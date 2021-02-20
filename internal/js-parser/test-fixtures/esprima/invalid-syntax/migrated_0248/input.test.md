@@ -11,154 +11,59 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "esprima/invalid-syntax/migrated_0248/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "esprima/invalid-syntax/migrated_0248/input.js"
-		end: Object {
-			column: 0
-			line: 2
+	loc: SourceLocation esprima/invalid-syntax/migrated_0248/input.js 1:0-2:0
+	path: UIDPath<esprima/invalid-syntax/migrated_0248/input.js>
+	body: Array [
+		JSLabeledStatement {
+			loc: SourceLocation esprima/invalid-syntax/migrated_0248/input.js 1:0-1:25
+			label: JSIdentifier {
+				name: "__proto__"
+				loc: SourceLocation esprima/invalid-syntax/migrated_0248/input.js 1:0-1:9 (__proto__)
+			}
+			body: JSLabeledStatement {
+				loc: SourceLocation esprima/invalid-syntax/migrated_0248/input.js 1:11-1:25
+				label: JSIdentifier {
+					name: "__proto__"
+					loc: SourceLocation esprima/invalid-syntax/migrated_0248/input.js 1:11-1:20 (__proto__)
+				}
+				body: JSExpressionStatement {
+					loc: SourceLocation esprima/invalid-syntax/migrated_0248/input.js 1:22-1:25
+					expression: JSNumericLiteral {
+						value: 42
+						format: undefined
+						loc: SourceLocation esprima/invalid-syntax/migrated_0248/input.js 1:22-1:24
+					}
+				}
+			}
 		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	]
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
 			location: Object {
-				filename: "esprima/invalid-syntax/migrated_0248/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 20
-					line: 1
-				}
-				start: Object {
-					column: 11
-					line: 1
-				}
+				end: Position 1:20
+				path: UIDPath<esprima/invalid-syntax/migrated_0248/input.js>
+				start: Position 1:11
 			}
 			description: Object {
-				category: "parse"
 				categoryValue: "js"
-				message: Array [
-					RAW_MARKUP {value: "Label <emphasis>"}
-					"__proto__"
-					RAW_MARKUP {value: "</emphasis> is already declared"}
-				]
+				category: Array ["parse"]
+				message: RAW_MARKUP {value: "Label <emphasis>__proto__</emphasis> is already declared"}
 				advice: Array [
 					log {
 						category: "info"
 						text: RAW_MARKUP {value: "Defined already here"}
 					}
-					frame {
-						location: Object {
-							filename: "esprima/invalid-syntax/migrated_0248/input.js"
-							identifierName: "__proto__"
-							end: Object {
-								column: 9
-								line: 1
-							}
-							start: Object {
-								column: 0
-								line: 1
-							}
-						}
-					}
+					frame {location: SourceLocation esprima/invalid-syntax/migrated_0248/input.js 1:0-1:9 (__proto__)}
 				]
-			}
-		}
-	]
-	body: Array [
-		JSLabeledStatement {
-			loc: Object {
-				filename: "esprima/invalid-syntax/migrated_0248/input.js"
-				end: Object {
-					column: 25
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
-			label: JSIdentifier {
-				name: "__proto__"
-				loc: Object {
-					filename: "esprima/invalid-syntax/migrated_0248/input.js"
-					identifierName: "__proto__"
-					end: Object {
-						column: 9
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
-			}
-			body: JSLabeledStatement {
-				loc: Object {
-					filename: "esprima/invalid-syntax/migrated_0248/input.js"
-					end: Object {
-						column: 25
-						line: 1
-					}
-					start: Object {
-						column: 11
-						line: 1
-					}
-				}
-				label: JSIdentifier {
-					name: "__proto__"
-					loc: Object {
-						filename: "esprima/invalid-syntax/migrated_0248/input.js"
-						identifierName: "__proto__"
-						end: Object {
-							column: 20
-							line: 1
-						}
-						start: Object {
-							column: 11
-							line: 1
-						}
-					}
-				}
-				body: JSExpressionStatement {
-					loc: Object {
-						filename: "esprima/invalid-syntax/migrated_0248/input.js"
-						end: Object {
-							column: 25
-							line: 1
-						}
-						start: Object {
-							column: 22
-							line: 1
-						}
-					}
-					expression: JSNumericLiteral {
-						value: 42
-						format: undefined
-						loc: Object {
-							filename: "esprima/invalid-syntax/migrated_0248/input.js"
-							end: Object {
-								column: 24
-								line: 1
-							}
-							start: Object {
-								column: 22
-								line: 1
-							}
-						}
-					}
-				}
 			}
 		}
 	]
@@ -173,13 +78,13 @@ JSRoot {
 
   ✖ Label __proto__ is already declared
 
+    __proto__: __proto__: 42;
+               ^^^^^^^^^
+
   ℹ Defined already here
 
     __proto__: __proto__: 42;
     ^^^^^^^^^
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

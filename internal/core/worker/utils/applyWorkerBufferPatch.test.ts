@@ -1,8 +1,8 @@
 import {test} from "rome";
 import {applyWorkerBufferPatch} from "./applyWorkerBufferPatch";
-import {WorkerBufferPatch} from "@internal/core/common/bridges/WorkerBridge";
-import {ob1Coerce0} from "@internal/ob1";
+import {WorkerBufferPatch} from "@internal/core";
 import {dedent} from "@internal/string-utils";
+import {ZeroIndexed} from "@internal/math";
 
 function makeRange(
 	startLine: number,
@@ -12,12 +12,12 @@ function makeRange(
 ) {
 	return {
 		start: {
-			line: ob1Coerce0(startLine),
-			character: ob1Coerce0(startChar),
+			line: new ZeroIndexed(startLine),
+			character: new ZeroIndexed(startChar),
 		},
 		end: {
-			line: ob1Coerce0(endLine),
-			character: ob1Coerce0(endChar),
+			line: new ZeroIndexed(endLine),
+			character: new ZeroIndexed(endChar),
 		},
 	};
 }

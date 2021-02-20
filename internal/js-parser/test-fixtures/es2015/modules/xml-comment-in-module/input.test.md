@@ -12,106 +12,34 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "es2015/modules/xml-comment-in-module/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
 	syntax: Array []
-	loc: Object {
-		filename: "es2015/modules/xml-comment-in-module/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2015/modules/xml-comment-in-module/input.js 1:0-2:0
+	path: UIDPath<es2015/modules/xml-comment-in-module/input.js>
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "es2015/modules/xml-comment-in-module/input.js"
-				end: Object {
-					column: 11
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2015/modules/xml-comment-in-module/input.js 1:0-1:11
 			expression: JSBinaryExpression {
 				operator: "<"
-				loc: Object {
-					filename: "es2015/modules/xml-comment-in-module/input.js"
-					end: Object {
-						column: 11
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/modules/xml-comment-in-module/input.js 1:0-1:11
 				left: JSReferenceIdentifier {
 					name: "foo"
-					loc: Object {
-						filename: "es2015/modules/xml-comment-in-module/input.js"
-						identifierName: "foo"
-						end: Object {
-							column: 3
-							line: 1
-						}
-						start: Object {
-							column: 0
-							line: 1
-						}
-					}
+					loc: SourceLocation es2015/modules/xml-comment-in-module/input.js 1:0-1:3 (foo)
 				}
 				right: JSUnaryExpression {
 					operator: "!"
 					prefix: true
-					loc: Object {
-						filename: "es2015/modules/xml-comment-in-module/input.js"
-						end: Object {
-							column: 11
-							line: 1
-						}
-						start: Object {
-							column: 5
-							line: 1
-						}
-					}
+					loc: SourceLocation es2015/modules/xml-comment-in-module/input.js 1:5-1:11
 					argument: JSUpdateExpression {
 						operator: "--"
 						prefix: true
-						loc: Object {
-							filename: "es2015/modules/xml-comment-in-module/input.js"
-							end: Object {
-								column: 11
-								line: 1
-							}
-							start: Object {
-								column: 6
-								line: 1
-							}
-						}
+						loc: SourceLocation es2015/modules/xml-comment-in-module/input.js 1:6-1:11
 						argument: JSReferenceIdentifier {
 							name: "bar"
-							loc: Object {
-								filename: "es2015/modules/xml-comment-in-module/input.js"
-								identifierName: "bar"
-								end: Object {
-									column: 11
-									line: 1
-								}
-								start: Object {
-									column: 8
-									line: 1
-								}
-							}
+							loc: SourceLocation es2015/modules/xml-comment-in-module/input.js 1:8-1:11 (bar)
 						}
 					}
 				}
@@ -124,6 +52,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

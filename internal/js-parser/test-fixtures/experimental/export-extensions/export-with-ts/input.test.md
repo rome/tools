@@ -11,45 +11,29 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "experimental/export-extensions/export-with-ts/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
 	syntax: Array []
-	loc: Object {
-		filename: "experimental/export-extensions/export-with-ts/input.js"
-		end: Object {
-			column: 0
-			line: 8
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation experimental/export-extensions/export-with-ts/input.js 1:0-8:0
+	path: UIDPath<experimental/export-extensions/export-with-ts/input.js>
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse"
 				categoryValue: "js"
+				category: Array ["parse"]
 				message: RAW_MARKUP {value: "Expected `from` for an export node"}
 			}
 			location: Object {
-				filename: "experimental/export-extensions/export-with-ts/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 15
-					line: 1
-				}
-				start: Object {
-					column: 16
-					line: 1
-				}
+				end: Position 1:15
+				path: UIDPath<experimental/export-extensions/export-with-ts/input.js>
+				start: Position 1:16
 			}
 		}
 	]
@@ -58,365 +42,108 @@ JSRoot {
 			exportKind: undefined
 			namedSpecifiers: Array []
 			namespaceSpecifier: undefined
-			loc: Object {
-				filename: "experimental/export-extensions/export-with-ts/input.js"
-				end: Object {
-					column: 15
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation experimental/export-extensions/export-with-ts/input.js 1:0-1:15
 			source: JSStringLiteral {
 				value: ""
-				loc: Object {
-					filename: "experimental/export-extensions/export-with-ts/input.js"
-					end: Object {
-						column: 15
-						line: 1
-					}
-					start: Object {
-						column: 16
-						line: 1
-					}
-				}
+				loc: SourceLocation experimental/export-extensions/export-with-ts/input.js 1:16-1:15
 			}
 			defaultSpecifier: JSExportDefaultSpecifier {
-				loc: Object {
-					filename: "experimental/export-extensions/export-with-ts/input.js"
-					end: Object {
-						column: 15
-						line: 1
-					}
-					start: Object {
-						column: 7
-						line: 1
-					}
-				}
+				loc: SourceLocation experimental/export-extensions/export-with-ts/input.js 1:7-1:15
 				exported: JSIdentifier {
 					name: "abstract"
-					loc: Object {
-						filename: "experimental/export-extensions/export-with-ts/input.js"
-						identifierName: "abstract"
-						end: Object {
-							column: 15
-							line: 1
-						}
-						start: Object {
-							column: 7
-							line: 1
-						}
-					}
+					loc: SourceLocation experimental/export-extensions/export-with-ts/input.js 1:7-1:15 (abstract)
 				}
 			}
 		}
 		JSClassDeclaration {
 			id: JSBindingIdentifier {
 				name: "A"
-				loc: Object {
-					filename: "experimental/export-extensions/export-with-ts/input.js"
-					identifierName: "A"
-					end: Object {
-						column: 23
-						line: 1
-					}
-					start: Object {
-						column: 22
-						line: 1
-					}
-				}
+				loc: SourceLocation experimental/export-extensions/export-with-ts/input.js 1:22-1:23 (A)
 			}
-			loc: Object {
-				filename: "experimental/export-extensions/export-with-ts/input.js"
-				end: Object {
-					column: 26
-					line: 1
-				}
-				start: Object {
-					column: 16
-					line: 1
-				}
-			}
+			loc: SourceLocation experimental/export-extensions/export-with-ts/input.js 1:16-1:26
 			meta: JSClassHead {
 				body: Array []
 				implements: undefined
 				superClass: undefined
 				superTypeParameters: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "experimental/export-extensions/export-with-ts/input.js"
-					end: Object {
-						column: 26
-						line: 1
-					}
-					start: Object {
-						column: 16
-						line: 1
-					}
-				}
+				loc: SourceLocation experimental/export-extensions/export-with-ts/input.js 1:16-1:26
 			}
 		}
 		JSExportExternalDeclaration {
 			exportKind: undefined
 			namedSpecifiers: Array []
 			namespaceSpecifier: undefined
-			loc: Object {
-				filename: "experimental/export-extensions/export-with-ts/input.js"
-				end: Object {
-					column: 14
-					line: 2
-				}
-				start: Object {
-					column: 0
-					line: 2
-				}
-			}
+			loc: SourceLocation experimental/export-extensions/export-with-ts/input.js 2:0-2:14
 			source: JSStringLiteral {
 				value: ""
-				loc: Object {
-					filename: "experimental/export-extensions/export-with-ts/input.js"
-					end: Object {
-						column: 14
-						line: 2
-					}
-					start: Object {
-						column: 15
-						line: 2
-					}
-				}
+				loc: SourceLocation experimental/export-extensions/export-with-ts/input.js 2:15-2:14
 			}
 			defaultSpecifier: JSExportDefaultSpecifier {
-				loc: Object {
-					filename: "experimental/export-extensions/export-with-ts/input.js"
-					end: Object {
-						column: 14
-						line: 2
-					}
-					start: Object {
-						column: 7
-						line: 2
-					}
-				}
+				loc: SourceLocation experimental/export-extensions/export-with-ts/input.js 2:7-2:14
 				exported: JSIdentifier {
 					name: "declare"
-					loc: Object {
-						filename: "experimental/export-extensions/export-with-ts/input.js"
-						identifierName: "declare"
-						end: Object {
-							column: 14
-							line: 2
-						}
-						start: Object {
-							column: 7
-							line: 2
-						}
-					}
+					loc: SourceLocation experimental/export-extensions/export-with-ts/input.js 2:7-2:14 (declare)
 				}
 			}
 		}
 		TSInterfaceDeclaration {
 			id: JSBindingIdentifier {
 				name: "B"
-				loc: Object {
-					filename: "experimental/export-extensions/export-with-ts/input.js"
-					identifierName: "B"
-					end: Object {
-						column: 26
-						line: 2
-					}
-					start: Object {
-						column: 25
-						line: 2
-					}
-				}
+				loc: SourceLocation experimental/export-extensions/export-with-ts/input.js 2:25-2:26 (B)
 			}
 			extends: undefined
 			typeParameters: undefined
-			loc: Object {
-				filename: "experimental/export-extensions/export-with-ts/input.js"
-				end: Object {
-					column: 29
-					line: 2
-				}
-				start: Object {
-					column: 15
-					line: 2
-				}
-			}
+			loc: SourceLocation experimental/export-extensions/export-with-ts/input.js 2:15-2:29
 			body: TSInterfaceBody {
 				body: Array []
-				loc: Object {
-					filename: "experimental/export-extensions/export-with-ts/input.js"
-					end: Object {
-						column: 29
-						line: 2
-					}
-					start: Object {
-						column: 27
-						line: 2
-					}
-				}
+				loc: SourceLocation experimental/export-extensions/export-with-ts/input.js 2:27-2:29
 			}
 		}
 		JSExportExternalDeclaration {
 			exportKind: undefined
 			namedSpecifiers: Array []
 			namespaceSpecifier: undefined
-			loc: Object {
-				filename: "experimental/export-extensions/export-with-ts/input.js"
-				end: Object {
-					column: 11
-					line: 3
-				}
-				start: Object {
-					column: 0
-					line: 3
-				}
-			}
+			loc: SourceLocation experimental/export-extensions/export-with-ts/input.js 3:0-3:11
 			source: JSStringLiteral {
 				value: ""
-				loc: Object {
-					filename: "experimental/export-extensions/export-with-ts/input.js"
-					end: Object {
-						column: 11
-						line: 3
-					}
-					start: Object {
-						column: 12
-						line: 3
-					}
-				}
+				loc: SourceLocation experimental/export-extensions/export-with-ts/input.js 3:12-3:11
 			}
 			defaultSpecifier: JSExportDefaultSpecifier {
-				loc: Object {
-					filename: "experimental/export-extensions/export-with-ts/input.js"
-					end: Object {
-						column: 11
-						line: 3
-					}
-					start: Object {
-						column: 7
-						line: 3
-					}
-				}
+				loc: SourceLocation experimental/export-extensions/export-with-ts/input.js 3:7-3:11
 				exported: JSIdentifier {
 					name: "enum"
-					loc: Object {
-						filename: "experimental/export-extensions/export-with-ts/input.js"
-						identifierName: "enum"
-						end: Object {
-							column: 11
-							line: 3
-						}
-						start: Object {
-							column: 7
-							line: 3
-						}
-					}
+					loc: SourceLocation experimental/export-extensions/export-with-ts/input.js 3:7-3:11 (enum)
 				}
 			}
 		}
 		JSExpressionStatement {
-			loc: Object {
-				filename: "experimental/export-extensions/export-with-ts/input.js"
-				end: Object {
-					column: 13
-					line: 3
-				}
-				start: Object {
-					column: 12
-					line: 3
-				}
-			}
+			loc: SourceLocation experimental/export-extensions/export-with-ts/input.js 3:12-3:13
 			expression: JSReferenceIdentifier {
 				name: "C"
-				loc: Object {
-					filename: "experimental/export-extensions/export-with-ts/input.js"
-					identifierName: "C"
-					end: Object {
-						column: 13
-						line: 3
-					}
-					start: Object {
-						column: 12
-						line: 3
-					}
-				}
+				loc: SourceLocation experimental/export-extensions/export-with-ts/input.js 3:12-3:13 (C)
 			}
 		}
 		JSBlockStatement {
 			body: Array []
 			directives: Array []
-			loc: Object {
-				filename: "experimental/export-extensions/export-with-ts/input.js"
-				end: Object {
-					column: 16
-					line: 3
-				}
-				start: Object {
-					column: 14
-					line: 3
-				}
-			}
+			loc: SourceLocation experimental/export-extensions/export-with-ts/input.js 3:14-3:16
 		}
 		JSExportLocalDeclaration {
 			exportKind: "type"
 			specifiers: undefined
-			loc: Object {
-				filename: "experimental/export-extensions/export-with-ts/input.js"
-				end: Object {
-					column: 21
-					line: 4
-				}
-				start: Object {
-					column: 0
-					line: 4
-				}
-			}
+			loc: SourceLocation experimental/export-extensions/export-with-ts/input.js 4:0-4:21
 			declaration: TSInterfaceDeclaration {
 				id: JSBindingIdentifier {
 					name: "D"
-					loc: Object {
-						filename: "experimental/export-extensions/export-with-ts/input.js"
-						identifierName: "D"
-						end: Object {
-							column: 18
-							line: 4
-						}
-						start: Object {
-							column: 17
-							line: 4
-						}
-					}
+					loc: SourceLocation experimental/export-extensions/export-with-ts/input.js 4:17-4:18 (D)
 				}
 				extends: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "experimental/export-extensions/export-with-ts/input.js"
-					end: Object {
-						column: 21
-						line: 4
-					}
-					start: Object {
-						column: 7
-						line: 4
-					}
-				}
+				loc: SourceLocation experimental/export-extensions/export-with-ts/input.js 4:7-4:21
 				body: TSInterfaceBody {
 					body: Array []
-					loc: Object {
-						filename: "experimental/export-extensions/export-with-ts/input.js"
-						end: Object {
-							column: 21
-							line: 4
-						}
-						start: Object {
-							column: 19
-							line: 4
-						}
-					}
+					loc: SourceLocation experimental/export-extensions/export-with-ts/input.js 4:19-4:21
 				}
 			}
 		}
@@ -424,272 +151,76 @@ JSRoot {
 			exportKind: undefined
 			namedSpecifiers: Array []
 			namespaceSpecifier: undefined
-			loc: Object {
-				filename: "experimental/export-extensions/export-with-ts/input.js"
-				end: Object {
-					column: 13
-					line: 5
-				}
-				start: Object {
-					column: 0
-					line: 5
-				}
-			}
+			loc: SourceLocation experimental/export-extensions/export-with-ts/input.js 5:0-5:13
 			source: JSStringLiteral {
 				value: ""
-				loc: Object {
-					filename: "experimental/export-extensions/export-with-ts/input.js"
-					end: Object {
-						column: 13
-						line: 5
-					}
-					start: Object {
-						column: 14
-						line: 5
-					}
-				}
+				loc: SourceLocation experimental/export-extensions/export-with-ts/input.js 5:14-5:13
 			}
 			defaultSpecifier: JSExportDefaultSpecifier {
-				loc: Object {
-					filename: "experimental/export-extensions/export-with-ts/input.js"
-					end: Object {
-						column: 13
-						line: 5
-					}
-					start: Object {
-						column: 7
-						line: 5
-					}
-				}
+				loc: SourceLocation experimental/export-extensions/export-with-ts/input.js 5:7-5:13
 				exported: JSIdentifier {
 					name: "module"
-					loc: Object {
-						filename: "experimental/export-extensions/export-with-ts/input.js"
-						identifierName: "module"
-						end: Object {
-							column: 13
-							line: 5
-						}
-						start: Object {
-							column: 7
-							line: 5
-						}
-					}
+					loc: SourceLocation experimental/export-extensions/export-with-ts/input.js 5:7-5:13 (module)
 				}
 			}
 		}
 		JSExpressionStatement {
-			loc: Object {
-				filename: "experimental/export-extensions/export-with-ts/input.js"
-				end: Object {
-					column: 15
-					line: 5
-				}
-				start: Object {
-					column: 14
-					line: 5
-				}
-			}
+			loc: SourceLocation experimental/export-extensions/export-with-ts/input.js 5:14-5:15
 			expression: JSReferenceIdentifier {
 				name: "E"
-				loc: Object {
-					filename: "experimental/export-extensions/export-with-ts/input.js"
-					identifierName: "E"
-					end: Object {
-						column: 15
-						line: 5
-					}
-					start: Object {
-						column: 14
-						line: 5
-					}
-				}
+				loc: SourceLocation experimental/export-extensions/export-with-ts/input.js 5:14-5:15 (E)
 			}
 		}
 		JSBlockStatement {
 			body: Array []
 			directives: Array []
-			loc: Object {
-				filename: "experimental/export-extensions/export-with-ts/input.js"
-				end: Object {
-					column: 18
-					line: 5
-				}
-				start: Object {
-					column: 16
-					line: 5
-				}
-			}
+			loc: SourceLocation experimental/export-extensions/export-with-ts/input.js 5:16-5:18
 		}
 		JSExportExternalDeclaration {
 			exportKind: undefined
 			namedSpecifiers: Array []
 			namespaceSpecifier: undefined
-			loc: Object {
-				filename: "experimental/export-extensions/export-with-ts/input.js"
-				end: Object {
-					column: 16
-					line: 6
-				}
-				start: Object {
-					column: 0
-					line: 6
-				}
-			}
+			loc: SourceLocation experimental/export-extensions/export-with-ts/input.js 6:0-6:16
 			source: JSStringLiteral {
 				value: ""
-				loc: Object {
-					filename: "experimental/export-extensions/export-with-ts/input.js"
-					end: Object {
-						column: 16
-						line: 6
-					}
-					start: Object {
-						column: 17
-						line: 6
-					}
-				}
+				loc: SourceLocation experimental/export-extensions/export-with-ts/input.js 6:17-6:16
 			}
 			defaultSpecifier: JSExportDefaultSpecifier {
-				loc: Object {
-					filename: "experimental/export-extensions/export-with-ts/input.js"
-					end: Object {
-						column: 16
-						line: 6
-					}
-					start: Object {
-						column: 7
-						line: 6
-					}
-				}
+				loc: SourceLocation experimental/export-extensions/export-with-ts/input.js 6:7-6:16
 				exported: JSIdentifier {
 					name: "namespace"
-					loc: Object {
-						filename: "experimental/export-extensions/export-with-ts/input.js"
-						identifierName: "namespace"
-						end: Object {
-							column: 16
-							line: 6
-						}
-						start: Object {
-							column: 7
-							line: 6
-						}
-					}
+					loc: SourceLocation experimental/export-extensions/export-with-ts/input.js 6:7-6:16 (namespace)
 				}
 			}
 		}
 		JSExpressionStatement {
-			loc: Object {
-				filename: "experimental/export-extensions/export-with-ts/input.js"
-				end: Object {
-					column: 18
-					line: 6
-				}
-				start: Object {
-					column: 17
-					line: 6
-				}
-			}
+			loc: SourceLocation experimental/export-extensions/export-with-ts/input.js 6:17-6:18
 			expression: JSReferenceIdentifier {
 				name: "F"
-				loc: Object {
-					filename: "experimental/export-extensions/export-with-ts/input.js"
-					identifierName: "F"
-					end: Object {
-						column: 18
-						line: 6
-					}
-					start: Object {
-						column: 17
-						line: 6
-					}
-				}
+				loc: SourceLocation experimental/export-extensions/export-with-ts/input.js 6:17-6:18 (F)
 			}
 		}
 		JSBlockStatement {
 			body: Array []
 			directives: Array []
-			loc: Object {
-				filename: "experimental/export-extensions/export-with-ts/input.js"
-				end: Object {
-					column: 21
-					line: 6
-				}
-				start: Object {
-					column: 19
-					line: 6
-				}
-			}
+			loc: SourceLocation experimental/export-extensions/export-with-ts/input.js 6:19-6:21
 		}
 		JSExportLocalDeclaration {
 			exportKind: "type"
 			specifiers: undefined
-			loc: Object {
-				filename: "experimental/export-extensions/export-with-ts/input.js"
-				end: Object {
-					column: 27
-					line: 7
-				}
-				start: Object {
-					column: 0
-					line: 7
-				}
-			}
+			loc: SourceLocation experimental/export-extensions/export-with-ts/input.js 7:0-7:27
 			declaration: TSTypeAlias {
 				id: JSBindingIdentifier {
 					name: "G"
-					loc: Object {
-						filename: "experimental/export-extensions/export-with-ts/input.js"
-						identifierName: "G"
-						end: Object {
-							column: 13
-							line: 7
-						}
-						start: Object {
-							column: 12
-							line: 7
-						}
-					}
+					loc: SourceLocation experimental/export-extensions/export-with-ts/input.js 7:12-7:13 (G)
 				}
 				typeParameters: undefined
-				loc: Object {
-					filename: "experimental/export-extensions/export-with-ts/input.js"
-					end: Object {
-						column: 27
-						line: 7
-					}
-					start: Object {
-						column: 7
-						line: 7
-					}
-				}
+				loc: SourceLocation experimental/export-extensions/export-with-ts/input.js 7:7-7:27
 				right: TSTypeQuery {
-					loc: Object {
-						filename: "experimental/export-extensions/export-with-ts/input.js"
-						end: Object {
-							column: 26
-							line: 7
-						}
-						start: Object {
-							column: 16
-							line: 7
-						}
-					}
+					loc: SourceLocation experimental/export-extensions/export-with-ts/input.js 7:16-7:26
 					exprName: JSReferenceIdentifier {
 						name: "foo"
-						loc: Object {
-							filename: "experimental/export-extensions/export-with-ts/input.js"
-							identifierName: "foo"
-							end: Object {
-								column: 26
-								line: 7
-							}
-							start: Object {
-								column: 23
-								line: 7
-							}
-						}
+						loc: SourceLocation experimental/export-extensions/export-with-ts/input.js 7:23-7:26 (foo)
 					}
 				}
 			}
@@ -711,8 +242,5 @@ JSRoot {
     2 │ export declare interface B {}
     3 │ export enum C {}
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

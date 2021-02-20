@@ -12,129 +12,37 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "typescript/cast/arrow-in-parens-with-parens-node/input.ts"
 	hasHoistedVars: true
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
+	loc: SourceLocation typescript/cast/arrow-in-parens-with-parens-node/input.ts 1:0-2:0
+	path: UIDPath<typescript/cast/arrow-in-parens-with-parens-node/input.ts>
 	syntax: Array ["ts"]
-	loc: Object {
-		filename: "typescript/cast/arrow-in-parens-with-parens-node/input.ts"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
 	body: Array [
 		JSVariableDeclarationStatement {
-			loc: Object {
-				filename: "typescript/cast/arrow-in-parens-with-parens-node/input.ts"
-				end: Object {
-					column: 44
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation typescript/cast/arrow-in-parens-with-parens-node/input.ts 1:0-1:44
 			declaration: JSVariableDeclaration {
 				kind: "var"
-				loc: Object {
-					filename: "typescript/cast/arrow-in-parens-with-parens-node/input.ts"
-					end: Object {
-						column: 44
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/cast/arrow-in-parens-with-parens-node/input.ts 1:0-1:44
 				declarations: Array [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "asserted1"
-							loc: Object {
-								filename: "typescript/cast/arrow-in-parens-with-parens-node/input.ts"
-								identifierName: "asserted1"
-								end: Object {
-									column: 13
-									line: 1
-								}
-								start: Object {
-									column: 4
-									line: 1
-								}
-							}
+							loc: SourceLocation typescript/cast/arrow-in-parens-with-parens-node/input.ts 1:4-1:13 (asserted1)
 						}
-						loc: Object {
-							filename: "typescript/cast/arrow-in-parens-with-parens-node/input.ts"
-							end: Object {
-								column: 43
-								line: 1
-							}
-							start: Object {
-								column: 4
-								line: 1
-							}
-						}
+						loc: SourceLocation typescript/cast/arrow-in-parens-with-parens-node/input.ts 1:4-1:43
 						init: JSArrowFunctionExpression {
-							loc: Object {
-								filename: "typescript/cast/arrow-in-parens-with-parens-node/input.ts"
-								end: Object {
-									column: 42
-									line: 1
-								}
-								start: Object {
-									column: 16
-									line: 1
-								}
-							}
+							loc: SourceLocation typescript/cast/arrow-in-parens-with-parens-node/input.ts 1:16-1:42
 							body: JSBlockStatement {
 								directives: Array []
-								loc: Object {
-									filename: "typescript/cast/arrow-in-parens-with-parens-node/input.ts"
-									end: Object {
-										column: 42
-										line: 1
-									}
-									start: Object {
-										column: 29
-										line: 1
-									}
-								}
+								loc: SourceLocation typescript/cast/arrow-in-parens-with-parens-node/input.ts 1:29-1:42
 								body: Array [
 									JSReturnStatement {
-										loc: Object {
-											filename: "typescript/cast/arrow-in-parens-with-parens-node/input.ts"
-											end: Object {
-												column: 40
-												line: 1
-											}
-											start: Object {
-												column: 31
-												line: 1
-											}
-										}
+										loc: SourceLocation typescript/cast/arrow-in-parens-with-parens-node/input.ts 1:31-1:40
 										argument: JSReferenceIdentifier {
 											name: "n"
-											loc: Object {
-												filename: "typescript/cast/arrow-in-parens-with-parens-node/input.ts"
-												identifierName: "n"
-												end: Object {
-													column: 39
-													line: 1
-												}
-												start: Object {
-													column: 38
-													line: 1
-												}
-											}
+											loc: SourceLocation typescript/cast/arrow-in-parens-with-parens-node/input.ts 1:38-1:39 (n)
 										}
 									}
 								]
@@ -145,62 +53,21 @@ JSRoot {
 								rest: undefined
 								returnType: undefined
 								thisType: undefined
-								loc: Object {
-									filename: "typescript/cast/arrow-in-parens-with-parens-node/input.ts"
-									end: Object {
-										column: 28
-										line: 1
-									}
-									start: Object {
-										column: 22
-										line: 1
-									}
-								}
+								loc: SourceLocation typescript/cast/arrow-in-parens-with-parens-node/input.ts 1:22-1:28
 								params: Array [
 									JSBindingIdentifier {
 										name: "n"
-										loc: Object {
-											filename: "typescript/cast/arrow-in-parens-with-parens-node/input.ts"
-											identifierName: "n"
-											end: Object {
-												column: 24
-												line: 1
-											}
-											start: Object {
-												column: 23
-												line: 1
-											}
-										}
+										loc: SourceLocation typescript/cast/arrow-in-parens-with-parens-node/input.ts 1:23-1:24 (n)
 									}
 								]
 								typeParameters: TSTypeParameterDeclaration {
-									loc: Object {
-										filename: "typescript/cast/arrow-in-parens-with-parens-node/input.ts"
-										end: Object {
-											column: 21
-											line: 1
-										}
-										start: Object {
-											column: 16
-											line: 1
-										}
-									}
+									loc: SourceLocation typescript/cast/arrow-in-parens-with-parens-node/input.ts 1:16-1:21
 									params: Array [
 										TSTypeParameter {
 											name: "any"
 											constraint: undefined
 											default: undefined
-											loc: Object {
-												filename: "typescript/cast/arrow-in-parens-with-parens-node/input.ts"
-												end: Object {
-													column: 20
-													line: 1
-												}
-												start: Object {
-													column: 17
-													line: 1
-												}
-											}
+											loc: SourceLocation typescript/cast/arrow-in-parens-with-parens-node/input.ts 1:17-1:20
 										}
 									]
 								}
@@ -217,6 +84,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

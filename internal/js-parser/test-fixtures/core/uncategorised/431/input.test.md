@@ -11,74 +11,38 @@ JSRoot {
 	comments: Array []
 	corrupt: true
 	directives: Array []
-	filename: "core/uncategorised/431/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "core/uncategorised/431/input.js"
-		end: Object {
-			column: 3
-			line: 1
+	loc: SourceLocation core/uncategorised/431/input.js 1:0-1:3
+	path: UIDPath<core/uncategorised/431/input.js>
+	body: Array [
+		JSExpressionStatement {
+			loc: SourceLocation core/uncategorised/431/input.js 1:2-1:3
+			expression: JSReferenceIdentifier {
+				name: "INVALID_PLACEHOLDER"
+				loc: SourceLocation core/uncategorised/431/input.js 1:2-1:3
+			}
 		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	]
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse"
 				categoryValue: "js"
+				category: Array ["parse"]
 				message: RAW_MARKUP {value: "Unterminated comment"}
 			}
 			location: Object {
-				filename: "core/uncategorised/431/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 0
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
-		}
-	]
-	body: Array [
-		JSExpressionStatement {
-			loc: Object {
-				filename: "core/uncategorised/431/input.js"
-				end: Object {
-					column: 3
-					line: 1
-				}
-				start: Object {
-					column: 2
-					line: 1
-				}
-			}
-			expression: JSReferenceIdentifier {
-				name: "INVALID_PLACEHOLDER"
-				loc: Object {
-					filename: "core/uncategorised/431/input.js"
-					end: Object {
-						column: 3
-						line: 1
-					}
-					start: Object {
-						column: 2
-						line: 1
-					}
-				}
+				end: Position 1:0
+				path: UIDPath<core/uncategorised/431/input.js>
+				start: Position 1:0
 			}
 		}
 	]
@@ -96,8 +60,5 @@ JSRoot {
     /**
     ^
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

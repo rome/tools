@@ -12,125 +12,43 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "experimental/class-private-methods/combined/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "experimental/class-private-methods/combined/input.js"
-		end: Object {
-			column: 0
-			line: 17
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation experimental/class-private-methods/combined/input.js 1:0-17:0
+	path: UIDPath<experimental/class-private-methods/combined/input.js>
 	body: Array [
 		JSClassDeclaration {
 			id: JSBindingIdentifier {
 				name: "Foo"
-				loc: Object {
-					filename: "experimental/class-private-methods/combined/input.js"
-					identifierName: "Foo"
-					end: Object {
-						column: 9
-						line: 1
-					}
-					start: Object {
-						column: 6
-						line: 1
-					}
-				}
+				loc: SourceLocation experimental/class-private-methods/combined/input.js 1:6-1:9 (Foo)
 			}
-			loc: Object {
-				filename: "experimental/class-private-methods/combined/input.js"
-				end: Object {
-					column: 1
-					line: 16
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation experimental/class-private-methods/combined/input.js 1:0-16:1
 			meta: JSClassHead {
 				implements: undefined
 				superClass: undefined
 				superTypeParameters: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "experimental/class-private-methods/combined/input.js"
-					end: Object {
-						column: 1
-						line: 16
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation experimental/class-private-methods/combined/input.js 1:0-16:1
 				body: Array [
 					JSClassProperty {
 						key: JSStaticPropertyKey {
 							value: JSIdentifier {
 								name: "a"
-								loc: Object {
-									filename: "experimental/class-private-methods/combined/input.js"
-									identifierName: "a"
-									end: Object {
-										column: 3
-										line: 2
-									}
-									start: Object {
-										column: 2
-										line: 2
-									}
-								}
+								loc: SourceLocation experimental/class-private-methods/combined/input.js 2:2-2:3 (a)
 							}
-							loc: Object {
-								filename: "experimental/class-private-methods/combined/input.js"
-								end: Object {
-									column: 3
-									line: 2
-								}
-								start: Object {
-									column: 2
-									line: 2
-								}
-							}
+							loc: SourceLocation experimental/class-private-methods/combined/input.js 2:2-2:3
 						}
 						value: JSNumericLiteral {
 							value: 1
 							format: undefined
-							loc: Object {
-								filename: "experimental/class-private-methods/combined/input.js"
-								end: Object {
-									column: 7
-									line: 2
-								}
-								start: Object {
-									column: 6
-									line: 2
-								}
-							}
+							loc: SourceLocation experimental/class-private-methods/combined/input.js 2:6-2:7
 						}
 						definite: undefined
 						typeAnnotation: undefined
-						loc: Object {
-							filename: "experimental/class-private-methods/combined/input.js"
-							end: Object {
-								column: 8
-								line: 2
-							}
-							start: Object {
-								column: 2
-								line: 2
-							}
-						}
+						loc: SourceLocation experimental/class-private-methods/combined/input.js 2:2-2:8
 						meta: JSClassPropertyMeta {
 							abstract: false
 							accessibility: undefined
@@ -138,21 +56,8 @@ JSRoot {
 							readonly: false
 							static: false
 							typeAnnotation: undefined
-							start: Object {
-								column: 2
-								line: 2
-							}
-							loc: Object {
-								filename: "experimental/class-private-methods/combined/input.js"
-								end: Object {
-									column: 3
-									line: 2
-								}
-								start: Object {
-									column: 2
-									line: 2
-								}
-							}
+							loc: SourceLocation experimental/class-private-methods/combined/input.js 2:2-2:3
+							start: Position 2:2
 						}
 					}
 					JSClassPrivateMethod {
@@ -160,41 +65,20 @@ JSRoot {
 						key: JSPrivateName {
 							id: JSIdentifier {
 								name: "a"
-								loc: Object {
-									filename: "experimental/class-private-methods/combined/input.js"
-									identifierName: "a"
-									end: Object {
-										column: 5
-										line: 4
-									}
-									start: Object {
-										column: 4
-										line: 4
-									}
-								}
+								loc: SourceLocation experimental/class-private-methods/combined/input.js 4:4-4:5 (a)
 							}
-							loc: Object {
-								filename: "experimental/class-private-methods/combined/input.js"
-								end: Object {
-									column: 5
-									line: 4
-								}
-								start: Object {
-									column: 3
-									line: 4
-								}
-							}
+							loc: SourceLocation experimental/class-private-methods/combined/input.js 4:3-4:5
 						}
-						loc: Object {
-							filename: "experimental/class-private-methods/combined/input.js"
-							end: Object {
-								column: 3
-								line: 6
-							}
-							start: Object {
-								column: 2
-								line: 4
-							}
+						loc: SourceLocation experimental/class-private-methods/combined/input.js 4:2-6:3
+						meta: JSClassPropertyMeta {
+							abstract: false
+							accessibility: undefined
+							optional: false
+							readonly: false
+							static: false
+							typeAnnotation: undefined
+							loc: SourceLocation experimental/class-private-methods/combined/input.js 4:2-4:5
+							start: Position 4:2
 						}
 						head: JSFunctionHead {
 							async: false
@@ -205,107 +89,23 @@ JSRoot {
 							returnType: undefined
 							thisType: undefined
 							typeParameters: undefined
-							loc: Object {
-								filename: "experimental/class-private-methods/combined/input.js"
-								end: Object {
-									column: 7
-									line: 4
-								}
-								start: Object {
-									column: 5
-									line: 4
-								}
-							}
-						}
-						meta: JSClassPropertyMeta {
-							abstract: false
-							accessibility: undefined
-							optional: false
-							readonly: false
-							static: false
-							typeAnnotation: undefined
-							start: Object {
-								column: 2
-								line: 4
-							}
-							loc: Object {
-								filename: "experimental/class-private-methods/combined/input.js"
-								end: Object {
-									column: 5
-									line: 4
-								}
-								start: Object {
-									column: 2
-									line: 4
-								}
-							}
+							loc: SourceLocation experimental/class-private-methods/combined/input.js 4:5-4:7
 						}
 						body: JSBlockStatement {
 							directives: Array []
-							loc: Object {
-								filename: "experimental/class-private-methods/combined/input.js"
-								end: Object {
-									column: 3
-									line: 6
-								}
-								start: Object {
-									column: 8
-									line: 4
-								}
-							}
+							loc: SourceLocation experimental/class-private-methods/combined/input.js 4:8-6:3
 							body: Array [
 								JSExpressionStatement {
-									loc: Object {
-										filename: "experimental/class-private-methods/combined/input.js"
-										end: Object {
-											column: 16
-											line: 5
-										}
-										start: Object {
-											column: 4
-											line: 5
-										}
-									}
+									loc: SourceLocation experimental/class-private-methods/combined/input.js 5:4-5:16
 									expression: JSYieldExpression {
 										delegate: false
-										loc: Object {
-											filename: "experimental/class-private-methods/combined/input.js"
-											end: Object {
-												column: 15
-												line: 5
-											}
-											start: Object {
-												column: 4
-												line: 5
-											}
-										}
+										loc: SourceLocation experimental/class-private-methods/combined/input.js 5:4-5:15
 										argument: JSCallExpression {
 											arguments: Array []
-											loc: Object {
-												filename: "experimental/class-private-methods/combined/input.js"
-												end: Object {
-													column: 15
-													line: 5
-												}
-												start: Object {
-													column: 10
-													line: 5
-												}
-											}
+											loc: SourceLocation experimental/class-private-methods/combined/input.js 5:10-5:15
 											callee: JSReferenceIdentifier {
 												name: "bar"
-												loc: Object {
-													filename: "experimental/class-private-methods/combined/input.js"
-													identifierName: "bar"
-													end: Object {
-														column: 13
-														line: 5
-													}
-													start: Object {
-														column: 10
-														line: 5
-													}
-												}
+												loc: SourceLocation experimental/class-private-methods/combined/input.js 5:10-5:13 (bar)
 											}
 										}
 									}
@@ -317,58 +117,17 @@ JSRoot {
 						key: JSPrivateName {
 							id: JSIdentifier {
 								name: "b"
-								loc: Object {
-									filename: "experimental/class-private-methods/combined/input.js"
-									identifierName: "b"
-									end: Object {
-										column: 4
-										line: 8
-									}
-									start: Object {
-										column: 3
-										line: 8
-									}
-								}
+								loc: SourceLocation experimental/class-private-methods/combined/input.js 8:3-8:4 (b)
 							}
-							loc: Object {
-								filename: "experimental/class-private-methods/combined/input.js"
-								end: Object {
-									column: 4
-									line: 8
-								}
-								start: Object {
-									column: 2
-									line: 8
-								}
-							}
+							loc: SourceLocation experimental/class-private-methods/combined/input.js 8:2-8:4
 						}
 						value: JSNumericLiteral {
 							value: 2
 							format: undefined
-							loc: Object {
-								filename: "experimental/class-private-methods/combined/input.js"
-								end: Object {
-									column: 8
-									line: 8
-								}
-								start: Object {
-									column: 7
-									line: 8
-								}
-							}
+							loc: SourceLocation experimental/class-private-methods/combined/input.js 8:7-8:8
 						}
 						typeAnnotation: undefined
-						loc: Object {
-							filename: "experimental/class-private-methods/combined/input.js"
-							end: Object {
-								column: 9
-								line: 8
-							}
-							start: Object {
-								column: 2
-								line: 8
-							}
-						}
+						loc: SourceLocation experimental/class-private-methods/combined/input.js 8:2-8:9
 						meta: JSClassPropertyMeta {
 							abstract: false
 							accessibility: undefined
@@ -376,21 +135,8 @@ JSRoot {
 							readonly: false
 							static: false
 							typeAnnotation: undefined
-							start: Object {
-								column: 2
-								line: 8
-							}
-							loc: Object {
-								filename: "experimental/class-private-methods/combined/input.js"
-								end: Object {
-									column: 4
-									line: 8
-								}
-								start: Object {
-									column: 2
-									line: 8
-								}
-							}
+							loc: SourceLocation experimental/class-private-methods/combined/input.js 8:2-8:4
+							start: Position 8:2
 						}
 					}
 					JSClassMethod {
@@ -398,41 +144,20 @@ JSRoot {
 						key: JSStaticPropertyKey {
 							value: JSIdentifier {
 								name: "b"
-								loc: Object {
-									filename: "experimental/class-private-methods/combined/input.js"
-									identifierName: "b"
-									end: Object {
-										column: 7
-										line: 10
-									}
-									start: Object {
-										column: 6
-										line: 10
-									}
-								}
+								loc: SourceLocation experimental/class-private-methods/combined/input.js 10:6-10:7 (b)
 							}
-							loc: Object {
-								filename: "experimental/class-private-methods/combined/input.js"
-								end: Object {
-									column: 7
-									line: 10
-								}
-								start: Object {
-									column: 6
-									line: 10
-								}
-							}
+							loc: SourceLocation experimental/class-private-methods/combined/input.js 10:6-10:7
 						}
-						loc: Object {
-							filename: "experimental/class-private-methods/combined/input.js"
-							end: Object {
-								column: 26
-								line: 10
-							}
-							start: Object {
-								column: 2
-								line: 10
-							}
+						loc: SourceLocation experimental/class-private-methods/combined/input.js 10:2-10:26
+						meta: JSClassPropertyMeta {
+							abstract: false
+							accessibility: undefined
+							optional: false
+							readonly: false
+							static: false
+							typeAnnotation: undefined
+							loc: SourceLocation experimental/class-private-methods/combined/input.js 10:2-10:7
+							start: Position 10:2
 						}
 						head: JSFunctionHead {
 							async: false
@@ -443,81 +168,18 @@ JSRoot {
 							returnType: undefined
 							thisType: undefined
 							typeParameters: undefined
-							loc: Object {
-								filename: "experimental/class-private-methods/combined/input.js"
-								end: Object {
-									column: 9
-									line: 10
-								}
-								start: Object {
-									column: 7
-									line: 10
-								}
-							}
-						}
-						meta: JSClassPropertyMeta {
-							abstract: false
-							accessibility: undefined
-							optional: false
-							readonly: false
-							static: false
-							typeAnnotation: undefined
-							start: Object {
-								column: 2
-								line: 10
-							}
-							loc: Object {
-								filename: "experimental/class-private-methods/combined/input.js"
-								end: Object {
-									column: 7
-									line: 10
-								}
-								start: Object {
-									column: 2
-									line: 10
-								}
-							}
+							loc: SourceLocation experimental/class-private-methods/combined/input.js 10:7-10:9
 						}
 						body: JSBlockStatement {
 							directives: Array []
-							loc: Object {
-								filename: "experimental/class-private-methods/combined/input.js"
-								end: Object {
-									column: 26
-									line: 10
-								}
-								start: Object {
-									column: 10
-									line: 10
-								}
-							}
+							loc: SourceLocation experimental/class-private-methods/combined/input.js 10:10-10:26
 							body: Array [
 								JSReturnStatement {
-									loc: Object {
-										filename: "experimental/class-private-methods/combined/input.js"
-										end: Object {
-											column: 24
-											line: 10
-										}
-										start: Object {
-											column: 12
-											line: 10
-										}
-									}
+									loc: SourceLocation experimental/class-private-methods/combined/input.js 10:12-10:24
 									argument: JSNumericLiteral {
 										value: 9_999
 										format: undefined
-										loc: Object {
-											filename: "experimental/class-private-methods/combined/input.js"
-											end: Object {
-												column: 23
-												line: 10
-											}
-											start: Object {
-												column: 19
-												line: 10
-											}
-										}
+										loc: SourceLocation experimental/class-private-methods/combined/input.js 10:19-10:23
 									}
 								}
 							]
@@ -528,42 +190,11 @@ JSRoot {
 						key: JSPrivateName {
 							id: JSIdentifier {
 								name: "c"
-								loc: Object {
-									filename: "experimental/class-private-methods/combined/input.js"
-									identifierName: "c"
-									end: Object {
-										column: 8
-										line: 11
-									}
-									start: Object {
-										column: 7
-										line: 11
-									}
-								}
+								loc: SourceLocation experimental/class-private-methods/combined/input.js 11:7-11:8 (c)
 							}
-							loc: Object {
-								filename: "experimental/class-private-methods/combined/input.js"
-								end: Object {
-									column: 8
-									line: 11
-								}
-								start: Object {
-									column: 6
-									line: 11
-								}
-							}
+							loc: SourceLocation experimental/class-private-methods/combined/input.js 11:6-11:8
 						}
-						loc: Object {
-							filename: "experimental/class-private-methods/combined/input.js"
-							end: Object {
-								column: 25
-								line: 11
-							}
-							start: Object {
-								column: 2
-								line: 11
-							}
-						}
+						loc: SourceLocation experimental/class-private-methods/combined/input.js 11:2-11:25
 						meta: JSClassPropertyMeta {
 							abstract: false
 							accessibility: undefined
@@ -571,62 +202,18 @@ JSRoot {
 							readonly: false
 							static: false
 							typeAnnotation: undefined
-							start: Object {
-								column: 2
-								line: 11
-							}
-							loc: Object {
-								filename: "experimental/class-private-methods/combined/input.js"
-								end: Object {
-									column: 8
-									line: 11
-								}
-								start: Object {
-									column: 2
-									line: 11
-								}
-							}
+							loc: SourceLocation experimental/class-private-methods/combined/input.js 11:2-11:8
+							start: Position 11:2
 						}
 						body: JSBlockStatement {
 							directives: Array []
-							loc: Object {
-								filename: "experimental/class-private-methods/combined/input.js"
-								end: Object {
-									column: 25
-									line: 11
-								}
-								start: Object {
-									column: 12
-									line: 11
-								}
-							}
+							loc: SourceLocation experimental/class-private-methods/combined/input.js 11:12-11:25
 							body: Array [
 								JSReturnStatement {
-									loc: Object {
-										filename: "experimental/class-private-methods/combined/input.js"
-										end: Object {
-											column: 23
-											line: 11
-										}
-										start: Object {
-											column: 14
-											line: 11
-										}
-									}
+									loc: SourceLocation experimental/class-private-methods/combined/input.js 11:14-11:23
 									argument: JSReferenceIdentifier {
 										name: "x"
-										loc: Object {
-											filename: "experimental/class-private-methods/combined/input.js"
-											identifierName: "x"
-											end: Object {
-												column: 22
-												line: 11
-											}
-											start: Object {
-												column: 21
-												line: 11
-											}
-										}
+										loc: SourceLocation experimental/class-private-methods/combined/input.js 11:21-11:22 (x)
 									}
 								}
 							]
@@ -639,46 +226,15 @@ JSRoot {
 							returnType: undefined
 							thisType: undefined
 							typeParameters: undefined
-							loc: Object {
-								filename: "experimental/class-private-methods/combined/input.js"
-								end: Object {
-									column: 11
-									line: 11
-								}
-								start: Object {
-									column: 8
-									line: 11
-								}
-							}
+							loc: SourceLocation experimental/class-private-methods/combined/input.js 11:8-11:11
 							params: Array [
 								JSBindingIdentifier {
 									name: "x"
-									loc: Object {
-										filename: "experimental/class-private-methods/combined/input.js"
-										identifierName: "x"
-										end: Object {
-											column: 10
-											line: 11
-										}
-										start: Object {
-											column: 9
-											line: 11
-										}
-									}
+									loc: SourceLocation experimental/class-private-methods/combined/input.js 11:9-11:10 (x)
 									meta: JSPatternMeta {
 										optional: undefined
 										typeAnnotation: undefined
-										loc: Object {
-											filename: "experimental/class-private-methods/combined/input.js"
-											end: Object {
-												column: 10
-												line: 11
-											}
-											start: Object {
-												column: 9
-												line: 11
-											}
-										}
+										loc: SourceLocation experimental/class-private-methods/combined/input.js 11:9-11:10
 									}
 								}
 							]
@@ -689,41 +245,20 @@ JSRoot {
 						key: JSPrivateName {
 							id: JSIdentifier {
 								name: "d"
-								loc: Object {
-									filename: "experimental/class-private-methods/combined/input.js"
-									identifierName: "d"
-									end: Object {
-										column: 4
-										line: 13
-									}
-									start: Object {
-										column: 3
-										line: 13
-									}
-								}
+								loc: SourceLocation experimental/class-private-methods/combined/input.js 13:3-13:4 (d)
 							}
-							loc: Object {
-								filename: "experimental/class-private-methods/combined/input.js"
-								end: Object {
-									column: 4
-									line: 13
-								}
-								start: Object {
-									column: 2
-									line: 13
-								}
-							}
+							loc: SourceLocation experimental/class-private-methods/combined/input.js 13:2-13:4
 						}
-						loc: Object {
-							filename: "experimental/class-private-methods/combined/input.js"
-							end: Object {
-								column: 3
-								line: 15
-							}
-							start: Object {
-								column: 2
-								line: 13
-							}
+						loc: SourceLocation experimental/class-private-methods/combined/input.js 13:2-15:3
+						meta: JSClassPropertyMeta {
+							abstract: false
+							accessibility: undefined
+							optional: false
+							readonly: false
+							static: false
+							typeAnnotation: undefined
+							loc: SourceLocation experimental/class-private-methods/combined/input.js 13:2-13:4
+							start: Position 13:2
 						}
 						head: JSFunctionHead {
 							async: false
@@ -734,135 +269,29 @@ JSRoot {
 							returnType: undefined
 							thisType: undefined
 							typeParameters: undefined
-							loc: Object {
-								filename: "experimental/class-private-methods/combined/input.js"
-								end: Object {
-									column: 6
-									line: 13
-								}
-								start: Object {
-									column: 4
-									line: 13
-								}
-							}
-						}
-						meta: JSClassPropertyMeta {
-							abstract: false
-							accessibility: undefined
-							optional: false
-							readonly: false
-							static: false
-							typeAnnotation: undefined
-							start: Object {
-								column: 2
-								line: 13
-							}
-							loc: Object {
-								filename: "experimental/class-private-methods/combined/input.js"
-								end: Object {
-									column: 4
-									line: 13
-								}
-								start: Object {
-									column: 2
-									line: 13
-								}
-							}
+							loc: SourceLocation experimental/class-private-methods/combined/input.js 13:4-13:6
 						}
 						body: JSBlockStatement {
 							directives: Array []
-							loc: Object {
-								filename: "experimental/class-private-methods/combined/input.js"
-								end: Object {
-									column: 3
-									line: 15
-								}
-								start: Object {
-									column: 7
-									line: 13
-								}
-							}
+							loc: SourceLocation experimental/class-private-methods/combined/input.js 13:7-15:3
 							body: Array [
 								JSReturnStatement {
-									loc: Object {
-										filename: "experimental/class-private-methods/combined/input.js"
-										end: Object {
-											column: 25
-											line: 14
-										}
-										start: Object {
-											column: 4
-											line: 14
-										}
-									}
+									loc: SourceLocation experimental/class-private-methods/combined/input.js 14:4-14:25
 									argument: JSCallExpression {
 										arguments: Array []
-										loc: Object {
-											filename: "experimental/class-private-methods/combined/input.js"
-											end: Object {
-												column: 24
-												line: 14
-											}
-											start: Object {
-												column: 11
-												line: 14
-											}
-										}
+										loc: SourceLocation experimental/class-private-methods/combined/input.js 14:11-14:24
 										callee: JSMemberExpression {
-											loc: Object {
-												filename: "experimental/class-private-methods/combined/input.js"
-												end: Object {
-													column: 22
-													line: 14
-												}
-												start: Object {
-													column: 11
-													line: 14
-												}
-											}
+											loc: SourceLocation experimental/class-private-methods/combined/input.js 14:11-14:22
 											object: JSReferenceIdentifier {
 												name: "Math"
-												loc: Object {
-													filename: "experimental/class-private-methods/combined/input.js"
-													identifierName: "Math"
-													end: Object {
-														column: 15
-														line: 14
-													}
-													start: Object {
-														column: 11
-														line: 14
-													}
-												}
+												loc: SourceLocation experimental/class-private-methods/combined/input.js 14:11-14:15 (Math)
 											}
 											property: JSStaticMemberProperty {
 												value: JSIdentifier {
 													name: "random"
-													loc: Object {
-														filename: "experimental/class-private-methods/combined/input.js"
-														identifierName: "random"
-														end: Object {
-															column: 22
-															line: 14
-														}
-														start: Object {
-															column: 16
-															line: 14
-														}
-													}
+													loc: SourceLocation experimental/class-private-methods/combined/input.js 14:16-14:22 (random)
 												}
-												loc: Object {
-													filename: "experimental/class-private-methods/combined/input.js"
-													identifierName: "random"
-													end: Object {
-														column: 22
-														line: 14
-													}
-													start: Object {
-														column: 16
-														line: 14
-													}
-												}
+												loc: SourceLocation experimental/class-private-methods/combined/input.js 14:16-14:22 (random)
 											}
 										}
 									}
@@ -880,6 +309,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

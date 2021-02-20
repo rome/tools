@@ -12,166 +12,48 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "typescript/type-arguments/tsx/input.tsx"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
+	loc: SourceLocation typescript/type-arguments/tsx/input.tsx 1:0-3:0
+	path: UIDPath<typescript/type-arguments/tsx/input.tsx>
 	syntax: Array [
 		"ts"
 		"jsx"
 	]
-	loc: Object {
-		filename: "typescript/type-arguments/tsx/input.tsx"
-		end: Object {
-			column: 0
-			line: 3
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "typescript/type-arguments/tsx/input.tsx"
-				end: Object {
-					column: 16
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation typescript/type-arguments/tsx/input.tsx 1:0-1:16
 			expression: JSXElement {
 				name: JSXReferenceIdentifier {
 					name: "C"
-					loc: Object {
-						filename: "typescript/type-arguments/tsx/input.tsx"
-						end: Object {
-							column: 2
-							line: 1
-						}
-						start: Object {
-							column: 1
-							line: 1
-						}
-					}
+					loc: SourceLocation typescript/type-arguments/tsx/input.tsx 1:1-1:2
 				}
 				attributes: Array []
 				children: Array []
 				selfClosing: false
-				loc: Object {
-					filename: "typescript/type-arguments/tsx/input.tsx"
-					end: Object {
-						column: 15
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/type-arguments/tsx/input.tsx 1:0-1:15
 				typeArguments: TSTypeParameterInstantiation {
-					loc: Object {
-						filename: "typescript/type-arguments/tsx/input.tsx"
-						end: Object {
-							column: 10
-							line: 1
-						}
-						start: Object {
-							column: 2
-							line: 1
-						}
-					}
-					params: Array [
-						TSNumberKeywordTypeAnnotation {
-							loc: Object {
-								filename: "typescript/type-arguments/tsx/input.tsx"
-								end: Object {
-									column: 9
-									line: 1
-								}
-								start: Object {
-									column: 3
-									line: 1
-								}
-							}
-						}
-					]
+					loc: SourceLocation typescript/type-arguments/tsx/input.tsx 1:2-1:10
+					params: Array [TSNumberKeywordTypeAnnotation {loc: SourceLocation typescript/type-arguments/tsx/input.tsx 1:3-1:9}]
 				}
 			}
 		}
 		JSExpressionStatement {
-			loc: Object {
-				filename: "typescript/type-arguments/tsx/input.tsx"
-				end: Object {
-					column: 13
-					line: 2
-				}
-				start: Object {
-					column: 0
-					line: 2
-				}
-			}
+			loc: SourceLocation typescript/type-arguments/tsx/input.tsx 2:0-2:13
 			expression: JSXElement {
 				name: JSXReferenceIdentifier {
 					name: "C"
-					loc: Object {
-						filename: "typescript/type-arguments/tsx/input.tsx"
-						end: Object {
-							column: 2
-							line: 2
-						}
-						start: Object {
-							column: 1
-							line: 2
-						}
-					}
+					loc: SourceLocation typescript/type-arguments/tsx/input.tsx 2:1-2:2
 				}
 				attributes: Array []
 				children: Array []
 				selfClosing: true
-				loc: Object {
-					filename: "typescript/type-arguments/tsx/input.tsx"
-					end: Object {
-						column: 12
-						line: 2
-					}
-					start: Object {
-						column: 0
-						line: 2
-					}
-				}
+				loc: SourceLocation typescript/type-arguments/tsx/input.tsx 2:0-2:12
 				typeArguments: TSTypeParameterInstantiation {
-					loc: Object {
-						filename: "typescript/type-arguments/tsx/input.tsx"
-						end: Object {
-							column: 10
-							line: 2
-						}
-						start: Object {
-							column: 2
-							line: 2
-						}
-					}
-					params: Array [
-						TSNumberKeywordTypeAnnotation {
-							loc: Object {
-								filename: "typescript/type-arguments/tsx/input.tsx"
-								end: Object {
-									column: 9
-									line: 2
-								}
-								start: Object {
-									column: 3
-									line: 2
-								}
-							}
-						}
-					]
+					loc: SourceLocation typescript/type-arguments/tsx/input.tsx 2:2-2:10
+					params: Array [TSNumberKeywordTypeAnnotation {loc: SourceLocation typescript/type-arguments/tsx/input.tsx 2:3-2:9}]
 				}
 			}
 		}
@@ -182,6 +64,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

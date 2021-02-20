@@ -11,121 +11,56 @@ JSRoot {
 	comments: Array []
 	corrupt: true
 	directives: Array []
-	filename: "es2017/async-functions/export-invalid/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
 	syntax: Array []
-	loc: Object {
-		filename: "es2017/async-functions/export-invalid/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2017/async-functions/export-invalid/input.js 1:0-2:0
+	path: UIDPath<es2017/async-functions/export-invalid/input.js>
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				category: "parse"
-				categoryValue: "js"
-				message: Array [
-					RAW_MARKUP {value: "Unexpected token, expected "}
-					"=>"
-				]
-			}
 			location: Object {
-				filename: "es2017/async-functions/export-invalid/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 32
-					line: 1
-				}
-				start: Object {
-					column: 31
-					line: 1
-				}
+				end: Position 1:32
+				path: UIDPath<es2017/async-functions/export-invalid/input.js>
+				start: Position 1:31
+			}
+			description: Object {
+				categoryValue: "js"
+				category: Array ["parse"]
+				message: RAW_MARKUP {value: "Unexpected character <emphasis>(</emphasis>"}
+				advice: Array [
+					log {
+						category: "info"
+						text: RAW_MARKUP {value: "Expected character <emphasis>=></emphasis>"}
+					}
+				]
 			}
 		}
 	]
 	body: Array [
 		JSExportDefaultDeclaration {
-			loc: Object {
-				filename: "es2017/async-functions/export-invalid/input.js"
-				end: Object {
-					column: 33
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2017/async-functions/export-invalid/input.js 1:0-1:33
 			declaration: JSArrowFunctionExpression {
-				loc: Object {
-					filename: "es2017/async-functions/export-invalid/input.js"
-					end: Object {
-						column: 33
-						line: 1
-					}
-					start: Object {
-						column: 15
-						line: 1
-					}
-				}
+				loc: SourceLocation es2017/async-functions/export-invalid/input.js 1:15-1:33
 				body: JSReferenceIdentifier {
 					name: "INVALID_PLACEHOLDER"
-					loc: Object {
-						filename: "es2017/async-functions/export-invalid/input.js"
-						end: Object {
-							column: 32
-							line: 1
-						}
-						start: Object {
-							column: 32
-							line: 1
-						}
-					}
+					loc: SourceLocation es2017/async-functions/export-invalid/input.js 1:32-1:32
 				}
 				head: JSFunctionHead {
 					async: true
 					hasHoistedVars: false
 					rest: undefined
 					thisType: undefined
-					loc: Object {
-						filename: "es2017/async-functions/export-invalid/input.js"
-						end: Object {
-							column: 30
-							line: 1
-						}
-						start: Object {
-							column: 15
-							line: 1
-						}
-					}
+					loc: SourceLocation es2017/async-functions/export-invalid/input.js 1:15-1:30
 					params: Array [
 						JSBindingIdentifier {
 							name: "functionX"
-							loc: Object {
-								filename: "es2017/async-functions/export-invalid/input.js"
-								identifierName: "functionX"
-								end: Object {
-									column: 30
-									line: 1
-								}
-								start: Object {
-									column: 21
-									line: 1
-								}
-							}
+							loc: SourceLocation es2017/async-functions/export-invalid/input.js 1:21-1:30 (functionX)
 						}
 					]
 				}
@@ -134,17 +69,7 @@ JSRoot {
 		JSBlockStatement {
 			body: Array []
 			directives: Array []
-			loc: Object {
-				filename: "es2017/async-functions/export-invalid/input.js"
-				end: Object {
-					column: 36
-					line: 1
-				}
-				start: Object {
-					column: 34
-					line: 1
-				}
-			}
+			loc: SourceLocation es2017/async-functions/export-invalid/input.js 1:34-1:36
 		}
 	]
 }
@@ -156,13 +81,12 @@ JSRoot {
 
  es2017/async-functions/export-invalid/input.js:1:31 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ Unexpected token, expected =>
+  ✖ Unexpected character (
 
     export default async functionX () {}
                                    ^
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  ℹ Expected character =>
 
-✖ Found 1 problem
 
 ```

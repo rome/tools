@@ -12,63 +12,23 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "esprima/es2015-generator/generator-expression-rest-param/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "esprima/es2015-generator/generator-expression-rest-param/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation esprima/es2015-generator/generator-expression-rest-param/input.js 1:0-2:0
+	path: UIDPath<esprima/es2015-generator/generator-expression-rest-param/input.js>
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "esprima/es2015-generator/generator-expression-rest-param/input.js"
-				end: Object {
-					column: 20
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation esprima/es2015-generator/generator-expression-rest-param/input.js 1:0-1:20
 			expression: JSFunctionExpression {
 				id: undefined
-				loc: Object {
-					filename: "esprima/es2015-generator/generator-expression-rest-param/input.js"
-					end: Object {
-						column: 19
-						line: 1
-					}
-					start: Object {
-						column: 1
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/es2015-generator/generator-expression-rest-param/input.js 1:1-1:19
 				body: JSBlockStatement {
 					body: Array []
 					directives: Array []
-					loc: Object {
-						filename: "esprima/es2015-generator/generator-expression-rest-param/input.js"
-						end: Object {
-							column: 19
-							line: 1
-						}
-						start: Object {
-							column: 17
-							line: 1
-						}
-					}
+					loc: SourceLocation esprima/es2015-generator/generator-expression-rest-param/input.js 1:17-1:19
 				}
 				head: JSFunctionHead {
 					async: false
@@ -78,45 +38,14 @@ JSRoot {
 					returnType: undefined
 					thisType: undefined
 					typeParameters: undefined
-					loc: Object {
-						filename: "esprima/es2015-generator/generator-expression-rest-param/input.js"
-						end: Object {
-							column: 16
-							line: 1
-						}
-						start: Object {
-							column: 10
-							line: 1
-						}
-					}
+					loc: SourceLocation esprima/es2015-generator/generator-expression-rest-param/input.js 1:10-1:16
 					rest: JSBindingIdentifier {
 						name: "x"
-						loc: Object {
-							filename: "esprima/es2015-generator/generator-expression-rest-param/input.js"
-							identifierName: "x"
-							end: Object {
-								column: 15
-								line: 1
-							}
-							start: Object {
-								column: 14
-								line: 1
-							}
-						}
+						loc: SourceLocation esprima/es2015-generator/generator-expression-rest-param/input.js 1:14-1:15 (x)
 						meta: JSPatternMeta {
 							optional: undefined
 							typeAnnotation: undefined
-							loc: Object {
-								filename: "esprima/es2015-generator/generator-expression-rest-param/input.js"
-								end: Object {
-									column: 15
-									line: 1
-								}
-								start: Object {
-									column: 14
-									line: 1
-								}
-							}
+							loc: SourceLocation esprima/es2015-generator/generator-expression-rest-param/input.js 1:14-1:15
 						}
 					}
 				}
@@ -129,6 +58,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

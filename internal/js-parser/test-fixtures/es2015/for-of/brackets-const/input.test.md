@@ -12,51 +12,21 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "es2015/for-of/brackets-const/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2015/for-of/brackets-const/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2015/for-of/brackets-const/input.js 1:0-2:0
+	path: UIDPath<es2015/for-of/brackets-const/input.js>
 	body: Array [
 		JSForOfStatement {
 			await: false
-			loc: Object {
-				filename: "es2015/for-of/brackets-const/input.js"
-				end: Object {
-					column: 25
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2015/for-of/brackets-const/input.js 1:0-1:25
 			body: JSBlockStatement {
 				body: Array []
 				directives: Array []
-				loc: Object {
-					filename: "es2015/for-of/brackets-const/input.js"
-					end: Object {
-						column: 25
-						line: 1
-					}
-					start: Object {
-						column: 23
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/for-of/brackets-const/input.js 1:23-1:25
 			}
 			right: JSRegExpLiteral {
 				global: false
@@ -65,146 +35,44 @@ JSRoot {
 				noDotNewline: false
 				sticky: false
 				unicode: false
-				loc: Object {
-					filename: "es2015/for-of/brackets-const/input.js"
-					end: Object {
-						column: 21
-						line: 1
-					}
-					start: Object {
-						column: 18
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/for-of/brackets-const/input.js 1:18-1:21
 				expression: JSRegExpSubExpression {
-					loc: Object {
-						filename: "es2015/for-of/brackets-const/input.js"
-						end: Object {
-							column: 20
-							line: 1
-						}
-						start: Object {
-							column: 19
-							line: 1
-						}
-					}
+					loc: SourceLocation es2015/for-of/brackets-const/input.js 1:19-1:20
 					body: Array [
 						JSRegExpCharacter {
 							value: "b"
-							loc: Object {
-								filename: "es2015/for-of/brackets-const/input.js"
-								end: Object {
-									column: 20
-									line: 1
-								}
-								start: Object {
-									column: 19
-									line: 1
-								}
-							}
+							loc: SourceLocation es2015/for-of/brackets-const/input.js 1:19-1:20
 						}
 					]
 				}
 			}
 			left: JSVariableDeclaration {
 				kind: "const"
-				loc: Object {
-					filename: "es2015/for-of/brackets-const/input.js"
-					end: Object {
-						column: 14
-						line: 1
-					}
-					start: Object {
-						column: 5
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/for-of/brackets-const/input.js 1:5-1:14
 				declarations: Array [
 					JSVariableDeclarator {
 						id: JSBindingObjectPattern {
 							rest: undefined
-							loc: Object {
-								filename: "es2015/for-of/brackets-const/input.js"
-								end: Object {
-									column: 14
-									line: 1
-								}
-								start: Object {
-									column: 11
-									line: 1
-								}
-							}
+							loc: SourceLocation es2015/for-of/brackets-const/input.js 1:11-1:14
 							properties: Array [
 								JSBindingObjectPatternProperty {
 									key: JSStaticPropertyKey {
 										value: JSIdentifier {
 											name: "a"
-											loc: Object {
-												filename: "es2015/for-of/brackets-const/input.js"
-												identifierName: "a"
-												end: Object {
-													column: 13
-													line: 1
-												}
-												start: Object {
-													column: 12
-													line: 1
-												}
-											}
+											loc: SourceLocation es2015/for-of/brackets-const/input.js 1:12-1:13 (a)
 										}
-										loc: Object {
-											filename: "es2015/for-of/brackets-const/input.js"
-											end: Object {
-												column: 13
-												line: 1
-											}
-											start: Object {
-												column: 12
-												line: 1
-											}
-										}
+										loc: SourceLocation es2015/for-of/brackets-const/input.js 1:12-1:13
 									}
 									value: JSBindingIdentifier {
 										name: "a"
-										loc: Object {
-											filename: "es2015/for-of/brackets-const/input.js"
-											identifierName: "a"
-											end: Object {
-												column: 13
-												line: 1
-											}
-											start: Object {
-												column: 12
-												line: 1
-											}
-										}
+										loc: SourceLocation es2015/for-of/brackets-const/input.js 1:12-1:13 (a)
 									}
-									loc: Object {
-										filename: "es2015/for-of/brackets-const/input.js"
-										end: Object {
-											column: 13
-											line: 1
-										}
-										start: Object {
-											column: 12
-											line: 1
-										}
-									}
+									loc: SourceLocation es2015/for-of/brackets-const/input.js 1:12-1:13
 								}
 							]
 						}
 						init: undefined
-						loc: Object {
-							filename: "es2015/for-of/brackets-const/input.js"
-							end: Object {
-								column: 14
-								line: 1
-							}
-							start: Object {
-								column: 11
-								line: 1
-							}
-						}
+						loc: SourceLocation es2015/for-of/brackets-const/input.js 1:11-1:14
 					}
 				]
 			}
@@ -216,6 +84,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

@@ -12,686 +12,202 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "jsx/regression/issue-8891/input.jsx"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
+	loc: SourceLocation jsx/regression/issue-8891/input.jsx 1:0-7:0
+	path: UIDPath<jsx/regression/issue-8891/input.jsx>
 	syntax: Array ["jsx"]
-	loc: Object {
-		filename: "jsx/regression/issue-8891/input.jsx"
-		end: Object {
-			column: 0
-			line: 7
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "jsx/regression/issue-8891/input.jsx"
-				end: Object {
-					column: 3
-					line: 6
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation jsx/regression/issue-8891/input.jsx 1:0-6:3
 			expression: JSXFragment {
-				loc: Object {
-					filename: "jsx/regression/issue-8891/input.jsx"
-					end: Object {
-						column: 3
-						line: 6
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation jsx/regression/issue-8891/input.jsx 1:0-6:3
 				children: Array [
 					JSXText {
 						value: "\n"
-						loc: Object {
-							filename: "jsx/regression/issue-8891/input.jsx"
-							end: Object {
-								column: 0
-								line: 2
-							}
-							start: Object {
-								column: 2
-								line: 1
-							}
-						}
+						loc: SourceLocation jsx/regression/issue-8891/input.jsx 1:2-2:0
 					}
 					JSXElement {
 						name: JSXReferenceIdentifier {
 							name: "Select"
-							loc: Object {
-								filename: "jsx/regression/issue-8891/input.jsx"
-								end: Object {
-									column: 7
-									line: 2
-								}
-								start: Object {
-									column: 1
-									line: 2
-								}
-							}
+							loc: SourceLocation jsx/regression/issue-8891/input.jsx 2:1-2:7
 						}
 						children: Array []
 						selfClosing: true
 						typeArguments: undefined
-						loc: Object {
-							filename: "jsx/regression/issue-8891/input.jsx"
-							end: Object {
-								column: 38
-								line: 2
-							}
-							start: Object {
-								column: 0
-								line: 2
-							}
-						}
+						loc: SourceLocation jsx/regression/issue-8891/input.jsx 2:0-2:38
 						attributes: Array [
 							JSXAttribute {
 								name: JSXIdentifier {
 									name: "prop"
-									loc: Object {
-										filename: "jsx/regression/issue-8891/input.jsx"
-										end: Object {
-											column: 12
-											line: 2
-										}
-										start: Object {
-											column: 8
-											line: 2
-										}
-									}
+									loc: SourceLocation jsx/regression/issue-8891/input.jsx 2:8-2:12
 								}
 								value: JSXExpressionContainer {
-									loc: Object {
-										filename: "jsx/regression/issue-8891/input.jsx"
-										end: Object {
-											column: 35
-											line: 2
-										}
-										start: Object {
-											column: 13
-											line: 2
-										}
-									}
+									loc: SourceLocation jsx/regression/issue-8891/input.jsx 2:13-2:35
 									expression: JSObjectExpression {
-										loc: Object {
-											filename: "jsx/regression/issue-8891/input.jsx"
-											end: Object {
-												column: 34
-												line: 2
-											}
-											start: Object {
-												column: 14
-												line: 2
-											}
-										}
+										loc: SourceLocation jsx/regression/issue-8891/input.jsx 2:14-2:34
 										properties: Array [
 											JSObjectProperty {
 												key: JSStaticPropertyKey {
 													value: JSIdentifier {
 														name: "function"
-														loc: Object {
-															filename: "jsx/regression/issue-8891/input.jsx"
-															identifierName: "function"
-															end: Object {
-																column: 24
-																line: 2
-															}
-															start: Object {
-																column: 16
-																line: 2
-															}
-														}
+														loc: SourceLocation jsx/regression/issue-8891/input.jsx 2:16-2:24 (function)
 													}
-													loc: Object {
-														filename: "jsx/regression/issue-8891/input.jsx"
-														end: Object {
-															column: 24
-															line: 2
-														}
-														start: Object {
-															column: 16
-															line: 2
-														}
-													}
+													loc: SourceLocation jsx/regression/issue-8891/input.jsx 2:16-2:24
 												}
 												value: JSStringLiteral {
 													value: "test"
-													loc: Object {
-														filename: "jsx/regression/issue-8891/input.jsx"
-														end: Object {
-															column: 32
-															line: 2
-														}
-														start: Object {
-															column: 26
-															line: 2
-														}
-													}
+													loc: SourceLocation jsx/regression/issue-8891/input.jsx 2:26-2:32
 												}
-												loc: Object {
-													filename: "jsx/regression/issue-8891/input.jsx"
-													end: Object {
-														column: 32
-														line: 2
-													}
-													start: Object {
-														column: 16
-														line: 2
-													}
-												}
+												loc: SourceLocation jsx/regression/issue-8891/input.jsx 2:16-2:32
 											}
 										]
 									}
 								}
-								loc: Object {
-									filename: "jsx/regression/issue-8891/input.jsx"
-									end: Object {
-										column: 35
-										line: 2
-									}
-									start: Object {
-										column: 8
-										line: 2
-									}
-								}
+								loc: SourceLocation jsx/regression/issue-8891/input.jsx 2:8-2:35
 							}
 						]
 					}
 					JSXText {
 						value: "\n"
-						loc: Object {
-							filename: "jsx/regression/issue-8891/input.jsx"
-							end: Object {
-								column: 0
-								line: 3
-							}
-							start: Object {
-								column: 38
-								line: 2
-							}
-						}
+						loc: SourceLocation jsx/regression/issue-8891/input.jsx 2:38-3:0
 					}
 					JSXElement {
 						name: JSXReferenceIdentifier {
 							name: "Select"
-							loc: Object {
-								filename: "jsx/regression/issue-8891/input.jsx"
-								end: Object {
-									column: 7
-									line: 3
-								}
-								start: Object {
-									column: 1
-									line: 3
-								}
-							}
+							loc: SourceLocation jsx/regression/issue-8891/input.jsx 3:1-3:7
 						}
 						children: Array []
 						selfClosing: true
 						typeArguments: undefined
-						loc: Object {
-							filename: "jsx/regression/issue-8891/input.jsx"
-							end: Object {
-								column: 35
-								line: 3
-							}
-							start: Object {
-								column: 0
-								line: 3
-							}
-						}
+						loc: SourceLocation jsx/regression/issue-8891/input.jsx 3:0-3:35
 						attributes: Array [
 							JSXAttribute {
 								name: JSXIdentifier {
 									name: "prop"
-									loc: Object {
-										filename: "jsx/regression/issue-8891/input.jsx"
-										end: Object {
-											column: 12
-											line: 3
-										}
-										start: Object {
-											column: 8
-											line: 3
-										}
-									}
+									loc: SourceLocation jsx/regression/issue-8891/input.jsx 3:8-3:12
 								}
 								value: JSXExpressionContainer {
-									loc: Object {
-										filename: "jsx/regression/issue-8891/input.jsx"
-										end: Object {
-											column: 32
-											line: 3
-										}
-										start: Object {
-											column: 13
-											line: 3
-										}
-									}
+									loc: SourceLocation jsx/regression/issue-8891/input.jsx 3:13-3:32
 									expression: JSObjectExpression {
-										loc: Object {
-											filename: "jsx/regression/issue-8891/input.jsx"
-											end: Object {
-												column: 31
-												line: 3
-											}
-											start: Object {
-												column: 14
-												line: 3
-											}
-										}
+										loc: SourceLocation jsx/regression/issue-8891/input.jsx 3:14-3:31
 										properties: Array [
 											JSObjectProperty {
 												key: JSStaticPropertyKey {
 													value: JSIdentifier {
 														name: "class"
-														loc: Object {
-															filename: "jsx/regression/issue-8891/input.jsx"
-															identifierName: "class"
-															end: Object {
-																column: 21
-																line: 3
-															}
-															start: Object {
-																column: 16
-																line: 3
-															}
-														}
+														loc: SourceLocation jsx/regression/issue-8891/input.jsx 3:16-3:21 (class)
 													}
-													loc: Object {
-														filename: "jsx/regression/issue-8891/input.jsx"
-														end: Object {
-															column: 21
-															line: 3
-														}
-														start: Object {
-															column: 16
-															line: 3
-														}
-													}
+													loc: SourceLocation jsx/regression/issue-8891/input.jsx 3:16-3:21
 												}
 												value: JSStringLiteral {
 													value: "test"
-													loc: Object {
-														filename: "jsx/regression/issue-8891/input.jsx"
-														end: Object {
-															column: 29
-															line: 3
-														}
-														start: Object {
-															column: 23
-															line: 3
-														}
-													}
+													loc: SourceLocation jsx/regression/issue-8891/input.jsx 3:23-3:29
 												}
-												loc: Object {
-													filename: "jsx/regression/issue-8891/input.jsx"
-													end: Object {
-														column: 29
-														line: 3
-													}
-													start: Object {
-														column: 16
-														line: 3
-													}
-												}
+												loc: SourceLocation jsx/regression/issue-8891/input.jsx 3:16-3:29
 											}
 										]
 									}
 								}
-								loc: Object {
-									filename: "jsx/regression/issue-8891/input.jsx"
-									end: Object {
-										column: 32
-										line: 3
-									}
-									start: Object {
-										column: 8
-										line: 3
-									}
-								}
+								loc: SourceLocation jsx/regression/issue-8891/input.jsx 3:8-3:32
 							}
 						]
 					}
 					JSXText {
 						value: "\n"
-						loc: Object {
-							filename: "jsx/regression/issue-8891/input.jsx"
-							end: Object {
-								column: 0
-								line: 4
-							}
-							start: Object {
-								column: 35
-								line: 3
-							}
-						}
+						loc: SourceLocation jsx/regression/issue-8891/input.jsx 3:35-4:0
 					}
 					JSXElement {
 						name: JSXReferenceIdentifier {
 							name: "Select"
-							loc: Object {
-								filename: "jsx/regression/issue-8891/input.jsx"
-								end: Object {
-									column: 7
-									line: 4
-								}
-								start: Object {
-									column: 1
-									line: 4
-								}
-							}
+							loc: SourceLocation jsx/regression/issue-8891/input.jsx 4:1-4:7
 						}
 						children: Array []
 						selfClosing: true
 						typeArguments: undefined
-						loc: Object {
-							filename: "jsx/regression/issue-8891/input.jsx"
-							end: Object {
-								column: 36
-								line: 4
-							}
-							start: Object {
-								column: 0
-								line: 4
-							}
-						}
+						loc: SourceLocation jsx/regression/issue-8891/input.jsx 4:0-4:36
 						attributes: Array [
 							JSXAttribute {
 								name: JSXIdentifier {
 									name: "prop"
-									loc: Object {
-										filename: "jsx/regression/issue-8891/input.jsx"
-										end: Object {
-											column: 12
-											line: 4
-										}
-										start: Object {
-											column: 8
-											line: 4
-										}
-									}
+									loc: SourceLocation jsx/regression/issue-8891/input.jsx 4:8-4:12
 								}
 								value: JSXExpressionContainer {
-									loc: Object {
-										filename: "jsx/regression/issue-8891/input.jsx"
-										end: Object {
-											column: 33
-											line: 4
-										}
-										start: Object {
-											column: 13
-											line: 4
-										}
-									}
+									loc: SourceLocation jsx/regression/issue-8891/input.jsx 4:13-4:33
 									expression: JSObjectExpression {
-										loc: Object {
-											filename: "jsx/regression/issue-8891/input.jsx"
-											end: Object {
-												column: 32
-												line: 4
-											}
-											start: Object {
-												column: 14
-												line: 4
-											}
-										}
+										loc: SourceLocation jsx/regression/issue-8891/input.jsx 4:14-4:32
 										properties: Array [
 											JSObjectProperty {
 												key: JSStaticPropertyKey {
 													value: JSIdentifier {
 														name: "delete"
-														loc: Object {
-															filename: "jsx/regression/issue-8891/input.jsx"
-															identifierName: "delete"
-															end: Object {
-																column: 22
-																line: 4
-															}
-															start: Object {
-																column: 16
-																line: 4
-															}
-														}
+														loc: SourceLocation jsx/regression/issue-8891/input.jsx 4:16-4:22 (delete)
 													}
-													loc: Object {
-														filename: "jsx/regression/issue-8891/input.jsx"
-														end: Object {
-															column: 22
-															line: 4
-														}
-														start: Object {
-															column: 16
-															line: 4
-														}
-													}
+													loc: SourceLocation jsx/regression/issue-8891/input.jsx 4:16-4:22
 												}
 												value: JSStringLiteral {
 													value: "test"
-													loc: Object {
-														filename: "jsx/regression/issue-8891/input.jsx"
-														end: Object {
-															column: 30
-															line: 4
-														}
-														start: Object {
-															column: 24
-															line: 4
-														}
-													}
+													loc: SourceLocation jsx/regression/issue-8891/input.jsx 4:24-4:30
 												}
-												loc: Object {
-													filename: "jsx/regression/issue-8891/input.jsx"
-													end: Object {
-														column: 30
-														line: 4
-													}
-													start: Object {
-														column: 16
-														line: 4
-													}
-												}
+												loc: SourceLocation jsx/regression/issue-8891/input.jsx 4:16-4:30
 											}
 										]
 									}
 								}
-								loc: Object {
-									filename: "jsx/regression/issue-8891/input.jsx"
-									end: Object {
-										column: 33
-										line: 4
-									}
-									start: Object {
-										column: 8
-										line: 4
-									}
-								}
+								loc: SourceLocation jsx/regression/issue-8891/input.jsx 4:8-4:33
 							}
 						]
 					}
 					JSXText {
 						value: "\n"
-						loc: Object {
-							filename: "jsx/regression/issue-8891/input.jsx"
-							end: Object {
-								column: 0
-								line: 5
-							}
-							start: Object {
-								column: 36
-								line: 4
-							}
-						}
+						loc: SourceLocation jsx/regression/issue-8891/input.jsx 4:36-5:0
 					}
 					JSXElement {
 						name: JSXReferenceIdentifier {
 							name: "Select"
-							loc: Object {
-								filename: "jsx/regression/issue-8891/input.jsx"
-								end: Object {
-									column: 7
-									line: 5
-								}
-								start: Object {
-									column: 1
-									line: 5
-								}
-							}
+							loc: SourceLocation jsx/regression/issue-8891/input.jsx 5:1-5:7
 						}
 						children: Array []
 						selfClosing: true
 						typeArguments: undefined
-						loc: Object {
-							filename: "jsx/regression/issue-8891/input.jsx"
-							end: Object {
-								column: 34
-								line: 5
-							}
-							start: Object {
-								column: 0
-								line: 5
-							}
-						}
+						loc: SourceLocation jsx/regression/issue-8891/input.jsx 5:0-5:34
 						attributes: Array [
 							JSXAttribute {
 								name: JSXIdentifier {
 									name: "prop"
-									loc: Object {
-										filename: "jsx/regression/issue-8891/input.jsx"
-										end: Object {
-											column: 12
-											line: 5
-										}
-										start: Object {
-											column: 8
-											line: 5
-										}
-									}
+									loc: SourceLocation jsx/regression/issue-8891/input.jsx 5:8-5:12
 								}
 								value: JSXExpressionContainer {
-									loc: Object {
-										filename: "jsx/regression/issue-8891/input.jsx"
-										end: Object {
-											column: 31
-											line: 5
-										}
-										start: Object {
-											column: 13
-											line: 5
-										}
-									}
+									loc: SourceLocation jsx/regression/issue-8891/input.jsx 5:13-5:31
 									expression: JSObjectExpression {
-										loc: Object {
-											filename: "jsx/regression/issue-8891/input.jsx"
-											end: Object {
-												column: 30
-												line: 5
-											}
-											start: Object {
-												column: 14
-												line: 5
-											}
-										}
+										loc: SourceLocation jsx/regression/issue-8891/input.jsx 5:14-5:30
 										properties: Array [
 											JSObjectProperty {
 												key: JSStaticPropertyKey {
 													value: JSIdentifier {
 														name: "enum"
-														loc: Object {
-															filename: "jsx/regression/issue-8891/input.jsx"
-															identifierName: "enum"
-															end: Object {
-																column: 20
-																line: 5
-															}
-															start: Object {
-																column: 16
-																line: 5
-															}
-														}
+														loc: SourceLocation jsx/regression/issue-8891/input.jsx 5:16-5:20 (enum)
 													}
-													loc: Object {
-														filename: "jsx/regression/issue-8891/input.jsx"
-														end: Object {
-															column: 20
-															line: 5
-														}
-														start: Object {
-															column: 16
-															line: 5
-														}
-													}
+													loc: SourceLocation jsx/regression/issue-8891/input.jsx 5:16-5:20
 												}
 												value: JSStringLiteral {
 													value: "test"
-													loc: Object {
-														filename: "jsx/regression/issue-8891/input.jsx"
-														end: Object {
-															column: 28
-															line: 5
-														}
-														start: Object {
-															column: 22
-															line: 5
-														}
-													}
+													loc: SourceLocation jsx/regression/issue-8891/input.jsx 5:22-5:28
 												}
-												loc: Object {
-													filename: "jsx/regression/issue-8891/input.jsx"
-													end: Object {
-														column: 28
-														line: 5
-													}
-													start: Object {
-														column: 16
-														line: 5
-													}
-												}
+												loc: SourceLocation jsx/regression/issue-8891/input.jsx 5:16-5:28
 											}
 										]
 									}
 								}
-								loc: Object {
-									filename: "jsx/regression/issue-8891/input.jsx"
-									end: Object {
-										column: 31
-										line: 5
-									}
-									start: Object {
-										column: 8
-										line: 5
-									}
-								}
+								loc: SourceLocation jsx/regression/issue-8891/input.jsx 5:8-5:31
 							}
 						]
 					}
 					JSXText {
 						value: "\n"
-						loc: Object {
-							filename: "jsx/regression/issue-8891/input.jsx"
-							end: Object {
-								column: 0
-								line: 6
-							}
-							start: Object {
-								column: 34
-								line: 5
-							}
-						}
+						loc: SourceLocation jsx/regression/issue-8891/input.jsx 5:34-6:0
 					}
 				]
 			}
@@ -703,6 +219,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

@@ -11,45 +11,29 @@ JSRoot {
 	comments: Array []
 	corrupt: true
 	directives: Array []
-	filename: "esprima/es2015-export-declaration/invalid-export-default-token/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
 	syntax: Array []
-	loc: Object {
-		filename: "esprima/es2015-export-declaration/invalid-export-default-token/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation esprima/es2015-export-declaration/invalid-export-default-token/input.js 1:0-2:0
+	path: UIDPath<esprima/es2015-export-declaration/invalid-export-default-token/input.js>
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse"
 				categoryValue: "js"
+				category: Array ["parse"]
 				message: RAW_MARKUP {value: "Expected a semicolon or a line terminator"}
 			}
 			location: Object {
-				filename: "esprima/es2015-export-declaration/invalid-export-default-token/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 16
-					line: 1
-				}
-				start: Object {
-					column: 17
-					line: 1
-				}
+				end: Position 1:16
+				path: UIDPath<esprima/es2015-export-declaration/invalid-export-default-token/input.js>
+				start: Position 1:17
 			}
 		}
 	]
@@ -57,102 +41,30 @@ JSRoot {
 		JSExportLocalDeclaration {
 			declaration: undefined
 			exportKind: "value"
-			loc: Object {
-				filename: "esprima/es2015-export-declaration/invalid-export-default-token/input.js"
-				end: Object {
-					column: 16
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation esprima/es2015-export-declaration/invalid-export-default-token/input.js 1:0-1:16
 			specifiers: Array [
 				JSExportLocalSpecifier {
-					loc: Object {
-						filename: "esprima/es2015-export-declaration/invalid-export-default-token/input.js"
-						end: Object {
-							column: 15
-							line: 1
-						}
-						start: Object {
-							column: 8
-							line: 1
-						}
-					}
+					loc: SourceLocation esprima/es2015-export-declaration/invalid-export-default-token/input.js 1:8-1:15
 					exported: JSIdentifier {
 						name: "default"
-						loc: Object {
-							filename: "esprima/es2015-export-declaration/invalid-export-default-token/input.js"
-							identifierName: "default"
-							end: Object {
-								column: 15
-								line: 1
-							}
-							start: Object {
-								column: 8
-								line: 1
-							}
-						}
+						loc: SourceLocation esprima/es2015-export-declaration/invalid-export-default-token/input.js 1:8-1:15 (default)
 					}
 					local: JSReferenceIdentifier {
 						name: "default"
-						loc: Object {
-							filename: "esprima/es2015-export-declaration/invalid-export-default-token/input.js"
-							identifierName: "default"
-							end: Object {
-								column: 15
-								line: 1
-							}
-							start: Object {
-								column: 8
-								line: 1
-							}
-						}
+						loc: SourceLocation esprima/es2015-export-declaration/invalid-export-default-token/input.js 1:8-1:15 (default)
 					}
 				}
 			]
 		}
 		JSExpressionStatement {
-			loc: Object {
-				filename: "esprima/es2015-export-declaration/invalid-export-default-token/input.js"
-				end: Object {
-					column: 0
-					line: 2
-				}
-				start: Object {
-					column: 17
-					line: 1
-				}
-			}
+			loc: SourceLocation esprima/es2015-export-declaration/invalid-export-default-token/input.js 1:17-2:0
 			expression: JSUnaryExpression {
 				operator: "+"
 				prefix: true
-				loc: Object {
-					filename: "esprima/es2015-export-declaration/invalid-export-default-token/input.js"
-					end: Object {
-						column: 0
-						line: 2
-					}
-					start: Object {
-						column: 17
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/es2015-export-declaration/invalid-export-default-token/input.js 1:17-2:0
 				argument: JSReferenceIdentifier {
 					name: "INVALID_PLACEHOLDER"
-					loc: Object {
-						filename: "esprima/es2015-export-declaration/invalid-export-default-token/input.js"
-						end: Object {
-							column: 0
-							line: 2
-						}
-						start: Object {
-							column: 0
-							line: 2
-						}
-					}
+					loc: SourceLocation esprima/es2015-export-declaration/invalid-export-default-token/input.js 2:0-2:0
 				}
 			}
 		}
@@ -171,8 +83,5 @@ JSRoot {
     export {default} +
                      ^
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

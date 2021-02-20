@@ -12,132 +12,40 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "esprima/rest-parameter/object-shorthand-method/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "esprima/rest-parameter/object-shorthand-method/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation esprima/rest-parameter/object-shorthand-method/input.js 1:0-2:0
+	path: UIDPath<esprima/rest-parameter/object-shorthand-method/input.js>
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "esprima/rest-parameter/object-shorthand-method/input.js"
-				end: Object {
-					column: 27
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation esprima/rest-parameter/object-shorthand-method/input.js 1:0-1:27
 			expression: JSAssignmentExpression {
 				operator: "="
-				loc: Object {
-					filename: "esprima/rest-parameter/object-shorthand-method/input.js"
-					end: Object {
-						column: 27
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/rest-parameter/object-shorthand-method/input.js 1:0-1:27
 				left: JSAssignmentIdentifier {
 					name: "x"
-					loc: Object {
-						filename: "esprima/rest-parameter/object-shorthand-method/input.js"
-						identifierName: "x"
-						end: Object {
-							column: 1
-							line: 1
-						}
-						start: Object {
-							column: 0
-							line: 1
-						}
-					}
+					loc: SourceLocation esprima/rest-parameter/object-shorthand-method/input.js 1:0-1:1 (x)
 				}
 				right: JSObjectExpression {
-					loc: Object {
-						filename: "esprima/rest-parameter/object-shorthand-method/input.js"
-						end: Object {
-							column: 27
-							line: 1
-						}
-						start: Object {
-							column: 4
-							line: 1
-						}
-					}
+					loc: SourceLocation esprima/rest-parameter/object-shorthand-method/input.js 1:4-1:27
 					properties: Array [
 						JSObjectMethod {
 							kind: "method"
 							key: JSStaticPropertyKey {
 								value: JSIdentifier {
 									name: "method"
-									loc: Object {
-										filename: "esprima/rest-parameter/object-shorthand-method/input.js"
-										identifierName: "method"
-										end: Object {
-											column: 12
-											line: 1
-										}
-										start: Object {
-											column: 6
-											line: 1
-										}
-									}
+									loc: SourceLocation esprima/rest-parameter/object-shorthand-method/input.js 1:6-1:12 (method)
 								}
-								loc: Object {
-									filename: "esprima/rest-parameter/object-shorthand-method/input.js"
-									end: Object {
-										column: 12
-										line: 1
-									}
-									start: Object {
-										column: 6
-										line: 1
-									}
-								}
+								loc: SourceLocation esprima/rest-parameter/object-shorthand-method/input.js 1:6-1:12
 							}
-							loc: Object {
-								filename: "esprima/rest-parameter/object-shorthand-method/input.js"
-								end: Object {
-									column: 25
-									line: 1
-								}
-								start: Object {
-									column: 6
-									line: 1
-								}
-							}
+							loc: SourceLocation esprima/rest-parameter/object-shorthand-method/input.js 1:6-1:25
 							body: JSBlockStatement {
 								body: Array []
 								directives: Array []
-								loc: Object {
-									filename: "esprima/rest-parameter/object-shorthand-method/input.js"
-									end: Object {
-										column: 25
-										line: 1
-									}
-									start: Object {
-										column: 22
-										line: 1
-									}
-								}
+								loc: SourceLocation esprima/rest-parameter/object-shorthand-method/input.js 1:22-1:25
 							}
 							head: JSFunctionHead {
 								async: false
@@ -147,45 +55,14 @@ JSRoot {
 								returnType: undefined
 								thisType: undefined
 								typeParameters: undefined
-								loc: Object {
-									filename: "esprima/rest-parameter/object-shorthand-method/input.js"
-									end: Object {
-										column: 21
-										line: 1
-									}
-									start: Object {
-										column: 12
-										line: 1
-									}
-								}
+								loc: SourceLocation esprima/rest-parameter/object-shorthand-method/input.js 1:12-1:21
 								rest: JSBindingIdentifier {
 									name: "test"
-									loc: Object {
-										filename: "esprima/rest-parameter/object-shorthand-method/input.js"
-										identifierName: "test"
-										end: Object {
-											column: 20
-											line: 1
-										}
-										start: Object {
-											column: 16
-											line: 1
-										}
-									}
+									loc: SourceLocation esprima/rest-parameter/object-shorthand-method/input.js 1:16-1:20 (test)
 									meta: JSPatternMeta {
 										optional: undefined
 										typeAnnotation: undefined
-										loc: Object {
-											filename: "esprima/rest-parameter/object-shorthand-method/input.js"
-											end: Object {
-												column: 20
-												line: 1
-											}
-											start: Object {
-												column: 16
-												line: 1
-											}
-										}
+										loc: SourceLocation esprima/rest-parameter/object-shorthand-method/input.js 1:16-1:20
 									}
 								}
 							}
@@ -201,6 +78,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

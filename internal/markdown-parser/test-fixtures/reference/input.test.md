@@ -11,371 +11,121 @@ MarkdownRoot {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
-	filename: "reference/input.md"
 	integrity: undefined
-	loc: Object {
-		filename: "reference/input.md"
-		end: Object {
-			column: 0
-			line: 14
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation reference/input.md 1:0-14:0
+	path: UIDPath<reference/input.md>
 	body: Array [
 		MarkdownReferenceInline {
 			value: ""
-			loc: Object {
-				filename: "reference/input.md"
-				end: Object {
-					column: 7
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation reference/input.md 1:0-1:7
 			reference: Array [
 				MarkdownText {
 					value: "lorem"
-					loc: Object {
-						filename: "reference/input.md"
-						end: Object {
-							column: 1
-							line: 1
-						}
-						start: Object {
-							column: 1
-							line: 1
-						}
-					}
+					loc: SourceLocation reference/input.md 1:1-1:1
 				}
 			]
 		}
 		MarkdownReferenceInline {
 			value: ""
-			loc: Object {
-				filename: "reference/input.md"
-				end: Object {
-					column: 9
-					line: 3
-				}
-				start: Object {
-					column: 0
-					line: 3
-				}
-			}
+			loc: SourceLocation reference/input.md 3:0-3:9
 			reference: Array [
 				MarkdownEmphasisInline {
 					value: Array [
 						MarkdownText {
 							value: "lorem"
-							loc: Object {
-								filename: "reference/input.md"
-								end: Object {
-									column: 2
-									line: 3
-								}
-								start: Object {
-									column: 2
-									line: 3
-								}
-							}
+							loc: SourceLocation reference/input.md 3:2-3:2
 						}
 					]
-					loc: Object {
-						filename: "reference/input.md"
-						end: Object {
-							column: 7
-							line: 3
-						}
-						start: Object {
-							column: 1
-							line: 3
-						}
-					}
+					loc: SourceLocation reference/input.md 3:1-3:7
 				}
 			]
 		}
 		MarkdownReferenceInline {
 			value: ""
-			loc: Object {
-				filename: "reference/input.md"
-				end: Object {
-					column: 11
-					line: 5
-				}
-				start: Object {
-					column: 0
-					line: 5
-				}
-			}
+			loc: SourceLocation reference/input.md 5:0-5:11
 			reference: Array [
 				MarkdownEmphasisInline {
 					value: Array [
 						MarkdownText {
 							value: "ipsum"
-							loc: Object {
-								filename: "reference/input.md"
-								end: Object {
-									column: 3
-									line: 5
-								}
-								start: Object {
-									column: 3
-									line: 5
-								}
-							}
+							loc: SourceLocation reference/input.md 5:3-5:3
 						}
 					]
-					loc: Object {
-						filename: "reference/input.md"
-						end: Object {
-							column: 8
-							line: 5
-						}
-						start: Object {
-							column: 1
-							line: 5
-						}
-					}
+					loc: SourceLocation reference/input.md 5:1-5:8
 				}
 			]
 		}
 		MarkdownReferenceInline {
 			value: ""
-			loc: Object {
-				filename: "reference/input.md"
-				end: Object {
-					column: 11
-					line: 7
-				}
-				start: Object {
-					column: 0
-					line: 7
-				}
-			}
+			loc: SourceLocation reference/input.md 7:0-7:11
 			reference: Array [
 				MarkdownEmphasisInline {
 					value: Array [
 						MarkdownText {
 							value: "lorem"
-							loc: Object {
-								filename: "reference/input.md"
-								end: Object {
-									column: 3
-									line: 7
-								}
-								start: Object {
-									column: 3
-									line: 7
-								}
-							}
+							loc: SourceLocation reference/input.md 7:3-7:3
 						}
 					]
-					loc: Object {
-						filename: "reference/input.md"
-						end: Object {
-							column: 8
-							line: 7
-						}
-						start: Object {
-							column: 1
-							line: 7
-						}
-					}
+					loc: SourceLocation reference/input.md 7:1-7:8
 				}
 			]
 		}
 		MarkdownReferenceInline {
 			value: ""
-			loc: Object {
-				filename: "reference/input.md"
-				end: Object {
-					column: 9
-					line: 9
-				}
-				start: Object {
-					column: 0
-					line: 9
-				}
-			}
+			loc: SourceLocation reference/input.md 9:0-9:9
 			reference: Array [
 				MarkdownEmphasisInline {
 					value: Array [
 						MarkdownText {
 							value: "lorem"
-							loc: Object {
-								filename: "reference/input.md"
-								end: Object {
-									column: 2
-									line: 9
-								}
-								start: Object {
-									column: 2
-									line: 9
-								}
-							}
+							loc: SourceLocation reference/input.md 9:2-9:2
 						}
 					]
-					loc: Object {
-						filename: "reference/input.md"
-						end: Object {
-							column: 7
-							line: 9
-						}
-						start: Object {
-							column: 1
-							line: 9
-						}
-					}
+					loc: SourceLocation reference/input.md 9:1-9:7
 				}
 			]
 		}
 		MarkdownReferenceInline {
 			value: ""
-			loc: Object {
-				filename: "reference/input.md"
-				end: Object {
-					column: 16
-					line: 11
-				}
-				start: Object {
-					column: 0
-					line: 11
-				}
-			}
+			loc: SourceLocation reference/input.md 11:0-11:16
 			reference: Array [
 				MarkdownText {
 					value: "lorem"
-					loc: Object {
-						filename: "reference/input.md"
-						end: Object {
-							column: 1
-							line: 11
-						}
-						start: Object {
-							column: 1
-							line: 11
-						}
-					}
+					loc: SourceLocation reference/input.md 11:1-11:1
 				}
 				MarkdownText {
 					value: "*"
-					loc: Object {
-						filename: "reference/input.md"
-						end: Object {
-							column: 6
-							line: 11
-						}
-						start: Object {
-							column: 6
-							line: 11
-						}
-					}
+					loc: SourceLocation reference/input.md 11:6-11:6
 				}
 				MarkdownText {
 					value: " ipsum"
-					loc: Object {
-						filename: "reference/input.md"
-						end: Object {
-							column: 7
-							line: 11
-						}
-						start: Object {
-							column: 7
-							line: 11
-						}
-					}
+					loc: SourceLocation reference/input.md 11:7-11:7
 				}
 				MarkdownText {
 					value: "**"
-					loc: Object {
-						filename: "reference/input.md"
-						end: Object {
-							column: 13
-							line: 11
-						}
-						start: Object {
-							column: 13
-							line: 11
-						}
-					}
+					loc: SourceLocation reference/input.md 11:13-11:13
 				}
 			]
 		}
 		MarkdownReferenceInline {
 			value: ""
-			loc: Object {
-				filename: "reference/input.md"
-				end: Object {
-					column: 16
-					line: 13
-				}
-				start: Object {
-					column: 0
-					line: 13
-				}
-			}
+			loc: SourceLocation reference/input.md 13:0-13:16
 			reference: Array [
 				MarkdownText {
 					value: "*"
-					loc: Object {
-						filename: "reference/input.md"
-						end: Object {
-							column: 1
-							line: 13
-						}
-						start: Object {
-							column: 1
-							line: 13
-						}
-					}
+					loc: SourceLocation reference/input.md 13:1-13:1
 				}
 				MarkdownText {
 					value: "lorem "
-					loc: Object {
-						filename: "reference/input.md"
-						end: Object {
-							column: 2
-							line: 13
-						}
-						start: Object {
-							column: 2
-							line: 13
-						}
-					}
+					loc: SourceLocation reference/input.md 13:2-13:2
 				}
 				MarkdownText {
 					value: "**"
-					loc: Object {
-						filename: "reference/input.md"
-						end: Object {
-							column: 8
-							line: 13
-						}
-						start: Object {
-							column: 8
-							line: 13
-						}
-					}
+					loc: SourceLocation reference/input.md 13:8-13:8
 				}
 				MarkdownText {
 					value: "ipsum"
-					loc: Object {
-						filename: "reference/input.md"
-						end: Object {
-							column: 10
-							line: 13
-						}
-						start: Object {
-							column: 10
-							line: 13
-						}
-					}
+					loc: SourceLocation reference/input.md 13:10-13:10
 				}
 			]
 		}
@@ -386,6 +136,5 @@ MarkdownRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

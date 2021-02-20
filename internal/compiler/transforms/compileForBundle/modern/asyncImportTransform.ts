@@ -22,7 +22,7 @@ export default createVisitor({
 			if (moduleId !== undefined) {
 				const id = jsStringLiteral.create({
 					loc: node.argument.loc,
-					value: moduleId,
+					value: moduleId.join(),
 				});
 				return signals.replace(template.expression`Rome.import(${id})`);
 			}

@@ -12,93 +12,32 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "esprima/es2015-yield/yield-catch-parameter/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "esprima/es2015-yield/yield-catch-parameter/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation esprima/es2015-yield/yield-catch-parameter/input.js 1:0-2:0
+	path: UIDPath<esprima/es2015-yield/yield-catch-parameter/input.js>
 	body: Array [
 		JSTryStatement {
 			finalizer: undefined
-			loc: Object {
-				filename: "esprima/es2015-yield/yield-catch-parameter/input.js"
-				end: Object {
-					column: 23
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation esprima/es2015-yield/yield-catch-parameter/input.js 1:0-1:23
 			block: JSBlockStatement {
 				body: Array []
 				directives: Array []
-				loc: Object {
-					filename: "esprima/es2015-yield/yield-catch-parameter/input.js"
-					end: Object {
-						column: 6
-						line: 1
-					}
-					start: Object {
-						column: 4
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/es2015-yield/yield-catch-parameter/input.js 1:4-1:6
 			}
 			handler: JSCatchClause {
-				loc: Object {
-					filename: "esprima/es2015-yield/yield-catch-parameter/input.js"
-					end: Object {
-						column: 23
-						line: 1
-					}
-					start: Object {
-						column: 7
-						line: 1
-					}
+				loc: SourceLocation esprima/es2015-yield/yield-catch-parameter/input.js 1:7-1:23
+				param: JSBindingIdentifier {
+					name: "yield"
+					loc: SourceLocation esprima/es2015-yield/yield-catch-parameter/input.js 1:14-1:19 (yield)
 				}
 				body: JSBlockStatement {
 					body: Array []
 					directives: Array []
-					loc: Object {
-						filename: "esprima/es2015-yield/yield-catch-parameter/input.js"
-						end: Object {
-							column: 23
-							line: 1
-						}
-						start: Object {
-							column: 21
-							line: 1
-						}
-					}
-				}
-				param: JSBindingIdentifier {
-					name: "yield"
-					loc: Object {
-						filename: "esprima/es2015-yield/yield-catch-parameter/input.js"
-						identifierName: "yield"
-						end: Object {
-							column: 19
-							line: 1
-						}
-						start: Object {
-							column: 14
-							line: 1
-						}
-					}
+					loc: SourceLocation esprima/es2015-yield/yield-catch-parameter/input.js 1:21-1:23
 				}
 			}
 		}
@@ -109,6 +48,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

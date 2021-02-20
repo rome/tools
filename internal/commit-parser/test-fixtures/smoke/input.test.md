@@ -12,20 +12,10 @@ CommitRoot {
 	corrupt: false
 	custom: true
 	diagnostics: Array []
-	filename: "smoke/input.txt"
 	integrity: undefined
 	rawBody: "everything included!"
 	scope: "some scope"
-	loc: Object {
-		filename: "smoke/input.txt"
-		end: Object {
-			column: 40
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation smoke/input.txt 1:0-1:40
+	path: RelativePath<smoke/input.txt>
 }
 ```

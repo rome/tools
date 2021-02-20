@@ -12,110 +12,38 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "typescript/class/private-fields-modifier-private/input.ts"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
+	loc: SourceLocation typescript/class/private-fields-modifier-private/input.ts 1:0-4:0
+	path: UIDPath<typescript/class/private-fields-modifier-private/input.ts>
 	syntax: Array ["ts"]
-	loc: Object {
-		filename: "typescript/class/private-fields-modifier-private/input.ts"
-		end: Object {
-			column: 0
-			line: 4
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
 	body: Array [
 		JSClassDeclaration {
 			id: JSBindingIdentifier {
 				name: "A"
-				loc: Object {
-					filename: "typescript/class/private-fields-modifier-private/input.ts"
-					identifierName: "A"
-					end: Object {
-						column: 7
-						line: 1
-					}
-					start: Object {
-						column: 6
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/class/private-fields-modifier-private/input.ts 1:6-1:7 (A)
 			}
-			loc: Object {
-				filename: "typescript/class/private-fields-modifier-private/input.ts"
-				end: Object {
-					column: 1
-					line: 3
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation typescript/class/private-fields-modifier-private/input.ts 1:0-3:1
 			meta: JSClassHead {
 				implements: undefined
 				superClass: undefined
 				superTypeParameters: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "typescript/class/private-fields-modifier-private/input.ts"
-					end: Object {
-						column: 1
-						line: 3
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/class/private-fields-modifier-private/input.ts 1:0-3:1
 				body: Array [
 					JSClassPrivateProperty {
 						key: JSPrivateName {
 							id: JSIdentifier {
 								name: "a"
-								loc: Object {
-									filename: "typescript/class/private-fields-modifier-private/input.ts"
-									identifierName: "a"
-									end: Object {
-										column: 12
-										line: 2
-									}
-									start: Object {
-										column: 11
-										line: 2
-									}
-								}
+								loc: SourceLocation typescript/class/private-fields-modifier-private/input.ts 2:11-2:12 (a)
 							}
-							loc: Object {
-								filename: "typescript/class/private-fields-modifier-private/input.ts"
-								end: Object {
-									column: 12
-									line: 2
-								}
-								start: Object {
-									column: 10
-									line: 2
-								}
-							}
+							loc: SourceLocation typescript/class/private-fields-modifier-private/input.ts 2:10-2:12
 						}
 						value: undefined
 						typeAnnotation: undefined
-						loc: Object {
-							filename: "typescript/class/private-fields-modifier-private/input.ts"
-							end: Object {
-								column: 13
-								line: 2
-							}
-							start: Object {
-								column: 2
-								line: 2
-							}
-						}
+						loc: SourceLocation typescript/class/private-fields-modifier-private/input.ts 2:2-2:13
 						meta: JSClassPropertyMeta {
 							abstract: false
 							accessibility: "private"
@@ -123,21 +51,8 @@ JSRoot {
 							readonly: false
 							static: false
 							typeAnnotation: undefined
-							start: Object {
-								column: 2
-								line: 2
-							}
-							loc: Object {
-								filename: "typescript/class/private-fields-modifier-private/input.ts"
-								end: Object {
-									column: 12
-									line: 2
-								}
-								start: Object {
-									column: 2
-									line: 2
-								}
-							}
+							loc: SourceLocation typescript/class/private-fields-modifier-private/input.ts 2:2-2:12
+							start: Position 2:2
 						}
 					}
 				]
@@ -150,6 +65,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

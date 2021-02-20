@@ -12,144 +12,41 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "core/uncategorised/257/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "core/uncategorised/257/input.js"
-		end: Object {
-			column: 52
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation core/uncategorised/257/input.js 1:0-1:52
+	path: UIDPath<core/uncategorised/257/input.js>
 	body: Array [
 		JSLabeledStatement {
-			loc: Object {
-				filename: "core/uncategorised/257/input.js"
-				end: Object {
-					column: 52
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation core/uncategorised/257/input.js 1:0-1:52
 			label: JSIdentifier {
 				name: "target1"
-				loc: Object {
-					filename: "core/uncategorised/257/input.js"
-					identifierName: "target1"
-					end: Object {
-						column: 7
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation core/uncategorised/257/input.js 1:0-1:7 (target1)
 			}
 			body: JSLabeledStatement {
-				loc: Object {
-					filename: "core/uncategorised/257/input.js"
-					end: Object {
-						column: 52
-						line: 1
-					}
-					start: Object {
-						column: 9
-						line: 1
-					}
-				}
+				loc: SourceLocation core/uncategorised/257/input.js 1:9-1:52
 				label: JSIdentifier {
 					name: "target2"
-					loc: Object {
-						filename: "core/uncategorised/257/input.js"
-						identifierName: "target2"
-						end: Object {
-							column: 16
-							line: 1
-						}
-						start: Object {
-							column: 9
-							line: 1
-						}
-					}
+					loc: SourceLocation core/uncategorised/257/input.js 1:9-1:16 (target2)
 				}
 				body: JSWhileStatement {
-					loc: Object {
-						filename: "core/uncategorised/257/input.js"
-						end: Object {
-							column: 52
-							line: 1
-						}
-						start: Object {
-							column: 18
-							line: 1
-						}
-					}
+					loc: SourceLocation core/uncategorised/257/input.js 1:18-1:52
 					test: JSBooleanLiteral {
 						value: true
-						loc: Object {
-							filename: "core/uncategorised/257/input.js"
-							end: Object {
-								column: 29
-								line: 1
-							}
-							start: Object {
-								column: 25
-								line: 1
-							}
-						}
+						loc: SourceLocation core/uncategorised/257/input.js 1:25-1:29
 					}
 					body: JSBlockStatement {
 						directives: Array []
-						loc: Object {
-							filename: "core/uncategorised/257/input.js"
-							end: Object {
-								column: 52
-								line: 1
-							}
-							start: Object {
-								column: 31
-								line: 1
-							}
-						}
+						loc: SourceLocation core/uncategorised/257/input.js 1:31-1:52
 						body: Array [
 							JSContinueStatement {
-								loc: Object {
-									filename: "core/uncategorised/257/input.js"
-									end: Object {
-										column: 50
-										line: 1
-									}
-									start: Object {
-										column: 33
-										line: 1
-									}
-								}
+								loc: SourceLocation core/uncategorised/257/input.js 1:33-1:50
 								label: JSIdentifier {
 									name: "target1"
-									loc: Object {
-										filename: "core/uncategorised/257/input.js"
-										identifierName: "target1"
-										end: Object {
-											column: 49
-											line: 1
-										}
-										start: Object {
-											column: 42
-											line: 1
-										}
-									}
+									loc: SourceLocation core/uncategorised/257/input.js 1:42-1:49 (target1)
 								}
 							}
 						]
@@ -164,6 +61,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

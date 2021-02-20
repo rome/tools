@@ -11,49 +11,17 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "es2015/identifiers/invalid-escape-seq-null/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2015/identifiers/invalid-escape-seq-null/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2015/identifiers/invalid-escape-seq-null/input.js 1:0-2:0
+	path: UIDPath<es2015/identifiers/invalid-escape-seq-null/input.js>
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "es2015/identifiers/invalid-escape-seq-null/input.js"
-				end: Object {
-					column: 9
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
-			expression: JSNullLiteral {
-				loc: Object {
-					filename: "es2015/identifiers/invalid-escape-seq-null/input.js"
-					end: Object {
-						column: 9
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
-			}
+			expression: JSNullLiteral {loc: SourceLocation es2015/identifiers/invalid-escape-seq-null/input.js 1:0-1:9}
+			loc: SourceLocation es2015/identifiers/invalid-escape-seq-null/input.js 1:0-1:9
 		}
 	]
 	diagnostics: Array [
@@ -61,26 +29,17 @@ JSRoot {
 			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse"
 				categoryValue: "js"
-				message: Array [
-					RAW_MARKUP {value: "Escape sequence in keyword "}
-					"null"
-				]
+				category: Array ["parse"]
+				message: RAW_MARKUP {value: "Escape sequence in keyword <emphasis>null</emphasis>"}
 			}
 			location: Object {
-				filename: "es2015/identifiers/invalid-escape-seq-null/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 3
-					line: 1
-				}
-				start: Object {
-					column: 3
-					line: 1
-				}
+				end: Position 1:3
+				path: UIDPath<es2015/identifiers/invalid-escape-seq-null/input.js>
+				start: Position 1:3
 			}
 		}
 	]
@@ -98,8 +57,5 @@ JSRoot {
     nul\u{6c}
        ^
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

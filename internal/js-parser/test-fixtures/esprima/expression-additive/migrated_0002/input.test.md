@@ -12,77 +12,27 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "esprima/expression-additive/migrated_0002/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "esprima/expression-additive/migrated_0002/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation esprima/expression-additive/migrated_0002/input.js 1:0-2:0
+	path: UIDPath<esprima/expression-additive/migrated_0002/input.js>
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "esprima/expression-additive/migrated_0002/input.js"
-				end: Object {
-					column: 17
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation esprima/expression-additive/migrated_0002/input.js 1:0-1:17
 			expression: JSBinaryExpression {
 				operator: "+"
-				loc: Object {
-					filename: "esprima/expression-additive/migrated_0002/input.js"
-					end: Object {
-						column: 17
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/expression-additive/migrated_0002/input.js 1:0-1:17
 				left: JSStringLiteral {
 					value: "use strict"
-					loc: Object {
-						filename: "esprima/expression-additive/migrated_0002/input.js"
-						end: Object {
-							column: 12
-							line: 1
-						}
-						start: Object {
-							column: 0
-							line: 1
-						}
-					}
+					loc: SourceLocation esprima/expression-additive/migrated_0002/input.js 1:0-1:12
 				}
 				right: JSNumericLiteral {
 					value: 42
 					format: undefined
-					loc: Object {
-						filename: "esprima/expression-additive/migrated_0002/input.js"
-						end: Object {
-							column: 17
-							line: 1
-						}
-						start: Object {
-							column: 15
-							line: 1
-						}
-					}
+					loc: SourceLocation esprima/expression-additive/migrated_0002/input.js 1:15-1:17
 				}
 			}
 		}
@@ -93,6 +43,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

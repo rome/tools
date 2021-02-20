@@ -11,202 +11,74 @@ JSRoot {
 	comments: Array []
 	corrupt: true
 	directives: Array []
-	filename: "es2017/async-functions/27/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2017/async-functions/27/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2017/async-functions/27/input.js 1:0-2:0
+	path: UIDPath<es2017/async-functions/27/input.js>
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				category: "parse"
-				categoryValue: "js"
-				message: Array [
-					RAW_MARKUP {value: "Unexpected token, expected "}
-					","
-				]
-			}
 			location: Object {
-				filename: "es2017/async-functions/27/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 22
-					line: 1
-				}
-				start: Object {
-					column: 21
-					line: 1
-				}
+				end: Position 1:22
+				path: UIDPath<es2017/async-functions/27/input.js>
+				start: Position 1:21
+			}
+			description: Object {
+				categoryValue: "js"
+				category: Array ["parse"]
+				message: RAW_MARKUP {value: "Unexpected character <emphasis>=</emphasis>"}
+				advice: Array [
+					log {
+						category: "info"
+						text: RAW_MARKUP {value: "Expected character <emphasis>,</emphasis>"}
+					}
+				]
 			}
 		}
 	]
 	body: Array [
 		JSVariableDeclarationStatement {
-			loc: Object {
-				filename: "es2017/async-functions/27/input.js"
-				end: Object {
-					column: 27
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2017/async-functions/27/input.js 1:0-1:27
 			declaration: JSVariableDeclaration {
 				kind: "const"
-				loc: Object {
-					filename: "es2017/async-functions/27/input.js"
-					end: Object {
-						column: 27
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation es2017/async-functions/27/input.js 1:0-1:27
 				declarations: Array [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "foo"
-							loc: Object {
-								filename: "es2017/async-functions/27/input.js"
-								identifierName: "foo"
-								end: Object {
-									column: 9
-									line: 1
-								}
-								start: Object {
-									column: 6
-									line: 1
-								}
-							}
+							loc: SourceLocation es2017/async-functions/27/input.js 1:6-1:9 (foo)
 						}
-						loc: Object {
-							filename: "es2017/async-functions/27/input.js"
-							end: Object {
-								column: 27
-								line: 1
-							}
-							start: Object {
-								column: 6
-								line: 1
-							}
-						}
+						loc: SourceLocation es2017/async-functions/27/input.js 1:6-1:27
 						init: JSAssignmentExpression {
 							operator: "="
-							loc: Object {
-								filename: "es2017/async-functions/27/input.js"
-								end: Object {
-									column: 27
-									line: 1
-								}
-								start: Object {
-									column: 13
-									line: 1
-								}
-							}
+							loc: SourceLocation es2017/async-functions/27/input.js 1:13-1:27
 							right: JSBooleanLiteral {
 								value: true
-								loc: Object {
-									filename: "es2017/async-functions/27/input.js"
-									end: Object {
-										column: 27
-										line: 1
-									}
-									start: Object {
-										column: 23
-										line: 1
-									}
-								}
+								loc: SourceLocation es2017/async-functions/27/input.js 1:23-1:27
 							}
 							left: JSAssignmentObjectPattern {
 								rest: undefined
-								loc: Object {
-									filename: "es2017/async-functions/27/input.js"
-									end: Object {
-										column: 20
-										line: 1
-									}
-									start: Object {
-										column: 13
-										line: 1
-									}
-								}
+								loc: SourceLocation es2017/async-functions/27/input.js 1:13-1:20
 								properties: Array [
 									JSAssignmentObjectPatternProperty {
 										key: JSStaticPropertyKey {
 											value: JSIdentifier {
 												name: "async"
-												loc: Object {
-													filename: "es2017/async-functions/27/input.js"
-													identifierName: "async"
-													end: Object {
-														column: 20
-														line: 1
-													}
-													start: Object {
-														column: 15
-														line: 1
-													}
-												}
+												loc: SourceLocation es2017/async-functions/27/input.js 1:15-1:20 (async)
 											}
-											loc: Object {
-												filename: "es2017/async-functions/27/input.js"
-												identifierName: "async"
-												end: Object {
-													column: 20
-													line: 1
-												}
-												start: Object {
-													column: 15
-													line: 1
-												}
-											}
+											loc: SourceLocation es2017/async-functions/27/input.js 1:15-1:20 (async)
 										}
 										value: JSAssignmentIdentifier {
 											name: "async"
-											loc: Object {
-												filename: "es2017/async-functions/27/input.js"
-												identifierName: "async"
-												end: Object {
-													column: 20
-													line: 1
-												}
-												start: Object {
-													column: 15
-													line: 1
-												}
-											}
+											loc: SourceLocation es2017/async-functions/27/input.js 1:15-1:20 (async)
 										}
-										loc: Object {
-											filename: "es2017/async-functions/27/input.js"
-											end: Object {
-												column: 20
-												line: 1
-											}
-											start: Object {
-												column: 15
-												line: 1
-											}
-										}
+										loc: SourceLocation es2017/async-functions/27/input.js 1:15-1:20
 									}
 								]
 							}
@@ -216,114 +88,32 @@ JSRoot {
 			}
 		}
 		JSExpressionStatement {
-			loc: Object {
-				filename: "es2017/async-functions/27/input.js"
-				end: Object {
-					column: 29
-					line: 1
-				}
-				start: Object {
-					column: 28
-					line: 1
-				}
-			}
+			loc: SourceLocation es2017/async-functions/27/input.js 1:28-1:29
 			expression: JSReferenceIdentifier {
 				name: "INVALID_PLACEHOLDER"
-				loc: Object {
-					filename: "es2017/async-functions/27/input.js"
-					end: Object {
-						column: 29
-						line: 1
-					}
-					start: Object {
-						column: 28
-						line: 1
-					}
-				}
+				loc: SourceLocation es2017/async-functions/27/input.js 1:28-1:29
 			}
 		}
 		JSExpressionStatement {
-			loc: Object {
-				filename: "es2017/async-functions/27/input.js"
-				end: Object {
-					column: 30
-					line: 1
-				}
-				start: Object {
-					column: 29
-					line: 1
-				}
-			}
+			loc: SourceLocation es2017/async-functions/27/input.js 1:29-1:30
 			expression: JSReferenceIdentifier {
 				name: "INVALID_PLACEHOLDER"
-				loc: Object {
-					filename: "es2017/async-functions/27/input.js"
-					end: Object {
-						column: 30
-						line: 1
-					}
-					start: Object {
-						column: 29
-						line: 1
-					}
-				}
+				loc: SourceLocation es2017/async-functions/27/input.js 1:29-1:30
 			}
 		}
 		JSExpressionStatement {
-			loc: Object {
-				filename: "es2017/async-functions/27/input.js"
-				end: Object {
-					column: 33
-					line: 1
-				}
-				start: Object {
-					column: 31
-					line: 1
-				}
-			}
+			loc: SourceLocation es2017/async-functions/27/input.js 1:31-1:33
 			expression: JSReferenceIdentifier {
 				name: "INVALID_PLACEHOLDER"
-				loc: Object {
-					filename: "es2017/async-functions/27/input.js"
-					end: Object {
-						column: 33
-						line: 1
-					}
-					start: Object {
-						column: 31
-						line: 1
-					}
-				}
+				loc: SourceLocation es2017/async-functions/27/input.js 1:31-1:33
 			}
 		}
 		JSBlockStatement {
 			body: Array []
 			directives: Array []
-			loc: Object {
-				filename: "es2017/async-functions/27/input.js"
-				end: Object {
-					column: 36
-					line: 1
-				}
-				start: Object {
-					column: 34
-					line: 1
-				}
-			}
+			loc: SourceLocation es2017/async-functions/27/input.js 1:34-1:36
 		}
-		JSEmptyStatement {
-			loc: Object {
-				filename: "es2017/async-functions/27/input.js"
-				end: Object {
-					column: 37
-					line: 1
-				}
-				start: Object {
-					column: 36
-					line: 1
-				}
-			}
-		}
+		JSEmptyStatement {loc: SourceLocation es2017/async-functions/27/input.js 1:36-1:37}
 	]
 }
 ```
@@ -334,13 +124,12 @@ JSRoot {
 
  es2017/async-functions/27/input.js:1:21 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ Unexpected token, expected ,
+  ✖ Unexpected character =
 
     const foo = ({ async = true }) => {};
                          ^
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  ℹ Expected character ,
 
-✖ Found 1 problem
 
 ```

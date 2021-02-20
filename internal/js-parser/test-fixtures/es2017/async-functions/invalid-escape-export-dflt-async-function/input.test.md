@@ -11,104 +11,46 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "es2017/async-functions/invalid-escape-export-dflt-async-function/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2017/async-functions/invalid-escape-export-dflt-async-function/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2017/async-functions/invalid-escape-export-dflt-async-function/input.js 1:0-2:0
+	path: UIDPath<es2017/async-functions/invalid-escape-export-dflt-async-function/input.js>
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse"
 				categoryValue: "js"
+				category: Array ["parse"]
 				message: RAW_MARKUP {value: "Expected a semicolon or a line terminator"}
 			}
 			location: Object {
-				filename: "es2017/async-functions/invalid-escape-export-dflt-async-function/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 25
-					line: 1
-				}
-				start: Object {
-					column: 26
-					line: 1
-				}
+				end: Position 1:25
+				path: UIDPath<es2017/async-functions/invalid-escape-export-dflt-async-function/input.js>
+				start: Position 1:26
 			}
 		}
 	]
 	body: Array [
 		JSExportDefaultDeclaration {
-			loc: Object {
-				filename: "es2017/async-functions/invalid-escape-export-dflt-async-function/input.js"
-				end: Object {
-					column: 25
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2017/async-functions/invalid-escape-export-dflt-async-function/input.js 1:0-1:25
 			declaration: JSReferenceIdentifier {
 				name: "async"
-				loc: Object {
-					filename: "es2017/async-functions/invalid-escape-export-dflt-async-function/input.js"
-					identifierName: "async"
-					end: Object {
-						column: 25
-						line: 1
-					}
-					start: Object {
-						column: 15
-						line: 1
-					}
-				}
+				loc: SourceLocation es2017/async-functions/invalid-escape-export-dflt-async-function/input.js 1:15-1:25 (async)
 			}
 		}
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "y"
-				loc: Object {
-					filename: "es2017/async-functions/invalid-escape-export-dflt-async-function/input.js"
-					identifierName: "y"
-					end: Object {
-						column: 36
-						line: 1
-					}
-					start: Object {
-						column: 35
-						line: 1
-					}
-				}
+				loc: SourceLocation es2017/async-functions/invalid-escape-export-dflt-async-function/input.js 1:35-1:36 (y)
 			}
-			loc: Object {
-				filename: "es2017/async-functions/invalid-escape-export-dflt-async-function/input.js"
-				end: Object {
-					column: 50
-					line: 1
-				}
-				start: Object {
-					column: 26
-					line: 1
-				}
-			}
+			loc: SourceLocation es2017/async-functions/invalid-escape-export-dflt-async-function/input.js 1:26-1:50
 			head: JSFunctionHead {
 				async: false
 				generator: false
@@ -118,86 +60,24 @@ JSRoot {
 				returnType: undefined
 				thisType: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "es2017/async-functions/invalid-escape-export-dflt-async-function/input.js"
-					end: Object {
-						column: 38
-						line: 1
-					}
-					start: Object {
-						column: 36
-						line: 1
-					}
-				}
+				loc: SourceLocation es2017/async-functions/invalid-escape-export-dflt-async-function/input.js 1:36-1:38
 			}
 			body: JSBlockStatement {
 				directives: Array []
-				loc: Object {
-					filename: "es2017/async-functions/invalid-escape-export-dflt-async-function/input.js"
-					end: Object {
-						column: 50
-						line: 1
-					}
-					start: Object {
-						column: 39
-						line: 1
-					}
-				}
+				loc: SourceLocation es2017/async-functions/invalid-escape-export-dflt-async-function/input.js 1:39-1:50
 				body: Array [
 					JSExpressionStatement {
-						loc: Object {
-							filename: "es2017/async-functions/invalid-escape-export-dflt-async-function/input.js"
-							end: Object {
-								column: 46
-								line: 1
-							}
-							start: Object {
-								column: 41
-								line: 1
-							}
-						}
+						loc: SourceLocation es2017/async-functions/invalid-escape-export-dflt-async-function/input.js 1:41-1:46
 						expression: JSReferenceIdentifier {
 							name: "await"
-							loc: Object {
-								filename: "es2017/async-functions/invalid-escape-export-dflt-async-function/input.js"
-								identifierName: "await"
-								end: Object {
-									column: 46
-									line: 1
-								}
-								start: Object {
-									column: 41
-									line: 1
-								}
-							}
+							loc: SourceLocation es2017/async-functions/invalid-escape-export-dflt-async-function/input.js 1:41-1:46 (await)
 						}
 					}
 					JSExpressionStatement {
-						loc: Object {
-							filename: "es2017/async-functions/invalid-escape-export-dflt-async-function/input.js"
-							end: Object {
-								column: 48
-								line: 1
-							}
-							start: Object {
-								column: 47
-								line: 1
-							}
-						}
+						loc: SourceLocation es2017/async-functions/invalid-escape-export-dflt-async-function/input.js 1:47-1:48
 						expression: JSReferenceIdentifier {
 							name: "x"
-							loc: Object {
-								filename: "es2017/async-functions/invalid-escape-export-dflt-async-function/input.js"
-								identifierName: "x"
-								end: Object {
-									column: 48
-									line: 1
-								}
-								start: Object {
-									column: 47
-									line: 1
-								}
-							}
+							loc: SourceLocation es2017/async-functions/invalid-escape-export-dflt-async-function/input.js 1:47-1:48 (x)
 						}
 					}
 				]
@@ -218,8 +98,5 @@ JSRoot {
     export default \u0061sync function y() { await x }
                               ^
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

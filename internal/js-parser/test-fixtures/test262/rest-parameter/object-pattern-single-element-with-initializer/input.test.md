@@ -12,65 +12,24 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "test262/rest-parameter/object-pattern-single-element-with-initializer/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "test262/rest-parameter/object-pattern-single-element-with-initializer/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation test262/rest-parameter/object-pattern-single-element-with-initializer/input.js 1:0-2:0
+	path: UIDPath<test262/rest-parameter/object-pattern-single-element-with-initializer/input.js>
 	body: Array [
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "singleElementWithInitializer"
-				loc: Object {
-					filename: "test262/rest-parameter/object-pattern-single-element-with-initializer/input.js"
-					identifierName: "singleElementWithInitializer"
-					end: Object {
-						column: 37
-						line: 1
-					}
-					start: Object {
-						column: 9
-						line: 1
-					}
-				}
+				loc: SourceLocation test262/rest-parameter/object-pattern-single-element-with-initializer/input.js 1:9-1:37 (singleElementWithInitializer)
 			}
-			loc: Object {
-				filename: "test262/rest-parameter/object-pattern-single-element-with-initializer/input.js"
-				end: Object {
-					column: 55
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation test262/rest-parameter/object-pattern-single-element-with-initializer/input.js 1:0-1:55
 			body: JSBlockStatement {
 				body: Array []
 				directives: Array []
-				loc: Object {
-					filename: "test262/rest-parameter/object-pattern-single-element-with-initializer/input.js"
-					end: Object {
-						column: 55
-						line: 1
-					}
-					start: Object {
-						column: 53
-						line: 1
-					}
-				}
+				loc: SourceLocation test262/rest-parameter/object-pattern-single-element-with-initializer/input.js 1:53-1:55
 			}
 			head: JSFunctionHead {
 				async: false
@@ -80,129 +39,37 @@ JSRoot {
 				returnType: undefined
 				thisType: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "test262/rest-parameter/object-pattern-single-element-with-initializer/input.js"
-					end: Object {
-						column: 52
-						line: 1
-					}
-					start: Object {
-						column: 37
-						line: 1
-					}
-				}
+				loc: SourceLocation test262/rest-parameter/object-pattern-single-element-with-initializer/input.js 1:37-1:52
 				rest: JSBindingObjectPattern {
 					rest: undefined
-					loc: Object {
-						filename: "test262/rest-parameter/object-pattern-single-element-with-initializer/input.js"
-						end: Object {
-							column: 51
-							line: 1
-						}
-						start: Object {
-							column: 41
-							line: 1
-						}
-					}
+					loc: SourceLocation test262/rest-parameter/object-pattern-single-element-with-initializer/input.js 1:41-1:51
 					meta: JSPatternMeta {
 						optional: undefined
 						typeAnnotation: undefined
-						loc: Object {
-							filename: "test262/rest-parameter/object-pattern-single-element-with-initializer/input.js"
-							end: Object {
-								column: 51
-								line: 1
-							}
-							start: Object {
-								column: 41
-								line: 1
-							}
-						}
+						loc: SourceLocation test262/rest-parameter/object-pattern-single-element-with-initializer/input.js 1:41-1:51
 					}
 					properties: Array [
 						JSBindingObjectPatternProperty {
 							key: JSStaticPropertyKey {
 								value: JSIdentifier {
 									name: "a"
-									loc: Object {
-										filename: "test262/rest-parameter/object-pattern-single-element-with-initializer/input.js"
-										identifierName: "a"
-										end: Object {
-											column: 43
-											line: 1
-										}
-										start: Object {
-											column: 42
-											line: 1
-										}
-									}
+									loc: SourceLocation test262/rest-parameter/object-pattern-single-element-with-initializer/input.js 1:42-1:43 (a)
 								}
-								loc: Object {
-									filename: "test262/rest-parameter/object-pattern-single-element-with-initializer/input.js"
-									end: Object {
-										column: 43
-										line: 1
-									}
-									start: Object {
-										column: 42
-										line: 1
-									}
-								}
+								loc: SourceLocation test262/rest-parameter/object-pattern-single-element-with-initializer/input.js 1:42-1:43
 							}
 							value: JSBindingAssignmentPattern {
-								loc: Object {
-									filename: "test262/rest-parameter/object-pattern-single-element-with-initializer/input.js"
-									end: Object {
-										column: 50
-										line: 1
-									}
-									start: Object {
-										column: 45
-										line: 1
-									}
-								}
+								loc: SourceLocation test262/rest-parameter/object-pattern-single-element-with-initializer/input.js 1:45-1:50
 								left: JSBindingIdentifier {
 									name: "b"
-									loc: Object {
-										filename: "test262/rest-parameter/object-pattern-single-element-with-initializer/input.js"
-										identifierName: "b"
-										end: Object {
-											column: 46
-											line: 1
-										}
-										start: Object {
-											column: 45
-											line: 1
-										}
-									}
+									loc: SourceLocation test262/rest-parameter/object-pattern-single-element-with-initializer/input.js 1:45-1:46 (b)
 								}
 								right: JSNumericLiteral {
 									value: 0
 									format: undefined
-									loc: Object {
-										filename: "test262/rest-parameter/object-pattern-single-element-with-initializer/input.js"
-										end: Object {
-											column: 50
-											line: 1
-										}
-										start: Object {
-											column: 49
-											line: 1
-										}
-									}
+									loc: SourceLocation test262/rest-parameter/object-pattern-single-element-with-initializer/input.js 1:49-1:50
 								}
 							}
-							loc: Object {
-								filename: "test262/rest-parameter/object-pattern-single-element-with-initializer/input.js"
-								end: Object {
-									column: 50
-									line: 1
-								}
-								start: Object {
-									column: 42
-									line: 1
-								}
-							}
+							loc: SourceLocation test262/rest-parameter/object-pattern-single-element-with-initializer/input.js 1:42-1:50
 						}
 					]
 				}
@@ -215,6 +82,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

@@ -11,104 +11,47 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "es2015/uncategorised/276/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2015/uncategorised/276/input.js"
-		end: Object {
-			column: 14
-			line: 1
+	loc: SourceLocation es2015/uncategorised/276/input.js 1:0-1:14
+	path: UIDPath<es2015/uncategorised/276/input.js>
+	body: Array [
+		JSExpressionStatement {
+			loc: SourceLocation es2015/uncategorised/276/input.js 1:0-1:14
+			expression: JSAssignmentExpression {
+				operator: "="
+				loc: SourceLocation es2015/uncategorised/276/input.js 1:0-1:14
+				right: JSReferenceIdentifier {
+					name: "obj"
+					loc: SourceLocation es2015/uncategorised/276/input.js 1:11-1:14 (obj)
+				}
+				left: JSAssignmentObjectPattern {
+					properties: Array []
+					rest: undefined
+					loc: SourceLocation es2015/uncategorised/276/input.js 1:1-1:7
+				}
+			}
 		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	]
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse"
 				categoryValue: "js"
-				message: RAW_MARKUP {value: "Unexpected token"}
+				category: Array ["parse"]
+				message: RAW_MARKUP {value: "Unexpected character <emphasis>}</emphasis>"}
 			}
 			location: Object {
-				filename: "es2015/uncategorised/276/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 7
-					line: 1
-				}
-				start: Object {
-					column: 6
-					line: 1
-				}
-			}
-		}
-	]
-	body: Array [
-		JSExpressionStatement {
-			loc: Object {
-				filename: "es2015/uncategorised/276/input.js"
-				end: Object {
-					column: 14
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
-			expression: JSAssignmentExpression {
-				operator: "="
-				loc: Object {
-					filename: "es2015/uncategorised/276/input.js"
-					end: Object {
-						column: 14
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
-				left: JSAssignmentObjectPattern {
-					properties: Array []
-					rest: undefined
-					loc: Object {
-						filename: "es2015/uncategorised/276/input.js"
-						end: Object {
-							column: 7
-							line: 1
-						}
-						start: Object {
-							column: 1
-							line: 1
-						}
-					}
-				}
-				right: JSReferenceIdentifier {
-					name: "obj"
-					loc: Object {
-						filename: "es2015/uncategorised/276/input.js"
-						identifierName: "obj"
-						end: Object {
-							column: 14
-							line: 1
-						}
-						start: Object {
-							column: 11
-							line: 1
-						}
-					}
-				}
+				end: Position 1:7
+				path: UIDPath<es2015/uncategorised/276/input.js>
+				start: Position 1:6
 			}
 		}
 	]
@@ -121,13 +64,10 @@ JSRoot {
 
  es2015/uncategorised/276/input.js:1:6 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ Unexpected token
+  ✖ Unexpected character }
 
     ({ 42 }) = obj
           ^
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

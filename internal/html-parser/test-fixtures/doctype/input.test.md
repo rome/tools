@@ -11,33 +11,13 @@ HTMLRoot {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
-	filename: "doctype/input.html"
 	integrity: undefined
-	loc: Object {
-		filename: "doctype/input.html"
-		end: Object {
-			column: 2
-			line: 5
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation doctype/input.html 1:0-5:2
+	path: UIDPath<doctype/input.html>
 	body: Array [
 		HTMLDoctypeTag {
 			value: "html"
-			loc: Object {
-				filename: "doctype/input.html"
-				end: Object {
-					column: 2
-					line: 5
-				}
-				start: Object {
-					column: 1
-					line: 1
-				}
-			}
+			loc: SourceLocation doctype/input.html 1:1-5:2
 		}
 	]
 }
@@ -46,6 +26,5 @@ HTMLRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

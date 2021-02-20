@@ -12,196 +12,62 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "typescript/regression/less-than-edge-case/input.tsx"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
+	loc: SourceLocation typescript/regression/less-than-edge-case/input.tsx 1:0-3:1
+	path: UIDPath<typescript/regression/less-than-edge-case/input.tsx>
 	syntax: Array [
 		"ts"
 		"jsx"
 	]
-	loc: Object {
-		filename: "typescript/regression/less-than-edge-case/input.tsx"
-		end: Object {
-			column: 1
-			line: 3
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
 	body: Array [
 		JSForStatement {
-			loc: Object {
-				filename: "typescript/regression/less-than-edge-case/input.tsx"
-				end: Object {
-					column: 1
-					line: 3
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation typescript/regression/less-than-edge-case/input.tsx 1:0-3:1
 			update: JSUpdateExpression {
 				operator: "++"
 				prefix: false
-				loc: Object {
-					filename: "typescript/regression/less-than-edge-case/input.tsx"
-					end: Object {
-						column: 43
-						line: 1
-					}
-					start: Object {
-						column: 40
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/regression/less-than-edge-case/input.tsx 1:40-1:43
 				argument: JSReferenceIdentifier {
 					name: "i"
-					loc: Object {
-						filename: "typescript/regression/less-than-edge-case/input.tsx"
-						identifierName: "i"
-						end: Object {
-							column: 41
-							line: 1
-						}
-						start: Object {
-							column: 40
-							line: 1
-						}
-					}
+					loc: SourceLocation typescript/regression/less-than-edge-case/input.tsx 1:40-1:41 (i)
 				}
 			}
 			init: JSVariableDeclaration {
 				kind: "let"
-				loc: Object {
-					filename: "typescript/regression/less-than-edge-case/input.tsx"
-					end: Object {
-						column: 14
-						line: 1
-					}
-					start: Object {
-						column: 5
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/regression/less-than-edge-case/input.tsx 1:5-1:14
 				declarations: Array [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "i"
-							loc: Object {
-								filename: "typescript/regression/less-than-edge-case/input.tsx"
-								identifierName: "i"
-								end: Object {
-									column: 10
-									line: 1
-								}
-								start: Object {
-									column: 9
-									line: 1
-								}
-							}
+							loc: SourceLocation typescript/regression/less-than-edge-case/input.tsx 1:9-1:10 (i)
 						}
-						loc: Object {
-							filename: "typescript/regression/less-than-edge-case/input.tsx"
-							end: Object {
-								column: 14
-								line: 1
-							}
-							start: Object {
-								column: 9
-								line: 1
-							}
-						}
+						loc: SourceLocation typescript/regression/less-than-edge-case/input.tsx 1:9-1:14
 						init: JSNumericLiteral {
 							value: 0
 							format: undefined
-							loc: Object {
-								filename: "typescript/regression/less-than-edge-case/input.tsx"
-								end: Object {
-									column: 14
-									line: 1
-								}
-								start: Object {
-									column: 13
-									line: 1
-								}
-							}
+							loc: SourceLocation typescript/regression/less-than-edge-case/input.tsx 1:13-1:14
 						}
 					}
 				]
 			}
 			body: JSBlockStatement {
 				directives: Array []
-				loc: Object {
-					filename: "typescript/regression/less-than-edge-case/input.tsx"
-					end: Object {
-						column: 1
-						line: 3
-					}
-					start: Object {
-						column: 45
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/regression/less-than-edge-case/input.tsx 1:45-3:1
 				body: Array [
 					JSExpressionStatement {
-						loc: Object {
-							filename: "typescript/regression/less-than-edge-case/input.tsx"
-							end: Object {
-								column: 9
-								line: 2
-							}
-							start: Object {
-								column: 4
-								line: 2
-							}
-						}
+						loc: SourceLocation typescript/regression/less-than-edge-case/input.tsx 2:4-2:9
 						expression: JSCallExpression {
-							loc: Object {
-								filename: "typescript/regression/less-than-edge-case/input.tsx"
-								end: Object {
-									column: 8
-									line: 2
-								}
-								start: Object {
-									column: 4
-									line: 2
-								}
-							}
+							loc: SourceLocation typescript/regression/less-than-edge-case/input.tsx 2:4-2:8
 							callee: JSReferenceIdentifier {
 								name: "x"
-								loc: Object {
-									filename: "typescript/regression/less-than-edge-case/input.tsx"
-									identifierName: "x"
-									end: Object {
-										column: 5
-										line: 2
-									}
-									start: Object {
-										column: 4
-										line: 2
-									}
-								}
+								loc: SourceLocation typescript/regression/less-than-edge-case/input.tsx 2:4-2:5 (x)
 							}
 							arguments: Array [
 								JSReferenceIdentifier {
 									name: "i"
-									loc: Object {
-										filename: "typescript/regression/less-than-edge-case/input.tsx"
-										identifierName: "i"
-										end: Object {
-											column: 7
-											line: 2
-										}
-										start: Object {
-											column: 6
-											line: 2
-										}
-									}
+									loc: SourceLocation typescript/regression/less-than-edge-case/input.tsx 2:6-2:7 (i)
 								}
 							]
 						}
@@ -210,114 +76,30 @@ JSRoot {
 			}
 			test: JSBinaryExpression {
 				operator: "<"
-				loc: Object {
-					filename: "typescript/regression/less-than-edge-case/input.tsx"
-					end: Object {
-						column: 38
-						line: 1
-					}
-					start: Object {
-						column: 16
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/regression/less-than-edge-case/input.tsx 1:16-1:38
 				left: JSReferenceIdentifier {
 					name: "i"
-					loc: Object {
-						filename: "typescript/regression/less-than-edge-case/input.tsx"
-						identifierName: "i"
-						end: Object {
-							column: 17
-							line: 1
-						}
-						start: Object {
-							column: 16
-							line: 1
-						}
-					}
+					loc: SourceLocation typescript/regression/less-than-edge-case/input.tsx 1:16-1:17 (i)
 				}
 				right: JSMemberExpression {
-					loc: Object {
-						filename: "typescript/regression/less-than-edge-case/input.tsx"
-						end: Object {
-							column: 38
-							line: 1
-						}
-						start: Object {
-							column: 20
-							line: 1
-						}
-					}
+					loc: SourceLocation typescript/regression/less-than-edge-case/input.tsx 1:20-1:38
 					property: JSStaticMemberProperty {
 						value: JSIdentifier {
 							name: "bar"
-							loc: Object {
-								filename: "typescript/regression/less-than-edge-case/input.tsx"
-								identifierName: "bar"
-								end: Object {
-									column: 38
-									line: 1
-								}
-								start: Object {
-									column: 35
-									line: 1
-								}
-							}
+							loc: SourceLocation typescript/regression/less-than-edge-case/input.tsx 1:35-1:38 (bar)
 						}
-						loc: Object {
-							filename: "typescript/regression/less-than-edge-case/input.tsx"
-							identifierName: "bar"
-							end: Object {
-								column: 38
-								line: 1
-							}
-							start: Object {
-								column: 35
-								line: 1
-							}
-						}
+						loc: SourceLocation typescript/regression/less-than-edge-case/input.tsx 1:35-1:38 (bar)
 					}
 					object: JSCallExpression {
-						loc: Object {
-							filename: "typescript/regression/less-than-edge-case/input.tsx"
-							end: Object {
-								column: 34
-								line: 1
-							}
-							start: Object {
-								column: 20
-								line: 1
-							}
-						}
+						loc: SourceLocation typescript/regression/less-than-edge-case/input.tsx 1:20-1:34
 						callee: JSReferenceIdentifier {
 							name: "require"
-							loc: Object {
-								filename: "typescript/regression/less-than-edge-case/input.tsx"
-								identifierName: "require"
-								end: Object {
-									column: 27
-									line: 1
-								}
-								start: Object {
-									column: 20
-									line: 1
-								}
-							}
+							loc: SourceLocation typescript/regression/less-than-edge-case/input.tsx 1:20-1:27 (require)
 						}
 						arguments: Array [
 							JSStringLiteral {
 								value: "foo"
-								loc: Object {
-									filename: "typescript/regression/less-than-edge-case/input.tsx"
-									end: Object {
-										column: 33
-										line: 1
-									}
-									start: Object {
-										column: 28
-										line: 1
-									}
-								}
+								loc: SourceLocation typescript/regression/less-than-edge-case/input.tsx 1:28-1:33
 							}
 						]
 					}
@@ -331,6 +113,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

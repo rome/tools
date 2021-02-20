@@ -14,7 +14,6 @@ import {
 	PartialProjectConfig,
 	ProjectConfig,
 	ProjectConfigMeta,
-	ProjectConfigMetaHard,
 	ProjectConfigObjects,
 	ProjectConfigTarget,
 	createDefaultProjectConfig,
@@ -29,18 +28,19 @@ import {
 } from "./utils";
 import {ConsumeConfigResult, consumeConfig} from "@internal/codec-config";
 import {AbsoluteFilePath, AbsoluteFilePathSet} from "@internal/path";
-import {exists, lstat, readDirectory, readFileText} from "@internal/fs";
-import crypto = require("crypto");
+import {CachedFileReader, exists, lstat, readDirectory} from "@internal/fs";
 import {parseSemverRange} from "@internal/codec-semver";
 import {descriptions} from "@internal/diagnostics";
-import {PROJECT_CONFIG_PACKAGE_JSON_FIELD} from "./constants";
+import {
+	PROJECT_CONFIG_PACKAGE_JSON_FIELD,
+	VCS_IGNORE_FILENAMES,
+} from "./constants";
 import {lintRuleNames} from "@internal/compiler";
-
-const IGNORE_FILENAMES = [".gitignore", ".hgignore"];
+import {sha256} from "@internal/string-utils";
 
 type NormalizedPartial = {
 	partial: PartialProjectConfig;
-	meta: ProjectConfigMetaHard;
+	meta: ProjectConfigMeta;
 };
 
 function categoryExists(consumer: Consumer): boolean {
@@ -60,15 +60,18 @@ function categoryExists(consumer: Consumer): boolean {
 export async function loadCompleteProjectConfig(
 	projectDirectory: AbsoluteFilePath,
 	configPath: AbsoluteFilePath,
+	reader: CachedFileReader,
 ): Promise<{
 	meta: ProjectConfigMeta;
 	config: ProjectConfig;
 }> {
 	// TODO use consumer.capture somehow here to aggregate errors
-	const {partial, meta} = await loadPartialProjectConfig(
+	const {partial, meta} = await loadPartialProjectConfig({
+		reader,
+		rootProjectDirectory: projectDirectory,
 		projectDirectory,
 		configPath,
-	);
+	});
 	const {consumer} = meta;
 
 	// Produce a defaultConfig with some directory specific values
@@ -93,12 +96,12 @@ export async function loadCompleteProjectConfig(
 	};
 
 	// Infer VCS ignore files as lint ignore rules
-	for (const filename of IGNORE_FILENAMES) {
+	for (const filename of VCS_IGNORE_FILENAMES) {
 		const possiblePath = config.vcs.root.append(filename);
 		meta.configDependencies.add(possiblePath);
 
 		if (await exists(possiblePath)) {
-			const file = await readFileText(possiblePath);
+			const file = await reader.readFileText(possiblePath);
 
 			consumer.handleThrownDiagnostics(() => {
 				const patterns = parsePathPatternsFile({
@@ -112,51 +115,71 @@ export async function loadCompleteProjectConfig(
 		}
 	}
 
+	// Calculate config hash keys
+	await Promise.all(
+		Array.from(
+			meta.configDependencies,
+			async (path) => {
+				if (await exists(path)) {
+					const content = await reader.readFile(path);
+					const hash = sha256.sync(content);
+					const key = projectDirectory.relative(path).join();
+					meta.configCacheKeys[key] = hash;
+				}
+			},
+		),
+	);
+
 	return {
 		config,
 		meta,
 	};
 }
 
+type LoadProjectConfigContext = {
+	rootProjectDirectory: AbsoluteFilePath;
+	projectDirectory: AbsoluteFilePath;
+	configPath: AbsoluteFilePath;
+	reader: CachedFileReader;
+};
+
 async function loadPartialProjectConfig(
-	projectDirectory: AbsoluteFilePath,
-	configPath: AbsoluteFilePath,
+	context: LoadProjectConfigContext,
 ): Promise<NormalizedPartial> {
-	const configFile = await readFileText(configPath);
+	const configFile = await context.reader.readFileText(context.configPath);
 	const res = consumeConfig({
-		path: configPath,
+		path: context.configPath,
 		input: configFile,
 	});
 
-	return normalizeProjectConfig(res, configPath, configFile, projectDirectory);
+	return normalizeProjectConfig(res, context);
 }
 
 export async function normalizeProjectConfig(
 	res: ConsumeConfigResult,
-	configPath: AbsoluteFilePath,
-	configFile: string,
-	projectDirectory: AbsoluteFilePath,
+	context: LoadProjectConfigContext,
 ): Promise<NormalizedPartial> {
+	const {configPath, projectDirectory, rootProjectDirectory} = context;
 	let {consumer} = res;
 
 	let configSourceSubKey;
-	let name: undefined | string;
+	let inferredName: undefined | string;
 	const isInPackageJson = configPath.getBasename() === "package.json";
 	if (isInPackageJson) {
 		// Infer name from package.json
-		name = consumer.get("name").asStringOrVoid();
+		inferredName = consumer.get("name").asStringOrVoid();
 
 		consumer = consumer.get(PROJECT_CONFIG_PACKAGE_JSON_FIELD);
 		configSourceSubKey = PROJECT_CONFIG_PACKAGE_JSON_FIELD;
 	}
 
-	const hash = crypto.createHash("sha256").update(configFile).digest("hex");
-
 	const config: PartialProjectConfig = {
 		presets: [],
 		format: {},
 		compiler: {},
+		parser: {},
 		bundler: {},
+		check: {},
 		cache: {},
 		lint: {},
 		resolver: {},
@@ -167,20 +190,25 @@ export async function normalizeProjectConfig(
 		vcs: {},
 		dependencies: {},
 		targets: new Map(),
+		integrations: {
+			eslint: {},
+			typescriptChecker: {},
+			prettier: {},
+		},
 	};
 
-	if (name !== undefined) {
-		config.name = name;
+	if (inferredName !== undefined) {
+		config.name = inferredName;
 	}
 
-	const meta: ProjectConfigMetaHard = {
+	const meta: ProjectConfigMeta = {
 		projectDirectory,
 		configPath,
 		consumer,
 		consumersChain: [consumer],
-		configHashes: [hash],
+		configCacheKeys: {},
 		configSourceSubKey,
-		configDependencies: getParentConfigDependencies(projectDirectory),
+		configDependencies: new AbsoluteFilePathSet(),
 	};
 
 	// We never use `name` here but it's used in `loadCompleteProjectConfig`
@@ -191,7 +219,7 @@ export async function normalizeProjectConfig(
 
 		consumer.handleThrownDiagnostics(() => {
 			config.version = parseSemverRange({
-				path: consumer.filename,
+				path: consumer.path,
 				input: version.asString(),
 				offsetPosition: version.getLocation("inner-value").start,
 			});
@@ -207,11 +235,13 @@ export async function normalizeProjectConfig(
 	const cache = consumer.get("cache");
 	if (categoryExists(cache)) {
 		// TODO
+		cache.enforceUsedProperties("cache config property");
 	}
 
 	const resolver = consumer.get("resolver");
 	if (categoryExists(resolver)) {
 		// TODO
+		resolver.enforceUsedProperties("resolver config property");
 	}
 
 	const bundler = consumer.get("bundler");
@@ -219,6 +249,8 @@ export async function normalizeProjectConfig(
 		if (bundler.has("externals")) {
 			config.bundler.externals = arrayOfStrings(bundler.get("externals"));
 		}
+
+		bundler.enforceUsedProperties("bundler config property");
 	}
 
 	const typeChecking = consumer.get("typeChecking");
@@ -233,12 +265,13 @@ export async function normalizeProjectConfig(
 				typeChecking.get("libs"),
 			);
 			config.typeCheck.libs = libs.files;
-			meta.configDependencies = new AbsoluteFilePathSet([
-				...meta.configDependencies,
-				...libs.directories,
-				...libs.files,
-			]);
+			meta.configDependencies = meta.configDependencies.concat(
+				libs.directories,
+				libs.files,
+			);
 		}
+
+		typeChecking.enforceUsedProperties("typeChecking config property");
 	}
 
 	const dependencies = consumer.get("dependencies");
@@ -273,10 +306,16 @@ export async function normalizeProjectConfig(
 				};
 			}
 		}
+
+		dependencies.enforceUsedProperties("dependencies config property");
 	}
 
 	const lint = consumer.get("lint");
 	if (categoryExists(lint)) {
+		if (lint.has("enabled")) {
+			config.lint.enabled = lint.get("enabled").asBoolean();
+		}
+
 		if (lint.has("ignore")) {
 			config.lint.ignore = arrayOfPatterns(lint.get("ignore"));
 		}
@@ -296,6 +335,8 @@ export async function normalizeProjectConfig(
 				"requireSuppressionExplanations",
 			).asBoolean();
 		}
+
+		lint.enforceUsedProperties("lint config property");
 	}
 
 	const format = consumer.get("format");
@@ -321,6 +362,22 @@ export async function normalizeProjectConfig(
 				max: 10,
 			});
 		}
+
+		format.enforceUsedProperties("format config property");
+	}
+
+	const parser = consumer.get("parser");
+	if (categoryExists(parser)) {
+		if (parser.has("jsxEverywhere")) {
+			config.parser.jsxEverywhere = parser.get("jsxEverywhere").asBoolean();
+		}
+	}
+
+	const check = consumer.get("check");
+	if (categoryExists(check)) {
+		if (check.has("dependencies")) {
+			config.check.dependencies = check.get("dependencies").asBoolean();
+		}
 	}
 
 	const tests = consumer.get("tests");
@@ -328,6 +385,8 @@ export async function normalizeProjectConfig(
 		if (tests.has("ignore")) {
 			config.tests.ignore = arrayOfPatterns(tests.get("ignore"));
 		}
+
+		tests.enforceUsedProperties("tests config property");
 	}
 
 	const develop = consumer.get("develop");
@@ -335,13 +394,15 @@ export async function normalizeProjectConfig(
 		if (develop.has("serveStatic")) {
 			config.develop.serveStatic = develop.get("serveStatic").asBoolean();
 		}
+
+		develop.enforceUsedProperties("develop config property");
 	}
 
 	const files = consumer.get("files");
 	if (categoryExists(files)) {
 		if (files.has("vendorPath")) {
 			config.files.vendorPath = projectDirectory.resolve(
-				files.get("vendorPath").asString(),
+				files.get("vendorPath").asFilePath(),
 			);
 		}
 
@@ -349,23 +410,31 @@ export async function normalizeProjectConfig(
 			config.files.maxSize = files.get("maxSize").asNumber();
 		}
 
+		if (files.has("maxSizeIgnore")) {
+			config.files.maxSizeIgnore = arrayOfPatterns(files.get("maxSizeIgnore"));
+		}
+
 		if (files.has("assetExtensions")) {
 			config.files.assetExtensions = files.get("assetExtensions").asMappedArray((
 				item,
 			) => item.asString());
 		}
+
+		files.enforceUsedProperties("files config property");
 	}
 
 	const vcs = consumer.get("vcs");
 	if (categoryExists(vcs)) {
 		if (vcs.has("root")) {
-			config.vcs.root = projectDirectory.resolve(vcs.get("root").asString());
+			config.vcs.root = projectDirectory.resolve(vcs.get("root").asFilePath());
 		}
+		vcs.enforceUsedProperties("vcs config property");
 	}
 
 	const compiler = consumer.get("compiler");
 	if (categoryExists(compiler)) {
 		// TODO
+		compiler.enforceUsedProperties("compiler config property");
 	}
 
 	const targets = consumer.get("targets");
@@ -376,13 +445,32 @@ export async function normalizeProjectConfig(
 					item.asString()
 				),
 			};
-			object.enforceUsedProperties("config target property");
+			object.enforceUsedProperties("target config property");
 			config.targets.set(name, target);
 		}
 	}
 
+	const integrations = consumer.get("integrations");
+	if (integrations.exists()) {
+		const eslint = integrations.get("eslint");
+		if (categoryExists(eslint)) {
+			if (eslint.has("enabled")) {
+				config.integrations.eslint.enabled = eslint.get("enabled").asBoolean();
+			}
+		}
+		eslint.enforceUsedProperties("eslint config property");
+	}
+
+	meta.configDependencies = meta.configDependencies.concat(
+		getParentConfigDependencies({
+			projectDirectory,
+			rootProjectDirectory,
+			partialConfig: config,
+		}),
+	);
+
 	// Need to get this before enforceUsedProperties so it will be flagged
-	const _extends = consumer.get("extends");
+	const extendsProp = consumer.get("extends");
 
 	// Flag unknown properties
 	consumer.enforceUsedProperties("config property");
@@ -392,9 +480,13 @@ export async function normalizeProjectConfig(
 		meta,
 	};
 
-	if (_extends.exists()) {
-		for (const elem of _extends.asImplicitArray()) {
-			normalized = await extendProjectConfig(projectDirectory, elem, normalized);
+	if (extendsProp.exists()) {
+		for (const elem of extendsProp.asImplicitArray()) {
+			normalized = await extendProjectConfig(
+				elem,
+				{...context, projectDirectory, rootProjectDirectory},
+				normalized,
+			);
 		}
 	}
 
@@ -411,9 +503,9 @@ async function normalizeTypeCheckingLibs(
 	const libFiles: AbsoluteFilePathSet = new AbsoluteFilePathSet();
 
 	// Normalize library directories
-	const directories: AbsoluteFilePath[] = arrayOfStrings(consumer).map((
-		libDirectory,
-	) => projectDirectory.resolve(libDirectory));
+	const directories: AbsoluteFilePath[] = consumer.asMappedArray((item) =>
+		projectDirectory.resolve(item.asFilePath())
+	);
 
 	// Crawl library directories and add their files
 	for (const directory of directories) {
@@ -435,21 +527,22 @@ async function normalizeTypeCheckingLibs(
 }
 
 async function extendProjectConfig(
-	projectDirectory: AbsoluteFilePath,
 	extendsStrConsumer: Consumer,
+	context: LoadProjectConfigContext,
 	{partial: config, meta}: NormalizedPartial,
 ): Promise<NormalizedPartial> {
-	const extendsRelative = extendsStrConsumer.asString();
+	const extendsRelative = extendsStrConsumer.asFilePath();
 
-	if (extendsRelative === "parent") {
+	if (extendsRelative.join() === "parent") {
 		// TODO maybe do some magic here?
 	}
 
-	const extendsPath = projectDirectory.resolve(extendsRelative);
-	const {partial: extendsObj, meta: extendsMeta} = await loadPartialProjectConfig(
-		extendsPath.getParent(),
-		extendsPath,
-	);
+	const extendsPath = context.projectDirectory.resolve(extendsRelative);
+	const {partial: extendsObj, meta: extendsMeta} = await loadPartialProjectConfig({
+		...context,
+		projectDirectory: extendsPath.getParent(),
+		configPath: extendsPath,
+	});
 
 	// Check for recursive config
 	if (extendsMeta.configDependencies.has(meta.configPath)) {
@@ -507,17 +600,27 @@ async function extendProjectConfig(
 		merged.bundler.externals = bundlerExternals;
 	}
 
+	const filesMaxSizeIgnore = mergeArrays(
+		extendsObj.files.maxSizeIgnore,
+		config.files.maxSizeIgnore,
+	);
+	if (filesMaxSizeIgnore !== undefined) {
+		merged.files.maxSizeIgnore = filesMaxSizeIgnore;
+	}
+
 	return {
 		partial: merged,
 		meta: {
 			...meta,
 			consumersChain: [...meta.consumersChain, ...extendsMeta.consumersChain],
-			configDependencies: new AbsoluteFilePathSet([
-				...meta.configDependencies,
-				...extendsMeta.configDependencies,
-				extendsPath,
-			]),
-			configHashes: [...meta.configHashes, ...extendsMeta.configHashes],
+			configDependencies: meta.configDependencies.concat(
+				extendsMeta.configDependencies,
+				[extendsPath],
+			),
+			configCacheKeys: {
+				...meta.configCacheKeys,
+				...extendsMeta.configCacheKeys,
+			},
 		},
 	};
 }
@@ -525,7 +628,9 @@ async function extendProjectConfig(
 type MergedPartialConfig<
 	A extends PartialProjectConfig,
 	B extends PartialProjectConfig
-> = {[Key in keyof ProjectConfigObjects]: A[Key] & B[Key]};
+> = {[Key in keyof ProjectConfigObjects]: A[Key] & B[Key]} & {
+	integrations: A["integrations"] & B["integrations"];
+};
 
 function mergePartialConfig<
 	A extends PartialProjectConfig,
@@ -540,6 +645,14 @@ function mergePartialConfig<
 		compiler: {
 			...a.compiler,
 			...b.compiler,
+		},
+		parser: {
+			...a.parser,
+			...b.parser,
+		},
+		check: {
+			...a.check,
+			...b.check,
 		},
 		format: {
 			...a.format,
@@ -582,5 +695,21 @@ function mergePartialConfig<
 			...b.vcs,
 		},
 		targets: new Map([...a.targets.entries(), ...b.targets.entries()]),
+		integrations: {
+			...a.integrations,
+			...b.integrations,
+			eslint: {
+				...a.integrations.eslint,
+				...b.integrations.eslint,
+			},
+			typescriptChecker: {
+				...a.integrations.typescriptChecker,
+				...b.integrations.typescriptChecker,
+			},
+			prettier: {
+				...a.integrations.prettier,
+				...b.integrations.prettier,
+			},
+		},
 	};
 }

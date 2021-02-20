@@ -11,67 +11,27 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "es2019/json-strings/string-line-separator/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2019/json-strings/string-line-separator/input.js"
-		end: Object {
-			column: 0
-			line: 4
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2019/json-strings/string-line-separator/input.js 1:0-4:0
+	path: UIDPath<es2019/json-strings/string-line-separator/input.js>
 	comments: Array [
 		CommentLine {
 			id: "0"
 			value: "      ^ That's a U+2028 LINE SEPARATOR UTF-16 char (between 'before' and 'after')"
-			loc: Object {
-				filename: "es2019/json-strings/string-line-separator/input.js"
-				end: Object {
-					column: 83
-					line: 3
-				}
-				start: Object {
-					column: 0
-					line: 3
-				}
-			}
+			loc: SourceLocation es2019/json-strings/string-line-separator/input.js 3:0-3:83
 		}
 	]
 	body: Array [
 		JSExpressionStatement {
+			loc: SourceLocation es2019/json-strings/string-line-separator/input.js 1:0-2:17
 			trailingComments: Array ["0"]
-			loc: Object {
-				filename: "es2019/json-strings/string-line-separator/input.js"
-				end: Object {
-					column: 17
-					line: 2
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
 			expression: JSStringLiteral {
 				value: "before\u2028after"
-				loc: Object {
-					filename: "es2019/json-strings/string-line-separator/input.js"
-					end: Object {
-						column: 15
-						line: 2
-					}
-					start: Object {
-						column: 1
-						line: 1
-					}
-				}
+				loc: SourceLocation es2019/json-strings/string-line-separator/input.js 1:1-2:15
 			}
 		}
 	]
@@ -81,6 +41,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

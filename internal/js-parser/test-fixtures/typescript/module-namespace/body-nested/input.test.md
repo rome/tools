@@ -12,104 +12,32 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "typescript/module-namespace/body-nested/input.ts"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
+	loc: SourceLocation typescript/module-namespace/body-nested/input.ts 1:0-5:0
+	path: UIDPath<typescript/module-namespace/body-nested/input.ts>
 	syntax: Array ["ts"]
-	loc: Object {
-		filename: "typescript/module-namespace/body-nested/input.ts"
-		end: Object {
-			column: 0
-			line: 5
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
 	body: Array [
 		TSModuleDeclaration {
 			id: JSBindingIdentifier {
 				name: "A"
-				loc: Object {
-					filename: "typescript/module-namespace/body-nested/input.ts"
-					identifierName: "A"
-					end: Object {
-						column: 11
-						line: 1
-					}
-					start: Object {
-						column: 10
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/module-namespace/body-nested/input.ts 1:10-1:11 (A)
 			}
-			loc: Object {
-				filename: "typescript/module-namespace/body-nested/input.ts"
-				end: Object {
-					column: 1
-					line: 4
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation typescript/module-namespace/body-nested/input.ts 1:0-4:1
 			body: TSModuleBlock {
-				loc: Object {
-					filename: "typescript/module-namespace/body-nested/input.ts"
-					end: Object {
-						column: 1
-						line: 4
-					}
-					start: Object {
-						column: 12
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/module-namespace/body-nested/input.ts 1:12-4:1
 				body: Array [
 					TSModuleDeclaration {
 						id: JSBindingIdentifier {
 							name: "B"
-							loc: Object {
-								filename: "typescript/module-namespace/body-nested/input.ts"
-								identifierName: "B"
-								end: Object {
-									column: 15
-									line: 2
-								}
-								start: Object {
-									column: 14
-									line: 2
-								}
-							}
+							loc: SourceLocation typescript/module-namespace/body-nested/input.ts 2:14-2:15 (B)
 						}
-						loc: Object {
-							filename: "typescript/module-namespace/body-nested/input.ts"
-							end: Object {
-								column: 5
-								line: 3
-							}
-							start: Object {
-								column: 4
-								line: 2
-							}
-						}
+						loc: SourceLocation typescript/module-namespace/body-nested/input.ts 2:4-3:5
 						body: TSModuleBlock {
 							body: Array []
-							loc: Object {
-								filename: "typescript/module-namespace/body-nested/input.ts"
-								end: Object {
-									column: 5
-									line: 3
-								}
-								start: Object {
-									column: 16
-									line: 2
-								}
-							}
+							loc: SourceLocation typescript/module-namespace/body-nested/input.ts 2:16-3:5
 						}
 					}
 				]
@@ -122,6 +50,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

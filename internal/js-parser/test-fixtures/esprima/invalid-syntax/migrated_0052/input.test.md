@@ -12,64 +12,24 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "esprima/invalid-syntax/migrated_0052/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "esprima/invalid-syntax/migrated_0052/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation esprima/invalid-syntax/migrated_0052/input.js 1:0-2:0
+	path: UIDPath<esprima/invalid-syntax/migrated_0052/input.js>
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "esprima/invalid-syntax/migrated_0052/input.js"
-				end: Object {
-					column: 3
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation esprima/invalid-syntax/migrated_0052/input.js 1:0-1:3
 			expression: JSUpdateExpression {
 				operator: "++"
 				prefix: false
-				loc: Object {
-					filename: "esprima/invalid-syntax/migrated_0052/input.js"
-					end: Object {
-						column: 3
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/invalid-syntax/migrated_0052/input.js 1:0-1:3
 				argument: JSNumericLiteral {
 					value: 1
 					format: undefined
-					loc: Object {
-						filename: "esprima/invalid-syntax/migrated_0052/input.js"
-						end: Object {
-							column: 1
-							line: 1
-						}
-						start: Object {
-							column: 0
-							line: 1
-						}
-					}
+					loc: SourceLocation esprima/invalid-syntax/migrated_0052/input.js 1:0-1:1
 				}
 			}
 		}
@@ -80,6 +40,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

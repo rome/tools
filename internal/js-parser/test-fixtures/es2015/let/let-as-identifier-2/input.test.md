@@ -12,91 +12,30 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "es2015/let/let-as-identifier-2/input.js"
 	hasHoistedVars: true
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2015/let/let-as-identifier-2/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2015/let/let-as-identifier-2/input.js 1:0-2:0
+	path: UIDPath<es2015/let/let-as-identifier-2/input.js>
 	body: Array [
 		JSVariableDeclarationStatement {
-			loc: Object {
-				filename: "es2015/let/let-as-identifier-2/input.js"
-				end: Object {
-					column: 11
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2015/let/let-as-identifier-2/input.js 1:0-1:11
 			declaration: JSVariableDeclaration {
 				kind: "var"
-				loc: Object {
-					filename: "es2015/let/let-as-identifier-2/input.js"
-					end: Object {
-						column: 11
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/let/let-as-identifier-2/input.js 1:0-1:11
 				declarations: Array [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "let"
-							loc: Object {
-								filename: "es2015/let/let-as-identifier-2/input.js"
-								identifierName: "let"
-								end: Object {
-									column: 7
-									line: 1
-								}
-								start: Object {
-									column: 4
-									line: 1
-								}
-							}
+							loc: SourceLocation es2015/let/let-as-identifier-2/input.js 1:4-1:7 (let)
 						}
-						loc: Object {
-							filename: "es2015/let/let-as-identifier-2/input.js"
-							end: Object {
-								column: 11
-								line: 1
-							}
-							start: Object {
-								column: 4
-								line: 1
-							}
-						}
+						loc: SourceLocation es2015/let/let-as-identifier-2/input.js 1:4-1:11
 						init: JSNumericLiteral {
 							value: 1
 							format: undefined
-							loc: Object {
-								filename: "es2015/let/let-as-identifier-2/input.js"
-								end: Object {
-									column: 11
-									line: 1
-								}
-								start: Object {
-									column: 10
-									line: 1
-								}
-							}
+							loc: SourceLocation es2015/let/let-as-identifier-2/input.js 1:10-1:11
 						}
 					}
 				]
@@ -109,6 +48,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

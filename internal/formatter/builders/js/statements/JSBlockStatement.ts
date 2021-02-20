@@ -21,9 +21,7 @@ export default function JSBlockStatement(
 		node.directives !== undefined && node.directives.length > 0;
 
 	if (
-		!hasComments &&
-		!hasContents &&
-		!hasDirectives &&
+		!(hasComments || hasContents || hasDirectives) &&
 		(parent.type === "JSArrowFunctionExpression" ||
 		parent.type === "JSClassMethod" ||
 		parent.type === "JSClassPrivateMethod" ||

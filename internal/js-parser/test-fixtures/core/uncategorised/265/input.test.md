@@ -12,105 +12,32 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "core/uncategorised/265/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "core/uncategorised/265/input.js"
-		end: Object {
-			column: 18
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation core/uncategorised/265/input.js 1:0-1:18
+	path: UIDPath<core/uncategorised/265/input.js>
 	body: Array [
 		JSWithStatement {
-			loc: Object {
-				filename: "core/uncategorised/265/input.js"
-				end: Object {
-					column: 18
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation core/uncategorised/265/input.js 1:0-1:18
 			object: JSReferenceIdentifier {
 				name: "x"
-				loc: Object {
-					filename: "core/uncategorised/265/input.js"
-					identifierName: "x"
-					end: Object {
-						column: 7
-						line: 1
-					}
-					start: Object {
-						column: 6
-						line: 1
-					}
-				}
+				loc: SourceLocation core/uncategorised/265/input.js 1:6-1:7 (x)
 			}
 			body: JSExpressionStatement {
-				loc: Object {
-					filename: "core/uncategorised/265/input.js"
-					end: Object {
-						column: 18
-						line: 1
-					}
-					start: Object {
-						column: 9
-						line: 1
-					}
-				}
+				loc: SourceLocation core/uncategorised/265/input.js 1:9-1:18
 				expression: JSAssignmentExpression {
 					operator: "="
-					loc: Object {
-						filename: "core/uncategorised/265/input.js"
-						end: Object {
-							column: 18
-							line: 1
-						}
-						start: Object {
-							column: 9
-							line: 1
-						}
-					}
+					loc: SourceLocation core/uncategorised/265/input.js 1:9-1:18
 					left: JSAssignmentIdentifier {
 						name: "foo"
-						loc: Object {
-							filename: "core/uncategorised/265/input.js"
-							identifierName: "foo"
-							end: Object {
-								column: 12
-								line: 1
-							}
-							start: Object {
-								column: 9
-								line: 1
-							}
-						}
+						loc: SourceLocation core/uncategorised/265/input.js 1:9-1:12 (foo)
 					}
 					right: JSReferenceIdentifier {
 						name: "bar"
-						loc: Object {
-							filename: "core/uncategorised/265/input.js"
-							identifierName: "bar"
-							end: Object {
-								column: 18
-								line: 1
-							}
-							start: Object {
-								column: 15
-								line: 1
-							}
-						}
+						loc: SourceLocation core/uncategorised/265/input.js 1:15-1:18 (bar)
 					}
 				}
 			}
@@ -122,6 +49,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

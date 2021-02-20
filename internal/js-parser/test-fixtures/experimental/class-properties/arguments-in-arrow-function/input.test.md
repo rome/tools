@@ -11,45 +11,29 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "experimental/class-properties/arguments-in-arrow-function/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "experimental/class-properties/arguments-in-arrow-function/input.js"
-		end: Object {
-			column: 1
-			line: 5
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation experimental/class-properties/arguments-in-arrow-function/input.js 1:0-5:1
+	path: UIDPath<experimental/class-properties/arguments-in-arrow-function/input.js>
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse"
 				categoryValue: "js"
+				category: Array ["parse"]
 				message: RAW_MARKUP {value: "'arguments' is not allowed in class field initializer"}
 			}
 			location: Object {
-				filename: "experimental/class-properties/arguments-in-arrow-function/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 25
-					line: 3
-				}
-				start: Object {
-					column: 16
-					line: 3
-				}
+				end: Position 3:25
+				path: UIDPath<experimental/class-properties/arguments-in-arrow-function/input.js>
+				start: Position 3:16
 			}
 		}
 	]
@@ -57,30 +41,9 @@ JSRoot {
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "fn"
-				loc: Object {
-					filename: "experimental/class-properties/arguments-in-arrow-function/input.js"
-					identifierName: "fn"
-					end: Object {
-						column: 11
-						line: 1
-					}
-					start: Object {
-						column: 9
-						line: 1
-					}
-				}
+				loc: SourceLocation experimental/class-properties/arguments-in-arrow-function/input.js 1:9-1:11 (fn)
 			}
-			loc: Object {
-				filename: "experimental/class-properties/arguments-in-arrow-function/input.js"
-				end: Object {
-					column: 1
-					line: 5
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation experimental/class-properties/arguments-in-arrow-function/input.js 1:0-5:1
 			head: JSFunctionHead {
 				async: false
 				generator: false
@@ -90,131 +53,38 @@ JSRoot {
 				returnType: undefined
 				thisType: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "experimental/class-properties/arguments-in-arrow-function/input.js"
-					end: Object {
-						column: 13
-						line: 1
-					}
-					start: Object {
-						column: 11
-						line: 1
-					}
-				}
+				loc: SourceLocation experimental/class-properties/arguments-in-arrow-function/input.js 1:11-1:13
 			}
 			body: JSBlockStatement {
 				directives: Array []
-				loc: Object {
-					filename: "experimental/class-properties/arguments-in-arrow-function/input.js"
-					end: Object {
-						column: 1
-						line: 5
-					}
-					start: Object {
-						column: 14
-						line: 1
-					}
-				}
+				loc: SourceLocation experimental/class-properties/arguments-in-arrow-function/input.js 1:14-5:1
 				body: Array [
 					JSClassDeclaration {
 						id: JSBindingIdentifier {
 							name: "A"
-							loc: Object {
-								filename: "experimental/class-properties/arguments-in-arrow-function/input.js"
-								identifierName: "A"
-								end: Object {
-									column: 9
-									line: 2
-								}
-								start: Object {
-									column: 8
-									line: 2
-								}
-							}
+							loc: SourceLocation experimental/class-properties/arguments-in-arrow-function/input.js 2:8-2:9 (A)
 						}
-						loc: Object {
-							filename: "experimental/class-properties/arguments-in-arrow-function/input.js"
-							end: Object {
-								column: 3
-								line: 4
-							}
-							start: Object {
-								column: 2
-								line: 2
-							}
-						}
+						loc: SourceLocation experimental/class-properties/arguments-in-arrow-function/input.js 2:2-4:3
 						meta: JSClassHead {
 							implements: undefined
 							superClass: undefined
 							superTypeParameters: undefined
 							typeParameters: undefined
-							loc: Object {
-								filename: "experimental/class-properties/arguments-in-arrow-function/input.js"
-								end: Object {
-									column: 3
-									line: 4
-								}
-								start: Object {
-									column: 2
-									line: 2
-								}
-							}
+							loc: SourceLocation experimental/class-properties/arguments-in-arrow-function/input.js 2:2-4:3
 							body: Array [
 								JSClassProperty {
 									key: JSStaticPropertyKey {
 										value: JSIdentifier {
 											name: "foo"
-											loc: Object {
-												filename: "experimental/class-properties/arguments-in-arrow-function/input.js"
-												identifierName: "foo"
-												end: Object {
-													column: 7
-													line: 3
-												}
-												start: Object {
-													column: 4
-													line: 3
-												}
-											}
+											loc: SourceLocation experimental/class-properties/arguments-in-arrow-function/input.js 3:4-3:7 (foo)
 										}
-										loc: Object {
-											filename: "experimental/class-properties/arguments-in-arrow-function/input.js"
-											end: Object {
-												column: 7
-												line: 3
-											}
-											start: Object {
-												column: 4
-												line: 3
-											}
-										}
+										loc: SourceLocation experimental/class-properties/arguments-in-arrow-function/input.js 3:4-3:7
 									}
 									value: JSArrowFunctionExpression {
-										loc: Object {
-											filename: "experimental/class-properties/arguments-in-arrow-function/input.js"
-											end: Object {
-												column: 25
-												line: 3
-											}
-											start: Object {
-												column: 10
-												line: 3
-											}
-										}
+										loc: SourceLocation experimental/class-properties/arguments-in-arrow-function/input.js 3:10-3:25
 										body: JSReferenceIdentifier {
 											name: "arguments"
-											loc: Object {
-												filename: "experimental/class-properties/arguments-in-arrow-function/input.js"
-												identifierName: "arguments"
-												end: Object {
-													column: 25
-													line: 3
-												}
-												start: Object {
-													column: 16
-													line: 3
-												}
-											}
+											loc: SourceLocation experimental/class-properties/arguments-in-arrow-function/input.js 3:16-3:25 (arguments)
 										}
 										head: JSFunctionHead {
 											async: false
@@ -223,32 +93,12 @@ JSRoot {
 											rest: undefined
 											returnType: undefined
 											thisType: undefined
-											loc: Object {
-												filename: "experimental/class-properties/arguments-in-arrow-function/input.js"
-												end: Object {
-													column: 15
-													line: 3
-												}
-												start: Object {
-													column: 10
-													line: 3
-												}
-											}
+											loc: SourceLocation experimental/class-properties/arguments-in-arrow-function/input.js 3:10-3:15
 										}
 									}
 									definite: undefined
 									typeAnnotation: undefined
-									loc: Object {
-										filename: "experimental/class-properties/arguments-in-arrow-function/input.js"
-										end: Object {
-											column: 26
-											line: 3
-										}
-										start: Object {
-											column: 4
-											line: 3
-										}
-									}
+									loc: SourceLocation experimental/class-properties/arguments-in-arrow-function/input.js 3:4-3:26
 									meta: JSClassPropertyMeta {
 										abstract: false
 										accessibility: undefined
@@ -256,21 +106,8 @@ JSRoot {
 										readonly: false
 										static: false
 										typeAnnotation: undefined
-										start: Object {
-											column: 4
-											line: 3
-										}
-										loc: Object {
-											filename: "experimental/class-properties/arguments-in-arrow-function/input.js"
-											end: Object {
-												column: 7
-												line: 3
-											}
-											start: Object {
-												column: 4
-												line: 3
-											}
-										}
+										loc: SourceLocation experimental/class-properties/arguments-in-arrow-function/input.js 3:4-3:7
+										start: Position 3:4
 									}
 								}
 							]
@@ -298,8 +135,5 @@ JSRoot {
     4 │   }
     5 │ }
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

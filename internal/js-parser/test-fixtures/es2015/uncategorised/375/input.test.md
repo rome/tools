@@ -11,48 +11,29 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "es2015/uncategorised/375/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
 	syntax: Array []
-	loc: Object {
-		filename: "es2015/uncategorised/375/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2015/uncategorised/375/input.js 1:0-2:0
+	path: UIDPath<es2015/uncategorised/375/input.js>
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse"
 				categoryValue: "js"
-				message: Array [
-					"enum"
-					RAW_MARKUP {value: " is a reserved word"}
-				]
+				category: Array ["parse"]
+				message: RAW_MARKUP {value: "enum is a reserved word"}
 			}
 			location: Object {
-				filename: "es2015/uncategorised/375/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 19
-					line: 1
-				}
-				start: Object {
-					column: 15
-					line: 1
-				}
+				end: Position 1:19
+				path: UIDPath<es2015/uncategorised/375/input.js>
+				start: Position 1:15
 			}
 		}
 	]
@@ -60,44 +41,13 @@ JSRoot {
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "foo"
-				loc: Object {
-					filename: "es2015/uncategorised/375/input.js"
-					identifierName: "foo"
-					end: Object {
-						column: 12
-						line: 1
-					}
-					start: Object {
-						column: 9
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/uncategorised/375/input.js 1:9-1:12 (foo)
 			}
-			loc: Object {
-				filename: "es2015/uncategorised/375/input.js"
-				end: Object {
-					column: 25
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2015/uncategorised/375/input.js 1:0-1:25
 			body: JSBlockStatement {
 				body: Array []
 				directives: Array []
-				loc: Object {
-					filename: "es2015/uncategorised/375/input.js"
-					end: Object {
-						column: 25
-						line: 1
-					}
-					start: Object {
-						column: 23
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/uncategorised/375/input.js 1:23-1:25
 			}
 			head: JSFunctionHead {
 				async: false
@@ -107,102 +57,30 @@ JSRoot {
 				returnType: undefined
 				thisType: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "es2015/uncategorised/375/input.js"
-					end: Object {
-						column: 22
-						line: 1
-					}
-					start: Object {
-						column: 12
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/uncategorised/375/input.js 1:12-1:22
 				params: Array [
 					JSBindingObjectPattern {
 						rest: undefined
-						loc: Object {
-							filename: "es2015/uncategorised/375/input.js"
-							end: Object {
-								column: 21
-								line: 1
-							}
-							start: Object {
-								column: 13
-								line: 1
-							}
-						}
+						loc: SourceLocation es2015/uncategorised/375/input.js 1:13-1:21
 						meta: JSPatternMeta {
 							optional: undefined
 							typeAnnotation: undefined
-							loc: Object {
-								filename: "es2015/uncategorised/375/input.js"
-								end: Object {
-									column: 21
-									line: 1
-								}
-								start: Object {
-									column: 13
-									line: 1
-								}
-							}
+							loc: SourceLocation es2015/uncategorised/375/input.js 1:13-1:21
 						}
 						properties: Array [
 							JSBindingObjectPatternProperty {
 								key: JSStaticPropertyKey {
 									value: JSIdentifier {
 										name: "enum"
-										loc: Object {
-											filename: "es2015/uncategorised/375/input.js"
-											identifierName: "enum"
-											end: Object {
-												column: 19
-												line: 1
-											}
-											start: Object {
-												column: 15
-												line: 1
-											}
-										}
+										loc: SourceLocation es2015/uncategorised/375/input.js 1:15-1:19 (enum)
 									}
-									loc: Object {
-										filename: "es2015/uncategorised/375/input.js"
-										end: Object {
-											column: 19
-											line: 1
-										}
-										start: Object {
-											column: 15
-											line: 1
-										}
-									}
+									loc: SourceLocation es2015/uncategorised/375/input.js 1:15-1:19
 								}
 								value: JSBindingIdentifier {
 									name: "enum"
-									loc: Object {
-										filename: "es2015/uncategorised/375/input.js"
-										identifierName: "enum"
-										end: Object {
-											column: 19
-											line: 1
-										}
-										start: Object {
-											column: 15
-											line: 1
-										}
-									}
+									loc: SourceLocation es2015/uncategorised/375/input.js 1:15-1:19 (enum)
 								}
-								loc: Object {
-									filename: "es2015/uncategorised/375/input.js"
-									end: Object {
-										column: 19
-										line: 1
-									}
-									start: Object {
-										column: 15
-										line: 1
-									}
-								}
+								loc: SourceLocation es2015/uncategorised/375/input.js 1:15-1:19
 							}
 						]
 					}
@@ -224,8 +102,5 @@ JSRoot {
     function foo({ enum }) {}
                    ^^^^
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

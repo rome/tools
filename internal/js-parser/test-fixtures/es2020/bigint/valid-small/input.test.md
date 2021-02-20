@@ -12,49 +12,19 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "es2020/bigint/valid-small/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2020/bigint/valid-small/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2020/bigint/valid-small/input.js 1:0-2:0
+	path: UIDPath<es2020/bigint/valid-small/input.js>
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "es2020/bigint/valid-small/input.js"
-				end: Object {
-					column: 4
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2020/bigint/valid-small/input.js 1:0-1:4
 			expression: JSBigIntLiteral {
 				value: "100"
-				loc: Object {
-					filename: "es2020/bigint/valid-small/input.js"
-					end: Object {
-						column: 4
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation es2020/bigint/valid-small/input.js 1:0-1:4
 			}
 		}
 	]
@@ -64,6 +34,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

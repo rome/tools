@@ -12,78 +12,27 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "esprima/es2015-identifier/weierstrass_weierstrass/input.js"
 	hasHoistedVars: true
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "esprima/es2015-identifier/weierstrass_weierstrass/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation esprima/es2015-identifier/weierstrass_weierstrass/input.js 1:0-2:0
+	path: UIDPath<esprima/es2015-identifier/weierstrass_weierstrass/input.js>
 	body: Array [
 		JSVariableDeclarationStatement {
-			loc: Object {
-				filename: "esprima/es2015-identifier/weierstrass_weierstrass/input.js"
-				end: Object {
-					column: 11
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation esprima/es2015-identifier/weierstrass_weierstrass/input.js 1:0-1:11
 			declaration: JSVariableDeclaration {
 				kind: "var"
-				loc: Object {
-					filename: "esprima/es2015-identifier/weierstrass_weierstrass/input.js"
-					end: Object {
-						column: 11
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/es2015-identifier/weierstrass_weierstrass/input.js 1:0-1:11
 				declarations: Array [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "\u2118\u2118"
-							loc: Object {
-								filename: "esprima/es2015-identifier/weierstrass_weierstrass/input.js"
-								identifierName: "\u2118\u2118"
-								end: Object {
-									column: 11
-									line: 1
-								}
-								start: Object {
-									column: 4
-									line: 1
-								}
-							}
+							loc: SourceLocation esprima/es2015-identifier/weierstrass_weierstrass/input.js 1:4-1:11 (\u2118\u2118)
 						}
 						init: undefined
-						loc: Object {
-							filename: "esprima/es2015-identifier/weierstrass_weierstrass/input.js"
-							end: Object {
-								column: 11
-								line: 1
-							}
-							start: Object {
-								column: 4
-								line: 1
-							}
-						}
+						loc: SourceLocation esprima/es2015-identifier/weierstrass_weierstrass/input.js 1:4-1:11
 					}
 				]
 			}
@@ -95,6 +44,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

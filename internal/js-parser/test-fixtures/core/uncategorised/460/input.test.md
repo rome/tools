@@ -11,119 +11,48 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "core/uncategorised/460/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "core/uncategorised/460/input.js"
-		end: Object {
-			column: 28
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation core/uncategorised/460/input.js 1:0-1:28
+	path: UIDPath<core/uncategorised/460/input.js>
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse"
 				categoryValue: "js"
-				message: Array [
-					RAW_MARKUP {value: "Unknown label <emphasis>"}
-					"x"
-					RAW_MARKUP {value: "</emphasis>"}
-				]
+				category: Array ["parse"]
+				message: RAW_MARKUP {value: "Unknown label <emphasis>x</emphasis>"}
 			}
 			location: Object {
-				filename: "core/uncategorised/460/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 15
-					line: 1
-				}
-				start: Object {
-					column: 15
-					line: 1
-				}
+				end: Position 1:15
+				path: UIDPath<core/uncategorised/460/input.js>
+				start: Position 1:15
 			}
 		}
 	]
 	body: Array [
 		JSWhileStatement {
-			loc: Object {
-				filename: "core/uncategorised/460/input.js"
-				end: Object {
-					column: 28
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation core/uncategorised/460/input.js 1:0-1:28
 			test: JSBooleanLiteral {
 				value: true
-				loc: Object {
-					filename: "core/uncategorised/460/input.js"
-					end: Object {
-						column: 11
-						line: 1
-					}
-					start: Object {
-						column: 7
-						line: 1
-					}
-				}
+				loc: SourceLocation core/uncategorised/460/input.js 1:7-1:11
 			}
 			body: JSBlockStatement {
 				directives: Array []
-				loc: Object {
-					filename: "core/uncategorised/460/input.js"
-					end: Object {
-						column: 28
-						line: 1
-					}
-					start: Object {
-						column: 13
-						line: 1
-					}
-				}
+				loc: SourceLocation core/uncategorised/460/input.js 1:13-1:28
 				body: Array [
 					JSContinueStatement {
-						loc: Object {
-							filename: "core/uncategorised/460/input.js"
-							end: Object {
-								column: 26
-								line: 1
-							}
-							start: Object {
-								column: 15
-								line: 1
-							}
-						}
+						loc: SourceLocation core/uncategorised/460/input.js 1:15-1:26
 						label: JSIdentifier {
 							name: "x"
-							loc: Object {
-								filename: "core/uncategorised/460/input.js"
-								identifierName: "x"
-								end: Object {
-									column: 25
-									line: 1
-								}
-								start: Object {
-									column: 24
-									line: 1
-								}
-							}
+							loc: SourceLocation core/uncategorised/460/input.js 1:24-1:25 (x)
 						}
 					}
 				]
@@ -144,8 +73,5 @@ JSRoot {
     while (true) { continue x; }
                    ^
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

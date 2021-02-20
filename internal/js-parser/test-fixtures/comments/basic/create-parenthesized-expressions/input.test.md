@@ -11,203 +11,73 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "comments/basic/create-parenthesized-expressions/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "comments/basic/create-parenthesized-expressions/input.js"
-		end: Object {
-			column: 0
-			line: 13
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation comments/basic/create-parenthesized-expressions/input.js 1:0-13:0
+	path: UIDPath<comments/basic/create-parenthesized-expressions/input.js>
 	comments: Array [
 		CommentLine {
 			id: "0"
 			value: " One"
-			loc: Object {
-				filename: "comments/basic/create-parenthesized-expressions/input.js"
-				end: Object {
-					column: 6
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation comments/basic/create-parenthesized-expressions/input.js 1:0-1:6
 		}
 		CommentBlock {
 			id: "1"
 			value: " Two "
-			loc: Object {
-				filename: "comments/basic/create-parenthesized-expressions/input.js"
-				end: Object {
-					column: 9
-					line: 4
-				}
-				start: Object {
-					column: 0
-					line: 4
-				}
-			}
+			loc: SourceLocation comments/basic/create-parenthesized-expressions/input.js 4:0-4:9
 		}
 		CommentLine {
 			id: "2"
 			value: " Three"
-			loc: Object {
-				filename: "comments/basic/create-parenthesized-expressions/input.js"
-				end: Object {
-					column: 10
-					line: 8
-				}
-				start: Object {
-					column: 2
-					line: 8
-				}
-			}
+			loc: SourceLocation comments/basic/create-parenthesized-expressions/input.js 8:2-8:10
 		}
 		CommentBlock {
 			id: "3"
 			value: " Four "
-			loc: Object {
-				filename: "comments/basic/create-parenthesized-expressions/input.js"
-				end: Object {
-					column: 11
-					line: 12
-				}
-				start: Object {
-					column: 1
-					line: 12
-				}
-			}
+			loc: SourceLocation comments/basic/create-parenthesized-expressions/input.js 12:1-12:11
 		}
 	]
 	body: Array [
 		JSExpressionStatement {
 			leadingComments: Array ["0"]
+			loc: SourceLocation comments/basic/create-parenthesized-expressions/input.js 2:0-2:4
 			trailingComments: Array ["1"]
-			loc: Object {
-				filename: "comments/basic/create-parenthesized-expressions/input.js"
-				end: Object {
-					column: 4
-					line: 2
-				}
-				start: Object {
-					column: 0
-					line: 2
-				}
-			}
 			expression: JSNumericLiteral {
 				value: 1
 				format: undefined
 				leadingComments: undefined
-				loc: Object {
-					filename: "comments/basic/create-parenthesized-expressions/input.js"
-					end: Object {
-						column: 2
-						line: 2
-					}
-					start: Object {
-						column: 1
-						line: 2
-					}
-				}
+				loc: SourceLocation comments/basic/create-parenthesized-expressions/input.js 2:1-2:2
 			}
 		}
 		JSExpressionStatement {
 			leadingComments: Array ["1"]
-			loc: Object {
-				filename: "comments/basic/create-parenthesized-expressions/input.js"
-				end: Object {
-					column: 4
-					line: 5
-				}
-				start: Object {
-					column: 0
-					line: 5
-				}
-			}
+			loc: SourceLocation comments/basic/create-parenthesized-expressions/input.js 5:0-5:4
 			expression: JSNumericLiteral {
 				value: 2
 				format: undefined
 				leadingComments: undefined
-				loc: Object {
-					filename: "comments/basic/create-parenthesized-expressions/input.js"
-					end: Object {
-						column: 2
-						line: 5
-					}
-					start: Object {
-						column: 1
-						line: 5
-					}
-				}
+				loc: SourceLocation comments/basic/create-parenthesized-expressions/input.js 5:1-5:2
 			}
 		}
 		JSExpressionStatement {
-			loc: Object {
-				filename: "comments/basic/create-parenthesized-expressions/input.js"
-				end: Object {
-					column: 2
-					line: 10
-				}
-				start: Object {
-					column: 0
-					line: 7
-				}
-			}
+			loc: SourceLocation comments/basic/create-parenthesized-expressions/input.js 7:0-10:2
 			expression: JSNumericLiteral {
 				value: 3
 				format: undefined
 				leadingComments: Array ["2"]
-				loc: Object {
-					filename: "comments/basic/create-parenthesized-expressions/input.js"
-					end: Object {
-						column: 3
-						line: 9
-					}
-					start: Object {
-						column: 2
-						line: 9
-					}
-				}
+				loc: SourceLocation comments/basic/create-parenthesized-expressions/input.js 9:2-9:3
 			}
 		}
 		JSExpressionStatement {
-			loc: Object {
-				filename: "comments/basic/create-parenthesized-expressions/input.js"
-				end: Object {
-					column: 15
-					line: 12
-				}
-				start: Object {
-					column: 0
-					line: 12
-				}
-			}
+			loc: SourceLocation comments/basic/create-parenthesized-expressions/input.js 12:0-12:15
 			expression: JSNumericLiteral {
 				value: 4
 				format: undefined
 				leadingComments: Array ["3"]
-				loc: Object {
-					filename: "comments/basic/create-parenthesized-expressions/input.js"
-					end: Object {
-						column: 13
-						line: 12
-					}
-					start: Object {
-						column: 12
-						line: 12
-					}
-				}
+				loc: SourceLocation comments/basic/create-parenthesized-expressions/input.js 12:12-12:13
 			}
 		}
 	]
@@ -217,6 +87,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

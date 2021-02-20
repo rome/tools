@@ -11,74 +11,38 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "es2015/uncategorised/151/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2015/uncategorised/151/input.js"
-		end: Object {
-			column: 7
-			line: 1
+	loc: SourceLocation es2015/uncategorised/151/input.js 1:0-1:7
+	path: UIDPath<es2015/uncategorised/151/input.js>
+	body: Array [
+		JSExpressionStatement {
+			loc: SourceLocation es2015/uncategorised/151/input.js 1:0-1:7
+			expression: JSObjectExpression {
+				properties: Array []
+				loc: SourceLocation es2015/uncategorised/151/input.js 1:1-1:6
+			}
 		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	]
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse"
 				categoryValue: "js"
-				message: RAW_MARKUP {value: "Unexpected token"}
+				category: Array ["parse"]
+				message: RAW_MARKUP {value: "Unexpected character <emphasis>}</emphasis>"}
 			}
 			location: Object {
-				filename: "es2015/uncategorised/151/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 6
-					line: 1
-				}
-				start: Object {
-					column: 5
-					line: 1
-				}
-			}
-		}
-	]
-	body: Array [
-		JSExpressionStatement {
-			loc: Object {
-				filename: "es2015/uncategorised/151/input.js"
-				end: Object {
-					column: 7
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
-			expression: JSObjectExpression {
-				properties: Array []
-				loc: Object {
-					filename: "es2015/uncategorised/151/input.js"
-					end: Object {
-						column: 6
-						line: 1
-					}
-					start: Object {
-						column: 1
-						line: 1
-					}
-				}
+				end: Position 1:6
+				path: UIDPath<es2015/uncategorised/151/input.js>
+				start: Position 1:5
 			}
 		}
 	]
@@ -91,13 +55,10 @@ JSRoot {
 
  es2015/uncategorised/151/input.js:1:5 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ Unexpected token
+  ✖ Unexpected character }
 
     ({[x]})
          ^
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

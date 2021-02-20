@@ -12,103 +12,31 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "typescript/cast/type-assertion-after-operator/input.ts"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
+	loc: SourceLocation typescript/cast/type-assertion-after-operator/input.ts 1:0-2:0
+	path: UIDPath<typescript/cast/type-assertion-after-operator/input.ts>
 	syntax: Array ["ts"]
-	loc: Object {
-		filename: "typescript/cast/type-assertion-after-operator/input.ts"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "typescript/cast/type-assertion-after-operator/input.ts"
-				end: Object {
-					column: 15
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation typescript/cast/type-assertion-after-operator/input.ts 1:0-1:15
 			expression: JSBinaryExpression {
 				operator: "+"
-				loc: Object {
-					filename: "typescript/cast/type-assertion-after-operator/input.ts"
-					end: Object {
-						column: 14
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/cast/type-assertion-after-operator/input.ts 1:0-1:14
 				left: JSNumericLiteral {
 					value: 1
 					format: undefined
-					loc: Object {
-						filename: "typescript/cast/type-assertion-after-operator/input.ts"
-						end: Object {
-							column: 1
-							line: 1
-						}
-						start: Object {
-							column: 0
-							line: 1
-						}
-					}
+					loc: SourceLocation typescript/cast/type-assertion-after-operator/input.ts 1:0-1:1
 				}
 				right: TSTypeAssertion {
-					loc: Object {
-						filename: "typescript/cast/type-assertion-after-operator/input.ts"
-						end: Object {
-							column: 14
-							line: 1
-						}
-						start: Object {
-							column: 4
-							line: 1
-						}
-					}
-					typeAnnotation: TSNumberKeywordTypeAnnotation {
-						loc: Object {
-							filename: "typescript/cast/type-assertion-after-operator/input.ts"
-							end: Object {
-								column: 11
-								line: 1
-							}
-							start: Object {
-								column: 5
-								line: 1
-							}
-						}
-					}
+					loc: SourceLocation typescript/cast/type-assertion-after-operator/input.ts 1:4-1:14
+					typeAnnotation: TSNumberKeywordTypeAnnotation {loc: SourceLocation typescript/cast/type-assertion-after-operator/input.ts 1:5-1:11}
 					expression: JSNumericLiteral {
 						value: 1
 						format: undefined
-						loc: Object {
-							filename: "typescript/cast/type-assertion-after-operator/input.ts"
-							end: Object {
-								column: 14
-								line: 1
-							}
-							start: Object {
-								column: 13
-								line: 1
-							}
-						}
+						loc: SourceLocation typescript/cast/type-assertion-after-operator/input.ts 1:13-1:14
 					}
 				}
 			}
@@ -120,6 +48,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

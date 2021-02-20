@@ -12,49 +12,19 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "core/uncategorised/310/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "core/uncategorised/310/input.js"
-		end: Object {
-			column: 5
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation core/uncategorised/310/input.js 1:0-2:5
+	path: UIDPath<core/uncategorised/310/input.js>
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "core/uncategorised/310/input.js"
-				end: Object {
-					column: 5
-					line: 2
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation core/uncategorised/310/input.js 1:0-2:5
 			expression: JSFunctionExpression {
 				id: undefined
-				loc: Object {
-					filename: "core/uncategorised/310/input.js"
-					end: Object {
-						column: 4
-						line: 2
-					}
-					start: Object {
-						column: 1
-						line: 1
-					}
-				}
+				loc: SourceLocation core/uncategorised/310/input.js 1:1-2:4
 				head: JSFunctionHead {
 					async: false
 					generator: false
@@ -64,72 +34,21 @@ JSRoot {
 					returnType: undefined
 					thisType: undefined
 					typeParameters: undefined
-					loc: Object {
-						filename: "core/uncategorised/310/input.js"
-						end: Object {
-							column: 11
-							line: 1
-						}
-						start: Object {
-							column: 9
-							line: 1
-						}
-					}
+					loc: SourceLocation core/uncategorised/310/input.js 1:9-1:11
 				}
 				body: JSBlockStatement {
 					directives: Array []
-					loc: Object {
-						filename: "core/uncategorised/310/input.js"
-						end: Object {
-							column: 4
-							line: 2
-						}
-						start: Object {
-							column: 11
-							line: 1
-						}
-					}
+					loc: SourceLocation core/uncategorised/310/input.js 1:11-2:4
 					body: Array [
 						JSReturnStatement {
 							argument: undefined
-							loc: Object {
-								filename: "core/uncategorised/310/input.js"
-								end: Object {
-									column: 19
-									line: 1
-								}
-								start: Object {
-									column: 13
-									line: 1
-								}
-							}
+							loc: SourceLocation core/uncategorised/310/input.js 1:13-1:19
 						}
 						JSExpressionStatement {
-							loc: Object {
-								filename: "core/uncategorised/310/input.js"
-								end: Object {
-									column: 2
-									line: 2
-								}
-								start: Object {
-									column: 0
-									line: 2
-								}
-							}
+							loc: SourceLocation core/uncategorised/310/input.js 2:0-2:2
 							expression: JSReferenceIdentifier {
 								name: "x"
-								loc: Object {
-									filename: "core/uncategorised/310/input.js"
-									identifierName: "x"
-									end: Object {
-										column: 1
-										line: 2
-									}
-									start: Object {
-										column: 0
-										line: 2
-									}
-								}
+								loc: SourceLocation core/uncategorised/310/input.js 2:0-2:1 (x)
 							}
 						}
 					]
@@ -143,6 +62,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

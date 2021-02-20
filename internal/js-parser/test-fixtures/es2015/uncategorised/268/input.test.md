@@ -10,65 +10,41 @@
 JSRoot {
 	corrupt: false
 	directives: Array []
-	filename: "es2015/uncategorised/268/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2015/uncategorised/268/input.js"
-		end: Object {
-			column: 53
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2015/uncategorised/268/input.js 1:0-1:53
+	path: UIDPath<es2015/uncategorised/268/input.js>
 	comments: Array [
 		CommentLine {
 			id: "0"
 			value: " expression closure is not supported"
-			loc: Object {
-				filename: "es2015/uncategorised/268/input.js"
-				end: Object {
-					column: 53
-					line: 1
-				}
-				start: Object {
-					column: 15
-					line: 1
-				}
-			}
+			loc: SourceLocation es2015/uncategorised/268/input.js 1:15-1:53
 		}
 	]
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				category: "parse"
-				categoryValue: "js"
-				message: Array [
-					RAW_MARKUP {value: "Unexpected token, expected "}
-					"{"
-				]
-			}
 			location: Object {
-				filename: "es2015/uncategorised/268/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 14
-					line: 1
-				}
-				start: Object {
-					column: 13
-					line: 1
-				}
+				end: Position 1:12
+				path: UIDPath<es2015/uncategorised/268/input.js>
+				start: Position 1:13
+			}
+			description: Object {
+				categoryValue: "js"
+				category: Array ["parse"]
+				message: RAW_MARKUP {value: "Unexpected character <emphasis>1</emphasis>"}
+				advice: Array [
+					log {
+						category: "info"
+						text: RAW_MARKUP {value: "Expected the opening block character <emphasis>{</emphasis>"}
+					}
+				]
 			}
 		}
 	]
@@ -76,31 +52,10 @@ JSRoot {
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "a"
-				loc: Object {
-					filename: "es2015/uncategorised/268/input.js"
-					identifierName: "a"
-					end: Object {
-						column: 10
-						line: 1
-					}
-					start: Object {
-						column: 9
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/uncategorised/268/input.js 1:9-1:10 (a)
 			}
+			loc: SourceLocation es2015/uncategorised/268/input.js 1:0-1:14
 			trailingComments: Array ["0"]
-			loc: Object {
-				filename: "es2015/uncategorised/268/input.js"
-				end: Object {
-					column: 14
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
 			head: JSFunctionHead {
 				async: false
 				generator: false
@@ -110,61 +65,21 @@ JSRoot {
 				returnType: undefined
 				thisType: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "es2015/uncategorised/268/input.js"
-					end: Object {
-						column: 12
-						line: 1
-					}
-					start: Object {
-						column: 10
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/uncategorised/268/input.js 1:10-1:12
 			}
 			body: JSBlockStatement {
 				directives: Array []
 				trailingComments: undefined
-				loc: Object {
-					filename: "es2015/uncategorised/268/input.js"
-					end: Object {
-						column: 14
-						line: 1
-					}
-					start: Object {
-						column: 13
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/uncategorised/268/input.js 1:13-1:14
 				body: Array [
 					JSExpressionStatement {
 						trailingComments: undefined
-						loc: Object {
-							filename: "es2015/uncategorised/268/input.js"
-							end: Object {
-								column: 14
-								line: 1
-							}
-							start: Object {
-								column: 13
-								line: 1
-							}
-						}
+						loc: SourceLocation es2015/uncategorised/268/input.js 1:13-1:14
 						expression: JSNumericLiteral {
 							value: 1
 							format: undefined
 							trailingComments: undefined
-							loc: Object {
-								filename: "es2015/uncategorised/268/input.js"
-								end: Object {
-									column: 14
-									line: 1
-								}
-								start: Object {
-									column: 13
-									line: 1
-								}
-							}
+							loc: SourceLocation es2015/uncategorised/268/input.js 1:13-1:14
 						}
 					}
 				]
@@ -180,13 +95,12 @@ JSRoot {
 
  es2015/uncategorised/268/input.js:1:13 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ Unexpected token, expected {
+  ✖ Unexpected character 1
 
     function a() 1 // expression closure is not supported
                  ^
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  ℹ Expected the opening block character {
 
-✖ Found 1 problem
 
 ```

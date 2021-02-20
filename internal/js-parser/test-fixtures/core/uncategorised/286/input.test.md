@@ -12,65 +12,24 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "core/uncategorised/286/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "core/uncategorised/286/input.js"
-		end: Object {
-			column: 24
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation core/uncategorised/286/input.js 1:0-1:24
+	path: UIDPath<core/uncategorised/286/input.js>
 	body: Array [
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "arguments"
-				loc: Object {
-					filename: "core/uncategorised/286/input.js"
-					identifierName: "arguments"
-					end: Object {
-						column: 18
-						line: 1
-					}
-					start: Object {
-						column: 9
-						line: 1
-					}
-				}
+				loc: SourceLocation core/uncategorised/286/input.js 1:9-1:18 (arguments)
 			}
-			loc: Object {
-				filename: "core/uncategorised/286/input.js"
-				end: Object {
-					column: 24
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation core/uncategorised/286/input.js 1:0-1:24
 			body: JSBlockStatement {
 				body: Array []
 				directives: Array []
-				loc: Object {
-					filename: "core/uncategorised/286/input.js"
-					end: Object {
-						column: 24
-						line: 1
-					}
-					start: Object {
-						column: 21
-						line: 1
-					}
-				}
+				loc: SourceLocation core/uncategorised/286/input.js 1:21-1:24
 			}
 			head: JSFunctionHead {
 				async: false
@@ -81,17 +40,7 @@ JSRoot {
 				returnType: undefined
 				thisType: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "core/uncategorised/286/input.js"
-					end: Object {
-						column: 20
-						line: 1
-					}
-					start: Object {
-						column: 18
-						line: 1
-					}
-				}
+				loc: SourceLocation core/uncategorised/286/input.js 1:18-1:20
 			}
 		}
 	]
@@ -101,6 +50,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

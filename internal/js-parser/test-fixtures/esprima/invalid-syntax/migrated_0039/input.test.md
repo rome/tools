@@ -11,61 +11,35 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "esprima/invalid-syntax/migrated_0039/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "esprima/invalid-syntax/migrated_0039/input.js"
-		end: Object {
-			column: 6
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation esprima/invalid-syntax/migrated_0039/input.js 1:0-1:6
+	path: UIDPath<esprima/invalid-syntax/migrated_0039/input.js>
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse"
 				categoryValue: "js"
+				category: Array ["parse"]
 				message: RAW_MARKUP {value: "Unterminated regular expression"}
 			}
 			location: Object {
-				filename: "esprima/invalid-syntax/migrated_0039/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 5
-					line: 1
-				}
-				start: Object {
-					column: 5
-					line: 1
-				}
+				end: Position 1:5
+				path: UIDPath<esprima/invalid-syntax/migrated_0039/input.js>
+				start: Position 1:5
 			}
 		}
 	]
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "esprima/invalid-syntax/migrated_0039/input.js"
-				end: Object {
-					column: 6
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation esprima/invalid-syntax/migrated_0039/input.js 1:0-1:6
 			expression: JSRegExpLiteral {
 				global: false
 				insensitive: false
@@ -73,85 +47,25 @@ JSRoot {
 				noDotNewline: false
 				sticky: false
 				unicode: false
-				loc: Object {
-					filename: "esprima/invalid-syntax/migrated_0039/input.js"
-					end: Object {
-						column: 6
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/invalid-syntax/migrated_0039/input.js 1:0-1:6
 				expression: JSRegExpSubExpression {
-					loc: Object {
-						filename: "esprima/invalid-syntax/migrated_0039/input.js"
-						end: Object {
-							column: 5
-							line: 1
-						}
-						start: Object {
-							column: 1
-							line: 1
-						}
-					}
+					loc: SourceLocation esprima/invalid-syntax/migrated_0039/input.js 1:1-1:5
 					body: Array [
 						JSRegExpCharacter {
 							value: "t"
-							loc: Object {
-								filename: "esprima/invalid-syntax/migrated_0039/input.js"
-								end: Object {
-									column: 2
-									line: 1
-								}
-								start: Object {
-									column: 1
-									line: 1
-								}
-							}
+							loc: SourceLocation esprima/invalid-syntax/migrated_0039/input.js 1:1-1:2
 						}
 						JSRegExpCharacter {
 							value: "e"
-							loc: Object {
-								filename: "esprima/invalid-syntax/migrated_0039/input.js"
-								end: Object {
-									column: 3
-									line: 1
-								}
-								start: Object {
-									column: 2
-									line: 1
-								}
-							}
+							loc: SourceLocation esprima/invalid-syntax/migrated_0039/input.js 1:2-1:3
 						}
 						JSRegExpCharacter {
 							value: "s"
-							loc: Object {
-								filename: "esprima/invalid-syntax/migrated_0039/input.js"
-								end: Object {
-									column: 4
-									line: 1
-								}
-								start: Object {
-									column: 3
-									line: 1
-								}
-							}
+							loc: SourceLocation esprima/invalid-syntax/migrated_0039/input.js 1:3-1:4
 						}
 						JSRegExpCharacter {
 							value: "t"
-							loc: Object {
-								filename: "esprima/invalid-syntax/migrated_0039/input.js"
-								end: Object {
-									column: 5
-									line: 1
-								}
-								start: Object {
-									column: 4
-									line: 1
-								}
-							}
+							loc: SourceLocation esprima/invalid-syntax/migrated_0039/input.js 1:4-1:5
 						}
 					]
 				}
@@ -172,8 +86,5 @@ JSRoot {
     /test
          ^
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

@@ -11,122 +11,48 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "esprima/es2015-meta-property/unknown-property/input.js"
 	hasHoistedVars: true
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "esprima/es2015-meta-property/unknown-property/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation esprima/es2015-meta-property/unknown-property/input.js 1:0-2:0
+	path: UIDPath<esprima/es2015-meta-property/unknown-property/input.js>
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse"
 				categoryValue: "js"
-				message: Array [
-					RAW_MARKUP {value: "The only valid meta property for "}
-					"new"
-					RAW_MARKUP {value: " is "}
-					"new"
-					RAW_MARKUP {value: "."}
-					"target"
-				]
+				category: Array ["parse"]
+				message: RAW_MARKUP {value: "The only valid meta property for new is new.target"}
 			}
 			location: Object {
-				filename: "esprima/es2015-meta-property/unknown-property/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 41
-					line: 1
-				}
-				start: Object {
-					column: 25
-					line: 1
-				}
+				end: Position 1:41
+				path: UIDPath<esprima/es2015-meta-property/unknown-property/input.js>
+				start: Position 1:25
 			}
 		}
 	]
 	body: Array [
 		JSVariableDeclarationStatement {
-			loc: Object {
-				filename: "esprima/es2015-meta-property/unknown-property/input.js"
-				end: Object {
-					column: 44
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation esprima/es2015-meta-property/unknown-property/input.js 1:0-1:44
 			declaration: JSVariableDeclaration {
 				kind: "var"
-				loc: Object {
-					filename: "esprima/es2015-meta-property/unknown-property/input.js"
-					end: Object {
-						column: 44
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/es2015-meta-property/unknown-property/input.js 1:0-1:44
 				declarations: Array [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "f"
-							loc: Object {
-								filename: "esprima/es2015-meta-property/unknown-property/input.js"
-								identifierName: "f"
-								end: Object {
-									column: 5
-									line: 1
-								}
-								start: Object {
-									column: 4
-									line: 1
-								}
-							}
+							loc: SourceLocation esprima/es2015-meta-property/unknown-property/input.js 1:4-1:5 (f)
 						}
-						loc: Object {
-							filename: "esprima/es2015-meta-property/unknown-property/input.js"
-							end: Object {
-								column: 44
-								line: 1
-							}
-							start: Object {
-								column: 4
-								line: 1
-							}
-						}
+						loc: SourceLocation esprima/es2015-meta-property/unknown-property/input.js 1:4-1:44
 						init: JSFunctionExpression {
 							id: undefined
-							loc: Object {
-								filename: "esprima/es2015-meta-property/unknown-property/input.js"
-								end: Object {
-									column: 44
-									line: 1
-								}
-								start: Object {
-									column: 8
-									line: 1
-								}
-							}
+							loc: SourceLocation esprima/es2015-meta-property/unknown-property/input.js 1:8-1:44
 							head: JSFunctionHead {
 								async: false
 								generator: false
@@ -136,85 +62,23 @@ JSRoot {
 								returnType: undefined
 								thisType: undefined
 								typeParameters: undefined
-								loc: Object {
-									filename: "esprima/es2015-meta-property/unknown-property/input.js"
-									end: Object {
-										column: 18
-										line: 1
-									}
-									start: Object {
-										column: 16
-										line: 1
-									}
-								}
+								loc: SourceLocation esprima/es2015-meta-property/unknown-property/input.js 1:16-1:18
 							}
 							body: JSBlockStatement {
 								directives: Array []
-								loc: Object {
-									filename: "esprima/es2015-meta-property/unknown-property/input.js"
-									end: Object {
-										column: 44
-										line: 1
-									}
-									start: Object {
-										column: 19
-										line: 1
-									}
-								}
+								loc: SourceLocation esprima/es2015-meta-property/unknown-property/input.js 1:19-1:44
 								body: Array [
 									JSExpressionStatement {
-										loc: Object {
-											filename: "esprima/es2015-meta-property/unknown-property/input.js"
-											end: Object {
-												column: 42
-												line: 1
-											}
-											start: Object {
-												column: 21
-												line: 1
-											}
-										}
+										loc: SourceLocation esprima/es2015-meta-property/unknown-property/input.js 1:21-1:42
 										expression: JSMetaProperty {
-											loc: Object {
-												filename: "esprima/es2015-meta-property/unknown-property/input.js"
-												end: Object {
-													column: 41
-													line: 1
-												}
-												start: Object {
-													column: 21
-													line: 1
-												}
-											}
+											loc: SourceLocation esprima/es2015-meta-property/unknown-property/input.js 1:21-1:41
 											meta: JSIdentifier {
 												name: "new"
-												loc: Object {
-													filename: "esprima/es2015-meta-property/unknown-property/input.js"
-													identifierName: "new"
-													end: Object {
-														column: 24
-														line: 1
-													}
-													start: Object {
-														column: 21
-														line: 1
-													}
-												}
+												loc: SourceLocation esprima/es2015-meta-property/unknown-property/input.js 1:21-1:24 (new)
 											}
 											property: JSIdentifier {
 												name: "unknown_property"
-												loc: Object {
-													filename: "esprima/es2015-meta-property/unknown-property/input.js"
-													identifierName: "unknown_property"
-													end: Object {
-														column: 41
-														line: 1
-													}
-													start: Object {
-														column: 25
-														line: 1
-													}
-												}
+												loc: SourceLocation esprima/es2015-meta-property/unknown-property/input.js 1:25-1:41 (unknown_property)
 											}
 										}
 									}
@@ -240,8 +104,5 @@ JSRoot {
     var f = function() { new.unknown_property; }
                              ^^^^^^^^^^^^^^^^
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

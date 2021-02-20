@@ -36,7 +36,7 @@ function dumpScope(
 }
 
 function dumpScopeTree(input: string): string {
-	const ast = parseJS({input, path: "unknown"});
+	const ast = parseJS({input});
 	const context = new CompilerContext({ast});
 
 	// Collect a map of scope to child scopes

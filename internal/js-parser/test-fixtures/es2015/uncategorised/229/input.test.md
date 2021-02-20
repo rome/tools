@@ -11,108 +11,48 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "es2015/uncategorised/229/input.js"
 	hasHoistedVars: true
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2015/uncategorised/229/input.js"
-		end: Object {
-			column: 9
-			line: 1
+	loc: SourceLocation es2015/uncategorised/229/input.js 1:0-1:9
+	path: UIDPath<es2015/uncategorised/229/input.js>
+	body: Array [
+		JSVariableDeclarationStatement {
+			loc: SourceLocation es2015/uncategorised/229/input.js 1:0-1:9
+			declaration: JSVariableDeclaration {
+				kind: "var"
+				loc: SourceLocation es2015/uncategorised/229/input.js 1:0-1:9
+				declarations: Array [
+					JSVariableDeclarator {
+						id: JSBindingIdentifier {
+							name: "super"
+							loc: SourceLocation es2015/uncategorised/229/input.js 1:4-1:9 (super)
+						}
+						init: undefined
+						loc: SourceLocation es2015/uncategorised/229/input.js 1:4-1:9
+					}
+				]
+			}
 		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	]
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse"
 				categoryValue: "js"
-				message: Array [
-					RAW_MARKUP {value: "Unexpected keyword "}
-					"super"
-				]
+				category: Array ["parse"]
+				message: RAW_MARKUP {value: "Unexpected keyword <emphasis>super</emphasis>"}
 			}
 			location: Object {
-				filename: "es2015/uncategorised/229/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 9
-					line: 1
-				}
-				start: Object {
-					column: 4
-					line: 1
-				}
-			}
-		}
-	]
-	body: Array [
-		JSVariableDeclarationStatement {
-			loc: Object {
-				filename: "es2015/uncategorised/229/input.js"
-				end: Object {
-					column: 9
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
-			declaration: JSVariableDeclaration {
-				kind: "var"
-				loc: Object {
-					filename: "es2015/uncategorised/229/input.js"
-					end: Object {
-						column: 9
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
-				declarations: Array [
-					JSVariableDeclarator {
-						id: JSBindingIdentifier {
-							name: "super"
-							loc: Object {
-								filename: "es2015/uncategorised/229/input.js"
-								identifierName: "super"
-								end: Object {
-									column: 9
-									line: 1
-								}
-								start: Object {
-									column: 4
-									line: 1
-								}
-							}
-						}
-						init: undefined
-						loc: Object {
-							filename: "es2015/uncategorised/229/input.js"
-							end: Object {
-								column: 9
-								line: 1
-							}
-							start: Object {
-								column: 4
-								line: 1
-							}
-						}
-					}
-				]
+				end: Position 1:9
+				path: UIDPath<es2015/uncategorised/229/input.js>
+				start: Position 1:4
 			}
 		}
 	]
@@ -130,8 +70,5 @@ JSRoot {
     var super
         ^^^^^
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

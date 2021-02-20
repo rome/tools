@@ -12,145 +12,43 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "typescript/function/getter-setter/input.ts"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
+	loc: SourceLocation typescript/function/getter-setter/input.ts 1:0-6:2
+	path: UIDPath<typescript/function/getter-setter/input.ts>
 	syntax: Array ["ts"]
-	loc: Object {
-		filename: "typescript/function/getter-setter/input.ts"
-		end: Object {
-			column: 2
-			line: 6
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
 	body: Array [
 		JSVariableDeclarationStatement {
-			loc: Object {
-				filename: "typescript/function/getter-setter/input.ts"
-				end: Object {
-					column: 2
-					line: 3
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation typescript/function/getter-setter/input.ts 1:0-3:2
 			declaration: JSVariableDeclaration {
 				kind: "const"
-				loc: Object {
-					filename: "typescript/function/getter-setter/input.ts"
-					end: Object {
-						column: 2
-						line: 3
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/function/getter-setter/input.ts 1:0-3:2
 				declarations: Array [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "g"
-							loc: Object {
-								filename: "typescript/function/getter-setter/input.ts"
-								identifierName: "g"
-								end: Object {
-									column: 7
-									line: 1
-								}
-								start: Object {
-									column: 6
-									line: 1
-								}
-							}
+							loc: SourceLocation typescript/function/getter-setter/input.ts 1:6-1:7 (g)
 						}
-						loc: Object {
-							filename: "typescript/function/getter-setter/input.ts"
-							end: Object {
-								column: 1
-								line: 3
-							}
-							start: Object {
-								column: 6
-								line: 1
-							}
-						}
+						loc: SourceLocation typescript/function/getter-setter/input.ts 1:6-3:1
 						init: JSObjectExpression {
-							loc: Object {
-								filename: "typescript/function/getter-setter/input.ts"
-								end: Object {
-									column: 1
-									line: 3
-								}
-								start: Object {
-									column: 10
-									line: 1
-								}
-							}
+							loc: SourceLocation typescript/function/getter-setter/input.ts 1:10-3:1
 							properties: Array [
 								JSObjectMethod {
 									kind: "get"
 									key: JSStaticPropertyKey {
 										value: JSIdentifier {
 											name: "m"
-											loc: Object {
-												filename: "typescript/function/getter-setter/input.ts"
-												identifierName: "m"
-												end: Object {
-													column: 7
-													line: 2
-												}
-												start: Object {
-													column: 6
-													line: 2
-												}
-											}
+											loc: SourceLocation typescript/function/getter-setter/input.ts 2:6-2:7 (m)
 										}
-										loc: Object {
-											filename: "typescript/function/getter-setter/input.ts"
-											end: Object {
-												column: 7
-												line: 2
-											}
-											start: Object {
-												column: 6
-												line: 2
-											}
-										}
+										loc: SourceLocation typescript/function/getter-setter/input.ts 2:6-2:7
 									}
-									loc: Object {
-										filename: "typescript/function/getter-setter/input.ts"
-										end: Object {
-											column: 20
-											line: 2
-										}
-										start: Object {
-											column: 2
-											line: 2
-										}
-									}
+									loc: SourceLocation typescript/function/getter-setter/input.ts 2:2-2:20
 									body: JSBlockStatement {
 										body: Array []
 										directives: Array []
-										loc: Object {
-											filename: "typescript/function/getter-setter/input.ts"
-											end: Object {
-												column: 20
-												line: 2
-											}
-											start: Object {
-												column: 18
-												line: 2
-											}
-										}
+										loc: SourceLocation typescript/function/getter-setter/input.ts 2:18-2:20
 									}
 									head: JSFunctionHead {
 										async: false
@@ -160,57 +58,16 @@ JSRoot {
 										rest: undefined
 										returnType: undefined
 										typeParameters: undefined
-										loc: Object {
-											filename: "typescript/function/getter-setter/input.ts"
-											end: Object {
-												column: 17
-												line: 2
-											}
-											start: Object {
-												column: 7
-												line: 2
-											}
-										}
+										loc: SourceLocation typescript/function/getter-setter/input.ts 2:7-2:17
 										thisType: JSBindingIdentifier {
 											name: "this"
-											loc: Object {
-												filename: "typescript/function/getter-setter/input.ts"
-												identifierName: "this"
-												end: Object {
-													column: 12
-													line: 2
-												}
-												start: Object {
-													column: 8
-													line: 2
-												}
-											}
+											loc: SourceLocation typescript/function/getter-setter/input.ts 2:8-2:12 (this)
 											meta: JSPatternMeta {
 												optional: undefined
-												loc: Object {
-													filename: "typescript/function/getter-setter/input.ts"
-													end: Object {
-														column: 16
-														line: 2
-													}
-													start: Object {
-														column: 8
-														line: 2
-													}
-												}
+												loc: SourceLocation typescript/function/getter-setter/input.ts 2:8-2:16
 												typeAnnotation: TSObjectTypeAnnotation {
 													members: Array []
-													loc: Object {
-														filename: "typescript/function/getter-setter/input.ts"
-														end: Object {
-															column: 16
-															line: 2
-														}
-														start: Object {
-															column: 14
-															line: 2
-														}
-													}
+													loc: SourceLocation typescript/function/getter-setter/input.ts 2:14-2:16
 												}
 											}
 										}
@@ -223,126 +80,34 @@ JSRoot {
 			}
 		}
 		JSVariableDeclarationStatement {
-			loc: Object {
-				filename: "typescript/function/getter-setter/input.ts"
-				end: Object {
-					column: 2
-					line: 6
-				}
-				start: Object {
-					column: 0
-					line: 4
-				}
-			}
+			loc: SourceLocation typescript/function/getter-setter/input.ts 4:0-6:2
 			declaration: JSVariableDeclaration {
 				kind: "const"
-				loc: Object {
-					filename: "typescript/function/getter-setter/input.ts"
-					end: Object {
-						column: 2
-						line: 6
-					}
-					start: Object {
-						column: 0
-						line: 4
-					}
-				}
+				loc: SourceLocation typescript/function/getter-setter/input.ts 4:0-6:2
 				declarations: Array [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "s"
-							loc: Object {
-								filename: "typescript/function/getter-setter/input.ts"
-								identifierName: "s"
-								end: Object {
-									column: 7
-									line: 4
-								}
-								start: Object {
-									column: 6
-									line: 4
-								}
-							}
+							loc: SourceLocation typescript/function/getter-setter/input.ts 4:6-4:7 (s)
 						}
-						loc: Object {
-							filename: "typescript/function/getter-setter/input.ts"
-							end: Object {
-								column: 1
-								line: 6
-							}
-							start: Object {
-								column: 6
-								line: 4
-							}
-						}
+						loc: SourceLocation typescript/function/getter-setter/input.ts 4:6-6:1
 						init: JSObjectExpression {
-							loc: Object {
-								filename: "typescript/function/getter-setter/input.ts"
-								end: Object {
-									column: 1
-									line: 6
-								}
-								start: Object {
-									column: 10
-									line: 4
-								}
-							}
+							loc: SourceLocation typescript/function/getter-setter/input.ts 4:10-6:1
 							properties: Array [
 								JSObjectMethod {
 									kind: "set"
 									key: JSStaticPropertyKey {
 										value: JSIdentifier {
 											name: "m"
-											loc: Object {
-												filename: "typescript/function/getter-setter/input.ts"
-												identifierName: "m"
-												end: Object {
-													column: 7
-													line: 5
-												}
-												start: Object {
-													column: 6
-													line: 5
-												}
-											}
+											loc: SourceLocation typescript/function/getter-setter/input.ts 5:6-5:7 (m)
 										}
-										loc: Object {
-											filename: "typescript/function/getter-setter/input.ts"
-											end: Object {
-												column: 7
-												line: 5
-											}
-											start: Object {
-												column: 6
-												line: 5
-											}
-										}
+										loc: SourceLocation typescript/function/getter-setter/input.ts 5:6-5:7
 									}
-									loc: Object {
-										filename: "typescript/function/getter-setter/input.ts"
-										end: Object {
-											column: 27
-											line: 5
-										}
-										start: Object {
-											column: 2
-											line: 5
-										}
-									}
+									loc: SourceLocation typescript/function/getter-setter/input.ts 5:2-5:27
 									body: JSBlockStatement {
 										body: Array []
 										directives: Array []
-										loc: Object {
-											filename: "typescript/function/getter-setter/input.ts"
-											end: Object {
-												column: 27
-												line: 5
-											}
-											start: Object {
-												column: 25
-												line: 5
-											}
-										}
+										loc: SourceLocation typescript/function/getter-setter/input.ts 5:25-5:27
 									}
 									head: JSFunctionHead {
 										async: false
@@ -351,89 +116,27 @@ JSRoot {
 										rest: undefined
 										returnType: undefined
 										typeParameters: undefined
-										loc: Object {
-											filename: "typescript/function/getter-setter/input.ts"
-											end: Object {
-												column: 24
-												line: 5
-											}
-											start: Object {
-												column: 7
-												line: 5
-											}
-										}
+										loc: SourceLocation typescript/function/getter-setter/input.ts 5:7-5:24
 										params: Array [
 											JSBindingIdentifier {
 												name: "value"
-												loc: Object {
-													filename: "typescript/function/getter-setter/input.ts"
-													identifierName: "value"
-													end: Object {
-														column: 23
-														line: 5
-													}
-													start: Object {
-														column: 18
-														line: 5
-													}
-												}
+												loc: SourceLocation typescript/function/getter-setter/input.ts 5:18-5:23 (value)
 												meta: JSPatternMeta {
 													optional: undefined
 													typeAnnotation: undefined
-													loc: Object {
-														filename: "typescript/function/getter-setter/input.ts"
-														end: Object {
-															column: 23
-															line: 5
-														}
-														start: Object {
-															column: 18
-															line: 5
-														}
-													}
+													loc: SourceLocation typescript/function/getter-setter/input.ts 5:18-5:23
 												}
 											}
 										]
 										thisType: JSBindingIdentifier {
 											name: "this"
-											loc: Object {
-												filename: "typescript/function/getter-setter/input.ts"
-												identifierName: "this"
-												end: Object {
-													column: 12
-													line: 5
-												}
-												start: Object {
-													column: 8
-													line: 5
-												}
-											}
+											loc: SourceLocation typescript/function/getter-setter/input.ts 5:8-5:12 (this)
 											meta: JSPatternMeta {
 												optional: undefined
-												loc: Object {
-													filename: "typescript/function/getter-setter/input.ts"
-													end: Object {
-														column: 16
-														line: 5
-													}
-													start: Object {
-														column: 8
-														line: 5
-													}
-												}
+												loc: SourceLocation typescript/function/getter-setter/input.ts 5:8-5:16
 												typeAnnotation: TSObjectTypeAnnotation {
 													members: Array []
-													loc: Object {
-														filename: "typescript/function/getter-setter/input.ts"
-														end: Object {
-															column: 16
-															line: 5
-														}
-														start: Object {
-															column: 14
-															line: 5
-														}
-													}
+													loc: SourceLocation typescript/function/getter-setter/input.ts 5:14-5:16
 												}
 											}
 										}
@@ -452,6 +155,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

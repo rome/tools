@@ -12,80 +12,28 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "core/opts/allowUndeclaredExports/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
 	syntax: Array []
-	loc: Object {
-		filename: "core/opts/allowUndeclaredExports/input.js"
-		end: Object {
-			column: 15
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation core/opts/allowUndeclaredExports/input.js 1:0-1:15
+	path: UIDPath<core/opts/allowUndeclaredExports/input.js>
 	body: Array [
 		JSExportLocalDeclaration {
 			declaration: undefined
 			exportKind: "value"
-			loc: Object {
-				filename: "core/opts/allowUndeclaredExports/input.js"
-				end: Object {
-					column: 15
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation core/opts/allowUndeclaredExports/input.js 1:0-1:15
 			specifiers: Array [
 				JSExportLocalSpecifier {
-					loc: Object {
-						filename: "core/opts/allowUndeclaredExports/input.js"
-						end: Object {
-							column: 12
-							line: 1
-						}
-						start: Object {
-							column: 9
-							line: 1
-						}
-					}
+					loc: SourceLocation core/opts/allowUndeclaredExports/input.js 1:9-1:12
 					exported: JSIdentifier {
 						name: "foo"
-						loc: Object {
-							filename: "core/opts/allowUndeclaredExports/input.js"
-							identifierName: "foo"
-							end: Object {
-								column: 12
-								line: 1
-							}
-							start: Object {
-								column: 9
-								line: 1
-							}
-						}
+						loc: SourceLocation core/opts/allowUndeclaredExports/input.js 1:9-1:12 (foo)
 					}
 					local: JSReferenceIdentifier {
 						name: "foo"
-						loc: Object {
-							filename: "core/opts/allowUndeclaredExports/input.js"
-							identifierName: "foo"
-							end: Object {
-								column: 12
-								line: 1
-							}
-							start: Object {
-								column: 9
-								line: 1
-							}
-						}
+						loc: SourceLocation core/opts/allowUndeclaredExports/input.js 1:9-1:12 (foo)
 					}
 				}
 			]
@@ -97,6 +45,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

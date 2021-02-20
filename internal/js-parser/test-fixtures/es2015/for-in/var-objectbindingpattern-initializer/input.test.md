@@ -11,200 +11,70 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "es2015/for-in/var-objectbindingpattern-initializer/input.js"
 	hasHoistedVars: true
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2015/for-in/var-objectbindingpattern-initializer/input.js"
-		end: Object {
-			column: 24
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2015/for-in/var-objectbindingpattern-initializer/input.js 1:0-1:24
+	path: UIDPath<es2015/for-in/var-objectbindingpattern-initializer/input.js>
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse"
 				categoryValue: "js"
+				category: Array ["parse"]
 				message: RAW_MARKUP {value: "Loop variable declaration may not have an initializer"}
 			}
 			location: Object {
-				filename: "es2015/for-in/var-objectbindingpattern-initializer/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 16
-					line: 1
-				}
-				start: Object {
-					column: 5
-					line: 1
-				}
+				end: Position 1:16
+				path: UIDPath<es2015/for-in/var-objectbindingpattern-initializer/input.js>
+				start: Position 1:5
 			}
 		}
 	]
 	body: Array [
 		JSForInStatement {
-			loc: Object {
-				filename: "es2015/for-in/var-objectbindingpattern-initializer/input.js"
-				end: Object {
-					column: 24
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
-			body: JSEmptyStatement {
-				loc: Object {
-					filename: "es2015/for-in/var-objectbindingpattern-initializer/input.js"
-					end: Object {
-						column: 24
-						line: 1
-					}
-					start: Object {
-						column: 23
-						line: 1
-					}
-				}
-			}
+			body: JSEmptyStatement {loc: SourceLocation es2015/for-in/var-objectbindingpattern-initializer/input.js 1:23-1:24}
+			loc: SourceLocation es2015/for-in/var-objectbindingpattern-initializer/input.js 1:0-1:24
 			right: JSObjectExpression {
 				properties: Array []
-				loc: Object {
-					filename: "es2015/for-in/var-objectbindingpattern-initializer/input.js"
-					end: Object {
-						column: 22
-						line: 1
-					}
-					start: Object {
-						column: 20
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/for-in/var-objectbindingpattern-initializer/input.js 1:20-1:22
 			}
 			left: JSVariableDeclaration {
 				kind: "var"
-				loc: Object {
-					filename: "es2015/for-in/var-objectbindingpattern-initializer/input.js"
-					end: Object {
-						column: 16
-						line: 1
-					}
-					start: Object {
-						column: 5
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/for-in/var-objectbindingpattern-initializer/input.js 1:5-1:16
 				declarations: Array [
 					JSVariableDeclarator {
 						id: JSBindingObjectPattern {
 							rest: undefined
-							loc: Object {
-								filename: "es2015/for-in/var-objectbindingpattern-initializer/input.js"
-								end: Object {
-									column: 12
-									line: 1
-								}
-								start: Object {
-									column: 9
-									line: 1
-								}
-							}
+							loc: SourceLocation es2015/for-in/var-objectbindingpattern-initializer/input.js 1:9-1:12
 							properties: Array [
 								JSBindingObjectPatternProperty {
 									key: JSStaticPropertyKey {
 										value: JSIdentifier {
 											name: "a"
-											loc: Object {
-												filename: "es2015/for-in/var-objectbindingpattern-initializer/input.js"
-												identifierName: "a"
-												end: Object {
-													column: 11
-													line: 1
-												}
-												start: Object {
-													column: 10
-													line: 1
-												}
-											}
+											loc: SourceLocation es2015/for-in/var-objectbindingpattern-initializer/input.js 1:10-1:11 (a)
 										}
-										loc: Object {
-											filename: "es2015/for-in/var-objectbindingpattern-initializer/input.js"
-											end: Object {
-												column: 11
-												line: 1
-											}
-											start: Object {
-												column: 10
-												line: 1
-											}
-										}
+										loc: SourceLocation es2015/for-in/var-objectbindingpattern-initializer/input.js 1:10-1:11
 									}
 									value: JSBindingIdentifier {
 										name: "a"
-										loc: Object {
-											filename: "es2015/for-in/var-objectbindingpattern-initializer/input.js"
-											identifierName: "a"
-											end: Object {
-												column: 11
-												line: 1
-											}
-											start: Object {
-												column: 10
-												line: 1
-											}
-										}
+										loc: SourceLocation es2015/for-in/var-objectbindingpattern-initializer/input.js 1:10-1:11 (a)
 									}
-									loc: Object {
-										filename: "es2015/for-in/var-objectbindingpattern-initializer/input.js"
-										end: Object {
-											column: 11
-											line: 1
-										}
-										start: Object {
-											column: 10
-											line: 1
-										}
-									}
+									loc: SourceLocation es2015/for-in/var-objectbindingpattern-initializer/input.js 1:10-1:11
 								}
 							]
 						}
-						loc: Object {
-							filename: "es2015/for-in/var-objectbindingpattern-initializer/input.js"
-							end: Object {
-								column: 16
-								line: 1
-							}
-							start: Object {
-								column: 9
-								line: 1
-							}
-						}
+						loc: SourceLocation es2015/for-in/var-objectbindingpattern-initializer/input.js 1:9-1:16
 						init: JSNumericLiteral {
 							value: 0
 							format: undefined
-							loc: Object {
-								filename: "es2015/for-in/var-objectbindingpattern-initializer/input.js"
-								end: Object {
-									column: 16
-									line: 1
-								}
-								start: Object {
-									column: 15
-									line: 1
-								}
-							}
+							loc: SourceLocation es2015/for-in/var-objectbindingpattern-initializer/input.js 1:15-1:16
 						}
 					}
 				]
@@ -225,8 +95,5 @@ JSRoot {
     for (var {a} = 0 in {});
          ^^^^^^^^^^^
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

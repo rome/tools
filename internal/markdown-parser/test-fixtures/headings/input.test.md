@@ -11,136 +11,46 @@ MarkdownRoot {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
-	filename: "headings/input.md"
 	integrity: undefined
-	loc: Object {
-		filename: "headings/input.md"
-		end: Object {
-			column: 32
-			line: 7
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation headings/input.md 1:0-7:32
+	path: UIDPath<headings/input.md>
 	body: Array [
 		MarkdownHeadingBlock {
 			value: "Title"
 			level: 1
-			loc: Object {
-				filename: "headings/input.md"
-				end: Object {
-					column: 7
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation headings/input.md 1:0-1:7
 		}
 		MarkdownHeadingBlock {
 			value: "Title"
 			level: 2
-			loc: Object {
-				filename: "headings/input.md"
-				end: Object {
-					column: 8
-					line: 2
-				}
-				start: Object {
-					column: 7
-					line: 1
-				}
-			}
+			loc: SourceLocation headings/input.md 2:0-2:8
 		}
 		MarkdownHeadingBlock {
 			value: "Title"
 			level: 3
-			loc: Object {
-				filename: "headings/input.md"
-				end: Object {
-					column: 9
-					line: 3
-				}
-				start: Object {
-					column: 8
-					line: 2
-				}
-			}
+			loc: SourceLocation headings/input.md 3:0-3:9
 		}
 		MarkdownHeadingBlock {
 			value: "Title"
 			level: 4
-			loc: Object {
-				filename: "headings/input.md"
-				end: Object {
-					column: 10
-					line: 4
-				}
-				start: Object {
-					column: 9
-					line: 3
-				}
-			}
+			loc: SourceLocation headings/input.md 4:0-4:10
 		}
 		MarkdownHeadingBlock {
 			value: "Title"
 			level: 5
-			loc: Object {
-				filename: "headings/input.md"
-				end: Object {
-					column: 11
-					line: 5
-				}
-				start: Object {
-					column: 10
-					line: 4
-				}
-			}
+			loc: SourceLocation headings/input.md 5:0-5:11
 		}
 		MarkdownHeadingBlock {
 			value: "Title"
 			level: 6
-			loc: Object {
-				filename: "headings/input.md"
-				end: Object {
-					column: 12
-					line: 6
-				}
-				start: Object {
-					column: 11
-					line: 5
-				}
-			}
+			loc: SourceLocation headings/input.md 6:0-6:12
 		}
 		MarkdownParagraph {
-			loc: Object {
-				filename: "headings/input.md"
-				end: Object {
-					column: 32
-					line: 7
-				}
-				start: Object {
-					column: 12
-					line: 6
-				}
-			}
+			loc: SourceLocation headings/input.md 7:0-7:32
 			children: Array [
 				MarkdownText {
 					value: "####### this will be a paragraph"
-					loc: Object {
-						filename: "headings/input.md"
-						end: Object {
-							column: 12
-							line: 6
-						}
-						start: Object {
-							column: 12
-							line: 6
-						}
-					}
+					loc: SourceLocation headings/input.md 7:0-7:0
 				}
 			]
 		}
@@ -151,6 +61,5 @@ MarkdownRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

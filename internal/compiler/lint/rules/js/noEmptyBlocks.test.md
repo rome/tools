@@ -17,9 +17,6 @@
 
   ℹ Empty logic blocks usually result from incomplete refactoring.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -46,9 +43,6 @@ if (foo) {
 
   ℹ Empty logic blocks usually result from incomplete refactoring.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -65,7 +59,6 @@ if (foo) {
 ### `2`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -81,7 +74,6 @@ if (foo) {
 ### `3`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -97,7 +89,6 @@ if (foo) {
 ### `4`
 
 ```
-✔ No known problems!
 
 ```
 

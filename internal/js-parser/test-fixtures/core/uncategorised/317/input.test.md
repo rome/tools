@@ -12,104 +12,32 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "core/uncategorised/317/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "core/uncategorised/317/input.js"
-		end: Object {
-			column: 25
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation core/uncategorised/317/input.js 1:0-1:25
+	path: UIDPath<core/uncategorised/317/input.js>
 	body: Array [
 		JSLabeledStatement {
-			loc: Object {
-				filename: "core/uncategorised/317/input.js"
-				end: Object {
-					column: 25
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation core/uncategorised/317/input.js 1:0-1:25
 			label: JSIdentifier {
 				name: "foo"
-				loc: Object {
-					filename: "core/uncategorised/317/input.js"
-					identifierName: "foo"
-					end: Object {
-						column: 3
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation core/uncategorised/317/input.js 1:0-1:3 (foo)
 			}
 			body: JSIfStatement {
 				alternate: undefined
-				loc: Object {
-					filename: "core/uncategorised/317/input.js"
-					end: Object {
-						column: 25
-						line: 1
-					}
-					start: Object {
-						column: 5
-						line: 1
-					}
-				}
+				loc: SourceLocation core/uncategorised/317/input.js 1:5-1:25
 				test: JSBooleanLiteral {
 					value: true
-					loc: Object {
-						filename: "core/uncategorised/317/input.js"
-						end: Object {
-							column: 13
-							line: 1
-						}
-						start: Object {
-							column: 9
-							line: 1
-						}
-					}
+					loc: SourceLocation core/uncategorised/317/input.js 1:9-1:13
 				}
 				consequent: JSBreakStatement {
-					loc: Object {
-						filename: "core/uncategorised/317/input.js"
-						end: Object {
-							column: 25
-							line: 1
-						}
-						start: Object {
-							column: 15
-							line: 1
-						}
-					}
+					loc: SourceLocation core/uncategorised/317/input.js 1:15-1:25
 					label: JSIdentifier {
 						name: "foo"
-						loc: Object {
-							filename: "core/uncategorised/317/input.js"
-							identifierName: "foo"
-							end: Object {
-								column: 24
-								line: 1
-							}
-							start: Object {
-								column: 21
-								line: 1
-							}
-						}
+						loc: SourceLocation core/uncategorised/317/input.js 1:21-1:24 (foo)
 					}
 				}
 			}
@@ -121,6 +49,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

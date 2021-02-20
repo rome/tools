@@ -12,104 +12,30 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "esprima/es2015-destructuring-assignment-array-pattern/elision/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "esprima/es2015-destructuring-assignment-array-pattern/elision/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation esprima/es2015-destructuring-assignment-array-pattern/elision/input.js 1:0-2:0
+	path: UIDPath<esprima/es2015-destructuring-assignment-array-pattern/elision/input.js>
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "esprima/es2015-destructuring-assignment-array-pattern/elision/input.js"
-				end: Object {
-					column: 6
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation esprima/es2015-destructuring-assignment-array-pattern/elision/input.js 1:0-1:6
 			expression: JSAssignmentExpression {
 				operator: "="
-				loc: Object {
-					filename: "esprima/es2015-destructuring-assignment-array-pattern/elision/input.js"
-					end: Object {
-						column: 6
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/es2015-destructuring-assignment-array-pattern/elision/input.js 1:0-1:6
 				right: JSNumericLiteral {
 					value: 0
 					format: undefined
-					loc: Object {
-						filename: "esprima/es2015-destructuring-assignment-array-pattern/elision/input.js"
-						end: Object {
-							column: 6
-							line: 1
-						}
-						start: Object {
-							column: 5
-							line: 1
-						}
-					}
+					loc: SourceLocation esprima/es2015-destructuring-assignment-array-pattern/elision/input.js 1:5-1:6
 				}
 				left: JSAssignmentArrayPattern {
 					rest: undefined
-					loc: Object {
-						filename: "esprima/es2015-destructuring-assignment-array-pattern/elision/input.js"
-						end: Object {
-							column: 4
-							line: 1
-						}
-						start: Object {
-							column: 0
-							line: 1
-						}
-					}
+					loc: SourceLocation esprima/es2015-destructuring-assignment-array-pattern/elision/input.js 1:0-1:4
 					elements: Array [
-						JSArrayHole {
-							loc: Object {
-								filename: "esprima/es2015-destructuring-assignment-array-pattern/elision/input.js"
-								end: Object {
-									column: 1
-									line: 1
-								}
-								start: Object {
-									column: 1
-									line: 1
-								}
-							}
-						}
-						JSArrayHole {
-							loc: Object {
-								filename: "esprima/es2015-destructuring-assignment-array-pattern/elision/input.js"
-								end: Object {
-									column: 2
-									line: 1
-								}
-								start: Object {
-									column: 2
-									line: 1
-								}
-							}
-						}
+						JSArrayHole {loc: SourceLocation esprima/es2015-destructuring-assignment-array-pattern/elision/input.js 1:1-1:1}
+						JSArrayHole {loc: SourceLocation esprima/es2015-destructuring-assignment-array-pattern/elision/input.js 1:2-1:2}
 					]
 				}
 			}
@@ -121,6 +47,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

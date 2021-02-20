@@ -12,190 +12,53 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "esprima/es2015-for-of/for-of-object-pattern/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "esprima/es2015-for-of/for-of-object-pattern/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation esprima/es2015-for-of/for-of-object-pattern/input.js 1:0-2:0
+	path: UIDPath<esprima/es2015-for-of/for-of-object-pattern/input.js>
 	body: Array [
 		JSForOfStatement {
 			await: false
-			loc: Object {
-				filename: "esprima/es2015-for-of/for-of-object-pattern/input.js"
-				end: Object {
-					column: 18
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
-			body: JSEmptyStatement {
-				loc: Object {
-					filename: "esprima/es2015-for-of/for-of-object-pattern/input.js"
-					end: Object {
-						column: 18
-						line: 1
-					}
-					start: Object {
-						column: 17
-						line: 1
-					}
-				}
-			}
+			body: JSEmptyStatement {loc: SourceLocation esprima/es2015-for-of/for-of-object-pattern/input.js 1:17-1:18}
+			loc: SourceLocation esprima/es2015-for-of/for-of-object-pattern/input.js 1:0-1:18
 			right: JSReferenceIdentifier {
 				name: "z"
-				loc: Object {
-					filename: "esprima/es2015-for-of/for-of-object-pattern/input.js"
-					identifierName: "z"
-					end: Object {
-						column: 16
-						line: 1
-					}
-					start: Object {
-						column: 15
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/es2015-for-of/for-of-object-pattern/input.js 1:15-1:16 (z)
 			}
 			left: JSAssignmentObjectPattern {
 				rest: undefined
-				loc: Object {
-					filename: "esprima/es2015-for-of/for-of-object-pattern/input.js"
-					end: Object {
-						column: 11
-						line: 1
-					}
-					start: Object {
-						column: 5
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/es2015-for-of/for-of-object-pattern/input.js 1:5-1:11
 				properties: Array [
 					JSAssignmentObjectPatternProperty {
 						key: JSStaticPropertyKey {
 							value: JSIdentifier {
 								name: "x"
-								loc: Object {
-									filename: "esprima/es2015-for-of/for-of-object-pattern/input.js"
-									identifierName: "x"
-									end: Object {
-										column: 7
-										line: 1
-									}
-									start: Object {
-										column: 6
-										line: 1
-									}
-								}
+								loc: SourceLocation esprima/es2015-for-of/for-of-object-pattern/input.js 1:6-1:7 (x)
 							}
-							loc: Object {
-								filename: "esprima/es2015-for-of/for-of-object-pattern/input.js"
-								end: Object {
-									column: 7
-									line: 1
-								}
-								start: Object {
-									column: 6
-									line: 1
-								}
-							}
+							loc: SourceLocation esprima/es2015-for-of/for-of-object-pattern/input.js 1:6-1:7
 						}
 						value: JSAssignmentIdentifier {
 							name: "x"
-							loc: Object {
-								filename: "esprima/es2015-for-of/for-of-object-pattern/input.js"
-								identifierName: "x"
-								end: Object {
-									column: 7
-									line: 1
-								}
-								start: Object {
-									column: 6
-									line: 1
-								}
-							}
+							loc: SourceLocation esprima/es2015-for-of/for-of-object-pattern/input.js 1:6-1:7 (x)
 						}
-						loc: Object {
-							filename: "esprima/es2015-for-of/for-of-object-pattern/input.js"
-							end: Object {
-								column: 7
-								line: 1
-							}
-							start: Object {
-								column: 6
-								line: 1
-							}
-						}
+						loc: SourceLocation esprima/es2015-for-of/for-of-object-pattern/input.js 1:6-1:7
 					}
 					JSAssignmentObjectPatternProperty {
 						key: JSStaticPropertyKey {
 							value: JSIdentifier {
 								name: "y"
-								loc: Object {
-									filename: "esprima/es2015-for-of/for-of-object-pattern/input.js"
-									identifierName: "y"
-									end: Object {
-										column: 10
-										line: 1
-									}
-									start: Object {
-										column: 9
-										line: 1
-									}
-								}
+								loc: SourceLocation esprima/es2015-for-of/for-of-object-pattern/input.js 1:9-1:10 (y)
 							}
-							loc: Object {
-								filename: "esprima/es2015-for-of/for-of-object-pattern/input.js"
-								end: Object {
-									column: 10
-									line: 1
-								}
-								start: Object {
-									column: 9
-									line: 1
-								}
-							}
+							loc: SourceLocation esprima/es2015-for-of/for-of-object-pattern/input.js 1:9-1:10
 						}
 						value: JSAssignmentIdentifier {
 							name: "y"
-							loc: Object {
-								filename: "esprima/es2015-for-of/for-of-object-pattern/input.js"
-								identifierName: "y"
-								end: Object {
-									column: 10
-									line: 1
-								}
-								start: Object {
-									column: 9
-									line: 1
-								}
-							}
+							loc: SourceLocation esprima/es2015-for-of/for-of-object-pattern/input.js 1:9-1:10 (y)
 						}
-						loc: Object {
-							filename: "esprima/es2015-for-of/for-of-object-pattern/input.js"
-							end: Object {
-								column: 10
-								line: 1
-							}
-							start: Object {
-								column: 9
-								line: 1
-							}
-						}
+						loc: SourceLocation esprima/es2015-for-of/for-of-object-pattern/input.js 1:9-1:10
 					}
 				]
 			}
@@ -207,6 +70,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

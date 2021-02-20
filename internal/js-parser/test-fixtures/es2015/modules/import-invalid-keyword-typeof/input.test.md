@@ -11,48 +11,29 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "es2015/modules/import-invalid-keyword-typeof/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
 	syntax: Array []
-	loc: Object {
-		filename: "es2015/modules/import-invalid-keyword-typeof/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2015/modules/import-invalid-keyword-typeof/input.js 1:0-2:0
+	path: UIDPath<es2015/modules/import-invalid-keyword-typeof/input.js>
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse"
 				categoryValue: "js"
-				message: Array [
-					RAW_MARKUP {value: "Unexpected keyword "}
-					"typeof"
-				]
+				category: Array ["parse"]
+				message: RAW_MARKUP {value: "Unexpected keyword <emphasis>typeof</emphasis>"}
 			}
 			location: Object {
-				filename: "es2015/modules/import-invalid-keyword-typeof/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 15
-					line: 1
-				}
-				start: Object {
-					column: 9
-					line: 1
-				}
+				end: Position 1:15
+				path: UIDPath<es2015/modules/import-invalid-keyword-typeof/input.js>
+				start: Position 1:9
 			}
 		}
 	]
@@ -61,87 +42,25 @@ JSRoot {
 			defaultSpecifier: undefined
 			importKind: undefined
 			namespaceSpecifier: undefined
-			loc: Object {
-				filename: "es2015/modules/import-invalid-keyword-typeof/input.js"
-				end: Object {
-					column: 29
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2015/modules/import-invalid-keyword-typeof/input.js 1:0-1:29
 			source: JSStringLiteral {
 				value: "foo"
-				loc: Object {
-					filename: "es2015/modules/import-invalid-keyword-typeof/input.js"
-					end: Object {
-						column: 28
-						line: 1
-					}
-					start: Object {
-						column: 23
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/modules/import-invalid-keyword-typeof/input.js 1:23-1:28
 			}
 			namedSpecifiers: Array [
 				JSImportSpecifier {
-					loc: Object {
-						filename: "es2015/modules/import-invalid-keyword-typeof/input.js"
-						end: Object {
-							column: 15
-							line: 1
-						}
-						start: Object {
-							column: 9
-							line: 1
-						}
-					}
+					loc: SourceLocation es2015/modules/import-invalid-keyword-typeof/input.js 1:9-1:15
 					imported: JSIdentifier {
 						name: "typeof"
-						loc: Object {
-							filename: "es2015/modules/import-invalid-keyword-typeof/input.js"
-							identifierName: "typeof"
-							end: Object {
-								column: 15
-								line: 1
-							}
-							start: Object {
-								column: 9
-								line: 1
-							}
-						}
+						loc: SourceLocation es2015/modules/import-invalid-keyword-typeof/input.js 1:9-1:15 (typeof)
 					}
 					local: JSImportSpecifierLocal {
 						name: JSBindingIdentifier {
 							name: "typeof"
-							loc: Object {
-								filename: "es2015/modules/import-invalid-keyword-typeof/input.js"
-								identifierName: "typeof"
-								end: Object {
-									column: 15
-									line: 1
-								}
-								start: Object {
-									column: 9
-									line: 1
-								}
-							}
+							loc: SourceLocation es2015/modules/import-invalid-keyword-typeof/input.js 1:9-1:15 (typeof)
 						}
 						importKind: undefined
-						loc: Object {
-							filename: "es2015/modules/import-invalid-keyword-typeof/input.js"
-							end: Object {
-								column: 15
-								line: 1
-							}
-							start: Object {
-								column: 9
-								line: 1
-							}
-						}
+						loc: SourceLocation es2015/modules/import-invalid-keyword-typeof/input.js 1:9-1:15
 					}
 				}
 			]
@@ -161,8 +80,5 @@ JSRoot {
     import { typeof } from "foo";
              ^^^^^^
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

@@ -11,74 +11,38 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "es2020/bigint/invalid-decimal/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2020/bigint/invalid-decimal/input.js"
-		end: Object {
-			column: 0
-			line: 2
+	loc: SourceLocation es2020/bigint/invalid-decimal/input.js 1:0-2:0
+	path: UIDPath<es2020/bigint/invalid-decimal/input.js>
+	body: Array [
+		JSExpressionStatement {
+			loc: SourceLocation es2020/bigint/invalid-decimal/input.js 1:0-1:4
+			expression: JSBigIntLiteral {
+				value: "1.0"
+				loc: SourceLocation es2020/bigint/invalid-decimal/input.js 1:0-1:4
+			}
 		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	]
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse"
 				categoryValue: "js"
+				category: Array ["parse"]
 				message: RAW_MARKUP {value: "A bigint can't have a decimal"}
 			}
 			location: Object {
-				filename: "es2020/bigint/invalid-decimal/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 3
-					line: 1
-				}
-				start: Object {
-					column: 3
-					line: 1
-				}
-			}
-		}
-	]
-	body: Array [
-		JSExpressionStatement {
-			loc: Object {
-				filename: "es2020/bigint/invalid-decimal/input.js"
-				end: Object {
-					column: 4
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
-			expression: JSBigIntLiteral {
-				value: "1.0"
-				loc: Object {
-					filename: "es2020/bigint/invalid-decimal/input.js"
-					end: Object {
-						column: 4
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				end: Position 1:3
+				path: UIDPath<es2020/bigint/invalid-decimal/input.js>
+				start: Position 1:3
 			}
 		}
 	]
@@ -96,8 +60,5 @@ JSRoot {
     1.0n
        ^
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

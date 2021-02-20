@@ -12,65 +12,24 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "test262/rest-parameter/object-pattern-empty-with-object/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "test262/rest-parameter/object-pattern-empty-with-object/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation test262/rest-parameter/object-pattern-empty-with-object/input.js 1:0-2:0
+	path: UIDPath<test262/rest-parameter/object-pattern-empty-with-object/input.js>
 	body: Array [
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "emptyWithObject"
-				loc: Object {
-					filename: "test262/rest-parameter/object-pattern-empty-with-object/input.js"
-					identifierName: "emptyWithObject"
-					end: Object {
-						column: 24
-						line: 1
-					}
-					start: Object {
-						column: 9
-						line: 1
-					}
-				}
+				loc: SourceLocation test262/rest-parameter/object-pattern-empty-with-object/input.js 1:9-1:24 (emptyWithObject)
 			}
-			loc: Object {
-				filename: "test262/rest-parameter/object-pattern-empty-with-object/input.js"
-				end: Object {
-					column: 39
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation test262/rest-parameter/object-pattern-empty-with-object/input.js 1:0-1:39
 			body: JSBlockStatement {
 				body: Array []
 				directives: Array []
-				loc: Object {
-					filename: "test262/rest-parameter/object-pattern-empty-with-object/input.js"
-					end: Object {
-						column: 39
-						line: 1
-					}
-					start: Object {
-						column: 37
-						line: 1
-					}
-				}
+				loc: SourceLocation test262/rest-parameter/object-pattern-empty-with-object/input.js 1:37-1:39
 			}
 			head: JSFunctionHead {
 				async: false
@@ -80,101 +39,30 @@ JSRoot {
 				returnType: undefined
 				thisType: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "test262/rest-parameter/object-pattern-empty-with-object/input.js"
-					end: Object {
-						column: 36
-						line: 1
-					}
-					start: Object {
-						column: 24
-						line: 1
-					}
-				}
+				loc: SourceLocation test262/rest-parameter/object-pattern-empty-with-object/input.js 1:24-1:36
 				rest: JSBindingObjectPattern {
 					rest: undefined
-					loc: Object {
-						filename: "test262/rest-parameter/object-pattern-empty-with-object/input.js"
-						end: Object {
-							column: 35
-							line: 1
-						}
-						start: Object {
-							column: 28
-							line: 1
-						}
-					}
+					loc: SourceLocation test262/rest-parameter/object-pattern-empty-with-object/input.js 1:28-1:35
 					meta: JSPatternMeta {
 						optional: undefined
 						typeAnnotation: undefined
-						loc: Object {
-							filename: "test262/rest-parameter/object-pattern-empty-with-object/input.js"
-							end: Object {
-								column: 35
-								line: 1
-							}
-							start: Object {
-								column: 28
-								line: 1
-							}
-						}
+						loc: SourceLocation test262/rest-parameter/object-pattern-empty-with-object/input.js 1:28-1:35
 					}
 					properties: Array [
 						JSBindingObjectPatternProperty {
 							key: JSStaticPropertyKey {
 								value: JSIdentifier {
 									name: "p"
-									loc: Object {
-										filename: "test262/rest-parameter/object-pattern-empty-with-object/input.js"
-										identifierName: "p"
-										end: Object {
-											column: 30
-											line: 1
-										}
-										start: Object {
-											column: 29
-											line: 1
-										}
-									}
+									loc: SourceLocation test262/rest-parameter/object-pattern-empty-with-object/input.js 1:29-1:30 (p)
 								}
-								loc: Object {
-									filename: "test262/rest-parameter/object-pattern-empty-with-object/input.js"
-									end: Object {
-										column: 30
-										line: 1
-									}
-									start: Object {
-										column: 29
-										line: 1
-									}
-								}
+								loc: SourceLocation test262/rest-parameter/object-pattern-empty-with-object/input.js 1:29-1:30
 							}
 							value: JSBindingObjectPattern {
 								properties: Array []
 								rest: undefined
-								loc: Object {
-									filename: "test262/rest-parameter/object-pattern-empty-with-object/input.js"
-									end: Object {
-										column: 34
-										line: 1
-									}
-									start: Object {
-										column: 32
-										line: 1
-									}
-								}
+								loc: SourceLocation test262/rest-parameter/object-pattern-empty-with-object/input.js 1:32-1:34
 							}
-							loc: Object {
-								filename: "test262/rest-parameter/object-pattern-empty-with-object/input.js"
-								end: Object {
-									column: 34
-									line: 1
-								}
-								start: Object {
-									column: 29
-									line: 1
-								}
-							}
+							loc: SourceLocation test262/rest-parameter/object-pattern-empty-with-object/input.js 1:29-1:34
 						}
 					]
 				}
@@ -187,6 +75,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

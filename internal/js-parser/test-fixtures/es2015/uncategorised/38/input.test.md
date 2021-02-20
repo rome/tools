@@ -11,230 +11,81 @@ JSRoot {
 	comments: Array []
 	corrupt: true
 	directives: Array []
-	filename: "es2015/uncategorised/38/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2015/uncategorised/38/input.js"
-		end: Object {
-			column: 29
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2015/uncategorised/38/input.js 1:0-1:29
+	path: UIDPath<es2015/uncategorised/38/input.js>
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse"
 				categoryValue: "js"
+				category: Array ["parse"]
 				message: RAW_MARKUP {value: "Parenthesized expression didnt contain anything"}
 			}
 			location: Object {
-				filename: "es2015/uncategorised/38/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 20
-					line: 1
-				}
-				start: Object {
-					column: 20
-					line: 1
-				}
+				end: Position 1:20
+				path: UIDPath<es2015/uncategorised/38/input.js>
+				start: Position 1:20
 			}
 		}
 	]
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "es2015/uncategorised/38/input.js"
-				end: Object {
-					column: 21
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2015/uncategorised/38/input.js 1:0-1:21
 			expression: JSCallExpression {
-				loc: Object {
-					filename: "es2015/uncategorised/38/input.js"
-					end: Object {
-						column: 21
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/uncategorised/38/input.js 1:0-1:21
 				arguments: Array [
 					JSUnaryExpression {
 						operator: "typeof"
 						prefix: true
-						loc: Object {
-							filename: "es2015/uncategorised/38/input.js"
-							end: Object {
-								column: 21
-								line: 1
-							}
-							start: Object {
-								column: 12
-								line: 1
-							}
-						}
+						loc: SourceLocation es2015/uncategorised/38/input.js 1:12-1:21
 						argument: JSReferenceIdentifier {
 							name: "INVALID_PLACEHOLDER"
-							loc: Object {
-								filename: "es2015/uncategorised/38/input.js"
-								end: Object {
-									column: 20
-									line: 1
-								}
-								start: Object {
-									column: 20
-									line: 1
-								}
-							}
+							loc: SourceLocation es2015/uncategorised/38/input.js 1:20-1:20
 						}
 					}
 				]
 				callee: JSMemberExpression {
-					loc: Object {
-						filename: "es2015/uncategorised/38/input.js"
-						end: Object {
-							column: 11
-							line: 1
-						}
-						start: Object {
-							column: 0
-							line: 1
-						}
-					}
+					loc: SourceLocation es2015/uncategorised/38/input.js 1:0-1:11
 					object: JSReferenceIdentifier {
 						name: "console"
-						loc: Object {
-							filename: "es2015/uncategorised/38/input.js"
-							identifierName: "console"
-							end: Object {
-								column: 7
-								line: 1
-							}
-							start: Object {
-								column: 0
-								line: 1
-							}
-						}
+						loc: SourceLocation es2015/uncategorised/38/input.js 1:0-1:7 (console)
 					}
 					property: JSStaticMemberProperty {
 						value: JSIdentifier {
 							name: "log"
-							loc: Object {
-								filename: "es2015/uncategorised/38/input.js"
-								identifierName: "log"
-								end: Object {
-									column: 11
-									line: 1
-								}
-								start: Object {
-									column: 8
-									line: 1
-								}
-							}
+							loc: SourceLocation es2015/uncategorised/38/input.js 1:8-1:11 (log)
 						}
-						loc: Object {
-							filename: "es2015/uncategorised/38/input.js"
-							identifierName: "log"
-							end: Object {
-								column: 11
-								line: 1
-							}
-							start: Object {
-								column: 8
-								line: 1
-							}
-						}
+						loc: SourceLocation es2015/uncategorised/38/input.js 1:8-1:11 (log)
 					}
 				}
 			}
 		}
 		JSExpressionStatement {
-			loc: Object {
-				filename: "es2015/uncategorised/38/input.js"
-				end: Object {
-					column: 24
-					line: 1
-				}
-				start: Object {
-					column: 22
-					line: 1
-				}
-			}
+			loc: SourceLocation es2015/uncategorised/38/input.js 1:22-1:24
 			expression: JSReferenceIdentifier {
 				name: "INVALID_PLACEHOLDER"
-				loc: Object {
-					filename: "es2015/uncategorised/38/input.js"
-					end: Object {
-						column: 24
-						line: 1
-					}
-					start: Object {
-						column: 22
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/uncategorised/38/input.js 1:22-1:24
 			}
 		}
 		JSBlockStatement {
 			body: Array []
 			directives: Array []
-			loc: Object {
-				filename: "es2015/uncategorised/38/input.js"
-				end: Object {
-					column: 27
-					line: 1
-				}
-				start: Object {
-					column: 25
-					line: 1
-				}
-			}
+			loc: SourceLocation es2015/uncategorised/38/input.js 1:25-1:27
 		}
 		JSExpressionStatement {
-			loc: Object {
-				filename: "es2015/uncategorised/38/input.js"
-				end: Object {
-					column: 29
-					line: 1
-				}
-				start: Object {
-					column: 27
-					line: 1
-				}
-			}
+			loc: SourceLocation es2015/uncategorised/38/input.js 1:27-1:29
 			expression: JSReferenceIdentifier {
 				name: "INVALID_PLACEHOLDER"
-				loc: Object {
-					filename: "es2015/uncategorised/38/input.js"
-					end: Object {
-						column: 28
-						line: 1
-					}
-					start: Object {
-						column: 27
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/uncategorised/38/input.js 1:27-1:28
 			}
 		}
 	]
@@ -252,8 +103,5 @@ JSRoot {
     console.log(typeof () => {});
                         ^
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

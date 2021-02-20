@@ -1,0 +1,18 @@
+@keyframes foo {
+	from {}
+	to {}
+	15% {}
+	0% {}
+	100% {}
+}
+
+@keyframes "foo" {
+
+}
+
+@keyframes "Initial" {
+
+}
+
+@keyframes FOO {
+}

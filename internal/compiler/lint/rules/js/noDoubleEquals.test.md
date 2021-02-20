@@ -24,9 +24,6 @@
 
   ℹ This may be unsafe if you are relying on type coercion
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -40,7 +37,6 @@ foo == bar;
 ### `1`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -54,7 +50,6 @@ foo == null;
 ### `2`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -68,7 +63,6 @@ foo != null;
 ### `3`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -82,7 +76,6 @@ null == foo;
 ### `4`
 
 ```
-✔ No known problems!
 
 ```
 

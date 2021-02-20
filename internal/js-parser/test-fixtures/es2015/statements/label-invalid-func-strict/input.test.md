@@ -11,45 +11,29 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "es2015/statements/label-invalid-func-strict/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2015/statements/label-invalid-func-strict/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2015/statements/label-invalid-func-strict/input.js 1:0-2:0
+	path: UIDPath<es2015/statements/label-invalid-func-strict/input.js>
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse"
 				categoryValue: "js"
+				category: Array ["parse"]
 				message: RAW_MARKUP {value: "In strict mode code, functions can only be declared at top level or inside a block"}
 			}
 			location: Object {
-				filename: "es2015/statements/label-invalid-func-strict/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 34
-					line: 1
-				}
-				start: Object {
-					column: 35
-					line: 1
-				}
+				end: Position 1:34
+				path: UIDPath<es2015/statements/label-invalid-func-strict/input.js>
+				start: Position 1:35
 			}
 		}
 	]
@@ -57,30 +41,9 @@ JSRoot {
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "foo"
-				loc: Object {
-					filename: "es2015/statements/label-invalid-func-strict/input.js"
-					identifierName: "foo"
-					end: Object {
-						column: 12
-						line: 1
-					}
-					start: Object {
-						column: 9
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/statements/label-invalid-func-strict/input.js 1:9-1:12 (foo)
 			}
-			loc: Object {
-				filename: "es2015/statements/label-invalid-func-strict/input.js"
-				end: Object {
-					column: 53
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2015/statements/label-invalid-func-strict/input.js 1:0-1:53
 			head: JSFunctionHead {
 				async: false
 				generator: false
@@ -90,115 +53,33 @@ JSRoot {
 				returnType: undefined
 				thisType: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "es2015/statements/label-invalid-func-strict/input.js"
-					end: Object {
-						column: 14
-						line: 1
-					}
-					start: Object {
-						column: 12
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/statements/label-invalid-func-strict/input.js 1:12-1:14
 			}
 			body: JSBlockStatement {
-				loc: Object {
-					filename: "es2015/statements/label-invalid-func-strict/input.js"
-					end: Object {
-						column: 53
-						line: 1
-					}
-					start: Object {
-						column: 15
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/statements/label-invalid-func-strict/input.js 1:15-1:53
 				directives: Array [
 					JSDirective {
 						value: "use strict"
-						loc: Object {
-							filename: "es2015/statements/label-invalid-func-strict/input.js"
-							end: Object {
-								column: 29
-								line: 1
-							}
-							start: Object {
-								column: 16
-								line: 1
-							}
-						}
+						loc: SourceLocation es2015/statements/label-invalid-func-strict/input.js 1:16-1:29
 					}
 				]
 				body: Array [
 					JSLabeledStatement {
-						loc: Object {
-							filename: "es2015/statements/label-invalid-func-strict/input.js"
-							end: Object {
-								column: 52
-								line: 1
-							}
-							start: Object {
-								column: 30
-								line: 1
-							}
-						}
+						loc: SourceLocation es2015/statements/label-invalid-func-strict/input.js 1:30-1:52
 						label: JSIdentifier {
 							name: "bar"
-							loc: Object {
-								filename: "es2015/statements/label-invalid-func-strict/input.js"
-								identifierName: "bar"
-								end: Object {
-									column: 33
-									line: 1
-								}
-								start: Object {
-									column: 30
-									line: 1
-								}
-							}
+							loc: SourceLocation es2015/statements/label-invalid-func-strict/input.js 1:30-1:33 (bar)
 						}
 						body: JSFunctionDeclaration {
 							id: JSBindingIdentifier {
 								name: "baz"
-								loc: Object {
-									filename: "es2015/statements/label-invalid-func-strict/input.js"
-									identifierName: "baz"
-									end: Object {
-										column: 47
-										line: 1
-									}
-									start: Object {
-										column: 44
-										line: 1
-									}
-								}
+								loc: SourceLocation es2015/statements/label-invalid-func-strict/input.js 1:44-1:47 (baz)
 							}
-							loc: Object {
-								filename: "es2015/statements/label-invalid-func-strict/input.js"
-								end: Object {
-									column: 52
-									line: 1
-								}
-								start: Object {
-									column: 35
-									line: 1
-								}
-							}
+							loc: SourceLocation es2015/statements/label-invalid-func-strict/input.js 1:35-1:52
 							body: JSBlockStatement {
 								body: Array []
 								directives: Array []
-								loc: Object {
-									filename: "es2015/statements/label-invalid-func-strict/input.js"
-									end: Object {
-										column: 52
-										line: 1
-									}
-									start: Object {
-										column: 50
-										line: 1
-									}
-								}
+								loc: SourceLocation es2015/statements/label-invalid-func-strict/input.js 1:50-1:52
 							}
 							head: JSFunctionHead {
 								async: false
@@ -209,17 +90,7 @@ JSRoot {
 								returnType: undefined
 								thisType: undefined
 								typeParameters: undefined
-								loc: Object {
-									filename: "es2015/statements/label-invalid-func-strict/input.js"
-									end: Object {
-										column: 49
-										line: 1
-									}
-									start: Object {
-										column: 47
-										line: 1
-									}
-								}
+								loc: SourceLocation es2015/statements/label-invalid-func-strict/input.js 1:47-1:49
 							}
 						}
 					}
@@ -241,8 +112,5 @@ JSRoot {
     function foo() {"use strict"; bar: function baz() {}}
                                        ^
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

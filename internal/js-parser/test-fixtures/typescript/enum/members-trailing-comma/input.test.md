@@ -12,81 +12,29 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "typescript/enum/members-trailing-comma/input.ts"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
+	loc: SourceLocation typescript/enum/members-trailing-comma/input.ts 1:0-4:0
+	path: UIDPath<typescript/enum/members-trailing-comma/input.ts>
 	syntax: Array ["ts"]
-	loc: Object {
-		filename: "typescript/enum/members-trailing-comma/input.ts"
-		end: Object {
-			column: 0
-			line: 4
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
 	body: Array [
 		TSEnumDeclaration {
 			id: JSBindingIdentifier {
 				name: "E"
-				loc: Object {
-					filename: "typescript/enum/members-trailing-comma/input.ts"
-					identifierName: "E"
-					end: Object {
-						column: 6
-						line: 1
-					}
-					start: Object {
-						column: 5
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/enum/members-trailing-comma/input.ts 1:5-1:6 (E)
 			}
 			const: false
-			loc: Object {
-				filename: "typescript/enum/members-trailing-comma/input.ts"
-				end: Object {
-					column: 1
-					line: 3
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation typescript/enum/members-trailing-comma/input.ts 1:0-3:1
 			members: Array [
 				TSEnumMember {
 					id: JSIdentifier {
 						name: "A"
-						loc: Object {
-							filename: "typescript/enum/members-trailing-comma/input.ts"
-							identifierName: "A"
-							end: Object {
-								column: 5
-								line: 2
-							}
-							start: Object {
-								column: 4
-								line: 2
-							}
-						}
+						loc: SourceLocation typescript/enum/members-trailing-comma/input.ts 2:4-2:5 (A)
 					}
 					initializer: undefined
-					loc: Object {
-						filename: "typescript/enum/members-trailing-comma/input.ts"
-						end: Object {
-							column: 5
-							line: 2
-						}
-						start: Object {
-							column: 4
-							line: 2
-						}
-					}
+					loc: SourceLocation typescript/enum/members-trailing-comma/input.ts 2:4-2:5
 				}
 			]
 		}
@@ -97,6 +45,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

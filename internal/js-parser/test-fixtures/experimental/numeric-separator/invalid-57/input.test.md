@@ -11,103 +11,47 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "experimental/numeric-separator/invalid-57/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "experimental/numeric-separator/invalid-57/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation experimental/numeric-separator/invalid-57/input.js 1:0-2:0
+	path: UIDPath<experimental/numeric-separator/invalid-57/input.js>
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse"
 				categoryValue: "js"
+				category: Array ["parse"]
 				message: RAW_MARKUP {value: "Invalid or unexpected int token"}
 			}
 			location: Object {
-				filename: "experimental/numeric-separator/invalid-57/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 0
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
+				end: Position 1:0
+				path: UIDPath<experimental/numeric-separator/invalid-57/input.js>
+				start: Position 1:0
 			}
 		}
 	]
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "experimental/numeric-separator/invalid-57/input.js"
-				end: Object {
-					column: 11
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation experimental/numeric-separator/invalid-57/input.js 1:0-1:11
 			expression: JSSequenceExpression {
-				loc: Object {
-					filename: "experimental/numeric-separator/invalid-57/input.js"
-					end: Object {
-						column: 11
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation experimental/numeric-separator/invalid-57/input.js 1:0-1:11
 				expressions: Array [
 					JSNumericLiteral {
 						value: 11.11
 						format: undefined
-						loc: Object {
-							filename: "experimental/numeric-separator/invalid-57/input.js"
-							end: Object {
-								column: 8
-								line: 1
-							}
-							start: Object {
-								column: 0
-								line: 1
-							}
-						}
+						loc: SourceLocation experimental/numeric-separator/invalid-57/input.js 1:0-1:8
 					}
 					JSNumericLiteral {
 						value: 0
 						format: undefined
-						loc: Object {
-							filename: "experimental/numeric-separator/invalid-57/input.js"
-							end: Object {
-								column: 11
-								line: 1
-							}
-							start: Object {
-								column: 10
-								line: 1
-							}
-						}
+						loc: SourceLocation experimental/numeric-separator/invalid-57/input.js 1:10-1:11
 					}
 				]
 			}
@@ -127,8 +71,5 @@ JSRoot {
     1_1._1_1, 0
     ^
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

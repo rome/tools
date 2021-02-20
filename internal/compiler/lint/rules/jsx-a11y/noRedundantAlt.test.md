@@ -18,9 +18,6 @@
   ℹ Screen readers announce img elements as "images", so it is not necessary to redeclare this in
     alternative text.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -45,9 +42,6 @@
   ℹ Screen readers announce img elements as "images", so it is not necessary to redeclare this in
     alternative text.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -72,9 +66,6 @@
   ℹ Screen readers announce img elements as "images", so it is not necessary to redeclare this in
     alternative text.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -99,9 +90,6 @@
   ℹ Screen readers announce img elements as "images", so it is not necessary to redeclare this in
     alternative text.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -126,9 +114,6 @@
   ℹ Screen readers announce img elements as "images", so it is not necessary to redeclare this in
     alternative text.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -153,9 +138,6 @@
   ℹ Screen readers announce img elements as "images", so it is not necessary to redeclare this in
     alternative text.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -169,7 +151,6 @@
 ### `6`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -183,7 +164,6 @@
 ### `7`
 
 ```
-✔ No known problems!
 
 ```
 

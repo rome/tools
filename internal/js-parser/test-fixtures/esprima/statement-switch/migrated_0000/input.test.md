@@ -12,51 +12,20 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "esprima/statement-switch/migrated_0000/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "esprima/statement-switch/migrated_0000/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation esprima/statement-switch/migrated_0000/input.js 1:0-2:0
+	path: UIDPath<esprima/statement-switch/migrated_0000/input.js>
 	body: Array [
 		JSSwitchStatement {
 			cases: Array []
-			loc: Object {
-				filename: "esprima/statement-switch/migrated_0000/input.js"
-				end: Object {
-					column: 13
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation esprima/statement-switch/migrated_0000/input.js 1:0-1:13
 			discriminant: JSReferenceIdentifier {
 				name: "x"
-				loc: Object {
-					filename: "esprima/statement-switch/migrated_0000/input.js"
-					identifierName: "x"
-					end: Object {
-						column: 9
-						line: 1
-					}
-					start: Object {
-						column: 8
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/statement-switch/migrated_0000/input.js 1:8-1:9 (x)
 			}
 		}
 	]
@@ -66,6 +35,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

@@ -12,50 +12,19 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "core/uncategorised/273/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "core/uncategorised/273/input.js"
-		end: Object {
-			column: 8
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation core/uncategorised/273/input.js 1:0-1:8
+	path: UIDPath<core/uncategorised/273/input.js>
 	body: Array [
 		JSThrowStatement {
-			loc: Object {
-				filename: "core/uncategorised/273/input.js"
-				end: Object {
-					column: 8
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation core/uncategorised/273/input.js 1:0-1:8
 			argument: JSReferenceIdentifier {
 				name: "x"
-				loc: Object {
-					filename: "core/uncategorised/273/input.js"
-					identifierName: "x"
-					end: Object {
-						column: 7
-						line: 1
-					}
-					start: Object {
-						column: 6
-						line: 1
-					}
-				}
+				loc: SourceLocation core/uncategorised/273/input.js 1:6-1:7 (x)
 			}
 		}
 	]
@@ -65,6 +34,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

@@ -11,111 +11,40 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "core/categorized/filename-specified/input.js"
 	hasHoistedVars: true
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "core/categorized/filename-specified/input.js"
-		end: Object {
-			column: 0
-			line: 3
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation core/categorized/filename-specified/input.js 1:0-3:0
+	path: UIDPath<core/categorized/filename-specified/input.js>
 	comments: Array [
 		CommentLine {
 			id: "0"
 			value: " This comment should have a filename prop attached to loc"
-			loc: Object {
-				filename: "core/categorized/filename-specified/input.js"
-				end: Object {
-					column: 59
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation core/categorized/filename-specified/input.js 1:0-1:59
 		}
 	]
 	body: Array [
 		JSVariableDeclarationStatement {
 			leadingComments: Array ["0"]
-			loc: Object {
-				filename: "core/categorized/filename-specified/input.js"
-				end: Object {
-					column: 39
-					line: 2
-				}
-				start: Object {
-					column: 0
-					line: 2
-				}
-			}
+			loc: SourceLocation core/categorized/filename-specified/input.js 2:0-2:39
 			declaration: JSVariableDeclaration {
 				kind: "var"
 				leadingComments: undefined
-				loc: Object {
-					filename: "core/categorized/filename-specified/input.js"
-					end: Object {
-						column: 39
-						line: 2
-					}
-					start: Object {
-						column: 0
-						line: 2
-					}
-				}
+				loc: SourceLocation core/categorized/filename-specified/input.js 2:0-2:39
 				declarations: Array [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "node"
 							leadingComments: undefined
-							loc: Object {
-								filename: "core/categorized/filename-specified/input.js"
-								identifierName: "node"
-								end: Object {
-									column: 8
-									line: 2
-								}
-								start: Object {
-									column: 4
-									line: 2
-								}
-							}
+							loc: SourceLocation core/categorized/filename-specified/input.js 2:4-2:8 (node)
 						}
 						leadingComments: undefined
-						loc: Object {
-							filename: "core/categorized/filename-specified/input.js"
-							end: Object {
-								column: 38
-								line: 2
-							}
-							start: Object {
-								column: 4
-								line: 2
-							}
-						}
+						loc: SourceLocation core/categorized/filename-specified/input.js 2:4-2:38
 						init: JSStringLiteral {
 							value: "shouldHaveFilenameLocProp"
-							loc: Object {
-								filename: "core/categorized/filename-specified/input.js"
-								end: Object {
-									column: 38
-									line: 2
-								}
-								start: Object {
-									column: 11
-									line: 2
-								}
-							}
+							loc: SourceLocation core/categorized/filename-specified/input.js 2:11-2:38
 						}
 					}
 				]
@@ -128,6 +57,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

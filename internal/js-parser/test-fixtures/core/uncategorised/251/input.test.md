@@ -12,77 +12,27 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "core/uncategorised/251/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "core/uncategorised/251/input.js"
-		end: Object {
-			column: 25
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation core/uncategorised/251/input.js 1:0-1:25
+	path: UIDPath<core/uncategorised/251/input.js>
 	body: Array [
 		JSWhileStatement {
-			loc: Object {
-				filename: "core/uncategorised/251/input.js"
-				end: Object {
-					column: 25
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation core/uncategorised/251/input.js 1:0-1:25
 			test: JSBooleanLiteral {
 				value: true
-				loc: Object {
-					filename: "core/uncategorised/251/input.js"
-					end: Object {
-						column: 11
-						line: 1
-					}
-					start: Object {
-						column: 7
-						line: 1
-					}
-				}
+				loc: SourceLocation core/uncategorised/251/input.js 1:7-1:11
 			}
 			body: JSBlockStatement {
 				directives: Array []
-				loc: Object {
-					filename: "core/uncategorised/251/input.js"
-					end: Object {
-						column: 25
-						line: 1
-					}
-					start: Object {
-						column: 13
-						line: 1
-					}
-				}
+				loc: SourceLocation core/uncategorised/251/input.js 1:13-1:25
 				body: Array [
 					JSContinueStatement {
 						label: undefined
-						loc: Object {
-							filename: "core/uncategorised/251/input.js"
-							end: Object {
-								column: 23
-								line: 1
-							}
-							start: Object {
-								column: 15
-								line: 1
-							}
-						}
+						loc: SourceLocation core/uncategorised/251/input.js 1:15-1:23
 					}
 				]
 			}
@@ -94,6 +44,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

@@ -12,123 +12,41 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "typescript/assert-predicate/asserts-this/input.ts"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
+	loc: SourceLocation typescript/assert-predicate/asserts-this/input.ts 1:0-4:0
+	path: UIDPath<typescript/assert-predicate/asserts-this/input.ts>
 	syntax: Array ["ts"]
-	loc: Object {
-		filename: "typescript/assert-predicate/asserts-this/input.ts"
-		end: Object {
-			column: 0
-			line: 4
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
 	body: Array [
 		JSClassDeclaration {
 			id: JSBindingIdentifier {
 				name: "C"
-				loc: Object {
-					filename: "typescript/assert-predicate/asserts-this/input.ts"
-					identifierName: "C"
-					end: Object {
-						column: 7
-						line: 1
-					}
-					start: Object {
-						column: 6
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/assert-predicate/asserts-this/input.ts 1:6-1:7 (C)
 			}
-			loc: Object {
-				filename: "typescript/assert-predicate/asserts-this/input.ts"
-				end: Object {
-					column: 1
-					line: 3
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation typescript/assert-predicate/asserts-this/input.ts 1:0-3:1
 			meta: JSClassHead {
 				implements: undefined
 				superClass: undefined
 				superTypeParameters: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "typescript/assert-predicate/asserts-this/input.ts"
-					end: Object {
-						column: 1
-						line: 3
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/assert-predicate/asserts-this/input.ts 1:0-3:1
 				body: Array [
 					JSClassMethod {
 						kind: "method"
 						key: JSStaticPropertyKey {
 							value: JSIdentifier {
 								name: "m"
-								loc: Object {
-									filename: "typescript/assert-predicate/asserts-this/input.ts"
-									identifierName: "m"
-									end: Object {
-										column: 3
-										line: 2
-									}
-									start: Object {
-										column: 2
-										line: 2
-									}
-								}
+								loc: SourceLocation typescript/assert-predicate/asserts-this/input.ts 2:2-2:3 (m)
 							}
-							loc: Object {
-								filename: "typescript/assert-predicate/asserts-this/input.ts"
-								end: Object {
-									column: 3
-									line: 2
-								}
-								start: Object {
-									column: 2
-									line: 2
-								}
-							}
+							loc: SourceLocation typescript/assert-predicate/asserts-this/input.ts 2:2-2:3
 						}
-						loc: Object {
-							filename: "typescript/assert-predicate/asserts-this/input.ts"
-							end: Object {
-								column: 22
-								line: 2
-							}
-							start: Object {
-								column: 2
-								line: 2
-							}
-						}
+						loc: SourceLocation typescript/assert-predicate/asserts-this/input.ts 2:2-2:22
 						body: JSBlockStatement {
 							body: Array []
 							directives: Array []
-							loc: Object {
-								filename: "typescript/assert-predicate/asserts-this/input.ts"
-								end: Object {
-									column: 22
-									line: 2
-								}
-								start: Object {
-									column: 20
-									line: 2
-								}
-							}
+							loc: SourceLocation typescript/assert-predicate/asserts-this/input.ts 2:20-2:22
 						}
 						meta: JSClassPropertyMeta {
 							abstract: false
@@ -137,21 +55,8 @@ JSRoot {
 							readonly: false
 							static: false
 							typeAnnotation: undefined
-							start: Object {
-								column: 2
-								line: 2
-							}
-							loc: Object {
-								filename: "typescript/assert-predicate/asserts-this/input.ts"
-								end: Object {
-									column: 3
-									line: 2
-								}
-								start: Object {
-									column: 2
-									line: 2
-								}
-							}
+							loc: SourceLocation typescript/assert-predicate/asserts-this/input.ts 2:2-2:3
+							start: Position 2:2
 						}
 						head: JSFunctionHead {
 							async: false
@@ -161,45 +66,14 @@ JSRoot {
 							rest: undefined
 							thisType: undefined
 							typeParameters: undefined
-							loc: Object {
-								filename: "typescript/assert-predicate/asserts-this/input.ts"
-								end: Object {
-									column: 19
-									line: 2
-								}
-								start: Object {
-									column: 3
-									line: 2
-								}
-							}
+							loc: SourceLocation typescript/assert-predicate/asserts-this/input.ts 2:3-2:19
 							returnType: TSTypePredicate {
 								asserts: true
 								typeAnnotation: undefined
-								loc: Object {
-									filename: "typescript/assert-predicate/asserts-this/input.ts"
-									end: Object {
-										column: 19
-										line: 2
-									}
-									start: Object {
-										column: 5
-										line: 2
-									}
-								}
+								loc: SourceLocation typescript/assert-predicate/asserts-this/input.ts 2:5-2:19
 								parameterName: JSIdentifier {
 									name: "this"
-									loc: Object {
-										filename: "typescript/assert-predicate/asserts-this/input.ts"
-										identifierName: "this"
-										end: Object {
-											column: 19
-											line: 2
-										}
-										start: Object {
-											column: 15
-											line: 2
-										}
-									}
+									loc: SourceLocation typescript/assert-predicate/asserts-this/input.ts 2:15-2:19 (this)
 								}
 							}
 						}
@@ -214,6 +88,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

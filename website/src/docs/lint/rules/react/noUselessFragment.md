@@ -17,7 +17,7 @@ disallow unnecessary fragments
 **ESLint Equivalent:** [jsx-no-useless-fragment](https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/jsx-no-useless-fragment.md)
 <!-- GENERATED:END(id:description) -->
 
-<!-- GENERATED:START(hash:b7b4661b877f7ff84db836d5a8d9cbe19dfa2182,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+<!-- GENERATED:START(hash:c58316354611d48255c8869d410dd11778029650,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
 
 ### Invalid
@@ -31,10 +31,10 @@ disallow unnecessary fragments
     &lt;&gt;<span class="token punctuation">{</span><span class="token variable">foo</span><span class="token punctuation">}</span>&lt;<span class="token operator">/</span>&gt;
     <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
 
-  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">A </span><span style="color: DodgerBlue;"><strong>Fragment</strong></span><span style="color: DodgerBlue;"> is redundant if it contains only one child, or if it is</span>
-    <span style="color: DodgerBlue;">the child of a html element, and is not a keyed fragment.</span>
+  <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">A </span><span style="color: rgb(38, 148, 255);"><strong>Fragment</strong></span><span style="color: rgb(38, 148, 255);"> is redundant if it contains only one child, or if it is</span>
+    <span style="color: rgb(38, 148, 255);">the child of a html element, and is not a keyed fragment.</span>
 
-  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Safe fix</span>
+  <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">Safe fix</span>
 
   <strong>  </strong><strong>1</strong><strong> </strong><strong> </strong><strong> │ </strong><span style="color: Tomato;">-</span> <span style="color: Tomato;"><strong>&lt;&gt;</strong></span>
   <strong>  </strong><strong>2</strong><strong> </strong><strong> </strong><strong> │ </strong><span style="color: Tomato;">-</span> <span style="color: Tomato;"><strong><span style="opacity: 0.8;">&rarr; </span></strong></span><span style="color: Tomato;">{foo}</span>
@@ -54,10 +54,10 @@ disallow unnecessary fragments
     &lt;<span class="token variable">p</span>&gt;&lt;&gt;foo&lt;<span class="token operator">/</span>&gt;&lt;<span class="token operator">/</span><span class="token variable">p</span>&gt;
        <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
 
-  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">A </span><span style="color: DodgerBlue;"><strong>Fragment</strong></span><span style="color: DodgerBlue;"> is redundant if it contains only one child, or if it is</span>
-    <span style="color: DodgerBlue;">the child of a html element, and is not a keyed fragment.</span>
+  <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">A </span><span style="color: rgb(38, 148, 255);"><strong>Fragment</strong></span><span style="color: rgb(38, 148, 255);"> is redundant if it contains only one child, or if it is</span>
+    <span style="color: rgb(38, 148, 255);">the child of a html element, and is not a keyed fragment.</span>
 
-  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Safe fix</span>
+  <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">Safe fix</span>
 
   <strong>  </strong><strong>1</strong><strong> </strong><strong> </strong><strong> │ </strong><span style="color: Tomato;">-</span> <span style="color: Tomato;"><strong>&lt;&gt;</strong></span>
   <strong>  </strong><strong>2</strong><strong> </strong><strong> </strong><strong> │ </strong><span style="color: Tomato;">-</span> <span style="color: Tomato;"><strong><span style="opacity: 0.8;">&rarr; </span></strong></span><span style="color: Tomato;">foo</span>
@@ -77,13 +77,12 @@ disallow unnecessary fragments
     &lt;&gt;&lt;<span class="token operator">/</span>&gt;
     <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
 
-  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">A </span><span style="color: DodgerBlue;"><strong>Fragment</strong></span><span style="color: DodgerBlue;"> is redundant if it contains only one child, or if it is</span>
-    <span style="color: DodgerBlue;">the child of a html element, and is not a keyed fragment.</span>
+  <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">A </span><span style="color: rgb(38, 148, 255);"><strong>Fragment</strong></span><span style="color: rgb(38, 148, 255);"> is redundant if it contains only one child, or if it is</span>
+    <span style="color: rgb(38, 148, 255);">the child of a html element, and is not a keyed fragment.</span>
 
-  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Safe fix</span>
+  <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">Safe fix</span>
 
-  <strong>  </strong><strong>1</strong><strong> </strong><strong> </strong><strong> │ </strong><span style="color: Tomato;">-</span> <span style="color: Tomato;"><strong>&lt;&gt;</strong></span>
-  <strong>  </strong><strong>2</strong><strong> </strong><strong> </strong><strong> │ </strong><span style="color: Tomato;">-</span> <span style="color: Tomato;"><strong>&lt;/&gt;</strong></span>
+  <span style="color: Tomato;">-</span> <span style="color: Tomato;"><strong>&lt;&gt;&lt;/&gt;</strong></span>
 
 </code></pre>{% endraw %}
 
@@ -98,10 +97,10 @@ disallow unnecessary fragments
     &lt;<span class="token variable">React</span><span class="token punctuation">.</span><span class="token attr-name">Fragment</span>&gt;foo&lt;<span class="token operator">/</span><span class="token variable">React</span><span class="token punctuation">.</span><span class="token attr-name">Fragment</span>&gt;
     <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
 
-  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">A </span><span style="color: DodgerBlue;"><strong>Fragment</strong></span><span style="color: DodgerBlue;"> is redundant if it contains only one child, or if it is</span>
-    <span style="color: DodgerBlue;">the child of a html element, and is not a keyed fragment.</span>
+  <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">A </span><span style="color: rgb(38, 148, 255);"><strong>Fragment</strong></span><span style="color: rgb(38, 148, 255);"> is redundant if it contains only one child, or if it is</span>
+    <span style="color: rgb(38, 148, 255);">the child of a html element, and is not a keyed fragment.</span>
 
-  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Safe fix</span>
+  <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">Safe fix</span>
 
   <strong>  </strong><strong>1</strong><strong> </strong><strong> </strong><strong> │ </strong><span style="color: Tomato;">-</span> <span style="color: Tomato;"><strong>&lt;React.Fragment&gt;</strong></span>
   <strong>  </strong><strong>2</strong><strong> </strong><strong> </strong><strong> │ </strong><span style="color: Tomato;">-</span> <span style="color: Tomato;"><strong><span style="opacity: 0.8;">&rarr; </span></strong></span><span style="color: Tomato;">foo</span>
@@ -121,10 +120,10 @@ disallow unnecessary fragments
     &lt;<span class="token variable">Fragment</span>&gt;foo&lt;<span class="token operator">/</span><span class="token variable">Fragment</span>&gt;
     <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
 
-  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">A </span><span style="color: DodgerBlue;"><strong>Fragment</strong></span><span style="color: DodgerBlue;"> is redundant if it contains only one child, or if it is</span>
-    <span style="color: DodgerBlue;">the child of a html element, and is not a keyed fragment.</span>
+  <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">A </span><span style="color: rgb(38, 148, 255);"><strong>Fragment</strong></span><span style="color: rgb(38, 148, 255);"> is redundant if it contains only one child, or if it is</span>
+    <span style="color: rgb(38, 148, 255);">the child of a html element, and is not a keyed fragment.</span>
 
-  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Safe fix</span>
+  <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">Safe fix</span>
 
   <strong>  </strong><strong>1</strong><strong> </strong><strong> </strong><strong> │ </strong><span style="color: Tomato;">-</span> <span style="color: Tomato;"><strong>&lt;Fragment&gt;</strong></span>
   <strong>  </strong><strong>2</strong><strong> </strong><strong> </strong><strong> │ </strong><span style="color: Tomato;">-</span> <span style="color: Tomato;"><strong><span style="opacity: 0.8;">&rarr; </span></strong></span><span style="color: Tomato;">foo</span>
@@ -155,10 +154,10 @@ disallow unnecessary fragments
      <strong> │ </strong><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
   <strong>  6</strong><strong> │ </strong>&lt;<span class="token operator">/</span><span class="token variable">section</span>&gt;
 
-  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">A </span><span style="color: DodgerBlue;"><strong>Fragment</strong></span><span style="color: DodgerBlue;"> is redundant if it contains only one child, or if it is</span>
-    <span style="color: DodgerBlue;">the child of a html element, and is not a keyed fragment.</span>
+  <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">A </span><span style="color: rgb(38, 148, 255);"><strong>Fragment</strong></span><span style="color: rgb(38, 148, 255);"> is redundant if it contains only one child, or if it is</span>
+    <span style="color: rgb(38, 148, 255);">the child of a html element, and is not a keyed fragment.</span>
 
-  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Safe fix</span>
+  <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">Safe fix</span>
 
   <strong>  </strong><strong>1</strong><strong> </strong><strong> </strong><strong> │ </strong><span style="color: Tomato;">-</span> <span style="color: Tomato;"><strong>&lt;&gt;</strong></span>
   <strong>  </strong><strong>2</strong><strong> </strong><strong> </strong><strong> │ </strong><span style="color: Tomato;">-</span> <span style="color: Tomato;"><strong><span style="opacity: 0.8;">&rarr; </span></strong></span><span style="color: Tomato;">&lt;div</span><span style="color: Tomato;"><span style="opacity: 0.8;">&middot;</span></span><span style="color: Tomato;">/&gt;</span>

@@ -12,78 +12,26 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "core/uncategorised/163/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "core/uncategorised/163/input.js"
-		end: Object {
-			column: 6
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation core/uncategorised/163/input.js 1:0-1:6
+	path: UIDPath<core/uncategorised/163/input.js>
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "core/uncategorised/163/input.js"
-				end: Object {
-					column: 6
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation core/uncategorised/163/input.js 1:0-1:6
 			expression: JSBinaryExpression {
 				operator: "in"
-				loc: Object {
-					filename: "core/uncategorised/163/input.js"
-					end: Object {
-						column: 6
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation core/uncategorised/163/input.js 1:0-1:6
 				left: JSReferenceIdentifier {
 					name: "x"
-					loc: Object {
-						filename: "core/uncategorised/163/input.js"
-						identifierName: "x"
-						end: Object {
-							column: 1
-							line: 1
-						}
-						start: Object {
-							column: 0
-							line: 1
-						}
-					}
+					loc: SourceLocation core/uncategorised/163/input.js 1:0-1:1 (x)
 				}
 				right: JSReferenceIdentifier {
 					name: "y"
-					loc: Object {
-						filename: "core/uncategorised/163/input.js"
-						identifierName: "y"
-						end: Object {
-							column: 6
-							line: 1
-						}
-						start: Object {
-							column: 5
-							line: 1
-						}
-					}
+					loc: SourceLocation core/uncategorised/163/input.js 1:5-1:6 (y)
 				}
 			}
 		}
@@ -94,6 +42,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

@@ -11,94 +11,44 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "typescript/class/extends-empty/input.ts"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
+	loc: SourceLocation typescript/class/extends-empty/input.ts 1:0-3:0
+	path: UIDPath<typescript/class/extends-empty/input.ts>
 	syntax: Array ["ts"]
-	loc: Object {
-		filename: "typescript/class/extends-empty/input.ts"
-		end: Object {
-			column: 0
-			line: 3
+	body: Array [
+		TSInterfaceDeclaration {
+			id: JSBindingIdentifier {
+				name: "foo"
+				loc: SourceLocation typescript/class/extends-empty/input.ts 1:10-1:13 (foo)
+			}
+			extends: Array []
+			typeParameters: undefined
+			loc: SourceLocation typescript/class/extends-empty/input.ts 1:0-2:1
+			body: TSInterfaceBody {
+				body: Array []
+				loc: SourceLocation typescript/class/extends-empty/input.ts 1:22-2:1
+			}
 		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	]
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse"
 				categoryValue: "js"
-				message: Array [
-					"extends"
-					RAW_MARKUP {value: " list cannot be empty"}
-				]
+				category: Array ["parse"]
+				message: RAW_MARKUP {value: "extends list cannot be empty"}
 			}
 			location: Object {
-				filename: "typescript/class/extends-empty/input.ts"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 22
-					line: 1
-				}
-				start: Object {
-					column: 22
-					line: 1
-				}
-			}
-		}
-	]
-	body: Array [
-		TSInterfaceDeclaration {
-			id: JSBindingIdentifier {
-				name: "foo"
-				loc: Object {
-					filename: "typescript/class/extends-empty/input.ts"
-					identifierName: "foo"
-					end: Object {
-						column: 13
-						line: 1
-					}
-					start: Object {
-						column: 10
-						line: 1
-					}
-				}
-			}
-			extends: Array []
-			typeParameters: undefined
-			loc: Object {
-				filename: "typescript/class/extends-empty/input.ts"
-				end: Object {
-					column: 1
-					line: 2
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
-			body: TSInterfaceBody {
-				body: Array []
-				loc: Object {
-					filename: "typescript/class/extends-empty/input.ts"
-					end: Object {
-						column: 1
-						line: 2
-					}
-					start: Object {
-						column: 22
-						line: 1
-					}
-				}
+				end: Position 1:22
+				path: UIDPath<typescript/class/extends-empty/input.ts>
+				start: Position 1:22
 			}
 		}
 	]
@@ -117,8 +67,5 @@ JSRoot {
       │                       ^
     2 │ }
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

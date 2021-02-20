@@ -11,45 +11,29 @@ JSRoot {
 	comments: Array []
 	corrupt: true
 	directives: Array []
-	filename: "typescript/assert-predicate/function-declaration/input.ts"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
+	loc: SourceLocation typescript/assert-predicate/function-declaration/input.ts 1:0-4:0
+	path: UIDPath<typescript/assert-predicate/function-declaration/input.ts>
 	syntax: Array ["ts"]
-	loc: Object {
-		filename: "typescript/assert-predicate/function-declaration/input.ts"
-		end: Object {
-			column: 0
-			line: 4
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse"
 				categoryValue: "js"
+				category: Array ["parse"]
 				message: RAW_MARKUP {value: "Expected an identifier"}
 			}
 			location: Object {
-				filename: "typescript/assert-predicate/function-declaration/input.ts"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 43
-					line: 3
-				}
-				start: Object {
-					column: 44
-					line: 3
-				}
+				end: Position 3:43
+				path: UIDPath<typescript/assert-predicate/function-declaration/input.ts>
+				start: Position 3:44
 			}
 		}
 	]
@@ -57,44 +41,13 @@ JSRoot {
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "asserts1"
-				loc: Object {
-					filename: "typescript/assert-predicate/function-declaration/input.ts"
-					identifierName: "asserts1"
-					end: Object {
-						column: 17
-						line: 1
-					}
-					start: Object {
-						column: 9
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/assert-predicate/function-declaration/input.ts 1:9-1:17 (asserts1)
 			}
-			loc: Object {
-				filename: "typescript/assert-predicate/function-declaration/input.ts"
-				end: Object {
-					column: 62
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation typescript/assert-predicate/function-declaration/input.ts 1:0-1:62
 			body: JSBlockStatement {
 				body: Array []
 				directives: Array []
-				loc: Object {
-					filename: "typescript/assert-predicate/function-declaration/input.ts"
-					end: Object {
-						column: 62
-						line: 1
-					}
-					start: Object {
-						column: 60
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/assert-predicate/function-declaration/input.ts 1:60-1:62
 			}
 			head: JSFunctionHead {
 				async: false
@@ -103,100 +56,24 @@ JSRoot {
 				rest: undefined
 				thisType: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "typescript/assert-predicate/function-declaration/input.ts"
-					end: Object {
-						column: 59
-						line: 1
-					}
-					start: Object {
-						column: 18
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/assert-predicate/function-declaration/input.ts 1:18-1:59
 				returnType: TSTypePredicate {
 					asserts: true
-					loc: Object {
-						filename: "typescript/assert-predicate/function-declaration/input.ts"
-						end: Object {
-							column: 59
-							line: 1
-						}
-						start: Object {
-							column: 44
-							line: 1
-						}
-					}
-					typeAnnotation: TSStringKeywordTypeAnnotation {
-						loc: Object {
-							filename: "typescript/assert-predicate/function-declaration/input.ts"
-							end: Object {
-								column: 59
-								line: 1
-							}
-							start: Object {
-								column: 53
-								line: 1
-							}
-						}
-					}
+					loc: SourceLocation typescript/assert-predicate/function-declaration/input.ts 1:44-1:59
+					typeAnnotation: TSStringKeywordTypeAnnotation {loc: SourceLocation typescript/assert-predicate/function-declaration/input.ts 1:53-1:59}
 					parameterName: JSIdentifier {
 						name: "value"
-						loc: Object {
-							filename: "typescript/assert-predicate/function-declaration/input.ts"
-							identifierName: "value"
-							end: Object {
-								column: 49
-								line: 1
-							}
-							start: Object {
-								column: 44
-								line: 1
-							}
-						}
+						loc: SourceLocation typescript/assert-predicate/function-declaration/input.ts 1:44-1:49 (value)
 					}
 				}
 				params: Array [
 					JSBindingIdentifier {
 						name: "value"
-						loc: Object {
-							filename: "typescript/assert-predicate/function-declaration/input.ts"
-							identifierName: "value"
-							end: Object {
-								column: 24
-								line: 1
-							}
-							start: Object {
-								column: 19
-								line: 1
-							}
-						}
+						loc: SourceLocation typescript/assert-predicate/function-declaration/input.ts 1:19-1:24 (value)
 						meta: JSPatternMeta {
 							optional: undefined
-							loc: Object {
-								filename: "typescript/assert-predicate/function-declaration/input.ts"
-								end: Object {
-									column: 33
-									line: 1
-								}
-								start: Object {
-									column: 19
-									line: 1
-								}
-							}
-							typeAnnotation: TSUnknownKeywordTypeAnnotation {
-								loc: Object {
-									filename: "typescript/assert-predicate/function-declaration/input.ts"
-									end: Object {
-										column: 33
-										line: 1
-									}
-									start: Object {
-										column: 26
-										line: 1
-									}
-								}
-							}
+							loc: SourceLocation typescript/assert-predicate/function-declaration/input.ts 1:19-1:33
+							typeAnnotation: TSUnknownKeywordTypeAnnotation {loc: SourceLocation typescript/assert-predicate/function-declaration/input.ts 1:26-1:33}
 						}
 					}
 				]
@@ -205,44 +82,13 @@ JSRoot {
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "asserts2"
-				loc: Object {
-					filename: "typescript/assert-predicate/function-declaration/input.ts"
-					identifierName: "asserts2"
-					end: Object {
-						column: 17
-						line: 2
-					}
-					start: Object {
-						column: 9
-						line: 2
-					}
-				}
+				loc: SourceLocation typescript/assert-predicate/function-declaration/input.ts 2:9-2:17 (asserts2)
 			}
-			loc: Object {
-				filename: "typescript/assert-predicate/function-declaration/input.ts"
-				end: Object {
-					column: 52
-					line: 2
-				}
-				start: Object {
-					column: 0
-					line: 2
-				}
-			}
+			loc: SourceLocation typescript/assert-predicate/function-declaration/input.ts 2:0-2:52
 			body: JSBlockStatement {
 				body: Array []
 				directives: Array []
-				loc: Object {
-					filename: "typescript/assert-predicate/function-declaration/input.ts"
-					end: Object {
-						column: 52
-						line: 2
-					}
-					start: Object {
-						column: 50
-						line: 2
-					}
-				}
+				loc: SourceLocation typescript/assert-predicate/function-declaration/input.ts 2:50-2:52
 			}
 			head: JSFunctionHead {
 				async: false
@@ -251,88 +97,24 @@ JSRoot {
 				rest: undefined
 				thisType: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "typescript/assert-predicate/function-declaration/input.ts"
-					end: Object {
-						column: 49
-						line: 2
-					}
-					start: Object {
-						column: 18
-						line: 2
-					}
-				}
+				loc: SourceLocation typescript/assert-predicate/function-declaration/input.ts 2:18-2:49
 				returnType: TSTypePredicate {
 					asserts: true
 					typeAnnotation: undefined
-					loc: Object {
-						filename: "typescript/assert-predicate/function-declaration/input.ts"
-						end: Object {
-							column: 49
-							line: 2
-						}
-						start: Object {
-							column: 34
-							line: 2
-						}
-					}
+					loc: SourceLocation typescript/assert-predicate/function-declaration/input.ts 2:34-2:49
 					parameterName: JSIdentifier {
 						name: "value"
-						loc: Object {
-							filename: "typescript/assert-predicate/function-declaration/input.ts"
-							identifierName: "value"
-							end: Object {
-								column: 49
-								line: 2
-							}
-							start: Object {
-								column: 44
-								line: 2
-							}
-						}
+						loc: SourceLocation typescript/assert-predicate/function-declaration/input.ts 2:44-2:49 (value)
 					}
 				}
 				params: Array [
 					JSBindingIdentifier {
 						name: "value"
-						loc: Object {
-							filename: "typescript/assert-predicate/function-declaration/input.ts"
-							identifierName: "value"
-							end: Object {
-								column: 24
-								line: 2
-							}
-							start: Object {
-								column: 19
-								line: 2
-							}
-						}
+						loc: SourceLocation typescript/assert-predicate/function-declaration/input.ts 2:19-2:24 (value)
 						meta: JSPatternMeta {
 							optional: undefined
-							loc: Object {
-								filename: "typescript/assert-predicate/function-declaration/input.ts"
-								end: Object {
-									column: 33
-									line: 2
-								}
-								start: Object {
-									column: 19
-									line: 2
-								}
-							}
-							typeAnnotation: TSUnknownKeywordTypeAnnotation {
-								loc: Object {
-									filename: "typescript/assert-predicate/function-declaration/input.ts"
-									end: Object {
-										column: 33
-										line: 2
-									}
-									start: Object {
-										column: 26
-										line: 2
-									}
-								}
-							}
+							loc: SourceLocation typescript/assert-predicate/function-declaration/input.ts 2:19-2:33
+							typeAnnotation: TSUnknownKeywordTypeAnnotation {loc: SourceLocation typescript/assert-predicate/function-declaration/input.ts 2:26-2:33}
 						}
 					}
 				]
@@ -341,30 +123,9 @@ JSRoot {
 		TSDeclareFunction {
 			id: JSBindingIdentifier {
 				name: "asserts3"
-				loc: Object {
-					filename: "typescript/assert-predicate/function-declaration/input.ts"
-					identifierName: "asserts3"
-					end: Object {
-						column: 17
-						line: 3
-					}
-					start: Object {
-						column: 9
-						line: 3
-					}
-				}
+				loc: SourceLocation typescript/assert-predicate/function-declaration/input.ts 3:9-3:17 (asserts3)
 			}
-			loc: Object {
-				filename: "typescript/assert-predicate/function-declaration/input.ts"
-				end: Object {
-					column: 45
-					line: 3
-				}
-				start: Object {
-					column: 0
-					line: 3
-				}
-			}
+			loc: SourceLocation typescript/assert-predicate/function-declaration/input.ts 3:0-3:45
 			head: JSFunctionHead {
 				async: false
 				generator: false
@@ -372,118 +133,34 @@ JSRoot {
 				rest: undefined
 				thisType: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "typescript/assert-predicate/function-declaration/input.ts"
-					end: Object {
-						column: 45
-						line: 3
-					}
-					start: Object {
-						column: 18
-						line: 3
-					}
-				}
+				loc: SourceLocation typescript/assert-predicate/function-declaration/input.ts 3:18-3:45
 				returnType: TSTypePredicate {
 					asserts: true
 					typeAnnotation: undefined
-					loc: Object {
-						filename: "typescript/assert-predicate/function-declaration/input.ts"
-						end: Object {
-							column: 45
-							line: 3
-						}
-						start: Object {
-							column: 34
-							line: 3
-						}
-					}
+					loc: SourceLocation typescript/assert-predicate/function-declaration/input.ts 3:34-3:45
 					parameterName: JSIdentifier {
 						name: ""
-						loc: Object {
-							filename: "typescript/assert-predicate/function-declaration/input.ts"
-							identifierName: ""
-							end: Object {
-								column: 45
-								line: 3
-							}
-							start: Object {
-								column: 44
-								line: 3
-							}
-						}
+						loc: SourceLocation typescript/assert-predicate/function-declaration/input.ts 3:44-3:45 ()
 					}
 				}
 				params: Array [
 					JSBindingIdentifier {
 						name: "value"
-						loc: Object {
-							filename: "typescript/assert-predicate/function-declaration/input.ts"
-							identifierName: "value"
-							end: Object {
-								column: 24
-								line: 3
-							}
-							start: Object {
-								column: 19
-								line: 3
-							}
-						}
+						loc: SourceLocation typescript/assert-predicate/function-declaration/input.ts 3:19-3:24 (value)
 						meta: JSPatternMeta {
 							optional: undefined
-							loc: Object {
-								filename: "typescript/assert-predicate/function-declaration/input.ts"
-								end: Object {
-									column: 33
-									line: 3
-								}
-								start: Object {
-									column: 19
-									line: 3
-								}
-							}
-							typeAnnotation: TSUnknownKeywordTypeAnnotation {
-								loc: Object {
-									filename: "typescript/assert-predicate/function-declaration/input.ts"
-									end: Object {
-										column: 33
-										line: 3
-									}
-									start: Object {
-										column: 26
-										line: 3
-									}
-								}
-							}
+							loc: SourceLocation typescript/assert-predicate/function-declaration/input.ts 3:19-3:33
+							typeAnnotation: TSUnknownKeywordTypeAnnotation {loc: SourceLocation typescript/assert-predicate/function-declaration/input.ts 3:26-3:33}
 						}
 					}
 				]
 			}
 		}
 		JSExpressionStatement {
-			loc: Object {
-				filename: "typescript/assert-predicate/function-declaration/input.ts"
-				end: Object {
-					column: 46
-					line: 3
-				}
-				start: Object {
-					column: 45
-					line: 3
-				}
-			}
+			loc: SourceLocation typescript/assert-predicate/function-declaration/input.ts 3:45-3:46
 			expression: JSReferenceIdentifier {
 				name: "INVALID_PLACEHOLDER"
-				loc: Object {
-					filename: "typescript/assert-predicate/function-declaration/input.ts"
-					end: Object {
-						column: 46
-						line: 3
-					}
-					start: Object {
-						column: 45
-						line: 3
-					}
-				}
+				loc: SourceLocation typescript/assert-predicate/function-declaration/input.ts 3:45-3:46
 			}
 		}
 	]
@@ -503,8 +180,5 @@ JSRoot {
   > 3 │ function asserts3 (value: unknown): asserts {}
       │                                             ^
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

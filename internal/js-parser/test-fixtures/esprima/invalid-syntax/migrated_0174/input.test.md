@@ -11,104 +11,47 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "esprima/invalid-syntax/migrated_0174/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "esprima/invalid-syntax/migrated_0174/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation esprima/invalid-syntax/migrated_0174/input.js 1:0-2:0
+	path: UIDPath<esprima/invalid-syntax/migrated_0174/input.js>
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse"
 				categoryValue: "js"
+				category: Array ["parse"]
 				message: RAW_MARKUP {value: "No loop label found"}
 			}
 			location: Object {
-				filename: "esprima/invalid-syntax/migrated_0174/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 22
-					line: 1
-				}
-				start: Object {
-					column: 22
-					line: 1
-				}
+				end: Position 1:22
+				path: UIDPath<esprima/invalid-syntax/migrated_0174/input.js>
+				start: Position 1:22
 			}
 		}
 	]
 	body: Array [
 		JSSwitchStatement {
-			loc: Object {
-				filename: "esprima/invalid-syntax/migrated_0174/input.js"
-				end: Object {
-					column: 33
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation esprima/invalid-syntax/migrated_0174/input.js 1:0-1:33
 			discriminant: JSReferenceIdentifier {
 				name: "x"
-				loc: Object {
-					filename: "esprima/invalid-syntax/migrated_0174/input.js"
-					identifierName: "x"
-					end: Object {
-						column: 9
-						line: 1
-					}
-					start: Object {
-						column: 8
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/invalid-syntax/migrated_0174/input.js 1:8-1:9 (x)
 			}
 			cases: Array [
 				JSSwitchCase {
 					test: undefined
-					loc: Object {
-						filename: "esprima/invalid-syntax/migrated_0174/input.js"
-						end: Object {
-							column: 31
-							line: 1
-						}
-						start: Object {
-							column: 13
-							line: 1
-						}
-					}
+					loc: SourceLocation esprima/invalid-syntax/migrated_0174/input.js 1:13-1:31
 					consequent: Array [
 						JSContinueStatement {
 							label: undefined
-							loc: Object {
-								filename: "esprima/invalid-syntax/migrated_0174/input.js"
-								end: Object {
-									column: 31
-									line: 1
-								}
-								start: Object {
-									column: 22
-									line: 1
-								}
-							}
+							loc: SourceLocation esprima/invalid-syntax/migrated_0174/input.js 1:22-1:31
 						}
 					]
 				}
@@ -129,8 +72,5 @@ JSRoot {
     switch (x) { default: continue; }
                           ^
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

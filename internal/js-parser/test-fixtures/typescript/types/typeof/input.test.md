@@ -12,147 +12,45 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "typescript/types/typeof/input.ts"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
+	loc: SourceLocation typescript/types/typeof/input.ts 1:0-2:0
+	path: UIDPath<typescript/types/typeof/input.ts>
 	syntax: Array ["ts"]
-	loc: Object {
-		filename: "typescript/types/typeof/input.ts"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
 	body: Array [
 		JSVariableDeclarationStatement {
-			loc: Object {
-				filename: "typescript/types/typeof/input.ts"
-				end: Object {
-					column: 18
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation typescript/types/typeof/input.ts 1:0-1:18
 			declaration: JSVariableDeclaration {
 				kind: "let"
-				loc: Object {
-					filename: "typescript/types/typeof/input.ts"
-					end: Object {
-						column: 18
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/types/typeof/input.ts 1:0-1:18
 				declarations: Array [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "x"
-							loc: Object {
-								filename: "typescript/types/typeof/input.ts"
-								end: Object {
-									column: 17
-									line: 1
-								}
-								start: Object {
-									column: 4
-									line: 1
-								}
-							}
+							loc: SourceLocation typescript/types/typeof/input.ts 1:4-1:17
 							meta: JSPatternMeta {
 								definite: undefined
-								loc: Object {
-									filename: "typescript/types/typeof/input.ts"
-									end: Object {
-										column: 17
-										line: 1
-									}
-									start: Object {
-										column: 4
-										line: 1
-									}
-								}
+								loc: SourceLocation typescript/types/typeof/input.ts 1:4-1:17
 								typeAnnotation: TSTypeQuery {
-									loc: Object {
-										filename: "typescript/types/typeof/input.ts"
-										end: Object {
-											column: 17
-											line: 1
-										}
-										start: Object {
-											column: 7
-											line: 1
-										}
-									}
+									loc: SourceLocation typescript/types/typeof/input.ts 1:7-1:17
 									exprName: TSQualifiedName {
-										loc: Object {
-											filename: "typescript/types/typeof/input.ts"
-											end: Object {
-												column: 17
-												line: 1
-											}
-											start: Object {
-												column: 14
-												line: 1
-											}
-										}
+										loc: SourceLocation typescript/types/typeof/input.ts 1:14-1:17
 										left: JSReferenceIdentifier {
 											name: "y"
-											loc: Object {
-												filename: "typescript/types/typeof/input.ts"
-												identifierName: "y"
-												end: Object {
-													column: 15
-													line: 1
-												}
-												start: Object {
-													column: 14
-													line: 1
-												}
-											}
+											loc: SourceLocation typescript/types/typeof/input.ts 1:14-1:15 (y)
 										}
 										right: JSIdentifier {
 											name: "z"
-											loc: Object {
-												filename: "typescript/types/typeof/input.ts"
-												identifierName: "z"
-												end: Object {
-													column: 17
-													line: 1
-												}
-												start: Object {
-													column: 16
-													line: 1
-												}
-											}
+											loc: SourceLocation typescript/types/typeof/input.ts 1:16-1:17 (z)
 										}
 									}
 								}
 							}
 						}
 						init: undefined
-						loc: Object {
-							filename: "typescript/types/typeof/input.ts"
-							end: Object {
-								column: 17
-								line: 1
-							}
-							start: Object {
-								column: 4
-								line: 1
-							}
-						}
+						loc: SourceLocation typescript/types/typeof/input.ts 1:4-1:17
 					}
 				]
 			}
@@ -164,6 +62,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

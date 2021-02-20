@@ -12,118 +12,36 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "core/uncategorised/296/input.js"
 	hasHoistedVars: true
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "core/uncategorised/296/input.js"
-		end: Object {
-			column: 29
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation core/uncategorised/296/input.js 1:0-1:29
+	path: UIDPath<core/uncategorised/296/input.js>
 	body: Array [
 		JSVariableDeclarationStatement {
-			loc: Object {
-				filename: "core/uncategorised/296/input.js"
-				end: Object {
-					column: 29
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation core/uncategorised/296/input.js 1:0-1:29
 			declaration: JSVariableDeclaration {
 				kind: "var"
-				loc: Object {
-					filename: "core/uncategorised/296/input.js"
-					end: Object {
-						column: 29
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation core/uncategorised/296/input.js 1:0-1:29
 				declarations: Array [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "hi"
-							loc: Object {
-								filename: "core/uncategorised/296/input.js"
-								identifierName: "hi"
-								end: Object {
-									column: 6
-									line: 1
-								}
-								start: Object {
-									column: 4
-									line: 1
-								}
-							}
+							loc: SourceLocation core/uncategorised/296/input.js 1:4-1:6 (hi)
 						}
-						loc: Object {
-							filename: "core/uncategorised/296/input.js"
-							end: Object {
-								column: 28
-								line: 1
-							}
-							start: Object {
-								column: 4
-								line: 1
-							}
-						}
+						loc: SourceLocation core/uncategorised/296/input.js 1:4-1:28
 						init: JSFunctionExpression {
 							id: JSBindingIdentifier {
 								name: "eval"
-								loc: Object {
-									filename: "core/uncategorised/296/input.js"
-									identifierName: "eval"
-									end: Object {
-										column: 22
-										line: 1
-									}
-									start: Object {
-										column: 18
-										line: 1
-									}
-								}
+								loc: SourceLocation core/uncategorised/296/input.js 1:18-1:22 (eval)
 							}
-							loc: Object {
-								filename: "core/uncategorised/296/input.js"
-								end: Object {
-									column: 28
-									line: 1
-								}
-								start: Object {
-									column: 9
-									line: 1
-								}
-							}
+							loc: SourceLocation core/uncategorised/296/input.js 1:9-1:28
 							body: JSBlockStatement {
 								body: Array []
 								directives: Array []
-								loc: Object {
-									filename: "core/uncategorised/296/input.js"
-									end: Object {
-										column: 28
-										line: 1
-									}
-									start: Object {
-										column: 25
-										line: 1
-									}
-								}
+								loc: SourceLocation core/uncategorised/296/input.js 1:25-1:28
 							}
 							head: JSFunctionHead {
 								async: false
@@ -134,17 +52,7 @@ JSRoot {
 								returnType: undefined
 								thisType: undefined
 								typeParameters: undefined
-								loc: Object {
-									filename: "core/uncategorised/296/input.js"
-									end: Object {
-										column: 24
-										line: 1
-									}
-									start: Object {
-										column: 22
-										line: 1
-									}
-								}
+								loc: SourceLocation core/uncategorised/296/input.js 1:22-1:24
 							}
 						}
 					}
@@ -158,6 +66,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

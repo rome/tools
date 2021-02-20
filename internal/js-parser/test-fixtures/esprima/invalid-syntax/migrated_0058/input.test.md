@@ -11,105 +11,44 @@ JSRoot {
 	comments: Array []
 	corrupt: true
 	directives: Array []
-	filename: "esprima/invalid-syntax/migrated_0058/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "esprima/invalid-syntax/migrated_0058/input.js"
-		end: Object {
-			column: 0
-			line: 2
+	loc: SourceLocation esprima/invalid-syntax/migrated_0058/input.js 1:0-2:0
+	path: UIDPath<esprima/invalid-syntax/migrated_0058/input.js>
+	body: Array [
+		JSExpressionStatement {
+			loc: SourceLocation esprima/invalid-syntax/migrated_0058/input.js 1:0-2:0
+			expression: JSArrayExpression {
+				loc: SourceLocation esprima/invalid-syntax/migrated_0058/input.js 1:0-2:0
+				elements: Array [
+					JSArrayHole {loc: SourceLocation esprima/invalid-syntax/migrated_0058/input.js 1:1-1:1}
+					JSReferenceIdentifier {
+						name: "INVALID_PLACEHOLDER"
+						loc: SourceLocation esprima/invalid-syntax/migrated_0058/input.js 2:0-2:0
+					}
+				]
+			}
 		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	]
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse"
 				categoryValue: "js"
-				message: Array [
-					RAW_MARKUP {value: "Unknown start to an "}
-					"array element"
-				]
+				category: Array ["parse"]
+				message: RAW_MARKUP {value: "Unknown start to an array element"}
 			}
 			location: Object {
-				filename: "esprima/invalid-syntax/migrated_0058/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 2
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 2
-				}
-			}
-		}
-	]
-	body: Array [
-		JSExpressionStatement {
-			loc: Object {
-				filename: "esprima/invalid-syntax/migrated_0058/input.js"
-				end: Object {
-					column: 0
-					line: 2
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
-			expression: JSArrayExpression {
-				loc: Object {
-					filename: "esprima/invalid-syntax/migrated_0058/input.js"
-					end: Object {
-						column: 0
-						line: 2
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
-				elements: Array [
-					JSArrayHole {
-						loc: Object {
-							filename: "esprima/invalid-syntax/migrated_0058/input.js"
-							end: Object {
-								column: 1
-								line: 1
-							}
-							start: Object {
-								column: 1
-								line: 1
-							}
-						}
-					}
-					JSReferenceIdentifier {
-						name: "INVALID_PLACEHOLDER"
-						loc: Object {
-							filename: "esprima/invalid-syntax/migrated_0058/input.js"
-							end: Object {
-								column: 0
-								line: 2
-							}
-							start: Object {
-								column: 0
-								line: 2
-							}
-						}
-					}
-				]
+				end: Position 1:2
+				path: UIDPath<esprima/invalid-syntax/migrated_0058/input.js>
+				start: Position 2:0
 			}
 		}
 	]
@@ -126,8 +65,5 @@ JSRoot {
 
     [,
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

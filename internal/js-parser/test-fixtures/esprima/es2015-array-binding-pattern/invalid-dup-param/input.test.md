@@ -11,110 +11,47 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "esprima/es2015-array-binding-pattern/invalid-dup-param/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "esprima/es2015-array-binding-pattern/invalid-dup-param/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation esprima/es2015-array-binding-pattern/invalid-dup-param/input.js 1:0-2:0
+	path: UIDPath<esprima/es2015-array-binding-pattern/invalid-dup-param/input.js>
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
 			location: Object {
-				filename: "esprima/es2015-array-binding-pattern/invalid-dup-param/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 6
-					line: 1
-				}
-				start: Object {
-					column: 5
-					line: 1
-				}
+				end: Position 1:6
+				path: UIDPath<esprima/es2015-array-binding-pattern/invalid-dup-param/input.js>
+				start: Position 1:5
 			}
 			description: Object {
-				category: "parse"
 				categoryValue: "js"
-				message: Array [
-					RAW_MARKUP {value: "Argument <emphasis>"}
-					"b"
-					RAW_MARKUP {value: "</emphasis> name clash in strict mode"}
-				]
+				category: Array ["parse"]
+				message: RAW_MARKUP {value: "Argument <emphasis>b</emphasis> name clash in strict mode"}
 				advice: Array [
 					log {
 						category: "info"
 						text: RAW_MARKUP {value: "Defined already here"}
 					}
-					frame {
-						location: Object {
-							filename: "esprima/es2015-array-binding-pattern/invalid-dup-param/input.js"
-							identifierName: "b"
-							end: Object {
-								column: 6
-								line: 1
-							}
-							start: Object {
-								column: 5
-								line: 1
-							}
-						}
-					}
+					frame {location: SourceLocation esprima/es2015-array-binding-pattern/invalid-dup-param/input.js 1:5-1:6 (b)}
 				]
 			}
 		}
 	]
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "esprima/es2015-array-binding-pattern/invalid-dup-param/input.js"
-				end: Object {
-					column: 18
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation esprima/es2015-array-binding-pattern/invalid-dup-param/input.js 1:0-1:18
 			expression: JSArrowFunctionExpression {
-				loc: Object {
-					filename: "esprima/es2015-array-binding-pattern/invalid-dup-param/input.js"
-					end: Object {
-						column: 17
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/es2015-array-binding-pattern/invalid-dup-param/input.js 1:0-1:17
 				body: JSNumericLiteral {
 					value: 0
 					format: undefined
-					loc: Object {
-						filename: "esprima/es2015-array-binding-pattern/invalid-dup-param/input.js"
-						end: Object {
-							column: 17
-							line: 1
-						}
-						start: Object {
-							column: 16
-							line: 1
-						}
-					}
+					loc: SourceLocation esprima/es2015-array-binding-pattern/invalid-dup-param/input.js 1:16-1:17
 				}
 				head: JSFunctionHead {
 					async: false
@@ -122,89 +59,26 @@ JSRoot {
 					rest: undefined
 					returnType: undefined
 					thisType: undefined
-					loc: Object {
-						filename: "esprima/es2015-array-binding-pattern/invalid-dup-param/input.js"
-						end: Object {
-							column: 16
-							line: 1
-						}
-						start: Object {
-							column: 0
-							line: 1
-						}
-					}
+					loc: SourceLocation esprima/es2015-array-binding-pattern/invalid-dup-param/input.js 1:0-1:16
 					params: Array [
 						JSBindingArrayPattern {
-							loc: Object {
-								filename: "esprima/es2015-array-binding-pattern/invalid-dup-param/input.js"
-								end: Object {
-									column: 13
-									line: 1
-								}
-								start: Object {
-									column: 1
-									line: 1
-								}
-							}
+							loc: SourceLocation esprima/es2015-array-binding-pattern/invalid-dup-param/input.js 1:1-1:13
 							rest: JSBindingIdentifier {
 								name: "b"
-								loc: Object {
-									filename: "esprima/es2015-array-binding-pattern/invalid-dup-param/input.js"
-									identifierName: "b"
-									end: Object {
-										column: 12
-										line: 1
-									}
-									start: Object {
-										column: 11
-										line: 1
-									}
-								}
+								loc: SourceLocation esprima/es2015-array-binding-pattern/invalid-dup-param/input.js 1:11-1:12 (b)
 							}
 							elements: Array [
 								JSBindingIdentifier {
 									name: "a"
-									loc: Object {
-										filename: "esprima/es2015-array-binding-pattern/invalid-dup-param/input.js"
-										identifierName: "a"
-										end: Object {
-											column: 3
-											line: 1
-										}
-										start: Object {
-											column: 2
-											line: 1
-										}
-									}
+									loc: SourceLocation esprima/es2015-array-binding-pattern/invalid-dup-param/input.js 1:2-1:3 (a)
 								}
 								JSBindingArrayPattern {
 									rest: undefined
-									loc: Object {
-										filename: "esprima/es2015-array-binding-pattern/invalid-dup-param/input.js"
-										end: Object {
-											column: 7
-											line: 1
-										}
-										start: Object {
-											column: 4
-											line: 1
-										}
-									}
+									loc: SourceLocation esprima/es2015-array-binding-pattern/invalid-dup-param/input.js 1:4-1:7
 									elements: Array [
 										JSBindingIdentifier {
 											name: "b"
-											loc: Object {
-												filename: "esprima/es2015-array-binding-pattern/invalid-dup-param/input.js"
-												identifierName: "b"
-												end: Object {
-													column: 6
-													line: 1
-												}
-												start: Object {
-													column: 5
-													line: 1
-												}
-											}
+											loc: SourceLocation esprima/es2015-array-binding-pattern/invalid-dup-param/input.js 1:5-1:6 (b)
 										}
 									]
 								}
@@ -231,8 +105,5 @@ JSRoot {
     ([a,[b],...b])=>0;
          ^
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

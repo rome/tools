@@ -12,133 +12,41 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "esprima/es2015-default-parameter-value/migrated_0002/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "esprima/es2015-default-parameter-value/migrated_0002/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation esprima/es2015-default-parameter-value/migrated_0002/input.js 1:0-2:0
+	path: UIDPath<esprima/es2015-default-parameter-value/migrated_0002/input.js>
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "esprima/es2015-default-parameter-value/migrated_0002/input.js"
-				end: Object {
-					column: 27
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation esprima/es2015-default-parameter-value/migrated_0002/input.js 1:0-1:27
 			expression: JSAssignmentExpression {
 				operator: "="
-				loc: Object {
-					filename: "esprima/es2015-default-parameter-value/migrated_0002/input.js"
-					end: Object {
-						column: 27
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/es2015-default-parameter-value/migrated_0002/input.js 1:0-1:27
 				left: JSAssignmentIdentifier {
 					name: "x"
-					loc: Object {
-						filename: "esprima/es2015-default-parameter-value/migrated_0002/input.js"
-						identifierName: "x"
-						end: Object {
-							column: 1
-							line: 1
-						}
-						start: Object {
-							column: 0
-							line: 1
-						}
-					}
+					loc: SourceLocation esprima/es2015-default-parameter-value/migrated_0002/input.js 1:0-1:1 (x)
 				}
 				right: JSObjectExpression {
-					loc: Object {
-						filename: "esprima/es2015-default-parameter-value/migrated_0002/input.js"
-						end: Object {
-							column: 27
-							line: 1
-						}
-						start: Object {
-							column: 4
-							line: 1
-						}
-					}
+					loc: SourceLocation esprima/es2015-default-parameter-value/migrated_0002/input.js 1:4-1:27
 					properties: Array [
 						JSObjectProperty {
 							key: JSStaticPropertyKey {
 								value: JSIdentifier {
 									name: "f"
-									loc: Object {
-										filename: "esprima/es2015-default-parameter-value/migrated_0002/input.js"
-										identifierName: "f"
-										end: Object {
-											column: 7
-											line: 1
-										}
-										start: Object {
-											column: 6
-											line: 1
-										}
-									}
+									loc: SourceLocation esprima/es2015-default-parameter-value/migrated_0002/input.js 1:6-1:7 (f)
 								}
-								loc: Object {
-									filename: "esprima/es2015-default-parameter-value/migrated_0002/input.js"
-									end: Object {
-										column: 7
-										line: 1
-									}
-									start: Object {
-										column: 6
-										line: 1
-									}
-								}
+								loc: SourceLocation esprima/es2015-default-parameter-value/migrated_0002/input.js 1:6-1:7
 							}
 							value: JSFunctionExpression {
 								id: undefined
-								loc: Object {
-									filename: "esprima/es2015-default-parameter-value/migrated_0002/input.js"
-									end: Object {
-										column: 25
-										line: 1
-									}
-									start: Object {
-										column: 9
-										line: 1
-									}
-								}
+								loc: SourceLocation esprima/es2015-default-parameter-value/migrated_0002/input.js 1:9-1:25
 								body: JSBlockStatement {
 									body: Array []
 									directives: Array []
-									loc: Object {
-										filename: "esprima/es2015-default-parameter-value/migrated_0002/input.js"
-										end: Object {
-											column: 25
-											line: 1
-										}
-										start: Object {
-											column: 23
-											line: 1
-										}
-									}
+									loc: SourceLocation esprima/es2015-default-parameter-value/migrated_0002/input.js 1:23-1:25
 								}
 								head: JSFunctionHead {
 									async: false
@@ -148,90 +56,29 @@ JSRoot {
 									returnType: undefined
 									thisType: undefined
 									typeParameters: undefined
-									loc: Object {
-										filename: "esprima/es2015-default-parameter-value/migrated_0002/input.js"
-										end: Object {
-											column: 22
-											line: 1
-										}
-										start: Object {
-											column: 17
-											line: 1
-										}
-									}
+									loc: SourceLocation esprima/es2015-default-parameter-value/migrated_0002/input.js 1:17-1:22
 									params: Array [
 										JSBindingAssignmentPattern {
-											loc: Object {
-												filename: "esprima/es2015-default-parameter-value/migrated_0002/input.js"
-												end: Object {
-													column: 21
-													line: 1
-												}
-												start: Object {
-													column: 18
-													line: 1
-												}
-											}
+											loc: SourceLocation esprima/es2015-default-parameter-value/migrated_0002/input.js 1:18-1:21
 											right: JSNumericLiteral {
 												value: 1
 												format: undefined
-												loc: Object {
-													filename: "esprima/es2015-default-parameter-value/migrated_0002/input.js"
-													end: Object {
-														column: 21
-														line: 1
-													}
-													start: Object {
-														column: 20
-														line: 1
-													}
-												}
+												loc: SourceLocation esprima/es2015-default-parameter-value/migrated_0002/input.js 1:20-1:21
 											}
 											left: JSBindingIdentifier {
 												name: "a"
-												loc: Object {
-													filename: "esprima/es2015-default-parameter-value/migrated_0002/input.js"
-													identifierName: "a"
-													end: Object {
-														column: 19
-														line: 1
-													}
-													start: Object {
-														column: 18
-														line: 1
-													}
-												}
+												loc: SourceLocation esprima/es2015-default-parameter-value/migrated_0002/input.js 1:18-1:19 (a)
 												meta: JSPatternMeta {
 													optional: undefined
 													typeAnnotation: undefined
-													loc: Object {
-														filename: "esprima/es2015-default-parameter-value/migrated_0002/input.js"
-														end: Object {
-															column: 19
-															line: 1
-														}
-														start: Object {
-															column: 18
-															line: 1
-														}
-													}
+													loc: SourceLocation esprima/es2015-default-parameter-value/migrated_0002/input.js 1:18-1:19
 												}
 											}
 										}
 									]
 								}
 							}
-							loc: Object {
-								filename: "esprima/es2015-default-parameter-value/migrated_0002/input.js"
-								end: Object {
-									column: 25
-									line: 1
-								}
-								start: Object {
-									column: 6
-									line: 1
-								}
-							}
+							loc: SourceLocation esprima/es2015-default-parameter-value/migrated_0002/input.js 1:6-1:25
 						}
 					]
 				}
@@ -244,6 +91,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

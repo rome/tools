@@ -10,37 +10,17 @@
 JSRoot {
 	comments: Array []
 	corrupt: false
-	filename: "es2015/yield/parameter-name-strict/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2015/yield/parameter-name-strict/input.js"
-		end: Object {
-			column: 21
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2015/yield/parameter-name-strict/input.js 1:0-2:21
+	path: UIDPath<es2015/yield/parameter-name-strict/input.js>
 	directives: Array [
 		JSDirective {
 			value: "use strict"
-			loc: Object {
-				filename: "es2015/yield/parameter-name-strict/input.js"
-				end: Object {
-					column: 13
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2015/yield/parameter-name-strict/input.js 1:0-1:13
 		}
 	]
 	diagnostics: Array [
@@ -48,26 +28,17 @@ JSRoot {
 			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse"
 				categoryValue: "js"
-				message: Array [
-					"yield"
-					RAW_MARKUP {value: " is a reserved word"}
-				]
+				category: Array ["parse"]
+				message: RAW_MARKUP {value: "yield is a reserved word"}
 			}
 			location: Object {
-				filename: "es2015/yield/parameter-name-strict/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 17
-					line: 2
-				}
-				start: Object {
-					column: 12
-					line: 2
-				}
+				end: Position 2:17
+				path: UIDPath<es2015/yield/parameter-name-strict/input.js>
+				start: Position 2:12
 			}
 		}
 	]
@@ -75,44 +46,13 @@ JSRoot {
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "fn"
-				loc: Object {
-					filename: "es2015/yield/parameter-name-strict/input.js"
-					identifierName: "fn"
-					end: Object {
-						column: 11
-						line: 2
-					}
-					start: Object {
-						column: 9
-						line: 2
-					}
-				}
+				loc: SourceLocation es2015/yield/parameter-name-strict/input.js 2:9-2:11 (fn)
 			}
-			loc: Object {
-				filename: "es2015/yield/parameter-name-strict/input.js"
-				end: Object {
-					column: 21
-					line: 2
-				}
-				start: Object {
-					column: 0
-					line: 2
-				}
-			}
+			loc: SourceLocation es2015/yield/parameter-name-strict/input.js 2:0-2:21
 			body: JSBlockStatement {
 				body: Array []
 				directives: Array []
-				loc: Object {
-					filename: "es2015/yield/parameter-name-strict/input.js"
-					end: Object {
-						column: 21
-						line: 2
-					}
-					start: Object {
-						column: 19
-						line: 2
-					}
-				}
+				loc: SourceLocation es2015/yield/parameter-name-strict/input.js 2:19-2:21
 			}
 			head: JSFunctionHead {
 				async: false
@@ -122,46 +62,15 @@ JSRoot {
 				returnType: undefined
 				thisType: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "es2015/yield/parameter-name-strict/input.js"
-					end: Object {
-						column: 18
-						line: 2
-					}
-					start: Object {
-						column: 11
-						line: 2
-					}
-				}
+				loc: SourceLocation es2015/yield/parameter-name-strict/input.js 2:11-2:18
 				params: Array [
 					JSBindingIdentifier {
 						name: "yield"
-						loc: Object {
-							filename: "es2015/yield/parameter-name-strict/input.js"
-							identifierName: "yield"
-							end: Object {
-								column: 17
-								line: 2
-							}
-							start: Object {
-								column: 12
-								line: 2
-							}
-						}
+						loc: SourceLocation es2015/yield/parameter-name-strict/input.js 2:12-2:17 (yield)
 						meta: JSPatternMeta {
 							optional: undefined
 							typeAnnotation: undefined
-							loc: Object {
-								filename: "es2015/yield/parameter-name-strict/input.js"
-								end: Object {
-									column: 17
-									line: 2
-								}
-								start: Object {
-									column: 12
-									line: 2
-								}
-							}
+							loc: SourceLocation es2015/yield/parameter-name-strict/input.js 2:12-2:17
 						}
 					}
 				]
@@ -183,8 +92,5 @@ JSRoot {
   > 2 │ function fn(yield) {}
       │             ^^^^^
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

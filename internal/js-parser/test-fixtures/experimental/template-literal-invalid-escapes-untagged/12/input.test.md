@@ -11,103 +11,47 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "experimental/template-literal-invalid-escapes-untagged/12/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "experimental/template-literal-invalid-escapes-untagged/12/input.js"
-		end: Object {
-			column: 22
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation experimental/template-literal-invalid-escapes-untagged/12/input.js 1:0-1:22
+	path: UIDPath<experimental/template-literal-invalid-escapes-untagged/12/input.js>
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse"
 				categoryValue: "js"
+				category: Array ["parse"]
 				message: RAW_MARKUP {value: "Invalid escape sequence in template"}
 			}
 			location: Object {
-				filename: "experimental/template-literal-invalid-escapes-untagged/12/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 10
-					line: 1
-				}
-				start: Object {
-					column: 10
-					line: 1
-				}
+				end: Position 1:10
+				path: UIDPath<experimental/template-literal-invalid-escapes-untagged/12/input.js>
+				start: Position 1:10
 			}
 		}
 	]
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "experimental/template-literal-invalid-escapes-untagged/12/input.js"
-				end: Object {
-					column: 22
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation experimental/template-literal-invalid-escapes-untagged/12/input.js 1:0-1:22
 			expression: JSTemplateLiteral {
-				loc: Object {
-					filename: "experimental/template-literal-invalid-escapes-untagged/12/input.js"
-					end: Object {
-						column: 22
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation experimental/template-literal-invalid-escapes-untagged/12/input.js 1:0-1:22
 				expressions: Array [
 					JSNumericLiteral {
 						value: 0
 						format: undefined
-						loc: Object {
-							filename: "experimental/template-literal-invalid-escapes-untagged/12/input.js"
-							end: Object {
-								column: 8
-								line: 1
-							}
-							start: Object {
-								column: 7
-								line: 1
-							}
-						}
+						loc: SourceLocation experimental/template-literal-invalid-escapes-untagged/12/input.js 1:7-1:8
 					}
 					JSNumericLiteral {
 						value: 1
 						format: undefined
-						loc: Object {
-							filename: "experimental/template-literal-invalid-escapes-untagged/12/input.js"
-							end: Object {
-								column: 15
-								line: 1
-							}
-							start: Object {
-								column: 14
-								line: 1
-							}
-						}
+						loc: SourceLocation experimental/template-literal-invalid-escapes-untagged/12/input.js 1:14-1:15
 					}
 				]
 				quasis: Array [
@@ -115,49 +59,19 @@ JSRoot {
 						cooked: "left"
 						raw: "left"
 						tail: false
-						loc: Object {
-							filename: "experimental/template-literal-invalid-escapes-untagged/12/input.js"
-							end: Object {
-								column: 5
-								line: 1
-							}
-							start: Object {
-								column: 1
-								line: 1
-							}
-						}
+						loc: SourceLocation experimental/template-literal-invalid-escapes-untagged/12/input.js 1:1-1:5
 					}
 					JSTemplateElement {
 						cooked: "\\xg"
 						raw: "\\xg"
 						tail: false
-						loc: Object {
-							filename: "experimental/template-literal-invalid-escapes-untagged/12/input.js"
-							end: Object {
-								column: 12
-								line: 1
-							}
-							start: Object {
-								column: 9
-								line: 1
-							}
-						}
+						loc: SourceLocation experimental/template-literal-invalid-escapes-untagged/12/input.js 1:9-1:12
 					}
 					JSTemplateElement {
 						cooked: "right"
 						raw: "right"
 						tail: true
-						loc: Object {
-							filename: "experimental/template-literal-invalid-escapes-untagged/12/input.js"
-							end: Object {
-								column: 21
-								line: 1
-							}
-							start: Object {
-								column: 16
-								line: 1
-							}
-						}
+						loc: SourceLocation experimental/template-literal-invalid-escapes-untagged/12/input.js 1:16-1:21
 					}
 				]
 			}
@@ -177,8 +91,5 @@ JSRoot {
     `left${0}\xg${1}right`
               ^
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

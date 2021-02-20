@@ -12,89 +12,45 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "core/uncategorised/295/input.js"
 	hasHoistedVars: true
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "core/uncategorised/295/input.js"
-		end: Object {
-			column: 37
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation core/uncategorised/295/input.js 1:0-1:37
+	path: UIDPath<core/uncategorised/295/input.js>
 	body: Array [
 		JSVariableDeclarationStatement {
-			loc: Object {
-				filename: "core/uncategorised/295/input.js"
-				end: Object {
-					column: 37
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation core/uncategorised/295/input.js 1:0-1:37
 			declaration: JSVariableDeclaration {
 				kind: "var"
-				loc: Object {
-					filename: "core/uncategorised/295/input.js"
-					end: Object {
-						column: 37
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation core/uncategorised/295/input.js 1:0-1:37
 				declarations: Array [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "hi"
-							loc: Object {
-								filename: "core/uncategorised/295/input.js"
-								identifierName: "hi"
-								end: Object {
-									column: 6
-									line: 1
-								}
-								start: Object {
-									column: 4
-									line: 1
-								}
-							}
+							loc: SourceLocation core/uncategorised/295/input.js 1:4-1:6 (hi)
 						}
-						loc: Object {
-							filename: "core/uncategorised/295/input.js"
-							end: Object {
-								column: 36
-								line: 1
-							}
-							start: Object {
-								column: 4
-								line: 1
-							}
-						}
+						loc: SourceLocation core/uncategorised/295/input.js 1:4-1:36
 						init: JSFunctionExpression {
 							id: undefined
-							loc: Object {
-								filename: "core/uncategorised/295/input.js"
-								end: Object {
-									column: 36
-									line: 1
-								}
-								start: Object {
-									column: 9
-									line: 1
-								}
+							loc: SourceLocation core/uncategorised/295/input.js 1:9-1:36
+							body: JSBlockStatement {
+								directives: Array []
+								loc: SourceLocation core/uncategorised/295/input.js 1:25-1:36
+								body: Array [
+									JSExpressionStatement {
+										loc: SourceLocation core/uncategorised/295/input.js 1:27-1:34
+										expression: JSCallExpression {
+											arguments: Array []
+											loc: SourceLocation core/uncategorised/295/input.js 1:27-1:34
+											callee: JSReferenceIdentifier {
+												name: "sayHi"
+												loc: SourceLocation core/uncategorised/295/input.js 1:27-1:32 (sayHi)
+											}
+										}
+									}
+								]
 							}
 							head: JSFunctionHead {
 								async: false
@@ -104,105 +60,16 @@ JSRoot {
 								returnType: undefined
 								thisType: undefined
 								typeParameters: undefined
-								loc: Object {
-									filename: "core/uncategorised/295/input.js"
-									end: Object {
-										column: 24
-										line: 1
-									}
-									start: Object {
-										column: 18
-										line: 1
-									}
-								}
+								loc: SourceLocation core/uncategorised/295/input.js 1:18-1:24
 								rest: JSBindingIdentifier {
 									name: "r"
-									loc: Object {
-										filename: "core/uncategorised/295/input.js"
-										identifierName: "r"
-										end: Object {
-											column: 23
-											line: 1
-										}
-										start: Object {
-											column: 22
-											line: 1
-										}
-									}
+									loc: SourceLocation core/uncategorised/295/input.js 1:22-1:23 (r)
 									meta: JSPatternMeta {
 										optional: undefined
 										typeAnnotation: undefined
-										loc: Object {
-											filename: "core/uncategorised/295/input.js"
-											end: Object {
-												column: 23
-												line: 1
-											}
-											start: Object {
-												column: 22
-												line: 1
-											}
-										}
+										loc: SourceLocation core/uncategorised/295/input.js 1:22-1:23
 									}
 								}
-							}
-							body: JSBlockStatement {
-								directives: Array []
-								loc: Object {
-									filename: "core/uncategorised/295/input.js"
-									end: Object {
-										column: 36
-										line: 1
-									}
-									start: Object {
-										column: 25
-										line: 1
-									}
-								}
-								body: Array [
-									JSExpressionStatement {
-										loc: Object {
-											filename: "core/uncategorised/295/input.js"
-											end: Object {
-												column: 34
-												line: 1
-											}
-											start: Object {
-												column: 27
-												line: 1
-											}
-										}
-										expression: JSCallExpression {
-											arguments: Array []
-											loc: Object {
-												filename: "core/uncategorised/295/input.js"
-												end: Object {
-													column: 34
-													line: 1
-												}
-												start: Object {
-													column: 27
-													line: 1
-												}
-											}
-											callee: JSReferenceIdentifier {
-												name: "sayHi"
-												loc: Object {
-													filename: "core/uncategorised/295/input.js"
-													identifierName: "sayHi"
-													end: Object {
-														column: 32
-														line: 1
-													}
-													start: Object {
-														column: 27
-														line: 1
-													}
-												}
-											}
-										}
-									}
-								]
 							}
 						}
 					}
@@ -216,6 +83,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

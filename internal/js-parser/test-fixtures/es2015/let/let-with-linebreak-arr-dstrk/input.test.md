@@ -12,135 +12,44 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "es2015/let/let-with-linebreak-arr-dstrk/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2015/let/let-with-linebreak-arr-dstrk/input.js"
-		end: Object {
-			column: 0
-			line: 3
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2015/let/let-with-linebreak-arr-dstrk/input.js 1:0-3:0
+	path: UIDPath<es2015/let/let-with-linebreak-arr-dstrk/input.js>
 	body: Array [
 		JSVariableDeclarationStatement {
-			loc: Object {
-				filename: "es2015/let/let-with-linebreak-arr-dstrk/input.js"
-				end: Object {
-					column: 14
-					line: 2
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2015/let/let-with-linebreak-arr-dstrk/input.js 1:0-2:14
 			declaration: JSVariableDeclaration {
 				kind: "let"
-				loc: Object {
-					filename: "es2015/let/let-with-linebreak-arr-dstrk/input.js"
-					end: Object {
-						column: 14
-						line: 2
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/let/let-with-linebreak-arr-dstrk/input.js 1:0-2:14
 				declarations: Array [
 					JSVariableDeclarator {
 						id: JSBindingArrayPattern {
 							rest: undefined
-							loc: Object {
-								filename: "es2015/let/let-with-linebreak-arr-dstrk/input.js"
-								end: Object {
-									column: 7
-									line: 2
-								}
-								start: Object {
-									column: 4
-									line: 2
-								}
-							}
+							loc: SourceLocation es2015/let/let-with-linebreak-arr-dstrk/input.js 2:4-2:7
 							elements: Array [
 								JSBindingIdentifier {
 									name: "a"
-									loc: Object {
-										filename: "es2015/let/let-with-linebreak-arr-dstrk/input.js"
-										identifierName: "a"
-										end: Object {
-											column: 6
-											line: 2
-										}
-										start: Object {
-											column: 5
-											line: 2
-										}
-									}
+									loc: SourceLocation es2015/let/let-with-linebreak-arr-dstrk/input.js 2:5-2:6 (a)
 									meta: JSPatternMeta {
 										optional: undefined
 										typeAnnotation: undefined
-										loc: Object {
-											filename: "es2015/let/let-with-linebreak-arr-dstrk/input.js"
-											end: Object {
-												column: 6
-												line: 2
-											}
-											start: Object {
-												column: 5
-												line: 2
-											}
-										}
+										loc: SourceLocation es2015/let/let-with-linebreak-arr-dstrk/input.js 2:5-2:6
 									}
 								}
 							]
 						}
-						loc: Object {
-							filename: "es2015/let/let-with-linebreak-arr-dstrk/input.js"
-							end: Object {
-								column: 13
-								line: 2
-							}
-							start: Object {
-								column: 4
-								line: 2
-							}
-						}
+						loc: SourceLocation es2015/let/let-with-linebreak-arr-dstrk/input.js 2:4-2:13
 						init: JSArrayExpression {
-							loc: Object {
-								filename: "es2015/let/let-with-linebreak-arr-dstrk/input.js"
-								end: Object {
-									column: 13
-									line: 2
-								}
-								start: Object {
-									column: 10
-									line: 2
-								}
-							}
+							loc: SourceLocation es2015/let/let-with-linebreak-arr-dstrk/input.js 2:10-2:13
 							elements: Array [
 								JSNumericLiteral {
 									value: 1
 									format: undefined
-									loc: Object {
-										filename: "es2015/let/let-with-linebreak-arr-dstrk/input.js"
-										end: Object {
-											column: 12
-											line: 2
-										}
-										start: Object {
-											column: 11
-											line: 2
-										}
-									}
+									loc: SourceLocation es2015/let/let-with-linebreak-arr-dstrk/input.js 2:11-2:12
 								}
 							]
 						}
@@ -155,6 +64,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

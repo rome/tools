@@ -11,189 +11,69 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "es2015/uncategorised/235/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2015/uncategorised/235/input.js"
-		end: Object {
-			column: 36
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2015/uncategorised/235/input.js 1:0-1:36
+	path: UIDPath<es2015/uncategorised/235/input.js>
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse"
 				categoryValue: "js"
+				category: Array ["parse"]
 				message: RAW_MARKUP {value: "Loop variable declaration may not have an initializer"}
 			}
 			location: Object {
-				filename: "es2015/uncategorised/235/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 15
-					line: 1
-				}
-				start: Object {
-					column: 5
-					line: 1
-				}
+				end: Position 1:15
+				path: UIDPath<es2015/uncategorised/235/input.js>
+				start: Position 1:5
 			}
 		}
 	]
 	body: Array [
 		JSForInStatement {
-			loc: Object {
-				filename: "es2015/uncategorised/235/input.js"
-				end: Object {
-					column: 36
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2015/uncategorised/235/input.js 1:0-1:36
 			right: JSReferenceIdentifier {
 				name: "list"
-				loc: Object {
-					filename: "es2015/uncategorised/235/input.js"
-					identifierName: "list"
-					end: Object {
-						column: 23
-						line: 1
-					}
-					start: Object {
-						column: 19
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/uncategorised/235/input.js 1:19-1:23 (list)
 			}
 			body: JSExpressionStatement {
-				loc: Object {
-					filename: "es2015/uncategorised/235/input.js"
-					end: Object {
-						column: 36
-						line: 1
-					}
-					start: Object {
-						column: 25
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/uncategorised/235/input.js 1:25-1:36
 				expression: JSCallExpression {
-					loc: Object {
-						filename: "es2015/uncategorised/235/input.js"
-						end: Object {
-							column: 35
-							line: 1
-						}
-						start: Object {
-							column: 25
-							line: 1
-						}
-					}
+					loc: SourceLocation es2015/uncategorised/235/input.js 1:25-1:35
 					callee: JSReferenceIdentifier {
 						name: "process"
-						loc: Object {
-							filename: "es2015/uncategorised/235/input.js"
-							identifierName: "process"
-							end: Object {
-								column: 32
-								line: 1
-							}
-							start: Object {
-								column: 25
-								line: 1
-							}
-						}
+						loc: SourceLocation es2015/uncategorised/235/input.js 1:25-1:32 (process)
 					}
 					arguments: Array [
 						JSReferenceIdentifier {
 							name: "x"
-							loc: Object {
-								filename: "es2015/uncategorised/235/input.js"
-								identifierName: "x"
-								end: Object {
-									column: 34
-									line: 1
-								}
-								start: Object {
-									column: 33
-									line: 1
-								}
-							}
+							loc: SourceLocation es2015/uncategorised/235/input.js 1:33-1:34 (x)
 						}
 					]
 				}
 			}
 			left: JSVariableDeclaration {
 				kind: "let"
-				loc: Object {
-					filename: "es2015/uncategorised/235/input.js"
-					end: Object {
-						column: 15
-						line: 1
-					}
-					start: Object {
-						column: 5
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/uncategorised/235/input.js 1:5-1:15
 				declarations: Array [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "x"
-							loc: Object {
-								filename: "es2015/uncategorised/235/input.js"
-								identifierName: "x"
-								end: Object {
-									column: 10
-									line: 1
-								}
-								start: Object {
-									column: 9
-									line: 1
-								}
-							}
+							loc: SourceLocation es2015/uncategorised/235/input.js 1:9-1:10 (x)
 						}
-						loc: Object {
-							filename: "es2015/uncategorised/235/input.js"
-							end: Object {
-								column: 15
-								line: 1
-							}
-							start: Object {
-								column: 9
-								line: 1
-							}
-						}
+						loc: SourceLocation es2015/uncategorised/235/input.js 1:9-1:15
 						init: JSNumericLiteral {
 							value: 42
 							format: undefined
-							loc: Object {
-								filename: "es2015/uncategorised/235/input.js"
-								end: Object {
-									column: 15
-									line: 1
-								}
-								start: Object {
-									column: 13
-									line: 1
-								}
-							}
+							loc: SourceLocation es2015/uncategorised/235/input.js 1:13-1:15
 						}
 					}
 				]
@@ -214,8 +94,5 @@ JSRoot {
     for (let x = 42 in list) process(x);
          ^^^^^^^^^^
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

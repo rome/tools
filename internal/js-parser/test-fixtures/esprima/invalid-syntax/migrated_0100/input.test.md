@@ -10,37 +10,17 @@
 JSRoot {
 	comments: Array []
 	corrupt: false
-	filename: "esprima/invalid-syntax/migrated_0100/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "esprima/invalid-syntax/migrated_0100/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation esprima/invalid-syntax/migrated_0100/input.js 1:0-2:0
+	path: UIDPath<esprima/invalid-syntax/migrated_0100/input.js>
 	directives: Array [
 		JSDirective {
 			value: "use strict"
-			loc: Object {
-				filename: "esprima/invalid-syntax/migrated_0100/input.js"
-				end: Object {
-					column: 13
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation esprima/invalid-syntax/migrated_0100/input.js 1:0-1:13
 		}
 	]
 	diagnostics: Array [
@@ -48,68 +28,29 @@ JSRoot {
 			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse"
 				categoryValue: "js"
-				message: Array [
-					"eval"
-					RAW_MARKUP {value: " is a reserved word"}
-				]
+				category: Array ["parse"]
+				message: RAW_MARKUP {value: "eval is a reserved word"}
 			}
 			location: Object {
-				filename: "esprima/invalid-syntax/migrated_0100/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 19
-					line: 1
-				}
-				start: Object {
-					column: 15
-					line: 1
-				}
+				end: Position 1:19
+				path: UIDPath<esprima/invalid-syntax/migrated_0100/input.js>
+				start: Position 1:15
 			}
 		}
 	]
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "esprima/invalid-syntax/migrated_0100/input.js"
-				end: Object {
-					column: 26
-					line: 1
-				}
-				start: Object {
-					column: 14
-					line: 1
-				}
-			}
+			loc: SourceLocation esprima/invalid-syntax/migrated_0100/input.js 1:14-1:26
 			expression: JSArrowFunctionExpression {
-				loc: Object {
-					filename: "esprima/invalid-syntax/migrated_0100/input.js"
-					end: Object {
-						column: 26
-						line: 1
-					}
-					start: Object {
-						column: 14
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/invalid-syntax/migrated_0100/input.js 1:14-1:26
 				body: JSNumericLiteral {
 					value: 42
 					format: undefined
-					loc: Object {
-						filename: "esprima/invalid-syntax/migrated_0100/input.js"
-						end: Object {
-							column: 26
-							line: 1
-						}
-						start: Object {
-							column: 24
-							line: 1
-						}
-					}
+					loc: SourceLocation esprima/invalid-syntax/migrated_0100/input.js 1:24-1:26
 				}
 				head: JSFunctionHead {
 					async: false
@@ -117,32 +58,11 @@ JSRoot {
 					rest: undefined
 					returnType: undefined
 					thisType: undefined
-					loc: Object {
-						filename: "esprima/invalid-syntax/migrated_0100/input.js"
-						end: Object {
-							column: 23
-							line: 1
-						}
-						start: Object {
-							column: 14
-							line: 1
-						}
-					}
+					loc: SourceLocation esprima/invalid-syntax/migrated_0100/input.js 1:14-1:23
 					params: Array [
 						JSBindingIdentifier {
 							name: "eval"
-							loc: Object {
-								filename: "esprima/invalid-syntax/migrated_0100/input.js"
-								identifierName: "eval"
-								end: Object {
-									column: 19
-									line: 1
-								}
-								start: Object {
-									column: 15
-									line: 1
-								}
-							}
+							loc: SourceLocation esprima/invalid-syntax/migrated_0100/input.js 1:15-1:19 (eval)
 						}
 					]
 				}
@@ -163,8 +83,5 @@ JSRoot {
     "use strict"; (eval) => 42
                    ^^^^
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

@@ -12,102 +12,31 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "esprima/es2015-generator/generator-expression-with-yield-delegate/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "esprima/es2015-generator/generator-expression-with-yield-delegate/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation esprima/es2015-generator/generator-expression-with-yield-delegate/input.js 1:0-2:0
+	path: UIDPath<esprima/es2015-generator/generator-expression-with-yield-delegate/input.js>
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "esprima/es2015-generator/generator-expression-with-yield-delegate/input.js"
-				end: Object {
-					column: 34
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation esprima/es2015-generator/generator-expression-with-yield-delegate/input.js 1:0-1:34
 			expression: JSFunctionExpression {
 				id: undefined
-				loc: Object {
-					filename: "esprima/es2015-generator/generator-expression-with-yield-delegate/input.js"
-					end: Object {
-						column: 33
-						line: 1
-					}
-					start: Object {
-						column: 1
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/es2015-generator/generator-expression-with-yield-delegate/input.js 1:1-1:33
 				body: JSBlockStatement {
 					directives: Array []
-					loc: Object {
-						filename: "esprima/es2015-generator/generator-expression-with-yield-delegate/input.js"
-						end: Object {
-							column: 33
-							line: 1
-						}
-						start: Object {
-							column: 20
-							line: 1
-						}
-					}
+					loc: SourceLocation esprima/es2015-generator/generator-expression-with-yield-delegate/input.js 1:20-1:33
 					body: Array [
 						JSExpressionStatement {
-							loc: Object {
-								filename: "esprima/es2015-generator/generator-expression-with-yield-delegate/input.js"
-								end: Object {
-									column: 31
-									line: 1
-								}
-								start: Object {
-									column: 22
-									line: 1
-								}
-							}
+							loc: SourceLocation esprima/es2015-generator/generator-expression-with-yield-delegate/input.js 1:22-1:31
 							expression: JSYieldExpression {
 								delegate: true
-								loc: Object {
-									filename: "esprima/es2015-generator/generator-expression-with-yield-delegate/input.js"
-									end: Object {
-										column: 30
-										line: 1
-									}
-									start: Object {
-										column: 22
-										line: 1
-									}
-								}
+								loc: SourceLocation esprima/es2015-generator/generator-expression-with-yield-delegate/input.js 1:22-1:30
 								argument: JSReferenceIdentifier {
 									name: "x"
-									loc: Object {
-										filename: "esprima/es2015-generator/generator-expression-with-yield-delegate/input.js"
-										identifierName: "x"
-										end: Object {
-											column: 30
-											line: 1
-										}
-										start: Object {
-											column: 29
-											line: 1
-										}
-									}
+									loc: SourceLocation esprima/es2015-generator/generator-expression-with-yield-delegate/input.js 1:29-1:30 (x)
 								}
 							}
 						}
@@ -121,106 +50,33 @@ JSRoot {
 					returnType: undefined
 					thisType: undefined
 					typeParameters: undefined
-					loc: Object {
-						filename: "esprima/es2015-generator/generator-expression-with-yield-delegate/input.js"
-						end: Object {
-							column: 19
-							line: 1
-						}
-						start: Object {
-							column: 10
-							line: 1
-						}
-					}
+					loc: SourceLocation esprima/es2015-generator/generator-expression-with-yield-delegate/input.js 1:10-1:19
 					params: Array [
 						JSBindingIdentifier {
 							name: "x"
-							loc: Object {
-								filename: "esprima/es2015-generator/generator-expression-with-yield-delegate/input.js"
-								identifierName: "x"
-								end: Object {
-									column: 12
-									line: 1
-								}
-								start: Object {
-									column: 11
-									line: 1
-								}
-							}
+							loc: SourceLocation esprima/es2015-generator/generator-expression-with-yield-delegate/input.js 1:11-1:12 (x)
 							meta: JSPatternMeta {
 								optional: undefined
 								typeAnnotation: undefined
-								loc: Object {
-									filename: "esprima/es2015-generator/generator-expression-with-yield-delegate/input.js"
-									end: Object {
-										column: 12
-										line: 1
-									}
-									start: Object {
-										column: 11
-										line: 1
-									}
-								}
+								loc: SourceLocation esprima/es2015-generator/generator-expression-with-yield-delegate/input.js 1:11-1:12
 							}
 						}
 						JSBindingIdentifier {
 							name: "y"
-							loc: Object {
-								filename: "esprima/es2015-generator/generator-expression-with-yield-delegate/input.js"
-								identifierName: "y"
-								end: Object {
-									column: 15
-									line: 1
-								}
-								start: Object {
-									column: 14
-									line: 1
-								}
-							}
+							loc: SourceLocation esprima/es2015-generator/generator-expression-with-yield-delegate/input.js 1:14-1:15 (y)
 							meta: JSPatternMeta {
 								optional: undefined
 								typeAnnotation: undefined
-								loc: Object {
-									filename: "esprima/es2015-generator/generator-expression-with-yield-delegate/input.js"
-									end: Object {
-										column: 15
-										line: 1
-									}
-									start: Object {
-										column: 14
-										line: 1
-									}
-								}
+								loc: SourceLocation esprima/es2015-generator/generator-expression-with-yield-delegate/input.js 1:14-1:15
 							}
 						}
 						JSBindingIdentifier {
 							name: "z"
-							loc: Object {
-								filename: "esprima/es2015-generator/generator-expression-with-yield-delegate/input.js"
-								identifierName: "z"
-								end: Object {
-									column: 18
-									line: 1
-								}
-								start: Object {
-									column: 17
-									line: 1
-								}
-							}
+							loc: SourceLocation esprima/es2015-generator/generator-expression-with-yield-delegate/input.js 1:17-1:18 (z)
 							meta: JSPatternMeta {
 								optional: undefined
 								typeAnnotation: undefined
-								loc: Object {
-									filename: "esprima/es2015-generator/generator-expression-with-yield-delegate/input.js"
-									end: Object {
-										column: 18
-										line: 1
-									}
-									start: Object {
-										column: 17
-										line: 1
-									}
-								}
+								loc: SourceLocation esprima/es2015-generator/generator-expression-with-yield-delegate/input.js 1:17-1:18
 							}
 						}
 					]
@@ -234,6 +90,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

@@ -12,107 +12,33 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "esprima/es2015-for-of/for-of-with-let/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "esprima/es2015-for-of/for-of-with-let/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation esprima/es2015-for-of/for-of-with-let/input.js 1:0-2:0
+	path: UIDPath<esprima/es2015-for-of/for-of-with-let/input.js>
 	body: Array [
 		JSForOfStatement {
 			await: false
-			loc: Object {
-				filename: "esprima/es2015-for-of/for-of-with-let/input.js"
-				end: Object {
-					column: 20
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
-			body: JSEmptyStatement {
-				loc: Object {
-					filename: "esprima/es2015-for-of/for-of-with-let/input.js"
-					end: Object {
-						column: 20
-						line: 1
-					}
-					start: Object {
-						column: 19
-						line: 1
-					}
-				}
-			}
+			body: JSEmptyStatement {loc: SourceLocation esprima/es2015-for-of/for-of-with-let/input.js 1:19-1:20}
+			loc: SourceLocation esprima/es2015-for-of/for-of-with-let/input.js 1:0-1:20
 			right: JSReferenceIdentifier {
 				name: "list"
-				loc: Object {
-					filename: "esprima/es2015-for-of/for-of-with-let/input.js"
-					identifierName: "list"
-					end: Object {
-						column: 18
-						line: 1
-					}
-					start: Object {
-						column: 14
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/es2015-for-of/for-of-with-let/input.js 1:14-1:18 (list)
 			}
 			left: JSVariableDeclaration {
 				kind: "let"
-				loc: Object {
-					filename: "esprima/es2015-for-of/for-of-with-let/input.js"
-					end: Object {
-						column: 10
-						line: 1
-					}
-					start: Object {
-						column: 5
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/es2015-for-of/for-of-with-let/input.js 1:5-1:10
 				declarations: Array [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "z"
-							loc: Object {
-								filename: "esprima/es2015-for-of/for-of-with-let/input.js"
-								identifierName: "z"
-								end: Object {
-									column: 10
-									line: 1
-								}
-								start: Object {
-									column: 9
-									line: 1
-								}
-							}
+							loc: SourceLocation esprima/es2015-for-of/for-of-with-let/input.js 1:9-1:10 (z)
 						}
 						init: undefined
-						loc: Object {
-							filename: "esprima/es2015-for-of/for-of-with-let/input.js"
-							end: Object {
-								column: 10
-								line: 1
-							}
-							start: Object {
-								column: 9
-								line: 1
-							}
-						}
+						loc: SourceLocation esprima/es2015-for-of/for-of-with-let/input.js 1:9-1:10
 					}
 				]
 			}
@@ -124,6 +50,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

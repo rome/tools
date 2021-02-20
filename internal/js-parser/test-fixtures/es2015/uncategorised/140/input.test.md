@@ -12,68 +12,27 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "es2015/uncategorised/140/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2015/uncategorised/140/input.js"
-		end: Object {
-			column: 21
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2015/uncategorised/140/input.js 1:0-1:21
+	path: UIDPath<es2015/uncategorised/140/input.js>
 	body: Array [
 		JSClassDeclaration {
 			id: JSBindingIdentifier {
 				name: "Semicolon"
-				loc: Object {
-					filename: "es2015/uncategorised/140/input.js"
-					identifierName: "Semicolon"
-					end: Object {
-						column: 15
-						line: 1
-					}
-					start: Object {
-						column: 6
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/uncategorised/140/input.js 1:6-1:15 (Semicolon)
 			}
-			loc: Object {
-				filename: "es2015/uncategorised/140/input.js"
-				end: Object {
-					column: 21
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2015/uncategorised/140/input.js 1:0-1:21
 			meta: JSClassHead {
 				body: Array []
 				implements: undefined
 				superClass: undefined
 				superTypeParameters: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "es2015/uncategorised/140/input.js"
-					end: Object {
-						column: 21
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/uncategorised/140/input.js 1:0-1:21
 			}
 		}
 	]
@@ -83,6 +42,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

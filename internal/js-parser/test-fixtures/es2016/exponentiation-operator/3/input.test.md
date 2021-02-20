@@ -12,78 +12,27 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "es2016/exponentiation-operator/3/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2016/exponentiation-operator/3/input.js"
-		end: Object {
-			column: 8
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2016/exponentiation-operator/3/input.js 1:0-1:8
+	path: UIDPath<es2016/exponentiation-operator/3/input.js>
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "es2016/exponentiation-operator/3/input.js"
-				end: Object {
-					column: 8
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2016/exponentiation-operator/3/input.js 1:0-1:8
 			expression: JSAssignmentExpression {
 				operator: "**="
-				loc: Object {
-					filename: "es2016/exponentiation-operator/3/input.js"
-					end: Object {
-						column: 7
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation es2016/exponentiation-operator/3/input.js 1:0-1:7
 				left: JSAssignmentIdentifier {
 					name: "a"
-					loc: Object {
-						filename: "es2016/exponentiation-operator/3/input.js"
-						identifierName: "a"
-						end: Object {
-							column: 1
-							line: 1
-						}
-						start: Object {
-							column: 0
-							line: 1
-						}
-					}
+					loc: SourceLocation es2016/exponentiation-operator/3/input.js 1:0-1:1 (a)
 				}
 				right: JSNumericLiteral {
 					value: 2
 					format: undefined
-					loc: Object {
-						filename: "es2016/exponentiation-operator/3/input.js"
-						end: Object {
-							column: 7
-							line: 1
-						}
-						start: Object {
-							column: 6
-							line: 1
-						}
-					}
+					loc: SourceLocation es2016/exponentiation-operator/3/input.js 1:6-1:7
 				}
 			}
 		}
@@ -94,6 +43,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

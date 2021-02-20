@@ -12,186 +12,53 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "typescript/module-namespace/global-in-module/input.ts"
 	hasHoistedVars: true
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
+	loc: SourceLocation typescript/module-namespace/global-in-module/input.ts 1:0-6:0
+	path: UIDPath<typescript/module-namespace/global-in-module/input.ts>
 	syntax: Array ["ts"]
-	loc: Object {
-		filename: "typescript/module-namespace/global-in-module/input.ts"
-		end: Object {
-			column: 0
-			line: 6
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
 	body: Array [
 		TSModuleDeclaration {
 			id: JSStringLiteral {
 				value: "m"
-				loc: Object {
-					filename: "typescript/module-namespace/global-in-module/input.ts"
-					end: Object {
-						column: 18
-						line: 1
-					}
-					start: Object {
-						column: 15
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/module-namespace/global-in-module/input.ts 1:15-1:18
 			}
 			declare: true
 			global: undefined
-			loc: Object {
-				filename: "typescript/module-namespace/global-in-module/input.ts"
-				end: Object {
-					column: 1
-					line: 5
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation typescript/module-namespace/global-in-module/input.ts 1:0-5:1
 			body: TSModuleBlock {
-				loc: Object {
-					filename: "typescript/module-namespace/global-in-module/input.ts"
-					end: Object {
-						column: 1
-						line: 5
-					}
-					start: Object {
-						column: 19
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/module-namespace/global-in-module/input.ts 1:19-5:1
 				body: Array [
 					TSModuleDeclaration {
 						id: JSBindingIdentifier {
 							name: "global"
-							loc: Object {
-								filename: "typescript/module-namespace/global-in-module/input.ts"
-								identifierName: "global"
-								end: Object {
-									column: 10
-									line: 2
-								}
-								start: Object {
-									column: 4
-									line: 2
-								}
-							}
+							loc: SourceLocation typescript/module-namespace/global-in-module/input.ts 2:4-2:10 (global)
 						}
 						global: true
-						loc: Object {
-							filename: "typescript/module-namespace/global-in-module/input.ts"
-							end: Object {
-								column: 5
-								line: 4
-							}
-							start: Object {
-								column: 4
-								line: 2
-							}
-						}
+						loc: SourceLocation typescript/module-namespace/global-in-module/input.ts 2:4-4:5
 						body: TSModuleBlock {
-							loc: Object {
-								filename: "typescript/module-namespace/global-in-module/input.ts"
-								end: Object {
-									column: 5
-									line: 4
-								}
-								start: Object {
-									column: 11
-									line: 2
-								}
-							}
+							loc: SourceLocation typescript/module-namespace/global-in-module/input.ts 2:11-4:5
 							body: Array [
 								JSVariableDeclarationStatement {
-									loc: Object {
-										filename: "typescript/module-namespace/global-in-module/input.ts"
-										end: Object {
-											column: 22
-											line: 3
-										}
-										start: Object {
-											column: 8
-											line: 3
-										}
-									}
+									loc: SourceLocation typescript/module-namespace/global-in-module/input.ts 3:8-3:22
 									declaration: JSVariableDeclaration {
 										kind: "var"
-										loc: Object {
-											filename: "typescript/module-namespace/global-in-module/input.ts"
-											end: Object {
-												column: 22
-												line: 3
-											}
-											start: Object {
-												column: 8
-												line: 3
-											}
-										}
+										loc: SourceLocation typescript/module-namespace/global-in-module/input.ts 3:8-3:22
 										declarations: Array [
 											JSVariableDeclarator {
 												id: JSBindingIdentifier {
 													name: "x"
-													loc: Object {
-														filename: "typescript/module-namespace/global-in-module/input.ts"
-														end: Object {
-															column: 21
-															line: 3
-														}
-														start: Object {
-															column: 12
-															line: 3
-														}
-													}
+													loc: SourceLocation typescript/module-namespace/global-in-module/input.ts 3:12-3:21
 													meta: JSPatternMeta {
 														definite: undefined
-														loc: Object {
-															filename: "typescript/module-namespace/global-in-module/input.ts"
-															end: Object {
-																column: 21
-																line: 3
-															}
-															start: Object {
-																column: 12
-																line: 3
-															}
-														}
-														typeAnnotation: TSNumberKeywordTypeAnnotation {
-															loc: Object {
-																filename: "typescript/module-namespace/global-in-module/input.ts"
-																end: Object {
-																	column: 21
-																	line: 3
-																}
-																start: Object {
-																	column: 15
-																	line: 3
-																}
-															}
-														}
+														loc: SourceLocation typescript/module-namespace/global-in-module/input.ts 3:12-3:21
+														typeAnnotation: TSNumberKeywordTypeAnnotation {loc: SourceLocation typescript/module-namespace/global-in-module/input.ts 3:15-3:21}
 													}
 												}
 												init: undefined
-												loc: Object {
-													filename: "typescript/module-namespace/global-in-module/input.ts"
-													end: Object {
-														column: 21
-														line: 3
-													}
-													start: Object {
-														column: 12
-														line: 3
-													}
-												}
+												loc: SourceLocation typescript/module-namespace/global-in-module/input.ts 3:12-3:21
 											}
 										]
 									}
@@ -209,6 +76,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

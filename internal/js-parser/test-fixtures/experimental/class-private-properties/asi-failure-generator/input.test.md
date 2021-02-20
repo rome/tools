@@ -11,45 +11,29 @@ JSRoot {
 	comments: Array []
 	corrupt: true
 	directives: Array []
-	filename: "experimental/class-private-properties/asi-failure-generator/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "experimental/class-private-properties/asi-failure-generator/input.js"
-		end: Object {
-			column: 0
-			line: 5
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation experimental/class-private-properties/asi-failure-generator/input.js 1:0-5:0
+	path: UIDPath<experimental/class-private-properties/asi-failure-generator/input.js>
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse"
 				categoryValue: "js"
+				category: Array ["parse"]
 				message: RAW_MARKUP {value: "Expected a semicolon or a line terminator"}
 			}
 			location: Object {
-				filename: "experimental/class-private-properties/asi-failure-generator/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 7
-					line: 3
-				}
-				start: Object {
-					column: 8
-					line: 3
-				}
+				end: Position 3:7
+				path: UIDPath<experimental/class-private-properties/asi-failure-generator/input.js>
+				start: Position 3:8
 			}
 		}
 	]
@@ -57,146 +41,42 @@ JSRoot {
 		JSClassDeclaration {
 			id: JSBindingIdentifier {
 				name: "Foo"
-				loc: Object {
-					filename: "experimental/class-private-properties/asi-failure-generator/input.js"
-					identifierName: "Foo"
-					end: Object {
-						column: 9
-						line: 1
-					}
-					start: Object {
-						column: 6
-						line: 1
-					}
-				}
+				loc: SourceLocation experimental/class-private-properties/asi-failure-generator/input.js 1:6-1:9 (Foo)
 			}
-			loc: Object {
-				filename: "experimental/class-private-properties/asi-failure-generator/input.js"
-				end: Object {
-					column: 10
-					line: 3
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation experimental/class-private-properties/asi-failure-generator/input.js 1:0-3:10
 			meta: JSClassHead {
 				implements: undefined
 				superClass: undefined
 				superTypeParameters: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "experimental/class-private-properties/asi-failure-generator/input.js"
-					end: Object {
-						column: 10
-						line: 3
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation experimental/class-private-properties/asi-failure-generator/input.js 1:0-3:10
 				body: Array [
 					JSClassPrivateProperty {
 						key: JSPrivateName {
 							id: JSIdentifier {
 								name: "p"
-								loc: Object {
-									filename: "experimental/class-private-properties/asi-failure-generator/input.js"
-									identifierName: "p"
-									end: Object {
-										column: 4
-										line: 2
-									}
-									start: Object {
-										column: 3
-										line: 2
-									}
-								}
+								loc: SourceLocation experimental/class-private-properties/asi-failure-generator/input.js 2:3-2:4 (p)
 							}
-							loc: Object {
-								filename: "experimental/class-private-properties/asi-failure-generator/input.js"
-								end: Object {
-									column: 4
-									line: 2
-								}
-								start: Object {
-									column: 2
-									line: 2
-								}
-							}
+							loc: SourceLocation experimental/class-private-properties/asi-failure-generator/input.js 2:2-2:4
 						}
 						value: JSBinaryExpression {
 							operator: "*"
-							loc: Object {
-								filename: "experimental/class-private-properties/asi-failure-generator/input.js"
-								end: Object {
-									column: 7
-									line: 3
-								}
-								start: Object {
-									column: 7
-									line: 2
-								}
-							}
+							loc: SourceLocation experimental/class-private-properties/asi-failure-generator/input.js 2:7-3:7
 							left: JSReferenceIdentifier {
 								name: "x"
-								loc: Object {
-									filename: "experimental/class-private-properties/asi-failure-generator/input.js"
-									identifierName: "x"
-									end: Object {
-										column: 8
-										line: 2
-									}
-									start: Object {
-										column: 7
-										line: 2
-									}
-								}
+								loc: SourceLocation experimental/class-private-properties/asi-failure-generator/input.js 2:7-2:8 (x)
 							}
 							right: JSCallExpression {
 								arguments: Array []
-								loc: Object {
-									filename: "experimental/class-private-properties/asi-failure-generator/input.js"
-									end: Object {
-										column: 7
-										line: 3
-									}
-									start: Object {
-										column: 3
-										line: 3
-									}
-								}
+								loc: SourceLocation experimental/class-private-properties/asi-failure-generator/input.js 3:3-3:7
 								callee: JSReferenceIdentifier {
 									name: "m"
-									loc: Object {
-										filename: "experimental/class-private-properties/asi-failure-generator/input.js"
-										identifierName: "m"
-										end: Object {
-											column: 4
-											line: 3
-										}
-										start: Object {
-											column: 3
-											line: 3
-										}
-									}
+									loc: SourceLocation experimental/class-private-properties/asi-failure-generator/input.js 3:3-3:4 (m)
 								}
 							}
 						}
 						typeAnnotation: undefined
-						loc: Object {
-							filename: "experimental/class-private-properties/asi-failure-generator/input.js"
-							end: Object {
-								column: 7
-								line: 3
-							}
-							start: Object {
-								column: 2
-								line: 2
-							}
-						}
+						loc: SourceLocation experimental/class-private-properties/asi-failure-generator/input.js 2:2-3:7
 						meta: JSClassPropertyMeta {
 							abstract: false
 							accessibility: undefined
@@ -204,66 +84,22 @@ JSRoot {
 							readonly: false
 							static: false
 							typeAnnotation: undefined
-							start: Object {
-								column: 2
-								line: 2
-							}
-							loc: Object {
-								filename: "experimental/class-private-properties/asi-failure-generator/input.js"
-								end: Object {
-									column: 4
-									line: 2
-								}
-								start: Object {
-									column: 2
-									line: 2
-								}
-							}
+							loc: SourceLocation experimental/class-private-properties/asi-failure-generator/input.js 2:2-2:4
+							start: Position 2:2
 						}
 					}
 					JSClassProperty {
 						key: JSStaticPropertyKey {
 							value: JSIdentifier {
 								name: ""
-								loc: Object {
-									filename: "experimental/class-private-properties/asi-failure-generator/input.js"
-									identifierName: ""
-									end: Object {
-										column: 9
-										line: 3
-									}
-									start: Object {
-										column: 8
-										line: 3
-									}
-								}
+								loc: SourceLocation experimental/class-private-properties/asi-failure-generator/input.js 3:8-3:9 ()
 							}
-							loc: Object {
-								filename: "experimental/class-private-properties/asi-failure-generator/input.js"
-								end: Object {
-									column: 9
-									line: 3
-								}
-								start: Object {
-									column: 8
-									line: 3
-								}
-							}
+							loc: SourceLocation experimental/class-private-properties/asi-failure-generator/input.js 3:8-3:9
 						}
 						value: undefined
 						definite: undefined
 						typeAnnotation: undefined
-						loc: Object {
-							filename: "experimental/class-private-properties/asi-failure-generator/input.js"
-							end: Object {
-								column: 9
-								line: 3
-							}
-							start: Object {
-								column: 8
-								line: 3
-							}
-						}
+						loc: SourceLocation experimental/class-private-properties/asi-failure-generator/input.js 3:8-3:9
 						meta: JSClassPropertyMeta {
 							abstract: false
 							accessibility: undefined
@@ -271,51 +107,18 @@ JSRoot {
 							readonly: false
 							static: false
 							typeAnnotation: undefined
-							start: Object {
-								column: 8
-								line: 3
-							}
-							loc: Object {
-								filename: "experimental/class-private-properties/asi-failure-generator/input.js"
-								end: Object {
-									column: 9
-									line: 3
-								}
-								start: Object {
-									column: 8
-									line: 3
-								}
-							}
+							loc: SourceLocation experimental/class-private-properties/asi-failure-generator/input.js 3:8-3:9
+							start: Position 3:8
 						}
 					}
 				]
 			}
 		}
 		JSExpressionStatement {
-			loc: Object {
-				filename: "experimental/class-private-properties/asi-failure-generator/input.js"
-				end: Object {
-					column: 1
-					line: 4
-				}
-				start: Object {
-					column: 0
-					line: 4
-				}
-			}
+			loc: SourceLocation experimental/class-private-properties/asi-failure-generator/input.js 4:0-4:1
 			expression: JSReferenceIdentifier {
 				name: "INVALID_PLACEHOLDER"
-				loc: Object {
-					filename: "experimental/class-private-properties/asi-failure-generator/input.js"
-					end: Object {
-						column: 1
-						line: 4
-					}
-					start: Object {
-						column: 0
-						line: 4
-					}
-				}
+				loc: SourceLocation experimental/class-private-properties/asi-failure-generator/input.js 4:0-4:1
 			}
 		}
 	]
@@ -336,8 +139,5 @@ JSRoot {
       │         ^
     4 │ }
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

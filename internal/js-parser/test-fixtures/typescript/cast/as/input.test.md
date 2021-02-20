@@ -11,393 +11,110 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "typescript/cast/as/input.ts"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
+	loc: SourceLocation typescript/cast/as/input.ts 1:0-5:0
+	path: UIDPath<typescript/cast/as/input.ts>
 	syntax: Array ["ts"]
-	loc: Object {
-		filename: "typescript/cast/as/input.ts"
-		end: Object {
-			column: 0
-			line: 5
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
 	comments: Array [
 		CommentLine {
 			id: "0"
 			value: " (x < y) as boolean;"
-			loc: Object {
-				filename: "typescript/cast/as/input.ts"
-				end: Object {
-					column: 40
-					line: 2
-				}
-				start: Object {
-					column: 18
-					line: 2
-				}
-			}
+			loc: SourceLocation typescript/cast/as/input.ts 2:18-2:40
 		}
 		CommentLine {
 			id: "1"
 			value: " x === (1 as number);"
-			loc: Object {
-				filename: "typescript/cast/as/input.ts"
-				end: Object {
-					column: 42
-					line: 3
-				}
-				start: Object {
-					column: 19
-					line: 3
-				}
-			}
+			loc: SourceLocation typescript/cast/as/input.ts 3:19-3:42
 		}
 	]
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "typescript/cast/as/input.ts"
-				end: Object {
-					column: 7
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation typescript/cast/as/input.ts 1:0-1:7
 			expression: TSAsExpression {
-				loc: Object {
-					filename: "typescript/cast/as/input.ts"
-					end: Object {
-						column: 6
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/cast/as/input.ts 1:0-1:6
 				expression: JSReferenceIdentifier {
 					name: "x"
-					loc: Object {
-						filename: "typescript/cast/as/input.ts"
-						identifierName: "x"
-						end: Object {
-							column: 1
-							line: 1
-						}
-						start: Object {
-							column: 0
-							line: 1
-						}
-					}
+					loc: SourceLocation typescript/cast/as/input.ts 1:0-1:1 (x)
 				}
 				typeAnnotation: TSTypeReference {
 					typeParameters: undefined
-					loc: Object {
-						filename: "typescript/cast/as/input.ts"
-						end: Object {
-							column: 6
-							line: 1
-						}
-						start: Object {
-							column: 5
-							line: 1
-						}
-					}
+					loc: SourceLocation typescript/cast/as/input.ts 1:5-1:6
 					typeName: JSReferenceIdentifier {
 						name: "T"
-						loc: Object {
-							filename: "typescript/cast/as/input.ts"
-							identifierName: "T"
-							end: Object {
-								column: 6
-								line: 1
-							}
-							start: Object {
-								column: 5
-								line: 1
-							}
-						}
+						loc: SourceLocation typescript/cast/as/input.ts 1:5-1:6 (T)
 					}
 				}
 			}
 		}
 		JSExpressionStatement {
+			loc: SourceLocation typescript/cast/as/input.ts 2:0-2:17
 			trailingComments: Array ["0"]
-			loc: Object {
-				filename: "typescript/cast/as/input.ts"
-				end: Object {
-					column: 17
-					line: 2
-				}
-				start: Object {
-					column: 0
-					line: 2
-				}
-			}
 			expression: TSAsExpression {
-				loc: Object {
-					filename: "typescript/cast/as/input.ts"
-					end: Object {
-						column: 16
-						line: 2
-					}
-					start: Object {
-						column: 0
-						line: 2
-					}
-				}
-				typeAnnotation: TSBooleanKeywordTypeAnnotation {
-					loc: Object {
-						filename: "typescript/cast/as/input.ts"
-						end: Object {
-							column: 16
-							line: 2
-						}
-						start: Object {
-							column: 9
-							line: 2
-						}
-					}
-				}
+				loc: SourceLocation typescript/cast/as/input.ts 2:0-2:16
+				typeAnnotation: TSBooleanKeywordTypeAnnotation {loc: SourceLocation typescript/cast/as/input.ts 2:9-2:16}
 				expression: JSBinaryExpression {
 					operator: "<"
-					loc: Object {
-						filename: "typescript/cast/as/input.ts"
-						end: Object {
-							column: 5
-							line: 2
-						}
-						start: Object {
-							column: 0
-							line: 2
-						}
-					}
+					loc: SourceLocation typescript/cast/as/input.ts 2:0-2:5
 					left: JSReferenceIdentifier {
 						name: "x"
-						loc: Object {
-							filename: "typescript/cast/as/input.ts"
-							identifierName: "x"
-							end: Object {
-								column: 1
-								line: 2
-							}
-							start: Object {
-								column: 0
-								line: 2
-							}
-						}
+						loc: SourceLocation typescript/cast/as/input.ts 2:0-2:1 (x)
 					}
 					right: JSReferenceIdentifier {
 						name: "y"
-						loc: Object {
-							filename: "typescript/cast/as/input.ts"
-							identifierName: "y"
-							end: Object {
-								column: 5
-								line: 2
-							}
-							start: Object {
-								column: 4
-								line: 2
-							}
-						}
+						loc: SourceLocation typescript/cast/as/input.ts 2:4-2:5 (y)
 					}
 				}
 			}
 		}
 		JSExpressionStatement {
 			leadingComments: Array ["0"]
+			loc: SourceLocation typescript/cast/as/input.ts 3:0-3:18
 			trailingComments: Array ["1"]
-			loc: Object {
-				filename: "typescript/cast/as/input.ts"
-				end: Object {
-					column: 18
-					line: 3
-				}
-				start: Object {
-					column: 0
-					line: 3
-				}
-			}
 			expression: JSBinaryExpression {
 				leadingComments: undefined
 				operator: "==="
-				loc: Object {
-					filename: "typescript/cast/as/input.ts"
-					end: Object {
-						column: 17
-						line: 3
-					}
-					start: Object {
-						column: 0
-						line: 3
-					}
-				}
+				loc: SourceLocation typescript/cast/as/input.ts 3:0-3:17
 				left: JSReferenceIdentifier {
 					name: "x"
 					leadingComments: undefined
-					loc: Object {
-						filename: "typescript/cast/as/input.ts"
-						identifierName: "x"
-						end: Object {
-							column: 1
-							line: 3
-						}
-						start: Object {
-							column: 0
-							line: 3
-						}
-					}
+					loc: SourceLocation typescript/cast/as/input.ts 3:0-3:1 (x)
 				}
 				right: TSAsExpression {
-					loc: Object {
-						filename: "typescript/cast/as/input.ts"
-						end: Object {
-							column: 17
-							line: 3
-						}
-						start: Object {
-							column: 6
-							line: 3
-						}
-					}
-					typeAnnotation: TSNumberKeywordTypeAnnotation {
-						loc: Object {
-							filename: "typescript/cast/as/input.ts"
-							end: Object {
-								column: 17
-								line: 3
-							}
-							start: Object {
-								column: 11
-								line: 3
-							}
-						}
-					}
+					loc: SourceLocation typescript/cast/as/input.ts 3:6-3:17
+					typeAnnotation: TSNumberKeywordTypeAnnotation {loc: SourceLocation typescript/cast/as/input.ts 3:11-3:17}
 					expression: JSNumericLiteral {
 						value: 1
 						format: undefined
-						loc: Object {
-							filename: "typescript/cast/as/input.ts"
-							end: Object {
-								column: 7
-								line: 3
-							}
-							start: Object {
-								column: 6
-								line: 3
-							}
-						}
+						loc: SourceLocation typescript/cast/as/input.ts 3:6-3:7
 					}
 				}
 			}
 		}
 		JSExpressionStatement {
 			leadingComments: Array ["1"]
-			loc: Object {
-				filename: "typescript/cast/as/input.ts"
-				end: Object {
-					column: 14
-					line: 4
-				}
-				start: Object {
-					column: 0
-					line: 4
-				}
-			}
+			loc: SourceLocation typescript/cast/as/input.ts 4:0-4:14
 			expression: TSAsExpression {
 				leadingComments: undefined
-				loc: Object {
-					filename: "typescript/cast/as/input.ts"
-					end: Object {
-						column: 13
-						line: 4
-					}
-					start: Object {
-						column: 0
-						line: 4
-					}
-				}
+				loc: SourceLocation typescript/cast/as/input.ts 4:0-4:13
 				typeAnnotation: TSTypeReference {
 					typeParameters: undefined
-					loc: Object {
-						filename: "typescript/cast/as/input.ts"
-						end: Object {
-							column: 13
-							line: 4
-						}
-						start: Object {
-							column: 12
-							line: 4
-						}
-					}
+					loc: SourceLocation typescript/cast/as/input.ts 4:12-4:13
 					typeName: JSReferenceIdentifier {
 						name: "T"
-						loc: Object {
-							filename: "typescript/cast/as/input.ts"
-							identifierName: "T"
-							end: Object {
-								column: 13
-								line: 4
-							}
-							start: Object {
-								column: 12
-								line: 4
-							}
-						}
+						loc: SourceLocation typescript/cast/as/input.ts 4:12-4:13 (T)
 					}
 				}
 				expression: TSAsExpression {
 					leadingComments: undefined
-					loc: Object {
-						filename: "typescript/cast/as/input.ts"
-						end: Object {
-							column: 8
-							line: 4
-						}
-						start: Object {
-							column: 0
-							line: 4
-						}
-					}
-					typeAnnotation: TSAnyKeywordTypeAnnotation {
-						loc: Object {
-							filename: "typescript/cast/as/input.ts"
-							end: Object {
-								column: 8
-								line: 4
-							}
-							start: Object {
-								column: 5
-								line: 4
-							}
-						}
-					}
+					loc: SourceLocation typescript/cast/as/input.ts 4:0-4:8
+					typeAnnotation: TSAnyKeywordTypeAnnotation {loc: SourceLocation typescript/cast/as/input.ts 4:5-4:8}
 					expression: JSReferenceIdentifier {
 						name: "x"
 						leadingComments: undefined
-						loc: Object {
-							filename: "typescript/cast/as/input.ts"
-							identifierName: "x"
-							end: Object {
-								column: 1
-								line: 4
-							}
-							start: Object {
-								column: 0
-								line: 4
-							}
-						}
+						loc: SourceLocation typescript/cast/as/input.ts 4:0-4:1 (x)
 					}
 				}
 			}
@@ -409,6 +126,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

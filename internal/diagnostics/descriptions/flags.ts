@@ -2,6 +2,7 @@ import {createDiagnosticsCategory} from "./index";
 import {StaticMarkup, markup} from "@internal/markup";
 import {toKebabCase} from "@internal/string-utils";
 import {DiagnosticAdvice} from "../types";
+import {DIAGNOSTIC_CATEGORIES} from "@internal/diagnostics";
 
 export const flags = createDiagnosticsCategory({
 	UNSUPPORTED_SHORTHAND: (flag: string) => ({
@@ -38,8 +39,8 @@ export const flags = createDiagnosticsCategory({
 	}),
 	NO_FILES_FOUND: (noun: undefined | string) => ({
 		message: noun === undefined
-			? markup`No files found`
-			: markup`No files to ${noun} found`,
+			? markup`No matching files found`
+			: markup`No matching ${noun} files found`,
 	}),
 	UNKNOWN_COMMAND: (
 		{
@@ -79,7 +80,7 @@ export const flags = createDiagnosticsCategory({
 		}
 
 		return {
-			category: "flags/invalid",
+			category: DIAGNOSTIC_CATEGORIES["flags/invalid"],
 			message: commandName === ""
 				? markup`No command specified`
 				: markup`Unknown command <emphasis>${commandName}</emphasis>`,

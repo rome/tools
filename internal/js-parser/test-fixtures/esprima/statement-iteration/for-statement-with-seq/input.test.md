@@ -12,108 +12,33 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "esprima/statement-iteration/for-statement-with-seq/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "esprima/statement-iteration/for-statement-with-seq/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation esprima/statement-iteration/for-statement-with-seq/input.js 1:0-2:0
+	path: UIDPath<esprima/statement-iteration/for-statement-with-seq/input.js>
 	body: Array [
 		JSForStatement {
 			test: undefined
 			update: undefined
-			loc: Object {
-				filename: "esprima/statement-iteration/for-statement-with-seq/input.js"
-				end: Object {
-					column: 13
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
-			body: JSEmptyStatement {
-				loc: Object {
-					filename: "esprima/statement-iteration/for-statement-with-seq/input.js"
-					end: Object {
-						column: 13
-						line: 1
-					}
-					start: Object {
-						column: 12
-						line: 1
-					}
-				}
-			}
+			body: JSEmptyStatement {loc: SourceLocation esprima/statement-iteration/for-statement-with-seq/input.js 1:12-1:13}
+			loc: SourceLocation esprima/statement-iteration/for-statement-with-seq/input.js 1:0-1:13
 			init: JSSequenceExpression {
-				loc: Object {
-					filename: "esprima/statement-iteration/for-statement-with-seq/input.js"
-					end: Object {
-						column: 9
-						line: 1
-					}
-					start: Object {
-						column: 4
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/statement-iteration/for-statement-with-seq/input.js 1:4-1:9
 				expressions: Array [
 					JSReferenceIdentifier {
 						name: "a"
-						loc: Object {
-							filename: "esprima/statement-iteration/for-statement-with-seq/input.js"
-							identifierName: "a"
-							end: Object {
-								column: 5
-								line: 1
-							}
-							start: Object {
-								column: 4
-								line: 1
-							}
-						}
+						loc: SourceLocation esprima/statement-iteration/for-statement-with-seq/input.js 1:4-1:5 (a)
 					}
 					JSReferenceIdentifier {
 						name: "b"
-						loc: Object {
-							filename: "esprima/statement-iteration/for-statement-with-seq/input.js"
-							identifierName: "b"
-							end: Object {
-								column: 7
-								line: 1
-							}
-							start: Object {
-								column: 6
-								line: 1
-							}
-						}
+						loc: SourceLocation esprima/statement-iteration/for-statement-with-seq/input.js 1:6-1:7 (b)
 					}
 					JSReferenceIdentifier {
 						name: "c"
-						loc: Object {
-							filename: "esprima/statement-iteration/for-statement-with-seq/input.js"
-							identifierName: "c"
-							end: Object {
-								column: 9
-								line: 1
-							}
-							start: Object {
-								column: 8
-								line: 1
-							}
-						}
+						loc: SourceLocation esprima/statement-iteration/for-statement-with-seq/input.js 1:8-1:9 (c)
 					}
 				]
 			}
@@ -125,6 +50,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

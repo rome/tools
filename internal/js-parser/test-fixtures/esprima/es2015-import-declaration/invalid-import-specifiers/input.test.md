@@ -11,48 +11,34 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "esprima/es2015-import-declaration/invalid-import-specifiers/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
 	syntax: Array []
-	loc: Object {
-		filename: "esprima/es2015-import-declaration/invalid-import-specifiers/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation esprima/es2015-import-declaration/invalid-import-specifiers/input.js 1:0-2:0
+	path: UIDPath<esprima/es2015-import-declaration/invalid-import-specifiers/input.js>
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				category: "parse"
-				categoryValue: "js"
-				message: Array [
-					RAW_MARKUP {value: "Unexpected token, expected "}
-					"{"
-				]
-			}
 			location: Object {
-				filename: "esprima/es2015-import-declaration/invalid-import-specifiers/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 16
-					line: 1
-				}
-				start: Object {
-					column: 12
-					line: 1
-				}
+				end: Position 1:11
+				path: UIDPath<esprima/es2015-import-declaration/invalid-import-specifiers/input.js>
+				start: Position 1:12
+			}
+			description: Object {
+				categoryValue: "js"
+				category: Array ["parse"]
+				message: RAW_MARKUP {value: "Unexpected character <emphasis>f</emphasis>"}
+				advice: Array [
+					log {
+						category: "info"
+						text: RAW_MARKUP {value: "Expected the opening import specifiers character <emphasis>{</emphasis>"}
+					}
+				]
 			}
 		}
 	]
@@ -60,243 +46,66 @@ JSRoot {
 		JSImportDeclaration {
 			importKind: undefined
 			namespaceSpecifier: undefined
-			loc: Object {
-				filename: "esprima/es2015-import-declaration/invalid-import-specifiers/input.js"
-				end: Object {
-					column: 23
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation esprima/es2015-import-declaration/invalid-import-specifiers/input.js 1:0-1:23
 			source: JSStringLiteral {
 				value: ""
-				loc: Object {
-					filename: "esprima/es2015-import-declaration/invalid-import-specifiers/input.js"
-					end: Object {
-						column: 23
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/es2015-import-declaration/invalid-import-specifiers/input.js 1:0-1:23
 			}
 			defaultSpecifier: JSImportDefaultSpecifier {
-				loc: Object {
-					filename: "esprima/es2015-import-declaration/invalid-import-specifiers/input.js"
-					end: Object {
-						column: 10
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/es2015-import-declaration/invalid-import-specifiers/input.js 1:0-1:10
 				local: JSImportSpecifierLocal {
 					name: JSBindingIdentifier {
 						name: "foo"
-						loc: Object {
-							filename: "esprima/es2015-import-declaration/invalid-import-specifiers/input.js"
-							identifierName: "foo"
-							end: Object {
-								column: 10
-								line: 1
-							}
-							start: Object {
-								column: 7
-								line: 1
-							}
-						}
+						loc: SourceLocation esprima/es2015-import-declaration/invalid-import-specifiers/input.js 1:7-1:10 (foo)
 					}
 					importKind: undefined
-					loc: Object {
-						filename: "esprima/es2015-import-declaration/invalid-import-specifiers/input.js"
-						end: Object {
-							column: 10
-							line: 1
-						}
-						start: Object {
-							column: 7
-							line: 1
-						}
-					}
+					loc: SourceLocation esprima/es2015-import-declaration/invalid-import-specifiers/input.js 1:7-1:10
 				}
 			}
 			namedSpecifiers: Array [
 				JSImportSpecifier {
-					loc: Object {
-						filename: "esprima/es2015-import-declaration/invalid-import-specifiers/input.js"
-						end: Object {
-							column: 16
-							line: 1
-						}
-						start: Object {
-							column: 12
-							line: 1
-						}
-					}
+					loc: SourceLocation esprima/es2015-import-declaration/invalid-import-specifiers/input.js 1:12-1:16
 					imported: JSIdentifier {
 						name: "from"
-						loc: Object {
-							filename: "esprima/es2015-import-declaration/invalid-import-specifiers/input.js"
-							identifierName: "from"
-							end: Object {
-								column: 16
-								line: 1
-							}
-							start: Object {
-								column: 12
-								line: 1
-							}
-						}
+						loc: SourceLocation esprima/es2015-import-declaration/invalid-import-specifiers/input.js 1:12-1:16 (from)
 					}
 					local: JSImportSpecifierLocal {
 						name: JSBindingIdentifier {
 							name: "from"
-							loc: Object {
-								filename: "esprima/es2015-import-declaration/invalid-import-specifiers/input.js"
-								identifierName: "from"
-								end: Object {
-									column: 16
-									line: 1
-								}
-								start: Object {
-									column: 12
-									line: 1
-								}
-							}
+							loc: SourceLocation esprima/es2015-import-declaration/invalid-import-specifiers/input.js 1:12-1:16 (from)
 						}
 						importKind: undefined
-						loc: Object {
-							filename: "esprima/es2015-import-declaration/invalid-import-specifiers/input.js"
-							end: Object {
-								column: 16
-								line: 1
-							}
-							start: Object {
-								column: 12
-								line: 1
-							}
-						}
+						loc: SourceLocation esprima/es2015-import-declaration/invalid-import-specifiers/input.js 1:12-1:16
 					}
 				}
 				JSImportSpecifier {
-					loc: Object {
-						filename: "esprima/es2015-import-declaration/invalid-import-specifiers/input.js"
-						end: Object {
-							column: 22
-							line: 1
-						}
-						start: Object {
-							column: 17
-							line: 1
-						}
-					}
+					loc: SourceLocation esprima/es2015-import-declaration/invalid-import-specifiers/input.js 1:17-1:22
 					imported: JSIdentifier {
 						name: ""
-						loc: Object {
-							filename: "esprima/es2015-import-declaration/invalid-import-specifiers/input.js"
-							identifierName: ""
-							end: Object {
-								column: 22
-								line: 1
-							}
-							start: Object {
-								column: 17
-								line: 1
-							}
-						}
+						loc: SourceLocation esprima/es2015-import-declaration/invalid-import-specifiers/input.js 1:17-1:22 ()
 					}
 					local: JSImportSpecifierLocal {
 						name: JSBindingIdentifier {
 							name: ""
-							loc: Object {
-								filename: "esprima/es2015-import-declaration/invalid-import-specifiers/input.js"
-								identifierName: ""
-								end: Object {
-									column: 22
-									line: 1
-								}
-								start: Object {
-									column: 17
-									line: 1
-								}
-							}
+							loc: SourceLocation esprima/es2015-import-declaration/invalid-import-specifiers/input.js 1:17-1:22 ()
 						}
 						importKind: undefined
-						loc: Object {
-							filename: "esprima/es2015-import-declaration/invalid-import-specifiers/input.js"
-							end: Object {
-								column: 22
-								line: 1
-							}
-							start: Object {
-								column: 17
-								line: 1
-							}
-						}
+						loc: SourceLocation esprima/es2015-import-declaration/invalid-import-specifiers/input.js 1:17-1:22
 					}
 				}
 				JSImportSpecifier {
-					loc: Object {
-						filename: "esprima/es2015-import-declaration/invalid-import-specifiers/input.js"
-						end: Object {
-							column: 23
-							line: 1
-						}
-						start: Object {
-							column: 22
-							line: 1
-						}
-					}
+					loc: SourceLocation esprima/es2015-import-declaration/invalid-import-specifiers/input.js 1:22-1:23
 					imported: JSIdentifier {
 						name: ""
-						loc: Object {
-							filename: "esprima/es2015-import-declaration/invalid-import-specifiers/input.js"
-							identifierName: ""
-							end: Object {
-								column: 23
-								line: 1
-							}
-							start: Object {
-								column: 22
-								line: 1
-							}
-						}
+						loc: SourceLocation esprima/es2015-import-declaration/invalid-import-specifiers/input.js 1:22-1:23 ()
 					}
 					local: JSImportSpecifierLocal {
 						name: JSBindingIdentifier {
 							name: ""
-							loc: Object {
-								filename: "esprima/es2015-import-declaration/invalid-import-specifiers/input.js"
-								identifierName: ""
-								end: Object {
-									column: 23
-									line: 1
-								}
-								start: Object {
-									column: 22
-									line: 1
-								}
-							}
+							loc: SourceLocation esprima/es2015-import-declaration/invalid-import-specifiers/input.js 1:22-1:23 ()
 						}
 						importKind: undefined
-						loc: Object {
-							filename: "esprima/es2015-import-declaration/invalid-import-specifiers/input.js"
-							end: Object {
-								column: 23
-								line: 1
-							}
-							start: Object {
-								column: 22
-								line: 1
-							}
-						}
+						loc: SourceLocation esprima/es2015-import-declaration/invalid-import-specifiers/input.js 1:22-1:23
 					}
 				}
 			]
@@ -311,13 +120,12 @@ JSRoot {
 
  esprima/es2015-import-declaration/invalid-import-specifiers/input.js:1:12 parse(js) ━━━━━━━━━━━━━━━
 
-  ✖ Unexpected token, expected {
+  ✖ Unexpected character f
 
     import foo, from "bar";
-                ^^^^
+                ^
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  ℹ Expected the opening import specifiers character {
 
-✖ Found 1 problem
 
 ```

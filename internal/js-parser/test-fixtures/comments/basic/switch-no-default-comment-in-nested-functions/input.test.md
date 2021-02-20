@@ -11,136 +11,43 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "comments/basic/switch-no-default-comment-in-nested-functions/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "comments/basic/switch-no-default-comment-in-nested-functions/input.js"
-		end: Object {
-			column: 0
-			line: 14
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation comments/basic/switch-no-default-comment-in-nested-functions/input.js 1:0-14:0
+	path: UIDPath<comments/basic/switch-no-default-comment-in-nested-functions/input.js>
 	comments: Array [
 		CommentLine {
 			id: "0"
 			value: " no default"
-			loc: Object {
-				filename: "comments/basic/switch-no-default-comment-in-nested-functions/input.js"
-				end: Object {
-					column: 25
-					line: 7
-				}
-				start: Object {
-					column: 12
-					line: 7
-				}
-			}
+			loc: SourceLocation comments/basic/switch-no-default-comment-in-nested-functions/input.js 7:12-7:25
 		}
 	]
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "comments/basic/switch-no-default-comment-in-nested-functions/input.js"
-				end: Object {
-					column: 2
-					line: 13
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation comments/basic/switch-no-default-comment-in-nested-functions/input.js 1:0-13:2
 			expression: JSAssignmentExpression {
 				operator: "="
-				loc: Object {
-					filename: "comments/basic/switch-no-default-comment-in-nested-functions/input.js"
-					end: Object {
-						column: 1
-						line: 13
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation comments/basic/switch-no-default-comment-in-nested-functions/input.js 1:0-13:1
 				left: JSMemberExpression {
-					loc: Object {
-						filename: "comments/basic/switch-no-default-comment-in-nested-functions/input.js"
-						end: Object {
-							column: 14
-							line: 1
-						}
-						start: Object {
-							column: 0
-							line: 1
-						}
-					}
+					loc: SourceLocation comments/basic/switch-no-default-comment-in-nested-functions/input.js 1:0-1:14
 					object: JSReferenceIdentifier {
 						name: "module"
-						loc: Object {
-							filename: "comments/basic/switch-no-default-comment-in-nested-functions/input.js"
-							identifierName: "module"
-							end: Object {
-								column: 6
-								line: 1
-							}
-							start: Object {
-								column: 0
-								line: 1
-							}
-						}
+						loc: SourceLocation comments/basic/switch-no-default-comment-in-nested-functions/input.js 1:0-1:6 (module)
 					}
 					property: JSStaticMemberProperty {
 						value: JSIdentifier {
 							name: "exports"
-							loc: Object {
-								filename: "comments/basic/switch-no-default-comment-in-nested-functions/input.js"
-								identifierName: "exports"
-								end: Object {
-									column: 14
-									line: 1
-								}
-								start: Object {
-									column: 7
-									line: 1
-								}
-							}
+							loc: SourceLocation comments/basic/switch-no-default-comment-in-nested-functions/input.js 1:7-1:14 (exports)
 						}
-						loc: Object {
-							filename: "comments/basic/switch-no-default-comment-in-nested-functions/input.js"
-							identifierName: "exports"
-							end: Object {
-								column: 14
-								line: 1
-							}
-							start: Object {
-								column: 7
-								line: 1
-							}
-						}
+						loc: SourceLocation comments/basic/switch-no-default-comment-in-nested-functions/input.js 1:7-1:14 (exports)
 					}
 				}
 				right: JSFunctionExpression {
 					id: undefined
-					loc: Object {
-						filename: "comments/basic/switch-no-default-comment-in-nested-functions/input.js"
-						end: Object {
-							column: 1
-							line: 13
-						}
-						start: Object {
-							column: 17
-							line: 1
-						}
-					}
+					loc: SourceLocation comments/basic/switch-no-default-comment-in-nested-functions/input.js 1:17-13:1
 					head: JSFunctionHead {
 						async: false
 						generator: false
@@ -149,91 +56,29 @@ JSRoot {
 						returnType: undefined
 						thisType: undefined
 						typeParameters: undefined
-						loc: Object {
-							filename: "comments/basic/switch-no-default-comment-in-nested-functions/input.js"
-							end: Object {
-								column: 34
-								line: 1
-							}
-							start: Object {
-								column: 25
-								line: 1
-							}
-						}
+						loc: SourceLocation comments/basic/switch-no-default-comment-in-nested-functions/input.js 1:25-1:34
 						params: Array [
 							JSBindingIdentifier {
 								name: "context"
-								loc: Object {
-									filename: "comments/basic/switch-no-default-comment-in-nested-functions/input.js"
-									identifierName: "context"
-									end: Object {
-										column: 33
-										line: 1
-									}
-									start: Object {
-										column: 26
-										line: 1
-									}
-								}
+								loc: SourceLocation comments/basic/switch-no-default-comment-in-nested-functions/input.js 1:26-1:33 (context)
 								meta: JSPatternMeta {
 									optional: undefined
 									typeAnnotation: undefined
-									loc: Object {
-										filename: "comments/basic/switch-no-default-comment-in-nested-functions/input.js"
-										end: Object {
-											column: 33
-											line: 1
-										}
-										start: Object {
-											column: 26
-											line: 1
-										}
-									}
+									loc: SourceLocation comments/basic/switch-no-default-comment-in-nested-functions/input.js 1:26-1:33
 								}
 							}
 						]
 					}
 					body: JSBlockStatement {
 						directives: Array []
-						loc: Object {
-							filename: "comments/basic/switch-no-default-comment-in-nested-functions/input.js"
-							end: Object {
-								column: 1
-								line: 13
-							}
-							start: Object {
-								column: 35
-								line: 1
-							}
-						}
+						loc: SourceLocation comments/basic/switch-no-default-comment-in-nested-functions/input.js 1:35-13:1
 						body: Array [
 							JSFunctionDeclaration {
 								id: JSBindingIdentifier {
 									name: "isConstant"
-									loc: Object {
-										filename: "comments/basic/switch-no-default-comment-in-nested-functions/input.js"
-										identifierName: "isConstant"
-										end: Object {
-											column: 23
-											line: 3
-										}
-										start: Object {
-											column: 13
-											line: 3
-										}
-									}
+									loc: SourceLocation comments/basic/switch-no-default-comment-in-nested-functions/input.js 3:13-3:23 (isConstant)
 								}
-								loc: Object {
-									filename: "comments/basic/switch-no-default-comment-in-nested-functions/input.js"
-									end: Object {
-										column: 5
-										line: 11
-									}
-									start: Object {
-										column: 4
-										line: 3
-									}
-								}
+								loc: SourceLocation comments/basic/switch-no-default-comment-in-nested-functions/input.js 3:4-11:5
 								head: JSFunctionHead {
 									async: false
 									generator: false
@@ -242,412 +87,109 @@ JSRoot {
 									returnType: undefined
 									thisType: undefined
 									typeParameters: undefined
-									loc: Object {
-										filename: "comments/basic/switch-no-default-comment-in-nested-functions/input.js"
-										end: Object {
-											column: 29
-											line: 3
-										}
-										start: Object {
-											column: 23
-											line: 3
-										}
-									}
+									loc: SourceLocation comments/basic/switch-no-default-comment-in-nested-functions/input.js 3:23-3:29
 									params: Array [
 										JSBindingIdentifier {
 											name: "node"
-											loc: Object {
-												filename: "comments/basic/switch-no-default-comment-in-nested-functions/input.js"
-												identifierName: "node"
-												end: Object {
-													column: 28
-													line: 3
-												}
-												start: Object {
-													column: 24
-													line: 3
-												}
-											}
+											loc: SourceLocation comments/basic/switch-no-default-comment-in-nested-functions/input.js 3:24-3:28 (node)
 											meta: JSPatternMeta {
 												optional: undefined
 												typeAnnotation: undefined
-												loc: Object {
-													filename: "comments/basic/switch-no-default-comment-in-nested-functions/input.js"
-													end: Object {
-														column: 28
-														line: 3
-													}
-													start: Object {
-														column: 24
-														line: 3
-													}
-												}
+												loc: SourceLocation comments/basic/switch-no-default-comment-in-nested-functions/input.js 3:24-3:28
 											}
 										}
 									]
 								}
 								body: JSBlockStatement {
 									directives: Array []
-									loc: Object {
-										filename: "comments/basic/switch-no-default-comment-in-nested-functions/input.js"
-										end: Object {
-											column: 5
-											line: 11
-										}
-										start: Object {
-											column: 30
-											line: 3
-										}
-									}
+									loc: SourceLocation comments/basic/switch-no-default-comment-in-nested-functions/input.js 3:30-11:5
 									body: Array [
 										JSSwitchStatement {
-											loc: Object {
-												filename: "comments/basic/switch-no-default-comment-in-nested-functions/input.js"
-												end: Object {
-													column: 9
-													line: 8
-												}
-												start: Object {
-													column: 8
-													line: 4
-												}
-											}
+											loc: SourceLocation comments/basic/switch-no-default-comment-in-nested-functions/input.js 4:8-8:9
 											discriminant: JSMemberExpression {
-												loc: Object {
-													filename: "comments/basic/switch-no-default-comment-in-nested-functions/input.js"
-													end: Object {
-														column: 25
-														line: 4
-													}
-													start: Object {
-														column: 16
-														line: 4
-													}
-												}
+												loc: SourceLocation comments/basic/switch-no-default-comment-in-nested-functions/input.js 4:16-4:25
 												object: JSReferenceIdentifier {
 													name: "node"
-													loc: Object {
-														filename: "comments/basic/switch-no-default-comment-in-nested-functions/input.js"
-														identifierName: "node"
-														end: Object {
-															column: 20
-															line: 4
-														}
-														start: Object {
-															column: 16
-															line: 4
-														}
-													}
+													loc: SourceLocation comments/basic/switch-no-default-comment-in-nested-functions/input.js 4:16-4:20 (node)
 												}
 												property: JSStaticMemberProperty {
 													value: JSIdentifier {
 														name: "type"
-														loc: Object {
-															filename: "comments/basic/switch-no-default-comment-in-nested-functions/input.js"
-															identifierName: "type"
-															end: Object {
-																column: 25
-																line: 4
-															}
-															start: Object {
-																column: 21
-																line: 4
-															}
-														}
+														loc: SourceLocation comments/basic/switch-no-default-comment-in-nested-functions/input.js 4:21-4:25 (type)
 													}
-													loc: Object {
-														filename: "comments/basic/switch-no-default-comment-in-nested-functions/input.js"
-														identifierName: "type"
-														end: Object {
-															column: 25
-															line: 4
-														}
-														start: Object {
-															column: 21
-															line: 4
-														}
-													}
+													loc: SourceLocation comments/basic/switch-no-default-comment-in-nested-functions/input.js 4:21-4:25 (type)
 												}
 											}
 											cases: Array [
 												JSSwitchCase {
+													loc: SourceLocation comments/basic/switch-no-default-comment-in-nested-functions/input.js 5:12-6:81
 													trailingComments: Array ["0"]
-													loc: Object {
-														filename: "comments/basic/switch-no-default-comment-in-nested-functions/input.js"
-														end: Object {
-															column: 81
-															line: 6
-														}
-														start: Object {
-															column: 12
-															line: 5
-														}
-													}
 													test: JSStringLiteral {
 														value: "SequenceExpression"
-														loc: Object {
-															filename: "comments/basic/switch-no-default-comment-in-nested-functions/input.js"
-															end: Object {
-																column: 37
-																line: 5
-															}
-															start: Object {
-																column: 17
-																line: 5
-															}
-														}
+														loc: SourceLocation comments/basic/switch-no-default-comment-in-nested-functions/input.js 5:17-5:37
 													}
 													consequent: Array [
 														JSReturnStatement {
 															trailingComments: undefined
-															loc: Object {
-																filename: "comments/basic/switch-no-default-comment-in-nested-functions/input.js"
-																end: Object {
-																	column: 81
-																	line: 6
-																}
-																start: Object {
-																	column: 16
-																	line: 6
-																}
-															}
+															loc: SourceLocation comments/basic/switch-no-default-comment-in-nested-functions/input.js 6:16-6:81
 															argument: JSCallExpression {
-																loc: Object {
-																	filename: "comments/basic/switch-no-default-comment-in-nested-functions/input.js"
-																	end: Object {
-																		column: 80
-																		line: 6
-																	}
-																	start: Object {
-																		column: 23
-																		line: 6
-																	}
-																}
+																loc: SourceLocation comments/basic/switch-no-default-comment-in-nested-functions/input.js 6:23-6:80
 																callee: JSReferenceIdentifier {
 																	name: "isConstant"
-																	loc: Object {
-																		filename: "comments/basic/switch-no-default-comment-in-nested-functions/input.js"
-																		identifierName: "isConstant"
-																		end: Object {
-																			column: 33
-																			line: 6
-																		}
-																		start: Object {
-																			column: 23
-																			line: 6
-																		}
-																	}
+																	loc: SourceLocation comments/basic/switch-no-default-comment-in-nested-functions/input.js 6:23-6:33 (isConstant)
 																}
 																arguments: Array [
 																	JSMemberExpression {
-																		loc: Object {
-																			filename: "comments/basic/switch-no-default-comment-in-nested-functions/input.js"
-																			end: Object {
-																				column: 79
-																				line: 6
-																			}
-																			start: Object {
-																				column: 34
-																				line: 6
-																			}
-																		}
+																		loc: SourceLocation comments/basic/switch-no-default-comment-in-nested-functions/input.js 6:34-6:79
 																		object: JSMemberExpression {
-																			loc: Object {
-																				filename: "comments/basic/switch-no-default-comment-in-nested-functions/input.js"
-																				end: Object {
-																					column: 50
-																					line: 6
-																				}
-																				start: Object {
-																					column: 34
-																					line: 6
-																				}
-																			}
+																			loc: SourceLocation comments/basic/switch-no-default-comment-in-nested-functions/input.js 6:34-6:50
 																			object: JSReferenceIdentifier {
 																				name: "node"
-																				loc: Object {
-																					filename: "comments/basic/switch-no-default-comment-in-nested-functions/input.js"
-																					identifierName: "node"
-																					end: Object {
-																						column: 38
-																						line: 6
-																					}
-																					start: Object {
-																						column: 34
-																						line: 6
-																					}
-																				}
+																				loc: SourceLocation comments/basic/switch-no-default-comment-in-nested-functions/input.js 6:34-6:38 (node)
 																			}
 																			property: JSStaticMemberProperty {
 																				value: JSIdentifier {
 																					name: "expressions"
-																					loc: Object {
-																						filename: "comments/basic/switch-no-default-comment-in-nested-functions/input.js"
-																						identifierName: "expressions"
-																						end: Object {
-																							column: 50
-																							line: 6
-																						}
-																						start: Object {
-																							column: 39
-																							line: 6
-																						}
-																					}
+																					loc: SourceLocation comments/basic/switch-no-default-comment-in-nested-functions/input.js 6:39-6:50 (expressions)
 																				}
-																				loc: Object {
-																					filename: "comments/basic/switch-no-default-comment-in-nested-functions/input.js"
-																					identifierName: "expressions"
-																					end: Object {
-																						column: 50
-																						line: 6
-																					}
-																					start: Object {
-																						column: 39
-																						line: 6
-																					}
-																				}
+																				loc: SourceLocation comments/basic/switch-no-default-comment-in-nested-functions/input.js 6:39-6:50 (expressions)
 																			}
 																		}
 																		property: JSComputedMemberProperty {
 																			value: JSBinaryExpression {
 																				operator: "-"
-																				loc: Object {
-																					filename: "comments/basic/switch-no-default-comment-in-nested-functions/input.js"
-																					end: Object {
-																						column: 78
-																						line: 6
-																					}
-																					start: Object {
-																						column: 51
-																						line: 6
-																					}
-																				}
+																				loc: SourceLocation comments/basic/switch-no-default-comment-in-nested-functions/input.js 6:51-6:78
 																				right: JSNumericLiteral {
 																					value: 1
 																					format: undefined
-																					loc: Object {
-																						filename: "comments/basic/switch-no-default-comment-in-nested-functions/input.js"
-																						end: Object {
-																							column: 78
-																							line: 6
-																						}
-																						start: Object {
-																							column: 77
-																							line: 6
-																						}
-																					}
+																					loc: SourceLocation comments/basic/switch-no-default-comment-in-nested-functions/input.js 6:77-6:78
 																				}
 																				left: JSMemberExpression {
-																					loc: Object {
-																						filename: "comments/basic/switch-no-default-comment-in-nested-functions/input.js"
-																						end: Object {
-																							column: 74
-																							line: 6
-																						}
-																						start: Object {
-																							column: 51
-																							line: 6
-																						}
-																					}
+																					loc: SourceLocation comments/basic/switch-no-default-comment-in-nested-functions/input.js 6:51-6:74
 																					property: JSStaticMemberProperty {
 																						value: JSIdentifier {
 																							name: "length"
-																							loc: Object {
-																								filename: "comments/basic/switch-no-default-comment-in-nested-functions/input.js"
-																								identifierName: "length"
-																								end: Object {
-																									column: 74
-																									line: 6
-																								}
-																								start: Object {
-																									column: 68
-																									line: 6
-																								}
-																							}
+																							loc: SourceLocation comments/basic/switch-no-default-comment-in-nested-functions/input.js 6:68-6:74 (length)
 																						}
-																						loc: Object {
-																							filename: "comments/basic/switch-no-default-comment-in-nested-functions/input.js"
-																							identifierName: "length"
-																							end: Object {
-																								column: 74
-																								line: 6
-																							}
-																							start: Object {
-																								column: 68
-																								line: 6
-																							}
-																						}
+																						loc: SourceLocation comments/basic/switch-no-default-comment-in-nested-functions/input.js 6:68-6:74 (length)
 																					}
 																					object: JSMemberExpression {
-																						loc: Object {
-																							filename: "comments/basic/switch-no-default-comment-in-nested-functions/input.js"
-																							end: Object {
-																								column: 67
-																								line: 6
-																							}
-																							start: Object {
-																								column: 51
-																								line: 6
-																							}
-																						}
+																						loc: SourceLocation comments/basic/switch-no-default-comment-in-nested-functions/input.js 6:51-6:67
 																						object: JSReferenceIdentifier {
 																							name: "node"
-																							loc: Object {
-																								filename: "comments/basic/switch-no-default-comment-in-nested-functions/input.js"
-																								identifierName: "node"
-																								end: Object {
-																									column: 55
-																									line: 6
-																								}
-																								start: Object {
-																									column: 51
-																									line: 6
-																								}
-																							}
+																							loc: SourceLocation comments/basic/switch-no-default-comment-in-nested-functions/input.js 6:51-6:55 (node)
 																						}
 																						property: JSStaticMemberProperty {
 																							value: JSIdentifier {
 																								name: "expressions"
-																								loc: Object {
-																									filename: "comments/basic/switch-no-default-comment-in-nested-functions/input.js"
-																									identifierName: "expressions"
-																									end: Object {
-																										column: 67
-																										line: 6
-																									}
-																									start: Object {
-																										column: 56
-																										line: 6
-																									}
-																								}
+																								loc: SourceLocation comments/basic/switch-no-default-comment-in-nested-functions/input.js 6:56-6:67 (expressions)
 																							}
-																							loc: Object {
-																								filename: "comments/basic/switch-no-default-comment-in-nested-functions/input.js"
-																								identifierName: "expressions"
-																								end: Object {
-																									column: 67
-																									line: 6
-																								}
-																								start: Object {
-																									column: 56
-																									line: 6
-																								}
-																							}
+																							loc: SourceLocation comments/basic/switch-no-default-comment-in-nested-functions/input.js 6:56-6:67 (expressions)
 																						}
 																					}
 																				}
 																			}
-																			loc: Object {
-																				filename: "comments/basic/switch-no-default-comment-in-nested-functions/input.js"
-																				end: Object {
-																					column: 79
-																					line: 6
-																				}
-																				start: Object {
-																					column: 50
-																					line: 6
-																				}
-																			}
+																			loc: SourceLocation comments/basic/switch-no-default-comment-in-nested-functions/input.js 6:50-6:79
 																		}
 																	}
 																]
@@ -658,30 +200,10 @@ JSRoot {
 											]
 										}
 										JSReturnStatement {
-											loc: Object {
-												filename: "comments/basic/switch-no-default-comment-in-nested-functions/input.js"
-												end: Object {
-													column: 21
-													line: 10
-												}
-												start: Object {
-													column: 8
-													line: 10
-												}
-											}
+											loc: SourceLocation comments/basic/switch-no-default-comment-in-nested-functions/input.js 10:8-10:21
 											argument: JSBooleanLiteral {
 												value: false
-												loc: Object {
-													filename: "comments/basic/switch-no-default-comment-in-nested-functions/input.js"
-													end: Object {
-														column: 20
-														line: 10
-													}
-													start: Object {
-														column: 15
-														line: 10
-													}
-												}
+												loc: SourceLocation comments/basic/switch-no-default-comment-in-nested-functions/input.js 10:15-10:20
 											}
 										}
 									]
@@ -699,6 +221,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

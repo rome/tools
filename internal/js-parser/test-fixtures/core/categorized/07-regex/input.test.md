@@ -12,65 +12,24 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "core/categorized/07-regex/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "core/categorized/07-regex/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation core/categorized/07-regex/input.js 1:0-2:0
+	path: UIDPath<core/categorized/07-regex/input.js>
 	body: Array [
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "foo"
-				loc: Object {
-					filename: "core/categorized/07-regex/input.js"
-					identifierName: "foo"
-					end: Object {
-						column: 12
-						line: 1
-					}
-					start: Object {
-						column: 9
-						line: 1
-					}
-				}
+				loc: SourceLocation core/categorized/07-regex/input.js 1:9-1:12 (foo)
 			}
-			loc: Object {
-				filename: "core/categorized/07-regex/input.js"
-				end: Object {
-					column: 17
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation core/categorized/07-regex/input.js 1:0-1:17
 			body: JSBlockStatement {
 				body: Array []
 				directives: Array []
-				loc: Object {
-					filename: "core/categorized/07-regex/input.js"
-					end: Object {
-						column: 17
-						line: 1
-					}
-					start: Object {
-						column: 15
-						line: 1
-					}
-				}
+				loc: SourceLocation core/categorized/07-regex/input.js 1:15-1:17
 			}
 			head: JSFunctionHead {
 				async: false
@@ -81,31 +40,11 @@ JSRoot {
 				returnType: undefined
 				thisType: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "core/categorized/07-regex/input.js"
-					end: Object {
-						column: 14
-						line: 1
-					}
-					start: Object {
-						column: 12
-						line: 1
-					}
-				}
+				loc: SourceLocation core/categorized/07-regex/input.js 1:12-1:14
 			}
 		}
 		JSExpressionStatement {
-			loc: Object {
-				filename: "core/categorized/07-regex/input.js"
-				end: Object {
-					column: 23
-					line: 1
-				}
-				start: Object {
-					column: 18
-					line: 1
-				}
-			}
+			loc: SourceLocation core/categorized/07-regex/input.js 1:18-1:23
 			expression: JSRegExpLiteral {
 				global: false
 				insensitive: true
@@ -113,57 +52,17 @@ JSRoot {
 				noDotNewline: false
 				sticky: false
 				unicode: false
-				loc: Object {
-					filename: "core/categorized/07-regex/input.js"
-					end: Object {
-						column: 23
-						line: 1
-					}
-					start: Object {
-						column: 18
-						line: 1
-					}
-				}
+				loc: SourceLocation core/categorized/07-regex/input.js 1:18-1:23
 				expression: JSRegExpSubExpression {
-					loc: Object {
-						filename: "core/categorized/07-regex/input.js"
-						end: Object {
-							column: 21
-							line: 1
-						}
-						start: Object {
-							column: 19
-							line: 1
-						}
-					}
+					loc: SourceLocation core/categorized/07-regex/input.js 1:19-1:21
 					body: Array [
 						JSRegExpCharacter {
 							value: "4"
-							loc: Object {
-								filename: "core/categorized/07-regex/input.js"
-								end: Object {
-									column: 20
-									line: 1
-								}
-								start: Object {
-									column: 19
-									line: 1
-								}
-							}
+							loc: SourceLocation core/categorized/07-regex/input.js 1:19-1:20
 						}
 						JSRegExpCharacter {
 							value: "2"
-							loc: Object {
-								filename: "core/categorized/07-regex/input.js"
-								end: Object {
-									column: 21
-									line: 1
-								}
-								start: Object {
-									column: 20
-									line: 1
-								}
-							}
+							loc: SourceLocation core/categorized/07-regex/input.js 1:20-1:21
 						}
 					]
 				}
@@ -176,6 +75,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

@@ -17,20 +17,19 @@ import {FileReference} from "@internal/core";
 import resolverSuggest from "./resolverSuggest";
 import {
 	AbsoluteFilePath,
-	AnyFilePath,
-	RelativeFilePath,
+	AnyPath,
+	RelativePath,
 	URLPath,
-	createFilePathFromSegments,
-	createRelativeFilePath,
+	createPathFromSegments,
+	createRelativePath,
 } from "@internal/path";
 import {DiagnosticAdvice, DiagnosticLocation} from "@internal/diagnostics";
 import {IMPLICIT_JS_EXTENSIONS} from "../../common/file-handlers/javascript";
-import {writeFile} from "@internal/fs";
-import https = require("https");
-
+import {exists, writeFile} from "@internal/fs";
 import {MOCKS_DIRECTORY_NAME} from "@internal/core/common/constants";
 import {Consumer} from "@internal/consume";
 import {markup} from "@internal/markup";
+import https = require("https");
 
 function request(
 	url: string,
@@ -101,20 +100,23 @@ function request(
 
 const NODE_MODULES = "node_modules";
 
-export type ResolverRemoteQuery = Omit<ResolverOptions, "origin"> & {
+export interface ResolverRemoteQuery extends Omit<ResolverOptions, "origin"> {
 	origin: URLPath | AbsoluteFilePath;
-	source: AnyFilePath;
+	source: AnyPath;
 	// Allows a resolution to stop at a directory or package boundary
 	requestedType?: "package" | "directory";
 	// Treat the source as a path (without being explicitly relative), and then a module/package if it fails to resolve
 	entry?: boolean;
 	// Strict disables implicit extensions
 	strict?: boolean;
-};
+}
 
-export type ResolverLocalQuery = Omit<ResolverRemoteQuery, "origin"> & {
+export interface ResolverLocalQuery extends Omit<ResolverRemoteQuery, "origin"> {
 	origin: AbsoluteFilePath;
-};
+}
+export interface ResolverEntryQuery extends ResolverRemoteQuery {
+	allowPartial?: boolean;
+}
 
 export type ResolverQuerySource =
 	| undefined
@@ -158,7 +160,7 @@ export type ResolverQueryResponseFetchError = {
 };
 
 type FilenameVariant = {
-	path: AnyFilePath;
+	path: AnyPath;
 	types: ResolverQueryResponseFoundType[];
 };
 
@@ -180,7 +182,7 @@ function shouldReturnQueryResponse(res: ResolverQueryResponse): boolean {
 	return res.type === "FOUND" || res.source !== undefined;
 }
 
-export function isPathLike(source: AnyFilePath): boolean {
+export function isPathLike(source: AnyPath): boolean {
 	return source.isAbsolute() || source.isExplicitRelative();
 }
 
@@ -207,7 +209,7 @@ export type ResolverOptions = {
 
 type ExportAlias = {
 	key: Consumer;
-	value: RelativeFilePath;
+	value: RelativePath;
 };
 
 function attachExportAliasIfUnresolved(
@@ -238,7 +240,7 @@ function getExportsAlias(
 		platform,
 	}: {
 		manifest: Manifest;
-		relative: RelativeFilePath;
+		relative: RelativePath;
 		platform?: Platform;
 	},
 ): undefined | ExportAlias {
@@ -295,7 +297,7 @@ function getPreferredMainKey(
 ): undefined | ExportAlias {
 	const alias = getExportsAlias({
 		manifest,
-		relative: createRelativeFilePath("."),
+		relative: createRelativePath("."),
 		platform,
 	});
 	if (alias !== undefined) {
@@ -305,7 +307,7 @@ function getPreferredMainKey(
 	if (manifest.main !== undefined) {
 		return {
 			key: consumer.get("main"),
-			value: createRelativeFilePath(manifest.main),
+			value: createRelativePath(manifest.main),
 		};
 	}
 
@@ -337,16 +339,21 @@ export default class Resolver {
 	}
 
 	public async resolveEntryAssert(
-		query: ResolverRemoteQuery,
+		query: ResolverEntryQuery,
 		querySource?: ResolverQuerySource,
 	): Promise<ResolverQueryResponseFound> {
+		const attempt = await this.maybeResolveEntryWithoutFileSystem(query);
+		if (attempt !== undefined) {
+			return attempt;
+		}
+
 		await this.findProjectFromQuery(query);
 		return this.resolveAssert({...query, entry: true}, querySource);
 	}
 
 	// I found myself wanting only `ref.path` a lot so this is just a helper method
 	public async resolveEntryAssertPath(
-		query: ResolverRemoteQuery,
+		query: ResolverEntryQuery,
 		querySource?: ResolverQuerySource,
 	): Promise<AbsoluteFilePath> {
 		const res = await this.resolveEntryAssert(query, querySource);
@@ -354,10 +361,54 @@ export default class Resolver {
 	}
 
 	public async resolveEntry(
-		query: ResolverRemoteQuery,
+		query: ResolverEntryQuery,
 	): Promise<ResolverQueryResponse> {
+		const attempt = await this.maybeResolveEntryWithoutFileSystem(query);
+		if (attempt !== undefined) {
+			return attempt;
+		}
+
 		await this.findProjectFromQuery(query);
 		return this.resolveRemote({...query, entry: true});
+	}
+
+	private async maybeResolveEntryWithoutFileSystem(
+		query: ResolverEntryQuery,
+	): Promise<undefined | ResolverQueryResponseFound> {
+		if (query.allowPartial === false) {
+			return undefined;
+		}
+
+		const {projectManager} = this.server;
+		let absolute: AbsoluteFilePath;
+
+		if (query.source.isAbsolute()) {
+			absolute = query.source.assertAbsolute();
+		} else if (query.origin.isAbsolute()) {
+			absolute = query.origin.assertAbsolute().append(
+				query.source.assertRelative(),
+			);
+		} else {
+			// URL or something?
+			return undefined;
+		}
+
+		// If we have loaded projects then there's no point doing our dirty checks
+		if (projectManager.findLoadedProject(absolute) !== undefined) {
+			return undefined;
+		}
+
+		// Found an exact match
+		if (await exists(absolute)) {
+			const project = await projectManager.findProject(absolute, true);
+			if (project === undefined) {
+				return undefined;
+			}
+
+			return this.finishResolverQueryResponse(absolute);
+		}
+
+		return undefined;
 	}
 
 	public async resolveAssert(
@@ -481,7 +532,7 @@ export default class Resolver {
 
 	private *getFilenameVariants(
 		query: ResolverLocalQuery,
-		path: AnyFilePath,
+		path: AnyPath,
 	): Iterable<FilenameVariant> {
 		const seen: Set<string> = new Set();
 		for (const variant of this._getFilenameVariants(query, path, [])) {
@@ -497,7 +548,7 @@ export default class Resolver {
 
 	private *_getFilenameVariants(
 		query: ResolverLocalQuery,
-		path: AnyFilePath,
+		path: AnyPath,
 		callees: ResolverQueryResponseFoundType[],
 	): Iterable<FilenameVariant> {
 		const {platform} = query;
@@ -560,7 +611,7 @@ export default class Resolver {
 	private finishResolverQueryResponse(
 		path: AbsoluteFilePath,
 		types: ResolverQueryResponseFoundType[] = [],
-	): ResolverQueryResponse {
+	): ResolverQueryResponseFound {
 		return {
 			type: "FOUND",
 			types,
@@ -590,6 +641,9 @@ export default class Resolver {
 		// Resolve the path heiarchy
 		const originDirectory = this.getOriginDirectory(query);
 		const resolvedOrigin = originDirectory.resolve(query.source);
+		if (!resolvedOrigin.isFilePath()) {
+			return QUERY_RESPONSE_MISSING;
+		}
 
 		// Check if this is an absolute filename
 		if (memoryFs.isFile(resolvedOrigin)) {
@@ -727,7 +781,7 @@ export default class Resolver {
 			if (manifestDef.manifest.exports !== true) {
 				const alias = getExportsAlias({
 					manifest: manifestDef.manifest,
-					relative: createFilePathFromSegments(moduleNameParts, "relative").assertRelative(),
+					relative: createPathFromSegments(moduleNameParts, "relative").assertRelative(),
 					platform: query.platform,
 				});
 
@@ -793,7 +847,7 @@ export default class Resolver {
 	}
 
 	// Given a reference to a module, extract the module name and any trailing relative paths
-	private splitModuleName(path: AnyFilePath): [string, string[]] {
+	private splitModuleName(path: AnyPath): [string, string[]] {
 		// fetch the first part of the path as that's the module name
 		// possible values of `moduleNameFull` could be `react` or `react/lib/whatever`
 		const [moduleName, ...moduleNameParts] = path.getSegments();

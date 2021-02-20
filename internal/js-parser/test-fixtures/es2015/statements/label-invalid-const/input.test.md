@@ -11,142 +11,52 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "es2015/statements/label-invalid-const/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2015/statements/label-invalid-const/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2015/statements/label-invalid-const/input.js 1:0-2:0
+	path: UIDPath<es2015/statements/label-invalid-const/input.js>
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse"
 				categoryValue: "js"
+				category: Array ["parse"]
 				message: RAW_MARKUP {value: "Lexical declaration cannot appear in a single-statement context"}
 			}
 			location: Object {
-				filename: "es2015/statements/label-invalid-const/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 4
-					line: 1
-				}
-				start: Object {
-					column: 5
-					line: 1
-				}
+				end: Position 1:4
+				path: UIDPath<es2015/statements/label-invalid-const/input.js>
+				start: Position 1:5
 			}
 		}
 	]
 	body: Array [
 		JSLabeledStatement {
-			loc: Object {
-				filename: "es2015/statements/label-invalid-const/input.js"
-				end: Object {
-					column: 22
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2015/statements/label-invalid-const/input.js 1:0-1:22
 			label: JSIdentifier {
 				name: "foo"
-				loc: Object {
-					filename: "es2015/statements/label-invalid-const/input.js"
-					identifierName: "foo"
-					end: Object {
-						column: 3
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/statements/label-invalid-const/input.js 1:0-1:3 (foo)
 			}
 			body: JSVariableDeclarationStatement {
-				loc: Object {
-					filename: "es2015/statements/label-invalid-const/input.js"
-					end: Object {
-						column: 22
-						line: 1
-					}
-					start: Object {
-						column: 5
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/statements/label-invalid-const/input.js 1:5-1:22
 				declaration: JSVariableDeclaration {
 					kind: "const"
-					loc: Object {
-						filename: "es2015/statements/label-invalid-const/input.js"
-						end: Object {
-							column: 22
-							line: 1
-						}
-						start: Object {
-							column: 5
-							line: 1
-						}
-					}
+					loc: SourceLocation es2015/statements/label-invalid-const/input.js 1:5-1:22
 					declarations: Array [
 						JSVariableDeclarator {
 							id: JSBindingIdentifier {
 								name: "bar"
-								loc: Object {
-									filename: "es2015/statements/label-invalid-const/input.js"
-									identifierName: "bar"
-									end: Object {
-										column: 14
-										line: 1
-									}
-									start: Object {
-										column: 11
-										line: 1
-									}
-								}
+								loc: SourceLocation es2015/statements/label-invalid-const/input.js 1:11-1:14 (bar)
 							}
-							loc: Object {
-								filename: "es2015/statements/label-invalid-const/input.js"
-								end: Object {
-									column: 21
-									line: 1
-								}
-								start: Object {
-									column: 11
-									line: 1
-								}
-							}
-							init: JSNullLiteral {
-								loc: Object {
-									filename: "es2015/statements/label-invalid-const/input.js"
-									end: Object {
-										column: 21
-										line: 1
-									}
-									start: Object {
-										column: 17
-										line: 1
-									}
-								}
-							}
+							init: JSNullLiteral {loc: SourceLocation es2015/statements/label-invalid-const/input.js 1:17-1:21}
+							loc: SourceLocation es2015/statements/label-invalid-const/input.js 1:11-1:21
 						}
 					]
 				}
@@ -167,8 +77,5 @@ JSRoot {
     foo: const bar = null;
          ^
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

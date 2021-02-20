@@ -7,7 +7,6 @@
 ### `Diagnostics`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -26,21 +25,37 @@ span.something {
 	background-color: red;
 }
 
+h1::before  {
+  content: " content ";
+}
+
+a {
+	transition: background-color 0.3s ease-in-out;
+}
+
 ```
 
 ### `Output`
 
 ```css
-.a{
+.a {
 	text-decoration: none;
 }
 
-span.something{
+span.something {
 	margin-bottom: 2px;
 }
 
-#id.class:hover{
+#id .class:hover {
 	background-color: red;
+}
+
+h1::before {
+	content: " content ";
+}
+
+a {
+	transition: background-color 0.3s ease-in-out;
 }
 
 ```

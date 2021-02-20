@@ -12,51 +12,20 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "experimental/function-sent/disabled-inside-generator/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "experimental/function-sent/disabled-inside-generator/input.js"
-		end: Object {
-			column: 0
-			line: 4
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation experimental/function-sent/disabled-inside-generator/input.js 1:0-4:0
+	path: UIDPath<experimental/function-sent/disabled-inside-generator/input.js>
 	body: Array [
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "foo"
-				loc: Object {
-					filename: "experimental/function-sent/disabled-inside-generator/input.js"
-					identifierName: "foo"
-					end: Object {
-						column: 13
-						line: 1
-					}
-					start: Object {
-						column: 10
-						line: 1
-					}
-				}
+				loc: SourceLocation experimental/function-sent/disabled-inside-generator/input.js 1:10-1:13 (foo)
 			}
-			loc: Object {
-				filename: "experimental/function-sent/disabled-inside-generator/input.js"
-				end: Object {
-					column: 1
-					line: 3
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation experimental/function-sent/disabled-inside-generator/input.js 1:0-3:1
 			head: JSFunctionHead {
 				async: false
 				generator: true
@@ -66,85 +35,23 @@ JSRoot {
 				returnType: undefined
 				thisType: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "experimental/function-sent/disabled-inside-generator/input.js"
-					end: Object {
-						column: 15
-						line: 1
-					}
-					start: Object {
-						column: 13
-						line: 1
-					}
-				}
+				loc: SourceLocation experimental/function-sent/disabled-inside-generator/input.js 1:13-1:15
 			}
 			body: JSBlockStatement {
 				directives: Array []
-				loc: Object {
-					filename: "experimental/function-sent/disabled-inside-generator/input.js"
-					end: Object {
-						column: 1
-						line: 3
-					}
-					start: Object {
-						column: 16
-						line: 1
-					}
-				}
+				loc: SourceLocation experimental/function-sent/disabled-inside-generator/input.js 1:16-3:1
 				body: Array [
 					JSReturnStatement {
-						loc: Object {
-							filename: "experimental/function-sent/disabled-inside-generator/input.js"
-							end: Object {
-								column: 23
-								line: 2
-							}
-							start: Object {
-								column: 2
-								line: 2
-							}
-						}
+						loc: SourceLocation experimental/function-sent/disabled-inside-generator/input.js 2:2-2:23
 						argument: JSMetaProperty {
-							loc: Object {
-								filename: "experimental/function-sent/disabled-inside-generator/input.js"
-								end: Object {
-									column: 22
-									line: 2
-								}
-								start: Object {
-									column: 9
-									line: 2
-								}
-							}
+							loc: SourceLocation experimental/function-sent/disabled-inside-generator/input.js 2:9-2:22
 							meta: JSIdentifier {
 								name: "function"
-								loc: Object {
-									filename: "experimental/function-sent/disabled-inside-generator/input.js"
-									identifierName: "function"
-									end: Object {
-										column: 17
-										line: 2
-									}
-									start: Object {
-										column: 9
-										line: 2
-									}
-								}
+								loc: SourceLocation experimental/function-sent/disabled-inside-generator/input.js 2:9-2:17 (function)
 							}
 							property: JSIdentifier {
 								name: "sent"
-								loc: Object {
-									filename: "experimental/function-sent/disabled-inside-generator/input.js"
-									identifierName: "sent"
-									end: Object {
-										column: 22
-										line: 2
-									}
-									start: Object {
-										column: 18
-										line: 2
-									}
-								}
+								loc: SourceLocation experimental/function-sent/disabled-inside-generator/input.js 2:18-2:22 (sent)
 							}
 						}
 					}
@@ -158,6 +65,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

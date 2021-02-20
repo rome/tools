@@ -11,110 +11,45 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "es2020/import-meta/no-other-prop-names/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
 	syntax: Array []
-	loc: Object {
-		filename: "es2020/import-meta/no-other-prop-names/input.js"
-		end: Object {
-			column: 0
-			line: 2
+	loc: SourceLocation es2020/import-meta/no-other-prop-names/input.js 1:0-2:0
+	path: UIDPath<es2020/import-meta/no-other-prop-names/input.js>
+	body: Array [
+		JSExpressionStatement {
+			loc: SourceLocation es2020/import-meta/no-other-prop-names/input.js 1:0-1:15
+			expression: JSMetaProperty {
+				loc: SourceLocation es2020/import-meta/no-other-prop-names/input.js 1:0-1:14
+				meta: JSIdentifier {
+					name: "import"
+					loc: SourceLocation es2020/import-meta/no-other-prop-names/input.js 1:0-1:6 (import)
+				}
+				property: JSIdentifier {
+					name: "notMeta"
+					loc: SourceLocation es2020/import-meta/no-other-prop-names/input.js 1:7-1:14 (notMeta)
+				}
+			}
 		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	]
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse"
 				categoryValue: "js"
-				message: Array [
-					RAW_MARKUP {value: "The only valid meta property for "}
-					"import"
-					RAW_MARKUP {value: " is "}
-					"import"
-					RAW_MARKUP {value: "."}
-					"meta"
-				]
+				category: Array ["parse"]
+				message: RAW_MARKUP {value: "The only valid meta property for import is import.meta"}
 			}
 			location: Object {
-				filename: "es2020/import-meta/no-other-prop-names/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 14
-					line: 1
-				}
-				start: Object {
-					column: 7
-					line: 1
-				}
-			}
-		}
-	]
-	body: Array [
-		JSExpressionStatement {
-			loc: Object {
-				filename: "es2020/import-meta/no-other-prop-names/input.js"
-				end: Object {
-					column: 15
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
-			expression: JSMetaProperty {
-				loc: Object {
-					filename: "es2020/import-meta/no-other-prop-names/input.js"
-					end: Object {
-						column: 14
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
-				meta: JSIdentifier {
-					name: "import"
-					loc: Object {
-						filename: "es2020/import-meta/no-other-prop-names/input.js"
-						identifierName: "import"
-						end: Object {
-							column: 6
-							line: 1
-						}
-						start: Object {
-							column: 0
-							line: 1
-						}
-					}
-				}
-				property: JSIdentifier {
-					name: "notMeta"
-					loc: Object {
-						filename: "es2020/import-meta/no-other-prop-names/input.js"
-						identifierName: "notMeta"
-						end: Object {
-							column: 14
-							line: 1
-						}
-						start: Object {
-							column: 7
-							line: 1
-						}
-					}
-				}
+				end: Position 1:14
+				path: UIDPath<es2020/import-meta/no-other-prop-names/input.js>
+				start: Position 1:7
 			}
 		}
 	]
@@ -132,8 +67,5 @@ JSRoot {
     import.notMeta;
            ^^^^^^^
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

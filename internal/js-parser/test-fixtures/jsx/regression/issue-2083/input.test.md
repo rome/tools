@@ -12,123 +12,43 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "jsx/regression/issue-2083/input.jsx"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
+	loc: SourceLocation jsx/regression/issue-2083/input.jsx 1:0-2:0
+	path: UIDPath<jsx/regression/issue-2083/input.jsx>
 	syntax: Array ["jsx"]
-	loc: Object {
-		filename: "jsx/regression/issue-2083/input.jsx"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "jsx/regression/issue-2083/input.jsx"
-				end: Object {
-					column: 27
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation jsx/regression/issue-2083/input.jsx 1:0-1:27
 			expression: JSConditionalExpression {
-				loc: Object {
-					filename: "jsx/regression/issue-2083/input.jsx"
-					end: Object {
-						column: 26
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation jsx/regression/issue-2083/input.jsx 1:0-1:26
 				test: JSBooleanLiteral {
 					value: true
-					loc: Object {
-						filename: "jsx/regression/issue-2083/input.jsx"
-						end: Object {
-							column: 4
-							line: 1
-						}
-						start: Object {
-							column: 0
-							line: 1
-						}
-					}
+					loc: SourceLocation jsx/regression/issue-2083/input.jsx 1:0-1:4
 				}
 				alternate: JSXElement {
 					name: JSXIdentifier {
 						name: "div"
-						loc: Object {
-							filename: "jsx/regression/issue-2083/input.jsx"
-							end: Object {
-								column: 23
-								line: 1
-							}
-							start: Object {
-								column: 20
-								line: 1
-							}
-						}
+						loc: SourceLocation jsx/regression/issue-2083/input.jsx 1:20-1:23
 					}
 					attributes: Array []
 					children: Array []
 					selfClosing: true
 					typeArguments: undefined
-					loc: Object {
-						filename: "jsx/regression/issue-2083/input.jsx"
-						end: Object {
-							column: 26
-							line: 1
-						}
-						start: Object {
-							column: 19
-							line: 1
-						}
-					}
+					loc: SourceLocation jsx/regression/issue-2083/input.jsx 1:19-1:26
 				}
 				consequent: JSXElement {
 					name: JSXIdentifier {
 						name: "div"
-						loc: Object {
-							filename: "jsx/regression/issue-2083/input.jsx"
-							end: Object {
-								column: 12
-								line: 1
-							}
-							start: Object {
-								column: 9
-								line: 1
-							}
-						}
+						loc: SourceLocation jsx/regression/issue-2083/input.jsx 1:9-1:12
 					}
 					attributes: Array []
 					children: Array []
 					selfClosing: true
 					typeArguments: undefined
-					loc: Object {
-						filename: "jsx/regression/issue-2083/input.jsx"
-						end: Object {
-							column: 15
-							line: 1
-						}
-						start: Object {
-							column: 8
-							line: 1
-						}
-					}
+					loc: SourceLocation jsx/regression/issue-2083/input.jsx 1:8-1:15
 				}
 			}
 		}
@@ -139,6 +59,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

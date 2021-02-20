@@ -11,174 +11,64 @@ JSRoot {
 	comments: Array []
 	corrupt: true
 	directives: Array []
-	filename: "es2015/modules/invalid-xml-comment-in-module/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
 	syntax: Array []
-	loc: Object {
-		filename: "es2015/modules/invalid-xml-comment-in-module/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2015/modules/invalid-xml-comment-in-module/input.js 1:0-2:0
+	path: UIDPath<es2015/modules/invalid-xml-comment-in-module/input.js>
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse"
 				categoryValue: "js"
-				message: Array [
-					RAW_MARKUP {value: "Unknown start to an "}
-					"statement expression"
-				]
+				category: Array ["parse"]
+				message: RAW_MARKUP {value: "Unknown start to an statement expression"}
 			}
 			location: Object {
-				filename: "es2015/modules/invalid-xml-comment-in-module/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 0
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
+				end: Position 1:0
+				path: UIDPath<es2015/modules/invalid-xml-comment-in-module/input.js>
+				start: Position 1:0
 			}
 		}
 	]
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "es2015/modules/invalid-xml-comment-in-module/input.js"
-				end: Object {
-					column: 4
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2015/modules/invalid-xml-comment-in-module/input.js 1:0-1:4
 			expression: JSUpdateExpression {
 				operator: "--"
 				prefix: false
-				loc: Object {
-					filename: "es2015/modules/invalid-xml-comment-in-module/input.js"
-					end: Object {
-						column: 4
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/modules/invalid-xml-comment-in-module/input.js 1:0-1:4
 				argument: TSNonNullExpression {
-					loc: Object {
-						filename: "es2015/modules/invalid-xml-comment-in-module/input.js"
-						end: Object {
-							column: 2
-							line: 1
-						}
-						start: Object {
-							column: 0
-							line: 1
-						}
-					}
+					loc: SourceLocation es2015/modules/invalid-xml-comment-in-module/input.js 1:0-1:2
 					expression: JSReferenceIdentifier {
 						name: "INVALID_PLACEHOLDER"
-						loc: Object {
-							filename: "es2015/modules/invalid-xml-comment-in-module/input.js"
-							end: Object {
-								column: 1
-								line: 1
-							}
-							start: Object {
-								column: 0
-								line: 1
-							}
-						}
+						loc: SourceLocation es2015/modules/invalid-xml-comment-in-module/input.js 1:0-1:1
 					}
 				}
 			}
 		}
 		JSExpressionStatement {
-			loc: Object {
-				filename: "es2015/modules/invalid-xml-comment-in-module/input.js"
-				end: Object {
-					column: 0
-					line: 2
-				}
-				start: Object {
-					column: 4
-					line: 1
-				}
-			}
+			loc: SourceLocation es2015/modules/invalid-xml-comment-in-module/input.js 1:4-2:0
 			expression: JSBinaryExpression {
 				operator: ">"
-				loc: Object {
-					filename: "es2015/modules/invalid-xml-comment-in-module/input.js"
-					end: Object {
-						column: 0
-						line: 2
-					}
-					start: Object {
-						column: 4
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/modules/invalid-xml-comment-in-module/input.js 1:4-2:0
 				right: JSReferenceIdentifier {
 					name: "INVALID_PLACEHOLDER"
-					loc: Object {
-						filename: "es2015/modules/invalid-xml-comment-in-module/input.js"
-						end: Object {
-							column: 0
-							line: 2
-						}
-						start: Object {
-							column: 0
-							line: 2
-						}
-					}
+					loc: SourceLocation es2015/modules/invalid-xml-comment-in-module/input.js 2:0-2:0
 				}
 				left: JSUpdateExpression {
 					operator: "--"
 					prefix: false
-					loc: Object {
-						filename: "es2015/modules/invalid-xml-comment-in-module/input.js"
-						end: Object {
-							column: 9
-							line: 1
-						}
-						start: Object {
-							column: 4
-							line: 1
-						}
-					}
+					loc: SourceLocation es2015/modules/invalid-xml-comment-in-module/input.js 1:4-1:9
 					argument: JSReferenceIdentifier {
 						name: "bar"
-						loc: Object {
-							filename: "es2015/modules/invalid-xml-comment-in-module/input.js"
-							identifierName: "bar"
-							end: Object {
-								column: 7
-								line: 1
-							}
-							start: Object {
-								column: 4
-								line: 1
-							}
-						}
+						loc: SourceLocation es2015/modules/invalid-xml-comment-in-module/input.js 1:4-1:7 (bar)
 					}
 				}
 			}
@@ -198,8 +88,5 @@ JSRoot {
     <!--bar-->
     ^
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

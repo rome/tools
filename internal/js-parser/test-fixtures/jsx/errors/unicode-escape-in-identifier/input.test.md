@@ -11,91 +11,45 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "jsx/errors/unicode-escape-in-identifier/input.jsx"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
+	loc: SourceLocation jsx/errors/unicode-escape-in-identifier/input.jsx 1:0-1:23
+	path: UIDPath<jsx/errors/unicode-escape-in-identifier/input.jsx>
 	syntax: Array ["jsx"]
-	loc: Object {
-		filename: "jsx/errors/unicode-escape-in-identifier/input.jsx"
-		end: Object {
-			column: 23
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				category: "parse"
-				categoryValue: "js"
-				message: RAW_MARKUP {value: "Unknown JSX identifier token"}
-			}
-			location: Object {
-				filename: "jsx/errors/unicode-escape-in-identifier/input.jsx"
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Object {
-					column: 1
-					line: 1
-				}
-				start: Object {
-					column: 1
-					line: 1
-				}
-			}
-		}
-	]
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "jsx/errors/unicode-escape-in-identifier/input.jsx"
-				end: Object {
-					column: 23
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation jsx/errors/unicode-escape-in-identifier/input.jsx 1:0-1:23
 			expression: JSXElement {
 				name: JSXReferenceIdentifier {
 					name: ""
-					loc: Object {
-						filename: "jsx/errors/unicode-escape-in-identifier/input.jsx"
-						end: Object {
-							column: 10
-							line: 1
-						}
-						start: Object {
-							column: 1
-							line: 1
-						}
-					}
+					loc: SourceLocation jsx/errors/unicode-escape-in-identifier/input.jsx 1:1-1:10
 				}
 				attributes: Array []
 				children: Array []
 				selfClosing: false
 				typeArguments: undefined
-				loc: Object {
-					filename: "jsx/errors/unicode-escape-in-identifier/input.jsx"
-					end: Object {
-						column: 23
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation jsx/errors/unicode-escape-in-identifier/input.jsx 1:0-1:23
+			}
+		}
+	]
+	diagnostics: Array [
+		Object {
+			origins: Array [Object {category: "parse"}]
+			description: Object {
+				advice: Array []
+				categoryValue: "js"
+				category: Array ["parse"]
+				message: RAW_MARKUP {value: "Unknown JSX identifier token"}
+			}
+			location: Object {
+				integrity: undefined
+				language: "js"
+				sourceText: undefined
+				end: Position 1:1
+				path: UIDPath<jsx/errors/unicode-escape-in-identifier/input.jsx>
+				start: Position 1:1
 			}
 		}
 	]
@@ -113,8 +67,5 @@ JSRoot {
     <\u{2F804}></\u{2F804}>
      ^
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

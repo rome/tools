@@ -1,59 +1,62 @@
-import {Number0, ob1Get0, ob1Inc, ob1Number0} from "@internal/ob1";
-import {WorkerBufferPatch} from "@internal/core/common/bridges/WorkerBridge";
+import {ZeroIndexed} from "@internal/math";
+import {WorkerBufferPatch} from "@internal/core";
 
 export function applyWorkerBufferPatch(
 	original: string,
 	{range: {start, end}, text}: WorkerBufferPatch,
 ) {
-	let currLine: Number0 = ob1Number0;
-	let currChar: Number0 = ob1Number0;
-	let cursor: Number0 = ob1Number0;
+	let currLine: ZeroIndexed = new ZeroIndexed();
+	let currChar: ZeroIndexed = new ZeroIndexed();
+	let cursor: ZeroIndexed = new ZeroIndexed();
 
 	let buffer: string | undefined;
 
 	// Offset based on UTF-16 code units
-	while (ob1Get0(cursor) <= original.length) {
+	while (cursor.valueOf() <= original.length) {
 		// Start position
-		if (currLine === start.line && currChar === start.character) {
+		if (currLine.equal(start.line) && currChar.equal(start.character)) {
 			// Include anything before the start of the patch range
-			const preText = original.slice(0, ob1Get0(cursor));
+			const preText = original.slice(0, cursor.valueOf());
 			buffer = preText + text;
 		}
 
 		// End position
-		if (currLine === end.line && currChar === end.character) {
+		if (currLine.equal(end.line) && currChar.equal(end.character)) {
 			if (buffer === undefined) {
 				// Start position was not encountered
 				return undefined;
 			}
+
 			// Append anything after the end of the patch range
-			const postText = original.slice(ob1Get0(cursor));
+			const postText = original.slice(cursor.valueOf());
 			buffer += postText;
 			return buffer;
 		}
 
-		switch (original[ob1Get0(cursor)]) {
+		switch (original[cursor.valueOf()]) {
 			case "\n": {
-				currLine = ob1Inc(currLine);
-				currChar = ob1Number0;
+				currLine = currLine.increment();
+				currChar = new ZeroIndexed();
 				break;
 			}
+
 			case "\r": {
-				currLine = ob1Inc(currLine);
-				currChar = ob1Number0;
+				currLine = currLine.increment();
+				currChar = new ZeroIndexed();
 
 				//  \r\n should only advance 1 line
-				if (original[ob1Get0(cursor) + 1] === "\n") {
-					cursor = ob1Inc(cursor);
+				if (original[cursor.valueOf() + 1] === "\n") {
+					cursor = cursor.increment();
 				}
 				break;
 			}
+
 			default: {
-				currChar = ob1Inc(currChar);
+				currChar = currChar.increment();
 			}
 		}
 
-		cursor = ob1Inc(cursor);
+		cursor = cursor.increment();
 	}
 
 	// End position was not encountered

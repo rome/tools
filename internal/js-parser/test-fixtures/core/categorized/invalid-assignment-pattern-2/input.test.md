@@ -11,145 +11,57 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "core/categorized/invalid-assignment-pattern-2/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "core/categorized/invalid-assignment-pattern-2/input.js"
-		end: Object {
-			column: 13
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation core/categorized/invalid-assignment-pattern-2/input.js 1:0-1:13
+	path: UIDPath<core/categorized/invalid-assignment-pattern-2/input.js>
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse"
 				categoryValue: "js"
+				category: Array ["parse"]
 				message: RAW_MARKUP {value: "Invalid parenthesized binding"}
 			}
 			location: Object {
-				filename: "core/categorized/invalid-assignment-pattern-2/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 7
-					line: 1
-				}
-				start: Object {
-					column: 2
-					line: 1
-				}
+				end: Position 1:7
+				path: UIDPath<core/categorized/invalid-assignment-pattern-2/input.js>
+				start: Position 1:2
 			}
 		}
 	]
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "core/categorized/invalid-assignment-pattern-2/input.js"
-				end: Object {
-					column: 13
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation core/categorized/invalid-assignment-pattern-2/input.js 1:0-1:13
 			expression: JSAssignmentExpression {
 				operator: "="
-				loc: Object {
-					filename: "core/categorized/invalid-assignment-pattern-2/input.js"
-					end: Object {
-						column: 13
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation core/categorized/invalid-assignment-pattern-2/input.js 1:0-1:13
 				right: JSReferenceIdentifier {
 					name: "t"
-					loc: Object {
-						filename: "core/categorized/invalid-assignment-pattern-2/input.js"
-						identifierName: "t"
-						end: Object {
-							column: 13
-							line: 1
-						}
-						start: Object {
-							column: 12
-							line: 1
-						}
-					}
+					loc: SourceLocation core/categorized/invalid-assignment-pattern-2/input.js 1:12-1:13 (t)
 				}
 				left: JSAssignmentArrayPattern {
 					rest: undefined
-					loc: Object {
-						filename: "core/categorized/invalid-assignment-pattern-2/input.js"
-						end: Object {
-							column: 9
-							line: 1
-						}
-						start: Object {
-							column: 0
-							line: 1
-						}
-					}
+					loc: SourceLocation core/categorized/invalid-assignment-pattern-2/input.js 1:0-1:9
 					elements: Array [
 						JSAssignmentAssignmentPattern {
 							operator: "="
-							loc: Object {
-								filename: "core/categorized/invalid-assignment-pattern-2/input.js"
-								end: Object {
-									column: 7
-									line: 1
-								}
-								start: Object {
-									column: 2
-									line: 1
-								}
-							}
+							loc: SourceLocation core/categorized/invalid-assignment-pattern-2/input.js 1:2-1:7
 							left: JSAssignmentIdentifier {
 								name: "a"
-								loc: Object {
-									filename: "core/categorized/invalid-assignment-pattern-2/input.js"
-									identifierName: "a"
-									end: Object {
-										column: 3
-										line: 1
-									}
-									start: Object {
-										column: 2
-										line: 1
-									}
-								}
+								loc: SourceLocation core/categorized/invalid-assignment-pattern-2/input.js 1:2-1:3 (a)
 							}
 							right: JSNumericLiteral {
 								value: 1
 								format: undefined
-								loc: Object {
-									filename: "core/categorized/invalid-assignment-pattern-2/input.js"
-									end: Object {
-										column: 7
-										line: 1
-									}
-									start: Object {
-										column: 6
-										line: 1
-									}
-								}
+								loc: SourceLocation core/categorized/invalid-assignment-pattern-2/input.js 1:6-1:7
 							}
 						}
 					]
@@ -171,8 +83,5 @@ JSRoot {
     [(a = 1)] = t
       ^^^^^
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

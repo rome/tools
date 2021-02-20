@@ -12,64 +12,23 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "core/uncategorised/141/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "core/uncategorised/141/input.js"
-		end: Object {
-			column: 6
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation core/uncategorised/141/input.js 1:0-1:6
+	path: UIDPath<core/uncategorised/141/input.js>
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "core/uncategorised/141/input.js"
-				end: Object {
-					column: 6
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation core/uncategorised/141/input.js 1:0-1:6
 			expression: JSUpdateExpression {
 				operator: "--"
 				prefix: true
-				loc: Object {
-					filename: "core/uncategorised/141/input.js"
-					end: Object {
-						column: 6
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation core/uncategorised/141/input.js 1:0-1:6
 				argument: JSReferenceIdentifier {
 					name: "eval"
-					loc: Object {
-						filename: "core/uncategorised/141/input.js"
-						identifierName: "eval"
-						end: Object {
-							column: 6
-							line: 1
-						}
-						start: Object {
-							column: 2
-							line: 1
-						}
-					}
+					loc: SourceLocation core/uncategorised/141/input.js 1:2-1:6 (eval)
 				}
 			}
 		}
@@ -80,6 +39,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

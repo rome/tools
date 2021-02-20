@@ -10,37 +10,17 @@
 JSRoot {
 	comments: Array []
 	corrupt: false
-	filename: "esprima/es2015-yield/invalid-yield-strict-rest-parameter/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "esprima/es2015-yield/invalid-yield-strict-rest-parameter/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation esprima/es2015-yield/invalid-yield-strict-rest-parameter/input.js 1:0-2:0
+	path: UIDPath<esprima/es2015-yield/invalid-yield-strict-rest-parameter/input.js>
 	directives: Array [
 		JSDirective {
 			value: "use strict"
-			loc: Object {
-				filename: "esprima/es2015-yield/invalid-yield-strict-rest-parameter/input.js"
-				end: Object {
-					column: 13
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation esprima/es2015-yield/invalid-yield-strict-rest-parameter/input.js 1:0-1:13
 		}
 	]
 	diagnostics: Array [
@@ -48,26 +28,17 @@ JSRoot {
 			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse"
 				categoryValue: "js"
-				message: Array [
-					"yield"
-					RAW_MARKUP {value: " is a reserved word"}
-				]
+				category: Array ["parse"]
+				message: RAW_MARKUP {value: "yield is a reserved word"}
 			}
 			location: Object {
-				filename: "esprima/es2015-yield/invalid-yield-strict-rest-parameter/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 33
-					line: 1
-				}
-				start: Object {
-					column: 28
-					line: 1
-				}
+				end: Position 1:33
+				path: UIDPath<esprima/es2015-yield/invalid-yield-strict-rest-parameter/input.js>
+				start: Position 1:28
 			}
 		}
 	]
@@ -75,44 +46,13 @@ JSRoot {
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "f"
-				loc: Object {
-					filename: "esprima/es2015-yield/invalid-yield-strict-rest-parameter/input.js"
-					identifierName: "f"
-					end: Object {
-						column: 24
-						line: 1
-					}
-					start: Object {
-						column: 23
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/es2015-yield/invalid-yield-strict-rest-parameter/input.js 1:23-1:24 (f)
 			}
-			loc: Object {
-				filename: "esprima/es2015-yield/invalid-yield-strict-rest-parameter/input.js"
-				end: Object {
-					column: 37
-					line: 1
-				}
-				start: Object {
-					column: 14
-					line: 1
-				}
-			}
+			loc: SourceLocation esprima/es2015-yield/invalid-yield-strict-rest-parameter/input.js 1:14-1:37
 			body: JSBlockStatement {
 				body: Array []
 				directives: Array []
-				loc: Object {
-					filename: "esprima/es2015-yield/invalid-yield-strict-rest-parameter/input.js"
-					end: Object {
-						column: 37
-						line: 1
-					}
-					start: Object {
-						column: 35
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/es2015-yield/invalid-yield-strict-rest-parameter/input.js 1:35-1:37
 			}
 			head: JSFunctionHead {
 				async: false
@@ -122,45 +62,14 @@ JSRoot {
 				returnType: undefined
 				thisType: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "esprima/es2015-yield/invalid-yield-strict-rest-parameter/input.js"
-					end: Object {
-						column: 34
-						line: 1
-					}
-					start: Object {
-						column: 24
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/es2015-yield/invalid-yield-strict-rest-parameter/input.js 1:24-1:34
 				rest: JSBindingIdentifier {
 					name: "yield"
-					loc: Object {
-						filename: "esprima/es2015-yield/invalid-yield-strict-rest-parameter/input.js"
-						identifierName: "yield"
-						end: Object {
-							column: 33
-							line: 1
-						}
-						start: Object {
-							column: 28
-							line: 1
-						}
-					}
+					loc: SourceLocation esprima/es2015-yield/invalid-yield-strict-rest-parameter/input.js 1:28-1:33 (yield)
 					meta: JSPatternMeta {
 						optional: undefined
 						typeAnnotation: undefined
-						loc: Object {
-							filename: "esprima/es2015-yield/invalid-yield-strict-rest-parameter/input.js"
-							end: Object {
-								column: 33
-								line: 1
-							}
-							start: Object {
-								column: 28
-								line: 1
-							}
-						}
+						loc: SourceLocation esprima/es2015-yield/invalid-yield-strict-rest-parameter/input.js 1:28-1:33
 					}
 				}
 			}
@@ -180,8 +89,5 @@ JSRoot {
     "use strict"; function f(...yield) {}
                                 ^^^^^
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

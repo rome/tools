@@ -29,13 +29,7 @@ import {TokenType, types as tt} from "./tokenizer/types";
 import {lineBreak} from "@internal/js-parser-utils";
 import {parseTopLevel} from "./parser/index";
 import {State} from "./tokenizer/state";
-import {
-	Number0,
-	ob1Number0,
-	ob1Number0Neg1,
-	ob1Number1,
-	ob1Sub,
-} from "@internal/ob1";
+import {OneIndexed, ZeroIndexed} from "@internal/math";
 import {Dict, OptionalProps} from "@internal/typescript-helpers";
 import {types as ct} from "@internal/js-parser/tokenizer/context";
 
@@ -55,7 +49,7 @@ export class DiagnosticsFatalError extends Error {
 export type OpeningContext = {
 	name: string;
 	start: Position;
-	indent: Number0;
+	indent: number;
 	open: TokenType;
 	close: TokenType;
 };
@@ -110,42 +104,42 @@ type JSParserTypes = {
 export type JSParser = ParserCore<JSParserTypes>;
 
 const EMPTY_POS: Position = {
-	line: ob1Number1,
-	column: ob1Number0,
+	line: new OneIndexed(),
+	column: new ZeroIndexed(),
 };
 
-export const createJSParser = createParser<JSParserTypes>({
+export const jsParser = createParser<JSParserTypes>({
 	diagnosticLanguage: "js",
 	getInitialState(): State {
 		return {
 			scopes: {},
 			hasHoistedVars: false,
 			tokens: [],
-			potentialArrowAt: ob1Number0Neg1,
-			commaAfterSpreadAt: ob1Number0Neg1,
-			yieldPos: ob1Number0,
-			awaitPos: ob1Number0,
+			potentialArrowAt: -1,
+			commaAfterSpreadAt: -1,
+			yieldPos: 0,
+			awaitPos: 0,
 			noArrowAt: [],
 			noArrowParamsConversionAt: [],
 			maybeInArrowParameters: false,
 			isIterator: false,
 			noAnonFunctionType: false,
-			classLevel: ob1Number0,
+			classLevel: 0,
 			labels: [],
 			yieldInPossibleArrowParameters: undefined,
-			index: ob1Number0,
-			lineStartIndex: ob1Number0,
-			curLine: ob1Number1,
+			index: 0,
+			lineStartIndex: 0,
+			curLine: 1,
 			tokenType: tt.eof,
 			tokenValue: undefined,
 			startPos: EMPTY_POS,
 			endPos: EMPTY_POS,
 			lastStartPos: EMPTY_POS,
 			lastEndPos: EMPTY_POS,
-			startIndex: ob1Number0,
-			endIndex: ob1Number0,
-			lastEndIndex: ob1Number0,
-			lastStartIndex: ob1Number0,
+			startIndex: 0,
+			endIndex: 0,
+			lastEndIndex: 0,
+			lastStartIndex: 0,
 			context: [ct.braceStatement],
 			exprAllowed: true,
 			containsOctal: false,
@@ -154,7 +148,7 @@ export const createJSParser = createParser<JSParserTypes>({
 			invalidTemplateEscapePosition: undefined,
 			exportedIdentifiers: new Map(),
 			lineStart: true,
-			indentLevel: ob1Number0,
+			indentLevel: 0,
 		};
 	},
 
@@ -163,8 +157,8 @@ export const createJSParser = createParser<JSParserTypes>({
 			return parser.state.startPos;
 		},
 
-		getIndex(parser): Number0 {
-			return parser.state.startIndex;
+		getIndex(parser): ZeroIndexed {
+			return new ZeroIndexed(parser.state.startIndex);
 		},
 
 		getLastEndPosition(parser): Position {
@@ -177,7 +171,7 @@ export function resetTokenizerLine(parser: JSParser) {
 	const {state} = parser;
 	state.lineStartIndex = state.index;
 	state.lineStart = true;
-	state.indentLevel = ob1Number0;
+	state.indentLevel = 0;
 }
 
 export function getScope(parser: JSParser, type: ScopeType) {
@@ -297,7 +291,7 @@ export function createToken(parser: JSParser, state: State): Token {
 	const token: Token = {
 		type: state.tokenType,
 		loc: {
-			filename: parser.filename,
+			path: parser.path,
 			start: state.startPos,
 			end: state.endPos,
 		},
@@ -385,7 +379,7 @@ export function expectRelational(parser: JSParser, op: "<" | ">"): boolean {
 
 export function banUnicodeEscape(
 	parser: JSParser,
-	index: undefined | Number0,
+	index: undefined | number,
 	name: string,
 ) {
 	if (index !== undefined) {
@@ -470,8 +464,8 @@ export function canInsertSemicolon(parser: JSParser): boolean {
 export function hasPrecedingLineBreak(parser: JSParser): boolean {
 	return lineBreak.test(
 		parser.getRawInput(
-			parser.getIndexFromPosition(parser.state.lastEndPos, parser.filename),
-			parser.getIndexFromPosition(parser.state.startPos, parser.filename),
+			parser.getIndexFromPosition(parser.state.lastEndPos),
+			parser.getIndexFromPosition(parser.state.startPos),
 		),
 	);
 }
@@ -514,9 +508,22 @@ export function expectOpening(
 	close: TokenType,
 	name: string,
 ): OpeningContext {
+	const index = parser.getIndex();
 	const pos = parser.getPosition();
 	const indent = parser.state.indentLevel;
-	expect(parser, open);
+	if (!eat(parser, open)) {
+		unexpectedDiagnostic(
+			parser,
+			{
+				description: descriptions.JS_PARSER.UNEXPECTED_TOKEN({
+					receivedChar: parser.getInputCharOnly(index),
+					expectedChar: open.label,
+					expectedOpeningName: name,
+					possibleShiftMistake: isPossibleShiftMistake(parser, open),
+				}),
+			},
+		);
+	}
 	return {
 		indent,
 		start: pos,
@@ -540,7 +547,7 @@ export function expectClosing(parser: JSParser, context: OpeningContext) {
 					context.name,
 					context.close.label,
 					{
-						filename: parser.filename,
+						path: parser.path,
 						start: currPos,
 						end: currPos,
 					},
@@ -554,33 +561,40 @@ export function expectClosing(parser: JSParser, context: OpeningContext) {
 	}
 }
 
-// Raise an unexpected token error. Can take the expected token type
-// instead of a message string.
+function isPossibleShiftMistake(parser: JSParser, tokenType: TokenType): boolean {
+	const possibleMistake = TOKEN_MISTAKES[tokenType.label];
+	return (
+		possibleMistake !== undefined &&
+		possibleMistake === parser.state.tokenType.label
+	);
+}
+
 export function unexpectedToken(
 	parser: JSParser,
 	pos?: Position,
 	tokenType?: TokenType,
 ) {
-	let expectedToken: undefined | string;
+	let expectedChar: undefined | string;
 	let possibleShiftMistake: boolean = false;
 
 	if (tokenType !== undefined) {
-		expectedToken = tokenType.label;
-
-		const possibleMistake = TOKEN_MISTAKES[tokenType.label];
-		possibleShiftMistake =
-			possibleMistake !== undefined &&
-			possibleMistake === parser.state.tokenType.label;
+		expectedChar = tokenType.label;
+		possibleShiftMistake = isPossibleShiftMistake(parser, tokenType);
 	}
+
+	const start = pos ?? parser.state.startPos;
 
 	unexpectedDiagnostic(
 		parser,
 		{
-			description: descriptions.JS_PARSER.UNEXPECTED_TOKEN(
-				expectedToken,
+			description: descriptions.JS_PARSER.UNEXPECTED_TOKEN({
+				receivedChar: parser.getInputCharOnly(
+					parser.getIndexFromPosition(start),
+				),
+				expectedChar,
 				possibleShiftMistake,
-			),
-			start: pos ?? parser.state.startPos,
+			}),
+			start,
 			end: pos ?? parser.state.endPos,
 		},
 	);
@@ -689,8 +703,8 @@ export function cloneState(
 export function getPositionFromState(parser: JSParser): Position {
 	const {state} = parser;
 	const pos: Position = {
-		line: state.curLine,
-		column: ob1Sub(state.index, state.lineStartIndex),
+		line: new OneIndexed(state.curLine),
+		column: new ZeroIndexed(state.index - state.lineStartIndex),
 	};
 	parser.indexTracker.setPositionIndex(pos, state.index);
 	return pos;

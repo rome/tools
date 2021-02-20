@@ -12,481 +12,132 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "typescript/types/type-operator/input.ts"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
+	loc: SourceLocation typescript/types/type-operator/input.ts 1:0-5:0
+	path: UIDPath<typescript/types/type-operator/input.ts>
 	syntax: Array ["ts"]
-	loc: Object {
-		filename: "typescript/types/type-operator/input.ts"
-		end: Object {
-			column: 0
-			line: 5
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
 	body: Array [
 		JSVariableDeclarationStatement {
-			loc: Object {
-				filename: "typescript/types/type-operator/input.ts"
-				end: Object {
-					column: 15
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation typescript/types/type-operator/input.ts 1:0-1:15
 			declaration: JSVariableDeclaration {
 				kind: "let"
-				loc: Object {
-					filename: "typescript/types/type-operator/input.ts"
-					end: Object {
-						column: 15
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/types/type-operator/input.ts 1:0-1:15
 				declarations: Array [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "x"
-							loc: Object {
-								filename: "typescript/types/type-operator/input.ts"
-								end: Object {
-									column: 14
-									line: 1
-								}
-								start: Object {
-									column: 4
-									line: 1
-								}
-							}
+							loc: SourceLocation typescript/types/type-operator/input.ts 1:4-1:14
 							meta: JSPatternMeta {
 								definite: undefined
-								loc: Object {
-									filename: "typescript/types/type-operator/input.ts"
-									end: Object {
-										column: 14
-										line: 1
-									}
-									start: Object {
-										column: 4
-										line: 1
-									}
-								}
+								loc: SourceLocation typescript/types/type-operator/input.ts 1:4-1:14
 								typeAnnotation: TSTypeOperator {
 									operator: "keyof"
-									loc: Object {
-										filename: "typescript/types/type-operator/input.ts"
-										end: Object {
-											column: 14
-											line: 1
-										}
-										start: Object {
-											column: 7
-											line: 1
-										}
-									}
+									loc: SourceLocation typescript/types/type-operator/input.ts 1:7-1:14
 									typeAnnotation: TSTypeReference {
 										typeParameters: undefined
-										loc: Object {
-											filename: "typescript/types/type-operator/input.ts"
-											end: Object {
-												column: 14
-												line: 1
-											}
-											start: Object {
-												column: 13
-												line: 1
-											}
-										}
+										loc: SourceLocation typescript/types/type-operator/input.ts 1:13-1:14
 										typeName: JSReferenceIdentifier {
 											name: "T"
-											loc: Object {
-												filename: "typescript/types/type-operator/input.ts"
-												identifierName: "T"
-												end: Object {
-													column: 14
-													line: 1
-												}
-												start: Object {
-													column: 13
-													line: 1
-												}
-											}
+											loc: SourceLocation typescript/types/type-operator/input.ts 1:13-1:14 (T)
 										}
 									}
 								}
 							}
 						}
 						init: undefined
-						loc: Object {
-							filename: "typescript/types/type-operator/input.ts"
-							end: Object {
-								column: 14
-								line: 1
-							}
-							start: Object {
-								column: 4
-								line: 1
-							}
-						}
+						loc: SourceLocation typescript/types/type-operator/input.ts 1:4-1:14
 					}
 				]
 			}
 		}
 		JSVariableDeclarationStatement {
-			loc: Object {
-				filename: "typescript/types/type-operator/input.ts"
-				end: Object {
-					column: 21
-					line: 2
-				}
-				start: Object {
-					column: 0
-					line: 2
-				}
-			}
+			loc: SourceLocation typescript/types/type-operator/input.ts 2:0-2:21
 			declaration: JSVariableDeclaration {
 				kind: "let"
-				loc: Object {
-					filename: "typescript/types/type-operator/input.ts"
-					end: Object {
-						column: 21
-						line: 2
-					}
-					start: Object {
-						column: 0
-						line: 2
-					}
-				}
+				loc: SourceLocation typescript/types/type-operator/input.ts 2:0-2:21
 				declarations: Array [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "y"
-							loc: Object {
-								filename: "typescript/types/type-operator/input.ts"
-								end: Object {
-									column: 20
-									line: 2
-								}
-								start: Object {
-									column: 4
-									line: 2
-								}
-							}
+							loc: SourceLocation typescript/types/type-operator/input.ts 2:4-2:20
 							meta: JSPatternMeta {
 								definite: undefined
-								loc: Object {
-									filename: "typescript/types/type-operator/input.ts"
-									end: Object {
-										column: 20
-										line: 2
-									}
-									start: Object {
-										column: 4
-										line: 2
-									}
-								}
+								loc: SourceLocation typescript/types/type-operator/input.ts 2:4-2:20
 								typeAnnotation: TSTypeOperator {
 									operator: "unique"
-									loc: Object {
-										filename: "typescript/types/type-operator/input.ts"
-										end: Object {
-											column: 20
-											line: 2
-										}
-										start: Object {
-											column: 7
-											line: 2
-										}
-									}
-									typeAnnotation: TSSymbolKeywordTypeAnnotation {
-										loc: Object {
-											filename: "typescript/types/type-operator/input.ts"
-											end: Object {
-												column: 20
-												line: 2
-											}
-											start: Object {
-												column: 14
-												line: 2
-											}
-										}
-									}
+									loc: SourceLocation typescript/types/type-operator/input.ts 2:7-2:20
+									typeAnnotation: TSSymbolKeywordTypeAnnotation {loc: SourceLocation typescript/types/type-operator/input.ts 2:14-2:20}
 								}
 							}
 						}
 						init: undefined
-						loc: Object {
-							filename: "typescript/types/type-operator/input.ts"
-							end: Object {
-								column: 20
-								line: 2
-							}
-							start: Object {
-								column: 4
-								line: 2
-							}
-						}
+						loc: SourceLocation typescript/types/type-operator/input.ts 2:4-2:20
 					}
 				]
 			}
 		}
 		JSVariableDeclarationStatement {
-			loc: Object {
-				filename: "typescript/types/type-operator/input.ts"
-				end: Object {
-					column: 25
-					line: 3
-				}
-				start: Object {
-					column: 0
-					line: 3
-				}
-			}
+			loc: SourceLocation typescript/types/type-operator/input.ts 3:0-3:25
 			declaration: JSVariableDeclaration {
 				kind: "let"
-				loc: Object {
-					filename: "typescript/types/type-operator/input.ts"
-					end: Object {
-						column: 25
-						line: 3
-					}
-					start: Object {
-						column: 0
-						line: 3
-					}
-				}
+				loc: SourceLocation typescript/types/type-operator/input.ts 3:0-3:25
 				declarations: Array [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "z"
-							loc: Object {
-								filename: "typescript/types/type-operator/input.ts"
-								end: Object {
-									column: 24
-									line: 3
-								}
-								start: Object {
-									column: 4
-									line: 3
-								}
-							}
+							loc: SourceLocation typescript/types/type-operator/input.ts 3:4-3:24
 							meta: JSPatternMeta {
 								definite: undefined
-								loc: Object {
-									filename: "typescript/types/type-operator/input.ts"
-									end: Object {
-										column: 24
-										line: 3
-									}
-									start: Object {
-										column: 4
-										line: 3
-									}
-								}
+								loc: SourceLocation typescript/types/type-operator/input.ts 3:4-3:24
 								typeAnnotation: TSTypeOperator {
 									operator: "readonly"
-									loc: Object {
-										filename: "typescript/types/type-operator/input.ts"
-										end: Object {
-											column: 24
-											line: 3
-										}
-										start: Object {
-											column: 7
-											line: 3
-										}
-									}
+									loc: SourceLocation typescript/types/type-operator/input.ts 3:7-3:24
 									typeAnnotation: TSArrayType {
-										loc: Object {
-											filename: "typescript/types/type-operator/input.ts"
-											end: Object {
-												column: 24
-												line: 3
-											}
-											start: Object {
-												column: 16
-												line: 3
-											}
-										}
-										elementType: TSNumberKeywordTypeAnnotation {
-											loc: Object {
-												filename: "typescript/types/type-operator/input.ts"
-												end: Object {
-													column: 22
-													line: 3
-												}
-												start: Object {
-													column: 16
-													line: 3
-												}
-											}
-										}
+										elementType: TSNumberKeywordTypeAnnotation {loc: SourceLocation typescript/types/type-operator/input.ts 3:16-3:22}
+										loc: SourceLocation typescript/types/type-operator/input.ts 3:16-3:24
 									}
 								}
 							}
 						}
 						init: undefined
-						loc: Object {
-							filename: "typescript/types/type-operator/input.ts"
-							end: Object {
-								column: 24
-								line: 3
-							}
-							start: Object {
-								column: 4
-								line: 3
-							}
-						}
+						loc: SourceLocation typescript/types/type-operator/input.ts 3:4-3:24
 					}
 				]
 			}
 		}
 		JSVariableDeclarationStatement {
-			loc: Object {
-				filename: "typescript/types/type-operator/input.ts"
-				end: Object {
-					column: 34
-					line: 4
-				}
-				start: Object {
-					column: 0
-					line: 4
-				}
-			}
+			loc: SourceLocation typescript/types/type-operator/input.ts 4:0-4:34
 			declaration: JSVariableDeclaration {
 				kind: "let"
-				loc: Object {
-					filename: "typescript/types/type-operator/input.ts"
-					end: Object {
-						column: 34
-						line: 4
-					}
-					start: Object {
-						column: 0
-						line: 4
-					}
-				}
+				loc: SourceLocation typescript/types/type-operator/input.ts 4:0-4:34
 				declarations: Array [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "z1"
-							loc: Object {
-								filename: "typescript/types/type-operator/input.ts"
-								end: Object {
-									column: 33
-									line: 4
-								}
-								start: Object {
-									column: 4
-									line: 4
-								}
-							}
+							loc: SourceLocation typescript/types/type-operator/input.ts 4:4-4:33
 							meta: JSPatternMeta {
 								definite: undefined
-								loc: Object {
-									filename: "typescript/types/type-operator/input.ts"
-									end: Object {
-										column: 33
-										line: 4
-									}
-									start: Object {
-										column: 4
-										line: 4
-									}
-								}
+								loc: SourceLocation typescript/types/type-operator/input.ts 4:4-4:33
 								typeAnnotation: TSTypeOperator {
 									operator: "readonly"
-									loc: Object {
-										filename: "typescript/types/type-operator/input.ts"
-										end: Object {
-											column: 33
-											line: 4
-										}
-										start: Object {
-											column: 8
-											line: 4
-										}
-									}
+									loc: SourceLocation typescript/types/type-operator/input.ts 4:8-4:33
 									typeAnnotation: TSTupleType {
-										loc: Object {
-											filename: "typescript/types/type-operator/input.ts"
-											end: Object {
-												column: 33
-												line: 4
-											}
-											start: Object {
-												column: 17
-												line: 4
-											}
-										}
+										loc: SourceLocation typescript/types/type-operator/input.ts 4:17-4:33
 										elementTypes: Array [
 											TSTupleElement {
 												name: undefined
 												optional: false
-												loc: Object {
-													filename: "typescript/types/type-operator/input.ts"
-													end: Object {
-														column: 24
-														line: 4
-													}
-													start: Object {
-														column: 18
-														line: 4
-													}
-												}
-												typeAnnotation: TSNumberKeywordTypeAnnotation {
-													loc: Object {
-														filename: "typescript/types/type-operator/input.ts"
-														end: Object {
-															column: 24
-															line: 4
-														}
-														start: Object {
-															column: 18
-															line: 4
-														}
-													}
-												}
+												loc: SourceLocation typescript/types/type-operator/input.ts 4:18-4:24
+												typeAnnotation: TSNumberKeywordTypeAnnotation {loc: SourceLocation typescript/types/type-operator/input.ts 4:18-4:24}
 											}
 											TSTupleElement {
 												name: undefined
 												optional: false
-												loc: Object {
-													filename: "typescript/types/type-operator/input.ts"
-													end: Object {
-														column: 32
-														line: 4
-													}
-													start: Object {
-														column: 26
-														line: 4
-													}
-												}
-												typeAnnotation: TSNumberKeywordTypeAnnotation {
-													loc: Object {
-														filename: "typescript/types/type-operator/input.ts"
-														end: Object {
-															column: 32
-															line: 4
-														}
-														start: Object {
-															column: 26
-															line: 4
-														}
-													}
-												}
+												loc: SourceLocation typescript/types/type-operator/input.ts 4:26-4:32
+												typeAnnotation: TSNumberKeywordTypeAnnotation {loc: SourceLocation typescript/types/type-operator/input.ts 4:26-4:32}
 											}
 										]
 									}
@@ -494,17 +145,7 @@ JSRoot {
 							}
 						}
 						init: undefined
-						loc: Object {
-							filename: "typescript/types/type-operator/input.ts"
-							end: Object {
-								column: 33
-								line: 4
-							}
-							start: Object {
-								column: 4
-								line: 4
-							}
-						}
+						loc: SourceLocation typescript/types/type-operator/input.ts 4:4-4:33
 					}
 				]
 			}
@@ -516,6 +157,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

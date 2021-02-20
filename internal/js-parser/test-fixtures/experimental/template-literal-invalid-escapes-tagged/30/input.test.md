@@ -12,91 +12,30 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "experimental/template-literal-invalid-escapes-tagged/30/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "experimental/template-literal-invalid-escapes-tagged/30/input.js"
-		end: Object {
-			column: 26
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation experimental/template-literal-invalid-escapes-tagged/30/input.js 1:0-1:26
+	path: UIDPath<experimental/template-literal-invalid-escapes-tagged/30/input.js>
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "experimental/template-literal-invalid-escapes-tagged/30/input.js"
-				end: Object {
-					column: 26
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation experimental/template-literal-invalid-escapes-tagged/30/input.js 1:0-1:26
 			expression: JSTaggedTemplateExpression {
 				typeArguments: undefined
-				loc: Object {
-					filename: "experimental/template-literal-invalid-escapes-tagged/30/input.js"
-					end: Object {
-						column: 26
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation experimental/template-literal-invalid-escapes-tagged/30/input.js 1:0-1:26
 				tag: JSReferenceIdentifier {
 					name: "sampleTag"
-					loc: Object {
-						filename: "experimental/template-literal-invalid-escapes-tagged/30/input.js"
-						identifierName: "sampleTag"
-						end: Object {
-							column: 9
-							line: 1
-						}
-						start: Object {
-							column: 0
-							line: 1
-						}
-					}
+					loc: SourceLocation experimental/template-literal-invalid-escapes-tagged/30/input.js 1:0-1:9 (sampleTag)
 				}
 				quasi: JSTemplateLiteral {
-					loc: Object {
-						filename: "experimental/template-literal-invalid-escapes-tagged/30/input.js"
-						end: Object {
-							column: 26
-							line: 1
-						}
-						start: Object {
-							column: 9
-							line: 1
-						}
-					}
+					loc: SourceLocation experimental/template-literal-invalid-escapes-tagged/30/input.js 1:9-1:26
 					expressions: Array [
 						JSNumericLiteral {
 							value: 0
 							format: undefined
-							loc: Object {
-								filename: "experimental/template-literal-invalid-escapes-tagged/30/input.js"
-								end: Object {
-									column: 19
-									line: 1
-								}
-								start: Object {
-									column: 18
-									line: 1
-								}
-							}
+							loc: SourceLocation experimental/template-literal-invalid-escapes-tagged/30/input.js 1:18-1:19
 						}
 					]
 					quasis: Array [
@@ -104,33 +43,13 @@ JSRoot {
 							cooked: "\\u000g"
 							raw: "\\u000g"
 							tail: false
-							loc: Object {
-								filename: "experimental/template-literal-invalid-escapes-tagged/30/input.js"
-								end: Object {
-									column: 16
-									line: 1
-								}
-								start: Object {
-									column: 10
-									line: 1
-								}
-							}
+							loc: SourceLocation experimental/template-literal-invalid-escapes-tagged/30/input.js 1:10-1:16
 						}
 						JSTemplateElement {
 							cooked: "right"
 							raw: "right"
 							tail: true
-							loc: Object {
-								filename: "experimental/template-literal-invalid-escapes-tagged/30/input.js"
-								end: Object {
-									column: 25
-									line: 1
-								}
-								start: Object {
-									column: 20
-									line: 1
-								}
-							}
+							loc: SourceLocation experimental/template-literal-invalid-escapes-tagged/30/input.js 1:20-1:25
 						}
 					]
 				}
@@ -143,6 +62,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

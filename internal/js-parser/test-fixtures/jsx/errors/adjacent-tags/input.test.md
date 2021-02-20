@@ -11,214 +11,75 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "jsx/errors/adjacent-tags/input.jsx"
 	hasHoistedVars: true
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
+	loc: SourceLocation jsx/errors/adjacent-tags/input.jsx 1:0-1:38
+	path: UIDPath<jsx/errors/adjacent-tags/input.jsx>
 	syntax: Array ["jsx"]
-	loc: Object {
-		filename: "jsx/errors/adjacent-tags/input.jsx"
-		end: Object {
-			column: 38
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse"
 				categoryValue: "js"
+				category: Array ["parse"]
 				message: RAW_MARKUP {value: "Adjacent JSX elements must be wrapped in an enclosing tag. Did you want a JSX fragment \\<>...\\</>?"}
 			}
 			location: Object {
-				filename: "jsx/errors/adjacent-tags/input.jsx"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 22
-					line: 1
-				}
-				start: Object {
-					column: 22
-					line: 1
-				}
+				end: Position 1:22
+				path: UIDPath<jsx/errors/adjacent-tags/input.jsx>
+				start: Position 1:22
 			}
 		}
 	]
 	body: Array [
 		JSVariableDeclarationStatement {
-			loc: Object {
-				filename: "jsx/errors/adjacent-tags/input.jsx"
-				end: Object {
-					column: 38
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation jsx/errors/adjacent-tags/input.jsx 1:0-1:38
 			declaration: JSVariableDeclaration {
 				kind: "var"
-				loc: Object {
-					filename: "jsx/errors/adjacent-tags/input.jsx"
-					end: Object {
-						column: 38
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation jsx/errors/adjacent-tags/input.jsx 1:0-1:38
 				declarations: Array [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "x"
-							loc: Object {
-								filename: "jsx/errors/adjacent-tags/input.jsx"
-								identifierName: "x"
-								end: Object {
-									column: 5
-									line: 1
-								}
-								start: Object {
-									column: 4
-									line: 1
-								}
-							}
+							loc: SourceLocation jsx/errors/adjacent-tags/input.jsx 1:4-1:5 (x)
 						}
-						loc: Object {
-							filename: "jsx/errors/adjacent-tags/input.jsx"
-							end: Object {
-								column: 38
-								line: 1
-							}
-							start: Object {
-								column: 4
-								line: 1
-							}
-						}
+						loc: SourceLocation jsx/errors/adjacent-tags/input.jsx 1:4-1:38
 						init: JSBinaryExpression {
 							operator: "<"
-							loc: Object {
-								filename: "jsx/errors/adjacent-tags/input.jsx"
-								end: Object {
-									column: 38
-									line: 1
-								}
-								start: Object {
-									column: 8
-									line: 1
-								}
-							}
+							loc: SourceLocation jsx/errors/adjacent-tags/input.jsx 1:8-1:38
 							left: JSBinaryExpression {
 								operator: ">"
-								loc: Object {
-									filename: "jsx/errors/adjacent-tags/input.jsx"
-									end: Object {
-										column: 30
-										line: 1
-									}
-									start: Object {
-										column: 8
-										line: 1
-									}
-								}
+								loc: SourceLocation jsx/errors/adjacent-tags/input.jsx 1:8-1:30
 								right: JSReferenceIdentifier {
 									name: "two"
-									loc: Object {
-										filename: "jsx/errors/adjacent-tags/input.jsx"
-										identifierName: "two"
-										end: Object {
-											column: 30
-											line: 1
-										}
-										start: Object {
-											column: 27
-											line: 1
-										}
-									}
+									loc: SourceLocation jsx/errors/adjacent-tags/input.jsx 1:27-1:30 (two)
 								}
 								left: JSBinaryExpression {
 									operator: "<"
-									loc: Object {
-										filename: "jsx/errors/adjacent-tags/input.jsx"
-										end: Object {
-											column: 26
-											line: 1
-										}
-										start: Object {
-											column: 8
-											line: 1
-										}
-									}
+									loc: SourceLocation jsx/errors/adjacent-tags/input.jsx 1:8-1:26
 									right: JSReferenceIdentifier {
 										name: "div"
-										loc: Object {
-											filename: "jsx/errors/adjacent-tags/input.jsx"
-											identifierName: "div"
-											end: Object {
-												column: 26
-												line: 1
-											}
-											start: Object {
-												column: 23
-												line: 1
-											}
-										}
+										loc: SourceLocation jsx/errors/adjacent-tags/input.jsx 1:23-1:26 (div)
 									}
 									left: JSXElement {
 										name: JSXIdentifier {
 											name: "div"
-											loc: Object {
-												filename: "jsx/errors/adjacent-tags/input.jsx"
-												end: Object {
-													column: 12
-													line: 1
-												}
-												start: Object {
-													column: 9
-													line: 1
-												}
-											}
+											loc: SourceLocation jsx/errors/adjacent-tags/input.jsx 1:9-1:12
 										}
 										attributes: Array []
 										selfClosing: false
 										typeArguments: undefined
-										loc: Object {
-											filename: "jsx/errors/adjacent-tags/input.jsx"
-											end: Object {
-												column: 22
-												line: 1
-											}
-											start: Object {
-												column: 8
-												line: 1
-											}
-										}
+										loc: SourceLocation jsx/errors/adjacent-tags/input.jsx 1:8-1:22
 										children: Array [
 											JSXText {
 												value: "one"
-												loc: Object {
-													filename: "jsx/errors/adjacent-tags/input.jsx"
-													end: Object {
-														column: 16
-														line: 1
-													}
-													start: Object {
-														column: 13
-														line: 1
-													}
-												}
+												loc: SourceLocation jsx/errors/adjacent-tags/input.jsx 1:13-1:16
 											}
 										]
 									}
@@ -231,99 +92,29 @@ JSRoot {
 								noDotNewline: false
 								sticky: false
 								unicode: false
-								loc: Object {
-									filename: "jsx/errors/adjacent-tags/input.jsx"
-									end: Object {
-										column: 38
-										line: 1
-									}
-									start: Object {
-										column: 31
-										line: 1
-									}
-								}
+								loc: SourceLocation jsx/errors/adjacent-tags/input.jsx 1:31-1:38
 								expression: JSRegExpSubExpression {
-									loc: Object {
-										filename: "jsx/errors/adjacent-tags/input.jsx"
-										end: Object {
-											column: 37
-											line: 1
-										}
-										start: Object {
-											column: 32
-											line: 1
-										}
-									}
+									loc: SourceLocation jsx/errors/adjacent-tags/input.jsx 1:32-1:37
 									body: Array [
 										JSRegExpCharacter {
 											value: "d"
-											loc: Object {
-												filename: "jsx/errors/adjacent-tags/input.jsx"
-												end: Object {
-													column: 33
-													line: 1
-												}
-												start: Object {
-													column: 32
-													line: 1
-												}
-											}
+											loc: SourceLocation jsx/errors/adjacent-tags/input.jsx 1:32-1:33
 										}
 										JSRegExpCharacter {
 											value: "i"
-											loc: Object {
-												filename: "jsx/errors/adjacent-tags/input.jsx"
-												end: Object {
-													column: 34
-													line: 1
-												}
-												start: Object {
-													column: 33
-													line: 1
-												}
-											}
+											loc: SourceLocation jsx/errors/adjacent-tags/input.jsx 1:33-1:34
 										}
 										JSRegExpCharacter {
 											value: "v"
-											loc: Object {
-												filename: "jsx/errors/adjacent-tags/input.jsx"
-												end: Object {
-													column: 35
-													line: 1
-												}
-												start: Object {
-													column: 34
-													line: 1
-												}
-											}
+											loc: SourceLocation jsx/errors/adjacent-tags/input.jsx 1:34-1:35
 										}
 										JSRegExpCharacter {
 											value: ">"
-											loc: Object {
-												filename: "jsx/errors/adjacent-tags/input.jsx"
-												end: Object {
-													column: 36
-													line: 1
-												}
-												start: Object {
-													column: 35
-													line: 1
-												}
-											}
+											loc: SourceLocation jsx/errors/adjacent-tags/input.jsx 1:35-1:36
 										}
 										JSRegExpCharacter {
 											value: ";"
-											loc: Object {
-												filename: "jsx/errors/adjacent-tags/input.jsx"
-												end: Object {
-													column: 37
-													line: 1
-												}
-												start: Object {
-													column: 36
-													line: 1
-												}
-											}
+											loc: SourceLocation jsx/errors/adjacent-tags/input.jsx 1:36-1:37
 										}
 									]
 								}
@@ -349,8 +140,5 @@ JSRoot {
     var x = <div>one</div><div>two</div>;
                           ^
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

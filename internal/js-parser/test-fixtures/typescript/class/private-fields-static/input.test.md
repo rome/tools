@@ -12,110 +12,38 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "typescript/class/private-fields-static/input.ts"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
+	loc: SourceLocation typescript/class/private-fields-static/input.ts 1:0-5:0
+	path: UIDPath<typescript/class/private-fields-static/input.ts>
 	syntax: Array ["ts"]
-	loc: Object {
-		filename: "typescript/class/private-fields-static/input.ts"
-		end: Object {
-			column: 0
-			line: 5
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
 	body: Array [
 		JSClassDeclaration {
 			id: JSBindingIdentifier {
 				name: "A"
-				loc: Object {
-					filename: "typescript/class/private-fields-static/input.ts"
-					identifierName: "A"
-					end: Object {
-						column: 7
-						line: 1
-					}
-					start: Object {
-						column: 6
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/class/private-fields-static/input.ts 1:6-1:7 (A)
 			}
-			loc: Object {
-				filename: "typescript/class/private-fields-static/input.ts"
-				end: Object {
-					column: 1
-					line: 4
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation typescript/class/private-fields-static/input.ts 1:0-4:1
 			meta: JSClassHead {
 				implements: undefined
 				superClass: undefined
 				superTypeParameters: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "typescript/class/private-fields-static/input.ts"
-					end: Object {
-						column: 1
-						line: 4
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/class/private-fields-static/input.ts 1:0-4:1
 				body: Array [
 					JSClassPrivateProperty {
 						key: JSPrivateName {
 							id: JSIdentifier {
 								name: "x"
-								loc: Object {
-									filename: "typescript/class/private-fields-static/input.ts"
-									identifierName: "x"
-									end: Object {
-										column: 11
-										line: 2
-									}
-									start: Object {
-										column: 10
-										line: 2
-									}
-								}
+								loc: SourceLocation typescript/class/private-fields-static/input.ts 2:10-2:11 (x)
 							}
-							loc: Object {
-								filename: "typescript/class/private-fields-static/input.ts"
-								end: Object {
-									column: 11
-									line: 2
-								}
-								start: Object {
-									column: 9
-									line: 2
-								}
-							}
+							loc: SourceLocation typescript/class/private-fields-static/input.ts 2:9-2:11
 						}
 						value: undefined
 						typeAnnotation: undefined
-						loc: Object {
-							filename: "typescript/class/private-fields-static/input.ts"
-							end: Object {
-								column: 12
-								line: 2
-							}
-							start: Object {
-								column: 2
-								line: 2
-							}
-						}
+						loc: SourceLocation typescript/class/private-fields-static/input.ts 2:2-2:12
 						meta: JSClassPropertyMeta {
 							abstract: false
 							accessibility: undefined
@@ -123,77 +51,21 @@ JSRoot {
 							readonly: false
 							static: true
 							typeAnnotation: undefined
-							start: Object {
-								column: 2
-								line: 2
-							}
-							loc: Object {
-								filename: "typescript/class/private-fields-static/input.ts"
-								end: Object {
-									column: 11
-									line: 2
-								}
-								start: Object {
-									column: 2
-									line: 2
-								}
-							}
+							loc: SourceLocation typescript/class/private-fields-static/input.ts 2:2-2:11
+							start: Position 2:2
 						}
 					}
 					JSClassPrivateProperty {
 						key: JSPrivateName {
 							id: JSIdentifier {
 								name: "y"
-								loc: Object {
-									filename: "typescript/class/private-fields-static/input.ts"
-									identifierName: "y"
-									end: Object {
-										column: 11
-										line: 3
-									}
-									start: Object {
-										column: 10
-										line: 3
-									}
-								}
+								loc: SourceLocation typescript/class/private-fields-static/input.ts 3:10-3:11 (y)
 							}
-							loc: Object {
-								filename: "typescript/class/private-fields-static/input.ts"
-								end: Object {
-									column: 11
-									line: 3
-								}
-								start: Object {
-									column: 9
-									line: 3
-								}
-							}
+							loc: SourceLocation typescript/class/private-fields-static/input.ts 3:9-3:11
 						}
 						value: undefined
-						loc: Object {
-							filename: "typescript/class/private-fields-static/input.ts"
-							end: Object {
-								column: 20
-								line: 3
-							}
-							start: Object {
-								column: 2
-								line: 3
-							}
-						}
-						typeAnnotation: TSStringKeywordTypeAnnotation {
-							loc: Object {
-								filename: "typescript/class/private-fields-static/input.ts"
-								end: Object {
-									column: 19
-									line: 3
-								}
-								start: Object {
-									column: 13
-									line: 3
-								}
-							}
-						}
+						loc: SourceLocation typescript/class/private-fields-static/input.ts 3:2-3:20
+						typeAnnotation: TSStringKeywordTypeAnnotation {loc: SourceLocation typescript/class/private-fields-static/input.ts 3:13-3:19}
 						meta: JSClassPropertyMeta {
 							abstract: false
 							accessibility: undefined
@@ -201,21 +73,8 @@ JSRoot {
 							readonly: false
 							static: true
 							typeAnnotation: undefined
-							start: Object {
-								column: 2
-								line: 3
-							}
-							loc: Object {
-								filename: "typescript/class/private-fields-static/input.ts"
-								end: Object {
-									column: 11
-									line: 3
-								}
-								start: Object {
-									column: 2
-									line: 3
-								}
-							}
+							loc: SourceLocation typescript/class/private-fields-static/input.ts 3:2-3:11
+							start: Position 3:2
 						}
 					}
 				]
@@ -228,6 +87,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

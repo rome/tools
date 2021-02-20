@@ -12,51 +12,20 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "esprima/es2015-yield/yield-yield-expression-delegate/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "esprima/es2015-yield/yield-yield-expression-delegate/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation esprima/es2015-yield/yield-yield-expression-delegate/input.js 1:0-2:0
+	path: UIDPath<esprima/es2015-yield/yield-yield-expression-delegate/input.js>
 	body: Array [
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "g"
-				loc: Object {
-					filename: "esprima/es2015-yield/yield-yield-expression-delegate/input.js"
-					identifierName: "g"
-					end: Object {
-						column: 11
-						line: 1
-					}
-					start: Object {
-						column: 10
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/es2015-yield/yield-yield-expression-delegate/input.js 1:10-1:11 (g)
 			}
-			loc: Object {
-				filename: "esprima/es2015-yield/yield-yield-expression-delegate/input.js"
-				end: Object {
-					column: 30
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation esprima/es2015-yield/yield-yield-expression-delegate/input.js 1:0-1:30
 			head: JSFunctionHead {
 				async: false
 				generator: true
@@ -66,71 +35,21 @@ JSRoot {
 				returnType: undefined
 				thisType: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "esprima/es2015-yield/yield-yield-expression-delegate/input.js"
-					end: Object {
-						column: 13
-						line: 1
-					}
-					start: Object {
-						column: 11
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/es2015-yield/yield-yield-expression-delegate/input.js 1:11-1:13
 			}
 			body: JSBlockStatement {
 				directives: Array []
-				loc: Object {
-					filename: "esprima/es2015-yield/yield-yield-expression-delegate/input.js"
-					end: Object {
-						column: 30
-						line: 1
-					}
-					start: Object {
-						column: 14
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/es2015-yield/yield-yield-expression-delegate/input.js 1:14-1:30
 				body: Array [
 					JSExpressionStatement {
-						loc: Object {
-							filename: "esprima/es2015-yield/yield-yield-expression-delegate/input.js"
-							end: Object {
-								column: 28
-								line: 1
-							}
-							start: Object {
-								column: 16
-								line: 1
-							}
-						}
+						loc: SourceLocation esprima/es2015-yield/yield-yield-expression-delegate/input.js 1:16-1:28
 						expression: JSYieldExpression {
 							delegate: true
-							loc: Object {
-								filename: "esprima/es2015-yield/yield-yield-expression-delegate/input.js"
-								end: Object {
-									column: 28
-									line: 1
-								}
-								start: Object {
-									column: 16
-									line: 1
-								}
-							}
+							loc: SourceLocation esprima/es2015-yield/yield-yield-expression-delegate/input.js 1:16-1:28
 							argument: JSYieldExpression {
 								argument: undefined
 								delegate: false
-								loc: Object {
-									filename: "esprima/es2015-yield/yield-yield-expression-delegate/input.js"
-									end: Object {
-										column: 28
-										line: 1
-									}
-									start: Object {
-										column: 23
-										line: 1
-									}
-								}
+								loc: SourceLocation esprima/es2015-yield/yield-yield-expression-delegate/input.js 1:23-1:28
 							}
 						}
 					}
@@ -144,6 +63,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

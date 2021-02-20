@@ -11,45 +11,29 @@ JSRoot {
 	comments: Array []
 	corrupt: true
 	directives: Array []
-	filename: "es2015/uncategorised/263/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2015/uncategorised/263/input.js"
-		end: Object {
-			column: 13
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2015/uncategorised/263/input.js 1:0-1:13
+	path: UIDPath<es2015/uncategorised/263/input.js>
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse"
 				categoryValue: "js"
+				category: Array ["parse"]
 				message: RAW_MARKUP {value: "Class name is required"}
 			}
 			location: Object {
-				filename: "es2015/uncategorised/263/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 5
-					line: 1
-				}
-				start: Object {
-					column: 6
-					line: 1
-				}
+				end: Position 1:5
+				path: UIDPath<es2015/uncategorised/263/input.js>
+				start: Position 1:6
 			}
 		}
 	]
@@ -57,89 +41,28 @@ JSRoot {
 		JSClassDeclaration {
 			id: JSBindingIdentifier {
 				name: "INVALID_PLACEHOLDER"
-				loc: Object {
-					filename: "es2015/uncategorised/263/input.js"
-					end: Object {
-						column: 5
-						line: 1
-					}
-					start: Object {
-						column: 6
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/uncategorised/263/input.js 1:6-1:5
 			}
-			loc: Object {
-				filename: "es2015/uncategorised/263/input.js"
-				end: Object {
-					column: 13
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2015/uncategorised/263/input.js 1:0-1:13
 			meta: JSClassHead {
 				implements: undefined
 				superClass: undefined
 				superTypeParameters: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "es2015/uncategorised/263/input.js"
-					end: Object {
-						column: 13
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/uncategorised/263/input.js 1:0-1:13
 				body: Array [
 					JSClassProperty {
 						key: JSStaticPropertyKey {
 							value: JSIdentifier {
 								name: "default"
-								loc: Object {
-									filename: "es2015/uncategorised/263/input.js"
-									identifierName: "default"
-									end: Object {
-										column: 13
-										line: 1
-									}
-									start: Object {
-										column: 6
-										line: 1
-									}
-								}
+								loc: SourceLocation es2015/uncategorised/263/input.js 1:6-1:13 (default)
 							}
-							loc: Object {
-								filename: "es2015/uncategorised/263/input.js"
-								end: Object {
-									column: 13
-									line: 1
-								}
-								start: Object {
-									column: 6
-									line: 1
-								}
-							}
+							loc: SourceLocation es2015/uncategorised/263/input.js 1:6-1:13
 						}
 						value: undefined
 						definite: undefined
 						typeAnnotation: undefined
-						loc: Object {
-							filename: "es2015/uncategorised/263/input.js"
-							end: Object {
-								column: 13
-								line: 1
-							}
-							start: Object {
-								column: 6
-								line: 1
-							}
-						}
+						loc: SourceLocation es2015/uncategorised/263/input.js 1:6-1:13
 						meta: JSClassPropertyMeta {
 							abstract: false
 							accessibility: undefined
@@ -147,21 +70,8 @@ JSRoot {
 							readonly: false
 							static: false
 							typeAnnotation: undefined
-							start: Object {
-								column: 6
-								line: 1
-							}
-							loc: Object {
-								filename: "es2015/uncategorised/263/input.js"
-								end: Object {
-									column: 13
-									line: 1
-								}
-								start: Object {
-									column: 6
-									line: 1
-								}
-							}
+							loc: SourceLocation es2015/uncategorised/263/input.js 1:6-1:13
+							start: Position 1:6
 						}
 					}
 				]
@@ -182,8 +92,5 @@ JSRoot {
     class default
           ^
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

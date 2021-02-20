@@ -11,106 +11,49 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "core/uncategorised/427/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "core/uncategorised/427/input.js"
-		end: Object {
-			column: 32
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation core/uncategorised/427/input.js 1:0-1:32
+	path: UIDPath<core/uncategorised/427/input.js>
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse"
 				categoryValue: "js"
+				category: Array ["parse"]
 				message: RAW_MARKUP {value: "Multiple default clauses"}
 			}
 			location: Object {
-				filename: "core/uncategorised/427/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 22
-					line: 1
-				}
-				start: Object {
-					column: 22
-					line: 1
-				}
+				end: Position 1:22
+				path: UIDPath<core/uncategorised/427/input.js>
+				start: Position 1:22
 			}
 		}
 	]
 	body: Array [
 		JSSwitchStatement {
-			loc: Object {
-				filename: "core/uncategorised/427/input.js"
-				end: Object {
-					column: 32
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation core/uncategorised/427/input.js 1:0-1:32
 			discriminant: JSReferenceIdentifier {
 				name: "c"
-				loc: Object {
-					filename: "core/uncategorised/427/input.js"
-					identifierName: "c"
-					end: Object {
-						column: 9
-						line: 1
-					}
-					start: Object {
-						column: 8
-						line: 1
-					}
-				}
+				loc: SourceLocation core/uncategorised/427/input.js 1:8-1:9 (c)
 			}
 			cases: Array [
 				JSSwitchCase {
 					consequent: Array []
 					test: undefined
-					loc: Object {
-						filename: "core/uncategorised/427/input.js"
-						end: Object {
-							column: 21
-							line: 1
-						}
-						start: Object {
-							column: 13
-							line: 1
-						}
-					}
+					loc: SourceLocation core/uncategorised/427/input.js 1:13-1:21
 				}
 				JSSwitchCase {
 					consequent: Array []
 					test: undefined
-					loc: Object {
-						filename: "core/uncategorised/427/input.js"
-						end: Object {
-							column: 30
-							line: 1
-						}
-						start: Object {
-							column: 22
-							line: 1
-						}
-					}
+					loc: SourceLocation core/uncategorised/427/input.js 1:22-1:30
 				}
 			]
 		}
@@ -129,8 +72,5 @@ JSRoot {
     switch (c) { default: default: }
                           ^
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

@@ -11,45 +11,29 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "typescript/class/duplicate-modifier-1/input.ts"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
+	loc: SourceLocation typescript/class/duplicate-modifier-1/input.ts 1:0-4:0
+	path: UIDPath<typescript/class/duplicate-modifier-1/input.ts>
 	syntax: Array ["ts"]
-	loc: Object {
-		filename: "typescript/class/duplicate-modifier-1/input.ts"
-		end: Object {
-			column: 0
-			line: 4
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse"
 				categoryValue: "js"
+				category: Array ["parse"]
 				message: RAW_MARKUP {value: "Unknown class property start"}
 			}
 			location: Object {
-				filename: "typescript/class/duplicate-modifier-1/input.ts"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 9
-					line: 2
-				}
-				start: Object {
-					column: 10
-					line: 2
-				}
+				end: Position 2:9
+				path: UIDPath<typescript/class/duplicate-modifier-1/input.ts>
+				start: Position 2:10
 			}
 		}
 	]
@@ -57,90 +41,28 @@ JSRoot {
 		JSClassDeclaration {
 			id: JSBindingIdentifier {
 				name: "A"
-				loc: Object {
-					filename: "typescript/class/duplicate-modifier-1/input.ts"
-					identifierName: "A"
-					end: Object {
-						column: 7
-						line: 1
-					}
-					start: Object {
-						column: 6
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/class/duplicate-modifier-1/input.ts 1:6-1:7 (A)
 			}
-			loc: Object {
-				filename: "typescript/class/duplicate-modifier-1/input.ts"
-				end: Object {
-					column: 1
-					line: 3
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation typescript/class/duplicate-modifier-1/input.ts 1:0-3:1
 			meta: JSClassHead {
 				implements: undefined
 				superClass: undefined
 				superTypeParameters: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "typescript/class/duplicate-modifier-1/input.ts"
-					end: Object {
-						column: 1
-						line: 3
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/class/duplicate-modifier-1/input.ts 1:0-3:1
 				body: Array [
 					JSClassProperty {
 						key: JSStaticPropertyKey {
 							value: JSIdentifier {
 								name: "foo"
-								loc: Object {
-									filename: "typescript/class/duplicate-modifier-1/input.ts"
-									identifierName: "foo"
-									end: Object {
-										column: 28
-										line: 2
-									}
-									start: Object {
-										column: 25
-										line: 2
-									}
-								}
+								loc: SourceLocation typescript/class/duplicate-modifier-1/input.ts 2:25-2:28 (foo)
 							}
-							loc: Object {
-								filename: "typescript/class/duplicate-modifier-1/input.ts"
-								end: Object {
-									column: 28
-									line: 2
-								}
-								start: Object {
-									column: 25
-									line: 2
-								}
-							}
+							loc: SourceLocation typescript/class/duplicate-modifier-1/input.ts 2:25-2:28
 						}
 						value: undefined
 						definite: undefined
 						typeAnnotation: undefined
-						loc: Object {
-							filename: "typescript/class/duplicate-modifier-1/input.ts"
-							end: Object {
-								column: 29
-								line: 2
-							}
-							start: Object {
-								column: 25
-								line: 2
-							}
-						}
+						loc: SourceLocation typescript/class/duplicate-modifier-1/input.ts 2:25-2:29
 						meta: JSClassPropertyMeta {
 							abstract: false
 							accessibility: undefined
@@ -148,21 +70,8 @@ JSRoot {
 							readonly: false
 							static: false
 							typeAnnotation: undefined
-							start: Object {
-								column: 25
-								line: 2
-							}
-							loc: Object {
-								filename: "typescript/class/duplicate-modifier-1/input.ts"
-								end: Object {
-									column: 28
-									line: 2
-								}
-								start: Object {
-									column: 25
-									line: 2
-								}
-							}
+							loc: SourceLocation typescript/class/duplicate-modifier-1/input.ts 2:25-2:28
+							start: Position 2:25
 						}
 					}
 				]
@@ -185,8 +94,5 @@ JSRoot {
       │           ^
     3 │ }
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

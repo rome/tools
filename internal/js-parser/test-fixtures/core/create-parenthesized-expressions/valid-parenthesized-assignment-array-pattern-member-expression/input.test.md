@@ -12,133 +12,39 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "core/create-parenthesized-expressions/valid-parenthesized-assignment-array-pattern-member-expression/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "core/create-parenthesized-expressions/valid-parenthesized-assignment-array-pattern-member-expression/input.js"
-		end: Object {
-			column: 12
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation core/create-parenthesized-expressions/valid-parenthesized-assignment-array-pattern-member-expression/input.js 1:0-1:12
+	path: UIDPath<core/create-parenthesized-expressions/valid-parenthesized-assignment-array-pattern-member-expression/input.js>
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "core/create-parenthesized-expressions/valid-parenthesized-assignment-array-pattern-member-expression/input.js"
-				end: Object {
-					column: 12
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation core/create-parenthesized-expressions/valid-parenthesized-assignment-array-pattern-member-expression/input.js 1:0-1:12
 			expression: JSAssignmentExpression {
 				operator: "="
-				loc: Object {
-					filename: "core/create-parenthesized-expressions/valid-parenthesized-assignment-array-pattern-member-expression/input.js"
-					end: Object {
-						column: 11
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation core/create-parenthesized-expressions/valid-parenthesized-assignment-array-pattern-member-expression/input.js 1:0-1:11
 				right: JSReferenceIdentifier {
 					name: "t"
-					loc: Object {
-						filename: "core/create-parenthesized-expressions/valid-parenthesized-assignment-array-pattern-member-expression/input.js"
-						identifierName: "t"
-						end: Object {
-							column: 11
-							line: 1
-						}
-						start: Object {
-							column: 10
-							line: 1
-						}
-					}
+					loc: SourceLocation core/create-parenthesized-expressions/valid-parenthesized-assignment-array-pattern-member-expression/input.js 1:10-1:11 (t)
 				}
 				left: JSAssignmentArrayPattern {
 					rest: undefined
-					loc: Object {
-						filename: "core/create-parenthesized-expressions/valid-parenthesized-assignment-array-pattern-member-expression/input.js"
-						end: Object {
-							column: 7
-							line: 1
-						}
-						start: Object {
-							column: 0
-							line: 1
-						}
-					}
+					loc: SourceLocation core/create-parenthesized-expressions/valid-parenthesized-assignment-array-pattern-member-expression/input.js 1:0-1:7
 					elements: Array [
 						JSMemberExpression {
-							loc: Object {
-								filename: "core/create-parenthesized-expressions/valid-parenthesized-assignment-array-pattern-member-expression/input.js"
-								end: Object {
-									column: 5
-									line: 1
-								}
-								start: Object {
-									column: 2
-									line: 1
-								}
-							}
+							loc: SourceLocation core/create-parenthesized-expressions/valid-parenthesized-assignment-array-pattern-member-expression/input.js 1:2-1:5
 							object: JSReferenceIdentifier {
 								name: "a"
-								loc: Object {
-									filename: "core/create-parenthesized-expressions/valid-parenthesized-assignment-array-pattern-member-expression/input.js"
-									identifierName: "a"
-									end: Object {
-										column: 3
-										line: 1
-									}
-									start: Object {
-										column: 2
-										line: 1
-									}
-								}
+								loc: SourceLocation core/create-parenthesized-expressions/valid-parenthesized-assignment-array-pattern-member-expression/input.js 1:2-1:3 (a)
 							}
 							property: JSStaticMemberProperty {
 								value: JSIdentifier {
 									name: "x"
-									loc: Object {
-										filename: "core/create-parenthesized-expressions/valid-parenthesized-assignment-array-pattern-member-expression/input.js"
-										identifierName: "x"
-										end: Object {
-											column: 5
-											line: 1
-										}
-										start: Object {
-											column: 4
-											line: 1
-										}
-									}
+									loc: SourceLocation core/create-parenthesized-expressions/valid-parenthesized-assignment-array-pattern-member-expression/input.js 1:4-1:5 (x)
 								}
-								loc: Object {
-									filename: "core/create-parenthesized-expressions/valid-parenthesized-assignment-array-pattern-member-expression/input.js"
-									identifierName: "x"
-									end: Object {
-										column: 5
-										line: 1
-									}
-									start: Object {
-										column: 4
-										line: 1
-									}
-								}
+								loc: SourceLocation core/create-parenthesized-expressions/valid-parenthesized-assignment-array-pattern-member-expression/input.js 1:4-1:5 (x)
 							}
 						}
 					]
@@ -152,6 +58,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

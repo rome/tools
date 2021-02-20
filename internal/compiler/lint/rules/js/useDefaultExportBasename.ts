@@ -12,7 +12,7 @@ import {
 	JSFunctionDeclaration,
 } from "@internal/ast";
 import {createVisitor, signals} from "@internal/compiler";
-import {UnknownPath} from "@internal/path";
+import {AnyPath} from "@internal/path";
 import {renameBindings} from "@internal/js-ast-utils";
 import {descriptions} from "@internal/diagnostics";
 import {normalizeCamelCase} from "./useCamelCase";
@@ -27,7 +27,7 @@ function isValidDeclaration(
 }
 
 export function filenameToId(
-	path: UnknownPath,
+	path: AnyPath,
 	capitalize: boolean,
 ): undefined | string {
 	let basename = path.getExtensionlessBasename();
@@ -74,7 +74,7 @@ export default createVisitor({
 
 				// Get the export default id
 				const id = declaration.id;
-				if (id !== undefined && context.path !== undefined) {
+				if (id !== undefined) {
 					const type =
 						declaration.type === "JSFunctionDeclaration" ? "function" : "class";
 					const basename = filenameToId(context.path, type === "class");

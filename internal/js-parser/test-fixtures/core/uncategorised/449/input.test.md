@@ -11,75 +11,38 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "core/uncategorised/449/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "core/uncategorised/449/input.js"
-		end: Object {
-			column: 6
-			line: 1
+	loc: SourceLocation core/uncategorised/449/input.js 1:0-1:6
+	path: UIDPath<core/uncategorised/449/input.js>
+	body: Array [
+		JSExpressionStatement {
+			loc: SourceLocation core/uncategorised/449/input.js 1:0-1:6
+			expression: JSReferenceIdentifier {
+				name: "\0"
+				loc: SourceLocation core/uncategorised/449/input.js 1:0-1:6 (\0)
+			}
 		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	]
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse"
 				categoryValue: "js"
+				category: Array ["parse"]
 				message: RAW_MARKUP {value: "Invalid Unicode escape"}
 			}
 			location: Object {
-				filename: "core/uncategorised/449/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 6
-					line: 1
-				}
-				start: Object {
-					column: 6
-					line: 1
-				}
-			}
-		}
-	]
-	body: Array [
-		JSExpressionStatement {
-			loc: Object {
-				filename: "core/uncategorised/449/input.js"
-				end: Object {
-					column: 6
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
-			expression: JSReferenceIdentifier {
-				name: "\0"
-				loc: Object {
-					filename: "core/uncategorised/449/input.js"
-					identifierName: "\0"
-					end: Object {
-						column: 6
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				end: Position 1:6
+				path: UIDPath<core/uncategorised/449/input.js>
+				start: Position 1:6
 			}
 		}
 	]
@@ -97,8 +60,5 @@ JSRoot {
     \u0000
           ^
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

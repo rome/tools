@@ -11,77 +11,38 @@ JSRoot {
 	comments: Array []
 	corrupt: true
 	directives: Array []
-	filename: "core/uncategorised/413/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "core/uncategorised/413/input.js"
-		end: Object {
-			column: 5
-			line: 1
+	loc: SourceLocation core/uncategorised/413/input.js 1:0-1:5
+	path: UIDPath<core/uncategorised/413/input.js>
+	body: Array [
+		JSThrowStatement {
+			loc: SourceLocation core/uncategorised/413/input.js 1:0-1:5
+			argument: JSReferenceIdentifier {
+				name: "INVALID_PLACEHOLDER"
+				loc: SourceLocation core/uncategorised/413/input.js 1:5-1:5
+			}
 		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	]
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse"
 				categoryValue: "js"
-				message: Array [
-					RAW_MARKUP {value: "Unknown start to an "}
-					"throw argument"
-				]
+				category: Array ["parse"]
+				message: RAW_MARKUP {value: "Unknown start to an throw argument"}
 			}
 			location: Object {
-				filename: "core/uncategorised/413/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 5
-					line: 1
-				}
-				start: Object {
-					column: 5
-					line: 1
-				}
-			}
-		}
-	]
-	body: Array [
-		JSThrowStatement {
-			loc: Object {
-				filename: "core/uncategorised/413/input.js"
-				end: Object {
-					column: 5
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
-			argument: JSReferenceIdentifier {
-				name: "INVALID_PLACEHOLDER"
-				loc: Object {
-					filename: "core/uncategorised/413/input.js"
-					end: Object {
-						column: 5
-						line: 1
-					}
-					start: Object {
-						column: 5
-						line: 1
-					}
-				}
+				end: Position 1:5
+				path: UIDPath<core/uncategorised/413/input.js>
+				start: Position 1:5
 			}
 		}
 	]
@@ -99,8 +60,5 @@ JSRoot {
     throw
          ^
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

@@ -12,143 +12,41 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "typescript/module-namespace/top-level-await/input.ts"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
+	loc: SourceLocation typescript/module-namespace/top-level-await/input.ts 1:0-4:0
+	path: UIDPath<typescript/module-namespace/top-level-await/input.ts>
 	syntax: Array ["ts"]
-	loc: Object {
-		filename: "typescript/module-namespace/top-level-await/input.ts"
-		end: Object {
-			column: 0
-			line: 4
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
 	body: Array [
 		TSModuleDeclaration {
 			id: JSBindingIdentifier {
 				name: "N"
-				loc: Object {
-					filename: "typescript/module-namespace/top-level-await/input.ts"
-					identifierName: "N"
-					end: Object {
-						column: 11
-						line: 1
-					}
-					start: Object {
-						column: 10
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/module-namespace/top-level-await/input.ts 1:10-1:11 (N)
 			}
-			loc: Object {
-				filename: "typescript/module-namespace/top-level-await/input.ts"
-				end: Object {
-					column: 1
-					line: 3
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation typescript/module-namespace/top-level-await/input.ts 1:0-3:1
 			body: TSModuleBlock {
-				loc: Object {
-					filename: "typescript/module-namespace/top-level-await/input.ts"
-					end: Object {
-						column: 1
-						line: 3
-					}
-					start: Object {
-						column: 12
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/module-namespace/top-level-await/input.ts 1:12-3:1
 				body: Array [
 					JSVariableDeclarationStatement {
-						loc: Object {
-							filename: "typescript/module-namespace/top-level-await/input.ts"
-							end: Object {
-								column: 23
-								line: 2
-							}
-							start: Object {
-								column: 4
-								line: 2
-							}
-						}
+						loc: SourceLocation typescript/module-namespace/top-level-await/input.ts 2:4-2:23
 						declaration: JSVariableDeclaration {
 							kind: "const"
-							loc: Object {
-								filename: "typescript/module-namespace/top-level-await/input.ts"
-								end: Object {
-									column: 23
-									line: 2
-								}
-								start: Object {
-									column: 4
-									line: 2
-								}
-							}
+							loc: SourceLocation typescript/module-namespace/top-level-await/input.ts 2:4-2:23
 							declarations: Array [
 								JSVariableDeclarator {
 									id: JSBindingIdentifier {
 										name: "x"
-										loc: Object {
-											filename: "typescript/module-namespace/top-level-await/input.ts"
-											identifierName: "x"
-											end: Object {
-												column: 11
-												line: 2
-											}
-											start: Object {
-												column: 10
-												line: 2
-											}
-										}
+										loc: SourceLocation typescript/module-namespace/top-level-await/input.ts 2:10-2:11 (x)
 									}
-									loc: Object {
-										filename: "typescript/module-namespace/top-level-await/input.ts"
-										end: Object {
-											column: 22
-											line: 2
-										}
-										start: Object {
-											column: 10
-											line: 2
-										}
-									}
+									loc: SourceLocation typescript/module-namespace/top-level-await/input.ts 2:10-2:22
 									init: JSAwaitExpression {
-										loc: Object {
-											filename: "typescript/module-namespace/top-level-await/input.ts"
-											end: Object {
-												column: 22
-												line: 2
-											}
-											start: Object {
-												column: 14
-												line: 2
-											}
-										}
+										loc: SourceLocation typescript/module-namespace/top-level-await/input.ts 2:14-2:22
 										argument: JSNumericLiteral {
 											value: 42
 											format: undefined
-											loc: Object {
-												filename: "typescript/module-namespace/top-level-await/input.ts"
-												end: Object {
-													column: 22
-													line: 2
-												}
-												start: Object {
-													column: 20
-													line: 2
-												}
-											}
+											loc: SourceLocation typescript/module-namespace/top-level-await/input.ts 2:20-2:22
 										}
 									}
 								}
@@ -165,6 +63,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

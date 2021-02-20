@@ -11,160 +11,62 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "es2015/uncategorised/328/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2015/uncategorised/328/input.js"
-		end: Object {
-			column: 18
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2015/uncategorised/328/input.js 1:0-1:18
+	path: UIDPath<es2015/uncategorised/328/input.js>
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse"
 				categoryValue: "js"
+				category: Array ["parse"]
 				message: RAW_MARKUP {value: "Expected a semicolon or a line terminator"}
 			}
 			location: Object {
-				filename: "es2015/uncategorised/328/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 10
-					line: 1
-				}
-				start: Object {
-					column: 11
-					line: 1
-				}
+				end: Position 1:10
+				path: UIDPath<es2015/uncategorised/328/input.js>
+				start: Position 1:11
 			}
 		}
 	]
 	body: Array [
 		JSIfStatement {
 			alternate: undefined
-			loc: Object {
-				filename: "es2015/uncategorised/328/input.js"
-				end: Object {
-					column: 10
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2015/uncategorised/328/input.js 1:0-1:10
 			test: JSNumericLiteral {
 				value: 1
 				format: undefined
-				loc: Object {
-					filename: "es2015/uncategorised/328/input.js"
-					end: Object {
-						column: 5
-						line: 1
-					}
-					start: Object {
-						column: 4
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/uncategorised/328/input.js 1:4-1:5
 			}
 			consequent: JSExpressionStatement {
-				loc: Object {
-					filename: "es2015/uncategorised/328/input.js"
-					end: Object {
-						column: 10
-						line: 1
-					}
-					start: Object {
-						column: 7
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/uncategorised/328/input.js 1:7-1:10
 				expression: JSReferenceIdentifier {
 					name: "let"
-					loc: Object {
-						filename: "es2015/uncategorised/328/input.js"
-						identifierName: "let"
-						end: Object {
-							column: 10
-							line: 1
-						}
-						start: Object {
-							column: 7
-							line: 1
-						}
-					}
+					loc: SourceLocation es2015/uncategorised/328/input.js 1:7-1:10 (let)
 				}
 			}
 		}
 		JSExpressionStatement {
-			loc: Object {
-				filename: "es2015/uncategorised/328/input.js"
-				end: Object {
-					column: 18
-					line: 1
-				}
-				start: Object {
-					column: 11
-					line: 1
-				}
-			}
+			loc: SourceLocation es2015/uncategorised/328/input.js 1:11-1:18
 			expression: JSAssignmentExpression {
 				operator: "="
-				loc: Object {
-					filename: "es2015/uncategorised/328/input.js"
-					end: Object {
-						column: 17
-						line: 1
-					}
-					start: Object {
-						column: 11
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/uncategorised/328/input.js 1:11-1:17
 				left: JSAssignmentIdentifier {
 					name: "x"
-					loc: Object {
-						filename: "es2015/uncategorised/328/input.js"
-						identifierName: "x"
-						end: Object {
-							column: 12
-							line: 1
-						}
-						start: Object {
-							column: 11
-							line: 1
-						}
-					}
+					loc: SourceLocation es2015/uncategorised/328/input.js 1:11-1:12 (x)
 				}
 				right: JSNumericLiteral {
 					value: 10
 					format: undefined
-					loc: Object {
-						filename: "es2015/uncategorised/328/input.js"
-						end: Object {
-							column: 17
-							line: 1
-						}
-						start: Object {
-							column: 15
-							line: 1
-						}
-					}
+					loc: SourceLocation es2015/uncategorised/328/input.js 1:15-1:17
 				}
 			}
 		}
@@ -183,8 +85,5 @@ JSRoot {
     if (1) let x = 10;
                ^
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

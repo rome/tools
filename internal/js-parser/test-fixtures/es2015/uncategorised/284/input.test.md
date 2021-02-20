@@ -11,90 +11,41 @@ JSRoot {
 	comments: Array []
 	corrupt: true
 	directives: Array []
-	filename: "es2015/uncategorised/284/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2015/uncategorised/284/input.js"
-		end: Object {
-			column: 13
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2015/uncategorised/284/input.js 1:0-1:13
+	path: UIDPath<es2015/uncategorised/284/input.js>
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse"
 				categoryValue: "js"
-				message: Array [
-					RAW_MARKUP {value: "Invalid left-hand side in "}
-					"arrow function parameters"
-				]
+				category: Array ["parse"]
+				message: RAW_MARKUP {value: "Invalid left-hand side in arrow function parameters"}
 			}
 			location: Object {
-				filename: "es2015/uncategorised/284/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 4
-					line: 1
-				}
-				start: Object {
-					column: 3
-					line: 1
-				}
+				end: Position 1:4
+				path: UIDPath<es2015/uncategorised/284/input.js>
+				start: Position 1:3
 			}
 		}
 	]
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "es2015/uncategorised/284/input.js"
-				end: Object {
-					column: 13
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2015/uncategorised/284/input.js 1:0-1:13
 			expression: JSArrowFunctionExpression {
-				loc: Object {
-					filename: "es2015/uncategorised/284/input.js"
-					end: Object {
-						column: 13
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/uncategorised/284/input.js 1:0-1:13
 				body: JSBlockStatement {
 					body: Array []
 					directives: Array []
-					loc: Object {
-						filename: "es2015/uncategorised/284/input.js"
-						end: Object {
-							column: 13
-							line: 1
-						}
-						start: Object {
-							column: 11
-							line: 1
-						}
-					}
+					loc: SourceLocation es2015/uncategorised/284/input.js 1:11-1:13
 				}
 				head: JSFunctionHead {
 					async: false
@@ -102,45 +53,15 @@ JSRoot {
 					rest: undefined
 					returnType: undefined
 					thisType: undefined
-					loc: Object {
-						filename: "es2015/uncategorised/284/input.js"
-						end: Object {
-							column: 10
-							line: 1
-						}
-						start: Object {
-							column: 0
-							line: 1
-						}
-					}
+					loc: SourceLocation es2015/uncategorised/284/input.js 1:0-1:10
 					params: Array [
 						JSBindingArrayPattern {
 							rest: undefined
-							loc: Object {
-								filename: "es2015/uncategorised/284/input.js"
-								end: Object {
-									column: 6
-									line: 1
-								}
-								start: Object {
-									column: 1
-									line: 1
-								}
-							}
+							loc: SourceLocation es2015/uncategorised/284/input.js 1:1-1:6
 							elements: Array [
 								JSBindingIdentifier {
 									name: "INVALID_PLACEHOLDER"
-									loc: Object {
-										filename: "es2015/uncategorised/284/input.js"
-										end: Object {
-											column: 10
-											line: 1
-										}
-										start: Object {
-											column: 11
-											line: 1
-										}
-									}
+									loc: SourceLocation es2015/uncategorised/284/input.js 1:11-1:10
 								}
 							]
 						}
@@ -163,8 +84,5 @@ JSRoot {
     ([ 5 ]) => {}
        ^
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

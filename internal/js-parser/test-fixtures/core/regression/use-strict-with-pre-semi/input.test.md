@@ -12,145 +12,42 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "core/regression/use-strict-with-pre-semi/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "core/regression/use-strict-with-pre-semi/input.js"
-		end: Object {
-			column: 0
-			line: 4
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation core/regression/use-strict-with-pre-semi/input.js 1:0-4:0
+	path: UIDPath<core/regression/use-strict-with-pre-semi/input.js>
 	body: Array [
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "a"
-				loc: Object {
-					filename: "core/regression/use-strict-with-pre-semi/input.js"
-					identifierName: "a"
-					end: Object {
-						column: 10
-						line: 1
-					}
-					start: Object {
-						column: 9
-						line: 1
-					}
-				}
+				loc: SourceLocation core/regression/use-strict-with-pre-semi/input.js 1:9-1:10 (a)
 			}
-			loc: Object {
-				filename: "core/regression/use-strict-with-pre-semi/input.js"
-				end: Object {
-					column: 1
-					line: 3
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation core/regression/use-strict-with-pre-semi/input.js 1:0-3:1
 			body: JSBlockStatement {
 				directives: Array []
-				loc: Object {
-					filename: "core/regression/use-strict-with-pre-semi/input.js"
-					end: Object {
-						column: 1
-						line: 3
-					}
-					start: Object {
-						column: 22
-						line: 1
-					}
-				}
+				loc: SourceLocation core/regression/use-strict-with-pre-semi/input.js 1:22-3:1
 				body: Array [
-					JSEmptyStatement {
-						loc: Object {
-							filename: "core/regression/use-strict-with-pre-semi/input.js"
-							end: Object {
-								column: 2
-								line: 2
-							}
-							start: Object {
-								column: 1
-								line: 2
-							}
-						}
-					}
+					JSEmptyStatement {loc: SourceLocation core/regression/use-strict-with-pre-semi/input.js 2:1-2:2}
 					JSExpressionStatement {
-						loc: Object {
-							filename: "core/regression/use-strict-with-pre-semi/input.js"
-							end: Object {
-								column: 16
-								line: 2
-							}
-							start: Object {
-								column: 3
-								line: 2
-							}
-						}
+						loc: SourceLocation core/regression/use-strict-with-pre-semi/input.js 2:3-2:16
 						expression: JSStringLiteral {
 							value: "use strict"
-							loc: Object {
-								filename: "core/regression/use-strict-with-pre-semi/input.js"
-								end: Object {
-									column: 15
-									line: 2
-								}
-								start: Object {
-									column: 3
-									line: 2
-								}
-							}
+							loc: SourceLocation core/regression/use-strict-with-pre-semi/input.js 2:3-2:15
 						}
 					}
 					JSWithStatement {
-						loc: Object {
-							filename: "core/regression/use-strict-with-pre-semi/input.js"
-							end: Object {
-								column: 29
-								line: 2
-							}
-							start: Object {
-								column: 17
-								line: 2
-							}
-						}
+						loc: SourceLocation core/regression/use-strict-with-pre-semi/input.js 2:17-2:29
 						object: JSObjectExpression {
 							properties: Array []
-							loc: Object {
-								filename: "core/regression/use-strict-with-pre-semi/input.js"
-								end: Object {
-									column: 25
-									line: 2
-								}
-								start: Object {
-									column: 23
-									line: 2
-								}
-							}
+							loc: SourceLocation core/regression/use-strict-with-pre-semi/input.js 2:23-2:25
 						}
 						body: JSBlockStatement {
 							body: Array []
 							directives: Array []
-							loc: Object {
-								filename: "core/regression/use-strict-with-pre-semi/input.js"
-								end: Object {
-									column: 29
-									line: 2
-								}
-								start: Object {
-									column: 27
-									line: 2
-								}
-							}
+							loc: SourceLocation core/regression/use-strict-with-pre-semi/input.js 2:27-2:29
 						}
 					}
 				]
@@ -163,101 +60,30 @@ JSRoot {
 				returnType: undefined
 				thisType: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "core/regression/use-strict-with-pre-semi/input.js"
-					end: Object {
-						column: 21
-						line: 1
-					}
-					start: Object {
-						column: 11
-						line: 1
-					}
-				}
+				loc: SourceLocation core/regression/use-strict-with-pre-semi/input.js 1:11-1:21
 				params: Array [
 					JSBindingAssignmentPattern {
-						loc: Object {
-							filename: "core/regression/use-strict-with-pre-semi/input.js"
-							end: Object {
-								column: 20
-								line: 1
-							}
-							start: Object {
-								column: 12
-								line: 1
-							}
-						}
+						loc: SourceLocation core/regression/use-strict-with-pre-semi/input.js 1:12-1:20
 						right: JSArrayExpression {
 							elements: Array []
-							loc: Object {
-								filename: "core/regression/use-strict-with-pre-semi/input.js"
-								end: Object {
-									column: 20
-									line: 1
-								}
-								start: Object {
-									column: 18
-									line: 1
-								}
-							}
+							loc: SourceLocation core/regression/use-strict-with-pre-semi/input.js 1:18-1:20
 						}
 						left: JSBindingArrayPattern {
 							rest: undefined
-							loc: Object {
-								filename: "core/regression/use-strict-with-pre-semi/input.js"
-								end: Object {
-									column: 15
-									line: 1
-								}
-								start: Object {
-									column: 12
-									line: 1
-								}
-							}
+							loc: SourceLocation core/regression/use-strict-with-pre-semi/input.js 1:12-1:15
 							meta: JSPatternMeta {
 								optional: undefined
 								typeAnnotation: undefined
-								loc: Object {
-									filename: "core/regression/use-strict-with-pre-semi/input.js"
-									end: Object {
-										column: 15
-										line: 1
-									}
-									start: Object {
-										column: 12
-										line: 1
-									}
-								}
+								loc: SourceLocation core/regression/use-strict-with-pre-semi/input.js 1:12-1:15
 							}
 							elements: Array [
 								JSBindingIdentifier {
 									name: "a"
-									loc: Object {
-										filename: "core/regression/use-strict-with-pre-semi/input.js"
-										identifierName: "a"
-										end: Object {
-											column: 14
-											line: 1
-										}
-										start: Object {
-											column: 13
-											line: 1
-										}
-									}
+									loc: SourceLocation core/regression/use-strict-with-pre-semi/input.js 1:13-1:14 (a)
 									meta: JSPatternMeta {
 										optional: undefined
 										typeAnnotation: undefined
-										loc: Object {
-											filename: "core/regression/use-strict-with-pre-semi/input.js"
-											end: Object {
-												column: 14
-												line: 1
-											}
-											start: Object {
-												column: 13
-												line: 1
-											}
-										}
+										loc: SourceLocation core/regression/use-strict-with-pre-semi/input.js 1:13-1:14
 									}
 								}
 							]
@@ -273,6 +99,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

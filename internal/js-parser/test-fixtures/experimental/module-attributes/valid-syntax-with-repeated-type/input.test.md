@@ -11,45 +11,29 @@ JSRoot {
 	comments: Array []
 	corrupt: true
 	directives: Array []
-	filename: "experimental/module-attributes/valid-syntax-with-repeated-type/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
 	syntax: Array []
-	loc: Object {
-		filename: "experimental/module-attributes/valid-syntax-with-repeated-type/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation experimental/module-attributes/valid-syntax-with-repeated-type/input.js 1:0-2:0
+	path: UIDPath<experimental/module-attributes/valid-syntax-with-repeated-type/input.js>
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse"
 				categoryValue: "js"
+				category: Array ["parse"]
 				message: RAW_MARKUP {value: "Expected a semicolon or a line terminator"}
 			}
 			location: Object {
-				filename: "experimental/module-attributes/valid-syntax-with-repeated-type/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 26
-					line: 1
-				}
-				start: Object {
-					column: 27
-					line: 1
-				}
+				end: Position 1:26
+				path: UIDPath<experimental/module-attributes/valid-syntax-with-repeated-type/input.js>
+				start: Position 1:27
 			}
 		}
 	]
@@ -58,238 +42,65 @@ JSRoot {
 			importKind: undefined
 			namedSpecifiers: Array []
 			namespaceSpecifier: undefined
-			loc: Object {
-				filename: "experimental/module-attributes/valid-syntax-with-repeated-type/input.js"
-				end: Object {
-					column: 26
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation experimental/module-attributes/valid-syntax-with-repeated-type/input.js 1:0-1:26
 			source: JSStringLiteral {
 				value: "foo.json"
-				loc: Object {
-					filename: "experimental/module-attributes/valid-syntax-with-repeated-type/input.js"
-					end: Object {
-						column: 26
-						line: 1
-					}
-					start: Object {
-						column: 16
-						line: 1
-					}
-				}
+				loc: SourceLocation experimental/module-attributes/valid-syntax-with-repeated-type/input.js 1:16-1:26
 			}
 			defaultSpecifier: JSImportDefaultSpecifier {
-				loc: Object {
-					filename: "experimental/module-attributes/valid-syntax-with-repeated-type/input.js"
-					end: Object {
-						column: 10
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation experimental/module-attributes/valid-syntax-with-repeated-type/input.js 1:0-1:10
 				local: JSImportSpecifierLocal {
 					name: JSBindingIdentifier {
 						name: "foo"
-						loc: Object {
-							filename: "experimental/module-attributes/valid-syntax-with-repeated-type/input.js"
-							identifierName: "foo"
-							end: Object {
-								column: 10
-								line: 1
-							}
-							start: Object {
-								column: 7
-								line: 1
-							}
-						}
+						loc: SourceLocation experimental/module-attributes/valid-syntax-with-repeated-type/input.js 1:7-1:10 (foo)
 					}
 					importKind: undefined
-					loc: Object {
-						filename: "experimental/module-attributes/valid-syntax-with-repeated-type/input.js"
-						end: Object {
-							column: 10
-							line: 1
-						}
-						start: Object {
-							column: 7
-							line: 1
-						}
-					}
+					loc: SourceLocation experimental/module-attributes/valid-syntax-with-repeated-type/input.js 1:7-1:10
 				}
 			}
 		}
 		JSWithStatement {
-			loc: Object {
-				filename: "experimental/module-attributes/valid-syntax-with-repeated-type/input.js"
-				end: Object {
-					column: 37
-					line: 1
-				}
-				start: Object {
-					column: 27
-					line: 1
-				}
-			}
+			loc: SourceLocation experimental/module-attributes/valid-syntax-with-repeated-type/input.js 1:27-1:37
 			object: JSReferenceIdentifier {
 				name: "type"
-				loc: Object {
-					filename: "experimental/module-attributes/valid-syntax-with-repeated-type/input.js"
-					identifierName: "type"
-					end: Object {
-						column: 36
-						line: 1
-					}
-					start: Object {
-						column: 32
-						line: 1
-					}
-				}
+				loc: SourceLocation experimental/module-attributes/valid-syntax-with-repeated-type/input.js 1:32-1:36 (type)
 			}
 			body: JSExpressionStatement {
-				loc: Object {
-					filename: "experimental/module-attributes/valid-syntax-with-repeated-type/input.js"
-					end: Object {
-						column: 37
-						line: 1
-					}
-					start: Object {
-						column: 36
-						line: 1
-					}
-				}
+				loc: SourceLocation experimental/module-attributes/valid-syntax-with-repeated-type/input.js 1:36-1:37
 				expression: JSReferenceIdentifier {
 					name: "INVALID_PLACEHOLDER"
-					loc: Object {
-						filename: "experimental/module-attributes/valid-syntax-with-repeated-type/input.js"
-						end: Object {
-							column: 37
-							line: 1
-						}
-						start: Object {
-							column: 36
-							line: 1
-						}
-					}
+					loc: SourceLocation experimental/module-attributes/valid-syntax-with-repeated-type/input.js 1:36-1:37
 				}
 			}
 		}
 		JSExpressionStatement {
-			loc: Object {
-				filename: "experimental/module-attributes/valid-syntax-with-repeated-type/input.js"
-				end: Object {
-					column: 50
-					line: 1
-				}
-				start: Object {
-					column: 38
-					line: 1
-				}
-			}
+			loc: SourceLocation experimental/module-attributes/valid-syntax-with-repeated-type/input.js 1:38-1:50
 			expression: JSSequenceExpression {
-				loc: Object {
-					filename: "experimental/module-attributes/valid-syntax-with-repeated-type/input.js"
-					end: Object {
-						column: 50
-						line: 1
-					}
-					start: Object {
-						column: 38
-						line: 1
-					}
-				}
+				loc: SourceLocation experimental/module-attributes/valid-syntax-with-repeated-type/input.js 1:38-1:50
 				expressions: Array [
 					JSStringLiteral {
 						value: "json"
-						loc: Object {
-							filename: "experimental/module-attributes/valid-syntax-with-repeated-type/input.js"
-							end: Object {
-								column: 44
-								line: 1
-							}
-							start: Object {
-								column: 38
-								line: 1
-							}
-						}
+						loc: SourceLocation experimental/module-attributes/valid-syntax-with-repeated-type/input.js 1:38-1:44
 					}
 					JSReferenceIdentifier {
 						name: "type"
-						loc: Object {
-							filename: "experimental/module-attributes/valid-syntax-with-repeated-type/input.js"
-							identifierName: "type"
-							end: Object {
-								column: 50
-								line: 1
-							}
-							start: Object {
-								column: 46
-								line: 1
-							}
-						}
+						loc: SourceLocation experimental/module-attributes/valid-syntax-with-repeated-type/input.js 1:46-1:50 (type)
 					}
 				]
 			}
 		}
 		JSExpressionStatement {
-			loc: Object {
-				filename: "experimental/module-attributes/valid-syntax-with-repeated-type/input.js"
-				end: Object {
-					column: 51
-					line: 1
-				}
-				start: Object {
-					column: 50
-					line: 1
-				}
-			}
+			loc: SourceLocation experimental/module-attributes/valid-syntax-with-repeated-type/input.js 1:50-1:51
 			expression: JSReferenceIdentifier {
 				name: "INVALID_PLACEHOLDER"
-				loc: Object {
-					filename: "experimental/module-attributes/valid-syntax-with-repeated-type/input.js"
-					end: Object {
-						column: 51
-						line: 1
-					}
-					start: Object {
-						column: 50
-						line: 1
-					}
-				}
+				loc: SourceLocation experimental/module-attributes/valid-syntax-with-repeated-type/input.js 1:50-1:51
 			}
 		}
 		JSExpressionStatement {
-			loc: Object {
-				filename: "experimental/module-attributes/valid-syntax-with-repeated-type/input.js"
-				end: Object {
-					column: 59
-					line: 1
-				}
-				start: Object {
-					column: 52
-					line: 1
-				}
-			}
+			loc: SourceLocation experimental/module-attributes/valid-syntax-with-repeated-type/input.js 1:52-1:59
 			expression: JSStringLiteral {
 				value: "html"
-				loc: Object {
-					filename: "experimental/module-attributes/valid-syntax-with-repeated-type/input.js"
-					end: Object {
-						column: 58
-						line: 1
-					}
-					start: Object {
-						column: 52
-						line: 1
-					}
-				}
+				loc: SourceLocation experimental/module-attributes/valid-syntax-with-repeated-type/input.js 1:52-1:58
 			}
 		}
 	]
@@ -307,8 +118,5 @@ JSRoot {
     import foo from "foo.json" with type: "json", type: "html";
                                ^
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

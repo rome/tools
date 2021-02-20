@@ -12,79 +12,28 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "es2015/modules/duplicate-named-export-destructuring12/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
 	syntax: Array []
-	loc: Object {
-		filename: "es2015/modules/duplicate-named-export-destructuring12/input.js"
-		end: Object {
-			column: 0
-			line: 3
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2015/modules/duplicate-named-export-destructuring12/input.js 1:0-3:0
+	path: UIDPath<es2015/modules/duplicate-named-export-destructuring12/input.js>
 	body: Array [
 		JSExportLocalDeclaration {
 			exportKind: "value"
 			specifiers: undefined
-			loc: Object {
-				filename: "es2015/modules/duplicate-named-export-destructuring12/input.js"
-				end: Object {
-					column: 25
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2015/modules/duplicate-named-export-destructuring12/input.js 1:0-1:25
 			declaration: JSFunctionDeclaration {
 				id: JSBindingIdentifier {
 					name: "foo4"
-					loc: Object {
-						filename: "es2015/modules/duplicate-named-export-destructuring12/input.js"
-						identifierName: "foo4"
-						end: Object {
-							column: 20
-							line: 1
-						}
-						start: Object {
-							column: 16
-							line: 1
-						}
-					}
+					loc: SourceLocation es2015/modules/duplicate-named-export-destructuring12/input.js 1:16-1:20 (foo4)
 				}
-				loc: Object {
-					filename: "es2015/modules/duplicate-named-export-destructuring12/input.js"
-					end: Object {
-						column: 25
-						line: 1
-					}
-					start: Object {
-						column: 7
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/modules/duplicate-named-export-destructuring12/input.js 1:7-1:25
 				body: JSBlockStatement {
 					body: Array []
 					directives: Array []
-					loc: Object {
-						filename: "es2015/modules/duplicate-named-export-destructuring12/input.js"
-						end: Object {
-							column: 25
-							line: 1
-						}
-						start: Object {
-							column: 23
-							line: 1
-						}
-					}
+					loc: SourceLocation es2015/modules/duplicate-named-export-destructuring12/input.js 1:23-1:25
 				}
 				head: JSFunctionHead {
 					async: false
@@ -95,460 +44,130 @@ JSRoot {
 					returnType: undefined
 					thisType: undefined
 					typeParameters: undefined
-					loc: Object {
-						filename: "es2015/modules/duplicate-named-export-destructuring12/input.js"
-						end: Object {
-							column: 22
-							line: 1
-						}
-						start: Object {
-							column: 20
-							line: 1
-						}
-					}
+					loc: SourceLocation es2015/modules/duplicate-named-export-destructuring12/input.js 1:20-1:22
 				}
 			}
 		}
-		JSEmptyStatement {
-			loc: Object {
-				filename: "es2015/modules/duplicate-named-export-destructuring12/input.js"
-				end: Object {
-					column: 26
-					line: 1
-				}
-				start: Object {
-					column: 25
-					line: 1
-				}
-			}
-		}
+		JSEmptyStatement {loc: SourceLocation es2015/modules/duplicate-named-export-destructuring12/input.js 1:25-1:26}
 		JSExportLocalDeclaration {
 			exportKind: "value"
 			specifiers: undefined
-			loc: Object {
-				filename: "es2015/modules/duplicate-named-export-destructuring12/input.js"
-				end: Object {
-					column: 67
-					line: 2
-				}
-				start: Object {
-					column: 0
-					line: 2
-				}
-			}
+			loc: SourceLocation es2015/modules/duplicate-named-export-destructuring12/input.js 2:0-2:67
 			declaration: JSVariableDeclarationStatement {
-				loc: Object {
-					filename: "es2015/modules/duplicate-named-export-destructuring12/input.js"
-					end: Object {
-						column: 67
-						line: 2
-					}
-					start: Object {
-						column: 7
-						line: 2
-					}
-				}
+				loc: SourceLocation es2015/modules/duplicate-named-export-destructuring12/input.js 2:7-2:67
 				declaration: JSVariableDeclaration {
 					kind: "const"
-					loc: Object {
-						filename: "es2015/modules/duplicate-named-export-destructuring12/input.js"
-						end: Object {
-							column: 67
-							line: 2
-						}
-						start: Object {
-							column: 7
-							line: 2
-						}
-					}
+					loc: SourceLocation es2015/modules/duplicate-named-export-destructuring12/input.js 2:7-2:67
 					declarations: Array [
 						JSVariableDeclarator {
 							id: JSBindingObjectPattern {
 								rest: undefined
-								loc: Object {
-									filename: "es2015/modules/duplicate-named-export-destructuring12/input.js"
-									end: Object {
-										column: 60
-										line: 2
-									}
-									start: Object {
-										column: 13
-										line: 2
-									}
-								}
+								loc: SourceLocation es2015/modules/duplicate-named-export-destructuring12/input.js 2:13-2:60
 								properties: Array [
 									JSBindingObjectPatternProperty {
 										key: JSStaticPropertyKey {
 											value: JSIdentifier {
 												name: "a"
-												loc: Object {
-													filename: "es2015/modules/duplicate-named-export-destructuring12/input.js"
-													identifierName: "a"
-													end: Object {
-														column: 16
-														line: 2
-													}
-													start: Object {
-														column: 15
-														line: 2
-													}
-												}
+												loc: SourceLocation es2015/modules/duplicate-named-export-destructuring12/input.js 2:15-2:16 (a)
 											}
-											loc: Object {
-												filename: "es2015/modules/duplicate-named-export-destructuring12/input.js"
-												end: Object {
-													column: 16
-													line: 2
-												}
-												start: Object {
-													column: 15
-													line: 2
-												}
-											}
+											loc: SourceLocation es2015/modules/duplicate-named-export-destructuring12/input.js 2:15-2:16
 										}
 										value: JSBindingArrayPattern {
 											rest: undefined
-											loc: Object {
-												filename: "es2015/modules/duplicate-named-export-destructuring12/input.js"
-												end: Object {
-													column: 27
-													line: 2
-												}
-												start: Object {
-													column: 18
-													line: 2
-												}
-											}
+											loc: SourceLocation es2015/modules/duplicate-named-export-destructuring12/input.js 2:18-2:27
 											elements: Array [
 												JSBindingObjectPattern {
 													rest: undefined
-													loc: Object {
-														filename: "es2015/modules/duplicate-named-export-destructuring12/input.js"
-														end: Object {
-															column: 26
-															line: 2
-														}
-														start: Object {
-															column: 19
-															line: 2
-														}
-													}
+													loc: SourceLocation es2015/modules/duplicate-named-export-destructuring12/input.js 2:19-2:26
 													meta: JSPatternMeta {
 														optional: undefined
 														typeAnnotation: undefined
-														loc: Object {
-															filename: "es2015/modules/duplicate-named-export-destructuring12/input.js"
-															end: Object {
-																column: 26
-																line: 2
-															}
-															start: Object {
-																column: 19
-																line: 2
-															}
-														}
+														loc: SourceLocation es2015/modules/duplicate-named-export-destructuring12/input.js 2:19-2:26
 													}
 													properties: Array [
 														JSBindingObjectPatternProperty {
 															key: JSStaticPropertyKey {
 																value: JSIdentifier {
 																	name: "foo"
-																	loc: Object {
-																		filename: "es2015/modules/duplicate-named-export-destructuring12/input.js"
-																		identifierName: "foo"
-																		end: Object {
-																			column: 24
-																			line: 2
-																		}
-																		start: Object {
-																			column: 21
-																			line: 2
-																		}
-																	}
+																	loc: SourceLocation es2015/modules/duplicate-named-export-destructuring12/input.js 2:21-2:24 (foo)
 																}
-																loc: Object {
-																	filename: "es2015/modules/duplicate-named-export-destructuring12/input.js"
-																	end: Object {
-																		column: 24
-																		line: 2
-																	}
-																	start: Object {
-																		column: 21
-																		line: 2
-																	}
-																}
+																loc: SourceLocation es2015/modules/duplicate-named-export-destructuring12/input.js 2:21-2:24
 															}
 															value: JSBindingIdentifier {
 																name: "foo"
-																loc: Object {
-																	filename: "es2015/modules/duplicate-named-export-destructuring12/input.js"
-																	identifierName: "foo"
-																	end: Object {
-																		column: 24
-																		line: 2
-																	}
-																	start: Object {
-																		column: 21
-																		line: 2
-																	}
-																}
+																loc: SourceLocation es2015/modules/duplicate-named-export-destructuring12/input.js 2:21-2:24 (foo)
 															}
-															loc: Object {
-																filename: "es2015/modules/duplicate-named-export-destructuring12/input.js"
-																end: Object {
-																	column: 24
-																	line: 2
-																}
-																start: Object {
-																	column: 21
-																	line: 2
-																}
-															}
+															loc: SourceLocation es2015/modules/duplicate-named-export-destructuring12/input.js 2:21-2:24
 														}
 													]
 												}
 											]
 										}
-										loc: Object {
-											filename: "es2015/modules/duplicate-named-export-destructuring12/input.js"
-											end: Object {
-												column: 27
-												line: 2
-											}
-											start: Object {
-												column: 15
-												line: 2
-											}
-										}
+										loc: SourceLocation es2015/modules/duplicate-named-export-destructuring12/input.js 2:15-2:27
 									}
 									JSBindingObjectPatternProperty {
 										key: JSStaticPropertyKey {
 											value: JSIdentifier {
 												name: "b"
-												loc: Object {
-													filename: "es2015/modules/duplicate-named-export-destructuring12/input.js"
-													identifierName: "b"
-													end: Object {
-														column: 30
-														line: 2
-													}
-													start: Object {
-														column: 29
-														line: 2
-													}
-												}
+												loc: SourceLocation es2015/modules/duplicate-named-export-destructuring12/input.js 2:29-2:30 (b)
 											}
-											loc: Object {
-												filename: "es2015/modules/duplicate-named-export-destructuring12/input.js"
-												end: Object {
-													column: 30
-													line: 2
-												}
-												start: Object {
-													column: 29
-													line: 2
-												}
-											}
+											loc: SourceLocation es2015/modules/duplicate-named-export-destructuring12/input.js 2:29-2:30
 										}
 										value: JSBindingObjectPattern {
 											rest: undefined
-											loc: Object {
-												filename: "es2015/modules/duplicate-named-export-destructuring12/input.js"
-												end: Object {
-													column: 58
-													line: 2
-												}
-												start: Object {
-													column: 32
-													line: 2
-												}
-											}
+											loc: SourceLocation es2015/modules/duplicate-named-export-destructuring12/input.js 2:32-2:58
 											properties: Array [
 												JSBindingObjectPatternProperty {
 													key: JSStaticPropertyKey {
 														value: JSIdentifier {
 															name: "foo2"
-															loc: Object {
-																filename: "es2015/modules/duplicate-named-export-destructuring12/input.js"
-																identifierName: "foo2"
-																end: Object {
-																	column: 38
-																	line: 2
-																}
-																start: Object {
-																	column: 34
-																	line: 2
-																}
-															}
+															loc: SourceLocation es2015/modules/duplicate-named-export-destructuring12/input.js 2:34-2:38 (foo2)
 														}
-														loc: Object {
-															filename: "es2015/modules/duplicate-named-export-destructuring12/input.js"
-															end: Object {
-																column: 38
-																line: 2
-															}
-															start: Object {
-																column: 34
-																line: 2
-															}
-														}
+														loc: SourceLocation es2015/modules/duplicate-named-export-destructuring12/input.js 2:34-2:38
 													}
 													value: JSBindingArrayPattern {
 														rest: undefined
-														loc: Object {
-															filename: "es2015/modules/duplicate-named-export-destructuring12/input.js"
-															end: Object {
-																column: 56
-																line: 2
-															}
-															start: Object {
-																column: 40
-																line: 2
-															}
-														}
+														loc: SourceLocation es2015/modules/duplicate-named-export-destructuring12/input.js 2:40-2:56
 														elements: Array [
 															JSBindingObjectPattern {
 																rest: undefined
-																loc: Object {
-																	filename: "es2015/modules/duplicate-named-export-destructuring12/input.js"
-																	end: Object {
-																		column: 55
-																		line: 2
-																	}
-																	start: Object {
-																		column: 41
-																		line: 2
-																	}
-																}
+																loc: SourceLocation es2015/modules/duplicate-named-export-destructuring12/input.js 2:41-2:55
 																meta: JSPatternMeta {
 																	optional: undefined
 																	typeAnnotation: undefined
-																	loc: Object {
-																		filename: "es2015/modules/duplicate-named-export-destructuring12/input.js"
-																		end: Object {
-																			column: 55
-																			line: 2
-																		}
-																		start: Object {
-																			column: 41
-																			line: 2
-																		}
-																	}
+																	loc: SourceLocation es2015/modules/duplicate-named-export-destructuring12/input.js 2:41-2:55
 																}
 																properties: Array [
 																	JSBindingObjectPatternProperty {
 																		key: JSStaticPropertyKey {
 																			value: JSIdentifier {
 																				name: "foo3"
-																				loc: Object {
-																					filename: "es2015/modules/duplicate-named-export-destructuring12/input.js"
-																					identifierName: "foo3"
-																					end: Object {
-																						column: 47
-																						line: 2
-																					}
-																					start: Object {
-																						column: 43
-																						line: 2
-																					}
-																				}
+																				loc: SourceLocation es2015/modules/duplicate-named-export-destructuring12/input.js 2:43-2:47 (foo3)
 																			}
-																			loc: Object {
-																				filename: "es2015/modules/duplicate-named-export-destructuring12/input.js"
-																				end: Object {
-																					column: 47
-																					line: 2
-																				}
-																				start: Object {
-																					column: 43
-																					line: 2
-																				}
-																			}
+																			loc: SourceLocation es2015/modules/duplicate-named-export-destructuring12/input.js 2:43-2:47
 																		}
 																		value: JSBindingIdentifier {
 																			name: "foo4"
-																			loc: Object {
-																				filename: "es2015/modules/duplicate-named-export-destructuring12/input.js"
-																				identifierName: "foo4"
-																				end: Object {
-																					column: 53
-																					line: 2
-																				}
-																				start: Object {
-																					column: 49
-																					line: 2
-																				}
-																			}
+																			loc: SourceLocation es2015/modules/duplicate-named-export-destructuring12/input.js 2:49-2:53 (foo4)
 																		}
-																		loc: Object {
-																			filename: "es2015/modules/duplicate-named-export-destructuring12/input.js"
-																			end: Object {
-																				column: 53
-																				line: 2
-																			}
-																			start: Object {
-																				column: 43
-																				line: 2
-																			}
-																		}
+																		loc: SourceLocation es2015/modules/duplicate-named-export-destructuring12/input.js 2:43-2:53
 																	}
 																]
 															}
 														]
 													}
-													loc: Object {
-														filename: "es2015/modules/duplicate-named-export-destructuring12/input.js"
-														end: Object {
-															column: 56
-															line: 2
-														}
-														start: Object {
-															column: 34
-															line: 2
-														}
-													}
+													loc: SourceLocation es2015/modules/duplicate-named-export-destructuring12/input.js 2:34-2:56
 												}
 											]
 										}
-										loc: Object {
-											filename: "es2015/modules/duplicate-named-export-destructuring12/input.js"
-											end: Object {
-												column: 58
-												line: 2
-											}
-											start: Object {
-												column: 29
-												line: 2
-											}
-										}
+										loc: SourceLocation es2015/modules/duplicate-named-export-destructuring12/input.js 2:29-2:58
 									}
 								]
 							}
-							loc: Object {
-								filename: "es2015/modules/duplicate-named-export-destructuring12/input.js"
-								end: Object {
-									column: 66
-									line: 2
-								}
-								start: Object {
-									column: 13
-									line: 2
-								}
-							}
+							loc: SourceLocation es2015/modules/duplicate-named-export-destructuring12/input.js 2:13-2:66
 							init: JSReferenceIdentifier {
 								name: "bar"
-								loc: Object {
-									filename: "es2015/modules/duplicate-named-export-destructuring12/input.js"
-									identifierName: "bar"
-									end: Object {
-										column: 66
-										line: 2
-									}
-									start: Object {
-										column: 63
-										line: 2
-									}
-								}
+								loc: SourceLocation es2015/modules/duplicate-named-export-destructuring12/input.js 2:63-2:66 (bar)
 							}
 						}
 					]
@@ -562,6 +181,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

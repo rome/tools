@@ -12,75 +12,24 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "es2015/array-rest-spread/comma-after-spread/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2015/array-rest-spread/comma-after-spread/input.js"
-		end: Object {
-			column: 8
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2015/array-rest-spread/comma-after-spread/input.js 1:0-1:8
+	path: UIDPath<es2015/array-rest-spread/comma-after-spread/input.js>
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "es2015/array-rest-spread/comma-after-spread/input.js"
-				end: Object {
-					column: 8
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2015/array-rest-spread/comma-after-spread/input.js 1:0-1:8
 			expression: JSArrayExpression {
-				loc: Object {
-					filename: "es2015/array-rest-spread/comma-after-spread/input.js"
-					end: Object {
-						column: 7
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/array-rest-spread/comma-after-spread/input.js 1:0-1:7
 				elements: Array [
 					JSSpreadElement {
-						loc: Object {
-							filename: "es2015/array-rest-spread/comma-after-spread/input.js"
-							end: Object {
-								column: 5
-								line: 1
-							}
-							start: Object {
-								column: 1
-								line: 1
-							}
-						}
+						loc: SourceLocation es2015/array-rest-spread/comma-after-spread/input.js 1:1-1:5
 						argument: JSReferenceIdentifier {
 							name: "a"
-							loc: Object {
-								filename: "es2015/array-rest-spread/comma-after-spread/input.js"
-								identifierName: "a"
-								end: Object {
-									column: 5
-									line: 1
-								}
-								start: Object {
-									column: 4
-									line: 1
-								}
-							}
+							loc: SourceLocation es2015/array-rest-spread/comma-after-spread/input.js 1:4-1:5 (a)
 						}
 					}
 				]
@@ -93,6 +42,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

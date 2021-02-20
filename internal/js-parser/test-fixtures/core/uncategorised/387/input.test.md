@@ -10,37 +10,28 @@
 JSRoot {
 	corrupt: true
 	directives: Array []
-	filename: "core/uncategorised/387/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "core/uncategorised/387/input.js"
-		end: Object {
-			column: 1
-			line: 4
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation core/uncategorised/387/input.js 1:0-4:1
+	path: UIDPath<core/uncategorised/387/input.js>
 	comments: Array [
 		CommentBlock {
 			id: "0"
 			value: " Some multiline\ncomment "
-			loc: Object {
-				filename: "core/uncategorised/387/input.js"
-				end: Object {
-					column: 10
-					line: 3
-				}
-				start: Object {
-					column: 0
-					line: 2
-				}
+			loc: SourceLocation core/uncategorised/387/input.js 2:0-3:10
+		}
+	]
+	body: Array [
+		JSExpressionStatement {
+			leadingComments: Array ["0"]
+			loc: SourceLocation core/uncategorised/387/input.js 4:0-4:1
+			expression: JSReferenceIdentifier {
+				name: "INVALID_PLACEHOLDER"
+				leadingComments: undefined
+				loc: SourceLocation core/uncategorised/387/input.js 4:0-4:1
 			}
 		}
 	]
@@ -49,57 +40,17 @@ JSRoot {
 			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse"
 				categoryValue: "js"
-				message: Array [
-					RAW_MARKUP {value: "Unknown start to an "}
-					"statement expression"
-				]
+				category: Array ["parse"]
+				message: RAW_MARKUP {value: "Unknown start to an statement expression"}
 			}
 			location: Object {
-				filename: "core/uncategorised/387/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 0
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 4
-				}
-			}
-		}
-	]
-	body: Array [
-		JSExpressionStatement {
-			leadingComments: Array ["0"]
-			loc: Object {
-				filename: "core/uncategorised/387/input.js"
-				end: Object {
-					column: 1
-					line: 4
-				}
-				start: Object {
-					column: 0
-					line: 4
-				}
-			}
-			expression: JSReferenceIdentifier {
-				name: "INVALID_PLACEHOLDER"
-				leadingComments: undefined
-				loc: Object {
-					filename: "core/uncategorised/387/input.js"
-					end: Object {
-						column: 1
-						line: 4
-					}
-					start: Object {
-						column: 0
-						line: 4
-					}
-				}
+				end: Position 1:0
+				path: UIDPath<core/uncategorised/387/input.js>
+				start: Position 4:0
 			}
 		}
 	]
@@ -117,8 +68,5 @@ JSRoot {
     2 │ /* Some multiline
     3 │ comment */
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

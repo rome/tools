@@ -12,106 +12,36 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "es2016/exponentiation-operator/5/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2016/exponentiation-operator/5/input.js"
-		end: Object {
-			column: 13
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2016/exponentiation-operator/5/input.js 1:0-1:13
+	path: UIDPath<es2016/exponentiation-operator/5/input.js>
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "es2016/exponentiation-operator/5/input.js"
-				end: Object {
-					column: 13
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2016/exponentiation-operator/5/input.js 1:0-1:13
 			expression: JSBinaryExpression {
 				operator: "**"
-				loc: Object {
-					filename: "es2016/exponentiation-operator/5/input.js"
-					end: Object {
-						column: 13
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation es2016/exponentiation-operator/5/input.js 1:0-1:13
 				left: JSNumericLiteral {
 					value: 2
 					format: undefined
-					loc: Object {
-						filename: "es2016/exponentiation-operator/5/input.js"
-						end: Object {
-							column: 1
-							line: 1
-						}
-						start: Object {
-							column: 0
-							line: 1
-						}
-					}
+					loc: SourceLocation es2016/exponentiation-operator/5/input.js 1:0-1:1
 				}
 				right: JSBinaryExpression {
 					operator: "**"
-					loc: Object {
-						filename: "es2016/exponentiation-operator/5/input.js"
-						end: Object {
-							column: 12
-							line: 1
-						}
-						start: Object {
-							column: 6
-							line: 1
-						}
-					}
+					loc: SourceLocation es2016/exponentiation-operator/5/input.js 1:6-1:12
 					left: JSNumericLiteral {
 						value: 3
 						format: undefined
-						loc: Object {
-							filename: "es2016/exponentiation-operator/5/input.js"
-							end: Object {
-								column: 7
-								line: 1
-							}
-							start: Object {
-								column: 6
-								line: 1
-							}
-						}
+						loc: SourceLocation es2016/exponentiation-operator/5/input.js 1:6-1:7
 					}
 					right: JSNumericLiteral {
 						value: 2
 						format: undefined
-						loc: Object {
-							filename: "es2016/exponentiation-operator/5/input.js"
-							end: Object {
-								column: 12
-								line: 1
-							}
-							start: Object {
-								column: 11
-								line: 1
-							}
-						}
+						loc: SourceLocation es2016/exponentiation-operator/5/input.js 1:11-1:12
 					}
 				}
 			}
@@ -123,6 +53,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

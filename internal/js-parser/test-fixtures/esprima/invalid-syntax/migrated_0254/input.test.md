@@ -11,105 +11,48 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "esprima/invalid-syntax/migrated_0254/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "esprima/invalid-syntax/migrated_0254/input.js"
-		end: Object {
-			column: 0
-			line: 2
+	loc: SourceLocation esprima/invalid-syntax/migrated_0254/input.js 1:0-2:0
+	path: UIDPath<esprima/invalid-syntax/migrated_0254/input.js>
+	body: Array [
+		JSVariableDeclarationStatement {
+			loc: SourceLocation esprima/invalid-syntax/migrated_0254/input.js 1:0-2:0
+			declaration: JSVariableDeclaration {
+				kind: "const"
+				loc: SourceLocation esprima/invalid-syntax/migrated_0254/input.js 1:0-2:0
+				declarations: Array [
+					JSVariableDeclarator {
+						id: JSBindingIdentifier {
+							name: ""
+							loc: SourceLocation esprima/invalid-syntax/migrated_0254/input.js 2:0-2:0 ()
+						}
+						init: undefined
+						loc: SourceLocation esprima/invalid-syntax/migrated_0254/input.js 2:0-2:0
+					}
+				]
+			}
 		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	]
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse"
 				categoryValue: "js"
+				category: Array ["parse"]
 				message: RAW_MARKUP {value: "Expected an identifier"}
 			}
 			location: Object {
-				filename: "esprima/invalid-syntax/migrated_0254/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 5
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 2
-				}
-			}
-		}
-	]
-	body: Array [
-		JSVariableDeclarationStatement {
-			loc: Object {
-				filename: "esprima/invalid-syntax/migrated_0254/input.js"
-				end: Object {
-					column: 0
-					line: 2
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
-			declaration: JSVariableDeclaration {
-				kind: "const"
-				loc: Object {
-					filename: "esprima/invalid-syntax/migrated_0254/input.js"
-					end: Object {
-						column: 0
-						line: 2
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
-				declarations: Array [
-					JSVariableDeclarator {
-						id: JSBindingIdentifier {
-							name: ""
-							loc: Object {
-								filename: "esprima/invalid-syntax/migrated_0254/input.js"
-								identifierName: ""
-								end: Object {
-									column: 0
-									line: 2
-								}
-								start: Object {
-									column: 0
-									line: 2
-								}
-							}
-						}
-						init: undefined
-						loc: Object {
-							filename: "esprima/invalid-syntax/migrated_0254/input.js"
-							end: Object {
-								column: 0
-								line: 2
-							}
-							start: Object {
-								column: 0
-								line: 2
-							}
-						}
-					}
-				]
+				end: Position 1:5
+				path: UIDPath<esprima/invalid-syntax/migrated_0254/input.js>
+				start: Position 2:0
 			}
 		}
 	]
@@ -126,8 +69,5 @@ JSRoot {
 
     const
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

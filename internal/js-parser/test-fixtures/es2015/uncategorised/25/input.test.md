@@ -12,108 +12,37 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "es2015/uncategorised/25/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2015/uncategorised/25/input.js"
-		end: Object {
-			column: 11
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2015/uncategorised/25/input.js 1:0-1:11
+	path: UIDPath<es2015/uncategorised/25/input.js>
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "es2015/uncategorised/25/input.js"
-				end: Object {
-					column: 11
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2015/uncategorised/25/input.js 1:0-1:11
 			expression: JSNewExpression {
 				arguments: Array []
 				optional: undefined
 				typeArguments: undefined
-				loc: Object {
-					filename: "es2015/uncategorised/25/input.js"
-					end: Object {
-						column: 11
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/uncategorised/25/input.js 1:0-1:11
 				callee: JSTaggedTemplateExpression {
 					typeArguments: undefined
-					loc: Object {
-						filename: "es2015/uncategorised/25/input.js"
-						end: Object {
-							column: 11
-							line: 1
-						}
-						start: Object {
-							column: 4
-							line: 1
-						}
-					}
+					loc: SourceLocation es2015/uncategorised/25/input.js 1:4-1:11
 					tag: JSReferenceIdentifier {
 						name: "raw"
-						loc: Object {
-							filename: "es2015/uncategorised/25/input.js"
-							identifierName: "raw"
-							end: Object {
-								column: 7
-								line: 1
-							}
-							start: Object {
-								column: 4
-								line: 1
-							}
-						}
+						loc: SourceLocation es2015/uncategorised/25/input.js 1:4-1:7 (raw)
 					}
 					quasi: JSTemplateLiteral {
 						expressions: Array []
-						loc: Object {
-							filename: "es2015/uncategorised/25/input.js"
-							end: Object {
-								column: 11
-								line: 1
-							}
-							start: Object {
-								column: 7
-								line: 1
-							}
-						}
+						loc: SourceLocation es2015/uncategorised/25/input.js 1:7-1:11
 						quasis: Array [
 							JSTemplateElement {
 								cooked: "42"
 								raw: "42"
 								tail: true
-								loc: Object {
-									filename: "es2015/uncategorised/25/input.js"
-									end: Object {
-										column: 10
-										line: 1
-									}
-									start: Object {
-										column: 8
-										line: 1
-									}
-								}
+								loc: SourceLocation es2015/uncategorised/25/input.js 1:8-1:10
 							}
 						]
 					}
@@ -127,6 +56,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

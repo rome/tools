@@ -1,17 +1,22 @@
 import {VERSION} from "@internal/core";
-import {AbsoluteFilePath, AbsoluteFilePathMap} from "@internal/path";
+import {AbsoluteFilePath, AbsoluteFilePathMap, UIDPath} from "@internal/path";
 import {FSStats, createReadStream, exists, lstat} from "@internal/fs";
 import Cache from "../common/Cache";
 import Worker from "./Worker";
 import {
 	RSERValue,
 	decodeSingleMessageRSERStream,
+	hashRSERValue,
 } from "@internal/codec-binary-serial";
 import {FileReference} from "../common/types/files";
 import {Consumer, consumeUnknown} from "@internal/consume";
-import {JSONObject} from "@internal/codec-config";
 import {sha256} from "@internal/string-utils";
-import {DiagnosticIntegrity} from "@internal/diagnostics";
+import {
+	DIAGNOSTIC_CATEGORIES,
+	DiagnosticIntegrity,
+} from "@internal/diagnostics";
+import {markup} from "@internal/markup";
+import {isPlainObject} from "@internal/typescript-helpers";
 
 // This can be shared across multiple machines safely
 export type PortableCacheMetadata = {
@@ -73,15 +78,15 @@ const localMetaLoader = createCacheEntryLoader<LocalCacheMetadata>(
 	},
 );
 
-type CacheKeyParts = Array<string | JSONObject>;
+type CacheKeyParts = RSERValue[];
 
 function serializeCacheKey(rawParts: CacheKeyParts): string {
 	const parts: string[] = [];
 	for (const part of rawParts) {
 		if (typeof part === "string") {
 			parts.push(part);
-		} else if (Object.keys(part).length > 0) {
-			parts.push(sha256.sync(JSON.stringify(part)));
+		} else if (!isPlainObject(part) || Object.keys(part).length > 0) {
+			parts.push(hashRSERValue(part));
 		}
 	}
 	return parts.join("-");
@@ -89,8 +94,8 @@ function serializeCacheKey(rawParts: CacheKeyParts): string {
 
 export class CacheEntry<Value extends RSERValue = RSERValue> {
 	constructor(
-		cache: Cache,
 		file: CacheFile,
+		cache: Cache,
 		name: string,
 		loader: CacheEntryLoader<Value>,
 	) {
@@ -116,15 +121,28 @@ export class CacheEntry<Value extends RSERValue = RSERValue> {
 			return undefined;
 		}
 
+		if (this.cache.readDisabled) {
+			return undefined;
+		}
+
 		const {path} = this;
 		if (!(await exists(path))) {
 			return undefined;
 		}
 
 		const stream = createReadStream(path);
-		const data = await decodeSingleMessageRSERStream(stream);
-		const consumer = consumeUnknown(data, "parse", "rser");
+		const decoded = await decodeSingleMessageRSERStream(stream);
 
+		if (decoded.type === "INCOMPATIBLE") {
+			this.cache.logger.warn(markup`Incompatible cache file ${path} ignored`);
+			return undefined;
+		}
+
+		const consumer = consumeUnknown(
+			decoded.value,
+			DIAGNOSTIC_CATEGORIES.parse,
+			"rser",
+		);
 		const value = this.loader.validate(consumer);
 		this.value = value;
 		return value;
@@ -302,18 +320,22 @@ class CacheFile {
 	private async createFreshPortableMetadata(): Promise<PortableCacheMetadataHashless> {
 		const {ref} = this;
 		const project = this.worker.getProject(ref.project);
-		const configHashes = [...project.configHashes];
+		const configCacheKeys: string[] = [];
+
+		for (const key of Object.keys(project.configCacheKeys).sort()) {
+			configCacheKeys.push(`${key}:${project.configCacheKeys[key]}`);
+		}
 
 		if (ref.manifest !== undefined) {
 			const manifest = this.worker.getPartialManifest(ref.manifest);
-			configHashes.push(manifest.hash);
+			configCacheKeys.push(`manifest:${manifest.hash}`);
 		}
 
 		const stats = await this.getStats();
 
 		return {
 			version: VERSION,
-			cacheKey: configHashes.join(";"),
+			cacheKey: configCacheKeys.join(";"),
 			size: stats.size,
 		};
 	}
@@ -344,8 +366,8 @@ class CacheFile {
 		}
 
 		const entry: CacheEntry<Value> = new CacheEntry(
-			this.cache,
 			this,
+			this.cache,
 			key,
 			loader,
 		);
@@ -360,8 +382,10 @@ export default class WorkerCache extends Cache {
 			"worker",
 			{
 				userConfig: worker.userConfig,
-				logger: worker.logger,
+				parentLogger: worker.logger,
 				fatalErrorHandler: worker.fatalErrorHandler,
+				writeDisabled: worker.options.cacheWriteDisabled,
+				readDisabled: worker.options.cacheReadDisabled,
 			},
 		);
 		this.worker = worker;
@@ -371,7 +395,7 @@ export default class WorkerCache extends Cache {
 	private worker: Worker;
 	private loadedFiles: AbsoluteFilePathMap<CacheFile>;
 
-	public async remove(uid: string, path: AbsoluteFilePath) {
+	public async remove(uid: UIDPath, path: AbsoluteFilePath) {
 		this.loadedFiles.delete(path);
 		await super.remove(uid, path);
 	}

@@ -12,78 +12,27 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "es2015/yield/yield-star-in-global-scope-is-multiplication/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2015/yield/yield-star-in-global-scope-is-multiplication/input.js"
-		end: Object {
-			column: 9
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2015/yield/yield-star-in-global-scope-is-multiplication/input.js 1:0-1:9
+	path: UIDPath<es2015/yield/yield-star-in-global-scope-is-multiplication/input.js>
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "es2015/yield/yield-star-in-global-scope-is-multiplication/input.js"
-				end: Object {
-					column: 9
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2015/yield/yield-star-in-global-scope-is-multiplication/input.js 1:0-1:9
 			expression: JSBinaryExpression {
 				operator: "*"
-				loc: Object {
-					filename: "es2015/yield/yield-star-in-global-scope-is-multiplication/input.js"
-					end: Object {
-						column: 9
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/yield/yield-star-in-global-scope-is-multiplication/input.js 1:0-1:9
 				left: JSReferenceIdentifier {
 					name: "yield"
-					loc: Object {
-						filename: "es2015/yield/yield-star-in-global-scope-is-multiplication/input.js"
-						identifierName: "yield"
-						end: Object {
-							column: 5
-							line: 1
-						}
-						start: Object {
-							column: 0
-							line: 1
-						}
-					}
+					loc: SourceLocation es2015/yield/yield-star-in-global-scope-is-multiplication/input.js 1:0-1:5 (yield)
 				}
 				right: JSNumericLiteral {
 					value: 10
 					format: undefined
-					loc: Object {
-						filename: "es2015/yield/yield-star-in-global-scope-is-multiplication/input.js"
-						end: Object {
-							column: 9
-							line: 1
-						}
-						start: Object {
-							column: 7
-							line: 1
-						}
-					}
+					loc: SourceLocation es2015/yield/yield-star-in-global-scope-is-multiplication/input.js 1:7-1:9
 				}
 			}
 		}
@@ -94,6 +43,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

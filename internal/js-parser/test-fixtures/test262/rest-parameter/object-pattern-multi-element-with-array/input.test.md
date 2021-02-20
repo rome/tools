@@ -12,65 +12,24 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "test262/rest-parameter/object-pattern-multi-element-with-array/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "test262/rest-parameter/object-pattern-multi-element-with-array/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation test262/rest-parameter/object-pattern-multi-element-with-array/input.js 1:0-2:0
+	path: UIDPath<test262/rest-parameter/object-pattern-multi-element-with-array/input.js>
 	body: Array [
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "multiElementWithArray"
-				loc: Object {
-					filename: "test262/rest-parameter/object-pattern-multi-element-with-array/input.js"
-					identifierName: "multiElementWithArray"
-					end: Object {
-						column: 30
-						line: 1
-					}
-					start: Object {
-						column: 9
-						line: 1
-					}
-				}
+				loc: SourceLocation test262/rest-parameter/object-pattern-multi-element-with-array/input.js 1:9-1:30 (multiElementWithArray)
 			}
-			loc: Object {
-				filename: "test262/rest-parameter/object-pattern-multi-element-with-array/input.js"
-				end: Object {
-					column: 57
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation test262/rest-parameter/object-pattern-multi-element-with-array/input.js 1:0-1:57
 			body: JSBlockStatement {
 				body: Array []
 				directives: Array []
-				loc: Object {
-					filename: "test262/rest-parameter/object-pattern-multi-element-with-array/input.js"
-					end: Object {
-						column: 57
-						line: 1
-					}
-					start: Object {
-						column: 55
-						line: 1
-					}
-				}
+				loc: SourceLocation test262/rest-parameter/object-pattern-multi-element-with-array/input.js 1:55-1:57
 			}
 			head: JSFunctionHead {
 				async: false
@@ -80,275 +39,79 @@ JSRoot {
 				returnType: undefined
 				thisType: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "test262/rest-parameter/object-pattern-multi-element-with-array/input.js"
-					end: Object {
-						column: 54
-						line: 1
-					}
-					start: Object {
-						column: 30
-						line: 1
-					}
-				}
+				loc: SourceLocation test262/rest-parameter/object-pattern-multi-element-with-array/input.js 1:30-1:54
 				rest: JSBindingObjectPattern {
 					rest: undefined
-					loc: Object {
-						filename: "test262/rest-parameter/object-pattern-multi-element-with-array/input.js"
-						end: Object {
-							column: 53
-							line: 1
-						}
-						start: Object {
-							column: 34
-							line: 1
-						}
-					}
+					loc: SourceLocation test262/rest-parameter/object-pattern-multi-element-with-array/input.js 1:34-1:53
 					meta: JSPatternMeta {
 						optional: undefined
 						typeAnnotation: undefined
-						loc: Object {
-							filename: "test262/rest-parameter/object-pattern-multi-element-with-array/input.js"
-							end: Object {
-								column: 53
-								line: 1
-							}
-							start: Object {
-								column: 34
-								line: 1
-							}
-						}
+						loc: SourceLocation test262/rest-parameter/object-pattern-multi-element-with-array/input.js 1:34-1:53
 					}
 					properties: Array [
 						JSBindingObjectPatternProperty {
 							key: JSStaticPropertyKey {
 								value: JSIdentifier {
 									name: "p"
-									loc: Object {
-										filename: "test262/rest-parameter/object-pattern-multi-element-with-array/input.js"
-										identifierName: "p"
-										end: Object {
-											column: 36
-											line: 1
-										}
-										start: Object {
-											column: 35
-											line: 1
-										}
-									}
+									loc: SourceLocation test262/rest-parameter/object-pattern-multi-element-with-array/input.js 1:35-1:36 (p)
 								}
-								loc: Object {
-									filename: "test262/rest-parameter/object-pattern-multi-element-with-array/input.js"
-									end: Object {
-										column: 36
-										line: 1
-									}
-									start: Object {
-										column: 35
-										line: 1
-									}
-								}
+								loc: SourceLocation test262/rest-parameter/object-pattern-multi-element-with-array/input.js 1:35-1:36
 							}
 							value: JSBindingArrayPattern {
 								rest: undefined
-								loc: Object {
-									filename: "test262/rest-parameter/object-pattern-multi-element-with-array/input.js"
-									end: Object {
-										column: 41
-										line: 1
-									}
-									start: Object {
-										column: 38
-										line: 1
-									}
-								}
+								loc: SourceLocation test262/rest-parameter/object-pattern-multi-element-with-array/input.js 1:38-1:41
 								elements: Array [
 									JSBindingIdentifier {
 										name: "a"
-										loc: Object {
-											filename: "test262/rest-parameter/object-pattern-multi-element-with-array/input.js"
-											identifierName: "a"
-											end: Object {
-												column: 40
-												line: 1
-											}
-											start: Object {
-												column: 39
-												line: 1
-											}
-										}
+										loc: SourceLocation test262/rest-parameter/object-pattern-multi-element-with-array/input.js 1:39-1:40 (a)
 										meta: JSPatternMeta {
 											optional: undefined
 											typeAnnotation: undefined
-											loc: Object {
-												filename: "test262/rest-parameter/object-pattern-multi-element-with-array/input.js"
-												end: Object {
-													column: 40
-													line: 1
-												}
-												start: Object {
-													column: 39
-													line: 1
-												}
-											}
+											loc: SourceLocation test262/rest-parameter/object-pattern-multi-element-with-array/input.js 1:39-1:40
 										}
 									}
 								]
 							}
-							loc: Object {
-								filename: "test262/rest-parameter/object-pattern-multi-element-with-array/input.js"
-								end: Object {
-									column: 41
-									line: 1
-								}
-								start: Object {
-									column: 35
-									line: 1
-								}
-							}
+							loc: SourceLocation test262/rest-parameter/object-pattern-multi-element-with-array/input.js 1:35-1:41
 						}
 						JSBindingObjectPatternProperty {
 							key: JSStaticPropertyKey {
 								value: JSIdentifier {
 									name: "b"
-									loc: Object {
-										filename: "test262/rest-parameter/object-pattern-multi-element-with-array/input.js"
-										identifierName: "b"
-										end: Object {
-											column: 44
-											line: 1
-										}
-										start: Object {
-											column: 43
-											line: 1
-										}
-									}
+									loc: SourceLocation test262/rest-parameter/object-pattern-multi-element-with-array/input.js 1:43-1:44 (b)
 								}
-								loc: Object {
-									filename: "test262/rest-parameter/object-pattern-multi-element-with-array/input.js"
-									end: Object {
-										column: 44
-										line: 1
-									}
-									start: Object {
-										column: 43
-										line: 1
-									}
-								}
+								loc: SourceLocation test262/rest-parameter/object-pattern-multi-element-with-array/input.js 1:43-1:44
 							}
 							value: JSBindingIdentifier {
 								name: "b"
-								loc: Object {
-									filename: "test262/rest-parameter/object-pattern-multi-element-with-array/input.js"
-									identifierName: "b"
-									end: Object {
-										column: 44
-										line: 1
-									}
-									start: Object {
-										column: 43
-										line: 1
-									}
-								}
+								loc: SourceLocation test262/rest-parameter/object-pattern-multi-element-with-array/input.js 1:43-1:44 (b)
 							}
-							loc: Object {
-								filename: "test262/rest-parameter/object-pattern-multi-element-with-array/input.js"
-								end: Object {
-									column: 44
-									line: 1
-								}
-								start: Object {
-									column: 43
-									line: 1
-								}
-							}
+							loc: SourceLocation test262/rest-parameter/object-pattern-multi-element-with-array/input.js 1:43-1:44
 						}
 						JSBindingObjectPatternProperty {
 							key: JSStaticPropertyKey {
 								value: JSIdentifier {
 									name: "q"
-									loc: Object {
-										filename: "test262/rest-parameter/object-pattern-multi-element-with-array/input.js"
-										identifierName: "q"
-										end: Object {
-											column: 47
-											line: 1
-										}
-										start: Object {
-											column: 46
-											line: 1
-										}
-									}
+									loc: SourceLocation test262/rest-parameter/object-pattern-multi-element-with-array/input.js 1:46-1:47 (q)
 								}
-								loc: Object {
-									filename: "test262/rest-parameter/object-pattern-multi-element-with-array/input.js"
-									end: Object {
-										column: 47
-										line: 1
-									}
-									start: Object {
-										column: 46
-										line: 1
-									}
-								}
+								loc: SourceLocation test262/rest-parameter/object-pattern-multi-element-with-array/input.js 1:46-1:47
 							}
 							value: JSBindingArrayPattern {
 								rest: undefined
-								loc: Object {
-									filename: "test262/rest-parameter/object-pattern-multi-element-with-array/input.js"
-									end: Object {
-										column: 52
-										line: 1
-									}
-									start: Object {
-										column: 49
-										line: 1
-									}
-								}
+								loc: SourceLocation test262/rest-parameter/object-pattern-multi-element-with-array/input.js 1:49-1:52
 								elements: Array [
 									JSBindingIdentifier {
 										name: "c"
-										loc: Object {
-											filename: "test262/rest-parameter/object-pattern-multi-element-with-array/input.js"
-											identifierName: "c"
-											end: Object {
-												column: 51
-												line: 1
-											}
-											start: Object {
-												column: 50
-												line: 1
-											}
-										}
+										loc: SourceLocation test262/rest-parameter/object-pattern-multi-element-with-array/input.js 1:50-1:51 (c)
 										meta: JSPatternMeta {
 											optional: undefined
 											typeAnnotation: undefined
-											loc: Object {
-												filename: "test262/rest-parameter/object-pattern-multi-element-with-array/input.js"
-												end: Object {
-													column: 51
-													line: 1
-												}
-												start: Object {
-													column: 50
-													line: 1
-												}
-											}
+											loc: SourceLocation test262/rest-parameter/object-pattern-multi-element-with-array/input.js 1:50-1:51
 										}
 									}
 								]
 							}
-							loc: Object {
-								filename: "test262/rest-parameter/object-pattern-multi-element-with-array/input.js"
-								end: Object {
-									column: 52
-									line: 1
-								}
-								start: Object {
-									column: 46
-									line: 1
-								}
-							}
+							loc: SourceLocation test262/rest-parameter/object-pattern-multi-element-with-array/input.js 1:46-1:52
 						}
 					]
 				}
@@ -361,6 +124,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

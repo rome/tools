@@ -11,97 +11,36 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "esprima/automatic-semicolon-insertion/migrated_0002/input.js"
 	hasHoistedVars: true
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "esprima/automatic-semicolon-insertion/migrated_0002/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation esprima/automatic-semicolon-insertion/migrated_0002/input.js 1:0-2:0
+	path: UIDPath<esprima/automatic-semicolon-insertion/migrated_0002/input.js>
 	comments: Array [
 		CommentBlock {
 			id: "0"
 			value: " comment "
-			loc: Object {
-				filename: "esprima/automatic-semicolon-insertion/migrated_0002/input.js"
-				end: Object {
-					column: 19
-					line: 1
-				}
-				start: Object {
-					column: 6
-					line: 1
-				}
-			}
+			loc: SourceLocation esprima/automatic-semicolon-insertion/migrated_0002/input.js 1:6-1:19
 		}
 	]
 	body: Array [
 		JSVariableDeclarationStatement {
-			loc: Object {
-				filename: "esprima/automatic-semicolon-insertion/migrated_0002/input.js"
-				end: Object {
-					column: 20
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation esprima/automatic-semicolon-insertion/migrated_0002/input.js 1:0-1:20
 			declaration: JSVariableDeclaration {
 				kind: "var"
-				loc: Object {
-					filename: "esprima/automatic-semicolon-insertion/migrated_0002/input.js"
-					end: Object {
-						column: 20
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/automatic-semicolon-insertion/migrated_0002/input.js 1:0-1:20
 				declarations: Array [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "x"
 							trailingComments: undefined
-							loc: Object {
-								filename: "esprima/automatic-semicolon-insertion/migrated_0002/input.js"
-								identifierName: "x"
-								end: Object {
-									column: 5
-									line: 1
-								}
-								start: Object {
-									column: 4
-									line: 1
-								}
-							}
+							loc: SourceLocation esprima/automatic-semicolon-insertion/migrated_0002/input.js 1:4-1:5 (x)
 						}
 						init: undefined
+						loc: SourceLocation esprima/automatic-semicolon-insertion/migrated_0002/input.js 1:4-1:5
 						trailingComments: Array ["0"]
-						loc: Object {
-							filename: "esprima/automatic-semicolon-insertion/migrated_0002/input.js"
-							end: Object {
-								column: 5
-								line: 1
-							}
-							start: Object {
-								column: 4
-								line: 1
-							}
-						}
 					}
 				]
 			}
@@ -113,6 +52,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

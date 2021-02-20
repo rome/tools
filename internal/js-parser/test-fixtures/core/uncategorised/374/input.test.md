@@ -11,147 +11,55 @@ JSRoot {
 	comments: Array []
 	corrupt: true
 	directives: Array []
-	filename: "core/uncategorised/374/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "core/uncategorised/374/input.js"
-		end: Object {
-			column: 32
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation core/uncategorised/374/input.js 1:0-1:32
+	path: UIDPath<core/uncategorised/374/input.js>
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse"
 				categoryValue: "js"
-				message: Array [
-					RAW_MARKUP {value: "Invalid left-hand side in "}
-					"for-in statement"
-				]
+				category: Array ["parse"]
+				message: RAW_MARKUP {value: "Invalid left-hand side in for-in statement"}
 			}
 			location: Object {
-				filename: "core/uncategorised/374/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 10
-					line: 1
-				}
-				start: Object {
-					column: 5
-					line: 1
-				}
+				end: Position 1:10
+				path: UIDPath<core/uncategorised/374/input.js>
+				start: Position 1:5
 			}
 		}
 	]
 	body: Array [
 		JSForInStatement {
-			loc: Object {
-				filename: "core/uncategorised/374/input.js"
-				end: Object {
-					column: 32
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation core/uncategorised/374/input.js 1:0-1:32
 			left: JSAssignmentIdentifier {
 				name: "INVALID_PLACEHOLDER"
-				loc: Object {
-					filename: "core/uncategorised/374/input.js"
-					end: Object {
-						column: 11
-						line: 1
-					}
-					start: Object {
-						column: 12
-						line: 1
-					}
-				}
+				loc: SourceLocation core/uncategorised/374/input.js 1:12-1:11
 			}
 			right: JSReferenceIdentifier {
 				name: "list"
-				loc: Object {
-					filename: "core/uncategorised/374/input.js"
-					identifierName: "list"
-					end: Object {
-						column: 19
-						line: 1
-					}
-					start: Object {
-						column: 15
-						line: 1
-					}
-				}
+				loc: SourceLocation core/uncategorised/374/input.js 1:15-1:19 (list)
 			}
 			body: JSExpressionStatement {
-				loc: Object {
-					filename: "core/uncategorised/374/input.js"
-					end: Object {
-						column: 32
-						line: 1
-					}
-					start: Object {
-						column: 21
-						line: 1
-					}
-				}
+				loc: SourceLocation core/uncategorised/374/input.js 1:21-1:32
 				expression: JSCallExpression {
-					loc: Object {
-						filename: "core/uncategorised/374/input.js"
-						end: Object {
-							column: 31
-							line: 1
-						}
-						start: Object {
-							column: 21
-							line: 1
-						}
-					}
+					loc: SourceLocation core/uncategorised/374/input.js 1:21-1:31
 					callee: JSReferenceIdentifier {
 						name: "process"
-						loc: Object {
-							filename: "core/uncategorised/374/input.js"
-							identifierName: "process"
-							end: Object {
-								column: 28
-								line: 1
-							}
-							start: Object {
-								column: 21
-								line: 1
-							}
-						}
+						loc: SourceLocation core/uncategorised/374/input.js 1:21-1:28 (process)
 					}
 					arguments: Array [
 						JSReferenceIdentifier {
 							name: "x"
-							loc: Object {
-								filename: "core/uncategorised/374/input.js"
-								identifierName: "x"
-								end: Object {
-									column: 30
-									line: 1
-								}
-								start: Object {
-									column: 29
-									line: 1
-								}
-							}
+							loc: SourceLocation core/uncategorised/374/input.js 1:29-1:30 (x)
 						}
 					]
 				}
@@ -172,8 +80,5 @@ JSRoot {
     for((1 + 1) in list) process(x);
          ^^^^^
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

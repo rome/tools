@@ -11,14 +11,14 @@ import {SourceMap} from "@internal/codec-source-map";
 import Bundler from "../bundler/Bundler";
 import {commandCategories} from "../../common/commands";
 import {createServerCommand} from "../commands";
-import {AbsoluteFilePath, createRelativeFilePath} from "@internal/path";
+import {AbsoluteFilePath, createRelativePath} from "@internal/path";
 import {markup} from "@internal/markup";
 
 // This will be dispatched to the client where it has a special case for `executeCode`
 type RunResult = {
 	type: "executeCode";
 	args: string[];
-	filename: string;
+	path: AbsoluteFilePath;
 	code: string;
 	map: SourceMap;
 };
@@ -44,7 +44,7 @@ export default createServerCommand({
 			return {
 				type: "executeCode",
 				args,
-				filename: path.join(),
+				path,
 				code: entry.js.content(),
 				map: entry.sourceMap.map.serialize(),
 			};
@@ -67,7 +67,7 @@ export default createServerCommand({
 					...req.getResolverOptionsFromFlags(),
 					origin: directory,
 					platform: "node",
-					source: createRelativeFilePath(relative),
+					source: createRelativePath(relative),
 				});
 
 				return executeCode(resolved);

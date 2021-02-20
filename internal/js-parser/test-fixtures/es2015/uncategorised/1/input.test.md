@@ -12,37 +12,17 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
-	filename: "es2015/uncategorised/1/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2015/uncategorised/1/input.js"
-		end: Object {
-			column: 18
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2015/uncategorised/1/input.js 1:0-1:18
+	path: UIDPath<es2015/uncategorised/1/input.js>
 	directives: Array [
 		JSDirective {
 			value: "\\u{714E}\\u{8336}"
-			loc: Object {
-				filename: "es2015/uncategorised/1/input.js"
-				end: Object {
-					column: 18
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2015/uncategorised/1/input.js 1:0-1:18
 		}
 	]
 }
@@ -51,6 +31,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

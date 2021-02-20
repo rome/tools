@@ -12,51 +12,20 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "es2015/yield/yield class/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2015/yield/yield class/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2015/yield/yield class/input.js 1:0-2:0
+	path: UIDPath<es2015/yield/yield class/input.js>
 	body: Array [
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "bar"
-				loc: Object {
-					filename: "es2015/yield/yield class/input.js"
-					identifierName: "bar"
-					end: Object {
-						column: 13
-						line: 1
-					}
-					start: Object {
-						column: 10
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/yield/yield class/input.js 1:10-1:13 (bar)
 			}
-			loc: Object {
-				filename: "es2015/yield/yield class/input.js"
-				end: Object {
-					column: 34
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2015/yield/yield class/input.js 1:0-1:34
 			head: JSFunctionHead {
 				async: false
 				generator: true
@@ -66,87 +35,27 @@ JSRoot {
 				returnType: undefined
 				thisType: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "es2015/yield/yield class/input.js"
-					end: Object {
-						column: 15
-						line: 1
-					}
-					start: Object {
-						column: 13
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/yield/yield class/input.js 1:13-1:15
 			}
 			body: JSBlockStatement {
 				directives: Array []
-				loc: Object {
-					filename: "es2015/yield/yield class/input.js"
-					end: Object {
-						column: 34
-						line: 1
-					}
-					start: Object {
-						column: 16
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/yield/yield class/input.js 1:16-1:34
 				body: Array [
 					JSExpressionStatement {
-						loc: Object {
-							filename: "es2015/yield/yield class/input.js"
-							end: Object {
-								column: 32
-								line: 1
-							}
-							start: Object {
-								column: 18
-								line: 1
-							}
-						}
+						loc: SourceLocation es2015/yield/yield class/input.js 1:18-1:32
 						expression: JSYieldExpression {
 							delegate: false
-							loc: Object {
-								filename: "es2015/yield/yield class/input.js"
-								end: Object {
-									column: 32
-									line: 1
-								}
-								start: Object {
-									column: 18
-									line: 1
-								}
-							}
+							loc: SourceLocation es2015/yield/yield class/input.js 1:18-1:32
 							argument: JSClassExpression {
 								id: undefined
-								loc: Object {
-									filename: "es2015/yield/yield class/input.js"
-									end: Object {
-										column: 32
-										line: 1
-									}
-									start: Object {
-										column: 24
-										line: 1
-									}
-								}
+								loc: SourceLocation es2015/yield/yield class/input.js 1:24-1:32
 								meta: JSClassHead {
 									body: Array []
 									implements: undefined
 									superClass: undefined
 									superTypeParameters: undefined
 									typeParameters: undefined
-									loc: Object {
-										filename: "es2015/yield/yield class/input.js"
-										end: Object {
-											column: 32
-											line: 1
-										}
-										start: Object {
-											column: 24
-											line: 1
-										}
-									}
+									loc: SourceLocation es2015/yield/yield class/input.js 1:24-1:32
 								}
 							}
 						}
@@ -161,6 +70,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

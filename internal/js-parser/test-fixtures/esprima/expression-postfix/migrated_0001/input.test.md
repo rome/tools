@@ -12,64 +12,23 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "esprima/expression-postfix/migrated_0001/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "esprima/expression-postfix/migrated_0001/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation esprima/expression-postfix/migrated_0001/input.js 1:0-2:0
+	path: UIDPath<esprima/expression-postfix/migrated_0001/input.js>
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "esprima/expression-postfix/migrated_0001/input.js"
-				end: Object {
-					column: 3
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation esprima/expression-postfix/migrated_0001/input.js 1:0-1:3
 			expression: JSUpdateExpression {
 				operator: "--"
 				prefix: false
-				loc: Object {
-					filename: "esprima/expression-postfix/migrated_0001/input.js"
-					end: Object {
-						column: 3
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/expression-postfix/migrated_0001/input.js 1:0-1:3
 				argument: JSReferenceIdentifier {
 					name: "x"
-					loc: Object {
-						filename: "esprima/expression-postfix/migrated_0001/input.js"
-						identifierName: "x"
-						end: Object {
-							column: 1
-							line: 1
-						}
-						start: Object {
-							column: 0
-							line: 1
-						}
-					}
+					loc: SourceLocation esprima/expression-postfix/migrated_0001/input.js 1:0-1:1 (x)
 				}
 			}
 		}
@@ -80,6 +39,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

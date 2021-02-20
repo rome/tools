@@ -11,129 +11,52 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "es2015/object/async-method-linebreak/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2015/object/async-method-linebreak/input.js"
-		end: Object {
-			column: 0
-			line: 5
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2015/object/async-method-linebreak/input.js 1:0-5:0
+	path: UIDPath<es2015/object/async-method-linebreak/input.js>
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse"
 				categoryValue: "js"
+				category: Array ["parse"]
 				message: RAW_MARKUP {value: "There shouldn't be any newlines between async and the rest of the function"}
 			}
 			location: Object {
-				filename: "es2015/object/async-method-linebreak/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 9
-					line: 2
-				}
-				start: Object {
-					column: 4
-					line: 3
-				}
+				end: Position 2:9
+				path: UIDPath<es2015/object/async-method-linebreak/input.js>
+				start: Position 3:4
 			}
 		}
 	]
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "es2015/object/async-method-linebreak/input.js"
-				end: Object {
-					column: 2
-					line: 4
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2015/object/async-method-linebreak/input.js 1:0-4:2
 			expression: JSObjectExpression {
-				loc: Object {
-					filename: "es2015/object/async-method-linebreak/input.js"
-					end: Object {
-						column: 1
-						line: 4
-					}
-					start: Object {
-						column: 1
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/object/async-method-linebreak/input.js 1:1-4:1
 				properties: Array [
 					JSObjectMethod {
 						kind: "method"
 						key: JSStaticPropertyKey {
 							value: JSIdentifier {
 								name: "foo"
-								loc: Object {
-									filename: "es2015/object/async-method-linebreak/input.js"
-									identifierName: "foo"
-									end: Object {
-										column: 7
-										line: 3
-									}
-									start: Object {
-										column: 4
-										line: 3
-									}
-								}
+								loc: SourceLocation es2015/object/async-method-linebreak/input.js 3:4-3:7 (foo)
 							}
-							loc: Object {
-								filename: "es2015/object/async-method-linebreak/input.js"
-								end: Object {
-									column: 7
-									line: 3
-								}
-								start: Object {
-									column: 4
-									line: 3
-								}
-							}
+							loc: SourceLocation es2015/object/async-method-linebreak/input.js 3:4-3:7
 						}
-						loc: Object {
-							filename: "es2015/object/async-method-linebreak/input.js"
-							end: Object {
-								column: 12
-								line: 3
-							}
-							start: Object {
-								column: 4
-								line: 2
-							}
-						}
+						loc: SourceLocation es2015/object/async-method-linebreak/input.js 2:4-3:12
 						body: JSBlockStatement {
 							body: Array []
 							directives: Array []
-							loc: Object {
-								filename: "es2015/object/async-method-linebreak/input.js"
-								end: Object {
-									column: 12
-									line: 3
-								}
-								start: Object {
-									column: 10
-									line: 3
-								}
-							}
+							loc: SourceLocation es2015/object/async-method-linebreak/input.js 3:10-3:12
 						}
 						head: JSFunctionHead {
 							async: true
@@ -144,17 +67,7 @@ JSRoot {
 							returnType: undefined
 							thisType: undefined
 							typeParameters: undefined
-							loc: Object {
-								filename: "es2015/object/async-method-linebreak/input.js"
-								end: Object {
-									column: 9
-									line: 3
-								}
-								start: Object {
-									column: 7
-									line: 3
-								}
-							}
+							loc: SourceLocation es2015/object/async-method-linebreak/input.js 3:7-3:9
 						}
 					}
 				]
@@ -177,8 +90,5 @@ JSRoot {
     3 │     foo() {}
     4 │ })
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

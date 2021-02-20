@@ -11,134 +11,57 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "es2015/uncategorised/325/input.js"
 	hasHoistedVars: true
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2015/uncategorised/325/input.js"
-		end: Object {
-			column: 7
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2015/uncategorised/325/input.js 1:0-1:7
+	path: UIDPath<es2015/uncategorised/325/input.js>
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse"
 				categoryValue: "js"
+				category: Array ["parse"]
 				message: RAW_MARKUP {value: "Complex binding patterns require an initialization value"}
 			}
 			location: Object {
-				filename: "es2015/uncategorised/325/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 7
-					line: 1
-				}
-				start: Object {
-					column: 7
-					line: 1
-				}
+				end: Position 1:7
+				path: UIDPath<es2015/uncategorised/325/input.js>
+				start: Position 1:7
 			}
 		}
 	]
 	body: Array [
 		JSVariableDeclarationStatement {
-			loc: Object {
-				filename: "es2015/uncategorised/325/input.js"
-				end: Object {
-					column: 7
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2015/uncategorised/325/input.js 1:0-1:7
 			declaration: JSVariableDeclaration {
 				kind: "var"
-				loc: Object {
-					filename: "es2015/uncategorised/325/input.js"
-					end: Object {
-						column: 7
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/uncategorised/325/input.js 1:0-1:7
 				declarations: Array [
 					JSVariableDeclarator {
 						id: JSBindingArrayPattern {
 							rest: undefined
-							loc: Object {
-								filename: "es2015/uncategorised/325/input.js"
-								end: Object {
-									column: 7
-									line: 1
-								}
-								start: Object {
-									column: 4
-									line: 1
-								}
-							}
+							loc: SourceLocation es2015/uncategorised/325/input.js 1:4-1:7
 							elements: Array [
 								JSBindingIdentifier {
 									name: "x"
-									loc: Object {
-										filename: "es2015/uncategorised/325/input.js"
-										identifierName: "x"
-										end: Object {
-											column: 6
-											line: 1
-										}
-										start: Object {
-											column: 5
-											line: 1
-										}
-									}
+									loc: SourceLocation es2015/uncategorised/325/input.js 1:5-1:6 (x)
 									meta: JSPatternMeta {
 										optional: undefined
 										typeAnnotation: undefined
-										loc: Object {
-											filename: "es2015/uncategorised/325/input.js"
-											end: Object {
-												column: 6
-												line: 1
-											}
-											start: Object {
-												column: 5
-												line: 1
-											}
-										}
+										loc: SourceLocation es2015/uncategorised/325/input.js 1:5-1:6
 									}
 								}
 							]
 						}
 						init: undefined
-						loc: Object {
-							filename: "es2015/uncategorised/325/input.js"
-							end: Object {
-								column: 7
-								line: 1
-							}
-							start: Object {
-								column: 4
-								line: 1
-							}
-						}
+						loc: SourceLocation es2015/uncategorised/325/input.js 1:4-1:7
 					}
 				]
 			}
@@ -158,8 +81,5 @@ JSRoot {
     var [x]
            ^
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

@@ -11,66 +11,26 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "jsx/errors/wrong-closing-tag/input.jsx"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
+	loc: SourceLocation jsx/errors/wrong-closing-tag/input.jsx 1:0-2:0
+	path: UIDPath<jsx/errors/wrong-closing-tag/input.jsx>
 	syntax: Array ["jsx"]
-	loc: Object {
-		filename: "jsx/errors/wrong-closing-tag/input.jsx"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "jsx/errors/wrong-closing-tag/input.jsx"
-				end: Object {
-					column: 11
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation jsx/errors/wrong-closing-tag/input.jsx 1:0-1:11
 			expression: JSXElement {
 				name: JSXReferenceIdentifier {
 					name: "Foo"
-					loc: Object {
-						filename: "jsx/errors/wrong-closing-tag/input.jsx"
-						end: Object {
-							column: 4
-							line: 1
-						}
-						start: Object {
-							column: 1
-							line: 1
-						}
-					}
+					loc: SourceLocation jsx/errors/wrong-closing-tag/input.jsx 1:1-1:4
 				}
 				attributes: Array []
 				children: Array []
 				selfClosing: false
 				typeArguments: undefined
-				loc: Object {
-					filename: "jsx/errors/wrong-closing-tag/input.jsx"
-					end: Object {
-						column: 11
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation jsx/errors/wrong-closing-tag/input.jsx 1:0-1:11
 			}
 		}
 	]
@@ -78,49 +38,23 @@ JSRoot {
 		Object {
 			origins: Array [Object {category: "parse"}]
 			location: Object {
-				filename: "jsx/errors/wrong-closing-tag/input.jsx"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 4
-					line: 1
-				}
-				start: Object {
-					column: 1
-					line: 1
-				}
+				end: Position 1:4
+				path: UIDPath<jsx/errors/wrong-closing-tag/input.jsx>
+				start: Position 1:1
 			}
 			description: Object {
-				category: "parse"
 				categoryValue: "js"
-				message: Array [
-					RAW_MARKUP {value: "Expected a corresponding JSX closing tag for <emphasis>"}
-					"Foo"
-					RAW_MARKUP {value: "</emphasis>"}
-				]
+				category: Array ["parse"]
+				message: RAW_MARKUP {value: "Expected a corresponding JSX closing tag for <emphasis>Foo</emphasis>"}
 				advice: Array [
 					log {
 						category: "info"
-						text: Array [
-							RAW_MARKUP {value: "Originated from opening tag of <emphasis>"}
-							"Foo"
-							RAW_MARKUP {value: "</emphasis>"}
-						]
+						text: RAW_MARKUP {value: "Originated from opening tag of <emphasis>Foo</emphasis>"}
 					}
-					frame {
-						location: Object {
-							filename: "jsx/errors/wrong-closing-tag/input.jsx"
-							end: Object {
-								column: 4
-								line: 1
-							}
-							start: Object {
-								column: 1
-								line: 1
-							}
-						}
-					}
+					frame {location: SourceLocation jsx/errors/wrong-closing-tag/input.jsx 1:1-1:4}
 				]
 			}
 		}
@@ -141,8 +75,5 @@ JSRoot {
     <Foo></Bar>
      ^^^
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

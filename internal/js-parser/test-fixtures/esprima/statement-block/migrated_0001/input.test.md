@@ -12,119 +12,37 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "esprima/statement-block/migrated_0001/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "esprima/statement-block/migrated_0001/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation esprima/statement-block/migrated_0001/input.js 1:0-2:0
+	path: UIDPath<esprima/statement-block/migrated_0001/input.js>
 	body: Array [
 		JSBlockStatement {
 			directives: Array []
-			loc: Object {
-				filename: "esprima/statement-block/migrated_0001/input.js"
-				end: Object {
-					column: 23
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation esprima/statement-block/migrated_0001/input.js 1:0-1:23
 			body: Array [
 				JSExpressionStatement {
-					loc: Object {
-						filename: "esprima/statement-block/migrated_0001/input.js"
-						end: Object {
-							column: 11
-							line: 1
-						}
-						start: Object {
-							column: 2
-							line: 1
-						}
-					}
+					loc: SourceLocation esprima/statement-block/migrated_0001/input.js 1:2-1:11
 					expression: JSCallExpression {
 						arguments: Array []
-						loc: Object {
-							filename: "esprima/statement-block/migrated_0001/input.js"
-							end: Object {
-								column: 10
-								line: 1
-							}
-							start: Object {
-								column: 2
-								line: 1
-							}
-						}
+						loc: SourceLocation esprima/statement-block/migrated_0001/input.js 1:2-1:10
 						callee: JSReferenceIdentifier {
 							name: "doThis"
-							loc: Object {
-								filename: "esprima/statement-block/migrated_0001/input.js"
-								identifierName: "doThis"
-								end: Object {
-									column: 8
-									line: 1
-								}
-								start: Object {
-									column: 2
-									line: 1
-								}
-							}
+							loc: SourceLocation esprima/statement-block/migrated_0001/input.js 1:2-1:8 (doThis)
 						}
 					}
 				}
 				JSExpressionStatement {
-					loc: Object {
-						filename: "esprima/statement-block/migrated_0001/input.js"
-						end: Object {
-							column: 21
-							line: 1
-						}
-						start: Object {
-							column: 12
-							line: 1
-						}
-					}
+					loc: SourceLocation esprima/statement-block/migrated_0001/input.js 1:12-1:21
 					expression: JSCallExpression {
 						arguments: Array []
-						loc: Object {
-							filename: "esprima/statement-block/migrated_0001/input.js"
-							end: Object {
-								column: 20
-								line: 1
-							}
-							start: Object {
-								column: 12
-								line: 1
-							}
-						}
+						loc: SourceLocation esprima/statement-block/migrated_0001/input.js 1:12-1:20
 						callee: JSReferenceIdentifier {
 							name: "doThat"
-							loc: Object {
-								filename: "esprima/statement-block/migrated_0001/input.js"
-								identifierName: "doThat"
-								end: Object {
-									column: 18
-									line: 1
-								}
-								start: Object {
-									column: 12
-									line: 1
-								}
-							}
+							loc: SourceLocation esprima/statement-block/migrated_0001/input.js 1:12-1:18 (doThat)
 						}
 					}
 				}
@@ -137,6 +55,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

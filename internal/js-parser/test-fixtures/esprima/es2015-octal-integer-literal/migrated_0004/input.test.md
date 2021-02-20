@@ -12,50 +12,20 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "esprima/es2015-octal-integer-literal/migrated_0004/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "esprima/es2015-octal-integer-literal/migrated_0004/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation esprima/es2015-octal-integer-literal/migrated_0004/input.js 1:0-2:0
+	path: UIDPath<esprima/es2015-octal-integer-literal/migrated_0004/input.js>
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "esprima/es2015-octal-integer-literal/migrated_0004/input.js"
-				end: Object {
-					column: 4
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation esprima/es2015-octal-integer-literal/migrated_0004/input.js 1:0-1:4
 			expression: JSNumericLiteral {
 				value: 10
 				format: "octal"
-				loc: Object {
-					filename: "esprima/es2015-octal-integer-literal/migrated_0004/input.js"
-					end: Object {
-						column: 4
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/es2015-octal-integer-literal/migrated_0004/input.js 1:0-1:4
 			}
 		}
 	]
@@ -65,6 +35,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

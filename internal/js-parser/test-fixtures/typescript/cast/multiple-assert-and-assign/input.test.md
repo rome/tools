@@ -12,128 +12,33 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "typescript/cast/multiple-assert-and-assign/input.ts"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
+	loc: SourceLocation typescript/cast/multiple-assert-and-assign/input.ts 1:0-1:26
+	path: UIDPath<typescript/cast/multiple-assert-and-assign/input.ts>
 	syntax: Array ["ts"]
-	loc: Object {
-		filename: "typescript/cast/multiple-assert-and-assign/input.ts"
-		end: Object {
-			column: 26
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "typescript/cast/multiple-assert-and-assign/input.ts"
-				end: Object {
-					column: 26
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation typescript/cast/multiple-assert-and-assign/input.ts 1:0-1:26
 			expression: JSAssignmentExpression {
 				operator: "="
-				loc: Object {
-					filename: "typescript/cast/multiple-assert-and-assign/input.ts"
-					end: Object {
-						column: 25
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/cast/multiple-assert-and-assign/input.ts 1:0-1:25
 				right: JSNumericLiteral {
 					value: 42
 					format: undefined
-					loc: Object {
-						filename: "typescript/cast/multiple-assert-and-assign/input.ts"
-						end: Object {
-							column: 25
-							line: 1
-						}
-						start: Object {
-							column: 23
-							line: 1
-						}
-					}
+					loc: SourceLocation typescript/cast/multiple-assert-and-assign/input.ts 1:23-1:25
 				}
 				left: TSAssignmentAsExpression {
-					loc: Object {
-						filename: "typescript/cast/multiple-assert-and-assign/input.ts"
-						end: Object {
-							column: 19
-							line: 1
-						}
-						start: Object {
-							column: 1
-							line: 1
-						}
-					}
-					typeAnnotation: TSAnyKeywordTypeAnnotation {
-						loc: Object {
-							filename: "typescript/cast/multiple-assert-and-assign/input.ts"
-							end: Object {
-								column: 19
-								line: 1
-							}
-							start: Object {
-								column: 16
-								line: 1
-							}
-						}
-					}
+					loc: SourceLocation typescript/cast/multiple-assert-and-assign/input.ts 1:1-1:19
+					typeAnnotation: TSAnyKeywordTypeAnnotation {loc: SourceLocation typescript/cast/multiple-assert-and-assign/input.ts 1:16-1:19}
 					expression: TSAssignmentAsExpression {
-						loc: Object {
-							filename: "typescript/cast/multiple-assert-and-assign/input.ts"
-							end: Object {
-								column: 12
-								line: 1
-							}
-							start: Object {
-								column: 1
-								line: 1
-							}
-						}
-						typeAnnotation: TSNumberKeywordTypeAnnotation {
-							loc: Object {
-								filename: "typescript/cast/multiple-assert-and-assign/input.ts"
-								end: Object {
-									column: 12
-									line: 1
-								}
-								start: Object {
-									column: 6
-									line: 1
-								}
-							}
-						}
+						loc: SourceLocation typescript/cast/multiple-assert-and-assign/input.ts 1:1-1:12
+						typeAnnotation: TSNumberKeywordTypeAnnotation {loc: SourceLocation typescript/cast/multiple-assert-and-assign/input.ts 1:6-1:12}
 						expression: JSAssignmentIdentifier {
 							name: "a"
-							loc: Object {
-								filename: "typescript/cast/multiple-assert-and-assign/input.ts"
-								identifierName: "a"
-								end: Object {
-									column: 2
-									line: 1
-								}
-								start: Object {
-									column: 1
-									line: 1
-								}
-							}
+							loc: SourceLocation typescript/cast/multiple-assert-and-assign/input.ts 1:1-1:2 (a)
 						}
 					}
 				}
@@ -146,6 +51,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

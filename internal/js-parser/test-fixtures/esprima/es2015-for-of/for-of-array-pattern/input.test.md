@@ -12,108 +12,33 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "esprima/es2015-for-of/for-of-array-pattern/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "esprima/es2015-for-of/for-of-array-pattern/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation esprima/es2015-for-of/for-of-array-pattern/input.js 1:0-2:0
+	path: UIDPath<esprima/es2015-for-of/for-of-array-pattern/input.js>
 	body: Array [
 		JSForOfStatement {
 			await: false
-			loc: Object {
-				filename: "esprima/es2015-for-of/for-of-array-pattern/input.js"
-				end: Object {
-					column: 18
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
-			body: JSEmptyStatement {
-				loc: Object {
-					filename: "esprima/es2015-for-of/for-of-array-pattern/input.js"
-					end: Object {
-						column: 18
-						line: 1
-					}
-					start: Object {
-						column: 17
-						line: 1
-					}
-				}
-			}
+			body: JSEmptyStatement {loc: SourceLocation esprima/es2015-for-of/for-of-array-pattern/input.js 1:17-1:18}
+			loc: SourceLocation esprima/es2015-for-of/for-of-array-pattern/input.js 1:0-1:18
 			right: JSReferenceIdentifier {
 				name: "r"
-				loc: Object {
-					filename: "esprima/es2015-for-of/for-of-array-pattern/input.js"
-					identifierName: "r"
-					end: Object {
-						column: 16
-						line: 1
-					}
-					start: Object {
-						column: 15
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/es2015-for-of/for-of-array-pattern/input.js 1:15-1:16 (r)
 			}
 			left: JSAssignmentArrayPattern {
 				rest: undefined
-				loc: Object {
-					filename: "esprima/es2015-for-of/for-of-array-pattern/input.js"
-					end: Object {
-						column: 11
-						line: 1
-					}
-					start: Object {
-						column: 5
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/es2015-for-of/for-of-array-pattern/input.js 1:5-1:11
 				elements: Array [
 					JSAssignmentIdentifier {
 						name: "p"
-						loc: Object {
-							filename: "esprima/es2015-for-of/for-of-array-pattern/input.js"
-							identifierName: "p"
-							end: Object {
-								column: 7
-								line: 1
-							}
-							start: Object {
-								column: 6
-								line: 1
-							}
-						}
+						loc: SourceLocation esprima/es2015-for-of/for-of-array-pattern/input.js 1:6-1:7 (p)
 					}
 					JSAssignmentIdentifier {
 						name: "q"
-						loc: Object {
-							filename: "esprima/es2015-for-of/for-of-array-pattern/input.js"
-							identifierName: "q"
-							end: Object {
-								column: 10
-								line: 1
-							}
-							start: Object {
-								column: 9
-								line: 1
-							}
-						}
+						loc: SourceLocation esprima/es2015-for-of/for-of-array-pattern/input.js 1:9-1:10 (q)
 					}
 				]
 			}
@@ -125,6 +50,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

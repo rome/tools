@@ -12,79 +12,29 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "core/categorized/regex-after-block/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "core/categorized/regex-after-block/input.js"
-		end: Object {
-			column: 5
-			line: 4
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation core/categorized/regex-after-block/input.js 1:0-4:5
+	path: UIDPath<core/categorized/regex-after-block/input.js>
 	body: Array [
 		JSIfStatement {
 			alternate: undefined
-			loc: Object {
-				filename: "core/categorized/regex-after-block/input.js"
-				end: Object {
-					column: 1
-					line: 2
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation core/categorized/regex-after-block/input.js 1:0-2:1
 			test: JSBooleanLiteral {
 				value: true
-				loc: Object {
-					filename: "core/categorized/regex-after-block/input.js"
-					end: Object {
-						column: 8
-						line: 1
-					}
-					start: Object {
-						column: 4
-						line: 1
-					}
-				}
+				loc: SourceLocation core/categorized/regex-after-block/input.js 1:4-1:8
 			}
 			consequent: JSBlockStatement {
 				body: Array []
 				directives: Array []
-				loc: Object {
-					filename: "core/categorized/regex-after-block/input.js"
-					end: Object {
-						column: 1
-						line: 2
-					}
-					start: Object {
-						column: 10
-						line: 1
-					}
-				}
+				loc: SourceLocation core/categorized/regex-after-block/input.js 1:10-2:1
 			}
 		}
 		JSExpressionStatement {
-			loc: Object {
-				filename: "core/categorized/regex-after-block/input.js"
-				end: Object {
-					column: 5
-					line: 4
-				}
-				start: Object {
-					column: 0
-					line: 4
-				}
-			}
+			loc: SourceLocation core/categorized/regex-after-block/input.js 4:0-4:5
 			expression: JSRegExpLiteral {
 				global: false
 				insensitive: false
@@ -92,71 +42,21 @@ JSRoot {
 				noDotNewline: false
 				sticky: false
 				unicode: false
-				loc: Object {
-					filename: "core/categorized/regex-after-block/input.js"
-					end: Object {
-						column: 5
-						line: 4
-					}
-					start: Object {
-						column: 0
-						line: 4
-					}
-				}
+				loc: SourceLocation core/categorized/regex-after-block/input.js 4:0-4:5
 				expression: JSRegExpSubExpression {
-					loc: Object {
-						filename: "core/categorized/regex-after-block/input.js"
-						end: Object {
-							column: 4
-							line: 4
-						}
-						start: Object {
-							column: 1
-							line: 4
-						}
-					}
+					loc: SourceLocation core/categorized/regex-after-block/input.js 4:1-4:4
 					body: Array [
 						JSRegExpCharacter {
 							value: "f"
-							loc: Object {
-								filename: "core/categorized/regex-after-block/input.js"
-								end: Object {
-									column: 2
-									line: 4
-								}
-								start: Object {
-									column: 1
-									line: 4
-								}
-							}
+							loc: SourceLocation core/categorized/regex-after-block/input.js 4:1-4:2
 						}
 						JSRegExpCharacter {
 							value: "o"
-							loc: Object {
-								filename: "core/categorized/regex-after-block/input.js"
-								end: Object {
-									column: 3
-									line: 4
-								}
-								start: Object {
-									column: 2
-									line: 4
-								}
-							}
+							loc: SourceLocation core/categorized/regex-after-block/input.js 4:2-4:3
 						}
 						JSRegExpCharacter {
 							value: "o"
-							loc: Object {
-								filename: "core/categorized/regex-after-block/input.js"
-								end: Object {
-									column: 4
-									line: 4
-								}
-								start: Object {
-									column: 3
-									line: 4
-								}
-							}
+							loc: SourceLocation core/categorized/regex-after-block/input.js 4:3-4:4
 						}
 					]
 				}
@@ -169,6 +69,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

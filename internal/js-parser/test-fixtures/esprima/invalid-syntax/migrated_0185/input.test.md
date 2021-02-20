@@ -11,48 +11,29 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "esprima/invalid-syntax/migrated_0185/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "esprima/invalid-syntax/migrated_0185/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation esprima/invalid-syntax/migrated_0185/input.js 1:0-2:0
+	path: UIDPath<esprima/invalid-syntax/migrated_0185/input.js>
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse"
 				categoryValue: "js"
-				message: Array [
-					"eval"
-					RAW_MARKUP {value: " is a reserved word"}
-				]
+				category: Array ["parse"]
+				message: RAW_MARKUP {value: "eval is a reserved word"}
 			}
 			location: Object {
-				filename: "esprima/invalid-syntax/migrated_0185/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 40
-					line: 1
-				}
-				start: Object {
-					column: 36
-					line: 1
-				}
+				end: Position 1:40
+				path: UIDPath<esprima/invalid-syntax/migrated_0185/input.js>
+				start: Position 1:36
 			}
 		}
 	]
@@ -60,30 +41,9 @@ JSRoot {
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "hello"
-				loc: Object {
-					filename: "esprima/invalid-syntax/migrated_0185/input.js"
-					identifierName: "hello"
-					end: Object {
-						column: 14
-						line: 1
-					}
-					start: Object {
-						column: 9
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/invalid-syntax/migrated_0185/input.js 1:9-1:14 (hello)
 			}
-			loc: Object {
-				filename: "esprima/invalid-syntax/migrated_0185/input.js"
-				end: Object {
-					column: 48
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation esprima/invalid-syntax/migrated_0185/input.js 1:0-1:48
 			head: JSFunctionHead {
 				async: false
 				generator: false
@@ -93,114 +53,33 @@ JSRoot {
 				returnType: undefined
 				thisType: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "esprima/invalid-syntax/migrated_0185/input.js"
-					end: Object {
-						column: 16
-						line: 1
-					}
-					start: Object {
-						column: 14
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/invalid-syntax/migrated_0185/input.js 1:14-1:16
 			}
 			body: JSBlockStatement {
-				loc: Object {
-					filename: "esprima/invalid-syntax/migrated_0185/input.js"
-					end: Object {
-						column: 48
-						line: 1
-					}
-					start: Object {
-						column: 17
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/invalid-syntax/migrated_0185/input.js 1:17-1:48
 				directives: Array [
 					JSDirective {
 						value: "use strict"
-						loc: Object {
-							filename: "esprima/invalid-syntax/migrated_0185/input.js"
-							end: Object {
-								column: 31
-								line: 1
-							}
-							start: Object {
-								column: 18
-								line: 1
-							}
-						}
+						loc: SourceLocation esprima/invalid-syntax/migrated_0185/input.js 1:18-1:31
 					}
 				]
 				body: Array [
 					JSVariableDeclarationStatement {
-						loc: Object {
-							filename: "esprima/invalid-syntax/migrated_0185/input.js"
-							end: Object {
-								column: 46
-								line: 1
-							}
-							start: Object {
-								column: 32
-								line: 1
-							}
-						}
+						loc: SourceLocation esprima/invalid-syntax/migrated_0185/input.js 1:32-1:46
 						declaration: JSVariableDeclaration {
 							kind: "var"
-							loc: Object {
-								filename: "esprima/invalid-syntax/migrated_0185/input.js"
-								end: Object {
-									column: 46
-									line: 1
-								}
-								start: Object {
-									column: 32
-									line: 1
-								}
-							}
+							loc: SourceLocation esprima/invalid-syntax/migrated_0185/input.js 1:32-1:46
 							declarations: Array [
 								JSVariableDeclarator {
 									id: JSBindingIdentifier {
 										name: "eval"
-										loc: Object {
-											filename: "esprima/invalid-syntax/migrated_0185/input.js"
-											identifierName: "eval"
-											end: Object {
-												column: 40
-												line: 1
-											}
-											start: Object {
-												column: 36
-												line: 1
-											}
-										}
+										loc: SourceLocation esprima/invalid-syntax/migrated_0185/input.js 1:36-1:40 (eval)
 									}
-									loc: Object {
-										filename: "esprima/invalid-syntax/migrated_0185/input.js"
-										end: Object {
-											column: 45
-											line: 1
-										}
-										start: Object {
-											column: 36
-											line: 1
-										}
-									}
+									loc: SourceLocation esprima/invalid-syntax/migrated_0185/input.js 1:36-1:45
 									init: JSNumericLiteral {
 										value: 10
 										format: undefined
-										loc: Object {
-											filename: "esprima/invalid-syntax/migrated_0185/input.js"
-											end: Object {
-												column: 45
-												line: 1
-											}
-											start: Object {
-												column: 43
-												line: 1
-											}
-										}
+										loc: SourceLocation esprima/invalid-syntax/migrated_0185/input.js 1:43-1:45
 									}
 								}
 							]
@@ -224,8 +103,5 @@ JSRoot {
     function hello() {'use strict'; var eval = 10; }
                                         ^^^^
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

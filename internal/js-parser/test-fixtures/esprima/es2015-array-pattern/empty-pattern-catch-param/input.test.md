@@ -12,93 +12,33 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "esprima/es2015-array-pattern/empty-pattern-catch-param/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "esprima/es2015-array-pattern/empty-pattern-catch-param/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation esprima/es2015-array-pattern/empty-pattern-catch-param/input.js 1:0-2:0
+	path: UIDPath<esprima/es2015-array-pattern/empty-pattern-catch-param/input.js>
 	body: Array [
 		JSTryStatement {
 			finalizer: undefined
-			loc: Object {
-				filename: "esprima/es2015-array-pattern/empty-pattern-catch-param/input.js"
-				end: Object {
-					column: 21
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation esprima/es2015-array-pattern/empty-pattern-catch-param/input.js 1:0-1:21
 			block: JSBlockStatement {
 				body: Array []
 				directives: Array []
-				loc: Object {
-					filename: "esprima/es2015-array-pattern/empty-pattern-catch-param/input.js"
-					end: Object {
-						column: 7
-						line: 1
-					}
-					start: Object {
-						column: 4
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/es2015-array-pattern/empty-pattern-catch-param/input.js 1:4-1:7
 			}
 			handler: JSCatchClause {
-				loc: Object {
-					filename: "esprima/es2015-array-pattern/empty-pattern-catch-param/input.js"
-					end: Object {
-						column: 21
-						line: 1
-					}
-					start: Object {
-						column: 8
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/es2015-array-pattern/empty-pattern-catch-param/input.js 1:8-1:21
 				body: JSBlockStatement {
 					body: Array []
 					directives: Array []
-					loc: Object {
-						filename: "esprima/es2015-array-pattern/empty-pattern-catch-param/input.js"
-						end: Object {
-							column: 21
-							line: 1
-						}
-						start: Object {
-							column: 19
-							line: 1
-						}
-					}
+					loc: SourceLocation esprima/es2015-array-pattern/empty-pattern-catch-param/input.js 1:19-1:21
 				}
 				param: JSBindingArrayPattern {
 					elements: Array []
 					rest: undefined
-					loc: Object {
-						filename: "esprima/es2015-array-pattern/empty-pattern-catch-param/input.js"
-						end: Object {
-							column: 17
-							line: 1
-						}
-						start: Object {
-							column: 15
-							line: 1
-						}
-					}
+					loc: SourceLocation esprima/es2015-array-pattern/empty-pattern-catch-param/input.js 1:15-1:17
 				}
 			}
 		}
@@ -109,6 +49,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

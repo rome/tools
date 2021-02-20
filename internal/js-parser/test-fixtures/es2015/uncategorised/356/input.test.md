@@ -12,91 +12,29 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "es2015/uncategorised/356/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2015/uncategorised/356/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2015/uncategorised/356/input.js 1:0-2:0
+	path: UIDPath<es2015/uncategorised/356/input.js>
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "es2015/uncategorised/356/input.js"
-				end: Object {
-					column: 14
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2015/uncategorised/356/input.js 1:0-1:14
 			expression: JSAssignmentExpression {
 				operator: "="
-				loc: Object {
-					filename: "es2015/uncategorised/356/input.js"
-					end: Object {
-						column: 13
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/uncategorised/356/input.js 1:0-1:13
 				left: JSAssignmentIdentifier {
 					name: "await"
-					loc: Object {
-						filename: "es2015/uncategorised/356/input.js"
-						identifierName: "await"
-						end: Object {
-							column: 5
-							line: 1
-						}
-						start: Object {
-							column: 0
-							line: 1
-						}
-					}
+					loc: SourceLocation es2015/uncategorised/356/input.js 1:0-1:5 (await)
 				}
 				right: JSCallExpression {
 					arguments: Array []
-					loc: Object {
-						filename: "es2015/uncategorised/356/input.js"
-						end: Object {
-							column: 13
-							line: 1
-						}
-						start: Object {
-							column: 8
-							line: 1
-						}
-					}
+					loc: SourceLocation es2015/uncategorised/356/input.js 1:8-1:13
 					callee: JSReferenceIdentifier {
 						name: "foo"
-						loc: Object {
-							filename: "es2015/uncategorised/356/input.js"
-							identifierName: "foo"
-							end: Object {
-								column: 11
-								line: 1
-							}
-							start: Object {
-								column: 8
-								line: 1
-							}
-						}
+						loc: SourceLocation es2015/uncategorised/356/input.js 1:8-1:11 (foo)
 					}
 				}
 			}
@@ -108,6 +46,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

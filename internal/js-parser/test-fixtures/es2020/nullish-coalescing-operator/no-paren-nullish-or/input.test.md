@@ -12,134 +12,40 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "es2020/nullish-coalescing-operator/no-paren-nullish-or/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2020/nullish-coalescing-operator/no-paren-nullish-or/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2020/nullish-coalescing-operator/no-paren-nullish-or/input.js 1:0-2:0
+	path: UIDPath<es2020/nullish-coalescing-operator/no-paren-nullish-or/input.js>
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "es2020/nullish-coalescing-operator/no-paren-nullish-or/input.js"
-				end: Object {
-					column: 17
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2020/nullish-coalescing-operator/no-paren-nullish-or/input.js 1:0-1:17
 			expression: JSLogicalExpression {
 				operator: "||"
-				loc: Object {
-					filename: "es2020/nullish-coalescing-operator/no-paren-nullish-or/input.js"
-					end: Object {
-						column: 16
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation es2020/nullish-coalescing-operator/no-paren-nullish-or/input.js 1:0-1:16
 				right: JSReferenceIdentifier {
 					name: "h"
-					loc: Object {
-						filename: "es2020/nullish-coalescing-operator/no-paren-nullish-or/input.js"
-						identifierName: "h"
-						end: Object {
-							column: 16
-							line: 1
-						}
-						start: Object {
-							column: 15
-							line: 1
-						}
-					}
+					loc: SourceLocation es2020/nullish-coalescing-operator/no-paren-nullish-or/input.js 1:15-1:16 (h)
 				}
 				left: JSLogicalExpression {
 					operator: "??"
-					loc: Object {
-						filename: "es2020/nullish-coalescing-operator/no-paren-nullish-or/input.js"
-						end: Object {
-							column: 11
-							line: 1
-						}
-						start: Object {
-							column: 0
-							line: 1
-						}
-					}
+					loc: SourceLocation es2020/nullish-coalescing-operator/no-paren-nullish-or/input.js 1:0-1:11
 					right: JSReferenceIdentifier {
 						name: "g"
-						loc: Object {
-							filename: "es2020/nullish-coalescing-operator/no-paren-nullish-or/input.js"
-							identifierName: "g"
-							end: Object {
-								column: 11
-								line: 1
-							}
-							start: Object {
-								column: 10
-								line: 1
-							}
-						}
+						loc: SourceLocation es2020/nullish-coalescing-operator/no-paren-nullish-or/input.js 1:10-1:11 (g)
 					}
 					left: JSLogicalExpression {
 						operator: "??"
-						loc: Object {
-							filename: "es2020/nullish-coalescing-operator/no-paren-nullish-or/input.js"
-							end: Object {
-								column: 6
-								line: 1
-							}
-							start: Object {
-								column: 0
-								line: 1
-							}
-						}
+						loc: SourceLocation es2020/nullish-coalescing-operator/no-paren-nullish-or/input.js 1:0-1:6
 						left: JSReferenceIdentifier {
 							name: "e"
-							loc: Object {
-								filename: "es2020/nullish-coalescing-operator/no-paren-nullish-or/input.js"
-								identifierName: "e"
-								end: Object {
-									column: 1
-									line: 1
-								}
-								start: Object {
-									column: 0
-									line: 1
-								}
-							}
+							loc: SourceLocation es2020/nullish-coalescing-operator/no-paren-nullish-or/input.js 1:0-1:1 (e)
 						}
 						right: JSReferenceIdentifier {
 							name: "f"
-							loc: Object {
-								filename: "es2020/nullish-coalescing-operator/no-paren-nullish-or/input.js"
-								identifierName: "f"
-								end: Object {
-									column: 6
-									line: 1
-								}
-								start: Object {
-									column: 5
-									line: 1
-								}
-							}
+							loc: SourceLocation es2020/nullish-coalescing-operator/no-paren-nullish-or/input.js 1:5-1:6 (f)
 						}
 					}
 				}
@@ -152,6 +58,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

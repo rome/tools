@@ -11,45 +11,29 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "core/uncategorised/555/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "core/uncategorised/555/input.js"
-		end: Object {
-			column: 0
-			line: 7
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation core/uncategorised/555/input.js 1:0-7:0
+	path: UIDPath<core/uncategorised/555/input.js>
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse"
 				categoryValue: "js"
+				category: Array ["parse"]
 				message: RAW_MARKUP {value: "The rest element has to be the last element when destructuring"}
 			}
 			location: Object {
-				filename: "core/uncategorised/555/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 13
-					line: 3
-				}
-				start: Object {
-					column: 13
-					line: 3
-				}
+				end: Position 3:13
+				path: UIDPath<core/uncategorised/555/input.js>
+				start: Position 3:13
 			}
 		}
 	]
@@ -57,44 +41,13 @@ JSRoot {
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "foo"
-				loc: Object {
-					filename: "core/uncategorised/555/input.js"
-					identifierName: "foo"
-					end: Object {
-						column: 12
-						line: 1
-					}
-					start: Object {
-						column: 9
-						line: 1
-					}
-				}
+				loc: SourceLocation core/uncategorised/555/input.js 1:9-1:12 (foo)
 			}
-			loc: Object {
-				filename: "core/uncategorised/555/input.js"
-				end: Object {
-					column: 1
-					line: 6
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation core/uncategorised/555/input.js 1:0-6:1
 			body: JSBlockStatement {
 				body: Array []
 				directives: Array []
-				loc: Object {
-					filename: "core/uncategorised/555/input.js"
-					end: Object {
-						column: 1
-						line: 6
-					}
-					start: Object {
-						column: 2
-						line: 5
-					}
-				}
+				loc: SourceLocation core/uncategorised/555/input.js 5:2-6:1
 			}
 			head: JSFunctionHead {
 				async: false
@@ -103,124 +56,39 @@ JSRoot {
 				returnType: undefined
 				thisType: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "core/uncategorised/555/input.js"
-					end: Object {
-						column: 1
-						line: 5
-					}
-					start: Object {
-						column: 13
-						line: 1
-					}
-				}
+				loc: SourceLocation core/uncategorised/555/input.js 1:13-5:1
 				rest: JSBindingIdentifier {
 					name: "second"
-					loc: Object {
-						filename: "core/uncategorised/555/input.js"
-						identifierName: "second"
-						end: Object {
-							column: 13
-							line: 3
-						}
-						start: Object {
-							column: 7
-							line: 3
-						}
-					}
+					loc: SourceLocation core/uncategorised/555/input.js 3:7-3:13 (second)
 					meta: JSPatternMeta {
 						optional: undefined
 						typeAnnotation: undefined
-						loc: Object {
-							filename: "core/uncategorised/555/input.js"
-							end: Object {
-								column: 13
-								line: 3
-							}
-							start: Object {
-								column: 7
-								line: 3
-							}
-						}
+						loc: SourceLocation core/uncategorised/555/input.js 3:7-3:13
 					}
 				}
 				params: Array [
 					JSBindingIdentifier {
 						name: "first"
-						loc: Object {
-							filename: "core/uncategorised/555/input.js"
-							identifierName: "first"
-							end: Object {
-								column: 9
-								line: 2
-							}
-							start: Object {
-								column: 4
-								line: 2
-							}
-						}
+						loc: SourceLocation core/uncategorised/555/input.js 2:4-2:9 (first)
 						meta: JSPatternMeta {
 							optional: undefined
 							typeAnnotation: undefined
-							loc: Object {
-								filename: "core/uncategorised/555/input.js"
-								end: Object {
-									column: 9
-									line: 2
-								}
-								start: Object {
-									column: 4
-									line: 2
-								}
-							}
+							loc: SourceLocation core/uncategorised/555/input.js 2:4-2:9
 						}
 					}
 					JSBindingIdentifier {
 						name: "third"
-						loc: Object {
-							filename: "core/uncategorised/555/input.js"
-							identifierName: "third"
-							end: Object {
-								column: 9
-								line: 4
-							}
-							start: Object {
-								column: 4
-								line: 4
-							}
-						}
+						loc: SourceLocation core/uncategorised/555/input.js 4:4-4:9 (third)
 						meta: JSPatternMeta {
 							optional: undefined
 							typeAnnotation: undefined
-							loc: Object {
-								filename: "core/uncategorised/555/input.js"
-								end: Object {
-									column: 9
-									line: 4
-								}
-								start: Object {
-									column: 4
-									line: 4
-								}
-							}
+							loc: SourceLocation core/uncategorised/555/input.js 4:4-4:9
 						}
 					}
 				]
 			}
 		}
-		JSEmptyStatement {
-			loc: Object {
-				filename: "core/uncategorised/555/input.js"
-				end: Object {
-					column: 2
-					line: 6
-				}
-				start: Object {
-					column: 1
-					line: 6
-				}
-			}
-		}
+		JSEmptyStatement {loc: SourceLocation core/uncategorised/555/input.js 6:1-6:2}
 	]
 }
 ```
@@ -240,8 +108,5 @@ JSRoot {
     4 │     third,
     5 │ ) {
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

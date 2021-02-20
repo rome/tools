@@ -8,7 +8,6 @@ test(
 	async (t) => {
 		const identifiers = getBindingIdentifiers(
 			parseJS({
-				path: "unknown",
 				input: dedent`
 					const foo = "bar";
 

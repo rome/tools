@@ -11,45 +11,29 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "esprima/es2015-generator/malformed-generator-method-2/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "esprima/es2015-generator/malformed-generator-method-2/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation esprima/es2015-generator/malformed-generator-method-2/input.js 1:0-2:0
+	path: UIDPath<esprima/es2015-generator/malformed-generator-method-2/input.js>
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse"
 				categoryValue: "js"
+				category: Array ["parse"]
 				message: RAW_MARKUP {value: "Expected an identifier"}
 			}
 			location: Object {
-				filename: "esprima/es2015-generator/malformed-generator-method-2/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 13
-					line: 1
-				}
-				start: Object {
-					column: 14
-					line: 1
-				}
+				end: Position 1:13
+				path: UIDPath<esprima/es2015-generator/malformed-generator-method-2/input.js>
+				start: Position 1:14
 			}
 		}
 	]
@@ -57,88 +41,36 @@ JSRoot {
 		JSClassDeclaration {
 			id: JSBindingIdentifier {
 				name: "Foo"
-				loc: Object {
-					filename: "esprima/es2015-generator/malformed-generator-method-2/input.js"
-					identifierName: "Foo"
-					end: Object {
-						column: 9
-						line: 1
-					}
-					start: Object {
-						column: 6
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/es2015-generator/malformed-generator-method-2/input.js 1:6-1:9 (Foo)
 			}
-			loc: Object {
-				filename: "esprima/es2015-generator/malformed-generator-method-2/input.js"
-				end: Object {
-					column: 15
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation esprima/es2015-generator/malformed-generator-method-2/input.js 1:0-1:15
 			meta: JSClassHead {
 				implements: undefined
 				superClass: undefined
 				superTypeParameters: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "esprima/es2015-generator/malformed-generator-method-2/input.js"
-					end: Object {
-						column: 15
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/es2015-generator/malformed-generator-method-2/input.js 1:0-1:15
 				body: Array [
 					TSDeclareMethod {
 						kind: "method"
 						key: JSStaticPropertyKey {
 							value: JSIdentifier {
 								name: ""
-								loc: Object {
-									filename: "esprima/es2015-generator/malformed-generator-method-2/input.js"
-									identifierName: ""
-									end: Object {
-										column: 15
-										line: 1
-									}
-									start: Object {
-										column: 14
-										line: 1
-									}
-								}
+								loc: SourceLocation esprima/es2015-generator/malformed-generator-method-2/input.js 1:14-1:15 ()
 							}
-							loc: Object {
-								filename: "esprima/es2015-generator/malformed-generator-method-2/input.js"
-								end: Object {
-									column: 15
-									line: 1
-								}
-								start: Object {
-									column: 14
-									line: 1
-								}
-							}
+							loc: SourceLocation esprima/es2015-generator/malformed-generator-method-2/input.js 1:14-1:15
 						}
 						body: undefined
-						loc: Object {
-							filename: "esprima/es2015-generator/malformed-generator-method-2/input.js"
-							end: Object {
-								column: 15
-								line: 1
-							}
-							start: Object {
-								column: 12
-								line: 1
-							}
+						loc: SourceLocation esprima/es2015-generator/malformed-generator-method-2/input.js 1:12-1:15
+						meta: JSClassPropertyMeta {
+							abstract: false
+							accessibility: undefined
+							optional: false
+							readonly: false
+							static: false
+							typeAnnotation: undefined
+							loc: SourceLocation esprima/es2015-generator/malformed-generator-method-2/input.js 1:12-1:15
+							start: Position 1:12
 						}
 						head: JSFunctionHead {
 							async: false
@@ -149,40 +81,7 @@ JSRoot {
 							returnType: undefined
 							thisType: undefined
 							typeParameters: undefined
-							loc: Object {
-								filename: "esprima/es2015-generator/malformed-generator-method-2/input.js"
-								end: Object {
-									column: 15
-									line: 1
-								}
-								start: Object {
-									column: 0
-									line: 2
-								}
-							}
-						}
-						meta: JSClassPropertyMeta {
-							abstract: false
-							accessibility: undefined
-							optional: false
-							readonly: false
-							static: false
-							typeAnnotation: undefined
-							start: Object {
-								column: 12
-								line: 1
-							}
-							loc: Object {
-								filename: "esprima/es2015-generator/malformed-generator-method-2/input.js"
-								end: Object {
-									column: 15
-									line: 1
-								}
-								start: Object {
-									column: 12
-									line: 1
-								}
-							}
+							loc: SourceLocation esprima/es2015-generator/malformed-generator-method-2/input.js 2:0-1:15
 						}
 					}
 				]
@@ -203,8 +102,5 @@ JSRoot {
     class Foo { * }
                   ^
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

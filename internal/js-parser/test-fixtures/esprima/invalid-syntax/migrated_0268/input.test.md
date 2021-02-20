@@ -11,48 +11,28 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "esprima/invalid-syntax/migrated_0268/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "esprima/invalid-syntax/migrated_0268/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation esprima/invalid-syntax/migrated_0268/input.js 1:0-2:0
+	path: UIDPath<esprima/invalid-syntax/migrated_0268/input.js>
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
 			location: Object {
-				filename: "esprima/invalid-syntax/migrated_0268/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 10
-					line: 1
-				}
-				start: Object {
-					column: 10
-					line: 1
-				}
+				end: Position 1:10
+				path: UIDPath<esprima/invalid-syntax/migrated_0268/input.js>
+				start: Position 1:10
 			}
 			description: Object {
-				category: "parse"
 				categoryValue: "js"
-				message: Array [
-					RAW_MARKUP {value: "A "}
-					"type annotation"
-					RAW_MARKUP {value: " is only valid inside of a TypeScript file"}
-				]
+				category: Array ["parse"]
+				message: RAW_MARKUP {value: "A type annotation is only valid inside of a TypeScript file"}
 				advice: Array [
 					log {
 						category: "info"
@@ -66,103 +46,31 @@ JSRoot {
 		JSClassDeclaration {
 			id: JSBindingIdentifier {
 				name: "A"
-				loc: Object {
-					filename: "esprima/invalid-syntax/migrated_0268/input.js"
-					identifierName: "A"
-					end: Object {
-						column: 7
-						line: 1
-					}
-					start: Object {
-						column: 6
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/invalid-syntax/migrated_0268/input.js 1:6-1:7 (A)
 			}
-			loc: Object {
-				filename: "esprima/invalid-syntax/migrated_0268/input.js"
-				end: Object {
-					column: 13
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation esprima/invalid-syntax/migrated_0268/input.js 1:0-1:13
 			meta: JSClassHead {
 				implements: undefined
 				superClass: undefined
 				superTypeParameters: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "esprima/invalid-syntax/migrated_0268/input.js"
-					end: Object {
-						column: 13
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/invalid-syntax/migrated_0268/input.js 1:0-1:13
 				body: Array [
 					JSClassProperty {
 						key: JSStaticPropertyKey {
 							value: JSIdentifier {
 								name: "a"
-								loc: Object {
-									filename: "esprima/invalid-syntax/migrated_0268/input.js"
-									identifierName: "a"
-									end: Object {
-										column: 10
-										line: 1
-									}
-									start: Object {
-										column: 9
-										line: 1
-									}
-								}
+								loc: SourceLocation esprima/invalid-syntax/migrated_0268/input.js 1:9-1:10 (a)
 							}
-							loc: Object {
-								filename: "esprima/invalid-syntax/migrated_0268/input.js"
-								end: Object {
-									column: 10
-									line: 1
-								}
-								start: Object {
-									column: 9
-									line: 1
-								}
-							}
+							loc: SourceLocation esprima/invalid-syntax/migrated_0268/input.js 1:9-1:10
 						}
 						value: undefined
 						definite: undefined
-						loc: Object {
-							filename: "esprima/invalid-syntax/migrated_0268/input.js"
-							end: Object {
-								column: 12
-								line: 1
-							}
-							start: Object {
-								column: 9
-								line: 1
-							}
-						}
+						loc: SourceLocation esprima/invalid-syntax/migrated_0268/input.js 1:9-1:12
 						typeAnnotation: TSNumericLiteralTypeAnnotation {
 							value: 0
 							format: undefined
-							loc: Object {
-								filename: "esprima/invalid-syntax/migrated_0268/input.js"
-								end: Object {
-									column: 12
-									line: 1
-								}
-								start: Object {
-									column: 11
-									line: 1
-								}
-							}
+							loc: SourceLocation esprima/invalid-syntax/migrated_0268/input.js 1:11-1:12
 						}
 						meta: JSClassPropertyMeta {
 							abstract: false
@@ -171,21 +79,8 @@ JSRoot {
 							readonly: false
 							static: false
 							typeAnnotation: undefined
-							start: Object {
-								column: 9
-								line: 1
-							}
-							loc: Object {
-								filename: "esprima/invalid-syntax/migrated_0268/input.js"
-								end: Object {
-									column: 10
-									line: 1
-								}
-								start: Object {
-									column: 9
-									line: 1
-								}
-							}
+							loc: SourceLocation esprima/invalid-syntax/migrated_0268/input.js 1:9-1:10
+							start: Position 1:9
 						}
 					}
 				]
@@ -208,8 +103,5 @@ JSRoot {
 
   ℹ To enable TypeScript support, the file extension should end in .ts or .tsx
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

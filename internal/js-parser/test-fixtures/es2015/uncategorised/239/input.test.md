@@ -11,45 +11,29 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "es2015/uncategorised/239/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
 	syntax: Array []
-	loc: Object {
-		filename: "es2015/uncategorised/239/input.js"
-		end: Object {
-			column: 19
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2015/uncategorised/239/input.js 1:0-1:19
+	path: UIDPath<es2015/uncategorised/239/input.js>
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse"
 				categoryValue: "js"
+				category: Array ["parse"]
 				message: RAW_MARKUP {value: "import missing a source"}
 			}
 			location: Object {
-				filename: "es2015/uncategorised/239/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 15
-					line: 1
-				}
-				start: Object {
-					column: 16
-					line: 1
-				}
+				end: Position 1:15
+				path: UIDPath<es2015/uncategorised/239/input.js>
+				start: Position 1:16
 			}
 		}
 	]
@@ -58,100 +42,28 @@ JSRoot {
 			importKind: undefined
 			namedSpecifiers: Array []
 			namespaceSpecifier: undefined
-			loc: Object {
-				filename: "es2015/uncategorised/239/input.js"
-				end: Object {
-					column: 15
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2015/uncategorised/239/input.js 1:0-1:15
 			source: JSStringLiteral {
 				value: ""
-				loc: Object {
-					filename: "es2015/uncategorised/239/input.js"
-					end: Object {
-						column: 15
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/uncategorised/239/input.js 1:0-1:15
 			}
 			defaultSpecifier: JSImportDefaultSpecifier {
-				loc: Object {
-					filename: "es2015/uncategorised/239/input.js"
-					end: Object {
-						column: 10
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/uncategorised/239/input.js 1:0-1:10
 				local: JSImportSpecifierLocal {
 					name: JSBindingIdentifier {
 						name: "foo"
-						loc: Object {
-							filename: "es2015/uncategorised/239/input.js"
-							identifierName: "foo"
-							end: Object {
-								column: 10
-								line: 1
-							}
-							start: Object {
-								column: 7
-								line: 1
-							}
-						}
+						loc: SourceLocation es2015/uncategorised/239/input.js 1:7-1:10 (foo)
 					}
 					importKind: undefined
-					loc: Object {
-						filename: "es2015/uncategorised/239/input.js"
-						end: Object {
-							column: 10
-							line: 1
-						}
-						start: Object {
-							column: 7
-							line: 1
-						}
-					}
+					loc: SourceLocation es2015/uncategorised/239/input.js 1:7-1:10
 				}
 			}
 		}
 		JSExpressionStatement {
-			loc: Object {
-				filename: "es2015/uncategorised/239/input.js"
-				end: Object {
-					column: 19
-					line: 1
-				}
-				start: Object {
-					column: 16
-					line: 1
-				}
-			}
+			loc: SourceLocation es2015/uncategorised/239/input.js 1:16-1:19
 			expression: JSReferenceIdentifier {
 				name: "bar"
-				loc: Object {
-					filename: "es2015/uncategorised/239/input.js"
-					identifierName: "bar"
-					end: Object {
-						column: 19
-						line: 1
-					}
-					start: Object {
-						column: 16
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/uncategorised/239/input.js 1:16-1:19 (bar)
 			}
 		}
 	]
@@ -169,8 +81,5 @@ JSRoot {
     import foo from bar
                     ^
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

@@ -12,160 +12,46 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "typescript/module-namespace/head/input.ts"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
+	loc: SourceLocation typescript/module-namespace/head/input.ts 1:0-5:0
+	path: UIDPath<typescript/module-namespace/head/input.ts>
 	syntax: Array ["ts"]
-	loc: Object {
-		filename: "typescript/module-namespace/head/input.ts"
-		end: Object {
-			column: 0
-			line: 5
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
 	body: Array [
 		TSModuleDeclaration {
 			id: JSBindingIdentifier {
 				name: "N"
-				loc: Object {
-					filename: "typescript/module-namespace/head/input.ts"
-					identifierName: "N"
-					end: Object {
-						column: 11
-						line: 1
-					}
-					start: Object {
-						column: 10
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/module-namespace/head/input.ts 1:10-1:11 (N)
 			}
-			loc: Object {
-				filename: "typescript/module-namespace/head/input.ts"
-				end: Object {
-					column: 14
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation typescript/module-namespace/head/input.ts 1:0-1:14
 			body: TSModuleBlock {
 				body: Array []
-				loc: Object {
-					filename: "typescript/module-namespace/head/input.ts"
-					end: Object {
-						column: 14
-						line: 1
-					}
-					start: Object {
-						column: 12
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/module-namespace/head/input.ts 1:12-1:14
 			}
 		}
 		TSModuleDeclaration {
 			id: JSBindingIdentifier {
 				name: "M"
-				loc: Object {
-					filename: "typescript/module-namespace/head/input.ts"
-					identifierName: "M"
-					end: Object {
-						column: 11
-						line: 2
-					}
-					start: Object {
-						column: 10
-						line: 2
-					}
-				}
+				loc: SourceLocation typescript/module-namespace/head/input.ts 2:10-2:11 (M)
 			}
-			loc: Object {
-				filename: "typescript/module-namespace/head/input.ts"
-				end: Object {
-					column: 18
-					line: 2
-				}
-				start: Object {
-					column: 0
-					line: 2
-				}
-			}
+			loc: SourceLocation typescript/module-namespace/head/input.ts 2:0-2:18
 			body: TSModuleDeclaration {
 				id: JSBindingIdentifier {
 					name: "N"
-					loc: Object {
-						filename: "typescript/module-namespace/head/input.ts"
-						identifierName: "N"
-						end: Object {
-							column: 13
-							line: 2
-						}
-						start: Object {
-							column: 12
-							line: 2
-						}
-					}
+					loc: SourceLocation typescript/module-namespace/head/input.ts 2:12-2:13 (N)
 				}
-				loc: Object {
-					filename: "typescript/module-namespace/head/input.ts"
-					end: Object {
-						column: 18
-						line: 2
-					}
-					start: Object {
-						column: 12
-						line: 2
-					}
-				}
+				loc: SourceLocation typescript/module-namespace/head/input.ts 2:12-2:18
 				body: TSModuleDeclaration {
 					id: JSBindingIdentifier {
 						name: "O"
-						loc: Object {
-							filename: "typescript/module-namespace/head/input.ts"
-							identifierName: "O"
-							end: Object {
-								column: 15
-								line: 2
-							}
-							start: Object {
-								column: 14
-								line: 2
-							}
-						}
+						loc: SourceLocation typescript/module-namespace/head/input.ts 2:14-2:15 (O)
 					}
-					loc: Object {
-						filename: "typescript/module-namespace/head/input.ts"
-						end: Object {
-							column: 18
-							line: 2
-						}
-						start: Object {
-							column: 14
-							line: 2
-						}
-					}
+					loc: SourceLocation typescript/module-namespace/head/input.ts 2:14-2:18
 					body: TSModuleBlock {
 						body: Array []
-						loc: Object {
-							filename: "typescript/module-namespace/head/input.ts"
-							end: Object {
-								column: 18
-								line: 2
-							}
-							start: Object {
-								column: 16
-								line: 2
-							}
-						}
+						loc: SourceLocation typescript/module-namespace/head/input.ts 2:16-2:18
 					}
 				}
 			}
@@ -173,85 +59,24 @@ JSRoot {
 		TSModuleDeclaration {
 			id: JSBindingIdentifier {
 				name: "M"
-				loc: Object {
-					filename: "typescript/module-namespace/head/input.ts"
-					identifierName: "M"
-					end: Object {
-						column: 8
-						line: 3
-					}
-					start: Object {
-						column: 7
-						line: 3
-					}
-				}
+				loc: SourceLocation typescript/module-namespace/head/input.ts 3:7-3:8 (M)
 			}
-			loc: Object {
-				filename: "typescript/module-namespace/head/input.ts"
-				end: Object {
-					column: 11
-					line: 3
-				}
-				start: Object {
-					column: 0
-					line: 3
-				}
-			}
+			loc: SourceLocation typescript/module-namespace/head/input.ts 3:0-3:11
 			body: TSModuleBlock {
 				body: Array []
-				loc: Object {
-					filename: "typescript/module-namespace/head/input.ts"
-					end: Object {
-						column: 11
-						line: 3
-					}
-					start: Object {
-						column: 9
-						line: 3
-					}
-				}
+				loc: SourceLocation typescript/module-namespace/head/input.ts 3:9-3:11
 			}
 		}
 		TSModuleDeclaration {
 			id: JSStringLiteral {
 				value: "m"
-				loc: Object {
-					filename: "typescript/module-namespace/head/input.ts"
-					end: Object {
-						column: 10
-						line: 4
-					}
-					start: Object {
-						column: 7
-						line: 4
-					}
-				}
+				loc: SourceLocation typescript/module-namespace/head/input.ts 4:7-4:10
 			}
 			global: undefined
-			loc: Object {
-				filename: "typescript/module-namespace/head/input.ts"
-				end: Object {
-					column: 13
-					line: 4
-				}
-				start: Object {
-					column: 0
-					line: 4
-				}
-			}
+			loc: SourceLocation typescript/module-namespace/head/input.ts 4:0-4:13
 			body: TSModuleBlock {
 				body: Array []
-				loc: Object {
-					filename: "typescript/module-namespace/head/input.ts"
-					end: Object {
-						column: 13
-						line: 4
-					}
-					start: Object {
-						column: 11
-						line: 4
-					}
-				}
+				loc: SourceLocation typescript/module-namespace/head/input.ts 4:11-4:13
 			}
 		}
 	]
@@ -261,6 +86,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

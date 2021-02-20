@@ -11,144 +11,54 @@ JSRoot {
 	comments: Array []
 	corrupt: true
 	directives: Array []
-	filename: "esprima/invalid-syntax/migrated_0128/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "esprima/invalid-syntax/migrated_0128/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation esprima/invalid-syntax/migrated_0128/input.js 1:0-2:0
+	path: UIDPath<esprima/invalid-syntax/migrated_0128/input.js>
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse"
 				categoryValue: "js"
-				message: Array [
-					RAW_MARKUP {value: "Unknown start to an "}
-					"statement expression"
-				]
+				category: Array ["parse"]
+				message: RAW_MARKUP {value: "Unknown start to an statement expression"}
 			}
 			location: Object {
-				filename: "esprima/invalid-syntax/migrated_0128/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 24
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 2
-				}
+				end: Position 1:24
+				path: UIDPath<esprima/invalid-syntax/migrated_0128/input.js>
+				start: Position 2:0
 			}
 		}
 	]
 	body: Array [
 		JSIfStatement {
-			loc: Object {
-				filename: "esprima/invalid-syntax/migrated_0128/input.js"
-				end: Object {
-					column: 0
-					line: 2
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation esprima/invalid-syntax/migrated_0128/input.js 1:0-2:0
 			test: JSBooleanLiteral {
 				value: false
-				loc: Object {
-					filename: "esprima/invalid-syntax/migrated_0128/input.js"
-					end: Object {
-						column: 8
-						line: 1
-					}
-					start: Object {
-						column: 3
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/invalid-syntax/migrated_0128/input.js 1:3-1:8
 			}
 			alternate: JSExpressionStatement {
-				loc: Object {
-					filename: "esprima/invalid-syntax/migrated_0128/input.js"
-					end: Object {
-						column: 0
-						line: 2
-					}
-					start: Object {
-						column: 0
-						line: 2
-					}
-				}
+				loc: SourceLocation esprima/invalid-syntax/migrated_0128/input.js 2:0-2:0
 				expression: JSReferenceIdentifier {
 					name: "INVALID_PLACEHOLDER"
-					loc: Object {
-						filename: "esprima/invalid-syntax/migrated_0128/input.js"
-						end: Object {
-							column: 0
-							line: 2
-						}
-						start: Object {
-							column: 0
-							line: 2
-						}
-					}
+					loc: SourceLocation esprima/invalid-syntax/migrated_0128/input.js 2:0-2:0
 				}
 			}
 			consequent: JSExpressionStatement {
-				loc: Object {
-					filename: "esprima/invalid-syntax/migrated_0128/input.js"
-					end: Object {
-						column: 19
-						line: 1
-					}
-					start: Object {
-						column: 10
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/invalid-syntax/migrated_0128/input.js 1:10-1:19
 				expression: JSCallExpression {
 					arguments: Array []
-					loc: Object {
-						filename: "esprima/invalid-syntax/migrated_0128/input.js"
-						end: Object {
-							column: 18
-							line: 1
-						}
-						start: Object {
-							column: 10
-							line: 1
-						}
-					}
+					loc: SourceLocation esprima/invalid-syntax/migrated_0128/input.js 1:10-1:18
 					callee: JSReferenceIdentifier {
 						name: "doThis"
-						loc: Object {
-							filename: "esprima/invalid-syntax/migrated_0128/input.js"
-							identifierName: "doThis"
-							end: Object {
-								column: 16
-								line: 1
-							}
-							start: Object {
-								column: 10
-								line: 1
-							}
-						}
+						loc: SourceLocation esprima/invalid-syntax/migrated_0128/input.js 1:10-1:16 (doThis)
 					}
 				}
 			}
@@ -167,8 +77,5 @@ JSRoot {
 
     if(false) doThis(); else
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

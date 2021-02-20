@@ -11,69 +11,34 @@ JSRoot {
 	comments: Array []
 	corrupt: true
 	directives: Array []
-	filename: "es2015/uncategorised/278/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2015/uncategorised/278/input.js"
-		end: Object {
-			column: 23
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2015/uncategorised/278/input.js 1:0-1:23
+	path: UIDPath<es2015/uncategorised/278/input.js>
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
 			location: Object {
-				filename: "es2015/uncategorised/278/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 10
-					line: 1
-				}
-				start: Object {
-					column: 10
-					line: 1
-				}
+				end: Position 1:10
+				path: UIDPath<es2015/uncategorised/278/input.js>
+				start: Position 1:10
 			}
 			description: Object {
-				category: "parse"
 				categoryValue: "js"
-				message: Array [
-					RAW_MARKUP {value: "Unclosed "}
-					"function params"
-				]
+				category: Array ["parse"]
+				message: RAW_MARKUP {value: "Unclosed <emphasis>function params</emphasis>"}
 				advice: Array [
 					log {
 						category: "info"
-						text: Array [
-							RAW_MARKUP {value: "We expected to find the closing character <emphasis>"}
-							")"
-							RAW_MARKUP {value: "</emphasis> here"}
-						]
+						text: RAW_MARKUP {value: "We expected to find the closing character <emphasis>)</emphasis> here"}
 					}
-					frame {
-						location: Object {
-							filename: "es2015/uncategorised/278/input.js"
-							end: Object {
-								column: 19
-								line: 1
-							}
-							start: Object {
-								column: 19
-								line: 1
-							}
-						}
-					}
+					frame {location: SourceLocation es2015/uncategorised/278/input.js 1:19-1:19}
 				]
 			}
 		}
@@ -82,29 +47,36 @@ JSRoot {
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "f"
-				loc: Object {
-					filename: "es2015/uncategorised/278/input.js"
-					identifierName: "f"
-					end: Object {
-						column: 10
-						line: 1
-					}
-					start: Object {
-						column: 9
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/uncategorised/278/input.js 1:9-1:10 (f)
 			}
-			loc: Object {
-				filename: "es2015/uncategorised/278/input.js"
-				end: Object {
-					column: 23
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
+			loc: SourceLocation es2015/uncategorised/278/input.js 1:0-1:23
+			body: JSBlockStatement {
+				directives: Array []
+				loc: SourceLocation es2015/uncategorised/278/input.js 1:19-1:23
+				body: Array [
+					JSExpressionStatement {
+						loc: SourceLocation es2015/uncategorised/278/input.js 1:19-1:20
+						expression: JSReferenceIdentifier {
+							name: "INVALID_PLACEHOLDER"
+							loc: SourceLocation es2015/uncategorised/278/input.js 1:19-1:20
+						}
+					}
+					JSExpressionStatement {
+						loc: SourceLocation es2015/uncategorised/278/input.js 1:21-1:22
+						expression: JSNumericLiteral {
+							value: 0
+							format: undefined
+							loc: SourceLocation es2015/uncategorised/278/input.js 1:21-1:22
+						}
+					}
+					JSExpressionStatement {
+						loc: SourceLocation es2015/uncategorised/278/input.js 1:22-1:23
+						expression: JSReferenceIdentifier {
+							name: "INVALID_PLACEHOLDER"
+							loc: SourceLocation es2015/uncategorised/278/input.js 1:22-1:23
+						}
+					}
+				]
 			}
 			head: JSFunctionHead {
 				async: false
@@ -113,174 +85,24 @@ JSRoot {
 				returnType: undefined
 				thisType: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "es2015/uncategorised/278/input.js"
-					end: Object {
-						column: 18
-						line: 1
-					}
-					start: Object {
-						column: 10
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/uncategorised/278/input.js 1:10-1:18
 				rest: JSBindingIdentifier {
 					name: "b"
-					loc: Object {
-						filename: "es2015/uncategorised/278/input.js"
-						identifierName: "b"
-						end: Object {
-							column: 18
-							line: 1
-						}
-						start: Object {
-							column: 17
-							line: 1
-						}
-					}
+					loc: SourceLocation es2015/uncategorised/278/input.js 1:17-1:18 (b)
 					meta: JSPatternMeta {
 						optional: undefined
 						typeAnnotation: undefined
-						loc: Object {
-							filename: "es2015/uncategorised/278/input.js"
-							end: Object {
-								column: 18
-								line: 1
-							}
-							start: Object {
-								column: 17
-								line: 1
-							}
-						}
+						loc: SourceLocation es2015/uncategorised/278/input.js 1:17-1:18
 					}
 				}
 				params: Array [
 					JSBindingIdentifier {
 						name: "a"
-						loc: Object {
-							filename: "es2015/uncategorised/278/input.js"
-							identifierName: "a"
-							end: Object {
-								column: 12
-								line: 1
-							}
-							start: Object {
-								column: 11
-								line: 1
-							}
-						}
+						loc: SourceLocation es2015/uncategorised/278/input.js 1:11-1:12 (a)
 						meta: JSPatternMeta {
 							optional: undefined
 							typeAnnotation: undefined
-							loc: Object {
-								filename: "es2015/uncategorised/278/input.js"
-								end: Object {
-									column: 12
-									line: 1
-								}
-								start: Object {
-									column: 11
-									line: 1
-								}
-							}
-						}
-					}
-				]
-			}
-			body: JSBlockStatement {
-				directives: Array []
-				loc: Object {
-					filename: "es2015/uncategorised/278/input.js"
-					end: Object {
-						column: 23
-						line: 1
-					}
-					start: Object {
-						column: 19
-						line: 1
-					}
-				}
-				body: Array [
-					JSExpressionStatement {
-						loc: Object {
-							filename: "es2015/uncategorised/278/input.js"
-							end: Object {
-								column: 20
-								line: 1
-							}
-							start: Object {
-								column: 19
-								line: 1
-							}
-						}
-						expression: JSReferenceIdentifier {
-							name: "INVALID_PLACEHOLDER"
-							loc: Object {
-								filename: "es2015/uncategorised/278/input.js"
-								end: Object {
-									column: 20
-									line: 1
-								}
-								start: Object {
-									column: 19
-									line: 1
-								}
-							}
-						}
-					}
-					JSExpressionStatement {
-						loc: Object {
-							filename: "es2015/uncategorised/278/input.js"
-							end: Object {
-								column: 22
-								line: 1
-							}
-							start: Object {
-								column: 21
-								line: 1
-							}
-						}
-						expression: JSNumericLiteral {
-							value: 0
-							format: undefined
-							loc: Object {
-								filename: "es2015/uncategorised/278/input.js"
-								end: Object {
-									column: 22
-									line: 1
-								}
-								start: Object {
-									column: 21
-									line: 1
-								}
-							}
-						}
-					}
-					JSExpressionStatement {
-						loc: Object {
-							filename: "es2015/uncategorised/278/input.js"
-							end: Object {
-								column: 23
-								line: 1
-							}
-							start: Object {
-								column: 22
-								line: 1
-							}
-						}
-						expression: JSReferenceIdentifier {
-							name: "INVALID_PLACEHOLDER"
-							loc: Object {
-								filename: "es2015/uncategorised/278/input.js"
-								end: Object {
-									column: 23
-									line: 1
-								}
-								start: Object {
-									column: 22
-									line: 1
-								}
-							}
+							loc: SourceLocation es2015/uncategorised/278/input.js 1:11-1:12
 						}
 					}
 				]
@@ -298,13 +120,13 @@ JSRoot {
 
   ✖ Unclosed function params
 
+    function f(a, ...b = 0)
+              ^
+
   ℹ We expected to find the closing character ) here
 
     function f(a, ...b = 0)
                        ^
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

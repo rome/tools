@@ -11,178 +11,67 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "es2015/identifiers/invalid-escape-seq-export/input.js"
 	hasHoistedVars: true
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
 	syntax: Array []
-	loc: Object {
-		filename: "es2015/identifiers/invalid-escape-seq-export/input.js"
-		end: Object {
-			column: 0
-			line: 5
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2015/identifiers/invalid-escape-seq-export/input.js 1:0-5:0
+	path: UIDPath<es2015/identifiers/invalid-escape-seq-export/input.js>
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse"
 				categoryValue: "js"
-				message: Array [
-					RAW_MARKUP {value: "Escape sequence in keyword "}
-					"export"
-				]
+				category: Array ["parse"]
+				message: RAW_MARKUP {value: "Escape sequence in keyword <emphasis>export</emphasis>"}
 			}
 			location: Object {
-				filename: "es2015/identifiers/invalid-escape-seq-export/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 9
-					line: 1
-				}
-				start: Object {
-					column: 9
-					line: 1
-				}
+				end: Position 1:9
+				path: UIDPath<es2015/identifiers/invalid-escape-seq-export/input.js>
+				start: Position 1:9
 			}
 		}
 	]
 	body: Array [
 		JSVariableDeclarationStatement {
-			loc: Object {
-				filename: "es2015/identifiers/invalid-escape-seq-export/input.js"
-				end: Object {
-					column: 22
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2015/identifiers/invalid-escape-seq-export/input.js 1:0-1:22
 			declaration: JSVariableDeclaration {
 				kind: "var"
-				loc: Object {
-					filename: "es2015/identifiers/invalid-escape-seq-export/input.js"
-					end: Object {
-						column: 22
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/identifiers/invalid-escape-seq-export/input.js 1:0-1:22
 				declarations: Array [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "export"
-							loc: Object {
-								filename: "es2015/identifiers/invalid-escape-seq-export/input.js"
-								identifierName: "export"
-								end: Object {
-									column: 15
-									line: 1
-								}
-								start: Object {
-									column: 4
-									line: 1
-								}
-							}
+							loc: SourceLocation es2015/identifiers/invalid-escape-seq-export/input.js 1:4-1:15 (export)
 						}
-						loc: Object {
-							filename: "es2015/identifiers/invalid-escape-seq-export/input.js"
-							end: Object {
-								column: 21
-								line: 1
-							}
-							start: Object {
-								column: 4
-								line: 1
-							}
-						}
+						loc: SourceLocation es2015/identifiers/invalid-escape-seq-export/input.js 1:4-1:21
 						init: JSNumericLiteral {
 							value: 123
 							format: undefined
-							loc: Object {
-								filename: "es2015/identifiers/invalid-escape-seq-export/input.js"
-								end: Object {
-									column: 21
-									line: 1
-								}
-								start: Object {
-									column: 18
-									line: 1
-								}
-							}
+							loc: SourceLocation es2015/identifiers/invalid-escape-seq-export/input.js 1:18-1:21
 						}
 					}
 				]
 			}
 		}
 		JSVariableDeclarationStatement {
-			loc: Object {
-				filename: "es2015/identifiers/invalid-escape-seq-export/input.js"
-				end: Object {
-					column: 6
-					line: 3
-				}
-				start: Object {
-					column: 0
-					line: 3
-				}
-			}
+			loc: SourceLocation es2015/identifiers/invalid-escape-seq-export/input.js 3:0-3:6
 			declaration: JSVariableDeclaration {
 				kind: "var"
-				loc: Object {
-					filename: "es2015/identifiers/invalid-escape-seq-export/input.js"
-					end: Object {
-						column: 6
-						line: 3
-					}
-					start: Object {
-						column: 0
-						line: 3
-					}
-				}
+				loc: SourceLocation es2015/identifiers/invalid-escape-seq-export/input.js 3:0-3:6
 				declarations: Array [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "x"
-							loc: Object {
-								filename: "es2015/identifiers/invalid-escape-seq-export/input.js"
-								identifierName: "x"
-								end: Object {
-									column: 5
-									line: 3
-								}
-								start: Object {
-									column: 4
-									line: 3
-								}
-							}
+							loc: SourceLocation es2015/identifiers/invalid-escape-seq-export/input.js 3:4-3:5 (x)
 						}
 						init: undefined
-						loc: Object {
-							filename: "es2015/identifiers/invalid-escape-seq-export/input.js"
-							end: Object {
-								column: 5
-								line: 3
-							}
-							start: Object {
-								column: 4
-								line: 3
-							}
-						}
+						loc: SourceLocation es2015/identifiers/invalid-escape-seq-export/input.js 3:4-3:5
 					}
 				]
 			}
@@ -190,59 +79,17 @@ JSRoot {
 		JSExportLocalDeclaration {
 			declaration: undefined
 			exportKind: "value"
-			loc: Object {
-				filename: "es2015/identifiers/invalid-escape-seq-export/input.js"
-				end: Object {
-					column: 18
-					line: 4
-				}
-				start: Object {
-					column: 0
-					line: 4
-				}
-			}
+			loc: SourceLocation es2015/identifiers/invalid-escape-seq-export/input.js 4:0-4:18
 			specifiers: Array [
 				JSExportLocalSpecifier {
-					loc: Object {
-						filename: "es2015/identifiers/invalid-escape-seq-export/input.js"
-						end: Object {
-							column: 15
-							line: 4
-						}
-						start: Object {
-							column: 14
-							line: 4
-						}
-					}
+					loc: SourceLocation es2015/identifiers/invalid-escape-seq-export/input.js 4:14-4:15
 					exported: JSIdentifier {
 						name: "x"
-						loc: Object {
-							filename: "es2015/identifiers/invalid-escape-seq-export/input.js"
-							identifierName: "x"
-							end: Object {
-								column: 15
-								line: 4
-							}
-							start: Object {
-								column: 14
-								line: 4
-							}
-						}
+						loc: SourceLocation es2015/identifiers/invalid-escape-seq-export/input.js 4:14-4:15 (x)
 					}
 					local: JSReferenceIdentifier {
 						name: "x"
-						loc: Object {
-							filename: "es2015/identifiers/invalid-escape-seq-export/input.js"
-							identifierName: "x"
-							end: Object {
-								column: 15
-								line: 4
-							}
-							start: Object {
-								column: 14
-								line: 4
-							}
-						}
+						loc: SourceLocation es2015/identifiers/invalid-escape-seq-export/input.js 4:14-4:15 (x)
 					}
 				}
 			]
@@ -264,8 +111,5 @@ JSRoot {
     2 │
     3 │ var x;
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

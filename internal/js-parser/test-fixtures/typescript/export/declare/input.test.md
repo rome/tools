@@ -11,48 +11,34 @@ JSRoot {
 	comments: Array []
 	corrupt: true
 	directives: Array []
-	filename: "typescript/export/declare/input.ts"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
+	loc: SourceLocation typescript/export/declare/input.ts 1:0-9:0
+	path: UIDPath<typescript/export/declare/input.ts>
 	syntax: Array ["ts"]
-	loc: Object {
-		filename: "typescript/export/declare/input.ts"
-		end: Object {
-			column: 0
-			line: 9
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				category: "parse"
-				categoryValue: "js"
-				message: Array [
-					RAW_MARKUP {value: "Unexpected token, expected "}
-					"("
-				]
-			}
 			location: Object {
-				filename: "typescript/export/declare/input.ts"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 25
-					line: 2
-				}
-				start: Object {
-					column: 24
-					line: 2
-				}
+				end: Position 2:23
+				path: UIDPath<typescript/export/declare/input.ts>
+				start: Position 2:24
+			}
+			description: Object {
+				categoryValue: "js"
+				category: Array ["parse"]
+				message: RAW_MARKUP {value: "Unexpected character <emphasis>f</emphasis>"}
+				advice: Array [
+					log {
+						category: "info"
+						text: RAW_MARKUP {value: "Expected the opening function params character <emphasis>(</emphasis>"}
+					}
+				]
 			}
 		}
 	]
@@ -60,98 +46,26 @@ JSRoot {
 		JSExportLocalDeclaration {
 			exportKind: "value"
 			specifiers: undefined
-			loc: Object {
-				filename: "typescript/export/declare/input.ts"
-				end: Object {
-					column: 31
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation typescript/export/declare/input.ts 1:0-1:31
 			declaration: JSVariableDeclarationStatement {
 				declare: true
-				loc: Object {
-					filename: "typescript/export/declare/input.ts"
-					end: Object {
-						column: 31
-						line: 1
-					}
-					start: Object {
-						column: 7
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/export/declare/input.ts 1:7-1:31
 				declaration: JSVariableDeclaration {
 					kind: "const"
-					loc: Object {
-						filename: "typescript/export/declare/input.ts"
-						end: Object {
-							column: 31
-							line: 1
-						}
-						start: Object {
-							column: 7
-							line: 1
-						}
-					}
+					loc: SourceLocation typescript/export/declare/input.ts 1:7-1:31
 					declarations: Array [
 						JSVariableDeclarator {
 							id: JSBindingIdentifier {
 								name: "x"
-								loc: Object {
-									filename: "typescript/export/declare/input.ts"
-									end: Object {
-										column: 30
-										line: 1
-									}
-									start: Object {
-										column: 21
-										line: 1
-									}
-								}
+								loc: SourceLocation typescript/export/declare/input.ts 1:21-1:30
 								meta: JSPatternMeta {
 									definite: undefined
-									loc: Object {
-										filename: "typescript/export/declare/input.ts"
-										end: Object {
-											column: 30
-											line: 1
-										}
-										start: Object {
-											column: 21
-											line: 1
-										}
-									}
-									typeAnnotation: TSNumberKeywordTypeAnnotation {
-										loc: Object {
-											filename: "typescript/export/declare/input.ts"
-											end: Object {
-												column: 30
-												line: 1
-											}
-											start: Object {
-												column: 24
-												line: 1
-											}
-										}
-									}
+									loc: SourceLocation typescript/export/declare/input.ts 1:21-1:30
+									typeAnnotation: TSNumberKeywordTypeAnnotation {loc: SourceLocation typescript/export/declare/input.ts 1:24-1:30}
 								}
 							}
 							init: undefined
-							loc: Object {
-								filename: "typescript/export/declare/input.ts"
-								end: Object {
-									column: 30
-									line: 1
-								}
-								start: Object {
-									column: 21
-									line: 1
-								}
-							}
+							loc: SourceLocation typescript/export/declare/input.ts 1:21-1:30
 						}
 					]
 				}
@@ -160,45 +74,14 @@ JSRoot {
 		JSExportLocalDeclaration {
 			exportKind: "value"
 			specifiers: undefined
-			loc: Object {
-				filename: "typescript/export/declare/input.ts"
-				end: Object {
-					column: 26
-					line: 8
-				}
-				start: Object {
-					column: 0
-					line: 2
-				}
-			}
+			loc: SourceLocation typescript/export/declare/input.ts 2:0-8:26
 			declaration: JSFunctionDeclaration {
 				id: JSBindingIdentifier {
 					name: "function"
-					loc: Object {
-						filename: "typescript/export/declare/input.ts"
-						identifierName: "function"
-						end: Object {
-							column: 23
-							line: 2
-						}
-						start: Object {
-							column: 15
-							line: 2
-						}
-					}
+					loc: SourceLocation typescript/export/declare/input.ts 2:15-2:23 (function)
 				}
 				declare: true
-				loc: Object {
-					filename: "typescript/export/declare/input.ts"
-					end: Object {
-						column: 26
-						line: 8
-					}
-					start: Object {
-						column: 7
-						line: 2
-					}
-				}
+				loc: SourceLocation typescript/export/declare/input.ts 2:7-8:26
 				head: JSFunctionHead {
 					async: false
 					generator: false
@@ -207,500 +90,151 @@ JSRoot {
 					returnType: undefined
 					thisType: undefined
 					typeParameters: undefined
-					loc: Object {
-						filename: "typescript/export/declare/input.ts"
-						end: Object {
-							column: 25
-							line: 2
-						}
-						start: Object {
-							column: 24
-							line: 2
-						}
-					}
+					loc: SourceLocation typescript/export/declare/input.ts 2:24-2:25
 					params: Array [
 						JSBindingIdentifier {
 							name: "f"
-							loc: Object {
-								filename: "typescript/export/declare/input.ts"
-								identifierName: "f"
-								end: Object {
-									column: 25
-									line: 2
-								}
-								start: Object {
-									column: 24
-									line: 2
-								}
-							}
+							loc: SourceLocation typescript/export/declare/input.ts 2:24-2:25 (f)
 							meta: JSPatternMeta {
 								optional: undefined
 								typeAnnotation: undefined
-								loc: Object {
-									filename: "typescript/export/declare/input.ts"
-									end: Object {
-										column: 25
-										line: 2
-									}
-									start: Object {
-										column: 24
-										line: 2
-									}
-								}
+								loc: SourceLocation typescript/export/declare/input.ts 2:24-2:25
 							}
 						}
 					]
 				}
 				body: JSBlockStatement {
 					directives: Array []
-					loc: Object {
-						filename: "typescript/export/declare/input.ts"
-						end: Object {
-							column: 26
-							line: 8
-						}
-						start: Object {
-							column: 25
-							line: 2
-						}
-					}
+					loc: SourceLocation typescript/export/declare/input.ts 2:25-8:26
 					body: Array [
 						JSExpressionStatement {
-							loc: Object {
-								filename: "typescript/export/declare/input.ts"
-								end: Object {
-									column: 27
-									line: 2
-								}
-								start: Object {
-									column: 25
-									line: 2
-								}
-							}
+							loc: SourceLocation typescript/export/declare/input.ts 2:25-2:27
 							expression: JSReferenceIdentifier {
 								name: "INVALID_PLACEHOLDER"
-								loc: Object {
-									filename: "typescript/export/declare/input.ts"
-									end: Object {
-										column: 26
-										line: 2
-									}
-									start: Object {
-										column: 26
-										line: 2
-									}
-								}
+								loc: SourceLocation typescript/export/declare/input.ts 2:26-2:26
 							}
 						}
 						JSExpressionStatement {
-							loc: Object {
-								filename: "typescript/export/declare/input.ts"
-								end: Object {
-									column: 28
-									line: 2
-								}
-								start: Object {
-									column: 27
-									line: 2
-								}
-							}
+							loc: SourceLocation typescript/export/declare/input.ts 2:27-2:28
 							expression: JSReferenceIdentifier {
 								name: "INVALID_PLACEHOLDER"
-								loc: Object {
-									filename: "typescript/export/declare/input.ts"
-									end: Object {
-										column: 28
-										line: 2
-									}
-									start: Object {
-										column: 27
-										line: 2
-									}
-								}
+								loc: SourceLocation typescript/export/declare/input.ts 2:27-2:28
 							}
 						}
 						JSExpressionStatement {
-							loc: Object {
-								filename: "typescript/export/declare/input.ts"
-								end: Object {
-									column: 34
-									line: 2
-								}
-								start: Object {
-									column: 29
-									line: 2
-								}
-							}
+							loc: SourceLocation typescript/export/declare/input.ts 2:29-2:34
 							expression: JSUnaryExpression {
 								operator: "void"
 								prefix: true
-								loc: Object {
-									filename: "typescript/export/declare/input.ts"
-									end: Object {
-										column: 34
-										line: 2
-									}
-									start: Object {
-										column: 29
-										line: 2
-									}
-								}
+								loc: SourceLocation typescript/export/declare/input.ts 2:29-2:34
 								argument: JSReferenceIdentifier {
 									name: "INVALID_PLACEHOLDER"
-									loc: Object {
-										filename: "typescript/export/declare/input.ts"
-										end: Object {
-											column: 34
-											line: 2
-										}
-										start: Object {
-											column: 33
-											line: 2
-										}
-									}
+									loc: SourceLocation typescript/export/declare/input.ts 2:33-2:34
 								}
 							}
 						}
 						JSExportLocalDeclaration {
 							exportKind: "value"
 							specifiers: undefined
-							loc: Object {
-								filename: "typescript/export/declare/input.ts"
-								end: Object {
-									column: 25
-									line: 3
-								}
-								start: Object {
-									column: 0
-									line: 3
-								}
-							}
+							loc: SourceLocation typescript/export/declare/input.ts 3:0-3:25
 							declaration: JSClassDeclaration {
 								id: JSBindingIdentifier {
 									name: "C"
-									loc: Object {
-										filename: "typescript/export/declare/input.ts"
-										identifierName: "C"
-										end: Object {
-											column: 22
-											line: 3
-										}
-										start: Object {
-											column: 21
-											line: 3
-										}
-									}
+									loc: SourceLocation typescript/export/declare/input.ts 3:21-3:22 (C)
 								}
 								declare: true
-								loc: Object {
-									filename: "typescript/export/declare/input.ts"
-									end: Object {
-										column: 25
-										line: 3
-									}
-									start: Object {
-										column: 7
-										line: 3
-									}
-								}
+								loc: SourceLocation typescript/export/declare/input.ts 3:7-3:25
 								meta: JSClassHead {
 									body: Array []
 									implements: undefined
 									superClass: undefined
 									superTypeParameters: undefined
 									typeParameters: undefined
-									loc: Object {
-										filename: "typescript/export/declare/input.ts"
-										end: Object {
-											column: 25
-											line: 3
-										}
-										start: Object {
-											column: 7
-											line: 3
-										}
-									}
+									loc: SourceLocation typescript/export/declare/input.ts 3:7-3:25
 								}
 							}
 						}
 						JSExportLocalDeclaration {
 							exportKind: "value"
 							specifiers: undefined
-							loc: Object {
-								filename: "typescript/export/declare/input.ts"
-								end: Object {
-									column: 29
-									line: 4
-								}
-								start: Object {
-									column: 0
-									line: 4
-								}
-							}
+							loc: SourceLocation typescript/export/declare/input.ts 4:0-4:29
 							declaration: TSInterfaceDeclaration {
 								id: JSBindingIdentifier {
 									name: "I"
-									loc: Object {
-										filename: "typescript/export/declare/input.ts"
-										identifierName: "I"
-										end: Object {
-											column: 26
-											line: 4
-										}
-										start: Object {
-											column: 25
-											line: 4
-										}
-									}
+									loc: SourceLocation typescript/export/declare/input.ts 4:25-4:26 (I)
 								}
 								declare: true
 								extends: undefined
 								typeParameters: undefined
-								loc: Object {
-									filename: "typescript/export/declare/input.ts"
-									end: Object {
-										column: 29
-										line: 4
-									}
-									start: Object {
-										column: 7
-										line: 4
-									}
-								}
+								loc: SourceLocation typescript/export/declare/input.ts 4:7-4:29
 								body: TSInterfaceBody {
 									body: Array []
-									loc: Object {
-										filename: "typescript/export/declare/input.ts"
-										end: Object {
-											column: 29
-											line: 4
-										}
-										start: Object {
-											column: 27
-											line: 4
-										}
-									}
+									loc: SourceLocation typescript/export/declare/input.ts 4:27-4:29
 								}
 							}
 						}
 						JSExportLocalDeclaration {
 							exportKind: "value"
 							specifiers: undefined
-							loc: Object {
-								filename: "typescript/export/declare/input.ts"
-								end: Object {
-									column: 31
-									line: 5
-								}
-								start: Object {
-									column: 0
-									line: 5
-								}
-							}
+							loc: SourceLocation typescript/export/declare/input.ts 5:0-5:31
 							declaration: TSTypeAlias {
 								id: JSBindingIdentifier {
 									name: "T"
-									loc: Object {
-										filename: "typescript/export/declare/input.ts"
-										identifierName: "T"
-										end: Object {
-											column: 21
-											line: 5
-										}
-										start: Object {
-											column: 20
-											line: 5
-										}
-									}
+									loc: SourceLocation typescript/export/declare/input.ts 5:20-5:21 (T)
 								}
 								declare: true
 								typeParameters: undefined
-								loc: Object {
-									filename: "typescript/export/declare/input.ts"
-									end: Object {
-										column: 31
-										line: 5
-									}
-									start: Object {
-										column: 7
-										line: 5
-									}
-								}
-								right: TSNumberKeywordTypeAnnotation {
-									loc: Object {
-										filename: "typescript/export/declare/input.ts"
-										end: Object {
-											column: 30
-											line: 5
-										}
-										start: Object {
-											column: 24
-											line: 5
-										}
-									}
-								}
+								loc: SourceLocation typescript/export/declare/input.ts 5:7-5:31
+								right: TSNumberKeywordTypeAnnotation {loc: SourceLocation typescript/export/declare/input.ts 5:24-5:30}
 							}
 						}
 						JSExportLocalDeclaration {
 							exportKind: "value"
 							specifiers: undefined
-							loc: Object {
-								filename: "typescript/export/declare/input.ts"
-								end: Object {
-									column: 26
-									line: 6
-								}
-								start: Object {
-									column: 0
-									line: 6
-								}
-							}
+							loc: SourceLocation typescript/export/declare/input.ts 6:0-6:26
 							declaration: TSModuleDeclaration {
 								id: JSBindingIdentifier {
 									name: "M"
-									loc: Object {
-										filename: "typescript/export/declare/input.ts"
-										identifierName: "M"
-										end: Object {
-											column: 23
-											line: 6
-										}
-										start: Object {
-											column: 22
-											line: 6
-										}
-									}
+									loc: SourceLocation typescript/export/declare/input.ts 6:22-6:23 (M)
 								}
 								declare: true
-								loc: Object {
-									filename: "typescript/export/declare/input.ts"
-									end: Object {
-										column: 26
-										line: 6
-									}
-									start: Object {
-										column: 7
-										line: 6
-									}
-								}
+								loc: SourceLocation typescript/export/declare/input.ts 6:7-6:26
 								body: TSModuleBlock {
 									body: Array []
-									loc: Object {
-										filename: "typescript/export/declare/input.ts"
-										end: Object {
-											column: 26
-											line: 6
-										}
-										start: Object {
-											column: 24
-											line: 6
-										}
-									}
+									loc: SourceLocation typescript/export/declare/input.ts 6:24-6:26
 								}
 							}
 						}
 						JSExportLocalDeclaration {
 							exportKind: "value"
 							specifiers: undefined
-							loc: Object {
-								filename: "typescript/export/declare/input.ts"
-								end: Object {
-									column: 29
-									line: 7
-								}
-								start: Object {
-									column: 0
-									line: 7
-								}
-							}
+							loc: SourceLocation typescript/export/declare/input.ts 7:0-7:29
 							declaration: TSModuleDeclaration {
 								id: JSBindingIdentifier {
 									name: "N"
-									loc: Object {
-										filename: "typescript/export/declare/input.ts"
-										identifierName: "N"
-										end: Object {
-											column: 26
-											line: 7
-										}
-										start: Object {
-											column: 25
-											line: 7
-										}
-									}
+									loc: SourceLocation typescript/export/declare/input.ts 7:25-7:26 (N)
 								}
 								declare: true
-								loc: Object {
-									filename: "typescript/export/declare/input.ts"
-									end: Object {
-										column: 29
-										line: 7
-									}
-									start: Object {
-										column: 7
-										line: 7
-									}
-								}
+								loc: SourceLocation typescript/export/declare/input.ts 7:7-7:29
 								body: TSModuleBlock {
 									body: Array []
-									loc: Object {
-										filename: "typescript/export/declare/input.ts"
-										end: Object {
-											column: 29
-											line: 7
-										}
-										start: Object {
-											column: 27
-											line: 7
-										}
-									}
+									loc: SourceLocation typescript/export/declare/input.ts 7:27-7:29
 								}
 							}
 						}
 						JSExportLocalDeclaration {
 							exportKind: "value"
 							specifiers: undefined
-							loc: Object {
-								filename: "typescript/export/declare/input.ts"
-								end: Object {
-									column: 26
-									line: 8
-								}
-								start: Object {
-									column: 0
-									line: 8
-								}
-							}
+							loc: SourceLocation typescript/export/declare/input.ts 8:0-8:26
 							declaration: TSEnumDeclaration {
 								id: JSBindingIdentifier {
 									name: "foo"
-									loc: Object {
-										filename: "typescript/export/declare/input.ts"
-										identifierName: "foo"
-										end: Object {
-											column: 23
-											line: 8
-										}
-										start: Object {
-											column: 20
-											line: 8
-										}
-									}
+									loc: SourceLocation typescript/export/declare/input.ts 8:20-8:23 (foo)
 								}
 								const: false
 								declare: true
 								members: Array []
-								loc: Object {
-									filename: "typescript/export/declare/input.ts"
-									end: Object {
-										column: 26
-										line: 8
-									}
-									start: Object {
-										column: 7
-										line: 8
-									}
-								}
+								loc: SourceLocation typescript/export/declare/input.ts 8:7-8:26
 							}
 						}
 					]
@@ -717,7 +251,7 @@ JSRoot {
 
  typescript/export/declare/input.ts:2:24 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ Unexpected token, expected (
+  ✖ Unexpected character f
 
     1 │ export declare const x: number;
   > 2 │ export declare function f(): void;
@@ -725,8 +259,7 @@ JSRoot {
     3 │ export declare class C {}
     4 │ export declare interface I {}
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  ℹ Expected the opening function params character (
 
-✖ Found 1 problem
 
 ```

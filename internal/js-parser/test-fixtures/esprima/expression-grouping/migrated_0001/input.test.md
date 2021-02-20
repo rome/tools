@@ -12,106 +12,36 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "esprima/expression-grouping/migrated_0001/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "esprima/expression-grouping/migrated_0001/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation esprima/expression-grouping/migrated_0001/input.js 1:0-2:0
+	path: UIDPath<esprima/expression-grouping/migrated_0001/input.js>
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "esprima/expression-grouping/migrated_0001/input.js"
-				end: Object {
-					column: 12
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation esprima/expression-grouping/migrated_0001/input.js 1:0-1:12
 			expression: JSBinaryExpression {
 				operator: "<<"
-				loc: Object {
-					filename: "esprima/expression-grouping/migrated_0001/input.js"
-					end: Object {
-						column: 12
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/expression-grouping/migrated_0001/input.js 1:0-1:12
 				right: JSNumericLiteral {
 					value: 6
 					format: undefined
-					loc: Object {
-						filename: "esprima/expression-grouping/migrated_0001/input.js"
-						end: Object {
-							column: 11
-							line: 1
-						}
-						start: Object {
-							column: 10
-							line: 1
-						}
-					}
+					loc: SourceLocation esprima/expression-grouping/migrated_0001/input.js 1:10-1:11
 				}
 				left: JSBinaryExpression {
 					operator: "+"
-					loc: Object {
-						filename: "esprima/expression-grouping/migrated_0001/input.js"
-						end: Object {
-							column: 5
-							line: 1
-						}
-						start: Object {
-							column: 0
-							line: 1
-						}
-					}
+					loc: SourceLocation esprima/expression-grouping/migrated_0001/input.js 1:0-1:5
 					left: JSNumericLiteral {
 						value: 4
 						format: undefined
-						loc: Object {
-							filename: "esprima/expression-grouping/migrated_0001/input.js"
-							end: Object {
-								column: 1
-								line: 1
-							}
-							start: Object {
-								column: 0
-								line: 1
-							}
-						}
+						loc: SourceLocation esprima/expression-grouping/migrated_0001/input.js 1:0-1:1
 					}
 					right: JSNumericLiteral {
 						value: 5
 						format: undefined
-						loc: Object {
-							filename: "esprima/expression-grouping/migrated_0001/input.js"
-							end: Object {
-								column: 5
-								line: 1
-							}
-							start: Object {
-								column: 4
-								line: 1
-							}
-						}
+						loc: SourceLocation esprima/expression-grouping/migrated_0001/input.js 1:4-1:5
 					}
 				}
 			}
@@ -123,6 +53,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

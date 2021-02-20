@@ -11,103 +11,46 @@ JSRoot {
 	comments: Array []
 	corrupt: true
 	directives: Array []
-	filename: "esprima/invalid-syntax/migrated_0150/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "esprima/invalid-syntax/migrated_0150/input.js"
-		end: Object {
-			column: 0
-			line: 2
+	loc: SourceLocation esprima/invalid-syntax/migrated_0150/input.js 1:0-2:0
+	path: UIDPath<esprima/invalid-syntax/migrated_0150/input.js>
+	body: Array [
+		JSExpressionStatement {
+			loc: SourceLocation esprima/invalid-syntax/migrated_0150/input.js 1:2-2:0
+			expression: JSBinaryExpression {
+				operator: "*"
+				loc: SourceLocation esprima/invalid-syntax/migrated_0150/input.js 1:2-2:0
+				left: JSReferenceIdentifier {
+					name: "hello"
+					loc: SourceLocation esprima/invalid-syntax/migrated_0150/input.js 1:2-1:7 (hello)
+				}
+				right: JSReferenceIdentifier {
+					name: "INVALID_PLACEHOLDER"
+					loc: SourceLocation esprima/invalid-syntax/migrated_0150/input.js 2:0-2:0
+				}
+			}
 		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	]
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse"
 				categoryValue: "js"
+				category: Array ["parse"]
 				message: RAW_MARKUP {value: "Unterminated comment"}
 			}
 			location: Object {
-				filename: "esprima/invalid-syntax/migrated_0150/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 0
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
-		}
-	]
-	body: Array [
-		JSExpressionStatement {
-			loc: Object {
-				filename: "esprima/invalid-syntax/migrated_0150/input.js"
-				end: Object {
-					column: 0
-					line: 2
-				}
-				start: Object {
-					column: 2
-					line: 1
-				}
-			}
-			expression: JSBinaryExpression {
-				operator: "*"
-				loc: Object {
-					filename: "esprima/invalid-syntax/migrated_0150/input.js"
-					end: Object {
-						column: 0
-						line: 2
-					}
-					start: Object {
-						column: 2
-						line: 1
-					}
-				}
-				right: JSReferenceIdentifier {
-					name: "INVALID_PLACEHOLDER"
-					loc: Object {
-						filename: "esprima/invalid-syntax/migrated_0150/input.js"
-						end: Object {
-							column: 0
-							line: 2
-						}
-						start: Object {
-							column: 0
-							line: 2
-						}
-					}
-				}
-				left: JSReferenceIdentifier {
-					name: "hello"
-					loc: Object {
-						filename: "esprima/invalid-syntax/migrated_0150/input.js"
-						identifierName: "hello"
-						end: Object {
-							column: 7
-							line: 1
-						}
-						start: Object {
-							column: 2
-							line: 1
-						}
-					}
-				}
+				end: Position 1:0
+				path: UIDPath<esprima/invalid-syntax/migrated_0150/input.js>
+				start: Position 1:0
 			}
 		}
 	]
@@ -125,8 +68,5 @@ JSRoot {
     /*hello  *
     ^
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

@@ -11,48 +11,28 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "experimental/class-private-properties/invalid-ts-type-literal/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "experimental/class-private-properties/invalid-ts-type-literal/input.js"
-		end: Object {
-			column: 0
-			line: 4
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation experimental/class-private-properties/invalid-ts-type-literal/input.js 1:0-4:0
+	path: UIDPath<experimental/class-private-properties/invalid-ts-type-literal/input.js>
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
 			location: Object {
-				filename: "experimental/class-private-properties/invalid-ts-type-literal/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 0
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
+				end: Position 1:0
+				path: UIDPath<experimental/class-private-properties/invalid-ts-type-literal/input.js>
+				start: Position 1:0
 			}
 			description: Object {
-				category: "parse"
 				categoryValue: "js"
-				message: Array [
-					RAW_MARKUP {value: "A "}
-					"interface declaration"
-					RAW_MARKUP {value: " is only valid inside of a TypeScript file"}
-				]
+				category: Array ["parse"]
+				message: RAW_MARKUP {value: "A interface declaration is only valid inside of a TypeScript file"}
 				advice: Array [
 					log {
 						category: "info"
@@ -66,100 +46,26 @@ JSRoot {
 		TSInterfaceDeclaration {
 			id: JSBindingIdentifier {
 				name: "I"
-				loc: Object {
-					filename: "experimental/class-private-properties/invalid-ts-type-literal/input.js"
-					identifierName: "I"
-					end: Object {
-						column: 11
-						line: 1
-					}
-					start: Object {
-						column: 10
-						line: 1
-					}
-				}
+				loc: SourceLocation experimental/class-private-properties/invalid-ts-type-literal/input.js 1:10-1:11 (I)
 			}
 			extends: undefined
 			typeParameters: undefined
-			loc: Object {
-				filename: "experimental/class-private-properties/invalid-ts-type-literal/input.js"
-				end: Object {
-					column: 1
-					line: 3
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation experimental/class-private-properties/invalid-ts-type-literal/input.js 1:0-3:1
 			body: TSInterfaceBody {
-				loc: Object {
-					filename: "experimental/class-private-properties/invalid-ts-type-literal/input.js"
-					end: Object {
-						column: 1
-						line: 3
-					}
-					start: Object {
-						column: 12
-						line: 1
-					}
-				}
+				loc: SourceLocation experimental/class-private-properties/invalid-ts-type-literal/input.js 1:12-3:1
 				body: Array [
 					TSPropertySignature {
 						key: JSStaticPropertyKey {
 							value: JSIdentifier {
 								name: "p"
-								loc: Object {
-									filename: "experimental/class-private-properties/invalid-ts-type-literal/input.js"
-									identifierName: "p"
-									end: Object {
-										column: 4
-										line: 2
-									}
-									start: Object {
-										column: 3
-										line: 2
-									}
-								}
+								loc: SourceLocation experimental/class-private-properties/invalid-ts-type-literal/input.js 2:3-2:4 (p)
 							}
-							loc: Object {
-								filename: "experimental/class-private-properties/invalid-ts-type-literal/input.js"
-								end: Object {
-									column: 4
-									line: 2
-								}
-								start: Object {
-									column: 3
-									line: 2
-								}
-							}
+							loc: SourceLocation experimental/class-private-properties/invalid-ts-type-literal/input.js 2:3-2:4
 						}
 						optional: false
 						readonly: false
-						loc: Object {
-							filename: "experimental/class-private-properties/invalid-ts-type-literal/input.js"
-							end: Object {
-								column: 12
-								line: 2
-							}
-							start: Object {
-								column: 3
-								line: 2
-							}
-						}
-						typeAnnotation: TSStringKeywordTypeAnnotation {
-							loc: Object {
-								filename: "experimental/class-private-properties/invalid-ts-type-literal/input.js"
-								end: Object {
-									column: 12
-									line: 2
-								}
-								start: Object {
-									column: 6
-									line: 2
-								}
-							}
-						}
+						loc: SourceLocation experimental/class-private-properties/invalid-ts-type-literal/input.js 2:3-2:12
+						typeAnnotation: TSStringKeywordTypeAnnotation {loc: SourceLocation experimental/class-private-properties/invalid-ts-type-literal/input.js 2:6-2:12}
 					}
 				]
 			}
@@ -183,8 +89,5 @@ JSRoot {
 
   ℹ To enable TypeScript support, the file extension should end in .ts or .tsx
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

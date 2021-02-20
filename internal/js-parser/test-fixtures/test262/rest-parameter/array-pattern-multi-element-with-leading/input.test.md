@@ -12,65 +12,24 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "test262/rest-parameter/array-pattern-multi-element-with-leading/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "test262/rest-parameter/array-pattern-multi-element-with-leading/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation test262/rest-parameter/array-pattern-multi-element-with-leading/input.js 1:0-2:0
+	path: UIDPath<test262/rest-parameter/array-pattern-multi-element-with-leading/input.js>
 	body: Array [
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "multiElementWithLeading"
-				loc: Object {
-					filename: "test262/rest-parameter/array-pattern-multi-element-with-leading/input.js"
-					identifierName: "multiElementWithLeading"
-					end: Object {
-						column: 32
-						line: 1
-					}
-					start: Object {
-						column: 9
-						line: 1
-					}
-				}
+				loc: SourceLocation test262/rest-parameter/array-pattern-multi-element-with-leading/input.js 1:9-1:32 (multiElementWithLeading)
 			}
-			loc: Object {
-				filename: "test262/rest-parameter/array-pattern-multi-element-with-leading/input.js"
-				end: Object {
-					column: 55
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation test262/rest-parameter/array-pattern-multi-element-with-leading/input.js 1:0-1:55
 			body: JSBlockStatement {
 				body: Array []
 				directives: Array []
-				loc: Object {
-					filename: "test262/rest-parameter/array-pattern-multi-element-with-leading/input.js"
-					end: Object {
-						column: 55
-						line: 1
-					}
-					start: Object {
-						column: 53
-						line: 1
-					}
-				}
+				loc: SourceLocation test262/rest-parameter/array-pattern-multi-element-with-leading/input.js 1:53-1:55
 			}
 			head: JSFunctionHead {
 				async: false
@@ -79,196 +38,61 @@ JSRoot {
 				returnType: undefined
 				thisType: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "test262/rest-parameter/array-pattern-multi-element-with-leading/input.js"
-					end: Object {
-						column: 52
-						line: 1
-					}
-					start: Object {
-						column: 32
-						line: 1
-					}
-				}
+				loc: SourceLocation test262/rest-parameter/array-pattern-multi-element-with-leading/input.js 1:32-1:52
 				params: Array [
 					JSBindingIdentifier {
 						name: "x"
-						loc: Object {
-							filename: "test262/rest-parameter/array-pattern-multi-element-with-leading/input.js"
-							identifierName: "x"
-							end: Object {
-								column: 34
-								line: 1
-							}
-							start: Object {
-								column: 33
-								line: 1
-							}
-						}
+						loc: SourceLocation test262/rest-parameter/array-pattern-multi-element-with-leading/input.js 1:33-1:34 (x)
 						meta: JSPatternMeta {
 							optional: undefined
 							typeAnnotation: undefined
-							loc: Object {
-								filename: "test262/rest-parameter/array-pattern-multi-element-with-leading/input.js"
-								end: Object {
-									column: 34
-									line: 1
-								}
-								start: Object {
-									column: 33
-									line: 1
-								}
-							}
+							loc: SourceLocation test262/rest-parameter/array-pattern-multi-element-with-leading/input.js 1:33-1:34
 						}
 					}
 					JSBindingIdentifier {
 						name: "y"
-						loc: Object {
-							filename: "test262/rest-parameter/array-pattern-multi-element-with-leading/input.js"
-							identifierName: "y"
-							end: Object {
-								column: 37
-								line: 1
-							}
-							start: Object {
-								column: 36
-								line: 1
-							}
-						}
+						loc: SourceLocation test262/rest-parameter/array-pattern-multi-element-with-leading/input.js 1:36-1:37 (y)
 						meta: JSPatternMeta {
 							optional: undefined
 							typeAnnotation: undefined
-							loc: Object {
-								filename: "test262/rest-parameter/array-pattern-multi-element-with-leading/input.js"
-								end: Object {
-									column: 37
-									line: 1
-								}
-								start: Object {
-									column: 36
-									line: 1
-								}
-							}
+							loc: SourceLocation test262/rest-parameter/array-pattern-multi-element-with-leading/input.js 1:36-1:37
 						}
 					}
 				]
 				rest: JSBindingArrayPattern {
 					rest: undefined
-					loc: Object {
-						filename: "test262/rest-parameter/array-pattern-multi-element-with-leading/input.js"
-						end: Object {
-							column: 51
-							line: 1
-						}
-						start: Object {
-							column: 42
-							line: 1
-						}
-					}
+					loc: SourceLocation test262/rest-parameter/array-pattern-multi-element-with-leading/input.js 1:42-1:51
 					meta: JSPatternMeta {
 						optional: undefined
 						typeAnnotation: undefined
-						loc: Object {
-							filename: "test262/rest-parameter/array-pattern-multi-element-with-leading/input.js"
-							end: Object {
-								column: 51
-								line: 1
-							}
-							start: Object {
-								column: 42
-								line: 1
-							}
-						}
+						loc: SourceLocation test262/rest-parameter/array-pattern-multi-element-with-leading/input.js 1:42-1:51
 					}
 					elements: Array [
 						JSBindingIdentifier {
 							name: "a"
-							loc: Object {
-								filename: "test262/rest-parameter/array-pattern-multi-element-with-leading/input.js"
-								identifierName: "a"
-								end: Object {
-									column: 44
-									line: 1
-								}
-								start: Object {
-									column: 43
-									line: 1
-								}
-							}
+							loc: SourceLocation test262/rest-parameter/array-pattern-multi-element-with-leading/input.js 1:43-1:44 (a)
 							meta: JSPatternMeta {
 								optional: undefined
 								typeAnnotation: undefined
-								loc: Object {
-									filename: "test262/rest-parameter/array-pattern-multi-element-with-leading/input.js"
-									end: Object {
-										column: 44
-										line: 1
-									}
-									start: Object {
-										column: 43
-										line: 1
-									}
-								}
+								loc: SourceLocation test262/rest-parameter/array-pattern-multi-element-with-leading/input.js 1:43-1:44
 							}
 						}
 						JSBindingIdentifier {
 							name: "b"
-							loc: Object {
-								filename: "test262/rest-parameter/array-pattern-multi-element-with-leading/input.js"
-								identifierName: "b"
-								end: Object {
-									column: 47
-									line: 1
-								}
-								start: Object {
-									column: 46
-									line: 1
-								}
-							}
+							loc: SourceLocation test262/rest-parameter/array-pattern-multi-element-with-leading/input.js 1:46-1:47 (b)
 							meta: JSPatternMeta {
 								optional: undefined
 								typeAnnotation: undefined
-								loc: Object {
-									filename: "test262/rest-parameter/array-pattern-multi-element-with-leading/input.js"
-									end: Object {
-										column: 47
-										line: 1
-									}
-									start: Object {
-										column: 46
-										line: 1
-									}
-								}
+								loc: SourceLocation test262/rest-parameter/array-pattern-multi-element-with-leading/input.js 1:46-1:47
 							}
 						}
 						JSBindingIdentifier {
 							name: "c"
-							loc: Object {
-								filename: "test262/rest-parameter/array-pattern-multi-element-with-leading/input.js"
-								identifierName: "c"
-								end: Object {
-									column: 50
-									line: 1
-								}
-								start: Object {
-									column: 49
-									line: 1
-								}
-							}
+							loc: SourceLocation test262/rest-parameter/array-pattern-multi-element-with-leading/input.js 1:49-1:50 (c)
 							meta: JSPatternMeta {
 								optional: undefined
 								typeAnnotation: undefined
-								loc: Object {
-									filename: "test262/rest-parameter/array-pattern-multi-element-with-leading/input.js"
-									end: Object {
-										column: 50
-										line: 1
-									}
-									start: Object {
-										column: 49
-										line: 1
-									}
-								}
+								loc: SourceLocation test262/rest-parameter/array-pattern-multi-element-with-leading/input.js 1:49-1:50
 							}
 						}
 					]
@@ -282,6 +106,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

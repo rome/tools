@@ -12,162 +12,48 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "typescript/interface/extends/input.ts"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
+	loc: SourceLocation typescript/interface/extends/input.ts 1:0-2:0
+	path: UIDPath<typescript/interface/extends/input.ts>
 	syntax: Array ["ts"]
-	loc: Object {
-		filename: "typescript/interface/extends/input.ts"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
 	body: Array [
 		TSInterfaceDeclaration {
 			id: JSBindingIdentifier {
 				name: "I"
-				loc: Object {
-					filename: "typescript/interface/extends/input.ts"
-					identifierName: "I"
-					end: Object {
-						column: 11
-						line: 1
-					}
-					start: Object {
-						column: 10
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/interface/extends/input.ts 1:10-1:11 (I)
 			}
 			typeParameters: undefined
-			loc: Object {
-				filename: "typescript/interface/extends/input.ts"
-				end: Object {
-					column: 29
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation typescript/interface/extends/input.ts 1:0-1:29
 			body: TSInterfaceBody {
 				body: Array []
-				loc: Object {
-					filename: "typescript/interface/extends/input.ts"
-					end: Object {
-						column: 29
-						line: 1
-					}
-					start: Object {
-						column: 27
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/interface/extends/input.ts 1:27-1:29
 			}
 			extends: Array [
 				TSExpressionWithTypeArguments {
-					loc: Object {
-						filename: "typescript/interface/extends/input.ts"
-						end: Object {
-							column: 26
-							line: 1
-						}
-						start: Object {
-							column: 20
-							line: 1
-						}
-					}
+					loc: SourceLocation typescript/interface/extends/input.ts 1:20-1:26
 					expression: TSQualifiedName {
-						loc: Object {
-							filename: "typescript/interface/extends/input.ts"
-							end: Object {
-								column: 23
-								line: 1
-							}
-							start: Object {
-								column: 20
-								line: 1
-							}
-						}
+						loc: SourceLocation typescript/interface/extends/input.ts 1:20-1:23
 						left: JSReferenceIdentifier {
 							name: "X"
-							loc: Object {
-								filename: "typescript/interface/extends/input.ts"
-								identifierName: "X"
-								end: Object {
-									column: 21
-									line: 1
-								}
-								start: Object {
-									column: 20
-									line: 1
-								}
-							}
+							loc: SourceLocation typescript/interface/extends/input.ts 1:20-1:21 (X)
 						}
 						right: JSIdentifier {
 							name: "Y"
-							loc: Object {
-								filename: "typescript/interface/extends/input.ts"
-								identifierName: "Y"
-								end: Object {
-									column: 23
-									line: 1
-								}
-								start: Object {
-									column: 22
-									line: 1
-								}
-							}
+							loc: SourceLocation typescript/interface/extends/input.ts 1:22-1:23 (Y)
 						}
 					}
 					typeParameters: TSTypeParameterInstantiation {
-						loc: Object {
-							filename: "typescript/interface/extends/input.ts"
-							end: Object {
-								column: 26
-								line: 1
-							}
-							start: Object {
-								column: 23
-								line: 1
-							}
-						}
+						loc: SourceLocation typescript/interface/extends/input.ts 1:23-1:26
 						params: Array [
 							TSTypeReference {
 								typeParameters: undefined
-								loc: Object {
-									filename: "typescript/interface/extends/input.ts"
-									end: Object {
-										column: 25
-										line: 1
-									}
-									start: Object {
-										column: 24
-										line: 1
-									}
-								}
+								loc: SourceLocation typescript/interface/extends/input.ts 1:24-1:25
 								typeName: JSReferenceIdentifier {
 									name: "Z"
-									loc: Object {
-										filename: "typescript/interface/extends/input.ts"
-										identifierName: "Z"
-										end: Object {
-											column: 25
-											line: 1
-										}
-										start: Object {
-											column: 24
-											line: 1
-										}
-									}
+									loc: SourceLocation typescript/interface/extends/input.ts 1:24-1:25 (Z)
 								}
 							}
 						]
@@ -182,6 +68,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

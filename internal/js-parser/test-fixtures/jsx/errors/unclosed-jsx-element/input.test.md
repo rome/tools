@@ -11,153 +11,59 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "jsx/errors/unclosed-jsx-element/input.jsx"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
+	loc: SourceLocation jsx/errors/unclosed-jsx-element/input.jsx 1:0-2:0
+	path: UIDPath<jsx/errors/unclosed-jsx-element/input.jsx>
 	syntax: Array ["jsx"]
-	loc: Object {
-		filename: "jsx/errors/unclosed-jsx-element/input.jsx"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			location: Object {
-				filename: "jsx/errors/unclosed-jsx-element/input.jsx"
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Object {
-					column: 13
-					line: 1
+	body: Array [
+		JSExpressionStatement {
+			loc: SourceLocation jsx/errors/unclosed-jsx-element/input.jsx 1:0-1:13
+			expression: JSXElement {
+				name: JSXIdentifier {
+					name: "div"
+					loc: SourceLocation jsx/errors/unclosed-jsx-element/input.jsx 1:1-1:4
 				}
-				start: Object {
-					column: 13
-					line: 1
-				}
-			}
-			description: Object {
-				category: "parse"
-				categoryValue: "js"
-				message: RAW_MARKUP {value: "Unclosed JSX element"}
-				advice: Array [
-					log {
-						category: "info"
-						text: Array [
-							RAW_MARKUP {value: "Originated from opening tag of <emphasis>"}
-							"div"
-							RAW_MARKUP {value: "</emphasis>"}
-						]
+				attributes: Array []
+				selfClosing: false
+				typeArguments: undefined
+				loc: SourceLocation jsx/errors/unclosed-jsx-element/input.jsx 1:0-1:13
+				children: Array [
+					JSXText {
+						value: "() => "
+						loc: SourceLocation jsx/errors/unclosed-jsx-element/input.jsx 1:5-1:11
 					}
-					frame {
-						location: Object {
-							filename: "jsx/errors/unclosed-jsx-element/input.jsx"
-							end: Object {
-								column: 4
-								line: 1
-							}
-							start: Object {
-								column: 1
-								line: 1
-							}
-						}
+					JSXExpressionContainer {
+						expression: JSXEmptyExpression {loc: SourceLocation jsx/errors/unclosed-jsx-element/input.jsx 1:12-1:12}
+						loc: SourceLocation jsx/errors/unclosed-jsx-element/input.jsx 1:11-1:13
 					}
 				]
 			}
 		}
 	]
-	body: Array [
-		JSExpressionStatement {
-			loc: Object {
-				filename: "jsx/errors/unclosed-jsx-element/input.jsx"
-				end: Object {
-					column: 13
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
+	diagnostics: Array [
+		Object {
+			origins: Array [Object {category: "parse"}]
+			location: Object {
+				integrity: undefined
+				language: "js"
+				sourceText: undefined
+				end: Position 1:13
+				path: UIDPath<jsx/errors/unclosed-jsx-element/input.jsx>
+				start: Position 1:13
 			}
-			expression: JSXElement {
-				name: JSXIdentifier {
-					name: "div"
-					loc: Object {
-						filename: "jsx/errors/unclosed-jsx-element/input.jsx"
-						end: Object {
-							column: 4
-							line: 1
-						}
-						start: Object {
-							column: 1
-							line: 1
-						}
+			description: Object {
+				categoryValue: "js"
+				category: Array ["parse"]
+				message: RAW_MARKUP {value: "Unclosed JSX element"}
+				advice: Array [
+					log {
+						category: "info"
+						text: RAW_MARKUP {value: "Originated from opening tag of <emphasis>div</emphasis>"}
 					}
-				}
-				attributes: Array []
-				selfClosing: false
-				typeArguments: undefined
-				loc: Object {
-					filename: "jsx/errors/unclosed-jsx-element/input.jsx"
-					end: Object {
-						column: 13
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
-				children: Array [
-					JSXText {
-						value: "() => "
-						loc: Object {
-							filename: "jsx/errors/unclosed-jsx-element/input.jsx"
-							end: Object {
-								column: 11
-								line: 1
-							}
-							start: Object {
-								column: 5
-								line: 1
-							}
-						}
-					}
-					JSXExpressionContainer {
-						loc: Object {
-							filename: "jsx/errors/unclosed-jsx-element/input.jsx"
-							end: Object {
-								column: 13
-								line: 1
-							}
-							start: Object {
-								column: 11
-								line: 1
-							}
-						}
-						expression: JSXEmptyExpression {
-							loc: Object {
-								filename: "jsx/errors/unclosed-jsx-element/input.jsx"
-								end: Object {
-									column: 12
-									line: 1
-								}
-								start: Object {
-									column: 12
-									line: 1
-								}
-							}
-						}
-					}
+					frame {location: SourceLocation jsx/errors/unclosed-jsx-element/input.jsx 1:1-1:4}
 				]
 			}
 		}
@@ -173,13 +79,13 @@ JSRoot {
 
   ✖ Unclosed JSX element
 
+    <div>() => {}
+                 ^
+
   ℹ Originated from opening tag of div
 
     <div>() => {}
      ^^^
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

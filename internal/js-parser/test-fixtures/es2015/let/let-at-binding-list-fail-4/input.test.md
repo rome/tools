@@ -12,121 +12,40 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "es2015/let/let-at-binding-list-fail-4/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2015/let/let-at-binding-list-fail-4/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2015/let/let-at-binding-list-fail-4/input.js 1:0-2:0
+	path: UIDPath<es2015/let/let-at-binding-list-fail-4/input.js>
 	body: Array [
 		JSVariableDeclarationStatement {
-			loc: Object {
-				filename: "es2015/let/let-at-binding-list-fail-4/input.js"
-				end: Object {
-					column: 17
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2015/let/let-at-binding-list-fail-4/input.js 1:0-1:17
 			declaration: JSVariableDeclaration {
 				kind: "const"
-				loc: Object {
-					filename: "es2015/let/let-at-binding-list-fail-4/input.js"
-					end: Object {
-						column: 17
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/let/let-at-binding-list-fail-4/input.js 1:0-1:17
 				declarations: Array [
 					JSVariableDeclarator {
 						id: JSBindingArrayPattern {
 							rest: undefined
-							loc: Object {
-								filename: "es2015/let/let-at-binding-list-fail-4/input.js"
-								end: Object {
-									column: 11
-									line: 1
-								}
-								start: Object {
-									column: 6
-									line: 1
-								}
-							}
+							loc: SourceLocation es2015/let/let-at-binding-list-fail-4/input.js 1:6-1:11
 							elements: Array [
 								JSBindingIdentifier {
 									name: "let"
-									loc: Object {
-										filename: "es2015/let/let-at-binding-list-fail-4/input.js"
-										identifierName: "let"
-										end: Object {
-											column: 10
-											line: 1
-										}
-										start: Object {
-											column: 7
-											line: 1
-										}
-									}
+									loc: SourceLocation es2015/let/let-at-binding-list-fail-4/input.js 1:7-1:10 (let)
 									meta: JSPatternMeta {
 										optional: undefined
 										typeAnnotation: undefined
-										loc: Object {
-											filename: "es2015/let/let-at-binding-list-fail-4/input.js"
-											end: Object {
-												column: 10
-												line: 1
-											}
-											start: Object {
-												column: 7
-												line: 1
-											}
-										}
+										loc: SourceLocation es2015/let/let-at-binding-list-fail-4/input.js 1:7-1:10
 									}
 								}
 							]
 						}
-						loc: Object {
-							filename: "es2015/let/let-at-binding-list-fail-4/input.js"
-							end: Object {
-								column: 16
-								line: 1
-							}
-							start: Object {
-								column: 6
-								line: 1
-							}
-						}
+						loc: SourceLocation es2015/let/let-at-binding-list-fail-4/input.js 1:6-1:16
 						init: JSArrayExpression {
 							elements: Array []
-							loc: Object {
-								filename: "es2015/let/let-at-binding-list-fail-4/input.js"
-								end: Object {
-									column: 16
-									line: 1
-								}
-								start: Object {
-									column: 14
-									line: 1
-								}
-							}
+							loc: SourceLocation es2015/let/let-at-binding-list-fail-4/input.js 1:14-1:16
 						}
 					}
 				]
@@ -139,6 +58,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

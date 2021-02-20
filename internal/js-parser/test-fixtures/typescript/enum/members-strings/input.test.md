@@ -12,121 +12,40 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "typescript/enum/members-strings/input.ts"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
+	loc: SourceLocation typescript/enum/members-strings/input.ts 1:0-5:0
+	path: UIDPath<typescript/enum/members-strings/input.ts>
 	syntax: Array ["ts"]
-	loc: Object {
-		filename: "typescript/enum/members-strings/input.ts"
-		end: Object {
-			column: 0
-			line: 5
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
 	body: Array [
 		TSEnumDeclaration {
 			id: JSBindingIdentifier {
 				name: "E"
-				loc: Object {
-					filename: "typescript/enum/members-strings/input.ts"
-					identifierName: "E"
-					end: Object {
-						column: 6
-						line: 1
-					}
-					start: Object {
-						column: 5
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/enum/members-strings/input.ts 1:5-1:6 (E)
 			}
 			const: false
-			loc: Object {
-				filename: "typescript/enum/members-strings/input.ts"
-				end: Object {
-					column: 1
-					line: 4
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation typescript/enum/members-strings/input.ts 1:0-4:1
 			members: Array [
 				TSEnumMember {
 					id: JSStringLiteral {
 						value: "foo"
-						loc: Object {
-							filename: "typescript/enum/members-strings/input.ts"
-							end: Object {
-								column: 9
-								line: 2
-							}
-							start: Object {
-								column: 4
-								line: 2
-							}
-						}
+						loc: SourceLocation typescript/enum/members-strings/input.ts 2:4-2:9
 					}
 					initializer: undefined
-					loc: Object {
-						filename: "typescript/enum/members-strings/input.ts"
-						end: Object {
-							column: 9
-							line: 2
-						}
-						start: Object {
-							column: 4
-							line: 2
-						}
-					}
+					loc: SourceLocation typescript/enum/members-strings/input.ts 2:4-2:9
 				}
 				TSEnumMember {
 					id: JSStringLiteral {
 						value: "bar"
-						loc: Object {
-							filename: "typescript/enum/members-strings/input.ts"
-							end: Object {
-								column: 9
-								line: 3
-							}
-							start: Object {
-								column: 4
-								line: 3
-							}
-						}
+						loc: SourceLocation typescript/enum/members-strings/input.ts 3:4-3:9
 					}
-					loc: Object {
-						filename: "typescript/enum/members-strings/input.ts"
-						end: Object {
-							column: 13
-							line: 3
-						}
-						start: Object {
-							column: 4
-							line: 3
-						}
-					}
+					loc: SourceLocation typescript/enum/members-strings/input.ts 3:4-3:13
 					initializer: JSNumericLiteral {
 						value: 1
 						format: undefined
-						loc: Object {
-							filename: "typescript/enum/members-strings/input.ts"
-							end: Object {
-								column: 13
-								line: 3
-							}
-							start: Object {
-								column: 12
-								line: 3
-							}
-						}
+						loc: SourceLocation typescript/enum/members-strings/input.ts 3:12-3:13
 					}
 				}
 			]
@@ -138,6 +57,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

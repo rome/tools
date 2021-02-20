@@ -12,118 +12,36 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "core/uncategorised/542/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "core/uncategorised/542/input.js"
-		end: Object {
-			column: 0
-			line: 3
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation core/uncategorised/542/input.js 1:0-3:0
+	path: UIDPath<core/uncategorised/542/input.js>
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "core/uncategorised/542/input.js"
-				end: Object {
-					column: 11
-					line: 2
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation core/uncategorised/542/input.js 1:0-2:11
 			expression: JSCallExpression {
-				loc: Object {
-					filename: "core/uncategorised/542/input.js"
-					end: Object {
-						column: 11
-						line: 2
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation core/uncategorised/542/input.js 1:0-2:11
 				arguments: Array [
 					JSStringLiteral {
 						value: " "
-						loc: Object {
-							filename: "core/uncategorised/542/input.js"
-							end: Object {
-								column: 10
-								line: 2
-							}
-							start: Object {
-								column: 7
-								line: 2
-							}
-						}
+						loc: SourceLocation core/uncategorised/542/input.js 2:7-2:10
 					}
 				]
 				callee: JSMemberExpression {
-					loc: Object {
-						filename: "core/uncategorised/542/input.js"
-						end: Object {
-							column: 6
-							line: 2
-						}
-						start: Object {
-							column: 0
-							line: 1
-						}
-					}
+					loc: SourceLocation core/uncategorised/542/input.js 1:0-2:6
 					object: JSStringLiteral {
 						value: "foo"
-						loc: Object {
-							filename: "core/uncategorised/542/input.js"
-							end: Object {
-								column: 5
-								line: 1
-							}
-							start: Object {
-								column: 0
-								line: 1
-							}
-						}
+						loc: SourceLocation core/uncategorised/542/input.js 1:0-1:5
 					}
 					property: JSStaticMemberProperty {
 						value: JSIdentifier {
 							name: "split"
-							loc: Object {
-								filename: "core/uncategorised/542/input.js"
-								identifierName: "split"
-								end: Object {
-									column: 6
-									line: 2
-								}
-								start: Object {
-									column: 1
-									line: 2
-								}
-							}
+							loc: SourceLocation core/uncategorised/542/input.js 2:1-2:6 (split)
 						}
-						loc: Object {
-							filename: "core/uncategorised/542/input.js"
-							identifierName: "split"
-							end: Object {
-								column: 6
-								line: 2
-							}
-							start: Object {
-								column: 1
-								line: 2
-							}
-						}
+						loc: SourceLocation core/uncategorised/542/input.js 2:1-2:6 (split)
 					}
 				}
 			}
@@ -135,6 +53,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

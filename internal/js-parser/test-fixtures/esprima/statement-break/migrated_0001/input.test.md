@@ -12,117 +12,35 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "esprima/statement-break/migrated_0001/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "esprima/statement-break/migrated_0001/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation esprima/statement-break/migrated_0001/input.js 1:0-2:0
+	path: UIDPath<esprima/statement-break/migrated_0001/input.js>
 	body: Array [
 		JSLabeledStatement {
-			loc: Object {
-				filename: "esprima/statement-break/migrated_0001/input.js"
-				end: Object {
-					column: 33
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation esprima/statement-break/migrated_0001/input.js 1:0-1:33
 			label: JSIdentifier {
 				name: "done"
-				loc: Object {
-					filename: "esprima/statement-break/migrated_0001/input.js"
-					identifierName: "done"
-					end: Object {
-						column: 4
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/statement-break/migrated_0001/input.js 1:0-1:4 (done)
 			}
 			body: JSWhileStatement {
-				loc: Object {
-					filename: "esprima/statement-break/migrated_0001/input.js"
-					end: Object {
-						column: 33
-						line: 1
-					}
-					start: Object {
-						column: 6
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/statement-break/migrated_0001/input.js 1:6-1:33
 				test: JSBooleanLiteral {
 					value: true
-					loc: Object {
-						filename: "esprima/statement-break/migrated_0001/input.js"
-						end: Object {
-							column: 17
-							line: 1
-						}
-						start: Object {
-							column: 13
-							line: 1
-						}
-					}
+					loc: SourceLocation esprima/statement-break/migrated_0001/input.js 1:13-1:17
 				}
 				body: JSBlockStatement {
 					directives: Array []
-					loc: Object {
-						filename: "esprima/statement-break/migrated_0001/input.js"
-						end: Object {
-							column: 33
-							line: 1
-						}
-						start: Object {
-							column: 19
-							line: 1
-						}
-					}
+					loc: SourceLocation esprima/statement-break/migrated_0001/input.js 1:19-1:33
 					body: Array [
 						JSBreakStatement {
-							loc: Object {
-								filename: "esprima/statement-break/migrated_0001/input.js"
-								end: Object {
-									column: 31
-									line: 1
-								}
-								start: Object {
-									column: 21
-									line: 1
-								}
-							}
+							loc: SourceLocation esprima/statement-break/migrated_0001/input.js 1:21-1:31
 							label: JSIdentifier {
 								name: "done"
-								loc: Object {
-									filename: "esprima/statement-break/migrated_0001/input.js"
-									identifierName: "done"
-									end: Object {
-										column: 31
-										line: 1
-									}
-									start: Object {
-										column: 27
-										line: 1
-									}
-								}
+								loc: SourceLocation esprima/statement-break/migrated_0001/input.js 1:27-1:31 (done)
 							}
 						}
 					]
@@ -136,6 +54,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

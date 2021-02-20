@@ -3,13 +3,12 @@ import {
 	ComplexToken,
 	NumberToken,
 	ParserOptions,
-	ParserOptionsWithRequiredPath,
 	SimpleToken,
 	StringToken,
 } from "@internal/parser-core";
 import {DiagnosticCategory} from "@internal/diagnostics";
 import {InlineState} from "@internal/markdown-parser/State";
-import {Number0} from "@internal/ob1";
+import {ZeroIndexed} from "@internal/math";
 
 export interface MarkdownParserOptions extends Omit<
 	ParserOptions,
@@ -21,7 +20,7 @@ export interface MarkdownParserOptions extends Omit<
 export type MarkdownParserTypes = {
 	tokens: Tokens;
 	state: MarkdownParserState;
-	options: ParserOptionsWithRequiredPath;
+	options: ParserOptions;
 	meta: void;
 };
 
@@ -43,6 +42,7 @@ export type ListProperties = {
 
 export type CodeProperties = {
 	language: string;
+	value: string;
 };
 
 /**
@@ -51,7 +51,7 @@ export type CodeProperties = {
  */
 export type DelimiterRun = {
 	// the index of the counter part that closes the delimiter
-	closingIndexOfDelimiter?: Number0;
+	closingIndexOfDelimiter?: ZeroIndexed;
 	leftFlankingDelimiter?: boolean;
 	rightFlankingDelimiter?: boolean;
 	value: string;

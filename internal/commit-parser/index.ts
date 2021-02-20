@@ -1,6 +1,5 @@
 import {CommitRoot} from "@internal/ast";
 import {descriptions} from "@internal/diagnostics";
-import {ob1Add} from "@internal/ob1";
 import {ParserOptions, TokenValues, createParser} from "@internal/parser-core";
 
 import {Symbols, Tokens} from "./types";
@@ -12,7 +11,7 @@ type CommitParserTypes = {
 	meta: void;
 };
 
-const createCommitParser = createParser<CommitParserTypes>({
+const commitParser = createParser<CommitParserTypes>({
 	diagnosticLanguage: "text",
 	diagnosticCategoryValue: "commit",
 
@@ -25,7 +24,7 @@ const createCommitParser = createParser<CommitParserTypes>({
 					parser.getInputCharOnly(index) === Symbols.Space ||
 					parser.getInputCharOnly(index) === Symbols.Tab
 				) {
-					index = ob1Add(index, 1);
+					index = index.increment();
 				}
 				return parser.finishToken("Whitespace", index);
 			}
@@ -49,7 +48,7 @@ const createCommitParser = createParser<CommitParserTypes>({
 });
 
 export function parseCommit(opts: ParserOptions): CommitRoot {
-	const parser = createCommitParser(opts);
+	const parser = commitParser.create(opts);
 	const start = parser.getPosition();
 
 	let commitType = "";
@@ -61,9 +60,9 @@ export function parseCommit(opts: ParserOptions): CommitRoot {
 			parser.eatToken("Word");
 		}
 		while (
-			!parser.matchToken("LeftParen") &&
-			!parser.matchToken("Exclamation") &&
-			!parser.matchToken("Colon")
+			!(parser.matchToken("LeftParen") ||
+			parser.matchToken("Exclamation") ||
+			parser.matchToken("Colon"))
 		) {
 			if (!parser.matchToken("Word")) {
 				parser.unexpectedDiagnostic({
@@ -75,9 +74,9 @@ export function parseCommit(opts: ParserOptions): CommitRoot {
 			parser.nextToken();
 		}
 		if (
-			!parser.matchToken("LeftParen") &&
-			!parser.matchToken("Exclamation") &&
-			!parser.matchToken("Colon")
+			!(parser.matchToken("LeftParen") ||
+			parser.matchToken("Exclamation") ||
+			parser.matchToken("Colon"))
 		) {
 			commitType = "";
 		}
@@ -87,7 +86,7 @@ export function parseCommit(opts: ParserOptions): CommitRoot {
 		});
 	}
 
-	const custom = !/^fix$/i.test(commitType) && !/^feat$/i.test(commitType);
+	const custom = !(/^fix$/i.test(commitType) || /^feat$/i.test(commitType));
 
 	let scope = "";
 	if (parser.eatToken("LeftParen")) {
@@ -172,5 +171,5 @@ export function parseCommit(opts: ParserOptions): CommitRoot {
 }
 
 export function tokenizeCommit(opts: ParserOptions): TokenValues<Tokens>[] {
-	return createCommitParser(opts).getAllTokens();
+	return commitParser.create(opts).getAllTokens();
 }

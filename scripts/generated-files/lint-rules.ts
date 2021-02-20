@@ -2,7 +2,7 @@ import {INTERNAL, ROOT, modifyGeneratedFile} from "../_utils";
 import {lstat, readDirectory, readFileText} from "@internal/fs";
 import {AbsoluteFilePath} from "@internal/path";
 import {pretty} from "@internal/pretty-format";
-import {dedent, toCamelCase} from "@internal/string-utils";
+import {dedent} from "@internal/string-utils";
 import {escapeXHTMLEntities} from "@internal/html-parser";
 
 const lintRulesFolder = INTERNAL.append("compiler", "lint", "rules");
@@ -88,27 +88,16 @@ export async function main() {
 		},
 		async () => {
 			let lines = [];
-			for (const {basename, ruleName, category} of defs) {
-				const varName = `${toCamelCase(category)}${toCamelCase(
-					basename,
-					{forcePascal: true},
-				)}`;
-				lines.push(
-					"// rome-ignore lint/js/useDefaultImportBasename: avoid clashing",
-				);
-				lines.push(`import ${varName} from "./${ruleName}";`);
+			for (const {basename, ruleName} of defs) {
+				lines.push(`import ${basename} from "./${ruleName}";`);
 			}
 			lines.push(`import {AnyVisitor} from "@internal/compiler";`);
 			lines.push("");
 			lines.push(
 				"export const lintTransforms: Map<LintRuleName, AnyVisitor> = new Map();",
 			);
-			for (const {basename, ruleName, category} of defs) {
-				const varName = `${toCamelCase(category)}${toCamelCase(
-					basename,
-					{forcePascal: true},
-				)}`;
-				lines.push(`lintTransforms.set("${ruleName}", ${varName});`);
+			for (const {basename, ruleName} of defs) {
+				lines.push(`lintTransforms.set("${ruleName}", ${basename});`);
 			}
 			lines.push("");
 
@@ -137,10 +126,20 @@ export async function main() {
 		},
 		async () => {
 			const lines = ["export type DiagnosticLintCategory ="];
-			for (const {ruleName} of defs) {
-				lines.push(`	| "lint/${ruleName}"`);
+			for (const {category, basename} of defs) {
+				lines.push(`	| ["lint", "${category}", "${basename}"]`);
 			}
 			lines.push(";");
+
+			lines.push(
+				"const lintCategoryNameMap: {[name in DiagnosticLintCategoryString]: DiagnosticLintCategory} = {",
+			);
+			for (const {ruleName, category, basename} of defs) {
+				lines.push(
+					`  "lint/${ruleName}": ["lint", "${category}", "${basename}"],`,
+				);
+			}
+			lines.push("};");
 			return {lines};
 		},
 	);
@@ -153,28 +152,20 @@ export async function main() {
 		},
 		async () => {
 			const lines = [];
-			for (const {basename, ruleName, hasRJSON, category} of defs) {
-				const varName = `${toCamelCase(category)}${toCamelCase(
-					basename,
-					{forcePascal: true},
-				)}`;
+			for (const {basename, ruleName, hasRJSON} of defs) {
 				if (hasRJSON) {
 					lines.push("// @ts-ignore");
-					lines.push(
-						"// rome-ignore lint/js/useDefaultImportBasename: avoid clashing",
-					);
-					lines.push(`import ${varName} from "./${ruleName}.test.rjson";`);
+					lines.push(`import ${basename} from "./${ruleName}.test.rjson";`);
 				}
 			}
 			lines.push("");
 			lines.push("export const tests: Tests = {");
-			for (const {basename, ruleName, hasRJSON, category} of defs) {
-				const varName = `${toCamelCase(category)}${toCamelCase(
-					basename,
-					{forcePascal: true},
-				)}`;
+			for (const {basename, ruleName, category, hasRJSON} of defs) {
 				if (hasRJSON) {
-					lines.push(`	"${ruleName}": ${varName},`);
+					lines.push(`	"${ruleName}": {`);
+					lines.push(`    category: ["lint", "${category}", "${basename}"],`);
+					lines.push(`    cases: ${basename},`);
+					lines.push("  },");
 				}
 			}
 			lines.push("};");
@@ -192,6 +183,13 @@ export async function main() {
 			title: "TypeScript",
 			credits: undefined,
 		},
+		a11y: {
+			title: "Accessibility (JSX and HTML)",
+			credits: dedent`
+				<a href="https://github.com/jsx-eslint/eslint-plugin-jsx-a11y">eslint-plugin-jsx-a11y</a>
+				and <a href="https://axe-linter.deque.com/">axe Linter</a>
+			`,
+		},
 		"jsx-a11y": {
 			title: "JSX Accessibility",
 			credits: `<a href="https://github.com/jsx-eslint/eslint-plugin-jsx-a11y">eslint-plugin-jsx-a11y</a>`,
@@ -206,6 +204,7 @@ export async function main() {
 	const categoryDocsOrder: Array<keyof typeof categoryDocsAliases> = [
 		"js",
 		"ts",
+		"a11y",
 		"jsx-a11y",
 		"react",
 	];

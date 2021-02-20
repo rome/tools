@@ -12,290 +12,79 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "typescript/interface/method-computed/input.ts"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
+	loc: SourceLocation typescript/interface/method-computed/input.ts 1:0-5:0
+	path: UIDPath<typescript/interface/method-computed/input.ts>
 	syntax: Array ["ts"]
-	loc: Object {
-		filename: "typescript/interface/method-computed/input.ts"
-		end: Object {
-			column: 0
-			line: 5
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
 	body: Array [
 		TSInterfaceDeclaration {
 			id: JSBindingIdentifier {
 				name: "I"
-				loc: Object {
-					filename: "typescript/interface/method-computed/input.ts"
-					identifierName: "I"
-					end: Object {
-						column: 11
-						line: 1
-					}
-					start: Object {
-						column: 10
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/interface/method-computed/input.ts 1:10-1:11 (I)
 			}
 			extends: undefined
 			typeParameters: undefined
-			loc: Object {
-				filename: "typescript/interface/method-computed/input.ts"
-				end: Object {
-					column: 1
-					line: 4
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation typescript/interface/method-computed/input.ts 1:0-4:1
 			body: TSInterfaceBody {
-				loc: Object {
-					filename: "typescript/interface/method-computed/input.ts"
-					end: Object {
-						column: 1
-						line: 4
-					}
-					start: Object {
-						column: 12
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/interface/method-computed/input.ts 1:12-4:1
 				body: Array [
 					TSMethodSignature {
 						key: JSComputedPropertyKey {
 							value: JSMemberExpression {
-								loc: Object {
-									filename: "typescript/interface/method-computed/input.ts"
-									end: Object {
-										column: 20
-										line: 2
-									}
-									start: Object {
-										column: 5
-										line: 2
-									}
-								}
+								loc: SourceLocation typescript/interface/method-computed/input.ts 2:5-2:20
 								object: JSReferenceIdentifier {
 									name: "Symbol"
-									loc: Object {
-										filename: "typescript/interface/method-computed/input.ts"
-										identifierName: "Symbol"
-										end: Object {
-											column: 11
-											line: 2
-										}
-										start: Object {
-											column: 5
-											line: 2
-										}
-									}
+									loc: SourceLocation typescript/interface/method-computed/input.ts 2:5-2:11 (Symbol)
 								}
 								property: JSStaticMemberProperty {
 									value: JSIdentifier {
 										name: "iterator"
-										loc: Object {
-											filename: "typescript/interface/method-computed/input.ts"
-											identifierName: "iterator"
-											end: Object {
-												column: 20
-												line: 2
-											}
-											start: Object {
-												column: 12
-												line: 2
-											}
-										}
+										loc: SourceLocation typescript/interface/method-computed/input.ts 2:12-2:20 (iterator)
 									}
-									loc: Object {
-										filename: "typescript/interface/method-computed/input.ts"
-										identifierName: "iterator"
-										end: Object {
-											column: 20
-											line: 2
-										}
-										start: Object {
-											column: 12
-											line: 2
-										}
-									}
+									loc: SourceLocation typescript/interface/method-computed/input.ts 2:12-2:20 (iterator)
 								}
 							}
-							loc: Object {
-								filename: "typescript/interface/method-computed/input.ts"
-								end: Object {
-									column: 21
-									line: 2
-								}
-								start: Object {
-									column: 4
-									line: 2
-								}
-							}
+							loc: SourceLocation typescript/interface/method-computed/input.ts 2:4-2:21
 						}
 						optional: false
-						loc: Object {
-							filename: "typescript/interface/method-computed/input.ts"
-							end: Object {
-								column: 30
-								line: 2
-							}
-							start: Object {
-								column: 4
-								line: 2
-							}
-						}
-						returnType: TSVoidKeywordTypeAnnotation {
-							loc: Object {
-								filename: "typescript/interface/method-computed/input.ts"
-								end: Object {
-									column: 29
-									line: 2
-								}
-								start: Object {
-									column: 25
-									line: 2
-								}
-							}
-						}
+						loc: SourceLocation typescript/interface/method-computed/input.ts 2:4-2:30
+						returnType: TSVoidKeywordTypeAnnotation {loc: SourceLocation typescript/interface/method-computed/input.ts 2:25-2:29}
 						meta: TSSignatureDeclarationMeta {
 							parameters: Array []
 							rest: undefined
 							typeParameters: undefined
-							loc: Object {
-								filename: "typescript/interface/method-computed/input.ts"
-								end: Object {
-									column: 29
-									line: 2
-								}
-								start: Object {
-									column: 21
-									line: 2
-								}
-							}
+							loc: SourceLocation typescript/interface/method-computed/input.ts 2:21-2:29
 						}
 					}
 					TSMethodSignature {
 						key: JSComputedPropertyKey {
 							value: JSMemberExpression {
-								loc: Object {
-									filename: "typescript/interface/method-computed/input.ts"
-									end: Object {
-										column: 20
-										line: 3
-									}
-									start: Object {
-										column: 5
-										line: 3
-									}
-								}
+								loc: SourceLocation typescript/interface/method-computed/input.ts 3:5-3:20
 								object: JSReferenceIdentifier {
 									name: "Symbol"
-									loc: Object {
-										filename: "typescript/interface/method-computed/input.ts"
-										identifierName: "Symbol"
-										end: Object {
-											column: 11
-											line: 3
-										}
-										start: Object {
-											column: 5
-											line: 3
-										}
-									}
+									loc: SourceLocation typescript/interface/method-computed/input.ts 3:5-3:11 (Symbol)
 								}
 								property: JSStaticMemberProperty {
 									value: JSIdentifier {
 										name: "iterator"
-										loc: Object {
-											filename: "typescript/interface/method-computed/input.ts"
-											identifierName: "iterator"
-											end: Object {
-												column: 20
-												line: 3
-											}
-											start: Object {
-												column: 12
-												line: 3
-											}
-										}
+										loc: SourceLocation typescript/interface/method-computed/input.ts 3:12-3:20 (iterator)
 									}
-									loc: Object {
-										filename: "typescript/interface/method-computed/input.ts"
-										identifierName: "iterator"
-										end: Object {
-											column: 20
-											line: 3
-										}
-										start: Object {
-											column: 12
-											line: 3
-										}
-									}
+									loc: SourceLocation typescript/interface/method-computed/input.ts 3:12-3:20 (iterator)
 								}
 							}
-							loc: Object {
-								filename: "typescript/interface/method-computed/input.ts"
-								end: Object {
-									column: 21
-									line: 3
-								}
-								start: Object {
-									column: 4
-									line: 3
-								}
-							}
+							loc: SourceLocation typescript/interface/method-computed/input.ts 3:4-3:21
 						}
 						optional: true
-						loc: Object {
-							filename: "typescript/interface/method-computed/input.ts"
-							end: Object {
-								column: 33
-								line: 3
-							}
-							start: Object {
-								column: 4
-								line: 3
-							}
-						}
-						returnType: TSNumberKeywordTypeAnnotation {
-							loc: Object {
-								filename: "typescript/interface/method-computed/input.ts"
-								end: Object {
-									column: 32
-									line: 3
-								}
-								start: Object {
-									column: 26
-									line: 3
-								}
-							}
-						}
+						loc: SourceLocation typescript/interface/method-computed/input.ts 3:4-3:33
+						returnType: TSNumberKeywordTypeAnnotation {loc: SourceLocation typescript/interface/method-computed/input.ts 3:26-3:32}
 						meta: TSSignatureDeclarationMeta {
 							parameters: Array []
 							rest: undefined
 							typeParameters: undefined
-							loc: Object {
-								filename: "typescript/interface/method-computed/input.ts"
-								end: Object {
-									column: 32
-									line: 3
-								}
-								start: Object {
-									column: 22
-									line: 3
-								}
-							}
+							loc: SourceLocation typescript/interface/method-computed/input.ts 3:22-3:32
 						}
 					}
 				]
@@ -308,6 +97,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

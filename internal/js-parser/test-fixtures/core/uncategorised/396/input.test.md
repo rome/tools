@@ -11,45 +11,29 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "core/uncategorised/396/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "core/uncategorised/396/input.js"
-		end: Object {
-			column: 26
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation core/uncategorised/396/input.js 1:0-1:26
+	path: UIDPath<core/uncategorised/396/input.js>
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse"
 				categoryValue: "js"
+				category: Array ["parse"]
 				message: RAW_MARKUP {value: "The rest element has to be the last element when destructuring"}
 			}
 			location: Object {
-				filename: "core/uncategorised/396/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 18
-					line: 1
-				}
-				start: Object {
-					column: 18
-					line: 1
-				}
+				end: Position 1:18
+				path: UIDPath<core/uncategorised/396/input.js>
+				start: Position 1:18
 			}
 		}
 	]
@@ -57,44 +41,13 @@ JSRoot {
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "t"
-				loc: Object {
-					filename: "core/uncategorised/396/input.js"
-					identifierName: "t"
-					end: Object {
-						column: 10
-						line: 1
-					}
-					start: Object {
-						column: 9
-						line: 1
-					}
-				}
+				loc: SourceLocation core/uncategorised/396/input.js 1:9-1:10 (t)
 			}
-			loc: Object {
-				filename: "core/uncategorised/396/input.js"
-				end: Object {
-					column: 26
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation core/uncategorised/396/input.js 1:0-1:26
 			body: JSBlockStatement {
 				body: Array []
 				directives: Array []
-				loc: Object {
-					filename: "core/uncategorised/396/input.js"
-					end: Object {
-						column: 26
-						line: 1
-					}
-					start: Object {
-						column: 23
-						line: 1
-					}
-				}
+				loc: SourceLocation core/uncategorised/396/input.js 1:23-1:26
 			}
 			head: JSFunctionHead {
 				async: false
@@ -103,76 +56,24 @@ JSRoot {
 				returnType: undefined
 				thisType: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "core/uncategorised/396/input.js"
-					end: Object {
-						column: 22
-						line: 1
-					}
-					start: Object {
-						column: 10
-						line: 1
-					}
-				}
+				loc: SourceLocation core/uncategorised/396/input.js 1:10-1:22
 				rest: JSBindingIdentifier {
 					name: "rest"
-					loc: Object {
-						filename: "core/uncategorised/396/input.js"
-						identifierName: "rest"
-						end: Object {
-							column: 18
-							line: 1
-						}
-						start: Object {
-							column: 14
-							line: 1
-						}
-					}
+					loc: SourceLocation core/uncategorised/396/input.js 1:14-1:18 (rest)
 					meta: JSPatternMeta {
 						optional: undefined
 						typeAnnotation: undefined
-						loc: Object {
-							filename: "core/uncategorised/396/input.js"
-							end: Object {
-								column: 18
-								line: 1
-							}
-							start: Object {
-								column: 14
-								line: 1
-							}
-						}
+						loc: SourceLocation core/uncategorised/396/input.js 1:14-1:18
 					}
 				}
 				params: Array [
 					JSBindingIdentifier {
 						name: "b"
-						loc: Object {
-							filename: "core/uncategorised/396/input.js"
-							identifierName: "b"
-							end: Object {
-								column: 21
-								line: 1
-							}
-							start: Object {
-								column: 20
-								line: 1
-							}
-						}
+						loc: SourceLocation core/uncategorised/396/input.js 1:20-1:21 (b)
 						meta: JSPatternMeta {
 							optional: undefined
 							typeAnnotation: undefined
-							loc: Object {
-								filename: "core/uncategorised/396/input.js"
-								end: Object {
-									column: 21
-									line: 1
-								}
-								start: Object {
-									column: 20
-									line: 1
-								}
-							}
+							loc: SourceLocation core/uncategorised/396/input.js 1:20-1:21
 						}
 					}
 				]
@@ -193,8 +94,5 @@ JSRoot {
     function t(...rest, b) { }
                       ^
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

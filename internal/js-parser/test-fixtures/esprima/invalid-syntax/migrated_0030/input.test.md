@@ -11,103 +11,47 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "esprima/invalid-syntax/migrated_0030/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "esprima/invalid-syntax/migrated_0030/input.js"
-		end: Object {
-			column: 0
-			line: 2
+	loc: SourceLocation esprima/invalid-syntax/migrated_0030/input.js 1:0-2:0
+	path: UIDPath<esprima/invalid-syntax/migrated_0030/input.js>
+	body: Array [
+		JSExpressionStatement {
+			loc: SourceLocation esprima/invalid-syntax/migrated_0030/input.js 1:0-1:7
+			expression: JSBinaryExpression {
+				operator: "in"
+				loc: SourceLocation esprima/invalid-syntax/migrated_0030/input.js 1:0-1:7
+				right: JSArrayExpression {
+					elements: Array []
+					loc: SourceLocation esprima/invalid-syntax/migrated_0030/input.js 1:5-1:7
+				}
+				left: JSNumericLiteral {
+					value: 3
+					format: "hex"
+					loc: SourceLocation esprima/invalid-syntax/migrated_0030/input.js 1:0-1:3
+				}
+			}
 		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	]
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse"
 				categoryValue: "js"
+				category: Array ["parse"]
 				message: RAW_MARKUP {value: "Identifier directly after number"}
 			}
 			location: Object {
-				filename: "esprima/invalid-syntax/migrated_0030/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 3
-					line: 1
-				}
-				start: Object {
-					column: 3
-					line: 1
-				}
-			}
-		}
-	]
-	body: Array [
-		JSExpressionStatement {
-			loc: Object {
-				filename: "esprima/invalid-syntax/migrated_0030/input.js"
-				end: Object {
-					column: 7
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
-			expression: JSBinaryExpression {
-				operator: "in"
-				loc: Object {
-					filename: "esprima/invalid-syntax/migrated_0030/input.js"
-					end: Object {
-						column: 7
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
-				right: JSArrayExpression {
-					elements: Array []
-					loc: Object {
-						filename: "esprima/invalid-syntax/migrated_0030/input.js"
-						end: Object {
-							column: 7
-							line: 1
-						}
-						start: Object {
-							column: 5
-							line: 1
-						}
-					}
-				}
-				left: JSNumericLiteral {
-					value: 3
-					format: "hex"
-					loc: Object {
-						filename: "esprima/invalid-syntax/migrated_0030/input.js"
-						end: Object {
-							column: 3
-							line: 1
-						}
-						start: Object {
-							column: 0
-							line: 1
-						}
-					}
-				}
+				end: Position 1:3
+				path: UIDPath<esprima/invalid-syntax/migrated_0030/input.js>
+				start: Position 1:3
 			}
 		}
 	]
@@ -125,8 +69,5 @@ JSRoot {
     0x3in[]
        ^
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

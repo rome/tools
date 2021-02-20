@@ -12,51 +12,20 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "esprima/es2015-yield/yield-member-expression-property/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "esprima/es2015-yield/yield-member-expression-property/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation esprima/es2015-yield/yield-member-expression-property/input.js 1:0-2:0
+	path: UIDPath<esprima/es2015-yield/yield-member-expression-property/input.js>
 	body: Array [
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "g"
-				loc: Object {
-					filename: "esprima/es2015-yield/yield-member-expression-property/input.js"
-					identifierName: "g"
-					end: Object {
-						column: 11
-						line: 1
-					}
-					start: Object {
-						column: 10
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/es2015-yield/yield-member-expression-property/input.js 1:10-1:11 (g)
 			}
-			loc: Object {
-				filename: "esprima/es2015-yield/yield-member-expression-property/input.js"
-				end: Object {
-					column: 34
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation esprima/es2015-yield/yield-member-expression-property/input.js 1:0-1:34
 			head: JSFunctionHead {
 				async: false
 				generator: true
@@ -66,112 +35,29 @@ JSRoot {
 				returnType: undefined
 				thisType: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "esprima/es2015-yield/yield-member-expression-property/input.js"
-					end: Object {
-						column: 13
-						line: 1
-					}
-					start: Object {
-						column: 11
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/es2015-yield/yield-member-expression-property/input.js 1:11-1:13
 			}
 			body: JSBlockStatement {
 				directives: Array []
-				loc: Object {
-					filename: "esprima/es2015-yield/yield-member-expression-property/input.js"
-					end: Object {
-						column: 34
-						line: 1
-					}
-					start: Object {
-						column: 14
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/es2015-yield/yield-member-expression-property/input.js 1:14-1:34
 				body: Array [
 					JSExpressionStatement {
-						loc: Object {
-							filename: "esprima/es2015-yield/yield-member-expression-property/input.js"
-							end: Object {
-								column: 32
-								line: 1
-							}
-							start: Object {
-								column: 16
-								line: 1
-							}
-						}
+						loc: SourceLocation esprima/es2015-yield/yield-member-expression-property/input.js 1:16-1:32
 						expression: JSYieldExpression {
 							delegate: false
-							loc: Object {
-								filename: "esprima/es2015-yield/yield-member-expression-property/input.js"
-								end: Object {
-									column: 31
-									line: 1
-								}
-								start: Object {
-									column: 16
-									line: 1
-								}
-							}
+							loc: SourceLocation esprima/es2015-yield/yield-member-expression-property/input.js 1:16-1:31
 							argument: JSMemberExpression {
-								loc: Object {
-									filename: "esprima/es2015-yield/yield-member-expression-property/input.js"
-									end: Object {
-										column: 31
-										line: 1
-									}
-									start: Object {
-										column: 22
-										line: 1
-									}
-								}
+								loc: SourceLocation esprima/es2015-yield/yield-member-expression-property/input.js 1:22-1:31
 								object: JSReferenceIdentifier {
 									name: "obj"
-									loc: Object {
-										filename: "esprima/es2015-yield/yield-member-expression-property/input.js"
-										identifierName: "obj"
-										end: Object {
-											column: 25
-											line: 1
-										}
-										start: Object {
-											column: 22
-											line: 1
-										}
-									}
+									loc: SourceLocation esprima/es2015-yield/yield-member-expression-property/input.js 1:22-1:25 (obj)
 								}
 								property: JSStaticMemberProperty {
 									value: JSIdentifier {
 										name: "yield"
-										loc: Object {
-											filename: "esprima/es2015-yield/yield-member-expression-property/input.js"
-											identifierName: "yield"
-											end: Object {
-												column: 31
-												line: 1
-											}
-											start: Object {
-												column: 26
-												line: 1
-											}
-										}
+										loc: SourceLocation esprima/es2015-yield/yield-member-expression-property/input.js 1:26-1:31 (yield)
 									}
-									loc: Object {
-										filename: "esprima/es2015-yield/yield-member-expression-property/input.js"
-										identifierName: "yield"
-										end: Object {
-											column: 31
-											line: 1
-										}
-										start: Object {
-											column: 26
-											line: 1
-										}
-									}
+									loc: SourceLocation esprima/es2015-yield/yield-member-expression-property/input.js 1:26-1:31 (yield)
 								}
 							}
 						}
@@ -186,6 +72,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

@@ -11,105 +11,45 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "esprima/es2015-yield/invalid-yield-generator-export-default/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
 	syntax: Array []
-	loc: Object {
-		filename: "esprima/es2015-yield/invalid-yield-generator-export-default/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation esprima/es2015-yield/invalid-yield-generator-export-default/input.js 1:0-2:0
+	path: UIDPath<esprima/es2015-yield/invalid-yield-generator-export-default/input.js>
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse"
 				categoryValue: "js"
-				message: Array [
-					"yield"
-					RAW_MARKUP {value: " is a reserved word"}
-				]
+				category: Array ["parse"]
+				message: RAW_MARKUP {value: "yield is a reserved word"}
 			}
 			location: Object {
-				filename: "esprima/es2015-yield/invalid-yield-generator-export-default/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 30
-					line: 1
-				}
-				start: Object {
-					column: 25
-					line: 1
-				}
+				end: Position 1:30
+				path: UIDPath<esprima/es2015-yield/invalid-yield-generator-export-default/input.js>
+				start: Position 1:25
 			}
 		}
 	]
 	body: Array [
 		JSExportDefaultDeclaration {
-			loc: Object {
-				filename: "esprima/es2015-yield/invalid-yield-generator-export-default/input.js"
-				end: Object {
-					column: 35
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation esprima/es2015-yield/invalid-yield-generator-export-default/input.js 1:0-1:35
 			declaration: JSFunctionDeclaration {
 				id: JSBindingIdentifier {
 					name: "yield"
-					loc: Object {
-						filename: "esprima/es2015-yield/invalid-yield-generator-export-default/input.js"
-						identifierName: "yield"
-						end: Object {
-							column: 30
-							line: 1
-						}
-						start: Object {
-							column: 25
-							line: 1
-						}
-					}
+					loc: SourceLocation esprima/es2015-yield/invalid-yield-generator-export-default/input.js 1:25-1:30 (yield)
 				}
-				loc: Object {
-					filename: "esprima/es2015-yield/invalid-yield-generator-export-default/input.js"
-					end: Object {
-						column: 35
-						line: 1
-					}
-					start: Object {
-						column: 15
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/es2015-yield/invalid-yield-generator-export-default/input.js 1:15-1:35
 				body: JSBlockStatement {
 					body: Array []
 					directives: Array []
-					loc: Object {
-						filename: "esprima/es2015-yield/invalid-yield-generator-export-default/input.js"
-						end: Object {
-							column: 35
-							line: 1
-						}
-						start: Object {
-							column: 33
-							line: 1
-						}
-					}
+					loc: SourceLocation esprima/es2015-yield/invalid-yield-generator-export-default/input.js 1:33-1:35
 				}
 				head: JSFunctionHead {
 					async: false
@@ -120,17 +60,7 @@ JSRoot {
 					returnType: undefined
 					thisType: undefined
 					typeParameters: undefined
-					loc: Object {
-						filename: "esprima/es2015-yield/invalid-yield-generator-export-default/input.js"
-						end: Object {
-							column: 32
-							line: 1
-						}
-						start: Object {
-							column: 30
-							line: 1
-						}
-					}
+					loc: SourceLocation esprima/es2015-yield/invalid-yield-generator-export-default/input.js 1:30-1:32
 				}
 			}
 		}
@@ -149,8 +79,5 @@ JSRoot {
     export default function *yield() {}
                              ^^^^^
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

@@ -115,7 +115,7 @@ export default class RecoveryStore {
 		this.requestIdToStore = new Map();
 		this.evictableStoreIds = [];
 		this.blockSave = undefined;
-		this.logger = server.logger.namespace(markup`[RecoveryStore]`);
+		this.logger = server.logger.namespace(markup`RecoveryStore`);
 		this.shouldTruncate = true;
 		this.recoveryDirectoryPath = server.userConfig.recoveryPath;
 	}
@@ -232,14 +232,18 @@ export default class RecoveryStore {
 
 	public async getStore(
 		storeId: string,
-		location: DiagnosticLocation = {},
+		location?: DiagnosticLocation,
 	): Promise<RecoveryDiskStore> {
 		const store = await this.maybeGetStore(storeId);
 		if (store === undefined) {
-			throw createSingleDiagnosticError({
-				description: descriptions.RECOVERY_STORE.NOT_FOUND(storeId),
-				location,
-			});
+			if (location === undefined) {
+				throw new Error(`Recovery store ${storeId} not found`);
+			} else {
+				throw createSingleDiagnosticError({
+					description: descriptions.RECOVERY_STORE.NOT_FOUND(storeId),
+					location,
+				});
+			}
 		} else {
 			return store;
 		}
@@ -335,7 +339,7 @@ export default class RecoveryStore {
 	public async apply(
 		req: ServerRequest,
 		storeId: string,
-		location: DiagnosticLocation = {},
+		location?: DiagnosticLocation,
 		filter?: (store: RecoveryDiskStore) => Promise<undefined | (string[])>,
 	): Promise<DiskStoreEntry[]> {
 		const store = await this.getStore(storeId, location);

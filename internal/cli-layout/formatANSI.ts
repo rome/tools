@@ -1,4 +1,5 @@
 import {formatAnsi, formatAnsiRGB} from "./ansi";
+import {DIAGNOSTIC_CATEGORIES} from "@internal/diagnostics";
 import OneDarkPro from "./syntax-theme/OneDarkPro.json";
 import {Dict} from "@internal/typescript-helpers";
 import {Consumer, consumeUnknown} from "@internal/consume";
@@ -33,8 +34,12 @@ export function ansiFormatText(
 
 		case "filelink": {
 			if (features.hyperlinks) {
-				const {filename} = buildFileLink(attributes, grid.options);
-				return formatAnsi.hyperlink(value, `file://${filename}`);
+				const {path} = buildFileLink(attributes, grid.options);
+				if (path.isAbsolute()) {
+					return formatAnsi.hyperlink(value, `file://${path.join()}`);
+				} else {
+					return value;
+				}
 			} else {
 				return value;
 			}
@@ -158,7 +163,9 @@ function getTokenColors(consumer: undefined | Consumer): Theme {
 	if (consumer === undefined) {
 		if (defaultTokenColors === undefined) {
 			defaultTokenColors = {
-				...getTokenColors(consumeUnknown(OneDarkPro, "parse", "vscodeTheme")),
+				...getTokenColors(
+					consumeUnknown(OneDarkPro, DIAGNOSTIC_CATEGORIES.parse, "vscodeTheme"),
+				),
 				kind: "default",
 			};
 		}

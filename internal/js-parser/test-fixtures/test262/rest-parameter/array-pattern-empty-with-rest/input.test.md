@@ -12,65 +12,24 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "test262/rest-parameter/array-pattern-empty-with-rest/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "test262/rest-parameter/array-pattern-empty-with-rest/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation test262/rest-parameter/array-pattern-empty-with-rest/input.js 1:0-2:0
+	path: UIDPath<test262/rest-parameter/array-pattern-empty-with-rest/input.js>
 	body: Array [
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "emptyWithRest"
-				loc: Object {
-					filename: "test262/rest-parameter/array-pattern-empty-with-rest/input.js"
-					identifierName: "emptyWithRest"
-					end: Object {
-						column: 22
-						line: 1
-					}
-					start: Object {
-						column: 9
-						line: 1
-					}
-				}
+				loc: SourceLocation test262/rest-parameter/array-pattern-empty-with-rest/input.js 1:9-1:22 (emptyWithRest)
 			}
-			loc: Object {
-				filename: "test262/rest-parameter/array-pattern-empty-with-rest/input.js"
-				end: Object {
-					column: 37
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation test262/rest-parameter/array-pattern-empty-with-rest/input.js 1:0-1:37
 			body: JSBlockStatement {
 				body: Array []
 				directives: Array []
-				loc: Object {
-					filename: "test262/rest-parameter/array-pattern-empty-with-rest/input.js"
-					end: Object {
-						column: 37
-						line: 1
-					}
-					start: Object {
-						column: 35
-						line: 1
-					}
-				}
+				loc: SourceLocation test262/rest-parameter/array-pattern-empty-with-rest/input.js 1:35-1:37
 			}
 			head: JSFunctionHead {
 				async: false
@@ -80,73 +39,23 @@ JSRoot {
 				returnType: undefined
 				thisType: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "test262/rest-parameter/array-pattern-empty-with-rest/input.js"
-					end: Object {
-						column: 34
-						line: 1
-					}
-					start: Object {
-						column: 22
-						line: 1
-					}
-				}
+				loc: SourceLocation test262/rest-parameter/array-pattern-empty-with-rest/input.js 1:22-1:34
 				rest: JSBindingArrayPattern {
 					elements: Array []
-					loc: Object {
-						filename: "test262/rest-parameter/array-pattern-empty-with-rest/input.js"
-						end: Object {
-							column: 33
-							line: 1
-						}
-						start: Object {
-							column: 26
-							line: 1
-						}
-					}
+					loc: SourceLocation test262/rest-parameter/array-pattern-empty-with-rest/input.js 1:26-1:33
 					meta: JSPatternMeta {
 						optional: undefined
 						typeAnnotation: undefined
-						loc: Object {
-							filename: "test262/rest-parameter/array-pattern-empty-with-rest/input.js"
-							end: Object {
-								column: 33
-								line: 1
-							}
-							start: Object {
-								column: 26
-								line: 1
-							}
-						}
+						loc: SourceLocation test262/rest-parameter/array-pattern-empty-with-rest/input.js 1:26-1:33
 					}
 					rest: JSBindingArrayPattern {
 						elements: Array []
 						rest: undefined
-						loc: Object {
-							filename: "test262/rest-parameter/array-pattern-empty-with-rest/input.js"
-							end: Object {
-								column: 32
-								line: 1
-							}
-							start: Object {
-								column: 30
-								line: 1
-							}
-						}
+						loc: SourceLocation test262/rest-parameter/array-pattern-empty-with-rest/input.js 1:30-1:32
 						meta: JSPatternMeta {
 							optional: undefined
 							typeAnnotation: undefined
-							loc: Object {
-								filename: "test262/rest-parameter/array-pattern-empty-with-rest/input.js"
-								end: Object {
-									column: 32
-									line: 1
-								}
-								start: Object {
-									column: 30
-									line: 1
-								}
-							}
+							loc: SourceLocation test262/rest-parameter/array-pattern-empty-with-rest/input.js 1:30-1:32
 						}
 					}
 				}
@@ -159,6 +68,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

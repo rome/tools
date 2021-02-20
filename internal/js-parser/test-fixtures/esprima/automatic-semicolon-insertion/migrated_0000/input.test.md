@@ -12,106 +12,34 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "esprima/automatic-semicolon-insertion/migrated_0000/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "esprima/automatic-semicolon-insertion/migrated_0000/input.js"
-		end: Object {
-			column: 0
-			line: 3
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation esprima/automatic-semicolon-insertion/migrated_0000/input.js 1:0-3:0
+	path: UIDPath<esprima/automatic-semicolon-insertion/migrated_0000/input.js>
 	body: Array [
 		JSBlockStatement {
 			directives: Array []
-			loc: Object {
-				filename: "esprima/automatic-semicolon-insertion/migrated_0000/input.js"
-				end: Object {
-					column: 5
-					line: 2
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation esprima/automatic-semicolon-insertion/migrated_0000/input.js 1:0-2:5
 			body: Array [
 				JSExpressionStatement {
-					loc: Object {
-						filename: "esprima/automatic-semicolon-insertion/migrated_0000/input.js"
-						end: Object {
-							column: 3
-							line: 1
-						}
-						start: Object {
-							column: 2
-							line: 1
-						}
-					}
+					loc: SourceLocation esprima/automatic-semicolon-insertion/migrated_0000/input.js 1:2-1:3
 					expression: JSReferenceIdentifier {
 						name: "x"
-						loc: Object {
-							filename: "esprima/automatic-semicolon-insertion/migrated_0000/input.js"
-							identifierName: "x"
-							end: Object {
-								column: 3
-								line: 1
-							}
-							start: Object {
-								column: 2
-								line: 1
-							}
-						}
+						loc: SourceLocation esprima/automatic-semicolon-insertion/migrated_0000/input.js 1:2-1:3 (x)
 					}
 				}
 				JSExpressionStatement {
-					loc: Object {
-						filename: "esprima/automatic-semicolon-insertion/migrated_0000/input.js"
-						end: Object {
-							column: 3
-							line: 2
-						}
-						start: Object {
-							column: 0
-							line: 2
-						}
-					}
+					loc: SourceLocation esprima/automatic-semicolon-insertion/migrated_0000/input.js 2:0-2:3
 					expression: JSUpdateExpression {
 						operator: "++"
 						prefix: true
-						loc: Object {
-							filename: "esprima/automatic-semicolon-insertion/migrated_0000/input.js"
-							end: Object {
-								column: 3
-								line: 2
-							}
-							start: Object {
-								column: 0
-								line: 2
-							}
-						}
+						loc: SourceLocation esprima/automatic-semicolon-insertion/migrated_0000/input.js 2:0-2:3
 						argument: JSReferenceIdentifier {
 							name: "y"
-							loc: Object {
-								filename: "esprima/automatic-semicolon-insertion/migrated_0000/input.js"
-								identifierName: "y"
-								end: Object {
-									column: 3
-									line: 2
-								}
-								start: Object {
-									column: 2
-									line: 2
-								}
-							}
+							loc: SourceLocation esprima/automatic-semicolon-insertion/migrated_0000/input.js 2:2-2:3 (y)
 						}
 					}
 				}
@@ -124,6 +52,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

@@ -12,78 +12,28 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "esprima/es2015-destructuring-assignment-object-pattern/empty-object-pattern-assignment/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "esprima/es2015-destructuring-assignment-object-pattern/empty-object-pattern-assignment/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation esprima/es2015-destructuring-assignment-object-pattern/empty-object-pattern-assignment/input.js 1:0-2:0
+	path: UIDPath<esprima/es2015-destructuring-assignment-object-pattern/empty-object-pattern-assignment/input.js>
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "esprima/es2015-destructuring-assignment-object-pattern/empty-object-pattern-assignment/input.js"
-				end: Object {
-					column: 9
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation esprima/es2015-destructuring-assignment-object-pattern/empty-object-pattern-assignment/input.js 1:0-1:9
 			expression: JSAssignmentExpression {
 				operator: "="
-				loc: Object {
-					filename: "esprima/es2015-destructuring-assignment-object-pattern/empty-object-pattern-assignment/input.js"
-					end: Object {
-						column: 7
-						line: 1
-					}
-					start: Object {
-						column: 1
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/es2015-destructuring-assignment-object-pattern/empty-object-pattern-assignment/input.js 1:1-1:7
 				left: JSAssignmentObjectPattern {
 					properties: Array []
 					rest: undefined
-					loc: Object {
-						filename: "esprima/es2015-destructuring-assignment-object-pattern/empty-object-pattern-assignment/input.js"
-						end: Object {
-							column: 3
-							line: 1
-						}
-						start: Object {
-							column: 1
-							line: 1
-						}
-					}
+					loc: SourceLocation esprima/es2015-destructuring-assignment-object-pattern/empty-object-pattern-assignment/input.js 1:1-1:3
 				}
 				right: JSNumericLiteral {
 					value: 0
 					format: undefined
-					loc: Object {
-						filename: "esprima/es2015-destructuring-assignment-object-pattern/empty-object-pattern-assignment/input.js"
-						end: Object {
-							column: 7
-							line: 1
-						}
-						start: Object {
-							column: 6
-							line: 1
-						}
-					}
+					loc: SourceLocation esprima/es2015-destructuring-assignment-object-pattern/empty-object-pattern-assignment/input.js 1:6-1:7
 				}
 			}
 		}
@@ -94,6 +44,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

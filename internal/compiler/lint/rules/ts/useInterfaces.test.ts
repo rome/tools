@@ -1,3 +1,5 @@
+import {DIAGNOSTIC_CATEGORIES} from "@internal/diagnostics";
+import {createRelativePath} from "@internal/path";
 import {test} from "rome";
 import {testLint} from "../../utils/testing";
 
@@ -7,8 +9,8 @@ test(
 		await testLint(
 			t,
 			{
-				filename: "file.ts",
-				category: "lint/ts/useInterfaces",
+				path: createRelativePath("file.ts"),
+				category: DIAGNOSTIC_CATEGORIES["lint/ts/useInterfaces"],
 			},
 		);
 	},

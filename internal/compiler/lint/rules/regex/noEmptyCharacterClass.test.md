@@ -17,9 +17,6 @@
 
   ℹ Empty character classes are usually typos.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -44,9 +41,6 @@ foo;
 
   ℹ Empty character classes are usually typos.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -66,14 +60,8 @@ foo;
 
   ✖ Do not use empty character classes in regular expressions.
 
-    ;if (foo.match(/^abc[]/)) { foo; }
-                        ^
-
   ℹ Empty character classes are usually typos.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -99,9 +87,6 @@ if (foo.match(/^abc/)) {
 
   ℹ Empty character classes are usually typos.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -126,9 +111,6 @@ foo;
 
   ℹ Empty character classes are usually typos.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -153,9 +135,6 @@ foo;
 
   ℹ Empty character classes are usually typos.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -170,7 +149,6 @@ foo;
 ### `6`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -185,7 +163,6 @@ foo;
 ### `7`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -200,7 +177,6 @@ regExp;
 ### `8`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -215,7 +191,6 @@ foo;
 ### `9`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -230,7 +205,6 @@ foo;
 ### `10`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -245,7 +219,6 @@ foo;
 ### `11`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -260,7 +233,6 @@ foo;
 ### `12`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -275,7 +247,6 @@ foo;
 ### `13`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -290,7 +261,6 @@ foo;
 ### `14`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -305,7 +275,6 @@ foo;
 ### `15`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -320,7 +289,6 @@ foo;
 ### `16`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -335,7 +303,6 @@ foo;
 ### `17`
 
 ```
-✔ No known problems!
 
 ```
 

@@ -11,104 +11,45 @@ JSRoot {
 	comments: Array []
 	corrupt: true
 	directives: Array []
-	filename: "esprima/invalid-syntax/migrated_0130/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "esprima/invalid-syntax/migrated_0130/input.js"
-		end: Object {
-			column: 0
-			line: 2
+	loc: SourceLocation esprima/invalid-syntax/migrated_0130/input.js 1:0-2:0
+	path: UIDPath<esprima/invalid-syntax/migrated_0130/input.js>
+	body: Array [
+		JSWhileStatement {
+			loc: SourceLocation esprima/invalid-syntax/migrated_0130/input.js 1:0-2:0
+			test: JSBooleanLiteral {
+				value: false
+				loc: SourceLocation esprima/invalid-syntax/migrated_0130/input.js 1:6-1:11
+			}
+			body: JSExpressionStatement {
+				loc: SourceLocation esprima/invalid-syntax/migrated_0130/input.js 2:0-2:0
+				expression: JSReferenceIdentifier {
+					name: "INVALID_PLACEHOLDER"
+					loc: SourceLocation esprima/invalid-syntax/migrated_0130/input.js 2:0-2:0
+				}
+			}
 		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	]
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse"
 				categoryValue: "js"
-				message: Array [
-					RAW_MARKUP {value: "Unknown start to an "}
-					"statement expression"
-				]
+				category: Array ["parse"]
+				message: RAW_MARKUP {value: "Unknown start to an statement expression"}
 			}
 			location: Object {
-				filename: "esprima/invalid-syntax/migrated_0130/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 12
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 2
-				}
-			}
-		}
-	]
-	body: Array [
-		JSWhileStatement {
-			loc: Object {
-				filename: "esprima/invalid-syntax/migrated_0130/input.js"
-				end: Object {
-					column: 0
-					line: 2
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
-			test: JSBooleanLiteral {
-				value: false
-				loc: Object {
-					filename: "esprima/invalid-syntax/migrated_0130/input.js"
-					end: Object {
-						column: 11
-						line: 1
-					}
-					start: Object {
-						column: 6
-						line: 1
-					}
-				}
-			}
-			body: JSExpressionStatement {
-				loc: Object {
-					filename: "esprima/invalid-syntax/migrated_0130/input.js"
-					end: Object {
-						column: 0
-						line: 2
-					}
-					start: Object {
-						column: 0
-						line: 2
-					}
-				}
-				expression: JSReferenceIdentifier {
-					name: "INVALID_PLACEHOLDER"
-					loc: Object {
-						filename: "esprima/invalid-syntax/migrated_0130/input.js"
-						end: Object {
-							column: 0
-							line: 2
-						}
-						start: Object {
-							column: 0
-							line: 2
-						}
-					}
-				}
+				end: Position 1:12
+				path: UIDPath<esprima/invalid-syntax/migrated_0130/input.js>
+				start: Position 2:0
 			}
 		}
 	]
@@ -125,8 +66,5 @@ JSRoot {
 
     while(false)
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

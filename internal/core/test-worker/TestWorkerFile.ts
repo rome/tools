@@ -7,6 +7,7 @@
 
 import {UnknownObject} from "@internal/typescript-helpers";
 import {
+	DIAGNOSTIC_CATEGORIES,
 	Diagnostic,
 	DiagnosticAdvice,
 	DiagnosticLocation,
@@ -40,6 +41,7 @@ import executeMain from "../common/utils/executeMain";
 import {
 	AbsoluteFilePath,
 	AbsoluteFilePathMap,
+	MixedPathSet,
 	createAbsoluteFilePath,
 } from "@internal/path";
 import {
@@ -89,8 +91,7 @@ export function cleanFrames(frames: ErrorFrames): ErrorFrames {
 	if (latestTestWorkerFrame === undefined) {
 		latestTestWorkerFrame = frames.find((frame) => {
 			return (
-				frame.filename !== undefined &&
-				frame.filename.includes("TestWorkerFile")
+				frame.path !== undefined && frame.path.join().includes("TestWorkerFile")
 			);
 		});
 	}
@@ -134,10 +135,7 @@ export default class TestWorkerFile {
 		this.worker = worker;
 		this.projectDirectory = createAbsoluteFilePath(opts.projectDirectory);
 
-		this.snapshotManager = new SnapshotManager(
-			this,
-			createAbsoluteFilePath(opts.path),
-		);
+		this.snapshotManager = new SnapshotManager(this, opts.path);
 
 		this.onlyFocusedTests = false;
 		this.hasDiagnostics = false;
@@ -296,7 +294,7 @@ export default class TestWorkerFile {
 					},
 					location: {
 						...res.syntaxError.location,
-						filename: this.path.join(),
+						path: this.path,
 					},
 					tags: {
 						...res.syntaxError,
@@ -316,7 +314,7 @@ export default class TestWorkerFile {
 		if (this.foundTests.size === 0 && !this.hasDiagnostics) {
 			await this.emitDiagnostic({
 				location: {
-					filename: this.path.join(),
+					path: this.path,
 				},
 				description: descriptions.TESTS.UNDECLARED,
 			});
@@ -419,12 +417,15 @@ export default class TestWorkerFile {
 			struct,
 			{
 				description: {
-					category: "tests/failure",
+					category: DIAGNOSTIC_CATEGORIES["tests/failure"],
 				},
-				filename: this.path.join(),
+				path: this.path,
 				cleanFrames,
 				stackAdviceOptions: {
-					importantFilenames: [this.path.join()],
+					importantPaths: new MixedPathSet([this.path]),
+				},
+				tags: {
+					internal: false,
 				},
 			},
 		);
@@ -465,7 +466,7 @@ export default class TestWorkerFile {
 				advice.push({
 					type: "log",
 					category: "info",
-					text: markup`Error occured while executing test file <filelink emphasis target="${this.path.join()}" />`,
+					text: markup`Error occured while executing test file <emphasis>${this.path}</emphasis> />`,
 				});
 				break;
 			}
@@ -639,7 +640,7 @@ export default class TestWorkerFile {
 			await this.emitDiagnostic({
 				description: descriptions.TESTS.LOGS(advice),
 				location: {
-					filename: this.path.join(),
+					path: this.path,
 				},
 			});
 		}

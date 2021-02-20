@@ -11,103 +11,47 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "es2020/dynamic-import/invalid-new/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2020/dynamic-import/invalid-new/input.js"
-		end: Object {
-			column: 0
-			line: 2
+	loc: SourceLocation es2020/dynamic-import/invalid-new/input.js 1:0-2:0
+	path: UIDPath<es2020/dynamic-import/invalid-new/input.js>
+	body: Array [
+		JSExpressionStatement {
+			loc: SourceLocation es2020/dynamic-import/invalid-new/input.js 1:0-1:18
+			expression: JSNewExpression {
+				arguments: Array []
+				optional: undefined
+				typeArguments: undefined
+				loc: SourceLocation es2020/dynamic-import/invalid-new/input.js 1:0-1:17
+				callee: JSImportCall {
+					loc: SourceLocation es2020/dynamic-import/invalid-new/input.js 1:10-1:17
+					argument: JSStringLiteral {
+						value: "foo"
+						loc: SourceLocation es2020/dynamic-import/invalid-new/input.js 1:11-1:16
+					}
+				}
+			}
 		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	]
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse"
 				categoryValue: "js"
+				category: Array ["parse"]
 				message: RAW_MARKUP {value: "super is only allowed in object methods and classes"}
 			}
 			location: Object {
-				filename: "es2020/dynamic-import/invalid-new/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 17
-					line: 1
-				}
-				start: Object {
-					column: 10
-					line: 1
-				}
-			}
-		}
-	]
-	body: Array [
-		JSExpressionStatement {
-			loc: Object {
-				filename: "es2020/dynamic-import/invalid-new/input.js"
-				end: Object {
-					column: 18
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
-			expression: JSNewExpression {
-				arguments: Array []
-				optional: undefined
-				typeArguments: undefined
-				loc: Object {
-					filename: "es2020/dynamic-import/invalid-new/input.js"
-					end: Object {
-						column: 17
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
-				callee: JSImportCall {
-					loc: Object {
-						filename: "es2020/dynamic-import/invalid-new/input.js"
-						end: Object {
-							column: 17
-							line: 1
-						}
-						start: Object {
-							column: 10
-							line: 1
-						}
-					}
-					argument: JSStringLiteral {
-						value: "foo"
-						loc: Object {
-							filename: "es2020/dynamic-import/invalid-new/input.js"
-							end: Object {
-								column: 16
-								line: 1
-							}
-							start: Object {
-								column: 11
-								line: 1
-							}
-						}
-					}
-				}
+				end: Position 1:17
+				path: UIDPath<es2020/dynamic-import/invalid-new/input.js>
+				start: Position 1:10
 			}
 		}
 	]
@@ -125,8 +69,5 @@ JSRoot {
     new import("foo");
               ^^^^^^^
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

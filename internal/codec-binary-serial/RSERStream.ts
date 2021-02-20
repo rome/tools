@@ -1,17 +1,17 @@
-import RSERBufferWriter from "./RSERBufferWriter";
+import RSERWriterMaterial from "./RSERWriterMaterial";
 import {Event} from "@internal/events";
 import {RSERValue} from "./types";
 import RSERBufferParser from "./RSERBufferParser";
-import {encodeValueToRSERBufferMessage} from "@internal/codec-binary-serial/index";
-import RSERBufferAssembler from "./RSERBufferAssembler";
-import {VERSION} from "./constants";
+import {encodeValueToRSERMessage} from "@internal/codec-binary-serial/index";
+import RSERWriterCounter from "./RSERWriterCounter";
 
 type State = {
 	// INIT: Waiting on stream header
 	// IDLE: Waiting on the next message and a full PDU length to decode
 	// READ: Know the length, need to read whole content
-	type: "INIT" | "IDLE" | "READ";
-	writer: RSERBufferWriter;
+	// INCOMPATIBLE: Read stream header and we have a version mismatch
+	type: "INIT" | "IDLE" | "READ" | "INCOMPATIBLE";
+	writer: RSERWriterMaterial;
 	reader: RSERBufferParser;
 };
 
@@ -27,7 +27,7 @@ const MAX_MESSAGE_HEADER_SIZE = MAX_INT_SIZE + 1;
 
 function createState(type: State["type"], size: number): State {
 	// Max possible size of a message header
-	const writer = RSERBufferWriter.allocate(size);
+	const writer = RSERWriterMaterial.allocate(size);
 
 	return {
 		type,
@@ -39,7 +39,10 @@ function createState(type: State["type"], size: number): State {
 export default class RSERStream {
 	constructor(type: RSERStreamType) {
 		this.type = type;
-		this.state = createState("INIT", MAX_STREAM_HEADER_SIZE);
+		this.state =
+			type === "file"
+				? createState("IDLE", MAX_MESSAGE_HEADER_SIZE)
+				: createState("INIT", MAX_STREAM_HEADER_SIZE);
 		this.overflow = [];
 
 		this.errorEvent = new Event({
@@ -53,8 +56,13 @@ export default class RSERStream {
 		this.sendEvent = new Event({
 			name: "RSERStream.sendEvent",
 		});
+
+		this.incompatibleEvent = new Event({
+			name: "RSERStream.incompatibleEvent",
+		});
 	}
 
+	public incompatibleEvent: Event<void, void>;
 	public errorEvent: Event<Error, void>;
 	public sendEvent: Event<ArrayBuffer, void>;
 	public valueEvent: Event<RSERValue, void>;
@@ -64,7 +72,7 @@ export default class RSERStream {
 	private state: State;
 
 	public sendValue(val: RSERValue) {
-		this.sendBuffer(encodeValueToRSERBufferMessage(val));
+		this.sendBuffer(encodeValueToRSERMessage(val));
 	}
 
 	public sendBuffer(buf: ArrayBuffer) {
@@ -113,7 +121,7 @@ export default class RSERStream {
 				arr = arr.slice(0, remaining);
 			}
 
-			writer.appendBytes(arr);
+			writer.writeBytes(arr);
 			this.process();
 		} catch (err) {
 			this.errorEvent.send(err);
@@ -127,11 +135,6 @@ export default class RSERStream {
 
 		if (leftover > 0 && reader.readOffset < writer.writeOffset) {
 			const bytes = writer.bytes.slice(reader.readOffset, writer.writeOffset);
-			console.log({
-				bytes,
-				readOffset: reader.readOffset,
-				writeOffset: writer.writeOffset,
-			});
 			this.overflow.unshift(bytes);
 		}
 	}
@@ -154,7 +157,7 @@ export default class RSERStream {
 					this.overflow.shift();
 				}
 
-				writer.appendBytes(entry);
+				writer.writeBytes(entry);
 
 				this.process();
 			}
@@ -171,14 +174,14 @@ export default class RSERStream {
 
 	// Send stream header
 	public sendStreamHeader() {
-		const assembler = new RSERBufferAssembler();
-		assembler.encodeStreamHeader(VERSION);
+		const counter = new RSERWriterCounter();
+		counter.encodeStreamHeader();
 
-		const buf = new RSERBufferWriter(
-			new ArrayBuffer(assembler.totalSize),
-			assembler,
+		const buf = new RSERWriterMaterial(
+			new ArrayBuffer(counter.totalSize),
+			counter,
 		);
-		buf.encodeStreamHeader(VERSION);
+		buf.encodeStreamHeader();
 		this.sendBuffer(buf.buffer);
 	}
 
@@ -187,8 +190,16 @@ export default class RSERStream {
 
 		// Decode stream header
 		if (type === "INIT") {
-			const validHeader = reader.maybeDecodeStreamHeader();
-			if (validHeader) {
+			const headerType = reader.maybeDecodeStreamHeader();
+			if (headerType === "INCOMPATIBLE") {
+				if (this.type === "file") {
+					this.setState(createState("INCOMPATIBLE", 0));
+					this.incompatibleEvent.send();
+				} else {
+					throw new Error("Stream version mismatch");
+				}
+			}
+			if (headerType === "VALID") {
 				this.unshiftUnreadOverflow();
 				this.setState(createState("IDLE", MAX_MESSAGE_HEADER_SIZE));
 

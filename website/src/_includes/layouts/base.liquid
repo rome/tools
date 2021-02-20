@@ -68,7 +68,7 @@
 			<div class="sidebar-container">
 				<div class="sidebar-stripe"></div>
 
-				<div class="sidebar">
+				<aside class="sidebar">
 					<div class="header-desktop">
 						<a class="logo" href="/">
 							{% include svg/rome-logo.svg %}
@@ -78,6 +78,7 @@
 
 					<div class="docsearch-container">
 						{% include svg/search-icon.svg %}
+						<label class="docsearch-label" for="docsearch">Search</label>
 						<input type="text" id="docsearch" class="docsearch" placeholder="Search" />
 					</div>
 
@@ -133,13 +134,13 @@
 					</div>
 
 					<div class="color-scheme-switch-container">
-						<div class="color-scheme-switch">
+						<button aria-label="Toggle theme" title="Toggle theme" role="switch" aria-checked="true" class="color-scheme-switch">
 							<div class="selector"></div>
 							{% include svg/moon.svg %}
 							{% include svg/sun.svg %}
-						</div>
+						</button>
 					</div>
-				</div>
+				</aside>
 			</div>
 
 			<div class="main">

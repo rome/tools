@@ -12,156 +12,38 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "typescript/types/conditional/input.ts"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
+	loc: SourceLocation typescript/types/conditional/input.ts 1:0-2:0
+	path: UIDPath<typescript/types/conditional/input.ts>
 	syntax: Array ["ts"]
-	loc: Object {
-		filename: "typescript/types/conditional/input.ts"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
 	body: Array [
 		JSVariableDeclarationStatement {
-			loc: Object {
-				filename: "typescript/types/conditional/input.ts"
-				end: Object {
-					column: 46
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation typescript/types/conditional/input.ts 1:0-1:46
 			declaration: JSVariableDeclaration {
 				kind: "let"
-				loc: Object {
-					filename: "typescript/types/conditional/input.ts"
-					end: Object {
-						column: 46
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/types/conditional/input.ts 1:0-1:46
 				declarations: Array [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "x"
-							loc: Object {
-								filename: "typescript/types/conditional/input.ts"
-								end: Object {
-									column: 45
-									line: 1
-								}
-								start: Object {
-									column: 4
-									line: 1
-								}
-							}
+							loc: SourceLocation typescript/types/conditional/input.ts 1:4-1:45
 							meta: JSPatternMeta {
 								definite: undefined
-								loc: Object {
-									filename: "typescript/types/conditional/input.ts"
-									end: Object {
-										column: 45
-										line: 1
-									}
-									start: Object {
-										column: 4
-										line: 1
-									}
-								}
+								loc: SourceLocation typescript/types/conditional/input.ts 1:4-1:45
 								typeAnnotation: TSConditionalType {
-									loc: Object {
-										filename: "typescript/types/conditional/input.ts"
-										end: Object {
-											column: 45
-											line: 1
-										}
-										start: Object {
-											column: 5
-											line: 1
-										}
-									}
-									checkType: TSNumberKeywordTypeAnnotation {
-										loc: Object {
-											filename: "typescript/types/conditional/input.ts"
-											end: Object {
-												column: 13
-												line: 1
-											}
-											start: Object {
-												column: 7
-												line: 1
-											}
-										}
-									}
-									extendsType: TSStringKeywordTypeAnnotation {
-										loc: Object {
-											filename: "typescript/types/conditional/input.ts"
-											end: Object {
-												column: 28
-												line: 1
-											}
-											start: Object {
-												column: 22
-												line: 1
-											}
-										}
-									}
-									falseType: TSNullKeywordTypeAnnotation {
-										loc: Object {
-											filename: "typescript/types/conditional/input.ts"
-											end: Object {
-												column: 45
-												line: 1
-											}
-											start: Object {
-												column: 41
-												line: 1
-											}
-										}
-									}
-									trueType: TSBooleanKeywordTypeAnnotation {
-										loc: Object {
-											filename: "typescript/types/conditional/input.ts"
-											end: Object {
-												column: 38
-												line: 1
-											}
-											start: Object {
-												column: 31
-												line: 1
-											}
-										}
-									}
+									checkType: TSNumberKeywordTypeAnnotation {loc: SourceLocation typescript/types/conditional/input.ts 1:7-1:13}
+									extendsType: TSStringKeywordTypeAnnotation {loc: SourceLocation typescript/types/conditional/input.ts 1:22-1:28}
+									falseType: TSNullKeywordTypeAnnotation {loc: SourceLocation typescript/types/conditional/input.ts 1:41-1:45}
+									loc: SourceLocation typescript/types/conditional/input.ts 1:5-1:45
+									trueType: TSBooleanKeywordTypeAnnotation {loc: SourceLocation typescript/types/conditional/input.ts 1:31-1:38}
 								}
 							}
 						}
 						init: undefined
-						loc: Object {
-							filename: "typescript/types/conditional/input.ts"
-							end: Object {
-								column: 45
-								line: 1
-							}
-							start: Object {
-								column: 4
-								line: 1
-							}
-						}
+						loc: SourceLocation typescript/types/conditional/input.ts 1:4-1:45
 					}
 				]
 			}
@@ -173,6 +55,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

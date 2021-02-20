@@ -8,27 +8,31 @@
 import {Position, SourceLocation} from "@internal/parser-core";
 import {Diffs} from "@internal/string-diff";
 import {ConstJSSourceType} from "@internal/ast";
-import {Number0, Number1} from "@internal/ob1";
+import {OneIndexed, ZeroIndexed} from "@internal/math";
 import {JSONPropertyValue} from "@internal/codec-config";
 import {DiagnosticCategory} from "./categories";
 import {Dict} from "@internal/typescript-helpers";
-import {ClientRequestFlags} from "@internal/core";
+import {ClientRequestFlags, CommandName} from "@internal/core";
 import {StaticMarkup} from "@internal/markup";
+import {AnyPath, MixedPathSet} from "@internal/path";
+
+export type DiagnosticCategoryDescription = {
+	category: DiagnosticCategory;
+	categoryValue?: string;
+};
 
 export type DiagnosticFilter = {
 	category?: DiagnosticCategory;
 	message?: StaticMarkup;
-	filename?: string;
+	path?: AnyPath;
 	start?: Position;
-	line?: Number1;
+	line?: OneIndexed;
 };
 
-export type DiagnosticSuppression = {
-	filename: string;
-	category: DiagnosticCategory;
-	categoryValue: undefined | string;
-	startLine: Number1;
-	endLine: Number1;
+export type DiagnosticSuppression = DiagnosticCategoryDescription & {
+	path: AnyPath;
+	startLine: OneIndexed;
+	endLine: OneIndexed;
 	loc: SourceLocation;
 };
 
@@ -44,7 +48,7 @@ export type DiagnosticLocation = {
 	marker?: StaticMarkup;
 	language?: DiagnosticLanguage;
 	sourceTypeJS?: DiagnosticSourceType;
-	filename?: string;
+	path: AnyPath;
 	start?: Position;
 	end?: Position;
 };
@@ -91,22 +95,24 @@ export type Diagnostic = {
 	location: DiagnosticLocation;
 	label?: StaticMarkup;
 	origins?: DiagnosticOrigin[];
-	dependencies?: {
-		filename: string;
-		integrity: DiagnosticIntegrity;
-	}[];
+	dependencies?: DiagnosticDependencies;
 	tags?: DiagnosticTags;
 };
 
 export type Diagnostics = Diagnostic[];
 
+export type DiagnosticDependency = {
+	path: AnyPath;
+	integrity?: DiagnosticIntegrity;
+};
+
+export type DiagnosticDependencies = DiagnosticDependency[];
+
 export type DiagnosticIntegrity = {
 	hash: string;
 };
 
-export type DiagnosticDescription = {
-	category: DiagnosticCategory;
-	categoryValue?: string;
+export type DiagnosticDescription = DiagnosticCategoryDescription & {
 	message: StaticMarkup;
 	advice: DiagnosticAdvice;
 };
@@ -168,7 +174,7 @@ export type DiagnosticAdviceAction = {
 	shortcut?: string;
 	instruction: StaticMarkup;
 	noun: StaticMarkup;
-	command: string;
+	command: CommandName;
 	commandFlags?: Dict<boolean | string | (string[])>;
 	requestFlags?: ClientRequestFlags;
 	args?: string[];
@@ -201,7 +207,7 @@ export type DiagnosticAdviceStacktrace = {
 	type: "stacktrace";
 	title?: StaticMarkup;
 	truncate?: boolean;
-	importantFilenames?: string[];
+	importantPaths?: MixedPathSet;
 	frames: DiagnosticAdviceStackFrame[];
 };
 
@@ -212,9 +218,9 @@ export type DiagnosticAdviceStackFrame = {
 	suffix?: string;
 	object?: string;
 	property?: string;
-	filename?: string;
-	line?: Number1;
-	column?: Number0;
+	path?: AnyPath;
+	line?: OneIndexed;
+	column?: ZeroIndexed;
 	language: undefined | DiagnosticLanguage;
 	sourceText?: string;
 };

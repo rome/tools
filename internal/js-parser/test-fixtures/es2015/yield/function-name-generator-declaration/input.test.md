@@ -12,65 +12,24 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "es2015/yield/function-name-generator-declaration/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2015/yield/function-name-generator-declaration/input.js"
-		end: Object {
-			column: 20
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2015/yield/function-name-generator-declaration/input.js 1:0-1:20
+	path: UIDPath<es2015/yield/function-name-generator-declaration/input.js>
 	body: Array [
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "yield"
-				loc: Object {
-					filename: "es2015/yield/function-name-generator-declaration/input.js"
-					identifierName: "yield"
-					end: Object {
-						column: 15
-						line: 1
-					}
-					start: Object {
-						column: 10
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/yield/function-name-generator-declaration/input.js 1:10-1:15 (yield)
 			}
-			loc: Object {
-				filename: "es2015/yield/function-name-generator-declaration/input.js"
-				end: Object {
-					column: 20
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2015/yield/function-name-generator-declaration/input.js 1:0-1:20
 			body: JSBlockStatement {
 				body: Array []
 				directives: Array []
-				loc: Object {
-					filename: "es2015/yield/function-name-generator-declaration/input.js"
-					end: Object {
-						column: 20
-						line: 1
-					}
-					start: Object {
-						column: 18
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/yield/function-name-generator-declaration/input.js 1:18-1:20
 			}
 			head: JSFunctionHead {
 				async: false
@@ -81,17 +40,7 @@ JSRoot {
 				returnType: undefined
 				thisType: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "es2015/yield/function-name-generator-declaration/input.js"
-					end: Object {
-						column: 17
-						line: 1
-					}
-					start: Object {
-						column: 15
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/yield/function-name-generator-declaration/input.js 1:15-1:17
 			}
 		}
 	]
@@ -101,6 +50,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

@@ -11,148 +11,56 @@ JSRoot {
 	comments: Array []
 	corrupt: true
 	directives: Array []
-	filename: "esprima/es2015-spread-element/invalid-new-dot-dot/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "esprima/es2015-spread-element/invalid-new-dot-dot/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation esprima/es2015-spread-element/invalid-new-dot-dot/input.js 1:0-2:0
+	path: UIDPath<esprima/es2015-spread-element/invalid-new-dot-dot/input.js>
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse"
 				categoryValue: "js"
-				message: Array [
-					RAW_MARKUP {value: "Unknown start to an "}
-					"new expression argument"
-				]
+				category: Array ["parse"]
+				message: RAW_MARKUP {value: "Unknown start to an new expression argument"}
 			}
 			location: Object {
-				filename: "esprima/es2015-spread-element/invalid-new-dot-dot/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 6
-					line: 1
-				}
-				start: Object {
-					column: 6
-					line: 1
-				}
+				end: Position 1:6
+				path: UIDPath<esprima/es2015-spread-element/invalid-new-dot-dot/input.js>
+				start: Position 1:6
 			}
 		}
 	]
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "esprima/es2015-spread-element/invalid-new-dot-dot/input.js"
-				end: Object {
-					column: 11
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation esprima/es2015-spread-element/invalid-new-dot-dot/input.js 1:0-1:11
 			expression: JSNewExpression {
 				optional: undefined
 				typeArguments: undefined
-				loc: Object {
-					filename: "esprima/es2015-spread-element/invalid-new-dot-dot/input.js"
-					end: Object {
-						column: 10
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/es2015-spread-element/invalid-new-dot-dot/input.js 1:0-1:10
 				callee: JSReferenceIdentifier {
 					name: "f"
-					loc: Object {
-						filename: "esprima/es2015-spread-element/invalid-new-dot-dot/input.js"
-						identifierName: "f"
-						end: Object {
-							column: 5
-							line: 1
-						}
-						start: Object {
-							column: 4
-							line: 1
-						}
-					}
+					loc: SourceLocation esprima/es2015-spread-element/invalid-new-dot-dot/input.js 1:4-1:5 (f)
 				}
 				arguments: Array [
 					JSMemberExpression {
-						loc: Object {
-							filename: "esprima/es2015-spread-element/invalid-new-dot-dot/input.js"
-							end: Object {
-								column: 9
-								line: 1
-							}
-							start: Object {
-								column: 6
-								line: 1
-							}
-						}
+						loc: SourceLocation esprima/es2015-spread-element/invalid-new-dot-dot/input.js 1:6-1:9
 						object: JSReferenceIdentifier {
 							name: "INVALID_PLACEHOLDER"
-							loc: Object {
-								filename: "esprima/es2015-spread-element/invalid-new-dot-dot/input.js"
-								end: Object {
-									column: 7
-									line: 1
-								}
-								start: Object {
-									column: 6
-									line: 1
-								}
-							}
+							loc: SourceLocation esprima/es2015-spread-element/invalid-new-dot-dot/input.js 1:6-1:7
 						}
 						property: JSStaticMemberProperty {
 							value: JSIdentifier {
 								name: "g"
-								loc: Object {
-									filename: "esprima/es2015-spread-element/invalid-new-dot-dot/input.js"
-									identifierName: "g"
-									end: Object {
-										column: 9
-										line: 1
-									}
-									start: Object {
-										column: 8
-										line: 1
-									}
-								}
+								loc: SourceLocation esprima/es2015-spread-element/invalid-new-dot-dot/input.js 1:8-1:9 (g)
 							}
-							loc: Object {
-								filename: "esprima/es2015-spread-element/invalid-new-dot-dot/input.js"
-								identifierName: "g"
-								end: Object {
-									column: 9
-									line: 1
-								}
-								start: Object {
-									column: 8
-									line: 1
-								}
-							}
+							loc: SourceLocation esprima/es2015-spread-element/invalid-new-dot-dot/input.js 1:8-1:9 (g)
 						}
 					}
 				]
@@ -173,8 +81,5 @@ JSRoot {
     new f(..g);
           ^
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

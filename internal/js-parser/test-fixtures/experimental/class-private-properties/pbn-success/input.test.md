@@ -12,124 +12,42 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "experimental/class-private-properties/pbn-success/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "experimental/class-private-properties/pbn-success/input.js"
-		end: Object {
-			column: 0
-			line: 20
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation experimental/class-private-properties/pbn-success/input.js 1:0-20:0
+	path: UIDPath<experimental/class-private-properties/pbn-success/input.js>
 	body: Array [
 		JSClassDeclaration {
 			id: JSBindingIdentifier {
 				name: "Point"
-				loc: Object {
-					filename: "experimental/class-private-properties/pbn-success/input.js"
-					identifierName: "Point"
-					end: Object {
-						column: 11
-						line: 1
-					}
-					start: Object {
-						column: 6
-						line: 1
-					}
-				}
+				loc: SourceLocation experimental/class-private-properties/pbn-success/input.js 1:6-1:11 (Point)
 			}
-			loc: Object {
-				filename: "experimental/class-private-properties/pbn-success/input.js"
-				end: Object {
-					column: 1
-					line: 19
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation experimental/class-private-properties/pbn-success/input.js 1:0-19:1
 			meta: JSClassHead {
 				implements: undefined
 				superClass: undefined
 				superTypeParameters: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "experimental/class-private-properties/pbn-success/input.js"
-					end: Object {
-						column: 1
-						line: 19
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation experimental/class-private-properties/pbn-success/input.js 1:0-19:1
 				body: Array [
 					JSClassPrivateProperty {
 						key: JSPrivateName {
 							id: JSIdentifier {
 								name: "x"
-								loc: Object {
-									filename: "experimental/class-private-properties/pbn-success/input.js"
-									identifierName: "x"
-									end: Object {
-										column: 4
-										line: 2
-									}
-									start: Object {
-										column: 3
-										line: 2
-									}
-								}
+								loc: SourceLocation experimental/class-private-properties/pbn-success/input.js 2:3-2:4 (x)
 							}
-							loc: Object {
-								filename: "experimental/class-private-properties/pbn-success/input.js"
-								end: Object {
-									column: 4
-									line: 2
-								}
-								start: Object {
-									column: 2
-									line: 2
-								}
-							}
+							loc: SourceLocation experimental/class-private-properties/pbn-success/input.js 2:2-2:4
 						}
 						value: JSNumericLiteral {
 							value: 1
 							format: undefined
-							loc: Object {
-								filename: "experimental/class-private-properties/pbn-success/input.js"
-								end: Object {
-									column: 8
-									line: 2
-								}
-								start: Object {
-									column: 7
-									line: 2
-								}
-							}
+							loc: SourceLocation experimental/class-private-properties/pbn-success/input.js 2:7-2:8
 						}
 						typeAnnotation: undefined
-						loc: Object {
-							filename: "experimental/class-private-properties/pbn-success/input.js"
-							end: Object {
-								column: 9
-								line: 2
-							}
-							start: Object {
-								column: 2
-								line: 2
-							}
-						}
+						loc: SourceLocation experimental/class-private-properties/pbn-success/input.js 2:2-2:9
 						meta: JSClassPropertyMeta {
 							abstract: false
 							accessibility: undefined
@@ -137,79 +55,25 @@ JSRoot {
 							readonly: false
 							static: false
 							typeAnnotation: undefined
-							start: Object {
-								column: 2
-								line: 2
-							}
-							loc: Object {
-								filename: "experimental/class-private-properties/pbn-success/input.js"
-								end: Object {
-									column: 4
-									line: 2
-								}
-								start: Object {
-									column: 2
-									line: 2
-								}
-							}
+							loc: SourceLocation experimental/class-private-properties/pbn-success/input.js 2:2-2:4
+							start: Position 2:2
 						}
 					}
 					JSClassPrivateProperty {
 						key: JSPrivateName {
 							id: JSIdentifier {
 								name: "y"
-								loc: Object {
-									filename: "experimental/class-private-properties/pbn-success/input.js"
-									identifierName: "y"
-									end: Object {
-										column: 4
-										line: 3
-									}
-									start: Object {
-										column: 3
-										line: 3
-									}
-								}
+								loc: SourceLocation experimental/class-private-properties/pbn-success/input.js 3:3-3:4 (y)
 							}
-							loc: Object {
-								filename: "experimental/class-private-properties/pbn-success/input.js"
-								end: Object {
-									column: 4
-									line: 3
-								}
-								start: Object {
-									column: 2
-									line: 3
-								}
-							}
+							loc: SourceLocation experimental/class-private-properties/pbn-success/input.js 3:2-3:4
 						}
 						value: JSNumericLiteral {
 							value: 2
 							format: undefined
-							loc: Object {
-								filename: "experimental/class-private-properties/pbn-success/input.js"
-								end: Object {
-									column: 8
-									line: 3
-								}
-								start: Object {
-									column: 7
-									line: 3
-								}
-							}
+							loc: SourceLocation experimental/class-private-properties/pbn-success/input.js 3:7-3:8
 						}
 						typeAnnotation: undefined
-						loc: Object {
-							filename: "experimental/class-private-properties/pbn-success/input.js"
-							end: Object {
-								column: 9
-								line: 3
-							}
-							start: Object {
-								column: 2
-								line: 3
-							}
-						}
+						loc: SourceLocation experimental/class-private-properties/pbn-success/input.js 3:2-3:9
 						meta: JSClassPropertyMeta {
 							abstract: false
 							accessibility: undefined
@@ -217,21 +81,8 @@ JSRoot {
 							readonly: false
 							static: false
 							typeAnnotation: undefined
-							start: Object {
-								column: 2
-								line: 3
-							}
-							loc: Object {
-								filename: "experimental/class-private-properties/pbn-success/input.js"
-								end: Object {
-									column: 4
-									line: 3
-								}
-								start: Object {
-									column: 2
-									line: 3
-								}
-							}
+							loc: SourceLocation experimental/class-private-properties/pbn-success/input.js 3:2-3:4
+							start: Position 3:2
 						}
 					}
 					JSClassMethod {
@@ -239,42 +90,11 @@ JSRoot {
 						key: JSStaticPropertyKey {
 							value: JSIdentifier {
 								name: "constructor"
-								loc: Object {
-									filename: "experimental/class-private-properties/pbn-success/input.js"
-									identifierName: "constructor"
-									end: Object {
-										column: 13
-										line: 5
-									}
-									start: Object {
-										column: 2
-										line: 5
-									}
-								}
+								loc: SourceLocation experimental/class-private-properties/pbn-success/input.js 5:2-5:13 (constructor)
 							}
-							loc: Object {
-								filename: "experimental/class-private-properties/pbn-success/input.js"
-								end: Object {
-									column: 13
-									line: 5
-								}
-								start: Object {
-									column: 2
-									line: 5
-								}
-							}
+							loc: SourceLocation experimental/class-private-properties/pbn-success/input.js 5:2-5:13
 						}
-						loc: Object {
-							filename: "experimental/class-private-properties/pbn-success/input.js"
-							end: Object {
-								column: 3
-								line: 8
-							}
-							start: Object {
-								column: 2
-								line: 5
-							}
-						}
+						loc: SourceLocation experimental/class-private-properties/pbn-success/input.js 5:2-8:3
 						meta: JSClassPropertyMeta {
 							abstract: false
 							accessibility: undefined
@@ -282,21 +102,8 @@ JSRoot {
 							readonly: false
 							static: false
 							typeAnnotation: undefined
-							start: Object {
-								column: 2
-								line: 5
-							}
-							loc: Object {
-								filename: "experimental/class-private-properties/pbn-success/input.js"
-								end: Object {
-									column: 13
-									line: 5
-								}
-								start: Object {
-									column: 2
-									line: 5
-								}
-							}
+							loc: SourceLocation experimental/class-private-properties/pbn-success/input.js 5:2-5:13
+							start: Position 5:2
 						}
 						head: JSFunctionHead {
 							async: false
@@ -306,131 +113,39 @@ JSRoot {
 							returnType: undefined
 							thisType: undefined
 							typeParameters: undefined
-							loc: Object {
-								filename: "experimental/class-private-properties/pbn-success/input.js"
-								end: Object {
-									column: 27
-									line: 5
-								}
-								start: Object {
-									column: 13
-									line: 5
-								}
-							}
+							loc: SourceLocation experimental/class-private-properties/pbn-success/input.js 5:13-5:27
 							params: Array [
 								JSBindingAssignmentPattern {
-									loc: Object {
-										filename: "experimental/class-private-properties/pbn-success/input.js"
-										end: Object {
-											column: 19
-											line: 5
-										}
-										start: Object {
-											column: 14
-											line: 5
-										}
-									}
+									loc: SourceLocation experimental/class-private-properties/pbn-success/input.js 5:14-5:19
 									right: JSNumericLiteral {
 										value: 0
 										format: undefined
-										loc: Object {
-											filename: "experimental/class-private-properties/pbn-success/input.js"
-											end: Object {
-												column: 19
-												line: 5
-											}
-											start: Object {
-												column: 18
-												line: 5
-											}
-										}
+										loc: SourceLocation experimental/class-private-properties/pbn-success/input.js 5:18-5:19
 									}
 									left: JSBindingIdentifier {
 										name: "x"
-										loc: Object {
-											filename: "experimental/class-private-properties/pbn-success/input.js"
-											identifierName: "x"
-											end: Object {
-												column: 15
-												line: 5
-											}
-											start: Object {
-												column: 14
-												line: 5
-											}
-										}
+										loc: SourceLocation experimental/class-private-properties/pbn-success/input.js 5:14-5:15 (x)
 										meta: JSPatternMeta {
 											optional: undefined
 											typeAnnotation: undefined
-											loc: Object {
-												filename: "experimental/class-private-properties/pbn-success/input.js"
-												end: Object {
-													column: 15
-													line: 5
-												}
-												start: Object {
-													column: 14
-													line: 5
-												}
-											}
+											loc: SourceLocation experimental/class-private-properties/pbn-success/input.js 5:14-5:15
 										}
 									}
 								}
 								JSBindingAssignmentPattern {
-									loc: Object {
-										filename: "experimental/class-private-properties/pbn-success/input.js"
-										end: Object {
-											column: 26
-											line: 5
-										}
-										start: Object {
-											column: 21
-											line: 5
-										}
-									}
+									loc: SourceLocation experimental/class-private-properties/pbn-success/input.js 5:21-5:26
 									right: JSNumericLiteral {
 										value: 0
 										format: undefined
-										loc: Object {
-											filename: "experimental/class-private-properties/pbn-success/input.js"
-											end: Object {
-												column: 26
-												line: 5
-											}
-											start: Object {
-												column: 25
-												line: 5
-											}
-										}
+										loc: SourceLocation experimental/class-private-properties/pbn-success/input.js 5:25-5:26
 									}
 									left: JSBindingIdentifier {
 										name: "y"
-										loc: Object {
-											filename: "experimental/class-private-properties/pbn-success/input.js"
-											identifierName: "y"
-											end: Object {
-												column: 22
-												line: 5
-											}
-											start: Object {
-												column: 21
-												line: 5
-											}
-										}
+										loc: SourceLocation experimental/class-private-properties/pbn-success/input.js 5:21-5:22 (y)
 										meta: JSPatternMeta {
 											optional: undefined
 											typeAnnotation: undefined
-											loc: Object {
-												filename: "experimental/class-private-properties/pbn-success/input.js"
-												end: Object {
-													column: 22
-													line: 5
-												}
-												start: Object {
-													column: 21
-													line: 5
-												}
-											}
+											loc: SourceLocation experimental/class-private-properties/pbn-success/input.js 5:21-5:22
 										}
 									}
 								}
@@ -438,262 +153,64 @@ JSRoot {
 						}
 						body: JSBlockStatement {
 							directives: Array []
-							loc: Object {
-								filename: "experimental/class-private-properties/pbn-success/input.js"
-								end: Object {
-									column: 3
-									line: 8
-								}
-								start: Object {
-									column: 28
-									line: 5
-								}
-							}
+							loc: SourceLocation experimental/class-private-properties/pbn-success/input.js 5:28-8:3
 							body: Array [
 								JSExpressionStatement {
-									loc: Object {
-										filename: "experimental/class-private-properties/pbn-success/input.js"
-										end: Object {
-											column: 17
-											line: 6
-										}
-										start: Object {
-											column: 4
-											line: 6
-										}
-									}
+									loc: SourceLocation experimental/class-private-properties/pbn-success/input.js 6:4-6:17
 									expression: JSAssignmentExpression {
 										operator: "="
-										loc: Object {
-											filename: "experimental/class-private-properties/pbn-success/input.js"
-											end: Object {
-												column: 16
-												line: 6
-											}
-											start: Object {
-												column: 4
-												line: 6
-											}
-										}
+										loc: SourceLocation experimental/class-private-properties/pbn-success/input.js 6:4-6:16
 										right: JSUnaryExpression {
 											operator: "+"
 											prefix: true
-											loc: Object {
-												filename: "experimental/class-private-properties/pbn-success/input.js"
-												end: Object {
-													column: 16
-													line: 6
-												}
-												start: Object {
-													column: 14
-													line: 6
-												}
-											}
+											loc: SourceLocation experimental/class-private-properties/pbn-success/input.js 6:14-6:16
 											argument: JSReferenceIdentifier {
 												name: "x"
-												loc: Object {
-													filename: "experimental/class-private-properties/pbn-success/input.js"
-													identifierName: "x"
-													end: Object {
-														column: 16
-														line: 6
-													}
-													start: Object {
-														column: 15
-														line: 6
-													}
-												}
+												loc: SourceLocation experimental/class-private-properties/pbn-success/input.js 6:15-6:16 (x)
 											}
 										}
 										left: JSMemberExpression {
-											loc: Object {
-												filename: "experimental/class-private-properties/pbn-success/input.js"
-												end: Object {
-													column: 11
-													line: 6
-												}
-												start: Object {
-													column: 4
-													line: 6
-												}
-											}
-											object: JSThisExpression {
-												loc: Object {
-													filename: "experimental/class-private-properties/pbn-success/input.js"
-													end: Object {
-														column: 8
-														line: 6
-													}
-													start: Object {
-														column: 4
-														line: 6
-													}
-												}
-											}
+											loc: SourceLocation experimental/class-private-properties/pbn-success/input.js 6:4-6:11
+											object: JSThisExpression {loc: SourceLocation experimental/class-private-properties/pbn-success/input.js 6:4-6:8}
 											property: JSStaticMemberProperty {
 												value: JSPrivateName {
 													id: JSIdentifier {
 														name: "x"
-														loc: Object {
-															filename: "experimental/class-private-properties/pbn-success/input.js"
-															identifierName: "x"
-															end: Object {
-																column: 11
-																line: 6
-															}
-															start: Object {
-																column: 10
-																line: 6
-															}
-														}
+														loc: SourceLocation experimental/class-private-properties/pbn-success/input.js 6:10-6:11 (x)
 													}
-													loc: Object {
-														filename: "experimental/class-private-properties/pbn-success/input.js"
-														end: Object {
-															column: 11
-															line: 6
-														}
-														start: Object {
-															column: 9
-															line: 6
-														}
-													}
+													loc: SourceLocation experimental/class-private-properties/pbn-success/input.js 6:9-6:11
 												}
-												loc: Object {
-													filename: "experimental/class-private-properties/pbn-success/input.js"
-													end: Object {
-														column: 11
-														line: 6
-													}
-													start: Object {
-														column: 9
-														line: 6
-													}
-												}
+												loc: SourceLocation experimental/class-private-properties/pbn-success/input.js 6:9-6:11
 											}
 										}
 									}
 								}
 								JSExpressionStatement {
-									loc: Object {
-										filename: "experimental/class-private-properties/pbn-success/input.js"
-										end: Object {
-											column: 17
-											line: 7
-										}
-										start: Object {
-											column: 4
-											line: 7
-										}
-									}
+									loc: SourceLocation experimental/class-private-properties/pbn-success/input.js 7:4-7:17
 									expression: JSAssignmentExpression {
 										operator: "="
-										loc: Object {
-											filename: "experimental/class-private-properties/pbn-success/input.js"
-											end: Object {
-												column: 16
-												line: 7
-											}
-											start: Object {
-												column: 4
-												line: 7
-											}
-										}
+										loc: SourceLocation experimental/class-private-properties/pbn-success/input.js 7:4-7:16
 										right: JSUnaryExpression {
 											operator: "+"
 											prefix: true
-											loc: Object {
-												filename: "experimental/class-private-properties/pbn-success/input.js"
-												end: Object {
-													column: 16
-													line: 7
-												}
-												start: Object {
-													column: 14
-													line: 7
-												}
-											}
+											loc: SourceLocation experimental/class-private-properties/pbn-success/input.js 7:14-7:16
 											argument: JSReferenceIdentifier {
 												name: "y"
-												loc: Object {
-													filename: "experimental/class-private-properties/pbn-success/input.js"
-													identifierName: "y"
-													end: Object {
-														column: 16
-														line: 7
-													}
-													start: Object {
-														column: 15
-														line: 7
-													}
-												}
+												loc: SourceLocation experimental/class-private-properties/pbn-success/input.js 7:15-7:16 (y)
 											}
 										}
 										left: JSMemberExpression {
-											loc: Object {
-												filename: "experimental/class-private-properties/pbn-success/input.js"
-												end: Object {
-													column: 11
-													line: 7
-												}
-												start: Object {
-													column: 4
-													line: 7
-												}
-											}
-											object: JSThisExpression {
-												loc: Object {
-													filename: "experimental/class-private-properties/pbn-success/input.js"
-													end: Object {
-														column: 8
-														line: 7
-													}
-													start: Object {
-														column: 4
-														line: 7
-													}
-												}
-											}
+											loc: SourceLocation experimental/class-private-properties/pbn-success/input.js 7:4-7:11
+											object: JSThisExpression {loc: SourceLocation experimental/class-private-properties/pbn-success/input.js 7:4-7:8}
 											property: JSStaticMemberProperty {
 												value: JSPrivateName {
 													id: JSIdentifier {
 														name: "y"
-														loc: Object {
-															filename: "experimental/class-private-properties/pbn-success/input.js"
-															identifierName: "y"
-															end: Object {
-																column: 11
-																line: 7
-															}
-															start: Object {
-																column: 10
-																line: 7
-															}
-														}
+														loc: SourceLocation experimental/class-private-properties/pbn-success/input.js 7:10-7:11 (y)
 													}
-													loc: Object {
-														filename: "experimental/class-private-properties/pbn-success/input.js"
-														end: Object {
-															column: 11
-															line: 7
-														}
-														start: Object {
-															column: 9
-															line: 7
-														}
-													}
+													loc: SourceLocation experimental/class-private-properties/pbn-success/input.js 7:9-7:11
 												}
-												loc: Object {
-													filename: "experimental/class-private-properties/pbn-success/input.js"
-													end: Object {
-														column: 11
-														line: 7
-													}
-													start: Object {
-														column: 9
-														line: 7
-													}
-												}
+												loc: SourceLocation experimental/class-private-properties/pbn-success/input.js 7:9-7:11
 											}
 										}
 									}
@@ -706,41 +223,20 @@ JSRoot {
 						key: JSStaticPropertyKey {
 							value: JSIdentifier {
 								name: "x"
-								loc: Object {
-									filename: "experimental/class-private-properties/pbn-success/input.js"
-									identifierName: "x"
-									end: Object {
-										column: 7
-										line: 10
-									}
-									start: Object {
-										column: 6
-										line: 10
-									}
-								}
+								loc: SourceLocation experimental/class-private-properties/pbn-success/input.js 10:6-10:7 (x)
 							}
-							loc: Object {
-								filename: "experimental/class-private-properties/pbn-success/input.js"
-								end: Object {
-									column: 7
-									line: 10
-								}
-								start: Object {
-									column: 6
-									line: 10
-								}
-							}
+							loc: SourceLocation experimental/class-private-properties/pbn-success/input.js 10:6-10:7
 						}
-						loc: Object {
-							filename: "experimental/class-private-properties/pbn-success/input.js"
-							end: Object {
-								column: 28
-								line: 10
-							}
-							start: Object {
-								column: 2
-								line: 10
-							}
+						loc: SourceLocation experimental/class-private-properties/pbn-success/input.js 10:2-10:28
+						meta: JSClassPropertyMeta {
+							abstract: false
+							accessibility: undefined
+							optional: false
+							readonly: false
+							static: false
+							typeAnnotation: undefined
+							loc: SourceLocation experimental/class-private-properties/pbn-success/input.js 10:2-10:7
+							start: Position 10:2
 						}
 						head: JSFunctionHead {
 							async: false
@@ -751,132 +247,26 @@ JSRoot {
 							returnType: undefined
 							thisType: undefined
 							typeParameters: undefined
-							loc: Object {
-								filename: "experimental/class-private-properties/pbn-success/input.js"
-								end: Object {
-									column: 9
-									line: 10
-								}
-								start: Object {
-									column: 7
-									line: 10
-								}
-							}
-						}
-						meta: JSClassPropertyMeta {
-							abstract: false
-							accessibility: undefined
-							optional: false
-							readonly: false
-							static: false
-							typeAnnotation: undefined
-							start: Object {
-								column: 2
-								line: 10
-							}
-							loc: Object {
-								filename: "experimental/class-private-properties/pbn-success/input.js"
-								end: Object {
-									column: 7
-									line: 10
-								}
-								start: Object {
-									column: 2
-									line: 10
-								}
-							}
+							loc: SourceLocation experimental/class-private-properties/pbn-success/input.js 10:7-10:9
 						}
 						body: JSBlockStatement {
 							directives: Array []
-							loc: Object {
-								filename: "experimental/class-private-properties/pbn-success/input.js"
-								end: Object {
-									column: 28
-									line: 10
-								}
-								start: Object {
-									column: 10
-									line: 10
-								}
-							}
+							loc: SourceLocation experimental/class-private-properties/pbn-success/input.js 10:10-10:28
 							body: Array [
 								JSReturnStatement {
-									loc: Object {
-										filename: "experimental/class-private-properties/pbn-success/input.js"
-										end: Object {
-											column: 26
-											line: 10
-										}
-										start: Object {
-											column: 12
-											line: 10
-										}
-									}
+									loc: SourceLocation experimental/class-private-properties/pbn-success/input.js 10:12-10:26
 									argument: JSMemberExpression {
-										loc: Object {
-											filename: "experimental/class-private-properties/pbn-success/input.js"
-											end: Object {
-												column: 26
-												line: 10
-											}
-											start: Object {
-												column: 19
-												line: 10
-											}
-										}
-										object: JSThisExpression {
-											loc: Object {
-												filename: "experimental/class-private-properties/pbn-success/input.js"
-												end: Object {
-													column: 23
-													line: 10
-												}
-												start: Object {
-													column: 19
-													line: 10
-												}
-											}
-										}
+										loc: SourceLocation experimental/class-private-properties/pbn-success/input.js 10:19-10:26
+										object: JSThisExpression {loc: SourceLocation experimental/class-private-properties/pbn-success/input.js 10:19-10:23}
 										property: JSStaticMemberProperty {
 											value: JSPrivateName {
 												id: JSIdentifier {
 													name: "x"
-													loc: Object {
-														filename: "experimental/class-private-properties/pbn-success/input.js"
-														identifierName: "x"
-														end: Object {
-															column: 26
-															line: 10
-														}
-														start: Object {
-															column: 25
-															line: 10
-														}
-													}
+													loc: SourceLocation experimental/class-private-properties/pbn-success/input.js 10:25-10:26 (x)
 												}
-												loc: Object {
-													filename: "experimental/class-private-properties/pbn-success/input.js"
-													end: Object {
-														column: 26
-														line: 10
-													}
-													start: Object {
-														column: 24
-														line: 10
-													}
-												}
+												loc: SourceLocation experimental/class-private-properties/pbn-success/input.js 10:24-10:26
 											}
-											loc: Object {
-												filename: "experimental/class-private-properties/pbn-success/input.js"
-												end: Object {
-													column: 26
-													line: 10
-												}
-												start: Object {
-													column: 24
-													line: 10
-												}
-											}
+											loc: SourceLocation experimental/class-private-properties/pbn-success/input.js 10:24-10:26
 										}
 									}
 								}
@@ -888,42 +278,11 @@ JSRoot {
 						key: JSStaticPropertyKey {
 							value: JSIdentifier {
 								name: "x"
-								loc: Object {
-									filename: "experimental/class-private-properties/pbn-success/input.js"
-									identifierName: "x"
-									end: Object {
-										column: 7
-										line: 11
-									}
-									start: Object {
-										column: 6
-										line: 11
-									}
-								}
+								loc: SourceLocation experimental/class-private-properties/pbn-success/input.js 11:6-11:7 (x)
 							}
-							loc: Object {
-								filename: "experimental/class-private-properties/pbn-success/input.js"
-								end: Object {
-									column: 7
-									line: 11
-								}
-								start: Object {
-									column: 6
-									line: 11
-								}
-							}
+							loc: SourceLocation experimental/class-private-properties/pbn-success/input.js 11:6-11:7
 						}
-						loc: Object {
-							filename: "experimental/class-private-properties/pbn-success/input.js"
-							end: Object {
-								column: 35
-								line: 11
-							}
-							start: Object {
-								column: 2
-								line: 11
-							}
-						}
+						loc: SourceLocation experimental/class-private-properties/pbn-success/input.js 11:2-11:35
 						meta: JSClassPropertyMeta {
 							abstract: false
 							accessibility: undefined
@@ -931,21 +290,8 @@ JSRoot {
 							readonly: false
 							static: false
 							typeAnnotation: undefined
-							start: Object {
-								column: 2
-								line: 11
-							}
-							loc: Object {
-								filename: "experimental/class-private-properties/pbn-success/input.js"
-								end: Object {
-									column: 7
-									line: 11
-								}
-								start: Object {
-									column: 2
-									line: 11
-								}
-							}
+							loc: SourceLocation experimental/class-private-properties/pbn-success/input.js 11:2-11:7
+							start: Position 11:2
 						}
 						head: JSFunctionHead {
 							async: false
@@ -955,184 +301,49 @@ JSRoot {
 							returnType: undefined
 							thisType: undefined
 							typeParameters: undefined
-							loc: Object {
-								filename: "experimental/class-private-properties/pbn-success/input.js"
-								end: Object {
-									column: 14
-									line: 11
-								}
-								start: Object {
-									column: 7
-									line: 11
-								}
-							}
+							loc: SourceLocation experimental/class-private-properties/pbn-success/input.js 11:7-11:14
 							params: Array [
 								JSBindingIdentifier {
 									name: "value"
-									loc: Object {
-										filename: "experimental/class-private-properties/pbn-success/input.js"
-										identifierName: "value"
-										end: Object {
-											column: 13
-											line: 11
-										}
-										start: Object {
-											column: 8
-											line: 11
-										}
-									}
+									loc: SourceLocation experimental/class-private-properties/pbn-success/input.js 11:8-11:13 (value)
 									meta: JSPatternMeta {
 										optional: undefined
 										typeAnnotation: undefined
-										loc: Object {
-											filename: "experimental/class-private-properties/pbn-success/input.js"
-											end: Object {
-												column: 13
-												line: 11
-											}
-											start: Object {
-												column: 8
-												line: 11
-											}
-										}
+										loc: SourceLocation experimental/class-private-properties/pbn-success/input.js 11:8-11:13
 									}
 								}
 							]
 						}
 						body: JSBlockStatement {
 							directives: Array []
-							loc: Object {
-								filename: "experimental/class-private-properties/pbn-success/input.js"
-								end: Object {
-									column: 35
-									line: 11
-								}
-								start: Object {
-									column: 15
-									line: 11
-								}
-							}
+							loc: SourceLocation experimental/class-private-properties/pbn-success/input.js 11:15-11:35
 							body: Array [
 								JSExpressionStatement {
-									loc: Object {
-										filename: "experimental/class-private-properties/pbn-success/input.js"
-										end: Object {
-											column: 33
-											line: 11
-										}
-										start: Object {
-											column: 17
-											line: 11
-										}
-									}
+									loc: SourceLocation experimental/class-private-properties/pbn-success/input.js 11:17-11:33
 									expression: JSAssignmentExpression {
 										operator: "="
-										loc: Object {
-											filename: "experimental/class-private-properties/pbn-success/input.js"
-											end: Object {
-												column: 33
-												line: 11
-											}
-											start: Object {
-												column: 17
-												line: 11
-											}
-										}
+										loc: SourceLocation experimental/class-private-properties/pbn-success/input.js 11:17-11:33
 										right: JSUnaryExpression {
 											operator: "+"
 											prefix: true
-											loc: Object {
-												filename: "experimental/class-private-properties/pbn-success/input.js"
-												end: Object {
-													column: 33
-													line: 11
-												}
-												start: Object {
-													column: 27
-													line: 11
-												}
-											}
+											loc: SourceLocation experimental/class-private-properties/pbn-success/input.js 11:27-11:33
 											argument: JSReferenceIdentifier {
 												name: "value"
-												loc: Object {
-													filename: "experimental/class-private-properties/pbn-success/input.js"
-													identifierName: "value"
-													end: Object {
-														column: 33
-														line: 11
-													}
-													start: Object {
-														column: 28
-														line: 11
-													}
-												}
+												loc: SourceLocation experimental/class-private-properties/pbn-success/input.js 11:28-11:33 (value)
 											}
 										}
 										left: JSMemberExpression {
-											loc: Object {
-												filename: "experimental/class-private-properties/pbn-success/input.js"
-												end: Object {
-													column: 24
-													line: 11
-												}
-												start: Object {
-													column: 17
-													line: 11
-												}
-											}
-											object: JSThisExpression {
-												loc: Object {
-													filename: "experimental/class-private-properties/pbn-success/input.js"
-													end: Object {
-														column: 21
-														line: 11
-													}
-													start: Object {
-														column: 17
-														line: 11
-													}
-												}
-											}
+											loc: SourceLocation experimental/class-private-properties/pbn-success/input.js 11:17-11:24
+											object: JSThisExpression {loc: SourceLocation experimental/class-private-properties/pbn-success/input.js 11:17-11:21}
 											property: JSStaticMemberProperty {
 												value: JSPrivateName {
 													id: JSIdentifier {
 														name: "x"
-														loc: Object {
-															filename: "experimental/class-private-properties/pbn-success/input.js"
-															identifierName: "x"
-															end: Object {
-																column: 24
-																line: 11
-															}
-															start: Object {
-																column: 23
-																line: 11
-															}
-														}
+														loc: SourceLocation experimental/class-private-properties/pbn-success/input.js 11:23-11:24 (x)
 													}
-													loc: Object {
-														filename: "experimental/class-private-properties/pbn-success/input.js"
-														end: Object {
-															column: 24
-															line: 11
-														}
-														start: Object {
-															column: 22
-															line: 11
-														}
-													}
+													loc: SourceLocation experimental/class-private-properties/pbn-success/input.js 11:22-11:24
 												}
-												loc: Object {
-													filename: "experimental/class-private-properties/pbn-success/input.js"
-													end: Object {
-														column: 24
-														line: 11
-													}
-													start: Object {
-														column: 22
-														line: 11
-													}
-												}
+												loc: SourceLocation experimental/class-private-properties/pbn-success/input.js 11:22-11:24
 											}
 										}
 									}
@@ -1145,41 +356,20 @@ JSRoot {
 						key: JSStaticPropertyKey {
 							value: JSIdentifier {
 								name: "y"
-								loc: Object {
-									filename: "experimental/class-private-properties/pbn-success/input.js"
-									identifierName: "y"
-									end: Object {
-										column: 7
-										line: 13
-									}
-									start: Object {
-										column: 6
-										line: 13
-									}
-								}
+								loc: SourceLocation experimental/class-private-properties/pbn-success/input.js 13:6-13:7 (y)
 							}
-							loc: Object {
-								filename: "experimental/class-private-properties/pbn-success/input.js"
-								end: Object {
-									column: 7
-									line: 13
-								}
-								start: Object {
-									column: 6
-									line: 13
-								}
-							}
+							loc: SourceLocation experimental/class-private-properties/pbn-success/input.js 13:6-13:7
 						}
-						loc: Object {
-							filename: "experimental/class-private-properties/pbn-success/input.js"
-							end: Object {
-								column: 28
-								line: 13
-							}
-							start: Object {
-								column: 2
-								line: 13
-							}
+						loc: SourceLocation experimental/class-private-properties/pbn-success/input.js 13:2-13:28
+						meta: JSClassPropertyMeta {
+							abstract: false
+							accessibility: undefined
+							optional: false
+							readonly: false
+							static: false
+							typeAnnotation: undefined
+							loc: SourceLocation experimental/class-private-properties/pbn-success/input.js 13:2-13:7
+							start: Position 13:2
 						}
 						head: JSFunctionHead {
 							async: false
@@ -1190,132 +380,26 @@ JSRoot {
 							returnType: undefined
 							thisType: undefined
 							typeParameters: undefined
-							loc: Object {
-								filename: "experimental/class-private-properties/pbn-success/input.js"
-								end: Object {
-									column: 9
-									line: 13
-								}
-								start: Object {
-									column: 7
-									line: 13
-								}
-							}
-						}
-						meta: JSClassPropertyMeta {
-							abstract: false
-							accessibility: undefined
-							optional: false
-							readonly: false
-							static: false
-							typeAnnotation: undefined
-							start: Object {
-								column: 2
-								line: 13
-							}
-							loc: Object {
-								filename: "experimental/class-private-properties/pbn-success/input.js"
-								end: Object {
-									column: 7
-									line: 13
-								}
-								start: Object {
-									column: 2
-									line: 13
-								}
-							}
+							loc: SourceLocation experimental/class-private-properties/pbn-success/input.js 13:7-13:9
 						}
 						body: JSBlockStatement {
 							directives: Array []
-							loc: Object {
-								filename: "experimental/class-private-properties/pbn-success/input.js"
-								end: Object {
-									column: 28
-									line: 13
-								}
-								start: Object {
-									column: 10
-									line: 13
-								}
-							}
+							loc: SourceLocation experimental/class-private-properties/pbn-success/input.js 13:10-13:28
 							body: Array [
 								JSReturnStatement {
-									loc: Object {
-										filename: "experimental/class-private-properties/pbn-success/input.js"
-										end: Object {
-											column: 26
-											line: 13
-										}
-										start: Object {
-											column: 12
-											line: 13
-										}
-									}
+									loc: SourceLocation experimental/class-private-properties/pbn-success/input.js 13:12-13:26
 									argument: JSMemberExpression {
-										loc: Object {
-											filename: "experimental/class-private-properties/pbn-success/input.js"
-											end: Object {
-												column: 26
-												line: 13
-											}
-											start: Object {
-												column: 19
-												line: 13
-											}
-										}
-										object: JSThisExpression {
-											loc: Object {
-												filename: "experimental/class-private-properties/pbn-success/input.js"
-												end: Object {
-													column: 23
-													line: 13
-												}
-												start: Object {
-													column: 19
-													line: 13
-												}
-											}
-										}
+										loc: SourceLocation experimental/class-private-properties/pbn-success/input.js 13:19-13:26
+										object: JSThisExpression {loc: SourceLocation experimental/class-private-properties/pbn-success/input.js 13:19-13:23}
 										property: JSStaticMemberProperty {
 											value: JSPrivateName {
 												id: JSIdentifier {
 													name: "y"
-													loc: Object {
-														filename: "experimental/class-private-properties/pbn-success/input.js"
-														identifierName: "y"
-														end: Object {
-															column: 26
-															line: 13
-														}
-														start: Object {
-															column: 25
-															line: 13
-														}
-													}
+													loc: SourceLocation experimental/class-private-properties/pbn-success/input.js 13:25-13:26 (y)
 												}
-												loc: Object {
-													filename: "experimental/class-private-properties/pbn-success/input.js"
-													end: Object {
-														column: 26
-														line: 13
-													}
-													start: Object {
-														column: 24
-														line: 13
-													}
-												}
+												loc: SourceLocation experimental/class-private-properties/pbn-success/input.js 13:24-13:26
 											}
-											loc: Object {
-												filename: "experimental/class-private-properties/pbn-success/input.js"
-												end: Object {
-													column: 26
-													line: 13
-												}
-												start: Object {
-													column: 24
-													line: 13
-												}
-											}
+											loc: SourceLocation experimental/class-private-properties/pbn-success/input.js 13:24-13:26
 										}
 									}
 								}
@@ -1327,42 +411,11 @@ JSRoot {
 						key: JSStaticPropertyKey {
 							value: JSIdentifier {
 								name: "y"
-								loc: Object {
-									filename: "experimental/class-private-properties/pbn-success/input.js"
-									identifierName: "y"
-									end: Object {
-										column: 7
-										line: 14
-									}
-									start: Object {
-										column: 6
-										line: 14
-									}
-								}
+								loc: SourceLocation experimental/class-private-properties/pbn-success/input.js 14:6-14:7 (y)
 							}
-							loc: Object {
-								filename: "experimental/class-private-properties/pbn-success/input.js"
-								end: Object {
-									column: 7
-									line: 14
-								}
-								start: Object {
-									column: 6
-									line: 14
-								}
-							}
+							loc: SourceLocation experimental/class-private-properties/pbn-success/input.js 14:6-14:7
 						}
-						loc: Object {
-							filename: "experimental/class-private-properties/pbn-success/input.js"
-							end: Object {
-								column: 35
-								line: 14
-							}
-							start: Object {
-								column: 2
-								line: 14
-							}
-						}
+						loc: SourceLocation experimental/class-private-properties/pbn-success/input.js 14:2-14:35
 						meta: JSClassPropertyMeta {
 							abstract: false
 							accessibility: undefined
@@ -1370,21 +423,8 @@ JSRoot {
 							readonly: false
 							static: false
 							typeAnnotation: undefined
-							start: Object {
-								column: 2
-								line: 14
-							}
-							loc: Object {
-								filename: "experimental/class-private-properties/pbn-success/input.js"
-								end: Object {
-									column: 7
-									line: 14
-								}
-								start: Object {
-									column: 2
-									line: 14
-								}
-							}
+							loc: SourceLocation experimental/class-private-properties/pbn-success/input.js 14:2-14:7
+							start: Position 14:2
 						}
 						head: JSFunctionHead {
 							async: false
@@ -1394,184 +434,49 @@ JSRoot {
 							returnType: undefined
 							thisType: undefined
 							typeParameters: undefined
-							loc: Object {
-								filename: "experimental/class-private-properties/pbn-success/input.js"
-								end: Object {
-									column: 14
-									line: 14
-								}
-								start: Object {
-									column: 7
-									line: 14
-								}
-							}
+							loc: SourceLocation experimental/class-private-properties/pbn-success/input.js 14:7-14:14
 							params: Array [
 								JSBindingIdentifier {
 									name: "value"
-									loc: Object {
-										filename: "experimental/class-private-properties/pbn-success/input.js"
-										identifierName: "value"
-										end: Object {
-											column: 13
-											line: 14
-										}
-										start: Object {
-											column: 8
-											line: 14
-										}
-									}
+									loc: SourceLocation experimental/class-private-properties/pbn-success/input.js 14:8-14:13 (value)
 									meta: JSPatternMeta {
 										optional: undefined
 										typeAnnotation: undefined
-										loc: Object {
-											filename: "experimental/class-private-properties/pbn-success/input.js"
-											end: Object {
-												column: 13
-												line: 14
-											}
-											start: Object {
-												column: 8
-												line: 14
-											}
-										}
+										loc: SourceLocation experimental/class-private-properties/pbn-success/input.js 14:8-14:13
 									}
 								}
 							]
 						}
 						body: JSBlockStatement {
 							directives: Array []
-							loc: Object {
-								filename: "experimental/class-private-properties/pbn-success/input.js"
-								end: Object {
-									column: 35
-									line: 14
-								}
-								start: Object {
-									column: 15
-									line: 14
-								}
-							}
+							loc: SourceLocation experimental/class-private-properties/pbn-success/input.js 14:15-14:35
 							body: Array [
 								JSExpressionStatement {
-									loc: Object {
-										filename: "experimental/class-private-properties/pbn-success/input.js"
-										end: Object {
-											column: 33
-											line: 14
-										}
-										start: Object {
-											column: 17
-											line: 14
-										}
-									}
+									loc: SourceLocation experimental/class-private-properties/pbn-success/input.js 14:17-14:33
 									expression: JSAssignmentExpression {
 										operator: "="
-										loc: Object {
-											filename: "experimental/class-private-properties/pbn-success/input.js"
-											end: Object {
-												column: 33
-												line: 14
-											}
-											start: Object {
-												column: 17
-												line: 14
-											}
-										}
+										loc: SourceLocation experimental/class-private-properties/pbn-success/input.js 14:17-14:33
 										right: JSUnaryExpression {
 											operator: "+"
 											prefix: true
-											loc: Object {
-												filename: "experimental/class-private-properties/pbn-success/input.js"
-												end: Object {
-													column: 33
-													line: 14
-												}
-												start: Object {
-													column: 27
-													line: 14
-												}
-											}
+											loc: SourceLocation experimental/class-private-properties/pbn-success/input.js 14:27-14:33
 											argument: JSReferenceIdentifier {
 												name: "value"
-												loc: Object {
-													filename: "experimental/class-private-properties/pbn-success/input.js"
-													identifierName: "value"
-													end: Object {
-														column: 33
-														line: 14
-													}
-													start: Object {
-														column: 28
-														line: 14
-													}
-												}
+												loc: SourceLocation experimental/class-private-properties/pbn-success/input.js 14:28-14:33 (value)
 											}
 										}
 										left: JSMemberExpression {
-											loc: Object {
-												filename: "experimental/class-private-properties/pbn-success/input.js"
-												end: Object {
-													column: 24
-													line: 14
-												}
-												start: Object {
-													column: 17
-													line: 14
-												}
-											}
-											object: JSThisExpression {
-												loc: Object {
-													filename: "experimental/class-private-properties/pbn-success/input.js"
-													end: Object {
-														column: 21
-														line: 14
-													}
-													start: Object {
-														column: 17
-														line: 14
-													}
-												}
-											}
+											loc: SourceLocation experimental/class-private-properties/pbn-success/input.js 14:17-14:24
+											object: JSThisExpression {loc: SourceLocation experimental/class-private-properties/pbn-success/input.js 14:17-14:21}
 											property: JSStaticMemberProperty {
 												value: JSPrivateName {
 													id: JSIdentifier {
 														name: "y"
-														loc: Object {
-															filename: "experimental/class-private-properties/pbn-success/input.js"
-															identifierName: "y"
-															end: Object {
-																column: 24
-																line: 14
-															}
-															start: Object {
-																column: 23
-																line: 14
-															}
-														}
+														loc: SourceLocation experimental/class-private-properties/pbn-success/input.js 14:23-14:24 (y)
 													}
-													loc: Object {
-														filename: "experimental/class-private-properties/pbn-success/input.js"
-														end: Object {
-															column: 24
-															line: 14
-														}
-														start: Object {
-															column: 22
-															line: 14
-														}
-													}
+													loc: SourceLocation experimental/class-private-properties/pbn-success/input.js 14:22-14:24
 												}
-												loc: Object {
-													filename: "experimental/class-private-properties/pbn-success/input.js"
-													end: Object {
-														column: 24
-														line: 14
-													}
-													start: Object {
-														column: 22
-														line: 14
-													}
-												}
+												loc: SourceLocation experimental/class-private-properties/pbn-success/input.js 14:22-14:24
 											}
 										}
 									}
@@ -1584,42 +489,11 @@ JSRoot {
 						key: JSStaticPropertyKey {
 							value: JSIdentifier {
 								name: "equals"
-								loc: Object {
-									filename: "experimental/class-private-properties/pbn-success/input.js"
-									identifierName: "equals"
-									end: Object {
-										column: 8
-										line: 16
-									}
-									start: Object {
-										column: 2
-										line: 16
-									}
-								}
+								loc: SourceLocation experimental/class-private-properties/pbn-success/input.js 16:2-16:8 (equals)
 							}
-							loc: Object {
-								filename: "experimental/class-private-properties/pbn-success/input.js"
-								end: Object {
-									column: 8
-									line: 16
-								}
-								start: Object {
-									column: 2
-									line: 16
-								}
-							}
+							loc: SourceLocation experimental/class-private-properties/pbn-success/input.js 16:2-16:8
 						}
-						loc: Object {
-							filename: "experimental/class-private-properties/pbn-success/input.js"
-							end: Object {
-								column: 59
-								line: 16
-							}
-							start: Object {
-								column: 2
-								line: 16
-							}
-						}
+						loc: SourceLocation experimental/class-private-properties/pbn-success/input.js 16:2-16:59
 						meta: JSClassPropertyMeta {
 							abstract: false
 							accessibility: undefined
@@ -1627,21 +501,8 @@ JSRoot {
 							readonly: false
 							static: false
 							typeAnnotation: undefined
-							start: Object {
-								column: 2
-								line: 16
-							}
-							loc: Object {
-								filename: "experimental/class-private-properties/pbn-success/input.js"
-								end: Object {
-									column: 8
-									line: 16
-								}
-								start: Object {
-									column: 2
-									line: 16
-								}
-							}
+							loc: SourceLocation experimental/class-private-properties/pbn-success/input.js 16:2-16:8
+							start: Position 16:2
 						}
 						head: JSFunctionHead {
 							async: false
@@ -1651,386 +512,95 @@ JSRoot {
 							returnType: undefined
 							thisType: undefined
 							typeParameters: undefined
-							loc: Object {
-								filename: "experimental/class-private-properties/pbn-success/input.js"
-								end: Object {
-									column: 11
-									line: 16
-								}
-								start: Object {
-									column: 8
-									line: 16
-								}
-							}
+							loc: SourceLocation experimental/class-private-properties/pbn-success/input.js 16:8-16:11
 							params: Array [
 								JSBindingIdentifier {
 									name: "p"
-									loc: Object {
-										filename: "experimental/class-private-properties/pbn-success/input.js"
-										identifierName: "p"
-										end: Object {
-											column: 10
-											line: 16
-										}
-										start: Object {
-											column: 9
-											line: 16
-										}
-									}
+									loc: SourceLocation experimental/class-private-properties/pbn-success/input.js 16:9-16:10 (p)
 									meta: JSPatternMeta {
 										optional: undefined
 										typeAnnotation: undefined
-										loc: Object {
-											filename: "experimental/class-private-properties/pbn-success/input.js"
-											end: Object {
-												column: 10
-												line: 16
-											}
-											start: Object {
-												column: 9
-												line: 16
-											}
-										}
+										loc: SourceLocation experimental/class-private-properties/pbn-success/input.js 16:9-16:10
 									}
 								}
 							]
 						}
 						body: JSBlockStatement {
 							directives: Array []
-							loc: Object {
-								filename: "experimental/class-private-properties/pbn-success/input.js"
-								end: Object {
-									column: 59
-									line: 16
-								}
-								start: Object {
-									column: 12
-									line: 16
-								}
-							}
+							loc: SourceLocation experimental/class-private-properties/pbn-success/input.js 16:12-16:59
 							body: Array [
 								JSReturnStatement {
-									loc: Object {
-										filename: "experimental/class-private-properties/pbn-success/input.js"
-										end: Object {
-											column: 57
-											line: 16
-										}
-										start: Object {
-											column: 14
-											line: 16
-										}
-									}
+									loc: SourceLocation experimental/class-private-properties/pbn-success/input.js 16:14-16:57
 									argument: JSLogicalExpression {
 										operator: "&&"
-										loc: Object {
-											filename: "experimental/class-private-properties/pbn-success/input.js"
-											end: Object {
-												column: 57
-												line: 16
-											}
-											start: Object {
-												column: 21
-												line: 16
-											}
-										}
+										loc: SourceLocation experimental/class-private-properties/pbn-success/input.js 16:21-16:57
 										left: JSBinaryExpression {
 											operator: "==="
-											loc: Object {
-												filename: "experimental/class-private-properties/pbn-success/input.js"
-												end: Object {
-													column: 37
-													line: 16
-												}
-												start: Object {
-													column: 21
-													line: 16
-												}
-											}
+											loc: SourceLocation experimental/class-private-properties/pbn-success/input.js 16:21-16:37
 											left: JSMemberExpression {
-												loc: Object {
-													filename: "experimental/class-private-properties/pbn-success/input.js"
-													end: Object {
-														column: 28
-														line: 16
-													}
-													start: Object {
-														column: 21
-														line: 16
-													}
-												}
-												object: JSThisExpression {
-													loc: Object {
-														filename: "experimental/class-private-properties/pbn-success/input.js"
-														end: Object {
-															column: 25
-															line: 16
-														}
-														start: Object {
-															column: 21
-															line: 16
-														}
-													}
-												}
+												loc: SourceLocation experimental/class-private-properties/pbn-success/input.js 16:21-16:28
+												object: JSThisExpression {loc: SourceLocation experimental/class-private-properties/pbn-success/input.js 16:21-16:25}
 												property: JSStaticMemberProperty {
 													value: JSPrivateName {
 														id: JSIdentifier {
 															name: "x"
-															loc: Object {
-																filename: "experimental/class-private-properties/pbn-success/input.js"
-																identifierName: "x"
-																end: Object {
-																	column: 28
-																	line: 16
-																}
-																start: Object {
-																	column: 27
-																	line: 16
-																}
-															}
+															loc: SourceLocation experimental/class-private-properties/pbn-success/input.js 16:27-16:28 (x)
 														}
-														loc: Object {
-															filename: "experimental/class-private-properties/pbn-success/input.js"
-															end: Object {
-																column: 28
-																line: 16
-															}
-															start: Object {
-																column: 26
-																line: 16
-															}
-														}
+														loc: SourceLocation experimental/class-private-properties/pbn-success/input.js 16:26-16:28
 													}
-													loc: Object {
-														filename: "experimental/class-private-properties/pbn-success/input.js"
-														end: Object {
-															column: 28
-															line: 16
-														}
-														start: Object {
-															column: 26
-															line: 16
-														}
-													}
+													loc: SourceLocation experimental/class-private-properties/pbn-success/input.js 16:26-16:28
 												}
 											}
 											right: JSMemberExpression {
-												loc: Object {
-													filename: "experimental/class-private-properties/pbn-success/input.js"
-													end: Object {
-														column: 37
-														line: 16
-													}
-													start: Object {
-														column: 33
-														line: 16
-													}
-												}
+												loc: SourceLocation experimental/class-private-properties/pbn-success/input.js 16:33-16:37
 												object: JSReferenceIdentifier {
 													name: "p"
-													loc: Object {
-														filename: "experimental/class-private-properties/pbn-success/input.js"
-														identifierName: "p"
-														end: Object {
-															column: 34
-															line: 16
-														}
-														start: Object {
-															column: 33
-															line: 16
-														}
-													}
+													loc: SourceLocation experimental/class-private-properties/pbn-success/input.js 16:33-16:34 (p)
 												}
 												property: JSStaticMemberProperty {
 													value: JSPrivateName {
 														id: JSIdentifier {
 															name: "x"
-															loc: Object {
-																filename: "experimental/class-private-properties/pbn-success/input.js"
-																identifierName: "x"
-																end: Object {
-																	column: 37
-																	line: 16
-																}
-																start: Object {
-																	column: 36
-																	line: 16
-																}
-															}
+															loc: SourceLocation experimental/class-private-properties/pbn-success/input.js 16:36-16:37 (x)
 														}
-														loc: Object {
-															filename: "experimental/class-private-properties/pbn-success/input.js"
-															end: Object {
-																column: 37
-																line: 16
-															}
-															start: Object {
-																column: 35
-																line: 16
-															}
-														}
+														loc: SourceLocation experimental/class-private-properties/pbn-success/input.js 16:35-16:37
 													}
-													loc: Object {
-														filename: "experimental/class-private-properties/pbn-success/input.js"
-														end: Object {
-															column: 37
-															line: 16
-														}
-														start: Object {
-															column: 35
-															line: 16
-														}
-													}
+													loc: SourceLocation experimental/class-private-properties/pbn-success/input.js 16:35-16:37
 												}
 											}
 										}
 										right: JSBinaryExpression {
 											operator: "==="
-											loc: Object {
-												filename: "experimental/class-private-properties/pbn-success/input.js"
-												end: Object {
-													column: 57
-													line: 16
-												}
-												start: Object {
-													column: 41
-													line: 16
-												}
-											}
+											loc: SourceLocation experimental/class-private-properties/pbn-success/input.js 16:41-16:57
 											left: JSMemberExpression {
-												loc: Object {
-													filename: "experimental/class-private-properties/pbn-success/input.js"
-													end: Object {
-														column: 48
-														line: 16
-													}
-													start: Object {
-														column: 41
-														line: 16
-													}
-												}
-												object: JSThisExpression {
-													loc: Object {
-														filename: "experimental/class-private-properties/pbn-success/input.js"
-														end: Object {
-															column: 45
-															line: 16
-														}
-														start: Object {
-															column: 41
-															line: 16
-														}
-													}
-												}
+												loc: SourceLocation experimental/class-private-properties/pbn-success/input.js 16:41-16:48
+												object: JSThisExpression {loc: SourceLocation experimental/class-private-properties/pbn-success/input.js 16:41-16:45}
 												property: JSStaticMemberProperty {
 													value: JSPrivateName {
 														id: JSIdentifier {
 															name: "y"
-															loc: Object {
-																filename: "experimental/class-private-properties/pbn-success/input.js"
-																identifierName: "y"
-																end: Object {
-																	column: 48
-																	line: 16
-																}
-																start: Object {
-																	column: 47
-																	line: 16
-																}
-															}
+															loc: SourceLocation experimental/class-private-properties/pbn-success/input.js 16:47-16:48 (y)
 														}
-														loc: Object {
-															filename: "experimental/class-private-properties/pbn-success/input.js"
-															end: Object {
-																column: 48
-																line: 16
-															}
-															start: Object {
-																column: 46
-																line: 16
-															}
-														}
+														loc: SourceLocation experimental/class-private-properties/pbn-success/input.js 16:46-16:48
 													}
-													loc: Object {
-														filename: "experimental/class-private-properties/pbn-success/input.js"
-														end: Object {
-															column: 48
-															line: 16
-														}
-														start: Object {
-															column: 46
-															line: 16
-														}
-													}
+													loc: SourceLocation experimental/class-private-properties/pbn-success/input.js 16:46-16:48
 												}
 											}
 											right: JSMemberExpression {
-												loc: Object {
-													filename: "experimental/class-private-properties/pbn-success/input.js"
-													end: Object {
-														column: 57
-														line: 16
-													}
-													start: Object {
-														column: 53
-														line: 16
-													}
-												}
+												loc: SourceLocation experimental/class-private-properties/pbn-success/input.js 16:53-16:57
 												object: JSReferenceIdentifier {
 													name: "p"
-													loc: Object {
-														filename: "experimental/class-private-properties/pbn-success/input.js"
-														identifierName: "p"
-														end: Object {
-															column: 54
-															line: 16
-														}
-														start: Object {
-															column: 53
-															line: 16
-														}
-													}
+													loc: SourceLocation experimental/class-private-properties/pbn-success/input.js 16:53-16:54 (p)
 												}
 												property: JSStaticMemberProperty {
 													value: JSPrivateName {
 														id: JSIdentifier {
 															name: "y"
-															loc: Object {
-																filename: "experimental/class-private-properties/pbn-success/input.js"
-																identifierName: "y"
-																end: Object {
-																	column: 57
-																	line: 16
-																}
-																start: Object {
-																	column: 56
-																	line: 16
-																}
-															}
+															loc: SourceLocation experimental/class-private-properties/pbn-success/input.js 16:56-16:57 (y)
 														}
-														loc: Object {
-															filename: "experimental/class-private-properties/pbn-success/input.js"
-															end: Object {
-																column: 57
-																line: 16
-															}
-															start: Object {
-																column: 55
-																line: 16
-															}
-														}
+														loc: SourceLocation experimental/class-private-properties/pbn-success/input.js 16:55-16:57
 													}
-													loc: Object {
-														filename: "experimental/class-private-properties/pbn-success/input.js"
-														end: Object {
-															column: 57
-															line: 16
-														}
-														start: Object {
-															column: 55
-															line: 16
-														}
-													}
+													loc: SourceLocation experimental/class-private-properties/pbn-success/input.js 16:55-16:57
 												}
 											}
 										}
@@ -2044,41 +614,20 @@ JSRoot {
 						key: JSStaticPropertyKey {
 							value: JSIdentifier {
 								name: "toString"
-								loc: Object {
-									filename: "experimental/class-private-properties/pbn-success/input.js"
-									identifierName: "toString"
-									end: Object {
-										column: 10
-										line: 18
-									}
-									start: Object {
-										column: 2
-										line: 18
-									}
-								}
+								loc: SourceLocation experimental/class-private-properties/pbn-success/input.js 18:2-18:10 (toString)
 							}
-							loc: Object {
-								filename: "experimental/class-private-properties/pbn-success/input.js"
-								end: Object {
-									column: 10
-									line: 18
-								}
-								start: Object {
-									column: 2
-									line: 18
-								}
-							}
+							loc: SourceLocation experimental/class-private-properties/pbn-success/input.js 18:2-18:10
 						}
-						loc: Object {
-							filename: "experimental/class-private-properties/pbn-success/input.js"
-							end: Object {
-								column: 58
-								line: 18
-							}
-							start: Object {
-								column: 2
-								line: 18
-							}
+						loc: SourceLocation experimental/class-private-properties/pbn-success/input.js 18:2-18:58
+						meta: JSClassPropertyMeta {
+							abstract: false
+							accessibility: undefined
+							optional: false
+							readonly: false
+							static: false
+							typeAnnotation: undefined
+							loc: SourceLocation experimental/class-private-properties/pbn-success/input.js 18:2-18:10
+							start: Position 18:2
 						}
 						head: JSFunctionHead {
 							async: false
@@ -2089,262 +638,63 @@ JSRoot {
 							returnType: undefined
 							thisType: undefined
 							typeParameters: undefined
-							loc: Object {
-								filename: "experimental/class-private-properties/pbn-success/input.js"
-								end: Object {
-									column: 12
-									line: 18
-								}
-								start: Object {
-									column: 10
-									line: 18
-								}
-							}
-						}
-						meta: JSClassPropertyMeta {
-							abstract: false
-							accessibility: undefined
-							optional: false
-							readonly: false
-							static: false
-							typeAnnotation: undefined
-							start: Object {
-								column: 2
-								line: 18
-							}
-							loc: Object {
-								filename: "experimental/class-private-properties/pbn-success/input.js"
-								end: Object {
-									column: 10
-									line: 18
-								}
-								start: Object {
-									column: 2
-									line: 18
-								}
-							}
+							loc: SourceLocation experimental/class-private-properties/pbn-success/input.js 18:10-18:12
 						}
 						body: JSBlockStatement {
 							directives: Array []
-							loc: Object {
-								filename: "experimental/class-private-properties/pbn-success/input.js"
-								end: Object {
-									column: 58
-									line: 18
-								}
-								start: Object {
-									column: 13
-									line: 18
-								}
-							}
+							loc: SourceLocation experimental/class-private-properties/pbn-success/input.js 18:13-18:58
 							body: Array [
 								JSReturnStatement {
-									loc: Object {
-										filename: "experimental/class-private-properties/pbn-success/input.js"
-										end: Object {
-											column: 56
-											line: 18
-										}
-										start: Object {
-											column: 15
-											line: 18
-										}
-									}
+									loc: SourceLocation experimental/class-private-properties/pbn-success/input.js 18:15-18:56
 									argument: JSTemplateLiteral {
-										loc: Object {
-											filename: "experimental/class-private-properties/pbn-success/input.js"
-											end: Object {
-												column: 56
-												line: 18
-											}
-											start: Object {
-												column: 22
-												line: 18
-											}
-										}
+										loc: SourceLocation experimental/class-private-properties/pbn-success/input.js 18:22-18:56
 										quasis: Array [
 											JSTemplateElement {
 												cooked: "Point<"
 												raw: "Point<"
 												tail: false
-												loc: Object {
-													filename: "experimental/class-private-properties/pbn-success/input.js"
-													end: Object {
-														column: 29
-														line: 18
-													}
-													start: Object {
-														column: 23
-														line: 18
-													}
-												}
+												loc: SourceLocation experimental/class-private-properties/pbn-success/input.js 18:23-18:29
 											}
 											JSTemplateElement {
 												cooked: ","
 												raw: ","
 												tail: false
-												loc: Object {
-													filename: "experimental/class-private-properties/pbn-success/input.js"
-													end: Object {
-														column: 42
-														line: 18
-													}
-													start: Object {
-														column: 41
-														line: 18
-													}
-												}
+												loc: SourceLocation experimental/class-private-properties/pbn-success/input.js 18:41-18:42
 											}
 											JSTemplateElement {
 												cooked: ">"
 												raw: ">"
 												tail: true
-												loc: Object {
-													filename: "experimental/class-private-properties/pbn-success/input.js"
-													end: Object {
-														column: 55
-														line: 18
-													}
-													start: Object {
-														column: 54
-														line: 18
-													}
-												}
+												loc: SourceLocation experimental/class-private-properties/pbn-success/input.js 18:54-18:55
 											}
 										]
 										expressions: Array [
 											JSMemberExpression {
-												loc: Object {
-													filename: "experimental/class-private-properties/pbn-success/input.js"
-													end: Object {
-														column: 39
-														line: 18
-													}
-													start: Object {
-														column: 32
-														line: 18
-													}
-												}
-												object: JSThisExpression {
-													loc: Object {
-														filename: "experimental/class-private-properties/pbn-success/input.js"
-														end: Object {
-															column: 36
-															line: 18
-														}
-														start: Object {
-															column: 32
-															line: 18
-														}
-													}
-												}
+												loc: SourceLocation experimental/class-private-properties/pbn-success/input.js 18:32-18:39
+												object: JSThisExpression {loc: SourceLocation experimental/class-private-properties/pbn-success/input.js 18:32-18:36}
 												property: JSStaticMemberProperty {
 													value: JSPrivateName {
 														id: JSIdentifier {
 															name: "x"
-															loc: Object {
-																filename: "experimental/class-private-properties/pbn-success/input.js"
-																identifierName: "x"
-																end: Object {
-																	column: 39
-																	line: 18
-																}
-																start: Object {
-																	column: 38
-																	line: 18
-																}
-															}
+															loc: SourceLocation experimental/class-private-properties/pbn-success/input.js 18:38-18:39 (x)
 														}
-														loc: Object {
-															filename: "experimental/class-private-properties/pbn-success/input.js"
-															end: Object {
-																column: 39
-																line: 18
-															}
-															start: Object {
-																column: 37
-																line: 18
-															}
-														}
+														loc: SourceLocation experimental/class-private-properties/pbn-success/input.js 18:37-18:39
 													}
-													loc: Object {
-														filename: "experimental/class-private-properties/pbn-success/input.js"
-														end: Object {
-															column: 39
-															line: 18
-														}
-														start: Object {
-															column: 37
-															line: 18
-														}
-													}
+													loc: SourceLocation experimental/class-private-properties/pbn-success/input.js 18:37-18:39
 												}
 											}
 											JSMemberExpression {
-												loc: Object {
-													filename: "experimental/class-private-properties/pbn-success/input.js"
-													end: Object {
-														column: 52
-														line: 18
-													}
-													start: Object {
-														column: 45
-														line: 18
-													}
-												}
-												object: JSThisExpression {
-													loc: Object {
-														filename: "experimental/class-private-properties/pbn-success/input.js"
-														end: Object {
-															column: 49
-															line: 18
-														}
-														start: Object {
-															column: 45
-															line: 18
-														}
-													}
-												}
+												loc: SourceLocation experimental/class-private-properties/pbn-success/input.js 18:45-18:52
+												object: JSThisExpression {loc: SourceLocation experimental/class-private-properties/pbn-success/input.js 18:45-18:49}
 												property: JSStaticMemberProperty {
 													value: JSPrivateName {
 														id: JSIdentifier {
 															name: "y"
-															loc: Object {
-																filename: "experimental/class-private-properties/pbn-success/input.js"
-																identifierName: "y"
-																end: Object {
-																	column: 52
-																	line: 18
-																}
-																start: Object {
-																	column: 51
-																	line: 18
-																}
-															}
+															loc: SourceLocation experimental/class-private-properties/pbn-success/input.js 18:51-18:52 (y)
 														}
-														loc: Object {
-															filename: "experimental/class-private-properties/pbn-success/input.js"
-															end: Object {
-																column: 52
-																line: 18
-															}
-															start: Object {
-																column: 50
-																line: 18
-															}
-														}
+														loc: SourceLocation experimental/class-private-properties/pbn-success/input.js 18:50-18:52
 													}
-													loc: Object {
-														filename: "experimental/class-private-properties/pbn-success/input.js"
-														end: Object {
-															column: 52
-															line: 18
-														}
-														start: Object {
-															column: 50
-															line: 18
-														}
-													}
+													loc: SourceLocation experimental/class-private-properties/pbn-success/input.js 18:50-18:52
 												}
 											}
 										]
@@ -2363,6 +713,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

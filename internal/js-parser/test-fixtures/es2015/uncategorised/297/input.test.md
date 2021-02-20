@@ -11,166 +11,66 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "es2015/uncategorised/297/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2015/uncategorised/297/input.js"
-		end: Object {
-			column: 30
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2015/uncategorised/297/input.js 1:0-1:30
+	path: UIDPath<es2015/uncategorised/297/input.js>
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse"
 				categoryValue: "js"
-				message: Array [
-					"eval"
-					RAW_MARKUP {value: " is a reserved word"}
-				]
+				category: Array ["parse"]
+				message: RAW_MARKUP {value: "eval is a reserved word"}
 			}
 			location: Object {
-				filename: "es2015/uncategorised/297/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 5
-					line: 1
-				}
-				start: Object {
-					column: 1
-					line: 1
-				}
+				end: Position 1:5
+				path: UIDPath<es2015/uncategorised/297/input.js>
+				start: Position 1:1
 			}
 		}
 	]
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "es2015/uncategorised/297/input.js"
-				end: Object {
-					column: 30
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2015/uncategorised/297/input.js 1:0-1:30
 			expression: JSArrowFunctionExpression {
-				loc: Object {
-					filename: "es2015/uncategorised/297/input.js"
-					end: Object {
-						column: 30
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/uncategorised/297/input.js 1:0-1:30
 				head: JSFunctionHead {
 					async: false
 					hasHoistedVars: false
 					rest: undefined
 					returnType: undefined
 					thisType: undefined
-					loc: Object {
-						filename: "es2015/uncategorised/297/input.js"
-						end: Object {
-							column: 9
-							line: 1
-						}
-						start: Object {
-							column: 0
-							line: 1
-						}
-					}
+					loc: SourceLocation es2015/uncategorised/297/input.js 1:0-1:9
 					params: Array [
 						JSBindingIdentifier {
 							name: "eval"
-							loc: Object {
-								filename: "es2015/uncategorised/297/input.js"
-								identifierName: "eval"
-								end: Object {
-									column: 5
-									line: 1
-								}
-								start: Object {
-									column: 1
-									line: 1
-								}
-							}
+							loc: SourceLocation es2015/uncategorised/297/input.js 1:1-1:5 (eval)
 						}
 					]
 				}
 				body: JSBlockStatement {
-					loc: Object {
-						filename: "es2015/uncategorised/297/input.js"
-						end: Object {
-							column: 30
-							line: 1
-						}
-						start: Object {
-							column: 10
-							line: 1
-						}
-					}
+					loc: SourceLocation es2015/uncategorised/297/input.js 1:10-1:30
 					directives: Array [
 						JSDirective {
 							value: "use strict"
-							loc: Object {
-								filename: "es2015/uncategorised/297/input.js"
-								end: Object {
-									column: 25
-									line: 1
-								}
-								start: Object {
-									column: 12
-									line: 1
-								}
-							}
+							loc: SourceLocation es2015/uncategorised/297/input.js 1:12-1:25
 						}
 					]
 					body: Array [
 						JSExpressionStatement {
-							loc: Object {
-								filename: "es2015/uncategorised/297/input.js"
-								end: Object {
-									column: 28
-									line: 1
-								}
-								start: Object {
-									column: 26
-									line: 1
-								}
-							}
+							loc: SourceLocation es2015/uncategorised/297/input.js 1:26-1:28
 							expression: JSNumericLiteral {
 								value: 42
 								format: undefined
-								loc: Object {
-									filename: "es2015/uncategorised/297/input.js"
-									end: Object {
-										column: 28
-										line: 1
-									}
-									start: Object {
-										column: 26
-										line: 1
-									}
-								}
+								loc: SourceLocation es2015/uncategorised/297/input.js 1:26-1:28
 							}
 						}
 					]
@@ -192,8 +92,5 @@ JSRoot {
     (eval) => { "use strict"; 42 }
      ^^^^
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

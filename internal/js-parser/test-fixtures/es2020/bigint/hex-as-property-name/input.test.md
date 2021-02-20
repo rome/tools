@@ -11,129 +11,52 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "es2020/bigint/hex-as-property-name/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2020/bigint/hex-as-property-name/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2020/bigint/hex-as-property-name/input.js 1:0-2:0
+	path: UIDPath<es2020/bigint/hex-as-property-name/input.js>
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse"
 				categoryValue: "js"
+				category: Array ["parse"]
 				message: RAW_MARKUP {value: "Expected an identifier"}
 			}
 			location: Object {
-				filename: "es2020/bigint/hex-as-property-name/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 2
-					line: 1
-				}
-				start: Object {
-					column: 3
-					line: 1
-				}
+				end: Position 1:2
+				path: UIDPath<es2020/bigint/hex-as-property-name/input.js>
+				start: Position 1:3
 			}
 		}
 	]
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "es2020/bigint/hex-as-property-name/input.js"
-				end: Object {
-					column: 19
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2020/bigint/hex-as-property-name/input.js 1:0-1:19
 			expression: JSObjectExpression {
-				loc: Object {
-					filename: "es2020/bigint/hex-as-property-name/input.js"
-					end: Object {
-						column: 17
-						line: 1
-					}
-					start: Object {
-						column: 1
-						line: 1
-					}
-				}
+				loc: SourceLocation es2020/bigint/hex-as-property-name/input.js 1:1-1:17
 				properties: Array [
 					JSObjectProperty {
 						key: JSStaticPropertyKey {
 							value: JSIdentifier {
 								name: ""
-								loc: Object {
-									filename: "es2020/bigint/hex-as-property-name/input.js"
-									identifierName: ""
-									end: Object {
-										column: 12
-										line: 1
-									}
-									start: Object {
-										column: 3
-										line: 1
-									}
-								}
+								loc: SourceLocation es2020/bigint/hex-as-property-name/input.js 1:3-1:12 ()
 							}
-							loc: Object {
-								filename: "es2020/bigint/hex-as-property-name/input.js"
-								end: Object {
-									column: 12
-									line: 1
-								}
-								start: Object {
-									column: 3
-									line: 1
-								}
-							}
+							loc: SourceLocation es2020/bigint/hex-as-property-name/input.js 1:3-1:12
 						}
 						value: JSNumericLiteral {
 							value: 0
 							format: undefined
-							loc: Object {
-								filename: "es2020/bigint/hex-as-property-name/input.js"
-								end: Object {
-									column: 15
-									line: 1
-								}
-								start: Object {
-									column: 14
-									line: 1
-								}
-							}
+							loc: SourceLocation es2020/bigint/hex-as-property-name/input.js 1:14-1:15
 						}
-						loc: Object {
-							filename: "es2020/bigint/hex-as-property-name/input.js"
-							end: Object {
-								column: 15
-								line: 1
-							}
-							start: Object {
-								column: 3
-								line: 1
-							}
-						}
+						loc: SourceLocation es2020/bigint/hex-as-property-name/input.js 1:3-1:15
 					}
 				]
 			}
@@ -153,8 +76,5 @@ JSRoot {
     ({ 0xbeefban: 0 });
        ^
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

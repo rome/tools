@@ -11,37 +11,17 @@ JSRoot {
 	body: Array []
 	comments: Array []
 	corrupt: false
-	filename: "es2015/uncategorised/216/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2015/uncategorised/216/input.js"
-		end: Object {
-			column: 12
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2015/uncategorised/216/input.js 1:0-1:12
+	path: UIDPath<es2015/uncategorised/216/input.js>
 	directives: Array [
 		JSDirective {
 			value: "\\u{110000}"
-			loc: Object {
-				filename: "es2015/uncategorised/216/input.js"
-				end: Object {
-					column: 12
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2015/uncategorised/216/input.js 1:0-1:12
 		}
 	]
 	diagnostics: Array [
@@ -49,23 +29,17 @@ JSRoot {
 			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse"
 				categoryValue: "js"
+				category: Array ["parse"]
 				message: RAW_MARKUP {value: "Code point out of bounds"}
 			}
 			location: Object {
-				filename: "es2015/uncategorised/216/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 3
-					line: 1
-				}
-				start: Object {
-					column: 3
-					line: 1
-				}
+				end: Position 1:3
+				path: UIDPath<es2015/uncategorised/216/input.js>
+				start: Position 1:3
 			}
 		}
 	]
@@ -83,8 +57,5 @@ JSRoot {
     "\u{110000}"
        ^
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

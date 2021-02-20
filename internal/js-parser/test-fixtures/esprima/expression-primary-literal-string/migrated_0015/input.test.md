@@ -12,37 +12,17 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
-	filename: "esprima/expression-primary-literal-string/migrated_0015/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "esprima/expression-primary-literal-string/migrated_0015/input.js"
-		end: Object {
-			column: 16
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation esprima/expression-primary-literal-string/migrated_0015/input.js 1:0-1:16
+	path: UIDPath<esprima/expression-primary-literal-string/migrated_0015/input.js>
 	directives: Array [
 		JSDirective {
 			value: "Hello\\712World"
-			loc: Object {
-				filename: "esprima/expression-primary-literal-string/migrated_0015/input.js"
-				end: Object {
-					column: 16
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation esprima/expression-primary-literal-string/migrated_0015/input.js 1:0-1:16
 		}
 	]
 }
@@ -51,6 +31,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

@@ -17,9 +17,6 @@
 
   ℹ Use a local variable instead.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -44,9 +41,6 @@ foo = bar;
 
   ℹ Use a local variable instead.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -72,9 +66,6 @@ function foo() {
 
   ℹ Use a local variable instead.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -99,9 +90,6 @@ function foo() {}
 
   ℹ Use a local variable instead.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -126,9 +114,6 @@ function foo() {}
 
   ℹ Use a local variable instead.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -153,9 +138,6 @@ function foo() {}
 
   ℹ Use a local variable instead.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -181,9 +163,6 @@ function foo() {
 
   ℹ Use a local variable instead.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -200,7 +179,6 @@ function foo() {
 ### `7`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -216,7 +194,6 @@ function foo() {
 ### `8`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -232,7 +209,6 @@ function foo(foo) {
 ### `9`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -249,7 +225,6 @@ function foo() {
 ### `10`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -264,7 +239,6 @@ foo = bar;
 ### `11`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -279,7 +253,6 @@ foo = bar;
 ### `12`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -295,7 +268,6 @@ var foo = function() {
 ### `13`
 
 ```
-✔ No known problems!
 
 ```
 

@@ -12,136 +12,44 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "core/categorized/startline-specified/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "core/categorized/startline-specified/input.js"
-		end: Object {
-			column: 0
-			line: 3
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation core/categorized/startline-specified/input.js 1:0-3:0
+	path: UIDPath<core/categorized/startline-specified/input.js>
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "core/categorized/startline-specified/input.js"
-				end: Object {
-					column: 8
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation core/categorized/startline-specified/input.js 1:0-1:8
 			expression: JSCallExpression {
-				loc: Object {
-					filename: "core/categorized/startline-specified/input.js"
-					end: Object {
-						column: 7
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation core/categorized/startline-specified/input.js 1:0-1:7
 				callee: JSReferenceIdentifier {
 					name: "call"
-					loc: Object {
-						filename: "core/categorized/startline-specified/input.js"
-						identifierName: "call"
-						end: Object {
-							column: 4
-							line: 1
-						}
-						start: Object {
-							column: 0
-							line: 1
-						}
-					}
+					loc: SourceLocation core/categorized/startline-specified/input.js 1:0-1:4 (call)
 				}
 				arguments: Array [
 					JSNumericLiteral {
 						value: 1
 						format: undefined
-						loc: Object {
-							filename: "core/categorized/startline-specified/input.js"
-							end: Object {
-								column: 6
-								line: 1
-							}
-							start: Object {
-								column: 5
-								line: 1
-							}
-						}
+						loc: SourceLocation core/categorized/startline-specified/input.js 1:5-1:6
 					}
 				]
 			}
 		}
 		JSExpressionStatement {
-			loc: Object {
-				filename: "core/categorized/startline-specified/input.js"
-				end: Object {
-					column: 7
-					line: 2
-				}
-				start: Object {
-					column: 0
-					line: 2
-				}
-			}
+			loc: SourceLocation core/categorized/startline-specified/input.js 2:0-2:7
 			expression: JSCallExpression {
-				loc: Object {
-					filename: "core/categorized/startline-specified/input.js"
-					end: Object {
-						column: 6
-						line: 2
-					}
-					start: Object {
-						column: 0
-						line: 2
-					}
-				}
+				loc: SourceLocation core/categorized/startline-specified/input.js 2:0-2:6
 				callee: JSReferenceIdentifier {
 					name: "run"
-					loc: Object {
-						filename: "core/categorized/startline-specified/input.js"
-						identifierName: "run"
-						end: Object {
-							column: 3
-							line: 2
-						}
-						start: Object {
-							column: 0
-							line: 2
-						}
-					}
+					loc: SourceLocation core/categorized/startline-specified/input.js 2:0-2:3 (run)
 				}
 				arguments: Array [
 					JSNumericLiteral {
 						value: 2
 						format: undefined
-						loc: Object {
-							filename: "core/categorized/startline-specified/input.js"
-							end: Object {
-								column: 5
-								line: 2
-							}
-							start: Object {
-								column: 4
-								line: 2
-							}
-						}
+						loc: SourceLocation core/categorized/startline-specified/input.js 2:4-2:5
 					}
 				]
 			}
@@ -153,6 +61,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

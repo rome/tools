@@ -12,49 +12,19 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "es2015/yield/yield-yield/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2015/yield/yield-yield/input.js"
-		end: Object {
-			column: 33
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2015/yield/yield-yield/input.js 1:0-1:33
+	path: UIDPath<es2015/yield/yield-yield/input.js>
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "es2015/yield/yield-yield/input.js"
-				end: Object {
-					column: 33
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2015/yield/yield-yield/input.js 1:0-1:33
 			expression: JSFunctionExpression {
 				id: undefined
-				loc: Object {
-					filename: "es2015/yield/yield-yield/input.js"
-					end: Object {
-						column: 32
-						line: 1
-					}
-					start: Object {
-						column: 1
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/yield/yield-yield/input.js 1:1-1:32
 				head: JSFunctionHead {
 					async: false
 					generator: true
@@ -64,84 +34,24 @@ JSRoot {
 					returnType: undefined
 					thisType: undefined
 					typeParameters: undefined
-					loc: Object {
-						filename: "es2015/yield/yield-yield/input.js"
-						end: Object {
-							column: 13
-							line: 1
-						}
-						start: Object {
-							column: 11
-							line: 1
-						}
-					}
+					loc: SourceLocation es2015/yield/yield-yield/input.js 1:11-1:13
 				}
 				body: JSBlockStatement {
 					directives: Array []
-					loc: Object {
-						filename: "es2015/yield/yield-yield/input.js"
-						end: Object {
-							column: 32
-							line: 1
-						}
-						start: Object {
-							column: 14
-							line: 1
-						}
-					}
+					loc: SourceLocation es2015/yield/yield-yield/input.js 1:14-1:32
 					body: Array [
 						JSExpressionStatement {
-							loc: Object {
-								filename: "es2015/yield/yield-yield/input.js"
-								end: Object {
-									column: 30
-									line: 1
-								}
-								start: Object {
-									column: 16
-									line: 1
-								}
-							}
+							loc: SourceLocation es2015/yield/yield-yield/input.js 1:16-1:30
 							expression: JSYieldExpression {
 								delegate: false
-								loc: Object {
-									filename: "es2015/yield/yield-yield/input.js"
-									end: Object {
-										column: 30
-										line: 1
-									}
-									start: Object {
-										column: 16
-										line: 1
-									}
-								}
+								loc: SourceLocation es2015/yield/yield-yield/input.js 1:16-1:30
 								argument: JSYieldExpression {
 									delegate: false
-									loc: Object {
-										filename: "es2015/yield/yield-yield/input.js"
-										end: Object {
-											column: 30
-											line: 1
-										}
-										start: Object {
-											column: 22
-											line: 1
-										}
-									}
+									loc: SourceLocation es2015/yield/yield-yield/input.js 1:22-1:30
 									argument: JSNumericLiteral {
 										value: 10
 										format: undefined
-										loc: Object {
-											filename: "es2015/yield/yield-yield/input.js"
-											end: Object {
-												column: 30
-												line: 1
-											}
-											start: Object {
-												column: 28
-												line: 1
-											}
-										}
+										loc: SourceLocation es2015/yield/yield-yield/input.js 1:28-1:30
 									}
 								}
 							}
@@ -157,6 +67,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

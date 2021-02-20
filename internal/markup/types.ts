@@ -6,10 +6,11 @@
  */
 
 import {BaseTokens, SimpleToken, StringToken} from "@internal/parser-core";
-import {AbsoluteFilePath} from "@internal/path";
+import {AbsoluteFilePath, AnyPath} from "@internal/path";
 import {UserConfig} from "@internal/core";
-import {Number0, Number1} from "@internal/ob1";
+import {OneIndexed, ZeroIndexed} from "@internal/math";
 import {Consumer} from "@internal/consume";
+import {GridLocators} from "@internal/cli-layout";
 
 export type Tokens = BaseTokens & {
 	Text: StringToken<"Text">;
@@ -75,20 +76,21 @@ export type MarkupTagName =
 	| "td"
 	| "ol"
 	| "ul"
-	| "li";
+	| "li"
+	| "locator";
 
 export type MarkupFormatPositionNormalizer = (
-	filename: string,
-	line: undefined | Number1,
-	column: undefined | Number0,
+	path: AnyPath,
+	line: undefined | OneIndexed,
+	column: undefined | ZeroIndexed,
 ) => {
-	filename: string;
-	line?: Number1;
-	column?: Number0;
+	path: AnyPath;
+	line?: OneIndexed;
+	column?: ZeroIndexed;
 };
 
 export type MarkupFormatFilenameHumanizer = (
-	filename: string,
+	path: AnyPath,
 ) => undefined | string;
 
 export type MarkupFormatOptions = {
@@ -104,6 +106,7 @@ export type MarkupFormatNormalizeOptions = MarkupFormatOptions & {
 };
 
 export type MarkupLinesAndWidth = {
+	locators: GridLocators;
 	width: number;
 	lines: string[];
 };

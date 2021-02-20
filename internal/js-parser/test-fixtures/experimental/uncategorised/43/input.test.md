@@ -12,124 +12,42 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "experimental/uncategorised/43/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "experimental/uncategorised/43/input.js"
-		end: Object {
-			column: 26
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation experimental/uncategorised/43/input.js 1:0-1:26
+	path: UIDPath<experimental/uncategorised/43/input.js>
 	body: Array [
 		JSClassDeclaration {
 			id: JSBindingIdentifier {
 				name: "Foo"
-				loc: Object {
-					filename: "experimental/uncategorised/43/input.js"
-					identifierName: "Foo"
-					end: Object {
-						column: 9
-						line: 1
-					}
-					start: Object {
-						column: 6
-						line: 1
-					}
-				}
+				loc: SourceLocation experimental/uncategorised/43/input.js 1:6-1:9 (Foo)
 			}
-			loc: Object {
-				filename: "experimental/uncategorised/43/input.js"
-				end: Object {
-					column: 26
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation experimental/uncategorised/43/input.js 1:0-1:26
 			meta: JSClassHead {
 				implements: undefined
 				superClass: undefined
 				superTypeParameters: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "experimental/uncategorised/43/input.js"
-					end: Object {
-						column: 26
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation experimental/uncategorised/43/input.js 1:0-1:26
 				body: Array [
 					JSClassProperty {
 						key: JSStaticPropertyKey {
 							value: JSIdentifier {
 								name: "foo"
-								loc: Object {
-									filename: "experimental/uncategorised/43/input.js"
-									identifierName: "foo"
-									end: Object {
-										column: 15
-										line: 1
-									}
-									start: Object {
-										column: 12
-										line: 1
-									}
-								}
+								loc: SourceLocation experimental/uncategorised/43/input.js 1:12-1:15 (foo)
 							}
-							loc: Object {
-								filename: "experimental/uncategorised/43/input.js"
-								end: Object {
-									column: 15
-									line: 1
-								}
-								start: Object {
-									column: 12
-									line: 1
-								}
-							}
+							loc: SourceLocation experimental/uncategorised/43/input.js 1:12-1:15
 						}
 						value: JSStringLiteral {
 							value: "bar"
-							loc: Object {
-								filename: "experimental/uncategorised/43/input.js"
-								end: Object {
-									column: 23
-									line: 1
-								}
-								start: Object {
-									column: 18
-									line: 1
-								}
-							}
+							loc: SourceLocation experimental/uncategorised/43/input.js 1:18-1:23
 						}
 						definite: undefined
 						typeAnnotation: undefined
-						loc: Object {
-							filename: "experimental/uncategorised/43/input.js"
-							end: Object {
-								column: 24
-								line: 1
-							}
-							start: Object {
-								column: 12
-								line: 1
-							}
-						}
+						loc: SourceLocation experimental/uncategorised/43/input.js 1:12-1:24
 						meta: JSClassPropertyMeta {
 							abstract: false
 							accessibility: undefined
@@ -137,21 +55,8 @@ JSRoot {
 							readonly: false
 							static: false
 							typeAnnotation: undefined
-							start: Object {
-								column: 12
-								line: 1
-							}
-							loc: Object {
-								filename: "experimental/uncategorised/43/input.js"
-								end: Object {
-									column: 15
-									line: 1
-								}
-								start: Object {
-									column: 12
-									line: 1
-								}
-							}
+							loc: SourceLocation experimental/uncategorised/43/input.js 1:12-1:15
+							start: Position 1:12
 						}
 					}
 				]
@@ -164,6 +69,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

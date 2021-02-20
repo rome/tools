@@ -12,117 +12,35 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "esprima/statement-break/migrated_0003/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "esprima/statement-break/migrated_0003/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation esprima/statement-break/migrated_0003/input.js 1:0-2:0
+	path: UIDPath<esprima/statement-break/migrated_0003/input.js>
 	body: Array [
 		JSLabeledStatement {
-			loc: Object {
-				filename: "esprima/statement-break/migrated_0003/input.js"
-				end: Object {
-					column: 44
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation esprima/statement-break/migrated_0003/input.js 1:0-1:44
 			label: JSIdentifier {
 				name: "__proto__"
-				loc: Object {
-					filename: "esprima/statement-break/migrated_0003/input.js"
-					identifierName: "__proto__"
-					end: Object {
-						column: 9
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/statement-break/migrated_0003/input.js 1:0-1:9 (__proto__)
 			}
 			body: JSWhileStatement {
-				loc: Object {
-					filename: "esprima/statement-break/migrated_0003/input.js"
-					end: Object {
-						column: 44
-						line: 1
-					}
-					start: Object {
-						column: 11
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/statement-break/migrated_0003/input.js 1:11-1:44
 				test: JSBooleanLiteral {
 					value: true
-					loc: Object {
-						filename: "esprima/statement-break/migrated_0003/input.js"
-						end: Object {
-							column: 22
-							line: 1
-						}
-						start: Object {
-							column: 18
-							line: 1
-						}
-					}
+					loc: SourceLocation esprima/statement-break/migrated_0003/input.js 1:18-1:22
 				}
 				body: JSBlockStatement {
 					directives: Array []
-					loc: Object {
-						filename: "esprima/statement-break/migrated_0003/input.js"
-						end: Object {
-							column: 44
-							line: 1
-						}
-						start: Object {
-							column: 24
-							line: 1
-						}
-					}
+					loc: SourceLocation esprima/statement-break/migrated_0003/input.js 1:24-1:44
 					body: Array [
 						JSBreakStatement {
-							loc: Object {
-								filename: "esprima/statement-break/migrated_0003/input.js"
-								end: Object {
-									column: 42
-									line: 1
-								}
-								start: Object {
-									column: 26
-									line: 1
-								}
-							}
+							loc: SourceLocation esprima/statement-break/migrated_0003/input.js 1:26-1:42
 							label: JSIdentifier {
 								name: "__proto__"
-								loc: Object {
-									filename: "esprima/statement-break/migrated_0003/input.js"
-									identifierName: "__proto__"
-									end: Object {
-										column: 41
-										line: 1
-									}
-									start: Object {
-										column: 32
-										line: 1
-									}
-								}
+								loc: SourceLocation esprima/statement-break/migrated_0003/input.js 1:32-1:41 (__proto__)
 							}
 						}
 					]
@@ -136,6 +54,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

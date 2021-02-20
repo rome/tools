@@ -12,266 +12,79 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "es2015/uncategorised/183/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2015/uncategorised/183/input.js"
-		end: Object {
-			column: 33
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2015/uncategorised/183/input.js 1:0-1:33
+	path: UIDPath<es2015/uncategorised/183/input.js>
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "es2015/uncategorised/183/input.js"
-				end: Object {
-					column: 33
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2015/uncategorised/183/input.js 1:0-1:33
 			expression: JSArrowFunctionExpression {
-				loc: Object {
-					filename: "es2015/uncategorised/183/input.js"
-					end: Object {
-						column: 33
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/uncategorised/183/input.js 1:0-1:33
 				body: JSBlockStatement {
 					body: Array []
 					directives: Array []
-					loc: Object {
-						filename: "es2015/uncategorised/183/input.js"
-						end: Object {
-							column: 33
-							line: 1
-						}
-						start: Object {
-							column: 31
-							line: 1
-						}
-					}
+					loc: SourceLocation es2015/uncategorised/183/input.js 1:31-1:33
 				}
 				head: JSFunctionHead {
 					async: false
 					hasHoistedVars: false
 					returnType: undefined
 					thisType: undefined
-					loc: Object {
-						filename: "es2015/uncategorised/183/input.js"
-						end: Object {
-							column: 30
-							line: 1
-						}
-						start: Object {
-							column: 0
-							line: 1
-						}
-					}
+					loc: SourceLocation es2015/uncategorised/183/input.js 1:0-1:30
 					rest: JSBindingIdentifier {
 						name: "f"
-						loc: Object {
-							filename: "es2015/uncategorised/183/input.js"
-							identifierName: "f"
-							end: Object {
-								column: 26
-								line: 1
-							}
-							start: Object {
-								column: 25
-								line: 1
-							}
-						}
+						loc: SourceLocation es2015/uncategorised/183/input.js 1:25-1:26 (f)
 					}
 					params: Array [
 						JSBindingObjectPattern {
 							rest: undefined
-							loc: Object {
-								filename: "es2015/uncategorised/183/input.js"
-								end: Object {
-									column: 12
-									line: 1
-								}
-								start: Object {
-									column: 1
-									line: 1
-								}
-							}
+							loc: SourceLocation es2015/uncategorised/183/input.js 1:1-1:12
 							properties: Array [
 								JSBindingObjectPatternProperty {
 									key: JSStaticPropertyKey {
 										value: JSIdentifier {
 											name: "a"
-											loc: Object {
-												filename: "es2015/uncategorised/183/input.js"
-												identifierName: "a"
-												end: Object {
-													column: 4
-													line: 1
-												}
-												start: Object {
-													column: 3
-													line: 1
-												}
-											}
+											loc: SourceLocation es2015/uncategorised/183/input.js 1:3-1:4 (a)
 										}
-										loc: Object {
-											filename: "es2015/uncategorised/183/input.js"
-											end: Object {
-												column: 4
-												line: 1
-											}
-											start: Object {
-												column: 3
-												line: 1
-											}
-										}
+										loc: SourceLocation es2015/uncategorised/183/input.js 1:3-1:4
 									}
 									value: JSBindingIdentifier {
 										name: "b"
-										loc: Object {
-											filename: "es2015/uncategorised/183/input.js"
-											identifierName: "b"
-											end: Object {
-												column: 7
-												line: 1
-											}
-											start: Object {
-												column: 6
-												line: 1
-											}
-										}
+										loc: SourceLocation es2015/uncategorised/183/input.js 1:6-1:7 (b)
 									}
-									loc: Object {
-										filename: "es2015/uncategorised/183/input.js"
-										end: Object {
-											column: 7
-											line: 1
-										}
-										start: Object {
-											column: 3
-											line: 1
-										}
-									}
+									loc: SourceLocation es2015/uncategorised/183/input.js 1:3-1:7
 								}
 								JSBindingObjectPatternProperty {
 									key: JSStaticPropertyKey {
 										value: JSIdentifier {
 											name: "c"
-											loc: Object {
-												filename: "es2015/uncategorised/183/input.js"
-												identifierName: "c"
-												end: Object {
-													column: 10
-													line: 1
-												}
-												start: Object {
-													column: 9
-													line: 1
-												}
-											}
+											loc: SourceLocation es2015/uncategorised/183/input.js 1:9-1:10 (c)
 										}
-										loc: Object {
-											filename: "es2015/uncategorised/183/input.js"
-											end: Object {
-												column: 10
-												line: 1
-											}
-											start: Object {
-												column: 9
-												line: 1
-											}
-										}
+										loc: SourceLocation es2015/uncategorised/183/input.js 1:9-1:10
 									}
 									value: JSBindingIdentifier {
 										name: "c"
-										loc: Object {
-											filename: "es2015/uncategorised/183/input.js"
-											identifierName: "c"
-											end: Object {
-												column: 10
-												line: 1
-											}
-											start: Object {
-												column: 9
-												line: 1
-											}
-										}
+										loc: SourceLocation es2015/uncategorised/183/input.js 1:9-1:10 (c)
 									}
-									loc: Object {
-										filename: "es2015/uncategorised/183/input.js"
-										end: Object {
-											column: 10
-											line: 1
-										}
-										start: Object {
-											column: 9
-											line: 1
-										}
-									}
+									loc: SourceLocation es2015/uncategorised/183/input.js 1:9-1:10
 								}
 							]
 						}
 						JSBindingArrayPattern {
 							rest: undefined
-							loc: Object {
-								filename: "es2015/uncategorised/183/input.js"
-								end: Object {
-									column: 20
-									line: 1
-								}
-								start: Object {
-									column: 14
-									line: 1
-								}
-							}
+							loc: SourceLocation es2015/uncategorised/183/input.js 1:14-1:20
 							elements: Array [
 								JSBindingIdentifier {
 									name: "d"
-									loc: Object {
-										filename: "es2015/uncategorised/183/input.js"
-										identifierName: "d"
-										end: Object {
-											column: 16
-											line: 1
-										}
-										start: Object {
-											column: 15
-											line: 1
-										}
-									}
+									loc: SourceLocation es2015/uncategorised/183/input.js 1:15-1:16 (d)
 								}
 								JSBindingIdentifier {
 									name: "e"
-									loc: Object {
-										filename: "es2015/uncategorised/183/input.js"
-										identifierName: "e"
-										end: Object {
-											column: 19
-											line: 1
-										}
-										start: Object {
-											column: 18
-											line: 1
-										}
-									}
+									loc: SourceLocation es2015/uncategorised/183/input.js 1:18-1:19 (e)
 								}
 							]
 						}
@@ -286,6 +99,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

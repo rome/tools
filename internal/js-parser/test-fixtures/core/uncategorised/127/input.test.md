@@ -12,202 +12,55 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "core/uncategorised/127/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "core/uncategorised/127/input.js"
-		end: Object {
-			column: 45
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation core/uncategorised/127/input.js 1:0-1:45
+	path: UIDPath<core/uncategorised/127/input.js>
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "core/uncategorised/127/input.js"
-				end: Object {
-					column: 45
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation core/uncategorised/127/input.js 1:0-1:45
 			expression: JSCallExpression {
-				loc: Object {
-					filename: "core/uncategorised/127/input.js"
-					end: Object {
-						column: 45
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation core/uncategorised/127/input.js 1:0-1:45
 				arguments: Array [
 					JSNumericLiteral {
 						value: 2_014
 						format: undefined
-						loc: Object {
-							filename: "core/uncategorised/127/input.js"
-							end: Object {
-								column: 44
-								line: 1
-							}
-							start: Object {
-								column: 40
-								line: 1
-							}
-						}
+						loc: SourceLocation core/uncategorised/127/input.js 1:40-1:44
 					}
 				]
 				callee: JSMemberExpression {
-					loc: Object {
-						filename: "core/uncategorised/127/input.js"
-						end: Object {
-							column: 39
-							line: 1
-						}
-						start: Object {
-							column: 0
-							line: 1
-						}
-					}
+					loc: SourceLocation core/uncategorised/127/input.js 1:0-1:39
 					property: JSStaticMemberProperty {
 						value: JSIdentifier {
 							name: "prepareForElection"
-							loc: Object {
-								filename: "core/uncategorised/127/input.js"
-								identifierName: "prepareForElection"
-								end: Object {
-									column: 39
-									line: 1
-								}
-								start: Object {
-									column: 21
-									line: 1
-								}
-							}
+							loc: SourceLocation core/uncategorised/127/input.js 1:21-1:39 (prepareForElection)
 						}
-						loc: Object {
-							filename: "core/uncategorised/127/input.js"
-							identifierName: "prepareForElection"
-							end: Object {
-								column: 39
-								line: 1
-							}
-							start: Object {
-								column: 21
-								line: 1
-							}
-						}
+						loc: SourceLocation core/uncategorised/127/input.js 1:21-1:39 (prepareForElection)
 					}
 					object: JSMemberExpression {
-						loc: Object {
-							filename: "core/uncategorised/127/input.js"
-							end: Object {
-								column: 20
-								line: 1
-							}
-							start: Object {
-								column: 0
-								line: 1
-							}
-						}
+						loc: SourceLocation core/uncategorised/127/input.js 1:0-1:20
 						property: JSStaticMemberProperty {
 							value: JSIdentifier {
 								name: "Indonesia"
-								loc: Object {
-									filename: "core/uncategorised/127/input.js"
-									identifierName: "Indonesia"
-									end: Object {
-										column: 20
-										line: 1
-									}
-									start: Object {
-										column: 11
-										line: 1
-									}
-								}
+								loc: SourceLocation core/uncategorised/127/input.js 1:11-1:20 (Indonesia)
 							}
-							loc: Object {
-								filename: "core/uncategorised/127/input.js"
-								identifierName: "Indonesia"
-								end: Object {
-									column: 20
-									line: 1
-								}
-								start: Object {
-									column: 11
-									line: 1
-								}
-							}
+							loc: SourceLocation core/uncategorised/127/input.js 1:11-1:20 (Indonesia)
 						}
 						object: JSMemberExpression {
-							loc: Object {
-								filename: "core/uncategorised/127/input.js"
-								end: Object {
-									column: 10
-									line: 1
-								}
-								start: Object {
-									column: 0
-									line: 1
-								}
-							}
+							loc: SourceLocation core/uncategorised/127/input.js 1:0-1:10
 							object: JSReferenceIdentifier {
 								name: "earth"
-								loc: Object {
-									filename: "core/uncategorised/127/input.js"
-									identifierName: "earth"
-									end: Object {
-										column: 5
-										line: 1
-									}
-									start: Object {
-										column: 0
-										line: 1
-									}
-								}
+								loc: SourceLocation core/uncategorised/127/input.js 1:0-1:5 (earth)
 							}
 							property: JSStaticMemberProperty {
 								value: JSIdentifier {
 									name: "asia"
-									loc: Object {
-										filename: "core/uncategorised/127/input.js"
-										identifierName: "asia"
-										end: Object {
-											column: 10
-											line: 1
-										}
-										start: Object {
-											column: 6
-											line: 1
-										}
-									}
+									loc: SourceLocation core/uncategorised/127/input.js 1:6-1:10 (asia)
 								}
-								loc: Object {
-									filename: "core/uncategorised/127/input.js"
-									identifierName: "asia"
-									end: Object {
-										column: 10
-										line: 1
-									}
-									start: Object {
-										column: 6
-										line: 1
-									}
-								}
+								loc: SourceLocation core/uncategorised/127/input.js 1:6-1:10 (asia)
 							}
 						}
 					}
@@ -221,6 +74,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

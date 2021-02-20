@@ -11,143 +11,54 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "esprima/es2015-meta-property/invalid-new-target/input.js"
 	hasHoistedVars: true
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "esprima/es2015-meta-property/invalid-new-target/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation esprima/es2015-meta-property/invalid-new-target/input.js 1:0-2:0
+	path: UIDPath<esprima/es2015-meta-property/invalid-new-target/input.js>
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse"
 				categoryValue: "js"
+				category: Array ["parse"]
 				message: RAW_MARKUP {value: "new.target can only be used in functions or class properties"}
 			}
 			location: Object {
-				filename: "esprima/es2015-meta-property/invalid-new-target/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 18
-					line: 1
-				}
-				start: Object {
-					column: 8
-					line: 1
-				}
+				end: Position 1:18
+				path: UIDPath<esprima/es2015-meta-property/invalid-new-target/input.js>
+				start: Position 1:8
 			}
 		}
 	]
 	body: Array [
 		JSVariableDeclarationStatement {
-			loc: Object {
-				filename: "esprima/es2015-meta-property/invalid-new-target/input.js"
-				end: Object {
-					column: 19
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation esprima/es2015-meta-property/invalid-new-target/input.js 1:0-1:19
 			declaration: JSVariableDeclaration {
 				kind: "var"
-				loc: Object {
-					filename: "esprima/es2015-meta-property/invalid-new-target/input.js"
-					end: Object {
-						column: 19
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/es2015-meta-property/invalid-new-target/input.js 1:0-1:19
 				declarations: Array [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "x"
-							loc: Object {
-								filename: "esprima/es2015-meta-property/invalid-new-target/input.js"
-								identifierName: "x"
-								end: Object {
-									column: 5
-									line: 1
-								}
-								start: Object {
-									column: 4
-									line: 1
-								}
-							}
+							loc: SourceLocation esprima/es2015-meta-property/invalid-new-target/input.js 1:4-1:5 (x)
 						}
-						loc: Object {
-							filename: "esprima/es2015-meta-property/invalid-new-target/input.js"
-							end: Object {
-								column: 18
-								line: 1
-							}
-							start: Object {
-								column: 4
-								line: 1
-							}
-						}
+						loc: SourceLocation esprima/es2015-meta-property/invalid-new-target/input.js 1:4-1:18
 						init: JSMetaProperty {
-							loc: Object {
-								filename: "esprima/es2015-meta-property/invalid-new-target/input.js"
-								end: Object {
-									column: 18
-									line: 1
-								}
-								start: Object {
-									column: 8
-									line: 1
-								}
-							}
+							loc: SourceLocation esprima/es2015-meta-property/invalid-new-target/input.js 1:8-1:18
 							meta: JSIdentifier {
 								name: "new"
-								loc: Object {
-									filename: "esprima/es2015-meta-property/invalid-new-target/input.js"
-									identifierName: "new"
-									end: Object {
-										column: 11
-										line: 1
-									}
-									start: Object {
-										column: 8
-										line: 1
-									}
-								}
+								loc: SourceLocation esprima/es2015-meta-property/invalid-new-target/input.js 1:8-1:11 (new)
 							}
 							property: JSIdentifier {
 								name: "target"
-								loc: Object {
-									filename: "esprima/es2015-meta-property/invalid-new-target/input.js"
-									identifierName: "target"
-									end: Object {
-										column: 18
-										line: 1
-									}
-									start: Object {
-										column: 12
-										line: 1
-									}
-								}
+								loc: SourceLocation esprima/es2015-meta-property/invalid-new-target/input.js 1:12-1:18 (target)
 							}
 						}
 					}
@@ -169,8 +80,5 @@ JSRoot {
     var x = new.target;
             ^^^^^^^^^^
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

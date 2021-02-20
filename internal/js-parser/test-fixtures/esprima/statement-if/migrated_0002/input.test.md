@@ -12,119 +12,37 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "esprima/statement-if/migrated_0002/input.js"
 	hasHoistedVars: true
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "esprima/statement-if/migrated_0002/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation esprima/statement-if/migrated_0002/input.js 1:0-2:0
+	path: UIDPath<esprima/statement-if/migrated_0002/input.js>
 	body: Array [
 		JSIfStatement {
 			alternate: undefined
-			loc: Object {
-				filename: "esprima/statement-if/migrated_0002/input.js"
-				end: Object {
-					column: 23
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation esprima/statement-if/migrated_0002/input.js 1:0-1:23
 			test: JSReferenceIdentifier {
 				name: "morning"
-				loc: Object {
-					filename: "esprima/statement-if/migrated_0002/input.js"
-					identifierName: "morning"
-					end: Object {
-						column: 11
-						line: 1
-					}
-					start: Object {
-						column: 4
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/statement-if/migrated_0002/input.js 1:4-1:11 (morning)
 			}
 			consequent: JSVariableDeclarationStatement {
-				loc: Object {
-					filename: "esprima/statement-if/migrated_0002/input.js"
-					end: Object {
-						column: 23
-						line: 1
-					}
-					start: Object {
-						column: 13
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/statement-if/migrated_0002/input.js 1:13-1:23
 				declaration: JSVariableDeclaration {
 					kind: "var"
-					loc: Object {
-						filename: "esprima/statement-if/migrated_0002/input.js"
-						end: Object {
-							column: 23
-							line: 1
-						}
-						start: Object {
-							column: 13
-							line: 1
-						}
-					}
+					loc: SourceLocation esprima/statement-if/migrated_0002/input.js 1:13-1:23
 					declarations: Array [
 						JSVariableDeclarator {
 							id: JSBindingIdentifier {
 								name: "x"
-								loc: Object {
-									filename: "esprima/statement-if/migrated_0002/input.js"
-									identifierName: "x"
-									end: Object {
-										column: 18
-										line: 1
-									}
-									start: Object {
-										column: 17
-										line: 1
-									}
-								}
+								loc: SourceLocation esprima/statement-if/migrated_0002/input.js 1:17-1:18 (x)
 							}
-							loc: Object {
-								filename: "esprima/statement-if/migrated_0002/input.js"
-								end: Object {
-									column: 22
-									line: 1
-								}
-								start: Object {
-									column: 17
-									line: 1
-								}
-							}
+							loc: SourceLocation esprima/statement-if/migrated_0002/input.js 1:17-1:22
 							init: JSNumericLiteral {
 								value: 0
 								format: undefined
-								loc: Object {
-									filename: "esprima/statement-if/migrated_0002/input.js"
-									end: Object {
-										column: 22
-										line: 1
-									}
-									start: Object {
-										column: 21
-										line: 1
-									}
-								}
+								loc: SourceLocation esprima/statement-if/migrated_0002/input.js 1:21-1:22
 							}
 						}
 					]
@@ -138,6 +56,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

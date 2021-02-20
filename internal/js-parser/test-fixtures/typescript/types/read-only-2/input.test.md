@@ -10,38 +10,18 @@
 JSRoot {
 	corrupt: false
 	directives: Array []
-	filename: "typescript/types/read-only-2/input.ts"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
+	loc: SourceLocation typescript/types/read-only-2/input.ts 1:0-1:32
+	path: UIDPath<typescript/types/read-only-2/input.ts>
 	syntax: Array ["ts"]
-	loc: Object {
-		filename: "typescript/types/read-only-2/input.ts"
-		end: Object {
-			column: 32
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
 	comments: Array [
 		CommentLine {
 			id: "0"
 			value: " Error"
-			loc: Object {
-				filename: "typescript/types/read-only-2/input.ts"
-				end: Object {
-					column: 32
-					line: 1
-				}
-				start: Object {
-					column: 24
-					line: 1
-				}
-			}
+			loc: SourceLocation typescript/types/read-only-2/input.ts 1:24-1:32
 		}
 	]
 	diagnostics: Array [
@@ -49,23 +29,17 @@ JSRoot {
 			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse"
 				categoryValue: "js"
+				category: Array ["parse"]
 				message: RAW_MARKUP {value: "'readonly' type modifier is only permitted on array and tuple literal types."}
 			}
 			location: Object {
-				filename: "typescript/types/read-only-2/input.ts"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 21
-					line: 1
-				}
-				start: Object {
-					column: 20
-					line: 1
-				}
+				end: Position 1:21
+				path: UIDPath<typescript/types/read-only-2/input.ts>
+				start: Position 1:20
 			}
 		}
 	]
@@ -73,72 +47,20 @@ JSRoot {
 		TSTypeAlias {
 			id: JSBindingIdentifier {
 				name: "T31"
-				loc: Object {
-					filename: "typescript/types/read-only-2/input.ts"
-					identifierName: "T31"
-					end: Object {
-						column: 8
-						line: 1
-					}
-					start: Object {
-						column: 5
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/types/read-only-2/input.ts 1:5-1:8 (T31)
 			}
 			typeParameters: undefined
+			loc: SourceLocation typescript/types/read-only-2/input.ts 1:0-1:22
 			trailingComments: Array ["0"]
-			loc: Object {
-				filename: "typescript/types/read-only-2/input.ts"
-				end: Object {
-					column: 22
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
 			right: TSTypeOperator {
 				operator: "readonly"
-				loc: Object {
-					filename: "typescript/types/read-only-2/input.ts"
-					end: Object {
-						column: 21
-						line: 1
-					}
-					start: Object {
-						column: 11
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/types/read-only-2/input.ts 1:11-1:21
 				typeAnnotation: TSTypeReference {
 					typeParameters: undefined
-					loc: Object {
-						filename: "typescript/types/read-only-2/input.ts"
-						end: Object {
-							column: 21
-							line: 1
-						}
-						start: Object {
-							column: 20
-							line: 1
-						}
-					}
+					loc: SourceLocation typescript/types/read-only-2/input.ts 1:20-1:21
 					typeName: JSReferenceIdentifier {
 						name: "T"
-						loc: Object {
-							filename: "typescript/types/read-only-2/input.ts"
-							identifierName: "T"
-							end: Object {
-								column: 21
-								line: 1
-							}
-							start: Object {
-								column: 20
-								line: 1
-							}
-						}
+						loc: SourceLocation typescript/types/read-only-2/input.ts 1:20-1:21 (T)
 					}
 				}
 			}
@@ -158,8 +80,5 @@ JSRoot {
     type T31 = readonly T;  // Error
                         ^
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

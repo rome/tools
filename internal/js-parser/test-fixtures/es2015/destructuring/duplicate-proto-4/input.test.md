@@ -11,87 +11,41 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "es2015/destructuring/duplicate-proto-4/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2015/destructuring/duplicate-proto-4/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2015/destructuring/duplicate-proto-4/input.js 1:0-2:0
+	path: UIDPath<es2015/destructuring/duplicate-proto-4/input.js>
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse"
 				categoryValue: "js"
+				category: Array ["parse"]
 				message: RAW_MARKUP {value: "Redefinition of __proto__ property"}
 			}
 			location: Object {
-				filename: "es2015/destructuring/duplicate-proto-4/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 26
-					line: 1
-				}
-				start: Object {
-					column: 17
-					line: 1
-				}
+				end: Position 1:26
+				path: UIDPath<es2015/destructuring/duplicate-proto-4/input.js>
+				start: Position 1:17
 			}
 		}
 	]
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "es2015/destructuring/duplicate-proto-4/input.js"
-				end: Object {
-					column: 53
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2015/destructuring/duplicate-proto-4/input.js 1:0-1:53
 			expression: JSArrowFunctionExpression {
-				loc: Object {
-					filename: "es2015/destructuring/duplicate-proto-4/input.js"
-					end: Object {
-						column: 52
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/destructuring/duplicate-proto-4/input.js 1:0-1:52
 				body: JSBlockStatement {
 					body: Array []
 					directives: Array []
-					loc: Object {
-						filename: "es2015/destructuring/duplicate-proto-4/input.js"
-						end: Object {
-							column: 52
-							line: 1
-						}
-						start: Object {
-							column: 50
-							line: 1
-						}
-					}
+					loc: SourceLocation es2015/destructuring/duplicate-proto-4/input.js 1:50-1:52
 				}
 				head: JSFunctionHead {
 					async: false
@@ -99,199 +53,53 @@ JSRoot {
 					rest: undefined
 					returnType: undefined
 					thisType: undefined
-					loc: Object {
-						filename: "es2015/destructuring/duplicate-proto-4/input.js"
-						end: Object {
-							column: 49
-							line: 1
-						}
-						start: Object {
-							column: 0
-							line: 1
-						}
-					}
+					loc: SourceLocation es2015/destructuring/duplicate-proto-4/input.js 1:0-1:49
 					params: Array [
 						JSBindingObjectPattern {
 							rest: undefined
-							loc: Object {
-								filename: "es2015/destructuring/duplicate-proto-4/input.js"
-								end: Object {
-									column: 45
-									line: 1
-								}
-								start: Object {
-									column: 1
-									line: 1
-								}
-							}
+							loc: SourceLocation es2015/destructuring/duplicate-proto-4/input.js 1:1-1:45
 							properties: Array [
 								JSBindingObjectPatternProperty {
 									key: JSStaticPropertyKey {
 										value: JSIdentifier {
 											name: "__proto__"
-											loc: Object {
-												filename: "es2015/destructuring/duplicate-proto-4/input.js"
-												identifierName: "__proto__"
-												end: Object {
-													column: 12
-													line: 1
-												}
-												start: Object {
-													column: 3
-													line: 1
-												}
-											}
+											loc: SourceLocation es2015/destructuring/duplicate-proto-4/input.js 1:3-1:12 (__proto__)
 										}
-										loc: Object {
-											filename: "es2015/destructuring/duplicate-proto-4/input.js"
-											end: Object {
-												column: 12
-												line: 1
-											}
-											start: Object {
-												column: 3
-												line: 1
-											}
-										}
+										loc: SourceLocation es2015/destructuring/duplicate-proto-4/input.js 1:3-1:12
 									}
 									value: JSBindingIdentifier {
 										name: "x"
-										loc: Object {
-											filename: "es2015/destructuring/duplicate-proto-4/input.js"
-											identifierName: "x"
-											end: Object {
-												column: 15
-												line: 1
-											}
-											start: Object {
-												column: 14
-												line: 1
-											}
-										}
+										loc: SourceLocation es2015/destructuring/duplicate-proto-4/input.js 1:14-1:15 (x)
 									}
-									loc: Object {
-										filename: "es2015/destructuring/duplicate-proto-4/input.js"
-										end: Object {
-											column: 15
-											line: 1
-										}
-										start: Object {
-											column: 3
-											line: 1
-										}
-									}
+									loc: SourceLocation es2015/destructuring/duplicate-proto-4/input.js 1:3-1:15
 								}
 								JSBindingObjectPatternProperty {
 									key: JSStaticPropertyKey {
 										value: JSIdentifier {
 											name: "__proto__"
-											loc: Object {
-												filename: "es2015/destructuring/duplicate-proto-4/input.js"
-												identifierName: "__proto__"
-												end: Object {
-													column: 26
-													line: 1
-												}
-												start: Object {
-													column: 17
-													line: 1
-												}
-											}
+											loc: SourceLocation es2015/destructuring/duplicate-proto-4/input.js 1:17-1:26 (__proto__)
 										}
-										loc: Object {
-											filename: "es2015/destructuring/duplicate-proto-4/input.js"
-											end: Object {
-												column: 26
-												line: 1
-											}
-											start: Object {
-												column: 17
-												line: 1
-											}
-										}
+										loc: SourceLocation es2015/destructuring/duplicate-proto-4/input.js 1:17-1:26
 									}
 									value: JSBindingIdentifier {
 										name: "y"
-										loc: Object {
-											filename: "es2015/destructuring/duplicate-proto-4/input.js"
-											identifierName: "y"
-											end: Object {
-												column: 29
-												line: 1
-											}
-											start: Object {
-												column: 28
-												line: 1
-											}
-										}
+										loc: SourceLocation es2015/destructuring/duplicate-proto-4/input.js 1:28-1:29 (y)
 									}
-									loc: Object {
-										filename: "es2015/destructuring/duplicate-proto-4/input.js"
-										end: Object {
-											column: 29
-											line: 1
-										}
-										start: Object {
-											column: 17
-											line: 1
-										}
-									}
+									loc: SourceLocation es2015/destructuring/duplicate-proto-4/input.js 1:17-1:29
 								}
 								JSBindingObjectPatternProperty {
 									key: JSStaticPropertyKey {
 										value: JSIdentifier {
 											name: "__proto__"
-											loc: Object {
-												filename: "es2015/destructuring/duplicate-proto-4/input.js"
-												identifierName: "__proto__"
-												end: Object {
-													column: 40
-													line: 1
-												}
-												start: Object {
-													column: 31
-													line: 1
-												}
-											}
+											loc: SourceLocation es2015/destructuring/duplicate-proto-4/input.js 1:31-1:40 (__proto__)
 										}
-										loc: Object {
-											filename: "es2015/destructuring/duplicate-proto-4/input.js"
-											end: Object {
-												column: 40
-												line: 1
-											}
-											start: Object {
-												column: 31
-												line: 1
-											}
-										}
+										loc: SourceLocation es2015/destructuring/duplicate-proto-4/input.js 1:31-1:40
 									}
 									value: JSBindingIdentifier {
 										name: "z"
-										loc: Object {
-											filename: "es2015/destructuring/duplicate-proto-4/input.js"
-											identifierName: "z"
-											end: Object {
-												column: 43
-												line: 1
-											}
-											start: Object {
-												column: 42
-												line: 1
-											}
-										}
+										loc: SourceLocation es2015/destructuring/duplicate-proto-4/input.js 1:42-1:43 (z)
 									}
-									loc: Object {
-										filename: "es2015/destructuring/duplicate-proto-4/input.js"
-										end: Object {
-											column: 43
-											line: 1
-										}
-										start: Object {
-											column: 31
-											line: 1
-										}
-									}
+									loc: SourceLocation es2015/destructuring/duplicate-proto-4/input.js 1:31-1:43
 								}
 							]
 						}
@@ -314,8 +122,5 @@ JSRoot {
     ({ __proto__: x, __proto__: y, __proto__: z }) => {};
                      ^^^^^^^^^
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

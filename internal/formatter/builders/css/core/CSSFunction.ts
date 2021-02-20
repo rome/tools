@@ -1,6 +1,12 @@
 import {CSSFunction} from "@internal/ast";
-import {Builder, Token} from "@internal/formatter";
+import {Builder, Token, concat} from "@internal/formatter";
+import {printCommaList} from "../utils";
 
 export default function CSSFunction(builder: Builder, node: CSSFunction): Token {
-	throw new Error("unimplemented");
+	return concat([
+		node.name,
+		"(",
+		printCommaList(builder, node.params, node),
+		")",
+	]);
 }

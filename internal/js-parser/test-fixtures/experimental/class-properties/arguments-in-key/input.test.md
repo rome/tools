@@ -12,51 +12,20 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "experimental/class-properties/arguments-in-key/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "experimental/class-properties/arguments-in-key/input.js"
-		end: Object {
-			column: 1
-			line: 5
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation experimental/class-properties/arguments-in-key/input.js 1:0-5:1
+	path: UIDPath<experimental/class-properties/arguments-in-key/input.js>
 	body: Array [
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "fn"
-				loc: Object {
-					filename: "experimental/class-properties/arguments-in-key/input.js"
-					identifierName: "fn"
-					end: Object {
-						column: 11
-						line: 1
-					}
-					start: Object {
-						column: 9
-						line: 1
-					}
-				}
+				loc: SourceLocation experimental/class-properties/arguments-in-key/input.js 1:9-1:11 (fn)
 			}
-			loc: Object {
-				filename: "experimental/class-properties/arguments-in-key/input.js"
-				end: Object {
-					column: 1
-					line: 5
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation experimental/class-properties/arguments-in-key/input.js 1:0-5:1
 			head: JSFunctionHead {
 				async: false
 				generator: false
@@ -66,133 +35,41 @@ JSRoot {
 				returnType: undefined
 				thisType: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "experimental/class-properties/arguments-in-key/input.js"
-					end: Object {
-						column: 13
-						line: 1
-					}
-					start: Object {
-						column: 11
-						line: 1
-					}
-				}
+				loc: SourceLocation experimental/class-properties/arguments-in-key/input.js 1:11-1:13
 			}
 			body: JSBlockStatement {
 				directives: Array []
-				loc: Object {
-					filename: "experimental/class-properties/arguments-in-key/input.js"
-					end: Object {
-						column: 1
-						line: 5
-					}
-					start: Object {
-						column: 14
-						line: 1
-					}
-				}
+				loc: SourceLocation experimental/class-properties/arguments-in-key/input.js 1:14-5:1
 				body: Array [
 					JSClassDeclaration {
 						id: JSBindingIdentifier {
 							name: "A"
-							loc: Object {
-								filename: "experimental/class-properties/arguments-in-key/input.js"
-								identifierName: "A"
-								end: Object {
-									column: 9
-									line: 2
-								}
-								start: Object {
-									column: 8
-									line: 2
-								}
-							}
+							loc: SourceLocation experimental/class-properties/arguments-in-key/input.js 2:8-2:9 (A)
 						}
-						loc: Object {
-							filename: "experimental/class-properties/arguments-in-key/input.js"
-							end: Object {
-								column: 3
-								line: 4
-							}
-							start: Object {
-								column: 2
-								line: 2
-							}
-						}
+						loc: SourceLocation experimental/class-properties/arguments-in-key/input.js 2:2-4:3
 						meta: JSClassHead {
 							implements: undefined
 							superClass: undefined
 							superTypeParameters: undefined
 							typeParameters: undefined
-							loc: Object {
-								filename: "experimental/class-properties/arguments-in-key/input.js"
-								end: Object {
-									column: 3
-									line: 4
-								}
-								start: Object {
-									column: 2
-									line: 2
-								}
-							}
+							loc: SourceLocation experimental/class-properties/arguments-in-key/input.js 2:2-4:3
 							body: Array [
 								JSClassProperty {
 									key: JSComputedPropertyKey {
 										value: JSReferenceIdentifier {
 											name: "arguments"
-											loc: Object {
-												filename: "experimental/class-properties/arguments-in-key/input.js"
-												identifierName: "arguments"
-												end: Object {
-													column: 14
-													line: 3
-												}
-												start: Object {
-													column: 5
-													line: 3
-												}
-											}
+											loc: SourceLocation experimental/class-properties/arguments-in-key/input.js 3:5-3:14 (arguments)
 										}
-										loc: Object {
-											filename: "experimental/class-properties/arguments-in-key/input.js"
-											end: Object {
-												column: 15
-												line: 3
-											}
-											start: Object {
-												column: 4
-												line: 3
-											}
-										}
+										loc: SourceLocation experimental/class-properties/arguments-in-key/input.js 3:4-3:15
 									}
 									value: JSNumericLiteral {
 										value: 2
 										format: undefined
-										loc: Object {
-											filename: "experimental/class-properties/arguments-in-key/input.js"
-											end: Object {
-												column: 19
-												line: 3
-											}
-											start: Object {
-												column: 18
-												line: 3
-											}
-										}
+										loc: SourceLocation experimental/class-properties/arguments-in-key/input.js 3:18-3:19
 									}
 									definite: undefined
 									typeAnnotation: undefined
-									loc: Object {
-										filename: "experimental/class-properties/arguments-in-key/input.js"
-										end: Object {
-											column: 20
-											line: 3
-										}
-										start: Object {
-											column: 4
-											line: 3
-										}
-									}
+									loc: SourceLocation experimental/class-properties/arguments-in-key/input.js 3:4-3:20
 									meta: JSClassPropertyMeta {
 										abstract: false
 										accessibility: undefined
@@ -200,21 +77,8 @@ JSRoot {
 										readonly: false
 										static: false
 										typeAnnotation: undefined
-										start: Object {
-											column: 4
-											line: 3
-										}
-										loc: Object {
-											filename: "experimental/class-properties/arguments-in-key/input.js"
-											end: Object {
-												column: 15
-												line: 3
-											}
-											start: Object {
-												column: 4
-												line: 3
-											}
-										}
+										loc: SourceLocation experimental/class-properties/arguments-in-key/input.js 3:4-3:15
+										start: Position 3:4
 									}
 								}
 							]
@@ -230,6 +94,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

@@ -12,457 +12,118 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "es2020/optional-chaining/parenthised-chain/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2020/optional-chaining/parenthised-chain/input.js"
-		end: Object {
-			column: 15
-			line: 5
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2020/optional-chaining/parenthised-chain/input.js 1:0-5:15
+	path: UIDPath<es2020/optional-chaining/parenthised-chain/input.js>
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "es2020/optional-chaining/parenthised-chain/input.js"
-				end: Object {
-					column: 9
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2020/optional-chaining/parenthised-chain/input.js 1:0-1:9
 			expression: JSMemberExpression {
-				loc: Object {
-					filename: "es2020/optional-chaining/parenthised-chain/input.js"
-					end: Object {
-						column: 8
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation es2020/optional-chaining/parenthised-chain/input.js 1:0-1:8
 				property: JSStaticMemberProperty {
 					value: JSIdentifier {
 						name: "c"
-						loc: Object {
-							filename: "es2020/optional-chaining/parenthised-chain/input.js"
-							identifierName: "c"
-							end: Object {
-								column: 8
-								line: 1
-							}
-							start: Object {
-								column: 7
-								line: 1
-							}
-						}
+						loc: SourceLocation es2020/optional-chaining/parenthised-chain/input.js 1:7-1:8 (c)
 					}
-					loc: Object {
-						filename: "es2020/optional-chaining/parenthised-chain/input.js"
-						identifierName: "c"
-						end: Object {
-							column: 8
-							line: 1
-						}
-						start: Object {
-							column: 7
-							line: 1
-						}
-					}
+					loc: SourceLocation es2020/optional-chaining/parenthised-chain/input.js 1:7-1:8 (c)
 				}
 				object: JSMemberExpression {
-					loc: Object {
-						filename: "es2020/optional-chaining/parenthised-chain/input.js"
-						end: Object {
-							column: 5
-							line: 1
-						}
-						start: Object {
-							column: 1
-							line: 1
-						}
-					}
+					loc: SourceLocation es2020/optional-chaining/parenthised-chain/input.js 1:1-1:5
 					object: JSReferenceIdentifier {
 						name: "a"
-						loc: Object {
-							filename: "es2020/optional-chaining/parenthised-chain/input.js"
-							identifierName: "a"
-							end: Object {
-								column: 2
-								line: 1
-							}
-							start: Object {
-								column: 1
-								line: 1
-							}
-						}
+						loc: SourceLocation es2020/optional-chaining/parenthised-chain/input.js 1:1-1:2 (a)
 					}
 					property: JSStaticMemberProperty {
 						value: JSIdentifier {
 							name: "b"
-							loc: Object {
-								filename: "es2020/optional-chaining/parenthised-chain/input.js"
-								identifierName: "b"
-								end: Object {
-									column: 5
-									line: 1
-								}
-								start: Object {
-									column: 4
-									line: 1
-								}
-							}
+							loc: SourceLocation es2020/optional-chaining/parenthised-chain/input.js 1:4-1:5 (b)
 						}
 						optional: true
-						loc: Object {
-							filename: "es2020/optional-chaining/parenthised-chain/input.js"
-							identifierName: "b"
-							end: Object {
-								column: 5
-								line: 1
-							}
-							start: Object {
-								column: 4
-								line: 1
-							}
-						}
+						loc: SourceLocation es2020/optional-chaining/parenthised-chain/input.js 1:4-1:5 (b)
 					}
 				}
 			}
 		}
 		JSExpressionStatement {
-			loc: Object {
-				filename: "es2020/optional-chaining/parenthised-chain/input.js"
-				end: Object {
-					column: 11
-					line: 3
-				}
-				start: Object {
-					column: 0
-					line: 3
-				}
-			}
+			loc: SourceLocation es2020/optional-chaining/parenthised-chain/input.js 3:0-3:11
 			expression: JSCallExpression {
 				arguments: Array []
-				loc: Object {
-					filename: "es2020/optional-chaining/parenthised-chain/input.js"
-					end: Object {
-						column: 10
-						line: 3
-					}
-					start: Object {
-						column: 0
-						line: 3
-					}
-				}
+				loc: SourceLocation es2020/optional-chaining/parenthised-chain/input.js 3:0-3:10
 				callee: JSMemberExpression {
-					loc: Object {
-						filename: "es2020/optional-chaining/parenthised-chain/input.js"
-						end: Object {
-							column: 8
-							line: 3
-						}
-						start: Object {
-							column: 0
-							line: 3
-						}
-					}
+					loc: SourceLocation es2020/optional-chaining/parenthised-chain/input.js 3:0-3:8
 					property: JSStaticMemberProperty {
 						value: JSIdentifier {
 							name: "c"
-							loc: Object {
-								filename: "es2020/optional-chaining/parenthised-chain/input.js"
-								identifierName: "c"
-								end: Object {
-									column: 8
-									line: 3
-								}
-								start: Object {
-									column: 7
-									line: 3
-								}
-							}
+							loc: SourceLocation es2020/optional-chaining/parenthised-chain/input.js 3:7-3:8 (c)
 						}
-						loc: Object {
-							filename: "es2020/optional-chaining/parenthised-chain/input.js"
-							identifierName: "c"
-							end: Object {
-								column: 8
-								line: 3
-							}
-							start: Object {
-								column: 7
-								line: 3
-							}
-						}
+						loc: SourceLocation es2020/optional-chaining/parenthised-chain/input.js 3:7-3:8 (c)
 					}
 					object: JSMemberExpression {
-						loc: Object {
-							filename: "es2020/optional-chaining/parenthised-chain/input.js"
-							end: Object {
-								column: 5
-								line: 3
-							}
-							start: Object {
-								column: 1
-								line: 3
-							}
-						}
+						loc: SourceLocation es2020/optional-chaining/parenthised-chain/input.js 3:1-3:5
 						object: JSReferenceIdentifier {
 							name: "a"
-							loc: Object {
-								filename: "es2020/optional-chaining/parenthised-chain/input.js"
-								identifierName: "a"
-								end: Object {
-									column: 2
-									line: 3
-								}
-								start: Object {
-									column: 1
-									line: 3
-								}
-							}
+							loc: SourceLocation es2020/optional-chaining/parenthised-chain/input.js 3:1-3:2 (a)
 						}
 						property: JSStaticMemberProperty {
 							value: JSIdentifier {
 								name: "b"
-								loc: Object {
-									filename: "es2020/optional-chaining/parenthised-chain/input.js"
-									identifierName: "b"
-									end: Object {
-										column: 5
-										line: 3
-									}
-									start: Object {
-										column: 4
-										line: 3
-									}
-								}
+								loc: SourceLocation es2020/optional-chaining/parenthised-chain/input.js 3:4-3:5 (b)
 							}
 							optional: true
-							loc: Object {
-								filename: "es2020/optional-chaining/parenthised-chain/input.js"
-								identifierName: "b"
-								end: Object {
-									column: 5
-									line: 3
-								}
-								start: Object {
-									column: 4
-									line: 3
-								}
-							}
+							loc: SourceLocation es2020/optional-chaining/parenthised-chain/input.js 3:4-3:5 (b)
 						}
 					}
 				}
 			}
 		}
 		JSExpressionStatement {
-			loc: Object {
-				filename: "es2020/optional-chaining/parenthised-chain/input.js"
-				end: Object {
-					column: 15
-					line: 5
-				}
-				start: Object {
-					column: 0
-					line: 5
-				}
-			}
+			loc: SourceLocation es2020/optional-chaining/parenthised-chain/input.js 5:0-5:15
 			expression: JSMemberExpression {
-				loc: Object {
-					filename: "es2020/optional-chaining/parenthised-chain/input.js"
-					end: Object {
-						column: 14
-						line: 5
-					}
-					start: Object {
-						column: 0
-						line: 5
-					}
-				}
+				loc: SourceLocation es2020/optional-chaining/parenthised-chain/input.js 5:0-5:14
 				property: JSStaticMemberProperty {
 					value: JSIdentifier {
 						name: "e"
-						loc: Object {
-							filename: "es2020/optional-chaining/parenthised-chain/input.js"
-							identifierName: "e"
-							end: Object {
-								column: 14
-								line: 5
-							}
-							start: Object {
-								column: 13
-								line: 5
-							}
-						}
+						loc: SourceLocation es2020/optional-chaining/parenthised-chain/input.js 5:13-5:14 (e)
 					}
 					optional: true
-					loc: Object {
-						filename: "es2020/optional-chaining/parenthised-chain/input.js"
-						identifierName: "e"
-						end: Object {
-							column: 14
-							line: 5
-						}
-						start: Object {
-							column: 13
-							line: 5
-						}
-					}
+					loc: SourceLocation es2020/optional-chaining/parenthised-chain/input.js 5:13-5:14 (e)
 				}
 				object: JSMemberExpression {
-					loc: Object {
-						filename: "es2020/optional-chaining/parenthised-chain/input.js"
-						end: Object {
-							column: 11
-							line: 5
-						}
-						start: Object {
-							column: 0
-							line: 5
-						}
-					}
+					loc: SourceLocation es2020/optional-chaining/parenthised-chain/input.js 5:0-5:11
 					property: JSStaticMemberProperty {
 						value: JSIdentifier {
 							name: "d"
-							loc: Object {
-								filename: "es2020/optional-chaining/parenthised-chain/input.js"
-								identifierName: "d"
-								end: Object {
-									column: 11
-									line: 5
-								}
-								start: Object {
-									column: 10
-									line: 5
-								}
-							}
+							loc: SourceLocation es2020/optional-chaining/parenthised-chain/input.js 5:10-5:11 (d)
 						}
-						loc: Object {
-							filename: "es2020/optional-chaining/parenthised-chain/input.js"
-							identifierName: "d"
-							end: Object {
-								column: 11
-								line: 5
-							}
-							start: Object {
-								column: 10
-								line: 5
-							}
-						}
+						loc: SourceLocation es2020/optional-chaining/parenthised-chain/input.js 5:10-5:11 (d)
 					}
 					object: JSMemberExpression {
-						loc: Object {
-							filename: "es2020/optional-chaining/parenthised-chain/input.js"
-							end: Object {
-								column: 9
-								line: 5
-							}
-							start: Object {
-								column: 0
-								line: 5
-							}
-						}
+						loc: SourceLocation es2020/optional-chaining/parenthised-chain/input.js 5:0-5:9
 						property: JSStaticMemberProperty {
 							value: JSIdentifier {
 								name: "c"
-								loc: Object {
-									filename: "es2020/optional-chaining/parenthised-chain/input.js"
-									identifierName: "c"
-									end: Object {
-										column: 9
-										line: 5
-									}
-									start: Object {
-										column: 8
-										line: 5
-									}
-								}
+								loc: SourceLocation es2020/optional-chaining/parenthised-chain/input.js 5:8-5:9 (c)
 							}
 							optional: true
-							loc: Object {
-								filename: "es2020/optional-chaining/parenthised-chain/input.js"
-								identifierName: "c"
-								end: Object {
-									column: 9
-									line: 5
-								}
-								start: Object {
-									column: 8
-									line: 5
-								}
-							}
+							loc: SourceLocation es2020/optional-chaining/parenthised-chain/input.js 5:8-5:9 (c)
 						}
 						object: JSMemberExpression {
-							loc: Object {
-								filename: "es2020/optional-chaining/parenthised-chain/input.js"
-								end: Object {
-									column: 5
-									line: 5
-								}
-								start: Object {
-									column: 1
-									line: 5
-								}
-							}
+							loc: SourceLocation es2020/optional-chaining/parenthised-chain/input.js 5:1-5:5
 							object: JSReferenceIdentifier {
 								name: "a"
-								loc: Object {
-									filename: "es2020/optional-chaining/parenthised-chain/input.js"
-									identifierName: "a"
-									end: Object {
-										column: 2
-										line: 5
-									}
-									start: Object {
-										column: 1
-										line: 5
-									}
-								}
+								loc: SourceLocation es2020/optional-chaining/parenthised-chain/input.js 5:1-5:2 (a)
 							}
 							property: JSStaticMemberProperty {
 								value: JSIdentifier {
 									name: "b"
-									loc: Object {
-										filename: "es2020/optional-chaining/parenthised-chain/input.js"
-										identifierName: "b"
-										end: Object {
-											column: 5
-											line: 5
-										}
-										start: Object {
-											column: 4
-											line: 5
-										}
-									}
+									loc: SourceLocation es2020/optional-chaining/parenthised-chain/input.js 5:4-5:5 (b)
 								}
 								optional: true
-								loc: Object {
-									filename: "es2020/optional-chaining/parenthised-chain/input.js"
-									identifierName: "b"
-									end: Object {
-										column: 5
-										line: 5
-									}
-									start: Object {
-										column: 4
-										line: 5
-									}
-								}
+								loc: SourceLocation es2020/optional-chaining/parenthised-chain/input.js 5:4-5:5 (b)
 							}
 						}
 					}
@@ -476,6 +137,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

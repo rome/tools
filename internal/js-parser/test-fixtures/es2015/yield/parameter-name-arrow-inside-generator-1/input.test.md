@@ -11,45 +11,29 @@ JSRoot {
 	comments: Array []
 	corrupt: true
 	directives: Array []
-	filename: "es2015/yield/parameter-name-arrow-inside-generator-1/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2015/yield/parameter-name-arrow-inside-generator-1/input.js"
-		end: Object {
-			column: 1
-			line: 3
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2015/yield/parameter-name-arrow-inside-generator-1/input.js 1:0-3:1
+	path: UIDPath<es2015/yield/parameter-name-arrow-inside-generator-1/input.js>
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse"
 				categoryValue: "js"
+				category: Array ["parse"]
 				message: RAW_MARKUP {value: "yield is not allowed in generator parameters"}
 			}
 			location: Object {
-				filename: "es2015/yield/parameter-name-arrow-inside-generator-1/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 8
-					line: 2
-				}
-				start: Object {
-					column: 8
-					line: 2
-				}
+				end: Position 2:8
+				path: UIDPath<es2015/yield/parameter-name-arrow-inside-generator-1/input.js>
+				start: Position 2:8
 			}
 		}
 	]
@@ -57,30 +41,9 @@ JSRoot {
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "fn"
-				loc: Object {
-					filename: "es2015/yield/parameter-name-arrow-inside-generator-1/input.js"
-					identifierName: "fn"
-					end: Object {
-						column: 12
-						line: 1
-					}
-					start: Object {
-						column: 10
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/yield/parameter-name-arrow-inside-generator-1/input.js 1:10-1:12 (fn)
 			}
-			loc: Object {
-				filename: "es2015/yield/parameter-name-arrow-inside-generator-1/input.js"
-				end: Object {
-					column: 1
-					line: 3
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2015/yield/parameter-name-arrow-inside-generator-1/input.js 1:0-3:1
 			head: JSFunctionHead {
 				async: false
 				generator: true
@@ -90,70 +53,20 @@ JSRoot {
 				returnType: undefined
 				thisType: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "es2015/yield/parameter-name-arrow-inside-generator-1/input.js"
-					end: Object {
-						column: 14
-						line: 1
-					}
-					start: Object {
-						column: 12
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/yield/parameter-name-arrow-inside-generator-1/input.js 1:12-1:14
 			}
 			body: JSBlockStatement {
 				directives: Array []
-				loc: Object {
-					filename: "es2015/yield/parameter-name-arrow-inside-generator-1/input.js"
-					end: Object {
-						column: 1
-						line: 3
-					}
-					start: Object {
-						column: 15
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/yield/parameter-name-arrow-inside-generator-1/input.js 1:15-3:1
 				body: Array [
 					JSExpressionStatement {
-						loc: Object {
-							filename: "es2015/yield/parameter-name-arrow-inside-generator-1/input.js"
-							end: Object {
-								column: 16
-								line: 2
-							}
-							start: Object {
-								column: 2
-								line: 2
-							}
-						}
+						loc: SourceLocation es2015/yield/parameter-name-arrow-inside-generator-1/input.js 2:2-2:16
 						expression: JSArrowFunctionExpression {
-							loc: Object {
-								filename: "es2015/yield/parameter-name-arrow-inside-generator-1/input.js"
-								end: Object {
-									column: 15
-									line: 2
-								}
-								start: Object {
-									column: 2
-									line: 2
-								}
-							}
+							loc: SourceLocation es2015/yield/parameter-name-arrow-inside-generator-1/input.js 2:2-2:15
 							body: JSBlockStatement {
 								body: Array []
 								directives: Array []
-								loc: Object {
-									filename: "es2015/yield/parameter-name-arrow-inside-generator-1/input.js"
-									end: Object {
-										column: 15
-										line: 2
-									}
-									start: Object {
-										column: 13
-										line: 2
-									}
-								}
+								loc: SourceLocation es2015/yield/parameter-name-arrow-inside-generator-1/input.js 2:13-2:15
 							}
 							head: JSFunctionHead {
 								async: false
@@ -161,31 +74,11 @@ JSRoot {
 								rest: undefined
 								returnType: undefined
 								thisType: undefined
-								loc: Object {
-									filename: "es2015/yield/parameter-name-arrow-inside-generator-1/input.js"
-									end: Object {
-										column: 12
-										line: 2
-									}
-									start: Object {
-										column: 2
-										line: 2
-									}
-								}
+								loc: SourceLocation es2015/yield/parameter-name-arrow-inside-generator-1/input.js 2:2-2:12
 								params: Array [
 									JSBindingIdentifier {
 										name: "INVALID_PLACEHOLDER"
-										loc: Object {
-											filename: "es2015/yield/parameter-name-arrow-inside-generator-1/input.js"
-											end: Object {
-												column: 12
-												line: 2
-											}
-											start: Object {
-												column: 13
-												line: 2
-											}
-										}
+										loc: SourceLocation es2015/yield/parameter-name-arrow-inside-generator-1/input.js 2:13-2:12
 									}
 								]
 							}
@@ -211,8 +104,5 @@ JSRoot {
       │         ^
     3 │ }
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

@@ -11,45 +11,29 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "esprima/es2015-yield/invalid-yield-generator-arrow-default/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "esprima/es2015-yield/invalid-yield-generator-arrow-default/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation esprima/es2015-yield/invalid-yield-generator-arrow-default/input.js 1:0-2:0
+	path: UIDPath<esprima/es2015-yield/invalid-yield-generator-arrow-default/input.js>
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse"
 				categoryValue: "js"
+				category: Array ["parse"]
 				message: RAW_MARKUP {value: "yield is not allowed in generator parameters"}
 			}
 			location: Object {
-				filename: "esprima/es2015-yield/invalid-yield-generator-arrow-default/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 26
-					line: 1
-				}
-				start: Object {
-					column: 26
-					line: 1
-				}
+				end: Position 1:26
+				path: UIDPath<esprima/es2015-yield/invalid-yield-generator-arrow-default/input.js>
+				start: Position 1:26
 			}
 		}
 	]
@@ -57,30 +41,9 @@ JSRoot {
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "g"
-				loc: Object {
-					filename: "esprima/es2015-yield/invalid-yield-generator-arrow-default/input.js"
-					identifierName: "g"
-					end: Object {
-						column: 11
-						line: 1
-					}
-					start: Object {
-						column: 10
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/es2015-yield/invalid-yield-generator-arrow-default/input.js 1:10-1:11 (g)
 			}
-			loc: Object {
-				filename: "esprima/es2015-yield/invalid-yield-generator-arrow-default/input.js"
-				end: Object {
-					column: 38
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation esprima/es2015-yield/invalid-yield-generator-arrow-default/input.js 1:0-1:38
 			head: JSFunctionHead {
 				async: false
 				generator: true
@@ -90,70 +53,20 @@ JSRoot {
 				returnType: undefined
 				thisType: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "esprima/es2015-yield/invalid-yield-generator-arrow-default/input.js"
-					end: Object {
-						column: 13
-						line: 1
-					}
-					start: Object {
-						column: 11
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/es2015-yield/invalid-yield-generator-arrow-default/input.js 1:11-1:13
 			}
 			body: JSBlockStatement {
 				directives: Array []
-				loc: Object {
-					filename: "esprima/es2015-yield/invalid-yield-generator-arrow-default/input.js"
-					end: Object {
-						column: 38
-						line: 1
-					}
-					start: Object {
-						column: 14
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/es2015-yield/invalid-yield-generator-arrow-default/input.js 1:14-1:38
 				body: Array [
 					JSExpressionStatement {
-						loc: Object {
-							filename: "esprima/es2015-yield/invalid-yield-generator-arrow-default/input.js"
-							end: Object {
-								column: 36
-								line: 1
-							}
-							start: Object {
-								column: 16
-								line: 1
-							}
-						}
+						loc: SourceLocation esprima/es2015-yield/invalid-yield-generator-arrow-default/input.js 1:16-1:36
 						expression: JSArrowFunctionExpression {
-							loc: Object {
-								filename: "esprima/es2015-yield/invalid-yield-generator-arrow-default/input.js"
-								end: Object {
-									column: 36
-									line: 1
-								}
-								start: Object {
-									column: 16
-									line: 1
-								}
-							}
+							loc: SourceLocation esprima/es2015-yield/invalid-yield-generator-arrow-default/input.js 1:16-1:36
 							body: JSBlockStatement {
 								body: Array []
 								directives: Array []
-								loc: Object {
-									filename: "esprima/es2015-yield/invalid-yield-generator-arrow-default/input.js"
-									end: Object {
-										column: 36
-										line: 1
-									}
-									start: Object {
-										column: 34
-										line: 1
-									}
-								}
+								loc: SourceLocation esprima/es2015-yield/invalid-yield-generator-arrow-default/input.js 1:34-1:36
 							}
 							head: JSFunctionHead {
 								async: false
@@ -161,73 +74,22 @@ JSRoot {
 								rest: undefined
 								returnType: undefined
 								thisType: undefined
-								loc: Object {
-									filename: "esprima/es2015-yield/invalid-yield-generator-arrow-default/input.js"
-									end: Object {
-										column: 33
-										line: 1
-									}
-									start: Object {
-										column: 16
-										line: 1
-									}
-								}
+								loc: SourceLocation esprima/es2015-yield/invalid-yield-generator-arrow-default/input.js 1:16-1:33
 								params: Array [
 									JSBindingAssignmentPattern {
 										operator: "="
-										loc: Object {
-											filename: "esprima/es2015-yield/invalid-yield-generator-arrow-default/input.js"
-											end: Object {
-												column: 29
-												line: 1
-											}
-											start: Object {
-												column: 17
-												line: 1
-											}
-										}
+										loc: SourceLocation esprima/es2015-yield/invalid-yield-generator-arrow-default/input.js 1:17-1:29
 										left: JSBindingIdentifier {
 											name: "x"
-											loc: Object {
-												filename: "esprima/es2015-yield/invalid-yield-generator-arrow-default/input.js"
-												identifierName: "x"
-												end: Object {
-													column: 18
-													line: 1
-												}
-												start: Object {
-													column: 17
-													line: 1
-												}
-											}
+											loc: SourceLocation esprima/es2015-yield/invalid-yield-generator-arrow-default/input.js 1:17-1:18 (x)
 										}
 										right: JSYieldExpression {
 											delegate: false
-											loc: Object {
-												filename: "esprima/es2015-yield/invalid-yield-generator-arrow-default/input.js"
-												end: Object {
-													column: 29
-													line: 1
-												}
-												start: Object {
-													column: 21
-													line: 1
-												}
-											}
+											loc: SourceLocation esprima/es2015-yield/invalid-yield-generator-arrow-default/input.js 1:21-1:29
 											argument: JSNumericLiteral {
 												value: 42
 												format: undefined
-												loc: Object {
-													filename: "esprima/es2015-yield/invalid-yield-generator-arrow-default/input.js"
-													end: Object {
-														column: 29
-														line: 1
-													}
-													start: Object {
-														column: 27
-														line: 1
-													}
-												}
+												loc: SourceLocation esprima/es2015-yield/invalid-yield-generator-arrow-default/input.js 1:27-1:29
 											}
 										}
 									}
@@ -253,8 +115,5 @@ JSRoot {
     function* g() { (x = yield 42) => {} }
                               ^
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

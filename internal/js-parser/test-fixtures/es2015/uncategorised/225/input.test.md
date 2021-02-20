@@ -11,131 +11,52 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "es2015/uncategorised/225/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2015/uncategorised/225/input.js"
-		end: Object {
-			column: 7
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2015/uncategorised/225/input.js 1:0-2:7
+	path: UIDPath<es2015/uncategorised/225/input.js>
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse"
 				categoryValue: "js"
+				category: Array ["parse"]
 				message: RAW_MARKUP {value: "Expected a semicolon or a line terminator"}
 			}
 			location: Object {
-				filename: "es2015/uncategorised/225/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 5
-					line: 2
-				}
-				start: Object {
-					column: 6
-					line: 2
-				}
+				end: Position 2:5
+				path: UIDPath<es2015/uncategorised/225/input.js>
+				start: Position 2:6
 			}
 		}
 	]
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "es2015/uncategorised/225/input.js"
-				end: Object {
-					column: 1
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2015/uncategorised/225/input.js 1:0-1:1
 			expression: JSReferenceIdentifier {
 				name: "x"
-				loc: Object {
-					filename: "es2015/uncategorised/225/input.js"
-					identifierName: "x"
-					end: Object {
-						column: 1
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/uncategorised/225/input.js 1:0-1:1 (x)
 			}
 		}
 		JSExpressionStatement {
-			loc: Object {
-				filename: "es2015/uncategorised/225/input.js"
-				end: Object {
-					column: 5
-					line: 2
-				}
-				start: Object {
-					column: 1
-					line: 2
-				}
-			}
+			loc: SourceLocation es2015/uncategorised/225/input.js 2:1-2:5
 			expression: JSReferenceIdentifier {
 				name: "isnt"
-				loc: Object {
-					filename: "es2015/uncategorised/225/input.js"
-					identifierName: "isnt"
-					end: Object {
-						column: 5
-						line: 2
-					}
-					start: Object {
-						column: 1
-						line: 2
-					}
-				}
+				loc: SourceLocation es2015/uncategorised/225/input.js 2:1-2:5 (isnt)
 			}
 		}
 		JSExpressionStatement {
-			loc: Object {
-				filename: "es2015/uncategorised/225/input.js"
-				end: Object {
-					column: 7
-					line: 2
-				}
-				start: Object {
-					column: 6
-					line: 2
-				}
-			}
+			loc: SourceLocation es2015/uncategorised/225/input.js 2:6-2:7
 			expression: JSReferenceIdentifier {
 				name: "y"
-				loc: Object {
-					filename: "es2015/uncategorised/225/input.js"
-					identifierName: "y"
-					end: Object {
-						column: 7
-						line: 2
-					}
-					start: Object {
-						column: 6
-						line: 2
-					}
-				}
+				loc: SourceLocation es2015/uncategorised/225/input.js 2:6-2:7 (y)
 			}
 		}
 	]
@@ -154,8 +75,5 @@ JSRoot {
   > 2 │  isnt y
       │       ^
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

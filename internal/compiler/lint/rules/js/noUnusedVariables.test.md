@@ -17,9 +17,6 @@
 
   ℹ Unused variables are dead code and usually the result of incomplete refactoring.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -43,9 +40,6 @@ const a = 4;
 
   ℹ Unused variables are dead code and usually the result of incomplete refactoring.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -75,11 +69,13 @@ let a = 4;
 
   ✖ The function variable foo is unused.
 
+  > 1 │ function foo(myVar) {
+      │          ^^^
+    2 │   console.log('foo');
+    3 │ };
+
   ℹ Unused variables are dead code and usually the result of incomplete refactoring.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 2 problems
 
 ```
 
@@ -107,9 +103,6 @@ function foo(myVar) {
 
   ℹ Unused variables are dead code and usually the result of incomplete refactoring.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -142,11 +135,13 @@ foo();
 
   ✖ The const variable foo is unused.
 
+  > 1 │ const foo = (b) => {
+      │       ^^^
+    2 │   console.log('foo');
+    3 │ };
+
   ℹ Unused variables are dead code and usually the result of incomplete refactoring.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 2 problems
 
 ```
 
@@ -162,6 +157,7 @@ function foo(b) {
 ### `5`
 
 ```
+<<<<<<< HEAD
 
  lint/js/noUnusedVariables/reject/6/file.ts:1:9 lint/js/noUnusedVariables(foo) ━━━━━━━━━━━━━━━━━━━━━
 
@@ -177,6 +173,8 @@ function foo(b) {
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem
+=======
+>>>>>>> main
 
 ```
 
@@ -304,7 +302,6 @@ foo();
 ### `10`
 
 ```
-✔ No known problems!
 
 ```
 

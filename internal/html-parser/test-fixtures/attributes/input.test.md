@@ -11,148 +11,48 @@ HTMLRoot {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
-	filename: "attributes/input.html"
 	integrity: undefined
-	loc: Object {
-		filename: "attributes/input.html"
-		end: Object {
-			column: 15
-			line: 4
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation attributes/input.html 1:0-4:15
+	path: UIDPath<attributes/input.html>
 	body: Array [
 		HTMLElement {
 			name: HTMLIdentifier {
 				name: "a"
-				loc: Object {
-					filename: "attributes/input.html"
-					end: Object {
-						column: 2
-						line: 1
-					}
-					start: Object {
-						column: 1
-						line: 1
-					}
-				}
+				loc: SourceLocation attributes/input.html 1:1-1:2
 			}
 			children: Array []
 			selfClosing: false
-			loc: Object {
-				filename: "attributes/input.html"
-				end: Object {
-					column: 6
-					line: 2
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation attributes/input.html 1:0-2:6
 			attributes: Array [
 				HTMLAttribute {
 					name: HTMLIdentifier {
 						name: "href"
-						loc: Object {
-							filename: "attributes/input.html"
-							end: Object {
-								column: 7
-								line: 1
-							}
-							start: Object {
-								column: 3
-								line: 1
-							}
-						}
+						loc: SourceLocation attributes/input.html 1:3-1:7
 					}
 					value: HTMLString {
 						value: ""
-						loc: Object {
-							filename: "attributes/input.html"
-							end: Object {
-								column: 1
-								line: 2
-							}
-							start: Object {
-								column: 8
-								line: 1
-							}
-						}
+						loc: SourceLocation attributes/input.html 1:8-2:1
 					}
-					loc: Object {
-						filename: "attributes/input.html"
-						end: Object {
-							column: 1
-							line: 2
-						}
-						start: Object {
-							column: 3
-							line: 1
-						}
-					}
+					loc: SourceLocation attributes/input.html 1:3-2:1
 				}
 			]
 		}
 		HTMLElement {
 			name: HTMLIdentifier {
 				name: "input"
-				loc: Object {
-					filename: "attributes/input.html"
-					end: Object {
-						column: 6
-						line: 4
-					}
-					start: Object {
-						column: 1
-						line: 4
-					}
-				}
+				loc: SourceLocation attributes/input.html 4:1-4:6
 			}
 			children: Array []
 			selfClosing: true
-			loc: Object {
-				filename: "attributes/input.html"
-				end: Object {
-					column: 15
-					line: 4
-				}
-				start: Object {
-					column: 0
-					line: 4
-				}
-			}
+			loc: SourceLocation attributes/input.html 4:0-4:15
 			attributes: Array [
 				HTMLAttribute {
 					name: HTMLIdentifier {
 						name: "checked"
-						loc: Object {
-							filename: "attributes/input.html"
-							end: Object {
-								column: 14
-								line: 4
-							}
-							start: Object {
-								column: 7
-								line: 4
-							}
-						}
+						loc: SourceLocation attributes/input.html 4:7-4:14
 					}
 					value: undefined
-					loc: Object {
-						filename: "attributes/input.html"
-						end: Object {
-							column: 14
-							line: 4
-						}
-						start: Object {
-							column: 7
-							line: 4
-						}
-					}
+					loc: SourceLocation attributes/input.html 4:7-4:14
 				}
 			]
 		}
@@ -163,6 +63,5 @@ HTMLRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

@@ -11,117 +11,50 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "es2017/async-functions/invalid-inside-loop/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2017/async-functions/invalid-inside-loop/input.js"
-		end: Object {
-			column: 32
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2017/async-functions/invalid-inside-loop/input.js 1:0-1:32
+	path: UIDPath<es2017/async-functions/invalid-inside-loop/input.js>
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse"
 				categoryValue: "js"
+				category: Array ["parse"]
 				message: RAW_MARKUP {value: "Async functions can only be declared at the top level or inside a block"}
 			}
 			location: Object {
-				filename: "es2017/async-functions/invalid-inside-loop/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 9
-					line: 1
-				}
-				start: Object {
-					column: 10
-					line: 1
-				}
+				end: Position 1:9
+				path: UIDPath<es2017/async-functions/invalid-inside-loop/input.js>
+				start: Position 1:10
 			}
 		}
 	]
 	body: Array [
 		JSWhileStatement {
-			loc: Object {
-				filename: "es2017/async-functions/invalid-inside-loop/input.js"
-				end: Object {
-					column: 32
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2017/async-functions/invalid-inside-loop/input.js 1:0-1:32
 			test: JSNumericLiteral {
 				value: 1
 				format: undefined
-				loc: Object {
-					filename: "es2017/async-functions/invalid-inside-loop/input.js"
-					end: Object {
-						column: 8
-						line: 1
-					}
-					start: Object {
-						column: 7
-						line: 1
-					}
-				}
+				loc: SourceLocation es2017/async-functions/invalid-inside-loop/input.js 1:7-1:8
 			}
 			body: JSFunctionDeclaration {
 				id: JSBindingIdentifier {
 					name: "foo"
-					loc: Object {
-						filename: "es2017/async-functions/invalid-inside-loop/input.js"
-						identifierName: "foo"
-						end: Object {
-							column: 28
-							line: 1
-						}
-						start: Object {
-							column: 25
-							line: 1
-						}
-					}
+					loc: SourceLocation es2017/async-functions/invalid-inside-loop/input.js 1:25-1:28 (foo)
 				}
-				loc: Object {
-					filename: "es2017/async-functions/invalid-inside-loop/input.js"
-					end: Object {
-						column: 32
-						line: 1
-					}
-					start: Object {
-						column: 10
-						line: 1
-					}
-				}
+				loc: SourceLocation es2017/async-functions/invalid-inside-loop/input.js 1:10-1:32
 				body: JSBlockStatement {
 					body: Array []
 					directives: Array []
-					loc: Object {
-						filename: "es2017/async-functions/invalid-inside-loop/input.js"
-						end: Object {
-							column: 32
-							line: 1
-						}
-						start: Object {
-							column: 30
-							line: 1
-						}
-					}
+					loc: SourceLocation es2017/async-functions/invalid-inside-loop/input.js 1:30-1:32
 				}
 				head: JSFunctionHead {
 					async: true
@@ -132,17 +65,7 @@ JSRoot {
 					returnType: undefined
 					thisType: undefined
 					typeParameters: undefined
-					loc: Object {
-						filename: "es2017/async-functions/invalid-inside-loop/input.js"
-						end: Object {
-							column: 30
-							line: 1
-						}
-						start: Object {
-							column: 28
-							line: 1
-						}
-					}
+					loc: SourceLocation es2017/async-functions/invalid-inside-loop/input.js 1:28-1:30
 				}
 			}
 		}
@@ -161,8 +84,5 @@ JSRoot {
     while (1) async function foo(){}
               ^
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

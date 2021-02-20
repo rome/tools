@@ -1,10 +1,15 @@
 import {createDiagnosticsCategory} from "./index";
 import {DiagnosticLocation} from "../types";
 import {markup} from "@internal/markup";
-import {buildSuggestionAdvice} from "../helpers";
+import {
+	buildSuggestionAdvice,
+	diagnosticLocationToMarkupFilelink,
+} from "../helpers";
 import {DiagnosticCategory} from "../categories";
 import {ResolverQueryResponseNotFound} from "@internal/core/server/fs/Resolver";
 import {SourceLocation} from "@internal/parser-core";
+import {AnyPath} from "@internal/path";
+import {DIAGNOSTIC_CATEGORIES} from "@internal/diagnostics";
 
 // @internal/path-match
 export const resolver = createDiagnosticsCategory({
@@ -14,12 +19,12 @@ export const resolver = createDiagnosticsCategory({
 		location: DiagnosticLocation,
 	) => {
 		let messagePrefix = "";
-		let category: DiagnosticCategory = "resolver/notFound";
+		let category: DiagnosticCategory = DIAGNOSTIC_CATEGORIES["resolver/notFound"];
 
 		switch (responseType) {
 			case "UNSUPPORTED": {
 				messagePrefix = "Unsupported";
-				category = "resolver/unsupported";
+				category = DIAGNOSTIC_CATEGORIES["resolver/unsupported"];
 				break;
 			}
 			case "MISSING": {
@@ -28,19 +33,19 @@ export const resolver = createDiagnosticsCategory({
 			}
 			case "FETCH_ERROR": {
 				messagePrefix = "Failed to fetch";
-				category = "resolver/fetchFailed";
+				category = DIAGNOSTIC_CATEGORIES["resolver/fetchFailed"];
 				break;
 			}
 		}
 
 		return {
-			message: markup`${messagePrefix} <emphasis>${source}</emphasis> from <filelink emphasis target="${location.filename!}" />`,
+			message: markup`${messagePrefix} <emphasis>${source}</emphasis> from <emphasis>${location.path}</emphasis>`,
 			category,
 		};
 	},
 	UNKNOWN_EXPORT: (
 		name: string,
-		source: string,
+		source: AnyPath,
 		exportedNames: string[],
 		formatExportedName: (
 			name: string,
@@ -49,8 +54,8 @@ export const resolver = createDiagnosticsCategory({
 			source: undefined | string;
 		},
 	) => ({
-		message: markup`Couldn't find export <emphasis>${name}</emphasis> in <filelink emphasis target="${source}" />`,
-		category: "resolver/unknownExport",
+		message: markup`Couldn't find export <emphasis>${name}</emphasis> in <emphasis>${source}</emphasis>`,
+		category: DIAGNOSTIC_CATEGORIES["resolver/unknownExport"],
 		advice: exportedNames.length === 0
 			? [
 					{
@@ -68,13 +73,7 @@ export const resolver = createDiagnosticsCategory({
 							let format = markup`${name}`;
 
 							if (location !== undefined) {
-								if (location.start === undefined) {
-									format = markup`<filelink target="${location.filename!}">${name}</filelink>`;
-								} else {
-									format = markup`<filelink target="${location.filename!}" line="${String(
-										location.start.line,
-									)}" column="${String(location.start.column)}">${name}</filelink>`;
-								}
+								format = diagnosticLocationToMarkupFilelink(location, name);
 							}
 
 							if (source !== undefined) {
@@ -88,16 +87,16 @@ export const resolver = createDiagnosticsCategory({
 	}),
 	UNKNOWN_EXPORT_POSSIBLE_UNEXPORTED_LOCAL: (
 		name: string,
-		source: string,
+		source: AnyPath,
 		location: SourceLocation,
 	) => ({
-		message: markup`Couldn't find export <emphasis>${name}</emphasis> in <filelink emphasis target="${source}" />`,
-		category: "resolver/unknownExport",
+		message: markup`Couldn't find export <emphasis>${name}</emphasis> in <emphasis>${source}</emphasis>`,
+		category: DIAGNOSTIC_CATEGORIES["resolver/unknownExport"],
 		advice: [
 			{
 				type: "log",
 				category: "info",
-				text: markup`However we found a matching local variable in <filelink emphasis target="${location.filename!}" />. Did you forget to export it?`,
+				text: markup`However we found a matching local variable in <emphasis>${location.path!}</emphasis>. Did you forget to export it?`,
 			},
 			{
 				type: "frame",

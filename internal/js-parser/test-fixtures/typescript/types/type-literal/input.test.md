@@ -11,181 +11,58 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "typescript/types/type-literal/input.ts"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
+	loc: SourceLocation typescript/types/type-literal/input.ts 1:0-3:0
+	path: UIDPath<typescript/types/type-literal/input.ts>
 	syntax: Array ["ts"]
-	loc: Object {
-		filename: "typescript/types/type-literal/input.ts"
-		end: Object {
-			column: 0
-			line: 3
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
 	comments: Array [
 		CommentLine {
 			id: "0"
 			value: " Type literals have the same body syntax as interfaces, so see `interface` directory for that."
-			loc: Object {
-				filename: "typescript/types/type-literal/input.ts"
-				end: Object {
-					column: 96
-					line: 2
-				}
-				start: Object {
-					column: 0
-					line: 2
-				}
-			}
+			loc: SourceLocation typescript/types/type-literal/input.ts 2:0-2:96
 		}
 	]
 	body: Array [
 		JSVariableDeclarationStatement {
+			loc: SourceLocation typescript/types/type-literal/input.ts 1:0-1:23
 			trailingComments: Array ["0"]
-			loc: Object {
-				filename: "typescript/types/type-literal/input.ts"
-				end: Object {
-					column: 23
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
 			declaration: JSVariableDeclaration {
 				kind: "let"
 				trailingComments: undefined
-				loc: Object {
-					filename: "typescript/types/type-literal/input.ts"
-					end: Object {
-						column: 23
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/types/type-literal/input.ts 1:0-1:23
 				declarations: Array [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "obj"
-							loc: Object {
-								filename: "typescript/types/type-literal/input.ts"
-								end: Object {
-									column: 22
-									line: 1
-								}
-								start: Object {
-									column: 4
-									line: 1
-								}
-							}
+							loc: SourceLocation typescript/types/type-literal/input.ts 1:4-1:22
 							meta: JSPatternMeta {
 								definite: undefined
-								loc: Object {
-									filename: "typescript/types/type-literal/input.ts"
-									end: Object {
-										column: 22
-										line: 1
-									}
-									start: Object {
-										column: 4
-										line: 1
-									}
-								}
+								loc: SourceLocation typescript/types/type-literal/input.ts 1:4-1:22
 								typeAnnotation: TSObjectTypeAnnotation {
-									loc: Object {
-										filename: "typescript/types/type-literal/input.ts"
-										end: Object {
-											column: 22
-											line: 1
-										}
-										start: Object {
-											column: 9
-											line: 1
-										}
-									}
+									loc: SourceLocation typescript/types/type-literal/input.ts 1:9-1:22
 									members: Array [
 										TSPropertySignature {
 											key: JSStaticPropertyKey {
 												value: JSIdentifier {
 													name: "x"
-													loc: Object {
-														filename: "typescript/types/type-literal/input.ts"
-														identifierName: "x"
-														end: Object {
-															column: 12
-															line: 1
-														}
-														start: Object {
-															column: 11
-															line: 1
-														}
-													}
+													loc: SourceLocation typescript/types/type-literal/input.ts 1:11-1:12 (x)
 												}
-												loc: Object {
-													filename: "typescript/types/type-literal/input.ts"
-													end: Object {
-														column: 12
-														line: 1
-													}
-													start: Object {
-														column: 11
-														line: 1
-													}
-												}
+												loc: SourceLocation typescript/types/type-literal/input.ts 1:11-1:12
 											}
 											optional: false
 											readonly: false
-											loc: Object {
-												filename: "typescript/types/type-literal/input.ts"
-												end: Object {
-													column: 20
-													line: 1
-												}
-												start: Object {
-													column: 11
-													line: 1
-												}
-											}
-											typeAnnotation: TSNumberKeywordTypeAnnotation {
-												loc: Object {
-													filename: "typescript/types/type-literal/input.ts"
-													end: Object {
-														column: 20
-														line: 1
-													}
-													start: Object {
-														column: 14
-														line: 1
-													}
-												}
-											}
+											loc: SourceLocation typescript/types/type-literal/input.ts 1:11-1:20
+											typeAnnotation: TSNumberKeywordTypeAnnotation {loc: SourceLocation typescript/types/type-literal/input.ts 1:14-1:20}
 										}
 									]
 								}
 							}
 						}
 						init: undefined
-						loc: Object {
-							filename: "typescript/types/type-literal/input.ts"
-							end: Object {
-								column: 22
-								line: 1
-							}
-							start: Object {
-								column: 4
-								line: 1
-							}
-						}
+						loc: SourceLocation typescript/types/type-literal/input.ts 1:4-1:22
 					}
 				]
 			}
@@ -197,6 +74,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

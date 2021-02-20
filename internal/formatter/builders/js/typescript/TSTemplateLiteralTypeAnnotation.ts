@@ -7,12 +7,13 @@
 
 import {Builder, Token} from "@internal/formatter";
 
-import {TSTemplateLiteralTypeAnnotation} from "@internal/ast";
-import {escapeJSString} from "@internal/string-escape";
+import {AnyNode, TSTemplateLiteralTypeAnnotation} from "@internal/ast";
+import {printTemplateLiteral} from "../utils";
 
 export default function TSTemplateLiteralTypeAnnotation(
 	builder: Builder,
 	node: TSTemplateLiteralTypeAnnotation,
+	parent: AnyNode,
 ): Token {
-	return escapeJSString(node.value, {quote: "`"});
+	return printTemplateLiteral(builder, node, parent);
 }

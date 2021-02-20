@@ -12,93 +12,31 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "es2017/async-functions/11/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2017/async-functions/11/input.js"
-		end: Object {
-			column: 17
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2017/async-functions/11/input.js 1:0-2:17
+	path: UIDPath<es2017/async-functions/11/input.js>
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "es2017/async-functions/11/input.js"
-				end: Object {
-					column: 5
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2017/async-functions/11/input.js 1:0-1:5
 			expression: JSReferenceIdentifier {
 				name: "async"
-				loc: Object {
-					filename: "es2017/async-functions/11/input.js"
-					identifierName: "async"
-					end: Object {
-						column: 5
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation es2017/async-functions/11/input.js 1:0-1:5 (async)
 			}
 		}
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "foo"
-				loc: Object {
-					filename: "es2017/async-functions/11/input.js"
-					identifierName: "foo"
-					end: Object {
-						column: 12
-						line: 2
-					}
-					start: Object {
-						column: 9
-						line: 2
-					}
-				}
+				loc: SourceLocation es2017/async-functions/11/input.js 2:9-2:12 (foo)
 			}
-			loc: Object {
-				filename: "es2017/async-functions/11/input.js"
-				end: Object {
-					column: 17
-					line: 2
-				}
-				start: Object {
-					column: 0
-					line: 2
-				}
-			}
+			loc: SourceLocation es2017/async-functions/11/input.js 2:0-2:17
 			body: JSBlockStatement {
 				body: Array []
 				directives: Array []
-				loc: Object {
-					filename: "es2017/async-functions/11/input.js"
-					end: Object {
-						column: 17
-						line: 2
-					}
-					start: Object {
-						column: 15
-						line: 2
-					}
-				}
+				loc: SourceLocation es2017/async-functions/11/input.js 2:15-2:17
 			}
 			head: JSFunctionHead {
 				async: false
@@ -109,17 +47,7 @@ JSRoot {
 				returnType: undefined
 				thisType: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "es2017/async-functions/11/input.js"
-					end: Object {
-						column: 14
-						line: 2
-					}
-					start: Object {
-						column: 12
-						line: 2
-					}
-				}
+				loc: SourceLocation es2017/async-functions/11/input.js 2:12-2:14
 			}
 		}
 	]
@@ -129,6 +57,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

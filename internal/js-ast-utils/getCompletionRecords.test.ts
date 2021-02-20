@@ -14,7 +14,6 @@ function helper(input: string) {
 	return getCompletionRecords(
 		jsFunctionDeclaration.assert(
 			parseJS({
-				path: "unknown",
 				input: `function foo(){${input}}`,
 			}).body[0],
 		).body,

@@ -12,50 +12,20 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "es2015/uncategorised/85/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
 	syntax: Array []
-	loc: Object {
-		filename: "es2015/uncategorised/85/input.js"
-		end: Object {
-			column: 22
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2015/uncategorised/85/input.js 1:0-1:22
+	path: UIDPath<es2015/uncategorised/85/input.js>
 	body: Array [
 		JSExportAllDeclaration {
 			exportKind: undefined
-			loc: Object {
-				filename: "es2015/uncategorised/85/input.js"
-				end: Object {
-					column: 22
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2015/uncategorised/85/input.js 1:0-1:22
 			source: JSStringLiteral {
 				value: "crypto"
-				loc: Object {
-					filename: "es2015/uncategorised/85/input.js"
-					end: Object {
-						column: 22
-						line: 1
-					}
-					start: Object {
-						column: 14
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/uncategorised/85/input.js 1:14-1:22
 			}
 		}
 	]
@@ -65,6 +35,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

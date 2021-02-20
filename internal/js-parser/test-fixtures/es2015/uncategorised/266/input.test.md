@@ -11,190 +11,75 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "es2015/uncategorised/266/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2015/uncategorised/266/input.js"
-		end: Object {
-			column: 18
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2015/uncategorised/266/input.js 1:0-1:18
+	path: UIDPath<es2015/uncategorised/266/input.js>
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
 			location: Object {
-				filename: "es2015/uncategorised/266/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 7
-					line: 1
-				}
-				start: Object {
-					column: 7
-					line: 1
-				}
+				end: Position 1:7
+				path: UIDPath<es2015/uncategorised/266/input.js>
+				start: Position 1:7
 			}
 			description: Object {
-				category: "parse"
 				categoryValue: "js"
-				message: Array [
-					RAW_MARKUP {value: "Unclosed "}
-					"template expression value"
-				]
+				category: Array ["parse"]
+				message: RAW_MARKUP {value: "Unclosed <emphasis>template expression value</emphasis>"}
 				advice: Array [
 					log {
 						category: "info"
-						text: Array [
-							RAW_MARKUP {value: "We expected to find the closing character <emphasis>"}
-							"}"
-							RAW_MARKUP {value: "</emphasis> here"}
-						]
+						text: RAW_MARKUP {value: "We expected to find the closing character <emphasis>}</emphasis> here"}
 					}
-					frame {
-						location: Object {
-							filename: "es2015/uncategorised/266/input.js"
-							end: Object {
-								column: 18
-								line: 1
-							}
-							start: Object {
-								column: 18
-								line: 1
-							}
-						}
-					}
+					frame {location: SourceLocation es2015/uncategorised/266/input.js 1:18-1:18}
 				]
 			}
 		}
 	]
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "es2015/uncategorised/266/input.js"
-				end: Object {
-					column: 18
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2015/uncategorised/266/input.js 1:0-1:18
 			expression: JSTemplateLiteral {
-				loc: Object {
-					filename: "es2015/uncategorised/266/input.js"
-					end: Object {
-						column: 18
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/uncategorised/266/input.js 1:0-1:18
 				quasis: Array [
 					JSTemplateElement {
 						cooked: "hello "
 						raw: "hello "
 						tail: false
-						loc: Object {
-							filename: "es2015/uncategorised/266/input.js"
-							end: Object {
-								column: 7
-								line: 1
-							}
-							start: Object {
-								column: 1
-								line: 1
-							}
-						}
+						loc: SourceLocation es2015/uncategorised/266/input.js 1:1-1:7
 					}
 					JSTemplateElement {
 						cooked: ""
 						raw: ""
 						tail: false
-						loc: Object {
-							filename: "es2015/uncategorised/266/input.js"
-							end: Object {
-								column: 18
-								line: 1
-							}
-							start: Object {
-								column: 18
-								line: 1
-							}
-						}
+						loc: SourceLocation es2015/uncategorised/266/input.js 1:18-1:18
 					}
 				]
 				expressions: Array [
 					JSTaggedTemplateExpression {
 						typeArguments: undefined
-						loc: Object {
-							filename: "es2015/uncategorised/266/input.js"
-							end: Object {
-								column: 18
-								line: 1
-							}
-							start: Object {
-								column: 9
-								line: 1
-							}
-						}
+						loc: SourceLocation es2015/uncategorised/266/input.js 1:9-1:18
 						tag: JSNumericLiteral {
 							value: 10
 							format: undefined
-							loc: Object {
-								filename: "es2015/uncategorised/266/input.js"
-								end: Object {
-									column: 11
-									line: 1
-								}
-								start: Object {
-									column: 9
-									line: 1
-								}
-							}
+							loc: SourceLocation es2015/uncategorised/266/input.js 1:9-1:11
 						}
 						quasi: JSTemplateLiteral {
 							expressions: Array []
-							loc: Object {
-								filename: "es2015/uncategorised/266/input.js"
-								end: Object {
-									column: 18
-									line: 1
-								}
-								start: Object {
-									column: 12
-									line: 1
-								}
-							}
+							loc: SourceLocation es2015/uncategorised/266/input.js 1:12-1:18
 							quasis: Array [
 								JSTemplateElement {
 									cooked: "test"
 									raw: "test"
 									tail: true
-									loc: Object {
-										filename: "es2015/uncategorised/266/input.js"
-										end: Object {
-											column: 17
-											line: 1
-										}
-										start: Object {
-											column: 13
-											line: 1
-										}
-									}
+									loc: SourceLocation es2015/uncategorised/266/input.js 1:13-1:17
 								}
 							]
 						}
@@ -214,13 +99,13 @@ JSRoot {
 
   ✖ Unclosed template expression value
 
+    `hello ${10 `test`
+           ^
+
   ℹ We expected to find the closing character } here
 
     `hello ${10 `test`
                       ^
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

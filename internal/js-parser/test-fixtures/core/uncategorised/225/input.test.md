@@ -12,78 +12,26 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "core/uncategorised/225/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "core/uncategorised/225/input.js"
-		end: Object {
-			column: 4
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation core/uncategorised/225/input.js 1:0-1:4
+	path: UIDPath<core/uncategorised/225/input.js>
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "core/uncategorised/225/input.js"
-				end: Object {
-					column: 4
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation core/uncategorised/225/input.js 1:0-1:4
 			expression: JSSequenceExpression {
-				loc: Object {
-					filename: "core/uncategorised/225/input.js"
-					end: Object {
-						column: 4
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation core/uncategorised/225/input.js 1:0-1:4
 				expressions: Array [
 					JSReferenceIdentifier {
 						name: "x"
-						loc: Object {
-							filename: "core/uncategorised/225/input.js"
-							identifierName: "x"
-							end: Object {
-								column: 1
-								line: 1
-							}
-							start: Object {
-								column: 0
-								line: 1
-							}
-						}
+						loc: SourceLocation core/uncategorised/225/input.js 1:0-1:1 (x)
 					}
 					JSReferenceIdentifier {
 						name: "y"
-						loc: Object {
-							filename: "core/uncategorised/225/input.js"
-							identifierName: "y"
-							end: Object {
-								column: 4
-								line: 1
-							}
-							start: Object {
-								column: 3
-								line: 1
-							}
-						}
+						loc: SourceLocation core/uncategorised/225/input.js 1:3-1:4 (y)
 					}
 				]
 			}
@@ -95,6 +43,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

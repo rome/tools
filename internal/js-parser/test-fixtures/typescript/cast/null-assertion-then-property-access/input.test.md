@@ -12,104 +12,31 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "typescript/cast/null-assertion-then-property-access/input.ts"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
+	loc: SourceLocation typescript/cast/null-assertion-then-property-access/input.ts 1:0-2:0
+	path: UIDPath<typescript/cast/null-assertion-then-property-access/input.ts>
 	syntax: Array ["ts"]
-	loc: Object {
-		filename: "typescript/cast/null-assertion-then-property-access/input.ts"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "typescript/cast/null-assertion-then-property-access/input.ts"
-				end: Object {
-					column: 5
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation typescript/cast/null-assertion-then-property-access/input.ts 1:0-1:5
 			expression: JSMemberExpression {
-				loc: Object {
-					filename: "typescript/cast/null-assertion-then-property-access/input.ts"
-					end: Object {
-						column: 4
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/cast/null-assertion-then-property-access/input.ts 1:0-1:4
 				object: TSNonNullExpression {
-					loc: Object {
-						filename: "typescript/cast/null-assertion-then-property-access/input.ts"
-						end: Object {
-							column: 2
-							line: 1
-						}
-						start: Object {
-							column: 0
-							line: 1
-						}
-					}
+					loc: SourceLocation typescript/cast/null-assertion-then-property-access/input.ts 1:0-1:2
 					expression: JSReferenceIdentifier {
 						name: "x"
-						loc: Object {
-							filename: "typescript/cast/null-assertion-then-property-access/input.ts"
-							identifierName: "x"
-							end: Object {
-								column: 1
-								line: 1
-							}
-							start: Object {
-								column: 0
-								line: 1
-							}
-						}
+						loc: SourceLocation typescript/cast/null-assertion-then-property-access/input.ts 1:0-1:1 (x)
 					}
 				}
 				property: JSStaticMemberProperty {
 					value: JSIdentifier {
 						name: "y"
-						loc: Object {
-							filename: "typescript/cast/null-assertion-then-property-access/input.ts"
-							identifierName: "y"
-							end: Object {
-								column: 4
-								line: 1
-							}
-							start: Object {
-								column: 3
-								line: 1
-							}
-						}
+						loc: SourceLocation typescript/cast/null-assertion-then-property-access/input.ts 1:3-1:4 (y)
 					}
-					loc: Object {
-						filename: "typescript/cast/null-assertion-then-property-access/input.ts"
-						identifierName: "y"
-						end: Object {
-							column: 4
-							line: 1
-						}
-						start: Object {
-							column: 3
-							line: 1
-						}
-					}
+					loc: SourceLocation typescript/cast/null-assertion-then-property-access/input.ts 1:3-1:4 (y)
 				}
 			}
 		}
@@ -120,6 +47,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

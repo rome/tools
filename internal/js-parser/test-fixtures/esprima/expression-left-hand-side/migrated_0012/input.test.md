@@ -12,173 +12,46 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "esprima/expression-left-hand-side/migrated_0012/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "esprima/expression-left-hand-side/migrated_0012/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation esprima/expression-left-hand-side/migrated_0012/input.js 1:0-2:0
+	path: UIDPath<esprima/expression-left-hand-side/migrated_0012/input.js>
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "esprima/expression-left-hand-side/migrated_0012/input.js"
-				end: Object {
-					column: 35
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation esprima/expression-left-hand-side/migrated_0012/input.js 1:0-1:35
 			expression: JSMemberExpression {
-				loc: Object {
-					filename: "esprima/expression-left-hand-side/migrated_0012/input.js"
-					end: Object {
-						column: 35
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/expression-left-hand-side/migrated_0012/input.js 1:0-1:35
 				property: JSStaticMemberProperty {
 					value: JSIdentifier {
 						name: "Earth"
-						loc: Object {
-							filename: "esprima/expression-left-hand-side/migrated_0012/input.js"
-							identifierName: "Earth"
-							end: Object {
-								column: 35
-								line: 1
-							}
-							start: Object {
-								column: 30
-								line: 1
-							}
-						}
+						loc: SourceLocation esprima/expression-left-hand-side/migrated_0012/input.js 1:30-1:35 (Earth)
 					}
-					loc: Object {
-						filename: "esprima/expression-left-hand-side/migrated_0012/input.js"
-						identifierName: "Earth"
-						end: Object {
-							column: 35
-							line: 1
-						}
-						start: Object {
-							column: 30
-							line: 1
-						}
-					}
+					loc: SourceLocation esprima/expression-left-hand-side/migrated_0012/input.js 1:30-1:35 (Earth)
 				}
 				object: JSMemberExpression {
-					loc: Object {
-						filename: "esprima/expression-left-hand-side/migrated_0012/input.js"
-						end: Object {
-							column: 29
-							line: 1
-						}
-						start: Object {
-							column: 0
-							line: 1
-						}
-					}
+					loc: SourceLocation esprima/expression-left-hand-side/migrated_0012/input.js 1:0-1:29
 					property: JSStaticMemberProperty {
 						value: JSIdentifier {
 							name: "solarsystem"
-							loc: Object {
-								filename: "esprima/expression-left-hand-side/migrated_0012/input.js"
-								identifierName: "solarsystem"
-								end: Object {
-									column: 29
-									line: 1
-								}
-								start: Object {
-									column: 18
-									line: 1
-								}
-							}
+							loc: SourceLocation esprima/expression-left-hand-side/migrated_0012/input.js 1:18-1:29 (solarsystem)
 						}
-						loc: Object {
-							filename: "esprima/expression-left-hand-side/migrated_0012/input.js"
-							identifierName: "solarsystem"
-							end: Object {
-								column: 29
-								line: 1
-							}
-							start: Object {
-								column: 18
-								line: 1
-							}
-						}
+						loc: SourceLocation esprima/expression-left-hand-side/migrated_0012/input.js 1:18-1:29 (solarsystem)
 					}
 					object: JSMemberExpression {
-						loc: Object {
-							filename: "esprima/expression-left-hand-side/migrated_0012/input.js"
-							end: Object {
-								column: 17
-								line: 1
-							}
-							start: Object {
-								column: 0
-								line: 1
-							}
-						}
+						loc: SourceLocation esprima/expression-left-hand-side/migrated_0012/input.js 1:0-1:17
 						object: JSReferenceIdentifier {
 							name: "universe"
-							loc: Object {
-								filename: "esprima/expression-left-hand-side/migrated_0012/input.js"
-								identifierName: "universe"
-								end: Object {
-									column: 8
-									line: 1
-								}
-								start: Object {
-									column: 0
-									line: 1
-								}
-							}
+							loc: SourceLocation esprima/expression-left-hand-side/migrated_0012/input.js 1:0-1:8 (universe)
 						}
 						property: JSStaticMemberProperty {
 							value: JSIdentifier {
 								name: "milkyway"
-								loc: Object {
-									filename: "esprima/expression-left-hand-side/migrated_0012/input.js"
-									identifierName: "milkyway"
-									end: Object {
-										column: 17
-										line: 1
-									}
-									start: Object {
-										column: 9
-										line: 1
-									}
-								}
+								loc: SourceLocation esprima/expression-left-hand-side/migrated_0012/input.js 1:9-1:17 (milkyway)
 							}
-							loc: Object {
-								filename: "esprima/expression-left-hand-side/migrated_0012/input.js"
-								identifierName: "milkyway"
-								end: Object {
-									column: 17
-									line: 1
-								}
-								start: Object {
-									column: 9
-									line: 1
-								}
-							}
+							loc: SourceLocation esprima/expression-left-hand-side/migrated_0012/input.js 1:9-1:17 (milkyway)
 						}
 					}
 				}
@@ -191,6 +64,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

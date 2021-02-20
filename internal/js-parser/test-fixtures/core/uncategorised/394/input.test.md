@@ -11,162 +11,65 @@ JSRoot {
 	comments: Array []
 	corrupt: true
 	directives: Array []
-	filename: "core/uncategorised/394/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "core/uncategorised/394/input.js"
-		end: Object {
-			column: 19
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation core/uncategorised/394/input.js 1:0-1:19
+	path: UIDPath<core/uncategorised/394/input.js>
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				category: "parse"
-				categoryValue: "js"
-				message: Array [
-					RAW_MARKUP {value: "Unexpected token, expected "}
-					","
-				]
-			}
 			location: Object {
-				filename: "core/uncategorised/394/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 14
-					line: 1
-				}
-				start: Object {
-					column: 13
-					line: 1
-				}
+				end: Position 1:14
+				path: UIDPath<core/uncategorised/394/input.js>
+				start: Position 1:13
+			}
+			description: Object {
+				categoryValue: "js"
+				category: Array ["parse"]
+				message: RAW_MARKUP {value: "Unexpected character <emphasis>{</emphasis>"}
+				advice: Array [
+					log {
+						category: "info"
+						text: RAW_MARKUP {value: "Expected character <emphasis>,</emphasis>"}
+					}
+				]
 			}
 		}
 	]
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "core/uncategorised/394/input.js"
-				end: Object {
-					column: 12
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation core/uncategorised/394/input.js 1:0-1:12
 			expression: JSObjectExpression {
-				loc: Object {
-					filename: "core/uncategorised/394/input.js"
-					end: Object {
-						column: 12
-						line: 1
-					}
-					start: Object {
-						column: 1
-						line: 1
-					}
-				}
+				loc: SourceLocation core/uncategorised/394/input.js 1:1-1:12
 				properties: Array [
 					JSObjectProperty {
 						key: JSStaticPropertyKey {
 							value: JSIdentifier {
 								name: "get"
-								loc: Object {
-									filename: "core/uncategorised/394/input.js"
-									identifierName: "get"
-									end: Object {
-										column: 6
-										line: 1
-									}
-									start: Object {
-										column: 3
-										line: 1
-									}
-								}
+								loc: SourceLocation core/uncategorised/394/input.js 1:3-1:6 (get)
 							}
-							loc: Object {
-								filename: "core/uncategorised/394/input.js"
-								end: Object {
-									column: 6
-									line: 1
-								}
-								start: Object {
-									column: 3
-									line: 1
-								}
-							}
+							loc: SourceLocation core/uncategorised/394/input.js 1:3-1:6
 						}
 						value: JSCallExpression {
-							loc: Object {
-								filename: "core/uncategorised/394/input.js"
-								end: Object {
-									column: 12
-									line: 1
-								}
-								start: Object {
-									column: 8
-									line: 1
-								}
-							}
+							loc: SourceLocation core/uncategorised/394/input.js 1:8-1:12
 							callee: JSReferenceIdentifier {
 								name: "g"
-								loc: Object {
-									filename: "core/uncategorised/394/input.js"
-									identifierName: "g"
-									end: Object {
-										column: 9
-										line: 1
-									}
-									start: Object {
-										column: 8
-										line: 1
-									}
-								}
+								loc: SourceLocation core/uncategorised/394/input.js 1:8-1:9 (g)
 							}
 							arguments: Array [
 								JSReferenceIdentifier {
 									name: "d"
-									loc: Object {
-										filename: "core/uncategorised/394/input.js"
-										identifierName: "d"
-										end: Object {
-											column: 11
-											line: 1
-										}
-										start: Object {
-											column: 10
-											line: 1
-										}
-									}
+									loc: SourceLocation core/uncategorised/394/input.js 1:10-1:11 (d)
 								}
 							]
 						}
-						loc: Object {
-							filename: "core/uncategorised/394/input.js"
-							end: Object {
-								column: 12
-								line: 1
-							}
-							start: Object {
-								column: 3
-								line: 1
-							}
-						}
+						loc: SourceLocation core/uncategorised/394/input.js 1:3-1:12
 					}
 				]
 			}
@@ -174,70 +77,20 @@ JSRoot {
 		JSBlockStatement {
 			body: Array []
 			directives: Array []
-			loc: Object {
-				filename: "core/uncategorised/394/input.js"
-				end: Object {
-					column: 16
-					line: 1
-				}
-				start: Object {
-					column: 13
-					line: 1
-				}
+			loc: SourceLocation core/uncategorised/394/input.js 1:13-1:16
+		}
+		JSExpressionStatement {
+			loc: SourceLocation core/uncategorised/394/input.js 1:17-1:18
+			expression: JSReferenceIdentifier {
+				name: "INVALID_PLACEHOLDER"
+				loc: SourceLocation core/uncategorised/394/input.js 1:17-1:18
 			}
 		}
 		JSExpressionStatement {
-			loc: Object {
-				filename: "core/uncategorised/394/input.js"
-				end: Object {
-					column: 18
-					line: 1
-				}
-				start: Object {
-					column: 17
-					line: 1
-				}
-			}
+			loc: SourceLocation core/uncategorised/394/input.js 1:18-1:19
 			expression: JSReferenceIdentifier {
 				name: "INVALID_PLACEHOLDER"
-				loc: Object {
-					filename: "core/uncategorised/394/input.js"
-					end: Object {
-						column: 18
-						line: 1
-					}
-					start: Object {
-						column: 17
-						line: 1
-					}
-				}
-			}
-		}
-		JSExpressionStatement {
-			loc: Object {
-				filename: "core/uncategorised/394/input.js"
-				end: Object {
-					column: 19
-					line: 1
-				}
-				start: Object {
-					column: 18
-					line: 1
-				}
-			}
-			expression: JSReferenceIdentifier {
-				name: "INVALID_PLACEHOLDER"
-				loc: Object {
-					filename: "core/uncategorised/394/input.js"
-					end: Object {
-						column: 19
-						line: 1
-					}
-					start: Object {
-						column: 18
-						line: 1
-					}
-				}
+				loc: SourceLocation core/uncategorised/394/input.js 1:18-1:19
 			}
 		}
 	]
@@ -250,13 +103,12 @@ JSRoot {
 
  core/uncategorised/394/input.js:1:13 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ Unexpected token, expected ,
+  ✖ Unexpected character {
 
     ({ get: g(d) { } })
                  ^
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  ℹ Expected character ,
 
-✖ Found 1 problem
 
 ```

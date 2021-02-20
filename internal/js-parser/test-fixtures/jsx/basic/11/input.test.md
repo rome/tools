@@ -12,79 +12,29 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "jsx/basic/11/input.jsx"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
+	loc: SourceLocation jsx/basic/11/input.jsx 1:0-1:24
+	path: UIDPath<jsx/basic/11/input.jsx>
 	syntax: Array ["jsx"]
-	loc: Object {
-		filename: "jsx/basic/11/input.jsx"
-		end: Object {
-			column: 24
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "jsx/basic/11/input.jsx"
-				end: Object {
-					column: 24
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation jsx/basic/11/input.jsx 1:0-1:24
 			expression: JSXElement {
 				name: JSXIdentifier {
 					name: "div"
-					loc: Object {
-						filename: "jsx/basic/11/input.jsx"
-						end: Object {
-							column: 4
-							line: 1
-						}
-						start: Object {
-							column: 1
-							line: 1
-						}
-					}
+					loc: SourceLocation jsx/basic/11/input.jsx 1:1-1:4
 				}
 				attributes: Array []
 				selfClosing: false
 				typeArguments: undefined
-				loc: Object {
-					filename: "jsx/basic/11/input.jsx"
-					end: Object {
-						column: 24
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation jsx/basic/11/input.jsx 1:0-1:24
 				children: Array [
 					JSXText {
 						value: "@test content"
-						loc: Object {
-							filename: "jsx/basic/11/input.jsx"
-							end: Object {
-								column: 18
-								line: 1
-							}
-							start: Object {
-								column: 5
-								line: 1
-							}
-						}
+						loc: SourceLocation jsx/basic/11/input.jsx 1:5-1:18
 					}
 				]
 			}
@@ -96,6 +46,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

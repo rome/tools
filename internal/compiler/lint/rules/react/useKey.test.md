@@ -21,11 +21,11 @@
 
   ✖ Provide a key prop with a unique value for each element in array.
 
+    const a = [<div />, <div />]
+                        ^^^^^^^
+
   ℹ Keys help React identify which items have changed, are added, or are removed.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 2 problems
 
 ```
 
@@ -49,9 +49,6 @@ const a = [<div />, <div />];
 
   ℹ Keys help React identify which items have changed, are added, or are removed.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -79,9 +76,6 @@ const a = [1, 2].map((x) =>
 
   ℹ Keys help React identify which items have changed, are added, or are removed.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -109,9 +103,6 @@ const a = foo?.map((x) =>
 
   ℹ Keys help React identify which items have changed, are added, or are removed.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -142,9 +133,6 @@ React.Children.map(
 
   ℹ Keys help React identify which items have changed, are added, or are removed.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -177,9 +165,6 @@ Children.map(
 
   ℹ Keys help React identify which items have changed, are added, or are removed.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -209,9 +194,6 @@ const a = [1, 2].map((x) => {
 
   ℹ Keys help React identify which items have changed, are added, or are removed.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -244,9 +226,6 @@ React.Children.map(
 
   ℹ Keys help React identify which items have changed, are added, or are removed.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -279,9 +258,6 @@ Children.map(
 
   ℹ Keys help React identify which items have changed, are added, or are removed.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -311,9 +287,6 @@ const a = [1, 2].map(function(x) {
 
   ℹ Keys help React identify which items have changed, are added, or are removed.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -346,9 +319,6 @@ React.Children.map(
 
   ℹ Keys help React identify which items have changed, are added, or are removed.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -369,7 +339,6 @@ Children.map(
 ### `11`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -383,7 +352,6 @@ const a = [<div key="a" />, <div key={"b"} />];
 ### `12`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -401,7 +369,6 @@ const a = [1, 2].map((x) =>
 ### `13`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -422,7 +389,6 @@ React.Children.map(
 ### `14`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -443,7 +409,6 @@ Children.map(
 ### `15`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -461,7 +426,6 @@ const a = [1, 2].map((x) => {
 ### `16`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -482,7 +446,6 @@ React.Children.map(
 ### `17`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -503,7 +466,6 @@ Children.map(
 ### `18`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -521,7 +483,6 @@ const a = [1, 2].map(function(x) {
 ### `19`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -542,7 +503,6 @@ React.Children.map(
 ### `20`
 
 ```
-✔ No known problems!
 
 ```
 

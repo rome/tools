@@ -12,93 +12,32 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "esprima/es2015-template-literals/tagged/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "esprima/es2015-template-literals/tagged/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation esprima/es2015-template-literals/tagged/input.js 1:0-2:0
+	path: UIDPath<esprima/es2015-template-literals/tagged/input.js>
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "esprima/es2015-template-literals/tagged/input.js"
-				end: Object {
-					column: 7
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation esprima/es2015-template-literals/tagged/input.js 1:0-1:7
 			expression: JSTaggedTemplateExpression {
 				typeArguments: undefined
-				loc: Object {
-					filename: "esprima/es2015-template-literals/tagged/input.js"
-					end: Object {
-						column: 7
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/es2015-template-literals/tagged/input.js 1:0-1:7
 				tag: JSReferenceIdentifier {
 					name: "raw"
-					loc: Object {
-						filename: "esprima/es2015-template-literals/tagged/input.js"
-						identifierName: "raw"
-						end: Object {
-							column: 3
-							line: 1
-						}
-						start: Object {
-							column: 0
-							line: 1
-						}
-					}
+					loc: SourceLocation esprima/es2015-template-literals/tagged/input.js 1:0-1:3 (raw)
 				}
 				quasi: JSTemplateLiteral {
 					expressions: Array []
-					loc: Object {
-						filename: "esprima/es2015-template-literals/tagged/input.js"
-						end: Object {
-							column: 7
-							line: 1
-						}
-						start: Object {
-							column: 3
-							line: 1
-						}
-					}
+					loc: SourceLocation esprima/es2015-template-literals/tagged/input.js 1:3-1:7
 					quasis: Array [
 						JSTemplateElement {
 							cooked: "42"
 							raw: "42"
 							tail: true
-							loc: Object {
-								filename: "esprima/es2015-template-literals/tagged/input.js"
-								end: Object {
-									column: 6
-									line: 1
-								}
-								start: Object {
-									column: 4
-									line: 1
-								}
-							}
+							loc: SourceLocation esprima/es2015-template-literals/tagged/input.js 1:4-1:6
 						}
 					]
 				}
@@ -111,6 +50,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

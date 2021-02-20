@@ -10,7 +10,7 @@ import {
 import {exists} from "@internal/fs";
 import {dedent, toCamelCase} from "@internal/string-utils";
 import {markup} from "@internal/markup";
-import {createUnknownPath} from "@internal/path";
+import {createAnyPath} from "@internal/path";
 import {main as generateAST} from "./generated-files/ast";
 
 export async function main([filename]: string[]): Promise<number> {
@@ -23,7 +23,7 @@ export async function main([filename]: string[]): Promise<number> {
 		return 1;
 	}
 
-	const segments = createUnknownPath(filename).getSegments();
+	const segments = createAnyPath(filename).getSegments();
 	if (segments.length !== 3) {
 		reporter.error(markup`Expected three segments in filename argument`);
 		return 1;
@@ -58,8 +58,8 @@ export async function main([filename]: string[]): Promise<number> {
 	}
 
 	if (
-		!whitelistedPrefix.includes(nodeType.slice(0, 2)) &&
-		!nodeType.toLowerCase().startsWith(language)
+		!(whitelistedPrefix.includes(nodeType.slice(0, 2)) ||
+		nodeType.toLowerCase().startsWith(language))
 	) {
 		reporter.error(
 			markup`Node type argument "${nodeType}" must have the language prefix "${language}"`,

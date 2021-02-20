@@ -12,208 +12,65 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "core/categorized/invalid-assignment-pattern-4/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "core/categorized/invalid-assignment-pattern-4/input.js"
-		end: Object {
-			column: 23
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation core/categorized/invalid-assignment-pattern-4/input.js 1:0-1:23
+	path: UIDPath<core/categorized/invalid-assignment-pattern-4/input.js>
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "core/categorized/invalid-assignment-pattern-4/input.js"
-				end: Object {
-					column: 22
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation core/categorized/invalid-assignment-pattern-4/input.js 1:0-1:22
 			expression: JSAssignmentExpression {
 				operator: "="
-				loc: Object {
-					filename: "core/categorized/invalid-assignment-pattern-4/input.js"
-					end: Object {
-						column: 22
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation core/categorized/invalid-assignment-pattern-4/input.js 1:0-1:22
 				right: JSReferenceIdentifier {
 					name: "t"
-					loc: Object {
-						filename: "core/categorized/invalid-assignment-pattern-4/input.js"
-						identifierName: "t"
-						end: Object {
-							column: 22
-							line: 1
-						}
-						start: Object {
-							column: 21
-							line: 1
-						}
-					}
+					loc: SourceLocation core/categorized/invalid-assignment-pattern-4/input.js 1:21-1:22 (t)
 				}
 				left: JSAssignmentArrayPattern {
 					rest: undefined
-					loc: Object {
-						filename: "core/categorized/invalid-assignment-pattern-4/input.js"
-						end: Object {
-							column: 18
-							line: 1
-						}
-						start: Object {
-							column: 0
-							line: 1
-						}
-					}
+					loc: SourceLocation core/categorized/invalid-assignment-pattern-4/input.js 1:0-1:18
 					elements: Array [
 						JSAssignmentObjectPattern {
 							rest: undefined
-							loc: Object {
-								filename: "core/categorized/invalid-assignment-pattern-4/input.js"
-								end: Object {
-									column: 17
-									line: 1
-								}
-								start: Object {
-									column: 1
-									line: 1
-								}
-							}
+							loc: SourceLocation core/categorized/invalid-assignment-pattern-4/input.js 1:1-1:17
 							properties: Array [
 								JSAssignmentObjectPatternProperty {
 									key: JSStaticPropertyKey {
 										value: JSIdentifier {
 											name: "b"
-											loc: Object {
-												filename: "core/categorized/invalid-assignment-pattern-4/input.js"
-												identifierName: "b"
-												end: Object {
-													column: 3
-													line: 1
-												}
-												start: Object {
-													column: 2
-													line: 1
-												}
-											}
+											loc: SourceLocation core/categorized/invalid-assignment-pattern-4/input.js 1:2-1:3 (b)
 										}
-										loc: Object {
-											filename: "core/categorized/invalid-assignment-pattern-4/input.js"
-											end: Object {
-												column: 3
-												line: 1
-											}
-											start: Object {
-												column: 2
-												line: 1
-											}
-										}
+										loc: SourceLocation core/categorized/invalid-assignment-pattern-4/input.js 1:2-1:3
 									}
 									value: JSAssignmentArrayPattern {
 										rest: undefined
-										loc: Object {
-											filename: "core/categorized/invalid-assignment-pattern-4/input.js"
-											end: Object {
-												column: 16
-												line: 1
-											}
-											start: Object {
-												column: 5
-												line: 1
-											}
-										}
+										loc: SourceLocation core/categorized/invalid-assignment-pattern-4/input.js 1:5-1:16
 										elements: Array [
 											JSAssignmentArrayPattern {
 												rest: undefined
-												loc: Object {
-													filename: "core/categorized/invalid-assignment-pattern-4/input.js"
-													end: Object {
-														column: 14
-														line: 1
-													}
-													start: Object {
-														column: 7
-														line: 1
-													}
-												}
+												loc: SourceLocation core/categorized/invalid-assignment-pattern-4/input.js 1:7-1:14
 												elements: Array [
 													JSAssignmentAssignmentPattern {
 														operator: "="
-														loc: Object {
-															filename: "core/categorized/invalid-assignment-pattern-4/input.js"
-															end: Object {
-																column: 13
-																line: 1
-															}
-															start: Object {
-																column: 8
-																line: 1
-															}
-														}
+														loc: SourceLocation core/categorized/invalid-assignment-pattern-4/input.js 1:8-1:13
 														left: JSAssignmentIdentifier {
 															name: "a"
-															loc: Object {
-																filename: "core/categorized/invalid-assignment-pattern-4/input.js"
-																identifierName: "a"
-																end: Object {
-																	column: 9
-																	line: 1
-																}
-																start: Object {
-																	column: 8
-																	line: 1
-																}
-															}
+															loc: SourceLocation core/categorized/invalid-assignment-pattern-4/input.js 1:8-1:9 (a)
 														}
 														right: JSNumericLiteral {
 															value: 1
 															format: undefined
-															loc: Object {
-																filename: "core/categorized/invalid-assignment-pattern-4/input.js"
-																end: Object {
-																	column: 13
-																	line: 1
-																}
-																start: Object {
-																	column: 12
-																	line: 1
-																}
-															}
+															loc: SourceLocation core/categorized/invalid-assignment-pattern-4/input.js 1:12-1:13
 														}
 													}
 												]
 											}
 										]
 									}
-									loc: Object {
-										filename: "core/categorized/invalid-assignment-pattern-4/input.js"
-										end: Object {
-											column: 16
-											line: 1
-										}
-										start: Object {
-											column: 2
-											line: 1
-										}
-									}
+									loc: SourceLocation core/categorized/invalid-assignment-pattern-4/input.js 1:2-1:16
 								}
 							]
 						}
@@ -228,6 +85,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

@@ -12,77 +12,26 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "esprima/expression-primary-literal-regular-expression/migrated_0003/input.js"
 	hasHoistedVars: true
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "esprima/expression-primary-literal-regular-expression/migrated_0003/input.js"
-		end: Object {
-			column: 16
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation esprima/expression-primary-literal-regular-expression/migrated_0003/input.js 1:0-1:16
+	path: UIDPath<esprima/expression-primary-literal-regular-expression/migrated_0003/input.js>
 	body: Array [
 		JSVariableDeclarationStatement {
-			loc: Object {
-				filename: "esprima/expression-primary-literal-regular-expression/migrated_0003/input.js"
-				end: Object {
-					column: 16
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation esprima/expression-primary-literal-regular-expression/migrated_0003/input.js 1:0-1:16
 			declaration: JSVariableDeclaration {
 				kind: "var"
-				loc: Object {
-					filename: "esprima/expression-primary-literal-regular-expression/migrated_0003/input.js"
-					end: Object {
-						column: 16
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/expression-primary-literal-regular-expression/migrated_0003/input.js 1:0-1:16
 				declarations: Array [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "x"
-							loc: Object {
-								filename: "esprima/expression-primary-literal-regular-expression/migrated_0003/input.js"
-								identifierName: "x"
-								end: Object {
-									column: 5
-									line: 1
-								}
-								start: Object {
-									column: 4
-									line: 1
-								}
-							}
+							loc: SourceLocation esprima/expression-primary-literal-regular-expression/migrated_0003/input.js 1:4-1:5 (x)
 						}
-						loc: Object {
-							filename: "esprima/expression-primary-literal-regular-expression/migrated_0003/input.js"
-							end: Object {
-								column: 16
-								line: 1
-							}
-							start: Object {
-								column: 4
-								line: 1
-							}
-						}
+						loc: SourceLocation esprima/expression-primary-literal-regular-expression/migrated_0003/input.js 1:4-1:16
 						init: JSRegExpLiteral {
 							global: false
 							insensitive: false
@@ -90,83 +39,23 @@ JSRoot {
 							noDotNewline: false
 							sticky: true
 							unicode: false
-							loc: Object {
-								filename: "esprima/expression-primary-literal-regular-expression/migrated_0003/input.js"
-								end: Object {
-									column: 16
-									line: 1
-								}
-								start: Object {
-									column: 8
-									line: 1
-								}
-							}
+							loc: SourceLocation esprima/expression-primary-literal-regular-expression/migrated_0003/input.js 1:8-1:16
 							expression: JSRegExpSubExpression {
-								loc: Object {
-									filename: "esprima/expression-primary-literal-regular-expression/migrated_0003/input.js"
-									end: Object {
-										column: 13
-										line: 1
-									}
-									start: Object {
-										column: 9
-										line: 1
-									}
-								}
+								loc: SourceLocation esprima/expression-primary-literal-regular-expression/migrated_0003/input.js 1:9-1:13
 								body: Array [
 									JSRegExpCharSet {
 										invert: false
-										loc: Object {
-											filename: "esprima/expression-primary-literal-regular-expression/migrated_0003/input.js"
-											end: Object {
-												column: 13
-												line: 1
-											}
-											start: Object {
-												column: 9
-												line: 1
-											}
-										}
+										loc: SourceLocation esprima/expression-primary-literal-regular-expression/migrated_0003/input.js 1:9-1:13
 										body: Array [
 											JSRegExpCharSetRange {
-												loc: Object {
-													filename: "esprima/expression-primary-literal-regular-expression/migrated_0003/input.js"
-													end: Object {
-														column: 13
-														line: 1
-													}
-													start: Object {
-														column: 10
-														line: 1
-													}
-												}
+												loc: SourceLocation esprima/expression-primary-literal-regular-expression/migrated_0003/input.js 1:10-1:13
 												end: JSRegExpCharacter {
 													value: "z"
-													loc: Object {
-														filename: "esprima/expression-primary-literal-regular-expression/migrated_0003/input.js"
-														end: Object {
-															column: 13
-															line: 1
-														}
-														start: Object {
-															column: 12
-															line: 1
-														}
-													}
+													loc: SourceLocation esprima/expression-primary-literal-regular-expression/migrated_0003/input.js 1:12-1:13
 												}
 												start: JSRegExpCharacter {
 													value: "a"
-													loc: Object {
-														filename: "esprima/expression-primary-literal-regular-expression/migrated_0003/input.js"
-														end: Object {
-															column: 11
-															line: 1
-														}
-														start: Object {
-															column: 10
-															line: 1
-														}
-													}
+													loc: SourceLocation esprima/expression-primary-literal-regular-expression/migrated_0003/input.js 1:10-1:11
 												}
 											}
 										]
@@ -185,6 +74,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

@@ -6,6 +6,7 @@
  */
 
 import {
+	DIAGNOSTIC_CATEGORIES,
 	Diagnostic,
 	DiagnosticAdvice,
 	DiagnosticAdviceItem,
@@ -331,9 +332,12 @@ export default class TestAPI implements TestHelper {
 			getErrorStructure(new Error(), framesToShift + 1),
 			{
 				description: {
-					category: "tests/failure",
+					category: DIAGNOSTIC_CATEGORIES["tests/failure"],
 					message: markup`${message}`,
 					advice,
+				},
+				tags: {
+					internal: false,
 				},
 			},
 		);
@@ -436,9 +440,9 @@ export default class TestAPI implements TestHelper {
 		}
 	}
 
-	public is(
-		received: unknown,
-		expected: unknown,
+	public is<T extends unknown>(
+		received: T,
+		expected: T,
 		message: string = "t.is() failed, using Object.is semantics",
 	): void {
 		if (Object.is(received, expected) !== true) {
@@ -672,13 +676,13 @@ export default class TestAPI implements TestHelper {
 		const callError = getErrorStructure(new Error(), 1);
 
 		this.onTeardown(async () => {
-			const {status} = this.snapshotManager.testInlineSnapshot(
+			const res = this.snapshotManager.testInlineSnapshot(
 				callFrame,
 				received,
 				snapshot,
 			);
 
-			if (status === "UPDATE" && this.options.freezeSnapshots) {
+			if (res.status === "UPDATE" && this.options.freezeSnapshots) {
 				await this.emitDiagnostic(
 					deriveDiagnosticFromErrorStructure(
 						callError,
@@ -690,7 +694,7 @@ export default class TestAPI implements TestHelper {
 				);
 			}
 
-			if (status === "NO_MATCH") {
+			if (res.status === "NO_MATCH") {
 				await this.emitDiagnostic(
 					deriveDiagnosticFromErrorStructure(
 						callError,
@@ -699,8 +703,8 @@ export default class TestAPI implements TestHelper {
 							description: {
 								...descriptions.SNAPSHOTS.INLINE_BAD_MATCH,
 								advice: this.buildMatchAdvice(
-									received,
-									snapshot,
+									res.receivedFormat,
+									res.expectedFormat,
 									{
 										receivedAlias: "What the code gave us",
 										expectedAlias: "Existing inline snapshot",
@@ -825,7 +829,7 @@ export default class TestAPI implements TestHelper {
 				advice.push({
 					type: "log",
 					category: "info",
-					text: markup`Run <code>rome test <filelink target="${this.path.join()}" /> --update-snapshots</code> to update this snapshot`,
+					text: markup`Run <code>rome test ${this.path} --update-snapshots</code> to update this snapshot`,
 				});
 
 				await this.emitDiagnostic(
@@ -834,7 +838,7 @@ export default class TestAPI implements TestHelper {
 						{
 							cleanFrames,
 							description: {
-								category: "tests/snapshots/incorrect",
+								category: DIAGNOSTIC_CATEGORIES["tests/snapshots/incorrect"],
 								message: markupMessage,
 								advice,
 							},

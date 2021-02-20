@@ -12,79 +12,28 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "es2015/uncategorised/384/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
 	syntax: Array []
-	loc: Object {
-		filename: "es2015/uncategorised/384/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2015/uncategorised/384/input.js 1:0-2:0
+	path: UIDPath<es2015/uncategorised/384/input.js>
 	body: Array [
 		JSExportLocalDeclaration {
 			exportKind: "value"
 			specifiers: undefined
-			loc: Object {
-				filename: "es2015/uncategorised/384/input.js"
-				end: Object {
-					column: 24
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2015/uncategorised/384/input.js 1:0-1:24
 			declaration: JSFunctionDeclaration {
 				id: JSBindingIdentifier {
 					name: "foo"
-					loc: Object {
-						filename: "es2015/uncategorised/384/input.js"
-						identifierName: "foo"
-						end: Object {
-							column: 19
-							line: 1
-						}
-						start: Object {
-							column: 16
-							line: 1
-						}
-					}
+					loc: SourceLocation es2015/uncategorised/384/input.js 1:16-1:19 (foo)
 				}
-				loc: Object {
-					filename: "es2015/uncategorised/384/input.js"
-					end: Object {
-						column: 24
-						line: 1
-					}
-					start: Object {
-						column: 7
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/uncategorised/384/input.js 1:7-1:24
 				body: JSBlockStatement {
 					body: Array []
 					directives: Array []
-					loc: Object {
-						filename: "es2015/uncategorised/384/input.js"
-						end: Object {
-							column: 24
-							line: 1
-						}
-						start: Object {
-							column: 22
-							line: 1
-						}
-					}
+					loc: SourceLocation es2015/uncategorised/384/input.js 1:22-1:24
 				}
 				head: JSFunctionHead {
 					async: false
@@ -95,17 +44,7 @@ JSRoot {
 					returnType: undefined
 					thisType: undefined
 					typeParameters: undefined
-					loc: Object {
-						filename: "es2015/uncategorised/384/input.js"
-						end: Object {
-							column: 21
-							line: 1
-						}
-						start: Object {
-							column: 19
-							line: 1
-						}
-					}
+					loc: SourceLocation es2015/uncategorised/384/input.js 1:19-1:21
 				}
 			}
 		}
@@ -116,6 +55,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

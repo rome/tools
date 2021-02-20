@@ -12,50 +12,20 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "experimental/numeric-separator/valid-3/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "experimental/numeric-separator/valid-3/input.js"
-		end: Object {
-			column: 9
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation experimental/numeric-separator/valid-3/input.js 1:0-1:9
+	path: UIDPath<experimental/numeric-separator/valid-3/input.js>
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "experimental/numeric-separator/valid-3/input.js"
-				end: Object {
-					column: 9
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation experimental/numeric-separator/valid-3/input.js 1:0-1:9
 			expression: JSNumericLiteral {
 				value: 11.01
-				format: undefined
-				loc: Object {
-					filename: "experimental/numeric-separator/valid-3/input.js"
-					end: Object {
-						column: 9
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				format: "scientific"
+				loc: SourceLocation experimental/numeric-separator/valid-3/input.js 1:0-1:9
 			}
 		}
 	]
@@ -65,6 +35,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

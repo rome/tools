@@ -12,147 +12,44 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "esprima/statement-try/migrated_0003/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "esprima/statement-try/migrated_0003/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation esprima/statement-try/migrated_0003/input.js 1:0-2:0
+	path: UIDPath<esprima/statement-try/migrated_0003/input.js>
 	body: Array [
 		JSTryStatement {
 			finalizer: undefined
-			loc: Object {
-				filename: "esprima/statement-try/migrated_0003/input.js"
-				end: Object {
-					column: 28
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation esprima/statement-try/migrated_0003/input.js 1:0-1:28
 			block: JSBlockStatement {
 				body: Array []
 				directives: Array []
-				loc: Object {
-					filename: "esprima/statement-try/migrated_0003/input.js"
-					end: Object {
-						column: 7
-						line: 1
-					}
-					start: Object {
-						column: 4
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/statement-try/migrated_0003/input.js 1:4-1:7
 			}
 			handler: JSCatchClause {
-				loc: Object {
-					filename: "esprima/statement-try/migrated_0003/input.js"
-					end: Object {
-						column: 28
-						line: 1
-					}
-					start: Object {
-						column: 8
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/statement-try/migrated_0003/input.js 1:8-1:28
 				param: JSBindingIdentifier {
 					name: "e"
-					loc: Object {
-						filename: "esprima/statement-try/migrated_0003/input.js"
-						identifierName: "e"
-						end: Object {
-							column: 16
-							line: 1
-						}
-						start: Object {
-							column: 15
-							line: 1
-						}
-					}
+					loc: SourceLocation esprima/statement-try/migrated_0003/input.js 1:15-1:16 (e)
 				}
 				body: JSBlockStatement {
 					directives: Array []
-					loc: Object {
-						filename: "esprima/statement-try/migrated_0003/input.js"
-						end: Object {
-							column: 28
-							line: 1
-						}
-						start: Object {
-							column: 18
-							line: 1
-						}
-					}
+					loc: SourceLocation esprima/statement-try/migrated_0003/input.js 1:18-1:28
 					body: Array [
 						JSExpressionStatement {
-							loc: Object {
-								filename: "esprima/statement-try/migrated_0003/input.js"
-								end: Object {
-									column: 26
-									line: 1
-								}
-								start: Object {
-									column: 20
-									line: 1
-								}
-							}
+							loc: SourceLocation esprima/statement-try/migrated_0003/input.js 1:20-1:26
 							expression: JSCallExpression {
-								loc: Object {
-									filename: "esprima/statement-try/migrated_0003/input.js"
-									end: Object {
-										column: 26
-										line: 1
-									}
-									start: Object {
-										column: 20
-										line: 1
-									}
-								}
+								loc: SourceLocation esprima/statement-try/migrated_0003/input.js 1:20-1:26
 								callee: JSReferenceIdentifier {
 									name: "say"
-									loc: Object {
-										filename: "esprima/statement-try/migrated_0003/input.js"
-										identifierName: "say"
-										end: Object {
-											column: 23
-											line: 1
-										}
-										start: Object {
-											column: 20
-											line: 1
-										}
-									}
+									loc: SourceLocation esprima/statement-try/migrated_0003/input.js 1:20-1:23 (say)
 								}
 								arguments: Array [
 									JSReferenceIdentifier {
 										name: "e"
-										loc: Object {
-											filename: "esprima/statement-try/migrated_0003/input.js"
-											identifierName: "e"
-											end: Object {
-												column: 25
-												line: 1
-											}
-											start: Object {
-												column: 24
-												line: 1
-											}
-										}
+										loc: SourceLocation esprima/statement-try/migrated_0003/input.js 1:24-1:25 (e)
 									}
 								]
 							}
@@ -168,6 +65,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

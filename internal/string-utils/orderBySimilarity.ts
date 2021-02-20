@@ -32,12 +32,12 @@ export function compareTwoStrings(aStr: string, bStr: string): number {
 	const b = bStr.replace(/\s+/g, "");
 
 	// If both are empty strings
-	if (!a.length && !b.length) {
+	if (!(a.length || b.length)) {
 		return 1;
 	}
 
 	// If only one is empty string
-	if (!a.length || !b.length) {
+	if (!(a.length && b.length)) {
 		return 0;
 	}
 

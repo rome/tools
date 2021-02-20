@@ -11,106 +11,48 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "jsx/errors/nested-fragment-unclosed/input.jsx"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
+	loc: SourceLocation jsx/errors/nested-fragment-unclosed/input.jsx 1:0-2:0
+	path: UIDPath<jsx/errors/nested-fragment-unclosed/input.jsx>
 	syntax: Array ["jsx"]
-	loc: Object {
-		filename: "jsx/errors/nested-fragment-unclosed/input.jsx"
-		end: Object {
-			column: 0
-			line: 2
+	body: Array [
+		JSExpressionStatement {
+			loc: SourceLocation jsx/errors/nested-fragment-unclosed/input.jsx 1:0-1:7
+			expression: JSXFragment {
+				loc: SourceLocation jsx/errors/nested-fragment-unclosed/input.jsx 1:0-1:7
+				children: Array [
+					JSXFragment {
+						children: Array []
+						loc: SourceLocation jsx/errors/nested-fragment-unclosed/input.jsx 1:2-1:7
+					}
+				]
+			}
 		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	]
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
 			location: Object {
-				filename: "jsx/errors/nested-fragment-unclosed/input.jsx"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 7
-					line: 1
-				}
-				start: Object {
-					column: 7
-					line: 1
-				}
+				end: Position 1:7
+				path: UIDPath<jsx/errors/nested-fragment-unclosed/input.jsx>
+				start: Position 1:7
 			}
 			description: Object {
-				category: "parse"
 				categoryValue: "js"
+				category: Array ["parse"]
 				message: RAW_MARKUP {value: "Unclosed JSX element"}
 				advice: Array [
 					log {
 						category: "info"
 						text: RAW_MARKUP {value: "Originated from this opening tag"}
 					}
-					frame {
-						location: Object {
-							filename: "jsx/errors/nested-fragment-unclosed/input.jsx"
-							end: Object {
-								column: 2
-								line: 1
-							}
-							start: Object {
-								column: 0
-								line: 1
-							}
-						}
-					}
-				]
-			}
-		}
-	]
-	body: Array [
-		JSExpressionStatement {
-			loc: Object {
-				filename: "jsx/errors/nested-fragment-unclosed/input.jsx"
-				end: Object {
-					column: 7
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
-			expression: JSXFragment {
-				loc: Object {
-					filename: "jsx/errors/nested-fragment-unclosed/input.jsx"
-					end: Object {
-						column: 7
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
-				children: Array [
-					JSXFragment {
-						children: Array []
-						loc: Object {
-							filename: "jsx/errors/nested-fragment-unclosed/input.jsx"
-							end: Object {
-								column: 7
-								line: 1
-							}
-							start: Object {
-								column: 2
-								line: 1
-							}
-						}
-					}
+					frame {location: SourceLocation jsx/errors/nested-fragment-unclosed/input.jsx 1:0-1:2}
 				]
 			}
 		}
@@ -126,13 +68,13 @@ JSRoot {
 
   ✖ Unclosed JSX element
 
+    <><></>
+           ^
+
   ℹ Originated from this opening tag
 
     <><></>
     ^^
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

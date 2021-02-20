@@ -12,223 +12,69 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "typescript/module-namespace/head-declare/input.ts"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
+	loc: SourceLocation typescript/module-namespace/head-declare/input.ts 1:0-5:0
+	path: UIDPath<typescript/module-namespace/head-declare/input.ts>
 	syntax: Array ["ts"]
-	loc: Object {
-		filename: "typescript/module-namespace/head-declare/input.ts"
-		end: Object {
-			column: 0
-			line: 5
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
 	body: Array [
 		TSModuleDeclaration {
 			id: JSBindingIdentifier {
 				name: "N"
-				loc: Object {
-					filename: "typescript/module-namespace/head-declare/input.ts"
-					identifierName: "N"
-					end: Object {
-						column: 19
-						line: 1
-					}
-					start: Object {
-						column: 18
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/module-namespace/head-declare/input.ts 1:18-1:19 (N)
 			}
 			declare: true
-			loc: Object {
-				filename: "typescript/module-namespace/head-declare/input.ts"
-				end: Object {
-					column: 24
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation typescript/module-namespace/head-declare/input.ts 1:0-1:24
 			body: TSModuleDeclaration {
 				id: JSBindingIdentifier {
 					name: "M"
-					loc: Object {
-						filename: "typescript/module-namespace/head-declare/input.ts"
-						identifierName: "M"
-						end: Object {
-							column: 21
-							line: 1
-						}
-						start: Object {
-							column: 20
-							line: 1
-						}
-					}
+					loc: SourceLocation typescript/module-namespace/head-declare/input.ts 1:20-1:21 (M)
 				}
-				loc: Object {
-					filename: "typescript/module-namespace/head-declare/input.ts"
-					end: Object {
-						column: 24
-						line: 1
-					}
-					start: Object {
-						column: 20
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/module-namespace/head-declare/input.ts 1:20-1:24
 				body: TSModuleBlock {
 					body: Array []
-					loc: Object {
-						filename: "typescript/module-namespace/head-declare/input.ts"
-						end: Object {
-							column: 24
-							line: 1
-						}
-						start: Object {
-							column: 22
-							line: 1
-						}
-					}
+					loc: SourceLocation typescript/module-namespace/head-declare/input.ts 1:22-1:24
 				}
 			}
 		}
 		TSModuleDeclaration {
 			id: JSBindingIdentifier {
 				name: "M"
-				loc: Object {
-					filename: "typescript/module-namespace/head-declare/input.ts"
-					identifierName: "M"
-					end: Object {
-						column: 16
-						line: 2
-					}
-					start: Object {
-						column: 15
-						line: 2
-					}
-				}
+				loc: SourceLocation typescript/module-namespace/head-declare/input.ts 2:15-2:16 (M)
 			}
 			declare: true
-			loc: Object {
-				filename: "typescript/module-namespace/head-declare/input.ts"
-				end: Object {
-					column: 19
-					line: 2
-				}
-				start: Object {
-					column: 0
-					line: 2
-				}
-			}
+			loc: SourceLocation typescript/module-namespace/head-declare/input.ts 2:0-2:19
 			body: TSModuleBlock {
 				body: Array []
-				loc: Object {
-					filename: "typescript/module-namespace/head-declare/input.ts"
-					end: Object {
-						column: 19
-						line: 2
-					}
-					start: Object {
-						column: 17
-						line: 2
-					}
-				}
+				loc: SourceLocation typescript/module-namespace/head-declare/input.ts 2:17-2:19
 			}
 		}
 		TSModuleDeclaration {
 			id: JSStringLiteral {
 				value: "m"
-				loc: Object {
-					filename: "typescript/module-namespace/head-declare/input.ts"
-					end: Object {
-						column: 18
-						line: 3
-					}
-					start: Object {
-						column: 15
-						line: 3
-					}
-				}
+				loc: SourceLocation typescript/module-namespace/head-declare/input.ts 3:15-3:18
 			}
 			declare: true
 			global: undefined
-			loc: Object {
-				filename: "typescript/module-namespace/head-declare/input.ts"
-				end: Object {
-					column: 21
-					line: 3
-				}
-				start: Object {
-					column: 0
-					line: 3
-				}
-			}
+			loc: SourceLocation typescript/module-namespace/head-declare/input.ts 3:0-3:21
 			body: TSModuleBlock {
 				body: Array []
-				loc: Object {
-					filename: "typescript/module-namespace/head-declare/input.ts"
-					end: Object {
-						column: 21
-						line: 3
-					}
-					start: Object {
-						column: 19
-						line: 3
-					}
-				}
+				loc: SourceLocation typescript/module-namespace/head-declare/input.ts 3:19-3:21
 			}
 		}
 		TSModuleDeclaration {
 			id: JSBindingIdentifier {
 				name: "global"
-				loc: Object {
-					filename: "typescript/module-namespace/head-declare/input.ts"
-					identifierName: "global"
-					end: Object {
-						column: 14
-						line: 4
-					}
-					start: Object {
-						column: 8
-						line: 4
-					}
-				}
+				loc: SourceLocation typescript/module-namespace/head-declare/input.ts 4:8-4:14 (global)
 			}
 			declare: true
 			global: true
-			loc: Object {
-				filename: "typescript/module-namespace/head-declare/input.ts"
-				end: Object {
-					column: 17
-					line: 4
-				}
-				start: Object {
-					column: 0
-					line: 4
-				}
-			}
+			loc: SourceLocation typescript/module-namespace/head-declare/input.ts 4:0-4:17
 			body: TSModuleBlock {
 				body: Array []
-				loc: Object {
-					filename: "typescript/module-namespace/head-declare/input.ts"
-					end: Object {
-						column: 17
-						line: 4
-					}
-					start: Object {
-						column: 15
-						line: 4
-					}
-				}
+				loc: SourceLocation typescript/module-namespace/head-declare/input.ts 4:15-4:17
 			}
 		}
 	]
@@ -238,6 +84,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

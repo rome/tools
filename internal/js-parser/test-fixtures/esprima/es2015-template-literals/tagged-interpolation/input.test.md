@@ -12,91 +12,29 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "esprima/es2015-template-literals/tagged-interpolation/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "esprima/es2015-template-literals/tagged-interpolation/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation esprima/es2015-template-literals/tagged-interpolation/input.js 1:0-2:0
+	path: UIDPath<esprima/es2015-template-literals/tagged-interpolation/input.js>
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "esprima/es2015-template-literals/tagged-interpolation/input.js"
-				end: Object {
-					column: 18
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation esprima/es2015-template-literals/tagged-interpolation/input.js 1:0-1:18
 			expression: JSTaggedTemplateExpression {
 				typeArguments: undefined
-				loc: Object {
-					filename: "esprima/es2015-template-literals/tagged-interpolation/input.js"
-					end: Object {
-						column: 18
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/es2015-template-literals/tagged-interpolation/input.js 1:0-1:18
 				tag: JSReferenceIdentifier {
 					name: "raw"
-					loc: Object {
-						filename: "esprima/es2015-template-literals/tagged-interpolation/input.js"
-						identifierName: "raw"
-						end: Object {
-							column: 3
-							line: 1
-						}
-						start: Object {
-							column: 0
-							line: 1
-						}
-					}
+					loc: SourceLocation esprima/es2015-template-literals/tagged-interpolation/input.js 1:0-1:3 (raw)
 				}
 				quasi: JSTemplateLiteral {
-					loc: Object {
-						filename: "esprima/es2015-template-literals/tagged-interpolation/input.js"
-						end: Object {
-							column: 18
-							line: 1
-						}
-						start: Object {
-							column: 3
-							line: 1
-						}
-					}
+					loc: SourceLocation esprima/es2015-template-literals/tagged-interpolation/input.js 1:3-1:18
 					expressions: Array [
 						JSReferenceIdentifier {
 							name: "name"
-							loc: Object {
-								filename: "esprima/es2015-template-literals/tagged-interpolation/input.js"
-								identifierName: "name"
-								end: Object {
-									column: 16
-									line: 1
-								}
-								start: Object {
-									column: 12
-									line: 1
-								}
-							}
+							loc: SourceLocation esprima/es2015-template-literals/tagged-interpolation/input.js 1:12-1:16 (name)
 						}
 					]
 					quasis: Array [
@@ -104,33 +42,13 @@ JSRoot {
 							cooked: "hello "
 							raw: "hello "
 							tail: false
-							loc: Object {
-								filename: "esprima/es2015-template-literals/tagged-interpolation/input.js"
-								end: Object {
-									column: 10
-									line: 1
-								}
-								start: Object {
-									column: 4
-									line: 1
-								}
-							}
+							loc: SourceLocation esprima/es2015-template-literals/tagged-interpolation/input.js 1:4-1:10
 						}
 						JSTemplateElement {
 							cooked: ""
 							raw: ""
 							tail: true
-							loc: Object {
-								filename: "esprima/es2015-template-literals/tagged-interpolation/input.js"
-								end: Object {
-									column: 17
-									line: 1
-								}
-								start: Object {
-									column: 17
-									line: 1
-								}
-							}
+							loc: SourceLocation esprima/es2015-template-literals/tagged-interpolation/input.js 1:17-1:17
 						}
 					]
 				}
@@ -143,6 +61,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

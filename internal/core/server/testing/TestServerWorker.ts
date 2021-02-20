@@ -10,11 +10,17 @@ import {forkThread} from "@internal/core/common/utils/fork";
 import {createClient} from "@internal/codec-websocket";
 import {TestWorkerFlags} from "@internal/core/test-worker/TestWorker";
 import TestServer, {BridgeDiagnosticsError} from "@internal/core/server/testing/TestServer";
-import {ob1Coerce0To1} from "@internal/ob1";
-import {deriveDiagnosticFromErrorStructure} from "@internal/diagnostics";
+import {
+	DIAGNOSTIC_CATEGORIES,
+	deriveDiagnosticFromErrorStructure,
+} from "@internal/diagnostics";
 import {markup} from "@internal/markup";
 import {ReporterProgress} from "@internal/cli-reporter";
-import {AbsoluteFilePathMap, AbsoluteFilePathSet} from "@internal/path";
+import {
+	AbsoluteFilePathMap,
+	AbsoluteFilePathSet,
+	createAnyPath,
+} from "@internal/path";
 import {ansiEscapes} from "@internal/cli-layout";
 import {FilePathLocker} from "@internal/async/lockers";
 import TestServerFile from "@internal/core/server/testing/TestServerFile";
@@ -63,6 +69,9 @@ export default class TestServerWorker {
 				stdin: true,
 				stdout: true,
 				stderr: true,
+				env: {
+					NODE_ENV: "test",
+				},
 			},
 		);
 
@@ -193,8 +202,8 @@ export default class TestServerWorker {
 			const loc = callFrame.get("location");
 
 			const resolved = this.runner.sourceMaps.assertApproxOriginalPositionFor(
-				urlToFilename(callFrame.get("url").asString()),
-				ob1Coerce0To1(loc.get("lineNumber").asZeroIndexedNumber()),
+				createAnyPath(urlToFilename(callFrame.get("url").asString())),
+				loc.get("lineNumber").asZeroIndexedNumber().toOneIndexed(),
 				loc.get("columnNumber").asZeroIndexedNumber(),
 			);
 
@@ -207,7 +216,7 @@ export default class TestServerWorker {
 				typeName: undefined,
 				functionName: name,
 				methodName: undefined,
-				filename: resolved.source,
+				path: resolved.source,
 				lineNumber: resolved.line,
 				columnNumber: resolved.column,
 				isTopLevel: false,
@@ -227,7 +236,7 @@ export default class TestServerWorker {
 					},
 					{
 						description: {
-							category: "tests/timeout",
+							category: DIAGNOSTIC_CATEGORIES["tests/timeout"],
 							message: markup`Test worker was unresponsive for <emphasis>${duration}</emphasis>. Possible infinite loop. Below is a stack trace before the test was terminated.`,
 							advice: [
 								{
@@ -290,7 +299,7 @@ export default class TestServerWorker {
 
 		let progressId;
 		if (progress !== undefined) {
-			progressId = progress.pushText(markup`<filelink target="${ref.uid}" />`);
+			progressId = progress.pushText(markup`${ref.uid}`);
 		}
 
 		try {
@@ -388,7 +397,7 @@ export default class TestServerWorker {
 
 		try {
 			const promises: Promise<void>[] = [];
-			for (let i = 0; i < 10; i++) {
+			for (let i = 0; i < 5; i++) {
 				promises.push(this.runTest());
 			}
 			await Promise.all(promises);

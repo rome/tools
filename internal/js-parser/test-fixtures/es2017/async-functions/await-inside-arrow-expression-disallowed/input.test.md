@@ -11,73 +11,37 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "es2017/async-functions/await-inside-arrow-expression-disallowed/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2017/async-functions/await-inside-arrow-expression-disallowed/input.js"
-		end: Object {
-			column: 17
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2017/async-functions/await-inside-arrow-expression-disallowed/input.js 1:0-1:17
+	path: UIDPath<es2017/async-functions/await-inside-arrow-expression-disallowed/input.js>
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse"
 				categoryValue: "js"
+				category: Array ["parse"]
 				message: RAW_MARKUP {value: "Expected a semicolon or a line terminator"}
 			}
 			location: Object {
-				filename: "es2017/async-functions/await-inside-arrow-expression-disallowed/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 13
-					line: 1
-				}
-				start: Object {
-					column: 14
-					line: 1
-				}
+				end: Position 1:13
+				path: UIDPath<es2017/async-functions/await-inside-arrow-expression-disallowed/input.js>
+				start: Position 1:14
 			}
 		}
 	]
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "es2017/async-functions/await-inside-arrow-expression-disallowed/input.js"
-				end: Object {
-					column: 17
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2017/async-functions/await-inside-arrow-expression-disallowed/input.js 1:0-1:17
 			expression: JSArrowFunctionExpression {
-				loc: Object {
-					filename: "es2017/async-functions/await-inside-arrow-expression-disallowed/input.js"
-					end: Object {
-						column: 17
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation es2017/async-functions/await-inside-arrow-expression-disallowed/input.js 1:0-1:17
 				head: JSFunctionHead {
 					async: false
 					hasHoistedVars: false
@@ -85,86 +49,24 @@ JSRoot {
 					rest: undefined
 					returnType: undefined
 					thisType: undefined
-					loc: Object {
-						filename: "es2017/async-functions/await-inside-arrow-expression-disallowed/input.js"
-						end: Object {
-							column: 5
-							line: 1
-						}
-						start: Object {
-							column: 0
-							line: 1
-						}
-					}
+					loc: SourceLocation es2017/async-functions/await-inside-arrow-expression-disallowed/input.js 1:0-1:5
 				}
 				body: JSBlockStatement {
 					directives: Array []
-					loc: Object {
-						filename: "es2017/async-functions/await-inside-arrow-expression-disallowed/input.js"
-						end: Object {
-							column: 17
-							line: 1
-						}
-						start: Object {
-							column: 6
-							line: 1
-						}
-					}
+					loc: SourceLocation es2017/async-functions/await-inside-arrow-expression-disallowed/input.js 1:6-1:17
 					body: Array [
 						JSExpressionStatement {
-							loc: Object {
-								filename: "es2017/async-functions/await-inside-arrow-expression-disallowed/input.js"
-								end: Object {
-									column: 13
-									line: 1
-								}
-								start: Object {
-									column: 8
-									line: 1
-								}
-							}
+							loc: SourceLocation es2017/async-functions/await-inside-arrow-expression-disallowed/input.js 1:8-1:13
 							expression: JSReferenceIdentifier {
 								name: "await"
-								loc: Object {
-									filename: "es2017/async-functions/await-inside-arrow-expression-disallowed/input.js"
-									identifierName: "await"
-									end: Object {
-										column: 13
-										line: 1
-									}
-									start: Object {
-										column: 8
-										line: 1
-									}
-								}
+								loc: SourceLocation es2017/async-functions/await-inside-arrow-expression-disallowed/input.js 1:8-1:13 (await)
 							}
 						}
 						JSExpressionStatement {
-							loc: Object {
-								filename: "es2017/async-functions/await-inside-arrow-expression-disallowed/input.js"
-								end: Object {
-									column: 15
-									line: 1
-								}
-								start: Object {
-									column: 14
-									line: 1
-								}
-							}
+							loc: SourceLocation es2017/async-functions/await-inside-arrow-expression-disallowed/input.js 1:14-1:15
 							expression: JSReferenceIdentifier {
 								name: "x"
-								loc: Object {
-									filename: "es2017/async-functions/await-inside-arrow-expression-disallowed/input.js"
-									identifierName: "x"
-									end: Object {
-										column: 15
-										line: 1
-									}
-									start: Object {
-										column: 14
-										line: 1
-									}
-								}
+								loc: SourceLocation es2017/async-functions/await-inside-arrow-expression-disallowed/input.js 1:14-1:15 (x)
 							}
 						}
 					]
@@ -186,8 +88,5 @@ JSRoot {
     () => { await x }
                   ^
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

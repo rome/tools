@@ -2,6 +2,8 @@ import {test} from "rome";
 import {LintRequest, LintResult, lint, lintRuleNames} from "@internal/compiler";
 import {ProjectConfig, createDefaultProjectConfig} from "@internal/project";
 import {parseJS} from "@internal/js-parser";
+import {dedent} from "@internal/string-utils";
+import {DIAGNOSTIC_CATEGORIES, equalCategoryNames} from "@internal/diagnostics";
 
 function createLintTransformOptions(
 	sourceText: string,
@@ -12,14 +14,40 @@ function createLintTransformOptions(
 		suppressionExplanation: "",
 		sourceText,
 		ast: parseJS({
-			path: "unknown",
 			input: sourceText,
 		}),
 		options: {},
 		project: {
-			configHashes: [],
 			config: mutateConfig(createDefaultProjectConfig()),
-			directory: undefined,
+		},
+	};
+}
+
+function createLintTransformSuppressions(
+	sourceText: string,
+	mutateConfig: (config: ProjectConfig) => ProjectConfig,
+): LintRequest {
+	return {
+		applySafeFixes: true,
+		suppressionExplanation: "test suppression",
+		sourceText,
+		ast: parseJS({
+			input: sourceText,
+		}),
+		options: {
+			lint: {
+				hasDecisions: true,
+				globalDecisions: [
+					{
+						action: "suppress",
+						category: DIAGNOSTIC_CATEGORIES["lint/js/noVar"],
+						categoryValue: undefined,
+					},
+				],
+			},
+		},
+		project: {
+			config: mutateConfig(createDefaultProjectConfig()),
 		},
 	};
 }
@@ -29,7 +57,12 @@ test(
 	async (t) => {
 		function hasUndeclaredDiag(res: LintResult): boolean {
 			for (const diag of res.diagnostics) {
-				if (diag.description.category === "lint/js/noUndeclaredVariables") {
+				if (
+					equalCategoryNames(
+						diag.description.category,
+						DIAGNOSTIC_CATEGORIES["lint/js/noUndeclaredVariables"],
+					)
+				) {
 					return true;
 				}
 			}
@@ -94,6 +127,38 @@ test(
 				}),
 			),
 		);
-		t.is(res.src, code);
+		t.is(res.formatted, code);
+	},
+);
+
+test(
+	"should add a new suppression on an existing suppression",
+	async (t) => {
+		const code = dedent`
+			// rome-ignore lint/js/noUnusedVariables: suppressed via --review
+			var foo = 5;
+		`;
+		const res = await lint(
+			createLintTransformSuppressions(
+				code,
+				(config) => ({
+					...config,
+					lint: {
+						...config.lint,
+						requireSuppressionExplanations: true,
+					},
+					format: {
+						...config.format,
+						enabled: true,
+					},
+				}),
+			),
+		);
+
+		t.true(
+			res.formatted.includes(
+				"rome-ignore lint/js/noVar lint/js/noUnusedVariables: suppressed via --review",
+			),
+		);
 	},
 );

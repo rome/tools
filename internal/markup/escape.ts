@@ -7,14 +7,8 @@
 
 import {Dict} from "@internal/typescript-helpers";
 import {MarkupTagName} from "./types";
-import {
-	AbsoluteFilePath,
-	AnyFilePath,
-	RelativeFilePath,
-	URLPath,
-	UnknownPath,
-} from "@internal/path";
-import {UnknownNumber, isNumber, ob1Get} from "@internal/ob1";
+import {AnyPath, URLPath, isPath} from "@internal/path";
+import {OneIndexed, UnknownNumber, ZeroIndexed} from "@internal/math";
 
 type LazyMarkupPart = StaticMarkup | LazyMarkupFactory | LazyMarkup;
 
@@ -72,7 +66,7 @@ export function convertToMarkupFromRandomString(unsafe: string): StaticMarkup {
 }
 
 export function filePathToMarkup(
-	path: AnyFilePath,
+	path: AnyPath,
 	explicit: boolean = false,
 ): StaticMarkup {
 	let tagName: MarkupTagName = "filelink";
@@ -92,12 +86,7 @@ export function filePathToMarkup(
 	);
 }
 
-type InterpolatedValue =
-	| undefined
-	| number
-	| bigint
-	| AnyFilePath
-	| UnknownNumber;
+type InterpolatedValue = undefined | AnyPath | UnknownNumber;
 
 const markupTemplateCache: WeakMap<TemplateStringsArray, AnyMarkup> = new WeakMap();
 
@@ -137,21 +126,7 @@ export function markup(
 			continue;
 		}
 
-		const value = values[i];
-		if (typeof value === "undefined") {
-			parts.push(toRawMarkup("<dim>undefined</dim>"));
-		} else if (isNumber(value)) {
-			parts.push(toRawMarkup(`<number>${String(ob1Get(value))}</number>`));
-		} else if (
-			value instanceof RelativeFilePath ||
-			value instanceof AbsoluteFilePath ||
-			value instanceof URLPath ||
-			value instanceof UnknownPath
-		) {
-			parts.push(filePathToMarkup(value));
-		} else {
-			parts.push(value);
-		}
+		parts.push(normalizeInterpolatedValue(values[i]));
 	}
 
 	const obj = concatMarkup(parts);
@@ -162,6 +137,31 @@ export function markup(
 	}
 
 	return obj;
+}
+
+function normalizeInterpolatedValue(
+	value: StaticMarkup | InterpolatedValue,
+): StaticMarkup;
+function normalizeInterpolatedValue(
+	value: LazyMarkupPart | InterpolatedValue,
+): AnyMarkup;
+function normalizeInterpolatedValue(
+	value: LazyMarkupPart | InterpolatedValue,
+): AnyMarkup {
+	if (typeof value === "undefined") {
+		return toRawMarkup("<dim>undefined</dim>");
+	} else if (
+		typeof value === "number" ||
+		typeof value === "bigint" ||
+		value instanceof ZeroIndexed ||
+		value instanceof OneIndexed
+	) {
+		return toRawMarkup(`<number>${String(value.valueOf())}</number>`);
+	} else if (isPath(value)) {
+		return filePathToMarkup(value);
+	} else {
+		return value;
+	}
 }
 
 // Here we have a cache making serializing markup so we can call it performantly with only the object
@@ -370,31 +370,39 @@ function escapeMarkup(input: string): string {
 	return escaped;
 }
 
-type MarkupAttributes = Dict<undefined | string | number | boolean>;
+type MarkupTagAttributes = Dict<undefined | string | boolean | UnknownNumber>;
 
 export function markupTag(
 	tagName: MarkupTagName,
 	text: StaticMarkup,
-	attrs?: MarkupAttributes,
+	attrs?: MarkupTagAttributes,
 ): StaticMarkup;
 export function markupTag(
 	tagName: MarkupTagName,
 	text: AnyMarkup,
-	attrs?: MarkupAttributes,
+	attrs?: MarkupTagAttributes,
 ): AnyMarkup;
 export function markupTag(
 	tagName: MarkupTagName,
 	text: AnyMarkup,
-	attrs?: MarkupAttributes,
+	attrs?: MarkupTagAttributes,
 ): AnyMarkup {
 	let ret = `<${tagName}`;
 
 	if (attrs !== undefined) {
 		for (const key in attrs) {
 			const value = attrs[key];
-			if (value !== undefined) {
-				ret += ` ${escapeMarkup(key)}="${escapeMarkup(String(value))}"`;
+			if (value === undefined) {
+				continue;
 			}
+
+			let escapedValue: string;
+			if (typeof value === "string" || typeof value === "boolean") {
+				escapedValue = escapeMarkup(String(value));
+			} else {
+				escapedValue = String(value.valueOf());
+			}
+			ret += ` ${escapeMarkup(key)}="${escapedValue}"`;
 		}
 	}
 

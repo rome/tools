@@ -11,131 +11,53 @@ JSRoot {
 	comments: Array []
 	corrupt: true
 	directives: Array []
-	filename: "es2015/array-rest-spread/invalid-location/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2015/array-rest-spread/invalid-location/input.js"
-		end: Object {
-			column: 13
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2015/array-rest-spread/invalid-location/input.js 1:0-1:13
+	path: UIDPath<es2015/array-rest-spread/invalid-location/input.js>
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse"
 				categoryValue: "js"
+				category: Array ["parse"]
 				message: RAW_MARKUP {value: "The rest element has to be the last element when destructuring"}
 			}
 			location: Object {
-				filename: "es2015/array-rest-spread/invalid-location/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 5
-					line: 1
-				}
-				start: Object {
-					column: 1
-					line: 1
-				}
+				end: Position 1:5
+				path: UIDPath<es2015/array-rest-spread/invalid-location/input.js>
+				start: Position 1:1
 			}
 		}
 	]
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "es2015/array-rest-spread/invalid-location/input.js"
-				end: Object {
-					column: 13
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2015/array-rest-spread/invalid-location/input.js 1:0-1:13
 			expression: JSAssignmentExpression {
 				operator: "="
-				loc: Object {
-					filename: "es2015/array-rest-spread/invalid-location/input.js"
-					end: Object {
-						column: 13
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/array-rest-spread/invalid-location/input.js 1:0-1:13
 				right: JSReferenceIdentifier {
 					name: "c"
-					loc: Object {
-						filename: "es2015/array-rest-spread/invalid-location/input.js"
-						identifierName: "c"
-						end: Object {
-							column: 13
-							line: 1
-						}
-						start: Object {
-							column: 12
-							line: 1
-						}
-					}
+					loc: SourceLocation es2015/array-rest-spread/invalid-location/input.js 1:12-1:13 (c)
 				}
 				left: JSAssignmentArrayPattern {
 					rest: undefined
-					loc: Object {
-						filename: "es2015/array-rest-spread/invalid-location/input.js"
-						end: Object {
-							column: 9
-							line: 1
-						}
-						start: Object {
-							column: 0
-							line: 1
-						}
-					}
+					loc: SourceLocation es2015/array-rest-spread/invalid-location/input.js 1:0-1:9
 					elements: Array [
 						JSAssignmentIdentifier {
 							name: "INVALID_PLACEHOLDER"
-							loc: Object {
-								filename: "es2015/array-rest-spread/invalid-location/input.js"
-								end: Object {
-									column: 9
-									line: 1
-								}
-								start: Object {
-									column: 10
-									line: 1
-								}
-							}
+							loc: SourceLocation es2015/array-rest-spread/invalid-location/input.js 1:10-1:9
 						}
 						JSAssignmentIdentifier {
 							name: "b"
-							loc: Object {
-								filename: "es2015/array-rest-spread/invalid-location/input.js"
-								identifierName: "b"
-								end: Object {
-									column: 8
-									line: 1
-								}
-								start: Object {
-									column: 7
-									line: 1
-								}
-							}
+							loc: SourceLocation es2015/array-rest-spread/invalid-location/input.js 1:7-1:8 (b)
 						}
 					]
 				}
@@ -156,8 +78,5 @@ JSRoot {
     [...a, b] = c
      ^^^^
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

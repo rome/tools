@@ -11,118 +11,50 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "es2017/async-functions/invalid-parens-async-func/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2017/async-functions/invalid-parens-async-func/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2017/async-functions/invalid-parens-async-func/input.js 1:0-2:0
+	path: UIDPath<es2017/async-functions/invalid-parens-async-func/input.js>
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse"
 				categoryValue: "js"
+				category: Array ["parse"]
 				message: RAW_MARKUP {value: "Expected a semicolon or a line terminator"}
 			}
 			location: Object {
-				filename: "es2017/async-functions/invalid-parens-async-func/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 7
-					line: 1
-				}
-				start: Object {
-					column: 8
-					line: 1
-				}
+				end: Position 1:7
+				path: UIDPath<es2017/async-functions/invalid-parens-async-func/input.js>
+				start: Position 1:8
 			}
 		}
 	]
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "es2017/async-functions/invalid-parens-async-func/input.js"
-				end: Object {
-					column: 7
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2017/async-functions/invalid-parens-async-func/input.js 1:0-1:7
 			expression: JSReferenceIdentifier {
 				name: "async"
-				loc: Object {
-					filename: "es2017/async-functions/invalid-parens-async-func/input.js"
-					identifierName: "async"
-					end: Object {
-						column: 6
-						line: 1
-					}
-					start: Object {
-						column: 1
-						line: 1
-					}
-				}
+				loc: SourceLocation es2017/async-functions/invalid-parens-async-func/input.js 1:1-1:6 (async)
 			}
 		}
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "x"
-				loc: Object {
-					filename: "es2017/async-functions/invalid-parens-async-func/input.js"
-					identifierName: "x"
-					end: Object {
-						column: 18
-						line: 1
-					}
-					start: Object {
-						column: 17
-						line: 1
-					}
-				}
+				loc: SourceLocation es2017/async-functions/invalid-parens-async-func/input.js 1:17-1:18 (x)
 			}
-			loc: Object {
-				filename: "es2017/async-functions/invalid-parens-async-func/input.js"
-				end: Object {
-					column: 25
-					line: 1
-				}
-				start: Object {
-					column: 8
-					line: 1
-				}
-			}
+			loc: SourceLocation es2017/async-functions/invalid-parens-async-func/input.js 1:8-1:25
 			body: JSBlockStatement {
 				body: Array []
 				directives: Array []
-				loc: Object {
-					filename: "es2017/async-functions/invalid-parens-async-func/input.js"
-					end: Object {
-						column: 25
-						line: 1
-					}
-					start: Object {
-						column: 23
-						line: 1
-					}
-				}
+				loc: SourceLocation es2017/async-functions/invalid-parens-async-func/input.js 1:23-1:25
 			}
 			head: JSFunctionHead {
 				async: false
@@ -132,46 +64,15 @@ JSRoot {
 				returnType: undefined
 				thisType: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "es2017/async-functions/invalid-parens-async-func/input.js"
-					end: Object {
-						column: 22
-						line: 1
-					}
-					start: Object {
-						column: 19
-						line: 1
-					}
-				}
+				loc: SourceLocation es2017/async-functions/invalid-parens-async-func/input.js 1:19-1:22
 				params: Array [
 					JSBindingIdentifier {
 						name: "a"
-						loc: Object {
-							filename: "es2017/async-functions/invalid-parens-async-func/input.js"
-							identifierName: "a"
-							end: Object {
-								column: 21
-								line: 1
-							}
-							start: Object {
-								column: 20
-								line: 1
-							}
-						}
+						loc: SourceLocation es2017/async-functions/invalid-parens-async-func/input.js 1:20-1:21 (a)
 						meta: JSPatternMeta {
 							optional: undefined
 							typeAnnotation: undefined
-							loc: Object {
-								filename: "es2017/async-functions/invalid-parens-async-func/input.js"
-								end: Object {
-									column: 21
-									line: 1
-								}
-								start: Object {
-									column: 20
-									line: 1
-								}
-							}
+							loc: SourceLocation es2017/async-functions/invalid-parens-async-func/input.js 1:20-1:21
 						}
 					}
 				]
@@ -192,8 +93,5 @@ JSRoot {
     (async) function x (a) {}
             ^
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

@@ -6,13 +6,13 @@
  */
 
 import {
+	BridgeDefinition,
 	BridgeErrorResponseDetails,
 	BridgeErrorResponseMessage,
 	BridgeEventsDeclaration,
 	BridgeEventsDeclarationToInstances,
 	BridgeHeartbeatExceededOptions,
 	BridgeMessage,
-	BridgeOptions,
 	BridgeRequestMessage,
 	BridgeResponseMessage,
 	BridgeSuccessResponseMessage,
@@ -51,7 +51,8 @@ export default class Bridge<
 	SharedEvents extends BridgeEventsDeclaration
 > {
 	constructor(
-		opts: BridgeOptions,
+		type: BridgeType,
+		def: BridgeDefinition<{}, {}, SharedEvents>,
 		listenEvents: ListenEvents,
 		callEvents: CallEvents,
 		SharedEvents: SharedEvents,
@@ -61,8 +62,8 @@ export default class Bridge<
 		this.alive = true;
 		this.hasHandshook = false;
 		this.endError = undefined;
-		this.debugName = opts.debugName;
-		this.type = opts.type;
+		this.debugName = def.debugName;
+		this.type = type;
 
 		this.messageIdCounter = 0;
 		this.eventsMap = new ExtendedMap("events");
@@ -126,7 +127,9 @@ export default class Bridge<
 			this.registerEvent(event);
 		}
 
-		this.init();
+		if (def.init !== undefined) {
+			def.init(this);
+		}
 	}
 
 	private teardownEvent: BridgeEventBidirectional<void, void>;
@@ -368,10 +371,6 @@ export default class Bridge<
 		return buf;
 	}
 
-	public init(): void {
-		// This method can be overridden by subclasses, it allows you to add logic such as error serializers
-	}
-
 	private clear(): void {
 		for (const [, event] of this.eventsMap) {
 			event.clear();
@@ -463,9 +462,9 @@ export default class Bridge<
 		const err = errRaw instanceof Error ? errRaw : new Error(String(errRaw));
 
 		// Fetch some metadata for hydration
-		const tranport = this.errorTransports.get(err.name);
+		const transport = this.errorTransports.get(err.name);
 		const metadata: RSERObject =
-			tranport === undefined ? {} : tranport.serialize(err);
+			transport === undefined ? {} : transport.serialize(err);
 
 		return {
 			value: getErrorStructure(err),

@@ -11,92 +11,46 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "experimental/template-literal-invalid-escapes-untagged/29/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "experimental/template-literal-invalid-escapes-untagged/29/input.js"
-		end: Object {
-			column: 8
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				category: "parse"
-				categoryValue: "js"
-				message: RAW_MARKUP {value: "Invalid escape sequence in template"}
-			}
-			location: Object {
-				filename: "experimental/template-literal-invalid-escapes-untagged/29/input.js"
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Object {
-					column: 5
-					line: 1
-				}
-				start: Object {
-					column: 5
-					line: 1
-				}
-			}
-		}
-	]
+	loc: SourceLocation experimental/template-literal-invalid-escapes-untagged/29/input.js 1:0-1:8
+	path: UIDPath<experimental/template-literal-invalid-escapes-untagged/29/input.js>
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "experimental/template-literal-invalid-escapes-untagged/29/input.js"
-				end: Object {
-					column: 8
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation experimental/template-literal-invalid-escapes-untagged/29/input.js 1:0-1:8
 			expression: JSTemplateLiteral {
 				expressions: Array []
-				loc: Object {
-					filename: "experimental/template-literal-invalid-escapes-untagged/29/input.js"
-					end: Object {
-						column: 8
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation experimental/template-literal-invalid-escapes-untagged/29/input.js 1:0-1:8
 				quasis: Array [
 					JSTemplateElement {
 						cooked: "\\u000g"
 						raw: "\\u000g"
 						tail: true
-						loc: Object {
-							filename: "experimental/template-literal-invalid-escapes-untagged/29/input.js"
-							end: Object {
-								column: 7
-								line: 1
-							}
-							start: Object {
-								column: 1
-								line: 1
-							}
-						}
+						loc: SourceLocation experimental/template-literal-invalid-escapes-untagged/29/input.js 1:1-1:7
 					}
 				]
+			}
+		}
+	]
+	diagnostics: Array [
+		Object {
+			origins: Array [Object {category: "parse"}]
+			description: Object {
+				advice: Array []
+				categoryValue: "js"
+				category: Array ["parse"]
+				message: RAW_MARKUP {value: "Invalid escape sequence in template"}
+			}
+			location: Object {
+				integrity: undefined
+				language: "js"
+				sourceText: undefined
+				end: Position 1:5
+				path: UIDPath<experimental/template-literal-invalid-escapes-untagged/29/input.js>
+				start: Position 1:5
 			}
 		}
 	]
@@ -114,8 +68,5 @@ JSRoot {
     `\u000g`
          ^
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

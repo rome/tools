@@ -1,7 +1,7 @@
 {
 	"name": "rome-root",
 	"license": "MIT",
-	"version": "10.0.4-beta",
+	"version": "10.0.5-beta",
 	"engines": {
 		"node": ">=12.8.1"
 	},
@@ -34,6 +34,19 @@
 				"out",
 				"vscode/node_modules"
 			]
+		},
+		"dependencies": {
+			"exceptions": {
+				"invalidLicenses": {
+					"MIT/X11": [
+						"wordwrap@>=0.0.2",
+						"mkdirp@>=0.0.2"
+					],
+					"BSD-like": [
+						"css-select@1.2.0"
+					]
+				}
+			}
 		}
 	}
 }

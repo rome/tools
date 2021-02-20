@@ -11,129 +11,52 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "esprima/invalid-syntax/migrated_0075/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "esprima/invalid-syntax/migrated_0075/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation esprima/invalid-syntax/migrated_0075/input.js 1:0-2:0
+	path: UIDPath<esprima/invalid-syntax/migrated_0075/input.js>
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse"
 				categoryValue: "js"
+				category: Array ["parse"]
 				message: RAW_MARKUP {value: "setter should have exactly one param"}
 			}
 			location: Object {
-				filename: "esprima/invalid-syntax/migrated_0075/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 14
-					line: 1
-				}
-				start: Object {
-					column: 3
-					line: 1
-				}
+				end: Position 1:14
+				path: UIDPath<esprima/invalid-syntax/migrated_0075/input.js>
+				start: Position 1:3
 			}
 		}
 	]
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "esprima/invalid-syntax/migrated_0075/input.js"
-				end: Object {
-					column: 17
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation esprima/invalid-syntax/migrated_0075/input.js 1:0-1:17
 			expression: JSObjectExpression {
-				loc: Object {
-					filename: "esprima/invalid-syntax/migrated_0075/input.js"
-					end: Object {
-						column: 16
-						line: 1
-					}
-					start: Object {
-						column: 1
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/invalid-syntax/migrated_0075/input.js 1:1-1:16
 				properties: Array [
 					JSObjectMethod {
 						kind: "set"
 						key: JSStaticPropertyKey {
 							value: JSIdentifier {
 								name: "s"
-								loc: Object {
-									filename: "esprima/invalid-syntax/migrated_0075/input.js"
-									identifierName: "s"
-									end: Object {
-										column: 8
-										line: 1
-									}
-									start: Object {
-										column: 7
-										line: 1
-									}
-								}
+								loc: SourceLocation esprima/invalid-syntax/migrated_0075/input.js 1:7-1:8 (s)
 							}
-							loc: Object {
-								filename: "esprima/invalid-syntax/migrated_0075/input.js"
-								end: Object {
-									column: 8
-									line: 1
-								}
-								start: Object {
-									column: 7
-									line: 1
-								}
-							}
+							loc: SourceLocation esprima/invalid-syntax/migrated_0075/input.js 1:7-1:8
 						}
-						loc: Object {
-							filename: "esprima/invalid-syntax/migrated_0075/input.js"
-							end: Object {
-								column: 14
-								line: 1
-							}
-							start: Object {
-								column: 3
-								line: 1
-							}
-						}
+						loc: SourceLocation esprima/invalid-syntax/migrated_0075/input.js 1:3-1:14
 						body: JSBlockStatement {
 							body: Array []
 							directives: Array []
-							loc: Object {
-								filename: "esprima/invalid-syntax/migrated_0075/input.js"
-								end: Object {
-									column: 14
-									line: 1
-								}
-								start: Object {
-									column: 11
-									line: 1
-								}
-							}
+							loc: SourceLocation esprima/invalid-syntax/migrated_0075/input.js 1:11-1:14
 						}
 						head: JSFunctionHead {
 							async: false
@@ -144,17 +67,7 @@ JSRoot {
 							returnType: undefined
 							thisType: undefined
 							typeParameters: undefined
-							loc: Object {
-								filename: "esprima/invalid-syntax/migrated_0075/input.js"
-								end: Object {
-									column: 10
-									line: 1
-								}
-								start: Object {
-									column: 8
-									line: 1
-								}
-							}
+							loc: SourceLocation esprima/invalid-syntax/migrated_0075/input.js 1:8-1:10
 						}
 					}
 				]
@@ -175,8 +88,5 @@ JSRoot {
     ({ set s() { } })
        ^^^^^^^^^^^
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

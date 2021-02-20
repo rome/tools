@@ -11,145 +11,56 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "es2015/destructuring/error-operator-for-default/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2015/destructuring/error-operator-for-default/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2015/destructuring/error-operator-for-default/input.js 1:0-2:0
+	path: UIDPath<es2015/destructuring/error-operator-for-default/input.js>
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse"
 				categoryValue: "js"
+				category: Array ["parse"]
 				message: RAW_MARKUP {value: "Only '=' operator can be used for specifying default value."}
 			}
 			location: Object {
-				filename: "es2015/destructuring/error-operator-for-default/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 3
-					line: 1
-				}
-				start: Object {
-					column: 2
-					line: 1
-				}
+				end: Position 1:3
+				path: UIDPath<es2015/destructuring/error-operator-for-default/input.js>
+				start: Position 1:2
 			}
 		}
 	]
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "es2015/destructuring/error-operator-for-default/input.js"
-				end: Object {
-					column: 14
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2015/destructuring/error-operator-for-default/input.js 1:0-1:14
 			expression: JSAssignmentExpression {
 				operator: "="
-				loc: Object {
-					filename: "es2015/destructuring/error-operator-for-default/input.js"
-					end: Object {
-						column: 13
-						line: 1
-					}
-					start: Object {
-						column: 1
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/destructuring/error-operator-for-default/input.js 1:1-1:13
 				right: JSReferenceIdentifier {
 					name: "a"
-					loc: Object {
-						filename: "es2015/destructuring/error-operator-for-default/input.js"
-						identifierName: "a"
-						end: Object {
-							column: 13
-							line: 1
-						}
-						start: Object {
-							column: 12
-							line: 1
-						}
-					}
+					loc: SourceLocation es2015/destructuring/error-operator-for-default/input.js 1:12-1:13 (a)
 				}
 				left: JSAssignmentArrayPattern {
 					rest: undefined
-					loc: Object {
-						filename: "es2015/destructuring/error-operator-for-default/input.js"
-						end: Object {
-							column: 9
-							line: 1
-						}
-						start: Object {
-							column: 1
-							line: 1
-						}
-					}
+					loc: SourceLocation es2015/destructuring/error-operator-for-default/input.js 1:1-1:9
 					elements: Array [
 						JSAssignmentAssignmentPattern {
 							operator: "+="
-							loc: Object {
-								filename: "es2015/destructuring/error-operator-for-default/input.js"
-								end: Object {
-									column: 8
-									line: 1
-								}
-								start: Object {
-									column: 2
-									line: 1
-								}
-							}
+							loc: SourceLocation es2015/destructuring/error-operator-for-default/input.js 1:2-1:8
 							left: JSAssignmentIdentifier {
 								name: "a"
-								loc: Object {
-									filename: "es2015/destructuring/error-operator-for-default/input.js"
-									identifierName: "a"
-									end: Object {
-										column: 3
-										line: 1
-									}
-									start: Object {
-										column: 2
-										line: 1
-									}
-								}
+								loc: SourceLocation es2015/destructuring/error-operator-for-default/input.js 1:2-1:3 (a)
 							}
 							right: JSReferenceIdentifier {
 								name: "a"
-								loc: Object {
-									filename: "es2015/destructuring/error-operator-for-default/input.js"
-									identifierName: "a"
-									end: Object {
-										column: 8
-										line: 1
-									}
-									start: Object {
-										column: 7
-										line: 1
-									}
-								}
+								loc: SourceLocation es2015/destructuring/error-operator-for-default/input.js 1:7-1:8 (a)
 							}
 						}
 					]
@@ -171,8 +82,5 @@ JSRoot {
     ([a += a] = a)
       ^
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

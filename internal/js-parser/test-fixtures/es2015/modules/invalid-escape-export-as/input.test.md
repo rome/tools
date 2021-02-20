@@ -11,48 +11,34 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "es2015/modules/invalid-escape-export-as/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
 	syntax: Array []
-	loc: Object {
-		filename: "es2015/modules/invalid-escape-export-as/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2015/modules/invalid-escape-export-as/input.js 1:0-2:0
+	path: UIDPath<es2015/modules/invalid-escape-export-as/input.js>
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				category: "parse"
-				categoryValue: "js"
-				message: Array [
-					RAW_MARKUP {value: "Unexpected token, expected "}
-					","
-				]
-			}
 			location: Object {
-				filename: "es2015/modules/invalid-escape-export-as/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 18
-					line: 1
-				}
-				start: Object {
-					column: 11
-					line: 1
-				}
+				end: Position 1:18
+				path: UIDPath<es2015/modules/invalid-escape-export-as/input.js>
+				start: Position 1:11
+			}
+			description: Object {
+				categoryValue: "js"
+				category: Array ["parse"]
+				message: RAW_MARKUP {value: "Unexpected character <emphasis>\\\\</emphasis>"}
+				advice: Array [
+					log {
+						category: "info"
+						text: RAW_MARKUP {value: "Expected character <emphasis>,</emphasis>"}
+					}
+				]
 			}
 		}
 	]
@@ -60,145 +46,39 @@ JSRoot {
 		JSExportLocalDeclaration {
 			declaration: undefined
 			exportKind: "value"
-			loc: Object {
-				filename: "es2015/modules/invalid-escape-export-as/input.js"
-				end: Object {
-					column: 22
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2015/modules/invalid-escape-export-as/input.js 1:0-1:22
 			specifiers: Array [
 				JSExportLocalSpecifier {
-					loc: Object {
-						filename: "es2015/modules/invalid-escape-export-as/input.js"
-						end: Object {
-							column: 10
-							line: 1
-						}
-						start: Object {
-							column: 9
-							line: 1
-						}
-					}
+					loc: SourceLocation es2015/modules/invalid-escape-export-as/input.js 1:9-1:10
 					exported: JSIdentifier {
 						name: "X"
-						loc: Object {
-							filename: "es2015/modules/invalid-escape-export-as/input.js"
-							identifierName: "X"
-							end: Object {
-								column: 10
-								line: 1
-							}
-							start: Object {
-								column: 9
-								line: 1
-							}
-						}
+						loc: SourceLocation es2015/modules/invalid-escape-export-as/input.js 1:9-1:10 (X)
 					}
 					local: JSReferenceIdentifier {
 						name: "X"
-						loc: Object {
-							filename: "es2015/modules/invalid-escape-export-as/input.js"
-							identifierName: "X"
-							end: Object {
-								column: 10
-								line: 1
-							}
-							start: Object {
-								column: 9
-								line: 1
-							}
-						}
+						loc: SourceLocation es2015/modules/invalid-escape-export-as/input.js 1:9-1:10 (X)
 					}
 				}
 				JSExportLocalSpecifier {
-					loc: Object {
-						filename: "es2015/modules/invalid-escape-export-as/input.js"
-						end: Object {
-							column: 18
-							line: 1
-						}
-						start: Object {
-							column: 11
-							line: 1
-						}
-					}
+					loc: SourceLocation es2015/modules/invalid-escape-export-as/input.js 1:11-1:18
 					exported: JSIdentifier {
 						name: "as"
-						loc: Object {
-							filename: "es2015/modules/invalid-escape-export-as/input.js"
-							identifierName: "as"
-							end: Object {
-								column: 18
-								line: 1
-							}
-							start: Object {
-								column: 11
-								line: 1
-							}
-						}
+						loc: SourceLocation es2015/modules/invalid-escape-export-as/input.js 1:11-1:18 (as)
 					}
 					local: JSReferenceIdentifier {
 						name: "as"
-						loc: Object {
-							filename: "es2015/modules/invalid-escape-export-as/input.js"
-							identifierName: "as"
-							end: Object {
-								column: 18
-								line: 1
-							}
-							start: Object {
-								column: 11
-								line: 1
-							}
-						}
+						loc: SourceLocation es2015/modules/invalid-escape-export-as/input.js 1:11-1:18 (as)
 					}
 				}
 				JSExportLocalSpecifier {
-					loc: Object {
-						filename: "es2015/modules/invalid-escape-export-as/input.js"
-						end: Object {
-							column: 20
-							line: 1
-						}
-						start: Object {
-							column: 19
-							line: 1
-						}
-					}
+					loc: SourceLocation es2015/modules/invalid-escape-export-as/input.js 1:19-1:20
 					exported: JSIdentifier {
 						name: "Y"
-						loc: Object {
-							filename: "es2015/modules/invalid-escape-export-as/input.js"
-							identifierName: "Y"
-							end: Object {
-								column: 20
-								line: 1
-							}
-							start: Object {
-								column: 19
-								line: 1
-							}
-						}
+						loc: SourceLocation es2015/modules/invalid-escape-export-as/input.js 1:19-1:20 (Y)
 					}
 					local: JSReferenceIdentifier {
 						name: "Y"
-						loc: Object {
-							filename: "es2015/modules/invalid-escape-export-as/input.js"
-							identifierName: "Y"
-							end: Object {
-								column: 20
-								line: 1
-							}
-							start: Object {
-								column: 19
-								line: 1
-							}
-						}
+						loc: SourceLocation es2015/modules/invalid-escape-export-as/input.js 1:19-1:20 (Y)
 					}
 				}
 			]
@@ -213,13 +93,12 @@ JSRoot {
 
  es2015/modules/invalid-escape-export-as/input.js:1:11 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ Unexpected token, expected ,
+  ✖ Unexpected character \
 
     export { X \u0061s Y }
                ^^^^^^^
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  ℹ Expected character ,
 
-✖ Found 1 problem
 
 ```

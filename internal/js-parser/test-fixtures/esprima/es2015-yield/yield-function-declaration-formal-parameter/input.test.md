@@ -12,65 +12,24 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "esprima/es2015-yield/yield-function-declaration-formal-parameter/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "esprima/es2015-yield/yield-function-declaration-formal-parameter/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation esprima/es2015-yield/yield-function-declaration-formal-parameter/input.js 1:0-2:0
+	path: UIDPath<esprima/es2015-yield/yield-function-declaration-formal-parameter/input.js>
 	body: Array [
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "f"
-				loc: Object {
-					filename: "esprima/es2015-yield/yield-function-declaration-formal-parameter/input.js"
-					identifierName: "f"
-					end: Object {
-						column: 10
-						line: 1
-					}
-					start: Object {
-						column: 9
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/es2015-yield/yield-function-declaration-formal-parameter/input.js 1:9-1:10 (f)
 			}
-			loc: Object {
-				filename: "esprima/es2015-yield/yield-function-declaration-formal-parameter/input.js"
-				end: Object {
-					column: 20
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation esprima/es2015-yield/yield-function-declaration-formal-parameter/input.js 1:0-1:20
 			body: JSBlockStatement {
 				body: Array []
 				directives: Array []
-				loc: Object {
-					filename: "esprima/es2015-yield/yield-function-declaration-formal-parameter/input.js"
-					end: Object {
-						column: 20
-						line: 1
-					}
-					start: Object {
-						column: 18
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/es2015-yield/yield-function-declaration-formal-parameter/input.js 1:18-1:20
 			}
 			head: JSFunctionHead {
 				async: false
@@ -80,46 +39,15 @@ JSRoot {
 				returnType: undefined
 				thisType: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "esprima/es2015-yield/yield-function-declaration-formal-parameter/input.js"
-					end: Object {
-						column: 17
-						line: 1
-					}
-					start: Object {
-						column: 10
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/es2015-yield/yield-function-declaration-formal-parameter/input.js 1:10-1:17
 				params: Array [
 					JSBindingIdentifier {
 						name: "yield"
-						loc: Object {
-							filename: "esprima/es2015-yield/yield-function-declaration-formal-parameter/input.js"
-							identifierName: "yield"
-							end: Object {
-								column: 16
-								line: 1
-							}
-							start: Object {
-								column: 11
-								line: 1
-							}
-						}
+						loc: SourceLocation esprima/es2015-yield/yield-function-declaration-formal-parameter/input.js 1:11-1:16 (yield)
 						meta: JSPatternMeta {
 							optional: undefined
 							typeAnnotation: undefined
-							loc: Object {
-								filename: "esprima/es2015-yield/yield-function-declaration-formal-parameter/input.js"
-								end: Object {
-									column: 16
-									line: 1
-								}
-								start: Object {
-									column: 11
-									line: 1
-								}
-							}
+							loc: SourceLocation esprima/es2015-yield/yield-function-declaration-formal-parameter/input.js 1:11-1:16
 						}
 					}
 				]
@@ -132,6 +60,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

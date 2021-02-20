@@ -12,136 +12,42 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "esprima/statement-iteration/migrated_0014/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "esprima/statement-iteration/migrated_0014/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation esprima/statement-iteration/migrated_0014/input.js 1:0-2:0
+	path: UIDPath<esprima/statement-iteration/migrated_0014/input.js>
 	body: Array [
 		JSForStatement {
 			update: undefined
-			loc: Object {
-				filename: "esprima/statement-iteration/migrated_0014/input.js"
-				end: Object {
-					column: 20
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
-			body: JSEmptyStatement {
-				loc: Object {
-					filename: "esprima/statement-iteration/migrated_0014/input.js"
-					end: Object {
-						column: 20
-						line: 1
-					}
-					start: Object {
-						column: 19
-						line: 1
-					}
-				}
-			}
+			body: JSEmptyStatement {loc: SourceLocation esprima/statement-iteration/migrated_0014/input.js 1:19-1:20}
+			loc: SourceLocation esprima/statement-iteration/migrated_0014/input.js 1:0-1:20
 			init: JSAssignmentExpression {
 				operator: "="
-				loc: Object {
-					filename: "esprima/statement-iteration/migrated_0014/input.js"
-					end: Object {
-						column: 9
-						line: 1
-					}
-					start: Object {
-						column: 4
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/statement-iteration/migrated_0014/input.js 1:4-1:9
 				left: JSAssignmentIdentifier {
 					name: "x"
-					loc: Object {
-						filename: "esprima/statement-iteration/migrated_0014/input.js"
-						identifierName: "x"
-						end: Object {
-							column: 5
-							line: 1
-						}
-						start: Object {
-							column: 4
-							line: 1
-						}
-					}
+					loc: SourceLocation esprima/statement-iteration/migrated_0014/input.js 1:4-1:5 (x)
 				}
 				right: JSNumericLiteral {
 					value: 0
 					format: undefined
-					loc: Object {
-						filename: "esprima/statement-iteration/migrated_0014/input.js"
-						end: Object {
-							column: 9
-							line: 1
-						}
-						start: Object {
-							column: 8
-							line: 1
-						}
-					}
+					loc: SourceLocation esprima/statement-iteration/migrated_0014/input.js 1:8-1:9
 				}
 			}
 			test: JSBinaryExpression {
 				operator: "<"
-				loc: Object {
-					filename: "esprima/statement-iteration/migrated_0014/input.js"
-					end: Object {
-						column: 17
-						line: 1
-					}
-					start: Object {
-						column: 11
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/statement-iteration/migrated_0014/input.js 1:11-1:17
 				left: JSReferenceIdentifier {
 					name: "x"
-					loc: Object {
-						filename: "esprima/statement-iteration/migrated_0014/input.js"
-						identifierName: "x"
-						end: Object {
-							column: 12
-							line: 1
-						}
-						start: Object {
-							column: 11
-							line: 1
-						}
-					}
+					loc: SourceLocation esprima/statement-iteration/migrated_0014/input.js 1:11-1:12 (x)
 				}
 				right: JSNumericLiteral {
 					value: 42
 					format: undefined
-					loc: Object {
-						filename: "esprima/statement-iteration/migrated_0014/input.js"
-						end: Object {
-							column: 17
-							line: 1
-						}
-						start: Object {
-							column: 15
-							line: 1
-						}
-					}
+					loc: SourceLocation esprima/statement-iteration/migrated_0014/input.js 1:15-1:17
 				}
 			}
 		}
@@ -152,6 +58,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

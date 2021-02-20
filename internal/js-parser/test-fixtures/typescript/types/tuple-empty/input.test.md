@@ -12,105 +12,35 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "typescript/types/tuple-empty/input.ts"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
+	loc: SourceLocation typescript/types/tuple-empty/input.ts 1:0-2:0
+	path: UIDPath<typescript/types/tuple-empty/input.ts>
 	syntax: Array ["ts"]
-	loc: Object {
-		filename: "typescript/types/tuple-empty/input.ts"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
 	body: Array [
 		JSVariableDeclarationStatement {
-			loc: Object {
-				filename: "typescript/types/tuple-empty/input.ts"
-				end: Object {
-					column: 10
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation typescript/types/tuple-empty/input.ts 1:0-1:10
 			declaration: JSVariableDeclaration {
 				kind: "let"
-				loc: Object {
-					filename: "typescript/types/tuple-empty/input.ts"
-					end: Object {
-						column: 10
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/types/tuple-empty/input.ts 1:0-1:10
 				declarations: Array [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "x"
-							loc: Object {
-								filename: "typescript/types/tuple-empty/input.ts"
-								end: Object {
-									column: 9
-									line: 1
-								}
-								start: Object {
-									column: 4
-									line: 1
-								}
-							}
+							loc: SourceLocation typescript/types/tuple-empty/input.ts 1:4-1:9
 							meta: JSPatternMeta {
 								definite: undefined
-								loc: Object {
-									filename: "typescript/types/tuple-empty/input.ts"
-									end: Object {
-										column: 9
-										line: 1
-									}
-									start: Object {
-										column: 4
-										line: 1
-									}
-								}
+								loc: SourceLocation typescript/types/tuple-empty/input.ts 1:4-1:9
 								typeAnnotation: TSTupleType {
 									elementTypes: Array []
-									loc: Object {
-										filename: "typescript/types/tuple-empty/input.ts"
-										end: Object {
-											column: 9
-											line: 1
-										}
-										start: Object {
-											column: 7
-											line: 1
-										}
-									}
+									loc: SourceLocation typescript/types/tuple-empty/input.ts 1:7-1:9
 								}
 							}
 						}
 						init: undefined
-						loc: Object {
-							filename: "typescript/types/tuple-empty/input.ts"
-							end: Object {
-								column: 9
-								line: 1
-							}
-							start: Object {
-								column: 4
-								line: 1
-							}
-						}
+						loc: SourceLocation typescript/types/tuple-empty/input.ts 1:4-1:9
 					}
 				]
 			}
@@ -122,6 +52,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

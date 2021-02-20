@@ -11,90 +11,46 @@ JSRoot {
 	comments: Array []
 	corrupt: true
 	directives: Array []
-	filename: "esprima/es2015-arrow-function/object-binding-pattern-invalid-pattern-without-parenthesis/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "esprima/es2015-arrow-function/object-binding-pattern-invalid-pattern-without-parenthesis/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation esprima/es2015-arrow-function/object-binding-pattern-invalid-pattern-without-parenthesis/input.js 1:0-2:0
+	path: UIDPath<esprima/es2015-arrow-function/object-binding-pattern-invalid-pattern-without-parenthesis/input.js>
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				category: "parse"
-				categoryValue: "js"
-				message: Array [
-					RAW_MARKUP {value: "Unexpected token, expected "}
-					","
-				]
-			}
 			location: Object {
-				filename: "esprima/es2015-arrow-function/object-binding-pattern-invalid-pattern-without-parenthesis/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 5
-					line: 1
-				}
-				start: Object {
-					column: 3
-					line: 1
-				}
+				end: Position 1:5
+				path: UIDPath<esprima/es2015-arrow-function/object-binding-pattern-invalid-pattern-without-parenthesis/input.js>
+				start: Position 1:3
+			}
+			description: Object {
+				categoryValue: "js"
+				category: Array ["parse"]
+				message: RAW_MARKUP {value: "Unexpected character <emphasis>=</emphasis>"}
+				advice: Array [
+					log {
+						category: "info"
+						text: RAW_MARKUP {value: "Expected character <emphasis>,</emphasis>"}
+					}
+				]
 			}
 		}
 	]
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "esprima/es2015-arrow-function/object-binding-pattern-invalid-pattern-without-parenthesis/input.js"
-				end: Object {
-					column: 6
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation esprima/es2015-arrow-function/object-binding-pattern-invalid-pattern-without-parenthesis/input.js 1:0-1:6
 			expression: JSArrowFunctionExpression {
-				loc: Object {
-					filename: "esprima/es2015-arrow-function/object-binding-pattern-invalid-pattern-without-parenthesis/input.js"
-					end: Object {
-						column: 6
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/es2015-arrow-function/object-binding-pattern-invalid-pattern-without-parenthesis/input.js 1:0-1:6
 				body: JSNumericLiteral {
 					value: 0
 					format: undefined
-					loc: Object {
-						filename: "esprima/es2015-arrow-function/object-binding-pattern-invalid-pattern-without-parenthesis/input.js"
-						end: Object {
-							column: 6
-							line: 1
-						}
-						start: Object {
-							column: 5
-							line: 1
-						}
-					}
+					loc: SourceLocation esprima/es2015-arrow-function/object-binding-pattern-invalid-pattern-without-parenthesis/input.js 1:5-1:6
 				}
 				head: JSFunctionHead {
 					async: false
@@ -102,62 +58,22 @@ JSRoot {
 					rest: undefined
 					returnType: undefined
 					thisType: undefined
-					loc: Object {
-						filename: "esprima/es2015-arrow-function/object-binding-pattern-invalid-pattern-without-parenthesis/input.js"
-						end: Object {
-							column: 5
-							line: 1
-						}
-						start: Object {
-							column: 0
-							line: 1
-						}
-					}
+					loc: SourceLocation esprima/es2015-arrow-function/object-binding-pattern-invalid-pattern-without-parenthesis/input.js 1:0-1:5
 					params: Array [
 						JSBindingObjectPattern {
 							properties: Array []
 							rest: undefined
-							loc: Object {
-								filename: "esprima/es2015-arrow-function/object-binding-pattern-invalid-pattern-without-parenthesis/input.js"
-								end: Object {
-									column: 3
-									line: 1
-								}
-								start: Object {
-									column: 1
-									line: 1
-								}
-							}
+							loc: SourceLocation esprima/es2015-arrow-function/object-binding-pattern-invalid-pattern-without-parenthesis/input.js 1:1-1:3
 						}
 					]
 				}
 			}
 		}
 		JSExpressionStatement {
-			loc: Object {
-				filename: "esprima/es2015-arrow-function/object-binding-pattern-invalid-pattern-without-parenthesis/input.js"
-				end: Object {
-					column: 7
-					line: 1
-				}
-				start: Object {
-					column: 6
-					line: 1
-				}
-			}
+			loc: SourceLocation esprima/es2015-arrow-function/object-binding-pattern-invalid-pattern-without-parenthesis/input.js 1:6-1:7
 			expression: JSReferenceIdentifier {
 				name: "INVALID_PLACEHOLDER"
-				loc: Object {
-					filename: "esprima/es2015-arrow-function/object-binding-pattern-invalid-pattern-without-parenthesis/input.js"
-					end: Object {
-						column: 7
-						line: 1
-					}
-					start: Object {
-						column: 6
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/es2015-arrow-function/object-binding-pattern-invalid-pattern-without-parenthesis/input.js 1:6-1:7
 			}
 		}
 	]
@@ -171,13 +87,12 @@ JSRoot {
  esprima/es2015-arrow-function/object-binding-pattern-invalid-pattern-without-parenthesis/input.js:1
  :3 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ Unexpected token, expected ,
+  ✖ Unexpected character =
 
     ({}=>0)
        ^^
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  ℹ Expected character ,
 
-✖ Found 1 problem
 
 ```

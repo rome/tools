@@ -8,8 +8,9 @@
 import {Consumer} from "@internal/consume";
 import {SemverVersionNode, parseSemverVersion} from "@internal/codec-semver";
 import {
-	SPDXExpressionNode,
-	SpdxLicenseParser,
+	SPDXLicenseParseResult,
+	SPDXLicenseParserOptions,
+	parseSPDXLicense,
 } from "@internal/codec-spdx-license";
 import {normalizeDependencies, parseGitDependencyPattern} from "./dependencies";
 import {
@@ -26,17 +27,17 @@ import {
 	ManifestRepository,
 } from "./types";
 import {tryParseWithOptionalOffsetPosition} from "@internal/parser-core";
-import {normalizeName} from "./name";
+import {manifestNameToString, normalizeName} from "./name";
 import {descriptions} from "@internal/diagnostics";
 import {
 	AbsoluteFilePath,
-	RelativeFilePathMap,
-	createRelativeFilePath,
+	RelativePathMap,
+	createRelativePath,
 } from "@internal/path";
 import {toCamelCase} from "@internal/string-utils";
 import {PathPatterns, parsePathPattern} from "@internal/path-match";
 import {normalizeCompatManifest} from "@internal/codec-js-manifest/compat";
-import {ProjectDefinition} from "@internal/project";
+import {CompilerProjects} from "@internal/compiler";
 
 export * from "./types";
 
@@ -167,23 +168,15 @@ function extractLicenseFromObjectConsumer(
 	return [value, prop];
 }
 
-// These are all licenses I found that are wrong, we should eventually remove this as we update those deps
-const INVALID_IGNORE_LICENSES = [
-	"UNLICENSED",
-	"none",
-	"Facebook Platform License",
-	"BSD",
-	"MIT/X11",
-	"Public Domain",
-	"MIT License",
-	"BSD-like",
-];
-
 function normalizeLicense(
 	consumer: Consumer,
-	loose: boolean,
-	projects: ProjectDefinition[],
-): undefined | SPDXExpressionNode {
+	{name, version, loose, projects}: {
+		name: undefined | string;
+		version: undefined | SemverVersionNode;
+		loose: boolean;
+		projects: CompilerProjects;
+	},
+): undefined | SPDXLicenseParseResult {
 	if (!consumer.has("license")) {
 		return undefined;
 	}
@@ -209,26 +202,25 @@ function normalizeLicense(
 		return undefined;
 	}
 
-	// Not valid licenses...
-	if (INVALID_IGNORE_LICENSES.includes(licenseId)) {
-		return undefined;
+	const opts: SPDXLicenseParserOptions = {
+		loose,
+		path: consumer.path,
+		input: licenseId,
+	};
+
+	if (name !== undefined && version !== undefined) {
+		opts.exceptions = {
+			packageName: name,
+			packageVersion: version,
+			projects,
+		};
 	}
 
-	// Parse as a SPDX expression
-	const spdxLisenceCode = new SpdxLicenseParser({
-		packageVersion: consumer.get("version").asString(),
-		packageName: consumer.get("name").asString(),
-		projects,
-	});
 	return tryParseWithOptionalOffsetPosition(
-		{
-			loose,
-			path: consumer.path,
-			input: licenseId,
-		},
+		opts,
 		{
 			getOffsetPosition: () => licenseProp.getLocation("inner-value").start,
-			parse: (opts) => spdxLisenceCode.parse(opts),
+			parse: (opts) => parseSPDXLicense(opts),
 		},
 	);
 }
@@ -426,6 +418,7 @@ function normalizeRepo(
 }
 
 function normalizeExports(consumer: Consumer): boolean | ManifestExports {
+	return true;
 	const unknown = consumer.asUnknown();
 
 	// "exports": false
@@ -437,12 +430,12 @@ function normalizeExports(consumer: Consumer): boolean | ManifestExports {
 		return true;
 	}
 
-	const exports: ManifestExports = new RelativeFilePathMap();
+	const exports: ManifestExports = new RelativePathMap();
 
 	// "exports": "./index.js"
 	if (typeof unknown === "string") {
 		exports.set(
-			createRelativeFilePath("."),
+			createRelativePath("."),
 			new Map([["default", createRelativeExportCondition(consumer)]]),
 		);
 		return exports;
@@ -460,7 +453,7 @@ function normalizeExports(consumer: Consumer): boolean | ManifestExports {
 		}
 
 		const conditions = normalizeExportsConditions(value);
-		exports.set(value.getKey().asRelativeFilePath(), conditions);
+		exports.set(value.getKey().asRelativePath(), conditions);
 	}
 
 	if (dotConditionCount && dotConditionCount !== exports.size) {
@@ -476,7 +469,7 @@ function createRelativeExportCondition(
 	return {
 		type: "relative",
 		consumer: value,
-		relative: value.asExplicitRelativeFilePath(),
+		relative: value.asExplicitRelativePath(),
 	};
 }
 
@@ -620,11 +613,9 @@ function checkDependencyKeyTypo(key: string, prop: Consumer) {
 export async function normalizeManifest(
 	path: AbsoluteFilePath,
 	consumer: Consumer,
-	projects: ProjectDefinition[],
+	projects: CompilerProjects,
 ): Promise<Manifest> {
-	const loose =
-		consumer.path !== undefined &&
-		consumer.path.getSegments().includes("node_modules");
+	const loose = consumer.path.hasSegment("node_modules");
 
 	// Check for typos. Ignore them in loose mode.
 	if (!loose) {
@@ -647,12 +638,19 @@ export async function normalizeManifest(
 		normalizeCompatManifest(consumer, name, version);
 	}
 
+	const strName = name === undefined ? undefined : manifestNameToString(name);
+
+	const parsedLicense = normalizeLicense(
+		consumer,
+		{name: strName, version, loose, projects},
+	);
+
 	return {
 		name,
 		version,
 		private: normalizeBoolean(consumer, "private") === true,
 		description: normalizeString(consumer, "description"),
-		license: normalizeLicense(consumer, loose, projects),
+		license: parsedLicense?.license,
 		type: consumer.get("type").asStringSetOrVoid(["module", "commonjs"]),
 		bin: normalizeBin(consumer, name.packageName, loose),
 		scripts: normalizeStringMap(consumer, "scripts", loose),
@@ -687,5 +685,8 @@ export async function normalizeManifest(
 		contributors: normalizePeople(consumer.get("contributors"), loose),
 		maintainers: normalizePeople(consumer.get("maintainers"), loose),
 		raw: consumer.asJSONObject(),
+		diagnostics: {
+			license: parsedLicense?.diagnostics,
+		},
 	};
 }

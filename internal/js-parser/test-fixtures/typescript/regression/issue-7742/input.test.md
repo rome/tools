@@ -12,239 +12,75 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "typescript/regression/issue-7742/input.tsx"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
+	loc: SourceLocation typescript/regression/issue-7742/input.tsx 1:0-4:0
+	path: UIDPath<typescript/regression/issue-7742/input.tsx>
 	syntax: Array [
 		"ts"
 		"jsx"
 	]
-	loc: Object {
-		filename: "typescript/regression/issue-7742/input.tsx"
-		end: Object {
-			column: 0
-			line: 4
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
 	body: Array [
 		TSInterfaceDeclaration {
 			id: JSBindingIdentifier {
 				name: "Foo"
-				loc: Object {
-					filename: "typescript/regression/issue-7742/input.tsx"
-					identifierName: "Foo"
-					end: Object {
-						column: 13
-						line: 1
-					}
-					start: Object {
-						column: 10
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/regression/issue-7742/input.tsx 1:10-1:13 (Foo)
 			}
 			extends: undefined
-			loc: Object {
-				filename: "typescript/regression/issue-7742/input.tsx"
-				end: Object {
-					column: 1
-					line: 3
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation typescript/regression/issue-7742/input.tsx 1:0-3:1
 			typeParameters: TSTypeParameterDeclaration {
-				loc: Object {
-					filename: "typescript/regression/issue-7742/input.tsx"
-					end: Object {
-						column: 16
-						line: 1
-					}
-					start: Object {
-						column: 13
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/regression/issue-7742/input.tsx 1:13-1:16
 				params: Array [
 					TSTypeParameter {
 						name: "G"
 						constraint: undefined
 						default: undefined
-						loc: Object {
-							filename: "typescript/regression/issue-7742/input.tsx"
-							end: Object {
-								column: 15
-								line: 1
-							}
-							start: Object {
-								column: 14
-								line: 1
-							}
-						}
+						loc: SourceLocation typescript/regression/issue-7742/input.tsx 1:14-1:15
 					}
 				]
 			}
 			body: TSInterfaceBody {
-				loc: Object {
-					filename: "typescript/regression/issue-7742/input.tsx"
-					end: Object {
-						column: 1
-						line: 3
-					}
-					start: Object {
-						column: 17
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/regression/issue-7742/input.tsx 1:17-3:1
 				body: Array [
 					TSCallSignatureDeclaration {
-						loc: Object {
-							filename: "typescript/regression/issue-7742/input.tsx"
-							end: Object {
-								column: 19
-								line: 2
-							}
-							start: Object {
-								column: 4
-								line: 2
-							}
-						}
+						loc: SourceLocation typescript/regression/issue-7742/input.tsx 2:4-2:19
 						typeAnnotation: TSTypeReference {
 							typeParameters: undefined
-							loc: Object {
-								filename: "typescript/regression/issue-7742/input.tsx"
-								end: Object {
-									column: 18
-									line: 2
-								}
-								start: Object {
-									column: 17
-									line: 2
-								}
-							}
+							loc: SourceLocation typescript/regression/issue-7742/input.tsx 2:17-2:18
 							typeName: JSReferenceIdentifier {
 								name: "T"
-								loc: Object {
-									filename: "typescript/regression/issue-7742/input.tsx"
-									identifierName: "T"
-									end: Object {
-										column: 18
-										line: 2
-									}
-									start: Object {
-										column: 17
-										line: 2
-									}
-								}
+								loc: SourceLocation typescript/regression/issue-7742/input.tsx 2:17-2:18 (T)
 							}
 						}
 						meta: TSSignatureDeclarationMeta {
 							rest: undefined
-							loc: Object {
-								filename: "typescript/regression/issue-7742/input.tsx"
-								end: Object {
-									column: 18
-									line: 2
-								}
-								start: Object {
-									column: 4
-									line: 2
-								}
-							}
+							loc: SourceLocation typescript/regression/issue-7742/input.tsx 2:4-2:18
 							typeParameters: TSTypeParameterDeclaration {
-								loc: Object {
-									filename: "typescript/regression/issue-7742/input.tsx"
-									end: Object {
-										column: 7
-										line: 2
-									}
-									start: Object {
-										column: 4
-										line: 2
-									}
-								}
+								loc: SourceLocation typescript/regression/issue-7742/input.tsx 2:4-2:7
 								params: Array [
 									TSTypeParameter {
 										name: "T"
 										constraint: undefined
 										default: undefined
-										loc: Object {
-											filename: "typescript/regression/issue-7742/input.tsx"
-											end: Object {
-												column: 6
-												line: 2
-											}
-											start: Object {
-												column: 5
-												line: 2
-											}
-										}
+										loc: SourceLocation typescript/regression/issue-7742/input.tsx 2:5-2:6
 									}
 								]
 							}
 							parameters: Array [
 								JSBindingIdentifier {
 									name: "bar"
-									loc: Object {
-										filename: "typescript/regression/issue-7742/input.tsx"
-										identifierName: "bar"
-										end: Object {
-											column: 11
-											line: 2
-										}
-										start: Object {
-											column: 8
-											line: 2
-										}
-									}
+									loc: SourceLocation typescript/regression/issue-7742/input.tsx 2:8-2:11 (bar)
 									meta: JSPatternMeta {
 										optional: undefined
-										loc: Object {
-											filename: "typescript/regression/issue-7742/input.tsx"
-											end: Object {
-												column: 14
-												line: 2
-											}
-											start: Object {
-												column: 8
-												line: 2
-											}
-										}
+										loc: SourceLocation typescript/regression/issue-7742/input.tsx 2:8-2:14
 										typeAnnotation: TSTypeReference {
 											typeParameters: undefined
-											loc: Object {
-												filename: "typescript/regression/issue-7742/input.tsx"
-												end: Object {
-													column: 14
-													line: 2
-												}
-												start: Object {
-													column: 13
-													line: 2
-												}
-											}
+											loc: SourceLocation typescript/regression/issue-7742/input.tsx 2:13-2:14
 											typeName: JSReferenceIdentifier {
 												name: "G"
-												loc: Object {
-													filename: "typescript/regression/issue-7742/input.tsx"
-													identifierName: "G"
-													end: Object {
-														column: 14
-														line: 2
-													}
-													start: Object {
-														column: 13
-														line: 2
-													}
-												}
+												loc: SourceLocation typescript/regression/issue-7742/input.tsx 2:13-2:14 (G)
 											}
 										}
 									}
@@ -262,6 +98,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

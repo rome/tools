@@ -11,106 +11,44 @@ JSRoot {
 	comments: Array []
 	corrupt: true
 	directives: Array []
-	filename: "esprima/es2015-for-of/invalid-lhs-init/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "esprima/es2015-for-of/invalid-lhs-init/input.js"
-		end: Object {
-			column: 0
-			line: 2
+	loc: SourceLocation esprima/es2015-for-of/invalid-lhs-init/input.js 1:0-2:0
+	path: UIDPath<esprima/es2015-for-of/invalid-lhs-init/input.js>
+	body: Array [
+		JSForOfStatement {
+			await: false
+			body: JSEmptyStatement {loc: SourceLocation esprima/es2015-for-of/invalid-lhs-init/input.js 1:18-1:19}
+			loc: SourceLocation esprima/es2015-for-of/invalid-lhs-init/input.js 1:0-1:19
+			left: JSAssignmentIdentifier {
+				name: "INVALID_PLACEHOLDER"
+				loc: SourceLocation esprima/es2015-for-of/invalid-lhs-init/input.js 1:10-1:9
+			}
+			right: JSReferenceIdentifier {
+				name: "that"
+				loc: SourceLocation esprima/es2015-for-of/invalid-lhs-init/input.js 1:13-1:17 (that)
+			}
 		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	]
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse"
 				categoryValue: "js"
-				message: Array [
-					RAW_MARKUP {value: "Invalid left-hand side in "}
-					"for-of statement"
-				]
+				category: Array ["parse"]
+				message: RAW_MARKUP {value: "Invalid left-hand side in for-of statement"}
 			}
 			location: Object {
-				filename: "esprima/es2015-for-of/invalid-lhs-init/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 9
-					line: 1
-				}
-				start: Object {
-					column: 5
-					line: 1
-				}
-			}
-		}
-	]
-	body: Array [
-		JSForOfStatement {
-			await: false
-			loc: Object {
-				filename: "esprima/es2015-for-of/invalid-lhs-init/input.js"
-				end: Object {
-					column: 19
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
-			body: JSEmptyStatement {
-				loc: Object {
-					filename: "esprima/es2015-for-of/invalid-lhs-init/input.js"
-					end: Object {
-						column: 19
-						line: 1
-					}
-					start: Object {
-						column: 18
-						line: 1
-					}
-				}
-			}
-			left: JSAssignmentIdentifier {
-				name: "INVALID_PLACEHOLDER"
-				loc: Object {
-					filename: "esprima/es2015-for-of/invalid-lhs-init/input.js"
-					end: Object {
-						column: 9
-						line: 1
-					}
-					start: Object {
-						column: 10
-						line: 1
-					}
-				}
-			}
-			right: JSReferenceIdentifier {
-				name: "that"
-				loc: Object {
-					filename: "esprima/es2015-for-of/invalid-lhs-init/input.js"
-					identifierName: "that"
-					end: Object {
-						column: 17
-						line: 1
-					}
-					start: Object {
-						column: 13
-						line: 1
-					}
-				}
+				end: Position 1:9
+				path: UIDPath<esprima/es2015-for-of/invalid-lhs-init/input.js>
+				start: Position 1:5
 			}
 		}
 	]
@@ -128,8 +66,5 @@ JSRoot {
     for (this of that);
          ^^^^
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

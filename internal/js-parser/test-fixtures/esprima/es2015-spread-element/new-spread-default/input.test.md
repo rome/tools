@@ -12,135 +12,41 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "esprima/es2015-spread-element/new-spread-default/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "esprima/es2015-spread-element/new-spread-default/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation esprima/es2015-spread-element/new-spread-default/input.js 1:0-2:0
+	path: UIDPath<esprima/es2015-spread-element/new-spread-default/input.js>
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "esprima/es2015-spread-element/new-spread-default/input.js"
-				end: Object {
-					column: 19
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation esprima/es2015-spread-element/new-spread-default/input.js 1:0-1:19
 			expression: JSNewExpression {
 				optional: undefined
 				typeArguments: undefined
-				loc: Object {
-					filename: "esprima/es2015-spread-element/new-spread-default/input.js"
-					end: Object {
-						column: 18
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/es2015-spread-element/new-spread-default/input.js 1:0-1:18
 				callee: JSReferenceIdentifier {
 					name: "f"
-					loc: Object {
-						filename: "esprima/es2015-spread-element/new-spread-default/input.js"
-						identifierName: "f"
-						end: Object {
-							column: 5
-							line: 1
-						}
-						start: Object {
-							column: 4
-							line: 1
-						}
-					}
+					loc: SourceLocation esprima/es2015-spread-element/new-spread-default/input.js 1:4-1:5 (f)
 				}
 				arguments: Array [
 					JSReferenceIdentifier {
 						name: "g"
-						loc: Object {
-							filename: "esprima/es2015-spread-element/new-spread-default/input.js"
-							identifierName: "g"
-							end: Object {
-								column: 7
-								line: 1
-							}
-							start: Object {
-								column: 6
-								line: 1
-							}
-						}
+						loc: SourceLocation esprima/es2015-spread-element/new-spread-default/input.js 1:6-1:7 (g)
 					}
 					JSSpreadElement {
-						loc: Object {
-							filename: "esprima/es2015-spread-element/new-spread-default/input.js"
-							end: Object {
-								column: 17
-								line: 1
-							}
-							start: Object {
-								column: 9
-								line: 1
-							}
-						}
+						loc: SourceLocation esprima/es2015-spread-element/new-spread-default/input.js 1:9-1:17
 						argument: JSAssignmentExpression {
 							operator: "="
-							loc: Object {
-								filename: "esprima/es2015-spread-element/new-spread-default/input.js"
-								end: Object {
-									column: 17
-									line: 1
-								}
-								start: Object {
-									column: 12
-									line: 1
-								}
-							}
+							loc: SourceLocation esprima/es2015-spread-element/new-spread-default/input.js 1:12-1:17
 							left: JSAssignmentIdentifier {
 								name: "h"
-								loc: Object {
-									filename: "esprima/es2015-spread-element/new-spread-default/input.js"
-									identifierName: "h"
-									end: Object {
-										column: 13
-										line: 1
-									}
-									start: Object {
-										column: 12
-										line: 1
-									}
-								}
+								loc: SourceLocation esprima/es2015-spread-element/new-spread-default/input.js 1:12-1:13 (h)
 							}
 							right: JSReferenceIdentifier {
 								name: "i"
-								loc: Object {
-									filename: "esprima/es2015-spread-element/new-spread-default/input.js"
-									identifierName: "i"
-									end: Object {
-										column: 17
-										line: 1
-									}
-									start: Object {
-										column: 16
-										line: 1
-									}
-								}
+								loc: SourceLocation esprima/es2015-spread-element/new-spread-default/input.js 1:16-1:17 (i)
 							}
 						}
 					}
@@ -154,6 +60,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

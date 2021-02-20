@@ -11,48 +11,29 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "es2015/class/invalid-escape-set/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2015/class/invalid-escape-set/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2015/class/invalid-escape-set/input.js 1:0-2:0
+	path: UIDPath<es2015/class/invalid-escape-set/input.js>
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse"
 				categoryValue: "js"
-				message: Array [
-					"set"
-					RAW_MARKUP {value: " can't contain a unicode escape"}
-				]
+				category: Array ["parse"]
+				message: RAW_MARKUP {value: "<emphasis>set</emphasis> can't contain a unicode escape"}
 			}
 			location: Object {
-				filename: "es2015/class/invalid-escape-set/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 12
-					line: 1
-				}
-				start: Object {
-					column: 12
-					line: 1
-				}
+				end: Position 1:12
+				path: UIDPath<es2015/class/invalid-escape-set/input.js>
+				start: Position 1:12
 			}
 		}
 	]
@@ -60,102 +41,30 @@ JSRoot {
 		JSClassDeclaration {
 			id: JSBindingIdentifier {
 				name: "X"
-				loc: Object {
-					filename: "es2015/class/invalid-escape-set/input.js"
-					identifierName: "X"
-					end: Object {
-						column: 7
-						line: 1
-					}
-					start: Object {
-						column: 6
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/class/invalid-escape-set/input.js 1:6-1:7 (X)
 			}
-			loc: Object {
-				filename: "es2015/class/invalid-escape-set/input.js"
-				end: Object {
-					column: 32
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2015/class/invalid-escape-set/input.js 1:0-1:32
 			meta: JSClassHead {
 				implements: undefined
 				superClass: undefined
 				superTypeParameters: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "es2015/class/invalid-escape-set/input.js"
-					end: Object {
-						column: 32
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/class/invalid-escape-set/input.js 1:0-1:32
 				body: Array [
 					JSClassMethod {
 						kind: "set"
 						key: JSStaticPropertyKey {
 							value: JSIdentifier {
 								name: "x"
-								loc: Object {
-									filename: "es2015/class/invalid-escape-set/input.js"
-									identifierName: "x"
-									end: Object {
-										column: 20
-										line: 1
-									}
-									start: Object {
-										column: 19
-										line: 1
-									}
-								}
+								loc: SourceLocation es2015/class/invalid-escape-set/input.js 1:19-1:20 (x)
 							}
-							loc: Object {
-								filename: "es2015/class/invalid-escape-set/input.js"
-								end: Object {
-									column: 20
-									line: 1
-								}
-								start: Object {
-									column: 19
-									line: 1
-								}
-							}
+							loc: SourceLocation es2015/class/invalid-escape-set/input.js 1:19-1:20
 						}
-						loc: Object {
-							filename: "es2015/class/invalid-escape-set/input.js"
-							end: Object {
-								column: 30
-								line: 1
-							}
-							start: Object {
-								column: 10
-								line: 1
-							}
-						}
+						loc: SourceLocation es2015/class/invalid-escape-set/input.js 1:10-1:30
 						body: JSBlockStatement {
 							body: Array []
 							directives: Array []
-							loc: Object {
-								filename: "es2015/class/invalid-escape-set/input.js"
-								end: Object {
-									column: 30
-									line: 1
-								}
-								start: Object {
-									column: 28
-									line: 1
-								}
-							}
+							loc: SourceLocation es2015/class/invalid-escape-set/input.js 1:28-1:30
 						}
 						meta: JSClassPropertyMeta {
 							abstract: false
@@ -164,21 +73,8 @@ JSRoot {
 							readonly: false
 							static: false
 							typeAnnotation: undefined
-							start: Object {
-								column: 10
-								line: 1
-							}
-							loc: Object {
-								filename: "es2015/class/invalid-escape-set/input.js"
-								end: Object {
-									column: 20
-									line: 1
-								}
-								start: Object {
-									column: 10
-									line: 1
-								}
-							}
+							loc: SourceLocation es2015/class/invalid-escape-set/input.js 1:10-1:20
+							start: Position 1:10
 						}
 						head: JSFunctionHead {
 							async: false
@@ -188,46 +84,15 @@ JSRoot {
 							returnType: undefined
 							thisType: undefined
 							typeParameters: undefined
-							loc: Object {
-								filename: "es2015/class/invalid-escape-set/input.js"
-								end: Object {
-									column: 27
-									line: 1
-								}
-								start: Object {
-									column: 20
-									line: 1
-								}
-							}
+							loc: SourceLocation es2015/class/invalid-escape-set/input.js 1:20-1:27
 							params: Array [
 								JSBindingIdentifier {
 									name: "value"
-									loc: Object {
-										filename: "es2015/class/invalid-escape-set/input.js"
-										identifierName: "value"
-										end: Object {
-											column: 26
-											line: 1
-										}
-										start: Object {
-											column: 21
-											line: 1
-										}
-									}
+									loc: SourceLocation es2015/class/invalid-escape-set/input.js 1:21-1:26 (value)
 									meta: JSPatternMeta {
 										optional: undefined
 										typeAnnotation: undefined
-										loc: Object {
-											filename: "es2015/class/invalid-escape-set/input.js"
-											end: Object {
-												column: 26
-												line: 1
-											}
-											start: Object {
-												column: 21
-												line: 1
-											}
-										}
+										loc: SourceLocation es2015/class/invalid-escape-set/input.js 1:21-1:26
 									}
 								}
 							]
@@ -251,8 +116,5 @@ JSRoot {
     class X { se\u0074 x(value) {} }
                 ^
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

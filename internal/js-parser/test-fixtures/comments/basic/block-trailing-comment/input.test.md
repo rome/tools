@@ -11,95 +11,34 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "comments/basic/block-trailing-comment/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "comments/basic/block-trailing-comment/input.js"
-		end: Object {
-			column: 0
-			line: 5
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation comments/basic/block-trailing-comment/input.js 1:0-5:0
+	path: UIDPath<comments/basic/block-trailing-comment/input.js>
 	comments: Array [
 		CommentLine {
 			id: "0"
 			value: "comment"
-			loc: Object {
-				filename: "comments/basic/block-trailing-comment/input.js"
-				end: Object {
-					column: 13
-					line: 3
-				}
-				start: Object {
-					column: 4
-					line: 3
-				}
-			}
+			loc: SourceLocation comments/basic/block-trailing-comment/input.js 3:4-3:13
 		}
 	]
 	body: Array [
 		JSBlockStatement {
 			directives: Array []
-			loc: Object {
-				filename: "comments/basic/block-trailing-comment/input.js"
-				end: Object {
-					column: 1
-					line: 4
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation comments/basic/block-trailing-comment/input.js 1:0-4:1
 			body: Array [
 				JSExpressionStatement {
+					loc: SourceLocation comments/basic/block-trailing-comment/input.js 2:4-2:8
 					trailingComments: Array ["0"]
-					loc: Object {
-						filename: "comments/basic/block-trailing-comment/input.js"
-						end: Object {
-							column: 8
-							line: 2
-						}
-						start: Object {
-							column: 4
-							line: 2
-						}
-					}
 					expression: JSCallExpression {
 						arguments: Array []
-						loc: Object {
-							filename: "comments/basic/block-trailing-comment/input.js"
-							end: Object {
-								column: 7
-								line: 2
-							}
-							start: Object {
-								column: 4
-								line: 2
-							}
-						}
+						loc: SourceLocation comments/basic/block-trailing-comment/input.js 2:4-2:7
 						callee: JSReferenceIdentifier {
 							name: "a"
-							loc: Object {
-								filename: "comments/basic/block-trailing-comment/input.js"
-								identifierName: "a"
-								end: Object {
-									column: 5
-									line: 2
-								}
-								start: Object {
-									column: 4
-									line: 2
-								}
-							}
+							loc: SourceLocation comments/basic/block-trailing-comment/input.js 2:4-2:5 (a)
 						}
 					}
 				}
@@ -112,6 +51,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

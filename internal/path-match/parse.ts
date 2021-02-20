@@ -14,7 +14,7 @@ import {
 	Tokens,
 } from "./types";
 import {ParserCore, ParserOptions, createParser} from "@internal/parser-core";
-import {Number0, ob1Add, ob1Get0, ob1Number0} from "@internal/ob1";
+import {ZeroIndexed} from "@internal/math";
 import {descriptions} from "@internal/diagnostics";
 
 function isntNewline(char: string): boolean {
@@ -30,36 +30,48 @@ type PatchMatchParserTypes = {
 
 type PatchMatchParser = ParserCore<PatchMatchParserTypes>;
 
-const createPathMatchParser = createParser<PatchMatchParserTypes>({
+const pathMatchParser = createParser<PatchMatchParserTypes>({
 	diagnosticLanguage: "path",
 	tokenize(parser, index) {
 		const char = parser.getInputCharOnly(index);
-		const nextChar = parser.getInputCharOnly(index, 1);
+		const nextChar = parser.getInputCharOnly(index.increment());
 
-		if (char === "*") {
-			if (nextChar === "*") {
-				return parser.finishToken("DoubleStar", ob1Add(index, 2));
-			} else {
-				return parser.finishToken("Star");
+		switch (char) {
+			case "*": {
+				if (nextChar === "*") {
+					return parser.finishToken("DoubleStar", index.add(2));
+				} else {
+					return parser.finishToken("Star");
+				}
 			}
-		} else if (index === ob1Number0 && char === "!") {
-			return parser.finishToken("Exclamation");
-		} else if (
-			char === "#" &&
-			parser.getPositionFromIndex(index).column === ob1Number0
-		) {
-			const [value, end] = parser.readInputFrom(index, isntNewline);
-			return parser.finishValueToken("Comment", value, end);
-		}
 
-		if (char === "\n") {
-			return parser.finishToken("EOL");
-		}
+			case "\n":
+				return parser.finishToken("EOL");
 
-		if (char === "/") {
-			return parser.finishToken("Separator");
-		} else if (char === "\\" && nextChar === "\\") {
-			return parser.finishToken("Separator", ob1Add(index, 2));
+			case "/":
+				return parser.finishToken("Separator");
+
+			case "!": {
+				if (index.valueOf() === 0 || parser.getCurrentToken().type === "EOL") {
+					return parser.finishToken("Exclamation");
+				}
+				break;
+			}
+
+			case "#": {
+				if (parser.getPositionFromIndex(index).column.valueOf() === 0) {
+					const [value, end] = parser.readInputFrom(index, isntNewline);
+					return parser.finishValueToken("Comment", value, end);
+				}
+				break;
+			}
+
+			case "\\": {
+				if (nextChar === "\\") {
+					return parser.finishToken("Separator", index.add(2));
+				}
+				break;
+			}
 		}
 
 		const [value, end] = parser.readInputFrom(
@@ -73,11 +85,11 @@ const createPathMatchParser = createParser<PatchMatchParserTypes>({
 function isWordCharacter(
 	parser: PatchMatchParser,
 	char: string,
-	index: Number0,
+	index: ZeroIndexed,
 	input: string,
 ): boolean {
-	const prevChar = input[ob1Get0(index) - 1];
-	const nextChar = input[ob1Get0(index) + 1];
+	const prevChar = input[index.valueOf() - 1];
+	const nextChar = input[index.valueOf() + 1];
 
 	if (char === "\n") {
 		return false;
@@ -165,10 +177,10 @@ function parseSegment(parser: PatchMatchParser): PatternSegmentNode {
 
 	// Keep consuming tokens until we hit a separator or a comment
 	while (
-		!parser.matchToken("Comment") &&
-		!parser.matchToken("EOF") &&
-		!eatSeparators(parser) &&
-		!parser.matchToken("EOL")
+		!(parser.matchToken("Comment") ||
+		parser.matchToken("EOF") ||
+		eatSeparators(parser) ||
+		parser.matchToken("EOL"))
 	) {
 		parts.push(parsePatternSegmentPart(parser));
 	}
@@ -250,9 +262,9 @@ function parsePatternNode(parser: PatchMatchParser): PathPattern {
 
 	// Keep parsing segments until we hit the end of the input or a comment
 	while (
-		!parser.matchToken("Comment") &&
-		!parser.matchToken("EOF") &&
-		!parser.matchToken("EOL")
+		!(parser.matchToken("Comment") ||
+		parser.matchToken("EOF") ||
+		parser.matchToken("EOL"))
 	) {
 		segments.push(parseSegment(parser));
 	}
@@ -283,7 +295,7 @@ function parsePatternNode(parser: PatchMatchParser): PathPattern {
 }
 
 export function parsePattern(opts: ParserOptions): PathPattern {
-	const parser = createPathMatchParser(opts);
+	const parser = pathMatchParser.create(opts);
 	const pattern = parsePatternNode(parser);
 	eatEOL(parser);
 	parser.finalize();
@@ -291,11 +303,12 @@ export function parsePattern(opts: ParserOptions): PathPattern {
 }
 
 export function parsePatternsFile(opts: ParserOptions): PathPattern[] {
-	const parser = createPathMatchParser(opts);
+	const parser = pathMatchParser.create(opts);
 	const patterns: PathPattern[] = [];
 
 	while (true) {
 		eatEOL(parser);
+
 		if (parser.matchToken("EOF")) {
 			break;
 		}

@@ -10,49 +10,19 @@
 HTMLRoot {
 	corrupt: false
 	diagnostics: Array []
-	filename: "smoke/input.html"
 	integrity: undefined
-	loc: Object {
-		filename: "smoke/input.html"
-		end: Object {
-			column: 6
-			line: 19
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation smoke/input.html 1:0-19:6
+	path: UIDPath<smoke/input.html>
 	comments: Array [
 		CommentBlock {
 			id: "0"
 			value: " I am a comment "
-			loc: Object {
-				filename: "smoke/input.html"
-				end: Object {
-					column: 23
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation smoke/input.html 1:0-1:23
 		}
 		CommentBlock {
 			id: "1"
 			value: " I am another comment "
-			loc: Object {
-				filename: "smoke/input.html"
-				end: Object {
-					column: 30
-					line: 17
-				}
-				start: Object {
-					column: 1
-					line: 17
-				}
-			}
+			loc: SourceLocation smoke/input.html 17:1-17:30
 		}
 	]
 	body: Array [
@@ -60,219 +30,69 @@ HTMLRoot {
 			name: HTMLIdentifier {
 				name: "foo"
 				leadingComments: undefined
-				loc: Object {
-					filename: "smoke/input.html"
-					end: Object {
-						column: 4
-						line: 2
-					}
-					start: Object {
-						column: 1
-						line: 2
-					}
-				}
+				loc: SourceLocation smoke/input.html 2:1-2:4
 			}
 			attributes: Array []
 			selfClosing: false
 			leadingComments: Array ["0"]
-			loc: Object {
-				filename: "smoke/input.html"
-				end: Object {
-					column: 6
-					line: 19
-				}
-				start: Object {
-					column: 0
-					line: 2
-				}
-			}
+			loc: SourceLocation smoke/input.html 2:0-19:6
 			children: Array [
 				HTMLElement {
 					name: HTMLIdentifier {
 						name: "input"
-						loc: Object {
-							filename: "smoke/input.html"
-							end: Object {
-								column: 7
-								line: 3
-							}
-							start: Object {
-								column: 2
-								line: 3
-							}
-						}
+						loc: SourceLocation smoke/input.html 3:2-3:7
 					}
 					children: Array []
 					selfClosing: true
-					loc: Object {
-						filename: "smoke/input.html"
-						end: Object {
-							column: 26
-							line: 3
-						}
-						start: Object {
-							column: 1
-							line: 3
-						}
-					}
+					loc: SourceLocation smoke/input.html 3:1-3:26
 					attributes: Array [
 						HTMLAttribute {
 							name: HTMLIdentifier {
 								name: "placeholder"
-								loc: Object {
-									filename: "smoke/input.html"
-									end: Object {
-										column: 19
-										line: 3
-									}
-									start: Object {
-										column: 8
-										line: 3
-									}
-								}
+								loc: SourceLocation smoke/input.html 3:8-3:19
 							}
 							value: HTMLString {
 								value: "ok"
-								loc: Object {
-									filename: "smoke/input.html"
-									end: Object {
-										column: 24
-										line: 3
-									}
-									start: Object {
-										column: 20
-										line: 3
-									}
-								}
+								loc: SourceLocation smoke/input.html 3:20-3:24
 							}
-							loc: Object {
-								filename: "smoke/input.html"
-								end: Object {
-									column: 24
-									line: 3
-								}
-								start: Object {
-									column: 8
-									line: 3
-								}
-							}
+							loc: SourceLocation smoke/input.html 3:8-3:24
 						}
 					]
 				}
 				HTMLText {
 					value: "yesiamatextdocumentasdfhahahaok"
-					loc: Object {
-						filename: "smoke/input.html"
-						end: Object {
-							column: 6
-							line: 14
-						}
-						start: Object {
-							column: 1
-							line: 4
-						}
-					}
+					loc: SourceLocation smoke/input.html 4:1-14:6
 				}
 				HTMLElement {
 					name: HTMLIdentifier {
 						name: "span"
-						loc: Object {
-							filename: "smoke/input.html"
-							end: Object {
-								column: 11
-								line: 14
-							}
-							start: Object {
-								column: 7
-								line: 14
-							}
-						}
+						loc: SourceLocation smoke/input.html 14:7-14:11
 					}
 					attributes: Array []
 					selfClosing: false
-					loc: Object {
-						filename: "smoke/input.html"
-						end: Object {
-							column: 48
-							line: 14
-						}
-						start: Object {
-							column: 6
-							line: 14
-						}
-					}
+					loc: SourceLocation smoke/input.html 14:6-14:48
 					children: Array [
 						HTMLElement {
 							name: HTMLIdentifier {
 								name: "span"
-								loc: Object {
-									filename: "smoke/input.html"
-									end: Object {
-										column: 17
-										line: 14
-									}
-									start: Object {
-										column: 13
-										line: 14
-									}
-								}
+								loc: SourceLocation smoke/input.html 14:13-14:17
 							}
 							attributes: Array []
 							selfClosing: false
-							loc: Object {
-								filename: "smoke/input.html"
-								end: Object {
-									column: 41
-									line: 14
-								}
-								start: Object {
-									column: 12
-									line: 14
-								}
-							}
+							loc: SourceLocation smoke/input.html 14:12-14:41
 							children: Array [
 								HTMLElement {
 									name: HTMLIdentifier {
 										name: "span"
-										loc: Object {
-											filename: "smoke/input.html"
-											end: Object {
-												column: 23
-												line: 14
-											}
-											start: Object {
-												column: 19
-												line: 14
-											}
-										}
+										loc: SourceLocation smoke/input.html 14:19-14:23
 									}
 									attributes: Array []
 									selfClosing: false
-									loc: Object {
-										filename: "smoke/input.html"
-										end: Object {
-											column: 34
-											line: 14
-										}
-										start: Object {
-											column: 18
-											line: 14
-										}
-									}
+									loc: SourceLocation smoke/input.html 14:18-14:34
 									children: Array [
 										HTMLText {
 											value: "lol"
-											loc: Object {
-												filename: "smoke/input.html"
-												end: Object {
-													column: 27
-													line: 14
-												}
-												start: Object {
-													column: 24
-													line: 14
-												}
-											}
+											loc: SourceLocation smoke/input.html 14:24-14:27
 										}
 									]
 								}
@@ -283,45 +103,15 @@ HTMLRoot {
 				HTMLElement {
 					name: HTMLIdentifier {
 						name: "yeah"
-						loc: Object {
-							filename: "smoke/input.html"
-							end: Object {
-								column: 6
-								line: 16
-							}
-							start: Object {
-								column: 2
-								line: 16
-							}
-						}
+						loc: SourceLocation smoke/input.html 16:2-16:6
 					}
 					attributes: Array []
 					selfClosing: false
-					loc: Object {
-						filename: "smoke/input.html"
-						end: Object {
-							column: 18
-							line: 16
-						}
-						start: Object {
-							column: 1
-							line: 16
-						}
-					}
+					loc: SourceLocation smoke/input.html 16:1-16:18
 					children: Array [
 						HTMLText {
 							value: "mate"
-							loc: Object {
-								filename: "smoke/input.html"
-								end: Object {
-									column: 11
-									line: 16
-								}
-								start: Object {
-									column: 7
-									line: 16
-								}
-							}
+							loc: SourceLocation smoke/input.html 16:7-16:11
 						}
 					]
 				}
@@ -334,6 +124,5 @@ HTMLRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

@@ -12,78 +12,27 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "es2015/let/let-with-linebreak/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2015/let/let-with-linebreak/input.js"
-		end: Object {
-			column: 0
-			line: 3
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2015/let/let-with-linebreak/input.js 1:0-3:0
+	path: UIDPath<es2015/let/let-with-linebreak/input.js>
 	body: Array [
 		JSVariableDeclarationStatement {
-			loc: Object {
-				filename: "es2015/let/let-with-linebreak/input.js"
-				end: Object {
-					column: 6
-					line: 2
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2015/let/let-with-linebreak/input.js 1:0-2:6
 			declaration: JSVariableDeclaration {
 				kind: "let"
-				loc: Object {
-					filename: "es2015/let/let-with-linebreak/input.js"
-					end: Object {
-						column: 6
-						line: 2
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/let/let-with-linebreak/input.js 1:0-2:6
 				declarations: Array [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "a"
-							loc: Object {
-								filename: "es2015/let/let-with-linebreak/input.js"
-								identifierName: "a"
-								end: Object {
-									column: 5
-									line: 2
-								}
-								start: Object {
-									column: 4
-									line: 2
-								}
-							}
+							loc: SourceLocation es2015/let/let-with-linebreak/input.js 2:4-2:5 (a)
 						}
 						init: undefined
-						loc: Object {
-							filename: "es2015/let/let-with-linebreak/input.js"
-							end: Object {
-								column: 5
-								line: 2
-							}
-							start: Object {
-								column: 4
-								line: 2
-							}
-						}
+						loc: SourceLocation es2015/let/let-with-linebreak/input.js 2:4-2:5
 					}
 				]
 			}
@@ -95,6 +44,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

@@ -10,37 +10,17 @@
 JSRoot {
 	comments: Array []
 	corrupt: false
-	filename: "es2015/uncategorised/332/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2015/uncategorised/332/input.js"
-		end: Object {
-			column: 29
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2015/uncategorised/332/input.js 1:0-1:29
+	path: UIDPath<es2015/uncategorised/332/input.js>
 	directives: Array [
 		JSDirective {
 			value: "use strict"
-			loc: Object {
-				filename: "es2015/uncategorised/332/input.js"
-				end: Object {
-					column: 13
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2015/uncategorised/332/input.js 1:0-1:13
 		}
 	]
 	diagnostics: Array [
@@ -48,97 +28,36 @@ JSRoot {
 			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse"
 				categoryValue: "js"
-				message: Array [
-					"eval"
-					RAW_MARKUP {value: " is a reserved word"}
-				]
+				category: Array ["parse"]
+				message: RAW_MARKUP {value: "eval is a reserved word"}
 			}
 			location: Object {
-				filename: "es2015/uncategorised/332/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 22
-					line: 1
-				}
-				start: Object {
-					column: 18
-					line: 1
-				}
+				end: Position 1:22
+				path: UIDPath<es2015/uncategorised/332/input.js>
+				start: Position 1:18
 			}
 		}
 	]
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "es2015/uncategorised/332/input.js"
-				end: Object {
-					column: 29
-					line: 1
-				}
-				start: Object {
-					column: 14
-					line: 1
-				}
-			}
+			loc: SourceLocation es2015/uncategorised/332/input.js 1:14-1:29
 			expression: JSAssignmentExpression {
 				operator: "="
-				loc: Object {
-					filename: "es2015/uncategorised/332/input.js"
-					end: Object {
-						column: 29
-						line: 1
-					}
-					start: Object {
-						column: 14
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/uncategorised/332/input.js 1:14-1:29
 				right: JSReferenceIdentifier {
 					name: "arr"
-					loc: Object {
-						filename: "es2015/uncategorised/332/input.js"
-						identifierName: "arr"
-						end: Object {
-							column: 29
-							line: 1
-						}
-						start: Object {
-							column: 26
-							line: 1
-						}
-					}
+					loc: SourceLocation es2015/uncategorised/332/input.js 1:26-1:29 (arr)
 				}
 				left: JSAssignmentArrayPattern {
 					elements: Array []
-					loc: Object {
-						filename: "es2015/uncategorised/332/input.js"
-						end: Object {
-							column: 23
-							line: 1
-						}
-						start: Object {
-							column: 14
-							line: 1
-						}
-					}
+					loc: SourceLocation es2015/uncategorised/332/input.js 1:14-1:23
 					rest: JSAssignmentIdentifier {
 						name: "eval"
-						loc: Object {
-							filename: "es2015/uncategorised/332/input.js"
-							identifierName: "eval"
-							end: Object {
-								column: 22
-								line: 1
-							}
-							start: Object {
-								column: 18
-								line: 1
-							}
-						}
+						loc: SourceLocation es2015/uncategorised/332/input.js 1:18-1:22 (eval)
 					}
 				}
 			}
@@ -158,8 +77,5 @@ JSRoot {
     'use strict'; [...eval] = arr
                       ^^^^
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

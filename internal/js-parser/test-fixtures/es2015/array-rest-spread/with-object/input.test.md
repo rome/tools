@@ -12,220 +12,68 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "es2015/array-rest-spread/with-object/input.js"
 	hasHoistedVars: true
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2015/array-rest-spread/with-object/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2015/array-rest-spread/with-object/input.js 1:0-2:0
+	path: UIDPath<es2015/array-rest-spread/with-object/input.js>
 	body: Array [
 		JSVariableDeclarationStatement {
-			loc: Object {
-				filename: "es2015/array-rest-spread/with-object/input.js"
-				end: Object {
-					column: 31
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2015/array-rest-spread/with-object/input.js 1:0-1:31
 			declaration: JSVariableDeclaration {
 				kind: "var"
-				loc: Object {
-					filename: "es2015/array-rest-spread/with-object/input.js"
-					end: Object {
-						column: 31
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/array-rest-spread/with-object/input.js 1:0-1:31
 				declarations: Array [
 					JSVariableDeclarator {
 						id: JSBindingArrayPattern {
 							elements: Array []
-							loc: Object {
-								filename: "es2015/array-rest-spread/with-object/input.js"
-								end: Object {
-									column: 17
-									line: 1
-								}
-								start: Object {
-									column: 4
-									line: 1
-								}
-							}
+							loc: SourceLocation es2015/array-rest-spread/with-object/input.js 1:4-1:17
 							rest: JSBindingObjectPattern {
 								rest: undefined
-								loc: Object {
-									filename: "es2015/array-rest-spread/with-object/input.js"
-									end: Object {
-										column: 16
-										line: 1
-									}
-									start: Object {
-										column: 8
-										line: 1
-									}
-								}
+								loc: SourceLocation es2015/array-rest-spread/with-object/input.js 1:8-1:16
 								meta: JSPatternMeta {
 									optional: undefined
 									typeAnnotation: undefined
-									loc: Object {
-										filename: "es2015/array-rest-spread/with-object/input.js"
-										end: Object {
-											column: 16
-											line: 1
-										}
-										start: Object {
-											column: 8
-											line: 1
-										}
-									}
+									loc: SourceLocation es2015/array-rest-spread/with-object/input.js 1:8-1:16
 								}
 								properties: Array [
 									JSBindingObjectPatternProperty {
 										key: JSStaticPropertyKey {
 											value: JSIdentifier {
 												name: "length"
-												loc: Object {
-													filename: "es2015/array-rest-spread/with-object/input.js"
-													identifierName: "length"
-													end: Object {
-														column: 15
-														line: 1
-													}
-													start: Object {
-														column: 9
-														line: 1
-													}
-												}
+												loc: SourceLocation es2015/array-rest-spread/with-object/input.js 1:9-1:15 (length)
 											}
-											loc: Object {
-												filename: "es2015/array-rest-spread/with-object/input.js"
-												end: Object {
-													column: 15
-													line: 1
-												}
-												start: Object {
-													column: 9
-													line: 1
-												}
-											}
+											loc: SourceLocation es2015/array-rest-spread/with-object/input.js 1:9-1:15
 										}
 										value: JSBindingIdentifier {
 											name: "length"
-											loc: Object {
-												filename: "es2015/array-rest-spread/with-object/input.js"
-												identifierName: "length"
-												end: Object {
-													column: 15
-													line: 1
-												}
-												start: Object {
-													column: 9
-													line: 1
-												}
-											}
+											loc: SourceLocation es2015/array-rest-spread/with-object/input.js 1:9-1:15 (length)
 										}
-										loc: Object {
-											filename: "es2015/array-rest-spread/with-object/input.js"
-											end: Object {
-												column: 15
-												line: 1
-											}
-											start: Object {
-												column: 9
-												line: 1
-											}
-										}
+										loc: SourceLocation es2015/array-rest-spread/with-object/input.js 1:9-1:15
 									}
 								]
 							}
 						}
-						loc: Object {
-							filename: "es2015/array-rest-spread/with-object/input.js"
-							end: Object {
-								column: 30
-								line: 1
-							}
-							start: Object {
-								column: 4
-								line: 1
-							}
-						}
+						loc: SourceLocation es2015/array-rest-spread/with-object/input.js 1:4-1:30
 						init: JSArrayExpression {
-							loc: Object {
-								filename: "es2015/array-rest-spread/with-object/input.js"
-								end: Object {
-									column: 30
-									line: 1
-								}
-								start: Object {
-									column: 20
-									line: 1
-								}
-							}
+							loc: SourceLocation es2015/array-rest-spread/with-object/input.js 1:20-1:30
 							elements: Array [
 								JSNumericLiteral {
 									value: 1
 									format: undefined
-									loc: Object {
-										filename: "es2015/array-rest-spread/with-object/input.js"
-										end: Object {
-											column: 23
-											line: 1
-										}
-										start: Object {
-											column: 22
-											line: 1
-										}
-									}
+									loc: SourceLocation es2015/array-rest-spread/with-object/input.js 1:22-1:23
 								}
 								JSNumericLiteral {
 									value: 2
 									format: undefined
-									loc: Object {
-										filename: "es2015/array-rest-spread/with-object/input.js"
-										end: Object {
-											column: 26
-											line: 1
-										}
-										start: Object {
-											column: 25
-											line: 1
-										}
-									}
+									loc: SourceLocation es2015/array-rest-spread/with-object/input.js 1:25-1:26
 								}
 								JSNumericLiteral {
 									value: 3
 									format: undefined
-									loc: Object {
-										filename: "es2015/array-rest-spread/with-object/input.js"
-										end: Object {
-											column: 29
-											line: 1
-										}
-										start: Object {
-											column: 28
-											line: 1
-										}
-									}
+									loc: SourceLocation es2015/array-rest-spread/with-object/input.js 1:28-1:29
 								}
 							]
 						}
@@ -240,6 +88,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

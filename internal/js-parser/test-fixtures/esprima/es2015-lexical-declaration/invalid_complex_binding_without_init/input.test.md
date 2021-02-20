@@ -11,103 +11,47 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "esprima/es2015-lexical-declaration/invalid_complex_binding_without_init/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "esprima/es2015-lexical-declaration/invalid_complex_binding_without_init/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation esprima/es2015-lexical-declaration/invalid_complex_binding_without_init/input.js 1:0-2:0
+	path: UIDPath<esprima/es2015-lexical-declaration/invalid_complex_binding_without_init/input.js>
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse"
 				categoryValue: "js"
+				category: Array ["parse"]
 				message: RAW_MARKUP {value: "Complex binding patterns require an initialization value"}
 			}
 			location: Object {
-				filename: "esprima/es2015-lexical-declaration/invalid_complex_binding_without_init/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 6
-					line: 1
-				}
-				start: Object {
-					column: 6
-					line: 1
-				}
+				end: Position 1:6
+				path: UIDPath<esprima/es2015-lexical-declaration/invalid_complex_binding_without_init/input.js>
+				start: Position 1:6
 			}
 		}
 	]
 	body: Array [
 		JSVariableDeclarationStatement {
-			loc: Object {
-				filename: "esprima/es2015-lexical-declaration/invalid_complex_binding_without_init/input.js"
-				end: Object {
-					column: 6
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation esprima/es2015-lexical-declaration/invalid_complex_binding_without_init/input.js 1:0-1:6
 			declaration: JSVariableDeclaration {
 				kind: "let"
-				loc: Object {
-					filename: "esprima/es2015-lexical-declaration/invalid_complex_binding_without_init/input.js"
-					end: Object {
-						column: 6
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/es2015-lexical-declaration/invalid_complex_binding_without_init/input.js 1:0-1:6
 				declarations: Array [
 					JSVariableDeclarator {
 						id: JSBindingArrayPattern {
 							elements: Array []
 							rest: undefined
-							loc: Object {
-								filename: "esprima/es2015-lexical-declaration/invalid_complex_binding_without_init/input.js"
-								end: Object {
-									column: 6
-									line: 1
-								}
-								start: Object {
-									column: 4
-									line: 1
-								}
-							}
+							loc: SourceLocation esprima/es2015-lexical-declaration/invalid_complex_binding_without_init/input.js 1:4-1:6
 						}
 						init: undefined
-						loc: Object {
-							filename: "esprima/es2015-lexical-declaration/invalid_complex_binding_without_init/input.js"
-							end: Object {
-								column: 6
-								line: 1
-							}
-							start: Object {
-								column: 4
-								line: 1
-							}
-						}
+						loc: SourceLocation esprima/es2015-lexical-declaration/invalid_complex_binding_without_init/input.js 1:4-1:6
 					}
 				]
 			}
@@ -127,8 +71,5 @@ JSRoot {
     let []
           ^
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

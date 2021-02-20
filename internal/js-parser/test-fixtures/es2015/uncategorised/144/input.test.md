@@ -12,160 +12,48 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "es2015/uncategorised/144/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2015/uncategorised/144/input.js"
-		end: Object {
-			column: 18
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2015/uncategorised/144/input.js 1:0-1:18
+	path: UIDPath<es2015/uncategorised/144/input.js>
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "es2015/uncategorised/144/input.js"
-				end: Object {
-					column: 18
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2015/uncategorised/144/input.js 1:0-1:18
 			expression: JSObjectExpression {
-				loc: Object {
-					filename: "es2015/uncategorised/144/input.js"
-					end: Object {
-						column: 17
-						line: 1
-					}
-					start: Object {
-						column: 1
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/uncategorised/144/input.js 1:1-1:17
 				properties: Array [
 					JSObjectProperty {
 						key: JSComputedPropertyKey {
 							value: JSReferenceIdentifier {
 								name: "x"
-								loc: Object {
-									filename: "es2015/uncategorised/144/input.js"
-									identifierName: "x"
-									end: Object {
-										column: 4
-										line: 1
-									}
-									start: Object {
-										column: 3
-										line: 1
-									}
-								}
+								loc: SourceLocation es2015/uncategorised/144/input.js 1:3-1:4 (x)
 							}
-							loc: Object {
-								filename: "es2015/uncategorised/144/input.js"
-								end: Object {
-									column: 5
-									line: 1
-								}
-								start: Object {
-									column: 2
-									line: 1
-								}
-							}
+							loc: SourceLocation es2015/uncategorised/144/input.js 1:2-1:5
 						}
 						value: JSNumericLiteral {
 							value: 10
 							format: undefined
-							loc: Object {
-								filename: "es2015/uncategorised/144/input.js"
-								end: Object {
-									column: 9
-									line: 1
-								}
-								start: Object {
-									column: 7
-									line: 1
-								}
-							}
+							loc: SourceLocation es2015/uncategorised/144/input.js 1:7-1:9
 						}
-						loc: Object {
-							filename: "es2015/uncategorised/144/input.js"
-							end: Object {
-								column: 9
-								line: 1
-							}
-							start: Object {
-								column: 2
-								line: 1
-							}
-						}
+						loc: SourceLocation es2015/uncategorised/144/input.js 1:2-1:9
 					}
 					JSObjectProperty {
 						key: JSStaticPropertyKey {
 							value: JSIdentifier {
 								name: "y"
-								loc: Object {
-									filename: "es2015/uncategorised/144/input.js"
-									identifierName: "y"
-									end: Object {
-										column: 12
-										line: 1
-									}
-									start: Object {
-										column: 11
-										line: 1
-									}
-								}
+								loc: SourceLocation es2015/uncategorised/144/input.js 1:11-1:12 (y)
 							}
-							loc: Object {
-								filename: "es2015/uncategorised/144/input.js"
-								end: Object {
-									column: 12
-									line: 1
-								}
-								start: Object {
-									column: 11
-									line: 1
-								}
-							}
+							loc: SourceLocation es2015/uncategorised/144/input.js 1:11-1:12
 						}
 						value: JSNumericLiteral {
 							value: 20
 							format: undefined
-							loc: Object {
-								filename: "es2015/uncategorised/144/input.js"
-								end: Object {
-									column: 16
-									line: 1
-								}
-								start: Object {
-									column: 14
-									line: 1
-								}
-							}
+							loc: SourceLocation es2015/uncategorised/144/input.js 1:14-1:16
 						}
-						loc: Object {
-							filename: "es2015/uncategorised/144/input.js"
-							end: Object {
-								column: 16
-								line: 1
-							}
-							start: Object {
-								column: 11
-								line: 1
-							}
-						}
+						loc: SourceLocation es2015/uncategorised/144/input.js 1:11-1:16
 					}
 				]
 			}
@@ -177,6 +65,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

@@ -17,7 +17,7 @@ disallow nested ternary expressions
 **ESLint Equivalent:** [no-nested-ternary](https://eslint.org/docs/rules/no-nested-ternary)
 <!-- GENERATED:END(id:description) -->
 
-<!-- GENERATED:START(hash:82a5d21545ab5a3eeacfb9c08de15671ccad9174,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+<!-- GENERATED:START(hash:e39fbace5995e32079c00502ddb860887e79a2fa,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
 
 ### Invalid
@@ -50,6 +50,9 @@ disallow nested ternary expressions
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Nesting ternary expressions can make code more difficult to</span>
     <span style="color: Tomato;">understand.</span>
+
+    <span class="token keyword">let</span> <span class="token variable">thing</span> <span class="token operator">=</span> <span class="token variable">foo</span> <span class="token punctuation">?</span> <span class="token variable">bar</span> <span class="token punctuation">?</span> <span class="token variable">boo</span> <span class="token punctuation">:</span> <span class="token variable">foo</span> <span class="token punctuation">:</span> <span class="token variable">baz</span> <span class="token punctuation">?</span> <span class="token variable">boo</span> <span class="token punctuation">:</span> <span class="token variable">foo</span><span class="token punctuation">;</span>
+                      <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
 
 </code></pre>{% endraw %}
 

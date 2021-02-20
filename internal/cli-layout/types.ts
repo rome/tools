@@ -4,20 +4,21 @@ import {
 	MarkupParsedChildren,
 } from "@internal/markup";
 import {TerminalFeatures} from "@internal/cli-environment";
-import {Number1} from "@internal/ob1";
+import {OneIndexed} from "@internal/math";
+import {Position} from "@internal/parser-core";
 
 export type GridPointer = {
 	char: MarkupParsedChildren;
 	message: MarkupParsedChildren;
-	line: Number1;
-	columnStart: Number1;
-	columnEnd: Number1;
+	line: OneIndexed;
+	columnStart: OneIndexed;
+	columnEnd: OneIndexed;
 };
 
 export type UserGridOptions = MarkupFormatOptions & {
 	convertTabs?: boolean;
 	features?: TerminalFeatures;
-	columns?: Number1;
+	columns?: OneIndexed;
 };
 
 export type GridViewOptions = {
@@ -32,3 +33,10 @@ export type GridOptions = UserGridOptions & {
 };
 
 export type GridOutputFormat = "ansi" | "html" | "none";
+
+export type GridLocator = {
+	start: Position;
+	end: Position;
+};
+
+export type GridLocators = Map<string, GridLocator>;

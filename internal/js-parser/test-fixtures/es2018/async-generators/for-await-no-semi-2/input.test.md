@@ -11,45 +11,29 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "es2018/async-generators/for-await-no-semi-2/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2018/async-generators/for-await-no-semi-2/input.js"
-		end: Object {
-			column: 0
-			line: 4
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2018/async-generators/for-await-no-semi-2/input.js 1:0-4:0
+	path: UIDPath<es2018/async-generators/for-await-no-semi-2/input.js>
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse"
 				categoryValue: "js"
+				category: Array ["parse"]
 				message: RAW_MARKUP {value: "Can't have an await on a regular for loop"}
 			}
 			location: Object {
-				filename: "es2018/async-generators/for-await-no-semi-2/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 11
-					line: 2
-				}
-				start: Object {
-					column: 11
-					line: 2
-				}
+				end: Position 2:11
+				path: UIDPath<es2018/async-generators/for-await-no-semi-2/input.js>
+				start: Position 2:11
 			}
 		}
 	]
@@ -57,30 +41,9 @@ JSRoot {
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "f"
-				loc: Object {
-					filename: "es2018/async-generators/for-await-no-semi-2/input.js"
-					identifierName: "f"
-					end: Object {
-						column: 16
-						line: 1
-					}
-					start: Object {
-						column: 15
-						line: 1
-					}
-				}
+				loc: SourceLocation es2018/async-generators/for-await-no-semi-2/input.js 1:15-1:16 (f)
 			}
-			loc: Object {
-				filename: "es2018/async-generators/for-await-no-semi-2/input.js"
-				end: Object {
-					column: 1
-					line: 3
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2018/async-generators/for-await-no-semi-2/input.js 1:0-3:1
 			head: JSFunctionHead {
 				async: true
 				generator: false
@@ -90,127 +53,34 @@ JSRoot {
 				returnType: undefined
 				thisType: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "es2018/async-generators/for-await-no-semi-2/input.js"
-					end: Object {
-						column: 18
-						line: 1
-					}
-					start: Object {
-						column: 16
-						line: 1
-					}
-				}
+				loc: SourceLocation es2018/async-generators/for-await-no-semi-2/input.js 1:16-1:18
 			}
 			body: JSBlockStatement {
 				directives: Array []
-				loc: Object {
-					filename: "es2018/async-generators/for-await-no-semi-2/input.js"
-					end: Object {
-						column: 1
-						line: 3
-					}
-					start: Object {
-						column: 19
-						line: 1
-					}
-				}
+				loc: SourceLocation es2018/async-generators/for-await-no-semi-2/input.js 1:19-3:1
 				body: Array [
 					JSForStatement {
 						update: undefined
-						loc: Object {
-							filename: "es2018/async-generators/for-await-no-semi-2/input.js"
-							end: Object {
-								column: 31
-								line: 2
-							}
-							start: Object {
-								column: 2
-								line: 2
-							}
-						}
-						body: JSEmptyStatement {
-							loc: Object {
-								filename: "es2018/async-generators/for-await-no-semi-2/input.js"
-								end: Object {
-									column: 31
-									line: 2
-								}
-								start: Object {
-									column: 30
-									line: 2
-								}
-							}
-						}
+						body: JSEmptyStatement {loc: SourceLocation es2018/async-generators/for-await-no-semi-2/input.js 2:30-2:31}
+						loc: SourceLocation es2018/async-generators/for-await-no-semi-2/input.js 2:2-2:31
 						test: JSBooleanLiteral {
 							value: false
-							loc: Object {
-								filename: "es2018/async-generators/for-await-no-semi-2/input.js"
-								end: Object {
-									column: 28
-									line: 2
-								}
-								start: Object {
-									column: 23
-									line: 2
-								}
-							}
+							loc: SourceLocation es2018/async-generators/for-await-no-semi-2/input.js 2:23-2:28
 						}
 						init: JSVariableDeclaration {
 							kind: "let"
-							loc: Object {
-								filename: "es2018/async-generators/for-await-no-semi-2/input.js"
-								end: Object {
-									column: 22
-									line: 2
-								}
-								start: Object {
-									column: 13
-									line: 2
-								}
-							}
+							loc: SourceLocation es2018/async-generators/for-await-no-semi-2/input.js 2:13-2:22
 							declarations: Array [
 								JSVariableDeclarator {
 									id: JSBindingIdentifier {
 										name: "i"
-										loc: Object {
-											filename: "es2018/async-generators/for-await-no-semi-2/input.js"
-											identifierName: "i"
-											end: Object {
-												column: 18
-												line: 2
-											}
-											start: Object {
-												column: 17
-												line: 2
-											}
-										}
+										loc: SourceLocation es2018/async-generators/for-await-no-semi-2/input.js 2:17-2:18 (i)
 									}
-									loc: Object {
-										filename: "es2018/async-generators/for-await-no-semi-2/input.js"
-										end: Object {
-											column: 22
-											line: 2
-										}
-										start: Object {
-											column: 17
-											line: 2
-										}
-									}
+									loc: SourceLocation es2018/async-generators/for-await-no-semi-2/input.js 2:17-2:22
 									init: JSNumericLiteral {
 										value: 0
 										format: undefined
-										loc: Object {
-											filename: "es2018/async-generators/for-await-no-semi-2/input.js"
-											end: Object {
-												column: 22
-												line: 2
-											}
-											start: Object {
-												column: 21
-												line: 2
-											}
-										}
+										loc: SourceLocation es2018/async-generators/for-await-no-semi-2/input.js 2:21-2:22
 									}
 								}
 							]
@@ -236,8 +106,5 @@ JSRoot {
       │            ^
     3 │ }
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

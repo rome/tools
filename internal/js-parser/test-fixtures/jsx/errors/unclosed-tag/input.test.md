@@ -11,66 +11,26 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "jsx/errors/unclosed-tag/input.jsx"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
+	loc: SourceLocation jsx/errors/unclosed-tag/input.jsx 1:0-2:0
+	path: UIDPath<jsx/errors/unclosed-tag/input.jsx>
 	syntax: Array ["jsx"]
-	loc: Object {
-		filename: "jsx/errors/unclosed-tag/input.jsx"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "jsx/errors/unclosed-tag/input.jsx"
-				end: Object {
-					column: 5
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation jsx/errors/unclosed-tag/input.jsx 1:0-1:5
 			expression: JSXElement {
 				name: JSXIdentifier {
 					name: "foo"
-					loc: Object {
-						filename: "jsx/errors/unclosed-tag/input.jsx"
-						end: Object {
-							column: 4
-							line: 1
-						}
-						start: Object {
-							column: 1
-							line: 1
-						}
-					}
+					loc: SourceLocation jsx/errors/unclosed-tag/input.jsx 1:1-1:4
 				}
 				attributes: Array []
 				children: Array []
 				selfClosing: false
 				typeArguments: undefined
-				loc: Object {
-					filename: "jsx/errors/unclosed-tag/input.jsx"
-					end: Object {
-						column: 5
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation jsx/errors/unclosed-tag/input.jsx 1:0-1:5
 			}
 		}
 	]
@@ -78,45 +38,23 @@ JSRoot {
 		Object {
 			origins: Array [Object {category: "parse"}]
 			location: Object {
-				filename: "jsx/errors/unclosed-tag/input.jsx"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 5
-					line: 1
-				}
-				start: Object {
-					column: 5
-					line: 1
-				}
+				end: Position 1:5
+				path: UIDPath<jsx/errors/unclosed-tag/input.jsx>
+				start: Position 1:5
 			}
 			description: Object {
-				category: "parse"
 				categoryValue: "js"
+				category: Array ["parse"]
 				message: RAW_MARKUP {value: "Unclosed JSX element"}
 				advice: Array [
 					log {
 						category: "info"
-						text: Array [
-							RAW_MARKUP {value: "Originated from opening tag of <emphasis>"}
-							"foo"
-							RAW_MARKUP {value: "</emphasis>"}
-						]
+						text: RAW_MARKUP {value: "Originated from opening tag of <emphasis>foo</emphasis>"}
 					}
-					frame {
-						location: Object {
-							filename: "jsx/errors/unclosed-tag/input.jsx"
-							end: Object {
-								column: 4
-								line: 1
-							}
-							start: Object {
-								column: 1
-								line: 1
-							}
-						}
-					}
+					frame {location: SourceLocation jsx/errors/unclosed-tag/input.jsx 1:1-1:4}
 				]
 			}
 		}
@@ -132,13 +70,13 @@ JSRoot {
 
   ✖ Unclosed JSX element
 
+    <foo>yes
+         ^
+
   ℹ Originated from opening tag of foo
 
     <foo>yes
      ^^^
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

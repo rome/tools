@@ -11,48 +11,29 @@ JSRoot {
 	comments: Array []
 	corrupt: true
 	directives: Array []
-	filename: "experimental/private-in/private-in-escaped-sequence/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "experimental/private-in/private-in-escaped-sequence/input.js"
-		end: Object {
-			column: 0
-			line: 7
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation experimental/private-in/private-in-escaped-sequence/input.js 1:0-7:0
+	path: UIDPath<experimental/private-in/private-in-escaped-sequence/input.js>
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse"
 				categoryValue: "js"
-				message: Array [
-					RAW_MARKUP {value: "Unknown start to an "}
-					"statement expression"
-				]
+				category: Array ["parse"]
+				message: RAW_MARKUP {value: "Unknown start to an statement expression"}
 			}
 			location: Object {
-				filename: "experimental/private-in/private-in-escaped-sequence/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 10
-					line: 3
-				}
-				start: Object {
-					column: 4
-					line: 4
-				}
+				end: Position 3:10
+				path: UIDPath<experimental/private-in/private-in-escaped-sequence/input.js>
+				start: Position 4:4
 			}
 		}
 	]
@@ -60,103 +41,31 @@ JSRoot {
 		JSClassDeclaration {
 			id: JSBindingIdentifier {
 				name: "Foo"
-				loc: Object {
-					filename: "experimental/private-in/private-in-escaped-sequence/input.js"
-					identifierName: "Foo"
-					end: Object {
-						column: 9
-						line: 1
-					}
-					start: Object {
-						column: 6
-						line: 1
-					}
-				}
+				loc: SourceLocation experimental/private-in/private-in-escaped-sequence/input.js 1:6-1:9 (Foo)
 			}
-			loc: Object {
-				filename: "experimental/private-in/private-in-escaped-sequence/input.js"
-				end: Object {
-					column: 1
-					line: 6
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation experimental/private-in/private-in-escaped-sequence/input.js 1:0-6:1
 			meta: JSClassHead {
 				implements: undefined
 				superClass: undefined
 				superTypeParameters: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "experimental/private-in/private-in-escaped-sequence/input.js"
-					end: Object {
-						column: 1
-						line: 6
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation experimental/private-in/private-in-escaped-sequence/input.js 1:0-6:1
 				body: Array [
 					JSClassPrivateProperty {
 						key: JSPrivateName {
 							id: JSIdentifier {
 								name: "a"
-								loc: Object {
-									filename: "experimental/private-in/private-in-escaped-sequence/input.js"
-									identifierName: "a"
-									end: Object {
-										column: 9
-										line: 2
-									}
-									start: Object {
-										column: 3
-										line: 2
-									}
-								}
+								loc: SourceLocation experimental/private-in/private-in-escaped-sequence/input.js 2:3-2:9 (a)
 							}
-							loc: Object {
-								filename: "experimental/private-in/private-in-escaped-sequence/input.js"
-								end: Object {
-									column: 9
-									line: 2
-								}
-								start: Object {
-									column: 2
-									line: 2
-								}
-							}
+							loc: SourceLocation experimental/private-in/private-in-escaped-sequence/input.js 2:2-2:9
 						}
 						value: JSNumericLiteral {
 							value: 1
 							format: undefined
-							loc: Object {
-								filename: "experimental/private-in/private-in-escaped-sequence/input.js"
-								end: Object {
-									column: 13
-									line: 2
-								}
-								start: Object {
-									column: 12
-									line: 2
-								}
-							}
+							loc: SourceLocation experimental/private-in/private-in-escaped-sequence/input.js 2:12-2:13
 						}
 						typeAnnotation: undefined
-						loc: Object {
-							filename: "experimental/private-in/private-in-escaped-sequence/input.js"
-							end: Object {
-								column: 14
-								line: 2
-							}
-							start: Object {
-								column: 2
-								line: 2
-							}
-						}
+						loc: SourceLocation experimental/private-in/private-in-escaped-sequence/input.js 2:2-2:14
 						meta: JSClassPropertyMeta {
 							abstract: false
 							accessibility: undefined
@@ -164,21 +73,8 @@ JSRoot {
 							readonly: false
 							static: false
 							typeAnnotation: undefined
-							start: Object {
-								column: 2
-								line: 2
-							}
-							loc: Object {
-								filename: "experimental/private-in/private-in-escaped-sequence/input.js"
-								end: Object {
-									column: 9
-									line: 2
-								}
-								start: Object {
-									column: 2
-									line: 2
-								}
-							}
+							loc: SourceLocation experimental/private-in/private-in-escaped-sequence/input.js 2:2-2:9
+							start: Position 2:2
 						}
 					}
 					JSClassMethod {
@@ -186,41 +82,20 @@ JSRoot {
 						key: JSStaticPropertyKey {
 							value: JSIdentifier {
 								name: "test"
-								loc: Object {
-									filename: "experimental/private-in/private-in-escaped-sequence/input.js"
-									identifierName: "test"
-									end: Object {
-										column: 6
-										line: 3
-									}
-									start: Object {
-										column: 2
-										line: 3
-									}
-								}
+								loc: SourceLocation experimental/private-in/private-in-escaped-sequence/input.js 3:2-3:6 (test)
 							}
-							loc: Object {
-								filename: "experimental/private-in/private-in-escaped-sequence/input.js"
-								end: Object {
-									column: 6
-									line: 3
-								}
-								start: Object {
-									column: 2
-									line: 3
-								}
-							}
+							loc: SourceLocation experimental/private-in/private-in-escaped-sequence/input.js 3:2-3:6
 						}
-						loc: Object {
-							filename: "experimental/private-in/private-in-escaped-sequence/input.js"
-							end: Object {
-								column: 3
-								line: 5
-							}
-							start: Object {
-								column: 2
-								line: 3
-							}
+						loc: SourceLocation experimental/private-in/private-in-escaped-sequence/input.js 3:2-5:3
+						meta: JSClassPropertyMeta {
+							abstract: false
+							accessibility: undefined
+							optional: false
+							readonly: false
+							static: false
+							typeAnnotation: undefined
+							loc: SourceLocation experimental/private-in/private-in-escaped-sequence/input.js 3:2-3:6
+							start: Position 3:2
 						}
 						head: JSFunctionHead {
 							async: false
@@ -231,135 +106,31 @@ JSRoot {
 							returnType: undefined
 							thisType: undefined
 							typeParameters: undefined
-							loc: Object {
-								filename: "experimental/private-in/private-in-escaped-sequence/input.js"
-								end: Object {
-									column: 8
-									line: 3
-								}
-								start: Object {
-									column: 6
-									line: 3
-								}
-							}
-						}
-						meta: JSClassPropertyMeta {
-							abstract: false
-							accessibility: undefined
-							optional: false
-							readonly: false
-							static: false
-							typeAnnotation: undefined
-							start: Object {
-								column: 2
-								line: 3
-							}
-							loc: Object {
-								filename: "experimental/private-in/private-in-escaped-sequence/input.js"
-								end: Object {
-									column: 6
-									line: 3
-								}
-								start: Object {
-									column: 2
-									line: 3
-								}
-							}
+							loc: SourceLocation experimental/private-in/private-in-escaped-sequence/input.js 3:6-3:8
 						}
 						body: JSBlockStatement {
 							directives: Array []
-							loc: Object {
-								filename: "experimental/private-in/private-in-escaped-sequence/input.js"
-								end: Object {
-									column: 3
-									line: 5
-								}
-								start: Object {
-									column: 9
-									line: 3
-								}
-							}
+							loc: SourceLocation experimental/private-in/private-in-escaped-sequence/input.js 3:9-5:3
 							body: Array [
 								JSExpressionStatement {
-									loc: Object {
-										filename: "experimental/private-in/private-in-escaped-sequence/input.js"
-										end: Object {
-											column: 5
-											line: 4
-										}
-										start: Object {
-											column: 4
-											line: 4
-										}
-									}
+									loc: SourceLocation experimental/private-in/private-in-escaped-sequence/input.js 4:4-4:5
 									expression: JSReferenceIdentifier {
 										name: "INVALID_PLACEHOLDER"
-										loc: Object {
-											filename: "experimental/private-in/private-in-escaped-sequence/input.js"
-											end: Object {
-												column: 5
-												line: 4
-											}
-											start: Object {
-												column: 4
-												line: 4
-											}
-										}
+										loc: SourceLocation experimental/private-in/private-in-escaped-sequence/input.js 4:4-4:5
 									}
 								}
 								JSExpressionStatement {
-									loc: Object {
-										filename: "experimental/private-in/private-in-escaped-sequence/input.js"
-										end: Object {
-											column: 18
-											line: 4
-										}
-										start: Object {
-											column: 5
-											line: 4
-										}
-									}
+									loc: SourceLocation experimental/private-in/private-in-escaped-sequence/input.js 4:5-4:18
 									expression: JSBinaryExpression {
 										operator: "in"
-										loc: Object {
-											filename: "experimental/private-in/private-in-escaped-sequence/input.js"
-											end: Object {
-												column: 17
-												line: 4
-											}
-											start: Object {
-												column: 5
-												line: 4
-											}
+										loc: SourceLocation experimental/private-in/private-in-escaped-sequence/input.js 4:5-4:17
+										left: JSReferenceIdentifier {
+											name: "a"
+											loc: SourceLocation experimental/private-in/private-in-escaped-sequence/input.js 4:5-4:11 (a)
 										}
 										right: JSObjectExpression {
 											properties: Array []
-											loc: Object {
-												filename: "experimental/private-in/private-in-escaped-sequence/input.js"
-												end: Object {
-													column: 17
-													line: 4
-												}
-												start: Object {
-													column: 15
-													line: 4
-												}
-											}
-										}
-										left: JSReferenceIdentifier {
-											name: "a"
-											loc: Object {
-												filename: "experimental/private-in/private-in-escaped-sequence/input.js"
-												identifierName: "a"
-												end: Object {
-													column: 11
-													line: 4
-												}
-												start: Object {
-													column: 5
-													line: 4
-												}
-											}
+											loc: SourceLocation experimental/private-in/private-in-escaped-sequence/input.js 4:15-4:17
 										}
 									}
 								}
@@ -386,8 +157,5 @@ JSRoot {
     4 │     #\u{61} in {};
     5 │   }
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

@@ -11,74 +11,38 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "esprima/es2015-generator/generator-parameter-invalid-binding-element/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "esprima/es2015-generator/generator-parameter-invalid-binding-element/input.js"
-		end: Object {
-			column: 0
-			line: 4
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation esprima/es2015-generator/generator-parameter-invalid-binding-element/input.js 1:0-4:0
+	path: UIDPath<esprima/es2015-generator/generator-parameter-invalid-binding-element/input.js>
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse"
 				categoryValue: "js"
+				category: Array ["parse"]
 				message: RAW_MARKUP {value: "Expected an identifier"}
 			}
 			location: Object {
-				filename: "esprima/es2015-generator/generator-parameter-invalid-binding-element/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 13
-					line: 2
-				}
-				start: Object {
-					column: 13
-					line: 2
-				}
+				end: Position 2:13
+				path: UIDPath<esprima/es2015-generator/generator-parameter-invalid-binding-element/input.js>
+				start: Position 2:13
 			}
 		}
 	]
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "esprima/es2015-generator/generator-parameter-invalid-binding-element/input.js"
-				end: Object {
-					column: 2
-					line: 3
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation esprima/es2015-generator/generator-parameter-invalid-binding-element/input.js 1:0-3:2
 			expression: JSFunctionExpression {
 				id: undefined
-				loc: Object {
-					filename: "esprima/es2015-generator/generator-parameter-invalid-binding-element/input.js"
-					end: Object {
-						column: 1
-						line: 3
-					}
-					start: Object {
-						column: 1
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/es2015-generator/generator-parameter-invalid-binding-element/input.js 1:1-3:1
 				head: JSFunctionHead {
 					async: false
 					generator: true
@@ -88,73 +52,22 @@ JSRoot {
 					returnType: undefined
 					thisType: undefined
 					typeParameters: undefined
-					loc: Object {
-						filename: "esprima/es2015-generator/generator-parameter-invalid-binding-element/input.js"
-						end: Object {
-							column: 12
-							line: 1
-						}
-						start: Object {
-							column: 10
-							line: 1
-						}
-					}
+					loc: SourceLocation esprima/es2015-generator/generator-parameter-invalid-binding-element/input.js 1:10-1:12
 				}
 				body: JSBlockStatement {
 					directives: Array []
-					loc: Object {
-						filename: "esprima/es2015-generator/generator-parameter-invalid-binding-element/input.js"
-						end: Object {
-							column: 1
-							line: 3
-						}
-						start: Object {
-							column: 13
-							line: 1
-						}
-					}
+					loc: SourceLocation esprima/es2015-generator/generator-parameter-invalid-binding-element/input.js 1:13-3:1
 					body: Array [
 						JSFunctionDeclaration {
 							id: JSBindingIdentifier {
 								name: ""
-								loc: Object {
-									filename: "esprima/es2015-generator/generator-parameter-invalid-binding-element/input.js"
-									identifierName: ""
-									end: Object {
-										column: 14
-										line: 2
-									}
-									start: Object {
-										column: 13
-										line: 2
-									}
-								}
+								loc: SourceLocation esprima/es2015-generator/generator-parameter-invalid-binding-element/input.js 2:13-2:14 ()
 							}
-							loc: Object {
-								filename: "esprima/es2015-generator/generator-parameter-invalid-binding-element/input.js"
-								end: Object {
-									column: 29
-									line: 2
-								}
-								start: Object {
-									column: 4
-									line: 2
-								}
-							}
+							loc: SourceLocation esprima/es2015-generator/generator-parameter-invalid-binding-element/input.js 2:4-2:29
 							body: JSBlockStatement {
 								body: Array []
 								directives: Array []
-								loc: Object {
-									filename: "esprima/es2015-generator/generator-parameter-invalid-binding-element/input.js"
-									end: Object {
-										column: 29
-										line: 2
-									}
-									start: Object {
-										column: 27
-										line: 2
-									}
-								}
+								loc: SourceLocation esprima/es2015-generator/generator-parameter-invalid-binding-element/input.js 2:27-2:29
 							}
 							head: JSFunctionHead {
 								async: false
@@ -164,87 +77,26 @@ JSRoot {
 								returnType: undefined
 								thisType: undefined
 								typeParameters: undefined
-								loc: Object {
-									filename: "esprima/es2015-generator/generator-parameter-invalid-binding-element/input.js"
-									end: Object {
-										column: 26
-										line: 2
-									}
-									start: Object {
-										column: 14
-										line: 2
-									}
-								}
+								loc: SourceLocation esprima/es2015-generator/generator-parameter-invalid-binding-element/input.js 2:14-2:26
 								params: Array [
 									JSBindingAssignmentPattern {
-										loc: Object {
-											filename: "esprima/es2015-generator/generator-parameter-invalid-binding-element/input.js"
-											end: Object {
-												column: 25
-												line: 2
-											}
-											start: Object {
-												column: 14
-												line: 2
+										loc: SourceLocation esprima/es2015-generator/generator-parameter-invalid-binding-element/input.js 2:14-2:25
+										left: JSBindingIdentifier {
+											name: "x"
+											loc: SourceLocation esprima/es2015-generator/generator-parameter-invalid-binding-element/input.js 2:14-2:15 (x)
+											meta: JSPatternMeta {
+												optional: undefined
+												typeAnnotation: undefined
+												loc: SourceLocation esprima/es2015-generator/generator-parameter-invalid-binding-element/input.js 2:14-2:15
 											}
 										}
 										right: JSYieldExpression {
 											delegate: false
-											loc: Object {
-												filename: "esprima/es2015-generator/generator-parameter-invalid-binding-element/input.js"
-												end: Object {
-													column: 25
-													line: 2
-												}
-												start: Object {
-													column: 18
-													line: 2
-												}
-											}
+											loc: SourceLocation esprima/es2015-generator/generator-parameter-invalid-binding-element/input.js 2:18-2:25
 											argument: JSNumericLiteral {
 												value: 3
 												format: undefined
-												loc: Object {
-													filename: "esprima/es2015-generator/generator-parameter-invalid-binding-element/input.js"
-													end: Object {
-														column: 25
-														line: 2
-													}
-													start: Object {
-														column: 24
-														line: 2
-													}
-												}
-											}
-										}
-										left: JSBindingIdentifier {
-											name: "x"
-											loc: Object {
-												filename: "esprima/es2015-generator/generator-parameter-invalid-binding-element/input.js"
-												identifierName: "x"
-												end: Object {
-													column: 15
-													line: 2
-												}
-												start: Object {
-													column: 14
-													line: 2
-												}
-											}
-											meta: JSPatternMeta {
-												optional: undefined
-												typeAnnotation: undefined
-												loc: Object {
-													filename: "esprima/es2015-generator/generator-parameter-invalid-binding-element/input.js"
-													end: Object {
-														column: 15
-														line: 2
-													}
-													start: Object {
-														column: 14
-														line: 2
-													}
-												}
+												loc: SourceLocation esprima/es2015-generator/generator-parameter-invalid-binding-element/input.js 2:24-2:25
 											}
 										}
 									}
@@ -272,8 +124,5 @@ JSRoot {
       │              ^
     3 │ })
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

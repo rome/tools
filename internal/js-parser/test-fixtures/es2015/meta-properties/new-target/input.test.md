@@ -12,51 +12,20 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "es2015/meta-properties/new-target/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2015/meta-properties/new-target/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2015/meta-properties/new-target/input.js 1:0-2:0
+	path: UIDPath<es2015/meta-properties/new-target/input.js>
 	body: Array [
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "foo"
-				loc: Object {
-					filename: "es2015/meta-properties/new-target/input.js"
-					identifierName: "foo"
-					end: Object {
-						column: 12
-						line: 1
-					}
-					start: Object {
-						column: 9
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/meta-properties/new-target/input.js 1:9-1:12 (foo)
 			}
-			loc: Object {
-				filename: "es2015/meta-properties/new-target/input.js"
-				end: Object {
-					column: 29
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2015/meta-properties/new-target/input.js 1:0-1:29
 			head: JSFunctionHead {
 				async: false
 				generator: false
@@ -66,85 +35,23 @@ JSRoot {
 				returnType: undefined
 				thisType: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "es2015/meta-properties/new-target/input.js"
-					end: Object {
-						column: 14
-						line: 1
-					}
-					start: Object {
-						column: 12
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/meta-properties/new-target/input.js 1:12-1:14
 			}
 			body: JSBlockStatement {
 				directives: Array []
-				loc: Object {
-					filename: "es2015/meta-properties/new-target/input.js"
-					end: Object {
-						column: 29
-						line: 1
-					}
-					start: Object {
-						column: 15
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/meta-properties/new-target/input.js 1:15-1:29
 				body: Array [
 					JSExpressionStatement {
-						loc: Object {
-							filename: "es2015/meta-properties/new-target/input.js"
-							end: Object {
-								column: 27
-								line: 1
-							}
-							start: Object {
-								column: 17
-								line: 1
-							}
-						}
+						loc: SourceLocation es2015/meta-properties/new-target/input.js 1:17-1:27
 						expression: JSMetaProperty {
-							loc: Object {
-								filename: "es2015/meta-properties/new-target/input.js"
-								end: Object {
-									column: 27
-									line: 1
-								}
-								start: Object {
-									column: 17
-									line: 1
-								}
-							}
+							loc: SourceLocation es2015/meta-properties/new-target/input.js 1:17-1:27
 							meta: JSIdentifier {
 								name: "new"
-								loc: Object {
-									filename: "es2015/meta-properties/new-target/input.js"
-									identifierName: "new"
-									end: Object {
-										column: 20
-										line: 1
-									}
-									start: Object {
-										column: 17
-										line: 1
-									}
-								}
+								loc: SourceLocation es2015/meta-properties/new-target/input.js 1:17-1:20 (new)
 							}
 							property: JSIdentifier {
 								name: "target"
-								loc: Object {
-									filename: "es2015/meta-properties/new-target/input.js"
-									identifierName: "target"
-									end: Object {
-										column: 27
-										line: 1
-									}
-									start: Object {
-										column: 21
-										line: 1
-									}
-								}
+								loc: SourceLocation es2015/meta-properties/new-target/input.js 1:21-1:27 (target)
 							}
 						}
 					}
@@ -158,6 +65,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

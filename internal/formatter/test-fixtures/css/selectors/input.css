@@ -1,0 +1,67 @@
+div {
+}
+
+#id {
+}
+
+div, #id {
+}
+
+.class {
+}
+
+a:hover {
+}
+
+a::before {
+}
+
+a:hover, a::before {
+}
+
+div #id {
+}
+
+div + #id {
+}
+
+div ~ #id {
+}
+
+div > #id {
+}
+
+div + #id, div ~ #id, div > #id {
+}
+
+* {
+
+}
+
+.field + * {
+
+}
+
+div[attr="value"] {
+
+}
+
+[ attr = value i ] {
+
+}
+
+.longlonglonglonglong_class_name[longlonglonglong_attr_name="longlonglonglonglonglong_value"] {
+
+}
+
+p:nth-last-of-type(2) {
+}
+
+:lang(en, ko) {
+}
+
+::pseudo-elem() {
+}
+
+::pseudo-elem(a, b) {
+}

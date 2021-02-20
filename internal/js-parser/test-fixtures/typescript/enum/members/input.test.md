@@ -12,123 +12,40 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "typescript/enum/members/input.ts"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
+	loc: SourceLocation typescript/enum/members/input.ts 1:0-5:0
+	path: UIDPath<typescript/enum/members/input.ts>
 	syntax: Array ["ts"]
-	loc: Object {
-		filename: "typescript/enum/members/input.ts"
-		end: Object {
-			column: 0
-			line: 5
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
 	body: Array [
 		TSEnumDeclaration {
 			id: JSBindingIdentifier {
 				name: "E"
-				loc: Object {
-					filename: "typescript/enum/members/input.ts"
-					identifierName: "E"
-					end: Object {
-						column: 6
-						line: 1
-					}
-					start: Object {
-						column: 5
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/enum/members/input.ts 1:5-1:6 (E)
 			}
 			const: false
-			loc: Object {
-				filename: "typescript/enum/members/input.ts"
-				end: Object {
-					column: 1
-					line: 4
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation typescript/enum/members/input.ts 1:0-4:1
 			members: Array [
 				TSEnumMember {
 					id: JSIdentifier {
 						name: "A"
-						loc: Object {
-							filename: "typescript/enum/members/input.ts"
-							identifierName: "A"
-							end: Object {
-								column: 5
-								line: 2
-							}
-							start: Object {
-								column: 4
-								line: 2
-							}
-						}
+						loc: SourceLocation typescript/enum/members/input.ts 2:4-2:5 (A)
 					}
 					initializer: undefined
-					loc: Object {
-						filename: "typescript/enum/members/input.ts"
-						end: Object {
-							column: 5
-							line: 2
-						}
-						start: Object {
-							column: 4
-							line: 2
-						}
-					}
+					loc: SourceLocation typescript/enum/members/input.ts 2:4-2:5
 				}
 				TSEnumMember {
 					id: JSIdentifier {
 						name: "B"
-						loc: Object {
-							filename: "typescript/enum/members/input.ts"
-							identifierName: "B"
-							end: Object {
-								column: 5
-								line: 3
-							}
-							start: Object {
-								column: 4
-								line: 3
-							}
-						}
+						loc: SourceLocation typescript/enum/members/input.ts 3:4-3:5 (B)
 					}
-					loc: Object {
-						filename: "typescript/enum/members/input.ts"
-						end: Object {
-							column: 9
-							line: 3
-						}
-						start: Object {
-							column: 4
-							line: 3
-						}
-					}
+					loc: SourceLocation typescript/enum/members/input.ts 3:4-3:9
 					initializer: JSNumericLiteral {
 						value: 0
 						format: undefined
-						loc: Object {
-							filename: "typescript/enum/members/input.ts"
-							end: Object {
-								column: 9
-								line: 3
-							}
-							start: Object {
-								column: 8
-								line: 3
-							}
-						}
+						loc: SourceLocation typescript/enum/members/input.ts 3:8-3:9
 					}
 				}
 			]
@@ -140,6 +57,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

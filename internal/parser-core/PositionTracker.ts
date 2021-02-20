@@ -1,83 +1,76 @@
-import {
-	Number0,
-	Number1,
-	ob1Get0,
-	ob1Inc,
-	ob1Number0,
-	ob1Number1,
-} from "@internal/ob1";
+import {OneIndexed, ZeroIndexed} from "@internal/math";
 import {Position} from "./types";
 import {pretty} from "@internal/pretty-format";
 import {derivePositionKey} from "./utils";
 import {ExtendedMap} from "@internal/collections";
+import {AnyPath, equalPaths} from "@internal/path";
 
 type GetPosition = () => Position;
 
 export default class PositionTracker {
 	constructor(
 		{
-			filename,
+			path,
 			input,
 			offsetPosition = {
-				line: ob1Number1,
-				column: ob1Number0,
+				line: new OneIndexed(),
+				column: new ZeroIndexed(),
 			},
 			getPosition,
 		}: {
-			filename: undefined | string;
+			path: undefined | AnyPath;
 			input: string;
 			offsetPosition?: Position;
 			getPosition?: GetPosition;
 		},
 	) {
 		this.getPosition = getPosition;
-		this.filename = filename;
+		this.path = path;
 		this.input = input;
 
 		this.latestPosition = offsetPosition;
 
 		this.positionsToIndex = new ExtendedMap("positionsToIndex");
-		this.positionsToIndex.set(derivePositionKey(offsetPosition), ob1Number0);
+		this.positionsToIndex.set(derivePositionKey(offsetPosition), 0);
 
 		this.cachedPositions = new Map();
 	}
 
-	private filename: undefined | string;
+	private path: undefined | AnyPath;
 	private input: string;
 	private latestPosition: Position;
-	public cachedPositions: Map<Number0, Position>;
-	private positionsToIndex: ExtendedMap<string, Number0>;
+	public cachedPositions: Map<number, Position>;
+	private positionsToIndex: ExtendedMap<string, number>;
 	private getPosition: undefined | GetPosition;
 
 	public getIndexFromPosition(
 		pos: Position,
-		filename: undefined | string,
-	): Number0 {
-		if (filename !== this.filename) {
+		path: undefined | AnyPath,
+	): ZeroIndexed {
+		if (!equalPaths(path, this.path)) {
 			throw new Error(
-				pretty`PositionTracker filename mismatch. DiagnosticLocation filename ${filename} is different than the filename we're tracking of ${this.filename}. Position: ${pos}`,
+				pretty`PositionTracker filename mismatch. Path ${path} is different than the filename we're tracking of ${this.path}. Position: ${pos}`,
 			);
 		}
 
-		const index = this.positionsToIndex.assert(derivePositionKey(pos));
-		return index;
+		return new ZeroIndexed(this.positionsToIndex.assert(derivePositionKey(pos)));
 	}
 
-	public getPositionFromIndex(index: Number0): Position {
-		const cached = this.cachedPositions.get(index);
+	public getPositionFromIndex(index: number | ZeroIndexed): Position {
+		const cached = this.cachedPositions.get(index.valueOf());
 		if (cached !== undefined) {
 			return cached;
 		}
 
-		let line: Number1 = ob1Number1;
-		let column: Number0 = ob1Number0;
+		let line: OneIndexed = new OneIndexed();
+		let column: ZeroIndexed = new ZeroIndexed();
 		let indexSearchStart: number = 0;
 
 		// Reuse existing line information if possible
 		const {latestPosition} = this;
 		const latestPositionIndex = this.getIndexFromPosition(
 			latestPosition,
-			this.filename,
+			this.path,
 		);
 
 		const currPosition =
@@ -85,7 +78,7 @@ export default class PositionTracker {
 		const currPositionIndex =
 			currPosition === undefined
 				? undefined
-				: this.getIndexFromPosition(latestPosition, this.filename);
+				: this.getIndexFromPosition(latestPosition, this.path);
 
 		if (
 			currPosition !== undefined &&
@@ -95,22 +88,22 @@ export default class PositionTracker {
 		) {
 			line = currPosition.line;
 			column = currPosition.column;
-			indexSearchStart = ob1Get0(currPositionIndex);
+			indexSearchStart = currPositionIndex.valueOf();
 		} else if (latestPositionIndex < index) {
 			line = latestPosition.line;
 			column = latestPosition.column;
-			indexSearchStart = ob1Get0(latestPositionIndex);
+			indexSearchStart = latestPositionIndex.valueOf();
 		}
 
 		// Read the rest of the input until we hit the index
-		for (let i = indexSearchStart; i < ob1Get0(index); i++) {
+		for (let i = indexSearchStart; i < index.valueOf(); i++) {
 			const char = this.input[i];
 
 			if (char === "\n") {
-				line = ob1Inc(line);
-				column = ob1Number0;
+				line = line.increment();
+				column = new ZeroIndexed();
 			} else {
-				column = ob1Inc(column);
+				column = column.increment();
 			}
 		}
 
@@ -127,8 +120,8 @@ export default class PositionTracker {
 		return pos;
 	}
 
-	public setPositionIndex(pos: Position, index: Number0) {
-		this.positionsToIndex.set(derivePositionKey(pos), index);
-		this.cachedPositions.set(index, pos);
+	public setPositionIndex(pos: Position, index: number | ZeroIndexed) {
+		this.positionsToIndex.set(derivePositionKey(pos), index.valueOf());
+		this.cachedPositions.set(index.valueOf(), pos);
 	}
 }

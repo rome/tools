@@ -12,123 +12,41 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "typescript/class/method-optional/input.ts"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
+	loc: SourceLocation typescript/class/method-optional/input.ts 1:0-4:0
+	path: UIDPath<typescript/class/method-optional/input.ts>
 	syntax: Array ["ts"]
-	loc: Object {
-		filename: "typescript/class/method-optional/input.ts"
-		end: Object {
-			column: 0
-			line: 4
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
 	body: Array [
 		JSClassDeclaration {
 			id: JSBindingIdentifier {
 				name: "C"
-				loc: Object {
-					filename: "typescript/class/method-optional/input.ts"
-					identifierName: "C"
-					end: Object {
-						column: 7
-						line: 1
-					}
-					start: Object {
-						column: 6
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/class/method-optional/input.ts 1:6-1:7 (C)
 			}
-			loc: Object {
-				filename: "typescript/class/method-optional/input.ts"
-				end: Object {
-					column: 1
-					line: 3
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation typescript/class/method-optional/input.ts 1:0-3:1
 			meta: JSClassHead {
 				implements: undefined
 				superClass: undefined
 				superTypeParameters: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "typescript/class/method-optional/input.ts"
-					end: Object {
-						column: 1
-						line: 3
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/class/method-optional/input.ts 1:0-3:1
 				body: Array [
 					JSClassMethod {
 						kind: "method"
 						key: JSStaticPropertyKey {
 							value: JSIdentifier {
 								name: "m"
-								loc: Object {
-									filename: "typescript/class/method-optional/input.ts"
-									identifierName: "m"
-									end: Object {
-										column: 5
-										line: 2
-									}
-									start: Object {
-										column: 4
-										line: 2
-									}
-								}
+								loc: SourceLocation typescript/class/method-optional/input.ts 2:4-2:5 (m)
 							}
-							loc: Object {
-								filename: "typescript/class/method-optional/input.ts"
-								end: Object {
-									column: 5
-									line: 2
-								}
-								start: Object {
-									column: 4
-									line: 2
-								}
-							}
+							loc: SourceLocation typescript/class/method-optional/input.ts 2:4-2:5
 						}
-						loc: Object {
-							filename: "typescript/class/method-optional/input.ts"
-							end: Object {
-								column: 17
-								line: 2
-							}
-							start: Object {
-								column: 4
-								line: 2
-							}
-						}
+						loc: SourceLocation typescript/class/method-optional/input.ts 2:4-2:17
 						body: JSBlockStatement {
 							body: Array []
 							directives: Array []
-							loc: Object {
-								filename: "typescript/class/method-optional/input.ts"
-								end: Object {
-									column: 17
-									line: 2
-								}
-								start: Object {
-									column: 15
-									line: 2
-								}
-							}
+							loc: SourceLocation typescript/class/method-optional/input.ts 2:15-2:17
 						}
 						meta: JSClassPropertyMeta {
 							abstract: false
@@ -137,21 +55,8 @@ JSRoot {
 							readonly: false
 							static: false
 							typeAnnotation: undefined
-							start: Object {
-								column: 4
-								line: 2
-							}
-							loc: Object {
-								filename: "typescript/class/method-optional/input.ts"
-								end: Object {
-									column: 6
-									line: 2
-								}
-								start: Object {
-									column: 4
-									line: 2
-								}
-							}
+							loc: SourceLocation typescript/class/method-optional/input.ts 2:4-2:6
+							start: Position 2:4
 						}
 						head: JSFunctionHead {
 							async: false
@@ -161,30 +66,8 @@ JSRoot {
 							rest: undefined
 							thisType: undefined
 							typeParameters: undefined
-							loc: Object {
-								filename: "typescript/class/method-optional/input.ts"
-								end: Object {
-									column: 14
-									line: 2
-								}
-								start: Object {
-									column: 6
-									line: 2
-								}
-							}
-							returnType: TSVoidKeywordTypeAnnotation {
-								loc: Object {
-									filename: "typescript/class/method-optional/input.ts"
-									end: Object {
-										column: 14
-										line: 2
-									}
-									start: Object {
-										column: 10
-										line: 2
-									}
-								}
-							}
+							loc: SourceLocation typescript/class/method-optional/input.ts 2:6-2:14
+							returnType: TSVoidKeywordTypeAnnotation {loc: SourceLocation typescript/class/method-optional/input.ts 2:10-2:14}
 						}
 					}
 				]
@@ -197,6 +80,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

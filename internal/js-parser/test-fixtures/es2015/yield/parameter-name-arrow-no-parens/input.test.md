@@ -12,94 +12,33 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "es2015/yield/parameter-name-arrow-no-parens/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2015/yield/parameter-name-arrow-no-parens/input.js"
-		end: Object {
-			column: 12
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2015/yield/parameter-name-arrow-no-parens/input.js 1:0-1:12
+	path: UIDPath<es2015/yield/parameter-name-arrow-no-parens/input.js>
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "es2015/yield/parameter-name-arrow-no-parens/input.js"
-				end: Object {
-					column: 12
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2015/yield/parameter-name-arrow-no-parens/input.js 1:0-1:12
 			expression: JSArrowFunctionExpression {
-				loc: Object {
-					filename: "es2015/yield/parameter-name-arrow-no-parens/input.js"
-					end: Object {
-						column: 11
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/yield/parameter-name-arrow-no-parens/input.js 1:0-1:11
 				body: JSBlockStatement {
 					body: Array []
 					directives: Array []
-					loc: Object {
-						filename: "es2015/yield/parameter-name-arrow-no-parens/input.js"
-						end: Object {
-							column: 11
-							line: 1
-						}
-						start: Object {
-							column: 9
-							line: 1
-						}
-					}
+					loc: SourceLocation es2015/yield/parameter-name-arrow-no-parens/input.js 1:9-1:11
 				}
 				head: JSFunctionHead {
 					async: false
 					hasHoistedVars: false
 					rest: undefined
 					thisType: undefined
-					loc: Object {
-						filename: "es2015/yield/parameter-name-arrow-no-parens/input.js"
-						end: Object {
-							column: 8
-							line: 1
-						}
-						start: Object {
-							column: 0
-							line: 1
-						}
-					}
+					loc: SourceLocation es2015/yield/parameter-name-arrow-no-parens/input.js 1:0-1:8
 					params: Array [
 						JSBindingIdentifier {
 							name: "yield"
-							loc: Object {
-								filename: "es2015/yield/parameter-name-arrow-no-parens/input.js"
-								identifierName: "yield"
-								end: Object {
-									column: 5
-									line: 1
-								}
-								start: Object {
-									column: 0
-									line: 1
-								}
-							}
+							loc: SourceLocation es2015/yield/parameter-name-arrow-no-parens/input.js 1:0-1:5 (yield)
 						}
 					]
 				}
@@ -112,6 +51,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

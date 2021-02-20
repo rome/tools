@@ -12,257 +12,66 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "es2020/optional-chaining/separated-chaining/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2020/optional-chaining/separated-chaining/input.js"
-		end: Object {
-			column: 0
-			line: 4
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2020/optional-chaining/separated-chaining/input.js 1:0-4:0
+	path: UIDPath<es2020/optional-chaining/separated-chaining/input.js>
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "es2020/optional-chaining/separated-chaining/input.js"
-				end: Object {
-					column: 13
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2020/optional-chaining/separated-chaining/input.js 1:0-1:13
 			expression: JSMemberExpression {
-				loc: Object {
-					filename: "es2020/optional-chaining/separated-chaining/input.js"
-					end: Object {
-						column: 13
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation es2020/optional-chaining/separated-chaining/input.js 1:0-1:13
 				property: JSStaticMemberProperty {
 					value: JSIdentifier {
 						name: "f"
-						loc: Object {
-							filename: "es2020/optional-chaining/separated-chaining/input.js"
-							identifierName: "f"
-							end: Object {
-								column: 13
-								line: 1
-							}
-							start: Object {
-								column: 12
-								line: 1
-							}
-						}
+						loc: SourceLocation es2020/optional-chaining/separated-chaining/input.js 1:12-1:13 (f)
 					}
 					optional: true
-					loc: Object {
-						filename: "es2020/optional-chaining/separated-chaining/input.js"
-						identifierName: "f"
-						end: Object {
-							column: 13
-							line: 1
-						}
-						start: Object {
-							column: 12
-							line: 1
-						}
-					}
+					loc: SourceLocation es2020/optional-chaining/separated-chaining/input.js 1:12-1:13 (f)
 				}
 				object: JSMemberExpression {
-					loc: Object {
-						filename: "es2020/optional-chaining/separated-chaining/input.js"
-						end: Object {
-							column: 10
-							line: 1
-						}
-						start: Object {
-							column: 0
-							line: 1
-						}
-					}
+					loc: SourceLocation es2020/optional-chaining/separated-chaining/input.js 1:0-1:10
 					property: JSStaticMemberProperty {
 						value: JSIdentifier {
 							name: "e"
-							loc: Object {
-								filename: "es2020/optional-chaining/separated-chaining/input.js"
-								identifierName: "e"
-								end: Object {
-									column: 10
-									line: 1
-								}
-								start: Object {
-									column: 9
-									line: 1
-								}
-							}
+							loc: SourceLocation es2020/optional-chaining/separated-chaining/input.js 1:9-1:10 (e)
 						}
-						loc: Object {
-							filename: "es2020/optional-chaining/separated-chaining/input.js"
-							identifierName: "e"
-							end: Object {
-								column: 10
-								line: 1
-							}
-							start: Object {
-								column: 9
-								line: 1
-							}
-						}
+						loc: SourceLocation es2020/optional-chaining/separated-chaining/input.js 1:9-1:10 (e)
 					}
 					object: JSMemberExpression {
-						loc: Object {
-							filename: "es2020/optional-chaining/separated-chaining/input.js"
-							end: Object {
-								column: 8
-								line: 1
-							}
-							start: Object {
-								column: 0
-								line: 1
-							}
-						}
+						loc: SourceLocation es2020/optional-chaining/separated-chaining/input.js 1:0-1:8
 						property: JSStaticMemberProperty {
 							value: JSIdentifier {
 								name: "d"
-								loc: Object {
-									filename: "es2020/optional-chaining/separated-chaining/input.js"
-									identifierName: "d"
-									end: Object {
-										column: 8
-										line: 1
-									}
-									start: Object {
-										column: 7
-										line: 1
-									}
-								}
+								loc: SourceLocation es2020/optional-chaining/separated-chaining/input.js 1:7-1:8 (d)
 							}
-							loc: Object {
-								filename: "es2020/optional-chaining/separated-chaining/input.js"
-								identifierName: "d"
-								end: Object {
-									column: 8
-									line: 1
-								}
-								start: Object {
-									column: 7
-									line: 1
-								}
-							}
+							loc: SourceLocation es2020/optional-chaining/separated-chaining/input.js 1:7-1:8 (d)
 						}
 						object: JSMemberExpression {
-							loc: Object {
-								filename: "es2020/optional-chaining/separated-chaining/input.js"
-								end: Object {
-									column: 6
-									line: 1
-								}
-								start: Object {
-									column: 0
-									line: 1
-								}
-							}
+							loc: SourceLocation es2020/optional-chaining/separated-chaining/input.js 1:0-1:6
 							property: JSStaticMemberProperty {
 								value: JSIdentifier {
 									name: "c"
-									loc: Object {
-										filename: "es2020/optional-chaining/separated-chaining/input.js"
-										identifierName: "c"
-										end: Object {
-											column: 6
-											line: 1
-										}
-										start: Object {
-											column: 5
-											line: 1
-										}
-									}
+									loc: SourceLocation es2020/optional-chaining/separated-chaining/input.js 1:5-1:6 (c)
 								}
-								loc: Object {
-									filename: "es2020/optional-chaining/separated-chaining/input.js"
-									identifierName: "c"
-									end: Object {
-										column: 6
-										line: 1
-									}
-									start: Object {
-										column: 5
-										line: 1
-									}
-								}
+								loc: SourceLocation es2020/optional-chaining/separated-chaining/input.js 1:5-1:6 (c)
 							}
 							object: JSMemberExpression {
-								loc: Object {
-									filename: "es2020/optional-chaining/separated-chaining/input.js"
-									end: Object {
-										column: 4
-										line: 1
-									}
-									start: Object {
-										column: 0
-										line: 1
-									}
-								}
+								loc: SourceLocation es2020/optional-chaining/separated-chaining/input.js 1:0-1:4
 								object: JSReferenceIdentifier {
 									name: "a"
-									loc: Object {
-										filename: "es2020/optional-chaining/separated-chaining/input.js"
-										identifierName: "a"
-										end: Object {
-											column: 1
-											line: 1
-										}
-										start: Object {
-											column: 0
-											line: 1
-										}
-									}
+									loc: SourceLocation es2020/optional-chaining/separated-chaining/input.js 1:0-1:1 (a)
 								}
 								property: JSStaticMemberProperty {
 									value: JSIdentifier {
 										name: "b"
-										loc: Object {
-											filename: "es2020/optional-chaining/separated-chaining/input.js"
-											identifierName: "b"
-											end: Object {
-												column: 4
-												line: 1
-											}
-											start: Object {
-												column: 3
-												line: 1
-											}
-										}
+										loc: SourceLocation es2020/optional-chaining/separated-chaining/input.js 1:3-1:4 (b)
 									}
 									optional: true
-									loc: Object {
-										filename: "es2020/optional-chaining/separated-chaining/input.js"
-										identifierName: "b"
-										end: Object {
-											column: 4
-											line: 1
-										}
-										start: Object {
-											column: 3
-											line: 1
-										}
-									}
+									loc: SourceLocation es2020/optional-chaining/separated-chaining/input.js 1:3-1:4 (b)
 								}
 							}
 						}
@@ -271,237 +80,56 @@ JSRoot {
 			}
 		}
 		JSExpressionStatement {
-			loc: Object {
-				filename: "es2020/optional-chaining/separated-chaining/input.js"
-				end: Object {
-					column: 12
-					line: 3
-				}
-				start: Object {
-					column: 0
-					line: 3
-				}
-			}
+			loc: SourceLocation es2020/optional-chaining/separated-chaining/input.js 3:0-3:12
 			expression: JSMemberExpression {
-				loc: Object {
-					filename: "es2020/optional-chaining/separated-chaining/input.js"
-					end: Object {
-						column: 12
-						line: 3
-					}
-					start: Object {
-						column: 0
-						line: 3
-					}
-				}
+				loc: SourceLocation es2020/optional-chaining/separated-chaining/input.js 3:0-3:12
 				property: JSStaticMemberProperty {
 					value: JSIdentifier {
 						name: "f"
-						loc: Object {
-							filename: "es2020/optional-chaining/separated-chaining/input.js"
-							identifierName: "f"
-							end: Object {
-								column: 12
-								line: 3
-							}
-							start: Object {
-								column: 11
-								line: 3
-							}
-						}
+						loc: SourceLocation es2020/optional-chaining/separated-chaining/input.js 3:11-3:12 (f)
 					}
-					loc: Object {
-						filename: "es2020/optional-chaining/separated-chaining/input.js"
-						identifierName: "f"
-						end: Object {
-							column: 12
-							line: 3
-						}
-						start: Object {
-							column: 11
-							line: 3
-						}
-					}
+					loc: SourceLocation es2020/optional-chaining/separated-chaining/input.js 3:11-3:12 (f)
 				}
 				object: JSMemberExpression {
-					loc: Object {
-						filename: "es2020/optional-chaining/separated-chaining/input.js"
-						end: Object {
-							column: 10
-							line: 3
-						}
-						start: Object {
-							column: 0
-							line: 3
-						}
-					}
+					loc: SourceLocation es2020/optional-chaining/separated-chaining/input.js 3:0-3:10
 					property: JSStaticMemberProperty {
 						value: JSIdentifier {
 							name: "e"
-							loc: Object {
-								filename: "es2020/optional-chaining/separated-chaining/input.js"
-								identifierName: "e"
-								end: Object {
-									column: 10
-									line: 3
-								}
-								start: Object {
-									column: 9
-									line: 3
-								}
-							}
+							loc: SourceLocation es2020/optional-chaining/separated-chaining/input.js 3:9-3:10 (e)
 						}
-						loc: Object {
-							filename: "es2020/optional-chaining/separated-chaining/input.js"
-							identifierName: "e"
-							end: Object {
-								column: 10
-								line: 3
-							}
-							start: Object {
-								column: 9
-								line: 3
-							}
-						}
+						loc: SourceLocation es2020/optional-chaining/separated-chaining/input.js 3:9-3:10 (e)
 					}
 					object: JSMemberExpression {
-						loc: Object {
-							filename: "es2020/optional-chaining/separated-chaining/input.js"
-							end: Object {
-								column: 8
-								line: 3
-							}
-							start: Object {
-								column: 0
-								line: 3
-							}
-						}
+						loc: SourceLocation es2020/optional-chaining/separated-chaining/input.js 3:0-3:8
 						property: JSStaticMemberProperty {
 							value: JSIdentifier {
 								name: "d"
-								loc: Object {
-									filename: "es2020/optional-chaining/separated-chaining/input.js"
-									identifierName: "d"
-									end: Object {
-										column: 8
-										line: 3
-									}
-									start: Object {
-										column: 7
-										line: 3
-									}
-								}
+								loc: SourceLocation es2020/optional-chaining/separated-chaining/input.js 3:7-3:8 (d)
 							}
 							optional: true
-							loc: Object {
-								filename: "es2020/optional-chaining/separated-chaining/input.js"
-								identifierName: "d"
-								end: Object {
-									column: 8
-									line: 3
-								}
-								start: Object {
-									column: 7
-									line: 3
-								}
-							}
+							loc: SourceLocation es2020/optional-chaining/separated-chaining/input.js 3:7-3:8 (d)
 						}
 						object: JSMemberExpression {
-							loc: Object {
-								filename: "es2020/optional-chaining/separated-chaining/input.js"
-								end: Object {
-									column: 5
-									line: 3
-								}
-								start: Object {
-									column: 0
-									line: 3
-								}
-							}
+							loc: SourceLocation es2020/optional-chaining/separated-chaining/input.js 3:0-3:5
 							property: JSStaticMemberProperty {
 								value: JSIdentifier {
 									name: "c"
-									loc: Object {
-										filename: "es2020/optional-chaining/separated-chaining/input.js"
-										identifierName: "c"
-										end: Object {
-											column: 5
-											line: 3
-										}
-										start: Object {
-											column: 4
-											line: 3
-										}
-									}
+									loc: SourceLocation es2020/optional-chaining/separated-chaining/input.js 3:4-3:5 (c)
 								}
-								loc: Object {
-									filename: "es2020/optional-chaining/separated-chaining/input.js"
-									identifierName: "c"
-									end: Object {
-										column: 5
-										line: 3
-									}
-									start: Object {
-										column: 4
-										line: 3
-									}
-								}
+								loc: SourceLocation es2020/optional-chaining/separated-chaining/input.js 3:4-3:5 (c)
 							}
 							object: JSMemberExpression {
-								loc: Object {
-									filename: "es2020/optional-chaining/separated-chaining/input.js"
-									end: Object {
-										column: 3
-										line: 3
-									}
-									start: Object {
-										column: 0
-										line: 3
-									}
-								}
+								loc: SourceLocation es2020/optional-chaining/separated-chaining/input.js 3:0-3:3
 								object: JSReferenceIdentifier {
 									name: "a"
-									loc: Object {
-										filename: "es2020/optional-chaining/separated-chaining/input.js"
-										identifierName: "a"
-										end: Object {
-											column: 1
-											line: 3
-										}
-										start: Object {
-											column: 0
-											line: 3
-										}
-									}
+									loc: SourceLocation es2020/optional-chaining/separated-chaining/input.js 3:0-3:1 (a)
 								}
 								property: JSStaticMemberProperty {
 									value: JSIdentifier {
 										name: "b"
-										loc: Object {
-											filename: "es2020/optional-chaining/separated-chaining/input.js"
-											identifierName: "b"
-											end: Object {
-												column: 3
-												line: 3
-											}
-											start: Object {
-												column: 2
-												line: 3
-											}
-										}
+										loc: SourceLocation es2020/optional-chaining/separated-chaining/input.js 3:2-3:3 (b)
 									}
-									loc: Object {
-										filename: "es2020/optional-chaining/separated-chaining/input.js"
-										identifierName: "b"
-										end: Object {
-											column: 3
-											line: 3
-										}
-										start: Object {
-											column: 2
-											line: 3
-										}
-									}
+									loc: SourceLocation es2020/optional-chaining/separated-chaining/input.js 3:2-3:3 (b)
 								}
 							}
 						}
@@ -516,6 +144,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

@@ -11,187 +11,70 @@ JSRoot {
 	comments: Array []
 	corrupt: true
 	directives: Array []
-	filename: "esprima/invalid-syntax/migrated_0102/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "esprima/invalid-syntax/migrated_0102/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation esprima/invalid-syntax/migrated_0102/input.js 1:0-2:0
+	path: UIDPath<esprima/invalid-syntax/migrated_0102/input.js>
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				category: "parse"
-				categoryValue: "js"
-				message: Array [
-					RAW_MARKUP {value: "Unexpected token, expected "}
-					","
-				]
-			}
 			location: Object {
-				filename: "esprima/invalid-syntax/migrated_0102/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 8
-					line: 1
-				}
-				start: Object {
-					column: 7
-					line: 1
-				}
+				end: Position 1:8
+				path: UIDPath<esprima/invalid-syntax/migrated_0102/input.js>
+				start: Position 1:7
+			}
+			description: Object {
+				categoryValue: "js"
+				category: Array ["parse"]
+				message: RAW_MARKUP {value: "Unexpected character <emphasis>/</emphasis>"}
+				advice: Array [
+					log {
+						category: "info"
+						text: RAW_MARKUP {value: "Expected character <emphasis>,</emphasis>"}
+					}
+				]
 			}
 		}
 	]
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "esprima/invalid-syntax/migrated_0102/input.js"
-				end: Object {
-					column: 10
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation esprima/invalid-syntax/migrated_0102/input.js 1:0-1:10
 			expression: JSAssignmentExpression {
 				operator: "="
-				loc: Object {
-					filename: "esprima/invalid-syntax/migrated_0102/input.js"
-					end: Object {
-						column: 10
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/invalid-syntax/migrated_0102/input.js 1:0-1:10
 				left: JSAssignmentIdentifier {
 					name: "p"
-					loc: Object {
-						filename: "esprima/invalid-syntax/migrated_0102/input.js"
-						identifierName: "p"
-						end: Object {
-							column: 1
-							line: 1
-						}
-						start: Object {
-							column: 0
-							line: 1
-						}
-					}
+					loc: SourceLocation esprima/invalid-syntax/migrated_0102/input.js 1:0-1:1 (p)
 				}
 				right: JSBinaryExpression {
 					operator: "/"
-					loc: Object {
-						filename: "esprima/invalid-syntax/migrated_0102/input.js"
-						end: Object {
-							column: 10
-							line: 1
-						}
-						start: Object {
-							column: 4
-							line: 1
-						}
-					}
+					loc: SourceLocation esprima/invalid-syntax/migrated_0102/input.js 1:4-1:10
 					right: JSReferenceIdentifier {
 						name: "INVALID_PLACEHOLDER"
-						loc: Object {
-							filename: "esprima/invalid-syntax/migrated_0102/input.js"
-							end: Object {
-								column: 10
-								line: 1
-							}
-							start: Object {
-								column: 9
-								line: 1
-							}
-						}
+						loc: SourceLocation esprima/invalid-syntax/migrated_0102/input.js 1:9-1:10
 					}
 					left: JSObjectExpression {
-						loc: Object {
-							filename: "esprima/invalid-syntax/migrated_0102/input.js"
-							end: Object {
-								column: 7
-								line: 1
-							}
-							start: Object {
-								column: 4
-								line: 1
-							}
-						}
+						loc: SourceLocation esprima/invalid-syntax/migrated_0102/input.js 1:4-1:7
 						properties: Array [
 							JSObjectProperty {
 								key: JSStaticPropertyKey {
 									value: JSIdentifier {
 										name: "q"
-										loc: Object {
-											filename: "esprima/invalid-syntax/migrated_0102/input.js"
-											identifierName: "q"
-											end: Object {
-												column: 7
-												line: 1
-											}
-											start: Object {
-												column: 6
-												line: 1
-											}
-										}
+										loc: SourceLocation esprima/invalid-syntax/migrated_0102/input.js 1:6-1:7 (q)
 									}
-									loc: Object {
-										filename: "esprima/invalid-syntax/migrated_0102/input.js"
-										end: Object {
-											column: 7
-											line: 1
-										}
-										start: Object {
-											column: 6
-											line: 1
-										}
-									}
+									loc: SourceLocation esprima/invalid-syntax/migrated_0102/input.js 1:6-1:7
 								}
 								value: JSReferenceIdentifier {
 									name: "q"
-									loc: Object {
-										filename: "esprima/invalid-syntax/migrated_0102/input.js"
-										identifierName: "q"
-										end: Object {
-											column: 7
-											line: 1
-										}
-										start: Object {
-											column: 6
-											line: 1
-										}
-									}
+									loc: SourceLocation esprima/invalid-syntax/migrated_0102/input.js 1:6-1:7 (q)
 								}
-								loc: Object {
-									filename: "esprima/invalid-syntax/migrated_0102/input.js"
-									end: Object {
-										column: 7
-										line: 1
-									}
-									start: Object {
-										column: 6
-										line: 1
-									}
-								}
+								loc: SourceLocation esprima/invalid-syntax/migrated_0102/input.js 1:6-1:7
 							}
 						]
 					}
@@ -208,13 +91,12 @@ JSRoot {
 
  esprima/invalid-syntax/migrated_0102/input.js:1:7 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ Unexpected token, expected ,
+  ✖ Unexpected character /
 
     p = { q/ }
            ^
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  ℹ Expected character ,
 
-✖ Found 1 problem
 
 ```

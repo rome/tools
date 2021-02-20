@@ -9,22 +9,25 @@ import setProcessTitle from "./utils/setProcessTitle";
 import {Worker, WorkerBridge} from "@internal/core";
 import {loadUserConfig} from "@internal/core/common/userConfig";
 import workerThreads = require("worker_threads");
+import {DIAGNOSTIC_CATEGORIES} from "@internal/diagnostics";
+import {consumeUnknown} from "@internal/consume";
 
 export default async function worker() {
 	setProcessTitle("worker");
 	const bridge = WorkerBridge.Client.createFromWorkerThreadParentPort();
-
-	const {id} = workerThreads.workerData;
-	if (typeof id !== "number") {
-		throw new Error(`Expected id to be a number but got ${id}`);
-	}
+	const workerData = consumeUnknown(
+		workerThreads.workerData,
+		DIAGNOSTIC_CATEGORIES.parse,
+	);
 
 	const userConfig = await loadUserConfig();
 	const worker = new Worker({
-		id,
 		userConfig,
 		bridge,
 		dedicated: true,
+		id: workerData.get("id").asNumber(),
+		cacheWriteDisabled: workerData.get("cacheWriteDisabled").asBoolean(),
+		cacheReadDisabled: workerData.get("cacheReadDisabled").asBoolean(),
 	});
 	await worker.init();
 	await bridge.handshake();

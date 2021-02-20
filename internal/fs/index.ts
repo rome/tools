@@ -10,10 +10,8 @@ import {
 	AbsoluteFilePathSet,
 	createAbsoluteFilePath,
 } from "@internal/path";
-import {
-	NodeSystemError,
-	convertPossibleNodeErrorToDiagnostic,
-} from "@internal/node";
+import {NodeSystemError} from "@internal/node";
+import {convertPossibleNodeErrorToDiagnostic} from "@internal/diagnostics";
 import {getEnvVar} from "@internal/cli-environment";
 import {
 	getErrorStructure,
@@ -21,7 +19,7 @@ import {
 	setNodeErrorProps,
 } from "@internal/v8";
 import fs = require("fs");
-import {FileNotFound} from "@internal/fs/FileNotFound";
+import {FileNotFound} from "@internal/fs";
 
 // Most fs errors don't have a stack trace. This is due to the way that node queues file operations.
 // Capturing a stacktrace would be very expensive.
@@ -54,7 +52,8 @@ function wrapReject<T>(promise: Promise<T>, addFrames: number): Promise<T> {
 	});
 }
 
-export {FileNotFound} from "./FileNotFound";
+export {default as FileNotFound} from "./FileNotFound";
+export {default as CachedFileReader} from "./CachedFileReader";
 
 // Reexported types: Only file that ever imports the fs module is this one
 export type FSHandle = fs.promises.FileHandle;
@@ -253,6 +252,10 @@ export function removeFile(path: AbsoluteFilePath): Promise<void> {
 // NB: There are probably race conditions, we could switch to openFile and openDirectory if it's a problem
 // https://github.com/rome/tools/issues/1001
 export async function removeDirectory(path: AbsoluteFilePath): Promise<void> {
+	if (!(await exists(path))) {
+		return;
+	}
+
 	// Delete all inner files
 	for (const subpath of await readDirectory(path)) {
 		const stats = await lstat(subpath);

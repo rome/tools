@@ -12,108 +12,36 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "esprima/es2015-identifier/valid_await/input.js"
 	hasHoistedVars: true
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "esprima/es2015-identifier/valid_await/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation esprima/es2015-identifier/valid_await/input.js 1:0-2:0
+	path: UIDPath<esprima/es2015-identifier/valid_await/input.js>
 	body: Array [
 		JSVariableDeclarationStatement {
-			loc: Object {
-				filename: "esprima/es2015-identifier/valid_await/input.js"
-				end: Object {
-					column: 10
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation esprima/es2015-identifier/valid_await/input.js 1:0-1:10
 			declaration: JSVariableDeclaration {
 				kind: "var"
-				loc: Object {
-					filename: "esprima/es2015-identifier/valid_await/input.js"
-					end: Object {
-						column: 10
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/es2015-identifier/valid_await/input.js 1:0-1:10
 				declarations: Array [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "await"
-							loc: Object {
-								filename: "esprima/es2015-identifier/valid_await/input.js"
-								identifierName: "await"
-								end: Object {
-									column: 9
-									line: 1
-								}
-								start: Object {
-									column: 4
-									line: 1
-								}
-							}
+							loc: SourceLocation esprima/es2015-identifier/valid_await/input.js 1:4-1:9 (await)
 						}
 						init: undefined
-						loc: Object {
-							filename: "esprima/es2015-identifier/valid_await/input.js"
-							end: Object {
-								column: 9
-								line: 1
-							}
-							start: Object {
-								column: 4
-								line: 1
-							}
-						}
+						loc: SourceLocation esprima/es2015-identifier/valid_await/input.js 1:4-1:9
 					}
 				]
 			}
 		}
 		JSExpressionStatement {
-			loc: Object {
-				filename: "esprima/es2015-identifier/valid_await/input.js"
-				end: Object {
-					column: 19
-					line: 1
-				}
-				start: Object {
-					column: 11
-					line: 1
-				}
-			}
+			loc: SourceLocation esprima/es2015-identifier/valid_await/input.js 1:11-1:19
 			expression: JSReferenceIdentifier {
 				name: "await"
-				loc: Object {
-					filename: "esprima/es2015-identifier/valid_await/input.js"
-					identifierName: "await"
-					end: Object {
-						column: 17
-						line: 1
-					}
-					start: Object {
-						column: 12
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/es2015-identifier/valid_await/input.js 1:12-1:17 (await)
 			}
 		}
 	]
@@ -123,6 +51,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

@@ -12,44 +12,19 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "esprima/statement-empty/migrated_0000/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "esprima/statement-empty/migrated_0000/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
-	body: Array [
-		JSEmptyStatement {
-			loc: Object {
-				filename: "esprima/statement-empty/migrated_0000/input.js"
-				end: Object {
-					column: 1
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
-		}
-	]
+	body: Array [JSEmptyStatement {loc: SourceLocation esprima/statement-empty/migrated_0000/input.js 1:0-1:1}]
+	loc: SourceLocation esprima/statement-empty/migrated_0000/input.js 1:0-2:0
+	path: UIDPath<esprima/statement-empty/migrated_0000/input.js>
 }
 ```
 
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

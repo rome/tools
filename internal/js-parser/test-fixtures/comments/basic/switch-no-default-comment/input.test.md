@@ -11,112 +11,41 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "comments/basic/switch-no-default-comment/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "comments/basic/switch-no-default-comment/input.js"
-		end: Object {
-			column: 0
-			line: 6
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation comments/basic/switch-no-default-comment/input.js 1:0-6:0
+	path: UIDPath<comments/basic/switch-no-default-comment/input.js>
 	comments: Array [
 		CommentLine {
 			id: "0"
 			value: "no default"
-			loc: Object {
-				filename: "comments/basic/switch-no-default-comment/input.js"
-				end: Object {
-					column: 16
-					line: 4
-				}
-				start: Object {
-					column: 4
-					line: 4
-				}
-			}
+			loc: SourceLocation comments/basic/switch-no-default-comment/input.js 4:4-4:16
 		}
 	]
 	body: Array [
 		JSSwitchStatement {
-			loc: Object {
-				filename: "comments/basic/switch-no-default-comment/input.js"
-				end: Object {
-					column: 1
-					line: 5
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation comments/basic/switch-no-default-comment/input.js 1:0-5:1
 			discriminant: JSReferenceIdentifier {
 				name: "a"
-				loc: Object {
-					filename: "comments/basic/switch-no-default-comment/input.js"
-					identifierName: "a"
-					end: Object {
-						column: 9
-						line: 1
-					}
-					start: Object {
-						column: 8
-						line: 1
-					}
-				}
+				loc: SourceLocation comments/basic/switch-no-default-comment/input.js 1:8-1:9 (a)
 			}
 			cases: Array [
 				JSSwitchCase {
+					loc: SourceLocation comments/basic/switch-no-default-comment/input.js 2:4-3:14
 					trailingComments: Array ["0"]
-					loc: Object {
-						filename: "comments/basic/switch-no-default-comment/input.js"
-						end: Object {
-							column: 14
-							line: 3
-						}
-						start: Object {
-							column: 4
-							line: 2
-						}
-					}
 					test: JSNumericLiteral {
 						value: 1
 						format: undefined
-						loc: Object {
-							filename: "comments/basic/switch-no-default-comment/input.js"
-							end: Object {
-								column: 10
-								line: 2
-							}
-							start: Object {
-								column: 9
-								line: 2
-							}
-						}
+						loc: SourceLocation comments/basic/switch-no-default-comment/input.js 2:9-2:10
 					}
 					consequent: Array [
 						JSBreakStatement {
 							label: undefined
 							trailingComments: undefined
-							loc: Object {
-								filename: "comments/basic/switch-no-default-comment/input.js"
-								end: Object {
-									column: 14
-									line: 3
-								}
-								start: Object {
-									column: 8
-									line: 3
-								}
-							}
+							loc: SourceLocation comments/basic/switch-no-default-comment/input.js 3:8-3:14
 						}
 					]
 				}
@@ -129,6 +58,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

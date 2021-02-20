@@ -12,148 +12,45 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "es2015/uncategorised/321/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2015/uncategorised/321/input.js"
-		end: Object {
-			column: 11
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2015/uncategorised/321/input.js 1:0-1:11
+	path: UIDPath<es2015/uncategorised/321/input.js>
 	body: Array [
 		JSVariableDeclarationStatement {
-			loc: Object {
-				filename: "es2015/uncategorised/321/input.js"
-				end: Object {
-					column: 11
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2015/uncategorised/321/input.js 1:0-1:11
 			declaration: JSVariableDeclaration {
 				kind: "let"
-				loc: Object {
-					filename: "es2015/uncategorised/321/input.js"
-					end: Object {
-						column: 11
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/uncategorised/321/input.js 1:0-1:11
 				declarations: Array [
 					JSVariableDeclarator {
 						id: JSBindingObjectPattern {
 							rest: undefined
-							loc: Object {
-								filename: "es2015/uncategorised/321/input.js"
-								end: Object {
-									column: 7
-									line: 1
-								}
-								start: Object {
-									column: 4
-									line: 1
-								}
-							}
+							loc: SourceLocation es2015/uncategorised/321/input.js 1:4-1:7
 							properties: Array [
 								JSBindingObjectPatternProperty {
 									key: JSStaticPropertyKey {
 										value: JSIdentifier {
 											name: "x"
-											loc: Object {
-												filename: "es2015/uncategorised/321/input.js"
-												identifierName: "x"
-												end: Object {
-													column: 6
-													line: 1
-												}
-												start: Object {
-													column: 5
-													line: 1
-												}
-											}
+											loc: SourceLocation es2015/uncategorised/321/input.js 1:5-1:6 (x)
 										}
-										loc: Object {
-											filename: "es2015/uncategorised/321/input.js"
-											end: Object {
-												column: 6
-												line: 1
-											}
-											start: Object {
-												column: 5
-												line: 1
-											}
-										}
+										loc: SourceLocation es2015/uncategorised/321/input.js 1:5-1:6
 									}
 									value: JSBindingIdentifier {
 										name: "x"
-										loc: Object {
-											filename: "es2015/uncategorised/321/input.js"
-											identifierName: "x"
-											end: Object {
-												column: 6
-												line: 1
-											}
-											start: Object {
-												column: 5
-												line: 1
-											}
-										}
+										loc: SourceLocation es2015/uncategorised/321/input.js 1:5-1:6 (x)
 									}
-									loc: Object {
-										filename: "es2015/uncategorised/321/input.js"
-										end: Object {
-											column: 6
-											line: 1
-										}
-										start: Object {
-											column: 5
-											line: 1
-										}
-									}
+									loc: SourceLocation es2015/uncategorised/321/input.js 1:5-1:6
 								}
 							]
 						}
-						loc: Object {
-							filename: "es2015/uncategorised/321/input.js"
-							end: Object {
-								column: 11
-								line: 1
-							}
-							start: Object {
-								column: 4
-								line: 1
-							}
-						}
+						loc: SourceLocation es2015/uncategorised/321/input.js 1:4-1:11
 						init: JSReferenceIdentifier {
 							name: "y"
-							loc: Object {
-								filename: "es2015/uncategorised/321/input.js"
-								identifierName: "y"
-								end: Object {
-									column: 11
-									line: 1
-								}
-								start: Object {
-									column: 10
-									line: 1
-								}
-							}
+							loc: SourceLocation es2015/uncategorised/321/input.js 1:10-1:11 (y)
 						}
 					}
 				]
@@ -166,6 +63,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

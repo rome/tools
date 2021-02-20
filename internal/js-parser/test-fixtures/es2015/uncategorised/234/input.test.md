@@ -11,149 +11,46 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
-	filename: "es2015/uncategorised/234/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2015/uncategorised/234/input.js"
-		end: Object {
-			column: 38
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2015/uncategorised/234/input.js 1:0-1:38
+	path: UIDPath<es2015/uncategorised/234/input.js>
 	directives: Array [
 		JSDirective {
 			value: "use strict"
-			loc: Object {
-				filename: "es2015/uncategorised/234/input.js"
-				end: Object {
-					column: 13
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2015/uncategorised/234/input.js 1:0-1:13
 		}
 	]
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "es2015/uncategorised/234/input.js"
-				end: Object {
-					column: 38
-					line: 1
-				}
-				start: Object {
-					column: 14
-					line: 1
-				}
-			}
+			loc: SourceLocation es2015/uncategorised/234/input.js 1:14-1:38
 			expression: JSAssignmentExpression {
 				operator: "="
-				loc: Object {
-					filename: "es2015/uncategorised/234/input.js"
-					end: Object {
-						column: 37
-						line: 1
-					}
-					start: Object {
-						column: 15
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/uncategorised/234/input.js 1:15-1:37
 				right: JSReferenceIdentifier {
 					name: "obj"
-					loc: Object {
-						filename: "es2015/uncategorised/234/input.js"
-						identifierName: "obj"
-						end: Object {
-							column: 37
-							line: 1
-						}
-						start: Object {
-							column: 34
-							line: 1
-						}
-					}
+					loc: SourceLocation es2015/uncategorised/234/input.js 1:34-1:37 (obj)
 				}
 				left: JSAssignmentObjectPattern {
 					rest: undefined
-					loc: Object {
-						filename: "es2015/uncategorised/234/input.js"
-						end: Object {
-							column: 31
-							line: 1
-						}
-						start: Object {
-							column: 15
-							line: 1
-						}
-					}
+					loc: SourceLocation es2015/uncategorised/234/input.js 1:15-1:31
 					properties: Array [
 						JSAssignmentObjectPatternProperty {
 							key: JSStaticPropertyKey {
 								value: JSIdentifier {
 									name: "v"
-									loc: Object {
-										filename: "es2015/uncategorised/234/input.js"
-										identifierName: "v"
-										end: Object {
-											column: 18
-											line: 1
-										}
-										start: Object {
-											column: 17
-											line: 1
-										}
-									}
+									loc: SourceLocation es2015/uncategorised/234/input.js 1:17-1:18 (v)
 								}
-								loc: Object {
-									filename: "es2015/uncategorised/234/input.js"
-									end: Object {
-										column: 18
-										line: 1
-									}
-									start: Object {
-										column: 17
-										line: 1
-									}
-								}
+								loc: SourceLocation es2015/uncategorised/234/input.js 1:17-1:18
 							}
 							value: JSAssignmentIdentifier {
 								name: "arguments"
-								loc: Object {
-									filename: "es2015/uncategorised/234/input.js"
-									identifierName: "arguments"
-									end: Object {
-										column: 29
-										line: 1
-									}
-									start: Object {
-										column: 20
-										line: 1
-									}
-								}
+								loc: SourceLocation es2015/uncategorised/234/input.js 1:20-1:29 (arguments)
 							}
-							loc: Object {
-								filename: "es2015/uncategorised/234/input.js"
-								end: Object {
-									column: 29
-									line: 1
-								}
-								start: Object {
-									column: 17
-									line: 1
-								}
-							}
+							loc: SourceLocation es2015/uncategorised/234/input.js 1:17-1:29
 						}
 					]
 				}
@@ -166,6 +63,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

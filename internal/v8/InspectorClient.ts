@@ -9,6 +9,7 @@ import {WebSocketInterface} from "@internal/codec-websocket";
 import {JSONValue} from "@internal/codec-config";
 import {Consumer, consumeUnknown} from "@internal/consume";
 import {ErrorCallback} from "@internal/typescript-helpers";
+import {DIAGNOSTIC_CATEGORIES} from "@internal/diagnostics";
 
 type InspectorSubscription = {
 	once: boolean;
@@ -72,7 +73,11 @@ export default class InspectorClient {
 
 		socket.completeFrameEvent.subscribe((frame) => {
 			const json = frame.payload.toString();
-			const data = consumeUnknown(JSON.parse(json), "parse", "json");
+			const data = consumeUnknown(
+				JSON.parse(json),
+				DIAGNOSTIC_CATEGORIES.parse,
+				"json",
+			);
 
 			// Message reply
 			const id = data.get("id").asNumberOrVoid();

@@ -11,45 +11,29 @@ JSRoot {
 	comments: Array []
 	corrupt: true
 	directives: Array []
-	filename: "experimental/module-attributes/invalid-syntax-with-attributes-multiple-lines/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
 	syntax: Array []
-	loc: Object {
-		filename: "experimental/module-attributes/invalid-syntax-with-attributes-multiple-lines/input.js"
-		end: Object {
-			column: 0
-			line: 3
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation experimental/module-attributes/invalid-syntax-with-attributes-multiple-lines/input.js 1:0-3:0
+	path: UIDPath<experimental/module-attributes/invalid-syntax-with-attributes-multiple-lines/input.js>
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse"
 				categoryValue: "js"
+				category: Array ["parse"]
 				message: RAW_MARKUP {value: "Expected a semicolon or a line terminator"}
 			}
 			location: Object {
-				filename: "experimental/module-attributes/invalid-syntax-with-attributes-multiple-lines/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 10
-					line: 1
-				}
-				start: Object {
-					column: 11
-					line: 1
-				}
+				end: Position 1:10
+				path: UIDPath<experimental/module-attributes/invalid-syntax-with-attributes-multiple-lines/input.js>
+				start: Position 1:11
 			}
 		}
 	]
@@ -59,112 +43,31 @@ JSRoot {
 			importKind: undefined
 			namedSpecifiers: Array []
 			namespaceSpecifier: undefined
-			loc: Object {
-				filename: "experimental/module-attributes/invalid-syntax-with-attributes-multiple-lines/input.js"
-				end: Object {
-					column: 10
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation experimental/module-attributes/invalid-syntax-with-attributes-multiple-lines/input.js 1:0-1:10
 			source: JSStringLiteral {
 				value: "x"
-				loc: Object {
-					filename: "experimental/module-attributes/invalid-syntax-with-attributes-multiple-lines/input.js"
-					end: Object {
-						column: 10
-						line: 1
-					}
-					start: Object {
-						column: 7
-						line: 1
-					}
-				}
+				loc: SourceLocation experimental/module-attributes/invalid-syntax-with-attributes-multiple-lines/input.js 1:7-1:10
 			}
 		}
 		JSWithStatement {
-			loc: Object {
-				filename: "experimental/module-attributes/invalid-syntax-with-attributes-multiple-lines/input.js"
-				end: Object {
-					column: 5
-					line: 2
-				}
-				start: Object {
-					column: 11
-					line: 1
-				}
-			}
+			loc: SourceLocation experimental/module-attributes/invalid-syntax-with-attributes-multiple-lines/input.js 1:11-2:5
 			object: JSReferenceIdentifier {
 				name: "type"
-				loc: Object {
-					filename: "experimental/module-attributes/invalid-syntax-with-attributes-multiple-lines/input.js"
-					identifierName: "type"
-					end: Object {
-						column: 4
-						line: 2
-					}
-					start: Object {
-						column: 0
-						line: 2
-					}
-				}
+				loc: SourceLocation experimental/module-attributes/invalid-syntax-with-attributes-multiple-lines/input.js 2:0-2:4 (type)
 			}
 			body: JSExpressionStatement {
-				loc: Object {
-					filename: "experimental/module-attributes/invalid-syntax-with-attributes-multiple-lines/input.js"
-					end: Object {
-						column: 5
-						line: 2
-					}
-					start: Object {
-						column: 4
-						line: 2
-					}
-				}
+				loc: SourceLocation experimental/module-attributes/invalid-syntax-with-attributes-multiple-lines/input.js 2:4-2:5
 				expression: JSReferenceIdentifier {
 					name: "INVALID_PLACEHOLDER"
-					loc: Object {
-						filename: "experimental/module-attributes/invalid-syntax-with-attributes-multiple-lines/input.js"
-						end: Object {
-							column: 5
-							line: 2
-						}
-						start: Object {
-							column: 4
-							line: 2
-						}
-					}
+					loc: SourceLocation experimental/module-attributes/invalid-syntax-with-attributes-multiple-lines/input.js 2:4-2:5
 				}
 			}
 		}
 		JSExpressionStatement {
-			loc: Object {
-				filename: "experimental/module-attributes/invalid-syntax-with-attributes-multiple-lines/input.js"
-				end: Object {
-					column: 12
-					line: 2
-				}
-				start: Object {
-					column: 6
-					line: 2
-				}
-			}
+			loc: SourceLocation experimental/module-attributes/invalid-syntax-with-attributes-multiple-lines/input.js 2:6-2:12
 			expression: JSStringLiteral {
 				value: "json"
-				loc: Object {
-					filename: "experimental/module-attributes/invalid-syntax-with-attributes-multiple-lines/input.js"
-					end: Object {
-						column: 12
-						line: 2
-					}
-					start: Object {
-						column: 6
-						line: 2
-					}
-				}
+				loc: SourceLocation experimental/module-attributes/invalid-syntax-with-attributes-multiple-lines/input.js 2:6-2:12
 			}
 		}
 	]
@@ -184,8 +87,5 @@ parse(js) ━━━━━━━━━━━━━━━━━━━━━━━�
       │            ^
     2 │ type: "json"
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

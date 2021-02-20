@@ -12,95 +12,33 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "esprima/es2015-export-declaration/export-from-named-as-specifier/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
 	syntax: Array []
-	loc: Object {
-		filename: "esprima/es2015-export-declaration/export-from-named-as-specifier/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation esprima/es2015-export-declaration/export-from-named-as-specifier/input.js 1:0-2:0
+	path: UIDPath<esprima/es2015-export-declaration/export-from-named-as-specifier/input.js>
 	body: Array [
 		JSExportExternalDeclaration {
 			defaultSpecifier: undefined
 			exportKind: undefined
 			namespaceSpecifier: undefined
-			loc: Object {
-				filename: "esprima/es2015-export-declaration/export-from-named-as-specifier/input.js"
-				end: Object {
-					column: 31
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation esprima/es2015-export-declaration/export-from-named-as-specifier/input.js 1:0-1:31
 			source: JSStringLiteral {
 				value: "foo"
-				loc: Object {
-					filename: "esprima/es2015-export-declaration/export-from-named-as-specifier/input.js"
-					end: Object {
-						column: 30
-						line: 1
-					}
-					start: Object {
-						column: 25
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/es2015-export-declaration/export-from-named-as-specifier/input.js 1:25-1:30
 			}
 			namedSpecifiers: Array [
 				JSExportExternalSpecifier {
-					loc: Object {
-						filename: "esprima/es2015-export-declaration/export-from-named-as-specifier/input.js"
-						end: Object {
-							column: 18
-							line: 1
-						}
-						start: Object {
-							column: 8
-							line: 1
-						}
-					}
+					loc: SourceLocation esprima/es2015-export-declaration/export-from-named-as-specifier/input.js 1:8-1:18
 					exported: JSIdentifier {
 						name: "bar"
-						loc: Object {
-							filename: "esprima/es2015-export-declaration/export-from-named-as-specifier/input.js"
-							identifierName: "bar"
-							end: Object {
-								column: 18
-								line: 1
-							}
-							start: Object {
-								column: 15
-								line: 1
-							}
-						}
+						loc: SourceLocation esprima/es2015-export-declaration/export-from-named-as-specifier/input.js 1:15-1:18 (bar)
 					}
 					local: JSIdentifier {
 						name: "foo"
-						loc: Object {
-							filename: "esprima/es2015-export-declaration/export-from-named-as-specifier/input.js"
-							identifierName: "foo"
-							end: Object {
-								column: 11
-								line: 1
-							}
-							start: Object {
-								column: 8
-								line: 1
-							}
-						}
+						loc: SourceLocation esprima/es2015-export-declaration/export-from-named-as-specifier/input.js 1:8-1:11 (foo)
 					}
 				}
 			]
@@ -112,6 +50,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

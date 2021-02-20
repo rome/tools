@@ -11,45 +11,29 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "esprima/invalid-syntax/migrated_0275/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "esprima/invalid-syntax/migrated_0275/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation esprima/invalid-syntax/migrated_0275/input.js 1:0-2:0
+	path: UIDPath<esprima/invalid-syntax/migrated_0275/input.js>
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse"
 				categoryValue: "js"
+				category: Array ["parse"]
 				message: RAW_MARKUP {value: "Unknown class property start"}
 			}
 			location: Object {
-				filename: "esprima/invalid-syntax/migrated_0275/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 10
-					line: 1
-				}
-				start: Object {
-					column: 11
-					line: 1
-				}
+				end: Position 1:10
+				path: UIDPath<esprima/invalid-syntax/migrated_0275/input.js>
+				start: Position 1:11
 			}
 		}
 	]
@@ -57,103 +41,30 @@ JSRoot {
 		JSClassDeclaration {
 			id: JSBindingIdentifier {
 				name: "A"
-				loc: Object {
-					filename: "esprima/invalid-syntax/migrated_0275/input.js"
-					identifierName: "A"
-					end: Object {
-						column: 7
-						line: 1
-					}
-					start: Object {
-						column: 6
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/invalid-syntax/migrated_0275/input.js 1:6-1:7 (A)
 			}
-			loc: Object {
-				filename: "esprima/invalid-syntax/migrated_0275/input.js"
-				end: Object {
-					column: 22
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation esprima/invalid-syntax/migrated_0275/input.js 1:0-1:22
 			meta: JSClassHead {
 				implements: undefined
 				superClass: undefined
 				superTypeParameters: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "esprima/invalid-syntax/migrated_0275/input.js"
-					end: Object {
-						column: 22
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/invalid-syntax/migrated_0275/input.js 1:0-1:22
 				body: Array [
 					JSClassMethod {
 						kind: "method"
 						key: JSStaticPropertyKey {
 							value: JSIdentifier {
 								name: "static"
-								loc: Object {
-									filename: "esprima/invalid-syntax/migrated_0275/input.js"
-									identifierName: "static"
-									end: Object {
-										column: 17
-										line: 1
-									}
-									start: Object {
-										column: 11
-										line: 1
-									}
-								}
+								loc: SourceLocation esprima/invalid-syntax/migrated_0275/input.js 1:11-1:17 (static)
 							}
-							loc: Object {
-								filename: "esprima/invalid-syntax/migrated_0275/input.js"
-								identifierName: "static"
-								end: Object {
-									column: 17
-									line: 1
-								}
-								start: Object {
-									column: 11
-									line: 1
-								}
-							}
+							loc: SourceLocation esprima/invalid-syntax/migrated_0275/input.js 1:11-1:17 (static)
 						}
-						loc: Object {
-							filename: "esprima/invalid-syntax/migrated_0275/input.js"
-							end: Object {
-								column: 21
-								line: 1
-							}
-							start: Object {
-								column: 11
-								line: 1
-							}
-						}
+						loc: SourceLocation esprima/invalid-syntax/migrated_0275/input.js 1:11-1:21
 						body: JSBlockStatement {
 							body: Array []
 							directives: Array []
-							loc: Object {
-								filename: "esprima/invalid-syntax/migrated_0275/input.js"
-								end: Object {
-									column: 21
-									line: 1
-								}
-								start: Object {
-									column: 19
-									line: 1
-								}
-							}
+							loc: SourceLocation esprima/invalid-syntax/migrated_0275/input.js 1:19-1:21
 						}
 						meta: JSClassPropertyMeta {
 							abstract: false
@@ -162,17 +73,7 @@ JSRoot {
 							readonly: false
 							static: false
 							typeAnnotation: undefined
-							loc: Object {
-								filename: "esprima/invalid-syntax/migrated_0275/input.js"
-								end: Object {
-									column: 17
-									line: 1
-								}
-								start: Object {
-									column: 11
-									line: 1
-								}
-							}
+							loc: SourceLocation esprima/invalid-syntax/migrated_0275/input.js 1:11-1:17
 						}
 						head: JSFunctionHead {
 							async: false
@@ -183,17 +84,7 @@ JSRoot {
 							returnType: undefined
 							thisType: undefined
 							typeParameters: undefined
-							loc: Object {
-								filename: "esprima/invalid-syntax/migrated_0275/input.js"
-								end: Object {
-									column: 19
-									line: 1
-								}
-								start: Object {
-									column: 17
-									line: 1
-								}
-							}
+							loc: SourceLocation esprima/invalid-syntax/migrated_0275/input.js 1:17-1:19
 						}
 					}
 				]
@@ -214,8 +105,5 @@ JSRoot {
     class A {a static(){}}
                ^
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

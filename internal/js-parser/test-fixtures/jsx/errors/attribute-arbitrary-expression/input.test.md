@@ -11,215 +11,79 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "jsx/errors/attribute-arbitrary-expression/input.jsx"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
+	loc: SourceLocation jsx/errors/attribute-arbitrary-expression/input.jsx 1:0-2:0
+	path: UIDPath<jsx/errors/attribute-arbitrary-expression/input.jsx>
 	syntax: Array ["jsx"]
-	loc: Object {
-		filename: "jsx/errors/attribute-arbitrary-expression/input.jsx"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse"
 				categoryValue: "js"
+				category: Array ["parse"]
 				message: RAW_MARKUP {value: "JSX attribute value should be either an expression or a quoted JSX text"}
 			}
 			location: Object {
-				filename: "jsx/errors/attribute-arbitrary-expression/input.jsx"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 9
-					line: 1
-				}
-				start: Object {
-					column: 9
-					line: 1
-				}
+				end: Position 1:9
+				path: UIDPath<jsx/errors/attribute-arbitrary-expression/input.jsx>
+				start: Position 1:9
 			}
 		}
 	]
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "jsx/errors/attribute-arbitrary-expression/input.jsx"
-				end: Object {
-					column: 17
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation jsx/errors/attribute-arbitrary-expression/input.jsx 1:0-1:17
 			expression: JSXElement {
 				name: JSXReferenceIdentifier {
 					name: "Foo"
-					loc: Object {
-						filename: "jsx/errors/attribute-arbitrary-expression/input.jsx"
-						end: Object {
-							column: 4
-							line: 1
-						}
-						start: Object {
-							column: 1
-							line: 1
-						}
-					}
+					loc: SourceLocation jsx/errors/attribute-arbitrary-expression/input.jsx 1:1-1:4
 				}
 				children: Array []
 				selfClosing: true
 				typeArguments: undefined
-				loc: Object {
-					filename: "jsx/errors/attribute-arbitrary-expression/input.jsx"
-					end: Object {
-						column: 17
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation jsx/errors/attribute-arbitrary-expression/input.jsx 1:0-1:17
 				attributes: Array [
 					JSXAttribute {
 						name: JSXIdentifier {
 							name: "bar"
-							loc: Object {
-								filename: "jsx/errors/attribute-arbitrary-expression/input.jsx"
-								end: Object {
-									column: 8
-									line: 1
-								}
-								start: Object {
-									column: 5
-									line: 1
-								}
-							}
+							loc: SourceLocation jsx/errors/attribute-arbitrary-expression/input.jsx 1:5-1:8
 						}
 						value: JSStringLiteral {
 							value: "?"
-							loc: Object {
-								filename: "jsx/errors/attribute-arbitrary-expression/input.jsx"
-								end: Object {
-									column: 9
-									line: 1
-								}
-								start: Object {
-									column: 9
-									line: 1
-								}
-							}
+							loc: SourceLocation jsx/errors/attribute-arbitrary-expression/input.jsx 1:9-1:9
 						}
-						loc: Object {
-							filename: "jsx/errors/attribute-arbitrary-expression/input.jsx"
-							end: Object {
-								column: 9
-								line: 1
-							}
-							start: Object {
-								column: 5
-								line: 1
-							}
-						}
+						loc: SourceLocation jsx/errors/attribute-arbitrary-expression/input.jsx 1:5-1:9
 					}
 					JSXAttribute {
 						name: JSXIdentifier {
 							name: "bar"
-							loc: Object {
-								filename: "jsx/errors/attribute-arbitrary-expression/input.jsx"
-								end: Object {
-									column: 12
-									line: 1
-								}
-								start: Object {
-									column: 9
-									line: 1
-								}
-							}
+							loc: SourceLocation jsx/errors/attribute-arbitrary-expression/input.jsx 1:9-1:12
 						}
 						value: undefined
-						loc: Object {
-							filename: "jsx/errors/attribute-arbitrary-expression/input.jsx"
-							end: Object {
-								column: 12
-								line: 1
-							}
-							start: Object {
-								column: 9
-								line: 1
-							}
-						}
+						loc: SourceLocation jsx/errors/attribute-arbitrary-expression/input.jsx 1:9-1:12
 					}
 					JSXAttribute {
 						name: JSXIdentifier {
 							name: ""
-							loc: Object {
-								filename: "jsx/errors/attribute-arbitrary-expression/input.jsx"
-								end: Object {
-									column: 13
-									line: 1
-								}
-								start: Object {
-									column: 12
-									line: 1
-								}
-							}
+							loc: SourceLocation jsx/errors/attribute-arbitrary-expression/input.jsx 1:12-1:13
 						}
 						value: undefined
-						loc: Object {
-							filename: "jsx/errors/attribute-arbitrary-expression/input.jsx"
-							end: Object {
-								column: 13
-								line: 1
-							}
-							start: Object {
-								column: 12
-								line: 1
-							}
-						}
+						loc: SourceLocation jsx/errors/attribute-arbitrary-expression/input.jsx 1:12-1:13
 					}
 					JSXAttribute {
 						name: JSXIdentifier {
 							name: ""
-							loc: Object {
-								filename: "jsx/errors/attribute-arbitrary-expression/input.jsx"
-								end: Object {
-									column: 14
-									line: 1
-								}
-								start: Object {
-									column: 13
-									line: 1
-								}
-							}
+							loc: SourceLocation jsx/errors/attribute-arbitrary-expression/input.jsx 1:13-1:14
 						}
 						value: undefined
-						loc: Object {
-							filename: "jsx/errors/attribute-arbitrary-expression/input.jsx"
-							end: Object {
-								column: 14
-								line: 1
-							}
-							start: Object {
-								column: 13
-								line: 1
-							}
-						}
+						loc: SourceLocation jsx/errors/attribute-arbitrary-expression/input.jsx 1:13-1:14
 					}
 				]
 			}
@@ -239,8 +103,5 @@ JSRoot {
     <Foo bar=bar() />
              ^
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

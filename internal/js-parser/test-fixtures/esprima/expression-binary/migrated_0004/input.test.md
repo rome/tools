@@ -12,106 +12,33 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "esprima/expression-binary/migrated_0004/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "esprima/expression-binary/migrated_0004/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation esprima/expression-binary/migrated_0004/input.js 1:0-2:0
+	path: UIDPath<esprima/expression-binary/migrated_0004/input.js>
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "esprima/expression-binary/migrated_0004/input.js"
-				end: Object {
-					column: 9
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation esprima/expression-binary/migrated_0004/input.js 1:0-1:9
 			expression: JSBinaryExpression {
 				operator: "+"
-				loc: Object {
-					filename: "esprima/expression-binary/migrated_0004/input.js"
-					end: Object {
-						column: 9
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/expression-binary/migrated_0004/input.js 1:0-1:9
 				left: JSReferenceIdentifier {
 					name: "x"
-					loc: Object {
-						filename: "esprima/expression-binary/migrated_0004/input.js"
-						identifierName: "x"
-						end: Object {
-							column: 1
-							line: 1
-						}
-						start: Object {
-							column: 0
-							line: 1
-						}
-					}
+					loc: SourceLocation esprima/expression-binary/migrated_0004/input.js 1:0-1:1 (x)
 				}
 				right: JSBinaryExpression {
 					operator: "*"
-					loc: Object {
-						filename: "esprima/expression-binary/migrated_0004/input.js"
-						end: Object {
-							column: 9
-							line: 1
-						}
-						start: Object {
-							column: 4
-							line: 1
-						}
-					}
+					loc: SourceLocation esprima/expression-binary/migrated_0004/input.js 1:4-1:9
 					left: JSReferenceIdentifier {
 						name: "y"
-						loc: Object {
-							filename: "esprima/expression-binary/migrated_0004/input.js"
-							identifierName: "y"
-							end: Object {
-								column: 5
-								line: 1
-							}
-							start: Object {
-								column: 4
-								line: 1
-							}
-						}
+						loc: SourceLocation esprima/expression-binary/migrated_0004/input.js 1:4-1:5 (y)
 					}
 					right: JSReferenceIdentifier {
 						name: "z"
-						loc: Object {
-							filename: "esprima/expression-binary/migrated_0004/input.js"
-							identifierName: "z"
-							end: Object {
-								column: 9
-								line: 1
-							}
-							start: Object {
-								column: 8
-								line: 1
-							}
-						}
+						loc: SourceLocation esprima/expression-binary/migrated_0004/input.js 1:8-1:9 (z)
 					}
 				}
 			}
@@ -123,6 +50,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

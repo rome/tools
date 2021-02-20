@@ -12,65 +12,24 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "es2015/yield/parameter-name-function/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2015/yield/parameter-name-function/input.js"
-		end: Object {
-			column: 21
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2015/yield/parameter-name-function/input.js 1:0-1:21
+	path: UIDPath<es2015/yield/parameter-name-function/input.js>
 	body: Array [
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "fn"
-				loc: Object {
-					filename: "es2015/yield/parameter-name-function/input.js"
-					identifierName: "fn"
-					end: Object {
-						column: 11
-						line: 1
-					}
-					start: Object {
-						column: 9
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/yield/parameter-name-function/input.js 1:9-1:11 (fn)
 			}
-			loc: Object {
-				filename: "es2015/yield/parameter-name-function/input.js"
-				end: Object {
-					column: 21
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2015/yield/parameter-name-function/input.js 1:0-1:21
 			body: JSBlockStatement {
 				body: Array []
 				directives: Array []
-				loc: Object {
-					filename: "es2015/yield/parameter-name-function/input.js"
-					end: Object {
-						column: 21
-						line: 1
-					}
-					start: Object {
-						column: 19
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/yield/parameter-name-function/input.js 1:19-1:21
 			}
 			head: JSFunctionHead {
 				async: false
@@ -80,46 +39,15 @@ JSRoot {
 				returnType: undefined
 				thisType: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "es2015/yield/parameter-name-function/input.js"
-					end: Object {
-						column: 18
-						line: 1
-					}
-					start: Object {
-						column: 11
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/yield/parameter-name-function/input.js 1:11-1:18
 				params: Array [
 					JSBindingIdentifier {
 						name: "yield"
-						loc: Object {
-							filename: "es2015/yield/parameter-name-function/input.js"
-							identifierName: "yield"
-							end: Object {
-								column: 17
-								line: 1
-							}
-							start: Object {
-								column: 12
-								line: 1
-							}
-						}
+						loc: SourceLocation es2015/yield/parameter-name-function/input.js 1:12-1:17 (yield)
 						meta: JSPatternMeta {
 							optional: undefined
 							typeAnnotation: undefined
-							loc: Object {
-								filename: "es2015/yield/parameter-name-function/input.js"
-								end: Object {
-									column: 17
-									line: 1
-								}
-								start: Object {
-									column: 12
-									line: 1
-								}
-							}
+							loc: SourceLocation es2015/yield/parameter-name-function/input.js 1:12-1:17
 						}
 					}
 				]
@@ -132,6 +60,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

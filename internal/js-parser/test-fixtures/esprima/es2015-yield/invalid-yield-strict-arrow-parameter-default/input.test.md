@@ -10,37 +10,17 @@
 JSRoot {
 	comments: Array []
 	corrupt: false
-	filename: "esprima/es2015-yield/invalid-yield-strict-arrow-parameter-default/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "esprima/es2015-yield/invalid-yield-strict-arrow-parameter-default/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation esprima/es2015-yield/invalid-yield-strict-arrow-parameter-default/input.js 1:0-2:0
+	path: UIDPath<esprima/es2015-yield/invalid-yield-strict-arrow-parameter-default/input.js>
 	directives: Array [
 		JSDirective {
 			value: "use strict"
-			loc: Object {
-				filename: "esprima/es2015-yield/invalid-yield-strict-arrow-parameter-default/input.js"
-				end: Object {
-					column: 13
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation esprima/es2015-yield/invalid-yield-strict-arrow-parameter-default/input.js 1:0-1:13
 		}
 	]
 	diagnostics: Array [
@@ -48,68 +28,29 @@ JSRoot {
 			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse"
 				categoryValue: "js"
-				message: Array [
-					"yield"
-					RAW_MARKUP {value: " is a reserved word"}
-				]
+				category: Array ["parse"]
+				message: RAW_MARKUP {value: "yield is a reserved word"}
 			}
 			location: Object {
-				filename: "esprima/es2015-yield/invalid-yield-strict-arrow-parameter-default/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 24
-					line: 1
-				}
-				start: Object {
-					column: 19
-					line: 1
-				}
+				end: Position 1:24
+				path: UIDPath<esprima/es2015-yield/invalid-yield-strict-arrow-parameter-default/input.js>
+				start: Position 1:19
 			}
 		}
 	]
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "esprima/es2015-yield/invalid-yield-strict-arrow-parameter-default/input.js"
-				end: Object {
-					column: 31
-					line: 1
-				}
-				start: Object {
-					column: 14
-					line: 1
-				}
-			}
+			loc: SourceLocation esprima/es2015-yield/invalid-yield-strict-arrow-parameter-default/input.js 1:14-1:31
 			expression: JSArrowFunctionExpression {
-				loc: Object {
-					filename: "esprima/es2015-yield/invalid-yield-strict-arrow-parameter-default/input.js"
-					end: Object {
-						column: 31
-						line: 1
-					}
-					start: Object {
-						column: 14
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/es2015-yield/invalid-yield-strict-arrow-parameter-default/input.js 1:14-1:31
 				body: JSBlockStatement {
 					body: Array []
 					directives: Array []
-					loc: Object {
-						filename: "esprima/es2015-yield/invalid-yield-strict-arrow-parameter-default/input.js"
-						end: Object {
-							column: 31
-							line: 1
-						}
-						start: Object {
-							column: 29
-							line: 1
-						}
-					}
+					loc: SourceLocation esprima/es2015-yield/invalid-yield-strict-arrow-parameter-default/input.js 1:29-1:31
 				}
 				head: JSFunctionHead {
 					async: false
@@ -117,60 +58,18 @@ JSRoot {
 					rest: undefined
 					returnType: undefined
 					thisType: undefined
-					loc: Object {
-						filename: "esprima/es2015-yield/invalid-yield-strict-arrow-parameter-default/input.js"
-						end: Object {
-							column: 28
-							line: 1
-						}
-						start: Object {
-							column: 14
-							line: 1
-						}
-					}
+					loc: SourceLocation esprima/es2015-yield/invalid-yield-strict-arrow-parameter-default/input.js 1:14-1:28
 					params: Array [
 						JSBindingAssignmentPattern {
 							operator: "="
-							loc: Object {
-								filename: "esprima/es2015-yield/invalid-yield-strict-arrow-parameter-default/input.js"
-								end: Object {
-									column: 24
-									line: 1
-								}
-								start: Object {
-									column: 15
-									line: 1
-								}
-							}
+							loc: SourceLocation esprima/es2015-yield/invalid-yield-strict-arrow-parameter-default/input.js 1:15-1:24
 							left: JSBindingIdentifier {
 								name: "x"
-								loc: Object {
-									filename: "esprima/es2015-yield/invalid-yield-strict-arrow-parameter-default/input.js"
-									identifierName: "x"
-									end: Object {
-										column: 16
-										line: 1
-									}
-									start: Object {
-										column: 15
-										line: 1
-									}
-								}
+								loc: SourceLocation esprima/es2015-yield/invalid-yield-strict-arrow-parameter-default/input.js 1:15-1:16 (x)
 							}
 							right: JSReferenceIdentifier {
 								name: "yield"
-								loc: Object {
-									filename: "esprima/es2015-yield/invalid-yield-strict-arrow-parameter-default/input.js"
-									identifierName: "yield"
-									end: Object {
-										column: 24
-										line: 1
-									}
-									start: Object {
-										column: 19
-										line: 1
-									}
-								}
+								loc: SourceLocation esprima/es2015-yield/invalid-yield-strict-arrow-parameter-default/input.js 1:19-1:24 (yield)
 							}
 						}
 					]
@@ -192,8 +91,5 @@ JSRoot {
     "use strict"; (x = yield) => {}
                        ^^^^^
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

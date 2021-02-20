@@ -10,37 +10,17 @@
 JSRoot {
 	comments: Array []
 	corrupt: false
-	filename: "core/uncategorised/547/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "core/uncategorised/547/input.js"
-		end: Object {
-			column: 0
-			line: 3
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation core/uncategorised/547/input.js 1:0-3:0
+	path: UIDPath<core/uncategorised/547/input.js>
 	directives: Array [
 		JSDirective {
 			value: "use strict"
-			loc: Object {
-				filename: "core/uncategorised/547/input.js"
-				end: Object {
-					column: 13
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation core/uncategorised/547/input.js 1:0-1:13
 		}
 	]
 	diagnostics: Array [
@@ -48,167 +28,55 @@ JSRoot {
 			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse"
 				categoryValue: "js"
-				message: Array [
-					"arguments"
-					RAW_MARKUP {value: " is a reserved word"}
-				]
+				category: Array ["parse"]
+				message: RAW_MARKUP {value: "arguments is a reserved word"}
 			}
 			location: Object {
-				filename: "core/uncategorised/547/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 17
-					line: 2
-				}
-				start: Object {
-					column: 8
-					line: 2
-				}
+				end: Position 2:17
+				path: UIDPath<core/uncategorised/547/input.js>
+				start: Position 2:8
 			}
 		}
 	]
 	body: Array [
 		JSVariableDeclarationStatement {
-			loc: Object {
-				filename: "core/uncategorised/547/input.js"
-				end: Object {
-					column: 28
-					line: 2
-				}
-				start: Object {
-					column: 0
-					line: 2
-				}
-			}
+			loc: SourceLocation core/uncategorised/547/input.js 2:0-2:28
 			declaration: JSVariableDeclaration {
 				kind: "const"
-				loc: Object {
-					filename: "core/uncategorised/547/input.js"
-					end: Object {
-						column: 28
-						line: 2
-					}
-					start: Object {
-						column: 0
-						line: 2
-					}
-				}
+				loc: SourceLocation core/uncategorised/547/input.js 2:0-2:28
 				declarations: Array [
 					JSVariableDeclarator {
 						id: JSBindingObjectPattern {
 							rest: undefined
-							loc: Object {
-								filename: "core/uncategorised/547/input.js"
-								end: Object {
-									column: 19
-									line: 2
-								}
-								start: Object {
-									column: 6
-									line: 2
-								}
-							}
+							loc: SourceLocation core/uncategorised/547/input.js 2:6-2:19
 							properties: Array [
 								JSBindingObjectPatternProperty {
 									key: JSStaticPropertyKey {
 										value: JSIdentifier {
 											name: "arguments"
-											loc: Object {
-												filename: "core/uncategorised/547/input.js"
-												identifierName: "arguments"
-												end: Object {
-													column: 17
-													line: 2
-												}
-												start: Object {
-													column: 8
-													line: 2
-												}
-											}
+											loc: SourceLocation core/uncategorised/547/input.js 2:8-2:17 (arguments)
 										}
-										loc: Object {
-											filename: "core/uncategorised/547/input.js"
-											end: Object {
-												column: 17
-												line: 2
-											}
-											start: Object {
-												column: 8
-												line: 2
-											}
-										}
+										loc: SourceLocation core/uncategorised/547/input.js 2:8-2:17
 									}
 									value: JSBindingIdentifier {
 										name: "arguments"
-										loc: Object {
-											filename: "core/uncategorised/547/input.js"
-											identifierName: "arguments"
-											end: Object {
-												column: 17
-												line: 2
-											}
-											start: Object {
-												column: 8
-												line: 2
-											}
-										}
+										loc: SourceLocation core/uncategorised/547/input.js 2:8-2:17 (arguments)
 									}
-									loc: Object {
-										filename: "core/uncategorised/547/input.js"
-										end: Object {
-											column: 17
-											line: 2
-										}
-										start: Object {
-											column: 8
-											line: 2
-										}
-									}
+									loc: SourceLocation core/uncategorised/547/input.js 2:8-2:17
 								}
 							]
 						}
-						loc: Object {
-							filename: "core/uncategorised/547/input.js"
-							end: Object {
-								column: 27
-								line: 2
-							}
-							start: Object {
-								column: 6
-								line: 2
-							}
-						}
+						loc: SourceLocation core/uncategorised/547/input.js 2:6-2:27
 						init: JSCallExpression {
 							arguments: Array []
-							loc: Object {
-								filename: "core/uncategorised/547/input.js"
-								end: Object {
-									column: 27
-									line: 2
-								}
-								start: Object {
-									column: 22
-									line: 2
-								}
-							}
+							loc: SourceLocation core/uncategorised/547/input.js 2:22-2:27
 							callee: JSReferenceIdentifier {
 								name: "foo"
-								loc: Object {
-									filename: "core/uncategorised/547/input.js"
-									identifierName: "foo"
-									end: Object {
-										column: 25
-										line: 2
-									}
-									start: Object {
-										column: 22
-										line: 2
-									}
-								}
+								loc: SourceLocation core/uncategorised/547/input.js 2:22-2:25 (foo)
 							}
 						}
 					}
@@ -231,8 +99,5 @@ JSRoot {
   > 2 │ const { arguments } = foo();
       │         ^^^^^^^^^
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

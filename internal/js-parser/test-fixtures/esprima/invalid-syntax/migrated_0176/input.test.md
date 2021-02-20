@@ -11,119 +11,48 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "esprima/invalid-syntax/migrated_0176/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "esprima/invalid-syntax/migrated_0176/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation esprima/invalid-syntax/migrated_0176/input.js 1:0-2:0
+	path: UIDPath<esprima/invalid-syntax/migrated_0176/input.js>
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse"
 				categoryValue: "js"
-				message: Array [
-					RAW_MARKUP {value: "Unknown label <emphasis>"}
-					"x"
-					RAW_MARKUP {value: "</emphasis>"}
-				]
+				category: Array ["parse"]
+				message: RAW_MARKUP {value: "Unknown label <emphasis>x</emphasis>"}
 			}
 			location: Object {
-				filename: "esprima/invalid-syntax/migrated_0176/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 15
-					line: 1
-				}
-				start: Object {
-					column: 15
-					line: 1
-				}
+				end: Position 1:15
+				path: UIDPath<esprima/invalid-syntax/migrated_0176/input.js>
+				start: Position 1:15
 			}
 		}
 	]
 	body: Array [
 		JSWhileStatement {
-			loc: Object {
-				filename: "esprima/invalid-syntax/migrated_0176/input.js"
-				end: Object {
-					column: 25
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation esprima/invalid-syntax/migrated_0176/input.js 1:0-1:25
 			test: JSBooleanLiteral {
 				value: true
-				loc: Object {
-					filename: "esprima/invalid-syntax/migrated_0176/input.js"
-					end: Object {
-						column: 11
-						line: 1
-					}
-					start: Object {
-						column: 7
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/invalid-syntax/migrated_0176/input.js 1:7-1:11
 			}
 			body: JSBlockStatement {
 				directives: Array []
-				loc: Object {
-					filename: "esprima/invalid-syntax/migrated_0176/input.js"
-					end: Object {
-						column: 25
-						line: 1
-					}
-					start: Object {
-						column: 13
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/invalid-syntax/migrated_0176/input.js 1:13-1:25
 				body: Array [
 					JSBreakStatement {
-						loc: Object {
-							filename: "esprima/invalid-syntax/migrated_0176/input.js"
-							end: Object {
-								column: 23
-								line: 1
-							}
-							start: Object {
-								column: 15
-								line: 1
-							}
-						}
+						loc: SourceLocation esprima/invalid-syntax/migrated_0176/input.js 1:15-1:23
 						label: JSIdentifier {
 							name: "x"
-							loc: Object {
-								filename: "esprima/invalid-syntax/migrated_0176/input.js"
-								identifierName: "x"
-								end: Object {
-									column: 22
-									line: 1
-								}
-								start: Object {
-									column: 21
-									line: 1
-								}
-							}
+							loc: SourceLocation esprima/invalid-syntax/migrated_0176/input.js 1:21-1:22 (x)
 						}
 					}
 				]
@@ -144,8 +73,5 @@ JSRoot {
     while (true) { break x; }
                    ^
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

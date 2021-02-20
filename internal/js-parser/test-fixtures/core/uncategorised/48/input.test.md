@@ -11,87 +11,37 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "core/uncategorised/48/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "core/uncategorised/48/input.js"
-		end: Object {
-			column: 21
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation core/uncategorised/48/input.js 1:0-1:21
+	path: UIDPath<core/uncategorised/48/input.js>
 	comments: Array [
 		CommentBlock {
 			id: "0"
 			value: "the"
-			loc: Object {
-				filename: "core/uncategorised/48/input.js"
-				end: Object {
-					column: 10
-					line: 1
-				}
-				start: Object {
-					column: 3
-					line: 1
-				}
-			}
+			loc: SourceLocation core/uncategorised/48/input.js 1:3-1:10
 		}
 		CommentBlock {
 			id: "1"
 			value: "answer"
-			loc: Object {
-				filename: "core/uncategorised/48/input.js"
-				end: Object {
-					column: 21
-					line: 1
-				}
-				start: Object {
-					column: 11
-					line: 1
-				}
-			}
+			loc: SourceLocation core/uncategorised/48/input.js 1:11-1:21
 		}
 	]
 	body: Array [
 		JSExpressionStatement {
+			loc: SourceLocation core/uncategorised/48/input.js 1:0-1:2
 			trailingComments: Array [
 				"0"
 				"1"
 			]
-			loc: Object {
-				filename: "core/uncategorised/48/input.js"
-				end: Object {
-					column: 2
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
 			expression: JSNumericLiteral {
 				value: 42
 				format: undefined
 				trailingComments: undefined
-				loc: Object {
-					filename: "core/uncategorised/48/input.js"
-					end: Object {
-						column: 2
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation core/uncategorised/48/input.js 1:0-1:2
 			}
 		}
 	]
@@ -101,6 +51,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

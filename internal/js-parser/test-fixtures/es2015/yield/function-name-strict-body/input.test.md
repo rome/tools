@@ -11,48 +11,29 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "es2015/yield/function-name-strict-body/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2015/yield/function-name-strict-body/input.js"
-		end: Object {
-			column: 34
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2015/yield/function-name-strict-body/input.js 1:0-1:34
+	path: UIDPath<es2015/yield/function-name-strict-body/input.js>
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse"
 				categoryValue: "js"
-				message: Array [
-					"yield"
-					RAW_MARKUP {value: " is a reserved word"}
-				]
+				category: Array ["parse"]
+				message: RAW_MARKUP {value: "yield is a reserved word"}
 			}
 			location: Object {
-				filename: "es2015/yield/function-name-strict-body/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 14
-					line: 1
-				}
-				start: Object {
-					column: 9
-					line: 1
-				}
+				end: Position 1:14
+				path: UIDPath<es2015/yield/function-name-strict-body/input.js>
+				start: Position 1:9
 			}
 		}
 	]
@@ -60,29 +41,18 @@ JSRoot {
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "yield"
-				loc: Object {
-					filename: "es2015/yield/function-name-strict-body/input.js"
-					identifierName: "yield"
-					end: Object {
-						column: 14
-						line: 1
-					}
-					start: Object {
-						column: 9
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/yield/function-name-strict-body/input.js 1:9-1:14 (yield)
 			}
-			loc: Object {
-				filename: "es2015/yield/function-name-strict-body/input.js"
-				end: Object {
-					column: 34
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
+			loc: SourceLocation es2015/yield/function-name-strict-body/input.js 1:0-1:34
+			body: JSBlockStatement {
+				body: Array []
+				loc: SourceLocation es2015/yield/function-name-strict-body/input.js 1:17-1:34
+				directives: Array [
+					JSDirective {
+						value: "use strict"
+						loc: SourceLocation es2015/yield/function-name-strict-body/input.js 1:19-1:32
+					}
+				]
 			}
 			head: JSFunctionHead {
 				async: false
@@ -93,47 +63,7 @@ JSRoot {
 				returnType: undefined
 				thisType: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "es2015/yield/function-name-strict-body/input.js"
-					end: Object {
-						column: 16
-						line: 1
-					}
-					start: Object {
-						column: 14
-						line: 1
-					}
-				}
-			}
-			body: JSBlockStatement {
-				body: Array []
-				loc: Object {
-					filename: "es2015/yield/function-name-strict-body/input.js"
-					end: Object {
-						column: 34
-						line: 1
-					}
-					start: Object {
-						column: 17
-						line: 1
-					}
-				}
-				directives: Array [
-					JSDirective {
-						value: "use strict"
-						loc: Object {
-							filename: "es2015/yield/function-name-strict-body/input.js"
-							end: Object {
-								column: 32
-								line: 1
-							}
-							start: Object {
-								column: 19
-								line: 1
-							}
-						}
-					}
-				]
+				loc: SourceLocation es2015/yield/function-name-strict-body/input.js 1:14-1:16
 			}
 		}
 	]
@@ -151,8 +81,5 @@ JSRoot {
     function yield() { "use strict"; }
              ^^^^^
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

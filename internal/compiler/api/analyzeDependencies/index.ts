@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyNode, ConstJSImportModuleKind} from "@internal/ast";
+import {AnyNode} from "@internal/ast";
 import {SourceLocation} from "@internal/parser-core";
 import {TransformRequest} from "../../types";
 import {
@@ -31,6 +31,7 @@ import {
 	AnyAnalyzeExport,
 } from "@internal/core";
 import {descriptions} from "@internal/diagnostics";
+import {mergeAnalyzeDependency} from "./utils";
 
 const analyzeCache: Cache<AnalyzeDependencyResult> = new Cache();
 
@@ -137,27 +138,7 @@ export default async function analyzeDependencies(
 
 			// If we have multiple import records for this file, then merge them together
 			const existing = dependenciesBySource.get(data.source);
-			if (existing === undefined) {
-				dependenciesBySource.set(data.source, data);
-			} else {
-				let kind: ConstJSImportModuleKind;
-				if (data.kind === existing.kind) {
-					kind = data.kind;
-				} else {
-					kind = "value";
-				}
-
-				const combinedRecord: AnalyzeDependency = {
-					type: data.type === "es" && existing.type === "es" ? "es" : "cjs",
-					kind,
-					optional: existing.optional && data.optional,
-					async: existing.async || data.async,
-					source: data.source,
-					all: existing.all || data.all,
-					names: [...existing.names, ...data.names],
-					loc: existing.loc || data.loc,
-				};
-
+			if (existing !== undefined) {
 				// Map ordering is by insertion time, so in the case where the previous import was a type import
 				// then we don't want to place our combined record in that position, it should be at the end.
 				// Inserting a type import statement at the top of the file shouldn't change the execution order
@@ -165,9 +146,11 @@ export default async function analyzeDependencies(
 				if (existing.kind === "type" && data.kind === "value") {
 					dependenciesBySource.delete(data.source);
 				}
-
-				dependenciesBySource.set(data.source, combinedRecord);
 			}
+			dependenciesBySource.set(
+				data.source,
+				mergeAnalyzeDependency(data, existing),
+			);
 		} else if (record instanceof ExportRecord) {
 			exports.push(record.data);
 		} else if (record instanceof CJSVarRefRecord) {

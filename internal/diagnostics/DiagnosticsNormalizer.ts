@@ -7,9 +7,12 @@
 
 import {
 	Diagnostic,
+	DiagnosticAdvice,
 	DiagnosticAdviceItem,
-	DiagnosticIntegrity,
+	DiagnosticDependencies,
+	DiagnosticDescription,
 	DiagnosticLocation,
+	DiagnosticSuppression,
 	DiagnosticTags,
 } from "./types";
 import {SourceMapConsumerCollection} from "@internal/codec-source-map";
@@ -19,60 +22,79 @@ import {
 	markup,
 	normalizeMarkup,
 } from "@internal/markup";
-import {ob1Number0, ob1Number1} from "@internal/ob1";
-import {RequiredProps} from "@internal/typescript-helpers";
-
-type NormalizeOptionsRequiredPosition = RequiredProps<
-	MarkupFormatNormalizeOptions,
-	"normalizePosition"
->;
+import {OneIndexed, ZeroIndexed} from "@internal/math";
+import {mergeObjects} from "@internal/typescript-helpers";
+import {AnyPath, MixedPathMap, MixedPathSet} from "@internal/path";
 
 export type DiagnosticsNormalizerOptions = {
-	getIntegrity?: (filename: string) => undefined | DiagnosticIntegrity;
 	tags?: DiagnosticTags;
 	label?: StaticMarkup;
 };
 
+function maybeMerge<T extends object>(a: T, b: Partial<T>): T {
+	for (let key in b) {
+		if (a[key] !== b[key]) {
+			return {
+				...a,
+				...b,
+			};
+		}
+	}
+
+	return a;
+}
+
+function maybeMap<T>(arr: T[], callback: (item: T) => T): T[] {
+	let modified = false;
+
+	const normalized = arr.map((item) => {
+		const mapped = callback(item);
+		if (mapped !== item) {
+			modified = true;
+		}
+		return mapped;
+	});
+
+	return modified ? normalized : arr;
+}
+
 export default class DiagnosticsNormalizer {
 	constructor(
-		normalizeOptions?: DiagnosticsNormalizerOptions,
+		normalizeOptions: DiagnosticsNormalizerOptions = {},
 		markupOptions?: MarkupFormatNormalizeOptions,
 		sourceMaps?: SourceMapConsumerCollection,
 	) {
 		this.sourceMaps = sourceMaps;
-		this.inlineSourceText = new Map();
-		this.hasMarkupOptions = markupOptions !== undefined;
-
-		this.hasOptions = normalizeOptions !== undefined;
-		this.options = normalizeOptions ?? {};
-
-		this.inlinedSourceTextFilenames = new Set();
-
+		this.inlineSourceText = new MixedPathMap();
+		this.options = normalizeOptions;
+		this.inlinedSourceTextPaths = new MixedPathSet();
 		this.markupOptions = this.createMarkupOptions(markupOptions);
 	}
 
 	private sourceMaps: undefined | SourceMapConsumerCollection;
 
 	private options: DiagnosticsNormalizerOptions;
-	private hasOptions: boolean;
+	private markupOptions: MarkupFormatNormalizeOptions;
 
-	private markupOptions: NormalizeOptionsRequiredPosition;
-	private hasMarkupOptions: boolean;
+	private inlineSourceText: MixedPathMap<string>;
+	private inlinedSourceTextPaths: MixedPathSet;
 
-	private inlineSourceText: Map<string, string>;
-	private inlinedSourceTextFilenames: Set<string>;
+	public removePath(path: AnyPath) {
+		this.inlineSourceText.delete(path);
+		this.inlinedSourceTextPaths.delete(path);
+	}
 
 	private createMarkupOptions(
 		markupOptions: MarkupFormatNormalizeOptions = {},
-	): NormalizeOptionsRequiredPosition {
+	): MarkupFormatNormalizeOptions {
 		const {sourceMaps} = this;
 
 		return {
 			...markupOptions,
-			normalizePosition: (filename, line, column) => {
+			normalizePosition: (path, line, column) => {
 				if (markupOptions?.normalizePosition !== undefined) {
-					({filename, line, column} = markupOptions.normalizePosition(
-						filename,
+					({path, line, column} = markupOptions.normalizePosition(
+						path,
 						line,
 						column,
 					));
@@ -82,42 +104,47 @@ export default class DiagnosticsNormalizer {
 					// line and column can be undefined so we do some weirdness to try and get only the filename if possible
 					// using some default positions and then we'll toss whatever positions they return
 					const resolved = sourceMaps.approxOriginalPositionFor(
-						filename,
-						line ?? ob1Number1,
-						column ?? ob1Number0,
+						path,
+						line ?? new OneIndexed(),
+						column ?? new ZeroIndexed(),
 					);
 					if (resolved !== undefined) {
 						return {
-							filename: resolved.source,
+							path: resolved.source,
 							line: line === undefined ? undefined : resolved.line,
 							column: column === undefined ? undefined : resolved.column,
 						};
 					}
 				}
 
-				return {filename, line, column};
+				return {path, line, column};
 			},
 		};
 	}
 
-	public setInlineSourceText(filename: string, sourceText: string) {
-		this.inlineSourceText.set(filename, sourceText);
+	public setInlineSourceText(path: AnyPath, sourceText: string) {
+		this.inlineSourceText.set(path, sourceText);
 	}
 
-	private normalizeFilename(filename: string): string
-	private normalizeFilename(filename: undefined | string): undefined | string
-	private normalizeFilename(filename: undefined | string): undefined | string {
+	private normalizePath(path: AnyPath): AnyPath;
+	private normalizePath(path: undefined | AnyPath): undefined | AnyPath;
+	private normalizePath(path: undefined | AnyPath): undefined | AnyPath {
 		const {markupOptions} = this;
-		if (markupOptions === undefined || filename === undefined) {
-			return filename;
+		if (markupOptions === undefined || path === undefined) {
+			return path;
 		}
 
 		const {normalizePosition} = markupOptions;
 		if (normalizePosition === undefined) {
-			return filename;
+			return path;
 		}
 
-		return normalizePosition(filename, undefined, undefined).filename;
+		let normalizedPath = normalizePosition(path, undefined, undefined).path;
+		if (normalizedPath.equal(path)) {
+			return path;
+		} else {
+			return normalizedPath;
+		}
 	}
 
 	private normalizePositionValue<T>(value: T): undefined | T {
@@ -130,64 +157,70 @@ export default class DiagnosticsNormalizer {
 
 	public normalizeLocation(location: DiagnosticLocation): DiagnosticLocation {
 		const {sourceMaps} = this;
-		const {getIntegrity} = this.options;
-		if (sourceMaps === undefined && getIntegrity === undefined) {
+		if (!this.hasNormalize()) {
 			return location;
 		}
 
-		let {marker, filename, start, end, integrity} = location;
-		let origFilename = filename;
+		let {marker, path, start, end, integrity} = location;
+		let origPath = path;
 
-		if (
-			filename !== undefined &&
-			origFilename !== undefined &&
-			sourceMaps !== undefined
-		) {
+		if (sourceMaps !== undefined && sourceMaps.hasAny()) {
 			if (start !== undefined) {
 				const resolved = sourceMaps.approxOriginalPositionFor(
-					origFilename,
+					origPath,
 					start.line,
 					start.column,
 				);
 				if (resolved !== undefined) {
-					filename = resolved.source;
-					start = {
-						...start,
-						line: resolved.line,
-						column: resolved.column,
-					};
+					path = resolved.source;
+					start = mergeObjects(
+						start,
+						{
+							line: resolved.line,
+							column: resolved.column,
+						},
+					);
 				}
 			}
 
 			if (end !== undefined) {
 				const resolved = sourceMaps.approxOriginalPositionFor(
-					origFilename,
+					origPath,
 					end.line,
 					end.column,
 				);
 				if (resolved !== undefined) {
 					// TODO confirm this is the same as `start` if it resolved
-					filename = resolved.source;
-					end = {
-						...end,
-						line: resolved.line,
-						column: resolved.column,
-					};
+					path = resolved.source;
+					end = mergeObjects(
+						end,
+						{
+							line: resolved.line,
+							column: resolved.column,
+						},
+					);
 				}
 			}
 		}
 
-		const normalizedFilename = this.normalizeFilename(filename);
+		const normalizedPath = this.normalizePath(path);
 
 		// Inline sourceText. We keep track of filenames we've already inlined to avoid duplicating sourceText
 		// During printing we'll fill it back in
 		let {sourceText} = location;
-		if (filename !== undefined && !this.inlinedSourceTextFilenames.has(filename)) {
-			if (sourceText === undefined) {
-				sourceText = this.inlineSourceText.get(filename);
-			}
-			if (sourceText === undefined && normalizedFilename !== undefined) {
-				sourceText = this.inlineSourceText.get(normalizedFilename);
+		if (!this.inlinedSourceTextPaths.has(path)) {
+			sourceText =
+				sourceText ??
+				this.inlineSourceText.get(path) ??
+				this.inlineSourceText.get(normalizedPath);
+
+			if (
+				location.sourceText !== undefined &&
+				location.sourceText !== sourceText
+			) {
+				throw new Error(
+					`Found multiple sourceText entries for ${path.join()} that did not match`,
+				);
 			}
 
 			// Remove sourceText if it's not pointing anywhere
@@ -197,31 +230,25 @@ export default class DiagnosticsNormalizer {
 
 			// Register filename as inlined if necessary
 			if (sourceText !== undefined) {
-				this.inlinedSourceTextFilenames.add(filename);
-
-				if (normalizedFilename !== undefined) {
-					this.inlinedSourceTextFilenames.add(normalizedFilename);
-				}
+				this.inlinedSourceTextPaths.add(normalizedPath);
 			}
 		}
 
-		if (
-			integrity === undefined &&
-			getIntegrity !== undefined &&
-			normalizedFilename !== undefined
-		) {
-			integrity = getIntegrity(normalizedFilename);
-		}
+		marker = this.maybeNormalizeMarkup(marker);
+		start = this.normalizePositionValue(start);
+		end = this.normalizePositionValue(end);
 
-		return {
-			...location,
-			integrity,
-			sourceText,
-			filename: normalizedFilename,
-			marker: this.maybeNormalizeMarkup(marker),
-			start: this.normalizePositionValue(start),
-			end: this.normalizePositionValue(end),
-		};
+		return maybeMerge(
+			location,
+			{
+				integrity,
+				sourceText,
+				path: normalizedPath,
+				marker,
+				start,
+				end,
+			},
+		);
 	}
 
 	private normalizeMarkup(markup: StaticMarkup): StaticMarkup {
@@ -234,32 +261,65 @@ export default class DiagnosticsNormalizer {
 		return markup === undefined ? undefined : this.normalizeMarkup(markup);
 	}
 
-	private normalizeDiagnosticAdviceItem(
-		item: DiagnosticAdviceItem,
-	): DiagnosticAdviceItem {
+	private normalizeDependencies(
+		deps: DiagnosticDependencies,
+	): DiagnosticDependencies {
+		return maybeMap(
+			deps,
+			(dep) => {
+				return maybeMerge(
+					dep,
+					{
+						path: this.normalizePath(dep.path),
+					},
+				);
+			},
+		);
+	}
+
+	private normalizeAdvice(advice: DiagnosticAdvice): DiagnosticAdvice {
+		return maybeMap(
+			advice,
+			(item) => {
+				return this.normalizeAdviceItem(item);
+			},
+		);
+	}
+
+	private normalizeAdviceItem(item: DiagnosticAdviceItem): DiagnosticAdviceItem {
 		const {sourceMaps} = this;
 
 		switch (item.type) {
 			case "frame":
-				return {
-					...item,
-					location: this.normalizeLocation(item.location),
-				};
+				return maybeMerge(
+					item,
+					{
+						location: this.normalizeLocation(item.location),
+					},
+				);
 
 			case "list":
-				return {
-					...item,
-					list: item.list.map((markup) => this.normalizeMarkup(markup)),
-				};
+				return maybeMerge(
+					item,
+					{
+						list: maybeMap(item.list, (markup) => this.normalizeMarkup(markup)),
+					},
+				);
 
 			case "log":
-				return {
-					...item,
-					text: this.normalizeMarkup(item.text),
-				};
+				return maybeMerge(
+					item,
+					{
+						text: this.normalizeMarkup(item.text),
+					},
+				);
 
 			case "action":
-				if (this.markupOptions.stripPositions) {
+				if (
+					this.markupOptions.stripPositions &&
+					item.commandFlags !== undefined &&
+					Object.keys(item.commandFlags).length > 0
+				) {
 					return {
 						...item,
 						// Command flags could have position information
@@ -269,88 +329,152 @@ export default class DiagnosticsNormalizer {
 					return item;
 				}
 
-			case "stacktrace":
-				return {
-					...item,
-					importantFilenames: (item.importantFilenames ?? []).map((filename) =>
-						this.normalizeFilename(filename)
-					),
-					frames: item.frames.map((frame) => {
-						const {filename, line, column} = frame;
+			case "stacktrace": {
+				let importantPaths: undefined | MixedPathSet = item.importantPaths;
 
-						if (
-							filename === undefined ||
-							line === undefined ||
-							column === undefined ||
-							(sourceMaps !== undefined && !sourceMaps.has(filename))
-						) {
-							return {
-								...frame,
-								start: this.normalizePositionValue(line),
-								column: this.normalizePositionValue(column),
-								filename: this.normalizeFilename(filename),
-							};
-						}
+				if (importantPaths !== undefined) {
+					const existingPaths = Array.from(importantPaths);
+					const newPaths = maybeMap(
+						existingPaths,
+						(path) => this.normalizePath(path),
+					);
 
-						if (sourceMaps !== undefined) {
-							const resolved = sourceMaps.approxOriginalPositionFor(
-								filename,
-								line,
-								column,
-							);
-							if (resolved !== undefined) {
-								return {
-									...frame,
-									filename: this.normalizeFilename(resolved.source),
-									line: this.normalizePositionValue(resolved.line),
-									column: this.normalizePositionValue(resolved.column),
-								};
-							}
-						}
+					if (newPaths !== existingPaths) {
+						importantPaths = new MixedPathSet(newPaths);
+					}
+				}
 
-						return frame;
-					}),
-				};
+				return maybeMerge(
+					item,
+					{
+						importantPaths,
+						frames: maybeMap(
+							item.frames,
+							(frame) => {
+								const {path, line, column} = frame;
+
+								if (
+									path === undefined ||
+									line === undefined ||
+									column === undefined ||
+									(sourceMaps !== undefined && !sourceMaps.has(path))
+								) {
+									return maybeMerge(
+										frame,
+										{
+											line: this.normalizePositionValue(line),
+											column: this.normalizePositionValue(column),
+											path: this.normalizePath(path),
+										},
+									);
+								}
+
+								if (sourceMaps !== undefined) {
+									const resolved = sourceMaps.approxOriginalPositionFor(
+										path,
+										line,
+										column,
+									);
+									if (resolved !== undefined) {
+										return maybeMerge(
+											frame,
+											{
+												path: this.normalizePath(resolved.source),
+												line: this.normalizePositionValue(resolved.line),
+												column: this.normalizePositionValue(resolved.column),
+											},
+										);
+									}
+								}
+
+								return frame;
+							},
+						),
+					},
+				);
+			}
 		}
 
 		return item;
 	}
 
-	public normalizeDiagnostic(diag: Diagnostic): Diagnostic {
-		const {sourceMaps} = this;
+	public normalizeSuppression(
+		suppression: DiagnosticSuppression,
+	): DiagnosticSuppression {
+		return maybeMerge(
+			suppression,
+			{
+				path: this.normalizePath(suppression.path),
+			},
+		);
+	}
 
-		// Fast path for a common case
-		if (
-			!this.hasMarkupOptions &&
-			(sourceMaps === undefined || !sourceMaps.hasAny()) &&
-			this.inlineSourceText.size === 0 &&
-			!this.hasOptions
-		) {
-			return diag;
+	private hasNormalize(): boolean {
+		const {sourceMaps, markupOptions} = this;
+		if (sourceMaps !== undefined && sourceMaps.hasAny()) {
+			return true;
 		}
 
-		const {description} = diag;
+		if (this.inlineSourceText.size > 0) {
+			return true;
+		}
 
-		const advice = description.advice.map((item) => {
-			return this.normalizeDiagnosticAdviceItem(item);
-		});
+		if (markupOptions.stripFilelinkText || markupOptions.stripPositions) {
+			return true;
+		}
 
-		let merge: Partial<Diagnostic> = {
-			label: this.maybeNormalizeMarkup(diag.label),
-			location: this.normalizeLocation(diag.location),
-			description: {
-				...description,
+		if (
+			markupOptions.humanizeFilename !== undefined ||
+			markupOptions.normalizePosition !== undefined
+		) {
+			return true;
+		}
+
+		return false;
+	}
+
+	private normalizeDescription(
+		description: DiagnosticDescription,
+	): DiagnosticDescription {
+		const advice = this.normalizeAdvice(description.advice);
+		return maybeMerge(
+			description,
+			{
 				message: this.normalizeMarkup(description.message),
 				advice,
 			},
+		);
+	}
+
+	public normalizeDiagnostic(diag: Diagnostic): Diagnostic {
+		// Fast path for a common case
+		if (!this.hasNormalize()) {
+			return diag;
+		}
+
+		let merge: Partial<Diagnostic> = {
+			location: this.normalizeLocation(diag.location),
+			description: this.normalizeDescription(diag.description),
 		};
+
+		if (diag.label !== undefined) {
+			merge.label = this.normalizeMarkup(diag.label);
+		}
+
+		if (diag.dependencies !== undefined) {
+			merge.dependencies = this.normalizeDependencies(diag.dependencies);
+		}
 
 		// Add on any specified tags
 		if (this.options.tags) {
-			merge.tags = {
-				...this.options.tags,
-				...diag.tags,
-			};
+			if (diag.tags === undefined) {
+				merge.tags = this.options.tags;
+			} else {
+				merge.tags = {
+					...this.options.tags,
+					...diag.tags,
+				};
+			}
 		}
 
 		// Add on any specified tags
@@ -359,11 +483,6 @@ export default class DiagnosticsNormalizer {
 			merge.label = diag.label ? markup`${label} (${diag.label})` : label;
 		}
 
-		diag = {
-			...diag,
-			...merge,
-		};
-
-		return diag;
+		return maybeMerge(diag, merge);
 	}
 }

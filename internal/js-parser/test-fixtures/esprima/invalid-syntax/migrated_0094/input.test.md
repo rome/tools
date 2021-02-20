@@ -10,37 +10,17 @@
 JSRoot {
 	comments: Array []
 	corrupt: false
-	filename: "esprima/invalid-syntax/migrated_0094/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "esprima/invalid-syntax/migrated_0094/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation esprima/invalid-syntax/migrated_0094/input.js 1:0-2:0
+	path: UIDPath<esprima/invalid-syntax/migrated_0094/input.js>
 	directives: Array [
 		JSDirective {
 			value: "use strict"
-			loc: Object {
-				filename: "esprima/invalid-syntax/migrated_0094/input.js"
-				end: Object {
-					column: 13
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation esprima/invalid-syntax/migrated_0094/input.js 1:0-1:13
 		}
 	]
 	diagnostics: Array [
@@ -48,65 +28,29 @@ JSRoot {
 			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse"
 				categoryValue: "js"
+				category: Array ["parse"]
 				message: RAW_MARKUP {value: "Legacy octal literals are not allowed in strict mode"}
 			}
 			location: Object {
-				filename: "esprima/invalid-syntax/migrated_0094/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 23
-					line: 1
-				}
-				start: Object {
-					column: 23
-					line: 1
-				}
+				end: Position 1:23
+				path: UIDPath<esprima/invalid-syntax/migrated_0094/input.js>
+				start: Position 1:23
 			}
 		}
 	]
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "esprima/invalid-syntax/migrated_0094/input.js"
-				end: Object {
-					column: 23
-					line: 1
-				}
-				start: Object {
-					column: 14
-					line: 1
-				}
-			}
+			loc: SourceLocation esprima/invalid-syntax/migrated_0094/input.js 1:14-1:23
 			expression: JSArrowFunctionExpression {
-				loc: Object {
-					filename: "esprima/invalid-syntax/migrated_0094/input.js"
-					end: Object {
-						column: 23
-						line: 1
-					}
-					start: Object {
-						column: 14
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/invalid-syntax/migrated_0094/input.js 1:14-1:23
 				body: JSNumericLiteral {
 					value: 0
 					format: "octal"
-					loc: Object {
-						filename: "esprima/invalid-syntax/migrated_0094/input.js"
-						end: Object {
-							column: 23
-							line: 1
-						}
-						start: Object {
-							column: 21
-							line: 1
-						}
-					}
+					loc: SourceLocation esprima/invalid-syntax/migrated_0094/input.js 1:21-1:23
 				}
 				head: JSFunctionHead {
 					async: false
@@ -114,32 +58,11 @@ JSRoot {
 					rest: undefined
 					returnType: undefined
 					thisType: undefined
-					loc: Object {
-						filename: "esprima/invalid-syntax/migrated_0094/input.js"
-						end: Object {
-							column: 20
-							line: 1
-						}
-						start: Object {
-							column: 14
-							line: 1
-						}
-					}
+					loc: SourceLocation esprima/invalid-syntax/migrated_0094/input.js 1:14-1:20
 					params: Array [
 						JSBindingIdentifier {
 							name: "a"
-							loc: Object {
-								filename: "esprima/invalid-syntax/migrated_0094/input.js"
-								identifierName: "a"
-								end: Object {
-									column: 16
-									line: 1
-								}
-								start: Object {
-									column: 15
-									line: 1
-								}
-							}
+							loc: SourceLocation esprima/invalid-syntax/migrated_0094/input.js 1:15-1:16 (a)
 						}
 					]
 				}
@@ -160,8 +83,5 @@ JSRoot {
     "use strict"; (a) => 00
                            ^
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

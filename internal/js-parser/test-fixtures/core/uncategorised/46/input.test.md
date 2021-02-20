@@ -11,69 +11,29 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "core/uncategorised/46/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "core/uncategorised/46/input.js"
-		end: Object {
-			column: 22
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation core/uncategorised/46/input.js 1:0-1:22
+	path: UIDPath<core/uncategorised/46/input.js>
 	comments: Array [
 		CommentBlock {
 			id: "0"
 			value: " block comment "
-			loc: Object {
-				filename: "core/uncategorised/46/input.js"
-				end: Object {
-					column: 19
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation core/uncategorised/46/input.js 1:0-1:19
 		}
 	]
 	body: Array [
 		JSExpressionStatement {
 			leadingComments: Array ["0"]
-			loc: Object {
-				filename: "core/uncategorised/46/input.js"
-				end: Object {
-					column: 22
-					line: 1
-				}
-				start: Object {
-					column: 20
-					line: 1
-				}
-			}
+			loc: SourceLocation core/uncategorised/46/input.js 1:20-1:22
 			expression: JSNumericLiteral {
 				value: 42
 				format: undefined
 				leadingComments: undefined
-				loc: Object {
-					filename: "core/uncategorised/46/input.js"
-					end: Object {
-						column: 22
-						line: 1
-					}
-					start: Object {
-						column: 20
-						line: 1
-					}
-				}
+				loc: SourceLocation core/uncategorised/46/input.js 1:20-1:22
 			}
 		}
 	]
@@ -83,6 +43,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

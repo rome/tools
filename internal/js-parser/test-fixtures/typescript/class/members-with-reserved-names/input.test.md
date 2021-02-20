@@ -12,110 +12,38 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "typescript/class/members-with-reserved-names/input.ts"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
+	loc: SourceLocation typescript/class/members-with-reserved-names/input.ts 1:0-4:0
+	path: UIDPath<typescript/class/members-with-reserved-names/input.ts>
 	syntax: Array ["ts"]
-	loc: Object {
-		filename: "typescript/class/members-with-reserved-names/input.ts"
-		end: Object {
-			column: 0
-			line: 4
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
 	body: Array [
 		JSClassDeclaration {
 			id: JSBindingIdentifier {
 				name: "C"
-				loc: Object {
-					filename: "typescript/class/members-with-reserved-names/input.ts"
-					identifierName: "C"
-					end: Object {
-						column: 7
-						line: 1
-					}
-					start: Object {
-						column: 6
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/class/members-with-reserved-names/input.ts 1:6-1:7 (C)
 			}
-			loc: Object {
-				filename: "typescript/class/members-with-reserved-names/input.ts"
-				end: Object {
-					column: 1
-					line: 3
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation typescript/class/members-with-reserved-names/input.ts 1:0-3:1
 			meta: JSClassHead {
 				implements: undefined
 				superClass: undefined
 				superTypeParameters: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "typescript/class/members-with-reserved-names/input.ts"
-					end: Object {
-						column: 1
-						line: 3
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/class/members-with-reserved-names/input.ts 1:0-3:1
 				body: Array [
 					TSDeclareMethod {
 						kind: "method"
 						key: JSStaticPropertyKey {
 							value: JSIdentifier {
 								name: "delete"
-								loc: Object {
-									filename: "typescript/class/members-with-reserved-names/input.ts"
-									identifierName: "delete"
-									end: Object {
-										column: 17
-										line: 2
-									}
-									start: Object {
-										column: 11
-										line: 2
-									}
-								}
+								loc: SourceLocation typescript/class/members-with-reserved-names/input.ts 2:11-2:17 (delete)
 							}
-							loc: Object {
-								filename: "typescript/class/members-with-reserved-names/input.ts"
-								end: Object {
-									column: 17
-									line: 2
-								}
-								start: Object {
-									column: 11
-									line: 2
-								}
-							}
+							loc: SourceLocation typescript/class/members-with-reserved-names/input.ts 2:11-2:17
 						}
 						body: undefined
-						loc: Object {
-							filename: "typescript/class/members-with-reserved-names/input.ts"
-							end: Object {
-								column: 26
-								line: 2
-							}
-							start: Object {
-								column: 4
-								line: 2
-							}
-						}
+						loc: SourceLocation typescript/class/members-with-reserved-names/input.ts 2:4-2:26
 						meta: JSClassPropertyMeta {
 							abstract: false
 							accessibility: "public"
@@ -123,21 +51,8 @@ JSRoot {
 							readonly: false
 							static: false
 							typeAnnotation: undefined
-							start: Object {
-								column: 4
-								line: 2
-							}
-							loc: Object {
-								filename: "typescript/class/members-with-reserved-names/input.ts"
-								end: Object {
-									column: 17
-									line: 2
-								}
-								start: Object {
-									column: 4
-									line: 2
-								}
-							}
+							loc: SourceLocation typescript/class/members-with-reserved-names/input.ts 2:4-2:17
+							start: Position 2:4
 						}
 						head: JSFunctionHead {
 							async: false
@@ -147,30 +62,8 @@ JSRoot {
 							rest: undefined
 							thisType: undefined
 							typeParameters: undefined
-							loc: Object {
-								filename: "typescript/class/members-with-reserved-names/input.ts"
-								end: Object {
-									column: 25
-									line: 2
-								}
-								start: Object {
-									column: 17
-									line: 2
-								}
-							}
-							returnType: TSVoidKeywordTypeAnnotation {
-								loc: Object {
-									filename: "typescript/class/members-with-reserved-names/input.ts"
-									end: Object {
-										column: 25
-										line: 2
-									}
-									start: Object {
-										column: 21
-										line: 2
-									}
-								}
-							}
+							loc: SourceLocation typescript/class/members-with-reserved-names/input.ts 2:17-2:25
+							returnType: TSVoidKeywordTypeAnnotation {loc: SourceLocation typescript/class/members-with-reserved-names/input.ts 2:21-2:25}
 						}
 					}
 				]
@@ -183,6 +76,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

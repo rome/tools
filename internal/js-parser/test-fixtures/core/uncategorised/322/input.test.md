@@ -12,37 +12,17 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
-	filename: "core/uncategorised/322/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "core/uncategorised/322/input.js"
-		end: Object {
-			column: 10
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation core/uncategorised/322/input.js 1:0-1:10
+	path: UIDPath<core/uncategorised/322/input.js>
 	directives: Array [
 		JSDirective {
 			value: "a\\u0026b"
-			loc: Object {
-				filename: "core/uncategorised/322/input.js"
-				end: Object {
-					column: 10
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation core/uncategorised/322/input.js 1:0-1:10
 		}
 	]
 }
@@ -51,6 +31,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

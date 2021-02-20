@@ -8,10 +8,10 @@
 import {DiagnosticLocation} from "@internal/diagnostics";
 import {toKebabCase} from "@internal/string-utils";
 import {ConsumeSourceLocationRequestTarget} from "@internal/consume";
-import {Number0, ob1Coerce0, ob1Number0Neg1, ob1Number1} from "@internal/ob1";
+import {OneIndexed, ZeroIndexed} from "@internal/math";
 import {Dict, RequiredProps} from "@internal/typescript-helpers";
 import {FlagValue} from "./Parser";
-import {AbsoluteFilePath} from "@internal/path";
+import {AbsoluteFilePath, createUIDPath} from "@internal/path";
 
 export type SerializeCLILocation = RequiredProps<
 	DiagnosticLocation,
@@ -98,20 +98,20 @@ export function serializeCLIFlags(
 	}: SerializeCLIOptions,
 	target: SerializeCLITarget,
 ): DiagnosticLocation {
-	let startColumn: Number0 = ob1Number0Neg1;
-	let endColumn: Number0 = ob1Number0Neg1;
+	let startColumn: ZeroIndexed = new ZeroIndexed(-1);
+	let endColumn: ZeroIndexed = new ZeroIndexed(-1);
 	let code = "";
 
 	function setStartColumn() {
-		startColumn = ob1Coerce0(code.length);
+		startColumn = new ZeroIndexed(code.length);
 	}
 
 	function setEndColumn() {
 		// Never point to a space
 		if (code[code.length - 1] === " ") {
-			endColumn = ob1Coerce0(code.length - 1);
+			endColumn = new ZeroIndexed(code.length - 1);
 		} else {
-			endColumn = ob1Coerce0(code.length);
+			endColumn = new ZeroIndexed(code.length);
 		}
 	}
 
@@ -236,7 +236,7 @@ export function serializeCLIFlags(
 					target.type === "flag" &&
 					(target.target === "value" || target.target === "inner-value")
 				) {
-					startColumn = ob1Coerce0(code.length);
+					startColumn = new ZeroIndexed(code.length);
 				}
 
 				// Number or string
@@ -259,18 +259,18 @@ export function serializeCLIFlags(
 		printArgs();
 	}
 
-	if (startColumn === ob1Number0Neg1 || endColumn === ob1Number0Neg1) {
-		startColumn = ob1Coerce0(code.length - 1);
+	if (startColumn.valueOf() === -1 || endColumn.valueOf() === -1) {
+		startColumn = new ZeroIndexed(code.length - 1);
 		endColumn = startColumn;
 	}
 
 	let start: DiagnosticLocation["start"] = {
-		line: ob1Number1,
+		line: new OneIndexed(),
 		column: startColumn,
 	};
 
 	let end: DiagnosticLocation["end"] = {
-		line: ob1Number1,
+		line: new OneIndexed(),
 		column: endColumn,
 	};
 
@@ -283,7 +283,7 @@ export function serializeCLIFlags(
 		language: "shell",
 		integrity: undefined,
 		sourceText: code.trimRight(),
-		filename: "argv",
+		path: createUIDPath("argv"),
 		start,
 		end,
 	};

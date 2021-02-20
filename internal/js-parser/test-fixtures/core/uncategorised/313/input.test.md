@@ -12,92 +12,30 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "core/uncategorised/313/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "core/uncategorised/313/input.js"
-		end: Object {
-			column: 8
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation core/uncategorised/313/input.js 1:0-2:8
+	path: UIDPath<core/uncategorised/313/input.js>
 	body: Array [
 		JSBlockStatement {
 			directives: Array []
-			loc: Object {
-				filename: "core/uncategorised/313/input.js"
-				end: Object {
-					column: 8
-					line: 2
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation core/uncategorised/313/input.js 1:0-2:8
 			body: Array [
 				JSThrowStatement {
-					loc: Object {
-						filename: "core/uncategorised/313/input.js"
-						end: Object {
-							column: 13
-							line: 1
-						}
-						start: Object {
-							column: 2
-							line: 1
-						}
-					}
+					loc: SourceLocation core/uncategorised/313/input.js 1:2-1:13
 					argument: JSReferenceIdentifier {
 						name: "error"
-						loc: Object {
-							filename: "core/uncategorised/313/input.js"
-							identifierName: "error"
-							end: Object {
-								column: 13
-								line: 1
-							}
-							start: Object {
-								column: 8
-								line: 1
-							}
-						}
+						loc: SourceLocation core/uncategorised/313/input.js 1:8-1:13 (error)
 					}
 				}
 				JSExpressionStatement {
-					loc: Object {
-						filename: "core/uncategorised/313/input.js"
-						end: Object {
-							column: 6
-							line: 2
-						}
-						start: Object {
-							column: 0
-							line: 2
-						}
-					}
+					loc: SourceLocation core/uncategorised/313/input.js 2:0-2:6
 					expression: JSReferenceIdentifier {
 						name: "error"
-						loc: Object {
-							filename: "core/uncategorised/313/input.js"
-							identifierName: "error"
-							end: Object {
-								column: 5
-								line: 2
-							}
-							start: Object {
-								column: 0
-								line: 2
-							}
-						}
+						loc: SourceLocation core/uncategorised/313/input.js 2:0-2:5 (error)
 					}
 				}
 			]
@@ -109,6 +47,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

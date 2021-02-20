@@ -27,16 +27,22 @@ import {
 	DiagnosticSuppressions,
 	DiagnosticsProcessor,
 	descriptions,
-	joinCategoryName,
+	equalCategoryNames,
+	formatCategoryDescription,
 } from "@internal/diagnostics";
 import Record from "./Record";
 import {RootScope} from "../scope/Scope";
 import {reduceNode} from "../methods/reduce";
-import {UnknownPath, createUnknownPath} from "@internal/path";
+import {
+	AbsoluteFilePath,
+	AbsoluteFilePathSet,
+	AnyPath,
+	equalPaths,
+} from "@internal/path";
 import {
 	AnyVisitor,
+	CompilerProject,
 	LintCompilerOptionsDecision,
-	TransformProjectDefinition,
 	Visitor,
 } from "../types";
 import {createSuppressionsVisitor, matchesSuppression} from "../suppressions";
@@ -63,7 +69,7 @@ export type ContextArg = {
 	ast: AnyRoot;
 	suppressions?: DiagnosticSuppressions;
 	ref?: FileReference;
-	project?: TransformProjectDefinition;
+	project?: CompilerProject;
 	frozen?: boolean;
 	options?: CompilerOptions;
 	origin?: DiagnosticOrigin;
@@ -71,7 +77,6 @@ export type ContextArg = {
 
 type AddDiagnosticResult = {
 	loc: undefined | DiagnosticLocation;
-	diagnostic: undefined | Diagnostic;
 	suppressed: boolean;
 };
 
@@ -97,27 +102,22 @@ export default class CompilerContext {
 			ref,
 			frozen = false,
 			options = {},
-			project = {
-				configHashes: [],
-				directory: undefined,
-				config: createDefaultProjectConfig(),
-			},
+			project,
 			suppressions = [],
 		} = arg;
 
 		this.records = [];
 
 		this.ast = ast;
-		this.path = createUnknownPath(ast.filename);
-		this.filename = ast.filename;
+		this.path = ast.path;
 		this.displayFilename =
-			ref === undefined ? ast.filename : ref.relative.join();
+			ref === undefined ? ast.path.join() : ref.relative.join();
 		this.frozen = frozen;
 		this.integrity = ast.integrity;
-		this.project = project;
+		this.project = CompilerContext.normalizeProject(project);
 		this.options = options;
 		this.origin = origin;
-		this.cacheDependencies = new Set();
+		this.cacheDependencies = new AbsoluteFilePathSet();
 		this.language = inferDiagnosticLanguageFromRootAST(ast);
 		this.sourceTypeJS = ast.type === "JSRoot" ? ast.sourceType : undefined;
 		this.rootScope = new RootScope(this, ast);
@@ -136,11 +136,10 @@ export default class CompilerContext {
 	}
 
 	private visitorStates: ExtendedMap<AnyVisitor, AnyVisitorState>;
-	public displayFilename: string;
-	public filename: string;
 	private integrity: undefined | DiagnosticIntegrity;
-	public path: UnknownPath;
-	public project: TransformProjectDefinition;
+	public displayFilename: string;
+	public path: AnyPath;
+	public project: CompilerProject;
 	public language: DiagnosticLanguage;
 	private sourceTypeJS: undefined | ConstJSSourceType;
 	private reducedRoot: boolean;
@@ -148,7 +147,7 @@ export default class CompilerContext {
 	private ast: AnyRoot;
 
 	public comments: CommentsConsumer;
-	private cacheDependencies: Set<string>;
+	private cacheDependencies: AbsoluteFilePathSet;
 	public records: Record[];
 
 	public diagnostics: DiagnosticsProcessor;
@@ -158,6 +157,18 @@ export default class CompilerContext {
 	public frozen: boolean;
 	private origin: undefined | DiagnosticOrigin;
 	public options: CompilerOptions;
+
+	public static normalizeProject(
+		project: undefined | CompilerProject,
+	): CompilerProject {
+		if (project === undefined) {
+			return {
+				config: createDefaultProjectConfig(),
+			};
+		} else {
+			return project;
+		}
+	}
 
 	public getVisitorState<State extends UnknownObject>(
 		visitor: Visitor<State>,
@@ -182,7 +193,7 @@ export default class CompilerContext {
 		const nonOverlapSuppressions = new Map();
 
 		for (const suppression of this.suppressions) {
-			const key = joinCategoryName(suppression);
+			const key = formatCategoryDescription(suppression);
 
 			if (!nonOverlapSuppressions.has(key)) {
 				nonOverlapSuppressions.set(key, suppression);
@@ -225,12 +236,12 @@ export default class CompilerContext {
 		return false;
 	}
 
-	public getCacheDependencies(): string[] {
+	public getCacheDependencies(): AbsoluteFilePath[] {
 		return Array.from(this.cacheDependencies);
 	}
 
-	public addCacheDependency(filename: string) {
-		this.cacheDependencies.add(filename);
+	public addCacheDependency(path: AbsoluteFilePath) {
+		this.cacheDependencies.add(path);
 	}
 
 	public reduceRoot(
@@ -316,9 +327,9 @@ export default class CompilerContext {
 			origins = origins.concat(contextDiag.origins);
 		}
 
-		if (loc !== undefined && loc.filename !== this.filename) {
+		if (loc !== undefined && !equalPaths(loc.path, this.path)) {
 			throw new Error(
-				`Trying to add a location from ${loc.filename} on a Context from ${this.path}`,
+				`Trying to add a location from ${loc.path} on a Context from ${this.path}`,
 			);
 		}
 
@@ -365,7 +376,7 @@ export default class CompilerContext {
 			};
 		}
 
-		const diagnostic = this.diagnostics.addDiagnostic({
+		this.diagnostics.addDiagnostic({
 			...diag,
 			tags,
 			description: {
@@ -375,7 +386,7 @@ export default class CompilerContext {
 			location: {
 				marker,
 				integrity: this.integrity,
-				filename: this.filename,
+				path: this.path,
 				start: loc === undefined ? undefined : loc.start,
 				end: loc === undefined ? undefined : loc.end,
 				sourceTypeJS: this.sourceTypeJS,
@@ -397,7 +408,7 @@ export default class CompilerContext {
 			);
 			for (const {category, categoryValue, action} of decisions) {
 				if (
-					category === diagCategory &&
+					equalCategoryNames(category, diagCategory) &&
 					action === "fix" &&
 					categoryValue === diagCategoryValue
 				) {
@@ -408,7 +419,6 @@ export default class CompilerContext {
 
 		return {
 			loc,
-			diagnostic,
 			suppressed,
 		};
 	}

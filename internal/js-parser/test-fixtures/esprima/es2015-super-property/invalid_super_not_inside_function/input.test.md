@@ -11,128 +11,49 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "esprima/es2015-super-property/invalid_super_not_inside_function/input.js"
 	hasHoistedVars: true
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "esprima/es2015-super-property/invalid_super_not_inside_function/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation esprima/es2015-super-property/invalid_super_not_inside_function/input.js 1:0-2:0
+	path: UIDPath<esprima/es2015-super-property/invalid_super_not_inside_function/input.js>
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse"
 				categoryValue: "js"
+				category: Array ["parse"]
 				message: RAW_MARKUP {value: "super is only allowed in object methods and classes"}
 			}
 			location: Object {
-				filename: "esprima/es2015-super-property/invalid_super_not_inside_function/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 7
-					line: 1
-				}
-				start: Object {
-					column: 8
-					line: 1
-				}
+				end: Position 1:7
+				path: UIDPath<esprima/es2015-super-property/invalid_super_not_inside_function/input.js>
+				start: Position 1:8
 			}
 		}
 	]
 	body: Array [
 		JSVariableDeclarationStatement {
-			loc: Object {
-				filename: "esprima/es2015-super-property/invalid_super_not_inside_function/input.js"
-				end: Object {
-					column: 16
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation esprima/es2015-super-property/invalid_super_not_inside_function/input.js 1:0-1:16
 			declaration: JSVariableDeclaration {
 				kind: "var"
-				loc: Object {
-					filename: "esprima/es2015-super-property/invalid_super_not_inside_function/input.js"
-					end: Object {
-						column: 16
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/es2015-super-property/invalid_super_not_inside_function/input.js 1:0-1:16
 				declarations: Array [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "x"
-							loc: Object {
-								filename: "esprima/es2015-super-property/invalid_super_not_inside_function/input.js"
-								identifierName: "x"
-								end: Object {
-									column: 5
-									line: 1
-								}
-								start: Object {
-									column: 4
-									line: 1
-								}
-							}
+							loc: SourceLocation esprima/es2015-super-property/invalid_super_not_inside_function/input.js 1:4-1:5 (x)
 						}
-						loc: Object {
-							filename: "esprima/es2015-super-property/invalid_super_not_inside_function/input.js"
-							end: Object {
-								column: 15
-								line: 1
-							}
-							start: Object {
-								column: 4
-								line: 1
-							}
-						}
+						loc: SourceLocation esprima/es2015-super-property/invalid_super_not_inside_function/input.js 1:4-1:15
 						init: JSCallExpression {
 							arguments: Array []
-							loc: Object {
-								filename: "esprima/es2015-super-property/invalid_super_not_inside_function/input.js"
-								end: Object {
-									column: 15
-									line: 1
-								}
-								start: Object {
-									column: 8
-									line: 1
-								}
-							}
-							callee: JSSuper {
-								loc: Object {
-									filename: "esprima/es2015-super-property/invalid_super_not_inside_function/input.js"
-									end: Object {
-										column: 13
-										line: 1
-									}
-									start: Object {
-										column: 8
-										line: 1
-									}
-								}
-							}
+							callee: JSSuper {loc: SourceLocation esprima/es2015-super-property/invalid_super_not_inside_function/input.js 1:8-1:13}
+							loc: SourceLocation esprima/es2015-super-property/invalid_super_not_inside_function/input.js 1:8-1:15
 						}
 					}
 				]
@@ -153,8 +74,5 @@ JSRoot {
     var x = super();
             ^
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

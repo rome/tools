@@ -15,16 +15,9 @@ import {
 import {SourceMapConsumer} from "@internal/codec-source-map";
 import {Position, derivePositionKey} from "@internal/parser-core";
 import {urlToFilename} from "./utils";
-import {
-	Number0,
-	Number1,
-	ob1Coerce0,
-	ob1Get0,
-	ob1Inc,
-	ob1Number0,
-	ob1Number1,
-} from "@internal/ob1";
+import {OneIndexed, ZeroIndexed} from "@internal/math";
 import inspector = require("inspector");
+import {MixedPathMap} from "@internal/path";
 
 function createCoverageFileStats(
 	covered: number,
@@ -101,11 +94,11 @@ export default class CoverageCollector {
 			const {ranges, code, map} = data;
 
 			// Turn an index into a position in the compiled source
-			let line: Number1 = ob1Number1;
-			let column: Number0 = ob1Number0;
-			let index: Number0 = ob1Number0;
-			const indexCache: Map<Number0, Position> = new Map();
-			function findIndex(newIndex: Number0): Position {
+			let line: OneIndexed = new OneIndexed();
+			let column: ZeroIndexed = new ZeroIndexed();
+			let index: ZeroIndexed = new ZeroIndexed();
+			const indexCache: Map<ZeroIndexed, Position> = new Map();
+			function findIndex(newIndex: ZeroIndexed): Position {
 				const cached = indexCache.get(newIndex);
 				if (cached !== undefined) {
 					return cached;
@@ -115,21 +108,21 @@ export default class CoverageCollector {
 					throw new Error(`Expected newIndex(${newIndex}) >= index(${index})`);
 				}
 
-				if (ob1Get0(newIndex) > code.length) {
+				if (newIndex.valueOf() > code.length) {
 					throw new Error(
 						`Expected newIndex(${newIndex}) <= code.length(${code.length})`,
 					);
 				}
 
 				while (index < newIndex) {
-					const char = code[ob1Get0(index)];
+					const char = code[index.valueOf()];
 					if (char === "\n") {
-						line = ob1Inc(line);
-						column = ob1Number0;
+						line = line.increment();
+						column = new ZeroIndexed();
 					} else {
-						column = ob1Inc(column);
+						column = column.increment();
 					}
-					index = ob1Inc(index);
+					index = index.increment();
 				}
 
 				const pos: Position = {
@@ -141,20 +134,20 @@ export default class CoverageCollector {
 			}
 
 			// Prefetch all sorted indexes
-			const offsets: Number0[] = [];
+			const offsets: ZeroIndexed[] = [];
 			for (const {startOffset, endOffset} of ranges) {
-				offsets.push(ob1Coerce0(startOffset));
-				offsets.push(ob1Coerce0(endOffset));
+				offsets.push(new ZeroIndexed(startOffset));
+				offsets.push(new ZeroIndexed(endOffset));
 			}
-			offsets.sort((a, b) => ob1Get0(a) - ob1Get0(b));
+			offsets.sort((a, b) => a.valueOf() - b.valueOf());
 			for (const index of offsets) {
 				findIndex(index);
 			}
 
 			//
 			for (const {kind, startOffset, endOffset, count} of ranges) {
-				const originalStart = findIndex(ob1Coerce0(startOffset));
-				const originalEnd = findIndex(ob1Coerce0(endOffset));
+				const originalStart = findIndex(new ZeroIndexed(startOffset));
+				const originalEnd = findIndex(new ZeroIndexed(endOffset));
 
 				const sourceStart = map.approxOriginalPositionFor(
 					originalStart.line,
@@ -189,7 +182,7 @@ export default class CoverageCollector {
 
 				const loc: CoverageLocationRange = {
 					kind,
-					filename: sourceStart.source,
+					path: sourceStart.source,
 					count,
 					start: {
 						line: sourceStart.line,
@@ -208,29 +201,29 @@ export default class CoverageCollector {
 		}
 
 		// Assemble files
-		const rangesByFile: Map<string, CoverageLocationRange[]> = new Map();
+		const rangesByFile: MixedPathMap<CoverageLocationRange[]> = new MixedPathMap();
 		for (const loc of locs) {
-			let ranges = rangesByFile.get(loc.filename);
+			let ranges = rangesByFile.get(loc.path);
 			if (ranges === undefined) {
 				ranges = [];
-				rangesByFile.set(loc.filename, ranges);
+				rangesByFile.set(loc.path, ranges);
 			}
 			ranges.push(loc);
 		}
 
 		const files: CoverageFile[] = [];
-		for (const [filename, ranges] of rangesByFile) {
-			const coveredLines: Set<Number1> = new Set();
-			const uncoveredLines: Set<Number1> = new Set();
+		for (const [path, ranges] of rangesByFile) {
+			const coveredLines: Set<OneIndexed> = new Set();
+			const uncoveredLines: Set<OneIndexed> = new Set();
 
-			let uncoveredFunctions: Set<Number1> = new Set();
-			let coveredFunctions: Set<Number1> = new Set();
+			let uncoveredFunctions: Set<OneIndexed> = new Set();
+			let coveredFunctions: Set<OneIndexed> = new Set();
 			let uncoveredBranches: Set<string> = new Set();
 			let coveredBranches: Set<string> = new Set();
 
 			for (const {count, kind, start, end} of ranges) {
 				// Fill in lines
-				for (let i = start.line; i <= end.line; i = ob1Inc(i)) {
+				for (let i = start.line; i <= end.line; i = i.increment()) {
 					if (count === 0) {
 						uncoveredLines.add(i);
 					} else {
@@ -278,7 +271,7 @@ export default class CoverageCollector {
 			}
 
 			files.push({
-				filename,
+				path,
 				lines: createCoverageFileStats(coveredLines.size, uncoveredLines.size),
 				branches: createCoverageFileStats(
 					coveredBranches.size,

@@ -11,69 +11,28 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "typescript/class/abstract-false-positive/input.ts"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
+	loc: SourceLocation typescript/class/abstract-false-positive/input.ts 1:0-3:0
+	path: UIDPath<typescript/class/abstract-false-positive/input.ts>
 	syntax: Array ["ts"]
-	loc: Object {
-		filename: "typescript/class/abstract-false-positive/input.ts"
-		end: Object {
-			column: 0
-			line: 3
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
 	comments: Array [
 		CommentLine {
 			id: "0"
 			value: " Exports an identifier, doesn't try parsing `abstract class`"
-			loc: Object {
-				filename: "typescript/class/abstract-false-positive/input.ts"
-				end: Object {
-					column: 62
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation typescript/class/abstract-false-positive/input.ts 1:0-1:62
 		}
 	]
 	body: Array [
 		JSExportDefaultDeclaration {
 			leadingComments: Array ["0"]
-			loc: Object {
-				filename: "typescript/class/abstract-false-positive/input.ts"
-				end: Object {
-					column: 24
-					line: 2
-				}
-				start: Object {
-					column: 0
-					line: 2
-				}
-			}
+			loc: SourceLocation typescript/class/abstract-false-positive/input.ts 2:0-2:24
 			declaration: JSReferenceIdentifier {
 				name: "abstract"
 				leadingComments: undefined
-				loc: Object {
-					filename: "typescript/class/abstract-false-positive/input.ts"
-					identifierName: "abstract"
-					end: Object {
-						column: 23
-						line: 2
-					}
-					start: Object {
-						column: 15
-						line: 2
-					}
-				}
+				loc: SourceLocation typescript/class/abstract-false-positive/input.ts 2:15-2:23 (abstract)
 			}
 		}
 	]
@@ -83,6 +42,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

@@ -11,244 +11,79 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "es2015/shorthand/2/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2015/shorthand/2/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2015/shorthand/2/input.js 1:0-2:0
+	path: UIDPath<es2015/shorthand/2/input.js>
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse"
 				categoryValue: "js"
-				message: Array [
-					RAW_MARKUP {value: "Unexpected keyword "}
-					"this"
-				]
+				category: Array ["parse"]
+				message: RAW_MARKUP {value: "Unexpected keyword <emphasis>this</emphasis>"}
 			}
 			location: Object {
-				filename: "es2015/shorthand/2/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 12
-					line: 1
-				}
-				start: Object {
-					column: 8
-					line: 1
-				}
+				end: Position 1:12
+				path: UIDPath<es2015/shorthand/2/input.js>
+				start: Position 1:8
 			}
 		}
 	]
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "es2015/shorthand/2/input.js"
-				end: Object {
-					column: 20
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2015/shorthand/2/input.js 1:0-1:20
 			expression: JSObjectExpression {
-				loc: Object {
-					filename: "es2015/shorthand/2/input.js"
-					end: Object {
-						column: 18
-						line: 1
-					}
-					start: Object {
-						column: 1
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/shorthand/2/input.js 1:1-1:18
 				properties: Array [
 					JSObjectProperty {
 						key: JSStaticPropertyKey {
 							value: JSIdentifier {
 								name: "get"
-								loc: Object {
-									filename: "es2015/shorthand/2/input.js"
-									identifierName: "get"
-									end: Object {
-										column: 6
-										line: 1
-									}
-									start: Object {
-										column: 3
-										line: 1
-									}
-								}
+								loc: SourceLocation es2015/shorthand/2/input.js 1:3-1:6 (get)
 							}
-							loc: Object {
-								filename: "es2015/shorthand/2/input.js"
-								end: Object {
-									column: 6
-									line: 1
-								}
-								start: Object {
-									column: 3
-									line: 1
-								}
-							}
+							loc: SourceLocation es2015/shorthand/2/input.js 1:3-1:6
 						}
 						value: JSReferenceIdentifier {
 							name: "get"
-							loc: Object {
-								filename: "es2015/shorthand/2/input.js"
-								identifierName: "get"
-								end: Object {
-									column: 6
-									line: 1
-								}
-								start: Object {
-									column: 3
-									line: 1
-								}
-							}
+							loc: SourceLocation es2015/shorthand/2/input.js 1:3-1:6 (get)
 						}
-						loc: Object {
-							filename: "es2015/shorthand/2/input.js"
-							end: Object {
-								column: 6
-								line: 1
-							}
-							start: Object {
-								column: 3
-								line: 1
-							}
-						}
+						loc: SourceLocation es2015/shorthand/2/input.js 1:3-1:6
 					}
 					JSObjectProperty {
 						key: JSStaticPropertyKey {
 							value: JSIdentifier {
 								name: "this"
-								loc: Object {
-									filename: "es2015/shorthand/2/input.js"
-									identifierName: "this"
-									end: Object {
-										column: 12
-										line: 1
-									}
-									start: Object {
-										column: 8
-										line: 1
-									}
-								}
+								loc: SourceLocation es2015/shorthand/2/input.js 1:8-1:12 (this)
 							}
-							loc: Object {
-								filename: "es2015/shorthand/2/input.js"
-								end: Object {
-									column: 12
-									line: 1
-								}
-								start: Object {
-									column: 8
-									line: 1
-								}
-							}
+							loc: SourceLocation es2015/shorthand/2/input.js 1:8-1:12
 						}
 						value: JSReferenceIdentifier {
 							name: "this"
-							loc: Object {
-								filename: "es2015/shorthand/2/input.js"
-								identifierName: "this"
-								end: Object {
-									column: 12
-									line: 1
-								}
-								start: Object {
-									column: 8
-									line: 1
-								}
-							}
+							loc: SourceLocation es2015/shorthand/2/input.js 1:8-1:12 (this)
 						}
-						loc: Object {
-							filename: "es2015/shorthand/2/input.js"
-							end: Object {
-								column: 12
-								line: 1
-							}
-							start: Object {
-								column: 8
-								line: 1
-							}
-						}
+						loc: SourceLocation es2015/shorthand/2/input.js 1:8-1:12
 					}
 					JSObjectProperty {
 						key: JSStaticPropertyKey {
 							value: JSIdentifier {
 								name: "if"
-								loc: Object {
-									filename: "es2015/shorthand/2/input.js"
-									identifierName: "if"
-									end: Object {
-										column: 16
-										line: 1
-									}
-									start: Object {
-										column: 14
-										line: 1
-									}
-								}
+								loc: SourceLocation es2015/shorthand/2/input.js 1:14-1:16 (if)
 							}
-							loc: Object {
-								filename: "es2015/shorthand/2/input.js"
-								end: Object {
-									column: 16
-									line: 1
-								}
-								start: Object {
-									column: 14
-									line: 1
-								}
-							}
+							loc: SourceLocation es2015/shorthand/2/input.js 1:14-1:16
 						}
 						value: JSReferenceIdentifier {
 							name: "if"
-							loc: Object {
-								filename: "es2015/shorthand/2/input.js"
-								identifierName: "if"
-								end: Object {
-									column: 16
-									line: 1
-								}
-								start: Object {
-									column: 14
-									line: 1
-								}
-							}
+							loc: SourceLocation es2015/shorthand/2/input.js 1:14-1:16 (if)
 						}
-						loc: Object {
-							filename: "es2015/shorthand/2/input.js"
-							end: Object {
-								column: 16
-								line: 1
-							}
-							start: Object {
-								column: 14
-								line: 1
-							}
-						}
+						loc: SourceLocation es2015/shorthand/2/input.js 1:14-1:16
 					}
 				]
 			}
@@ -268,8 +103,5 @@ JSRoot {
     ({ get, this, if });
             ^^^^
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

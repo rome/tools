@@ -12,80 +12,28 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "esprima/es2015-super-property/super_computed/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "esprima/es2015-super-property/super_computed/input.js"
-		end: Object {
-			column: 0
-			line: 6
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation esprima/es2015-super-property/super_computed/input.js 1:0-6:0
+	path: UIDPath<esprima/es2015-super-property/super_computed/input.js>
 	body: Array [
 		JSClassDeclaration {
 			id: JSBindingIdentifier {
 				name: "A"
-				loc: Object {
-					filename: "esprima/es2015-super-property/super_computed/input.js"
-					identifierName: "A"
-					end: Object {
-						column: 7
-						line: 1
-					}
-					start: Object {
-						column: 6
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/es2015-super-property/super_computed/input.js 1:6-1:7 (A)
 			}
-			loc: Object {
-				filename: "esprima/es2015-super-property/super_computed/input.js"
-				end: Object {
-					column: 1
-					line: 5
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation esprima/es2015-super-property/super_computed/input.js 1:0-5:1
 			meta: JSClassHead {
 				implements: undefined
 				superTypeParameters: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "esprima/es2015-super-property/super_computed/input.js"
-					end: Object {
-						column: 1
-						line: 5
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/es2015-super-property/super_computed/input.js 1:0-5:1
 				superClass: JSReferenceIdentifier {
 					name: "B"
-					loc: Object {
-						filename: "esprima/es2015-super-property/super_computed/input.js"
-						identifierName: "B"
-						end: Object {
-							column: 17
-							line: 1
-						}
-						start: Object {
-							column: 16
-							line: 1
-						}
-					}
+					loc: SourceLocation esprima/es2015-super-property/super_computed/input.js 1:16-1:17 (B)
 				}
 				body: Array [
 					JSClassMethod {
@@ -93,41 +41,20 @@ JSRoot {
 						key: JSStaticPropertyKey {
 							value: JSIdentifier {
 								name: "X"
-								loc: Object {
-									filename: "esprima/es2015-super-property/super_computed/input.js"
-									identifierName: "X"
-									end: Object {
-										column: 5
-										line: 2
-									}
-									start: Object {
-										column: 4
-										line: 2
-									}
-								}
+								loc: SourceLocation esprima/es2015-super-property/super_computed/input.js 2:4-2:5 (X)
 							}
-							loc: Object {
-								filename: "esprima/es2015-super-property/super_computed/input.js"
-								end: Object {
-									column: 5
-									line: 2
-								}
-								start: Object {
-									column: 4
-									line: 2
-								}
-							}
+							loc: SourceLocation esprima/es2015-super-property/super_computed/input.js 2:4-2:5
 						}
-						loc: Object {
-							filename: "esprima/es2015-super-property/super_computed/input.js"
-							end: Object {
-								column: 5
-								line: 4
-							}
-							start: Object {
-								column: 4
-								line: 2
-							}
+						loc: SourceLocation esprima/es2015-super-property/super_computed/input.js 2:4-4:5
+						meta: JSClassPropertyMeta {
+							abstract: false
+							accessibility: undefined
+							optional: false
+							readonly: false
+							static: false
+							typeAnnotation: undefined
+							loc: SourceLocation esprima/es2015-super-property/super_computed/input.js 2:4-2:5
+							start: Position 2:4
 						}
 						head: JSFunctionHead {
 							async: false
@@ -138,119 +65,24 @@ JSRoot {
 							returnType: undefined
 							thisType: undefined
 							typeParameters: undefined
-							loc: Object {
-								filename: "esprima/es2015-super-property/super_computed/input.js"
-								end: Object {
-									column: 7
-									line: 2
-								}
-								start: Object {
-									column: 5
-									line: 2
-								}
-							}
-						}
-						meta: JSClassPropertyMeta {
-							abstract: false
-							accessibility: undefined
-							optional: false
-							readonly: false
-							static: false
-							typeAnnotation: undefined
-							start: Object {
-								column: 4
-								line: 2
-							}
-							loc: Object {
-								filename: "esprima/es2015-super-property/super_computed/input.js"
-								end: Object {
-									column: 5
-									line: 2
-								}
-								start: Object {
-									column: 4
-									line: 2
-								}
-							}
+							loc: SourceLocation esprima/es2015-super-property/super_computed/input.js 2:5-2:7
 						}
 						body: JSBlockStatement {
 							directives: Array []
-							loc: Object {
-								filename: "esprima/es2015-super-property/super_computed/input.js"
-								end: Object {
-									column: 5
-									line: 4
-								}
-								start: Object {
-									column: 8
-									line: 2
-								}
-							}
+							loc: SourceLocation esprima/es2015-super-property/super_computed/input.js 2:8-4:5
 							body: Array [
 								JSReturnStatement {
-									loc: Object {
-										filename: "esprima/es2015-super-property/super_computed/input.js"
-										end: Object {
-											column: 23
-											line: 3
-										}
-										start: Object {
-											column: 8
-											line: 3
-										}
-									}
+									loc: SourceLocation esprima/es2015-super-property/super_computed/input.js 3:8-3:23
 									argument: JSMemberExpression {
-										loc: Object {
-											filename: "esprima/es2015-super-property/super_computed/input.js"
-											end: Object {
-												column: 23
-												line: 3
-											}
-											start: Object {
-												column: 15
-												line: 3
-											}
-										}
-										object: JSSuper {
-											loc: Object {
-												filename: "esprima/es2015-super-property/super_computed/input.js"
-												end: Object {
-													column: 20
-													line: 3
-												}
-												start: Object {
-													column: 15
-													line: 3
-												}
-											}
-										}
+										loc: SourceLocation esprima/es2015-super-property/super_computed/input.js 3:15-3:23
+										object: JSSuper {loc: SourceLocation esprima/es2015-super-property/super_computed/input.js 3:15-3:20}
 										property: JSComputedMemberProperty {
 											value: JSNumericLiteral {
 												value: 1
 												format: undefined
-												loc: Object {
-													filename: "esprima/es2015-super-property/super_computed/input.js"
-													end: Object {
-														column: 22
-														line: 3
-													}
-													start: Object {
-														column: 21
-														line: 3
-													}
-												}
+												loc: SourceLocation esprima/es2015-super-property/super_computed/input.js 3:21-3:22
 											}
-											loc: Object {
-												filename: "esprima/es2015-super-property/super_computed/input.js"
-												end: Object {
-													column: 23
-													line: 3
-												}
-												start: Object {
-													column: 20
-													line: 3
-												}
-											}
+											loc: SourceLocation esprima/es2015-super-property/super_computed/input.js 3:20-3:23
 										}
 									}
 								}
@@ -267,6 +99,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

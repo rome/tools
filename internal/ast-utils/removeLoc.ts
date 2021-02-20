@@ -8,10 +8,9 @@
 import {
 	AnyNode,
 	AnyNodes,
-	MOCK_PROGRAM,
+	MOCK_JS_ROOT,
 	NodeBaseWithComments,
 } from "@internal/ast";
-import {createDefaultProjectConfig} from "@internal/project";
 import {AnyVisitors, CompilerContext, Path, signals} from "@internal/compiler";
 import {SourceLocation} from "@internal/parser-core";
 
@@ -52,12 +51,7 @@ const removeLocTransform: AnyVisitors = [
 
 export function removeLoc(ast: AnyNode): AnyNodes {
 	const context = new CompilerContext({
-		ast: MOCK_PROGRAM,
-		project: {
-			configHashes: [],
-			directory: undefined,
-			config: createDefaultProjectConfig(),
-		},
+		ast: MOCK_JS_ROOT,
 	});
 	return context.reduce(ast, removeLocTransform);
 }

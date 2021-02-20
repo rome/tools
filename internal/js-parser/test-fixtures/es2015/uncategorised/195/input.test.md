@@ -12,36 +12,16 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "es2015/uncategorised/195/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2015/uncategorised/195/input.js"
-		end: Object {
-			column: 8
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2015/uncategorised/195/input.js 1:0-1:8
+	path: UIDPath<es2015/uncategorised/195/input.js>
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "es2015/uncategorised/195/input.js"
-				end: Object {
-					column: 8
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2015/uncategorised/195/input.js 1:0-1:8
 			expression: JSRegExpLiteral {
 				global: false
 				insensitive: false
@@ -49,83 +29,23 @@ JSRoot {
 				noDotNewline: false
 				sticky: false
 				unicode: true
-				loc: Object {
-					filename: "es2015/uncategorised/195/input.js"
-					end: Object {
-						column: 8
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/uncategorised/195/input.js 1:0-1:8
 				expression: JSRegExpSubExpression {
-					loc: Object {
-						filename: "es2015/uncategorised/195/input.js"
-						end: Object {
-							column: 5
-							line: 1
-						}
-						start: Object {
-							column: 1
-							line: 1
-						}
-					}
+					loc: SourceLocation es2015/uncategorised/195/input.js 1:1-1:5
 					body: Array [
 						JSRegExpCharSet {
 							invert: false
-							loc: Object {
-								filename: "es2015/uncategorised/195/input.js"
-								end: Object {
-									column: 5
-									line: 1
-								}
-								start: Object {
-									column: 1
-									line: 1
-								}
-							}
+							loc: SourceLocation es2015/uncategorised/195/input.js 1:1-1:5
 							body: Array [
 								JSRegExpCharSetRange {
-									loc: Object {
-										filename: "es2015/uncategorised/195/input.js"
-										end: Object {
-											column: 5
-											line: 1
-										}
-										start: Object {
-											column: 2
-											line: 1
-										}
-									}
+									loc: SourceLocation es2015/uncategorised/195/input.js 1:2-1:5
 									end: JSRegExpCharacter {
 										value: "z"
-										loc: Object {
-											filename: "es2015/uncategorised/195/input.js"
-											end: Object {
-												column: 5
-												line: 1
-											}
-											start: Object {
-												column: 4
-												line: 1
-											}
-										}
+										loc: SourceLocation es2015/uncategorised/195/input.js 1:4-1:5
 									}
 									start: JSRegExpCharacter {
 										value: "a"
-										loc: Object {
-											filename: "es2015/uncategorised/195/input.js"
-											end: Object {
-												column: 3
-												line: 1
-											}
-											start: Object {
-												column: 2
-												line: 1
-											}
-										}
+										loc: SourceLocation es2015/uncategorised/195/input.js 1:2-1:3
 									}
 								}
 							]
@@ -141,6 +61,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

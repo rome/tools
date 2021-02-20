@@ -5,15 +5,50 @@
  * LICENSE file in the root directory of this source tree.
  */
 
+const shortSuffixes = {
+	ms: "ms",
+	s: "s",
+	m: "m",
+	h: "h",
+};
+
+const longSuffixes = {
+	ms: "millisecond",
+	s: "second",
+	m: "minute",
+	h: "hour",
+};
+
+function format(
+	key: keyof typeof shortSuffixes,
+	num: string | number,
+	longform: boolean,
+): string {
+	const str = String(num);
+	if (longform) {
+		let suffix = longSuffixes[key];
+		if (str !== "1") {
+			suffix += "s";
+		}
+		return `${str} ${suffix} `;
+	} else {
+		return `${str}${shortSuffixes[key]}`;
+	}
+}
+
 export function humanizeDuration(
 	ms: number,
-	allowMilliseconds: boolean = false,
+	{allowMilliseconds = false, longform = false, secondFractionDigits = 2}: {
+		allowMilliseconds?: boolean;
+		secondFractionDigits?: number;
+		longform?: boolean;
+	} = {},
 ): string {
 	if (ms === 0) {
 		if (allowMilliseconds) {
-			return "0ms";
+			return format("ms", 0, longform);
 		} else {
-			return "0s";
+			return format("s", 0, longform);
 		}
 	}
 
@@ -23,19 +58,35 @@ export function humanizeDuration(
 
 	if (h === 0 && m === 0 && s === 0) {
 		if (allowMilliseconds) {
-			return `${ms}ms`;
+			return format("ms", ms, longform);
 		} else {
-			return `${(ms / 1_000).toFixed(2)}s`;
+			return format("s", (ms / 1_000).toFixed(secondFractionDigits), longform);
 		}
 	}
 
 	let buf = "";
+
 	if (h > 0) {
-		buf += `${String(h)}h`;
+		buf += format("h", h, longform);
 	}
+
 	if (m > 0) {
-		buf += `${String(m % 60)}m`;
+		buf += format("m", m % 60, longform);
 	}
-	buf += `${String(s % 60)}s`;
+
+	if (allowMilliseconds) {
+		buf += format(
+			"s",
+			(ms / 1_000 % 60).toFixed(secondFractionDigits),
+			longform,
+		);
+	} else {
+		buf += format("s", s % 60, longform);
+	}
+
+	if (longform) {
+		buf = buf.trimRight();
+	}
+
 	return buf;
 }

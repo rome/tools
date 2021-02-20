@@ -12,133 +12,41 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "esprima/es2015-rest-parameter/object-method/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "esprima/es2015-rest-parameter/object-method/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation esprima/es2015-rest-parameter/object-method/input.js 1:0-2:0
+	path: UIDPath<esprima/es2015-rest-parameter/object-method/input.js>
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "esprima/es2015-rest-parameter/object-method/input.js"
-				end: Object {
-					column: 31
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation esprima/es2015-rest-parameter/object-method/input.js 1:0-1:31
 			expression: JSAssignmentExpression {
 				operator: "="
-				loc: Object {
-					filename: "esprima/es2015-rest-parameter/object-method/input.js"
-					end: Object {
-						column: 31
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/es2015-rest-parameter/object-method/input.js 1:0-1:31
 				left: JSAssignmentIdentifier {
 					name: "o"
-					loc: Object {
-						filename: "esprima/es2015-rest-parameter/object-method/input.js"
-						identifierName: "o"
-						end: Object {
-							column: 1
-							line: 1
-						}
-						start: Object {
-							column: 0
-							line: 1
-						}
-					}
+					loc: SourceLocation esprima/es2015-rest-parameter/object-method/input.js 1:0-1:1 (o)
 				}
 				right: JSObjectExpression {
-					loc: Object {
-						filename: "esprima/es2015-rest-parameter/object-method/input.js"
-						end: Object {
-							column: 31
-							line: 1
-						}
-						start: Object {
-							column: 4
-							line: 1
-						}
-					}
+					loc: SourceLocation esprima/es2015-rest-parameter/object-method/input.js 1:4-1:31
 					properties: Array [
 						JSObjectProperty {
 							key: JSStaticPropertyKey {
 								value: JSIdentifier {
 									name: "f"
-									loc: Object {
-										filename: "esprima/es2015-rest-parameter/object-method/input.js"
-										identifierName: "f"
-										end: Object {
-											column: 7
-											line: 1
-										}
-										start: Object {
-											column: 6
-											line: 1
-										}
-									}
+									loc: SourceLocation esprima/es2015-rest-parameter/object-method/input.js 1:6-1:7 (f)
 								}
-								loc: Object {
-									filename: "esprima/es2015-rest-parameter/object-method/input.js"
-									end: Object {
-										column: 7
-										line: 1
-									}
-									start: Object {
-										column: 6
-										line: 1
-									}
-								}
+								loc: SourceLocation esprima/es2015-rest-parameter/object-method/input.js 1:6-1:7
 							}
 							value: JSFunctionExpression {
 								id: undefined
-								loc: Object {
-									filename: "esprima/es2015-rest-parameter/object-method/input.js"
-									end: Object {
-										column: 29
-										line: 1
-									}
-									start: Object {
-										column: 9
-										line: 1
-									}
-								}
+								loc: SourceLocation esprima/es2015-rest-parameter/object-method/input.js 1:9-1:29
 								body: JSBlockStatement {
 									body: Array []
 									directives: Array []
-									loc: Object {
-										filename: "esprima/es2015-rest-parameter/object-method/input.js"
-										end: Object {
-											column: 29
-											line: 1
-										}
-										start: Object {
-											column: 27
-											line: 1
-										}
-									}
+									loc: SourceLocation esprima/es2015-rest-parameter/object-method/input.js 1:27-1:29
 								}
 								head: JSFunctionHead {
 									async: false
@@ -147,92 +55,30 @@ JSRoot {
 									returnType: undefined
 									thisType: undefined
 									typeParameters: undefined
-									loc: Object {
-										filename: "esprima/es2015-rest-parameter/object-method/input.js"
-										end: Object {
-											column: 26
-											line: 1
-										}
-										start: Object {
-											column: 17
-											line: 1
-										}
-									}
+									loc: SourceLocation esprima/es2015-rest-parameter/object-method/input.js 1:17-1:26
 									rest: JSBindingIdentifier {
 										name: "b"
-										loc: Object {
-											filename: "esprima/es2015-rest-parameter/object-method/input.js"
-											identifierName: "b"
-											end: Object {
-												column: 25
-												line: 1
-											}
-											start: Object {
-												column: 24
-												line: 1
-											}
-										}
+										loc: SourceLocation esprima/es2015-rest-parameter/object-method/input.js 1:24-1:25 (b)
 										meta: JSPatternMeta {
 											optional: undefined
 											typeAnnotation: undefined
-											loc: Object {
-												filename: "esprima/es2015-rest-parameter/object-method/input.js"
-												end: Object {
-													column: 25
-													line: 1
-												}
-												start: Object {
-													column: 24
-													line: 1
-												}
-											}
+											loc: SourceLocation esprima/es2015-rest-parameter/object-method/input.js 1:24-1:25
 										}
 									}
 									params: Array [
 										JSBindingIdentifier {
 											name: "a"
-											loc: Object {
-												filename: "esprima/es2015-rest-parameter/object-method/input.js"
-												identifierName: "a"
-												end: Object {
-													column: 19
-													line: 1
-												}
-												start: Object {
-													column: 18
-													line: 1
-												}
-											}
+											loc: SourceLocation esprima/es2015-rest-parameter/object-method/input.js 1:18-1:19 (a)
 											meta: JSPatternMeta {
 												optional: undefined
 												typeAnnotation: undefined
-												loc: Object {
-													filename: "esprima/es2015-rest-parameter/object-method/input.js"
-													end: Object {
-														column: 19
-														line: 1
-													}
-													start: Object {
-														column: 18
-														line: 1
-													}
-												}
+												loc: SourceLocation esprima/es2015-rest-parameter/object-method/input.js 1:18-1:19
 											}
 										}
 									]
 								}
 							}
-							loc: Object {
-								filename: "esprima/es2015-rest-parameter/object-method/input.js"
-								end: Object {
-									column: 29
-									line: 1
-								}
-								start: Object {
-									column: 6
-									line: 1
-								}
-							}
+							loc: SourceLocation esprima/es2015-rest-parameter/object-method/input.js 1:6-1:29
 						}
 					]
 				}
@@ -245,6 +91,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

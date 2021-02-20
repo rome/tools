@@ -12,65 +12,25 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "core/escape-template/non-octal-nine/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "core/escape-template/non-octal-nine/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation core/escape-template/non-octal-nine/input.js 1:0-2:0
+	path: UIDPath<core/escape-template/non-octal-nine/input.js>
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "core/escape-template/non-octal-nine/input.js"
-				end: Object {
-					column: 5
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation core/escape-template/non-octal-nine/input.js 1:0-1:5
 			expression: JSTemplateLiteral {
 				expressions: Array []
-				loc: Object {
-					filename: "core/escape-template/non-octal-nine/input.js"
-					end: Object {
-						column: 4
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation core/escape-template/non-octal-nine/input.js 1:0-1:4
 				quasis: Array [
 					JSTemplateElement {
 						cooked: "9"
 						raw: "\\9"
 						tail: true
-						loc: Object {
-							filename: "core/escape-template/non-octal-nine/input.js"
-							end: Object {
-								column: 3
-								line: 1
-							}
-							start: Object {
-								column: 1
-								line: 1
-							}
-						}
+						loc: SourceLocation core/escape-template/non-octal-nine/input.js 1:1-1:3
 					}
 				]
 			}
@@ -82,6 +42,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

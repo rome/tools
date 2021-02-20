@@ -12,107 +12,33 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "esprima/es2015-for-of/for-of-with-const/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "esprima/es2015-for-of/for-of-with-const/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation esprima/es2015-for-of/for-of-with-const/input.js 1:0-2:0
+	path: UIDPath<esprima/es2015-for-of/for-of-with-const/input.js>
 	body: Array [
 		JSForOfStatement {
 			await: false
-			loc: Object {
-				filename: "esprima/es2015-for-of/for-of-with-const/input.js"
-				end: Object {
-					column: 22
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
-			body: JSEmptyStatement {
-				loc: Object {
-					filename: "esprima/es2015-for-of/for-of-with-const/input.js"
-					end: Object {
-						column: 22
-						line: 1
-					}
-					start: Object {
-						column: 21
-						line: 1
-					}
-				}
-			}
+			body: JSEmptyStatement {loc: SourceLocation esprima/es2015-for-of/for-of-with-const/input.js 1:21-1:22}
+			loc: SourceLocation esprima/es2015-for-of/for-of-with-const/input.js 1:0-1:22
 			right: JSReferenceIdentifier {
 				name: "list"
-				loc: Object {
-					filename: "esprima/es2015-for-of/for-of-with-const/input.js"
-					identifierName: "list"
-					end: Object {
-						column: 20
-						line: 1
-					}
-					start: Object {
-						column: 16
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/es2015-for-of/for-of-with-const/input.js 1:16-1:20 (list)
 			}
 			left: JSVariableDeclaration {
 				kind: "const"
-				loc: Object {
-					filename: "esprima/es2015-for-of/for-of-with-const/input.js"
-					end: Object {
-						column: 12
-						line: 1
-					}
-					start: Object {
-						column: 5
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/es2015-for-of/for-of-with-const/input.js 1:5-1:12
 				declarations: Array [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "y"
-							loc: Object {
-								filename: "esprima/es2015-for-of/for-of-with-const/input.js"
-								identifierName: "y"
-								end: Object {
-									column: 12
-									line: 1
-								}
-								start: Object {
-									column: 11
-									line: 1
-								}
-							}
+							loc: SourceLocation esprima/es2015-for-of/for-of-with-const/input.js 1:11-1:12 (y)
 						}
 						init: undefined
-						loc: Object {
-							filename: "esprima/es2015-for-of/for-of-with-const/input.js"
-							end: Object {
-								column: 12
-								line: 1
-							}
-							start: Object {
-								column: 11
-								line: 1
-							}
-						}
+						loc: SourceLocation esprima/es2015-for-of/for-of-with-const/input.js 1:11-1:12
 					}
 				]
 			}
@@ -124,6 +50,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

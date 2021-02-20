@@ -11,132 +11,51 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "es2015/uncategorised/370/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2015/uncategorised/370/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2015/uncategorised/370/input.js 1:0-2:0
+	path: UIDPath<es2015/uncategorised/370/input.js>
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse"
 				categoryValue: "js"
-				message: Array [
-					"enum"
-					RAW_MARKUP {value: " is a reserved word"}
-				]
+				category: Array ["parse"]
+				message: RAW_MARKUP {value: "enum is a reserved word"}
 			}
 			location: Object {
-				filename: "es2015/uncategorised/370/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 10
-					line: 1
-				}
-				start: Object {
-					column: 6
-					line: 1
-				}
+				end: Position 1:10
+				path: UIDPath<es2015/uncategorised/370/input.js>
+				start: Position 1:6
 			}
 		}
 	]
 	body: Array [
 		JSVariableDeclarationStatement {
-			loc: Object {
-				filename: "es2015/uncategorised/370/input.js"
-				end: Object {
-					column: 19
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2015/uncategorised/370/input.js 1:0-1:19
 			declaration: JSVariableDeclaration {
 				kind: "const"
-				loc: Object {
-					filename: "es2015/uncategorised/370/input.js"
-					end: Object {
-						column: 19
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/uncategorised/370/input.js 1:0-1:19
 				declarations: Array [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "enum"
-							loc: Object {
-								filename: "es2015/uncategorised/370/input.js"
-								identifierName: "enum"
-								end: Object {
-									column: 10
-									line: 1
-								}
-								start: Object {
-									column: 6
-									line: 1
-								}
-							}
+							loc: SourceLocation es2015/uncategorised/370/input.js 1:6-1:10 (enum)
 						}
-						loc: Object {
-							filename: "es2015/uncategorised/370/input.js"
-							end: Object {
-								column: 18
-								line: 1
-							}
-							start: Object {
-								column: 6
-								line: 1
-							}
-						}
+						loc: SourceLocation es2015/uncategorised/370/input.js 1:6-1:18
 						init: JSCallExpression {
 							arguments: Array []
-							loc: Object {
-								filename: "es2015/uncategorised/370/input.js"
-								end: Object {
-									column: 18
-									line: 1
-								}
-								start: Object {
-									column: 13
-									line: 1
-								}
-							}
+							loc: SourceLocation es2015/uncategorised/370/input.js 1:13-1:18
 							callee: JSReferenceIdentifier {
 								name: "foo"
-								loc: Object {
-									filename: "es2015/uncategorised/370/input.js"
-									identifierName: "foo"
-									end: Object {
-										column: 16
-										line: 1
-									}
-									start: Object {
-										column: 13
-										line: 1
-									}
-								}
+								loc: SourceLocation es2015/uncategorised/370/input.js 1:13-1:16 (foo)
 							}
 						}
 					}
@@ -158,8 +77,5 @@ JSRoot {
     const enum = foo();
           ^^^^
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

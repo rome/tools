@@ -12,150 +12,48 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "typescript/type-arguments/tagged-template-no-asi/input.ts"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
+	loc: SourceLocation typescript/type-arguments/tagged-template-no-asi/input.ts 1:0-3:0
+	path: UIDPath<typescript/type-arguments/tagged-template-no-asi/input.ts>
 	syntax: Array ["ts"]
-	loc: Object {
-		filename: "typescript/type-arguments/tagged-template-no-asi/input.ts"
-		end: Object {
-			column: 0
-			line: 3
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "typescript/type-arguments/tagged-template-no-asi/input.ts"
-				end: Object {
-					column: 2
-					line: 2
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation typescript/type-arguments/tagged-template-no-asi/input.ts 1:0-2:2
 			expression: JSNewExpression {
 				arguments: Array []
 				optional: undefined
 				typeArguments: undefined
-				loc: Object {
-					filename: "typescript/type-arguments/tagged-template-no-asi/input.ts"
-					end: Object {
-						column: 2
-						line: 2
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/type-arguments/tagged-template-no-asi/input.ts 1:0-2:2
 				callee: JSTaggedTemplateExpression {
-					loc: Object {
-						filename: "typescript/type-arguments/tagged-template-no-asi/input.ts"
-						end: Object {
-							column: 2
-							line: 2
-						}
-						start: Object {
-							column: 4
-							line: 1
-						}
-					}
+					loc: SourceLocation typescript/type-arguments/tagged-template-no-asi/input.ts 1:4-2:2
 					tag: JSReferenceIdentifier {
 						name: "C"
-						loc: Object {
-							filename: "typescript/type-arguments/tagged-template-no-asi/input.ts"
-							identifierName: "C"
-							end: Object {
-								column: 5
-								line: 1
-							}
-							start: Object {
-								column: 4
-								line: 1
-							}
-						}
+						loc: SourceLocation typescript/type-arguments/tagged-template-no-asi/input.ts 1:4-1:5 (C)
 					}
 					quasi: JSTemplateLiteral {
 						expressions: Array []
-						loc: Object {
-							filename: "typescript/type-arguments/tagged-template-no-asi/input.ts"
-							end: Object {
-								column: 2
-								line: 2
-							}
-							start: Object {
-								column: 0
-								line: 2
-							}
-						}
+						loc: SourceLocation typescript/type-arguments/tagged-template-no-asi/input.ts 2:0-2:2
 						quasis: Array [
 							JSTemplateElement {
 								cooked: ""
 								raw: ""
 								tail: true
-								loc: Object {
-									filename: "typescript/type-arguments/tagged-template-no-asi/input.ts"
-									end: Object {
-										column: 1
-										line: 2
-									}
-									start: Object {
-										column: 1
-										line: 2
-									}
-								}
+								loc: SourceLocation typescript/type-arguments/tagged-template-no-asi/input.ts 2:1-2:1
 							}
 						]
 					}
 					typeArguments: TSTypeParameterInstantiation {
-						loc: Object {
-							filename: "typescript/type-arguments/tagged-template-no-asi/input.ts"
-							end: Object {
-								column: 8
-								line: 1
-							}
-							start: Object {
-								column: 5
-								line: 1
-							}
-						}
+						loc: SourceLocation typescript/type-arguments/tagged-template-no-asi/input.ts 1:5-1:8
 						params: Array [
 							TSTypeReference {
 								typeParameters: undefined
-								loc: Object {
-									filename: "typescript/type-arguments/tagged-template-no-asi/input.ts"
-									end: Object {
-										column: 7
-										line: 1
-									}
-									start: Object {
-										column: 6
-										line: 1
-									}
-								}
+								loc: SourceLocation typescript/type-arguments/tagged-template-no-asi/input.ts 1:6-1:7
 								typeName: JSReferenceIdentifier {
 									name: "T"
-									loc: Object {
-										filename: "typescript/type-arguments/tagged-template-no-asi/input.ts"
-										identifierName: "T"
-										end: Object {
-											column: 7
-											line: 1
-										}
-										start: Object {
-											column: 6
-											line: 1
-										}
-									}
+									loc: SourceLocation typescript/type-arguments/tagged-template-no-asi/input.ts 1:6-1:7 (T)
 								}
 							}
 						]
@@ -170,6 +68,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

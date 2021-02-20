@@ -12,123 +12,51 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "es2015/class-methods/tricky-names/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2015/class-methods/tricky-names/input.js"
-		end: Object {
-			column: 0
-			line: 56
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2015/class-methods/tricky-names/input.js 1:0-56:0
+	path: UIDPath<es2015/class-methods/tricky-names/input.js>
 	body: Array [
 		JSClassDeclaration {
 			id: JSBindingIdentifier {
 				name: "A"
-				loc: Object {
-					filename: "es2015/class-methods/tricky-names/input.js"
-					identifierName: "A"
-					end: Object {
-						column: 7
-						line: 1
-					}
-					start: Object {
-						column: 6
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/class-methods/tricky-names/input.js 1:6-1:7 (A)
 			}
-			loc: Object {
-				filename: "es2015/class-methods/tricky-names/input.js"
-				end: Object {
-					column: 1
-					line: 55
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2015/class-methods/tricky-names/input.js 1:0-55:1
 			meta: JSClassHead {
 				implements: undefined
 				superClass: undefined
 				superTypeParameters: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "es2015/class-methods/tricky-names/input.js"
-					end: Object {
-						column: 1
-						line: 55
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/class-methods/tricky-names/input.js 1:0-55:1
 				body: Array [
 					JSClassMethod {
 						kind: "method"
 						key: JSStaticPropertyKey {
 							value: JSIdentifier {
 								name: "get"
-								loc: Object {
-									filename: "es2015/class-methods/tricky-names/input.js"
-									identifierName: "get"
-									end: Object {
-										column: 5
-										line: 2
-									}
-									start: Object {
-										column: 2
-										line: 2
-									}
-								}
+								loc: SourceLocation es2015/class-methods/tricky-names/input.js 2:2-2:5 (get)
 							}
-							loc: Object {
-								filename: "es2015/class-methods/tricky-names/input.js"
-								end: Object {
-									column: 5
-									line: 2
-								}
-								start: Object {
-									column: 2
-									line: 2
-								}
-							}
+							loc: SourceLocation es2015/class-methods/tricky-names/input.js 2:2-2:5
 						}
-						loc: Object {
-							filename: "es2015/class-methods/tricky-names/input.js"
-							end: Object {
-								column: 7
-								line: 3
-							}
-							start: Object {
-								column: 2
-								line: 2
-							}
-						}
+						loc: SourceLocation es2015/class-methods/tricky-names/input.js 2:2-3:7
 						body: JSBlockStatement {
 							body: Array []
 							directives: Array []
-							loc: Object {
-								filename: "es2015/class-methods/tricky-names/input.js"
-								end: Object {
-									column: 7
-									line: 3
-								}
-								start: Object {
-									column: 5
-									line: 3
-								}
-							}
+							loc: SourceLocation es2015/class-methods/tricky-names/input.js 3:5-3:7
+						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							accessibility: undefined
+							optional: false
+							readonly: false
+							static: false
+							typeAnnotation: undefined
+							loc: SourceLocation es2015/class-methods/tricky-names/input.js 2:2-2:5
+							start: Position 2:2
 						}
 						head: JSFunctionHead {
 							async: false
@@ -139,40 +67,7 @@ JSRoot {
 							returnType: undefined
 							thisType: undefined
 							typeParameters: undefined
-							loc: Object {
-								filename: "es2015/class-methods/tricky-names/input.js"
-								end: Object {
-									column: 4
-									line: 3
-								}
-								start: Object {
-									column: 2
-									line: 3
-								}
-							}
-						}
-						meta: JSClassPropertyMeta {
-							abstract: false
-							accessibility: undefined
-							optional: false
-							readonly: false
-							static: false
-							typeAnnotation: undefined
-							start: Object {
-								column: 2
-								line: 2
-							}
-							loc: Object {
-								filename: "es2015/class-methods/tricky-names/input.js"
-								end: Object {
-									column: 5
-									line: 2
-								}
-								start: Object {
-									column: 2
-									line: 2
-								}
-							}
+							loc: SourceLocation es2015/class-methods/tricky-names/input.js 3:2-3:4
 						}
 					}
 					JSClassMethod {
@@ -180,56 +75,25 @@ JSRoot {
 						key: JSStaticPropertyKey {
 							value: JSIdentifier {
 								name: "set"
-								loc: Object {
-									filename: "es2015/class-methods/tricky-names/input.js"
-									identifierName: "set"
-									end: Object {
-										column: 5
-										line: 5
-									}
-									start: Object {
-										column: 2
-										line: 5
-									}
-								}
+								loc: SourceLocation es2015/class-methods/tricky-names/input.js 5:2-5:5 (set)
 							}
-							loc: Object {
-								filename: "es2015/class-methods/tricky-names/input.js"
-								end: Object {
-									column: 5
-									line: 5
-								}
-								start: Object {
-									column: 2
-									line: 5
-								}
-							}
+							loc: SourceLocation es2015/class-methods/tricky-names/input.js 5:2-5:5
 						}
-						loc: Object {
-							filename: "es2015/class-methods/tricky-names/input.js"
-							end: Object {
-								column: 7
-								line: 6
-							}
-							start: Object {
-								column: 2
-								line: 5
-							}
-						}
+						loc: SourceLocation es2015/class-methods/tricky-names/input.js 5:2-6:7
 						body: JSBlockStatement {
 							body: Array []
 							directives: Array []
-							loc: Object {
-								filename: "es2015/class-methods/tricky-names/input.js"
-								end: Object {
-									column: 7
-									line: 6
-								}
-								start: Object {
-									column: 5
-									line: 6
-								}
-							}
+							loc: SourceLocation es2015/class-methods/tricky-names/input.js 6:5-6:7
+						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							accessibility: undefined
+							optional: false
+							readonly: false
+							static: false
+							typeAnnotation: undefined
+							loc: SourceLocation es2015/class-methods/tricky-names/input.js 5:2-5:5
+							start: Position 5:2
 						}
 						head: JSFunctionHead {
 							async: false
@@ -240,40 +104,7 @@ JSRoot {
 							returnType: undefined
 							thisType: undefined
 							typeParameters: undefined
-							loc: Object {
-								filename: "es2015/class-methods/tricky-names/input.js"
-								end: Object {
-									column: 4
-									line: 6
-								}
-								start: Object {
-									column: 2
-									line: 6
-								}
-							}
-						}
-						meta: JSClassPropertyMeta {
-							abstract: false
-							accessibility: undefined
-							optional: false
-							readonly: false
-							static: false
-							typeAnnotation: undefined
-							start: Object {
-								column: 2
-								line: 5
-							}
-							loc: Object {
-								filename: "es2015/class-methods/tricky-names/input.js"
-								end: Object {
-									column: 5
-									line: 5
-								}
-								start: Object {
-									column: 2
-									line: 5
-								}
-							}
+							loc: SourceLocation es2015/class-methods/tricky-names/input.js 6:2-6:4
 						}
 					}
 					JSClassMethod {
@@ -281,57 +112,15 @@ JSRoot {
 						key: JSStaticPropertyKey {
 							value: JSIdentifier {
 								name: "static"
-								loc: Object {
-									filename: "es2015/class-methods/tricky-names/input.js"
-									identifierName: "static"
-									end: Object {
-										column: 8
-										line: 8
-									}
-									start: Object {
-										column: 2
-										line: 8
-									}
-								}
+								loc: SourceLocation es2015/class-methods/tricky-names/input.js 8:2-8:8 (static)
 							}
-							loc: Object {
-								filename: "es2015/class-methods/tricky-names/input.js"
-								identifierName: "static"
-								end: Object {
-									column: 8
-									line: 8
-								}
-								start: Object {
-									column: 2
-									line: 8
-								}
-							}
+							loc: SourceLocation es2015/class-methods/tricky-names/input.js 8:2-8:8 (static)
 						}
-						loc: Object {
-							filename: "es2015/class-methods/tricky-names/input.js"
-							end: Object {
-								column: 7
-								line: 9
-							}
-							start: Object {
-								column: 2
-								line: 8
-							}
-						}
+						loc: SourceLocation es2015/class-methods/tricky-names/input.js 8:2-9:7
 						body: JSBlockStatement {
 							body: Array []
 							directives: Array []
-							loc: Object {
-								filename: "es2015/class-methods/tricky-names/input.js"
-								end: Object {
-									column: 7
-									line: 9
-								}
-								start: Object {
-									column: 5
-									line: 9
-								}
-							}
+							loc: SourceLocation es2015/class-methods/tricky-names/input.js 9:5-9:7
 						}
 						meta: JSClassPropertyMeta {
 							abstract: false
@@ -340,17 +129,7 @@ JSRoot {
 							readonly: false
 							static: false
 							typeAnnotation: undefined
-							loc: Object {
-								filename: "es2015/class-methods/tricky-names/input.js"
-								end: Object {
-									column: 8
-									line: 8
-								}
-								start: Object {
-									column: 2
-									line: 8
-								}
-							}
+							loc: SourceLocation es2015/class-methods/tricky-names/input.js 8:2-8:8
 						}
 						head: JSFunctionHead {
 							async: false
@@ -361,17 +140,7 @@ JSRoot {
 							returnType: undefined
 							thisType: undefined
 							typeParameters: undefined
-							loc: Object {
-								filename: "es2015/class-methods/tricky-names/input.js"
-								end: Object {
-									column: 4
-									line: 9
-								}
-								start: Object {
-									column: 2
-									line: 9
-								}
-							}
+							loc: SourceLocation es2015/class-methods/tricky-names/input.js 9:2-9:4
 						}
 					}
 					JSClassMethod {
@@ -379,56 +148,25 @@ JSRoot {
 						key: JSStaticPropertyKey {
 							value: JSIdentifier {
 								name: "async"
-								loc: Object {
-									filename: "es2015/class-methods/tricky-names/input.js"
-									identifierName: "async"
-									end: Object {
-										column: 7
-										line: 11
-									}
-									start: Object {
-										column: 2
-										line: 11
-									}
-								}
+								loc: SourceLocation es2015/class-methods/tricky-names/input.js 11:2-11:7 (async)
 							}
-							loc: Object {
-								filename: "es2015/class-methods/tricky-names/input.js"
-								end: Object {
-									column: 7
-									line: 11
-								}
-								start: Object {
-									column: 2
-									line: 11
-								}
-							}
+							loc: SourceLocation es2015/class-methods/tricky-names/input.js 11:2-11:7
 						}
-						loc: Object {
-							filename: "es2015/class-methods/tricky-names/input.js"
-							end: Object {
-								column: 7
-								line: 12
-							}
-							start: Object {
-								column: 2
-								line: 11
-							}
-						}
+						loc: SourceLocation es2015/class-methods/tricky-names/input.js 11:2-12:7
 						body: JSBlockStatement {
 							body: Array []
 							directives: Array []
-							loc: Object {
-								filename: "es2015/class-methods/tricky-names/input.js"
-								end: Object {
-									column: 7
-									line: 12
-								}
-								start: Object {
-									column: 5
-									line: 12
-								}
-							}
+							loc: SourceLocation es2015/class-methods/tricky-names/input.js 12:5-12:7
+						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							accessibility: undefined
+							optional: false
+							readonly: false
+							static: false
+							typeAnnotation: undefined
+							loc: SourceLocation es2015/class-methods/tricky-names/input.js 11:2-11:7
+							start: Position 11:2
 						}
 						head: JSFunctionHead {
 							async: false
@@ -439,40 +177,7 @@ JSRoot {
 							returnType: undefined
 							thisType: undefined
 							typeParameters: undefined
-							loc: Object {
-								filename: "es2015/class-methods/tricky-names/input.js"
-								end: Object {
-									column: 4
-									line: 12
-								}
-								start: Object {
-									column: 2
-									line: 12
-								}
-							}
-						}
-						meta: JSClassPropertyMeta {
-							abstract: false
-							accessibility: undefined
-							optional: false
-							readonly: false
-							static: false
-							typeAnnotation: undefined
-							start: Object {
-								column: 2
-								line: 11
-							}
-							loc: Object {
-								filename: "es2015/class-methods/tricky-names/input.js"
-								end: Object {
-									column: 7
-									line: 11
-								}
-								start: Object {
-									column: 2
-									line: 11
-								}
-							}
+							loc: SourceLocation es2015/class-methods/tricky-names/input.js 12:2-12:4
 						}
 					}
 					JSClassMethod {
@@ -480,55 +185,25 @@ JSRoot {
 						key: JSStaticPropertyKey {
 							value: JSStringLiteral {
 								value: "get"
-								loc: Object {
-									filename: "es2015/class-methods/tricky-names/input.js"
-									end: Object {
-										column: 7
-										line: 15
-									}
-									start: Object {
-										column: 2
-										line: 15
-									}
-								}
+								loc: SourceLocation es2015/class-methods/tricky-names/input.js 15:2-15:7
 							}
-							loc: Object {
-								filename: "es2015/class-methods/tricky-names/input.js"
-								end: Object {
-									column: 7
-									line: 15
-								}
-								start: Object {
-									column: 2
-									line: 15
-								}
-							}
+							loc: SourceLocation es2015/class-methods/tricky-names/input.js 15:2-15:7
 						}
-						loc: Object {
-							filename: "es2015/class-methods/tricky-names/input.js"
-							end: Object {
-								column: 7
-								line: 16
-							}
-							start: Object {
-								column: 2
-								line: 15
-							}
-						}
+						loc: SourceLocation es2015/class-methods/tricky-names/input.js 15:2-16:7
 						body: JSBlockStatement {
 							body: Array []
 							directives: Array []
-							loc: Object {
-								filename: "es2015/class-methods/tricky-names/input.js"
-								end: Object {
-									column: 7
-									line: 16
-								}
-								start: Object {
-									column: 5
-									line: 16
-								}
-							}
+							loc: SourceLocation es2015/class-methods/tricky-names/input.js 16:5-16:7
+						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							accessibility: undefined
+							optional: false
+							readonly: false
+							static: false
+							typeAnnotation: undefined
+							loc: SourceLocation es2015/class-methods/tricky-names/input.js 15:2-15:7
+							start: Position 15:2
 						}
 						head: JSFunctionHead {
 							async: false
@@ -539,40 +214,7 @@ JSRoot {
 							returnType: undefined
 							thisType: undefined
 							typeParameters: undefined
-							loc: Object {
-								filename: "es2015/class-methods/tricky-names/input.js"
-								end: Object {
-									column: 4
-									line: 16
-								}
-								start: Object {
-									column: 2
-									line: 16
-								}
-							}
-						}
-						meta: JSClassPropertyMeta {
-							abstract: false
-							accessibility: undefined
-							optional: false
-							readonly: false
-							static: false
-							typeAnnotation: undefined
-							start: Object {
-								column: 2
-								line: 15
-							}
-							loc: Object {
-								filename: "es2015/class-methods/tricky-names/input.js"
-								end: Object {
-									column: 7
-									line: 15
-								}
-								start: Object {
-									column: 2
-									line: 15
-								}
-							}
+							loc: SourceLocation es2015/class-methods/tricky-names/input.js 16:2-16:4
 						}
 					}
 					JSClassMethod {
@@ -580,55 +222,25 @@ JSRoot {
 						key: JSStaticPropertyKey {
 							value: JSStringLiteral {
 								value: "set"
-								loc: Object {
-									filename: "es2015/class-methods/tricky-names/input.js"
-									end: Object {
-										column: 7
-										line: 18
-									}
-									start: Object {
-										column: 2
-										line: 18
-									}
-								}
+								loc: SourceLocation es2015/class-methods/tricky-names/input.js 18:2-18:7
 							}
-							loc: Object {
-								filename: "es2015/class-methods/tricky-names/input.js"
-								end: Object {
-									column: 7
-									line: 18
-								}
-								start: Object {
-									column: 2
-									line: 18
-								}
-							}
+							loc: SourceLocation es2015/class-methods/tricky-names/input.js 18:2-18:7
 						}
-						loc: Object {
-							filename: "es2015/class-methods/tricky-names/input.js"
-							end: Object {
-								column: 7
-								line: 19
-							}
-							start: Object {
-								column: 2
-								line: 18
-							}
-						}
+						loc: SourceLocation es2015/class-methods/tricky-names/input.js 18:2-19:7
 						body: JSBlockStatement {
 							body: Array []
 							directives: Array []
-							loc: Object {
-								filename: "es2015/class-methods/tricky-names/input.js"
-								end: Object {
-									column: 7
-									line: 19
-								}
-								start: Object {
-									column: 5
-									line: 19
-								}
-							}
+							loc: SourceLocation es2015/class-methods/tricky-names/input.js 19:5-19:7
+						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							accessibility: undefined
+							optional: false
+							readonly: false
+							static: false
+							typeAnnotation: undefined
+							loc: SourceLocation es2015/class-methods/tricky-names/input.js 18:2-18:7
+							start: Position 18:2
 						}
 						head: JSFunctionHead {
 							async: false
@@ -639,40 +251,7 @@ JSRoot {
 							returnType: undefined
 							thisType: undefined
 							typeParameters: undefined
-							loc: Object {
-								filename: "es2015/class-methods/tricky-names/input.js"
-								end: Object {
-									column: 4
-									line: 19
-								}
-								start: Object {
-									column: 2
-									line: 19
-								}
-							}
-						}
-						meta: JSClassPropertyMeta {
-							abstract: false
-							accessibility: undefined
-							optional: false
-							readonly: false
-							static: false
-							typeAnnotation: undefined
-							start: Object {
-								column: 2
-								line: 18
-							}
-							loc: Object {
-								filename: "es2015/class-methods/tricky-names/input.js"
-								end: Object {
-									column: 7
-									line: 18
-								}
-								start: Object {
-									column: 2
-									line: 18
-								}
-							}
+							loc: SourceLocation es2015/class-methods/tricky-names/input.js 19:2-19:4
 						}
 					}
 					JSClassMethod {
@@ -680,55 +259,25 @@ JSRoot {
 						key: JSStaticPropertyKey {
 							value: JSStringLiteral {
 								value: "async"
-								loc: Object {
-									filename: "es2015/class-methods/tricky-names/input.js"
-									end: Object {
-										column: 9
-										line: 21
-									}
-									start: Object {
-										column: 2
-										line: 21
-									}
-								}
+								loc: SourceLocation es2015/class-methods/tricky-names/input.js 21:2-21:9
 							}
-							loc: Object {
-								filename: "es2015/class-methods/tricky-names/input.js"
-								end: Object {
-									column: 9
-									line: 21
-								}
-								start: Object {
-									column: 2
-									line: 21
-								}
-							}
+							loc: SourceLocation es2015/class-methods/tricky-names/input.js 21:2-21:9
 						}
-						loc: Object {
-							filename: "es2015/class-methods/tricky-names/input.js"
-							end: Object {
-								column: 7
-								line: 22
-							}
-							start: Object {
-								column: 2
-								line: 21
-							}
-						}
+						loc: SourceLocation es2015/class-methods/tricky-names/input.js 21:2-22:7
 						body: JSBlockStatement {
 							body: Array []
 							directives: Array []
-							loc: Object {
-								filename: "es2015/class-methods/tricky-names/input.js"
-								end: Object {
-									column: 7
-									line: 22
-								}
-								start: Object {
-									column: 5
-									line: 22
-								}
-							}
+							loc: SourceLocation es2015/class-methods/tricky-names/input.js 22:5-22:7
+						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							accessibility: undefined
+							optional: false
+							readonly: false
+							static: false
+							typeAnnotation: undefined
+							loc: SourceLocation es2015/class-methods/tricky-names/input.js 21:2-21:9
+							start: Position 21:2
 						}
 						head: JSFunctionHead {
 							async: false
@@ -739,40 +288,7 @@ JSRoot {
 							returnType: undefined
 							thisType: undefined
 							typeParameters: undefined
-							loc: Object {
-								filename: "es2015/class-methods/tricky-names/input.js"
-								end: Object {
-									column: 4
-									line: 22
-								}
-								start: Object {
-									column: 2
-									line: 22
-								}
-							}
-						}
-						meta: JSClassPropertyMeta {
-							abstract: false
-							accessibility: undefined
-							optional: false
-							readonly: false
-							static: false
-							typeAnnotation: undefined
-							start: Object {
-								column: 2
-								line: 21
-							}
-							loc: Object {
-								filename: "es2015/class-methods/tricky-names/input.js"
-								end: Object {
-									column: 9
-									line: 21
-								}
-								start: Object {
-									column: 2
-									line: 21
-								}
-							}
+							loc: SourceLocation es2015/class-methods/tricky-names/input.js 22:2-22:4
 						}
 					}
 					JSClassMethod {
@@ -780,56 +296,25 @@ JSRoot {
 						key: JSStaticPropertyKey {
 							value: JSIdentifier {
 								name: "get"
-								loc: Object {
-									filename: "es2015/class-methods/tricky-names/input.js"
-									identifierName: "get"
-									end: Object {
-										column: 5
-										line: 26
-									}
-									start: Object {
-										column: 2
-										line: 26
-									}
-								}
+								loc: SourceLocation es2015/class-methods/tricky-names/input.js 26:2-26:5 (get)
 							}
-							loc: Object {
-								filename: "es2015/class-methods/tricky-names/input.js"
-								end: Object {
-									column: 5
-									line: 26
-								}
-								start: Object {
-									column: 2
-									line: 26
-								}
-							}
+							loc: SourceLocation es2015/class-methods/tricky-names/input.js 26:2-26:5
 						}
-						loc: Object {
-							filename: "es2015/class-methods/tricky-names/input.js"
-							end: Object {
-								column: 7
-								line: 27
-							}
-							start: Object {
-								column: 2
-								line: 25
-							}
-						}
+						loc: SourceLocation es2015/class-methods/tricky-names/input.js 25:2-27:7
 						body: JSBlockStatement {
 							body: Array []
 							directives: Array []
-							loc: Object {
-								filename: "es2015/class-methods/tricky-names/input.js"
-								end: Object {
-									column: 7
-									line: 27
-								}
-								start: Object {
-									column: 5
-									line: 27
-								}
-							}
+							loc: SourceLocation es2015/class-methods/tricky-names/input.js 27:5-27:7
+						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							accessibility: undefined
+							optional: false
+							readonly: false
+							static: true
+							typeAnnotation: undefined
+							loc: SourceLocation es2015/class-methods/tricky-names/input.js 25:2-26:5
+							start: Position 25:2
 						}
 						head: JSFunctionHead {
 							async: false
@@ -840,40 +325,7 @@ JSRoot {
 							returnType: undefined
 							thisType: undefined
 							typeParameters: undefined
-							loc: Object {
-								filename: "es2015/class-methods/tricky-names/input.js"
-								end: Object {
-									column: 4
-									line: 27
-								}
-								start: Object {
-									column: 2
-									line: 27
-								}
-							}
-						}
-						meta: JSClassPropertyMeta {
-							abstract: false
-							accessibility: undefined
-							optional: false
-							readonly: false
-							static: true
-							typeAnnotation: undefined
-							start: Object {
-								column: 2
-								line: 25
-							}
-							loc: Object {
-								filename: "es2015/class-methods/tricky-names/input.js"
-								end: Object {
-									column: 5
-									line: 26
-								}
-								start: Object {
-									column: 2
-									line: 25
-								}
-							}
+							loc: SourceLocation es2015/class-methods/tricky-names/input.js 27:2-27:4
 						}
 					}
 					JSClassMethod {
@@ -881,56 +333,25 @@ JSRoot {
 						key: JSStaticPropertyKey {
 							value: JSIdentifier {
 								name: "set"
-								loc: Object {
-									filename: "es2015/class-methods/tricky-names/input.js"
-									identifierName: "set"
-									end: Object {
-										column: 5
-										line: 30
-									}
-									start: Object {
-										column: 2
-										line: 30
-									}
-								}
+								loc: SourceLocation es2015/class-methods/tricky-names/input.js 30:2-30:5 (set)
 							}
-							loc: Object {
-								filename: "es2015/class-methods/tricky-names/input.js"
-								end: Object {
-									column: 5
-									line: 30
-								}
-								start: Object {
-									column: 2
-									line: 30
-								}
-							}
+							loc: SourceLocation es2015/class-methods/tricky-names/input.js 30:2-30:5
 						}
-						loc: Object {
-							filename: "es2015/class-methods/tricky-names/input.js"
-							end: Object {
-								column: 7
-								line: 31
-							}
-							start: Object {
-								column: 2
-								line: 29
-							}
-						}
+						loc: SourceLocation es2015/class-methods/tricky-names/input.js 29:2-31:7
 						body: JSBlockStatement {
 							body: Array []
 							directives: Array []
-							loc: Object {
-								filename: "es2015/class-methods/tricky-names/input.js"
-								end: Object {
-									column: 7
-									line: 31
-								}
-								start: Object {
-									column: 5
-									line: 31
-								}
-							}
+							loc: SourceLocation es2015/class-methods/tricky-names/input.js 31:5-31:7
+						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							accessibility: undefined
+							optional: false
+							readonly: false
+							static: true
+							typeAnnotation: undefined
+							loc: SourceLocation es2015/class-methods/tricky-names/input.js 29:2-30:5
+							start: Position 29:2
 						}
 						head: JSFunctionHead {
 							async: false
@@ -941,40 +362,7 @@ JSRoot {
 							returnType: undefined
 							thisType: undefined
 							typeParameters: undefined
-							loc: Object {
-								filename: "es2015/class-methods/tricky-names/input.js"
-								end: Object {
-									column: 4
-									line: 31
-								}
-								start: Object {
-									column: 2
-									line: 31
-								}
-							}
-						}
-						meta: JSClassPropertyMeta {
-							abstract: false
-							accessibility: undefined
-							optional: false
-							readonly: false
-							static: true
-							typeAnnotation: undefined
-							start: Object {
-								column: 2
-								line: 29
-							}
-							loc: Object {
-								filename: "es2015/class-methods/tricky-names/input.js"
-								end: Object {
-									column: 5
-									line: 30
-								}
-								start: Object {
-									column: 2
-									line: 29
-								}
-							}
+							loc: SourceLocation es2015/class-methods/tricky-names/input.js 31:2-31:4
 						}
 					}
 					JSClassMethod {
@@ -982,56 +370,25 @@ JSRoot {
 						key: JSStaticPropertyKey {
 							value: JSIdentifier {
 								name: "static"
-								loc: Object {
-									filename: "es2015/class-methods/tricky-names/input.js"
-									identifierName: "static"
-									end: Object {
-										column: 8
-										line: 34
-									}
-									start: Object {
-										column: 2
-										line: 34
-									}
-								}
+								loc: SourceLocation es2015/class-methods/tricky-names/input.js 34:2-34:8 (static)
 							}
-							loc: Object {
-								filename: "es2015/class-methods/tricky-names/input.js"
-								end: Object {
-									column: 8
-									line: 34
-								}
-								start: Object {
-									column: 2
-									line: 34
-								}
-							}
+							loc: SourceLocation es2015/class-methods/tricky-names/input.js 34:2-34:8
 						}
-						loc: Object {
-							filename: "es2015/class-methods/tricky-names/input.js"
-							end: Object {
-								column: 7
-								line: 35
-							}
-							start: Object {
-								column: 2
-								line: 33
-							}
-						}
+						loc: SourceLocation es2015/class-methods/tricky-names/input.js 33:2-35:7
 						body: JSBlockStatement {
 							body: Array []
 							directives: Array []
-							loc: Object {
-								filename: "es2015/class-methods/tricky-names/input.js"
-								end: Object {
-									column: 7
-									line: 35
-								}
-								start: Object {
-									column: 5
-									line: 35
-								}
-							}
+							loc: SourceLocation es2015/class-methods/tricky-names/input.js 35:5-35:7
+						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							accessibility: undefined
+							optional: false
+							readonly: false
+							static: true
+							typeAnnotation: undefined
+							loc: SourceLocation es2015/class-methods/tricky-names/input.js 33:2-34:8
+							start: Position 33:2
 						}
 						head: JSFunctionHead {
 							async: false
@@ -1042,40 +399,7 @@ JSRoot {
 							returnType: undefined
 							thisType: undefined
 							typeParameters: undefined
-							loc: Object {
-								filename: "es2015/class-methods/tricky-names/input.js"
-								end: Object {
-									column: 4
-									line: 35
-								}
-								start: Object {
-									column: 2
-									line: 35
-								}
-							}
-						}
-						meta: JSClassPropertyMeta {
-							abstract: false
-							accessibility: undefined
-							optional: false
-							readonly: false
-							static: true
-							typeAnnotation: undefined
-							start: Object {
-								column: 2
-								line: 33
-							}
-							loc: Object {
-								filename: "es2015/class-methods/tricky-names/input.js"
-								end: Object {
-									column: 8
-									line: 34
-								}
-								start: Object {
-									column: 2
-									line: 33
-								}
-							}
+							loc: SourceLocation es2015/class-methods/tricky-names/input.js 35:2-35:4
 						}
 					}
 					JSClassMethod {
@@ -1083,56 +407,25 @@ JSRoot {
 						key: JSStaticPropertyKey {
 							value: JSIdentifier {
 								name: "async"
-								loc: Object {
-									filename: "es2015/class-methods/tricky-names/input.js"
-									identifierName: "async"
-									end: Object {
-										column: 7
-										line: 38
-									}
-									start: Object {
-										column: 2
-										line: 38
-									}
-								}
+								loc: SourceLocation es2015/class-methods/tricky-names/input.js 38:2-38:7 (async)
 							}
-							loc: Object {
-								filename: "es2015/class-methods/tricky-names/input.js"
-								end: Object {
-									column: 7
-									line: 38
-								}
-								start: Object {
-									column: 2
-									line: 38
-								}
-							}
+							loc: SourceLocation es2015/class-methods/tricky-names/input.js 38:2-38:7
 						}
-						loc: Object {
-							filename: "es2015/class-methods/tricky-names/input.js"
-							end: Object {
-								column: 7
-								line: 39
-							}
-							start: Object {
-								column: 2
-								line: 37
-							}
-						}
+						loc: SourceLocation es2015/class-methods/tricky-names/input.js 37:2-39:7
 						body: JSBlockStatement {
 							body: Array []
 							directives: Array []
-							loc: Object {
-								filename: "es2015/class-methods/tricky-names/input.js"
-								end: Object {
-									column: 7
-									line: 39
-								}
-								start: Object {
-									column: 5
-									line: 39
-								}
-							}
+							loc: SourceLocation es2015/class-methods/tricky-names/input.js 39:5-39:7
+						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							accessibility: undefined
+							optional: false
+							readonly: false
+							static: true
+							typeAnnotation: undefined
+							loc: SourceLocation es2015/class-methods/tricky-names/input.js 37:2-38:7
+							start: Position 37:2
 						}
 						head: JSFunctionHead {
 							async: false
@@ -1143,40 +436,7 @@ JSRoot {
 							returnType: undefined
 							thisType: undefined
 							typeParameters: undefined
-							loc: Object {
-								filename: "es2015/class-methods/tricky-names/input.js"
-								end: Object {
-									column: 4
-									line: 39
-								}
-								start: Object {
-									column: 2
-									line: 39
-								}
-							}
-						}
-						meta: JSClassPropertyMeta {
-							abstract: false
-							accessibility: undefined
-							optional: false
-							readonly: false
-							static: true
-							typeAnnotation: undefined
-							start: Object {
-								column: 2
-								line: 37
-							}
-							loc: Object {
-								filename: "es2015/class-methods/tricky-names/input.js"
-								end: Object {
-									column: 7
-									line: 38
-								}
-								start: Object {
-									column: 2
-									line: 37
-								}
-							}
+							loc: SourceLocation es2015/class-methods/tricky-names/input.js 39:2-39:4
 						}
 					}
 					JSClassMethod {
@@ -1184,77 +444,15 @@ JSRoot {
 						key: JSStaticPropertyKey {
 							value: JSIdentifier {
 								name: "a"
-								loc: Object {
-									filename: "es2015/class-methods/tricky-names/input.js"
-									identifierName: "a"
-									end: Object {
-										column: 3
-										line: 42
-									}
-									start: Object {
-										column: 2
-										line: 42
-									}
-								}
+								loc: SourceLocation es2015/class-methods/tricky-names/input.js 42:2-42:3 (a)
 							}
-							loc: Object {
-								filename: "es2015/class-methods/tricky-names/input.js"
-								end: Object {
-									column: 3
-									line: 42
-								}
-								start: Object {
-									column: 2
-									line: 42
-								}
-							}
+							loc: SourceLocation es2015/class-methods/tricky-names/input.js 42:2-42:3
 						}
-						loc: Object {
-							filename: "es2015/class-methods/tricky-names/input.js"
-							end: Object {
-								column: 7
-								line: 43
-							}
-							start: Object {
-								column: 2
-								line: 41
-							}
-						}
+						loc: SourceLocation es2015/class-methods/tricky-names/input.js 41:2-43:7
 						body: JSBlockStatement {
 							body: Array []
 							directives: Array []
-							loc: Object {
-								filename: "es2015/class-methods/tricky-names/input.js"
-								end: Object {
-									column: 7
-									line: 43
-								}
-								start: Object {
-									column: 5
-									line: 43
-								}
-							}
-						}
-						head: JSFunctionHead {
-							async: false
-							generator: false
-							hasHoistedVars: false
-							params: Array []
-							rest: undefined
-							returnType: undefined
-							thisType: undefined
-							typeParameters: undefined
-							loc: Object {
-								filename: "es2015/class-methods/tricky-names/input.js"
-								end: Object {
-									column: 4
-									line: 43
-								}
-								start: Object {
-									column: 2
-									line: 43
-								}
-							}
+							loc: SourceLocation es2015/class-methods/tricky-names/input.js 43:5-43:7
 						}
 						meta: JSClassPropertyMeta {
 							abstract: false
@@ -1263,78 +461,8 @@ JSRoot {
 							readonly: false
 							static: true
 							typeAnnotation: undefined
-							start: Object {
-								column: 2
-								line: 41
-							}
-							loc: Object {
-								filename: "es2015/class-methods/tricky-names/input.js"
-								end: Object {
-									column: 3
-									line: 42
-								}
-								start: Object {
-									column: 2
-									line: 41
-								}
-							}
-						}
-					}
-					JSClassMethod {
-						kind: "get"
-						key: JSStaticPropertyKey {
-							value: JSIdentifier {
-								name: "async"
-								loc: Object {
-									filename: "es2015/class-methods/tricky-names/input.js"
-									identifierName: "async"
-									end: Object {
-										column: 7
-										line: 47
-									}
-									start: Object {
-										column: 2
-										line: 47
-									}
-								}
-							}
-							loc: Object {
-								filename: "es2015/class-methods/tricky-names/input.js"
-								end: Object {
-									column: 7
-									line: 47
-								}
-								start: Object {
-									column: 2
-									line: 47
-								}
-							}
-						}
-						loc: Object {
-							filename: "es2015/class-methods/tricky-names/input.js"
-							end: Object {
-								column: 7
-								line: 48
-							}
-							start: Object {
-								column: 2
-								line: 46
-							}
-						}
-						body: JSBlockStatement {
-							body: Array []
-							directives: Array []
-							loc: Object {
-								filename: "es2015/class-methods/tricky-names/input.js"
-								end: Object {
-									column: 7
-									line: 48
-								}
-								start: Object {
-									column: 5
-									line: 48
-								}
-							}
+							loc: SourceLocation es2015/class-methods/tricky-names/input.js 41:2-42:3
+							start: Position 41:2
 						}
 						head: JSFunctionHead {
 							async: false
@@ -1345,17 +473,23 @@ JSRoot {
 							returnType: undefined
 							thisType: undefined
 							typeParameters: undefined
-							loc: Object {
-								filename: "es2015/class-methods/tricky-names/input.js"
-								end: Object {
-									column: 4
-									line: 48
-								}
-								start: Object {
-									column: 2
-									line: 48
-								}
+							loc: SourceLocation es2015/class-methods/tricky-names/input.js 43:2-43:4
+						}
+					}
+					JSClassMethod {
+						kind: "get"
+						key: JSStaticPropertyKey {
+							value: JSIdentifier {
+								name: "async"
+								loc: SourceLocation es2015/class-methods/tricky-names/input.js 47:2-47:7 (async)
 							}
+							loc: SourceLocation es2015/class-methods/tricky-names/input.js 47:2-47:7
+						}
+						loc: SourceLocation es2015/class-methods/tricky-names/input.js 46:2-48:7
+						body: JSBlockStatement {
+							body: Array []
+							directives: Array []
+							loc: SourceLocation es2015/class-methods/tricky-names/input.js 48:5-48:7
 						}
 						meta: JSClassPropertyMeta {
 							abstract: false
@@ -1364,78 +498,8 @@ JSRoot {
 							readonly: false
 							static: false
 							typeAnnotation: undefined
-							start: Object {
-								column: 2
-								line: 46
-							}
-							loc: Object {
-								filename: "es2015/class-methods/tricky-names/input.js"
-								end: Object {
-									column: 7
-									line: 47
-								}
-								start: Object {
-									column: 2
-									line: 46
-								}
-							}
-						}
-					}
-					JSClassMethod {
-						kind: "get"
-						key: JSStaticPropertyKey {
-							value: JSIdentifier {
-								name: "static"
-								loc: Object {
-									filename: "es2015/class-methods/tricky-names/input.js"
-									identifierName: "static"
-									end: Object {
-										column: 8
-										line: 53
-									}
-									start: Object {
-										column: 2
-										line: 53
-									}
-								}
-							}
-							loc: Object {
-								filename: "es2015/class-methods/tricky-names/input.js"
-								end: Object {
-									column: 8
-									line: 53
-								}
-								start: Object {
-									column: 2
-									line: 53
-								}
-							}
-						}
-						loc: Object {
-							filename: "es2015/class-methods/tricky-names/input.js"
-							end: Object {
-								column: 7
-								line: 54
-							}
-							start: Object {
-								column: 2
-								line: 51
-							}
-						}
-						body: JSBlockStatement {
-							body: Array []
-							directives: Array []
-							loc: Object {
-								filename: "es2015/class-methods/tricky-names/input.js"
-								end: Object {
-									column: 7
-									line: 54
-								}
-								start: Object {
-									column: 5
-									line: 54
-								}
-							}
+							loc: SourceLocation es2015/class-methods/tricky-names/input.js 46:2-47:7
+							start: Position 46:2
 						}
 						head: JSFunctionHead {
 							async: false
@@ -1446,17 +510,23 @@ JSRoot {
 							returnType: undefined
 							thisType: undefined
 							typeParameters: undefined
-							loc: Object {
-								filename: "es2015/class-methods/tricky-names/input.js"
-								end: Object {
-									column: 4
-									line: 54
-								}
-								start: Object {
-									column: 2
-									line: 54
-								}
+							loc: SourceLocation es2015/class-methods/tricky-names/input.js 48:2-48:4
+						}
+					}
+					JSClassMethod {
+						kind: "get"
+						key: JSStaticPropertyKey {
+							value: JSIdentifier {
+								name: "static"
+								loc: SourceLocation es2015/class-methods/tricky-names/input.js 53:2-53:8 (static)
 							}
+							loc: SourceLocation es2015/class-methods/tricky-names/input.js 53:2-53:8
+						}
+						loc: SourceLocation es2015/class-methods/tricky-names/input.js 51:2-54:7
+						body: JSBlockStatement {
+							body: Array []
+							directives: Array []
+							loc: SourceLocation es2015/class-methods/tricky-names/input.js 54:5-54:7
 						}
 						meta: JSClassPropertyMeta {
 							abstract: false
@@ -1465,21 +535,19 @@ JSRoot {
 							readonly: false
 							static: true
 							typeAnnotation: undefined
-							start: Object {
-								column: 2
-								line: 51
-							}
-							loc: Object {
-								filename: "es2015/class-methods/tricky-names/input.js"
-								end: Object {
-									column: 8
-									line: 53
-								}
-								start: Object {
-									column: 2
-									line: 51
-								}
-							}
+							loc: SourceLocation es2015/class-methods/tricky-names/input.js 51:2-53:8
+							start: Position 51:2
+						}
+						head: JSFunctionHead {
+							async: false
+							generator: false
+							hasHoistedVars: false
+							params: Array []
+							rest: undefined
+							returnType: undefined
+							thisType: undefined
+							typeParameters: undefined
+							loc: SourceLocation es2015/class-methods/tricky-names/input.js 54:2-54:4
 						}
 					}
 				]
@@ -1492,6 +560,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

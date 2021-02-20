@@ -11,168 +11,56 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "comments/regression/10230/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "comments/regression/10230/input.js"
-		end: Object {
-			column: 0
-			line: 8
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation comments/regression/10230/input.js 1:0-8:0
+	path: UIDPath<comments/regression/10230/input.js>
 	comments: Array [
 		CommentLine {
 			id: "0"
 			value: " One"
-			loc: Object {
-				filename: "comments/regression/10230/input.js"
-				end: Object {
-					column: 8
-					line: 3
-				}
-				start: Object {
-					column: 2
-					line: 3
-				}
-			}
+			loc: SourceLocation comments/regression/10230/input.js 3:2-3:8
 		}
 		CommentLine {
 			id: "1"
 			value: " Two"
-			loc: Object {
-				filename: "comments/regression/10230/input.js"
-				end: Object {
-					column: 6
-					line: 6
-				}
-				start: Object {
-					column: 0
-					line: 6
-				}
-			}
+			loc: SourceLocation comments/regression/10230/input.js 6:0-6:6
 		}
 	]
 	body: Array [
 		JSExpressionStatement {
+			loc: SourceLocation comments/regression/10230/input.js 1:0-4:1
 			trailingComments: Array ["1"]
-			loc: Object {
-				filename: "comments/regression/10230/input.js"
-				end: Object {
-					column: 1
-					line: 4
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
 			expression: JSAssignmentExpression {
 				operator: "="
 				trailingComments: undefined
-				loc: Object {
-					filename: "comments/regression/10230/input.js"
-					end: Object {
-						column: 1
-						line: 4
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation comments/regression/10230/input.js 1:0-4:1
 				left: JSAssignmentIdentifier {
 					name: "A"
-					loc: Object {
-						filename: "comments/regression/10230/input.js"
-						identifierName: "A"
-						end: Object {
-							column: 1
-							line: 1
-						}
-						start: Object {
-							column: 0
-							line: 1
-						}
-					}
+					loc: SourceLocation comments/regression/10230/input.js 1:0-1:1 (A)
 				}
 				right: JSObjectExpression {
 					trailingComments: undefined
-					loc: Object {
-						filename: "comments/regression/10230/input.js"
-						end: Object {
-							column: 1
-							line: 4
-						}
-						start: Object {
-							column: 4
-							line: 1
-						}
-					}
+					loc: SourceLocation comments/regression/10230/input.js 1:4-4:1
 					properties: Array [
 						JSObjectProperty {
 							key: JSStaticPropertyKey {
 								value: JSIdentifier {
 									name: "a"
-									loc: Object {
-										filename: "comments/regression/10230/input.js"
-										identifierName: "a"
-										end: Object {
-											column: 3
-											line: 2
-										}
-										start: Object {
-											column: 2
-											line: 2
-										}
-									}
+									loc: SourceLocation comments/regression/10230/input.js 2:2-2:3 (a)
 								}
-								loc: Object {
-									filename: "comments/regression/10230/input.js"
-									end: Object {
-										column: 3
-										line: 2
-									}
-									start: Object {
-										column: 2
-										line: 2
-									}
-								}
+								loc: SourceLocation comments/regression/10230/input.js 2:2-2:3
 							}
 							value: JSNumericLiteral {
 								value: 42
 								format: undefined
-								loc: Object {
-									filename: "comments/regression/10230/input.js"
-									end: Object {
-										column: 7
-										line: 2
-									}
-									start: Object {
-										column: 5
-										line: 2
-									}
-								}
+								loc: SourceLocation comments/regression/10230/input.js 2:5-2:7
 							}
+							loc: SourceLocation comments/regression/10230/input.js 2:2-2:7
 							trailingComments: Array ["0"]
-							loc: Object {
-								filename: "comments/regression/10230/input.js"
-								end: Object {
-									column: 7
-									line: 2
-								}
-								start: Object {
-									column: 2
-									line: 2
-								}
-							}
 						}
 					]
 				}
@@ -180,32 +68,11 @@ JSRoot {
 		}
 		JSExpressionStatement {
 			leadingComments: Array ["1"]
-			loc: Object {
-				filename: "comments/regression/10230/input.js"
-				end: Object {
-					column: 1
-					line: 7
-				}
-				start: Object {
-					column: 0
-					line: 7
-				}
-			}
+			loc: SourceLocation comments/regression/10230/input.js 7:0-7:1
 			expression: JSReferenceIdentifier {
 				name: "B"
 				leadingComments: undefined
-				loc: Object {
-					filename: "comments/regression/10230/input.js"
-					identifierName: "B"
-					end: Object {
-						column: 1
-						line: 7
-					}
-					start: Object {
-						column: 0
-						line: 7
-					}
-				}
+				loc: SourceLocation comments/regression/10230/input.js 7:0-7:1 (B)
 			}
 		}
 	]
@@ -215,6 +82,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

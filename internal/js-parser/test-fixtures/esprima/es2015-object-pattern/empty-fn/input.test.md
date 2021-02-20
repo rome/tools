@@ -12,65 +12,24 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "esprima/es2015-object-pattern/empty-fn/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "esprima/es2015-object-pattern/empty-fn/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation esprima/es2015-object-pattern/empty-fn/input.js 1:0-2:0
+	path: UIDPath<esprima/es2015-object-pattern/empty-fn/input.js>
 	body: Array [
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "a"
-				loc: Object {
-					filename: "esprima/es2015-object-pattern/empty-fn/input.js"
-					identifierName: "a"
-					end: Object {
-						column: 10
-						line: 1
-					}
-					start: Object {
-						column: 9
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/es2015-object-pattern/empty-fn/input.js 1:9-1:10 (a)
 			}
-			loc: Object {
-				filename: "esprima/es2015-object-pattern/empty-fn/input.js"
-				end: Object {
-					column: 17
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation esprima/es2015-object-pattern/empty-fn/input.js 1:0-1:17
 			body: JSBlockStatement {
 				body: Array []
 				directives: Array []
-				loc: Object {
-					filename: "esprima/es2015-object-pattern/empty-fn/input.js"
-					end: Object {
-						column: 17
-						line: 1
-					}
-					start: Object {
-						column: 15
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/es2015-object-pattern/empty-fn/input.js 1:15-1:17
 			}
 			head: JSFunctionHead {
 				async: false
@@ -80,46 +39,16 @@ JSRoot {
 				returnType: undefined
 				thisType: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "esprima/es2015-object-pattern/empty-fn/input.js"
-					end: Object {
-						column: 14
-						line: 1
-					}
-					start: Object {
-						column: 10
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/es2015-object-pattern/empty-fn/input.js 1:10-1:14
 				params: Array [
 					JSBindingObjectPattern {
 						properties: Array []
 						rest: undefined
-						loc: Object {
-							filename: "esprima/es2015-object-pattern/empty-fn/input.js"
-							end: Object {
-								column: 13
-								line: 1
-							}
-							start: Object {
-								column: 11
-								line: 1
-							}
-						}
+						loc: SourceLocation esprima/es2015-object-pattern/empty-fn/input.js 1:11-1:13
 						meta: JSPatternMeta {
 							optional: undefined
 							typeAnnotation: undefined
-							loc: Object {
-								filename: "esprima/es2015-object-pattern/empty-fn/input.js"
-								end: Object {
-									column: 13
-									line: 1
-								}
-								start: Object {
-									column: 11
-									line: 1
-								}
-							}
+							loc: SourceLocation esprima/es2015-object-pattern/empty-fn/input.js 1:11-1:13
 						}
 					}
 				]
@@ -132,6 +61,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

@@ -11,62 +11,22 @@ HTMLRoot {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
-	filename: "cdata/input.html"
 	integrity: undefined
-	loc: Object {
-		filename: "cdata/input.html"
-		end: Object {
-			column: 7
-			line: 6
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation cdata/input.html 1:0-6:7
+	path: UIDPath<cdata/input.html>
 	body: Array [
 		HTMLElement {
 			name: HTMLIdentifier {
 				name: "math"
-				loc: Object {
-					filename: "cdata/input.html"
-					end: Object {
-						column: 5
-						line: 1
-					}
-					start: Object {
-						column: 1
-						line: 1
-					}
-				}
+				loc: SourceLocation cdata/input.html 1:1-1:5
 			}
 			attributes: Array []
 			selfClosing: false
-			loc: Object {
-				filename: "cdata/input.html"
-				end: Object {
-					column: 7
-					line: 6
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation cdata/input.html 1:0-6:7
 			children: Array [
 				HTMLCdataTag {
 					value: "x>y"
-					loc: Object {
-						filename: "cdata/input.html"
-						end: Object {
-							column: 4
-							line: 5
-						}
-						start: Object {
-							column: 1
-							line: 3
-						}
-					}
+					loc: SourceLocation cdata/input.html 3:1-5:4
 				}
 			]
 		}
@@ -77,6 +37,5 @@ HTMLRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

@@ -11,87 +11,41 @@ JSRoot {
 	comments: Array []
 	corrupt: true
 	directives: Array []
-	filename: "es2015/arrow-functions/no-ternary-test/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2015/arrow-functions/no-ternary-test/input.js"
-		end: Object {
-			column: 17
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2015/arrow-functions/no-ternary-test/input.js 1:0-1:17
+	path: UIDPath<es2015/arrow-functions/no-ternary-test/input.js>
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse"
 				categoryValue: "js"
+				category: Array ["parse"]
 				message: RAW_MARKUP {value: "Expected a semicolon or a line terminator"}
 			}
 			location: Object {
-				filename: "es2015/arrow-functions/no-ternary-test/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 8
-					line: 1
-				}
-				start: Object {
-					column: 9
-					line: 1
-				}
+				end: Position 1:8
+				path: UIDPath<es2015/arrow-functions/no-ternary-test/input.js>
+				start: Position 1:9
 			}
 		}
 	]
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "es2015/arrow-functions/no-ternary-test/input.js"
-				end: Object {
-					column: 8
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2015/arrow-functions/no-ternary-test/input.js 1:0-1:8
 			expression: JSArrowFunctionExpression {
-				loc: Object {
-					filename: "es2015/arrow-functions/no-ternary-test/input.js"
-					end: Object {
-						column: 8
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/arrow-functions/no-ternary-test/input.js 1:0-1:8
 				body: JSBlockStatement {
 					body: Array []
 					directives: Array []
-					loc: Object {
-						filename: "es2015/arrow-functions/no-ternary-test/input.js"
-						end: Object {
-							column: 8
-							line: 1
-						}
-						start: Object {
-							column: 6
-							line: 1
-						}
-					}
+					loc: SourceLocation es2015/arrow-functions/no-ternary-test/input.js 1:6-1:8
 				}
 				head: JSFunctionHead {
 					async: false
@@ -100,128 +54,38 @@ JSRoot {
 					rest: undefined
 					returnType: undefined
 					thisType: undefined
-					loc: Object {
-						filename: "es2015/arrow-functions/no-ternary-test/input.js"
-						end: Object {
-							column: 5
-							line: 1
-						}
-						start: Object {
-							column: 0
-							line: 1
-						}
-					}
+					loc: SourceLocation es2015/arrow-functions/no-ternary-test/input.js 1:0-1:5
 				}
 			}
 		}
 		JSExpressionStatement {
-			loc: Object {
-				filename: "es2015/arrow-functions/no-ternary-test/input.js"
-				end: Object {
-					column: 10
-					line: 1
-				}
-				start: Object {
-					column: 9
-					line: 1
-				}
-			}
+			loc: SourceLocation es2015/arrow-functions/no-ternary-test/input.js 1:9-1:10
 			expression: JSReferenceIdentifier {
 				name: "INVALID_PLACEHOLDER"
-				loc: Object {
-					filename: "es2015/arrow-functions/no-ternary-test/input.js"
-					end: Object {
-						column: 10
-						line: 1
-					}
-					start: Object {
-						column: 9
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/arrow-functions/no-ternary-test/input.js 1:9-1:10
 			}
 		}
 		JSExpressionStatement {
-			loc: Object {
-				filename: "es2015/arrow-functions/no-ternary-test/input.js"
-				end: Object {
-					column: 12
-					line: 1
-				}
-				start: Object {
-					column: 11
-					line: 1
-				}
-			}
+			loc: SourceLocation es2015/arrow-functions/no-ternary-test/input.js 1:11-1:12
 			expression: JSNumericLiteral {
 				value: 1
 				format: undefined
-				loc: Object {
-					filename: "es2015/arrow-functions/no-ternary-test/input.js"
-					end: Object {
-						column: 12
-						line: 1
-					}
-					start: Object {
-						column: 11
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/arrow-functions/no-ternary-test/input.js 1:11-1:12
 			}
 		}
 		JSExpressionStatement {
-			loc: Object {
-				filename: "es2015/arrow-functions/no-ternary-test/input.js"
-				end: Object {
-					column: 14
-					line: 1
-				}
-				start: Object {
-					column: 13
-					line: 1
-				}
-			}
+			loc: SourceLocation es2015/arrow-functions/no-ternary-test/input.js 1:13-1:14
 			expression: JSReferenceIdentifier {
 				name: "INVALID_PLACEHOLDER"
-				loc: Object {
-					filename: "es2015/arrow-functions/no-ternary-test/input.js"
-					end: Object {
-						column: 14
-						line: 1
-					}
-					start: Object {
-						column: 13
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/arrow-functions/no-ternary-test/input.js 1:13-1:14
 			}
 		}
 		JSExpressionStatement {
-			loc: Object {
-				filename: "es2015/arrow-functions/no-ternary-test/input.js"
-				end: Object {
-					column: 17
-					line: 1
-				}
-				start: Object {
-					column: 15
-					line: 1
-				}
-			}
+			loc: SourceLocation es2015/arrow-functions/no-ternary-test/input.js 1:15-1:17
 			expression: JSNumericLiteral {
 				value: 2
 				format: undefined
-				loc: Object {
-					filename: "es2015/arrow-functions/no-ternary-test/input.js"
-					end: Object {
-						column: 16
-						line: 1
-					}
-					start: Object {
-						column: 15
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/arrow-functions/no-ternary-test/input.js 1:15-1:16
 			}
 		}
 	]
@@ -239,8 +103,5 @@ JSRoot {
     () => {} ? 1 : 2;
              ^
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

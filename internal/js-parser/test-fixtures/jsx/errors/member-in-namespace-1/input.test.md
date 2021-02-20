@@ -11,173 +11,67 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "jsx/errors/member-in-namespace-1/input.jsx"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
+	loc: SourceLocation jsx/errors/member-in-namespace-1/input.jsx 1:0-2:0
+	path: UIDPath<jsx/errors/member-in-namespace-1/input.jsx>
 	syntax: Array ["jsx"]
-	loc: Object {
-		filename: "jsx/errors/member-in-namespace-1/input.jsx"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse"
 				categoryValue: "js"
+				category: Array ["parse"]
 				message: RAW_MARKUP {value: "Unknown JSX identifier token"}
 			}
 			location: Object {
-				filename: "jsx/errors/member-in-namespace-1/input.jsx"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 4
-					line: 1
-				}
-				start: Object {
-					column: 4
-					line: 1
-				}
+				end: Position 1:4
+				path: UIDPath<jsx/errors/member-in-namespace-1/input.jsx>
+				start: Position 1:4
 			}
 		}
 	]
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "jsx/errors/member-in-namespace-1/input.jsx"
-				end: Object {
-					column: 9
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation jsx/errors/member-in-namespace-1/input.jsx 1:0-1:9
 			expression: JSXElement {
 				name: JSXMemberExpression {
-					loc: Object {
-						filename: "jsx/errors/member-in-namespace-1/input.jsx"
-						end: Object {
-							column: 4
-							line: 1
-						}
-						start: Object {
-							column: 1
-							line: 1
-						}
-					}
+					loc: SourceLocation jsx/errors/member-in-namespace-1/input.jsx 1:1-1:4
 					object: JSXIdentifier {
 						name: "a"
-						loc: Object {
-							filename: "jsx/errors/member-in-namespace-1/input.jsx"
-							end: Object {
-								column: 2
-								line: 1
-							}
-							start: Object {
-								column: 1
-								line: 1
-							}
-						}
+						loc: SourceLocation jsx/errors/member-in-namespace-1/input.jsx 1:1-1:2
 					}
 					property: JSXIdentifier {
 						name: "b"
-						loc: Object {
-							filename: "jsx/errors/member-in-namespace-1/input.jsx"
-							end: Object {
-								column: 4
-								line: 1
-							}
-							start: Object {
-								column: 3
-								line: 1
-							}
-						}
+						loc: SourceLocation jsx/errors/member-in-namespace-1/input.jsx 1:3-1:4
 					}
 				}
 				children: Array []
 				selfClosing: true
 				typeArguments: undefined
-				loc: Object {
-					filename: "jsx/errors/member-in-namespace-1/input.jsx"
-					end: Object {
-						column: 9
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation jsx/errors/member-in-namespace-1/input.jsx 1:0-1:9
 				attributes: Array [
 					JSXAttribute {
 						name: JSXIdentifier {
 							name: ""
-							loc: Object {
-								filename: "jsx/errors/member-in-namespace-1/input.jsx"
-								end: Object {
-									column: 5
-									line: 1
-								}
-								start: Object {
-									column: 4
-									line: 1
-								}
-							}
+							loc: SourceLocation jsx/errors/member-in-namespace-1/input.jsx 1:4-1:5
 						}
 						value: undefined
-						loc: Object {
-							filename: "jsx/errors/member-in-namespace-1/input.jsx"
-							end: Object {
-								column: 5
-								line: 1
-							}
-							start: Object {
-								column: 4
-								line: 1
-							}
-						}
+						loc: SourceLocation jsx/errors/member-in-namespace-1/input.jsx 1:4-1:5
 					}
 					JSXAttribute {
 						name: JSXIdentifier {
 							name: "c"
-							loc: Object {
-								filename: "jsx/errors/member-in-namespace-1/input.jsx"
-								end: Object {
-									column: 6
-									line: 1
-								}
-								start: Object {
-									column: 5
-									line: 1
-								}
-							}
+							loc: SourceLocation jsx/errors/member-in-namespace-1/input.jsx 1:5-1:6
 						}
 						value: undefined
-						loc: Object {
-							filename: "jsx/errors/member-in-namespace-1/input.jsx"
-							end: Object {
-								column: 6
-								line: 1
-							}
-							start: Object {
-								column: 5
-								line: 1
-							}
-						}
+						loc: SourceLocation jsx/errors/member-in-namespace-1/input.jsx 1:5-1:6
 					}
 				]
 			}
@@ -197,8 +91,5 @@ JSRoot {
     <a.b:c />
         ^
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

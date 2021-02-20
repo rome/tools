@@ -12,145 +12,42 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "typescript/module-namespace/body-declare/input.ts"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
+	loc: SourceLocation typescript/module-namespace/body-declare/input.ts 1:0-4:0
+	path: UIDPath<typescript/module-namespace/body-declare/input.ts>
 	syntax: Array ["ts"]
-	loc: Object {
-		filename: "typescript/module-namespace/body-declare/input.ts"
-		end: Object {
-			column: 0
-			line: 4
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
 	body: Array [
 		TSModuleDeclaration {
 			id: JSBindingIdentifier {
 				name: "N"
-				loc: Object {
-					filename: "typescript/module-namespace/body-declare/input.ts"
-					identifierName: "N"
-					end: Object {
-						column: 19
-						line: 1
-					}
-					start: Object {
-						column: 18
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/module-namespace/body-declare/input.ts 1:18-1:19 (N)
 			}
 			declare: true
-			loc: Object {
-				filename: "typescript/module-namespace/body-declare/input.ts"
-				end: Object {
-					column: 1
-					line: 3
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation typescript/module-namespace/body-declare/input.ts 1:0-3:1
 			body: TSModuleBlock {
-				loc: Object {
-					filename: "typescript/module-namespace/body-declare/input.ts"
-					end: Object {
-						column: 1
-						line: 3
-					}
-					start: Object {
-						column: 20
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/module-namespace/body-declare/input.ts 1:20-3:1
 				body: Array [
 					JSVariableDeclarationStatement {
-						loc: Object {
-							filename: "typescript/module-namespace/body-declare/input.ts"
-							end: Object {
-								column: 20
-								line: 2
-							}
-							start: Object {
-								column: 4
-								line: 2
-							}
-						}
+						loc: SourceLocation typescript/module-namespace/body-declare/input.ts 2:4-2:20
 						declaration: JSVariableDeclaration {
 							kind: "const"
-							loc: Object {
-								filename: "typescript/module-namespace/body-declare/input.ts"
-								end: Object {
-									column: 20
-									line: 2
-								}
-								start: Object {
-									column: 4
-									line: 2
-								}
-							}
+							loc: SourceLocation typescript/module-namespace/body-declare/input.ts 2:4-2:20
 							declarations: Array [
 								JSVariableDeclarator {
 									id: JSBindingIdentifier {
 										name: "x"
-										loc: Object {
-											filename: "typescript/module-namespace/body-declare/input.ts"
-											end: Object {
-												column: 19
-												line: 2
-											}
-											start: Object {
-												column: 10
-												line: 2
-											}
-										}
+										loc: SourceLocation typescript/module-namespace/body-declare/input.ts 2:10-2:19
 										meta: JSPatternMeta {
 											definite: undefined
-											loc: Object {
-												filename: "typescript/module-namespace/body-declare/input.ts"
-												end: Object {
-													column: 19
-													line: 2
-												}
-												start: Object {
-													column: 10
-													line: 2
-												}
-											}
-											typeAnnotation: TSNumberKeywordTypeAnnotation {
-												loc: Object {
-													filename: "typescript/module-namespace/body-declare/input.ts"
-													end: Object {
-														column: 19
-														line: 2
-													}
-													start: Object {
-														column: 13
-														line: 2
-													}
-												}
-											}
+											loc: SourceLocation typescript/module-namespace/body-declare/input.ts 2:10-2:19
+											typeAnnotation: TSNumberKeywordTypeAnnotation {loc: SourceLocation typescript/module-namespace/body-declare/input.ts 2:13-2:19}
 										}
 									}
 									init: undefined
-									loc: Object {
-										filename: "typescript/module-namespace/body-declare/input.ts"
-										end: Object {
-											column: 19
-											line: 2
-										}
-										start: Object {
-											column: 10
-											line: 2
-										}
-									}
+									loc: SourceLocation typescript/module-namespace/body-declare/input.ts 2:10-2:19
 								}
 							]
 						}
@@ -165,6 +62,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

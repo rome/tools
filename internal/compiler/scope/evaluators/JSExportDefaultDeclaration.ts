@@ -13,7 +13,9 @@ export default createScopeEvaluator({
 	inject(node: AnyNode, parent: AnyNode, scope: Scope) {
 		node = jsExportDefaultDeclaration.assert(node);
 
-		const {declaration} = node;
+		const {
+			declaration,
+		} = node;
 		scope.injectEvaluate(declaration, node);
 
 		if (

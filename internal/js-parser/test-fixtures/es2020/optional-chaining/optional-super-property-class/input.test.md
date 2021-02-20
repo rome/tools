@@ -11,45 +11,29 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "es2020/optional-chaining/optional-super-property-class/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2020/optional-chaining/optional-super-property-class/input.js"
-		end: Object {
-			column: 1
-			line: 5
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2020/optional-chaining/optional-super-property-class/input.js 1:0-5:1
+	path: UIDPath<es2020/optional-chaining/optional-super-property-class/input.js>
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse"
 				categoryValue: "js"
+				category: Array ["parse"]
 				message: RAW_MARKUP {value: "Invalid super suffix operator"}
 			}
 			location: Object {
-				filename: "es2020/optional-chaining/optional-super-property-class/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 20
-					line: 3
-				}
-				start: Object {
-					column: 20
-					line: 3
-				}
+				end: Position 3:20
+				path: UIDPath<es2020/optional-chaining/optional-super-property-class/input.js>
+				start: Position 3:20
 			}
 		}
 	]
@@ -57,87 +41,35 @@ JSRoot {
 		JSClassDeclaration {
 			id: JSBindingIdentifier {
 				name: "A"
-				loc: Object {
-					filename: "es2020/optional-chaining/optional-super-property-class/input.js"
-					identifierName: "A"
-					end: Object {
-						column: 7
-						line: 1
-					}
-					start: Object {
-						column: 6
-						line: 1
-					}
-				}
+				loc: SourceLocation es2020/optional-chaining/optional-super-property-class/input.js 1:6-1:7 (A)
 			}
-			loc: Object {
-				filename: "es2020/optional-chaining/optional-super-property-class/input.js"
-				end: Object {
-					column: 1
-					line: 5
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2020/optional-chaining/optional-super-property-class/input.js 1:0-5:1
 			meta: JSClassHead {
 				implements: undefined
 				superClass: undefined
 				superTypeParameters: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "es2020/optional-chaining/optional-super-property-class/input.js"
-					end: Object {
-						column: 1
-						line: 5
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation es2020/optional-chaining/optional-super-property-class/input.js 1:0-5:1
 				body: Array [
 					JSClassMethod {
 						kind: "method"
 						key: JSStaticPropertyKey {
 							value: JSIdentifier {
 								name: "b"
-								loc: Object {
-									filename: "es2020/optional-chaining/optional-super-property-class/input.js"
-									identifierName: "b"
-									end: Object {
-										column: 5
-										line: 2
-									}
-									start: Object {
-										column: 4
-										line: 2
-									}
-								}
+								loc: SourceLocation es2020/optional-chaining/optional-super-property-class/input.js 2:4-2:5 (b)
 							}
-							loc: Object {
-								filename: "es2020/optional-chaining/optional-super-property-class/input.js"
-								end: Object {
-									column: 5
-									line: 2
-								}
-								start: Object {
-									column: 4
-									line: 2
-								}
-							}
+							loc: SourceLocation es2020/optional-chaining/optional-super-property-class/input.js 2:4-2:5
 						}
-						loc: Object {
-							filename: "es2020/optional-chaining/optional-super-property-class/input.js"
-							end: Object {
-								column: 5
-								line: 4
-							}
-							start: Object {
-								column: 4
-								line: 2
-							}
+						loc: SourceLocation es2020/optional-chaining/optional-super-property-class/input.js 2:4-4:5
+						meta: JSClassPropertyMeta {
+							abstract: false
+							accessibility: undefined
+							optional: false
+							readonly: false
+							static: false
+							typeAnnotation: undefined
+							loc: SourceLocation es2020/optional-chaining/optional-super-property-class/input.js 2:4-2:5
+							start: Position 2:4
 						}
 						head: JSFunctionHead {
 							async: false
@@ -148,121 +80,24 @@ JSRoot {
 							returnType: undefined
 							thisType: undefined
 							typeParameters: undefined
-							loc: Object {
-								filename: "es2020/optional-chaining/optional-super-property-class/input.js"
-								end: Object {
-									column: 7
-									line: 2
-								}
-								start: Object {
-									column: 5
-									line: 2
-								}
-							}
-						}
-						meta: JSClassPropertyMeta {
-							abstract: false
-							accessibility: undefined
-							optional: false
-							readonly: false
-							static: false
-							typeAnnotation: undefined
-							start: Object {
-								column: 4
-								line: 2
-							}
-							loc: Object {
-								filename: "es2020/optional-chaining/optional-super-property-class/input.js"
-								end: Object {
-									column: 5
-									line: 2
-								}
-								start: Object {
-									column: 4
-									line: 2
-								}
-							}
+							loc: SourceLocation es2020/optional-chaining/optional-super-property-class/input.js 2:5-2:7
 						}
 						body: JSBlockStatement {
 							directives: Array []
-							loc: Object {
-								filename: "es2020/optional-chaining/optional-super-property-class/input.js"
-								end: Object {
-									column: 5
-									line: 4
-								}
-								start: Object {
-									column: 7
-									line: 2
-								}
-							}
+							loc: SourceLocation es2020/optional-chaining/optional-super-property-class/input.js 2:7-4:5
 							body: Array [
 								JSReturnStatement {
-									loc: Object {
-										filename: "es2020/optional-chaining/optional-super-property-class/input.js"
-										end: Object {
-											column: 24
-											line: 3
-										}
-										start: Object {
-											column: 8
-											line: 3
-										}
-									}
+									loc: SourceLocation es2020/optional-chaining/optional-super-property-class/input.js 3:8-3:24
 									argument: JSMemberExpression {
-										loc: Object {
-											filename: "es2020/optional-chaining/optional-super-property-class/input.js"
-											end: Object {
-												column: 23
-												line: 3
-											}
-											start: Object {
-												column: 15
-												line: 3
-											}
-										}
-										object: JSSuper {
-											loc: Object {
-												filename: "es2020/optional-chaining/optional-super-property-class/input.js"
-												end: Object {
-													column: 20
-													line: 3
-												}
-												start: Object {
-													column: 15
-													line: 3
-												}
-											}
-										}
+										loc: SourceLocation es2020/optional-chaining/optional-super-property-class/input.js 3:15-3:23
+										object: JSSuper {loc: SourceLocation es2020/optional-chaining/optional-super-property-class/input.js 3:15-3:20}
 										property: JSStaticMemberProperty {
 											value: JSIdentifier {
 												name: "b"
-												loc: Object {
-													filename: "es2020/optional-chaining/optional-super-property-class/input.js"
-													identifierName: "b"
-													end: Object {
-														column: 23
-														line: 3
-													}
-													start: Object {
-														column: 22
-														line: 3
-													}
-												}
+												loc: SourceLocation es2020/optional-chaining/optional-super-property-class/input.js 3:22-3:23 (b)
 											}
 											optional: true
-											loc: Object {
-												filename: "es2020/optional-chaining/optional-super-property-class/input.js"
-												identifierName: "b"
-												end: Object {
-													column: 23
-													line: 3
-												}
-												start: Object {
-													column: 22
-													line: 3
-												}
-											}
+											loc: SourceLocation es2020/optional-chaining/optional-super-property-class/input.js 3:22-3:23 (b)
 										}
 									}
 								}
@@ -291,8 +126,5 @@ JSRoot {
     4 │     }
     5 │ }
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

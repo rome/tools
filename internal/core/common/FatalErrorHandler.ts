@@ -2,10 +2,12 @@ import {printDiagnostics} from "@internal/cli-diagnostics";
 import {Reporter, WrapperFactory} from "@internal/cli-reporter";
 import {StaticMarkup} from "@internal/markup";
 import {
+	DIAGNOSTIC_CATEGORIES,
 	DiagnosticsProcessor,
 	getOrDeriveDiagnosticsFromError,
 } from "@internal/diagnostics";
 import {ErrorCallback, VoidCallback} from "@internal/typescript-helpers";
+
 import workerThreads = require("worker_threads");
 
 type FatalErrorHandlerOptions = {
@@ -97,11 +99,10 @@ export default class FatalErrorHandler {
 				error,
 				{
 					description: {
-						category: "internalError/fatal",
+						category: DIAGNOSTIC_CATEGORIES["internalError/fatal"],
 					},
 					label: source,
 					tags: {
-						internal: true,
 						fatal: true,
 					},
 				},
@@ -136,6 +137,8 @@ export default class FatalErrorHandler {
 						},
 						0,
 					);
+
+					await new Promise(() => {});
 				}
 			}
 		}

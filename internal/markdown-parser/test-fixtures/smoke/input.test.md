@@ -11,223 +11,73 @@ MarkdownRoot {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
-	filename: "smoke/input.md"
 	integrity: undefined
-	loc: Object {
-		filename: "smoke/input.md"
-		end: Object {
-			column: 64
-			line: 30
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation smoke/input.md 1:0-30:64
+	path: UIDPath<smoke/input.md>
 	body: Array [
 		MarkdownHeadingBlock {
 			value: "Title"
 			level: 1
-			loc: Object {
-				filename: "smoke/input.md"
-				end: Object {
-					column: 7
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation smoke/input.md 1:0-1:7
 		}
 		MarkdownHeadingBlock {
 			value: "Title"
 			level: 2
-			loc: Object {
-				filename: "smoke/input.md"
-				end: Object {
-					column: 8
-					line: 2
-				}
-				start: Object {
-					column: 7
-					line: 1
-				}
-			}
+			loc: SourceLocation smoke/input.md 2:0-2:8
 		}
 		MarkdownHeadingBlock {
 			value: "Title"
 			level: 3
-			loc: Object {
-				filename: "smoke/input.md"
-				end: Object {
-					column: 9
-					line: 3
-				}
-				start: Object {
-					column: 8
-					line: 2
-				}
-			}
+			loc: SourceLocation smoke/input.md 3:0-3:9
 		}
 		MarkdownHeadingBlock {
 			value: "Title"
 			level: 4
-			loc: Object {
-				filename: "smoke/input.md"
-				end: Object {
-					column: 10
-					line: 4
-				}
-				start: Object {
-					column: 9
-					line: 3
-				}
-			}
+			loc: SourceLocation smoke/input.md 4:0-4:10
 		}
 		MarkdownHeadingBlock {
 			value: "Title"
 			level: 5
-			loc: Object {
-				filename: "smoke/input.md"
-				end: Object {
-					column: 11
-					line: 5
-				}
-				start: Object {
-					column: 10
-					line: 4
-				}
-			}
+			loc: SourceLocation smoke/input.md 5:0-5:11
 		}
 		MarkdownHeadingBlock {
 			value: "Title"
 			level: 6
-			loc: Object {
-				filename: "smoke/input.md"
-				end: Object {
-					column: 12
-					line: 6
-				}
-				start: Object {
-					column: 11
-					line: 5
-				}
-			}
+			loc: SourceLocation smoke/input.md 6:0-6:12
 		}
 		MarkdownParagraph {
-			loc: Object {
-				filename: "smoke/input.md"
-				end: Object {
-					column: 32
-					line: 7
-				}
-				start: Object {
-					column: 12
-					line: 6
-				}
-			}
+			loc: SourceLocation smoke/input.md 7:0-7:32
 			children: Array [
 				MarkdownText {
 					value: "####### this will be a paragraph"
-					loc: Object {
-						filename: "smoke/input.md"
-						end: Object {
-							column: 12
-							line: 6
-						}
-						start: Object {
-							column: 12
-							line: 6
-						}
-					}
+					loc: SourceLocation smoke/input.md 7:0-7:0
 				}
 			]
 		}
 		MarkdownHeadingBlock {
 			value: "Another title"
 			level: 3
-			loc: Object {
-				filename: "smoke/input.md"
-				end: Object {
-					column: 17
-					line: 13
-				}
-				start: Object {
-					column: 0
-					line: 12
-				}
-			}
+			loc: SourceLocation smoke/input.md 13:0-13:17
 		}
 		MarkdownDividerBlock {
 			value: "___"
-			loc: Object {
-				filename: "smoke/input.md"
-				end: Object {
-					column: 3
-					line: 14
-				}
-				start: Object {
-					column: 3
-					line: 14
-				}
-			}
+			loc: SourceLocation smoke/input.md 14:3-14:3
 		}
 		MarkdownListBlock {
 			ordered: true
-			loc: Object {
-				filename: "smoke/input.md"
-				end: Object {
-					column: 13
-					line: 15
-				}
-				start: Object {
-					column: 0
-					line: 15
-				}
-			}
+			loc: SourceLocation smoke/input.md 15:0-15:13
 			children: Array [
 				MarkdownListItem {
 					value: undefined
 					checked: undefined
-					loc: Object {
-						filename: "smoke/input.md"
-						end: Object {
-							column: 13
-							line: 15
-						}
-						start: Object {
-							column: 3
-							line: 15
-						}
-					}
+					loc: SourceLocation smoke/input.md 15:3-15:13
 					children: Array [
 						MarkdownParagraph {
-							loc: Object {
-								filename: "smoke/input.md"
-								end: Object {
-									column: 13
-									line: 15
-								}
-								start: Object {
-									column: 3
-									line: 15
-								}
-							}
+							loc: SourceLocation smoke/input.md 15:3-15:13
 							children: Array [
 								MarkdownText {
 									value: "first item"
-									loc: Object {
-										filename: "smoke/input.md"
-										end: Object {
-											column: 3
-											line: 15
-										}
-										start: Object {
-											column: 3
-											line: 15
-										}
-									}
+									loc: SourceLocation smoke/input.md 15:3-15:3
 								}
 							]
 						}
@@ -237,59 +87,19 @@ MarkdownRoot {
 		}
 		MarkdownListBlock {
 			ordered: true
-			loc: Object {
-				filename: "smoke/input.md"
-				end: Object {
-					column: 14
-					line: 16
-				}
-				start: Object {
-					column: 0
-					line: 16
-				}
-			}
+			loc: SourceLocation smoke/input.md 16:0-16:14
 			children: Array [
 				MarkdownListItem {
 					value: undefined
 					checked: undefined
-					loc: Object {
-						filename: "smoke/input.md"
-						end: Object {
-							column: 14
-							line: 16
-						}
-						start: Object {
-							column: 3
-							line: 16
-						}
-					}
+					loc: SourceLocation smoke/input.md 16:3-16:14
 					children: Array [
 						MarkdownParagraph {
-							loc: Object {
-								filename: "smoke/input.md"
-								end: Object {
-									column: 14
-									line: 16
-								}
-								start: Object {
-									column: 3
-									line: 16
-								}
-							}
+							loc: SourceLocation smoke/input.md 16:3-16:14
 							children: Array [
 								MarkdownText {
 									value: "second item"
-									loc: Object {
-										filename: "smoke/input.md"
-										end: Object {
-											column: 3
-											line: 16
-										}
-										start: Object {
-											column: 3
-											line: 16
-										}
-									}
+									loc: SourceLocation smoke/input.md 16:3-16:3
 								}
 							]
 						}
@@ -299,59 +109,19 @@ MarkdownRoot {
 		}
 		MarkdownListBlock {
 			ordered: false
-			loc: Object {
-				filename: "smoke/input.md"
-				end: Object {
-					column: 12
-					line: 17
-				}
-				start: Object {
-					column: 0
-					line: 17
-				}
-			}
+			loc: SourceLocation smoke/input.md 17:0-17:12
 			children: Array [
 				MarkdownListItem {
 					value: "-"
 					checked: undefined
-					loc: Object {
-						filename: "smoke/input.md"
-						end: Object {
-							column: 12
-							line: 17
-						}
-						start: Object {
-							column: 2
-							line: 17
-						}
-					}
+					loc: SourceLocation smoke/input.md 17:2-17:12
 					children: Array [
 						MarkdownParagraph {
-							loc: Object {
-								filename: "smoke/input.md"
-								end: Object {
-									column: 12
-									line: 17
-								}
-								start: Object {
-									column: 2
-									line: 17
-								}
-							}
+							loc: SourceLocation smoke/input.md 17:2-17:12
 							children: Array [
 								MarkdownText {
 									value: "first item"
-									loc: Object {
-										filename: "smoke/input.md"
-										end: Object {
-											column: 2
-											line: 17
-										}
-										start: Object {
-											column: 2
-											line: 17
-										}
-									}
+									loc: SourceLocation smoke/input.md 17:2-17:2
 								}
 							]
 						}
@@ -361,59 +131,19 @@ MarkdownRoot {
 		}
 		MarkdownListBlock {
 			ordered: false
-			loc: Object {
-				filename: "smoke/input.md"
-				end: Object {
-					column: 13
-					line: 18
-				}
-				start: Object {
-					column: 0
-					line: 18
-				}
-			}
+			loc: SourceLocation smoke/input.md 18:0-18:13
 			children: Array [
 				MarkdownListItem {
 					value: "-"
 					checked: undefined
-					loc: Object {
-						filename: "smoke/input.md"
-						end: Object {
-							column: 13
-							line: 18
-						}
-						start: Object {
-							column: 2
-							line: 18
-						}
-					}
+					loc: SourceLocation smoke/input.md 18:2-18:13
 					children: Array [
 						MarkdownParagraph {
-							loc: Object {
-								filename: "smoke/input.md"
-								end: Object {
-									column: 13
-									line: 18
-								}
-								start: Object {
-									column: 2
-									line: 18
-								}
-							}
+							loc: SourceLocation smoke/input.md 18:2-18:13
 							children: Array [
 								MarkdownText {
 									value: "second item"
-									loc: Object {
-										filename: "smoke/input.md"
-										end: Object {
-											column: 2
-											line: 18
-										}
-										start: Object {
-											column: 2
-											line: 18
-										}
-									}
+									loc: SourceLocation smoke/input.md 18:2-18:2
 								}
 							]
 						}
@@ -423,59 +153,19 @@ MarkdownRoot {
 		}
 		MarkdownListBlock {
 			ordered: false
-			loc: Object {
-				filename: "smoke/input.md"
-				end: Object {
-					column: 12
-					line: 19
-				}
-				start: Object {
-					column: 0
-					line: 19
-				}
-			}
+			loc: SourceLocation smoke/input.md 19:0-19:12
 			children: Array [
 				MarkdownListItem {
 					value: "*"
 					checked: undefined
-					loc: Object {
-						filename: "smoke/input.md"
-						end: Object {
-							column: 12
-							line: 19
-						}
-						start: Object {
-							column: 2
-							line: 19
-						}
-					}
+					loc: SourceLocation smoke/input.md 19:2-19:12
 					children: Array [
 						MarkdownParagraph {
-							loc: Object {
-								filename: "smoke/input.md"
-								end: Object {
-									column: 12
-									line: 19
-								}
-								start: Object {
-									column: 2
-									line: 19
-								}
-							}
+							loc: SourceLocation smoke/input.md 19:2-19:12
 							children: Array [
 								MarkdownText {
 									value: "first item"
-									loc: Object {
-										filename: "smoke/input.md"
-										end: Object {
-											column: 2
-											line: 19
-										}
-										start: Object {
-											column: 2
-											line: 19
-										}
-									}
+									loc: SourceLocation smoke/input.md 19:2-19:2
 								}
 							]
 						}
@@ -485,59 +175,19 @@ MarkdownRoot {
 		}
 		MarkdownListBlock {
 			ordered: false
-			loc: Object {
-				filename: "smoke/input.md"
-				end: Object {
-					column: 13
-					line: 20
-				}
-				start: Object {
-					column: 0
-					line: 20
-				}
-			}
+			loc: SourceLocation smoke/input.md 20:0-20:13
 			children: Array [
 				MarkdownListItem {
 					value: "*"
 					checked: undefined
-					loc: Object {
-						filename: "smoke/input.md"
-						end: Object {
-							column: 13
-							line: 20
-						}
-						start: Object {
-							column: 2
-							line: 20
-						}
-					}
+					loc: SourceLocation smoke/input.md 20:2-20:13
 					children: Array [
 						MarkdownParagraph {
-							loc: Object {
-								filename: "smoke/input.md"
-								end: Object {
-									column: 13
-									line: 20
-								}
-								start: Object {
-									column: 2
-									line: 20
-								}
-							}
+							loc: SourceLocation smoke/input.md 20:2-20:13
 							children: Array [
 								MarkdownText {
 									value: "second item"
-									loc: Object {
-										filename: "smoke/input.md"
-										end: Object {
-											column: 2
-											line: 20
-										}
-										start: Object {
-											column: 2
-											line: 20
-										}
-									}
+									loc: SourceLocation smoke/input.md 20:2-20:2
 								}
 							]
 						}
@@ -546,431 +196,131 @@ MarkdownRoot {
 			]
 		}
 		MarkdownParagraph {
-			loc: Object {
-				filename: "smoke/input.md"
-				end: Object {
-					column: 10
-					line: 21
-				}
-				start: Object {
-					column: 0
-					line: 21
-				}
-			}
+			loc: SourceLocation smoke/input.md 21:0-21:10
 			children: Array [
 				MarkdownText {
 					value: "*"
-					loc: Object {
-						filename: "smoke/input.md"
-						end: Object {
-							column: 0
-							line: 21
-						}
-						start: Object {
-							column: 0
-							line: 21
-						}
-					}
+					loc: SourceLocation smoke/input.md 21:0-21:0
 				}
 				MarkdownText {
 					value: "paragraph"
-					loc: Object {
-						filename: "smoke/input.md"
-						end: Object {
-							column: 1
-							line: 21
-						}
-						start: Object {
-							column: 1
-							line: 21
-						}
-					}
+					loc: SourceLocation smoke/input.md 21:1-21:1
 				}
 			]
 		}
 		MarkdownDividerBlock {
 			value: "---"
-			loc: Object {
-				filename: "smoke/input.md"
-				end: Object {
-					column: 3
-					line: 22
-				}
-				start: Object {
-					column: 3
-					line: 22
-				}
-			}
+			loc: SourceLocation smoke/input.md 22:3-22:3
 		}
 		MarkdownParagraph {
-			loc: Object {
-				filename: "smoke/input.md"
-				end: Object {
-					column: 9
-					line: 23
-				}
-				start: Object {
-					column: 0
-					line: 23
-				}
-			}
+			loc: SourceLocation smoke/input.md 23:0-23:9
 			children: Array [
 				MarkdownText {
 					value: "Paragraph"
-					loc: Object {
-						filename: "smoke/input.md"
-						end: Object {
-							column: 0
-							line: 23
-						}
-						start: Object {
-							column: 0
-							line: 23
-						}
-					}
+					loc: SourceLocation smoke/input.md 23:0-23:0
 				}
 			]
 		}
 		MarkdownDividerBlock {
 			value: "***"
-			loc: Object {
-				filename: "smoke/input.md"
-				end: Object {
-					column: 3
-					line: 24
-				}
-				start: Object {
-					column: 3
-					line: 24
-				}
-			}
+			loc: SourceLocation smoke/input.md 24:3-24:3
 		}
 		MarkdownParagraph {
-			loc: Object {
-				filename: "smoke/input.md"
-				end: Object {
-					column: 60
-					line: 26
-				}
-				start: Object {
-					column: 0
-					line: 26
-				}
-			}
+			loc: SourceLocation smoke/input.md 26:0-26:60
 			children: Array [
 				MarkdownText {
 					value: "Lorem "
-					loc: Object {
-						filename: "smoke/input.md"
-						end: Object {
-							column: 0
-							line: 26
-						}
-						start: Object {
-							column: 0
-							line: 26
-						}
-					}
+					loc: SourceLocation smoke/input.md 26:0-26:0
 				}
 				MarkdownEmphasisInline {
 					value: Array [
 						MarkdownText {
 							value: "ipsum dolor sit"
-							loc: Object {
-								filename: "smoke/input.md"
-								end: Object {
-									column: 7
-									line: 26
-								}
-								start: Object {
-									column: 7
-									line: 26
-								}
-							}
+							loc: SourceLocation smoke/input.md 26:7-26:7
 						}
 					]
-					loc: Object {
-						filename: "smoke/input.md"
-						end: Object {
-							column: 22
-							line: 26
-						}
-						start: Object {
-							column: 6
-							line: 26
-						}
-					}
+					loc: SourceLocation smoke/input.md 26:6-26:22
 				}
 				MarkdownText {
 					value: " amet, "
-					loc: Object {
-						filename: "smoke/input.md"
-						end: Object {
-							column: 23
-							line: 26
-						}
-						start: Object {
-							column: 23
-							line: 26
-						}
-					}
+					loc: SourceLocation smoke/input.md 26:23-26:23
 				}
 				MarkdownEmphasisInline {
 					value: Array [
 						MarkdownText {
 							value: "consectetur adipiscing elit"
-							loc: Object {
-								filename: "smoke/input.md"
-								end: Object {
-									column: 31
-									line: 26
-								}
-								start: Object {
-									column: 31
-									line: 26
-								}
-							}
+							loc: SourceLocation smoke/input.md 26:31-26:31
 						}
 					]
-					loc: Object {
-						filename: "smoke/input.md"
-						end: Object {
-							column: 58
-							line: 26
-						}
-						start: Object {
-							column: 30
-							line: 26
-						}
-					}
+					loc: SourceLocation smoke/input.md 26:30-26:58
 				}
 				MarkdownText {
 					value: "."
-					loc: Object {
-						filename: "smoke/input.md"
-						end: Object {
-							column: 59
-							line: 26
-						}
-						start: Object {
-							column: 59
-							line: 26
-						}
-					}
+					loc: SourceLocation smoke/input.md 26:59-26:59
 				}
 			]
 		}
 		MarkdownParagraph {
-			loc: Object {
-				filename: "smoke/input.md"
-				end: Object {
-					column: 64
-					line: 28
-				}
-				start: Object {
-					column: 0
-					line: 28
-				}
-			}
+			loc: SourceLocation smoke/input.md 28:0-28:64
 			children: Array [
 				MarkdownText {
 					value: "Lorem "
-					loc: Object {
-						filename: "smoke/input.md"
-						end: Object {
-							column: 0
-							line: 28
-						}
-						start: Object {
-							column: 0
-							line: 28
-						}
-					}
+					loc: SourceLocation smoke/input.md 28:0-28:0
 				}
 				MarkdownEmphasisInline {
 					value: Array [
 						MarkdownText {
 							value: "ipsum dolor"
-							loc: Object {
-								filename: "smoke/input.md"
-								end: Object {
-									column: 8
-									line: 28
-								}
-								start: Object {
-									column: 8
-									line: 28
-								}
-							}
+							loc: SourceLocation smoke/input.md 28:8-28:8
 						}
 					]
-					loc: Object {
-						filename: "smoke/input.md"
-						end: Object {
-							column: 19
-							line: 28
-						}
-						start: Object {
-							column: 6
-							line: 28
-						}
-					}
+					loc: SourceLocation smoke/input.md 28:6-28:19
 				}
 				MarkdownText {
 					value: " sit amet, "
-					loc: Object {
-						filename: "smoke/input.md"
-						end: Object {
-							column: 21
-							line: 28
-						}
-						start: Object {
-							column: 21
-							line: 28
-						}
-					}
+					loc: SourceLocation smoke/input.md 28:21-28:21
 				}
 				MarkdownEmphasisInline {
 					value: Array [
 						MarkdownText {
 							value: "consectetur adipiscing"
-							loc: Object {
-								filename: "smoke/input.md"
-								end: Object {
-									column: 34
-									line: 28
-								}
-								start: Object {
-									column: 34
-									line: 28
-								}
-							}
+							loc: SourceLocation smoke/input.md 28:34-28:34
 						}
 					]
-					loc: Object {
-						filename: "smoke/input.md"
-						end: Object {
-							column: 56
-							line: 28
-						}
-						start: Object {
-							column: 32
-							line: 28
-						}
-					}
+					loc: SourceLocation smoke/input.md 28:32-28:56
 				}
 				MarkdownText {
 					value: " elit."
-					loc: Object {
-						filename: "smoke/input.md"
-						end: Object {
-							column: 58
-							line: 28
-						}
-						start: Object {
-							column: 58
-							line: 28
-						}
-					}
+					loc: SourceLocation smoke/input.md 28:58-28:58
 				}
 			]
 		}
 		MarkdownParagraph {
-			loc: Object {
-				filename: "smoke/input.md"
-				end: Object {
-					column: 64
-					line: 30
-				}
-				start: Object {
-					column: 0
-					line: 30
-				}
-			}
+			loc: SourceLocation smoke/input.md 30:0-30:64
 			children: Array [
 				MarkdownText {
 					value: "Lorem ipsum "
-					loc: Object {
-						filename: "smoke/input.md"
-						end: Object {
-							column: 0
-							line: 30
-						}
-						start: Object {
-							column: 0
-							line: 30
-						}
-					}
+					loc: SourceLocation smoke/input.md 30:0-30:0
 				}
 				MarkdownEmphasisInline {
 					value: Array []
-					loc: Object {
-						filename: "smoke/input.md"
-						end: Object {
-							column: 14
-							line: 30
-						}
-						start: Object {
-							column: 12
-							line: 30
-						}
-					}
+					loc: SourceLocation smoke/input.md 30:12-30:14
 				}
 				MarkdownText {
 					value: "dolor sit amet, consectetur"
-					loc: Object {
-						filename: "smoke/input.md"
-						end: Object {
-							column: 16
-							line: 30
-						}
-						start: Object {
-							column: 16
-							line: 30
-						}
-					}
+					loc: SourceLocation smoke/input.md 30:16-30:16
 				}
 				MarkdownText {
 					value: "**"
-					loc: Object {
-						filename: "smoke/input.md"
-						end: Object {
-							column: 43
-							line: 30
-						}
-						start: Object {
-							column: 43
-							line: 30
-						}
-					}
+					loc: SourceLocation smoke/input.md 30:43-30:43
 				}
 				MarkdownText {
 					value: "__"
-					loc: Object {
-						filename: "smoke/input.md"
-						end: Object {
-							column: 45
-							line: 30
-						}
-						start: Object {
-							column: 45
-							line: 30
-						}
-					}
+					loc: SourceLocation smoke/input.md 30:45-30:45
 				}
 				MarkdownText {
 					value: " adipiscing elit."
-					loc: Object {
-						filename: "smoke/input.md"
-						end: Object {
-							column: 47
-							line: 30
-						}
-						start: Object {
-							column: 47
-							line: 30
-						}
-					}
+					loc: SourceLocation smoke/input.md 30:47-30:47
 				}
 			]
 		}
@@ -981,6 +331,5 @@ MarkdownRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

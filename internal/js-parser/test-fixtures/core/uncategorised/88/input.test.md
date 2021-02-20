@@ -12,37 +12,17 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
-	filename: "core/uncategorised/88/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "core/uncategorised/88/input.js"
-		end: Object {
-			column: 6
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation core/uncategorised/88/input.js 1:0-1:6
+	path: UIDPath<core/uncategorised/88/input.js>
 	directives: Array [
 		JSDirective {
 			value: "\\x61"
-			loc: Object {
-				filename: "core/uncategorised/88/input.js"
-				end: Object {
-					column: 6
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation core/uncategorised/88/input.js 1:0-1:6
 		}
 	]
 }
@@ -51,6 +31,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

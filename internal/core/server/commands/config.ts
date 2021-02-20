@@ -8,23 +8,23 @@
 import {ServerRequest} from "@internal/core";
 import {commandCategories} from "../../common/commands";
 import {createServerCommand} from "../commands";
-import {assertHardMeta, normalizeProjectConfig} from "@internal/project";
-import {AbsoluteFilePath, createUnknownPath} from "@internal/path";
+import {normalizeProjectConfig} from "@internal/project";
+import {AbsoluteFilePath, createAnyPath} from "@internal/path";
 import {markup} from "@internal/markup";
 import {interceptDiagnostics} from "@internal/diagnostics";
 import {Consumer} from "@internal/consume";
 import {
 	ConsumeConfigResult,
 	consumeConfig,
-	json,
 	stringifyConfig,
 } from "@internal/codec-config";
-import {readFileText, writeFile} from "@internal/fs";
+import {CachedFileReader, readFileText, writeFile} from "@internal/fs";
 import {
 	loadUserConfig,
 	normalizeUserConfig,
 } from "@internal/core/common/userConfig";
 import {USER_CONFIG_DIRECTORY} from "@internal/core/common/constants";
+import prettyFormat from "@internal/pretty-format";
 
 type Flags = {
 	user: boolean;
@@ -76,9 +76,9 @@ async function runCommand(
 		}
 
 		reporter.success(
-			markup`${action === "push" ? "Adding" : "Setting"} <emphasis>${keyParts}</emphasis> to <emphasis>${JSON.stringify(
+			markup`${action === "push" ? "Adding" : "Setting"} <emphasis>${prettyFormat(
 				value,
-			)}</emphasis> in the config <emphasis>${configPath}</emphasis>`,
+			)}</emphasis> to <emphasis>${keyParts}</emphasis> in the config <emphasis>${configPath}</emphasis>`,
 		);
 
 		if (value === "true" || value === "false") {
@@ -110,7 +110,7 @@ async function runCommand(
 		await interceptDiagnostics(
 			async () => {
 				// Reconsume with new stringified config
-				const res = json.consume({
+				const res = consumeConfig({
 					path: configPath,
 					input: stringified,
 				});
@@ -120,7 +120,7 @@ async function runCommand(
 				return {};
 			},
 			(processor) => {
-				processor.normalizer.setInlineSourceText(configPath.join(), stringified);
+				processor.normalizer.setInlineSourceText(configPath, stringified);
 			},
 		);
 
@@ -152,18 +152,22 @@ async function runCommand(
 			);
 		} else {
 			const project = await req.assertClientCwdProject();
-			const meta = assertHardMeta(project.meta);
+			const {meta} = project;
 			const {configPath, configSourceSubKey} = meta;
+			const rootProject = project.root ?? project;
 
 			await handleConfig(
 				configPath,
 				configSourceSubKey,
-				async (res, stringified) => {
+				async (res) => {
 					await normalizeProjectConfig(
 						res,
-						meta.configPath,
-						stringified,
-						meta.projectDirectory,
+						{
+							reader: new CachedFileReader(),
+							configPath: meta.configPath,
+							projectDirectory: project.directory,
+							rootProjectDirectory: rootProject.directory,
+						},
 					);
 				},
 			);
@@ -222,7 +226,7 @@ export const setDirectory = createServerCommand<Flags>({
 		req.expectArgumentLength(2);
 
 		let value = req.query.args[1];
-		const path = createUnknownPath(value);
+		const path = createAnyPath(value);
 
 		// If the value is an absolute path, then make it relative to the project directory
 		if (path.isAbsolute()) {
@@ -233,7 +237,7 @@ export const setDirectory = createServerCommand<Flags>({
 			} else {
 				// Relative to project config folder
 				const project = await req.assertClientCwdProject();
-				cwd = assertHardMeta(project.meta).configPath.getParent();
+				cwd = project.meta.configPath.getParent();
 			}
 
 			value = cwd.relative(path).join();

@@ -11,129 +11,51 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "es2015/uncategorised/359/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
 	syntax: Array []
-	loc: Object {
-		filename: "es2015/uncategorised/359/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2015/uncategorised/359/input.js 1:0-2:0
+	path: UIDPath<es2015/uncategorised/359/input.js>
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse"
 				categoryValue: "js"
+				category: Array ["parse"]
 				message: RAW_MARKUP {value: "Can not use 'await' as identifier inside an async function"}
 			}
 			location: Object {
-				filename: "es2015/uncategorised/359/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 11
-					line: 1
-				}
-				start: Object {
-					column: 6
-					line: 1
-				}
+				end: Position 1:11
+				path: UIDPath<es2015/uncategorised/359/input.js>
+				start: Position 1:6
 			}
 		}
 	]
 	body: Array [
 		JSVariableDeclarationStatement {
-			loc: Object {
-				filename: "es2015/uncategorised/359/input.js"
-				end: Object {
-					column: 20
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2015/uncategorised/359/input.js 1:0-1:20
 			declaration: JSVariableDeclaration {
 				kind: "const"
-				loc: Object {
-					filename: "es2015/uncategorised/359/input.js"
-					end: Object {
-						column: 20
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/uncategorised/359/input.js 1:0-1:20
 				declarations: Array [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "await"
-							loc: Object {
-								filename: "es2015/uncategorised/359/input.js"
-								identifierName: "await"
-								end: Object {
-									column: 11
-									line: 1
-								}
-								start: Object {
-									column: 6
-									line: 1
-								}
-							}
+							loc: SourceLocation es2015/uncategorised/359/input.js 1:6-1:11 (await)
 						}
-						loc: Object {
-							filename: "es2015/uncategorised/359/input.js"
-							end: Object {
-								column: 19
-								line: 1
-							}
-							start: Object {
-								column: 6
-								line: 1
-							}
-						}
+						loc: SourceLocation es2015/uncategorised/359/input.js 1:6-1:19
 						init: JSCallExpression {
 							arguments: Array []
-							loc: Object {
-								filename: "es2015/uncategorised/359/input.js"
-								end: Object {
-									column: 19
-									line: 1
-								}
-								start: Object {
-									column: 14
-									line: 1
-								}
-							}
+							loc: SourceLocation es2015/uncategorised/359/input.js 1:14-1:19
 							callee: JSReferenceIdentifier {
 								name: "foo"
-								loc: Object {
-									filename: "es2015/uncategorised/359/input.js"
-									identifierName: "foo"
-									end: Object {
-										column: 17
-										line: 1
-									}
-									start: Object {
-										column: 14
-										line: 1
-									}
-								}
+								loc: SourceLocation es2015/uncategorised/359/input.js 1:14-1:17 (foo)
 							}
 						}
 					}
@@ -155,8 +77,5 @@ JSRoot {
     const await = foo();
           ^^^^^
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

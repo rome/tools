@@ -12,65 +12,24 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "es2015/yield/yield-star-parameter-default-inside-function/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2015/yield/yield-star-parameter-default-inside-function/input.js"
-		end: Object {
-			column: 32
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2015/yield/yield-star-parameter-default-inside-function/input.js 1:0-1:32
+	path: UIDPath<es2015/yield/yield-star-parameter-default-inside-function/input.js>
 	body: Array [
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "fn"
-				loc: Object {
-					filename: "es2015/yield/yield-star-parameter-default-inside-function/input.js"
-					identifierName: "fn"
-					end: Object {
-						column: 11
-						line: 1
-					}
-					start: Object {
-						column: 9
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/yield/yield-star-parameter-default-inside-function/input.js 1:9-1:11 (fn)
 			}
-			loc: Object {
-				filename: "es2015/yield/yield-star-parameter-default-inside-function/input.js"
-				end: Object {
-					column: 32
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2015/yield/yield-star-parameter-default-inside-function/input.js 1:0-1:32
 			body: JSBlockStatement {
 				body: Array []
 				directives: Array []
-				loc: Object {
-					filename: "es2015/yield/yield-star-parameter-default-inside-function/input.js"
-					end: Object {
-						column: 32
-						line: 1
-					}
-					start: Object {
-						column: 30
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/yield/yield-star-parameter-default-inside-function/input.js 1:30-1:32
 			}
 			head: JSFunctionHead {
 				async: false
@@ -80,102 +39,29 @@ JSRoot {
 				returnType: undefined
 				thisType: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "es2015/yield/yield-star-parameter-default-inside-function/input.js"
-					end: Object {
-						column: 29
-						line: 1
-					}
-					start: Object {
-						column: 11
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/yield/yield-star-parameter-default-inside-function/input.js 1:11-1:29
 				params: Array [
 					JSBindingAssignmentPattern {
-						loc: Object {
-							filename: "es2015/yield/yield-star-parameter-default-inside-function/input.js"
-							end: Object {
-								column: 28
-								line: 1
-							}
-							start: Object {
-								column: 12
-								line: 1
-							}
-						}
+						loc: SourceLocation es2015/yield/yield-star-parameter-default-inside-function/input.js 1:12-1:28
 						left: JSBindingIdentifier {
 							name: "x"
-							loc: Object {
-								filename: "es2015/yield/yield-star-parameter-default-inside-function/input.js"
-								identifierName: "x"
-								end: Object {
-									column: 13
-									line: 1
-								}
-								start: Object {
-									column: 12
-									line: 1
-								}
-							}
+							loc: SourceLocation es2015/yield/yield-star-parameter-default-inside-function/input.js 1:12-1:13 (x)
 							meta: JSPatternMeta {
 								optional: undefined
 								typeAnnotation: undefined
-								loc: Object {
-									filename: "es2015/yield/yield-star-parameter-default-inside-function/input.js"
-									end: Object {
-										column: 13
-										line: 1
-									}
-									start: Object {
-										column: 12
-										line: 1
-									}
-								}
+								loc: SourceLocation es2015/yield/yield-star-parameter-default-inside-function/input.js 1:12-1:13
 							}
 						}
 						right: JSBinaryExpression {
 							operator: "*"
-							loc: Object {
-								filename: "es2015/yield/yield-star-parameter-default-inside-function/input.js"
-								end: Object {
-									column: 28
-									line: 1
-								}
-								start: Object {
-									column: 16
-									line: 1
-								}
-							}
+							loc: SourceLocation es2015/yield/yield-star-parameter-default-inside-function/input.js 1:16-1:28
 							left: JSReferenceIdentifier {
 								name: "yield"
-								loc: Object {
-									filename: "es2015/yield/yield-star-parameter-default-inside-function/input.js"
-									identifierName: "yield"
-									end: Object {
-										column: 21
-										line: 1
-									}
-									start: Object {
-										column: 16
-										line: 1
-									}
-								}
+								loc: SourceLocation es2015/yield/yield-star-parameter-default-inside-function/input.js 1:16-1:21 (yield)
 							}
 							right: JSReferenceIdentifier {
 								name: "yield"
-								loc: Object {
-									filename: "es2015/yield/yield-star-parameter-default-inside-function/input.js"
-									identifierName: "yield"
-									end: Object {
-										column: 28
-										line: 1
-									}
-									start: Object {
-										column: 23
-										line: 1
-									}
-								}
+								loc: SourceLocation es2015/yield/yield-star-parameter-default-inside-function/input.js 1:23-1:28 (yield)
 							}
 						}
 					}
@@ -189,6 +75,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

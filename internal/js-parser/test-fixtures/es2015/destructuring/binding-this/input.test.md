@@ -11,175 +11,64 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "es2015/destructuring/binding-this/input.js"
 	hasHoistedVars: true
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2015/destructuring/binding-this/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2015/destructuring/binding-this/input.js 1:0-2:0
+	path: UIDPath<es2015/destructuring/binding-this/input.js>
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse"
 				categoryValue: "js"
-				message: Array [
-					RAW_MARKUP {value: "Unexpected keyword "}
-					"this"
-				]
+				category: Array ["parse"]
+				message: RAW_MARKUP {value: "Unexpected keyword <emphasis>this</emphasis>"}
 			}
 			location: Object {
-				filename: "es2015/destructuring/binding-this/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 10
-					line: 1
-				}
-				start: Object {
-					column: 6
-					line: 1
-				}
+				end: Position 1:10
+				path: UIDPath<es2015/destructuring/binding-this/input.js>
+				start: Position 1:6
 			}
 		}
 	]
 	body: Array [
 		JSVariableDeclarationStatement {
-			loc: Object {
-				filename: "es2015/destructuring/binding-this/input.js"
-				end: Object {
-					column: 18
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2015/destructuring/binding-this/input.js 1:0-1:18
 			declaration: JSVariableDeclaration {
 				kind: "var"
-				loc: Object {
-					filename: "es2015/destructuring/binding-this/input.js"
-					end: Object {
-						column: 18
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/destructuring/binding-this/input.js 1:0-1:18
 				declarations: Array [
 					JSVariableDeclarator {
 						id: JSBindingObjectPattern {
 							rest: undefined
-							loc: Object {
-								filename: "es2015/destructuring/binding-this/input.js"
-								end: Object {
-									column: 12
-									line: 1
-								}
-								start: Object {
-									column: 4
-									line: 1
-								}
-							}
+							loc: SourceLocation es2015/destructuring/binding-this/input.js 1:4-1:12
 							properties: Array [
 								JSBindingObjectPatternProperty {
 									key: JSStaticPropertyKey {
 										value: JSIdentifier {
 											name: "this"
-											loc: Object {
-												filename: "es2015/destructuring/binding-this/input.js"
-												identifierName: "this"
-												end: Object {
-													column: 10
-													line: 1
-												}
-												start: Object {
-													column: 6
-													line: 1
-												}
-											}
+											loc: SourceLocation es2015/destructuring/binding-this/input.js 1:6-1:10 (this)
 										}
-										loc: Object {
-											filename: "es2015/destructuring/binding-this/input.js"
-											end: Object {
-												column: 10
-												line: 1
-											}
-											start: Object {
-												column: 6
-												line: 1
-											}
-										}
+										loc: SourceLocation es2015/destructuring/binding-this/input.js 1:6-1:10
 									}
 									value: JSBindingIdentifier {
 										name: "this"
-										loc: Object {
-											filename: "es2015/destructuring/binding-this/input.js"
-											identifierName: "this"
-											end: Object {
-												column: 10
-												line: 1
-											}
-											start: Object {
-												column: 6
-												line: 1
-											}
-										}
+										loc: SourceLocation es2015/destructuring/binding-this/input.js 1:6-1:10 (this)
 									}
-									loc: Object {
-										filename: "es2015/destructuring/binding-this/input.js"
-										end: Object {
-											column: 10
-											line: 1
-										}
-										start: Object {
-											column: 6
-											line: 1
-										}
-									}
+									loc: SourceLocation es2015/destructuring/binding-this/input.js 1:6-1:10
 								}
 							]
 						}
-						loc: Object {
-							filename: "es2015/destructuring/binding-this/input.js"
-							end: Object {
-								column: 17
-								line: 1
-							}
-							start: Object {
-								column: 4
-								line: 1
-							}
-						}
+						loc: SourceLocation es2015/destructuring/binding-this/input.js 1:4-1:17
 						init: JSObjectExpression {
 							properties: Array []
-							loc: Object {
-								filename: "es2015/destructuring/binding-this/input.js"
-								end: Object {
-									column: 17
-									line: 1
-								}
-								start: Object {
-									column: 15
-									line: 1
-								}
-							}
+							loc: SourceLocation es2015/destructuring/binding-this/input.js 1:15-1:17
 						}
 					}
 				]
@@ -200,8 +89,5 @@ JSRoot {
     var { this } = {};
           ^^^^
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

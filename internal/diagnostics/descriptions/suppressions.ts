@@ -1,7 +1,11 @@
 import {createDiagnosticsCategory} from "./index";
 import {DiagnosticSuppression} from "../types";
 import {markup} from "@internal/markup";
-import {joinCategoryName} from "../helpers";
+import {buildSuggestionAdvice, formatCategoryDescription} from "../helpers";
+import {
+	DIAGNOSTIC_CATEGORIES,
+	VALID_DIAGNOSTIC_CATEGORIES,
+} from "../categories";
 
 export const suppressions = createDiagnosticsCategory({
 	UNUSED: (suppression: DiagnosticSuppression) => {
@@ -13,8 +17,8 @@ export const suppressions = createDiagnosticsCategory({
 		}
 
 		return {
-			message: markup`Unused <emphasis>${joinCategoryName(suppression)}</emphasis> suppression`,
-			category: "suppressions/unused",
+			message: markup`Unused <emphasis>${formatCategoryDescription(suppression)}</emphasis> suppression`,
+			category: DIAGNOSTIC_CATEGORIES["suppressions/unused"],
 			advice: [
 				{
 					type: "log",
@@ -25,31 +29,39 @@ export const suppressions = createDiagnosticsCategory({
 		};
 	},
 	MISSING_SPACE: {
-		category: "suppressions/missingSpace",
+		category: DIAGNOSTIC_CATEGORIES["suppressions/missingSpace"],
 		message: markup`Missing space between prefix and suppression categories`,
 	},
 	EMPTY: {
-		category: "suppressions/empty",
+		category: DIAGNOSTIC_CATEGORIES["suppressions/empty"],
 		message: markup`This suppression comment doesn't include any categories to suppress!`,
 	},
 	MISSING_TARGET: {
-		category: "suppressions/missingTarget",
+		category: DIAGNOSTIC_CATEGORIES["suppressions/missingTarget"],
 		message: markup`We could not find a target for this suppression`,
 	},
 	MISSING_EXPLANATION: {
-		category: "suppressions/missingExplanation",
+		category: DIAGNOSTIC_CATEGORIES["suppressions/missingExplanation"],
 		message: markup`Suppression comments must have an explanation`,
 	},
+	INVALID_CATEGORY_NAME: (category: string) => ({
+		category: DIAGNOSTIC_CATEGORIES["suppressions/invalidCategory"],
+		message: markup`Unknown category <emphasis>${category}</emphasis>`,
+		advice: buildSuggestionAdvice(
+			category,
+			Array.from(VALID_DIAGNOSTIC_CATEGORIES),
+		),
+	}),
 	DUPLICATE: (category: string) => ({
-		category: "suppressions/duplicate",
+		category: DIAGNOSTIC_CATEGORIES["suppressions/duplicate"],
 		message: markup`Duplicate suppression category <emphasis>${category}</emphasis>`,
 	}),
 	OVERLAP: (category: string) => ({
-		category: "suppressions/overlap",
+		category: DIAGNOSTIC_CATEGORIES["suppressions/overlap"],
 		message: markup`overlap suppression category <emphasis>${category}</emphasis>`,
 	}),
 	INCORRECT_SUPPRESSION_START: {
-		category: "suppressions/incorrectSuppressionStart",
+		category: DIAGNOSTIC_CATEGORIES["suppressions/incorrectSuppressionStart"],
 		message: markup`This looks like a suppression comment typo. Did you mean <emphasis>rome-ignore</emphasis> instead?`,
 	},
 });

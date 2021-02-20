@@ -7,6 +7,7 @@
 
 import {Reporter, ReporterNamespace} from "@internal/cli-reporter";
 import {
+	DIAGNOSTIC_CATEGORIES,
 	Diagnostic,
 	DiagnosticsError,
 	deriveDiagnosticFromError,
@@ -67,7 +68,7 @@ function grammarNumberTests(num: number): StaticMarkup {
 }
 
 function getProgressTestRefText(ref: TestRef) {
-	return markup`<filelink target="${ref.path.join()}" />: ${ref.testName}`;
+	return markup`${ref.path}: ${ref.testName}`;
 }
 
 function findAvailablePort(): Promise<number> {
@@ -105,7 +106,7 @@ export default class TestServer {
 		this.paths = opts.paths;
 		this.reporter = opts.request.reporter;
 		this.server = opts.request.server;
-		this.logger = this.server.logger.namespace(markup`[TestServerRunner]`);
+		this.logger = this.server.logger.namespace(markup`TestServerRunner`);
 		this.request = opts.request;
 		this.options = opts.options;
 
@@ -191,7 +192,7 @@ export default class TestServer {
 					err,
 					{
 						description: {
-							category: "tests/failure",
+							category: DIAGNOSTIC_CATEGORIES["tests/failure"],
 						},
 					},
 				),
@@ -247,7 +248,7 @@ export default class TestServer {
 							const sourceMap = bundle.entry.sourceMap.map;
 							const consumer = sourceMap.toConsumer();
 							//this.coverageCollector.addSourceMap(path.join(), code, consumer);
-							this.sourceMaps.add(path.join(), consumer);
+							this.sourceMaps.add(path, consumer);
 						}
 
 						const ref = this.server.projectManager.getFileReference(path);
@@ -396,12 +397,12 @@ export default class TestServer {
 							error,
 							{
 								label: markup`${ref.testName}`,
-								filename: ref.path.join(),
+								path: ref.path,
 								description: {
-									category: "tests/failure",
+									category: DIAGNOSTIC_CATEGORIES["tests/failure"],
 								},
 								tags: {
-									internal: true,
+									internal: false,
 								},
 							},
 						);
@@ -425,7 +426,7 @@ export default class TestServer {
 							label: markup`${ref.testName}`,
 							description: descriptions.TESTS.CANCELLED,
 							location: {
-								filename: ref.path.join(),
+								path: ref.path,
 							},
 						});
 					}
@@ -491,10 +492,10 @@ export default class TestServer {
 
 		// Turn the flat list of filenames into a directory tree
 		for (const file of files) {
-			const {filename} = file;
+			const {path} = file;
 
 			// Get the absolute filename
-			const absolute = server.projectManager.getFilePathFromUid(filename);
+			const absolute = server.projectManager.maybeGetFilePathFromUid(path);
 			if (absolute === undefined) {
 				continue;
 			}
@@ -510,15 +511,14 @@ export default class TestServer {
 			// Track unfiltered files
 			totalFiles++;
 
-			const filenameParts = filename.split("/");
-			const basename = filenameParts.pop();
+			const basename = path.getBasename();
 			if (basename === undefined) {
 				throw new Error("Should always be at least one element from a split()");
 			}
 
 			let target: CoverageDirectory = root;
 
-			for (const part of filenameParts) {
+			for (const part of path.getParentSegments()) {
 				const existingDirectory = target.directories.get(part);
 				if (existingDirectory === undefined) {
 					const newDirectory = {
@@ -573,14 +573,14 @@ export default class TestServer {
 
 			const fileIndent = " ".repeat(depth + 1);
 			for (const [name, file] of sortMapKeys(directory.files)) {
-				let absolute = file.filename;
+				let absolute = file.path;
 
 				// Exchange any UIDs
-				const absolutePath = server.projectManager.getFilePathFromUid(
-					file.filename,
+				const absolutePath = server.projectManager.maybeGetFilePathFromUid(
+					file.path,
 				);
 				if (absolutePath !== undefined) {
-					absolute = absolutePath.join();
+					absolute = absolutePath;
 				}
 
 				rows.push([

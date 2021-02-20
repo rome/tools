@@ -11,204 +11,76 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "esprima/es2015-yield/invalid-yield-binding-property/input.js"
 	hasHoistedVars: true
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "esprima/es2015-yield/invalid-yield-binding-property/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation esprima/es2015-yield/invalid-yield-binding-property/input.js 1:0-2:0
+	path: UIDPath<esprima/es2015-yield/invalid-yield-binding-property/input.js>
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				category: "parse"
-				categoryValue: "js"
-				message: Array [
-					RAW_MARKUP {value: "Unexpected token, expected "}
-					","
-				]
-			}
 			location: Object {
-				filename: "esprima/es2015-yield/invalid-yield-binding-property/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 19
-					line: 1
-				}
-				start: Object {
-					column: 18
-					line: 1
-				}
+				end: Position 1:19
+				path: UIDPath<esprima/es2015-yield/invalid-yield-binding-property/input.js>
+				start: Position 1:18
+			}
+			description: Object {
+				categoryValue: "js"
+				category: Array ["parse"]
+				message: RAW_MARKUP {value: "Unexpected character <emphasis>3</emphasis>"}
+				advice: Array [
+					log {
+						category: "info"
+						text: RAW_MARKUP {value: "Expected character <emphasis>,</emphasis>"}
+					}
+				]
 			}
 		}
 	]
 	body: Array [
 		JSVariableDeclarationStatement {
-			loc: Object {
-				filename: "esprima/es2015-yield/invalid-yield-binding-property/input.js"
-				end: Object {
-					column: 25
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation esprima/es2015-yield/invalid-yield-binding-property/input.js 1:0-1:25
 			declaration: JSVariableDeclaration {
 				kind: "var"
-				loc: Object {
-					filename: "esprima/es2015-yield/invalid-yield-binding-property/input.js"
-					end: Object {
-						column: 25
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/es2015-yield/invalid-yield-binding-property/input.js 1:0-1:25
 				declarations: Array [
 					JSVariableDeclarator {
 						id: JSBindingObjectPattern {
 							rest: undefined
-							loc: Object {
-								filename: "esprima/es2015-yield/invalid-yield-binding-property/input.js"
-								end: Object {
-									column: 20
-									line: 1
-								}
-								start: Object {
-									column: 4
-									line: 1
-								}
-							}
+							loc: SourceLocation esprima/es2015-yield/invalid-yield-binding-property/input.js 1:4-1:20
 							properties: Array [
 								JSBindingObjectPatternProperty {
 									key: JSStaticPropertyKey {
 										value: JSIdentifier {
 											name: "x"
-											loc: Object {
-												filename: "esprima/es2015-yield/invalid-yield-binding-property/input.js"
-												identifierName: "x"
-												end: Object {
-													column: 6
-													line: 1
-												}
-												start: Object {
-													column: 5
-													line: 1
-												}
-											}
+											loc: SourceLocation esprima/es2015-yield/invalid-yield-binding-property/input.js 1:5-1:6 (x)
 										}
-										loc: Object {
-											filename: "esprima/es2015-yield/invalid-yield-binding-property/input.js"
-											end: Object {
-												column: 6
-												line: 1
-											}
-											start: Object {
-												column: 5
-												line: 1
-											}
-										}
+										loc: SourceLocation esprima/es2015-yield/invalid-yield-binding-property/input.js 1:5-1:6
 									}
 									value: JSBindingAssignmentPattern {
-										loc: Object {
-											filename: "esprima/es2015-yield/invalid-yield-binding-property/input.js"
-											end: Object {
-												column: 17
-												line: 1
-											}
-											start: Object {
-												column: 8
-												line: 1
-											}
-										}
+										loc: SourceLocation esprima/es2015-yield/invalid-yield-binding-property/input.js 1:8-1:17
 										left: JSBindingIdentifier {
 											name: "y"
-											loc: Object {
-												filename: "esprima/es2015-yield/invalid-yield-binding-property/input.js"
-												identifierName: "y"
-												end: Object {
-													column: 9
-													line: 1
-												}
-												start: Object {
-													column: 8
-													line: 1
-												}
-											}
+											loc: SourceLocation esprima/es2015-yield/invalid-yield-binding-property/input.js 1:8-1:9 (y)
 										}
 										right: JSReferenceIdentifier {
 											name: "yield"
-											loc: Object {
-												filename: "esprima/es2015-yield/invalid-yield-binding-property/input.js"
-												identifierName: "yield"
-												end: Object {
-													column: 17
-													line: 1
-												}
-												start: Object {
-													column: 12
-													line: 1
-												}
-											}
+											loc: SourceLocation esprima/es2015-yield/invalid-yield-binding-property/input.js 1:12-1:17 (yield)
 										}
 									}
-									loc: Object {
-										filename: "esprima/es2015-yield/invalid-yield-binding-property/input.js"
-										end: Object {
-											column: 17
-											line: 1
-										}
-										start: Object {
-											column: 5
-											line: 1
-										}
-									}
+									loc: SourceLocation esprima/es2015-yield/invalid-yield-binding-property/input.js 1:5-1:17
 								}
 							]
 						}
-						loc: Object {
-							filename: "esprima/es2015-yield/invalid-yield-binding-property/input.js"
-							end: Object {
-								column: 24
-								line: 1
-							}
-							start: Object {
-								column: 4
-								line: 1
-							}
-						}
+						loc: SourceLocation esprima/es2015-yield/invalid-yield-binding-property/input.js 1:4-1:24
 						init: JSReferenceIdentifier {
 							name: "z"
-							loc: Object {
-								filename: "esprima/es2015-yield/invalid-yield-binding-property/input.js"
-								identifierName: "z"
-								end: Object {
-									column: 24
-									line: 1
-								}
-								start: Object {
-									column: 23
-									line: 1
-								}
-							}
+							loc: SourceLocation esprima/es2015-yield/invalid-yield-binding-property/input.js 1:23-1:24 (z)
 						}
 					}
 				]
@@ -224,13 +96,12 @@ JSRoot {
 
  esprima/es2015-yield/invalid-yield-binding-property/input.js:1:18 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ Unexpected token, expected ,
+  ✖ Unexpected character 3
 
     var {x: y = yield 3} = z;
                       ^
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  ℹ Expected character ,
 
-✖ Found 1 problem
 
 ```

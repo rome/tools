@@ -12,134 +12,42 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "esprima/statement-variable/migrated_0003/input.js"
 	hasHoistedVars: true
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "esprima/statement-variable/migrated_0003/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation esprima/statement-variable/migrated_0003/input.js 1:0-2:0
+	path: UIDPath<esprima/statement-variable/migrated_0003/input.js>
 	body: Array [
 		JSVariableDeclarationStatement {
-			loc: Object {
-				filename: "esprima/statement-variable/migrated_0003/input.js"
-				end: Object {
-					column: 29
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation esprima/statement-variable/migrated_0003/input.js 1:0-1:29
 			declaration: JSVariableDeclaration {
 				kind: "var"
-				loc: Object {
-					filename: "esprima/statement-variable/migrated_0003/input.js"
-					end: Object {
-						column: 29
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/statement-variable/migrated_0003/input.js 1:0-1:29
 				declarations: Array [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "eval"
-							loc: Object {
-								filename: "esprima/statement-variable/migrated_0003/input.js"
-								identifierName: "eval"
-								end: Object {
-									column: 8
-									line: 1
-								}
-								start: Object {
-									column: 4
-									line: 1
-								}
-							}
+							loc: SourceLocation esprima/statement-variable/migrated_0003/input.js 1:4-1:8 (eval)
 						}
-						loc: Object {
-							filename: "esprima/statement-variable/migrated_0003/input.js"
-							end: Object {
-								column: 13
-								line: 1
-							}
-							start: Object {
-								column: 4
-								line: 1
-							}
-						}
+						loc: SourceLocation esprima/statement-variable/migrated_0003/input.js 1:4-1:13
 						init: JSNumericLiteral {
 							value: 42
 							format: undefined
-							loc: Object {
-								filename: "esprima/statement-variable/migrated_0003/input.js"
-								end: Object {
-									column: 13
-									line: 1
-								}
-								start: Object {
-									column: 11
-									line: 1
-								}
-							}
+							loc: SourceLocation esprima/statement-variable/migrated_0003/input.js 1:11-1:13
 						}
 					}
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "arguments"
-							loc: Object {
-								filename: "esprima/statement-variable/migrated_0003/input.js"
-								identifierName: "arguments"
-								end: Object {
-									column: 24
-									line: 1
-								}
-								start: Object {
-									column: 15
-									line: 1
-								}
-							}
+							loc: SourceLocation esprima/statement-variable/migrated_0003/input.js 1:15-1:24 (arguments)
 						}
-						loc: Object {
-							filename: "esprima/statement-variable/migrated_0003/input.js"
-							end: Object {
-								column: 29
-								line: 1
-							}
-							start: Object {
-								column: 15
-								line: 1
-							}
-						}
+						loc: SourceLocation esprima/statement-variable/migrated_0003/input.js 1:15-1:29
 						init: JSNumericLiteral {
 							value: 42
 							format: undefined
-							loc: Object {
-								filename: "esprima/statement-variable/migrated_0003/input.js"
-								end: Object {
-									column: 29
-									line: 1
-								}
-								start: Object {
-									column: 27
-									line: 1
-								}
-							}
+							loc: SourceLocation esprima/statement-variable/migrated_0003/input.js 1:27-1:29
 						}
 					}
 				]
@@ -152,6 +60,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

@@ -14,7 +14,6 @@ import {
 	readMarkup,
 } from "@internal/markup";
 import {splitLines} from "@internal/string-utils";
-import {ob1Get0} from "@internal/ob1";
 import {AnyMarkups} from "@internal/markup/escape";
 
 export function reduce<Token extends TokenShape>(
@@ -27,8 +26,8 @@ export function reduce<Token extends TokenShape>(
 
 	for (let i = 0; i < tokens.length; i++) {
 		const token = tokens[i];
-		const start = ob1Get0(token.start);
-		const end = ob1Get0(token.end);
+		const start = token.start.valueOf();
+		const end = token.end.valueOf();
 		let value = input.slice(start, end);
 
 		// Add on text between tokens

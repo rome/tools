@@ -5,8 +5,8 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Number0, Number1, ob1Coerce1, ob1Number0Neg1} from "@internal/ob1";
-import {AnyFilePath} from "@internal/path";
+import {OneIndexed, ZeroIndexed} from "@internal/math";
+import {AnyPath} from "@internal/path";
 import {
 	DiagnosticCategory,
 	DiagnosticDescriptionOptional,
@@ -15,7 +15,7 @@ import {
 	DiagnosticLocation,
 } from "@internal/diagnostics";
 import {default as ParserCore} from "./ParserCore";
-import {Dict, RequiredProps} from "@internal/typescript-helpers";
+import {Dict} from "@internal/typescript-helpers";
 
 // rome-ignore lint/ts/noExplicitAny: future cleanup
 export type AnyParserCore = ParserCore<{
@@ -24,6 +24,14 @@ export type AnyParserCore = ParserCore<{
 	options: ParserOptions & Dict<any>;
 	meta: Dict<any> | void;
 }>;
+
+export type ParserCoreFactory<Types extends ParserCoreTypes> = {
+	create(
+		opts: Types["options"],
+		meta: Types["meta"],
+		overrides?: ParserCoreOverrides,
+	): ParserCore<Types>;
+};
 
 export type ParserCoreTypes = {
 	tokens: BaseTokens;
@@ -47,19 +55,20 @@ export type ParserCoreImplementation<Types extends ParserCoreTypes> = {
 	getInitialState?: (parser: ParserCore<Types>) => Types["state"];
 	tokenize?: (
 		parser: ParserCore<Types>,
-		index: Number0,
+		index: ZeroIndexed,
 	) => undefined | TokenValues<Types["tokens"]>;
 	normalizeInput?: (input: string) => string;
 	tokenizeWithState?: (
 		parser: ParserCore<Types>,
-		index: Number0,
+		index: ZeroIndexed,
 		state: Types["state"],
 	) => undefined | ParserCoreTokenizeState<Types>;
 	overrides?: {
 		getPosition: (parser: ParserCore<Types>) => Position;
-		getIndex: (parser: ParserCore<Types>) => Number0;
+		getIndex: (parser: ParserCore<Types>) => ZeroIndexed;
 		getLastEndPosition: (parser: ParserCore<Types>) => Position;
 	};
+	parseTemplate?: (opts: ParserOptions) => unknown;
 };
 
 export type ParserCoreTokenizeState<Types extends ParserCoreTypes> = [
@@ -90,8 +99,8 @@ export type ValueNode<Type extends string, Value> = NodeBase & {
 //# Token types
 export type TokenBase = {
 	type: string;
-	start: Number0;
-	end: Number0;
+	start: ZeroIndexed;
+	end: ZeroIndexed;
 };
 
 export type TokensShape = {
@@ -133,31 +142,30 @@ export type BaseTokens = {
 
 //# Other types
 export type SourceLocation = {
-	filename?: string;
+	path: AnyPath;
 	identifierName?: string;
 	start: Position;
 	end: Position;
 };
 
 export type Position = {
-	line: Number1;
-	column: Number0;
+	line: OneIndexed;
+	column: ZeroIndexed;
 };
 
 export const UNKNOWN_POSITION: Position = {
-	line: ob1Coerce1(-1),
-	column: ob1Number0Neg1,
+	line: new OneIndexed(-1),
+	column: new ZeroIndexed(-1),
 };
 
 export type ParserOptions = {
-	path?: string | AnyFilePath;
+	path?: AnyPath;
 	integrity?: DiagnosticIntegrity;
 	input?: string;
 	sourceText?: string;
 	offsetPosition?: Position;
+	includeSourceTextInDiagnostics?: boolean;
 };
-
-export type ParserOptionsWithRequiredPath = RequiredProps<ParserOptions, "path">;
 
 export type ParserUnexpectedOptions = {
 	description?: DiagnosticDescriptionOptional;
@@ -165,9 +173,9 @@ export type ParserUnexpectedOptions = {
 	start?: Position;
 	end?: Position;
 	token?: TokenBase;
-	index?: Number0;
-	startIndex?: Number0;
-	endIndex?: Number0;
+	index?: number | ZeroIndexed;
+	startIndex?: number | ZeroIndexed;
+	endIndex?: number | ZeroIndexed;
 	location?: DiagnosticLocation;
 };
 

@@ -12,103 +12,33 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "esprima/expression-primary-object/migrated_0037/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "esprima/expression-primary-object/migrated_0037/input.js"
-		end: Object {
-			column: 11
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation esprima/expression-primary-object/migrated_0037/input.js 1:0-1:11
+	path: UIDPath<esprima/expression-primary-object/migrated_0037/input.js>
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "esprima/expression-primary-object/migrated_0037/input.js"
-				end: Object {
-					column: 11
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation esprima/expression-primary-object/migrated_0037/input.js 1:0-1:11
 			expression: JSObjectExpression {
-				loc: Object {
-					filename: "esprima/expression-primary-object/migrated_0037/input.js"
-					end: Object {
-						column: 10
-						line: 1
-					}
-					start: Object {
-						column: 1
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/expression-primary-object/migrated_0037/input.js 1:1-1:10
 				properties: Array [
 					JSObjectProperty {
 						key: JSStaticPropertyKey {
 							value: JSStringLiteral {
 								value: "["
-								loc: Object {
-									filename: "esprima/expression-primary-object/migrated_0037/input.js"
-									end: Object {
-										column: 5
-										line: 1
-									}
-									start: Object {
-										column: 2
-										line: 1
-									}
-								}
+								loc: SourceLocation esprima/expression-primary-object/migrated_0037/input.js 1:2-1:5
 							}
-							loc: Object {
-								filename: "esprima/expression-primary-object/migrated_0037/input.js"
-								end: Object {
-									column: 5
-									line: 1
-								}
-								start: Object {
-									column: 2
-									line: 1
-								}
-							}
+							loc: SourceLocation esprima/expression-primary-object/migrated_0037/input.js 1:2-1:5
 						}
 						value: JSNumericLiteral {
 							value: 42
 							format: undefined
-							loc: Object {
-								filename: "esprima/expression-primary-object/migrated_0037/input.js"
-								end: Object {
-									column: 9
-									line: 1
-								}
-								start: Object {
-									column: 7
-									line: 1
-								}
-							}
+							loc: SourceLocation esprima/expression-primary-object/migrated_0037/input.js 1:7-1:9
 						}
-						loc: Object {
-							filename: "esprima/expression-primary-object/migrated_0037/input.js"
-							end: Object {
-								column: 9
-								line: 1
-							}
-							start: Object {
-								column: 2
-								line: 1
-							}
-						}
+						loc: SourceLocation esprima/expression-primary-object/migrated_0037/input.js 1:2-1:9
 					}
 				]
 			}
@@ -120,6 +50,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

@@ -10,37 +10,17 @@
 JSRoot {
 	comments: Array []
 	corrupt: false
-	filename: "esprima/es2015-yield/invalid-yield-generator-strict-function-expression/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "esprima/es2015-yield/invalid-yield-generator-strict-function-expression/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation esprima/es2015-yield/invalid-yield-generator-strict-function-expression/input.js 1:0-2:0
+	path: UIDPath<esprima/es2015-yield/invalid-yield-generator-strict-function-expression/input.js>
 	directives: Array [
 		JSDirective {
 			value: "use strict"
-			loc: Object {
-				filename: "esprima/es2015-yield/invalid-yield-generator-strict-function-expression/input.js"
-				end: Object {
-					column: 13
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation esprima/es2015-yield/invalid-yield-generator-strict-function-expression/input.js 1:0-1:13
 		}
 	]
 	diagnostics: Array [
@@ -48,26 +28,17 @@ JSRoot {
 			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse"
 				categoryValue: "js"
-				message: Array [
-					"yield"
-					RAW_MARKUP {value: " is a reserved word"}
-				]
+				category: Array ["parse"]
+				message: RAW_MARKUP {value: "yield is a reserved word"}
 			}
 			location: Object {
-				filename: "esprima/es2015-yield/invalid-yield-generator-strict-function-expression/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 51
-					line: 1
-				}
-				start: Object {
-					column: 46
-					line: 1
-				}
+				end: Position 1:51
+				path: UIDPath<esprima/es2015-yield/invalid-yield-generator-strict-function-expression/input.js>
+				start: Position 1:46
 			}
 		}
 	]
@@ -75,30 +46,9 @@ JSRoot {
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "g"
-				loc: Object {
-					filename: "esprima/es2015-yield/invalid-yield-generator-strict-function-expression/input.js"
-					identifierName: "g"
-					end: Object {
-						column: 25
-						line: 1
-					}
-					start: Object {
-						column: 24
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/es2015-yield/invalid-yield-generator-strict-function-expression/input.js 1:24-1:25 (g)
 			}
-			loc: Object {
-				filename: "esprima/es2015-yield/invalid-yield-generator-strict-function-expression/input.js"
-				end: Object {
-					column: 58
-					line: 1
-				}
-				start: Object {
-					column: 14
-					line: 1
-				}
-			}
+			loc: SourceLocation esprima/es2015-yield/invalid-yield-generator-strict-function-expression/input.js 1:14-1:58
 			head: JSFunctionHead {
 				async: false
 				generator: true
@@ -108,126 +58,34 @@ JSRoot {
 				returnType: undefined
 				thisType: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "esprima/es2015-yield/invalid-yield-generator-strict-function-expression/input.js"
-					end: Object {
-						column: 27
-						line: 1
-					}
-					start: Object {
-						column: 25
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/es2015-yield/invalid-yield-generator-strict-function-expression/input.js 1:25-1:27
 			}
 			body: JSBlockStatement {
 				directives: Array []
-				loc: Object {
-					filename: "esprima/es2015-yield/invalid-yield-generator-strict-function-expression/input.js"
-					end: Object {
-						column: 58
-						line: 1
-					}
-					start: Object {
-						column: 27
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/es2015-yield/invalid-yield-generator-strict-function-expression/input.js 1:27-1:58
 				body: Array [
 					JSVariableDeclarationStatement {
-						loc: Object {
-							filename: "esprima/es2015-yield/invalid-yield-generator-strict-function-expression/input.js"
-							end: Object {
-								column: 56
-								line: 1
-							}
-							start: Object {
-								column: 29
-								line: 1
-							}
-						}
+						loc: SourceLocation esprima/es2015-yield/invalid-yield-generator-strict-function-expression/input.js 1:29-1:56
 						declaration: JSVariableDeclaration {
 							kind: "var"
-							loc: Object {
-								filename: "esprima/es2015-yield/invalid-yield-generator-strict-function-expression/input.js"
-								end: Object {
-									column: 56
-									line: 1
-								}
-								start: Object {
-									column: 29
-									line: 1
-								}
-							}
+							loc: SourceLocation esprima/es2015-yield/invalid-yield-generator-strict-function-expression/input.js 1:29-1:56
 							declarations: Array [
 								JSVariableDeclarator {
 									id: JSBindingIdentifier {
 										name: "y"
-										loc: Object {
-											filename: "esprima/es2015-yield/invalid-yield-generator-strict-function-expression/input.js"
-											identifierName: "y"
-											end: Object {
-												column: 34
-												line: 1
-											}
-											start: Object {
-												column: 33
-												line: 1
-											}
-										}
+										loc: SourceLocation esprima/es2015-yield/invalid-yield-generator-strict-function-expression/input.js 1:33-1:34 (y)
 									}
-									loc: Object {
-										filename: "esprima/es2015-yield/invalid-yield-generator-strict-function-expression/input.js"
-										end: Object {
-											column: 55
-											line: 1
-										}
-										start: Object {
-											column: 33
-											line: 1
-										}
-									}
+									loc: SourceLocation esprima/es2015-yield/invalid-yield-generator-strict-function-expression/input.js 1:33-1:55
 									init: JSFunctionExpression {
 										id: JSBindingIdentifier {
 											name: "yield"
-											loc: Object {
-												filename: "esprima/es2015-yield/invalid-yield-generator-strict-function-expression/input.js"
-												identifierName: "yield"
-												end: Object {
-													column: 51
-													line: 1
-												}
-												start: Object {
-													column: 46
-													line: 1
-												}
-											}
+											loc: SourceLocation esprima/es2015-yield/invalid-yield-generator-strict-function-expression/input.js 1:46-1:51 (yield)
 										}
-										loc: Object {
-											filename: "esprima/es2015-yield/invalid-yield-generator-strict-function-expression/input.js"
-											end: Object {
-												column: 55
-												line: 1
-											}
-											start: Object {
-												column: 37
-												line: 1
-											}
-										}
+										loc: SourceLocation esprima/es2015-yield/invalid-yield-generator-strict-function-expression/input.js 1:37-1:55
 										body: JSBlockStatement {
 											body: Array []
 											directives: Array []
-											loc: Object {
-												filename: "esprima/es2015-yield/invalid-yield-generator-strict-function-expression/input.js"
-												end: Object {
-													column: 55
-													line: 1
-												}
-												start: Object {
-													column: 53
-													line: 1
-												}
-											}
+											loc: SourceLocation esprima/es2015-yield/invalid-yield-generator-strict-function-expression/input.js 1:53-1:55
 										}
 										head: JSFunctionHead {
 											async: false
@@ -238,17 +96,7 @@ JSRoot {
 											returnType: undefined
 											thisType: undefined
 											typeParameters: undefined
-											loc: Object {
-												filename: "esprima/es2015-yield/invalid-yield-generator-strict-function-expression/input.js"
-												end: Object {
-													column: 53
-													line: 1
-												}
-												start: Object {
-													column: 51
-													line: 1
-												}
-											}
+											loc: SourceLocation esprima/es2015-yield/invalid-yield-generator-strict-function-expression/input.js 1:51-1:53
 										}
 									}
 								}
@@ -273,8 +121,5 @@ JSRoot {
     "use strict"; function *g(){ var y = function yield(){}; }
                                                   ^^^^^
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

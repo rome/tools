@@ -11,45 +11,29 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "esprima/es2015-yield/invalid-yield-generator-lexical-declaration/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "esprima/es2015-yield/invalid-yield-generator-lexical-declaration/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation esprima/es2015-yield/invalid-yield-generator-lexical-declaration/input.js 1:0-2:0
+	path: UIDPath<esprima/es2015-yield/invalid-yield-generator-lexical-declaration/input.js>
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse"
 				categoryValue: "js"
+				category: Array ["parse"]
 				message: RAW_MARKUP {value: "Can not use 'yield' as identifier inside a generator"}
 			}
 			location: Object {
-				filename: "esprima/es2015-yield/invalid-yield-generator-lexical-declaration/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 25
-					line: 1
-				}
-				start: Object {
-					column: 20
-					line: 1
-				}
+				end: Position 1:25
+				path: UIDPath<esprima/es2015-yield/invalid-yield-generator-lexical-declaration/input.js>
+				start: Position 1:20
 			}
 		}
 	]
@@ -57,30 +41,9 @@ JSRoot {
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "g"
-				loc: Object {
-					filename: "esprima/es2015-yield/invalid-yield-generator-lexical-declaration/input.js"
-					identifierName: "g"
-					end: Object {
-						column: 11
-						line: 1
-					}
-					start: Object {
-						column: 10
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/es2015-yield/invalid-yield-generator-lexical-declaration/input.js 1:10-1:11 (g)
 			}
-			loc: Object {
-				filename: "esprima/es2015-yield/invalid-yield-generator-lexical-declaration/input.js"
-				end: Object {
-					column: 28
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation esprima/es2015-yield/invalid-yield-generator-lexical-declaration/input.js 1:0-1:28
 			head: JSFunctionHead {
 				async: false
 				generator: true
@@ -90,86 +53,25 @@ JSRoot {
 				returnType: undefined
 				thisType: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "esprima/es2015-yield/invalid-yield-generator-lexical-declaration/input.js"
-					end: Object {
-						column: 13
-						line: 1
-					}
-					start: Object {
-						column: 11
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/es2015-yield/invalid-yield-generator-lexical-declaration/input.js 1:11-1:13
 			}
 			body: JSBlockStatement {
 				directives: Array []
-				loc: Object {
-					filename: "esprima/es2015-yield/invalid-yield-generator-lexical-declaration/input.js"
-					end: Object {
-						column: 28
-						line: 1
-					}
-					start: Object {
-						column: 14
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/es2015-yield/invalid-yield-generator-lexical-declaration/input.js 1:14-1:28
 				body: Array [
 					JSVariableDeclarationStatement {
-						loc: Object {
-							filename: "esprima/es2015-yield/invalid-yield-generator-lexical-declaration/input.js"
-							end: Object {
-								column: 26
-								line: 1
-							}
-							start: Object {
-								column: 16
-								line: 1
-							}
-						}
+						loc: SourceLocation esprima/es2015-yield/invalid-yield-generator-lexical-declaration/input.js 1:16-1:26
 						declaration: JSVariableDeclaration {
 							kind: "let"
-							loc: Object {
-								filename: "esprima/es2015-yield/invalid-yield-generator-lexical-declaration/input.js"
-								end: Object {
-									column: 26
-									line: 1
-								}
-								start: Object {
-									column: 16
-									line: 1
-								}
-							}
+							loc: SourceLocation esprima/es2015-yield/invalid-yield-generator-lexical-declaration/input.js 1:16-1:26
 							declarations: Array [
 								JSVariableDeclarator {
 									id: JSBindingIdentifier {
 										name: "yield"
-										loc: Object {
-											filename: "esprima/es2015-yield/invalid-yield-generator-lexical-declaration/input.js"
-											identifierName: "yield"
-											end: Object {
-												column: 25
-												line: 1
-											}
-											start: Object {
-												column: 20
-												line: 1
-											}
-										}
+										loc: SourceLocation esprima/es2015-yield/invalid-yield-generator-lexical-declaration/input.js 1:20-1:25 (yield)
 									}
 									init: undefined
-									loc: Object {
-										filename: "esprima/es2015-yield/invalid-yield-generator-lexical-declaration/input.js"
-										end: Object {
-											column: 25
-											line: 1
-										}
-										start: Object {
-											column: 20
-											line: 1
-										}
-									}
+									loc: SourceLocation esprima/es2015-yield/invalid-yield-generator-lexical-declaration/input.js 1:20-1:25
 								}
 							]
 						}
@@ -192,8 +94,5 @@ JSRoot {
     function *g() { let yield; }
                         ^^^^^
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

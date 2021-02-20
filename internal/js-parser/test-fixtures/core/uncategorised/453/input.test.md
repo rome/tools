@@ -11,37 +11,17 @@ JSRoot {
 	body: Array []
 	comments: Array []
 	corrupt: false
-	filename: "core/uncategorised/453/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "core/uncategorised/453/input.js"
-		end: Object {
-			column: 4
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation core/uncategorised/453/input.js 1:0-1:4
+	path: UIDPath<core/uncategorised/453/input.js>
 	directives: Array [
 		JSDirective {
 			value: "\\"
-			loc: Object {
-				filename: "core/uncategorised/453/input.js"
-				end: Object {
-					column: 4
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation core/uncategorised/453/input.js 1:0-1:4
 		}
 	]
 	diagnostics: Array [
@@ -49,23 +29,17 @@ JSRoot {
 			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse"
 				categoryValue: "js"
+				category: Array ["parse"]
 				message: RAW_MARKUP {value: "Bad character escape sequence"}
 			}
 			location: Object {
-				filename: "core/uncategorised/453/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 3
-					line: 1
-				}
-				start: Object {
-					column: 3
-					line: 1
-				}
+				end: Position 1:3
+				path: UIDPath<core/uncategorised/453/input.js>
+				start: Position 1:3
 			}
 		}
 	]
@@ -83,8 +57,5 @@ JSRoot {
     "\u
        ^
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

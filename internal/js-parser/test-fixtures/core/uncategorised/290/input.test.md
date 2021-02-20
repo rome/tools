@@ -12,50 +12,36 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "core/uncategorised/290/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "core/uncategorised/290/input.js"
-		end: Object {
-			column: 30
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation core/uncategorised/290/input.js 1:0-1:30
+	path: UIDPath<core/uncategorised/290/input.js>
 	body: Array [
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "hello"
-				loc: Object {
-					filename: "core/uncategorised/290/input.js"
-					identifierName: "hello"
-					end: Object {
-						column: 14
-						line: 1
-					}
-					start: Object {
-						column: 9
-						line: 1
-					}
-				}
+				loc: SourceLocation core/uncategorised/290/input.js 1:9-1:14 (hello)
 			}
-			loc: Object {
-				filename: "core/uncategorised/290/input.js"
-				end: Object {
-					column: 30
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
+			loc: SourceLocation core/uncategorised/290/input.js 1:0-1:30
+			body: JSBlockStatement {
+				directives: Array []
+				loc: SourceLocation core/uncategorised/290/input.js 1:18-1:30
+				body: Array [
+					JSExpressionStatement {
+						loc: SourceLocation core/uncategorised/290/input.js 1:20-1:28
+						expression: JSCallExpression {
+							arguments: Array []
+							loc: SourceLocation core/uncategorised/290/input.js 1:20-1:27
+							callee: JSReferenceIdentifier {
+								name: "sayHi"
+								loc: SourceLocation core/uncategorised/290/input.js 1:20-1:25 (sayHi)
+							}
+						}
+					}
+				]
 			}
 			head: JSFunctionHead {
 				async: false
@@ -65,104 +51,15 @@ JSRoot {
 				returnType: undefined
 				thisType: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "core/uncategorised/290/input.js"
-					end: Object {
-						column: 17
-						line: 1
-					}
-					start: Object {
-						column: 14
-						line: 1
-					}
-				}
+				loc: SourceLocation core/uncategorised/290/input.js 1:14-1:17
 				params: Array [
 					JSBindingIdentifier {
 						name: "a"
-						loc: Object {
-							filename: "core/uncategorised/290/input.js"
-							identifierName: "a"
-							end: Object {
-								column: 16
-								line: 1
-							}
-							start: Object {
-								column: 15
-								line: 1
-							}
-						}
+						loc: SourceLocation core/uncategorised/290/input.js 1:15-1:16 (a)
 						meta: JSPatternMeta {
 							optional: undefined
 							typeAnnotation: undefined
-							loc: Object {
-								filename: "core/uncategorised/290/input.js"
-								end: Object {
-									column: 16
-									line: 1
-								}
-								start: Object {
-									column: 15
-									line: 1
-								}
-							}
-						}
-					}
-				]
-			}
-			body: JSBlockStatement {
-				directives: Array []
-				loc: Object {
-					filename: "core/uncategorised/290/input.js"
-					end: Object {
-						column: 30
-						line: 1
-					}
-					start: Object {
-						column: 18
-						line: 1
-					}
-				}
-				body: Array [
-					JSExpressionStatement {
-						loc: Object {
-							filename: "core/uncategorised/290/input.js"
-							end: Object {
-								column: 28
-								line: 1
-							}
-							start: Object {
-								column: 20
-								line: 1
-							}
-						}
-						expression: JSCallExpression {
-							arguments: Array []
-							loc: Object {
-								filename: "core/uncategorised/290/input.js"
-								end: Object {
-									column: 27
-									line: 1
-								}
-								start: Object {
-									column: 20
-									line: 1
-								}
-							}
-							callee: JSReferenceIdentifier {
-								name: "sayHi"
-								loc: Object {
-									filename: "core/uncategorised/290/input.js"
-									identifierName: "sayHi"
-									end: Object {
-										column: 25
-										line: 1
-									}
-									start: Object {
-										column: 20
-										line: 1
-									}
-								}
-							}
+							loc: SourceLocation core/uncategorised/290/input.js 1:15-1:16
 						}
 					}
 				]
@@ -175,6 +72,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

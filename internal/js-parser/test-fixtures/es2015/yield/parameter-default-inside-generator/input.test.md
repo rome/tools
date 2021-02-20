@@ -11,45 +11,29 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "es2015/yield/parameter-default-inside-generator/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2015/yield/parameter-default-inside-generator/input.js"
-		end: Object {
-			column: 26
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2015/yield/parameter-default-inside-generator/input.js 1:0-1:26
+	path: UIDPath<es2015/yield/parameter-default-inside-generator/input.js>
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse"
 				categoryValue: "js"
+				category: Array ["parse"]
 				message: RAW_MARKUP {value: "yield is not allowed in generator parameters"}
 			}
 			location: Object {
-				filename: "es2015/yield/parameter-default-inside-generator/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 17
-					line: 1
-				}
-				start: Object {
-					column: 17
-					line: 1
-				}
+				end: Position 1:17
+				path: UIDPath<es2015/yield/parameter-default-inside-generator/input.js>
+				start: Position 1:17
 			}
 		}
 	]
@@ -57,44 +41,13 @@ JSRoot {
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "fn"
-				loc: Object {
-					filename: "es2015/yield/parameter-default-inside-generator/input.js"
-					identifierName: "fn"
-					end: Object {
-						column: 12
-						line: 1
-					}
-					start: Object {
-						column: 10
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/yield/parameter-default-inside-generator/input.js 1:10-1:12 (fn)
 			}
-			loc: Object {
-				filename: "es2015/yield/parameter-default-inside-generator/input.js"
-				end: Object {
-					column: 26
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2015/yield/parameter-default-inside-generator/input.js 1:0-1:26
 			body: JSBlockStatement {
 				body: Array []
 				directives: Array []
-				loc: Object {
-					filename: "es2015/yield/parameter-default-inside-generator/input.js"
-					end: Object {
-						column: 26
-						line: 1
-					}
-					start: Object {
-						column: 24
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/yield/parameter-default-inside-generator/input.js 1:24-1:26
 			}
 			head: JSFunctionHead {
 				async: false
@@ -104,73 +57,22 @@ JSRoot {
 				returnType: undefined
 				thisType: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "es2015/yield/parameter-default-inside-generator/input.js"
-					end: Object {
-						column: 23
-						line: 1
-					}
-					start: Object {
-						column: 12
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/yield/parameter-default-inside-generator/input.js 1:12-1:23
 				params: Array [
 					JSBindingAssignmentPattern {
-						loc: Object {
-							filename: "es2015/yield/parameter-default-inside-generator/input.js"
-							end: Object {
-								column: 22
-								line: 1
-							}
-							start: Object {
-								column: 13
-								line: 1
-							}
-						}
+						loc: SourceLocation es2015/yield/parameter-default-inside-generator/input.js 1:13-1:22
 						right: JSYieldExpression {
 							argument: undefined
 							delegate: false
-							loc: Object {
-								filename: "es2015/yield/parameter-default-inside-generator/input.js"
-								end: Object {
-									column: 22
-									line: 1
-								}
-								start: Object {
-									column: 17
-									line: 1
-								}
-							}
+							loc: SourceLocation es2015/yield/parameter-default-inside-generator/input.js 1:17-1:22
 						}
 						left: JSBindingIdentifier {
 							name: "x"
-							loc: Object {
-								filename: "es2015/yield/parameter-default-inside-generator/input.js"
-								identifierName: "x"
-								end: Object {
-									column: 14
-									line: 1
-								}
-								start: Object {
-									column: 13
-									line: 1
-								}
-							}
+							loc: SourceLocation es2015/yield/parameter-default-inside-generator/input.js 1:13-1:14 (x)
 							meta: JSPatternMeta {
 								optional: undefined
 								typeAnnotation: undefined
-								loc: Object {
-									filename: "es2015/yield/parameter-default-inside-generator/input.js"
-									end: Object {
-										column: 14
-										line: 1
-									}
-									start: Object {
-										column: 13
-										line: 1
-									}
-								}
+								loc: SourceLocation es2015/yield/parameter-default-inside-generator/input.js 1:13-1:14
 							}
 						}
 					}
@@ -192,8 +94,5 @@ JSRoot {
     function* fn(x = yield) {}
                      ^
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

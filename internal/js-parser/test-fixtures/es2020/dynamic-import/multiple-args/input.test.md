@@ -11,170 +11,64 @@ JSRoot {
 	comments: Array []
 	corrupt: true
 	directives: Array []
-	filename: "es2020/dynamic-import/multiple-args/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2020/dynamic-import/multiple-args/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2020/dynamic-import/multiple-args/input.js 1:0-2:0
+	path: UIDPath<es2020/dynamic-import/multiple-args/input.js>
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse"
 				categoryValue: "js"
+				category: Array ["parse"]
 				message: RAW_MARKUP {value: "Trailing comma is disallowed inside import(...) arguments"}
 			}
 			location: Object {
-				filename: "es2020/dynamic-import/multiple-args/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 15
-					line: 1
-				}
-				start: Object {
-					column: 14
-					line: 1
-				}
+				end: Position 1:15
+				path: UIDPath<es2020/dynamic-import/multiple-args/input.js>
+				start: Position 1:14
 			}
 		}
 	]
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "es2020/dynamic-import/multiple-args/input.js"
-				end: Object {
-					column: 15
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2020/dynamic-import/multiple-args/input.js 1:0-1:15
 			expression: JSImportCall {
-				loc: Object {
-					filename: "es2020/dynamic-import/multiple-args/input.js"
-					end: Object {
-						column: 15
-						line: 1
-					}
-					start: Object {
-						column: 6
-						line: 1
-					}
-				}
+				loc: SourceLocation es2020/dynamic-import/multiple-args/input.js 1:6-1:15
 				argument: JSStringLiteral {
 					value: "hello"
-					loc: Object {
-						filename: "es2020/dynamic-import/multiple-args/input.js"
-						end: Object {
-							column: 14
-							line: 1
-						}
-						start: Object {
-							column: 7
-							line: 1
-						}
-					}
+					loc: SourceLocation es2020/dynamic-import/multiple-args/input.js 1:7-1:14
 				}
 			}
 		}
 		JSExpressionStatement {
-			loc: Object {
-				filename: "es2020/dynamic-import/multiple-args/input.js"
-				end: Object {
-					column: 28
-					line: 1
-				}
-				start: Object {
-					column: 16
-					line: 1
-				}
-			}
+			loc: SourceLocation es2020/dynamic-import/multiple-args/input.js 1:16-1:28
 			expression: JSSequenceExpression {
-				loc: Object {
-					filename: "es2020/dynamic-import/multiple-args/input.js"
-					end: Object {
-						column: 28
-						line: 1
-					}
-					start: Object {
-						column: 16
-						line: 1
-					}
-				}
+				loc: SourceLocation es2020/dynamic-import/multiple-args/input.js 1:16-1:28
 				expressions: Array [
 					JSStringLiteral {
 						value: "world"
-						loc: Object {
-							filename: "es2020/dynamic-import/multiple-args/input.js"
-							end: Object {
-								column: 23
-								line: 1
-							}
-							start: Object {
-								column: 16
-								line: 1
-							}
-						}
+						loc: SourceLocation es2020/dynamic-import/multiple-args/input.js 1:16-1:23
 					}
 					JSStringLiteral {
 						value: "!"
-						loc: Object {
-							filename: "es2020/dynamic-import/multiple-args/input.js"
-							end: Object {
-								column: 28
-								line: 1
-							}
-							start: Object {
-								column: 25
-								line: 1
-							}
-						}
+						loc: SourceLocation es2020/dynamic-import/multiple-args/input.js 1:25-1:28
 					}
 				]
 			}
 		}
 		JSExpressionStatement {
-			loc: Object {
-				filename: "es2020/dynamic-import/multiple-args/input.js"
-				end: Object {
-					column: 30
-					line: 1
-				}
-				start: Object {
-					column: 28
-					line: 1
-				}
-			}
+			loc: SourceLocation es2020/dynamic-import/multiple-args/input.js 1:28-1:30
 			expression: JSReferenceIdentifier {
 				name: "INVALID_PLACEHOLDER"
-				loc: Object {
-					filename: "es2020/dynamic-import/multiple-args/input.js"
-					end: Object {
-						column: 29
-						line: 1
-					}
-					start: Object {
-						column: 28
-						line: 1
-					}
-				}
+				loc: SourceLocation es2020/dynamic-import/multiple-args/input.js 1:28-1:29
 			}
 		}
 	]
@@ -192,8 +86,5 @@ JSRoot {
     import('hello', 'world', '!');
                   ^
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

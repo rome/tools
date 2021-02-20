@@ -11,78 +11,39 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "es2015/uncategorised/198/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2015/uncategorised/198/input.js"
-		end: Object {
-			column: 2
-			line: 1
+	loc: SourceLocation es2015/uncategorised/198/input.js 1:0-1:2
+	path: UIDPath<es2015/uncategorised/198/input.js>
+	body: Array [
+		JSExpressionStatement {
+			loc: SourceLocation es2015/uncategorised/198/input.js 1:0-1:2
+			expression: JSNumericLiteral {
+				value: 0
+				format: "octal"
+				loc: SourceLocation es2015/uncategorised/198/input.js 1:0-1:2
+			}
 		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	]
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse"
 				categoryValue: "js"
-				message: Array [
-					RAW_MARKUP {value: "Expected number in radix "}
-					"8"
-				]
+				category: Array ["parse"]
+				message: RAW_MARKUP {value: "Expected number in radix <emphasis>8</emphasis>"}
 			}
 			location: Object {
-				filename: "es2015/uncategorised/198/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 2
-					line: 1
-				}
-				start: Object {
-					column: 2
-					line: 1
-				}
-			}
-		}
-	]
-	body: Array [
-		JSExpressionStatement {
-			loc: Object {
-				filename: "es2015/uncategorised/198/input.js"
-				end: Object {
-					column: 2
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
-			expression: JSNumericLiteral {
-				value: 0
-				format: "octal"
-				loc: Object {
-					filename: "es2015/uncategorised/198/input.js"
-					end: Object {
-						column: 2
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				end: Position 1:2
+				path: UIDPath<es2015/uncategorised/198/input.js>
+				start: Position 1:2
 			}
 		}
 	]
@@ -100,8 +61,5 @@ JSRoot {
     0o
       ^
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

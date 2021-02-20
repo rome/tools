@@ -12,65 +12,24 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "typescript/type-arguments/whitespace/input.ts"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
+	loc: SourceLocation typescript/type-arguments/whitespace/input.ts 1:0-1:24
+	path: UIDPath<typescript/type-arguments/whitespace/input.ts>
 	syntax: Array ["ts"]
-	loc: Object {
-		filename: "typescript/type-arguments/whitespace/input.ts"
-		end: Object {
-			column: 24
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
 	body: Array [
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "f"
-				loc: Object {
-					filename: "typescript/type-arguments/whitespace/input.ts"
-					identifierName: "f"
-					end: Object {
-						column: 10
-						line: 1
-					}
-					start: Object {
-						column: 9
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/type-arguments/whitespace/input.ts 1:9-1:10 (f)
 			}
-			loc: Object {
-				filename: "typescript/type-arguments/whitespace/input.ts"
-				end: Object {
-					column: 24
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation typescript/type-arguments/whitespace/input.ts 1:0-1:24
 			body: JSBlockStatement {
 				body: Array []
 				directives: Array []
-				loc: Object {
-					filename: "typescript/type-arguments/whitespace/input.ts"
-					end: Object {
-						column: 24
-						line: 1
-					}
-					start: Object {
-						column: 22
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/type-arguments/whitespace/input.ts 1:22-1:24
 			}
 			head: JSFunctionHead {
 				async: false
@@ -80,45 +39,15 @@ JSRoot {
 				rest: undefined
 				returnType: undefined
 				thisType: undefined
-				loc: Object {
-					filename: "typescript/type-arguments/whitespace/input.ts"
-					end: Object {
-						column: 21
-						line: 1
-					}
-					start: Object {
-						column: 10
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/type-arguments/whitespace/input.ts 1:10-1:21
 				typeParameters: TSTypeParameterDeclaration {
-					loc: Object {
-						filename: "typescript/type-arguments/whitespace/input.ts"
-						end: Object {
-							column: 19
-							line: 1
-						}
-						start: Object {
-							column: 10
-							line: 1
-						}
-					}
+					loc: SourceLocation typescript/type-arguments/whitespace/input.ts 1:10-1:19
 					params: Array [
 						TSTypeParameter {
 							name: "T"
 							constraint: undefined
 							default: undefined
-							loc: Object {
-								filename: "typescript/type-arguments/whitespace/input.ts"
-								end: Object {
-									column: 14
-									line: 1
-								}
-								start: Object {
-									column: 13
-									line: 1
-								}
-							}
+							loc: SourceLocation typescript/type-arguments/whitespace/input.ts 1:13-1:14
 						}
 					]
 				}
@@ -131,6 +60,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

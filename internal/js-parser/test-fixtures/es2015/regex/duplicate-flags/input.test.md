@@ -11,61 +11,16 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "es2015/regex/duplicate-flags/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2015/regex/duplicate-flags/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				category: "parse"
-				categoryValue: "js"
-				message: RAW_MARKUP {value: "Duplicate regular expression flag"}
-			}
-			location: Object {
-				filename: "es2015/regex/duplicate-flags/input.js"
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Object {
-					column: 5
-					line: 1
-				}
-				start: Object {
-					column: 5
-					line: 1
-				}
-			}
-		}
-	]
+	loc: SourceLocation es2015/regex/duplicate-flags/input.js 1:0-2:0
+	path: UIDPath<es2015/regex/duplicate-flags/input.js>
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "es2015/regex/duplicate-flags/input.js"
-				end: Object {
-					column: 7
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2015/regex/duplicate-flags/input.js 1:0-1:7
 			expression: JSRegExpLiteral {
 				global: true
 				insensitive: true
@@ -73,45 +28,30 @@ JSRoot {
 				noDotNewline: false
 				sticky: false
 				unicode: false
-				loc: Object {
-					filename: "es2015/regex/duplicate-flags/input.js"
-					end: Object {
-						column: 6
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/regex/duplicate-flags/input.js 1:0-1:6
 				expression: JSRegExpSubExpression {
-					loc: Object {
-						filename: "es2015/regex/duplicate-flags/input.js"
-						end: Object {
-							column: 2
-							line: 1
-						}
-						start: Object {
-							column: 1
-							line: 1
-						}
-					}
-					body: Array [
-						JSRegExpAnyCharacter {
-							loc: Object {
-								filename: "es2015/regex/duplicate-flags/input.js"
-								end: Object {
-									column: 2
-									line: 1
-								}
-								start: Object {
-									column: 1
-									line: 1
-								}
-							}
-						}
-					]
+					body: Array [JSRegExpAnyCharacter {loc: SourceLocation es2015/regex/duplicate-flags/input.js 1:1-1:2}]
+					loc: SourceLocation es2015/regex/duplicate-flags/input.js 1:1-1:2
 				}
+			}
+		}
+	]
+	diagnostics: Array [
+		Object {
+			origins: Array [Object {category: "parse"}]
+			description: Object {
+				advice: Array []
+				categoryValue: "js"
+				category: Array ["parse"]
+				message: RAW_MARKUP {value: "Duplicate regular expression flag"}
+			}
+			location: Object {
+				integrity: undefined
+				language: "js"
+				sourceText: undefined
+				end: Position 1:5
+				path: UIDPath<es2015/regex/duplicate-flags/input.js>
+				start: Position 1:5
 			}
 		}
 	]
@@ -129,8 +69,5 @@ JSRoot {
     /./gii;
          ^
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

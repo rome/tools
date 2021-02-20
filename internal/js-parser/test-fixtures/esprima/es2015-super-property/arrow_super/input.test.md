@@ -12,80 +12,28 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "esprima/es2015-super-property/arrow_super/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "esprima/es2015-super-property/arrow_super/input.js"
-		end: Object {
-			column: 0
-			line: 6
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation esprima/es2015-super-property/arrow_super/input.js 1:0-6:0
+	path: UIDPath<esprima/es2015-super-property/arrow_super/input.js>
 	body: Array [
 		JSClassDeclaration {
 			id: JSBindingIdentifier {
 				name: "A"
-				loc: Object {
-					filename: "esprima/es2015-super-property/arrow_super/input.js"
-					identifierName: "A"
-					end: Object {
-						column: 7
-						line: 1
-					}
-					start: Object {
-						column: 6
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/es2015-super-property/arrow_super/input.js 1:6-1:7 (A)
 			}
-			loc: Object {
-				filename: "esprima/es2015-super-property/arrow_super/input.js"
-				end: Object {
-					column: 1
-					line: 5
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation esprima/es2015-super-property/arrow_super/input.js 1:0-5:1
 			meta: JSClassHead {
 				implements: undefined
 				superTypeParameters: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "esprima/es2015-super-property/arrow_super/input.js"
-					end: Object {
-						column: 1
-						line: 5
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/es2015-super-property/arrow_super/input.js 1:0-5:1
 				superClass: JSReferenceIdentifier {
 					name: "B"
-					loc: Object {
-						filename: "esprima/es2015-super-property/arrow_super/input.js"
-						identifierName: "B"
-						end: Object {
-							column: 17
-							line: 1
-						}
-						start: Object {
-							column: 16
-							line: 1
-						}
-					}
+					loc: SourceLocation esprima/es2015-super-property/arrow_super/input.js 1:16-1:17 (B)
 				}
 				body: Array [
 					JSClassMethod {
@@ -93,41 +41,20 @@ JSRoot {
 						key: JSStaticPropertyKey {
 							value: JSIdentifier {
 								name: "constructor"
-								loc: Object {
-									filename: "esprima/es2015-super-property/arrow_super/input.js"
-									identifierName: "constructor"
-									end: Object {
-										column: 15
-										line: 2
-									}
-									start: Object {
-										column: 4
-										line: 2
-									}
-								}
+								loc: SourceLocation esprima/es2015-super-property/arrow_super/input.js 2:4-2:15 (constructor)
 							}
-							loc: Object {
-								filename: "esprima/es2015-super-property/arrow_super/input.js"
-								end: Object {
-									column: 15
-									line: 2
-								}
-								start: Object {
-									column: 4
-									line: 2
-								}
-							}
+							loc: SourceLocation esprima/es2015-super-property/arrow_super/input.js 2:4-2:15
 						}
-						loc: Object {
-							filename: "esprima/es2015-super-property/arrow_super/input.js"
-							end: Object {
-								column: 5
-								line: 4
-							}
-							start: Object {
-								column: 4
-								line: 2
-							}
+						loc: SourceLocation esprima/es2015-super-property/arrow_super/input.js 2:4-4:5
+						meta: JSClassPropertyMeta {
+							abstract: false
+							accessibility: undefined
+							optional: false
+							readonly: false
+							static: false
+							typeAnnotation: undefined
+							loc: SourceLocation esprima/es2015-super-property/arrow_super/input.js 2:4-2:15
+							start: Position 2:4
 						}
 						head: JSFunctionHead {
 							async: false
@@ -138,78 +65,20 @@ JSRoot {
 							returnType: undefined
 							thisType: undefined
 							typeParameters: undefined
-							loc: Object {
-								filename: "esprima/es2015-super-property/arrow_super/input.js"
-								end: Object {
-									column: 17
-									line: 2
-								}
-								start: Object {
-									column: 15
-									line: 2
-								}
-							}
-						}
-						meta: JSClassPropertyMeta {
-							abstract: false
-							accessibility: undefined
-							optional: false
-							readonly: false
-							static: false
-							typeAnnotation: undefined
-							start: Object {
-								column: 4
-								line: 2
-							}
-							loc: Object {
-								filename: "esprima/es2015-super-property/arrow_super/input.js"
-								end: Object {
-									column: 15
-									line: 2
-								}
-								start: Object {
-									column: 4
-									line: 2
-								}
-							}
+							loc: SourceLocation esprima/es2015-super-property/arrow_super/input.js 2:15-2:17
 						}
 						body: JSBlockStatement {
 							directives: Array []
-							loc: Object {
-								filename: "esprima/es2015-super-property/arrow_super/input.js"
-								end: Object {
-									column: 5
-									line: 4
-								}
-								start: Object {
-									column: 18
-									line: 2
-								}
-							}
+							loc: SourceLocation esprima/es2015-super-property/arrow_super/input.js 2:18-4:5
 							body: Array [
 								JSExpressionStatement {
-									loc: Object {
-										filename: "esprima/es2015-super-property/arrow_super/input.js"
-										end: Object {
-											column: 21
-											line: 3
-										}
-										start: Object {
-											column: 8
-											line: 3
-										}
-									}
+									loc: SourceLocation esprima/es2015-super-property/arrow_super/input.js 3:8-3:21
 									expression: JSArrowFunctionExpression {
-										loc: Object {
-											filename: "esprima/es2015-super-property/arrow_super/input.js"
-											end: Object {
-												column: 21
-												line: 3
-											}
-											start: Object {
-												column: 8
-												line: 3
-											}
+										loc: SourceLocation esprima/es2015-super-property/arrow_super/input.js 3:8-3:21
+										body: JSCallExpression {
+											arguments: Array []
+											callee: JSSuper {loc: SourceLocation esprima/es2015-super-property/arrow_super/input.js 3:14-3:19}
+											loc: SourceLocation esprima/es2015-super-property/arrow_super/input.js 3:14-3:21
 										}
 										head: JSFunctionHead {
 											async: false
@@ -218,44 +87,7 @@ JSRoot {
 											rest: undefined
 											returnType: undefined
 											thisType: undefined
-											loc: Object {
-												filename: "esprima/es2015-super-property/arrow_super/input.js"
-												end: Object {
-													column: 13
-													line: 3
-												}
-												start: Object {
-													column: 8
-													line: 3
-												}
-											}
-										}
-										body: JSCallExpression {
-											arguments: Array []
-											loc: Object {
-												filename: "esprima/es2015-super-property/arrow_super/input.js"
-												end: Object {
-													column: 21
-													line: 3
-												}
-												start: Object {
-													column: 14
-													line: 3
-												}
-											}
-											callee: JSSuper {
-												loc: Object {
-													filename: "esprima/es2015-super-property/arrow_super/input.js"
-													end: Object {
-														column: 19
-														line: 3
-													}
-													start: Object {
-														column: 14
-														line: 3
-													}
-												}
-											}
+											loc: SourceLocation esprima/es2015-super-property/arrow_super/input.js 3:8-3:13
 										}
 									}
 								}
@@ -272,6 +104,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

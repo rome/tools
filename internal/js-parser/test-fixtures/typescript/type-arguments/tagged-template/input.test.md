@@ -12,135 +12,43 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "typescript/type-arguments/tagged-template/input.ts"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
+	loc: SourceLocation typescript/type-arguments/tagged-template/input.ts 1:0-2:0
+	path: UIDPath<typescript/type-arguments/tagged-template/input.ts>
 	syntax: Array ["ts"]
-	loc: Object {
-		filename: "typescript/type-arguments/tagged-template/input.ts"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "typescript/type-arguments/tagged-template/input.ts"
-				end: Object {
-					column: 7
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation typescript/type-arguments/tagged-template/input.ts 1:0-1:7
 			expression: JSTaggedTemplateExpression {
-				loc: Object {
-					filename: "typescript/type-arguments/tagged-template/input.ts"
-					end: Object {
-						column: 6
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/type-arguments/tagged-template/input.ts 1:0-1:6
 				tag: JSReferenceIdentifier {
 					name: "f"
-					loc: Object {
-						filename: "typescript/type-arguments/tagged-template/input.ts"
-						identifierName: "f"
-						end: Object {
-							column: 1
-							line: 1
-						}
-						start: Object {
-							column: 0
-							line: 1
-						}
-					}
+					loc: SourceLocation typescript/type-arguments/tagged-template/input.ts 1:0-1:1 (f)
 				}
 				quasi: JSTemplateLiteral {
 					expressions: Array []
-					loc: Object {
-						filename: "typescript/type-arguments/tagged-template/input.ts"
-						end: Object {
-							column: 6
-							line: 1
-						}
-						start: Object {
-							column: 4
-							line: 1
-						}
-					}
+					loc: SourceLocation typescript/type-arguments/tagged-template/input.ts 1:4-1:6
 					quasis: Array [
 						JSTemplateElement {
 							cooked: ""
 							raw: ""
 							tail: true
-							loc: Object {
-								filename: "typescript/type-arguments/tagged-template/input.ts"
-								end: Object {
-									column: 5
-									line: 1
-								}
-								start: Object {
-									column: 5
-									line: 1
-								}
-							}
+							loc: SourceLocation typescript/type-arguments/tagged-template/input.ts 1:5-1:5
 						}
 					]
 				}
 				typeArguments: TSTypeParameterInstantiation {
-					loc: Object {
-						filename: "typescript/type-arguments/tagged-template/input.ts"
-						end: Object {
-							column: 4
-							line: 1
-						}
-						start: Object {
-							column: 1
-							line: 1
-						}
-					}
+					loc: SourceLocation typescript/type-arguments/tagged-template/input.ts 1:1-1:4
 					params: Array [
 						TSTypeReference {
 							typeParameters: undefined
-							loc: Object {
-								filename: "typescript/type-arguments/tagged-template/input.ts"
-								end: Object {
-									column: 3
-									line: 1
-								}
-								start: Object {
-									column: 2
-									line: 1
-								}
-							}
+							loc: SourceLocation typescript/type-arguments/tagged-template/input.ts 1:2-1:3
 							typeName: JSReferenceIdentifier {
 								name: "T"
-								loc: Object {
-									filename: "typescript/type-arguments/tagged-template/input.ts"
-									identifierName: "T"
-									end: Object {
-										column: 3
-										line: 1
-									}
-									start: Object {
-										column: 2
-										line: 1
-									}
-								}
+								loc: SourceLocation typescript/type-arguments/tagged-template/input.ts 1:2-1:3 (T)
 							}
 						}
 					]
@@ -154,6 +62,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

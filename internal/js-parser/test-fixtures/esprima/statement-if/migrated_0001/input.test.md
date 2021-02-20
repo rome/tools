@@ -12,91 +12,30 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "esprima/statement-if/migrated_0001/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "esprima/statement-if/migrated_0001/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation esprima/statement-if/migrated_0001/input.js 1:0-2:0
+	path: UIDPath<esprima/statement-if/migrated_0001/input.js>
 	body: Array [
 		JSIfStatement {
 			alternate: undefined
-			loc: Object {
-				filename: "esprima/statement-if/migrated_0001/input.js"
-				end: Object {
-					column: 27
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation esprima/statement-if/migrated_0001/input.js 1:0-1:27
 			test: JSReferenceIdentifier {
 				name: "morning"
-				loc: Object {
-					filename: "esprima/statement-if/migrated_0001/input.js"
-					identifierName: "morning"
-					end: Object {
-						column: 11
-						line: 1
-					}
-					start: Object {
-						column: 4
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/statement-if/migrated_0001/input.js 1:4-1:11 (morning)
 			}
 			consequent: JSExpressionStatement {
-				loc: Object {
-					filename: "esprima/statement-if/migrated_0001/input.js"
-					end: Object {
-						column: 27
-						line: 1
-					}
-					start: Object {
-						column: 13
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/statement-if/migrated_0001/input.js 1:13-1:27
 				expression: JSFunctionExpression {
 					id: undefined
-					loc: Object {
-						filename: "esprima/statement-if/migrated_0001/input.js"
-						end: Object {
-							column: 26
-							line: 1
-						}
-						start: Object {
-							column: 14
-							line: 1
-						}
-					}
+					loc: SourceLocation esprima/statement-if/migrated_0001/input.js 1:14-1:26
 					body: JSBlockStatement {
 						body: Array []
 						directives: Array []
-						loc: Object {
-							filename: "esprima/statement-if/migrated_0001/input.js"
-							end: Object {
-								column: 26
-								line: 1
-							}
-							start: Object {
-								column: 24
-								line: 1
-							}
-						}
+						loc: SourceLocation esprima/statement-if/migrated_0001/input.js 1:24-1:26
 					}
 					head: JSFunctionHead {
 						async: false
@@ -107,17 +46,7 @@ JSRoot {
 						returnType: undefined
 						thisType: undefined
 						typeParameters: undefined
-						loc: Object {
-							filename: "esprima/statement-if/migrated_0001/input.js"
-							end: Object {
-								column: 24
-								line: 1
-							}
-							start: Object {
-								column: 22
-								line: 1
-							}
-						}
+						loc: SourceLocation esprima/statement-if/migrated_0001/input.js 1:22-1:24
 					}
 				}
 			}
@@ -129,6 +58,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

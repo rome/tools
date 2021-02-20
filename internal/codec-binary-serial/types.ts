@@ -1,14 +1,19 @@
+import {AnyIndexedNumber} from "@internal/math";
 import {
 	AbsoluteFilePathMap,
-	AnyFilePath,
-	AnyFilePathSet,
-	RelativeFilePathMap,
-	UnknownPathMap,
+	AnyPath,
+	MixedPathMap,
+	PathSet,
+	RelativePathMap,
+	UIDPathMap,
+	URLPathMap,
 } from "@internal/path";
 
-export type IntSize = 1 | 2 | 4 | 8;
-
 export type EqualShapeObjects<Value> = {[key in keyof Value]: Value[key]};
+
+// Value types
+
+export type RSERValueObjects = Extract<RSERValue, object>;
 
 export type RSERValue =
 	| undefined
@@ -23,19 +28,35 @@ export type RSERValue =
 	| RegExp
 	| Error
 	| ArrayBuffer
+	| AnyIndexedNumber
 	| RSERArrayBufferView
-	| AnyFilePath
-	| AnyFilePathSet
-	| AnyRSERFilePathMap
+	| AnyPath
+	| PathSet
+	| AnyRSERPathMap
 	| RSERMap
 	| RSERSet
 	| RSERObject
 	| RSERArray;
 
-export type AnyRSERFilePathMap =
-	| RSERAbsoluteFilePathMap
-	| RSERRelativeFilePathMap
-	| RSERUnknownPathMap;
+export type AnyRSERPathMap =
+	| RSERMixedPathMap
+	| AbsoluteFilePathMap<RSERValue>
+	| RelativePathMap<RSERValue>
+	| URLPathMap<RSERValue>
+	| UIDPathMap<RSERValue>;
+
+export type RSERMixedPathMap = MixedPathMap<RSERValue>;
+
+export type RSERMap = Map<RSERValue, RSERValue>;
+export type RSERSet = Set<RSERValue>;
+
+export type RSERObject = {
+	[x: string]: RSERValue;
+};
+
+export type RSERArray = RSERValue[];
+
+// Boring
 
 export type RSERArrayBufferView =
 	| Int8Array
@@ -50,17 +71,3 @@ export type RSERArrayBufferView =
 	| BigInt64Array
 	| BigUint64Array
 	| DataView;
-
-export type RSERUnknownPathMap = UnknownPathMap<RSERValue>;
-export type RSERAbsoluteFilePathMap = AbsoluteFilePathMap<RSERValue>;
-export type RSERRelativeFilePathMap = RelativeFilePathMap<RSERValue>;
-
-export type RSERMap = Map<RSERValue, RSERValue>;
-export type RSERSet = Set<RSERValue>;
-
-export type RSERObject = {
-	[x: string]: RSERValue;
-};
-export type RSERArray = RSERValue[];
-
-export type RSERValueObject = Extract<RSERValue, object>;

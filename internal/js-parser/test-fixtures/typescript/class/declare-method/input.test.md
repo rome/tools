@@ -11,45 +11,29 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "typescript/class/declare-method/input.ts"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
+	loc: SourceLocation typescript/class/declare-method/input.ts 1:0-4:0
+	path: UIDPath<typescript/class/declare-method/input.ts>
 	syntax: Array ["ts"]
-	loc: Object {
-		filename: "typescript/class/declare-method/input.ts"
-		end: Object {
-			column: 0
-			line: 4
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse"
 				categoryValue: "js"
+				category: Array ["parse"]
 				message: RAW_MARKUP {value: "Unknown class property start"}
 			}
 			location: Object {
-				filename: "typescript/class/declare-method/input.ts"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 9
-					line: 2
-				}
-				start: Object {
-					column: 10
-					line: 2
-				}
+				end: Position 2:9
+				path: UIDPath<typescript/class/declare-method/input.ts>
+				start: Position 2:10
 			}
 		}
 	]
@@ -57,102 +41,40 @@ JSRoot {
 		JSClassDeclaration {
 			id: JSBindingIdentifier {
 				name: "A"
-				loc: Object {
-					filename: "typescript/class/declare-method/input.ts"
-					identifierName: "A"
-					end: Object {
-						column: 7
-						line: 1
-					}
-					start: Object {
-						column: 6
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/class/declare-method/input.ts 1:6-1:7 (A)
 			}
-			loc: Object {
-				filename: "typescript/class/declare-method/input.ts"
-				end: Object {
-					column: 1
-					line: 3
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation typescript/class/declare-method/input.ts 1:0-3:1
 			meta: JSClassHead {
 				implements: undefined
 				superClass: undefined
 				superTypeParameters: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "typescript/class/declare-method/input.ts"
-					end: Object {
-						column: 1
-						line: 3
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/class/declare-method/input.ts 1:0-3:1
 				body: Array [
 					JSClassMethod {
 						kind: "method"
 						key: JSStaticPropertyKey {
 							value: JSIdentifier {
 								name: "foo"
-								loc: Object {
-									filename: "typescript/class/declare-method/input.ts"
-									identifierName: "foo"
-									end: Object {
-										column: 13
-										line: 2
-									}
-									start: Object {
-										column: 10
-										line: 2
-									}
-								}
+								loc: SourceLocation typescript/class/declare-method/input.ts 2:10-2:13 (foo)
 							}
-							loc: Object {
-								filename: "typescript/class/declare-method/input.ts"
-								end: Object {
-									column: 13
-									line: 2
-								}
-								start: Object {
-									column: 10
-									line: 2
-								}
-							}
+							loc: SourceLocation typescript/class/declare-method/input.ts 2:10-2:13
 						}
-						loc: Object {
-							filename: "typescript/class/declare-method/input.ts"
-							end: Object {
-								column: 18
-								line: 2
-							}
-							start: Object {
-								column: 10
-								line: 2
-							}
-						}
+						loc: SourceLocation typescript/class/declare-method/input.ts 2:10-2:18
 						body: JSBlockStatement {
 							body: Array []
 							directives: Array []
-							loc: Object {
-								filename: "typescript/class/declare-method/input.ts"
-								end: Object {
-									column: 18
-									line: 2
-								}
-								start: Object {
-									column: 16
-									line: 2
-								}
-							}
+							loc: SourceLocation typescript/class/declare-method/input.ts 2:16-2:18
+						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							accessibility: undefined
+							optional: false
+							readonly: false
+							static: false
+							typeAnnotation: undefined
+							loc: SourceLocation typescript/class/declare-method/input.ts 2:10-2:13
+							start: Position 2:10
 						}
 						head: JSFunctionHead {
 							async: false
@@ -163,40 +85,7 @@ JSRoot {
 							returnType: undefined
 							thisType: undefined
 							typeParameters: undefined
-							loc: Object {
-								filename: "typescript/class/declare-method/input.ts"
-								end: Object {
-									column: 15
-									line: 2
-								}
-								start: Object {
-									column: 13
-									line: 2
-								}
-							}
-						}
-						meta: JSClassPropertyMeta {
-							abstract: false
-							accessibility: undefined
-							optional: false
-							readonly: false
-							static: false
-							typeAnnotation: undefined
-							start: Object {
-								column: 10
-								line: 2
-							}
-							loc: Object {
-								filename: "typescript/class/declare-method/input.ts"
-								end: Object {
-									column: 13
-									line: 2
-								}
-								start: Object {
-									column: 10
-									line: 2
-								}
-							}
+							loc: SourceLocation typescript/class/declare-method/input.ts 2:13-2:15
 						}
 					}
 				]
@@ -219,8 +108,5 @@ JSRoot {
       │           ^
     3 │ }
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

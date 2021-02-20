@@ -15,125 +15,32 @@ import {StaticMarkup, markup} from "@internal/markup";
 import stringDiff from "@internal/string-diff";
 import {buildSuggestionAdvice} from "../helpers";
 import {addEmphasis, createDiagnosticsCategory, orJoin} from "./index";
+import {DIAGNOSTIC_CATEGORIES} from "../categories";
 
 export const lint = createDiagnosticsCategory({
-	HTML_USE_VALID_LANG: (value: string, suggestions: string[]) => ({
-		category: "lint/html/useValidLang",
-		message: markup`Provide a valid value for the <emphasis>lang</emphasis> attribute.`,
-		advice: buildSuggestionAdvice(value, suggestions),
-	}),
-	HTML_USE_HTML_LANG: {
-		category: "lint/html/useHtmlLang",
-		message: markup`Provide a <emphasis>lang</emphasis> attribute when using the <emphasis>html</emphasis> element.`,
+	A11_Y_NO_NONINTERACTIVE_TABINDEX: {
+		category: DIAGNOSTIC_CATEGORIES["lint/a11y/noNoninteractiveTabindex"],
+		message: markup`Do not use <emphasis>tabIndex</emphasis> on an element that is not interactive.`,
 		advice: [
 			{
 				type: "log",
 				category: "info",
-				text: markup`Setting a lang attribute on HTML elements configures the language used by screen readers when no user default is specified.`,
+				text: markup`Adding non-interactive elements to the keyboard navigation flow can confuse users.`,
 			},
 		],
 	},
-	JS_NO_SINGLE_CHAR_REGEX_ALTERNATIVES: {
-		category: "lint/js/noSingleCharRegexAlternatives",
-		message: markup`No single character alternations in regular expressions. Use a character class instead.`,
-	},
-	JS_NO_UNNECESSARY_CONTINUE: {
-		category: "lint/js/noUnnecessaryContinue",
-		message: markup`Unnecessary <emphasis>continue</emphasis> statement`,
-	},
-	JS_PREFER_OPTIONAL_CHAINING: {
-		category: "lint/js/preferOptionalChaining",
-		message: markup`Prefer optional chaining to manual checks.`,
-	},
-	HTML_USE_CLOSING_NON_VOID: {
-		category: "lint/html/useClosingNonVoid",
-		message: markup`Non-void HTML elements cannot be self-closing. This is valid when using JSX, but not when using HTML.`,
-	},
-	JSX_USE_SELF_CLOSING_ELEMENTS: {
-		category: "lint/jsx/useSelfClosingElements",
-		message: markup`JSX elements without children should be marked as self-closing. In JSX, it is valid for any element to be self-closing.`,
-	},
-	JS_NO_SHOUTY_CONSTANTS: (constantLocation: DiagnosticLocation = {}) => ({
-		category: "lint/js/noShoutyConstants",
-		message: markup`Redundant constant reference`,
+	A11_Y_NO_SVG_WITHOUT_TITLE: {
+		category: DIAGNOSTIC_CATEGORIES["lint/a11y/noSvgWithoutTitle"],
+		message: markup`Alternative text <emphasis>title</emphasis> element cannot be empty`,
 		advice: [
 			{
 				type: "log",
 				category: "info",
-				text: markup`You should avoid declaring constants with a string that's the same value as the variable name. It introduces a level of unnecessary indirection when it's only two additional characters to inline.`,
-			},
-			{
-				type: "log",
-				category: "info",
-				text: markup`This constant is declared here`,
-			},
-			{
-				type: "frame",
-				location: constantLocation,
-			},
-		],
-	}),
-	JS_NO_UNUSED_TEMPLATE_LITERAL: {
-		category: "lint/js/noUnusedTemplateLiteral",
-		message: markup`Do not use template literals if interpolation and special-character handling are not needed.`,
-	},
-	JSX_NO_IMPLICIT_BOOLEAN: {
-		category: "lint/jsx/noImplicitBoolean",
-		message: markup`Use explicit boolean values for boolean JSX props.`,
-	},
-	JS_NO_NESTED_TERNARY: {
-		category: "lint/js/noNestedTernary",
-		message: markup`Nesting ternary expressions can make code more difficult to understand.`,
-	},
-	JSX_USE_J_S_X_FILE_EXTENSION: (ext: string, basename: string) => ({
-		category: "lint/jsx/useJSXFileExtension",
-		message: markup`Files with the <emphasis>${ext}</emphasis> extension cannot contain JSX elements.`,
-		advice: [
-			{
-				type: "log",
-				category: "info",
-				text: markup`Change the <emphasis>${basename}${ext}</emphasis> file extension to <emphasis>.jsx</emphasis> or <emphasis>.tsx</emphasis>.`,
-			},
-		],
-	}),
-	TS_PREFER_INTERFACES: {
-		category: "lint/ts/useInterfaces",
-		message: markup`Use an interface instead of an object type alias`,
-	},
-	JSX_NO_PROP_SPREADING: {
-		category: "lint/jsx/noPropSpreading",
-		message: markup`Avoid using property spreading in JSX components.`,
-		advice: [
-			{
-				type: "log",
-				category: "info",
-				text: markup`Explicit JSX attributes enhance the readability of code by clearly indicating which props are accepted by a given element.`,
+				text: markup`For accessibility purposes, <emphasis>SVGs</emphasis> should have an alternative text, provided via <emphasis>title</emphasis> element.`,
 			},
 		],
 	},
-	REACT_NO_ARRAY_INDEX_KEY: {
-		category: "lint/react/noArrayIndexKey",
-		message: markup`Avoid using array index as key property in an element.`,
-		advice: [
-			{
-				type: "log",
-				category: "info",
-				text: markup`See <hyperlink target="https://reactjs.org/docs/lists-and-keys.html#keys" /> for more information.`,
-			},
-		],
-	},
-	REACT_NO_THIS_IN_SFC: {
-		category: "lint/react/noThisInSFC",
-		message: markup`Avoid using <emphasis>this</emphasis> in stateless functional components.`,
-		advice: [
-			{
-				type: "log",
-				category: "info",
-				text: markup`The <emphasis>this</emphasis> keyword has no binding in functional components. Use hooks instead.`,
-			},
-		],
-	},
-	JSX_A11Y_ARIA_PROPTYPES: (
+	A11_Y_USE_ARIA_PROPTYPES: (
 		attributeName: string,
 		values?: Array<string | boolean>,
 	) => {
@@ -152,14 +59,35 @@ export const lint = createDiagnosticsCategory({
 			});
 		}
 		return {
-			category: "lint/jsx-a11y/useAriaProptypes",
+			category: DIAGNOSTIC_CATEGORIES["lint/a11y/useAriaProptypes"],
 			message: markup`The value of the ARIA attribute <emphasis>${attributeName}</emphasis> is not correct.`,
 			advice,
 		};
 	},
-
-	JSX_A11Y_NO_NONINTERACTIVE_ELEMENT_TO_INTERACTIVE_ROLE: (element: string) => ({
-		category: "lint/jsx-a11y/noNoninteractiveElementToInteractiveRole",
+	A11_Y_USE_MEDIA_CAPTION: {
+		category: DIAGNOSTIC_CATEGORIES["lint/a11y/useMediaCaption"],
+		message: markup`Provide a <emphasis>track</emphasis> for captions when using <emphasis>audio</emphasis> or <emphasis>video</emphasis> elements.`,
+		advice: [
+			{
+				type: "log",
+				category: "info",
+				text: markup`Captions support users with hearing-impairments. They should be a transcription or translation of the dialogue, sound effects, musical cues, and other relevant audio information.`,
+			},
+		],
+	},
+	A11_Y_NO_ARIA_UNSUPPORTED_ELEMENTS: {
+		category: DIAGNOSTIC_CATEGORIES["lint/a11y/noAriaUnsupportedElements"],
+		message: markup`Avoid the <emphasis>role</emphasis> attribute and <emphasis>aria-*</emphasis> attributes when using <emphasis>meta</emphasis>, <emphasis>html</emphasis>, <emphasis>script</emphasis>, and <emphasis>style</emphasis> elements.`,
+		advice: [
+			{
+				type: "log",
+				category: "info",
+				text: markup`Using roles on elements that do not support them can cause issues with screen readers.`,
+			},
+		],
+	},
+	A11_Y_NO_NONINTERACTIVE_ELEMENT_TO_INTERACTIVE_ROLE: (element: string) => ({
+		category: DIAGNOSTIC_CATEGORIES["lint/a11y/noNoninteractiveElementToInteractiveRole"],
 		message: markup`The HTML element <emphasis>${element}</emphasis> is non-interactive and should not have an interactive role.`,
 		advice: [
 			{
@@ -169,8 +97,128 @@ export const lint = createDiagnosticsCategory({
 			},
 		],
 	}),
+	A11_Y_NO_DISTRACTING_ELEMENTS: (element: string) => ({
+		category: DIAGNOSTIC_CATEGORIES["lint/a11y/noDistractingElements"],
+		message: markup`Avoid using deprecated ${element} elements.`,
+		advice: [
+			{
+				type: "log",
+				category: "info",
+				text: markup`Deprecated ${element} are difficult to read and distract attention away from page content, especially for users with visual impairments.`,
+			},
+		],
+	}),
+	JS_NO_SINGLE_CHAR_REGEX_ALTERNATIVES: {
+		category: DIAGNOSTIC_CATEGORIES["lint/js/noSingleCharRegexAlternatives"],
+		message: markup`No single character alternations in regular expressions. Use a character class instead.`,
+	},
+	JS_NO_UNNECESSARY_CONTINUE: {
+		category: DIAGNOSTIC_CATEGORIES["lint/js/noUnnecessaryContinue"],
+		message: markup`Unnecessary <emphasis>continue</emphasis> statement`,
+	},
+	JS_PREFER_OPTIONAL_CHAINING: {
+		category: DIAGNOSTIC_CATEGORIES["lint/js/preferOptionalChaining"],
+		message: markup`Prefer optional chaining to manual checks.`,
+	},
+	HTML_USE_CLOSING_NON_VOID: {
+		category: DIAGNOSTIC_CATEGORIES["lint/html/useClosingNonVoid"],
+		message: markup`Non-void HTML elements cannot be self-closing. This is valid when using JSX, but not when using HTML.`,
+	},
+	JSX_USE_SELF_CLOSING_ELEMENTS: {
+		category: DIAGNOSTIC_CATEGORIES["lint/jsx/useSelfClosingElements"],
+		message: markup`JSX elements without children should be marked as self-closing. In JSX, it is valid for any element to be self-closing.`,
+	},
+	JS_NO_SHOUTY_CONSTANTS: (constantLocation: undefined | DiagnosticLocation) => {
+		const advice: DiagnosticAdvice = [
+			{
+				type: "log",
+				category: "info",
+				text: markup`You should avoid declaring constants with a string that's the same value as the variable name. It introduces a level of unnecessary indirection when it's only two additional characters to inline.`,
+			},
+		];
+
+		if (constantLocation !== undefined) {
+			advice.push({
+				type: "log",
+				category: "info",
+				text: markup`This constant is declared here`,
+			});
+
+			advice.push({
+				type: "frame",
+				location: constantLocation,
+			});
+		}
+
+		return {
+			category: DIAGNOSTIC_CATEGORIES["lint/js/noShoutyConstants"],
+			message: markup`Redundant constant reference`,
+			advice,
+		};
+	},
+	JS_NO_UNUSED_TEMPLATE_LITERAL: {
+		category: DIAGNOSTIC_CATEGORIES["lint/js/noUnusedTemplateLiteral"],
+		message: markup`Do not use template literals if interpolation and special-character handling are not needed.`,
+	},
+	JSX_NO_IMPLICIT_BOOLEAN: {
+		category: DIAGNOSTIC_CATEGORIES["lint/jsx/noImplicitBoolean"],
+		message: markup`Use explicit boolean values for boolean JSX props.`,
+	},
+	JS_NO_NESTED_TERNARY: {
+		category: DIAGNOSTIC_CATEGORIES["lint/js/noNestedTernary"],
+		message: markup`Nesting ternary expressions can make code more difficult to understand.`,
+	},
+	JSX_USE_J_S_X_FILE_EXTENSION: (ext: string, basename: string) => ({
+		category: DIAGNOSTIC_CATEGORIES["lint/jsx/useJSXFileExtension"],
+		message: markup`Files with the <emphasis>${ext}</emphasis> extension cannot contain JSX elements.`,
+		advice: [
+			{
+				type: "log",
+				category: "info",
+				text: markup`Change the <emphasis>${basename}${ext}</emphasis> file extension to <emphasis>.jsx</emphasis> or <emphasis>.tsx</emphasis>.`,
+			},
+		],
+	}),
+	TS_PREFER_INTERFACES: {
+		category: DIAGNOSTIC_CATEGORIES["lint/ts/useInterfaces"],
+		message: markup`Use an interface instead of an object type alias`,
+	},
+	JSX_NO_PROP_SPREADING: {
+		category: DIAGNOSTIC_CATEGORIES["lint/jsx/noPropSpreading"],
+		message: markup`Avoid using property spreading in JSX components.`,
+		advice: [
+			{
+				type: "log",
+				category: "info",
+				text: markup`Explicit JSX attributes enhance the readability of code by clearly indicating which props are accepted by a given element.`,
+			},
+		],
+	},
+	REACT_NO_ARRAY_INDEX_KEY: {
+		category: DIAGNOSTIC_CATEGORIES["lint/react/noArrayIndexKey"],
+		message: markup`Avoid using array index as key property in an element.`,
+		advice: [
+			{
+				type: "log",
+				category: "info",
+				text: markup`See <hyperlink target="https://reactjs.org/docs/lists-and-keys.html#keys" /> for more information.`,
+			},
+		],
+	},
+	REACT_NO_THIS_IN_SFC: {
+		category: DIAGNOSTIC_CATEGORIES["lint/react/noThisInSFC"],
+		message: markup`Avoid using <emphasis>this</emphasis> in stateless functional components.`,
+		advice: [
+			{
+				type: "log",
+				category: "info",
+				text: markup`The <emphasis>this</emphasis> keyword has no binding in functional components. Use hooks instead.`,
+			},
+		],
+	},
+
 	JSX_USE_PASCAL_CASE: (oldName: string, newName: string) => ({
-		category: "lint/jsx/usePascalCase",
+		category: DIAGNOSTIC_CATEGORIES["lint/jsx/usePascalCase"],
 		message: markup`Switch <emphasis>${oldName}</emphasis> to <emphasis>${newName}</emphasis>.`,
 		advice: [
 			{
@@ -181,7 +229,7 @@ export const lint = createDiagnosticsCategory({
 		],
 	}),
 	REACT_NO_USELESS_FRAGMENT: {
-		category: "lint/react/noUselessFragment",
+		category: DIAGNOSTIC_CATEGORIES["lint/react/noUselessFragment"],
 		message: markup`Avoid using unnecessary <emphasis>Fragment</emphasis>.`,
 		advice: [
 			{
@@ -192,7 +240,7 @@ export const lint = createDiagnosticsCategory({
 		],
 	},
 	REACT_NO_ACCESS_STATE_IN_SET_STATE: {
-		category: "lint/react/noAccessStateInSetState",
+		category: DIAGNOSTIC_CATEGORIES["lint/react/noAccessStateInSetState"],
 		message: markup`Avoid using <emphasis>this.state</emphasis> within a <emphasis>this.setState</emphasis> call.`,
 		advice: [
 			{
@@ -203,11 +251,11 @@ export const lint = createDiagnosticsCategory({
 		],
 	},
 	JSX_A11Y_NO_REDUNDANT_ROLES: (role: string, element: string) => ({
-		category: "lint/jsx-a11y/noRedundantRoles",
+		category: DIAGNOSTIC_CATEGORIES["lint/jsx-a11y/noRedundantRoles"],
 		message: markup`Using the role attribute <emphasis>${role}</emphasis> on the <emphasis>${element}</emphasis> element is redundant.`,
 	}),
 	JSX_A11Y_ANCHOR_IS_VALID: (message: StaticMarkup) => ({
-		category: "lint/jsx-a11y/useValidAnchor",
+		category: DIAGNOSTIC_CATEGORIES["lint/jsx-a11y/useValidAnchor"],
 		message,
 		advice: [
 			{
@@ -217,23 +265,12 @@ export const lint = createDiagnosticsCategory({
 			},
 		],
 	}),
-	JSX_A11Y_NO_NONINTERACTIVE_TABINDEX: {
-		category: "lint/jsx-a11y/noNoninteractiveTabindex",
-		message: markup`Do not use <emphasis>tabIndex</emphasis> on an element that is not interactive.`,
-		advice: [
-			{
-				type: "log",
-				category: "info",
-				text: markup`Adding non-interactive elements to the keyboard navigation flow can confuse users.`,
-			},
-		],
-	},
 	JSX_A11Y_ARIA_PROPS: (attribute: string) => ({
-		category: "lint/jsx-a11y/useAriaProps",
+		category: DIAGNOSTIC_CATEGORIES["lint/jsx-a11y/useAriaProps"],
 		message: markup`<emphasis>${attribute}</emphasis> is an invalid ARIA attribute.`,
 	}),
 	JSX_A11Y_CLICK_EVENTS_HAVE_KEY_EVENTS: {
-		category: "lint/jsx-a11y/useKeyWithClickEvents",
+		category: DIAGNOSTIC_CATEGORIES["lint/jsx-a11y/useKeyWithClickEvents"],
 		message: markup`Pair the <emphasis>onClick</emphasis> mouse event with the <emphasis>onKeyUp</emphasis>, the <emphasis>onKeyDown</emphasis>, or the <emphasis>onKeyPress</emphasis> keyboard event.`,
 		advice: [
 			{
@@ -244,11 +281,11 @@ export const lint = createDiagnosticsCategory({
 		],
 	},
 	JSX_NO_DUPLICATE_PROPS: (key: string) => ({
-		category: "lint/jsx/noDuplicateProps",
+		category: DIAGNOSTIC_CATEGORIES["lint/jsx/noDuplicateProps"],
 		message: markup`Avoid duplicate component props. Check the <emphasis>${key}</emphasis> prop.`,
 	}),
 	REACT_NO_STRING_REFS: (details: StaticMarkup) => ({
-		category: "lint/react/noStringRefs",
+		category: DIAGNOSTIC_CATEGORIES["lint/react/noStringRefs"],
 		message: markup`Using ${details} is a deprecated pattern.`,
 		advice: [
 			{
@@ -259,7 +296,7 @@ export const lint = createDiagnosticsCategory({
 		],
 	}),
 	REACT_USE_FRAGMENT_SYNTAX: {
-		category: "lint/react/useFragmentSyntax",
+		category: DIAGNOSTIC_CATEGORIES["lint/react/useFragmentSyntax"],
 		message: markup`Use shorthand syntax for <emphasis>Fragment</emphasis> elements instead of standard syntax.`,
 		advice: [
 			{
@@ -270,7 +307,7 @@ export const lint = createDiagnosticsCategory({
 		],
 	},
 	REACT_NO_REDUNDANT_SHOULD_COMPONENT_UPDATE: {
-		category: "lint/react/noRedundantShouldComponentUpdate",
+		category: DIAGNOSTIC_CATEGORIES["lint/react/noRedundantShouldComponentUpdate"],
 		message: markup`Do not implement <emphasis>shouldComponentUpdate</emphasis> when extending <emphasis>React.PureComponent</emphasis>.`,
 		advice: [
 			{
@@ -281,7 +318,7 @@ export const lint = createDiagnosticsCategory({
 		],
 	},
 	REACT_NO_UNSAFE: (oldMethod: string, newMethod: string) => ({
-		category: "lint/react/noUnsafe",
+		category: DIAGNOSTIC_CATEGORIES["lint/react/noUnsafe"],
 		message: markup`The <emphasis>${oldMethod}</emphasis> method is unsafe for use in async rendering. Use the <emphasis>${newMethod}</emphasis> method instead.`,
 		advice: [
 			{
@@ -292,7 +329,7 @@ export const lint = createDiagnosticsCategory({
 		],
 	}),
 	REACT_NO_DID_MOUNT_SET_STATE: {
-		category: "lint/react/noDidMountSetState",
+		category: DIAGNOSTIC_CATEGORIES["lint/react/noDidMountSetState"],
 		message: markup`Avoid calling <emphasis>this.setState</emphasis> in the <emphasis>componentDidMount</emphasis> method.`,
 		advice: [
 			{
@@ -303,7 +340,7 @@ export const lint = createDiagnosticsCategory({
 		],
 	},
 	REACT_USE_BUTTON_TYPE: {
-		category: "lint/react/useButtonType",
+		category: DIAGNOSTIC_CATEGORIES["lint/react/useButtonType"],
 		message: markup`Provide an explicit <emphasis>type</emphasis> prop on <emphasis>button</emphasis> elements.`,
 		advice: [
 			{
@@ -314,7 +351,7 @@ export const lint = createDiagnosticsCategory({
 		],
 	},
 	JSX_A11Y_TABINDEX_NO_POSITIVE: {
-		category: "lint/jsx-a11y/noPositiveTabindex",
+		category: DIAGNOSTIC_CATEGORIES["lint/jsx-a11y/noPositiveTabindex"],
 		message: markup`Avoid positive integer values for the <emphasis>tabIndex</emphasis> attribute.`,
 		advice: [
 			{
@@ -328,7 +365,7 @@ export const lint = createDiagnosticsCategory({
 		mouseEvent: string,
 		keyboardEvent: string,
 	) => ({
-		category: "lint/jsx-a11y/useKeyWithMouseEvents",
+		category: DIAGNOSTIC_CATEGORIES["lint/jsx-a11y/useKeyWithMouseEvents"],
 		message: markup`Pair the <emphasis>${mouseEvent}</emphasis> mouse event with the <emphasis>${keyboardEvent}</emphasis> keyboard event.`,
 		advice: [
 			{
@@ -338,19 +375,8 @@ export const lint = createDiagnosticsCategory({
 			},
 		],
 	}),
-	JSX_A11Y_MEDIA_HAS_CAPTION: {
-		category: "lint/jsx-a11y/useMediaCaption",
-		message: markup`Provide a <emphasis>track</emphasis> for captions when using <emphasis>audio</emphasis> or <emphasis>video</emphasis> elements.`,
-		advice: [
-			{
-				type: "log",
-				category: "info",
-				text: markup`Captions support users with hearing-impairments. They should be a transcription or translation of the dialogue, sound effects, musical cues, and other relevant audio information.`,
-			},
-		],
-	},
 	REACT_NO_WILL_UPDATE_SET_STATE: {
-		category: "lint/react/noWillUpdateSetState",
+		category: DIAGNOSTIC_CATEGORIES["lint/react/noWillUpdateSetState"],
 		message: markup`Avoid calling <emphasis>this.setState</emphasis> in the <emphasis>componentWillUpdate</emphasis> method.`,
 		advice: [
 			{
@@ -360,19 +386,8 @@ export const lint = createDiagnosticsCategory({
 			},
 		],
 	},
-	JSX_A11Y_ARIA_UNSUPPORTED_ELEMENTS: {
-		category: "lint/jsx-a11y/noAriaUnsupportedElements",
-		message: markup`Avoid the <emphasis>role</emphasis> attribute and <emphasis>aria-*</emphasis> attributes when using <emphasis>meta</emphasis>, <emphasis>html</emphasis>, <emphasis>script</emphasis>, and <emphasis>style</emphasis> elements.`,
-		advice: [
-			{
-				type: "log",
-				category: "info",
-				text: markup`Using roles on elements that do not support them can cause issues with screen readers.`,
-			},
-		],
-	},
 	JSX_A11Y_ANCHOR_HAS_CONTENT: {
-		category: "lint/jsx-a11y/useAnchorContent",
+		category: DIAGNOSTIC_CATEGORIES["lint/jsx-a11y/useAnchorContent"],
 		message: markup`Provide screen reader accessible content when using <emphasis>anchor</emphasis> elements.`,
 		advice: [
 			{
@@ -382,13 +397,13 @@ export const lint = createDiagnosticsCategory({
 			},
 		],
 	},
-	JSX_A11Y_LANG: (value: string, suggestions: string[]) => ({
-		category: "lint/jsx-a11y/useValidLang",
+	A11Y_LANG: (value: string, suggestions: string[]) => ({
+		category: DIAGNOSTIC_CATEGORIES["lint/a11y/useValidLang"],
 		message: markup`Provide a valid value for the <emphasis>lang</emphasis> attribute.`,
 		advice: buildSuggestionAdvice(value, suggestions),
 	}),
-	JSX_A11Y_ALT_TEXT: {
-		category: "lint/jsx-a11y/useAltText",
+	A11Y_ALT_TEXT: {
+		category: DIAGNOSTIC_CATEGORIES["lint/a11y/useAltText"],
 		message: markup`Provide <emphasis>alt</emphasis> text when using <emphasis>img</emphasis>, <emphasis>area</emphasis>, <emphasis>input type='image'</emphasis>, and <emphasis>object</emphasis> elements.`,
 		advice: [
 			{
@@ -399,7 +414,7 @@ export const lint = createDiagnosticsCategory({
 		],
 	},
 	JSX_A11Y_HEADING_USE_CONTENT: {
-		category: "lint/jsx-a11y/useHeadingContent",
+		category: DIAGNOSTIC_CATEGORIES["lint/jsx-a11y/useHeadingContent"],
 		message: markup`Provide screen reader accessible content when using <emphasis>heading</emphasis> elements.`,
 		advice: [
 			{
@@ -409,8 +424,8 @@ export const lint = createDiagnosticsCategory({
 			},
 		],
 	},
-	JSX_A11Y_HTML_USE_LANG: {
-		category: "lint/jsx-a11y/useHtmlLang",
+	A11Y_HTML_USE_LANG: {
+		category: DIAGNOSTIC_CATEGORIES["lint/a11y/useHtmlLang"],
 		message: markup`Provide a <emphasis>lang</emphasis> attribute when using the <emphasis>html</emphasis> element.`,
 		advice: [
 			{
@@ -421,7 +436,7 @@ export const lint = createDiagnosticsCategory({
 		],
 	},
 	JSX_A11Y_IFRAME_USE_TITLE: {
-		category: "lint/jsx-a11y/useIframeTitle",
+		category: DIAGNOSTIC_CATEGORIES["lint/jsx-a11y/useIframeTitle"],
 		message: markup`Provide a <emphasis>title</emphasis> attribute when using <emphasis>iframe</emphasis> elements.`,
 		advice: [
 			{
@@ -432,7 +447,7 @@ export const lint = createDiagnosticsCategory({
 		],
 	},
 	JSX_A11Y_IMG_REDUNDANT_ALT: {
-		category: "lint/jsx-a11y/noRedundantAlt",
+		category: DIAGNOSTIC_CATEGORIES["lint/jsx-a11y/noRedundantAlt"],
 		message: markup`Avoid the words "image", "picture", or "photo" in <emphasis>img</emphasis> element alt text.`,
 		advice: [
 			{
@@ -443,7 +458,7 @@ export const lint = createDiagnosticsCategory({
 		],
 	},
 	JSX_A11Y_NO_ACCESS_KEY: {
-		category: "lint/jsx-a11y/noAccessKey",
+		category: DIAGNOSTIC_CATEGORIES["lint/jsx-a11y/noAccessKey"],
 		message: markup`Avoid the <emphasis>accessKey</emphasis> attribute to reduce inconsistencies between keyboard shortcuts and screen reader keyboard comments.`,
 		advice: [
 			{
@@ -454,7 +469,7 @@ export const lint = createDiagnosticsCategory({
 		],
 	},
 	JSX_A11Y_NO_AUTOFOCUS: {
-		category: "lint/jsx-a11y/noAutofocus",
+		category: DIAGNOSTIC_CATEGORIES["lint/jsx-a11y/noAutofocus"],
 		message: markup`Avoid the <emphasis>autoFocus</emphasis> attribute.`,
 		advice: [
 			{
@@ -464,19 +479,8 @@ export const lint = createDiagnosticsCategory({
 			},
 		],
 	},
-	JSX_A11Y_NO_DISTRACTING_ELEMENTS: (element: string) => ({
-		category: "lint/jsx-a11y/noDistractingElements",
-		message: markup`Avoid using deprecated ${element} elements.`,
-		advice: [
-			{
-				type: "log",
-				category: "info",
-				text: markup`Deprecated ${element} are difficult to read and distract attention away from page content, especially for users with visual impairments.`,
-			},
-		],
-	}),
 	JSX_A11Y_NO_ON_CHANGE: {
-		category: "lint/jsx-a11y/noOnChange",
+		category: DIAGNOSTIC_CATEGORIES["lint/jsx-a11y/noOnChange"],
 		message: markup`Provide an <emphasis>onBlur</emphasis> event instead of an <emphasis>onChange</emphasis> event unless absolutely necessary.`,
 		advice: [
 			{
@@ -487,7 +491,7 @@ export const lint = createDiagnosticsCategory({
 		],
 	},
 	JSX_A11Y_NO_TARGET_BLANK: {
-		category: "lint/jsx-a11y/noTargetBlank",
+		category: DIAGNOSTIC_CATEGORIES["lint/jsx-a11y/noTargetBlank"],
 		message: markup`Avoid using <emphasis>target="_blank"</emphasis> without <emphasis>rel="noreferrer"</emphasis>.`,
 		advice: [
 			{
@@ -498,7 +502,7 @@ export const lint = createDiagnosticsCategory({
 		],
 	},
 	JSX_A11Y_NO_SCOPE: {
-		category: "lint/jsx-a11y/noHeaderScope",
+		category: DIAGNOSTIC_CATEGORIES["lint/jsx-a11y/noHeaderScope"],
 		message: markup`Avoid using the <emphasis>scope</emphasis> attribute on elements other than <emphasis>th</emphasis> elements.`,
 		advice: [
 			{
@@ -512,7 +516,7 @@ export const lint = createDiagnosticsCategory({
 		roleName: string,
 		missingAttributes: string[],
 	) => ({
-		category: "lint/jsx-a11y/useAriaPropsForRole",
+		category: DIAGNOSTIC_CATEGORIES["lint/jsx-a11y/useAriaPropsForRole"],
 		message: markup`The element with the <emphasis>${roleName}</emphasis> ARIA role does not have the required ARIA attributes.`,
 		advice: missingAttributes.map((missingAttribute) => {
 			return {
@@ -523,7 +527,7 @@ export const lint = createDiagnosticsCategory({
 		}),
 	}),
 	REACT_USE_KEY: (origin: string) => ({
-		category: "lint/react/useKey",
+		category: DIAGNOSTIC_CATEGORIES["lint/react/useKey"],
 		message: markup`Provide a <emphasis>key</emphasis> prop with a unique value for each element in <emphasis>${origin}</emphasis>.`,
 		advice: [
 			{
@@ -534,7 +538,7 @@ export const lint = createDiagnosticsCategory({
 		],
 	}),
 	JSX_NO_COMMENT_TEXT: {
-		category: "lint/jsx/noCommentText",
+		category: DIAGNOSTIC_CATEGORIES["lint/jsx/noCommentText"],
 		message: markup`Wrap <emphasis>comments</emphasis> inside children within <emphasis>braces</emphasis>.`,
 		advice: [
 			{
@@ -545,7 +549,7 @@ export const lint = createDiagnosticsCategory({
 		],
 	},
 	REACT_NO_CHILDREN_PROP: {
-		category: "lint/react/noChildrenProp",
+		category: DIAGNOSTIC_CATEGORIES["lint/react/noChildrenProp"],
 		message: markup`Avoid passing <emphasis>children</emphasis> using a prop.`,
 		advice: [
 			{
@@ -556,7 +560,7 @@ export const lint = createDiagnosticsCategory({
 		],
 	},
 	REACT_NO_DANGER: {
-		category: "lint/react/noDanger",
+		category: DIAGNOSTIC_CATEGORIES["lint/react/noDanger"],
 		message: markup`Avoid passing content using the <emphasis>dangerouslySetInnerHTML</emphasis> prop.`,
 		advice: [
 			{
@@ -567,7 +571,7 @@ export const lint = createDiagnosticsCategory({
 		],
 	},
 	REACT_NO_DANGER_WITH_CHILDREN: {
-		category: "lint/react/noDangerWithChildren",
+		category: DIAGNOSTIC_CATEGORIES["lint/react/noDangerWithChildren"],
 		message: markup`Avoid passing both <emphasis>children</emphasis> and the <emphasis>dangerouslySetInnerHTML</emphasis> prop.`,
 		advice: [
 			{
@@ -578,7 +582,7 @@ export const lint = createDiagnosticsCategory({
 		],
 	},
 	REACT_NO_DID_UPDATE_SET_STATE: {
-		category: "lint/react/noDidUpdateSetState",
+		category: DIAGNOSTIC_CATEGORIES["lint/react/noDidUpdateSetState"],
 		message: markup`Avoid calling <emphasis>this.setState</emphasis> in the <emphasis>componentDidUpdate</emphasis> method.`,
 		advice: [
 			{
@@ -589,7 +593,7 @@ export const lint = createDiagnosticsCategory({
 		],
 	},
 	REACT_NO_DIRECT_MUTATION_STATE: {
-		category: "lint/react/noDirectMutationState",
+		category: DIAGNOSTIC_CATEGORIES["lint/react/noDirectMutationState"],
 		message: markup`Avoid mutating <emphasis>this.state</emphasis> directly.`,
 		advice: [
 			{
@@ -600,7 +604,7 @@ export const lint = createDiagnosticsCategory({
 		],
 	},
 	REACT_NO_FIND_DOM_NODE: {
-		category: "lint/react/noFindDOMNode",
+		category: DIAGNOSTIC_CATEGORIES["lint/react/noFindDOMNode"],
 		message: markup`Avoid using the <emphasis>findDOMNode</emphasis> function.`,
 		advice: [
 			{
@@ -615,7 +619,7 @@ export const lint = createDiagnosticsCategory({
 		wrong: string,
 		position: "before" | "after",
 	) => ({
-		category: "lint/react/useSortComp",
+		category: DIAGNOSTIC_CATEGORIES["lint/react/useSortComp"],
 		message: markup`<emphasis>${wrong}</emphasis> should be placed ${position} <emphasis>${right}</emphasis>.`,
 		advice: [
 			{
@@ -626,7 +630,7 @@ export const lint = createDiagnosticsCategory({
 		],
 	}),
 	REACT_USE_STYLE_PROP_OBJECT: {
-		category: "lint/react/useStylePropObject",
+		category: DIAGNOSTIC_CATEGORIES["lint/react/useStylePropObject"],
 		message: markup`The <emphasis>style</emphasis> prop value must be an object.`,
 		advice: [
 			{
@@ -637,21 +641,21 @@ export const lint = createDiagnosticsCategory({
 		],
 	},
 	REACT_USE_RENDER_RETURN: {
-		category: "lint/react/useRenderReturn",
+		category: DIAGNOSTIC_CATEGORIES["lint/react/useRenderReturn"],
 		message: markup`The <emphasis>render</emphasis> method on a component must return content.`,
 	},
 	REACT_NO_RENDER_RETURN_VALUE: {
-		category: "lint/react/noRenderReturnValue",
+		category: DIAGNOSTIC_CATEGORIES["lint/react/noRenderReturnValue"],
 		message: markup`Do not depend on the return value from <emphasis>ReactDOM.render()</emphasis>.`,
 	},
 	REACT_NO_VOID_ELEMENTS_WITH_CHILDREN: (element: string, properties: string[]) => ({
-		category: "lint/react/noVoidElementsWithChildren",
+		category: DIAGNOSTIC_CATEGORIES["lint/react/noVoidElementsWithChildren"],
 		message: markup`<emphasis>${element}</emphasis> is a void element tag and must not have <emphasis>${orJoin(
 			properties.map((name) => markup`${name}`),
 		)}</emphasis>.`,
 	}),
 	JS_USE_DEFAULT_IMPORT_BASENAME: (prev: string, basenames: string[]) => ({
-		category: "lint/js/useDefaultImportBasename",
+		category: DIAGNOSTIC_CATEGORIES["lint/js/useDefaultImportBasename"],
 		message: markup`Use the basename ${orJoin(
 			addEmphasis(basenames.map((basename) => markup`${basename}`)),
 		)} when importing the default.`,
@@ -669,7 +673,7 @@ export const lint = createDiagnosticsCategory({
 		],
 	}),
 	JS_NO_COMMA_OPERATOR: {
-		category: "lint/js/noCommaOperator",
+		category: DIAGNOSTIC_CATEGORIES["lint/js/noCommaOperator"],
 		message: markup`<emphasis>Avoid the comma operator</emphasis>. It can lead to easy mistakes and ambiguous code.`,
 		advice: [
 			{
@@ -680,11 +684,11 @@ export const lint = createDiagnosticsCategory({
 		],
 	},
 	JS_NO_NEGATION_ELSE: {
-		category: "lint/js/noNegationElse",
+		category: DIAGNOSTIC_CATEGORIES["lint/js/noNegationElse"],
 		message: markup`<emphasis>Invert blocks</emphasis> when performing a negation test.`,
 	},
 	JS_NO_DUPLICATE_IMPORT_SOURCE: (seenLocation: DiagnosticLocation) => ({
-		category: "lint/js/noDuplicateImportSource",
+		category: DIAGNOSTIC_CATEGORIES["lint/js/noDuplicateImportSource"],
 		message: markup`This module has <emphasis>already been imported</emphasis>.`,
 		advice: [
 			{
@@ -699,23 +703,23 @@ export const lint = createDiagnosticsCategory({
 		],
 	}),
 	JS_PREFER_BLOCK_STATEMENT: {
-		category: "lint/js/useBlockStatements",
+		category: DIAGNOSTIC_CATEGORIES["lint/js/useBlockStatements"],
 		message: markup`<emphasis>Block statements</emphasis> are preferred in this position.`,
 	},
 	JS_USE_TEMPLATE: {
-		category: "lint/js/useTemplate",
+		category: DIAGNOSTIC_CATEGORIES["lint/js/useTemplate"],
 		message: markup`<emphasis>Template literals</emphasis> are preferred over <emphasis>string concatenation</emphasis>.`,
 	},
 	JS_USE_WHILE: {
-		category: "lint/js/useWhile",
+		category: DIAGNOSTIC_CATEGORIES["lint/js/useWhile"],
 		message: markup`Use <emphasis>while</emphasis> loops instead of <emphasis>for</emphasis> loops.`,
 	},
 	JS_UNSAFE_NEGATION: {
-		category: "lint/js/noUnsafeNegation",
+		category: DIAGNOSTIC_CATEGORIES["lint/js/noUnsafeNegation"],
 		message: markup`The <emphasis>negation operator is used unsafely</emphasis> on the left side of this binary expression.`,
 	},
 	JS_NO_UNUSED_VARIABLES: (kind: string, name: string) => ({
-		category: "lint/js/noUnusedVariables",
+		category: DIAGNOSTIC_CATEGORIES["lint/js/noUnusedVariables"],
 		categoryValue: name,
 		message: markup`The ${kind} variable <emphasis>${name}</emphasis> is unused.`,
 		advice: [
@@ -727,17 +731,17 @@ export const lint = createDiagnosticsCategory({
 		],
 	}),
 	JS_NO_UNDECLARED_VARIABLES: (name: string, bindingsInScope: string[]) => ({
-		category: "lint/js/noUndeclaredVariables",
+		category: DIAGNOSTIC_CATEGORIES["lint/js/noUndeclaredVariables"],
 		categoryValue: name,
 		message: markup`The <emphasis>${name}</emphasis> variable is undeclared`,
 		advice: buildSuggestionAdvice(name, bindingsInScope),
 	}),
 	JS_VARIABLE_CAMEL_CASE: (name: string, camelCaseName: string) => ({
-		category: "lint/js/useCamelCase",
+		category: DIAGNOSTIC_CATEGORIES["lint/js/useCamelCase"],
 		message: markup`The <emphasis>${name}</emphasis> variable should be camel cased as <emphasis>${camelCaseName}</emphasis>.`,
 	}),
 	JS_USE_SINGLE_CASE_STATEMENT: {
-		category: "lint/js/useSingleCaseStatement",
+		category: DIAGNOSTIC_CATEGORIES["lint/js/useSingleCaseStatement"],
 		message: markup`A switch case should only have a single statement. If you want more, then wrap it in a block.`,
 	},
 	/*JS_NO_CONFUSING_LANGUAGE: (
@@ -745,7 +749,7 @@ export const lint = createDiagnosticsCategory({
 		suggestion: string,
 		advice: DiagnosticAdvice,
 	) => ({
-		category: "lint/js/noConfusingLanguage",
+		category: DIAGNOSTIC_CATEGORIES["lint/js/noConfusingLanguage"],
 		message,
 		advice: [
 			...advice,
@@ -757,7 +761,7 @@ export const lint = createDiagnosticsCategory({
 		],
 	}),*/
 	JS_NO_DOUBLE_EQUALS: {
-		category: "lint/js/noDoubleEquals",
+		category: DIAGNOSTIC_CATEGORIES["lint/js/noDoubleEquals"],
 		message: markup`Use <emphasis>===</emphasis> instead of <emphasis>==</emphasis>.`,
 		advice: [
 			{
@@ -768,7 +772,7 @@ export const lint = createDiagnosticsCategory({
 		],
 	},
 	REGEX_NO_EMPTY_MATCHES: {
-		category: "lint/regex/noEmptyMatches",
+		category: DIAGNOSTIC_CATEGORIES["lint/regex/noEmptyMatches"],
 		message: markup`This expression can return <emphasis>empty matches</emphasis>, and may match infinitely in some use cases.`,
 		advice: [
 			{
@@ -779,7 +783,7 @@ export const lint = createDiagnosticsCategory({
 		],
 	},
 	JS_NEGATE_DOUBLE_EQUALS: {
-		category: "lint/js/noDoubleEquals",
+		category: DIAGNOSTIC_CATEGORIES["lint/js/noDoubleEquals"],
 		message: markup`Use <emphasis>!==</emphasis> instead of <emphasis>!=</emphasis>.`,
 		advice: [
 			{
@@ -790,7 +794,7 @@ export const lint = createDiagnosticsCategory({
 		],
 	},
 	JS_NO_CATCH_ASSIGN: {
-		category: "lint/js/noCatchAssign",
+		category: DIAGNOSTIC_CATEGORIES["lint/js/noCatchAssign"],
 		message: markup`Do not <emphasis>reassign catch parameters</emphasis>.`,
 		advice: [
 			{
@@ -801,7 +805,7 @@ export const lint = createDiagnosticsCategory({
 		],
 	},
 	JS_NO_SPARSE_ARRAY: {
-		category: "lint/js/noSparseArray",
+		category: DIAGNOSTIC_CATEGORIES["lint/js/noSparseArray"],
 		message: markup`This <emphasis>array</emphasis> contains an <emphasis>empty slot</emphasis>.`,
 		advice: [
 			{
@@ -812,15 +816,15 @@ export const lint = createDiagnosticsCategory({
 		],
 	},
 	JS_USE_SINGLE_VAR_DECLARATOR: {
-		category: "lint/js/useSingleVarDeclarator",
+		category: DIAGNOSTIC_CATEGORIES["lint/js/useSingleVarDeclarator"],
 		message: markup`Declare variables separately.`,
 	},
 	JS_USE_FUNCTION_DECLARATIONS: {
-		category: "lint/js/useFunctionDeclarations",
+		category: DIAGNOSTIC_CATEGORIES["lint/js/useFunctionDeclarations"],
 		message: markup`Use a <emphasis>function declaration</emphasis> instead of a <emphasis>const function</emphasis>.`,
 	},
 	JS_NO_VAR: {
-		category: "lint/js/noVar",
+		category: DIAGNOSTIC_CATEGORIES["lint/js/noVar"],
 		message: markup`Variable declarations using <emphasis>var</emphasis> are disallowed.`,
 		advice: [
 			{
@@ -831,11 +835,11 @@ export const lint = createDiagnosticsCategory({
 		],
 	},
 	TS_PREFER_SHORTHAND_ARRAY_TYPE: {
-		category: "lint/ts/preferShorthandArrayType",
+		category: DIAGNOSTIC_CATEGORIES["lint/ts/preferShorthandArrayType"],
 		message: markup`Use <emphasis>shorthand T[] syntax</emphasis> instead of <emphasis>Array${"<T>"} syntax</emphasis>.`,
 	},
 	JS_NO_UNSAFE_FINALLY: (type: string) => ({
-		category: "lint/js/noUnsafeFinally",
+		category: DIAGNOSTIC_CATEGORIES["lint/js/noUnsafeFinally"],
 		message: markup`Using <emphasis>${type}</emphasis> inside a <emphasis>finally</emphasis> clause is unsafe.`,
 		advice: [
 			{
@@ -846,7 +850,7 @@ export const lint = createDiagnosticsCategory({
 		],
 	}),
 	JS_NO_TEMPLATE_CURLY_IN_STRING: {
-		category: "lint/js/noTemplateCurlyInString",
+		category: DIAGNOSTIC_CATEGORIES["lint/js/noTemplateCurlyInString"],
 		message: markup`This string contains an <emphasis>unexpected template string</emphasis> expression.`,
 		advice: [
 			{
@@ -857,7 +861,7 @@ export const lint = createDiagnosticsCategory({
 		],
 	},
 	JS_NO_SHADOW_RESTRICTED_NAMES: (name: string) => ({
-		category: "lint/js/noShadowRestrictedNames",
+		category: DIAGNOSTIC_CATEGORIES["lint/js/noShadowRestrictedNames"],
 		message: markup`Do not shadow the global <emphasis>${name}</emphasis> property.`,
 		advice: [
 			{
@@ -868,7 +872,7 @@ export const lint = createDiagnosticsCategory({
 		],
 	}),
 	REGEX_NO_MULTIPLE_SPACES_IN_REGEX_LITERAL: (count: number) => ({
-		category: "lint/regex/noMultipleSpacesInRegularExpressionLiterals",
+		category: DIAGNOSTIC_CATEGORIES["lint/regex/noMultipleSpacesInRegularExpressionLiterals"],
 		message: markup`This <emphasis>regular expression</emphasis> contains unclear uses of <emphasis>multiple spaces</emphasis>.`,
 		advice: [
 			{
@@ -881,7 +885,7 @@ export const lint = createDiagnosticsCategory({
 		],
 	}),
 	JS_NO_LABEL_VAR: (name: string) => ({
-		category: "lint/js/noLabelVar",
+		category: DIAGNOSTIC_CATEGORIES["lint/js/noLabelVar"],
 		message: markup`Do not use the ${name} variable name as a label.`,
 		advice: [
 			{
@@ -892,7 +896,7 @@ export const lint = createDiagnosticsCategory({
 		],
 	}),
 	JS_NO_IMPORT_ASSIGN: (name: string) => ({
-		category: "lint/js/noImportAssign",
+		category: DIAGNOSTIC_CATEGORIES["lint/js/noImportAssign"],
 		message: markup`The imported variable <emphasis>${name}</emphasis> is read-only.`,
 		advice: [
 			{
@@ -903,7 +907,7 @@ export const lint = createDiagnosticsCategory({
 		],
 	}),
 	JS_NO_EXTRA_BOOLEAN_CAST: {
-		category: "lint/js/noExtraBooleanCast",
+		category: DIAGNOSTIC_CATEGORIES["lint/js/noExtraBooleanCast"],
 		message: markup`Avoid <emphasis>redundant double-negation</emphasis>.`,
 		advice: [
 			{
@@ -914,7 +918,7 @@ export const lint = createDiagnosticsCategory({
 		],
 	},
 	JS_NO_FUNCTION_ASSIGN: {
-		category: "lint/js/noFunctionAssign",
+		category: DIAGNOSTIC_CATEGORIES["lint/js/noFunctionAssign"],
 		message: markup`Do not <emphasis>reassign a function declaration</emphasis>.`,
 		advice: [
 			{
@@ -925,7 +929,7 @@ export const lint = createDiagnosticsCategory({
 		],
 	},
 	REGEX_NO_EMPTY_CHAR_SET: {
-		category: "lint/regex/noEmptyCharacterClass",
+		category: DIAGNOSTIC_CATEGORIES["lint/regex/noEmptyCharacterClass"],
 		message: markup`Do not use <emphasis>empty character classes in regular expressions</emphasis>.`,
 		advice: [
 			{
@@ -936,11 +940,11 @@ export const lint = createDiagnosticsCategory({
 		],
 	},
 	JS_NO_DUPLICATE_KEYS: (key: string) => ({
-		category: "lint/js/noDuplicateKeys",
+		category: DIAGNOSTIC_CATEGORIES["lint/js/noDuplicateKeys"],
 		message: markup`Avoid duplicate component key. Check the <emphasis>${key}</emphasis> key.`,
 	}),
 	REGEX_NO_POSIX_IN_REGULAR_EXPRESSION: {
-		category: "lint/regex/noPosixInRegularExpression",
+		category: DIAGNOSTIC_CATEGORIES["lint/regex/noPosixInRegularExpression"],
 		message: markup`Do not use POSIX character classes and collating sequences.`,
 		advice: [
 			{
@@ -951,7 +955,7 @@ export const lint = createDiagnosticsCategory({
 		],
 	},
 	JS_NO_DUPLICATE_CASE: (value: string) => ({
-		category: "lint/js/noDuplicateCase",
+		category: DIAGNOSTIC_CATEGORIES["lint/js/noDuplicateCase"],
 		message: markup`Do not duplicate the <emphasis>${value}</emphasis> case.`,
 		advice: [
 			{
@@ -962,15 +966,15 @@ export const lint = createDiagnosticsCategory({
 		],
 	}),
 	JS_NO_DUPE_ARGS: (name: string) => ({
-		category: "lint/js/noDupeArgs",
+		category: DIAGNOSTIC_CATEGORIES["lint/js/noDupeArgs"],
 		message: markup`Avoid duplicate function arguments. Check the <emphasis>${name}</emphasis> argument.`,
 	}),
 	JS_NO_DELETE: {
-		category: "lint/js/noDelete",
+		category: DIAGNOSTIC_CATEGORIES["lint/js/noDelete"],
 		message: markup`This is an unexpected use of the <emphasis>delete</emphasis> operator.`,
 	},
 	JS_NO_DELETE_VARS: {
-		category: "lint/js/noDeleteVars",
+		category: DIAGNOSTIC_CATEGORIES["lint/js/noDeleteVars"],
 		message: markup`This is an invalid use of the <emphasis>delete</emphasis> operator.`,
 		advice: [
 			{
@@ -981,11 +985,11 @@ export const lint = createDiagnosticsCategory({
 		],
 	},
 	JS_NO_DEBUGGER: {
-		category: "lint/js/noDebugger",
+		category: DIAGNOSTIC_CATEGORIES["lint/js/noDebugger"],
 		message: markup`This is an unexpected use of the <emphasis>debugger</emphasis> statement.`,
 	},
 	JS_NO_COND_ASSIGN: {
-		category: "lint/js/noCondAssign",
+		category: DIAGNOSTIC_CATEGORIES["lint/js/noCondAssign"],
 		message: markup`Do not assign <emphasis>variables in loop conditions</emphasis>.`,
 		advice: [
 			{
@@ -996,12 +1000,12 @@ export const lint = createDiagnosticsCategory({
 		],
 	},
 	JS_NO_COMPARE_NEG_ZERO: (op: string) => ({
-		category: "lint/js/noCompareNegZero",
+		category: DIAGNOSTIC_CATEGORIES["lint/js/noCompareNegZero"],
 		message: markup`Do not use the <emphasis>${op}</emphasis> operator to compare against <emphasis>-0</emphasis>.`,
 		fixable: op === "===",
 	}),
 	JS_NO_ASYNC_PROMISE_EXECUTOR: {
-		category: "lint/js/noAsyncPromiseExecutor",
+		category: DIAGNOSTIC_CATEGORIES["lint/js/noAsyncPromiseExecutor"],
 		message: markup`<emphasis>Promise executor functions</emphasis> should not be <emphasis>async</emphasis>.`,
 		advice: [
 			{
@@ -1012,7 +1016,7 @@ export const lint = createDiagnosticsCategory({
 		],
 	},
 	JS_NO_GETTER_RETURN: (got: string) => ({
-		category: "lint/js/noGetterReturn",
+		category: DIAGNOSTIC_CATEGORIES["lint/js/noGetterReturn"],
 		message: markup`<emphasis>Return a value at the end of a getter method</emphasis> instead of ${got}.`,
 		advice: [
 			{
@@ -1023,7 +1027,7 @@ export const lint = createDiagnosticsCategory({
 		],
 	}),
 	JS_NO_SETTER_RETURN: {
-		category: "lint/js/noSetterReturn",
+		category: DIAGNOSTIC_CATEGORIES["lint/js/noSetterReturn"],
 		message: markup`Do not <emphasis>return a value</emphasis> at the end of a <emphasis>setter method</emphasis>.`,
 		advice: [
 			{
@@ -1034,7 +1038,7 @@ export const lint = createDiagnosticsCategory({
 		],
 	},
 	JS_NO_EMPTY_BLOCKS: {
-		category: "lint/js/noEmptyBlocks",
+		category: DIAGNOSTIC_CATEGORIES["lint/js/noEmptyBlocks"],
 		message: markup`Avoid <emphasis>empty logic blocks</emphasis>.`,
 		advice: [
 			{
@@ -1045,7 +1049,7 @@ export const lint = createDiagnosticsCategory({
 		],
 	},
 	JS_NO_ARGUMENTS: {
-		category: "lint/js/noArguments",
+		category: DIAGNOSTIC_CATEGORIES["lint/js/noArguments"],
 		message: markup`Use the <emphasis>rest parameters</emphasis> instead of <emphasis>arguments</emphasis>.`,
 		advice: [
 			{
@@ -1056,11 +1060,11 @@ export const lint = createDiagnosticsCategory({
 		],
 	},
 	REGEX_DUPLICATE_REGEX_GROUP_NAME: (name: string) => ({
-		category: "lint/regex/noDuplicateGroupNamesInRegularExpressions",
+		category: DIAGNOSTIC_CATEGORIES["lint/regex/noDuplicateGroupNamesInRegularExpressions"],
 		message: markup`Avoid duplicate group names. Check the <emphasis>${name}</emphasis> group.`,
 	}),
 	REGEX_NO_REFERENCE_TO_NON_EXISTING_GROUP: (name: string) => ({
-		category: "lint/regex/noReferenceToNonExistingGroup",
+		category: DIAGNOSTIC_CATEGORIES["lint/regex/noReferenceToNonExistingGroup"],
 		message: markup`Avoid nonexistent group names. Check the <emphasis>${name}</emphasis> group.`,
 	}),
 	JS_USE_DEFAULT_EXPORT_BASENAME: (
@@ -1087,7 +1091,7 @@ export const lint = createDiagnosticsCategory({
 		adviceMessage = markup`${adviceMessage} ${defaultType} name should be <emphasis>${actualFilename}</emphasis>.`;
 
 		return {
-			category: "lint/js/useDefaultExportBasename",
+			category: DIAGNOSTIC_CATEGORIES["lint/js/useDefaultExportBasename"],
 			message: markup`The filename and the name of a default ${defaultType} should match.`,
 			advice: [
 				{
@@ -1099,7 +1103,7 @@ export const lint = createDiagnosticsCategory({
 		};
 	},
 	JS_NO_RESTRICTED_GLOBALS: (globalName) => ({
-		category: "lint/js/noRestrictedGlobals",
+		category: DIAGNOSTIC_CATEGORIES["lint/js/noRestrictedGlobals"],
 		message: markup`Do not use the global variable <emphasis>${globalName}</emphasis>.`,
 		advice: [
 			{
@@ -1110,11 +1114,11 @@ export const lint = createDiagnosticsCategory({
 		],
 	}),
 	JS_SORT_EXPORT_SPECIFIERS: {
-		category: "lint/js/useSortedSpecifiers",
+		category: DIAGNOSTIC_CATEGORIES["lint/js/useSortedSpecifiers"],
 		message: markup`The specifiers of the export declaration should be sorted alphabetically.`,
 	},
 	JS_SORT_IMPORT_SPECIFIERS: {
-		category: "lint/js/useSortedSpecifiers",
+		category: DIAGNOSTIC_CATEGORIES["lint/js/useSortedSpecifiers"],
 		message: markup`The specifiers of the import declaration should be sorted alphabetically.`,
 	},
 	PENDING_FIXES: (
@@ -1123,7 +1127,7 @@ export const lint = createDiagnosticsCategory({
 		original: string,
 		formatted: string,
 	) => ({
-		category: "lint/pendingFixes",
+		category: DIAGNOSTIC_CATEGORIES["lint/pendingFixes"],
 		message: markup`Pending formatting and safe fixes`,
 		advice: [
 			{
@@ -1141,7 +1145,7 @@ export const lint = createDiagnosticsCategory({
 				commandFlags: {
 					apply: true,
 				},
-			} as DiagnosticAdviceAction,
+			},
 			{
 				type: "action",
 				hidden: true,
@@ -1157,7 +1161,7 @@ export const lint = createDiagnosticsCategory({
 		],
 	}),
 	TS_NO_EXPLICIT_ANY: {
-		category: "lint/ts/noExplicitAny",
+		category: DIAGNOSTIC_CATEGORIES["lint/ts/noExplicitAny"],
 		message: markup`Avoid using the <emphasis>any</emphasis> type.`,
 		advice: [
 			{
@@ -1166,5 +1170,13 @@ export const lint = createDiagnosticsCategory({
 				text: markup`Using nonspecific types defeats the purpose of using TypeScript.`,
 			},
 		],
+	},
+	JS_USE_SIMPLIFIED_LOGICAL_EXPRESSION: {
+		category: DIAGNOSTIC_CATEGORIES["lint/js/useSimplifiedLogicalExpression"],
+		message: markup`Logical expression contains unnecessary complexity.`,
+	},
+	TS_USE_SIMPLIFIED_BOOLEAN_EXPRESSION: {
+		category: DIAGNOSTIC_CATEGORIES["lint/ts/useSimplifiedBooleanExpression"],
+		message: markup`Boolean expression contains unnecessary complexity.`,
 	},
 });

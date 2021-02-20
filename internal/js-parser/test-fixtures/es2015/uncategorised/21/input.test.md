@@ -12,65 +12,25 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "es2015/uncategorised/21/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2015/uncategorised/21/input.js"
-		end: Object {
-			column: 3
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2015/uncategorised/21/input.js 1:0-1:3
+	path: UIDPath<es2015/uncategorised/21/input.js>
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "es2015/uncategorised/21/input.js"
-				end: Object {
-					column: 3
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2015/uncategorised/21/input.js 1:0-1:3
 			expression: JSTemplateLiteral {
 				expressions: Array []
-				loc: Object {
-					filename: "es2015/uncategorised/21/input.js"
-					end: Object {
-						column: 3
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/uncategorised/21/input.js 1:0-1:3
 				quasis: Array [
 					JSTemplateElement {
 						cooked: "$"
 						raw: "$"
 						tail: true
-						loc: Object {
-							filename: "es2015/uncategorised/21/input.js"
-							end: Object {
-								column: 2
-								line: 1
-							}
-							start: Object {
-								column: 1
-								line: 1
-							}
-						}
+						loc: SourceLocation es2015/uncategorised/21/input.js 1:1-1:2
 					}
 				]
 			}
@@ -82,6 +42,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

@@ -11,103 +11,47 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "es2020/dynamic-import/invalid-arguments-spread/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2020/dynamic-import/invalid-arguments-spread/input.js"
-		end: Object {
-			column: 0
-			line: 2
+	loc: SourceLocation es2020/dynamic-import/invalid-arguments-spread/input.js 1:0-2:0
+	path: UIDPath<es2020/dynamic-import/invalid-arguments-spread/input.js>
+	body: Array [
+		JSExpressionStatement {
+			loc: SourceLocation es2020/dynamic-import/invalid-arguments-spread/input.js 1:0-1:14
+			expression: JSImportCall {
+				loc: SourceLocation es2020/dynamic-import/invalid-arguments-spread/input.js 1:6-1:14
+				argument: JSArrayExpression {
+					loc: SourceLocation es2020/dynamic-import/invalid-arguments-spread/input.js 1:10-1:13
+					elements: Array [
+						JSNumericLiteral {
+							value: 1
+							format: undefined
+							loc: SourceLocation es2020/dynamic-import/invalid-arguments-spread/input.js 1:11-1:12
+						}
+					]
+				}
+			}
 		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	]
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse"
 				categoryValue: "js"
+				category: Array ["parse"]
 				message: RAW_MARKUP {value: "Spread is not allowed in import()"}
 			}
 			location: Object {
-				filename: "es2020/dynamic-import/invalid-arguments-spread/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 13
-					line: 1
-				}
-				start: Object {
-					column: 7
-					line: 1
-				}
-			}
-		}
-	]
-	body: Array [
-		JSExpressionStatement {
-			loc: Object {
-				filename: "es2020/dynamic-import/invalid-arguments-spread/input.js"
-				end: Object {
-					column: 14
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
-			expression: JSImportCall {
-				loc: Object {
-					filename: "es2020/dynamic-import/invalid-arguments-spread/input.js"
-					end: Object {
-						column: 14
-						line: 1
-					}
-					start: Object {
-						column: 6
-						line: 1
-					}
-				}
-				argument: JSArrayExpression {
-					loc: Object {
-						filename: "es2020/dynamic-import/invalid-arguments-spread/input.js"
-						end: Object {
-							column: 13
-							line: 1
-						}
-						start: Object {
-							column: 10
-							line: 1
-						}
-					}
-					elements: Array [
-						JSNumericLiteral {
-							value: 1
-							format: undefined
-							loc: Object {
-								filename: "es2020/dynamic-import/invalid-arguments-spread/input.js"
-								end: Object {
-									column: 12
-									line: 1
-								}
-								start: Object {
-									column: 11
-									line: 1
-								}
-							}
-						}
-					]
-				}
+				end: Position 1:13
+				path: UIDPath<es2020/dynamic-import/invalid-arguments-spread/input.js>
+				start: Position 1:7
 			}
 		}
 	]
@@ -125,8 +69,5 @@ JSRoot {
     import(...[1])
            ^^^^^^
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

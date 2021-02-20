@@ -12,91 +12,30 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "es2015/modules/duplicate-named-export-builtin/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
 	syntax: Array []
-	loc: Object {
-		filename: "es2015/modules/duplicate-named-export-builtin/input.js"
-		end: Object {
-			column: 0
-			line: 4
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2015/modules/duplicate-named-export-builtin/input.js 1:0-4:0
+	path: UIDPath<es2015/modules/duplicate-named-export-builtin/input.js>
 	body: Array [
 		JSVariableDeclarationStatement {
-			loc: Object {
-				filename: "es2015/modules/duplicate-named-export-builtin/input.js"
-				end: Object {
-					column: 19
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2015/modules/duplicate-named-export-builtin/input.js 1:0-1:19
 			declaration: JSVariableDeclaration {
 				kind: "const"
-				loc: Object {
-					filename: "es2015/modules/duplicate-named-export-builtin/input.js"
-					end: Object {
-						column: 19
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/modules/duplicate-named-export-builtin/input.js 1:0-1:19
 				declarations: Array [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "toString"
-							loc: Object {
-								filename: "es2015/modules/duplicate-named-export-builtin/input.js"
-								identifierName: "toString"
-								end: Object {
-									column: 14
-									line: 1
-								}
-								start: Object {
-									column: 6
-									line: 1
-								}
-							}
+							loc: SourceLocation es2015/modules/duplicate-named-export-builtin/input.js 1:6-1:14 (toString)
 						}
-						loc: Object {
-							filename: "es2015/modules/duplicate-named-export-builtin/input.js"
-							end: Object {
-								column: 18
-								line: 1
-							}
-							start: Object {
-								column: 6
-								line: 1
-							}
-						}
+						loc: SourceLocation es2015/modules/duplicate-named-export-builtin/input.js 1:6-1:18
 						init: JSNumericLiteral {
 							value: 1
 							format: undefined
-							loc: Object {
-								filename: "es2015/modules/duplicate-named-export-builtin/input.js"
-								end: Object {
-									column: 18
-									line: 1
-								}
-								start: Object {
-									column: 17
-									line: 1
-								}
-							}
+							loc: SourceLocation es2015/modules/duplicate-named-export-builtin/input.js 1:17-1:18
 						}
 					}
 				]
@@ -105,59 +44,17 @@ JSRoot {
 		JSExportLocalDeclaration {
 			declaration: undefined
 			exportKind: "value"
-			loc: Object {
-				filename: "es2015/modules/duplicate-named-export-builtin/input.js"
-				end: Object {
-					column: 20
-					line: 3
-				}
-				start: Object {
-					column: 0
-					line: 3
-				}
-			}
+			loc: SourceLocation es2015/modules/duplicate-named-export-builtin/input.js 3:0-3:20
 			specifiers: Array [
 				JSExportLocalSpecifier {
-					loc: Object {
-						filename: "es2015/modules/duplicate-named-export-builtin/input.js"
-						end: Object {
-							column: 17
-							line: 3
-						}
-						start: Object {
-							column: 9
-							line: 3
-						}
-					}
+					loc: SourceLocation es2015/modules/duplicate-named-export-builtin/input.js 3:9-3:17
 					exported: JSIdentifier {
 						name: "toString"
-						loc: Object {
-							filename: "es2015/modules/duplicate-named-export-builtin/input.js"
-							identifierName: "toString"
-							end: Object {
-								column: 17
-								line: 3
-							}
-							start: Object {
-								column: 9
-								line: 3
-							}
-						}
+						loc: SourceLocation es2015/modules/duplicate-named-export-builtin/input.js 3:9-3:17 (toString)
 					}
 					local: JSReferenceIdentifier {
 						name: "toString"
-						loc: Object {
-							filename: "es2015/modules/duplicate-named-export-builtin/input.js"
-							identifierName: "toString"
-							end: Object {
-								column: 17
-								line: 3
-							}
-							start: Object {
-								column: 9
-								line: 3
-							}
-						}
+						loc: SourceLocation es2015/modules/duplicate-named-export-builtin/input.js 3:9-3:17 (toString)
 					}
 				}
 			]
@@ -169,6 +66,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

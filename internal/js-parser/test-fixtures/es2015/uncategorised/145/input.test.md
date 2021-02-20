@@ -12,104 +12,33 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "es2015/uncategorised/145/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2015/uncategorised/145/input.js"
-		end: Object {
-			column: 31
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2015/uncategorised/145/input.js 1:0-1:31
+	path: UIDPath<es2015/uncategorised/145/input.js>
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "es2015/uncategorised/145/input.js"
-				end: Object {
-					column: 31
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2015/uncategorised/145/input.js 1:0-1:31
 			expression: JSObjectExpression {
-				loc: Object {
-					filename: "es2015/uncategorised/145/input.js"
-					end: Object {
-						column: 30
-						line: 1
-					}
-					start: Object {
-						column: 1
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/uncategorised/145/input.js 1:1-1:30
 				properties: Array [
 					JSObjectMethod {
 						kind: "get"
 						key: JSComputedPropertyKey {
 							value: JSReferenceIdentifier {
 								name: "x"
-								loc: Object {
-									filename: "es2015/uncategorised/145/input.js"
-									identifierName: "x"
-									end: Object {
-										column: 8
-										line: 1
-									}
-									start: Object {
-										column: 7
-										line: 1
-									}
-								}
+								loc: SourceLocation es2015/uncategorised/145/input.js 1:7-1:8 (x)
 							}
-							loc: Object {
-								filename: "es2015/uncategorised/145/input.js"
-								end: Object {
-									column: 9
-									line: 1
-								}
-								start: Object {
-									column: 6
-									line: 1
-								}
-							}
+							loc: SourceLocation es2015/uncategorised/145/input.js 1:6-1:9
 						}
-						loc: Object {
-							filename: "es2015/uncategorised/145/input.js"
-							end: Object {
-								column: 14
-								line: 1
-							}
-							start: Object {
-								column: 2
-								line: 1
-							}
-						}
+						loc: SourceLocation es2015/uncategorised/145/input.js 1:2-1:14
 						body: JSBlockStatement {
 							body: Array []
 							directives: Array []
-							loc: Object {
-								filename: "es2015/uncategorised/145/input.js"
-								end: Object {
-									column: 14
-									line: 1
-								}
-								start: Object {
-									column: 12
-									line: 1
-								}
-							}
+							loc: SourceLocation es2015/uncategorised/145/input.js 1:12-1:14
 						}
 						head: JSFunctionHead {
 							async: false
@@ -120,17 +49,7 @@ JSRoot {
 							returnType: undefined
 							thisType: undefined
 							typeParameters: undefined
-							loc: Object {
-								filename: "es2015/uncategorised/145/input.js"
-								end: Object {
-									column: 11
-									line: 1
-								}
-								start: Object {
-									column: 9
-									line: 1
-								}
-							}
+							loc: SourceLocation es2015/uncategorised/145/input.js 1:9-1:11
 						}
 					}
 					JSObjectMethod {
@@ -138,56 +57,15 @@ JSRoot {
 						key: JSComputedPropertyKey {
 							value: JSReferenceIdentifier {
 								name: "x"
-								loc: Object {
-									filename: "es2015/uncategorised/145/input.js"
-									identifierName: "x"
-									end: Object {
-										column: 22
-										line: 1
-									}
-									start: Object {
-										column: 21
-										line: 1
-									}
-								}
+								loc: SourceLocation es2015/uncategorised/145/input.js 1:21-1:22 (x)
 							}
-							loc: Object {
-								filename: "es2015/uncategorised/145/input.js"
-								end: Object {
-									column: 23
-									line: 1
-								}
-								start: Object {
-									column: 20
-									line: 1
-								}
-							}
+							loc: SourceLocation es2015/uncategorised/145/input.js 1:20-1:23
 						}
-						loc: Object {
-							filename: "es2015/uncategorised/145/input.js"
-							end: Object {
-								column: 29
-								line: 1
-							}
-							start: Object {
-								column: 16
-								line: 1
-							}
-						}
+						loc: SourceLocation es2015/uncategorised/145/input.js 1:16-1:29
 						body: JSBlockStatement {
 							body: Array []
 							directives: Array []
-							loc: Object {
-								filename: "es2015/uncategorised/145/input.js"
-								end: Object {
-									column: 29
-									line: 1
-								}
-								start: Object {
-									column: 27
-									line: 1
-								}
-							}
+							loc: SourceLocation es2015/uncategorised/145/input.js 1:27-1:29
 						}
 						head: JSFunctionHead {
 							async: false
@@ -197,46 +75,15 @@ JSRoot {
 							returnType: undefined
 							thisType: undefined
 							typeParameters: undefined
-							loc: Object {
-								filename: "es2015/uncategorised/145/input.js"
-								end: Object {
-									column: 26
-									line: 1
-								}
-								start: Object {
-									column: 23
-									line: 1
-								}
-							}
+							loc: SourceLocation es2015/uncategorised/145/input.js 1:23-1:26
 							params: Array [
 								JSBindingIdentifier {
 									name: "v"
-									loc: Object {
-										filename: "es2015/uncategorised/145/input.js"
-										identifierName: "v"
-										end: Object {
-											column: 25
-											line: 1
-										}
-										start: Object {
-											column: 24
-											line: 1
-										}
-									}
+									loc: SourceLocation es2015/uncategorised/145/input.js 1:24-1:25 (v)
 									meta: JSPatternMeta {
 										optional: undefined
 										typeAnnotation: undefined
-										loc: Object {
-											filename: "es2015/uncategorised/145/input.js"
-											end: Object {
-												column: 25
-												line: 1
-											}
-											start: Object {
-												column: 24
-												line: 1
-											}
-										}
+										loc: SourceLocation es2015/uncategorised/145/input.js 1:24-1:25
 									}
 								}
 							]
@@ -252,6 +99,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

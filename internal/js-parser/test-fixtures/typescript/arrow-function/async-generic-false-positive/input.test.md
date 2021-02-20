@@ -12,189 +12,56 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "typescript/arrow-function/async-generic-false-positive/input.ts"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
+	loc: SourceLocation typescript/arrow-function/async-generic-false-positive/input.ts 1:0-3:0
+	path: UIDPath<typescript/arrow-function/async-generic-false-positive/input.ts>
 	syntax: Array ["ts"]
-	loc: Object {
-		filename: "typescript/arrow-function/async-generic-false-positive/input.ts"
-		end: Object {
-			column: 0
-			line: 3
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "typescript/arrow-function/async-generic-false-positive/input.ts"
-				end: Object {
-					column: 10
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation typescript/arrow-function/async-generic-false-positive/input.ts 1:0-1:10
 			expression: JSBinaryExpression {
 				operator: "<"
-				loc: Object {
-					filename: "typescript/arrow-function/async-generic-false-positive/input.ts"
-					end: Object {
-						column: 9
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/arrow-function/async-generic-false-positive/input.ts 1:0-1:9
 				left: JSReferenceIdentifier {
 					name: "async"
-					loc: Object {
-						filename: "typescript/arrow-function/async-generic-false-positive/input.ts"
-						identifierName: "async"
-						end: Object {
-							column: 5
-							line: 1
-						}
-						start: Object {
-							column: 0
-							line: 1
-						}
-					}
+					loc: SourceLocation typescript/arrow-function/async-generic-false-positive/input.ts 1:0-1:5 (async)
 				}
 				right: JSNumericLiteral {
 					value: 1
 					format: undefined
-					loc: Object {
-						filename: "typescript/arrow-function/async-generic-false-positive/input.ts"
-						end: Object {
-							column: 9
-							line: 1
-						}
-						start: Object {
-							column: 8
-							line: 1
-						}
-					}
+					loc: SourceLocation typescript/arrow-function/async-generic-false-positive/input.ts 1:8-1:9
 				}
 			}
 		}
 		JSExpressionStatement {
-			loc: Object {
-				filename: "typescript/arrow-function/async-generic-false-positive/input.ts"
-				end: Object {
-					column: 16
-					line: 2
-				}
-				start: Object {
-					column: 0
-					line: 2
-				}
-			}
+			loc: SourceLocation typescript/arrow-function/async-generic-false-positive/input.ts 2:0-2:16
 			expression: JSBinaryExpression {
 				operator: "=="
-				loc: Object {
-					filename: "typescript/arrow-function/async-generic-false-positive/input.ts"
-					end: Object {
-						column: 15
-						line: 2
-					}
-					start: Object {
-						column: 0
-						line: 2
-					}
-				}
+				loc: SourceLocation typescript/arrow-function/async-generic-false-positive/input.ts 2:0-2:15
 				right: JSNumericLiteral {
 					value: 0
 					format: undefined
-					loc: Object {
-						filename: "typescript/arrow-function/async-generic-false-positive/input.ts"
-						end: Object {
-							column: 15
-							line: 2
-						}
-						start: Object {
-							column: 14
-							line: 2
-						}
-					}
+					loc: SourceLocation typescript/arrow-function/async-generic-false-positive/input.ts 2:14-2:15
 				}
 				left: JSCallExpression {
 					arguments: Array []
-					loc: Object {
-						filename: "typescript/arrow-function/async-generic-false-positive/input.ts"
-						end: Object {
-							column: 10
-							line: 2
-						}
-						start: Object {
-							column: 0
-							line: 2
-						}
-					}
+					loc: SourceLocation typescript/arrow-function/async-generic-false-positive/input.ts 2:0-2:10
 					callee: JSReferenceIdentifier {
 						name: "async"
-						loc: Object {
-							filename: "typescript/arrow-function/async-generic-false-positive/input.ts"
-							identifierName: "async"
-							end: Object {
-								column: 5
-								line: 2
-							}
-							start: Object {
-								column: 0
-								line: 2
-							}
-						}
+						loc: SourceLocation typescript/arrow-function/async-generic-false-positive/input.ts 2:0-2:5 (async)
 					}
 					typeArguments: TSTypeParameterInstantiation {
-						loc: Object {
-							filename: "typescript/arrow-function/async-generic-false-positive/input.ts"
-							end: Object {
-								column: 8
-								line: 2
-							}
-							start: Object {
-								column: 5
-								line: 2
-							}
-						}
+						loc: SourceLocation typescript/arrow-function/async-generic-false-positive/input.ts 2:5-2:8
 						params: Array [
 							TSTypeReference {
 								typeParameters: undefined
-								loc: Object {
-									filename: "typescript/arrow-function/async-generic-false-positive/input.ts"
-									end: Object {
-										column: 7
-										line: 2
-									}
-									start: Object {
-										column: 6
-										line: 2
-									}
-								}
+								loc: SourceLocation typescript/arrow-function/async-generic-false-positive/input.ts 2:6-2:7
 								typeName: JSReferenceIdentifier {
 									name: "T"
-									loc: Object {
-										filename: "typescript/arrow-function/async-generic-false-positive/input.ts"
-										identifierName: "T"
-										end: Object {
-											column: 7
-											line: 2
-										}
-										start: Object {
-											column: 6
-											line: 2
-										}
-									}
+									loc: SourceLocation typescript/arrow-function/async-generic-false-positive/input.ts 2:6-2:7 (T)
 								}
 							}
 						]
@@ -209,6 +76,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

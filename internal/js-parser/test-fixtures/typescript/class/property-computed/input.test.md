@@ -12,165 +12,49 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "typescript/class/property-computed/input.ts"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
+	loc: SourceLocation typescript/class/property-computed/input.ts 1:0-5:0
+	path: UIDPath<typescript/class/property-computed/input.ts>
 	syntax: Array ["ts"]
-	loc: Object {
-		filename: "typescript/class/property-computed/input.ts"
-		end: Object {
-			column: 0
-			line: 5
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
 	body: Array [
 		JSClassDeclaration {
 			id: JSBindingIdentifier {
 				name: "C"
-				loc: Object {
-					filename: "typescript/class/property-computed/input.ts"
-					identifierName: "C"
-					end: Object {
-						column: 7
-						line: 1
-					}
-					start: Object {
-						column: 6
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/class/property-computed/input.ts 1:6-1:7 (C)
 			}
-			loc: Object {
-				filename: "typescript/class/property-computed/input.ts"
-				end: Object {
-					column: 1
-					line: 4
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation typescript/class/property-computed/input.ts 1:0-4:1
 			meta: JSClassHead {
 				implements: undefined
 				superClass: undefined
 				superTypeParameters: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "typescript/class/property-computed/input.ts"
-					end: Object {
-						column: 1
-						line: 4
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/class/property-computed/input.ts 1:0-4:1
 				body: Array [
 					JSClassProperty {
 						key: JSComputedPropertyKey {
 							value: JSMemberExpression {
-								loc: Object {
-									filename: "typescript/class/property-computed/input.ts"
-									end: Object {
-										column: 20
-										line: 2
-									}
-									start: Object {
-										column: 5
-										line: 2
-									}
-								}
+								loc: SourceLocation typescript/class/property-computed/input.ts 2:5-2:20
 								object: JSReferenceIdentifier {
 									name: "Symbol"
-									loc: Object {
-										filename: "typescript/class/property-computed/input.ts"
-										identifierName: "Symbol"
-										end: Object {
-											column: 11
-											line: 2
-										}
-										start: Object {
-											column: 5
-											line: 2
-										}
-									}
+									loc: SourceLocation typescript/class/property-computed/input.ts 2:5-2:11 (Symbol)
 								}
 								property: JSStaticMemberProperty {
 									value: JSIdentifier {
 										name: "iterator"
-										loc: Object {
-											filename: "typescript/class/property-computed/input.ts"
-											identifierName: "iterator"
-											end: Object {
-												column: 20
-												line: 2
-											}
-											start: Object {
-												column: 12
-												line: 2
-											}
-										}
+										loc: SourceLocation typescript/class/property-computed/input.ts 2:12-2:20 (iterator)
 									}
-									loc: Object {
-										filename: "typescript/class/property-computed/input.ts"
-										identifierName: "iterator"
-										end: Object {
-											column: 20
-											line: 2
-										}
-										start: Object {
-											column: 12
-											line: 2
-										}
-									}
+									loc: SourceLocation typescript/class/property-computed/input.ts 2:12-2:20 (iterator)
 								}
 							}
-							loc: Object {
-								filename: "typescript/class/property-computed/input.ts"
-								end: Object {
-									column: 21
-									line: 2
-								}
-								start: Object {
-									column: 4
-									line: 2
-								}
-							}
+							loc: SourceLocation typescript/class/property-computed/input.ts 2:4-2:21
 						}
 						value: undefined
 						definite: undefined
-						loc: Object {
-							filename: "typescript/class/property-computed/input.ts"
-							end: Object {
-								column: 30
-								line: 2
-							}
-							start: Object {
-								column: 4
-								line: 2
-							}
-						}
-						typeAnnotation: TSNumberKeywordTypeAnnotation {
-							loc: Object {
-								filename: "typescript/class/property-computed/input.ts"
-								end: Object {
-									column: 29
-									line: 2
-								}
-								start: Object {
-									column: 23
-									line: 2
-								}
-							}
-						}
+						loc: SourceLocation typescript/class/property-computed/input.ts 2:4-2:30
+						typeAnnotation: TSNumberKeywordTypeAnnotation {loc: SourceLocation typescript/class/property-computed/input.ts 2:23-2:29}
 						meta: JSClassPropertyMeta {
 							abstract: false
 							accessibility: undefined
@@ -178,120 +62,32 @@ JSRoot {
 							readonly: false
 							static: false
 							typeAnnotation: undefined
-							start: Object {
-								column: 4
-								line: 2
-							}
-							loc: Object {
-								filename: "typescript/class/property-computed/input.ts"
-								end: Object {
-									column: 21
-									line: 2
-								}
-								start: Object {
-									column: 4
-									line: 2
-								}
-							}
+							loc: SourceLocation typescript/class/property-computed/input.ts 2:4-2:21
+							start: Position 2:4
 						}
 					}
 					JSClassProperty {
 						key: JSComputedPropertyKey {
 							value: JSMemberExpression {
-								loc: Object {
-									filename: "typescript/class/property-computed/input.ts"
-									end: Object {
-										column: 20
-										line: 3
-									}
-									start: Object {
-										column: 5
-										line: 3
-									}
-								}
+								loc: SourceLocation typescript/class/property-computed/input.ts 3:5-3:20
 								object: JSReferenceIdentifier {
 									name: "Symbol"
-									loc: Object {
-										filename: "typescript/class/property-computed/input.ts"
-										identifierName: "Symbol"
-										end: Object {
-											column: 11
-											line: 3
-										}
-										start: Object {
-											column: 5
-											line: 3
-										}
-									}
+									loc: SourceLocation typescript/class/property-computed/input.ts 3:5-3:11 (Symbol)
 								}
 								property: JSStaticMemberProperty {
 									value: JSIdentifier {
 										name: "iterator"
-										loc: Object {
-											filename: "typescript/class/property-computed/input.ts"
-											identifierName: "iterator"
-											end: Object {
-												column: 20
-												line: 3
-											}
-											start: Object {
-												column: 12
-												line: 3
-											}
-										}
+										loc: SourceLocation typescript/class/property-computed/input.ts 3:12-3:20 (iterator)
 									}
-									loc: Object {
-										filename: "typescript/class/property-computed/input.ts"
-										identifierName: "iterator"
-										end: Object {
-											column: 20
-											line: 3
-										}
-										start: Object {
-											column: 12
-											line: 3
-										}
-									}
+									loc: SourceLocation typescript/class/property-computed/input.ts 3:12-3:20 (iterator)
 								}
 							}
-							loc: Object {
-								filename: "typescript/class/property-computed/input.ts"
-								end: Object {
-									column: 21
-									line: 3
-								}
-								start: Object {
-									column: 4
-									line: 3
-								}
-							}
+							loc: SourceLocation typescript/class/property-computed/input.ts 3:4-3:21
 						}
 						value: undefined
 						definite: undefined
-						loc: Object {
-							filename: "typescript/class/property-computed/input.ts"
-							end: Object {
-								column: 31
-								line: 3
-							}
-							start: Object {
-								column: 4
-								line: 3
-							}
-						}
-						typeAnnotation: TSNumberKeywordTypeAnnotation {
-							loc: Object {
-								filename: "typescript/class/property-computed/input.ts"
-								end: Object {
-									column: 30
-									line: 3
-								}
-								start: Object {
-									column: 24
-									line: 3
-								}
-							}
-						}
+						loc: SourceLocation typescript/class/property-computed/input.ts 3:4-3:31
+						typeAnnotation: TSNumberKeywordTypeAnnotation {loc: SourceLocation typescript/class/property-computed/input.ts 3:24-3:30}
 						meta: JSClassPropertyMeta {
 							abstract: false
 							accessibility: undefined
@@ -299,21 +95,8 @@ JSRoot {
 							readonly: false
 							static: false
 							typeAnnotation: undefined
-							start: Object {
-								column: 4
-								line: 3
-							}
-							loc: Object {
-								filename: "typescript/class/property-computed/input.ts"
-								end: Object {
-									column: 22
-									line: 3
-								}
-								start: Object {
-									column: 4
-									line: 3
-								}
-							}
+							loc: SourceLocation typescript/class/property-computed/input.ts 3:4-3:22
+							start: Position 3:4
 						}
 					}
 				]
@@ -326,6 +109,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

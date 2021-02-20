@@ -11,192 +11,74 @@ JSRoot {
 	comments: Array []
 	corrupt: true
 	directives: Array []
-	filename: "experimental/top-level-await/for-await-script/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "experimental/top-level-await/for-await-script/input.js"
-		end: Object {
-			column: 25
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation experimental/top-level-await/for-await-script/input.js 1:0-1:25
+	path: UIDPath<experimental/top-level-await/for-await-script/input.js>
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				category: "parse"
-				categoryValue: "js"
-				message: Array [
-					RAW_MARKUP {value: "Unexpected token, expected "}
-					"("
-				]
-			}
 			location: Object {
-				filename: "experimental/top-level-await/for-await-script/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 9
-					line: 1
-				}
-				start: Object {
-					column: 4
-					line: 1
-				}
+				end: Position 1:3
+				path: UIDPath<experimental/top-level-await/for-await-script/input.js>
+				start: Position 1:4
+			}
+			description: Object {
+				categoryValue: "js"
+				category: Array ["parse"]
+				message: RAW_MARKUP {value: "Unexpected character <emphasis>a</emphasis>"}
+				advice: Array [
+					log {
+						category: "info"
+						text: RAW_MARKUP {value: "Expected the opening for head character <emphasis>(</emphasis>"}
+					}
+				]
 			}
 		}
 	]
 	body: Array [
 		JSForStatement {
-			loc: Object {
-				filename: "experimental/top-level-await/for-await-script/input.js"
-				end: Object {
-					column: 23
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation experimental/top-level-await/for-await-script/input.js 1:0-1:23
 			test: JSReferenceIdentifier {
 				name: "a"
-				loc: Object {
-					filename: "experimental/top-level-await/for-await-script/input.js"
-					identifierName: "a"
-					end: Object {
-						column: 18
-						line: 1
-					}
-					start: Object {
-						column: 17
-						line: 1
-					}
-				}
+				loc: SourceLocation experimental/top-level-await/for-await-script/input.js 1:17-1:18 (a)
 			}
 			update: JSReferenceIdentifier {
 				name: "of"
-				loc: Object {
-					filename: "experimental/top-level-await/for-await-script/input.js"
-					identifierName: "of"
-					end: Object {
-						column: 21
-						line: 1
-					}
-					start: Object {
-						column: 19
-						line: 1
-					}
-				}
+				loc: SourceLocation experimental/top-level-await/for-await-script/input.js 1:19-1:21 (of)
 			}
 			body: JSExpressionStatement {
-				loc: Object {
-					filename: "experimental/top-level-await/for-await-script/input.js"
-					end: Object {
-						column: 23
-						line: 1
-					}
-					start: Object {
-						column: 22
-						line: 1
-					}
-				}
+				loc: SourceLocation experimental/top-level-await/for-await-script/input.js 1:22-1:23
 				expression: JSReferenceIdentifier {
 					name: "b"
-					loc: Object {
-						filename: "experimental/top-level-await/for-await-script/input.js"
-						identifierName: "b"
-						end: Object {
-							column: 23
-							line: 1
-						}
-						start: Object {
-							column: 22
-							line: 1
-						}
-					}
+					loc: SourceLocation experimental/top-level-await/for-await-script/input.js 1:22-1:23 (b)
 				}
 			}
 			init: JSCallExpression {
-				loc: Object {
-					filename: "experimental/top-level-await/for-await-script/input.js"
-					end: Object {
-						column: 16
-						line: 1
-					}
-					start: Object {
-						column: 4
-						line: 1
-					}
-				}
+				loc: SourceLocation experimental/top-level-await/for-await-script/input.js 1:4-1:16
 				callee: JSReferenceIdentifier {
 					name: "await"
-					loc: Object {
-						filename: "experimental/top-level-await/for-await-script/input.js"
-						identifierName: "await"
-						end: Object {
-							column: 9
-							line: 1
-						}
-						start: Object {
-							column: 4
-							line: 1
-						}
-					}
+					loc: SourceLocation experimental/top-level-await/for-await-script/input.js 1:4-1:9 (await)
 				}
 				arguments: Array [
 					JSReferenceIdentifier {
 						name: "INVALID_PLACEHOLDER"
-						loc: Object {
-							filename: "experimental/top-level-await/for-await-script/input.js"
-							end: Object {
-								column: 16
-								line: 1
-							}
-							start: Object {
-								column: 11
-								line: 1
-							}
-						}
+						loc: SourceLocation experimental/top-level-await/for-await-script/input.js 1:11-1:16
 					}
 				]
 			}
 		}
 		JSExpressionStatement {
-			loc: Object {
-				filename: "experimental/top-level-await/for-await-script/input.js"
-				end: Object {
-					column: 25
-					line: 1
-				}
-				start: Object {
-					column: 23
-					line: 1
-				}
-			}
+			loc: SourceLocation experimental/top-level-await/for-await-script/input.js 1:23-1:25
 			expression: JSReferenceIdentifier {
 				name: "INVALID_PLACEHOLDER"
-				loc: Object {
-					filename: "experimental/top-level-await/for-await-script/input.js"
-					end: Object {
-						column: 24
-						line: 1
-					}
-					start: Object {
-						column: 23
-						line: 1
-					}
-				}
+				loc: SourceLocation experimental/top-level-await/for-await-script/input.js 1:23-1:24
 			}
 		}
 	]
@@ -209,13 +91,12 @@ JSRoot {
 
  experimental/top-level-await/for-await-script/input.js:1:4 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ Unexpected token, expected (
+  ✖ Unexpected character a
 
     for await (const a of b);
-        ^^^^^
+        ^
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  ℹ Expected the opening for head character (
 
-✖ Found 1 problem
 
 ```

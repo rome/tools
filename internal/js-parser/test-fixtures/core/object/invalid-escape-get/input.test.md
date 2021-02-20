@@ -11,132 +11,52 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "core/object/invalid-escape-get/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "core/object/invalid-escape-get/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation core/object/invalid-escape-get/input.js 1:0-2:0
+	path: UIDPath<core/object/invalid-escape-get/input.js>
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse"
 				categoryValue: "js"
-				message: Array [
-					"get"
-					RAW_MARKUP {value: " can't contain a unicode escape"}
-				]
+				category: Array ["parse"]
+				message: RAW_MARKUP {value: "<emphasis>get</emphasis> can't contain a unicode escape"}
 			}
 			location: Object {
-				filename: "core/object/invalid-escape-get/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 5
-					line: 1
-				}
-				start: Object {
-					column: 5
-					line: 1
-				}
+				end: Position 1:5
+				path: UIDPath<core/object/invalid-escape-get/input.js>
+				start: Position 1:5
 			}
 		}
 	]
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "core/object/invalid-escape-get/input.js"
-				end: Object {
-					column: 21
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation core/object/invalid-escape-get/input.js 1:0-1:21
 			expression: JSObjectExpression {
-				loc: Object {
-					filename: "core/object/invalid-escape-get/input.js"
-					end: Object {
-						column: 20
-						line: 1
-					}
-					start: Object {
-						column: 1
-						line: 1
-					}
-				}
+				loc: SourceLocation core/object/invalid-escape-get/input.js 1:1-1:20
 				properties: Array [
 					JSObjectMethod {
 						kind: "get"
 						key: JSStaticPropertyKey {
 							value: JSIdentifier {
 								name: "x"
-								loc: Object {
-									filename: "core/object/invalid-escape-get/input.js"
-									identifierName: "x"
-									end: Object {
-										column: 13
-										line: 1
-									}
-									start: Object {
-										column: 12
-										line: 1
-									}
-								}
+								loc: SourceLocation core/object/invalid-escape-get/input.js 1:12-1:13 (x)
 							}
-							loc: Object {
-								filename: "core/object/invalid-escape-get/input.js"
-								end: Object {
-									column: 13
-									line: 1
-								}
-								start: Object {
-									column: 12
-									line: 1
-								}
-							}
+							loc: SourceLocation core/object/invalid-escape-get/input.js 1:12-1:13
 						}
-						loc: Object {
-							filename: "core/object/invalid-escape-get/input.js"
-							end: Object {
-								column: 18
-								line: 1
-							}
-							start: Object {
-								column: 3
-								line: 1
-							}
-						}
+						loc: SourceLocation core/object/invalid-escape-get/input.js 1:3-1:18
 						body: JSBlockStatement {
 							body: Array []
 							directives: Array []
-							loc: Object {
-								filename: "core/object/invalid-escape-get/input.js"
-								end: Object {
-									column: 18
-									line: 1
-								}
-								start: Object {
-									column: 16
-									line: 1
-								}
-							}
+							loc: SourceLocation core/object/invalid-escape-get/input.js 1:16-1:18
 						}
 						head: JSFunctionHead {
 							async: false
@@ -147,17 +67,7 @@ JSRoot {
 							returnType: undefined
 							thisType: undefined
 							typeParameters: undefined
-							loc: Object {
-								filename: "core/object/invalid-escape-get/input.js"
-								end: Object {
-									column: 15
-									line: 1
-								}
-								start: Object {
-									column: 13
-									line: 1
-								}
-							}
+							loc: SourceLocation core/object/invalid-escape-get/input.js 1:13-1:15
 						}
 					}
 				]
@@ -178,8 +88,5 @@ JSRoot {
     ({ ge\u0074 x() {} })
          ^
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

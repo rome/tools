@@ -12,142 +12,40 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "es2017/async-functions/33/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2017/async-functions/33/input.js"
-		end: Object {
-			column: 0
-			line: 4
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2017/async-functions/33/input.js 1:0-4:0
+	path: UIDPath<es2017/async-functions/33/input.js>
 	body: Array [
 		JSVariableDeclarationStatement {
-			loc: Object {
-				filename: "es2017/async-functions/33/input.js"
-				end: Object {
-					column: 2
-					line: 3
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2017/async-functions/33/input.js 1:0-3:2
 			declaration: JSVariableDeclaration {
 				kind: "const"
-				loc: Object {
-					filename: "es2017/async-functions/33/input.js"
-					end: Object {
-						column: 2
-						line: 3
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation es2017/async-functions/33/input.js 1:0-3:2
 				declarations: Array [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "foo"
-							loc: Object {
-								filename: "es2017/async-functions/33/input.js"
-								identifierName: "foo"
-								end: Object {
-									column: 9
-									line: 1
-								}
-								start: Object {
-									column: 6
-									line: 1
-								}
-							}
+							loc: SourceLocation es2017/async-functions/33/input.js 1:6-1:9 (foo)
 						}
-						loc: Object {
-							filename: "es2017/async-functions/33/input.js"
-							end: Object {
-								column: 1
-								line: 3
-							}
-							start: Object {
-								column: 6
-								line: 1
-							}
-						}
+						loc: SourceLocation es2017/async-functions/33/input.js 1:6-3:1
 						init: JSFunctionExpression {
 							id: undefined
-							loc: Object {
-								filename: "es2017/async-functions/33/input.js"
-								end: Object {
-									column: 1
-									line: 3
-								}
-								start: Object {
-									column: 12
-									line: 1
-								}
-							}
+							loc: SourceLocation es2017/async-functions/33/input.js 1:12-3:1
 							body: JSBlockStatement {
 								directives: Array []
-								loc: Object {
-									filename: "es2017/async-functions/33/input.js"
-									end: Object {
-										column: 1
-										line: 3
-									}
-									start: Object {
-										column: 43
-										line: 1
-									}
-								}
+								loc: SourceLocation es2017/async-functions/33/input.js 1:43-3:1
 								body: Array [
 									JSExpressionStatement {
-										loc: Object {
-											filename: "es2017/async-functions/33/input.js"
-											end: Object {
-												column: 12
-												line: 2
-											}
-											start: Object {
-												column: 2
-												line: 2
-											}
-										}
+										loc: SourceLocation es2017/async-functions/33/input.js 2:2-2:12
 										expression: JSAwaitExpression {
-											loc: Object {
-												filename: "es2017/async-functions/33/input.js"
-												end: Object {
-													column: 11
-													line: 2
-												}
-												start: Object {
-													column: 2
-													line: 2
-												}
-											}
+											loc: SourceLocation es2017/async-functions/33/input.js 2:2-2:11
 											argument: JSReferenceIdentifier {
 												name: "baz"
-												loc: Object {
-													filename: "es2017/async-functions/33/input.js"
-													identifierName: "baz"
-													end: Object {
-														column: 11
-														line: 2
-													}
-													start: Object {
-														column: 8
-														line: 2
-													}
-												}
+												loc: SourceLocation es2017/async-functions/33/input.js 2:8-2:11 (baz)
 											}
 										}
 									}
@@ -161,102 +59,30 @@ JSRoot {
 								returnType: undefined
 								thisType: undefined
 								typeParameters: undefined
-								loc: Object {
-									filename: "es2017/async-functions/33/input.js"
-									end: Object {
-										column: 42
-										line: 1
-									}
-									start: Object {
-										column: 26
-										line: 1
-									}
-								}
+								loc: SourceLocation es2017/async-functions/33/input.js 1:26-1:42
 								params: Array [
 									JSBindingObjectPattern {
 										rest: undefined
-										loc: Object {
-											filename: "es2017/async-functions/33/input.js"
-											end: Object {
-												column: 41
-												line: 1
-											}
-											start: Object {
-												column: 27
-												line: 1
-											}
-										}
+										loc: SourceLocation es2017/async-functions/33/input.js 1:27-1:41
 										meta: JSPatternMeta {
 											optional: undefined
 											typeAnnotation: undefined
-											loc: Object {
-												filename: "es2017/async-functions/33/input.js"
-												end: Object {
-													column: 41
-													line: 1
-												}
-												start: Object {
-													column: 27
-													line: 1
-												}
-											}
+											loc: SourceLocation es2017/async-functions/33/input.js 1:27-1:41
 										}
 										properties: Array [
 											JSBindingObjectPatternProperty {
 												key: JSStaticPropertyKey {
 													value: JSIdentifier {
 														name: "async"
-														loc: Object {
-															filename: "es2017/async-functions/33/input.js"
-															identifierName: "async"
-															end: Object {
-																column: 34
-																line: 1
-															}
-															start: Object {
-																column: 29
-																line: 1
-															}
-														}
+														loc: SourceLocation es2017/async-functions/33/input.js 1:29-1:34 (async)
 													}
-													loc: Object {
-														filename: "es2017/async-functions/33/input.js"
-														end: Object {
-															column: 34
-															line: 1
-														}
-														start: Object {
-															column: 29
-															line: 1
-														}
-													}
+													loc: SourceLocation es2017/async-functions/33/input.js 1:29-1:34
 												}
 												value: JSBindingIdentifier {
 													name: "bar"
-													loc: Object {
-														filename: "es2017/async-functions/33/input.js"
-														identifierName: "bar"
-														end: Object {
-															column: 39
-															line: 1
-														}
-														start: Object {
-															column: 36
-															line: 1
-														}
-													}
+													loc: SourceLocation es2017/async-functions/33/input.js 1:36-1:39 (bar)
 												}
-												loc: Object {
-													filename: "es2017/async-functions/33/input.js"
-													end: Object {
-														column: 39
-														line: 1
-													}
-													start: Object {
-														column: 29
-														line: 1
-													}
-												}
+												loc: SourceLocation es2017/async-functions/33/input.js 1:29-1:39
 											}
 										]
 									}
@@ -274,6 +100,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

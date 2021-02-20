@@ -16,7 +16,7 @@ import {
 	createParser,
 } from "@internal/parser-core";
 import {isEscaped} from "@internal/string-utils";
-import {Number0, ob1Add, ob1Get0} from "@internal/ob1";
+import {ZeroIndexed} from "@internal/math";
 import {descriptions} from "@internal/diagnostics";
 
 type Tokens = BaseTokens & {
@@ -54,16 +54,16 @@ function isHash(char: string): boolean {
 	return char === "#";
 }
 
-function isCodeBlockEnd(index: Number0, input: string): boolean {
+function isCodeBlockEnd(index: ZeroIndexed, input: string): boolean {
 	return (
-		input[ob1Get0(index)] === "`" &&
+		input[index.valueOf()] === "`" &&
 		!isEscaped(index, input) &&
-		input[ob1Get0(ob1Add(index, 1))] === "`" &&
-		input[ob1Get0(ob1Add(index, 2))] === "`"
+		input[index.add(1).valueOf()] === "`" &&
+		input[index.add(2).valueOf()] === "`"
 	);
 }
 
-function isInCodeBlock(char: string, index: Number0, input: string): boolean {
+function isInCodeBlock(char: string, index: ZeroIndexed, input: string): boolean {
 	return !isCodeBlockEnd(index, input);
 }
 
@@ -84,7 +84,7 @@ type SnapshotParserTypes = {
 
 type SnapshotParser = ParserCore<SnapshotParserTypes>;
 
-export const createSnapshotParser = createParser<SnapshotParserTypes>({
+export const snapshotParser = createParser<SnapshotParserTypes>({
 	diagnosticLanguage: "markdown",
 	ignoreWhitespaceTokens: true,
 
@@ -95,15 +95,15 @@ export const createSnapshotParser = createParser<SnapshotParserTypes>({
 			case "#": {
 				const [hashes] = parser.readInputFrom(index, isHash);
 				const level = hashes.length;
-				return parser.finishValueToken("Hashes", level, ob1Add(index, level));
+				return parser.finishValueToken("Hashes", level, index.add(level));
 			}
 
 			case "`": {
-				const nextChar = parser.getInputCharOnly(index, 1);
-				const nextNextChar = parser.getInputCharOnly(index, 2);
+				const nextChar = parser.getInputCharOnly(index.increment());
+				const nextNextChar = parser.getInputCharOnly(index.add(2));
 
 				if (nextChar === "`" && nextNextChar === "`") {
-					let codeOffset = ob1Add(index, 3);
+					let codeOffset = index.add(3);
 
 					let language: undefined | string;
 					if (parser.getInputCharOnly(codeOffset) !== "\n") {
@@ -116,7 +116,7 @@ export const createSnapshotParser = createParser<SnapshotParserTypes>({
 					// Expect the first offset character to be a newline
 					if (parser.getInputCharOnly(codeOffset) === "\n") {
 						// Skip leading newline
-						codeOffset = ob1Add(codeOffset, 1);
+						codeOffset = codeOffset.add(1);
 					} else {
 						throw parser.unexpected({
 							description: descriptions.SNAPSHOTS.MISSING_NEWLINE_AFTER_CODE_BLOCK,
@@ -126,7 +126,7 @@ export const createSnapshotParser = createParser<SnapshotParserTypes>({
 
 					let [code] = parser.readInputFrom(codeOffset, isInCodeBlock);
 
-					let end = ob1Add(codeOffset, code.length);
+					let end = codeOffset.add(code.length);
 
 					if (isCodeBlockEnd(end, parser.input)) {
 						// Check for trailing newline
@@ -135,7 +135,7 @@ export const createSnapshotParser = createParser<SnapshotParserTypes>({
 							code = code.slice(0, -1);
 
 							// Skip closing ticks
-							end = ob1Add(end, 3);
+							end = end.add(3);
 
 							return parser.finishValueToken(
 								"CodeBlock",

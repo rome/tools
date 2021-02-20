@@ -12,52 +12,20 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "core/uncategorised/238/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "core/uncategorised/238/input.js"
-		end: Object {
-			column: 8
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation core/uncategorised/238/input.js 1:0-1:8
+	path: UIDPath<core/uncategorised/238/input.js>
 	body: Array [
 		JSForStatement {
 			init: undefined
 			test: undefined
 			update: undefined
-			loc: Object {
-				filename: "core/uncategorised/238/input.js"
-				end: Object {
-					column: 8
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
-			body: JSEmptyStatement {
-				loc: Object {
-					filename: "core/uncategorised/238/input.js"
-					end: Object {
-						column: 8
-						line: 1
-					}
-					start: Object {
-						column: 7
-						line: 1
-					}
-				}
-			}
+			body: JSEmptyStatement {loc: SourceLocation core/uncategorised/238/input.js 1:7-1:8}
+			loc: SourceLocation core/uncategorised/238/input.js 1:0-1:8
 		}
 	]
 }
@@ -66,6 +34,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

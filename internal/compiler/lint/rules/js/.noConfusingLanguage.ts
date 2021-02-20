@@ -7,7 +7,7 @@
 
 import {createVisitor, signals} from "@internal/compiler";
 import {PositionTracker, SourceLocation} from "@internal/parser-core";
-import {ob1Coerce0} from "@internal/ob1";
+import {ZeroIndexed} from "@internal/math";
 import {isIdentifierish} from "@internal/js-ast-utils";
 import {DiagnosticAdvice, descriptions} from "@internal/diagnostics";
 import {preserveCasing} from "@internal/string-utils";
@@ -80,7 +80,7 @@ function check(
 
 	const lower = input.toLowerCase();
 	const tracker = new PositionTracker({
-		filename: loc.filename,
+		filename: loc.path,
 		input: lower,
 		offsetPosition: loc.start,
 	});
@@ -105,8 +105,8 @@ function check(
 					// Calculate the actual location of this
 					loc: {
 						...loc,
-						start: tracker.getPositionFromIndex(ob1Coerce0(i)),
-						end: tracker.getPositionFromIndex(ob1Coerce0(i + word.length)),
+						start: tracker.getPositionFromIndex(new ZeroIndexed(i)),
+						end: tracker.getPositionFromIndex(new ZeroIndexed(i + word.length)),
 					},
 				});
 

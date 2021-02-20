@@ -12,77 +12,26 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "typescript/import/export-import-require/input.ts"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
+	loc: SourceLocation typescript/import/export-import-require/input.ts 1:0-2:0
+	path: UIDPath<typescript/import/export-import-require/input.ts>
 	syntax: Array ["ts"]
-	loc: Object {
-		filename: "typescript/import/export-import-require/input.ts"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
 	body: Array [
 		TSImportEqualsDeclaration {
 			id: JSBindingIdentifier {
 				name: "a"
-				loc: Object {
-					filename: "typescript/import/export-import-require/input.ts"
-					identifierName: "a"
-					end: Object {
-						column: 15
-						line: 1
-					}
-					start: Object {
-						column: 14
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/import/export-import-require/input.ts 1:14-1:15 (a)
 			}
 			isExport: true
-			loc: Object {
-				filename: "typescript/import/export-import-require/input.ts"
-				end: Object {
-					column: 31
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation typescript/import/export-import-require/input.ts 1:0-1:31
 			moduleReference: TSExternalModuleReference {
-				loc: Object {
-					filename: "typescript/import/export-import-require/input.ts"
-					end: Object {
-						column: 30
-						line: 1
-					}
-					start: Object {
-						column: 18
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/import/export-import-require/input.ts 1:18-1:30
 				expression: JSStringLiteral {
 					value: "a"
-					loc: Object {
-						filename: "typescript/import/export-import-require/input.ts"
-						end: Object {
-							column: 29
-							line: 1
-						}
-						start: Object {
-							column: 26
-							line: 1
-						}
-					}
+					loc: SourceLocation typescript/import/export-import-require/input.ts 1:26-1:29
 				}
 			}
 		}
@@ -93,6 +42,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

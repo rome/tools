@@ -12,111 +12,39 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "experimental/class-properties/inline/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "experimental/class-properties/inline/input.js"
-		end: Object {
-			column: 0
-			line: 4
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation experimental/class-properties/inline/input.js 1:0-4:0
+	path: UIDPath<experimental/class-properties/inline/input.js>
 	body: Array [
 		JSClassDeclaration {
 			id: JSBindingIdentifier {
 				name: "A"
-				loc: Object {
-					filename: "experimental/class-properties/inline/input.js"
-					identifierName: "A"
-					end: Object {
-						column: 7
-						line: 1
-					}
-					start: Object {
-						column: 6
-						line: 1
-					}
-				}
+				loc: SourceLocation experimental/class-properties/inline/input.js 1:6-1:7 (A)
 			}
-			loc: Object {
-				filename: "experimental/class-properties/inline/input.js"
-				end: Object {
-					column: 17
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation experimental/class-properties/inline/input.js 1:0-1:17
 			meta: JSClassHead {
 				implements: undefined
 				superClass: undefined
 				superTypeParameters: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "experimental/class-properties/inline/input.js"
-					end: Object {
-						column: 17
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation experimental/class-properties/inline/input.js 1:0-1:17
 				body: Array [
 					JSClassProperty {
 						key: JSStaticPropertyKey {
 							value: JSIdentifier {
 								name: "x"
-								loc: Object {
-									filename: "experimental/class-properties/inline/input.js"
-									identifierName: "x"
-									end: Object {
-										column: 11
-										line: 1
-									}
-									start: Object {
-										column: 10
-										line: 1
-									}
-								}
+								loc: SourceLocation experimental/class-properties/inline/input.js 1:10-1:11 (x)
 							}
-							loc: Object {
-								filename: "experimental/class-properties/inline/input.js"
-								end: Object {
-									column: 11
-									line: 1
-								}
-								start: Object {
-									column: 10
-									line: 1
-								}
-							}
+							loc: SourceLocation experimental/class-properties/inline/input.js 1:10-1:11
 						}
 						value: undefined
 						definite: undefined
 						typeAnnotation: undefined
-						loc: Object {
-							filename: "experimental/class-properties/inline/input.js"
-							end: Object {
-								column: 12
-								line: 1
-							}
-							start: Object {
-								column: 10
-								line: 1
-							}
-						}
+						loc: SourceLocation experimental/class-properties/inline/input.js 1:10-1:12
 						meta: JSClassPropertyMeta {
 							abstract: false
 							accessibility: undefined
@@ -124,66 +52,22 @@ JSRoot {
 							readonly: false
 							static: false
 							typeAnnotation: undefined
-							start: Object {
-								column: 10
-								line: 1
-							}
-							loc: Object {
-								filename: "experimental/class-properties/inline/input.js"
-								end: Object {
-									column: 11
-									line: 1
-								}
-								start: Object {
-									column: 10
-									line: 1
-								}
-							}
+							loc: SourceLocation experimental/class-properties/inline/input.js 1:10-1:11
+							start: Position 1:10
 						}
 					}
 					JSClassProperty {
 						key: JSStaticPropertyKey {
 							value: JSIdentifier {
 								name: "y"
-								loc: Object {
-									filename: "experimental/class-properties/inline/input.js"
-									identifierName: "y"
-									end: Object {
-										column: 14
-										line: 1
-									}
-									start: Object {
-										column: 13
-										line: 1
-									}
-								}
+								loc: SourceLocation experimental/class-properties/inline/input.js 1:13-1:14 (y)
 							}
-							loc: Object {
-								filename: "experimental/class-properties/inline/input.js"
-								end: Object {
-									column: 14
-									line: 1
-								}
-								start: Object {
-									column: 13
-									line: 1
-								}
-							}
+							loc: SourceLocation experimental/class-properties/inline/input.js 1:13-1:14
 						}
 						value: undefined
 						definite: undefined
 						typeAnnotation: undefined
-						loc: Object {
-							filename: "experimental/class-properties/inline/input.js"
-							end: Object {
-								column: 15
-								line: 1
-							}
-							start: Object {
-								column: 13
-								line: 1
-							}
-						}
+						loc: SourceLocation experimental/class-properties/inline/input.js 1:13-1:15
 						meta: JSClassPropertyMeta {
 							abstract: false
 							accessibility: undefined
@@ -191,21 +75,8 @@ JSRoot {
 							readonly: false
 							static: false
 							typeAnnotation: undefined
-							start: Object {
-								column: 13
-								line: 1
-							}
-							loc: Object {
-								filename: "experimental/class-properties/inline/input.js"
-								end: Object {
-									column: 14
-									line: 1
-								}
-								start: Object {
-									column: 13
-									line: 1
-								}
-							}
+							loc: SourceLocation experimental/class-properties/inline/input.js 1:13-1:14
+							start: Position 1:13
 						}
 					}
 				]
@@ -214,104 +85,32 @@ JSRoot {
 		JSClassDeclaration {
 			id: JSBindingIdentifier {
 				name: "B"
-				loc: Object {
-					filename: "experimental/class-properties/inline/input.js"
-					identifierName: "B"
-					end: Object {
-						column: 7
-						line: 3
-					}
-					start: Object {
-						column: 6
-						line: 3
-					}
-				}
+				loc: SourceLocation experimental/class-properties/inline/input.js 3:6-3:7 (B)
 			}
-			loc: Object {
-				filename: "experimental/class-properties/inline/input.js"
-				end: Object {
-					column: 25
-					line: 3
-				}
-				start: Object {
-					column: 0
-					line: 3
-				}
-			}
+			loc: SourceLocation experimental/class-properties/inline/input.js 3:0-3:25
 			meta: JSClassHead {
 				implements: undefined
 				superClass: undefined
 				superTypeParameters: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "experimental/class-properties/inline/input.js"
-					end: Object {
-						column: 25
-						line: 3
-					}
-					start: Object {
-						column: 0
-						line: 3
-					}
-				}
+				loc: SourceLocation experimental/class-properties/inline/input.js 3:0-3:25
 				body: Array [
 					JSClassProperty {
 						key: JSStaticPropertyKey {
 							value: JSIdentifier {
 								name: "x"
-								loc: Object {
-									filename: "experimental/class-properties/inline/input.js"
-									identifierName: "x"
-									end: Object {
-										column: 11
-										line: 3
-									}
-									start: Object {
-										column: 10
-										line: 3
-									}
-								}
+								loc: SourceLocation experimental/class-properties/inline/input.js 3:10-3:11 (x)
 							}
-							loc: Object {
-								filename: "experimental/class-properties/inline/input.js"
-								end: Object {
-									column: 11
-									line: 3
-								}
-								start: Object {
-									column: 10
-									line: 3
-								}
-							}
+							loc: SourceLocation experimental/class-properties/inline/input.js 3:10-3:11
 						}
 						value: JSNumericLiteral {
 							value: 0
 							format: undefined
-							loc: Object {
-								filename: "experimental/class-properties/inline/input.js"
-								end: Object {
-									column: 15
-									line: 3
-								}
-								start: Object {
-									column: 14
-									line: 3
-								}
-							}
+							loc: SourceLocation experimental/class-properties/inline/input.js 3:14-3:15
 						}
 						definite: undefined
 						typeAnnotation: undefined
-						loc: Object {
-							filename: "experimental/class-properties/inline/input.js"
-							end: Object {
-								column: 16
-								line: 3
-							}
-							start: Object {
-								column: 10
-								line: 3
-							}
-						}
+						loc: SourceLocation experimental/class-properties/inline/input.js 3:10-3:16
 						meta: JSClassPropertyMeta {
 							abstract: false
 							accessibility: undefined
@@ -319,80 +118,26 @@ JSRoot {
 							readonly: false
 							static: false
 							typeAnnotation: undefined
-							start: Object {
-								column: 10
-								line: 3
-							}
-							loc: Object {
-								filename: "experimental/class-properties/inline/input.js"
-								end: Object {
-									column: 11
-									line: 3
-								}
-								start: Object {
-									column: 10
-									line: 3
-								}
-							}
+							loc: SourceLocation experimental/class-properties/inline/input.js 3:10-3:11
+							start: Position 3:10
 						}
 					}
 					JSClassProperty {
 						key: JSStaticPropertyKey {
 							value: JSIdentifier {
 								name: "y"
-								loc: Object {
-									filename: "experimental/class-properties/inline/input.js"
-									identifierName: "y"
-									end: Object {
-										column: 18
-										line: 3
-									}
-									start: Object {
-										column: 17
-										line: 3
-									}
-								}
+								loc: SourceLocation experimental/class-properties/inline/input.js 3:17-3:18 (y)
 							}
-							loc: Object {
-								filename: "experimental/class-properties/inline/input.js"
-								end: Object {
-									column: 18
-									line: 3
-								}
-								start: Object {
-									column: 17
-									line: 3
-								}
-							}
+							loc: SourceLocation experimental/class-properties/inline/input.js 3:17-3:18
 						}
 						value: JSNumericLiteral {
 							value: 1
 							format: undefined
-							loc: Object {
-								filename: "experimental/class-properties/inline/input.js"
-								end: Object {
-									column: 22
-									line: 3
-								}
-								start: Object {
-									column: 21
-									line: 3
-								}
-							}
+							loc: SourceLocation experimental/class-properties/inline/input.js 3:21-3:22
 						}
 						definite: undefined
 						typeAnnotation: undefined
-						loc: Object {
-							filename: "experimental/class-properties/inline/input.js"
-							end: Object {
-								column: 23
-								line: 3
-							}
-							start: Object {
-								column: 17
-								line: 3
-							}
-						}
+						loc: SourceLocation experimental/class-properties/inline/input.js 3:17-3:23
 						meta: JSClassPropertyMeta {
 							abstract: false
 							accessibility: undefined
@@ -400,21 +145,8 @@ JSRoot {
 							readonly: false
 							static: false
 							typeAnnotation: undefined
-							start: Object {
-								column: 17
-								line: 3
-							}
-							loc: Object {
-								filename: "experimental/class-properties/inline/input.js"
-								end: Object {
-									column: 18
-									line: 3
-								}
-								start: Object {
-									column: 17
-									line: 3
-								}
-							}
+							loc: SourceLocation experimental/class-properties/inline/input.js 3:17-3:18
+							start: Position 3:17
 						}
 					}
 				]
@@ -427,6 +159,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

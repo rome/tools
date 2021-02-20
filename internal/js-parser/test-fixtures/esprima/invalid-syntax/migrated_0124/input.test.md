@@ -11,160 +11,65 @@ JSRoot {
 	comments: Array []
 	corrupt: true
 	directives: Array []
-	filename: "esprima/invalid-syntax/migrated_0124/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "esprima/invalid-syntax/migrated_0124/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation esprima/invalid-syntax/migrated_0124/input.js 1:0-2:0
+	path: UIDPath<esprima/invalid-syntax/migrated_0124/input.js>
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				category: "parse"
-				categoryValue: "js"
-				message: Array [
-					RAW_MARKUP {value: "Unexpected token, expected "}
-					";"
-				]
-			}
 			location: Object {
-				filename: "esprima/invalid-syntax/migrated_0124/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 15
-					line: 1
-				}
-				start: Object {
-					column: 14
-					line: 1
-				}
+				end: Position 1:15
+				path: UIDPath<esprima/invalid-syntax/migrated_0124/input.js>
+				start: Position 1:14
+			}
+			description: Object {
+				categoryValue: "js"
+				category: Array ["parse"]
+				message: RAW_MARKUP {value: "Unexpected character <emphasis>)</emphasis>"}
+				advice: Array [
+					log {
+						category: "info"
+						text: RAW_MARKUP {value: "Expected character <emphasis>;</emphasis>"}
+					}
+				]
 			}
 		}
 	]
 	body: Array [
 		JSForStatement {
-			loc: Object {
-				filename: "esprima/invalid-syntax/migrated_0124/input.js"
-				end: Object {
-					column: 0
-					line: 2
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation esprima/invalid-syntax/migrated_0124/input.js 1:0-2:0
 			test: JSReferenceIdentifier {
 				name: "INVALID_PLACEHOLDER"
-				loc: Object {
-					filename: "esprima/invalid-syntax/migrated_0124/input.js"
-					end: Object {
-						column: 15
-						line: 1
-					}
-					start: Object {
-						column: 14
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/invalid-syntax/migrated_0124/input.js 1:14-1:15
 			}
 			update: JSReferenceIdentifier {
 				name: "INVALID_PLACEHOLDER"
-				loc: Object {
-					filename: "esprima/invalid-syntax/migrated_0124/input.js"
-					end: Object {
-						column: 0
-						line: 2
-					}
-					start: Object {
-						column: 0
-						line: 2
-					}
-				}
+				loc: SourceLocation esprima/invalid-syntax/migrated_0124/input.js 2:0-2:0
 			}
 			body: JSExpressionStatement {
-				loc: Object {
-					filename: "esprima/invalid-syntax/migrated_0124/input.js"
-					end: Object {
-						column: 0
-						line: 2
-					}
-					start: Object {
-						column: 0
-						line: 2
-					}
-				}
+				loc: SourceLocation esprima/invalid-syntax/migrated_0124/input.js 2:0-2:0
 				expression: JSReferenceIdentifier {
 					name: "INVALID_PLACEHOLDER"
-					loc: Object {
-						filename: "esprima/invalid-syntax/migrated_0124/input.js"
-						end: Object {
-							column: 0
-							line: 2
-						}
-						start: Object {
-							column: 0
-							line: 2
-						}
-					}
+					loc: SourceLocation esprima/invalid-syntax/migrated_0124/input.js 2:0-2:0
 				}
 			}
 			init: JSBinaryExpression {
 				operator: "in"
-				loc: Object {
-					filename: "esprima/invalid-syntax/migrated_0124/input.js"
-					end: Object {
-						column: 13
-						line: 1
-					}
-					start: Object {
-						column: 6
-						line: 1
-					}
+				loc: SourceLocation esprima/invalid-syntax/migrated_0124/input.js 1:6-1:13
+				left: JSReferenceIdentifier {
+					name: "i"
+					loc: SourceLocation esprima/invalid-syntax/migrated_0124/input.js 1:6-1:7 (i)
 				}
 				right: JSObjectExpression {
 					properties: Array []
-					loc: Object {
-						filename: "esprima/invalid-syntax/migrated_0124/input.js"
-						end: Object {
-							column: 13
-							line: 1
-						}
-						start: Object {
-							column: 11
-							line: 1
-						}
-					}
-				}
-				left: JSReferenceIdentifier {
-					name: "i"
-					loc: Object {
-						filename: "esprima/invalid-syntax/migrated_0124/input.js"
-						identifierName: "i"
-						end: Object {
-							column: 7
-							line: 1
-						}
-						start: Object {
-							column: 6
-							line: 1
-						}
-					}
+					loc: SourceLocation esprima/invalid-syntax/migrated_0124/input.js 1:11-1:13
 				}
 			}
 		}
@@ -178,13 +83,12 @@ JSRoot {
 
  esprima/invalid-syntax/migrated_0124/input.js:1:14 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ Unexpected token, expected ;
+  ✖ Unexpected character )
 
     for ((i in {}));
                   ^
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  ℹ Expected character ;
 
-✖ Found 1 problem
 
 ```

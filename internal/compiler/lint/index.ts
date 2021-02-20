@@ -16,7 +16,7 @@ import {ProjectConfig} from "@internal/project";
 export type LintResult = {
 	diagnostics: Diagnostics;
 	suppressions: DiagnosticSuppressions;
-	src: string;
+	formatted: string;
 };
 
 const ruleVisitorCache: WeakMap<ProjectConfig, AnyVisitor[]> = new WeakMap();
@@ -51,7 +51,8 @@ function getVisitors(config: ProjectConfig): AnyVisitor[] {
 const lintCache: Cache<LintResult> = new Cache();
 
 export default async function lint(req: LintRequest): Promise<LintResult> {
-	const {ast, project, applySafeFixes, options, suppressionExplanation} = req;
+	const {ast, applySafeFixes, options, suppressionExplanation} = req;
+	const project = CompilerContext.normalizeProject(req.project);
 
 	const query = Cache.buildQuery(req, {applySafeFixes, suppressionExplanation});
 	const cached = lintCache.get(query);
@@ -59,12 +60,13 @@ export default async function lint(req: LintRequest): Promise<LintResult> {
 		return cached;
 	}
 
+	const shouldLint = project.config.lint.enabled;
 	const shouldFormat = project.config.format.enabled;
 	const visitors = getVisitors(project.config);
 
 	// Perform fixes
 	let formatAst = ast;
-	if (shouldFormat && applySafeFixes) {
+	if (shouldFormat && applySafeFixes && shouldLint) {
 		const formatContext = new CompilerContext({
 			ref: req.ref,
 			options,
@@ -95,7 +97,6 @@ export default async function lint(req: LintRequest): Promise<LintResult> {
 		).code;
 	}
 
-	// Run lints (could be with the autofixed AST)
 	const context = new CompilerContext({
 		ref: req.ref,
 		ast,
@@ -106,16 +107,19 @@ export default async function lint(req: LintRequest): Promise<LintResult> {
 		},
 		frozen: true,
 	});
-	const newAst = context.reduceRoot(visitors);
-	if (ast !== newAst) {
-		throw new Error("Expected the same ast. `frozen: true` is broken");
+
+	if (shouldLint) {
+		// Run lints (could be with the autofixed AST)
+		const newAst = context.reduceRoot(visitors);
+		if (ast !== newAst) {
+			throw new Error("Expected the same ast. `frozen: true` is broken");
+		}
 	}
 
-	const diagnostics = context.diagnostics.getDiagnostics();
 	const result: LintResult = {
 		suppressions: context.suppressions,
-		diagnostics: [...ast.diagnostics, ...diagnostics],
-		src: formattedCode,
+		diagnostics: [...ast.diagnostics, ...context.diagnostics.getDiagnostics()],
+		formatted: formattedCode,
 	};
 	lintCache.set(query, result);
 	return result;

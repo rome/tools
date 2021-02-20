@@ -19,14 +19,14 @@ import {exists, readFileText} from "@internal/fs";
 
 export type UserConfig = {
 	configPath: undefined | AbsoluteFilePath;
-	cachePath: AbsoluteFilePath;
+	cacheDirectory: AbsoluteFilePath;
 	recoveryPath: AbsoluteFilePath;
 	syntaxTheme: undefined | Consumer;
 };
 
 export const DEFAULT_USER_CONFIG: UserConfig = {
 	configPath: undefined,
-	cachePath: DEFAULT_CACHE_PATH,
+	cacheDirectory: DEFAULT_CACHE_PATH,
 	recoveryPath: DEFAULT_USER_CONFIG_RECOVERY_DIRECTORY,
 	syntaxTheme: undefined,
 };
@@ -40,7 +40,7 @@ export async function normalizeUserConfig(
 	};
 
 	if (consumer.has("cachePath")) {
-		userConfig.cachePath = consumer.get("cachePath").asAbsoluteFilePath(
+		userConfig.cacheDirectory = consumer.get("cachePath").asAbsoluteFilePath(
 			undefined,
 			configPath.getParent(),
 		);

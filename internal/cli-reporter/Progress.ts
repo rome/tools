@@ -19,7 +19,7 @@ import {
 import ProgressBase from "./ProgressBase";
 import {AnyMarkup, markup} from "@internal/markup";
 import {formatAnsi} from "@internal/cli-layout";
-import {Number1, ob1Get1} from "@internal/ob1";
+import {OneIndexed} from "@internal/math";
 import * as streamUtils from "./stream";
 import {VoidCallback} from "@internal/typescript-helpers";
 
@@ -124,7 +124,7 @@ export default class Progress extends ProgressBase {
 				}
 
 				// We remove the bouncer width from the total columns since we'll append it
-				const width = ob1Get1(stream.features.columns) - BOUNCER_WIDTH;
+				const width = stream.features.columns.valueOf() - BOUNCER_WIDTH;
 
 				// Position to place the bouncer
 				let position = elapsedFrames % width;
@@ -281,13 +281,13 @@ export default class Progress extends ProgressBase {
 
 	private buildProgressBar(
 		stream: ReporterStream,
-		columns: Number1,
+		columns: OneIndexed,
 		bar: SplitBar,
 		total: number,
 	): string {
 		const ratio = Math.min(Math.max(this.current / total, 0), 1);
 
-		const completeLength = Math.round(ob1Get1(columns) * ratio);
+		const completeLength = Math.round(columns.valueOf() * ratio);
 		let fullBar = "";
 		for (const [i, char] of bar) {
 			if (i < completeLength) {
@@ -357,7 +357,7 @@ export default class Progress extends ProgressBase {
 		return suffix;
 	}
 
-	private buildBar(stream: ReporterStream, suffix: string, columns: Number1) {
+	private buildBar(stream: ReporterStream, suffix: string, columns: OneIndexed) {
 		const {total, title} = this;
 
 		// Text ranges that we should make bold
@@ -382,7 +382,7 @@ export default class Progress extends ProgressBase {
 		}
 
 		// Get the full width of the bar. We take off 3 for padding.
-		const width = ob1Get1(columns) - 3;
+		const width = columns.valueOf() - 3;
 
 		// The amount of spaces to put between the title and counter
 		const spacerLength = Math.max(0, width - prefix.length - suffix.length);

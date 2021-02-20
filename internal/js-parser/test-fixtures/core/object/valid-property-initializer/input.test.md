@@ -11,202 +11,75 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "core/object/valid-property-initializer/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "core/object/valid-property-initializer/input.js"
-		end: Object {
-			column: 0
-			line: 5
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation core/object/valid-property-initializer/input.js 1:0-5:0
+	path: UIDPath<core/object/valid-property-initializer/input.js>
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				category: "parse"
-				categoryValue: "js"
-				message: Array [
-					RAW_MARKUP {value: "Unexpected token, expected "}
-					","
-				]
-			}
 			location: Object {
-				filename: "core/object/valid-property-initializer/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 7
-					line: 2
-				}
-				start: Object {
-					column: 6
-					line: 2
-				}
+				end: Position 2:7
+				path: UIDPath<core/object/valid-property-initializer/input.js>
+				start: Position 2:6
+			}
+			description: Object {
+				categoryValue: "js"
+				category: Array ["parse"]
+				message: RAW_MARKUP {value: "Unexpected character <emphasis>=</emphasis>"}
+				advice: Array [
+					log {
+						category: "info"
+						text: RAW_MARKUP {value: "Expected character <emphasis>,</emphasis>"}
+					}
+				]
 			}
 		}
 	]
 	body: Array [
 		JSVariableDeclarationStatement {
-			loc: Object {
-				filename: "core/object/valid-property-initializer/input.js"
-				end: Object {
-					column: 25
-					line: 4
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation core/object/valid-property-initializer/input.js 1:0-4:25
 			declaration: JSVariableDeclaration {
 				kind: "const"
-				loc: Object {
-					filename: "core/object/valid-property-initializer/input.js"
-					end: Object {
-						column: 25
-						line: 4
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation core/object/valid-property-initializer/input.js 1:0-4:25
 				declarations: Array [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "obj"
-							loc: Object {
-								filename: "core/object/valid-property-initializer/input.js"
-								identifierName: "obj"
-								end: Object {
-									column: 9
-									line: 1
-								}
-								start: Object {
-									column: 6
-									line: 1
-								}
-							}
+							loc: SourceLocation core/object/valid-property-initializer/input.js 1:6-1:9 (obj)
 						}
-						loc: Object {
-							filename: "core/object/valid-property-initializer/input.js"
-							end: Object {
-								column: 11
-								line: 2
-							}
-							start: Object {
-								column: 6
-								line: 1
-							}
-						}
+						loc: SourceLocation core/object/valid-property-initializer/input.js 1:6-2:11
 						init: JSAssignmentExpression {
 							operator: "="
-							loc: Object {
-								filename: "core/object/valid-property-initializer/input.js"
-								end: Object {
-									column: 11
-									line: 2
-								}
-								start: Object {
-									column: 12
-									line: 1
-								}
-							}
+							loc: SourceLocation core/object/valid-property-initializer/input.js 1:12-2:11
 							right: JSNumericLiteral {
 								value: 123
 								format: undefined
-								loc: Object {
-									filename: "core/object/valid-property-initializer/input.js"
-									end: Object {
-										column: 11
-										line: 2
-									}
-									start: Object {
-										column: 8
-										line: 2
-									}
-								}
+								loc: SourceLocation core/object/valid-property-initializer/input.js 2:8-2:11
 							}
 							left: JSAssignmentObjectPattern {
 								rest: undefined
-								loc: Object {
-									filename: "core/object/valid-property-initializer/input.js"
-									end: Object {
-										column: 5
-										line: 2
-									}
-									start: Object {
-										column: 12
-										line: 1
-									}
-								}
+								loc: SourceLocation core/object/valid-property-initializer/input.js 1:12-2:5
 								properties: Array [
 									JSAssignmentObjectPatternProperty {
 										key: JSStaticPropertyKey {
 											value: JSIdentifier {
 												name: "foo"
-												loc: Object {
-													filename: "core/object/valid-property-initializer/input.js"
-													identifierName: "foo"
-													end: Object {
-														column: 5
-														line: 2
-													}
-													start: Object {
-														column: 2
-														line: 2
-													}
-												}
+												loc: SourceLocation core/object/valid-property-initializer/input.js 2:2-2:5 (foo)
 											}
-											loc: Object {
-												filename: "core/object/valid-property-initializer/input.js"
-												end: Object {
-													column: 5
-													line: 2
-												}
-												start: Object {
-													column: 2
-													line: 2
-												}
-											}
+											loc: SourceLocation core/object/valid-property-initializer/input.js 2:2-2:5
 										}
 										value: JSAssignmentIdentifier {
 											name: "foo"
-											loc: Object {
-												filename: "core/object/valid-property-initializer/input.js"
-												identifierName: "foo"
-												end: Object {
-													column: 5
-													line: 2
-												}
-												start: Object {
-													column: 2
-													line: 2
-												}
-											}
+											loc: SourceLocation core/object/valid-property-initializer/input.js 2:2-2:5 (foo)
 										}
-										loc: Object {
-											filename: "core/object/valid-property-initializer/input.js"
-											end: Object {
-												column: 5
-												line: 2
-											}
-											start: Object {
-												column: 2
-												line: 2
-											}
-										}
+										loc: SourceLocation core/object/valid-property-initializer/input.js 2:2-2:5
 									}
 								]
 							}
@@ -215,239 +88,65 @@ JSRoot {
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "bar"
-							loc: Object {
-								filename: "core/object/valid-property-initializer/input.js"
-								end: Object {
-									column: 8
-									line: 3
-								}
-								start: Object {
-									column: 2
-									line: 3
-								}
-							}
+							loc: SourceLocation core/object/valid-property-initializer/input.js 3:2-3:8
 							meta: JSPatternMeta {
 								definite: undefined
-								loc: Object {
-									filename: "core/object/valid-property-initializer/input.js"
-									end: Object {
-										column: 8
-										line: 3
-									}
-									start: Object {
-										column: 2
-										line: 3
-									}
-								}
+								loc: SourceLocation core/object/valid-property-initializer/input.js 3:2-3:8
 								typeAnnotation: TSTypeReference {
 									typeParameters: undefined
-									loc: Object {
-										filename: "core/object/valid-property-initializer/input.js"
-										end: Object {
-											column: 8
-											line: 3
-										}
-										start: Object {
-											column: 7
-											line: 3
-										}
-									}
+									loc: SourceLocation core/object/valid-property-initializer/input.js 3:7-3:8
 									typeName: JSReferenceIdentifier {
 										name: "x"
-										loc: Object {
-											filename: "core/object/valid-property-initializer/input.js"
-											identifierName: "x"
-											end: Object {
-												column: 8
-												line: 3
-											}
-											start: Object {
-												column: 7
-												line: 3
-											}
-										}
+										loc: SourceLocation core/object/valid-property-initializer/input.js 3:7-3:8 (x)
 									}
 								}
 							}
 						}
-						loc: Object {
-							filename: "core/object/valid-property-initializer/input.js"
-							end: Object {
-								column: 14
-								line: 3
-							}
-							start: Object {
-								column: 2
-								line: 3
-							}
-						}
+						loc: SourceLocation core/object/valid-property-initializer/input.js 3:2-3:14
 						init: JSNumericLiteral {
 							value: 123
 							format: undefined
-							loc: Object {
-								filename: "core/object/valid-property-initializer/input.js"
-								end: Object {
-									column: 14
-									line: 3
-								}
-								start: Object {
-									column: 11
-									line: 3
-								}
-							}
+							loc: SourceLocation core/object/valid-property-initializer/input.js 3:11-3:14
 						}
 					}
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: ""
-							loc: Object {
-								filename: "core/object/valid-property-initializer/input.js"
-								identifierName: ""
-								end: Object {
-									column: 1
-									line: 4
-								}
-								start: Object {
-									column: 0
-									line: 4
-								}
-							}
+							loc: SourceLocation core/object/valid-property-initializer/input.js 4:0-4:1 ()
 						}
-						loc: Object {
-							filename: "core/object/valid-property-initializer/input.js"
-							end: Object {
-								column: 24
-								line: 4
-							}
-							start: Object {
-								column: 0
-								line: 4
-							}
-						}
+						loc: SourceLocation core/object/valid-property-initializer/input.js 4:0-4:24
 						init: JSObjectExpression {
-							loc: Object {
-								filename: "core/object/valid-property-initializer/input.js"
-								end: Object {
-									column: 24
-									line: 4
-								}
-								start: Object {
-									column: 4
-									line: 4
-								}
-							}
+							loc: SourceLocation core/object/valid-property-initializer/input.js 4:4-4:24
 							properties: Array [
 								JSObjectProperty {
 									key: JSStaticPropertyKey {
 										value: JSIdentifier {
 											name: "foo"
-											loc: Object {
-												filename: "core/object/valid-property-initializer/input.js"
-												identifierName: "foo"
-												end: Object {
-													column: 9
-													line: 4
-												}
-												start: Object {
-													column: 6
-													line: 4
-												}
-											}
+											loc: SourceLocation core/object/valid-property-initializer/input.js 4:6-4:9 (foo)
 										}
-										loc: Object {
-											filename: "core/object/valid-property-initializer/input.js"
-											end: Object {
-												column: 9
-												line: 4
-											}
-											start: Object {
-												column: 6
-												line: 4
-											}
-										}
+										loc: SourceLocation core/object/valid-property-initializer/input.js 4:6-4:9
 									}
 									value: JSNumericLiteral {
 										value: 24
 										format: undefined
-										loc: Object {
-											filename: "core/object/valid-property-initializer/input.js"
-											end: Object {
-												column: 13
-												line: 4
-											}
-											start: Object {
-												column: 11
-												line: 4
-											}
-										}
+										loc: SourceLocation core/object/valid-property-initializer/input.js 4:11-4:13
 									}
-									loc: Object {
-										filename: "core/object/valid-property-initializer/input.js"
-										end: Object {
-											column: 13
-											line: 4
-										}
-										start: Object {
-											column: 6
-											line: 4
-										}
-									}
+									loc: SourceLocation core/object/valid-property-initializer/input.js 4:6-4:13
 								}
 								JSObjectProperty {
 									key: JSStaticPropertyKey {
 										value: JSIdentifier {
 											name: "bar"
-											loc: Object {
-												filename: "core/object/valid-property-initializer/input.js"
-												identifierName: "bar"
-												end: Object {
-													column: 18
-													line: 4
-												}
-												start: Object {
-													column: 15
-													line: 4
-												}
-											}
+											loc: SourceLocation core/object/valid-property-initializer/input.js 4:15-4:18 (bar)
 										}
-										loc: Object {
-											filename: "core/object/valid-property-initializer/input.js"
-											end: Object {
-												column: 18
-												line: 4
-											}
-											start: Object {
-												column: 15
-												line: 4
-											}
-										}
+										loc: SourceLocation core/object/valid-property-initializer/input.js 4:15-4:18
 									}
 									value: JSNumericLiteral {
 										value: 45
 										format: undefined
-										loc: Object {
-											filename: "core/object/valid-property-initializer/input.js"
-											end: Object {
-												column: 22
-												line: 4
-											}
-											start: Object {
-												column: 20
-												line: 4
-											}
-										}
+										loc: SourceLocation core/object/valid-property-initializer/input.js 4:20-4:22
 									}
-									loc: Object {
-										filename: "core/object/valid-property-initializer/input.js"
-										end: Object {
-											column: 22
-											line: 4
-										}
-										start: Object {
-											column: 15
-											line: 4
-										}
-									}
+									loc: SourceLocation core/object/valid-property-initializer/input.js 4:15-4:22
 								}
 							]
 						}
@@ -465,7 +164,7 @@ JSRoot {
 
  core/object/valid-property-initializer/input.js:2:6 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ Unexpected token, expected ,
+  ✖ Unexpected character =
 
     1 │ const obj = {
   > 2 │   foo = 123,
@@ -473,8 +172,7 @@ JSRoot {
     3 │   bar: x = 123,
     4 │ } = { foo: 24, bar: 45 };
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  ℹ Expected character ,
 
-✖ Found 1 problem
 
 ```

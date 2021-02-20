@@ -11,45 +11,29 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "es2015/class/extends-strict/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2015/class/extends-strict/input.js"
-		end: Object {
-			column: 0
-			line: 5
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2015/class/extends-strict/input.js 1:0-5:0
+	path: UIDPath<es2015/class/extends-strict/input.js>
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse"
 				categoryValue: "js"
+				category: Array ["parse"]
 				message: RAW_MARKUP {value: "'with' in strict mode"}
 			}
 			location: Object {
-				filename: "es2015/class/extends-strict/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 12
-					line: 2
-				}
-				start: Object {
-					column: 2
-					line: 2
-				}
+				end: Position 2:12
+				path: UIDPath<es2015/class/extends-strict/input.js>
+				start: Position 2:2
 			}
 		}
 	]
@@ -57,86 +41,24 @@ JSRoot {
 		JSClassDeclaration {
 			id: JSBindingIdentifier {
 				name: "C"
-				loc: Object {
-					filename: "es2015/class/extends-strict/input.js"
-					identifierName: "C"
-					end: Object {
-						column: 7
-						line: 1
-					}
-					start: Object {
-						column: 6
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/class/extends-strict/input.js 1:6-1:7 (C)
 			}
-			loc: Object {
-				filename: "es2015/class/extends-strict/input.js"
-				end: Object {
-					column: 7
-					line: 4
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2015/class/extends-strict/input.js 1:0-4:7
 			meta: JSClassHead {
 				body: Array []
 				implements: undefined
 				superTypeParameters: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "es2015/class/extends-strict/input.js"
-					end: Object {
-						column: 7
-						line: 4
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/class/extends-strict/input.js 1:0-4:7
 				superClass: JSCallExpression {
 					arguments: Array []
-					loc: Object {
-						filename: "es2015/class/extends-strict/input.js"
-						end: Object {
-							column: 3
-							line: 4
-						}
-						start: Object {
-							column: 17
-							line: 1
-						}
-					}
+					loc: SourceLocation es2015/class/extends-strict/input.js 1:17-4:3
 					callee: JSFunctionExpression {
 						id: JSBindingIdentifier {
 							name: "B"
-							loc: Object {
-								filename: "es2015/class/extends-strict/input.js"
-								identifierName: "B"
-								end: Object {
-									column: 27
-									line: 1
-								}
-								start: Object {
-									column: 26
-									line: 1
-								}
-							}
+							loc: SourceLocation es2015/class/extends-strict/input.js 1:26-1:27 (B)
 						}
-						loc: Object {
-							filename: "es2015/class/extends-strict/input.js"
-							end: Object {
-								column: 1
-								line: 4
-							}
-							start: Object {
-								column: 17
-								line: 1
-							}
-						}
+						loc: SourceLocation es2015/class/extends-strict/input.js 1:17-4:1
 						head: JSFunctionHead {
 							async: false
 							generator: false
@@ -146,98 +68,25 @@ JSRoot {
 							returnType: undefined
 							thisType: undefined
 							typeParameters: undefined
-							loc: Object {
-								filename: "es2015/class/extends-strict/input.js"
-								end: Object {
-									column: 29
-									line: 1
-								}
-								start: Object {
-									column: 27
-									line: 1
-								}
-							}
+							loc: SourceLocation es2015/class/extends-strict/input.js 1:27-1:29
 						}
 						body: JSBlockStatement {
 							directives: Array []
-							loc: Object {
-								filename: "es2015/class/extends-strict/input.js"
-								end: Object {
-									column: 1
-									line: 4
-								}
-								start: Object {
-									column: 30
-									line: 1
-								}
-							}
+							loc: SourceLocation es2015/class/extends-strict/input.js 1:30-4:1
 							body: Array [
 								JSWithStatement {
-									loc: Object {
-										filename: "es2015/class/extends-strict/input.js"
-										end: Object {
-											column: 12
-											line: 2
-										}
-										start: Object {
-											column: 2
-											line: 2
-										}
-									}
-									body: JSEmptyStatement {
-										loc: Object {
-											filename: "es2015/class/extends-strict/input.js"
-											end: Object {
-												column: 12
-												line: 2
-											}
-											start: Object {
-												column: 11
-												line: 2
-											}
-										}
-									}
+									body: JSEmptyStatement {loc: SourceLocation es2015/class/extends-strict/input.js 2:11-2:12}
+									loc: SourceLocation es2015/class/extends-strict/input.js 2:2-2:12
 									object: JSObjectExpression {
 										properties: Array []
-										loc: Object {
-											filename: "es2015/class/extends-strict/input.js"
-											end: Object {
-												column: 10
-												line: 2
-											}
-											start: Object {
-												column: 8
-												line: 2
-											}
-										}
+										loc: SourceLocation es2015/class/extends-strict/input.js 2:8-2:10
 									}
 								}
 								JSReturnStatement {
-									loc: Object {
-										filename: "es2015/class/extends-strict/input.js"
-										end: Object {
-											column: 11
-											line: 3
-										}
-										start: Object {
-											column: 2
-											line: 3
-										}
-									}
+									loc: SourceLocation es2015/class/extends-strict/input.js 3:2-3:11
 									argument: JSReferenceIdentifier {
 										name: "B"
-										loc: Object {
-											filename: "es2015/class/extends-strict/input.js"
-											identifierName: "B"
-											end: Object {
-												column: 10
-												line: 3
-											}
-											start: Object {
-												column: 9
-												line: 3
-											}
-										}
+										loc: SourceLocation es2015/class/extends-strict/input.js 3:9-3:10 (B)
 									}
 								}
 							]
@@ -264,8 +113,5 @@ JSRoot {
     3 │   return B;
     4 │ }()) {}
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

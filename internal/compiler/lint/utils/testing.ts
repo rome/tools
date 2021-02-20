@@ -6,14 +6,20 @@
  */
 
 import {TestHelper} from "rome";
-import {DiagnosticCategory, DiagnosticsProcessor} from "@internal/diagnostics";
+import {
+	DIAGNOSTIC_CATEGORIES,
+	DiagnosticCategory,
+	DiagnosticsProcessor,
+	equalCategoryNames,
+	joinCategoryName,
+} from "@internal/diagnostics";
 import {printDiagnosticsToString} from "@internal/cli-diagnostics";
 import {IntegrationWorker, createMockWorker} from "@internal/test-helpers";
-import {createRelativeFilePath} from "@internal/path";
+import {AnyPath, createUIDPath} from "@internal/path";
 
 type TestLintOptions = {
-	category: undefined | DiagnosticCategory;
-	filename: string;
+	category: DiagnosticCategory;
+	path: AnyPath;
 	snapshotFilename?: string;
 	valid?: string[];
 	invalid?: string[];
@@ -40,7 +46,7 @@ async function testLintExpect(
 	input: string,
 	{
 		category,
-		filename,
+		path,
 		snapshotFilename,
 	}: TestLintOptions,
 	index: number,
@@ -49,7 +55,7 @@ async function testLintExpect(
 	t.addToAdvice({
 		type: "inspect",
 		data: {
-			filename,
+			filename: path.join(),
 			expectValid,
 		},
 	});
@@ -65,7 +71,9 @@ async function testLintExpect(
 		sourceText: input,
 	});
 
-	const uid = `${category}/${expectValid ? "pass" : "reject"}/${index}/${filename}`;
+	const uid = createUIDPath(
+		`${joinCategoryName(category)}/${expectValid ? "pass" : "reject"}/${index}/${path.join()}`,
+	);
 
 	const res = await performFileOperation(
 		{
@@ -102,8 +110,8 @@ async function testLintExpect(
 	processor.normalizer.setInlineSourceText(uid, input);
 	processor.addFilter({
 		test: (diag) =>
-			diag.description.category === category ||
-			diag.description.category === "parse"
+			equalCategoryNames(diag.description.category, category) ||
+			equalCategoryNames(diag.description.category, DIAGNOSTIC_CATEGORIES.parse)
 		,
 	});
 	processor.addDiagnostics(res.diagnostics);
@@ -115,12 +123,20 @@ async function testLintExpect(
 	} else {
 		t.true(diagnostics.length > 0, "Expected test to have diagnostics.");
 	}
-	const path = createRelativeFilePath(filename);
 
 	const snapshotName = t.snapshot(
 		await printDiagnosticsToString({
 			diagnostics,
 			suppressions: res.suppressions,
+			printerOptions: {
+				fileHandlers: [
+					{
+						async exists() {
+							return true;
+						},
+					},
+				],
+			},
 		}),
 		undefined,
 		{filename: snapshotFilename},

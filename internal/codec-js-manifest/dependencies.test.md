@@ -48,17 +48,7 @@ npm {
 		minor: 0
 		patch: 0
 		prerelease: Array []
-		loc: Object {
-			filename: undefined
-			end: Object {
-				column: 4
-				line: 1
-			}
-			start: Object {
-				column: 0
-				line: 1
-			}
-		}
+		loc: SourceLocation unknown 1:0-1:4
 	}
 }
 ```
@@ -77,17 +67,7 @@ npm {
 		minor: 0
 		patch: 0
 		prerelease: Array []
-		loc: Object {
-			filename: undefined
-			end: Object {
-				column: 4
-				line: 1
-			}
-			start: Object {
-				column: 0
-				line: 1
-			}
-		}
+		loc: SourceLocation unknown 1:0-1:4
 	}
 }
 ```

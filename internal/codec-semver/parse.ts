@@ -26,7 +26,6 @@ import {
 	isAlpha,
 	isDigit,
 } from "@internal/parser-core";
-import {ob1Add} from "@internal/ob1";
 import {descriptions} from "@internal/diagnostics";
 
 export type SemverParserOptions = ParserOptions & {
@@ -45,12 +44,12 @@ type SemverParserTypes = {
 };
 type SemverParser = ParserCore<SemverParserTypes>;
 
-const createSemverParser = createParser<SemverParserTypes>({
+const semverParser = createParser<SemverParserTypes>({
 	diagnosticLanguage: "semver",
 	normalizeInput: (input) => input.trimRight(),
 	tokenize(parser, index) {
 		const char = parser.getInputCharOnly(index);
-		const nextChar = parser.getInputCharOnly(index, 1);
+		const nextChar = parser.getInputCharOnly(index.increment());
 
 		if (
 			(char === "<" && nextChar === "=") ||
@@ -59,7 +58,7 @@ const createSemverParser = createParser<SemverParserTypes>({
 		) {
 			// @ts-ignore: TS doesn't infer the possible combinations
 			const value: ComparatorOperator = char + nextChar;
-			return parser.finishValueToken("Operator", value, ob1Add(index, 2));
+			return parser.finishValueToken("Operator", value, index.add(2));
 		}
 
 		if (
@@ -74,7 +73,7 @@ const createSemverParser = createParser<SemverParserTypes>({
 		}
 
 		if (char === "|" && nextChar === "|") {
-			return parser.finishToken("Pipe", ob1Add(index, 2));
+			return parser.finishToken("Pipe", index.add(2));
 		}
 
 		if (char === "*") {
@@ -82,7 +81,7 @@ const createSemverParser = createParser<SemverParserTypes>({
 		}
 
 		if (
-			parser.getInputCharOnly(index, -1) === " " &&
+			parser.getInputCharOnly(index.decrement()) === " " &&
 			char === "-" &&
 			nextChar === " "
 		) {
@@ -106,13 +105,13 @@ const createSemverParser = createParser<SemverParserTypes>({
 			return parser.finishValueToken(
 				"Number",
 				Number(value),
-				ob1Add(index, value.length),
+				index.add(value.length),
 			);
 		}
 
 		if (isAlpha(char)) {
 			const [value] = parser.readInputFrom(index, isAlpha);
-			return parser.finishValueToken("Word", value, ob1Add(index, value.length));
+			return parser.finishValueToken("Word", value, index.add(value.length));
 		}
 
 		if (char === " " || char === "\t") {
@@ -454,7 +453,7 @@ function parseLogicalAnd(parser: SemverParser, left: RangeNode): LogicalAndNode 
 		left,
 		right,
 		loc: {
-			filename: parser.filename,
+			path: parser.path,
 			start: parser.getLoc(left).start,
 			end: parser.getLoc(right).end,
 		},
@@ -510,11 +509,11 @@ function parseInitialVersion(parser: SemverParser): AbsoluteVersionNode {
 }
 
 export function parseSemverRange(opts: SemverParserOptions): RangeNode {
-	return parseInitialRange(createSemverParser(opts, {mode: "range"}));
+	return parseInitialRange(semverParser.create(opts, {mode: "range"}));
 }
 
 export function parseSemverVersion(
 	opts: SemverParserOptions,
 ): AbsoluteVersionNode {
-	return parseInitialVersion(createSemverParser(opts, {mode: "version"}));
+	return parseInitialVersion(semverParser.create(opts, {mode: "version"}));
 }

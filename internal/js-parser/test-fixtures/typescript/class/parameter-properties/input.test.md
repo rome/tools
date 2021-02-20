@@ -11,140 +11,48 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "typescript/class/parameter-properties/input.ts"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
+	loc: SourceLocation typescript/class/parameter-properties/input.ts 1:0-12:0
+	path: UIDPath<typescript/class/parameter-properties/input.ts>
 	syntax: Array ["ts"]
-	loc: Object {
-		filename: "typescript/class/parameter-properties/input.ts"
-		end: Object {
-			column: 0
-			line: 12
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
 	comments: Array [
 		CommentLine {
 			id: "0"
 			value: " Also works on AssignmentPattern"
-			loc: Object {
-				filename: "typescript/class/parameter-properties/input.ts"
-				end: Object {
-					column: 42
-					line: 8
-				}
-				start: Object {
-					column: 8
-					line: 8
-				}
-			}
+			loc: SourceLocation typescript/class/parameter-properties/input.ts 8:8-8:42
 		}
 	]
 	body: Array [
 		JSClassDeclaration {
 			id: JSBindingIdentifier {
 				name: "C"
-				loc: Object {
-					filename: "typescript/class/parameter-properties/input.ts"
-					identifierName: "C"
-					end: Object {
-						column: 7
-						line: 1
-					}
-					start: Object {
-						column: 6
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/class/parameter-properties/input.ts 1:6-1:7 (C)
 			}
-			loc: Object {
-				filename: "typescript/class/parameter-properties/input.ts"
-				end: Object {
-					column: 1
-					line: 11
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation typescript/class/parameter-properties/input.ts 1:0-11:1
 			meta: JSClassHead {
 				implements: undefined
 				superClass: undefined
 				superTypeParameters: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "typescript/class/parameter-properties/input.ts"
-					end: Object {
-						column: 1
-						line: 11
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/class/parameter-properties/input.ts 1:0-11:1
 				body: Array [
 					JSClassMethod {
 						kind: "constructor"
 						key: JSStaticPropertyKey {
 							value: JSIdentifier {
 								name: "constructor"
-								loc: Object {
-									filename: "typescript/class/parameter-properties/input.ts"
-									identifierName: "constructor"
-									end: Object {
-										column: 15
-										line: 2
-									}
-									start: Object {
-										column: 4
-										line: 2
-									}
-								}
+								loc: SourceLocation typescript/class/parameter-properties/input.ts 2:4-2:15 (constructor)
 							}
-							loc: Object {
-								filename: "typescript/class/parameter-properties/input.ts"
-								end: Object {
-									column: 15
-									line: 2
-								}
-								start: Object {
-									column: 4
-									line: 2
-								}
-							}
+							loc: SourceLocation typescript/class/parameter-properties/input.ts 2:4-2:15
 						}
-						loc: Object {
-							filename: "typescript/class/parameter-properties/input.ts"
-							end: Object {
-								column: 33
-								line: 10
-							}
-							start: Object {
-								column: 4
-								line: 2
-							}
-						}
+						loc: SourceLocation typescript/class/parameter-properties/input.ts 2:4-10:33
 						body: JSBlockStatement {
 							body: Array []
 							directives: Array []
-							loc: Object {
-								filename: "typescript/class/parameter-properties/input.ts"
-								end: Object {
-									column: 33
-									line: 10
-								}
-								start: Object {
-									column: 31
-									line: 10
-								}
-							}
+							loc: SourceLocation typescript/class/parameter-properties/input.ts 10:31-10:33
 						}
 						meta: JSClassPropertyMeta {
 							abstract: false
@@ -153,21 +61,8 @@ JSRoot {
 							readonly: false
 							static: false
 							typeAnnotation: undefined
-							start: Object {
-								column: 4
-								line: 2
-							}
-							loc: Object {
-								filename: "typescript/class/parameter-properties/input.ts"
-								end: Object {
-									column: 15
-									line: 2
-								}
-								start: Object {
-									column: 4
-									line: 2
-								}
-							}
+							loc: SourceLocation typescript/class/parameter-properties/input.ts 2:4-2:15
+							start: Position 2:4
 						}
 						head: JSFunctionHead {
 							async: false
@@ -177,365 +72,105 @@ JSRoot {
 							returnType: undefined
 							thisType: undefined
 							typeParameters: undefined
-							loc: Object {
-								filename: "typescript/class/parameter-properties/input.ts"
-								end: Object {
-									column: 30
-									line: 10
-								}
-								start: Object {
-									column: 15
-									line: 2
-								}
-							}
+							loc: SourceLocation typescript/class/parameter-properties/input.ts 2:15-10:30
 							params: Array [
 								JSBindingIdentifier {
 									name: "r"
-									loc: Object {
-										filename: "typescript/class/parameter-properties/input.ts"
-										end: Object {
-											column: 18
-											line: 3
-										}
-										start: Object {
-											column: 8
-											line: 3
-										}
-									}
+									loc: SourceLocation typescript/class/parameter-properties/input.ts 3:8-3:18
 									meta: JSPatternMeta {
 										accessibility: undefined
 										readonly: true
 										typeAnnotation: undefined
-										loc: Object {
-											filename: "typescript/class/parameter-properties/input.ts"
-											end: Object {
-												column: 18
-												line: 3
-											}
-											start: Object {
-												column: 8
-												line: 3
-											}
-										}
+										loc: SourceLocation typescript/class/parameter-properties/input.ts 3:8-3:18
 									}
 								}
 								JSBindingIdentifier {
 									name: "pu"
-									loc: Object {
-										filename: "typescript/class/parameter-properties/input.ts"
-										end: Object {
-											column: 25
-											line: 4
-										}
-										start: Object {
-											column: 8
-											line: 4
-										}
-									}
+									loc: SourceLocation typescript/class/parameter-properties/input.ts 4:8-4:25
 									meta: JSPatternMeta {
 										accessibility: "public"
 										readonly: false
-										loc: Object {
-											filename: "typescript/class/parameter-properties/input.ts"
-											end: Object {
-												column: 25
-												line: 4
-											}
-											start: Object {
-												column: 8
-												line: 4
-											}
-										}
-										typeAnnotation: TSNumberKeywordTypeAnnotation {
-											loc: Object {
-												filename: "typescript/class/parameter-properties/input.ts"
-												end: Object {
-													column: 25
-													line: 4
-												}
-												start: Object {
-													column: 19
-													line: 4
-												}
-											}
-										}
+										loc: SourceLocation typescript/class/parameter-properties/input.ts 4:8-4:25
+										typeAnnotation: TSNumberKeywordTypeAnnotation {loc: SourceLocation typescript/class/parameter-properties/input.ts 4:19-4:25}
 									}
 								}
 								JSBindingIdentifier {
 									name: "po"
-									loc: Object {
-										filename: "typescript/class/parameter-properties/input.ts"
-										end: Object {
-											column: 21
-											line: 5
-										}
-										start: Object {
-											column: 8
-											line: 5
-										}
-									}
+									loc: SourceLocation typescript/class/parameter-properties/input.ts 5:8-5:21
 									meta: JSPatternMeta {
 										accessibility: "protected"
 										readonly: false
 										typeAnnotation: undefined
-										loc: Object {
-											filename: "typescript/class/parameter-properties/input.ts"
-											end: Object {
-												column: 21
-												line: 5
-											}
-											start: Object {
-												column: 8
-												line: 5
-											}
-										}
+										loc: SourceLocation typescript/class/parameter-properties/input.ts 5:8-5:21
 									}
 								}
 								JSBindingIdentifier {
 									name: "pi"
-									loc: Object {
-										filename: "typescript/class/parameter-properties/input.ts"
-										end: Object {
-											column: 27
-											line: 6
-										}
-										start: Object {
-											column: 8
-											line: 6
-										}
-									}
+									loc: SourceLocation typescript/class/parameter-properties/input.ts 6:8-6:27
 									meta: JSPatternMeta {
 										accessibility: "private"
 										readonly: false
-										loc: Object {
-											filename: "typescript/class/parameter-properties/input.ts"
-											end: Object {
-												column: 27
-												line: 6
-											}
-											start: Object {
-												column: 8
-												line: 6
-											}
-										}
-										typeAnnotation: TSNumberKeywordTypeAnnotation {
-											loc: Object {
-												filename: "typescript/class/parameter-properties/input.ts"
-												end: Object {
-													column: 27
-													line: 6
-												}
-												start: Object {
-													column: 21
-													line: 6
-												}
-											}
-										}
+										loc: SourceLocation typescript/class/parameter-properties/input.ts 6:8-6:27
+										typeAnnotation: TSNumberKeywordTypeAnnotation {loc: SourceLocation typescript/class/parameter-properties/input.ts 6:21-6:27}
 									}
 								}
 								JSBindingIdentifier {
 									name: "pur"
-									loc: Object {
-										filename: "typescript/class/parameter-properties/input.ts"
-										end: Object {
-											column: 27
-											line: 7
-										}
-										start: Object {
-											column: 8
-											line: 7
-										}
-									}
+									loc: SourceLocation typescript/class/parameter-properties/input.ts 7:8-7:27
 									meta: JSPatternMeta {
 										accessibility: "public"
 										readonly: true
 										typeAnnotation: undefined
-										loc: Object {
-											filename: "typescript/class/parameter-properties/input.ts"
-											end: Object {
-												column: 27
-												line: 7
-											}
-											start: Object {
-												column: 8
-												line: 7
-											}
-										}
+										loc: SourceLocation typescript/class/parameter-properties/input.ts 7:8-7:27
 									}
 								}
 								JSBindingAssignmentPattern {
 									leadingComments: Array ["0"]
-									loc: Object {
-										filename: "typescript/class/parameter-properties/input.ts"
-										end: Object {
-											column: 22
-											line: 9
-										}
-										start: Object {
-											column: 8
-											line: 9
-										}
-									}
+									loc: SourceLocation typescript/class/parameter-properties/input.ts 9:8-9:22
 									right: JSNumericLiteral {
 										value: 0
 										format: undefined
-										loc: Object {
-											filename: "typescript/class/parameter-properties/input.ts"
-											end: Object {
-												column: 22
-												line: 9
-											}
-											start: Object {
-												column: 21
-												line: 9
-											}
-										}
+										loc: SourceLocation typescript/class/parameter-properties/input.ts 9:21-9:22
 									}
 									meta: JSPatternMeta {
 										accessibility: undefined
 										leadingComments: undefined
 										readonly: true
 										typeAnnotation: undefined
-										loc: Object {
-											filename: "typescript/class/parameter-properties/input.ts"
-											end: Object {
-												column: 22
-												line: 9
-											}
-											start: Object {
-												column: 8
-												line: 9
-											}
-										}
+										loc: SourceLocation typescript/class/parameter-properties/input.ts 9:8-9:22
 									}
 									left: JSBindingIdentifier {
 										name: "x"
 										leadingComments: undefined
-										loc: Object {
-											filename: "typescript/class/parameter-properties/input.ts"
-											identifierName: "x"
-											end: Object {
-												column: 18
-												line: 9
-											}
-											start: Object {
-												column: 17
-												line: 9
-											}
-										}
+										loc: SourceLocation typescript/class/parameter-properties/input.ts 9:17-9:18 (x)
 										meta: JSPatternMeta {
 											leadingComments: undefined
 											optional: undefined
 											typeAnnotation: undefined
-											loc: Object {
-												filename: "typescript/class/parameter-properties/input.ts"
-												end: Object {
-													column: 18
-													line: 9
-												}
-												start: Object {
-													column: 8
-													line: 9
-												}
-											}
+											loc: SourceLocation typescript/class/parameter-properties/input.ts 9:8-9:18
 										}
 									}
 								}
 								JSBindingAssignmentPattern {
-									loc: Object {
-										filename: "typescript/class/parameter-properties/input.ts"
-										end: Object {
-											column: 29
-											line: 10
-										}
-										start: Object {
-											column: 8
-											line: 10
-										}
-									}
+									loc: SourceLocation typescript/class/parameter-properties/input.ts 10:8-10:29
 									right: JSNumericLiteral {
 										value: 0
 										format: undefined
-										loc: Object {
-											filename: "typescript/class/parameter-properties/input.ts"
-											end: Object {
-												column: 29
-												line: 10
-											}
-											start: Object {
-												column: 28
-												line: 10
-											}
-										}
+										loc: SourceLocation typescript/class/parameter-properties/input.ts 10:28-10:29
 									}
 									meta: JSPatternMeta {
 										accessibility: "public"
 										readonly: false
-										loc: Object {
-											filename: "typescript/class/parameter-properties/input.ts"
-											end: Object {
-												column: 29
-												line: 10
-											}
-											start: Object {
-												column: 8
-												line: 10
-											}
-										}
-										typeAnnotation: TSNumberKeywordTypeAnnotation {
-											loc: Object {
-												filename: "typescript/class/parameter-properties/input.ts"
-												end: Object {
-													column: 25
-													line: 10
-												}
-												start: Object {
-													column: 19
-													line: 10
-												}
-											}
-										}
+										loc: SourceLocation typescript/class/parameter-properties/input.ts 10:8-10:29
+										typeAnnotation: TSNumberKeywordTypeAnnotation {loc: SourceLocation typescript/class/parameter-properties/input.ts 10:19-10:25}
 									}
 									left: JSBindingIdentifier {
 										name: "y"
-										loc: Object {
-											filename: "typescript/class/parameter-properties/input.ts"
-											identifierName: "y"
-											end: Object {
-												column: 16
-												line: 10
-											}
-											start: Object {
-												column: 15
-												line: 10
-											}
-										}
+										loc: SourceLocation typescript/class/parameter-properties/input.ts 10:15-10:16 (y)
 										meta: JSPatternMeta {
 											optional: true
-											loc: Object {
-												filename: "typescript/class/parameter-properties/input.ts"
-												end: Object {
-													column: 25
-													line: 10
-												}
-												start: Object {
-													column: 8
-													line: 10
-												}
-											}
-											typeAnnotation: TSNumberKeywordTypeAnnotation {
-												loc: Object {
-													filename: "typescript/class/parameter-properties/input.ts"
-													end: Object {
-														column: 25
-														line: 10
-													}
-													start: Object {
-														column: 19
-														line: 10
-													}
-												}
-											}
+											loc: SourceLocation typescript/class/parameter-properties/input.ts 10:8-10:25
+											typeAnnotation: TSNumberKeywordTypeAnnotation {loc: SourceLocation typescript/class/parameter-properties/input.ts 10:19-10:25}
 										}
 									}
 								}
@@ -552,6 +187,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

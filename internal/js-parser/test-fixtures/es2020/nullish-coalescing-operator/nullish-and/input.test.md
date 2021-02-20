@@ -12,106 +12,33 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "es2020/nullish-coalescing-operator/nullish-and/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2020/nullish-coalescing-operator/nullish-and/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2020/nullish-coalescing-operator/nullish-and/input.js 1:0-2:0
+	path: UIDPath<es2020/nullish-coalescing-operator/nullish-and/input.js>
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "es2020/nullish-coalescing-operator/nullish-and/input.js"
-				end: Object {
-					column: 14
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2020/nullish-coalescing-operator/nullish-and/input.js 1:0-1:14
 			expression: JSLogicalExpression {
 				operator: "??"
-				loc: Object {
-					filename: "es2020/nullish-coalescing-operator/nullish-and/input.js"
-					end: Object {
-						column: 13
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation es2020/nullish-coalescing-operator/nullish-and/input.js 1:0-1:13
 				left: JSReferenceIdentifier {
 					name: "a"
-					loc: Object {
-						filename: "es2020/nullish-coalescing-operator/nullish-and/input.js"
-						identifierName: "a"
-						end: Object {
-							column: 1
-							line: 1
-						}
-						start: Object {
-							column: 0
-							line: 1
-						}
-					}
+					loc: SourceLocation es2020/nullish-coalescing-operator/nullish-and/input.js 1:0-1:1 (a)
 				}
 				right: JSLogicalExpression {
 					operator: "&&"
-					loc: Object {
-						filename: "es2020/nullish-coalescing-operator/nullish-and/input.js"
-						end: Object {
-							column: 12
-							line: 1
-						}
-						start: Object {
-							column: 6
-							line: 1
-						}
-					}
+					loc: SourceLocation es2020/nullish-coalescing-operator/nullish-and/input.js 1:6-1:12
 					left: JSReferenceIdentifier {
 						name: "b"
-						loc: Object {
-							filename: "es2020/nullish-coalescing-operator/nullish-and/input.js"
-							identifierName: "b"
-							end: Object {
-								column: 7
-								line: 1
-							}
-							start: Object {
-								column: 6
-								line: 1
-							}
-						}
+						loc: SourceLocation es2020/nullish-coalescing-operator/nullish-and/input.js 1:6-1:7 (b)
 					}
 					right: JSReferenceIdentifier {
 						name: "c"
-						loc: Object {
-							filename: "es2020/nullish-coalescing-operator/nullish-and/input.js"
-							identifierName: "c"
-							end: Object {
-								column: 12
-								line: 1
-							}
-							start: Object {
-								column: 11
-								line: 1
-							}
-						}
+						loc: SourceLocation es2020/nullish-coalescing-operator/nullish-and/input.js 1:11-1:12 (c)
 					}
 				}
 			}
@@ -123,6 +50,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

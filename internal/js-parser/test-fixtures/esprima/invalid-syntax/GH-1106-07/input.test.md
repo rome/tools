@@ -11,37 +11,17 @@ JSRoot {
 	body: Array []
 	comments: Array []
 	corrupt: false
-	filename: "esprima/invalid-syntax/GH-1106-07/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "esprima/invalid-syntax/GH-1106-07/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation esprima/invalid-syntax/GH-1106-07/input.js 1:0-2:0
+	path: UIDPath<esprima/invalid-syntax/GH-1106-07/input.js>
 	directives: Array [
 		JSDirective {
 			value: "\\u000"
-			loc: Object {
-				filename: "esprima/invalid-syntax/GH-1106-07/input.js"
-				end: Object {
-					column: 8
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation esprima/invalid-syntax/GH-1106-07/input.js 1:0-1:8
 		}
 	]
 	diagnostics: Array [
@@ -49,23 +29,17 @@ JSRoot {
 			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse"
 				categoryValue: "js"
+				category: Array ["parse"]
 				message: RAW_MARKUP {value: "Bad character escape sequence"}
 			}
 			location: Object {
-				filename: "esprima/invalid-syntax/GH-1106-07/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 3
-					line: 1
-				}
-				start: Object {
-					column: 3
-					line: 1
-				}
+				end: Position 1:3
+				path: UIDPath<esprima/invalid-syntax/GH-1106-07/input.js>
+				start: Position 1:3
 			}
 		}
 	]
@@ -83,8 +57,5 @@ JSRoot {
     "\u000";
        ^
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

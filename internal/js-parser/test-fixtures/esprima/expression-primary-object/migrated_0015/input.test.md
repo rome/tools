@@ -12,131 +12,40 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "esprima/expression-primary-object/migrated_0015/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "esprima/expression-primary-object/migrated_0015/input.js"
-		end: Object {
-			column: 24
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation esprima/expression-primary-object/migrated_0015/input.js 1:0-1:24
+	path: UIDPath<esprima/expression-primary-object/migrated_0015/input.js>
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "esprima/expression-primary-object/migrated_0015/input.js"
-				end: Object {
-					column: 24
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation esprima/expression-primary-object/migrated_0015/input.js 1:0-1:24
 			expression: JSAssignmentExpression {
 				operator: "="
-				loc: Object {
-					filename: "esprima/expression-primary-object/migrated_0015/input.js"
-					end: Object {
-						column: 24
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/expression-primary-object/migrated_0015/input.js 1:0-1:24
 				left: JSAssignmentIdentifier {
 					name: "x"
-					loc: Object {
-						filename: "esprima/expression-primary-object/migrated_0015/input.js"
-						identifierName: "x"
-						end: Object {
-							column: 1
-							line: 1
-						}
-						start: Object {
-							column: 0
-							line: 1
-						}
-					}
+					loc: SourceLocation esprima/expression-primary-object/migrated_0015/input.js 1:0-1:1 (x)
 				}
 				right: JSObjectExpression {
-					loc: Object {
-						filename: "esprima/expression-primary-object/migrated_0015/input.js"
-						end: Object {
-							column: 24
-							line: 1
-						}
-						start: Object {
-							column: 4
-							line: 1
-						}
-					}
+					loc: SourceLocation esprima/expression-primary-object/migrated_0015/input.js 1:4-1:24
 					properties: Array [
 						JSObjectMethod {
 							kind: "get"
 							key: JSStaticPropertyKey {
 								value: JSStringLiteral {
 									value: "undef"
-									loc: Object {
-										filename: "esprima/expression-primary-object/migrated_0015/input.js"
-										end: Object {
-											column: 17
-											line: 1
-										}
-										start: Object {
-											column: 10
-											line: 1
-										}
-									}
+									loc: SourceLocation esprima/expression-primary-object/migrated_0015/input.js 1:10-1:17
 								}
-								loc: Object {
-									filename: "esprima/expression-primary-object/migrated_0015/input.js"
-									end: Object {
-										column: 17
-										line: 1
-									}
-									start: Object {
-										column: 10
-										line: 1
-									}
-								}
+								loc: SourceLocation esprima/expression-primary-object/migrated_0015/input.js 1:10-1:17
 							}
-							loc: Object {
-								filename: "esprima/expression-primary-object/migrated_0015/input.js"
-								end: Object {
-									column: 22
-									line: 1
-								}
-								start: Object {
-									column: 6
-									line: 1
-								}
-							}
+							loc: SourceLocation esprima/expression-primary-object/migrated_0015/input.js 1:6-1:22
 							body: JSBlockStatement {
 								body: Array []
 								directives: Array []
-								loc: Object {
-									filename: "esprima/expression-primary-object/migrated_0015/input.js"
-									end: Object {
-										column: 22
-										line: 1
-									}
-									start: Object {
-										column: 20
-										line: 1
-									}
-								}
+								loc: SourceLocation esprima/expression-primary-object/migrated_0015/input.js 1:20-1:22
 							}
 							head: JSFunctionHead {
 								async: false
@@ -147,17 +56,7 @@ JSRoot {
 								returnType: undefined
 								thisType: undefined
 								typeParameters: undefined
-								loc: Object {
-									filename: "esprima/expression-primary-object/migrated_0015/input.js"
-									end: Object {
-										column: 19
-										line: 1
-									}
-									start: Object {
-										column: 17
-										line: 1
-									}
-								}
+								loc: SourceLocation esprima/expression-primary-object/migrated_0015/input.js 1:17-1:19
 							}
 						}
 					]
@@ -171,6 +70,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

@@ -9,3 +9,11 @@ span.something {
 #id .class:hover {
 	background-color: red;
 }
+
+h1::before  {
+  content: " content ";
+}
+
+a {
+	transition: background-color 0.3s ease-in-out;
+}

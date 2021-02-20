@@ -11,106 +11,46 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "experimental/numeric-separator/invalid-27/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "experimental/numeric-separator/invalid-27/input.js"
-		end: Object {
-			column: 0
-			line: 2
+	loc: SourceLocation experimental/numeric-separator/invalid-27/input.js 1:0-2:0
+	path: UIDPath<experimental/numeric-separator/invalid-27/input.js>
+	body: Array [
+		JSExpressionStatement {
+			loc: SourceLocation experimental/numeric-separator/invalid-27/input.js 1:0-1:2
+			expression: JSNumericLiteral {
+				value: 0
+				format: "hex"
+				loc: SourceLocation experimental/numeric-separator/invalid-27/input.js 1:0-1:2
+			}
 		}
-		start: Object {
-			column: 0
-			line: 1
+		JSExpressionStatement {
+			loc: SourceLocation experimental/numeric-separator/invalid-27/input.js 1:2-1:5
+			expression: JSReferenceIdentifier {
+				name: "Z_1"
+				loc: SourceLocation experimental/numeric-separator/invalid-27/input.js 1:2-1:5 (Z_1)
+			}
 		}
-	}
+	]
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse"
 				categoryValue: "js"
-				message: Array [
-					RAW_MARKUP {value: "Expected number in radix "}
-					"16"
-				]
+				category: Array ["parse"]
+				message: RAW_MARKUP {value: "Expected number in radix <emphasis>16</emphasis>"}
 			}
 			location: Object {
-				filename: "experimental/numeric-separator/invalid-27/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 2
-					line: 1
-				}
-				start: Object {
-					column: 2
-					line: 1
-				}
-			}
-		}
-	]
-	body: Array [
-		JSExpressionStatement {
-			loc: Object {
-				filename: "experimental/numeric-separator/invalid-27/input.js"
-				end: Object {
-					column: 2
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
-			expression: JSNumericLiteral {
-				value: 0
-				format: "hex"
-				loc: Object {
-					filename: "experimental/numeric-separator/invalid-27/input.js"
-					end: Object {
-						column: 2
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
-			}
-		}
-		JSExpressionStatement {
-			loc: Object {
-				filename: "experimental/numeric-separator/invalid-27/input.js"
-				end: Object {
-					column: 5
-					line: 1
-				}
-				start: Object {
-					column: 2
-					line: 1
-				}
-			}
-			expression: JSReferenceIdentifier {
-				name: "Z_1"
-				loc: Object {
-					filename: "experimental/numeric-separator/invalid-27/input.js"
-					identifierName: "Z_1"
-					end: Object {
-						column: 5
-						line: 1
-					}
-					start: Object {
-						column: 2
-						line: 1
-					}
-				}
+				end: Position 1:2
+				path: UIDPath<experimental/numeric-separator/invalid-27/input.js>
+				start: Position 1:2
 			}
 		}
 	]
@@ -128,8 +68,5 @@ JSRoot {
     0xZ_1
       ^
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

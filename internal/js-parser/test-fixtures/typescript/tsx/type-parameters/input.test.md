@@ -12,68 +12,27 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "typescript/tsx/type-parameters/input.tsx"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
+	loc: SourceLocation typescript/tsx/type-parameters/input.tsx 1:0-2:0
+	path: UIDPath<typescript/tsx/type-parameters/input.tsx>
 	syntax: Array [
 		"ts"
 		"jsx"
 	]
-	loc: Object {
-		filename: "typescript/tsx/type-parameters/input.tsx"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
 	body: Array [
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "f"
-				loc: Object {
-					filename: "typescript/tsx/type-parameters/input.tsx"
-					identifierName: "f"
-					end: Object {
-						column: 10
-						line: 1
-					}
-					start: Object {
-						column: 9
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/tsx/type-parameters/input.tsx 1:9-1:10 (f)
 			}
-			loc: Object {
-				filename: "typescript/tsx/type-parameters/input.tsx"
-				end: Object {
-					column: 32
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation typescript/tsx/type-parameters/input.tsx 1:0-1:32
 			body: JSBlockStatement {
 				body: Array []
 				directives: Array []
-				loc: Object {
-					filename: "typescript/tsx/type-parameters/input.tsx"
-					end: Object {
-						column: 32
-						line: 1
-					}
-					start: Object {
-						column: 30
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/tsx/type-parameters/input.tsx 1:30-1:32
 			}
 			head: JSFunctionHead {
 				async: false
@@ -83,84 +42,22 @@ JSRoot {
 				rest: undefined
 				thisType: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "typescript/tsx/type-parameters/input.tsx"
-					end: Object {
-						column: 29
-						line: 1
-					}
-					start: Object {
-						column: 10
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/tsx/type-parameters/input.tsx 1:10-1:29
 				returnType: TSFunctionType {
-					loc: Object {
-						filename: "typescript/tsx/type-parameters/input.tsx"
-						end: Object {
-							column: 29
-							line: 1
-						}
-						start: Object {
-							column: 14
-							line: 1
-						}
-					}
-					typeAnnotation: TSNumberKeywordTypeAnnotation {
-						loc: Object {
-							filename: "typescript/tsx/type-parameters/input.tsx"
-							end: Object {
-								column: 29
-								line: 1
-							}
-							start: Object {
-								column: 23
-								line: 1
-							}
-						}
-					}
+					loc: SourceLocation typescript/tsx/type-parameters/input.tsx 1:14-1:29
+					typeAnnotation: TSNumberKeywordTypeAnnotation {loc: SourceLocation typescript/tsx/type-parameters/input.tsx 1:23-1:29}
 					meta: TSSignatureDeclarationMeta {
 						parameters: Array []
 						rest: undefined
-						loc: Object {
-							filename: "typescript/tsx/type-parameters/input.tsx"
-							end: Object {
-								column: 29
-								line: 1
-							}
-							start: Object {
-								column: 14
-								line: 1
-							}
-						}
+						loc: SourceLocation typescript/tsx/type-parameters/input.tsx 1:14-1:29
 						typeParameters: TSTypeParameterDeclaration {
-							loc: Object {
-								filename: "typescript/tsx/type-parameters/input.tsx"
-								end: Object {
-									column: 17
-									line: 1
-								}
-								start: Object {
-									column: 14
-									line: 1
-								}
-							}
+							loc: SourceLocation typescript/tsx/type-parameters/input.tsx 1:14-1:17
 							params: Array [
 								TSTypeParameter {
 									name: "T"
 									constraint: undefined
 									default: undefined
-									loc: Object {
-										filename: "typescript/tsx/type-parameters/input.tsx"
-										end: Object {
-											column: 16
-											line: 1
-										}
-										start: Object {
-											column: 15
-											line: 1
-										}
-									}
+									loc: SourceLocation typescript/tsx/type-parameters/input.tsx 1:15-1:16
 								}
 							]
 						}
@@ -175,6 +72,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

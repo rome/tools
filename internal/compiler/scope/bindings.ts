@@ -42,6 +42,10 @@ export class Binding {
 	public node: AnyNode;
 	public isExported: boolean;
 
+	public getKind(): string {
+		return this.kind;
+	}
+
 	public setExported(isExported: boolean) {
 		this.isExported = isExported;
 	}
@@ -113,6 +117,7 @@ export type TypeBindingKind =
 	| "alias"
 	| "enum"
 	| "parameter"
+	| "infer type"
 	| "mapped type";
 
 export class TypeBinding extends ConstBinding {
@@ -126,6 +131,10 @@ export class TypeBinding extends ConstBinding {
 	}
 
 	public typeKind: TypeBindingKind;
+
+	public getKind(): string {
+		return this.typeKind;
+	}
 }
 
 export class ClassBinding extends Binding {

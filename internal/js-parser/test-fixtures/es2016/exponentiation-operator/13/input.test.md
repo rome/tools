@@ -11,134 +11,55 @@ JSRoot {
 	comments: Array []
 	corrupt: true
 	directives: Array []
-	filename: "es2016/exponentiation-operator/13/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2016/exponentiation-operator/13/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2016/exponentiation-operator/13/input.js 1:0-2:0
+	path: UIDPath<es2016/exponentiation-operator/13/input.js>
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse"
 				categoryValue: "js"
-				message: Array [
-					RAW_MARKUP {value: "Unknown start to an "}
-					"statement expression"
-				]
+				category: Array ["parse"]
+				message: RAW_MARKUP {value: "Unknown start to an statement expression"}
 			}
 			location: Object {
-				filename: "es2016/exponentiation-operator/13/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 3
-					line: 1
-				}
-				start: Object {
-					column: 3
-					line: 1
-				}
+				end: Position 1:3
+				path: UIDPath<es2016/exponentiation-operator/13/input.js>
+				start: Position 1:3
 			}
 		}
 	]
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "es2016/exponentiation-operator/13/input.js"
-				end: Object {
-					column: 4
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2016/exponentiation-operator/13/input.js 1:0-1:4
 			expression: JSBinaryExpression {
 				operator: "%"
-				loc: Object {
-					filename: "es2016/exponentiation-operator/13/input.js"
-					end: Object {
-						column: 4
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation es2016/exponentiation-operator/13/input.js 1:0-1:4
 				right: JSReferenceIdentifier {
 					name: "INVALID_PLACEHOLDER"
-					loc: Object {
-						filename: "es2016/exponentiation-operator/13/input.js"
-						end: Object {
-							column: 4
-							line: 1
-						}
-						start: Object {
-							column: 3
-							line: 1
-						}
-					}
+					loc: SourceLocation es2016/exponentiation-operator/13/input.js 1:3-1:4
 				}
 				left: JSNumericLiteral {
 					value: 1
 					format: undefined
-					loc: Object {
-						filename: "es2016/exponentiation-operator/13/input.js"
-						end: Object {
-							column: 1
-							line: 1
-						}
-						start: Object {
-							column: 0
-							line: 1
-						}
-					}
+					loc: SourceLocation es2016/exponentiation-operator/13/input.js 1:0-1:1
 				}
 			}
 		}
 		JSExpressionStatement {
-			loc: Object {
-				filename: "es2016/exponentiation-operator/13/input.js"
-				end: Object {
-					column: 7
-					line: 1
-				}
-				start: Object {
-					column: 5
-					line: 1
-				}
-			}
+			loc: SourceLocation es2016/exponentiation-operator/13/input.js 1:5-1:7
 			expression: JSNumericLiteral {
 				value: 1
 				format: undefined
-				loc: Object {
-					filename: "es2016/exponentiation-operator/13/input.js"
-					end: Object {
-						column: 6
-						line: 1
-					}
-					start: Object {
-						column: 5
-						line: 1
-					}
-				}
+				loc: SourceLocation es2016/exponentiation-operator/13/input.js 1:5-1:6
 			}
 		}
 	]
@@ -156,8 +77,5 @@ JSRoot {
     1 %* 1;
        ^
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

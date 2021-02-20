@@ -11,191 +11,70 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "es2015/identifiers/invalid-escape-seq-const/input.js"
 	hasHoistedVars: true
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2015/identifiers/invalid-escape-seq-const/input.js"
-		end: Object {
-			column: 0
-			line: 4
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2015/identifiers/invalid-escape-seq-const/input.js 1:0-4:0
+	path: UIDPath<es2015/identifiers/invalid-escape-seq-const/input.js>
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse"
 				categoryValue: "js"
-				message: Array [
-					RAW_MARKUP {value: "Escape sequence in keyword "}
-					"const"
-				]
+				category: Array ["parse"]
+				message: RAW_MARKUP {value: "Escape sequence in keyword <emphasis>const</emphasis>"}
 			}
 			location: Object {
-				filename: "es2015/identifiers/invalid-escape-seq-const/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 6
-					line: 1
-				}
-				start: Object {
-					column: 6
-					line: 1
-				}
+				end: Position 1:6
+				path: UIDPath<es2015/identifiers/invalid-escape-seq-const/input.js>
+				start: Position 1:6
 			}
 		}
 	]
 	body: Array [
 		JSVariableDeclarationStatement {
-			loc: Object {
-				filename: "es2015/identifiers/invalid-escape-seq-const/input.js"
-				end: Object {
-					column: 21
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2015/identifiers/invalid-escape-seq-const/input.js 1:0-1:21
 			declaration: JSVariableDeclaration {
 				kind: "var"
-				loc: Object {
-					filename: "es2015/identifiers/invalid-escape-seq-const/input.js"
-					end: Object {
-						column: 21
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/identifiers/invalid-escape-seq-const/input.js 1:0-1:21
 				declarations: Array [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "const"
-							loc: Object {
-								filename: "es2015/identifiers/invalid-escape-seq-const/input.js"
-								identifierName: "const"
-								end: Object {
-									column: 14
-									line: 1
-								}
-								start: Object {
-									column: 4
-									line: 1
-								}
-							}
+							loc: SourceLocation es2015/identifiers/invalid-escape-seq-const/input.js 1:4-1:14 (const)
 						}
-						loc: Object {
-							filename: "es2015/identifiers/invalid-escape-seq-const/input.js"
-							end: Object {
-								column: 20
-								line: 1
-							}
-							start: Object {
-								column: 4
-								line: 1
-							}
-						}
+						loc: SourceLocation es2015/identifiers/invalid-escape-seq-const/input.js 1:4-1:20
 						init: JSNumericLiteral {
 							value: 123
 							format: undefined
-							loc: Object {
-								filename: "es2015/identifiers/invalid-escape-seq-const/input.js"
-								end: Object {
-									column: 20
-									line: 1
-								}
-								start: Object {
-									column: 17
-									line: 1
-								}
-							}
+							loc: SourceLocation es2015/identifiers/invalid-escape-seq-const/input.js 1:17-1:20
 						}
 					}
 				]
 			}
 		}
 		JSVariableDeclarationStatement {
-			loc: Object {
-				filename: "es2015/identifiers/invalid-escape-seq-const/input.js"
-				end: Object {
-					column: 17
-					line: 3
-				}
-				start: Object {
-					column: 0
-					line: 3
-				}
-			}
+			loc: SourceLocation es2015/identifiers/invalid-escape-seq-const/input.js 3:0-3:17
 			declaration: JSVariableDeclaration {
 				kind: "const"
-				loc: Object {
-					filename: "es2015/identifiers/invalid-escape-seq-const/input.js"
-					end: Object {
-						column: 17
-						line: 3
-					}
-					start: Object {
-						column: 0
-						line: 3
-					}
-				}
+				loc: SourceLocation es2015/identifiers/invalid-escape-seq-const/input.js 3:0-3:17
 				declarations: Array [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "x"
-							loc: Object {
-								filename: "es2015/identifiers/invalid-escape-seq-const/input.js"
-								identifierName: "x"
-								end: Object {
-									column: 12
-									line: 3
-								}
-								start: Object {
-									column: 11
-									line: 3
-								}
-							}
+							loc: SourceLocation es2015/identifiers/invalid-escape-seq-const/input.js 3:11-3:12 (x)
 						}
-						loc: Object {
-							filename: "es2015/identifiers/invalid-escape-seq-const/input.js"
-							end: Object {
-								column: 16
-								line: 3
-							}
-							start: Object {
-								column: 11
-								line: 3
-							}
-						}
+						loc: SourceLocation es2015/identifiers/invalid-escape-seq-const/input.js 3:11-3:16
 						init: JSNumericLiteral {
 							value: 2
 							format: undefined
-							loc: Object {
-								filename: "es2015/identifiers/invalid-escape-seq-const/input.js"
-								end: Object {
-									column: 16
-									line: 3
-								}
-								start: Object {
-									column: 15
-									line: 3
-								}
-							}
+							loc: SourceLocation es2015/identifiers/invalid-escape-seq-const/input.js 3:15-3:16
 						}
 					}
 				]
@@ -218,8 +97,5 @@ JSRoot {
     2 │
     3 │ co\u{6e}st x = 2;
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

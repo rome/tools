@@ -82,7 +82,7 @@ export default class DependencyOrderer {
 
 		const subAncestry = ancestry.concat([path.join()]);
 		for (const depPath of node.getAbsoluteDependencies()) {
-			const dep = node.getDependencyInfoFromAbsolute(depPath).analyze;
+			const dep = node.getDependencyInfoFromAbsolute(depPath);
 			if (dep.kind === "value") {
 				this.addFile(depPath, subAncestry);
 			}
@@ -100,10 +100,12 @@ export default class DependencyOrderer {
 			const node = flatOrder[i];
 
 			for (const imp of node.analyze.value.importFirstUsage) {
-				const resolved = node.getNodeFromRelativeDependency(imp.source).resolveImport(
-					imp.imported,
-					imp.loc,
-				);
+				const subnode = node.getNodeFromRelativeDependency(imp.source);
+				if (subnode === undefined) {
+					continue;
+				}
+
+				const resolved = subnode.resolveImport(imp.imported, imp.loc);
 				if (resolved.type !== "FOUND") {
 					continue;
 				}
@@ -147,7 +149,7 @@ export default class DependencyOrderer {
 				path,
 			),
 			location: {
-				filename: node.path.join(),
+				path: node.path,
 				integrity: node.getIntegrity(),
 				start: imp.loc === undefined ? undefined : imp.loc.start,
 				end: imp.loc === undefined ? undefined : imp.loc.end,

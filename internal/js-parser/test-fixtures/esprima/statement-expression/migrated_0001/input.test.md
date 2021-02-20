@@ -12,78 +12,26 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "esprima/statement-expression/migrated_0001/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "esprima/statement-expression/migrated_0001/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation esprima/statement-expression/migrated_0001/input.js 1:0-2:0
+	path: UIDPath<esprima/statement-expression/migrated_0001/input.js>
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "esprima/statement-expression/migrated_0001/input.js"
-				end: Object {
-					column: 4
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation esprima/statement-expression/migrated_0001/input.js 1:0-1:4
 			expression: JSSequenceExpression {
-				loc: Object {
-					filename: "esprima/statement-expression/migrated_0001/input.js"
-					end: Object {
-						column: 4
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/statement-expression/migrated_0001/input.js 1:0-1:4
 				expressions: Array [
 					JSReferenceIdentifier {
 						name: "x"
-						loc: Object {
-							filename: "esprima/statement-expression/migrated_0001/input.js"
-							identifierName: "x"
-							end: Object {
-								column: 1
-								line: 1
-							}
-							start: Object {
-								column: 0
-								line: 1
-							}
-						}
+						loc: SourceLocation esprima/statement-expression/migrated_0001/input.js 1:0-1:1 (x)
 					}
 					JSReferenceIdentifier {
 						name: "y"
-						loc: Object {
-							filename: "esprima/statement-expression/migrated_0001/input.js"
-							identifierName: "y"
-							end: Object {
-								column: 4
-								line: 1
-							}
-							start: Object {
-								column: 3
-								line: 1
-							}
-						}
+						loc: SourceLocation esprima/statement-expression/migrated_0001/input.js 1:3-1:4 (y)
 					}
 				]
 			}
@@ -95,6 +43,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

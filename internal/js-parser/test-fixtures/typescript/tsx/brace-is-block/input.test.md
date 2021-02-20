@@ -11,41 +11,21 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "typescript/tsx/brace-is-block/input.tsx"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
+	loc: SourceLocation typescript/tsx/brace-is-block/input.tsx 1:0-4:0
+	path: UIDPath<typescript/tsx/brace-is-block/input.tsx>
 	syntax: Array [
 		"ts"
 		"jsx"
 	]
-	loc: Object {
-		filename: "typescript/tsx/brace-is-block/input.tsx"
-		end: Object {
-			column: 0
-			line: 4
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
 	comments: Array [
 		CommentLine {
 			id: "0"
 			value: " Regression test for tokenizer bug where the `{` after `<T>` was considered a JSX interpolation."
-			loc: Object {
-				filename: "typescript/tsx/brace-is-block/input.tsx"
-				end: Object {
-					column: 98
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation typescript/tsx/brace-is-block/input.tsx 1:0-1:98
 		}
 	]
 	body: Array [
@@ -53,102 +33,29 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "C"
 				leadingComments: undefined
-				loc: Object {
-					filename: "typescript/tsx/brace-is-block/input.tsx"
-					identifierName: "C"
-					end: Object {
-						column: 7
-						line: 2
-					}
-					start: Object {
-						column: 6
-						line: 2
-					}
-				}
+				loc: SourceLocation typescript/tsx/brace-is-block/input.tsx 2:6-2:7 (C)
 			}
 			leadingComments: Array ["0"]
-			loc: Object {
-				filename: "typescript/tsx/brace-is-block/input.tsx"
-				end: Object {
-					column: 23
-					line: 2
-				}
-				start: Object {
-					column: 0
-					line: 2
-				}
-			}
+			loc: SourceLocation typescript/tsx/brace-is-block/input.tsx 2:0-2:23
 			meta: JSClassHead {
 				body: Array []
 				implements: undefined
 				leadingComments: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "typescript/tsx/brace-is-block/input.tsx"
-					end: Object {
-						column: 23
-						line: 2
-					}
-					start: Object {
-						column: 0
-						line: 2
-					}
-				}
+				loc: SourceLocation typescript/tsx/brace-is-block/input.tsx 2:0-2:23
 				superClass: JSReferenceIdentifier {
 					name: "D"
-					loc: Object {
-						filename: "typescript/tsx/brace-is-block/input.tsx"
-						identifierName: "D"
-						end: Object {
-							column: 17
-							line: 2
-						}
-						start: Object {
-							column: 16
-							line: 2
-						}
-					}
+					loc: SourceLocation typescript/tsx/brace-is-block/input.tsx 2:16-2:17 (D)
 				}
 				superTypeParameters: TSTypeParameterInstantiation {
-					loc: Object {
-						filename: "typescript/tsx/brace-is-block/input.tsx"
-						end: Object {
-							column: 20
-							line: 2
-						}
-						start: Object {
-							column: 17
-							line: 2
-						}
-					}
+					loc: SourceLocation typescript/tsx/brace-is-block/input.tsx 2:17-2:20
 					params: Array [
 						TSTypeReference {
 							typeParameters: undefined
-							loc: Object {
-								filename: "typescript/tsx/brace-is-block/input.tsx"
-								end: Object {
-									column: 19
-									line: 2
-								}
-								start: Object {
-									column: 18
-									line: 2
-								}
-							}
+							loc: SourceLocation typescript/tsx/brace-is-block/input.tsx 2:18-2:19
 							typeName: JSReferenceIdentifier {
 								name: "T"
-								loc: Object {
-									filename: "typescript/tsx/brace-is-block/input.tsx"
-									identifierName: "T"
-									end: Object {
-										column: 19
-										line: 2
-									}
-									start: Object {
-										column: 18
-										line: 2
-									}
-								}
+								loc: SourceLocation typescript/tsx/brace-is-block/input.tsx 2:18-2:19 (T)
 							}
 						}
 					]
@@ -156,47 +63,17 @@ JSRoot {
 			}
 		}
 		JSExpressionStatement {
-			loc: Object {
-				filename: "typescript/tsx/brace-is-block/input.tsx"
-				end: Object {
-					column: 4
-					line: 3
-				}
-				start: Object {
-					column: 0
-					line: 3
-				}
-			}
+			loc: SourceLocation typescript/tsx/brace-is-block/input.tsx 3:0-3:4
 			expression: JSXElement {
 				name: JSXReferenceIdentifier {
 					name: "C"
-					loc: Object {
-						filename: "typescript/tsx/brace-is-block/input.tsx"
-						end: Object {
-							column: 2
-							line: 3
-						}
-						start: Object {
-							column: 1
-							line: 3
-						}
-					}
+					loc: SourceLocation typescript/tsx/brace-is-block/input.tsx 3:1-3:2
 				}
 				attributes: Array []
 				children: Array []
 				selfClosing: true
 				typeArguments: undefined
-				loc: Object {
-					filename: "typescript/tsx/brace-is-block/input.tsx"
-					end: Object {
-						column: 4
-						line: 3
-					}
-					start: Object {
-						column: 0
-						line: 3
-					}
-				}
+				loc: SourceLocation typescript/tsx/brace-is-block/input.tsx 3:0-3:4
 			}
 		}
 	]
@@ -206,6 +83,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

@@ -12,148 +12,47 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "esprima/es2015-object-pattern/nested/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "esprima/es2015-object-pattern/nested/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation esprima/es2015-object-pattern/nested/input.js 1:0-2:0
+	path: UIDPath<esprima/es2015-object-pattern/nested/input.js>
 	body: Array [
 		JSVariableDeclarationStatement {
-			loc: Object {
-				filename: "esprima/es2015-object-pattern/nested/input.js"
-				end: Object {
-					column: 14
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation esprima/es2015-object-pattern/nested/input.js 1:0-1:14
 			declaration: JSVariableDeclaration {
 				kind: "let"
-				loc: Object {
-					filename: "esprima/es2015-object-pattern/nested/input.js"
-					end: Object {
-						column: 14
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/es2015-object-pattern/nested/input.js 1:0-1:14
 				declarations: Array [
 					JSVariableDeclarator {
 						id: JSBindingObjectPattern {
 							rest: undefined
-							loc: Object {
-								filename: "esprima/es2015-object-pattern/nested/input.js"
-								end: Object {
-									column: 10
-									line: 1
-								}
-								start: Object {
-									column: 4
-									line: 1
-								}
-							}
+							loc: SourceLocation esprima/es2015-object-pattern/nested/input.js 1:4-1:10
 							properties: Array [
 								JSBindingObjectPatternProperty {
 									key: JSStaticPropertyKey {
 										value: JSIdentifier {
 											name: "a"
-											loc: Object {
-												filename: "esprima/es2015-object-pattern/nested/input.js"
-												identifierName: "a"
-												end: Object {
-													column: 6
-													line: 1
-												}
-												start: Object {
-													column: 5
-													line: 1
-												}
-											}
+											loc: SourceLocation esprima/es2015-object-pattern/nested/input.js 1:5-1:6 (a)
 										}
-										loc: Object {
-											filename: "esprima/es2015-object-pattern/nested/input.js"
-											end: Object {
-												column: 6
-												line: 1
-											}
-											start: Object {
-												column: 5
-												line: 1
-											}
-										}
+										loc: SourceLocation esprima/es2015-object-pattern/nested/input.js 1:5-1:6
 									}
 									value: JSBindingObjectPattern {
 										properties: Array []
 										rest: undefined
-										loc: Object {
-											filename: "esprima/es2015-object-pattern/nested/input.js"
-											end: Object {
-												column: 9
-												line: 1
-											}
-											start: Object {
-												column: 7
-												line: 1
-											}
-										}
+										loc: SourceLocation esprima/es2015-object-pattern/nested/input.js 1:7-1:9
 									}
-									loc: Object {
-										filename: "esprima/es2015-object-pattern/nested/input.js"
-										end: Object {
-											column: 9
-											line: 1
-										}
-										start: Object {
-											column: 5
-											line: 1
-										}
-									}
+									loc: SourceLocation esprima/es2015-object-pattern/nested/input.js 1:5-1:9
 								}
 							]
 						}
-						loc: Object {
-							filename: "esprima/es2015-object-pattern/nested/input.js"
-							end: Object {
-								column: 14
-								line: 1
-							}
-							start: Object {
-								column: 4
-								line: 1
-							}
-						}
+						loc: SourceLocation esprima/es2015-object-pattern/nested/input.js 1:4-1:14
 						init: JSNumericLiteral {
 							value: 0
 							format: undefined
-							loc: Object {
-								filename: "esprima/es2015-object-pattern/nested/input.js"
-								end: Object {
-									column: 14
-									line: 1
-								}
-								start: Object {
-									column: 13
-									line: 1
-								}
-							}
+							loc: SourceLocation esprima/es2015-object-pattern/nested/input.js 1:13-1:14
 						}
 					}
 				]
@@ -166,6 +65,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

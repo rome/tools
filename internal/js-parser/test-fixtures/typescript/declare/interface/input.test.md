@@ -12,67 +12,26 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "typescript/declare/interface/input.ts"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
+	loc: SourceLocation typescript/declare/interface/input.ts 1:0-2:0
+	path: UIDPath<typescript/declare/interface/input.ts>
 	syntax: Array ["ts"]
-	loc: Object {
-		filename: "typescript/declare/interface/input.ts"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
 	body: Array [
 		TSInterfaceDeclaration {
 			id: JSBindingIdentifier {
 				name: "I"
-				loc: Object {
-					filename: "typescript/declare/interface/input.ts"
-					identifierName: "I"
-					end: Object {
-						column: 19
-						line: 1
-					}
-					start: Object {
-						column: 18
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/declare/interface/input.ts 1:18-1:19 (I)
 			}
 			declare: true
 			extends: undefined
 			typeParameters: undefined
-			loc: Object {
-				filename: "typescript/declare/interface/input.ts"
-				end: Object {
-					column: 22
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation typescript/declare/interface/input.ts 1:0-1:22
 			body: TSInterfaceBody {
 				body: Array []
-				loc: Object {
-					filename: "typescript/declare/interface/input.ts"
-					end: Object {
-						column: 22
-						line: 1
-					}
-					start: Object {
-						column: 20
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/declare/interface/input.ts 1:20-1:22
 			}
 		}
 	]
@@ -82,6 +41,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

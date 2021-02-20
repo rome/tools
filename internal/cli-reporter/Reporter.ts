@@ -69,6 +69,7 @@ import {
 import highlightShell from "@internal/markup-syntax-highlight/highlightShell";
 
 export type ReporterOptions = {
+	shouldRedirectOutToErr?: boolean;
 	streams?: ReporterStreamAttached[];
 	stdin?: NodeJS.ReadStream;
 	markupOptions?: MarkupFormatOptions;
@@ -106,7 +107,7 @@ export default class Reporter implements ReporterNamespace {
 		this.indentLevel = 0;
 		this.markupOptions =
 			opts.markupOptions === undefined ? {} : opts.markupOptions;
-		this.shouldRedirectOutToErr = false;
+		this.shouldRedirectOutToErr = opts.shouldRedirectOutToErr ?? false;
 		this.stdin = opts.stdin;
 		this.wrapperFactory = opts.wrapperFactory;
 		this.streamHandles = new Set();
@@ -225,24 +226,32 @@ export default class Reporter implements ReporterNamespace {
 
 	public attachConditionalStream(
 		stream: ReporterStream,
-		check: () => boolean,
+		check?: () => boolean,
 	): ReporterConditionalStream {
 		let handle: undefined | ReporterStreamHandle;
 
 		const cond: ReporterConditionalStream = {
-			update: () => {
-				if (check()) {
-					if (handle === undefined) {
-						handle = this.addStream(stream);
-					}
-					return true;
-				} else {
-					if (handle !== undefined) {
-						handle.remove();
-						handle = undefined;
-					}
-					return false;
+			enable: () => {
+				if (handle === undefined) {
+					handle = this.addStream(stream);
 				}
+			},
+			disable: () => {
+				if (handle !== undefined) {
+					handle.remove();
+					handle = undefined;
+				}
+			},
+			update: () => {
+				if (check !== undefined) {
+					if (check()) {
+						cond.enable();
+					} else {
+						cond.disable();
+					}
+				}
+
+				return handle !== undefined;
 			},
 		};
 
@@ -450,13 +459,13 @@ export default class Reporter implements ReporterNamespace {
 			message,
 			{
 				options: {
-					yes: {
-						label: markup`Yes`,
-						shortcut: "y",
-					},
 					no: {
 						label: markup`No`,
 						shortcut: "n",
+					},
+					yes: {
+						label: markup`Yes`,
+						shortcut: "y",
 					},
 				},
 			},
@@ -884,8 +893,13 @@ export default class Reporter implements ReporterNamespace {
 		this.log(highlighted);
 	}
 
-	public namespace(prefix: AnyMarkup): ReporterNamespace {
+	public namespace(...prefixes: AnyMarkup[]): ReporterNamespace {
+		const prefix = concatMarkup(prefixes.map((prefix) => markup`[${prefix}]`));
+
 		return {
+			namespace: (...addPrefixes) => {
+				return this.namespace(...prefixes, ...addPrefixes);
+			},
 			success: (suffix) => this.success(markup`${prefix} ${suffix}`),
 			info: (suffix) => this.info(markup`${prefix} ${suffix}`),
 			error: (suffix) => this.error(markup`${prefix} ${suffix}`),

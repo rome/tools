@@ -11,110 +11,39 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "comments/basic/call-expression-function-argument/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "comments/basic/call-expression-function-argument/input.js"
-		end: Object {
-			column: 0
-			line: 7
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation comments/basic/call-expression-function-argument/input.js 1:0-7:0
+	path: UIDPath<comments/basic/call-expression-function-argument/input.js>
 	comments: Array [
 		CommentLine {
 			id: "0"
 			value: " one"
-			loc: Object {
-				filename: "comments/basic/call-expression-function-argument/input.js"
-				end: Object {
-					column: 8
-					line: 3
-				}
-				start: Object {
-					column: 2
-					line: 3
-				}
-			}
+			loc: SourceLocation comments/basic/call-expression-function-argument/input.js 3:2-3:8
 		}
 		CommentLine {
 			id: "1"
 			value: " two"
-			loc: Object {
-				filename: "comments/basic/call-expression-function-argument/input.js"
-				end: Object {
-					column: 6
-					line: 5
-				}
-				start: Object {
-					column: 0
-					line: 5
-				}
-			}
+			loc: SourceLocation comments/basic/call-expression-function-argument/input.js 5:0-5:6
 		}
 	]
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "comments/basic/call-expression-function-argument/input.js"
-				end: Object {
-					column: 2
-					line: 6
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation comments/basic/call-expression-function-argument/input.js 1:0-6:2
 			expression: JSCallExpression {
-				loc: Object {
-					filename: "comments/basic/call-expression-function-argument/input.js"
-					end: Object {
-						column: 1
-						line: 6
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation comments/basic/call-expression-function-argument/input.js 1:0-6:1
 				callee: JSReferenceIdentifier {
 					name: "test"
-					loc: Object {
-						filename: "comments/basic/call-expression-function-argument/input.js"
-						identifierName: "test"
-						end: Object {
-							column: 4
-							line: 1
-						}
-						start: Object {
-							column: 0
-							line: 1
-						}
-					}
+					loc: SourceLocation comments/basic/call-expression-function-argument/input.js 1:0-1:4 (test)
 				}
 				arguments: Array [
 					JSFunctionExpression {
 						id: undefined
+						loc: SourceLocation comments/basic/call-expression-function-argument/input.js 1:5-4:1
 						trailingComments: Array ["1"]
-						loc: Object {
-							filename: "comments/basic/call-expression-function-argument/input.js"
-							end: Object {
-								column: 1
-								line: 4
-							}
-							start: Object {
-								column: 5
-								line: 1
-							}
-						}
 						head: JSFunctionHead {
 							async: false
 							generator: false
@@ -124,102 +53,31 @@ JSRoot {
 							returnType: undefined
 							thisType: undefined
 							typeParameters: undefined
-							loc: Object {
-								filename: "comments/basic/call-expression-function-argument/input.js"
-								end: Object {
-									column: 15
-									line: 1
-								}
-								start: Object {
-									column: 13
-									line: 1
-								}
-							}
+							loc: SourceLocation comments/basic/call-expression-function-argument/input.js 1:13-1:15
 						}
 						body: JSBlockStatement {
 							directives: Array []
+							loc: SourceLocation comments/basic/call-expression-function-argument/input.js 1:16-4:1
 							trailingComments: Array ["1"]
-							loc: Object {
-								filename: "comments/basic/call-expression-function-argument/input.js"
-								end: Object {
-									column: 1
-									line: 4
-								}
-								start: Object {
-									column: 16
-									line: 1
-								}
-							}
 							body: Array [
 								JSVariableDeclarationStatement {
+									loc: SourceLocation comments/basic/call-expression-function-argument/input.js 2:2-2:12
 									trailingComments: Array ["0"]
-									loc: Object {
-										filename: "comments/basic/call-expression-function-argument/input.js"
-										end: Object {
-											column: 12
-											line: 2
-										}
-										start: Object {
-											column: 2
-											line: 2
-										}
-									}
 									declaration: JSVariableDeclaration {
 										kind: "var"
 										trailingComments: undefined
-										loc: Object {
-											filename: "comments/basic/call-expression-function-argument/input.js"
-											end: Object {
-												column: 12
-												line: 2
-											}
-											start: Object {
-												column: 2
-												line: 2
-											}
-										}
+										loc: SourceLocation comments/basic/call-expression-function-argument/input.js 2:2-2:12
 										declarations: Array [
 											JSVariableDeclarator {
 												id: JSBindingIdentifier {
 													name: "a"
-													loc: Object {
-														filename: "comments/basic/call-expression-function-argument/input.js"
-														identifierName: "a"
-														end: Object {
-															column: 7
-															line: 2
-														}
-														start: Object {
-															column: 6
-															line: 2
-														}
-													}
+													loc: SourceLocation comments/basic/call-expression-function-argument/input.js 2:6-2:7 (a)
 												}
-												loc: Object {
-													filename: "comments/basic/call-expression-function-argument/input.js"
-													end: Object {
-														column: 11
-														line: 2
-													}
-													start: Object {
-														column: 6
-														line: 2
-													}
-												}
+												loc: SourceLocation comments/basic/call-expression-function-argument/input.js 2:6-2:11
 												init: JSNumericLiteral {
 													value: 1
 													format: undefined
-													loc: Object {
-														filename: "comments/basic/call-expression-function-argument/input.js"
-														end: Object {
-															column: 11
-															line: 2
-														}
-														start: Object {
-															column: 10
-															line: 2
-														}
-													}
+													loc: SourceLocation comments/basic/call-expression-function-argument/input.js 2:10-2:11
 												}
 											}
 										]
@@ -238,6 +96,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

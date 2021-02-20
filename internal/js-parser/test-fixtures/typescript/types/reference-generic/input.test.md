@@ -12,147 +12,42 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "typescript/types/reference-generic/input.ts"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
+	loc: SourceLocation typescript/types/reference-generic/input.ts 1:0-2:0
+	path: UIDPath<typescript/types/reference-generic/input.ts>
 	syntax: Array ["ts"]
-	loc: Object {
-		filename: "typescript/types/reference-generic/input.ts"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
 	body: Array [
 		JSVariableDeclarationStatement {
-			loc: Object {
-				filename: "typescript/types/reference-generic/input.ts"
-				end: Object {
-					column: 21
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation typescript/types/reference-generic/input.ts 1:0-1:21
 			declaration: JSVariableDeclaration {
 				kind: "let"
-				loc: Object {
-					filename: "typescript/types/reference-generic/input.ts"
-					end: Object {
-						column: 21
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/types/reference-generic/input.ts 1:0-1:21
 				declarations: Array [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "x"
-							loc: Object {
-								filename: "typescript/types/reference-generic/input.ts"
-								end: Object {
-									column: 20
-									line: 1
-								}
-								start: Object {
-									column: 4
-									line: 1
-								}
-							}
+							loc: SourceLocation typescript/types/reference-generic/input.ts 1:4-1:20
 							meta: JSPatternMeta {
 								definite: undefined
-								loc: Object {
-									filename: "typescript/types/reference-generic/input.ts"
-									end: Object {
-										column: 20
-										line: 1
-									}
-									start: Object {
-										column: 4
-										line: 1
-									}
-								}
+								loc: SourceLocation typescript/types/reference-generic/input.ts 1:4-1:20
 								typeAnnotation: TSTypeReference {
-									loc: Object {
-										filename: "typescript/types/reference-generic/input.ts"
-										end: Object {
-											column: 20
-											line: 1
-										}
-										start: Object {
-											column: 7
-											line: 1
-										}
-									}
+									loc: SourceLocation typescript/types/reference-generic/input.ts 1:7-1:20
 									typeName: JSReferenceIdentifier {
 										name: "Array"
-										loc: Object {
-											filename: "typescript/types/reference-generic/input.ts"
-											identifierName: "Array"
-											end: Object {
-												column: 12
-												line: 1
-											}
-											start: Object {
-												column: 7
-												line: 1
-											}
-										}
+										loc: SourceLocation typescript/types/reference-generic/input.ts 1:7-1:12 (Array)
 									}
 									typeParameters: TSTypeParameterInstantiation {
-										loc: Object {
-											filename: "typescript/types/reference-generic/input.ts"
-											end: Object {
-												column: 20
-												line: 1
-											}
-											start: Object {
-												column: 12
-												line: 1
-											}
-										}
-										params: Array [
-											TSNumberKeywordTypeAnnotation {
-												loc: Object {
-													filename: "typescript/types/reference-generic/input.ts"
-													end: Object {
-														column: 19
-														line: 1
-													}
-													start: Object {
-														column: 13
-														line: 1
-													}
-												}
-											}
-										]
+										loc: SourceLocation typescript/types/reference-generic/input.ts 1:12-1:20
+										params: Array [TSNumberKeywordTypeAnnotation {loc: SourceLocation typescript/types/reference-generic/input.ts 1:13-1:19}]
 									}
 								}
 							}
 						}
 						init: undefined
-						loc: Object {
-							filename: "typescript/types/reference-generic/input.ts"
-							end: Object {
-								column: 20
-								line: 1
-							}
-							start: Object {
-								column: 4
-								line: 1
-							}
-						}
+						loc: SourceLocation typescript/types/reference-generic/input.ts 1:4-1:20
 					}
 				]
 			}
@@ -164,6 +59,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

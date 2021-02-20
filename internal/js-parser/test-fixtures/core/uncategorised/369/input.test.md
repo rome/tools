@@ -11,106 +11,47 @@ JSRoot {
 	comments: Array []
 	corrupt: true
 	directives: Array []
-	filename: "core/uncategorised/369/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "core/uncategorised/369/input.js"
-		end: Object {
-			column: 12
-			line: 1
+	loc: SourceLocation core/uncategorised/369/input.js 1:0-1:12
+	path: UIDPath<core/uncategorised/369/input.js>
+	body: Array [
+		JSExpressionStatement {
+			loc: SourceLocation core/uncategorised/369/input.js 1:0-1:12
+			expression: JSAssignmentExpression {
+				operator: "="
+				loc: SourceLocation core/uncategorised/369/input.js 1:0-1:12
+				left: JSAssignmentIdentifier {
+					name: "INVALID_PLACEHOLDER"
+					loc: SourceLocation core/uncategorised/369/input.js 1:8-1:7
+				}
+				right: JSNumericLiteral {
+					value: 10
+					format: undefined
+					loc: SourceLocation core/uncategorised/369/input.js 1:10-1:12
+				}
+			}
 		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	]
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse"
 				categoryValue: "js"
-				message: Array [
-					RAW_MARKUP {value: "Invalid left-hand side in "}
-					"assignment expression"
-				]
+				category: Array ["parse"]
+				message: RAW_MARKUP {value: "Invalid left-hand side in assignment expression"}
 			}
 			location: Object {
-				filename: "core/uncategorised/369/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 6
-					line: 1
-				}
-				start: Object {
-					column: 1
-					line: 1
-				}
-			}
-		}
-	]
-	body: Array [
-		JSExpressionStatement {
-			loc: Object {
-				filename: "core/uncategorised/369/input.js"
-				end: Object {
-					column: 12
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
-			expression: JSAssignmentExpression {
-				operator: "="
-				loc: Object {
-					filename: "core/uncategorised/369/input.js"
-					end: Object {
-						column: 12
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
-				left: JSAssignmentIdentifier {
-					name: "INVALID_PLACEHOLDER"
-					loc: Object {
-						filename: "core/uncategorised/369/input.js"
-						end: Object {
-							column: 7
-							line: 1
-						}
-						start: Object {
-							column: 8
-							line: 1
-						}
-					}
-				}
-				right: JSNumericLiteral {
-					value: 10
-					format: undefined
-					loc: Object {
-						filename: "core/uncategorised/369/input.js"
-						end: Object {
-							column: 12
-							line: 1
-						}
-						start: Object {
-							column: 10
-							line: 1
-						}
-					}
-				}
+				end: Position 1:6
+				path: UIDPath<core/uncategorised/369/input.js>
+				start: Position 1:1
 			}
 		}
 	]
@@ -128,8 +69,5 @@ JSRoot {
     (1 + 1) = 10
      ^^^^^
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

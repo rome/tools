@@ -13,29 +13,18 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "core/uncategorised/316/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "core/uncategorised/316/input.js"
-		end: Object {
-			column: 0
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation core/uncategorised/316/input.js 1:0-1:0
+	path: UIDPath<core/uncategorised/316/input.js>
 }
 ```
 
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

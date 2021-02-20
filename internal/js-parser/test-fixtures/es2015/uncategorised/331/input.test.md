@@ -11,133 +11,54 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "es2015/uncategorised/331/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2015/uncategorised/331/input.js"
-		end: Object {
-			column: 26
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2015/uncategorised/331/input.js 1:0-1:26
+	path: UIDPath<es2015/uncategorised/331/input.js>
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse"
 				categoryValue: "js"
-				message: RAW_MARKUP {value: "Unexpected token"}
+				category: Array ["parse"]
+				message: RAW_MARKUP {value: "Unexpected character <emphasis>c</emphasis>"}
 			}
 			location: Object {
-				filename: "es2015/uncategorised/331/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 19
-					line: 1
-				}
-				start: Object {
-					column: 14
-					line: 1
-				}
+				end: Position 1:19
+				path: UIDPath<es2015/uncategorised/331/input.js>
+				start: Position 1:14
 			}
 		}
 	]
 	body: Array [
 		JSIfStatement {
-			loc: Object {
-				filename: "es2015/uncategorised/331/input.js"
-				end: Object {
-					column: 26
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
-			consequent: JSEmptyStatement {
-				loc: Object {
-					filename: "es2015/uncategorised/331/input.js"
-					end: Object {
-						column: 8
-						line: 1
-					}
-					start: Object {
-						column: 7
-						line: 1
-					}
-				}
-			}
+			consequent: JSEmptyStatement {loc: SourceLocation es2015/uncategorised/331/input.js 1:7-1:8}
+			loc: SourceLocation es2015/uncategorised/331/input.js 1:0-1:26
 			test: JSNumericLiteral {
 				value: 1
 				format: undefined
-				loc: Object {
-					filename: "es2015/uncategorised/331/input.js"
-					end: Object {
-						column: 5
-						line: 1
-					}
-					start: Object {
-						column: 4
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/uncategorised/331/input.js 1:4-1:5
 			}
 			alternate: JSClassDeclaration {
 				id: JSBindingIdentifier {
 					name: "Cls"
-					loc: Object {
-						filename: "es2015/uncategorised/331/input.js"
-						identifierName: "Cls"
-						end: Object {
-							column: 23
-							line: 1
-						}
-						start: Object {
-							column: 20
-							line: 1
-						}
-					}
+					loc: SourceLocation es2015/uncategorised/331/input.js 1:20-1:23 (Cls)
 				}
-				loc: Object {
-					filename: "es2015/uncategorised/331/input.js"
-					end: Object {
-						column: 26
-						line: 1
-					}
-					start: Object {
-						column: 14
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/uncategorised/331/input.js 1:14-1:26
 				meta: JSClassHead {
 					body: Array []
 					implements: undefined
 					superClass: undefined
 					superTypeParameters: undefined
 					typeParameters: undefined
-					loc: Object {
-						filename: "es2015/uncategorised/331/input.js"
-						end: Object {
-							column: 26
-							line: 1
-						}
-						start: Object {
-							column: 14
-							line: 1
-						}
-					}
+					loc: SourceLocation es2015/uncategorised/331/input.js 1:14-1:26
 				}
 			}
 		}
@@ -151,13 +72,10 @@ JSRoot {
 
  es2015/uncategorised/331/input.js:1:14 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ Unexpected token
+  ✖ Unexpected character c
 
     if (1) ; else class Cls {}
                   ^^^^^
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

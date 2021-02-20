@@ -12,160 +12,46 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "typescript/declare/const/input.ts"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
+	loc: SourceLocation typescript/declare/const/input.ts 1:0-2:0
+	path: UIDPath<typescript/declare/const/input.ts>
 	syntax: Array ["ts"]
-	loc: Object {
-		filename: "typescript/declare/const/input.ts"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
 	body: Array [
 		JSVariableDeclarationStatement {
 			declare: true
-			loc: Object {
-				filename: "typescript/declare/const/input.ts"
-				end: Object {
-					column: 35
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation typescript/declare/const/input.ts 1:0-1:35
 			declaration: JSVariableDeclaration {
 				kind: "const"
-				loc: Object {
-					filename: "typescript/declare/const/input.ts"
-					end: Object {
-						column: 35
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/declare/const/input.ts 1:0-1:35
 				declarations: Array [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "x"
-							loc: Object {
-								filename: "typescript/declare/const/input.ts"
-								end: Object {
-									column: 23
-									line: 1
-								}
-								start: Object {
-									column: 14
-									line: 1
-								}
-							}
+							loc: SourceLocation typescript/declare/const/input.ts 1:14-1:23
 							meta: JSPatternMeta {
 								definite: undefined
-								loc: Object {
-									filename: "typescript/declare/const/input.ts"
-									end: Object {
-										column: 23
-										line: 1
-									}
-									start: Object {
-										column: 14
-										line: 1
-									}
-								}
-								typeAnnotation: TSNumberKeywordTypeAnnotation {
-									loc: Object {
-										filename: "typescript/declare/const/input.ts"
-										end: Object {
-											column: 23
-											line: 1
-										}
-										start: Object {
-											column: 17
-											line: 1
-										}
-									}
-								}
+								loc: SourceLocation typescript/declare/const/input.ts 1:14-1:23
+								typeAnnotation: TSNumberKeywordTypeAnnotation {loc: SourceLocation typescript/declare/const/input.ts 1:17-1:23}
 							}
 						}
 						init: undefined
-						loc: Object {
-							filename: "typescript/declare/const/input.ts"
-							end: Object {
-								column: 23
-								line: 1
-							}
-							start: Object {
-								column: 14
-								line: 1
-							}
-						}
+						loc: SourceLocation typescript/declare/const/input.ts 1:14-1:23
 					}
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "y"
-							loc: Object {
-								filename: "typescript/declare/const/input.ts"
-								end: Object {
-									column: 34
-									line: 1
-								}
-								start: Object {
-									column: 25
-									line: 1
-								}
-							}
+							loc: SourceLocation typescript/declare/const/input.ts 1:25-1:34
 							meta: JSPatternMeta {
 								definite: undefined
-								loc: Object {
-									filename: "typescript/declare/const/input.ts"
-									end: Object {
-										column: 34
-										line: 1
-									}
-									start: Object {
-										column: 25
-										line: 1
-									}
-								}
-								typeAnnotation: TSStringKeywordTypeAnnotation {
-									loc: Object {
-										filename: "typescript/declare/const/input.ts"
-										end: Object {
-											column: 34
-											line: 1
-										}
-										start: Object {
-											column: 28
-											line: 1
-										}
-									}
-								}
+								loc: SourceLocation typescript/declare/const/input.ts 1:25-1:34
+								typeAnnotation: TSStringKeywordTypeAnnotation {loc: SourceLocation typescript/declare/const/input.ts 1:28-1:34}
 							}
 						}
 						init: undefined
-						loc: Object {
-							filename: "typescript/declare/const/input.ts"
-							end: Object {
-								column: 34
-								line: 1
-							}
-							start: Object {
-								column: 25
-								line: 1
-							}
-						}
+						loc: SourceLocation typescript/declare/const/input.ts 1:25-1:34
 					}
 				]
 			}
@@ -177,6 +63,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

@@ -12,62 +12,22 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "es2017/async-functions/await-as-argument-identifier-in-non-async-functions/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2017/async-functions/await-as-argument-identifier-in-non-async-functions/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2017/async-functions/await-as-argument-identifier-in-non-async-functions/input.js 1:0-2:0
+	path: UIDPath<es2017/async-functions/await-as-argument-identifier-in-non-async-functions/input.js>
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "es2017/async-functions/await-as-argument-identifier-in-non-async-functions/input.js"
-				end: Object {
-					column: 13
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2017/async-functions/await-as-argument-identifier-in-non-async-functions/input.js 1:0-1:13
 			expression: JSArrowFunctionExpression {
-				loc: Object {
-					filename: "es2017/async-functions/await-as-argument-identifier-in-non-async-functions/input.js"
-					end: Object {
-						column: 13
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation es2017/async-functions/await-as-argument-identifier-in-non-async-functions/input.js 1:0-1:13
 				body: JSBlockStatement {
 					body: Array []
 					directives: Array []
-					loc: Object {
-						filename: "es2017/async-functions/await-as-argument-identifier-in-non-async-functions/input.js"
-						end: Object {
-							column: 13
-							line: 1
-						}
-						start: Object {
-							column: 11
-							line: 1
-						}
-					}
+					loc: SourceLocation es2017/async-functions/await-as-argument-identifier-in-non-async-functions/input.js 1:11-1:13
 				}
 				head: JSFunctionHead {
 					async: false
@@ -75,32 +35,11 @@ JSRoot {
 					rest: undefined
 					returnType: undefined
 					thisType: undefined
-					loc: Object {
-						filename: "es2017/async-functions/await-as-argument-identifier-in-non-async-functions/input.js"
-						end: Object {
-							column: 10
-							line: 1
-						}
-						start: Object {
-							column: 0
-							line: 1
-						}
-					}
+					loc: SourceLocation es2017/async-functions/await-as-argument-identifier-in-non-async-functions/input.js 1:0-1:10
 					params: Array [
 						JSBindingIdentifier {
 							name: "await"
-							loc: Object {
-								filename: "es2017/async-functions/await-as-argument-identifier-in-non-async-functions/input.js"
-								identifierName: "await"
-								end: Object {
-									column: 6
-									line: 1
-								}
-								start: Object {
-									column: 1
-									line: 1
-								}
-							}
+							loc: SourceLocation es2017/async-functions/await-as-argument-identifier-in-non-async-functions/input.js 1:1-1:6 (await)
 						}
 					]
 				}
@@ -113,6 +52,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

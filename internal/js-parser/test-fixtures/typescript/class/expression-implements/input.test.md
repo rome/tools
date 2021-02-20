@@ -12,161 +12,48 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "typescript/class/expression-implements/input.ts"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
+	loc: SourceLocation typescript/class/expression-implements/input.ts 1:0-3:0
+	path: UIDPath<typescript/class/expression-implements/input.ts>
 	syntax: Array ["ts"]
-	loc: Object {
-		filename: "typescript/class/expression-implements/input.ts"
-		end: Object {
-			column: 0
-			line: 3
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "typescript/class/expression-implements/input.ts"
-				end: Object {
-					column: 29
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation typescript/class/expression-implements/input.ts 1:0-1:29
 			expression: JSClassExpression {
 				id: undefined
-				loc: Object {
-					filename: "typescript/class/expression-implements/input.ts"
-					end: Object {
-						column: 27
-						line: 1
-					}
-					start: Object {
-						column: 1
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/class/expression-implements/input.ts 1:1-1:27
 				meta: JSClassHead {
 					body: Array []
 					superClass: undefined
 					superTypeParameters: undefined
 					typeParameters: undefined
-					loc: Object {
-						filename: "typescript/class/expression-implements/input.ts"
-						end: Object {
-							column: 27
-							line: 1
-						}
-						start: Object {
-							column: 1
-							line: 1
-						}
-					}
+					loc: SourceLocation typescript/class/expression-implements/input.ts 1:1-1:27
 					implements: Array [
 						TSExpressionWithTypeArguments {
-							loc: Object {
-								filename: "typescript/class/expression-implements/input.ts"
-								end: Object {
-									column: 24
-									line: 1
-								}
-								start: Object {
-									column: 18
-									line: 1
-								}
-							}
+							loc: SourceLocation typescript/class/expression-implements/input.ts 1:18-1:24
 							expression: TSQualifiedName {
-								loc: Object {
-									filename: "typescript/class/expression-implements/input.ts"
-									end: Object {
-										column: 21
-										line: 1
-									}
-									start: Object {
-										column: 18
-										line: 1
-									}
-								}
+								loc: SourceLocation typescript/class/expression-implements/input.ts 1:18-1:21
 								left: JSReferenceIdentifier {
 									name: "X"
-									loc: Object {
-										filename: "typescript/class/expression-implements/input.ts"
-										identifierName: "X"
-										end: Object {
-											column: 19
-											line: 1
-										}
-										start: Object {
-											column: 18
-											line: 1
-										}
-									}
+									loc: SourceLocation typescript/class/expression-implements/input.ts 1:18-1:19 (X)
 								}
 								right: JSIdentifier {
 									name: "Y"
-									loc: Object {
-										filename: "typescript/class/expression-implements/input.ts"
-										identifierName: "Y"
-										end: Object {
-											column: 21
-											line: 1
-										}
-										start: Object {
-											column: 20
-											line: 1
-										}
-									}
+									loc: SourceLocation typescript/class/expression-implements/input.ts 1:20-1:21 (Y)
 								}
 							}
 							typeParameters: TSTypeParameterInstantiation {
-								loc: Object {
-									filename: "typescript/class/expression-implements/input.ts"
-									end: Object {
-										column: 24
-										line: 1
-									}
-									start: Object {
-										column: 21
-										line: 1
-									}
-								}
+								loc: SourceLocation typescript/class/expression-implements/input.ts 1:21-1:24
 								params: Array [
 									TSTypeReference {
 										typeParameters: undefined
-										loc: Object {
-											filename: "typescript/class/expression-implements/input.ts"
-											end: Object {
-												column: 23
-												line: 1
-											}
-											start: Object {
-												column: 22
-												line: 1
-											}
-										}
+										loc: SourceLocation typescript/class/expression-implements/input.ts 1:22-1:23
 										typeName: JSReferenceIdentifier {
 											name: "T"
-											loc: Object {
-												filename: "typescript/class/expression-implements/input.ts"
-												identifierName: "T"
-												end: Object {
-													column: 23
-													line: 1
-												}
-												start: Object {
-													column: 22
-													line: 1
-												}
-											}
+											loc: SourceLocation typescript/class/expression-implements/input.ts 1:22-1:23 (T)
 										}
 									}
 								]
@@ -177,156 +64,42 @@ JSRoot {
 			}
 		}
 		JSExpressionStatement {
-			loc: Object {
-				filename: "typescript/class/expression-implements/input.ts"
-				end: Object {
-					column: 31
-					line: 2
-				}
-				start: Object {
-					column: 0
-					line: 2
-				}
-			}
+			loc: SourceLocation typescript/class/expression-implements/input.ts 2:0-2:31
 			expression: JSClassExpression {
 				id: JSBindingIdentifier {
 					name: "C"
-					loc: Object {
-						filename: "typescript/class/expression-implements/input.ts"
-						identifierName: "C"
-						end: Object {
-							column: 8
-							line: 2
-						}
-						start: Object {
-							column: 7
-							line: 2
-						}
-					}
+					loc: SourceLocation typescript/class/expression-implements/input.ts 2:7-2:8 (C)
 				}
-				loc: Object {
-					filename: "typescript/class/expression-implements/input.ts"
-					end: Object {
-						column: 29
-						line: 2
-					}
-					start: Object {
-						column: 1
-						line: 2
-					}
-				}
+				loc: SourceLocation typescript/class/expression-implements/input.ts 2:1-2:29
 				meta: JSClassHead {
 					body: Array []
 					superClass: undefined
 					superTypeParameters: undefined
 					typeParameters: undefined
-					loc: Object {
-						filename: "typescript/class/expression-implements/input.ts"
-						end: Object {
-							column: 29
-							line: 2
-						}
-						start: Object {
-							column: 1
-							line: 2
-						}
-					}
+					loc: SourceLocation typescript/class/expression-implements/input.ts 2:1-2:29
 					implements: Array [
 						TSExpressionWithTypeArguments {
-							loc: Object {
-								filename: "typescript/class/expression-implements/input.ts"
-								end: Object {
-									column: 26
-									line: 2
-								}
-								start: Object {
-									column: 20
-									line: 2
-								}
-							}
+							loc: SourceLocation typescript/class/expression-implements/input.ts 2:20-2:26
 							expression: TSQualifiedName {
-								loc: Object {
-									filename: "typescript/class/expression-implements/input.ts"
-									end: Object {
-										column: 23
-										line: 2
-									}
-									start: Object {
-										column: 20
-										line: 2
-									}
-								}
+								loc: SourceLocation typescript/class/expression-implements/input.ts 2:20-2:23
 								left: JSReferenceIdentifier {
 									name: "X"
-									loc: Object {
-										filename: "typescript/class/expression-implements/input.ts"
-										identifierName: "X"
-										end: Object {
-											column: 21
-											line: 2
-										}
-										start: Object {
-											column: 20
-											line: 2
-										}
-									}
+									loc: SourceLocation typescript/class/expression-implements/input.ts 2:20-2:21 (X)
 								}
 								right: JSIdentifier {
 									name: "Y"
-									loc: Object {
-										filename: "typescript/class/expression-implements/input.ts"
-										identifierName: "Y"
-										end: Object {
-											column: 23
-											line: 2
-										}
-										start: Object {
-											column: 22
-											line: 2
-										}
-									}
+									loc: SourceLocation typescript/class/expression-implements/input.ts 2:22-2:23 (Y)
 								}
 							}
 							typeParameters: TSTypeParameterInstantiation {
-								loc: Object {
-									filename: "typescript/class/expression-implements/input.ts"
-									end: Object {
-										column: 26
-										line: 2
-									}
-									start: Object {
-										column: 23
-										line: 2
-									}
-								}
+								loc: SourceLocation typescript/class/expression-implements/input.ts 2:23-2:26
 								params: Array [
 									TSTypeReference {
 										typeParameters: undefined
-										loc: Object {
-											filename: "typescript/class/expression-implements/input.ts"
-											end: Object {
-												column: 25
-												line: 2
-											}
-											start: Object {
-												column: 24
-												line: 2
-											}
-										}
+										loc: SourceLocation typescript/class/expression-implements/input.ts 2:24-2:25
 										typeName: JSReferenceIdentifier {
 											name: "T"
-											loc: Object {
-												filename: "typescript/class/expression-implements/input.ts"
-												identifierName: "T"
-												end: Object {
-													column: 25
-													line: 2
-												}
-												start: Object {
-													column: 24
-													line: 2
-												}
-											}
+											loc: SourceLocation typescript/class/expression-implements/input.ts 2:24-2:25 (T)
 										}
 									}
 								]
@@ -343,6 +116,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

@@ -12,9 +12,8 @@ import {
 	stringifySemver,
 } from "@internal/codec-semver";
 import {tryParseWithOptionalOffsetPosition} from "@internal/parser-core";
-import {UnknownPath, createUnknownPath} from "@internal/path";
+import {AnyPath, createAnyPath} from "@internal/path";
 import {manifestNameToString, normalizeName} from "./name";
-import {ob1Add} from "@internal/ob1";
 import {descriptions} from "@internal/diagnostics";
 import {ManifestName} from "./types";
 
@@ -312,13 +311,13 @@ const LINK_PREFIX = "link:";
 
 type LinkPattern = {
 	type: "link";
-	path: UnknownPath;
+	path: AnyPath;
 };
 
 function parseLink(pattern: string): LinkPattern {
 	return {
 		type: "link",
-		path: createUnknownPath(pattern.slice(LINK_PREFIX.length)),
+		path: createAnyPath(pattern.slice(LINK_PREFIX.length)),
 	};
 }
 
@@ -384,8 +383,8 @@ function parseNpm(
 					loc: start === undefined
 						? undefined
 						: consumer.getLocationRange(
-								ob1Add(start, offset),
-								end === undefined ? undefined : ob1Add(end, offset),
+								start.add(offset),
+								end === undefined ? undefined : end.add(offset),
 								"inner-value",
 							),
 				},
@@ -410,7 +409,7 @@ function parseNpm(
 					const pos = consumer.getLocation("inner-value").start;
 					return {
 						...pos,
-						column: ob1Add(pos.column, offset),
+						column: pos.column.add(offset),
 					};
 				},
 				parse: (opts) => parseSemverRange(opts),
@@ -487,7 +486,7 @@ export function parseDependencyPattern(
 
 	if (
 		FILE_PREFIX_REGEX.test(pattern) ||
-		createUnknownPath(pattern).isAbsolute() ||
+		createAnyPath(pattern).isAbsolute() ||
 		pattern.startsWith("file:")
 	) {
 		return parseFile(pattern);

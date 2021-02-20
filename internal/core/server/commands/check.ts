@@ -6,10 +6,10 @@
  */
 
 import {ServerRequest} from "@internal/core";
-import Linter, {
+import Checker, {
+	CheckerOptions,
 	LinterCompilerOptionsPerFile,
-	LinterOptions,
-} from "../linter/Linter";
+} from "../checker/Checker";
 import {markup} from "@internal/markup";
 import {createServerCommand} from "../commands";
 import {
@@ -18,8 +18,9 @@ import {
 } from "@internal/compiler";
 import {Consumer} from "@internal/consume";
 import {commandCategories} from "@internal/core/common/commands";
-import {createUnknownPath} from "@internal/path";
+import {createFilePath, createUIDPath} from "@internal/path";
 import {LINTABLE_EXTENSIONS} from "@internal/core/common/file-handlers";
+import {ServerRequestGlobArgs} from "../ServerRequest";
 
 type Flags = {
 	decisions: string[];
@@ -80,7 +81,7 @@ export default createServerCommand<Flags>({
 		const {decisions} = flags;
 		if (decisions !== undefined) {
 			({lintCompilerOptionsPerFile, globalDecisions} = parseDecisionStrings({
-				filename: "argv",
+				path: createUIDPath("argv"),
 				decisions: decisions.map((value, i) => {
 					return {
 						value,
@@ -102,7 +103,7 @@ export default createServerCommand<Flags>({
 		}
 
 		// Look up arguments manually in vsc if we were passed a changes branch
-		let args;
+		let args: undefined | ServerRequestGlobArgs;
 		if (flags.changed !== undefined) {
 			// No arguments expected when using this flag
 			req.expectArgumentLength(0);
@@ -110,20 +111,23 @@ export default createServerCommand<Flags>({
 			const client = await req.getVCSClient();
 			const target =
 				flags.changed === "" ? await client.getDefaultBranch() : flags.changed;
-			args = await client.getModifiedFiles(target);
+			const modifiedFiles = await client.getModifiedFiles(target);
+			const flagLoc = req.getDiagnosticLocationFromFlags({
+				type: "flag",
+				key: "changed",
+			});
 
 			// Only include lintable files
-			args = args.filter((arg) => {
-				const path = createUnknownPath(arg);
-
+			args = [];
+			for (const arg of modifiedFiles) {
+				const path = createFilePath(arg);
 				for (const ext of LINTABLE_EXTENSIONS) {
 					if (path.hasEndExtension(ext)) {
-						return true;
+						args.push([path, flagLoc]);
+						break;
 					}
 				}
-
-				return false;
-			});
+			}
 
 			if (args.length === 0) {
 				reporter.warn(
@@ -131,12 +135,12 @@ export default createServerCommand<Flags>({
 				);
 			} else {
 				reporter.info(markup`Files changed from <emphasis>${target}</emphasis>`);
-				reporter.list(args.map((arg) => markup`<filelink target="${arg}" />`));
+				reporter.list(args.map(([path]) => markup`${path}`));
 				reporter.hr();
 			}
 		}
 
-		const opts: LinterOptions = {
+		const opts: CheckerOptions = {
 			hasDecisions: flags.decisions.length > 0,
 			lintCompilerOptionsPerFile,
 			globalDecisions,
@@ -145,7 +149,7 @@ export default createServerCommand<Flags>({
 			suppressionExplanation: cachedSuppressionExplanation,
 			args,
 		};
-		const linter = new Linter(req, opts);
+		const linter = new Checker(req, opts);
 		if (req.query.requestFlags.watch) {
 			await linter.runWatch();
 		} else {

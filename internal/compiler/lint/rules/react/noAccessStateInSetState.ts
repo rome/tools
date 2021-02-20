@@ -9,8 +9,9 @@ export default createVisitor({
 		const {node} = path;
 		if (
 			node.type === "JSCallExpression" &&
-			doesNodeMatchPattern(node.callee, "this.setState") &&
-			node.arguments[0].type === "JSObjectExpression"
+			node.arguments.length > 0 &&
+			node.arguments[0].type === "JSObjectExpression" &&
+			doesNodeMatchPattern(node.callee, "this.setState")
 		) {
 			const hasThisState = node.arguments[0].properties.some((arg) => {
 				if (arg.type === "JSObjectProperty") {

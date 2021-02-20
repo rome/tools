@@ -12,62 +12,22 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "es2017/trailing-function-commas/4/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2017/trailing-function-commas/4/input.js"
-		end: Object {
-			column: 14
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2017/trailing-function-commas/4/input.js 1:0-1:14
+	path: UIDPath<es2017/trailing-function-commas/4/input.js>
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "es2017/trailing-function-commas/4/input.js"
-				end: Object {
-					column: 14
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2017/trailing-function-commas/4/input.js 1:0-1:14
 			expression: JSArrowFunctionExpression {
-				loc: Object {
-					filename: "es2017/trailing-function-commas/4/input.js"
-					end: Object {
-						column: 13
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation es2017/trailing-function-commas/4/input.js 1:0-1:13
 				body: JSNumericLiteral {
 					value: 1
 					format: undefined
-					loc: Object {
-						filename: "es2017/trailing-function-commas/4/input.js"
-						end: Object {
-							column: 13
-							line: 1
-						}
-						start: Object {
-							column: 12
-							line: 1
-						}
-					}
+					loc: SourceLocation es2017/trailing-function-commas/4/input.js 1:12-1:13
 				}
 				head: JSFunctionHead {
 					async: false
@@ -75,47 +35,15 @@ JSRoot {
 					rest: undefined
 					returnType: undefined
 					thisType: undefined
-					loc: Object {
-						filename: "es2017/trailing-function-commas/4/input.js"
-						end: Object {
-							column: 11
-							line: 1
-						}
-						start: Object {
-							column: 0
-							line: 1
-						}
-					}
+					loc: SourceLocation es2017/trailing-function-commas/4/input.js 1:0-1:11
 					params: Array [
 						JSBindingIdentifier {
 							name: "x"
-							loc: Object {
-								filename: "es2017/trailing-function-commas/4/input.js"
-								identifierName: "x"
-								end: Object {
-									column: 2
-									line: 1
-								}
-								start: Object {
-									column: 1
-									line: 1
-								}
-							}
+							loc: SourceLocation es2017/trailing-function-commas/4/input.js 1:1-1:2 (x)
 						}
 						JSBindingIdentifier {
 							name: "y"
-							loc: Object {
-								filename: "es2017/trailing-function-commas/4/input.js"
-								identifierName: "y"
-								end: Object {
-									column: 5
-									line: 1
-								}
-								start: Object {
-									column: 4
-									line: 1
-								}
-							}
+							loc: SourceLocation es2017/trailing-function-commas/4/input.js 1:4-1:5 (y)
 						}
 					]
 				}
@@ -128,6 +56,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

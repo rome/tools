@@ -12,146 +12,42 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "typescript/types/tuple-labeled/input.ts"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
+	loc: SourceLocation typescript/types/tuple-labeled/input.ts 1:0-2:0
+	path: UIDPath<typescript/types/tuple-labeled/input.ts>
 	syntax: Array ["ts"]
-	loc: Object {
-		filename: "typescript/types/tuple-labeled/input.ts"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
 	body: Array [
 		TSTypeAlias {
 			id: JSBindingIdentifier {
 				name: "StrStrNumNumBool"
-				loc: Object {
-					filename: "typescript/types/tuple-labeled/input.ts"
-					identifierName: "StrStrNumNumBool"
-					end: Object {
-						column: 21
-						line: 1
-					}
-					start: Object {
-						column: 5
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/types/tuple-labeled/input.ts 1:5-1:21 (StrStrNumNumBool)
 			}
 			typeParameters: undefined
-			loc: Object {
-				filename: "typescript/types/tuple-labeled/input.ts"
-				end: Object {
-					column: 46
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation typescript/types/tuple-labeled/input.ts 1:0-1:46
 			right: TSTupleType {
-				loc: Object {
-					filename: "typescript/types/tuple-labeled/input.ts"
-					end: Object {
-						column: 45
-						line: 1
-					}
-					start: Object {
-						column: 24
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/types/tuple-labeled/input.ts 1:24-1:45
 				elementTypes: Array [
 					TSTupleElement {
 						name: undefined
 						optional: false
-						loc: Object {
-							filename: "typescript/types/tuple-labeled/input.ts"
-							end: Object {
-								column: 32
-								line: 1
-							}
-							start: Object {
-								column: 25
-								line: 1
-							}
-						}
-						typeAnnotation: TSBooleanKeywordTypeAnnotation {
-							loc: Object {
-								filename: "typescript/types/tuple-labeled/input.ts"
-								end: Object {
-									column: 32
-									line: 1
-								}
-								start: Object {
-									column: 25
-									line: 1
-								}
-							}
-						}
+						loc: SourceLocation typescript/types/tuple-labeled/input.ts 1:25-1:32
+						typeAnnotation: TSBooleanKeywordTypeAnnotation {loc: SourceLocation typescript/types/tuple-labeled/input.ts 1:25-1:32}
 					}
 					TSTupleElement {
 						name: undefined
 						optional: false
-						loc: Object {
-							filename: "typescript/types/tuple-labeled/input.ts"
-							end: Object {
-								column: 44
-								line: 1
-							}
-							start: Object {
-								column: 34
-								line: 1
-							}
-						}
+						loc: SourceLocation typescript/types/tuple-labeled/input.ts 1:34-1:44
 						typeAnnotation: TSRestType {
-							loc: Object {
-								filename: "typescript/types/tuple-labeled/input.ts"
-								end: Object {
-									column: 44
-									line: 1
-								}
-								start: Object {
-									column: 34
-									line: 1
-								}
-							}
+							loc: SourceLocation typescript/types/tuple-labeled/input.ts 1:34-1:44
 							argument: TSTypeReference {
 								typeParameters: undefined
-								loc: Object {
-									filename: "typescript/types/tuple-labeled/input.ts"
-									end: Object {
-										column: 44
-										line: 1
-									}
-									start: Object {
-										column: 37
-										line: 1
-									}
-								}
+								loc: SourceLocation typescript/types/tuple-labeled/input.ts 1:37-1:44
 								typeName: JSReferenceIdentifier {
 									name: "Strings"
-									loc: Object {
-										filename: "typescript/types/tuple-labeled/input.ts"
-										identifierName: "Strings"
-										end: Object {
-											column: 44
-											line: 1
-										}
-										start: Object {
-											column: 37
-											line: 1
-										}
-									}
+									loc: SourceLocation typescript/types/tuple-labeled/input.ts 1:37-1:44 (Strings)
 								}
 							}
 						}
@@ -166,6 +62,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

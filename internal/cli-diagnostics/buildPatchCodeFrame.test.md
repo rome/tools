@@ -97,7 +97,7 @@ Seb		astian
 ```
 # Before
 let namedBackReference = "";
-let namedBackReferenceIndex = ob1Get0(index) + 2;
+let namedBackReferenceIndex = index.toNumber() + 2;
 let namedBackReferenceChar = input[namedBackReferenceIndex];
 if (namedBackReferenceChar === "<") {
 	namedBackReferenceChar = input[namedBackReferenceIndex];
@@ -119,7 +119,7 @@ if (namedBackReferenceChar === "<") {
 			value: namedBackReference,
 			escaped: true,
 		},
-		ob1Coerce0(namedBackReferenceIndex),
+		new ZeroIndexedNumber(namedBackReferenceIndex),
 	);
 }
 
@@ -130,7 +130,7 @@ let [char, next] = this.getInputChar(index, 2);
 if (char === "<") {
 	while (!this.isEOF(next)) {
 		value += char;
-		[char, next] = this.getInputChar(index, 1);
+		[char, next] = this.getInputChar(index.increment());
 
 		if (char === ">") {
 			break;
@@ -149,7 +149,7 @@ if (char === "<") {
 
 # Diff
    1 	 │ - let·namedBackReference·=·"";
-   2 	 │ - let·namedBackReferenceIndex·=·ob1Get0(index)·+·2;
+   2 	 │ - let·namedBackReferenceIndex·=·index.toNumber()·+·2;
    3 	 │ - let·namedBackReferenceChar·=·input[namedBackReferenceIndex];
    4 	 │ - if·(namedBackReferenceChar·===·"<")·{
    5 	 │ - → namedBackReferenceChar·=·input[namedBackReferenceIndex];
@@ -171,7 +171,7 @@ if (char === "<") {
   	  4 │ + if·(char·===·"<")·{
   	  5 │ + → while·(!this.isEOF(next))·{
   	  6 │ + → → value·+=·char;
-  	  7 │ + → → [char,·next]·=·this.getInputChar(index,·1);
+  	  7 │ + → → [char,·next]·=·this.getInputChar(index.increment());
   	  8 │ +
   	  9 │ + → → if·(char·===·">")·{
   	 10 │ + → → → break;
@@ -185,7 +185,7 @@ if (char === "<") {
   	 17 │ + → → → value,
   22 18 │   → → → escaped:·true,
   23 19 │   → → },
-  24 	 │ - → → ob1Coerce0(namedBackReferenceIndex),
+  24 	 │ - → → new·ZeroIndexedNumber(namedBackReferenceIndex),
   	 20 │ + → → index,
   25 21 │   → );
 ```

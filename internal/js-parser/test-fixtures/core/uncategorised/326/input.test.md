@@ -12,119 +12,35 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "core/uncategorised/326/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "core/uncategorised/326/input.js"
-		end: Object {
-			column: 8
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation core/uncategorised/326/input.js 1:0-1:8
+	path: UIDPath<core/uncategorised/326/input.js>
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "core/uncategorised/326/input.js"
-				end: Object {
-					column: 8
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation core/uncategorised/326/input.js 1:0-1:8
 			expression: JSBinaryExpression {
 				operator: "/"
-				loc: Object {
-					filename: "core/uncategorised/326/input.js"
-					end: Object {
-						column: 8
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation core/uncategorised/326/input.js 1:0-1:8
 				right: JSReferenceIdentifier {
 					name: "b"
-					loc: Object {
-						filename: "core/uncategorised/326/input.js"
-						identifierName: "b"
-						end: Object {
-							column: 8
-							line: 1
-						}
-						start: Object {
-							column: 7
-							line: 1
-						}
-					}
+					loc: SourceLocation core/uncategorised/326/input.js 1:7-1:8 (b)
 				}
 				left: JSMemberExpression {
-					loc: Object {
-						filename: "core/uncategorised/326/input.js"
-						end: Object {
-							column: 4
-							line: 1
-						}
-						start: Object {
-							column: 0
-							line: 1
-						}
-					}
+					loc: SourceLocation core/uncategorised/326/input.js 1:0-1:4
 					object: JSReferenceIdentifier {
 						name: "a"
-						loc: Object {
-							filename: "core/uncategorised/326/input.js"
-							identifierName: "a"
-							end: Object {
-								column: 1
-								line: 1
-							}
-							start: Object {
-								column: 0
-								line: 1
-							}
-						}
+						loc: SourceLocation core/uncategorised/326/input.js 1:0-1:1 (a)
 					}
 					property: JSStaticMemberProperty {
 						value: JSIdentifier {
 							name: "in"
-							loc: Object {
-								filename: "core/uncategorised/326/input.js"
-								identifierName: "in"
-								end: Object {
-									column: 4
-									line: 1
-								}
-								start: Object {
-									column: 2
-									line: 1
-								}
-							}
+							loc: SourceLocation core/uncategorised/326/input.js 1:2-1:4 (in)
 						}
-						loc: Object {
-							filename: "core/uncategorised/326/input.js"
-							identifierName: "in"
-							end: Object {
-								column: 4
-								line: 1
-							}
-							start: Object {
-								column: 2
-								line: 1
-							}
-						}
+						loc: SourceLocation core/uncategorised/326/input.js 1:2-1:4 (in)
 					}
 				}
 			}
@@ -136,6 +52,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

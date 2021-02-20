@@ -12,90 +12,28 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "core/uncategorised/123/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "core/uncategorised/123/input.js"
-		end: Object {
-			column: 20
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation core/uncategorised/123/input.js 1:0-1:20
+	path: UIDPath<core/uncategorised/123/input.js>
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "core/uncategorised/123/input.js"
-				end: Object {
-					column: 20
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation core/uncategorised/123/input.js 1:0-1:20
 			expression: JSMemberExpression {
-				loc: Object {
-					filename: "core/uncategorised/123/input.js"
-					end: Object {
-						column: 20
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation core/uncategorised/123/input.js 1:0-1:20
 				object: JSReferenceIdentifier {
 					name: "universe"
-					loc: Object {
-						filename: "core/uncategorised/123/input.js"
-						identifierName: "universe"
-						end: Object {
-							column: 8
-							line: 1
-						}
-						start: Object {
-							column: 0
-							line: 1
-						}
-					}
+					loc: SourceLocation core/uncategorised/123/input.js 1:0-1:8 (universe)
 				}
 				property: JSComputedMemberProperty {
 					value: JSReferenceIdentifier {
 						name: "galaxyName"
-						loc: Object {
-							filename: "core/uncategorised/123/input.js"
-							identifierName: "galaxyName"
-							end: Object {
-								column: 19
-								line: 1
-							}
-							start: Object {
-								column: 9
-								line: 1
-							}
-						}
+						loc: SourceLocation core/uncategorised/123/input.js 1:9-1:19 (galaxyName)
 					}
-					loc: Object {
-						filename: "core/uncategorised/123/input.js"
-						end: Object {
-							column: 20
-							line: 1
-						}
-						start: Object {
-							column: 8
-							line: 1
-						}
-					}
+					loc: SourceLocation core/uncategorised/123/input.js 1:8-1:20
 				}
 			}
 		}
@@ -106,6 +44,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

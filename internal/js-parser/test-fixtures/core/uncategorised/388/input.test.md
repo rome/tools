@@ -11,117 +11,50 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "core/uncategorised/388/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "core/uncategorised/388/input.js"
-		end: Object {
-			column: 9
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation core/uncategorised/388/input.js 1:0-1:9
+	path: UIDPath<core/uncategorised/388/input.js>
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse"
 				categoryValue: "js"
+				category: Array ["parse"]
 				message: RAW_MARKUP {value: "Expected a semicolon or a line terminator"}
 			}
 			location: Object {
-				filename: "core/uncategorised/388/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 5
-					line: 1
-				}
-				start: Object {
-					column: 6
-					line: 1
-				}
+				end: Position 1:5
+				path: UIDPath<core/uncategorised/388/input.js>
+				start: Position 1:6
 			}
 		}
 	]
 	body: Array [
 		JSBlockStatement {
 			directives: Array []
-			loc: Object {
-				filename: "core/uncategorised/388/input.js"
-				end: Object {
-					column: 9
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation core/uncategorised/388/input.js 1:0-1:9
 			body: Array [
 				JSExpressionStatement {
-					loc: Object {
-						filename: "core/uncategorised/388/input.js"
-						end: Object {
-							column: 5
-							line: 1
-						}
-						start: Object {
-							column: 2
-							line: 1
-						}
-					}
+					loc: SourceLocation core/uncategorised/388/input.js 1:2-1:5
 					expression: JSReferenceIdentifier {
 						name: "set"
-						loc: Object {
-							filename: "core/uncategorised/388/input.js"
-							identifierName: "set"
-							end: Object {
-								column: 5
-								line: 1
-							}
-							start: Object {
-								column: 2
-								line: 1
-							}
-						}
+						loc: SourceLocation core/uncategorised/388/input.js 1:2-1:5 (set)
 					}
 				}
 				JSExpressionStatement {
-					loc: Object {
-						filename: "core/uncategorised/388/input.js"
-						end: Object {
-							column: 7
-							line: 1
-						}
-						start: Object {
-							column: 6
-							line: 1
-						}
-					}
+					loc: SourceLocation core/uncategorised/388/input.js 1:6-1:7
 					expression: JSNumericLiteral {
 						value: 1
 						format: undefined
-						loc: Object {
-							filename: "core/uncategorised/388/input.js"
-							end: Object {
-								column: 7
-								line: 1
-							}
-							start: Object {
-								column: 6
-								line: 1
-							}
-						}
+						loc: SourceLocation core/uncategorised/388/input.js 1:6-1:7
 					}
 				}
 			]
@@ -141,8 +74,5 @@ JSRoot {
     { set 1 }
           ^
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

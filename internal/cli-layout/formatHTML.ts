@@ -47,7 +47,7 @@ export function htmlFormatText(
 			return `<span style="color: Orange;">${value}</span>`;
 
 		case "info":
-			return `<span style="color: DodgerBlue;">${value}</span>`;
+			return `<span style="color: rgb(38, 148, 255);">${value}</span>`;
 
 		case "code":
 			return `<i>${value}</i>`;

@@ -12,147 +12,45 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "es2015/let/let-at-catch-block/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2015/let/let-at-catch-block/input.js"
-		end: Object {
-			column: 1
-			line: 3
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2015/let/let-at-catch-block/input.js 1:0-3:1
+	path: UIDPath<es2015/let/let-at-catch-block/input.js>
 	body: Array [
 		JSTryStatement {
 			finalizer: undefined
-			loc: Object {
-				filename: "es2015/let/let-at-catch-block/input.js"
-				end: Object {
-					column: 1
-					line: 3
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2015/let/let-at-catch-block/input.js 1:0-3:1
 			block: JSBlockStatement {
 				body: Array []
 				directives: Array []
-				loc: Object {
-					filename: "es2015/let/let-at-catch-block/input.js"
-					end: Object {
-						column: 6
-						line: 1
-					}
-					start: Object {
-						column: 4
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/let/let-at-catch-block/input.js 1:4-1:6
 			}
 			handler: JSCatchClause {
-				loc: Object {
-					filename: "es2015/let/let-at-catch-block/input.js"
-					end: Object {
-						column: 1
-						line: 3
-					}
-					start: Object {
-						column: 7
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/let/let-at-catch-block/input.js 1:7-3:1
 				param: JSBindingIdentifier {
 					name: "err"
-					loc: Object {
-						filename: "es2015/let/let-at-catch-block/input.js"
-						identifierName: "err"
-						end: Object {
-							column: 17
-							line: 1
-						}
-						start: Object {
-							column: 14
-							line: 1
-						}
-					}
+					loc: SourceLocation es2015/let/let-at-catch-block/input.js 1:14-1:17 (err)
 				}
 				body: JSBlockStatement {
 					directives: Array []
-					loc: Object {
-						filename: "es2015/let/let-at-catch-block/input.js"
-						end: Object {
-							column: 1
-							line: 3
-						}
-						start: Object {
-							column: 19
-							line: 1
-						}
-					}
+					loc: SourceLocation es2015/let/let-at-catch-block/input.js 1:19-3:1
 					body: Array [
 						JSVariableDeclarationStatement {
-							loc: Object {
-								filename: "es2015/let/let-at-catch-block/input.js"
-								end: Object {
-									column: 10
-									line: 2
-								}
-								start: Object {
-									column: 2
-									line: 2
-								}
-							}
+							loc: SourceLocation es2015/let/let-at-catch-block/input.js 2:2-2:10
 							declaration: JSVariableDeclaration {
 								kind: "let"
-								loc: Object {
-									filename: "es2015/let/let-at-catch-block/input.js"
-									end: Object {
-										column: 10
-										line: 2
-									}
-									start: Object {
-										column: 2
-										line: 2
-									}
-								}
+								loc: SourceLocation es2015/let/let-at-catch-block/input.js 2:2-2:10
 								declarations: Array [
 									JSVariableDeclarator {
 										id: JSBindingIdentifier {
 											name: "let"
-											loc: Object {
-												filename: "es2015/let/let-at-catch-block/input.js"
-												identifierName: "let"
-												end: Object {
-													column: 9
-													line: 2
-												}
-												start: Object {
-													column: 6
-													line: 2
-												}
-											}
+											loc: SourceLocation es2015/let/let-at-catch-block/input.js 2:6-2:9 (let)
 										}
 										init: undefined
-										loc: Object {
-											filename: "es2015/let/let-at-catch-block/input.js"
-											end: Object {
-												column: 9
-												line: 2
-											}
-											start: Object {
-												column: 6
-												line: 2
-											}
-										}
+										loc: SourceLocation es2015/let/let-at-catch-block/input.js 2:6-2:9
 									}
 								]
 							}
@@ -168,6 +66,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

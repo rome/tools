@@ -11,45 +11,29 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "typescript/class/property-optional-definite-assignment-not-allowed/input.ts"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
+	loc: SourceLocation typescript/class/property-optional-definite-assignment-not-allowed/input.ts 1:0-4:0
+	path: UIDPath<typescript/class/property-optional-definite-assignment-not-allowed/input.ts>
 	syntax: Array ["ts"]
-	loc: Object {
-		filename: "typescript/class/property-optional-definite-assignment-not-allowed/input.ts"
-		end: Object {
-			column: 0
-			line: 4
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse"
 				categoryValue: "js"
+				category: Array ["parse"]
 				message: RAW_MARKUP {value: "Expected a semicolon or a line terminator"}
 			}
 			location: Object {
-				filename: "typescript/class/property-optional-definite-assignment-not-allowed/input.ts"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 4
-					line: 2
-				}
-				start: Object {
-					column: 4
-					line: 2
-				}
+				end: Position 2:4
+				path: UIDPath<typescript/class/property-optional-definite-assignment-not-allowed/input.ts>
+				start: Position 2:4
 			}
 		}
 	]
@@ -57,90 +41,28 @@ JSRoot {
 		JSClassDeclaration {
 			id: JSBindingIdentifier {
 				name: "C"
-				loc: Object {
-					filename: "typescript/class/property-optional-definite-assignment-not-allowed/input.ts"
-					identifierName: "C"
-					end: Object {
-						column: 7
-						line: 1
-					}
-					start: Object {
-						column: 6
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/class/property-optional-definite-assignment-not-allowed/input.ts 1:6-1:7 (C)
 			}
-			loc: Object {
-				filename: "typescript/class/property-optional-definite-assignment-not-allowed/input.ts"
-				end: Object {
-					column: 1
-					line: 3
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation typescript/class/property-optional-definite-assignment-not-allowed/input.ts 1:0-3:1
 			meta: JSClassHead {
 				implements: undefined
 				superClass: undefined
 				superTypeParameters: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "typescript/class/property-optional-definite-assignment-not-allowed/input.ts"
-					end: Object {
-						column: 1
-						line: 3
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/class/property-optional-definite-assignment-not-allowed/input.ts 1:0-3:1
 				body: Array [
 					JSClassProperty {
 						key: JSStaticPropertyKey {
 							value: JSIdentifier {
 								name: "x"
-								loc: Object {
-									filename: "typescript/class/property-optional-definite-assignment-not-allowed/input.ts"
-									identifierName: "x"
-									end: Object {
-										column: 3
-										line: 2
-									}
-									start: Object {
-										column: 2
-										line: 2
-									}
-								}
+								loc: SourceLocation typescript/class/property-optional-definite-assignment-not-allowed/input.ts 2:2-2:3 (x)
 							}
-							loc: Object {
-								filename: "typescript/class/property-optional-definite-assignment-not-allowed/input.ts"
-								end: Object {
-									column: 3
-									line: 2
-								}
-								start: Object {
-									column: 2
-									line: 2
-								}
-							}
+							loc: SourceLocation typescript/class/property-optional-definite-assignment-not-allowed/input.ts 2:2-2:3
 						}
 						value: undefined
 						definite: undefined
 						typeAnnotation: undefined
-						loc: Object {
-							filename: "typescript/class/property-optional-definite-assignment-not-allowed/input.ts"
-							end: Object {
-								column: 4
-								line: 2
-							}
-							start: Object {
-								column: 2
-								line: 2
-							}
-						}
+						loc: SourceLocation typescript/class/property-optional-definite-assignment-not-allowed/input.ts 2:2-2:4
 						meta: JSClassPropertyMeta {
 							abstract: false
 							accessibility: undefined
@@ -148,78 +70,22 @@ JSRoot {
 							readonly: false
 							static: false
 							typeAnnotation: undefined
-							start: Object {
-								column: 2
-								line: 2
-							}
-							loc: Object {
-								filename: "typescript/class/property-optional-definite-assignment-not-allowed/input.ts"
-								end: Object {
-									column: 4
-									line: 2
-								}
-								start: Object {
-									column: 2
-									line: 2
-								}
-							}
+							loc: SourceLocation typescript/class/property-optional-definite-assignment-not-allowed/input.ts 2:2-2:4
+							start: Position 2:2
 						}
 					}
 					JSClassProperty {
 						key: JSStaticPropertyKey {
 							value: JSIdentifier {
 								name: ""
-								loc: Object {
-									filename: "typescript/class/property-optional-definite-assignment-not-allowed/input.ts"
-									identifierName: ""
-									end: Object {
-										column: 5
-										line: 2
-									}
-									start: Object {
-										column: 4
-										line: 2
-									}
-								}
+								loc: SourceLocation typescript/class/property-optional-definite-assignment-not-allowed/input.ts 2:4-2:5 ()
 							}
-							loc: Object {
-								filename: "typescript/class/property-optional-definite-assignment-not-allowed/input.ts"
-								end: Object {
-									column: 5
-									line: 2
-								}
-								start: Object {
-									column: 4
-									line: 2
-								}
-							}
+							loc: SourceLocation typescript/class/property-optional-definite-assignment-not-allowed/input.ts 2:4-2:5
 						}
 						value: undefined
 						definite: undefined
-						loc: Object {
-							filename: "typescript/class/property-optional-definite-assignment-not-allowed/input.ts"
-							end: Object {
-								column: 14
-								line: 2
-							}
-							start: Object {
-								column: 4
-								line: 2
-							}
-						}
-						typeAnnotation: TSNumberKeywordTypeAnnotation {
-							loc: Object {
-								filename: "typescript/class/property-optional-definite-assignment-not-allowed/input.ts"
-								end: Object {
-									column: 13
-									line: 2
-								}
-								start: Object {
-									column: 7
-									line: 2
-								}
-							}
-						}
+						loc: SourceLocation typescript/class/property-optional-definite-assignment-not-allowed/input.ts 2:4-2:14
+						typeAnnotation: TSNumberKeywordTypeAnnotation {loc: SourceLocation typescript/class/property-optional-definite-assignment-not-allowed/input.ts 2:7-2:13}
 						meta: JSClassPropertyMeta {
 							abstract: false
 							accessibility: undefined
@@ -227,21 +93,8 @@ JSRoot {
 							readonly: false
 							static: false
 							typeAnnotation: undefined
-							start: Object {
-								column: 4
-								line: 2
-							}
-							loc: Object {
-								filename: "typescript/class/property-optional-definite-assignment-not-allowed/input.ts"
-								end: Object {
-									column: 5
-									line: 2
-								}
-								start: Object {
-									column: 4
-									line: 2
-								}
-							}
+							loc: SourceLocation typescript/class/property-optional-definite-assignment-not-allowed/input.ts 2:4-2:5
+							start: Position 2:4
 						}
 					}
 				]
@@ -264,8 +117,5 @@ JSRoot {
       │     ^
     3 │ }
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

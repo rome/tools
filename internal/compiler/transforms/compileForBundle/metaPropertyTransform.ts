@@ -24,18 +24,9 @@ function isImportMeta(node: AnyNode): node is JSMetaProperty {
 
 function createURLString(context: CompilerContext): AnyJSExpression {
 	const str = jsStringLiteral.create({
-		value: `file://${getFilename(context)}`,
+		value: `file://${context.path.join()}`,
 	});
 	return template.expression`typeof __filename === 'string' ? 'file://' + __filename : ${str}`;
-}
-
-function getFilename(context: CompilerContext): string {
-	const {path} = context;
-	if (path === undefined) {
-		return "";
-	} else {
-		return path.join();
-	}
 }
 
 export default createVisitor({

@@ -11,83 +11,33 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "es2015/modules/import-declaration-trailing-comma/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
 	syntax: Array []
-	loc: Object {
-		filename: "es2015/modules/import-declaration-trailing-comma/input.js"
-		end: Object {
-			column: 0
-			line: 6
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2015/modules/import-declaration-trailing-comma/input.js 1:0-6:0
+	path: UIDPath<es2015/modules/import-declaration-trailing-comma/input.js>
 	comments: Array [
 		CommentBlock {
 			id: "1"
 			value: " One "
-			loc: Object {
-				filename: "es2015/modules/import-declaration-trailing-comma/input.js"
-				end: Object {
-					column: 11
-					line: 2
-				}
-				start: Object {
-					column: 2
-					line: 2
-				}
-			}
+			loc: SourceLocation es2015/modules/import-declaration-trailing-comma/input.js 2:2-2:11
 		}
 		CommentBlock {
 			id: "2"
 			value: " Two "
-			loc: Object {
-				filename: "es2015/modules/import-declaration-trailing-comma/input.js"
-				end: Object {
-					column: 11
-					line: 3
-				}
-				start: Object {
-					column: 2
-					line: 3
-				}
-			}
+			loc: SourceLocation es2015/modules/import-declaration-trailing-comma/input.js 3:2-3:11
 		}
 		CommentBlock {
 			id: "3"
 			value: " Three "
-			loc: Object {
-				filename: "es2015/modules/import-declaration-trailing-comma/input.js"
-				end: Object {
-					column: 13
-					line: 4
-				}
-				start: Object {
-					column: 2
-					line: 4
-				}
-			}
+			loc: SourceLocation es2015/modules/import-declaration-trailing-comma/input.js 4:2-4:13
 		}
 		CommentBlock {
 			id: "4"
 			value: " Four "
-			loc: Object {
-				filename: "es2015/modules/import-declaration-trailing-comma/input.js"
-				end: Object {
-					column: 12
-					line: 5
-				}
-				start: Object {
-					column: 2
-					line: 5
-				}
-			}
+			loc: SourceLocation es2015/modules/import-declaration-trailing-comma/input.js 5:2-5:12
 		}
 	]
 	body: Array [
@@ -95,66 +45,25 @@ JSRoot {
 			defaultSpecifier: undefined
 			importKind: undefined
 			namespaceSpecifier: undefined
-			loc: Object {
-				filename: "es2015/modules/import-declaration-trailing-comma/input.js"
-				end: Object {
-					column: 24
-					line: 5
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2015/modules/import-declaration-trailing-comma/input.js 1:0-5:24
 			source: JSStringLiteral {
 				value: "foo"
-				loc: Object {
-					filename: "es2015/modules/import-declaration-trailing-comma/input.js"
-					end: Object {
-						column: 23
-						line: 5
-					}
-					start: Object {
-						column: 18
-						line: 5
-					}
-				}
+				loc: SourceLocation es2015/modules/import-declaration-trailing-comma/input.js 5:18-5:23
 			}
 			namedSpecifiers: Array [
 				JSImportSpecifier {
 					leadingComments: Array ["1"]
+					loc: SourceLocation es2015/modules/import-declaration-trailing-comma/input.js 2:12-2:15
 					trailingComments: Array [
 						"2"
 						"3"
 						"4"
 					]
-					loc: Object {
-						filename: "es2015/modules/import-declaration-trailing-comma/input.js"
-						end: Object {
-							column: 15
-							line: 2
-						}
-						start: Object {
-							column: 12
-							line: 2
-						}
-					}
 					imported: JSIdentifier {
 						name: "Foo"
 						leadingComments: undefined
 						trailingComments: undefined
-						loc: Object {
-							filename: "es2015/modules/import-declaration-trailing-comma/input.js"
-							identifierName: "Foo"
-							end: Object {
-								column: 15
-								line: 2
-							}
-							start: Object {
-								column: 12
-								line: 2
-							}
-						}
+						loc: SourceLocation es2015/modules/import-declaration-trailing-comma/input.js 2:12-2:15 (Foo)
 					}
 					local: JSImportSpecifierLocal {
 						name: JSBindingIdentifier {
@@ -162,33 +71,12 @@ JSRoot {
 							innerComments: undefined
 							leadingComments: undefined
 							trailingComments: undefined
-							loc: Object {
-								filename: "es2015/modules/import-declaration-trailing-comma/input.js"
-								identifierName: "Foo"
-								end: Object {
-									column: 15
-									line: 2
-								}
-								start: Object {
-									column: 12
-									line: 2
-								}
-							}
+							loc: SourceLocation es2015/modules/import-declaration-trailing-comma/input.js 2:12-2:15 (Foo)
 						}
 						importKind: undefined
 						leadingComments: undefined
 						trailingComments: undefined
-						loc: Object {
-							filename: "es2015/modules/import-declaration-trailing-comma/input.js"
-							end: Object {
-								column: 15
-								line: 2
-							}
-							start: Object {
-								column: 12
-								line: 2
-							}
-						}
+						loc: SourceLocation es2015/modules/import-declaration-trailing-comma/input.js 2:12-2:15
 					}
 				}
 			]
@@ -200,6 +88,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

@@ -12,105 +12,34 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "esprima/declaration-let/migrated_0002/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "esprima/declaration-let/migrated_0002/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation esprima/declaration-let/migrated_0002/input.js 1:0-2:0
+	path: UIDPath<esprima/declaration-let/migrated_0002/input.js>
 	body: Array [
 		JSBlockStatement {
 			directives: Array []
-			loc: Object {
-				filename: "esprima/declaration-let/migrated_0002/input.js"
-				end: Object {
-					column: 14
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation esprima/declaration-let/migrated_0002/input.js 1:0-1:14
 			body: Array [
 				JSVariableDeclarationStatement {
-					loc: Object {
-						filename: "esprima/declaration-let/migrated_0002/input.js"
-						end: Object {
-							column: 12
-							line: 1
-						}
-						start: Object {
-							column: 2
-							line: 1
-						}
-					}
+					loc: SourceLocation esprima/declaration-let/migrated_0002/input.js 1:2-1:12
 					declaration: JSVariableDeclaration {
 						kind: "let"
-						loc: Object {
-							filename: "esprima/declaration-let/migrated_0002/input.js"
-							end: Object {
-								column: 12
-								line: 1
-							}
-							start: Object {
-								column: 2
-								line: 1
-							}
-						}
+						loc: SourceLocation esprima/declaration-let/migrated_0002/input.js 1:2-1:12
 						declarations: Array [
 							JSVariableDeclarator {
 								id: JSBindingIdentifier {
 									name: "x"
-									loc: Object {
-										filename: "esprima/declaration-let/migrated_0002/input.js"
-										identifierName: "x"
-										end: Object {
-											column: 7
-											line: 1
-										}
-										start: Object {
-											column: 6
-											line: 1
-										}
-									}
+									loc: SourceLocation esprima/declaration-let/migrated_0002/input.js 1:6-1:7 (x)
 								}
-								loc: Object {
-									filename: "esprima/declaration-let/migrated_0002/input.js"
-									end: Object {
-										column: 12
-										line: 1
-									}
-									start: Object {
-										column: 6
-										line: 1
-									}
-								}
+								loc: SourceLocation esprima/declaration-let/migrated_0002/input.js 1:6-1:12
 								init: JSNumericLiteral {
 									value: 42
 									format: undefined
-									loc: Object {
-										filename: "esprima/declaration-let/migrated_0002/input.js"
-										end: Object {
-											column: 12
-											line: 1
-										}
-										start: Object {
-											column: 10
-											line: 1
-										}
-									}
+									loc: SourceLocation esprima/declaration-let/migrated_0002/input.js 1:10-1:12
 								}
 							}
 						]
@@ -125,6 +54,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

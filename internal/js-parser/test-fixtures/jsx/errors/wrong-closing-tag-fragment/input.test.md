@@ -11,49 +11,19 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "jsx/errors/wrong-closing-tag-fragment/input.jsx"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
+	loc: SourceLocation jsx/errors/wrong-closing-tag-fragment/input.jsx 1:0-2:0
+	path: UIDPath<jsx/errors/wrong-closing-tag-fragment/input.jsx>
 	syntax: Array ["jsx"]
-	loc: Object {
-		filename: "jsx/errors/wrong-closing-tag-fragment/input.jsx"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "jsx/errors/wrong-closing-tag-fragment/input.jsx"
-				end: Object {
-					column: 14
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation jsx/errors/wrong-closing-tag-fragment/input.jsx 1:0-1:14
 			expression: JSXFragment {
 				children: Array []
-				loc: Object {
-					filename: "jsx/errors/wrong-closing-tag-fragment/input.jsx"
-					end: Object {
-						column: 14
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation jsx/errors/wrong-closing-tag-fragment/input.jsx 1:0-1:14
 			}
 		}
 	]
@@ -61,41 +31,23 @@ JSRoot {
 		Object {
 			origins: Array [Object {category: "parse"}]
 			location: Object {
-				filename: "jsx/errors/wrong-closing-tag-fragment/input.jsx"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 2
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
+				end: Position 1:2
+				path: UIDPath<jsx/errors/wrong-closing-tag-fragment/input.jsx>
+				start: Position 1:0
 			}
 			description: Object {
-				category: "parse"
 				categoryValue: "js"
+				category: Array ["parse"]
 				message: RAW_MARKUP {value: "Expected JSX closing fragment tag"}
 				advice: Array [
 					log {
 						category: "info"
 						text: RAW_MARKUP {value: "Originated from this opening tag"}
 					}
-					frame {
-						location: Object {
-							filename: "jsx/errors/wrong-closing-tag-fragment/input.jsx"
-							end: Object {
-								column: 2
-								line: 1
-							}
-							start: Object {
-								column: 0
-								line: 1
-							}
-						}
-					}
+					frame {location: SourceLocation jsx/errors/wrong-closing-tag-fragment/input.jsx 1:0-1:2}
 				]
 			}
 		}
@@ -116,8 +68,5 @@ JSRoot {
     <></something>
     ^^
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

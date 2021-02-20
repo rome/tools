@@ -12,250 +12,75 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "typescript/types/mapped-type-key-remap/input.ts"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
+	loc: SourceLocation typescript/types/mapped-type-key-remap/input.ts 1:0-4:0
+	path: UIDPath<typescript/types/mapped-type-key-remap/input.ts>
 	syntax: Array ["ts"]
-	loc: Object {
-		filename: "typescript/types/mapped-type-key-remap/input.ts"
-		end: Object {
-			column: 0
-			line: 4
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
 	body: Array [
 		TSTypeAlias {
 			id: JSBindingIdentifier {
 				name: "MappedType"
-				loc: Object {
-					filename: "typescript/types/mapped-type-key-remap/input.ts"
-					identifierName: "MappedType"
-					end: Object {
-						column: 15
-						line: 1
-					}
-					start: Object {
-						column: 5
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/types/mapped-type-key-remap/input.ts 1:5-1:15 (MappedType)
 			}
-			loc: Object {
-				filename: "typescript/types/mapped-type-key-remap/input.ts"
-				end: Object {
-					column: 1
-					line: 3
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation typescript/types/mapped-type-key-remap/input.ts 1:0-3:1
 			typeParameters: TSTypeParameterDeclaration {
-				loc: Object {
-					filename: "typescript/types/mapped-type-key-remap/input.ts"
-					end: Object {
-						column: 18
-						line: 1
-					}
-					start: Object {
-						column: 15
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/types/mapped-type-key-remap/input.ts 1:15-1:18
 				params: Array [
 					TSTypeParameter {
 						name: "T"
 						constraint: undefined
 						default: undefined
-						loc: Object {
-							filename: "typescript/types/mapped-type-key-remap/input.ts"
-							end: Object {
-								column: 17
-								line: 1
-							}
-							start: Object {
-								column: 16
-								line: 1
-							}
-						}
+						loc: SourceLocation typescript/types/mapped-type-key-remap/input.ts 1:16-1:17
 					}
 				]
 			}
 			right: TSMappedType {
 				optional: undefined
 				readonly: undefined
-				loc: Object {
-					filename: "typescript/types/mapped-type-key-remap/input.ts"
-					end: Object {
-						column: 1
-						line: 3
-					}
-					start: Object {
-						column: 21
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/types/mapped-type-key-remap/input.ts 1:21-3:1
 				nameType: TSTypeReference {
 					typeParameters: undefined
-					loc: Object {
-						filename: "typescript/types/mapped-type-key-remap/input.ts"
-						end: Object {
-							column: 28
-							line: 2
-						}
-						start: Object {
-							column: 18
-							line: 2
-						}
-					}
+					loc: SourceLocation typescript/types/mapped-type-key-remap/input.ts 2:18-2:28
 					typeName: JSReferenceIdentifier {
 						name: "NewKeyType"
-						loc: Object {
-							filename: "typescript/types/mapped-type-key-remap/input.ts"
-							identifierName: "NewKeyType"
-							end: Object {
-								column: 28
-								line: 2
-							}
-							start: Object {
-								column: 18
-								line: 2
-							}
-						}
+						loc: SourceLocation typescript/types/mapped-type-key-remap/input.ts 2:18-2:28 (NewKeyType)
 					}
 				}
 				typeParameter: TSTypeParameter {
 					name: "K"
-					loc: Object {
-						filename: "typescript/types/mapped-type-key-remap/input.ts"
-						end: Object {
-							column: 14
-							line: 2
-						}
-						start: Object {
-							column: 2
-							line: 2
-						}
-					}
+					loc: SourceLocation typescript/types/mapped-type-key-remap/input.ts 2:2-2:14
 					constraint: TSTypeOperator {
 						operator: "keyof"
-						loc: Object {
-							filename: "typescript/types/mapped-type-key-remap/input.ts"
-							end: Object {
-								column: 14
-								line: 2
-							}
-							start: Object {
-								column: 7
-								line: 2
-							}
-						}
+						loc: SourceLocation typescript/types/mapped-type-key-remap/input.ts 2:7-2:14
 						typeAnnotation: TSTypeReference {
 							typeParameters: undefined
-							loc: Object {
-								filename: "typescript/types/mapped-type-key-remap/input.ts"
-								end: Object {
-									column: 14
-									line: 2
-								}
-								start: Object {
-									column: 13
-									line: 2
-								}
-							}
+							loc: SourceLocation typescript/types/mapped-type-key-remap/input.ts 2:13-2:14
 							typeName: JSReferenceIdentifier {
 								name: "T"
-								loc: Object {
-									filename: "typescript/types/mapped-type-key-remap/input.ts"
-									identifierName: "T"
-									end: Object {
-										column: 14
-										line: 2
-									}
-									start: Object {
-										column: 13
-										line: 2
-									}
-								}
+								loc: SourceLocation typescript/types/mapped-type-key-remap/input.ts 2:13-2:14 (T)
 							}
 						}
 					}
 				}
 				typeAnnotation: TSIndexedAccessType {
-					loc: Object {
-						filename: "typescript/types/mapped-type-key-remap/input.ts"
-						end: Object {
-							column: 35
-							line: 2
-						}
-						start: Object {
-							column: 31
-							line: 2
-						}
-					}
+					loc: SourceLocation typescript/types/mapped-type-key-remap/input.ts 2:31-2:35
 					indexType: TSTypeReference {
 						typeParameters: undefined
-						loc: Object {
-							filename: "typescript/types/mapped-type-key-remap/input.ts"
-							end: Object {
-								column: 34
-								line: 2
-							}
-							start: Object {
-								column: 33
-								line: 2
-							}
-						}
+						loc: SourceLocation typescript/types/mapped-type-key-remap/input.ts 2:33-2:34
 						typeName: JSReferenceIdentifier {
 							name: "K"
-							loc: Object {
-								filename: "typescript/types/mapped-type-key-remap/input.ts"
-								identifierName: "K"
-								end: Object {
-									column: 34
-									line: 2
-								}
-								start: Object {
-									column: 33
-									line: 2
-								}
-							}
+							loc: SourceLocation typescript/types/mapped-type-key-remap/input.ts 2:33-2:34 (K)
 						}
 					}
 					objectType: TSTypeReference {
 						typeParameters: undefined
-						loc: Object {
-							filename: "typescript/types/mapped-type-key-remap/input.ts"
-							end: Object {
-								column: 32
-								line: 2
-							}
-							start: Object {
-								column: 31
-								line: 2
-							}
-						}
+						loc: SourceLocation typescript/types/mapped-type-key-remap/input.ts 2:31-2:32
 						typeName: JSReferenceIdentifier {
 							name: "T"
-							loc: Object {
-								filename: "typescript/types/mapped-type-key-remap/input.ts"
-								identifierName: "T"
-								end: Object {
-									column: 32
-									line: 2
-								}
-								start: Object {
-									column: 31
-									line: 2
-								}
-							}
+							loc: SourceLocation typescript/types/mapped-type-key-remap/input.ts 2:31-2:32 (T)
 						}
 					}
 				}
@@ -268,6 +93,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

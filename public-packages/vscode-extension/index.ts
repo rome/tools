@@ -18,7 +18,7 @@ function crawl(root: string): Iterable<string> {
 		[Symbol.iterator]() {
 			return {
 				next() {
-					const value = root;
+					const value = process.platform === "win32" ? root.slice(1) : root;
 					root = path.dirname(value);
 
 					return {

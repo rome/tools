@@ -11,106 +11,50 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "es2015/uncategorised/291/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2015/uncategorised/291/input.js"
-		end: Object {
-			column: 22
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2015/uncategorised/291/input.js 1:0-1:22
+	path: UIDPath<es2015/uncategorised/291/input.js>
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse"
 				categoryValue: "js"
+				category: Array ["parse"]
 				message: RAW_MARKUP {value: "'import' and 'export' may only appear at the top level"}
 			}
 			location: Object {
-				filename: "es2015/uncategorised/291/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 22
-					line: 1
-				}
-				start: Object {
-					column: 22
-					line: 1
-				}
+				end: Position 1:22
+				path: UIDPath<es2015/uncategorised/291/input.js>
+				start: Position 1:22
 			}
 		}
 	]
 	body: Array [
 		JSIfStatement {
 			alternate: undefined
-			loc: Object {
-				filename: "es2015/uncategorised/291/input.js"
-				end: Object {
-					column: 22
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2015/uncategorised/291/input.js 1:0-1:22
 			test: JSNumericLiteral {
 				value: 1
 				format: undefined
-				loc: Object {
-					filename: "es2015/uncategorised/291/input.js"
-					end: Object {
-						column: 5
-						line: 1
-					}
-					start: Object {
-						column: 4
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/uncategorised/291/input.js 1:4-1:5
 			}
 			consequent: JSImportDeclaration {
 				defaultSpecifier: undefined
 				importKind: undefined
 				namedSpecifiers: Array []
 				namespaceSpecifier: undefined
-				loc: Object {
-					filename: "es2015/uncategorised/291/input.js"
-					end: Object {
-						column: 22
-						line: 1
-					}
-					start: Object {
-						column: 7
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/uncategorised/291/input.js 1:7-1:22
 				source: JSStringLiteral {
 					value: "acorn"
-					loc: Object {
-						filename: "es2015/uncategorised/291/input.js"
-						end: Object {
-							column: 21
-							line: 1
-						}
-						start: Object {
-							column: 14
-							line: 1
-						}
-					}
+					loc: SourceLocation es2015/uncategorised/291/input.js 1:14-1:21
 				}
 			}
 		}
@@ -129,8 +73,5 @@ JSRoot {
     if (1) import "acorn";
                           ^
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

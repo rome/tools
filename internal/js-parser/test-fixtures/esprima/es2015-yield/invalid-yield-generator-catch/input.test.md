@@ -11,45 +11,29 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "esprima/es2015-yield/invalid-yield-generator-catch/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "esprima/es2015-yield/invalid-yield-generator-catch/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation esprima/es2015-yield/invalid-yield-generator-catch/input.js 1:0-2:0
+	path: UIDPath<esprima/es2015-yield/invalid-yield-generator-catch/input.js>
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse"
 				categoryValue: "js"
+				category: Array ["parse"]
 				message: RAW_MARKUP {value: "Can not use 'yield' as identifier inside a generator"}
 			}
 			location: Object {
-				filename: "esprima/es2015-yield/invalid-yield-generator-catch/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 35
-					line: 1
-				}
-				start: Object {
-					column: 30
-					line: 1
-				}
+				end: Position 1:35
+				path: UIDPath<esprima/es2015-yield/invalid-yield-generator-catch/input.js>
+				start: Position 1:30
 			}
 		}
 	]
@@ -57,30 +41,9 @@ JSRoot {
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "g"
-				loc: Object {
-					filename: "esprima/es2015-yield/invalid-yield-generator-catch/input.js"
-					identifierName: "g"
-					end: Object {
-						column: 11
-						line: 1
-					}
-					start: Object {
-						column: 10
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/es2015-yield/invalid-yield-generator-catch/input.js 1:10-1:11 (g)
 			}
-			loc: Object {
-				filename: "esprima/es2015-yield/invalid-yield-generator-catch/input.js"
-				end: Object {
-					column: 41
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation esprima/es2015-yield/invalid-yield-generator-catch/input.js 1:0-1:41
 			head: JSFunctionHead {
 				async: false
 				generator: true
@@ -90,101 +53,30 @@ JSRoot {
 				returnType: undefined
 				thisType: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "esprima/es2015-yield/invalid-yield-generator-catch/input.js"
-					end: Object {
-						column: 13
-						line: 1
-					}
-					start: Object {
-						column: 11
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/es2015-yield/invalid-yield-generator-catch/input.js 1:11-1:13
 			}
 			body: JSBlockStatement {
 				directives: Array []
-				loc: Object {
-					filename: "esprima/es2015-yield/invalid-yield-generator-catch/input.js"
-					end: Object {
-						column: 41
-						line: 1
-					}
-					start: Object {
-						column: 14
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/es2015-yield/invalid-yield-generator-catch/input.js 1:14-1:41
 				body: Array [
 					JSTryStatement {
 						finalizer: undefined
-						loc: Object {
-							filename: "esprima/es2015-yield/invalid-yield-generator-catch/input.js"
-							end: Object {
-								column: 39
-								line: 1
-							}
-							start: Object {
-								column: 16
-								line: 1
-							}
-						}
+						loc: SourceLocation esprima/es2015-yield/invalid-yield-generator-catch/input.js 1:16-1:39
 						block: JSBlockStatement {
 							body: Array []
 							directives: Array []
-							loc: Object {
-								filename: "esprima/es2015-yield/invalid-yield-generator-catch/input.js"
-								end: Object {
-									column: 22
-									line: 1
-								}
-								start: Object {
-									column: 20
-									line: 1
-								}
-							}
+							loc: SourceLocation esprima/es2015-yield/invalid-yield-generator-catch/input.js 1:20-1:22
 						}
 						handler: JSCatchClause {
-							loc: Object {
-								filename: "esprima/es2015-yield/invalid-yield-generator-catch/input.js"
-								end: Object {
-									column: 39
-									line: 1
-								}
-								start: Object {
-									column: 23
-									line: 1
-								}
+							loc: SourceLocation esprima/es2015-yield/invalid-yield-generator-catch/input.js 1:23-1:39
+							param: JSBindingIdentifier {
+								name: "yield"
+								loc: SourceLocation esprima/es2015-yield/invalid-yield-generator-catch/input.js 1:30-1:35 (yield)
 							}
 							body: JSBlockStatement {
 								body: Array []
 								directives: Array []
-								loc: Object {
-									filename: "esprima/es2015-yield/invalid-yield-generator-catch/input.js"
-									end: Object {
-										column: 39
-										line: 1
-									}
-									start: Object {
-										column: 37
-										line: 1
-									}
-								}
-							}
-							param: JSBindingIdentifier {
-								name: "yield"
-								loc: Object {
-									filename: "esprima/es2015-yield/invalid-yield-generator-catch/input.js"
-									identifierName: "yield"
-									end: Object {
-										column: 35
-										line: 1
-									}
-									start: Object {
-										column: 30
-										line: 1
-									}
-								}
+								loc: SourceLocation esprima/es2015-yield/invalid-yield-generator-catch/input.js 1:37-1:39
 							}
 						}
 					}
@@ -206,8 +98,5 @@ JSRoot {
     function *g() { try {} catch (yield) {} }
                                   ^^^^^
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

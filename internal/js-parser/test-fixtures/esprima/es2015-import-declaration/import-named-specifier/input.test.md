@@ -12,109 +12,37 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "esprima/es2015-import-declaration/import-named-specifier/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
 	syntax: Array []
-	loc: Object {
-		filename: "esprima/es2015-import-declaration/import-named-specifier/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation esprima/es2015-import-declaration/import-named-specifier/input.js 1:0-2:0
+	path: UIDPath<esprima/es2015-import-declaration/import-named-specifier/input.js>
 	body: Array [
 		JSImportDeclaration {
 			defaultSpecifier: undefined
 			importKind: undefined
 			namespaceSpecifier: undefined
-			loc: Object {
-				filename: "esprima/es2015-import-declaration/import-named-specifier/input.js"
-				end: Object {
-					column: 24
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation esprima/es2015-import-declaration/import-named-specifier/input.js 1:0-1:24
 			source: JSStringLiteral {
 				value: "foo"
-				loc: Object {
-					filename: "esprima/es2015-import-declaration/import-named-specifier/input.js"
-					end: Object {
-						column: 23
-						line: 1
-					}
-					start: Object {
-						column: 18
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/es2015-import-declaration/import-named-specifier/input.js 1:18-1:23
 			}
 			namedSpecifiers: Array [
 				JSImportSpecifier {
-					loc: Object {
-						filename: "esprima/es2015-import-declaration/import-named-specifier/input.js"
-						end: Object {
-							column: 11
-							line: 1
-						}
-						start: Object {
-							column: 8
-							line: 1
-						}
-					}
+					loc: SourceLocation esprima/es2015-import-declaration/import-named-specifier/input.js 1:8-1:11
 					imported: JSIdentifier {
 						name: "bar"
-						loc: Object {
-							filename: "esprima/es2015-import-declaration/import-named-specifier/input.js"
-							identifierName: "bar"
-							end: Object {
-								column: 11
-								line: 1
-							}
-							start: Object {
-								column: 8
-								line: 1
-							}
-						}
+						loc: SourceLocation esprima/es2015-import-declaration/import-named-specifier/input.js 1:8-1:11 (bar)
 					}
 					local: JSImportSpecifierLocal {
 						name: JSBindingIdentifier {
 							name: "bar"
-							loc: Object {
-								filename: "esprima/es2015-import-declaration/import-named-specifier/input.js"
-								identifierName: "bar"
-								end: Object {
-									column: 11
-									line: 1
-								}
-								start: Object {
-									column: 8
-									line: 1
-								}
-							}
+							loc: SourceLocation esprima/es2015-import-declaration/import-named-specifier/input.js 1:8-1:11 (bar)
 						}
 						importKind: undefined
-						loc: Object {
-							filename: "esprima/es2015-import-declaration/import-named-specifier/input.js"
-							end: Object {
-								column: 11
-								line: 1
-							}
-							start: Object {
-								column: 8
-								line: 1
-							}
-						}
+						loc: SourceLocation esprima/es2015-import-declaration/import-named-specifier/input.js 1:8-1:11
 					}
 				}
 			]
@@ -126,6 +54,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

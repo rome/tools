@@ -12,135 +12,42 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "typescript/class/extends/input.ts"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
+	loc: SourceLocation typescript/class/extends/input.ts 1:0-2:0
+	path: UIDPath<typescript/class/extends/input.ts>
 	syntax: Array ["ts"]
-	loc: Object {
-		filename: "typescript/class/extends/input.ts"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
 	body: Array [
 		JSClassDeclaration {
 			id: JSBindingIdentifier {
 				name: "C"
-				loc: Object {
-					filename: "typescript/class/extends/input.ts"
-					identifierName: "C"
-					end: Object {
-						column: 7
-						line: 1
-					}
-					start: Object {
-						column: 6
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/class/extends/input.ts 1:6-1:7 (C)
 			}
-			loc: Object {
-				filename: "typescript/class/extends/input.ts"
-				end: Object {
-					column: 25
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation typescript/class/extends/input.ts 1:0-1:25
 			meta: JSClassHead {
 				body: Array []
 				implements: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "typescript/class/extends/input.ts"
-					end: Object {
-						column: 25
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/class/extends/input.ts 1:0-1:25
 				superClass: JSCallExpression {
 					arguments: Array []
-					loc: Object {
-						filename: "typescript/class/extends/input.ts"
-						end: Object {
-							column: 19
-							line: 1
-						}
-						start: Object {
-							column: 16
-							line: 1
-						}
-					}
+					loc: SourceLocation typescript/class/extends/input.ts 1:16-1:19
 					callee: JSReferenceIdentifier {
 						name: "f"
-						loc: Object {
-							filename: "typescript/class/extends/input.ts"
-							identifierName: "f"
-							end: Object {
-								column: 17
-								line: 1
-							}
-							start: Object {
-								column: 16
-								line: 1
-							}
-						}
+						loc: SourceLocation typescript/class/extends/input.ts 1:16-1:17 (f)
 					}
 				}
 				superTypeParameters: TSTypeParameterInstantiation {
-					loc: Object {
-						filename: "typescript/class/extends/input.ts"
-						end: Object {
-							column: 22
-							line: 1
-						}
-						start: Object {
-							column: 19
-							line: 1
-						}
-					}
+					loc: SourceLocation typescript/class/extends/input.ts 1:19-1:22
 					params: Array [
 						TSTypeReference {
 							typeParameters: undefined
-							loc: Object {
-								filename: "typescript/class/extends/input.ts"
-								end: Object {
-									column: 21
-									line: 1
-								}
-								start: Object {
-									column: 20
-									line: 1
-								}
-							}
+							loc: SourceLocation typescript/class/extends/input.ts 1:20-1:21
 							typeName: JSReferenceIdentifier {
 								name: "T"
-								loc: Object {
-									filename: "typescript/class/extends/input.ts"
-									identifierName: "T"
-									end: Object {
-										column: 21
-										line: 1
-									}
-									start: Object {
-										column: 20
-										line: 1
-									}
-								}
+								loc: SourceLocation typescript/class/extends/input.ts 1:20-1:21 (T)
 							}
 						}
 					]
@@ -154,6 +61,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

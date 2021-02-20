@@ -11,189 +11,72 @@ JSRoot {
 	comments: Array []
 	corrupt: true
 	directives: Array []
-	filename: "es2015/uncategorised/311/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2015/uncategorised/311/input.js"
-		end: Object {
-			column: 13
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2015/uncategorised/311/input.js 1:0-1:13
+	path: UIDPath<es2015/uncategorised/311/input.js>
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				category: "parse"
-				categoryValue: "js"
-				message: Array [
-					RAW_MARKUP {value: "Unexpected token, expected "}
-					","
-				]
-			}
 			location: Object {
-				filename: "es2015/uncategorised/311/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 10
-					line: 1
-				}
-				start: Object {
-					column: 9
-					line: 1
-				}
+				end: Position 1:10
+				path: UIDPath<es2015/uncategorised/311/input.js>
+				start: Position 1:9
+			}
+			description: Object {
+				categoryValue: "js"
+				category: Array ["parse"]
+				message: RAW_MARKUP {value: "Unexpected character <emphasis>=</emphasis>"}
+				advice: Array [
+					log {
+						category: "info"
+						text: RAW_MARKUP {value: "Expected character <emphasis>,</emphasis>"}
+					}
+				]
 			}
 		}
 	]
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "es2015/uncategorised/311/input.js"
-				end: Object {
-					column: 12
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2015/uncategorised/311/input.js 1:0-1:12
 			expression: JSAssignmentExpression {
 				operator: "="
-				loc: Object {
-					filename: "es2015/uncategorised/311/input.js"
-					end: Object {
-						column: 12
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/uncategorised/311/input.js 1:0-1:12
 				left: JSAssignmentIdentifier {
 					name: "obj"
-					loc: Object {
-						filename: "es2015/uncategorised/311/input.js"
-						identifierName: "obj"
-						end: Object {
-							column: 3
-							line: 1
-						}
-						start: Object {
-							column: 0
-							line: 1
-						}
-					}
+					loc: SourceLocation es2015/uncategorised/311/input.js 1:0-1:3 (obj)
 				}
 				right: JSAssignmentExpression {
 					operator: "="
-					loc: Object {
-						filename: "es2015/uncategorised/311/input.js"
-						end: Object {
-							column: 12
-							line: 1
-						}
-						start: Object {
-							column: 6
-							line: 1
-						}
-					}
+					loc: SourceLocation es2015/uncategorised/311/input.js 1:6-1:12
 					right: JSNumericLiteral {
 						value: 0
 						format: undefined
-						loc: Object {
-							filename: "es2015/uncategorised/311/input.js"
-							end: Object {
-								column: 12
-								line: 1
-							}
-							start: Object {
-								column: 11
-								line: 1
-							}
-						}
+						loc: SourceLocation es2015/uncategorised/311/input.js 1:11-1:12
 					}
 					left: JSAssignmentObjectPattern {
 						rest: undefined
-						loc: Object {
-							filename: "es2015/uncategorised/311/input.js"
-							end: Object {
-								column: 8
-								line: 1
-							}
-							start: Object {
-								column: 6
-								line: 1
-							}
-						}
+						loc: SourceLocation es2015/uncategorised/311/input.js 1:6-1:8
 						properties: Array [
 							JSAssignmentObjectPatternProperty {
 								key: JSStaticPropertyKey {
 									value: JSIdentifier {
 										name: "x"
-										loc: Object {
-											filename: "es2015/uncategorised/311/input.js"
-											identifierName: "x"
-											end: Object {
-												column: 8
-												line: 1
-											}
-											start: Object {
-												column: 7
-												line: 1
-											}
-										}
+										loc: SourceLocation es2015/uncategorised/311/input.js 1:7-1:8 (x)
 									}
-									loc: Object {
-										filename: "es2015/uncategorised/311/input.js"
-										end: Object {
-											column: 8
-											line: 1
-										}
-										start: Object {
-											column: 7
-											line: 1
-										}
-									}
+									loc: SourceLocation es2015/uncategorised/311/input.js 1:7-1:8
 								}
 								value: JSAssignmentIdentifier {
 									name: "x"
-									loc: Object {
-										filename: "es2015/uncategorised/311/input.js"
-										identifierName: "x"
-										end: Object {
-											column: 8
-											line: 1
-										}
-										start: Object {
-											column: 7
-											line: 1
-										}
-									}
+									loc: SourceLocation es2015/uncategorised/311/input.js 1:7-1:8 (x)
 								}
-								loc: Object {
-									filename: "es2015/uncategorised/311/input.js"
-									end: Object {
-										column: 8
-										line: 1
-									}
-									start: Object {
-										column: 7
-										line: 1
-									}
-								}
+								loc: SourceLocation es2015/uncategorised/311/input.js 1:7-1:8
 							}
 						]
 					}
@@ -201,30 +84,10 @@ JSRoot {
 			}
 		}
 		JSExpressionStatement {
-			loc: Object {
-				filename: "es2015/uncategorised/311/input.js"
-				end: Object {
-					column: 13
-					line: 1
-				}
-				start: Object {
-					column: 12
-					line: 1
-				}
-			}
+			loc: SourceLocation es2015/uncategorised/311/input.js 1:12-1:13
 			expression: JSReferenceIdentifier {
 				name: "INVALID_PLACEHOLDER"
-				loc: Object {
-					filename: "es2015/uncategorised/311/input.js"
-					end: Object {
-						column: 13
-						line: 1
-					}
-					start: Object {
-						column: 12
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/uncategorised/311/input.js 1:12-1:13
 			}
 		}
 	]
@@ -237,13 +100,12 @@ JSRoot {
 
  es2015/uncategorised/311/input.js:1:9 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ Unexpected token, expected ,
+  ✖ Unexpected character =
 
     obj = {x = 0}
              ^
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  ℹ Expected character ,
 
-✖ Found 1 problem
 
 ```

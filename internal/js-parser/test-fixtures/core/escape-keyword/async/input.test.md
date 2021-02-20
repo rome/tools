@@ -12,63 +12,22 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "core/escape-keyword/async/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "core/escape-keyword/async/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation core/escape-keyword/async/input.js 1:0-2:0
+	path: UIDPath<core/escape-keyword/async/input.js>
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "core/escape-keyword/async/input.js"
-				end: Object {
-					column: 15
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation core/escape-keyword/async/input.js 1:0-1:15
 			expression: JSCallExpression {
 				arguments: Array []
-				loc: Object {
-					filename: "core/escape-keyword/async/input.js"
-					end: Object {
-						column: 14
-						line: 1
-					}
-					start: Object {
-						column: 1
-						line: 1
-					}
-				}
+				loc: SourceLocation core/escape-keyword/async/input.js 1:1-1:14
 				callee: JSReferenceIdentifier {
 					name: "async"
-					loc: Object {
-						filename: "core/escape-keyword/async/input.js"
-						identifierName: "async"
-						end: Object {
-							column: 11
-							line: 1
-						}
-						start: Object {
-							column: 1
-							line: 1
-						}
-					}
+					loc: SourceLocation core/escape-keyword/async/input.js 1:1-1:11 (async)
 				}
 			}
 		}
@@ -79,6 +38,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

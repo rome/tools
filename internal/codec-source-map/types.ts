@@ -5,26 +5,27 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Number0, Number1} from "@internal/ob1";
+import {OneIndexed, ZeroIndexed} from "@internal/math";
+import {AnyPath} from "@internal/path";
 
 export type Mappings = Mapping[];
 
 export type ParsedMapping = {
 	generated: {
-		line: Number1;
-		column: Number0;
+		line: OneIndexed;
+		column: ZeroIndexed;
 	};
 	original: {
-		line: Number1;
-		column: Number0;
+		line: OneIndexed;
+		column: ZeroIndexed;
 	};
-	source: undefined | string;
+	source: undefined | AnyPath;
 	name: undefined | string;
 };
 
 export type Mapping = Omit<ParsedMapping, "generated"> & {
 	generated: ParsedMapping["generated"] & {
-		index: Number0;
+		index: ZeroIndexed;
 	};
 };
 
@@ -32,9 +33,9 @@ export type ParsedMappings = Map<string, Mapping | ParsedMapping>;
 
 export type ResolvedLocation = {
 	found: boolean;
-	source: string;
-	line: Number1;
-	column: Number0;
+	source: AnyPath;
+	line: OneIndexed;
+	column: ZeroIndexed;
 	name: undefined | string;
 };
 

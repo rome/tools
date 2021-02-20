@@ -12,92 +12,30 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "esprima/statement-labelled/migrated_0000/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "esprima/statement-labelled/migrated_0000/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation esprima/statement-labelled/migrated_0000/input.js 1:0-2:0
+	path: UIDPath<esprima/statement-labelled/migrated_0000/input.js>
 	body: Array [
 		JSLabeledStatement {
-			loc: Object {
-				filename: "esprima/statement-labelled/migrated_0000/input.js"
-				end: Object {
-					column: 27
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation esprima/statement-labelled/migrated_0000/input.js 1:0-1:27
 			label: JSIdentifier {
 				name: "start"
-				loc: Object {
-					filename: "esprima/statement-labelled/migrated_0000/input.js"
-					identifierName: "start"
-					end: Object {
-						column: 5
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/statement-labelled/migrated_0000/input.js 1:0-1:5 (start)
 			}
 			body: JSForStatement {
 				init: undefined
 				test: undefined
 				update: undefined
-				loc: Object {
-					filename: "esprima/statement-labelled/migrated_0000/input.js"
-					end: Object {
-						column: 27
-						line: 1
-					}
-					start: Object {
-						column: 7
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/statement-labelled/migrated_0000/input.js 1:7-1:27
 				body: JSBreakStatement {
-					loc: Object {
-						filename: "esprima/statement-labelled/migrated_0000/input.js"
-						end: Object {
-							column: 27
-							line: 1
-						}
-						start: Object {
-							column: 16
-							line: 1
-						}
-					}
+					loc: SourceLocation esprima/statement-labelled/migrated_0000/input.js 1:16-1:27
 					label: JSIdentifier {
 						name: "start"
-						loc: Object {
-							filename: "esprima/statement-labelled/migrated_0000/input.js"
-							identifierName: "start"
-							end: Object {
-								column: 27
-								line: 1
-							}
-							start: Object {
-								column: 22
-								line: 1
-							}
-						}
+						loc: SourceLocation esprima/statement-labelled/migrated_0000/input.js 1:22-1:27 (start)
 					}
 				}
 			}
@@ -109,6 +47,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

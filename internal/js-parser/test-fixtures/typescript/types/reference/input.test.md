@@ -12,120 +12,39 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "typescript/types/reference/input.ts"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
+	loc: SourceLocation typescript/types/reference/input.ts 1:0-2:0
+	path: UIDPath<typescript/types/reference/input.ts>
 	syntax: Array ["ts"]
-	loc: Object {
-		filename: "typescript/types/reference/input.ts"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
 	body: Array [
 		JSVariableDeclarationStatement {
-			loc: Object {
-				filename: "typescript/types/reference/input.ts"
-				end: Object {
-					column: 9
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation typescript/types/reference/input.ts 1:0-1:9
 			declaration: JSVariableDeclaration {
 				kind: "let"
-				loc: Object {
-					filename: "typescript/types/reference/input.ts"
-					end: Object {
-						column: 9
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/types/reference/input.ts 1:0-1:9
 				declarations: Array [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "x"
-							loc: Object {
-								filename: "typescript/types/reference/input.ts"
-								end: Object {
-									column: 8
-									line: 1
-								}
-								start: Object {
-									column: 4
-									line: 1
-								}
-							}
+							loc: SourceLocation typescript/types/reference/input.ts 1:4-1:8
 							meta: JSPatternMeta {
 								definite: undefined
-								loc: Object {
-									filename: "typescript/types/reference/input.ts"
-									end: Object {
-										column: 8
-										line: 1
-									}
-									start: Object {
-										column: 4
-										line: 1
-									}
-								}
+								loc: SourceLocation typescript/types/reference/input.ts 1:4-1:8
 								typeAnnotation: TSTypeReference {
 									typeParameters: undefined
-									loc: Object {
-										filename: "typescript/types/reference/input.ts"
-										end: Object {
-											column: 8
-											line: 1
-										}
-										start: Object {
-											column: 7
-											line: 1
-										}
-									}
+									loc: SourceLocation typescript/types/reference/input.ts 1:7-1:8
 									typeName: JSReferenceIdentifier {
 										name: "T"
-										loc: Object {
-											filename: "typescript/types/reference/input.ts"
-											identifierName: "T"
-											end: Object {
-												column: 8
-												line: 1
-											}
-											start: Object {
-												column: 7
-												line: 1
-											}
-										}
+										loc: SourceLocation typescript/types/reference/input.ts 1:7-1:8 (T)
 									}
 								}
 							}
 						}
 						init: undefined
-						loc: Object {
-							filename: "typescript/types/reference/input.ts"
-							end: Object {
-								column: 8
-								line: 1
-							}
-							start: Object {
-								column: 4
-								line: 1
-							}
-						}
+						loc: SourceLocation typescript/types/reference/input.ts 1:4-1:8
 					}
 				]
 			}
@@ -137,6 +56,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

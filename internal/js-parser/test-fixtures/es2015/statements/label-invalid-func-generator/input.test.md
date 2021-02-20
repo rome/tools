@@ -11,117 +11,49 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "es2015/statements/label-invalid-func-generator/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2015/statements/label-invalid-func-generator/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2015/statements/label-invalid-func-generator/input.js 1:0-2:0
+	path: UIDPath<es2015/statements/label-invalid-func-generator/input.js>
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse"
 				categoryValue: "js"
+				category: Array ["parse"]
 				message: RAW_MARKUP {value: "Generators can only be declared at the top level or inside a block"}
 			}
 			location: Object {
-				filename: "es2015/statements/label-invalid-func-generator/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 23
-					line: 1
-				}
-				start: Object {
-					column: 5
-					line: 1
-				}
+				end: Position 1:23
+				path: UIDPath<es2015/statements/label-invalid-func-generator/input.js>
+				start: Position 1:5
 			}
 		}
 	]
 	body: Array [
 		JSLabeledStatement {
-			loc: Object {
-				filename: "es2015/statements/label-invalid-func-generator/input.js"
-				end: Object {
-					column: 23
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2015/statements/label-invalid-func-generator/input.js 1:0-1:23
 			label: JSIdentifier {
 				name: "foo"
-				loc: Object {
-					filename: "es2015/statements/label-invalid-func-generator/input.js"
-					identifierName: "foo"
-					end: Object {
-						column: 3
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/statements/label-invalid-func-generator/input.js 1:0-1:3 (foo)
 			}
 			body: JSFunctionDeclaration {
 				id: JSBindingIdentifier {
 					name: "bar"
-					loc: Object {
-						filename: "es2015/statements/label-invalid-func-generator/input.js"
-						identifierName: "bar"
-						end: Object {
-							column: 18
-							line: 1
-						}
-						start: Object {
-							column: 15
-							line: 1
-						}
-					}
+					loc: SourceLocation es2015/statements/label-invalid-func-generator/input.js 1:15-1:18 (bar)
 				}
-				loc: Object {
-					filename: "es2015/statements/label-invalid-func-generator/input.js"
-					end: Object {
-						column: 23
-						line: 1
-					}
-					start: Object {
-						column: 5
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/statements/label-invalid-func-generator/input.js 1:5-1:23
 				body: JSBlockStatement {
 					body: Array []
 					directives: Array []
-					loc: Object {
-						filename: "es2015/statements/label-invalid-func-generator/input.js"
-						end: Object {
-							column: 23
-							line: 1
-						}
-						start: Object {
-							column: 21
-							line: 1
-						}
-					}
+					loc: SourceLocation es2015/statements/label-invalid-func-generator/input.js 1:21-1:23
 				}
 				head: JSFunctionHead {
 					async: false
@@ -132,17 +64,7 @@ JSRoot {
 					returnType: undefined
 					thisType: undefined
 					typeParameters: undefined
-					loc: Object {
-						filename: "es2015/statements/label-invalid-func-generator/input.js"
-						end: Object {
-							column: 20
-							line: 1
-						}
-						start: Object {
-							column: 18
-							line: 1
-						}
-					}
+					loc: SourceLocation es2015/statements/label-invalid-func-generator/input.js 1:18-1:20
 				}
 			}
 		}
@@ -161,8 +83,5 @@ JSRoot {
     foo: function* bar() {}
          ^^^^^^^^^^^^^^^^^^
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

@@ -12,148 +12,45 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "es2015/uncategorised/303/input.js"
 	hasHoistedVars: true
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2015/uncategorised/303/input.js"
-		end: Object {
-			column: 16
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2015/uncategorised/303/input.js 1:0-1:16
+	path: UIDPath<es2015/uncategorised/303/input.js>
 	body: Array [
 		JSVariableDeclarationStatement {
-			loc: Object {
-				filename: "es2015/uncategorised/303/input.js"
-				end: Object {
-					column: 16
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2015/uncategorised/303/input.js 1:0-1:16
 			declaration: JSVariableDeclaration {
 				kind: "var"
-				loc: Object {
-					filename: "es2015/uncategorised/303/input.js"
-					end: Object {
-						column: 16
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/uncategorised/303/input.js 1:0-1:16
 				declarations: Array [
 					JSVariableDeclarator {
 						id: JSBindingObjectPattern {
 							rest: undefined
-							loc: Object {
-								filename: "es2015/uncategorised/303/input.js"
-								end: Object {
-									column: 9
-									line: 1
-								}
-								start: Object {
-									column: 4
-									line: 1
-								}
-							}
+							loc: SourceLocation es2015/uncategorised/303/input.js 1:4-1:9
 							properties: Array [
 								JSBindingObjectPatternProperty {
 									key: JSStaticPropertyKey {
 										value: JSIdentifier {
 											name: "get"
-											loc: Object {
-												filename: "es2015/uncategorised/303/input.js"
-												identifierName: "get"
-												end: Object {
-													column: 8
-													line: 1
-												}
-												start: Object {
-													column: 5
-													line: 1
-												}
-											}
+											loc: SourceLocation es2015/uncategorised/303/input.js 1:5-1:8 (get)
 										}
-										loc: Object {
-											filename: "es2015/uncategorised/303/input.js"
-											end: Object {
-												column: 8
-												line: 1
-											}
-											start: Object {
-												column: 5
-												line: 1
-											}
-										}
+										loc: SourceLocation es2015/uncategorised/303/input.js 1:5-1:8
 									}
 									value: JSBindingIdentifier {
 										name: "get"
-										loc: Object {
-											filename: "es2015/uncategorised/303/input.js"
-											identifierName: "get"
-											end: Object {
-												column: 8
-												line: 1
-											}
-											start: Object {
-												column: 5
-												line: 1
-											}
-										}
+										loc: SourceLocation es2015/uncategorised/303/input.js 1:5-1:8 (get)
 									}
-									loc: Object {
-										filename: "es2015/uncategorised/303/input.js"
-										end: Object {
-											column: 8
-											line: 1
-										}
-										start: Object {
-											column: 5
-											line: 1
-										}
-									}
+									loc: SourceLocation es2015/uncategorised/303/input.js 1:5-1:8
 								}
 							]
 						}
-						loc: Object {
-							filename: "es2015/uncategorised/303/input.js"
-							end: Object {
-								column: 15
-								line: 1
-							}
-							start: Object {
-								column: 4
-								line: 1
-							}
-						}
+						loc: SourceLocation es2015/uncategorised/303/input.js 1:4-1:15
 						init: JSReferenceIdentifier {
 							name: "obj"
-							loc: Object {
-								filename: "es2015/uncategorised/303/input.js"
-								identifierName: "obj"
-								end: Object {
-									column: 15
-									line: 1
-								}
-								start: Object {
-									column: 12
-									line: 1
-								}
-							}
+							loc: SourceLocation es2015/uncategorised/303/input.js 1:12-1:15 (obj)
 						}
 					}
 				]
@@ -166,6 +63,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

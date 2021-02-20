@@ -11,87 +11,41 @@ JSRoot {
 	comments: Array []
 	corrupt: true
 	directives: Array []
-	filename: "typescript/cast/arrow-parameter-assertion/input.ts"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
+	loc: SourceLocation typescript/cast/arrow-parameter-assertion/input.ts 1:0-1:14
+	path: UIDPath<typescript/cast/arrow-parameter-assertion/input.ts>
 	syntax: Array ["ts"]
-	loc: Object {
-		filename: "typescript/cast/arrow-parameter-assertion/input.ts"
-		end: Object {
-			column: 14
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse"
 				categoryValue: "js"
+				category: Array ["parse"]
 				message: RAW_MARKUP {value: "Unexpected type cast in parameter position"}
 			}
 			location: Object {
-				filename: "typescript/cast/arrow-parameter-assertion/input.ts"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 6
-					line: 1
-				}
-				start: Object {
-					column: 1
-					line: 1
-				}
+				end: Position 1:6
+				path: UIDPath<typescript/cast/arrow-parameter-assertion/input.ts>
+				start: Position 1:1
 			}
 		}
 	]
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "typescript/cast/arrow-parameter-assertion/input.ts"
-				end: Object {
-					column: 14
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation typescript/cast/arrow-parameter-assertion/input.ts 1:0-1:14
 			expression: JSArrowFunctionExpression {
-				loc: Object {
-					filename: "typescript/cast/arrow-parameter-assertion/input.ts"
-					end: Object {
-						column: 13
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/cast/arrow-parameter-assertion/input.ts 1:0-1:13
 				body: JSBlockStatement {
 					body: Array []
 					directives: Array []
-					loc: Object {
-						filename: "typescript/cast/arrow-parameter-assertion/input.ts"
-						end: Object {
-							column: 13
-							line: 1
-						}
-						start: Object {
-							column: 11
-							line: 1
-						}
-					}
+					loc: SourceLocation typescript/cast/arrow-parameter-assertion/input.ts 1:11-1:13
 				}
 				head: JSFunctionHead {
 					async: false
@@ -99,31 +53,11 @@ JSRoot {
 					rest: undefined
 					returnType: undefined
 					thisType: undefined
-					loc: Object {
-						filename: "typescript/cast/arrow-parameter-assertion/input.ts"
-						end: Object {
-							column: 10
-							line: 1
-						}
-						start: Object {
-							column: 0
-							line: 1
-						}
-					}
+					loc: SourceLocation typescript/cast/arrow-parameter-assertion/input.ts 1:0-1:10
 					params: Array [
 						JSBindingIdentifier {
 							name: "INVALID_PLACEHOLDER"
-							loc: Object {
-								filename: "typescript/cast/arrow-parameter-assertion/input.ts"
-								end: Object {
-									column: 10
-									line: 1
-								}
-								start: Object {
-									column: 11
-									line: 1
-								}
-							}
+							loc: SourceLocation typescript/cast/arrow-parameter-assertion/input.ts 1:11-1:10
 						}
 					]
 				}
@@ -144,8 +78,5 @@ JSRoot {
     (<T> a) => {};
      ^^^^^
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

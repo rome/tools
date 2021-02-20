@@ -10,131 +10,60 @@
 JSRoot {
 	comments: Array []
 	corrupt: false
+	diagnostics: Array []
 	directives: Array []
-	filename: "typescript/types/literal-string-2/input.ts"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
+	loc: SourceLocation typescript/types/literal-string-2/input.ts 1:0-2:0
+	path: UIDPath<typescript/types/literal-string-2/input.ts>
 	syntax: Array ["ts"]
-	loc: Object {
-		filename: "typescript/types/literal-string-2/input.ts"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				category: "parse"
-				categoryValue: "js"
-				message: RAW_MARKUP {value: "Template literal types cannot have any substitution"}
-			}
-			location: Object {
-				filename: "typescript/types/literal-string-2/input.ts"
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Object {
-					column: 17
-					line: 1
-				}
-				start: Object {
-					column: 14
-					line: 1
-				}
-			}
-		}
-	]
 	body: Array [
 		JSVariableDeclarationStatement {
-			loc: Object {
-				filename: "typescript/types/literal-string-2/input.ts"
-				end: Object {
-					column: 20
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation typescript/types/literal-string-2/input.ts 1:0-1:20
 			declaration: JSVariableDeclaration {
 				kind: "let"
-				loc: Object {
-					filename: "typescript/types/literal-string-2/input.ts"
-					end: Object {
-						column: 20
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/types/literal-string-2/input.ts 1:0-1:20
 				declarations: Array [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "x"
-							loc: Object {
-								filename: "typescript/types/literal-string-2/input.ts"
-								end: Object {
-									column: 19
-									line: 1
-								}
-								start: Object {
-									column: 4
-									line: 1
-								}
-							}
+							loc: SourceLocation typescript/types/literal-string-2/input.ts 1:4-1:19
 							meta: JSPatternMeta {
 								definite: undefined
-								loc: Object {
-									filename: "typescript/types/literal-string-2/input.ts"
-									end: Object {
-										column: 19
-										line: 1
-									}
-									start: Object {
-										column: 4
-										line: 1
-									}
-								}
+								loc: SourceLocation typescript/types/literal-string-2/input.ts 1:4-1:19
 								typeAnnotation: TSTemplateLiteralTypeAnnotation {
-									value: "foo-"
-									loc: Object {
-										filename: "typescript/types/literal-string-2/input.ts"
-										end: Object {
-											column: 19
-											line: 1
+									loc: SourceLocation typescript/types/literal-string-2/input.ts 1:7-1:19
+									expressions: Array [
+										TSTypeReference {
+											typeParameters: undefined
+											loc: SourceLocation typescript/types/literal-string-2/input.ts 1:14-1:17
+											typeName: JSReferenceIdentifier {
+												name: "bar"
+												loc: SourceLocation typescript/types/literal-string-2/input.ts 1:14-1:17 (bar)
+											}
 										}
-										start: Object {
-											column: 7
-											line: 1
+									]
+									quasis: Array [
+										TSTemplateElement {
+											cooked: "foo-"
+											raw: "foo-"
+											tail: false
+											loc: SourceLocation typescript/types/literal-string-2/input.ts 1:8-1:12
 										}
-									}
+										TSTemplateElement {
+											cooked: ""
+											raw: ""
+											tail: true
+											loc: SourceLocation typescript/types/literal-string-2/input.ts 1:18-1:18
+										}
+									]
 								}
 							}
 						}
 						init: undefined
-						loc: Object {
-							filename: "typescript/types/literal-string-2/input.ts"
-							end: Object {
-								column: 19
-								line: 1
-							}
-							start: Object {
-								column: 4
-								line: 1
-							}
-						}
+						loc: SourceLocation typescript/types/literal-string-2/input.ts 1:4-1:19
 					}
 				]
 			}
@@ -146,16 +75,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-
- typescript/types/literal-string-2/input.ts:1:14 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  ✖ Template literal types cannot have any substitution
-
-    let x: `foo-${bar}`;
-                  ^^^
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

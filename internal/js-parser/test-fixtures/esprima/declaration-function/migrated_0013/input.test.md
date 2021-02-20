@@ -12,65 +12,24 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "esprima/declaration-function/migrated_0013/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "esprima/declaration-function/migrated_0013/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation esprima/declaration-function/migrated_0013/input.js 1:0-2:0
+	path: UIDPath<esprima/declaration-function/migrated_0013/input.js>
 	body: Array [
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "universe"
-				loc: Object {
-					filename: "esprima/declaration-function/migrated_0013/input.js"
-					identifierName: "universe"
-					end: Object {
-						column: 17
-						line: 1
-					}
-					start: Object {
-						column: 9
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/declaration-function/migrated_0013/input.js 1:9-1:17 (universe)
 			}
-			loc: Object {
-				filename: "esprima/declaration-function/migrated_0013/input.js"
-				end: Object {
-					column: 32
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation esprima/declaration-function/migrated_0013/input.js 1:0-1:32
 			body: JSBlockStatement {
 				body: Array []
 				directives: Array []
-				loc: Object {
-					filename: "esprima/declaration-function/migrated_0013/input.js"
-					end: Object {
-						column: 32
-						line: 1
-					}
-					start: Object {
-						column: 29
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/declaration-function/migrated_0013/input.js 1:29-1:32
 			}
 			head: JSFunctionHead {
 				async: false
@@ -80,46 +39,15 @@ JSRoot {
 				returnType: undefined
 				thisType: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "esprima/declaration-function/migrated_0013/input.js"
-					end: Object {
-						column: 28
-						line: 1
-					}
-					start: Object {
-						column: 17
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/declaration-function/migrated_0013/input.js 1:17-1:28
 				params: Array [
 					JSBindingIdentifier {
 						name: "__proto__"
-						loc: Object {
-							filename: "esprima/declaration-function/migrated_0013/input.js"
-							identifierName: "__proto__"
-							end: Object {
-								column: 27
-								line: 1
-							}
-							start: Object {
-								column: 18
-								line: 1
-							}
-						}
+						loc: SourceLocation esprima/declaration-function/migrated_0013/input.js 1:18-1:27 (__proto__)
 						meta: JSPatternMeta {
 							optional: undefined
 							typeAnnotation: undefined
-							loc: Object {
-								filename: "esprima/declaration-function/migrated_0013/input.js"
-								end: Object {
-									column: 27
-									line: 1
-								}
-								start: Object {
-									column: 18
-									line: 1
-								}
-							}
+							loc: SourceLocation esprima/declaration-function/migrated_0013/input.js 1:18-1:27
 						}
 					}
 				]
@@ -132,6 +60,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

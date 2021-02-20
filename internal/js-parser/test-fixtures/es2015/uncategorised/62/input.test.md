@@ -12,137 +12,43 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "es2015/uncategorised/62/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2015/uncategorised/62/input.js"
-		end: Object {
-			column: 15
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2015/uncategorised/62/input.js 1:0-1:15
+	path: UIDPath<es2015/uncategorised/62/input.js>
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "es2015/uncategorised/62/input.js"
-				end: Object {
-					column: 15
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2015/uncategorised/62/input.js 1:0-1:15
 			expression: JSAssignmentExpression {
 				operator: "="
-				loc: Object {
-					filename: "es2015/uncategorised/62/input.js"
-					end: Object {
-						column: 15
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/uncategorised/62/input.js 1:0-1:15
 				right: JSArrayExpression {
-					loc: Object {
-						filename: "es2015/uncategorised/62/input.js"
-						end: Object {
-							column: 15
-							line: 1
-						}
-						start: Object {
-							column: 9
-							line: 1
-						}
-					}
+					loc: SourceLocation es2015/uncategorised/62/input.js 1:9-1:15
 					elements: Array [
 						JSReferenceIdentifier {
 							name: "b"
-							loc: Object {
-								filename: "es2015/uncategorised/62/input.js"
-								identifierName: "b"
-								end: Object {
-									column: 11
-									line: 1
-								}
-								start: Object {
-									column: 10
-									line: 1
-								}
-							}
+							loc: SourceLocation es2015/uncategorised/62/input.js 1:10-1:11 (b)
 						}
 						JSReferenceIdentifier {
 							name: "a"
-							loc: Object {
-								filename: "es2015/uncategorised/62/input.js"
-								identifierName: "a"
-								end: Object {
-									column: 14
-									line: 1
-								}
-								start: Object {
-									column: 13
-									line: 1
-								}
-							}
+							loc: SourceLocation es2015/uncategorised/62/input.js 1:13-1:14 (a)
 						}
 					]
 				}
 				left: JSAssignmentArrayPattern {
 					rest: undefined
-					loc: Object {
-						filename: "es2015/uncategorised/62/input.js"
-						end: Object {
-							column: 6
-							line: 1
-						}
-						start: Object {
-							column: 0
-							line: 1
-						}
-					}
+					loc: SourceLocation es2015/uncategorised/62/input.js 1:0-1:6
 					elements: Array [
 						JSAssignmentIdentifier {
 							name: "a"
-							loc: Object {
-								filename: "es2015/uncategorised/62/input.js"
-								identifierName: "a"
-								end: Object {
-									column: 2
-									line: 1
-								}
-								start: Object {
-									column: 1
-									line: 1
-								}
-							}
+							loc: SourceLocation es2015/uncategorised/62/input.js 1:1-1:2 (a)
 						}
 						JSAssignmentIdentifier {
 							name: "b"
-							loc: Object {
-								filename: "es2015/uncategorised/62/input.js"
-								identifierName: "b"
-								end: Object {
-									column: 5
-									line: 1
-								}
-								start: Object {
-									column: 4
-									line: 1
-								}
-							}
+							loc: SourceLocation es2015/uncategorised/62/input.js 1:4-1:5 (b)
 						}
 					]
 				}
@@ -155,6 +61,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

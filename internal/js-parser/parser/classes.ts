@@ -64,7 +64,6 @@ import {
 	parseTSTypeAnnotation,
 	tryTSParseIndexSignature,
 } from "./index";
-import {ob1Dec, ob1Inc} from "@internal/ob1";
 import {parseBindingIdentifier, toBindingIdentifier} from "./expression";
 import {descriptions} from "@internal/diagnostics";
 
@@ -220,7 +219,7 @@ type ClassBodyState = {
 function parseClassBody(parser: JSParser): AnyJSClassMember[] {
 	// class bodies are implicitly strict
 	pushScope(parser, "STRICT", true);
-	parser.state.classLevel = ob1Inc(parser.state.classLevel);
+	parser.state.classLevel = parser.state.classLevel + 1;
 
 	const state: ClassBodyState = {hadConstructor: false};
 
@@ -245,7 +244,7 @@ function parseClassBody(parser: JSParser): AnyJSClassMember[] {
 
 	expectClosing(parser, openContext);
 
-	parser.state.classLevel = ob1Dec(parser.state.classLevel);
+	parser.state.classLevel = parser.state.classLevel - 1;
 	popScope(parser, "STRICT");
 
 	return body;
@@ -363,7 +362,7 @@ function parseClassMemberWithIsStatic(
 		abstract,
 	};
 
-	if (!abstract && !isStatic && accessibility === undefined) {
+	if (!(abstract || isStatic) && accessibility === undefined) {
 		const indexSignature = tryTSParseIndexSignature(parser, start);
 		if (indexSignature) {
 			return {

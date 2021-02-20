@@ -22,6 +22,7 @@ import ci from "./commands/ci";
 import test from "./commands/test";
 import noop from "./commands/noop";
 import json from "./commands/json";
+import autoConfig from "./commands/autoConfig";
 import * as recover from "./commands/recover";
 import * as cache from "./commands/cache";
 
@@ -33,7 +34,7 @@ import _projectDump from "./commands/_projectDump";
 //
 import {UnknownObject} from "@internal/typescript-helpers";
 import ServerRequest from "./ServerRequest";
-import {SharedCommand} from "../common/commands";
+import {CommandName, SharedCommand} from "../common/commands";
 import {DiagnosticsPrinter} from "@internal/cli-diagnostics";
 import {StaticMarkup} from "@internal/markup";
 import init from "@internal/core/server/commands/init";
@@ -92,7 +93,7 @@ export async function chainCommands(
 }
 
 // rome-ignore lint/ts/noExplicitAny: future cleanup
-export const serverCommands: Map<string, ServerCommand<any>> = new Map();
+export const serverCommands: Map<CommandName, ServerCommand<any>> = new Map();
 serverCommands.set("_evict", _evict);
 serverCommands.set("_moduleSignature", _moduleSignature);
 serverCommands.set("_projectDump", _projectDump);
@@ -121,6 +122,7 @@ serverCommands.set("run", run);
 serverCommands.set("stop", stop);
 serverCommands.set("status", status);
 serverCommands.set("test", test);
+serverCommands.set("auto-config", autoConfig);
 serverCommands.set("recover apply", recover.apply);
 serverCommands.set("recover clear", recover.clear);
 serverCommands.set("recover diff", recover.diff);

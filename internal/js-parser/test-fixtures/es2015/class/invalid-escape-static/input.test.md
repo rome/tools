@@ -11,48 +11,29 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "es2015/class/invalid-escape-static/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2015/class/invalid-escape-static/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2015/class/invalid-escape-static/input.js 1:0-2:0
+	path: UIDPath<es2015/class/invalid-escape-static/input.js>
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse"
 				categoryValue: "js"
-				message: Array [
-					"static"
-					RAW_MARKUP {value: " can't contain a unicode escape"}
-				]
+				category: Array ["parse"]
+				message: RAW_MARKUP {value: "<emphasis>static</emphasis> can't contain a unicode escape"}
 			}
 			location: Object {
-				filename: "es2015/class/invalid-escape-static/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 12
-					line: 1
-				}
-				start: Object {
-					column: 12
-					line: 1
-				}
+				end: Position 1:12
+				path: UIDPath<es2015/class/invalid-escape-static/input.js>
+				start: Position 1:12
 			}
 		}
 	]
@@ -60,102 +41,40 @@ JSRoot {
 		JSClassDeclaration {
 			id: JSBindingIdentifier {
 				name: "X"
-				loc: Object {
-					filename: "es2015/class/invalid-escape-static/input.js"
-					identifierName: "X"
-					end: Object {
-						column: 7
-						line: 1
-					}
-					start: Object {
-						column: 6
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/class/invalid-escape-static/input.js 1:6-1:7 (X)
 			}
-			loc: Object {
-				filename: "es2015/class/invalid-escape-static/input.js"
-				end: Object {
-					column: 30
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2015/class/invalid-escape-static/input.js 1:0-1:30
 			meta: JSClassHead {
 				implements: undefined
 				superClass: undefined
 				superTypeParameters: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "es2015/class/invalid-escape-static/input.js"
-					end: Object {
-						column: 30
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/class/invalid-escape-static/input.js 1:0-1:30
 				body: Array [
 					JSClassMethod {
 						kind: "method"
 						key: JSStaticPropertyKey {
 							value: JSIdentifier {
 								name: "y"
-								loc: Object {
-									filename: "es2015/class/invalid-escape-static/input.js"
-									identifierName: "y"
-									end: Object {
-										column: 23
-										line: 1
-									}
-									start: Object {
-										column: 22
-										line: 1
-									}
-								}
+								loc: SourceLocation es2015/class/invalid-escape-static/input.js 1:22-1:23 (y)
 							}
-							loc: Object {
-								filename: "es2015/class/invalid-escape-static/input.js"
-								end: Object {
-									column: 23
-									line: 1
-								}
-								start: Object {
-									column: 22
-									line: 1
-								}
-							}
+							loc: SourceLocation es2015/class/invalid-escape-static/input.js 1:22-1:23
 						}
-						loc: Object {
-							filename: "es2015/class/invalid-escape-static/input.js"
-							end: Object {
-								column: 28
-								line: 1
-							}
-							start: Object {
-								column: 10
-								line: 1
-							}
-						}
+						loc: SourceLocation es2015/class/invalid-escape-static/input.js 1:10-1:28
 						body: JSBlockStatement {
 							body: Array []
 							directives: Array []
-							loc: Object {
-								filename: "es2015/class/invalid-escape-static/input.js"
-								end: Object {
-									column: 28
-									line: 1
-								}
-								start: Object {
-									column: 26
-									line: 1
-								}
-							}
+							loc: SourceLocation es2015/class/invalid-escape-static/input.js 1:26-1:28
+						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							accessibility: undefined
+							optional: false
+							readonly: false
+							static: true
+							typeAnnotation: undefined
+							loc: SourceLocation es2015/class/invalid-escape-static/input.js 1:10-1:23
+							start: Position 1:10
 						}
 						head: JSFunctionHead {
 							async: false
@@ -166,40 +85,7 @@ JSRoot {
 							returnType: undefined
 							thisType: undefined
 							typeParameters: undefined
-							loc: Object {
-								filename: "es2015/class/invalid-escape-static/input.js"
-								end: Object {
-									column: 25
-									line: 1
-								}
-								start: Object {
-									column: 23
-									line: 1
-								}
-							}
-						}
-						meta: JSClassPropertyMeta {
-							abstract: false
-							accessibility: undefined
-							optional: false
-							readonly: false
-							static: true
-							typeAnnotation: undefined
-							start: Object {
-								column: 10
-								line: 1
-							}
-							loc: Object {
-								filename: "es2015/class/invalid-escape-static/input.js"
-								end: Object {
-									column: 23
-									line: 1
-								}
-								start: Object {
-									column: 10
-									line: 1
-								}
-							}
+							loc: SourceLocation es2015/class/invalid-escape-static/input.js 1:23-1:25
 						}
 					}
 				]
@@ -220,8 +106,5 @@ JSRoot {
     class X { st\u0061tic y() {} }
                 ^
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

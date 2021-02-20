@@ -12,130 +12,38 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "typescript/types/array/input.ts"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
+	loc: SourceLocation typescript/types/array/input.ts 1:0-2:0
+	path: UIDPath<typescript/types/array/input.ts>
 	syntax: Array ["ts"]
-	loc: Object {
-		filename: "typescript/types/array/input.ts"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
 	body: Array [
 		JSVariableDeclarationStatement {
-			loc: Object {
-				filename: "typescript/types/array/input.ts"
-				end: Object {
-					column: 20
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation typescript/types/array/input.ts 1:0-1:20
 			declaration: JSVariableDeclaration {
 				kind: "let"
-				loc: Object {
-					filename: "typescript/types/array/input.ts"
-					end: Object {
-						column: 20
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/types/array/input.ts 1:0-1:20
 				declarations: Array [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "arr"
-							loc: Object {
-								filename: "typescript/types/array/input.ts"
-								end: Object {
-									column: 19
-									line: 1
-								}
-								start: Object {
-									column: 4
-									line: 1
-								}
-							}
+							loc: SourceLocation typescript/types/array/input.ts 1:4-1:19
 							meta: JSPatternMeta {
 								definite: undefined
-								loc: Object {
-									filename: "typescript/types/array/input.ts"
-									end: Object {
-										column: 19
-										line: 1
-									}
-									start: Object {
-										column: 4
-										line: 1
-									}
-								}
+								loc: SourceLocation typescript/types/array/input.ts 1:4-1:19
 								typeAnnotation: TSArrayType {
-									loc: Object {
-										filename: "typescript/types/array/input.ts"
-										end: Object {
-											column: 19
-											line: 1
-										}
-										start: Object {
-											column: 9
-											line: 1
-										}
-									}
+									loc: SourceLocation typescript/types/array/input.ts 1:9-1:19
 									elementType: TSArrayType {
-										loc: Object {
-											filename: "typescript/types/array/input.ts"
-											end: Object {
-												column: 17
-												line: 1
-											}
-											start: Object {
-												column: 9
-												line: 1
-											}
-										}
-										elementType: TSNumberKeywordTypeAnnotation {
-											loc: Object {
-												filename: "typescript/types/array/input.ts"
-												end: Object {
-													column: 15
-													line: 1
-												}
-												start: Object {
-													column: 9
-													line: 1
-												}
-											}
-										}
+										elementType: TSNumberKeywordTypeAnnotation {loc: SourceLocation typescript/types/array/input.ts 1:9-1:15}
+										loc: SourceLocation typescript/types/array/input.ts 1:9-1:17
 									}
 								}
 							}
 						}
 						init: undefined
-						loc: Object {
-							filename: "typescript/types/array/input.ts"
-							end: Object {
-								column: 19
-								line: 1
-							}
-							start: Object {
-								column: 4
-								line: 1
-							}
-						}
+						loc: SourceLocation typescript/types/array/input.ts 1:4-1:19
 					}
 				]
 			}
@@ -147,6 +55,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

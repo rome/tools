@@ -12,104 +12,33 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "esprima/es2015-generator/generator-method-with-params/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "esprima/es2015-generator/generator-method-with-params/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation esprima/es2015-generator/generator-method-with-params/input.js 1:0-2:0
+	path: UIDPath<esprima/es2015-generator/generator-method-with-params/input.js>
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "esprima/es2015-generator/generator-method-with-params/input.js"
-				end: Object {
-					column: 22
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation esprima/es2015-generator/generator-method-with-params/input.js 1:0-1:22
 			expression: JSObjectExpression {
-				loc: Object {
-					filename: "esprima/es2015-generator/generator-method-with-params/input.js"
-					end: Object {
-						column: 21
-						line: 1
-					}
-					start: Object {
-						column: 1
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/es2015-generator/generator-method-with-params/input.js 1:1-1:21
 				properties: Array [
 					JSObjectMethod {
 						kind: "method"
 						key: JSStaticPropertyKey {
 							value: JSIdentifier {
 								name: "foo"
-								loc: Object {
-									filename: "esprima/es2015-generator/generator-method-with-params/input.js"
-									identifierName: "foo"
-									end: Object {
-										column: 7
-										line: 1
-									}
-									start: Object {
-										column: 4
-										line: 1
-									}
-								}
+								loc: SourceLocation esprima/es2015-generator/generator-method-with-params/input.js 1:4-1:7 (foo)
 							}
-							loc: Object {
-								filename: "esprima/es2015-generator/generator-method-with-params/input.js"
-								end: Object {
-									column: 7
-									line: 1
-								}
-								start: Object {
-									column: 4
-									line: 1
-								}
-							}
+							loc: SourceLocation esprima/es2015-generator/generator-method-with-params/input.js 1:4-1:7
 						}
-						loc: Object {
-							filename: "esprima/es2015-generator/generator-method-with-params/input.js"
-							end: Object {
-								column: 19
-								line: 1
-							}
-							start: Object {
-								column: 3
-								line: 1
-							}
-						}
+						loc: SourceLocation esprima/es2015-generator/generator-method-with-params/input.js 1:3-1:19
 						body: JSBlockStatement {
 							body: Array []
 							directives: Array []
-							loc: Object {
-								filename: "esprima/es2015-generator/generator-method-with-params/input.js"
-								end: Object {
-									column: 19
-									line: 1
-								}
-								start: Object {
-									column: 17
-									line: 1
-								}
-							}
+							loc: SourceLocation esprima/es2015-generator/generator-method-with-params/input.js 1:17-1:19
 						}
 						head: JSFunctionHead {
 							async: false
@@ -119,106 +48,33 @@ JSRoot {
 							returnType: undefined
 							thisType: undefined
 							typeParameters: undefined
-							loc: Object {
-								filename: "esprima/es2015-generator/generator-method-with-params/input.js"
-								end: Object {
-									column: 16
-									line: 1
-								}
-								start: Object {
-									column: 7
-									line: 1
-								}
-							}
+							loc: SourceLocation esprima/es2015-generator/generator-method-with-params/input.js 1:7-1:16
 							params: Array [
 								JSBindingIdentifier {
 									name: "x"
-									loc: Object {
-										filename: "esprima/es2015-generator/generator-method-with-params/input.js"
-										identifierName: "x"
-										end: Object {
-											column: 9
-											line: 1
-										}
-										start: Object {
-											column: 8
-											line: 1
-										}
-									}
+									loc: SourceLocation esprima/es2015-generator/generator-method-with-params/input.js 1:8-1:9 (x)
 									meta: JSPatternMeta {
 										optional: undefined
 										typeAnnotation: undefined
-										loc: Object {
-											filename: "esprima/es2015-generator/generator-method-with-params/input.js"
-											end: Object {
-												column: 9
-												line: 1
-											}
-											start: Object {
-												column: 8
-												line: 1
-											}
-										}
+										loc: SourceLocation esprima/es2015-generator/generator-method-with-params/input.js 1:8-1:9
 									}
 								}
 								JSBindingIdentifier {
 									name: "y"
-									loc: Object {
-										filename: "esprima/es2015-generator/generator-method-with-params/input.js"
-										identifierName: "y"
-										end: Object {
-											column: 12
-											line: 1
-										}
-										start: Object {
-											column: 11
-											line: 1
-										}
-									}
+									loc: SourceLocation esprima/es2015-generator/generator-method-with-params/input.js 1:11-1:12 (y)
 									meta: JSPatternMeta {
 										optional: undefined
 										typeAnnotation: undefined
-										loc: Object {
-											filename: "esprima/es2015-generator/generator-method-with-params/input.js"
-											end: Object {
-												column: 12
-												line: 1
-											}
-											start: Object {
-												column: 11
-												line: 1
-											}
-										}
+										loc: SourceLocation esprima/es2015-generator/generator-method-with-params/input.js 1:11-1:12
 									}
 								}
 								JSBindingIdentifier {
 									name: "z"
-									loc: Object {
-										filename: "esprima/es2015-generator/generator-method-with-params/input.js"
-										identifierName: "z"
-										end: Object {
-											column: 15
-											line: 1
-										}
-										start: Object {
-											column: 14
-											line: 1
-										}
-									}
+									loc: SourceLocation esprima/es2015-generator/generator-method-with-params/input.js 1:14-1:15 (z)
 									meta: JSPatternMeta {
 										optional: undefined
 										typeAnnotation: undefined
-										loc: Object {
-											filename: "esprima/es2015-generator/generator-method-with-params/input.js"
-											end: Object {
-												column: 15
-												line: 1
-											}
-											start: Object {
-												column: 14
-												line: 1
-											}
-										}
+										loc: SourceLocation esprima/es2015-generator/generator-method-with-params/input.js 1:14-1:15
 									}
 								}
 							]
@@ -234,6 +90,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

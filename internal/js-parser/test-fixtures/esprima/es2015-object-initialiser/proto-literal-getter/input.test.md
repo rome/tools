@@ -12,157 +12,44 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "esprima/es2015-object-initialiser/proto-literal-getter/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "esprima/es2015-object-initialiser/proto-literal-getter/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation esprima/es2015-object-initialiser/proto-literal-getter/input.js 1:0-2:0
+	path: UIDPath<esprima/es2015-object-initialiser/proto-literal-getter/input.js>
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "esprima/es2015-object-initialiser/proto-literal-getter/input.js"
-				end: Object {
-					column: 42
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation esprima/es2015-object-initialiser/proto-literal-getter/input.js 1:0-1:42
 			expression: JSObjectExpression {
-				loc: Object {
-					filename: "esprima/es2015-object-initialiser/proto-literal-getter/input.js"
-					end: Object {
-						column: 41
-						line: 1
-					}
-					start: Object {
-						column: 1
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/es2015-object-initialiser/proto-literal-getter/input.js 1:1-1:41
 				properties: Array [
 					JSObjectProperty {
 						key: JSStaticPropertyKey {
 							value: JSStringLiteral {
 								value: "__proto__"
-								loc: Object {
-									filename: "esprima/es2015-object-initialiser/proto-literal-getter/input.js"
-									end: Object {
-										column: 14
-										line: 1
-									}
-									start: Object {
-										column: 3
-										line: 1
-									}
-								}
+								loc: SourceLocation esprima/es2015-object-initialiser/proto-literal-getter/input.js 1:3-1:14
 							}
-							loc: Object {
-								filename: "esprima/es2015-object-initialiser/proto-literal-getter/input.js"
-								end: Object {
-									column: 14
-									line: 1
-								}
-								start: Object {
-									column: 3
-									line: 1
-								}
-							}
+							loc: SourceLocation esprima/es2015-object-initialiser/proto-literal-getter/input.js 1:3-1:14
 						}
-						value: JSNullLiteral {
-							loc: Object {
-								filename: "esprima/es2015-object-initialiser/proto-literal-getter/input.js"
-								end: Object {
-									column: 20
-									line: 1
-								}
-								start: Object {
-									column: 16
-									line: 1
-								}
-							}
-						}
-						loc: Object {
-							filename: "esprima/es2015-object-initialiser/proto-literal-getter/input.js"
-							end: Object {
-								column: 20
-								line: 1
-							}
-							start: Object {
-								column: 3
-								line: 1
-							}
-						}
+						value: JSNullLiteral {loc: SourceLocation esprima/es2015-object-initialiser/proto-literal-getter/input.js 1:16-1:20}
+						loc: SourceLocation esprima/es2015-object-initialiser/proto-literal-getter/input.js 1:3-1:20
 					}
 					JSObjectMethod {
 						kind: "get"
 						key: JSStaticPropertyKey {
 							value: JSIdentifier {
 								name: "__proto__"
-								loc: Object {
-									filename: "esprima/es2015-object-initialiser/proto-literal-getter/input.js"
-									identifierName: "__proto__"
-									end: Object {
-										column: 35
-										line: 1
-									}
-									start: Object {
-										column: 26
-										line: 1
-									}
-								}
+								loc: SourceLocation esprima/es2015-object-initialiser/proto-literal-getter/input.js 1:26-1:35 (__proto__)
 							}
-							loc: Object {
-								filename: "esprima/es2015-object-initialiser/proto-literal-getter/input.js"
-								end: Object {
-									column: 35
-									line: 1
-								}
-								start: Object {
-									column: 26
-									line: 1
-								}
-							}
+							loc: SourceLocation esprima/es2015-object-initialiser/proto-literal-getter/input.js 1:26-1:35
 						}
-						loc: Object {
-							filename: "esprima/es2015-object-initialiser/proto-literal-getter/input.js"
-							end: Object {
-								column: 39
-								line: 1
-							}
-							start: Object {
-								column: 22
-								line: 1
-							}
-						}
+						loc: SourceLocation esprima/es2015-object-initialiser/proto-literal-getter/input.js 1:22-1:39
 						body: JSBlockStatement {
 							body: Array []
 							directives: Array []
-							loc: Object {
-								filename: "esprima/es2015-object-initialiser/proto-literal-getter/input.js"
-								end: Object {
-									column: 39
-									line: 1
-								}
-								start: Object {
-									column: 37
-									line: 1
-								}
-							}
+							loc: SourceLocation esprima/es2015-object-initialiser/proto-literal-getter/input.js 1:37-1:39
 						}
 						head: JSFunctionHead {
 							async: false
@@ -173,17 +60,7 @@ JSRoot {
 							returnType: undefined
 							thisType: undefined
 							typeParameters: undefined
-							loc: Object {
-								filename: "esprima/es2015-object-initialiser/proto-literal-getter/input.js"
-								end: Object {
-									column: 37
-									line: 1
-								}
-								start: Object {
-									column: 35
-									line: 1
-								}
-							}
+							loc: SourceLocation esprima/es2015-object-initialiser/proto-literal-getter/input.js 1:35-1:37
 						}
 					}
 				]
@@ -196,6 +73,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

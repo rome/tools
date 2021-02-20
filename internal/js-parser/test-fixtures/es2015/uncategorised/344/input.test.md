@@ -11,73 +11,35 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "es2015/uncategorised/344/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2015/uncategorised/344/input.js"
-		end: Object {
-			column: 5
-			line: 1
+	loc: SourceLocation es2015/uncategorised/344/input.js 1:0-1:5
+	path: UIDPath<es2015/uncategorised/344/input.js>
+	body: Array [
+		JSExpressionStatement {
+			expression: JSSuper {loc: SourceLocation es2015/uncategorised/344/input.js 1:0-1:5}
+			loc: SourceLocation es2015/uncategorised/344/input.js 1:0-1:5
 		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	]
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse"
 				categoryValue: "js"
+				category: Array ["parse"]
 				message: RAW_MARKUP {value: "super is only allowed in object methods and classes"}
 			}
 			location: Object {
-				filename: "es2015/uncategorised/344/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 0
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
-		}
-	]
-	body: Array [
-		JSExpressionStatement {
-			loc: Object {
-				filename: "es2015/uncategorised/344/input.js"
-				end: Object {
-					column: 5
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
-			expression: JSSuper {
-				loc: Object {
-					filename: "es2015/uncategorised/344/input.js"
-					end: Object {
-						column: 5
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				end: Position 1:0
+				path: UIDPath<es2015/uncategorised/344/input.js>
+				start: Position 1:0
 			}
 		}
 	]
@@ -95,8 +57,5 @@ JSRoot {
     super
     ^
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

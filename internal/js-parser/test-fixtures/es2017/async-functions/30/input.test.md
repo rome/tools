@@ -12,104 +12,33 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "es2017/async-functions/30/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2017/async-functions/30/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2017/async-functions/30/input.js 1:0-2:0
+	path: UIDPath<es2017/async-functions/30/input.js>
 	body: Array [
 		JSVariableDeclarationStatement {
-			loc: Object {
-				filename: "es2017/async-functions/30/input.js"
-				end: Object {
-					column: 40
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2017/async-functions/30/input.js 1:0-1:40
 			declaration: JSVariableDeclaration {
 				kind: "const"
-				loc: Object {
-					filename: "es2017/async-functions/30/input.js"
-					end: Object {
-						column: 40
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation es2017/async-functions/30/input.js 1:0-1:40
 				declarations: Array [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "foo"
-							loc: Object {
-								filename: "es2017/async-functions/30/input.js"
-								identifierName: "foo"
-								end: Object {
-									column: 9
-									line: 1
-								}
-								start: Object {
-									column: 6
-									line: 1
-								}
-							}
+							loc: SourceLocation es2017/async-functions/30/input.js 1:6-1:9 (foo)
 						}
-						loc: Object {
-							filename: "es2017/async-functions/30/input.js"
-							end: Object {
-								column: 39
-								line: 1
-							}
-							start: Object {
-								column: 6
-								line: 1
-							}
-						}
+						loc: SourceLocation es2017/async-functions/30/input.js 1:6-1:39
 						init: JSFunctionExpression {
 							id: undefined
-							loc: Object {
-								filename: "es2017/async-functions/30/input.js"
-								end: Object {
-									column: 39
-									line: 1
-								}
-								start: Object {
-									column: 12
-									line: 1
-								}
-							}
+							loc: SourceLocation es2017/async-functions/30/input.js 1:12-1:39
 							body: JSBlockStatement {
 								body: Array []
 								directives: Array []
-								loc: Object {
-									filename: "es2017/async-functions/30/input.js"
-									end: Object {
-										column: 39
-										line: 1
-									}
-									start: Object {
-										column: 37
-										line: 1
-									}
-								}
+								loc: SourceLocation es2017/async-functions/30/input.js 1:37-1:39
 							}
 							head: JSFunctionHead {
 								async: false
@@ -119,102 +48,30 @@ JSRoot {
 								returnType: undefined
 								thisType: undefined
 								typeParameters: undefined
-								loc: Object {
-									filename: "es2017/async-functions/30/input.js"
-									end: Object {
-										column: 36
-										line: 1
-									}
-									start: Object {
-										column: 20
-										line: 1
-									}
-								}
+								loc: SourceLocation es2017/async-functions/30/input.js 1:20-1:36
 								params: Array [
 									JSBindingObjectPattern {
 										rest: undefined
-										loc: Object {
-											filename: "es2017/async-functions/30/input.js"
-											end: Object {
-												column: 35
-												line: 1
-											}
-											start: Object {
-												column: 21
-												line: 1
-											}
-										}
+										loc: SourceLocation es2017/async-functions/30/input.js 1:21-1:35
 										meta: JSPatternMeta {
 											optional: undefined
 											typeAnnotation: undefined
-											loc: Object {
-												filename: "es2017/async-functions/30/input.js"
-												end: Object {
-													column: 35
-													line: 1
-												}
-												start: Object {
-													column: 21
-													line: 1
-												}
-											}
+											loc: SourceLocation es2017/async-functions/30/input.js 1:21-1:35
 										}
 										properties: Array [
 											JSBindingObjectPatternProperty {
 												key: JSStaticPropertyKey {
 													value: JSIdentifier {
 														name: "async"
-														loc: Object {
-															filename: "es2017/async-functions/30/input.js"
-															identifierName: "async"
-															end: Object {
-																column: 28
-																line: 1
-															}
-															start: Object {
-																column: 23
-																line: 1
-															}
-														}
+														loc: SourceLocation es2017/async-functions/30/input.js 1:23-1:28 (async)
 													}
-													loc: Object {
-														filename: "es2017/async-functions/30/input.js"
-														end: Object {
-															column: 28
-															line: 1
-														}
-														start: Object {
-															column: 23
-															line: 1
-														}
-													}
+													loc: SourceLocation es2017/async-functions/30/input.js 1:23-1:28
 												}
 												value: JSBindingIdentifier {
 													name: "bar"
-													loc: Object {
-														filename: "es2017/async-functions/30/input.js"
-														identifierName: "bar"
-														end: Object {
-															column: 33
-															line: 1
-														}
-														start: Object {
-															column: 30
-															line: 1
-														}
-													}
+													loc: SourceLocation es2017/async-functions/30/input.js 1:30-1:33 (bar)
 												}
-												loc: Object {
-													filename: "es2017/async-functions/30/input.js"
-													end: Object {
-														column: 33
-														line: 1
-													}
-													start: Object {
-														column: 23
-														line: 1
-													}
-												}
+												loc: SourceLocation es2017/async-functions/30/input.js 1:23-1:33
 											}
 										]
 									}
@@ -232,6 +89,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

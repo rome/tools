@@ -11,87 +11,41 @@ JSRoot {
 	comments: Array []
 	corrupt: true
 	directives: Array []
-	filename: "es2020/dynamic-import/no-args/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2020/dynamic-import/no-args/input.js"
-		end: Object {
-			column: 0
-			line: 2
+	loc: SourceLocation es2020/dynamic-import/no-args/input.js 1:0-2:0
+	path: UIDPath<es2020/dynamic-import/no-args/input.js>
+	body: Array [
+		JSExpressionStatement {
+			loc: SourceLocation es2020/dynamic-import/no-args/input.js 1:0-1:9
+			expression: JSImportCall {
+				loc: SourceLocation es2020/dynamic-import/no-args/input.js 1:6-1:8
+				argument: JSReferenceIdentifier {
+					name: "INVALID_PLACEHOLDER"
+					loc: SourceLocation es2020/dynamic-import/no-args/input.js 1:7-1:7
+				}
+			}
 		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	]
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse"
 				categoryValue: "js"
+				category: Array ["parse"]
 				message: RAW_MARKUP {value: "import() requires exactly one argument"}
 			}
 			location: Object {
-				filename: "es2020/dynamic-import/no-args/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 7
-					line: 1
-				}
-				start: Object {
-					column: 7
-					line: 1
-				}
-			}
-		}
-	]
-	body: Array [
-		JSExpressionStatement {
-			loc: Object {
-				filename: "es2020/dynamic-import/no-args/input.js"
-				end: Object {
-					column: 9
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
-			expression: JSImportCall {
-				loc: Object {
-					filename: "es2020/dynamic-import/no-args/input.js"
-					end: Object {
-						column: 8
-						line: 1
-					}
-					start: Object {
-						column: 6
-						line: 1
-					}
-				}
-				argument: JSReferenceIdentifier {
-					name: "INVALID_PLACEHOLDER"
-					loc: Object {
-						filename: "es2020/dynamic-import/no-args/input.js"
-						end: Object {
-							column: 7
-							line: 1
-						}
-						start: Object {
-							column: 7
-							line: 1
-						}
-					}
-				}
+				end: Position 1:7
+				path: UIDPath<es2020/dynamic-import/no-args/input.js>
+				start: Position 1:7
 			}
 		}
 	]
@@ -109,8 +63,5 @@ JSRoot {
     import();
            ^
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

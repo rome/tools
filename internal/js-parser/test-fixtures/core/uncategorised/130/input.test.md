@@ -12,91 +12,28 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "core/uncategorised/130/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "core/uncategorised/130/input.js"
-		end: Object {
-			column: 14
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation core/uncategorised/130/input.js 1:0-1:14
+	path: UIDPath<core/uncategorised/130/input.js>
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "core/uncategorised/130/input.js"
-				end: Object {
-					column: 14
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation core/uncategorised/130/input.js 1:0-1:14
 			expression: JSMemberExpression {
-				loc: Object {
-					filename: "core/uncategorised/130/input.js"
-					end: Object {
-						column: 14
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation core/uncategorised/130/input.js 1:0-1:14
 				object: JSReferenceIdentifier {
 					name: "universe"
-					loc: Object {
-						filename: "core/uncategorised/130/input.js"
-						identifierName: "universe"
-						end: Object {
-							column: 8
-							line: 1
-						}
-						start: Object {
-							column: 0
-							line: 1
-						}
-					}
+					loc: SourceLocation core/uncategorised/130/input.js 1:0-1:8 (universe)
 				}
 				property: JSStaticMemberProperty {
 					value: JSIdentifier {
 						name: "false"
-						loc: Object {
-							filename: "core/uncategorised/130/input.js"
-							identifierName: "false"
-							end: Object {
-								column: 14
-								line: 1
-							}
-							start: Object {
-								column: 9
-								line: 1
-							}
-						}
+						loc: SourceLocation core/uncategorised/130/input.js 1:9-1:14 (false)
 					}
-					loc: Object {
-						filename: "core/uncategorised/130/input.js"
-						identifierName: "false"
-						end: Object {
-							column: 14
-							line: 1
-						}
-						start: Object {
-							column: 9
-							line: 1
-						}
-					}
+					loc: SourceLocation core/uncategorised/130/input.js 1:9-1:14 (false)
 				}
 			}
 		}
@@ -107,6 +44,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

@@ -8,10 +8,8 @@
 import {UnknownObject} from "@internal/typescript-helpers";
 import {SourceMapConsumer} from "@internal/codec-source-map";
 import {sourceMapManager} from "@internal/v8";
-import internalModule = require("module");
-
 import vm = require("vm");
-
+import {OneIndexed, ZeroIndexed} from "@internal/math";
 import {
 	Diagnostic,
 	descriptions,
@@ -19,7 +17,7 @@ import {
 } from "@internal/diagnostics";
 import {AbsoluteFilePath} from "@internal/path";
 import {Position} from "@internal/parser-core";
-import {ob1Coerce1, ob1Number0} from "@internal/ob1";
+import {getRequire} from "../IntegrationLoader";
 
 type ExecuteMainOptions = {
 	path: AbsoluteFilePath;
@@ -51,9 +49,7 @@ export default async function executeMain(
 		setImmediate,
 		setInterval,
 		setTimeout,
-		require: internalModule.createRequire
-			? internalModule.createRequire(filename)
-			: internalModule.createRequireFromPath(filename),
+		require: getRequire(path),
 		console,
 		__dirname: path.getParent().join(),
 		__filename: filename,
@@ -90,8 +86,8 @@ export default async function executeMain(
 			const line = Number(lineMatch[2]);
 
 			const pos: Position = {
-				column: ob1Number0,
-				line: ob1Coerce1(line),
+				column: new ZeroIndexed(),
+				line: new OneIndexed(line),
 			};
 
 			const syntaxError: Diagnostic = {
@@ -99,7 +95,7 @@ export default async function executeMain(
 				location: {
 					start: pos,
 					end: pos,
-					filename,
+					path,
 					sourceText: truncateSourceText(code, pos, pos),
 				},
 				tags: {
@@ -114,7 +110,7 @@ export default async function executeMain(
 
 	// Execute the script if there was no syntax error
 	if (sourceMap !== undefined) {
-		sourceMapManager.add(filename, sourceMap);
+		sourceMapManager.add(path, sourceMap);
 	}
 	const res = await script.runInContext(context);
 

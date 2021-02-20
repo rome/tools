@@ -10,37 +10,17 @@
 JSRoot {
 	comments: Array []
 	corrupt: false
-	filename: "es2015/uncategorised/290/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2015/uncategorised/290/input.js"
-		end: Object {
-			column: 27
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2015/uncategorised/290/input.js 1:0-1:27
+	path: UIDPath<es2015/uncategorised/290/input.js>
 	directives: Array [
 		JSDirective {
 			value: "use strict"
-			loc: Object {
-				filename: "es2015/uncategorised/290/input.js"
-				end: Object {
-					column: 13
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2015/uncategorised/290/input.js 1:0-1:13
 		}
 	]
 	diagnostics: Array [
@@ -48,66 +28,29 @@ JSRoot {
 			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse"
 				categoryValue: "js"
+				category: Array ["parse"]
 				message: RAW_MARKUP {value: "Invalid escape sequence in template"}
 			}
 			location: Object {
-				filename: "es2015/uncategorised/290/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 23
-					line: 1
-				}
-				start: Object {
-					column: 23
-					line: 1
-				}
+				end: Position 1:23
+				path: UIDPath<es2015/uncategorised/290/input.js>
+				start: Position 1:23
 			}
 		}
 	]
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "es2015/uncategorised/290/input.js"
-				end: Object {
-					column: 27
-					line: 1
-				}
-				start: Object {
-					column: 14
-					line: 1
-				}
-			}
+			loc: SourceLocation es2015/uncategorised/290/input.js 1:14-1:27
 			expression: JSTemplateLiteral {
-				loc: Object {
-					filename: "es2015/uncategorised/290/input.js"
-					end: Object {
-						column: 26
-						line: 1
-					}
-					start: Object {
-						column: 14
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/uncategorised/290/input.js 1:14-1:26
 				expressions: Array [
 					JSReferenceIdentifier {
 						name: "test"
-						loc: Object {
-							filename: "es2015/uncategorised/290/input.js"
-							identifierName: "test"
-							end: Object {
-								column: 21
-								line: 1
-							}
-							start: Object {
-								column: 17
-								line: 1
-							}
-						}
+						loc: SourceLocation es2015/uncategorised/290/input.js 1:17-1:21 (test)
 					}
 				]
 				quasis: Array [
@@ -115,33 +58,13 @@ JSRoot {
 						cooked: ""
 						raw: ""
 						tail: false
-						loc: Object {
-							filename: "es2015/uncategorised/290/input.js"
-							end: Object {
-								column: 15
-								line: 1
-							}
-							start: Object {
-								column: 15
-								line: 1
-							}
-						}
+						loc: SourceLocation es2015/uncategorised/290/input.js 1:15-1:15
 					}
 					JSTemplateElement {
 						cooked: "\\02"
 						raw: "\\02"
 						tail: true
-						loc: Object {
-							filename: "es2015/uncategorised/290/input.js"
-							end: Object {
-								column: 25
-								line: 1
-							}
-							start: Object {
-								column: 22
-								line: 1
-							}
-						}
+						loc: SourceLocation es2015/uncategorised/290/input.js 1:22-1:25
 					}
 				]
 			}
@@ -161,8 +84,5 @@ JSRoot {
     "use strict"; `${test}\02`;
                            ^
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

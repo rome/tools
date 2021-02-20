@@ -22,7 +22,6 @@ test(
 		const jsx = jsxElement.assert(
 			jsExpressionStatement.assert(
 				parseJS({
-					path: "unknown",
 					input: dedent`
 						<div className="foo" onClick={() => {alert("hello")}} custom={true} other={{one: "first", two: "second"}}/>
 					`,

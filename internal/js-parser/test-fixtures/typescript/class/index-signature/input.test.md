@@ -12,201 +12,52 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "typescript/class/index-signature/input.ts"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
+	loc: SourceLocation typescript/class/index-signature/input.ts 1:0-5:0
+	path: UIDPath<typescript/class/index-signature/input.ts>
 	syntax: Array ["ts"]
-	loc: Object {
-		filename: "typescript/class/index-signature/input.ts"
-		end: Object {
-			column: 0
-			line: 5
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
 	body: Array [
 		JSClassDeclaration {
 			id: JSBindingIdentifier {
 				name: "C"
-				loc: Object {
-					filename: "typescript/class/index-signature/input.ts"
-					identifierName: "C"
-					end: Object {
-						column: 7
-						line: 1
-					}
-					start: Object {
-						column: 6
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/class/index-signature/input.ts 1:6-1:7 (C)
 			}
-			loc: Object {
-				filename: "typescript/class/index-signature/input.ts"
-				end: Object {
-					column: 1
-					line: 4
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation typescript/class/index-signature/input.ts 1:0-4:1
 			meta: JSClassHead {
 				implements: undefined
 				superClass: undefined
 				superTypeParameters: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "typescript/class/index-signature/input.ts"
-					end: Object {
-						column: 1
-						line: 4
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/class/index-signature/input.ts 1:0-4:1
 				body: Array [
 					TSIndexSignature {
 						key: JSBindingIdentifier {
 							name: "x"
-							loc: Object {
-								filename: "typescript/class/index-signature/input.ts"
-								end: Object {
-									column: 14
-									line: 2
-								}
-								start: Object {
-									column: 5
-									line: 2
-								}
-							}
+							loc: SourceLocation typescript/class/index-signature/input.ts 2:5-2:14
 							meta: JSPatternMeta {
-								loc: Object {
-									filename: "typescript/class/index-signature/input.ts"
-									end: Object {
-										column: 14
-										line: 2
-									}
-									start: Object {
-										column: 5
-										line: 2
-									}
-								}
-								typeAnnotation: TSStringKeywordTypeAnnotation {
-									loc: Object {
-										filename: "typescript/class/index-signature/input.ts"
-										end: Object {
-											column: 14
-											line: 2
-										}
-										start: Object {
-											column: 8
-											line: 2
-										}
-									}
-								}
+								loc: SourceLocation typescript/class/index-signature/input.ts 2:5-2:14
+								typeAnnotation: TSStringKeywordTypeAnnotation {loc: SourceLocation typescript/class/index-signature/input.ts 2:8-2:14}
 							}
 						}
 						readonly: false
-						loc: Object {
-							filename: "typescript/class/index-signature/input.ts"
-							end: Object {
-								column: 21
-								line: 2
-							}
-							start: Object {
-								column: 4
-								line: 2
-							}
-						}
-						typeAnnotation: TSAnyKeywordTypeAnnotation {
-							loc: Object {
-								filename: "typescript/class/index-signature/input.ts"
-								end: Object {
-									column: 20
-									line: 2
-								}
-								start: Object {
-									column: 17
-									line: 2
-								}
-							}
-						}
+						loc: SourceLocation typescript/class/index-signature/input.ts 2:4-2:21
+						typeAnnotation: TSAnyKeywordTypeAnnotation {loc: SourceLocation typescript/class/index-signature/input.ts 2:17-2:20}
 					}
 					TSIndexSignature {
 						key: JSBindingIdentifier {
 							name: "x"
-							loc: Object {
-								filename: "typescript/class/index-signature/input.ts"
-								end: Object {
-									column: 23
-									line: 3
-								}
-								start: Object {
-									column: 14
-									line: 3
-								}
-							}
+							loc: SourceLocation typescript/class/index-signature/input.ts 3:14-3:23
 							meta: JSPatternMeta {
-								loc: Object {
-									filename: "typescript/class/index-signature/input.ts"
-									end: Object {
-										column: 23
-										line: 3
-									}
-									start: Object {
-										column: 14
-										line: 3
-									}
-								}
-								typeAnnotation: TSStringKeywordTypeAnnotation {
-									loc: Object {
-										filename: "typescript/class/index-signature/input.ts"
-										end: Object {
-											column: 23
-											line: 3
-										}
-										start: Object {
-											column: 17
-											line: 3
-										}
-									}
-								}
+								loc: SourceLocation typescript/class/index-signature/input.ts 3:14-3:23
+								typeAnnotation: TSStringKeywordTypeAnnotation {loc: SourceLocation typescript/class/index-signature/input.ts 3:17-3:23}
 							}
 						}
 						readonly: true
-						loc: Object {
-							filename: "typescript/class/index-signature/input.ts"
-							end: Object {
-								column: 30
-								line: 3
-							}
-							start: Object {
-								column: 4
-								line: 3
-							}
-						}
-						typeAnnotation: TSAnyKeywordTypeAnnotation {
-							loc: Object {
-								filename: "typescript/class/index-signature/input.ts"
-								end: Object {
-									column: 29
-									line: 3
-								}
-								start: Object {
-									column: 26
-									line: 3
-								}
-							}
-						}
+						loc: SourceLocation typescript/class/index-signature/input.ts 3:4-3:30
+						typeAnnotation: TSAnyKeywordTypeAnnotation {loc: SourceLocation typescript/class/index-signature/input.ts 3:26-3:29}
 					}
 				]
 			}
@@ -218,6 +69,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

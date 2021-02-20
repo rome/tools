@@ -12,62 +12,22 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "jsx/basic/fragment-2/input.jsx"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
+	loc: SourceLocation jsx/basic/fragment-2/input.jsx 1:0-2:0
+	path: UIDPath<jsx/basic/fragment-2/input.jsx>
 	syntax: Array ["jsx"]
-	loc: Object {
-		filename: "jsx/basic/fragment-2/input.jsx"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "jsx/basic/fragment-2/input.jsx"
-				end: Object {
-					column: 22
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation jsx/basic/fragment-2/input.jsx 1:0-1:22
 			expression: JSXFragment {
-				loc: Object {
-					filename: "jsx/basic/fragment-2/input.jsx"
-					end: Object {
-						column: 22
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation jsx/basic/fragment-2/input.jsx 1:0-1:22
 				children: Array [
 					JSXText {
 						value: "Hi, I'm a string!"
-						loc: Object {
-							filename: "jsx/basic/fragment-2/input.jsx"
-							end: Object {
-								column: 19
-								line: 1
-							}
-							start: Object {
-								column: 2
-								line: 1
-							}
-						}
+						loc: SourceLocation jsx/basic/fragment-2/input.jsx 1:2-1:19
 					}
 				]
 			}
@@ -79,6 +39,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

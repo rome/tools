@@ -12,152 +12,50 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "experimental/top-level-await/inside-class-property/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
 	syntax: Array []
-	loc: Object {
-		filename: "experimental/top-level-await/inside-class-property/input.js"
-		end: Object {
-			column: 0
-			line: 4
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation experimental/top-level-await/inside-class-property/input.js 1:0-4:0
+	path: UIDPath<experimental/top-level-await/inside-class-property/input.js>
 	body: Array [
 		JSExportLocalDeclaration {
 			exportKind: "value"
 			specifiers: undefined
-			loc: Object {
-				filename: "experimental/top-level-await/inside-class-property/input.js"
-				end: Object {
-					column: 1
-					line: 3
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation experimental/top-level-await/inside-class-property/input.js 1:0-3:1
 			declaration: JSClassDeclaration {
 				id: JSBindingIdentifier {
 					name: "C"
-					loc: Object {
-						filename: "experimental/top-level-await/inside-class-property/input.js"
-						identifierName: "C"
-						end: Object {
-							column: 14
-							line: 1
-						}
-						start: Object {
-							column: 13
-							line: 1
-						}
-					}
+					loc: SourceLocation experimental/top-level-await/inside-class-property/input.js 1:13-1:14 (C)
 				}
-				loc: Object {
-					filename: "experimental/top-level-await/inside-class-property/input.js"
-					end: Object {
-						column: 1
-						line: 3
-					}
-					start: Object {
-						column: 7
-						line: 1
-					}
-				}
+				loc: SourceLocation experimental/top-level-await/inside-class-property/input.js 1:7-3:1
 				meta: JSClassHead {
 					implements: undefined
 					superClass: undefined
 					superTypeParameters: undefined
 					typeParameters: undefined
-					loc: Object {
-						filename: "experimental/top-level-await/inside-class-property/input.js"
-						end: Object {
-							column: 1
-							line: 3
-						}
-						start: Object {
-							column: 7
-							line: 1
-						}
-					}
+					loc: SourceLocation experimental/top-level-await/inside-class-property/input.js 1:7-3:1
 					body: Array [
 						JSClassProperty {
 							key: JSStaticPropertyKey {
 								value: JSIdentifier {
 									name: "p"
-									loc: Object {
-										filename: "experimental/top-level-await/inside-class-property/input.js"
-										identifierName: "p"
-										end: Object {
-											column: 3
-											line: 2
-										}
-										start: Object {
-											column: 2
-											line: 2
-										}
-									}
+									loc: SourceLocation experimental/top-level-await/inside-class-property/input.js 2:2-2:3 (p)
 								}
-								loc: Object {
-									filename: "experimental/top-level-await/inside-class-property/input.js"
-									end: Object {
-										column: 3
-										line: 2
-									}
-									start: Object {
-										column: 2
-										line: 2
-									}
-								}
+								loc: SourceLocation experimental/top-level-await/inside-class-property/input.js 2:2-2:3
 							}
 							value: JSAwaitExpression {
-								loc: Object {
-									filename: "experimental/top-level-await/inside-class-property/input.js"
-									end: Object {
-										column: 13
-										line: 2
-									}
-									start: Object {
-										column: 6
-										line: 2
-									}
-								}
+								loc: SourceLocation experimental/top-level-await/inside-class-property/input.js 2:6-2:13
 								argument: JSNumericLiteral {
 									value: 0
 									format: undefined
-									loc: Object {
-										filename: "experimental/top-level-await/inside-class-property/input.js"
-										end: Object {
-											column: 13
-											line: 2
-										}
-										start: Object {
-											column: 12
-											line: 2
-										}
-									}
+									loc: SourceLocation experimental/top-level-await/inside-class-property/input.js 2:12-2:13
 								}
 							}
 							definite: undefined
 							typeAnnotation: undefined
-							loc: Object {
-								filename: "experimental/top-level-await/inside-class-property/input.js"
-								end: Object {
-									column: 14
-									line: 2
-								}
-								start: Object {
-									column: 2
-									line: 2
-								}
-							}
+							loc: SourceLocation experimental/top-level-await/inside-class-property/input.js 2:2-2:14
 							meta: JSClassPropertyMeta {
 								abstract: false
 								accessibility: undefined
@@ -165,21 +63,8 @@ JSRoot {
 								readonly: false
 								static: false
 								typeAnnotation: undefined
-								start: Object {
-									column: 2
-									line: 2
-								}
-								loc: Object {
-									filename: "experimental/top-level-await/inside-class-property/input.js"
-									end: Object {
-										column: 3
-										line: 2
-									}
-									start: Object {
-										column: 2
-										line: 2
-									}
-								}
+								loc: SourceLocation experimental/top-level-await/inside-class-property/input.js 2:2-2:3
+								start: Position 2:2
 							}
 						}
 					]
@@ -193,6 +78,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

@@ -12,153 +12,49 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "es2017/async-functions/19/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2017/async-functions/19/input.js"
-		end: Object {
-			column: 20
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2017/async-functions/19/input.js 1:0-1:20
+	path: UIDPath<es2017/async-functions/19/input.js>
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "es2017/async-functions/19/input.js"
-				end: Object {
-					column: 20
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2017/async-functions/19/input.js 1:0-1:20
 			expression: JSCallExpression {
-				loc: Object {
-					filename: "es2017/async-functions/19/input.js"
-					end: Object {
-						column: 20
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation es2017/async-functions/19/input.js 1:0-1:20
 				callee: JSReferenceIdentifier {
 					name: "f"
-					loc: Object {
-						filename: "es2017/async-functions/19/input.js"
-						identifierName: "f"
-						end: Object {
-							column: 1
-							line: 1
-						}
-						start: Object {
-							column: 0
-							line: 1
-						}
-					}
+					loc: SourceLocation es2017/async-functions/19/input.js 1:0-1:1 (f)
 				}
 				arguments: Array [
 					JSReferenceIdentifier {
 						name: "a"
-						loc: Object {
-							filename: "es2017/async-functions/19/input.js"
-							identifierName: "a"
-							end: Object {
-								column: 3
-								line: 1
-							}
-							start: Object {
-								column: 2
-								line: 1
-							}
-						}
+						loc: SourceLocation es2017/async-functions/19/input.js 1:2-1:3 (a)
 					}
 					JSCallExpression {
-						loc: Object {
-							filename: "es2017/async-functions/19/input.js"
-							end: Object {
-								column: 16
-								line: 1
-							}
-							start: Object {
-								column: 5
-								line: 1
-							}
-						}
+						loc: SourceLocation es2017/async-functions/19/input.js 1:5-1:16
 						callee: JSReferenceIdentifier {
 							name: "async"
-							loc: Object {
-								filename: "es2017/async-functions/19/input.js"
-								identifierName: "async"
-								end: Object {
-									column: 10
-									line: 1
-								}
-								start: Object {
-									column: 5
-									line: 1
-								}
-							}
+							loc: SourceLocation es2017/async-functions/19/input.js 1:5-1:10 (async)
 						}
 						arguments: Array [
 							JSNumericLiteral {
 								value: 1
 								format: undefined
-								loc: Object {
-									filename: "es2017/async-functions/19/input.js"
-									end: Object {
-										column: 12
-										line: 1
-									}
-									start: Object {
-										column: 11
-										line: 1
-									}
-								}
+								loc: SourceLocation es2017/async-functions/19/input.js 1:11-1:12
 							}
 							JSNumericLiteral {
 								value: 2
 								format: undefined
-								loc: Object {
-									filename: "es2017/async-functions/19/input.js"
-									end: Object {
-										column: 15
-										line: 1
-									}
-									start: Object {
-										column: 14
-										line: 1
-									}
-								}
+								loc: SourceLocation es2017/async-functions/19/input.js 1:14-1:15
 							}
 						]
 					}
 					JSReferenceIdentifier {
 						name: "b"
-						loc: Object {
-							filename: "es2017/async-functions/19/input.js"
-							identifierName: "b"
-							end: Object {
-								column: 19
-								line: 1
-							}
-							start: Object {
-								column: 18
-								line: 1
-							}
-						}
+						loc: SourceLocation es2017/async-functions/19/input.js 1:18-1:19 (b)
 					}
 				]
 			}
@@ -170,6 +66,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

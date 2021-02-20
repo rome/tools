@@ -18,9 +18,6 @@
   ℹ The onBlur event is more declarative and reliable for indicating input changes when using
     keyboard navigation.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -45,9 +42,6 @@
   ℹ The onBlur event is more declarative and reliable for indicating input changes when using
     keyboard navigation.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -72,9 +66,6 @@
   ℹ The onBlur event is more declarative and reliable for indicating input changes when using
     keyboard navigation.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -99,9 +90,6 @@
   ℹ The onBlur event is more declarative and reliable for indicating input changes when using
     keyboard navigation.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -115,7 +103,6 @@
 ### `4`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -129,7 +116,6 @@
 ### `5`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -143,7 +129,6 @@
 ### `6`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -157,7 +142,6 @@
 ### `7`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -171,7 +155,6 @@
 ### `8`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -185,7 +168,6 @@
 ### `9`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -199,7 +181,6 @@
 ### `10`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -213,7 +194,6 @@
 ### `11`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -227,7 +207,6 @@
 ### `12`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -241,7 +220,6 @@
 ### `13`
 
 ```
-✔ No known problems!
 
 ```
 

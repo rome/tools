@@ -12,89 +12,28 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "esprima/statement-iteration/migrated_0005/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "esprima/statement-iteration/migrated_0005/input.js"
-		end: Object {
-			column: 0
-			line: 3
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation esprima/statement-iteration/migrated_0005/input.js 1:0-3:0
+	path: UIDPath<esprima/statement-iteration/migrated_0005/input.js>
 	body: Array [
 		JSDoWhileStatement {
-			loc: Object {
-				filename: "esprima/statement-iteration/migrated_0005/input.js"
-				end: Object {
-					column: 13
-					line: 2
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation esprima/statement-iteration/migrated_0005/input.js 1:0-2:13
 			test: JSBooleanLiteral {
 				value: true
-				loc: Object {
-					filename: "esprima/statement-iteration/migrated_0005/input.js"
-					end: Object {
-						column: 12
-						line: 2
-					}
-					start: Object {
-						column: 8
-						line: 2
-					}
-				}
+				loc: SourceLocation esprima/statement-iteration/migrated_0005/input.js 2:8-2:12
 			}
 			body: JSExpressionStatement {
-				loc: Object {
-					filename: "esprima/statement-iteration/migrated_0005/input.js"
-					end: Object {
-						column: 1
-						line: 2
-					}
-					start: Object {
-						column: 3
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/statement-iteration/migrated_0005/input.js 1:3-2:1
 				expression: JSCallExpression {
 					arguments: Array []
-					loc: Object {
-						filename: "esprima/statement-iteration/migrated_0005/input.js"
-						end: Object {
-							column: 9
-							line: 1
-						}
-						start: Object {
-							column: 3
-							line: 1
-						}
-					}
+					loc: SourceLocation esprima/statement-iteration/migrated_0005/input.js 1:3-1:9
 					callee: JSReferenceIdentifier {
 						name: "that"
-						loc: Object {
-							filename: "esprima/statement-iteration/migrated_0005/input.js"
-							identifierName: "that"
-							end: Object {
-								column: 7
-								line: 1
-							}
-							start: Object {
-								column: 3
-								line: 1
-							}
-						}
+						loc: SourceLocation esprima/statement-iteration/migrated_0005/input.js 1:3-1:7 (that)
 					}
 				}
 			}
@@ -106,6 +45,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

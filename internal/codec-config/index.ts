@@ -6,7 +6,6 @@ import {
 	PartialConfigHandler,
 } from "@internal/codec-config/types";
 import {RequiredProps} from "@internal/typescript-helpers";
-import {createUnknownPath} from "@internal/path";
 import {
 	json as _json,
 	json5 as _json5,
@@ -17,6 +16,7 @@ import {toml as _toml} from "./toml/index";
 import {Consumer, consume, consumeUnknown} from "@internal/consume";
 import {ParserOptions} from "@internal/parser-core";
 import {JSONValue} from "@internal/codec-config/json/types";
+import {DIAGNOSTIC_CATEGORIES} from "@internal/diagnostics";
 
 export {
 	JSONArray,
@@ -50,9 +50,7 @@ function partialToFull(partial: PartialConfigHandler): ConfigHandler {
 			return {
 				type,
 				consumer: consume({
-					filePath: opts.path === undefined
-						? undefined
-						: createUnknownPath(opts.path),
+					path: opts.path,
 					context,
 					objectPath: [],
 					value,
@@ -68,7 +66,11 @@ function partialToFull(partial: PartialConfigHandler): ConfigHandler {
 
 		stringify(value: unknown, comments: ConfigCommentMap = new Map()): string {
 			return partial.stringifyFromConsumer({
-				consumer: consumeUnknown(value, "parse", partial.language),
+				consumer: consumeUnknown(
+					value,
+					DIAGNOSTIC_CATEGORIES.parse,
+					partial.language,
+				),
 				comments,
 			});
 		},
@@ -86,7 +88,7 @@ function partialToFull(partial: PartialConfigHandler): ConfigHandler {
 export function consumeConfig(
 	opts: RequiredProps<ConfigParserOptions, "path">,
 ): ConsumeConfigResult {
-	const path = createUnknownPath(opts.path);
+	const {path} = opts;
 
 	for (const handler of CONFIG_HANDLERS) {
 		for (const ext of handler.extensions) {

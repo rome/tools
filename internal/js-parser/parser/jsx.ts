@@ -313,7 +313,7 @@ function parseJSXOpeningElementAt(
 			typeArguments: undefined,
 			name: undefined,
 			loc: {
-				filename: parser.filename,
+				path: parser.path,
 				start,
 				end: parser.getPosition(),
 			},
@@ -343,9 +343,7 @@ function parseJSXOpeningElementAt(
 
 	// into an unusual state for: <foo<bar>></foo>
 	while (
-		!match(parser, tt.slash) &&
-		!match(parser, tt.jsxTagEnd) &&
-		!atEOF(parser)
+		!(match(parser, tt.slash) || match(parser, tt.jsxTagEnd) || atEOF(parser))
 	) {
 		attributes.push(parseJSXAttribute(parser));
 	}
@@ -417,7 +415,7 @@ function parseJSXElementAt(
 					if (eat(parser, tt.slash)) {
 						closingName = parseJSXClosingElementAt(parser);
 						closingNameLoc = {
-							filename: parser.filename,
+							path: parser.path,
 							start,
 							end: parser.getPosition(),
 						};

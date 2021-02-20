@@ -11,144 +11,54 @@ JSRoot {
 	comments: Array []
 	corrupt: true
 	directives: Array []
-	filename: "core/uncategorised/420/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "core/uncategorised/420/input.js"
-		end: Object {
-			column: 24
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation core/uncategorised/420/input.js 1:0-1:24
+	path: UIDPath<core/uncategorised/420/input.js>
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse"
 				categoryValue: "js"
-				message: Array [
-					RAW_MARKUP {value: "Unknown start to an "}
-					"statement expression"
-				]
+				category: Array ["parse"]
+				message: RAW_MARKUP {value: "Unknown start to an statement expression"}
 			}
 			location: Object {
-				filename: "core/uncategorised/420/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 24
-					line: 1
-				}
-				start: Object {
-					column: 24
-					line: 1
-				}
+				end: Position 1:24
+				path: UIDPath<core/uncategorised/420/input.js>
+				start: Position 1:24
 			}
 		}
 	]
 	body: Array [
 		JSIfStatement {
-			loc: Object {
-				filename: "core/uncategorised/420/input.js"
-				end: Object {
-					column: 24
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation core/uncategorised/420/input.js 1:0-1:24
 			test: JSBooleanLiteral {
 				value: false
-				loc: Object {
-					filename: "core/uncategorised/420/input.js"
-					end: Object {
-						column: 8
-						line: 1
-					}
-					start: Object {
-						column: 3
-						line: 1
-					}
-				}
+				loc: SourceLocation core/uncategorised/420/input.js 1:3-1:8
 			}
 			alternate: JSExpressionStatement {
-				loc: Object {
-					filename: "core/uncategorised/420/input.js"
-					end: Object {
-						column: 24
-						line: 1
-					}
-					start: Object {
-						column: 24
-						line: 1
-					}
-				}
+				loc: SourceLocation core/uncategorised/420/input.js 1:24-1:24
 				expression: JSReferenceIdentifier {
 					name: "INVALID_PLACEHOLDER"
-					loc: Object {
-						filename: "core/uncategorised/420/input.js"
-						end: Object {
-							column: 24
-							line: 1
-						}
-						start: Object {
-							column: 24
-							line: 1
-						}
-					}
+					loc: SourceLocation core/uncategorised/420/input.js 1:24-1:24
 				}
 			}
 			consequent: JSExpressionStatement {
-				loc: Object {
-					filename: "core/uncategorised/420/input.js"
-					end: Object {
-						column: 19
-						line: 1
-					}
-					start: Object {
-						column: 10
-						line: 1
-					}
-				}
+				loc: SourceLocation core/uncategorised/420/input.js 1:10-1:19
 				expression: JSCallExpression {
 					arguments: Array []
-					loc: Object {
-						filename: "core/uncategorised/420/input.js"
-						end: Object {
-							column: 18
-							line: 1
-						}
-						start: Object {
-							column: 10
-							line: 1
-						}
-					}
+					loc: SourceLocation core/uncategorised/420/input.js 1:10-1:18
 					callee: JSReferenceIdentifier {
 						name: "doThis"
-						loc: Object {
-							filename: "core/uncategorised/420/input.js"
-							identifierName: "doThis"
-							end: Object {
-								column: 16
-								line: 1
-							}
-							start: Object {
-								column: 10
-								line: 1
-							}
-						}
+						loc: SourceLocation core/uncategorised/420/input.js 1:10-1:16 (doThis)
 					}
 				}
 			}
@@ -168,8 +78,5 @@ JSRoot {
     if(false) doThis(); else
                             ^
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

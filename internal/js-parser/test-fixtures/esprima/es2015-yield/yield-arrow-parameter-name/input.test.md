@@ -12,62 +12,22 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "esprima/es2015-yield/yield-arrow-parameter-name/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "esprima/es2015-yield/yield-arrow-parameter-name/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation esprima/es2015-yield/yield-arrow-parameter-name/input.js 1:0-2:0
+	path: UIDPath<esprima/es2015-yield/yield-arrow-parameter-name/input.js>
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "esprima/es2015-yield/yield-arrow-parameter-name/input.js"
-				end: Object {
-					column: 14
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation esprima/es2015-yield/yield-arrow-parameter-name/input.js 1:0-1:14
 			expression: JSArrowFunctionExpression {
-				loc: Object {
-					filename: "esprima/es2015-yield/yield-arrow-parameter-name/input.js"
-					end: Object {
-						column: 13
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/es2015-yield/yield-arrow-parameter-name/input.js 1:0-1:13
 				body: JSNumericLiteral {
 					value: 42
 					format: undefined
-					loc: Object {
-						filename: "esprima/es2015-yield/yield-arrow-parameter-name/input.js"
-						end: Object {
-							column: 13
-							line: 1
-						}
-						start: Object {
-							column: 11
-							line: 1
-						}
-					}
+					loc: SourceLocation esprima/es2015-yield/yield-arrow-parameter-name/input.js 1:11-1:13
 				}
 				head: JSFunctionHead {
 					async: false
@@ -75,32 +35,11 @@ JSRoot {
 					rest: undefined
 					returnType: undefined
 					thisType: undefined
-					loc: Object {
-						filename: "esprima/es2015-yield/yield-arrow-parameter-name/input.js"
-						end: Object {
-							column: 10
-							line: 1
-						}
-						start: Object {
-							column: 0
-							line: 1
-						}
-					}
+					loc: SourceLocation esprima/es2015-yield/yield-arrow-parameter-name/input.js 1:0-1:10
 					params: Array [
 						JSBindingIdentifier {
 							name: "yield"
-							loc: Object {
-								filename: "esprima/es2015-yield/yield-arrow-parameter-name/input.js"
-								identifierName: "yield"
-								end: Object {
-									column: 6
-									line: 1
-								}
-								start: Object {
-									column: 1
-									line: 1
-								}
-							}
+							loc: SourceLocation esprima/es2015-yield/yield-arrow-parameter-name/input.js 1:1-1:6 (yield)
 						}
 					]
 				}
@@ -113,6 +52,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

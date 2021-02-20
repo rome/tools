@@ -12,148 +12,44 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "esprima/es2015-spread-element/new-multi-spread/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "esprima/es2015-spread-element/new-multi-spread/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation esprima/es2015-spread-element/new-multi-spread/input.js 1:0-2:0
+	path: UIDPath<esprima/es2015-spread-element/new-multi-spread/input.js>
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "esprima/es2015-spread-element/new-multi-spread/input.js"
-				end: Object {
-					column: 24
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation esprima/es2015-spread-element/new-multi-spread/input.js 1:0-1:24
 			expression: JSNewExpression {
 				optional: undefined
 				typeArguments: undefined
-				loc: Object {
-					filename: "esprima/es2015-spread-element/new-multi-spread/input.js"
-					end: Object {
-						column: 23
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/es2015-spread-element/new-multi-spread/input.js 1:0-1:23
 				callee: JSReferenceIdentifier {
 					name: "f"
-					loc: Object {
-						filename: "esprima/es2015-spread-element/new-multi-spread/input.js"
-						identifierName: "f"
-						end: Object {
-							column: 5
-							line: 1
-						}
-						start: Object {
-							column: 4
-							line: 1
-						}
-					}
+					loc: SourceLocation esprima/es2015-spread-element/new-multi-spread/input.js 1:4-1:5 (f)
 				}
 				arguments: Array [
 					JSSpreadElement {
-						loc: Object {
-							filename: "esprima/es2015-spread-element/new-multi-spread/input.js"
-							end: Object {
-								column: 10
-								line: 1
-							}
-							start: Object {
-								column: 6
-								line: 1
-							}
-						}
+						loc: SourceLocation esprima/es2015-spread-element/new-multi-spread/input.js 1:6-1:10
 						argument: JSReferenceIdentifier {
 							name: "x"
-							loc: Object {
-								filename: "esprima/es2015-spread-element/new-multi-spread/input.js"
-								identifierName: "x"
-								end: Object {
-									column: 10
-									line: 1
-								}
-								start: Object {
-									column: 9
-									line: 1
-								}
-							}
+							loc: SourceLocation esprima/es2015-spread-element/new-multi-spread/input.js 1:9-1:10 (x)
 						}
 					}
 					JSSpreadElement {
-						loc: Object {
-							filename: "esprima/es2015-spread-element/new-multi-spread/input.js"
-							end: Object {
-								column: 16
-								line: 1
-							}
-							start: Object {
-								column: 12
-								line: 1
-							}
-						}
+						loc: SourceLocation esprima/es2015-spread-element/new-multi-spread/input.js 1:12-1:16
 						argument: JSReferenceIdentifier {
 							name: "y"
-							loc: Object {
-								filename: "esprima/es2015-spread-element/new-multi-spread/input.js"
-								identifierName: "y"
-								end: Object {
-									column: 16
-									line: 1
-								}
-								start: Object {
-									column: 15
-									line: 1
-								}
-							}
+							loc: SourceLocation esprima/es2015-spread-element/new-multi-spread/input.js 1:15-1:16 (y)
 						}
 					}
 					JSSpreadElement {
-						loc: Object {
-							filename: "esprima/es2015-spread-element/new-multi-spread/input.js"
-							end: Object {
-								column: 22
-								line: 1
-							}
-							start: Object {
-								column: 18
-								line: 1
-							}
-						}
+						loc: SourceLocation esprima/es2015-spread-element/new-multi-spread/input.js 1:18-1:22
 						argument: JSReferenceIdentifier {
 							name: "z"
-							loc: Object {
-								filename: "esprima/es2015-spread-element/new-multi-spread/input.js"
-								identifierName: "z"
-								end: Object {
-									column: 22
-									line: 1
-								}
-								start: Object {
-									column: 21
-									line: 1
-								}
-							}
+							loc: SourceLocation esprima/es2015-spread-element/new-multi-spread/input.js 1:21-1:22 (z)
 						}
 					}
 				]
@@ -166,6 +62,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

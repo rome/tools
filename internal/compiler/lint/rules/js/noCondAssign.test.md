@@ -19,9 +19,6 @@
 
   ℹ It is a common typo to mistype an equality operator as an assignment operator.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -49,9 +46,6 @@ for (let i = 1; i = 10; i++) {
 
   ℹ It is a common typo to mistype an equality operator as an assignment operator.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -79,9 +73,6 @@ if (foo = "bar") {
 
   ℹ It is a common typo to mistype an equality operator as an assignment operator.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -109,9 +100,6 @@ while (foo = "bar") {
 
   ℹ It is a common typo to mistype an equality operator as an assignment operator.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -137,9 +125,6 @@ do {
 
   ℹ It is a common typo to mistype an equality operator as an assignment operator.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -153,7 +138,6 @@ do {
 ### `5`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -169,7 +153,6 @@ while ((foo = foo.bar) !== undefined) {
 ### `6`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -185,7 +168,6 @@ if (foo++ === 3) {
 ### `7`
 
 ```
-✔ No known problems!
 
 ```
 

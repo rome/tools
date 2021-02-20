@@ -11,94 +11,50 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "es2015/uncategorised/265/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2015/uncategorised/265/input.js"
-		end: Object {
-			column: 13
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				category: "parse"
-				categoryValue: "js"
-				message: Array [
-					RAW_MARKUP {value: "Unexpected token, expected "}
-					"("
-				]
-			}
-			location: Object {
-				filename: "es2015/uncategorised/265/input.js"
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Object {
-					column: 8
-					line: 1
-				}
-				start: Object {
-					column: 7
-					line: 1
-				}
-			}
-		}
-	]
+	loc: SourceLocation es2015/uncategorised/265/input.js 1:0-1:13
+	path: UIDPath<es2015/uncategorised/265/input.js>
 	body: Array [
 		JSSwitchStatement {
 			cases: Array []
-			loc: Object {
-				filename: "es2015/uncategorised/265/input.js"
-				end: Object {
-					column: 13
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2015/uncategorised/265/input.js 1:0-1:13
 			discriminant: JSTemplateLiteral {
 				expressions: Array []
-				loc: Object {
-					filename: "es2015/uncategorised/265/input.js"
-					end: Object {
-						column: 13
-						line: 1
-					}
-					start: Object {
-						column: 7
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/uncategorised/265/input.js 1:7-1:13
 				quasis: Array [
 					JSTemplateElement {
 						cooked: "test"
 						raw: "test"
 						tail: true
-						loc: Object {
-							filename: "es2015/uncategorised/265/input.js"
-							end: Object {
-								column: 12
-								line: 1
-							}
-							start: Object {
-								column: 8
-								line: 1
-							}
-						}
+						loc: SourceLocation es2015/uncategorised/265/input.js 1:8-1:12
+					}
+				]
+			}
+		}
+	]
+	diagnostics: Array [
+		Object {
+			origins: Array [Object {category: "parse"}]
+			location: Object {
+				integrity: undefined
+				language: "js"
+				sourceText: undefined
+				end: Position 1:6
+				path: UIDPath<es2015/uncategorised/265/input.js>
+				start: Position 1:7
+			}
+			description: Object {
+				categoryValue: "js"
+				category: Array ["parse"]
+				message: RAW_MARKUP {value: "Unexpected character <emphasis>`</emphasis>"}
+				advice: Array [
+					log {
+						category: "info"
+						text: RAW_MARKUP {value: "Expected the opening switch discriminant character <emphasis>(</emphasis>"}
 					}
 				]
 			}
@@ -113,13 +69,12 @@ JSRoot {
 
  es2015/uncategorised/265/input.js:1:7 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ Unexpected token, expected (
+  ✖ Unexpected character `
 
     switch `test`
            ^
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  ℹ Expected the opening switch discriminant character (
 
-✖ Found 1 problem
 
 ```

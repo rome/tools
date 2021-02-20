@@ -11,45 +11,29 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "es2018/async-generators/for-await-no-in/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2018/async-generators/for-await-no-in/input.js"
-		end: Object {
-			column: 0
-			line: 4
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2018/async-generators/for-await-no-in/input.js 1:0-4:0
+	path: UIDPath<es2018/async-generators/for-await-no-in/input.js>
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse"
 				categoryValue: "js"
+				category: Array ["parse"]
 				message: RAW_MARKUP {value: "Can't have an await on a regular for loop"}
 			}
 			location: Object {
-				filename: "es2018/async-generators/for-await-no-in/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 11
-					line: 2
-				}
-				start: Object {
-					column: 11
-					line: 2
-				}
+				end: Position 2:11
+				path: UIDPath<es2018/async-generators/for-await-no-in/input.js>
+				start: Position 2:11
 			}
 		}
 	]
@@ -57,30 +41,9 @@ JSRoot {
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "f"
-				loc: Object {
-					filename: "es2018/async-generators/for-await-no-in/input.js"
-					identifierName: "f"
-					end: Object {
-						column: 16
-						line: 1
-					}
-					start: Object {
-						column: 15
-						line: 1
-					}
-				}
+				loc: SourceLocation es2018/async-generators/for-await-no-in/input.js 1:15-1:16 (f)
 			}
-			loc: Object {
-				filename: "es2018/async-generators/for-await-no-in/input.js"
-				end: Object {
-					column: 1
-					line: 3
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2018/async-generators/for-await-no-in/input.js 1:0-3:1
 			head: JSFunctionHead {
 				async: true
 				generator: false
@@ -90,114 +53,30 @@ JSRoot {
 				returnType: undefined
 				thisType: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "es2018/async-generators/for-await-no-in/input.js"
-					end: Object {
-						column: 18
-						line: 1
-					}
-					start: Object {
-						column: 16
-						line: 1
-					}
-				}
+				loc: SourceLocation es2018/async-generators/for-await-no-in/input.js 1:16-1:18
 			}
 			body: JSBlockStatement {
 				directives: Array []
-				loc: Object {
-					filename: "es2018/async-generators/for-await-no-in/input.js"
-					end: Object {
-						column: 1
-						line: 3
-					}
-					start: Object {
-						column: 19
-						line: 1
-					}
-				}
+				loc: SourceLocation es2018/async-generators/for-await-no-in/input.js 1:19-3:1
 				body: Array [
 					JSForInStatement {
-						loc: Object {
-							filename: "es2018/async-generators/for-await-no-in/input.js"
-							end: Object {
-								column: 25
-								line: 2
-							}
-							start: Object {
-								column: 2
-								line: 2
-							}
-						}
-						body: JSEmptyStatement {
-							loc: Object {
-								filename: "es2018/async-generators/for-await-no-in/input.js"
-								end: Object {
-									column: 25
-									line: 2
-								}
-								start: Object {
-									column: 24
-									line: 2
-								}
-							}
-						}
+						body: JSEmptyStatement {loc: SourceLocation es2018/async-generators/for-await-no-in/input.js 2:24-2:25}
+						loc: SourceLocation es2018/async-generators/for-await-no-in/input.js 2:2-2:25
 						right: JSReferenceIdentifier {
 							name: "y"
-							loc: Object {
-								filename: "es2018/async-generators/for-await-no-in/input.js"
-								identifierName: "y"
-								end: Object {
-									column: 23
-									line: 2
-								}
-								start: Object {
-									column: 22
-									line: 2
-								}
-							}
+							loc: SourceLocation es2018/async-generators/for-await-no-in/input.js 2:22-2:23 (y)
 						}
 						left: JSVariableDeclaration {
 							kind: "let"
-							loc: Object {
-								filename: "es2018/async-generators/for-await-no-in/input.js"
-								end: Object {
-									column: 18
-									line: 2
-								}
-								start: Object {
-									column: 13
-									line: 2
-								}
-							}
+							loc: SourceLocation es2018/async-generators/for-await-no-in/input.js 2:13-2:18
 							declarations: Array [
 								JSVariableDeclarator {
 									id: JSBindingIdentifier {
 										name: "x"
-										loc: Object {
-											filename: "es2018/async-generators/for-await-no-in/input.js"
-											identifierName: "x"
-											end: Object {
-												column: 18
-												line: 2
-											}
-											start: Object {
-												column: 17
-												line: 2
-											}
-										}
+										loc: SourceLocation es2018/async-generators/for-await-no-in/input.js 2:17-2:18 (x)
 									}
 									init: undefined
-									loc: Object {
-										filename: "es2018/async-generators/for-await-no-in/input.js"
-										end: Object {
-											column: 18
-											line: 2
-										}
-										start: Object {
-											column: 17
-											line: 2
-										}
-									}
+									loc: SourceLocation es2018/async-generators/for-await-no-in/input.js 2:17-2:18
 								}
 							]
 						}
@@ -222,8 +101,5 @@ JSRoot {
       │            ^
     3 │ }
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

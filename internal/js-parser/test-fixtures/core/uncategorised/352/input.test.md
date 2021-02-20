@@ -11,103 +11,46 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "core/uncategorised/352/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "core/uncategorised/352/input.js"
-		end: Object {
-			column: 2
-			line: 1
+	loc: SourceLocation core/uncategorised/352/input.js 1:0-1:2
+	path: UIDPath<core/uncategorised/352/input.js>
+	body: Array [
+		JSExpressionStatement {
+			loc: SourceLocation core/uncategorised/352/input.js 1:0-1:1
+			expression: JSNumericLiteral {
+				value: 3
+				format: undefined
+				loc: SourceLocation core/uncategorised/352/input.js 1:0-1:1
+			}
 		}
-		start: Object {
-			column: 0
-			line: 1
+		JSExpressionStatement {
+			loc: SourceLocation core/uncategorised/352/input.js 1:1-1:2
+			expression: JSReferenceIdentifier {
+				name: "x"
+				loc: SourceLocation core/uncategorised/352/input.js 1:1-1:2 (x)
+			}
 		}
-	}
+	]
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse"
 				categoryValue: "js"
+				category: Array ["parse"]
 				message: RAW_MARKUP {value: "Identifier directly after number"}
 			}
 			location: Object {
-				filename: "core/uncategorised/352/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 1
-					line: 1
-				}
-				start: Object {
-					column: 1
-					line: 1
-				}
-			}
-		}
-	]
-	body: Array [
-		JSExpressionStatement {
-			loc: Object {
-				filename: "core/uncategorised/352/input.js"
-				end: Object {
-					column: 1
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
-			expression: JSNumericLiteral {
-				value: 3
-				format: undefined
-				loc: Object {
-					filename: "core/uncategorised/352/input.js"
-					end: Object {
-						column: 1
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
-			}
-		}
-		JSExpressionStatement {
-			loc: Object {
-				filename: "core/uncategorised/352/input.js"
-				end: Object {
-					column: 2
-					line: 1
-				}
-				start: Object {
-					column: 1
-					line: 1
-				}
-			}
-			expression: JSReferenceIdentifier {
-				name: "x"
-				loc: Object {
-					filename: "core/uncategorised/352/input.js"
-					identifierName: "x"
-					end: Object {
-						column: 2
-						line: 1
-					}
-					start: Object {
-						column: 1
-						line: 1
-					}
-				}
+				end: Position 1:1
+				path: UIDPath<core/uncategorised/352/input.js>
+				start: Position 1:1
 			}
 		}
 	]
@@ -125,8 +68,5 @@ JSRoot {
     3x
      ^
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

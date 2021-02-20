@@ -11,48 +11,29 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "typescript/types/import-type-escaped-error/input.ts"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
+	loc: SourceLocation typescript/types/import-type-escaped-error/input.ts 1:0-2:0
+	path: UIDPath<typescript/types/import-type-escaped-error/input.ts>
 	syntax: Array ["ts"]
-	loc: Object {
-		filename: "typescript/types/import-type-escaped-error/input.ts"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse"
 				categoryValue: "js"
-				message: Array [
-					RAW_MARKUP {value: "Expected keyword "}
-					"from"
-				]
+				category: Array ["parse"]
+				message: RAW_MARKUP {value: "Expected keyword <emphasis>from</emphasis>"}
 			}
 			location: Object {
-				filename: "typescript/types/import-type-escaped-error/input.ts"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 16
-					line: 1
-				}
-				start: Object {
-					column: 17
-					line: 1
-				}
+				end: Position 1:16
+				path: UIDPath<typescript/types/import-type-escaped-error/input.ts>
+				start: Position 1:17
 			}
 		}
 	]
@@ -61,155 +42,42 @@ JSRoot {
 			importKind: undefined
 			namedSpecifiers: Array []
 			namespaceSpecifier: undefined
-			loc: Object {
-				filename: "typescript/types/import-type-escaped-error/input.ts"
-				end: Object {
-					column: 16
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation typescript/types/import-type-escaped-error/input.ts 1:0-1:16
 			source: JSStringLiteral {
 				value: ""
-				loc: Object {
-					filename: "typescript/types/import-type-escaped-error/input.ts"
-					end: Object {
-						column: 16
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/types/import-type-escaped-error/input.ts 1:0-1:16
 			}
 			defaultSpecifier: JSImportDefaultSpecifier {
-				loc: Object {
-					filename: "typescript/types/import-type-escaped-error/input.ts"
-					end: Object {
-						column: 16
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/types/import-type-escaped-error/input.ts 1:0-1:16
 				local: JSImportSpecifierLocal {
 					name: JSBindingIdentifier {
 						name: "type"
-						loc: Object {
-							filename: "typescript/types/import-type-escaped-error/input.ts"
-							identifierName: "type"
-							end: Object {
-								column: 16
-								line: 1
-							}
-							start: Object {
-								column: 7
-								line: 1
-							}
-						}
+						loc: SourceLocation typescript/types/import-type-escaped-error/input.ts 1:7-1:16 (type)
 					}
 					importKind: undefined
-					loc: Object {
-						filename: "typescript/types/import-type-escaped-error/input.ts"
-						end: Object {
-							column: 16
-							line: 1
-						}
-						start: Object {
-							column: 7
-							line: 1
-						}
-					}
+					loc: SourceLocation typescript/types/import-type-escaped-error/input.ts 1:7-1:16
 				}
 			}
 		}
 		JSExpressionStatement {
-			loc: Object {
-				filename: "typescript/types/import-type-escaped-error/input.ts"
-				end: Object {
-					column: 27
-					line: 1
-				}
-				start: Object {
-					column: 17
-					line: 1
-				}
-			}
+			loc: SourceLocation typescript/types/import-type-escaped-error/input.ts 1:17-1:27
 			expression: JSReferenceIdentifier {
 				name: "typescript"
-				loc: Object {
-					filename: "typescript/types/import-type-escaped-error/input.ts"
-					identifierName: "typescript"
-					end: Object {
-						column: 27
-						line: 1
-					}
-					start: Object {
-						column: 17
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/types/import-type-escaped-error/input.ts 1:17-1:27 (typescript)
 			}
 		}
 		JSExpressionStatement {
-			loc: Object {
-				filename: "typescript/types/import-type-escaped-error/input.ts"
-				end: Object {
-					column: 32
-					line: 1
-				}
-				start: Object {
-					column: 28
-					line: 1
-				}
-			}
+			loc: SourceLocation typescript/types/import-type-escaped-error/input.ts 1:28-1:32
 			expression: JSReferenceIdentifier {
 				name: "from"
-				loc: Object {
-					filename: "typescript/types/import-type-escaped-error/input.ts"
-					identifierName: "from"
-					end: Object {
-						column: 32
-						line: 1
-					}
-					start: Object {
-						column: 28
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/types/import-type-escaped-error/input.ts 1:28-1:32 (from)
 			}
 		}
 		JSExpressionStatement {
-			loc: Object {
-				filename: "typescript/types/import-type-escaped-error/input.ts"
-				end: Object {
-					column: 46
-					line: 1
-				}
-				start: Object {
-					column: 33
-					line: 1
-				}
-			}
+			loc: SourceLocation typescript/types/import-type-escaped-error/input.ts 1:33-1:46
 			expression: JSStringLiteral {
 				value: "typescript"
-				loc: Object {
-					filename: "typescript/types/import-type-escaped-error/input.ts"
-					end: Object {
-						column: 45
-						line: 1
-					}
-					start: Object {
-						column: 33
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/types/import-type-escaped-error/input.ts 1:33-1:45
 			}
 		}
 	]
@@ -227,8 +95,5 @@ JSRoot {
     import typ\u{65} typescript from "typescript";
                      ^
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

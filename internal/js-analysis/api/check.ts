@@ -17,12 +17,12 @@ import E from "../types/errors/E";
 import T from "../types/T";
 import OpenT from "../types/OpenT";
 import buildGraph from "./buildGraph";
-import {TransformProjectDefinition} from "@internal/compiler";
+import {CompilerProject} from "@internal/compiler";
 
 export default async function check(
 	opts: {
 		ast: JSRoot;
-		project: TransformProjectDefinition;
+		project?: CompilerProject;
 		provider: CheckProvider;
 	},
 ): Promise<Diagnostics> {
@@ -91,7 +91,7 @@ function resolveGraph(hub: Hub): Diagnostics {
 					advice.push({
 						type: "frame",
 						location: {
-							filename: originLoc.filename,
+							path: originLoc.path,
 							start: originLoc.start,
 							end: originLoc.end,
 							marker,

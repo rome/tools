@@ -206,22 +206,10 @@ export function concatFileHandlers(
 			return undefined;
 		},
 
-		async readAbsolute(path) {
+		async read(path) {
 			for (const handler of handlers) {
-				if (handler.readAbsolute !== undefined) {
-					const content = await handler.readAbsolute(path);
-					if (content !== undefined) {
-						return content;
-					}
-				}
-			}
-			return undefined;
-		},
-
-		async readRelative(path) {
-			for (const handler of handlers) {
-				if (handler.readRelative !== undefined) {
-					const content = await handler.readRelative(path);
+				if (handler.read !== undefined) {
+					const content = await handler.read(path);
 					if (content !== undefined) {
 						return content;
 					}

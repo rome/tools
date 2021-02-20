@@ -11,103 +11,45 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "es2015/meta-properties/new-target-invalid/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2015/meta-properties/new-target-invalid/input.js"
-		end: Object {
-			column: 10
-			line: 1
+	loc: SourceLocation es2015/meta-properties/new-target-invalid/input.js 1:0-1:10
+	path: UIDPath<es2015/meta-properties/new-target-invalid/input.js>
+	body: Array [
+		JSExpressionStatement {
+			loc: SourceLocation es2015/meta-properties/new-target-invalid/input.js 1:0-1:10
+			expression: JSMetaProperty {
+				loc: SourceLocation es2015/meta-properties/new-target-invalid/input.js 1:0-1:10
+				meta: JSIdentifier {
+					name: "new"
+					loc: SourceLocation es2015/meta-properties/new-target-invalid/input.js 1:0-1:3 (new)
+				}
+				property: JSIdentifier {
+					name: "target"
+					loc: SourceLocation es2015/meta-properties/new-target-invalid/input.js 1:4-1:10 (target)
+				}
+			}
 		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	]
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse"
 				categoryValue: "js"
+				category: Array ["parse"]
 				message: RAW_MARKUP {value: "new.target can only be used in functions or class properties"}
 			}
 			location: Object {
-				filename: "es2015/meta-properties/new-target-invalid/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 10
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
-		}
-	]
-	body: Array [
-		JSExpressionStatement {
-			loc: Object {
-				filename: "es2015/meta-properties/new-target-invalid/input.js"
-				end: Object {
-					column: 10
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
-			expression: JSMetaProperty {
-				loc: Object {
-					filename: "es2015/meta-properties/new-target-invalid/input.js"
-					end: Object {
-						column: 10
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
-				meta: JSIdentifier {
-					name: "new"
-					loc: Object {
-						filename: "es2015/meta-properties/new-target-invalid/input.js"
-						identifierName: "new"
-						end: Object {
-							column: 3
-							line: 1
-						}
-						start: Object {
-							column: 0
-							line: 1
-						}
-					}
-				}
-				property: JSIdentifier {
-					name: "target"
-					loc: Object {
-						filename: "es2015/meta-properties/new-target-invalid/input.js"
-						identifierName: "target"
-						end: Object {
-							column: 10
-							line: 1
-						}
-						start: Object {
-							column: 4
-							line: 1
-						}
-					}
-				}
+				end: Position 1:10
+				path: UIDPath<es2015/meta-properties/new-target-invalid/input.js>
+				start: Position 1:0
 			}
 		}
 	]
@@ -125,8 +67,5 @@ JSRoot {
     new.target
     ^^^^^^^^^^
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

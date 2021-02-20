@@ -11,164 +11,52 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "typescript/types/object-shorthand/input.ts"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
+	loc: SourceLocation typescript/types/object-shorthand/input.ts 1:0-6:0
+	path: UIDPath<typescript/types/object-shorthand/input.ts>
 	syntax: Array ["ts"]
-	loc: Object {
-		filename: "typescript/types/object-shorthand/input.ts"
-		end: Object {
-			column: 0
-			line: 6
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
 	comments: Array [
 		CommentLine {
 			id: "0"
 			value: " actually put."
-			loc: Object {
-				filename: "typescript/types/object-shorthand/input.ts"
-				end: Object {
-					column: 20
-					line: 3
-				}
-				start: Object {
-					column: 4
-					line: 3
-				}
-			}
+			loc: SourceLocation typescript/types/object-shorthand/input.ts 3:4-3:20
 		}
 	]
 	body: Array [
 		JSVariableDeclarationStatement {
-			loc: Object {
-				filename: "typescript/types/object-shorthand/input.ts"
-				end: Object {
-					column: 2
-					line: 5
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation typescript/types/object-shorthand/input.ts 1:0-5:2
 			declaration: JSVariableDeclaration {
 				kind: "const"
-				loc: Object {
-					filename: "typescript/types/object-shorthand/input.ts"
-					end: Object {
-						column: 2
-						line: 5
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/types/object-shorthand/input.ts 1:0-5:2
 				declarations: Array [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "table"
-							loc: Object {
-								filename: "typescript/types/object-shorthand/input.ts"
-								identifierName: "table"
-								end: Object {
-									column: 11
-									line: 1
-								}
-								start: Object {
-									column: 6
-									line: 1
-								}
-							}
+							loc: SourceLocation typescript/types/object-shorthand/input.ts 1:6-1:11 (table)
 						}
-						loc: Object {
-							filename: "typescript/types/object-shorthand/input.ts"
-							end: Object {
-								column: 1
-								line: 5
-							}
-							start: Object {
-								column: 6
-								line: 1
-							}
-						}
+						loc: SourceLocation typescript/types/object-shorthand/input.ts 1:6-5:1
 						init: JSObjectExpression {
-							loc: Object {
-								filename: "typescript/types/object-shorthand/input.ts"
-								end: Object {
-									column: 1
-									line: 5
-								}
-								start: Object {
-									column: 14
-									line: 1
-								}
-							}
+							loc: SourceLocation typescript/types/object-shorthand/input.ts 1:14-5:1
 							properties: Array [
 								JSObjectMethod {
 									kind: "method"
 									key: JSStaticPropertyKey {
 										value: JSIdentifier {
 											name: "put"
-											loc: Object {
-												filename: "typescript/types/object-shorthand/input.ts"
-												identifierName: "put"
-												end: Object {
-													column: 5
-													line: 2
-												}
-												start: Object {
-													column: 2
-													line: 2
-												}
-											}
+											loc: SourceLocation typescript/types/object-shorthand/input.ts 2:2-2:5 (put)
 										}
-										loc: Object {
-											filename: "typescript/types/object-shorthand/input.ts"
-											end: Object {
-												column: 5
-												line: 2
-											}
-											start: Object {
-												column: 2
-												line: 2
-											}
-										}
+										loc: SourceLocation typescript/types/object-shorthand/input.ts 2:2-2:5
 									}
-									loc: Object {
-										filename: "typescript/types/object-shorthand/input.ts"
-										end: Object {
-											column: 3
-											line: 4
-										}
-										start: Object {
-											column: 2
-											line: 2
-										}
-									}
+									loc: SourceLocation typescript/types/object-shorthand/input.ts 2:2-4:3
 									body: JSBlockStatement {
 										body: Array []
 										directives: Array []
 										trailingComments: Array []
 										innerComments: Array ["0"]
-										loc: Object {
-											filename: "typescript/types/object-shorthand/input.ts"
-											end: Object {
-												column: 3
-												line: 4
-											}
-											start: Object {
-												column: 42
-												line: 2
-											}
-										}
+										loc: SourceLocation typescript/types/object-shorthand/input.ts 2:42-4:3
 									}
 									head: JSFunctionHead {
 										async: false
@@ -177,172 +65,47 @@ JSRoot {
 										rest: undefined
 										returnType: undefined
 										thisType: undefined
-										loc: Object {
-											filename: "typescript/types/object-shorthand/input.ts"
-											end: Object {
-												column: 41
-												line: 2
-											}
-											start: Object {
-												column: 31
-												line: 2
-											}
-										}
+										loc: SourceLocation typescript/types/object-shorthand/input.ts 2:31-2:41
 										params: Array [
 											JSBindingIdentifier {
 												name: "value"
-												loc: Object {
-													filename: "typescript/types/object-shorthand/input.ts"
-													identifierName: "value"
-													end: Object {
-														column: 37
-														line: 2
-													}
-													start: Object {
-														column: 32
-														line: 2
-													}
-												}
+												loc: SourceLocation typescript/types/object-shorthand/input.ts 2:32-2:37 (value)
 												meta: JSPatternMeta {
 													optional: undefined
-													loc: Object {
-														filename: "typescript/types/object-shorthand/input.ts"
-														end: Object {
-															column: 40
-															line: 2
-														}
-														start: Object {
-															column: 32
-															line: 2
-														}
-													}
+													loc: SourceLocation typescript/types/object-shorthand/input.ts 2:32-2:40
 													typeAnnotation: TSTypeReference {
 														typeParameters: undefined
-														loc: Object {
-															filename: "typescript/types/object-shorthand/input.ts"
-															end: Object {
-																column: 40
-																line: 2
-															}
-															start: Object {
-																column: 39
-																line: 2
-															}
-														}
+														loc: SourceLocation typescript/types/object-shorthand/input.ts 2:39-2:40
 														typeName: JSReferenceIdentifier {
 															name: "T"
-															loc: Object {
-																filename: "typescript/types/object-shorthand/input.ts"
-																identifierName: "T"
-																end: Object {
-																	column: 40
-																	line: 2
-																}
-																start: Object {
-																	column: 39
-																	line: 2
-																}
-															}
+															loc: SourceLocation typescript/types/object-shorthand/input.ts 2:39-2:40 (T)
 														}
 													}
 												}
 											}
 										]
 										typeParameters: TSTypeParameterDeclaration {
-											loc: Object {
-												filename: "typescript/types/object-shorthand/input.ts"
-												end: Object {
-													column: 31
-													line: 2
-												}
-												start: Object {
-													column: 5
-													line: 2
-												}
-											}
+											loc: SourceLocation typescript/types/object-shorthand/input.ts 2:5-2:31
 											params: Array [
 												TSTypeParameter {
 													name: "T"
 													default: undefined
-													loc: Object {
-														filename: "typescript/types/object-shorthand/input.ts"
-														end: Object {
-															column: 30
-															line: 2
-														}
-														start: Object {
-															column: 6
-															line: 2
-														}
-													}
+													loc: SourceLocation typescript/types/object-shorthand/input.ts 2:6-2:30
 													constraint: TSObjectTypeAnnotation {
-														loc: Object {
-															filename: "typescript/types/object-shorthand/input.ts"
-															end: Object {
-																column: 30
-																line: 2
-															}
-															start: Object {
-																column: 16
-																line: 2
-															}
-														}
+														loc: SourceLocation typescript/types/object-shorthand/input.ts 2:16-2:30
 														members: Array [
 															TSPropertySignature {
 																key: JSStaticPropertyKey {
 																	value: JSIdentifier {
 																		name: "id"
-																		loc: Object {
-																			filename: "typescript/types/object-shorthand/input.ts"
-																			identifierName: "id"
-																			end: Object {
-																				column: 20
-																				line: 2
-																			}
-																			start: Object {
-																				column: 18
-																				line: 2
-																			}
-																		}
+																		loc: SourceLocation typescript/types/object-shorthand/input.ts 2:18-2:20 (id)
 																	}
-																	loc: Object {
-																		filename: "typescript/types/object-shorthand/input.ts"
-																		end: Object {
-																			column: 20
-																			line: 2
-																		}
-																		start: Object {
-																			column: 18
-																			line: 2
-																		}
-																	}
+																	loc: SourceLocation typescript/types/object-shorthand/input.ts 2:18-2:20
 																}
 																optional: false
 																readonly: false
-																loc: Object {
-																	filename: "typescript/types/object-shorthand/input.ts"
-																	end: Object {
-																		column: 28
-																		line: 2
-																	}
-																	start: Object {
-																		column: 18
-																		line: 2
-																	}
-																}
-																typeAnnotation: TSStringKeywordTypeAnnotation {
-																	loc: Object {
-																		filename: "typescript/types/object-shorthand/input.ts"
-																		end: Object {
-																			column: 28
-																			line: 2
-																		}
-																		start: Object {
-																			column: 22
-																			line: 2
-																		}
-																	}
-																}
+																loc: SourceLocation typescript/types/object-shorthand/input.ts 2:18-2:28
+																typeAnnotation: TSStringKeywordTypeAnnotation {loc: SourceLocation typescript/types/object-shorthand/input.ts 2:22-2:28}
 															}
 														]
 													}
@@ -364,6 +127,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

@@ -1,4 +1,7 @@
 import {isAlpha, isDigit} from "@internal/parser-core";
+import {AnyCSSToken, CSSParser, Tokens} from "@internal/css-parser/types";
+import {descriptions} from "@internal/diagnostics";
+import {matchToken} from "@internal/css-parser/tokenizer";
 
 export const Symbols = {
 	CarriageReturn: "\r",
@@ -102,4 +105,71 @@ export function isValidEscape(char1: string, char2?: string): boolean {
 
 export function isWhitespace(char: string): boolean {
 	return isNewline(char) || char === Symbols.Space || char === Symbols.Tab;
+}
+
+export function isCustomProperty(value: string): boolean {
+	return value.startsWith("--");
+}
+
+export function getBlockStartTokenValue(
+	parser: CSSParser,
+	token: AnyCSSToken,
+): string | undefined {
+	switch (token.type) {
+		case "LeftCurlyBracket":
+			return "{";
+		case "LeftParen":
+			return "(";
+		case "LeftSquareBracket":
+			return "[";
+		default: {
+			parser.unexpectedDiagnostic({
+				description: descriptions.CSS_PARSER.INVALID_BLOCK_START,
+			});
+			return undefined;
+		}
+	}
+}
+
+export function getBlockEndTokenType(
+	parser: CSSParser,
+	token: AnyCSSToken,
+): keyof Tokens | undefined {
+	switch (token.type) {
+		case "LeftCurlyBracket":
+			return "RightCurlyBracket";
+		case "LeftParen":
+			return "RightParen";
+		case "LeftSquareBracket":
+			return "RightSquareBracket";
+		default: {
+			parser.unexpectedDiagnostic({
+				description: descriptions.CSS_PARSER.INVALID_BLOCK_START,
+			});
+			return undefined;
+		}
+	}
+}
+
+export function matchEndOfDeclaration(
+	parser: CSSParser,
+	endingTokenType: keyof Tokens,
+): boolean {
+	return (
+		matchToken(parser, "EOF") ||
+		matchToken(parser, "Semi") ||
+		matchToken(parser, endingTokenType)
+	);
+}
+
+// https://www.w3.org/TR/css-values-4/#css-wide-keywords
+export const CSS_WIDE_KEYWORDS = ["unset", "initial", "inherit"];
+
+// Given an Ident, tells if it's a valid <custom-ident>
+// Source: https://www.w3.org/TR/css-values-4/#custom-idents
+export function isCustomIdent(token: Tokens["Ident"]) {
+	if (CSS_WIDE_KEYWORDS.includes(token.value)) {
+		return false;
+	}
+	return true;
 }

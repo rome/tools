@@ -12,110 +12,38 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "typescript/class/constructor/input.ts"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
+	loc: SourceLocation typescript/class/constructor/input.ts 1:0-6:0
+	path: UIDPath<typescript/class/constructor/input.ts>
 	syntax: Array ["ts"]
-	loc: Object {
-		filename: "typescript/class/constructor/input.ts"
-		end: Object {
-			column: 0
-			line: 6
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
 	body: Array [
 		JSClassDeclaration {
 			id: JSBindingIdentifier {
 				name: "C"
-				loc: Object {
-					filename: "typescript/class/constructor/input.ts"
-					identifierName: "C"
-					end: Object {
-						column: 7
-						line: 1
-					}
-					start: Object {
-						column: 6
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/class/constructor/input.ts 1:6-1:7 (C)
 			}
-			loc: Object {
-				filename: "typescript/class/constructor/input.ts"
-				end: Object {
-					column: 1
-					line: 5
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation typescript/class/constructor/input.ts 1:0-5:1
 			meta: JSClassHead {
 				implements: undefined
 				superClass: undefined
 				superTypeParameters: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "typescript/class/constructor/input.ts"
-					end: Object {
-						column: 1
-						line: 5
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/class/constructor/input.ts 1:0-5:1
 				body: Array [
 					TSDeclareMethod {
 						kind: "constructor"
 						key: JSStaticPropertyKey {
 							value: JSIdentifier {
 								name: "constructor"
-								loc: Object {
-									filename: "typescript/class/constructor/input.ts"
-									identifierName: "constructor"
-									end: Object {
-										column: 15
-										line: 2
-									}
-									start: Object {
-										column: 4
-										line: 2
-									}
-								}
+								loc: SourceLocation typescript/class/constructor/input.ts 2:4-2:15 (constructor)
 							}
-							loc: Object {
-								filename: "typescript/class/constructor/input.ts"
-								end: Object {
-									column: 15
-									line: 2
-								}
-								start: Object {
-									column: 4
-									line: 2
-								}
-							}
+							loc: SourceLocation typescript/class/constructor/input.ts 2:4-2:15
 						}
 						body: undefined
-						loc: Object {
-							filename: "typescript/class/constructor/input.ts"
-							end: Object {
-								column: 38
-								line: 2
-							}
-							start: Object {
-								column: 4
-								line: 2
-							}
-						}
+						loc: SourceLocation typescript/class/constructor/input.ts 2:4-2:38
 						meta: JSClassPropertyMeta {
 							abstract: false
 							accessibility: undefined
@@ -123,21 +51,8 @@ JSRoot {
 							readonly: false
 							static: false
 							typeAnnotation: undefined
-							start: Object {
-								column: 4
-								line: 2
-							}
-							loc: Object {
-								filename: "typescript/class/constructor/input.ts"
-								end: Object {
-									column: 15
-									line: 2
-								}
-								start: Object {
-									column: 4
-									line: 2
-								}
-							}
+							loc: SourceLocation typescript/class/constructor/input.ts 2:4-2:15
+							start: Position 2:4
 						}
 						head: JSFunctionHead {
 							async: false
@@ -147,100 +62,24 @@ JSRoot {
 							returnType: undefined
 							thisType: undefined
 							typeParameters: undefined
-							loc: Object {
-								filename: "typescript/class/constructor/input.ts"
-								end: Object {
-									column: 37
-									line: 2
-								}
-								start: Object {
-									column: 15
-									line: 2
-								}
-							}
+							loc: SourceLocation typescript/class/constructor/input.ts 2:15-2:37
 							params: Array [
 								JSBindingIdentifier {
 									name: "x"
-									loc: Object {
-										filename: "typescript/class/constructor/input.ts"
-										identifierName: "x"
-										end: Object {
-											column: 17
-											line: 2
-										}
-										start: Object {
-											column: 16
-											line: 2
-										}
-									}
+									loc: SourceLocation typescript/class/constructor/input.ts 2:16-2:17 (x)
 									meta: JSPatternMeta {
 										optional: undefined
-										loc: Object {
-											filename: "typescript/class/constructor/input.ts"
-											end: Object {
-												column: 25
-												line: 2
-											}
-											start: Object {
-												column: 16
-												line: 2
-											}
-										}
-										typeAnnotation: TSNumberKeywordTypeAnnotation {
-											loc: Object {
-												filename: "typescript/class/constructor/input.ts"
-												end: Object {
-													column: 25
-													line: 2
-												}
-												start: Object {
-													column: 19
-													line: 2
-												}
-											}
-										}
+										loc: SourceLocation typescript/class/constructor/input.ts 2:16-2:25
+										typeAnnotation: TSNumberKeywordTypeAnnotation {loc: SourceLocation typescript/class/constructor/input.ts 2:19-2:25}
 									}
 								}
 								JSBindingIdentifier {
 									name: "y"
-									loc: Object {
-										filename: "typescript/class/constructor/input.ts"
-										identifierName: "y"
-										end: Object {
-											column: 28
-											line: 2
-										}
-										start: Object {
-											column: 27
-											line: 2
-										}
-									}
+									loc: SourceLocation typescript/class/constructor/input.ts 2:27-2:28 (y)
 									meta: JSPatternMeta {
 										optional: undefined
-										loc: Object {
-											filename: "typescript/class/constructor/input.ts"
-											end: Object {
-												column: 36
-												line: 2
-											}
-											start: Object {
-												column: 27
-												line: 2
-											}
-										}
-										typeAnnotation: TSNumberKeywordTypeAnnotation {
-											loc: Object {
-												filename: "typescript/class/constructor/input.ts"
-												end: Object {
-													column: 36
-													line: 2
-												}
-												start: Object {
-													column: 30
-													line: 2
-												}
-											}
-										}
+										loc: SourceLocation typescript/class/constructor/input.ts 2:27-2:36
+										typeAnnotation: TSNumberKeywordTypeAnnotation {loc: SourceLocation typescript/class/constructor/input.ts 2:30-2:36}
 									}
 								}
 							]
@@ -251,43 +90,12 @@ JSRoot {
 						key: JSStaticPropertyKey {
 							value: JSIdentifier {
 								name: "constructor"
-								loc: Object {
-									filename: "typescript/class/constructor/input.ts"
-									identifierName: "constructor"
-									end: Object {
-										column: 15
-										line: 3
-									}
-									start: Object {
-										column: 4
-										line: 3
-									}
-								}
+								loc: SourceLocation typescript/class/constructor/input.ts 3:4-3:15 (constructor)
 							}
-							loc: Object {
-								filename: "typescript/class/constructor/input.ts"
-								end: Object {
-									column: 15
-									line: 3
-								}
-								start: Object {
-									column: 4
-									line: 3
-								}
-							}
+							loc: SourceLocation typescript/class/constructor/input.ts 3:4-3:15
 						}
 						body: undefined
-						loc: Object {
-							filename: "typescript/class/constructor/input.ts"
-							end: Object {
-								column: 38
-								line: 3
-							}
-							start: Object {
-								column: 4
-								line: 3
-							}
-						}
+						loc: SourceLocation typescript/class/constructor/input.ts 3:4-3:38
 						meta: JSClassPropertyMeta {
 							abstract: false
 							accessibility: undefined
@@ -295,21 +103,8 @@ JSRoot {
 							readonly: false
 							static: false
 							typeAnnotation: undefined
-							start: Object {
-								column: 4
-								line: 3
-							}
-							loc: Object {
-								filename: "typescript/class/constructor/input.ts"
-								end: Object {
-									column: 15
-									line: 3
-								}
-								start: Object {
-									column: 4
-									line: 3
-								}
-							}
+							loc: SourceLocation typescript/class/constructor/input.ts 3:4-3:15
+							start: Position 3:4
 						}
 						head: JSFunctionHead {
 							async: false
@@ -319,100 +114,24 @@ JSRoot {
 							returnType: undefined
 							thisType: undefined
 							typeParameters: undefined
-							loc: Object {
-								filename: "typescript/class/constructor/input.ts"
-								end: Object {
-									column: 37
-									line: 3
-								}
-								start: Object {
-									column: 15
-									line: 3
-								}
-							}
+							loc: SourceLocation typescript/class/constructor/input.ts 3:15-3:37
 							params: Array [
 								JSBindingIdentifier {
 									name: "x"
-									loc: Object {
-										filename: "typescript/class/constructor/input.ts"
-										identifierName: "x"
-										end: Object {
-											column: 17
-											line: 3
-										}
-										start: Object {
-											column: 16
-											line: 3
-										}
-									}
+									loc: SourceLocation typescript/class/constructor/input.ts 3:16-3:17 (x)
 									meta: JSPatternMeta {
 										optional: undefined
-										loc: Object {
-											filename: "typescript/class/constructor/input.ts"
-											end: Object {
-												column: 25
-												line: 3
-											}
-											start: Object {
-												column: 16
-												line: 3
-											}
-										}
-										typeAnnotation: TSStringKeywordTypeAnnotation {
-											loc: Object {
-												filename: "typescript/class/constructor/input.ts"
-												end: Object {
-													column: 25
-													line: 3
-												}
-												start: Object {
-													column: 19
-													line: 3
-												}
-											}
-										}
+										loc: SourceLocation typescript/class/constructor/input.ts 3:16-3:25
+										typeAnnotation: TSStringKeywordTypeAnnotation {loc: SourceLocation typescript/class/constructor/input.ts 3:19-3:25}
 									}
 								}
 								JSBindingIdentifier {
 									name: "y"
-									loc: Object {
-										filename: "typescript/class/constructor/input.ts"
-										identifierName: "y"
-										end: Object {
-											column: 28
-											line: 3
-										}
-										start: Object {
-											column: 27
-											line: 3
-										}
-									}
+									loc: SourceLocation typescript/class/constructor/input.ts 3:27-3:28 (y)
 									meta: JSPatternMeta {
 										optional: undefined
-										loc: Object {
-											filename: "typescript/class/constructor/input.ts"
-											end: Object {
-												column: 36
-												line: 3
-											}
-											start: Object {
-												column: 27
-												line: 3
-											}
-										}
-										typeAnnotation: TSStringKeywordTypeAnnotation {
-											loc: Object {
-												filename: "typescript/class/constructor/input.ts"
-												end: Object {
-													column: 36
-													line: 3
-												}
-												start: Object {
-													column: 30
-													line: 3
-												}
-											}
-										}
+										loc: SourceLocation typescript/class/constructor/input.ts 3:27-3:36
+										typeAnnotation: TSStringKeywordTypeAnnotation {loc: SourceLocation typescript/class/constructor/input.ts 3:30-3:36}
 									}
 								}
 							]
@@ -423,56 +142,15 @@ JSRoot {
 						key: JSStaticPropertyKey {
 							value: JSIdentifier {
 								name: "constructor"
-								loc: Object {
-									filename: "typescript/class/constructor/input.ts"
-									identifierName: "constructor"
-									end: Object {
-										column: 15
-										line: 4
-									}
-									start: Object {
-										column: 4
-										line: 4
-									}
-								}
+								loc: SourceLocation typescript/class/constructor/input.ts 4:4-4:15 (constructor)
 							}
-							loc: Object {
-								filename: "typescript/class/constructor/input.ts"
-								end: Object {
-									column: 15
-									line: 4
-								}
-								start: Object {
-									column: 4
-									line: 4
-								}
-							}
+							loc: SourceLocation typescript/class/constructor/input.ts 4:4-4:15
 						}
-						loc: Object {
-							filename: "typescript/class/constructor/input.ts"
-							end: Object {
-								column: 34
-								line: 4
-							}
-							start: Object {
-								column: 4
-								line: 4
-							}
-						}
+						loc: SourceLocation typescript/class/constructor/input.ts 4:4-4:34
 						body: JSBlockStatement {
 							body: Array []
 							directives: Array []
-							loc: Object {
-								filename: "typescript/class/constructor/input.ts"
-								end: Object {
-									column: 34
-									line: 4
-								}
-								start: Object {
-									column: 32
-									line: 4
-								}
-							}
+							loc: SourceLocation typescript/class/constructor/input.ts 4:32-4:34
 						}
 						meta: JSClassPropertyMeta {
 							abstract: false
@@ -481,21 +159,8 @@ JSRoot {
 							readonly: false
 							static: false
 							typeAnnotation: undefined
-							start: Object {
-								column: 4
-								line: 4
-							}
-							loc: Object {
-								filename: "typescript/class/constructor/input.ts"
-								end: Object {
-									column: 15
-									line: 4
-								}
-								start: Object {
-									column: 4
-									line: 4
-								}
-							}
+							loc: SourceLocation typescript/class/constructor/input.ts 4:4-4:15
+							start: Position 4:4
 						}
 						head: JSFunctionHead {
 							async: false
@@ -505,100 +170,24 @@ JSRoot {
 							returnType: undefined
 							thisType: undefined
 							typeParameters: undefined
-							loc: Object {
-								filename: "typescript/class/constructor/input.ts"
-								end: Object {
-									column: 31
-									line: 4
-								}
-								start: Object {
-									column: 15
-									line: 4
-								}
-							}
+							loc: SourceLocation typescript/class/constructor/input.ts 4:15-4:31
 							params: Array [
 								JSBindingIdentifier {
 									name: "x"
-									loc: Object {
-										filename: "typescript/class/constructor/input.ts"
-										identifierName: "x"
-										end: Object {
-											column: 17
-											line: 4
-										}
-										start: Object {
-											column: 16
-											line: 4
-										}
-									}
+									loc: SourceLocation typescript/class/constructor/input.ts 4:16-4:17 (x)
 									meta: JSPatternMeta {
 										optional: undefined
-										loc: Object {
-											filename: "typescript/class/constructor/input.ts"
-											end: Object {
-												column: 22
-												line: 4
-											}
-											start: Object {
-												column: 16
-												line: 4
-											}
-										}
-										typeAnnotation: TSAnyKeywordTypeAnnotation {
-											loc: Object {
-												filename: "typescript/class/constructor/input.ts"
-												end: Object {
-													column: 22
-													line: 4
-												}
-												start: Object {
-													column: 19
-													line: 4
-												}
-											}
-										}
+										loc: SourceLocation typescript/class/constructor/input.ts 4:16-4:22
+										typeAnnotation: TSAnyKeywordTypeAnnotation {loc: SourceLocation typescript/class/constructor/input.ts 4:19-4:22}
 									}
 								}
 								JSBindingIdentifier {
 									name: "y"
-									loc: Object {
-										filename: "typescript/class/constructor/input.ts"
-										identifierName: "y"
-										end: Object {
-											column: 25
-											line: 4
-										}
-										start: Object {
-											column: 24
-											line: 4
-										}
-									}
+									loc: SourceLocation typescript/class/constructor/input.ts 4:24-4:25 (y)
 									meta: JSPatternMeta {
 										optional: undefined
-										loc: Object {
-											filename: "typescript/class/constructor/input.ts"
-											end: Object {
-												column: 30
-												line: 4
-											}
-											start: Object {
-												column: 24
-												line: 4
-											}
-										}
-										typeAnnotation: TSAnyKeywordTypeAnnotation {
-											loc: Object {
-												filename: "typescript/class/constructor/input.ts"
-												end: Object {
-													column: 30
-													line: 4
-												}
-												start: Object {
-													column: 27
-													line: 4
-												}
-											}
-										}
+										loc: SourceLocation typescript/class/constructor/input.ts 4:24-4:30
+										typeAnnotation: TSAnyKeywordTypeAnnotation {loc: SourceLocation typescript/class/constructor/input.ts 4:27-4:30}
 									}
 								}
 							]
@@ -614,6 +203,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

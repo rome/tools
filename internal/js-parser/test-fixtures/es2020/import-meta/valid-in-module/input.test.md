@@ -12,118 +12,35 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "es2020/import-meta/valid-in-module/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
 	syntax: Array []
-	loc: Object {
-		filename: "es2020/import-meta/valid-in-module/input.js"
-		end: Object {
-			column: 0
-			line: 6
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2020/import-meta/valid-in-module/input.js 1:0-6:0
+	path: UIDPath<es2020/import-meta/valid-in-module/input.js>
 	body: Array [
 		JSVariableDeclarationStatement {
-			loc: Object {
-				filename: "es2020/import-meta/valid-in-module/input.js"
-				end: Object {
-					column: 22
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2020/import-meta/valid-in-module/input.js 1:0-1:22
 			declaration: JSVariableDeclaration {
 				kind: "const"
-				loc: Object {
-					filename: "es2020/import-meta/valid-in-module/input.js"
-					end: Object {
-						column: 22
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation es2020/import-meta/valid-in-module/input.js 1:0-1:22
 				declarations: Array [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "x"
-							loc: Object {
-								filename: "es2020/import-meta/valid-in-module/input.js"
-								identifierName: "x"
-								end: Object {
-									column: 7
-									line: 1
-								}
-								start: Object {
-									column: 6
-									line: 1
-								}
-							}
+							loc: SourceLocation es2020/import-meta/valid-in-module/input.js 1:6-1:7 (x)
 						}
-						loc: Object {
-							filename: "es2020/import-meta/valid-in-module/input.js"
-							end: Object {
-								column: 21
-								line: 1
-							}
-							start: Object {
-								column: 6
-								line: 1
-							}
-						}
+						loc: SourceLocation es2020/import-meta/valid-in-module/input.js 1:6-1:21
 						init: JSMetaProperty {
-							loc: Object {
-								filename: "es2020/import-meta/valid-in-module/input.js"
-								end: Object {
-									column: 21
-									line: 1
-								}
-								start: Object {
-									column: 10
-									line: 1
-								}
-							}
+							loc: SourceLocation es2020/import-meta/valid-in-module/input.js 1:10-1:21
 							meta: JSIdentifier {
 								name: "import"
-								loc: Object {
-									filename: "es2020/import-meta/valid-in-module/input.js"
-									identifierName: "import"
-									end: Object {
-										column: 16
-										line: 1
-									}
-									start: Object {
-										column: 10
-										line: 1
-									}
-								}
+								loc: SourceLocation es2020/import-meta/valid-in-module/input.js 1:10-1:16 (import)
 							}
 							property: JSIdentifier {
 								name: "meta"
-								loc: Object {
-									filename: "es2020/import-meta/valid-in-module/input.js"
-									identifierName: "meta"
-									end: Object {
-										column: 21
-										line: 1
-									}
-									start: Object {
-										column: 17
-										line: 1
-									}
-								}
+								loc: SourceLocation es2020/import-meta/valid-in-module/input.js 1:17-1:21 (meta)
 							}
 						}
 					}
@@ -131,140 +48,35 @@ JSRoot {
 			}
 		}
 		JSVariableDeclarationStatement {
-			loc: Object {
-				filename: "es2020/import-meta/valid-in-module/input.js"
-				end: Object {
-					column: 28
-					line: 2
-				}
-				start: Object {
-					column: 0
-					line: 2
-				}
-			}
+			loc: SourceLocation es2020/import-meta/valid-in-module/input.js 2:0-2:28
 			declaration: JSVariableDeclaration {
 				kind: "const"
-				loc: Object {
-					filename: "es2020/import-meta/valid-in-module/input.js"
-					end: Object {
-						column: 28
-						line: 2
-					}
-					start: Object {
-						column: 0
-						line: 2
-					}
-				}
+				loc: SourceLocation es2020/import-meta/valid-in-module/input.js 2:0-2:28
 				declarations: Array [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "url"
-							loc: Object {
-								filename: "es2020/import-meta/valid-in-module/input.js"
-								identifierName: "url"
-								end: Object {
-									column: 9
-									line: 2
-								}
-								start: Object {
-									column: 6
-									line: 2
-								}
-							}
+							loc: SourceLocation es2020/import-meta/valid-in-module/input.js 2:6-2:9 (url)
 						}
-						loc: Object {
-							filename: "es2020/import-meta/valid-in-module/input.js"
-							end: Object {
-								column: 27
-								line: 2
-							}
-							start: Object {
-								column: 6
-								line: 2
-							}
-						}
+						loc: SourceLocation es2020/import-meta/valid-in-module/input.js 2:6-2:27
 						init: JSMemberExpression {
-							loc: Object {
-								filename: "es2020/import-meta/valid-in-module/input.js"
-								end: Object {
-									column: 27
-									line: 2
-								}
-								start: Object {
-									column: 12
-									line: 2
-								}
-							}
+							loc: SourceLocation es2020/import-meta/valid-in-module/input.js 2:12-2:27
 							property: JSStaticMemberProperty {
 								value: JSIdentifier {
 									name: "url"
-									loc: Object {
-										filename: "es2020/import-meta/valid-in-module/input.js"
-										identifierName: "url"
-										end: Object {
-											column: 27
-											line: 2
-										}
-										start: Object {
-											column: 24
-											line: 2
-										}
-									}
+									loc: SourceLocation es2020/import-meta/valid-in-module/input.js 2:24-2:27 (url)
 								}
-								loc: Object {
-									filename: "es2020/import-meta/valid-in-module/input.js"
-									identifierName: "url"
-									end: Object {
-										column: 27
-										line: 2
-									}
-									start: Object {
-										column: 24
-										line: 2
-									}
-								}
+								loc: SourceLocation es2020/import-meta/valid-in-module/input.js 2:24-2:27 (url)
 							}
 							object: JSMetaProperty {
-								loc: Object {
-									filename: "es2020/import-meta/valid-in-module/input.js"
-									end: Object {
-										column: 23
-										line: 2
-									}
-									start: Object {
-										column: 12
-										line: 2
-									}
-								}
+								loc: SourceLocation es2020/import-meta/valid-in-module/input.js 2:12-2:23
 								meta: JSIdentifier {
 									name: "import"
-									loc: Object {
-										filename: "es2020/import-meta/valid-in-module/input.js"
-										identifierName: "import"
-										end: Object {
-											column: 18
-											line: 2
-										}
-										start: Object {
-											column: 12
-											line: 2
-										}
-									}
+									loc: SourceLocation es2020/import-meta/valid-in-module/input.js 2:12-2:18 (import)
 								}
 								property: JSIdentifier {
 									name: "meta"
-									loc: Object {
-										filename: "es2020/import-meta/valid-in-module/input.js"
-										identifierName: "meta"
-										end: Object {
-											column: 23
-											line: 2
-										}
-										start: Object {
-											column: 19
-											line: 2
-										}
-									}
+									loc: SourceLocation es2020/import-meta/valid-in-module/input.js 2:19-2:23 (meta)
 								}
 							}
 						}
@@ -273,280 +85,70 @@ JSRoot {
 			}
 		}
 		JSExpressionStatement {
-			loc: Object {
-				filename: "es2020/import-meta/valid-in-module/input.js"
-				end: Object {
-					column: 12
-					line: 3
-				}
-				start: Object {
-					column: 0
-					line: 3
-				}
-			}
+			loc: SourceLocation es2020/import-meta/valid-in-module/input.js 3:0-3:12
 			expression: JSMetaProperty {
-				loc: Object {
-					filename: "es2020/import-meta/valid-in-module/input.js"
-					end: Object {
-						column: 11
-						line: 3
-					}
-					start: Object {
-						column: 0
-						line: 3
-					}
-				}
+				loc: SourceLocation es2020/import-meta/valid-in-module/input.js 3:0-3:11
 				meta: JSIdentifier {
 					name: "import"
-					loc: Object {
-						filename: "es2020/import-meta/valid-in-module/input.js"
-						identifierName: "import"
-						end: Object {
-							column: 6
-							line: 3
-						}
-						start: Object {
-							column: 0
-							line: 3
-						}
-					}
+					loc: SourceLocation es2020/import-meta/valid-in-module/input.js 3:0-3:6 (import)
 				}
 				property: JSIdentifier {
 					name: "meta"
-					loc: Object {
-						filename: "es2020/import-meta/valid-in-module/input.js"
-						identifierName: "meta"
-						end: Object {
-							column: 11
-							line: 3
-						}
-						start: Object {
-							column: 7
-							line: 3
-						}
-					}
+					loc: SourceLocation es2020/import-meta/valid-in-module/input.js 3:7-3:11 (meta)
 				}
 			}
 		}
 		JSExpressionStatement {
-			loc: Object {
-				filename: "es2020/import-meta/valid-in-module/input.js"
-				end: Object {
-					column: 16
-					line: 4
-				}
-				start: Object {
-					column: 0
-					line: 4
-				}
-			}
+			loc: SourceLocation es2020/import-meta/valid-in-module/input.js 4:0-4:16
 			expression: JSMemberExpression {
-				loc: Object {
-					filename: "es2020/import-meta/valid-in-module/input.js"
-					end: Object {
-						column: 15
-						line: 4
-					}
-					start: Object {
-						column: 0
-						line: 4
-					}
-				}
+				loc: SourceLocation es2020/import-meta/valid-in-module/input.js 4:0-4:15
 				property: JSStaticMemberProperty {
 					value: JSIdentifier {
 						name: "url"
-						loc: Object {
-							filename: "es2020/import-meta/valid-in-module/input.js"
-							identifierName: "url"
-							end: Object {
-								column: 15
-								line: 4
-							}
-							start: Object {
-								column: 12
-								line: 4
-							}
-						}
+						loc: SourceLocation es2020/import-meta/valid-in-module/input.js 4:12-4:15 (url)
 					}
-					loc: Object {
-						filename: "es2020/import-meta/valid-in-module/input.js"
-						identifierName: "url"
-						end: Object {
-							column: 15
-							line: 4
-						}
-						start: Object {
-							column: 12
-							line: 4
-						}
-					}
+					loc: SourceLocation es2020/import-meta/valid-in-module/input.js 4:12-4:15 (url)
 				}
 				object: JSMetaProperty {
-					loc: Object {
-						filename: "es2020/import-meta/valid-in-module/input.js"
-						end: Object {
-							column: 11
-							line: 4
-						}
-						start: Object {
-							column: 0
-							line: 4
-						}
-					}
+					loc: SourceLocation es2020/import-meta/valid-in-module/input.js 4:0-4:11
 					meta: JSIdentifier {
 						name: "import"
-						loc: Object {
-							filename: "es2020/import-meta/valid-in-module/input.js"
-							identifierName: "import"
-							end: Object {
-								column: 6
-								line: 4
-							}
-							start: Object {
-								column: 0
-								line: 4
-							}
-						}
+						loc: SourceLocation es2020/import-meta/valid-in-module/input.js 4:0-4:6 (import)
 					}
 					property: JSIdentifier {
 						name: "meta"
-						loc: Object {
-							filename: "es2020/import-meta/valid-in-module/input.js"
-							identifierName: "meta"
-							end: Object {
-								column: 11
-								line: 4
-							}
-							start: Object {
-								column: 7
-								line: 4
-							}
-						}
+						loc: SourceLocation es2020/import-meta/valid-in-module/input.js 4:7-4:11 (meta)
 					}
 				}
 			}
 		}
 		JSExpressionStatement {
-			loc: Object {
-				filename: "es2020/import-meta/valid-in-module/input.js"
-				end: Object {
-					column: 34
-					line: 5
-				}
-				start: Object {
-					column: 0
-					line: 5
-				}
-			}
+			loc: SourceLocation es2020/import-meta/valid-in-module/input.js 5:0-5:34
 			expression: JSAssignmentExpression {
 				operator: "="
-				loc: Object {
-					filename: "es2020/import-meta/valid-in-module/input.js"
-					end: Object {
-						column: 33
-						line: 5
-					}
-					start: Object {
-						column: 0
-						line: 5
-					}
-				}
+				loc: SourceLocation es2020/import-meta/valid-in-module/input.js 5:0-5:33
 				right: JSBooleanLiteral {
 					value: true
-					loc: Object {
-						filename: "es2020/import-meta/valid-in-module/input.js"
-						end: Object {
-							column: 33
-							line: 5
-						}
-						start: Object {
-							column: 29
-							line: 5
-						}
-					}
+					loc: SourceLocation es2020/import-meta/valid-in-module/input.js 5:29-5:33
 				}
 				left: JSMemberExpression {
-					loc: Object {
-						filename: "es2020/import-meta/valid-in-module/input.js"
-						end: Object {
-							column: 26
-							line: 5
-						}
-						start: Object {
-							column: 0
-							line: 5
-						}
-					}
+					loc: SourceLocation es2020/import-meta/valid-in-module/input.js 5:0-5:26
 					property: JSStaticMemberProperty {
 						value: JSIdentifier {
 							name: "couldBeMutable"
-							loc: Object {
-								filename: "es2020/import-meta/valid-in-module/input.js"
-								identifierName: "couldBeMutable"
-								end: Object {
-									column: 26
-									line: 5
-								}
-								start: Object {
-									column: 12
-									line: 5
-								}
-							}
+							loc: SourceLocation es2020/import-meta/valid-in-module/input.js 5:12-5:26 (couldBeMutable)
 						}
-						loc: Object {
-							filename: "es2020/import-meta/valid-in-module/input.js"
-							identifierName: "couldBeMutable"
-							end: Object {
-								column: 26
-								line: 5
-							}
-							start: Object {
-								column: 12
-								line: 5
-							}
-						}
+						loc: SourceLocation es2020/import-meta/valid-in-module/input.js 5:12-5:26 (couldBeMutable)
 					}
 					object: JSMetaProperty {
-						loc: Object {
-							filename: "es2020/import-meta/valid-in-module/input.js"
-							end: Object {
-								column: 11
-								line: 5
-							}
-							start: Object {
-								column: 0
-								line: 5
-							}
-						}
+						loc: SourceLocation es2020/import-meta/valid-in-module/input.js 5:0-5:11
 						meta: JSIdentifier {
 							name: "import"
-							loc: Object {
-								filename: "es2020/import-meta/valid-in-module/input.js"
-								identifierName: "import"
-								end: Object {
-									column: 6
-									line: 5
-								}
-								start: Object {
-									column: 0
-									line: 5
-								}
-							}
+							loc: SourceLocation es2020/import-meta/valid-in-module/input.js 5:0-5:6 (import)
 						}
 						property: JSIdentifier {
 							name: "meta"
-							loc: Object {
-								filename: "es2020/import-meta/valid-in-module/input.js"
-								identifierName: "meta"
-								end: Object {
-									column: 11
-									line: 5
-								}
-								start: Object {
-									column: 7
-									line: 5
-								}
-							}
+							loc: SourceLocation es2020/import-meta/valid-in-module/input.js 5:7-5:11 (meta)
 						}
 					}
 				}
@@ -559,6 +161,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

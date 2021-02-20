@@ -11,102 +11,45 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "es2017/async-functions/await-async-function-expression-name/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2017/async-functions/await-async-function-expression-name/input.js"
-		end: Object {
-			column: 28
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2017/async-functions/await-async-function-expression-name/input.js 1:0-1:28
+	path: UIDPath<es2017/async-functions/await-async-function-expression-name/input.js>
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse"
 				categoryValue: "js"
+				category: Array ["parse"]
 				message: RAW_MARKUP {value: "Can not use 'await' as identifier inside an async function"}
 			}
 			location: Object {
-				filename: "es2017/async-functions/await-async-function-expression-name/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 21
-					line: 1
-				}
-				start: Object {
-					column: 16
-					line: 1
-				}
+				end: Position 1:21
+				path: UIDPath<es2017/async-functions/await-async-function-expression-name/input.js>
+				start: Position 1:16
 			}
 		}
 	]
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "es2017/async-functions/await-async-function-expression-name/input.js"
-				end: Object {
-					column: 28
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2017/async-functions/await-async-function-expression-name/input.js 1:0-1:28
 			expression: JSFunctionExpression {
 				id: JSBindingIdentifier {
 					name: "await"
-					loc: Object {
-						filename: "es2017/async-functions/await-async-function-expression-name/input.js"
-						identifierName: "await"
-						end: Object {
-							column: 21
-							line: 1
-						}
-						start: Object {
-							column: 16
-							line: 1
-						}
-					}
+					loc: SourceLocation es2017/async-functions/await-async-function-expression-name/input.js 1:16-1:21 (await)
 				}
-				loc: Object {
-					filename: "es2017/async-functions/await-async-function-expression-name/input.js"
-					end: Object {
-						column: 26
-						line: 1
-					}
-					start: Object {
-						column: 1
-						line: 1
-					}
-				}
+				loc: SourceLocation es2017/async-functions/await-async-function-expression-name/input.js 1:1-1:26
 				body: JSBlockStatement {
 					body: Array []
 					directives: Array []
-					loc: Object {
-						filename: "es2017/async-functions/await-async-function-expression-name/input.js"
-						end: Object {
-							column: 26
-							line: 1
-						}
-						start: Object {
-							column: 24
-							line: 1
-						}
-					}
+					loc: SourceLocation es2017/async-functions/await-async-function-expression-name/input.js 1:24-1:26
 				}
 				head: JSFunctionHead {
 					async: true
@@ -117,17 +60,7 @@ JSRoot {
 					returnType: undefined
 					thisType: undefined
 					typeParameters: undefined
-					loc: Object {
-						filename: "es2017/async-functions/await-async-function-expression-name/input.js"
-						end: Object {
-							column: 23
-							line: 1
-						}
-						start: Object {
-							column: 21
-							line: 1
-						}
-					}
+					loc: SourceLocation es2017/async-functions/await-async-function-expression-name/input.js 1:21-1:23
 				}
 			}
 		}
@@ -146,8 +79,5 @@ JSRoot {
     (async function await() {});
                     ^^^^^
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

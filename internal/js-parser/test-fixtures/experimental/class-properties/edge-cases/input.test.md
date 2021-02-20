@@ -12,111 +12,39 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "experimental/class-properties/edge-cases/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "experimental/class-properties/edge-cases/input.js"
-		end: Object {
-			column: 1
-			line: 50
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation experimental/class-properties/edge-cases/input.js 1:0-50:1
+	path: UIDPath<experimental/class-properties/edge-cases/input.js>
 	body: Array [
 		JSClassDeclaration {
 			id: JSBindingIdentifier {
 				name: "A1"
-				loc: Object {
-					filename: "experimental/class-properties/edge-cases/input.js"
-					identifierName: "A1"
-					end: Object {
-						column: 8
-						line: 1
-					}
-					start: Object {
-						column: 6
-						line: 1
-					}
-				}
+				loc: SourceLocation experimental/class-properties/edge-cases/input.js 1:6-1:8 (A1)
 			}
-			loc: Object {
-				filename: "experimental/class-properties/edge-cases/input.js"
-				end: Object {
-					column: 1
-					line: 5
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation experimental/class-properties/edge-cases/input.js 1:0-5:1
 			meta: JSClassHead {
 				implements: undefined
 				superClass: undefined
 				superTypeParameters: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "experimental/class-properties/edge-cases/input.js"
-					end: Object {
-						column: 1
-						line: 5
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation experimental/class-properties/edge-cases/input.js 1:0-5:1
 				body: Array [
 					JSClassProperty {
 						key: JSStaticPropertyKey {
 							value: JSIdentifier {
 								name: "a"
-								loc: Object {
-									filename: "experimental/class-properties/edge-cases/input.js"
-									identifierName: "a"
-									end: Object {
-										column: 3
-										line: 3
-									}
-									start: Object {
-										column: 2
-										line: 3
-									}
-								}
+								loc: SourceLocation experimental/class-properties/edge-cases/input.js 3:2-3:3 (a)
 							}
-							loc: Object {
-								filename: "experimental/class-properties/edge-cases/input.js"
-								end: Object {
-									column: 3
-									line: 3
-								}
-								start: Object {
-									column: 2
-									line: 3
-								}
-							}
+							loc: SourceLocation experimental/class-properties/edge-cases/input.js 3:2-3:3
 						}
 						value: undefined
 						definite: undefined
 						typeAnnotation: undefined
-						loc: Object {
-							filename: "experimental/class-properties/edge-cases/input.js"
-							end: Object {
-								column: 3
-								line: 3
-							}
-							start: Object {
-								column: 2
-								line: 2
-							}
-						}
+						loc: SourceLocation experimental/class-properties/edge-cases/input.js 2:2-3:3
 						meta: JSClassPropertyMeta {
 							abstract: false
 							accessibility: undefined
@@ -124,67 +52,22 @@ JSRoot {
 							readonly: false
 							static: true
 							typeAnnotation: undefined
-							start: Object {
-								column: 2
-								line: 2
-							}
-							loc: Object {
-								filename: "experimental/class-properties/edge-cases/input.js"
-								end: Object {
-									column: 3
-									line: 3
-								}
-								start: Object {
-									column: 2
-									line: 2
-								}
-							}
+							loc: SourceLocation experimental/class-properties/edge-cases/input.js 2:2-3:3
+							start: Position 2:2
 						}
 					}
 					JSClassProperty {
 						key: JSStaticPropertyKey {
 							value: JSIdentifier {
 								name: "static"
-								loc: Object {
-									filename: "experimental/class-properties/edge-cases/input.js"
-									identifierName: "static"
-									end: Object {
-										column: 8
-										line: 4
-									}
-									start: Object {
-										column: 2
-										line: 4
-									}
-								}
+								loc: SourceLocation experimental/class-properties/edge-cases/input.js 4:2-4:8 (static)
 							}
-							loc: Object {
-								filename: "experimental/class-properties/edge-cases/input.js"
-								identifierName: "static"
-								end: Object {
-									column: 8
-									line: 4
-								}
-								start: Object {
-									column: 2
-									line: 4
-								}
-							}
+							loc: SourceLocation experimental/class-properties/edge-cases/input.js 4:2-4:8 (static)
 						}
 						value: undefined
 						definite: undefined
 						typeAnnotation: undefined
-						loc: Object {
-							filename: "experimental/class-properties/edge-cases/input.js"
-							end: Object {
-								column: 8
-								line: 4
-							}
-							start: Object {
-								column: 2
-								line: 4
-							}
-						}
+						loc: SourceLocation experimental/class-properties/edge-cases/input.js 4:2-4:8
 						meta: JSClassPropertyMeta {
 							abstract: false
 							accessibility: undefined
@@ -192,17 +75,7 @@ JSRoot {
 							readonly: false
 							static: false
 							typeAnnotation: undefined
-							loc: Object {
-								filename: "experimental/class-properties/edge-cases/input.js"
-								end: Object {
-									column: 8
-									line: 4
-								}
-								start: Object {
-									column: 2
-									line: 4
-								}
-							}
+							loc: SourceLocation experimental/class-properties/edge-cases/input.js 4:2-4:8
 						}
 					}
 				]
@@ -211,90 +84,28 @@ JSRoot {
 		JSClassDeclaration {
 			id: JSBindingIdentifier {
 				name: "A2"
-				loc: Object {
-					filename: "experimental/class-properties/edge-cases/input.js"
-					identifierName: "A2"
-					end: Object {
-						column: 8
-						line: 7
-					}
-					start: Object {
-						column: 6
-						line: 7
-					}
-				}
+				loc: SourceLocation experimental/class-properties/edge-cases/input.js 7:6-7:8 (A2)
 			}
-			loc: Object {
-				filename: "experimental/class-properties/edge-cases/input.js"
-				end: Object {
-					column: 14
-					line: 7
-				}
-				start: Object {
-					column: 0
-					line: 7
-				}
-			}
+			loc: SourceLocation experimental/class-properties/edge-cases/input.js 7:0-7:14
 			meta: JSClassHead {
 				implements: undefined
 				superClass: undefined
 				superTypeParameters: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "experimental/class-properties/edge-cases/input.js"
-					end: Object {
-						column: 14
-						line: 7
-					}
-					start: Object {
-						column: 0
-						line: 7
-					}
-				}
+				loc: SourceLocation experimental/class-properties/edge-cases/input.js 7:0-7:14
 				body: Array [
 					JSClassProperty {
 						key: JSStaticPropertyKey {
 							value: JSIdentifier {
 								name: "a"
-								loc: Object {
-									filename: "experimental/class-properties/edge-cases/input.js"
-									identifierName: "a"
-									end: Object {
-										column: 12
-										line: 7
-									}
-									start: Object {
-										column: 11
-										line: 7
-									}
-								}
+								loc: SourceLocation experimental/class-properties/edge-cases/input.js 7:11-7:12 (a)
 							}
-							loc: Object {
-								filename: "experimental/class-properties/edge-cases/input.js"
-								end: Object {
-									column: 12
-									line: 7
-								}
-								start: Object {
-									column: 11
-									line: 7
-								}
-							}
+							loc: SourceLocation experimental/class-properties/edge-cases/input.js 7:11-7:12
 						}
 						value: undefined
 						definite: undefined
 						typeAnnotation: undefined
-						loc: Object {
-							filename: "experimental/class-properties/edge-cases/input.js"
-							end: Object {
-								column: 12
-								line: 7
-							}
-							start: Object {
-								column: 11
-								line: 7
-							}
-						}
+						loc: SourceLocation experimental/class-properties/edge-cases/input.js 7:11-7:12
 						meta: JSClassPropertyMeta {
 							abstract: false
 							accessibility: undefined
@@ -302,21 +113,8 @@ JSRoot {
 							readonly: false
 							static: false
 							typeAnnotation: undefined
-							start: Object {
-								column: 11
-								line: 7
-							}
-							loc: Object {
-								filename: "experimental/class-properties/edge-cases/input.js"
-								end: Object {
-									column: 12
-									line: 7
-								}
-								start: Object {
-									column: 11
-									line: 7
-								}
-							}
+							loc: SourceLocation experimental/class-properties/edge-cases/input.js 7:11-7:12
+							start: Position 7:11
 						}
 					}
 				]
@@ -325,90 +123,28 @@ JSRoot {
 		JSClassDeclaration {
 			id: JSBindingIdentifier {
 				name: "A3"
-				loc: Object {
-					filename: "experimental/class-properties/edge-cases/input.js"
-					identifierName: "A3"
-					end: Object {
-						column: 8
-						line: 8
-					}
-					start: Object {
-						column: 6
-						line: 8
-					}
-				}
+				loc: SourceLocation experimental/class-properties/edge-cases/input.js 8:6-8:8 (A3)
 			}
-			loc: Object {
-				filename: "experimental/class-properties/edge-cases/input.js"
-				end: Object {
-					column: 16
-					line: 8
-				}
-				start: Object {
-					column: 0
-					line: 8
-				}
-			}
+			loc: SourceLocation experimental/class-properties/edge-cases/input.js 8:0-8:16
 			meta: JSClassHead {
 				implements: undefined
 				superClass: undefined
 				superTypeParameters: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "experimental/class-properties/edge-cases/input.js"
-					end: Object {
-						column: 16
-						line: 8
-					}
-					start: Object {
-						column: 0
-						line: 8
-					}
-				}
+				loc: SourceLocation experimental/class-properties/edge-cases/input.js 8:0-8:16
 				body: Array [
 					JSClassProperty {
 						key: JSStaticPropertyKey {
 							value: JSIdentifier {
 								name: "get"
-								loc: Object {
-									filename: "experimental/class-properties/edge-cases/input.js"
-									identifierName: "get"
-									end: Object {
-										column: 14
-										line: 8
-									}
-									start: Object {
-										column: 11
-										line: 8
-									}
-								}
+								loc: SourceLocation experimental/class-properties/edge-cases/input.js 8:11-8:14 (get)
 							}
-							loc: Object {
-								filename: "experimental/class-properties/edge-cases/input.js"
-								end: Object {
-									column: 14
-									line: 8
-								}
-								start: Object {
-									column: 11
-									line: 8
-								}
-							}
+							loc: SourceLocation experimental/class-properties/edge-cases/input.js 8:11-8:14
 						}
 						value: undefined
 						definite: undefined
 						typeAnnotation: undefined
-						loc: Object {
-							filename: "experimental/class-properties/edge-cases/input.js"
-							end: Object {
-								column: 14
-								line: 8
-							}
-							start: Object {
-								column: 11
-								line: 8
-							}
-						}
+						loc: SourceLocation experimental/class-properties/edge-cases/input.js 8:11-8:14
 						meta: JSClassPropertyMeta {
 							abstract: false
 							accessibility: undefined
@@ -416,21 +152,8 @@ JSRoot {
 							readonly: false
 							static: false
 							typeAnnotation: undefined
-							start: Object {
-								column: 11
-								line: 8
-							}
-							loc: Object {
-								filename: "experimental/class-properties/edge-cases/input.js"
-								end: Object {
-									column: 14
-									line: 8
-								}
-								start: Object {
-									column: 11
-									line: 8
-								}
-							}
+							loc: SourceLocation experimental/class-properties/edge-cases/input.js 8:11-8:14
+							start: Position 8:11
 						}
 					}
 				]
@@ -439,90 +162,28 @@ JSRoot {
 		JSClassDeclaration {
 			id: JSBindingIdentifier {
 				name: "A4"
-				loc: Object {
-					filename: "experimental/class-properties/edge-cases/input.js"
-					identifierName: "A4"
-					end: Object {
-						column: 8
-						line: 9
-					}
-					start: Object {
-						column: 6
-						line: 9
-					}
-				}
+				loc: SourceLocation experimental/class-properties/edge-cases/input.js 9:6-9:8 (A4)
 			}
-			loc: Object {
-				filename: "experimental/class-properties/edge-cases/input.js"
-				end: Object {
-					column: 16
-					line: 9
-				}
-				start: Object {
-					column: 0
-					line: 9
-				}
-			}
+			loc: SourceLocation experimental/class-properties/edge-cases/input.js 9:0-9:16
 			meta: JSClassHead {
 				implements: undefined
 				superClass: undefined
 				superTypeParameters: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "experimental/class-properties/edge-cases/input.js"
-					end: Object {
-						column: 16
-						line: 9
-					}
-					start: Object {
-						column: 0
-						line: 9
-					}
-				}
+				loc: SourceLocation experimental/class-properties/edge-cases/input.js 9:0-9:16
 				body: Array [
 					JSClassProperty {
 						key: JSStaticPropertyKey {
 							value: JSIdentifier {
 								name: "set"
-								loc: Object {
-									filename: "experimental/class-properties/edge-cases/input.js"
-									identifierName: "set"
-									end: Object {
-										column: 14
-										line: 9
-									}
-									start: Object {
-										column: 11
-										line: 9
-									}
-								}
+								loc: SourceLocation experimental/class-properties/edge-cases/input.js 9:11-9:14 (set)
 							}
-							loc: Object {
-								filename: "experimental/class-properties/edge-cases/input.js"
-								end: Object {
-									column: 14
-									line: 9
-								}
-								start: Object {
-									column: 11
-									line: 9
-								}
-							}
+							loc: SourceLocation experimental/class-properties/edge-cases/input.js 9:11-9:14
 						}
 						value: undefined
 						definite: undefined
 						typeAnnotation: undefined
-						loc: Object {
-							filename: "experimental/class-properties/edge-cases/input.js"
-							end: Object {
-								column: 14
-								line: 9
-							}
-							start: Object {
-								column: 11
-								line: 9
-							}
-						}
+						loc: SourceLocation experimental/class-properties/edge-cases/input.js 9:11-9:14
 						meta: JSClassPropertyMeta {
 							abstract: false
 							accessibility: undefined
@@ -530,21 +191,8 @@ JSRoot {
 							readonly: false
 							static: false
 							typeAnnotation: undefined
-							start: Object {
-								column: 11
-								line: 9
-							}
-							loc: Object {
-								filename: "experimental/class-properties/edge-cases/input.js"
-								end: Object {
-									column: 14
-									line: 9
-								}
-								start: Object {
-									column: 11
-									line: 9
-								}
-							}
+							loc: SourceLocation experimental/class-properties/edge-cases/input.js 9:11-9:14
+							start: Position 9:11
 						}
 					}
 				]
@@ -553,91 +201,28 @@ JSRoot {
 		JSClassDeclaration {
 			id: JSBindingIdentifier {
 				name: "A5"
-				loc: Object {
-					filename: "experimental/class-properties/edge-cases/input.js"
-					identifierName: "A5"
-					end: Object {
-						column: 8
-						line: 10
-					}
-					start: Object {
-						column: 6
-						line: 10
-					}
-				}
+				loc: SourceLocation experimental/class-properties/edge-cases/input.js 10:6-10:8 (A5)
 			}
-			loc: Object {
-				filename: "experimental/class-properties/edge-cases/input.js"
-				end: Object {
-					column: 19
-					line: 10
-				}
-				start: Object {
-					column: 0
-					line: 10
-				}
-			}
+			loc: SourceLocation experimental/class-properties/edge-cases/input.js 10:0-10:19
 			meta: JSClassHead {
 				implements: undefined
 				superClass: undefined
 				superTypeParameters: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "experimental/class-properties/edge-cases/input.js"
-					end: Object {
-						column: 19
-						line: 10
-					}
-					start: Object {
-						column: 0
-						line: 10
-					}
-				}
+				loc: SourceLocation experimental/class-properties/edge-cases/input.js 10:0-10:19
 				body: Array [
 					JSClassProperty {
 						key: JSStaticPropertyKey {
 							value: JSIdentifier {
 								name: "static"
-								loc: Object {
-									filename: "experimental/class-properties/edge-cases/input.js"
-									identifierName: "static"
-									end: Object {
-										column: 17
-										line: 10
-									}
-									start: Object {
-										column: 11
-										line: 10
-									}
-								}
+								loc: SourceLocation experimental/class-properties/edge-cases/input.js 10:11-10:17 (static)
 							}
-							loc: Object {
-								filename: "experimental/class-properties/edge-cases/input.js"
-								identifierName: "static"
-								end: Object {
-									column: 17
-									line: 10
-								}
-								start: Object {
-									column: 11
-									line: 10
-								}
-							}
+							loc: SourceLocation experimental/class-properties/edge-cases/input.js 10:11-10:17 (static)
 						}
 						value: undefined
 						definite: undefined
 						typeAnnotation: undefined
-						loc: Object {
-							filename: "experimental/class-properties/edge-cases/input.js"
-							end: Object {
-								column: 17
-								line: 10
-							}
-							start: Object {
-								column: 11
-								line: 10
-							}
-						}
+						loc: SourceLocation experimental/class-properties/edge-cases/input.js 10:11-10:17
 						meta: JSClassPropertyMeta {
 							abstract: false
 							accessibility: undefined
@@ -645,17 +230,7 @@ JSRoot {
 							readonly: false
 							static: false
 							typeAnnotation: undefined
-							loc: Object {
-								filename: "experimental/class-properties/edge-cases/input.js"
-								end: Object {
-									column: 17
-									line: 10
-								}
-								start: Object {
-									column: 11
-									line: 10
-								}
-							}
+							loc: SourceLocation experimental/class-properties/edge-cases/input.js 10:11-10:17
 						}
 					}
 				]
@@ -664,90 +239,28 @@ JSRoot {
 		JSClassDeclaration {
 			id: JSBindingIdentifier {
 				name: "A6"
-				loc: Object {
-					filename: "experimental/class-properties/edge-cases/input.js"
-					identifierName: "A6"
-					end: Object {
-						column: 8
-						line: 11
-					}
-					start: Object {
-						column: 6
-						line: 11
-					}
-				}
+				loc: SourceLocation experimental/class-properties/edge-cases/input.js 11:6-11:8 (A6)
 			}
-			loc: Object {
-				filename: "experimental/class-properties/edge-cases/input.js"
-				end: Object {
-					column: 18
-					line: 11
-				}
-				start: Object {
-					column: 0
-					line: 11
-				}
-			}
+			loc: SourceLocation experimental/class-properties/edge-cases/input.js 11:0-11:18
 			meta: JSClassHead {
 				implements: undefined
 				superClass: undefined
 				superTypeParameters: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "experimental/class-properties/edge-cases/input.js"
-					end: Object {
-						column: 18
-						line: 11
-					}
-					start: Object {
-						column: 0
-						line: 11
-					}
-				}
+				loc: SourceLocation experimental/class-properties/edge-cases/input.js 11:0-11:18
 				body: Array [
 					JSClassProperty {
 						key: JSStaticPropertyKey {
 							value: JSIdentifier {
 								name: "async"
-								loc: Object {
-									filename: "experimental/class-properties/edge-cases/input.js"
-									identifierName: "async"
-									end: Object {
-										column: 16
-										line: 11
-									}
-									start: Object {
-										column: 11
-										line: 11
-									}
-								}
+								loc: SourceLocation experimental/class-properties/edge-cases/input.js 11:11-11:16 (async)
 							}
-							loc: Object {
-								filename: "experimental/class-properties/edge-cases/input.js"
-								end: Object {
-									column: 16
-									line: 11
-								}
-								start: Object {
-									column: 11
-									line: 11
-								}
-							}
+							loc: SourceLocation experimental/class-properties/edge-cases/input.js 11:11-11:16
 						}
 						value: undefined
 						definite: undefined
 						typeAnnotation: undefined
-						loc: Object {
-							filename: "experimental/class-properties/edge-cases/input.js"
-							end: Object {
-								column: 16
-								line: 11
-							}
-							start: Object {
-								column: 11
-								line: 11
-							}
-						}
+						loc: SourceLocation experimental/class-properties/edge-cases/input.js 11:11-11:16
 						meta: JSClassPropertyMeta {
 							abstract: false
 							accessibility: undefined
@@ -755,21 +268,8 @@ JSRoot {
 							readonly: false
 							static: false
 							typeAnnotation: undefined
-							start: Object {
-								column: 11
-								line: 11
-							}
-							loc: Object {
-								filename: "experimental/class-properties/edge-cases/input.js"
-								end: Object {
-									column: 16
-									line: 11
-								}
-								start: Object {
-									column: 11
-									line: 11
-								}
-							}
+							loc: SourceLocation experimental/class-properties/edge-cases/input.js 11:11-11:16
+							start: Position 11:11
 						}
 					}
 				]
@@ -778,89 +278,53 @@ JSRoot {
 		JSClassDeclaration {
 			id: JSBindingIdentifier {
 				name: "A7"
-				loc: Object {
-					filename: "experimental/class-properties/edge-cases/input.js"
-					identifierName: "A7"
-					end: Object {
-						column: 8
-						line: 13
-					}
-					start: Object {
-						column: 6
-						line: 13
-					}
-				}
+				loc: SourceLocation experimental/class-properties/edge-cases/input.js 13:6-13:8 (A7)
 			}
-			loc: Object {
-				filename: "experimental/class-properties/edge-cases/input.js"
-				end: Object {
-					column: 1
-					line: 16
-				}
-				start: Object {
-					column: 0
-					line: 13
-				}
-			}
+			loc: SourceLocation experimental/class-properties/edge-cases/input.js 13:0-16:1
 			meta: JSClassHead {
 				implements: undefined
 				superClass: undefined
 				superTypeParameters: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "experimental/class-properties/edge-cases/input.js"
-					end: Object {
-						column: 1
-						line: 16
-					}
-					start: Object {
-						column: 0
-						line: 13
-					}
-				}
+				loc: SourceLocation experimental/class-properties/edge-cases/input.js 13:0-16:1
 				body: Array [
 					JSClassProperty {
 						key: JSStaticPropertyKey {
 							value: JSIdentifier {
 								name: "get"
-								loc: Object {
-									filename: "experimental/class-properties/edge-cases/input.js"
-									identifierName: "get"
-									end: Object {
-										column: 5
-										line: 14
-									}
-									start: Object {
-										column: 2
-										line: 14
-									}
-								}
+								loc: SourceLocation experimental/class-properties/edge-cases/input.js 14:2-14:5 (get)
 							}
-							loc: Object {
-								filename: "experimental/class-properties/edge-cases/input.js"
-								end: Object {
-									column: 5
-									line: 14
-								}
-								start: Object {
-									column: 2
-									line: 14
-								}
-							}
+							loc: SourceLocation experimental/class-properties/edge-cases/input.js 14:2-14:5
 						}
 						value: undefined
 						definite: undefined
 						typeAnnotation: undefined
-						loc: Object {
-							filename: "experimental/class-properties/edge-cases/input.js"
-							end: Object {
-								column: 5
-								line: 14
+						loc: SourceLocation experimental/class-properties/edge-cases/input.js 14:2-14:5
+						meta: JSClassPropertyMeta {
+							abstract: false
+							accessibility: undefined
+							optional: false
+							readonly: false
+							static: false
+							typeAnnotation: undefined
+							loc: SourceLocation experimental/class-properties/edge-cases/input.js 14:2-14:5
+							start: Position 14:2
+						}
+					}
+					JSClassMethod {
+						kind: "method"
+						key: JSStaticPropertyKey {
+							value: JSIdentifier {
+								name: "a"
+								loc: SourceLocation experimental/class-properties/edge-cases/input.js 15:3-15:4 (a)
 							}
-							start: Object {
-								column: 2
-								line: 14
-							}
+							loc: SourceLocation experimental/class-properties/edge-cases/input.js 15:3-15:4
+						}
+						loc: SourceLocation experimental/class-properties/edge-cases/input.js 15:2-15:8
+						body: JSBlockStatement {
+							body: Array []
+							directives: Array []
+							loc: SourceLocation experimental/class-properties/edge-cases/input.js 15:6-15:8
 						}
 						meta: JSClassPropertyMeta {
 							abstract: false
@@ -869,78 +333,8 @@ JSRoot {
 							readonly: false
 							static: false
 							typeAnnotation: undefined
-							start: Object {
-								column: 2
-								line: 14
-							}
-							loc: Object {
-								filename: "experimental/class-properties/edge-cases/input.js"
-								end: Object {
-									column: 5
-									line: 14
-								}
-								start: Object {
-									column: 2
-									line: 14
-								}
-							}
-						}
-					}
-					JSClassMethod {
-						kind: "method"
-						key: JSStaticPropertyKey {
-							value: JSIdentifier {
-								name: "a"
-								loc: Object {
-									filename: "experimental/class-properties/edge-cases/input.js"
-									identifierName: "a"
-									end: Object {
-										column: 4
-										line: 15
-									}
-									start: Object {
-										column: 3
-										line: 15
-									}
-								}
-							}
-							loc: Object {
-								filename: "experimental/class-properties/edge-cases/input.js"
-								end: Object {
-									column: 4
-									line: 15
-								}
-								start: Object {
-									column: 3
-									line: 15
-								}
-							}
-						}
-						loc: Object {
-							filename: "experimental/class-properties/edge-cases/input.js"
-							end: Object {
-								column: 8
-								line: 15
-							}
-							start: Object {
-								column: 2
-								line: 15
-							}
-						}
-						body: JSBlockStatement {
-							body: Array []
-							directives: Array []
-							loc: Object {
-								filename: "experimental/class-properties/edge-cases/input.js"
-								end: Object {
-									column: 8
-									line: 15
-								}
-								start: Object {
-									column: 6
-									line: 15
-								}
-							}
+							loc: SourceLocation experimental/class-properties/edge-cases/input.js 15:2-15:4
+							start: Position 15:2
 						}
 						head: JSFunctionHead {
 							async: false
@@ -951,40 +345,7 @@ JSRoot {
 							returnType: undefined
 							thisType: undefined
 							typeParameters: undefined
-							loc: Object {
-								filename: "experimental/class-properties/edge-cases/input.js"
-								end: Object {
-									column: 6
-									line: 15
-								}
-								start: Object {
-									column: 4
-									line: 15
-								}
-							}
-						}
-						meta: JSClassPropertyMeta {
-							abstract: false
-							accessibility: undefined
-							optional: false
-							readonly: false
-							static: false
-							typeAnnotation: undefined
-							start: Object {
-								column: 2
-								line: 15
-							}
-							loc: Object {
-								filename: "experimental/class-properties/edge-cases/input.js"
-								end: Object {
-									column: 4
-									line: 15
-								}
-								start: Object {
-									column: 2
-									line: 15
-								}
-							}
+							loc: SourceLocation experimental/class-properties/edge-cases/input.js 15:4-15:6
 						}
 					}
 				]
@@ -993,102 +354,40 @@ JSRoot {
 		JSClassDeclaration {
 			id: JSBindingIdentifier {
 				name: "A8"
-				loc: Object {
-					filename: "experimental/class-properties/edge-cases/input.js"
-					identifierName: "A8"
-					end: Object {
-						column: 8
-						line: 18
-					}
-					start: Object {
-						column: 6
-						line: 18
-					}
-				}
+				loc: SourceLocation experimental/class-properties/edge-cases/input.js 18:6-18:8 (A8)
 			}
-			loc: Object {
-				filename: "experimental/class-properties/edge-cases/input.js"
-				end: Object {
-					column: 1
-					line: 21
-				}
-				start: Object {
-					column: 0
-					line: 18
-				}
-			}
+			loc: SourceLocation experimental/class-properties/edge-cases/input.js 18:0-21:1
 			meta: JSClassHead {
 				implements: undefined
 				superClass: undefined
 				superTypeParameters: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "experimental/class-properties/edge-cases/input.js"
-					end: Object {
-						column: 1
-						line: 21
-					}
-					start: Object {
-						column: 0
-						line: 18
-					}
-				}
+				loc: SourceLocation experimental/class-properties/edge-cases/input.js 18:0-21:1
 				body: Array [
 					JSClassMethod {
 						kind: "method"
 						key: JSStaticPropertyKey {
 							value: JSIdentifier {
 								name: "a"
-								loc: Object {
-									filename: "experimental/class-properties/edge-cases/input.js"
-									identifierName: "a"
-									end: Object {
-										column: 4
-										line: 20
-									}
-									start: Object {
-										column: 3
-										line: 20
-									}
-								}
+								loc: SourceLocation experimental/class-properties/edge-cases/input.js 20:3-20:4 (a)
 							}
-							loc: Object {
-								filename: "experimental/class-properties/edge-cases/input.js"
-								end: Object {
-									column: 4
-									line: 20
-								}
-								start: Object {
-									column: 3
-									line: 20
-								}
-							}
+							loc: SourceLocation experimental/class-properties/edge-cases/input.js 20:3-20:4
 						}
-						loc: Object {
-							filename: "experimental/class-properties/edge-cases/input.js"
-							end: Object {
-								column: 8
-								line: 20
-							}
-							start: Object {
-								column: 2
-								line: 19
-							}
-						}
+						loc: SourceLocation experimental/class-properties/edge-cases/input.js 19:2-20:8
 						body: JSBlockStatement {
 							body: Array []
 							directives: Array []
-							loc: Object {
-								filename: "experimental/class-properties/edge-cases/input.js"
-								end: Object {
-									column: 8
-									line: 20
-								}
-								start: Object {
-									column: 6
-									line: 20
-								}
-							}
+							loc: SourceLocation experimental/class-properties/edge-cases/input.js 20:6-20:8
+						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							accessibility: undefined
+							optional: false
+							readonly: false
+							static: true
+							typeAnnotation: undefined
+							loc: SourceLocation experimental/class-properties/edge-cases/input.js 19:2-20:4
+							start: Position 19:2
 						}
 						head: JSFunctionHead {
 							async: false
@@ -1099,40 +398,7 @@ JSRoot {
 							returnType: undefined
 							thisType: undefined
 							typeParameters: undefined
-							loc: Object {
-								filename: "experimental/class-properties/edge-cases/input.js"
-								end: Object {
-									column: 6
-									line: 20
-								}
-								start: Object {
-									column: 4
-									line: 20
-								}
-							}
-						}
-						meta: JSClassPropertyMeta {
-							abstract: false
-							accessibility: undefined
-							optional: false
-							readonly: false
-							static: true
-							typeAnnotation: undefined
-							start: Object {
-								column: 2
-								line: 19
-							}
-							loc: Object {
-								filename: "experimental/class-properties/edge-cases/input.js"
-								end: Object {
-									column: 4
-									line: 20
-								}
-								start: Object {
-									column: 2
-									line: 19
-								}
-							}
+							loc: SourceLocation experimental/class-properties/edge-cases/input.js 20:4-20:6
 						}
 					}
 				]
@@ -1141,89 +407,53 @@ JSRoot {
 		JSClassDeclaration {
 			id: JSBindingIdentifier {
 				name: "A9"
-				loc: Object {
-					filename: "experimental/class-properties/edge-cases/input.js"
-					identifierName: "A9"
-					end: Object {
-						column: 8
-						line: 23
-					}
-					start: Object {
-						column: 6
-						line: 23
-					}
-				}
+				loc: SourceLocation experimental/class-properties/edge-cases/input.js 23:6-23:8 (A9)
 			}
-			loc: Object {
-				filename: "experimental/class-properties/edge-cases/input.js"
-				end: Object {
-					column: 1
-					line: 26
-				}
-				start: Object {
-					column: 0
-					line: 23
-				}
-			}
+			loc: SourceLocation experimental/class-properties/edge-cases/input.js 23:0-26:1
 			meta: JSClassHead {
 				implements: undefined
 				superClass: undefined
 				superTypeParameters: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "experimental/class-properties/edge-cases/input.js"
-					end: Object {
-						column: 1
-						line: 26
-					}
-					start: Object {
-						column: 0
-						line: 23
-					}
-				}
+				loc: SourceLocation experimental/class-properties/edge-cases/input.js 23:0-26:1
 				body: Array [
 					JSClassProperty {
 						key: JSStaticPropertyKey {
 							value: JSIdentifier {
 								name: "async"
-								loc: Object {
-									filename: "experimental/class-properties/edge-cases/input.js"
-									identifierName: "async"
-									end: Object {
-										column: 7
-										line: 24
-									}
-									start: Object {
-										column: 2
-										line: 24
-									}
-								}
+								loc: SourceLocation experimental/class-properties/edge-cases/input.js 24:2-24:7 (async)
 							}
-							loc: Object {
-								filename: "experimental/class-properties/edge-cases/input.js"
-								end: Object {
-									column: 7
-									line: 24
-								}
-								start: Object {
-									column: 2
-									line: 24
-								}
-							}
+							loc: SourceLocation experimental/class-properties/edge-cases/input.js 24:2-24:7
 						}
 						value: undefined
 						definite: undefined
 						typeAnnotation: undefined
-						loc: Object {
-							filename: "experimental/class-properties/edge-cases/input.js"
-							end: Object {
-								column: 7
-								line: 24
+						loc: SourceLocation experimental/class-properties/edge-cases/input.js 24:2-24:7
+						meta: JSClassPropertyMeta {
+							abstract: false
+							accessibility: undefined
+							optional: false
+							readonly: false
+							static: false
+							typeAnnotation: undefined
+							loc: SourceLocation experimental/class-properties/edge-cases/input.js 24:2-24:7
+							start: Position 24:2
+						}
+					}
+					JSClassMethod {
+						kind: "method"
+						key: JSStaticPropertyKey {
+							value: JSIdentifier {
+								name: "a"
+								loc: SourceLocation experimental/class-properties/edge-cases/input.js 25:2-25:3 (a)
 							}
-							start: Object {
-								column: 2
-								line: 24
-							}
+							loc: SourceLocation experimental/class-properties/edge-cases/input.js 25:2-25:3
+						}
+						loc: SourceLocation experimental/class-properties/edge-cases/input.js 25:2-25:7
+						body: JSBlockStatement {
+							body: Array []
+							directives: Array []
+							loc: SourceLocation experimental/class-properties/edge-cases/input.js 25:5-25:7
 						}
 						meta: JSClassPropertyMeta {
 							abstract: false
@@ -1232,78 +462,8 @@ JSRoot {
 							readonly: false
 							static: false
 							typeAnnotation: undefined
-							start: Object {
-								column: 2
-								line: 24
-							}
-							loc: Object {
-								filename: "experimental/class-properties/edge-cases/input.js"
-								end: Object {
-									column: 7
-									line: 24
-								}
-								start: Object {
-									column: 2
-									line: 24
-								}
-							}
-						}
-					}
-					JSClassMethod {
-						kind: "method"
-						key: JSStaticPropertyKey {
-							value: JSIdentifier {
-								name: "a"
-								loc: Object {
-									filename: "experimental/class-properties/edge-cases/input.js"
-									identifierName: "a"
-									end: Object {
-										column: 3
-										line: 25
-									}
-									start: Object {
-										column: 2
-										line: 25
-									}
-								}
-							}
-							loc: Object {
-								filename: "experimental/class-properties/edge-cases/input.js"
-								end: Object {
-									column: 3
-									line: 25
-								}
-								start: Object {
-									column: 2
-									line: 25
-								}
-							}
-						}
-						loc: Object {
-							filename: "experimental/class-properties/edge-cases/input.js"
-							end: Object {
-								column: 7
-								line: 25
-							}
-							start: Object {
-								column: 2
-								line: 25
-							}
-						}
-						body: JSBlockStatement {
-							body: Array []
-							directives: Array []
-							loc: Object {
-								filename: "experimental/class-properties/edge-cases/input.js"
-								end: Object {
-									column: 7
-									line: 25
-								}
-								start: Object {
-									column: 5
-									line: 25
-								}
-							}
+							loc: SourceLocation experimental/class-properties/edge-cases/input.js 25:2-25:3
+							start: Position 25:2
 						}
 						head: JSFunctionHead {
 							async: false
@@ -1314,40 +474,7 @@ JSRoot {
 							returnType: undefined
 							thisType: undefined
 							typeParameters: undefined
-							loc: Object {
-								filename: "experimental/class-properties/edge-cases/input.js"
-								end: Object {
-									column: 5
-									line: 25
-								}
-								start: Object {
-									column: 3
-									line: 25
-								}
-							}
-						}
-						meta: JSClassPropertyMeta {
-							abstract: false
-							accessibility: undefined
-							optional: false
-							readonly: false
-							static: false
-							typeAnnotation: undefined
-							start: Object {
-								column: 2
-								line: 25
-							}
-							loc: Object {
-								filename: "experimental/class-properties/edge-cases/input.js"
-								end: Object {
-									column: 3
-									line: 25
-								}
-								start: Object {
-									column: 2
-									line: 25
-								}
-							}
+							loc: SourceLocation experimental/class-properties/edge-cases/input.js 25:3-25:5
 						}
 					}
 				]
@@ -1356,90 +483,28 @@ JSRoot {
 		JSClassDeclaration {
 			id: JSBindingIdentifier {
 				name: "A10"
-				loc: Object {
-					filename: "experimental/class-properties/edge-cases/input.js"
-					identifierName: "A10"
-					end: Object {
-						column: 9
-						line: 28
-					}
-					start: Object {
-						column: 6
-						line: 28
-					}
-				}
+				loc: SourceLocation experimental/class-properties/edge-cases/input.js 28:6-28:9 (A10)
 			}
-			loc: Object {
-				filename: "experimental/class-properties/edge-cases/input.js"
-				end: Object {
-					column: 1
-					line: 32
-				}
-				start: Object {
-					column: 0
-					line: 28
-				}
-			}
+			loc: SourceLocation experimental/class-properties/edge-cases/input.js 28:0-32:1
 			meta: JSClassHead {
 				implements: undefined
 				superClass: undefined
 				superTypeParameters: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "experimental/class-properties/edge-cases/input.js"
-					end: Object {
-						column: 1
-						line: 32
-					}
-					start: Object {
-						column: 0
-						line: 28
-					}
-				}
+				loc: SourceLocation experimental/class-properties/edge-cases/input.js 28:0-32:1
 				body: Array [
 					JSClassProperty {
 						key: JSStaticPropertyKey {
 							value: JSIdentifier {
 								name: "async"
-								loc: Object {
-									filename: "experimental/class-properties/edge-cases/input.js"
-									identifierName: "async"
-									end: Object {
-										column: 7
-										line: 30
-									}
-									start: Object {
-										column: 2
-										line: 30
-									}
-								}
+								loc: SourceLocation experimental/class-properties/edge-cases/input.js 30:2-30:7 (async)
 							}
-							loc: Object {
-								filename: "experimental/class-properties/edge-cases/input.js"
-								end: Object {
-									column: 7
-									line: 30
-								}
-								start: Object {
-									column: 2
-									line: 30
-								}
-							}
+							loc: SourceLocation experimental/class-properties/edge-cases/input.js 30:2-30:7
 						}
 						value: undefined
 						definite: undefined
 						typeAnnotation: undefined
-						loc: Object {
-							filename: "experimental/class-properties/edge-cases/input.js"
-							end: Object {
-								column: 7
-								line: 30
-							}
-							start: Object {
-								column: 2
-								line: 29
-							}
-						}
+						loc: SourceLocation experimental/class-properties/edge-cases/input.js 29:2-30:7
 						meta: JSClassPropertyMeta {
 							abstract: false
 							accessibility: undefined
@@ -1447,66 +512,22 @@ JSRoot {
 							readonly: false
 							static: true
 							typeAnnotation: undefined
-							start: Object {
-								column: 2
-								line: 29
-							}
-							loc: Object {
-								filename: "experimental/class-properties/edge-cases/input.js"
-								end: Object {
-									column: 7
-									line: 30
-								}
-								start: Object {
-									column: 2
-									line: 29
-								}
-							}
+							loc: SourceLocation experimental/class-properties/edge-cases/input.js 29:2-30:7
+							start: Position 29:2
 						}
 					}
 					JSClassProperty {
 						key: JSStaticPropertyKey {
 							value: JSIdentifier {
 								name: "a"
-								loc: Object {
-									filename: "experimental/class-properties/edge-cases/input.js"
-									identifierName: "a"
-									end: Object {
-										column: 3
-										line: 31
-									}
-									start: Object {
-										column: 2
-										line: 31
-									}
-								}
+								loc: SourceLocation experimental/class-properties/edge-cases/input.js 31:2-31:3 (a)
 							}
-							loc: Object {
-								filename: "experimental/class-properties/edge-cases/input.js"
-								end: Object {
-									column: 3
-									line: 31
-								}
-								start: Object {
-									column: 2
-									line: 31
-								}
-							}
+							loc: SourceLocation experimental/class-properties/edge-cases/input.js 31:2-31:3
 						}
 						value: undefined
 						definite: undefined
 						typeAnnotation: undefined
-						loc: Object {
-							filename: "experimental/class-properties/edge-cases/input.js"
-							end: Object {
-								column: 3
-								line: 31
-							}
-							start: Object {
-								column: 2
-								line: 31
-							}
-						}
+						loc: SourceLocation experimental/class-properties/edge-cases/input.js 31:2-31:3
 						meta: JSClassPropertyMeta {
 							abstract: false
 							accessibility: undefined
@@ -1514,21 +535,8 @@ JSRoot {
 							readonly: false
 							static: false
 							typeAnnotation: undefined
-							start: Object {
-								column: 2
-								line: 31
-							}
-							loc: Object {
-								filename: "experimental/class-properties/edge-cases/input.js"
-								end: Object {
-									column: 3
-									line: 31
-								}
-								start: Object {
-									column: 2
-									line: 31
-								}
-							}
+							loc: SourceLocation experimental/class-properties/edge-cases/input.js 31:2-31:3
+							start: Position 31:2
 						}
 					}
 				]
@@ -1537,91 +545,28 @@ JSRoot {
 		JSClassDeclaration {
 			id: JSBindingIdentifier {
 				name: "A11"
-				loc: Object {
-					filename: "experimental/class-properties/edge-cases/input.js"
-					identifierName: "A11"
-					end: Object {
-						column: 9
-						line: 34
-					}
-					start: Object {
-						column: 6
-						line: 34
-					}
-				}
+				loc: SourceLocation experimental/class-properties/edge-cases/input.js 34:6-34:9 (A11)
 			}
-			loc: Object {
-				filename: "experimental/class-properties/edge-cases/input.js"
-				end: Object {
-					column: 21
-					line: 34
-				}
-				start: Object {
-					column: 0
-					line: 34
-				}
-			}
+			loc: SourceLocation experimental/class-properties/edge-cases/input.js 34:0-34:21
 			meta: JSClassHead {
 				implements: undefined
 				superClass: undefined
 				superTypeParameters: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "experimental/class-properties/edge-cases/input.js"
-					end: Object {
-						column: 21
-						line: 34
-					}
-					start: Object {
-						column: 0
-						line: 34
-					}
-				}
+				loc: SourceLocation experimental/class-properties/edge-cases/input.js 34:0-34:21
 				body: Array [
 					JSClassProperty {
 						key: JSStaticPropertyKey {
 							value: JSIdentifier {
 								name: "static"
-								loc: Object {
-									filename: "experimental/class-properties/edge-cases/input.js"
-									identifierName: "static"
-									end: Object {
-										column: 18
-										line: 34
-									}
-									start: Object {
-										column: 12
-										line: 34
-									}
-								}
+								loc: SourceLocation experimental/class-properties/edge-cases/input.js 34:12-34:18 (static)
 							}
-							loc: Object {
-								filename: "experimental/class-properties/edge-cases/input.js"
-								identifierName: "static"
-								end: Object {
-									column: 18
-									line: 34
-								}
-								start: Object {
-									column: 12
-									line: 34
-								}
-							}
+							loc: SourceLocation experimental/class-properties/edge-cases/input.js 34:12-34:18 (static)
 						}
 						value: undefined
 						definite: undefined
 						typeAnnotation: undefined
-						loc: Object {
-							filename: "experimental/class-properties/edge-cases/input.js"
-							end: Object {
-								column: 19
-								line: 34
-							}
-							start: Object {
-								column: 12
-								line: 34
-							}
-						}
+						loc: SourceLocation experimental/class-properties/edge-cases/input.js 34:12-34:19
 						meta: JSClassPropertyMeta {
 							abstract: false
 							accessibility: undefined
@@ -1629,17 +574,7 @@ JSRoot {
 							readonly: false
 							static: false
 							typeAnnotation: undefined
-							loc: Object {
-								filename: "experimental/class-properties/edge-cases/input.js"
-								end: Object {
-									column: 18
-									line: 34
-								}
-								start: Object {
-									column: 12
-									line: 34
-								}
-							}
+							loc: SourceLocation experimental/class-properties/edge-cases/input.js 34:12-34:18
 						}
 					}
 				]
@@ -1648,105 +583,32 @@ JSRoot {
 		JSClassDeclaration {
 			id: JSBindingIdentifier {
 				name: "A12"
-				loc: Object {
-					filename: "experimental/class-properties/edge-cases/input.js"
-					identifierName: "A12"
-					end: Object {
-						column: 9
-						line: 36
-					}
-					start: Object {
-						column: 6
-						line: 36
-					}
-				}
+				loc: SourceLocation experimental/class-properties/edge-cases/input.js 36:6-36:9 (A12)
 			}
-			loc: Object {
-				filename: "experimental/class-properties/edge-cases/input.js"
-				end: Object {
-					column: 1
-					line: 38
-				}
-				start: Object {
-					column: 0
-					line: 36
-				}
-			}
+			loc: SourceLocation experimental/class-properties/edge-cases/input.js 36:0-38:1
 			meta: JSClassHead {
 				implements: undefined
 				superClass: undefined
 				superTypeParameters: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "experimental/class-properties/edge-cases/input.js"
-					end: Object {
-						column: 1
-						line: 38
-					}
-					start: Object {
-						column: 0
-						line: 36
-					}
-				}
+				loc: SourceLocation experimental/class-properties/edge-cases/input.js 36:0-38:1
 				body: Array [
 					JSClassProperty {
 						key: JSStaticPropertyKey {
 							value: JSIdentifier {
 								name: "static"
-								loc: Object {
-									filename: "experimental/class-properties/edge-cases/input.js"
-									identifierName: "static"
-									end: Object {
-										column: 8
-										line: 37
-									}
-									start: Object {
-										column: 2
-										line: 37
-									}
-								}
+								loc: SourceLocation experimental/class-properties/edge-cases/input.js 37:2-37:8 (static)
 							}
-							loc: Object {
-								filename: "experimental/class-properties/edge-cases/input.js"
-								identifierName: "static"
-								end: Object {
-									column: 8
-									line: 37
-								}
-								start: Object {
-									column: 2
-									line: 37
-								}
-							}
+							loc: SourceLocation experimental/class-properties/edge-cases/input.js 37:2-37:8 (static)
 						}
 						value: JSNumericLiteral {
 							value: 0
 							format: undefined
-							loc: Object {
-								filename: "experimental/class-properties/edge-cases/input.js"
-								end: Object {
-									column: 12
-									line: 37
-								}
-								start: Object {
-									column: 11
-									line: 37
-								}
-							}
+							loc: SourceLocation experimental/class-properties/edge-cases/input.js 37:11-37:12
 						}
 						definite: undefined
 						typeAnnotation: undefined
-						loc: Object {
-							filename: "experimental/class-properties/edge-cases/input.js"
-							end: Object {
-								column: 13
-								line: 37
-							}
-							start: Object {
-								column: 2
-								line: 37
-							}
-						}
+						loc: SourceLocation experimental/class-properties/edge-cases/input.js 37:2-37:13
 						meta: JSClassPropertyMeta {
 							abstract: false
 							accessibility: undefined
@@ -1754,17 +616,7 @@ JSRoot {
 							readonly: false
 							static: false
 							typeAnnotation: undefined
-							loc: Object {
-								filename: "experimental/class-properties/edge-cases/input.js"
-								end: Object {
-									column: 8
-									line: 37
-								}
-								start: Object {
-									column: 2
-									line: 37
-								}
-							}
+							loc: SourceLocation experimental/class-properties/edge-cases/input.js 37:2-37:8
 						}
 					}
 				]
@@ -1773,122 +625,30 @@ JSRoot {
 		JSClassDeclaration {
 			id: JSBindingIdentifier {
 				name: "A13"
-				loc: Object {
-					filename: "experimental/class-properties/edge-cases/input.js"
-					identifierName: "A13"
-					end: Object {
-						column: 9
-						line: 40
-					}
-					start: Object {
-						column: 6
-						line: 40
-					}
-				}
+				loc: SourceLocation experimental/class-properties/edge-cases/input.js 40:6-40:9 (A13)
 			}
-			loc: Object {
-				filename: "experimental/class-properties/edge-cases/input.js"
-				end: Object {
-					column: 1
-					line: 43
-				}
-				start: Object {
-					column: 0
-					line: 40
-				}
-			}
+			loc: SourceLocation experimental/class-properties/edge-cases/input.js 40:0-43:1
 			meta: JSClassHead {
 				implements: undefined
 				superClass: undefined
 				superTypeParameters: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "experimental/class-properties/edge-cases/input.js"
-					end: Object {
-						column: 1
-						line: 43
-					}
-					start: Object {
-						column: 0
-						line: 40
-					}
-				}
+				loc: SourceLocation experimental/class-properties/edge-cases/input.js 40:0-43:1
 				body: Array [
 					JSClassMethod {
 						kind: "get"
 						key: JSComputedPropertyKey {
 							value: JSStringLiteral {
 								value: "a"
-								loc: Object {
-									filename: "experimental/class-properties/edge-cases/input.js"
-									end: Object {
-										column: 6
-										line: 42
-									}
-									start: Object {
-										column: 3
-										line: 42
-									}
-								}
+								loc: SourceLocation experimental/class-properties/edge-cases/input.js 42:3-42:6
 							}
-							loc: Object {
-								filename: "experimental/class-properties/edge-cases/input.js"
-								end: Object {
-									column: 7
-									line: 42
-								}
-								start: Object {
-									column: 2
-									line: 42
-								}
-							}
+							loc: SourceLocation experimental/class-properties/edge-cases/input.js 42:2-42:7
 						}
-						loc: Object {
-							filename: "experimental/class-properties/edge-cases/input.js"
-							end: Object {
-								column: 11
-								line: 42
-							}
-							start: Object {
-								column: 2
-								line: 41
-							}
-						}
+						loc: SourceLocation experimental/class-properties/edge-cases/input.js 41:2-42:11
 						body: JSBlockStatement {
 							body: Array []
 							directives: Array []
-							loc: Object {
-								filename: "experimental/class-properties/edge-cases/input.js"
-								end: Object {
-									column: 11
-									line: 42
-								}
-								start: Object {
-									column: 9
-									line: 42
-								}
-							}
-						}
-						head: JSFunctionHead {
-							async: false
-							generator: false
-							hasHoistedVars: false
-							params: Array []
-							rest: undefined
-							returnType: undefined
-							thisType: undefined
-							typeParameters: undefined
-							loc: Object {
-								filename: "experimental/class-properties/edge-cases/input.js"
-								end: Object {
-									column: 9
-									line: 42
-								}
-								start: Object {
-									column: 7
-									line: 42
-								}
-							}
+							loc: SourceLocation experimental/class-properties/edge-cases/input.js 42:9-42:11
 						}
 						meta: JSClassPropertyMeta {
 							abstract: false
@@ -1897,125 +657,8 @@ JSRoot {
 							readonly: false
 							static: false
 							typeAnnotation: undefined
-							start: Object {
-								column: 2
-								line: 41
-							}
-							loc: Object {
-								filename: "experimental/class-properties/edge-cases/input.js"
-								end: Object {
-									column: 7
-									line: 42
-								}
-								start: Object {
-									column: 2
-									line: 41
-								}
-							}
-						}
-					}
-				]
-			}
-		}
-		JSClassDeclaration {
-			id: JSBindingIdentifier {
-				name: "A14"
-				loc: Object {
-					filename: "experimental/class-properties/edge-cases/input.js"
-					identifierName: "A14"
-					end: Object {
-						column: 9
-						line: 45
-					}
-					start: Object {
-						column: 6
-						line: 45
-					}
-				}
-			}
-			loc: Object {
-				filename: "experimental/class-properties/edge-cases/input.js"
-				end: Object {
-					column: 1
-					line: 50
-				}
-				start: Object {
-					column: 0
-					line: 45
-				}
-			}
-			meta: JSClassHead {
-				implements: undefined
-				superClass: undefined
-				superTypeParameters: undefined
-				typeParameters: undefined
-				loc: Object {
-					filename: "experimental/class-properties/edge-cases/input.js"
-					end: Object {
-						column: 1
-						line: 50
-					}
-					start: Object {
-						column: 0
-						line: 45
-					}
-				}
-				body: Array [
-					JSClassMethod {
-						kind: "get"
-						key: JSStaticPropertyKey {
-							value: JSIdentifier {
-								name: "static"
-								loc: Object {
-									filename: "experimental/class-properties/edge-cases/input.js"
-									identifierName: "static"
-									end: Object {
-										column: 8
-										line: 48
-									}
-									start: Object {
-										column: 2
-										line: 48
-									}
-								}
-							}
-							loc: Object {
-								filename: "experimental/class-properties/edge-cases/input.js"
-								end: Object {
-									column: 8
-									line: 48
-								}
-								start: Object {
-									column: 2
-									line: 48
-								}
-							}
-						}
-						loc: Object {
-							filename: "experimental/class-properties/edge-cases/input.js"
-							end: Object {
-								column: 6
-								line: 49
-							}
-							start: Object {
-								column: 2
-								line: 46
-							}
-						}
-						body: JSBlockStatement {
-							body: Array []
-							directives: Array []
-							loc: Object {
-								filename: "experimental/class-properties/edge-cases/input.js"
-								end: Object {
-									column: 6
-									line: 49
-								}
-								start: Object {
-									column: 4
-									line: 49
-								}
-							}
+							loc: SourceLocation experimental/class-properties/edge-cases/input.js 41:2-42:7
+							start: Position 41:2
 						}
 						head: JSFunctionHead {
 							async: false
@@ -2026,17 +669,39 @@ JSRoot {
 							returnType: undefined
 							thisType: undefined
 							typeParameters: undefined
-							loc: Object {
-								filename: "experimental/class-properties/edge-cases/input.js"
-								end: Object {
-									column: 4
-									line: 49
-								}
-								start: Object {
-									column: 2
-									line: 49
-								}
+							loc: SourceLocation experimental/class-properties/edge-cases/input.js 42:7-42:9
+						}
+					}
+				]
+			}
+		}
+		JSClassDeclaration {
+			id: JSBindingIdentifier {
+				name: "A14"
+				loc: SourceLocation experimental/class-properties/edge-cases/input.js 45:6-45:9 (A14)
+			}
+			loc: SourceLocation experimental/class-properties/edge-cases/input.js 45:0-50:1
+			meta: JSClassHead {
+				implements: undefined
+				superClass: undefined
+				superTypeParameters: undefined
+				typeParameters: undefined
+				loc: SourceLocation experimental/class-properties/edge-cases/input.js 45:0-50:1
+				body: Array [
+					JSClassMethod {
+						kind: "get"
+						key: JSStaticPropertyKey {
+							value: JSIdentifier {
+								name: "static"
+								loc: SourceLocation experimental/class-properties/edge-cases/input.js 48:2-48:8 (static)
 							}
+							loc: SourceLocation experimental/class-properties/edge-cases/input.js 48:2-48:8
+						}
+						loc: SourceLocation experimental/class-properties/edge-cases/input.js 46:2-49:6
+						body: JSBlockStatement {
+							body: Array []
+							directives: Array []
+							loc: SourceLocation experimental/class-properties/edge-cases/input.js 49:4-49:6
 						}
 						meta: JSClassPropertyMeta {
 							abstract: false
@@ -2045,21 +710,19 @@ JSRoot {
 							readonly: false
 							static: true
 							typeAnnotation: undefined
-							start: Object {
-								column: 2
-								line: 46
-							}
-							loc: Object {
-								filename: "experimental/class-properties/edge-cases/input.js"
-								end: Object {
-									column: 8
-									line: 48
-								}
-								start: Object {
-									column: 2
-									line: 46
-								}
-							}
+							loc: SourceLocation experimental/class-properties/edge-cases/input.js 46:2-48:8
+							start: Position 46:2
+						}
+						head: JSFunctionHead {
+							async: false
+							generator: false
+							hasHoistedVars: false
+							params: Array []
+							rest: undefined
+							returnType: undefined
+							thisType: undefined
+							typeParameters: undefined
+							loc: SourceLocation experimental/class-properties/edge-cases/input.js 49:2-49:4
 						}
 					}
 				]
@@ -2072,6 +735,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

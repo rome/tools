@@ -2,7 +2,7 @@ import {test} from "rome";
 import {renameBindings} from "@internal/js-ast-utils/renameBindings";
 import {CompilerContext, Path} from "@internal/compiler";
 import {
-	MOCK_PROGRAM,
+	MOCK_JS_ROOT,
 	jsAssignmentExpression,
 	jsExpressionStatement,
 	jsIdentifier,
@@ -11,7 +11,6 @@ import {
 	jsReferenceIdentifier,
 	jsStaticMemberProperty,
 } from "@internal/ast";
-import {createDefaultProjectConfig} from "@internal/project";
 
 test(
 	"should rename biding",
@@ -40,12 +39,7 @@ test(
 		map.set("foo", "hello");
 
 		const context = new CompilerContext({
-			ast: MOCK_PROGRAM,
-			project: {
-				configHashes: [],
-				directory: undefined,
-				config: createDefaultProjectConfig(),
-			},
+			ast: MOCK_JS_ROOT,
 		});
 
 		const path = new Path(js, context, {});

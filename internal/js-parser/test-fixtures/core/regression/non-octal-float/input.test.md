@@ -12,50 +12,20 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "core/regression/non-octal-float/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "core/regression/non-octal-float/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation core/regression/non-octal-float/input.js 1:0-2:0
+	path: UIDPath<core/regression/non-octal-float/input.js>
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "core/regression/non-octal-float/input.js"
-				end: Object {
-					column: 4
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation core/regression/non-octal-float/input.js 1:0-1:4
 			expression: JSNumericLiteral {
 				value: 9.5
 				format: undefined
-				loc: Object {
-					filename: "core/regression/non-octal-float/input.js"
-					end: Object {
-						column: 4
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation core/regression/non-octal-float/input.js 1:0-1:4
 			}
 		}
 	]
@@ -65,6 +35,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

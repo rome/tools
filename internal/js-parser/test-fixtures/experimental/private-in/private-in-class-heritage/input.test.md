@@ -11,48 +11,29 @@ JSRoot {
 	comments: Array []
 	corrupt: true
 	directives: Array []
-	filename: "experimental/private-in/private-in-class-heritage/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "experimental/private-in/private-in-class-heritage/input.js"
-		end: Object {
-			column: 0
-			line: 7
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation experimental/private-in/private-in-class-heritage/input.js 1:0-7:0
+	path: UIDPath<experimental/private-in/private-in-class-heritage/input.js>
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse"
 				categoryValue: "js"
-				message: Array [
-					RAW_MARKUP {value: "Unknown start to an "}
-					"class heritage"
-				]
+				category: Array ["parse"]
+				message: RAW_MARKUP {value: "Unknown start to an class heritage"}
 			}
 			location: Object {
-				filename: "experimental/private-in/private-in-class-heritage/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 21
-					line: 4
-				}
-				start: Object {
-					column: 21
-					line: 4
-				}
+				end: Position 4:21
+				path: UIDPath<experimental/private-in/private-in-class-heritage/input.js>
+				start: Position 4:21
 			}
 		}
 	]
@@ -60,103 +41,31 @@ JSRoot {
 		JSClassDeclaration {
 			id: JSBindingIdentifier {
 				name: "Foo"
-				loc: Object {
-					filename: "experimental/private-in/private-in-class-heritage/input.js"
-					identifierName: "Foo"
-					end: Object {
-						column: 9
-						line: 1
-					}
-					start: Object {
-						column: 6
-						line: 1
-					}
-				}
+				loc: SourceLocation experimental/private-in/private-in-class-heritage/input.js 1:6-1:9 (Foo)
 			}
-			loc: Object {
-				filename: "experimental/private-in/private-in-class-heritage/input.js"
-				end: Object {
-					column: 1
-					line: 6
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation experimental/private-in/private-in-class-heritage/input.js 1:0-6:1
 			meta: JSClassHead {
 				implements: undefined
 				superClass: undefined
 				superTypeParameters: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "experimental/private-in/private-in-class-heritage/input.js"
-					end: Object {
-						column: 1
-						line: 6
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation experimental/private-in/private-in-class-heritage/input.js 1:0-6:1
 				body: Array [
 					JSClassPrivateProperty {
 						key: JSPrivateName {
 							id: JSIdentifier {
 								name: "x"
-								loc: Object {
-									filename: "experimental/private-in/private-in-class-heritage/input.js"
-									identifierName: "x"
-									end: Object {
-										column: 4
-										line: 2
-									}
-									start: Object {
-										column: 3
-										line: 2
-									}
-								}
+								loc: SourceLocation experimental/private-in/private-in-class-heritage/input.js 2:3-2:4 (x)
 							}
-							loc: Object {
-								filename: "experimental/private-in/private-in-class-heritage/input.js"
-								end: Object {
-									column: 4
-									line: 2
-								}
-								start: Object {
-									column: 2
-									line: 2
-								}
-							}
+							loc: SourceLocation experimental/private-in/private-in-class-heritage/input.js 2:2-2:4
 						}
 						value: JSNumericLiteral {
 							value: 1
 							format: undefined
-							loc: Object {
-								filename: "experimental/private-in/private-in-class-heritage/input.js"
-								end: Object {
-									column: 8
-									line: 2
-								}
-								start: Object {
-									column: 7
-									line: 2
-								}
-							}
+							loc: SourceLocation experimental/private-in/private-in-class-heritage/input.js 2:7-2:8
 						}
 						typeAnnotation: undefined
-						loc: Object {
-							filename: "experimental/private-in/private-in-class-heritage/input.js"
-							end: Object {
-								column: 9
-								line: 2
-							}
-							start: Object {
-								column: 2
-								line: 2
-							}
-						}
+						loc: SourceLocation experimental/private-in/private-in-class-heritage/input.js 2:2-2:9
 						meta: JSClassPropertyMeta {
 							abstract: false
 							accessibility: undefined
@@ -164,21 +73,8 @@ JSRoot {
 							readonly: false
 							static: false
 							typeAnnotation: undefined
-							start: Object {
-								column: 2
-								line: 2
-							}
-							loc: Object {
-								filename: "experimental/private-in/private-in-class-heritage/input.js"
-								end: Object {
-									column: 4
-									line: 2
-								}
-								start: Object {
-									column: 2
-									line: 2
-								}
-							}
+							loc: SourceLocation experimental/private-in/private-in-class-heritage/input.js 2:2-2:4
+							start: Position 2:2
 						}
 					}
 					JSClassMethod {
@@ -186,41 +82,20 @@ JSRoot {
 						key: JSStaticPropertyKey {
 							value: JSIdentifier {
 								name: "test"
-								loc: Object {
-									filename: "experimental/private-in/private-in-class-heritage/input.js"
-									identifierName: "test"
-									end: Object {
-										column: 6
-										line: 3
-									}
-									start: Object {
-										column: 2
-										line: 3
-									}
-								}
+								loc: SourceLocation experimental/private-in/private-in-class-heritage/input.js 3:2-3:6 (test)
 							}
-							loc: Object {
-								filename: "experimental/private-in/private-in-class-heritage/input.js"
-								end: Object {
-									column: 6
-									line: 3
-								}
-								start: Object {
-									column: 2
-									line: 3
-								}
-							}
+							loc: SourceLocation experimental/private-in/private-in-class-heritage/input.js 3:2-3:6
 						}
-						loc: Object {
-							filename: "experimental/private-in/private-in-class-heritage/input.js"
-							end: Object {
-								column: 3
-								line: 5
-							}
-							start: Object {
-								column: 2
-								line: 3
-							}
+						loc: SourceLocation experimental/private-in/private-in-class-heritage/input.js 3:2-5:3
+						meta: JSClassPropertyMeta {
+							abstract: false
+							accessibility: undefined
+							optional: false
+							readonly: false
+							static: false
+							typeAnnotation: undefined
+							loc: SourceLocation experimental/private-in/private-in-class-heritage/input.js 3:2-3:6
+							start: Position 3:2
 						}
 						head: JSFunctionHead {
 							async: false
@@ -231,155 +106,40 @@ JSRoot {
 							returnType: undefined
 							thisType: undefined
 							typeParameters: undefined
-							loc: Object {
-								filename: "experimental/private-in/private-in-class-heritage/input.js"
-								end: Object {
-									column: 8
-									line: 3
-								}
-								start: Object {
-									column: 6
-									line: 3
-								}
-							}
-						}
-						meta: JSClassPropertyMeta {
-							abstract: false
-							accessibility: undefined
-							optional: false
-							readonly: false
-							static: false
-							typeAnnotation: undefined
-							start: Object {
-								column: 2
-								line: 3
-							}
-							loc: Object {
-								filename: "experimental/private-in/private-in-class-heritage/input.js"
-								end: Object {
-									column: 6
-									line: 3
-								}
-								start: Object {
-									column: 2
-									line: 3
-								}
-							}
+							loc: SourceLocation experimental/private-in/private-in-class-heritage/input.js 3:6-3:8
 						}
 						body: JSBlockStatement {
 							directives: Array []
-							loc: Object {
-								filename: "experimental/private-in/private-in-class-heritage/input.js"
-								end: Object {
-									column: 3
-									line: 5
-								}
-								start: Object {
-									column: 9
-									line: 3
-								}
-							}
+							loc: SourceLocation experimental/private-in/private-in-class-heritage/input.js 3:9-5:3
 							body: Array [
 								JSClassDeclaration {
 									id: JSBindingIdentifier {
 										name: "X"
-										loc: Object {
-											filename: "experimental/private-in/private-in-class-heritage/input.js"
-											identifierName: "X"
-											end: Object {
-												column: 11
-												line: 4
-											}
-											start: Object {
-												column: 10
-												line: 4
-											}
-										}
+										loc: SourceLocation experimental/private-in/private-in-class-heritage/input.js 4:10-4:11 (X)
 									}
-									loc: Object {
-										filename: "experimental/private-in/private-in-class-heritage/input.js"
-										end: Object {
-											column: 29
-											line: 4
-										}
-										start: Object {
-											column: 4
-											line: 4
-										}
-									}
+									loc: SourceLocation experimental/private-in/private-in-class-heritage/input.js 4:4-4:29
 									meta: JSClassHead {
 										implements: undefined
 										superTypeParameters: undefined
 										typeParameters: undefined
-										loc: Object {
-											filename: "experimental/private-in/private-in-class-heritage/input.js"
-											end: Object {
-												column: 29
-												line: 4
-											}
-											start: Object {
-												column: 4
-												line: 4
-											}
-										}
+										loc: SourceLocation experimental/private-in/private-in-class-heritage/input.js 4:4-4:29
 										superClass: JSReferenceIdentifier {
 											name: "INVALID_PLACEHOLDER"
-											loc: Object {
-												filename: "experimental/private-in/private-in-class-heritage/input.js"
-												end: Object {
-													column: 22
-													line: 4
-												}
-												start: Object {
-													column: 21
-													line: 4
-												}
-											}
+											loc: SourceLocation experimental/private-in/private-in-class-heritage/input.js 4:21-4:22
 										}
 										body: Array [
 											JSClassProperty {
 												key: JSStaticPropertyKey {
 													value: JSIdentifier {
 														name: ""
-														loc: Object {
-															filename: "experimental/private-in/private-in-class-heritage/input.js"
-															identifierName: ""
-															end: Object {
-																column: 28
-																line: 4
-															}
-															start: Object {
-																column: 27
-																line: 4
-															}
-														}
+														loc: SourceLocation experimental/private-in/private-in-class-heritage/input.js 4:27-4:28 ()
 													}
-													loc: Object {
-														filename: "experimental/private-in/private-in-class-heritage/input.js"
-														end: Object {
-															column: 28
-															line: 4
-														}
-														start: Object {
-															column: 27
-															line: 4
-														}
-													}
+													loc: SourceLocation experimental/private-in/private-in-class-heritage/input.js 4:27-4:28
 												}
 												value: undefined
 												definite: undefined
 												typeAnnotation: undefined
-												loc: Object {
-													filename: "experimental/private-in/private-in-class-heritage/input.js"
-													end: Object {
-														column: 28
-														line: 4
-													}
-													start: Object {
-														column: 27
-														line: 4
-													}
-												}
+												loc: SourceLocation experimental/private-in/private-in-class-heritage/input.js 4:27-4:28
 												meta: JSClassPropertyMeta {
 													abstract: false
 													accessibility: undefined
@@ -387,81 +147,26 @@ JSRoot {
 													readonly: false
 													static: false
 													typeAnnotation: undefined
-													start: Object {
-														column: 27
-														line: 4
-													}
-													loc: Object {
-														filename: "experimental/private-in/private-in-class-heritage/input.js"
-														end: Object {
-															column: 28
-															line: 4
-														}
-														start: Object {
-															column: 27
-															line: 4
-														}
-													}
+													loc: SourceLocation experimental/private-in/private-in-class-heritage/input.js 4:27-4:28
+													start: Position 4:27
 												}
 											}
 										]
 									}
 								}
 								JSExpressionStatement {
-									loc: Object {
-										filename: "experimental/private-in/private-in-class-heritage/input.js"
-										end: Object {
-											column: 30
-											line: 4
-										}
-										start: Object {
-											column: 29
-											line: 4
-										}
-									}
+									loc: SourceLocation experimental/private-in/private-in-class-heritage/input.js 4:29-4:30
 									expression: JSReferenceIdentifier {
 										name: "INVALID_PLACEHOLDER"
-										loc: Object {
-											filename: "experimental/private-in/private-in-class-heritage/input.js"
-											end: Object {
-												column: 30
-												line: 4
-											}
-											start: Object {
-												column: 29
-												line: 4
-											}
-										}
+										loc: SourceLocation experimental/private-in/private-in-class-heritage/input.js 4:29-4:30
 									}
 								}
 								JSBlockStatement {
 									body: Array []
 									directives: Array []
-									loc: Object {
-										filename: "experimental/private-in/private-in-class-heritage/input.js"
-										end: Object {
-											column: 33
-											line: 4
-										}
-										start: Object {
-											column: 31
-											line: 4
-										}
-									}
+									loc: SourceLocation experimental/private-in/private-in-class-heritage/input.js 4:31-4:33
 								}
-								JSEmptyStatement {
-									loc: Object {
-										filename: "experimental/private-in/private-in-class-heritage/input.js"
-										end: Object {
-											column: 34
-											line: 4
-										}
-										start: Object {
-											column: 33
-											line: 4
-										}
-									}
-								}
+								JSEmptyStatement {loc: SourceLocation experimental/private-in/private-in-class-heritage/input.js 4:33-4:34}
 							]
 						}
 					}
@@ -487,8 +192,5 @@ JSRoot {
     5 │   }
     6 │ }
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

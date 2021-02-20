@@ -12,7 +12,7 @@ import {TestHelper, test, testOptions} from "rome";
 import {
 	AbsoluteFilePath,
 	AbsoluteFilePathSet,
-	RelativeFilePath,
+	RelativePath,
 	createAbsoluteFilePath,
 } from "@internal/path";
 import {
@@ -23,6 +23,7 @@ import {
 	readFileText,
 } from "@internal/fs";
 import {ExtendedMap} from "@internal/collections";
+import {DIAGNOSTIC_CATEGORIES} from "@internal/diagnostics";
 
 const dirname = testOptions.dirname ?? "";
 
@@ -47,7 +48,7 @@ export type Fixture = {
 };
 
 export type FixtureFile = {
-	relative: RelativeFilePath;
+	relative: RelativePath;
 	absolute: AbsoluteFilePath;
 	content: Buffer;
 };
@@ -91,7 +92,7 @@ async function _getFixtures(
 						...inheritOptions.asUnknownObject(),
 						...ownOptions.asUnknownObject(),
 					},
-					"tests/fixtureOptions",
+					DIAGNOSTIC_CATEGORIES["tests/fixtureOptions"],
 				);
 
 	// An array of directories names that lead to this fixture
@@ -160,7 +161,7 @@ export async function getFixtures(dir: string): Promise<Fixture[]> {
 		name: undefined,
 		dir: root,
 		parts: [],
-		options: consumeUnknown({}, "tests/fixtureOptions"),
+		options: consumeUnknown({}, DIAGNOSTIC_CATEGORIES["tests/fixtureOptions"]),
 	});
 }
 

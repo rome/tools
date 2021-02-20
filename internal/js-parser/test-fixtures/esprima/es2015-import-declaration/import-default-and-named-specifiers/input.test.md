@@ -12,150 +12,47 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "esprima/es2015-import-declaration/import-default-and-named-specifiers/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
 	syntax: Array []
-	loc: Object {
-		filename: "esprima/es2015-import-declaration/import-default-and-named-specifiers/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation esprima/es2015-import-declaration/import-default-and-named-specifiers/input.js 1:0-2:0
+	path: UIDPath<esprima/es2015-import-declaration/import-default-and-named-specifiers/input.js>
 	body: Array [
 		JSImportDeclaration {
 			importKind: undefined
 			namespaceSpecifier: undefined
-			loc: Object {
-				filename: "esprima/es2015-import-declaration/import-default-and-named-specifiers/input.js"
-				end: Object {
-					column: 29
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation esprima/es2015-import-declaration/import-default-and-named-specifiers/input.js 1:0-1:29
 			source: JSStringLiteral {
 				value: "foo"
-				loc: Object {
-					filename: "esprima/es2015-import-declaration/import-default-and-named-specifiers/input.js"
-					end: Object {
-						column: 28
-						line: 1
-					}
-					start: Object {
-						column: 23
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/es2015-import-declaration/import-default-and-named-specifiers/input.js 1:23-1:28
 			}
 			defaultSpecifier: JSImportDefaultSpecifier {
-				loc: Object {
-					filename: "esprima/es2015-import-declaration/import-default-and-named-specifiers/input.js"
-					end: Object {
-						column: 10
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/es2015-import-declaration/import-default-and-named-specifiers/input.js 1:0-1:10
 				local: JSImportSpecifierLocal {
 					name: JSBindingIdentifier {
 						name: "foo"
-						loc: Object {
-							filename: "esprima/es2015-import-declaration/import-default-and-named-specifiers/input.js"
-							identifierName: "foo"
-							end: Object {
-								column: 10
-								line: 1
-							}
-							start: Object {
-								column: 7
-								line: 1
-							}
-						}
+						loc: SourceLocation esprima/es2015-import-declaration/import-default-and-named-specifiers/input.js 1:7-1:10 (foo)
 					}
 					importKind: undefined
-					loc: Object {
-						filename: "esprima/es2015-import-declaration/import-default-and-named-specifiers/input.js"
-						end: Object {
-							column: 10
-							line: 1
-						}
-						start: Object {
-							column: 7
-							line: 1
-						}
-					}
+					loc: SourceLocation esprima/es2015-import-declaration/import-default-and-named-specifiers/input.js 1:7-1:10
 				}
 			}
 			namedSpecifiers: Array [
 				JSImportSpecifier {
-					loc: Object {
-						filename: "esprima/es2015-import-declaration/import-default-and-named-specifiers/input.js"
-						end: Object {
-							column: 16
-							line: 1
-						}
-						start: Object {
-							column: 13
-							line: 1
-						}
-					}
+					loc: SourceLocation esprima/es2015-import-declaration/import-default-and-named-specifiers/input.js 1:13-1:16
 					imported: JSIdentifier {
 						name: "bar"
-						loc: Object {
-							filename: "esprima/es2015-import-declaration/import-default-and-named-specifiers/input.js"
-							identifierName: "bar"
-							end: Object {
-								column: 16
-								line: 1
-							}
-							start: Object {
-								column: 13
-								line: 1
-							}
-						}
+						loc: SourceLocation esprima/es2015-import-declaration/import-default-and-named-specifiers/input.js 1:13-1:16 (bar)
 					}
 					local: JSImportSpecifierLocal {
 						name: JSBindingIdentifier {
 							name: "bar"
-							loc: Object {
-								filename: "esprima/es2015-import-declaration/import-default-and-named-specifiers/input.js"
-								identifierName: "bar"
-								end: Object {
-									column: 16
-									line: 1
-								}
-								start: Object {
-									column: 13
-									line: 1
-								}
-							}
+							loc: SourceLocation esprima/es2015-import-declaration/import-default-and-named-specifiers/input.js 1:13-1:16 (bar)
 						}
 						importKind: undefined
-						loc: Object {
-							filename: "esprima/es2015-import-declaration/import-default-and-named-specifiers/input.js"
-							end: Object {
-								column: 16
-								line: 1
-							}
-							start: Object {
-								column: 13
-								line: 1
-							}
-						}
+						loc: SourceLocation esprima/es2015-import-declaration/import-default-and-named-specifiers/input.js 1:13-1:16
 					}
 				}
 			]
@@ -167,6 +64,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

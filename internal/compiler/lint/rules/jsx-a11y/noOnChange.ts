@@ -11,7 +11,7 @@ export default createVisitor({
 	enter(path) {
 		const {context, node} = path;
 
-		if (!isJSXElement(node, "select") && !isJSXElement(node, "option")) {
+		if (!(isJSXElement(node, "select") || isJSXElement(node, "option"))) {
 			return signals.retain;
 		}
 

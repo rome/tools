@@ -15,9 +15,6 @@
     let thing = foo ? bar : baz === qux ? quxx : foobar;
                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -43,9 +40,9 @@ let thing = foo ? bar : baz === qux ? quxx : foobar;
 
   ✖ Nesting ternary expressions can make code more difficult to understand.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    let thing = foo ? bar ? boo : foo : baz ? boo : foo;
+                      ^^^^^^^^^^^^^^^
 
-✖ Found 2 problems
 
 ```
 
@@ -67,9 +64,6 @@ let thing = foo ? bar ? boo : foo : baz ? boo : foo;
     foo ? baz === qux ? quxx() : foobar() : bar();
           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -83,7 +77,6 @@ foo ? baz === qux ? quxx() : foobar() : bar();
 ### `3`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -97,7 +90,6 @@ let thing = foo ? bar : foobar;
 ### `4`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -111,7 +103,6 @@ let thing = foo ? bar || boo : foo || bar;
 ### `5`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -125,7 +116,6 @@ let thing = foo ? bar && boo : foo && bar;
 ### `6`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -139,7 +129,6 @@ let thing = foo || baz ? bar || boo : foo || bar;
 ### `7`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -153,7 +142,6 @@ let thing = foo && baz ? bar || boo : foo && bar;
 ### `8`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -167,7 +155,6 @@ let thing = foo || baz ? bar || boo : foo && bar;
 ### `9`
 
 ```
-✔ No known problems!
 
 ```
 

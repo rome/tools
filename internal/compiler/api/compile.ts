@@ -11,12 +11,13 @@ import {Cache} from "@internal/compiler";
 import {formatAST} from "@internal/formatter";
 import {CompileRequest} from "../types";
 import transform from "../methods/transform";
+import {AnyPath} from "@internal/path";
 
 export type CompileResult = {
 	mappings: Mappings;
 	diagnostics: Diagnostics;
 	suppressions: DiagnosticSuppressions;
-	cacheDependencies: string[];
+	cacheDependencies: AnyPath[];
 	compiledCode: string;
 	sourceText: string;
 };
@@ -44,7 +45,7 @@ export default async function compile(
 	const formatted = formatAST(
 		transformedAst,
 		{
-			projectConfig: project.config,
+			projectConfig: project?.config,
 			typeAnnotations: false,
 			indent: req.stage === "compileForBundle" ? 1 : 0,
 			sourceMaps: true,

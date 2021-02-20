@@ -6,7 +6,7 @@
  */
 
 import {ProjectConfig} from "@internal/project";
-import {AnyFilePath, UnknownPath, createUnknownPath} from "@internal/path";
+import {AnyPath} from "@internal/path";
 import {ExtensionHandler, PartialExtensionHandler} from "./types";
 import {
 	cjsHandler,
@@ -17,7 +17,11 @@ import {
 	tsxHandler,
 } from "./javascript";
 import {htmlHandler} from "./html";
-import {DiagnosticLanguage} from "@internal/diagnostics";
+import {
+	DiagnosticLanguage,
+	createSingleDiagnosticError,
+	descriptions,
+} from "@internal/diagnostics";
 import {markdownHandler} from "@internal/core/common/file-handlers/markdown";
 import {
 	assetHandler,
@@ -33,18 +37,15 @@ export type GetFileHandlerResult = {
 	handler?: ExtensionHandler;
 };
 
-export function inferDiagnosticLanguageFromFilename(
-	filename: undefined | UnknownPath | string,
+export function inferDiagnosticLanguageFromPath(
+	path: undefined | AnyPath,
 	existing?: DiagnosticLanguage,
 ): DiagnosticLanguage {
 	if (existing !== undefined && existing !== "unknown") {
 		return existing;
 	}
-	if (filename !== undefined) {
-		const {handler} = getFileHandlerFromPath(
-			createUnknownPath(filename),
-			undefined,
-		);
+	if (path !== undefined) {
+		const {handler} = getFileHandlerFromPath(path, undefined);
 		if (handler !== undefined) {
 			return handler.language;
 		}
@@ -64,7 +65,7 @@ export function getFileHandlerExtensions(
 }
 
 export function getFileHandlerFromPath(
-	path: AnyFilePath,
+	path: AnyPath,
 	projectConfig: undefined | ProjectConfig,
 ): GetFileHandlerResult {
 	const basename = path.getBasename();
@@ -90,13 +91,18 @@ export function getFileHandlerFromPath(
 }
 
 export function getFileHandlerFromPathAssert(
-	path: AnyFilePath,
+	path: AnyPath,
 	projectConfig: undefined | ProjectConfig,
 ): Required<GetFileHandlerResult> {
 	const {handler, ext} = getFileHandlerFromPath(path, projectConfig);
 
 	if (handler === undefined) {
-		throw new Error(`No file handler found for '${path.join()}'`);
+		throw createSingleDiagnosticError({
+			description: descriptions.FILES.NO_FILE_HANDLER(path),
+			location: {
+				path,
+			},
+		});
 	} else {
 		return {handler, ext};
 	}
@@ -163,8 +169,8 @@ setHandler("html", htmlHandler);
 setHandler("htm", htmlHandler);
 setHandler("md", markdownHandler);
 setHandler("css", cssHandler);
-// Config
 
+// Config
 for (const handler of CONFIG_HANDLERS) {
 	for (const ext of handler.extensions) {
 		if (ext === "yaml" || ext === "yml" || ext === "toml" || ext === "ini") {

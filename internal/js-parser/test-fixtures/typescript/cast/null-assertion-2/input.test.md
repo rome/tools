@@ -12,90 +12,29 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "typescript/cast/null-assertion-2/input.ts"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
+	loc: SourceLocation typescript/cast/null-assertion-2/input.ts 1:0-2:0
+	path: UIDPath<typescript/cast/null-assertion-2/input.ts>
 	syntax: Array ["ts"]
-	loc: Object {
-		filename: "typescript/cast/null-assertion-2/input.ts"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "typescript/cast/null-assertion-2/input.ts"
-				end: Object {
-					column: 6
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation typescript/cast/null-assertion-2/input.ts 1:0-1:6
 			expression: JSBinaryExpression {
 				operator: "/"
-				loc: Object {
-					filename: "typescript/cast/null-assertion-2/input.ts"
-					end: Object {
-						column: 6
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/cast/null-assertion-2/input.ts 1:0-1:6
 				right: JSNumericLiteral {
 					value: 2
 					format: undefined
-					loc: Object {
-						filename: "typescript/cast/null-assertion-2/input.ts"
-						end: Object {
-							column: 6
-							line: 1
-						}
-						start: Object {
-							column: 5
-							line: 1
-						}
-					}
+					loc: SourceLocation typescript/cast/null-assertion-2/input.ts 1:5-1:6
 				}
 				left: TSNonNullExpression {
-					loc: Object {
-						filename: "typescript/cast/null-assertion-2/input.ts"
-						end: Object {
-							column: 2
-							line: 1
-						}
-						start: Object {
-							column: 0
-							line: 1
-						}
-					}
+					loc: SourceLocation typescript/cast/null-assertion-2/input.ts 1:0-1:2
 					expression: JSReferenceIdentifier {
 						name: "x"
-						loc: Object {
-							filename: "typescript/cast/null-assertion-2/input.ts"
-							identifierName: "x"
-							end: Object {
-								column: 1
-								line: 1
-							}
-							start: Object {
-								column: 0
-								line: 1
-							}
-						}
+						loc: SourceLocation typescript/cast/null-assertion-2/input.ts 1:0-1:1 (x)
 					}
 				}
 			}
@@ -107,6 +46,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

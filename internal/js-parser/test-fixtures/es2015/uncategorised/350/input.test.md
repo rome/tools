@@ -12,159 +12,48 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "es2015/uncategorised/350/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2015/uncategorised/350/input.js"
-		end: Object {
-			column: 36
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2015/uncategorised/350/input.js 1:0-1:36
+	path: UIDPath<es2015/uncategorised/350/input.js>
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "es2015/uncategorised/350/input.js"
-				end: Object {
-					column: 36
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2015/uncategorised/350/input.js 1:0-1:36
 			expression: JSObjectExpression {
-				loc: Object {
-					filename: "es2015/uncategorised/350/input.js"
-					end: Object {
-						column: 35
-						line: 1
-					}
-					start: Object {
-						column: 1
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/uncategorised/350/input.js 1:1-1:35
 				properties: Array [
 					JSObjectProperty {
 						key: JSComputedPropertyKey {
 							value: JSStringLiteral {
 								value: "__proto__"
-								loc: Object {
-									filename: "es2015/uncategorised/350/input.js"
-									end: Object {
-										column: 15
-										line: 1
-									}
-									start: Object {
-										column: 4
-										line: 1
-									}
-								}
+								loc: SourceLocation es2015/uncategorised/350/input.js 1:4-1:15
 							}
-							loc: Object {
-								filename: "es2015/uncategorised/350/input.js"
-								end: Object {
-									column: 16
-									line: 1
-								}
-								start: Object {
-									column: 3
-									line: 1
-								}
-							}
+							loc: SourceLocation es2015/uncategorised/350/input.js 1:3-1:16
 						}
 						value: JSNumericLiteral {
 							value: 1
 							format: undefined
-							loc: Object {
-								filename: "es2015/uncategorised/350/input.js"
-								end: Object {
-									column: 19
-									line: 1
-								}
-								start: Object {
-									column: 18
-									line: 1
-								}
-							}
+							loc: SourceLocation es2015/uncategorised/350/input.js 1:18-1:19
 						}
-						loc: Object {
-							filename: "es2015/uncategorised/350/input.js"
-							end: Object {
-								column: 19
-								line: 1
-							}
-							start: Object {
-								column: 3
-								line: 1
-							}
-						}
+						loc: SourceLocation es2015/uncategorised/350/input.js 1:3-1:19
 					}
 					JSObjectProperty {
 						key: JSStaticPropertyKey {
 							value: JSIdentifier {
 								name: "__proto__"
-								loc: Object {
-									filename: "es2015/uncategorised/350/input.js"
-									identifierName: "__proto__"
-									end: Object {
-										column: 30
-										line: 1
-									}
-									start: Object {
-										column: 21
-										line: 1
-									}
-								}
+								loc: SourceLocation es2015/uncategorised/350/input.js 1:21-1:30 (__proto__)
 							}
-							loc: Object {
-								filename: "es2015/uncategorised/350/input.js"
-								end: Object {
-									column: 30
-									line: 1
-								}
-								start: Object {
-									column: 21
-									line: 1
-								}
-							}
+							loc: SourceLocation es2015/uncategorised/350/input.js 1:21-1:30
 						}
 						value: JSNumericLiteral {
 							value: 2
 							format: undefined
-							loc: Object {
-								filename: "es2015/uncategorised/350/input.js"
-								end: Object {
-									column: 33
-									line: 1
-								}
-								start: Object {
-									column: 32
-									line: 1
-								}
-							}
+							loc: SourceLocation es2015/uncategorised/350/input.js 1:32-1:33
 						}
-						loc: Object {
-							filename: "es2015/uncategorised/350/input.js"
-							end: Object {
-								column: 33
-								line: 1
-							}
-							start: Object {
-								column: 21
-								line: 1
-							}
-						}
+						loc: SourceLocation es2015/uncategorised/350/input.js 1:21-1:33
 					}
 				]
 			}
@@ -176,6 +65,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

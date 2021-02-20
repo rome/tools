@@ -11,78 +11,39 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "esprima/invalid-syntax/migrated_0009/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "esprima/invalid-syntax/migrated_0009/input.js"
-		end: Object {
-			column: 0
-			line: 2
+	loc: SourceLocation esprima/invalid-syntax/migrated_0009/input.js 1:0-2:0
+	path: UIDPath<esprima/invalid-syntax/migrated_0009/input.js>
+	body: Array [
+		JSExpressionStatement {
+			loc: SourceLocation esprima/invalid-syntax/migrated_0009/input.js 1:0-1:2
+			expression: JSNumericLiteral {
+				value: 0
+				format: "hex"
+				loc: SourceLocation esprima/invalid-syntax/migrated_0009/input.js 1:0-1:2
+			}
 		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	]
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse"
 				categoryValue: "js"
-				message: Array [
-					RAW_MARKUP {value: "Expected number in radix "}
-					"16"
-				]
+				category: Array ["parse"]
+				message: RAW_MARKUP {value: "Expected number in radix <emphasis>16</emphasis>"}
 			}
 			location: Object {
-				filename: "esprima/invalid-syntax/migrated_0009/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 2
-					line: 1
-				}
-				start: Object {
-					column: 2
-					line: 1
-				}
-			}
-		}
-	]
-	body: Array [
-		JSExpressionStatement {
-			loc: Object {
-				filename: "esprima/invalid-syntax/migrated_0009/input.js"
-				end: Object {
-					column: 2
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
-			expression: JSNumericLiteral {
-				value: 0
-				format: "hex"
-				loc: Object {
-					filename: "esprima/invalid-syntax/migrated_0009/input.js"
-					end: Object {
-						column: 2
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				end: Position 1:2
+				path: UIDPath<esprima/invalid-syntax/migrated_0009/input.js>
+				start: Position 1:2
 			}
 		}
 	]
@@ -100,8 +61,5 @@ JSRoot {
     0x
       ^
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

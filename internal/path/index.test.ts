@@ -7,8 +7,9 @@
 
 import {
 	createAbsoluteFilePath,
-	createRelativeFilePath,
-	createUnknownPath,
+	createAnyPath,
+	createFilePath,
+	createRelativePath,
 } from "@internal/path";
 import {test} from "rome";
 
@@ -65,7 +66,9 @@ for (let i = 0; i < relativeTests.length; i++) {
 				text: "Metadata",
 			});
 
-			const relative = createAbsoluteFilePath(absolute).relative(arg);
+			const relative = createAbsoluteFilePath(absolute).relative(
+				createFilePath(arg),
+			);
 
 			t.addToAdvice({
 				type: "inspect",
@@ -98,7 +101,7 @@ for (let i = 0; i < segmentTests.length; i++) {
 	test(
 		`segments: ${i}: ${loc}`,
 		(t) => {
-			t.looksLike(createUnknownPath(loc).parsed.segments, expectedSegments);
+			t.looksLike(createAnyPath(loc).parsed.segments, expectedSegments);
 		},
 	);
 }
@@ -108,7 +111,7 @@ test(
 	(t) => {
 		t.true(createAbsoluteFilePath("~/foo").parsed.segments[0] !== "~");
 		t.inlineSnapshot(
-			createRelativeFilePath("~/foo").parsed.segments,
+			createRelativePath("~/foo").parsed.segments,
 			'Array [\n\t"~"\n\t"foo"\n]',
 		);
 		t.inlineSnapshot(
@@ -121,11 +124,11 @@ test(
 test(
 	"getUnique",
 	(t) => {
-		t.inlineSnapshot(createRelativeFilePath(".").getUnique().join(), ".");
-		t.inlineSnapshot(createRelativeFilePath("./foo").getUnique().join(), "foo");
-		t.inlineSnapshot(createRelativeFilePath("foo/").getUnique().join(), "foo");
+		t.inlineSnapshot(createRelativePath(".").getUnique().join(), ".");
+		t.inlineSnapshot(createRelativePath("./foo").getUnique().join(), "foo");
+		t.inlineSnapshot(createRelativePath("foo/").getUnique().join(), "foo");
 		t.inlineSnapshot(
-			createRelativeFilePath("foo/bar").getUnique().join(),
+			createRelativePath("foo/bar").getUnique().join(),
 			"foo/bar",
 		);
 	},

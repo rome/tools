@@ -12,123 +12,51 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "esprima/es2015-class/migrated_0011/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "esprima/es2015-class/migrated_0011/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation esprima/es2015-class/migrated_0011/input.js 1:0-2:0
+	path: UIDPath<esprima/es2015-class/migrated_0011/input.js>
 	body: Array [
 		JSClassDeclaration {
 			id: JSBindingIdentifier {
 				name: "A"
-				loc: Object {
-					filename: "esprima/es2015-class/migrated_0011/input.js"
-					identifierName: "A"
-					end: Object {
-						column: 7
-						line: 1
-					}
-					start: Object {
-						column: 6
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/es2015-class/migrated_0011/input.js 1:6-1:7 (A)
 			}
-			loc: Object {
-				filename: "esprima/es2015-class/migrated_0011/input.js"
-				end: Object {
-					column: 58
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation esprima/es2015-class/migrated_0011/input.js 1:0-1:58
 			meta: JSClassHead {
 				implements: undefined
 				superClass: undefined
 				superTypeParameters: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "esprima/es2015-class/migrated_0011/input.js"
-					end: Object {
-						column: 58
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/es2015-class/migrated_0011/input.js 1:0-1:58
 				body: Array [
 					JSClassMethod {
 						kind: "method"
 						key: JSStaticPropertyKey {
 							value: JSIdentifier {
 								name: "a"
-								loc: Object {
-									filename: "esprima/es2015-class/migrated_0011/input.js"
-									identifierName: "a"
-									end: Object {
-										column: 17
-										line: 1
-									}
-									start: Object {
-										column: 16
-										line: 1
-									}
-								}
+								loc: SourceLocation esprima/es2015-class/migrated_0011/input.js 1:16-1:17 (a)
 							}
-							loc: Object {
-								filename: "esprima/es2015-class/migrated_0011/input.js"
-								end: Object {
-									column: 17
-									line: 1
-								}
-								start: Object {
-									column: 16
-									line: 1
-								}
-							}
+							loc: SourceLocation esprima/es2015-class/migrated_0011/input.js 1:16-1:17
 						}
-						loc: Object {
-							filename: "esprima/es2015-class/migrated_0011/input.js"
-							end: Object {
-								column: 21
-								line: 1
-							}
-							start: Object {
-								column: 9
-								line: 1
-							}
-						}
+						loc: SourceLocation esprima/es2015-class/migrated_0011/input.js 1:9-1:21
 						body: JSBlockStatement {
 							body: Array []
 							directives: Array []
-							loc: Object {
-								filename: "esprima/es2015-class/migrated_0011/input.js"
-								end: Object {
-									column: 21
-									line: 1
-								}
-								start: Object {
-									column: 19
-									line: 1
-								}
-							}
+							loc: SourceLocation esprima/es2015-class/migrated_0011/input.js 1:19-1:21
+						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							accessibility: undefined
+							optional: false
+							readonly: false
+							static: true
+							typeAnnotation: undefined
+							loc: SourceLocation esprima/es2015-class/migrated_0011/input.js 1:9-1:17
+							start: Position 1:9
 						}
 						head: JSFunctionHead {
 							async: false
@@ -139,40 +67,7 @@ JSRoot {
 							returnType: undefined
 							thisType: undefined
 							typeParameters: undefined
-							loc: Object {
-								filename: "esprima/es2015-class/migrated_0011/input.js"
-								end: Object {
-									column: 19
-									line: 1
-								}
-								start: Object {
-									column: 17
-									line: 1
-								}
-							}
-						}
-						meta: JSClassPropertyMeta {
-							abstract: false
-							accessibility: undefined
-							optional: false
-							readonly: false
-							static: true
-							typeAnnotation: undefined
-							start: Object {
-								column: 9
-								line: 1
-							}
-							loc: Object {
-								filename: "esprima/es2015-class/migrated_0011/input.js"
-								end: Object {
-									column: 17
-									line: 1
-								}
-								start: Object {
-									column: 9
-									line: 1
-								}
-							}
+							loc: SourceLocation esprima/es2015-class/migrated_0011/input.js 1:17-1:19
 						}
 					}
 					JSClassMethod {
@@ -180,56 +75,25 @@ JSRoot {
 						key: JSStaticPropertyKey {
 							value: JSIdentifier {
 								name: "a"
-								loc: Object {
-									filename: "esprima/es2015-class/migrated_0011/input.js"
-									identifierName: "a"
-									end: Object {
-										column: 34
-										line: 1
-									}
-									start: Object {
-										column: 33
-										line: 1
-									}
-								}
+								loc: SourceLocation esprima/es2015-class/migrated_0011/input.js 1:33-1:34 (a)
 							}
-							loc: Object {
-								filename: "esprima/es2015-class/migrated_0011/input.js"
-								end: Object {
-									column: 34
-									line: 1
-								}
-								start: Object {
-									column: 33
-									line: 1
-								}
-							}
+							loc: SourceLocation esprima/es2015-class/migrated_0011/input.js 1:33-1:34
 						}
-						loc: Object {
-							filename: "esprima/es2015-class/migrated_0011/input.js"
-							end: Object {
-								column: 38
-								line: 1
-							}
-							start: Object {
-								column: 22
-								line: 1
-							}
-						}
+						loc: SourceLocation esprima/es2015-class/migrated_0011/input.js 1:22-1:38
 						body: JSBlockStatement {
 							body: Array []
 							directives: Array []
-							loc: Object {
-								filename: "esprima/es2015-class/migrated_0011/input.js"
-								end: Object {
-									column: 38
-									line: 1
-								}
-								start: Object {
-									column: 36
-									line: 1
-								}
-							}
+							loc: SourceLocation esprima/es2015-class/migrated_0011/input.js 1:36-1:38
+						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							accessibility: undefined
+							optional: false
+							readonly: false
+							static: true
+							typeAnnotation: undefined
+							loc: SourceLocation esprima/es2015-class/migrated_0011/input.js 1:22-1:34
+							start: Position 1:22
 						}
 						head: JSFunctionHead {
 							async: false
@@ -240,40 +104,7 @@ JSRoot {
 							returnType: undefined
 							thisType: undefined
 							typeParameters: undefined
-							loc: Object {
-								filename: "esprima/es2015-class/migrated_0011/input.js"
-								end: Object {
-									column: 36
-									line: 1
-								}
-								start: Object {
-									column: 34
-									line: 1
-								}
-							}
-						}
-						meta: JSClassPropertyMeta {
-							abstract: false
-							accessibility: undefined
-							optional: false
-							readonly: false
-							static: true
-							typeAnnotation: undefined
-							start: Object {
-								column: 22
-								line: 1
-							}
-							loc: Object {
-								filename: "esprima/es2015-class/migrated_0011/input.js"
-								end: Object {
-									column: 34
-									line: 1
-								}
-								start: Object {
-									column: 22
-									line: 1
-								}
-							}
+							loc: SourceLocation esprima/es2015-class/migrated_0011/input.js 1:34-1:36
 						}
 					}
 					JSClassMethod {
@@ -281,56 +112,15 @@ JSRoot {
 						key: JSStaticPropertyKey {
 							value: JSIdentifier {
 								name: "a"
-								loc: Object {
-									filename: "esprima/es2015-class/migrated_0011/input.js"
-									identifierName: "a"
-									end: Object {
-										column: 51
-										line: 1
-									}
-									start: Object {
-										column: 50
-										line: 1
-									}
-								}
+								loc: SourceLocation esprima/es2015-class/migrated_0011/input.js 1:50-1:51 (a)
 							}
-							loc: Object {
-								filename: "esprima/es2015-class/migrated_0011/input.js"
-								end: Object {
-									column: 51
-									line: 1
-								}
-								start: Object {
-									column: 50
-									line: 1
-								}
-							}
+							loc: SourceLocation esprima/es2015-class/migrated_0011/input.js 1:50-1:51
 						}
-						loc: Object {
-							filename: "esprima/es2015-class/migrated_0011/input.js"
-							end: Object {
-								column: 56
-								line: 1
-							}
-							start: Object {
-								column: 39
-								line: 1
-							}
-						}
+						loc: SourceLocation esprima/es2015-class/migrated_0011/input.js 1:39-1:56
 						body: JSBlockStatement {
 							body: Array []
 							directives: Array []
-							loc: Object {
-								filename: "esprima/es2015-class/migrated_0011/input.js"
-								end: Object {
-									column: 56
-									line: 1
-								}
-								start: Object {
-									column: 54
-									line: 1
-								}
-							}
+							loc: SourceLocation esprima/es2015-class/migrated_0011/input.js 1:54-1:56
 						}
 						meta: JSClassPropertyMeta {
 							abstract: false
@@ -339,21 +129,8 @@ JSRoot {
 							readonly: false
 							static: true
 							typeAnnotation: undefined
-							start: Object {
-								column: 39
-								line: 1
-							}
-							loc: Object {
-								filename: "esprima/es2015-class/migrated_0011/input.js"
-								end: Object {
-									column: 51
-									line: 1
-								}
-								start: Object {
-									column: 39
-									line: 1
-								}
-							}
+							loc: SourceLocation esprima/es2015-class/migrated_0011/input.js 1:39-1:51
+							start: Position 1:39
 						}
 						head: JSFunctionHead {
 							async: false
@@ -363,46 +140,15 @@ JSRoot {
 							returnType: undefined
 							thisType: undefined
 							typeParameters: undefined
-							loc: Object {
-								filename: "esprima/es2015-class/migrated_0011/input.js"
-								end: Object {
-									column: 54
-									line: 1
-								}
-								start: Object {
-									column: 51
-									line: 1
-								}
-							}
+							loc: SourceLocation esprima/es2015-class/migrated_0011/input.js 1:51-1:54
 							params: Array [
 								JSBindingIdentifier {
 									name: "b"
-									loc: Object {
-										filename: "esprima/es2015-class/migrated_0011/input.js"
-										identifierName: "b"
-										end: Object {
-											column: 53
-											line: 1
-										}
-										start: Object {
-											column: 52
-											line: 1
-										}
-									}
+									loc: SourceLocation esprima/es2015-class/migrated_0011/input.js 1:52-1:53 (b)
 									meta: JSPatternMeta {
 										optional: undefined
 										typeAnnotation: undefined
-										loc: Object {
-											filename: "esprima/es2015-class/migrated_0011/input.js"
-											end: Object {
-												column: 53
-												line: 1
-											}
-											start: Object {
-												column: 52
-												line: 1
-											}
-										}
+										loc: SourceLocation esprima/es2015-class/migrated_0011/input.js 1:52-1:53
 									}
 								}
 							]
@@ -418,6 +164,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

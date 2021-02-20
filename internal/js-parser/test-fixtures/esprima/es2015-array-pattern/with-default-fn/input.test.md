@@ -12,65 +12,24 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "esprima/es2015-array-pattern/with-default-fn/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "esprima/es2015-array-pattern/with-default-fn/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation esprima/es2015-array-pattern/with-default-fn/input.js 1:0-2:0
+	path: UIDPath<esprima/es2015-array-pattern/with-default-fn/input.js>
 	body: Array [
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "a"
-				loc: Object {
-					filename: "esprima/es2015-array-pattern/with-default-fn/input.js"
-					identifierName: "a"
-					end: Object {
-						column: 10
-						line: 1
-					}
-					start: Object {
-						column: 9
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/es2015-array-pattern/with-default-fn/input.js 1:9-1:10 (a)
 			}
-			loc: Object {
-				filename: "esprima/es2015-array-pattern/with-default-fn/input.js"
-				end: Object {
-					column: 20
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation esprima/es2015-array-pattern/with-default-fn/input.js 1:0-1:20
 			body: JSBlockStatement {
 				body: Array []
 				directives: Array []
-				loc: Object {
-					filename: "esprima/es2015-array-pattern/with-default-fn/input.js"
-					end: Object {
-						column: 20
-						line: 1
-					}
-					start: Object {
-						column: 18
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/es2015-array-pattern/with-default-fn/input.js 1:18-1:20
 			}
 			head: JSFunctionHead {
 				async: false
@@ -80,102 +39,31 @@ JSRoot {
 				returnType: undefined
 				thisType: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "esprima/es2015-array-pattern/with-default-fn/input.js"
-					end: Object {
-						column: 17
-						line: 1
-					}
-					start: Object {
-						column: 10
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/es2015-array-pattern/with-default-fn/input.js 1:10-1:17
 				params: Array [
 					JSBindingArrayPattern {
 						rest: undefined
-						loc: Object {
-							filename: "esprima/es2015-array-pattern/with-default-fn/input.js"
-							end: Object {
-								column: 16
-								line: 1
-							}
-							start: Object {
-								column: 11
-								line: 1
-							}
-						}
+						loc: SourceLocation esprima/es2015-array-pattern/with-default-fn/input.js 1:11-1:16
 						meta: JSPatternMeta {
 							optional: undefined
 							typeAnnotation: undefined
-							loc: Object {
-								filename: "esprima/es2015-array-pattern/with-default-fn/input.js"
-								end: Object {
-									column: 16
-									line: 1
-								}
-								start: Object {
-									column: 11
-									line: 1
-								}
-							}
+							loc: SourceLocation esprima/es2015-array-pattern/with-default-fn/input.js 1:11-1:16
 						}
 						elements: Array [
 							JSBindingAssignmentPattern {
-								loc: Object {
-									filename: "esprima/es2015-array-pattern/with-default-fn/input.js"
-									end: Object {
-										column: 15
-										line: 1
-									}
-									start: Object {
-										column: 12
-										line: 1
-									}
-								}
+								loc: SourceLocation esprima/es2015-array-pattern/with-default-fn/input.js 1:12-1:15
 								right: JSNumericLiteral {
 									value: 0
 									format: undefined
-									loc: Object {
-										filename: "esprima/es2015-array-pattern/with-default-fn/input.js"
-										end: Object {
-											column: 15
-											line: 1
-										}
-										start: Object {
-											column: 14
-											line: 1
-										}
-									}
+									loc: SourceLocation esprima/es2015-array-pattern/with-default-fn/input.js 1:14-1:15
 								}
 								left: JSBindingIdentifier {
 									name: "a"
-									loc: Object {
-										filename: "esprima/es2015-array-pattern/with-default-fn/input.js"
-										identifierName: "a"
-										end: Object {
-											column: 13
-											line: 1
-										}
-										start: Object {
-											column: 12
-											line: 1
-										}
-									}
+									loc: SourceLocation esprima/es2015-array-pattern/with-default-fn/input.js 1:12-1:13 (a)
 									meta: JSPatternMeta {
 										optional: undefined
 										typeAnnotation: undefined
-										loc: Object {
-											filename: "esprima/es2015-array-pattern/with-default-fn/input.js"
-											end: Object {
-												column: 13
-												line: 1
-											}
-											start: Object {
-												column: 12
-												line: 1
-											}
-										}
+										loc: SourceLocation esprima/es2015-array-pattern/with-default-fn/input.js 1:12-1:13
 									}
 								}
 							}
@@ -191,6 +79,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

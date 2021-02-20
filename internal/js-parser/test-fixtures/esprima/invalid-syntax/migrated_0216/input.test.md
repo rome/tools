@@ -11,75 +11,39 @@ JSRoot {
 	body: Array []
 	comments: Array []
 	corrupt: false
-	filename: "esprima/invalid-syntax/migrated_0216/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "esprima/invalid-syntax/migrated_0216/input.js"
-		end: Object {
-			column: 0
-			line: 2
+	loc: SourceLocation esprima/invalid-syntax/migrated_0216/input.js 1:0-2:0
+	path: UIDPath<esprima/invalid-syntax/migrated_0216/input.js>
+	directives: Array [
+		JSDirective {
+			value: "\\1"
+			loc: SourceLocation esprima/invalid-syntax/migrated_0216/input.js 1:0-1:5
 		}
-		start: Object {
-			column: 0
-			line: 1
+		JSDirective {
+			value: "use strict"
+			loc: SourceLocation esprima/invalid-syntax/migrated_0216/input.js 1:6-1:19
 		}
-	}
+	]
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse"
 				categoryValue: "js"
+				category: Array ["parse"]
 				message: RAW_MARKUP {value: "Octal literal in strict mode"}
 			}
 			location: Object {
-				filename: "esprima/invalid-syntax/migrated_0216/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 2
-					line: 1
-				}
-				start: Object {
-					column: 2
-					line: 1
-				}
-			}
-		}
-	]
-	directives: Array [
-		JSDirective {
-			value: "\\1"
-			loc: Object {
-				filename: "esprima/invalid-syntax/migrated_0216/input.js"
-				end: Object {
-					column: 5
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
-		}
-		JSDirective {
-			value: "use strict"
-			loc: Object {
-				filename: "esprima/invalid-syntax/migrated_0216/input.js"
-				end: Object {
-					column: 19
-					line: 1
-				}
-				start: Object {
-					column: 6
-					line: 1
-				}
+				end: Position 1:2
+				path: UIDPath<esprima/invalid-syntax/migrated_0216/input.js>
+				start: Position 1:2
 			}
 		}
 	]
@@ -97,8 +61,5 @@ JSRoot {
     "\1"; 'use strict';
       ^
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

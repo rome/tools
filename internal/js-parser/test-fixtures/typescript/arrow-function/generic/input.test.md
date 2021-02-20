@@ -12,193 +12,60 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "typescript/arrow-function/generic/input.ts"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
+	loc: SourceLocation typescript/arrow-function/generic/input.ts 1:0-2:0
+	path: UIDPath<typescript/arrow-function/generic/input.ts>
 	syntax: Array ["ts"]
-	loc: Object {
-		filename: "typescript/arrow-function/generic/input.ts"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "typescript/arrow-function/generic/input.ts"
-				end: Object {
-					column: 18
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation typescript/arrow-function/generic/input.ts 1:0-1:18
 			expression: JSArrowFunctionExpression {
-				loc: Object {
-					filename: "typescript/arrow-function/generic/input.ts"
-					end: Object {
-						column: 17
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/arrow-function/generic/input.ts 1:0-1:17
 				body: JSReferenceIdentifier {
 					name: "a"
-					loc: Object {
-						filename: "typescript/arrow-function/generic/input.ts"
-						identifierName: "a"
-						end: Object {
-							column: 17
-							line: 1
-						}
-						start: Object {
-							column: 16
-							line: 1
-						}
-					}
+					loc: SourceLocation typescript/arrow-function/generic/input.ts 1:16-1:17 (a)
 				}
 				head: JSFunctionHead {
 					async: false
 					hasHoistedVars: false
 					rest: undefined
 					thisType: undefined
-					loc: Object {
-						filename: "typescript/arrow-function/generic/input.ts"
-						end: Object {
-							column: 15
-							line: 1
-						}
-						start: Object {
-							column: 3
-							line: 1
-						}
-					}
+					loc: SourceLocation typescript/arrow-function/generic/input.ts 1:3-1:15
 					returnType: TSTypeReference {
 						typeParameters: undefined
-						loc: Object {
-							filename: "typescript/arrow-function/generic/input.ts"
-							end: Object {
-								column: 12
-								line: 1
-							}
-							start: Object {
-								column: 11
-								line: 1
-							}
-						}
+						loc: SourceLocation typescript/arrow-function/generic/input.ts 1:11-1:12
 						typeName: JSReferenceIdentifier {
 							name: "T"
-							loc: Object {
-								filename: "typescript/arrow-function/generic/input.ts"
-								identifierName: "T"
-								end: Object {
-									column: 12
-									line: 1
-								}
-								start: Object {
-									column: 11
-									line: 1
-								}
-							}
+							loc: SourceLocation typescript/arrow-function/generic/input.ts 1:11-1:12 (T)
 						}
 					}
 					typeParameters: TSTypeParameterDeclaration {
-						loc: Object {
-							filename: "typescript/arrow-function/generic/input.ts"
-							end: Object {
-								column: 3
-								line: 1
-							}
-							start: Object {
-								column: 0
-								line: 1
-							}
-						}
+						loc: SourceLocation typescript/arrow-function/generic/input.ts 1:0-1:3
 						params: Array [
 							TSTypeParameter {
 								name: "T"
 								constraint: undefined
 								default: undefined
-								loc: Object {
-									filename: "typescript/arrow-function/generic/input.ts"
-									end: Object {
-										column: 2
-										line: 1
-									}
-									start: Object {
-										column: 1
-										line: 1
-									}
-								}
+								loc: SourceLocation typescript/arrow-function/generic/input.ts 1:1-1:2
 							}
 						]
 					}
 					params: Array [
 						JSBindingIdentifier {
 							name: "a"
-							loc: Object {
-								filename: "typescript/arrow-function/generic/input.ts"
-								end: Object {
-									column: 15
-									line: 1
-								}
-								start: Object {
-									column: 16
-									line: 1
-								}
-							}
+							loc: SourceLocation typescript/arrow-function/generic/input.ts 1:16-1:15
 							meta: JSPatternMeta {
 								optional: undefined
-								loc: Object {
-									filename: "typescript/arrow-function/generic/input.ts"
-									end: Object {
-										column: 15
-										line: 1
-									}
-									start: Object {
-										column: 16
-										line: 1
-									}
-								}
+								loc: SourceLocation typescript/arrow-function/generic/input.ts 1:16-1:15
 								typeAnnotation: TSTypeReference {
 									typeParameters: undefined
-									loc: Object {
-										filename: "typescript/arrow-function/generic/input.ts"
-										end: Object {
-											column: 8
-											line: 1
-										}
-										start: Object {
-											column: 7
-											line: 1
-										}
-									}
+									loc: SourceLocation typescript/arrow-function/generic/input.ts 1:7-1:8
 									typeName: JSReferenceIdentifier {
 										name: "T"
-										loc: Object {
-											filename: "typescript/arrow-function/generic/input.ts"
-											identifierName: "T"
-											end: Object {
-												column: 8
-												line: 1
-											}
-											start: Object {
-												column: 7
-												line: 1
-											}
-										}
+										loc: SourceLocation typescript/arrow-function/generic/input.ts 1:7-1:8 (T)
 									}
 								}
 							}
@@ -214,6 +81,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

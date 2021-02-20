@@ -11,75 +11,38 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "esprima/expression-primary-array/migrated_0012/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "esprima/expression-primary-array/migrated_0012/input.js"
-		end: Object {
-			column: 0
-			line: 2
+	loc: SourceLocation esprima/expression-primary-array/migrated_0012/input.js 1:0-2:0
+	path: UIDPath<esprima/expression-primary-array/migrated_0012/input.js>
+	body: Array [
+		JSExpressionStatement {
+			loc: SourceLocation esprima/expression-primary-array/migrated_0012/input.js 1:0-1:18
+			expression: JSReferenceIdentifier {
+				name: "\u2163\u2161\u200a"
+				loc: SourceLocation esprima/expression-primary-array/migrated_0012/input.js 1:0-1:18 (\u2163\u2161\u200a)
+			}
 		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	]
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse"
 				categoryValue: "js"
+				category: Array ["parse"]
 				message: RAW_MARKUP {value: "Invalid Unicode escape"}
 			}
 			location: Object {
-				filename: "esprima/expression-primary-array/migrated_0012/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 18
-					line: 1
-				}
-				start: Object {
-					column: 18
-					line: 1
-				}
-			}
-		}
-	]
-	body: Array [
-		JSExpressionStatement {
-			loc: Object {
-				filename: "esprima/expression-primary-array/migrated_0012/input.js"
-				end: Object {
-					column: 18
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
-			expression: JSReferenceIdentifier {
-				name: "\u2163\u2161\u200a"
-				loc: Object {
-					filename: "esprima/expression-primary-array/migrated_0012/input.js"
-					identifierName: "\u2163\u2161\u200a"
-					end: Object {
-						column: 18
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				end: Position 1:18
+				path: UIDPath<esprima/expression-primary-array/migrated_0012/input.js>
+				start: Position 1:18
 			}
 		}
 	]
@@ -97,8 +60,5 @@ JSRoot {
     \u2163\u2161\u200A
                       ^
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

@@ -12,62 +12,22 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "es2017/async-functions/await-object-key-inside-arrow-params-inside-async-arrow-params copy/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2017/async-functions/await-object-key-inside-arrow-params-inside-async-arrow-params copy/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2017/async-functions/await-object-key-inside-arrow-params-inside-async-arrow-params copy/input.js 1:0-2:0
+	path: UIDPath<es2017/async-functions/await-object-key-inside-arrow-params-inside-async-arrow-params copy/input.js>
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "es2017/async-functions/await-object-key-inside-arrow-params-inside-async-arrow-params copy/input.js"
-				end: Object {
-					column: 39
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2017/async-functions/await-object-key-inside-arrow-params-inside-async-arrow-params copy/input.js 1:0-1:39
 			expression: JSArrowFunctionExpression {
-				loc: Object {
-					filename: "es2017/async-functions/await-object-key-inside-arrow-params-inside-async-arrow-params copy/input.js"
-					end: Object {
-						column: 38
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation es2017/async-functions/await-object-key-inside-arrow-params-inside-async-arrow-params copy/input.js 1:0-1:38
 				body: JSBlockStatement {
 					body: Array []
 					directives: Array []
-					loc: Object {
-						filename: "es2017/async-functions/await-object-key-inside-arrow-params-inside-async-arrow-params copy/input.js"
-						end: Object {
-							column: 38
-							line: 1
-						}
-						start: Object {
-							column: 36
-							line: 1
-						}
-					}
+					loc: SourceLocation es2017/async-functions/await-object-key-inside-arrow-params-inside-async-arrow-params copy/input.js 1:36-1:38
 				}
 				head: JSFunctionHead {
 					async: true
@@ -75,72 +35,21 @@ JSRoot {
 					rest: undefined
 					returnType: undefined
 					thisType: undefined
-					loc: Object {
-						filename: "es2017/async-functions/await-object-key-inside-arrow-params-inside-async-arrow-params copy/input.js"
-						end: Object {
-							column: 35
-							line: 1
-						}
-						start: Object {
-							column: 0
-							line: 1
-						}
-					}
+					loc: SourceLocation es2017/async-functions/await-object-key-inside-arrow-params-inside-async-arrow-params copy/input.js 1:0-1:35
 					params: Array [
 						JSBindingAssignmentPattern {
 							operator: "="
-							loc: Object {
-								filename: "es2017/async-functions/await-object-key-inside-arrow-params-inside-async-arrow-params copy/input.js"
-								end: Object {
-									column: 31
-									line: 1
-								}
-								start: Object {
-									column: 7
-									line: 1
-								}
-							}
+							loc: SourceLocation es2017/async-functions/await-object-key-inside-arrow-params-inside-async-arrow-params copy/input.js 1:7-1:31
 							left: JSBindingIdentifier {
 								name: "a"
-								loc: Object {
-									filename: "es2017/async-functions/await-object-key-inside-arrow-params-inside-async-arrow-params copy/input.js"
-									identifierName: "a"
-									end: Object {
-										column: 8
-										line: 1
-									}
-									start: Object {
-										column: 7
-										line: 1
-									}
-								}
+								loc: SourceLocation es2017/async-functions/await-object-key-inside-arrow-params-inside-async-arrow-params copy/input.js 1:7-1:8 (a)
 							}
 							right: JSArrowFunctionExpression {
-								loc: Object {
-									filename: "es2017/async-functions/await-object-key-inside-arrow-params-inside-async-arrow-params copy/input.js"
-									end: Object {
-										column: 31
-										line: 1
-									}
-									start: Object {
-										column: 11
-										line: 1
-									}
-								}
+								loc: SourceLocation es2017/async-functions/await-object-key-inside-arrow-params-inside-async-arrow-params copy/input.js 1:11-1:31
 								body: JSBlockStatement {
 									body: Array []
 									directives: Array []
-									loc: Object {
-										filename: "es2017/async-functions/await-object-key-inside-arrow-params-inside-async-arrow-params copy/input.js"
-										end: Object {
-											column: 31
-											line: 1
-										}
-										start: Object {
-											column: 29
-											line: 1
-										}
-									}
+									loc: SourceLocation es2017/async-functions/await-object-key-inside-arrow-params-inside-async-arrow-params copy/input.js 1:29-1:31
 								}
 								head: JSFunctionHead {
 									async: false
@@ -148,87 +57,25 @@ JSRoot {
 									rest: undefined
 									returnType: undefined
 									thisType: undefined
-									loc: Object {
-										filename: "es2017/async-functions/await-object-key-inside-arrow-params-inside-async-arrow-params copy/input.js"
-										end: Object {
-											column: 28
-											line: 1
-										}
-										start: Object {
-											column: 11
-											line: 1
-										}
-									}
+									loc: SourceLocation es2017/async-functions/await-object-key-inside-arrow-params-inside-async-arrow-params copy/input.js 1:11-1:28
 									params: Array [
 										JSBindingObjectPattern {
 											rest: undefined
-											loc: Object {
-												filename: "es2017/async-functions/await-object-key-inside-arrow-params-inside-async-arrow-params copy/input.js"
-												end: Object {
-													column: 24
-													line: 1
-												}
-												start: Object {
-													column: 12
-													line: 1
-												}
-											}
+											loc: SourceLocation es2017/async-functions/await-object-key-inside-arrow-params-inside-async-arrow-params copy/input.js 1:12-1:24
 											properties: Array [
 												JSBindingObjectPatternProperty {
 													key: JSStaticPropertyKey {
 														value: JSIdentifier {
 															name: "await"
-															loc: Object {
-																filename: "es2017/async-functions/await-object-key-inside-arrow-params-inside-async-arrow-params copy/input.js"
-																identifierName: "await"
-																end: Object {
-																	column: 19
-																	line: 1
-																}
-																start: Object {
-																	column: 14
-																	line: 1
-																}
-															}
+															loc: SourceLocation es2017/async-functions/await-object-key-inside-arrow-params-inside-async-arrow-params copy/input.js 1:14-1:19 (await)
 														}
-														loc: Object {
-															filename: "es2017/async-functions/await-object-key-inside-arrow-params-inside-async-arrow-params copy/input.js"
-															end: Object {
-																column: 19
-																line: 1
-															}
-															start: Object {
-																column: 14
-																line: 1
-															}
-														}
+														loc: SourceLocation es2017/async-functions/await-object-key-inside-arrow-params-inside-async-arrow-params copy/input.js 1:14-1:19
 													}
 													value: JSBindingIdentifier {
 														name: "x"
-														loc: Object {
-															filename: "es2017/async-functions/await-object-key-inside-arrow-params-inside-async-arrow-params copy/input.js"
-															identifierName: "x"
-															end: Object {
-																column: 22
-																line: 1
-															}
-															start: Object {
-																column: 21
-																line: 1
-															}
-														}
+														loc: SourceLocation es2017/async-functions/await-object-key-inside-arrow-params-inside-async-arrow-params copy/input.js 1:21-1:22 (x)
 													}
-													loc: Object {
-														filename: "es2017/async-functions/await-object-key-inside-arrow-params-inside-async-arrow-params copy/input.js"
-														end: Object {
-															column: 22
-															line: 1
-														}
-														start: Object {
-															column: 14
-															line: 1
-														}
-													}
+													loc: SourceLocation es2017/async-functions/await-object-key-inside-arrow-params-inside-async-arrow-params copy/input.js 1:14-1:22
 												}
 											]
 										}
@@ -247,6 +94,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

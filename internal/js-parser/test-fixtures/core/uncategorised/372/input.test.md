@@ -12,64 +12,24 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "core/uncategorised/372/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "core/uncategorised/372/input.js"
-		end: Object {
-			column: 3
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation core/uncategorised/372/input.js 1:0-1:3
+	path: UIDPath<core/uncategorised/372/input.js>
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "core/uncategorised/372/input.js"
-				end: Object {
-					column: 3
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation core/uncategorised/372/input.js 1:0-1:3
 			expression: JSUpdateExpression {
 				operator: "++"
 				prefix: true
-				loc: Object {
-					filename: "core/uncategorised/372/input.js"
-					end: Object {
-						column: 3
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation core/uncategorised/372/input.js 1:0-1:3
 				argument: JSNumericLiteral {
 					value: 1
 					format: undefined
-					loc: Object {
-						filename: "core/uncategorised/372/input.js"
-						end: Object {
-							column: 3
-							line: 1
-						}
-						start: Object {
-							column: 2
-							line: 1
-						}
-					}
+					loc: SourceLocation core/uncategorised/372/input.js 1:2-1:3
 				}
 			}
 		}
@@ -80,6 +40,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

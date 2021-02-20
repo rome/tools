@@ -10,8 +10,23 @@ import {
 	DEFAULT_CLIENT_FLAGS,
 	DEFAULT_CLIENT_REQUEST_FLAGS,
 } from "../common/types/client";
-import {BundlerConfig, FileReference, LAG_INTERVAL} from "@internal/core";
 import {
+	BundlerConfig,
+	FileReference,
+	LAG_INTERVAL,
+	WorkerAnalyzeDependencyResult,
+	WorkerBufferPatch,
+	WorkerCompileResult,
+	WorkerCompilerOptions,
+	WorkerFormatResult,
+	WorkerLintOptions,
+	WorkerLintResult,
+	WorkerParseOptions,
+	WorkerPrefetchedModuleSignatures,
+	WorkerUpdateInlineSnapshotResult,
+} from "@internal/core";
+import {
+	DIAGNOSTIC_CATEGORIES,
 	Diagnostic,
 	DiagnosticAdvice,
 	DiagnosticCategory,
@@ -22,11 +37,11 @@ import {
 	DiagnosticsError,
 	DiagnosticsProcessor,
 	createSingleDiagnosticError,
-	deriveDiagnosticFromError,
 	descriptions,
 	diagnosticLocationToMarkupFilelink,
-	getDiagnosticsFromError,
 	getOrDeriveDiagnosticsFromError,
+	joinCategoryName,
+	provideDiagnosticAdviceForError,
 } from "@internal/diagnostics";
 import {
 	DiagnosticsFileHandler,
@@ -37,7 +52,6 @@ import {
 } from "@internal/cli-diagnostics";
 import {ProjectDefinition} from "@internal/project";
 import {ResolverOptions} from "./fs/Resolver";
-
 import ServerBridge, {
 	ServerQueryRequest,
 	ServerQueryResponse,
@@ -58,31 +72,17 @@ import {
 } from "@internal/cli-flags";
 import {AnyRoot} from "@internal/ast";
 import {TransformStageName} from "@internal/compiler";
-import WorkerBridge, {
-	PrefetchedModuleSignatures,
-	WorkerAnalyzeDependencyResult,
-	WorkerBufferPatch,
-	WorkerCompileResult,
-	WorkerCompilerOptions,
-	WorkerFormatResult,
-	WorkerLintOptions,
-	WorkerLintResult,
-	WorkerParseOptions,
-	WorkerUpdateInlineSnapshotResult,
-} from "../common/bridges/WorkerBridge";
+
 import {ModuleSignature} from "@internal/js-analysis";
 import {
 	AbsoluteFilePath,
 	AbsoluteFilePathMap,
 	AbsoluteFilePathSet,
 	AnyFilePath,
-	RelativeFilePath,
-	UnknownPath,
-	createAbsoluteFilePath,
-	createUnknownPath,
+	AnyPath,
+	createUIDPath,
 } from "@internal/path";
 import {Dict, RequiredProps, mergeObjects} from "@internal/typescript-helpers";
-import {ob1Coerce0, ob1Number0, ob1Number1} from "@internal/ob1";
 import {markup, readMarkup} from "@internal/markup";
 import {DiagnosticsProcessorOptions} from "@internal/diagnostics/DiagnosticsProcessor";
 import {VCSClient} from "@internal/vcs";
@@ -90,6 +90,9 @@ import {InlineSnapshotUpdates} from "../test-worker/SnapshotManager";
 import {FormatterOptions} from "@internal/formatter";
 import {RecoverySaveFile} from "./fs/RecoveryStore";
 import {GlobOptions, Globber} from "./fs/glob";
+import WorkerBridge from "../common/bridges/WorkerBridge";
+import {OneIndexed, ZeroIndexed} from "@internal/math";
+import {Consumer, consume} from "@internal/consume";
 
 type ServerRequestOptions = {
 	server: Server;
@@ -116,12 +119,13 @@ type WrapRequestDiagnosticOpts = {
 	noRetry?: boolean;
 };
 
+export type ServerRequestGlobArgs = [AnyFilePath, DiagnosticLocation][];
+
 type ServerRequestGlobOptions = Omit<GlobOptions, "args" | "relativeDirectory"> & {
-	args?: Array<UnknownPath | string>;
-	tryAlternateArg?: (path: UnknownPath) => undefined | UnknownPath;
+	args?: ServerRequestGlobArgs;
+	tryAlternateArg?: (path: AnyPath) => undefined | AnyPath;
 	ignoreArgumentMisses?: boolean;
 	ignoreProjectIgnore?: boolean;
-	disabledDiagnosticCategory?: DiagnosticCategory;
 	advice?: DiagnosticAdvice;
 	verb?: string;
 	noun?: string;
@@ -136,7 +140,7 @@ async function globUnmatched(
 	const {server} = req;
 	const {configCategory, ignoreProjectIgnore} = opts;
 
-	let category: DiagnosticCategory = "args/fileNotFound";
+	let category: DiagnosticCategory = DIAGNOSTIC_CATEGORIES["args/fileNotFound"];
 
 	let advice: DiagnosticAdvice = [...(opts.advice || [])];
 
@@ -144,6 +148,7 @@ async function globUnmatched(
 	if (configCategory !== undefined && !ignoreProjectIgnore) {
 		const globber = await req.glob({
 			...opts,
+			configCategory: undefined,
 			ignoreProjectIgnore: true,
 		});
 		const withoutIgnore = await globber.get(false);
@@ -240,7 +245,8 @@ export default class ServerRequest {
 		this.files = new AbsoluteFilePathMap();
 
 		this.logger = server.logger.namespace(
-			markup`[ServerRequest] Request #${this.id}:`,
+			markup`ServerRequest`,
+			markup`Request #${this.id}`,
 		);
 
 		this.markerEvent = new Event({
@@ -254,11 +260,14 @@ export default class ServerRequest {
 			serial: true,
 		});
 
+		this.args = this.createArgsConsumer();
+
 		this.client.requestsInFlight.add(this);
 	}
 
 	public id: number;
 	public query: ServerQueryRequest;
+	public args: Consumer;
 	public bridge: BridgeServer<typeof ServerBridge>;
 	public client: ServerClient;
 	public logger: ReporterNamespace;
@@ -275,23 +284,42 @@ export default class ServerRequest {
 	private toredown: boolean;
 	private files: AbsoluteFilePathMap<RecoverySaveFile>;
 
+	private createArgsConsumer(): Consumer {
+		return consume({
+			value: this.query.args,
+			context: {
+				category: DIAGNOSTIC_CATEGORIES["args/invalid"],
+				getDiagnosticLocation: (keys) => {
+					if (keys.length === 0 && typeof keys[0] === "number") {
+						return this.getDiagnosticLocationFromFlags({
+							type: "arg",
+							key: keys[0],
+						});
+					} else {
+						return undefined;
+					}
+				},
+			},
+		});
+	}
+
 	public queueSaveFile(path: AbsoluteFilePath, opts: RecoverySaveFile) {
 		this.files.set(path, opts);
 	}
 
-	public async flushFiles(): Promise<number> {
+	public async flushFiles(): Promise<AbsoluteFilePathSet> {
 		const {files} = this;
 		const {server} = this;
 		const {logger} = server;
 
 		if (files.size === 0) {
 			this.logger.info(markup`No files to write`);
-			return 0;
+			return new AbsoluteFilePathSet();
 		} else if (this.query.noFileWrites) {
 			this.logger.info(
 				markup`Writing no files due to noFileWrites flag being set`,
 			);
-			return 0;
+			return new AbsoluteFilePathSet();
 		}
 
 		this.files = new AbsoluteFilePathMap();
@@ -345,7 +373,7 @@ export default class ServerRequest {
 		await this.server.recoveryStore.commit(this);
 		this.logger.info(markup`Flushed ${totalFiles} files`);
 
-		return totalFiles;
+		return files.keysToSet();
 	}
 
 	public updateRequestFlags(flags: Partial<ClientRequestFlags>) {
@@ -480,14 +508,16 @@ export default class ServerRequest {
 		max: boolean = true,
 	): Promise<AbsoluteFilePath> {
 		this.expectArgumentLength(index + 1, max ? undefined : Infinity);
-		const arg = this.query.args[index];
+
+		const arg = this.args.getIndex(index);
+		const source = arg.asFilePath();
 
 		return await this.server.resolver.resolveEntryAssertPath(
 			{
 				...this.getResolverOptionsFromFlags(),
-				source: createUnknownPath(arg),
+				source,
 			},
-			{location: this.getDiagnosticLocationFromFlags({type: "arg", key: index})},
+			{location: arg.getDiagnosticLocation()},
 		);
 	}
 
@@ -514,9 +544,9 @@ export default class ServerRequest {
 	private logDiagnostics(diagnostics: Diagnostics) {
 		for (const diag of diagnostics) {
 			this.logger.error(
-				markup`Encountered diagnostic: ${diag.description.message}. Category: ${diag.description.category}. Location: ${diagnosticLocationToMarkupFilelink(
-					diag.location,
-				)}`,
+				markup`Encountered diagnostic: ${diag.description.message}. Category: ${joinCategoryName(
+					diag.description.category,
+				)}. Location: ${diagnosticLocationToMarkupFilelink(diag.location)}`,
 			);
 		}
 	}
@@ -553,13 +583,15 @@ export default class ServerRequest {
 		});
 	}
 
-	private maybeReadMemoryFile(path: RelativeFilePath): undefined | string {
-		switch (path.join()) {
-			case "argv":
-				return this.getDiagnosticLocationFromFlags("none").sourceText;
+	private maybeReadMemoryFile(path: AnyPath): undefined | string {
+		if (path.isUID()) {
+			switch (path.getBasename()) {
+				case "argv":
+					return this.getDiagnosticLocationFromFlags("none").sourceText;
 
-			case "cwd":
-				return this.client.flags.cwd.join();
+				case "cwd":
+					return this.client.flags.cwd.join();
+			}
 		}
 		return undefined;
 	}
@@ -568,7 +600,7 @@ export default class ServerRequest {
 		return [
 			this.server.createDiagnosticsPrinterFileHandler(),
 			{
-				readRelative: async (path) => {
+				read: async (path) => {
 					return this.maybeReadMemoryFile(path);
 				},
 			},
@@ -577,6 +609,7 @@ export default class ServerRequest {
 
 	public createDiagnosticsPrinter(
 		processor: DiagnosticsProcessor = this.createDiagnosticsProcessor(),
+		opts: Partial<Omit<DiagnosticsPrinterOptions, "processor">> = {},
 	): DiagnosticsPrinter {
 		processor.unshiftOrigin({
 			category: "server",
@@ -584,12 +617,20 @@ export default class ServerRequest {
 		});
 
 		return new DiagnosticsPrinter({
-			processor,
+			streaming: true,
 			reporter: this.reporter,
 			cwd: this.client.flags.cwd,
 			wrapErrors: true,
-			flags: this.getDiagnosticsPrinterFlags(),
-			fileHandlers: this.createDiagnosticsPrinterFileHandlers(),
+			...opts,
+			flags: {
+				...this.getDiagnosticsPrinterFlags(),
+				...opts.flags,
+			},
+			fileHandlers: [
+				...this.createDiagnosticsPrinterFileHandlers(),
+				...(opts.fileHandlers || []),
+			],
+			processor,
 		});
 	}
 
@@ -672,8 +713,8 @@ export default class ServerRequest {
 			category =
 				typeof target !== "string" &&
 				(target.type === "arg" || target.type === "arg-range")
-					? "args/invalid"
-					: "flags/invalid";
+					? DIAGNOSTIC_CATEGORIES["args/invalid"]
+					: DIAGNOSTIC_CATEGORIES["flags/invalid"];
 		}
 
 		const diag: Diagnostic = {
@@ -697,26 +738,26 @@ export default class ServerRequest {
 		return {
 			sourceText: cwd,
 			start: {
-				line: ob1Number1,
-				column: ob1Number0,
+				line: new OneIndexed(),
+				column: new ZeroIndexed(),
 			},
 			end: {
-				line: ob1Number1,
-				column: ob1Coerce0(cwd.length),
+				line: new OneIndexed(),
+				column: new ZeroIndexed(cwd.length),
 			},
-			filename: "cwd",
+			path: createUIDPath("cwd"),
 		};
 	}
 
 	public getDiagnosticLocationFromFlags(
 		target: "none",
-	): RequiredProps<DiagnosticLocation, "sourceText">
+	): RequiredProps<DiagnosticLocation, "sourceText">;
 	public getDiagnosticLocationFromFlags(
 		target: Exclude<SerializeCLITarget, "none">,
-	): SerializeCLILocation
+	): SerializeCLILocation;
 	public getDiagnosticLocationFromFlags(
 		target: SerializeCLITarget,
-	): DiagnosticLocation
+	): DiagnosticLocation;
 	public getDiagnosticLocationFromFlags(
 		target: SerializeCLITarget,
 	): DiagnosticLocation {
@@ -837,36 +878,21 @@ export default class ServerRequest {
 			this.endMarker(marker);
 			return res;
 		} catch (err) {
-			let diagnostics = getDiagnosticsFromError(err);
-
-			if (diagnostics === undefined) {
-				const diag = deriveDiagnosticFromError(
-					err,
-					{
-						description: {
-							category: "internalError/request",
-						},
-					},
-				);
-
-				throw createSingleDiagnosticError({
-					...diag,
+			throw provideDiagnosticAdviceForError(
+				err,
+				{
 					description: {
-						...diag.description,
+						category: DIAGNOSTIC_CATEGORIES["internalError/request"],
 						advice: [
-							...diag.description.advice,
 							{
 								type: "log",
 								category: "info",
-								text: markup`Error occurred while requesting <emphasis>${method}</emphasis> for <filelink emphasis target="${ref.uid}" />`,
+								text: markup`Error occurred while requesting <emphasis>${method}</emphasis> for <emphasis>${ref.uid}</emphasis>`,
 							},
 						],
 					},
-				});
-			} else {
-				// We don't want to tamper with these
-				throw err;
-			}
+				},
+			);
 		} finally {
 			lock.release();
 			clearInterval(interval);
@@ -1038,15 +1064,13 @@ export default class ServerRequest {
 			},
 		);
 
-		// Turn all the cacheDependencies entries from 'absolute paths to UIDs
+		// Turn all the cacheDependencies entries from absolute paths to UIDs
 		return {
 			...res,
 			value: {
 				...res.value,
-				cacheDependencies: res.value.cacheDependencies.map((filename) => {
-					return projectManager.getFileReference(
-						createAbsoluteFilePath(filename),
-					).uid;
+				cacheDependencies: res.value.cacheDependencies.map((path) => {
+					return projectManager.getFileReference(path.assertAbsolute()).uid;
 				}),
 			},
 		};
@@ -1082,12 +1106,12 @@ export default class ServerRequest {
 
 	private async maybePrefetchModuleSignatures(
 		path: AbsoluteFilePath,
-	): Promise<PrefetchedModuleSignatures> {
+	): Promise<WorkerPrefetchedModuleSignatures> {
 		this.checkCancelled();
 
 		const {projectManager} = this.server;
 
-		const prefetchedModuleSignatures: PrefetchedModuleSignatures = {};
+		const prefetchedModuleSignatures: WorkerPrefetchedModuleSignatures = {};
 		const project = await projectManager.assertProject(path);
 		if (!project.config.typeCheck.enabled) {
 			return prefetchedModuleSignatures;
@@ -1170,16 +1194,20 @@ export default class ServerRequest {
 		const argToLocation: AbsoluteFilePathMap<DiagnosticLocation> = new AbsoluteFilePathMap();
 		const args: AbsoluteFilePathSet = new AbsoluteFilePathSet();
 
-		let rawArgs: Array<string | AnyFilePath> = opts.args ?? this.query.args;
+		let rawArgs: ServerRequestGlobArgs =
+			opts.args ??
+			this.args.asMappedArray((elem) => [
+				elem.asFilePath(),
+				elem.getDiagnosticLocation(),
+			]);
 		if (rawArgs.length === 0) {
-			rawArgs = [cwd];
-			argToLocation.set(cwd, this.getDiagnosticLocationForClientCwd());
+			rawArgs = [[cwd, this.getDiagnosticLocationForClientCwd()]];
 		}
 
 		for (let i = 0; i < rawArgs.length; i++) {
-			const path = createUnknownPath(rawArgs[i]);
-			let abs: AbsoluteFilePath;
+			const [path, loc] = rawArgs[i];
 
+			let abs: AbsoluteFilePath;
 			if (path.isAbsolute()) {
 				abs = path.assertAbsolute();
 			} else {
@@ -1188,7 +1216,15 @@ export default class ServerRequest {
 					abs = resolved;
 				} else {
 					// Will need to be resolved...
-					abs = await this.resolveEntryAssertPathArg(i, false);
+					abs = await this.server.resolver.resolveEntryAssertPath(
+						{
+							...this.getResolverOptionsFromFlags(),
+							source: path,
+							// Allow requests to stop at directories
+							requestedType: "directory",
+						},
+						{location: loc},
+					);
 				}
 			}
 
@@ -1215,17 +1251,17 @@ export default class ServerRequest {
 				args.add(abs);
 
 				if (!argToLocation.has(abs)) {
-					argToLocation.set(
-						abs,
-						this.getDiagnosticLocationFromFlags({
-							type: "arg",
-							key: i,
-						}),
-					);
+					argToLocation.set(abs, loc);
 				}
 			} else {
 				// This should fail. Resolver produces much nicer error messages.
-				await this.resolveEntryAssertPathArg(i, false);
+				await this.server.resolver.resolveEntryAssertPath(
+					{
+						...this.getResolverOptionsFromFlags(),
+						source: path,
+					},
+					{location: loc},
+				);
 			}
 		}
 
@@ -1243,7 +1279,9 @@ export default class ServerRequest {
 
 				onSearchNoMatch: async (path) => {
 					if (!opts.ignoreArgumentMisses) {
-						const location = argToLocation.get(path) ?? {};
+						const location =
+							argToLocation.get(path) ??
+							this.getDiagnosticLocationFromFlags("none");
 						await this.server.projectManager.assertProject(path, location);
 						await globUnmatched(this, opts, path, location);
 					}
@@ -1275,10 +1313,7 @@ export default class ServerRequest {
 				err,
 				{
 					description: {
-						category: "internalError/request",
-					},
-					tags: {
-						internal: true,
+						category: DIAGNOSTIC_CATEGORIES["internalError/request"],
 					},
 				},
 			);
@@ -1312,12 +1347,10 @@ export default class ServerRequest {
 		}
 
 		if (shouldPrint) {
-			await printer.print();
-
-			// Don't output the footer if this is a notifier for an invalid request as it will be followed by a help screen
-			if (!(rawErr instanceof ServerRequestInvalid)) {
-				await printer.footer();
-			}
+			await printer.print({
+				// Don't output the footer if this is a notifier for an invalid request as it will be followed by a help screen
+				showFooter: !(rawErr instanceof ServerRequestInvalid),
+			});
 		}
 
 		const diagnostics = printer.processor.getDiagnostics();

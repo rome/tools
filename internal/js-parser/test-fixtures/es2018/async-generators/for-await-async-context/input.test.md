@@ -11,48 +11,34 @@ JSRoot {
 	comments: Array []
 	corrupt: true
 	directives: Array []
-	filename: "es2018/async-generators/for-await-async-context/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2018/async-generators/for-await-async-context/input.js"
-		end: Object {
-			column: 0
-			line: 4
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2018/async-generators/for-await-async-context/input.js 1:0-4:0
+	path: UIDPath<es2018/async-generators/for-await-async-context/input.js>
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				category: "parse"
-				categoryValue: "js"
-				message: Array [
-					RAW_MARKUP {value: "Unexpected token, expected "}
-					"("
-				]
-			}
 			location: Object {
-				filename: "es2018/async-generators/for-await-async-context/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 11
-					line: 2
-				}
-				start: Object {
-					column: 6
-					line: 2
-				}
+				end: Position 2:5
+				path: UIDPath<es2018/async-generators/for-await-async-context/input.js>
+				start: Position 2:6
+			}
+			description: Object {
+				categoryValue: "js"
+				category: Array ["parse"]
+				message: RAW_MARKUP {value: "Unexpected character <emphasis>a</emphasis>"}
+				advice: Array [
+					log {
+						category: "info"
+						text: RAW_MARKUP {value: "Expected the opening for head character <emphasis>(</emphasis>"}
+					}
+				]
 			}
 		}
 	]
@@ -60,30 +46,9 @@ JSRoot {
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "f"
-				loc: Object {
-					filename: "es2018/async-generators/for-await-async-context/input.js"
-					identifierName: "f"
-					end: Object {
-						column: 10
-						line: 1
-					}
-					start: Object {
-						column: 9
-						line: 1
-					}
-				}
+				loc: SourceLocation es2018/async-generators/for-await-async-context/input.js 1:9-1:10 (f)
 			}
-			loc: Object {
-				filename: "es2018/async-generators/for-await-async-context/input.js"
-				end: Object {
-					column: 1
-					line: 3
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2018/async-generators/for-await-async-context/input.js 1:0-3:1
 			head: JSFunctionHead {
 				async: false
 				generator: false
@@ -93,173 +58,48 @@ JSRoot {
 				returnType: undefined
 				thisType: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "es2018/async-generators/for-await-async-context/input.js"
-					end: Object {
-						column: 12
-						line: 1
-					}
-					start: Object {
-						column: 10
-						line: 1
-					}
-				}
+				loc: SourceLocation es2018/async-generators/for-await-async-context/input.js 1:10-1:12
 			}
 			body: JSBlockStatement {
 				directives: Array []
-				loc: Object {
-					filename: "es2018/async-generators/for-await-async-context/input.js"
-					end: Object {
-						column: 1
-						line: 3
-					}
-					start: Object {
-						column: 13
-						line: 1
-					}
-				}
+				loc: SourceLocation es2018/async-generators/for-await-async-context/input.js 1:13-3:1
 				body: Array [
 					JSForStatement {
-						loc: Object {
-							filename: "es2018/async-generators/for-await-async-context/input.js"
-							end: Object {
-								column: 23
-								line: 2
-							}
-							start: Object {
-								column: 2
-								line: 2
-							}
-						}
+						loc: SourceLocation es2018/async-generators/for-await-async-context/input.js 2:2-2:23
 						test: JSReferenceIdentifier {
 							name: "x"
-							loc: Object {
-								filename: "es2018/async-generators/for-await-async-context/input.js"
-								identifierName: "x"
-								end: Object {
-									column: 18
-									line: 2
-								}
-								start: Object {
-									column: 17
-									line: 2
-								}
-							}
+							loc: SourceLocation es2018/async-generators/for-await-async-context/input.js 2:17-2:18 (x)
 						}
 						update: JSReferenceIdentifier {
 							name: "of"
-							loc: Object {
-								filename: "es2018/async-generators/for-await-async-context/input.js"
-								identifierName: "of"
-								end: Object {
-									column: 21
-									line: 2
-								}
-								start: Object {
-									column: 19
-									line: 2
-								}
-							}
+							loc: SourceLocation es2018/async-generators/for-await-async-context/input.js 2:19-2:21 (of)
 						}
 						body: JSExpressionStatement {
-							loc: Object {
-								filename: "es2018/async-generators/for-await-async-context/input.js"
-								end: Object {
-									column: 23
-									line: 2
-								}
-								start: Object {
-									column: 22
-									line: 2
-								}
-							}
+							loc: SourceLocation es2018/async-generators/for-await-async-context/input.js 2:22-2:23
 							expression: JSReferenceIdentifier {
 								name: "y"
-								loc: Object {
-									filename: "es2018/async-generators/for-await-async-context/input.js"
-									identifierName: "y"
-									end: Object {
-										column: 23
-										line: 2
-									}
-									start: Object {
-										column: 22
-										line: 2
-									}
-								}
+								loc: SourceLocation es2018/async-generators/for-await-async-context/input.js 2:22-2:23 (y)
 							}
 						}
 						init: JSCallExpression {
-							loc: Object {
-								filename: "es2018/async-generators/for-await-async-context/input.js"
-								end: Object {
-									column: 16
-									line: 2
-								}
-								start: Object {
-									column: 6
-									line: 2
-								}
-							}
+							loc: SourceLocation es2018/async-generators/for-await-async-context/input.js 2:6-2:16
 							callee: JSReferenceIdentifier {
 								name: "await"
-								loc: Object {
-									filename: "es2018/async-generators/for-await-async-context/input.js"
-									identifierName: "await"
-									end: Object {
-										column: 11
-										line: 2
-									}
-									start: Object {
-										column: 6
-										line: 2
-									}
-								}
+								loc: SourceLocation es2018/async-generators/for-await-async-context/input.js 2:6-2:11 (await)
 							}
 							arguments: Array [
 								JSReferenceIdentifier {
 									name: "let"
-									loc: Object {
-										filename: "es2018/async-generators/for-await-async-context/input.js"
-										identifierName: "let"
-										end: Object {
-											column: 16
-											line: 2
-										}
-										start: Object {
-											column: 13
-											line: 2
-										}
-									}
+									loc: SourceLocation es2018/async-generators/for-await-async-context/input.js 2:13-2:16 (let)
 								}
 							]
 						}
 					}
 					JSExpressionStatement {
-						loc: Object {
-							filename: "es2018/async-generators/for-await-async-context/input.js"
-							end: Object {
-								column: 25
-								line: 2
-							}
-							start: Object {
-								column: 23
-								line: 2
-							}
-						}
+						loc: SourceLocation es2018/async-generators/for-await-async-context/input.js 2:23-2:25
 						expression: JSReferenceIdentifier {
 							name: "INVALID_PLACEHOLDER"
-							loc: Object {
-								filename: "es2018/async-generators/for-await-async-context/input.js"
-								end: Object {
-									column: 24
-									line: 2
-								}
-								start: Object {
-									column: 23
-									line: 2
-								}
-							}
+							loc: SourceLocation es2018/async-generators/for-await-async-context/input.js 2:23-2:24
 						}
 					}
 				]
@@ -275,15 +115,14 @@ JSRoot {
 
  es2018/async-generators/for-await-async-context/input.js:2:6 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ Unexpected token, expected (
+  ✖ Unexpected character a
 
     1 │ function f() {
   > 2 │   for await (let x of y);
-      │       ^^^^^
+      │       ^
     3 │ }
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  ℹ Expected the opening for head character (
 
-✖ Found 1 problem
 
 ```

@@ -12,149 +12,45 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "esprima/statement-iteration/migrated_0013/input.js"
 	hasHoistedVars: true
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "esprima/statement-iteration/migrated_0013/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation esprima/statement-iteration/migrated_0013/input.js 1:0-2:0
+	path: UIDPath<esprima/statement-iteration/migrated_0013/input.js>
 	body: Array [
 		JSForStatement {
 			test: undefined
 			update: undefined
-			loc: Object {
-				filename: "esprima/statement-iteration/migrated_0013/input.js"
-				end: Object {
-					column: 24
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
-			body: JSEmptyStatement {
-				loc: Object {
-					filename: "esprima/statement-iteration/migrated_0013/input.js"
-					end: Object {
-						column: 24
-						line: 1
-					}
-					start: Object {
-						column: 23
-						line: 1
-					}
-				}
-			}
+			body: JSEmptyStatement {loc: SourceLocation esprima/statement-iteration/migrated_0013/input.js 1:23-1:24}
+			loc: SourceLocation esprima/statement-iteration/migrated_0013/input.js 1:0-1:24
 			init: JSVariableDeclaration {
 				kind: "var"
-				loc: Object {
-					filename: "esprima/statement-iteration/migrated_0013/input.js"
-					end: Object {
-						column: 20
-						line: 1
-					}
-					start: Object {
-						column: 4
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/statement-iteration/migrated_0013/input.js 1:4-1:20
 				declarations: Array [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "x"
-							loc: Object {
-								filename: "esprima/statement-iteration/migrated_0013/input.js"
-								identifierName: "x"
-								end: Object {
-									column: 9
-									line: 1
-								}
-								start: Object {
-									column: 8
-									line: 1
-								}
-							}
+							loc: SourceLocation esprima/statement-iteration/migrated_0013/input.js 1:8-1:9 (x)
 						}
-						loc: Object {
-							filename: "esprima/statement-iteration/migrated_0013/input.js"
-							end: Object {
-								column: 13
-								line: 1
-							}
-							start: Object {
-								column: 8
-								line: 1
-							}
-						}
+						loc: SourceLocation esprima/statement-iteration/migrated_0013/input.js 1:8-1:13
 						init: JSNumericLiteral {
 							value: 0
 							format: undefined
-							loc: Object {
-								filename: "esprima/statement-iteration/migrated_0013/input.js"
-								end: Object {
-									column: 13
-									line: 1
-								}
-								start: Object {
-									column: 12
-									line: 1
-								}
-							}
+							loc: SourceLocation esprima/statement-iteration/migrated_0013/input.js 1:12-1:13
 						}
 					}
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "y"
-							loc: Object {
-								filename: "esprima/statement-iteration/migrated_0013/input.js"
-								identifierName: "y"
-								end: Object {
-									column: 16
-									line: 1
-								}
-								start: Object {
-									column: 15
-									line: 1
-								}
-							}
+							loc: SourceLocation esprima/statement-iteration/migrated_0013/input.js 1:15-1:16 (y)
 						}
-						loc: Object {
-							filename: "esprima/statement-iteration/migrated_0013/input.js"
-							end: Object {
-								column: 20
-								line: 1
-							}
-							start: Object {
-								column: 15
-								line: 1
-							}
-						}
+						loc: SourceLocation esprima/statement-iteration/migrated_0013/input.js 1:15-1:20
 						init: JSNumericLiteral {
 							value: 1
 							format: undefined
-							loc: Object {
-								filename: "esprima/statement-iteration/migrated_0013/input.js"
-								end: Object {
-									column: 20
-									line: 1
-								}
-								start: Object {
-									column: 19
-									line: 1
-								}
-							}
+							loc: SourceLocation esprima/statement-iteration/migrated_0013/input.js 1:19-1:20
 						}
 					}
 				]
@@ -167,6 +63,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

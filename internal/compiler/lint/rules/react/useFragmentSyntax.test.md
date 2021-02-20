@@ -26,9 +26,6 @@
     4   │ - </Fragment>
       4 │ + </>
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -64,9 +61,6 @@
     4   │ - </React.Fragment>
       4 │ + </>
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -88,9 +82,6 @@
 
   ✖ Use shorthand syntax for Fragment elements instead of standard syntax.
 
-    const Hello = <div><Fragment><Foo /><Foo /></Fragment></div>
-                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
   ℹ Shorthand fragment syntax saves keystrokes and is only unapplicable when keys are required.
 
   ℹ Safe fix
@@ -102,9 +93,6 @@
     4   │ - </Fragment>
       4 │ + </>
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -126,9 +114,6 @@ const Hello = <div>
 
   ✖ Use shorthand syntax for Fragment elements instead of standard syntax.
 
-    const Hello = <div><React.Fragment><Foo /><Foo /></React.Fragment></div>
-                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
   ℹ Shorthand fragment syntax saves keystrokes and is only unapplicable when keys are required.
 
   ℹ Safe fix
@@ -140,9 +125,6 @@ const Hello = <div>
     4   │ - </React.Fragment>
       4 │ + </>
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -178,9 +160,6 @@ const Hello = <div>
     4   │ - </React.Fragment>
       4 │ + </>
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -216,9 +195,6 @@ const Hello = <>
     4   │ - </Fragment>
       4 │ + </>
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -257,9 +233,6 @@ const Hello = <>
     4   │ - </React.Fragment>
       4 │ + </>
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -301,9 +274,6 @@ function Foo() {
     4   │ - </Fragment>
       4 │ + </>
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -344,9 +314,6 @@ function Foo() {
     4   │ - </React.Fragment>
       4 │ + </>
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -386,9 +353,6 @@ function Hello() {
     4   │ - </Fragment>
       4 │ + </>
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -426,9 +390,6 @@ function Hello() {
     4   │ - </React.Fragment>
       4 │ + </>
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -466,9 +427,6 @@ function Hello() {
     4   │ - </Fragment>
       4 │ + </>
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -487,7 +445,6 @@ function Hello() {
 ### `12`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -504,7 +461,6 @@ function Hello() {
 ### `13`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -518,7 +474,6 @@ function Hello() {
 ### `14`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -534,7 +489,6 @@ function Hello() {
 ### `15`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -552,7 +506,6 @@ const Hello = <div>
 ### `16`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -568,7 +521,6 @@ const Hello = <>
 ### `17`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -584,7 +536,6 @@ const Hello = <Fragment key="id">
 ### `18`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -600,7 +551,6 @@ const Hello = <React.Fragment key="id">
 ### `19`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -617,7 +567,6 @@ function Foo() {
 ### `20`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -635,7 +584,6 @@ function Hello() {
 ### `21`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -653,7 +601,6 @@ function Hello() {
 ### `22`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -661,8 +608,7 @@ function Hello() {
 
 ```tsx
 function Hello() {
-	return <>
-	</>;
+	return <></>;
 }
 
 ```
@@ -670,7 +616,6 @@ function Hello() {
 ### `23`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -686,7 +631,6 @@ function Hello() {
 ### `24`
 
 ```
-✔ No known problems!
 
 ```
 

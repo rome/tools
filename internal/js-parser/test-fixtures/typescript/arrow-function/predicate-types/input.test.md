@@ -12,160 +12,45 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "typescript/arrow-function/predicate-types/input.ts"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
+	loc: SourceLocation typescript/arrow-function/predicate-types/input.ts 1:0-2:0
+	path: UIDPath<typescript/arrow-function/predicate-types/input.ts>
 	syntax: Array ["ts"]
-	loc: Object {
-		filename: "typescript/arrow-function/predicate-types/input.ts"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "typescript/arrow-function/predicate-types/input.ts"
-				end: Object {
-					column: 30
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation typescript/arrow-function/predicate-types/input.ts 1:0-1:30
 			expression: JSArrowFunctionExpression {
-				loc: Object {
-					filename: "typescript/arrow-function/predicate-types/input.ts"
-					end: Object {
-						column: 29
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/arrow-function/predicate-types/input.ts 1:0-1:29
 				body: JSBooleanLiteral {
 					value: true
-					loc: Object {
-						filename: "typescript/arrow-function/predicate-types/input.ts"
-						end: Object {
-							column: 29
-							line: 1
-						}
-						start: Object {
-							column: 25
-							line: 1
-						}
-					}
+					loc: SourceLocation typescript/arrow-function/predicate-types/input.ts 1:25-1:29
 				}
 				head: JSFunctionHead {
 					async: false
 					hasHoistedVars: false
 					rest: undefined
 					thisType: undefined
-					loc: Object {
-						filename: "typescript/arrow-function/predicate-types/input.ts"
-						end: Object {
-							column: 24
-							line: 1
-						}
-						start: Object {
-							column: 0
-							line: 1
-						}
-					}
+					loc: SourceLocation typescript/arrow-function/predicate-types/input.ts 1:0-1:24
 					returnType: TSTypePredicate {
 						asserts: false
-						loc: Object {
-							filename: "typescript/arrow-function/predicate-types/input.ts"
-							end: Object {
-								column: 21
-								line: 1
-							}
-							start: Object {
-								column: 10
-								line: 1
-							}
-						}
-						typeAnnotation: TSStringKeywordTypeAnnotation {
-							loc: Object {
-								filename: "typescript/arrow-function/predicate-types/input.ts"
-								end: Object {
-									column: 21
-									line: 1
-								}
-								start: Object {
-									column: 15
-									line: 1
-								}
-							}
-						}
+						loc: SourceLocation typescript/arrow-function/predicate-types/input.ts 1:10-1:21
+						typeAnnotation: TSStringKeywordTypeAnnotation {loc: SourceLocation typescript/arrow-function/predicate-types/input.ts 1:15-1:21}
 						parameterName: JSIdentifier {
 							name: "x"
-							loc: Object {
-								filename: "typescript/arrow-function/predicate-types/input.ts"
-								identifierName: "x"
-								end: Object {
-									column: 11
-									line: 1
-								}
-								start: Object {
-									column: 10
-									line: 1
-								}
-							}
+							loc: SourceLocation typescript/arrow-function/predicate-types/input.ts 1:10-1:11 (x)
 						}
 					}
 					params: Array [
 						JSBindingIdentifier {
 							name: "x"
-							loc: Object {
-								filename: "typescript/arrow-function/predicate-types/input.ts"
-								end: Object {
-									column: 24
-									line: 1
-								}
-								start: Object {
-									column: 25
-									line: 1
-								}
-							}
+							loc: SourceLocation typescript/arrow-function/predicate-types/input.ts 1:25-1:24
 							meta: JSPatternMeta {
 								optional: undefined
-								loc: Object {
-									filename: "typescript/arrow-function/predicate-types/input.ts"
-									end: Object {
-										column: 24
-										line: 1
-									}
-									start: Object {
-										column: 25
-										line: 1
-									}
-								}
-								typeAnnotation: TSAnyKeywordTypeAnnotation {
-									loc: Object {
-										filename: "typescript/arrow-function/predicate-types/input.ts"
-										end: Object {
-											column: 7
-											line: 1
-										}
-										start: Object {
-											column: 4
-											line: 1
-										}
-									}
-								}
+								loc: SourceLocation typescript/arrow-function/predicate-types/input.ts 1:25-1:24
+								typeAnnotation: TSAnyKeywordTypeAnnotation {loc: SourceLocation typescript/arrow-function/predicate-types/input.ts 1:4-1:7}
 							}
 						}
 					]
@@ -179,6 +64,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

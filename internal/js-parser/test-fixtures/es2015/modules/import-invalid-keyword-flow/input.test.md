@@ -11,48 +11,29 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "es2015/modules/import-invalid-keyword-flow/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
 	syntax: Array []
-	loc: Object {
-		filename: "es2015/modules/import-invalid-keyword-flow/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2015/modules/import-invalid-keyword-flow/input.js 1:0-2:0
+	path: UIDPath<es2015/modules/import-invalid-keyword-flow/input.js>
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse"
 				categoryValue: "js"
-				message: Array [
-					RAW_MARKUP {value: "Unexpected keyword "}
-					"default"
-				]
+				category: Array ["parse"]
+				message: RAW_MARKUP {value: "Unexpected keyword <emphasis>default</emphasis>"}
 			}
 			location: Object {
-				filename: "es2015/modules/import-invalid-keyword-flow/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 16
-					line: 1
-				}
-				start: Object {
-					column: 9
-					line: 1
-				}
+				end: Position 1:16
+				path: UIDPath<es2015/modules/import-invalid-keyword-flow/input.js>
+				start: Position 1:9
 			}
 		}
 	]
@@ -61,87 +42,25 @@ JSRoot {
 			defaultSpecifier: undefined
 			importKind: undefined
 			namespaceSpecifier: undefined
-			loc: Object {
-				filename: "es2015/modules/import-invalid-keyword-flow/input.js"
-				end: Object {
-					column: 30
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2015/modules/import-invalid-keyword-flow/input.js 1:0-1:30
 			source: JSStringLiteral {
 				value: "foo"
-				loc: Object {
-					filename: "es2015/modules/import-invalid-keyword-flow/input.js"
-					end: Object {
-						column: 29
-						line: 1
-					}
-					start: Object {
-						column: 24
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/modules/import-invalid-keyword-flow/input.js 1:24-1:29
 			}
 			namedSpecifiers: Array [
 				JSImportSpecifier {
-					loc: Object {
-						filename: "es2015/modules/import-invalid-keyword-flow/input.js"
-						end: Object {
-							column: 16
-							line: 1
-						}
-						start: Object {
-							column: 9
-							line: 1
-						}
-					}
+					loc: SourceLocation es2015/modules/import-invalid-keyword-flow/input.js 1:9-1:16
 					imported: JSIdentifier {
 						name: "default"
-						loc: Object {
-							filename: "es2015/modules/import-invalid-keyword-flow/input.js"
-							identifierName: "default"
-							end: Object {
-								column: 16
-								line: 1
-							}
-							start: Object {
-								column: 9
-								line: 1
-							}
-						}
+						loc: SourceLocation es2015/modules/import-invalid-keyword-flow/input.js 1:9-1:16 (default)
 					}
 					local: JSImportSpecifierLocal {
 						name: JSBindingIdentifier {
 							name: "default"
-							loc: Object {
-								filename: "es2015/modules/import-invalid-keyword-flow/input.js"
-								identifierName: "default"
-								end: Object {
-									column: 16
-									line: 1
-								}
-								start: Object {
-									column: 9
-									line: 1
-								}
-							}
+							loc: SourceLocation es2015/modules/import-invalid-keyword-flow/input.js 1:9-1:16 (default)
 						}
 						importKind: undefined
-						loc: Object {
-							filename: "es2015/modules/import-invalid-keyword-flow/input.js"
-							end: Object {
-								column: 16
-								line: 1
-							}
-							start: Object {
-								column: 9
-								line: 1
-							}
-						}
+						loc: SourceLocation es2015/modules/import-invalid-keyword-flow/input.js 1:9-1:16
 					}
 				}
 			]
@@ -161,8 +80,5 @@ JSRoot {
     import { default } from "foo";
              ^^^^^^^
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

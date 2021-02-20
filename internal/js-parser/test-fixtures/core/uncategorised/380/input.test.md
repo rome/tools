@@ -11,128 +11,51 @@ JSRoot {
 	comments: Array []
 	corrupt: true
 	directives: Array []
-	filename: "core/uncategorised/380/input.js"
 	hasHoistedVars: true
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "core/uncategorised/380/input.js"
-		end: Object {
-			column: 11
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation core/uncategorised/380/input.js 1:0-1:11
+	path: UIDPath<core/uncategorised/380/input.js>
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse"
 				categoryValue: "js"
+				category: Array ["parse"]
 				message: RAW_MARKUP {value: "Unterminated regular expression"}
 			}
 			location: Object {
-				filename: "core/uncategorised/380/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 9
-					line: 1
-				}
-				start: Object {
-					column: 9
-					line: 1
-				}
+				end: Position 1:9
+				path: UIDPath<core/uncategorised/380/input.js>
+				start: Position 1:9
 			}
 		}
 	]
 	body: Array [
 		JSVariableDeclarationStatement {
-			loc: Object {
-				filename: "core/uncategorised/380/input.js"
-				end: Object {
-					column: 11
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation core/uncategorised/380/input.js 1:0-1:11
 			declaration: JSVariableDeclaration {
 				kind: "var"
-				loc: Object {
-					filename: "core/uncategorised/380/input.js"
-					end: Object {
-						column: 11
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation core/uncategorised/380/input.js 1:0-1:11
 				declarations: Array [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "x"
-							loc: Object {
-								filename: "core/uncategorised/380/input.js"
-								identifierName: "x"
-								end: Object {
-									column: 5
-									line: 1
-								}
-								start: Object {
-									column: 4
-									line: 1
-								}
-							}
+							loc: SourceLocation core/uncategorised/380/input.js 1:4-1:5 (x)
 						}
-						loc: Object {
-							filename: "core/uncategorised/380/input.js"
-							end: Object {
-								column: 11
-								line: 1
-							}
-							start: Object {
-								column: 4
-								line: 1
-							}
-						}
+						loc: SourceLocation core/uncategorised/380/input.js 1:4-1:11
 						init: JSBinaryExpression {
 							operator: "/"
-							loc: Object {
-								filename: "core/uncategorised/380/input.js"
-								end: Object {
-									column: 11
-									line: 1
-								}
-								start: Object {
-									column: 8
-									line: 1
-								}
-							}
+							loc: SourceLocation core/uncategorised/380/input.js 1:8-1:11
 							right: JSReferenceIdentifier {
 								name: "INVALID_PLACEHOLDER"
-								loc: Object {
-									filename: "core/uncategorised/380/input.js"
-									end: Object {
-										column: 11
-										line: 1
-									}
-									start: Object {
-										column: 11
-										line: 1
-									}
-								}
+								loc: SourceLocation core/uncategorised/380/input.js 1:11-1:11
 							}
 							left: JSRegExpLiteral {
 								global: false
@@ -141,30 +64,10 @@ JSRoot {
 								noDotNewline: false
 								sticky: false
 								unicode: false
-								loc: Object {
-									filename: "core/uncategorised/380/input.js"
-									end: Object {
-										column: 10
-										line: 1
-									}
-									start: Object {
-										column: 8
-										line: 1
-									}
-								}
+								loc: SourceLocation core/uncategorised/380/input.js 1:8-1:10
 								expression: JSRegExpSubExpression {
 									body: Array []
-									loc: Object {
-										filename: "core/uncategorised/380/input.js"
-										end: Object {
-											column: 9
-											line: 1
-										}
-										start: Object {
-											column: 9
-											line: 1
-										}
-									}
+									loc: SourceLocation core/uncategorised/380/input.js 1:9-1:9
 								}
 							}
 						}
@@ -188,8 +91,5 @@ JSRoot {
       │          ^
     2 │ /
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

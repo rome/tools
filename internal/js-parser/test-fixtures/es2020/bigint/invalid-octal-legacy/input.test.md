@@ -11,74 +11,38 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "es2020/bigint/invalid-octal-legacy/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2020/bigint/invalid-octal-legacy/input.js"
-		end: Object {
-			column: 0
-			line: 2
+	loc: SourceLocation es2020/bigint/invalid-octal-legacy/input.js 1:0-2:0
+	path: UIDPath<es2020/bigint/invalid-octal-legacy/input.js>
+	body: Array [
+		JSExpressionStatement {
+			loc: SourceLocation es2020/bigint/invalid-octal-legacy/input.js 1:0-1:7
+			expression: JSBigIntLiteral {
+				value: "016432"
+				loc: SourceLocation es2020/bigint/invalid-octal-legacy/input.js 1:0-1:7
+			}
 		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	]
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse"
 				categoryValue: "js"
+				category: Array ["parse"]
 				message: RAW_MARKUP {value: "A bigint can't be an octal"}
 			}
 			location: Object {
-				filename: "es2020/bigint/invalid-octal-legacy/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 6
-					line: 1
-				}
-				start: Object {
-					column: 6
-					line: 1
-				}
-			}
-		}
-	]
-	body: Array [
-		JSExpressionStatement {
-			loc: Object {
-				filename: "es2020/bigint/invalid-octal-legacy/input.js"
-				end: Object {
-					column: 7
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
-			expression: JSBigIntLiteral {
-				value: "016432"
-				loc: Object {
-					filename: "es2020/bigint/invalid-octal-legacy/input.js"
-					end: Object {
-						column: 7
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				end: Position 1:6
+				path: UIDPath<es2020/bigint/invalid-octal-legacy/input.js>
+				start: Position 1:6
 			}
 		}
 	]
@@ -96,8 +60,5 @@ JSRoot {
     016432n
           ^
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

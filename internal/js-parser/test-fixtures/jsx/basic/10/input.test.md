@@ -11,108 +11,38 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "jsx/basic/10/input.jsx"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
+	loc: SourceLocation jsx/basic/10/input.jsx 1:0-1:32
+	path: UIDPath<jsx/basic/10/input.jsx>
 	syntax: Array ["jsx"]
-	loc: Object {
-		filename: "jsx/basic/10/input.jsx"
-		end: Object {
-			column: 32
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
 	comments: Array [
 		CommentBlock {
 			id: "1"
 			value: " this is a comment "
-			loc: Object {
-				filename: "jsx/basic/10/input.jsx"
-				end: Object {
-					column: 27
-					line: 1
-				}
-				start: Object {
-					column: 4
-					line: 1
-				}
-			}
+			loc: SourceLocation jsx/basic/10/input.jsx 1:4-1:27
 		}
 	]
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "jsx/basic/10/input.jsx"
-				end: Object {
-					column: 32
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation jsx/basic/10/input.jsx 1:0-1:32
 			expression: JSXElement {
 				name: JSXIdentifier {
 					name: "a"
-					loc: Object {
-						filename: "jsx/basic/10/input.jsx"
-						end: Object {
-							column: 2
-							line: 1
-						}
-						start: Object {
-							column: 1
-							line: 1
-						}
-					}
+					loc: SourceLocation jsx/basic/10/input.jsx 1:1-1:2
 				}
 				attributes: Array []
 				selfClosing: false
 				typeArguments: undefined
-				loc: Object {
-					filename: "jsx/basic/10/input.jsx"
-					end: Object {
-						column: 32
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation jsx/basic/10/input.jsx 1:0-1:32
 				children: Array [
 					JSXExpressionContainer {
-						loc: Object {
-							filename: "jsx/basic/10/input.jsx"
-							end: Object {
-								column: 28
-								line: 1
-							}
-							start: Object {
-								column: 3
-								line: 1
-							}
-						}
+						loc: SourceLocation jsx/basic/10/input.jsx 1:3-1:28
 						expression: JSXEmptyExpression {
+							loc: SourceLocation jsx/basic/10/input.jsx 1:4-1:4
 							trailingComments: Array ["1"]
-							loc: Object {
-								filename: "jsx/basic/10/input.jsx"
-								end: Object {
-									column: 4
-									line: 1
-								}
-								start: Object {
-									column: 4
-									line: 1
-								}
-							}
 						}
 					}
 				]
@@ -125,6 +55,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

@@ -11,89 +11,43 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "core/uncategorised/412/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "core/uncategorised/412/input.js"
-		end: Object {
-			column: 11
-			line: 1
+	loc: SourceLocation core/uncategorised/412/input.js 1:0-1:11
+	path: UIDPath<core/uncategorised/412/input.js>
+	body: Array [
+		JSContinueStatement {
+			label: undefined
+			loc: SourceLocation core/uncategorised/412/input.js 1:0-1:8
 		}
-		start: Object {
-			column: 0
-			line: 1
+		JSExpressionStatement {
+			loc: SourceLocation core/uncategorised/412/input.js 1:9-1:11
+			expression: JSNumericLiteral {
+				value: 2
+				format: undefined
+				loc: SourceLocation core/uncategorised/412/input.js 1:9-1:10
+			}
 		}
-	}
+	]
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse"
 				categoryValue: "js"
-				message: RAW_MARKUP {value: "Unexpected token"}
+				category: Array ["parse"]
+				message: RAW_MARKUP {value: "Unexpected character <emphasis>2</emphasis>"}
 			}
 			location: Object {
-				filename: "core/uncategorised/412/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 10
-					line: 1
-				}
-				start: Object {
-					column: 9
-					line: 1
-				}
-			}
-		}
-	]
-	body: Array [
-		JSContinueStatement {
-			label: undefined
-			loc: Object {
-				filename: "core/uncategorised/412/input.js"
-				end: Object {
-					column: 8
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
-		}
-		JSExpressionStatement {
-			loc: Object {
-				filename: "core/uncategorised/412/input.js"
-				end: Object {
-					column: 11
-					line: 1
-				}
-				start: Object {
-					column: 9
-					line: 1
-				}
-			}
-			expression: JSNumericLiteral {
-				value: 2
-				format: undefined
-				loc: Object {
-					filename: "core/uncategorised/412/input.js"
-					end: Object {
-						column: 10
-						line: 1
-					}
-					start: Object {
-						column: 9
-						line: 1
-					}
-				}
+				end: Position 1:10
+				path: UIDPath<core/uncategorised/412/input.js>
+				start: Position 1:9
 			}
 		}
 	]
@@ -106,13 +60,10 @@ JSRoot {
 
  core/uncategorised/412/input.js:1:9 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ Unexpected token
+  ✖ Unexpected character 2
 
     continue 2;
              ^
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

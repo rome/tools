@@ -11,45 +11,29 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "typescript/function/pattern-parameters/input.ts"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
+	loc: SourceLocation typescript/function/pattern-parameters/input.ts 1:0-2:0
+	path: UIDPath<typescript/function/pattern-parameters/input.ts>
 	syntax: Array ["ts"]
-	loc: Object {
-		filename: "typescript/function/pattern-parameters/input.ts"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse"
 				categoryValue: "js"
+				category: Array ["parse"]
 				message: RAW_MARKUP {value: "A binding pattern parameter cannot be optional in an implementation signature."}
 			}
 			location: Object {
-				filename: "typescript/function/pattern-parameters/input.ts"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 13
-					line: 1
-				}
-				start: Object {
-					column: 11
-					line: 1
-				}
+				end: Position 1:13
+				path: UIDPath<typescript/function/pattern-parameters/input.ts>
+				start: Position 1:11
 			}
 		}
 	]
@@ -57,44 +41,13 @@ JSRoot {
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "f"
-				loc: Object {
-					filename: "typescript/function/pattern-parameters/input.ts"
-					identifierName: "f"
-					end: Object {
-						column: 10
-						line: 1
-					}
-					start: Object {
-						column: 9
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/function/pattern-parameters/input.ts 1:9-1:10 (f)
 			}
-			loc: Object {
-				filename: "typescript/function/pattern-parameters/input.ts"
-				end: Object {
-					column: 22
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation typescript/function/pattern-parameters/input.ts 1:0-1:22
 			body: JSBlockStatement {
 				body: Array []
 				directives: Array []
-				loc: Object {
-					filename: "typescript/function/pattern-parameters/input.ts"
-					end: Object {
-						column: 22
-						line: 1
-					}
-					start: Object {
-						column: 20
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/function/pattern-parameters/input.ts 1:20-1:22
 			}
 			head: JSFunctionHead {
 				async: false
@@ -104,76 +57,26 @@ JSRoot {
 				returnType: undefined
 				thisType: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "typescript/function/pattern-parameters/input.ts"
-					end: Object {
-						column: 19
-						line: 1
-					}
-					start: Object {
-						column: 10
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/function/pattern-parameters/input.ts 1:10-1:19
 				params: Array [
 					JSBindingArrayPattern {
 						elements: Array []
 						rest: undefined
-						loc: Object {
-							filename: "typescript/function/pattern-parameters/input.ts"
-							end: Object {
-								column: 13
-								line: 1
-							}
-							start: Object {
-								column: 11
-								line: 1
-							}
-						}
+						loc: SourceLocation typescript/function/pattern-parameters/input.ts 1:11-1:13
 						meta: JSPatternMeta {
 							optional: true
 							typeAnnotation: undefined
-							loc: Object {
-								filename: "typescript/function/pattern-parameters/input.ts"
-								end: Object {
-									column: 14
-									line: 1
-								}
-								start: Object {
-									column: 11
-									line: 1
-								}
-							}
+							loc: SourceLocation typescript/function/pattern-parameters/input.ts 1:11-1:14
 						}
 					}
 					JSBindingObjectPattern {
 						properties: Array []
 						rest: undefined
-						loc: Object {
-							filename: "typescript/function/pattern-parameters/input.ts"
-							end: Object {
-								column: 18
-								line: 1
-							}
-							start: Object {
-								column: 16
-								line: 1
-							}
-						}
+						loc: SourceLocation typescript/function/pattern-parameters/input.ts 1:16-1:18
 						meta: JSPatternMeta {
 							optional: undefined
 							typeAnnotation: undefined
-							loc: Object {
-								filename: "typescript/function/pattern-parameters/input.ts"
-								end: Object {
-									column: 18
-									line: 1
-								}
-								start: Object {
-									column: 16
-									line: 1
-								}
-							}
+							loc: SourceLocation typescript/function/pattern-parameters/input.ts 1:16-1:18
 						}
 					}
 				]
@@ -194,8 +97,5 @@ JSRoot {
     function f([]?, {}) {}
                ^^
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

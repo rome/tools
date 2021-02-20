@@ -11,177 +11,69 @@ JSRoot {
 	comments: Array []
 	corrupt: true
 	directives: Array []
-	filename: "typescript/variable-declarator/definite-assignment-not-allowed/input.ts"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
+	loc: SourceLocation typescript/variable-declarator/definite-assignment-not-allowed/input.ts 1:0-1:13
+	path: UIDPath<typescript/variable-declarator/definite-assignment-not-allowed/input.ts>
 	syntax: Array ["ts"]
-	loc: Object {
-		filename: "typescript/variable-declarator/definite-assignment-not-allowed/input.ts"
-		end: Object {
-			column: 13
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse"
 				categoryValue: "js"
+				category: Array ["parse"]
 				message: RAW_MARKUP {value: "Complex binding patterns require an initialization value"}
 			}
 			location: Object {
-				filename: "typescript/variable-declarator/definite-assignment-not-allowed/input.ts"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 6
-					line: 1
-				}
-				start: Object {
-					column: 6
-					line: 1
-				}
+				end: Position 1:6
+				path: UIDPath<typescript/variable-declarator/definite-assignment-not-allowed/input.ts>
+				start: Position 1:6
 			}
 		}
 	]
 	body: Array [
 		JSVariableDeclarationStatement {
-			loc: Object {
-				filename: "typescript/variable-declarator/definite-assignment-not-allowed/input.ts"
-				end: Object {
-					column: 6
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation typescript/variable-declarator/definite-assignment-not-allowed/input.ts 1:0-1:6
 			declaration: JSVariableDeclaration {
 				kind: "let"
-				loc: Object {
-					filename: "typescript/variable-declarator/definite-assignment-not-allowed/input.ts"
-					end: Object {
-						column: 6
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/variable-declarator/definite-assignment-not-allowed/input.ts 1:0-1:6
 				declarations: Array [
 					JSVariableDeclarator {
 						id: JSBindingObjectPattern {
 							properties: Array []
 							rest: undefined
-							loc: Object {
-								filename: "typescript/variable-declarator/definite-assignment-not-allowed/input.ts"
-								end: Object {
-									column: 6
-									line: 1
-								}
-								start: Object {
-									column: 4
-									line: 1
-								}
-							}
+							loc: SourceLocation typescript/variable-declarator/definite-assignment-not-allowed/input.ts 1:4-1:6
 						}
 						init: undefined
-						loc: Object {
-							filename: "typescript/variable-declarator/definite-assignment-not-allowed/input.ts"
-							end: Object {
-								column: 6
-								line: 1
-							}
-							start: Object {
-								column: 4
-								line: 1
-							}
-						}
+						loc: SourceLocation typescript/variable-declarator/definite-assignment-not-allowed/input.ts 1:4-1:6
 					}
 				]
 			}
 		}
 		JSExpressionStatement {
-			loc: Object {
-				filename: "typescript/variable-declarator/definite-assignment-not-allowed/input.ts"
-				end: Object {
-					column: 9
-					line: 1
-				}
-				start: Object {
-					column: 6
-					line: 1
-				}
-			}
+			loc: SourceLocation typescript/variable-declarator/definite-assignment-not-allowed/input.ts 1:6-1:9
 			expression: JSUnaryExpression {
 				operator: "!"
 				prefix: true
-				loc: Object {
-					filename: "typescript/variable-declarator/definite-assignment-not-allowed/input.ts"
-					end: Object {
-						column: 9
-						line: 1
-					}
-					start: Object {
-						column: 6
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/variable-declarator/definite-assignment-not-allowed/input.ts 1:6-1:9
 				argument: JSReferenceIdentifier {
 					name: "INVALID_PLACEHOLDER"
-					loc: Object {
-						filename: "typescript/variable-declarator/definite-assignment-not-allowed/input.ts"
-						end: Object {
-							column: 9
-							line: 1
-						}
-						start: Object {
-							column: 8
-							line: 1
-						}
-					}
+					loc: SourceLocation typescript/variable-declarator/definite-assignment-not-allowed/input.ts 1:8-1:9
 				}
 			}
 		}
 		JSBlockStatement {
 			body: Array []
 			directives: Array []
-			loc: Object {
-				filename: "typescript/variable-declarator/definite-assignment-not-allowed/input.ts"
-				end: Object {
-					column: 12
-					line: 1
-				}
-				start: Object {
-					column: 10
-					line: 1
-				}
-			}
+			loc: SourceLocation typescript/variable-declarator/definite-assignment-not-allowed/input.ts 1:10-1:12
 		}
-		JSEmptyStatement {
-			loc: Object {
-				filename: "typescript/variable-declarator/definite-assignment-not-allowed/input.ts"
-				end: Object {
-					column: 13
-					line: 1
-				}
-				start: Object {
-					column: 12
-					line: 1
-				}
-			}
-		}
+		JSEmptyStatement {loc: SourceLocation typescript/variable-declarator/definite-assignment-not-allowed/input.ts 1:12-1:13}
 	]
 }
 ```
@@ -197,8 +89,5 @@ JSRoot {
     let {}! = {};
           ^
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

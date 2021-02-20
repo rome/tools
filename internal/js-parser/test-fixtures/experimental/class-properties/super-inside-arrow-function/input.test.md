@@ -12,123 +12,40 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "experimental/class-properties/super-inside-arrow-function/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "experimental/class-properties/super-inside-arrow-function/input.js"
-		end: Object {
-			column: 0
-			line: 4
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation experimental/class-properties/super-inside-arrow-function/input.js 1:0-4:0
+	path: UIDPath<experimental/class-properties/super-inside-arrow-function/input.js>
 	body: Array [
 		JSClassDeclaration {
 			id: JSBindingIdentifier {
 				name: "A"
-				loc: Object {
-					filename: "experimental/class-properties/super-inside-arrow-function/input.js"
-					identifierName: "A"
-					end: Object {
-						column: 7
-						line: 1
-					}
-					start: Object {
-						column: 6
-						line: 1
-					}
-				}
+				loc: SourceLocation experimental/class-properties/super-inside-arrow-function/input.js 1:6-1:7 (A)
 			}
-			loc: Object {
-				filename: "experimental/class-properties/super-inside-arrow-function/input.js"
-				end: Object {
-					column: 1
-					line: 3
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation experimental/class-properties/super-inside-arrow-function/input.js 1:0-3:1
 			meta: JSClassHead {
 				implements: undefined
 				superTypeParameters: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "experimental/class-properties/super-inside-arrow-function/input.js"
-					end: Object {
-						column: 1
-						line: 3
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation experimental/class-properties/super-inside-arrow-function/input.js 1:0-3:1
 				superClass: JSReferenceIdentifier {
 					name: "B"
-					loc: Object {
-						filename: "experimental/class-properties/super-inside-arrow-function/input.js"
-						identifierName: "B"
-						end: Object {
-							column: 17
-							line: 1
-						}
-						start: Object {
-							column: 16
-							line: 1
-						}
-					}
+					loc: SourceLocation experimental/class-properties/super-inside-arrow-function/input.js 1:16-1:17 (B)
 				}
 				body: Array [
 					JSClassProperty {
 						key: JSStaticPropertyKey {
 							value: JSIdentifier {
 								name: "foo"
-								loc: Object {
-									filename: "experimental/class-properties/super-inside-arrow-function/input.js"
-									identifierName: "foo"
-									end: Object {
-										column: 5
-										line: 2
-									}
-									start: Object {
-										column: 2
-										line: 2
-									}
-								}
+								loc: SourceLocation experimental/class-properties/super-inside-arrow-function/input.js 2:2-2:5 (foo)
 							}
-							loc: Object {
-								filename: "experimental/class-properties/super-inside-arrow-function/input.js"
-								end: Object {
-									column: 5
-									line: 2
-								}
-								start: Object {
-									column: 2
-									line: 2
-								}
-							}
+							loc: SourceLocation experimental/class-properties/super-inside-arrow-function/input.js 2:2-2:5
 						}
 						value: JSArrowFunctionExpression {
-							loc: Object {
-								filename: "experimental/class-properties/super-inside-arrow-function/input.js"
-								end: Object {
-									column: 23
-									line: 2
-								}
-								start: Object {
-									column: 8
-									line: 2
-								}
-							}
+							loc: SourceLocation experimental/class-properties/super-inside-arrow-function/input.js 2:8-2:23
 							head: JSFunctionHead {
 								async: false
 								hasHoistedVars: false
@@ -136,101 +53,27 @@ JSRoot {
 								rest: undefined
 								returnType: undefined
 								thisType: undefined
-								loc: Object {
-									filename: "experimental/class-properties/super-inside-arrow-function/input.js"
-									end: Object {
-										column: 13
-										line: 2
-									}
-									start: Object {
-										column: 8
-										line: 2
-									}
-								}
+								loc: SourceLocation experimental/class-properties/super-inside-arrow-function/input.js 2:8-2:13
 							}
 							body: JSCallExpression {
 								arguments: Array []
-								loc: Object {
-									filename: "experimental/class-properties/super-inside-arrow-function/input.js"
-									end: Object {
-										column: 23
-										line: 2
-									}
-									start: Object {
-										column: 14
-										line: 2
-									}
-								}
+								loc: SourceLocation experimental/class-properties/super-inside-arrow-function/input.js 2:14-2:23
 								callee: JSMemberExpression {
-									loc: Object {
-										filename: "experimental/class-properties/super-inside-arrow-function/input.js"
-										end: Object {
-											column: 21
-											line: 2
-										}
-										start: Object {
-											column: 14
-											line: 2
-										}
-									}
-									object: JSSuper {
-										loc: Object {
-											filename: "experimental/class-properties/super-inside-arrow-function/input.js"
-											end: Object {
-												column: 19
-												line: 2
-											}
-											start: Object {
-												column: 14
-												line: 2
-											}
-										}
-									}
+									loc: SourceLocation experimental/class-properties/super-inside-arrow-function/input.js 2:14-2:21
+									object: JSSuper {loc: SourceLocation experimental/class-properties/super-inside-arrow-function/input.js 2:14-2:19}
 									property: JSStaticMemberProperty {
 										value: JSIdentifier {
 											name: "x"
-											loc: Object {
-												filename: "experimental/class-properties/super-inside-arrow-function/input.js"
-												identifierName: "x"
-												end: Object {
-													column: 21
-													line: 2
-												}
-												start: Object {
-													column: 20
-													line: 2
-												}
-											}
+											loc: SourceLocation experimental/class-properties/super-inside-arrow-function/input.js 2:20-2:21 (x)
 										}
-										loc: Object {
-											filename: "experimental/class-properties/super-inside-arrow-function/input.js"
-											identifierName: "x"
-											end: Object {
-												column: 21
-												line: 2
-											}
-											start: Object {
-												column: 20
-												line: 2
-											}
-										}
+										loc: SourceLocation experimental/class-properties/super-inside-arrow-function/input.js 2:20-2:21 (x)
 									}
 								}
 							}
 						}
 						definite: undefined
 						typeAnnotation: undefined
-						loc: Object {
-							filename: "experimental/class-properties/super-inside-arrow-function/input.js"
-							end: Object {
-								column: 24
-								line: 2
-							}
-							start: Object {
-								column: 2
-								line: 2
-							}
-						}
+						loc: SourceLocation experimental/class-properties/super-inside-arrow-function/input.js 2:2-2:24
 						meta: JSClassPropertyMeta {
 							abstract: false
 							accessibility: undefined
@@ -238,21 +81,8 @@ JSRoot {
 							readonly: false
 							static: false
 							typeAnnotation: undefined
-							start: Object {
-								column: 2
-								line: 2
-							}
-							loc: Object {
-								filename: "experimental/class-properties/super-inside-arrow-function/input.js"
-								end: Object {
-									column: 5
-									line: 2
-								}
-								start: Object {
-									column: 2
-									line: 2
-								}
-							}
+							loc: SourceLocation experimental/class-properties/super-inside-arrow-function/input.js 2:2-2:5
+							start: Position 2:2
 						}
 					}
 				]
@@ -265,6 +95,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

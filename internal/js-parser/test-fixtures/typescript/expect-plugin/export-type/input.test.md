@@ -12,79 +12,26 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "typescript/expect-plugin/export-type/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
 	syntax: Array []
-	loc: Object {
-		filename: "typescript/expect-plugin/export-type/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation typescript/expect-plugin/export-type/input.js 1:0-2:0
+	path: UIDPath<typescript/expect-plugin/export-type/input.js>
 	body: Array [
 		JSExportLocalDeclaration {
 			exportKind: "type"
 			specifiers: undefined
-			loc: Object {
-				filename: "typescript/expect-plugin/export-type/input.js"
-				end: Object {
-					column: 25
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation typescript/expect-plugin/export-type/input.js 1:0-1:25
 			declaration: TSTypeAlias {
 				id: JSBindingIdentifier {
 					name: "Foo"
-					loc: Object {
-						filename: "typescript/expect-plugin/export-type/input.js"
-						identifierName: "Foo"
-						end: Object {
-							column: 15
-							line: 1
-						}
-						start: Object {
-							column: 12
-							line: 1
-						}
-					}
+					loc: SourceLocation typescript/expect-plugin/export-type/input.js 1:12-1:15 (Foo)
 				}
 				typeParameters: undefined
-				loc: Object {
-					filename: "typescript/expect-plugin/export-type/input.js"
-					end: Object {
-						column: 25
-						line: 1
-					}
-					start: Object {
-						column: 7
-						line: 1
-					}
-				}
-				right: TSNumberKeywordTypeAnnotation {
-					loc: Object {
-						filename: "typescript/expect-plugin/export-type/input.js"
-						end: Object {
-							column: 24
-							line: 1
-						}
-						start: Object {
-							column: 18
-							line: 1
-						}
-					}
-				}
+				loc: SourceLocation typescript/expect-plugin/export-type/input.js 1:7-1:25
+				right: TSNumberKeywordTypeAnnotation {loc: SourceLocation typescript/expect-plugin/export-type/input.js 1:18-1:24}
 			}
 		}
 	]
@@ -94,6 +41,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

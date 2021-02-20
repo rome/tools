@@ -11,102 +11,45 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "esprima/invalid-syntax/migrated_0041/input.js"
 	hasHoistedVars: true
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "esprima/invalid-syntax/migrated_0041/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation esprima/invalid-syntax/migrated_0041/input.js 1:0-2:0
+	path: UIDPath<esprima/invalid-syntax/migrated_0041/input.js>
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse"
 				categoryValue: "js"
+				category: Array ["parse"]
 				message: RAW_MARKUP {value: "Bad character escape sequence"}
 			}
 			location: Object {
-				filename: "esprima/invalid-syntax/migrated_0041/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 17
-					line: 1
-				}
-				start: Object {
-					column: 17
-					line: 1
-				}
+				end: Position 1:17
+				path: UIDPath<esprima/invalid-syntax/migrated_0041/input.js>
+				start: Position 1:17
 			}
 		}
 	]
 	body: Array [
 		JSVariableDeclarationStatement {
-			loc: Object {
-				filename: "esprima/invalid-syntax/migrated_0041/input.js"
-				end: Object {
-					column: 18
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation esprima/invalid-syntax/migrated_0041/input.js 1:0-1:18
 			declaration: JSVariableDeclaration {
 				kind: "var"
-				loc: Object {
-					filename: "esprima/invalid-syntax/migrated_0041/input.js"
-					end: Object {
-						column: 18
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/invalid-syntax/migrated_0041/input.js 1:0-1:18
 				declarations: Array [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "x"
-							loc: Object {
-								filename: "esprima/invalid-syntax/migrated_0041/input.js"
-								identifierName: "x"
-								end: Object {
-									column: 5
-									line: 1
-								}
-								start: Object {
-									column: 4
-									line: 1
-								}
-							}
+							loc: SourceLocation esprima/invalid-syntax/migrated_0041/input.js 1:4-1:5 (x)
 						}
-						loc: Object {
-							filename: "esprima/invalid-syntax/migrated_0041/input.js"
-							end: Object {
-								column: 18
-								line: 1
-							}
-							start: Object {
-								column: 4
-								line: 1
-							}
-						}
+						loc: SourceLocation esprima/invalid-syntax/migrated_0041/input.js 1:4-1:18
 						init: JSRegExpLiteral {
 							global: false
 							insensitive: false
@@ -114,83 +57,23 @@ JSRoot {
 							noDotNewline: false
 							sticky: false
 							unicode: false
-							loc: Object {
-								filename: "esprima/invalid-syntax/migrated_0041/input.js"
-								end: Object {
-									column: 18
-									line: 1
-								}
-								start: Object {
-									column: 8
-									line: 1
-								}
-							}
+							loc: SourceLocation esprima/invalid-syntax/migrated_0041/input.js 1:8-1:18
 							expression: JSRegExpSubExpression {
-								loc: Object {
-									filename: "esprima/invalid-syntax/migrated_0041/input.js"
-									end: Object {
-										column: 13
-										line: 1
-									}
-									start: Object {
-										column: 9
-										line: 1
-									}
-								}
+								loc: SourceLocation esprima/invalid-syntax/migrated_0041/input.js 1:9-1:13
 								body: Array [
 									JSRegExpCharSet {
 										invert: false
-										loc: Object {
-											filename: "esprima/invalid-syntax/migrated_0041/input.js"
-											end: Object {
-												column: 13
-												line: 1
-											}
-											start: Object {
-												column: 9
-												line: 1
-											}
-										}
+										loc: SourceLocation esprima/invalid-syntax/migrated_0041/input.js 1:9-1:13
 										body: Array [
 											JSRegExpCharSetRange {
-												loc: Object {
-													filename: "esprima/invalid-syntax/migrated_0041/input.js"
-													end: Object {
-														column: 13
-														line: 1
-													}
-													start: Object {
-														column: 10
-														line: 1
-													}
-												}
+												loc: SourceLocation esprima/invalid-syntax/migrated_0041/input.js 1:10-1:13
 												end: JSRegExpCharacter {
 													value: "z"
-													loc: Object {
-														filename: "esprima/invalid-syntax/migrated_0041/input.js"
-														end: Object {
-															column: 13
-															line: 1
-														}
-														start: Object {
-															column: 12
-															line: 1
-														}
-													}
+													loc: SourceLocation esprima/invalid-syntax/migrated_0041/input.js 1:12-1:13
 												}
 												start: JSRegExpCharacter {
 													value: "a"
-													loc: Object {
-														filename: "esprima/invalid-syntax/migrated_0041/input.js"
-														end: Object {
-															column: 11
-															line: 1
-														}
-														start: Object {
-															column: 10
-															line: 1
-														}
-													}
+													loc: SourceLocation esprima/invalid-syntax/migrated_0041/input.js 1:10-1:11
 												}
 											}
 										]
@@ -217,8 +100,5 @@ JSRoot {
     var x = /[a-z]/\ux
                      ^
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

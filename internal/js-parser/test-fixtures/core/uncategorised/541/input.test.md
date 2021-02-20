@@ -12,65 +12,24 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "core/uncategorised/541/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "core/uncategorised/541/input.js"
-		end: Object {
-			column: 21
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation core/uncategorised/541/input.js 1:0-1:21
+	path: UIDPath<core/uncategorised/541/input.js>
 	body: Array [
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "f"
-				loc: Object {
-					filename: "core/uncategorised/541/input.js"
-					identifierName: "f"
-					end: Object {
-						column: 10
-						line: 1
-					}
-					start: Object {
-						column: 9
-						line: 1
-					}
-				}
+				loc: SourceLocation core/uncategorised/541/input.js 1:9-1:10 (f)
 			}
-			loc: Object {
-				filename: "core/uncategorised/541/input.js"
-				end: Object {
-					column: 15
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation core/uncategorised/541/input.js 1:0-1:15
 			body: JSBlockStatement {
 				body: Array []
 				directives: Array []
-				loc: Object {
-					filename: "core/uncategorised/541/input.js"
-					end: Object {
-						column: 15
-						line: 1
-					}
-					start: Object {
-						column: 13
-						line: 1
-					}
-				}
+				loc: SourceLocation core/uncategorised/541/input.js 1:13-1:15
 			}
 			head: JSFunctionHead {
 				async: false
@@ -81,31 +40,11 @@ JSRoot {
 				returnType: undefined
 				thisType: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "core/uncategorised/541/input.js"
-					end: Object {
-						column: 12
-						line: 1
-					}
-					start: Object {
-						column: 10
-						line: 1
-					}
-				}
+				loc: SourceLocation core/uncategorised/541/input.js 1:10-1:12
 			}
 		}
 		JSExpressionStatement {
-			loc: Object {
-				filename: "core/uncategorised/541/input.js"
-				end: Object {
-					column: 21
-					line: 1
-				}
-				start: Object {
-					column: 16
-					line: 1
-				}
-			}
+			loc: SourceLocation core/uncategorised/541/input.js 1:16-1:21
 			expression: JSRegExpLiteral {
 				global: false
 				insensitive: false
@@ -113,71 +52,21 @@ JSRoot {
 				noDotNewline: false
 				sticky: false
 				unicode: false
-				loc: Object {
-					filename: "core/uncategorised/541/input.js"
-					end: Object {
-						column: 21
-						line: 1
-					}
-					start: Object {
-						column: 16
-						line: 1
-					}
-				}
+				loc: SourceLocation core/uncategorised/541/input.js 1:16-1:21
 				expression: JSRegExpSubExpression {
-					loc: Object {
-						filename: "core/uncategorised/541/input.js"
-						end: Object {
-							column: 20
-							line: 1
-						}
-						start: Object {
-							column: 17
-							line: 1
-						}
-					}
+					loc: SourceLocation core/uncategorised/541/input.js 1:17-1:20
 					body: Array [
 						JSRegExpCharacter {
 							value: " "
-							loc: Object {
-								filename: "core/uncategorised/541/input.js"
-								end: Object {
-									column: 18
-									line: 1
-								}
-								start: Object {
-									column: 17
-									line: 1
-								}
-							}
+							loc: SourceLocation core/uncategorised/541/input.js 1:17-1:18
 						}
 						JSRegExpCharacter {
 							value: "1"
-							loc: Object {
-								filename: "core/uncategorised/541/input.js"
-								end: Object {
-									column: 19
-									line: 1
-								}
-								start: Object {
-									column: 18
-									line: 1
-								}
-							}
+							loc: SourceLocation core/uncategorised/541/input.js 1:18-1:19
 						}
 						JSRegExpCharacter {
 							value: " "
-							loc: Object {
-								filename: "core/uncategorised/541/input.js"
-								end: Object {
-									column: 20
-									line: 1
-								}
-								start: Object {
-									column: 19
-									line: 1
-								}
-							}
+							loc: SourceLocation core/uncategorised/541/input.js 1:19-1:20
 						}
 					]
 				}
@@ -190,6 +79,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

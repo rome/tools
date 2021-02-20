@@ -10,37 +10,17 @@
 JSRoot {
 	comments: Array []
 	corrupt: false
-	filename: "esprima/es2015-yield/invalid-yield-strict-binding-element/input.js"
 	hasHoistedVars: true
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "esprima/es2015-yield/invalid-yield-strict-binding-element/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation esprima/es2015-yield/invalid-yield-strict-binding-element/input.js 1:0-2:0
+	path: UIDPath<esprima/es2015-yield/invalid-yield-strict-binding-element/input.js>
 	directives: Array [
 		JSDirective {
 			value: "use strict"
-			loc: Object {
-				filename: "esprima/es2015-yield/invalid-yield-strict-binding-element/input.js"
-				end: Object {
-					column: 13
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation esprima/es2015-yield/invalid-yield-strict-binding-element/input.js 1:0-1:13
 		}
 	]
 	diagnostics: Array [
@@ -48,154 +28,52 @@ JSRoot {
 			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse"
 				categoryValue: "js"
-				message: Array [
-					"yield"
-					RAW_MARKUP {value: " is a reserved word"}
-				]
+				category: Array ["parse"]
+				message: RAW_MARKUP {value: "yield is a reserved word"}
 			}
 			location: Object {
-				filename: "esprima/es2015-yield/invalid-yield-strict-binding-element/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 28
-					line: 1
-				}
-				start: Object {
-					column: 23
-					line: 1
-				}
+				end: Position 1:28
+				path: UIDPath<esprima/es2015-yield/invalid-yield-strict-binding-element/input.js>
+				start: Position 1:23
 			}
 		}
 	]
 	body: Array [
 		JSVariableDeclarationStatement {
-			loc: Object {
-				filename: "esprima/es2015-yield/invalid-yield-strict-binding-element/input.js"
-				end: Object {
-					column: 37
-					line: 1
-				}
-				start: Object {
-					column: 14
-					line: 1
-				}
-			}
+			loc: SourceLocation esprima/es2015-yield/invalid-yield-strict-binding-element/input.js 1:14-1:37
 			declaration: JSVariableDeclaration {
 				kind: "var"
-				loc: Object {
-					filename: "esprima/es2015-yield/invalid-yield-strict-binding-element/input.js"
-					end: Object {
-						column: 37
-						line: 1
-					}
-					start: Object {
-						column: 14
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/es2015-yield/invalid-yield-strict-binding-element/input.js 1:14-1:37
 				declarations: Array [
 					JSVariableDeclarator {
 						id: JSBindingObjectPattern {
 							rest: undefined
-							loc: Object {
-								filename: "esprima/es2015-yield/invalid-yield-strict-binding-element/input.js"
-								end: Object {
-									column: 30
-									line: 1
-								}
-								start: Object {
-									column: 18
-									line: 1
-								}
-							}
+							loc: SourceLocation esprima/es2015-yield/invalid-yield-strict-binding-element/input.js 1:18-1:30
 							properties: Array [
 								JSBindingObjectPatternProperty {
 									key: JSStaticPropertyKey {
 										value: JSIdentifier {
 											name: "x"
-											loc: Object {
-												filename: "esprima/es2015-yield/invalid-yield-strict-binding-element/input.js"
-												identifierName: "x"
-												end: Object {
-													column: 21
-													line: 1
-												}
-												start: Object {
-													column: 20
-													line: 1
-												}
-											}
+											loc: SourceLocation esprima/es2015-yield/invalid-yield-strict-binding-element/input.js 1:20-1:21 (x)
 										}
-										loc: Object {
-											filename: "esprima/es2015-yield/invalid-yield-strict-binding-element/input.js"
-											end: Object {
-												column: 21
-												line: 1
-											}
-											start: Object {
-												column: 20
-												line: 1
-											}
-										}
+										loc: SourceLocation esprima/es2015-yield/invalid-yield-strict-binding-element/input.js 1:20-1:21
 									}
 									value: JSBindingIdentifier {
 										name: "yield"
-										loc: Object {
-											filename: "esprima/es2015-yield/invalid-yield-strict-binding-element/input.js"
-											identifierName: "yield"
-											end: Object {
-												column: 28
-												line: 1
-											}
-											start: Object {
-												column: 23
-												line: 1
-											}
-										}
+										loc: SourceLocation esprima/es2015-yield/invalid-yield-strict-binding-element/input.js 1:23-1:28 (yield)
 									}
-									loc: Object {
-										filename: "esprima/es2015-yield/invalid-yield-strict-binding-element/input.js"
-										end: Object {
-											column: 28
-											line: 1
-										}
-										start: Object {
-											column: 20
-											line: 1
-										}
-									}
+									loc: SourceLocation esprima/es2015-yield/invalid-yield-strict-binding-element/input.js 1:20-1:28
 								}
 							]
 						}
-						loc: Object {
-							filename: "esprima/es2015-yield/invalid-yield-strict-binding-element/input.js"
-							end: Object {
-								column: 36
-								line: 1
-							}
-							start: Object {
-								column: 18
-								line: 1
-							}
-						}
+						loc: SourceLocation esprima/es2015-yield/invalid-yield-strict-binding-element/input.js 1:18-1:36
 						init: JSReferenceIdentifier {
 							name: "foo"
-							loc: Object {
-								filename: "esprima/es2015-yield/invalid-yield-strict-binding-element/input.js"
-								identifierName: "foo"
-								end: Object {
-									column: 36
-									line: 1
-								}
-								start: Object {
-									column: 33
-									line: 1
-								}
-							}
+							loc: SourceLocation esprima/es2015-yield/invalid-yield-strict-binding-element/input.js 1:33-1:36 (foo)
 						}
 					}
 				]
@@ -216,8 +94,5 @@ JSRoot {
     "use strict"; var { x: yield } = foo;
                            ^^^^^
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

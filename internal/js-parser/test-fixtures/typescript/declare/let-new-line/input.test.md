@@ -12,106 +12,34 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "typescript/declare/let-new-line/input.ts"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
+	loc: SourceLocation typescript/declare/let-new-line/input.ts 1:0-3:0
+	path: UIDPath<typescript/declare/let-new-line/input.ts>
 	syntax: Array ["ts"]
-	loc: Object {
-		filename: "typescript/declare/let-new-line/input.ts"
-		end: Object {
-			column: 0
-			line: 3
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "typescript/declare/let-new-line/input.ts"
-				end: Object {
-					column: 7
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation typescript/declare/let-new-line/input.ts 1:0-1:7
 			expression: JSReferenceIdentifier {
 				name: "declare"
-				loc: Object {
-					filename: "typescript/declare/let-new-line/input.ts"
-					identifierName: "declare"
-					end: Object {
-						column: 7
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/declare/let-new-line/input.ts 1:0-1:7 (declare)
 			}
 		}
 		JSVariableDeclarationStatement {
-			loc: Object {
-				filename: "typescript/declare/let-new-line/input.ts"
-				end: Object {
-					column: 6
-					line: 2
-				}
-				start: Object {
-					column: 0
-					line: 2
-				}
-			}
+			loc: SourceLocation typescript/declare/let-new-line/input.ts 2:0-2:6
 			declaration: JSVariableDeclaration {
 				kind: "let"
-				loc: Object {
-					filename: "typescript/declare/let-new-line/input.ts"
-					end: Object {
-						column: 6
-						line: 2
-					}
-					start: Object {
-						column: 0
-						line: 2
-					}
-				}
+				loc: SourceLocation typescript/declare/let-new-line/input.ts 2:0-2:6
 				declarations: Array [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "x"
-							loc: Object {
-								filename: "typescript/declare/let-new-line/input.ts"
-								identifierName: "x"
-								end: Object {
-									column: 5
-									line: 2
-								}
-								start: Object {
-									column: 4
-									line: 2
-								}
-							}
+							loc: SourceLocation typescript/declare/let-new-line/input.ts 2:4-2:5 (x)
 						}
 						init: undefined
-						loc: Object {
-							filename: "typescript/declare/let-new-line/input.ts"
-							end: Object {
-								column: 5
-								line: 2
-							}
-							start: Object {
-								column: 4
-								line: 2
-							}
-						}
+						loc: SourceLocation typescript/declare/let-new-line/input.ts 2:4-2:5
 					}
 				]
 			}
@@ -123,6 +51,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

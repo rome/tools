@@ -12,6 +12,7 @@ export {getFileHandlerFromPath} from "./common/file-handlers/index";
 export {default as Client} from "./client/Client";
 export {localCommands} from "./client/commands";
 
+export {CommandName} from "./common/commands";
 export {default as WorkerBridge} from "./common/bridges/WorkerBridge";
 export {default as ServerBridge} from "./common/bridges/ServerBridge";
 export {
@@ -25,6 +26,7 @@ export * from "./common/types/bundler";
 export * from "./common/types/client";
 export * from "./common/types/files";
 export * from "./common/types/analyzeDependencies";
+export * from "./worker/types";
 
 export {default as Server} from "./server/Server";
 export {serverCommands} from "./server/commands";

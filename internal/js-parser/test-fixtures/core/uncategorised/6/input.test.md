@@ -12,106 +12,36 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "core/uncategorised/6/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "core/uncategorised/6/input.js"
-		end: Object {
-			column: 12
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation core/uncategorised/6/input.js 1:0-1:12
+	path: UIDPath<core/uncategorised/6/input.js>
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "core/uncategorised/6/input.js"
-				end: Object {
-					column: 12
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation core/uncategorised/6/input.js 1:0-1:12
 			expression: JSBinaryExpression {
 				operator: "*"
-				loc: Object {
-					filename: "core/uncategorised/6/input.js"
-					end: Object {
-						column: 12
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation core/uncategorised/6/input.js 1:0-1:12
 				right: JSNumericLiteral {
 					value: 3
 					format: undefined
-					loc: Object {
-						filename: "core/uncategorised/6/input.js"
-						end: Object {
-							column: 12
-							line: 1
-						}
-						start: Object {
-							column: 11
-							line: 1
-						}
-					}
+					loc: SourceLocation core/uncategorised/6/input.js 1:11-1:12
 				}
 				left: JSBinaryExpression {
 					operator: "+"
-					loc: Object {
-						filename: "core/uncategorised/6/input.js"
-						end: Object {
-							column: 6
-							line: 1
-						}
-						start: Object {
-							column: 1
-							line: 1
-						}
-					}
+					loc: SourceLocation core/uncategorised/6/input.js 1:1-1:6
 					left: JSNumericLiteral {
 						value: 1
 						format: undefined
-						loc: Object {
-							filename: "core/uncategorised/6/input.js"
-							end: Object {
-								column: 2
-								line: 1
-							}
-							start: Object {
-								column: 1
-								line: 1
-							}
-						}
+						loc: SourceLocation core/uncategorised/6/input.js 1:1-1:2
 					}
 					right: JSNumericLiteral {
 						value: 2
 						format: undefined
-						loc: Object {
-							filename: "core/uncategorised/6/input.js"
-							end: Object {
-								column: 6
-								line: 1
-							}
-							start: Object {
-								column: 5
-								line: 1
-							}
-						}
+						loc: SourceLocation core/uncategorised/6/input.js 1:5-1:6
 					}
 				}
 			}
@@ -123,6 +53,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

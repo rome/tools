@@ -12,211 +12,53 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "typescript/types/tuple-optional/input.ts"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
+	loc: SourceLocation typescript/types/tuple-optional/input.ts 1:0-2:0
+	path: UIDPath<typescript/types/tuple-optional/input.ts>
 	syntax: Array ["ts"]
-	loc: Object {
-		filename: "typescript/types/tuple-optional/input.ts"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
 	body: Array [
 		JSVariableDeclarationStatement {
-			loc: Object {
-				filename: "typescript/types/tuple-optional/input.ts"
-				end: Object {
-					column: 44
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation typescript/types/tuple-optional/input.ts 1:0-1:44
 			declaration: JSVariableDeclaration {
 				kind: "let"
-				loc: Object {
-					filename: "typescript/types/tuple-optional/input.ts"
-					end: Object {
-						column: 44
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/types/tuple-optional/input.ts 1:0-1:44
 				declarations: Array [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "x"
-							loc: Object {
-								filename: "typescript/types/tuple-optional/input.ts"
-								end: Object {
-									column: 44
-									line: 1
-								}
-								start: Object {
-									column: 4
-									line: 1
-								}
-							}
+							loc: SourceLocation typescript/types/tuple-optional/input.ts 1:4-1:44
 							meta: JSPatternMeta {
 								definite: undefined
-								loc: Object {
-									filename: "typescript/types/tuple-optional/input.ts"
-									end: Object {
-										column: 44
-										line: 1
-									}
-									start: Object {
-										column: 4
-										line: 1
-									}
-								}
+								loc: SourceLocation typescript/types/tuple-optional/input.ts 1:4-1:44
 								typeAnnotation: TSTupleType {
-									loc: Object {
-										filename: "typescript/types/tuple-optional/input.ts"
-										end: Object {
-											column: 44
-											line: 1
-										}
-										start: Object {
-											column: 7
-											line: 1
-										}
-									}
+									loc: SourceLocation typescript/types/tuple-optional/input.ts 1:7-1:44
 									elementTypes: Array [
 										TSTupleElement {
 											name: undefined
 											optional: false
-											loc: Object {
-												filename: "typescript/types/tuple-optional/input.ts"
-												end: Object {
-													column: 14
-													line: 1
-												}
-												start: Object {
-													column: 8
-													line: 1
-												}
-											}
-											typeAnnotation: TSStringKeywordTypeAnnotation {
-												loc: Object {
-													filename: "typescript/types/tuple-optional/input.ts"
-													end: Object {
-														column: 14
-														line: 1
-													}
-													start: Object {
-														column: 8
-														line: 1
-													}
-												}
-											}
+											loc: SourceLocation typescript/types/tuple-optional/input.ts 1:8-1:14
+											typeAnnotation: TSStringKeywordTypeAnnotation {loc: SourceLocation typescript/types/tuple-optional/input.ts 1:8-1:14}
 										}
 										TSTupleElement {
 											name: undefined
 											optional: true
-											loc: Object {
-												filename: "typescript/types/tuple-optional/input.ts"
-												end: Object {
-													column: 23
-													line: 1
-												}
-												start: Object {
-													column: 16
-													line: 1
-												}
-											}
-											typeAnnotation: TSNumberKeywordTypeAnnotation {
-												loc: Object {
-													filename: "typescript/types/tuple-optional/input.ts"
-													end: Object {
-														column: 22
-														line: 1
-													}
-													start: Object {
-														column: 16
-														line: 1
-													}
-												}
-											}
+											loc: SourceLocation typescript/types/tuple-optional/input.ts 1:16-1:23
+											typeAnnotation: TSNumberKeywordTypeAnnotation {loc: SourceLocation typescript/types/tuple-optional/input.ts 1:16-1:22}
 										}
 										TSTupleElement {
 											name: undefined
 											optional: true
-											loc: Object {
-												filename: "typescript/types/tuple-optional/input.ts"
-												end: Object {
-													column: 43
-													line: 1
-												}
-												start: Object {
-													column: 25
-													line: 1
-												}
-											}
+											loc: SourceLocation typescript/types/tuple-optional/input.ts 1:25-1:43
 											typeAnnotation: TSParenthesizedType {
-												loc: Object {
-													filename: "typescript/types/tuple-optional/input.ts"
-													end: Object {
-														column: 42
-														line: 1
-													}
-													start: Object {
-														column: 25
-														line: 1
-													}
-												}
+												loc: SourceLocation typescript/types/tuple-optional/input.ts 1:25-1:42
 												typeAnnotation: TSUnionTypeAnnotation {
-													loc: Object {
-														filename: "typescript/types/tuple-optional/input.ts"
-														end: Object {
-															column: 41
-															line: 1
-														}
-														start: Object {
-															column: 26
-															line: 1
-														}
-													}
+													loc: SourceLocation typescript/types/tuple-optional/input.ts 1:26-1:41
 													types: Array [
-														TSStringKeywordTypeAnnotation {
-															loc: Object {
-																filename: "typescript/types/tuple-optional/input.ts"
-																end: Object {
-																	column: 32
-																	line: 1
-																}
-																start: Object {
-																	column: 26
-																	line: 1
-																}
-															}
-														}
-														TSNumberKeywordTypeAnnotation {
-															loc: Object {
-																filename: "typescript/types/tuple-optional/input.ts"
-																end: Object {
-																	column: 41
-																	line: 1
-																}
-																start: Object {
-																	column: 35
-																	line: 1
-																}
-															}
-														}
+														TSStringKeywordTypeAnnotation {loc: SourceLocation typescript/types/tuple-optional/input.ts 1:26-1:32}
+														TSNumberKeywordTypeAnnotation {loc: SourceLocation typescript/types/tuple-optional/input.ts 1:35-1:41}
 													]
 												}
 											}
@@ -226,17 +68,7 @@ JSRoot {
 							}
 						}
 						init: undefined
-						loc: Object {
-							filename: "typescript/types/tuple-optional/input.ts"
-							end: Object {
-								column: 44
-								line: 1
-							}
-							start: Object {
-								column: 4
-								line: 1
-							}
-						}
+						loc: SourceLocation typescript/types/tuple-optional/input.ts 1:4-1:44
 					}
 				]
 			}
@@ -248,6 +80,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

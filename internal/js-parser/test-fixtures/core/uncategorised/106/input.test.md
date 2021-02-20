@@ -12,77 +12,26 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "core/uncategorised/106/input.js"
 	hasHoistedVars: true
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "core/uncategorised/106/input.js"
-		end: Object {
-			column: 18
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation core/uncategorised/106/input.js 1:0-1:18
+	path: UIDPath<core/uncategorised/106/input.js>
 	body: Array [
 		JSVariableDeclarationStatement {
-			loc: Object {
-				filename: "core/uncategorised/106/input.js"
-				end: Object {
-					column: 18
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation core/uncategorised/106/input.js 1:0-1:18
 			declaration: JSVariableDeclaration {
 				kind: "var"
-				loc: Object {
-					filename: "core/uncategorised/106/input.js"
-					end: Object {
-						column: 18
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation core/uncategorised/106/input.js 1:0-1:18
 				declarations: Array [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "x"
-							loc: Object {
-								filename: "core/uncategorised/106/input.js"
-								identifierName: "x"
-								end: Object {
-									column: 5
-									line: 1
-								}
-								start: Object {
-									column: 4
-									line: 1
-								}
-							}
+							loc: SourceLocation core/uncategorised/106/input.js 1:4-1:5 (x)
 						}
-						loc: Object {
-							filename: "core/uncategorised/106/input.js"
-							end: Object {
-								column: 18
-								line: 1
-							}
-							start: Object {
-								column: 4
-								line: 1
-							}
-						}
+						loc: SourceLocation core/uncategorised/106/input.js 1:4-1:18
 						init: JSRegExpLiteral {
 							global: false
 							insensitive: false
@@ -90,127 +39,37 @@ JSRoot {
 							noDotNewline: false
 							sticky: false
 							unicode: false
-							loc: Object {
-								filename: "core/uncategorised/106/input.js"
-								end: Object {
-									column: 18
-									line: 1
-								}
-								start: Object {
-									column: 8
-									line: 1
-								}
-							}
+							loc: SourceLocation core/uncategorised/106/input.js 1:8-1:18
 							expression: JSRegExpSubExpression {
-								loc: Object {
-									filename: "core/uncategorised/106/input.js"
-									end: Object {
-										column: 17
-										line: 1
-									}
-									start: Object {
-										column: 9
-										line: 1
-									}
-								}
+								loc: SourceLocation core/uncategorised/106/input.js 1:9-1:17
 								body: Array [
 									JSRegExpCharacter {
 										value: "f"
-										loc: Object {
-											filename: "core/uncategorised/106/input.js"
-											end: Object {
-												column: 10
-												line: 1
-											}
-											start: Object {
-												column: 9
-												line: 1
-											}
-										}
+										loc: SourceLocation core/uncategorised/106/input.js 1:9-1:10
 									}
 									JSRegExpCharacter {
 										value: "o"
-										loc: Object {
-											filename: "core/uncategorised/106/input.js"
-											end: Object {
-												column: 11
-												line: 1
-											}
-											start: Object {
-												column: 10
-												line: 1
-											}
-										}
+										loc: SourceLocation core/uncategorised/106/input.js 1:10-1:11
 									}
 									JSRegExpCharacter {
 										value: "o"
-										loc: Object {
-											filename: "core/uncategorised/106/input.js"
-											end: Object {
-												column: 12
-												line: 1
-											}
-											start: Object {
-												column: 11
-												line: 1
-											}
-										}
+										loc: SourceLocation core/uncategorised/106/input.js 1:11-1:12
 									}
 									JSRegExpCharacter {
 										value: "/"
-										loc: Object {
-											filename: "core/uncategorised/106/input.js"
-											end: Object {
-												column: 14
-												line: 1
-											}
-											start: Object {
-												column: 12
-												line: 1
-											}
-										}
+										loc: SourceLocation core/uncategorised/106/input.js 1:12-1:14
 									}
 									JSRegExpCharacter {
 										value: "b"
-										loc: Object {
-											filename: "core/uncategorised/106/input.js"
-											end: Object {
-												column: 15
-												line: 1
-											}
-											start: Object {
-												column: 14
-												line: 1
-											}
-										}
+										loc: SourceLocation core/uncategorised/106/input.js 1:14-1:15
 									}
 									JSRegExpCharacter {
 										value: "a"
-										loc: Object {
-											filename: "core/uncategorised/106/input.js"
-											end: Object {
-												column: 16
-												line: 1
-											}
-											start: Object {
-												column: 15
-												line: 1
-											}
-										}
+										loc: SourceLocation core/uncategorised/106/input.js 1:15-1:16
 									}
 									JSRegExpCharacter {
 										value: "r"
-										loc: Object {
-											filename: "core/uncategorised/106/input.js"
-											end: Object {
-												column: 17
-												line: 1
-											}
-											start: Object {
-												column: 16
-												line: 1
-											}
-										}
+										loc: SourceLocation core/uncategorised/106/input.js 1:16-1:17
 									}
 								]
 							}
@@ -226,6 +85,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

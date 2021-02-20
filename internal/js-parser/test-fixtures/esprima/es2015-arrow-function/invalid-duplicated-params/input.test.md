@@ -11,110 +11,46 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "esprima/es2015-arrow-function/invalid-duplicated-params/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "esprima/es2015-arrow-function/invalid-duplicated-params/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation esprima/es2015-arrow-function/invalid-duplicated-params/input.js 1:0-2:0
+	path: UIDPath<esprima/es2015-arrow-function/invalid-duplicated-params/input.js>
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
 			location: Object {
-				filename: "esprima/es2015-arrow-function/invalid-duplicated-params/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 5
-					line: 1
-				}
-				start: Object {
-					column: 4
-					line: 1
-				}
+				end: Position 1:5
+				path: UIDPath<esprima/es2015-arrow-function/invalid-duplicated-params/input.js>
+				start: Position 1:4
 			}
 			description: Object {
-				category: "parse"
 				categoryValue: "js"
-				message: Array [
-					RAW_MARKUP {value: "Argument <emphasis>"}
-					"x"
-					RAW_MARKUP {value: "</emphasis> name clash in strict mode"}
-				]
+				category: Array ["parse"]
+				message: RAW_MARKUP {value: "Argument <emphasis>x</emphasis> name clash in strict mode"}
 				advice: Array [
 					log {
 						category: "info"
 						text: RAW_MARKUP {value: "Defined already here"}
 					}
-					frame {
-						location: Object {
-							filename: "esprima/es2015-arrow-function/invalid-duplicated-params/input.js"
-							identifierName: "x"
-							end: Object {
-								column: 5
-								line: 1
-							}
-							start: Object {
-								column: 4
-								line: 1
-							}
-						}
-					}
+					frame {location: SourceLocation esprima/es2015-arrow-function/invalid-duplicated-params/input.js 1:4-1:5 (x)}
 				]
 			}
 		}
 	]
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "esprima/es2015-arrow-function/invalid-duplicated-params/input.js"
-				end: Object {
-					column: 12
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation esprima/es2015-arrow-function/invalid-duplicated-params/input.js 1:0-1:12
 			expression: JSArrowFunctionExpression {
-				loc: Object {
-					filename: "esprima/es2015-arrow-function/invalid-duplicated-params/input.js"
-					end: Object {
-						column: 11
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/es2015-arrow-function/invalid-duplicated-params/input.js 1:0-1:11
 				body: JSReferenceIdentifier {
 					name: "y"
-					loc: Object {
-						filename: "esprima/es2015-arrow-function/invalid-duplicated-params/input.js"
-						identifierName: "y"
-						end: Object {
-							column: 11
-							line: 1
-						}
-						start: Object {
-							column: 10
-							line: 1
-						}
-					}
+					loc: SourceLocation esprima/es2015-arrow-function/invalid-duplicated-params/input.js 1:10-1:11 (y)
 				}
 				head: JSFunctionHead {
 					async: false
@@ -122,47 +58,15 @@ JSRoot {
 					rest: undefined
 					returnType: undefined
 					thisType: undefined
-					loc: Object {
-						filename: "esprima/es2015-arrow-function/invalid-duplicated-params/input.js"
-						end: Object {
-							column: 9
-							line: 1
-						}
-						start: Object {
-							column: 0
-							line: 1
-						}
-					}
+					loc: SourceLocation esprima/es2015-arrow-function/invalid-duplicated-params/input.js 1:0-1:9
 					params: Array [
 						JSBindingIdentifier {
 							name: "x"
-							loc: Object {
-								filename: "esprima/es2015-arrow-function/invalid-duplicated-params/input.js"
-								identifierName: "x"
-								end: Object {
-									column: 2
-									line: 1
-								}
-								start: Object {
-									column: 1
-									line: 1
-								}
-							}
+							loc: SourceLocation esprima/es2015-arrow-function/invalid-duplicated-params/input.js 1:1-1:2 (x)
 						}
 						JSBindingIdentifier {
 							name: "x"
-							loc: Object {
-								filename: "esprima/es2015-arrow-function/invalid-duplicated-params/input.js"
-								identifierName: "x"
-								end: Object {
-									column: 5
-									line: 1
-								}
-								start: Object {
-									column: 4
-									line: 1
-								}
-							}
+							loc: SourceLocation esprima/es2015-arrow-function/invalid-duplicated-params/input.js 1:4-1:5 (x)
 						}
 					]
 				}
@@ -185,8 +89,5 @@ JSRoot {
     (x, x) => y;
         ^
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

@@ -12,51 +12,20 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "es2015/yield/function-name-class-wrapped/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2015/yield/function-name-class-wrapped/input.js"
-		end: Object {
-			column: 0
-			line: 4
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2015/yield/function-name-class-wrapped/input.js 1:0-4:0
+	path: UIDPath<es2015/yield/function-name-class-wrapped/input.js>
 	body: Array [
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "wrap"
-				loc: Object {
-					filename: "es2015/yield/function-name-class-wrapped/input.js"
-					identifierName: "wrap"
-					end: Object {
-						column: 14
-						line: 1
-					}
-					start: Object {
-						column: 10
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/yield/function-name-class-wrapped/input.js 1:10-1:14 (wrap)
 			}
-			loc: Object {
-				filename: "es2015/yield/function-name-class-wrapped/input.js"
-				end: Object {
-					column: 1
-					line: 3
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2015/yield/function-name-class-wrapped/input.js 1:0-3:1
 			head: JSFunctionHead {
 				async: false
 				generator: true
@@ -66,131 +35,49 @@ JSRoot {
 				returnType: undefined
 				thisType: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "es2015/yield/function-name-class-wrapped/input.js"
-					end: Object {
-						column: 16
-						line: 1
-					}
-					start: Object {
-						column: 14
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/yield/function-name-class-wrapped/input.js 1:14-1:16
 			}
 			body: JSBlockStatement {
 				directives: Array []
-				loc: Object {
-					filename: "es2015/yield/function-name-class-wrapped/input.js"
-					end: Object {
-						column: 1
-						line: 3
-					}
-					start: Object {
-						column: 17
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/yield/function-name-class-wrapped/input.js 1:17-3:1
 				body: Array [
 					JSClassDeclaration {
 						id: JSBindingIdentifier {
 							name: "A"
-							loc: Object {
-								filename: "es2015/yield/function-name-class-wrapped/input.js"
-								identifierName: "A"
-								end: Object {
-									column: 11
-									line: 2
-								}
-								start: Object {
-									column: 10
-									line: 2
-								}
-							}
+							loc: SourceLocation es2015/yield/function-name-class-wrapped/input.js 2:10-2:11 (A)
 						}
-						loc: Object {
-							filename: "es2015/yield/function-name-class-wrapped/input.js"
-							end: Object {
-								column: 25
-								line: 2
-							}
-							start: Object {
-								column: 4
-								line: 2
-							}
-						}
+						loc: SourceLocation es2015/yield/function-name-class-wrapped/input.js 2:4-2:25
 						meta: JSClassHead {
 							implements: undefined
 							superClass: undefined
 							superTypeParameters: undefined
 							typeParameters: undefined
-							loc: Object {
-								filename: "es2015/yield/function-name-class-wrapped/input.js"
-								end: Object {
-									column: 25
-									line: 2
-								}
-								start: Object {
-									column: 4
-									line: 2
-								}
-							}
+							loc: SourceLocation es2015/yield/function-name-class-wrapped/input.js 2:4-2:25
 							body: Array [
 								JSClassMethod {
 									kind: "method"
 									key: JSStaticPropertyKey {
 										value: JSIdentifier {
 											name: "yield"
-											loc: Object {
-												filename: "es2015/yield/function-name-class-wrapped/input.js"
-												identifierName: "yield"
-												end: Object {
-													column: 19
-													line: 2
-												}
-												start: Object {
-													column: 14
-													line: 2
-												}
-											}
+											loc: SourceLocation es2015/yield/function-name-class-wrapped/input.js 2:14-2:19 (yield)
 										}
-										loc: Object {
-											filename: "es2015/yield/function-name-class-wrapped/input.js"
-											end: Object {
-												column: 19
-												line: 2
-											}
-											start: Object {
-												column: 14
-												line: 2
-											}
-										}
+										loc: SourceLocation es2015/yield/function-name-class-wrapped/input.js 2:14-2:19
 									}
-									loc: Object {
-										filename: "es2015/yield/function-name-class-wrapped/input.js"
-										end: Object {
-											column: 24
-											line: 2
-										}
-										start: Object {
-											column: 13
-											line: 2
-										}
-									}
+									loc: SourceLocation es2015/yield/function-name-class-wrapped/input.js 2:13-2:24
 									body: JSBlockStatement {
 										body: Array []
 										directives: Array []
-										loc: Object {
-											filename: "es2015/yield/function-name-class-wrapped/input.js"
-											end: Object {
-												column: 24
-												line: 2
-											}
-											start: Object {
-												column: 22
-												line: 2
-											}
-										}
+										loc: SourceLocation es2015/yield/function-name-class-wrapped/input.js 2:22-2:24
+									}
+									meta: JSClassPropertyMeta {
+										abstract: false
+										accessibility: undefined
+										optional: false
+										readonly: false
+										static: false
+										typeAnnotation: undefined
+										loc: SourceLocation es2015/yield/function-name-class-wrapped/input.js 2:13-2:19
+										start: Position 2:13
 									}
 									head: JSFunctionHead {
 										async: false
@@ -201,40 +88,7 @@ JSRoot {
 										returnType: undefined
 										thisType: undefined
 										typeParameters: undefined
-										loc: Object {
-											filename: "es2015/yield/function-name-class-wrapped/input.js"
-											end: Object {
-												column: 21
-												line: 2
-											}
-											start: Object {
-												column: 19
-												line: 2
-											}
-										}
-									}
-									meta: JSClassPropertyMeta {
-										abstract: false
-										accessibility: undefined
-										optional: false
-										readonly: false
-										static: false
-										typeAnnotation: undefined
-										start: Object {
-											column: 13
-											line: 2
-										}
-										loc: Object {
-											filename: "es2015/yield/function-name-class-wrapped/input.js"
-											end: Object {
-												column: 19
-												line: 2
-											}
-											start: Object {
-												column: 13
-												line: 2
-											}
-										}
+										loc: SourceLocation es2015/yield/function-name-class-wrapped/input.js 2:19-2:21
 									}
 								}
 							]
@@ -250,6 +104,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

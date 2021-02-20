@@ -12,146 +12,44 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "jsx/regression/3/input.jsx"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
+	loc: SourceLocation jsx/regression/3/input.jsx 1:0-1:18
+	path: UIDPath<jsx/regression/3/input.jsx>
 	syntax: Array ["jsx"]
-	loc: Object {
-		filename: "jsx/regression/3/input.jsx"
-		end: Object {
-			column: 18
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "jsx/regression/3/input.jsx"
-				end: Object {
-					column: 18
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation jsx/regression/3/input.jsx 1:0-1:18
 			expression: JSXElement {
 				name: JSXIdentifier {
 					name: "div"
-					loc: Object {
-						filename: "jsx/regression/3/input.jsx"
-						end: Object {
-							column: 4
-							line: 1
-						}
-						start: Object {
-							column: 1
-							line: 1
-						}
-					}
+					loc: SourceLocation jsx/regression/3/input.jsx 1:1-1:4
 				}
 				attributes: Array []
 				selfClosing: false
 				typeArguments: undefined
-				loc: Object {
-					filename: "jsx/regression/3/input.jsx"
-					end: Object {
-						column: 18
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation jsx/regression/3/input.jsx 1:0-1:18
 				children: Array [
 					JSXExpressionContainer {
-						loc: Object {
-							filename: "jsx/regression/3/input.jsx"
-							end: Object {
-								column: 12
-								line: 1
-							}
-							start: Object {
-								column: 5
-								line: 1
-							}
-						}
+						loc: SourceLocation jsx/regression/3/input.jsx 1:5-1:12
 						expression: JSObjectExpression {
-							loc: Object {
-								filename: "jsx/regression/3/input.jsx"
-								end: Object {
-									column: 10
-									line: 1
-								}
-								start: Object {
-									column: 7
-									line: 1
-								}
-							}
+							loc: SourceLocation jsx/regression/3/input.jsx 1:7-1:10
 							properties: Array [
 								JSObjectProperty {
 									key: JSStaticPropertyKey {
 										value: JSIdentifier {
 											name: "a"
-											loc: Object {
-												filename: "jsx/regression/3/input.jsx"
-												identifierName: "a"
-												end: Object {
-													column: 9
-													line: 1
-												}
-												start: Object {
-													column: 8
-													line: 1
-												}
-											}
+											loc: SourceLocation jsx/regression/3/input.jsx 1:8-1:9 (a)
 										}
-										loc: Object {
-											filename: "jsx/regression/3/input.jsx"
-											end: Object {
-												column: 9
-												line: 1
-											}
-											start: Object {
-												column: 8
-												line: 1
-											}
-										}
+										loc: SourceLocation jsx/regression/3/input.jsx 1:8-1:9
 									}
 									value: JSReferenceIdentifier {
 										name: "a"
-										loc: Object {
-											filename: "jsx/regression/3/input.jsx"
-											identifierName: "a"
-											end: Object {
-												column: 9
-												line: 1
-											}
-											start: Object {
-												column: 8
-												line: 1
-											}
-										}
+										loc: SourceLocation jsx/regression/3/input.jsx 1:8-1:9 (a)
 									}
-									loc: Object {
-										filename: "jsx/regression/3/input.jsx"
-										end: Object {
-											column: 9
-											line: 1
-										}
-										start: Object {
-											column: 8
-											line: 1
-										}
-									}
+									loc: SourceLocation jsx/regression/3/input.jsx 1:8-1:9
 								}
 							]
 						}
@@ -166,6 +64,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

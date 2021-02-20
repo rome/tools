@@ -11,69 +11,34 @@ JSRoot {
 	comments: Array []
 	corrupt: true
 	directives: Array []
-	filename: "esprima/es2015-array-pattern/with-default-catch-param-fail/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "esprima/es2015-array-pattern/with-default-catch-param-fail/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation esprima/es2015-array-pattern/with-default-catch-param-fail/input.js 1:0-2:0
+	path: UIDPath<esprima/es2015-array-pattern/with-default-catch-param-fail/input.js>
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
 			location: Object {
-				filename: "esprima/es2015-array-pattern/with-default-catch-param-fail/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 14
-					line: 1
-				}
-				start: Object {
-					column: 14
-					line: 1
-				}
+				end: Position 1:14
+				path: UIDPath<esprima/es2015-array-pattern/with-default-catch-param-fail/input.js>
+				start: Position 1:14
 			}
 			description: Object {
-				category: "parse"
 				categoryValue: "js"
-				message: Array [
-					RAW_MARKUP {value: "Unclosed "}
-					"catch clause param"
-				]
+				category: Array ["parse"]
+				message: RAW_MARKUP {value: "Unclosed <emphasis>catch clause param</emphasis>"}
 				advice: Array [
 					log {
 						category: "info"
-						text: Array [
-							RAW_MARKUP {value: "We expected to find the closing character <emphasis>"}
-							")"
-							RAW_MARKUP {value: "</emphasis> here"}
-						]
+						text: RAW_MARKUP {value: "We expected to find the closing character <emphasis>)</emphasis> here"}
 					}
-					frame {
-						location: Object {
-							filename: "esprima/es2015-array-pattern/with-default-catch-param-fail/input.js"
-							end: Object {
-								column: 19
-								line: 1
-							}
-							start: Object {
-								column: 19
-								line: 1
-							}
-						}
-					}
+					frame {location: SourceLocation esprima/es2015-array-pattern/with-default-catch-param-fail/input.js 1:19-1:19}
 				]
 			}
 		}
@@ -81,212 +46,61 @@ JSRoot {
 	body: Array [
 		JSTryStatement {
 			finalizer: undefined
-			loc: Object {
-				filename: "esprima/es2015-array-pattern/with-default-catch-param-fail/input.js"
-				end: Object {
-					column: 28
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation esprima/es2015-array-pattern/with-default-catch-param-fail/input.js 1:0-1:28
 			block: JSBlockStatement {
 				body: Array []
 				directives: Array []
-				loc: Object {
-					filename: "esprima/es2015-array-pattern/with-default-catch-param-fail/input.js"
-					end: Object {
-						column: 7
-						line: 1
-					}
-					start: Object {
-						column: 4
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/es2015-array-pattern/with-default-catch-param-fail/input.js 1:4-1:7
 			}
 			handler: JSCatchClause {
-				loc: Object {
-					filename: "esprima/es2015-array-pattern/with-default-catch-param-fail/input.js"
-					end: Object {
-						column: 28
-						line: 1
-					}
-					start: Object {
-						column: 8
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/es2015-array-pattern/with-default-catch-param-fail/input.js 1:8-1:28
 				param: JSBindingArrayPattern {
 					rest: undefined
-					loc: Object {
-						filename: "esprima/es2015-array-pattern/with-default-catch-param-fail/input.js"
-						end: Object {
-							column: 18
-							line: 1
-						}
-						start: Object {
-							column: 15
-							line: 1
-						}
-					}
+					loc: SourceLocation esprima/es2015-array-pattern/with-default-catch-param-fail/input.js 1:15-1:18
 					elements: Array [
 						JSBindingIdentifier {
 							name: "a"
-							loc: Object {
-								filename: "esprima/es2015-array-pattern/with-default-catch-param-fail/input.js"
-								identifierName: "a"
-								end: Object {
-									column: 17
-									line: 1
-								}
-								start: Object {
-									column: 16
-									line: 1
-								}
-							}
+							loc: SourceLocation esprima/es2015-array-pattern/with-default-catch-param-fail/input.js 1:16-1:17 (a)
 							meta: JSPatternMeta {
 								optional: undefined
 								typeAnnotation: undefined
-								loc: Object {
-									filename: "esprima/es2015-array-pattern/with-default-catch-param-fail/input.js"
-									end: Object {
-										column: 17
-										line: 1
-									}
-									start: Object {
-										column: 16
-										line: 1
-									}
-								}
+								loc: SourceLocation esprima/es2015-array-pattern/with-default-catch-param-fail/input.js 1:16-1:17
 							}
 						}
 					]
 				}
 				body: JSBlockStatement {
 					directives: Array []
-					loc: Object {
-						filename: "esprima/es2015-array-pattern/with-default-catch-param-fail/input.js"
-						end: Object {
-							column: 28
-							line: 1
-						}
-						start: Object {
-							column: 19
-							line: 1
-						}
-					}
+					loc: SourceLocation esprima/es2015-array-pattern/with-default-catch-param-fail/input.js 1:19-1:28
 					body: Array [
 						JSExpressionStatement {
-							loc: Object {
-								filename: "esprima/es2015-array-pattern/with-default-catch-param-fail/input.js"
-								end: Object {
-									column: 23
-									line: 1
-								}
-								start: Object {
-									column: 19
-									line: 1
-								}
-							}
+							loc: SourceLocation esprima/es2015-array-pattern/with-default-catch-param-fail/input.js 1:19-1:23
 							expression: JSMemberExpression {
-								loc: Object {
-									filename: "esprima/es2015-array-pattern/with-default-catch-param-fail/input.js"
-									end: Object {
-										column: 23
-										line: 1
-									}
-									start: Object {
-										column: 19
-										line: 1
-									}
-								}
+								loc: SourceLocation esprima/es2015-array-pattern/with-default-catch-param-fail/input.js 1:19-1:23
 								object: JSReferenceIdentifier {
 									name: "INVALID_PLACEHOLDER"
-									loc: Object {
-										filename: "esprima/es2015-array-pattern/with-default-catch-param-fail/input.js"
-										end: Object {
-											column: 20
-											line: 1
-										}
-										start: Object {
-											column: 19
-											line: 1
-										}
-									}
+									loc: SourceLocation esprima/es2015-array-pattern/with-default-catch-param-fail/input.js 1:19-1:20
 								}
 								property: JSComputedMemberProperty {
 									value: JSReferenceIdentifier {
 										name: "INVALID_PLACEHOLDER"
-										loc: Object {
-											filename: "esprima/es2015-array-pattern/with-default-catch-param-fail/input.js"
-											end: Object {
-												column: 23
-												line: 1
-											}
-											start: Object {
-												column: 22
-												line: 1
-											}
-										}
+										loc: SourceLocation esprima/es2015-array-pattern/with-default-catch-param-fail/input.js 1:22-1:23
 									}
-									loc: Object {
-										filename: "esprima/es2015-array-pattern/with-default-catch-param-fail/input.js"
-										end: Object {
-											column: 23
-											line: 1
-										}
-										start: Object {
-											column: 21
-											line: 1
-										}
-									}
+									loc: SourceLocation esprima/es2015-array-pattern/with-default-catch-param-fail/input.js 1:21-1:23
 								}
 							}
 						}
 						JSExpressionStatement {
-							loc: Object {
-								filename: "esprima/es2015-array-pattern/with-default-catch-param-fail/input.js"
-								end: Object {
-									column: 24
-									line: 1
-								}
-								start: Object {
-									column: 23
-									line: 1
-								}
-							}
+							loc: SourceLocation esprima/es2015-array-pattern/with-default-catch-param-fail/input.js 1:23-1:24
 							expression: JSReferenceIdentifier {
 								name: "INVALID_PLACEHOLDER"
-								loc: Object {
-									filename: "esprima/es2015-array-pattern/with-default-catch-param-fail/input.js"
-									end: Object {
-										column: 24
-										line: 1
-									}
-									start: Object {
-										column: 23
-										line: 1
-									}
-								}
+								loc: SourceLocation esprima/es2015-array-pattern/with-default-catch-param-fail/input.js 1:23-1:24
 							}
 						}
 						JSBlockStatement {
 							body: Array []
 							directives: Array []
-							loc: Object {
-								filename: "esprima/es2015-array-pattern/with-default-catch-param-fail/input.js"
-								end: Object {
-									column: 28
-									line: 1
-								}
-								start: Object {
-									column: 25
-									line: 1
-								}
-							}
+							loc: SourceLocation esprima/es2015-array-pattern/with-default-catch-param-fail/input.js 1:25-1:28
 						}
 					]
 				}
@@ -304,13 +118,13 @@ JSRoot {
 
   ✖ Unclosed catch clause param
 
+    try { } catch ([a] = []) { }
+                  ^
+
   ℹ We expected to find the closing character ) here
 
     try { } catch ([a] = []) { }
                        ^
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

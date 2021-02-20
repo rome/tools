@@ -12,77 +12,26 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "es2015/modules/export-default-function-declaration/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
 	syntax: Array []
-	loc: Object {
-		filename: "es2015/modules/export-default-function-declaration/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2015/modules/export-default-function-declaration/input.js 1:0-2:0
+	path: UIDPath<es2015/modules/export-default-function-declaration/input.js>
 	body: Array [
 		JSExportDefaultDeclaration {
-			loc: Object {
-				filename: "es2015/modules/export-default-function-declaration/input.js"
-				end: Object {
-					column: 30
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2015/modules/export-default-function-declaration/input.js 1:0-1:30
 			declaration: JSFunctionDeclaration {
 				id: JSBindingIdentifier {
 					name: "a"
-					loc: Object {
-						filename: "es2015/modules/export-default-function-declaration/input.js"
-						identifierName: "a"
-						end: Object {
-							column: 25
-							line: 1
-						}
-						start: Object {
-							column: 24
-							line: 1
-						}
-					}
+					loc: SourceLocation es2015/modules/export-default-function-declaration/input.js 1:24-1:25 (a)
 				}
-				loc: Object {
-					filename: "es2015/modules/export-default-function-declaration/input.js"
-					end: Object {
-						column: 30
-						line: 1
-					}
-					start: Object {
-						column: 15
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/modules/export-default-function-declaration/input.js 1:15-1:30
 				body: JSBlockStatement {
 					body: Array []
 					directives: Array []
-					loc: Object {
-						filename: "es2015/modules/export-default-function-declaration/input.js"
-						end: Object {
-							column: 30
-							line: 1
-						}
-						start: Object {
-							column: 28
-							line: 1
-						}
-					}
+					loc: SourceLocation es2015/modules/export-default-function-declaration/input.js 1:28-1:30
 				}
 				head: JSFunctionHead {
 					async: false
@@ -93,17 +42,7 @@ JSRoot {
 					returnType: undefined
 					thisType: undefined
 					typeParameters: undefined
-					loc: Object {
-						filename: "es2015/modules/export-default-function-declaration/input.js"
-						end: Object {
-							column: 27
-							line: 1
-						}
-						start: Object {
-							column: 25
-							line: 1
-						}
-					}
+					loc: SourceLocation es2015/modules/export-default-function-declaration/input.js 1:25-1:27
 				}
 			}
 		}
@@ -114,6 +53,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

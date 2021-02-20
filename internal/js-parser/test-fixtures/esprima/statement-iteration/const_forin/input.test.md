@@ -12,150 +12,46 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "esprima/statement-iteration/const_forin/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "esprima/statement-iteration/const_forin/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation esprima/statement-iteration/const_forin/input.js 1:0-2:0
+	path: UIDPath<esprima/statement-iteration/const_forin/input.js>
 	body: Array [
 		JSForInStatement {
-			loc: Object {
-				filename: "esprima/statement-iteration/const_forin/input.js"
-				end: Object {
-					column: 33
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation esprima/statement-iteration/const_forin/input.js 1:0-1:33
 			right: JSReferenceIdentifier {
 				name: "list"
-				loc: Object {
-					filename: "esprima/statement-iteration/const_forin/input.js"
-					identifierName: "list"
-					end: Object {
-						column: 20
-						line: 1
-					}
-					start: Object {
-						column: 16
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/statement-iteration/const_forin/input.js 1:16-1:20 (list)
 			}
 			left: JSVariableDeclaration {
 				kind: "const"
-				loc: Object {
-					filename: "esprima/statement-iteration/const_forin/input.js"
-					end: Object {
-						column: 12
-						line: 1
-					}
-					start: Object {
-						column: 5
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/statement-iteration/const_forin/input.js 1:5-1:12
 				declarations: Array [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "x"
-							loc: Object {
-								filename: "esprima/statement-iteration/const_forin/input.js"
-								identifierName: "x"
-								end: Object {
-									column: 12
-									line: 1
-								}
-								start: Object {
-									column: 11
-									line: 1
-								}
-							}
+							loc: SourceLocation esprima/statement-iteration/const_forin/input.js 1:11-1:12 (x)
 						}
 						init: undefined
-						loc: Object {
-							filename: "esprima/statement-iteration/const_forin/input.js"
-							end: Object {
-								column: 12
-								line: 1
-							}
-							start: Object {
-								column: 11
-								line: 1
-							}
-						}
+						loc: SourceLocation esprima/statement-iteration/const_forin/input.js 1:11-1:12
 					}
 				]
 			}
 			body: JSExpressionStatement {
-				loc: Object {
-					filename: "esprima/statement-iteration/const_forin/input.js"
-					end: Object {
-						column: 33
-						line: 1
-					}
-					start: Object {
-						column: 22
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/statement-iteration/const_forin/input.js 1:22-1:33
 				expression: JSCallExpression {
-					loc: Object {
-						filename: "esprima/statement-iteration/const_forin/input.js"
-						end: Object {
-							column: 32
-							line: 1
-						}
-						start: Object {
-							column: 22
-							line: 1
-						}
-					}
+					loc: SourceLocation esprima/statement-iteration/const_forin/input.js 1:22-1:32
 					callee: JSReferenceIdentifier {
 						name: "process"
-						loc: Object {
-							filename: "esprima/statement-iteration/const_forin/input.js"
-							identifierName: "process"
-							end: Object {
-								column: 29
-								line: 1
-							}
-							start: Object {
-								column: 22
-								line: 1
-							}
-						}
+						loc: SourceLocation esprima/statement-iteration/const_forin/input.js 1:22-1:29 (process)
 					}
 					arguments: Array [
 						JSReferenceIdentifier {
 							name: "x"
-							loc: Object {
-								filename: "esprima/statement-iteration/const_forin/input.js"
-								identifierName: "x"
-								end: Object {
-									column: 31
-									line: 1
-								}
-								start: Object {
-									column: 30
-									line: 1
-								}
-							}
+							loc: SourceLocation esprima/statement-iteration/const_forin/input.js 1:30-1:31 (x)
 						}
 					]
 				}
@@ -168,6 +64,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

@@ -2,24 +2,27 @@ import {
 	AbsoluteFilePath,
 	AbsoluteFilePathMap,
 	AbsoluteFilePathSet,
-	AnyFilePath,
-	AnyFilePathSet,
-	RelativeFilePath,
-	RelativeFilePathMap,
-	RelativeFilePathSet,
+	AnyPath,
+	PathSet,
+	RelativePath,
+	RelativePathMap,
+	RelativePathSet,
+	UIDPath,
+	UIDPathMap,
+	UIDPathSet,
 	URLPath,
-	UnknownPath,
-	UnknownPathMap,
-	UnknownPathSet,
+	URLPathMap,
+	URLPathSet,
 	createAbsoluteFilePath,
-	createRelativeFilePath,
+	createRelativePath,
+	createUIDPath,
 	createURLPath,
-	createUnknownPath,
 } from "@internal/path";
 import {
-	AnyRSERFilePathMap,
+	AnyRSERPathMap,
 	RSERArrayBufferView,
 } from "@internal/codec-binary-serial/types";
+import RSERParserError from "./RSERParserError";
 
 // Bump whenever we make backwards incompatible changes
 export const VERSION = 1;
@@ -35,36 +38,57 @@ export function formatCode(code: number): string {
 export enum VALUE_CODES {
 	STREAM_HEADER,
 	MESSAGE_HEADER,
+
 	STRING,
-	ARRAY,
-	SET,
-	MAP,
-	OBJECT,
-	SYMBOL,
-	DATE,
 	TRUE,
 	FALSE,
 	NULL,
 	UNDEFINED,
+
+	SYMBOL,
+	DATE,
+	ERROR,
+	REGEXP,
+
+	ARRAY,
+	SET,
+	MAP,
+	OBJECT,
+	TEMPLATED_OBJECT_ARRAY,
+
 	INT8,
 	INT16,
 	INT32,
 	INT64,
 	FLOAT,
 	NAN,
+
+	ZERO_INDEXED_NUMBER,
+	ONE_INDEXED_NUMBER,
+
 	POSITIVE_INFINITY,
 	NEGATIVE_INFINITY,
 	NEGATIVE_ZERO,
-	FILE_PATH,
-	FILE_PATH_SET,
-	FILE_PATH_MAP,
-	ERROR,
-	REGEXP,
-	TEMPLATED_OBJECT_ARRAY,
+
+	PATH,
+	PATH_SET,
+	PATH_MAP,
+	MIXED_PATH_SET,
+	MIXED_PATH_MAP,
+
 	REFERENCE,
 	DECLARE_REFERENCE,
+
 	ARRAY_BUFFER,
 	ARRAY_BUFFER_VIEW,
+
+	POSITION,
+	SOURCE_LOCATION,
+
+	// These save a single byte having to specify an Int8...
+	NEGATIVE_ONE,
+	POSITIVE_ZERO,
+	POSITIVE_ONE,
 }
 
 export function validateValueCode(code: number): VALUE_CODES {
@@ -91,9 +115,9 @@ export function validateValueCode(code: number): VALUE_CODES {
 		case VALUE_CODES.POSITIVE_INFINITY:
 		case VALUE_CODES.NEGATIVE_INFINITY:
 		case VALUE_CODES.NEGATIVE_ZERO:
-		case VALUE_CODES.FILE_PATH:
-		case VALUE_CODES.FILE_PATH_SET:
-		case VALUE_CODES.FILE_PATH_MAP:
+		case VALUE_CODES.PATH:
+		case VALUE_CODES.PATH_SET:
+		case VALUE_CODES.PATH_MAP:
 		case VALUE_CODES.ERROR:
 		case VALUE_CODES.REGEXP:
 		case VALUE_CODES.TEMPLATED_OBJECT_ARRAY:
@@ -101,11 +125,19 @@ export function validateValueCode(code: number): VALUE_CODES {
 		case VALUE_CODES.REFERENCE:
 		case VALUE_CODES.ARRAY_BUFFER_VIEW:
 		case VALUE_CODES.ARRAY_BUFFER:
-		case VALUE_CODES.STREAM_HEADER:
+		case VALUE_CODES.POSITION:
+		case VALUE_CODES.SOURCE_LOCATION:
+		case VALUE_CODES.NEGATIVE_ONE:
+		case VALUE_CODES.POSITIVE_ZERO:
+		case VALUE_CODES.POSITIVE_ONE:
+		case VALUE_CODES.ZERO_INDEXED_NUMBER:
+		case VALUE_CODES.ONE_INDEXED_NUMBER:
+		case VALUE_CODES.MIXED_PATH_SET:
+		case VALUE_CODES.MIXED_PATH_MAP:
 			return code;
 
 		default:
-			throw new Error(`Invalid value code ${code}`);
+			throw new RSERParserError(`Invalid value code ${code}`);
 	}
 }
 
@@ -143,7 +175,7 @@ export function validateArrayBufferViewCode(
 			return code;
 
 		default:
-			throw new Error(`Invalid typed array code ${code}`);
+			throw new RSERParserError(`Invalid typed array code ${code}`);
 	}
 }
 
@@ -175,7 +207,7 @@ export function instanceToArrayBufferViewCode(
 	} else if (val instanceof DataView) {
 		return ARRAY_BUFFER_VIEW_CODES.DATA_VIEW;
 	} else {
-		throw new Error("Unknown typed array instance");
+		throw new RSERParserError("Unknown typed array instance");
 	}
 }
 export function arrayBufferViewCodeToInstance(
@@ -245,7 +277,7 @@ export function validateErrorCode(code: number): ERROR_CODES {
 			return code;
 
 		default:
-			throw new Error(`Invalid error code ${code}`);
+			throw new RSERParserError(`Invalid error code ${code}`);
 	}
 }
 
@@ -291,115 +323,119 @@ export function errorCodeToInstance(code: ERROR_CODES): Error {
 			return new Error();
 
 		default:
-			throw new Error(`Invalid error code ${code}`);
+			throw new RSERParserError(`Invalid error code ${code}`);
 	}
 }
 
-export enum FILE_CODES {
-	UNKNOWN,
+export enum TYPED_PATH_CODES {
 	ABSOLUTE,
 	RELATIVE,
 	URL,
+	UID,
 }
 
-export function validateFileCode(code: number): FILE_CODES {
+export function validateFileCode(code: number): TYPED_PATH_CODES {
 	switch (code) {
-		case FILE_CODES.UNKNOWN:
-		case FILE_CODES.ABSOLUTE:
-		case FILE_CODES.RELATIVE:
-		case FILE_CODES.URL:
+		case TYPED_PATH_CODES.ABSOLUTE:
+		case TYPED_PATH_CODES.RELATIVE:
+		case TYPED_PATH_CODES.URL:
+		case TYPED_PATH_CODES.UID:
 			return code;
 
 		default:
-			throw new Error(`Unknown file code ${code}`);
+			throw new RSERParserError(`Unknown path code ${code}`);
 	}
 }
 
-export function filePathMapToCode(map: AnyRSERFilePathMap): FILE_CODES {
-	if (map instanceof RelativeFilePathMap) {
-		return FILE_CODES.RELATIVE;
+export function pathMapToCode(map: AnyRSERPathMap): TYPED_PATH_CODES {
+	if (map instanceof RelativePathMap) {
+		return TYPED_PATH_CODES.RELATIVE;
 	} else if (map instanceof AbsoluteFilePathMap) {
-		return FILE_CODES.ABSOLUTE;
-	} else if (map instanceof UnknownPathMap) {
-		return FILE_CODES.UNKNOWN;
+		return TYPED_PATH_CODES.ABSOLUTE;
+	} else if (map instanceof URLPathMap) {
+		return TYPED_PATH_CODES.URL;
+	} else if (map instanceof UIDPathMap) {
+		return TYPED_PATH_CODES.UID;
 	} else {
-		throw new Error("Unknown FilePath type");
+		throw new RSERParserError("Unknown FilePath type");
 	}
 }
 
-export function filePathSetToCode(set: AnyFilePathSet): FILE_CODES {
-	if (set instanceof RelativeFilePathSet) {
-		return FILE_CODES.RELATIVE;
+export function pathSetToCode(set: PathSet): TYPED_PATH_CODES {
+	if (set instanceof RelativePathSet) {
+		return TYPED_PATH_CODES.RELATIVE;
 	} else if (set instanceof AbsoluteFilePathSet) {
-		return FILE_CODES.ABSOLUTE;
-	} else if (set instanceof UnknownPathSet) {
-		return FILE_CODES.UNKNOWN;
+		return TYPED_PATH_CODES.ABSOLUTE;
+	} else if (set instanceof URLPathSet) {
+		return TYPED_PATH_CODES.URL;
+	} else if (set instanceof UIDPathSet) {
+		return TYPED_PATH_CODES.UID;
 	} else {
-		throw new Error("Unknown FilePath type");
+		throw new RSERParserError("Unknown FilePath type");
 	}
 }
 
-export function filePathToCode(path: AnyFilePath): FILE_CODES {
-	if (path instanceof RelativeFilePath) {
-		return FILE_CODES.RELATIVE;
+export function pathToCode(path: AnyPath): TYPED_PATH_CODES {
+	if (path instanceof RelativePath) {
+		return TYPED_PATH_CODES.RELATIVE;
 	} else if (path instanceof AbsoluteFilePath) {
-		return FILE_CODES.ABSOLUTE;
-	} else if (path instanceof UnknownPath) {
-		return FILE_CODES.UNKNOWN;
+		return TYPED_PATH_CODES.ABSOLUTE;
 	} else if (path instanceof URLPath) {
-		return FILE_CODES.URL;
+		return TYPED_PATH_CODES.URL;
+	} else if (path instanceof UIDPath) {
+		return TYPED_PATH_CODES.UID;
 	} else {
-		throw new Error("Unknown FilePath type");
+		throw new RSERParserError("Unknown FilePath type");
 	}
 }
 
-export function filePathFromCode(
-	code: FILE_CODES,
-	filename: string,
-): AnyFilePath {
+export function pathFromCode(code: TYPED_PATH_CODES, filename: string): AnyPath {
 	switch (code) {
-		case FILE_CODES.RELATIVE:
-			return createRelativeFilePath(filename);
+		case TYPED_PATH_CODES.RELATIVE:
+			return createRelativePath(filename);
 
-		case FILE_CODES.ABSOLUTE:
+		case TYPED_PATH_CODES.ABSOLUTE:
 			return createAbsoluteFilePath(filename);
 
-		case FILE_CODES.URL:
+		case TYPED_PATH_CODES.URL:
 			return createURLPath(filename);
 
-		case FILE_CODES.UNKNOWN:
-			return createUnknownPath(filename);
+		case TYPED_PATH_CODES.UID:
+			return createUIDPath(filename);
 	}
 }
 
-export function filePathMapFromCode(code: FILE_CODES): AnyRSERFilePathMap {
+export function pathMapFromCode(code: TYPED_PATH_CODES): AnyRSERPathMap {
 	switch (code) {
-		case FILE_CODES.UNKNOWN:
-			return new UnknownPathMap();
+		case TYPED_PATH_CODES.RELATIVE:
+			return new RelativePathMap();
 
-		case FILE_CODES.RELATIVE:
-			return new RelativeFilePathMap();
-
-		case FILE_CODES.ABSOLUTE:
+		case TYPED_PATH_CODES.ABSOLUTE:
 			return new AbsoluteFilePathMap();
 
+		case TYPED_PATH_CODES.URL:
+			return new URLPathMap();
+
+		case TYPED_PATH_CODES.UID:
+			return new UIDPathMap();
+
 		default:
-			throw new Error(`File path code ${code} cannot be a map`);
+			throw new RSERParserError(`File path code ${code} cannot be a map`);
 	}
 }
 
-export function filePathSetFromCode(code: FILE_CODES): AnyFilePathSet {
+export function pathSetFromCode(code: TYPED_PATH_CODES): PathSet {
 	switch (code) {
-		case FILE_CODES.UNKNOWN:
-			return new UnknownPathSet();
+		case TYPED_PATH_CODES.RELATIVE:
+			return new RelativePathSet();
 
-		case FILE_CODES.RELATIVE:
-			return new RelativeFilePathSet();
-
-		case FILE_CODES.ABSOLUTE:
+		case TYPED_PATH_CODES.ABSOLUTE:
 			return new AbsoluteFilePathSet();
 
+		case TYPED_PATH_CODES.UID:
+			return new UIDPathSet();
+
 		default:
-			throw new Error(`File path code ${code} cannot be a map`);
+			throw new RSERParserError(`File path code ${code} cannot be a map`);
 	}
 }

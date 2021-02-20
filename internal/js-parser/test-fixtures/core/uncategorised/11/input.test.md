@@ -12,117 +12,32 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "core/uncategorised/11/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "core/uncategorised/11/input.js"
-		end: Object {
-			column: 13
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation core/uncategorised/11/input.js 1:0-1:13
+	path: UIDPath<core/uncategorised/11/input.js>
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "core/uncategorised/11/input.js"
-				end: Object {
-					column: 13
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation core/uncategorised/11/input.js 1:0-1:13
 			expression: JSAssignmentExpression {
 				operator: "="
-				loc: Object {
-					filename: "core/uncategorised/11/input.js"
-					end: Object {
-						column: 13
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation core/uncategorised/11/input.js 1:0-1:13
 				left: JSAssignmentIdentifier {
 					name: "x"
-					loc: Object {
-						filename: "core/uncategorised/11/input.js"
-						identifierName: "x"
-						end: Object {
-							column: 1
-							line: 1
-						}
-						start: Object {
-							column: 0
-							line: 1
-						}
-					}
+					loc: SourceLocation core/uncategorised/11/input.js 1:0-1:1 (x)
 				}
 				right: JSArrayExpression {
-					loc: Object {
-						filename: "core/uncategorised/11/input.js"
-						end: Object {
-							column: 13
-							line: 1
-						}
-						start: Object {
-							column: 4
-							line: 1
-						}
-					}
+					loc: SourceLocation core/uncategorised/11/input.js 1:4-1:13
 					elements: Array [
-						JSArrayHole {
-							loc: Object {
-								filename: "core/uncategorised/11/input.js"
-								end: Object {
-									column: 5
-									line: 1
-								}
-								start: Object {
-									column: 6
-									line: 1
-								}
-							}
-						}
-						JSArrayHole {
-							loc: Object {
-								filename: "core/uncategorised/11/input.js"
-								end: Object {
-									column: 7
-									line: 1
-								}
-								start: Object {
-									column: 7
-									line: 1
-								}
-							}
-						}
+						JSArrayHole {loc: SourceLocation core/uncategorised/11/input.js 1:6-1:5}
+						JSArrayHole {loc: SourceLocation core/uncategorised/11/input.js 1:7-1:7}
 						JSNumericLiteral {
 							value: 42
 							format: undefined
-							loc: Object {
-								filename: "core/uncategorised/11/input.js"
-								end: Object {
-									column: 11
-									line: 1
-								}
-								start: Object {
-									column: 9
-									line: 1
-								}
-							}
+							loc: SourceLocation core/uncategorised/11/input.js 1:9-1:11
 						}
 					]
 				}
@@ -135,6 +50,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

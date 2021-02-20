@@ -12,92 +12,31 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "jsx/basic/17/input.jsx"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
+	loc: SourceLocation jsx/basic/17/input.jsx 1:0-1:18
+	path: UIDPath<jsx/basic/17/input.jsx>
 	syntax: Array ["jsx"]
-	loc: Object {
-		filename: "jsx/basic/17/input.jsx"
-		end: Object {
-			column: 18
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "jsx/basic/17/input.jsx"
-				end: Object {
-					column: 18
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation jsx/basic/17/input.jsx 1:0-1:18
 			expression: JSXElement {
 				name: JSXIdentifier {
 					name: "div"
-					loc: Object {
-						filename: "jsx/basic/17/input.jsx"
-						end: Object {
-							column: 4
-							line: 1
-						}
-						start: Object {
-							column: 1
-							line: 1
-						}
-					}
+					loc: SourceLocation jsx/basic/17/input.jsx 1:1-1:4
 				}
 				children: Array []
 				selfClosing: true
 				typeArguments: undefined
-				loc: Object {
-					filename: "jsx/basic/17/input.jsx"
-					end: Object {
-						column: 18
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation jsx/basic/17/input.jsx 1:0-1:18
 				attributes: Array [
 					JSXSpreadAttribute {
-						loc: Object {
-							filename: "jsx/basic/17/input.jsx"
-							end: Object {
-								column: 15
-								line: 1
-							}
-							start: Object {
-								column: 5
-								line: 1
-							}
-						}
+						loc: SourceLocation jsx/basic/17/input.jsx 1:5-1:15
 						argument: JSReferenceIdentifier {
 							name: "props"
-							loc: Object {
-								filename: "jsx/basic/17/input.jsx"
-								identifierName: "props"
-								end: Object {
-									column: 14
-									line: 1
-								}
-								start: Object {
-									column: 9
-									line: 1
-								}
-							}
+							loc: SourceLocation jsx/basic/17/input.jsx 1:9-1:14 (props)
 						}
 					}
 				]
@@ -110,6 +49,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

@@ -14,12 +14,14 @@ import {semver} from "./semver";
 import {v8} from "./v8";
 import {lintCommand} from "./commands/lintCommand";
 import {projectManager} from "./projectManager";
+import {files} from "./files";
 import {compiler} from "./compiler";
 import {stringEscape} from "./stringEscape";
 import {analyzeDependencies} from "./analyzeDependencies";
 import {stringMarkup} from "./parsers/stringMarkup";
 import {pathMatch} from "./parsers/pathMatch";
 import {tests} from "./tests";
+import {integrations} from "./integrations";
 import {suppressions} from "./suppressions";
 import {snapshots} from "./snapshots";
 import {bundler} from "./bundler";
@@ -158,6 +160,7 @@ export const descriptions = {
 	ANALYZE_DEPENDENCIES: analyzeDependencies,
 	STRING_MARKUP: stringMarkup,
 	PATH_MATCH: pathMatch,
+	INTEGRATIONS: integrations,
 	TESTS: tests,
 	SUPPRESSIONS: suppressions,
 	SNAPSHOTS: snapshots,
@@ -170,6 +173,7 @@ export const descriptions = {
 	CONSUME: consume,
 	MANIFEST: manifest,
 	PROJECT_CONFIG: projectConfig,
+	FILES: files,
 	USER_CONFIG: userConfig,
 	HTML_PARSER: htmlParser,
 	MARKDOWN_PARSER: markdownParser,

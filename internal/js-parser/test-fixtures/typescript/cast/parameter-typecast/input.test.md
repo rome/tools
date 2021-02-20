@@ -11,89 +11,42 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "typescript/cast/parameter-typecast/input.ts"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
+	loc: SourceLocation typescript/cast/parameter-typecast/input.ts 1:0-2:0
+	path: UIDPath<typescript/cast/parameter-typecast/input.ts>
 	syntax: Array ["ts"]
-	loc: Object {
-		filename: "typescript/cast/parameter-typecast/input.ts"
-		end: Object {
-			column: 0
-			line: 2
+	body: Array [
+		JSExpressionStatement {
+			loc: SourceLocation typescript/cast/parameter-typecast/input.ts 1:0-1:11
+			expression: JSCallExpression {
+				arguments: Array []
+				loc: SourceLocation typescript/cast/parameter-typecast/input.ts 1:0-1:10
+				callee: JSReferenceIdentifier {
+					name: "func"
+					loc: SourceLocation typescript/cast/parameter-typecast/input.ts 1:0-1:4 (func)
+				}
+			}
 		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	]
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse"
 				categoryValue: "js"
+				category: Array ["parse"]
 				message: RAW_MARKUP {value: "Function parameter type annotation? Possibly forgot curlies around an object. Possibly forgot async keyword."}
 			}
 			location: Object {
-				filename: "typescript/cast/parameter-typecast/input.ts"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 9
-					line: 1
-				}
-				start: Object {
-					column: 5
-					line: 1
-				}
-			}
-		}
-	]
-	body: Array [
-		JSExpressionStatement {
-			loc: Object {
-				filename: "typescript/cast/parameter-typecast/input.ts"
-				end: Object {
-					column: 11
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
-			expression: JSCallExpression {
-				arguments: Array []
-				loc: Object {
-					filename: "typescript/cast/parameter-typecast/input.ts"
-					end: Object {
-						column: 10
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
-				callee: JSReferenceIdentifier {
-					name: "func"
-					loc: Object {
-						filename: "typescript/cast/parameter-typecast/input.ts"
-						identifierName: "func"
-						end: Object {
-							column: 4
-							line: 1
-						}
-						start: Object {
-							column: 0
-							line: 1
-						}
-					}
-				}
+				end: Position 1:9
+				path: UIDPath<typescript/cast/parameter-typecast/input.ts>
+				start: Position 1:5
 			}
 		}
 	]
@@ -112,8 +65,5 @@ JSRoot {
     func(a: T);
          ^^^^
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

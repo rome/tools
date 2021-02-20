@@ -11,116 +11,49 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "es2015/yield/function-name-generator-expression/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2015/yield/function-name-generator-expression/input.js"
-		end: Object {
-			column: 21
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2015/yield/function-name-generator-expression/input.js 1:0-1:21
+	path: UIDPath<es2015/yield/function-name-generator-expression/input.js>
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse"
 				categoryValue: "js"
+				category: Array ["parse"]
 				message: RAW_MARKUP {value: "Can not use 'yield' as identifier inside a generator"}
 			}
 			location: Object {
-				filename: "es2015/yield/function-name-generator-expression/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 16
-					line: 1
-				}
-				start: Object {
-					column: 11
-					line: 1
-				}
+				end: Position 1:16
+				path: UIDPath<es2015/yield/function-name-generator-expression/input.js>
+				start: Position 1:11
 			}
 		}
 	]
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "es2015/yield/function-name-generator-expression/input.js"
-				end: Object {
-					column: 21
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2015/yield/function-name-generator-expression/input.js 1:0-1:21
 			expression: JSUnaryExpression {
 				operator: "+"
 				prefix: true
-				loc: Object {
-					filename: "es2015/yield/function-name-generator-expression/input.js"
-					end: Object {
-						column: 21
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/yield/function-name-generator-expression/input.js 1:0-1:21
 				argument: JSFunctionExpression {
 					id: JSBindingIdentifier {
 						name: "yield"
-						loc: Object {
-							filename: "es2015/yield/function-name-generator-expression/input.js"
-							identifierName: "yield"
-							end: Object {
-								column: 16
-								line: 1
-							}
-							start: Object {
-								column: 11
-								line: 1
-							}
-						}
+						loc: SourceLocation es2015/yield/function-name-generator-expression/input.js 1:11-1:16 (yield)
 					}
-					loc: Object {
-						filename: "es2015/yield/function-name-generator-expression/input.js"
-						end: Object {
-							column: 21
-							line: 1
-						}
-						start: Object {
-							column: 1
-							line: 1
-						}
-					}
+					loc: SourceLocation es2015/yield/function-name-generator-expression/input.js 1:1-1:21
 					body: JSBlockStatement {
 						body: Array []
 						directives: Array []
-						loc: Object {
-							filename: "es2015/yield/function-name-generator-expression/input.js"
-							end: Object {
-								column: 21
-								line: 1
-							}
-							start: Object {
-								column: 19
-								line: 1
-							}
-						}
+						loc: SourceLocation es2015/yield/function-name-generator-expression/input.js 1:19-1:21
 					}
 					head: JSFunctionHead {
 						async: false
@@ -131,17 +64,7 @@ JSRoot {
 						returnType: undefined
 						thisType: undefined
 						typeParameters: undefined
-						loc: Object {
-							filename: "es2015/yield/function-name-generator-expression/input.js"
-							end: Object {
-								column: 18
-								line: 1
-							}
-							start: Object {
-								column: 16
-								line: 1
-							}
-						}
+						loc: SourceLocation es2015/yield/function-name-generator-expression/input.js 1:16-1:18
 					}
 				}
 			}
@@ -161,8 +84,5 @@ JSRoot {
     +function* yield() {}
                ^^^^^
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

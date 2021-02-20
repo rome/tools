@@ -12,93 +12,30 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "core/uncategorised/240/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "core/uncategorised/240/input.js"
-		end: Object {
-			column: 13
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation core/uncategorised/240/input.js 1:0-1:13
+	path: UIDPath<core/uncategorised/240/input.js>
 	body: Array [
 		JSForStatement {
 			test: undefined
 			update: undefined
-			loc: Object {
-				filename: "core/uncategorised/240/input.js"
-				end: Object {
-					column: 13
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
-			body: JSEmptyStatement {
-				loc: Object {
-					filename: "core/uncategorised/240/input.js"
-					end: Object {
-						column: 13
-						line: 1
-					}
-					start: Object {
-						column: 12
-						line: 1
-					}
-				}
-			}
+			body: JSEmptyStatement {loc: SourceLocation core/uncategorised/240/input.js 1:12-1:13}
+			loc: SourceLocation core/uncategorised/240/input.js 1:0-1:13
 			init: JSAssignmentExpression {
 				operator: "="
-				loc: Object {
-					filename: "core/uncategorised/240/input.js"
-					end: Object {
-						column: 9
-						line: 1
-					}
-					start: Object {
-						column: 4
-						line: 1
-					}
-				}
+				loc: SourceLocation core/uncategorised/240/input.js 1:4-1:9
 				left: JSAssignmentIdentifier {
 					name: "x"
-					loc: Object {
-						filename: "core/uncategorised/240/input.js"
-						identifierName: "x"
-						end: Object {
-							column: 5
-							line: 1
-						}
-						start: Object {
-							column: 4
-							line: 1
-						}
-					}
+					loc: SourceLocation core/uncategorised/240/input.js 1:4-1:5 (x)
 				}
 				right: JSNumericLiteral {
 					value: 0
 					format: undefined
-					loc: Object {
-						filename: "core/uncategorised/240/input.js"
-						end: Object {
-							column: 9
-							line: 1
-						}
-						start: Object {
-							column: 8
-							line: 1
-						}
-					}
+					loc: SourceLocation core/uncategorised/240/input.js 1:8-1:9
 				}
 			}
 		}
@@ -109,6 +46,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

@@ -12,123 +12,41 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "typescript/arrow-function/arrow-function-with-newline/input.ts"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
+	loc: SourceLocation typescript/arrow-function/arrow-function-with-newline/input.ts 1:0-3:0
+	path: UIDPath<typescript/arrow-function/arrow-function-with-newline/input.ts>
 	syntax: Array ["ts"]
-	loc: Object {
-		filename: "typescript/arrow-function/arrow-function-with-newline/input.ts"
-		end: Object {
-			column: 0
-			line: 3
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "typescript/arrow-function/arrow-function-with-newline/input.ts"
-				end: Object {
-					column: 10
-					line: 2
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation typescript/arrow-function/arrow-function-with-newline/input.ts 1:0-2:10
 			expression: JSArrowFunctionExpression {
-				loc: Object {
-					filename: "typescript/arrow-function/arrow-function-with-newline/input.ts"
-					end: Object {
-						column: 10
-						line: 2
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/arrow-function/arrow-function-with-newline/input.ts 1:0-2:10
 				body: JSBlockStatement {
 					body: Array []
 					directives: Array []
-					loc: Object {
-						filename: "typescript/arrow-function/arrow-function-with-newline/input.ts"
-						end: Object {
-							column: 10
-							line: 2
-						}
-						start: Object {
-							column: 7
-							line: 2
-						}
-					}
+					loc: SourceLocation typescript/arrow-function/arrow-function-with-newline/input.ts 2:7-2:10
 				}
 				head: JSFunctionHead {
 					async: true
 					hasHoistedVars: false
 					rest: undefined
 					thisType: undefined
-					loc: Object {
-						filename: "typescript/arrow-function/arrow-function-with-newline/input.ts"
-						end: Object {
-							column: 6
-							line: 2
-						}
-						start: Object {
-							column: 0
-							line: 1
-						}
-					}
+					loc: SourceLocation typescript/arrow-function/arrow-function-with-newline/input.ts 1:0-2:6
 					params: Array [
 						JSBindingIdentifier {
 							name: "f"
-							loc: Object {
-								filename: "typescript/arrow-function/arrow-function-with-newline/input.ts"
-								identifierName: "f"
-								end: Object {
-									column: 8
-									line: 1
-								}
-								start: Object {
-									column: 7
-									line: 1
-								}
-							}
+							loc: SourceLocation typescript/arrow-function/arrow-function-with-newline/input.ts 1:7-1:8 (f)
 						}
 					]
 					returnType: TSTypeReference {
 						typeParameters: undefined
-						loc: Object {
-							filename: "typescript/arrow-function/arrow-function-with-newline/input.ts"
-							end: Object {
-								column: 3
-								line: 2
-							}
-							start: Object {
-								column: 2
-								line: 2
-							}
-						}
+						loc: SourceLocation typescript/arrow-function/arrow-function-with-newline/input.ts 2:2-2:3
 						typeName: JSReferenceIdentifier {
 							name: "t"
-							loc: Object {
-								filename: "typescript/arrow-function/arrow-function-with-newline/input.ts"
-								identifierName: "t"
-								end: Object {
-									column: 3
-									line: 2
-								}
-								start: Object {
-									column: 2
-									line: 2
-								}
-							}
+							loc: SourceLocation typescript/arrow-function/arrow-function-with-newline/input.ts 2:2-2:3 (t)
 						}
 					}
 				}
@@ -141,6 +59,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

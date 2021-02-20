@@ -11,103 +11,47 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "es2015/uncategorised/209/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2015/uncategorised/209/input.js"
-		end: Object {
-			column: 4
-			line: 1
+	loc: SourceLocation es2015/uncategorised/209/input.js 1:0-1:4
+	path: UIDPath<es2015/uncategorised/209/input.js>
+	body: Array [
+		JSExpressionStatement {
+			loc: SourceLocation es2015/uncategorised/209/input.js 1:0-1:3
+			expression: JSNumericLiteral {
+				value: 1
+				format: "binary"
+				loc: SourceLocation es2015/uncategorised/209/input.js 1:0-1:3
+			}
 		}
-		start: Object {
-			column: 0
-			line: 1
+		JSExpressionStatement {
+			loc: SourceLocation es2015/uncategorised/209/input.js 1:3-1:4
+			expression: JSNumericLiteral {
+				value: 8
+				format: undefined
+				loc: SourceLocation es2015/uncategorised/209/input.js 1:3-1:4
+			}
 		}
-	}
+	]
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse"
 				categoryValue: "js"
+				category: Array ["parse"]
 				message: RAW_MARKUP {value: "Expected a semicolon or a line terminator"}
 			}
 			location: Object {
-				filename: "es2015/uncategorised/209/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 3
-					line: 1
-				}
-				start: Object {
-					column: 3
-					line: 1
-				}
-			}
-		}
-	]
-	body: Array [
-		JSExpressionStatement {
-			loc: Object {
-				filename: "es2015/uncategorised/209/input.js"
-				end: Object {
-					column: 3
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
-			expression: JSNumericLiteral {
-				value: 1
-				format: "binary"
-				loc: Object {
-					filename: "es2015/uncategorised/209/input.js"
-					end: Object {
-						column: 3
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
-			}
-		}
-		JSExpressionStatement {
-			loc: Object {
-				filename: "es2015/uncategorised/209/input.js"
-				end: Object {
-					column: 4
-					line: 1
-				}
-				start: Object {
-					column: 3
-					line: 1
-				}
-			}
-			expression: JSNumericLiteral {
-				value: 8
-				format: undefined
-				loc: Object {
-					filename: "es2015/uncategorised/209/input.js"
-					end: Object {
-						column: 4
-						line: 1
-					}
-					start: Object {
-						column: 3
-						line: 1
-					}
-				}
+				end: Position 1:3
+				path: UIDPath<es2015/uncategorised/209/input.js>
+				start: Position 1:3
 			}
 		}
 	]
@@ -125,8 +69,5 @@ JSRoot {
     0b18
        ^
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

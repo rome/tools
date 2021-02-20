@@ -11,124 +11,43 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "core/uncategorised/305/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "core/uncategorised/305/input.js"
-		end: Object {
-			column: 8
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation core/uncategorised/305/input.js 1:0-2:8
+	path: UIDPath<core/uncategorised/305/input.js>
 	comments: Array [
 		CommentLine {
 			id: "0"
 			value: " Comment"
-			loc: Object {
-				filename: "core/uncategorised/305/input.js"
-				end: Object {
-					column: 34
-					line: 1
-				}
-				start: Object {
-					column: 24
-					line: 1
-				}
-			}
+			loc: SourceLocation core/uncategorised/305/input.js 1:24-1:34
 		}
 	]
 	body: Array [
 		JSWhileStatement {
-			loc: Object {
-				filename: "core/uncategorised/305/input.js"
-				end: Object {
-					column: 8
-					line: 2
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation core/uncategorised/305/input.js 1:0-2:8
 			test: JSBooleanLiteral {
 				value: true
-				loc: Object {
-					filename: "core/uncategorised/305/input.js"
-					end: Object {
-						column: 11
-						line: 1
-					}
-					start: Object {
-						column: 7
-						line: 1
-					}
-				}
+				loc: SourceLocation core/uncategorised/305/input.js 1:7-1:11
 			}
 			body: JSBlockStatement {
 				directives: Array []
-				loc: Object {
-					filename: "core/uncategorised/305/input.js"
-					end: Object {
-						column: 8
-						line: 2
-					}
-					start: Object {
-						column: 13
-						line: 1
-					}
-				}
+				loc: SourceLocation core/uncategorised/305/input.js 1:13-2:8
 				body: Array [
 					JSContinueStatement {
 						label: undefined
+						loc: SourceLocation core/uncategorised/305/input.js 1:15-1:23
 						trailingComments: Array ["0"]
-						loc: Object {
-							filename: "core/uncategorised/305/input.js"
-							end: Object {
-								column: 23
-								line: 1
-							}
-							start: Object {
-								column: 15
-								line: 1
-							}
-						}
 					}
 					JSExpressionStatement {
 						leadingComments: Array ["0"]
-						loc: Object {
-							filename: "core/uncategorised/305/input.js"
-							end: Object {
-								column: 6
-								line: 2
-							}
-							start: Object {
-								column: 0
-								line: 2
-							}
-						}
+						loc: SourceLocation core/uncategorised/305/input.js 2:0-2:6
 						expression: JSReferenceIdentifier {
 							name: "there"
 							leadingComments: undefined
-							loc: Object {
-								filename: "core/uncategorised/305/input.js"
-								identifierName: "there"
-								end: Object {
-									column: 5
-									line: 2
-								}
-								start: Object {
-									column: 0
-									line: 2
-								}
-							}
+							loc: SourceLocation core/uncategorised/305/input.js 2:0-2:5 (there)
 						}
 					}
 				]
@@ -141,6 +60,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

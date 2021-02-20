@@ -12,106 +12,33 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "es2020/nullish-coalescing-operator/multiline/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2020/nullish-coalescing-operator/multiline/input.js"
-		end: Object {
-			column: 0
-			line: 4
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2020/nullish-coalescing-operator/multiline/input.js 1:0-4:0
+	path: UIDPath<es2020/nullish-coalescing-operator/multiline/input.js>
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "es2020/nullish-coalescing-operator/multiline/input.js"
-				end: Object {
-					column: 7
-					line: 3
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2020/nullish-coalescing-operator/multiline/input.js 1:0-3:7
 			expression: JSLogicalExpression {
 				operator: "??"
-				loc: Object {
-					filename: "es2020/nullish-coalescing-operator/multiline/input.js"
-					end: Object {
-						column: 6
-						line: 3
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation es2020/nullish-coalescing-operator/multiline/input.js 1:0-3:6
 				right: JSReferenceIdentifier {
 					name: "c"
-					loc: Object {
-						filename: "es2020/nullish-coalescing-operator/multiline/input.js"
-						identifierName: "c"
-						end: Object {
-							column: 6
-							line: 3
-						}
-						start: Object {
-							column: 5
-							line: 3
-						}
-					}
+					loc: SourceLocation es2020/nullish-coalescing-operator/multiline/input.js 3:5-3:6 (c)
 				}
 				left: JSLogicalExpression {
 					operator: "??"
-					loc: Object {
-						filename: "es2020/nullish-coalescing-operator/multiline/input.js"
-						end: Object {
-							column: 6
-							line: 2
-						}
-						start: Object {
-							column: 0
-							line: 1
-						}
-					}
+					loc: SourceLocation es2020/nullish-coalescing-operator/multiline/input.js 1:0-2:6
 					left: JSReferenceIdentifier {
 						name: "a"
-						loc: Object {
-							filename: "es2020/nullish-coalescing-operator/multiline/input.js"
-							identifierName: "a"
-							end: Object {
-								column: 1
-								line: 1
-							}
-							start: Object {
-								column: 0
-								line: 1
-							}
-						}
+						loc: SourceLocation es2020/nullish-coalescing-operator/multiline/input.js 1:0-1:1 (a)
 					}
 					right: JSReferenceIdentifier {
 						name: "b"
-						loc: Object {
-							filename: "es2020/nullish-coalescing-operator/multiline/input.js"
-							identifierName: "b"
-							end: Object {
-								column: 6
-								line: 2
-							}
-							start: Object {
-								column: 5
-								line: 2
-							}
-						}
+						loc: SourceLocation es2020/nullish-coalescing-operator/multiline/input.js 2:5-2:6 (b)
 					}
 				}
 			}
@@ -123,6 +50,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

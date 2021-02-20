@@ -12,79 +12,29 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "esprima/es2015-class/migrated_0024/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "esprima/es2015-class/migrated_0024/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation esprima/es2015-class/migrated_0024/input.js 1:0-2:0
+	path: UIDPath<esprima/es2015-class/migrated_0024/input.js>
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "esprima/es2015-class/migrated_0024/input.js"
-				end: Object {
-					column: 19
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation esprima/es2015-class/migrated_0024/input.js 1:0-1:19
 			expression: JSClassExpression {
 				id: undefined
-				loc: Object {
-					filename: "esprima/es2015-class/migrated_0024/input.js"
-					end: Object {
-						column: 18
-						line: 1
-					}
-					start: Object {
-						column: 1
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/es2015-class/migrated_0024/input.js 1:1-1:18
 				meta: JSClassHead {
 					body: Array []
 					implements: undefined
 					superTypeParameters: undefined
 					typeParameters: undefined
-					loc: Object {
-						filename: "esprima/es2015-class/migrated_0024/input.js"
-						end: Object {
-							column: 18
-							line: 1
-						}
-						start: Object {
-							column: 1
-							line: 1
-						}
-					}
+					loc: SourceLocation esprima/es2015-class/migrated_0024/input.js 1:1-1:18
 					superClass: JSNumericLiteral {
 						value: 0
 						format: undefined
-						loc: Object {
-							filename: "esprima/es2015-class/migrated_0024/input.js"
-							end: Object {
-								column: 16
-								line: 1
-							}
-							start: Object {
-								column: 15
-								line: 1
-							}
-						}
+						loc: SourceLocation esprima/es2015-class/migrated_0024/input.js 1:15-1:16
 					}
 				}
 			}
@@ -96,6 +46,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

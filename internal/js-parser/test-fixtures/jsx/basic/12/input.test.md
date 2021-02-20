@@ -12,110 +12,40 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "jsx/basic/12/input.jsx"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
+	loc: SourceLocation jsx/basic/12/input.jsx 1:0-1:41
+	path: UIDPath<jsx/basic/12/input.jsx>
 	syntax: Array ["jsx"]
-	loc: Object {
-		filename: "jsx/basic/12/input.jsx"
-		end: Object {
-			column: 41
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "jsx/basic/12/input.jsx"
-				end: Object {
-					column: 41
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation jsx/basic/12/input.jsx 1:0-1:41
 			expression: JSXElement {
 				name: JSXIdentifier {
 					name: "div"
-					loc: Object {
-						filename: "jsx/basic/12/input.jsx"
-						end: Object {
-							column: 4
-							line: 1
-						}
-						start: Object {
-							column: 1
-							line: 1
-						}
-					}
+					loc: SourceLocation jsx/basic/12/input.jsx 1:1-1:4
 				}
 				attributes: Array []
 				selfClosing: false
 				typeArguments: undefined
-				loc: Object {
-					filename: "jsx/basic/12/input.jsx"
-					end: Object {
-						column: 41
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation jsx/basic/12/input.jsx 1:0-1:41
 				children: Array [
 					JSXElement {
 						name: JSXIdentifier {
 							name: "br"
-							loc: Object {
-								filename: "jsx/basic/12/input.jsx"
-								end: Object {
-									column: 8
-									line: 1
-								}
-								start: Object {
-									column: 6
-									line: 1
-								}
-							}
+							loc: SourceLocation jsx/basic/12/input.jsx 1:6-1:8
 						}
 						attributes: Array []
 						children: Array []
 						selfClosing: true
 						typeArguments: undefined
-						loc: Object {
-							filename: "jsx/basic/12/input.jsx"
-							end: Object {
-								column: 11
-								line: 1
-							}
-							start: Object {
-								column: 5
-								line: 1
-							}
-						}
+						loc: SourceLocation jsx/basic/12/input.jsx 1:5-1:11
 					}
 					JSXText {
 						value: "7x invalid-js-identifier"
-						loc: Object {
-							filename: "jsx/basic/12/input.jsx"
-							end: Object {
-								column: 35
-								line: 1
-							}
-							start: Object {
-								column: 11
-								line: 1
-							}
-						}
+						loc: SourceLocation jsx/basic/12/input.jsx 1:11-1:35
 					}
 				]
 			}
@@ -127,6 +57,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

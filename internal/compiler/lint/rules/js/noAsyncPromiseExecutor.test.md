@@ -17,9 +17,6 @@
 
   ℹ This can lead to lost errors and unnecessary indirection.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -43,9 +40,6 @@ new Promise(async function foo() {});
 
   ℹ This can lead to lost errors and unnecessary indirection.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -69,9 +63,6 @@ new Promise(async () => {});
 
   ℹ This can lead to lost errors and unnecessary indirection.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -85,7 +76,6 @@ new Promise(async () => {});
 ### `3`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -99,7 +89,6 @@ new Promise(() => {});
 ### `4`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -113,7 +102,6 @@ new Promise(() => {}, async function unrelated() {});
 ### `5`
 
 ```
-✔ No known problems!
 
 ```
 

@@ -11,123 +11,56 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "es2015/for-of/invalid-escape-of/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2015/for-of/invalid-escape-of/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				category: "parse"
-				categoryValue: "js"
-				message: Array [
-					RAW_MARKUP {value: "Unexpected token, expected "}
-					";"
-				]
-			}
-			location: Object {
-				filename: "es2015/for-of/invalid-escape-of/input.js"
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Object {
-					column: 14
-					line: 1
-				}
-				start: Object {
-					column: 7
-					line: 1
-				}
-			}
-		}
-	]
+	loc: SourceLocation es2015/for-of/invalid-escape-of/input.js 1:0-2:0
+	path: UIDPath<es2015/for-of/invalid-escape-of/input.js>
 	body: Array [
 		JSForStatement {
-			loc: Object {
-				filename: "es2015/for-of/invalid-escape-of/input.js"
-				end: Object {
-					column: 20
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
+			loc: SourceLocation es2015/for-of/invalid-escape-of/input.js 1:0-1:20
+			init: JSReferenceIdentifier {
+				name: "x"
+				loc: SourceLocation es2015/for-of/invalid-escape-of/input.js 1:5-1:6 (x)
+			}
+			test: JSReferenceIdentifier {
+				name: "of"
+				loc: SourceLocation es2015/for-of/invalid-escape-of/input.js 1:7-1:14 (of)
+			}
+			update: JSReferenceIdentifier {
+				name: "y"
+				loc: SourceLocation es2015/for-of/invalid-escape-of/input.js 1:15-1:16 (y)
 			}
 			body: JSBlockStatement {
 				body: Array []
 				directives: Array []
-				loc: Object {
-					filename: "es2015/for-of/invalid-escape-of/input.js"
-					end: Object {
-						column: 20
-						line: 1
-					}
-					start: Object {
-						column: 18
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/for-of/invalid-escape-of/input.js 1:18-1:20
 			}
-			init: JSReferenceIdentifier {
-				name: "x"
-				loc: Object {
-					filename: "es2015/for-of/invalid-escape-of/input.js"
-					identifierName: "x"
-					end: Object {
-						column: 6
-						line: 1
-					}
-					start: Object {
-						column: 5
-						line: 1
-					}
-				}
+		}
+	]
+	diagnostics: Array [
+		Object {
+			origins: Array [Object {category: "parse"}]
+			location: Object {
+				integrity: undefined
+				language: "js"
+				sourceText: undefined
+				end: Position 1:14
+				path: UIDPath<es2015/for-of/invalid-escape-of/input.js>
+				start: Position 1:7
 			}
-			test: JSReferenceIdentifier {
-				name: "of"
-				loc: Object {
-					filename: "es2015/for-of/invalid-escape-of/input.js"
-					identifierName: "of"
-					end: Object {
-						column: 14
-						line: 1
+			description: Object {
+				categoryValue: "js"
+				category: Array ["parse"]
+				message: RAW_MARKUP {value: "Unexpected character <emphasis>\\\\</emphasis>"}
+				advice: Array [
+					log {
+						category: "info"
+						text: RAW_MARKUP {value: "Expected character <emphasis>;</emphasis>"}
 					}
-					start: Object {
-						column: 7
-						line: 1
-					}
-				}
-			}
-			update: JSReferenceIdentifier {
-				name: "y"
-				loc: Object {
-					filename: "es2015/for-of/invalid-escape-of/input.js"
-					identifierName: "y"
-					end: Object {
-						column: 16
-						line: 1
-					}
-					start: Object {
-						column: 15
-						line: 1
-					}
-				}
+				]
 			}
 		}
 	]
@@ -140,13 +73,12 @@ JSRoot {
 
  es2015/for-of/invalid-escape-of/input.js:1:7 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ Unexpected token, expected ;
+  ✖ Unexpected character \
 
     for (x \u006ff y) {}
            ^^^^^^^
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  ℹ Expected character ;
 
-✖ Found 1 problem
 
 ```

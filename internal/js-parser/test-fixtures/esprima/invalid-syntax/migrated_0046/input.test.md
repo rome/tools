@@ -11,106 +11,47 @@ JSRoot {
 	comments: Array []
 	corrupt: true
 	directives: Array []
-	filename: "esprima/invalid-syntax/migrated_0046/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "esprima/invalid-syntax/migrated_0046/input.js"
-		end: Object {
-			column: 0
-			line: 2
+	loc: SourceLocation esprima/invalid-syntax/migrated_0046/input.js 1:0-2:0
+	path: UIDPath<esprima/invalid-syntax/migrated_0046/input.js>
+	body: Array [
+		JSExpressionStatement {
+			loc: SourceLocation esprima/invalid-syntax/migrated_0046/input.js 1:0-1:10
+			expression: JSAssignmentExpression {
+				operator: "="
+				loc: SourceLocation esprima/invalid-syntax/migrated_0046/input.js 1:0-1:10
+				left: JSAssignmentIdentifier {
+					name: "INVALID_PLACEHOLDER"
+					loc: SourceLocation esprima/invalid-syntax/migrated_0046/input.js 1:7-1:6
+				}
+				right: JSNumericLiteral {
+					value: 4
+					format: undefined
+					loc: SourceLocation esprima/invalid-syntax/migrated_0046/input.js 1:9-1:10
+				}
+			}
 		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	]
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse"
 				categoryValue: "js"
-				message: Array [
-					RAW_MARKUP {value: "Invalid left-hand side in "}
-					"assignment expression"
-				]
+				category: Array ["parse"]
+				message: RAW_MARKUP {value: "Invalid left-hand side in assignment expression"}
 			}
 			location: Object {
-				filename: "esprima/invalid-syntax/migrated_0046/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 6
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
-		}
-	]
-	body: Array [
-		JSExpressionStatement {
-			loc: Object {
-				filename: "esprima/invalid-syntax/migrated_0046/input.js"
-				end: Object {
-					column: 10
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
-			expression: JSAssignmentExpression {
-				operator: "="
-				loc: Object {
-					filename: "esprima/invalid-syntax/migrated_0046/input.js"
-					end: Object {
-						column: 10
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
-				left: JSAssignmentIdentifier {
-					name: "INVALID_PLACEHOLDER"
-					loc: Object {
-						filename: "esprima/invalid-syntax/migrated_0046/input.js"
-						end: Object {
-							column: 6
-							line: 1
-						}
-						start: Object {
-							column: 7
-							line: 1
-						}
-					}
-				}
-				right: JSNumericLiteral {
-					value: 4
-					format: undefined
-					loc: Object {
-						filename: "esprima/invalid-syntax/migrated_0046/input.js"
-						end: Object {
-							column: 10
-							line: 1
-						}
-						start: Object {
-							column: 9
-							line: 1
-						}
-					}
-				}
+				end: Position 1:6
+				path: UIDPath<esprima/invalid-syntax/migrated_0046/input.js>
+				start: Position 1:0
 			}
 		}
 	]
@@ -128,8 +69,5 @@ JSRoot {
     func() = 4
     ^^^^^^
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

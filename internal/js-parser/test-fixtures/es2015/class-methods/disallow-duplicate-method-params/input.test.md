@@ -11,67 +11,34 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "es2015/class-methods/disallow-duplicate-method-params/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2015/class-methods/disallow-duplicate-method-params/input.js"
-		end: Object {
-			column: 0
-			line: 4
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2015/class-methods/disallow-duplicate-method-params/input.js 1:0-4:0
+	path: UIDPath<es2015/class-methods/disallow-duplicate-method-params/input.js>
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
 			location: Object {
-				filename: "es2015/class-methods/disallow-duplicate-method-params/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 12
-					line: 2
-				}
-				start: Object {
-					column: 11
-					line: 2
-				}
+				end: Position 2:12
+				path: UIDPath<es2015/class-methods/disallow-duplicate-method-params/input.js>
+				start: Position 2:11
 			}
 			description: Object {
-				category: "parse"
 				categoryValue: "js"
-				message: Array [
-					RAW_MARKUP {value: "Argument <emphasis>"}
-					"a"
-					RAW_MARKUP {value: "</emphasis> name clash in strict mode"}
-				]
+				category: Array ["parse"]
+				message: RAW_MARKUP {value: "Argument <emphasis>a</emphasis> name clash in strict mode"}
 				advice: Array [
 					log {
 						category: "info"
 						text: RAW_MARKUP {value: "Defined already here"}
 					}
-					frame {
-						location: Object {
-							filename: "es2015/class-methods/disallow-duplicate-method-params/input.js"
-							identifierName: "a"
-							end: Object {
-								column: 12
-								line: 2
-							}
-							start: Object {
-								column: 11
-								line: 2
-							}
-						}
-					}
+					frame {location: SourceLocation es2015/class-methods/disallow-duplicate-method-params/input.js 2:11-2:12 (a)}
 				]
 			}
 		}
@@ -80,102 +47,30 @@ JSRoot {
 		JSClassDeclaration {
 			id: JSBindingIdentifier {
 				name: "Foo"
-				loc: Object {
-					filename: "es2015/class-methods/disallow-duplicate-method-params/input.js"
-					identifierName: "Foo"
-					end: Object {
-						column: 9
-						line: 1
-					}
-					start: Object {
-						column: 6
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/class-methods/disallow-duplicate-method-params/input.js 1:6-1:9 (Foo)
 			}
-			loc: Object {
-				filename: "es2015/class-methods/disallow-duplicate-method-params/input.js"
-				end: Object {
-					column: 1
-					line: 3
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2015/class-methods/disallow-duplicate-method-params/input.js 1:0-3:1
 			meta: JSClassHead {
 				implements: undefined
 				superClass: undefined
 				superTypeParameters: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "es2015/class-methods/disallow-duplicate-method-params/input.js"
-					end: Object {
-						column: 1
-						line: 3
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/class-methods/disallow-duplicate-method-params/input.js 1:0-3:1
 				body: Array [
 					JSClassMethod {
 						kind: "method"
 						key: JSStaticPropertyKey {
 							value: JSIdentifier {
 								name: "bar"
-								loc: Object {
-									filename: "es2015/class-methods/disallow-duplicate-method-params/input.js"
-									identifierName: "bar"
-									end: Object {
-										column: 7
-										line: 2
-									}
-									start: Object {
-										column: 4
-										line: 2
-									}
-								}
+								loc: SourceLocation es2015/class-methods/disallow-duplicate-method-params/input.js 2:4-2:7 (bar)
 							}
-							loc: Object {
-								filename: "es2015/class-methods/disallow-duplicate-method-params/input.js"
-								end: Object {
-									column: 7
-									line: 2
-								}
-								start: Object {
-									column: 4
-									line: 2
-								}
-							}
+							loc: SourceLocation es2015/class-methods/disallow-duplicate-method-params/input.js 2:4-2:7
 						}
-						loc: Object {
-							filename: "es2015/class-methods/disallow-duplicate-method-params/input.js"
-							end: Object {
-								column: 16
-								line: 2
-							}
-							start: Object {
-								column: 4
-								line: 2
-							}
-						}
+						loc: SourceLocation es2015/class-methods/disallow-duplicate-method-params/input.js 2:4-2:16
 						body: JSBlockStatement {
 							body: Array []
 							directives: Array []
-							loc: Object {
-								filename: "es2015/class-methods/disallow-duplicate-method-params/input.js"
-								end: Object {
-									column: 16
-									line: 2
-								}
-								start: Object {
-									column: 14
-									line: 2
-								}
-							}
+							loc: SourceLocation es2015/class-methods/disallow-duplicate-method-params/input.js 2:14-2:16
 						}
 						meta: JSClassPropertyMeta {
 							abstract: false
@@ -184,21 +79,8 @@ JSRoot {
 							readonly: false
 							static: false
 							typeAnnotation: undefined
-							start: Object {
-								column: 4
-								line: 2
-							}
-							loc: Object {
-								filename: "es2015/class-methods/disallow-duplicate-method-params/input.js"
-								end: Object {
-									column: 7
-									line: 2
-								}
-								start: Object {
-									column: 4
-									line: 2
-								}
-							}
+							loc: SourceLocation es2015/class-methods/disallow-duplicate-method-params/input.js 2:4-2:7
+							start: Position 2:4
 						}
 						head: JSFunctionHead {
 							async: false
@@ -208,76 +90,24 @@ JSRoot {
 							returnType: undefined
 							thisType: undefined
 							typeParameters: undefined
-							loc: Object {
-								filename: "es2015/class-methods/disallow-duplicate-method-params/input.js"
-								end: Object {
-									column: 13
-									line: 2
-								}
-								start: Object {
-									column: 7
-									line: 2
-								}
-							}
+							loc: SourceLocation es2015/class-methods/disallow-duplicate-method-params/input.js 2:7-2:13
 							params: Array [
 								JSBindingIdentifier {
 									name: "a"
-									loc: Object {
-										filename: "es2015/class-methods/disallow-duplicate-method-params/input.js"
-										identifierName: "a"
-										end: Object {
-											column: 9
-											line: 2
-										}
-										start: Object {
-											column: 8
-											line: 2
-										}
-									}
+									loc: SourceLocation es2015/class-methods/disallow-duplicate-method-params/input.js 2:8-2:9 (a)
 									meta: JSPatternMeta {
 										optional: undefined
 										typeAnnotation: undefined
-										loc: Object {
-											filename: "es2015/class-methods/disallow-duplicate-method-params/input.js"
-											end: Object {
-												column: 9
-												line: 2
-											}
-											start: Object {
-												column: 8
-												line: 2
-											}
-										}
+										loc: SourceLocation es2015/class-methods/disallow-duplicate-method-params/input.js 2:8-2:9
 									}
 								}
 								JSBindingIdentifier {
 									name: "a"
-									loc: Object {
-										filename: "es2015/class-methods/disallow-duplicate-method-params/input.js"
-										identifierName: "a"
-										end: Object {
-											column: 12
-											line: 2
-										}
-										start: Object {
-											column: 11
-											line: 2
-										}
-									}
+									loc: SourceLocation es2015/class-methods/disallow-duplicate-method-params/input.js 2:11-2:12 (a)
 									meta: JSPatternMeta {
 										optional: undefined
 										typeAnnotation: undefined
-										loc: Object {
-											filename: "es2015/class-methods/disallow-duplicate-method-params/input.js"
-											end: Object {
-												column: 12
-												line: 2
-											}
-											start: Object {
-												column: 11
-												line: 2
-											}
-										}
+										loc: SourceLocation es2015/class-methods/disallow-duplicate-method-params/input.js 2:11-2:12
 									}
 								}
 							]
@@ -305,8 +135,5 @@ JSRoot {
       │            ^
     3 │ }
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

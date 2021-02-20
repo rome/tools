@@ -11,97 +11,36 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "comments/regression/10448/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "comments/regression/10448/input.js"
-		end: Object {
-			column: 1
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation comments/regression/10448/input.js 1:0-2:1
+	path: UIDPath<comments/regression/10448/input.js>
 	comments: Array [
 		CommentBlock {
 			id: "0"
 			value: " not used "
-			loc: Object {
-				filename: "comments/regression/10448/input.js"
-				end: Object {
-					column: 33
-					line: 1
-				}
-				start: Object {
-					column: 19
-					line: 1
-				}
-			}
+			loc: SourceLocation comments/regression/10448/input.js 1:19-1:33
 		}
 		CommentBlock {
 			id: "1"
 			value: " not used "
-			loc: Object {
-				filename: "comments/regression/10448/input.js"
-				end: Object {
-					column: 49
-					line: 1
-				}
-				start: Object {
-					column: 35
-					line: 1
-				}
-			}
+			loc: SourceLocation comments/regression/10448/input.js 1:35-1:49
 		}
 	]
 	body: Array [
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "foo"
-				loc: Object {
-					filename: "comments/regression/10448/input.js"
-					identifierName: "foo"
-					end: Object {
-						column: 12
-						line: 1
-					}
-					start: Object {
-						column: 9
-						line: 1
-					}
-				}
+				loc: SourceLocation comments/regression/10448/input.js 1:9-1:12 (foo)
 			}
-			loc: Object {
-				filename: "comments/regression/10448/input.js"
-				end: Object {
-					column: 1
-					line: 2
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation comments/regression/10448/input.js 1:0-2:1
 			body: JSBlockStatement {
 				body: Array []
 				directives: Array []
-				loc: Object {
-					filename: "comments/regression/10448/input.js"
-					end: Object {
-						column: 1
-						line: 2
-					}
-					start: Object {
-						column: 52
-						line: 1
-					}
-				}
+				loc: SourceLocation comments/regression/10448/input.js 1:52-2:1
 			}
 			head: JSFunctionHead {
 				async: false
@@ -111,91 +50,30 @@ JSRoot {
 				returnType: undefined
 				thisType: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "comments/regression/10448/input.js"
-					end: Object {
-						column: 51
-						line: 1
-					}
-					start: Object {
-						column: 12
-						line: 1
-					}
-				}
+				loc: SourceLocation comments/regression/10448/input.js 1:12-1:51
 				params: Array [
 					JSBindingArrayPattern {
 						rest: undefined
-						loc: Object {
-							filename: "comments/regression/10448/input.js"
-							end: Object {
-								column: 50
-								line: 1
-							}
-							start: Object {
-								column: 13
-								line: 1
-							}
-						}
+						loc: SourceLocation comments/regression/10448/input.js 1:13-1:50
 						meta: JSPatternMeta {
 							optional: undefined
 							typeAnnotation: undefined
-							loc: Object {
-								filename: "comments/regression/10448/input.js"
-								end: Object {
-									column: 50
-									line: 1
-								}
-								start: Object {
-									column: 13
-									line: 1
-								}
-							}
+							loc: SourceLocation comments/regression/10448/input.js 1:13-1:50
 						}
 						elements: Array [
 							JSBindingIdentifier {
 								name: "foo"
-								loc: Object {
-									filename: "comments/regression/10448/input.js"
-									identifierName: "foo"
-									end: Object {
-										column: 17
-										line: 1
-									}
-									start: Object {
-										column: 14
-										line: 1
-									}
-								}
+								loc: SourceLocation comments/regression/10448/input.js 1:14-1:17 (foo)
 								meta: JSPatternMeta {
 									optional: undefined
 									typeAnnotation: undefined
-									loc: Object {
-										filename: "comments/regression/10448/input.js"
-										end: Object {
-											column: 17
-											line: 1
-										}
-										start: Object {
-											column: 14
-											line: 1
-										}
-									}
+									loc: SourceLocation comments/regression/10448/input.js 1:14-1:17
 								}
 							}
 							JSArrayHole {
 								leadingComments: Array ["0"]
+								loc: SourceLocation comments/regression/10448/input.js 1:33-1:18
 								trailingComments: Array ["1"]
-								loc: Object {
-									filename: "comments/regression/10448/input.js"
-									end: Object {
-										column: 18
-										line: 1
-									}
-									start: Object {
-										column: 33
-										line: 1
-									}
-								}
 							}
 						]
 					}
@@ -209,6 +87,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

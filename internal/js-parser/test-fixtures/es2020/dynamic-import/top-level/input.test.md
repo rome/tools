@@ -12,186 +12,54 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "es2020/dynamic-import/top-level/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2020/dynamic-import/top-level/input.js"
-		end: Object {
-			column: 0
-			line: 7
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2020/dynamic-import/top-level/input.js 1:0-7:0
+	path: UIDPath<es2020/dynamic-import/top-level/input.js>
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "es2020/dynamic-import/top-level/input.js"
-				end: Object {
-					column: 21
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2020/dynamic-import/top-level/input.js 1:0-1:21
 			expression: JSImportCall {
-				loc: Object {
-					filename: "es2020/dynamic-import/top-level/input.js"
-					end: Object {
-						column: 20
-						line: 1
-					}
-					start: Object {
-						column: 6
-						line: 1
-					}
-				}
+				loc: SourceLocation es2020/dynamic-import/top-level/input.js 1:6-1:20
 				argument: JSStringLiteral {
 					value: "testing.js"
-					loc: Object {
-						filename: "es2020/dynamic-import/top-level/input.js"
-						end: Object {
-							column: 19
-							line: 1
-						}
-						start: Object {
-							column: 7
-							line: 1
-						}
-					}
+					loc: SourceLocation es2020/dynamic-import/top-level/input.js 1:7-1:19
 				}
 			}
 		}
 		JSVariableDeclarationStatement {
-			loc: Object {
-				filename: "es2020/dynamic-import/top-level/input.js"
-				end: Object {
-					column: 21
-					line: 3
-				}
-				start: Object {
-					column: 0
-					line: 3
-				}
-			}
+			loc: SourceLocation es2020/dynamic-import/top-level/input.js 3:0-3:21
 			declaration: JSVariableDeclaration {
 				kind: "const"
-				loc: Object {
-					filename: "es2020/dynamic-import/top-level/input.js"
-					end: Object {
-						column: 21
-						line: 3
-					}
-					start: Object {
-						column: 0
-						line: 3
-					}
-				}
+				loc: SourceLocation es2020/dynamic-import/top-level/input.js 3:0-3:21
 				declarations: Array [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "test"
-							loc: Object {
-								filename: "es2020/dynamic-import/top-level/input.js"
-								identifierName: "test"
-								end: Object {
-									column: 10
-									line: 3
-								}
-								start: Object {
-									column: 6
-									line: 3
-								}
-							}
+							loc: SourceLocation es2020/dynamic-import/top-level/input.js 3:6-3:10 (test)
 						}
-						loc: Object {
-							filename: "es2020/dynamic-import/top-level/input.js"
-							end: Object {
-								column: 20
-								line: 3
-							}
-							start: Object {
-								column: 6
-								line: 3
-							}
-						}
+						loc: SourceLocation es2020/dynamic-import/top-level/input.js 3:6-3:20
 						init: JSStringLiteral {
 							value: "hello"
-							loc: Object {
-								filename: "es2020/dynamic-import/top-level/input.js"
-								end: Object {
-									column: 20
-									line: 3
-								}
-								start: Object {
-									column: 13
-									line: 3
-								}
-							}
+							loc: SourceLocation es2020/dynamic-import/top-level/input.js 3:13-3:20
 						}
 					}
 				]
 			}
 		}
 		JSExpressionStatement {
-			loc: Object {
-				filename: "es2020/dynamic-import/top-level/input.js"
-				end: Object {
-					column: 29
-					line: 4
-				}
-				start: Object {
-					column: 0
-					line: 4
-				}
-			}
+			loc: SourceLocation es2020/dynamic-import/top-level/input.js 4:0-4:29
 			expression: JSImportCall {
-				loc: Object {
-					filename: "es2020/dynamic-import/top-level/input.js"
-					end: Object {
-						column: 28
-						line: 4
-					}
-					start: Object {
-						column: 6
-						line: 4
-					}
-				}
+				loc: SourceLocation es2020/dynamic-import/top-level/input.js 4:6-4:28
 				argument: JSTemplateLiteral {
-					loc: Object {
-						filename: "es2020/dynamic-import/top-level/input.js"
-						end: Object {
-							column: 27
-							line: 4
-						}
-						start: Object {
-							column: 7
-							line: 4
-						}
-					}
+					loc: SourceLocation es2020/dynamic-import/top-level/input.js 4:7-4:27
 					expressions: Array [
 						JSReferenceIdentifier {
 							name: "test"
-							loc: Object {
-								filename: "es2020/dynamic-import/top-level/input.js"
-								identifierName: "test"
-								end: Object {
-									column: 22
-									line: 4
-								}
-								start: Object {
-									column: 18
-									line: 4
-								}
-							}
+							loc: SourceLocation es2020/dynamic-import/top-level/input.js 4:18-4:22 (test)
 						}
 					]
 					quasis: Array [
@@ -199,89 +67,46 @@ JSRoot {
 							cooked: "testing/"
 							raw: "testing/"
 							tail: false
-							loc: Object {
-								filename: "es2020/dynamic-import/top-level/input.js"
-								end: Object {
-									column: 16
-									line: 4
-								}
-								start: Object {
-									column: 8
-									line: 4
-								}
-							}
+							loc: SourceLocation es2020/dynamic-import/top-level/input.js 4:8-4:16
 						}
 						JSTemplateElement {
 							cooked: ".js"
 							raw: ".js"
 							tail: true
-							loc: Object {
-								filename: "es2020/dynamic-import/top-level/input.js"
-								end: Object {
-									column: 26
-									line: 4
-								}
-								start: Object {
-									column: 23
-									line: 4
-								}
-							}
+							loc: SourceLocation es2020/dynamic-import/top-level/input.js 4:23-4:26
 						}
 					]
 				}
 			}
 		}
 		JSExpressionStatement {
-			loc: Object {
-				filename: "es2020/dynamic-import/top-level/input.js"
-				end: Object {
-					column: 36
-					line: 6
-				}
-				start: Object {
-					column: 0
-					line: 6
-				}
-			}
+			loc: SourceLocation es2020/dynamic-import/top-level/input.js 6:0-6:36
 			expression: JSCallExpression {
-				loc: Object {
-					filename: "es2020/dynamic-import/top-level/input.js"
-					end: Object {
-						column: 35
-						line: 6
+				loc: SourceLocation es2020/dynamic-import/top-level/input.js 6:0-6:35
+				callee: JSMemberExpression {
+					loc: SourceLocation es2020/dynamic-import/top-level/input.js 6:0-6:25
+					object: JSImportCall {
+						loc: SourceLocation es2020/dynamic-import/top-level/input.js 6:6-6:20
+						argument: JSStringLiteral {
+							value: "testing.js"
+							loc: SourceLocation es2020/dynamic-import/top-level/input.js 6:7-6:19
+						}
 					}
-					start: Object {
-						column: 0
-						line: 6
+					property: JSStaticMemberProperty {
+						value: JSIdentifier {
+							name: "then"
+							loc: SourceLocation es2020/dynamic-import/top-level/input.js 6:21-6:25 (then)
+						}
+						loc: SourceLocation es2020/dynamic-import/top-level/input.js 6:21-6:25 (then)
 					}
 				}
 				arguments: Array [
 					JSArrowFunctionExpression {
-						loc: Object {
-							filename: "es2020/dynamic-import/top-level/input.js"
-							end: Object {
-								column: 34
-								line: 6
-							}
-							start: Object {
-								column: 26
-								line: 6
-							}
-						}
+						loc: SourceLocation es2020/dynamic-import/top-level/input.js 6:26-6:34
 						body: JSBlockStatement {
 							body: Array []
 							directives: Array []
-							loc: Object {
-								filename: "es2020/dynamic-import/top-level/input.js"
-								end: Object {
-									column: 34
-									line: 6
-								}
-								start: Object {
-									column: 32
-									line: 6
-								}
-							}
+							loc: SourceLocation es2020/dynamic-import/top-level/input.js 6:32-6:34
 						}
 						head: JSFunctionHead {
 							async: false
@@ -290,89 +115,10 @@ JSRoot {
 							rest: undefined
 							returnType: undefined
 							thisType: undefined
-							loc: Object {
-								filename: "es2020/dynamic-import/top-level/input.js"
-								end: Object {
-									column: 31
-									line: 6
-								}
-								start: Object {
-									column: 26
-									line: 6
-								}
-							}
+							loc: SourceLocation es2020/dynamic-import/top-level/input.js 6:26-6:31
 						}
 					}
 				]
-				callee: JSMemberExpression {
-					loc: Object {
-						filename: "es2020/dynamic-import/top-level/input.js"
-						end: Object {
-							column: 25
-							line: 6
-						}
-						start: Object {
-							column: 0
-							line: 6
-						}
-					}
-					object: JSImportCall {
-						loc: Object {
-							filename: "es2020/dynamic-import/top-level/input.js"
-							end: Object {
-								column: 20
-								line: 6
-							}
-							start: Object {
-								column: 6
-								line: 6
-							}
-						}
-						argument: JSStringLiteral {
-							value: "testing.js"
-							loc: Object {
-								filename: "es2020/dynamic-import/top-level/input.js"
-								end: Object {
-									column: 19
-									line: 6
-								}
-								start: Object {
-									column: 7
-									line: 6
-								}
-							}
-						}
-					}
-					property: JSStaticMemberProperty {
-						value: JSIdentifier {
-							name: "then"
-							loc: Object {
-								filename: "es2020/dynamic-import/top-level/input.js"
-								identifierName: "then"
-								end: Object {
-									column: 25
-									line: 6
-								}
-								start: Object {
-									column: 21
-									line: 6
-								}
-							}
-						}
-						loc: Object {
-							filename: "es2020/dynamic-import/top-level/input.js"
-							identifierName: "then"
-							end: Object {
-								column: 25
-								line: 6
-							}
-							start: Object {
-								column: 21
-								line: 6
-							}
-						}
-					}
-				}
 			}
 		}
 	]
@@ -382,6 +128,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

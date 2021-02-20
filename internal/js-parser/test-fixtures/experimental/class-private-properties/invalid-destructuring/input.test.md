@@ -12,124 +12,42 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "experimental/class-private-properties/invalid-destructuring/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "experimental/class-private-properties/invalid-destructuring/input.js"
-		end: Object {
-			column: 0
-			line: 7
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation experimental/class-private-properties/invalid-destructuring/input.js 1:0-7:0
+	path: UIDPath<experimental/class-private-properties/invalid-destructuring/input.js>
 	body: Array [
 		JSClassDeclaration {
 			id: JSBindingIdentifier {
 				name: "C"
-				loc: Object {
-					filename: "experimental/class-private-properties/invalid-destructuring/input.js"
-					identifierName: "C"
-					end: Object {
-						column: 7
-						line: 1
-					}
-					start: Object {
-						column: 6
-						line: 1
-					}
-				}
+				loc: SourceLocation experimental/class-private-properties/invalid-destructuring/input.js 1:6-1:7 (C)
 			}
-			loc: Object {
-				filename: "experimental/class-private-properties/invalid-destructuring/input.js"
-				end: Object {
-					column: 1
-					line: 6
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation experimental/class-private-properties/invalid-destructuring/input.js 1:0-6:1
 			meta: JSClassHead {
 				implements: undefined
 				superClass: undefined
 				superTypeParameters: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "experimental/class-private-properties/invalid-destructuring/input.js"
-					end: Object {
-						column: 1
-						line: 6
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation experimental/class-private-properties/invalid-destructuring/input.js 1:0-6:1
 				body: Array [
 					JSClassPrivateProperty {
 						key: JSPrivateName {
 							id: JSIdentifier {
 								name: "x"
-								loc: Object {
-									filename: "experimental/class-private-properties/invalid-destructuring/input.js"
-									identifierName: "x"
-									end: Object {
-										column: 4
-										line: 2
-									}
-									start: Object {
-										column: 3
-										line: 2
-									}
-								}
+								loc: SourceLocation experimental/class-private-properties/invalid-destructuring/input.js 2:3-2:4 (x)
 							}
-							loc: Object {
-								filename: "experimental/class-private-properties/invalid-destructuring/input.js"
-								end: Object {
-									column: 4
-									line: 2
-								}
-								start: Object {
-									column: 2
-									line: 2
-								}
-							}
+							loc: SourceLocation experimental/class-private-properties/invalid-destructuring/input.js 2:2-2:4
 						}
 						value: JSNumericLiteral {
 							value: 1
 							format: undefined
-							loc: Object {
-								filename: "experimental/class-private-properties/invalid-destructuring/input.js"
-								end: Object {
-									column: 8
-									line: 2
-								}
-								start: Object {
-									column: 7
-									line: 2
-								}
-							}
+							loc: SourceLocation experimental/class-private-properties/invalid-destructuring/input.js 2:7-2:8
 						}
 						typeAnnotation: undefined
-						loc: Object {
-							filename: "experimental/class-private-properties/invalid-destructuring/input.js"
-							end: Object {
-								column: 9
-								line: 2
-							}
-							start: Object {
-								column: 2
-								line: 2
-							}
-						}
+						loc: SourceLocation experimental/class-private-properties/invalid-destructuring/input.js 2:2-2:9
 						meta: JSClassPropertyMeta {
 							abstract: false
 							accessibility: undefined
@@ -137,21 +55,8 @@ JSRoot {
 							readonly: false
 							static: false
 							typeAnnotation: undefined
-							start: Object {
-								column: 2
-								line: 2
-							}
-							loc: Object {
-								filename: "experimental/class-private-properties/invalid-destructuring/input.js"
-								end: Object {
-									column: 4
-									line: 2
-								}
-								start: Object {
-									column: 2
-									line: 2
-								}
-							}
+							loc: SourceLocation experimental/class-private-properties/invalid-destructuring/input.js 2:2-2:4
+							start: Position 2:2
 						}
 					}
 					JSClassMethod {
@@ -159,41 +64,20 @@ JSRoot {
 						key: JSStaticPropertyKey {
 							value: JSIdentifier {
 								name: "m"
-								loc: Object {
-									filename: "experimental/class-private-properties/invalid-destructuring/input.js"
-									identifierName: "m"
-									end: Object {
-										column: 3
-										line: 3
-									}
-									start: Object {
-										column: 2
-										line: 3
-									}
-								}
+								loc: SourceLocation experimental/class-private-properties/invalid-destructuring/input.js 3:2-3:3 (m)
 							}
-							loc: Object {
-								filename: "experimental/class-private-properties/invalid-destructuring/input.js"
-								end: Object {
-									column: 3
-									line: 3
-								}
-								start: Object {
-									column: 2
-									line: 3
-								}
-							}
+							loc: SourceLocation experimental/class-private-properties/invalid-destructuring/input.js 3:2-3:3
 						}
-						loc: Object {
-							filename: "experimental/class-private-properties/invalid-destructuring/input.js"
-							end: Object {
-								column: 3
-								line: 5
-							}
-							start: Object {
-								column: 2
-								line: 3
-							}
+						loc: SourceLocation experimental/class-private-properties/invalid-destructuring/input.js 3:2-5:3
+						meta: JSClassPropertyMeta {
+							abstract: false
+							accessibility: undefined
+							optional: false
+							readonly: false
+							static: false
+							typeAnnotation: undefined
+							loc: SourceLocation experimental/class-private-properties/invalid-destructuring/input.js 3:2-3:3
+							start: Position 3:2
 						}
 						head: JSFunctionHead {
 							async: false
@@ -204,191 +88,44 @@ JSRoot {
 							returnType: undefined
 							thisType: undefined
 							typeParameters: undefined
-							loc: Object {
-								filename: "experimental/class-private-properties/invalid-destructuring/input.js"
-								end: Object {
-									column: 5
-									line: 3
-								}
-								start: Object {
-									column: 3
-									line: 3
-								}
-							}
-						}
-						meta: JSClassPropertyMeta {
-							abstract: false
-							accessibility: undefined
-							optional: false
-							readonly: false
-							static: false
-							typeAnnotation: undefined
-							start: Object {
-								column: 2
-								line: 3
-							}
-							loc: Object {
-								filename: "experimental/class-private-properties/invalid-destructuring/input.js"
-								end: Object {
-									column: 3
-									line: 3
-								}
-								start: Object {
-									column: 2
-									line: 3
-								}
-							}
+							loc: SourceLocation experimental/class-private-properties/invalid-destructuring/input.js 3:3-3:5
 						}
 						body: JSBlockStatement {
 							directives: Array []
-							loc: Object {
-								filename: "experimental/class-private-properties/invalid-destructuring/input.js"
-								end: Object {
-									column: 3
-									line: 5
-								}
-								start: Object {
-									column: 6
-									line: 3
-								}
-							}
+							loc: SourceLocation experimental/class-private-properties/invalid-destructuring/input.js 3:6-5:3
 							body: Array [
 								JSVariableDeclarationStatement {
-									loc: Object {
-										filename: "experimental/class-private-properties/invalid-destructuring/input.js"
-										end: Object {
-											column: 25
-											line: 4
-										}
-										start: Object {
-											column: 4
-											line: 4
-										}
-									}
+									loc: SourceLocation experimental/class-private-properties/invalid-destructuring/input.js 4:4-4:25
 									declaration: JSVariableDeclaration {
 										kind: "const"
-										loc: Object {
-											filename: "experimental/class-private-properties/invalid-destructuring/input.js"
-											end: Object {
-												column: 25
-												line: 4
-											}
-											start: Object {
-												column: 4
-												line: 4
-											}
-										}
+										loc: SourceLocation experimental/class-private-properties/invalid-destructuring/input.js 4:4-4:25
 										declarations: Array [
 											JSVariableDeclarator {
 												id: JSBindingObjectPattern {
 													rest: undefined
-													loc: Object {
-														filename: "experimental/class-private-properties/invalid-destructuring/input.js"
-														end: Object {
-															column: 17
-															line: 4
-														}
-														start: Object {
-															column: 10
-															line: 4
-														}
-													}
+													loc: SourceLocation experimental/class-private-properties/invalid-destructuring/input.js 4:10-4:17
 													properties: Array [
 														JSBindingObjectPatternProperty {
 															key: JSStaticPropertyKey {
 																value: JSPrivateName {
 																	id: JSIdentifier {
 																		name: "x"
-																		loc: Object {
-																			filename: "experimental/class-private-properties/invalid-destructuring/input.js"
-																			identifierName: "x"
-																			end: Object {
-																				column: 13
-																				line: 4
-																			}
-																			start: Object {
-																				column: 12
-																				line: 4
-																			}
-																		}
+																		loc: SourceLocation experimental/class-private-properties/invalid-destructuring/input.js 4:12-4:13 (x)
 																	}
-																	loc: Object {
-																		filename: "experimental/class-private-properties/invalid-destructuring/input.js"
-																		end: Object {
-																			column: 13
-																			line: 4
-																		}
-																		start: Object {
-																			column: 11
-																			line: 4
-																		}
-																	}
+																	loc: SourceLocation experimental/class-private-properties/invalid-destructuring/input.js 4:11-4:13
 																}
-																loc: Object {
-																	filename: "experimental/class-private-properties/invalid-destructuring/input.js"
-																	end: Object {
-																		column: 13
-																		line: 4
-																	}
-																	start: Object {
-																		column: 11
-																		line: 4
-																	}
-																}
+																loc: SourceLocation experimental/class-private-properties/invalid-destructuring/input.js 4:11-4:13
 															}
 															value: JSBindingIdentifier {
 																name: "x"
-																loc: Object {
-																	filename: "experimental/class-private-properties/invalid-destructuring/input.js"
-																	identifierName: "x"
-																	end: Object {
-																		column: 16
-																		line: 4
-																	}
-																	start: Object {
-																		column: 15
-																		line: 4
-																	}
-																}
+																loc: SourceLocation experimental/class-private-properties/invalid-destructuring/input.js 4:15-4:16 (x)
 															}
-															loc: Object {
-																filename: "experimental/class-private-properties/invalid-destructuring/input.js"
-																end: Object {
-																	column: 16
-																	line: 4
-																}
-																start: Object {
-																	column: 11
-																	line: 4
-																}
-															}
+															loc: SourceLocation experimental/class-private-properties/invalid-destructuring/input.js 4:11-4:16
 														}
 													]
 												}
-												loc: Object {
-													filename: "experimental/class-private-properties/invalid-destructuring/input.js"
-													end: Object {
-														column: 24
-														line: 4
-													}
-													start: Object {
-														column: 10
-														line: 4
-													}
-												}
-												init: JSThisExpression {
-													loc: Object {
-														filename: "experimental/class-private-properties/invalid-destructuring/input.js"
-														end: Object {
-															column: 24
-															line: 4
-														}
-														start: Object {
-															column: 20
-															line: 4
-														}
-													}
-												}
+												init: JSThisExpression {loc: SourceLocation experimental/class-private-properties/invalid-destructuring/input.js 4:20-4:24}
+												loc: SourceLocation experimental/class-private-properties/invalid-destructuring/input.js 4:10-4:24
 											}
 										]
 									}
@@ -406,6 +143,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

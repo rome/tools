@@ -8,67 +8,31 @@
 CSSRoot {
 	corrupt: false
 	diagnostics: Array []
-	filename: "smoke/input.css"
 	integrity: undefined
-	leadingComments: Array []
-	innerComments: Array ["0"]
-	loc: Object {
-		filename: "smoke/input.css"
-		end: Object {
-			column: 1
-			line: 12
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation smoke/input.css 1:0-12:1
+	path: RelativePath<smoke/input.css>
 	comments: Array [
 		CommentBlock {
 			id: "0"
 			value: "This is a comment"
-			loc: Object {
-				filename: "smoke/input.css"
-				end: Object {
-					column: 0
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation smoke/input.css 1:0-1:21
 		}
 	]
 	body: Array [
 		CSSRule {
-			leadingComments: undefined
-			loc: Object {
-				filename: "smoke/input.css"
-				end: Object {
-					column: 1
-					line: 5
-				}
-				start: Object {
-					column: 0
-					line: 2
-				}
-			}
+			leadingComments: Array ["0"]
+			loc: SourceLocation smoke/input.css 2:0-5:1
 			prelude: Array [
-				CSSIdentifier {
-					value: "body"
+				CSSSelector {
 					leadingComments: undefined
-					loc: Object {
-						filename: "smoke/input.css"
-						end: Object {
-							column: 4
-							line: 2
+					loc: SourceLocation smoke/input.css 2:0-2:5
+					patterns: Array [
+						CSSTypeSelector {
+							value: "body"
+							leadingComments: undefined
+							loc: SourceLocation smoke/input.css 2:0-2:4
 						}
-						start: Object {
-							column: 0
-							line: 2
-						}
-					}
+					]
 				}
 			]
 			block: CSSBlock {
@@ -78,253 +42,109 @@ CSSRoot {
 						value: Array [
 							CSSIdentifier {
 								value: "red"
-								loc: Object {
-									filename: "smoke/input.css"
-									end: Object {
-										column: 19
-										line: 3
-									}
-									start: Object {
-										column: 16
-										line: 3
-									}
-								}
+								loc: SourceLocation smoke/input.css 3:16-3:19
 							}
 						]
 						important: false
-						loc: Object {
-							filename: "smoke/input.css"
-							end: Object {
-								column: 19
-								line: 3
-							}
-							start: Object {
-								column: 4
-								line: 3
-							}
-						}
+						loc: SourceLocation smoke/input.css 3:4-3:19
 					}
 					CSSDeclaration {
 						name: "width"
 						value: Array [
-							CSSFunction {
+							CSSCalcFunction {
 								name: "calc"
-								value: Array [
-									CSSDimension {
-										value: 1
-										unit: "px"
-										loc: Object {
-											filename: "smoke/input.css"
-											end: Object {
-												column: 19
-												line: 4
+								loc: SourceLocation smoke/input.css 4:16-4:25
+								params: Array [
+									CSSCalcSum {
+										value: Array [
+											CSSCalcProduct {
+												value: Array [
+													CSSCalcValue {
+														value: CSSDimension {
+															value: 1
+															unit: "px"
+															loc: SourceLocation smoke/input.css 4:16-4:16
+														}
+														loc: SourceLocation smoke/input.css 4:16-4:19
+													}
+												]
+												loc: SourceLocation smoke/input.css 4:19-4:20
 											}
-											start: Object {
-												column: 16
-												line: 4
+											CSSCalcOperation {
+												value: "+"
+												loc: SourceLocation smoke/input.css 4:21-4:22
 											}
-										}
-									}
-									CSSRaw {
-										value: "+"
-										loc: Object {
-											filename: "smoke/input.css"
-											end: Object {
-												column: 21
-												line: 4
+											CSSCalcProduct {
+												value: Array [
+													CSSCalcValue {
+														value: CSSPercentage {
+															value: 2
+															loc: SourceLocation smoke/input.css 4:22-4:22
+														}
+														loc: SourceLocation smoke/input.css 4:22-4:24
+													}
+												]
+												loc: SourceLocation smoke/input.css 4:24-4:24
 											}
-											start: Object {
-												column: 20
-												line: 4
-											}
-										}
-									}
-									CSSPercentage {
-										value: 2
-										loc: Object {
-											filename: "smoke/input.css"
-											end: Object {
-												column: 24
-												line: 4
-											}
-											start: Object {
-												column: 22
-												line: 4
-											}
-										}
+										]
+										loc: SourceLocation smoke/input.css 4:16-4:24
 									}
 								]
-								loc: Object {
-									filename: "smoke/input.css"
-									end: Object {
-										column: 25
-										line: 4
-									}
-									start: Object {
-										column: 11
-										line: 4
-									}
-								}
 							}
 						]
 						important: false
-						loc: Object {
-							filename: "smoke/input.css"
-							end: Object {
-								column: 25
-								line: 4
-							}
-							start: Object {
-								column: 4
-								line: 4
-							}
-						}
+						loc: SourceLocation smoke/input.css 4:4-4:25
 					}
 				]
 				startingTokenValue: "{"
-				loc: Object {
-					filename: "smoke/input.css"
-					end: Object {
-						column: 1
-						line: 5
-					}
-					start: Object {
-						column: 5
-						line: 2
-					}
-				}
+				loc: SourceLocation smoke/input.css 2:5-5:1
 			}
 		}
 		CSSAtRule {
 			name: "media"
-			loc: Object {
-				filename: "smoke/input.css"
-				end: Object {
-					column: 1
-					line: 12
-				}
-				start: Object {
-					column: 0
-					line: 7
-				}
-			}
+			loc: SourceLocation smoke/input.css 7:0-12:1
 			prelude: Array [
 				CSSIdentifier {
 					value: "screen"
-					loc: Object {
-						filename: "smoke/input.css"
-						end: Object {
-							column: 13
-							line: 7
-						}
-						start: Object {
-							column: 7
-							line: 7
-						}
-					}
+					loc: SourceLocation smoke/input.css 7:7-7:13
 				}
 				CSSIdentifier {
 					value: "and"
-					loc: Object {
-						filename: "smoke/input.css"
-						end: Object {
-							column: 17
-							line: 7
-						}
-						start: Object {
-							column: 14
-							line: 7
-						}
-					}
+					loc: SourceLocation smoke/input.css 7:14-7:17
 				}
 				CSSBlock {
 					value: Array [
 						CSSIdentifier {
 							value: "min-width"
-							loc: Object {
-								filename: "smoke/input.css"
-								end: Object {
-									column: 28
-									line: 7
-								}
-								start: Object {
-									column: 19
-									line: 7
-								}
-							}
+							loc: SourceLocation smoke/input.css 7:19-7:28
 						}
 						CSSRaw {
 							value: ":"
-							loc: Object {
-								filename: "smoke/input.css"
-								end: Object {
-									column: 29
-									line: 7
-								}
-								start: Object {
-									column: 28
-									line: 7
-								}
-							}
+							loc: SourceLocation smoke/input.css 7:28-7:29
 						}
 						CSSDimension {
 							value: 1_337
 							unit: "px"
-							loc: Object {
-								filename: "smoke/input.css"
-								end: Object {
-									column: 36
-									line: 7
-								}
-								start: Object {
-									column: 30
-									line: 7
-								}
-							}
+							loc: SourceLocation smoke/input.css 7:30-7:36
 						}
 					]
 					startingTokenValue: "("
-					loc: Object {
-						filename: "smoke/input.css"
-						end: Object {
-							column: 37
-							line: 7
-						}
-						start: Object {
-							column: 18
-							line: 7
-						}
-					}
+					loc: SourceLocation smoke/input.css 7:18-7:37
 				}
 			]
 			block: CSSBlock {
 				value: Array [
 					CSSRule {
-						loc: Object {
-							filename: "smoke/input.css"
-							end: Object {
-								column: 5
-								line: 11
-							}
-							start: Object {
-								column: 4
-								line: 8
-							}
-						}
+						loc: SourceLocation smoke/input.css 8:4-11:5
 						prelude: Array [
-							CSSIdentifier {
-								value: "body"
-								loc: Object {
-									filename: "smoke/input.css"
-									end: Object {
-										column: 8
-										line: 8
+							CSSSelector {
+								loc: SourceLocation smoke/input.css 8:4-8:9
+								patterns: Array [
+									CSSTypeSelector {
+										value: "body"
+										loc: SourceLocation smoke/input.css 8:4-8:8
 									}
-									start: Object {
-										column: 4
-										line: 8
-									}
-								}
+								]
 							}
 						]
 						block: CSSBlock {
@@ -334,136 +154,67 @@ CSSRoot {
 									value: Array [
 										CSSIdentifier {
 											value: "blue"
-											loc: Object {
-												filename: "smoke/input.css"
-												end: Object {
-													column: 24
-													line: 9
-												}
-												start: Object {
-													column: 20
-													line: 9
-												}
-											}
+											loc: SourceLocation smoke/input.css 9:20-9:24
 										}
 									]
 									important: false
-									loc: Object {
-										filename: "smoke/input.css"
-										end: Object {
-											column: 24
-											line: 9
-										}
-										start: Object {
-											column: 8
-											line: 9
-										}
-									}
+									loc: SourceLocation smoke/input.css 9:8-9:24
 								}
 								CSSDeclaration {
 									name: "width"
 									value: Array [
-										CSSFunction {
+										CSSCalcFunction {
 											name: "calc"
-											value: Array [
-												CSSDimension {
-													value: 2
-													unit: "px"
-													loc: Object {
-														filename: "smoke/input.css"
-														end: Object {
-															column: 23
-															line: 10
+											loc: SourceLocation smoke/input.css 10:20-10:29
+											params: Array [
+												CSSCalcSum {
+													value: Array [
+														CSSCalcProduct {
+															value: Array [
+																CSSCalcValue {
+																	value: CSSDimension {
+																		value: 2
+																		unit: "px"
+																		loc: SourceLocation smoke/input.css 10:20-10:20
+																	}
+																	loc: SourceLocation smoke/input.css 10:20-10:23
+																}
+															]
+															loc: SourceLocation smoke/input.css 10:23-10:24
 														}
-														start: Object {
-															column: 20
-															line: 10
+														CSSCalcOperation {
+															value: "+"
+															loc: SourceLocation smoke/input.css 10:25-10:26
 														}
-													}
-												}
-												CSSRaw {
-													value: "+"
-													loc: Object {
-														filename: "smoke/input.css"
-														end: Object {
-															column: 25
-															line: 10
+														CSSCalcProduct {
+															value: Array [
+																CSSCalcValue {
+																	value: CSSPercentage {
+																		value: 3
+																		loc: SourceLocation smoke/input.css 10:26-10:26
+																	}
+																	loc: SourceLocation smoke/input.css 10:26-10:28
+																}
+															]
+															loc: SourceLocation smoke/input.css 10:28-10:28
 														}
-														start: Object {
-															column: 24
-															line: 10
-														}
-													}
-												}
-												CSSPercentage {
-													value: 3
-													loc: Object {
-														filename: "smoke/input.css"
-														end: Object {
-															column: 28
-															line: 10
-														}
-														start: Object {
-															column: 26
-															line: 10
-														}
-													}
+													]
+													loc: SourceLocation smoke/input.css 10:20-10:28
 												}
 											]
-											loc: Object {
-												filename: "smoke/input.css"
-												end: Object {
-													column: 29
-													line: 10
-												}
-												start: Object {
-													column: 15
-													line: 10
-												}
-											}
 										}
 									]
 									important: false
-									loc: Object {
-										filename: "smoke/input.css"
-										end: Object {
-											column: 29
-											line: 10
-										}
-										start: Object {
-											column: 8
-											line: 10
-										}
-									}
+									loc: SourceLocation smoke/input.css 10:8-10:29
 								}
 							]
 							startingTokenValue: "{"
-							loc: Object {
-								filename: "smoke/input.css"
-								end: Object {
-									column: 5
-									line: 11
-								}
-								start: Object {
-									column: 9
-									line: 8
-								}
-							}
+							loc: SourceLocation smoke/input.css 8:9-11:5
 						}
 					}
 				]
 				startingTokenValue: "{"
-				loc: Object {
-					filename: "smoke/input.css"
-					end: Object {
-						column: 1
-						line: 12
-					}
-					start: Object {
-						column: 38
-						line: 7
-					}
-				}
+				loc: SourceLocation smoke/input.css 7:38-12:1
 			}
 		}
 	]

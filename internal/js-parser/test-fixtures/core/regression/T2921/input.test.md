@@ -11,134 +11,53 @@ JSRoot {
 	comments: Array []
 	corrupt: true
 	directives: Array []
-	filename: "core/regression/T2921/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "core/regression/T2921/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation core/regression/T2921/input.js 1:0-2:0
+	path: UIDPath<core/regression/T2921/input.js>
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse"
 				categoryValue: "js"
-				message: Array [
-					RAW_MARKUP {value: "Unknown start to an "}
-					"statement expression"
-				]
+				category: Array ["parse"]
+				message: RAW_MARKUP {value: "Unknown start to an statement expression"}
 			}
 			location: Object {
-				filename: "core/regression/T2921/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 4
-					line: 1
-				}
-				start: Object {
-					column: 4
-					line: 1
-				}
+				end: Position 1:4
+				path: UIDPath<core/regression/T2921/input.js>
+				start: Position 1:4
 			}
 		}
 	]
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "core/regression/T2921/input.js"
-				end: Object {
-					column: 5
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation core/regression/T2921/input.js 1:0-1:5
 			expression: JSBinaryExpression {
 				operator: "<="
-				loc: Object {
-					filename: "core/regression/T2921/input.js"
-					end: Object {
-						column: 5
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
+				loc: SourceLocation core/regression/T2921/input.js 1:0-1:5
+				left: JSReferenceIdentifier {
+					name: "a"
+					loc: SourceLocation core/regression/T2921/input.js 1:0-1:1 (a)
 				}
 				right: JSReferenceIdentifier {
 					name: "INVALID_PLACEHOLDER"
-					loc: Object {
-						filename: "core/regression/T2921/input.js"
-						end: Object {
-							column: 5
-							line: 1
-						}
-						start: Object {
-							column: 4
-							line: 1
-						}
-					}
-				}
-				left: JSReferenceIdentifier {
-					name: "a"
-					loc: Object {
-						filename: "core/regression/T2921/input.js"
-						identifierName: "a"
-						end: Object {
-							column: 1
-							line: 1
-						}
-						start: Object {
-							column: 0
-							line: 1
-						}
-					}
+					loc: SourceLocation core/regression/T2921/input.js 1:4-1:5
 				}
 			}
 		}
 		JSExpressionStatement {
-			loc: Object {
-				filename: "core/regression/T2921/input.js"
-				end: Object {
-					column: 8
-					line: 1
-				}
-				start: Object {
-					column: 6
-					line: 1
-				}
-			}
+			loc: SourceLocation core/regression/T2921/input.js 1:6-1:8
 			expression: JSReferenceIdentifier {
 				name: "b"
-				loc: Object {
-					filename: "core/regression/T2921/input.js"
-					identifierName: "b"
-					end: Object {
-						column: 7
-						line: 1
-					}
-					start: Object {
-						column: 6
-						line: 1
-					}
-				}
+				loc: SourceLocation core/regression/T2921/input.js 1:6-1:7 (b)
 			}
 		}
 	]
@@ -156,8 +75,5 @@ JSRoot {
     a <== b;
         ^
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

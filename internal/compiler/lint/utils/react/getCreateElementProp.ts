@@ -8,8 +8,7 @@ export default function getCreateElementProp(
 	propName: string,
 ): JSObjectProperty | undefined {
 	if (
-		!isCreateElement(node, scope) ||
-		!node.arguments[1] ||
+		!(isCreateElement(node, scope) && node.arguments[1]) ||
 		node.arguments[1].type !== "JSObjectExpression"
 	) {
 		return;

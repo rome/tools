@@ -11,43 +11,51 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "esprima/es2015-identifier/invalid_var_await/input.js"
 	hasHoistedVars: true
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "esprima/es2015-identifier/invalid_var_await/input.js"
-		end: Object {
-			column: 0
-			line: 2
+	loc: SourceLocation esprima/es2015-identifier/invalid_var_await/input.js 1:0-2:0
+	path: UIDPath<esprima/es2015-identifier/invalid_var_await/input.js>
+	body: Array [
+		JSExportLocalDeclaration {
+			exportKind: "value"
+			specifiers: undefined
+			loc: SourceLocation esprima/es2015-identifier/invalid_var_await/input.js 1:0-1:17
+			declaration: JSVariableDeclarationStatement {
+				loc: SourceLocation esprima/es2015-identifier/invalid_var_await/input.js 1:7-1:17
+				declaration: JSVariableDeclaration {
+					kind: "var"
+					loc: SourceLocation esprima/es2015-identifier/invalid_var_await/input.js 1:7-1:17
+					declarations: Array [
+						JSVariableDeclarator {
+							id: JSBindingIdentifier {
+								name: "await"
+								loc: SourceLocation esprima/es2015-identifier/invalid_var_await/input.js 1:11-1:16 (await)
+							}
+							init: undefined
+							loc: SourceLocation esprima/es2015-identifier/invalid_var_await/input.js 1:11-1:16
+						}
+					]
+				}
+			}
 		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	]
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
 			location: Object {
-				filename: "esprima/es2015-identifier/invalid_var_await/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 17
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
+				end: Position 1:17
+				path: UIDPath<esprima/es2015-identifier/invalid_var_await/input.js>
+				start: Position 1:0
 			}
 			description: Object {
-				category: "parse"
 				categoryValue: "js"
+				category: Array ["parse"]
 				message: RAW_MARKUP {value: "<emphasis>import</emphasis> and <emphasis>export</emphasis> can only appear in a module"}
 				advice: Array [
 					log {
@@ -56,84 +64,9 @@ JSRoot {
 					}
 					log {
 						category: "info"
-						text: RAW_MARKUP {value: "Add <emphasis>\"type\": \"module\"</emphasis> to your <filelink emphasis target=\"<dim>undefined</dim>\" />"}
+						text: RAW_MARKUP {value: "Add <emphasis>\\\"type\\\": \\\"module\\\"</emphasis> to your <filelink emphasis target=\"\\<dim>undefined\\</dim>\">\\<dim>undefined\\</dim></filelink>"}
 					}
 				]
-			}
-		}
-	]
-	body: Array [
-		JSExportLocalDeclaration {
-			exportKind: "value"
-			specifiers: undefined
-			loc: Object {
-				filename: "esprima/es2015-identifier/invalid_var_await/input.js"
-				end: Object {
-					column: 17
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
-			declaration: JSVariableDeclarationStatement {
-				loc: Object {
-					filename: "esprima/es2015-identifier/invalid_var_await/input.js"
-					end: Object {
-						column: 17
-						line: 1
-					}
-					start: Object {
-						column: 7
-						line: 1
-					}
-				}
-				declaration: JSVariableDeclaration {
-					kind: "var"
-					loc: Object {
-						filename: "esprima/es2015-identifier/invalid_var_await/input.js"
-						end: Object {
-							column: 17
-							line: 1
-						}
-						start: Object {
-							column: 7
-							line: 1
-						}
-					}
-					declarations: Array [
-						JSVariableDeclarator {
-							id: JSBindingIdentifier {
-								name: "await"
-								loc: Object {
-									filename: "esprima/es2015-identifier/invalid_var_await/input.js"
-									identifierName: "await"
-									end: Object {
-										column: 16
-										line: 1
-									}
-									start: Object {
-										column: 11
-										line: 1
-									}
-								}
-							}
-							init: undefined
-							loc: Object {
-								filename: "esprima/es2015-identifier/invalid_var_await/input.js"
-								end: Object {
-									column: 16
-									line: 1
-								}
-								start: Object {
-									column: 11
-									line: 1
-								}
-							}
-						}
-					]
-				}
 			}
 		}
 	]
@@ -155,8 +88,5 @@ JSRoot {
 
   ℹ Add "type": "module" to your <dim>undefined</dim>
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

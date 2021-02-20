@@ -12,90 +12,27 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "es2018/object-rest-spread/comma-after-spread-for-in/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2018/object-rest-spread/comma-after-spread-for-in/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2018/object-rest-spread/comma-after-spread-for-in/input.js 1:0-2:0
+	path: UIDPath<es2018/object-rest-spread/comma-after-spread-for-in/input.js>
 	body: Array [
 		JSForInStatement {
-			loc: Object {
-				filename: "es2018/object-rest-spread/comma-after-spread-for-in/input.js"
-				end: Object {
-					column: 20
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
-			body: JSEmptyStatement {
-				loc: Object {
-					filename: "es2018/object-rest-spread/comma-after-spread-for-in/input.js"
-					end: Object {
-						column: 20
-						line: 1
-					}
-					start: Object {
-						column: 19
-						line: 1
-					}
-				}
-			}
+			body: JSEmptyStatement {loc: SourceLocation es2018/object-rest-spread/comma-after-spread-for-in/input.js 1:19-1:20}
+			loc: SourceLocation es2018/object-rest-spread/comma-after-spread-for-in/input.js 1:0-1:20
 			right: JSArrayExpression {
 				elements: Array []
-				loc: Object {
-					filename: "es2018/object-rest-spread/comma-after-spread-for-in/input.js"
-					end: Object {
-						column: 18
-						line: 1
-					}
-					start: Object {
-						column: 16
-						line: 1
-					}
-				}
+				loc: SourceLocation es2018/object-rest-spread/comma-after-spread-for-in/input.js 1:16-1:18
 			}
 			left: JSAssignmentObjectPattern {
 				properties: Array []
-				loc: Object {
-					filename: "es2018/object-rest-spread/comma-after-spread-for-in/input.js"
-					end: Object {
-						column: 12
-						line: 1
-					}
-					start: Object {
-						column: 5
-						line: 1
-					}
-				}
+				loc: SourceLocation es2018/object-rest-spread/comma-after-spread-for-in/input.js 1:5-1:12
 				rest: JSAssignmentIdentifier {
 					name: "a"
-					loc: Object {
-						filename: "es2018/object-rest-spread/comma-after-spread-for-in/input.js"
-						identifierName: "a"
-						end: Object {
-							column: 10
-							line: 1
-						}
-						start: Object {
-							column: 9
-							line: 1
-						}
-					}
+					loc: SourceLocation es2018/object-rest-spread/comma-after-spread-for-in/input.js 1:9-1:10 (a)
 				}
 			}
 		}
@@ -106,6 +43,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

@@ -12,119 +12,38 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "es2016/exponentiation-operator/4/input.js"
 	hasHoistedVars: true
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2016/exponentiation-operator/4/input.js"
-		end: Object {
-			column: 21
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2016/exponentiation-operator/4/input.js 1:0-1:21
+	path: UIDPath<es2016/exponentiation-operator/4/input.js>
 	body: Array [
 		JSVariableDeclarationStatement {
-			loc: Object {
-				filename: "es2016/exponentiation-operator/4/input.js"
-				end: Object {
-					column: 21
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2016/exponentiation-operator/4/input.js 1:0-1:21
 			declaration: JSVariableDeclaration {
 				kind: "var"
-				loc: Object {
-					filename: "es2016/exponentiation-operator/4/input.js"
-					end: Object {
-						column: 21
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation es2016/exponentiation-operator/4/input.js 1:0-1:21
 				declarations: Array [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "squared"
-							loc: Object {
-								filename: "es2016/exponentiation-operator/4/input.js"
-								identifierName: "squared"
-								end: Object {
-									column: 11
-									line: 1
-								}
-								start: Object {
-									column: 4
-									line: 1
-								}
-							}
+							loc: SourceLocation es2016/exponentiation-operator/4/input.js 1:4-1:11 (squared)
 						}
-						loc: Object {
-							filename: "es2016/exponentiation-operator/4/input.js"
-							end: Object {
-								column: 20
-								line: 1
-							}
-							start: Object {
-								column: 4
-								line: 1
-							}
-						}
+						loc: SourceLocation es2016/exponentiation-operator/4/input.js 1:4-1:20
 						init: JSBinaryExpression {
 							operator: "**"
-							loc: Object {
-								filename: "es2016/exponentiation-operator/4/input.js"
-								end: Object {
-									column: 20
-									line: 1
-								}
-								start: Object {
-									column: 14
-									line: 1
-								}
-							}
+							loc: SourceLocation es2016/exponentiation-operator/4/input.js 1:14-1:20
 							left: JSNumericLiteral {
 								value: 2
 								format: undefined
-								loc: Object {
-									filename: "es2016/exponentiation-operator/4/input.js"
-									end: Object {
-										column: 15
-										line: 1
-									}
-									start: Object {
-										column: 14
-										line: 1
-									}
-								}
+								loc: SourceLocation es2016/exponentiation-operator/4/input.js 1:14-1:15
 							}
 							right: JSNumericLiteral {
 								value: 2
 								format: undefined
-								loc: Object {
-									filename: "es2016/exponentiation-operator/4/input.js"
-									end: Object {
-										column: 20
-										line: 1
-									}
-									start: Object {
-										column: 19
-										line: 1
-									}
-								}
+								loc: SourceLocation es2016/exponentiation-operator/4/input.js 1:19-1:20
 							}
 						}
 					}
@@ -138,6 +57,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

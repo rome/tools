@@ -12,51 +12,20 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "typescript/export/as-namespace/input.ts"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
+	loc: SourceLocation typescript/export/as-namespace/input.ts 1:0-2:0
+	path: UIDPath<typescript/export/as-namespace/input.ts>
 	syntax: Array ["ts"]
-	loc: Object {
-		filename: "typescript/export/as-namespace/input.ts"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
 	body: Array [
 		TSNamespaceExportDeclaration {
 			id: JSIdentifier {
 				name: "A"
-				loc: Object {
-					filename: "typescript/export/as-namespace/input.ts"
-					identifierName: "A"
-					end: Object {
-						column: 21
-						line: 1
-					}
-					start: Object {
-						column: 20
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/export/as-namespace/input.ts 1:20-1:21 (A)
 			}
-			loc: Object {
-				filename: "typescript/export/as-namespace/input.ts"
-				end: Object {
-					column: 22
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation typescript/export/as-namespace/input.ts 1:0-1:22
 		}
 	]
 }
@@ -65,6 +34,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

@@ -12,6 +12,10 @@
 
   ✖ Redundant constant reference
 
+    1 │ const FOO = "FOO";
+  > 2 │ console.log(FOO);
+      │             ^^^
+
   ℹ You should avoid declaring constants with a string that's the same value as the variable name.
     It introduces a level of unnecessary indirection when it's only two additional characters to
     inline.
@@ -27,9 +31,6 @@
   - FOO
   + "FOO"
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -49,6 +50,12 @@ console.log("FOO");
 
   ✖ Redundant constant reference
 
+    1 │ const FOO = "FOO";
+    2 │ function f() {
+  > 3 │   return FOO;
+      │          ^^^
+    4 │ }
+
   ℹ You should avoid declaring constants with a string that's the same value as the variable name.
     It introduces a level of unnecessary indirection when it's only two additional characters to
     inline.
@@ -65,9 +72,6 @@ console.log("FOO");
   - FOO
   + "FOO"
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -95,18 +99,11 @@ function f() {
 
   ℹ This constant is declared here
 
-  > 1 │ const FOO = "FOO", BAR = "bar";
-      │       ^^^
-    2 │ console.log(FOO);
-
   ℹ Safe fix
 
   - FOO
   + "FOO"
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -122,7 +119,6 @@ console.log("FOO");
 ### `3`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -137,7 +133,6 @@ console.log(FOO);
 ### `4`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -152,7 +147,6 @@ console.log(FOO);
 ### `5`
 
 ```
-✔ No known problems!
 
 ```
 

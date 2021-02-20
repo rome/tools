@@ -11,129 +11,53 @@ JSRoot {
 	comments: Array []
 	corrupt: true
 	directives: Array []
-	filename: "esprima/es2015-arrow-function/invalid-line-terminator-arrow/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "esprima/es2015-arrow-function/invalid-line-terminator-arrow/input.js"
-		end: Object {
-			column: 0
-			line: 3
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation esprima/es2015-arrow-function/invalid-line-terminator-arrow/input.js 1:0-3:0
+	path: UIDPath<esprima/es2015-arrow-function/invalid-line-terminator-arrow/input.js>
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse"
 				categoryValue: "js"
+				category: Array ["parse"]
 				message: RAW_MARKUP {value: "Parenthesized expression didnt contain anything"}
 			}
 			location: Object {
-				filename: "esprima/es2015-arrow-function/invalid-line-terminator-arrow/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 1
-					line: 1
-				}
-				start: Object {
-					column: 1
-					line: 1
-				}
+				end: Position 1:1
+				path: UIDPath<esprima/es2015-arrow-function/invalid-line-terminator-arrow/input.js>
+				start: Position 1:1
 			}
 		}
 	]
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "esprima/es2015-arrow-function/invalid-line-terminator-arrow/input.js"
-				end: Object {
-					column: 2
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation esprima/es2015-arrow-function/invalid-line-terminator-arrow/input.js 1:0-1:2
 			expression: JSReferenceIdentifier {
 				name: "INVALID_PLACEHOLDER"
-				loc: Object {
-					filename: "esprima/es2015-arrow-function/invalid-line-terminator-arrow/input.js"
-					end: Object {
-						column: 1
-						line: 1
-					}
-					start: Object {
-						column: 1
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/es2015-arrow-function/invalid-line-terminator-arrow/input.js 1:1-1:1
 			}
 		}
 		JSExpressionStatement {
-			loc: Object {
-				filename: "esprima/es2015-arrow-function/invalid-line-terminator-arrow/input.js"
-				end: Object {
-					column: 2
-					line: 2
-				}
-				start: Object {
-					column: 0
-					line: 2
-				}
-			}
+			loc: SourceLocation esprima/es2015-arrow-function/invalid-line-terminator-arrow/input.js 2:0-2:2
 			expression: JSReferenceIdentifier {
 				name: "INVALID_PLACEHOLDER"
-				loc: Object {
-					filename: "esprima/es2015-arrow-function/invalid-line-terminator-arrow/input.js"
-					end: Object {
-						column: 2
-						line: 2
-					}
-					start: Object {
-						column: 0
-						line: 2
-					}
-				}
+				loc: SourceLocation esprima/es2015-arrow-function/invalid-line-terminator-arrow/input.js 2:0-2:2
 			}
 		}
 		JSExpressionStatement {
-			loc: Object {
-				filename: "esprima/es2015-arrow-function/invalid-line-terminator-arrow/input.js"
-				end: Object {
-					column: 5
-					line: 2
-				}
-				start: Object {
-					column: 3
-					line: 2
-				}
-			}
+			loc: SourceLocation esprima/es2015-arrow-function/invalid-line-terminator-arrow/input.js 2:3-2:5
 			expression: JSNumericLiteral {
 				value: 42
 				format: undefined
-				loc: Object {
-					filename: "esprima/es2015-arrow-function/invalid-line-terminator-arrow/input.js"
-					end: Object {
-						column: 5
-						line: 2
-					}
-					start: Object {
-						column: 3
-						line: 2
-					}
-				}
+				loc: SourceLocation esprima/es2015-arrow-function/invalid-line-terminator-arrow/input.js 2:3-2:5
 			}
 		}
 	]
@@ -152,8 +76,5 @@ JSRoot {
       │  ^
     2 │ => 42
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

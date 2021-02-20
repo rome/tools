@@ -11,118 +11,48 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "core/uncategorised/520/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "core/uncategorised/520/input.js"
-		end: Object {
-			column: 36
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation core/uncategorised/520/input.js 1:0-1:36
+	path: UIDPath<core/uncategorised/520/input.js>
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse"
 				categoryValue: "js"
-				message: Array [
-					"eval"
-					RAW_MARKUP {value: " is a reserved word"}
-				]
+				category: Array ["parse"]
+				message: RAW_MARKUP {value: "eval is a reserved word"}
 			}
 			location: Object {
-				filename: "core/uncategorised/520/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 16
-					line: 1
-				}
-				start: Object {
-					column: 12
-					line: 1
-				}
+				end: Position 1:16
+				path: UIDPath<core/uncategorised/520/input.js>
+				start: Position 1:12
 			}
 		}
 	]
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "core/uncategorised/520/input.js"
-				end: Object {
-					column: 36
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation core/uncategorised/520/input.js 1:0-1:36
 			expression: JSFunctionExpression {
 				id: JSBindingIdentifier {
 					name: "a"
-					loc: Object {
-						filename: "core/uncategorised/520/input.js"
-						identifierName: "a"
-						end: Object {
-							column: 11
-							line: 1
-						}
-						start: Object {
-							column: 10
-							line: 1
-						}
-					}
+					loc: SourceLocation core/uncategorised/520/input.js 1:10-1:11 (a)
 				}
-				loc: Object {
-					filename: "core/uncategorised/520/input.js"
-					end: Object {
-						column: 35
-						line: 1
-					}
-					start: Object {
-						column: 1
-						line: 1
-					}
-				}
+				loc: SourceLocation core/uncategorised/520/input.js 1:1-1:35
 				body: JSBlockStatement {
 					body: Array []
-					loc: Object {
-						filename: "core/uncategorised/520/input.js"
-						end: Object {
-							column: 35
-							line: 1
-						}
-						start: Object {
-							column: 18
-							line: 1
-						}
-					}
+					loc: SourceLocation core/uncategorised/520/input.js 1:18-1:35
 					directives: Array [
 						JSDirective {
 							value: "use strict"
-							loc: Object {
-								filename: "core/uncategorised/520/input.js"
-								end: Object {
-									column: 33
-									line: 1
-								}
-								start: Object {
-									column: 20
-									line: 1
-								}
-							}
+							loc: SourceLocation core/uncategorised/520/input.js 1:20-1:33
 						}
 					]
 				}
@@ -134,46 +64,15 @@ JSRoot {
 					returnType: undefined
 					thisType: undefined
 					typeParameters: undefined
-					loc: Object {
-						filename: "core/uncategorised/520/input.js"
-						end: Object {
-							column: 17
-							line: 1
-						}
-						start: Object {
-							column: 11
-							line: 1
-						}
-					}
+					loc: SourceLocation core/uncategorised/520/input.js 1:11-1:17
 					params: Array [
 						JSBindingIdentifier {
 							name: "eval"
-							loc: Object {
-								filename: "core/uncategorised/520/input.js"
-								identifierName: "eval"
-								end: Object {
-									column: 16
-									line: 1
-								}
-								start: Object {
-									column: 12
-									line: 1
-								}
-							}
+							loc: SourceLocation core/uncategorised/520/input.js 1:12-1:16 (eval)
 							meta: JSPatternMeta {
 								optional: undefined
 								typeAnnotation: undefined
-								loc: Object {
-									filename: "core/uncategorised/520/input.js"
-									end: Object {
-										column: 16
-										line: 1
-									}
-									start: Object {
-										column: 12
-										line: 1
-									}
-								}
+								loc: SourceLocation core/uncategorised/520/input.js 1:12-1:16
 							}
 						}
 					]
@@ -195,8 +94,5 @@ JSRoot {
     (function a(eval) { "use strict"; })
                 ^^^^
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

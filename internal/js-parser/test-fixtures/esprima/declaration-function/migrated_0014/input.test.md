@@ -12,51 +12,20 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "esprima/declaration-function/migrated_0014/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "esprima/declaration-function/migrated_0014/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation esprima/declaration-function/migrated_0014/input.js 1:0-2:0
+	path: UIDPath<esprima/declaration-function/migrated_0014/input.js>
 	body: Array [
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "test"
-				loc: Object {
-					filename: "esprima/declaration-function/migrated_0014/input.js"
-					identifierName: "test"
-					end: Object {
-						column: 13
-						line: 1
-					}
-					start: Object {
-						column: 9
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/declaration-function/migrated_0014/input.js 1:9-1:13 (test)
 			}
-			loc: Object {
-				filename: "esprima/declaration-function/migrated_0014/input.js"
-				end: Object {
-					column: 38
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation esprima/declaration-function/migrated_0014/input.js 1:0-1:38
 			head: JSFunctionHead {
 				async: false
 				generator: false
@@ -66,85 +35,25 @@ JSRoot {
 				returnType: undefined
 				thisType: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "esprima/declaration-function/migrated_0014/input.js"
-					end: Object {
-						column: 15
-						line: 1
-					}
-					start: Object {
-						column: 13
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/declaration-function/migrated_0014/input.js 1:13-1:15
 			}
 			body: JSBlockStatement {
 				directives: Array []
-				loc: Object {
-					filename: "esprima/declaration-function/migrated_0014/input.js"
-					end: Object {
-						column: 38
-						line: 1
-					}
-					start: Object {
-						column: 16
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/declaration-function/migrated_0014/input.js 1:16-1:38
 				body: Array [
 					JSExpressionStatement {
-						loc: Object {
-							filename: "esprima/declaration-function/migrated_0014/input.js"
-							end: Object {
-								column: 36
-								line: 1
-							}
-							start: Object {
-								column: 18
-								line: 1
-							}
-						}
+						loc: SourceLocation esprima/declaration-function/migrated_0014/input.js 1:18-1:36
 						expression: JSBinaryExpression {
 							operator: "+"
-							loc: Object {
-								filename: "esprima/declaration-function/migrated_0014/input.js"
-								end: Object {
-									column: 35
-									line: 1
-								}
-								start: Object {
-									column: 18
-									line: 1
-								}
-							}
+							loc: SourceLocation esprima/declaration-function/migrated_0014/input.js 1:18-1:35
 							left: JSStringLiteral {
 								value: "use strict"
-								loc: Object {
-									filename: "esprima/declaration-function/migrated_0014/input.js"
-									end: Object {
-										column: 30
-										line: 1
-									}
-									start: Object {
-										column: 18
-										line: 1
-									}
-								}
+								loc: SourceLocation esprima/declaration-function/migrated_0014/input.js 1:18-1:30
 							}
 							right: JSNumericLiteral {
 								value: 42
 								format: undefined
-								loc: Object {
-									filename: "esprima/declaration-function/migrated_0014/input.js"
-									end: Object {
-										column: 35
-										line: 1
-									}
-									start: Object {
-										column: 33
-										line: 1
-									}
-								}
+								loc: SourceLocation esprima/declaration-function/migrated_0014/input.js 1:33-1:35
 							}
 						}
 					}
@@ -158,6 +67,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

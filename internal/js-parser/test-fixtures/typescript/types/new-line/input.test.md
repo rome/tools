@@ -12,106 +12,33 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "typescript/types/new-line/input.ts"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
+	loc: SourceLocation typescript/types/new-line/input.ts 1:0-3:0
+	path: UIDPath<typescript/types/new-line/input.ts>
 	syntax: Array ["ts"]
-	loc: Object {
-		filename: "typescript/types/new-line/input.ts"
-		end: Object {
-			column: 0
-			line: 3
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "typescript/types/new-line/input.ts"
-				end: Object {
-					column: 4
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation typescript/types/new-line/input.ts 1:0-1:4
 			expression: JSReferenceIdentifier {
 				name: "type"
-				loc: Object {
-					filename: "typescript/types/new-line/input.ts"
-					identifierName: "type"
-					end: Object {
-						column: 4
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/types/new-line/input.ts 1:0-1:4 (type)
 			}
 		}
 		JSExpressionStatement {
-			loc: Object {
-				filename: "typescript/types/new-line/input.ts"
-				end: Object {
-					column: 13
-					line: 2
-				}
-				start: Object {
-					column: 0
-					line: 2
-				}
-			}
+			loc: SourceLocation typescript/types/new-line/input.ts 2:0-2:13
 			expression: JSAssignmentExpression {
 				operator: "="
-				loc: Object {
-					filename: "typescript/types/new-line/input.ts"
-					end: Object {
-						column: 12
-						line: 2
-					}
-					start: Object {
-						column: 0
-						line: 2
-					}
-				}
+				loc: SourceLocation typescript/types/new-line/input.ts 2:0-2:12
 				left: JSAssignmentIdentifier {
 					name: "Foo"
-					loc: Object {
-						filename: "typescript/types/new-line/input.ts"
-						identifierName: "Foo"
-						end: Object {
-							column: 3
-							line: 2
-						}
-						start: Object {
-							column: 0
-							line: 2
-						}
-					}
+					loc: SourceLocation typescript/types/new-line/input.ts 2:0-2:3 (Foo)
 				}
 				right: JSReferenceIdentifier {
 					name: "string"
-					loc: Object {
-						filename: "typescript/types/new-line/input.ts"
-						identifierName: "string"
-						end: Object {
-							column: 12
-							line: 2
-						}
-						start: Object {
-							column: 6
-							line: 2
-						}
-					}
+					loc: SourceLocation typescript/types/new-line/input.ts 2:6-2:12 (string)
 				}
 			}
 		}
@@ -122,6 +49,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

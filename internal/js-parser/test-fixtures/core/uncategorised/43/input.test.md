@@ -12,76 +12,25 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "core/uncategorised/43/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "core/uncategorised/43/input.js"
-		end: Object {
-			column: 32
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation core/uncategorised/43/input.js 1:0-1:32
+	path: UIDPath<core/uncategorised/43/input.js>
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "core/uncategorised/43/input.js"
-				end: Object {
-					column: 32
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation core/uncategorised/43/input.js 1:0-1:32
 			expression: JSAssignmentExpression {
 				operator: "="
-				loc: Object {
-					filename: "core/uncategorised/43/input.js"
-					end: Object {
-						column: 32
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation core/uncategorised/43/input.js 1:0-1:32
 				left: JSAssignmentIdentifier {
 					name: "x"
-					loc: Object {
-						filename: "core/uncategorised/43/input.js"
-						identifierName: "x"
-						end: Object {
-							column: 1
-							line: 1
-						}
-						start: Object {
-							column: 0
-							line: 1
-						}
-					}
+					loc: SourceLocation core/uncategorised/43/input.js 1:0-1:1 (x)
 				}
 				right: JSObjectExpression {
-					loc: Object {
-						filename: "core/uncategorised/43/input.js"
-						end: Object {
-							column: 32
-							line: 1
-						}
-						start: Object {
-							column: 4
-							line: 1
-						}
-					}
+					loc: SourceLocation core/uncategorised/43/input.js 1:4-1:32
 					properties: Array [
 						JSObjectMethod {
 							kind: "set"
@@ -89,40 +38,31 @@ JSRoot {
 								value: JSNumericLiteral {
 									value: 10
 									format: undefined
-									loc: Object {
-										filename: "core/uncategorised/43/input.js"
-										end: Object {
-											column: 12
-											line: 1
-										}
-										start: Object {
-											column: 10
-											line: 1
-										}
-									}
+									loc: SourceLocation core/uncategorised/43/input.js 1:10-1:12
 								}
-								loc: Object {
-									filename: "core/uncategorised/43/input.js"
-									end: Object {
-										column: 12
-										line: 1
-									}
-									start: Object {
-										column: 10
-										line: 1
-									}
-								}
+								loc: SourceLocation core/uncategorised/43/input.js 1:10-1:12
 							}
-							loc: Object {
-								filename: "core/uncategorised/43/input.js"
-								end: Object {
-									column: 30
-									line: 1
-								}
-								start: Object {
-									column: 6
-									line: 1
-								}
+							loc: SourceLocation core/uncategorised/43/input.js 1:6-1:30
+							body: JSBlockStatement {
+								directives: Array []
+								loc: SourceLocation core/uncategorised/43/input.js 1:16-1:30
+								body: Array [
+									JSExpressionStatement {
+										loc: SourceLocation core/uncategorised/43/input.js 1:18-1:28
+										expression: JSAssignmentExpression {
+											operator: "="
+											loc: SourceLocation core/uncategorised/43/input.js 1:18-1:28
+											left: JSAssignmentIdentifier {
+												name: "m_null"
+												loc: SourceLocation core/uncategorised/43/input.js 1:18-1:24 (m_null)
+											}
+											right: JSReferenceIdentifier {
+												name: "w"
+												loc: SourceLocation core/uncategorised/43/input.js 1:27-1:28 (w)
+											}
+										}
+									}
+								]
 							}
 							head: JSFunctionHead {
 								async: false
@@ -132,119 +72,15 @@ JSRoot {
 								returnType: undefined
 								thisType: undefined
 								typeParameters: undefined
-								loc: Object {
-									filename: "core/uncategorised/43/input.js"
-									end: Object {
-										column: 15
-										line: 1
-									}
-									start: Object {
-										column: 12
-										line: 1
-									}
-								}
+								loc: SourceLocation core/uncategorised/43/input.js 1:12-1:15
 								params: Array [
 									JSBindingIdentifier {
 										name: "w"
-										loc: Object {
-											filename: "core/uncategorised/43/input.js"
-											identifierName: "w"
-											end: Object {
-												column: 14
-												line: 1
-											}
-											start: Object {
-												column: 13
-												line: 1
-											}
-										}
+										loc: SourceLocation core/uncategorised/43/input.js 1:13-1:14 (w)
 										meta: JSPatternMeta {
 											optional: undefined
 											typeAnnotation: undefined
-											loc: Object {
-												filename: "core/uncategorised/43/input.js"
-												end: Object {
-													column: 14
-													line: 1
-												}
-												start: Object {
-													column: 13
-													line: 1
-												}
-											}
-										}
-									}
-								]
-							}
-							body: JSBlockStatement {
-								directives: Array []
-								loc: Object {
-									filename: "core/uncategorised/43/input.js"
-									end: Object {
-										column: 30
-										line: 1
-									}
-									start: Object {
-										column: 16
-										line: 1
-									}
-								}
-								body: Array [
-									JSExpressionStatement {
-										loc: Object {
-											filename: "core/uncategorised/43/input.js"
-											end: Object {
-												column: 28
-												line: 1
-											}
-											start: Object {
-												column: 18
-												line: 1
-											}
-										}
-										expression: JSAssignmentExpression {
-											operator: "="
-											loc: Object {
-												filename: "core/uncategorised/43/input.js"
-												end: Object {
-													column: 28
-													line: 1
-												}
-												start: Object {
-													column: 18
-													line: 1
-												}
-											}
-											left: JSAssignmentIdentifier {
-												name: "m_null"
-												loc: Object {
-													filename: "core/uncategorised/43/input.js"
-													identifierName: "m_null"
-													end: Object {
-														column: 24
-														line: 1
-													}
-													start: Object {
-														column: 18
-														line: 1
-													}
-												}
-											}
-											right: JSReferenceIdentifier {
-												name: "w"
-												loc: Object {
-													filename: "core/uncategorised/43/input.js"
-													identifierName: "w"
-													end: Object {
-														column: 28
-														line: 1
-													}
-													start: Object {
-														column: 27
-														line: 1
-													}
-												}
-											}
+											loc: SourceLocation core/uncategorised/43/input.js 1:13-1:14
 										}
 									}
 								]
@@ -261,6 +97,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

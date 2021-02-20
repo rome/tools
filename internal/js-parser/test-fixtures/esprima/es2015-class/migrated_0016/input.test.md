@@ -12,134 +12,42 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "esprima/es2015-class/migrated_0016/input.js"
 	hasHoistedVars: true
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "esprima/es2015-class/migrated_0016/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation esprima/es2015-class/migrated_0016/input.js 1:0-2:0
+	path: UIDPath<esprima/es2015-class/migrated_0016/input.js>
 	body: Array [
 		JSVariableDeclarationStatement {
-			loc: Object {
-				filename: "esprima/es2015-class/migrated_0016/input.js"
-				end: Object {
-					column: 27
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation esprima/es2015-class/migrated_0016/input.js 1:0-1:27
 			declaration: JSVariableDeclaration {
 				kind: "var"
-				loc: Object {
-					filename: "esprima/es2015-class/migrated_0016/input.js"
-					end: Object {
-						column: 27
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/es2015-class/migrated_0016/input.js 1:0-1:27
 				declarations: Array [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "x"
-							loc: Object {
-								filename: "esprima/es2015-class/migrated_0016/input.js"
-								identifierName: "x"
-								end: Object {
-									column: 5
-									line: 1
-								}
-								start: Object {
-									column: 4
-									line: 1
-								}
-							}
+							loc: SourceLocation esprima/es2015-class/migrated_0016/input.js 1:4-1:5 (x)
 						}
-						loc: Object {
-							filename: "esprima/es2015-class/migrated_0016/input.js"
-							end: Object {
-								column: 27
-								line: 1
-							}
-							start: Object {
-								column: 4
-								line: 1
-							}
-						}
+						loc: SourceLocation esprima/es2015-class/migrated_0016/input.js 1:4-1:27
 						init: JSClassExpression {
 							id: JSBindingIdentifier {
 								name: "A"
-								loc: Object {
-									filename: "esprima/es2015-class/migrated_0016/input.js"
-									identifierName: "A"
-									end: Object {
-										column: 15
-										line: 1
-									}
-									start: Object {
-										column: 14
-										line: 1
-									}
-								}
+								loc: SourceLocation esprima/es2015-class/migrated_0016/input.js 1:14-1:15 (A)
 							}
-							loc: Object {
-								filename: "esprima/es2015-class/migrated_0016/input.js"
-								end: Object {
-									column: 27
-									line: 1
-								}
-								start: Object {
-									column: 8
-									line: 1
-								}
-							}
+							loc: SourceLocation esprima/es2015-class/migrated_0016/input.js 1:8-1:27
 							meta: JSClassHead {
 								body: Array []
 								implements: undefined
 								superTypeParameters: undefined
 								typeParameters: undefined
-								loc: Object {
-									filename: "esprima/es2015-class/migrated_0016/input.js"
-									end: Object {
-										column: 27
-										line: 1
-									}
-									start: Object {
-										column: 8
-										line: 1
-									}
-								}
+								loc: SourceLocation esprima/es2015-class/migrated_0016/input.js 1:8-1:27
 								superClass: JSNumericLiteral {
 									value: 0
 									format: undefined
-									loc: Object {
-										filename: "esprima/es2015-class/migrated_0016/input.js"
-										end: Object {
-											column: 25
-											line: 1
-										}
-										start: Object {
-											column: 24
-											line: 1
-										}
-									}
+									loc: SourceLocation esprima/es2015-class/migrated_0016/input.js 1:24-1:25
 								}
 							}
 						}
@@ -154,6 +62,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

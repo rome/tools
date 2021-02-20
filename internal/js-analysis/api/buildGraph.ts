@@ -9,12 +9,13 @@ import {AnyJSStatement, JSRoot} from "@internal/ast";
 import {CheckProvider} from "../types";
 import {ModuleSignatureManager} from "../Evaluator";
 import Hub from "../Hub";
-import {TransformProjectDefinition} from "@internal/compiler";
+import {CompilerProject} from "@internal/compiler";
+import {AnyPath, MixedPathMap} from "@internal/path";
 
 export default async function buildGraph(
 	opts: {
 		ast: JSRoot;
-		project: TransformProjectDefinition;
+		project?: CompilerProject;
 		connected: boolean;
 		provider: CheckProvider;
 	},
@@ -38,47 +39,49 @@ export default async function buildGraph(
 	// fetch imports
 	if (connected) {
 		// create graphs
-		const graphs: Map<string, undefined | ModuleSignatureManager> = new Map();
+		const graphsByPath: MixedPathMap<undefined | ModuleSignatureManager> = new MixedPathMap();
+		const graphsByKey: Map<string, undefined | ModuleSignatureManager> = new Map();
+
 		async function getModuleSignature(
 			source: string,
-			relative: string,
+			origin: AnyPath,
 		): Promise<undefined | ModuleSignatureManager> {
-			const graphKey = `${relative}:${source}`;
-			if (graphs.has(graphKey)) {
-				// already prepared graph
-				return graphs.get(graphKey);
+			const graphKey = `${origin.join()}:${source}`;
+			if (graphsByKey.has(graphKey)) {
+				// Already prepared graph
+				return graphsByKey.get(graphKey);
 			}
 
-			// query the provider for the export types
-			const graph = await provider.getExportTypes(relative, source);
+			// Query the provider for the export types
+			const graph = await provider.getExportTypes(origin, source);
 
-			// check if the resolved graph even exists
+			// Check if the resolved graph even exists
 			if (graph === undefined) {
 				// TODO unknown module, create an error
-				graphs.set(graphKey, undefined);
+				graphsByKey.set(graphKey, undefined);
 				return undefined;
 			}
 
-			// check if we've already initialised this graph before, in the case of different relative URLs
-			if (graphs.has(graph.filename)) {
+			// Check if we've already initialised this graph before, in the case of different relative URLs
+			if (graphsByPath.has(graph.path)) {
 				// TODO this is pretty inefficient, we shouldn't even receive it
-				const manager = graphs.get(graph.filename);
-				graphs.set(graphKey, manager);
+				const manager = graphsByPath.get(graph.path);
+				graphsByKey.set(graphKey, manager);
 				return manager;
 			}
 
-			// create the graph
+			// Create the graph
 			const manager = evaluator.initModuleSignature(graph, getModuleSignature);
-			graphs.set(graphKey, manager);
-			graphs.set(graph.filename, manager);
+			graphsByKey.set(graphKey, manager);
+			graphsByPath.set(graph.path, manager);
 			await manager.init();
 			return manager;
 		}
 
-		// seed graphs
+		// Seed graphs
 		const seedCache: Set<string> = new Set();
 		await Promise.all(
-			evaluator.imports.map(({source, relative}) => {
+			evaluator.imports.map(({source, origin: relative}) => {
 				const cacheKey = `${source}:${relative}`;
 				if (seedCache.has(cacheKey)) {
 					return undefined;
@@ -90,9 +93,9 @@ export default async function buildGraph(
 		);
 
 		// link imports
-		for (const {source, importedName, relative, type} of evaluator.imports) {
-			const graphKey = `${relative}:${source}`;
-			const graph = graphs.get(graphKey);
+		for (const {source, importedName, origin, type} of evaluator.imports) {
+			const graphKey = `${origin.join()}:${source}`;
+			const graph = graphsByKey.get(graphKey);
 			if (graph === undefined) {
 				// unknown module, an error would have been created in the initial graph prep
 				continue;
@@ -103,7 +106,7 @@ export default async function buildGraph(
 				continue;
 			}
 
-			type.setAbsolute(graph.filename);
+			type.setAbsolute(graph.path);
 			graph.link(importedName, type);
 		}
 	}

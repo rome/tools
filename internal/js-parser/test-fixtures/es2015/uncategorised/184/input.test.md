@@ -12,91 +12,29 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "es2015/uncategorised/184/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2015/uncategorised/184/input.js"
-		end: Object {
-			column: 10
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2015/uncategorised/184/input.js 1:0-1:10
+	path: UIDPath<es2015/uncategorised/184/input.js>
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "es2015/uncategorised/184/input.js"
-				end: Object {
-					column: 10
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2015/uncategorised/184/input.js 1:0-1:10
 			expression: JSAssignmentExpression {
 				operator: "="
-				loc: Object {
-					filename: "es2015/uncategorised/184/input.js"
-					end: Object {
-						column: 10
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/uncategorised/184/input.js 1:0-1:10
 				right: JSReferenceIdentifier {
 					name: "b"
-					loc: Object {
-						filename: "es2015/uncategorised/184/input.js"
-						identifierName: "b"
-						end: Object {
-							column: 10
-							line: 1
-						}
-						start: Object {
-							column: 9
-							line: 1
-						}
-					}
+					loc: SourceLocation es2015/uncategorised/184/input.js 1:9-1:10 (b)
 				}
 				left: JSAssignmentArrayPattern {
 					elements: Array []
-					loc: Object {
-						filename: "es2015/uncategorised/184/input.js"
-						end: Object {
-							column: 6
-							line: 1
-						}
-						start: Object {
-							column: 0
-							line: 1
-						}
-					}
+					loc: SourceLocation es2015/uncategorised/184/input.js 1:0-1:6
 					rest: JSAssignmentIdentifier {
 						name: "a"
-						loc: Object {
-							filename: "es2015/uncategorised/184/input.js"
-							identifierName: "a"
-							end: Object {
-								column: 5
-								line: 1
-							}
-							start: Object {
-								column: 4
-								line: 1
-							}
-						}
+						loc: SourceLocation es2015/uncategorised/184/input.js 1:4-1:5 (a)
 					}
 				}
 			}
@@ -108,6 +46,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

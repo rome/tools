@@ -11,87 +11,41 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "core/uncategorised/466/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "core/uncategorised/466/input.js"
-		end: Object {
-			column: 43
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation core/uncategorised/466/input.js 1:0-1:43
+	path: UIDPath<core/uncategorised/466/input.js>
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse"
 				categoryValue: "js"
+				category: Array ["parse"]
 				message: RAW_MARKUP {value: "Deleting local variable in strict mode"}
 			}
 			location: Object {
-				filename: "core/uncategorised/466/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 37
-					line: 1
-				}
-				start: Object {
-					column: 36
-					line: 1
-				}
+				end: Position 1:37
+				path: UIDPath<core/uncategorised/466/input.js>
+				start: Position 1:36
 			}
 		}
 	]
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "core/uncategorised/466/input.js"
-				end: Object {
-					column: 43
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation core/uncategorised/466/input.js 1:0-1:43
 			expression: JSCallExpression {
 				arguments: Array []
-				loc: Object {
-					filename: "core/uncategorised/466/input.js"
-					end: Object {
-						column: 42
-						line: 1
-					}
-					start: Object {
-						column: 1
-						line: 1
-					}
-				}
+				loc: SourceLocation core/uncategorised/466/input.js 1:1-1:42
 				callee: JSFunctionExpression {
 					id: undefined
-					loc: Object {
-						filename: "core/uncategorised/466/input.js"
-						end: Object {
-							column: 40
-							line: 1
-						}
-						start: Object {
-							column: 1
-							line: 1
-						}
-					}
+					loc: SourceLocation core/uncategorised/466/input.js 1:1-1:40
 					head: JSFunctionHead {
 						async: false
 						generator: false
@@ -101,87 +55,26 @@ JSRoot {
 						returnType: undefined
 						thisType: undefined
 						typeParameters: undefined
-						loc: Object {
-							filename: "core/uncategorised/466/input.js"
-							end: Object {
-								column: 12
-								line: 1
-							}
-							start: Object {
-								column: 10
-								line: 1
-							}
-						}
+						loc: SourceLocation core/uncategorised/466/input.js 1:10-1:12
 					}
 					body: JSBlockStatement {
-						loc: Object {
-							filename: "core/uncategorised/466/input.js"
-							end: Object {
-								column: 40
-								line: 1
-							}
-							start: Object {
-								column: 13
-								line: 1
-							}
-						}
+						loc: SourceLocation core/uncategorised/466/input.js 1:13-1:40
 						directives: Array [
 							JSDirective {
 								value: "use strict"
-								loc: Object {
-									filename: "core/uncategorised/466/input.js"
-									end: Object {
-										column: 28
-										line: 1
-									}
-									start: Object {
-										column: 15
-										line: 1
-									}
-								}
+								loc: SourceLocation core/uncategorised/466/input.js 1:15-1:28
 							}
 						]
 						body: Array [
 							JSExpressionStatement {
-								loc: Object {
-									filename: "core/uncategorised/466/input.js"
-									end: Object {
-										column: 38
-										line: 1
-									}
-									start: Object {
-										column: 29
-										line: 1
-									}
-								}
+								loc: SourceLocation core/uncategorised/466/input.js 1:29-1:38
 								expression: JSUnaryExpression {
 									operator: "delete"
 									prefix: true
-									loc: Object {
-										filename: "core/uncategorised/466/input.js"
-										end: Object {
-											column: 37
-											line: 1
-										}
-										start: Object {
-											column: 29
-											line: 1
-										}
-									}
+									loc: SourceLocation core/uncategorised/466/input.js 1:29-1:37
 									argument: JSReferenceIdentifier {
 										name: "i"
-										loc: Object {
-											filename: "core/uncategorised/466/input.js"
-											identifierName: "i"
-											end: Object {
-												column: 37
-												line: 1
-											}
-											start: Object {
-												column: 36
-												line: 1
-											}
-										}
+										loc: SourceLocation core/uncategorised/466/input.js 1:36-1:37 (i)
 									}
 								}
 							}
@@ -205,8 +98,5 @@ JSRoot {
     (function () { 'use strict'; delete i; }())
                                         ^
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

@@ -12,162 +12,49 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "jsx/basic/20/input.jsx"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
+	loc: SourceLocation jsx/basic/20/input.jsx 1:0-1:52
+	path: UIDPath<jsx/basic/20/input.jsx>
 	syntax: Array ["jsx"]
-	loc: Object {
-		filename: "jsx/basic/20/input.jsx"
-		end: Object {
-			column: 52
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "jsx/basic/20/input.jsx"
-				end: Object {
-					column: 52
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation jsx/basic/20/input.jsx 1:0-1:52
 			expression: JSXElement {
 				name: JSXReferenceIdentifier {
 					name: "A"
-					loc: Object {
-						filename: "jsx/basic/20/input.jsx"
-						end: Object {
-							column: 2
-							line: 1
-						}
-						start: Object {
-							column: 1
-							line: 1
-						}
-					}
+					loc: SourceLocation jsx/basic/20/input.jsx 1:1-1:2
 				}
 				selfClosing: false
 				typeArguments: undefined
-				loc: Object {
-					filename: "jsx/basic/20/input.jsx"
-					end: Object {
-						column: 52
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation jsx/basic/20/input.jsx 1:0-1:52
 				children: Array [
 					JSXElement {
 						name: JSXIdentifier {
 							name: "div"
-							loc: Object {
-								filename: "jsx/basic/20/input.jsx"
-								end: Object {
-									column: 35
-									line: 1
-								}
-								start: Object {
-									column: 32
-									line: 1
-								}
-							}
+							loc: SourceLocation jsx/basic/20/input.jsx 1:32-1:35
 						}
 						attributes: Array []
 						selfClosing: false
 						typeArguments: undefined
-						loc: Object {
-							filename: "jsx/basic/20/input.jsx"
-							end: Object {
-								column: 48
-								line: 1
-							}
-							start: Object {
-								column: 31
-								line: 1
-							}
-						}
+						loc: SourceLocation jsx/basic/20/input.jsx 1:31-1:48
 						children: Array [
 							JSXExpressionContainer {
-								loc: Object {
-									filename: "jsx/basic/20/input.jsx"
-									end: Object {
-										column: 42
-										line: 1
-									}
-									start: Object {
-										column: 36
-										line: 1
-									}
-								}
+								loc: SourceLocation jsx/basic/20/input.jsx 1:36-1:42
 								expression: JSMemberExpression {
-									loc: Object {
-										filename: "jsx/basic/20/input.jsx"
-										end: Object {
-											column: 41
-											line: 1
-										}
-										start: Object {
-											column: 37
-											line: 1
-										}
-									}
+									loc: SourceLocation jsx/basic/20/input.jsx 1:37-1:41
 									object: JSReferenceIdentifier {
 										name: "aa"
-										loc: Object {
-											filename: "jsx/basic/20/input.jsx"
-											identifierName: "aa"
-											end: Object {
-												column: 39
-												line: 1
-											}
-											start: Object {
-												column: 37
-												line: 1
-											}
-										}
+										loc: SourceLocation jsx/basic/20/input.jsx 1:37-1:39 (aa)
 									}
 									property: JSStaticMemberProperty {
 										value: JSIdentifier {
 											name: "b"
-											loc: Object {
-												filename: "jsx/basic/20/input.jsx"
-												identifierName: "b"
-												end: Object {
-													column: 41
-													line: 1
-												}
-												start: Object {
-													column: 40
-													line: 1
-												}
-											}
+											loc: SourceLocation jsx/basic/20/input.jsx 1:40-1:41 (b)
 										}
-										loc: Object {
-											filename: "jsx/basic/20/input.jsx"
-											identifierName: "b"
-											end: Object {
-												column: 41
-												line: 1
-											}
-											start: Object {
-												column: 40
-												line: 1
-											}
-										}
+										loc: SourceLocation jsx/basic/20/input.jsx 1:40-1:41 (b)
 									}
 								}
 							}
@@ -178,280 +65,70 @@ JSRoot {
 					JSXAttribute {
 						name: JSXIdentifier {
 							name: "aa"
-							loc: Object {
-								filename: "jsx/basic/20/input.jsx"
-								end: Object {
-									column: 5
-									line: 1
-								}
-								start: Object {
-									column: 3
-									line: 1
-								}
-							}
+							loc: SourceLocation jsx/basic/20/input.jsx 1:3-1:5
 						}
 						value: JSXExpressionContainer {
-							loc: Object {
-								filename: "jsx/basic/20/input.jsx"
-								end: Object {
-									column: 16
-									line: 1
-								}
-								start: Object {
-									column: 6
-									line: 1
-								}
-							}
+							loc: SourceLocation jsx/basic/20/input.jsx 1:6-1:16
 							expression: JSMemberExpression {
-								loc: Object {
-									filename: "jsx/basic/20/input.jsx"
-									end: Object {
-										column: 15
-										line: 1
-									}
-									start: Object {
-										column: 7
-										line: 1
-									}
-								}
+								loc: SourceLocation jsx/basic/20/input.jsx 1:7-1:15
 								property: JSStaticMemberProperty {
 									value: JSIdentifier {
 										name: "cc"
-										loc: Object {
-											filename: "jsx/basic/20/input.jsx"
-											identifierName: "cc"
-											end: Object {
-												column: 15
-												line: 1
-											}
-											start: Object {
-												column: 13
-												line: 1
-											}
-										}
+										loc: SourceLocation jsx/basic/20/input.jsx 1:13-1:15 (cc)
 									}
-									loc: Object {
-										filename: "jsx/basic/20/input.jsx"
-										identifierName: "cc"
-										end: Object {
-											column: 15
-											line: 1
-										}
-										start: Object {
-											column: 13
-											line: 1
-										}
-									}
+									loc: SourceLocation jsx/basic/20/input.jsx 1:13-1:15 (cc)
 								}
 								object: JSMemberExpression {
-									loc: Object {
-										filename: "jsx/basic/20/input.jsx"
-										end: Object {
-											column: 12
-											line: 1
-										}
-										start: Object {
-											column: 7
-											line: 1
-										}
-									}
+									loc: SourceLocation jsx/basic/20/input.jsx 1:7-1:12
 									object: JSReferenceIdentifier {
 										name: "aa"
-										loc: Object {
-											filename: "jsx/basic/20/input.jsx"
-											identifierName: "aa"
-											end: Object {
-												column: 9
-												line: 1
-											}
-											start: Object {
-												column: 7
-												line: 1
-											}
-										}
+										loc: SourceLocation jsx/basic/20/input.jsx 1:7-1:9 (aa)
 									}
 									property: JSStaticMemberProperty {
 										value: JSIdentifier {
 											name: "bb"
-											loc: Object {
-												filename: "jsx/basic/20/input.jsx"
-												identifierName: "bb"
-												end: Object {
-													column: 12
-													line: 1
-												}
-												start: Object {
-													column: 10
-													line: 1
-												}
-											}
+											loc: SourceLocation jsx/basic/20/input.jsx 1:10-1:12 (bb)
 										}
-										loc: Object {
-											filename: "jsx/basic/20/input.jsx"
-											identifierName: "bb"
-											end: Object {
-												column: 12
-												line: 1
-											}
-											start: Object {
-												column: 10
-												line: 1
-											}
-										}
+										loc: SourceLocation jsx/basic/20/input.jsx 1:10-1:12 (bb)
 									}
 								}
 							}
 						}
-						loc: Object {
-							filename: "jsx/basic/20/input.jsx"
-							end: Object {
-								column: 16
-								line: 1
-							}
-							start: Object {
-								column: 3
-								line: 1
-							}
-						}
+						loc: SourceLocation jsx/basic/20/input.jsx 1:3-1:16
 					}
 					JSXAttribute {
 						name: JSXIdentifier {
 							name: "bb"
-							loc: Object {
-								filename: "jsx/basic/20/input.jsx"
-								end: Object {
-									column: 19
-									line: 1
-								}
-								start: Object {
-									column: 17
-									line: 1
-								}
-							}
+							loc: SourceLocation jsx/basic/20/input.jsx 1:17-1:19
 						}
 						value: JSXExpressionContainer {
-							loc: Object {
-								filename: "jsx/basic/20/input.jsx"
-								end: Object {
-									column: 30
-									line: 1
-								}
-								start: Object {
-									column: 20
-									line: 1
-								}
-							}
+							loc: SourceLocation jsx/basic/20/input.jsx 1:20-1:30
 							expression: JSMemberExpression {
-								loc: Object {
-									filename: "jsx/basic/20/input.jsx"
-									end: Object {
-										column: 29
-										line: 1
-									}
-									start: Object {
-										column: 21
-										line: 1
-									}
-								}
+								loc: SourceLocation jsx/basic/20/input.jsx 1:21-1:29
 								property: JSStaticMemberProperty {
 									value: JSIdentifier {
 										name: "dd"
-										loc: Object {
-											filename: "jsx/basic/20/input.jsx"
-											identifierName: "dd"
-											end: Object {
-												column: 29
-												line: 1
-											}
-											start: Object {
-												column: 27
-												line: 1
-											}
-										}
+										loc: SourceLocation jsx/basic/20/input.jsx 1:27-1:29 (dd)
 									}
-									loc: Object {
-										filename: "jsx/basic/20/input.jsx"
-										identifierName: "dd"
-										end: Object {
-											column: 29
-											line: 1
-										}
-										start: Object {
-											column: 27
-											line: 1
-										}
-									}
+									loc: SourceLocation jsx/basic/20/input.jsx 1:27-1:29 (dd)
 								}
 								object: JSMemberExpression {
-									loc: Object {
-										filename: "jsx/basic/20/input.jsx"
-										end: Object {
-											column: 26
-											line: 1
-										}
-										start: Object {
-											column: 21
-											line: 1
-										}
-									}
+									loc: SourceLocation jsx/basic/20/input.jsx 1:21-1:26
 									object: JSReferenceIdentifier {
 										name: "bb"
-										loc: Object {
-											filename: "jsx/basic/20/input.jsx"
-											identifierName: "bb"
-											end: Object {
-												column: 23
-												line: 1
-											}
-											start: Object {
-												column: 21
-												line: 1
-											}
-										}
+										loc: SourceLocation jsx/basic/20/input.jsx 1:21-1:23 (bb)
 									}
 									property: JSStaticMemberProperty {
 										value: JSIdentifier {
 											name: "cc"
-											loc: Object {
-												filename: "jsx/basic/20/input.jsx"
-												identifierName: "cc"
-												end: Object {
-													column: 26
-													line: 1
-												}
-												start: Object {
-													column: 24
-													line: 1
-												}
-											}
+											loc: SourceLocation jsx/basic/20/input.jsx 1:24-1:26 (cc)
 										}
-										loc: Object {
-											filename: "jsx/basic/20/input.jsx"
-											identifierName: "cc"
-											end: Object {
-												column: 26
-												line: 1
-											}
-											start: Object {
-												column: 24
-												line: 1
-											}
-										}
+										loc: SourceLocation jsx/basic/20/input.jsx 1:24-1:26 (cc)
 									}
 								}
 							}
 						}
-						loc: Object {
-							filename: "jsx/basic/20/input.jsx"
-							end: Object {
-								column: 30
-								line: 1
-							}
-							start: Object {
-								column: 17
-								line: 1
-							}
-						}
+						loc: SourceLocation jsx/basic/20/input.jsx 1:17-1:30
 					}
 				]
 			}
@@ -463,6 +140,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

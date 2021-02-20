@@ -8,20 +8,20 @@ import {
 	PartialConfigHandler,
 	PartialConsumeConfigResult,
 } from "@internal/codec-config/types";
-
-import {descriptions} from "@internal/diagnostics";
-import {Number0, ob1Inc} from "@internal/ob1";
+import {DIAGNOSTIC_CATEGORIES, descriptions} from "@internal/diagnostics";
+import {ZeroIndexed} from "@internal/math";
+import convertToTomlFromConsumer from "@internal/codec-config/toml/convertToTomlFromConsumer";
 
 function isSingleStringValueChar(
 	char: string,
-	index: Number0,
+	index: ZeroIndexed,
 	input: string,
 ): boolean {
 	return !(char === "'" && !isEscaped(index, input));
 }
 function isDoubleStringValueChar(
 	char: string,
-	index: Number0,
+	index: ZeroIndexed,
 	input: string,
 ): boolean {
 	return !(char === "'" && !isEscaped(index, input));
@@ -31,7 +31,7 @@ function allowedCharacterForKey(char: string) {
 	return char !== undefined && /^[A-Za-z0-9_\-]+$/.test(char);
 }
 
-const createTomlParser = createParser<TOMLParserTypes>({
+const tomlParser = createParser<TOMLParserTypes>({
 	diagnosticLanguage: "toml",
 	ignoreWhitespaceTokens: true,
 	getInitialState: () => ({
@@ -44,14 +44,14 @@ const createTomlParser = createParser<TOMLParserTypes>({
 			case "'":
 			case '"': {
 				const [value, end] = parser.readInputFrom(
-					ob1Inc(index),
+					index.increment(),
 					char === '"' ? isDoubleStringValueChar : isSingleStringValueChar,
 				);
 
 				// TODO check overflow
 
 				// TODO string unescaping
-				return parser.finishValueToken("String", value, ob1Inc(end));
+				return parser.finishValueToken("String", value, end.increment());
 			}
 
 			case "[":
@@ -173,7 +173,7 @@ export const toml: PartialConfigHandler = {
 	jsonSuperset: false,
 
 	parseExtra(opts: ParserOptions): ConfigParserResult {
-		const parser = createTomlParser(opts);
+		const parser = tomlParser.create(opts);
 
 		const root = parseObject(parser);
 
@@ -184,10 +184,12 @@ export const toml: PartialConfigHandler = {
 			value: root,
 			// TODO position tracking
 			context: {
-				category: "parse",
+				category: DIAGNOSTIC_CATEGORIES.parse,
 				categoryValue: "toml",
 				normalizeKey: (key) => key,
-				getDiagnosticLocation: () => ({}),
+				getDiagnosticLocation: () => ({
+					path: parser.path,
+				}),
 				getOriginalValue: () => undefined,
 			},
 			// TODO comments
@@ -196,10 +198,10 @@ export const toml: PartialConfigHandler = {
 	},
 
 	tokenize(opts: ConfigParserOptions): TokenBase[] {
-		return createTomlParser(opts).getAllTokens();
+		return tomlParser.create(opts).getAllTokens();
 	},
 
 	stringifyFromConsumer(opts: PartialConsumeConfigResult): string {
-		throw new Error("todo");
+		return convertToTomlFromConsumer(opts.consumer, opts.comments);
 	},
 };

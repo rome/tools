@@ -21,9 +21,21 @@ import {
 	getErrorStructure,
 } from "@internal/v8";
 import DiagnosticsNormalizer from "./DiagnosticsNormalizer";
-import {diagnosticLocationToMarkupFilelink, joinCategoryName} from "./helpers";
+import {
+	appendAdviceToDiagnostic,
+	diagnosticLocationToMarkupFilelink,
+	formatCategoryDescription,
+	prependAdviceToDiagnostic,
+} from "./helpers";
 import {RequiredProps} from "@internal/typescript-helpers";
 import {StaticMarkup, isEmptyMarkup, markup} from "@internal/markup";
+import {
+	DiagnosticsError,
+	createSingleDiagnosticError,
+	getDiagnosticsFromError,
+	isUserDiagnosticError,
+} from "./error-wrappers";
+import {AnyPath, MixedPathSet, UNKNOWN_PATH, equalPaths} from "@internal/path";
 
 function normalizeArray<T>(val: undefined | (T[])): T[] {
 	if (Array.isArray(val)) {
@@ -73,15 +85,15 @@ export function derivePositionlessKeyFromDiagnostic(diag: Diagnostic): string {
 
 export function deriveRootAdviceFromDiagnostic(
 	diag: Diagnostic,
-	opts: {
-		skipFrame: boolean;
-		includeHeaderInAdvice: boolean;
-		outdated: boolean;
-	} = {
-		skipFrame: false,
-		includeHeaderInAdvice: true,
-		outdated: false,
-	},
+	{
+		skipFrame = false,
+		includeHeaderInAdvice = true,
+		outdated = false,
+	}: {
+		skipFrame?: boolean;
+		includeHeaderInAdvice?: boolean;
+		outdated?: boolean;
+	} = {},
 ): {
 	advice: DiagnosticAdvice;
 	lastAdvice: DiagnosticAdvice;
@@ -96,7 +108,7 @@ export function deriveRootAdviceFromDiagnostic(
 		header = markup`<emphasis>${diag.label}</emphasis> ${header}`;
 	}
 
-	header = markup`${header} <emphasis>${joinCategoryName(description)}</emphasis>`;
+	header = markup`${header} <emphasis>${formatCategoryDescription(description)}</emphasis>`;
 
 	if (tags.internal) {
 		header = markup`${header} <inverse><error> INTERNAL </error></inverse>`;
@@ -106,7 +118,7 @@ export function deriveRootAdviceFromDiagnostic(
 		header = markup`${header} <inverse> FIXABLE </inverse>`;
 	}
 
-	if (opts.outdated) {
+	if (outdated) {
 		header = markup`${header} <inverse><warn> OUTDATED </warn></inverse>`;
 	}
 
@@ -114,7 +126,7 @@ export function deriveRootAdviceFromDiagnostic(
 		header = markup`${header} <inverse><error> FATAL </error></inverse>`;
 	}
 
-	if (opts.includeHeaderInAdvice) {
+	if (includeHeaderInAdvice) {
 		advice.push({
 			type: "log",
 			category: "none",
@@ -138,7 +150,7 @@ export function deriveRootAdviceFromDiagnostic(
 		});
 	}
 
-	if (!opts.skipFrame) {
+	if (!skipFrame) {
 		if (location.start !== undefined && location.end !== undefined) {
 			advice.push({
 				type: "frame",
@@ -176,35 +188,100 @@ export function deriveRootAdviceFromDiagnostic(
 export type DeriveErrorDiagnosticOptions = {
 	description: RequiredProps<Partial<DiagnosticDescription>, "category">;
 	label?: StaticMarkup;
-	tags?: DiagnosticTags;
-	filename?: string;
+	// Passing in `internal: true` is redundant
+	tags?: Omit<DiagnosticTags, "internal"> & {
+		internal?: false;
+	};
+	path?: AnyPath;
+	cleanRelativeError?: Error;
 	cleanFrames?: (frames: ErrorFrames) => ErrorFrames;
 	stackAdviceOptions?: DeriveErrorStackAdviceOptions;
 };
+
+export function provideDiagnosticAdviceForError(
+	error: Error,
+	opts: DeriveErrorDiagnosticOptions,
+): Error {
+	if (isUserDiagnosticError(error)) {
+		return error;
+	} else {
+		let diagnostics = getDiagnosticsFromError(error);
+
+		if (diagnostics === undefined) {
+			let diag = deriveDiagnosticFromError(error, opts);
+
+			if (opts.description.message !== undefined) {
+				diag = prependAdviceToDiagnostic(
+					diag,
+					[
+						{
+							type: "log",
+							category: "none",
+							text: markup`${getErrorStructure(error).message}`,
+						},
+					],
+				);
+			}
+
+			return createSingleDiagnosticError(diag);
+		} else {
+			return new DiagnosticsError(
+				error.message,
+				diagnostics.map((diag) => {
+					return appendAdviceToDiagnostic(
+						diag,
+						[
+							{
+								type: "log",
+								category: "info",
+								text: markup`${getErrorStructure(error).message}`,
+							},
+						],
+					);
+				}),
+			);
+		}
+	}
+}
 
 export function deriveDiagnosticFromErrorStructure(
 	struct: Partial<StructuredError>,
 	opts: DeriveErrorDiagnosticOptions,
 ): Diagnostic {
-	const {filename} = opts;
-
-	let targetFilename: undefined | string = filename;
+	let targetPath: AnyPath = opts.path ?? UNKNOWN_PATH;
 	let targetLoc = undefined;
 
 	let {frames = [], message = "Unknown error"} = struct;
 
-	const {cleanFrames} = opts;
-	if (cleanFrames !== undefined && frames) {
+	const {cleanFrames, cleanRelativeError} = opts;
+	if (cleanFrames !== undefined) {
 		frames = cleanFrames(frames);
+	}
+	if (cleanRelativeError !== undefined) {
+		// We consider the last two frames as possible candidates to allow for easy construction
+		const refFrames = getErrorStructure(cleanRelativeError).frames.slice(0, 2);
+
+		frameLoop: for (let i = 0; i < frames.length; i++) {
+			const frame = frames[i];
+			for (const refFrame of refFrames) {
+				if (
+					equalPaths(frame.path, refFrame.path) &&
+					frame.lineNumber === refFrame.lineNumber
+				) {
+					frames = frames.slice(0, i - 1);
+					break frameLoop;
+				}
+			}
+		}
 	}
 
 	// Point the target to the closest frame with a filename
 	for (const frame of frames) {
-		if (frame.filename === undefined) {
+		if (frame.path === undefined) {
 			continue;
 		}
 
-		targetFilename = frame.filename;
+		targetPath = frame.path;
 		targetLoc = getDiagnosticLocationFromErrorFrame(frame);
 		break;
 	}
@@ -224,12 +301,15 @@ export function deriveDiagnosticFromErrorStructure(
 			advice: [...advice, ...(opts.description?.advice || [])],
 		},
 		location: {
-			filename: targetFilename,
+			path: targetPath,
 			start: targetLoc === undefined ? undefined : targetLoc.start,
 			end: targetLoc === undefined ? undefined : targetLoc.end,
 		},
 		label: opts.label,
-		tags: opts.tags,
+		tags: {
+			internal: true,
+			...opts.tags,
+		},
 	};
 }
 
@@ -242,12 +322,12 @@ export function deriveDiagnosticFromError(
 
 export type DeriveErrorStackAdviceOptions = {
 	title?: StaticMarkup;
-	importantFilenames?: string[];
+	importantPaths?: MixedPathSet;
 };
 
 export function getErrorStackAdvice(
 	error: Partial<StructuredError>,
-	{title, importantFilenames}: DeriveErrorStackAdviceOptions = {},
+	{title, importantPaths}: DeriveErrorStackAdviceOptions = {},
 ): DiagnosticAdvice {
 	const advice: DiagnosticAdvice = [];
 	const {frames = [], stack} = error;
@@ -300,7 +380,7 @@ export function getErrorStackAdvice(
 				typeName,
 				functionName,
 				methodName,
-				filename,
+				path,
 				lineNumber,
 				columnNumber,
 				isEval,
@@ -341,7 +421,7 @@ export function getErrorStackAdvice(
 				prefix,
 				object,
 				property,
-				filename,
+				path,
 				line: lineNumber,
 				column: columnNumber,
 			};
@@ -351,7 +431,7 @@ export function getErrorStackAdvice(
 			type: "stacktrace",
 			title,
 			frames: adviceFrames,
-			importantFilenames,
+			importantPaths,
 		});
 	}
 
@@ -362,6 +442,10 @@ export function addOriginsToDiagnostics(
 	origins: DiagnosticOrigin[],
 	diagnostics: Diagnostics,
 ): Diagnostics {
+	if (origins.length === 0) {
+		return diagnostics;
+	}
+
 	return diagnostics.map((diag) => {
 		return addOriginsToDiagnostic(origins, diag);
 	});
@@ -371,6 +455,10 @@ export function addOriginsToDiagnostic(
 	origins: DiagnosticOrigin[],
 	diag: Diagnostic,
 ): Diagnostic {
+	if (origins.length === 0) {
+		return diag;
+	}
+
 	const newOrigins =
 		diag.origins === undefined ? origins : [...origins, ...diag.origins];
 	return {

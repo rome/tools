@@ -2,12 +2,17 @@ import {
 	BaseTokens,
 	ComplexToken,
 	NumberToken,
-	ParserOptionsWithRequiredPath,
+	ParserCore,
+	ParserOptions,
 	SimpleToken,
 	StringToken,
 } from "@internal/parser-core";
 import {
 	CSSBlock,
+	CSSCalcFunction,
+	CSSCalcSum,
+	CSSComma,
+	CSSCustomProperty,
 	CSSDimension,
 	CSSFunction,
 	CSSHash,
@@ -15,11 +20,14 @@ import {
 	CSSNumber,
 	CSSPercentage,
 	CSSRaw,
+	CSSString,
+	CSSUrlFunction,
+	CSSVarFunction,
 	CSSWhitespace,
 } from "@internal/ast";
 
 export interface CSSParserOptions extends Omit<
-	ParserOptionsWithRequiredPath,
+	ParserOptions,
 	"ignoreWhitespaceTokens"
 > {}
 
@@ -37,6 +45,7 @@ export interface HashData {
 export interface NumberData {
 	numberType: string;
 	value: number;
+	raw: string;
 }
 
 export type Tokens = BaseTokens & {
@@ -71,6 +80,7 @@ export type AnyCSSToken = Tokens[keyof Tokens];
 
 export type AnyCSSValue =
 	| CSSFunction
+	| CSSVarFunction
 	| CSSBlock
 	| CSSDimension
 	| CSSPercentage
@@ -78,4 +88,21 @@ export type AnyCSSValue =
 	| CSSNumber
 	| CSSHash
 	| CSSWhitespace
+	| CSSString
+	| CSSComma
+	| CSSCustomProperty
+	| CSSUrlFunction
+	| CSSCalcFunction
+	| CSSCalcSum
 	| CSSRaw;
+
+export type AnyFunction = CSSFunction | CSSVarFunction | CSSUrlFunction;
+
+export type CSSParserTypes = {
+	tokens: Tokens;
+	state: {};
+	options: CSSParserOptions;
+	meta: void;
+};
+
+export type CSSParser = ParserCore<CSSParserTypes>;

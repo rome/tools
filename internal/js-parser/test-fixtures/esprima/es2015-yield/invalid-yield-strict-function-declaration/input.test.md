@@ -11,48 +11,29 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "esprima/es2015-yield/invalid-yield-strict-function-declaration/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "esprima/es2015-yield/invalid-yield-strict-function-declaration/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation esprima/es2015-yield/invalid-yield-strict-function-declaration/input.js 1:0-2:0
+	path: UIDPath<esprima/es2015-yield/invalid-yield-strict-function-declaration/input.js>
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse"
 				categoryValue: "js"
-				message: Array [
-					"yield"
-					RAW_MARKUP {value: " is a reserved word"}
-				]
+				category: Array ["parse"]
+				message: RAW_MARKUP {value: "yield is a reserved word"}
 			}
 			location: Object {
-				filename: "esprima/es2015-yield/invalid-yield-strict-function-declaration/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 14
-					line: 1
-				}
-				start: Object {
-					column: 9
-					line: 1
-				}
+				end: Position 1:14
+				path: UIDPath<esprima/es2015-yield/invalid-yield-strict-function-declaration/input.js>
+				start: Position 1:9
 			}
 		}
 	]
@@ -60,29 +41,18 @@ JSRoot {
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "yield"
-				loc: Object {
-					filename: "esprima/es2015-yield/invalid-yield-strict-function-declaration/input.js"
-					identifierName: "yield"
-					end: Object {
-						column: 14
-						line: 1
-					}
-					start: Object {
-						column: 9
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/es2015-yield/invalid-yield-strict-function-declaration/input.js 1:9-1:14 (yield)
 			}
-			loc: Object {
-				filename: "esprima/es2015-yield/invalid-yield-strict-function-declaration/input.js"
-				end: Object {
-					column: 33
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
+			loc: SourceLocation esprima/es2015-yield/invalid-yield-strict-function-declaration/input.js 1:0-1:33
+			body: JSBlockStatement {
+				body: Array []
+				loc: SourceLocation esprima/es2015-yield/invalid-yield-strict-function-declaration/input.js 1:16-1:33
+				directives: Array [
+					JSDirective {
+						value: "use strict"
+						loc: SourceLocation esprima/es2015-yield/invalid-yield-strict-function-declaration/input.js 1:18-1:31
+					}
+				]
 			}
 			head: JSFunctionHead {
 				async: false
@@ -93,47 +63,7 @@ JSRoot {
 				returnType: undefined
 				thisType: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "esprima/es2015-yield/invalid-yield-strict-function-declaration/input.js"
-					end: Object {
-						column: 16
-						line: 1
-					}
-					start: Object {
-						column: 14
-						line: 1
-					}
-				}
-			}
-			body: JSBlockStatement {
-				body: Array []
-				loc: Object {
-					filename: "esprima/es2015-yield/invalid-yield-strict-function-declaration/input.js"
-					end: Object {
-						column: 33
-						line: 1
-					}
-					start: Object {
-						column: 16
-						line: 1
-					}
-				}
-				directives: Array [
-					JSDirective {
-						value: "use strict"
-						loc: Object {
-							filename: "esprima/es2015-yield/invalid-yield-strict-function-declaration/input.js"
-							end: Object {
-								column: 31
-								line: 1
-							}
-							start: Object {
-								column: 18
-								line: 1
-							}
-						}
-					}
-				]
+				loc: SourceLocation esprima/es2015-yield/invalid-yield-strict-function-declaration/input.js 1:14-1:16
 			}
 		}
 	]
@@ -151,8 +81,5 @@ JSRoot {
     function yield(){ "use strict"; }
              ^^^^^
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

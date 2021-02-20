@@ -12,121 +12,37 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "typescript/interface/modifiers/input.ts"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
+	loc: SourceLocation typescript/interface/modifiers/input.ts 1:0-4:0
+	path: UIDPath<typescript/interface/modifiers/input.ts>
 	syntax: Array ["ts"]
-	loc: Object {
-		filename: "typescript/interface/modifiers/input.ts"
-		end: Object {
-			column: 0
-			line: 4
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
 	body: Array [
 		TSInterfaceDeclaration {
 			id: JSBindingIdentifier {
 				name: "I"
-				loc: Object {
-					filename: "typescript/interface/modifiers/input.ts"
-					identifierName: "I"
-					end: Object {
-						column: 11
-						line: 1
-					}
-					start: Object {
-						column: 10
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/interface/modifiers/input.ts 1:10-1:11 (I)
 			}
 			extends: undefined
 			typeParameters: undefined
-			loc: Object {
-				filename: "typescript/interface/modifiers/input.ts"
-				end: Object {
-					column: 1
-					line: 3
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation typescript/interface/modifiers/input.ts 1:0-3:1
 			body: TSInterfaceBody {
-				loc: Object {
-					filename: "typescript/interface/modifiers/input.ts"
-					end: Object {
-						column: 1
-						line: 3
-					}
-					start: Object {
-						column: 12
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/interface/modifiers/input.ts 1:12-3:1
 				body: Array [
 					TSPropertySignature {
 						key: JSStaticPropertyKey {
 							value: JSIdentifier {
 								name: "x"
-								loc: Object {
-									filename: "typescript/interface/modifiers/input.ts"
-									identifierName: "x"
-									end: Object {
-										column: 14
-										line: 2
-									}
-									start: Object {
-										column: 13
-										line: 2
-									}
-								}
+								loc: SourceLocation typescript/interface/modifiers/input.ts 2:13-2:14 (x)
 							}
-							loc: Object {
-								filename: "typescript/interface/modifiers/input.ts"
-								end: Object {
-									column: 14
-									line: 2
-								}
-								start: Object {
-									column: 13
-									line: 2
-								}
-							}
+							loc: SourceLocation typescript/interface/modifiers/input.ts 2:13-2:14
 						}
 						optional: false
 						readonly: true
-						loc: Object {
-							filename: "typescript/interface/modifiers/input.ts"
-							end: Object {
-								column: 23
-								line: 2
-							}
-							start: Object {
-								column: 4
-								line: 2
-							}
-						}
-						typeAnnotation: TSNumberKeywordTypeAnnotation {
-							loc: Object {
-								filename: "typescript/interface/modifiers/input.ts"
-								end: Object {
-									column: 22
-									line: 2
-								}
-								start: Object {
-									column: 16
-									line: 2
-								}
-							}
-						}
+						loc: SourceLocation typescript/interface/modifiers/input.ts 2:4-2:23
+						typeAnnotation: TSNumberKeywordTypeAnnotation {loc: SourceLocation typescript/interface/modifiers/input.ts 2:16-2:22}
 					}
 				]
 			}
@@ -138,6 +54,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

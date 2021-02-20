@@ -11,75 +11,39 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "experimental/numeric-separator/invalid-114/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "experimental/numeric-separator/invalid-114/input.js"
-		end: Object {
-			column: 0
-			line: 2
+	loc: SourceLocation experimental/numeric-separator/invalid-114/input.js 1:0-2:0
+	path: UIDPath<experimental/numeric-separator/invalid-114/input.js>
+	body: Array [
+		JSExpressionStatement {
+			loc: SourceLocation experimental/numeric-separator/invalid-114/input.js 1:0-1:9
+			expression: JSNumericLiteral {
+				value: 17
+				format: "hex"
+				loc: SourceLocation experimental/numeric-separator/invalid-114/input.js 1:1-1:8
+			}
 		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	]
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse"
 				categoryValue: "js"
+				category: Array ["parse"]
 				message: RAW_MARKUP {value: "Invalid or unexpected int token"}
 			}
 			location: Object {
-				filename: "experimental/numeric-separator/invalid-114/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 1
-					line: 1
-				}
-				start: Object {
-					column: 1
-					line: 1
-				}
-			}
-		}
-	]
-	body: Array [
-		JSExpressionStatement {
-			loc: Object {
-				filename: "experimental/numeric-separator/invalid-114/input.js"
-				end: Object {
-					column: 9
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
-			expression: JSNumericLiteral {
-				value: 17
-				format: "hex"
-				loc: Object {
-					filename: "experimental/numeric-separator/invalid-114/input.js"
-					end: Object {
-						column: 8
-						line: 1
-					}
-					start: Object {
-						column: 1
-						line: 1
-					}
-				}
+				end: Position 1:1
+				path: UIDPath<experimental/numeric-separator/invalid-114/input.js>
+				start: Position 1:1
 			}
 		}
 	]
@@ -97,8 +61,5 @@ JSRoot {
     (0x_1__1)
      ^
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

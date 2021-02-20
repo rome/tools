@@ -12,121 +12,38 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "core/uncategorised/340/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "core/uncategorised/340/input.js"
-		end: Object {
-			column: 5
-			line: 3
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation core/uncategorised/340/input.js 1:0-3:5
+	path: UIDPath<core/uncategorised/340/input.js>
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "core/uncategorised/340/input.js"
-				end: Object {
-					column: 6
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation core/uncategorised/340/input.js 1:0-1:6
 			expression: JSMemberExpression {
-				loc: Object {
-					filename: "core/uncategorised/340/input.js"
-					end: Object {
-						column: 6
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation core/uncategorised/340/input.js 1:0-1:6
 				object: JSReferenceIdentifier {
 					name: "foo"
-					loc: Object {
-						filename: "core/uncategorised/340/input.js"
-						identifierName: "foo"
-						end: Object {
-							column: 3
-							line: 1
-						}
-						start: Object {
-							column: 0
-							line: 1
-						}
-					}
+					loc: SourceLocation core/uncategorised/340/input.js 1:0-1:3 (foo)
 				}
 				property: JSStaticMemberProperty {
 					value: JSIdentifier {
 						name: "in"
-						loc: Object {
-							filename: "core/uncategorised/340/input.js"
-							identifierName: "in"
-							end: Object {
-								column: 6
-								line: 1
-							}
-							start: Object {
-								column: 4
-								line: 1
-							}
-						}
+						loc: SourceLocation core/uncategorised/340/input.js 1:4-1:6 (in)
 					}
-					loc: Object {
-						filename: "core/uncategorised/340/input.js"
-						identifierName: "in"
-						end: Object {
-							column: 6
-							line: 1
-						}
-						start: Object {
-							column: 4
-							line: 1
-						}
-					}
+					loc: SourceLocation core/uncategorised/340/input.js 1:4-1:6 (in)
 				}
 			}
 		}
 		JSBlockStatement {
 			body: Array []
 			directives: Array []
-			loc: Object {
-				filename: "core/uncategorised/340/input.js"
-				end: Object {
-					column: 2
-					line: 2
-				}
-				start: Object {
-					column: 0
-					line: 2
-				}
-			}
+			loc: SourceLocation core/uncategorised/340/input.js 2:0-2:2
 		}
 		JSExpressionStatement {
-			loc: Object {
-				filename: "core/uncategorised/340/input.js"
-				end: Object {
-					column: 5
-					line: 3
-				}
-				start: Object {
-					column: 0
-					line: 3
-				}
-			}
+			loc: SourceLocation core/uncategorised/340/input.js 3:0-3:5
 			expression: JSRegExpLiteral {
 				global: false
 				insensitive: false
@@ -134,71 +51,21 @@ JSRoot {
 				noDotNewline: false
 				sticky: false
 				unicode: false
-				loc: Object {
-					filename: "core/uncategorised/340/input.js"
-					end: Object {
-						column: 5
-						line: 3
-					}
-					start: Object {
-						column: 0
-						line: 3
-					}
-				}
+				loc: SourceLocation core/uncategorised/340/input.js 3:0-3:5
 				expression: JSRegExpSubExpression {
-					loc: Object {
-						filename: "core/uncategorised/340/input.js"
-						end: Object {
-							column: 4
-							line: 3
-						}
-						start: Object {
-							column: 1
-							line: 3
-						}
-					}
+					loc: SourceLocation core/uncategorised/340/input.js 3:1-3:4
 					body: Array [
 						JSRegExpCharacter {
 							value: "f"
-							loc: Object {
-								filename: "core/uncategorised/340/input.js"
-								end: Object {
-									column: 2
-									line: 3
-								}
-								start: Object {
-									column: 1
-									line: 3
-								}
-							}
+							loc: SourceLocation core/uncategorised/340/input.js 3:1-3:2
 						}
 						JSRegExpCharacter {
 							value: "o"
-							loc: Object {
-								filename: "core/uncategorised/340/input.js"
-								end: Object {
-									column: 3
-									line: 3
-								}
-								start: Object {
-									column: 2
-									line: 3
-								}
-							}
+							loc: SourceLocation core/uncategorised/340/input.js 3:2-3:3
 						}
 						JSRegExpCharacter {
 							value: "o"
-							loc: Object {
-								filename: "core/uncategorised/340/input.js"
-								end: Object {
-									column: 4
-									line: 3
-								}
-								start: Object {
-									column: 3
-									line: 3
-								}
-							}
+							loc: SourceLocation core/uncategorised/340/input.js 3:3-3:4
 						}
 					]
 				}
@@ -211,6 +78,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

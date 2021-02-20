@@ -11,144 +11,55 @@ JSRoot {
 	comments: Array []
 	corrupt: true
 	directives: Array []
-	filename: "es2017/async-functions/10/input.js"
 	hasHoistedVars: true
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2017/async-functions/10/input.js"
-		end: Object {
-			column: 13
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2017/async-functions/10/input.js 1:0-2:13
+	path: UIDPath<es2017/async-functions/10/input.js>
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse"
 				categoryValue: "js"
+				category: Array ["parse"]
 				message: RAW_MARKUP {value: "Expected a semicolon or a line terminator"}
 			}
 			location: Object {
-				filename: "es2017/async-functions/10/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 3
-					line: 2
-				}
-				start: Object {
-					column: 4
-					line: 2
-				}
+				end: Position 2:3
+				path: UIDPath<es2017/async-functions/10/input.js>
+				start: Position 2:4
 			}
 		}
 	]
 	body: Array [
 		JSVariableDeclarationStatement {
-			loc: Object {
-				filename: "es2017/async-functions/10/input.js"
-				end: Object {
-					column: 3
-					line: 2
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2017/async-functions/10/input.js 1:0-2:3
 			declaration: JSVariableDeclaration {
 				kind: "var"
-				loc: Object {
-					filename: "es2017/async-functions/10/input.js"
-					end: Object {
-						column: 3
-						line: 2
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation es2017/async-functions/10/input.js 1:0-2:3
 				declarations: Array [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "x"
-							loc: Object {
-								filename: "es2017/async-functions/10/input.js"
-								identifierName: "x"
-								end: Object {
-									column: 5
-									line: 1
-								}
-								start: Object {
-									column: 4
-									line: 1
-								}
-							}
+							loc: SourceLocation es2017/async-functions/10/input.js 1:4-1:5 (x)
 						}
-						loc: Object {
-							filename: "es2017/async-functions/10/input.js"
-							end: Object {
-								column: 3
-								line: 2
-							}
-							start: Object {
-								column: 4
-								line: 1
-							}
-						}
+						loc: SourceLocation es2017/async-functions/10/input.js 1:4-2:3
 						init: JSCallExpression {
-							loc: Object {
-								filename: "es2017/async-functions/10/input.js"
-								end: Object {
-									column: 3
-									line: 2
-								}
-								start: Object {
-									column: 8
-									line: 1
-								}
-							}
+							loc: SourceLocation es2017/async-functions/10/input.js 1:8-2:3
 							callee: JSReferenceIdentifier {
 								name: "async"
-								loc: Object {
-									filename: "es2017/async-functions/10/input.js"
-									identifierName: "async"
-									end: Object {
-										column: 13
-										line: 1
-									}
-									start: Object {
-										column: 8
-										line: 1
-									}
-								}
+								loc: SourceLocation es2017/async-functions/10/input.js 1:8-1:13 (async)
 							}
 							arguments: Array [
 								JSReferenceIdentifier {
 									name: "x"
-									loc: Object {
-										filename: "es2017/async-functions/10/input.js"
-										identifierName: "x"
-										end: Object {
-											column: 2
-											line: 2
-										}
-										start: Object {
-											column: 1
-											line: 2
-										}
-									}
+									loc: SourceLocation es2017/async-functions/10/input.js 2:1-2:2 (x)
 								}
 							]
 						}
@@ -157,86 +68,25 @@ JSRoot {
 			}
 		}
 		JSExpressionStatement {
-			loc: Object {
-				filename: "es2017/async-functions/10/input.js"
-				end: Object {
-					column: 6
-					line: 2
-				}
-				start: Object {
-					column: 4
-					line: 2
-				}
-			}
+			loc: SourceLocation es2017/async-functions/10/input.js 2:4-2:6
 			expression: JSReferenceIdentifier {
 				name: "INVALID_PLACEHOLDER"
-				loc: Object {
-					filename: "es2017/async-functions/10/input.js"
-					end: Object {
-						column: 6
-						line: 2
-					}
-					start: Object {
-						column: 4
-						line: 2
-					}
-				}
+				loc: SourceLocation es2017/async-functions/10/input.js 2:4-2:6
 			}
 		}
 		JSExpressionStatement {
-			loc: Object {
-				filename: "es2017/async-functions/10/input.js"
-				end: Object {
-					column: 13
-					line: 2
-				}
-				start: Object {
-					column: 7
-					line: 2
-				}
-			}
+			loc: SourceLocation es2017/async-functions/10/input.js 2:7-2:13
 			expression: JSBinaryExpression {
 				operator: "+"
-				loc: Object {
-					filename: "es2017/async-functions/10/input.js"
-					end: Object {
-						column: 12
-						line: 2
-					}
-					start: Object {
-						column: 7
-						line: 2
-					}
-				}
+				loc: SourceLocation es2017/async-functions/10/input.js 2:7-2:12
 				left: JSReferenceIdentifier {
 					name: "x"
-					loc: Object {
-						filename: "es2017/async-functions/10/input.js"
-						identifierName: "x"
-						end: Object {
-							column: 8
-							line: 2
-						}
-						start: Object {
-							column: 7
-							line: 2
-						}
-					}
+					loc: SourceLocation es2017/async-functions/10/input.js 2:7-2:8 (x)
 				}
 				right: JSNumericLiteral {
 					value: 1
 					format: undefined
-					loc: Object {
-						filename: "es2017/async-functions/10/input.js"
-						end: Object {
-							column: 12
-							line: 2
-						}
-						start: Object {
-							column: 11
-							line: 2
-						}
-					}
+					loc: SourceLocation es2017/async-functions/10/input.js 2:11-2:12
 				}
 			}
 		}
@@ -256,8 +106,5 @@ JSRoot {
   > 2 │ (x) => x + 1;
       │     ^
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

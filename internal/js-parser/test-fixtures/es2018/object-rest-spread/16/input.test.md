@@ -11,285 +11,95 @@ JSRoot {
 	comments: Array []
 	corrupt: true
 	directives: Array []
-	filename: "es2018/object-rest-spread/16/input.js"
 	hasHoistedVars: true
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2018/object-rest-spread/16/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2018/object-rest-spread/16/input.js 1:0-2:0
+	path: UIDPath<es2018/object-rest-spread/16/input.js>
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse"
 				categoryValue: "js"
+				category: Array ["parse"]
 				message: RAW_MARKUP {value: "Expected an identifier"}
 			}
 			location: Object {
-				filename: "es2018/object-rest-spread/16/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 8
-					line: 1
-				}
-				start: Object {
-					column: 8
-					line: 1
-				}
+				end: Position 1:8
+				path: UIDPath<es2018/object-rest-spread/16/input.js>
+				start: Position 1:8
 			}
 		}
 	]
 	body: Array [
 		JSVariableDeclarationStatement {
-			loc: Object {
-				filename: "es2018/object-rest-spread/16/input.js"
-				end: Object {
-					column: 11
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2018/object-rest-spread/16/input.js 1:0-1:11
 			declaration: JSVariableDeclaration {
 				kind: "var"
-				loc: Object {
-					filename: "es2018/object-rest-spread/16/input.js"
-					end: Object {
-						column: 11
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation es2018/object-rest-spread/16/input.js 1:0-1:11
 				declarations: Array [
 					JSVariableDeclarator {
 						id: JSBindingObjectPattern {
-							loc: Object {
-								filename: "es2018/object-rest-spread/16/input.js"
-								end: Object {
-									column: 11
-									line: 1
-								}
-								start: Object {
-									column: 4
-									line: 1
-								}
-							}
+							loc: SourceLocation es2018/object-rest-spread/16/input.js 1:4-1:11
 							rest: JSBindingIdentifier {
 								name: ""
-								loc: Object {
-									filename: "es2018/object-rest-spread/16/input.js"
-									identifierName: ""
-									end: Object {
-										column: 9
-										line: 1
-									}
-									start: Object {
-										column: 8
-										line: 1
-									}
-								}
+								loc: SourceLocation es2018/object-rest-spread/16/input.js 1:8-1:9 ()
 							}
 							properties: Array [
 								JSBindingObjectPatternProperty {
 									key: JSStaticPropertyKey {
 										value: JSIdentifier {
 											name: "z"
-											loc: Object {
-												filename: "es2018/object-rest-spread/16/input.js"
-												identifierName: "z"
-												end: Object {
-													column: 10
-													line: 1
-												}
-												start: Object {
-													column: 9
-													line: 1
-												}
-											}
+											loc: SourceLocation es2018/object-rest-spread/16/input.js 1:9-1:10 (z)
 										}
-										loc: Object {
-											filename: "es2018/object-rest-spread/16/input.js"
-											end: Object {
-												column: 10
-												line: 1
-											}
-											start: Object {
-												column: 9
-												line: 1
-											}
-										}
+										loc: SourceLocation es2018/object-rest-spread/16/input.js 1:9-1:10
 									}
 									value: JSBindingIdentifier {
 										name: "z"
-										loc: Object {
-											filename: "es2018/object-rest-spread/16/input.js"
-											identifierName: "z"
-											end: Object {
-												column: 10
-												line: 1
-											}
-											start: Object {
-												column: 9
-												line: 1
-											}
-										}
+										loc: SourceLocation es2018/object-rest-spread/16/input.js 1:9-1:10 (z)
 									}
-									loc: Object {
-										filename: "es2018/object-rest-spread/16/input.js"
-										end: Object {
-											column: 10
-											line: 1
-										}
-										start: Object {
-											column: 9
-											line: 1
-										}
-									}
+									loc: SourceLocation es2018/object-rest-spread/16/input.js 1:9-1:10
 								}
 							]
 						}
 						init: undefined
-						loc: Object {
-							filename: "es2018/object-rest-spread/16/input.js"
-							end: Object {
-								column: 11
-								line: 1
-							}
-							start: Object {
-								column: 4
-								line: 1
-							}
-						}
+						loc: SourceLocation es2018/object-rest-spread/16/input.js 1:4-1:11
 					}
 				]
 			}
 		}
 		JSExpressionStatement {
-			loc: Object {
-				filename: "es2018/object-rest-spread/16/input.js"
-				end: Object {
-					column: 23
-					line: 1
-				}
-				start: Object {
-					column: 11
-					line: 1
-				}
-			}
+			loc: SourceLocation es2018/object-rest-spread/16/input.js 1:11-1:23
 			expression: JSAssignmentExpression {
 				operator: "="
-				loc: Object {
-					filename: "es2018/object-rest-spread/16/input.js"
-					end: Object {
-						column: 22
-						line: 1
-					}
-					start: Object {
-						column: 11
-						line: 1
-					}
-				}
+				loc: SourceLocation es2018/object-rest-spread/16/input.js 1:11-1:22
 				left: JSAssignmentIdentifier {
 					name: "INVALID_PLACEHOLDER"
-					loc: Object {
-						filename: "es2018/object-rest-spread/16/input.js"
-						end: Object {
-							column: 12
-							line: 1
-						}
-						start: Object {
-							column: 11
-							line: 1
-						}
-					}
+					loc: SourceLocation es2018/object-rest-spread/16/input.js 1:11-1:12
 				}
 				right: JSObjectExpression {
-					loc: Object {
-						filename: "es2018/object-rest-spread/16/input.js"
-						end: Object {
-							column: 22
-							line: 1
-						}
-						start: Object {
-							column: 15
-							line: 1
-						}
-					}
+					loc: SourceLocation es2018/object-rest-spread/16/input.js 1:15-1:22
 					properties: Array [
 						JSObjectProperty {
 							key: JSStaticPropertyKey {
 								value: JSIdentifier {
 									name: "z"
-									loc: Object {
-										filename: "es2018/object-rest-spread/16/input.js"
-										identifierName: "z"
-										end: Object {
-											column: 18
-											line: 1
-										}
-										start: Object {
-											column: 17
-											line: 1
-										}
-									}
+									loc: SourceLocation es2018/object-rest-spread/16/input.js 1:17-1:18 (z)
 								}
-								loc: Object {
-									filename: "es2018/object-rest-spread/16/input.js"
-									end: Object {
-										column: 18
-										line: 1
-									}
-									start: Object {
-										column: 17
-										line: 1
-									}
-								}
+								loc: SourceLocation es2018/object-rest-spread/16/input.js 1:17-1:18
 							}
 							value: JSNumericLiteral {
 								value: 1
 								format: undefined
-								loc: Object {
-									filename: "es2018/object-rest-spread/16/input.js"
-									end: Object {
-										column: 21
-										line: 1
-									}
-									start: Object {
-										column: 20
-										line: 1
-									}
-								}
+								loc: SourceLocation es2018/object-rest-spread/16/input.js 1:20-1:21
 							}
-							loc: Object {
-								filename: "es2018/object-rest-spread/16/input.js"
-								end: Object {
-									column: 21
-									line: 1
-								}
-								start: Object {
-									column: 17
-									line: 1
-								}
-							}
+							loc: SourceLocation es2018/object-rest-spread/16/input.js 1:17-1:21
 						}
 					]
 				}
@@ -310,8 +120,5 @@ JSRoot {
     var {...{z}} = { z: 1};
             ^
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

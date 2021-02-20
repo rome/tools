@@ -12,51 +12,20 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "es2015/meta-properties/nested-arrow-function/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2015/meta-properties/nested-arrow-function/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2015/meta-properties/nested-arrow-function/input.js 1:0-2:0
+	path: UIDPath<es2015/meta-properties/nested-arrow-function/input.js>
 	body: Array [
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "A"
-				loc: Object {
-					filename: "es2015/meta-properties/nested-arrow-function/input.js"
-					identifierName: "A"
-					end: Object {
-						column: 10
-						line: 1
-					}
-					start: Object {
-						column: 9
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/meta-properties/nested-arrow-function/input.js 1:9-1:10 (A)
 			}
-			loc: Object {
-				filename: "es2015/meta-properties/nested-arrow-function/input.js"
-				end: Object {
-					column: 40
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2015/meta-properties/nested-arrow-function/input.js 1:0-1:40
 			head: JSFunctionHead {
 				async: false
 				generator: false
@@ -66,56 +35,16 @@ JSRoot {
 				returnType: undefined
 				thisType: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "es2015/meta-properties/nested-arrow-function/input.js"
-					end: Object {
-						column: 12
-						line: 1
-					}
-					start: Object {
-						column: 10
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/meta-properties/nested-arrow-function/input.js 1:10-1:12
 			}
 			body: JSBlockStatement {
 				directives: Array []
-				loc: Object {
-					filename: "es2015/meta-properties/nested-arrow-function/input.js"
-					end: Object {
-						column: 40
-						line: 1
-					}
-					start: Object {
-						column: 13
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/meta-properties/nested-arrow-function/input.js 1:13-1:40
 				body: Array [
 					JSReturnStatement {
-						loc: Object {
-							filename: "es2015/meta-properties/nested-arrow-function/input.js"
-							end: Object {
-								column: 38
-								line: 1
-							}
-							start: Object {
-								column: 15
-								line: 1
-							}
-						}
+						loc: SourceLocation es2015/meta-properties/nested-arrow-function/input.js 1:15-1:38
 						argument: JSArrowFunctionExpression {
-							loc: Object {
-								filename: "es2015/meta-properties/nested-arrow-function/input.js"
-								end: Object {
-									column: 38
-									line: 1
-								}
-								start: Object {
-									column: 22
-									line: 1
-								}
-							}
+							loc: SourceLocation es2015/meta-properties/nested-arrow-function/input.js 1:22-1:38
 							head: JSFunctionHead {
 								async: false
 								hasHoistedVars: false
@@ -123,59 +52,17 @@ JSRoot {
 								rest: undefined
 								returnType: undefined
 								thisType: undefined
-								loc: Object {
-									filename: "es2015/meta-properties/nested-arrow-function/input.js"
-									end: Object {
-										column: 27
-										line: 1
-									}
-									start: Object {
-										column: 22
-										line: 1
-									}
-								}
+								loc: SourceLocation es2015/meta-properties/nested-arrow-function/input.js 1:22-1:27
 							}
 							body: JSMetaProperty {
-								loc: Object {
-									filename: "es2015/meta-properties/nested-arrow-function/input.js"
-									end: Object {
-										column: 38
-										line: 1
-									}
-									start: Object {
-										column: 28
-										line: 1
-									}
-								}
+								loc: SourceLocation es2015/meta-properties/nested-arrow-function/input.js 1:28-1:38
 								meta: JSIdentifier {
 									name: "new"
-									loc: Object {
-										filename: "es2015/meta-properties/nested-arrow-function/input.js"
-										identifierName: "new"
-										end: Object {
-											column: 31
-											line: 1
-										}
-										start: Object {
-											column: 28
-											line: 1
-										}
-									}
+									loc: SourceLocation es2015/meta-properties/nested-arrow-function/input.js 1:28-1:31 (new)
 								}
 								property: JSIdentifier {
 									name: "target"
-									loc: Object {
-										filename: "es2015/meta-properties/nested-arrow-function/input.js"
-										identifierName: "target"
-										end: Object {
-											column: 38
-											line: 1
-										}
-										start: Object {
-											column: 32
-											line: 1
-										}
-									}
+									loc: SourceLocation es2015/meta-properties/nested-arrow-function/input.js 1:32-1:38 (target)
 								}
 							}
 						}
@@ -190,6 +77,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

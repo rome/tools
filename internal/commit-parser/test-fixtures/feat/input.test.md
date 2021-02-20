@@ -12,20 +12,10 @@ CommitRoot {
 	corrupt: false
 	custom: false
 	diagnostics: Array []
-	filename: "feat/input.txt"
 	integrity: undefined
 	rawBody: "commit with a feat commit type"
 	scope: ""
-	loc: Object {
-		filename: "feat/input.txt"
-		end: Object {
-			column: 35
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation feat/input.txt 1:0-1:35
+	path: RelativePath<feat/input.txt>
 }
 ```

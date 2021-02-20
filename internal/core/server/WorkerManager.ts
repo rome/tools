@@ -13,7 +13,13 @@ import {
 	MAX_MASTER_BYTES_BEFORE_WORKERS,
 	MAX_WORKER_BYTES_BEFORE_ADD,
 } from "../common/constants";
-import {MAX_WORKER_COUNT, Server, Worker, WorkerBridge} from "@internal/core";
+import {
+	MAX_WORKER_COUNT,
+	Server,
+	Worker,
+	WorkerBridge,
+	WorkerOptions,
+} from "@internal/core";
 import {Locker} from "../../async/lockers";
 import {BridgeServer, Event} from "@internal/events";
 import {AbsoluteFilePath} from "@internal/path";
@@ -47,10 +53,10 @@ export default class WorkerManager {
 		this.workers = new ExtendedMap("workers");
 		this.idCounter = 0;
 
-		this.logger = server.logger.namespace(markup`[WorkerManager]`);
+		this.logger = server.logger.namespace(markup`WorkerManager`);
 	}
 
-	public workerStartEvent: Event<BridgeServer<typeof WorkerBridge>, void>;
+	public workerStartEvent: Event<WorkerContainer, void>;
 	public locker: Locker<number>;
 
 	private server: Server;
@@ -139,10 +145,10 @@ export default class WorkerManager {
 		});
 
 		const worker = new Worker({
-			id: 0,
 			userConfig: this.server.userConfig,
 			bridge: bridges.client,
 			dedicated: false,
+			...this.buildPartialWorkerOptions(0),
 		});
 
 		// We make an assumption elsewhere in the code that this is always the first worker
@@ -169,7 +175,7 @@ export default class WorkerManager {
 			bridges.client.handshake(),
 		]);
 
-		this.workerStartEvent.send(bridges.server);
+		this.workerStartEvent.send(container);
 	}
 
 	private async replaceOwnWorker() {
@@ -246,6 +252,16 @@ export default class WorkerManager {
 		}
 	}
 
+	private buildPartialWorkerOptions(
+		workerId: number,
+	): Pick<WorkerOptions, "id" | "cacheReadDisabled" | "cacheWriteDisabled"> {
+		return {
+			id: workerId,
+			cacheReadDisabled: this.server.cache.readDisabled,
+			cacheWriteDisabled: this.server.cache.writeDisabled,
+		};
+	}
+
 	private async _spawnWorker(
 		workerId: number,
 		isGhost: boolean,
@@ -256,9 +272,7 @@ export default class WorkerManager {
 		const thread = forkThread(
 			"worker",
 			{
-				workerData: {
-					id: workerId,
-				},
+				workerData: this.buildPartialWorkerOptions(workerId),
 			},
 		);
 
@@ -277,6 +291,10 @@ export default class WorkerManager {
 				bridge.hydrateError(details),
 				fatalErrorSource,
 			);
+		});
+
+		bridge.events.log.subscribe(({chunk, isError}) => {
+			this.server.emitLog(chunk, "worker", isError);
 		});
 
 		bridge.monitorHeartbeat(
@@ -304,7 +322,7 @@ export default class WorkerManager {
 			},
 		);
 
-		const worker: WorkerContainer = {
+		const container: WorkerContainer = {
 			id: workerId,
 			fileCount: 0,
 			byteCount: 0n,
@@ -313,7 +331,7 @@ export default class WorkerManager {
 			ghost: isGhost,
 			ready: false,
 		};
-		this.workers.set(workerId, worker);
+		this.workers.set(workerId, container);
 
 		thread.once(
 			"error",
@@ -326,7 +344,7 @@ export default class WorkerManager {
 			},
 		);
 
-		await this.workerHandshake(worker);
+		await this.workerHandshake(container);
 
 		// If a worker is spawned while we're profiling then make sure it's profiling too
 		const profileData = this.server.getRunningProfilingData();
@@ -334,7 +352,11 @@ export default class WorkerManager {
 			await bridge.events.profilingStart.call(profileData);
 		}
 
-		this.workerStartEvent.send(bridge);
+		if (this.server.hasWorkerLogsSubscriptions()) {
+			await bridge.events.setLogs.call(true);
+		}
+
+		this.workerStartEvent.send(container);
 
 		this.logger.info(
 			markup`Worker ${String(workerId)} started after <duration>${String(
@@ -342,7 +364,7 @@ export default class WorkerManager {
 			)}</duration>`,
 		);
 
-		return worker;
+		return container;
 	}
 
 	public own(workerId: number, stats: SimpleStats) {

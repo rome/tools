@@ -11,120 +11,39 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
-	filename: "esprima/es2015-yield/yield-strict-method/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "esprima/es2015-yield/yield-strict-method/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation esprima/es2015-yield/yield-strict-method/input.js 1:0-2:0
+	path: UIDPath<esprima/es2015-yield/yield-strict-method/input.js>
 	directives: Array [
 		JSDirective {
 			value: "use strict"
-			loc: Object {
-				filename: "esprima/es2015-yield/yield-strict-method/input.js"
-				end: Object {
-					column: 13
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation esprima/es2015-yield/yield-strict-method/input.js 1:0-1:13
 		}
 	]
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "esprima/es2015-yield/yield-strict-method/input.js"
-				end: Object {
-					column: 30
-					line: 1
-				}
-				start: Object {
-					column: 14
-					line: 1
-				}
-			}
+			loc: SourceLocation esprima/es2015-yield/yield-strict-method/input.js 1:14-1:30
 			expression: JSObjectExpression {
-				loc: Object {
-					filename: "esprima/es2015-yield/yield-strict-method/input.js"
-					end: Object {
-						column: 29
-						line: 1
-					}
-					start: Object {
-						column: 15
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/es2015-yield/yield-strict-method/input.js 1:15-1:29
 				properties: Array [
 					JSObjectMethod {
 						kind: "method"
 						key: JSStaticPropertyKey {
 							value: JSIdentifier {
 								name: "yield"
-								loc: Object {
-									filename: "esprima/es2015-yield/yield-strict-method/input.js"
-									identifierName: "yield"
-									end: Object {
-										column: 22
-										line: 1
-									}
-									start: Object {
-										column: 17
-										line: 1
-									}
-								}
+								loc: SourceLocation esprima/es2015-yield/yield-strict-method/input.js 1:17-1:22 (yield)
 							}
-							loc: Object {
-								filename: "esprima/es2015-yield/yield-strict-method/input.js"
-								end: Object {
-									column: 22
-									line: 1
-								}
-								start: Object {
-									column: 17
-									line: 1
-								}
-							}
+							loc: SourceLocation esprima/es2015-yield/yield-strict-method/input.js 1:17-1:22
 						}
-						loc: Object {
-							filename: "esprima/es2015-yield/yield-strict-method/input.js"
-							end: Object {
-								column: 27
-								line: 1
-							}
-							start: Object {
-								column: 17
-								line: 1
-							}
-						}
+						loc: SourceLocation esprima/es2015-yield/yield-strict-method/input.js 1:17-1:27
 						body: JSBlockStatement {
 							body: Array []
 							directives: Array []
-							loc: Object {
-								filename: "esprima/es2015-yield/yield-strict-method/input.js"
-								end: Object {
-									column: 27
-									line: 1
-								}
-								start: Object {
-									column: 25
-									line: 1
-								}
-							}
+							loc: SourceLocation esprima/es2015-yield/yield-strict-method/input.js 1:25-1:27
 						}
 						head: JSFunctionHead {
 							async: false
@@ -135,17 +54,7 @@ JSRoot {
 							returnType: undefined
 							thisType: undefined
 							typeParameters: undefined
-							loc: Object {
-								filename: "esprima/es2015-yield/yield-strict-method/input.js"
-								end: Object {
-									column: 24
-									line: 1
-								}
-								start: Object {
-									column: 22
-									line: 1
-								}
-							}
+							loc: SourceLocation esprima/es2015-yield/yield-strict-method/input.js 1:22-1:24
 						}
 					}
 				]
@@ -158,6 +67,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

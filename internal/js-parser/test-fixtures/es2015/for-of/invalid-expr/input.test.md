@@ -11,69 +11,34 @@ JSRoot {
 	comments: Array []
 	corrupt: true
 	directives: Array []
-	filename: "es2015/for-of/invalid-expr/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2015/for-of/invalid-expr/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2015/for-of/invalid-expr/input.js 1:0-2:0
+	path: UIDPath<es2015/for-of/invalid-expr/input.js>
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
 			location: Object {
-				filename: "es2015/for-of/invalid-expr/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 4
-					line: 1
-				}
-				start: Object {
-					column: 4
-					line: 1
-				}
+				end: Position 1:4
+				path: UIDPath<es2015/for-of/invalid-expr/input.js>
+				start: Position 1:4
 			}
 			description: Object {
-				category: "parse"
 				categoryValue: "js"
-				message: Array [
-					RAW_MARKUP {value: "Unclosed "}
-					"for head"
-				]
+				category: Array ["parse"]
+				message: RAW_MARKUP {value: "Unclosed <emphasis>for head</emphasis>"}
 				advice: Array [
 					log {
 						category: "info"
-						text: Array [
-							RAW_MARKUP {value: "We expected to find the closing character <emphasis>"}
-							")"
-							RAW_MARKUP {value: "</emphasis> here"}
-						]
+						text: RAW_MARKUP {value: "We expected to find the closing character <emphasis>)</emphasis> here"}
 					}
-					frame {
-						location: Object {
-							filename: "es2015/for-of/invalid-expr/input.js"
-							end: Object {
-								column: 15
-								line: 1
-							}
-							start: Object {
-								column: 15
-								line: 1
-							}
-						}
-					}
+					frame {location: SourceLocation es2015/for-of/invalid-expr/input.js 1:15-1:15}
 				]
 			}
 		}
@@ -81,174 +46,51 @@ JSRoot {
 	body: Array [
 		JSForOfStatement {
 			await: false
-			loc: Object {
-				filename: "es2015/for-of/invalid-expr/input.js"
-				end: Object {
-					column: 16
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2015/for-of/invalid-expr/input.js 1:0-1:16
 			right: JSReferenceIdentifier {
 				name: "y"
-				loc: Object {
-					filename: "es2015/for-of/invalid-expr/input.js"
-					identifierName: "y"
-					end: Object {
-						column: 15
-						line: 1
-					}
-					start: Object {
-						column: 14
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/for-of/invalid-expr/input.js 1:14-1:15 (y)
 			}
 			body: JSExpressionStatement {
-				loc: Object {
-					filename: "es2015/for-of/invalid-expr/input.js"
-					end: Object {
-						column: 16
-						line: 1
-					}
-					start: Object {
-						column: 15
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/for-of/invalid-expr/input.js 1:15-1:16
 				expression: JSReferenceIdentifier {
 					name: "INVALID_PLACEHOLDER"
-					loc: Object {
-						filename: "es2015/for-of/invalid-expr/input.js"
-						end: Object {
-							column: 16
-							line: 1
-						}
-						start: Object {
-							column: 15
-							line: 1
-						}
-					}
+					loc: SourceLocation es2015/for-of/invalid-expr/input.js 1:15-1:16
 				}
 			}
 			left: JSVariableDeclaration {
 				kind: "let"
-				loc: Object {
-					filename: "es2015/for-of/invalid-expr/input.js"
-					end: Object {
-						column: 10
-						line: 1
-					}
-					start: Object {
-						column: 5
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/for-of/invalid-expr/input.js 1:5-1:10
 				declarations: Array [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "x"
-							loc: Object {
-								filename: "es2015/for-of/invalid-expr/input.js"
-								identifierName: "x"
-								end: Object {
-									column: 10
-									line: 1
-								}
-								start: Object {
-									column: 9
-									line: 1
-								}
-							}
+							loc: SourceLocation es2015/for-of/invalid-expr/input.js 1:9-1:10 (x)
 						}
 						init: undefined
-						loc: Object {
-							filename: "es2015/for-of/invalid-expr/input.js"
-							end: Object {
-								column: 10
-								line: 1
-							}
-							start: Object {
-								column: 9
-								line: 1
-							}
-						}
+						loc: SourceLocation es2015/for-of/invalid-expr/input.js 1:9-1:10
 					}
 				]
 			}
 		}
 		JSExpressionStatement {
-			loc: Object {
-				filename: "es2015/for-of/invalid-expr/input.js"
-				end: Object {
-					column: 18
-					line: 1
-				}
-				start: Object {
-					column: 17
-					line: 1
-				}
-			}
+			loc: SourceLocation es2015/for-of/invalid-expr/input.js 1:17-1:18
 			expression: JSReferenceIdentifier {
 				name: "z"
-				loc: Object {
-					filename: "es2015/for-of/invalid-expr/input.js"
-					identifierName: "z"
-					end: Object {
-						column: 18
-						line: 1
-					}
-					start: Object {
-						column: 17
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/for-of/invalid-expr/input.js 1:17-1:18 (z)
 			}
 		}
 		JSExpressionStatement {
-			loc: Object {
-				filename: "es2015/for-of/invalid-expr/input.js"
-				end: Object {
-					column: 19
-					line: 1
-				}
-				start: Object {
-					column: 18
-					line: 1
-				}
-			}
+			loc: SourceLocation es2015/for-of/invalid-expr/input.js 1:18-1:19
 			expression: JSReferenceIdentifier {
 				name: "INVALID_PLACEHOLDER"
-				loc: Object {
-					filename: "es2015/for-of/invalid-expr/input.js"
-					end: Object {
-						column: 19
-						line: 1
-					}
-					start: Object {
-						column: 18
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/for-of/invalid-expr/input.js 1:18-1:19
 			}
 		}
 		JSBlockStatement {
 			body: Array []
 			directives: Array []
-			loc: Object {
-				filename: "es2015/for-of/invalid-expr/input.js"
-				end: Object {
-					column: 22
-					line: 1
-				}
-				start: Object {
-					column: 20
-					line: 1
-				}
-			}
+			loc: SourceLocation es2015/for-of/invalid-expr/input.js 1:20-1:22
 		}
 	]
 }
@@ -262,13 +104,13 @@ JSRoot {
 
   ✖ Unclosed for head
 
+    for (let x of y, z) {}
+        ^
+
   ℹ We expected to find the closing character ) here
 
     for (let x of y, z) {}
                    ^
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

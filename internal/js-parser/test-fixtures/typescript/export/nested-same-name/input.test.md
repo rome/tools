@@ -12,105 +12,34 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "typescript/export/nested-same-name/input.ts"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
+	loc: SourceLocation typescript/export/nested-same-name/input.ts 1:0-5:0
+	path: UIDPath<typescript/export/nested-same-name/input.ts>
 	syntax: Array ["ts"]
-	loc: Object {
-		filename: "typescript/export/nested-same-name/input.ts"
-		end: Object {
-			column: 0
-			line: 5
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
 	body: Array [
 		JSExportLocalDeclaration {
 			exportKind: "value"
 			specifiers: undefined
-			loc: Object {
-				filename: "typescript/export/nested-same-name/input.ts"
-				end: Object {
-					column: 19
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation typescript/export/nested-same-name/input.ts 1:0-1:19
 			declaration: JSVariableDeclarationStatement {
-				loc: Object {
-					filename: "typescript/export/nested-same-name/input.ts"
-					end: Object {
-						column: 19
-						line: 1
-					}
-					start: Object {
-						column: 7
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/export/nested-same-name/input.ts 1:7-1:19
 				declaration: JSVariableDeclaration {
 					kind: "const"
-					loc: Object {
-						filename: "typescript/export/nested-same-name/input.ts"
-						end: Object {
-							column: 19
-							line: 1
-						}
-						start: Object {
-							column: 7
-							line: 1
-						}
-					}
+					loc: SourceLocation typescript/export/nested-same-name/input.ts 1:7-1:19
 					declarations: Array [
 						JSVariableDeclarator {
 							id: JSBindingIdentifier {
 								name: "x"
-								loc: Object {
-									filename: "typescript/export/nested-same-name/input.ts"
-									identifierName: "x"
-									end: Object {
-										column: 14
-										line: 1
-									}
-									start: Object {
-										column: 13
-										line: 1
-									}
-								}
+								loc: SourceLocation typescript/export/nested-same-name/input.ts 1:13-1:14 (x)
 							}
-							loc: Object {
-								filename: "typescript/export/nested-same-name/input.ts"
-								end: Object {
-									column: 18
-									line: 1
-								}
-								start: Object {
-									column: 13
-									line: 1
-								}
-							}
+							loc: SourceLocation typescript/export/nested-same-name/input.ts 1:13-1:18
 							init: JSNumericLiteral {
 								value: 0
 								format: undefined
-								loc: Object {
-									filename: "typescript/export/nested-same-name/input.ts"
-									end: Object {
-										column: 18
-										line: 1
-									}
-									start: Object {
-										column: 17
-										line: 1
-									}
-								}
+								loc: SourceLocation typescript/export/nested-same-name/input.ts 1:17-1:18
 							}
 						}
 					]
@@ -120,138 +49,36 @@ JSRoot {
 		JSExportLocalDeclaration {
 			exportKind: "value"
 			specifiers: undefined
-			loc: Object {
-				filename: "typescript/export/nested-same-name/input.ts"
-				end: Object {
-					column: 1
-					line: 4
-				}
-				start: Object {
-					column: 0
-					line: 2
-				}
-			}
+			loc: SourceLocation typescript/export/nested-same-name/input.ts 2:0-4:1
 			declaration: TSModuleDeclaration {
 				id: JSBindingIdentifier {
 					name: "N"
-					loc: Object {
-						filename: "typescript/export/nested-same-name/input.ts"
-						identifierName: "N"
-						end: Object {
-							column: 18
-							line: 2
-						}
-						start: Object {
-							column: 17
-							line: 2
-						}
-					}
+					loc: SourceLocation typescript/export/nested-same-name/input.ts 2:17-2:18 (N)
 				}
-				loc: Object {
-					filename: "typescript/export/nested-same-name/input.ts"
-					end: Object {
-						column: 1
-						line: 4
-					}
-					start: Object {
-						column: 7
-						line: 2
-					}
-				}
+				loc: SourceLocation typescript/export/nested-same-name/input.ts 2:7-4:1
 				body: TSModuleBlock {
-					loc: Object {
-						filename: "typescript/export/nested-same-name/input.ts"
-						end: Object {
-							column: 1
-							line: 4
-						}
-						start: Object {
-							column: 19
-							line: 2
-						}
-					}
+					loc: SourceLocation typescript/export/nested-same-name/input.ts 2:19-4:1
 					body: Array [
 						JSExportLocalDeclaration {
 							exportKind: "value"
 							specifiers: undefined
-							loc: Object {
-								filename: "typescript/export/nested-same-name/input.ts"
-								end: Object {
-									column: 23
-									line: 3
-								}
-								start: Object {
-									column: 4
-									line: 3
-								}
-							}
+							loc: SourceLocation typescript/export/nested-same-name/input.ts 3:4-3:23
 							declaration: JSVariableDeclarationStatement {
-								loc: Object {
-									filename: "typescript/export/nested-same-name/input.ts"
-									end: Object {
-										column: 23
-										line: 3
-									}
-									start: Object {
-										column: 11
-										line: 3
-									}
-								}
+								loc: SourceLocation typescript/export/nested-same-name/input.ts 3:11-3:23
 								declaration: JSVariableDeclaration {
 									kind: "const"
-									loc: Object {
-										filename: "typescript/export/nested-same-name/input.ts"
-										end: Object {
-											column: 23
-											line: 3
-										}
-										start: Object {
-											column: 11
-											line: 3
-										}
-									}
+									loc: SourceLocation typescript/export/nested-same-name/input.ts 3:11-3:23
 									declarations: Array [
 										JSVariableDeclarator {
 											id: JSBindingIdentifier {
 												name: "x"
-												loc: Object {
-													filename: "typescript/export/nested-same-name/input.ts"
-													identifierName: "x"
-													end: Object {
-														column: 18
-														line: 3
-													}
-													start: Object {
-														column: 17
-														line: 3
-													}
-												}
+												loc: SourceLocation typescript/export/nested-same-name/input.ts 3:17-3:18 (x)
 											}
-											loc: Object {
-												filename: "typescript/export/nested-same-name/input.ts"
-												end: Object {
-													column: 22
-													line: 3
-												}
-												start: Object {
-													column: 17
-													line: 3
-												}
-											}
+											loc: SourceLocation typescript/export/nested-same-name/input.ts 3:17-3:22
 											init: JSNumericLiteral {
 												value: 1
 												format: undefined
-												loc: Object {
-													filename: "typescript/export/nested-same-name/input.ts"
-													end: Object {
-														column: 22
-														line: 3
-													}
-													start: Object {
-														column: 21
-														line: 3
-													}
-												}
+												loc: SourceLocation typescript/export/nested-same-name/input.ts 3:21-3:22
 											}
 										}
 									]
@@ -269,6 +96,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

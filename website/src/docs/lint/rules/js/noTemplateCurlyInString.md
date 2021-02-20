@@ -17,7 +17,7 @@ disallow template literal placeholder syntax in regular strings
 **ESLint Equivalent:** [no-template-curly-in-string](https://eslint.org/docs/rules/no-template-curly-in-string)
 <!-- GENERATED:END(id:description) -->
 
-<!-- GENERATED:START(hash:c3e179345a8fb2e8fd65fd751a0ae6649e12204a,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+<!-- GENERATED:START(hash:1e40d1320acdd4ce23da182b792640b9c4dfd3d2,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
 
 ### Invalid
@@ -33,8 +33,8 @@ disallow template literal placeholder syntax in regular strings
   <strong><span style="color: Tomato;">&gt;</span></strong><strong> 2</strong><strong> │ </strong>               <span class="token keyword">const</span> <span class="token variable">helloUser</span> <span class="token operator">=</span> <span class="token string">&apos;Hello, ${user}&apos;</span><span class="token punctuation">;</span>
      <strong> │ </strong>                                 <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
 
-  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Using template string expressions in regular strings is usually a</span>
-    <span style="color: DodgerBlue;">typo.</span>
+  <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">Using template string expressions in regular strings is usually a</span>
+    <span style="color: rgb(38, 148, 255);">typo.</span>
 
 </code></pre>{% endraw %}
 <!-- GENERATED:END(id:examples) -->

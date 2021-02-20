@@ -12,80 +12,28 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "es2015/uncategorised/86/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
 	syntax: Array []
-	loc: Object {
-		filename: "es2015/uncategorised/86/input.js"
-		end: Object {
-			column: 0
-			line: 3
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2015/uncategorised/86/input.js 1:0-3:0
+	path: UIDPath<es2015/uncategorised/86/input.js>
 	body: Array [
 		JSExportLocalDeclaration {
 			declaration: undefined
 			exportKind: "value"
-			loc: Object {
-				filename: "es2015/uncategorised/86/input.js"
-				end: Object {
-					column: 18
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2015/uncategorised/86/input.js 1:0-1:18
 			specifiers: Array [
 				JSExportLocalSpecifier {
-					loc: Object {
-						filename: "es2015/uncategorised/86/input.js"
-						end: Object {
-							column: 16
-							line: 1
-						}
-						start: Object {
-							column: 9
-							line: 1
-						}
-					}
+					loc: SourceLocation es2015/uncategorised/86/input.js 1:9-1:16
 					exported: JSIdentifier {
 						name: "encrypt"
-						loc: Object {
-							filename: "es2015/uncategorised/86/input.js"
-							identifierName: "encrypt"
-							end: Object {
-								column: 16
-								line: 1
-							}
-							start: Object {
-								column: 9
-								line: 1
-							}
-						}
+						loc: SourceLocation es2015/uncategorised/86/input.js 1:9-1:16 (encrypt)
 					}
 					local: JSReferenceIdentifier {
 						name: "encrypt"
-						loc: Object {
-							filename: "es2015/uncategorised/86/input.js"
-							identifierName: "encrypt"
-							end: Object {
-								column: 16
-								line: 1
-							}
-							start: Object {
-								column: 9
-								line: 1
-							}
-						}
+						loc: SourceLocation es2015/uncategorised/86/input.js 1:9-1:16 (encrypt)
 					}
 				}
 			]
@@ -93,44 +41,13 @@ JSRoot {
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "encrypt"
-				loc: Object {
-					filename: "es2015/uncategorised/86/input.js"
-					identifierName: "encrypt"
-					end: Object {
-						column: 16
-						line: 2
-					}
-					start: Object {
-						column: 9
-						line: 2
-					}
-				}
+				loc: SourceLocation es2015/uncategorised/86/input.js 2:9-2:16 (encrypt)
 			}
-			loc: Object {
-				filename: "es2015/uncategorised/86/input.js"
-				end: Object {
-					column: 22
-					line: 2
-				}
-				start: Object {
-					column: 0
-					line: 2
-				}
-			}
+			loc: SourceLocation es2015/uncategorised/86/input.js 2:0-2:22
 			body: JSBlockStatement {
 				body: Array []
 				directives: Array []
-				loc: Object {
-					filename: "es2015/uncategorised/86/input.js"
-					end: Object {
-						column: 22
-						line: 2
-					}
-					start: Object {
-						column: 20
-						line: 2
-					}
-				}
+				loc: SourceLocation es2015/uncategorised/86/input.js 2:20-2:22
 			}
 			head: JSFunctionHead {
 				async: false
@@ -141,17 +58,7 @@ JSRoot {
 				returnType: undefined
 				thisType: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "es2015/uncategorised/86/input.js"
-					end: Object {
-						column: 19
-						line: 2
-					}
-					start: Object {
-						column: 17
-						line: 2
-					}
-				}
+				loc: SourceLocation es2015/uncategorised/86/input.js 2:17-2:19
 			}
 		}
 	]
@@ -161,6 +68,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

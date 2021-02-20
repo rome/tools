@@ -11,45 +11,29 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "typescript/class/declare-field-modifiers/input.ts"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
+	loc: SourceLocation typescript/class/declare-field-modifiers/input.ts 1:0-12:0
+	path: UIDPath<typescript/class/declare-field-modifiers/input.ts>
 	syntax: Array ["ts"]
-	loc: Object {
-		filename: "typescript/class/declare-field-modifiers/input.ts"
-		end: Object {
-			column: 0
-			line: 12
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse"
 				categoryValue: "js"
+				category: Array ["parse"]
 				message: RAW_MARKUP {value: "Unknown class property start"}
 			}
 			location: Object {
-				filename: "typescript/class/declare-field-modifiers/input.ts"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 9
-					line: 2
-				}
-				start: Object {
-					column: 10
-					line: 2
-				}
+				end: Position 2:9
+				path: UIDPath<typescript/class/declare-field-modifiers/input.ts>
+				start: Position 2:10
 			}
 		}
 	]
@@ -57,90 +41,28 @@ JSRoot {
 		JSClassDeclaration {
 			id: JSBindingIdentifier {
 				name: "A"
-				loc: Object {
-					filename: "typescript/class/declare-field-modifiers/input.ts"
-					identifierName: "A"
-					end: Object {
-						column: 7
-						line: 1
-					}
-					start: Object {
-						column: 6
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/class/declare-field-modifiers/input.ts 1:6-1:7 (A)
 			}
-			loc: Object {
-				filename: "typescript/class/declare-field-modifiers/input.ts"
-				end: Object {
-					column: 1
-					line: 11
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation typescript/class/declare-field-modifiers/input.ts 1:0-11:1
 			meta: JSClassHead {
 				implements: undefined
 				superClass: undefined
 				superTypeParameters: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "typescript/class/declare-field-modifiers/input.ts"
-					end: Object {
-						column: 1
-						line: 11
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/class/declare-field-modifiers/input.ts 1:0-11:1
 				body: Array [
 					JSClassProperty {
 						key: JSStaticPropertyKey {
 							value: JSIdentifier {
 								name: "foo"
-								loc: Object {
-									filename: "typescript/class/declare-field-modifiers/input.ts"
-									identifierName: "foo"
-									end: Object {
-										column: 20
-										line: 2
-									}
-									start: Object {
-										column: 17
-										line: 2
-									}
-								}
+								loc: SourceLocation typescript/class/declare-field-modifiers/input.ts 2:17-2:20 (foo)
 							}
-							loc: Object {
-								filename: "typescript/class/declare-field-modifiers/input.ts"
-								end: Object {
-									column: 20
-									line: 2
-								}
-								start: Object {
-									column: 17
-									line: 2
-								}
-							}
+							loc: SourceLocation typescript/class/declare-field-modifiers/input.ts 2:17-2:20
 						}
 						value: undefined
 						definite: undefined
 						typeAnnotation: undefined
-						loc: Object {
-							filename: "typescript/class/declare-field-modifiers/input.ts"
-							end: Object {
-								column: 21
-								line: 2
-							}
-							start: Object {
-								column: 10
-								line: 2
-							}
-						}
+						loc: SourceLocation typescript/class/declare-field-modifiers/input.ts 2:10-2:21
 						meta: JSClassPropertyMeta {
 							abstract: false
 							accessibility: undefined
@@ -148,78 +70,22 @@ JSRoot {
 							readonly: false
 							static: true
 							typeAnnotation: undefined
-							start: Object {
-								column: 10
-								line: 2
-							}
-							loc: Object {
-								filename: "typescript/class/declare-field-modifiers/input.ts"
-								end: Object {
-									column: 20
-									line: 2
-								}
-								start: Object {
-									column: 10
-									line: 2
-								}
-							}
+							loc: SourceLocation typescript/class/declare-field-modifiers/input.ts 2:10-2:20
+							start: Position 2:10
 						}
 					}
 					JSClassProperty {
 						key: JSStaticPropertyKey {
 							value: JSIdentifier {
 								name: "foo0"
-								loc: Object {
-									filename: "typescript/class/declare-field-modifiers/input.ts"
-									identifierName: "foo0"
-									end: Object {
-										column: 21
-										line: 3
-									}
-									start: Object {
-										column: 17
-										line: 3
-									}
-								}
+								loc: SourceLocation typescript/class/declare-field-modifiers/input.ts 3:17-3:21 (foo0)
 							}
-							loc: Object {
-								filename: "typescript/class/declare-field-modifiers/input.ts"
-								end: Object {
-									column: 21
-									line: 3
-								}
-								start: Object {
-									column: 17
-									line: 3
-								}
-							}
+							loc: SourceLocation typescript/class/declare-field-modifiers/input.ts 3:17-3:21
 						}
 						value: undefined
 						definite: undefined
-						loc: Object {
-							filename: "typescript/class/declare-field-modifiers/input.ts"
-							end: Object {
-								column: 30
-								line: 3
-							}
-							start: Object {
-								column: 17
-								line: 3
-							}
-						}
-						typeAnnotation: TSStringKeywordTypeAnnotation {
-							loc: Object {
-								filename: "typescript/class/declare-field-modifiers/input.ts"
-								end: Object {
-									column: 29
-									line: 3
-								}
-								start: Object {
-									column: 23
-									line: 3
-								}
-							}
-						}
+						loc: SourceLocation typescript/class/declare-field-modifiers/input.ts 3:17-3:30
+						typeAnnotation: TSStringKeywordTypeAnnotation {loc: SourceLocation typescript/class/declare-field-modifiers/input.ts 3:23-3:29}
 						meta: JSClassPropertyMeta {
 							abstract: false
 							accessibility: undefined
@@ -227,66 +93,22 @@ JSRoot {
 							readonly: false
 							static: false
 							typeAnnotation: undefined
-							start: Object {
-								column: 17
-								line: 3
-							}
-							loc: Object {
-								filename: "typescript/class/declare-field-modifiers/input.ts"
-								end: Object {
-									column: 21
-									line: 3
-								}
-								start: Object {
-									column: 17
-									line: 3
-								}
-							}
+							loc: SourceLocation typescript/class/declare-field-modifiers/input.ts 3:17-3:21
+							start: Position 3:17
 						}
 					}
 					JSClassProperty {
 						key: JSStaticPropertyKey {
 							value: JSIdentifier {
 								name: "foo1"
-								loc: Object {
-									filename: "typescript/class/declare-field-modifiers/input.ts"
-									identifierName: "foo1"
-									end: Object {
-										column: 21
-										line: 5
-									}
-									start: Object {
-										column: 17
-										line: 5
-									}
-								}
+								loc: SourceLocation typescript/class/declare-field-modifiers/input.ts 5:17-5:21 (foo1)
 							}
-							loc: Object {
-								filename: "typescript/class/declare-field-modifiers/input.ts"
-								end: Object {
-									column: 21
-									line: 5
-								}
-								start: Object {
-									column: 17
-									line: 5
-								}
-							}
+							loc: SourceLocation typescript/class/declare-field-modifiers/input.ts 5:17-5:21
 						}
 						value: undefined
 						definite: undefined
 						typeAnnotation: undefined
-						loc: Object {
-							filename: "typescript/class/declare-field-modifiers/input.ts"
-							end: Object {
-								column: 22
-								line: 5
-							}
-							start: Object {
-								column: 10
-								line: 5
-							}
-						}
+						loc: SourceLocation typescript/class/declare-field-modifiers/input.ts 5:10-5:22
 						meta: JSClassPropertyMeta {
 							abstract: false
 							accessibility: "public"
@@ -294,66 +116,22 @@ JSRoot {
 							readonly: false
 							static: false
 							typeAnnotation: undefined
-							start: Object {
-								column: 10
-								line: 5
-							}
-							loc: Object {
-								filename: "typescript/class/declare-field-modifiers/input.ts"
-								end: Object {
-									column: 21
-									line: 5
-								}
-								start: Object {
-									column: 10
-									line: 5
-								}
-							}
+							loc: SourceLocation typescript/class/declare-field-modifiers/input.ts 5:10-5:21
+							start: Position 5:10
 						}
 					}
 					JSClassProperty {
 						key: JSStaticPropertyKey {
 							value: JSIdentifier {
 								name: "foo2"
-								loc: Object {
-									filename: "typescript/class/declare-field-modifiers/input.ts"
-									identifierName: "foo2"
-									end: Object {
-										column: 21
-										line: 6
-									}
-									start: Object {
-										column: 17
-										line: 6
-									}
-								}
+								loc: SourceLocation typescript/class/declare-field-modifiers/input.ts 6:17-6:21 (foo2)
 							}
-							loc: Object {
-								filename: "typescript/class/declare-field-modifiers/input.ts"
-								end: Object {
-									column: 21
-									line: 6
-								}
-								start: Object {
-									column: 17
-									line: 6
-								}
-							}
+							loc: SourceLocation typescript/class/declare-field-modifiers/input.ts 6:17-6:21
 						}
 						value: undefined
 						definite: undefined
 						typeAnnotation: undefined
-						loc: Object {
-							filename: "typescript/class/declare-field-modifiers/input.ts"
-							end: Object {
-								column: 22
-								line: 6
-							}
-							start: Object {
-								column: 17
-								line: 6
-							}
-						}
+						loc: SourceLocation typescript/class/declare-field-modifiers/input.ts 6:17-6:22
 						meta: JSClassPropertyMeta {
 							abstract: false
 							accessibility: undefined
@@ -361,66 +139,22 @@ JSRoot {
 							readonly: false
 							static: false
 							typeAnnotation: undefined
-							start: Object {
-								column: 17
-								line: 6
-							}
-							loc: Object {
-								filename: "typescript/class/declare-field-modifiers/input.ts"
-								end: Object {
-									column: 21
-									line: 6
-								}
-								start: Object {
-									column: 17
-									line: 6
-								}
-							}
+							loc: SourceLocation typescript/class/declare-field-modifiers/input.ts 6:17-6:21
+							start: Position 6:17
 						}
 					}
 					JSClassProperty {
 						key: JSStaticPropertyKey {
 							value: JSIdentifier {
 								name: "foo4"
-								loc: Object {
-									filename: "typescript/class/declare-field-modifiers/input.ts"
-									identifierName: "foo4"
-									end: Object {
-										column: 28
-										line: 8
-									}
-									start: Object {
-										column: 24
-										line: 8
-									}
-								}
+								loc: SourceLocation typescript/class/declare-field-modifiers/input.ts 8:24-8:28 (foo4)
 							}
-							loc: Object {
-								filename: "typescript/class/declare-field-modifiers/input.ts"
-								end: Object {
-									column: 28
-									line: 8
-								}
-								start: Object {
-									column: 24
-									line: 8
-								}
-							}
+							loc: SourceLocation typescript/class/declare-field-modifiers/input.ts 8:24-8:28
 						}
 						value: undefined
 						definite: undefined
 						typeAnnotation: undefined
-						loc: Object {
-							filename: "typescript/class/declare-field-modifiers/input.ts"
-							end: Object {
-								column: 29
-								line: 8
-							}
-							start: Object {
-								column: 10
-								line: 8
-							}
-						}
+						loc: SourceLocation typescript/class/declare-field-modifiers/input.ts 8:10-8:29
 						meta: JSClassPropertyMeta {
 							abstract: false
 							accessibility: "public"
@@ -428,66 +162,22 @@ JSRoot {
 							readonly: false
 							static: true
 							typeAnnotation: undefined
-							start: Object {
-								column: 10
-								line: 8
-							}
-							loc: Object {
-								filename: "typescript/class/declare-field-modifiers/input.ts"
-								end: Object {
-									column: 28
-									line: 8
-								}
-								start: Object {
-									column: 10
-									line: 8
-								}
-							}
+							loc: SourceLocation typescript/class/declare-field-modifiers/input.ts 8:10-8:28
+							start: Position 8:10
 						}
 					}
 					JSClassProperty {
 						key: JSStaticPropertyKey {
 							value: JSIdentifier {
 								name: "foo3"
-								loc: Object {
-									filename: "typescript/class/declare-field-modifiers/input.ts"
-									identifierName: "foo3"
-									end: Object {
-										column: 28
-										line: 9
-									}
-									start: Object {
-										column: 24
-										line: 9
-									}
-								}
+								loc: SourceLocation typescript/class/declare-field-modifiers/input.ts 9:24-9:28 (foo3)
 							}
-							loc: Object {
-								filename: "typescript/class/declare-field-modifiers/input.ts"
-								end: Object {
-									column: 28
-									line: 9
-								}
-								start: Object {
-									column: 24
-									line: 9
-								}
-							}
+							loc: SourceLocation typescript/class/declare-field-modifiers/input.ts 9:24-9:28
 						}
 						value: undefined
 						definite: undefined
 						typeAnnotation: undefined
-						loc: Object {
-							filename: "typescript/class/declare-field-modifiers/input.ts"
-							end: Object {
-								column: 29
-								line: 9
-							}
-							start: Object {
-								column: 17
-								line: 9
-							}
-						}
+						loc: SourceLocation typescript/class/declare-field-modifiers/input.ts 9:17-9:29
 						meta: JSClassPropertyMeta {
 							abstract: false
 							accessibility: undefined
@@ -495,66 +185,22 @@ JSRoot {
 							readonly: false
 							static: true
 							typeAnnotation: undefined
-							start: Object {
-								column: 17
-								line: 9
-							}
-							loc: Object {
-								filename: "typescript/class/declare-field-modifiers/input.ts"
-								end: Object {
-									column: 28
-									line: 9
-								}
-								start: Object {
-									column: 17
-									line: 9
-								}
-							}
+							loc: SourceLocation typescript/class/declare-field-modifiers/input.ts 9:17-9:28
+							start: Position 9:17
 						}
 					}
 					JSClassProperty {
 						key: JSStaticPropertyKey {
 							value: JSIdentifier {
 								name: "foo5"
-								loc: Object {
-									filename: "typescript/class/declare-field-modifiers/input.ts"
-									identifierName: "foo5"
-									end: Object {
-										column: 28
-										line: 10
-									}
-									start: Object {
-										column: 24
-										line: 10
-									}
-								}
+								loc: SourceLocation typescript/class/declare-field-modifiers/input.ts 10:24-10:28 (foo5)
 							}
-							loc: Object {
-								filename: "typescript/class/declare-field-modifiers/input.ts"
-								end: Object {
-									column: 28
-									line: 10
-								}
-								start: Object {
-									column: 24
-									line: 10
-								}
-							}
+							loc: SourceLocation typescript/class/declare-field-modifiers/input.ts 10:24-10:28
 						}
 						value: undefined
 						definite: undefined
 						typeAnnotation: undefined
-						loc: Object {
-							filename: "typescript/class/declare-field-modifiers/input.ts"
-							end: Object {
-								column: 29
-								line: 10
-							}
-							start: Object {
-								column: 24
-								line: 10
-							}
-						}
+						loc: SourceLocation typescript/class/declare-field-modifiers/input.ts 10:24-10:29
 						meta: JSClassPropertyMeta {
 							abstract: false
 							accessibility: undefined
@@ -562,21 +208,8 @@ JSRoot {
 							readonly: false
 							static: false
 							typeAnnotation: undefined
-							start: Object {
-								column: 24
-								line: 10
-							}
-							loc: Object {
-								filename: "typescript/class/declare-field-modifiers/input.ts"
-								end: Object {
-									column: 28
-									line: 10
-								}
-								start: Object {
-									column: 24
-									line: 10
-								}
-							}
+							loc: SourceLocation typescript/class/declare-field-modifiers/input.ts 10:24-10:28
+							start: Position 10:24
 						}
 					}
 				]
@@ -599,8 +232,5 @@ JSRoot {
       │           ^
     3 │   static declare foo0: string;
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

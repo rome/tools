@@ -12,93 +12,32 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "typescript/types/import-type-declaration/input.ts"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
+	loc: SourceLocation typescript/types/import-type-declaration/input.ts 1:0-4:0
+	path: UIDPath<typescript/types/import-type-declaration/input.ts>
 	syntax: Array ["ts"]
-	loc: Object {
-		filename: "typescript/types/import-type-declaration/input.ts"
-		end: Object {
-			column: 0
-			line: 4
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
 	body: Array [
 		JSImportDeclaration {
 			importKind: "type"
 			namedSpecifiers: Array []
 			namespaceSpecifier: undefined
-			loc: Object {
-				filename: "typescript/types/import-type-declaration/input.ts"
-				end: Object {
-					column: 27
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation typescript/types/import-type-declaration/input.ts 1:0-1:27
 			source: JSStringLiteral {
 				value: "./mod"
-				loc: Object {
-					filename: "typescript/types/import-type-declaration/input.ts"
-					end: Object {
-						column: 26
-						line: 1
-					}
-					start: Object {
-						column: 19
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/types/import-type-declaration/input.ts 1:19-1:26
 			}
 			defaultSpecifier: JSImportDefaultSpecifier {
-				loc: Object {
-					filename: "typescript/types/import-type-declaration/input.ts"
-					end: Object {
-						column: 13
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/types/import-type-declaration/input.ts 1:0-1:13
 				local: JSImportSpecifierLocal {
 					name: JSBindingIdentifier {
 						name: "T"
-						loc: Object {
-							filename: "typescript/types/import-type-declaration/input.ts"
-							identifierName: "T"
-							end: Object {
-								column: 13
-								line: 1
-							}
-							start: Object {
-								column: 12
-								line: 1
-							}
-						}
+						loc: SourceLocation typescript/types/import-type-declaration/input.ts 1:12-1:13 (T)
 					}
 					importKind: "type"
-					loc: Object {
-						filename: "typescript/types/import-type-declaration/input.ts"
-						end: Object {
-							column: 13
-							line: 1
-						}
-						start: Object {
-							column: 12
-							line: 1
-						}
-					}
+					loc: SourceLocation typescript/types/import-type-declaration/input.ts 1:12-1:13
 				}
 			}
 		}
@@ -106,144 +45,40 @@ JSRoot {
 			defaultSpecifier: undefined
 			importKind: "type"
 			namespaceSpecifier: undefined
-			loc: Object {
-				filename: "typescript/types/import-type-declaration/input.ts"
-				end: Object {
-					column: 34
-					line: 2
-				}
-				start: Object {
-					column: 0
-					line: 2
-				}
-			}
+			loc: SourceLocation typescript/types/import-type-declaration/input.ts 2:0-2:34
 			source: JSStringLiteral {
 				value: "./mod"
-				loc: Object {
-					filename: "typescript/types/import-type-declaration/input.ts"
-					end: Object {
-						column: 33
-						line: 2
-					}
-					start: Object {
-						column: 26
-						line: 2
-					}
-				}
+				loc: SourceLocation typescript/types/import-type-declaration/input.ts 2:26-2:33
 			}
 			namedSpecifiers: Array [
 				JSImportSpecifier {
-					loc: Object {
-						filename: "typescript/types/import-type-declaration/input.ts"
-						end: Object {
-							column: 15
-							line: 2
-						}
-						start: Object {
-							column: 14
-							line: 2
-						}
-					}
+					loc: SourceLocation typescript/types/import-type-declaration/input.ts 2:14-2:15
 					imported: JSIdentifier {
 						name: "A"
-						loc: Object {
-							filename: "typescript/types/import-type-declaration/input.ts"
-							identifierName: "A"
-							end: Object {
-								column: 15
-								line: 2
-							}
-							start: Object {
-								column: 14
-								line: 2
-							}
-						}
+						loc: SourceLocation typescript/types/import-type-declaration/input.ts 2:14-2:15 (A)
 					}
 					local: JSImportSpecifierLocal {
 						name: JSBindingIdentifier {
 							name: "A"
-							loc: Object {
-								filename: "typescript/types/import-type-declaration/input.ts"
-								identifierName: "A"
-								end: Object {
-									column: 15
-									line: 2
-								}
-								start: Object {
-									column: 14
-									line: 2
-								}
-							}
+							loc: SourceLocation typescript/types/import-type-declaration/input.ts 2:14-2:15 (A)
 						}
 						importKind: undefined
-						loc: Object {
-							filename: "typescript/types/import-type-declaration/input.ts"
-							end: Object {
-								column: 15
-								line: 2
-							}
-							start: Object {
-								column: 14
-								line: 2
-							}
-						}
+						loc: SourceLocation typescript/types/import-type-declaration/input.ts 2:14-2:15
 					}
 				}
 				JSImportSpecifier {
-					loc: Object {
-						filename: "typescript/types/import-type-declaration/input.ts"
-						end: Object {
-							column: 18
-							line: 2
-						}
-						start: Object {
-							column: 17
-							line: 2
-						}
-					}
+					loc: SourceLocation typescript/types/import-type-declaration/input.ts 2:17-2:18
 					imported: JSIdentifier {
 						name: "B"
-						loc: Object {
-							filename: "typescript/types/import-type-declaration/input.ts"
-							identifierName: "B"
-							end: Object {
-								column: 18
-								line: 2
-							}
-							start: Object {
-								column: 17
-								line: 2
-							}
-						}
+						loc: SourceLocation typescript/types/import-type-declaration/input.ts 2:17-2:18 (B)
 					}
 					local: JSImportSpecifierLocal {
 						name: JSBindingIdentifier {
 							name: "B"
-							loc: Object {
-								filename: "typescript/types/import-type-declaration/input.ts"
-								identifierName: "B"
-								end: Object {
-									column: 18
-									line: 2
-								}
-								start: Object {
-									column: 17
-									line: 2
-								}
-							}
+							loc: SourceLocation typescript/types/import-type-declaration/input.ts 2:17-2:18 (B)
 						}
 						importKind: undefined
-						loc: Object {
-							filename: "typescript/types/import-type-declaration/input.ts"
-							end: Object {
-								column: 18
-								line: 2
-							}
-							start: Object {
-								column: 17
-								line: 2
-							}
-						}
+						loc: SourceLocation typescript/types/import-type-declaration/input.ts 2:17-2:18
 					}
 				}
 			]
@@ -252,71 +87,20 @@ JSRoot {
 			defaultSpecifier: undefined
 			importKind: "type"
 			namedSpecifiers: Array []
-			loc: Object {
-				filename: "typescript/types/import-type-declaration/input.ts"
-				end: Object {
-					column: 36
-					line: 3
-				}
-				start: Object {
-					column: 0
-					line: 3
-				}
-			}
+			loc: SourceLocation typescript/types/import-type-declaration/input.ts 3:0-3:36
 			source: JSStringLiteral {
 				value: "./mod"
-				loc: Object {
-					filename: "typescript/types/import-type-declaration/input.ts"
-					end: Object {
-						column: 35
-						line: 3
-					}
-					start: Object {
-						column: 28
-						line: 3
-					}
-				}
+				loc: SourceLocation typescript/types/import-type-declaration/input.ts 3:28-3:35
 			}
 			namespaceSpecifier: JSImportNamespaceSpecifier {
-				loc: Object {
-					filename: "typescript/types/import-type-declaration/input.ts"
-					end: Object {
-						column: 22
-						line: 3
-					}
-					start: Object {
-						column: 0
-						line: 3
-					}
-				}
+				loc: SourceLocation typescript/types/import-type-declaration/input.ts 3:0-3:22
 				local: JSImportSpecifierLocal {
 					name: JSBindingIdentifier {
 						name: "Types"
-						loc: Object {
-							filename: "typescript/types/import-type-declaration/input.ts"
-							identifierName: "Types"
-							end: Object {
-								column: 22
-								line: 3
-							}
-							start: Object {
-								column: 17
-								line: 3
-							}
-						}
+						loc: SourceLocation typescript/types/import-type-declaration/input.ts 3:17-3:22 (Types)
 					}
 					importKind: "type"
-					loc: Object {
-						filename: "typescript/types/import-type-declaration/input.ts"
-						end: Object {
-							column: 22
-							line: 3
-						}
-						start: Object {
-							column: 17
-							line: 3
-						}
-					}
+					loc: SourceLocation typescript/types/import-type-declaration/input.ts 3:17-3:22
 				}
 			}
 		}
@@ -327,6 +111,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

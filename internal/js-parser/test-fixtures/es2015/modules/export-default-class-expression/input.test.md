@@ -12,80 +12,29 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "es2015/modules/export-default-class-expression/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
 	syntax: Array []
-	loc: Object {
-		filename: "es2015/modules/export-default-class-expression/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2015/modules/export-default-class-expression/input.js 1:0-2:0
+	path: UIDPath<es2015/modules/export-default-class-expression/input.js>
 	body: Array [
 		JSExportDefaultDeclaration {
-			loc: Object {
-				filename: "es2015/modules/export-default-class-expression/input.js"
-				end: Object {
-					column: 30
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2015/modules/export-default-class-expression/input.js 1:0-1:30
 			declaration: JSClassExpression {
 				id: JSBindingIdentifier {
 					name: "Foo"
-					loc: Object {
-						filename: "es2015/modules/export-default-class-expression/input.js"
-						identifierName: "Foo"
-						end: Object {
-							column: 25
-							line: 1
-						}
-						start: Object {
-							column: 22
-							line: 1
-						}
-					}
+					loc: SourceLocation es2015/modules/export-default-class-expression/input.js 1:22-1:25 (Foo)
 				}
-				loc: Object {
-					filename: "es2015/modules/export-default-class-expression/input.js"
-					end: Object {
-						column: 28
-						line: 1
-					}
-					start: Object {
-						column: 16
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/modules/export-default-class-expression/input.js 1:16-1:28
 				meta: JSClassHead {
 					body: Array []
 					implements: undefined
 					superClass: undefined
 					superTypeParameters: undefined
 					typeParameters: undefined
-					loc: Object {
-						filename: "es2015/modules/export-default-class-expression/input.js"
-						end: Object {
-							column: 28
-							line: 1
-						}
-						start: Object {
-							column: 16
-							line: 1
-						}
-					}
+					loc: SourceLocation es2015/modules/export-default-class-expression/input.js 1:16-1:28
 				}
 			}
 		}
@@ -96,6 +45,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

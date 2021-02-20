@@ -11,145 +11,55 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "esprima/es2015-for-of/invalid-const-init/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "esprima/es2015-for-of/invalid-const-init/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation esprima/es2015-for-of/invalid-const-init/input.js 1:0-2:0
+	path: UIDPath<esprima/es2015-for-of/invalid-const-init/input.js>
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse"
 				categoryValue: "js"
+				category: Array ["parse"]
 				message: RAW_MARKUP {value: "Loop variable declaration may not have an initializer"}
 			}
 			location: Object {
-				filename: "esprima/es2015-for-of/invalid-const-init/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 16
-					line: 1
-				}
-				start: Object {
-					column: 5
-					line: 1
-				}
+				end: Position 1:16
+				path: UIDPath<esprima/es2015-for-of/invalid-const-init/input.js>
+				start: Position 1:5
 			}
 		}
 	]
 	body: Array [
 		JSForOfStatement {
 			await: false
-			loc: Object {
-				filename: "esprima/es2015-for-of/invalid-const-init/input.js"
-				end: Object {
-					column: 23
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
-			body: JSEmptyStatement {
-				loc: Object {
-					filename: "esprima/es2015-for-of/invalid-const-init/input.js"
-					end: Object {
-						column: 23
-						line: 1
-					}
-					start: Object {
-						column: 22
-						line: 1
-					}
-				}
-			}
+			body: JSEmptyStatement {loc: SourceLocation esprima/es2015-for-of/invalid-const-init/input.js 1:22-1:23}
+			loc: SourceLocation esprima/es2015-for-of/invalid-const-init/input.js 1:0-1:23
 			right: JSReferenceIdentifier {
 				name: "y"
-				loc: Object {
-					filename: "esprima/es2015-for-of/invalid-const-init/input.js"
-					identifierName: "y"
-					end: Object {
-						column: 21
-						line: 1
-					}
-					start: Object {
-						column: 20
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/es2015-for-of/invalid-const-init/input.js 1:20-1:21 (y)
 			}
 			left: JSVariableDeclaration {
 				kind: "const"
-				loc: Object {
-					filename: "esprima/es2015-for-of/invalid-const-init/input.js"
-					end: Object {
-						column: 16
-						line: 1
-					}
-					start: Object {
-						column: 5
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/es2015-for-of/invalid-const-init/input.js 1:5-1:16
 				declarations: Array [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "x"
-							loc: Object {
-								filename: "esprima/es2015-for-of/invalid-const-init/input.js"
-								identifierName: "x"
-								end: Object {
-									column: 12
-									line: 1
-								}
-								start: Object {
-									column: 11
-									line: 1
-								}
-							}
+							loc: SourceLocation esprima/es2015-for-of/invalid-const-init/input.js 1:11-1:12 (x)
 						}
-						loc: Object {
-							filename: "esprima/es2015-for-of/invalid-const-init/input.js"
-							end: Object {
-								column: 16
-								line: 1
-							}
-							start: Object {
-								column: 11
-								line: 1
-							}
-						}
+						loc: SourceLocation esprima/es2015-for-of/invalid-const-init/input.js 1:11-1:16
 						init: JSNumericLiteral {
 							value: 1
 							format: undefined
-							loc: Object {
-								filename: "esprima/es2015-for-of/invalid-const-init/input.js"
-								end: Object {
-									column: 16
-									line: 1
-								}
-								start: Object {
-									column: 15
-									line: 1
-								}
-							}
+							loc: SourceLocation esprima/es2015-for-of/invalid-const-init/input.js 1:15-1:16
 						}
 					}
 				]
@@ -170,8 +80,5 @@ JSRoot {
     for (const x = 1 of y);
          ^^^^^^^^^^^
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

@@ -11,140 +11,54 @@ JSRoot {
 	comments: Array []
 	corrupt: true
 	directives: Array []
-	filename: "esprima/es2015-generator/generator-method-with-invalid-computed-name/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "esprima/es2015-generator/generator-method-with-invalid-computed-name/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation esprima/es2015-generator/generator-method-with-invalid-computed-name/input.js 1:0-2:0
+	path: UIDPath<esprima/es2015-generator/generator-method-with-invalid-computed-name/input.js>
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
 			location: Object {
-				filename: "esprima/es2015-generator/generator-method-with-invalid-computed-name/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 4
-					line: 1
-				}
-				start: Object {
-					column: 4
-					line: 1
-				}
+				end: Position 1:4
+				path: UIDPath<esprima/es2015-generator/generator-method-with-invalid-computed-name/input.js>
+				start: Position 1:4
 			}
 			description: Object {
-				category: "parse"
 				categoryValue: "js"
-				message: Array [
-					RAW_MARKUP {value: "Unclosed "}
-					"property name"
-				]
+				category: Array ["parse"]
+				message: RAW_MARKUP {value: "Unclosed <emphasis>property name</emphasis>"}
 				advice: Array [
 					log {
 						category: "info"
-						text: Array [
-							RAW_MARKUP {value: "We expected to find the closing character <emphasis>"}
-							"]"
-							RAW_MARKUP {value: "</emphasis> here"}
-						]
+						text: RAW_MARKUP {value: "We expected to find the closing character <emphasis>]</emphasis> here"}
 					}
-					frame {
-						location: Object {
-							filename: "esprima/es2015-generator/generator-method-with-invalid-computed-name/input.js"
-							end: Object {
-								column: 11
-								line: 1
-							}
-							start: Object {
-								column: 11
-								line: 1
-							}
-						}
-					}
+					frame {location: SourceLocation esprima/es2015-generator/generator-method-with-invalid-computed-name/input.js 1:11-1:11}
 				]
 			}
 		}
 	]
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "esprima/es2015-generator/generator-method-with-invalid-computed-name/input.js"
-				end: Object {
-					column: 24
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation esprima/es2015-generator/generator-method-with-invalid-computed-name/input.js 1:0-1:24
 			expression: JSObjectExpression {
-				loc: Object {
-					filename: "esprima/es2015-generator/generator-method-with-invalid-computed-name/input.js"
-					end: Object {
-						column: 23
-						line: 1
-					}
-					start: Object {
-						column: 1
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/es2015-generator/generator-method-with-invalid-computed-name/input.js 1:1-1:23
 				properties: Array [
 					JSObjectMethod {
 						kind: "method"
 						key: JSComputedPropertyKey {
 							value: JSReferenceIdentifier {
 								name: "yield"
-								loc: Object {
-									filename: "esprima/es2015-generator/generator-method-with-invalid-computed-name/input.js"
-									identifierName: "yield"
-									end: Object {
-										column: 10
-										line: 1
-									}
-									start: Object {
-										column: 5
-										line: 1
-									}
-								}
+								loc: SourceLocation esprima/es2015-generator/generator-method-with-invalid-computed-name/input.js 1:5-1:10 (yield)
 							}
-							loc: Object {
-								filename: "esprima/es2015-generator/generator-method-with-invalid-computed-name/input.js"
-								end: Object {
-									column: 10
-									line: 1
-								}
-								start: Object {
-									column: 4
-									line: 1
-								}
-							}
+							loc: SourceLocation esprima/es2015-generator/generator-method-with-invalid-computed-name/input.js 1:4-1:10
 						}
-						loc: Object {
-							filename: "esprima/es2015-generator/generator-method-with-invalid-computed-name/input.js"
-							end: Object {
-								column: 23
-								line: 1
-							}
-							start: Object {
-								column: 3
-								line: 1
-							}
-						}
+						loc: SourceLocation esprima/es2015-generator/generator-method-with-invalid-computed-name/input.js 1:3-1:23
 						head: JSFunctionHead {
 							async: false
 							generator: true
@@ -153,119 +67,38 @@ JSRoot {
 							returnType: undefined
 							thisType: undefined
 							typeParameters: undefined
-							loc: Object {
-								filename: "esprima/es2015-generator/generator-method-with-invalid-computed-name/input.js"
-								end: Object {
-									column: 15
-									line: 1
-								}
-								start: Object {
-									column: 11
-									line: 1
-								}
-							}
+							loc: SourceLocation esprima/es2015-generator/generator-method-with-invalid-computed-name/input.js 1:11-1:15
 							params: Array [
 								JSBindingIdentifier {
 									name: "iter"
-									loc: Object {
-										filename: "esprima/es2015-generator/generator-method-with-invalid-computed-name/input.js"
-										identifierName: "iter"
-										end: Object {
-											column: 15
-											line: 1
-										}
-										start: Object {
-											column: 11
-											line: 1
-										}
-									}
+									loc: SourceLocation esprima/es2015-generator/generator-method-with-invalid-computed-name/input.js 1:11-1:15 (iter)
 									meta: JSPatternMeta {
 										optional: undefined
 										typeAnnotation: undefined
-										loc: Object {
-											filename: "esprima/es2015-generator/generator-method-with-invalid-computed-name/input.js"
-											end: Object {
-												column: 15
-												line: 1
-											}
-											start: Object {
-												column: 11
-												line: 1
-											}
-										}
+										loc: SourceLocation esprima/es2015-generator/generator-method-with-invalid-computed-name/input.js 1:11-1:15
 									}
 								}
 							]
 						}
 						body: JSBlockStatement {
 							directives: Array []
-							loc: Object {
-								filename: "esprima/es2015-generator/generator-method-with-invalid-computed-name/input.js"
-								end: Object {
-									column: 23
-									line: 1
-								}
-								start: Object {
-									column: 15
-									line: 1
-								}
-							}
+							loc: SourceLocation esprima/es2015-generator/generator-method-with-invalid-computed-name/input.js 1:15-1:23
 							body: Array [
 								JSExpressionStatement {
-									loc: Object {
-										filename: "esprima/es2015-generator/generator-method-with-invalid-computed-name/input.js"
-										end: Object {
-											column: 18
-											line: 1
-										}
-										start: Object {
-											column: 15
-											line: 1
-										}
-									}
+									loc: SourceLocation esprima/es2015-generator/generator-method-with-invalid-computed-name/input.js 1:15-1:18
 									expression: JSCallExpression {
 										arguments: Array []
-										loc: Object {
-											filename: "esprima/es2015-generator/generator-method-with-invalid-computed-name/input.js"
-											end: Object {
-												column: 18
-												line: 1
-											}
-											start: Object {
-												column: 15
-												line: 1
-											}
-										}
+										loc: SourceLocation esprima/es2015-generator/generator-method-with-invalid-computed-name/input.js 1:15-1:18
 										callee: JSReferenceIdentifier {
 											name: "INVALID_PLACEHOLDER"
-											loc: Object {
-												filename: "esprima/es2015-generator/generator-method-with-invalid-computed-name/input.js"
-												end: Object {
-													column: 16
-													line: 1
-												}
-												start: Object {
-													column: 15
-													line: 1
-												}
-											}
+											loc: SourceLocation esprima/es2015-generator/generator-method-with-invalid-computed-name/input.js 1:15-1:16
 										}
 									}
 								}
 								JSBlockStatement {
 									body: Array []
 									directives: Array []
-									loc: Object {
-										filename: "esprima/es2015-generator/generator-method-with-invalid-computed-name/input.js"
-										end: Object {
-											column: 21
-											line: 1
-										}
-										start: Object {
-											column: 19
-											line: 1
-										}
-									}
+									loc: SourceLocation esprima/es2015-generator/generator-method-with-invalid-computed-name/input.js 1:19-1:21
 								}
 							]
 						}
@@ -285,13 +118,13 @@ JSRoot {
 
   ✖ Unclosed property name
 
+    ({ *[yield iter]() {} })
+        ^
+
   ℹ We expected to find the closing character ] here
 
     ({ *[yield iter]() {} })
                ^
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

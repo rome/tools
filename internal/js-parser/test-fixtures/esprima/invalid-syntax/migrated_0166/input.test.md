@@ -11,103 +11,46 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "esprima/invalid-syntax/migrated_0166/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "esprima/invalid-syntax/migrated_0166/input.js"
-		end: Object {
-			column: 0
-			line: 2
+	loc: SourceLocation esprima/invalid-syntax/migrated_0166/input.js 1:0-2:0
+	path: UIDPath<esprima/invalid-syntax/migrated_0166/input.js>
+	body: Array [
+		JSExpressionStatement {
+			loc: SourceLocation esprima/invalid-syntax/migrated_0166/input.js 1:0-1:11
+			expression: JSAssignmentExpression {
+				operator: "="
+				loc: SourceLocation esprima/invalid-syntax/migrated_0166/input.js 1:0-1:11
+				left: JSAssignmentIdentifier {
+					name: "\u200c"
+					loc: SourceLocation esprima/invalid-syntax/migrated_0166/input.js 1:0-1:6 (\u200c)
+				}
+				right: JSArrayExpression {
+					elements: Array []
+					loc: SourceLocation esprima/invalid-syntax/migrated_0166/input.js 1:9-1:11
+				}
+			}
 		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	]
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse"
 				categoryValue: "js"
+				category: Array ["parse"]
 				message: RAW_MARKUP {value: "Invalid Unicode escape"}
 			}
 			location: Object {
-				filename: "esprima/invalid-syntax/migrated_0166/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 6
-					line: 1
-				}
-				start: Object {
-					column: 6
-					line: 1
-				}
-			}
-		}
-	]
-	body: Array [
-		JSExpressionStatement {
-			loc: Object {
-				filename: "esprima/invalid-syntax/migrated_0166/input.js"
-				end: Object {
-					column: 11
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
-			expression: JSAssignmentExpression {
-				operator: "="
-				loc: Object {
-					filename: "esprima/invalid-syntax/migrated_0166/input.js"
-					end: Object {
-						column: 11
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
-				right: JSArrayExpression {
-					elements: Array []
-					loc: Object {
-						filename: "esprima/invalid-syntax/migrated_0166/input.js"
-						end: Object {
-							column: 11
-							line: 1
-						}
-						start: Object {
-							column: 9
-							line: 1
-						}
-					}
-				}
-				left: JSAssignmentIdentifier {
-					name: "\u200c"
-					loc: Object {
-						filename: "esprima/invalid-syntax/migrated_0166/input.js"
-						identifierName: "\u200c"
-						end: Object {
-							column: 6
-							line: 1
-						}
-						start: Object {
-							column: 0
-							line: 1
-						}
-					}
-				}
+				end: Position 1:6
+				path: UIDPath<esprima/invalid-syntax/migrated_0166/input.js>
+				start: Position 1:6
 			}
 		}
 	]
@@ -125,8 +68,5 @@ JSRoot {
     \u200C = []
           ^
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

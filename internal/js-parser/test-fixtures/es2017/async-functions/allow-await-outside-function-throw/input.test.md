@@ -11,45 +11,29 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "es2017/async-functions/allow-await-outside-function-throw/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2017/async-functions/allow-await-outside-function-throw/input.js"
-		end: Object {
-			column: 0
-			line: 4
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2017/async-functions/allow-await-outside-function-throw/input.js 1:0-4:0
+	path: UIDPath<es2017/async-functions/allow-await-outside-function-throw/input.js>
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse"
 				categoryValue: "js"
+				category: Array ["parse"]
 				message: RAW_MARKUP {value: "Expected a semicolon or a line terminator"}
 			}
 			location: Object {
-				filename: "es2017/async-functions/allow-await-outside-function-throw/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 14
-					line: 2
-				}
-				start: Object {
-					column: 15
-					line: 2
-				}
+				end: Position 2:14
+				path: UIDPath<es2017/async-functions/allow-await-outside-function-throw/input.js>
+				start: Position 2:15
 			}
 		}
 	]
@@ -57,30 +41,9 @@ JSRoot {
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "a"
-				loc: Object {
-					filename: "es2017/async-functions/allow-await-outside-function-throw/input.js"
-					identifierName: "a"
-					end: Object {
-						column: 10
-						line: 1
-					}
-					start: Object {
-						column: 9
-						line: 1
-					}
-				}
+				loc: SourceLocation es2017/async-functions/allow-await-outside-function-throw/input.js 1:9-1:10 (a)
 			}
-			loc: Object {
-				filename: "es2017/async-functions/allow-await-outside-function-throw/input.js"
-				end: Object {
-					column: 1
-					line: 3
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2017/async-functions/allow-await-outside-function-throw/input.js 1:0-3:1
 			head: JSFunctionHead {
 				async: false
 				generator: false
@@ -90,86 +53,25 @@ JSRoot {
 				returnType: undefined
 				thisType: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "es2017/async-functions/allow-await-outside-function-throw/input.js"
-					end: Object {
-						column: 12
-						line: 1
-					}
-					start: Object {
-						column: 10
-						line: 1
-					}
-				}
+				loc: SourceLocation es2017/async-functions/allow-await-outside-function-throw/input.js 1:10-1:12
 			}
 			body: JSBlockStatement {
 				directives: Array []
-				loc: Object {
-					filename: "es2017/async-functions/allow-await-outside-function-throw/input.js"
-					end: Object {
-						column: 1
-						line: 3
-					}
-					start: Object {
-						column: 13
-						line: 1
-					}
-				}
+				loc: SourceLocation es2017/async-functions/allow-await-outside-function-throw/input.js 1:13-3:1
 				body: Array [
 					JSReturnStatement {
-						loc: Object {
-							filename: "es2017/async-functions/allow-await-outside-function-throw/input.js"
-							end: Object {
-								column: 14
-								line: 2
-							}
-							start: Object {
-								column: 2
-								line: 2
-							}
-						}
+						loc: SourceLocation es2017/async-functions/allow-await-outside-function-throw/input.js 2:2-2:14
 						argument: JSReferenceIdentifier {
 							name: "await"
-							loc: Object {
-								filename: "es2017/async-functions/allow-await-outside-function-throw/input.js"
-								identifierName: "await"
-								end: Object {
-									column: 14
-									line: 2
-								}
-								start: Object {
-									column: 9
-									line: 2
-								}
-							}
+							loc: SourceLocation es2017/async-functions/allow-await-outside-function-throw/input.js 2:9-2:14 (await)
 						}
 					}
 					JSExpressionStatement {
-						loc: Object {
-							filename: "es2017/async-functions/allow-await-outside-function-throw/input.js"
-							end: Object {
-								column: 16
-								line: 2
-							}
-							start: Object {
-								column: 15
-								line: 2
-							}
-						}
+						loc: SourceLocation es2017/async-functions/allow-await-outside-function-throw/input.js 2:15-2:16
 						expression: JSNumericLiteral {
 							value: 1
 							format: undefined
-							loc: Object {
-								filename: "es2017/async-functions/allow-await-outside-function-throw/input.js"
-								end: Object {
-									column: 16
-									line: 2
-								}
-								start: Object {
-									column: 15
-									line: 2
-								}
-							}
+							loc: SourceLocation es2017/async-functions/allow-await-outside-function-throw/input.js 2:15-2:16
 						}
 					}
 				]
@@ -192,8 +94,5 @@ JSRoot {
       │                ^
     3 │ }
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

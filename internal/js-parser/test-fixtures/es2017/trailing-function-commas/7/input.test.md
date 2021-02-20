@@ -11,74 +11,38 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "es2017/trailing-function-commas/7/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2017/trailing-function-commas/7/input.js"
-		end: Object {
-			column: 8
-			line: 1
+	loc: SourceLocation es2017/trailing-function-commas/7/input.js 1:0-1:8
+	path: UIDPath<es2017/trailing-function-commas/7/input.js>
+	body: Array [
+		JSExpressionStatement {
+			loc: SourceLocation es2017/trailing-function-commas/7/input.js 1:0-1:8
+			expression: JSStringLiteral {
+				value: "foo"
+				loc: SourceLocation es2017/trailing-function-commas/7/input.js 1:1-1:6
+			}
 		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	]
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse"
 				categoryValue: "js"
-				message: RAW_MARKUP {value: "Unexpected token"}
+				category: Array ["parse"]
+				message: RAW_MARKUP {value: "Unexpected character <emphasis>)</emphasis>"}
 			}
 			location: Object {
-				filename: "es2017/trailing-function-commas/7/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 7
-					line: 1
-				}
-				start: Object {
-					column: 7
-					line: 1
-				}
-			}
-		}
-	]
-	body: Array [
-		JSExpressionStatement {
-			loc: Object {
-				filename: "es2017/trailing-function-commas/7/input.js"
-				end: Object {
-					column: 8
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
-			expression: JSStringLiteral {
-				value: "foo"
-				loc: Object {
-					filename: "es2017/trailing-function-commas/7/input.js"
-					end: Object {
-						column: 6
-						line: 1
-					}
-					start: Object {
-						column: 1
-						line: 1
-					}
-				}
+				end: Position 1:7
+				path: UIDPath<es2017/trailing-function-commas/7/input.js>
+				start: Position 1:7
 			}
 		}
 	]
@@ -91,13 +55,10 @@ JSRoot {
 
  es2017/trailing-function-commas/7/input.js:1:7 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ Unexpected token
+  ✖ Unexpected character )
 
     ('foo',)
            ^
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

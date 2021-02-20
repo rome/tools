@@ -12,108 +12,46 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "experimental/class-private-methods/generator/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "experimental/class-private-methods/generator/input.js"
-		end: Object {
-			column: 0
-			line: 6
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation experimental/class-private-methods/generator/input.js 1:0-6:0
+	path: UIDPath<experimental/class-private-methods/generator/input.js>
 	body: Array [
 		JSClassDeclaration {
 			id: JSBindingIdentifier {
 				name: "Hotel"
-				loc: Object {
-					filename: "experimental/class-private-methods/generator/input.js"
-					identifierName: "Hotel"
-					end: Object {
-						column: 11
-						line: 1
-					}
-					start: Object {
-						column: 6
-						line: 1
-					}
-				}
+				loc: SourceLocation experimental/class-private-methods/generator/input.js 1:6-1:11 (Hotel)
 			}
-			loc: Object {
-				filename: "experimental/class-private-methods/generator/input.js"
-				end: Object {
-					column: 1
-					line: 5
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation experimental/class-private-methods/generator/input.js 1:0-5:1
 			meta: JSClassHead {
 				implements: undefined
 				superClass: undefined
 				superTypeParameters: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "experimental/class-private-methods/generator/input.js"
-					end: Object {
-						column: 1
-						line: 5
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation experimental/class-private-methods/generator/input.js 1:0-5:1
 				body: Array [
 					JSClassPrivateMethod {
 						kind: "method"
 						key: JSPrivateName {
 							id: JSIdentifier {
 								name: "evil"
-								loc: Object {
-									filename: "experimental/class-private-methods/generator/input.js"
-									identifierName: "evil"
-									end: Object {
-										column: 8
-										line: 2
-									}
-									start: Object {
-										column: 4
-										line: 2
-									}
-								}
+								loc: SourceLocation experimental/class-private-methods/generator/input.js 2:4-2:8 (evil)
 							}
-							loc: Object {
-								filename: "experimental/class-private-methods/generator/input.js"
-								end: Object {
-									column: 8
-									line: 2
-								}
-								start: Object {
-									column: 3
-									line: 2
-								}
-							}
+							loc: SourceLocation experimental/class-private-methods/generator/input.js 2:3-2:8
 						}
-						loc: Object {
-							filename: "experimental/class-private-methods/generator/input.js"
-							end: Object {
-								column: 3
-								line: 4
-							}
-							start: Object {
-								column: 2
-								line: 2
-							}
+						loc: SourceLocation experimental/class-private-methods/generator/input.js 2:2-4:3
+						meta: JSClassPropertyMeta {
+							abstract: false
+							accessibility: undefined
+							optional: false
+							readonly: false
+							static: false
+							typeAnnotation: undefined
+							loc: SourceLocation experimental/class-private-methods/generator/input.js 2:2-2:8
+							start: Position 2:2
 						}
 						head: JSFunctionHead {
 							async: false
@@ -124,107 +62,23 @@ JSRoot {
 							returnType: undefined
 							thisType: undefined
 							typeParameters: undefined
-							loc: Object {
-								filename: "experimental/class-private-methods/generator/input.js"
-								end: Object {
-									column: 10
-									line: 2
-								}
-								start: Object {
-									column: 8
-									line: 2
-								}
-							}
-						}
-						meta: JSClassPropertyMeta {
-							abstract: false
-							accessibility: undefined
-							optional: false
-							readonly: false
-							static: false
-							typeAnnotation: undefined
-							start: Object {
-								column: 2
-								line: 2
-							}
-							loc: Object {
-								filename: "experimental/class-private-methods/generator/input.js"
-								end: Object {
-									column: 8
-									line: 2
-								}
-								start: Object {
-									column: 2
-									line: 2
-								}
-							}
+							loc: SourceLocation experimental/class-private-methods/generator/input.js 2:8-2:10
 						}
 						body: JSBlockStatement {
 							directives: Array []
-							loc: Object {
-								filename: "experimental/class-private-methods/generator/input.js"
-								end: Object {
-									column: 3
-									line: 4
-								}
-								start: Object {
-									column: 11
-									line: 2
-								}
-							}
+							loc: SourceLocation experimental/class-private-methods/generator/input.js 2:11-4:3
 							body: Array [
 								JSExpressionStatement {
-									loc: Object {
-										filename: "experimental/class-private-methods/generator/input.js"
-										end: Object {
-											column: 22
-											line: 3
-										}
-										start: Object {
-											column: 4
-											line: 3
-										}
-									}
+									loc: SourceLocation experimental/class-private-methods/generator/input.js 3:4-3:22
 									expression: JSYieldExpression {
 										delegate: false
-										loc: Object {
-											filename: "experimental/class-private-methods/generator/input.js"
-											end: Object {
-												column: 21
-												line: 3
-											}
-											start: Object {
-												column: 4
-												line: 3
-											}
-										}
+										loc: SourceLocation experimental/class-private-methods/generator/input.js 3:4-3:21
 										argument: JSCallExpression {
 											arguments: Array []
-											loc: Object {
-												filename: "experimental/class-private-methods/generator/input.js"
-												end: Object {
-													column: 21
-													line: 3
-												}
-												start: Object {
-													column: 10
-													line: 3
-												}
-											}
+											loc: SourceLocation experimental/class-private-methods/generator/input.js 3:10-3:21
 											callee: JSReferenceIdentifier {
 												name: "notReally"
-												loc: Object {
-													filename: "experimental/class-private-methods/generator/input.js"
-													identifierName: "notReally"
-													end: Object {
-														column: 19
-														line: 3
-													}
-													start: Object {
-														column: 10
-														line: 3
-													}
-												}
+												loc: SourceLocation experimental/class-private-methods/generator/input.js 3:10-3:19 (notReally)
 											}
 										}
 									}
@@ -242,6 +96,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

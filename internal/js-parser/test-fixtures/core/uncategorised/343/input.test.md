@@ -11,138 +11,46 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "core/uncategorised/343/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "core/uncategorised/343/input.js"
-		end: Object {
-			column: 12
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation core/uncategorised/343/input.js 1:0-2:12
+	path: UIDPath<core/uncategorised/343/input.js>
 	comments: Array [
 		CommentLine {
 			id: "0"
 			value: " nothing"
-			loc: Object {
-				filename: "core/uncategorised/343/input.js"
-				end: Object {
-					column: 12
-					line: 2
-				}
-				start: Object {
-					column: 1
-					line: 2
-				}
-			}
+			loc: SourceLocation core/uncategorised/343/input.js 2:1-2:12
 		}
 	]
 	body: Array [
 		JSExpressionStatement {
+			loc: SourceLocation core/uncategorised/343/input.js 1:0-1:11
 			trailingComments: Array ["0"]
-			loc: Object {
-				filename: "core/uncategorised/343/input.js"
-				end: Object {
-					column: 11
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
 			expression: JSAssignmentExpression {
 				operator: "="
-				loc: Object {
-					filename: "core/uncategorised/343/input.js"
-					end: Object {
-						column: 10
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation core/uncategorised/343/input.js 1:0-1:10
 				left: JSAssignmentIdentifier {
 					name: "x"
-					loc: Object {
-						filename: "core/uncategorised/343/input.js"
-						identifierName: "x"
-						end: Object {
-							column: 1
-							line: 1
-						}
-						start: Object {
-							column: 0
-							line: 1
-						}
-					}
+					loc: SourceLocation core/uncategorised/343/input.js 1:0-1:1 (x)
 				}
 				right: JSBinaryExpression {
 					operator: ">"
-					loc: Object {
-						filename: "core/uncategorised/343/input.js"
-						end: Object {
-							column: 10
-							line: 1
-						}
-						start: Object {
-							column: 4
-							line: 1
-						}
-					}
+					loc: SourceLocation core/uncategorised/343/input.js 1:4-1:10
 					right: JSNumericLiteral {
 						value: 10
 						format: undefined
-						loc: Object {
-							filename: "core/uncategorised/343/input.js"
-							end: Object {
-								column: 10
-								line: 1
-							}
-							start: Object {
-								column: 8
-								line: 1
-							}
-						}
+						loc: SourceLocation core/uncategorised/343/input.js 1:8-1:10
 					}
 					left: JSUpdateExpression {
 						operator: "--"
 						prefix: false
-						loc: Object {
-							filename: "core/uncategorised/343/input.js"
-							end: Object {
-								column: 7
-								line: 1
-							}
-							start: Object {
-								column: 4
-								line: 1
-							}
-						}
+						loc: SourceLocation core/uncategorised/343/input.js 1:4-1:7
 						argument: JSReferenceIdentifier {
 							name: "y"
-							loc: Object {
-								filename: "core/uncategorised/343/input.js"
-								identifierName: "y"
-								end: Object {
-									column: 5
-									line: 1
-								}
-								start: Object {
-									column: 4
-									line: 1
-								}
-							}
+							loc: SourceLocation core/uncategorised/343/input.js 1:4-1:5 (y)
 						}
 					}
 				}
@@ -155,6 +63,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

@@ -12,104 +12,32 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "typescript/const/no-initializer/input.ts"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
+	loc: SourceLocation typescript/const/no-initializer/input.ts 1:0-2:0
+	path: UIDPath<typescript/const/no-initializer/input.ts>
 	syntax: Array ["ts"]
-	loc: Object {
-		filename: "typescript/const/no-initializer/input.ts"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
 	body: Array [
 		JSVariableDeclarationStatement {
-			loc: Object {
-				filename: "typescript/const/no-initializer/input.ts"
-				end: Object {
-					column: 16
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation typescript/const/no-initializer/input.ts 1:0-1:16
 			declaration: JSVariableDeclaration {
 				kind: "const"
-				loc: Object {
-					filename: "typescript/const/no-initializer/input.ts"
-					end: Object {
-						column: 16
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/const/no-initializer/input.ts 1:0-1:16
 				declarations: Array [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "x"
-							loc: Object {
-								filename: "typescript/const/no-initializer/input.ts"
-								end: Object {
-									column: 15
-									line: 1
-								}
-								start: Object {
-									column: 6
-									line: 1
-								}
-							}
+							loc: SourceLocation typescript/const/no-initializer/input.ts 1:6-1:15
 							meta: JSPatternMeta {
 								definite: undefined
-								loc: Object {
-									filename: "typescript/const/no-initializer/input.ts"
-									end: Object {
-										column: 15
-										line: 1
-									}
-									start: Object {
-										column: 6
-										line: 1
-									}
-								}
-								typeAnnotation: TSNumberKeywordTypeAnnotation {
-									loc: Object {
-										filename: "typescript/const/no-initializer/input.ts"
-										end: Object {
-											column: 15
-											line: 1
-										}
-										start: Object {
-											column: 9
-											line: 1
-										}
-									}
-								}
+								loc: SourceLocation typescript/const/no-initializer/input.ts 1:6-1:15
+								typeAnnotation: TSNumberKeywordTypeAnnotation {loc: SourceLocation typescript/const/no-initializer/input.ts 1:9-1:15}
 							}
 						}
 						init: undefined
-						loc: Object {
-							filename: "typescript/const/no-initializer/input.ts"
-							end: Object {
-								column: 15
-								line: 1
-							}
-							start: Object {
-								column: 6
-								line: 1
-							}
-						}
+						loc: SourceLocation typescript/const/no-initializer/input.ts 1:6-1:15
 					}
 				]
 			}
@@ -121,6 +49,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

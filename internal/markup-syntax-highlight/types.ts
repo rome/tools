@@ -1,11 +1,11 @@
-import {Number0} from "@internal/ob1";
+import {ZeroIndexed} from "@internal/math";
 import {DiagnosticLanguage, DiagnosticSourceType} from "@internal/diagnostics";
-import {UnknownPath} from "@internal/path";
+import {AnyPath} from "@internal/path";
 import {MarkupTokenType, StaticMarkup} from "@internal/markup";
 import {AnyMarkups} from "@internal/markup/escape";
 
 export type AnsiHighlightOptions = {
-	path: UnknownPath;
+	path: AnyPath;
 	input: string;
 	sourceTypeJS: undefined | DiagnosticSourceType;
 	language: DiagnosticLanguage;
@@ -13,8 +13,8 @@ export type AnsiHighlightOptions = {
 };
 
 export type TokenShape = {
-	start: Number0;
-	end: Number0;
+	start: ZeroIndexed;
+	end: ZeroIndexed;
 };
 
 export type ReduceCallbackResult = {

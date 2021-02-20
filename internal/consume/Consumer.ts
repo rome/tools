@@ -17,6 +17,8 @@ import {
 	descriptions,
 } from "@internal/diagnostics";
 import {
+	Dict,
+	UnknownFunction,
 	UnknownObject,
 	VoidCallback,
 	isPlainObject,
@@ -36,33 +38,35 @@ import {
 	ConsumePropertyNumberDefinition,
 	ConsumePropertyPrimitiveDefinition,
 	ConsumePropertyStringDefinition,
+	ConsumeProtectedFunction,
 	ConsumeSourceLocationRequestTarget,
 	ConsumerHandleUnexpected,
+	ConsumerMapCallback,
 	ConsumerOnDefinition,
 	ConsumerOptions,
 } from "./types";
 import {SourceLocation, UNKNOWN_POSITION} from "@internal/parser-core";
 import {
 	AnyIndexedNumber,
-	Number0,
-	Number1,
-	ob1Add,
-	ob1Coerce0,
-	ob1Coerce1,
-	ob1Get,
-} from "@internal/ob1";
+	OneIndexed,
+	ZeroIndexed,
+	isIndexedNumberish,
+} from "@internal/math";
 import {isValidIdentifierName} from "@internal/js-ast-utils";
 import {escapeJSString} from "@internal/string-escape";
 import {
 	AbsoluteFilePath,
-	RelativeFilePath,
+	AnyFilePath,
+	AnyPath,
+	RelativePath,
 	URLPath,
-	UnknownPath,
 	createAbsoluteFilePath,
+	createAnyPath,
 	createURLPath,
-	createUnknownPath,
+	isPath,
 } from "@internal/path";
 import {StaticMarkup, markup, readMarkup} from "@internal/markup";
+import {consumeUnknown} from ".";
 
 type UnexpectedConsumerOptions = {
 	loc?: SourceLocation;
@@ -77,9 +81,7 @@ function isComputedPart(part: ConsumeKey): boolean {
 
 export default class Consumer {
 	constructor(opts: ConsumerOptions) {
-		this.path = opts.filePath;
-		this.filename = this.path === undefined ? undefined : this.path.join();
-
+		this.path = opts.path;
 		this.value = opts.value;
 		this.parent = opts.parent;
 		this.keyPath = opts.objectPath;
@@ -96,8 +98,7 @@ export default class Consumer {
 		this.handleUnexpected = opts.handleUnexpectedDiagnostic;
 	}
 
-	public path: undefined | UnknownPath;
-	public filename: undefined | string;
+	public path: AnyPath;
 
 	private declared: boolean;
 	private handleUnexpected: undefined | ConsumerHandleUnexpected;
@@ -213,11 +214,16 @@ export default class Consumer {
 		}
 
 		const getDiagnosticLocation = this.context.getDiagnosticLocation;
-		if (getDiagnosticLocation === undefined) {
-			return {};
-		} else {
-			return getDiagnosticLocation(this.keyPath, target);
+		if (getDiagnosticLocation !== undefined) {
+			const loc = getDiagnosticLocation(this.keyPath, target);
+			if (loc !== undefined) {
+				return loc;
+			}
 		}
+
+		return {
+			path: this.path,
+		};
 	}
 
 	public getLocation(
@@ -230,13 +236,13 @@ export default class Consumer {
 			location.end === undefined
 		) {
 			return {
-				filename: this.filename,
+				path: this.path,
 				start: UNKNOWN_POSITION,
 				end: UNKNOWN_POSITION,
 			};
 		} else {
 			return {
-				filename: location.filename,
+				path: location.path,
 				start: location.start,
 				end: location.end,
 			};
@@ -244,8 +250,8 @@ export default class Consumer {
 	}
 
 	public getLocationRange(
-		startIndex: Number0,
-		endIndex: Number0 = startIndex,
+		startIndex: ZeroIndexed,
+		endIndex: ZeroIndexed = startIndex,
 		target?: ConsumeSourceLocationRequestTarget,
 	): SourceLocation {
 		const loc = this.getLocation(target);
@@ -264,11 +270,11 @@ export default class Consumer {
 			...loc,
 			start: {
 				...start,
-				column: ob1Add(start.column, startIndex),
+				column: start.column.add(startIndex),
 			},
 			end: {
 				...start,
-				column: ob1Add(start.column, endIndex),
+				column: start.column.add(endIndex),
 			},
 		};
 	}
@@ -296,10 +302,7 @@ export default class Consumer {
 
 	public wasInSource(): boolean {
 		const loc = this.getDiagnosticLocation();
-		return (
-			loc.filename !== undefined &&
-			(loc.start !== undefined || loc.end !== undefined)
-		);
+		return loc.start !== undefined || loc.end !== undefined;
 	}
 
 	public getKeyPathString(path: ConsumePath = this.keyPath): string {
@@ -321,7 +324,7 @@ export default class Consumer {
 
 			// If we are a computed property then wrap in brackets, the previous part would not have inserted a dot
 			// We allow a computed part at the beginning of a path
-			if (isComputedPart(part) && i > 0) {
+			if (isComputedPart(part)) {
 				const inner =
 					typeof part === "number"
 						? String(part)
@@ -379,7 +382,7 @@ export default class Consumer {
 	): DiagnosticsError {
 		const {target = "value"} = opts;
 
-		const {filename} = this;
+		const {path} = this;
 		let location = this.getDiagnosticLocation(target);
 		const fromSource = this.wasInSource();
 
@@ -413,7 +416,7 @@ export default class Consumer {
 
 			// If consumer is undefined and we have no filename then we were not able to find a location,
 			// in this case, just throw a normal error
-			if (consumer === undefined && filename === undefined) {
+			if (consumer === undefined && path === undefined) {
 				throw new Error(readMarkup(message));
 			}
 
@@ -444,7 +447,7 @@ export default class Consumer {
 			},
 			location: {
 				...location,
-				filename: this.filename,
+				path: this.path,
 			},
 		};
 
@@ -485,7 +488,7 @@ export default class Consumer {
 			usedNames: this.usedNames,
 			onDefinition: this.onDefinition,
 			handleUnexpectedDiagnostic: this.handleUnexpected,
-			filePath: this.path,
+			path: this.path,
 			context: this.context,
 			value: this.value,
 			parent: this.parent,
@@ -564,6 +567,14 @@ export default class Consumer {
 		}
 
 		return value;
+	}
+
+	public getParentValue(def?: unknown): unknown {
+		if (this.parent === undefined) {
+			return def;
+		} else {
+			return this.parent.getValue();
+		}
 	}
 
 	public getValue(def?: unknown): unknown {
@@ -811,6 +822,14 @@ export default class Consumer {
 		return value;
 	}
 
+	public asMappedObject<T>(callback: (c: Consumer, key: string) => T): Dict<T> {
+		const obj: Dict<T> = {};
+		for (const [key, value] of this.asMap()) {
+			obj[key] = callback(value, key);
+		}
+		return obj;
+	}
+
 	public asMap(optional?: boolean, markUsed = true): Map<string, Consumer> {
 		this.declareDefinition({
 			type: "object",
@@ -858,7 +877,7 @@ export default class Consumer {
 		});
 	}
 
-	public asMappedArray<T>(callback: (c: Consumer) => T): T[] {
+	public asMappedArray<T>(callback: ConsumerMapCallback<T>): T[] {
 		return Array.from(this.asIterable(), callback);
 	}
 
@@ -866,11 +885,11 @@ export default class Consumer {
 		return this.asImplicitMappedArray((c) => c);
 	}
 
-	public asImplicitMappedArray<T>(callback: (c: Consumer) => T): T[] {
+	public asImplicitMappedArray<T>(callback: ConsumerMapCallback<T>): T[] {
 		if (Array.isArray(this.asUnknown())) {
 			return this.asMappedArray(callback);
 		} else if (this.exists()) {
-			return [callback(this)];
+			return [callback(this, 0)];
 		} else {
 			return [];
 		}
@@ -942,6 +961,61 @@ export default class Consumer {
 		} else {
 			return undefined;
 		}
+	}
+
+	public asFunction(def?: UnknownFunction): UnknownFunction {
+		this.declareDefinition({
+			type: "function",
+			default: def,
+			required: def === undefined,
+		});
+
+		const fn = this.getValue(def);
+
+		if (typeof fn === "function") {
+			return fn as UnknownFunction;
+		} else {
+			this.unexpected(descriptions.CONSUME.EXPECTED_FUNCTION);
+
+			return () => {
+				return undefined;
+			};
+		}
+	}
+
+	public async asPromise(def?: PromiseLike<unknown>): Promise<Consumer> {
+		let value: unknown;
+
+		if (this.isObject()) {
+			const obj = this.asOriginalUnknownObject();
+			if (typeof obj.then === "function") {
+				value = await obj;
+			} else {
+				value = obj;
+			}
+		} else {
+			value = this.getValue(def);
+		}
+
+		return consumeUnknown(
+			value,
+			this.context.category,
+			this.context.categoryValue,
+		);
+	}
+
+	public asWrappedFunction(def?: UnknownFunction): ConsumeProtectedFunction {
+		const fn = this.asFunction(def);
+		const context = this.getParentValue();
+
+		return (...args) => {
+			const ret = fn.apply(context, args);
+			return consumeUnknown(
+				ret,
+				this.context.category,
+				this.context.categoryValue,
+			);
+		};
 	}
 
 	public asString(def?: string): string {
@@ -1042,7 +1116,7 @@ export default class Consumer {
 		return BigInt("0");
 	}
 
-	private _declareOptionalFilePath() {
+	private _declareOptionalPath() {
 		this.declareDefinition(
 			{
 				type: "string",
@@ -1054,7 +1128,7 @@ export default class Consumer {
 	}
 
 	public asURLPath(def?: string): URLPath {
-		const path = this.asUnknownPath(def);
+		const path = this.asAnyPath(def);
 		if (path.isURL()) {
 			return path.assertURL();
 		} else {
@@ -1067,12 +1141,12 @@ export default class Consumer {
 		if (this.exists()) {
 			return this.asURLPath();
 		} else {
-			this._declareOptionalFilePath();
+			this._declareOptionalPath();
 			return undefined;
 		}
 	}
 
-	public asUnknownPath(def?: string): UnknownPath {
+	public asAnyPath(def?: string): AnyPath {
 		this.declareDefinition(
 			{
 				type: "string",
@@ -1082,14 +1156,41 @@ export default class Consumer {
 			"path",
 		);
 
-		return createUnknownPath(this.asString(def));
+		// Allow path instances
+		const value = this.getValue(def);
+		if (isPath(value)) {
+			return value;
+		}
+
+		// Otherwise expect a string
+		return createAnyPath(this.asString(def));
 	}
 
-	public asUnknownPathOrVoid(): undefined | UnknownPath {
+	public asAnyPathOrVoid(): undefined | AnyPath {
 		if (this.exists()) {
-			return this.asUnknownPath();
+			return this.asAnyPath();
 		} else {
-			this._declareOptionalFilePath();
+			this._declareOptionalPath();
+			return undefined;
+		}
+	}
+
+	public asFilePath(def?: string): AnyFilePath {
+		const path = this.asAnyPath(def);
+		if (path.isFilePath()) {
+			return path.assertFilePath();
+		} else {
+			this.unexpected(descriptions.CONSUME.EXPECTED_FILE_PATH);
+			return path.toExplicitRelative();
+		}
+	}
+
+	public asFilePathOrVoid(): undefined | AnyFilePath {
+		const path = this.asAnyPath();
+		if (path.isFilePath()) {
+			return path.assertFilePath();
+		} else {
+			this._declareOptionalPath();
 			return undefined;
 		}
 	}
@@ -1098,7 +1199,7 @@ export default class Consumer {
 		def?: string,
 		cwd?: AbsoluteFilePath,
 	): AbsoluteFilePath {
-		const path = this.asUnknownPath(def);
+		const path = this.asAnyPath(def);
 		if (path.isAbsolute()) {
 			return path.assertAbsolute();
 		} else if (cwd !== undefined && path.isRelative()) {
@@ -1115,13 +1216,13 @@ export default class Consumer {
 		if (this.exists()) {
 			return this.asAbsoluteFilePath(undefined, cwd);
 		} else {
-			this._declareOptionalFilePath();
+			this._declareOptionalPath();
 			return undefined;
 		}
 	}
 
-	public asRelativeFilePath(def?: string): RelativeFilePath {
-		const path = this.asUnknownPath(def);
+	public asRelativePath(def?: string): RelativePath {
+		const path = this.asAnyPath(def);
 		if (path.isRelative()) {
 			return path.assertRelative();
 		} else {
@@ -1130,17 +1231,17 @@ export default class Consumer {
 		}
 	}
 
-	public asRelativeFilePathOrVoid(): undefined | RelativeFilePath {
+	public asRelativePathOrVoid(): undefined | RelativePath {
 		if (this.exists()) {
-			return this.asRelativeFilePath();
+			return this.asRelativePath();
 		} else {
-			this._declareOptionalFilePath();
+			this._declareOptionalPath();
 			return undefined;
 		}
 	}
 
-	public asExplicitRelativeFilePath(def?: string): RelativeFilePath {
-		const path = this.asRelativeFilePath(def);
+	public asExplicitRelativePath(def?: string): RelativePath {
+		const path = this.asRelativePath(def);
 
 		if (path.isExplicitRelative()) {
 			return path;
@@ -1150,11 +1251,11 @@ export default class Consumer {
 		}
 	}
 
-	public asExplicitRelativeFilePathOrVoid(): undefined | RelativeFilePath {
+	public asExplicitRelativePathOrVoid(): undefined | RelativePath {
 		if (this.exists()) {
-			return this.asExplicitRelativeFilePath();
+			return this.asExplicitRelativePath();
 		} else {
-			this._declareOptionalFilePath();
+			this._declareOptionalPath();
 			return undefined;
 		}
 	}
@@ -1173,22 +1274,22 @@ export default class Consumer {
 		}
 	}
 
-	public asZeroIndexedNumber(def?: number): Number0 {
-		return ob1Coerce0(this.asNumber(def));
+	public asZeroIndexedNumber(def?: number): ZeroIndexed {
+		return new ZeroIndexed(this.asNumber(def));
 	}
 
-	public asOneIndexedNumber(def?: number): Number1 {
-		return ob1Coerce1(this.asNumber(def));
+	public asOneIndexedNumber(def?: number): OneIndexed {
+		return new OneIndexed(this.asNumber(def));
 	}
 
-	public asZeroIndexedNumberOrVoid(): undefined | Number0 {
+	public asZeroIndexedNumberOrVoid(): undefined | ZeroIndexed {
 		const num = this.asNumberOrVoid();
-		return num === undefined ? undefined : ob1Coerce0(num);
+		return num === undefined ? undefined : new ZeroIndexed(num);
 	}
 
-	public asOneIndexedNumberOrVoid(): undefined | Number1 {
+	public asOneIndexedNumberOrVoid(): undefined | OneIndexed {
 		const num = this.asNumberOrVoid();
-		return num === undefined ? undefined : ob1Coerce1(num);
+		return num === undefined ? undefined : new OneIndexed(num);
 	}
 
 	public asNumber(def?: number): number {
@@ -1198,7 +1299,10 @@ export default class Consumer {
 			required: def === undefined,
 		});
 
-		const value = this.getValue(def);
+		let value = this.getValue(def);
+		if (isIndexedNumberish(value)) {
+			value = value.valueOf();
+		}
 		if (typeof value !== "number") {
 			this.unexpected(descriptions.CONSUME.EXPECTED_NUMBER);
 			return 0;
@@ -1212,23 +1316,23 @@ export default class Consumer {
 			max?: number;
 			default?: number;
 		},
-	): number
+	): number;
 
 	public asNumberInRange(
 		opts: {
-			min: Number0;
-			max?: Number0;
-			default?: Number0;
+			min: OneIndexed;
+			max?: OneIndexed;
+			default?: OneIndexed;
 		},
-	): Number0
+	): OneIndexed;
 
 	public asNumberInRange(
 		opts: {
-			min: Number1;
-			max?: Number1;
-			default?: Number1;
+			min: OneIndexed;
+			max?: OneIndexed;
+			default?: OneIndexed;
 		},
-	): Number1
+	): OneIndexed;
 
 	public asNumberInRange(
 		opts: {
@@ -1237,9 +1341,9 @@ export default class Consumer {
 			default?: number | AnyIndexedNumber;
 		},
 	): number | AnyIndexedNumber {
-		const min = ob1Get(opts.min);
-		const max = ob1Get(opts.max);
-		const def = ob1Get(opts.default);
+		const min = opts.min === undefined ? undefined : opts.min.valueOf();
+		const max = opts.max === undefined ? undefined : opts.max.valueOf();
+		const def = opts.default === undefined ? undefined : opts.default.valueOf();
 
 		this.declareDefinition({
 			type: "number",
@@ -1254,15 +1358,22 @@ export default class Consumer {
 		// Nice error message when both min and max are specified
 		if (min !== undefined && max !== undefined && (num < min || num > max)) {
 			this.unexpected(descriptions.CONSUME.EXPECTED_NUMBER_BETWEEN(min, max));
-			return num;
+		} else {
+			if (min !== undefined && num < min) {
+				this.unexpected(descriptions.CONSUME.EXPECTED_NUMBER_HIGHER(min));
+			}
+
+			if (max !== undefined && num > max) {
+				this.unexpected(descriptions.CONSUME.EXPECTED_NUMBER_LOWER(max));
+			}
 		}
 
-		if (min !== undefined && num < min) {
-			this.unexpected(descriptions.CONSUME.EXPECTED_NUMBER_HIGHER(min));
+		if (opts.min instanceof OneIndexed) {
+			return new OneIndexed(num);
 		}
 
-		if (max !== undefined && num > max) {
-			this.unexpected(descriptions.CONSUME.EXPECTED_NUMBER_LOWER(max));
+		if (opts.min instanceof ZeroIndexed) {
+			return new ZeroIndexed(num);
 		}
 
 		return num;

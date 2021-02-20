@@ -6,11 +6,12 @@
  */
 
 import {Position} from "@internal/parser-core";
-import {Number0, Number1} from "@internal/ob1";
+import {OneIndexed, ZeroIndexed} from "@internal/math";
 import {JSONPropertyValue} from "@internal/codec-config";
 import inspector = require("inspector");
 
 import {InterfaceToObject} from "@internal/typescript-helpers";
+import {AnyPath} from "@internal/path";
 
 export type CPUProfile = InterfaceToObject<inspector.Profiler.Profile>;
 
@@ -43,7 +44,7 @@ export type CoverageRangeWithMetadata = inspector.Profiler.CoverageRange & {
 export type LocationRangeKind = "branch" | "function" | "expression";
 
 export type CoverageLocationRange = {
-	filename: string;
+	path: AnyPath;
 	kind: LocationRangeKind;
 	count: number;
 	start: Position;
@@ -58,7 +59,7 @@ export type CoverageFileStats = {
 };
 
 export type CoverageFile = {
-	filename: string;
+	path: AnyPath;
 	lines: CoverageFileStats;
 	branches: CoverageFileStats;
 	functions: CoverageFileStats;
@@ -68,9 +69,9 @@ export type ErrorFrame = {
 	typeName: undefined | string;
 	functionName: undefined | string;
 	methodName: undefined | string;
-	filename: undefined | string;
-	lineNumber: undefined | Number1;
-	columnNumber: undefined | Number0;
+	path: undefined | AnyPath;
+	lineNumber: undefined | OneIndexed;
+	columnNumber: undefined | ZeroIndexed;
 	isTopLevel: boolean;
 	isAsync: boolean;
 	isEval: boolean;

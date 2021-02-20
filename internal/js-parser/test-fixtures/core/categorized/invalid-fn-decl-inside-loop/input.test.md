@@ -11,117 +11,50 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "core/categorized/invalid-fn-decl-inside-loop/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "core/categorized/invalid-fn-decl-inside-loop/input.js"
-		end: Object {
-			column: 26
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation core/categorized/invalid-fn-decl-inside-loop/input.js 1:0-1:26
+	path: UIDPath<core/categorized/invalid-fn-decl-inside-loop/input.js>
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse"
 				categoryValue: "js"
+				category: Array ["parse"]
 				message: RAW_MARKUP {value: "In non-strict mode code, functions can only be declared at top level, inside a block, or as the body of an if statement"}
 			}
 			location: Object {
-				filename: "core/categorized/invalid-fn-decl-inside-loop/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 9
-					line: 1
-				}
-				start: Object {
-					column: 10
-					line: 1
-				}
+				end: Position 1:9
+				path: UIDPath<core/categorized/invalid-fn-decl-inside-loop/input.js>
+				start: Position 1:10
 			}
 		}
 	]
 	body: Array [
 		JSWhileStatement {
-			loc: Object {
-				filename: "core/categorized/invalid-fn-decl-inside-loop/input.js"
-				end: Object {
-					column: 26
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation core/categorized/invalid-fn-decl-inside-loop/input.js 1:0-1:26
 			test: JSNumericLiteral {
 				value: 1
 				format: undefined
-				loc: Object {
-					filename: "core/categorized/invalid-fn-decl-inside-loop/input.js"
-					end: Object {
-						column: 8
-						line: 1
-					}
-					start: Object {
-						column: 7
-						line: 1
-					}
-				}
+				loc: SourceLocation core/categorized/invalid-fn-decl-inside-loop/input.js 1:7-1:8
 			}
 			body: JSFunctionDeclaration {
 				id: JSBindingIdentifier {
 					name: "foo"
-					loc: Object {
-						filename: "core/categorized/invalid-fn-decl-inside-loop/input.js"
-						identifierName: "foo"
-						end: Object {
-							column: 22
-							line: 1
-						}
-						start: Object {
-							column: 19
-							line: 1
-						}
-					}
+					loc: SourceLocation core/categorized/invalid-fn-decl-inside-loop/input.js 1:19-1:22 (foo)
 				}
-				loc: Object {
-					filename: "core/categorized/invalid-fn-decl-inside-loop/input.js"
-					end: Object {
-						column: 26
-						line: 1
-					}
-					start: Object {
-						column: 10
-						line: 1
-					}
-				}
+				loc: SourceLocation core/categorized/invalid-fn-decl-inside-loop/input.js 1:10-1:26
 				body: JSBlockStatement {
 					body: Array []
 					directives: Array []
-					loc: Object {
-						filename: "core/categorized/invalid-fn-decl-inside-loop/input.js"
-						end: Object {
-							column: 26
-							line: 1
-						}
-						start: Object {
-							column: 24
-							line: 1
-						}
-					}
+					loc: SourceLocation core/categorized/invalid-fn-decl-inside-loop/input.js 1:24-1:26
 				}
 				head: JSFunctionHead {
 					async: false
@@ -132,17 +65,7 @@ JSRoot {
 					returnType: undefined
 					thisType: undefined
 					typeParameters: undefined
-					loc: Object {
-						filename: "core/categorized/invalid-fn-decl-inside-loop/input.js"
-						end: Object {
-							column: 24
-							line: 1
-						}
-						start: Object {
-							column: 22
-							line: 1
-						}
-					}
+					loc: SourceLocation core/categorized/invalid-fn-decl-inside-loop/input.js 1:22-1:24
 				}
 			}
 		}
@@ -162,8 +85,5 @@ JSRoot {
     while (1) function foo(){}
               ^
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

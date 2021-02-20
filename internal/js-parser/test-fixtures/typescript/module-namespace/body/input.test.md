@@ -12,131 +12,39 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "typescript/module-namespace/body/input.ts"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
+	loc: SourceLocation typescript/module-namespace/body/input.ts 1:0-4:0
+	path: UIDPath<typescript/module-namespace/body/input.ts>
 	syntax: Array ["ts"]
-	loc: Object {
-		filename: "typescript/module-namespace/body/input.ts"
-		end: Object {
-			column: 0
-			line: 4
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
 	body: Array [
 		TSModuleDeclaration {
 			id: JSBindingIdentifier {
 				name: "N"
-				loc: Object {
-					filename: "typescript/module-namespace/body/input.ts"
-					identifierName: "N"
-					end: Object {
-						column: 11
-						line: 1
-					}
-					start: Object {
-						column: 10
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/module-namespace/body/input.ts 1:10-1:11 (N)
 			}
-			loc: Object {
-				filename: "typescript/module-namespace/body/input.ts"
-				end: Object {
-					column: 1
-					line: 3
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation typescript/module-namespace/body/input.ts 1:0-3:1
 			body: TSModuleBlock {
-				loc: Object {
-					filename: "typescript/module-namespace/body/input.ts"
-					end: Object {
-						column: 1
-						line: 3
-					}
-					start: Object {
-						column: 12
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/module-namespace/body/input.ts 1:12-3:1
 				body: Array [
 					JSVariableDeclarationStatement {
-						loc: Object {
-							filename: "typescript/module-namespace/body/input.ts"
-							end: Object {
-								column: 16
-								line: 2
-							}
-							start: Object {
-								column: 4
-								line: 2
-							}
-						}
+						loc: SourceLocation typescript/module-namespace/body/input.ts 2:4-2:16
 						declaration: JSVariableDeclaration {
 							kind: "const"
-							loc: Object {
-								filename: "typescript/module-namespace/body/input.ts"
-								end: Object {
-									column: 16
-									line: 2
-								}
-								start: Object {
-									column: 4
-									line: 2
-								}
-							}
+							loc: SourceLocation typescript/module-namespace/body/input.ts 2:4-2:16
 							declarations: Array [
 								JSVariableDeclarator {
 									id: JSBindingIdentifier {
 										name: "x"
-										loc: Object {
-											filename: "typescript/module-namespace/body/input.ts"
-											identifierName: "x"
-											end: Object {
-												column: 11
-												line: 2
-											}
-											start: Object {
-												column: 10
-												line: 2
-											}
-										}
+										loc: SourceLocation typescript/module-namespace/body/input.ts 2:10-2:11 (x)
 									}
-									loc: Object {
-										filename: "typescript/module-namespace/body/input.ts"
-										end: Object {
-											column: 15
-											line: 2
-										}
-										start: Object {
-											column: 10
-											line: 2
-										}
-									}
+									loc: SourceLocation typescript/module-namespace/body/input.ts 2:10-2:15
 									init: JSNumericLiteral {
 										value: 0
 										format: undefined
-										loc: Object {
-											filename: "typescript/module-namespace/body/input.ts"
-											end: Object {
-												column: 15
-												line: 2
-											}
-											start: Object {
-												column: 14
-												line: 2
-											}
-										}
+										loc: SourceLocation typescript/module-namespace/body/input.ts 2:14-2:15
 									}
 								}
 							]
@@ -152,6 +60,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

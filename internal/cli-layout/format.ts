@@ -15,7 +15,6 @@ import {
 } from "@internal/markup";
 import {GridOutputFormat, UserGridOptions} from "./types";
 import Grid from "./Grid";
-import {ob1Get1} from "@internal/ob1";
 import {splitChars, splitLines} from "@internal/string-utils";
 
 export function renderGrid(
@@ -38,6 +37,7 @@ export function renderGrid(
 		const width = Math.max(...lines.map((line) => splitChars(line).length));
 
 		return {
+			locators: new Map(),
 			width,
 			lines,
 		};
@@ -51,7 +51,8 @@ export function renderGrid(
 	});
 	grid.drawChildren(grid.parse(safe, undefined), []);
 	return {
-		width: ob1Get1(grid.getWidth()),
+		locators: grid.locators,
+		width: grid.getWidth().valueOf(),
 		lines: grid.getLines(format),
 	};
 }

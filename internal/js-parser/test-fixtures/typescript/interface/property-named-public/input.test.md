@@ -12,121 +12,37 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "typescript/interface/property-named-public/input.ts"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
+	loc: SourceLocation typescript/interface/property-named-public/input.ts 1:0-4:0
+	path: UIDPath<typescript/interface/property-named-public/input.ts>
 	syntax: Array ["ts"]
-	loc: Object {
-		filename: "typescript/interface/property-named-public/input.ts"
-		end: Object {
-			column: 0
-			line: 4
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
 	body: Array [
 		TSInterfaceDeclaration {
 			id: JSBindingIdentifier {
 				name: "I"
-				loc: Object {
-					filename: "typescript/interface/property-named-public/input.ts"
-					identifierName: "I"
-					end: Object {
-						column: 11
-						line: 1
-					}
-					start: Object {
-						column: 10
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/interface/property-named-public/input.ts 1:10-1:11 (I)
 			}
 			extends: undefined
 			typeParameters: undefined
-			loc: Object {
-				filename: "typescript/interface/property-named-public/input.ts"
-				end: Object {
-					column: 1
-					line: 3
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation typescript/interface/property-named-public/input.ts 1:0-3:1
 			body: TSInterfaceBody {
-				loc: Object {
-					filename: "typescript/interface/property-named-public/input.ts"
-					end: Object {
-						column: 1
-						line: 3
-					}
-					start: Object {
-						column: 12
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/interface/property-named-public/input.ts 1:12-3:1
 				body: Array [
 					TSPropertySignature {
 						key: JSStaticPropertyKey {
 							value: JSIdentifier {
 								name: "public"
-								loc: Object {
-									filename: "typescript/interface/property-named-public/input.ts"
-									identifierName: "public"
-									end: Object {
-										column: 7
-										line: 2
-									}
-									start: Object {
-										column: 1
-										line: 2
-									}
-								}
+								loc: SourceLocation typescript/interface/property-named-public/input.ts 2:1-2:7 (public)
 							}
-							loc: Object {
-								filename: "typescript/interface/property-named-public/input.ts"
-								end: Object {
-									column: 7
-									line: 2
-								}
-								start: Object {
-									column: 1
-									line: 2
-								}
-							}
+							loc: SourceLocation typescript/interface/property-named-public/input.ts 2:1-2:7
 						}
 						optional: false
 						readonly: false
-						loc: Object {
-							filename: "typescript/interface/property-named-public/input.ts"
-							end: Object {
-								column: 16
-								line: 2
-							}
-							start: Object {
-								column: 1
-								line: 2
-							}
-						}
-						typeAnnotation: TSNumberKeywordTypeAnnotation {
-							loc: Object {
-								filename: "typescript/interface/property-named-public/input.ts"
-								end: Object {
-									column: 15
-									line: 2
-								}
-								start: Object {
-									column: 9
-									line: 2
-								}
-							}
-						}
+						loc: SourceLocation typescript/interface/property-named-public/input.ts 2:1-2:16
+						typeAnnotation: TSNumberKeywordTypeAnnotation {loc: SourceLocation typescript/interface/property-named-public/input.ts 2:9-2:15}
 					}
 				]
 			}
@@ -138,6 +54,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

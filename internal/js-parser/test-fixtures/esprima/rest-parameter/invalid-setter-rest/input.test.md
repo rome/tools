@@ -11,157 +11,59 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "esprima/rest-parameter/invalid-setter-rest/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "esprima/rest-parameter/invalid-setter-rest/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation esprima/rest-parameter/invalid-setter-rest/input.js 1:0-2:0
+	path: UIDPath<esprima/rest-parameter/invalid-setter-rest/input.js>
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse"
 				categoryValue: "js"
+				category: Array ["parse"]
 				message: RAW_MARKUP {value: "setter function argument must not be a rest parameter"}
 			}
 			location: Object {
-				filename: "esprima/rest-parameter/invalid-setter-rest/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 16
-					line: 1
-				}
-				start: Object {
-					column: 15
-					line: 1
-				}
+				end: Position 1:16
+				path: UIDPath<esprima/rest-parameter/invalid-setter-rest/input.js>
+				start: Position 1:15
 			}
 		}
 	]
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "esprima/rest-parameter/invalid-setter-rest/input.js"
-				end: Object {
-					column: 22
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation esprima/rest-parameter/invalid-setter-rest/input.js 1:0-1:22
 			expression: JSAssignmentExpression {
 				operator: "="
-				loc: Object {
-					filename: "esprima/rest-parameter/invalid-setter-rest/input.js"
-					end: Object {
-						column: 22
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/rest-parameter/invalid-setter-rest/input.js 1:0-1:22
 				left: JSAssignmentIdentifier {
 					name: "x"
-					loc: Object {
-						filename: "esprima/rest-parameter/invalid-setter-rest/input.js"
-						identifierName: "x"
-						end: Object {
-							column: 1
-							line: 1
-						}
-						start: Object {
-							column: 0
-							line: 1
-						}
-					}
+					loc: SourceLocation esprima/rest-parameter/invalid-setter-rest/input.js 1:0-1:1 (x)
 				}
 				right: JSObjectExpression {
-					loc: Object {
-						filename: "esprima/rest-parameter/invalid-setter-rest/input.js"
-						end: Object {
-							column: 22
-							line: 1
-						}
-						start: Object {
-							column: 4
-							line: 1
-						}
-					}
+					loc: SourceLocation esprima/rest-parameter/invalid-setter-rest/input.js 1:4-1:22
 					properties: Array [
 						JSObjectMethod {
 							kind: "set"
 							key: JSStaticPropertyKey {
 								value: JSIdentifier {
 									name: "f"
-									loc: Object {
-										filename: "esprima/rest-parameter/invalid-setter-rest/input.js"
-										identifierName: "f"
-										end: Object {
-											column: 11
-											line: 1
-										}
-										start: Object {
-											column: 10
-											line: 1
-										}
-									}
+									loc: SourceLocation esprima/rest-parameter/invalid-setter-rest/input.js 1:10-1:11 (f)
 								}
-								loc: Object {
-									filename: "esprima/rest-parameter/invalid-setter-rest/input.js"
-									end: Object {
-										column: 11
-										line: 1
-									}
-									start: Object {
-										column: 10
-										line: 1
-									}
-								}
+								loc: SourceLocation esprima/rest-parameter/invalid-setter-rest/input.js 1:10-1:11
 							}
-							loc: Object {
-								filename: "esprima/rest-parameter/invalid-setter-rest/input.js"
-								end: Object {
-									column: 20
-									line: 1
-								}
-								start: Object {
-									column: 6
-									line: 1
-								}
-							}
+							loc: SourceLocation esprima/rest-parameter/invalid-setter-rest/input.js 1:6-1:20
 							body: JSBlockStatement {
 								body: Array []
 								directives: Array []
-								loc: Object {
-									filename: "esprima/rest-parameter/invalid-setter-rest/input.js"
-									end: Object {
-										column: 20
-										line: 1
-									}
-									start: Object {
-										column: 18
-										line: 1
-									}
-								}
+								loc: SourceLocation esprima/rest-parameter/invalid-setter-rest/input.js 1:18-1:20
 							}
 							head: JSFunctionHead {
 								async: false
@@ -171,45 +73,14 @@ JSRoot {
 								returnType: undefined
 								thisType: undefined
 								typeParameters: undefined
-								loc: Object {
-									filename: "esprima/rest-parameter/invalid-setter-rest/input.js"
-									end: Object {
-										column: 17
-										line: 1
-									}
-									start: Object {
-										column: 11
-										line: 1
-									}
-								}
+								loc: SourceLocation esprima/rest-parameter/invalid-setter-rest/input.js 1:11-1:17
 								rest: JSBindingIdentifier {
 									name: "y"
-									loc: Object {
-										filename: "esprima/rest-parameter/invalid-setter-rest/input.js"
-										identifierName: "y"
-										end: Object {
-											column: 16
-											line: 1
-										}
-										start: Object {
-											column: 15
-											line: 1
-										}
-									}
+									loc: SourceLocation esprima/rest-parameter/invalid-setter-rest/input.js 1:15-1:16 (y)
 									meta: JSPatternMeta {
 										optional: undefined
 										typeAnnotation: undefined
-										loc: Object {
-											filename: "esprima/rest-parameter/invalid-setter-rest/input.js"
-											end: Object {
-												column: 16
-												line: 1
-											}
-											start: Object {
-												column: 15
-												line: 1
-											}
-										}
+										loc: SourceLocation esprima/rest-parameter/invalid-setter-rest/input.js 1:15-1:16
 									}
 								}
 							}
@@ -233,8 +104,5 @@ JSRoot {
     x = { set f(...y) {} }
                    ^
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

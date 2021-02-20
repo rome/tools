@@ -12,92 +12,30 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "core/categorized/label-kind-switch/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "core/categorized/label-kind-switch/input.js"
-		end: Object {
-			column: 1
-			line: 4
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation core/categorized/label-kind-switch/input.js 1:0-4:1
+	path: UIDPath<core/categorized/label-kind-switch/input.js>
 	body: Array [
 		JSBlockStatement {
 			directives: Array []
-			loc: Object {
-				filename: "core/categorized/label-kind-switch/input.js"
-				end: Object {
-					column: 1
-					line: 4
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation core/categorized/label-kind-switch/input.js 1:0-4:1
 			body: Array [
 				JSLabeledStatement {
-					loc: Object {
-						filename: "core/categorized/label-kind-switch/input.js"
-						end: Object {
-							column: 3
-							line: 3
-						}
-						start: Object {
-							column: 2
-							line: 2
-						}
-					}
+					loc: SourceLocation core/categorized/label-kind-switch/input.js 2:2-3:3
 					label: JSIdentifier {
 						name: "a"
-						loc: Object {
-							filename: "core/categorized/label-kind-switch/input.js"
-							identifierName: "a"
-							end: Object {
-								column: 3
-								line: 2
-							}
-							start: Object {
-								column: 2
-								line: 2
-							}
-						}
+						loc: SourceLocation core/categorized/label-kind-switch/input.js 2:2-2:3 (a)
 					}
 					body: JSSwitchStatement {
 						cases: Array []
-						loc: Object {
-							filename: "core/categorized/label-kind-switch/input.js"
-							end: Object {
-								column: 3
-								line: 3
-							}
-							start: Object {
-								column: 5
-								line: 2
-							}
-						}
+						loc: SourceLocation core/categorized/label-kind-switch/input.js 2:5-3:3
 						discriminant: JSReferenceIdentifier {
 							name: "i"
-							loc: Object {
-								filename: "core/categorized/label-kind-switch/input.js"
-								identifierName: "i"
-								end: Object {
-									column: 14
-									line: 2
-								}
-								start: Object {
-									column: 13
-									line: 2
-								}
-							}
+							loc: SourceLocation core/categorized/label-kind-switch/input.js 2:13-2:14 (i)
 						}
 					}
 				}
@@ -110,6 +48,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

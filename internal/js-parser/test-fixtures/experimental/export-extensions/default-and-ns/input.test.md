@@ -12,106 +12,34 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "experimental/export-extensions/default-and-ns/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
 	syntax: Array []
-	loc: Object {
-		filename: "experimental/export-extensions/default-and-ns/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation experimental/export-extensions/default-and-ns/input.js 1:0-2:0
+	path: UIDPath<experimental/export-extensions/default-and-ns/input.js>
 	body: Array [
 		JSExportExternalDeclaration {
 			exportKind: undefined
 			namedSpecifiers: Array []
-			loc: Object {
-				filename: "experimental/export-extensions/default-and-ns/input.js"
-				end: Object {
-					column: 29
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation experimental/export-extensions/default-and-ns/input.js 1:0-1:29
 			source: JSStringLiteral {
 				value: "test"
-				loc: Object {
-					filename: "experimental/export-extensions/default-and-ns/input.js"
-					end: Object {
-						column: 28
-						line: 1
-					}
-					start: Object {
-						column: 22
-						line: 1
-					}
-				}
+				loc: SourceLocation experimental/export-extensions/default-and-ns/input.js 1:22-1:28
 			}
 			defaultSpecifier: JSExportDefaultSpecifier {
-				loc: Object {
-					filename: "experimental/export-extensions/default-and-ns/input.js"
-					end: Object {
-						column: 8
-						line: 1
-					}
-					start: Object {
-						column: 7
-						line: 1
-					}
-				}
+				loc: SourceLocation experimental/export-extensions/default-and-ns/input.js 1:7-1:8
 				exported: JSIdentifier {
 					name: "B"
-					loc: Object {
-						filename: "experimental/export-extensions/default-and-ns/input.js"
-						identifierName: "B"
-						end: Object {
-							column: 8
-							line: 1
-						}
-						start: Object {
-							column: 7
-							line: 1
-						}
-					}
+					loc: SourceLocation experimental/export-extensions/default-and-ns/input.js 1:7-1:8 (B)
 				}
 			}
 			namespaceSpecifier: JSExportNamespaceSpecifier {
-				loc: Object {
-					filename: "experimental/export-extensions/default-and-ns/input.js"
-					end: Object {
-						column: 16
-						line: 1
-					}
-					start: Object {
-						column: 10
-						line: 1
-					}
-				}
+				loc: SourceLocation experimental/export-extensions/default-and-ns/input.js 1:10-1:16
 				exported: JSIdentifier {
 					name: "A"
-					loc: Object {
-						filename: "experimental/export-extensions/default-and-ns/input.js"
-						identifierName: "A"
-						end: Object {
-							column: 16
-							line: 1
-						}
-						start: Object {
-							column: 15
-							line: 1
-						}
-					}
+					loc: SourceLocation experimental/export-extensions/default-and-ns/input.js 1:15-1:16 (A)
 				}
 			}
 		}
@@ -122,6 +50,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

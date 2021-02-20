@@ -12,32 +12,27 @@ import {
 	SourceMap,
 } from "./types";
 import {decodeVLQ} from "./base64";
-import {
-	Number0,
-	Number1,
-	ob1Add,
-	ob1Dec,
-	ob1Get0,
-	ob1Inc,
-	ob1Number0,
-	ob1Number1,
-} from "@internal/ob1";
+import {OneIndexed, ZeroIndexed} from "@internal/math";
 import {Dict} from "@internal/typescript-helpers";
+import {AnyPath, createAnyPath} from "@internal/path";
 
-export function getParsedMappingKey(line: Number1, column: Number0): string {
-	return `${String(line)}:${String(column)}`;
+export function getParsedMappingKey(
+	line: OneIndexed,
+	column: ZeroIndexed,
+): string {
+	return `${String(line.valueOf())}:${String(column.valueOf())}`;
 }
 
 type GetMappings = () => ParsedMappings;
 
 export default class SourceMapConsumer {
-	constructor(file: string, getMappings: GetMappings) {
-		this.file = file;
+	constructor(path: AnyPath, getMappings: GetMappings) {
+		this.path = path;
 		this._getMappings = getMappings;
 		this.mappings = undefined;
 	}
 
-	private file: string;
+	private path: AnyPath;
 	private _getMappings: GetMappings;
 	private mappings: undefined | ParsedMappings;
 
@@ -48,17 +43,17 @@ export default class SourceMapConsumer {
 
 	public static fromJSON(sourceMap: SourceMap): SourceMapConsumer {
 		return new SourceMapConsumer(
-			sourceMap.file,
+			createAnyPath(sourceMap.file),
 			() => SourceMapConsumer.parseMappings(sourceMap),
 		);
 	}
 
 	public static fromJSONLazy(
-		file: string,
+		path: AnyPath,
 		getSourceMap: () => SourceMap,
 	): SourceMapConsumer {
 		return new SourceMapConsumer(
-			file,
+			path,
 			() => SourceMapConsumer.parseMappings(getSourceMap()),
 		);
 	}
@@ -67,10 +62,10 @@ export default class SourceMapConsumer {
 		const rawStr: string = sourceMap.mappings;
 		const map: ParsedMappings = new Map();
 
-		let generatedLine = ob1Number1;
-		let previousGeneratedColumn = ob1Number0;
-		let previousOriginalLine = ob1Number1;
-		let previousOriginalColumn = ob1Number0;
+		let generatedLine = new OneIndexed();
+		let previousGeneratedColumn = new ZeroIndexed();
+		let previousOriginalLine = new OneIndexed();
+		let previousOriginalColumn = new ZeroIndexed();
 		let previousSource = 0;
 		let previousName = 0;
 		let length = rawStr.length;
@@ -78,23 +73,27 @@ export default class SourceMapConsumer {
 		let cachedSegments: Dict<number[]> = {};
 		let value;
 
+		const sources: AnyPath[] = sourceMap.sources.map((source) => {
+			return createAnyPath(source);
+		});
+
 		while (index < length) {
 			const char = rawStr[index];
 			if (char === ";") {
-				generatedLine = ob1Inc(generatedLine);
+				generatedLine = generatedLine.increment();
 				index++;
-				previousGeneratedColumn = ob1Number0;
+				previousGeneratedColumn = new ZeroIndexed();
 			} else if (char === ",") {
 				index++;
 			} else {
 				const mapping: ParsedMapping = {
 					generated: {
 						line: generatedLine,
-						column: ob1Number0,
+						column: new ZeroIndexed(),
 					},
 					original: {
-						line: ob1Number1,
-						column: ob1Number0,
+						line: new OneIndexed(),
+						column: new ZeroIndexed(),
 					},
 					source: undefined,
 					name: undefined,
@@ -135,23 +134,23 @@ export default class SourceMapConsumer {
 				}
 
 				// Generated column
-				mapping.generated.column = ob1Add(previousGeneratedColumn, segment[0]);
+				mapping.generated.column = previousGeneratedColumn.add(segment[0]);
 				previousGeneratedColumn = mapping.generated.column;
 
 				if (segment.length > 1) {
 					// Original source
-					mapping.source = sourceMap.sources[previousSource + segment[1]];
+					mapping.source = sources[previousSource + segment[1]];
 					previousSource += segment[1];
 
 					// Original line
-					const newOriginalLine = ob1Add(previousOriginalLine, segment[2]);
+					const newOriginalLine = previousOriginalLine.add(segment[2]);
 					previousOriginalLine = newOriginalLine;
 
 					// Lines are stored 0-based
-					mapping.original.line = ob1Add(newOriginalLine, 1);
+					mapping.original.line = newOriginalLine.increment();
 
 					// Original column
-					const newOriginalColumn = ob1Add(previousOriginalColumn, segment[3]);
+					const newOriginalColumn = previousOriginalColumn.add(segment[3]);
 					mapping.original.column = newOriginalColumn;
 					previousOriginalColumn = newOriginalColumn;
 
@@ -187,13 +186,13 @@ export default class SourceMapConsumer {
 	}
 
 	public approxOriginalPositionFor(
-		line: Number1,
-		column: Number0,
+		line: OneIndexed,
+		column: ZeroIndexed,
 	): undefined | ResolvedLocation {
-		while (ob1Get0(column) >= 0) {
+		while (column.valueOf() >= 0) {
 			const mapping = this.exactOriginalPositionFor(line, column);
 			if (mapping === undefined) {
-				column = ob1Dec(column);
+				column = column.decrement();
 			} else {
 				return mapping;
 			}
@@ -203,8 +202,8 @@ export default class SourceMapConsumer {
 	}
 
 	public exactOriginalPositionFor(
-		line: Number1,
-		column: Number0,
+		line: OneIndexed,
+		column: ZeroIndexed,
 	): undefined | ResolvedLocation {
 		const key = getParsedMappingKey(line, column);
 		const mapping = this.getMappings().get(key);
@@ -212,7 +211,7 @@ export default class SourceMapConsumer {
 			return undefined;
 		}
 
-		const source = mapping.source ?? this.file;
+		const source = mapping.source ?? this.path;
 		if (source === undefined) {
 			throw new Error("Mapping provided unknown source");
 		}

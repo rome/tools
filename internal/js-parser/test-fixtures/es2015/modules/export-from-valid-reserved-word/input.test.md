@@ -12,95 +12,33 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "es2015/modules/export-from-valid-reserved-word/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
 	syntax: Array []
-	loc: Object {
-		filename: "es2015/modules/export-from-valid-reserved-word/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2015/modules/export-from-valid-reserved-word/input.js 1:0-2:0
+	path: UIDPath<es2015/modules/export-from-valid-reserved-word/input.js>
 	body: Array [
 		JSExportExternalDeclaration {
 			defaultSpecifier: undefined
 			exportKind: undefined
 			namespaceSpecifier: undefined
-			loc: Object {
-				filename: "es2015/modules/export-from-valid-reserved-word/input.js"
-				end: Object {
-					column: 24
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2015/modules/export-from-valid-reserved-word/input.js 1:0-1:24
 			source: JSStringLiteral {
 				value: "foo"
-				loc: Object {
-					filename: "es2015/modules/export-from-valid-reserved-word/input.js"
-					end: Object {
-						column: 24
-						line: 1
-					}
-					start: Object {
-						column: 19
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/modules/export-from-valid-reserved-word/input.js 1:19-1:24
 			}
 			namedSpecifiers: Array [
 				JSExportExternalSpecifier {
-					loc: Object {
-						filename: "es2015/modules/export-from-valid-reserved-word/input.js"
-						end: Object {
-							column: 11
-							line: 1
-						}
-						start: Object {
-							column: 9
-							line: 1
-						}
-					}
+					loc: SourceLocation es2015/modules/export-from-valid-reserved-word/input.js 1:9-1:11
 					exported: JSIdentifier {
 						name: "if"
-						loc: Object {
-							filename: "es2015/modules/export-from-valid-reserved-word/input.js"
-							identifierName: "if"
-							end: Object {
-								column: 11
-								line: 1
-							}
-							start: Object {
-								column: 9
-								line: 1
-							}
-						}
+						loc: SourceLocation es2015/modules/export-from-valid-reserved-word/input.js 1:9-1:11 (if)
 					}
 					local: JSIdentifier {
 						name: "if"
-						loc: Object {
-							filename: "es2015/modules/export-from-valid-reserved-word/input.js"
-							identifierName: "if"
-							end: Object {
-								column: 11
-								line: 1
-							}
-							start: Object {
-								column: 9
-								line: 1
-							}
-						}
+						loc: SourceLocation es2015/modules/export-from-valid-reserved-word/input.js 1:9-1:11 (if)
 					}
 				}
 			]
@@ -112,6 +50,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

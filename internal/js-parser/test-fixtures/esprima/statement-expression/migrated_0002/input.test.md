@@ -11,75 +11,38 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "esprima/statement-expression/migrated_0002/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "esprima/statement-expression/migrated_0002/input.js"
-		end: Object {
-			column: 0
-			line: 2
+	loc: SourceLocation esprima/statement-expression/migrated_0002/input.js 1:0-2:0
+	path: UIDPath<esprima/statement-expression/migrated_0002/input.js>
+	body: Array [
+		JSExpressionStatement {
+			loc: SourceLocation esprima/statement-expression/migrated_0002/input.js 1:0-1:7
+			expression: JSReferenceIdentifier {
+				name: "\0u0061"
+				loc: SourceLocation esprima/statement-expression/migrated_0002/input.js 1:0-1:7 (\0u0061)
+			}
 		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	]
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse"
 				categoryValue: "js"
+				category: Array ["parse"]
 				message: RAW_MARKUP {value: "Expecting Unicode escape sequence \\uXXXX"}
 			}
 			location: Object {
-				filename: "esprima/statement-expression/migrated_0002/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 1
-					line: 1
-				}
-				start: Object {
-					column: 1
-					line: 1
-				}
-			}
-		}
-	]
-	body: Array [
-		JSExpressionStatement {
-			loc: Object {
-				filename: "esprima/statement-expression/migrated_0002/input.js"
-				end: Object {
-					column: 7
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
-			expression: JSReferenceIdentifier {
-				name: "\0u0061"
-				loc: Object {
-					filename: "esprima/statement-expression/migrated_0002/input.js"
-					identifierName: "\0u0061"
-					end: Object {
-						column: 7
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				end: Position 1:1
+				path: UIDPath<esprima/statement-expression/migrated_0002/input.js>
+				start: Position 1:1
 			}
 		}
 	]
@@ -97,8 +60,5 @@ JSRoot {
     \\u0061
      ^
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

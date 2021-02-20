@@ -11,7 +11,7 @@ eleventyNavigation:
 
 # Rules
 
-<!-- GENERATED:START(hash:6dddc6f2a96f7e35047dc98f9753b08695dbdc72,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. -->
+<!-- GENERATED:START(hash:a84121d08a825f38c8f1ccad3433756a29808fd7,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. -->
 <section>
 <h2>JavaScript</h2>
 <p>Rule semantics and descriptions taken from <a href="https://eslint.org/">ESLint</a>. See individual rule docs for direct references.</p>
@@ -310,6 +310,13 @@ MISSING DOCUMENTATION
 MISSING DOCUMENTATION
 </div>
 <div class="rule">
+<h3 data-toc-exclude id="useSimplifiedLogicalExpression">
+	<a href="/docs/lint/rules/js/useSimplifiedLogicalExpression">useSimplifiedLogicalExpression</a>
+	<a class="header-anchor" href="#useSimplifiedLogicalExpression"></a>
+</h3>
+discard redundant terms from logical expressions
+</div>
+<div class="rule">
 <h3 data-toc-exclude id="useSingleCaseStatement">
 	<a href="/docs/lint/rules/js/useSingleCaseStatement">useSingleCaseStatement</a>
 	<a class="header-anchor" href="#useSingleCaseStatement"></a>
@@ -368,6 +375,88 @@ promotes the use of `[]` over `Array&lt;&gt;`
 </h3>
 MISSING DOCUMENTATION
 </div>
+<div class="rule">
+<h3 data-toc-exclude id="useSimplifiedBooleanExpression">
+	<a href="/docs/lint/rules/ts/useSimplifiedBooleanExpression">useSimplifiedBooleanExpression</a>
+	<a class="header-anchor" href="#useSimplifiedBooleanExpression"></a>
+</h3>
+discard redundant terms or operators in boolean expressions
+</div>
+</section>
+<section>
+<h2>Accessibility (JSX and HTML)</h2>
+<p>Rule semantics and descriptions taken from <a href="https://github.com/jsx-eslint/eslint-plugin-jsx-a11y">eslint-plugin-jsx-a11y</a>
+and <a href="https://axe-linter.deque.com/">axe Linter</a>. See individual rule docs for direct references.</p>
+<div class="rule">
+<h3 data-toc-exclude id="noAriaUnsupportedElements">
+	<a href="/docs/lint/rules/a11y/noAriaUnsupportedElements">noAriaUnsupportedElements</a>
+	<a class="header-anchor" href="#noAriaUnsupportedElements"></a>
+</h3>
+enforce that elements that do not support ARIA roles, states, and properties do not have those attributes
+</div>
+<div class="rule">
+<h3 data-toc-exclude id="noDistractingElements">
+	<a href="/docs/lint/rules/a11y/noDistractingElements">noDistractingElements</a>
+	<a class="header-anchor" href="#noDistractingElements"></a>
+</h3>
+enforce distracting elements are not used
+</div>
+<div class="rule">
+<h3 data-toc-exclude id="noNoninteractiveElementToInteractiveRole">
+	<a href="/docs/lint/rules/a11y/noNoninteractiveElementToInteractiveRole">noNoninteractiveElementToInteractiveRole</a>
+	<a class="header-anchor" href="#noNoninteractiveElementToInteractiveRole"></a>
+</h3>
+non-interactive elements should not be assigned interactive roles
+</div>
+<div class="rule">
+<h3 data-toc-exclude id="noNoninteractiveTabindex">
+	<a href="/docs/lint/rules/a11y/noNoninteractiveTabindex">noNoninteractiveTabindex</a>
+	<a class="header-anchor" href="#noNoninteractiveTabindex"></a>
+</h3>
+MISSING DOCUMENTATION
+</div>
+<div class="rule">
+<h3 data-toc-exclude id="noSvgWithoutTitle">
+	<a href="/docs/lint/rules/a11y/noSvgWithoutTitle">noSvgWithoutTitle</a>
+	<a class="header-anchor" href="#noSvgWithoutTitle"></a>
+</h3>
+MISSING DOCUMENTATION
+</div>
+<div class="rule">
+<h3 data-toc-exclude id="useAltText">
+	<a href="/docs/lint/rules/a11y/useAltText">useAltText</a>
+	<a class="header-anchor" href="#useAltText"></a>
+</h3>
+Checks that images have a valid alternative text
+</div>
+<div class="rule">
+<h3 data-toc-exclude id="useAriaProptypes">
+	<a href="/docs/lint/rules/a11y/useAriaProptypes">useAriaProptypes</a>
+	<a class="header-anchor" href="#useAriaProptypes"></a>
+</h3>
+enforce ARIA state and property values are valid
+</div>
+<div class="rule">
+<h3 data-toc-exclude id="useHtmlLang">
+	<a href="/docs/lint/rules/a11y/useHtmlLang">useHtmlLang</a>
+	<a class="header-anchor" href="#useHtmlLang"></a>
+</h3>
+the `lang` attribute is mandatory
+</div>
+<div class="rule">
+<h3 data-toc-exclude id="useMediaCaption">
+	<a href="/docs/lint/rules/a11y/useMediaCaption">useMediaCaption</a>
+	<a class="header-anchor" href="#useMediaCaption"></a>
+</h3>
+enforces that `audio` and `video` elements must have a `track` for captions
+</div>
+<div class="rule">
+<h3 data-toc-exclude id="useValidLang">
+	<a href="/docs/lint/rules/a11y/useValidLang">useValidLang</a>
+	<a class="header-anchor" href="#useValidLang"></a>
+</h3>
+check if `lang` attribute is valid
+</div>
 </section>
 <section>
 <h2>JSX Accessibility</h2>
@@ -380,13 +469,6 @@ MISSING DOCUMENTATION
 enforce that the `accessKey` prop is not used on any element to avoid complications with keyboard commands used by a screenreader
 </div>
 <div class="rule">
-<h3 data-toc-exclude id="noAriaUnsupportedElements">
-	<a href="/docs/lint/rules/jsx-a11y/noAriaUnsupportedElements">noAriaUnsupportedElements</a>
-	<a class="header-anchor" href="#noAriaUnsupportedElements"></a>
-</h3>
-enforce that elements that do not support ARIA roles, states, and properties do not have those attributes
-</div>
-<div class="rule">
 <h3 data-toc-exclude id="noAutofocus">
 	<a href="/docs/lint/rules/jsx-a11y/noAutofocus">noAutofocus</a>
 	<a class="header-anchor" href="#noAutofocus"></a>
@@ -394,32 +476,11 @@ enforce that elements that do not support ARIA roles, states, and properties do 
 discourage the usage of `autoFocus`
 </div>
 <div class="rule">
-<h3 data-toc-exclude id="noDistractingElements">
-	<a href="/docs/lint/rules/jsx-a11y/noDistractingElements">noDistractingElements</a>
-	<a class="header-anchor" href="#noDistractingElements"></a>
-</h3>
-enforce distracting elements are not used
-</div>
-<div class="rule">
 <h3 data-toc-exclude id="noHeaderScope">
 	<a href="/docs/lint/rules/jsx-a11y/noHeaderScope">noHeaderScope</a>
 	<a class="header-anchor" href="#noHeaderScope"></a>
 </h3>
 enforce scope prop is only used on `th` elements
-</div>
-<div class="rule">
-<h3 data-toc-exclude id="noNoninteractiveElementToInteractiveRole">
-	<a href="/docs/lint/rules/jsx-a11y/noNoninteractiveElementToInteractiveRole">noNoninteractiveElementToInteractiveRole</a>
-	<a class="header-anchor" href="#noNoninteractiveElementToInteractiveRole"></a>
-</h3>
-non-interactive elements should not be assigned interactive roles
-</div>
-<div class="rule">
-<h3 data-toc-exclude id="noNoninteractiveTabindex">
-	<a href="/docs/lint/rules/jsx-a11y/noNoninteractiveTabindex">noNoninteractiveTabindex</a>
-	<a class="header-anchor" href="#noNoninteractiveTabindex"></a>
-</h3>
-&quot;`tabIndex` should only be declared on interactive elements&quot;
 </div>
 <div class="rule">
 <h3 data-toc-exclude id="noOnChange">
@@ -457,13 +518,6 @@ enforce explicit role property is not the same as implicit/default role property
 Prevent usage of unsafe `target=&quot;_blank&quot;`
 </div>
 <div class="rule">
-<h3 data-toc-exclude id="useAltText">
-	<a href="/docs/lint/rules/jsx-a11y/useAltText">useAltText</a>
-	<a class="header-anchor" href="#useAltText"></a>
-</h3>
-enforce alternative text
-</div>
-<div class="rule">
 <h3 data-toc-exclude id="useAnchorContent">
 	<a href="/docs/lint/rules/jsx-a11y/useAnchorContent">useAnchorContent</a>
 	<a class="header-anchor" href="#useAnchorContent"></a>
@@ -485,25 +539,11 @@ enforce all `aria-*` props are valid
 enforce that elements with ARIA roles must have all required attributes for that role
 </div>
 <div class="rule">
-<h3 data-toc-exclude id="useAriaProptypes">
-	<a href="/docs/lint/rules/jsx-a11y/useAriaProptypes">useAriaProptypes</a>
-	<a class="header-anchor" href="#useAriaProptypes"></a>
-</h3>
-enforce ARIA state and property values are valid
-</div>
-<div class="rule">
 <h3 data-toc-exclude id="useHeadingContent">
 	<a href="/docs/lint/rules/jsx-a11y/useHeadingContent">useHeadingContent</a>
 	<a class="header-anchor" href="#useHeadingContent"></a>
 </h3>
 enforce heading (`h1`, `h2`, etc) elements contain accessible content
-</div>
-<div class="rule">
-<h3 data-toc-exclude id="useHtmlLang">
-	<a href="/docs/lint/rules/jsx-a11y/useHtmlLang">useHtmlLang</a>
-	<a class="header-anchor" href="#useHtmlLang"></a>
-</h3>
-the `lang` attribute is mandatory
 </div>
 <div class="rule">
 <h3 data-toc-exclude id="useIframeTitle">
@@ -527,25 +567,11 @@ enforce a clickable non-interactive element has at least one keyboard event list
 enforce that `onMouseOver`/`onMouseOut` are accompanied by `onFocus`/`onBlur` for keyboard-only users
 </div>
 <div class="rule">
-<h3 data-toc-exclude id="useMediaCaption">
-	<a href="/docs/lint/rules/jsx-a11y/useMediaCaption">useMediaCaption</a>
-	<a class="header-anchor" href="#useMediaCaption"></a>
-</h3>
-enforces that `audio` and `video` elements must have a `track` for captions
-</div>
-<div class="rule">
 <h3 data-toc-exclude id="useValidAnchor">
 	<a href="/docs/lint/rules/jsx-a11y/useValidAnchor">useValidAnchor</a>
 	<a class="header-anchor" href="#useValidAnchor"></a>
 </h3>
 enforce all anchors are valid, navigable elements
-</div>
-<div class="rule">
-<h3 data-toc-exclude id="useValidLang">
-	<a href="/docs/lint/rules/jsx-a11y/useValidLang">useValidLang</a>
-	<a class="header-anchor" href="#useValidLang"></a>
-</h3>
-check if `lang` attribute is valid
 </div>
 </section>
 <section>

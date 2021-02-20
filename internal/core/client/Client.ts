@@ -7,6 +7,7 @@
 
 import {
 	ClientFlags,
+	ClientLogsLevel,
 	ClientTerminalFeatures,
 	DEFAULT_CLIENT_FLAGS,
 } from "../common/types/client";
@@ -32,7 +33,10 @@ import {Reporter, ReporterDerivedStreams} from "@internal/cli-reporter";
 import prettyFormat from "@internal/pretty-format";
 import {TarWriter} from "@internal/codec-tar";
 import {Profile, Profiler, Trace, TraceEvent} from "@internal/v8";
-import {PartialServerQueryRequest} from "../common/bridges/ServerBridge";
+import {
+	PartialServerQueryRequest,
+	ServerBridgeLog,
+} from "../common/bridges/ServerBridge";
 import {UserConfig, getUserConfigFile} from "../common/userConfig";
 import {createWriteStream, removeFile} from "@internal/fs";
 import {json} from "@internal/codec-config";
@@ -315,18 +319,29 @@ export default class Client {
 	}
 
 	public subscribeLogs(
-		includeWorkerLogs: boolean,
+		level: ClientLogsLevel,
+		includeWorker: boolean,
 		callback: (chunk: string) => void,
 	): Promise<EventSubscription> {
 		return this.onBridge(async ({bridge}) => {
-			if (includeWorkerLogs) {
-				await bridge.events.enableWorkerLogs.call();
-			}
+			await bridge.events.setLogLevel.call({
+				level,
+				includeWorker,
+			});
 
-			return bridge.events.log.subscribe(({origin, chunk}) => {
-				if (origin === "worker" && !includeWorkerLogs) {
-					// We allow multiple calls to bridge.enableWorkerLogs
-					// Filter the event if necessary if it wasn't requested by this log subscription
+			return bridge.events.log.subscribe((
+				{
+					origin,
+					chunk,
+					isError,
+				}: ServerBridgeLog,
+			) => {
+				// We allow multiple calls to bridge.subscribeLogs
+				// Filter the event if necessary if it wasn't requested by this log subscription
+				if (origin === "worker" && !includeWorker) {
+					return;
+				}
+				if (!isError && level !== "all") {
 					return;
 				}
 
@@ -421,6 +436,7 @@ export default class Client {
 		let logsHTML = "";
 		let logsPlain = "";
 		await this.subscribeLogs(
+			"all",
 			true,
 			(chunk) => {
 				logsPlain += joinMarkupLines(
@@ -650,10 +666,6 @@ export default class Client {
 			server.attachToBridge(bridges.server),
 			this.attachBridge(status),
 		]);
-
-		this.endEvent.subscribe(async () => {
-			await server.end();
-		});
 
 		return {serverClient, bridge: bridges.client, server};
 	}

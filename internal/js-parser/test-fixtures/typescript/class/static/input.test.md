@@ -12,131 +12,38 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "typescript/class/static/input.ts"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
+	loc: SourceLocation typescript/class/static/input.ts 1:0-7:0
+	path: UIDPath<typescript/class/static/input.ts>
 	syntax: Array ["ts"]
-	loc: Object {
-		filename: "typescript/class/static/input.ts"
-		end: Object {
-			column: 0
-			line: 7
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
 	body: Array [
 		JSClassDeclaration {
 			id: JSBindingIdentifier {
 				name: "C"
-				loc: Object {
-					filename: "typescript/class/static/input.ts"
-					identifierName: "C"
-					end: Object {
-						column: 7
-						line: 1
-					}
-					start: Object {
-						column: 6
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/class/static/input.ts 1:6-1:7 (C)
 			}
-			loc: Object {
-				filename: "typescript/class/static/input.ts"
-				end: Object {
-					column: 1
-					line: 6
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation typescript/class/static/input.ts 1:0-6:1
 			meta: JSClassHead {
 				implements: undefined
 				superClass: undefined
 				superTypeParameters: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "typescript/class/static/input.ts"
-					end: Object {
-						column: 1
-						line: 6
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/class/static/input.ts 1:0-6:1
 				body: Array [
 					TSDeclareMethod {
 						kind: "method"
 						key: JSStaticPropertyKey {
 							value: JSIdentifier {
 								name: "f"
-								loc: Object {
-									filename: "typescript/class/static/input.ts"
-									identifierName: "f"
-									end: Object {
-										column: 12
-										line: 2
-									}
-									start: Object {
-										column: 11
-										line: 2
-									}
-								}
+								loc: SourceLocation typescript/class/static/input.ts 2:11-2:12 (f)
 							}
-							loc: Object {
-								filename: "typescript/class/static/input.ts"
-								end: Object {
-									column: 12
-									line: 2
-								}
-								start: Object {
-									column: 11
-									line: 2
-								}
-							}
+							loc: SourceLocation typescript/class/static/input.ts 2:11-2:12
 						}
 						body: undefined
-						loc: Object {
-							filename: "typescript/class/static/input.ts"
-							end: Object {
-								column: 15
-								line: 2
-							}
-							start: Object {
-								column: 4
-								line: 2
-							}
-						}
-						head: JSFunctionHead {
-							async: false
-							generator: false
-							hasHoistedVars: false
-							params: Array []
-							rest: undefined
-							returnType: undefined
-							thisType: undefined
-							typeParameters: undefined
-							loc: Object {
-								filename: "typescript/class/static/input.ts"
-								end: Object {
-									column: 14
-									line: 2
-								}
-								start: Object {
-									column: 12
-									line: 2
-								}
-							}
-						}
+						loc: SourceLocation typescript/class/static/input.ts 2:4-2:15
 						meta: JSClassPropertyMeta {
 							abstract: false
 							accessibility: undefined
@@ -144,64 +51,8 @@ JSRoot {
 							readonly: false
 							static: true
 							typeAnnotation: undefined
-							start: Object {
-								column: 4
-								line: 2
-							}
-							loc: Object {
-								filename: "typescript/class/static/input.ts"
-								end: Object {
-									column: 12
-									line: 2
-								}
-								start: Object {
-									column: 4
-									line: 2
-								}
-							}
-						}
-					}
-					TSDeclareMethod {
-						kind: "method"
-						key: JSStaticPropertyKey {
-							value: JSIdentifier {
-								name: "f"
-								loc: Object {
-									filename: "typescript/class/static/input.ts"
-									identifierName: "f"
-									end: Object {
-										column: 19
-										line: 3
-									}
-									start: Object {
-										column: 18
-										line: 3
-									}
-								}
-							}
-							loc: Object {
-								filename: "typescript/class/static/input.ts"
-								end: Object {
-									column: 19
-									line: 3
-								}
-								start: Object {
-									column: 18
-									line: 3
-								}
-							}
-						}
-						body: undefined
-						loc: Object {
-							filename: "typescript/class/static/input.ts"
-							end: Object {
-								column: 22
-								line: 3
-							}
-							start: Object {
-								column: 4
-								line: 3
-							}
+							loc: SourceLocation typescript/class/static/input.ts 2:4-2:12
+							start: Position 2:4
 						}
 						head: JSFunctionHead {
 							async: false
@@ -212,18 +63,20 @@ JSRoot {
 							returnType: undefined
 							thisType: undefined
 							typeParameters: undefined
-							loc: Object {
-								filename: "typescript/class/static/input.ts"
-								end: Object {
-									column: 21
-									line: 3
-								}
-								start: Object {
-									column: 19
-									line: 3
-								}
-							}
+							loc: SourceLocation typescript/class/static/input.ts 2:12-2:14
 						}
+					}
+					TSDeclareMethod {
+						kind: "method"
+						key: JSStaticPropertyKey {
+							value: JSIdentifier {
+								name: "f"
+								loc: SourceLocation typescript/class/static/input.ts 3:18-3:19 (f)
+							}
+							loc: SourceLocation typescript/class/static/input.ts 3:18-3:19
+						}
+						body: undefined
+						loc: SourceLocation typescript/class/static/input.ts 3:4-3:22
 						meta: JSClassPropertyMeta {
 							abstract: false
 							accessibility: "public"
@@ -231,64 +84,8 @@ JSRoot {
 							readonly: false
 							static: true
 							typeAnnotation: undefined
-							start: Object {
-								column: 4
-								line: 3
-							}
-							loc: Object {
-								filename: "typescript/class/static/input.ts"
-								end: Object {
-									column: 19
-									line: 3
-								}
-								start: Object {
-									column: 4
-									line: 3
-								}
-							}
-						}
-					}
-					TSDeclareMethod {
-						kind: "method"
-						key: JSStaticPropertyKey {
-							value: JSIdentifier {
-								name: "f"
-								loc: Object {
-									filename: "typescript/class/static/input.ts"
-									identifierName: "f"
-									end: Object {
-										column: 22
-										line: 4
-									}
-									start: Object {
-										column: 21
-										line: 4
-									}
-								}
-							}
-							loc: Object {
-								filename: "typescript/class/static/input.ts"
-								end: Object {
-									column: 22
-									line: 4
-								}
-								start: Object {
-									column: 21
-									line: 4
-								}
-							}
-						}
-						body: undefined
-						loc: Object {
-							filename: "typescript/class/static/input.ts"
-							end: Object {
-								column: 25
-								line: 4
-							}
-							start: Object {
-								column: 4
-								line: 4
-							}
+							loc: SourceLocation typescript/class/static/input.ts 3:4-3:19
+							start: Position 3:4
 						}
 						head: JSFunctionHead {
 							async: false
@@ -299,18 +96,20 @@ JSRoot {
 							returnType: undefined
 							thisType: undefined
 							typeParameters: undefined
-							loc: Object {
-								filename: "typescript/class/static/input.ts"
-								end: Object {
-									column: 24
-									line: 4
-								}
-								start: Object {
-									column: 22
-									line: 4
-								}
-							}
+							loc: SourceLocation typescript/class/static/input.ts 3:19-3:21
 						}
+					}
+					TSDeclareMethod {
+						kind: "method"
+						key: JSStaticPropertyKey {
+							value: JSIdentifier {
+								name: "f"
+								loc: SourceLocation typescript/class/static/input.ts 4:21-4:22 (f)
+							}
+							loc: SourceLocation typescript/class/static/input.ts 4:21-4:22
+						}
+						body: undefined
+						loc: SourceLocation typescript/class/static/input.ts 4:4-4:25
 						meta: JSClassPropertyMeta {
 							abstract: false
 							accessibility: "protected"
@@ -318,64 +117,8 @@ JSRoot {
 							readonly: false
 							static: true
 							typeAnnotation: undefined
-							start: Object {
-								column: 4
-								line: 4
-							}
-							loc: Object {
-								filename: "typescript/class/static/input.ts"
-								end: Object {
-									column: 22
-									line: 4
-								}
-								start: Object {
-									column: 4
-									line: 4
-								}
-							}
-						}
-					}
-					TSDeclareMethod {
-						kind: "method"
-						key: JSStaticPropertyKey {
-							value: JSIdentifier {
-								name: "f"
-								loc: Object {
-									filename: "typescript/class/static/input.ts"
-									identifierName: "f"
-									end: Object {
-										column: 20
-										line: 5
-									}
-									start: Object {
-										column: 19
-										line: 5
-									}
-								}
-							}
-							loc: Object {
-								filename: "typescript/class/static/input.ts"
-								end: Object {
-									column: 20
-									line: 5
-								}
-								start: Object {
-									column: 19
-									line: 5
-								}
-							}
-						}
-						body: undefined
-						loc: Object {
-							filename: "typescript/class/static/input.ts"
-							end: Object {
-								column: 23
-								line: 5
-							}
-							start: Object {
-								column: 4
-								line: 5
-							}
+							loc: SourceLocation typescript/class/static/input.ts 4:4-4:22
+							start: Position 4:4
 						}
 						head: JSFunctionHead {
 							async: false
@@ -386,18 +129,20 @@ JSRoot {
 							returnType: undefined
 							thisType: undefined
 							typeParameters: undefined
-							loc: Object {
-								filename: "typescript/class/static/input.ts"
-								end: Object {
-									column: 22
-									line: 5
-								}
-								start: Object {
-									column: 20
-									line: 5
-								}
-							}
+							loc: SourceLocation typescript/class/static/input.ts 4:22-4:24
 						}
+					}
+					TSDeclareMethod {
+						kind: "method"
+						key: JSStaticPropertyKey {
+							value: JSIdentifier {
+								name: "f"
+								loc: SourceLocation typescript/class/static/input.ts 5:19-5:20 (f)
+							}
+							loc: SourceLocation typescript/class/static/input.ts 5:19-5:20
+						}
+						body: undefined
+						loc: SourceLocation typescript/class/static/input.ts 5:4-5:23
 						meta: JSClassPropertyMeta {
 							abstract: false
 							accessibility: "private"
@@ -405,21 +150,19 @@ JSRoot {
 							readonly: false
 							static: true
 							typeAnnotation: undefined
-							start: Object {
-								column: 4
-								line: 5
-							}
-							loc: Object {
-								filename: "typescript/class/static/input.ts"
-								end: Object {
-									column: 20
-									line: 5
-								}
-								start: Object {
-									column: 4
-									line: 5
-								}
-							}
+							loc: SourceLocation typescript/class/static/input.ts 5:4-5:20
+							start: Position 5:4
+						}
+						head: JSFunctionHead {
+							async: false
+							generator: false
+							hasHoistedVars: false
+							params: Array []
+							rest: undefined
+							returnType: undefined
+							thisType: undefined
+							typeParameters: undefined
+							loc: SourceLocation typescript/class/static/input.ts 5:20-5:22
 						}
 					}
 				]
@@ -432,6 +175,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

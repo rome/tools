@@ -57,7 +57,6 @@ export default createServerCommand({
 				},
 			],
 			extensions: JS_EXTENSIONS,
-			disabledDiagnosticCategory: "tests/disabled",
 		});
 		const paths = await globber.get();
 

@@ -12,78 +12,27 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "esprima/es2015-identifier/escaped_math_zain_start/input.js"
 	hasHoistedVars: true
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "esprima/es2015-identifier/escaped_math_zain_start/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation esprima/es2015-identifier/escaped_math_zain_start/input.js 1:0-2:0
+	path: UIDPath<esprima/es2015-identifier/escaped_math_zain_start/input.js>
 	body: Array [
 		JSVariableDeclarationStatement {
-			loc: Object {
-				filename: "esprima/es2015-identifier/escaped_math_zain_start/input.js"
-				end: Object {
-					column: 15
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation esprima/es2015-identifier/escaped_math_zain_start/input.js 1:0-1:15
 			declaration: JSVariableDeclaration {
 				kind: "var"
-				loc: Object {
-					filename: "esprima/es2015-identifier/escaped_math_zain_start/input.js"
-					end: Object {
-						column: 15
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/es2015-identifier/escaped_math_zain_start/input.js 1:0-1:15
 				declarations: Array [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "\u{1ee06}_$"
-							loc: Object {
-								filename: "esprima/es2015-identifier/escaped_math_zain_start/input.js"
-								identifierName: "\u{1ee06}_$"
-								end: Object {
-									column: 15
-									line: 1
-								}
-								start: Object {
-									column: 4
-									line: 1
-								}
-							}
+							loc: SourceLocation esprima/es2015-identifier/escaped_math_zain_start/input.js 1:4-1:15 (\u{1ee06}_$)
 						}
 						init: undefined
-						loc: Object {
-							filename: "esprima/es2015-identifier/escaped_math_zain_start/input.js"
-							end: Object {
-								column: 15
-								line: 1
-							}
-							start: Object {
-								column: 4
-								line: 1
-							}
-						}
+						loc: SourceLocation esprima/es2015-identifier/escaped_math_zain_start/input.js 1:4-1:15
 					}
 				]
 			}
@@ -95,6 +44,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

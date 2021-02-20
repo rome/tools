@@ -12,124 +12,41 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "experimental/class-private-properties/super-private-member-access/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "experimental/class-private-properties/super-private-member-access/input.js"
-		end: Object {
-			column: 0
-			line: 8
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation experimental/class-private-properties/super-private-member-access/input.js 1:0-8:0
+	path: UIDPath<experimental/class-private-properties/super-private-member-access/input.js>
 	body: Array [
 		JSClassDeclaration {
 			id: JSBindingIdentifier {
 				name: "A"
-				loc: Object {
-					filename: "experimental/class-private-properties/super-private-member-access/input.js"
-					identifierName: "A"
-					end: Object {
-						column: 7
-						line: 1
-					}
-					start: Object {
-						column: 6
-						line: 1
-					}
-				}
+				loc: SourceLocation experimental/class-private-properties/super-private-member-access/input.js 1:6-1:7 (A)
 			}
-			loc: Object {
-				filename: "experimental/class-private-properties/super-private-member-access/input.js"
-				end: Object {
-					column: 1
-					line: 7
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation experimental/class-private-properties/super-private-member-access/input.js 1:0-7:1
 			meta: JSClassHead {
 				implements: undefined
 				superTypeParameters: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "experimental/class-private-properties/super-private-member-access/input.js"
-					end: Object {
-						column: 1
-						line: 7
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation experimental/class-private-properties/super-private-member-access/input.js 1:0-7:1
 				superClass: JSReferenceIdentifier {
 					name: "B"
-					loc: Object {
-						filename: "experimental/class-private-properties/super-private-member-access/input.js"
-						identifierName: "B"
-						end: Object {
-							column: 17
-							line: 1
-						}
-						start: Object {
-							column: 16
-							line: 1
-						}
-					}
+					loc: SourceLocation experimental/class-private-properties/super-private-member-access/input.js 1:16-1:17 (B)
 				}
 				body: Array [
 					JSClassPrivateProperty {
 						key: JSPrivateName {
 							id: JSIdentifier {
 								name: "x"
-								loc: Object {
-									filename: "experimental/class-private-properties/super-private-member-access/input.js"
-									identifierName: "x"
-									end: Object {
-										column: 4
-										line: 2
-									}
-									start: Object {
-										column: 3
-										line: 2
-									}
-								}
+								loc: SourceLocation experimental/class-private-properties/super-private-member-access/input.js 2:3-2:4 (x)
 							}
-							loc: Object {
-								filename: "experimental/class-private-properties/super-private-member-access/input.js"
-								end: Object {
-									column: 4
-									line: 2
-								}
-								start: Object {
-									column: 2
-									line: 2
-								}
-							}
+							loc: SourceLocation experimental/class-private-properties/super-private-member-access/input.js 2:2-2:4
 						}
 						value: undefined
 						typeAnnotation: undefined
-						loc: Object {
-							filename: "experimental/class-private-properties/super-private-member-access/input.js"
-							end: Object {
-								column: 5
-								line: 2
-							}
-							start: Object {
-								column: 2
-								line: 2
-							}
-						}
+						loc: SourceLocation experimental/class-private-properties/super-private-member-access/input.js 2:2-2:5
 						meta: JSClassPropertyMeta {
 							abstract: false
 							accessibility: undefined
@@ -137,21 +54,8 @@ JSRoot {
 							readonly: false
 							static: false
 							typeAnnotation: undefined
-							start: Object {
-								column: 2
-								line: 2
-							}
-							loc: Object {
-								filename: "experimental/class-private-properties/super-private-member-access/input.js"
-								end: Object {
-									column: 4
-									line: 2
-								}
-								start: Object {
-									column: 2
-									line: 2
-								}
-							}
+							loc: SourceLocation experimental/class-private-properties/super-private-member-access/input.js 2:2-2:4
+							start: Position 2:2
 						}
 					}
 					JSClassMethod {
@@ -159,41 +63,20 @@ JSRoot {
 						key: JSStaticPropertyKey {
 							value: JSIdentifier {
 								name: "method"
-								loc: Object {
-									filename: "experimental/class-private-properties/super-private-member-access/input.js"
-									identifierName: "method"
-									end: Object {
-										column: 8
-										line: 4
-									}
-									start: Object {
-										column: 2
-										line: 4
-									}
-								}
+								loc: SourceLocation experimental/class-private-properties/super-private-member-access/input.js 4:2-4:8 (method)
 							}
-							loc: Object {
-								filename: "experimental/class-private-properties/super-private-member-access/input.js"
-								end: Object {
-									column: 8
-									line: 4
-								}
-								start: Object {
-									column: 2
-									line: 4
-								}
-							}
+							loc: SourceLocation experimental/class-private-properties/super-private-member-access/input.js 4:2-4:8
 						}
-						loc: Object {
-							filename: "experimental/class-private-properties/super-private-member-access/input.js"
-							end: Object {
-								column: 3
-								line: 6
-							}
-							start: Object {
-								column: 2
-								line: 4
-							}
+						loc: SourceLocation experimental/class-private-properties/super-private-member-access/input.js 4:2-6:3
+						meta: JSClassPropertyMeta {
+							abstract: false
+							accessibility: undefined
+							optional: false
+							readonly: false
+							static: false
+							typeAnnotation: undefined
+							loc: SourceLocation experimental/class-private-properties/super-private-member-access/input.js 4:2-4:8
+							start: Position 4:2
 						}
 						head: JSFunctionHead {
 							async: false
@@ -204,132 +87,26 @@ JSRoot {
 							returnType: undefined
 							thisType: undefined
 							typeParameters: undefined
-							loc: Object {
-								filename: "experimental/class-private-properties/super-private-member-access/input.js"
-								end: Object {
-									column: 10
-									line: 4
-								}
-								start: Object {
-									column: 8
-									line: 4
-								}
-							}
-						}
-						meta: JSClassPropertyMeta {
-							abstract: false
-							accessibility: undefined
-							optional: false
-							readonly: false
-							static: false
-							typeAnnotation: undefined
-							start: Object {
-								column: 2
-								line: 4
-							}
-							loc: Object {
-								filename: "experimental/class-private-properties/super-private-member-access/input.js"
-								end: Object {
-									column: 8
-									line: 4
-								}
-								start: Object {
-									column: 2
-									line: 4
-								}
-							}
+							loc: SourceLocation experimental/class-private-properties/super-private-member-access/input.js 4:8-4:10
 						}
 						body: JSBlockStatement {
 							directives: Array []
-							loc: Object {
-								filename: "experimental/class-private-properties/super-private-member-access/input.js"
-								end: Object {
-									column: 3
-									line: 6
-								}
-								start: Object {
-									column: 11
-									line: 4
-								}
-							}
+							loc: SourceLocation experimental/class-private-properties/super-private-member-access/input.js 4:11-6:3
 							body: Array [
 								JSExpressionStatement {
-									loc: Object {
-										filename: "experimental/class-private-properties/super-private-member-access/input.js"
-										end: Object {
-											column: 13
-											line: 5
-										}
-										start: Object {
-											column: 4
-											line: 5
-										}
-									}
+									loc: SourceLocation experimental/class-private-properties/super-private-member-access/input.js 5:4-5:13
 									expression: JSMemberExpression {
-										loc: Object {
-											filename: "experimental/class-private-properties/super-private-member-access/input.js"
-											end: Object {
-												column: 12
-												line: 5
-											}
-											start: Object {
-												column: 4
-												line: 5
-											}
-										}
-										object: JSSuper {
-											loc: Object {
-												filename: "experimental/class-private-properties/super-private-member-access/input.js"
-												end: Object {
-													column: 9
-													line: 5
-												}
-												start: Object {
-													column: 4
-													line: 5
-												}
-											}
-										}
+										loc: SourceLocation experimental/class-private-properties/super-private-member-access/input.js 5:4-5:12
+										object: JSSuper {loc: SourceLocation experimental/class-private-properties/super-private-member-access/input.js 5:4-5:9}
 										property: JSStaticMemberProperty {
 											value: JSPrivateName {
 												id: JSIdentifier {
 													name: "x"
-													loc: Object {
-														filename: "experimental/class-private-properties/super-private-member-access/input.js"
-														identifierName: "x"
-														end: Object {
-															column: 12
-															line: 5
-														}
-														start: Object {
-															column: 11
-															line: 5
-														}
-													}
+													loc: SourceLocation experimental/class-private-properties/super-private-member-access/input.js 5:11-5:12 (x)
 												}
-												loc: Object {
-													filename: "experimental/class-private-properties/super-private-member-access/input.js"
-													end: Object {
-														column: 12
-														line: 5
-													}
-													start: Object {
-														column: 10
-														line: 5
-													}
-												}
+												loc: SourceLocation experimental/class-private-properties/super-private-member-access/input.js 5:10-5:12
 											}
-											loc: Object {
-												filename: "experimental/class-private-properties/super-private-member-access/input.js"
-												end: Object {
-													column: 12
-													line: 5
-												}
-												start: Object {
-													column: 10
-													line: 5
-												}
-											}
+											loc: SourceLocation experimental/class-private-properties/super-private-member-access/input.js 5:10-5:12
 										}
 									}
 								}
@@ -346,6 +123,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

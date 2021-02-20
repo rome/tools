@@ -12,93 +12,33 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "es2019/optional-catch-binding/no-binding-finally/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2019/optional-catch-binding/no-binding-finally/input.js"
-		end: Object {
-			column: 0
-			line: 10
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2019/optional-catch-binding/no-binding-finally/input.js 1:0-10:0
+	path: UIDPath<es2019/optional-catch-binding/no-binding-finally/input.js>
 	body: Array [
 		JSTryStatement {
-			loc: Object {
-				filename: "es2019/optional-catch-binding/no-binding-finally/input.js"
-				end: Object {
-					column: 1
-					line: 9
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2019/optional-catch-binding/no-binding-finally/input.js 1:0-9:1
 			block: JSBlockStatement {
 				body: Array []
 				directives: Array []
-				loc: Object {
-					filename: "es2019/optional-catch-binding/no-binding-finally/input.js"
-					end: Object {
-						column: 1
-						line: 3
-					}
-					start: Object {
-						column: 4
-						line: 1
-					}
-				}
+				loc: SourceLocation es2019/optional-catch-binding/no-binding-finally/input.js 1:4-3:1
 			}
 			finalizer: JSBlockStatement {
 				body: Array []
 				directives: Array []
-				loc: Object {
-					filename: "es2019/optional-catch-binding/no-binding-finally/input.js"
-					end: Object {
-						column: 1
-						line: 9
-					}
-					start: Object {
-						column: 8
-						line: 7
-					}
-				}
+				loc: SourceLocation es2019/optional-catch-binding/no-binding-finally/input.js 7:8-9:1
 			}
 			handler: JSCatchClause {
 				param: undefined
-				loc: Object {
-					filename: "es2019/optional-catch-binding/no-binding-finally/input.js"
-					end: Object {
-						column: 1
-						line: 6
-					}
-					start: Object {
-						column: 0
-						line: 4
-					}
-				}
+				loc: SourceLocation es2019/optional-catch-binding/no-binding-finally/input.js 4:0-6:1
 				body: JSBlockStatement {
 					body: Array []
 					directives: Array []
-					loc: Object {
-						filename: "es2019/optional-catch-binding/no-binding-finally/input.js"
-						end: Object {
-							column: 1
-							line: 6
-						}
-						start: Object {
-							column: 6
-							line: 4
-						}
-					}
+					loc: SourceLocation es2019/optional-catch-binding/no-binding-finally/input.js 4:6-6:1
 				}
 			}
 		}
@@ -109,6 +49,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

@@ -21,16 +21,18 @@ import {
 	toCamelCase,
 	toKebabCase,
 } from "@internal/string-utils";
-import {AbsoluteFilePath, HOME_PATH, createUnknownPath} from "@internal/path";
+import {AbsoluteFilePath, HOME_PATH, createUIDPath} from "@internal/path";
 import {Dict} from "@internal/typescript-helpers";
 import {
 	AnyMarkups,
 	StaticMarkup,
 	concatMarkup,
+	joinMarkupLines,
 	markup,
 	readMarkup,
 } from "@internal/markup";
 import {
+	DIAGNOSTIC_CATEGORIES,
 	Diagnostic,
 	DiagnosticsError,
 	descriptions,
@@ -40,6 +42,7 @@ import {prettyFormatEager} from "@internal/pretty-format";
 import highlightShell from "@internal/markup-syntax-highlight/highlightShell";
 import {RSERObject} from "@internal/codec-binary-serial";
 import {ExtendedMap} from "@internal/collections";
+import {markupToPlainText} from "@internal/cli-layout";
 
 export type Examples = {
 	description: StaticMarkup;
@@ -56,7 +59,7 @@ type CommandOptions<T extends RSERObject> = {
 	name: string;
 	category?: string;
 	description?: StaticMarkup;
-	usage?: string;
+	usage?: StaticMarkup;
 	examples?: Examples;
 	ignoreFlags?: string[];
 	hidden?: boolean;
@@ -237,7 +240,7 @@ export default class Parser<T> {
 		}
 
 		const consumer = consume({
-			filePath: createUnknownPath("argv"),
+			path: createUIDPath("argv"),
 			value: flags,
 			onDefinition: (def, valueConsumer) => {
 				const key = def.objectPath.join(".");
@@ -294,7 +297,7 @@ export default class Parser<T> {
 				}
 			},
 			context: {
-				category: "flags/invalid",
+				category: DIAGNOSTIC_CATEGORIES["flags/invalid"],
 				normalizeKey: (key) => {
 					return this.incorrectCaseFlags.has(key) ? key : toKebabCase(key);
 				},
@@ -687,7 +690,7 @@ export default class Parser<T> {
 
 	private async showUsageHelp(
 		description?: StaticMarkup,
-		usage: string = "[flags]",
+		usage: StaticMarkup = "[flags]",
 		prefix?: string,
 	) {
 		const {reporter} = this;
@@ -701,7 +704,7 @@ export default class Parser<T> {
 					reporter.br({force: true});
 				}
 
-				const commandParts = [programName];
+				const commandParts: StaticMarkup[] = [programName];
 				if (prefix !== undefined) {
 					commandParts.push(prefix);
 				}
@@ -805,7 +808,9 @@ export default class Parser<T> {
 			// add command description if exists
 			let description = "";
 			if (meta.description) {
-				description += ` -d '${readMarkup(meta.description)}'`;
+				description += ` -d '${joinMarkupLines(
+					markupToPlainText(meta.description),
+				)}'`;
 			}
 
 			script += `${scriptPre} -n '__fish_use_subcommand' -a '${subcmd}'${description}\n`;

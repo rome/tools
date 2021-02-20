@@ -12,89 +12,28 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "core/uncategorised/236/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "core/uncategorised/236/input.js"
-		end: Object {
-			column: 26
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation core/uncategorised/236/input.js 1:0-1:26
+	path: UIDPath<core/uncategorised/236/input.js>
 	body: Array [
 		JSWhileStatement {
-			loc: Object {
-				filename: "core/uncategorised/236/input.js"
-				end: Object {
-					column: 26
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation core/uncategorised/236/input.js 1:0-1:26
 			test: JSBooleanLiteral {
 				value: true
-				loc: Object {
-					filename: "core/uncategorised/236/input.js"
-					end: Object {
-						column: 11
-						line: 1
-					}
-					start: Object {
-						column: 7
-						line: 1
-					}
-				}
+				loc: SourceLocation core/uncategorised/236/input.js 1:7-1:11
 			}
 			body: JSExpressionStatement {
-				loc: Object {
-					filename: "core/uncategorised/236/input.js"
-					end: Object {
-						column: 26
-						line: 1
-					}
-					start: Object {
-						column: 13
-						line: 1
-					}
-				}
+				loc: SourceLocation core/uncategorised/236/input.js 1:13-1:26
 				expression: JSCallExpression {
 					arguments: Array []
-					loc: Object {
-						filename: "core/uncategorised/236/input.js"
-						end: Object {
-							column: 26
-							line: 1
-						}
-						start: Object {
-							column: 13
-							line: 1
-						}
-					}
+					loc: SourceLocation core/uncategorised/236/input.js 1:13-1:26
 					callee: JSReferenceIdentifier {
 						name: "doSomething"
-						loc: Object {
-							filename: "core/uncategorised/236/input.js"
-							identifierName: "doSomething"
-							end: Object {
-								column: 24
-								line: 1
-							}
-							start: Object {
-								column: 13
-								line: 1
-							}
-						}
+						loc: SourceLocation core/uncategorised/236/input.js 1:13-1:24 (doSomething)
 					}
 				}
 			}
@@ -106,6 +45,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

@@ -12,328 +12,87 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "typescript/cast/need-parentheses/input.ts"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
+	loc: SourceLocation typescript/cast/need-parentheses/input.ts 1:0-4:0
+	path: UIDPath<typescript/cast/need-parentheses/input.ts>
 	syntax: Array ["ts"]
-	loc: Object {
-		filename: "typescript/cast/need-parentheses/input.ts"
-		end: Object {
-			column: 0
-			line: 4
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "typescript/cast/need-parentheses/input.ts"
-				end: Object {
-					column: 10
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation typescript/cast/need-parentheses/input.ts 1:0-1:10
 			expression: JSMemberExpression {
-				loc: Object {
-					filename: "typescript/cast/need-parentheses/input.ts"
-					end: Object {
-						column: 9
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/cast/need-parentheses/input.ts 1:0-1:9
 				property: JSStaticMemberProperty {
 					value: JSIdentifier {
 						name: "y"
-						loc: Object {
-							filename: "typescript/cast/need-parentheses/input.ts"
-							identifierName: "y"
-							end: Object {
-								column: 9
-								line: 1
-							}
-							start: Object {
-								column: 8
-								line: 1
-							}
-						}
+						loc: SourceLocation typescript/cast/need-parentheses/input.ts 1:8-1:9 (y)
 					}
-					loc: Object {
-						filename: "typescript/cast/need-parentheses/input.ts"
-						identifierName: "y"
-						end: Object {
-							column: 9
-							line: 1
-						}
-						start: Object {
-							column: 8
-							line: 1
-						}
-					}
+					loc: SourceLocation typescript/cast/need-parentheses/input.ts 1:8-1:9 (y)
 				}
 				object: TSTypeAssertion {
-					loc: Object {
-						filename: "typescript/cast/need-parentheses/input.ts"
-						end: Object {
-							column: 6
-							line: 1
-						}
-						start: Object {
-							column: 1
-							line: 1
-						}
-					}
+					loc: SourceLocation typescript/cast/need-parentheses/input.ts 1:1-1:6
 					expression: JSReferenceIdentifier {
 						name: "x"
-						loc: Object {
-							filename: "typescript/cast/need-parentheses/input.ts"
-							identifierName: "x"
-							end: Object {
-								column: 6
-								line: 1
-							}
-							start: Object {
-								column: 5
-								line: 1
-							}
-						}
+						loc: SourceLocation typescript/cast/need-parentheses/input.ts 1:5-1:6 (x)
 					}
 					typeAnnotation: TSTypeReference {
 						typeParameters: undefined
-						loc: Object {
-							filename: "typescript/cast/need-parentheses/input.ts"
-							end: Object {
-								column: 3
-								line: 1
-							}
-							start: Object {
-								column: 2
-								line: 1
-							}
-						}
+						loc: SourceLocation typescript/cast/need-parentheses/input.ts 1:2-1:3
 						typeName: JSReferenceIdentifier {
 							name: "T"
-							loc: Object {
-								filename: "typescript/cast/need-parentheses/input.ts"
-								identifierName: "T"
-								end: Object {
-									column: 3
-									line: 1
-								}
-								start: Object {
-									column: 2
-									line: 1
-								}
-							}
+							loc: SourceLocation typescript/cast/need-parentheses/input.ts 1:2-1:3 (T)
 						}
 					}
 				}
 			}
 		}
 		JSExpressionStatement {
-			loc: Object {
-				filename: "typescript/cast/need-parentheses/input.ts"
-				end: Object {
-					column: 11
-					line: 2
-				}
-				start: Object {
-					column: 0
-					line: 2
-				}
-			}
+			loc: SourceLocation typescript/cast/need-parentheses/input.ts 2:0-2:11
 			expression: JSMemberExpression {
-				loc: Object {
-					filename: "typescript/cast/need-parentheses/input.ts"
-					end: Object {
-						column: 10
-						line: 2
-					}
-					start: Object {
-						column: 0
-						line: 2
-					}
-				}
+				loc: SourceLocation typescript/cast/need-parentheses/input.ts 2:0-2:10
 				property: JSStaticMemberProperty {
 					value: JSIdentifier {
 						name: "y"
-						loc: Object {
-							filename: "typescript/cast/need-parentheses/input.ts"
-							identifierName: "y"
-							end: Object {
-								column: 10
-								line: 2
-							}
-							start: Object {
-								column: 9
-								line: 2
-							}
-						}
+						loc: SourceLocation typescript/cast/need-parentheses/input.ts 2:9-2:10 (y)
 					}
-					loc: Object {
-						filename: "typescript/cast/need-parentheses/input.ts"
-						identifierName: "y"
-						end: Object {
-							column: 10
-							line: 2
-						}
-						start: Object {
-							column: 9
-							line: 2
-						}
-					}
+					loc: SourceLocation typescript/cast/need-parentheses/input.ts 2:9-2:10 (y)
 				}
 				object: TSAsExpression {
-					loc: Object {
-						filename: "typescript/cast/need-parentheses/input.ts"
-						end: Object {
-							column: 7
-							line: 2
-						}
-						start: Object {
-							column: 1
-							line: 2
-						}
-					}
+					loc: SourceLocation typescript/cast/need-parentheses/input.ts 2:1-2:7
 					expression: JSReferenceIdentifier {
 						name: "x"
-						loc: Object {
-							filename: "typescript/cast/need-parentheses/input.ts"
-							identifierName: "x"
-							end: Object {
-								column: 2
-								line: 2
-							}
-							start: Object {
-								column: 1
-								line: 2
-							}
-						}
+						loc: SourceLocation typescript/cast/need-parentheses/input.ts 2:1-2:2 (x)
 					}
 					typeAnnotation: TSTypeReference {
 						typeParameters: undefined
-						loc: Object {
-							filename: "typescript/cast/need-parentheses/input.ts"
-							end: Object {
-								column: 7
-								line: 2
-							}
-							start: Object {
-								column: 6
-								line: 2
-							}
-						}
+						loc: SourceLocation typescript/cast/need-parentheses/input.ts 2:6-2:7
 						typeName: JSReferenceIdentifier {
 							name: "T"
-							loc: Object {
-								filename: "typescript/cast/need-parentheses/input.ts"
-								identifierName: "T"
-								end: Object {
-									column: 7
-									line: 2
-								}
-								start: Object {
-									column: 6
-									line: 2
-								}
-							}
+							loc: SourceLocation typescript/cast/need-parentheses/input.ts 2:6-2:7 (T)
 						}
 					}
 				}
 			}
 		}
 		JSExpressionStatement {
-			loc: Object {
-				filename: "typescript/cast/need-parentheses/input.ts"
-				end: Object {
-					column: 5
-					line: 3
-				}
-				start: Object {
-					column: 0
-					line: 3
-				}
-			}
+			loc: SourceLocation typescript/cast/need-parentheses/input.ts 3:0-3:5
 			expression: JSMemberExpression {
-				loc: Object {
-					filename: "typescript/cast/need-parentheses/input.ts"
-					end: Object {
-						column: 4
-						line: 3
-					}
-					start: Object {
-						column: 0
-						line: 3
-					}
-				}
+				loc: SourceLocation typescript/cast/need-parentheses/input.ts 3:0-3:4
 				object: TSNonNullExpression {
-					loc: Object {
-						filename: "typescript/cast/need-parentheses/input.ts"
-						end: Object {
-							column: 2
-							line: 3
-						}
-						start: Object {
-							column: 0
-							line: 3
-						}
-					}
+					loc: SourceLocation typescript/cast/need-parentheses/input.ts 3:0-3:2
 					expression: JSReferenceIdentifier {
 						name: "x"
-						loc: Object {
-							filename: "typescript/cast/need-parentheses/input.ts"
-							identifierName: "x"
-							end: Object {
-								column: 1
-								line: 3
-							}
-							start: Object {
-								column: 0
-								line: 3
-							}
-						}
+						loc: SourceLocation typescript/cast/need-parentheses/input.ts 3:0-3:1 (x)
 					}
 				}
 				property: JSStaticMemberProperty {
 					value: JSIdentifier {
 						name: "y"
-						loc: Object {
-							filename: "typescript/cast/need-parentheses/input.ts"
-							identifierName: "y"
-							end: Object {
-								column: 4
-								line: 3
-							}
-							start: Object {
-								column: 3
-								line: 3
-							}
-						}
+						loc: SourceLocation typescript/cast/need-parentheses/input.ts 3:3-3:4 (y)
 					}
-					loc: Object {
-						filename: "typescript/cast/need-parentheses/input.ts"
-						identifierName: "y"
-						end: Object {
-							column: 4
-							line: 3
-						}
-						start: Object {
-							column: 3
-							line: 3
-						}
-					}
+					loc: SourceLocation typescript/cast/need-parentheses/input.ts 3:3-3:4 (y)
 				}
 			}
 		}
@@ -344,6 +103,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

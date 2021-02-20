@@ -11,45 +11,29 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "experimental/module-attributes/import-with-statement/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
 	syntax: Array []
-	loc: Object {
-		filename: "experimental/module-attributes/import-with-statement/input.js"
-		end: Object {
-			column: 0
-			line: 3
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation experimental/module-attributes/import-with-statement/input.js 1:0-3:0
+	path: UIDPath<experimental/module-attributes/import-with-statement/input.js>
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse"
 				categoryValue: "js"
+				category: Array ["parse"]
 				message: RAW_MARKUP {value: "'with' in strict mode"}
 			}
 			location: Object {
-				filename: "experimental/module-attributes/import-with-statement/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 10
-					line: 2
-				}
-				start: Object {
-					column: 0
-					line: 2
-				}
+				end: Position 2:10
+				path: UIDPath<experimental/module-attributes/import-with-statement/input.js>
+				start: Position 2:0
 			}
 		}
 	]
@@ -59,70 +43,18 @@ JSRoot {
 			importKind: undefined
 			namedSpecifiers: Array []
 			namespaceSpecifier: undefined
-			loc: Object {
-				filename: "experimental/module-attributes/import-with-statement/input.js"
-				end: Object {
-					column: 10
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation experimental/module-attributes/import-with-statement/input.js 1:0-1:10
 			source: JSStringLiteral {
 				value: "x"
-				loc: Object {
-					filename: "experimental/module-attributes/import-with-statement/input.js"
-					end: Object {
-						column: 10
-						line: 1
-					}
-					start: Object {
-						column: 7
-						line: 1
-					}
-				}
+				loc: SourceLocation experimental/module-attributes/import-with-statement/input.js 1:7-1:10
 			}
 		}
 		JSWithStatement {
-			loc: Object {
-				filename: "experimental/module-attributes/import-with-statement/input.js"
-				end: Object {
-					column: 10
-					line: 2
-				}
-				start: Object {
-					column: 0
-					line: 2
-				}
-			}
-			body: JSEmptyStatement {
-				loc: Object {
-					filename: "experimental/module-attributes/import-with-statement/input.js"
-					end: Object {
-						column: 10
-						line: 2
-					}
-					start: Object {
-						column: 9
-						line: 2
-					}
-				}
-			}
+			body: JSEmptyStatement {loc: SourceLocation experimental/module-attributes/import-with-statement/input.js 2:9-2:10}
+			loc: SourceLocation experimental/module-attributes/import-with-statement/input.js 2:0-2:10
 			object: JSObjectExpression {
 				properties: Array []
-				loc: Object {
-					filename: "experimental/module-attributes/import-with-statement/input.js"
-					end: Object {
-						column: 8
-						line: 2
-					}
-					start: Object {
-						column: 6
-						line: 2
-					}
-				}
+				loc: SourceLocation experimental/module-attributes/import-with-statement/input.js 2:6-2:8
 			}
 		}
 	]
@@ -141,8 +73,5 @@ JSRoot {
   > 2 │ with ({});
       │ ^^^^^^^^^^
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

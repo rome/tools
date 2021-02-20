@@ -18,7 +18,7 @@ import {isRoot} from "@internal/ast-utils";
 import stringDiff from "@internal/string-diff";
 import {formatAST} from "@internal/formatter";
 import {StaticMarkup, markup} from "@internal/markup";
-import {DiagnosticDescription} from "@internal/diagnostics";
+import {DiagnosticDescription, equalCategoryNames} from "@internal/diagnostics";
 import {ContextDiagnostic} from "./CompilerContext";
 import {
 	buildLintDecisionAdviceAction,
@@ -360,7 +360,7 @@ export default class Path {
 				);
 				for (const decision of decisions) {
 					if (
-						decision.category === category &&
+						equalCategoryNames(decision.category, category) &&
 						(decision.categoryValue === undefined ||
 						decision.categoryValue === categoryValue) &&
 						decision.action === "fix" &&

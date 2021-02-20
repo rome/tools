@@ -11,140 +11,47 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "comments/regression/10432/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "comments/regression/10432/input.js"
-		end: Object {
-			column: 0
-			line: 6
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation comments/regression/10432/input.js 1:0-6:0
+	path: UIDPath<comments/regression/10432/input.js>
 	comments: Array [
 		CommentBlock {
 			id: "0"
 			value: " istanbul ignore next "
-			loc: Object {
-				filename: "comments/regression/10432/input.js"
-				end: Object {
-					column: 26
-					line: 2
-				}
-				start: Object {
-					column: 0
-					line: 2
-				}
-			}
+			loc: SourceLocation comments/regression/10432/input.js 2:0-2:26
 		}
 	]
 	body: Array [
 		JSVariableDeclarationStatement {
+			loc: SourceLocation comments/regression/10432/input.js 1:0-1:36
 			trailingComments: Array ["0"]
-			loc: Object {
-				filename: "comments/regression/10432/input.js"
-				end: Object {
-					column: 36
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
 			declaration: JSVariableDeclaration {
 				kind: "const"
 				trailingComments: undefined
-				loc: Object {
-					filename: "comments/regression/10432/input.js"
-					end: Object {
-						column: 36
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation comments/regression/10432/input.js 1:0-1:36
 				declarations: Array [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "socket"
-							loc: Object {
-								filename: "comments/regression/10432/input.js"
-								identifierName: "socket"
-								end: Object {
-									column: 12
-									line: 1
-								}
-								start: Object {
-									column: 6
-									line: 1
-								}
-							}
+							loc: SourceLocation comments/regression/10432/input.js 1:6-1:12 (socket)
 						}
 						trailingComments: undefined
-						loc: Object {
-							filename: "comments/regression/10432/input.js"
-							end: Object {
-								column: 36
-								line: 1
-							}
-							start: Object {
-								column: 6
-								line: 1
-							}
-						}
+						loc: SourceLocation comments/regression/10432/input.js 1:6-1:36
 						init: JSCallExpression {
 							trailingComments: undefined
-							loc: Object {
-								filename: "comments/regression/10432/input.js"
-								end: Object {
-									column: 36
-									line: 1
-								}
-								start: Object {
-									column: 15
-									line: 1
-								}
-							}
+							loc: SourceLocation comments/regression/10432/input.js 1:15-1:36
 							callee: JSReferenceIdentifier {
 								name: "socketClient"
-								loc: Object {
-									filename: "comments/regression/10432/input.js"
-									identifierName: "socketClient"
-									end: Object {
-										column: 27
-										line: 1
-									}
-									start: Object {
-										column: 15
-										line: 1
-									}
-								}
+								loc: SourceLocation comments/regression/10432/input.js 1:15-1:27 (socketClient)
 							}
 							arguments: Array [
 								JSReferenceIdentifier {
 									name: "address"
-									loc: Object {
-										filename: "comments/regression/10432/input.js"
-										identifierName: "address"
-										end: Object {
-											column: 35
-											line: 1
-										}
-										start: Object {
-											column: 28
-											line: 1
-										}
-									}
+									loc: SourceLocation comments/regression/10432/input.js 1:28-1:35 (address)
 								}
 							]
 						}
@@ -154,117 +61,34 @@ JSRoot {
 		}
 		JSExpressionStatement {
 			leadingComments: Array ["0"]
-			loc: Object {
-				filename: "comments/regression/10432/input.js"
-				end: Object {
-					column: 2
-					line: 5
-				}
-				start: Object {
-					column: 0
-					line: 3
-				}
-			}
+			loc: SourceLocation comments/regression/10432/input.js 3:0-5:2
 			expression: JSCallExpression {
 				leadingComments: undefined
-				loc: Object {
-					filename: "comments/regression/10432/input.js"
-					end: Object {
-						column: 2
-						line: 5
-					}
-					start: Object {
-						column: 0
-						line: 3
-					}
-				}
+				loc: SourceLocation comments/regression/10432/input.js 3:0-5:2
 				callee: JSMemberExpression {
 					leadingComments: undefined
-					loc: Object {
-						filename: "comments/regression/10432/input.js"
-						end: Object {
-							column: 9
-							line: 3
-						}
-						start: Object {
-							column: 0
-							line: 3
-						}
-					}
+					loc: SourceLocation comments/regression/10432/input.js 3:0-3:9
 					object: JSReferenceIdentifier {
 						name: "socket"
 						leadingComments: undefined
-						loc: Object {
-							filename: "comments/regression/10432/input.js"
-							identifierName: "socket"
-							end: Object {
-								column: 6
-								line: 3
-							}
-							start: Object {
-								column: 0
-								line: 3
-							}
-						}
+						loc: SourceLocation comments/regression/10432/input.js 3:0-3:6 (socket)
 					}
 					property: JSStaticMemberProperty {
 						value: JSIdentifier {
 							name: "on"
-							loc: Object {
-								filename: "comments/regression/10432/input.js"
-								identifierName: "on"
-								end: Object {
-									column: 9
-									line: 3
-								}
-								start: Object {
-									column: 7
-									line: 3
-								}
-							}
+							loc: SourceLocation comments/regression/10432/input.js 3:7-3:9 (on)
 						}
-						loc: Object {
-							filename: "comments/regression/10432/input.js"
-							identifierName: "on"
-							end: Object {
-								column: 9
-								line: 3
-							}
-							start: Object {
-								column: 7
-								line: 3
-							}
-						}
+						loc: SourceLocation comments/regression/10432/input.js 3:7-3:9 (on)
 					}
 				}
 				arguments: Array [
 					JSStringLiteral {
 						value: "connect"
-						loc: Object {
-							filename: "comments/regression/10432/input.js"
-							end: Object {
-								column: 19
-								line: 3
-							}
-							start: Object {
-								column: 10
-								line: 3
-							}
-						}
+						loc: SourceLocation comments/regression/10432/input.js 3:10-3:19
 					}
 					JSFunctionExpression {
 						id: undefined
-						loc: Object {
-							filename: "comments/regression/10432/input.js"
-							end: Object {
-								column: 1
-								line: 5
-							}
-							start: Object {
-								column: 21
-								line: 3
-							}
-						}
+						loc: SourceLocation comments/regression/10432/input.js 3:21-5:1
 						head: JSFunctionHead {
 							async: false
 							generator: false
@@ -274,113 +98,31 @@ JSRoot {
 							returnType: undefined
 							thisType: undefined
 							typeParameters: undefined
-							loc: Object {
-								filename: "comments/regression/10432/input.js"
-								end: Object {
-									column: 32
-									line: 3
-								}
-								start: Object {
-									column: 30
-									line: 3
-								}
-							}
+							loc: SourceLocation comments/regression/10432/input.js 3:30-3:32
 						}
 						body: JSBlockStatement {
 							directives: Array []
-							loc: Object {
-								filename: "comments/regression/10432/input.js"
-								end: Object {
-									column: 1
-									line: 5
-								}
-								start: Object {
-									column: 33
-									line: 3
-								}
-							}
+							loc: SourceLocation comments/regression/10432/input.js 3:33-5:1
 							body: Array [
 								JSExpressionStatement {
-									loc: Object {
-										filename: "comments/regression/10432/input.js"
-										end: Object {
-											column: 34
-											line: 4
-										}
-										start: Object {
-											column: 2
-											line: 4
-										}
-									}
+									loc: SourceLocation comments/regression/10432/input.js 4:2-4:34
 									expression: JSCallExpression {
-										loc: Object {
-											filename: "comments/regression/10432/input.js"
-											end: Object {
-												column: 34
-												line: 4
-											}
-											start: Object {
-												column: 2
-												line: 4
-											}
-										}
+										loc: SourceLocation comments/regression/10432/input.js 4:2-4:34
 										callee: JSReferenceIdentifier {
 											name: "debug"
-											loc: Object {
-												filename: "comments/regression/10432/input.js"
-												identifierName: "debug"
-												end: Object {
-													column: 7
-													line: 4
-												}
-												start: Object {
-													column: 2
-													line: 4
-												}
-											}
+											loc: SourceLocation comments/regression/10432/input.js 4:2-4:7 (debug)
 										}
 										arguments: Array [
 											JSBinaryExpression {
 												operator: "+"
-												loc: Object {
-													filename: "comments/regression/10432/input.js"
-													end: Object {
-														column: 33
-														line: 4
-													}
-													start: Object {
-														column: 8
-														line: 4
-													}
-												}
+												loc: SourceLocation comments/regression/10432/input.js 4:8-4:33
 												left: JSStringLiteral {
 													value: "Connected to "
-													loc: Object {
-														filename: "comments/regression/10432/input.js"
-														end: Object {
-															column: 23
-															line: 4
-														}
-														start: Object {
-															column: 8
-															line: 4
-														}
-													}
+													loc: SourceLocation comments/regression/10432/input.js 4:8-4:23
 												}
 												right: JSReferenceIdentifier {
 													name: "address"
-													loc: Object {
-														filename: "comments/regression/10432/input.js"
-														identifierName: "address"
-														end: Object {
-															column: 33
-															line: 4
-														}
-														start: Object {
-															column: 26
-															line: 4
-														}
-													}
+													loc: SourceLocation comments/regression/10432/input.js 4:26-4:33 (address)
 												}
 											}
 										]
@@ -399,6 +141,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

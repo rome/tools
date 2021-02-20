@@ -11,48 +11,29 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "core/uncategorised/485/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "core/uncategorised/485/input.js"
-		end: Object {
-			column: 37
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation core/uncategorised/485/input.js 1:0-1:37
+	path: UIDPath<core/uncategorised/485/input.js>
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse"
 				categoryValue: "js"
-				message: Array [
-					"arguments"
-					RAW_MARKUP {value: " is a reserved word"}
-				]
+				category: Array ["parse"]
+				message: RAW_MARKUP {value: "arguments is a reserved word"}
 			}
 			location: Object {
-				filename: "core/uncategorised/485/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 18
-					line: 1
-				}
-				start: Object {
-					column: 9
-					line: 1
-				}
+				end: Position 1:18
+				path: UIDPath<core/uncategorised/485/input.js>
+				start: Position 1:9
 			}
 		}
 	]
@@ -60,29 +41,18 @@ JSRoot {
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "arguments"
-				loc: Object {
-					filename: "core/uncategorised/485/input.js"
-					identifierName: "arguments"
-					end: Object {
-						column: 18
-						line: 1
-					}
-					start: Object {
-						column: 9
-						line: 1
-					}
-				}
+				loc: SourceLocation core/uncategorised/485/input.js 1:9-1:18 (arguments)
 			}
-			loc: Object {
-				filename: "core/uncategorised/485/input.js"
-				end: Object {
-					column: 37
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
+			loc: SourceLocation core/uncategorised/485/input.js 1:0-1:37
+			body: JSBlockStatement {
+				body: Array []
+				loc: SourceLocation core/uncategorised/485/input.js 1:21-1:37
+				directives: Array [
+					JSDirective {
+						value: "use strict"
+						loc: SourceLocation core/uncategorised/485/input.js 1:22-1:35
+					}
+				]
 			}
 			head: JSFunctionHead {
 				async: false
@@ -93,47 +63,7 @@ JSRoot {
 				returnType: undefined
 				thisType: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "core/uncategorised/485/input.js"
-					end: Object {
-						column: 20
-						line: 1
-					}
-					start: Object {
-						column: 18
-						line: 1
-					}
-				}
-			}
-			body: JSBlockStatement {
-				body: Array []
-				loc: Object {
-					filename: "core/uncategorised/485/input.js"
-					end: Object {
-						column: 37
-						line: 1
-					}
-					start: Object {
-						column: 21
-						line: 1
-					}
-				}
-				directives: Array [
-					JSDirective {
-						value: "use strict"
-						loc: Object {
-							filename: "core/uncategorised/485/input.js"
-							end: Object {
-								column: 35
-								line: 1
-							}
-							start: Object {
-								column: 22
-								line: 1
-							}
-						}
-					}
-				]
+				loc: SourceLocation core/uncategorised/485/input.js 1:18-1:20
 			}
 		}
 	]
@@ -151,8 +81,5 @@ JSRoot {
     function arguments() {'use strict'; }
              ^^^^^^^^^
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

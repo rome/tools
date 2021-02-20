@@ -11,11 +11,18 @@ import {AnyRoot} from "@internal/ast";
 import {ProjectConfig} from "@internal/project";
 import {EnterSignal, ExitSignal} from "./signals";
 import CompilerContext from "./lib/CompilerContext";
-import {AbsoluteFilePath} from "@internal/path";
+import {AbsoluteFilePath, UIDPath, UIDPathMap} from "@internal/path";
 import {SourceMap} from "@internal/codec-source-map";
 import {Dict, UnknownObject} from "@internal/typescript-helpers";
 import {DiagnosticCategory} from "@internal/diagnostics";
 import {VisitorStateEnter, VisitorStateExit} from "./lib/VisitorState";
+
+export type CompilerProject = {
+	config: ProjectConfig;
+	directory?: undefined | AbsoluteFilePath;
+};
+
+export type CompilerProjects = CompilerProject[];
 
 //
 export type TransformStageName = "pre" | "compile" | "compileForBundle";
@@ -56,33 +63,28 @@ export type LintRequest = TransformRequest & {
 	suppressionExplanation?: string;
 };
 
-export type TransformProjectDefinition = {
-	configHashes: string[];
-	config: ProjectConfig;
-	directory: undefined | AbsoluteFilePath;
-};
-
 export type TransformRequest = {
-	ref?: FileReference;
 	sourceText: string;
 	ast: AnyRoot;
-	project: TransformProjectDefinition;
 	options: CompilerOptions;
+	ref?: FileReference;
+	project?: CompilerProject;
 	stage?: TransformStageName;
 };
 
-export type BundleCompileResolvedImports = {
-	[key: string]: {
-		id: string;
+export type BundleCompileResolvedImports = UIDPathMap<Map<
+	string,
+	{
+		id: UIDPath;
 		name: string;
-	};
-};
+	}
+>>;
 
 export type BundleCompileOptions = {
 	moduleAll: boolean;
-	moduleId: string;
+	moduleId: UIDPath;
 	analyze: AnalyzeDependencyResult;
-	relativeSourcesToModuleId: Dict<string>;
+	relativeSourcesToModuleId: Dict<UIDPath>;
 	resolvedImports: BundleCompileResolvedImports;
 	assetPath: undefined | string;
 };

@@ -12,146 +12,62 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "es2020/dynamic-import/variable-arguments/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2020/dynamic-import/variable-arguments/input.js"
-		end: Object {
-			column: 0
-			line: 3
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2020/dynamic-import/variable-arguments/input.js 1:0-3:0
+	path: UIDPath<es2020/dynamic-import/variable-arguments/input.js>
 	body: Array [
 		JSVariableDeclarationStatement {
-			loc: Object {
-				filename: "es2020/dynamic-import/variable-arguments/input.js"
-				end: Object {
-					column: 30
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2020/dynamic-import/variable-arguments/input.js 1:0-1:30
 			declaration: JSVariableDeclaration {
 				kind: "const"
-				loc: Object {
-					filename: "es2020/dynamic-import/variable-arguments/input.js"
-					end: Object {
-						column: 30
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation es2020/dynamic-import/variable-arguments/input.js 1:0-1:30
 				declarations: Array [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "testVarible"
-							loc: Object {
-								filename: "es2020/dynamic-import/variable-arguments/input.js"
-								identifierName: "testVarible"
-								end: Object {
-									column: 17
-									line: 1
-								}
-								start: Object {
-									column: 6
-									line: 1
-								}
-							}
+							loc: SourceLocation es2020/dynamic-import/variable-arguments/input.js 1:6-1:17 (testVarible)
 						}
-						loc: Object {
-							filename: "es2020/dynamic-import/variable-arguments/input.js"
-							end: Object {
-								column: 29
-								line: 1
-							}
-							start: Object {
-								column: 6
-								line: 1
-							}
-						}
+						loc: SourceLocation es2020/dynamic-import/variable-arguments/input.js 1:6-1:29
 						init: JSStringLiteral {
 							value: "test.js"
-							loc: Object {
-								filename: "es2020/dynamic-import/variable-arguments/input.js"
-								end: Object {
-									column: 29
-									line: 1
-								}
-								start: Object {
-									column: 20
-									line: 1
-								}
-							}
+							loc: SourceLocation es2020/dynamic-import/variable-arguments/input.js 1:20-1:29
 						}
 					}
 				]
 			}
 		}
 		JSExpressionStatement {
-			loc: Object {
-				filename: "es2020/dynamic-import/variable-arguments/input.js"
-				end: Object {
-					column: 35
-					line: 2
-				}
-				start: Object {
-					column: 0
-					line: 2
-				}
-			}
+			loc: SourceLocation es2020/dynamic-import/variable-arguments/input.js 2:0-2:35
 			expression: JSCallExpression {
-				loc: Object {
-					filename: "es2020/dynamic-import/variable-arguments/input.js"
-					end: Object {
-						column: 34
-						line: 2
+				loc: SourceLocation es2020/dynamic-import/variable-arguments/input.js 2:0-2:34
+				callee: JSMemberExpression {
+					loc: SourceLocation es2020/dynamic-import/variable-arguments/input.js 2:0-2:24
+					object: JSImportCall {
+						loc: SourceLocation es2020/dynamic-import/variable-arguments/input.js 2:6-2:19
+						argument: JSReferenceIdentifier {
+							name: "testVarible"
+							loc: SourceLocation es2020/dynamic-import/variable-arguments/input.js 2:7-2:18 (testVarible)
+						}
 					}
-					start: Object {
-						column: 0
-						line: 2
+					property: JSStaticMemberProperty {
+						value: JSIdentifier {
+							name: "then"
+							loc: SourceLocation es2020/dynamic-import/variable-arguments/input.js 2:20-2:24 (then)
+						}
+						loc: SourceLocation es2020/dynamic-import/variable-arguments/input.js 2:20-2:24 (then)
 					}
 				}
 				arguments: Array [
 					JSArrowFunctionExpression {
-						loc: Object {
-							filename: "es2020/dynamic-import/variable-arguments/input.js"
-							end: Object {
-								column: 33
-								line: 2
-							}
-							start: Object {
-								column: 25
-								line: 2
-							}
-						}
+						loc: SourceLocation es2020/dynamic-import/variable-arguments/input.js 2:25-2:33
 						body: JSBlockStatement {
 							body: Array []
 							directives: Array []
-							loc: Object {
-								filename: "es2020/dynamic-import/variable-arguments/input.js"
-								end: Object {
-									column: 33
-									line: 2
-								}
-								start: Object {
-									column: 31
-									line: 2
-								}
-							}
+							loc: SourceLocation es2020/dynamic-import/variable-arguments/input.js 2:31-2:33
 						}
 						head: JSFunctionHead {
 							async: false
@@ -160,90 +76,10 @@ JSRoot {
 							rest: undefined
 							returnType: undefined
 							thisType: undefined
-							loc: Object {
-								filename: "es2020/dynamic-import/variable-arguments/input.js"
-								end: Object {
-									column: 30
-									line: 2
-								}
-								start: Object {
-									column: 25
-									line: 2
-								}
-							}
+							loc: SourceLocation es2020/dynamic-import/variable-arguments/input.js 2:25-2:30
 						}
 					}
 				]
-				callee: JSMemberExpression {
-					loc: Object {
-						filename: "es2020/dynamic-import/variable-arguments/input.js"
-						end: Object {
-							column: 24
-							line: 2
-						}
-						start: Object {
-							column: 0
-							line: 2
-						}
-					}
-					object: JSImportCall {
-						loc: Object {
-							filename: "es2020/dynamic-import/variable-arguments/input.js"
-							end: Object {
-								column: 19
-								line: 2
-							}
-							start: Object {
-								column: 6
-								line: 2
-							}
-						}
-						argument: JSReferenceIdentifier {
-							name: "testVarible"
-							loc: Object {
-								filename: "es2020/dynamic-import/variable-arguments/input.js"
-								identifierName: "testVarible"
-								end: Object {
-									column: 18
-									line: 2
-								}
-								start: Object {
-									column: 7
-									line: 2
-								}
-							}
-						}
-					}
-					property: JSStaticMemberProperty {
-						value: JSIdentifier {
-							name: "then"
-							loc: Object {
-								filename: "es2020/dynamic-import/variable-arguments/input.js"
-								identifierName: "then"
-								end: Object {
-									column: 24
-									line: 2
-								}
-								start: Object {
-									column: 20
-									line: 2
-								}
-							}
-						}
-						loc: Object {
-							filename: "es2020/dynamic-import/variable-arguments/input.js"
-							identifierName: "then"
-							end: Object {
-								column: 24
-								line: 2
-							}
-							start: Object {
-								column: 20
-								line: 2
-							}
-						}
-					}
-				}
 			}
 		}
 	]
@@ -253,6 +89,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

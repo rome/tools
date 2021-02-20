@@ -11,116 +11,50 @@ JSRoot {
 	comments: Array []
 	corrupt: true
 	directives: Array []
-	filename: "esprima/es2015-export-declaration/invalid-export-batch-token/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
 	syntax: Array []
-	loc: Object {
-		filename: "esprima/es2015-export-declaration/invalid-export-batch-token/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation esprima/es2015-export-declaration/invalid-export-batch-token/input.js 1:0-2:0
+	path: UIDPath<esprima/es2015-export-declaration/invalid-export-batch-token/input.js>
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse"
 				categoryValue: "js"
+				category: Array ["parse"]
 				message: RAW_MARKUP {value: "Expected `from` for an export node"}
 			}
 			location: Object {
-				filename: "esprima/es2015-export-declaration/invalid-export-batch-token/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 8
-					line: 1
-				}
-				start: Object {
-					column: 9
-					line: 1
-				}
+				end: Position 1:8
+				path: UIDPath<esprima/es2015-export-declaration/invalid-export-batch-token/input.js>
+				start: Position 1:9
 			}
 		}
 	]
 	body: Array [
 		JSExportAllDeclaration {
 			exportKind: undefined
-			loc: Object {
-				filename: "esprima/es2015-export-declaration/invalid-export-batch-token/input.js"
-				end: Object {
-					column: 8
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation esprima/es2015-export-declaration/invalid-export-batch-token/input.js 1:0-1:8
 			source: JSStringLiteral {
 				value: ""
-				loc: Object {
-					filename: "esprima/es2015-export-declaration/invalid-export-batch-token/input.js"
-					end: Object {
-						column: 8
-						line: 1
-					}
-					start: Object {
-						column: 9
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/es2015-export-declaration/invalid-export-batch-token/input.js 1:9-1:8
 			}
 		}
 		JSExpressionStatement {
-			loc: Object {
-				filename: "esprima/es2015-export-declaration/invalid-export-batch-token/input.js"
-				end: Object {
-					column: 0
-					line: 2
-				}
-				start: Object {
-					column: 9
-					line: 1
-				}
-			}
+			loc: SourceLocation esprima/es2015-export-declaration/invalid-export-batch-token/input.js 1:9-2:0
 			expression: JSUnaryExpression {
 				operator: "+"
 				prefix: true
-				loc: Object {
-					filename: "esprima/es2015-export-declaration/invalid-export-batch-token/input.js"
-					end: Object {
-						column: 0
-						line: 2
-					}
-					start: Object {
-						column: 9
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/es2015-export-declaration/invalid-export-batch-token/input.js 1:9-2:0
 				argument: JSReferenceIdentifier {
 					name: "INVALID_PLACEHOLDER"
-					loc: Object {
-						filename: "esprima/es2015-export-declaration/invalid-export-batch-token/input.js"
-						end: Object {
-							column: 0
-							line: 2
-						}
-						start: Object {
-							column: 0
-							line: 2
-						}
-					}
+					loc: SourceLocation esprima/es2015-export-declaration/invalid-export-batch-token/input.js 2:0-2:0
 				}
 			}
 		}
@@ -139,8 +73,5 @@ JSRoot {
     export * +
              ^
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

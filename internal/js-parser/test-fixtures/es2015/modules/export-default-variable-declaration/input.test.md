@@ -11,128 +11,51 @@ JSRoot {
 	comments: Array []
 	corrupt: true
 	directives: Array []
-	filename: "es2015/modules/export-default-variable-declaration/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
 	syntax: Array []
-	loc: Object {
-		filename: "es2015/modules/export-default-variable-declaration/input.js"
-		end: Object {
-			column: 1
-			line: 3
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2015/modules/export-default-variable-declaration/input.js 1:0-3:1
+	path: UIDPath<es2015/modules/export-default-variable-declaration/input.js>
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse"
 				categoryValue: "js"
+				category: Array ["parse"]
 				message: RAW_MARKUP {value: "Only expressions, functions or classes are allowed as the `default` export."}
 			}
 			location: Object {
-				filename: "es2015/modules/export-default-variable-declaration/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 14
-					line: 1
-				}
-				start: Object {
-					column: 15
-					line: 1
-				}
+				end: Position 1:14
+				path: UIDPath<es2015/modules/export-default-variable-declaration/input.js>
+				start: Position 1:15
 			}
 		}
 	]
 	body: Array [
 		JSExportDefaultDeclaration {
-			loc: Object {
-				filename: "es2015/modules/export-default-variable-declaration/input.js"
-				end: Object {
-					column: 20
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2015/modules/export-default-variable-declaration/input.js 1:0-1:20
 			declaration: JSReferenceIdentifier {
 				name: "INVALID_PLACEHOLDER"
-				loc: Object {
-					filename: "es2015/modules/export-default-variable-declaration/input.js"
-					end: Object {
-						column: 20
-						line: 1
-					}
-					start: Object {
-						column: 15
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/modules/export-default-variable-declaration/input.js 1:15-1:20
 			}
 		}
 		JSExpressionStatement {
-			loc: Object {
-				filename: "es2015/modules/export-default-variable-declaration/input.js"
-				end: Object {
-					column: 1
-					line: 3
-				}
-				start: Object {
-					column: 21
-					line: 1
-				}
-			}
+			loc: SourceLocation es2015/modules/export-default-variable-declaration/input.js 1:21-3:1
 			expression: JSAssignmentExpression {
 				operator: "="
-				loc: Object {
-					filename: "es2015/modules/export-default-variable-declaration/input.js"
-					end: Object {
-						column: 1
-						line: 3
-					}
-					start: Object {
-						column: 21
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/modules/export-default-variable-declaration/input.js 1:21-3:1
 				left: JSAssignmentIdentifier {
 					name: "Foo"
-					loc: Object {
-						filename: "es2015/modules/export-default-variable-declaration/input.js"
-						identifierName: "Foo"
-						end: Object {
-							column: 24
-							line: 1
-						}
-						start: Object {
-							column: 21
-							line: 1
-						}
-					}
+					loc: SourceLocation es2015/modules/export-default-variable-declaration/input.js 1:21-1:24 (Foo)
 				}
 				right: JSArrowFunctionExpression {
-					loc: Object {
-						filename: "es2015/modules/export-default-variable-declaration/input.js"
-						end: Object {
-							column: 1
-							line: 3
-						}
-						start: Object {
-							column: 27
-							line: 1
-						}
-					}
+					loc: SourceLocation es2015/modules/export-default-variable-declaration/input.js 1:27-3:1
 					head: JSFunctionHead {
 						async: false
 						hasHoistedVars: false
@@ -140,73 +63,23 @@ JSRoot {
 						rest: undefined
 						returnType: undefined
 						thisType: undefined
-						loc: Object {
-							filename: "es2015/modules/export-default-variable-declaration/input.js"
-							end: Object {
-								column: 32
-								line: 1
-							}
-							start: Object {
-								column: 27
-								line: 1
-							}
-						}
+						loc: SourceLocation es2015/modules/export-default-variable-declaration/input.js 1:27-1:32
 					}
 					body: JSBlockStatement {
 						directives: Array []
-						loc: Object {
-							filename: "es2015/modules/export-default-variable-declaration/input.js"
-							end: Object {
-								column: 1
-								line: 3
-							}
-							start: Object {
-								column: 33
-								line: 1
-							}
-						}
+						loc: SourceLocation es2015/modules/export-default-variable-declaration/input.js 1:33-3:1
 						body: Array [
 							JSReturnStatement {
-								loc: Object {
-									filename: "es2015/modules/export-default-variable-declaration/input.js"
-									end: Object {
-										column: 41
-										line: 2
-									}
-									start: Object {
-										column: 4
-										line: 2
-									}
-								}
+								loc: SourceLocation es2015/modules/export-default-variable-declaration/input.js 2:4-2:41
 								argument: JSTemplateLiteral {
 									expressions: Array []
-									loc: Object {
-										filename: "es2015/modules/export-default-variable-declaration/input.js"
-										end: Object {
-											column: 40
-											line: 2
-										}
-										start: Object {
-											column: 11
-											line: 2
-										}
-									}
+									loc: SourceLocation es2015/modules/export-default-variable-declaration/input.js 2:11-2:40
 									quasis: Array [
 										JSTemplateElement {
 											cooked: "<div class=\"bar\">Hola</div>"
 											raw: "<div class=\"bar\">Hola</div>"
 											tail: true
-											loc: Object {
-												filename: "es2015/modules/export-default-variable-declaration/input.js"
-												end: Object {
-													column: 39
-													line: 2
-												}
-												start: Object {
-													column: 12
-													line: 2
-												}
-											}
+											loc: SourceLocation es2015/modules/export-default-variable-declaration/input.js 2:12-2:39
 										}
 									]
 								}
@@ -233,8 +106,5 @@ JSRoot {
     2 │     return `<div class="bar">Hola</div>`;
     3 │ }
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

@@ -11,284 +11,88 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "jsx/regression/issue-11387/input.jsx"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
+	loc: SourceLocation jsx/regression/issue-11387/input.jsx 1:0-2:0
+	path: UIDPath<jsx/regression/issue-11387/input.jsx>
 	syntax: Array ["jsx"]
-	loc: Object {
-		filename: "jsx/regression/issue-11387/input.jsx"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				category: "parse"
-				categoryValue: "js"
-				message: Array [
-					RAW_MARKUP {value: "Unexpected token, expected "}
-					","
-				]
-			}
 			location: Object {
-				filename: "jsx/regression/issue-11387/input.jsx"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 63
-					line: 1
-				}
-				start: Object {
-					column: 46
-					line: 1
-				}
+				end: Position 1:63
+				path: UIDPath<jsx/regression/issue-11387/input.jsx>
+				start: Position 1:46
+			}
+			description: Object {
+				categoryValue: "js"
+				category: Array ["parse"]
+				message: RAW_MARKUP {value: "Unexpected character <emphasis>,</emphasis>"}
+				advice: Array [
+					log {
+						category: "info"
+						text: RAW_MARKUP {value: "Expected character <emphasis>,</emphasis>"}
+					}
+				]
 			}
 		}
 	]
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "jsx/regression/issue-11387/input.jsx"
-				end: Object {
-					column: 69
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation jsx/regression/issue-11387/input.jsx 1:0-1:69
 			expression: JSXElement {
 				name: JSXIdentifier {
 					name: "div"
-					loc: Object {
-						filename: "jsx/regression/issue-11387/input.jsx"
-						end: Object {
-							column: 4
-							line: 1
-						}
-						start: Object {
-							column: 1
-							line: 1
-						}
-					}
+					loc: SourceLocation jsx/regression/issue-11387/input.jsx 1:1-1:4
 				}
 				attributes: Array []
 				selfClosing: false
 				typeArguments: undefined
-				loc: Object {
-					filename: "jsx/regression/issue-11387/input.jsx"
-					end: Object {
-						column: 69
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation jsx/regression/issue-11387/input.jsx 1:0-1:69
 				children: Array [
 					JSXExpressionContainer {
-						loc: Object {
-							filename: "jsx/regression/issue-11387/input.jsx"
-							end: Object {
-								column: 46
-								line: 1
-							}
-							start: Object {
-								column: 5
-								line: 1
-							}
-						}
+						loc: SourceLocation jsx/regression/issue-11387/input.jsx 1:5-1:46
 						expression: JSSequenceExpression {
-							loc: Object {
-								filename: "jsx/regression/issue-11387/input.jsx"
-								end: Object {
-									column: 46
-									line: 1
-								}
-								start: Object {
-									column: 7
-									line: 1
-								}
-							}
+							loc: SourceLocation jsx/regression/issue-11387/input.jsx 1:7-1:46
 							expressions: Array [
 								JSMemberExpression {
-									loc: Object {
-										filename: "jsx/regression/issue-11387/input.jsx"
-										end: Object {
-											column: 18
-											line: 1
-										}
-										start: Object {
-											column: 7
-											line: 1
-										}
-									}
-									object: JSThisExpression {
-										loc: Object {
-											filename: "jsx/regression/issue-11387/input.jsx"
-											end: Object {
-												column: 11
-												line: 1
-											}
-											start: Object {
-												column: 7
-												line: 1
-											}
-										}
-									}
+									loc: SourceLocation jsx/regression/issue-11387/input.jsx 1:7-1:18
+									object: JSThisExpression {loc: SourceLocation jsx/regression/issue-11387/input.jsx 1:7-1:11}
 									property: JSStaticMemberProperty {
 										value: JSIdentifier {
 											name: "class"
-											loc: Object {
-												filename: "jsx/regression/issue-11387/input.jsx"
-												identifierName: "class"
-												end: Object {
-													column: 18
-													line: 1
-												}
-												start: Object {
-													column: 13
-													line: 1
-												}
-											}
+											loc: SourceLocation jsx/regression/issue-11387/input.jsx 1:13-1:18 (class)
 										}
 										optional: true
-										loc: Object {
-											filename: "jsx/regression/issue-11387/input.jsx"
-											identifierName: "class"
-											end: Object {
-												column: 18
-												line: 1
-											}
-											start: Object {
-												column: 13
-												line: 1
-											}
-										}
+										loc: SourceLocation jsx/regression/issue-11387/input.jsx 1:13-1:18 (class)
 									}
 								}
 								JSMemberExpression {
-									loc: Object {
-										filename: "jsx/regression/issue-11387/input.jsx"
-										end: Object {
-											column: 30
-											line: 1
-										}
-										start: Object {
-											column: 20
-											line: 1
-										}
-									}
-									object: JSThisExpression {
-										loc: Object {
-											filename: "jsx/regression/issue-11387/input.jsx"
-											end: Object {
-												column: 24
-												line: 1
-											}
-											start: Object {
-												column: 20
-												line: 1
-											}
-										}
-									}
+									loc: SourceLocation jsx/regression/issue-11387/input.jsx 1:20-1:30
+									object: JSThisExpression {loc: SourceLocation jsx/regression/issue-11387/input.jsx 1:20-1:24}
 									property: JSStaticMemberProperty {
 										value: JSIdentifier {
 											name: "class"
-											loc: Object {
-												filename: "jsx/regression/issue-11387/input.jsx"
-												identifierName: "class"
-												end: Object {
-													column: 30
-													line: 1
-												}
-												start: Object {
-													column: 25
-													line: 1
-												}
-											}
+											loc: SourceLocation jsx/regression/issue-11387/input.jsx 1:25-1:30 (class)
 										}
-										loc: Object {
-											filename: "jsx/regression/issue-11387/input.jsx"
-											identifierName: "class"
-											end: Object {
-												column: 30
-												line: 1
-											}
-											start: Object {
-												column: 25
-												line: 1
-											}
-										}
+										loc: SourceLocation jsx/regression/issue-11387/input.jsx 1:25-1:30 (class)
 									}
 								}
 								JSMemberExpression {
-									loc: Object {
-										filename: "jsx/regression/issue-11387/input.jsx"
-										end: Object {
-											column: 46
-											line: 1
-										}
-										start: Object {
-											column: 32
-											line: 1
-										}
-									}
-									object: JSThisExpression {
-										loc: Object {
-											filename: "jsx/regression/issue-11387/input.jsx"
-											end: Object {
-												column: 36
-												line: 1
-											}
-											start: Object {
-												column: 32
-												line: 1
-											}
-										}
-									}
+									loc: SourceLocation jsx/regression/issue-11387/input.jsx 1:32-1:46
+									object: JSThisExpression {loc: SourceLocation jsx/regression/issue-11387/input.jsx 1:32-1:36}
 									property: JSStaticMemberProperty {
 										value: JSIdentifier {
 											name: "function"
-											loc: Object {
-												filename: "jsx/regression/issue-11387/input.jsx"
-												identifierName: "function"
-												end: Object {
-													column: 46
-													line: 1
-												}
-												start: Object {
-													column: 38
-													line: 1
-												}
-											}
+											loc: SourceLocation jsx/regression/issue-11387/input.jsx 1:38-1:46 (function)
 										}
 										optional: true
-										loc: Object {
-											filename: "jsx/regression/issue-11387/input.jsx"
-											identifierName: "function"
-											end: Object {
-												column: 46
-												line: 1
-											}
-											start: Object {
-												column: 38
-												line: 1
-											}
-										}
+										loc: SourceLocation jsx/regression/issue-11387/input.jsx 1:38-1:46 (function)
 									}
 								}
 							]
@@ -296,17 +100,7 @@ JSRoot {
 					}
 					JSXText {
 						value: ", this.function)}"
-						loc: Object {
-							filename: "jsx/regression/issue-11387/input.jsx"
-							end: Object {
-								column: 63
-								line: 1
-							}
-							start: Object {
-								column: 46
-								line: 1
-							}
-						}
+						loc: SourceLocation jsx/regression/issue-11387/input.jsx 1:46-1:63
 					}
 				]
 			}
@@ -321,13 +115,12 @@ JSRoot {
 
  jsx/regression/issue-11387/input.jsx:1:46 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ Unexpected token, expected ,
+  ✖ Unexpected character ,
 
     <div>{(this?.class, this.class, this?.function, this.function)}</div>
                                                   ^^^^^^^^^^^^^^^^^
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  ℹ Expected character ,
 
-✖ Found 1 problem
 
 ```

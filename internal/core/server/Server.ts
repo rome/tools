@@ -13,6 +13,7 @@ import {
 	VERSION,
 } from "@internal/core";
 import {
+	DIAGNOSTIC_CATEGORIES,
 	DiagnosticOrigin,
 	Diagnostics,
 	DiagnosticsProcessor,
@@ -40,6 +41,7 @@ import MemoryFileSystem from "./fs/MemoryFileSystem";
 import ServerCache from "./ServerCache";
 import {
 	Reporter,
+	ReporterConditionalStream,
 	ReporterProgress,
 	ReporterProgressOptions,
 	mergeProgresses,
@@ -48,13 +50,15 @@ import {Profiler} from "@internal/v8";
 import {
 	PartialServerQueryRequest,
 	ProfilingStartData,
+	ServerBridgeLog,
 } from "../common/bridges/ServerBridge";
 import {
 	ClientFlags,
+	ClientLogsLevel,
 	ClientRequestFlags,
 	DEFAULT_CLIENT_REQUEST_FLAGS,
 } from "../common/types/client";
-import {AbsoluteFilePath, createUnknownPath} from "@internal/path";
+import {AbsoluteFilePath, createUIDPath} from "@internal/path";
 import {Dict, mergeObjects} from "@internal/typescript-helpers";
 import LSPServer from "./lsp/LSPServer";
 import ServerReporter from "./ServerReporter";
@@ -62,7 +66,7 @@ import VirtualModules from "../common/VirtualModules";
 import {DiagnosticsProcessorOptions} from "@internal/diagnostics/DiagnosticsProcessor";
 import {toKebabCase} from "@internal/string-utils";
 import {FilePathLocker} from "../../async/lockers";
-import {getEnvVar} from "@internal/cli-environment";
+import {DEFAULT_TERMINAL_FEATURES, getEnvVar} from "@internal/cli-environment";
 import {markup} from "@internal/markup";
 import prettyFormat from "@internal/pretty-format";
 import RecoveryStore from "./fs/RecoveryStore";
@@ -167,6 +171,21 @@ function validateAllowedRequestFlag(
 	}
 }
 
+function sendLog(
+	bridge: BridgeServer<typeof ServerBridge>,
+	level: ClientLogsLevel,
+	log: ServerBridgeLog,
+) {
+	// Sometimes the bridge hasn't completely been teardown and we still consider it connected
+	if (!bridge.alive) {
+		return;
+	}
+
+	if (log.isError || level === "all") {
+		bridge.events.log.send(log);
+	}
+}
+
 export default class Server {
 	constructor(opts: ServerOptions) {
 		this.profiling = undefined;
@@ -191,13 +210,15 @@ export default class Server {
 
 		this.connectedReporters = new ServerReporter(this);
 
-		this.connectedClientsListeningForLogs = new Set();
+		this.connectedClientsListeningForWorkerLogs = new Set();
+		this.connectedClientsListeningForLogs = new Map();
 		this.connectedLSPServers = new Set();
 		this.connectedClients = new Set();
 
+		this.hadConnectedClient = false;
 		this.clientIdCounter = 0;
 
-		this.logInitBuffer = "";
+		this.logInitBuffer = [];
 		this.requestRunningCounter = 0;
 		this.terminateWhenIdle = false;
 
@@ -220,8 +241,7 @@ export default class Server {
 			{
 				markupOptions: {
 					userConfig: this.userConfig,
-					humanizeFilename: (filename) => {
-						const path = createUnknownPath(filename);
+					humanizeFilename: (path) => {
 						if (path.isAbsolute()) {
 							const remote = this.projectManager.getRemoteFromLocalPath(
 								path.assertAbsolute(),
@@ -232,30 +252,37 @@ export default class Server {
 						}
 						return undefined;
 					},
-					normalizePosition: (filename, line, column) => {
-						const path = this.projectManager.getFilePathFromUid(filename);
-						if (path === undefined) {
-							return {filename, line, column};
+					normalizePosition: (path, line, column) => {
+						const normalPath = this.projectManager.maybeGetFilePathFromUid(path);
+						if (normalPath === undefined) {
+							return {path, line, column};
 						} else {
-							return {filename: path.join(), line, column};
+							return {path: normalPath, line, column};
 						}
 					},
 				},
 			},
+			"server",
+		);
+
+		this.loggerStream = this.logger.attachConditionalStream(
 			{
-				loggerType: "server",
-				write: (chunk) => {
-					this.emitServerLog(chunk);
+				format: "markup",
+				features: {
+					...DEFAULT_TERMINAL_FEATURES,
+					columns: undefined,
 				},
-				check: () => {
-					return (
-						this.clientIdCounter === 0 ||
-						this.connectedClientsListeningForLogs.size > 0
-					);
+				write: (chunk, isError) => {
+					this.emitLog(chunk, "server", isError);
 				},
 			},
+			() => {
+				return (
+					!this.hadConnectedClient ||
+					this.connectedClientsListeningForLogs.size > 0
+				);
+			},
 		);
-		this.logger.updateStream();
 
 		this.virtualModules = new VirtualModules();
 		this.recoveryStore = new RecoveryStore(this);
@@ -300,23 +327,43 @@ export default class Server {
 	public logger: Logger;
 	public requestFileLocker: FilePathLocker;
 
+	private loggerStream: ReporterConditionalStream;
+
 	// Before we receive our first connected client we will buffer our server init logs
-	// These should be relatively cheap to process since we don't do a lot
-	private logInitBuffer: string;
+	// These __should__ be relatively cheap to retain since we don't do a lot
+	private logInitBuffer: [string, boolean][];
 
 	private requestRunningCounter: number;
 	private terminateWhenIdle: boolean;
 	private clientIdCounter: number;
+	private hadConnectedClient: boolean;
 	private profiling: undefined | ProfilingStartData;
 
 	private connectedClients: Set<ServerClient>;
 	private connectedLSPServers: Set<LSPServer>;
-	private connectedClientsListeningForLogs: Set<ServerClient>;
+
+	private connectedClientsListeningForLogs: Map<ServerClient, ClientLogsLevel>;
+	private connectedClientsListeningForWorkerLogs: Set<ServerClient>;
 
 	// Used when starting up child processes and indicates whether they should start profiling
 	// on init
 	public getRunningProfilingData(): undefined | ProfilingStartData {
 		return this.profiling;
+	}
+
+	// Used when starting up workers and indicates whether they should start sending logs
+	public hasWorkerLogsSubscriptions(): boolean {
+		return this.connectedClientsListeningForWorkerLogs.size > 0;
+	}
+
+	public async updateWorkerLogsSubscriptions() {
+		const enabled = this.hasWorkerLogsSubscriptions();
+
+		await Promise.all(
+			this.workerManager.getWorkers().map((worker) => {
+				return worker.bridge.events.setLogs.call(enabled);
+			}),
+		);
 	}
 
 	// Derive a concatenated reporter from the logger and all connected clients
@@ -332,16 +379,26 @@ export default class Server {
 		return new WorkerQueue<M>(this, opts);
 	}
 
-	private emitServerLog(chunk: string) {
+	public emitLog(
+		chunk: string,
+		origin: ServerBridgeLog["origin"],
+		isError: boolean,
+	) {
 		if (this.clientIdCounter === 0) {
-			this.logInitBuffer += chunk;
+			this.logInitBuffer.push([chunk, isError]);
 		}
 
-		for (const {bridge} of this.connectedClientsListeningForLogs) {
-			// Sometimes the bridge hasn't completely been teardown and we still consider it connected
-			if (bridge.alive) {
-				bridge.events.log.send({chunk, origin: "server"});
+		const log: ServerBridgeLog = {chunk, origin, isError};
+
+		for (const [client, level] of this.connectedClientsListeningForLogs) {
+			if (
+				origin === "worker" &&
+				!this.connectedClientsListeningForWorkerLogs.has(client)
+			) {
+				continue;
 			}
+
+			sendLog(client.bridge, level, log);
 		}
 	}
 
@@ -382,7 +439,7 @@ export default class Server {
 
 	public createDiagnosticsPrinterFileHandler(): DiagnosticsFileHandler {
 		return {
-			readAbsolute: async (path) => {
+			read: async (path) => {
 				const virtualContents = this.virtualModules.getPossibleVirtualFileContents(
 					path,
 				);
@@ -393,7 +450,7 @@ export default class Server {
 				}
 			},
 			exists: async (path) => {
-				if (this.virtualModules.isVirtualPath(path)) {
+				if (path.isAbsolute() && this.virtualModules.isVirtualPath(path)) {
 					return true;
 				} else {
 					return undefined;
@@ -414,12 +471,7 @@ export default class Server {
 	public createDisconnectedDiagnosticsProcessor(
 		origins: DiagnosticOrigin[],
 	): DiagnosticsProcessor {
-		return this.createDiagnosticsProcessor({
-			onDiagnostics: (diagnostics: Diagnostics) => {
-				this.fatalErrorHandler.wrapPromise(
-					this.handleDisconnectedDiagnostics(diagnostics),
-				);
-			},
+		const processor = this.createDiagnosticsProcessor({
 			origins: [
 				...origins,
 				{
@@ -428,6 +480,16 @@ export default class Server {
 				},
 			],
 		});
+
+		processor.insertDiagnosticsEvent.subscribe(() => {
+			if (processor.hasDiagnostics()) {
+				this.fatalErrorHandler.wrapPromise(
+					this.handleDisconnectedDiagnostics(processor.getDiagnostics()),
+				);
+			}
+		});
+
+		return processor;
 	}
 
 	private maybeSetupGlobalErrorHandlers() {
@@ -491,6 +553,11 @@ export default class Server {
 	public async attachToBridge(
 		bridge: BridgeServer<typeof ServerBridge>,
 	): Promise<ServerClient> {
+		if (!this.hadConnectedClient) {
+			this.hadConnectedClient = true;
+			this.loggerStream.update();
+		}
+
 		let profiler: undefined | Profiler;
 
 		// If we aren't a dedicated process then we should only expect a single connection
@@ -534,34 +601,6 @@ export default class Server {
 		bridge.events.profilingStopWorker.subscribe(async (id) => {
 			const worker = this.workerManager.getWorkerAssert(id);
 			return await worker.bridge.events.profilingStop.call();
-		});
-
-		// When enableWorkerLogs is called we setup subscriptions to the worker logs
-		// Logs are never transported from workers to the server unless there is a subscription
-		let subscribedWorkers = false;
-		bridge.events.enableWorkerLogs.subscribe(() => {
-			// enableWorkerLogs could be called twice in the case of `--logs --rage`. We'll only want to setup the subscriptions once
-			if (subscribedWorkers) {
-				return;
-			} else {
-				subscribedWorkers = true;
-			}
-
-			function onLog(chunk: string) {
-				bridge.events.log.call({origin: "worker", chunk});
-			}
-
-			// Add on existing workers if there are any
-			for (const worker of this.workerManager.getWorkers()) {
-				bridge.attachEndSubscriptionRemoval(
-					worker.bridge.events.log.subscribe(onLog),
-				);
-			}
-
-			// Listen for logs for any workers that start later
-			this.workerManager.workerStartEvent.subscribe((worker) => {
-				bridge.attachEndSubscriptionRemoval(worker.events.log.subscribe(onLog));
-			});
 		});
 
 		await bridge.handshake();
@@ -645,7 +684,7 @@ export default class Server {
 		);
 
 		// Warn about disabled disk caching. Don't bother if it's only been set due to ROME_DEV. We don't care to see it in development.
-		if (this.cache.disabled && getEnvVar("ROME_DEV").type !== "ENABLED") {
+		if (this.cache.writeDisabled && getEnvVar("ROME_DEV").type !== "ENABLED") {
 			reporter.warn(
 				markup`Disk caching has been disabled due to the <emphasis>ROME_CACHE=0</emphasis> environment variable`,
 			);
@@ -662,31 +701,50 @@ export default class Server {
 
 		this.connectedClients.add(client);
 
-		bridge.updatedListenersEvent.subscribe((listeners) => {
-			if (listeners.has("log")) {
-				if (!this.connectedClientsListeningForLogs.has(client)) {
-					this.connectedClientsListeningForLogs.add(client);
-					let buffer = this.logInitBuffer;
-					buffer += ".".repeat(20);
-					buffer += "\n";
-					bridge.events.log.send({
-						chunk: buffer,
-						origin: "server",
-					});
-				}
-			} else {
-				this.connectedClientsListeningForLogs.delete(client);
+		bridge.events.setLogLevel.subscribe(async ({level, includeWorker}) => {
+			let startWorkerLogsEnabled = this.hasWorkerLogsSubscriptions();
+
+			if (includeWorker) {
+				this.connectedClientsListeningForWorkerLogs.add(client);
 			}
-			this.logger.updateStream();
+
+			if (level === undefined) {
+				this.connectedClientsListeningForLogs.delete(client);
+				this.connectedClientsListeningForWorkerLogs.delete(client);
+			} else {
+				if (!this.connectedClientsListeningForLogs.has(client)) {
+					// Send init logs
+					for (const [chunk, isError] of this.logInitBuffer) {
+						sendLog(bridge, level, {chunk, origin: "server", isError});
+					}
+
+					// Send separator
+					sendLog(
+						bridge,
+						level,
+						{chunk: ".".repeat(20) + "\n", origin: "server", isError: false},
+					);
+				}
+
+				this.connectedClientsListeningForLogs.set(client, level);
+			}
+
+			this.loggerStream.update();
+
+			const currWorkerLogsEnabled = this.hasWorkerLogsSubscriptions();
+			if (currWorkerLogsEnabled !== startWorkerLogsEnabled) {
+				await this.updateWorkerLogsSubscriptions();
+			}
 		});
 
 		bridge.endEvent.subscribe(() => {
 			this.connectedClients.delete(client);
 			this.connectedClientsListeningForLogs.delete(client);
+			this.connectedClientsListeningForWorkerLogs.delete(client);
 			for (const handle of streamHandles) {
 				handle.remove();
 			}
-			this.logger.updateStream();
+			this.loggerStream.update();
 
 			// Cancel any requests still in flight
 			for (const req of client.requestsInFlight) {
@@ -771,7 +829,7 @@ export default class Server {
 
 			return res;
 		} catch (err) {
-			await this.fatalErrorHandler.handle(err);
+			await this.fatalErrorHandler.handleAsync(err);
 			throw new Error("Should never meet this condition");
 		} finally {
 			// We no longer care if the client dies
@@ -848,7 +906,7 @@ export default class Server {
 			// A type-safe wrapper for retrieving command flags
 			// TODO perhaps present this as JSON or something if this isn't a request from the CLI?
 			const flagsConsumer = consume({
-				filePath: createUnknownPath("argv"),
+				path: createUIDPath("argv"),
 				parent: undefined,
 				value: query.commandFlags,
 				onDefinition(def) {
@@ -857,7 +915,7 @@ export default class Server {
 				},
 				objectPath: [],
 				context: {
-					category: "flags/invalid",
+					category: DIAGNOSTIC_CATEGORIES["flags/invalid"],
 					getOriginalValue: () => {
 						return undefined;
 					},

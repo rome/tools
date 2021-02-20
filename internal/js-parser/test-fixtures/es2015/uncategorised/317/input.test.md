@@ -12,191 +12,59 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "es2015/uncategorised/317/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2015/uncategorised/317/input.js"
-		end: Object {
-			column: 22
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2015/uncategorised/317/input.js 1:0-1:22
+	path: UIDPath<es2015/uncategorised/317/input.js>
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "es2015/uncategorised/317/input.js"
-				end: Object {
-					column: 22
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2015/uncategorised/317/input.js 1:0-1:22
 			expression: JSTemplateLiteral {
-				loc: Object {
-					filename: "es2015/uncategorised/317/input.js"
-					end: Object {
-						column: 22
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/uncategorised/317/input.js 1:0-1:22
 				quasis: Array [
 					JSTemplateElement {
 						cooked: ""
 						raw: ""
 						tail: false
-						loc: Object {
-							filename: "es2015/uncategorised/317/input.js"
-							end: Object {
-								column: 1
-								line: 1
-							}
-							start: Object {
-								column: 1
-								line: 1
-							}
-						}
+						loc: SourceLocation es2015/uncategorised/317/input.js 1:1-1:1
 					}
 					JSTemplateElement {
 						cooked: ""
 						raw: ""
 						tail: true
-						loc: Object {
-							filename: "es2015/uncategorised/317/input.js"
-							end: Object {
-								column: 21
-								line: 1
-							}
-							start: Object {
-								column: 21
-								line: 1
-							}
-						}
+						loc: SourceLocation es2015/uncategorised/317/input.js 1:21-1:21
 					}
 				]
 				expressions: Array [
 					JSMemberExpression {
-						loc: Object {
-							filename: "es2015/uncategorised/317/input.js"
-							end: Object {
-								column: 20
-								line: 1
-							}
-							start: Object {
-								column: 3
-								line: 1
-							}
-						}
+						loc: SourceLocation es2015/uncategorised/317/input.js 1:3-1:20
 						property: JSComputedMemberProperty {
 							value: JSNumericLiteral {
 								value: 0
 								format: undefined
-								loc: Object {
-									filename: "es2015/uncategorised/317/input.js"
-									end: Object {
-										column: 19
-										line: 1
-									}
-									start: Object {
-										column: 18
-										line: 1
-									}
-								}
+								loc: SourceLocation es2015/uncategorised/317/input.js 1:18-1:19
 							}
-							loc: Object {
-								filename: "es2015/uncategorised/317/input.js"
-								end: Object {
-									column: 20
-									line: 1
-								}
-								start: Object {
-									column: 17
-									line: 1
-								}
-							}
+							loc: SourceLocation es2015/uncategorised/317/input.js 1:17-1:20
 						}
 						object: JSCallExpression {
-							loc: Object {
-								filename: "es2015/uncategorised/317/input.js"
-								end: Object {
-									column: 17
-									line: 1
-								}
-								start: Object {
-									column: 3
-									line: 1
-								}
-							}
+							loc: SourceLocation es2015/uncategorised/317/input.js 1:3-1:17
 							arguments: Array [
 								JSStringLiteral {
 									value: "1"
-									loc: Object {
-										filename: "es2015/uncategorised/317/input.js"
-										end: Object {
-											column: 16
-											line: 1
-										}
-										start: Object {
-											column: 13
-											line: 1
-										}
-									}
+									loc: SourceLocation es2015/uncategorised/317/input.js 1:13-1:16
 								}
 							]
 							callee: JSMemberExpression {
-								loc: Object {
-									filename: "es2015/uncategorised/317/input.js"
-									end: Object {
-										column: 12
-										line: 1
-									}
-									start: Object {
-										column: 3
-										line: 1
-									}
-								}
+								loc: SourceLocation es2015/uncategorised/317/input.js 1:3-1:12
 								property: JSStaticMemberProperty {
 									value: JSIdentifier {
 										name: "exec"
-										loc: Object {
-											filename: "es2015/uncategorised/317/input.js"
-											identifierName: "exec"
-											end: Object {
-												column: 12
-												line: 1
-											}
-											start: Object {
-												column: 8
-												line: 1
-											}
-										}
+										loc: SourceLocation es2015/uncategorised/317/input.js 1:8-1:12 (exec)
 									}
-									loc: Object {
-										filename: "es2015/uncategorised/317/input.js"
-										identifierName: "exec"
-										end: Object {
-											column: 12
-											line: 1
-										}
-										start: Object {
-											column: 8
-											line: 1
-										}
-									}
+									loc: SourceLocation es2015/uncategorised/317/input.js 1:8-1:12 (exec)
 								}
 								object: JSRegExpLiteral {
 									global: false
@@ -205,44 +73,10 @@ JSRoot {
 									noDotNewline: false
 									sticky: false
 									unicode: false
-									loc: Object {
-										filename: "es2015/uncategorised/317/input.js"
-										end: Object {
-											column: 7
-											line: 1
-										}
-										start: Object {
-											column: 3
-											line: 1
-										}
-									}
+									loc: SourceLocation es2015/uncategorised/317/input.js 1:3-1:7
 									expression: JSRegExpSubExpression {
-										loc: Object {
-											filename: "es2015/uncategorised/317/input.js"
-											end: Object {
-												column: 6
-												line: 1
-											}
-											start: Object {
-												column: 4
-												line: 1
-											}
-										}
-										body: Array [
-											JSRegExpDigitCharacter {
-												loc: Object {
-													filename: "es2015/uncategorised/317/input.js"
-													end: Object {
-														column: 6
-														line: 1
-													}
-													start: Object {
-														column: 4
-														line: 1
-													}
-												}
-											}
-										]
+										body: Array [JSRegExpDigitCharacter {loc: SourceLocation es2015/uncategorised/317/input.js 1:4-1:6}]
+										loc: SourceLocation es2015/uncategorised/317/input.js 1:4-1:6
 									}
 								}
 							}
@@ -258,6 +92,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

@@ -11,659 +11,190 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "core/categorized/not-directive/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "core/categorized/not-directive/input.js"
-		end: Object {
-			column: 0
-			line: 119
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation core/categorized/not-directive/input.js 1:0-119:0
+	path: UIDPath<core/categorized/not-directive/input.js>
 	comments: Array [
 		CommentLine {
 			id: "0"
 			value: " Should not be a syntax error because should not be parsed in strict mode."
-			loc: Object {
-				filename: "core/categorized/not-directive/input.js"
-				end: Object {
-					column: 76
-					line: 16
-				}
-				start: Object {
-					column: 0
-					line: 16
-				}
-			}
+			loc: SourceLocation core/categorized/not-directive/input.js 16:0-16:76
 		}
 	]
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "core/categorized/not-directive/input.js"
-				end: Object {
-					column: 15
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation core/categorized/not-directive/input.js 1:0-1:15
 			expression: JSStringLiteral {
 				value: "use strict"
-				loc: Object {
-					filename: "core/categorized/not-directive/input.js"
-					end: Object {
-						column: 13
-						line: 1
-					}
-					start: Object {
-						column: 1
-						line: 1
-					}
-				}
+				loc: SourceLocation core/categorized/not-directive/input.js 1:1-1:13
 			}
 		}
 		JSExpressionStatement {
-			loc: Object {
-				filename: "core/categorized/not-directive/input.js"
-				end: Object {
-					column: 17
-					line: 3
-				}
-				start: Object {
-					column: 0
-					line: 3
-				}
-			}
+			loc: SourceLocation core/categorized/not-directive/input.js 3:0-3:17
 			expression: JSMemberExpression {
-				loc: Object {
-					filename: "core/categorized/not-directive/input.js"
-					end: Object {
-						column: 16
-						line: 3
-					}
-					start: Object {
-						column: 0
-						line: 3
-					}
-				}
+				loc: SourceLocation core/categorized/not-directive/input.js 3:0-3:16
 				object: JSStringLiteral {
 					value: "use strict"
-					loc: Object {
-						filename: "core/categorized/not-directive/input.js"
-						end: Object {
-							column: 12
-							line: 3
-						}
-						start: Object {
-							column: 0
-							line: 3
-						}
-					}
+					loc: SourceLocation core/categorized/not-directive/input.js 3:0-3:12
 				}
 				property: JSStaticMemberProperty {
 					value: JSIdentifier {
 						name: "foo"
-						loc: Object {
-							filename: "core/categorized/not-directive/input.js"
-							identifierName: "foo"
-							end: Object {
-								column: 16
-								line: 3
-							}
-							start: Object {
-								column: 13
-								line: 3
-							}
-						}
+						loc: SourceLocation core/categorized/not-directive/input.js 3:13-3:16 (foo)
 					}
-					loc: Object {
-						filename: "core/categorized/not-directive/input.js"
-						identifierName: "foo"
-						end: Object {
-							column: 16
-							line: 3
-						}
-						start: Object {
-							column: 13
-							line: 3
-						}
-					}
+					loc: SourceLocation core/categorized/not-directive/input.js 3:13-3:16 (foo)
 				}
 			}
 		}
 		JSExpressionStatement {
-			loc: Object {
-				filename: "core/categorized/not-directive/input.js"
-				end: Object {
-					column: 18
-					line: 4
-				}
-				start: Object {
-					column: 0
-					line: 4
-				}
-			}
+			loc: SourceLocation core/categorized/not-directive/input.js 4:0-4:18
 			expression: JSMemberExpression {
-				loc: Object {
-					filename: "core/categorized/not-directive/input.js"
-					end: Object {
-						column: 17
-						line: 4
-					}
-					start: Object {
-						column: 0
-						line: 4
-					}
-				}
+				loc: SourceLocation core/categorized/not-directive/input.js 4:0-4:17
 				object: JSStringLiteral {
 					value: "use strict"
-					loc: Object {
-						filename: "core/categorized/not-directive/input.js"
-						end: Object {
-							column: 12
-							line: 4
-						}
-						start: Object {
-							column: 0
-							line: 4
-						}
-					}
+					loc: SourceLocation core/categorized/not-directive/input.js 4:0-4:12
 				}
 				property: JSComputedMemberProperty {
 					value: JSReferenceIdentifier {
 						name: "foo"
-						loc: Object {
-							filename: "core/categorized/not-directive/input.js"
-							identifierName: "foo"
-							end: Object {
-								column: 16
-								line: 4
-							}
-							start: Object {
-								column: 13
-								line: 4
-							}
-						}
+						loc: SourceLocation core/categorized/not-directive/input.js 4:13-4:16 (foo)
 					}
-					loc: Object {
-						filename: "core/categorized/not-directive/input.js"
-						end: Object {
-							column: 17
-							line: 4
-						}
-						start: Object {
-							column: 12
-							line: 4
-						}
-					}
+					loc: SourceLocation core/categorized/not-directive/input.js 4:12-4:17
 				}
 			}
 		}
 		JSExpressionStatement {
-			loc: Object {
-				filename: "core/categorized/not-directive/input.js"
-				end: Object {
-					column: 18
-					line: 5
-				}
-				start: Object {
-					column: 0
-					line: 5
-				}
-			}
+			loc: SourceLocation core/categorized/not-directive/input.js 5:0-5:18
 			expression: JSTaggedTemplateExpression {
 				typeArguments: undefined
-				loc: Object {
-					filename: "core/categorized/not-directive/input.js"
-					end: Object {
-						column: 17
-						line: 5
-					}
-					start: Object {
-						column: 0
-						line: 5
-					}
-				}
+				loc: SourceLocation core/categorized/not-directive/input.js 5:0-5:17
 				tag: JSStringLiteral {
 					value: "use strict"
-					loc: Object {
-						filename: "core/categorized/not-directive/input.js"
-						end: Object {
-							column: 12
-							line: 5
-						}
-						start: Object {
-							column: 0
-							line: 5
-						}
-					}
+					loc: SourceLocation core/categorized/not-directive/input.js 5:0-5:12
 				}
 				quasi: JSTemplateLiteral {
 					expressions: Array []
-					loc: Object {
-						filename: "core/categorized/not-directive/input.js"
-						end: Object {
-							column: 17
-							line: 5
-						}
-						start: Object {
-							column: 12
-							line: 5
-						}
-					}
+					loc: SourceLocation core/categorized/not-directive/input.js 5:12-5:17
 					quasis: Array [
 						JSTemplateElement {
 							cooked: "foo"
 							raw: "foo"
 							tail: true
-							loc: Object {
-								filename: "core/categorized/not-directive/input.js"
-								end: Object {
-									column: 16
-									line: 5
-								}
-								start: Object {
-									column: 13
-									line: 5
-								}
-							}
+							loc: SourceLocation core/categorized/not-directive/input.js 5:13-5:16
 						}
 					]
 				}
 			}
 		}
 		JSExpressionStatement {
-			loc: Object {
-				filename: "core/categorized/not-directive/input.js"
-				end: Object {
-					column: 18
-					line: 6
-				}
-				start: Object {
-					column: 0
-					line: 6
-				}
-			}
+			loc: SourceLocation core/categorized/not-directive/input.js 6:0-6:18
 			expression: JSCallExpression {
-				loc: Object {
-					filename: "core/categorized/not-directive/input.js"
-					end: Object {
-						column: 17
-						line: 6
-					}
-					start: Object {
-						column: 0
-						line: 6
-					}
-				}
+				loc: SourceLocation core/categorized/not-directive/input.js 6:0-6:17
 				callee: JSStringLiteral {
 					value: "use strict"
-					loc: Object {
-						filename: "core/categorized/not-directive/input.js"
-						end: Object {
-							column: 12
-							line: 6
-						}
-						start: Object {
-							column: 0
-							line: 6
-						}
-					}
+					loc: SourceLocation core/categorized/not-directive/input.js 6:0-6:12
 				}
 				arguments: Array [
 					JSReferenceIdentifier {
 						name: "foo"
-						loc: Object {
-							filename: "core/categorized/not-directive/input.js"
-							identifierName: "foo"
-							end: Object {
-								column: 16
-								line: 6
-							}
-							start: Object {
-								column: 13
-								line: 6
-							}
-						}
+						loc: SourceLocation core/categorized/not-directive/input.js 6:13-6:16 (foo)
 					}
 				]
 			}
 		}
 		JSExpressionStatement {
-			loc: Object {
-				filename: "core/categorized/not-directive/input.js"
-				end: Object {
-					column: 7
-					line: 8
-				}
-				start: Object {
-					column: 0
-					line: 7
-				}
-			}
+			loc: SourceLocation core/categorized/not-directive/input.js 7:0-8:7
 			expression: JSMemberExpression {
-				loc: Object {
-					filename: "core/categorized/not-directive/input.js"
-					end: Object {
-						column: 6
-						line: 8
-					}
-					start: Object {
-						column: 0
-						line: 7
-					}
-				}
+				loc: SourceLocation core/categorized/not-directive/input.js 7:0-8:6
 				object: JSStringLiteral {
 					value: "use strict"
-					loc: Object {
-						filename: "core/categorized/not-directive/input.js"
-						end: Object {
-							column: 12
-							line: 7
-						}
-						start: Object {
-							column: 0
-							line: 7
-						}
-					}
+					loc: SourceLocation core/categorized/not-directive/input.js 7:0-7:12
 				}
 				property: JSStaticMemberProperty {
 					value: JSIdentifier {
 						name: "foo"
-						loc: Object {
-							filename: "core/categorized/not-directive/input.js"
-							identifierName: "foo"
-							end: Object {
-								column: 6
-								line: 8
-							}
-							start: Object {
-								column: 3
-								line: 8
-							}
-						}
+						loc: SourceLocation core/categorized/not-directive/input.js 8:3-8:6 (foo)
 					}
-					loc: Object {
-						filename: "core/categorized/not-directive/input.js"
-						identifierName: "foo"
-						end: Object {
-							column: 6
-							line: 8
-						}
-						start: Object {
-							column: 3
-							line: 8
-						}
-					}
+					loc: SourceLocation core/categorized/not-directive/input.js 8:3-8:6 (foo)
 				}
 			}
 		}
 		JSExpressionStatement {
-			loc: Object {
-				filename: "core/categorized/not-directive/input.js"
-				end: Object {
-					column: 8
-					line: 10
-				}
-				start: Object {
-					column: 0
-					line: 9
-				}
-			}
+			loc: SourceLocation core/categorized/not-directive/input.js 9:0-10:8
 			expression: JSMemberExpression {
-				loc: Object {
-					filename: "core/categorized/not-directive/input.js"
-					end: Object {
-						column: 7
-						line: 10
-					}
-					start: Object {
-						column: 0
-						line: 9
-					}
-				}
+				loc: SourceLocation core/categorized/not-directive/input.js 9:0-10:7
 				object: JSStringLiteral {
 					value: "use strict"
-					loc: Object {
-						filename: "core/categorized/not-directive/input.js"
-						end: Object {
-							column: 12
-							line: 9
-						}
-						start: Object {
-							column: 0
-							line: 9
-						}
-					}
+					loc: SourceLocation core/categorized/not-directive/input.js 9:0-9:12
 				}
 				property: JSComputedMemberProperty {
 					value: JSReferenceIdentifier {
 						name: "foo"
-						loc: Object {
-							filename: "core/categorized/not-directive/input.js"
-							identifierName: "foo"
-							end: Object {
-								column: 6
-								line: 10
-							}
-							start: Object {
-								column: 3
-								line: 10
-							}
-						}
+						loc: SourceLocation core/categorized/not-directive/input.js 10:3-10:6 (foo)
 					}
-					loc: Object {
-						filename: "core/categorized/not-directive/input.js"
-						end: Object {
-							column: 7
-							line: 10
-						}
-						start: Object {
-							column: 2
-							line: 10
-						}
-					}
+					loc: SourceLocation core/categorized/not-directive/input.js 10:2-10:7
 				}
 			}
 		}
 		JSExpressionStatement {
-			loc: Object {
-				filename: "core/categorized/not-directive/input.js"
-				end: Object {
-					column: 8
-					line: 12
-				}
-				start: Object {
-					column: 0
-					line: 11
-				}
-			}
+			loc: SourceLocation core/categorized/not-directive/input.js 11:0-12:8
 			expression: JSTaggedTemplateExpression {
 				typeArguments: undefined
-				loc: Object {
-					filename: "core/categorized/not-directive/input.js"
-					end: Object {
-						column: 7
-						line: 12
-					}
-					start: Object {
-						column: 0
-						line: 11
-					}
-				}
+				loc: SourceLocation core/categorized/not-directive/input.js 11:0-12:7
 				tag: JSStringLiteral {
 					value: "use strict"
-					loc: Object {
-						filename: "core/categorized/not-directive/input.js"
-						end: Object {
-							column: 12
-							line: 11
-						}
-						start: Object {
-							column: 0
-							line: 11
-						}
-					}
+					loc: SourceLocation core/categorized/not-directive/input.js 11:0-11:12
 				}
 				quasi: JSTemplateLiteral {
 					expressions: Array []
-					loc: Object {
-						filename: "core/categorized/not-directive/input.js"
-						end: Object {
-							column: 7
-							line: 12
-						}
-						start: Object {
-							column: 2
-							line: 12
-						}
-					}
+					loc: SourceLocation core/categorized/not-directive/input.js 12:2-12:7
 					quasis: Array [
 						JSTemplateElement {
 							cooked: "foo"
 							raw: "foo"
 							tail: true
-							loc: Object {
-								filename: "core/categorized/not-directive/input.js"
-								end: Object {
-									column: 6
-									line: 12
-								}
-								start: Object {
-									column: 3
-									line: 12
-								}
-							}
+							loc: SourceLocation core/categorized/not-directive/input.js 12:3-12:6
 						}
 					]
 				}
 			}
 		}
 		JSExpressionStatement {
+			loc: SourceLocation core/categorized/not-directive/input.js 13:0-14:8
 			trailingComments: Array ["0"]
-			loc: Object {
-				filename: "core/categorized/not-directive/input.js"
-				end: Object {
-					column: 8
-					line: 14
-				}
-				start: Object {
-					column: 0
-					line: 13
-				}
-			}
 			expression: JSCallExpression {
-				loc: Object {
-					filename: "core/categorized/not-directive/input.js"
-					end: Object {
-						column: 7
-						line: 14
-					}
-					start: Object {
-						column: 0
-						line: 13
-					}
-				}
+				loc: SourceLocation core/categorized/not-directive/input.js 13:0-14:7
 				callee: JSStringLiteral {
 					value: "use strict"
-					loc: Object {
-						filename: "core/categorized/not-directive/input.js"
-						end: Object {
-							column: 12
-							line: 13
-						}
-						start: Object {
-							column: 0
-							line: 13
-						}
-					}
+					loc: SourceLocation core/categorized/not-directive/input.js 13:0-13:12
 				}
 				arguments: Array [
 					JSReferenceIdentifier {
 						name: "foo"
-						loc: Object {
-							filename: "core/categorized/not-directive/input.js"
-							identifierName: "foo"
-							end: Object {
-								column: 6
-								line: 14
-							}
-							start: Object {
-								column: 3
-								line: 14
-							}
-						}
+						loc: SourceLocation core/categorized/not-directive/input.js 14:3-14:6 (foo)
 					}
 				]
 			}
 		}
 		JSExpressionStatement {
 			leadingComments: Array ["0"]
-			loc: Object {
-				filename: "core/categorized/not-directive/input.js"
-				end: Object {
-					column: 5
-					line: 17
-				}
-				start: Object {
-					column: 0
-					line: 17
-				}
-			}
+			loc: SourceLocation core/categorized/not-directive/input.js 17:0-17:5
 			expression: JSStringLiteral {
 				value: "\x05"
 				leadingComments: undefined
-				loc: Object {
-					filename: "core/categorized/not-directive/input.js"
-					end: Object {
-						column: 4
-						line: 17
-					}
-					start: Object {
-						column: 0
-						line: 17
-					}
-				}
+				loc: SourceLocation core/categorized/not-directive/input.js 17:0-17:4
 			}
 		}
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "f"
-				loc: Object {
-					filename: "core/categorized/not-directive/input.js"
-					identifierName: "f"
-					end: Object {
-						column: 10
-						line: 19
-					}
-					start: Object {
-						column: 9
-						line: 19
-					}
-				}
+				loc: SourceLocation core/categorized/not-directive/input.js 19:9-19:10 (f)
 			}
-			loc: Object {
-				filename: "core/categorized/not-directive/input.js"
-				end: Object {
-					column: 1
-					line: 22
-				}
-				start: Object {
-					column: 0
-					line: 19
-				}
-			}
+			loc: SourceLocation core/categorized/not-directive/input.js 19:0-22:1
 			head: JSFunctionHead {
 				async: false
 				generator: false
@@ -673,126 +204,34 @@ JSRoot {
 				returnType: undefined
 				thisType: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "core/categorized/not-directive/input.js"
-					end: Object {
-						column: 12
-						line: 19
-					}
-					start: Object {
-						column: 10
-						line: 19
-					}
-				}
+				loc: SourceLocation core/categorized/not-directive/input.js 19:10-19:12
 			}
 			body: JSBlockStatement {
 				directives: Array []
-				loc: Object {
-					filename: "core/categorized/not-directive/input.js"
-					end: Object {
-						column: 1
-						line: 22
-					}
-					start: Object {
-						column: 12
-						line: 19
-					}
-				}
+				loc: SourceLocation core/categorized/not-directive/input.js 19:12-22:1
 				body: Array [
 					JSExpressionStatement {
-						loc: Object {
-							filename: "core/categorized/not-directive/input.js"
-							end: Object {
-								column: 19
-								line: 20
-							}
-							start: Object {
-								column: 2
-								line: 20
-							}
-						}
+						loc: SourceLocation core/categorized/not-directive/input.js 20:2-20:19
 						expression: JSMemberExpression {
-							loc: Object {
-								filename: "core/categorized/not-directive/input.js"
-								end: Object {
-									column: 18
-									line: 20
-								}
-								start: Object {
-									column: 2
-									line: 20
-								}
-							}
+							loc: SourceLocation core/categorized/not-directive/input.js 20:2-20:18
 							object: JSStringLiteral {
 								value: "use strict"
-								loc: Object {
-									filename: "core/categorized/not-directive/input.js"
-									end: Object {
-										column: 14
-										line: 20
-									}
-									start: Object {
-										column: 2
-										line: 20
-									}
-								}
+								loc: SourceLocation core/categorized/not-directive/input.js 20:2-20:14
 							}
 							property: JSStaticMemberProperty {
 								value: JSIdentifier {
 									name: "foo"
-									loc: Object {
-										filename: "core/categorized/not-directive/input.js"
-										identifierName: "foo"
-										end: Object {
-											column: 18
-											line: 20
-										}
-										start: Object {
-											column: 15
-											line: 20
-										}
-									}
+									loc: SourceLocation core/categorized/not-directive/input.js 20:15-20:18 (foo)
 								}
-								loc: Object {
-									filename: "core/categorized/not-directive/input.js"
-									identifierName: "foo"
-									end: Object {
-										column: 18
-										line: 20
-									}
-									start: Object {
-										column: 15
-										line: 20
-									}
-								}
+								loc: SourceLocation core/categorized/not-directive/input.js 20:15-20:18 (foo)
 							}
 						}
 					}
 					JSExpressionStatement {
-						loc: Object {
-							filename: "core/categorized/not-directive/input.js"
-							end: Object {
-								column: 7
-								line: 21
-							}
-							start: Object {
-								column: 2
-								line: 21
-							}
-						}
+						loc: SourceLocation core/categorized/not-directive/input.js 21:2-21:7
 						expression: JSStringLiteral {
 							value: "\x05"
-							loc: Object {
-								filename: "core/categorized/not-directive/input.js"
-								end: Object {
-									column: 6
-									line: 21
-								}
-								start: Object {
-									column: 2
-									line: 21
-								}
-							}
+							loc: SourceLocation core/categorized/not-directive/input.js 21:2-21:6
 						}
 					}
 				]
@@ -801,30 +240,9 @@ JSRoot {
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "f"
-				loc: Object {
-					filename: "core/categorized/not-directive/input.js"
-					identifierName: "f"
-					end: Object {
-						column: 10
-						line: 24
-					}
-					start: Object {
-						column: 9
-						line: 24
-					}
-				}
+				loc: SourceLocation core/categorized/not-directive/input.js 24:9-24:10 (f)
 			}
-			loc: Object {
-				filename: "core/categorized/not-directive/input.js"
-				end: Object {
-					column: 1
-					line: 27
-				}
-				start: Object {
-					column: 0
-					line: 24
-				}
-			}
+			loc: SourceLocation core/categorized/not-directive/input.js 24:0-27:1
 			head: JSFunctionHead {
 				async: false
 				generator: false
@@ -834,125 +252,34 @@ JSRoot {
 				returnType: undefined
 				thisType: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "core/categorized/not-directive/input.js"
-					end: Object {
-						column: 12
-						line: 24
-					}
-					start: Object {
-						column: 10
-						line: 24
-					}
-				}
+				loc: SourceLocation core/categorized/not-directive/input.js 24:10-24:12
 			}
 			body: JSBlockStatement {
 				directives: Array []
-				loc: Object {
-					filename: "core/categorized/not-directive/input.js"
-					end: Object {
-						column: 1
-						line: 27
-					}
-					start: Object {
-						column: 12
-						line: 24
-					}
-				}
+				loc: SourceLocation core/categorized/not-directive/input.js 24:12-27:1
 				body: Array [
 					JSExpressionStatement {
-						loc: Object {
-							filename: "core/categorized/not-directive/input.js"
-							end: Object {
-								column: 20
-								line: 25
-							}
-							start: Object {
-								column: 2
-								line: 25
-							}
-						}
+						loc: SourceLocation core/categorized/not-directive/input.js 25:2-25:20
 						expression: JSMemberExpression {
-							loc: Object {
-								filename: "core/categorized/not-directive/input.js"
-								end: Object {
-									column: 19
-									line: 25
-								}
-								start: Object {
-									column: 2
-									line: 25
-								}
-							}
+							loc: SourceLocation core/categorized/not-directive/input.js 25:2-25:19
 							object: JSStringLiteral {
 								value: "use strict"
-								loc: Object {
-									filename: "core/categorized/not-directive/input.js"
-									end: Object {
-										column: 14
-										line: 25
-									}
-									start: Object {
-										column: 2
-										line: 25
-									}
-								}
+								loc: SourceLocation core/categorized/not-directive/input.js 25:2-25:14
 							}
 							property: JSComputedMemberProperty {
 								value: JSReferenceIdentifier {
 									name: "foo"
-									loc: Object {
-										filename: "core/categorized/not-directive/input.js"
-										identifierName: "foo"
-										end: Object {
-											column: 18
-											line: 25
-										}
-										start: Object {
-											column: 15
-											line: 25
-										}
-									}
+									loc: SourceLocation core/categorized/not-directive/input.js 25:15-25:18 (foo)
 								}
-								loc: Object {
-									filename: "core/categorized/not-directive/input.js"
-									end: Object {
-										column: 19
-										line: 25
-									}
-									start: Object {
-										column: 14
-										line: 25
-									}
-								}
+								loc: SourceLocation core/categorized/not-directive/input.js 25:14-25:19
 							}
 						}
 					}
 					JSExpressionStatement {
-						loc: Object {
-							filename: "core/categorized/not-directive/input.js"
-							end: Object {
-								column: 7
-								line: 26
-							}
-							start: Object {
-								column: 2
-								line: 26
-							}
-						}
+						loc: SourceLocation core/categorized/not-directive/input.js 26:2-26:7
 						expression: JSStringLiteral {
 							value: "\x05"
-							loc: Object {
-								filename: "core/categorized/not-directive/input.js"
-								end: Object {
-									column: 6
-									line: 26
-								}
-								start: Object {
-									column: 2
-									line: 26
-								}
-							}
+							loc: SourceLocation core/categorized/not-directive/input.js 26:2-26:6
 						}
 					}
 				]
@@ -961,30 +288,9 @@ JSRoot {
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "f"
-				loc: Object {
-					filename: "core/categorized/not-directive/input.js"
-					identifierName: "f"
-					end: Object {
-						column: 10
-						line: 29
-					}
-					start: Object {
-						column: 9
-						line: 29
-					}
-				}
+				loc: SourceLocation core/categorized/not-directive/input.js 29:9-29:10 (f)
 			}
-			loc: Object {
-				filename: "core/categorized/not-directive/input.js"
-				end: Object {
-					column: 1
-					line: 32
-				}
-				start: Object {
-					column: 0
-					line: 29
-				}
-			}
+			loc: SourceLocation core/categorized/not-directive/input.js 29:0-32:1
 			head: JSFunctionHead {
 				async: false
 				generator: false
@@ -994,130 +300,40 @@ JSRoot {
 				returnType: undefined
 				thisType: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "core/categorized/not-directive/input.js"
-					end: Object {
-						column: 12
-						line: 29
-					}
-					start: Object {
-						column: 10
-						line: 29
-					}
-				}
+				loc: SourceLocation core/categorized/not-directive/input.js 29:10-29:12
 			}
 			body: JSBlockStatement {
 				directives: Array []
-				loc: Object {
-					filename: "core/categorized/not-directive/input.js"
-					end: Object {
-						column: 1
-						line: 32
-					}
-					start: Object {
-						column: 12
-						line: 29
-					}
-				}
+				loc: SourceLocation core/categorized/not-directive/input.js 29:12-32:1
 				body: Array [
 					JSExpressionStatement {
-						loc: Object {
-							filename: "core/categorized/not-directive/input.js"
-							end: Object {
-								column: 20
-								line: 30
-							}
-							start: Object {
-								column: 2
-								line: 30
-							}
-						}
+						loc: SourceLocation core/categorized/not-directive/input.js 30:2-30:20
 						expression: JSTaggedTemplateExpression {
 							typeArguments: undefined
-							loc: Object {
-								filename: "core/categorized/not-directive/input.js"
-								end: Object {
-									column: 19
-									line: 30
-								}
-								start: Object {
-									column: 2
-									line: 30
-								}
-							}
+							loc: SourceLocation core/categorized/not-directive/input.js 30:2-30:19
 							tag: JSStringLiteral {
 								value: "use strict"
-								loc: Object {
-									filename: "core/categorized/not-directive/input.js"
-									end: Object {
-										column: 14
-										line: 30
-									}
-									start: Object {
-										column: 2
-										line: 30
-									}
-								}
+								loc: SourceLocation core/categorized/not-directive/input.js 30:2-30:14
 							}
 							quasi: JSTemplateLiteral {
 								expressions: Array []
-								loc: Object {
-									filename: "core/categorized/not-directive/input.js"
-									end: Object {
-										column: 19
-										line: 30
-									}
-									start: Object {
-										column: 14
-										line: 30
-									}
-								}
+								loc: SourceLocation core/categorized/not-directive/input.js 30:14-30:19
 								quasis: Array [
 									JSTemplateElement {
 										cooked: "foo"
 										raw: "foo"
 										tail: true
-										loc: Object {
-											filename: "core/categorized/not-directive/input.js"
-											end: Object {
-												column: 18
-												line: 30
-											}
-											start: Object {
-												column: 15
-												line: 30
-											}
-										}
+										loc: SourceLocation core/categorized/not-directive/input.js 30:15-30:18
 									}
 								]
 							}
 						}
 					}
 					JSExpressionStatement {
-						loc: Object {
-							filename: "core/categorized/not-directive/input.js"
-							end: Object {
-								column: 7
-								line: 31
-							}
-							start: Object {
-								column: 2
-								line: 31
-							}
-						}
+						loc: SourceLocation core/categorized/not-directive/input.js 31:2-31:7
 						expression: JSStringLiteral {
 							value: "\x05"
-							loc: Object {
-								filename: "core/categorized/not-directive/input.js"
-								end: Object {
-									column: 6
-									line: 31
-								}
-								start: Object {
-									column: 2
-									line: 31
-								}
-							}
+							loc: SourceLocation core/categorized/not-directive/input.js 31:2-31:6
 						}
 					}
 				]
@@ -1126,30 +342,9 @@ JSRoot {
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "f"
-				loc: Object {
-					filename: "core/categorized/not-directive/input.js"
-					identifierName: "f"
-					end: Object {
-						column: 10
-						line: 34
-					}
-					start: Object {
-						column: 9
-						line: 34
-					}
-				}
+				loc: SourceLocation core/categorized/not-directive/input.js 34:9-34:10 (f)
 			}
-			loc: Object {
-				filename: "core/categorized/not-directive/input.js"
-				end: Object {
-					column: 1
-					line: 37
-				}
-				start: Object {
-					column: 0
-					line: 34
-				}
-			}
+			loc: SourceLocation core/categorized/not-directive/input.js 34:0-37:1
 			head: JSFunctionHead {
 				async: false
 				generator: false
@@ -1159,114 +354,33 @@ JSRoot {
 				returnType: undefined
 				thisType: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "core/categorized/not-directive/input.js"
-					end: Object {
-						column: 12
-						line: 34
-					}
-					start: Object {
-						column: 10
-						line: 34
-					}
-				}
+				loc: SourceLocation core/categorized/not-directive/input.js 34:10-34:12
 			}
 			body: JSBlockStatement {
 				directives: Array []
-				loc: Object {
-					filename: "core/categorized/not-directive/input.js"
-					end: Object {
-						column: 1
-						line: 37
-					}
-					start: Object {
-						column: 12
-						line: 34
-					}
-				}
+				loc: SourceLocation core/categorized/not-directive/input.js 34:12-37:1
 				body: Array [
 					JSExpressionStatement {
-						loc: Object {
-							filename: "core/categorized/not-directive/input.js"
-							end: Object {
-								column: 20
-								line: 35
-							}
-							start: Object {
-								column: 2
-								line: 35
-							}
-						}
+						loc: SourceLocation core/categorized/not-directive/input.js 35:2-35:20
 						expression: JSCallExpression {
-							loc: Object {
-								filename: "core/categorized/not-directive/input.js"
-								end: Object {
-									column: 19
-									line: 35
-								}
-								start: Object {
-									column: 2
-									line: 35
-								}
-							}
+							loc: SourceLocation core/categorized/not-directive/input.js 35:2-35:19
 							callee: JSStringLiteral {
 								value: "use strict"
-								loc: Object {
-									filename: "core/categorized/not-directive/input.js"
-									end: Object {
-										column: 14
-										line: 35
-									}
-									start: Object {
-										column: 2
-										line: 35
-									}
-								}
+								loc: SourceLocation core/categorized/not-directive/input.js 35:2-35:14
 							}
 							arguments: Array [
 								JSReferenceIdentifier {
 									name: "foo"
-									loc: Object {
-										filename: "core/categorized/not-directive/input.js"
-										identifierName: "foo"
-										end: Object {
-											column: 18
-											line: 35
-										}
-										start: Object {
-											column: 15
-											line: 35
-										}
-									}
+									loc: SourceLocation core/categorized/not-directive/input.js 35:15-35:18 (foo)
 								}
 							]
 						}
 					}
 					JSExpressionStatement {
-						loc: Object {
-							filename: "core/categorized/not-directive/input.js"
-							end: Object {
-								column: 7
-								line: 36
-							}
-							start: Object {
-								column: 2
-								line: 36
-							}
-						}
+						loc: SourceLocation core/categorized/not-directive/input.js 36:2-36:7
 						expression: JSStringLiteral {
 							value: "\x05"
-							loc: Object {
-								filename: "core/categorized/not-directive/input.js"
-								end: Object {
-									column: 6
-									line: 36
-								}
-								start: Object {
-									column: 2
-									line: 36
-								}
-							}
+							loc: SourceLocation core/categorized/not-directive/input.js 36:2-36:6
 						}
 					}
 				]
@@ -1275,30 +389,9 @@ JSRoot {
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "f"
-				loc: Object {
-					filename: "core/categorized/not-directive/input.js"
-					identifierName: "f"
-					end: Object {
-						column: 10
-						line: 39
-					}
-					start: Object {
-						column: 9
-						line: 39
-					}
-				}
+				loc: SourceLocation core/categorized/not-directive/input.js 39:9-39:10 (f)
 			}
-			loc: Object {
-				filename: "core/categorized/not-directive/input.js"
-				end: Object {
-					column: 1
-					line: 43
-				}
-				start: Object {
-					column: 0
-					line: 39
-				}
-			}
+			loc: SourceLocation core/categorized/not-directive/input.js 39:0-43:1
 			head: JSFunctionHead {
 				async: false
 				generator: false
@@ -1308,126 +401,34 @@ JSRoot {
 				returnType: undefined
 				thisType: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "core/categorized/not-directive/input.js"
-					end: Object {
-						column: 12
-						line: 39
-					}
-					start: Object {
-						column: 10
-						line: 39
-					}
-				}
+				loc: SourceLocation core/categorized/not-directive/input.js 39:10-39:12
 			}
 			body: JSBlockStatement {
 				directives: Array []
-				loc: Object {
-					filename: "core/categorized/not-directive/input.js"
-					end: Object {
-						column: 1
-						line: 43
-					}
-					start: Object {
-						column: 12
-						line: 39
-					}
-				}
+				loc: SourceLocation core/categorized/not-directive/input.js 39:12-43:1
 				body: Array [
 					JSExpressionStatement {
-						loc: Object {
-							filename: "core/categorized/not-directive/input.js"
-							end: Object {
-								column: 7
-								line: 41
-							}
-							start: Object {
-								column: 2
-								line: 40
-							}
-						}
+						loc: SourceLocation core/categorized/not-directive/input.js 40:2-41:7
 						expression: JSMemberExpression {
-							loc: Object {
-								filename: "core/categorized/not-directive/input.js"
-								end: Object {
-									column: 6
-									line: 41
-								}
-								start: Object {
-									column: 2
-									line: 40
-								}
-							}
+							loc: SourceLocation core/categorized/not-directive/input.js 40:2-41:6
 							object: JSStringLiteral {
 								value: "use strict"
-								loc: Object {
-									filename: "core/categorized/not-directive/input.js"
-									end: Object {
-										column: 14
-										line: 40
-									}
-									start: Object {
-										column: 2
-										line: 40
-									}
-								}
+								loc: SourceLocation core/categorized/not-directive/input.js 40:2-40:14
 							}
 							property: JSStaticMemberProperty {
 								value: JSIdentifier {
 									name: "foo"
-									loc: Object {
-										filename: "core/categorized/not-directive/input.js"
-										identifierName: "foo"
-										end: Object {
-											column: 6
-											line: 41
-										}
-										start: Object {
-											column: 3
-											line: 41
-										}
-									}
+									loc: SourceLocation core/categorized/not-directive/input.js 41:3-41:6 (foo)
 								}
-								loc: Object {
-									filename: "core/categorized/not-directive/input.js"
-									identifierName: "foo"
-									end: Object {
-										column: 6
-										line: 41
-									}
-									start: Object {
-										column: 3
-										line: 41
-									}
-								}
+								loc: SourceLocation core/categorized/not-directive/input.js 41:3-41:6 (foo)
 							}
 						}
 					}
 					JSExpressionStatement {
-						loc: Object {
-							filename: "core/categorized/not-directive/input.js"
-							end: Object {
-								column: 7
-								line: 42
-							}
-							start: Object {
-								column: 2
-								line: 42
-							}
-						}
+						loc: SourceLocation core/categorized/not-directive/input.js 42:2-42:7
 						expression: JSStringLiteral {
 							value: "\x05"
-							loc: Object {
-								filename: "core/categorized/not-directive/input.js"
-								end: Object {
-									column: 6
-									line: 42
-								}
-								start: Object {
-									column: 2
-									line: 42
-								}
-							}
+							loc: SourceLocation core/categorized/not-directive/input.js 42:2-42:6
 						}
 					}
 				]
@@ -1436,30 +437,9 @@ JSRoot {
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "f"
-				loc: Object {
-					filename: "core/categorized/not-directive/input.js"
-					identifierName: "f"
-					end: Object {
-						column: 10
-						line: 45
-					}
-					start: Object {
-						column: 9
-						line: 45
-					}
-				}
+				loc: SourceLocation core/categorized/not-directive/input.js 45:9-45:10 (f)
 			}
-			loc: Object {
-				filename: "core/categorized/not-directive/input.js"
-				end: Object {
-					column: 1
-					line: 49
-				}
-				start: Object {
-					column: 0
-					line: 45
-				}
-			}
+			loc: SourceLocation core/categorized/not-directive/input.js 45:0-49:1
 			head: JSFunctionHead {
 				async: false
 				generator: false
@@ -1469,125 +449,34 @@ JSRoot {
 				returnType: undefined
 				thisType: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "core/categorized/not-directive/input.js"
-					end: Object {
-						column: 12
-						line: 45
-					}
-					start: Object {
-						column: 10
-						line: 45
-					}
-				}
+				loc: SourceLocation core/categorized/not-directive/input.js 45:10-45:12
 			}
 			body: JSBlockStatement {
 				directives: Array []
-				loc: Object {
-					filename: "core/categorized/not-directive/input.js"
-					end: Object {
-						column: 1
-						line: 49
-					}
-					start: Object {
-						column: 12
-						line: 45
-					}
-				}
+				loc: SourceLocation core/categorized/not-directive/input.js 45:12-49:1
 				body: Array [
 					JSExpressionStatement {
-						loc: Object {
-							filename: "core/categorized/not-directive/input.js"
-							end: Object {
-								column: 8
-								line: 47
-							}
-							start: Object {
-								column: 2
-								line: 46
-							}
-						}
+						loc: SourceLocation core/categorized/not-directive/input.js 46:2-47:8
 						expression: JSMemberExpression {
-							loc: Object {
-								filename: "core/categorized/not-directive/input.js"
-								end: Object {
-									column: 7
-									line: 47
-								}
-								start: Object {
-									column: 2
-									line: 46
-								}
-							}
+							loc: SourceLocation core/categorized/not-directive/input.js 46:2-47:7
 							object: JSStringLiteral {
 								value: "use strict"
-								loc: Object {
-									filename: "core/categorized/not-directive/input.js"
-									end: Object {
-										column: 14
-										line: 46
-									}
-									start: Object {
-										column: 2
-										line: 46
-									}
-								}
+								loc: SourceLocation core/categorized/not-directive/input.js 46:2-46:14
 							}
 							property: JSComputedMemberProperty {
 								value: JSReferenceIdentifier {
 									name: "foo"
-									loc: Object {
-										filename: "core/categorized/not-directive/input.js"
-										identifierName: "foo"
-										end: Object {
-											column: 6
-											line: 47
-										}
-										start: Object {
-											column: 3
-											line: 47
-										}
-									}
+									loc: SourceLocation core/categorized/not-directive/input.js 47:3-47:6 (foo)
 								}
-								loc: Object {
-									filename: "core/categorized/not-directive/input.js"
-									end: Object {
-										column: 7
-										line: 47
-									}
-									start: Object {
-										column: 2
-										line: 47
-									}
-								}
+								loc: SourceLocation core/categorized/not-directive/input.js 47:2-47:7
 							}
 						}
 					}
 					JSExpressionStatement {
-						loc: Object {
-							filename: "core/categorized/not-directive/input.js"
-							end: Object {
-								column: 7
-								line: 48
-							}
-							start: Object {
-								column: 2
-								line: 48
-							}
-						}
+						loc: SourceLocation core/categorized/not-directive/input.js 48:2-48:7
 						expression: JSStringLiteral {
 							value: "\x05"
-							loc: Object {
-								filename: "core/categorized/not-directive/input.js"
-								end: Object {
-									column: 6
-									line: 48
-								}
-								start: Object {
-									column: 2
-									line: 48
-								}
-							}
+							loc: SourceLocation core/categorized/not-directive/input.js 48:2-48:6
 						}
 					}
 				]
@@ -1596,30 +485,9 @@ JSRoot {
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "f"
-				loc: Object {
-					filename: "core/categorized/not-directive/input.js"
-					identifierName: "f"
-					end: Object {
-						column: 10
-						line: 51
-					}
-					start: Object {
-						column: 9
-						line: 51
-					}
-				}
+				loc: SourceLocation core/categorized/not-directive/input.js 51:9-51:10 (f)
 			}
-			loc: Object {
-				filename: "core/categorized/not-directive/input.js"
-				end: Object {
-					column: 1
-					line: 55
-				}
-				start: Object {
-					column: 0
-					line: 51
-				}
-			}
+			loc: SourceLocation core/categorized/not-directive/input.js 51:0-55:1
 			head: JSFunctionHead {
 				async: false
 				generator: false
@@ -1629,130 +497,40 @@ JSRoot {
 				returnType: undefined
 				thisType: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "core/categorized/not-directive/input.js"
-					end: Object {
-						column: 12
-						line: 51
-					}
-					start: Object {
-						column: 10
-						line: 51
-					}
-				}
+				loc: SourceLocation core/categorized/not-directive/input.js 51:10-51:12
 			}
 			body: JSBlockStatement {
 				directives: Array []
-				loc: Object {
-					filename: "core/categorized/not-directive/input.js"
-					end: Object {
-						column: 1
-						line: 55
-					}
-					start: Object {
-						column: 12
-						line: 51
-					}
-				}
+				loc: SourceLocation core/categorized/not-directive/input.js 51:12-55:1
 				body: Array [
 					JSExpressionStatement {
-						loc: Object {
-							filename: "core/categorized/not-directive/input.js"
-							end: Object {
-								column: 8
-								line: 53
-							}
-							start: Object {
-								column: 2
-								line: 52
-							}
-						}
+						loc: SourceLocation core/categorized/not-directive/input.js 52:2-53:8
 						expression: JSTaggedTemplateExpression {
 							typeArguments: undefined
-							loc: Object {
-								filename: "core/categorized/not-directive/input.js"
-								end: Object {
-									column: 7
-									line: 53
-								}
-								start: Object {
-									column: 2
-									line: 52
-								}
-							}
+							loc: SourceLocation core/categorized/not-directive/input.js 52:2-53:7
 							tag: JSStringLiteral {
 								value: "use strict"
-								loc: Object {
-									filename: "core/categorized/not-directive/input.js"
-									end: Object {
-										column: 14
-										line: 52
-									}
-									start: Object {
-										column: 2
-										line: 52
-									}
-								}
+								loc: SourceLocation core/categorized/not-directive/input.js 52:2-52:14
 							}
 							quasi: JSTemplateLiteral {
 								expressions: Array []
-								loc: Object {
-									filename: "core/categorized/not-directive/input.js"
-									end: Object {
-										column: 7
-										line: 53
-									}
-									start: Object {
-										column: 2
-										line: 53
-									}
-								}
+								loc: SourceLocation core/categorized/not-directive/input.js 53:2-53:7
 								quasis: Array [
 									JSTemplateElement {
 										cooked: "foo"
 										raw: "foo"
 										tail: true
-										loc: Object {
-											filename: "core/categorized/not-directive/input.js"
-											end: Object {
-												column: 6
-												line: 53
-											}
-											start: Object {
-												column: 3
-												line: 53
-											}
-										}
+										loc: SourceLocation core/categorized/not-directive/input.js 53:3-53:6
 									}
 								]
 							}
 						}
 					}
 					JSExpressionStatement {
-						loc: Object {
-							filename: "core/categorized/not-directive/input.js"
-							end: Object {
-								column: 7
-								line: 54
-							}
-							start: Object {
-								column: 2
-								line: 54
-							}
-						}
+						loc: SourceLocation core/categorized/not-directive/input.js 54:2-54:7
 						expression: JSStringLiteral {
 							value: "\x05"
-							loc: Object {
-								filename: "core/categorized/not-directive/input.js"
-								end: Object {
-									column: 6
-									line: 54
-								}
-								start: Object {
-									column: 2
-									line: 54
-								}
-							}
+							loc: SourceLocation core/categorized/not-directive/input.js 54:2-54:6
 						}
 					}
 				]
@@ -1761,30 +539,9 @@ JSRoot {
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "f"
-				loc: Object {
-					filename: "core/categorized/not-directive/input.js"
-					identifierName: "f"
-					end: Object {
-						column: 10
-						line: 57
-					}
-					start: Object {
-						column: 9
-						line: 57
-					}
-				}
+				loc: SourceLocation core/categorized/not-directive/input.js 57:9-57:10 (f)
 			}
-			loc: Object {
-				filename: "core/categorized/not-directive/input.js"
-				end: Object {
-					column: 1
-					line: 61
-				}
-				start: Object {
-					column: 0
-					line: 57
-				}
-			}
+			loc: SourceLocation core/categorized/not-directive/input.js 57:0-61:1
 			head: JSFunctionHead {
 				async: false
 				generator: false
@@ -1794,114 +551,33 @@ JSRoot {
 				returnType: undefined
 				thisType: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "core/categorized/not-directive/input.js"
-					end: Object {
-						column: 12
-						line: 57
-					}
-					start: Object {
-						column: 10
-						line: 57
-					}
-				}
+				loc: SourceLocation core/categorized/not-directive/input.js 57:10-57:12
 			}
 			body: JSBlockStatement {
 				directives: Array []
-				loc: Object {
-					filename: "core/categorized/not-directive/input.js"
-					end: Object {
-						column: 1
-						line: 61
-					}
-					start: Object {
-						column: 12
-						line: 57
-					}
-				}
+				loc: SourceLocation core/categorized/not-directive/input.js 57:12-61:1
 				body: Array [
 					JSExpressionStatement {
-						loc: Object {
-							filename: "core/categorized/not-directive/input.js"
-							end: Object {
-								column: 8
-								line: 59
-							}
-							start: Object {
-								column: 2
-								line: 58
-							}
-						}
+						loc: SourceLocation core/categorized/not-directive/input.js 58:2-59:8
 						expression: JSCallExpression {
-							loc: Object {
-								filename: "core/categorized/not-directive/input.js"
-								end: Object {
-									column: 7
-									line: 59
-								}
-								start: Object {
-									column: 2
-									line: 58
-								}
-							}
+							loc: SourceLocation core/categorized/not-directive/input.js 58:2-59:7
 							callee: JSStringLiteral {
 								value: "use strict"
-								loc: Object {
-									filename: "core/categorized/not-directive/input.js"
-									end: Object {
-										column: 14
-										line: 58
-									}
-									start: Object {
-										column: 2
-										line: 58
-									}
-								}
+								loc: SourceLocation core/categorized/not-directive/input.js 58:2-58:14
 							}
 							arguments: Array [
 								JSReferenceIdentifier {
 									name: "foo"
-									loc: Object {
-										filename: "core/categorized/not-directive/input.js"
-										identifierName: "foo"
-										end: Object {
-											column: 6
-											line: 59
-										}
-										start: Object {
-											column: 3
-											line: 59
-										}
-									}
+									loc: SourceLocation core/categorized/not-directive/input.js 59:3-59:6 (foo)
 								}
 							]
 						}
 					}
 					JSExpressionStatement {
-						loc: Object {
-							filename: "core/categorized/not-directive/input.js"
-							end: Object {
-								column: 7
-								line: 60
-							}
-							start: Object {
-								column: 2
-								line: 60
-							}
-						}
+						loc: SourceLocation core/categorized/not-directive/input.js 60:2-60:7
 						expression: JSStringLiteral {
 							value: "\x05"
-							loc: Object {
-								filename: "core/categorized/not-directive/input.js"
-								end: Object {
-									column: 6
-									line: 60
-								}
-								start: Object {
-									column: 2
-									line: 60
-								}
-							}
+							loc: SourceLocation core/categorized/not-directive/input.js 60:2-60:6
 						}
 					}
 				]
@@ -1910,30 +586,9 @@ JSRoot {
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "f"
-				loc: Object {
-					filename: "core/categorized/not-directive/input.js"
-					identifierName: "f"
-					end: Object {
-						column: 10
-						line: 63
-					}
-					start: Object {
-						column: 9
-						line: 63
-					}
-				}
+				loc: SourceLocation core/categorized/not-directive/input.js 63:9-63:10 (f)
 			}
-			loc: Object {
-				filename: "core/categorized/not-directive/input.js"
-				end: Object {
-					column: 1
-					line: 67
-				}
-				start: Object {
-					column: 0
-					line: 63
-				}
-			}
+			loc: SourceLocation core/categorized/not-directive/input.js 63:0-67:1
 			head: JSFunctionHead {
 				async: false
 				generator: false
@@ -1943,168 +598,45 @@ JSRoot {
 				returnType: undefined
 				thisType: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "core/categorized/not-directive/input.js"
-					end: Object {
-						column: 12
-						line: 63
-					}
-					start: Object {
-						column: 10
-						line: 63
-					}
-				}
+				loc: SourceLocation core/categorized/not-directive/input.js 63:10-63:12
 			}
 			body: JSBlockStatement {
 				directives: Array []
-				loc: Object {
-					filename: "core/categorized/not-directive/input.js"
-					end: Object {
-						column: 1
-						line: 67
-					}
-					start: Object {
-						column: 12
-						line: 63
-					}
-				}
+				loc: SourceLocation core/categorized/not-directive/input.js 63:12-67:1
 				body: Array [
 					JSExpressionStatement {
-						loc: Object {
-							filename: "core/categorized/not-directive/input.js"
-							end: Object {
-								column: 8
-								line: 64
-							}
-							start: Object {
-								column: 2
-								line: 64
-							}
-						}
+						loc: SourceLocation core/categorized/not-directive/input.js 64:2-64:8
 						expression: JSCallExpression {
 							arguments: Array []
-							loc: Object {
-								filename: "core/categorized/not-directive/input.js"
-								end: Object {
-									column: 7
-									line: 64
-								}
-								start: Object {
-									column: 2
-									line: 64
-								}
-							}
+							loc: SourceLocation core/categorized/not-directive/input.js 64:2-64:7
 							callee: JSReferenceIdentifier {
 								name: "foo"
-								loc: Object {
-									filename: "core/categorized/not-directive/input.js"
-									identifierName: "foo"
-									end: Object {
-										column: 5
-										line: 64
-									}
-									start: Object {
-										column: 2
-										line: 64
-									}
-								}
+								loc: SourceLocation core/categorized/not-directive/input.js 64:2-64:5 (foo)
 							}
 						}
 					}
 					JSExpressionStatement {
-						loc: Object {
-							filename: "core/categorized/not-directive/input.js"
-							end: Object {
-								column: 19
-								line: 65
-							}
-							start: Object {
-								column: 2
-								line: 65
-							}
-						}
+						loc: SourceLocation core/categorized/not-directive/input.js 65:2-65:19
 						expression: JSMemberExpression {
-							loc: Object {
-								filename: "core/categorized/not-directive/input.js"
-								end: Object {
-									column: 18
-									line: 65
-								}
-								start: Object {
-									column: 2
-									line: 65
-								}
-							}
+							loc: SourceLocation core/categorized/not-directive/input.js 65:2-65:18
 							object: JSStringLiteral {
 								value: "use strict"
-								loc: Object {
-									filename: "core/categorized/not-directive/input.js"
-									end: Object {
-										column: 14
-										line: 65
-									}
-									start: Object {
-										column: 2
-										line: 65
-									}
-								}
+								loc: SourceLocation core/categorized/not-directive/input.js 65:2-65:14
 							}
 							property: JSStaticMemberProperty {
 								value: JSIdentifier {
 									name: "bar"
-									loc: Object {
-										filename: "core/categorized/not-directive/input.js"
-										identifierName: "bar"
-										end: Object {
-											column: 18
-											line: 65
-										}
-										start: Object {
-											column: 15
-											line: 65
-										}
-									}
+									loc: SourceLocation core/categorized/not-directive/input.js 65:15-65:18 (bar)
 								}
-								loc: Object {
-									filename: "core/categorized/not-directive/input.js"
-									identifierName: "bar"
-									end: Object {
-										column: 18
-										line: 65
-									}
-									start: Object {
-										column: 15
-										line: 65
-									}
-								}
+								loc: SourceLocation core/categorized/not-directive/input.js 65:15-65:18 (bar)
 							}
 						}
 					}
 					JSExpressionStatement {
-						loc: Object {
-							filename: "core/categorized/not-directive/input.js"
-							end: Object {
-								column: 7
-								line: 66
-							}
-							start: Object {
-								column: 2
-								line: 66
-							}
-						}
+						loc: SourceLocation core/categorized/not-directive/input.js 66:2-66:7
 						expression: JSStringLiteral {
 							value: "\x05"
-							loc: Object {
-								filename: "core/categorized/not-directive/input.js"
-								end: Object {
-									column: 6
-									line: 66
-								}
-								start: Object {
-									column: 2
-									line: 66
-								}
-							}
+							loc: SourceLocation core/categorized/not-directive/input.js 66:2-66:6
 						}
 					}
 				]
@@ -2113,30 +645,9 @@ JSRoot {
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "f"
-				loc: Object {
-					filename: "core/categorized/not-directive/input.js"
-					identifierName: "f"
-					end: Object {
-						column: 10
-						line: 69
-					}
-					start: Object {
-						column: 9
-						line: 69
-					}
-				}
+				loc: SourceLocation core/categorized/not-directive/input.js 69:9-69:10 (f)
 			}
-			loc: Object {
-				filename: "core/categorized/not-directive/input.js"
-				end: Object {
-					column: 1
-					line: 73
-				}
-				start: Object {
-					column: 0
-					line: 69
-				}
-			}
+			loc: SourceLocation core/categorized/not-directive/input.js 69:0-73:1
 			head: JSFunctionHead {
 				async: false
 				generator: false
@@ -2146,167 +657,45 @@ JSRoot {
 				returnType: undefined
 				thisType: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "core/categorized/not-directive/input.js"
-					end: Object {
-						column: 12
-						line: 69
-					}
-					start: Object {
-						column: 10
-						line: 69
-					}
-				}
+				loc: SourceLocation core/categorized/not-directive/input.js 69:10-69:12
 			}
 			body: JSBlockStatement {
 				directives: Array []
-				loc: Object {
-					filename: "core/categorized/not-directive/input.js"
-					end: Object {
-						column: 1
-						line: 73
-					}
-					start: Object {
-						column: 12
-						line: 69
-					}
-				}
+				loc: SourceLocation core/categorized/not-directive/input.js 69:12-73:1
 				body: Array [
 					JSExpressionStatement {
-						loc: Object {
-							filename: "core/categorized/not-directive/input.js"
-							end: Object {
-								column: 8
-								line: 70
-							}
-							start: Object {
-								column: 2
-								line: 70
-							}
-						}
+						loc: SourceLocation core/categorized/not-directive/input.js 70:2-70:8
 						expression: JSCallExpression {
 							arguments: Array []
-							loc: Object {
-								filename: "core/categorized/not-directive/input.js"
-								end: Object {
-									column: 7
-									line: 70
-								}
-								start: Object {
-									column: 2
-									line: 70
-								}
-							}
+							loc: SourceLocation core/categorized/not-directive/input.js 70:2-70:7
 							callee: JSReferenceIdentifier {
 								name: "foo"
-								loc: Object {
-									filename: "core/categorized/not-directive/input.js"
-									identifierName: "foo"
-									end: Object {
-										column: 5
-										line: 70
-									}
-									start: Object {
-										column: 2
-										line: 70
-									}
-								}
+								loc: SourceLocation core/categorized/not-directive/input.js 70:2-70:5 (foo)
 							}
 						}
 					}
 					JSExpressionStatement {
-						loc: Object {
-							filename: "core/categorized/not-directive/input.js"
-							end: Object {
-								column: 20
-								line: 71
-							}
-							start: Object {
-								column: 2
-								line: 71
-							}
-						}
+						loc: SourceLocation core/categorized/not-directive/input.js 71:2-71:20
 						expression: JSMemberExpression {
-							loc: Object {
-								filename: "core/categorized/not-directive/input.js"
-								end: Object {
-									column: 19
-									line: 71
-								}
-								start: Object {
-									column: 2
-									line: 71
-								}
-							}
+							loc: SourceLocation core/categorized/not-directive/input.js 71:2-71:19
 							object: JSStringLiteral {
 								value: "use strict"
-								loc: Object {
-									filename: "core/categorized/not-directive/input.js"
-									end: Object {
-										column: 14
-										line: 71
-									}
-									start: Object {
-										column: 2
-										line: 71
-									}
-								}
+								loc: SourceLocation core/categorized/not-directive/input.js 71:2-71:14
 							}
 							property: JSComputedMemberProperty {
 								value: JSReferenceIdentifier {
 									name: "bar"
-									loc: Object {
-										filename: "core/categorized/not-directive/input.js"
-										identifierName: "bar"
-										end: Object {
-											column: 18
-											line: 71
-										}
-										start: Object {
-											column: 15
-											line: 71
-										}
-									}
+									loc: SourceLocation core/categorized/not-directive/input.js 71:15-71:18 (bar)
 								}
-								loc: Object {
-									filename: "core/categorized/not-directive/input.js"
-									end: Object {
-										column: 19
-										line: 71
-									}
-									start: Object {
-										column: 14
-										line: 71
-									}
-								}
+								loc: SourceLocation core/categorized/not-directive/input.js 71:14-71:19
 							}
 						}
 					}
 					JSExpressionStatement {
-						loc: Object {
-							filename: "core/categorized/not-directive/input.js"
-							end: Object {
-								column: 7
-								line: 72
-							}
-							start: Object {
-								column: 2
-								line: 72
-							}
-						}
+						loc: SourceLocation core/categorized/not-directive/input.js 72:2-72:7
 						expression: JSStringLiteral {
 							value: "\x05"
-							loc: Object {
-								filename: "core/categorized/not-directive/input.js"
-								end: Object {
-									column: 6
-									line: 72
-								}
-								start: Object {
-									column: 2
-									line: 72
-								}
-							}
+							loc: SourceLocation core/categorized/not-directive/input.js 72:2-72:6
 						}
 					}
 				]
@@ -2315,30 +704,9 @@ JSRoot {
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "f"
-				loc: Object {
-					filename: "core/categorized/not-directive/input.js"
-					identifierName: "f"
-					end: Object {
-						column: 10
-						line: 75
-					}
-					start: Object {
-						column: 9
-						line: 75
-					}
-				}
+				loc: SourceLocation core/categorized/not-directive/input.js 75:9-75:10 (f)
 			}
-			loc: Object {
-				filename: "core/categorized/not-directive/input.js"
-				end: Object {
-					column: 1
-					line: 79
-				}
-				start: Object {
-					column: 0
-					line: 75
-				}
-			}
+			loc: SourceLocation core/categorized/not-directive/input.js 75:0-79:1
 			head: JSFunctionHead {
 				async: false
 				generator: false
@@ -2348,172 +716,51 @@ JSRoot {
 				returnType: undefined
 				thisType: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "core/categorized/not-directive/input.js"
-					end: Object {
-						column: 12
-						line: 75
-					}
-					start: Object {
-						column: 10
-						line: 75
-					}
-				}
+				loc: SourceLocation core/categorized/not-directive/input.js 75:10-75:12
 			}
 			body: JSBlockStatement {
 				directives: Array []
-				loc: Object {
-					filename: "core/categorized/not-directive/input.js"
-					end: Object {
-						column: 1
-						line: 79
-					}
-					start: Object {
-						column: 12
-						line: 75
-					}
-				}
+				loc: SourceLocation core/categorized/not-directive/input.js 75:12-79:1
 				body: Array [
 					JSExpressionStatement {
-						loc: Object {
-							filename: "core/categorized/not-directive/input.js"
-							end: Object {
-								column: 8
-								line: 76
-							}
-							start: Object {
-								column: 2
-								line: 76
-							}
-						}
+						loc: SourceLocation core/categorized/not-directive/input.js 76:2-76:8
 						expression: JSCallExpression {
 							arguments: Array []
-							loc: Object {
-								filename: "core/categorized/not-directive/input.js"
-								end: Object {
-									column: 7
-									line: 76
-								}
-								start: Object {
-									column: 2
-									line: 76
-								}
-							}
+							loc: SourceLocation core/categorized/not-directive/input.js 76:2-76:7
 							callee: JSReferenceIdentifier {
 								name: "foo"
-								loc: Object {
-									filename: "core/categorized/not-directive/input.js"
-									identifierName: "foo"
-									end: Object {
-										column: 5
-										line: 76
-									}
-									start: Object {
-										column: 2
-										line: 76
-									}
-								}
+								loc: SourceLocation core/categorized/not-directive/input.js 76:2-76:5 (foo)
 							}
 						}
 					}
 					JSExpressionStatement {
-						loc: Object {
-							filename: "core/categorized/not-directive/input.js"
-							end: Object {
-								column: 20
-								line: 77
-							}
-							start: Object {
-								column: 2
-								line: 77
-							}
-						}
+						loc: SourceLocation core/categorized/not-directive/input.js 77:2-77:20
 						expression: JSTaggedTemplateExpression {
 							typeArguments: undefined
-							loc: Object {
-								filename: "core/categorized/not-directive/input.js"
-								end: Object {
-									column: 19
-									line: 77
-								}
-								start: Object {
-									column: 2
-									line: 77
-								}
-							}
+							loc: SourceLocation core/categorized/not-directive/input.js 77:2-77:19
 							tag: JSStringLiteral {
 								value: "use strict"
-								loc: Object {
-									filename: "core/categorized/not-directive/input.js"
-									end: Object {
-										column: 14
-										line: 77
-									}
-									start: Object {
-										column: 2
-										line: 77
-									}
-								}
+								loc: SourceLocation core/categorized/not-directive/input.js 77:2-77:14
 							}
 							quasi: JSTemplateLiteral {
 								expressions: Array []
-								loc: Object {
-									filename: "core/categorized/not-directive/input.js"
-									end: Object {
-										column: 19
-										line: 77
-									}
-									start: Object {
-										column: 14
-										line: 77
-									}
-								}
+								loc: SourceLocation core/categorized/not-directive/input.js 77:14-77:19
 								quasis: Array [
 									JSTemplateElement {
 										cooked: "bar"
 										raw: "bar"
 										tail: true
-										loc: Object {
-											filename: "core/categorized/not-directive/input.js"
-											end: Object {
-												column: 18
-												line: 77
-											}
-											start: Object {
-												column: 15
-												line: 77
-											}
-										}
+										loc: SourceLocation core/categorized/not-directive/input.js 77:15-77:18
 									}
 								]
 							}
 						}
 					}
 					JSExpressionStatement {
-						loc: Object {
-							filename: "core/categorized/not-directive/input.js"
-							end: Object {
-								column: 7
-								line: 78
-							}
-							start: Object {
-								column: 2
-								line: 78
-							}
-						}
+						loc: SourceLocation core/categorized/not-directive/input.js 78:2-78:7
 						expression: JSStringLiteral {
 							value: "\x05"
-							loc: Object {
-								filename: "core/categorized/not-directive/input.js"
-								end: Object {
-									column: 6
-									line: 78
-								}
-								start: Object {
-									column: 2
-									line: 78
-								}
-							}
+							loc: SourceLocation core/categorized/not-directive/input.js 78:2-78:6
 						}
 					}
 				]
@@ -2522,30 +769,9 @@ JSRoot {
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "f"
-				loc: Object {
-					filename: "core/categorized/not-directive/input.js"
-					identifierName: "f"
-					end: Object {
-						column: 10
-						line: 81
-					}
-					start: Object {
-						column: 9
-						line: 81
-					}
-				}
+				loc: SourceLocation core/categorized/not-directive/input.js 81:9-81:10 (f)
 			}
-			loc: Object {
-				filename: "core/categorized/not-directive/input.js"
-				end: Object {
-					column: 1
-					line: 85
-				}
-				start: Object {
-					column: 0
-					line: 81
-				}
-			}
+			loc: SourceLocation core/categorized/not-directive/input.js 81:0-85:1
 			head: JSFunctionHead {
 				async: false
 				generator: false
@@ -2555,156 +781,44 @@ JSRoot {
 				returnType: undefined
 				thisType: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "core/categorized/not-directive/input.js"
-					end: Object {
-						column: 12
-						line: 81
-					}
-					start: Object {
-						column: 10
-						line: 81
-					}
-				}
+				loc: SourceLocation core/categorized/not-directive/input.js 81:10-81:12
 			}
 			body: JSBlockStatement {
 				directives: Array []
-				loc: Object {
-					filename: "core/categorized/not-directive/input.js"
-					end: Object {
-						column: 1
-						line: 85
-					}
-					start: Object {
-						column: 12
-						line: 81
-					}
-				}
+				loc: SourceLocation core/categorized/not-directive/input.js 81:12-85:1
 				body: Array [
 					JSExpressionStatement {
-						loc: Object {
-							filename: "core/categorized/not-directive/input.js"
-							end: Object {
-								column: 8
-								line: 82
-							}
-							start: Object {
-								column: 2
-								line: 82
-							}
-						}
+						loc: SourceLocation core/categorized/not-directive/input.js 82:2-82:8
 						expression: JSCallExpression {
 							arguments: Array []
-							loc: Object {
-								filename: "core/categorized/not-directive/input.js"
-								end: Object {
-									column: 7
-									line: 82
-								}
-								start: Object {
-									column: 2
-									line: 82
-								}
-							}
+							loc: SourceLocation core/categorized/not-directive/input.js 82:2-82:7
 							callee: JSReferenceIdentifier {
 								name: "foo"
-								loc: Object {
-									filename: "core/categorized/not-directive/input.js"
-									identifierName: "foo"
-									end: Object {
-										column: 5
-										line: 82
-									}
-									start: Object {
-										column: 2
-										line: 82
-									}
-								}
+								loc: SourceLocation core/categorized/not-directive/input.js 82:2-82:5 (foo)
 							}
 						}
 					}
 					JSExpressionStatement {
-						loc: Object {
-							filename: "core/categorized/not-directive/input.js"
-							end: Object {
-								column: 20
-								line: 83
-							}
-							start: Object {
-								column: 2
-								line: 83
-							}
-						}
+						loc: SourceLocation core/categorized/not-directive/input.js 83:2-83:20
 						expression: JSCallExpression {
-							loc: Object {
-								filename: "core/categorized/not-directive/input.js"
-								end: Object {
-									column: 19
-									line: 83
-								}
-								start: Object {
-									column: 2
-									line: 83
-								}
-							}
+							loc: SourceLocation core/categorized/not-directive/input.js 83:2-83:19
 							callee: JSStringLiteral {
 								value: "use strict"
-								loc: Object {
-									filename: "core/categorized/not-directive/input.js"
-									end: Object {
-										column: 14
-										line: 83
-									}
-									start: Object {
-										column: 2
-										line: 83
-									}
-								}
+								loc: SourceLocation core/categorized/not-directive/input.js 83:2-83:14
 							}
 							arguments: Array [
 								JSReferenceIdentifier {
 									name: "bar"
-									loc: Object {
-										filename: "core/categorized/not-directive/input.js"
-										identifierName: "bar"
-										end: Object {
-											column: 18
-											line: 83
-										}
-										start: Object {
-											column: 15
-											line: 83
-										}
-									}
+									loc: SourceLocation core/categorized/not-directive/input.js 83:15-83:18 (bar)
 								}
 							]
 						}
 					}
 					JSExpressionStatement {
-						loc: Object {
-							filename: "core/categorized/not-directive/input.js"
-							end: Object {
-								column: 7
-								line: 84
-							}
-							start: Object {
-								column: 2
-								line: 84
-							}
-						}
+						loc: SourceLocation core/categorized/not-directive/input.js 84:2-84:7
 						expression: JSStringLiteral {
 							value: "\x05"
-							loc: Object {
-								filename: "core/categorized/not-directive/input.js"
-								end: Object {
-									column: 6
-									line: 84
-								}
-								start: Object {
-									column: 2
-									line: 84
-								}
-							}
+							loc: SourceLocation core/categorized/not-directive/input.js 84:2-84:6
 						}
 					}
 				]
@@ -2713,30 +827,9 @@ JSRoot {
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "f"
-				loc: Object {
-					filename: "core/categorized/not-directive/input.js"
-					identifierName: "f"
-					end: Object {
-						column: 10
-						line: 87
-					}
-					start: Object {
-						column: 9
-						line: 87
-					}
-				}
+				loc: SourceLocation core/categorized/not-directive/input.js 87:9-87:10 (f)
 			}
-			loc: Object {
-				filename: "core/categorized/not-directive/input.js"
-				end: Object {
-					column: 1
-					line: 92
-				}
-				start: Object {
-					column: 0
-					line: 87
-				}
-			}
+			loc: SourceLocation core/categorized/not-directive/input.js 87:0-92:1
 			head: JSFunctionHead {
 				async: false
 				generator: false
@@ -2746,168 +839,45 @@ JSRoot {
 				returnType: undefined
 				thisType: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "core/categorized/not-directive/input.js"
-					end: Object {
-						column: 12
-						line: 87
-					}
-					start: Object {
-						column: 10
-						line: 87
-					}
-				}
+				loc: SourceLocation core/categorized/not-directive/input.js 87:10-87:12
 			}
 			body: JSBlockStatement {
 				directives: Array []
-				loc: Object {
-					filename: "core/categorized/not-directive/input.js"
-					end: Object {
-						column: 1
-						line: 92
-					}
-					start: Object {
-						column: 12
-						line: 87
-					}
-				}
+				loc: SourceLocation core/categorized/not-directive/input.js 87:12-92:1
 				body: Array [
 					JSExpressionStatement {
-						loc: Object {
-							filename: "core/categorized/not-directive/input.js"
-							end: Object {
-								column: 8
-								line: 88
-							}
-							start: Object {
-								column: 2
-								line: 88
-							}
-						}
+						loc: SourceLocation core/categorized/not-directive/input.js 88:2-88:8
 						expression: JSCallExpression {
 							arguments: Array []
-							loc: Object {
-								filename: "core/categorized/not-directive/input.js"
-								end: Object {
-									column: 7
-									line: 88
-								}
-								start: Object {
-									column: 2
-									line: 88
-								}
-							}
+							loc: SourceLocation core/categorized/not-directive/input.js 88:2-88:7
 							callee: JSReferenceIdentifier {
 								name: "foo"
-								loc: Object {
-									filename: "core/categorized/not-directive/input.js"
-									identifierName: "foo"
-									end: Object {
-										column: 5
-										line: 88
-									}
-									start: Object {
-										column: 2
-										line: 88
-									}
-								}
+								loc: SourceLocation core/categorized/not-directive/input.js 88:2-88:5 (foo)
 							}
 						}
 					}
 					JSExpressionStatement {
-						loc: Object {
-							filename: "core/categorized/not-directive/input.js"
-							end: Object {
-								column: 7
-								line: 90
-							}
-							start: Object {
-								column: 2
-								line: 89
-							}
-						}
+						loc: SourceLocation core/categorized/not-directive/input.js 89:2-90:7
 						expression: JSMemberExpression {
-							loc: Object {
-								filename: "core/categorized/not-directive/input.js"
-								end: Object {
-									column: 6
-									line: 90
-								}
-								start: Object {
-									column: 2
-									line: 89
-								}
-							}
+							loc: SourceLocation core/categorized/not-directive/input.js 89:2-90:6
 							object: JSStringLiteral {
 								value: "use strict"
-								loc: Object {
-									filename: "core/categorized/not-directive/input.js"
-									end: Object {
-										column: 14
-										line: 89
-									}
-									start: Object {
-										column: 2
-										line: 89
-									}
-								}
+								loc: SourceLocation core/categorized/not-directive/input.js 89:2-89:14
 							}
 							property: JSStaticMemberProperty {
 								value: JSIdentifier {
 									name: "bar"
-									loc: Object {
-										filename: "core/categorized/not-directive/input.js"
-										identifierName: "bar"
-										end: Object {
-											column: 6
-											line: 90
-										}
-										start: Object {
-											column: 3
-											line: 90
-										}
-									}
+									loc: SourceLocation core/categorized/not-directive/input.js 90:3-90:6 (bar)
 								}
-								loc: Object {
-									filename: "core/categorized/not-directive/input.js"
-									identifierName: "bar"
-									end: Object {
-										column: 6
-										line: 90
-									}
-									start: Object {
-										column: 3
-										line: 90
-									}
-								}
+								loc: SourceLocation core/categorized/not-directive/input.js 90:3-90:6 (bar)
 							}
 						}
 					}
 					JSExpressionStatement {
-						loc: Object {
-							filename: "core/categorized/not-directive/input.js"
-							end: Object {
-								column: 7
-								line: 91
-							}
-							start: Object {
-								column: 2
-								line: 91
-							}
-						}
+						loc: SourceLocation core/categorized/not-directive/input.js 91:2-91:7
 						expression: JSStringLiteral {
 							value: "\x05"
-							loc: Object {
-								filename: "core/categorized/not-directive/input.js"
-								end: Object {
-									column: 6
-									line: 91
-								}
-								start: Object {
-									column: 2
-									line: 91
-								}
-							}
+							loc: SourceLocation core/categorized/not-directive/input.js 91:2-91:6
 						}
 					}
 				]
@@ -2916,30 +886,9 @@ JSRoot {
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "f"
-				loc: Object {
-					filename: "core/categorized/not-directive/input.js"
-					identifierName: "f"
-					end: Object {
-						column: 10
-						line: 94
-					}
-					start: Object {
-						column: 9
-						line: 94
-					}
-				}
+				loc: SourceLocation core/categorized/not-directive/input.js 94:9-94:10 (f)
 			}
-			loc: Object {
-				filename: "core/categorized/not-directive/input.js"
-				end: Object {
-					column: 1
-					line: 99
-				}
-				start: Object {
-					column: 0
-					line: 94
-				}
-			}
+			loc: SourceLocation core/categorized/not-directive/input.js 94:0-99:1
 			head: JSFunctionHead {
 				async: false
 				generator: false
@@ -2949,167 +898,45 @@ JSRoot {
 				returnType: undefined
 				thisType: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "core/categorized/not-directive/input.js"
-					end: Object {
-						column: 12
-						line: 94
-					}
-					start: Object {
-						column: 10
-						line: 94
-					}
-				}
+				loc: SourceLocation core/categorized/not-directive/input.js 94:10-94:12
 			}
 			body: JSBlockStatement {
 				directives: Array []
-				loc: Object {
-					filename: "core/categorized/not-directive/input.js"
-					end: Object {
-						column: 1
-						line: 99
-					}
-					start: Object {
-						column: 12
-						line: 94
-					}
-				}
+				loc: SourceLocation core/categorized/not-directive/input.js 94:12-99:1
 				body: Array [
 					JSExpressionStatement {
-						loc: Object {
-							filename: "core/categorized/not-directive/input.js"
-							end: Object {
-								column: 8
-								line: 95
-							}
-							start: Object {
-								column: 2
-								line: 95
-							}
-						}
+						loc: SourceLocation core/categorized/not-directive/input.js 95:2-95:8
 						expression: JSCallExpression {
 							arguments: Array []
-							loc: Object {
-								filename: "core/categorized/not-directive/input.js"
-								end: Object {
-									column: 7
-									line: 95
-								}
-								start: Object {
-									column: 2
-									line: 95
-								}
-							}
+							loc: SourceLocation core/categorized/not-directive/input.js 95:2-95:7
 							callee: JSReferenceIdentifier {
 								name: "foo"
-								loc: Object {
-									filename: "core/categorized/not-directive/input.js"
-									identifierName: "foo"
-									end: Object {
-										column: 5
-										line: 95
-									}
-									start: Object {
-										column: 2
-										line: 95
-									}
-								}
+								loc: SourceLocation core/categorized/not-directive/input.js 95:2-95:5 (foo)
 							}
 						}
 					}
 					JSExpressionStatement {
-						loc: Object {
-							filename: "core/categorized/not-directive/input.js"
-							end: Object {
-								column: 8
-								line: 97
-							}
-							start: Object {
-								column: 2
-								line: 96
-							}
-						}
+						loc: SourceLocation core/categorized/not-directive/input.js 96:2-97:8
 						expression: JSMemberExpression {
-							loc: Object {
-								filename: "core/categorized/not-directive/input.js"
-								end: Object {
-									column: 7
-									line: 97
-								}
-								start: Object {
-									column: 2
-									line: 96
-								}
-							}
+							loc: SourceLocation core/categorized/not-directive/input.js 96:2-97:7
 							object: JSStringLiteral {
 								value: "use strict"
-								loc: Object {
-									filename: "core/categorized/not-directive/input.js"
-									end: Object {
-										column: 14
-										line: 96
-									}
-									start: Object {
-										column: 2
-										line: 96
-									}
-								}
+								loc: SourceLocation core/categorized/not-directive/input.js 96:2-96:14
 							}
 							property: JSComputedMemberProperty {
 								value: JSReferenceIdentifier {
 									name: "bar"
-									loc: Object {
-										filename: "core/categorized/not-directive/input.js"
-										identifierName: "bar"
-										end: Object {
-											column: 6
-											line: 97
-										}
-										start: Object {
-											column: 3
-											line: 97
-										}
-									}
+									loc: SourceLocation core/categorized/not-directive/input.js 97:3-97:6 (bar)
 								}
-								loc: Object {
-									filename: "core/categorized/not-directive/input.js"
-									end: Object {
-										column: 7
-										line: 97
-									}
-									start: Object {
-										column: 2
-										line: 97
-									}
-								}
+								loc: SourceLocation core/categorized/not-directive/input.js 97:2-97:7
 							}
 						}
 					}
 					JSExpressionStatement {
-						loc: Object {
-							filename: "core/categorized/not-directive/input.js"
-							end: Object {
-								column: 7
-								line: 98
-							}
-							start: Object {
-								column: 2
-								line: 98
-							}
-						}
+						loc: SourceLocation core/categorized/not-directive/input.js 98:2-98:7
 						expression: JSStringLiteral {
 							value: "\x05"
-							loc: Object {
-								filename: "core/categorized/not-directive/input.js"
-								end: Object {
-									column: 6
-									line: 98
-								}
-								start: Object {
-									column: 2
-									line: 98
-								}
-							}
+							loc: SourceLocation core/categorized/not-directive/input.js 98:2-98:6
 						}
 					}
 				]
@@ -3118,30 +945,9 @@ JSRoot {
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "f"
-				loc: Object {
-					filename: "core/categorized/not-directive/input.js"
-					identifierName: "f"
-					end: Object {
-						column: 10
-						line: 101
-					}
-					start: Object {
-						column: 9
-						line: 101
-					}
-				}
+				loc: SourceLocation core/categorized/not-directive/input.js 101:9-101:10 (f)
 			}
-			loc: Object {
-				filename: "core/categorized/not-directive/input.js"
-				end: Object {
-					column: 1
-					line: 106
-				}
-				start: Object {
-					column: 0
-					line: 101
-				}
-			}
+			loc: SourceLocation core/categorized/not-directive/input.js 101:0-106:1
 			head: JSFunctionHead {
 				async: false
 				generator: false
@@ -3151,172 +957,51 @@ JSRoot {
 				returnType: undefined
 				thisType: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "core/categorized/not-directive/input.js"
-					end: Object {
-						column: 12
-						line: 101
-					}
-					start: Object {
-						column: 10
-						line: 101
-					}
-				}
+				loc: SourceLocation core/categorized/not-directive/input.js 101:10-101:12
 			}
 			body: JSBlockStatement {
 				directives: Array []
-				loc: Object {
-					filename: "core/categorized/not-directive/input.js"
-					end: Object {
-						column: 1
-						line: 106
-					}
-					start: Object {
-						column: 12
-						line: 101
-					}
-				}
+				loc: SourceLocation core/categorized/not-directive/input.js 101:12-106:1
 				body: Array [
 					JSExpressionStatement {
-						loc: Object {
-							filename: "core/categorized/not-directive/input.js"
-							end: Object {
-								column: 8
-								line: 102
-							}
-							start: Object {
-								column: 2
-								line: 102
-							}
-						}
+						loc: SourceLocation core/categorized/not-directive/input.js 102:2-102:8
 						expression: JSCallExpression {
 							arguments: Array []
-							loc: Object {
-								filename: "core/categorized/not-directive/input.js"
-								end: Object {
-									column: 7
-									line: 102
-								}
-								start: Object {
-									column: 2
-									line: 102
-								}
-							}
+							loc: SourceLocation core/categorized/not-directive/input.js 102:2-102:7
 							callee: JSReferenceIdentifier {
 								name: "foo"
-								loc: Object {
-									filename: "core/categorized/not-directive/input.js"
-									identifierName: "foo"
-									end: Object {
-										column: 5
-										line: 102
-									}
-									start: Object {
-										column: 2
-										line: 102
-									}
-								}
+								loc: SourceLocation core/categorized/not-directive/input.js 102:2-102:5 (foo)
 							}
 						}
 					}
 					JSExpressionStatement {
-						loc: Object {
-							filename: "core/categorized/not-directive/input.js"
-							end: Object {
-								column: 8
-								line: 104
-							}
-							start: Object {
-								column: 2
-								line: 103
-							}
-						}
+						loc: SourceLocation core/categorized/not-directive/input.js 103:2-104:8
 						expression: JSTaggedTemplateExpression {
 							typeArguments: undefined
-							loc: Object {
-								filename: "core/categorized/not-directive/input.js"
-								end: Object {
-									column: 7
-									line: 104
-								}
-								start: Object {
-									column: 2
-									line: 103
-								}
-							}
+							loc: SourceLocation core/categorized/not-directive/input.js 103:2-104:7
 							tag: JSStringLiteral {
 								value: "use strict"
-								loc: Object {
-									filename: "core/categorized/not-directive/input.js"
-									end: Object {
-										column: 14
-										line: 103
-									}
-									start: Object {
-										column: 2
-										line: 103
-									}
-								}
+								loc: SourceLocation core/categorized/not-directive/input.js 103:2-103:14
 							}
 							quasi: JSTemplateLiteral {
 								expressions: Array []
-								loc: Object {
-									filename: "core/categorized/not-directive/input.js"
-									end: Object {
-										column: 7
-										line: 104
-									}
-									start: Object {
-										column: 2
-										line: 104
-									}
-								}
+								loc: SourceLocation core/categorized/not-directive/input.js 104:2-104:7
 								quasis: Array [
 									JSTemplateElement {
 										cooked: "bar"
 										raw: "bar"
 										tail: true
-										loc: Object {
-											filename: "core/categorized/not-directive/input.js"
-											end: Object {
-												column: 6
-												line: 104
-											}
-											start: Object {
-												column: 3
-												line: 104
-											}
-										}
+										loc: SourceLocation core/categorized/not-directive/input.js 104:3-104:6
 									}
 								]
 							}
 						}
 					}
 					JSExpressionStatement {
-						loc: Object {
-							filename: "core/categorized/not-directive/input.js"
-							end: Object {
-								column: 7
-								line: 105
-							}
-							start: Object {
-								column: 2
-								line: 105
-							}
-						}
+						loc: SourceLocation core/categorized/not-directive/input.js 105:2-105:7
 						expression: JSStringLiteral {
 							value: "\x05"
-							loc: Object {
-								filename: "core/categorized/not-directive/input.js"
-								end: Object {
-									column: 6
-									line: 105
-								}
-								start: Object {
-									column: 2
-									line: 105
-								}
-							}
+							loc: SourceLocation core/categorized/not-directive/input.js 105:2-105:6
 						}
 					}
 				]
@@ -3325,30 +1010,9 @@ JSRoot {
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "f"
-				loc: Object {
-					filename: "core/categorized/not-directive/input.js"
-					identifierName: "f"
-					end: Object {
-						column: 10
-						line: 108
-					}
-					start: Object {
-						column: 9
-						line: 108
-					}
-				}
+				loc: SourceLocation core/categorized/not-directive/input.js 108:9-108:10 (f)
 			}
-			loc: Object {
-				filename: "core/categorized/not-directive/input.js"
-				end: Object {
-					column: 1
-					line: 113
-				}
-				start: Object {
-					column: 0
-					line: 108
-				}
-			}
+			loc: SourceLocation core/categorized/not-directive/input.js 108:0-113:1
 			head: JSFunctionHead {
 				async: false
 				generator: false
@@ -3358,156 +1022,44 @@ JSRoot {
 				returnType: undefined
 				thisType: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "core/categorized/not-directive/input.js"
-					end: Object {
-						column: 12
-						line: 108
-					}
-					start: Object {
-						column: 10
-						line: 108
-					}
-				}
+				loc: SourceLocation core/categorized/not-directive/input.js 108:10-108:12
 			}
 			body: JSBlockStatement {
 				directives: Array []
-				loc: Object {
-					filename: "core/categorized/not-directive/input.js"
-					end: Object {
-						column: 1
-						line: 113
-					}
-					start: Object {
-						column: 12
-						line: 108
-					}
-				}
+				loc: SourceLocation core/categorized/not-directive/input.js 108:12-113:1
 				body: Array [
 					JSExpressionStatement {
-						loc: Object {
-							filename: "core/categorized/not-directive/input.js"
-							end: Object {
-								column: 8
-								line: 109
-							}
-							start: Object {
-								column: 2
-								line: 109
-							}
-						}
+						loc: SourceLocation core/categorized/not-directive/input.js 109:2-109:8
 						expression: JSCallExpression {
 							arguments: Array []
-							loc: Object {
-								filename: "core/categorized/not-directive/input.js"
-								end: Object {
-									column: 7
-									line: 109
-								}
-								start: Object {
-									column: 2
-									line: 109
-								}
-							}
+							loc: SourceLocation core/categorized/not-directive/input.js 109:2-109:7
 							callee: JSReferenceIdentifier {
 								name: "foo"
-								loc: Object {
-									filename: "core/categorized/not-directive/input.js"
-									identifierName: "foo"
-									end: Object {
-										column: 5
-										line: 109
-									}
-									start: Object {
-										column: 2
-										line: 109
-									}
-								}
+								loc: SourceLocation core/categorized/not-directive/input.js 109:2-109:5 (foo)
 							}
 						}
 					}
 					JSExpressionStatement {
-						loc: Object {
-							filename: "core/categorized/not-directive/input.js"
-							end: Object {
-								column: 8
-								line: 111
-							}
-							start: Object {
-								column: 2
-								line: 110
-							}
-						}
+						loc: SourceLocation core/categorized/not-directive/input.js 110:2-111:8
 						expression: JSCallExpression {
-							loc: Object {
-								filename: "core/categorized/not-directive/input.js"
-								end: Object {
-									column: 7
-									line: 111
-								}
-								start: Object {
-									column: 2
-									line: 110
-								}
-							}
+							loc: SourceLocation core/categorized/not-directive/input.js 110:2-111:7
 							callee: JSStringLiteral {
 								value: "use strict"
-								loc: Object {
-									filename: "core/categorized/not-directive/input.js"
-									end: Object {
-										column: 14
-										line: 110
-									}
-									start: Object {
-										column: 2
-										line: 110
-									}
-								}
+								loc: SourceLocation core/categorized/not-directive/input.js 110:2-110:14
 							}
 							arguments: Array [
 								JSReferenceIdentifier {
 									name: "bar"
-									loc: Object {
-										filename: "core/categorized/not-directive/input.js"
-										identifierName: "bar"
-										end: Object {
-											column: 6
-											line: 111
-										}
-										start: Object {
-											column: 3
-											line: 111
-										}
-									}
+									loc: SourceLocation core/categorized/not-directive/input.js 111:3-111:6 (bar)
 								}
 							]
 						}
 					}
 					JSExpressionStatement {
-						loc: Object {
-							filename: "core/categorized/not-directive/input.js"
-							end: Object {
-								column: 7
-								line: 112
-							}
-							start: Object {
-								column: 2
-								line: 112
-							}
-						}
+						loc: SourceLocation core/categorized/not-directive/input.js 112:2-112:7
 						expression: JSStringLiteral {
 							value: "\x05"
-							loc: Object {
-								filename: "core/categorized/not-directive/input.js"
-								end: Object {
-									column: 6
-									line: 112
-								}
-								start: Object {
-									column: 2
-									line: 112
-								}
-							}
+							loc: SourceLocation core/categorized/not-directive/input.js 112:2-112:6
 						}
 					}
 				]
@@ -3516,30 +1068,9 @@ JSRoot {
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "f"
-				loc: Object {
-					filename: "core/categorized/not-directive/input.js"
-					identifierName: "f"
-					end: Object {
-						column: 10
-						line: 115
-					}
-					start: Object {
-						column: 9
-						line: 115
-					}
-				}
+				loc: SourceLocation core/categorized/not-directive/input.js 115:9-115:10 (f)
 			}
-			loc: Object {
-				filename: "core/categorized/not-directive/input.js"
-				end: Object {
-					column: 1
-					line: 118
-				}
-				start: Object {
-					column: 0
-					line: 115
-				}
-			}
+			loc: SourceLocation core/categorized/not-directive/input.js 115:0-118:1
 			head: JSFunctionHead {
 				async: false
 				generator: false
@@ -3549,85 +1080,25 @@ JSRoot {
 				returnType: undefined
 				thisType: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "core/categorized/not-directive/input.js"
-					end: Object {
-						column: 12
-						line: 115
-					}
-					start: Object {
-						column: 10
-						line: 115
-					}
-				}
+				loc: SourceLocation core/categorized/not-directive/input.js 115:10-115:12
 			}
 			body: JSBlockStatement {
 				directives: Array []
-				loc: Object {
-					filename: "core/categorized/not-directive/input.js"
-					end: Object {
-						column: 1
-						line: 118
-					}
-					start: Object {
-						column: 12
-						line: 115
-					}
-				}
+				loc: SourceLocation core/categorized/not-directive/input.js 115:12-118:1
 				body: Array [
 					JSExpressionStatement {
-						loc: Object {
-							filename: "core/categorized/not-directive/input.js"
-							end: Object {
-								column: 5
-								line: 116
-							}
-							start: Object {
-								column: 2
-								line: 116
-							}
-						}
+						loc: SourceLocation core/categorized/not-directive/input.js 116:2-116:5
 						expression: JSNumericLiteral {
 							value: 5
 							format: "octal"
-							loc: Object {
-								filename: "core/categorized/not-directive/input.js"
-								end: Object {
-									column: 4
-									line: 116
-								}
-								start: Object {
-									column: 2
-									line: 116
-								}
-							}
+							loc: SourceLocation core/categorized/not-directive/input.js 116:2-116:4
 						}
 					}
 					JSExpressionStatement {
-						loc: Object {
-							filename: "core/categorized/not-directive/input.js"
-							end: Object {
-								column: 15
-								line: 117
-							}
-							start: Object {
-								column: 2
-								line: 117
-							}
-						}
+						loc: SourceLocation core/categorized/not-directive/input.js 117:2-117:15
 						expression: JSStringLiteral {
 							value: "use strict"
-							loc: Object {
-								filename: "core/categorized/not-directive/input.js"
-								end: Object {
-									column: 14
-									line: 117
-								}
-								start: Object {
-									column: 2
-									line: 117
-								}
-							}
+							loc: SourceLocation core/categorized/not-directive/input.js 117:2-117:14
 						}
 					}
 				]
@@ -3640,6 +1111,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

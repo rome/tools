@@ -12,40 +12,20 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "jsx/basic/html-comment/input.jsx"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	trailingComments: Array []
 	innerComments: Array ["0"]
+	loc: SourceLocation jsx/basic/html-comment/input.jsx 1:0-2:0
+	path: UIDPath<jsx/basic/html-comment/input.jsx>
 	syntax: Array ["jsx"]
-	loc: Object {
-		filename: "jsx/basic/html-comment/input.jsx"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
 	comments: Array [
 		CommentLine {
 			id: "0"
 			value: "a"
-			loc: Object {
-				filename: "jsx/basic/html-comment/input.jsx"
-				end: Object {
-					column: 5
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation jsx/basic/html-comment/input.jsx 1:0-1:5
 		}
 	]
 }
@@ -54,6 +34,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

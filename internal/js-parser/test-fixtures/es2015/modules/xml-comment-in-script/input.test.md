@@ -11,69 +11,28 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "es2015/modules/xml-comment-in-script/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2015/modules/xml-comment-in-script/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2015/modules/xml-comment-in-script/input.js 1:0-2:0
+	path: UIDPath<es2015/modules/xml-comment-in-script/input.js>
 	comments: Array [
 		CommentLine {
 			id: "0"
 			value: "bar"
-			loc: Object {
-				filename: "es2015/modules/xml-comment-in-script/input.js"
-				end: Object {
-					column: 11
-					line: 1
-				}
-				start: Object {
-					column: 4
-					line: 1
-				}
-			}
+			loc: SourceLocation es2015/modules/xml-comment-in-script/input.js 1:4-1:11
 		}
 	]
 	body: Array [
 		JSExpressionStatement {
+			loc: SourceLocation es2015/modules/xml-comment-in-script/input.js 1:0-1:3
 			trailingComments: Array ["0"]
-			loc: Object {
-				filename: "es2015/modules/xml-comment-in-script/input.js"
-				end: Object {
-					column: 3
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
 			expression: JSReferenceIdentifier {
 				name: "foo"
 				trailingComments: undefined
-				loc: Object {
-					filename: "es2015/modules/xml-comment-in-script/input.js"
-					identifierName: "foo"
-					end: Object {
-						column: 3
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/modules/xml-comment-in-script/input.js 1:0-1:3 (foo)
 			}
 		}
 	]
@@ -83,6 +42,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

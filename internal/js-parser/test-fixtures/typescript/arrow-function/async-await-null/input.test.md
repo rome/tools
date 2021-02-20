@@ -12,73 +12,21 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "typescript/arrow-function/async-await-null/input.ts"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
+	loc: SourceLocation typescript/arrow-function/async-await-null/input.ts 1:0-2:0
+	path: UIDPath<typescript/arrow-function/async-await-null/input.ts>
 	syntax: Array ["ts"]
-	loc: Object {
-		filename: "typescript/arrow-function/async-await-null/input.ts"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "typescript/arrow-function/async-await-null/input.ts"
-				end: Object {
-					column: 26
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation typescript/arrow-function/async-await-null/input.ts 1:0-1:26
 			expression: JSArrowFunctionExpression {
-				loc: Object {
-					filename: "typescript/arrow-function/async-await-null/input.ts"
-					end: Object {
-						column: 25
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/arrow-function/async-await-null/input.ts 1:0-1:25
 				body: JSAwaitExpression {
-					loc: Object {
-						filename: "typescript/arrow-function/async-await-null/input.ts"
-						end: Object {
-							column: 25
-							line: 1
-						}
-						start: Object {
-							column: 15
-							line: 1
-						}
-					}
-					argument: JSNullLiteral {
-						loc: Object {
-							filename: "typescript/arrow-function/async-await-null/input.ts"
-							end: Object {
-								column: 25
-								line: 1
-							}
-							start: Object {
-								column: 21
-								line: 1
-							}
-						}
-					}
+					argument: JSNullLiteral {loc: SourceLocation typescript/arrow-function/async-await-null/input.ts 1:21-1:25}
+					loc: SourceLocation typescript/arrow-function/async-await-null/input.ts 1:15-1:25
 				}
 				head: JSFunctionHead {
 					async: true
@@ -87,45 +35,15 @@ JSRoot {
 					rest: undefined
 					returnType: undefined
 					thisType: undefined
-					loc: Object {
-						filename: "typescript/arrow-function/async-await-null/input.ts"
-						end: Object {
-							column: 14
-							line: 1
-						}
-						start: Object {
-							column: 0
-							line: 1
-						}
-					}
+					loc: SourceLocation typescript/arrow-function/async-await-null/input.ts 1:0-1:14
 					typeParameters: TSTypeParameterDeclaration {
-						loc: Object {
-							filename: "typescript/arrow-function/async-await-null/input.ts"
-							end: Object {
-								column: 9
-								line: 1
-							}
-							start: Object {
-								column: 6
-								line: 1
-							}
-						}
+						loc: SourceLocation typescript/arrow-function/async-await-null/input.ts 1:6-1:9
 						params: Array [
 							TSTypeParameter {
 								name: "T"
 								constraint: undefined
 								default: undefined
-								loc: Object {
-									filename: "typescript/arrow-function/async-await-null/input.ts"
-									end: Object {
-										column: 8
-										line: 1
-									}
-									start: Object {
-										column: 7
-										line: 1
-									}
-								}
+								loc: SourceLocation typescript/arrow-function/async-await-null/input.ts 1:7-1:8
 							}
 						]
 					}
@@ -139,6 +57,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

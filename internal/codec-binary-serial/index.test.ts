@@ -1,6 +1,6 @@
 import RSERBufferParser from "./RSERBufferParser";
 import {
-	AnyRSERFilePathMap,
+	AnyRSERPathMap,
 	RSERArray,
 	RSERMap,
 	RSERObject,
@@ -13,10 +13,10 @@ import {
 	createAbsoluteFilePath,
 } from "@internal/path";
 import {TestHelper, test} from "rome";
-import {encodeValueToRSERBufferMessage} from "./index";
+import {encodeValueToRSERMessage} from "./index";
 
 function assert(t: TestHelper, val: RSERValue) {
-	const buf = encodeValueToRSERBufferMessage(val);
+	const buf = encodeValueToRSERMessage(val);
 
 	const parser = new RSERBufferParser(new DataView(buf));
 	t.true(typeof parser.maybeDecodeMessageHeader() === "number");
@@ -87,7 +87,7 @@ test(
 		obj.foo = obj;
 		assert(t, obj);
 
-		const pathMap: AnyRSERFilePathMap = new AbsoluteFilePathMap();
+		const pathMap: AnyRSERPathMap = new AbsoluteFilePathMap();
 		pathMap.set(createAbsoluteFilePath("/"), pathMap);
 		assert(t, pathMap);
 	},

@@ -12,7 +12,6 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "core/uncategorised/57/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
@@ -20,32 +19,13 @@ JSRoot {
 	syntax: Array []
 	trailingComments: Array []
 	innerComments: Array ["0"]
-	loc: Object {
-		filename: "core/uncategorised/57/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation core/uncategorised/57/input.js 1:0-2:0
+	path: UIDPath<core/uncategorised/57/input.js>
 	comments: Array [
 		CommentLine {
 			id: "0"
 			value: " Hello, world!"
-			loc: Object {
-				filename: "core/uncategorised/57/input.js"
-				end: Object {
-					column: 16
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation core/uncategorised/57/input.js 1:0-1:16
 		}
 	]
 }
@@ -54,6 +34,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

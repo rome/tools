@@ -9,7 +9,6 @@ import {
 	isHexDigit,
 	isntLineBreak,
 } from "./utils";
-import {ob1Coerce0, ob1Coerce1} from "@internal/ob1";
 import {dedent} from "@internal/string-utils";
 import {parseJS} from "@internal/js-parser";
 import {
@@ -18,6 +17,7 @@ import {
 	jsNumericLiteral,
 	jsReturnStatement,
 } from "@internal/ast";
+import {OneIndexed, ZeroIndexed} from "@internal/math";
 
 test(
 	"",
@@ -43,12 +43,12 @@ test(
 		t.is(
 			comparePositions(
 				{
-					column: ob1Coerce0(4),
-					line: ob1Coerce1(2),
+					column: new ZeroIndexed(4),
+					line: new OneIndexed(2),
 				},
 				{
-					column: ob1Coerce0(4),
-					line: ob1Coerce1(3),
+					column: new ZeroIndexed(4),
+					line: new OneIndexed(3),
 				},
 			),
 			-1,
@@ -57,12 +57,12 @@ test(
 		t.is(
 			comparePositions(
 				{
-					column: ob1Coerce0(4),
-					line: ob1Coerce1(9),
+					column: new ZeroIndexed(4),
+					line: new OneIndexed(9),
 				},
 				{
-					column: ob1Coerce0(4),
-					line: ob1Coerce1(9),
+					column: new ZeroIndexed(4),
+					line: new OneIndexed(9),
 				},
 			),
 			0,
@@ -71,19 +71,18 @@ test(
 		t.is(
 			comparePositions(
 				{
-					column: ob1Coerce0(9),
-					line: ob1Coerce1(4),
+					column: new ZeroIndexed(9),
+					line: new OneIndexed(4),
 				},
 				{
-					column: ob1Coerce0(6),
-					line: ob1Coerce1(4),
+					column: new ZeroIndexed(6),
+					line: new OneIndexed(4),
 				},
 			),
 			1,
 		);
 
 		const js = parseJS({
-			path: "unknown",
 			input: dedent`
 				const foo = bar;
 
@@ -107,7 +106,7 @@ test(
 					).argument,
 				),
 			]),
-			'Object {\n\tfilename: "unknown"\n\tend: Object {\n\t\tcolumn: 9\n\t\tline: 6\n\t}\n\tstart: Object {\n\t\tcolumn: 0\n\t\tline: 1\n\t}\n}',
+			"SourceLocation unknown 1:0-6:9",
 		);
 	},
 );

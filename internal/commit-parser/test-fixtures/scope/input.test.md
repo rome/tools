@@ -12,20 +12,10 @@ CommitRoot {
 	corrupt: false
 	custom: false
 	diagnostics: Array []
-	filename: "scope/input.txt"
 	integrity: undefined
 	rawBody: "commit with an included scope"
 	scope: "test scope"
-	loc: Object {
-		filename: "scope/input.txt"
-		end: Object {
-			column: 45
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation scope/input.txt 1:0-1:45
+	path: RelativePath<scope/input.txt>
 }
 ```

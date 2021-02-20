@@ -12,65 +12,22 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "typescript/type-alias/plain/input.ts"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
+	loc: SourceLocation typescript/type-alias/plain/input.ts 1:0-2:0
+	path: UIDPath<typescript/type-alias/plain/input.ts>
 	syntax: Array ["ts"]
-	loc: Object {
-		filename: "typescript/type-alias/plain/input.ts"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
 	body: Array [
 		TSTypeAlias {
 			id: JSBindingIdentifier {
 				name: "T"
-				loc: Object {
-					filename: "typescript/type-alias/plain/input.ts"
-					identifierName: "T"
-					end: Object {
-						column: 6
-						line: 1
-					}
-					start: Object {
-						column: 5
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/type-alias/plain/input.ts 1:5-1:6 (T)
 			}
 			typeParameters: undefined
-			loc: Object {
-				filename: "typescript/type-alias/plain/input.ts"
-				end: Object {
-					column: 16
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
-			right: TSNumberKeywordTypeAnnotation {
-				loc: Object {
-					filename: "typescript/type-alias/plain/input.ts"
-					end: Object {
-						column: 15
-						line: 1
-					}
-					start: Object {
-						column: 9
-						line: 1
-					}
-				}
-			}
+			loc: SourceLocation typescript/type-alias/plain/input.ts 1:0-1:16
+			right: TSNumberKeywordTypeAnnotation {loc: SourceLocation typescript/type-alias/plain/input.ts 1:9-1:15}
 		}
 	]
 }
@@ -79,6 +36,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

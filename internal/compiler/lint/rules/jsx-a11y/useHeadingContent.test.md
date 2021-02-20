@@ -17,9 +17,6 @@
 
   ℹ All headings on a page should have content that is accessible to screen readers.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -43,9 +40,6 @@
 
   ℹ All headings on a page should have content that is accessible to screen readers.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -71,9 +65,6 @@
 
   ℹ All headings on a page should have content that is accessible to screen readers.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -89,7 +80,6 @@
 ### `3`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -105,7 +95,6 @@
 ### `4`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -121,7 +110,6 @@
 ### `5`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -135,7 +123,6 @@
 ### `6`
 
 ```
-✔ No known problems!
 
 ```
 

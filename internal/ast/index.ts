@@ -11,22 +11,48 @@ export * from "./unions";
 export {bindingKeys, nodeNames, visitorKeys} from "./utils";
 export type AnyNodes = AnyNode | (AnyNode[]);
 
-/* GENERATED:START(hash:1c1163b6d0c13aa9082fce475588a6b1950fc73a,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/ast` to update. */
+/* GENERATED:START(hash:20817ba46111fce33ac6c9664817c55a1b937fc7,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/ast` to update. */
 export * from "./common/comments/CommentBlock";
 export * from "./common/comments/CommentLine";
 export * from "./common/commit/CommitRoot";
 export * from "./css/core/CSSAtRule";
+export * from "./css/selectors/CSSAttributeSelector";
 export * from "./css/core/CSSBlock";
+export * from "./css/function/CSSCalcFunction";
+export * from "./css/calculations/CSSCalcNumberProduct";
+export * from "./css/calculations/CSSCalcNumberSum";
+export * from "./css/calculations/CSSCalcNumberValue";
+export * from "./css/calculations/CSSCalcOperation";
+export * from "./css/calculations/CSSCalcProduct";
+export * from "./css/calculations/CSSCalcSum";
+export * from "./css/calculations/CSSCalcValue";
+export * from "./css/selectors/CSSClassSelector";
+export * from "./css/selectors/CSSCombinator";
+export * from "./css/core/CSSComma";
+export * from "./css/core/CSSCustomProperty";
 export * from "./css/core/CSSDeclaration";
 export * from "./css/core/CSSDimension";
 export * from "./css/core/CSSFunction";
 export * from "./css/core/CSSHash";
 export * from "./css/core/CSSIdentifier";
+export * from "./css/selectors/CSSIdSelector";
+export * from "./css/keyframe/CSSKeyframe";
+export * from "./css/keyframe/CSSKeyframeBlock";
+export * from "./css/keyframe/CSSKeyframeName";
+export * from "./css/keyframe/CSSKeyframeSelector";
 export * from "./css/core/CSSNumber";
 export * from "./css/core/CSSPercentage";
+export * from "./css/selectors/CSSPseudoClassSelector";
+export * from "./css/selectors/CSSPseudoElementSelector";
 export * from "./css/core/CSSRaw";
 export * from "./css/core/CSSRoot";
 export * from "./css/core/CSSRule";
+export * from "./css/selectors/CSSSelector";
+export * from "./css/core/CSSString";
+export * from "./css/selectors/CSSTypeSelector";
+export * from "./css/selectors/CSSUniversalSelector";
+export * from "./css/function/CSSUrlFunction";
+export * from "./css/function/CSSVarFunction";
 export * from "./css/core/CSSWhitespace";
 export * from "./html/attributes/HTMLAttribute";
 export * from "./html/tags/HTMLCdataTag";
@@ -244,6 +270,7 @@ export * from "./js/typescript/TSSignatureDeclarationMeta";
 export * from "./js/typescript/TSStringKeywordTypeAnnotation";
 export * from "./js/typescript/TSStringLiteralTypeAnnotation";
 export * from "./js/typescript/TSSymbolKeywordTypeAnnotation";
+export * from "./js/typescript/TSTemplateElement";
 export * from "./js/typescript/TSTemplateLiteralTypeAnnotation";
 export * from "./js/typescript/TSThisType";
 export * from "./js/typescript/TSTupleElement";
@@ -267,17 +294,43 @@ export type AnyNode =
 	| n.CommentLine
 	| n.CommitRoot
 	| n.CSSAtRule
+	| n.CSSAttributeSelector
 	| n.CSSBlock
+	| n.CSSCalcFunction
+	| n.CSSCalcNumberProduct
+	| n.CSSCalcNumberSum
+	| n.CSSCalcNumberValue
+	| n.CSSCalcOperation
+	| n.CSSCalcProduct
+	| n.CSSCalcSum
+	| n.CSSCalcValue
+	| n.CSSClassSelector
+	| n.CSSCombinator
+	| n.CSSComma
+	| n.CSSCustomProperty
 	| n.CSSDeclaration
 	| n.CSSDimension
 	| n.CSSFunction
 	| n.CSSHash
 	| n.CSSIdentifier
+	| n.CSSIdSelector
+	| n.CSSKeyframe
+	| n.CSSKeyframeBlock
+	| n.CSSKeyframeName
+	| n.CSSKeyframeSelector
 	| n.CSSNumber
 	| n.CSSPercentage
+	| n.CSSPseudoClassSelector
+	| n.CSSPseudoElementSelector
 	| n.CSSRaw
 	| n.CSSRoot
 	| n.CSSRule
+	| n.CSSSelector
+	| n.CSSString
+	| n.CSSTypeSelector
+	| n.CSSUniversalSelector
+	| n.CSSUrlFunction
+	| n.CSSVarFunction
 	| n.CSSWhitespace
 	| n.HTMLAttribute
 	| n.HTMLCdataTag
@@ -495,6 +548,7 @@ export type AnyNode =
 	| n.TSStringKeywordTypeAnnotation
 	| n.TSStringLiteralTypeAnnotation
 	| n.TSSymbolKeywordTypeAnnotation
+	| n.TSTemplateElement
 	| n.TSTemplateLiteralTypeAnnotation
 	| n.TSThisType
 	| n.TSTupleElement

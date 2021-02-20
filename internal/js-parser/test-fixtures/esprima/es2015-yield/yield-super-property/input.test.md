@@ -12,80 +12,28 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "esprima/es2015-yield/yield-super-property/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "esprima/es2015-yield/yield-super-property/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation esprima/es2015-yield/yield-super-property/input.js 1:0-2:0
+	path: UIDPath<esprima/es2015-yield/yield-super-property/input.js>
 	body: Array [
 		JSClassDeclaration {
 			id: JSBindingIdentifier {
 				name: "A"
-				loc: Object {
-					filename: "esprima/es2015-yield/yield-super-property/input.js"
-					identifierName: "A"
-					end: Object {
-						column: 7
-						line: 1
-					}
-					start: Object {
-						column: 6
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/es2015-yield/yield-super-property/input.js 1:6-1:7 (A)
 			}
-			loc: Object {
-				filename: "esprima/es2015-yield/yield-super-property/input.js"
-				end: Object {
-					column: 41
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation esprima/es2015-yield/yield-super-property/input.js 1:0-1:41
 			meta: JSClassHead {
 				implements: undefined
 				superTypeParameters: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "esprima/es2015-yield/yield-super-property/input.js"
-					end: Object {
-						column: 41
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/es2015-yield/yield-super-property/input.js 1:0-1:41
 				superClass: JSReferenceIdentifier {
 					name: "B"
-					loc: Object {
-						filename: "esprima/es2015-yield/yield-super-property/input.js"
-						identifierName: "B"
-						end: Object {
-							column: 17
-							line: 1
-						}
-						start: Object {
-							column: 16
-							line: 1
-						}
-					}
+					loc: SourceLocation esprima/es2015-yield/yield-super-property/input.js 1:16-1:17 (B)
 				}
 				body: Array [
 					JSClassMethod {
@@ -93,41 +41,20 @@ JSRoot {
 						key: JSStaticPropertyKey {
 							value: JSIdentifier {
 								name: "X"
-								loc: Object {
-									filename: "esprima/es2015-yield/yield-super-property/input.js"
-									identifierName: "X"
-									end: Object {
-										column: 21
-										line: 1
-									}
-									start: Object {
-										column: 20
-										line: 1
-									}
-								}
+								loc: SourceLocation esprima/es2015-yield/yield-super-property/input.js 1:20-1:21 (X)
 							}
-							loc: Object {
-								filename: "esprima/es2015-yield/yield-super-property/input.js"
-								end: Object {
-									column: 21
-									line: 1
-								}
-								start: Object {
-									column: 20
-									line: 1
-								}
-							}
+							loc: SourceLocation esprima/es2015-yield/yield-super-property/input.js 1:20-1:21
 						}
-						loc: Object {
-							filename: "esprima/es2015-yield/yield-super-property/input.js"
-							end: Object {
-								column: 39
-								line: 1
-							}
-							start: Object {
-								column: 20
-								line: 1
-							}
+						loc: SourceLocation esprima/es2015-yield/yield-super-property/input.js 1:20-1:39
+						meta: JSClassPropertyMeta {
+							abstract: false
+							accessibility: undefined
+							optional: false
+							readonly: false
+							static: false
+							typeAnnotation: undefined
+							loc: SourceLocation esprima/es2015-yield/yield-super-property/input.js 1:20-1:21
+							start: Position 1:20
 						}
 						head: JSFunctionHead {
 							async: false
@@ -138,120 +65,23 @@ JSRoot {
 							returnType: undefined
 							thisType: undefined
 							typeParameters: undefined
-							loc: Object {
-								filename: "esprima/es2015-yield/yield-super-property/input.js"
-								end: Object {
-									column: 23
-									line: 1
-								}
-								start: Object {
-									column: 21
-									line: 1
-								}
-							}
-						}
-						meta: JSClassPropertyMeta {
-							abstract: false
-							accessibility: undefined
-							optional: false
-							readonly: false
-							static: false
-							typeAnnotation: undefined
-							start: Object {
-								column: 20
-								line: 1
-							}
-							loc: Object {
-								filename: "esprima/es2015-yield/yield-super-property/input.js"
-								end: Object {
-									column: 21
-									line: 1
-								}
-								start: Object {
-									column: 20
-									line: 1
-								}
-							}
+							loc: SourceLocation esprima/es2015-yield/yield-super-property/input.js 1:21-1:23
 						}
 						body: JSBlockStatement {
 							directives: Array []
-							loc: Object {
-								filename: "esprima/es2015-yield/yield-super-property/input.js"
-								end: Object {
-									column: 39
-									line: 1
-								}
-								start: Object {
-									column: 24
-									line: 1
-								}
-							}
+							loc: SourceLocation esprima/es2015-yield/yield-super-property/input.js 1:24-1:39
 							body: Array [
 								JSExpressionStatement {
-									loc: Object {
-										filename: "esprima/es2015-yield/yield-super-property/input.js"
-										end: Object {
-											column: 37
-											line: 1
-										}
-										start: Object {
-											column: 26
-											line: 1
-										}
-									}
+									loc: SourceLocation esprima/es2015-yield/yield-super-property/input.js 1:26-1:37
 									expression: JSMemberExpression {
-										loc: Object {
-											filename: "esprima/es2015-yield/yield-super-property/input.js"
-											end: Object {
-												column: 37
-												line: 1
-											}
-											start: Object {
-												column: 26
-												line: 1
-											}
-										}
-										object: JSSuper {
-											loc: Object {
-												filename: "esprima/es2015-yield/yield-super-property/input.js"
-												end: Object {
-													column: 31
-													line: 1
-												}
-												start: Object {
-													column: 26
-													line: 1
-												}
-											}
-										}
+										loc: SourceLocation esprima/es2015-yield/yield-super-property/input.js 1:26-1:37
+										object: JSSuper {loc: SourceLocation esprima/es2015-yield/yield-super-property/input.js 1:26-1:31}
 										property: JSStaticMemberProperty {
 											value: JSIdentifier {
 												name: "yield"
-												loc: Object {
-													filename: "esprima/es2015-yield/yield-super-property/input.js"
-													identifierName: "yield"
-													end: Object {
-														column: 37
-														line: 1
-													}
-													start: Object {
-														column: 32
-														line: 1
-													}
-												}
+												loc: SourceLocation esprima/es2015-yield/yield-super-property/input.js 1:32-1:37 (yield)
 											}
-											loc: Object {
-												filename: "esprima/es2015-yield/yield-super-property/input.js"
-												identifierName: "yield"
-												end: Object {
-													column: 37
-													line: 1
-												}
-												start: Object {
-													column: 32
-													line: 1
-												}
-											}
+											loc: SourceLocation esprima/es2015-yield/yield-super-property/input.js 1:32-1:37 (yield)
 										}
 									}
 								}
@@ -268,6 +98,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

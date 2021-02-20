@@ -11,45 +11,29 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "experimental/top-level-await/inside-function/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
 	syntax: Array []
-	loc: Object {
-		filename: "experimental/top-level-await/inside-function/input.js"
-		end: Object {
-			column: 1
-			line: 3
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation experimental/top-level-await/inside-function/input.js 1:0-3:1
+	path: UIDPath<experimental/top-level-await/inside-function/input.js>
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse"
 				categoryValue: "js"
+				category: Array ["parse"]
 				message: RAW_MARKUP {value: "Can't use await outside of an async function"}
 			}
 			location: Object {
-				filename: "experimental/top-level-await/inside-function/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 7
-					line: 2
-				}
-				start: Object {
-					column: 2
-					line: 2
-				}
+				end: Position 2:7
+				path: UIDPath<experimental/top-level-await/inside-function/input.js>
+				start: Position 2:2
 			}
 		}
 	]
@@ -57,30 +41,9 @@ JSRoot {
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "fn"
-				loc: Object {
-					filename: "experimental/top-level-await/inside-function/input.js"
-					identifierName: "fn"
-					end: Object {
-						column: 11
-						line: 1
-					}
-					start: Object {
-						column: 9
-						line: 1
-					}
-				}
+				loc: SourceLocation experimental/top-level-await/inside-function/input.js 1:9-1:11 (fn)
 			}
-			loc: Object {
-				filename: "experimental/top-level-await/inside-function/input.js"
-				end: Object {
-					column: 1
-					line: 3
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation experimental/top-level-await/inside-function/input.js 1:0-3:1
 			head: JSFunctionHead {
 				async: false
 				generator: false
@@ -90,86 +53,25 @@ JSRoot {
 				returnType: undefined
 				thisType: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "experimental/top-level-await/inside-function/input.js"
-					end: Object {
-						column: 13
-						line: 1
-					}
-					start: Object {
-						column: 11
-						line: 1
-					}
-				}
+				loc: SourceLocation experimental/top-level-await/inside-function/input.js 1:11-1:13
 			}
 			body: JSBlockStatement {
 				directives: Array []
-				loc: Object {
-					filename: "experimental/top-level-await/inside-function/input.js"
-					end: Object {
-						column: 1
-						line: 3
-					}
-					start: Object {
-						column: 14
-						line: 1
-					}
-				}
+				loc: SourceLocation experimental/top-level-await/inside-function/input.js 1:14-3:1
 				body: Array [
 					JSExpressionStatement {
-						loc: Object {
-							filename: "experimental/top-level-await/inside-function/input.js"
-							end: Object {
-								column: 7
-								line: 2
-							}
-							start: Object {
-								column: 2
-								line: 2
-							}
-						}
+						loc: SourceLocation experimental/top-level-await/inside-function/input.js 2:2-2:7
 						expression: JSReferenceIdentifier {
 							name: "await"
-							loc: Object {
-								filename: "experimental/top-level-await/inside-function/input.js"
-								identifierName: "await"
-								end: Object {
-									column: 7
-									line: 2
-								}
-								start: Object {
-									column: 2
-									line: 2
-								}
-							}
+							loc: SourceLocation experimental/top-level-await/inside-function/input.js 2:2-2:7 (await)
 						}
 					}
 					JSExpressionStatement {
-						loc: Object {
-							filename: "experimental/top-level-await/inside-function/input.js"
-							end: Object {
-								column: 10
-								line: 2
-							}
-							start: Object {
-								column: 8
-								line: 2
-							}
-						}
+						loc: SourceLocation experimental/top-level-await/inside-function/input.js 2:8-2:10
 						expression: JSNumericLiteral {
 							value: 0
 							format: undefined
-							loc: Object {
-								filename: "experimental/top-level-await/inside-function/input.js"
-								end: Object {
-									column: 9
-									line: 2
-								}
-								start: Object {
-									column: 8
-									line: 2
-								}
-							}
+							loc: SourceLocation experimental/top-level-await/inside-function/input.js 2:8-2:9
 						}
 					}
 				]
@@ -192,8 +94,5 @@ JSRoot {
       │   ^^^^^
     3 │ }
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

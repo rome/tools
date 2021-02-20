@@ -11,117 +11,49 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "core/categorized/valid-assignment-pattern-3/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "core/categorized/valid-assignment-pattern-3/input.js"
-		end: Object {
-			column: 14
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation core/categorized/valid-assignment-pattern-3/input.js 1:0-1:14
+	path: UIDPath<core/categorized/valid-assignment-pattern-3/input.js>
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse"
 				categoryValue: "js"
+				category: Array ["parse"]
 				message: RAW_MARKUP {value: "Invalid parenthesized binding"}
 			}
 			location: Object {
-				filename: "core/categorized/valid-assignment-pattern-3/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 5
-					line: 1
-				}
-				start: Object {
-					column: 4
-					line: 1
-				}
+				end: Position 1:5
+				path: UIDPath<core/categorized/valid-assignment-pattern-3/input.js>
+				start: Position 1:4
 			}
 		}
 	]
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "core/categorized/valid-assignment-pattern-3/input.js"
-				end: Object {
-					column: 14
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation core/categorized/valid-assignment-pattern-3/input.js 1:0-1:14
 			expression: JSAssignmentExpression {
 				operator: "="
-				loc: Object {
-					filename: "core/categorized/valid-assignment-pattern-3/input.js"
-					end: Object {
-						column: 13
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation core/categorized/valid-assignment-pattern-3/input.js 1:0-1:13
 				right: JSReferenceIdentifier {
 					name: "t"
-					loc: Object {
-						filename: "core/categorized/valid-assignment-pattern-3/input.js"
-						identifierName: "t"
-						end: Object {
-							column: 13
-							line: 1
-						}
-						start: Object {
-							column: 12
-							line: 1
-						}
-					}
+					loc: SourceLocation core/categorized/valid-assignment-pattern-3/input.js 1:12-1:13 (t)
 				}
 				left: JSAssignmentArrayPattern {
 					rest: undefined
-					loc: Object {
-						filename: "core/categorized/valid-assignment-pattern-3/input.js"
-						end: Object {
-							column: 9
-							line: 1
-						}
-						start: Object {
-							column: 0
-							line: 1
-						}
-					}
+					loc: SourceLocation core/categorized/valid-assignment-pattern-3/input.js 1:0-1:9
 					elements: Array [
 						JSAssignmentIdentifier {
 							name: "x"
-							loc: Object {
-								filename: "core/categorized/valid-assignment-pattern-3/input.js"
-								identifierName: "x"
-								end: Object {
-									column: 5
-									line: 1
-								}
-								start: Object {
-									column: 4
-									line: 1
-								}
-							}
+							loc: SourceLocation core/categorized/valid-assignment-pattern-3/input.js 1:4-1:5 (x)
 						}
 					]
 				}
@@ -142,8 +74,5 @@ JSRoot {
     [(((x)))] = t;
         ^
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

@@ -12,90 +12,29 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "core/uncategorised/543/input.js"
 	hasHoistedVars: true
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "core/uncategorised/543/input.js"
-		end: Object {
-			column: 0
-			line: 7
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation core/uncategorised/543/input.js 1:0-7:0
+	path: UIDPath<core/uncategorised/543/input.js>
 	body: Array [
 		JSVariableDeclarationStatement {
-			loc: Object {
-				filename: "core/uncategorised/543/input.js"
-				end: Object {
-					column: 2
-					line: 4
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation core/uncategorised/543/input.js 1:0-4:2
 			declaration: JSVariableDeclaration {
 				kind: "var"
-				loc: Object {
-					filename: "core/uncategorised/543/input.js"
-					end: Object {
-						column: 2
-						line: 4
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation core/uncategorised/543/input.js 1:0-4:2
 				declarations: Array [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "fn"
-							loc: Object {
-								filename: "core/uncategorised/543/input.js"
-								identifierName: "fn"
-								end: Object {
-									column: 6
-									line: 1
-								}
-								start: Object {
-									column: 4
-									line: 1
-								}
-							}
+							loc: SourceLocation core/uncategorised/543/input.js 1:4-1:6 (fn)
 						}
-						loc: Object {
-							filename: "core/uncategorised/543/input.js"
-							end: Object {
-								column: 1
-								line: 4
-							}
-							start: Object {
-								column: 4
-								line: 1
-							}
-						}
+						loc: SourceLocation core/uncategorised/543/input.js 1:4-4:1
 						init: JSFunctionExpression {
 							id: undefined
-							loc: Object {
-								filename: "core/uncategorised/543/input.js"
-								end: Object {
-									column: 1
-									line: 4
-								}
-								start: Object {
-									column: 9
-									line: 1
-								}
-							}
+							loc: SourceLocation core/uncategorised/543/input.js 1:9-4:1
 							head: JSFunctionHead {
 								async: false
 								generator: false
@@ -105,59 +44,19 @@ JSRoot {
 								returnType: undefined
 								thisType: undefined
 								typeParameters: undefined
-								loc: Object {
-									filename: "core/uncategorised/543/input.js"
-									end: Object {
-										column: 20
-										line: 1
-									}
-									start: Object {
-										column: 18
-										line: 1
-									}
-								}
+								loc: SourceLocation core/uncategorised/543/input.js 1:18-1:20
 							}
 							body: JSBlockStatement {
 								body: Array []
-								loc: Object {
-									filename: "core/uncategorised/543/input.js"
-									end: Object {
-										column: 1
-										line: 4
-									}
-									start: Object {
-										column: 21
-										line: 1
-									}
-								}
+								loc: SourceLocation core/uncategorised/543/input.js 1:21-4:1
 								directives: Array [
 									JSDirective {
 										value: "use strict"
-										loc: Object {
-											filename: "core/uncategorised/543/input.js"
-											end: Object {
-												column: 15
-												line: 2
-											}
-											start: Object {
-												column: 2
-												line: 2
-											}
-										}
+										loc: SourceLocation core/uncategorised/543/input.js 2:2-2:15
 									}
 									JSDirective {
 										value: "use strict"
-										loc: Object {
-											filename: "core/uncategorised/543/input.js"
-											end: Object {
-												column: 15
-												line: 3
-											}
-											start: Object {
-												column: 2
-												line: 3
-											}
-										}
+										loc: SourceLocation core/uncategorised/543/input.js 3:2-3:15
 									}
 								]
 							}
@@ -167,31 +66,11 @@ JSRoot {
 			}
 		}
 		JSExpressionStatement {
-			loc: Object {
-				filename: "core/uncategorised/543/input.js"
-				end: Object {
-					column: 5
-					line: 6
-				}
-				start: Object {
-					column: 0
-					line: 6
-				}
-			}
+			loc: SourceLocation core/uncategorised/543/input.js 6:0-6:5
 			expression: JSNumericLiteral {
 				value: 64
 				format: "octal"
-				loc: Object {
-					filename: "core/uncategorised/543/input.js"
-					end: Object {
-						column: 4
-						line: 6
-					}
-					start: Object {
-						column: 0
-						line: 6
-					}
-				}
+				loc: SourceLocation core/uncategorised/543/input.js 6:0-6:4
 			}
 		}
 	]
@@ -201,6 +80,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

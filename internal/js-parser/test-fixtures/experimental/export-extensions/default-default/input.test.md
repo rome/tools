@@ -11,102 +11,45 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "experimental/export-extensions/default-default/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
 	syntax: Array []
-	loc: Object {
-		filename: "experimental/export-extensions/default-default/input.js"
-		end: Object {
-			column: 26
-			line: 1
+	loc: SourceLocation experimental/export-extensions/default-default/input.js 1:0-1:26
+	path: UIDPath<experimental/export-extensions/default-default/input.js>
+	body: Array [
+		JSExportDefaultDeclaration {
+			loc: SourceLocation experimental/export-extensions/default-default/input.js 1:0-1:19
+			declaration: JSReferenceIdentifier {
+				name: "from"
+				loc: SourceLocation experimental/export-extensions/default-default/input.js 1:15-1:19 (from)
+			}
 		}
-		start: Object {
-			column: 0
-			line: 1
+		JSExpressionStatement {
+			loc: SourceLocation experimental/export-extensions/default-default/input.js 1:20-1:26
+			expression: JSStringLiteral {
+				value: "bar"
+				loc: SourceLocation experimental/export-extensions/default-default/input.js 1:20-1:25
+			}
 		}
-	}
+	]
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse"
 				categoryValue: "js"
+				category: Array ["parse"]
 				message: RAW_MARKUP {value: "Expected a semicolon or a line terminator"}
 			}
 			location: Object {
-				filename: "experimental/export-extensions/default-default/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 19
-					line: 1
-				}
-				start: Object {
-					column: 20
-					line: 1
-				}
-			}
-		}
-	]
-	body: Array [
-		JSExportDefaultDeclaration {
-			loc: Object {
-				filename: "experimental/export-extensions/default-default/input.js"
-				end: Object {
-					column: 19
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
-			declaration: JSReferenceIdentifier {
-				name: "from"
-				loc: Object {
-					filename: "experimental/export-extensions/default-default/input.js"
-					identifierName: "from"
-					end: Object {
-						column: 19
-						line: 1
-					}
-					start: Object {
-						column: 15
-						line: 1
-					}
-				}
-			}
-		}
-		JSExpressionStatement {
-			loc: Object {
-				filename: "experimental/export-extensions/default-default/input.js"
-				end: Object {
-					column: 26
-					line: 1
-				}
-				start: Object {
-					column: 20
-					line: 1
-				}
-			}
-			expression: JSStringLiteral {
-				value: "bar"
-				loc: Object {
-					filename: "experimental/export-extensions/default-default/input.js"
-					end: Object {
-						column: 25
-						line: 1
-					}
-					start: Object {
-						column: 20
-						line: 1
-					}
-				}
+				end: Position 1:19
+				path: UIDPath<experimental/export-extensions/default-default/input.js>
+				start: Position 1:20
 			}
 		}
 	]
@@ -124,8 +67,5 @@ JSRoot {
     export default from "bar";
                         ^
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

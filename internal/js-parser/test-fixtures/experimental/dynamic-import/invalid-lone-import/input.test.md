@@ -11,90 +11,46 @@ JSRoot {
 	comments: Array []
 	corrupt: true
 	directives: Array []
-	filename: "experimental/dynamic-import/invalid-lone-import/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "experimental/dynamic-import/invalid-lone-import/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				category: "parse"
-				categoryValue: "js"
-				message: Array [
-					RAW_MARKUP {value: "Unexpected token, expected "}
-					"("
-				]
-			}
-			location: Object {
-				filename: "experimental/dynamic-import/invalid-lone-import/input.js"
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Object {
-					column: 8
-					line: 1
-				}
-				start: Object {
-					column: 7
-					line: 1
+	loc: SourceLocation experimental/dynamic-import/invalid-lone-import/input.js 1:0-2:0
+	path: UIDPath<experimental/dynamic-import/invalid-lone-import/input.js>
+	body: Array [
+		JSExpressionStatement {
+			loc: SourceLocation experimental/dynamic-import/invalid-lone-import/input.js 1:0-1:8
+			expression: JSImportCall {
+				loc: SourceLocation experimental/dynamic-import/invalid-lone-import/input.js 1:7-1:8
+				argument: JSReferenceIdentifier {
+					name: "INVALID_PLACEHOLDER"
+					loc: SourceLocation experimental/dynamic-import/invalid-lone-import/input.js 1:7-1:7
 				}
 			}
 		}
 	]
-	body: Array [
-		JSExpressionStatement {
-			loc: Object {
-				filename: "experimental/dynamic-import/invalid-lone-import/input.js"
-				end: Object {
-					column: 8
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
+	diagnostics: Array [
+		Object {
+			origins: Array [Object {category: "parse"}]
+			location: Object {
+				integrity: undefined
+				language: "js"
+				sourceText: undefined
+				end: Position 1:7
+				path: UIDPath<experimental/dynamic-import/invalid-lone-import/input.js>
+				start: Position 1:7
 			}
-			expression: JSImportCall {
-				loc: Object {
-					filename: "experimental/dynamic-import/invalid-lone-import/input.js"
-					end: Object {
-						column: 8
-						line: 1
+			description: Object {
+				categoryValue: "js"
+				category: Array ["parse"]
+				message: RAW_MARKUP {value: "Unexpected character <emphasis>)</emphasis>"}
+				advice: Array [
+					log {
+						category: "info"
+						text: RAW_MARKUP {value: "Expected the opening array character <emphasis>(</emphasis>"}
 					}
-					start: Object {
-						column: 7
-						line: 1
-					}
-				}
-				argument: JSReferenceIdentifier {
-					name: "INVALID_PLACEHOLDER"
-					loc: Object {
-						filename: "experimental/dynamic-import/invalid-lone-import/input.js"
-						end: Object {
-							column: 7
-							line: 1
-						}
-						start: Object {
-							column: 7
-							line: 1
-						}
-					}
-				}
+				]
 			}
 		}
 	]
@@ -107,13 +63,12 @@ JSRoot {
 
  experimental/dynamic-import/invalid-lone-import/input.js:1:7 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ Unexpected token, expected (
+  ✖ Unexpected character )
 
     (import)
            ^
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  ℹ Expected the opening array character (
 
-✖ Found 1 problem
 
 ```

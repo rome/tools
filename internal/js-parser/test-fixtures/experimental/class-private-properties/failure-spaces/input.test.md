@@ -11,45 +11,29 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "experimental/class-private-properties/failure-spaces/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "experimental/class-private-properties/failure-spaces/input.js"
-		end: Object {
-			column: 0
-			line: 4
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation experimental/class-private-properties/failure-spaces/input.js 1:0-4:0
+	path: UIDPath<experimental/class-private-properties/failure-spaces/input.js>
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse"
 				categoryValue: "js"
+				category: Array ["parse"]
 				message: RAW_MARKUP {value: "Unexpected space between # and identifier"}
 			}
 			location: Object {
-				filename: "experimental/class-private-properties/failure-spaces/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 3
-					line: 2
-				}
-				start: Object {
-					column: 3
-					line: 2
-				}
+				end: Position 2:3
+				path: UIDPath<experimental/class-private-properties/failure-spaces/input.js>
+				start: Position 2:3
 			}
 		}
 	]
@@ -57,89 +41,27 @@ JSRoot {
 		JSClassDeclaration {
 			id: JSBindingIdentifier {
 				name: "Spaces"
-				loc: Object {
-					filename: "experimental/class-private-properties/failure-spaces/input.js"
-					identifierName: "Spaces"
-					end: Object {
-						column: 12
-						line: 1
-					}
-					start: Object {
-						column: 6
-						line: 1
-					}
-				}
+				loc: SourceLocation experimental/class-private-properties/failure-spaces/input.js 1:6-1:12 (Spaces)
 			}
-			loc: Object {
-				filename: "experimental/class-private-properties/failure-spaces/input.js"
-				end: Object {
-					column: 1
-					line: 3
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation experimental/class-private-properties/failure-spaces/input.js 1:0-3:1
 			meta: JSClassHead {
 				implements: undefined
 				superClass: undefined
 				superTypeParameters: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "experimental/class-private-properties/failure-spaces/input.js"
-					end: Object {
-						column: 1
-						line: 3
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation experimental/class-private-properties/failure-spaces/input.js 1:0-3:1
 				body: Array [
 					JSClassPrivateProperty {
 						key: JSPrivateName {
 							id: JSIdentifier {
 								name: "wrongSpaces"
-								loc: Object {
-									filename: "experimental/class-private-properties/failure-spaces/input.js"
-									identifierName: "wrongSpaces"
-									end: Object {
-										column: 16
-										line: 2
-									}
-									start: Object {
-										column: 5
-										line: 2
-									}
-								}
+								loc: SourceLocation experimental/class-private-properties/failure-spaces/input.js 2:5-2:16 (wrongSpaces)
 							}
-							loc: Object {
-								filename: "experimental/class-private-properties/failure-spaces/input.js"
-								end: Object {
-									column: 16
-									line: 2
-								}
-								start: Object {
-									column: 2
-									line: 2
-								}
-							}
+							loc: SourceLocation experimental/class-private-properties/failure-spaces/input.js 2:2-2:16
 						}
 						value: undefined
 						typeAnnotation: undefined
-						loc: Object {
-							filename: "experimental/class-private-properties/failure-spaces/input.js"
-							end: Object {
-								column: 17
-								line: 2
-							}
-							start: Object {
-								column: 2
-								line: 2
-							}
-						}
+						loc: SourceLocation experimental/class-private-properties/failure-spaces/input.js 2:2-2:17
 						meta: JSClassPropertyMeta {
 							abstract: false
 							accessibility: undefined
@@ -147,21 +69,8 @@ JSRoot {
 							readonly: false
 							static: false
 							typeAnnotation: undefined
-							start: Object {
-								column: 2
-								line: 2
-							}
-							loc: Object {
-								filename: "experimental/class-private-properties/failure-spaces/input.js"
-								end: Object {
-									column: 16
-									line: 2
-								}
-								start: Object {
-									column: 2
-									line: 2
-								}
-							}
+							loc: SourceLocation experimental/class-private-properties/failure-spaces/input.js 2:2-2:16
+							start: Position 2:2
 						}
 					}
 				]
@@ -184,8 +93,5 @@ JSRoot {
       │    ^
     3 │ }
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

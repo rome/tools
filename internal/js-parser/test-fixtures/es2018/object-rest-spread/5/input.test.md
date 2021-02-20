@@ -12,159 +12,45 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "es2018/object-rest-spread/5/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2018/object-rest-spread/5/input.js"
-		end: Object {
-			column: 13
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2018/object-rest-spread/5/input.js 1:0-1:13
+	path: UIDPath<es2018/object-rest-spread/5/input.js>
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "es2018/object-rest-spread/5/input.js"
-				end: Object {
-					column: 13
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2018/object-rest-spread/5/input.js 1:0-1:13
 			expression: JSAssignmentExpression {
 				operator: "="
-				loc: Object {
-					filename: "es2018/object-rest-spread/5/input.js"
-					end: Object {
-						column: 13
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation es2018/object-rest-spread/5/input.js 1:0-1:13
 				left: JSAssignmentIdentifier {
 					name: "z"
-					loc: Object {
-						filename: "es2018/object-rest-spread/5/input.js"
-						identifierName: "z"
-						end: Object {
-							column: 1
-							line: 1
-						}
-						start: Object {
-							column: 0
-							line: 1
-						}
-					}
+					loc: SourceLocation es2018/object-rest-spread/5/input.js 1:0-1:1 (z)
 				}
 				right: JSObjectExpression {
-					loc: Object {
-						filename: "es2018/object-rest-spread/5/input.js"
-						end: Object {
-							column: 13
-							line: 1
-						}
-						start: Object {
-							column: 4
-							line: 1
-						}
-					}
+					loc: SourceLocation es2018/object-rest-spread/5/input.js 1:4-1:13
 					properties: Array [
 						JSObjectProperty {
 							key: JSStaticPropertyKey {
 								value: JSIdentifier {
 									name: "x"
-									loc: Object {
-										filename: "es2018/object-rest-spread/5/input.js"
-										identifierName: "x"
-										end: Object {
-											column: 6
-											line: 1
-										}
-										start: Object {
-											column: 5
-											line: 1
-										}
-									}
+									loc: SourceLocation es2018/object-rest-spread/5/input.js 1:5-1:6 (x)
 								}
-								loc: Object {
-									filename: "es2018/object-rest-spread/5/input.js"
-									end: Object {
-										column: 6
-										line: 1
-									}
-									start: Object {
-										column: 5
-										line: 1
-									}
-								}
+								loc: SourceLocation es2018/object-rest-spread/5/input.js 1:5-1:6
 							}
 							value: JSReferenceIdentifier {
 								name: "x"
-								loc: Object {
-									filename: "es2018/object-rest-spread/5/input.js"
-									identifierName: "x"
-									end: Object {
-										column: 6
-										line: 1
-									}
-									start: Object {
-										column: 5
-										line: 1
-									}
-								}
+								loc: SourceLocation es2018/object-rest-spread/5/input.js 1:5-1:6 (x)
 							}
-							loc: Object {
-								filename: "es2018/object-rest-spread/5/input.js"
-								end: Object {
-									column: 6
-									line: 1
-								}
-								start: Object {
-									column: 5
-									line: 1
-								}
-							}
+							loc: SourceLocation es2018/object-rest-spread/5/input.js 1:5-1:6
 						}
 						JSSpreadProperty {
-							loc: Object {
-								filename: "es2018/object-rest-spread/5/input.js"
-								end: Object {
-									column: 12
-									line: 1
-								}
-								start: Object {
-									column: 8
-									line: 1
-								}
-							}
+							loc: SourceLocation es2018/object-rest-spread/5/input.js 1:8-1:12
 							argument: JSReferenceIdentifier {
 								name: "y"
-								loc: Object {
-									filename: "es2018/object-rest-spread/5/input.js"
-									identifierName: "y"
-									end: Object {
-										column: 12
-										line: 1
-									}
-									start: Object {
-										column: 11
-										line: 1
-									}
-								}
+								loc: SourceLocation es2018/object-rest-spread/5/input.js 1:11-1:12 (y)
 							}
 						}
 					]
@@ -178,6 +64,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

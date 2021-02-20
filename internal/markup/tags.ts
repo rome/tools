@@ -42,14 +42,7 @@ export const globalAttributes: AttributeValidators = new Map([
 export const tags: Map<MarkupTagName, AttributeValidators> = new Map();
 
 tags.set("emphasis", new Map());
-tags.set(
-	"number",
-	new Map([
-		["approx", booleanValidator],
-		["pluralSuffix", stringValidator],
-		["singularSuffix", stringValidator],
-	]),
-);
+tags.set("number", new Map([["approx", booleanValidator]]));
 tags.set("indent", new Map());
 tags.set(
 	"view",
@@ -99,6 +92,7 @@ tags.set("strike", new Map());
 tags.set("token", new Map([["type", validateTokenType]]));
 tags.set("error", new Map());
 tags.set("success", new Map());
+tags.set("locator", new Map([["id", stringValidator]]));
 tags.set("warn", new Map());
 tags.set("info", new Map());
 tags.set("code", new Map());

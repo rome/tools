@@ -11,74 +11,38 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "es2017/async-functions/invalid-escape-await/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2017/async-functions/invalid-escape-await/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2017/async-functions/invalid-escape-await/input.js 1:0-2:0
+	path: UIDPath<es2017/async-functions/invalid-escape-await/input.js>
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse"
 				categoryValue: "js"
+				category: Array ["parse"]
 				message: RAW_MARKUP {value: "Can not use 'await' as identifier inside an async function"}
 			}
 			location: Object {
-				filename: "es2017/async-functions/invalid-escape-await/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 30
-					line: 1
-				}
-				start: Object {
-					column: 20
-					line: 1
-				}
+				end: Position 1:30
+				path: UIDPath<es2017/async-functions/invalid-escape-await/input.js>
+				start: Position 1:20
 			}
 		}
 	]
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "es2017/async-functions/invalid-escape-await/input.js"
-				end: Object {
-					column: 35
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2017/async-functions/invalid-escape-await/input.js 1:0-1:35
 			expression: JSFunctionExpression {
 				id: undefined
-				loc: Object {
-					filename: "es2017/async-functions/invalid-escape-await/input.js"
-					end: Object {
-						column: 34
-						line: 1
-					}
-					start: Object {
-						column: 1
-						line: 1
-					}
-				}
+				loc: SourceLocation es2017/async-functions/invalid-escape-await/input.js 1:1-1:34
 				head: JSFunctionHead {
 					async: true
 					generator: false
@@ -88,86 +52,24 @@ JSRoot {
 					returnType: undefined
 					thisType: undefined
 					typeParameters: undefined
-					loc: Object {
-						filename: "es2017/async-functions/invalid-escape-await/input.js"
-						end: Object {
-							column: 17
-							line: 1
-						}
-						start: Object {
-							column: 15
-							line: 1
-						}
-					}
+					loc: SourceLocation es2017/async-functions/invalid-escape-await/input.js 1:15-1:17
 				}
 				body: JSBlockStatement {
 					directives: Array []
-					loc: Object {
-						filename: "es2017/async-functions/invalid-escape-await/input.js"
-						end: Object {
-							column: 34
-							line: 1
-						}
-						start: Object {
-							column: 18
-							line: 1
-						}
-					}
+					loc: SourceLocation es2017/async-functions/invalid-escape-await/input.js 1:18-1:34
 					body: Array [
 						JSExpressionStatement {
-							loc: Object {
-								filename: "es2017/async-functions/invalid-escape-await/input.js"
-								end: Object {
-									column: 30
-									line: 1
-								}
-								start: Object {
-									column: 20
-									line: 1
-								}
-							}
+							loc: SourceLocation es2017/async-functions/invalid-escape-await/input.js 1:20-1:30
 							expression: JSReferenceIdentifier {
 								name: "await"
-								loc: Object {
-									filename: "es2017/async-functions/invalid-escape-await/input.js"
-									identifierName: "await"
-									end: Object {
-										column: 30
-										line: 1
-									}
-									start: Object {
-										column: 20
-										line: 1
-									}
-								}
+								loc: SourceLocation es2017/async-functions/invalid-escape-await/input.js 1:20-1:30 (await)
 							}
 						}
 						JSExpressionStatement {
-							loc: Object {
-								filename: "es2017/async-functions/invalid-escape-await/input.js"
-								end: Object {
-									column: 32
-									line: 1
-								}
-								start: Object {
-									column: 31
-									line: 1
-								}
-							}
+							loc: SourceLocation es2017/async-functions/invalid-escape-await/input.js 1:31-1:32
 							expression: JSReferenceIdentifier {
 								name: "x"
-								loc: Object {
-									filename: "es2017/async-functions/invalid-escape-await/input.js"
-									identifierName: "x"
-									end: Object {
-										column: 32
-										line: 1
-									}
-									start: Object {
-										column: 31
-										line: 1
-									}
-								}
+								loc: SourceLocation es2017/async-functions/invalid-escape-await/input.js 1:31-1:32 (x)
 							}
 						}
 					]
@@ -189,8 +91,5 @@ JSRoot {
     (async function() { aw\u0061it x })
                         ^^^^^^^^^^
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

@@ -12,62 +12,22 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "es2015/uncategorised/45/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2015/uncategorised/45/input.js"
-		end: Object {
-			column: 20
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2015/uncategorised/45/input.js 1:0-1:20
+	path: UIDPath<es2015/uncategorised/45/input.js>
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "es2015/uncategorised/45/input.js"
-				end: Object {
-					column: 20
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2015/uncategorised/45/input.js 1:0-1:20
 			expression: JSArrowFunctionExpression {
-				loc: Object {
-					filename: "es2015/uncategorised/45/input.js"
-					end: Object {
-						column: 20
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/uncategorised/45/input.js 1:0-1:20
 				body: JSNumericLiteral {
 					value: 42
 					format: undefined
-					loc: Object {
-						filename: "es2015/uncategorised/45/input.js"
-						end: Object {
-							column: 20
-							line: 1
-						}
-						start: Object {
-							column: 18
-							line: 1
-						}
-					}
+					loc: SourceLocation es2015/uncategorised/45/input.js 1:18-1:20
 				}
 				head: JSFunctionHead {
 					async: false
@@ -75,75 +35,23 @@ JSRoot {
 					rest: undefined
 					returnType: undefined
 					thisType: undefined
-					loc: Object {
-						filename: "es2015/uncategorised/45/input.js"
-						end: Object {
-							column: 17
-							line: 1
-						}
-						start: Object {
-							column: 0
-							line: 1
-						}
-					}
+					loc: SourceLocation es2015/uncategorised/45/input.js 1:0-1:17
 					params: Array [
 						JSBindingIdentifier {
 							name: "eval"
-							loc: Object {
-								filename: "es2015/uncategorised/45/input.js"
-								identifierName: "eval"
-								end: Object {
-									column: 5
-									line: 1
-								}
-								start: Object {
-									column: 1
-									line: 1
-								}
-							}
+							loc: SourceLocation es2015/uncategorised/45/input.js 1:1-1:5 (eval)
 						}
 						JSBindingAssignmentPattern {
 							operator: "="
-							loc: Object {
-								filename: "es2015/uncategorised/45/input.js"
-								end: Object {
-									column: 13
-									line: 1
-								}
-								start: Object {
-									column: 7
-									line: 1
-								}
-							}
+							loc: SourceLocation es2015/uncategorised/45/input.js 1:7-1:13
 							left: JSBindingIdentifier {
 								name: "a"
-								loc: Object {
-									filename: "es2015/uncategorised/45/input.js"
-									identifierName: "a"
-									end: Object {
-										column: 8
-										line: 1
-									}
-									start: Object {
-										column: 7
-										line: 1
-									}
-								}
+								loc: SourceLocation es2015/uncategorised/45/input.js 1:7-1:8 (a)
 							}
 							right: JSNumericLiteral {
 								value: 10
 								format: undefined
-								loc: Object {
-									filename: "es2015/uncategorised/45/input.js"
-									end: Object {
-										column: 13
-										line: 1
-									}
-									start: Object {
-										column: 11
-										line: 1
-									}
-								}
+								loc: SourceLocation es2015/uncategorised/45/input.js 1:11-1:13
 							}
 						}
 					]
@@ -157,6 +65,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

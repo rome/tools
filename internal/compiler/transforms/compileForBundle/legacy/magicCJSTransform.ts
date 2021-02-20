@@ -46,7 +46,7 @@ export default createVisitor({
 			) {
 				const resolved = options.relativeSourcesToModuleId[source];
 				const sourceNode = jsStringLiteral.create({
-					value: resolved,
+					value: resolved.join(),
 				});
 				return signals.replace(
 					template.expression`Rome.requireNamespace(${sourceNode})`,
@@ -71,7 +71,7 @@ export default createVisitor({
 		// Add module wrapper
 		if (node.type === "JSRoot") {
 			const source = jsStringLiteral.create({
-				value: options.moduleId,
+				value: options.moduleId.join(),
 			});
 
 			// Build factory

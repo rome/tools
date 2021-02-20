@@ -12,62 +12,22 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "typescript/function/export-default/input.ts"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
+	loc: SourceLocation typescript/function/export-default/input.ts 1:0-2:0
+	path: UIDPath<typescript/function/export-default/input.ts>
 	syntax: Array ["ts"]
-	loc: Object {
-		filename: "typescript/function/export-default/input.ts"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
 	body: Array [
 		JSExportDefaultDeclaration {
-			loc: Object {
-				filename: "typescript/function/export-default/input.ts"
-				end: Object {
-					column: 42
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation typescript/function/export-default/input.ts 1:0-1:42
 			declaration: TSDeclareFunction {
 				id: JSBindingIdentifier {
 					name: "*default*"
-					loc: Object {
-						filename: "typescript/function/export-default/input.ts"
-						end: Object {
-							column: 42
-							line: 1
-						}
-						start: Object {
-							column: 15
-							line: 1
-						}
-					}
+					loc: SourceLocation typescript/function/export-default/input.ts 1:15-1:42
 				}
-				loc: Object {
-					filename: "typescript/function/export-default/input.ts"
-					end: Object {
-						column: 42
-						line: 1
-					}
-					start: Object {
-						column: 15
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/function/export-default/input.ts 1:15-1:42
 				head: JSFunctionHead {
 					async: false
 					generator: false
@@ -75,71 +35,16 @@ JSRoot {
 					rest: undefined
 					thisType: undefined
 					typeParameters: undefined
-					loc: Object {
-						filename: "typescript/function/export-default/input.ts"
-						end: Object {
-							column: 41
-							line: 1
-						}
-						start: Object {
-							column: 23
-							line: 1
-						}
-					}
-					returnType: TSVoidKeywordTypeAnnotation {
-						loc: Object {
-							filename: "typescript/function/export-default/input.ts"
-							end: Object {
-								column: 41
-								line: 1
-							}
-							start: Object {
-								column: 37
-								line: 1
-							}
-						}
-					}
+					loc: SourceLocation typescript/function/export-default/input.ts 1:23-1:41
+					returnType: TSVoidKeywordTypeAnnotation {loc: SourceLocation typescript/function/export-default/input.ts 1:37-1:41}
 					params: Array [
 						JSBindingIdentifier {
 							name: "x"
-							loc: Object {
-								filename: "typescript/function/export-default/input.ts"
-								identifierName: "x"
-								end: Object {
-									column: 25
-									line: 1
-								}
-								start: Object {
-									column: 24
-									line: 1
-								}
-							}
+							loc: SourceLocation typescript/function/export-default/input.ts 1:24-1:25 (x)
 							meta: JSPatternMeta {
 								optional: true
-								loc: Object {
-									filename: "typescript/function/export-default/input.ts"
-									end: Object {
-										column: 34
-										line: 1
-									}
-									start: Object {
-										column: 24
-										line: 1
-									}
-								}
-								typeAnnotation: TSNumberKeywordTypeAnnotation {
-									loc: Object {
-										filename: "typescript/function/export-default/input.ts"
-										end: Object {
-											column: 34
-											line: 1
-										}
-										start: Object {
-											column: 28
-											line: 1
-										}
-									}
-								}
+								loc: SourceLocation typescript/function/export-default/input.ts 1:24-1:34
+								typeAnnotation: TSNumberKeywordTypeAnnotation {loc: SourceLocation typescript/function/export-default/input.ts 1:28-1:34}
 							}
 						}
 					]
@@ -153,6 +58,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

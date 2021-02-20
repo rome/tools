@@ -12,286 +12,94 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "es2015/uncategorised/26/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2015/uncategorised/26/input.js"
-		end: Object {
-			column: 70
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2015/uncategorised/26/input.js 1:0-1:70
+	path: UIDPath<es2015/uncategorised/26/input.js>
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "es2015/uncategorised/26/input.js"
-				end: Object {
-					column: 70
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2015/uncategorised/26/input.js 1:0-1:70
 			expression: JSTemplateLiteral {
-				loc: Object {
-					filename: "es2015/uncategorised/26/input.js"
-					end: Object {
-						column: 70
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/uncategorised/26/input.js 1:0-1:70
 				quasis: Array [
 					JSTemplateElement {
 						cooked: "outer"
 						raw: "outer"
 						tail: false
-						loc: Object {
-							filename: "es2015/uncategorised/26/input.js"
-							end: Object {
-								column: 6
-								line: 1
-							}
-							start: Object {
-								column: 1
-								line: 1
-							}
-						}
+						loc: SourceLocation es2015/uncategorised/26/input.js 1:1-1:6
 					}
 					JSTemplateElement {
 						cooked: "bar"
 						raw: "bar"
 						tail: false
-						loc: Object {
-							filename: "es2015/uncategorised/26/input.js"
-							end: Object {
-								column: 24
-								line: 1
-							}
-							start: Object {
-								column: 21
-								line: 1
-							}
-						}
+						loc: SourceLocation es2015/uncategorised/26/input.js 1:21-1:24
 					}
 					JSTemplateElement {
 						cooked: "end"
 						raw: "end"
 						tail: true
-						loc: Object {
-							filename: "es2015/uncategorised/26/input.js"
-							end: Object {
-								column: 69
-								line: 1
-							}
-							start: Object {
-								column: 66
-								line: 1
-							}
-						}
+						loc: SourceLocation es2015/uncategorised/26/input.js 1:66-1:69
 					}
 				]
 				expressions: Array [
 					JSObjectExpression {
-						loc: Object {
-							filename: "es2015/uncategorised/26/input.js"
-							end: Object {
-								column: 20
-								line: 1
-							}
-							start: Object {
-								column: 8
-								line: 1
-							}
-						}
+						loc: SourceLocation es2015/uncategorised/26/input.js 1:8-1:20
 						properties: Array [
 							JSObjectProperty {
 								key: JSStaticPropertyKey {
 									value: JSIdentifier {
 										name: "x"
-										loc: Object {
-											filename: "es2015/uncategorised/26/input.js"
-											identifierName: "x"
-											end: Object {
-												column: 10
-												line: 1
-											}
-											start: Object {
-												column: 9
-												line: 1
-											}
-										}
+										loc: SourceLocation es2015/uncategorised/26/input.js 1:9-1:10 (x)
 									}
-									loc: Object {
-										filename: "es2015/uncategorised/26/input.js"
-										end: Object {
-											column: 10
-											line: 1
-										}
-										start: Object {
-											column: 9
-											line: 1
-										}
-									}
+									loc: SourceLocation es2015/uncategorised/26/input.js 1:9-1:10
 								}
 								value: JSObjectExpression {
-									loc: Object {
-										filename: "es2015/uncategorised/26/input.js"
-										end: Object {
-											column: 19
-											line: 1
-										}
-										start: Object {
-											column: 12
-											line: 1
-										}
-									}
+									loc: SourceLocation es2015/uncategorised/26/input.js 1:12-1:19
 									properties: Array [
 										JSObjectProperty {
 											key: JSStaticPropertyKey {
 												value: JSIdentifier {
 													name: "y"
-													loc: Object {
-														filename: "es2015/uncategorised/26/input.js"
-														identifierName: "y"
-														end: Object {
-															column: 14
-															line: 1
-														}
-														start: Object {
-															column: 13
-															line: 1
-														}
-													}
+													loc: SourceLocation es2015/uncategorised/26/input.js 1:13-1:14 (y)
 												}
-												loc: Object {
-													filename: "es2015/uncategorised/26/input.js"
-													end: Object {
-														column: 14
-														line: 1
-													}
-													start: Object {
-														column: 13
-														line: 1
-													}
-												}
+												loc: SourceLocation es2015/uncategorised/26/input.js 1:13-1:14
 											}
 											value: JSNumericLiteral {
 												value: 10
 												format: undefined
-												loc: Object {
-													filename: "es2015/uncategorised/26/input.js"
-													end: Object {
-														column: 18
-														line: 1
-													}
-													start: Object {
-														column: 16
-														line: 1
-													}
-												}
+												loc: SourceLocation es2015/uncategorised/26/input.js 1:16-1:18
 											}
-											loc: Object {
-												filename: "es2015/uncategorised/26/input.js"
-												end: Object {
-													column: 18
-													line: 1
-												}
-												start: Object {
-													column: 13
-													line: 1
-												}
-											}
+											loc: SourceLocation es2015/uncategorised/26/input.js 1:13-1:18
 										}
 									]
 								}
-								loc: Object {
-									filename: "es2015/uncategorised/26/input.js"
-									end: Object {
-										column: 19
-										line: 1
-									}
-									start: Object {
-										column: 9
-										line: 1
-									}
-								}
+								loc: SourceLocation es2015/uncategorised/26/input.js 1:9-1:19
 							}
 						]
 					}
 					JSTemplateLiteral {
-						loc: Object {
-							filename: "es2015/uncategorised/26/input.js"
-							end: Object {
-								column: 65
-								line: 1
-							}
-							start: Object {
-								column: 26
-								line: 1
-							}
-						}
+						loc: SourceLocation es2015/uncategorised/26/input.js 1:26-1:65
 						quasis: Array [
 							JSTemplateElement {
 								cooked: "nested"
 								raw: "nested"
 								tail: false
-								loc: Object {
-									filename: "es2015/uncategorised/26/input.js"
-									end: Object {
-										column: 33
-										line: 1
-									}
-									start: Object {
-										column: 27
-										line: 1
-									}
-								}
+								loc: SourceLocation es2015/uncategorised/26/input.js 1:27-1:33
 							}
 							JSTemplateElement {
 								cooked: "endnest"
 								raw: "endnest"
 								tail: true
-								loc: Object {
-									filename: "es2015/uncategorised/26/input.js"
-									end: Object {
-										column: 64
-										line: 1
-									}
-									start: Object {
-										column: 57
-										line: 1
-									}
-								}
+								loc: SourceLocation es2015/uncategorised/26/input.js 1:57-1:64
 							}
 						]
 						expressions: Array [
 							JSFunctionExpression {
 								id: undefined
-								loc: Object {
-									filename: "es2015/uncategorised/26/input.js"
-									end: Object {
-										column: 56
-										line: 1
-									}
-									start: Object {
-										column: 35
-										line: 1
-									}
-								}
+								loc: SourceLocation es2015/uncategorised/26/input.js 1:35-1:56
 								head: JSFunctionHead {
 									async: false
 									generator: false
@@ -301,58 +109,18 @@ JSRoot {
 									returnType: undefined
 									thisType: undefined
 									typeParameters: undefined
-									loc: Object {
-										filename: "es2015/uncategorised/26/input.js"
-										end: Object {
-											column: 45
-											line: 1
-										}
-										start: Object {
-											column: 43
-											line: 1
-										}
-									}
+									loc: SourceLocation es2015/uncategorised/26/input.js 1:43-1:45
 								}
 								body: JSBlockStatement {
 									directives: Array []
-									loc: Object {
-										filename: "es2015/uncategorised/26/input.js"
-										end: Object {
-											column: 56
-											line: 1
-										}
-										start: Object {
-											column: 45
-											line: 1
-										}
-									}
+									loc: SourceLocation es2015/uncategorised/26/input.js 1:45-1:56
 									body: Array [
 										JSReturnStatement {
-											loc: Object {
-												filename: "es2015/uncategorised/26/input.js"
-												end: Object {
-													column: 55
-													line: 1
-												}
-												start: Object {
-													column: 46
-													line: 1
-												}
-											}
+											loc: SourceLocation es2015/uncategorised/26/input.js 1:46-1:55
 											argument: JSNumericLiteral {
 												value: 1
 												format: undefined
-												loc: Object {
-													filename: "es2015/uncategorised/26/input.js"
-													end: Object {
-														column: 54
-														line: 1
-													}
-													start: Object {
-														column: 53
-														line: 1
-													}
-												}
+												loc: SourceLocation es2015/uncategorised/26/input.js 1:53-1:54
 											}
 										}
 									]
@@ -370,6 +138,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

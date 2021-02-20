@@ -11,49 +11,29 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "typescript/class/async-optional-method/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
 	syntax: Array []
-	loc: Object {
-		filename: "typescript/class/async-optional-method/input.js"
-		end: Object {
-			column: 1
-			line: 3
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation typescript/class/async-optional-method/input.js 1:0-3:1
+	path: UIDPath<typescript/class/async-optional-method/input.js>
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse"
 				categoryValue: "js"
-				message: Array [
-					RAW_MARKUP {value: "Expected "}
-					"ts"
-					RAW_MARKUP {value: " syntax to be enabled"}
-				]
+				category: Array ["parse"]
+				message: RAW_MARKUP {value: "Expected <emphasis>ts</emphasis> syntax to be enabled"}
 			}
 			location: Object {
-				filename: "typescript/class/async-optional-method/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 14
-					line: 2
-				}
-				start: Object {
-					column: 14
-					line: 2
-				}
+				end: Position 2:14
+				path: UIDPath<typescript/class/async-optional-method/input.js>
+				start: Position 2:14
 			}
 		}
 	]
@@ -61,59 +41,17 @@ JSRoot {
 		JSClassDeclaration {
 			id: JSBindingIdentifier {
 				name: "A"
-				loc: Object {
-					filename: "typescript/class/async-optional-method/input.js"
-					identifierName: "A"
-					end: Object {
-						column: 7
-						line: 1
-					}
-					start: Object {
-						column: 6
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/class/async-optional-method/input.js 1:6-1:7 (A)
 			}
-			loc: Object {
-				filename: "typescript/class/async-optional-method/input.js"
-				end: Object {
-					column: 1
-					line: 3
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation typescript/class/async-optional-method/input.js 1:0-3:1
 			meta: JSClassHead {
 				implements: undefined
 				superTypeParameters: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "typescript/class/async-optional-method/input.js"
-					end: Object {
-						column: 1
-						line: 3
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/class/async-optional-method/input.js 1:0-3:1
 				superClass: JSReferenceIdentifier {
 					name: "B"
-					loc: Object {
-						filename: "typescript/class/async-optional-method/input.js"
-						identifierName: "B"
-						end: Object {
-							column: 17
-							line: 1
-						}
-						start: Object {
-							column: 16
-							line: 1
-						}
-					}
+					loc: SourceLocation typescript/class/async-optional-method/input.js 1:16-1:17 (B)
 				}
 				body: Array [
 					TSDeclareMethod {
@@ -121,43 +59,12 @@ JSRoot {
 						key: JSStaticPropertyKey {
 							value: JSIdentifier {
 								name: "method"
-								loc: Object {
-									filename: "typescript/class/async-optional-method/input.js"
-									identifierName: "method"
-									end: Object {
-										column: 14
-										line: 2
-									}
-									start: Object {
-										column: 8
-										line: 2
-									}
-								}
+								loc: SourceLocation typescript/class/async-optional-method/input.js 2:8-2:14 (method)
 							}
-							loc: Object {
-								filename: "typescript/class/async-optional-method/input.js"
-								end: Object {
-									column: 14
-									line: 2
-								}
-								start: Object {
-									column: 8
-									line: 2
-								}
-							}
+							loc: SourceLocation typescript/class/async-optional-method/input.js 2:8-2:14
 						}
 						body: undefined
-						loc: Object {
-							filename: "typescript/class/async-optional-method/input.js"
-							end: Object {
-								column: 44
-								line: 2
-							}
-							start: Object {
-								column: 2
-								line: 2
-							}
-						}
+						loc: SourceLocation typescript/class/async-optional-method/input.js 2:2-2:44
 						meta: JSClassPropertyMeta {
 							abstract: false
 							accessibility: undefined
@@ -165,21 +72,8 @@ JSRoot {
 							readonly: false
 							static: false
 							typeAnnotation: undefined
-							start: Object {
-								column: 2
-								line: 2
-							}
-							loc: Object {
-								filename: "typescript/class/async-optional-method/input.js"
-								end: Object {
-									column: 15
-									line: 2
-								}
-								start: Object {
-									column: 2
-									line: 2
-								}
-							}
+							loc: SourceLocation typescript/class/async-optional-method/input.js 2:2-2:15
+							start: Position 2:2
 						}
 						head: JSFunctionHead {
 							async: true
@@ -188,115 +82,27 @@ JSRoot {
 							rest: undefined
 							thisType: undefined
 							typeParameters: undefined
-							loc: Object {
-								filename: "typescript/class/async-optional-method/input.js"
-								end: Object {
-									column: 43
-									line: 2
-								}
-								start: Object {
-									column: 15
-									line: 2
-								}
-							}
+							loc: SourceLocation typescript/class/async-optional-method/input.js 2:15-2:43
 							params: Array [
 								JSBindingIdentifier {
 									name: "val"
-									loc: Object {
-										filename: "typescript/class/async-optional-method/input.js"
-										identifierName: "val"
-										end: Object {
-											column: 19
-											line: 2
-										}
-										start: Object {
-											column: 16
-											line: 2
-										}
-									}
+									loc: SourceLocation typescript/class/async-optional-method/input.js 2:16-2:19 (val)
 									meta: JSPatternMeta {
 										optional: undefined
-										loc: Object {
-											filename: "typescript/class/async-optional-method/input.js"
-											end: Object {
-												column: 27
-												line: 2
-											}
-											start: Object {
-												column: 16
-												line: 2
-											}
-										}
-										typeAnnotation: TSStringKeywordTypeAnnotation {
-											loc: Object {
-												filename: "typescript/class/async-optional-method/input.js"
-												end: Object {
-													column: 27
-													line: 2
-												}
-												start: Object {
-													column: 21
-													line: 2
-												}
-											}
-										}
+										loc: SourceLocation typescript/class/async-optional-method/input.js 2:16-2:27
+										typeAnnotation: TSStringKeywordTypeAnnotation {loc: SourceLocation typescript/class/async-optional-method/input.js 2:21-2:27}
 									}
 								}
 							]
 							returnType: TSTypeReference {
-								loc: Object {
-									filename: "typescript/class/async-optional-method/input.js"
-									end: Object {
-										column: 43
-										line: 2
-									}
-									start: Object {
-										column: 30
-										line: 2
-									}
-								}
+								loc: SourceLocation typescript/class/async-optional-method/input.js 2:30-2:43
 								typeName: JSReferenceIdentifier {
 									name: "Promise"
-									loc: Object {
-										filename: "typescript/class/async-optional-method/input.js"
-										identifierName: "Promise"
-										end: Object {
-											column: 37
-											line: 2
-										}
-										start: Object {
-											column: 30
-											line: 2
-										}
-									}
+									loc: SourceLocation typescript/class/async-optional-method/input.js 2:30-2:37 (Promise)
 								}
 								typeParameters: TSTypeParameterInstantiation {
-									loc: Object {
-										filename: "typescript/class/async-optional-method/input.js"
-										end: Object {
-											column: 43
-											line: 2
-										}
-										start: Object {
-											column: 37
-											line: 2
-										}
-									}
-									params: Array [
-										TSVoidKeywordTypeAnnotation {
-											loc: Object {
-												filename: "typescript/class/async-optional-method/input.js"
-												end: Object {
-													column: 42
-													line: 2
-												}
-												start: Object {
-													column: 38
-													line: 2
-												}
-											}
-										}
-									]
+									loc: SourceLocation typescript/class/async-optional-method/input.js 2:37-2:43
+									params: Array [TSVoidKeywordTypeAnnotation {loc: SourceLocation typescript/class/async-optional-method/input.js 2:38-2:42}]
 								}
 							}
 						}
@@ -321,8 +127,5 @@ JSRoot {
       │               ^
     3 │ }
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

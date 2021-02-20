@@ -11,131 +11,52 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "core/uncategorised/428/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "core/uncategorised/428/input.js"
-		end: Object {
-			column: 11
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation core/uncategorised/428/input.js 1:0-1:11
+	path: UIDPath<core/uncategorised/428/input.js>
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse"
 				categoryValue: "js"
+				category: Array ["parse"]
 				message: RAW_MARKUP {value: "Expected an identifier"}
 			}
 			location: Object {
-				filename: "core/uncategorised/428/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 8
-					line: 1
-				}
-				start: Object {
-					column: 8
-					line: 1
-				}
+				end: Position 1:8
+				path: UIDPath<core/uncategorised/428/input.js>
+				start: Position 1:8
 			}
 		}
 	]
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "core/uncategorised/428/input.js"
-				end: Object {
-					column: 11
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation core/uncategorised/428/input.js 1:0-1:11
 			expression: JSMemberExpression {
-				loc: Object {
-					filename: "core/uncategorised/428/input.js"
-					end: Object {
-						column: 11
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation core/uncategorised/428/input.js 1:0-1:11
 				property: JSStaticMemberProperty {
 					value: JSIdentifier {
 						name: ""
-						loc: Object {
-							filename: "core/uncategorised/428/input.js"
-							identifierName: ""
-							end: Object {
-								column: 11
-								line: 1
-							}
-							start: Object {
-								column: 8
-								line: 1
-							}
-						}
+						loc: SourceLocation core/uncategorised/428/input.js 1:8-1:11 ()
 					}
-					loc: Object {
-						filename: "core/uncategorised/428/input.js"
-						identifierName: ""
-						end: Object {
-							column: 11
-							line: 1
-						}
-						start: Object {
-							column: 8
-							line: 1
-						}
-					}
+					loc: SourceLocation core/uncategorised/428/input.js 1:8-1:11 ()
 				}
 				object: JSNewExpression {
 					arguments: Array []
 					optional: undefined
 					typeArguments: undefined
-					loc: Object {
-						filename: "core/uncategorised/428/input.js"
-						end: Object {
-							column: 7
-							line: 1
-						}
-						start: Object {
-							column: 0
-							line: 1
-						}
-					}
+					loc: SourceLocation core/uncategorised/428/input.js 1:0-1:7
 					callee: JSReferenceIdentifier {
 						name: "X"
-						loc: Object {
-							filename: "core/uncategorised/428/input.js"
-							identifierName: "X"
-							end: Object {
-								column: 5
-								line: 1
-							}
-							start: Object {
-								column: 4
-								line: 1
-							}
-						}
+						loc: SourceLocation core/uncategorised/428/input.js 1:4-1:5 (X)
 					}
 				}
 			}
@@ -155,8 +76,5 @@ JSRoot {
     new X()."s"
             ^
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

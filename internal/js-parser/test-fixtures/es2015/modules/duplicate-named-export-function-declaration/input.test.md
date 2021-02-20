@@ -11,66 +11,34 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "es2015/modules/duplicate-named-export-function-declaration/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
 	syntax: Array []
-	loc: Object {
-		filename: "es2015/modules/duplicate-named-export-function-declaration/input.js"
-		end: Object {
-			column: 0
-			line: 3
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2015/modules/duplicate-named-export-function-declaration/input.js 1:0-3:0
+	path: UIDPath<es2015/modules/duplicate-named-export-function-declaration/input.js>
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
 			location: Object {
-				filename: "es2015/modules/duplicate-named-export-function-declaration/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 24
-					line: 2
-				}
-				start: Object {
-					column: 7
-					line: 2
-				}
+				end: Position 2:24
+				path: UIDPath<es2015/modules/duplicate-named-export-function-declaration/input.js>
+				start: Position 2:7
 			}
 			description: Object {
-				category: "parse"
 				categoryValue: "js"
-				message: Array [
-					RAW_MARKUP {value: "`"}
-					"foo"
-					RAW_MARKUP {value: "` has already been exported. Exported identifiers must be unique."}
-				]
+				category: Array ["parse"]
+				message: RAW_MARKUP {value: "`foo` has already been exported. Exported identifiers must be unique."}
 				advice: Array [
 					log {
 						category: "info"
 						text: RAW_MARKUP {value: "Defined already here"}
 					}
-					frame {
-						location: Object {
-							filename: "es2015/modules/duplicate-named-export-function-declaration/input.js"
-							end: Object {
-								column: 12
-								line: 1
-							}
-							start: Object {
-								column: 9
-								line: 1
-							}
-						}
-					}
+					frame {location: SourceLocation es2015/modules/duplicate-named-export-function-declaration/input.js 1:9-1:12}
 				]
 			}
 		}
@@ -79,59 +47,17 @@ JSRoot {
 		JSExportLocalDeclaration {
 			declaration: undefined
 			exportKind: "value"
-			loc: Object {
-				filename: "es2015/modules/duplicate-named-export-function-declaration/input.js"
-				end: Object {
-					column: 15
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2015/modules/duplicate-named-export-function-declaration/input.js 1:0-1:15
 			specifiers: Array [
 				JSExportLocalSpecifier {
-					loc: Object {
-						filename: "es2015/modules/duplicate-named-export-function-declaration/input.js"
-						end: Object {
-							column: 12
-							line: 1
-						}
-						start: Object {
-							column: 9
-							line: 1
-						}
-					}
+					loc: SourceLocation es2015/modules/duplicate-named-export-function-declaration/input.js 1:9-1:12
 					exported: JSIdentifier {
 						name: "foo"
-						loc: Object {
-							filename: "es2015/modules/duplicate-named-export-function-declaration/input.js"
-							identifierName: "foo"
-							end: Object {
-								column: 12
-								line: 1
-							}
-							start: Object {
-								column: 9
-								line: 1
-							}
-						}
+						loc: SourceLocation es2015/modules/duplicate-named-export-function-declaration/input.js 1:9-1:12 (foo)
 					}
 					local: JSReferenceIdentifier {
 						name: "foo"
-						loc: Object {
-							filename: "es2015/modules/duplicate-named-export-function-declaration/input.js"
-							identifierName: "foo"
-							end: Object {
-								column: 12
-								line: 1
-							}
-							start: Object {
-								column: 9
-								line: 1
-							}
-						}
+						loc: SourceLocation es2015/modules/duplicate-named-export-function-declaration/input.js 1:9-1:12 (foo)
 					}
 				}
 			]
@@ -139,58 +65,17 @@ JSRoot {
 		JSExportLocalDeclaration {
 			exportKind: "value"
 			specifiers: undefined
-			loc: Object {
-				filename: "es2015/modules/duplicate-named-export-function-declaration/input.js"
-				end: Object {
-					column: 24
-					line: 2
-				}
-				start: Object {
-					column: 0
-					line: 2
-				}
-			}
+			loc: SourceLocation es2015/modules/duplicate-named-export-function-declaration/input.js 2:0-2:24
 			declaration: JSFunctionDeclaration {
 				id: JSBindingIdentifier {
 					name: "foo"
-					loc: Object {
-						filename: "es2015/modules/duplicate-named-export-function-declaration/input.js"
-						identifierName: "foo"
-						end: Object {
-							column: 19
-							line: 2
-						}
-						start: Object {
-							column: 16
-							line: 2
-						}
-					}
+					loc: SourceLocation es2015/modules/duplicate-named-export-function-declaration/input.js 2:16-2:19 (foo)
 				}
-				loc: Object {
-					filename: "es2015/modules/duplicate-named-export-function-declaration/input.js"
-					end: Object {
-						column: 24
-						line: 2
-					}
-					start: Object {
-						column: 7
-						line: 2
-					}
-				}
+				loc: SourceLocation es2015/modules/duplicate-named-export-function-declaration/input.js 2:7-2:24
 				body: JSBlockStatement {
 					body: Array []
 					directives: Array []
-					loc: Object {
-						filename: "es2015/modules/duplicate-named-export-function-declaration/input.js"
-						end: Object {
-							column: 24
-							line: 2
-						}
-						start: Object {
-							column: 22
-							line: 2
-						}
-					}
+					loc: SourceLocation es2015/modules/duplicate-named-export-function-declaration/input.js 2:22-2:24
 				}
 				head: JSFunctionHead {
 					async: false
@@ -201,33 +86,11 @@ JSRoot {
 					returnType: undefined
 					thisType: undefined
 					typeParameters: undefined
-					loc: Object {
-						filename: "es2015/modules/duplicate-named-export-function-declaration/input.js"
-						end: Object {
-							column: 21
-							line: 2
-						}
-						start: Object {
-							column: 19
-							line: 2
-						}
-					}
+					loc: SourceLocation es2015/modules/duplicate-named-export-function-declaration/input.js 2:19-2:21
 				}
 			}
 		}
-		JSEmptyStatement {
-			loc: Object {
-				filename: "es2015/modules/duplicate-named-export-function-declaration/input.js"
-				end: Object {
-					column: 25
-					line: 2
-				}
-				start: Object {
-					column: 24
-					line: 2
-				}
-			}
-		}
+		JSEmptyStatement {loc: SourceLocation es2015/modules/duplicate-named-export-function-declaration/input.js 2:24-2:25}
 	]
 }
 ```
@@ -240,14 +103,15 @@ JSRoot {
 
   ✖ `foo` has already been exported. Exported identifiers must be unique.
 
+    1 │ export { foo };
+  > 2 │ export function foo() {};
+      │        ^^^^^^^^^^^^^^^^^
+
   ℹ Defined already here
 
   > 1 │ export { foo };
       │          ^^^
     2 │ export function foo() {};
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

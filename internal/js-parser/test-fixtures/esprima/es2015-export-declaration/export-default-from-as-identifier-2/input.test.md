@@ -12,78 +12,26 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "esprima/es2015-export-declaration/export-default-from-as-identifier-2/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
 	syntax: Array []
-	loc: Object {
-		filename: "esprima/es2015-export-declaration/export-default-from-as-identifier-2/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation esprima/es2015-export-declaration/export-default-from-as-identifier-2/input.js 1:0-2:0
+	path: UIDPath<esprima/es2015-export-declaration/export-default-from-as-identifier-2/input.js>
 	body: Array [
 		JSExportDefaultDeclaration {
-			loc: Object {
-				filename: "esprima/es2015-export-declaration/export-default-from-as-identifier-2/input.js"
-				end: Object {
-					column: 26
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation esprima/es2015-export-declaration/export-default-from-as-identifier-2/input.js 1:0-1:26
 			declaration: JSCallExpression {
-				loc: Object {
-					filename: "esprima/es2015-export-declaration/export-default-from-as-identifier-2/input.js"
-					end: Object {
-						column: 25
-						line: 1
-					}
-					start: Object {
-						column: 15
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/es2015-export-declaration/export-default-from-as-identifier-2/input.js 1:15-1:25
 				callee: JSReferenceIdentifier {
 					name: "from"
-					loc: Object {
-						filename: "esprima/es2015-export-declaration/export-default-from-as-identifier-2/input.js"
-						identifierName: "from"
-						end: Object {
-							column: 19
-							line: 1
-						}
-						start: Object {
-							column: 15
-							line: 1
-						}
-					}
+					loc: SourceLocation esprima/es2015-export-declaration/export-default-from-as-identifier-2/input.js 1:15-1:19 (from)
 				}
 				arguments: Array [
 					JSReferenceIdentifier {
 						name: "bar"
-						loc: Object {
-							filename: "esprima/es2015-export-declaration/export-default-from-as-identifier-2/input.js"
-							identifierName: "bar"
-							end: Object {
-								column: 24
-								line: 1
-							}
-							start: Object {
-								column: 21
-								line: 1
-							}
-						}
+						loc: SourceLocation esprima/es2015-export-declaration/export-default-from-as-identifier-2/input.js 1:21-1:24 (bar)
 					}
 				]
 			}
@@ -95,6 +43,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

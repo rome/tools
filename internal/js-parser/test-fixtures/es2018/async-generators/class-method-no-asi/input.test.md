@@ -12,110 +12,64 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "es2018/async-generators/class-method-no-asi/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2018/async-generators/class-method-no-asi/input.js"
-		end: Object {
-			column: 0
-			line: 5
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2018/async-generators/class-method-no-asi/input.js 1:0-5:0
+	path: UIDPath<es2018/async-generators/class-method-no-asi/input.js>
 	body: Array [
 		JSClassDeclaration {
 			id: JSBindingIdentifier {
 				name: "A"
-				loc: Object {
-					filename: "es2018/async-generators/class-method-no-asi/input.js"
-					identifierName: "A"
-					end: Object {
-						column: 7
-						line: 1
-					}
-					start: Object {
-						column: 6
-						line: 1
-					}
-				}
+				loc: SourceLocation es2018/async-generators/class-method-no-asi/input.js 1:6-1:7 (A)
 			}
-			loc: Object {
-				filename: "es2018/async-generators/class-method-no-asi/input.js"
-				end: Object {
-					column: 1
-					line: 4
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2018/async-generators/class-method-no-asi/input.js 1:0-4:1
 			meta: JSClassHead {
 				implements: undefined
 				superClass: undefined
 				superTypeParameters: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "es2018/async-generators/class-method-no-asi/input.js"
-					end: Object {
-						column: 1
-						line: 4
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation es2018/async-generators/class-method-no-asi/input.js 1:0-4:1
 				body: Array [
 					JSClassProperty {
 						key: JSStaticPropertyKey {
 							value: JSIdentifier {
 								name: "async"
-								loc: Object {
-									filename: "es2018/async-generators/class-method-no-asi/input.js"
-									identifierName: "async"
-									end: Object {
-										column: 7
-										line: 2
-									}
-									start: Object {
-										column: 2
-										line: 2
-									}
-								}
+								loc: SourceLocation es2018/async-generators/class-method-no-asi/input.js 2:2-2:7 (async)
 							}
-							loc: Object {
-								filename: "es2018/async-generators/class-method-no-asi/input.js"
-								end: Object {
-									column: 7
-									line: 2
-								}
-								start: Object {
-									column: 2
-									line: 2
-								}
-							}
+							loc: SourceLocation es2018/async-generators/class-method-no-asi/input.js 2:2-2:7
 						}
 						value: undefined
 						definite: undefined
 						typeAnnotation: undefined
-						loc: Object {
-							filename: "es2018/async-generators/class-method-no-asi/input.js"
-							end: Object {
-								column: 7
-								line: 2
+						loc: SourceLocation es2018/async-generators/class-method-no-asi/input.js 2:2-2:7
+						meta: JSClassPropertyMeta {
+							abstract: false
+							accessibility: undefined
+							optional: false
+							readonly: false
+							static: false
+							typeAnnotation: undefined
+							loc: SourceLocation es2018/async-generators/class-method-no-asi/input.js 2:2-2:7
+							start: Position 2:2
+						}
+					}
+					JSClassMethod {
+						kind: "method"
+						key: JSStaticPropertyKey {
+							value: JSIdentifier {
+								name: "a"
+								loc: SourceLocation es2018/async-generators/class-method-no-asi/input.js 3:4-3:5 (a)
 							}
-							start: Object {
-								column: 2
-								line: 2
-							}
+							loc: SourceLocation es2018/async-generators/class-method-no-asi/input.js 3:4-3:5
+						}
+						loc: SourceLocation es2018/async-generators/class-method-no-asi/input.js 3:2-3:9
+						body: JSBlockStatement {
+							body: Array []
+							directives: Array []
+							loc: SourceLocation es2018/async-generators/class-method-no-asi/input.js 3:7-3:9
 						}
 						meta: JSClassPropertyMeta {
 							abstract: false
@@ -124,78 +78,8 @@ JSRoot {
 							readonly: false
 							static: false
 							typeAnnotation: undefined
-							start: Object {
-								column: 2
-								line: 2
-							}
-							loc: Object {
-								filename: "es2018/async-generators/class-method-no-asi/input.js"
-								end: Object {
-									column: 7
-									line: 2
-								}
-								start: Object {
-									column: 2
-									line: 2
-								}
-							}
-						}
-					}
-					JSClassMethod {
-						kind: "method"
-						key: JSStaticPropertyKey {
-							value: JSIdentifier {
-								name: "a"
-								loc: Object {
-									filename: "es2018/async-generators/class-method-no-asi/input.js"
-									identifierName: "a"
-									end: Object {
-										column: 5
-										line: 3
-									}
-									start: Object {
-										column: 4
-										line: 3
-									}
-								}
-							}
-							loc: Object {
-								filename: "es2018/async-generators/class-method-no-asi/input.js"
-								end: Object {
-									column: 5
-									line: 3
-								}
-								start: Object {
-									column: 4
-									line: 3
-								}
-							}
-						}
-						loc: Object {
-							filename: "es2018/async-generators/class-method-no-asi/input.js"
-							end: Object {
-								column: 9
-								line: 3
-							}
-							start: Object {
-								column: 2
-								line: 3
-							}
-						}
-						body: JSBlockStatement {
-							body: Array []
-							directives: Array []
-							loc: Object {
-								filename: "es2018/async-generators/class-method-no-asi/input.js"
-								end: Object {
-									column: 9
-									line: 3
-								}
-								start: Object {
-									column: 7
-									line: 3
-								}
-							}
+							loc: SourceLocation es2018/async-generators/class-method-no-asi/input.js 3:2-3:5
+							start: Position 3:2
 						}
 						head: JSFunctionHead {
 							async: false
@@ -206,40 +90,7 @@ JSRoot {
 							returnType: undefined
 							thisType: undefined
 							typeParameters: undefined
-							loc: Object {
-								filename: "es2018/async-generators/class-method-no-asi/input.js"
-								end: Object {
-									column: 7
-									line: 3
-								}
-								start: Object {
-									column: 5
-									line: 3
-								}
-							}
-						}
-						meta: JSClassPropertyMeta {
-							abstract: false
-							accessibility: undefined
-							optional: false
-							readonly: false
-							static: false
-							typeAnnotation: undefined
-							start: Object {
-								column: 2
-								line: 3
-							}
-							loc: Object {
-								filename: "es2018/async-generators/class-method-no-asi/input.js"
-								end: Object {
-									column: 5
-									line: 3
-								}
-								start: Object {
-									column: 2
-									line: 3
-								}
-							}
+							loc: SourceLocation es2018/async-generators/class-method-no-asi/input.js 3:5-3:7
 						}
 					}
 				]
@@ -252,6 +103,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

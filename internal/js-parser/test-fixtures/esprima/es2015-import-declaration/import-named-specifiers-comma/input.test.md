@@ -12,166 +12,52 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "esprima/es2015-import-declaration/import-named-specifiers-comma/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
 	syntax: Array []
-	loc: Object {
-		filename: "esprima/es2015-import-declaration/import-named-specifiers-comma/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation esprima/es2015-import-declaration/import-named-specifiers-comma/input.js 1:0-2:0
+	path: UIDPath<esprima/es2015-import-declaration/import-named-specifiers-comma/input.js>
 	body: Array [
 		JSImportDeclaration {
 			defaultSpecifier: undefined
 			importKind: undefined
 			namespaceSpecifier: undefined
-			loc: Object {
-				filename: "esprima/es2015-import-declaration/import-named-specifiers-comma/input.js"
-				end: Object {
-					column: 30
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation esprima/es2015-import-declaration/import-named-specifiers-comma/input.js 1:0-1:30
 			source: JSStringLiteral {
 				value: "foo"
-				loc: Object {
-					filename: "esprima/es2015-import-declaration/import-named-specifiers-comma/input.js"
-					end: Object {
-						column: 29
-						line: 1
-					}
-					start: Object {
-						column: 24
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/es2015-import-declaration/import-named-specifiers-comma/input.js 1:24-1:29
 			}
 			namedSpecifiers: Array [
 				JSImportSpecifier {
-					loc: Object {
-						filename: "esprima/es2015-import-declaration/import-named-specifiers-comma/input.js"
-						end: Object {
-							column: 11
-							line: 1
-						}
-						start: Object {
-							column: 8
-							line: 1
-						}
-					}
+					loc: SourceLocation esprima/es2015-import-declaration/import-named-specifiers-comma/input.js 1:8-1:11
 					imported: JSIdentifier {
 						name: "bar"
-						loc: Object {
-							filename: "esprima/es2015-import-declaration/import-named-specifiers-comma/input.js"
-							identifierName: "bar"
-							end: Object {
-								column: 11
-								line: 1
-							}
-							start: Object {
-								column: 8
-								line: 1
-							}
-						}
+						loc: SourceLocation esprima/es2015-import-declaration/import-named-specifiers-comma/input.js 1:8-1:11 (bar)
 					}
 					local: JSImportSpecifierLocal {
 						name: JSBindingIdentifier {
 							name: "bar"
-							loc: Object {
-								filename: "esprima/es2015-import-declaration/import-named-specifiers-comma/input.js"
-								identifierName: "bar"
-								end: Object {
-									column: 11
-									line: 1
-								}
-								start: Object {
-									column: 8
-									line: 1
-								}
-							}
+							loc: SourceLocation esprima/es2015-import-declaration/import-named-specifiers-comma/input.js 1:8-1:11 (bar)
 						}
 						importKind: undefined
-						loc: Object {
-							filename: "esprima/es2015-import-declaration/import-named-specifiers-comma/input.js"
-							end: Object {
-								column: 11
-								line: 1
-							}
-							start: Object {
-								column: 8
-								line: 1
-							}
-						}
+						loc: SourceLocation esprima/es2015-import-declaration/import-named-specifiers-comma/input.js 1:8-1:11
 					}
 				}
 				JSImportSpecifier {
-					loc: Object {
-						filename: "esprima/es2015-import-declaration/import-named-specifiers-comma/input.js"
-						end: Object {
-							column: 16
-							line: 1
-						}
-						start: Object {
-							column: 13
-							line: 1
-						}
-					}
+					loc: SourceLocation esprima/es2015-import-declaration/import-named-specifiers-comma/input.js 1:13-1:16
 					imported: JSIdentifier {
 						name: "baz"
-						loc: Object {
-							filename: "esprima/es2015-import-declaration/import-named-specifiers-comma/input.js"
-							identifierName: "baz"
-							end: Object {
-								column: 16
-								line: 1
-							}
-							start: Object {
-								column: 13
-								line: 1
-							}
-						}
+						loc: SourceLocation esprima/es2015-import-declaration/import-named-specifiers-comma/input.js 1:13-1:16 (baz)
 					}
 					local: JSImportSpecifierLocal {
 						name: JSBindingIdentifier {
 							name: "baz"
-							loc: Object {
-								filename: "esprima/es2015-import-declaration/import-named-specifiers-comma/input.js"
-								identifierName: "baz"
-								end: Object {
-									column: 16
-									line: 1
-								}
-								start: Object {
-									column: 13
-									line: 1
-								}
-							}
+							loc: SourceLocation esprima/es2015-import-declaration/import-named-specifiers-comma/input.js 1:13-1:16 (baz)
 						}
 						importKind: undefined
-						loc: Object {
-							filename: "esprima/es2015-import-declaration/import-named-specifiers-comma/input.js"
-							end: Object {
-								column: 16
-								line: 1
-							}
-							start: Object {
-								column: 13
-								line: 1
-							}
-						}
+						loc: SourceLocation esprima/es2015-import-declaration/import-named-specifiers-comma/input.js 1:13-1:16
 					}
 				}
 			]
@@ -183,6 +69,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

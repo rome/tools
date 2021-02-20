@@ -6,7 +6,6 @@ import {jsExpressionStatement} from "@internal/ast";
 function binaryExpressionHelper(input: string): boolean {
 	const node = jsExpressionStatement.assert(
 		parseJS({
-			path: "unknown",
 			input,
 		}).body[0],
 	);

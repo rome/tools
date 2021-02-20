@@ -6,25 +6,30 @@
  */
 
 import {ModuleSignature, TypeCheckProvider} from "@internal/js-analysis";
-import WorkerBridge, {
-	PrefetchedModuleSignatures,
+import {
+	WorkerBuffer,
 	WorkerBufferPatch,
+	WorkerOptions,
 	WorkerParseOptions,
+	WorkerParseResult,
 	WorkerPartialManifest,
 	WorkerPartialManifests,
+	WorkerPrefetchedModuleSignatures,
+	WorkerProject,
 	WorkerProjects,
-} from "../common/bridges/WorkerBridge";
-import {AnyRoot, ConstJSSourceType, JSRoot} from "@internal/ast";
+} from "./types";
+import WorkerBridge from "../common/bridges/WorkerBridge";
+import {ConstJSSourceType, JSRoot} from "@internal/ast";
 import Logger from "../common/utils/Logger";
 import {Profiler} from "@internal/v8";
 import {UserConfig} from "@internal/core";
-import {DiagnosticIntegrity, DiagnosticsError} from "@internal/diagnostics";
+import {DiagnosticsError} from "@internal/diagnostics";
 import {
 	AbsoluteFilePath,
 	AbsoluteFilePathMap,
-	UnknownPathMap,
-	createAbsoluteFilePath,
-	createUnknownPath,
+	AnyPath,
+	MixedPathMap,
+	UIDPath,
 } from "@internal/path";
 import {
 	FSReadStream,
@@ -34,7 +39,6 @@ import {
 } from "@internal/fs";
 import {FileReference} from "../common/types/files";
 import {getFileHandlerFromPathAssert} from "../common/file-handlers/index";
-import {TransformProjectDefinition} from "@internal/compiler";
 import WorkerAPI from "./WorkerAPI";
 import {applyWorkerBufferPatch} from "./utils/applyWorkerBufferPatch";
 import VirtualModules from "../common/VirtualModules";
@@ -44,54 +48,33 @@ import {ExtendedMap} from "@internal/collections";
 import WorkerCache from "./WorkerCache";
 import FatalErrorHandler from "../common/FatalErrorHandler";
 import {RSERObject} from "@internal/codec-binary-serial";
-
-export type ParseResult = {
-	ast: AnyRoot;
-	integrity: undefined | DiagnosticIntegrity;
-	mtimeNs: bigint;
-	project: TransformProjectDefinition;
-	path: AbsoluteFilePath;
-	lastAccessed: number;
-	sourceText: string;
-	astModifiedFromSource: boolean;
-};
-
-export type WorkerBuffer = {
-	content: string;
-	mtimeNs: bigint;
-};
-
-type WorkerOptions = {
-	userConfig: UserConfig;
-	dedicated: boolean;
-	bridge: BridgeClient<typeof WorkerBridge>;
-	id: number;
-};
+import {ReporterConditionalStream} from "@internal/cli-reporter";
+import {DEFAULT_TERMINAL_FEATURES} from "@internal/cli-environment";
 
 export default class Worker {
 	constructor(opts: WorkerOptions) {
 		this.bridge = opts.bridge;
+		this.options = opts;
 
 		this.userConfig = opts.userConfig;
 		this.partialManifests = new ExtendedMap("partialManifests");
 		this.projects = new Map();
 		this.astCache = new AbsoluteFilePathMap();
-		this.moduleSignatureCache = new UnknownPathMap();
+		this.moduleSignatureCache = new MixedPathMap();
 		this.buffers = new AbsoluteFilePathMap();
 		this.virtualModules = new VirtualModules();
 
-		this.logger = new Logger(
-			{},
-			{
-				loggerType: "worker",
-				check: () => opts.bridge.events.log.hasSubscribers(),
-				write(chunk) {
-					opts.bridge.events.log.send(chunk.toString());
-				},
+		this.logger = new Logger({}, "worker");
+
+		this.loggerStream = this.logger.attachConditionalStream({
+			format: "markup",
+			features: {
+				...DEFAULT_TERMINAL_FEATURES,
+				columns: undefined,
 			},
-		);
-		opts.bridge.updatedListenersEvent.subscribe(() => {
-			this.logger.updateStream();
+			write(chunk, isError) {
+				opts.bridge.events.log.send({chunk: chunk.toString(), isError});
+			},
 		});
 
 		this.cache = new WorkerCache(this);
@@ -135,16 +118,18 @@ export default class Worker {
 
 	public userConfig: UserConfig;
 	public api: WorkerAPI;
+	public options: WorkerOptions;
 	public logger: Logger;
+	public cache: WorkerCache;
 	public fatalErrorHandler: FatalErrorHandler;
 	public virtualModules: VirtualModules;
 
-	private cache: WorkerCache;
+	private loggerStream: ReporterConditionalStream;
 	private bridge: BridgeClient<typeof WorkerBridge>;
 	private partialManifests: ExtendedMap<number, WorkerPartialManifest>;
-	private projects: Map<number, TransformProjectDefinition>;
-	private astCache: AbsoluteFilePathMap<ParseResult>;
-	private moduleSignatureCache: UnknownPathMap<ModuleSignature>;
+	private projects: WorkerProjects;
+	private astCache: AbsoluteFilePathMap<WorkerParseResult>;
+	private moduleSignatureCache: MixedPathMap<ModuleSignature>;
 	private buffers: AbsoluteFilePathMap<WorkerBuffer>;
 
 	public getPartialManifest(id: number): WorkerPartialManifest {
@@ -228,8 +213,20 @@ export default class Worker {
 			return this.api.moduleSignatureJS(payload.ref, payload.parseOptions);
 		});
 
-		bridge.events.updateProjects.subscribe((payload) => {
-			return this.updateProjects(payload.projects);
+		bridge.events.evictProject.subscribe((id) => {
+			return this.evictProject(id);
+		});
+
+		bridge.events.updateProjects.subscribe((projects) => {
+			return this.updateProjects(projects);
+		});
+
+		bridge.events.setLogs.subscribe((enabled) => {
+			if (enabled) {
+				this.loggerStream.enable();
+			} else {
+				this.loggerStream.disable();
+			}
 		});
 
 		bridge.events.updateManifests.subscribe((payload) => {
@@ -267,7 +264,7 @@ export default class Worker {
 	}
 
 	public isDiskSynced(path: AbsoluteFilePath): boolean {
-		return !this.buffers.has(path) && !this.virtualModules.isVirtualPath(path);
+		return !(this.buffers.has(path) || this.virtualModules.isVirtualPath(path));
 	}
 
 	public hasBuffer(path: AbsoluteFilePath): boolean {
@@ -331,7 +328,7 @@ export default class Worker {
 
 	public async getTypeCheckProvider(
 		projectId: number,
-		prefetchedModuleSignatures: PrefetchedModuleSignatures = {},
+		prefetchedModuleSignatures: WorkerPrefetchedModuleSignatures = {},
 		parseOptions: WorkerParseOptions,
 	): Promise<TypeCheckProvider> {
 		const libs: JSRoot[] = [];
@@ -360,10 +357,7 @@ export default class Worker {
 
 			switch (value.type) {
 				case "RESOLVED": {
-					this.moduleSignatureCache.set(
-						createUnknownPath(value.graph.filename),
-						value.graph,
-					);
+					this.moduleSignatureCache.set(value.graph.path, value.graph);
 					return value.graph;
 				}
 
@@ -374,19 +368,17 @@ export default class Worker {
 					return resolveGraph(value.key);
 
 				case "USE_CACHED": {
-					return this.moduleSignatureCache.assert(
-						createUnknownPath(value.filename),
-					);
+					return this.moduleSignatureCache.assert(value.path);
 				}
 			}
 		};
 
 		return {
 			getExportTypes: async (
-				origin: string,
+				origin: AnyPath,
 				relative: string,
 			): Promise<undefined | ModuleSignature> => {
-				return resolveGraph(`${origin}:${relative}`);
+				return resolveGraph(`${origin.join()}:${relative}`);
 			},
 			libs,
 		};
@@ -449,9 +441,8 @@ export default class Worker {
 	public async parse(
 		ref: FileReference,
 		options: WorkerParseOptions,
-	): Promise<ParseResult> {
-		const path = createAbsoluteFilePath(ref.real);
-
+	): Promise<WorkerParseResult> {
+		const path = ref.real;
 		const {project: projectId, uid} = ref;
 		const project = this.getProject(projectId);
 
@@ -483,7 +474,9 @@ export default class Worker {
 		if (cacheEnabled) {
 			// Update the lastAccessed of the ast cache and return it, it will be evicted on
 			// any file change
-			const cachedResult: undefined | ParseResult = this.astCache.get(path);
+			const cachedResult: undefined | WorkerParseResult = this.astCache.get(
+				path,
+			);
 			if (cachedResult !== undefined) {
 				let useCached = true;
 
@@ -520,7 +513,7 @@ export default class Worker {
 
 		const {sourceText, astModifiedFromSource, ast} = await handler.parse({
 			sourceTypeJS,
-			path: createUnknownPath(uid),
+			path: uid,
 			manifestPath,
 			integrity,
 			mtimeNs,
@@ -537,8 +530,7 @@ export default class Worker {
 
 		// Sometimes we may want to allow the "fixed" AST
 		if (
-			!options.allowParserDiagnostics &&
-			!options.allowCorrupt &&
+			!(options.allowParserDiagnostics || options.allowCorrupt) &&
 			ast.diagnostics.length > 0
 		) {
 			throw new DiagnosticsError(
@@ -547,7 +539,7 @@ export default class Worker {
 			);
 		}
 
-		const res: ParseResult = {
+		const res: WorkerParseResult = {
 			ast,
 			lastAccessed: Date.now(),
 			sourceText,
@@ -565,7 +557,7 @@ export default class Worker {
 		return res;
 	}
 
-	public getProject(id: number): TransformProjectDefinition {
+	public getProject(id: number): WorkerProject {
 		const config = this.projects.get(id);
 		if (config === undefined) {
 			throw new Error(
@@ -578,7 +570,7 @@ export default class Worker {
 	private async evict(
 		{real, uid}: {
 			real: AbsoluteFilePath;
-			uid: string;
+			uid: UIDPath;
 		},
 	) {
 		this.logger.info(markup`Evicted ${real}`);
@@ -597,20 +589,13 @@ export default class Worker {
 		}
 	}
 
+	public evictProject(projectId: number) {
+		this.projects.delete(projectId);
+	}
+
 	public updateProjects(projects: WorkerProjects) {
-		for (const {config, directory, configHashes, id} of projects) {
-			if (config === undefined) {
-				this.projects.delete(id);
-			} else {
-				this.projects.set(
-					id,
-					{
-						directory,
-						configHashes,
-						config,
-					},
-				);
-			}
+		for (const [id, project] of projects) {
+			this.projects.set(id, project);
 		}
 	}
 }

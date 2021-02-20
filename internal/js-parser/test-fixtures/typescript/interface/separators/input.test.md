@@ -12,177 +12,50 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "typescript/interface/separators/input.ts"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
+	loc: SourceLocation typescript/interface/separators/input.ts 1:0-7:0
+	path: UIDPath<typescript/interface/separators/input.ts>
 	syntax: Array ["ts"]
-	loc: Object {
-		filename: "typescript/interface/separators/input.ts"
-		end: Object {
-			column: 0
-			line: 7
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
 	body: Array [
 		TSInterfaceDeclaration {
 			id: JSBindingIdentifier {
 				name: "Comma"
-				loc: Object {
-					filename: "typescript/interface/separators/input.ts"
-					identifierName: "Comma"
-					end: Object {
-						column: 15
-						line: 1
-					}
-					start: Object {
-						column: 10
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/interface/separators/input.ts 1:10-1:15 (Comma)
 			}
 			extends: undefined
 			typeParameters: undefined
-			loc: Object {
-				filename: "typescript/interface/separators/input.ts"
-				end: Object {
-					column: 40
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation typescript/interface/separators/input.ts 1:0-1:40
 			body: TSInterfaceBody {
-				loc: Object {
-					filename: "typescript/interface/separators/input.ts"
-					end: Object {
-						column: 40
-						line: 1
-					}
-					start: Object {
-						column: 16
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/interface/separators/input.ts 1:16-1:40
 				body: Array [
 					TSPropertySignature {
 						key: JSStaticPropertyKey {
 							value: JSIdentifier {
 								name: "x"
-								loc: Object {
-									filename: "typescript/interface/separators/input.ts"
-									identifierName: "x"
-									end: Object {
-										column: 19
-										line: 1
-									}
-									start: Object {
-										column: 18
-										line: 1
-									}
-								}
+								loc: SourceLocation typescript/interface/separators/input.ts 1:18-1:19 (x)
 							}
-							loc: Object {
-								filename: "typescript/interface/separators/input.ts"
-								end: Object {
-									column: 19
-									line: 1
-								}
-								start: Object {
-									column: 18
-									line: 1
-								}
-							}
+							loc: SourceLocation typescript/interface/separators/input.ts 1:18-1:19
 						}
 						optional: false
 						readonly: false
-						loc: Object {
-							filename: "typescript/interface/separators/input.ts"
-							end: Object {
-								column: 28
-								line: 1
-							}
-							start: Object {
-								column: 18
-								line: 1
-							}
-						}
-						typeAnnotation: TSNumberKeywordTypeAnnotation {
-							loc: Object {
-								filename: "typescript/interface/separators/input.ts"
-								end: Object {
-									column: 27
-									line: 1
-								}
-								start: Object {
-									column: 21
-									line: 1
-								}
-							}
-						}
+						loc: SourceLocation typescript/interface/separators/input.ts 1:18-1:28
+						typeAnnotation: TSNumberKeywordTypeAnnotation {loc: SourceLocation typescript/interface/separators/input.ts 1:21-1:27}
 					}
 					TSPropertySignature {
 						key: JSStaticPropertyKey {
 							value: JSIdentifier {
 								name: "y"
-								loc: Object {
-									filename: "typescript/interface/separators/input.ts"
-									identifierName: "y"
-									end: Object {
-										column: 30
-										line: 1
-									}
-									start: Object {
-										column: 29
-										line: 1
-									}
-								}
+								loc: SourceLocation typescript/interface/separators/input.ts 1:29-1:30 (y)
 							}
-							loc: Object {
-								filename: "typescript/interface/separators/input.ts"
-								end: Object {
-									column: 30
-									line: 1
-								}
-								start: Object {
-									column: 29
-									line: 1
-								}
-							}
+							loc: SourceLocation typescript/interface/separators/input.ts 1:29-1:30
 						}
 						optional: false
 						readonly: false
-						loc: Object {
-							filename: "typescript/interface/separators/input.ts"
-							end: Object {
-								column: 38
-								line: 1
-							}
-							start: Object {
-								column: 29
-								line: 1
-							}
-						}
-						typeAnnotation: TSNumberKeywordTypeAnnotation {
-							loc: Object {
-								filename: "typescript/interface/separators/input.ts"
-								end: Object {
-									column: 38
-									line: 1
-								}
-								start: Object {
-									column: 32
-									line: 1
-								}
-							}
-						}
+						loc: SourceLocation typescript/interface/separators/input.ts 1:29-1:38
+						typeAnnotation: TSNumberKeywordTypeAnnotation {loc: SourceLocation typescript/interface/separators/input.ts 1:32-1:38}
 					}
 				]
 			}
@@ -190,156 +63,39 @@ JSRoot {
 		TSInterfaceDeclaration {
 			id: JSBindingIdentifier {
 				name: "Semi"
-				loc: Object {
-					filename: "typescript/interface/separators/input.ts"
-					identifierName: "Semi"
-					end: Object {
-						column: 14
-						line: 2
-					}
-					start: Object {
-						column: 10
-						line: 2
-					}
-				}
+				loc: SourceLocation typescript/interface/separators/input.ts 2:10-2:14 (Semi)
 			}
 			extends: undefined
 			typeParameters: undefined
-			loc: Object {
-				filename: "typescript/interface/separators/input.ts"
-				end: Object {
-					column: 39
-					line: 2
-				}
-				start: Object {
-					column: 0
-					line: 2
-				}
-			}
+			loc: SourceLocation typescript/interface/separators/input.ts 2:0-2:39
 			body: TSInterfaceBody {
-				loc: Object {
-					filename: "typescript/interface/separators/input.ts"
-					end: Object {
-						column: 39
-						line: 2
-					}
-					start: Object {
-						column: 15
-						line: 2
-					}
-				}
+				loc: SourceLocation typescript/interface/separators/input.ts 2:15-2:39
 				body: Array [
 					TSPropertySignature {
 						key: JSStaticPropertyKey {
 							value: JSIdentifier {
 								name: "x"
-								loc: Object {
-									filename: "typescript/interface/separators/input.ts"
-									identifierName: "x"
-									end: Object {
-										column: 18
-										line: 2
-									}
-									start: Object {
-										column: 17
-										line: 2
-									}
-								}
+								loc: SourceLocation typescript/interface/separators/input.ts 2:17-2:18 (x)
 							}
-							loc: Object {
-								filename: "typescript/interface/separators/input.ts"
-								end: Object {
-									column: 18
-									line: 2
-								}
-								start: Object {
-									column: 17
-									line: 2
-								}
-							}
+							loc: SourceLocation typescript/interface/separators/input.ts 2:17-2:18
 						}
 						optional: false
 						readonly: false
-						loc: Object {
-							filename: "typescript/interface/separators/input.ts"
-							end: Object {
-								column: 27
-								line: 2
-							}
-							start: Object {
-								column: 17
-								line: 2
-							}
-						}
-						typeAnnotation: TSNumberKeywordTypeAnnotation {
-							loc: Object {
-								filename: "typescript/interface/separators/input.ts"
-								end: Object {
-									column: 26
-									line: 2
-								}
-								start: Object {
-									column: 20
-									line: 2
-								}
-							}
-						}
+						loc: SourceLocation typescript/interface/separators/input.ts 2:17-2:27
+						typeAnnotation: TSNumberKeywordTypeAnnotation {loc: SourceLocation typescript/interface/separators/input.ts 2:20-2:26}
 					}
 					TSPropertySignature {
 						key: JSStaticPropertyKey {
 							value: JSIdentifier {
 								name: "y"
-								loc: Object {
-									filename: "typescript/interface/separators/input.ts"
-									identifierName: "y"
-									end: Object {
-										column: 29
-										line: 2
-									}
-									start: Object {
-										column: 28
-										line: 2
-									}
-								}
+								loc: SourceLocation typescript/interface/separators/input.ts 2:28-2:29 (y)
 							}
-							loc: Object {
-								filename: "typescript/interface/separators/input.ts"
-								end: Object {
-									column: 29
-									line: 2
-								}
-								start: Object {
-									column: 28
-									line: 2
-								}
-							}
+							loc: SourceLocation typescript/interface/separators/input.ts 2:28-2:29
 						}
 						optional: false
 						readonly: false
-						loc: Object {
-							filename: "typescript/interface/separators/input.ts"
-							end: Object {
-								column: 37
-								line: 2
-							}
-							start: Object {
-								column: 28
-								line: 2
-							}
-						}
-						typeAnnotation: TSNumberKeywordTypeAnnotation {
-							loc: Object {
-								filename: "typescript/interface/separators/input.ts"
-								end: Object {
-									column: 37
-									line: 2
-								}
-								start: Object {
-									column: 31
-									line: 2
-								}
-							}
-						}
+						loc: SourceLocation typescript/interface/separators/input.ts 2:28-2:37
+						typeAnnotation: TSNumberKeywordTypeAnnotation {loc: SourceLocation typescript/interface/separators/input.ts 2:31-2:37}
 					}
 				]
 			}
@@ -347,156 +103,39 @@ JSRoot {
 		TSInterfaceDeclaration {
 			id: JSBindingIdentifier {
 				name: "Newline"
-				loc: Object {
-					filename: "typescript/interface/separators/input.ts"
-					identifierName: "Newline"
-					end: Object {
-						column: 17
-						line: 3
-					}
-					start: Object {
-						column: 10
-						line: 3
-					}
-				}
+				loc: SourceLocation typescript/interface/separators/input.ts 3:10-3:17 (Newline)
 			}
 			extends: undefined
 			typeParameters: undefined
-			loc: Object {
-				filename: "typescript/interface/separators/input.ts"
-				end: Object {
-					column: 1
-					line: 6
-				}
-				start: Object {
-					column: 0
-					line: 3
-				}
-			}
+			loc: SourceLocation typescript/interface/separators/input.ts 3:0-6:1
 			body: TSInterfaceBody {
-				loc: Object {
-					filename: "typescript/interface/separators/input.ts"
-					end: Object {
-						column: 1
-						line: 6
-					}
-					start: Object {
-						column: 18
-						line: 3
-					}
-				}
+				loc: SourceLocation typescript/interface/separators/input.ts 3:18-6:1
 				body: Array [
 					TSPropertySignature {
 						key: JSStaticPropertyKey {
 							value: JSIdentifier {
 								name: "x"
-								loc: Object {
-									filename: "typescript/interface/separators/input.ts"
-									identifierName: "x"
-									end: Object {
-										column: 5
-										line: 4
-									}
-									start: Object {
-										column: 4
-										line: 4
-									}
-								}
+								loc: SourceLocation typescript/interface/separators/input.ts 4:4-4:5 (x)
 							}
-							loc: Object {
-								filename: "typescript/interface/separators/input.ts"
-								end: Object {
-									column: 5
-									line: 4
-								}
-								start: Object {
-									column: 4
-									line: 4
-								}
-							}
+							loc: SourceLocation typescript/interface/separators/input.ts 4:4-4:5
 						}
 						optional: false
 						readonly: false
-						loc: Object {
-							filename: "typescript/interface/separators/input.ts"
-							end: Object {
-								column: 13
-								line: 4
-							}
-							start: Object {
-								column: 4
-								line: 4
-							}
-						}
-						typeAnnotation: TSNumberKeywordTypeAnnotation {
-							loc: Object {
-								filename: "typescript/interface/separators/input.ts"
-								end: Object {
-									column: 13
-									line: 4
-								}
-								start: Object {
-									column: 7
-									line: 4
-								}
-							}
-						}
+						loc: SourceLocation typescript/interface/separators/input.ts 4:4-4:13
+						typeAnnotation: TSNumberKeywordTypeAnnotation {loc: SourceLocation typescript/interface/separators/input.ts 4:7-4:13}
 					}
 					TSPropertySignature {
 						key: JSStaticPropertyKey {
 							value: JSIdentifier {
 								name: "y"
-								loc: Object {
-									filename: "typescript/interface/separators/input.ts"
-									identifierName: "y"
-									end: Object {
-										column: 5
-										line: 5
-									}
-									start: Object {
-										column: 4
-										line: 5
-									}
-								}
+								loc: SourceLocation typescript/interface/separators/input.ts 5:4-5:5 (y)
 							}
-							loc: Object {
-								filename: "typescript/interface/separators/input.ts"
-								end: Object {
-									column: 5
-									line: 5
-								}
-								start: Object {
-									column: 4
-									line: 5
-								}
-							}
+							loc: SourceLocation typescript/interface/separators/input.ts 5:4-5:5
 						}
 						optional: false
 						readonly: false
-						loc: Object {
-							filename: "typescript/interface/separators/input.ts"
-							end: Object {
-								column: 13
-								line: 5
-							}
-							start: Object {
-								column: 4
-								line: 5
-							}
-						}
-						typeAnnotation: TSNumberKeywordTypeAnnotation {
-							loc: Object {
-								filename: "typescript/interface/separators/input.ts"
-								end: Object {
-									column: 13
-									line: 5
-								}
-								start: Object {
-									column: 7
-									line: 5
-								}
-							}
-						}
+						loc: SourceLocation typescript/interface/separators/input.ts 5:4-5:13
+						typeAnnotation: TSNumberKeywordTypeAnnotation {loc: SourceLocation typescript/interface/separators/input.ts 5:7-5:13}
 					}
 				]
 			}
@@ -508,6 +147,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

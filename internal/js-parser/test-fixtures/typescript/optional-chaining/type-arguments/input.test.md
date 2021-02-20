@@ -12,174 +12,45 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "typescript/optional-chaining/type-arguments/input.ts"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
+	loc: SourceLocation typescript/optional-chaining/type-arguments/input.ts 1:0-2:0
+	path: UIDPath<typescript/optional-chaining/type-arguments/input.ts>
 	syntax: Array ["ts"]
-	loc: Object {
-		filename: "typescript/optional-chaining/type-arguments/input.ts"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "typescript/optional-chaining/type-arguments/input.ts"
-				end: Object {
-					column: 30
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation typescript/optional-chaining/type-arguments/input.ts 1:0-1:30
 			expression: JSCallExpression {
 				arguments: Array []
-				loc: Object {
-					filename: "typescript/optional-chaining/type-arguments/input.ts"
-					end: Object {
-						column: 30
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/optional-chaining/type-arguments/input.ts 1:0-1:30
 				typeArguments: TSTypeParameterInstantiation {
-					loc: Object {
-						filename: "typescript/optional-chaining/type-arguments/input.ts"
-						end: Object {
-							column: 28
-							line: 1
-						}
-						start: Object {
-							column: 20
-							line: 1
-						}
-					}
-					params: Array [
-						TSStringKeywordTypeAnnotation {
-							loc: Object {
-								filename: "typescript/optional-chaining/type-arguments/input.ts"
-								end: Object {
-									column: 27
-									line: 1
-								}
-								start: Object {
-									column: 21
-									line: 1
-								}
-							}
-						}
-					]
+					loc: SourceLocation typescript/optional-chaining/type-arguments/input.ts 1:20-1:28
+					params: Array [TSStringKeywordTypeAnnotation {loc: SourceLocation typescript/optional-chaining/type-arguments/input.ts 1:21-1:27}]
 				}
 				callee: JSMemberExpression {
-					loc: Object {
-						filename: "typescript/optional-chaining/type-arguments/input.ts"
-						end: Object {
-							column: 20
-							line: 1
-						}
-						start: Object {
-							column: 0
-							line: 1
-						}
-					}
+					loc: SourceLocation typescript/optional-chaining/type-arguments/input.ts 1:0-1:20
 					property: JSStaticMemberProperty {
 						value: JSIdentifier {
 							name: "greet"
-							loc: Object {
-								filename: "typescript/optional-chaining/type-arguments/input.ts"
-								identifierName: "greet"
-								end: Object {
-									column: 20
-									line: 1
-								}
-								start: Object {
-									column: 15
-									line: 1
-								}
-							}
+							loc: SourceLocation typescript/optional-chaining/type-arguments/input.ts 1:15-1:20 (greet)
 						}
 						optional: true
-						loc: Object {
-							filename: "typescript/optional-chaining/type-arguments/input.ts"
-							identifierName: "greet"
-							end: Object {
-								column: 20
-								line: 1
-							}
-							start: Object {
-								column: 15
-								line: 1
-							}
-						}
+						loc: SourceLocation typescript/optional-chaining/type-arguments/input.ts 1:15-1:20 (greet)
 					}
 					object: JSMemberExpression {
-						loc: Object {
-							filename: "typescript/optional-chaining/type-arguments/input.ts"
-							end: Object {
-								column: 13
-								line: 1
-							}
-							start: Object {
-								column: 0
-								line: 1
-							}
-						}
+						loc: SourceLocation typescript/optional-chaining/type-arguments/input.ts 1:0-1:13
 						object: JSReferenceIdentifier {
 							name: "example"
-							loc: Object {
-								filename: "typescript/optional-chaining/type-arguments/input.ts"
-								identifierName: "example"
-								end: Object {
-									column: 7
-									line: 1
-								}
-								start: Object {
-									column: 0
-									line: 1
-								}
-							}
+							loc: SourceLocation typescript/optional-chaining/type-arguments/input.ts 1:0-1:7 (example)
 						}
 						property: JSStaticMemberProperty {
 							value: JSIdentifier {
 								name: "inner"
-								loc: Object {
-									filename: "typescript/optional-chaining/type-arguments/input.ts"
-									identifierName: "inner"
-									end: Object {
-										column: 13
-										line: 1
-									}
-									start: Object {
-										column: 8
-										line: 1
-									}
-								}
+								loc: SourceLocation typescript/optional-chaining/type-arguments/input.ts 1:8-1:13 (inner)
 							}
-							loc: Object {
-								filename: "typescript/optional-chaining/type-arguments/input.ts"
-								identifierName: "inner"
-								end: Object {
-									column: 13
-									line: 1
-								}
-								start: Object {
-									column: 8
-									line: 1
-								}
-							}
+							loc: SourceLocation typescript/optional-chaining/type-arguments/input.ts 1:8-1:13 (inner)
 						}
 					}
 				}
@@ -192,6 +63,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

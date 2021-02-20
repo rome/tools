@@ -11,249 +11,90 @@ JSRoot {
 	comments: Array []
 	corrupt: true
 	directives: Array []
-	filename: "es2017/async-functions/await-inside-parameters-of-async-arrow-function/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2017/async-functions/await-inside-parameters-of-async-arrow-function/input.js"
-		end: Object {
-			column: 26
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2017/async-functions/await-inside-parameters-of-async-arrow-function/input.js 1:0-1:26
+	path: UIDPath<es2017/async-functions/await-inside-parameters-of-async-arrow-function/input.js>
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				category: "parse"
-				categoryValue: "js"
-				message: Array [
-					RAW_MARKUP {value: "Unexpected token, expected "}
-					","
-				]
-			}
 			location: Object {
-				filename: "es2017/async-functions/await-inside-parameters-of-async-arrow-function/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 18
-					line: 1
-				}
-				start: Object {
-					column: 17
-					line: 1
-				}
+				end: Position 1:18
+				path: UIDPath<es2017/async-functions/await-inside-parameters-of-async-arrow-function/input.js>
+				start: Position 1:17
+			}
+			description: Object {
+				categoryValue: "js"
+				category: Array ["parse"]
+				message: RAW_MARKUP {value: "Unexpected character <emphasis>2</emphasis>"}
+				advice: Array [
+					log {
+						category: "info"
+						text: RAW_MARKUP {value: "Expected character <emphasis>,</emphasis>"}
+					}
+				]
 			}
 		}
 	]
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "es2017/async-functions/await-inside-parameters-of-async-arrow-function/input.js"
-				end: Object {
-					column: 16
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2017/async-functions/await-inside-parameters-of-async-arrow-function/input.js 1:0-1:16
 			expression: JSCallExpression {
-				loc: Object {
-					filename: "es2017/async-functions/await-inside-parameters-of-async-arrow-function/input.js"
-					end: Object {
-						column: 16
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation es2017/async-functions/await-inside-parameters-of-async-arrow-function/input.js 1:0-1:16
 				callee: JSReferenceIdentifier {
 					name: "async"
-					loc: Object {
-						filename: "es2017/async-functions/await-inside-parameters-of-async-arrow-function/input.js"
-						identifierName: "async"
-						end: Object {
-							column: 5
-							line: 1
-						}
-						start: Object {
-							column: 0
-							line: 1
-						}
-					}
+					loc: SourceLocation es2017/async-functions/await-inside-parameters-of-async-arrow-function/input.js 1:0-1:5 (async)
 				}
 				arguments: Array [
 					JSAssignmentExpression {
 						operator: "="
-						loc: Object {
-							filename: "es2017/async-functions/await-inside-parameters-of-async-arrow-function/input.js"
-							end: Object {
-								column: 16
-								line: 1
-							}
-							start: Object {
-								column: 7
-								line: 1
-							}
-						}
+						loc: SourceLocation es2017/async-functions/await-inside-parameters-of-async-arrow-function/input.js 1:7-1:16
 						left: JSAssignmentIdentifier {
 							name: "x"
-							loc: Object {
-								filename: "es2017/async-functions/await-inside-parameters-of-async-arrow-function/input.js"
-								identifierName: "x"
-								end: Object {
-									column: 8
-									line: 1
-								}
-								start: Object {
-									column: 7
-									line: 1
-								}
-							}
+							loc: SourceLocation es2017/async-functions/await-inside-parameters-of-async-arrow-function/input.js 1:7-1:8 (x)
 						}
 						right: JSReferenceIdentifier {
 							name: "await"
-							loc: Object {
-								filename: "es2017/async-functions/await-inside-parameters-of-async-arrow-function/input.js"
-								identifierName: "await"
-								end: Object {
-									column: 16
-									line: 1
-								}
-								start: Object {
-									column: 11
-									line: 1
-								}
-							}
+							loc: SourceLocation es2017/async-functions/await-inside-parameters-of-async-arrow-function/input.js 1:11-1:16 (await)
 						}
 					}
 				]
 			}
 		}
 		JSExpressionStatement {
-			loc: Object {
-				filename: "es2017/async-functions/await-inside-parameters-of-async-arrow-function/input.js"
-				end: Object {
-					column: 18
-					line: 1
-				}
-				start: Object {
-					column: 17
-					line: 1
-				}
-			}
+			loc: SourceLocation es2017/async-functions/await-inside-parameters-of-async-arrow-function/input.js 1:17-1:18
 			expression: JSNumericLiteral {
 				value: 2
 				format: undefined
-				loc: Object {
-					filename: "es2017/async-functions/await-inside-parameters-of-async-arrow-function/input.js"
-					end: Object {
-						column: 18
-						line: 1
-					}
-					start: Object {
-						column: 17
-						line: 1
-					}
-				}
+				loc: SourceLocation es2017/async-functions/await-inside-parameters-of-async-arrow-function/input.js 1:17-1:18
 			}
 		}
 		JSExpressionStatement {
-			loc: Object {
-				filename: "es2017/async-functions/await-inside-parameters-of-async-arrow-function/input.js"
-				end: Object {
-					column: 19
-					line: 1
-				}
-				start: Object {
-					column: 18
-					line: 1
-				}
-			}
+			loc: SourceLocation es2017/async-functions/await-inside-parameters-of-async-arrow-function/input.js 1:18-1:19
 			expression: JSReferenceIdentifier {
 				name: "INVALID_PLACEHOLDER"
-				loc: Object {
-					filename: "es2017/async-functions/await-inside-parameters-of-async-arrow-function/input.js"
-					end: Object {
-						column: 19
-						line: 1
-					}
-					start: Object {
-						column: 18
-						line: 1
-					}
-				}
+				loc: SourceLocation es2017/async-functions/await-inside-parameters-of-async-arrow-function/input.js 1:18-1:19
 			}
 		}
 		JSExpressionStatement {
-			loc: Object {
-				filename: "es2017/async-functions/await-inside-parameters-of-async-arrow-function/input.js"
-				end: Object {
-					column: 22
-					line: 1
-				}
-				start: Object {
-					column: 20
-					line: 1
-				}
-			}
+			loc: SourceLocation es2017/async-functions/await-inside-parameters-of-async-arrow-function/input.js 1:20-1:22
 			expression: JSReferenceIdentifier {
 				name: "INVALID_PLACEHOLDER"
-				loc: Object {
-					filename: "es2017/async-functions/await-inside-parameters-of-async-arrow-function/input.js"
-					end: Object {
-						column: 22
-						line: 1
-					}
-					start: Object {
-						column: 20
-						line: 1
-					}
-				}
+				loc: SourceLocation es2017/async-functions/await-inside-parameters-of-async-arrow-function/input.js 1:20-1:22
 			}
 		}
 		JSBlockStatement {
 			body: Array []
 			directives: Array []
-			loc: Object {
-				filename: "es2017/async-functions/await-inside-parameters-of-async-arrow-function/input.js"
-				end: Object {
-					column: 25
-					line: 1
-				}
-				start: Object {
-					column: 23
-					line: 1
-				}
-			}
+			loc: SourceLocation es2017/async-functions/await-inside-parameters-of-async-arrow-function/input.js 1:23-1:25
 		}
-		JSEmptyStatement {
-			loc: Object {
-				filename: "es2017/async-functions/await-inside-parameters-of-async-arrow-function/input.js"
-				end: Object {
-					column: 26
-					line: 1
-				}
-				start: Object {
-					column: 25
-					line: 1
-				}
-			}
-		}
+		JSEmptyStatement {loc: SourceLocation es2017/async-functions/await-inside-parameters-of-async-arrow-function/input.js 1:25-1:26}
 	]
 }
 ```
@@ -264,13 +105,12 @@ JSRoot {
 
  es2017/async-functions/await-inside-parameters-of-async-arrow-function/input.js:1:17 parse(js) ━━━━
 
-  ✖ Unexpected token, expected ,
+  ✖ Unexpected character 2
 
     async (x = await 2) => {};
                      ^
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  ℹ Expected character ,
 
-✖ Found 1 problem
 
 ```

@@ -11,105 +11,46 @@ JSRoot {
 	comments: Array []
 	corrupt: true
 	directives: Array []
-	filename: "core/uncategorised/419/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "core/uncategorised/419/input.js"
-		end: Object {
-			column: 9
-			line: 1
+	loc: SourceLocation core/uncategorised/419/input.js 1:0-1:9
+	path: UIDPath<core/uncategorised/419/input.js>
+	body: Array [
+		JSIfStatement {
+			alternate: undefined
+			loc: SourceLocation core/uncategorised/419/input.js 1:0-1:9
+			test: JSBooleanLiteral {
+				value: false
+				loc: SourceLocation core/uncategorised/419/input.js 1:3-1:8
+			}
+			consequent: JSExpressionStatement {
+				loc: SourceLocation core/uncategorised/419/input.js 1:9-1:9
+				expression: JSReferenceIdentifier {
+					name: "INVALID_PLACEHOLDER"
+					loc: SourceLocation core/uncategorised/419/input.js 1:9-1:9
+				}
+			}
 		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	]
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse"
 				categoryValue: "js"
-				message: Array [
-					RAW_MARKUP {value: "Unknown start to an "}
-					"statement expression"
-				]
+				category: Array ["parse"]
+				message: RAW_MARKUP {value: "Unknown start to an statement expression"}
 			}
 			location: Object {
-				filename: "core/uncategorised/419/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 9
-					line: 1
-				}
-				start: Object {
-					column: 9
-					line: 1
-				}
-			}
-		}
-	]
-	body: Array [
-		JSIfStatement {
-			alternate: undefined
-			loc: Object {
-				filename: "core/uncategorised/419/input.js"
-				end: Object {
-					column: 9
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
-			test: JSBooleanLiteral {
-				value: false
-				loc: Object {
-					filename: "core/uncategorised/419/input.js"
-					end: Object {
-						column: 8
-						line: 1
-					}
-					start: Object {
-						column: 3
-						line: 1
-					}
-				}
-			}
-			consequent: JSExpressionStatement {
-				loc: Object {
-					filename: "core/uncategorised/419/input.js"
-					end: Object {
-						column: 9
-						line: 1
-					}
-					start: Object {
-						column: 9
-						line: 1
-					}
-				}
-				expression: JSReferenceIdentifier {
-					name: "INVALID_PLACEHOLDER"
-					loc: Object {
-						filename: "core/uncategorised/419/input.js"
-						end: Object {
-							column: 9
-							line: 1
-						}
-						start: Object {
-							column: 9
-							line: 1
-						}
-					}
-				}
+				end: Position 1:9
+				path: UIDPath<core/uncategorised/419/input.js>
+				start: Position 1:9
 			}
 		}
 	]
@@ -127,8 +68,5 @@ JSRoot {
     if(false)
              ^
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

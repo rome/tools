@@ -12,106 +12,33 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "esprima/expression-left-hand-side/migrated_0006/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "esprima/expression-left-hand-side/migrated_0006/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation esprima/expression-left-hand-side/migrated_0006/input.js 1:0-2:0
+	path: UIDPath<esprima/expression-left-hand-side/migrated_0006/input.js>
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "esprima/expression-left-hand-side/migrated_0006/input.js"
-				end: Object {
-					column: 13
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation esprima/expression-left-hand-side/migrated_0006/input.js 1:0-1:13
 			expression: JSNewExpression {
 				arguments: Array []
 				optional: undefined
 				typeArguments: undefined
-				loc: Object {
-					filename: "esprima/expression-left-hand-side/migrated_0006/input.js"
-					end: Object {
-						column: 13
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/expression-left-hand-side/migrated_0006/input.js 1:0-1:13
 				callee: JSMemberExpression {
-					loc: Object {
-						filename: "esprima/expression-left-hand-side/migrated_0006/input.js"
-						end: Object {
-							column: 11
-							line: 1
-						}
-						start: Object {
-							column: 4
-							line: 1
-						}
-					}
+					loc: SourceLocation esprima/expression-left-hand-side/migrated_0006/input.js 1:4-1:11
 					object: JSReferenceIdentifier {
 						name: "foo"
-						loc: Object {
-							filename: "esprima/expression-left-hand-side/migrated_0006/input.js"
-							identifierName: "foo"
-							end: Object {
-								column: 7
-								line: 1
-							}
-							start: Object {
-								column: 4
-								line: 1
-							}
-						}
+						loc: SourceLocation esprima/expression-left-hand-side/migrated_0006/input.js 1:4-1:7 (foo)
 					}
 					property: JSStaticMemberProperty {
 						value: JSIdentifier {
 							name: "bar"
-							loc: Object {
-								filename: "esprima/expression-left-hand-side/migrated_0006/input.js"
-								identifierName: "bar"
-								end: Object {
-									column: 11
-									line: 1
-								}
-								start: Object {
-									column: 8
-									line: 1
-								}
-							}
+							loc: SourceLocation esprima/expression-left-hand-side/migrated_0006/input.js 1:8-1:11 (bar)
 						}
-						loc: Object {
-							filename: "esprima/expression-left-hand-side/migrated_0006/input.js"
-							identifierName: "bar"
-							end: Object {
-								column: 11
-								line: 1
-							}
-							start: Object {
-								column: 8
-								line: 1
-							}
-						}
+						loc: SourceLocation esprima/expression-left-hand-side/migrated_0006/input.js 1:8-1:11 (bar)
 					}
 				}
 			}
@@ -123,6 +50,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

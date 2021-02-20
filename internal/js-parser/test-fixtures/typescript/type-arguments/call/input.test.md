@@ -12,104 +12,32 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "typescript/type-arguments/call/input.ts"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
+	loc: SourceLocation typescript/type-arguments/call/input.ts 1:0-3:0
+	path: UIDPath<typescript/type-arguments/call/input.ts>
 	syntax: Array ["ts"]
-	loc: Object {
-		filename: "typescript/type-arguments/call/input.ts"
-		end: Object {
-			column: 0
-			line: 3
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "typescript/type-arguments/call/input.ts"
-				end: Object {
-					column: 7
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation typescript/type-arguments/call/input.ts 1:0-1:7
 			expression: JSCallExpression {
 				arguments: Array []
-				loc: Object {
-					filename: "typescript/type-arguments/call/input.ts"
-					end: Object {
-						column: 6
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/type-arguments/call/input.ts 1:0-1:6
 				callee: JSReferenceIdentifier {
 					name: "f"
-					loc: Object {
-						filename: "typescript/type-arguments/call/input.ts"
-						identifierName: "f"
-						end: Object {
-							column: 1
-							line: 1
-						}
-						start: Object {
-							column: 0
-							line: 1
-						}
-					}
+					loc: SourceLocation typescript/type-arguments/call/input.ts 1:0-1:1 (f)
 				}
 				typeArguments: TSTypeParameterInstantiation {
-					loc: Object {
-						filename: "typescript/type-arguments/call/input.ts"
-						end: Object {
-							column: 4
-							line: 1
-						}
-						start: Object {
-							column: 1
-							line: 1
-						}
-					}
+					loc: SourceLocation typescript/type-arguments/call/input.ts 1:1-1:4
 					params: Array [
 						TSTypeReference {
 							typeParameters: undefined
-							loc: Object {
-								filename: "typescript/type-arguments/call/input.ts"
-								end: Object {
-									column: 3
-									line: 1
-								}
-								start: Object {
-									column: 2
-									line: 1
-								}
-							}
+							loc: SourceLocation typescript/type-arguments/call/input.ts 1:2-1:3
 							typeName: JSReferenceIdentifier {
 								name: "T"
-								loc: Object {
-									filename: "typescript/type-arguments/call/input.ts"
-									identifierName: "T"
-									end: Object {
-										column: 3
-										line: 1
-									}
-									start: Object {
-										column: 2
-										line: 1
-									}
-								}
+								loc: SourceLocation typescript/type-arguments/call/input.ts 1:2-1:3 (T)
 							}
 						}
 					]
@@ -117,114 +45,31 @@ JSRoot {
 			}
 		}
 		JSExpressionStatement {
-			loc: Object {
-				filename: "typescript/type-arguments/call/input.ts"
-				end: Object {
-					column: 10
-					line: 2
-				}
-				start: Object {
-					column: 0
-					line: 2
-				}
-			}
+			loc: SourceLocation typescript/type-arguments/call/input.ts 2:0-2:10
 			expression: JSCallExpression {
 				arguments: Array []
-				loc: Object {
-					filename: "typescript/type-arguments/call/input.ts"
-					end: Object {
-						column: 9
-						line: 2
-					}
-					start: Object {
-						column: 0
-						line: 2
-					}
-				}
+				loc: SourceLocation typescript/type-arguments/call/input.ts 2:0-2:9
 				callee: JSReferenceIdentifier {
 					name: "f"
-					loc: Object {
-						filename: "typescript/type-arguments/call/input.ts"
-						identifierName: "f"
-						end: Object {
-							column: 1
-							line: 2
-						}
-						start: Object {
-							column: 0
-							line: 2
-						}
-					}
+					loc: SourceLocation typescript/type-arguments/call/input.ts 2:0-2:1 (f)
 				}
 				typeArguments: TSTypeParameterInstantiation {
-					loc: Object {
-						filename: "typescript/type-arguments/call/input.ts"
-						end: Object {
-							column: 7
-							line: 2
-						}
-						start: Object {
-							column: 1
-							line: 2
-						}
-					}
+					loc: SourceLocation typescript/type-arguments/call/input.ts 2:1-2:7
 					params: Array [
 						TSTypeReference {
 							typeParameters: undefined
-							loc: Object {
-								filename: "typescript/type-arguments/call/input.ts"
-								end: Object {
-									column: 3
-									line: 2
-								}
-								start: Object {
-									column: 2
-									line: 2
-								}
-							}
+							loc: SourceLocation typescript/type-arguments/call/input.ts 2:2-2:3
 							typeName: JSReferenceIdentifier {
 								name: "T"
-								loc: Object {
-									filename: "typescript/type-arguments/call/input.ts"
-									identifierName: "T"
-									end: Object {
-										column: 3
-										line: 2
-									}
-									start: Object {
-										column: 2
-										line: 2
-									}
-								}
+								loc: SourceLocation typescript/type-arguments/call/input.ts 2:2-2:3 (T)
 							}
 						}
 						TSTypeReference {
 							typeParameters: undefined
-							loc: Object {
-								filename: "typescript/type-arguments/call/input.ts"
-								end: Object {
-									column: 6
-									line: 2
-								}
-								start: Object {
-									column: 5
-									line: 2
-								}
-							}
+							loc: SourceLocation typescript/type-arguments/call/input.ts 2:5-2:6
 							typeName: JSReferenceIdentifier {
 								name: "U"
-								loc: Object {
-									filename: "typescript/type-arguments/call/input.ts"
-									identifierName: "U"
-									end: Object {
-										column: 6
-										line: 2
-									}
-									start: Object {
-										column: 5
-										line: 2
-									}
-								}
+								loc: SourceLocation typescript/type-arguments/call/input.ts 2:5-2:6 (U)
 							}
 						}
 					]
@@ -238,6 +83,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

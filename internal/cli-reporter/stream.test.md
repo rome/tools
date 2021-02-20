@@ -14,11 +14,11 @@
 
 ```javascript
 Object {
-	currentLine: 0
 	leadingNewline: false
 	lineSnapshots: Map []
 	nextLineInsertLeadingNewline: true
 	buffer: Array ["1"]
+	currentLine: ZeroIndexedNumber<0>
 }
 ```
 
@@ -34,10 +34,10 @@ Object {
 
 ```javascript
 Object {
-	currentLine: 2
 	leadingNewline: true
 	lineSnapshots: Map []
 	nextLineInsertLeadingNewline: false
+	currentLine: ZeroIndexedNumber<2>
 	buffer: Array [
 		"1"
 		"2"
@@ -62,10 +62,10 @@ Object {
 
 ```javascript
 Object {
-	currentLine: 4
 	leadingNewline: true
-	lineSnapshots: Map [Object {close: Function close} => 1]
+	lineSnapshots: Map [Object {close: Function close} => ZeroIndexedNumber<1>]
 	nextLineInsertLeadingNewline: false
+	currentLine: ZeroIndexedNumber<4>
 	buffer: Array [
 		"1"
 		"2"
@@ -87,11 +87,11 @@ remove me[1G[2K
 
 ```javascript
 Object {
-	currentLine: 0
 	leadingNewline: false
-	lineSnapshots: Map [Object {close: Function close} => 0]
+	lineSnapshots: Map [Object {close: Function close} => ZeroIndexedNumber<0>]
 	nextLineInsertLeadingNewline: false
 	buffer: Array [""]
+	currentLine: ZeroIndexedNumber<0>
 }
 ```
 
@@ -111,10 +111,10 @@ Object {
 
 ```javascript
 Object {
-	currentLine: 4
 	leadingNewline: true
-	lineSnapshots: Map [Object {close: Function close} => 2]
+	lineSnapshots: Map [Object {close: Function close} => ZeroIndexedNumber<2>]
 	nextLineInsertLeadingNewline: false
+	currentLine: ZeroIndexedNumber<4>
 	buffer: Array [
 		"1"
 		"2"
@@ -136,10 +136,10 @@ remove me[1G[2Kok i did it
 
 ```javascript
 Object {
-	currentLine: 0
 	leadingNewline: false
-	lineSnapshots: Map [Object {close: Function close} => 0]
+	lineSnapshots: Map [Object {close: Function close} => ZeroIndexedNumber<0>]
 	nextLineInsertLeadingNewline: false
 	buffer: Array ["ok i did it"]
+	currentLine: ZeroIndexedNumber<0>
 }
 ```

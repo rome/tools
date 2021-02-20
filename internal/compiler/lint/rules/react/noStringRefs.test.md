@@ -12,18 +12,9 @@
 
   ✖ Using this.refs is a deprecated pattern.
 
-    1 │ class Hello extends React.Component {
-    2 │   componentDidMount() {
-  > 3 │     const component = this.refs.hello;
-      │                       ^^^^^^^^^
-    4 │   }
-
   ℹ See https://reactjs.org/docs/refs-and-the-dom.html#legacy-api-string-refs for more
     information.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -53,19 +44,9 @@ class Hello extends React.Component {
 
   ✖ Using string literals in ref attributes is a deprecated pattern.
 
-    1 │ class Hello extends React.Component {
-    2 │   render() {
-  > 3 │     return <div ref='hello'>Hello {this.props.name}</div>;
-      │                 ^^^^^^^^^^^
-    4 │   }
-    5 │ }
-
   ℹ See https://reactjs.org/docs/refs-and-the-dom.html#legacy-api-string-refs for more
     information.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -91,6 +72,13 @@ class Hello extends React.Component {
 
   ✖ Unclosed jsx expression container
 
+    1 │ class Hello extends React.Component {
+    2 │   render() {
+  > 3 │     return <div ref={${"`"}hello${"`"}}>Hello {this.props.name}</div>;
+      │                     ^
+    4 │   }
+    5 │ }
+
   ℹ We expected to find the closing character } here
 
     1 │ class Hello extends React.Component {
@@ -100,9 +88,6 @@ class Hello extends React.Component {
     4 │   }
     5 │ }
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -120,19 +105,9 @@ undefined
 
   ✖ Using string literals in ref attributes is a deprecated pattern.
 
-    1 │ class Hello extends React.Component {
-    2 │   render() {
-  > 3 │     return <div ref={'hello'}>Hello {this.props.name}</div>;
-      │                 ^^^^^^^^^^^^^
-    4 │   }
-    5 │ }
-
   ℹ See https://reactjs.org/docs/refs-and-the-dom.html#legacy-api-string-refs for more
     information.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -158,6 +133,13 @@ class Hello extends React.Component {
 
   ✖ Unclosed jsx expression container
 
+    1 │ class Hello extends React.Component {
+    2 │   render() {
+  > 3 │     return <div ref={${"`"}hello${"$"}{index}${"`"}>Hello {this.props.name}</div>;
+      │                     ^
+    4 │   }
+    5 │ }
+
   ℹ We expected to find the closing character } here
 
     1 │ class Hello extends React.Component {
@@ -167,9 +149,6 @@ class Hello extends React.Component {
     4 │   }
     5 │ }
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -187,12 +166,6 @@ undefined
 
   ✖ Using this.refs is a deprecated pattern.
 
-    1 │ class Hello extends React.Component {
-    2 │   componentDidMount() {
-  > 3 │     const component = this.refs.hello;
-      │                       ^^^^^^^^^
-    4 │   }
-
   ℹ See https://reactjs.org/docs/refs-and-the-dom.html#legacy-api-string-refs for more
     information.
 
@@ -203,9 +176,6 @@ undefined
   ℹ See https://reactjs.org/docs/refs-and-the-dom.html#legacy-api-string-refs for more
     information.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 2 problems
 
 ```
 
@@ -230,7 +200,6 @@ class Hello extends React.Component {
 ### `6`
 
 ```
-✔ No known problems!
 
 ```
 

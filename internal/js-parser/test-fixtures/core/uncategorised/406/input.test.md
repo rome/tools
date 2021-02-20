@@ -11,106 +11,51 @@ JSRoot {
 	comments: Array []
 	corrupt: true
 	directives: Array []
-	filename: "core/uncategorised/406/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "core/uncategorised/406/input.js"
-		end: Object {
-			column: 5
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				category: "parse"
-				categoryValue: "js"
-				message: Array [
-					RAW_MARKUP {value: "Unexpected token, expected "}
-					"("
-				]
+	loc: SourceLocation core/uncategorised/406/input.js 1:0-1:5
+	path: UIDPath<core/uncategorised/406/input.js>
+	body: Array [
+		JSIfStatement {
+			alternate: undefined
+			loc: SourceLocation core/uncategorised/406/input.js 1:0-1:5
+			test: JSReferenceIdentifier {
+				name: "INVALID_PLACEHOLDER"
+				loc: SourceLocation core/uncategorised/406/input.js 1:2-1:3
 			}
-			location: Object {
-				filename: "core/uncategorised/406/input.js"
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Object {
-					column: 3
-					line: 1
-				}
-				start: Object {
-					column: 2
-					line: 1
+			consequent: JSExpressionStatement {
+				loc: SourceLocation core/uncategorised/406/input.js 1:3-1:5
+				expression: JSReferenceIdentifier {
+					name: "a"
+					loc: SourceLocation core/uncategorised/406/input.js 1:3-1:4 (a)
 				}
 			}
 		}
 	]
-	body: Array [
-		JSIfStatement {
-			alternate: undefined
-			loc: Object {
-				filename: "core/uncategorised/406/input.js"
-				end: Object {
-					column: 5
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
+	diagnostics: Array [
+		Object {
+			origins: Array [Object {category: "parse"}]
+			location: Object {
+				integrity: undefined
+				language: "js"
+				sourceText: undefined
+				end: Position 1:2
+				path: UIDPath<core/uncategorised/406/input.js>
+				start: Position 1:2
 			}
-			test: JSReferenceIdentifier {
-				name: "INVALID_PLACEHOLDER"
-				loc: Object {
-					filename: "core/uncategorised/406/input.js"
-					end: Object {
-						column: 3
-						line: 1
+			description: Object {
+				categoryValue: "js"
+				category: Array ["parse"]
+				message: RAW_MARKUP {value: "Unexpected character <emphasis>.</emphasis>"}
+				advice: Array [
+					log {
+						category: "info"
+						text: RAW_MARKUP {value: "Expected the opening if test character <emphasis>(</emphasis>"}
 					}
-					start: Object {
-						column: 2
-						line: 1
-					}
-				}
-			}
-			consequent: JSExpressionStatement {
-				loc: Object {
-					filename: "core/uncategorised/406/input.js"
-					end: Object {
-						column: 5
-						line: 1
-					}
-					start: Object {
-						column: 3
-						line: 1
-					}
-				}
-				expression: JSReferenceIdentifier {
-					name: "a"
-					loc: Object {
-						filename: "core/uncategorised/406/input.js"
-						identifierName: "a"
-						end: Object {
-							column: 4
-							line: 1
-						}
-						start: Object {
-							column: 3
-							line: 1
-						}
-					}
-				}
+				]
 			}
 		}
 	]
@@ -123,13 +68,12 @@ JSRoot {
 
  core/uncategorised/406/input.js:1:2 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ Unexpected token, expected (
+  ✖ Unexpected character .
 
     if.a;
       ^
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  ℹ Expected the opening if test character (
 
-✖ Found 1 problem
 
 ```

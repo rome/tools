@@ -11,45 +11,29 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "es2016/simple-parameter-list/default/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2016/simple-parameter-list/default/input.js"
-		end: Object {
-			column: 0
-			line: 4
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2016/simple-parameter-list/default/input.js 1:0-4:0
+	path: UIDPath<es2016/simple-parameter-list/default/input.js>
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse"
 				categoryValue: "js"
+				category: Array ["parse"]
 				message: RAW_MARKUP {value: "Illegal 'use strict' directive in function with non-simple parameter list"}
 			}
 			location: Object {
-				filename: "es2016/simple-parameter-list/default/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 15
-					line: 2
-				}
-				start: Object {
-					column: 2
-					line: 2
-				}
+				end: Position 2:15
+				path: UIDPath<es2016/simple-parameter-list/default/input.js>
+				start: Position 2:2
 			}
 		}
 	]
@@ -57,57 +41,16 @@ JSRoot {
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "a"
-				loc: Object {
-					filename: "es2016/simple-parameter-list/default/input.js"
-					identifierName: "a"
-					end: Object {
-						column: 10
-						line: 1
-					}
-					start: Object {
-						column: 9
-						line: 1
-					}
-				}
+				loc: SourceLocation es2016/simple-parameter-list/default/input.js 1:9-1:10 (a)
 			}
-			loc: Object {
-				filename: "es2016/simple-parameter-list/default/input.js"
-				end: Object {
-					column: 1
-					line: 3
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2016/simple-parameter-list/default/input.js 1:0-3:1
 			body: JSBlockStatement {
 				body: Array []
-				loc: Object {
-					filename: "es2016/simple-parameter-list/default/input.js"
-					end: Object {
-						column: 1
-						line: 3
-					}
-					start: Object {
-						column: 25
-						line: 1
-					}
-				}
+				loc: SourceLocation es2016/simple-parameter-list/default/input.js 1:25-3:1
 				directives: Array [
 					JSDirective {
 						value: "use strict"
-						loc: Object {
-							filename: "es2016/simple-parameter-list/default/input.js"
-							end: Object {
-								column: 15
-								line: 2
-							}
-							start: Object {
-								column: 2
-								line: 2
-							}
-						}
+						loc: SourceLocation es2016/simple-parameter-list/default/input.js 2:2-2:15
 					}
 				]
 			}
@@ -119,72 +62,21 @@ JSRoot {
 				returnType: undefined
 				thisType: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "es2016/simple-parameter-list/default/input.js"
-					end: Object {
-						column: 24
-						line: 1
-					}
-					start: Object {
-						column: 10
-						line: 1
-					}
-				}
+				loc: SourceLocation es2016/simple-parameter-list/default/input.js 1:10-1:24
 				params: Array [
 					JSBindingAssignmentPattern {
-						loc: Object {
-							filename: "es2016/simple-parameter-list/default/input.js"
-							end: Object {
-								column: 23
-								line: 1
-							}
-							start: Object {
-								column: 11
-								line: 1
-							}
-						}
+						loc: SourceLocation es2016/simple-parameter-list/default/input.js 1:11-1:23
 						right: JSObjectExpression {
 							properties: Array []
-							loc: Object {
-								filename: "es2016/simple-parameter-list/default/input.js"
-								end: Object {
-									column: 23
-									line: 1
-								}
-								start: Object {
-									column: 21
-									line: 1
-								}
-							}
+							loc: SourceLocation es2016/simple-parameter-list/default/input.js 1:21-1:23
 						}
 						left: JSBindingIdentifier {
 							name: "options"
-							loc: Object {
-								filename: "es2016/simple-parameter-list/default/input.js"
-								identifierName: "options"
-								end: Object {
-									column: 18
-									line: 1
-								}
-								start: Object {
-									column: 11
-									line: 1
-								}
-							}
+							loc: SourceLocation es2016/simple-parameter-list/default/input.js 1:11-1:18 (options)
 							meta: JSPatternMeta {
 								optional: undefined
 								typeAnnotation: undefined
-								loc: Object {
-									filename: "es2016/simple-parameter-list/default/input.js"
-									end: Object {
-										column: 18
-										line: 1
-									}
-									start: Object {
-										column: 11
-										line: 1
-									}
-								}
+								loc: SourceLocation es2016/simple-parameter-list/default/input.js 1:11-1:18
 							}
 						}
 					}
@@ -208,8 +100,5 @@ JSRoot {
       │   ^^^^^^^^^^^^^
     3 │ }
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

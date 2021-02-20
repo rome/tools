@@ -11,77 +11,38 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "es2015/identifiers/invalid-escape-seq-true/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2015/identifiers/invalid-escape-seq-true/input.js"
-		end: Object {
-			column: 0
-			line: 2
+	loc: SourceLocation es2015/identifiers/invalid-escape-seq-true/input.js 1:0-2:0
+	path: UIDPath<es2015/identifiers/invalid-escape-seq-true/input.js>
+	body: Array [
+		JSExpressionStatement {
+			loc: SourceLocation es2015/identifiers/invalid-escape-seq-true/input.js 1:0-1:9
+			expression: JSBooleanLiteral {
+				value: true
+				loc: SourceLocation es2015/identifiers/invalid-escape-seq-true/input.js 1:0-1:9
+			}
 		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	]
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse"
 				categoryValue: "js"
-				message: Array [
-					RAW_MARKUP {value: "Escape sequence in keyword "}
-					"true"
-				]
+				category: Array ["parse"]
+				message: RAW_MARKUP {value: "Escape sequence in keyword <emphasis>true</emphasis>"}
 			}
 			location: Object {
-				filename: "es2015/identifiers/invalid-escape-seq-true/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 0
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
-		}
-	]
-	body: Array [
-		JSExpressionStatement {
-			loc: Object {
-				filename: "es2015/identifiers/invalid-escape-seq-true/input.js"
-				end: Object {
-					column: 9
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
-			expression: JSBooleanLiteral {
-				value: true
-				loc: Object {
-					filename: "es2015/identifiers/invalid-escape-seq-true/input.js"
-					end: Object {
-						column: 9
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				end: Position 1:0
+				path: UIDPath<es2015/identifiers/invalid-escape-seq-true/input.js>
+				start: Position 1:0
 			}
 		}
 	]
@@ -99,8 +60,5 @@ JSRoot {
     \u0074rue
     ^
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

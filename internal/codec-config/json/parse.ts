@@ -5,7 +5,11 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {DiagnosticLocation, descriptions} from "@internal/diagnostics";
+import {
+	DIAGNOSTIC_CATEGORIES,
+	DiagnosticLocation,
+	descriptions,
+} from "@internal/diagnostics";
 import {
 	Comments,
 	ConfigCommentMap,
@@ -27,42 +31,16 @@ import {
 	Position,
 	SourceLocation,
 	createParser,
-	isAlpha,
 	isDigit,
 } from "@internal/parser-core";
-import {Number0, ob1Add, ob1Get0, ob1Inc, ob1Sub} from "@internal/ob1";
+import {ZeroIndexed} from "@internal/math";
 import {isEscaped} from "@internal/string-utils";
-
-// Words can't start with a digit
-function isWordStartChar(char: string): boolean {
-	return isAlpha(char) || char === "_" || char === "$";
-}
-
-// But a digit can appear inside of a word
-function isWordChar(char: string): boolean {
-	return isWordStartChar(char) || isDigit(char);
-}
-
-// Check if an input string is a valid word, this is used by the stringifier to
-// determine if a property key should be quoted
-export function isValidWord(word: string): boolean {
-	if (word.length === 0 || !isWordStartChar(word[0])) {
-		return false;
-	}
-
-	for (const char of word) {
-		if (!isWordChar(char)) {
-			return false;
-		}
-	}
-
-	return true;
-}
+import {isWordChar, isWordStartChar} from "@internal/codec-config/util";
 
 // Check if a character is a part of a string, returning false for a newline or unescaped quote char
 function isJSONStringValueChar(
 	char: string,
-	index: Number0,
+	index: ZeroIndexed,
 	input: string,
 ): boolean {
 	if (char === "\n") {
@@ -75,7 +53,7 @@ function isJSONStringValueChar(
 // NOTE: Different methods as we allow newlines in RJSON strings
 function isRJSONStringValueChar(
 	char: string,
-	index: Number0,
+	index: ZeroIndexed,
 	input: string,
 ): boolean {
 	return !(char === '"' && !isEscaped(index, input));
@@ -94,11 +72,11 @@ function isntNewline(char: string): boolean {
 
 function isntBlockCommentEnd(
 	char: string,
-	index: Number0,
+	index: ZeroIndexed,
 	input: string,
 ): boolean {
-	const nextChar = input[ob1Get0(index) + 1];
-	return char !== "*" && nextChar !== "/";
+	const nextChar = input[index.valueOf() + 1];
+	return !(char === "*" && nextChar === "/");
 }
 
 // Used for Number token validation, allow underscore as a separatore
@@ -131,7 +109,7 @@ type JSONParserTypes = {
 
 type JSONParser = ParserCore<JSONParserTypes>;
 
-export const createJSONParser = createParser<JSONParserTypes>({
+export const jsonParser = createParser<JSONParserTypes>({
 	diagnosticLanguage: "json",
 	ignoreWhitespaceTokens: true,
 	retainCarriageReturn: true,
@@ -142,37 +120,37 @@ export const createJSONParser = createParser<JSONParserTypes>({
 			pathToComments: new Map(),
 		};
 	},
-	tokenize(parser: JSONParser, index: Number0) {
+	tokenize(parser: JSONParser, index: ZeroIndexed) {
 		const char = parser.getInputCharOnly(index);
-		const nextChar = parser.getInputCharOnly(index, 1);
+		const nextChar = parser.getInputCharOnly(index.increment());
 
 		// Line comment
 		if (char === "/" && nextChar === "/") {
-			const commentValueIndex = ob1Add(index, 2);
+			const commentValueIndex = index.add(2);
 			const [value] = parser.readInputFrom(commentValueIndex, isntNewline);
 			// (comment content start + comment content length)
 			return parser.finishValueToken(
 				"LineComment",
 				value,
-				ob1Add(commentValueIndex, value.length),
+				commentValueIndex.add(value.length),
 			);
 		}
 
 		// BlockComment
 		if (char === "/" && nextChar === "*") {
-			const commentValueIndex = ob1Add(index, 2);
+			const commentValueIndex = index.add(2);
 			const [value] = parser.readInputFrom(
 				commentValueIndex,
 				isntBlockCommentEnd,
 			);
 
 			// (comment content start + comment content length + 2 characters for comment end)
-			const endIndex = ob1Add(ob1Add(commentValueIndex, value.length), 2);
+			const endIndex = commentValueIndex.add(value.length).add(2);
 
 			// Ensure the comment is closed
 			if (
-				parser.input[ob1Get0(endIndex) - 2] !== "*" ||
-				parser.input[ob1Get0(endIndex) - 1] !== "/"
+				parser.input[endIndex.valueOf() - 2] !== "*" ||
+				parser.input[endIndex.valueOf() - 1] !== "/"
 			) {
 				throw parser.unexpected({
 					description: descriptions.JSON.UNCLOSED_BLOCK_COMMENT,
@@ -187,7 +165,7 @@ export const createJSONParser = createParser<JSONParserTypes>({
 		switch (char) {
 			case '"': {
 				const [value, end, overflow] = parser.readInputFrom(
-					ob1Inc(index),
+					index.increment(),
 					parser.meta.type === "rjson"
 						? isRJSONStringValueChar
 						: isJSONStringValueChar,
@@ -208,7 +186,7 @@ export const createJSONParser = createParser<JSONParserTypes>({
 						if (char === "\n") {
 							throw parser.unexpected({
 								description: descriptions.JSON.STRING_NEWLINES_IN_JSON,
-								start: parser.getPositionFromIndex(ob1Add(index, strIndex)),
+								start: parser.getPositionFromIndex(index.add(strIndex)),
 							});
 						}
 					}
@@ -220,14 +198,14 @@ export const createJSONParser = createParser<JSONParserTypes>({
 					(metadata, strIndex) => {
 						throw parser.unexpected({
 							description: metadata,
-							start: parser.getPositionFromIndex(ob1Add(index, strIndex)),
+							start: parser.getPositionFromIndex(index.add(strIndex)),
 						});
 					},
 					parser.meta.type === "rjson",
 				);
 
 				// increment to take the trailing quote
-				return parser.finishValueToken("String", unescaped, ob1Inc(end));
+				return parser.finishValueToken("String", unescaped, end.increment());
 			}
 
 			case "'":
@@ -278,13 +256,13 @@ export const createJSONParser = createParser<JSONParserTypes>({
 				parser.readInputFrom(index, isNumberChar)[0],
 			);
 			const num = Number(value);
-			return parser.finishValueToken("Number", num, ob1Add(index, value.length));
+			return parser.finishValueToken("Number", num, index.add(value.length));
 		}
 
 		// Word - boolean, undefined etc
 		if (isWordStartChar(char)) {
 			const [value] = parser.readInputFrom(index, isWordChar);
-			return parser.finishValueToken("Word", value, ob1Add(index, value.length));
+			return parser.finishValueToken("Word", value, index.add(value.length));
 		}
 
 		// Unknown character
@@ -358,7 +336,7 @@ function parseObject(
 
 		// If there's no property key indicator then delegate any comments we have to object
 		const hasKey = isFirstProp && firstKey !== undefined;
-		if (!hasKey && !parser.matchToken("String") && !parser.matchToken("Word")) {
+		if (!(hasKey || parser.matchToken("String") || parser.matchToken("Word"))) {
 			innerComments = [...innerComments, ...leadingComments];
 			break;
 		}
@@ -398,7 +376,7 @@ function parseObject(
 
 		// If the next token isn't a comma or closing brace then we've just stolen
 		// the leading comments of the next property
-		if (!parser.matchToken("Comma") && !parser.matchToken("BraceClose")) {
+		if (!(parser.matchToken("Comma") || parser.matchToken("BraceClose"))) {
 			nextLeadingComments = trailingValueComments;
 			trailingValueComments = [];
 		}
@@ -468,7 +446,7 @@ function parseObject(
 // Remove underscores from 'a string, this is used for numeric separators eg. 100_000
 function removeUnderscores(
 	parser: JSONParser,
-	index: Number0,
+	index: ZeroIndexed,
 	raw: string,
 ): string {
 	let str = "";
@@ -481,7 +459,7 @@ function removeUnderscores(
 			if (parser.meta.type !== "rjson") {
 				throw parser.unexpected({
 					description: descriptions.JSON.NUMERIC_SEPARATORS_IN_JSON,
-					start: parser.getPositionFromIndex(ob1Inc(index)),
+					start: parser.getPositionFromIndex(index.increment()),
 				});
 			}
 		} else {
@@ -820,13 +798,14 @@ export function parseJSONExtra(
 	opts: ParserOptions,
 	type: ConfigType,
 ): ConfigParserResult {
-	const parser = createJSONParser(
+	const parser = jsonParser.create(
 		opts,
 		{
 			type,
 		},
 		{diagnosticLanguage: type},
 	);
+
 	const categoryValue = parser.options.consumeDiagnosticCategoryValue ?? "json";
 
 	let expectSyntaxError = false;
@@ -852,7 +831,7 @@ export function parseJSONExtra(
 				type: "json",
 				comments: new Map(),
 				context: {
-					category: "parse",
+					category: DIAGNOSTIC_CATEGORIES.parse,
 					categoryValue,
 					normalizeKey(path) {
 						return getContext().normalizeKey(path);
@@ -904,7 +883,7 @@ function _parse(parser: JSONParser, categoryValue: string): ConfigParserResult {
 	parser.finalize();
 
 	const context: Required<ConsumeContext> = {
-		category: "parse",
+		category: DIAGNOSTIC_CATEGORIES.parse,
 		categoryValue,
 		normalizeKey: (key) => key,
 		getDiagnosticLocation: (
@@ -915,7 +894,7 @@ function _parse(parser: JSONParser, categoryValue: string): ConfigParserResult {
 			if (info === undefined) {
 				return {
 					language: parser.language,
-					filename: parser.filename,
+					path: parser.path,
 				};
 			}
 
@@ -931,7 +910,7 @@ function _parse(parser: JSONParser, categoryValue: string): ConfigParserResult {
 			}
 
 			let loc: SourceLocation = {
-				filename: parser.filename,
+				path: parser.path,
 				start,
 				end,
 			};
@@ -945,11 +924,11 @@ function _parse(parser: JSONParser, categoryValue: string): ConfigParserResult {
 						...loc,
 						start: {
 							...loc.start,
-							column: ob1Add(loc.start.column, 1),
+							column: loc.start.column.add(1),
 						},
 						end: {
 							...loc.end,
-							column: ob1Sub(loc.end.column, 1),
+							column: loc.end.column.subtract(1),
 						},
 					};
 				}

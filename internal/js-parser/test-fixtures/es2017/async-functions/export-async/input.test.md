@@ -11,91 +11,44 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "es2017/async-functions/export-async/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
 	syntax: Array []
-	loc: Object {
-		filename: "es2017/async-functions/export-async/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				category: "parse"
-				categoryValue: "js"
-				message: RAW_MARKUP {value: "Started with `export async` so we expected to receive an async function but no function keyword was found"}
-			}
-			location: Object {
-				filename: "es2017/async-functions/export-async/input.js"
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Object {
-					column: 13
-					line: 1
-				}
-				start: Object {
-					column: 12
-					line: 1
-				}
-			}
-		}
-	]
+	loc: SourceLocation es2017/async-functions/export-async/input.js 1:0-2:0
+	path: UIDPath<es2017/async-functions/export-async/input.js>
 	body: Array [
 		JSExportLocalDeclaration {
 			declaration: undefined
 			exportKind: "value"
 			specifiers: Array []
-			loc: Object {
-				filename: "es2017/async-functions/export-async/input.js"
-				end: Object {
-					column: 6
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2017/async-functions/export-async/input.js 1:0-1:6
 		}
 		JSExpressionStatement {
-			loc: Object {
-				filename: "es2017/async-functions/export-async/input.js"
-				end: Object {
-					column: 13
-					line: 1
-				}
-				start: Object {
-					column: 7
-					line: 1
-				}
-			}
+			loc: SourceLocation es2017/async-functions/export-async/input.js 1:7-1:13
 			expression: JSReferenceIdentifier {
 				name: "async"
-				loc: Object {
-					filename: "es2017/async-functions/export-async/input.js"
-					identifierName: "async"
-					end: Object {
-						column: 12
-						line: 1
-					}
-					start: Object {
-						column: 7
-						line: 1
-					}
-				}
+				loc: SourceLocation es2017/async-functions/export-async/input.js 1:7-1:12 (async)
+			}
+		}
+	]
+	diagnostics: Array [
+		Object {
+			origins: Array [Object {category: "parse"}]
+			description: Object {
+				advice: Array []
+				categoryValue: "js"
+				category: Array ["parse"]
+				message: RAW_MARKUP {value: "Started with `export async` so we expected to receive an async function but no function keyword was found"}
+			}
+			location: Object {
+				integrity: undefined
+				language: "js"
+				sourceText: undefined
+				end: Position 1:13
+				path: UIDPath<es2017/async-functions/export-async/input.js>
+				start: Position 1:12
 			}
 		}
 	]
@@ -114,8 +67,5 @@ JSRoot {
     export async;
                 ^
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

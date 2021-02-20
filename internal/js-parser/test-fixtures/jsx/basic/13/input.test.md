@@ -12,196 +12,66 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "jsx/basic/13/input.jsx"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
+	loc: SourceLocation jsx/basic/13/input.jsx 1:0-1:57
+	path: UIDPath<jsx/basic/13/input.jsx>
 	syntax: Array ["jsx"]
-	loc: Object {
-		filename: "jsx/basic/13/input.jsx"
-		end: Object {
-			column: 57
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "jsx/basic/13/input.jsx"
-				end: Object {
-					column: 57
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation jsx/basic/13/input.jsx 1:0-1:57
 			expression: JSXElement {
 				name: JSXReferenceIdentifier {
 					name: "LeftRight"
-					loc: Object {
-						filename: "jsx/basic/13/input.jsx"
-						end: Object {
-							column: 10
-							line: 1
-						}
-						start: Object {
-							column: 1
-							line: 1
-						}
-					}
+					loc: SourceLocation jsx/basic/13/input.jsx 1:1-1:10
 				}
 				children: Array []
 				selfClosing: true
 				typeArguments: undefined
-				loc: Object {
-					filename: "jsx/basic/13/input.jsx"
-					end: Object {
-						column: 57
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation jsx/basic/13/input.jsx 1:0-1:57
 				attributes: Array [
 					JSXAttribute {
 						name: JSXIdentifier {
 							name: "left"
-							loc: Object {
-								filename: "jsx/basic/13/input.jsx"
-								end: Object {
-									column: 15
-									line: 1
-								}
-								start: Object {
-									column: 11
-									line: 1
-								}
-							}
+							loc: SourceLocation jsx/basic/13/input.jsx 1:11-1:15
 						}
 						value: JSXElement {
 							name: JSXIdentifier {
 								name: "a"
-								loc: Object {
-									filename: "jsx/basic/13/input.jsx"
-									end: Object {
-										column: 18
-										line: 1
-									}
-									start: Object {
-										column: 17
-										line: 1
-									}
-								}
+								loc: SourceLocation jsx/basic/13/input.jsx 1:17-1:18
 							}
 							attributes: Array []
 							children: Array []
 							selfClosing: true
 							typeArguments: undefined
-							loc: Object {
-								filename: "jsx/basic/13/input.jsx"
-								end: Object {
-									column: 21
-									line: 1
-								}
-								start: Object {
-									column: 16
-									line: 1
-								}
-							}
+							loc: SourceLocation jsx/basic/13/input.jsx 1:16-1:21
 						}
-						loc: Object {
-							filename: "jsx/basic/13/input.jsx"
-							end: Object {
-								column: 21
-								line: 1
-							}
-							start: Object {
-								column: 11
-								line: 1
-							}
-						}
+						loc: SourceLocation jsx/basic/13/input.jsx 1:11-1:21
 					}
 					JSXAttribute {
 						name: JSXIdentifier {
 							name: "right"
-							loc: Object {
-								filename: "jsx/basic/13/input.jsx"
-								end: Object {
-									column: 27
-									line: 1
-								}
-								start: Object {
-									column: 22
-									line: 1
-								}
-							}
+							loc: SourceLocation jsx/basic/13/input.jsx 1:22-1:27
 						}
 						value: JSXElement {
 							name: JSXIdentifier {
 								name: "b"
-								loc: Object {
-									filename: "jsx/basic/13/input.jsx"
-									end: Object {
-										column: 30
-										line: 1
-									}
-									start: Object {
-										column: 29
-										line: 1
-									}
-								}
+								loc: SourceLocation jsx/basic/13/input.jsx 1:29-1:30
 							}
 							attributes: Array []
 							selfClosing: false
 							typeArguments: undefined
-							loc: Object {
-								filename: "jsx/basic/13/input.jsx"
-								end: Object {
-									column: 54
-									line: 1
-								}
-								start: Object {
-									column: 28
-									line: 1
-								}
-							}
+							loc: SourceLocation jsx/basic/13/input.jsx 1:28-1:54
 							children: Array [
 								JSXText {
 									value: "monkeys /> gorillas"
-									loc: Object {
-										filename: "jsx/basic/13/input.jsx"
-										end: Object {
-											column: 50
-											line: 1
-										}
-										start: Object {
-											column: 31
-											line: 1
-										}
-									}
+									loc: SourceLocation jsx/basic/13/input.jsx 1:31-1:50
 								}
 							]
 						}
-						loc: Object {
-							filename: "jsx/basic/13/input.jsx"
-							end: Object {
-								column: 54
-								line: 1
-							}
-							start: Object {
-								column: 22
-								line: 1
-							}
-						}
+						loc: SourceLocation jsx/basic/13/input.jsx 1:22-1:54
 					}
 				]
 			}
@@ -213,6 +83,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

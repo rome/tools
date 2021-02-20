@@ -11,206 +11,71 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "core/uncategorised/465/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "core/uncategorised/465/input.js"
-		end: Object {
-			column: 39
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation core/uncategorised/465/input.js 1:0-1:39
+	path: UIDPath<core/uncategorised/465/input.js>
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
 			location: Object {
-				filename: "core/uncategorised/465/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 19
-					line: 1
-				}
-				start: Object {
-					column: 18
-					line: 1
-				}
+				end: Position 1:19
+				path: UIDPath<core/uncategorised/465/input.js>
+				start: Position 1:18
 			}
 			description: Object {
-				category: "parse"
 				categoryValue: "js"
-				message: Array [
-					RAW_MARKUP {value: "Label <emphasis>"}
-					"x"
-					RAW_MARKUP {value: "</emphasis> is already declared"}
-				]
+				category: Array ["parse"]
+				message: RAW_MARKUP {value: "Label <emphasis>x</emphasis> is already declared"}
 				advice: Array [
 					log {
 						category: "info"
 						text: RAW_MARKUP {value: "Defined already here"}
 					}
-					frame {
-						location: Object {
-							filename: "core/uncategorised/465/input.js"
-							identifierName: "x"
-							end: Object {
-								column: 1
-								line: 1
-							}
-							start: Object {
-								column: 0
-								line: 1
-							}
-						}
-					}
+					frame {location: SourceLocation core/uncategorised/465/input.js 1:0-1:1 (x)}
 				]
 			}
 		}
 	]
 	body: Array [
 		JSLabeledStatement {
-			loc: Object {
-				filename: "core/uncategorised/465/input.js"
-				end: Object {
-					column: 39
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation core/uncategorised/465/input.js 1:0-1:39
 			label: JSIdentifier {
 				name: "x"
-				loc: Object {
-					filename: "core/uncategorised/465/input.js"
-					identifierName: "x"
-					end: Object {
-						column: 1
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation core/uncategorised/465/input.js 1:0-1:1 (x)
 			}
 			body: JSWhileStatement {
-				loc: Object {
-					filename: "core/uncategorised/465/input.js"
-					end: Object {
-						column: 39
-						line: 1
-					}
-					start: Object {
-						column: 3
-						line: 1
-					}
-				}
+				loc: SourceLocation core/uncategorised/465/input.js 1:3-1:39
 				test: JSBooleanLiteral {
 					value: true
-					loc: Object {
-						filename: "core/uncategorised/465/input.js"
-						end: Object {
-							column: 14
-							line: 1
-						}
-						start: Object {
-							column: 10
-							line: 1
-						}
-					}
+					loc: SourceLocation core/uncategorised/465/input.js 1:10-1:14
 				}
 				body: JSBlockStatement {
 					directives: Array []
-					loc: Object {
-						filename: "core/uncategorised/465/input.js"
-						end: Object {
-							column: 39
-							line: 1
-						}
-						start: Object {
-							column: 16
-							line: 1
-						}
-					}
+					loc: SourceLocation core/uncategorised/465/input.js 1:16-1:39
 					body: Array [
 						JSLabeledStatement {
-							loc: Object {
-								filename: "core/uncategorised/465/input.js"
-								end: Object {
-									column: 37
-									line: 1
-								}
-								start: Object {
-									column: 18
-									line: 1
-								}
-							}
+							loc: SourceLocation core/uncategorised/465/input.js 1:18-1:37
 							label: JSIdentifier {
 								name: "x"
-								loc: Object {
-									filename: "core/uncategorised/465/input.js"
-									identifierName: "x"
-									end: Object {
-										column: 19
-										line: 1
-									}
-									start: Object {
-										column: 18
-										line: 1
-									}
-								}
+								loc: SourceLocation core/uncategorised/465/input.js 1:18-1:19 (x)
 							}
 							body: JSWhileStatement {
-								loc: Object {
-									filename: "core/uncategorised/465/input.js"
-									end: Object {
-										column: 37
-										line: 1
-									}
-									start: Object {
-										column: 21
-										line: 1
-									}
-								}
+								loc: SourceLocation core/uncategorised/465/input.js 1:21-1:37
 								test: JSBooleanLiteral {
 									value: true
-									loc: Object {
-										filename: "core/uncategorised/465/input.js"
-										end: Object {
-											column: 32
-											line: 1
-										}
-										start: Object {
-											column: 28
-											line: 1
-										}
-									}
+									loc: SourceLocation core/uncategorised/465/input.js 1:28-1:32
 								}
 								body: JSBlockStatement {
 									body: Array []
 									directives: Array []
-									loc: Object {
-										filename: "core/uncategorised/465/input.js"
-										end: Object {
-											column: 37
-											line: 1
-										}
-										start: Object {
-											column: 34
-											line: 1
-										}
-									}
+									loc: SourceLocation core/uncategorised/465/input.js 1:34-1:37
 								}
 							}
 						}
@@ -230,13 +95,13 @@ JSRoot {
 
   ✖ Label x is already declared
 
+    x: while (true) { x: while (true) { } }
+                      ^
+
   ℹ Defined already here
 
     x: while (true) { x: while (true) { } }
     ^
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

@@ -12,67 +12,26 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "typescript/enum/export-const/input.ts"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
+	loc: SourceLocation typescript/enum/export-const/input.ts 1:0-2:0
+	path: UIDPath<typescript/enum/export-const/input.ts>
 	syntax: Array ["ts"]
-	loc: Object {
-		filename: "typescript/enum/export-const/input.ts"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
 	body: Array [
 		JSExportLocalDeclaration {
 			exportKind: "value"
 			specifiers: undefined
-			loc: Object {
-				filename: "typescript/enum/export-const/input.ts"
-				end: Object {
-					column: 22
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation typescript/enum/export-const/input.ts 1:0-1:22
 			declaration: TSEnumDeclaration {
 				id: JSBindingIdentifier {
 					name: "E"
-					loc: Object {
-						filename: "typescript/enum/export-const/input.ts"
-						identifierName: "E"
-						end: Object {
-							column: 19
-							line: 1
-						}
-						start: Object {
-							column: 18
-							line: 1
-						}
-					}
+					loc: SourceLocation typescript/enum/export-const/input.ts 1:18-1:19 (E)
 				}
 				const: true
 				members: Array []
-				loc: Object {
-					filename: "typescript/enum/export-const/input.ts"
-					end: Object {
-						column: 22
-						line: 1
-					}
-					start: Object {
-						column: 7
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/enum/export-const/input.ts 1:7-1:22
 			}
 		}
 	]
@@ -82,6 +41,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

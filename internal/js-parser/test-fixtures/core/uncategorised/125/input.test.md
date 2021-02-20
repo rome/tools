@@ -12,119 +12,36 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "core/uncategorised/125/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "core/uncategorised/125/input.js"
-		end: Object {
-			column: 21
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation core/uncategorised/125/input.js 1:0-1:21
+	path: UIDPath<core/uncategorised/125/input.js>
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "core/uncategorised/125/input.js"
-				end: Object {
-					column: 21
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation core/uncategorised/125/input.js 1:0-1:21
 			expression: JSMemberExpression {
-				loc: Object {
-					filename: "core/uncategorised/125/input.js"
-					end: Object {
-						column: 21
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation core/uncategorised/125/input.js 1:0-1:21
 				property: JSStaticMemberProperty {
 					value: JSIdentifier {
 						name: "galaxies"
-						loc: Object {
-							filename: "core/uncategorised/125/input.js"
-							identifierName: "galaxies"
-							end: Object {
-								column: 21
-								line: 1
-							}
-							start: Object {
-								column: 13
-								line: 1
-							}
-						}
+						loc: SourceLocation core/uncategorised/125/input.js 1:13-1:21 (galaxies)
 					}
-					loc: Object {
-						filename: "core/uncategorised/125/input.js"
-						identifierName: "galaxies"
-						end: Object {
-							column: 21
-							line: 1
-						}
-						start: Object {
-							column: 13
-							line: 1
-						}
-					}
+					loc: SourceLocation core/uncategorised/125/input.js 1:13-1:21 (galaxies)
 				}
 				object: JSCallExpression {
-					loc: Object {
-						filename: "core/uncategorised/125/input.js"
-						end: Object {
-							column: 12
-							line: 1
-						}
-						start: Object {
-							column: 0
-							line: 1
-						}
-					}
+					loc: SourceLocation core/uncategorised/125/input.js 1:0-1:12
 					callee: JSReferenceIdentifier {
 						name: "universe"
-						loc: Object {
-							filename: "core/uncategorised/125/input.js"
-							identifierName: "universe"
-							end: Object {
-								column: 8
-								line: 1
-							}
-							start: Object {
-								column: 0
-								line: 1
-							}
-						}
+						loc: SourceLocation core/uncategorised/125/input.js 1:0-1:8 (universe)
 					}
 					arguments: Array [
 						JSNumericLiteral {
 							value: 42
 							format: undefined
-							loc: Object {
-								filename: "core/uncategorised/125/input.js"
-								end: Object {
-									column: 11
-									line: 1
-								}
-								start: Object {
-									column: 9
-									line: 1
-								}
-							}
+							loc: SourceLocation core/uncategorised/125/input.js 1:9-1:11
 						}
 					]
 				}
@@ -137,6 +54,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

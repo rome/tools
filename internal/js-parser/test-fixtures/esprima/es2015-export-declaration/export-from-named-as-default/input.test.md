@@ -12,95 +12,33 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "esprima/es2015-export-declaration/export-from-named-as-default/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
 	syntax: Array []
-	loc: Object {
-		filename: "esprima/es2015-export-declaration/export-from-named-as-default/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation esprima/es2015-export-declaration/export-from-named-as-default/input.js 1:0-2:0
+	path: UIDPath<esprima/es2015-export-declaration/export-from-named-as-default/input.js>
 	body: Array [
 		JSExportExternalDeclaration {
 			defaultSpecifier: undefined
 			exportKind: undefined
 			namespaceSpecifier: undefined
-			loc: Object {
-				filename: "esprima/es2015-export-declaration/export-from-named-as-default/input.js"
-				end: Object {
-					column: 35
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation esprima/es2015-export-declaration/export-from-named-as-default/input.js 1:0-1:35
 			source: JSStringLiteral {
 				value: "foo"
-				loc: Object {
-					filename: "esprima/es2015-export-declaration/export-from-named-as-default/input.js"
-					end: Object {
-						column: 34
-						line: 1
-					}
-					start: Object {
-						column: 29
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/es2015-export-declaration/export-from-named-as-default/input.js 1:29-1:34
 			}
 			namedSpecifiers: Array [
 				JSExportExternalSpecifier {
-					loc: Object {
-						filename: "esprima/es2015-export-declaration/export-from-named-as-default/input.js"
-						end: Object {
-							column: 22
-							line: 1
-						}
-						start: Object {
-							column: 8
-							line: 1
-						}
-					}
+					loc: SourceLocation esprima/es2015-export-declaration/export-from-named-as-default/input.js 1:8-1:22
 					exported: JSIdentifier {
 						name: "default"
-						loc: Object {
-							filename: "esprima/es2015-export-declaration/export-from-named-as-default/input.js"
-							identifierName: "default"
-							end: Object {
-								column: 22
-								line: 1
-							}
-							start: Object {
-								column: 15
-								line: 1
-							}
-						}
+						loc: SourceLocation esprima/es2015-export-declaration/export-from-named-as-default/input.js 1:15-1:22 (default)
 					}
 					local: JSIdentifier {
 						name: "foo"
-						loc: Object {
-							filename: "esprima/es2015-export-declaration/export-from-named-as-default/input.js"
-							identifierName: "foo"
-							end: Object {
-								column: 11
-								line: 1
-							}
-							start: Object {
-								column: 8
-								line: 1
-							}
-						}
+						loc: SourceLocation esprima/es2015-export-declaration/export-from-named-as-default/input.js 1:8-1:11 (foo)
 					}
 				}
 			]
@@ -112,6 +50,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

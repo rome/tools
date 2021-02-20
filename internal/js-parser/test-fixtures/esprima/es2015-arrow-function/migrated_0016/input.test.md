@@ -12,140 +12,48 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "esprima/es2015-arrow-function/migrated_0016/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "esprima/es2015-arrow-function/migrated_0016/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation esprima/es2015-arrow-function/migrated_0016/input.js 1:0-2:0
+	path: UIDPath<esprima/es2015-arrow-function/migrated_0016/input.js>
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "esprima/es2015-arrow-function/migrated_0016/input.js"
-				end: Object {
-					column: 12
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation esprima/es2015-arrow-function/migrated_0016/input.js 1:0-1:12
 			expression: JSArrowFunctionExpression {
-				loc: Object {
-					filename: "esprima/es2015-arrow-function/migrated_0016/input.js"
-					end: Object {
-						column: 12
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/es2015-arrow-function/migrated_0016/input.js 1:0-1:12
 				head: JSFunctionHead {
 					async: false
 					hasHoistedVars: false
 					rest: undefined
 					thisType: undefined
-					loc: Object {
-						filename: "esprima/es2015-arrow-function/migrated_0016/input.js"
-						end: Object {
-							column: 4
-							line: 1
-						}
-						start: Object {
-							column: 0
-							line: 1
-						}
-					}
+					loc: SourceLocation esprima/es2015-arrow-function/migrated_0016/input.js 1:0-1:4
 					params: Array [
 						JSBindingIdentifier {
 							name: "x"
-							loc: Object {
-								filename: "esprima/es2015-arrow-function/migrated_0016/input.js"
-								identifierName: "x"
-								end: Object {
-									column: 1
-									line: 1
-								}
-								start: Object {
-									column: 0
-									line: 1
-								}
-							}
+							loc: SourceLocation esprima/es2015-arrow-function/migrated_0016/input.js 1:0-1:1 (x)
 						}
 					]
 				}
 				body: JSArrowFunctionExpression {
-					loc: Object {
-						filename: "esprima/es2015-arrow-function/migrated_0016/input.js"
-						end: Object {
-							column: 12
-							line: 1
-						}
-						start: Object {
-							column: 5
-							line: 1
-						}
-					}
+					loc: SourceLocation esprima/es2015-arrow-function/migrated_0016/input.js 1:5-1:12
 					body: JSNumericLiteral {
 						value: 42
 						format: undefined
-						loc: Object {
-							filename: "esprima/es2015-arrow-function/migrated_0016/input.js"
-							end: Object {
-								column: 12
-								line: 1
-							}
-							start: Object {
-								column: 10
-								line: 1
-							}
-						}
+						loc: SourceLocation esprima/es2015-arrow-function/migrated_0016/input.js 1:10-1:12
 					}
 					head: JSFunctionHead {
 						async: false
 						hasHoistedVars: false
 						rest: undefined
 						thisType: undefined
-						loc: Object {
-							filename: "esprima/es2015-arrow-function/migrated_0016/input.js"
-							end: Object {
-								column: 9
-								line: 1
-							}
-							start: Object {
-								column: 5
-								line: 1
-							}
-						}
+						loc: SourceLocation esprima/es2015-arrow-function/migrated_0016/input.js 1:5-1:9
 						params: Array [
 							JSBindingIdentifier {
 								name: "y"
-								loc: Object {
-									filename: "esprima/es2015-arrow-function/migrated_0016/input.js"
-									identifierName: "y"
-									end: Object {
-										column: 6
-										line: 1
-									}
-									start: Object {
-										column: 5
-										line: 1
-									}
-								}
+								loc: SourceLocation esprima/es2015-arrow-function/migrated_0016/input.js 1:5-1:6 (y)
 							}
 						]
 					}
@@ -159,6 +67,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

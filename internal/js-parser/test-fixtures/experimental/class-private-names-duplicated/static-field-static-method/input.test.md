@@ -12,123 +12,67 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "experimental/class-private-names-duplicated/static-field-static-method/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "experimental/class-private-names-duplicated/static-field-static-method/input.js"
-		end: Object {
-			column: 1
-			line: 4
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation experimental/class-private-names-duplicated/static-field-static-method/input.js 1:0-4:1
+	path: UIDPath<experimental/class-private-names-duplicated/static-field-static-method/input.js>
 	body: Array [
 		JSClassDeclaration {
 			id: JSBindingIdentifier {
 				name: "A"
-				loc: Object {
-					filename: "experimental/class-private-names-duplicated/static-field-static-method/input.js"
-					identifierName: "A"
-					end: Object {
-						column: 7
-						line: 1
-					}
-					start: Object {
-						column: 6
-						line: 1
-					}
-				}
+				loc: SourceLocation experimental/class-private-names-duplicated/static-field-static-method/input.js 1:6-1:7 (A)
 			}
-			loc: Object {
-				filename: "experimental/class-private-names-duplicated/static-field-static-method/input.js"
-				end: Object {
-					column: 1
-					line: 4
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation experimental/class-private-names-duplicated/static-field-static-method/input.js 1:0-4:1
 			meta: JSClassHead {
 				implements: undefined
 				superClass: undefined
 				superTypeParameters: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "experimental/class-private-names-duplicated/static-field-static-method/input.js"
-					end: Object {
-						column: 1
-						line: 4
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation experimental/class-private-names-duplicated/static-field-static-method/input.js 1:0-4:1
 				body: Array [
 					JSClassPrivateProperty {
 						key: JSPrivateName {
 							id: JSIdentifier {
 								name: "x"
-								loc: Object {
-									filename: "experimental/class-private-names-duplicated/static-field-static-method/input.js"
-									identifierName: "x"
-									end: Object {
-										column: 11
-										line: 2
-									}
-									start: Object {
-										column: 10
-										line: 2
-									}
-								}
+								loc: SourceLocation experimental/class-private-names-duplicated/static-field-static-method/input.js 2:10-2:11 (x)
 							}
-							loc: Object {
-								filename: "experimental/class-private-names-duplicated/static-field-static-method/input.js"
-								end: Object {
-									column: 11
-									line: 2
-								}
-								start: Object {
-									column: 9
-									line: 2
-								}
-							}
+							loc: SourceLocation experimental/class-private-names-duplicated/static-field-static-method/input.js 2:9-2:11
 						}
 						value: JSNumericLiteral {
 							value: 0
 							format: undefined
-							loc: Object {
-								filename: "experimental/class-private-names-duplicated/static-field-static-method/input.js"
-								end: Object {
-									column: 15
-									line: 2
-								}
-								start: Object {
-									column: 14
-									line: 2
-								}
-							}
+							loc: SourceLocation experimental/class-private-names-duplicated/static-field-static-method/input.js 2:14-2:15
 						}
 						typeAnnotation: undefined
-						loc: Object {
-							filename: "experimental/class-private-names-duplicated/static-field-static-method/input.js"
-							end: Object {
-								column: 16
-								line: 2
+						loc: SourceLocation experimental/class-private-names-duplicated/static-field-static-method/input.js 2:2-2:16
+						meta: JSClassPropertyMeta {
+							abstract: false
+							accessibility: undefined
+							optional: false
+							readonly: false
+							static: true
+							typeAnnotation: undefined
+							loc: SourceLocation experimental/class-private-names-duplicated/static-field-static-method/input.js 2:2-2:11
+							start: Position 2:2
+						}
+					}
+					JSClassPrivateMethod {
+						kind: "method"
+						key: JSPrivateName {
+							id: JSIdentifier {
+								name: "x"
+								loc: SourceLocation experimental/class-private-names-duplicated/static-field-static-method/input.js 3:10-3:11 (x)
 							}
-							start: Object {
-								column: 2
-								line: 2
-							}
+							loc: SourceLocation experimental/class-private-names-duplicated/static-field-static-method/input.js 3:9-3:11
+						}
+						loc: SourceLocation experimental/class-private-names-duplicated/static-field-static-method/input.js 3:2-3:16
+						body: JSBlockStatement {
+							body: Array []
+							directives: Array []
+							loc: SourceLocation experimental/class-private-names-duplicated/static-field-static-method/input.js 3:14-3:16
 						}
 						meta: JSClassPropertyMeta {
 							abstract: false
@@ -137,78 +81,8 @@ JSRoot {
 							readonly: false
 							static: true
 							typeAnnotation: undefined
-							start: Object {
-								column: 2
-								line: 2
-							}
-							loc: Object {
-								filename: "experimental/class-private-names-duplicated/static-field-static-method/input.js"
-								end: Object {
-									column: 11
-									line: 2
-								}
-								start: Object {
-									column: 2
-									line: 2
-								}
-							}
-						}
-					}
-					JSClassPrivateMethod {
-						kind: "method"
-						key: JSPrivateName {
-							id: JSIdentifier {
-								name: "x"
-								loc: Object {
-									filename: "experimental/class-private-names-duplicated/static-field-static-method/input.js"
-									identifierName: "x"
-									end: Object {
-										column: 11
-										line: 3
-									}
-									start: Object {
-										column: 10
-										line: 3
-									}
-								}
-							}
-							loc: Object {
-								filename: "experimental/class-private-names-duplicated/static-field-static-method/input.js"
-								end: Object {
-									column: 11
-									line: 3
-								}
-								start: Object {
-									column: 9
-									line: 3
-								}
-							}
-						}
-						loc: Object {
-							filename: "experimental/class-private-names-duplicated/static-field-static-method/input.js"
-							end: Object {
-								column: 16
-								line: 3
-							}
-							start: Object {
-								column: 2
-								line: 3
-							}
-						}
-						body: JSBlockStatement {
-							body: Array []
-							directives: Array []
-							loc: Object {
-								filename: "experimental/class-private-names-duplicated/static-field-static-method/input.js"
-								end: Object {
-									column: 16
-									line: 3
-								}
-								start: Object {
-									column: 14
-									line: 3
-								}
-							}
+							loc: SourceLocation experimental/class-private-names-duplicated/static-field-static-method/input.js 3:2-3:11
+							start: Position 3:2
 						}
 						head: JSFunctionHead {
 							async: false
@@ -219,40 +93,7 @@ JSRoot {
 							returnType: undefined
 							thisType: undefined
 							typeParameters: undefined
-							loc: Object {
-								filename: "experimental/class-private-names-duplicated/static-field-static-method/input.js"
-								end: Object {
-									column: 13
-									line: 3
-								}
-								start: Object {
-									column: 11
-									line: 3
-								}
-							}
-						}
-						meta: JSClassPropertyMeta {
-							abstract: false
-							accessibility: undefined
-							optional: false
-							readonly: false
-							static: true
-							typeAnnotation: undefined
-							start: Object {
-								column: 2
-								line: 3
-							}
-							loc: Object {
-								filename: "experimental/class-private-names-duplicated/static-field-static-method/input.js"
-								end: Object {
-									column: 11
-									line: 3
-								}
-								start: Object {
-									column: 2
-									line: 3
-								}
-							}
+							loc: SourceLocation experimental/class-private-names-duplicated/static-field-static-method/input.js 3:11-3:13
 						}
 					}
 				]
@@ -265,6 +106,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

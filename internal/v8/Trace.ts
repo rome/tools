@@ -8,7 +8,8 @@
 import {Profile, TraceEvent} from "./types";
 import sourceMapManager from "./sourceMapManager";
 import {urlToFilename} from "./utils";
-import {ob1Coerce0, ob1Coerce0To1, ob1Coerce1To0, ob1Get0} from "@internal/ob1";
+import {createAnyPath} from "@internal/path";
+import {ZeroIndexed} from "@internal/math";
 
 export default class Trace {
 	constructor() {
@@ -33,14 +34,14 @@ export default class Trace {
 
 			// Call frame line numbers are 0-index while Rome is 1-indexed
 			const resolved = sourceMapManager.approxOriginalPositionFor(
-				urlToFilename(callFrame.url),
-				ob1Coerce0To1(ob1Coerce0(callFrame.lineNumber)),
-				ob1Coerce0(callFrame.columnNumber),
+				createAnyPath(urlToFilename(callFrame.url)),
+				new ZeroIndexed(callFrame.lineNumber).toOneIndexed(),
+				new ZeroIndexed(callFrame.columnNumber),
 			);
 			if (resolved !== undefined) {
-				callFrame.url = resolved.source;
-				callFrame.lineNumber = ob1Get0(ob1Coerce1To0(resolved.line));
-				callFrame.columnNumber = ob1Get0(resolved.column);
+				callFrame.url = resolved.source.join();
+				callFrame.lineNumber = resolved.line.toZeroIndexed().valueOf();
+				callFrame.columnNumber = resolved.column.valueOf();
 
 				if (resolved.name !== undefined) {
 					callFrame.functionName = resolved.name;

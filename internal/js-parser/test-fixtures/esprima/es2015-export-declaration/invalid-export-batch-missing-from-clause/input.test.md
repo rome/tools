@@ -11,75 +11,39 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "esprima/es2015-export-declaration/invalid-export-batch-missing-from-clause/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
 	syntax: Array []
-	loc: Object {
-		filename: "esprima/es2015-export-declaration/invalid-export-batch-missing-from-clause/input.js"
-		end: Object {
-			column: 0
-			line: 2
+	loc: SourceLocation esprima/es2015-export-declaration/invalid-export-batch-missing-from-clause/input.js 1:0-2:0
+	path: UIDPath<esprima/es2015-export-declaration/invalid-export-batch-missing-from-clause/input.js>
+	body: Array [
+		JSExportAllDeclaration {
+			exportKind: undefined
+			loc: SourceLocation esprima/es2015-export-declaration/invalid-export-batch-missing-from-clause/input.js 1:0-1:8
+			source: JSStringLiteral {
+				value: ""
+				loc: SourceLocation esprima/es2015-export-declaration/invalid-export-batch-missing-from-clause/input.js 2:0-1:8
+			}
 		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	]
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse"
 				categoryValue: "js"
+				category: Array ["parse"]
 				message: RAW_MARKUP {value: "Expected `from` for an export node"}
 			}
 			location: Object {
-				filename: "esprima/es2015-export-declaration/invalid-export-batch-missing-from-clause/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 8
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 2
-				}
-			}
-		}
-	]
-	body: Array [
-		JSExportAllDeclaration {
-			exportKind: undefined
-			loc: Object {
-				filename: "esprima/es2015-export-declaration/invalid-export-batch-missing-from-clause/input.js"
-				end: Object {
-					column: 8
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
-			source: JSStringLiteral {
-				value: ""
-				loc: Object {
-					filename: "esprima/es2015-export-declaration/invalid-export-batch-missing-from-clause/input.js"
-					end: Object {
-						column: 8
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 2
-					}
-				}
+				end: Position 1:8
+				path: UIDPath<esprima/es2015-export-declaration/invalid-export-batch-missing-from-clause/input.js>
+				start: Position 2:0
 			}
 		}
 	]
@@ -96,8 +60,5 @@ JSRoot {
 
     export *
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

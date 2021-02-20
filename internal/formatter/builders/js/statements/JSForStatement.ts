@@ -25,7 +25,7 @@ export default function JSForStatement(
 ): Token {
 	const body = printClause(builder, node.body, node);
 
-	if (!node.init && !node.test && !node.update) {
+	if (!(node.init || node.test || node.update)) {
 		return group(concat(["for", space, "(;;)", body]));
 	}
 

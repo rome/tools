@@ -11,45 +11,29 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "experimental/class-private-properties/optional-chain-start-call/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "experimental/class-private-properties/optional-chain-start-call/input.js"
-		end: Object {
-			column: 0
-			line: 8
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation experimental/class-private-properties/optional-chain-start-call/input.js 1:0-8:0
+	path: UIDPath<experimental/class-private-properties/optional-chain-start-call/input.js>
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse"
 				categoryValue: "js"
+				category: Array ["parse"]
 				message: RAW_MARKUP {value: "Expected an identifier"}
 			}
 			location: Object {
-				filename: "experimental/class-private-properties/optional-chain-start-call/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 16
-					line: 5
-				}
-				start: Object {
-					column: 16
-					line: 5
-				}
+				end: Position 5:16
+				path: UIDPath<experimental/class-private-properties/optional-chain-start-call/input.js>
+				start: Position 5:16
 			}
 		}
 	]
@@ -57,103 +41,31 @@ JSRoot {
 		JSClassDeclaration {
 			id: JSBindingIdentifier {
 				name: "Foo"
-				loc: Object {
-					filename: "experimental/class-private-properties/optional-chain-start-call/input.js"
-					identifierName: "Foo"
-					end: Object {
-						column: 9
-						line: 1
-					}
-					start: Object {
-						column: 6
-						line: 1
-					}
-				}
+				loc: SourceLocation experimental/class-private-properties/optional-chain-start-call/input.js 1:6-1:9 (Foo)
 			}
-			loc: Object {
-				filename: "experimental/class-private-properties/optional-chain-start-call/input.js"
-				end: Object {
-					column: 1
-					line: 7
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation experimental/class-private-properties/optional-chain-start-call/input.js 1:0-7:1
 			meta: JSClassHead {
 				implements: undefined
 				superClass: undefined
 				superTypeParameters: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "experimental/class-private-properties/optional-chain-start-call/input.js"
-					end: Object {
-						column: 1
-						line: 7
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation experimental/class-private-properties/optional-chain-start-call/input.js 1:0-7:1
 				body: Array [
 					JSClassPrivateProperty {
 						key: JSPrivateName {
 							id: JSIdentifier {
 								name: "m"
-								loc: Object {
-									filename: "experimental/class-private-properties/optional-chain-start-call/input.js"
-									identifierName: "m"
-									end: Object {
-										column: 11
-										line: 2
-									}
-									start: Object {
-										column: 10
-										line: 2
-									}
-								}
+								loc: SourceLocation experimental/class-private-properties/optional-chain-start-call/input.js 2:10-2:11 (m)
 							}
-							loc: Object {
-								filename: "experimental/class-private-properties/optional-chain-start-call/input.js"
-								end: Object {
-									column: 11
-									line: 2
-								}
-								start: Object {
-									column: 9
-									line: 2
-								}
-							}
+							loc: SourceLocation experimental/class-private-properties/optional-chain-start-call/input.js 2:9-2:11
 						}
 						value: JSFunctionExpression {
 							id: undefined
-							loc: Object {
-								filename: "experimental/class-private-properties/optional-chain-start-call/input.js"
-								end: Object {
-									column: 27
-									line: 2
-								}
-								start: Object {
-									column: 14
-									line: 2
-								}
-							}
+							loc: SourceLocation experimental/class-private-properties/optional-chain-start-call/input.js 2:14-2:27
 							body: JSBlockStatement {
 								body: Array []
 								directives: Array []
-								loc: Object {
-									filename: "experimental/class-private-properties/optional-chain-start-call/input.js"
-									end: Object {
-										column: 27
-										line: 2
-									}
-									start: Object {
-										column: 25
-										line: 2
-									}
-								}
+								loc: SourceLocation experimental/class-private-properties/optional-chain-start-call/input.js 2:25-2:27
 							}
 							head: JSFunctionHead {
 								async: false
@@ -164,31 +76,11 @@ JSRoot {
 								returnType: undefined
 								thisType: undefined
 								typeParameters: undefined
-								loc: Object {
-									filename: "experimental/class-private-properties/optional-chain-start-call/input.js"
-									end: Object {
-										column: 24
-										line: 2
-									}
-									start: Object {
-										column: 22
-										line: 2
-									}
-								}
+								loc: SourceLocation experimental/class-private-properties/optional-chain-start-call/input.js 2:22-2:24
 							}
 						}
 						typeAnnotation: undefined
-						loc: Object {
-							filename: "experimental/class-private-properties/optional-chain-start-call/input.js"
-							end: Object {
-								column: 28
-								line: 2
-							}
-							start: Object {
-								column: 2
-								line: 2
-							}
-						}
+						loc: SourceLocation experimental/class-private-properties/optional-chain-start-call/input.js 2:2-2:28
 						meta: JSClassPropertyMeta {
 							abstract: false
 							accessibility: undefined
@@ -196,21 +88,8 @@ JSRoot {
 							readonly: false
 							static: true
 							typeAnnotation: undefined
-							start: Object {
-								column: 2
-								line: 2
-							}
-							loc: Object {
-								filename: "experimental/class-private-properties/optional-chain-start-call/input.js"
-								end: Object {
-									column: 11
-									line: 2
-								}
-								start: Object {
-									column: 2
-									line: 2
-								}
-							}
+							loc: SourceLocation experimental/class-private-properties/optional-chain-start-call/input.js 2:2-2:11
+							start: Position 2:2
 						}
 					}
 					JSClassMethod {
@@ -218,41 +97,20 @@ JSRoot {
 						key: JSStaticPropertyKey {
 							value: JSIdentifier {
 								name: "test"
-								loc: Object {
-									filename: "experimental/class-private-properties/optional-chain-start-call/input.js"
-									identifierName: "test"
-									end: Object {
-										column: 13
-										line: 4
-									}
-									start: Object {
-										column: 9
-										line: 4
-									}
-								}
+								loc: SourceLocation experimental/class-private-properties/optional-chain-start-call/input.js 4:9-4:13 (test)
 							}
-							loc: Object {
-								filename: "experimental/class-private-properties/optional-chain-start-call/input.js"
-								end: Object {
-									column: 13
-									line: 4
-								}
-								start: Object {
-									column: 9
-									line: 4
-								}
-							}
+							loc: SourceLocation experimental/class-private-properties/optional-chain-start-call/input.js 4:9-4:13
 						}
-						loc: Object {
-							filename: "experimental/class-private-properties/optional-chain-start-call/input.js"
-							end: Object {
-								column: 3
-								line: 6
-							}
-							start: Object {
-								column: 2
-								line: 4
-							}
+						loc: SourceLocation experimental/class-private-properties/optional-chain-start-call/input.js 4:2-6:3
+						meta: JSClassPropertyMeta {
+							abstract: false
+							accessibility: undefined
+							optional: false
+							readonly: false
+							static: true
+							typeAnnotation: undefined
+							loc: SourceLocation experimental/class-private-properties/optional-chain-start-call/input.js 4:2-4:13
+							start: Position 4:2
 						}
 						head: JSFunctionHead {
 							async: false
@@ -263,165 +121,38 @@ JSRoot {
 							returnType: undefined
 							thisType: undefined
 							typeParameters: undefined
-							loc: Object {
-								filename: "experimental/class-private-properties/optional-chain-start-call/input.js"
-								end: Object {
-									column: 15
-									line: 4
-								}
-								start: Object {
-									column: 13
-									line: 4
-								}
-							}
-						}
-						meta: JSClassPropertyMeta {
-							abstract: false
-							accessibility: undefined
-							optional: false
-							readonly: false
-							static: true
-							typeAnnotation: undefined
-							start: Object {
-								column: 2
-								line: 4
-							}
-							loc: Object {
-								filename: "experimental/class-private-properties/optional-chain-start-call/input.js"
-								end: Object {
-									column: 13
-									line: 4
-								}
-								start: Object {
-									column: 2
-									line: 4
-								}
-							}
+							loc: SourceLocation experimental/class-private-properties/optional-chain-start-call/input.js 4:13-4:15
 						}
 						body: JSBlockStatement {
 							directives: Array []
-							loc: Object {
-								filename: "experimental/class-private-properties/optional-chain-start-call/input.js"
-								end: Object {
-									column: 3
-									line: 6
-								}
-								start: Object {
-									column: 16
-									line: 4
-								}
-							}
+							loc: SourceLocation experimental/class-private-properties/optional-chain-start-call/input.js 4:16-6:3
 							body: Array [
 								JSReturnStatement {
-									loc: Object {
-										filename: "experimental/class-private-properties/optional-chain-start-call/input.js"
-										end: Object {
-											column: 17
-											line: 5
-										}
-										start: Object {
-											column: 4
-											line: 5
-										}
-									}
+									loc: SourceLocation experimental/class-private-properties/optional-chain-start-call/input.js 5:4-5:17
 									argument: JSMemberExpression {
-										loc: Object {
-											filename: "experimental/class-private-properties/optional-chain-start-call/input.js"
-											end: Object {
-												column: 17
-												line: 5
-											}
-											start: Object {
-												column: 11
-												line: 5
-											}
-										}
+										loc: SourceLocation experimental/class-private-properties/optional-chain-start-call/input.js 5:11-5:17
 										object: JSReferenceIdentifier {
 											name: "Foo"
-											loc: Object {
-												filename: "experimental/class-private-properties/optional-chain-start-call/input.js"
-												identifierName: "Foo"
-												end: Object {
-													column: 14
-													line: 5
-												}
-												start: Object {
-													column: 11
-													line: 5
-												}
-											}
+											loc: SourceLocation experimental/class-private-properties/optional-chain-start-call/input.js 5:11-5:14 (Foo)
 										}
 										property: JSStaticMemberProperty {
 											value: JSIdentifier {
 												name: ""
-												loc: Object {
-													filename: "experimental/class-private-properties/optional-chain-start-call/input.js"
-													identifierName: ""
-													end: Object {
-														column: 17
-														line: 5
-													}
-													start: Object {
-														column: 16
-														line: 5
-													}
-												}
+												loc: SourceLocation experimental/class-private-properties/optional-chain-start-call/input.js 5:16-5:17 ()
 											}
 											optional: true
-											loc: Object {
-												filename: "experimental/class-private-properties/optional-chain-start-call/input.js"
-												identifierName: ""
-												end: Object {
-													column: 17
-													line: 5
-												}
-												start: Object {
-													column: 16
-													line: 5
-												}
-											}
+											loc: SourceLocation experimental/class-private-properties/optional-chain-start-call/input.js 5:16-5:17 ()
 										}
 									}
 								}
 								JSExpressionStatement {
-									loc: Object {
-										filename: "experimental/class-private-properties/optional-chain-start-call/input.js"
-										end: Object {
-											column: 21
-											line: 5
-										}
-										start: Object {
-											column: 17
-											line: 5
-										}
-									}
+									loc: SourceLocation experimental/class-private-properties/optional-chain-start-call/input.js 5:17-5:21
 									expression: JSCallExpression {
 										arguments: Array []
-										loc: Object {
-											filename: "experimental/class-private-properties/optional-chain-start-call/input.js"
-											end: Object {
-												column: 20
-												line: 5
-											}
-											start: Object {
-												column: 17
-												line: 5
-											}
-										}
+										loc: SourceLocation experimental/class-private-properties/optional-chain-start-call/input.js 5:17-5:20
 										callee: JSReferenceIdentifier {
 											name: "m"
-											loc: Object {
-												filename: "experimental/class-private-properties/optional-chain-start-call/input.js"
-												identifierName: "m"
-												end: Object {
-													column: 18
-													line: 5
-												}
-												start: Object {
-													column: 17
-													line: 5
-												}
-											}
+											loc: SourceLocation experimental/class-private-properties/optional-chain-start-call/input.js 5:17-5:18 (m)
 										}
 									}
 								}
@@ -449,8 +180,5 @@ JSRoot {
     6 │   }
     7 │ }
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

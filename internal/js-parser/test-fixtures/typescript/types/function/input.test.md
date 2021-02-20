@@ -12,253 +12,62 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "typescript/types/function/input.ts"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
+	loc: SourceLocation typescript/types/function/input.ts 1:0-2:0
+	path: UIDPath<typescript/types/function/input.ts>
 	syntax: Array ["ts"]
-	loc: Object {
-		filename: "typescript/types/function/input.ts"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
 	body: Array [
 		JSVariableDeclarationStatement {
-			loc: Object {
-				filename: "typescript/types/function/input.ts"
-				end: Object {
-					column: 55
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation typescript/types/function/input.ts 1:0-1:55
 			declaration: JSVariableDeclaration {
 				kind: "let"
-				loc: Object {
-					filename: "typescript/types/function/input.ts"
-					end: Object {
-						column: 55
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/types/function/input.ts 1:0-1:55
 				declarations: Array [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "f"
-							loc: Object {
-								filename: "typescript/types/function/input.ts"
-								end: Object {
-									column: 54
-									line: 1
-								}
-								start: Object {
-									column: 4
-									line: 1
-								}
-							}
+							loc: SourceLocation typescript/types/function/input.ts 1:4-1:54
 							meta: JSPatternMeta {
 								definite: undefined
-								loc: Object {
-									filename: "typescript/types/function/input.ts"
-									end: Object {
-										column: 54
-										line: 1
-									}
-									start: Object {
-										column: 4
-										line: 1
-									}
-								}
+								loc: SourceLocation typescript/types/function/input.ts 1:4-1:54
 								typeAnnotation: TSFunctionType {
-									loc: Object {
-										filename: "typescript/types/function/input.ts"
-										end: Object {
-											column: 54
-											line: 1
-										}
-										start: Object {
-											column: 7
-											line: 1
-										}
-									}
-									typeAnnotation: TSVoidKeywordTypeAnnotation {
-										loc: Object {
-											filename: "typescript/types/function/input.ts"
-											end: Object {
-												column: 54
-												line: 1
-											}
-											start: Object {
-												column: 50
-												line: 1
-											}
-										}
-									}
+									loc: SourceLocation typescript/types/function/input.ts 1:7-1:54
+									typeAnnotation: TSVoidKeywordTypeAnnotation {loc: SourceLocation typescript/types/function/input.ts 1:50-1:54}
 									meta: TSSignatureDeclarationMeta {
 										typeParameters: undefined
-										loc: Object {
-											filename: "typescript/types/function/input.ts"
-											end: Object {
-												column: 54
-												line: 1
-											}
-											start: Object {
-												column: 7
-												line: 1
-											}
-										}
+										loc: SourceLocation typescript/types/function/input.ts 1:7-1:54
 										rest: JSBindingIdentifier {
 											name: "c"
-											loc: Object {
-												filename: "typescript/types/function/input.ts"
-												identifierName: "c"
-												end: Object {
-													column: 35
-													line: 1
-												}
-												start: Object {
-													column: 34
-													line: 1
-												}
-											}
+											loc: SourceLocation typescript/types/function/input.ts 1:34-1:35 (c)
 											meta: JSPatternMeta {
 												optional: undefined
-												loc: Object {
-													filename: "typescript/types/function/input.ts"
-													end: Object {
-														column: 45
-														line: 1
-													}
-													start: Object {
-														column: 34
-														line: 1
-													}
-												}
+												loc: SourceLocation typescript/types/function/input.ts 1:34-1:45
 												typeAnnotation: TSArrayType {
-													loc: Object {
-														filename: "typescript/types/function/input.ts"
-														end: Object {
-															column: 45
-															line: 1
-														}
-														start: Object {
-															column: 37
-															line: 1
-														}
-													}
-													elementType: TSNumberKeywordTypeAnnotation {
-														loc: Object {
-															filename: "typescript/types/function/input.ts"
-															end: Object {
-																column: 43
-																line: 1
-															}
-															start: Object {
-																column: 37
-																line: 1
-															}
-														}
-													}
+													elementType: TSNumberKeywordTypeAnnotation {loc: SourceLocation typescript/types/function/input.ts 1:37-1:43}
+													loc: SourceLocation typescript/types/function/input.ts 1:37-1:45
 												}
 											}
 										}
 										parameters: Array [
 											JSBindingIdentifier {
 												name: "a"
-												loc: Object {
-													filename: "typescript/types/function/input.ts"
-													identifierName: "a"
-													end: Object {
-														column: 9
-														line: 1
-													}
-													start: Object {
-														column: 8
-														line: 1
-													}
-												}
+												loc: SourceLocation typescript/types/function/input.ts 1:8-1:9 (a)
 												meta: JSPatternMeta {
 													optional: undefined
-													loc: Object {
-														filename: "typescript/types/function/input.ts"
-														end: Object {
-															column: 17
-															line: 1
-														}
-														start: Object {
-															column: 8
-															line: 1
-														}
-													}
-													typeAnnotation: TSNumberKeywordTypeAnnotation {
-														loc: Object {
-															filename: "typescript/types/function/input.ts"
-															end: Object {
-																column: 17
-																line: 1
-															}
-															start: Object {
-																column: 11
-																line: 1
-															}
-														}
-													}
+													loc: SourceLocation typescript/types/function/input.ts 1:8-1:17
+													typeAnnotation: TSNumberKeywordTypeAnnotation {loc: SourceLocation typescript/types/function/input.ts 1:11-1:17}
 												}
 											}
 											JSBindingIdentifier {
 												name: "b"
-												loc: Object {
-													filename: "typescript/types/function/input.ts"
-													identifierName: "b"
-													end: Object {
-														column: 20
-														line: 1
-													}
-													start: Object {
-														column: 19
-														line: 1
-													}
-												}
+												loc: SourceLocation typescript/types/function/input.ts 1:19-1:20 (b)
 												meta: JSPatternMeta {
 													optional: true
-													loc: Object {
-														filename: "typescript/types/function/input.ts"
-														end: Object {
-															column: 29
-															line: 1
-														}
-														start: Object {
-															column: 19
-															line: 1
-														}
-													}
-													typeAnnotation: TSNumberKeywordTypeAnnotation {
-														loc: Object {
-															filename: "typescript/types/function/input.ts"
-															end: Object {
-																column: 29
-																line: 1
-															}
-															start: Object {
-																column: 23
-																line: 1
-															}
-														}
-													}
+													loc: SourceLocation typescript/types/function/input.ts 1:19-1:29
+													typeAnnotation: TSNumberKeywordTypeAnnotation {loc: SourceLocation typescript/types/function/input.ts 1:23-1:29}
 												}
 											}
 										]
@@ -267,17 +76,7 @@ JSRoot {
 							}
 						}
 						init: undefined
-						loc: Object {
-							filename: "typescript/types/function/input.ts"
-							end: Object {
-								column: 54
-								line: 1
-							}
-							start: Object {
-								column: 4
-								line: 1
-							}
-						}
+						loc: SourceLocation typescript/types/function/input.ts 1:4-1:54
 					}
 				]
 			}
@@ -289,6 +88,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

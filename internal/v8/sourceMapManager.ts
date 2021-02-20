@@ -7,13 +7,14 @@
 
 import {SourceMapConsumerCollection} from "@internal/codec-source-map";
 import {ErrorFrame} from "@internal/v8";
-import {ob1Coerce1, ob1Coerce1To0} from "@internal/ob1";
 import {
 	ERROR_FRAMES_PROP,
 	ErrorWithFrames,
 	getErrorStructure,
 	setErrorFrames,
 } from "./errors";
+import {maybeCreateAnyPath} from "@internal/path";
+import {OneIndexed} from "@internal/math";
 
 let inited: boolean = false;
 
@@ -53,7 +54,7 @@ function buildStackString(err: Error): string {
 			isAsync,
 			isEval,
 			isConstructor,
-			filename,
+			path,
 			lineNumber,
 			columnNumber,
 		} = frame;
@@ -87,11 +88,11 @@ function buildStackString(err: Error): string {
 		if (isNative) {
 			parts.push("native");
 		} else if (
-			filename !== undefined &&
+			path !== undefined &&
 			lineNumber !== undefined &&
 			columnNumber !== undefined
 		) {
-			parts.push(`(${filename}:${lineNumber}:${columnNumber})`);
+			parts.push(`(${path.join()}:${lineNumber}:${columnNumber})`);
 		}
 
 		if (!resolvedLocation) {
@@ -133,21 +134,21 @@ function addErrorFrames(err: ErrorWithFrames, frames: NodeJS.CallSite[]): void {
 			// TODO frameApi.isAsync
 			isAsync: false,
 			resolvedLocation: true,
-			filename: noNull(filename),
-			lineNumber: lineNumber == null ? undefined : ob1Coerce1(lineNumber),
+			path: maybeCreateAnyPath(noNull(filename)),
+			lineNumber: lineNumber == null ? undefined : new OneIndexed(lineNumber),
 			// Rome expects 0-indexed columns, V8 provides 1-indexed
 			columnNumber: columnNumber == null
 				? undefined
-				: ob1Coerce1To0(columnNumber),
+				: new OneIndexed(columnNumber).toZeroIndexed(),
 		};
 
 		if (
-			frame.filename !== undefined &&
+			frame.path !== undefined &&
 			frame.lineNumber !== undefined &&
 			frame.columnNumber !== undefined
 		) {
 			const {found, line, column, source, name} = sourceMaps.assertApproxOriginalPositionFor(
-				frame.filename,
+				frame.path,
 				frame.lineNumber,
 				frame.columnNumber,
 			);
@@ -159,7 +160,7 @@ function addErrorFrames(err: ErrorWithFrames, frames: NodeJS.CallSite[]): void {
 				resolvedLocation: found,
 				lineNumber: line,
 				columnNumber: column,
-				filename: source,
+				path: source,
 			};
 		} else {
 			return frame;

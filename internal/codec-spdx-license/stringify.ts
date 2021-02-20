@@ -6,14 +6,18 @@
  */
 import {ExpressionNode} from "@internal/codec-spdx-license/types";
 
-export default function stringify(node: ExpressionNode): string {
+export function stringifySPDXLicense(node: ExpressionNode): string {
 	// TODO parens
 	switch (node.type) {
 		case "Or":
-			return `${stringify(node.left)} OR ${stringify(node.right)}`;
+			return `${stringifySPDXLicense(node.left)} OR ${stringifySPDXLicense(
+				node.right,
+			)}`;
 
 		case "And":
-			return `${stringify(node.left)} AND ${stringify(node.right)}`;
+			return `${stringifySPDXLicense(node.left)} AND ${stringifySPDXLicense(
+				node.right,
+			)}`;
 
 		case "License": {
 			let str = node.id;

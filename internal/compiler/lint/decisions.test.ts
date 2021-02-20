@@ -1,21 +1,20 @@
 import {test} from "rome";
 import {dedent} from "@internal/string-utils";
 import {parseDecisionStrings} from "@internal/compiler";
-import {createAbsoluteFilePath} from "@internal/path";
+import {createAbsoluteFilePath, createRelativePath} from "@internal/path";
 import lint from "./index";
 import {parseJS} from "@internal/js-parser";
-import {createDefaultProjectConfig} from "@internal/project";
-import {ob1Number0, ob1Number1} from "@internal/ob1";
+import {OneIndexed, ZeroIndexed} from "@internal/math";
 
 test(
 	"apply single autofix",
 	async (t) => {
 		const {lintCompilerOptionsPerFile} = parseDecisionStrings({
-			filename: "test",
+			path: createRelativePath("test"),
 			decisions: [
 				{
-					value: "fix-lint/js/doubleEquals-foo.ts-2:0-0",
-					start: {line: ob1Number1, column: ob1Number0},
+					value: "fix-lint/js/noDoubleEquals-foo.ts-2:0-0",
+					start: {line: new OneIndexed(), column: new ZeroIndexed()},
 				},
 			],
 			cwd: createAbsoluteFilePath("/"),
@@ -30,18 +29,13 @@ test(
 
 		const res = await lint({
 			applySafeFixes: true,
-			project: {
-				configHashes: [],
-				directory: undefined,
-				config: createDefaultProjectConfig(),
-			},
 			options: {
 				lint: compilerOptions,
 			},
 			sourceText,
-			ast: parseJS({path: "unknown", input: sourceText}),
+			ast: parseJS({input: sourceText}),
 		});
 		t.is(res.diagnostics.length, 1);
-		t.snapshot(res.src);
+		t.snapshot(res.formatted);
 	},
 );

@@ -11,104 +11,47 @@ JSRoot {
 	comments: Array []
 	corrupt: true
 	directives: Array []
-	filename: "es2015/uncategorised/294/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2015/uncategorised/294/input.js"
-		end: Object {
-			column: 9
-			line: 1
+	loc: SourceLocation es2015/uncategorised/294/input.js 1:0-1:9
+	path: UIDPath<es2015/uncategorised/294/input.js>
+	body: Array [
+		JSExpressionStatement {
+			loc: SourceLocation es2015/uncategorised/294/input.js 1:0-1:9
+			expression: JSSequenceExpression {
+				loc: SourceLocation es2015/uncategorised/294/input.js 1:1-1:8
+				expressions: Array [
+					JSReferenceIdentifier {
+						name: "b"
+						loc: SourceLocation es2015/uncategorised/294/input.js 1:1-1:2 (b)
+					}
+					JSReferenceIdentifier {
+						name: "INVALID_PLACEHOLDER"
+						loc: SourceLocation es2015/uncategorised/294/input.js 1:9-1:9
+					}
+				]
+			}
 		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	]
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse"
 				categoryValue: "js"
-				message: RAW_MARKUP {value: "Unexpected token"}
+				category: Array ["parse"]
+				message: RAW_MARKUP {value: "Unexpected character <emphasis>.</emphasis>"}
 			}
 			location: Object {
-				filename: "es2015/uncategorised/294/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 4
-					line: 1
-				}
-				start: Object {
-					column: 4
-					line: 1
-				}
-			}
-		}
-	]
-	body: Array [
-		JSExpressionStatement {
-			loc: Object {
-				filename: "es2015/uncategorised/294/input.js"
-				end: Object {
-					column: 9
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
-			expression: JSSequenceExpression {
-				loc: Object {
-					filename: "es2015/uncategorised/294/input.js"
-					end: Object {
-						column: 8
-						line: 1
-					}
-					start: Object {
-						column: 1
-						line: 1
-					}
-				}
-				expressions: Array [
-					JSReferenceIdentifier {
-						name: "b"
-						loc: Object {
-							filename: "es2015/uncategorised/294/input.js"
-							identifierName: "b"
-							end: Object {
-								column: 2
-								line: 1
-							}
-							start: Object {
-								column: 1
-								line: 1
-							}
-						}
-					}
-					JSReferenceIdentifier {
-						name: "INVALID_PLACEHOLDER"
-						loc: Object {
-							filename: "es2015/uncategorised/294/input.js"
-							end: Object {
-								column: 9
-								line: 1
-							}
-							start: Object {
-								column: 9
-								line: 1
-							}
-						}
-					}
-				]
+				end: Position 1:4
+				path: UIDPath<es2015/uncategorised/294/input.js>
+				start: Position 1:4
 			}
 		}
 	]
@@ -121,13 +64,10 @@ JSRoot {
 
  es2015/uncategorised/294/input.js:1:4 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ Unexpected token
+  ✖ Unexpected character .
 
     (b, ...a)
         ^
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

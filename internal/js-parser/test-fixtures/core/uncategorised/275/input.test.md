@@ -12,103 +12,32 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "core/uncategorised/275/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "core/uncategorised/275/input.js"
-		end: Object {
-			column: 26
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation core/uncategorised/275/input.js 1:0-1:26
+	path: UIDPath<core/uncategorised/275/input.js>
 	body: Array [
 		JSThrowStatement {
-			loc: Object {
-				filename: "core/uncategorised/275/input.js"
-				end: Object {
-					column: 26
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation core/uncategorised/275/input.js 1:0-1:26
 			argument: JSObjectExpression {
-				loc: Object {
-					filename: "core/uncategorised/275/input.js"
-					end: Object {
-						column: 26
-						line: 1
-					}
-					start: Object {
-						column: 6
-						line: 1
-					}
-				}
+				loc: SourceLocation core/uncategorised/275/input.js 1:6-1:26
 				properties: Array [
 					JSObjectProperty {
 						key: JSStaticPropertyKey {
 							value: JSIdentifier {
 								name: "message"
-								loc: Object {
-									filename: "core/uncategorised/275/input.js"
-									identifierName: "message"
-									end: Object {
-										column: 15
-										line: 1
-									}
-									start: Object {
-										column: 8
-										line: 1
-									}
-								}
+								loc: SourceLocation core/uncategorised/275/input.js 1:8-1:15 (message)
 							}
-							loc: Object {
-								filename: "core/uncategorised/275/input.js"
-								end: Object {
-									column: 15
-									line: 1
-								}
-								start: Object {
-									column: 8
-									line: 1
-								}
-							}
+							loc: SourceLocation core/uncategorised/275/input.js 1:8-1:15
 						}
 						value: JSStringLiteral {
 							value: "Error"
-							loc: Object {
-								filename: "core/uncategorised/275/input.js"
-								end: Object {
-									column: 24
-									line: 1
-								}
-								start: Object {
-									column: 17
-									line: 1
-								}
-							}
+							loc: SourceLocation core/uncategorised/275/input.js 1:17-1:24
 						}
-						loc: Object {
-							filename: "core/uncategorised/275/input.js"
-							end: Object {
-								column: 24
-								line: 1
-							}
-							start: Object {
-								column: 8
-								line: 1
-							}
-						}
+						loc: SourceLocation core/uncategorised/275/input.js 1:8-1:24
 					}
 				]
 			}
@@ -120,6 +49,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

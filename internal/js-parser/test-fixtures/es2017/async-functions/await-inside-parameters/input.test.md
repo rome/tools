@@ -11,45 +11,29 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "es2017/async-functions/await-inside-parameters/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2017/async-functions/await-inside-parameters/input.js"
-		end: Object {
-			column: 33
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2017/async-functions/await-inside-parameters/input.js 1:0-1:33
+	path: UIDPath<es2017/async-functions/await-inside-parameters/input.js>
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse"
 				categoryValue: "js"
+				category: Array ["parse"]
 				message: RAW_MARKUP {value: "await is not allowed in async function parameters"}
 			}
 			location: Object {
-				filename: "es2017/async-functions/await-inside-parameters/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 27
-					line: 1
-				}
-				start: Object {
-					column: 28
-					line: 1
-				}
+				end: Position 1:27
+				path: UIDPath<es2017/async-functions/await-inside-parameters/input.js>
+				start: Position 1:28
 			}
 		}
 	]
@@ -57,44 +41,13 @@ JSRoot {
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "fn"
-				loc: Object {
-					filename: "es2017/async-functions/await-inside-parameters/input.js"
-					identifierName: "fn"
-					end: Object {
-						column: 17
-						line: 1
-					}
-					start: Object {
-						column: 15
-						line: 1
-					}
-				}
+				loc: SourceLocation es2017/async-functions/await-inside-parameters/input.js 1:15-1:17 (fn)
 			}
-			loc: Object {
-				filename: "es2017/async-functions/await-inside-parameters/input.js"
-				end: Object {
-					column: 33
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2017/async-functions/await-inside-parameters/input.js 1:0-1:33
 			body: JSBlockStatement {
 				body: Array []
 				directives: Array []
-				loc: Object {
-					filename: "es2017/async-functions/await-inside-parameters/input.js"
-					end: Object {
-						column: 33
-						line: 1
-					}
-					start: Object {
-						column: 31
-						line: 1
-					}
-				}
+				loc: SourceLocation es2017/async-functions/await-inside-parameters/input.js 1:31-1:33
 			}
 			head: JSFunctionHead {
 				async: true
@@ -104,86 +57,25 @@ JSRoot {
 				returnType: undefined
 				thisType: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "es2017/async-functions/await-inside-parameters/input.js"
-					end: Object {
-						column: 30
-						line: 1
-					}
-					start: Object {
-						column: 17
-						line: 1
-					}
-				}
+				loc: SourceLocation es2017/async-functions/await-inside-parameters/input.js 1:17-1:30
 				params: Array [
 					JSBindingAssignmentPattern {
-						loc: Object {
-							filename: "es2017/async-functions/await-inside-parameters/input.js"
-							end: Object {
-								column: 29
-								line: 1
-							}
-							start: Object {
-								column: 18
-								line: 1
-							}
-						}
+						loc: SourceLocation es2017/async-functions/await-inside-parameters/input.js 1:18-1:29
 						right: JSAwaitExpression {
-							loc: Object {
-								filename: "es2017/async-functions/await-inside-parameters/input.js"
-								end: Object {
-									column: 29
-									line: 1
-								}
-								start: Object {
-									column: 22
-									line: 1
-								}
-							}
+							loc: SourceLocation es2017/async-functions/await-inside-parameters/input.js 1:22-1:29
 							argument: JSNumericLiteral {
 								value: 2
 								format: undefined
-								loc: Object {
-									filename: "es2017/async-functions/await-inside-parameters/input.js"
-									end: Object {
-										column: 29
-										line: 1
-									}
-									start: Object {
-										column: 28
-										line: 1
-									}
-								}
+								loc: SourceLocation es2017/async-functions/await-inside-parameters/input.js 1:28-1:29
 							}
 						}
 						left: JSBindingIdentifier {
 							name: "x"
-							loc: Object {
-								filename: "es2017/async-functions/await-inside-parameters/input.js"
-								identifierName: "x"
-								end: Object {
-									column: 19
-									line: 1
-								}
-								start: Object {
-									column: 18
-									line: 1
-								}
-							}
+							loc: SourceLocation es2017/async-functions/await-inside-parameters/input.js 1:18-1:19 (x)
 							meta: JSPatternMeta {
 								optional: undefined
 								typeAnnotation: undefined
-								loc: Object {
-									filename: "es2017/async-functions/await-inside-parameters/input.js"
-									end: Object {
-										column: 19
-										line: 1
-									}
-									start: Object {
-										column: 18
-										line: 1
-									}
-								}
+								loc: SourceLocation es2017/async-functions/await-inside-parameters/input.js 1:18-1:19
 							}
 						}
 					}
@@ -205,8 +97,5 @@ JSRoot {
     async function fn(x = await 2) {}
                                 ^
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

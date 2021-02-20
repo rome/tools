@@ -12,181 +12,61 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "jsx/regression/1/input.jsx"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
+	loc: SourceLocation jsx/regression/1/input.jsx 1:0-1:40
+	path: UIDPath<jsx/regression/1/input.jsx>
 	syntax: Array ["jsx"]
-	loc: Object {
-		filename: "jsx/regression/1/input.jsx"
-		end: Object {
-			column: 40
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "jsx/regression/1/input.jsx"
-				end: Object {
-					column: 40
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation jsx/regression/1/input.jsx 1:0-1:40
 			expression: JSXElement {
 				name: JSXIdentifier {
 					name: "p"
-					loc: Object {
-						filename: "jsx/regression/1/input.jsx"
-						end: Object {
-							column: 2
-							line: 1
-						}
-						start: Object {
-							column: 1
-							line: 1
-						}
-					}
+					loc: SourceLocation jsx/regression/1/input.jsx 1:1-1:2
 				}
 				attributes: Array []
 				selfClosing: false
 				typeArguments: undefined
-				loc: Object {
-					filename: "jsx/regression/1/input.jsx"
-					end: Object {
-						column: 38
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation jsx/regression/1/input.jsx 1:0-1:38
 				children: Array [
 					JSXText {
 						value: "foo "
-						loc: Object {
-							filename: "jsx/regression/1/input.jsx"
-							end: Object {
-								column: 7
-								line: 1
-							}
-							start: Object {
-								column: 3
-								line: 1
-							}
-						}
+						loc: SourceLocation jsx/regression/1/input.jsx 1:3-1:7
 					}
 					JSXElement {
 						name: JSXIdentifier {
 							name: "a"
-							loc: Object {
-								filename: "jsx/regression/1/input.jsx"
-								end: Object {
-									column: 9
-									line: 1
-								}
-								start: Object {
-									column: 8
-									line: 1
-								}
-							}
+							loc: SourceLocation jsx/regression/1/input.jsx 1:8-1:9
 						}
 						selfClosing: false
 						typeArguments: undefined
-						loc: Object {
-							filename: "jsx/regression/1/input.jsx"
-							end: Object {
-								column: 30
-								line: 1
-							}
-							start: Object {
-								column: 7
-								line: 1
-							}
-						}
+						loc: SourceLocation jsx/regression/1/input.jsx 1:7-1:30
 						children: Array [
 							JSXText {
 								value: " bar"
-								loc: Object {
-									filename: "jsx/regression/1/input.jsx"
-									end: Object {
-										column: 26
-										line: 1
-									}
-									start: Object {
-										column: 22
-										line: 1
-									}
-								}
+								loc: SourceLocation jsx/regression/1/input.jsx 1:22-1:26
 							}
 						]
 						attributes: Array [
 							JSXAttribute {
 								name: JSXIdentifier {
 									name: "href"
-									loc: Object {
-										filename: "jsx/regression/1/input.jsx"
-										end: Object {
-											column: 14
-											line: 1
-										}
-										start: Object {
-											column: 10
-											line: 1
-										}
-									}
+									loc: SourceLocation jsx/regression/1/input.jsx 1:10-1:14
 								}
 								value: JSStringLiteral {
 									value: "test"
-									loc: Object {
-										filename: "jsx/regression/1/input.jsx"
-										end: Object {
-											column: 21
-											line: 1
-										}
-										start: Object {
-											column: 15
-											line: 1
-										}
-									}
+									loc: SourceLocation jsx/regression/1/input.jsx 1:15-1:21
 								}
-								loc: Object {
-									filename: "jsx/regression/1/input.jsx"
-									end: Object {
-										column: 21
-										line: 1
-									}
-									start: Object {
-										column: 10
-										line: 1
-									}
-								}
+								loc: SourceLocation jsx/regression/1/input.jsx 1:10-1:21
 							}
 						]
 					}
 					JSXText {
 						value: " baz"
-						loc: Object {
-							filename: "jsx/regression/1/input.jsx"
-							end: Object {
-								column: 34
-								line: 1
-							}
-							start: Object {
-								column: 30
-								line: 1
-							}
-						}
+						loc: SourceLocation jsx/regression/1/input.jsx 1:30-1:34
 					}
 				]
 			}
@@ -198,6 +78,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

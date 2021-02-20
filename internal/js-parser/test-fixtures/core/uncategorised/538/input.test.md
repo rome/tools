@@ -11,54 +11,24 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "core/uncategorised/538/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "core/uncategorised/538/input.js"
-		end: Object {
-			column: 1
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation core/uncategorised/538/input.js 1:0-2:1
+	path: UIDPath<core/uncategorised/538/input.js>
 	body: Array [
 		JSEmptyStatement {
 			leadingComments: Array ["0"]
-			loc: Object {
-				filename: "core/uncategorised/538/input.js"
-				end: Object {
-					column: 1
-					line: 2
-				}
-				start: Object {
-					column: 0
-					line: 2
-				}
-			}
+			loc: SourceLocation core/uncategorised/538/input.js 2:0-2:1
 		}
 	]
 	comments: Array [
 		CommentLine {
 			id: "0"
 			value: ""
-			loc: Object {
-				filename: "core/uncategorised/538/input.js"
-				end: Object {
-					column: 4
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation core/uncategorised/538/input.js 1:0-1:4
 		}
 	]
 }
@@ -67,6 +37,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

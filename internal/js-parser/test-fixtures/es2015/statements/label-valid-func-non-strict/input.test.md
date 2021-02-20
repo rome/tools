@@ -12,92 +12,30 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "es2015/statements/label-valid-func-non-strict/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2015/statements/label-valid-func-non-strict/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2015/statements/label-valid-func-non-strict/input.js 1:0-2:0
+	path: UIDPath<es2015/statements/label-valid-func-non-strict/input.js>
 	body: Array [
 		JSLabeledStatement {
-			loc: Object {
-				filename: "es2015/statements/label-valid-func-non-strict/input.js"
-				end: Object {
-					column: 22
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2015/statements/label-valid-func-non-strict/input.js 1:0-1:22
 			label: JSIdentifier {
 				name: "foo"
-				loc: Object {
-					filename: "es2015/statements/label-valid-func-non-strict/input.js"
-					identifierName: "foo"
-					end: Object {
-						column: 3
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/statements/label-valid-func-non-strict/input.js 1:0-1:3 (foo)
 			}
 			body: JSFunctionDeclaration {
 				id: JSBindingIdentifier {
 					name: "bar"
-					loc: Object {
-						filename: "es2015/statements/label-valid-func-non-strict/input.js"
-						identifierName: "bar"
-						end: Object {
-							column: 17
-							line: 1
-						}
-						start: Object {
-							column: 14
-							line: 1
-						}
-					}
+					loc: SourceLocation es2015/statements/label-valid-func-non-strict/input.js 1:14-1:17 (bar)
 				}
-				loc: Object {
-					filename: "es2015/statements/label-valid-func-non-strict/input.js"
-					end: Object {
-						column: 22
-						line: 1
-					}
-					start: Object {
-						column: 5
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/statements/label-valid-func-non-strict/input.js 1:5-1:22
 				body: JSBlockStatement {
 					body: Array []
 					directives: Array []
-					loc: Object {
-						filename: "es2015/statements/label-valid-func-non-strict/input.js"
-						end: Object {
-							column: 22
-							line: 1
-						}
-						start: Object {
-							column: 20
-							line: 1
-						}
-					}
+					loc: SourceLocation es2015/statements/label-valid-func-non-strict/input.js 1:20-1:22
 				}
 				head: JSFunctionHead {
 					async: false
@@ -108,17 +46,7 @@ JSRoot {
 					returnType: undefined
 					thisType: undefined
 					typeParameters: undefined
-					loc: Object {
-						filename: "es2015/statements/label-valid-func-non-strict/input.js"
-						end: Object {
-							column: 19
-							line: 1
-						}
-						start: Object {
-							column: 17
-							line: 1
-						}
-					}
+					loc: SourceLocation es2015/statements/label-valid-func-non-strict/input.js 1:17-1:19
 				}
 			}
 		}
@@ -129,6 +57,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

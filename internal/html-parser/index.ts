@@ -2,7 +2,6 @@ import {
 	ParserCore,
 	ParserCoreTokenizeState,
 	ParserOptions,
-	ParserOptionsWithRequiredPath,
 	createParser,
 	isAlpha,
 	isDigit,
@@ -18,18 +17,22 @@ import {
 	HTMLString,
 	HTMLText,
 } from "@internal/ast";
-import {Number0, ob1Add, ob1Get0, ob1Inc} from "@internal/ob1";
+import {ZeroIndexed} from "@internal/math";
 import {isEscaped} from "@internal/string-utils";
 import {isSelfClosingTagName} from "./tags";
 import {descriptions} from "@internal/diagnostics";
 import {State, Tokens} from "@internal/html-parser/types";
 
-function isTagStartChar(index: Number0, input: string): boolean {
-	const i = ob1Get0(index);
+function isTagStartChar(index: ZeroIndexed, input: string): boolean {
+	const i = index.valueOf();
 	return input[i] === "<" && !isEscaped(index, input);
 }
 
-function isStringValueChar(char: string, index: Number0, input: string): boolean {
+function isStringValueChar(
+	char: string,
+	index: ZeroIndexed,
+	input: string,
+): boolean {
 	if (char === '"' && !isEscaped(index, input)) {
 		return false;
 	}
@@ -41,16 +44,20 @@ function isIdentifierChar(char: string): boolean {
 	return isDigit(char) || isAlpha(char) || char === "-";
 }
 
-function isTextChar(char: string, index: Number0, input: string): boolean {
+function isTextChar(char: string, index: ZeroIndexed, input: string): boolean {
 	return !isTagStartChar(index, input);
 }
 
-function isntCommentEnd(char: string, index: Number0, input: string): boolean {
+function isntCommentEnd(
+	char: string,
+	index: ZeroIndexed,
+	input: string,
+): boolean {
 	const isCommentEnd =
 		char === "-" &&
 		!isEscaped(index, input) &&
-		input[ob1Get0(index) + 1] === "-" &&
-		input[ob1Get0(index) + 2] === ">";
+		input[index.valueOf() + 1] === "-" &&
+		input[index.valueOf() + 2] === ">";
 	return !isCommentEnd;
 }
 
@@ -63,7 +70,7 @@ type HTMLParserTypes = {
 
 type HTMLParser = ParserCore<HTMLParserTypes>;
 
-const createHTMLParser = createParser<HTMLParserTypes>({
+const htmlParser = createParser<HTMLParserTypes>({
 	ignoreWhitespaceTokens: true,
 	diagnosticLanguage: "html",
 	getInitialState: () => ({inTagHead: false}),
@@ -81,8 +88,8 @@ const createHTMLParser = createParser<HTMLParserTypes>({
 				return [state, parser.finishToken("Equals")];
 			}
 
-			if (char === "/" && parser.getInputCharOnly(index, 1)) {
-				return [state, parser.finishToken("TagSelfClosing", ob1Add(index, 2))];
+			if (char === "/" && parser.getInputCharOnly(index.increment())) {
+				return [state, parser.finishToken("TagSelfClosing", index.add(2))];
 			}
 
 			if (isIdentifierChar(char)) {
@@ -92,7 +99,7 @@ const createHTMLParser = createParser<HTMLParserTypes>({
 
 			if (char === '"') {
 				const [value, stringValueEnd, unclosed] = parser.readInputFrom(
-					ob1Inc(index),
+					index.increment(),
 					isStringValueChar,
 				);
 
@@ -100,7 +107,7 @@ const createHTMLParser = createParser<HTMLParserTypes>({
 					// TODO
 				}
 
-				const end = ob1Add(stringValueEnd, 1);
+				const end = stringValueEnd.add(1);
 				return [state, parser.finishValueToken("String", value, end)];
 			}
 
@@ -128,12 +135,12 @@ const createHTMLParser = createParser<HTMLParserTypes>({
 
 		if (
 			parser.getInputCharOnly(index) === "<" &&
-			parser.getInputCharOnly(index, 1) === "!" &&
-			parser.getInputCharOnly(index, 2) === "-" &&
-			parser.getInputCharOnly(index, 3) === "-"
+			parser.getInputCharOnly(index.increment()) === "!" &&
+			parser.getInputCharOnly(index.add(2)) === "-" &&
+			parser.getInputCharOnly(index.add(3)) === "-"
 		) {
 			// Skip <!--
-			const start = ob1Add(index, 4);
+			const start = index.add(4);
 			const [value, valueEnd, overflow] = parser.readInputFrom(
 				start,
 				isntCommentEnd,
@@ -145,7 +152,7 @@ const createHTMLParser = createParser<HTMLParserTypes>({
 			}
 
 			// Skip -->
-			const end = ob1Add(valueEnd, 3);
+			const end = valueEnd.add(3);
 
 			return [
 				{
@@ -158,8 +165,8 @@ const createHTMLParser = createParser<HTMLParserTypes>({
 		if (isTagStartChar(index, parser.input)) {
 			let token;
 
-			if (parser.getInputCharOnly(index, 1) === "/") {
-				token = parser.finishToken("TagEndOpen", ob1Add(index, 2));
+			if (parser.getInputCharOnly(index.increment()) === "/") {
+				token = parser.finishToken("TagEndOpen", index.add(2));
 			} else {
 				token = parser.finishToken("TagStartOpen");
 			}
@@ -287,9 +294,9 @@ function parseTag(
 
 	// Parse attributes
 	while (
-		!parser.matchToken("EOF") &&
-		!parser.matchToken("TagSelfClosing") &&
-		!parser.matchToken("TagEnd")
+		!(parser.matchToken("EOF") ||
+		parser.matchToken("TagSelfClosing") ||
+		parser.matchToken("TagEnd"))
 	) {
 		const keyToken = parser.getToken();
 
@@ -322,9 +329,8 @@ function parseTag(
 	// Verify closing tag
 	if (!selfClosing) {
 		while (
-			// Build children
-			!parser.matchToken("EOF") &&
-			!parser.matchToken("TagEndOpen")
+			!// Build children
+			(parser.matchToken("EOF") || parser.matchToken("TagEndOpen"))
 		) {
 			const child = parseChild(parser);
 			if (child !== undefined) {
@@ -547,28 +553,22 @@ function parseChild(parser: HTMLParser): undefined | AnyHTMLChildNode {
 
 function consumeDOCTYPE(
 	parser: HTMLParser,
-	index: Number0,
-): [boolean, string | undefined, Number0 | undefined] {
+	index: ZeroIndexed,
+): [boolean, string | undefined, ZeroIndexed | undefined] {
 	// doc requires a token like this
 	if (
-		parser.getInputCharOnly(index, 1) === "D" &&
-		parser.getInputCharOnly(index, 2) === "O" &&
-		parser.getInputCharOnly(index, 3) === "C" &&
-		parser.getInputCharOnly(index, 4) === "T" &&
-		parser.getInputCharOnly(index, 5) === "Y" &&
-		parser.getInputCharOnly(index, 6) === "P" &&
-		parser.getInputCharOnly(index, 7) === "E" &&
-		!isDigit(parser.getInputCharOnly(index, 8)) &&
-		!isAlpha(parser.getInputCharOnly(index, 8))
+		parser.getInputRangeOnly(index.increment(), 7) === "DOCTYPE" &&
+		!isDigit(parser.getInputCharOnly(index.add(8))) &&
+		!isAlpha(parser.getInputCharOnly(index.add(8)))
 	) {
 		const [value, endIndex] = parser.readInputFrom(
-			ob1Add(index, 9),
+			index.add(9),
 			(char) => {
 				return char !== ">";
 			},
 		);
 		// we skip the greater sign
-		return [true, value.trim(), ob1Add(endIndex, 1)];
+		return [true, value.trim(), endIndex.add(1)];
 	}
 
 	return [false, undefined, undefined];
@@ -576,35 +576,27 @@ function consumeDOCTYPE(
 
 function consumeCDATA(
 	parser: HTMLParser,
-	index: Number0,
-): [boolean, string | undefined, Number0 | undefined] {
+	index: ZeroIndexed,
+): [boolean, string | undefined, ZeroIndexed | undefined] {
 	// doc requires a token like this
-	if (
-		parser.getInputCharOnly(index, 1) === "[" &&
-		parser.getInputCharOnly(index, 2) === "C" &&
-		parser.getInputCharOnly(index, 3) === "D" &&
-		parser.getInputCharOnly(index, 4) === "A" &&
-		parser.getInputCharOnly(index, 5) === "T" &&
-		parser.getInputCharOnly(index, 6) === "A" &&
-		parser.getInputCharOnly(index, 7) === "["
-	) {
+	if (parser.getInputRangeOnly(index.increment(), 7) === "[CDATA[") {
 		const [value, endIndex] = parser.readInputFrom(
-			ob1Add(index, 8),
+			index.add(8),
 			(char, index, input) => {
 				return !(char === "]" &&
-				input[ob1Get0(index) + 1] === "]" &&
-				input[ob1Get0(index) + 2] === ">");
+				input[index.valueOf() + 1] === "]" &&
+				input[index.valueOf() + 2] === ">");
 			},
 		);
 		// we skip the greater sign
-		return [true, value.trim(), ob1Add(endIndex, 3)];
+		return [true, value.trim(), endIndex.add(3)];
 	}
 
 	return [false, undefined, undefined];
 }
 
-export function parseHTML(opts: ParserOptionsWithRequiredPath): HTMLRoot {
-	const parser = createHTMLParser(opts);
+export function parseHTML(opts: ParserOptions): HTMLRoot {
+	const parser = htmlParser.create(opts);
 	const start = parser.getPosition();
 	const body: AnyHTMLChildNode[] = [];
 
@@ -626,8 +618,8 @@ export function parseHTML(opts: ParserOptionsWithRequiredPath): HTMLRoot {
 	);
 }
 
-export function tokenizeHTML(opts: ParserOptionsWithRequiredPath) {
-	return createHTMLParser(opts).getAllTokens();
+export function tokenizeHTML(opts: ParserOptions) {
+	return htmlParser.create(opts).getAllTokens();
 }
 
 export * from "./xhtmlEntities";

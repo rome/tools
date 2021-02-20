@@ -11,119 +11,51 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "typescript/interface/export-abstract-interface/input.ts"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
+	loc: SourceLocation typescript/interface/export-abstract-interface/input.ts 1:0-4:0
+	path: UIDPath<typescript/interface/export-abstract-interface/input.ts>
 	syntax: Array ["ts"]
-	loc: Object {
-		filename: "typescript/interface/export-abstract-interface/input.ts"
-		end: Object {
-			column: 0
-			line: 4
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse"
 				categoryValue: "js"
+				category: Array ["parse"]
 				message: RAW_MARKUP {value: "Expected a semicolon or a line terminator"}
 			}
 			location: Object {
-				filename: "typescript/interface/export-abstract-interface/input.ts"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 15
-					line: 1
-				}
-				start: Object {
-					column: 16
-					line: 1
-				}
+				end: Position 1:15
+				path: UIDPath<typescript/interface/export-abstract-interface/input.ts>
+				start: Position 1:16
 			}
 		}
 	]
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "typescript/interface/export-abstract-interface/input.ts"
-				end: Object {
-					column: 15
-					line: 1
-				}
-				start: Object {
-					column: 7
-					line: 1
-				}
-			}
+			loc: SourceLocation typescript/interface/export-abstract-interface/input.ts 1:7-1:15
 			expression: JSReferenceIdentifier {
 				name: "abstract"
-				loc: Object {
-					filename: "typescript/interface/export-abstract-interface/input.ts"
-					identifierName: "abstract"
-					end: Object {
-						column: 15
-						line: 1
-					}
-					start: Object {
-						column: 7
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/interface/export-abstract-interface/input.ts 1:7-1:15 (abstract)
 			}
 		}
 		TSInterfaceDeclaration {
 			id: JSBindingIdentifier {
 				name: "I"
-				loc: Object {
-					filename: "typescript/interface/export-abstract-interface/input.ts"
-					identifierName: "I"
-					end: Object {
-						column: 27
-						line: 1
-					}
-					start: Object {
-						column: 26
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/interface/export-abstract-interface/input.ts 1:26-1:27 (I)
 			}
 			extends: undefined
 			typeParameters: undefined
-			loc: Object {
-				filename: "typescript/interface/export-abstract-interface/input.ts"
-				end: Object {
-					column: 1
-					line: 3
-				}
-				start: Object {
-					column: 16
-					line: 1
-				}
-			}
+			loc: SourceLocation typescript/interface/export-abstract-interface/input.ts 1:16-3:1
 			body: TSInterfaceBody {
 				body: Array []
-				loc: Object {
-					filename: "typescript/interface/export-abstract-interface/input.ts"
-					end: Object {
-						column: 1
-						line: 3
-					}
-					start: Object {
-						column: 28
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/interface/export-abstract-interface/input.ts 1:28-3:1
 			}
 		}
 	]
@@ -143,8 +75,5 @@ JSRoot {
     2 │
     3 │ }
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

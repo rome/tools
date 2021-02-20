@@ -11,48 +11,29 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "es2015/meta-properties/new-target-invalid-escaped-new/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2015/meta-properties/new-target-invalid-escaped-new/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2015/meta-properties/new-target-invalid-escaped-new/input.js 1:0-2:0
+	path: UIDPath<es2015/meta-properties/new-target-invalid-escaped-new/input.js>
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse"
 				categoryValue: "js"
-				message: Array [
-					RAW_MARKUP {value: "Escape sequence in keyword "}
-					"new"
-				]
+				category: Array ["parse"]
+				message: RAW_MARKUP {value: "Escape sequence in keyword <emphasis>new</emphasis>"}
 			}
 			location: Object {
-				filename: "es2015/meta-properties/new-target-invalid-escaped-new/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 16
-					line: 1
-				}
-				start: Object {
-					column: 16
-					line: 1
-				}
+				end: Position 1:16
+				path: UIDPath<es2015/meta-properties/new-target-invalid-escaped-new/input.js>
+				start: Position 1:16
 			}
 		}
 	]
@@ -60,30 +41,9 @@ JSRoot {
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "f"
-				loc: Object {
-					filename: "es2015/meta-properties/new-target-invalid-escaped-new/input.js"
-					identifierName: "f"
-					end: Object {
-						column: 10
-						line: 1
-					}
-					start: Object {
-						column: 9
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/meta-properties/new-target-invalid-escaped-new/input.js 1:9-1:10 (f)
 			}
-			loc: Object {
-				filename: "es2015/meta-properties/new-target-invalid-escaped-new/input.js"
-				end: Object {
-					column: 33
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2015/meta-properties/new-target-invalid-escaped-new/input.js 1:0-1:33
 			head: JSFunctionHead {
 				async: false
 				generator: false
@@ -93,85 +53,23 @@ JSRoot {
 				returnType: undefined
 				thisType: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "es2015/meta-properties/new-target-invalid-escaped-new/input.js"
-					end: Object {
-						column: 12
-						line: 1
-					}
-					start: Object {
-						column: 10
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/meta-properties/new-target-invalid-escaped-new/input.js 1:10-1:12
 			}
 			body: JSBlockStatement {
 				directives: Array []
-				loc: Object {
-					filename: "es2015/meta-properties/new-target-invalid-escaped-new/input.js"
-					end: Object {
-						column: 33
-						line: 1
-					}
-					start: Object {
-						column: 13
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/meta-properties/new-target-invalid-escaped-new/input.js 1:13-1:33
 				body: Array [
 					JSExpressionStatement {
-						loc: Object {
-							filename: "es2015/meta-properties/new-target-invalid-escaped-new/input.js"
-							end: Object {
-								column: 31
-								line: 1
-							}
-							start: Object {
-								column: 15
-								line: 1
-							}
-						}
+						loc: SourceLocation es2015/meta-properties/new-target-invalid-escaped-new/input.js 1:15-1:31
 						expression: JSMetaProperty {
-							loc: Object {
-								filename: "es2015/meta-properties/new-target-invalid-escaped-new/input.js"
-								end: Object {
-									column: 30
-									line: 1
-								}
-								start: Object {
-									column: 15
-									line: 1
-								}
-							}
+							loc: SourceLocation es2015/meta-properties/new-target-invalid-escaped-new/input.js 1:15-1:30
 							meta: JSIdentifier {
 								name: "new"
-								loc: Object {
-									filename: "es2015/meta-properties/new-target-invalid-escaped-new/input.js"
-									identifierName: "new"
-									end: Object {
-										column: 23
-										line: 1
-									}
-									start: Object {
-										column: 15
-										line: 1
-									}
-								}
+								loc: SourceLocation es2015/meta-properties/new-target-invalid-escaped-new/input.js 1:15-1:23 (new)
 							}
 							property: JSIdentifier {
 								name: "target"
-								loc: Object {
-									filename: "es2015/meta-properties/new-target-invalid-escaped-new/input.js"
-									identifierName: "target"
-									end: Object {
-										column: 30
-										line: 1
-									}
-									start: Object {
-										column: 24
-										line: 1
-									}
-								}
+								loc: SourceLocation es2015/meta-properties/new-target-invalid-escaped-new/input.js 1:24-1:30 (target)
 							}
 						}
 					}
@@ -193,8 +91,5 @@ JSRoot {
     function f() { n\u0065w.target; }
                     ^
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

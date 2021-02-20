@@ -12,62 +12,22 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "experimental/top-level-await/export-default/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
 	syntax: Array []
-	loc: Object {
-		filename: "experimental/top-level-await/export-default/input.js"
-		end: Object {
-			column: 23
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation experimental/top-level-await/export-default/input.js 1:0-1:23
+	path: UIDPath<experimental/top-level-await/export-default/input.js>
 	body: Array [
 		JSExportDefaultDeclaration {
-			loc: Object {
-				filename: "experimental/top-level-await/export-default/input.js"
-				end: Object {
-					column: 23
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation experimental/top-level-await/export-default/input.js 1:0-1:23
 			declaration: JSAwaitExpression {
-				loc: Object {
-					filename: "experimental/top-level-await/export-default/input.js"
-					end: Object {
-						column: 22
-						line: 1
-					}
-					start: Object {
-						column: 15
-						line: 1
-					}
-				}
+				loc: SourceLocation experimental/top-level-await/export-default/input.js 1:15-1:22
 				argument: JSNumericLiteral {
 					value: 0
 					format: undefined
-					loc: Object {
-						filename: "experimental/top-level-await/export-default/input.js"
-						end: Object {
-							column: 22
-							line: 1
-						}
-						start: Object {
-							column: 21
-							line: 1
-						}
-					}
+					loc: SourceLocation experimental/top-level-await/export-default/input.js 1:21-1:22
 				}
 			}
 		}
@@ -78,6 +38,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

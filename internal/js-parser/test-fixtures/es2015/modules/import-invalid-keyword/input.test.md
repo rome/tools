@@ -11,48 +11,29 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "es2015/modules/import-invalid-keyword/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
 	syntax: Array []
-	loc: Object {
-		filename: "es2015/modules/import-invalid-keyword/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2015/modules/import-invalid-keyword/input.js 1:0-2:0
+	path: UIDPath<es2015/modules/import-invalid-keyword/input.js>
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse"
 				categoryValue: "js"
-				message: Array [
-					RAW_MARKUP {value: "Unexpected keyword "}
-					"debugger"
-				]
+				category: Array ["parse"]
+				message: RAW_MARKUP {value: "Unexpected keyword <emphasis>debugger</emphasis>"}
 			}
 			location: Object {
-				filename: "es2015/modules/import-invalid-keyword/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 17
-					line: 1
-				}
-				start: Object {
-					column: 9
-					line: 1
-				}
+				end: Position 1:17
+				path: UIDPath<es2015/modules/import-invalid-keyword/input.js>
+				start: Position 1:9
 			}
 		}
 	]
@@ -61,87 +42,25 @@ JSRoot {
 			defaultSpecifier: undefined
 			importKind: undefined
 			namespaceSpecifier: undefined
-			loc: Object {
-				filename: "es2015/modules/import-invalid-keyword/input.js"
-				end: Object {
-					column: 31
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2015/modules/import-invalid-keyword/input.js 1:0-1:31
 			source: JSStringLiteral {
 				value: "foo"
-				loc: Object {
-					filename: "es2015/modules/import-invalid-keyword/input.js"
-					end: Object {
-						column: 30
-						line: 1
-					}
-					start: Object {
-						column: 25
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/modules/import-invalid-keyword/input.js 1:25-1:30
 			}
 			namedSpecifiers: Array [
 				JSImportSpecifier {
-					loc: Object {
-						filename: "es2015/modules/import-invalid-keyword/input.js"
-						end: Object {
-							column: 17
-							line: 1
-						}
-						start: Object {
-							column: 9
-							line: 1
-						}
-					}
+					loc: SourceLocation es2015/modules/import-invalid-keyword/input.js 1:9-1:17
 					imported: JSIdentifier {
 						name: "debugger"
-						loc: Object {
-							filename: "es2015/modules/import-invalid-keyword/input.js"
-							identifierName: "debugger"
-							end: Object {
-								column: 17
-								line: 1
-							}
-							start: Object {
-								column: 9
-								line: 1
-							}
-						}
+						loc: SourceLocation es2015/modules/import-invalid-keyword/input.js 1:9-1:17 (debugger)
 					}
 					local: JSImportSpecifierLocal {
 						name: JSBindingIdentifier {
 							name: "debugger"
-							loc: Object {
-								filename: "es2015/modules/import-invalid-keyword/input.js"
-								identifierName: "debugger"
-								end: Object {
-									column: 17
-									line: 1
-								}
-								start: Object {
-									column: 9
-									line: 1
-								}
-							}
+							loc: SourceLocation es2015/modules/import-invalid-keyword/input.js 1:9-1:17 (debugger)
 						}
 						importKind: undefined
-						loc: Object {
-							filename: "es2015/modules/import-invalid-keyword/input.js"
-							end: Object {
-								column: 17
-								line: 1
-							}
-							start: Object {
-								column: 9
-								line: 1
-							}
-						}
+						loc: SourceLocation es2015/modules/import-invalid-keyword/input.js 1:9-1:17
 					}
 				}
 			]
@@ -161,8 +80,5 @@ JSRoot {
     import { debugger } from "foo";
              ^^^^^^^^
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

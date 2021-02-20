@@ -11,159 +11,60 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "es2015/for-in/bare-initializer/input.js"
 	hasHoistedVars: true
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2015/for-in/bare-initializer/input.js"
-		end: Object {
-			column: 0
-			line: 3
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2015/for-in/bare-initializer/input.js 1:0-3:0
+	path: UIDPath<es2015/for-in/bare-initializer/input.js>
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse"
 				categoryValue: "js"
+				category: Array ["parse"]
 				message: RAW_MARKUP {value: "Not a valid assignment target"}
 			}
 			location: Object {
-				filename: "es2015/for-in/bare-initializer/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 10
-					line: 2
-				}
-				start: Object {
-					column: 5
-					line: 2
-				}
+				end: Position 2:10
+				path: UIDPath<es2015/for-in/bare-initializer/input.js>
+				start: Position 2:5
 			}
 		}
 	]
 	body: Array [
 		JSVariableDeclarationStatement {
-			loc: Object {
-				filename: "es2015/for-in/bare-initializer/input.js"
-				end: Object {
-					column: 6
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2015/for-in/bare-initializer/input.js 1:0-1:6
 			declaration: JSVariableDeclaration {
 				kind: "var"
-				loc: Object {
-					filename: "es2015/for-in/bare-initializer/input.js"
-					end: Object {
-						column: 6
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/for-in/bare-initializer/input.js 1:0-1:6
 				declarations: Array [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "a"
-							loc: Object {
-								filename: "es2015/for-in/bare-initializer/input.js"
-								identifierName: "a"
-								end: Object {
-									column: 5
-									line: 1
-								}
-								start: Object {
-									column: 4
-									line: 1
-								}
-							}
+							loc: SourceLocation es2015/for-in/bare-initializer/input.js 1:4-1:5 (a)
 						}
 						init: undefined
-						loc: Object {
-							filename: "es2015/for-in/bare-initializer/input.js"
-							end: Object {
-								column: 5
-								line: 1
-							}
-							start: Object {
-								column: 4
-								line: 1
-							}
-						}
+						loc: SourceLocation es2015/for-in/bare-initializer/input.js 1:4-1:5
 					}
 				]
 			}
 		}
 		JSForInStatement {
-			loc: Object {
-				filename: "es2015/for-in/bare-initializer/input.js"
-				end: Object {
-					column: 18
-					line: 2
-				}
-				start: Object {
-					column: 0
-					line: 2
-				}
-			}
-			body: JSEmptyStatement {
-				loc: Object {
-					filename: "es2015/for-in/bare-initializer/input.js"
-					end: Object {
-						column: 18
-						line: 2
-					}
-					start: Object {
-						column: 17
-						line: 2
-					}
-				}
-			}
+			body: JSEmptyStatement {loc: SourceLocation es2015/for-in/bare-initializer/input.js 2:17-2:18}
+			loc: SourceLocation es2015/for-in/bare-initializer/input.js 2:0-2:18
 			left: JSAssignmentIdentifier {
 				name: "X"
-				loc: Object {
-					filename: "es2015/for-in/bare-initializer/input.js"
-					end: Object {
-						column: 10
-						line: 2
-					}
-					start: Object {
-						column: 5
-						line: 2
-					}
-				}
+				loc: SourceLocation es2015/for-in/bare-initializer/input.js 2:5-2:10
 			}
 			right: JSObjectExpression {
 				properties: Array []
-				loc: Object {
-					filename: "es2015/for-in/bare-initializer/input.js"
-					end: Object {
-						column: 16
-						line: 2
-					}
-					start: Object {
-						column: 14
-						line: 2
-					}
-				}
+				loc: SourceLocation es2015/for-in/bare-initializer/input.js 2:14-2:16
 			}
 		}
 	]
@@ -182,8 +83,5 @@ JSRoot {
   > 2 │ for (a = 0 in {});
       │      ^^^^^
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

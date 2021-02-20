@@ -12,194 +12,60 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "typescript/arrow-function/async-generic-tokens-true/input.ts"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
+	loc: SourceLocation typescript/arrow-function/async-generic-tokens-true/input.ts 1:0-2:0
+	path: UIDPath<typescript/arrow-function/async-generic-tokens-true/input.ts>
 	syntax: Array ["ts"]
-	loc: Object {
-		filename: "typescript/arrow-function/async-generic-tokens-true/input.ts"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "typescript/arrow-function/async-generic-tokens-true/input.ts"
-				end: Object {
-					column: 24
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation typescript/arrow-function/async-generic-tokens-true/input.ts 1:0-1:24
 			expression: JSArrowFunctionExpression {
-				loc: Object {
-					filename: "typescript/arrow-function/async-generic-tokens-true/input.ts"
-					end: Object {
-						column: 23
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/arrow-function/async-generic-tokens-true/input.ts 1:0-1:23
 				body: JSReferenceIdentifier {
 					name: "a"
-					loc: Object {
-						filename: "typescript/arrow-function/async-generic-tokens-true/input.ts"
-						identifierName: "a"
-						end: Object {
-							column: 23
-							line: 1
-						}
-						start: Object {
-							column: 22
-							line: 1
-						}
-					}
+					loc: SourceLocation typescript/arrow-function/async-generic-tokens-true/input.ts 1:22-1:23 (a)
 				}
 				head: JSFunctionHead {
 					async: true
 					hasHoistedVars: false
 					rest: undefined
 					thisType: undefined
-					loc: Object {
-						filename: "typescript/arrow-function/async-generic-tokens-true/input.ts"
-						end: Object {
-							column: 21
-							line: 1
-						}
-						start: Object {
-							column: 0
-							line: 1
-						}
-					}
+					loc: SourceLocation typescript/arrow-function/async-generic-tokens-true/input.ts 1:0-1:21
 					returnType: TSTypeReference {
 						typeParameters: undefined
-						loc: Object {
-							filename: "typescript/arrow-function/async-generic-tokens-true/input.ts"
-							end: Object {
-								column: 18
-								line: 1
-							}
-							start: Object {
-								column: 17
-								line: 1
-							}
-						}
+						loc: SourceLocation typescript/arrow-function/async-generic-tokens-true/input.ts 1:17-1:18
 						typeName: JSReferenceIdentifier {
 							name: "T"
-							loc: Object {
-								filename: "typescript/arrow-function/async-generic-tokens-true/input.ts"
-								identifierName: "T"
-								end: Object {
-									column: 18
-									line: 1
-								}
-								start: Object {
-									column: 17
-									line: 1
-								}
-							}
+							loc: SourceLocation typescript/arrow-function/async-generic-tokens-true/input.ts 1:17-1:18 (T)
 						}
 					}
 					typeParameters: TSTypeParameterDeclaration {
-						loc: Object {
-							filename: "typescript/arrow-function/async-generic-tokens-true/input.ts"
-							end: Object {
-								column: 9
-								line: 1
-							}
-							start: Object {
-								column: 6
-								line: 1
-							}
-						}
+						loc: SourceLocation typescript/arrow-function/async-generic-tokens-true/input.ts 1:6-1:9
 						params: Array [
 							TSTypeParameter {
 								name: "T"
 								constraint: undefined
 								default: undefined
-								loc: Object {
-									filename: "typescript/arrow-function/async-generic-tokens-true/input.ts"
-									end: Object {
-										column: 8
-										line: 1
-									}
-									start: Object {
-										column: 7
-										line: 1
-									}
-								}
+								loc: SourceLocation typescript/arrow-function/async-generic-tokens-true/input.ts 1:7-1:8
 							}
 						]
 					}
 					params: Array [
 						JSBindingIdentifier {
 							name: "a"
-							loc: Object {
-								filename: "typescript/arrow-function/async-generic-tokens-true/input.ts"
-								identifierName: "a"
-								end: Object {
-									column: 11
-									line: 1
-								}
-								start: Object {
-									column: 10
-									line: 1
-								}
-							}
+							loc: SourceLocation typescript/arrow-function/async-generic-tokens-true/input.ts 1:10-1:11 (a)
 							meta: JSPatternMeta {
 								optional: undefined
-								loc: Object {
-									filename: "typescript/arrow-function/async-generic-tokens-true/input.ts"
-									end: Object {
-										column: 14
-										line: 1
-									}
-									start: Object {
-										column: 10
-										line: 1
-									}
-								}
+								loc: SourceLocation typescript/arrow-function/async-generic-tokens-true/input.ts 1:10-1:14
 								typeAnnotation: TSTypeReference {
 									typeParameters: undefined
-									loc: Object {
-										filename: "typescript/arrow-function/async-generic-tokens-true/input.ts"
-										end: Object {
-											column: 14
-											line: 1
-										}
-										start: Object {
-											column: 13
-											line: 1
-										}
-									}
+									loc: SourceLocation typescript/arrow-function/async-generic-tokens-true/input.ts 1:13-1:14
 									typeName: JSReferenceIdentifier {
 										name: "T"
-										loc: Object {
-											filename: "typescript/arrow-function/async-generic-tokens-true/input.ts"
-											identifierName: "T"
-											end: Object {
-												column: 14
-												line: 1
-											}
-											start: Object {
-												column: 13
-												line: 1
-											}
-										}
+										loc: SourceLocation typescript/arrow-function/async-generic-tokens-true/input.ts 1:13-1:14 (T)
 									}
 								}
 							}
@@ -215,6 +81,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

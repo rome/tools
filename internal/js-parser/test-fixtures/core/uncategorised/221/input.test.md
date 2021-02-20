@@ -12,136 +12,43 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "core/uncategorised/221/input.js"
 	hasHoistedVars: true
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "core/uncategorised/221/input.js"
-		end: Object {
-			column: 34
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation core/uncategorised/221/input.js 1:0-1:34
+	path: UIDPath<core/uncategorised/221/input.js>
 	body: Array [
 		JSVariableDeclarationStatement {
-			loc: Object {
-				filename: "core/uncategorised/221/input.js"
-				end: Object {
-					column: 34
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation core/uncategorised/221/input.js 1:0-1:34
 			declaration: JSVariableDeclaration {
 				kind: "var"
-				loc: Object {
-					filename: "core/uncategorised/221/input.js"
-					end: Object {
-						column: 34
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation core/uncategorised/221/input.js 1:0-1:34
 				declarations: Array [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "implements"
-							loc: Object {
-								filename: "core/uncategorised/221/input.js"
-								identifierName: "implements"
-								end: Object {
-									column: 14
-									line: 1
-								}
-								start: Object {
-									column: 4
-									line: 1
-								}
-							}
+							loc: SourceLocation core/uncategorised/221/input.js 1:4-1:14 (implements)
 						}
 						init: undefined
-						loc: Object {
-							filename: "core/uncategorised/221/input.js"
-							end: Object {
-								column: 14
-								line: 1
-							}
-							start: Object {
-								column: 4
-								line: 1
-							}
-						}
+						loc: SourceLocation core/uncategorised/221/input.js 1:4-1:14
 					}
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "interface"
-							loc: Object {
-								filename: "core/uncategorised/221/input.js"
-								identifierName: "interface"
-								end: Object {
-									column: 25
-									line: 1
-								}
-								start: Object {
-									column: 16
-									line: 1
-								}
-							}
+							loc: SourceLocation core/uncategorised/221/input.js 1:16-1:25 (interface)
 						}
 						init: undefined
-						loc: Object {
-							filename: "core/uncategorised/221/input.js"
-							end: Object {
-								column: 25
-								line: 1
-							}
-							start: Object {
-								column: 16
-								line: 1
-							}
-						}
+						loc: SourceLocation core/uncategorised/221/input.js 1:16-1:25
 					}
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "package"
-							loc: Object {
-								filename: "core/uncategorised/221/input.js"
-								identifierName: "package"
-								end: Object {
-									column: 34
-									line: 1
-								}
-								start: Object {
-									column: 27
-									line: 1
-								}
-							}
+							loc: SourceLocation core/uncategorised/221/input.js 1:27-1:34 (package)
 						}
 						init: undefined
-						loc: Object {
-							filename: "core/uncategorised/221/input.js"
-							end: Object {
-								column: 34
-								line: 1
-							}
-							start: Object {
-								column: 27
-								line: 1
-							}
-						}
+						loc: SourceLocation core/uncategorised/221/input.js 1:27-1:34
 					}
 				]
 			}
@@ -153,6 +60,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

@@ -18,9 +18,6 @@
   ℹ Actions triggered using mouse events should have corresponding keyboard events to account for
     keyboard-only navigation.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -45,9 +42,6 @@
   ℹ Actions triggered using mouse events should have corresponding keyboard events to account for
     keyboard-only navigation.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -72,9 +66,6 @@
   ℹ Actions triggered using mouse events should have corresponding keyboard events to account for
     keyboard-only navigation.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -101,9 +92,6 @@
   ℹ Actions triggered using mouse events should have corresponding keyboard events to account for
     keyboard-only navigation.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -119,7 +107,6 @@
 ### `4`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -133,7 +120,6 @@
 ### `5`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -147,7 +133,6 @@
 ### `6`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -163,7 +148,6 @@
 ### `7`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -179,7 +163,6 @@
 ### `8`
 
 ```
-✔ No known problems!
 
 ```
 

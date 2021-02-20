@@ -12,65 +12,24 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "es2015/meta-properties/new-target-inside-params/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2015/meta-properties/new-target-inside-params/input.js"
-		end: Object {
-			column: 0
-			line: 3
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2015/meta-properties/new-target-inside-params/input.js 1:0-3:0
+	path: UIDPath<es2015/meta-properties/new-target-inside-params/input.js>
 	body: Array [
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "Foo"
-				loc: Object {
-					filename: "es2015/meta-properties/new-target-inside-params/input.js"
-					identifierName: "Foo"
-					end: Object {
-						column: 12
-						line: 1
-					}
-					start: Object {
-						column: 9
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/meta-properties/new-target-inside-params/input.js 1:9-1:12 (Foo)
 			}
-			loc: Object {
-				filename: "es2015/meta-properties/new-target-inside-params/input.js"
-				end: Object {
-					column: 31
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2015/meta-properties/new-target-inside-params/input.js 1:0-1:31
 			body: JSBlockStatement {
 				body: Array []
 				directives: Array []
-				loc: Object {
-					filename: "es2015/meta-properties/new-target-inside-params/input.js"
-					end: Object {
-						column: 31
-						line: 1
-					}
-					start: Object {
-						column: 29
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/meta-properties/new-target-inside-params/input.js 1:29-1:31
 			}
 			head: JSFunctionHead {
 				async: false
@@ -80,101 +39,28 @@ JSRoot {
 				returnType: undefined
 				thisType: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "es2015/meta-properties/new-target-inside-params/input.js"
-					end: Object {
-						column: 28
-						line: 1
-					}
-					start: Object {
-						column: 12
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/meta-properties/new-target-inside-params/input.js 1:12-1:28
 				params: Array [
 					JSBindingAssignmentPattern {
-						loc: Object {
-							filename: "es2015/meta-properties/new-target-inside-params/input.js"
-							end: Object {
-								column: 27
-								line: 1
-							}
-							start: Object {
-								column: 13
-								line: 1
-							}
-						}
+						loc: SourceLocation es2015/meta-properties/new-target-inside-params/input.js 1:13-1:27
 						left: JSBindingIdentifier {
 							name: "x"
-							loc: Object {
-								filename: "es2015/meta-properties/new-target-inside-params/input.js"
-								identifierName: "x"
-								end: Object {
-									column: 14
-									line: 1
-								}
-								start: Object {
-									column: 13
-									line: 1
-								}
-							}
+							loc: SourceLocation es2015/meta-properties/new-target-inside-params/input.js 1:13-1:14 (x)
 							meta: JSPatternMeta {
 								optional: undefined
 								typeAnnotation: undefined
-								loc: Object {
-									filename: "es2015/meta-properties/new-target-inside-params/input.js"
-									end: Object {
-										column: 14
-										line: 1
-									}
-									start: Object {
-										column: 13
-										line: 1
-									}
-								}
+								loc: SourceLocation es2015/meta-properties/new-target-inside-params/input.js 1:13-1:14
 							}
 						}
 						right: JSMetaProperty {
-							loc: Object {
-								filename: "es2015/meta-properties/new-target-inside-params/input.js"
-								end: Object {
-									column: 27
-									line: 1
-								}
-								start: Object {
-									column: 17
-									line: 1
-								}
-							}
+							loc: SourceLocation es2015/meta-properties/new-target-inside-params/input.js 1:17-1:27
 							meta: JSIdentifier {
 								name: "new"
-								loc: Object {
-									filename: "es2015/meta-properties/new-target-inside-params/input.js"
-									identifierName: "new"
-									end: Object {
-										column: 20
-										line: 1
-									}
-									start: Object {
-										column: 17
-										line: 1
-									}
-								}
+								loc: SourceLocation es2015/meta-properties/new-target-inside-params/input.js 1:17-1:20 (new)
 							}
 							property: JSIdentifier {
 								name: "target"
-								loc: Object {
-									filename: "es2015/meta-properties/new-target-inside-params/input.js"
-									identifierName: "target"
-									end: Object {
-										column: 27
-										line: 1
-									}
-									start: Object {
-										column: 21
-										line: 1
-									}
-								}
+								loc: SourceLocation es2015/meta-properties/new-target-inside-params/input.js 1:21-1:27 (target)
 							}
 						}
 					}
@@ -184,30 +70,9 @@ JSRoot {
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "Bar"
-				loc: Object {
-					filename: "es2015/meta-properties/new-target-inside-params/input.js"
-					identifierName: "Bar"
-					end: Object {
-						column: 12
-						line: 2
-					}
-					start: Object {
-						column: 9
-						line: 2
-					}
-				}
+				loc: SourceLocation es2015/meta-properties/new-target-inside-params/input.js 2:9-2:12 (Bar)
 			}
-			loc: Object {
-				filename: "es2015/meta-properties/new-target-inside-params/input.js"
-				end: Object {
-					column: 41
-					line: 2
-				}
-				start: Object {
-					column: 0
-					line: 2
-				}
-			}
+			loc: SourceLocation es2015/meta-properties/new-target-inside-params/input.js 2:0-2:41
 			head: JSFunctionHead {
 				async: false
 				generator: false
@@ -217,70 +82,20 @@ JSRoot {
 				returnType: undefined
 				thisType: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "es2015/meta-properties/new-target-inside-params/input.js"
-					end: Object {
-						column: 14
-						line: 2
-					}
-					start: Object {
-						column: 12
-						line: 2
-					}
-				}
+				loc: SourceLocation es2015/meta-properties/new-target-inside-params/input.js 2:12-2:14
 			}
 			body: JSBlockStatement {
 				directives: Array []
-				loc: Object {
-					filename: "es2015/meta-properties/new-target-inside-params/input.js"
-					end: Object {
-						column: 41
-						line: 2
-					}
-					start: Object {
-						column: 15
-						line: 2
-					}
-				}
+				loc: SourceLocation es2015/meta-properties/new-target-inside-params/input.js 2:15-2:41
 				body: Array [
 					JSExpressionStatement {
-						loc: Object {
-							filename: "es2015/meta-properties/new-target-inside-params/input.js"
-							end: Object {
-								column: 39
-								line: 2
-							}
-							start: Object {
-								column: 17
-								line: 2
-							}
-						}
+						loc: SourceLocation es2015/meta-properties/new-target-inside-params/input.js 2:17-2:39
 						expression: JSArrowFunctionExpression {
-							loc: Object {
-								filename: "es2015/meta-properties/new-target-inside-params/input.js"
-								end: Object {
-									column: 39
-									line: 2
-								}
-								start: Object {
-									column: 17
-									line: 2
-								}
-							}
+							loc: SourceLocation es2015/meta-properties/new-target-inside-params/input.js 2:17-2:39
 							body: JSBlockStatement {
 								body: Array []
 								directives: Array []
-								loc: Object {
-									filename: "es2015/meta-properties/new-target-inside-params/input.js"
-									end: Object {
-										column: 39
-										line: 2
-									}
-									start: Object {
-										column: 37
-										line: 2
-									}
-								}
+								loc: SourceLocation es2015/meta-properties/new-target-inside-params/input.js 2:37-2:39
 							}
 							head: JSFunctionHead {
 								async: false
@@ -288,87 +103,24 @@ JSRoot {
 								rest: undefined
 								returnType: undefined
 								thisType: undefined
-								loc: Object {
-									filename: "es2015/meta-properties/new-target-inside-params/input.js"
-									end: Object {
-										column: 36
-										line: 2
-									}
-									start: Object {
-										column: 17
-										line: 2
-									}
-								}
+								loc: SourceLocation es2015/meta-properties/new-target-inside-params/input.js 2:17-2:36
 								params: Array [
 									JSBindingAssignmentPattern {
 										operator: "="
-										loc: Object {
-											filename: "es2015/meta-properties/new-target-inside-params/input.js"
-											end: Object {
-												column: 32
-												line: 2
-											}
-											start: Object {
-												column: 18
-												line: 2
-											}
-										}
+										loc: SourceLocation es2015/meta-properties/new-target-inside-params/input.js 2:18-2:32
 										left: JSBindingIdentifier {
 											name: "x"
-											loc: Object {
-												filename: "es2015/meta-properties/new-target-inside-params/input.js"
-												identifierName: "x"
-												end: Object {
-													column: 19
-													line: 2
-												}
-												start: Object {
-													column: 18
-													line: 2
-												}
-											}
+											loc: SourceLocation es2015/meta-properties/new-target-inside-params/input.js 2:18-2:19 (x)
 										}
 										right: JSMetaProperty {
-											loc: Object {
-												filename: "es2015/meta-properties/new-target-inside-params/input.js"
-												end: Object {
-													column: 32
-													line: 2
-												}
-												start: Object {
-													column: 22
-													line: 2
-												}
-											}
+											loc: SourceLocation es2015/meta-properties/new-target-inside-params/input.js 2:22-2:32
 											meta: JSIdentifier {
 												name: "new"
-												loc: Object {
-													filename: "es2015/meta-properties/new-target-inside-params/input.js"
-													identifierName: "new"
-													end: Object {
-														column: 25
-														line: 2
-													}
-													start: Object {
-														column: 22
-														line: 2
-													}
-												}
+												loc: SourceLocation es2015/meta-properties/new-target-inside-params/input.js 2:22-2:25 (new)
 											}
 											property: JSIdentifier {
 												name: "target"
-												loc: Object {
-													filename: "es2015/meta-properties/new-target-inside-params/input.js"
-													identifierName: "target"
-													end: Object {
-														column: 32
-														line: 2
-													}
-													start: Object {
-														column: 26
-														line: 2
-													}
-												}
+												loc: SourceLocation es2015/meta-properties/new-target-inside-params/input.js 2:26-2:32 (target)
 											}
 										}
 									}
@@ -386,6 +138,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

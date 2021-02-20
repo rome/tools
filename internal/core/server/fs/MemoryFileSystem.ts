@@ -24,24 +24,25 @@ import {
 } from "@internal/diagnostics";
 import {EventQueue} from "@internal/events";
 import {json} from "@internal/codec-config";
-import {WorkerPartialManifest} from "../../common/bridges/WorkerBridge";
+import {WorkerPartialManifest} from "@internal/core";
 import {
 	AbsoluteFilePath,
 	AbsoluteFilePathMap,
 	AbsoluteFilePathSet,
+	createRelativePath,
 } from "@internal/path";
 import {
+	CachedFileReader,
 	FSStats,
 	FSWatcher,
+	FileNotFound,
 	exists,
 	lstat,
 	readDirectory,
-	readFileText,
 	watch,
 } from "@internal/fs";
-import {getFileHandlerFromPath} from "@internal/core";
 import crypto = require("crypto");
-import {FileNotFound} from "@internal/fs/FileNotFound";
+
 import {markup} from "@internal/markup";
 import {ReporterNamespace} from "@internal/cli-reporter";
 import {GlobOptions, Globber} from "./glob";
@@ -103,12 +104,15 @@ type DeclareManifestOpts = {
 	diagnostics: DiagnosticsProcessor;
 	dirname: AbsoluteFilePath;
 	path: AbsoluteFilePath;
-	content: undefined | string;
+	isPartialProject: boolean;
+	reader: CachedFileReader;
 };
 
 type CrawlOptions = {
 	reason: "watch" | "initial";
+	reader: CachedFileReader;
 	watcherId?: number;
+	partialAllowlist?: AbsoluteFilePath[];
 	diagnostics: DiagnosticsProcessor;
 	onFoundDirectory?: (path: AbsoluteFilePath) => void;
 	tick?: (path: AbsoluteFilePath) => void;
@@ -157,7 +161,7 @@ export default class MemoryFileSystem {
 		this.manifestCounter = 0;
 		this.manifests = new AbsoluteFilePathMap();
 
-		this.logger = server.logger.namespace(markup`[MemoryFileSystem]`);
+		this.logger = server.logger.namespace(markup`MemoryFileSystem`);
 
 		this.watcherCounter = 0;
 		this.watchPromises = new AbsoluteFilePathMap();
@@ -188,6 +192,7 @@ export default class MemoryFileSystem {
 	private logger: ReporterNamespace;
 
 	private watchers: AbsoluteFilePathMap<{
+		partial: boolean;
 		path: AbsoluteFilePath;
 		close: WatcherClose;
 	}>;
@@ -208,20 +213,23 @@ export default class MemoryFileSystem {
 	// Inject virtual modules so they are discoverable
 	private async injectVirtualModules() {
 		const files = this.server.virtualModules.getStatMap();
+		const reader = new CachedFileReader();
 
 		for (const [path, {stats, content}] of files) {
 			if (stats.isDirectory()) {
 				this.directories.set(path, toSimpleStats(stats));
 			} else {
+				reader.cache(path, Buffer.from(content ?? ""));
 				this.files.set(path, toSimpleStats(stats));
 				this.addFileToDirectoryListing(path);
 
 				if (isValidManifest(path)) {
 					await this.declareManifest({
-						content,
+						isPartialProject: false,
 						diagnostics: this.server.createDisconnectedDiagnosticsProcessor([]),
 						dirname: path.getParent(),
 						path,
+						reader,
 					});
 				}
 			}
@@ -255,6 +263,7 @@ export default class MemoryFileSystem {
 		diagnostics: DiagnosticsProcessor,
 		projectDirectory: AbsoluteFilePath,
 		id: number,
+		partialAllowlist?: AbsoluteFilePath[],
 	): Promise<WatcherClose> {
 		const {server} = this;
 		const {logger} = server;
@@ -300,7 +309,7 @@ export default class MemoryFileSystem {
 							return;
 						}
 
-						const path = directoryPath.resolve(filename);
+						const path = directoryPath.resolve(createRelativePath(filename));
 						this.refreshPath(
 							path,
 							{onFoundDirectory, watcherId: id},
@@ -320,9 +329,11 @@ export default class MemoryFileSystem {
 				projectDirectory,
 				stats,
 				{
+					partialAllowlist,
 					diagnostics,
 					onFoundDirectory,
 					reason: "initial",
+					reader: new CachedFileReader(),
 				},
 			);
 			const took = Date.now() - start;
@@ -504,28 +515,44 @@ export default class MemoryFileSystem {
 		}
 	}
 
-	public async watch(projectDirectory: AbsoluteFilePath): Promise<void> {
+	public async watch(
+		projectDirectory: AbsoluteFilePath,
+		target: AbsoluteFilePath = projectDirectory,
+		partial: boolean = false,
+	): Promise<void> {
 		const directoryLink = markup`<emphasis>${projectDirectory}</emphasis>`;
 
 		// Defer if we're already currently initializing this project
 		const cached = this.watchPromises.get(projectDirectory);
 		if (cached !== undefined) {
 			await cached;
-			return undefined;
 		}
 
 		// Check if we're already watching this directory
-		if (this.watchers.has(projectDirectory)) {
-			return undefined;
+		const existingWatcher = this.watchers.get(projectDirectory);
+		if (existingWatcher !== undefined) {
+			if (existingWatcher.partial) {
+				// Already loaded but only partially so refresh it
+				existingWatcher.close();
+			} else {
+				// Already loaded
+				return undefined;
+			}
 		}
 
 		// Check if we're already watching a parent directory
-		for (const {path} of this.watchers.values()) {
+		for (const {path, close, partial} of this.watchers.values()) {
 			if (projectDirectory.isRelativeTo(path)) {
-				this.logger.info(
-					markup`Skipped crawl for ${directoryLink} because we're already watching the parent directory ${path}`,
-				);
-				return undefined;
+				if (partial) {
+					// If this directory was loaded as partial then reload it as complete
+					close();
+					return this.watch(path);
+				} else {
+					this.logger.info(
+						markup`Skipped crawl for ${directoryLink} because we're already watching the parent directory ${path}`,
+					);
+					return undefined;
+				}
 			}
 		}
 
@@ -533,13 +560,22 @@ export default class MemoryFileSystem {
 		await this.waitIfInitializingWatch(projectDirectory);
 
 		// New watch target
-		this.logger.info(markup`Adding new project directory ${directoryLink}`);
+		if (partial) {
+			this.logger.info(
+				markup`Adding new partial project directory ${directoryLink} with a target of ${target}`,
+			);
+		} else {
+			this.logger.info(markup`Adding new project directory ${directoryLink}`);
+		}
 
 		// Remove watchers that are descedents of this directory as this watcher will handle them
 		for (const [loc, {close, path}] of this.watchers) {
 			if (path.isRelativeTo(projectDirectory)) {
 				this.watchers.delete(loc);
 				close();
+
+				// Don't allow partial watching as we need at a minimum to include this directory
+				partial = false;
 			}
 		}
 
@@ -554,7 +590,12 @@ export default class MemoryFileSystem {
 
 		this.logger.info(markup`Watching ${directoryLink}`);
 		const id = this.watcherCounter++;
-		const promise = this.createWatcher(diagnostics, projectDirectory, id);
+		const promise = this.createWatcher(
+			diagnostics,
+			projectDirectory,
+			id,
+			partial ? [target] : undefined,
+		);
 		this.watchPromises.set(projectDirectory, promise);
 
 		await this.processingLock.wrap(async () => {
@@ -562,6 +603,7 @@ export default class MemoryFileSystem {
 			this.watchers.set(
 				projectDirectory,
 				{
+					partial,
 					path: projectDirectory,
 					close: watcherClose,
 				},
@@ -609,17 +651,11 @@ export default class MemoryFileSystem {
 	}
 
 	private isIgnored(path: AbsoluteFilePath, type: "directory" | "file"): boolean {
+		type;
+
 		const project = this.server.projectManager.findLoadedProject(path);
 		if (project === undefined) {
 			return false;
-		}
-
-		// If we're a file and don't have an extension handler so there's no reason for us to care about it
-		if (
-			type === "file" &&
-			getFileHandlerFromPath(path, project.config) === undefined
-		) {
-			return true;
 		}
 
 		// Ensure we aren't in any of the default denylists
@@ -650,11 +686,12 @@ export default class MemoryFileSystem {
 		{
 			path,
 			diagnostics,
-			content,
+			isPartialProject,
+			reader,
 		}: DeclareManifestOpts,
 	): Promise<void> {
 		// Fetch the manifest
-		const manifestRaw = content ?? (await readFileText(path));
+		const manifestRaw = await reader.readFileText(path);
 		const hash = crypto.createHash("sha256").update(manifestRaw).digest("hex");
 
 		const consumer = json.consumeValue({
@@ -710,8 +747,10 @@ export default class MemoryFileSystem {
 
 		if (isProjectPackage && consumer.has(PROJECT_CONFIG_PACKAGE_JSON_FIELD)) {
 			await projectManager.addDiskProject({
+				reader,
 				projectDirectory: directory,
 				configPath: path,
+				isPartial: isPartialProject,
 			});
 		}
 
@@ -753,11 +792,47 @@ export default class MemoryFileSystem {
 		return oldStats === undefined || newStats.mtimeNs !== oldStats.mtimeNs;
 	}
 
+	private getPartialAllowlist(
+		path: AbsoluteFilePath,
+		opts: CrawlOptions,
+	): undefined | (AbsoluteFilePath[]) {
+		// No use doing these potentially expensive path checks if we don't even have an allowlist to return
+		if (opts.partialAllowlist === undefined) {
+			return undefined;
+		}
+
+		// Always process and include a package.json or other priority file
+		if (PRIORITY_FILES.has(path.getBasename())) {
+			return undefined;
+		}
+
+		// Also always include files inside of those blessed directory names
+		if (path.hasParent() && PRIORITY_FILES.has(path.getParent().getBasename())) {
+			return undefined;
+		}
+
+		return opts.partialAllowlist;
+	}
+
 	private async addDirectory(
 		directoryPath: AbsoluteFilePath,
 		stats: SimpleStats,
 		opts: CrawlOptions,
 	): Promise<boolean> {
+		const partialAllowlist = this.getPartialAllowlist(directoryPath, opts);
+		if (partialAllowlist !== undefined) {
+			let allowed = false;
+			for (const onlyAllowPath of partialAllowlist) {
+				if (onlyAllowPath.isRelativeTo(directoryPath)) {
+					allowed = true;
+					break;
+				}
+			}
+			if (!allowed) {
+				return false;
+			}
+		}
+
 		if (!this.hasStatsChanged(directoryPath, stats)) {
 			return false;
 		}
@@ -886,6 +961,7 @@ export default class MemoryFileSystem {
 		const crawlOpts: CrawlOptions = {
 			reason: "watch",
 			diagnostics,
+			reader: new CachedFileReader(),
 			...customCrawlOpts,
 		};
 
@@ -901,6 +977,20 @@ export default class MemoryFileSystem {
 		stats: SimpleStats,
 		opts: CrawlOptions,
 	): Promise<boolean> {
+		const partialAllowlist = this.getPartialAllowlist(path, opts);
+		if (partialAllowlist !== undefined) {
+			let allowed = false;
+			for (const onlyAllowPath of partialAllowlist) {
+				if (path.equal(onlyAllowPath)) {
+					allowed = true;
+					break;
+				}
+			}
+			if (!allowed) {
+				return false;
+			}
+		}
+
 		if (!this.hasStatsChanged(path, stats)) {
 			return false;
 		}
@@ -952,12 +1042,14 @@ export default class MemoryFileSystem {
 				opts.diagnostics.addDiagnostic({
 					description: descriptions.PROJECT_MANAGER.MULTIPLE_CONFIGS,
 					location: {
-						filename: path.join(),
+						path,
 					},
 				});
 			}
 
 			await projectManager.addDiskProject({
+				reader: opts.reader,
+				isPartial: opts.partialAllowlist !== undefined,
 				// Get the directory above .config
 				projectDirectory: dirname.getParent(),
 				configPath: path,
@@ -966,7 +1058,8 @@ export default class MemoryFileSystem {
 
 		if (isValidManifest(path)) {
 			await this.declareManifest({
-				content: undefined,
+				reader: opts.reader,
+				isPartialProject: opts.partialAllowlist !== undefined,
 				diagnostics: opts.diagnostics,
 				dirname,
 				path,

@@ -12,528 +12,142 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "typescript/types/mapped/input.ts"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
+	loc: SourceLocation typescript/types/mapped/input.ts 1:0-5:0
+	path: UIDPath<typescript/types/mapped/input.ts>
 	syntax: Array ["ts"]
-	loc: Object {
-		filename: "typescript/types/mapped/input.ts"
-		end: Object {
-			column: 0
-			line: 5
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
 	body: Array [
 		JSVariableDeclarationStatement {
-			loc: Object {
-				filename: "typescript/types/mapped/input.ts"
-				end: Object {
-					column: 37
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation typescript/types/mapped/input.ts 1:0-1:37
 			declaration: JSVariableDeclaration {
 				kind: "let"
-				loc: Object {
-					filename: "typescript/types/mapped/input.ts"
-					end: Object {
-						column: 37
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/types/mapped/input.ts 1:0-1:37
 				declarations: Array [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "map1"
-							loc: Object {
-								filename: "typescript/types/mapped/input.ts"
-								end: Object {
-									column: 36
-									line: 1
-								}
-								start: Object {
-									column: 4
-									line: 1
-								}
-							}
+							loc: SourceLocation typescript/types/mapped/input.ts 1:4-1:36
 							meta: JSPatternMeta {
 								definite: undefined
-								loc: Object {
-									filename: "typescript/types/mapped/input.ts"
-									end: Object {
-										column: 36
-										line: 1
-									}
-									start: Object {
-										column: 4
-										line: 1
-									}
-								}
+								loc: SourceLocation typescript/types/mapped/input.ts 1:4-1:36
 								typeAnnotation: TSMappedType {
 									nameType: undefined
 									optional: undefined
 									readonly: undefined
-									loc: Object {
-										filename: "typescript/types/mapped/input.ts"
-										end: Object {
-											column: 36
-											line: 1
-										}
-										start: Object {
-											column: 10
-											line: 1
-										}
-									}
-									typeAnnotation: TSNumberKeywordTypeAnnotation {
-										loc: Object {
-											filename: "typescript/types/mapped/input.ts"
-											end: Object {
-												column: 33
-												line: 1
-											}
-											start: Object {
-												column: 27
-												line: 1
-											}
-										}
-									}
+									loc: SourceLocation typescript/types/mapped/input.ts 1:10-1:36
+									typeAnnotation: TSNumberKeywordTypeAnnotation {loc: SourceLocation typescript/types/mapped/input.ts 1:27-1:33}
 									typeParameter: TSTypeParameter {
 										name: "P"
-										loc: Object {
-											filename: "typescript/types/mapped/input.ts"
-											end: Object {
-												column: 24
-												line: 1
-											}
-											start: Object {
-												column: 13
-												line: 1
-											}
-										}
-										constraint: TSStringKeywordTypeAnnotation {
-											loc: Object {
-												filename: "typescript/types/mapped/input.ts"
-												end: Object {
-													column: 24
-													line: 1
-												}
-												start: Object {
-													column: 18
-													line: 1
-												}
-											}
-										}
+										constraint: TSStringKeywordTypeAnnotation {loc: SourceLocation typescript/types/mapped/input.ts 1:18-1:24}
+										loc: SourceLocation typescript/types/mapped/input.ts 1:13-1:24
 									}
 								}
 							}
 						}
 						init: undefined
-						loc: Object {
-							filename: "typescript/types/mapped/input.ts"
-							end: Object {
-								column: 36
-								line: 1
-							}
-							start: Object {
-								column: 4
-								line: 1
-							}
-						}
+						loc: SourceLocation typescript/types/mapped/input.ts 1:4-1:36
 					}
 				]
 			}
 		}
 		JSVariableDeclarationStatement {
-			loc: Object {
-				filename: "typescript/types/mapped/input.ts"
-				end: Object {
-					column: 47
-					line: 2
-				}
-				start: Object {
-					column: 0
-					line: 2
-				}
-			}
+			loc: SourceLocation typescript/types/mapped/input.ts 2:0-2:47
 			declaration: JSVariableDeclaration {
 				kind: "let"
-				loc: Object {
-					filename: "typescript/types/mapped/input.ts"
-					end: Object {
-						column: 47
-						line: 2
-					}
-					start: Object {
-						column: 0
-						line: 2
-					}
-				}
+				loc: SourceLocation typescript/types/mapped/input.ts 2:0-2:47
 				declarations: Array [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "map2"
-							loc: Object {
-								filename: "typescript/types/mapped/input.ts"
-								end: Object {
-									column: 46
-									line: 2
-								}
-								start: Object {
-									column: 4
-									line: 2
-								}
-							}
+							loc: SourceLocation typescript/types/mapped/input.ts 2:4-2:46
 							meta: JSPatternMeta {
 								definite: undefined
-								loc: Object {
-									filename: "typescript/types/mapped/input.ts"
-									end: Object {
-										column: 46
-										line: 2
-									}
-									start: Object {
-										column: 4
-										line: 2
-									}
-								}
+								loc: SourceLocation typescript/types/mapped/input.ts 2:4-2:46
 								typeAnnotation: TSMappedType {
 									nameType: undefined
 									optional: true
 									readonly: true
-									loc: Object {
-										filename: "typescript/types/mapped/input.ts"
-										end: Object {
-											column: 46
-											line: 2
-										}
-										start: Object {
-											column: 10
-											line: 2
-										}
-									}
-									typeAnnotation: TSNumberKeywordTypeAnnotation {
-										loc: Object {
-											filename: "typescript/types/mapped/input.ts"
-											end: Object {
-												column: 43
-												line: 2
-											}
-											start: Object {
-												column: 37
-												line: 2
-											}
-										}
-									}
+									loc: SourceLocation typescript/types/mapped/input.ts 2:10-2:46
+									typeAnnotation: TSNumberKeywordTypeAnnotation {loc: SourceLocation typescript/types/mapped/input.ts 2:37-2:43}
 									typeParameter: TSTypeParameter {
 										name: "P"
-										loc: Object {
-											filename: "typescript/types/mapped/input.ts"
-											end: Object {
-												column: 33
-												line: 2
-											}
-											start: Object {
-												column: 22
-												line: 2
-											}
-										}
-										constraint: TSStringKeywordTypeAnnotation {
-											loc: Object {
-												filename: "typescript/types/mapped/input.ts"
-												end: Object {
-													column: 33
-													line: 2
-												}
-												start: Object {
-													column: 27
-													line: 2
-												}
-											}
-										}
+										constraint: TSStringKeywordTypeAnnotation {loc: SourceLocation typescript/types/mapped/input.ts 2:27-2:33}
+										loc: SourceLocation typescript/types/mapped/input.ts 2:22-2:33
 									}
 								}
 							}
 						}
 						init: undefined
-						loc: Object {
-							filename: "typescript/types/mapped/input.ts"
-							end: Object {
-								column: 46
-								line: 2
-							}
-							start: Object {
-								column: 4
-								line: 2
-							}
-						}
+						loc: SourceLocation typescript/types/mapped/input.ts 2:4-2:46
 					}
 				]
 			}
 		}
 		JSVariableDeclarationStatement {
-			loc: Object {
-				filename: "typescript/types/mapped/input.ts"
-				end: Object {
-					column: 49
-					line: 3
-				}
-				start: Object {
-					column: 0
-					line: 3
-				}
-			}
+			loc: SourceLocation typescript/types/mapped/input.ts 3:0-3:49
 			declaration: JSVariableDeclaration {
 				kind: "let"
-				loc: Object {
-					filename: "typescript/types/mapped/input.ts"
-					end: Object {
-						column: 49
-						line: 3
-					}
-					start: Object {
-						column: 0
-						line: 3
-					}
-				}
+				loc: SourceLocation typescript/types/mapped/input.ts 3:0-3:49
 				declarations: Array [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "map3"
-							loc: Object {
-								filename: "typescript/types/mapped/input.ts"
-								end: Object {
-									column: 48
-									line: 3
-								}
-								start: Object {
-									column: 4
-									line: 3
-								}
-							}
+							loc: SourceLocation typescript/types/mapped/input.ts 3:4-3:48
 							meta: JSPatternMeta {
 								definite: undefined
-								loc: Object {
-									filename: "typescript/types/mapped/input.ts"
-									end: Object {
-										column: 48
-										line: 3
-									}
-									start: Object {
-										column: 4
-										line: 3
-									}
-								}
+								loc: SourceLocation typescript/types/mapped/input.ts 3:4-3:48
 								typeAnnotation: TSMappedType {
 									nameType: undefined
 									optional: "+"
 									readonly: "+"
-									loc: Object {
-										filename: "typescript/types/mapped/input.ts"
-										end: Object {
-											column: 48
-											line: 3
-										}
-										start: Object {
-											column: 10
-											line: 3
-										}
-									}
-									typeAnnotation: TSNumberKeywordTypeAnnotation {
-										loc: Object {
-											filename: "typescript/types/mapped/input.ts"
-											end: Object {
-												column: 45
-												line: 3
-											}
-											start: Object {
-												column: 39
-												line: 3
-											}
-										}
-									}
+									loc: SourceLocation typescript/types/mapped/input.ts 3:10-3:48
+									typeAnnotation: TSNumberKeywordTypeAnnotation {loc: SourceLocation typescript/types/mapped/input.ts 3:39-3:45}
 									typeParameter: TSTypeParameter {
 										name: "P"
-										loc: Object {
-											filename: "typescript/types/mapped/input.ts"
-											end: Object {
-												column: 34
-												line: 3
-											}
-											start: Object {
-												column: 23
-												line: 3
-											}
-										}
-										constraint: TSStringKeywordTypeAnnotation {
-											loc: Object {
-												filename: "typescript/types/mapped/input.ts"
-												end: Object {
-													column: 34
-													line: 3
-												}
-												start: Object {
-													column: 28
-													line: 3
-												}
-											}
-										}
+										constraint: TSStringKeywordTypeAnnotation {loc: SourceLocation typescript/types/mapped/input.ts 3:28-3:34}
+										loc: SourceLocation typescript/types/mapped/input.ts 3:23-3:34
 									}
 								}
 							}
 						}
 						init: undefined
-						loc: Object {
-							filename: "typescript/types/mapped/input.ts"
-							end: Object {
-								column: 48
-								line: 3
-							}
-							start: Object {
-								column: 4
-								line: 3
-							}
-						}
+						loc: SourceLocation typescript/types/mapped/input.ts 3:4-3:48
 					}
 				]
 			}
 		}
 		JSVariableDeclarationStatement {
-			loc: Object {
-				filename: "typescript/types/mapped/input.ts"
-				end: Object {
-					column: 48
-					line: 4
-				}
-				start: Object {
-					column: 0
-					line: 4
-				}
-			}
+			loc: SourceLocation typescript/types/mapped/input.ts 4:0-4:48
 			declaration: JSVariableDeclaration {
 				kind: "let"
-				loc: Object {
-					filename: "typescript/types/mapped/input.ts"
-					end: Object {
-						column: 48
-						line: 4
-					}
-					start: Object {
-						column: 0
-						line: 4
-					}
-				}
+				loc: SourceLocation typescript/types/mapped/input.ts 4:0-4:48
 				declarations: Array [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "map4"
-							loc: Object {
-								filename: "typescript/types/mapped/input.ts"
-								end: Object {
-									column: 47
-									line: 4
-								}
-								start: Object {
-									column: 4
-									line: 4
-								}
-							}
+							loc: SourceLocation typescript/types/mapped/input.ts 4:4-4:47
 							meta: JSPatternMeta {
 								definite: undefined
-								loc: Object {
-									filename: "typescript/types/mapped/input.ts"
-									end: Object {
-										column: 47
-										line: 4
-									}
-									start: Object {
-										column: 4
-										line: 4
-									}
-								}
+								loc: SourceLocation typescript/types/mapped/input.ts 4:4-4:47
 								typeAnnotation: TSMappedType {
 									nameType: undefined
 									optional: "-"
 									readonly: "-"
-									loc: Object {
-										filename: "typescript/types/mapped/input.ts"
-										end: Object {
-											column: 47
-											line: 4
-										}
-										start: Object {
-											column: 10
-											line: 4
-										}
-									}
-									typeAnnotation: TSNumberKeywordTypeAnnotation {
-										loc: Object {
-											filename: "typescript/types/mapped/input.ts"
-											end: Object {
-												column: 45
-												line: 4
-											}
-											start: Object {
-												column: 39
-												line: 4
-											}
-										}
-									}
+									loc: SourceLocation typescript/types/mapped/input.ts 4:10-4:47
+									typeAnnotation: TSNumberKeywordTypeAnnotation {loc: SourceLocation typescript/types/mapped/input.ts 4:39-4:45}
 									typeParameter: TSTypeParameter {
 										name: "P"
-										loc: Object {
-											filename: "typescript/types/mapped/input.ts"
-											end: Object {
-												column: 34
-												line: 4
-											}
-											start: Object {
-												column: 23
-												line: 4
-											}
-										}
-										constraint: TSStringKeywordTypeAnnotation {
-											loc: Object {
-												filename: "typescript/types/mapped/input.ts"
-												end: Object {
-													column: 34
-													line: 4
-												}
-												start: Object {
-													column: 28
-													line: 4
-												}
-											}
-										}
+										constraint: TSStringKeywordTypeAnnotation {loc: SourceLocation typescript/types/mapped/input.ts 4:28-4:34}
+										loc: SourceLocation typescript/types/mapped/input.ts 4:23-4:34
 									}
 								}
 							}
 						}
 						init: undefined
-						loc: Object {
-							filename: "typescript/types/mapped/input.ts"
-							end: Object {
-								column: 47
-								line: 4
-							}
-							start: Object {
-								column: 4
-								line: 4
-							}
-						}
+						loc: SourceLocation typescript/types/mapped/input.ts 4:4-4:47
 					}
 				]
 			}
@@ -545,6 +159,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

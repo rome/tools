@@ -12,195 +12,64 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "jsx/basic/8/input.jsx"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
+	loc: SourceLocation jsx/basic/8/input.jsx 1:0-1:27
+	path: UIDPath<jsx/basic/8/input.jsx>
 	syntax: Array ["jsx"]
-	loc: Object {
-		filename: "jsx/basic/8/input.jsx"
-		end: Object {
-			column: 27
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "jsx/basic/8/input.jsx"
-				end: Object {
-					column: 27
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation jsx/basic/8/input.jsx 1:0-1:27
 			expression: JSXElement {
 				name: JSXIdentifier {
 					name: "a"
-					loc: Object {
-						filename: "jsx/basic/8/input.jsx"
-						end: Object {
-							column: 2
-							line: 1
-						}
-						start: Object {
-							column: 1
-							line: 1
-						}
-					}
+					loc: SourceLocation jsx/basic/8/input.jsx 1:1-1:2
 				}
 				children: Array []
 				selfClosing: true
 				typeArguments: undefined
-				loc: Object {
-					filename: "jsx/basic/8/input.jsx"
-					end: Object {
-						column: 27
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation jsx/basic/8/input.jsx 1:0-1:27
 				attributes: Array [
 					JSXAttribute {
 						name: JSXIdentifier {
 							name: "b"
-							loc: Object {
-								filename: "jsx/basic/8/input.jsx"
-								end: Object {
-									column: 4
-									line: 1
-								}
-								start: Object {
-									column: 3
-									line: 1
-								}
-							}
+							loc: SourceLocation jsx/basic/8/input.jsx 1:3-1:4
 						}
 						value: JSXExpressionContainer {
-							loc: Object {
-								filename: "jsx/basic/8/input.jsx"
-								end: Object {
-									column: 24
-									line: 1
-								}
-								start: Object {
-									column: 5
-									line: 1
-								}
-							}
+							loc: SourceLocation jsx/basic/8/input.jsx 1:5-1:24
 							expression: JSConditionalExpression {
-								loc: Object {
-									filename: "jsx/basic/8/input.jsx"
-									end: Object {
-										column: 23
-										line: 1
-									}
-									start: Object {
-										column: 6
-										line: 1
-									}
-								}
+								loc: SourceLocation jsx/basic/8/input.jsx 1:6-1:23
 								test: JSReferenceIdentifier {
 									name: "x"
-									loc: Object {
-										filename: "jsx/basic/8/input.jsx"
-										identifierName: "x"
-										end: Object {
-											column: 7
-											line: 1
-										}
-										start: Object {
-											column: 6
-											line: 1
-										}
-									}
+									loc: SourceLocation jsx/basic/8/input.jsx 1:6-1:7 (x)
 								}
 								alternate: JSXElement {
 									name: JSXIdentifier {
 										name: "d"
-										loc: Object {
-											filename: "jsx/basic/8/input.jsx"
-											end: Object {
-												column: 20
-												line: 1
-											}
-											start: Object {
-												column: 19
-												line: 1
-											}
-										}
+										loc: SourceLocation jsx/basic/8/input.jsx 1:19-1:20
 									}
 									attributes: Array []
 									children: Array []
 									selfClosing: true
 									typeArguments: undefined
-									loc: Object {
-										filename: "jsx/basic/8/input.jsx"
-										end: Object {
-											column: 23
-											line: 1
-										}
-										start: Object {
-											column: 18
-											line: 1
-										}
-									}
+									loc: SourceLocation jsx/basic/8/input.jsx 1:18-1:23
 								}
 								consequent: JSXElement {
 									name: JSXIdentifier {
 										name: "c"
-										loc: Object {
-											filename: "jsx/basic/8/input.jsx"
-											end: Object {
-												column: 12
-												line: 1
-											}
-											start: Object {
-												column: 11
-												line: 1
-											}
-										}
+										loc: SourceLocation jsx/basic/8/input.jsx 1:11-1:12
 									}
 									attributes: Array []
 									children: Array []
 									selfClosing: true
 									typeArguments: undefined
-									loc: Object {
-										filename: "jsx/basic/8/input.jsx"
-										end: Object {
-											column: 15
-											line: 1
-										}
-										start: Object {
-											column: 10
-											line: 1
-										}
-									}
+									loc: SourceLocation jsx/basic/8/input.jsx 1:10-1:15
 								}
 							}
 						}
-						loc: Object {
-							filename: "jsx/basic/8/input.jsx"
-							end: Object {
-								column: 24
-								line: 1
-							}
-							start: Object {
-								column: 3
-								line: 1
-							}
-						}
+						loc: SourceLocation jsx/basic/8/input.jsx 1:3-1:24
 					}
 				]
 			}
@@ -212,6 +81,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

@@ -1,59 +1,124 @@
 import {RSERValue} from "./types";
-import RSERBufferAssembler from "./RSERBufferAssembler";
-import RSERBufferWriter from "./RSERBufferWriter";
+import RSERWriterMaterial from "./RSERWriterMaterial";
 import RSERStream from "./RSERStream";
 import fs = require("fs");
+import {markup} from "@internal/markup";
+import {
+	DIAGNOSTIC_CATEGORIES,
+	provideDiagnosticAdviceForError,
+} from "@internal/diagnostics";
+import {createAbsoluteFilePath} from "@internal/path";
+import RSERWriterCounter from "./RSERWriterCounter";
+import RSERWriterHasher from "./RSERWriterHasher";
+import {sha256} from "@internal/string-utils";
 
-export {default as RSERBufferObserver} from "./RSERBufferAssembler";
+export {default as RSERBufferObserver} from "./RSERWriterBase";
 export {default as RSERBufferParser} from "./RSERBufferParser";
-export {default as RSERBufferWriter} from "./RSERBufferWriter";
+export {default as RSERWriterMaterial} from "./RSERWriterMaterial";
 export {default as RSERStream} from "./RSERStream";
 
 export {
-	AnyRSERFilePathMap,
-	RSERAbsoluteFilePathMap,
+	AnyRSERPathMap as AnyRSERFilePathMap,
 	RSERArray,
 	RSERMap,
 	RSERObject,
-	RSERRelativeFilePathMap,
 	RSERSet,
-	RSERUnknownPathMap,
 	RSERValue,
 } from "./types";
 
-export function encodeValueToRSERBufferMessage(val: RSERValue): ArrayBuffer {
-	const assembler = new RSERBufferAssembler();
-	assembler.encodeValue(val);
-	const payloadLength = assembler.totalSize;
-	assembler.encodeMessageHeader(payloadLength);
-	const messageLength = assembler.totalSize;
+export function encodeValueToRSERSingleMessageStream(
+	val: RSERValue,
+): ArrayBuffer {
+	return encodeValueToRSERBuffer(val, true);
+}
 
-	const buf = new RSERBufferWriter(new ArrayBuffer(messageLength), assembler);
+export function encodeValueToRSERMessage(val: RSERValue): ArrayBuffer {
+	return encodeValueToRSERBuffer(val, false);
+}
+
+export function hashRSERValue(val: RSERValue): string {
+	if (typeof val === "string") {
+		// Fast path for strings
+		return sha256.sync(val);
+	}
+
+	const hasher = new RSERWriterHasher();
+	hasher.encodeValue(val);
+	return hasher.digest();
+}
+
+function encodeValueToRSERBuffer(val: RSERValue, isStream: boolean): ArrayBuffer {
+	const counter = new RSERWriterCounter();
+	if (isStream) {
+		counter.encodeStreamHeader();
+	}
+	counter.encodeValue(val);
+	const payloadLength = counter.totalSize;
+	counter.encodeMessageHeader(payloadLength);
+	const messageLength = counter.totalSize;
+
+	const buf = new RSERWriterMaterial(new ArrayBuffer(messageLength), counter);
+	if (isStream) {
+		buf.encodeStreamHeader();
+	}
 	buf.encodeMessageHeader(payloadLength);
 	buf.encodeValue(val);
 	return buf.buffer;
 }
 
+type DecodedRSERSingleMessageStream =
+	| {
+			type: "INCOMPATIBLE";
+		}
+	| {
+			type: "VALUE";
+			value: RSERValue;
+		};
+
 export function decodeSingleMessageRSERStream(
 	readStream: fs.ReadStream,
-): Promise<RSERValue> {
+): Promise<DecodedRSERSingleMessageStream> {
 	return new Promise((resolve, reject) => {
 		let foundValue = false;
 		const decodeStream = new RSERStream("file");
 
+		function safeClose() {
+			foundValue = true;
+			readStream.close();
+		}
+
+		function handleError(err: Error) {
+			reject(
+				provideDiagnosticAdviceForError(
+					err,
+					{
+						description: {
+							message: markup`An error occured while decoding binary file ${createAbsoluteFilePath(
+								String(readStream.path),
+							)}`,
+							category: DIAGNOSTIC_CATEGORIES.parse,
+							categoryValue: "binary",
+						},
+					},
+				),
+			);
+			safeClose();
+		}
+
 		readStream.on(
 			"data",
 			(chunk) => {
-				decodeStream.append(
-					typeof chunk === "string" ? Buffer.from(chunk) : chunk,
-				);
+				const nodeBuffer: Buffer =
+					typeof chunk === "string" ? Buffer.from(chunk) : chunk;
+				const arrBuffer: ArrayBuffer = nodeBuffer.buffer;
+				decodeStream.append(arrBuffer);
 			},
 		);
 
 		readStream.on(
 			"error",
 			(err) => {
-				reject(err);
+				handleError(err);
 			},
 		);
 
@@ -61,13 +126,18 @@ export function decodeSingleMessageRSERStream(
 			"close",
 			() => {
 				if (!foundValue) {
-					reject(new Error("Stream ended and never received a value"));
+					handleError(new Error("Stream ended and never received a value"));
 				}
 			},
 		);
 
+		decodeStream.incompatibleEvent.subscribe(() => {
+			resolve({type: "INCOMPATIBLE"});
+			safeClose();
+		});
+
 		decodeStream.errorEvent.subscribe((err) => {
-			reject(err);
+			handleError(err);
 		});
 
 		decodeStream.valueEvent.subscribe((value) => {
@@ -76,7 +146,10 @@ export function decodeSingleMessageRSERStream(
 			}
 
 			foundValue = true;
-			resolve(value);
+			resolve({
+				type: "VALUE",
+				value,
+			});
 		});
 	});
 }

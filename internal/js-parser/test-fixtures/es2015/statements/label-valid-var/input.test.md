@@ -12,105 +12,33 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "es2015/statements/label-valid-var/input.js"
 	hasHoistedVars: true
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2015/statements/label-valid-var/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2015/statements/label-valid-var/input.js 1:0-2:0
+	path: UIDPath<es2015/statements/label-valid-var/input.js>
 	body: Array [
 		JSLabeledStatement {
-			loc: Object {
-				filename: "es2015/statements/label-valid-var/input.js"
-				end: Object {
-					column: 13
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2015/statements/label-valid-var/input.js 1:0-1:13
 			label: JSIdentifier {
 				name: "foo"
-				loc: Object {
-					filename: "es2015/statements/label-valid-var/input.js"
-					identifierName: "foo"
-					end: Object {
-						column: 3
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/statements/label-valid-var/input.js 1:0-1:3 (foo)
 			}
 			body: JSVariableDeclarationStatement {
-				loc: Object {
-					filename: "es2015/statements/label-valid-var/input.js"
-					end: Object {
-						column: 13
-						line: 1
-					}
-					start: Object {
-						column: 5
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/statements/label-valid-var/input.js 1:5-1:13
 				declaration: JSVariableDeclaration {
 					kind: "var"
-					loc: Object {
-						filename: "es2015/statements/label-valid-var/input.js"
-						end: Object {
-							column: 13
-							line: 1
-						}
-						start: Object {
-							column: 5
-							line: 1
-						}
-					}
+					loc: SourceLocation es2015/statements/label-valid-var/input.js 1:5-1:13
 					declarations: Array [
 						JSVariableDeclarator {
 							id: JSBindingIdentifier {
 								name: "bar"
-								loc: Object {
-									filename: "es2015/statements/label-valid-var/input.js"
-									identifierName: "bar"
-									end: Object {
-										column: 12
-										line: 1
-									}
-									start: Object {
-										column: 9
-										line: 1
-									}
-								}
+								loc: SourceLocation es2015/statements/label-valid-var/input.js 1:9-1:12 (bar)
 							}
 							init: undefined
-							loc: Object {
-								filename: "es2015/statements/label-valid-var/input.js"
-								end: Object {
-									column: 12
-									line: 1
-								}
-								start: Object {
-									column: 9
-									line: 1
-								}
-							}
+							loc: SourceLocation es2015/statements/label-valid-var/input.js 1:9-1:12
 						}
 					]
 				}
@@ -123,6 +51,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

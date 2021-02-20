@@ -12,91 +12,28 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "core/uncategorised/128/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "core/uncategorised/128/input.js"
-		end: Object {
-			column: 11
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation core/uncategorised/128/input.js 1:0-1:11
+	path: UIDPath<core/uncategorised/128/input.js>
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "core/uncategorised/128/input.js"
-				end: Object {
-					column: 11
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation core/uncategorised/128/input.js 1:0-1:11
 			expression: JSMemberExpression {
-				loc: Object {
-					filename: "core/uncategorised/128/input.js"
-					end: Object {
-						column: 11
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation core/uncategorised/128/input.js 1:0-1:11
 				object: JSReferenceIdentifier {
 					name: "universe"
-					loc: Object {
-						filename: "core/uncategorised/128/input.js"
-						identifierName: "universe"
-						end: Object {
-							column: 8
-							line: 1
-						}
-						start: Object {
-							column: 0
-							line: 1
-						}
-					}
+					loc: SourceLocation core/uncategorised/128/input.js 1:0-1:8 (universe)
 				}
 				property: JSStaticMemberProperty {
 					value: JSIdentifier {
 						name: "if"
-						loc: Object {
-							filename: "core/uncategorised/128/input.js"
-							identifierName: "if"
-							end: Object {
-								column: 11
-								line: 1
-							}
-							start: Object {
-								column: 9
-								line: 1
-							}
-						}
+						loc: SourceLocation core/uncategorised/128/input.js 1:9-1:11 (if)
 					}
-					loc: Object {
-						filename: "core/uncategorised/128/input.js"
-						identifierName: "if"
-						end: Object {
-							column: 11
-							line: 1
-						}
-						start: Object {
-							column: 9
-							line: 1
-						}
-					}
+					loc: SourceLocation core/uncategorised/128/input.js 1:9-1:11 (if)
 				}
 			}
 		}
@@ -107,6 +44,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

@@ -17,9 +17,6 @@
 
   ℹ All links on a page should have content that is accessible to screen readers.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -43,9 +40,6 @@
 
   ℹ All links on a page should have content that is accessible to screen readers.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -61,7 +55,6 @@
 ### `2`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -77,7 +70,6 @@
 ### `3`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -93,7 +85,6 @@
 ### `4`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -107,7 +98,6 @@
 ### `5`
 
 ```
-✔ No known problems!
 
 ```
 

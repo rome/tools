@@ -12,20 +12,10 @@ CommitRoot {
 	corrupt: false
 	custom: true
 	diagnostics: Array []
-	filename: "custom/input.txt"
 	integrity: undefined
 	rawBody: "commit with a custom commit type"
 	scope: ""
-	loc: Object {
-		filename: "custom/input.txt"
-		end: Object {
-			column: 39
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation custom/input.txt 1:0-1:39
+	path: RelativePath<custom/input.txt>
 }
 ```

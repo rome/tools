@@ -12,136 +12,43 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "es2015/yield/accessor-name-inst-computed-yield-expr/input.js"
 	hasHoistedVars: true
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2015/yield/accessor-name-inst-computed-yield-expr/input.js"
-		end: Object {
-			column: 0
-			line: 10
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2015/yield/accessor-name-inst-computed-yield-expr/input.js 1:0-10:0
+	path: UIDPath<es2015/yield/accessor-name-inst-computed-yield-expr/input.js>
 	body: Array [
 		JSVariableDeclarationStatement {
-			loc: Object {
-				filename: "es2015/yield/accessor-name-inst-computed-yield-expr/input.js"
-				end: Object {
-					column: 22
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2015/yield/accessor-name-inst-computed-yield-expr/input.js 1:0-1:22
 			declaration: JSVariableDeclaration {
 				kind: "var"
-				loc: Object {
-					filename: "es2015/yield/accessor-name-inst-computed-yield-expr/input.js"
-					end: Object {
-						column: 22
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/yield/accessor-name-inst-computed-yield-expr/input.js 1:0-1:22
 				declarations: Array [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "yieldSet"
-							loc: Object {
-								filename: "es2015/yield/accessor-name-inst-computed-yield-expr/input.js"
-								identifierName: "yieldSet"
-								end: Object {
-									column: 12
-									line: 1
-								}
-								start: Object {
-									column: 4
-									line: 1
-								}
-							}
+							loc: SourceLocation es2015/yield/accessor-name-inst-computed-yield-expr/input.js 1:4-1:12 (yieldSet)
 						}
 						init: undefined
-						loc: Object {
-							filename: "es2015/yield/accessor-name-inst-computed-yield-expr/input.js"
-							end: Object {
-								column: 12
-								line: 1
-							}
-							start: Object {
-								column: 4
-								line: 1
-							}
-						}
+						loc: SourceLocation es2015/yield/accessor-name-inst-computed-yield-expr/input.js 1:4-1:12
 					}
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "C"
-							loc: Object {
-								filename: "es2015/yield/accessor-name-inst-computed-yield-expr/input.js"
-								identifierName: "C"
-								end: Object {
-									column: 15
-									line: 1
-								}
-								start: Object {
-									column: 14
-									line: 1
-								}
-							}
+							loc: SourceLocation es2015/yield/accessor-name-inst-computed-yield-expr/input.js 1:14-1:15 (C)
 						}
 						init: undefined
-						loc: Object {
-							filename: "es2015/yield/accessor-name-inst-computed-yield-expr/input.js"
-							end: Object {
-								column: 15
-								line: 1
-							}
-							start: Object {
-								column: 14
-								line: 1
-							}
-						}
+						loc: SourceLocation es2015/yield/accessor-name-inst-computed-yield-expr/input.js 1:14-1:15
 					}
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "iter"
-							loc: Object {
-								filename: "es2015/yield/accessor-name-inst-computed-yield-expr/input.js"
-								identifierName: "iter"
-								end: Object {
-									column: 21
-									line: 1
-								}
-								start: Object {
-									column: 17
-									line: 1
-								}
-							}
+							loc: SourceLocation es2015/yield/accessor-name-inst-computed-yield-expr/input.js 1:17-1:21 (iter)
 						}
 						init: undefined
-						loc: Object {
-							filename: "es2015/yield/accessor-name-inst-computed-yield-expr/input.js"
-							end: Object {
-								column: 21
-								line: 1
-							}
-							start: Object {
-								column: 17
-								line: 1
-							}
-						}
+						loc: SourceLocation es2015/yield/accessor-name-inst-computed-yield-expr/input.js 1:17-1:21
 					}
 				]
 			}
@@ -149,30 +56,9 @@ JSRoot {
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "g"
-				loc: Object {
-					filename: "es2015/yield/accessor-name-inst-computed-yield-expr/input.js"
-					identifierName: "g"
-					end: Object {
-						column: 11
-						line: 2
-					}
-					start: Object {
-						column: 10
-						line: 2
-					}
-				}
+				loc: SourceLocation es2015/yield/accessor-name-inst-computed-yield-expr/input.js 2:10-2:11 (g)
 			}
-			loc: Object {
-				filename: "es2015/yield/accessor-name-inst-computed-yield-expr/input.js"
-				end: Object {
-					column: 1
-					line: 9
-				}
-				start: Object {
-					column: 0
-					line: 2
-				}
-			}
+			loc: SourceLocation es2015/yield/accessor-name-inst-computed-yield-expr/input.js 2:0-9:1
 			head: JSFunctionHead {
 				async: false
 				generator: true
@@ -182,75 +68,24 @@ JSRoot {
 				returnType: undefined
 				thisType: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "es2015/yield/accessor-name-inst-computed-yield-expr/input.js"
-					end: Object {
-						column: 13
-						line: 2
-					}
-					start: Object {
-						column: 11
-						line: 2
-					}
-				}
+				loc: SourceLocation es2015/yield/accessor-name-inst-computed-yield-expr/input.js 2:11-2:13
 			}
 			body: JSBlockStatement {
 				directives: Array []
-				loc: Object {
-					filename: "es2015/yield/accessor-name-inst-computed-yield-expr/input.js"
-					end: Object {
-						column: 1
-						line: 9
-					}
-					start: Object {
-						column: 14
-						line: 2
-					}
-				}
+				loc: SourceLocation es2015/yield/accessor-name-inst-computed-yield-expr/input.js 2:14-9:1
 				body: Array [
 					JSClassDeclaration {
 						id: JSBindingIdentifier {
 							name: "C_"
-							loc: Object {
-								filename: "es2015/yield/accessor-name-inst-computed-yield-expr/input.js"
-								identifierName: "C_"
-								end: Object {
-									column: 10
-									line: 3
-								}
-								start: Object {
-									column: 8
-									line: 3
-								}
-							}
+							loc: SourceLocation es2015/yield/accessor-name-inst-computed-yield-expr/input.js 3:8-3:10 (C_)
 						}
-						loc: Object {
-							filename: "es2015/yield/accessor-name-inst-computed-yield-expr/input.js"
-							end: Object {
-								column: 3
-								line: 6
-							}
-							start: Object {
-								column: 2
-								line: 3
-							}
-						}
+						loc: SourceLocation es2015/yield/accessor-name-inst-computed-yield-expr/input.js 3:2-6:3
 						meta: JSClassHead {
 							implements: undefined
 							superClass: undefined
 							superTypeParameters: undefined
 							typeParameters: undefined
-							loc: Object {
-								filename: "es2015/yield/accessor-name-inst-computed-yield-expr/input.js"
-								end: Object {
-									column: 3
-									line: 6
-								}
-								start: Object {
-									column: 2
-									line: 3
-								}
-							}
+							loc: SourceLocation es2015/yield/accessor-name-inst-computed-yield-expr/input.js 3:2-6:3
 							body: Array [
 								JSClassMethod {
 									kind: "get"
@@ -258,40 +93,20 @@ JSRoot {
 										value: JSYieldExpression {
 											argument: undefined
 											delegate: false
-											loc: Object {
-												filename: "es2015/yield/accessor-name-inst-computed-yield-expr/input.js"
-												end: Object {
-													column: 14
-													line: 4
-												}
-												start: Object {
-													column: 9
-													line: 4
-												}
-											}
+											loc: SourceLocation es2015/yield/accessor-name-inst-computed-yield-expr/input.js 4:9-4:14
 										}
-										loc: Object {
-											filename: "es2015/yield/accessor-name-inst-computed-yield-expr/input.js"
-											end: Object {
-												column: 15
-												line: 4
-											}
-											start: Object {
-												column: 8
-												line: 4
-											}
-										}
+										loc: SourceLocation es2015/yield/accessor-name-inst-computed-yield-expr/input.js 4:8-4:15
 									}
-									loc: Object {
-										filename: "es2015/yield/accessor-name-inst-computed-yield-expr/input.js"
-										end: Object {
-											column: 41
-											line: 4
-										}
-										start: Object {
-											column: 4
-											line: 4
-										}
+									loc: SourceLocation es2015/yield/accessor-name-inst-computed-yield-expr/input.js 4:4-4:41
+									meta: JSClassPropertyMeta {
+										abstract: false
+										accessibility: undefined
+										optional: false
+										readonly: false
+										static: false
+										typeAnnotation: undefined
+										loc: SourceLocation es2015/yield/accessor-name-inst-computed-yield-expr/input.js 4:4-4:15
+										start: Position 4:4
 									}
 									head: JSFunctionHead {
 										async: false
@@ -302,80 +117,17 @@ JSRoot {
 										returnType: undefined
 										thisType: undefined
 										typeParameters: undefined
-										loc: Object {
-											filename: "es2015/yield/accessor-name-inst-computed-yield-expr/input.js"
-											end: Object {
-												column: 17
-												line: 4
-											}
-											start: Object {
-												column: 15
-												line: 4
-											}
-										}
-									}
-									meta: JSClassPropertyMeta {
-										abstract: false
-										accessibility: undefined
-										optional: false
-										readonly: false
-										static: false
-										typeAnnotation: undefined
-										start: Object {
-											column: 4
-											line: 4
-										}
-										loc: Object {
-											filename: "es2015/yield/accessor-name-inst-computed-yield-expr/input.js"
-											end: Object {
-												column: 15
-												line: 4
-											}
-											start: Object {
-												column: 4
-												line: 4
-											}
-										}
+										loc: SourceLocation es2015/yield/accessor-name-inst-computed-yield-expr/input.js 4:15-4:17
 									}
 									body: JSBlockStatement {
 										directives: Array []
-										loc: Object {
-											filename: "es2015/yield/accessor-name-inst-computed-yield-expr/input.js"
-											end: Object {
-												column: 41
-												line: 4
-											}
-											start: Object {
-												column: 18
-												line: 4
-											}
-										}
+										loc: SourceLocation es2015/yield/accessor-name-inst-computed-yield-expr/input.js 4:18-4:41
 										body: Array [
 											JSReturnStatement {
-												loc: Object {
-													filename: "es2015/yield/accessor-name-inst-computed-yield-expr/input.js"
-													end: Object {
-														column: 39
-														line: 4
-													}
-													start: Object {
-														column: 20
-														line: 4
-													}
-												}
+												loc: SourceLocation es2015/yield/accessor-name-inst-computed-yield-expr/input.js 4:20-4:39
 												argument: JSStringLiteral {
 													value: "get yield"
-													loc: Object {
-														filename: "es2015/yield/accessor-name-inst-computed-yield-expr/input.js"
-														end: Object {
-															column: 38
-															line: 4
-														}
-														start: Object {
-															column: 27
-															line: 4
-														}
-													}
+													loc: SourceLocation es2015/yield/accessor-name-inst-computed-yield-expr/input.js 4:27-4:38
 												}
 											}
 										]
@@ -387,41 +139,11 @@ JSRoot {
 										value: JSYieldExpression {
 											argument: undefined
 											delegate: false
-											loc: Object {
-												filename: "es2015/yield/accessor-name-inst-computed-yield-expr/input.js"
-												end: Object {
-													column: 14
-													line: 5
-												}
-												start: Object {
-													column: 9
-													line: 5
-												}
-											}
+											loc: SourceLocation es2015/yield/accessor-name-inst-computed-yield-expr/input.js 5:9-5:14
 										}
-										loc: Object {
-											filename: "es2015/yield/accessor-name-inst-computed-yield-expr/input.js"
-											end: Object {
-												column: 15
-												line: 5
-											}
-											start: Object {
-												column: 8
-												line: 5
-											}
-										}
+										loc: SourceLocation es2015/yield/accessor-name-inst-computed-yield-expr/input.js 5:8-5:15
 									}
-									loc: Object {
-										filename: "es2015/yield/accessor-name-inst-computed-yield-expr/input.js"
-										end: Object {
-											column: 44
-											line: 5
-										}
-										start: Object {
-											column: 4
-											line: 5
-										}
-									}
+									loc: SourceLocation es2015/yield/accessor-name-inst-computed-yield-expr/input.js 5:4-5:44
 									meta: JSClassPropertyMeta {
 										abstract: false
 										accessibility: undefined
@@ -429,21 +151,29 @@ JSRoot {
 										readonly: false
 										static: false
 										typeAnnotation: undefined
-										start: Object {
-											column: 4
-											line: 5
-										}
-										loc: Object {
-											filename: "es2015/yield/accessor-name-inst-computed-yield-expr/input.js"
-											end: Object {
-												column: 15
-												line: 5
+										loc: SourceLocation es2015/yield/accessor-name-inst-computed-yield-expr/input.js 5:4-5:15
+										start: Position 5:4
+									}
+									body: JSBlockStatement {
+										directives: Array []
+										loc: SourceLocation es2015/yield/accessor-name-inst-computed-yield-expr/input.js 5:23-5:44
+										body: Array [
+											JSExpressionStatement {
+												loc: SourceLocation es2015/yield/accessor-name-inst-computed-yield-expr/input.js 5:25-5:42
+												expression: JSAssignmentExpression {
+													operator: "="
+													loc: SourceLocation es2015/yield/accessor-name-inst-computed-yield-expr/input.js 5:25-5:41
+													left: JSAssignmentIdentifier {
+														name: "yieldSet"
+														loc: SourceLocation es2015/yield/accessor-name-inst-computed-yield-expr/input.js 5:25-5:33 (yieldSet)
+													}
+													right: JSReferenceIdentifier {
+														name: "param"
+														loc: SourceLocation es2015/yield/accessor-name-inst-computed-yield-expr/input.js 5:36-5:41 (param)
+													}
+												}
 											}
-											start: Object {
-												column: 4
-												line: 5
-											}
-										}
+										]
 									}
 									head: JSFunctionHead {
 										async: false
@@ -453,119 +183,15 @@ JSRoot {
 										returnType: undefined
 										thisType: undefined
 										typeParameters: undefined
-										loc: Object {
-											filename: "es2015/yield/accessor-name-inst-computed-yield-expr/input.js"
-											end: Object {
-												column: 22
-												line: 5
-											}
-											start: Object {
-												column: 15
-												line: 5
-											}
-										}
+										loc: SourceLocation es2015/yield/accessor-name-inst-computed-yield-expr/input.js 5:15-5:22
 										params: Array [
 											JSBindingIdentifier {
 												name: "param"
-												loc: Object {
-													filename: "es2015/yield/accessor-name-inst-computed-yield-expr/input.js"
-													identifierName: "param"
-													end: Object {
-														column: 21
-														line: 5
-													}
-													start: Object {
-														column: 16
-														line: 5
-													}
-												}
+												loc: SourceLocation es2015/yield/accessor-name-inst-computed-yield-expr/input.js 5:16-5:21 (param)
 												meta: JSPatternMeta {
 													optional: undefined
 													typeAnnotation: undefined
-													loc: Object {
-														filename: "es2015/yield/accessor-name-inst-computed-yield-expr/input.js"
-														end: Object {
-															column: 21
-															line: 5
-														}
-														start: Object {
-															column: 16
-															line: 5
-														}
-													}
-												}
-											}
-										]
-									}
-									body: JSBlockStatement {
-										directives: Array []
-										loc: Object {
-											filename: "es2015/yield/accessor-name-inst-computed-yield-expr/input.js"
-											end: Object {
-												column: 44
-												line: 5
-											}
-											start: Object {
-												column: 23
-												line: 5
-											}
-										}
-										body: Array [
-											JSExpressionStatement {
-												loc: Object {
-													filename: "es2015/yield/accessor-name-inst-computed-yield-expr/input.js"
-													end: Object {
-														column: 42
-														line: 5
-													}
-													start: Object {
-														column: 25
-														line: 5
-													}
-												}
-												expression: JSAssignmentExpression {
-													operator: "="
-													loc: Object {
-														filename: "es2015/yield/accessor-name-inst-computed-yield-expr/input.js"
-														end: Object {
-															column: 41
-															line: 5
-														}
-														start: Object {
-															column: 25
-															line: 5
-														}
-													}
-													left: JSAssignmentIdentifier {
-														name: "yieldSet"
-														loc: Object {
-															filename: "es2015/yield/accessor-name-inst-computed-yield-expr/input.js"
-															identifierName: "yieldSet"
-															end: Object {
-																column: 33
-																line: 5
-															}
-															start: Object {
-																column: 25
-																line: 5
-															}
-														}
-													}
-													right: JSReferenceIdentifier {
-														name: "param"
-														loc: Object {
-															filename: "es2015/yield/accessor-name-inst-computed-yield-expr/input.js"
-															identifierName: "param"
-															end: Object {
-																column: 41
-																line: 5
-															}
-															start: Object {
-																column: 36
-																line: 5
-															}
-														}
-													}
+													loc: SourceLocation es2015/yield/accessor-name-inst-computed-yield-expr/input.js 5:16-5:21
 												}
 											}
 										]
@@ -575,59 +201,17 @@ JSRoot {
 						}
 					}
 					JSExpressionStatement {
-						loc: Object {
-							filename: "es2015/yield/accessor-name-inst-computed-yield-expr/input.js"
-							end: Object {
-								column: 9
-								line: 8
-							}
-							start: Object {
-								column: 2
-								line: 8
-							}
-						}
+						loc: SourceLocation es2015/yield/accessor-name-inst-computed-yield-expr/input.js 8:2-8:9
 						expression: JSAssignmentExpression {
 							operator: "="
-							loc: Object {
-								filename: "es2015/yield/accessor-name-inst-computed-yield-expr/input.js"
-								end: Object {
-									column: 8
-									line: 8
-								}
-								start: Object {
-									column: 2
-									line: 8
-								}
-							}
+							loc: SourceLocation es2015/yield/accessor-name-inst-computed-yield-expr/input.js 8:2-8:8
 							left: JSAssignmentIdentifier {
 								name: "C"
-								loc: Object {
-									filename: "es2015/yield/accessor-name-inst-computed-yield-expr/input.js"
-									identifierName: "C"
-									end: Object {
-										column: 3
-										line: 8
-									}
-									start: Object {
-										column: 2
-										line: 8
-									}
-								}
+								loc: SourceLocation es2015/yield/accessor-name-inst-computed-yield-expr/input.js 8:2-8:3 (C)
 							}
 							right: JSReferenceIdentifier {
 								name: "C_"
-								loc: Object {
-									filename: "es2015/yield/accessor-name-inst-computed-yield-expr/input.js"
-									identifierName: "C_"
-									end: Object {
-										column: 8
-										line: 8
-									}
-									start: Object {
-										column: 6
-										line: 8
-									}
-								}
+								loc: SourceLocation es2015/yield/accessor-name-inst-computed-yield-expr/input.js 8:6-8:8 (C_)
 							}
 						}
 					}
@@ -641,6 +225,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

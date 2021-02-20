@@ -12,78 +12,27 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "esprima/es2015-export-declaration/export-named-specifiers-comma/input.js"
 	hasHoistedVars: true
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
 	syntax: Array []
-	loc: Object {
-		filename: "esprima/es2015-export-declaration/export-named-specifiers-comma/input.js"
-		end: Object {
-			column: 0
-			line: 4
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation esprima/es2015-export-declaration/export-named-specifiers-comma/input.js 1:0-4:0
+	path: UIDPath<esprima/es2015-export-declaration/export-named-specifiers-comma/input.js>
 	body: Array [
 		JSVariableDeclarationStatement {
-			loc: Object {
-				filename: "esprima/es2015-export-declaration/export-named-specifiers-comma/input.js"
-				end: Object {
-					column: 8
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation esprima/es2015-export-declaration/export-named-specifiers-comma/input.js 1:0-1:8
 			declaration: JSVariableDeclaration {
 				kind: "var"
-				loc: Object {
-					filename: "esprima/es2015-export-declaration/export-named-specifiers-comma/input.js"
-					end: Object {
-						column: 8
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/es2015-export-declaration/export-named-specifiers-comma/input.js 1:0-1:8
 				declarations: Array [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "bar"
-							loc: Object {
-								filename: "esprima/es2015-export-declaration/export-named-specifiers-comma/input.js"
-								identifierName: "bar"
-								end: Object {
-									column: 7
-									line: 1
-								}
-								start: Object {
-									column: 4
-									line: 1
-								}
-							}
+							loc: SourceLocation esprima/es2015-export-declaration/export-named-specifiers-comma/input.js 1:4-1:7 (bar)
 						}
 						init: undefined
-						loc: Object {
-							filename: "esprima/es2015-export-declaration/export-named-specifiers-comma/input.js"
-							end: Object {
-								column: 7
-								line: 1
-							}
-							start: Object {
-								column: 4
-								line: 1
-							}
-						}
+						loc: SourceLocation esprima/es2015-export-declaration/export-named-specifiers-comma/input.js 1:4-1:7
 					}
 				]
 			}
@@ -91,160 +40,45 @@ JSRoot {
 		JSExportLocalDeclaration {
 			declaration: undefined
 			exportKind: "value"
-			loc: Object {
-				filename: "esprima/es2015-export-declaration/export-named-specifiers-comma/input.js"
-				end: Object {
-					column: 19
-					line: 2
-				}
-				start: Object {
-					column: 0
-					line: 2
-				}
-			}
+			loc: SourceLocation esprima/es2015-export-declaration/export-named-specifiers-comma/input.js 2:0-2:19
 			specifiers: Array [
 				JSExportLocalSpecifier {
-					loc: Object {
-						filename: "esprima/es2015-export-declaration/export-named-specifiers-comma/input.js"
-						end: Object {
-							column: 11
-							line: 2
-						}
-						start: Object {
-							column: 8
-							line: 2
-						}
-					}
+					loc: SourceLocation esprima/es2015-export-declaration/export-named-specifiers-comma/input.js 2:8-2:11
 					exported: JSIdentifier {
 						name: "foo"
-						loc: Object {
-							filename: "esprima/es2015-export-declaration/export-named-specifiers-comma/input.js"
-							identifierName: "foo"
-							end: Object {
-								column: 11
-								line: 2
-							}
-							start: Object {
-								column: 8
-								line: 2
-							}
-						}
+						loc: SourceLocation esprima/es2015-export-declaration/export-named-specifiers-comma/input.js 2:8-2:11 (foo)
 					}
 					local: JSReferenceIdentifier {
 						name: "foo"
-						loc: Object {
-							filename: "esprima/es2015-export-declaration/export-named-specifiers-comma/input.js"
-							identifierName: "foo"
-							end: Object {
-								column: 11
-								line: 2
-							}
-							start: Object {
-								column: 8
-								line: 2
-							}
-						}
+						loc: SourceLocation esprima/es2015-export-declaration/export-named-specifiers-comma/input.js 2:8-2:11 (foo)
 					}
 				}
 				JSExportLocalSpecifier {
-					loc: Object {
-						filename: "esprima/es2015-export-declaration/export-named-specifiers-comma/input.js"
-						end: Object {
-							column: 16
-							line: 2
-						}
-						start: Object {
-							column: 13
-							line: 2
-						}
-					}
+					loc: SourceLocation esprima/es2015-export-declaration/export-named-specifiers-comma/input.js 2:13-2:16
 					exported: JSIdentifier {
 						name: "bar"
-						loc: Object {
-							filename: "esprima/es2015-export-declaration/export-named-specifiers-comma/input.js"
-							identifierName: "bar"
-							end: Object {
-								column: 16
-								line: 2
-							}
-							start: Object {
-								column: 13
-								line: 2
-							}
-						}
+						loc: SourceLocation esprima/es2015-export-declaration/export-named-specifiers-comma/input.js 2:13-2:16 (bar)
 					}
 					local: JSReferenceIdentifier {
 						name: "bar"
-						loc: Object {
-							filename: "esprima/es2015-export-declaration/export-named-specifiers-comma/input.js"
-							identifierName: "bar"
-							end: Object {
-								column: 16
-								line: 2
-							}
-							start: Object {
-								column: 13
-								line: 2
-							}
-						}
+						loc: SourceLocation esprima/es2015-export-declaration/export-named-specifiers-comma/input.js 2:13-2:16 (bar)
 					}
 				}
 			]
 		}
 		JSVariableDeclarationStatement {
-			loc: Object {
-				filename: "esprima/es2015-export-declaration/export-named-specifiers-comma/input.js"
-				end: Object {
-					column: 8
-					line: 3
-				}
-				start: Object {
-					column: 0
-					line: 3
-				}
-			}
+			loc: SourceLocation esprima/es2015-export-declaration/export-named-specifiers-comma/input.js 3:0-3:8
 			declaration: JSVariableDeclaration {
 				kind: "var"
-				loc: Object {
-					filename: "esprima/es2015-export-declaration/export-named-specifiers-comma/input.js"
-					end: Object {
-						column: 8
-						line: 3
-					}
-					start: Object {
-						column: 0
-						line: 3
-					}
-				}
+				loc: SourceLocation esprima/es2015-export-declaration/export-named-specifiers-comma/input.js 3:0-3:8
 				declarations: Array [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "foo"
-							loc: Object {
-								filename: "esprima/es2015-export-declaration/export-named-specifiers-comma/input.js"
-								identifierName: "foo"
-								end: Object {
-									column: 7
-									line: 3
-								}
-								start: Object {
-									column: 4
-									line: 3
-								}
-							}
+							loc: SourceLocation esprima/es2015-export-declaration/export-named-specifiers-comma/input.js 3:4-3:7 (foo)
 						}
 						init: undefined
-						loc: Object {
-							filename: "esprima/es2015-export-declaration/export-named-specifiers-comma/input.js"
-							end: Object {
-								column: 7
-								line: 3
-							}
-							start: Object {
-								column: 4
-								line: 3
-							}
-						}
+						loc: SourceLocation esprima/es2015-export-declaration/export-named-specifiers-comma/input.js 3:4-3:7
 					}
 				]
 			}
@@ -256,6 +90,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

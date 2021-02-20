@@ -12,51 +12,20 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "core/regression/9374/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "core/regression/9374/input.js"
-		end: Object {
-			column: 0
-			line: 4
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation core/regression/9374/input.js 1:0-4:0
+	path: UIDPath<core/regression/9374/input.js>
 	body: Array [
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "test"
-				loc: Object {
-					filename: "core/regression/9374/input.js"
-					identifierName: "test"
-					end: Object {
-						column: 14
-						line: 1
-					}
-					start: Object {
-						column: 10
-						line: 1
-					}
-				}
+				loc: SourceLocation core/regression/9374/input.js 1:10-1:14 (test)
 			}
-			loc: Object {
-				filename: "core/regression/9374/input.js"
-				end: Object {
-					column: 1
-					line: 3
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation core/regression/9374/input.js 1:0-3:1
 			head: JSFunctionHead {
 				async: false
 				generator: true
@@ -66,86 +35,25 @@ JSRoot {
 				returnType: undefined
 				thisType: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "core/regression/9374/input.js"
-					end: Object {
-						column: 16
-						line: 1
-					}
-					start: Object {
-						column: 14
-						line: 1
-					}
-				}
+				loc: SourceLocation core/regression/9374/input.js 1:14-1:16
 			}
 			body: JSBlockStatement {
 				directives: Array []
-				loc: Object {
-					filename: "core/regression/9374/input.js"
-					end: Object {
-						column: 1
-						line: 3
-					}
-					start: Object {
-						column: 17
-						line: 1
-					}
-				}
+				loc: SourceLocation core/regression/9374/input.js 1:17-3:1
 				body: Array [
 					JSExpressionStatement {
-						loc: Object {
-							filename: "core/regression/9374/input.js"
-							end: Object {
-								column: 18
-								line: 2
-							}
-							start: Object {
-								column: 2
-								line: 2
-							}
-						}
+						loc: SourceLocation core/regression/9374/input.js 2:2-2:18
 						expression: JSYieldExpression {
 							delegate: false
-							loc: Object {
-								filename: "core/regression/9374/input.js"
-								end: Object {
-									column: 17
-									line: 2
-								}
-								start: Object {
-									column: 2
-									line: 2
-								}
-							}
+							loc: SourceLocation core/regression/9374/input.js 2:2-2:17
 							argument: JSNewExpression {
 								arguments: Array []
 								optional: undefined
 								typeArguments: undefined
-								loc: Object {
-									filename: "core/regression/9374/input.js"
-									end: Object {
-										column: 17
-										line: 2
-									}
-									start: Object {
-										column: 8
-										line: 2
-									}
-								}
+								loc: SourceLocation core/regression/9374/input.js 2:8-2:17
 								callee: JSReferenceIdentifier {
 									name: "Foo"
-									loc: Object {
-										filename: "core/regression/9374/input.js"
-										identifierName: "Foo"
-										end: Object {
-											column: 15
-											line: 2
-										}
-										start: Object {
-											column: 12
-											line: 2
-										}
-									}
+									loc: SourceLocation core/regression/9374/input.js 2:12-2:15 (Foo)
 								}
 							}
 						}
@@ -160,6 +68,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

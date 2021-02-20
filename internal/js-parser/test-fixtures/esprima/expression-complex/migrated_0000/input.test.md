@@ -12,330 +12,89 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "esprima/expression-complex/migrated_0000/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "esprima/expression-complex/migrated_0000/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation esprima/expression-complex/migrated_0000/input.js 1:0-2:0
+	path: UIDPath<esprima/expression-complex/migrated_0000/input.js>
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "esprima/expression-complex/migrated_0000/input.js"
-				end: Object {
-					column: 46
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation esprima/expression-complex/migrated_0000/input.js 1:0-1:46
 			expression: JSLogicalExpression {
 				operator: "||"
-				loc: Object {
-					filename: "esprima/expression-complex/migrated_0000/input.js"
-					end: Object {
-						column: 46
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/expression-complex/migrated_0000/input.js 1:0-1:46
 				left: JSReferenceIdentifier {
 					name: "a"
-					loc: Object {
-						filename: "esprima/expression-complex/migrated_0000/input.js"
-						identifierName: "a"
-						end: Object {
-							column: 1
-							line: 1
-						}
-						start: Object {
-							column: 0
-							line: 1
-						}
-					}
+					loc: SourceLocation esprima/expression-complex/migrated_0000/input.js 1:0-1:1 (a)
 				}
 				right: JSLogicalExpression {
 					operator: "&&"
-					loc: Object {
-						filename: "esprima/expression-complex/migrated_0000/input.js"
-						end: Object {
-							column: 46
-							line: 1
-						}
-						start: Object {
-							column: 5
-							line: 1
-						}
-					}
+					loc: SourceLocation esprima/expression-complex/migrated_0000/input.js 1:5-1:46
 					left: JSReferenceIdentifier {
 						name: "b"
-						loc: Object {
-							filename: "esprima/expression-complex/migrated_0000/input.js"
-							identifierName: "b"
-							end: Object {
-								column: 6
-								line: 1
-							}
-							start: Object {
-								column: 5
-								line: 1
-							}
-						}
+						loc: SourceLocation esprima/expression-complex/migrated_0000/input.js 1:5-1:6 (b)
 					}
 					right: JSBinaryExpression {
 						operator: "|"
-						loc: Object {
-							filename: "esprima/expression-complex/migrated_0000/input.js"
-							end: Object {
-								column: 46
-								line: 1
-							}
-							start: Object {
-								column: 10
-								line: 1
-							}
-						}
+						loc: SourceLocation esprima/expression-complex/migrated_0000/input.js 1:10-1:46
 						left: JSReferenceIdentifier {
 							name: "c"
-							loc: Object {
-								filename: "esprima/expression-complex/migrated_0000/input.js"
-								identifierName: "c"
-								end: Object {
-									column: 11
-									line: 1
-								}
-								start: Object {
-									column: 10
-									line: 1
-								}
-							}
+							loc: SourceLocation esprima/expression-complex/migrated_0000/input.js 1:10-1:11 (c)
 						}
 						right: JSBinaryExpression {
 							operator: "^"
-							loc: Object {
-								filename: "esprima/expression-complex/migrated_0000/input.js"
-								end: Object {
-									column: 46
-									line: 1
-								}
-								start: Object {
-									column: 14
-									line: 1
-								}
-							}
+							loc: SourceLocation esprima/expression-complex/migrated_0000/input.js 1:14-1:46
 							left: JSReferenceIdentifier {
 								name: "d"
-								loc: Object {
-									filename: "esprima/expression-complex/migrated_0000/input.js"
-									identifierName: "d"
-									end: Object {
-										column: 15
-										line: 1
-									}
-									start: Object {
-										column: 14
-										line: 1
-									}
-								}
+								loc: SourceLocation esprima/expression-complex/migrated_0000/input.js 1:14-1:15 (d)
 							}
 							right: JSBinaryExpression {
 								operator: "&"
-								loc: Object {
-									filename: "esprima/expression-complex/migrated_0000/input.js"
-									end: Object {
-										column: 46
-										line: 1
-									}
-									start: Object {
-										column: 18
-										line: 1
-									}
-								}
+								loc: SourceLocation esprima/expression-complex/migrated_0000/input.js 1:18-1:46
 								left: JSReferenceIdentifier {
 									name: "e"
-									loc: Object {
-										filename: "esprima/expression-complex/migrated_0000/input.js"
-										identifierName: "e"
-										end: Object {
-											column: 19
-											line: 1
-										}
-										start: Object {
-											column: 18
-											line: 1
-										}
-									}
+									loc: SourceLocation esprima/expression-complex/migrated_0000/input.js 1:18-1:19 (e)
 								}
 								right: JSBinaryExpression {
 									operator: "=="
-									loc: Object {
-										filename: "esprima/expression-complex/migrated_0000/input.js"
-										end: Object {
-											column: 46
-											line: 1
-										}
-										start: Object {
-											column: 22
-											line: 1
-										}
-									}
+									loc: SourceLocation esprima/expression-complex/migrated_0000/input.js 1:22-1:46
 									left: JSReferenceIdentifier {
 										name: "f"
-										loc: Object {
-											filename: "esprima/expression-complex/migrated_0000/input.js"
-											identifierName: "f"
-											end: Object {
-												column: 23
-												line: 1
-											}
-											start: Object {
-												column: 22
-												line: 1
-											}
-										}
+										loc: SourceLocation esprima/expression-complex/migrated_0000/input.js 1:22-1:23 (f)
 									}
 									right: JSBinaryExpression {
 										operator: "<"
-										loc: Object {
-											filename: "esprima/expression-complex/migrated_0000/input.js"
-											end: Object {
-												column: 46
-												line: 1
-											}
-											start: Object {
-												column: 27
-												line: 1
-											}
-										}
+										loc: SourceLocation esprima/expression-complex/migrated_0000/input.js 1:27-1:46
 										left: JSReferenceIdentifier {
 											name: "g"
-											loc: Object {
-												filename: "esprima/expression-complex/migrated_0000/input.js"
-												identifierName: "g"
-												end: Object {
-													column: 28
-													line: 1
-												}
-												start: Object {
-													column: 27
-													line: 1
-												}
-											}
+											loc: SourceLocation esprima/expression-complex/migrated_0000/input.js 1:27-1:28 (g)
 										}
 										right: JSBinaryExpression {
 											operator: ">>>"
-											loc: Object {
-												filename: "esprima/expression-complex/migrated_0000/input.js"
-												end: Object {
-													column: 46
-													line: 1
-												}
-												start: Object {
-													column: 31
-													line: 1
-												}
-											}
+											loc: SourceLocation esprima/expression-complex/migrated_0000/input.js 1:31-1:46
 											left: JSReferenceIdentifier {
 												name: "h"
-												loc: Object {
-													filename: "esprima/expression-complex/migrated_0000/input.js"
-													identifierName: "h"
-													end: Object {
-														column: 32
-														line: 1
-													}
-													start: Object {
-														column: 31
-														line: 1
-													}
-												}
+												loc: SourceLocation esprima/expression-complex/migrated_0000/input.js 1:31-1:32 (h)
 											}
 											right: JSBinaryExpression {
 												operator: "+"
-												loc: Object {
-													filename: "esprima/expression-complex/migrated_0000/input.js"
-													end: Object {
-														column: 46
-														line: 1
-													}
-													start: Object {
-														column: 37
-														line: 1
-													}
-												}
+												loc: SourceLocation esprima/expression-complex/migrated_0000/input.js 1:37-1:46
 												left: JSReferenceIdentifier {
 													name: "i"
-													loc: Object {
-														filename: "esprima/expression-complex/migrated_0000/input.js"
-														identifierName: "i"
-														end: Object {
-															column: 38
-															line: 1
-														}
-														start: Object {
-															column: 37
-															line: 1
-														}
-													}
+													loc: SourceLocation esprima/expression-complex/migrated_0000/input.js 1:37-1:38 (i)
 												}
 												right: JSBinaryExpression {
 													operator: "*"
-													loc: Object {
-														filename: "esprima/expression-complex/migrated_0000/input.js"
-														end: Object {
-															column: 46
-															line: 1
-														}
-														start: Object {
-															column: 41
-															line: 1
-														}
-													}
+													loc: SourceLocation esprima/expression-complex/migrated_0000/input.js 1:41-1:46
 													left: JSReferenceIdentifier {
 														name: "j"
-														loc: Object {
-															filename: "esprima/expression-complex/migrated_0000/input.js"
-															identifierName: "j"
-															end: Object {
-																column: 42
-																line: 1
-															}
-															start: Object {
-																column: 41
-																line: 1
-															}
-														}
+														loc: SourceLocation esprima/expression-complex/migrated_0000/input.js 1:41-1:42 (j)
 													}
 													right: JSReferenceIdentifier {
 														name: "k"
-														loc: Object {
-															filename: "esprima/expression-complex/migrated_0000/input.js"
-															identifierName: "k"
-															end: Object {
-																column: 46
-																line: 1
-															}
-															start: Object {
-																column: 45
-																line: 1
-															}
-														}
+														loc: SourceLocation esprima/expression-complex/migrated_0000/input.js 1:45-1:46 (k)
 													}
 												}
 											}
@@ -355,6 +114,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

@@ -12,58 +12,28 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "comments/html/first-line/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
 	trailingComments: Array []
+	loc: SourceLocation comments/html/first-line/input.js 1:0-2:0
+	path: UIDPath<comments/html/first-line/input.js>
 	innerComments: Array [
 		"0"
 		"1"
 	]
-	loc: Object {
-		filename: "comments/html/first-line/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
 	comments: Array [
 		CommentBlock {
 			id: "0"
 			value: ""
-			loc: Object {
-				filename: "comments/html/first-line/input.js"
-				end: Object {
-					column: 4
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation comments/html/first-line/input.js 1:0-1:4
 		}
 		CommentLine {
 			id: "1"
 			value: " comment"
-			loc: Object {
-				filename: "comments/html/first-line/input.js"
-				end: Object {
-					column: 16
-					line: 1
-				}
-				start: Object {
-					column: 5
-					line: 1
-				}
-			}
+			loc: SourceLocation comments/html/first-line/input.js 1:5-1:16
 		}
 	]
 }
@@ -72,6 +42,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

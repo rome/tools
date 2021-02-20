@@ -11,215 +11,79 @@ JSRoot {
 	comments: Array []
 	corrupt: true
 	directives: Array []
-	filename: "esprima/es2015-arrow-function/arrow-rest-forgetting-comma/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "esprima/es2015-arrow-function/arrow-rest-forgetting-comma/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation esprima/es2015-arrow-function/arrow-rest-forgetting-comma/input.js 1:0-2:0
+	path: UIDPath<esprima/es2015-arrow-function/arrow-rest-forgetting-comma/input.js>
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				category: "parse"
-				categoryValue: "js"
-				message: Array [
-					RAW_MARKUP {value: "Unexpected token, expected "}
-					","
-				]
-			}
 			location: Object {
-				filename: "esprima/es2015-arrow-function/arrow-rest-forgetting-comma/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 6
-					line: 1
-				}
-				start: Object {
-					column: 3
-					line: 1
-				}
+				end: Position 1:6
+				path: UIDPath<esprima/es2015-arrow-function/arrow-rest-forgetting-comma/input.js>
+				start: Position 1:3
+			}
+			description: Object {
+				categoryValue: "js"
+				category: Array ["parse"]
+				message: RAW_MARKUP {value: "Unexpected character <emphasis>.</emphasis>"}
+				advice: Array [
+					log {
+						category: "info"
+						text: RAW_MARKUP {value: "Expected character <emphasis>,</emphasis>"}
+					}
+				]
 			}
 		}
 	]
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "esprima/es2015-arrow-function/arrow-rest-forgetting-comma/input.js"
-				end: Object {
-					column: 2
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation esprima/es2015-arrow-function/arrow-rest-forgetting-comma/input.js 1:0-1:2
 			expression: JSReferenceIdentifier {
 				name: "a"
-				loc: Object {
-					filename: "esprima/es2015-arrow-function/arrow-rest-forgetting-comma/input.js"
-					identifierName: "a"
-					end: Object {
-						column: 2
-						line: 1
-					}
-					start: Object {
-						column: 1
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/es2015-arrow-function/arrow-rest-forgetting-comma/input.js 1:1-1:2 (a)
 			}
 		}
 		JSExpressionStatement {
-			loc: Object {
-				filename: "esprima/es2015-arrow-function/arrow-rest-forgetting-comma/input.js"
-				end: Object {
-					column: 6
-					line: 1
-				}
-				start: Object {
-					column: 3
-					line: 1
-				}
-			}
+			loc: SourceLocation esprima/es2015-arrow-function/arrow-rest-forgetting-comma/input.js 1:3-1:6
 			expression: JSReferenceIdentifier {
 				name: "INVALID_PLACEHOLDER"
-				loc: Object {
-					filename: "esprima/es2015-arrow-function/arrow-rest-forgetting-comma/input.js"
-					end: Object {
-						column: 6
-						line: 1
-					}
-					start: Object {
-						column: 3
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/es2015-arrow-function/arrow-rest-forgetting-comma/input.js 1:3-1:6
 			}
 		}
 		JSExpressionStatement {
-			loc: Object {
-				filename: "esprima/es2015-arrow-function/arrow-rest-forgetting-comma/input.js"
-				end: Object {
-					column: 7
-					line: 1
-				}
-				start: Object {
-					column: 6
-					line: 1
-				}
-			}
+			loc: SourceLocation esprima/es2015-arrow-function/arrow-rest-forgetting-comma/input.js 1:6-1:7
 			expression: JSReferenceIdentifier {
 				name: "b"
-				loc: Object {
-					filename: "esprima/es2015-arrow-function/arrow-rest-forgetting-comma/input.js"
-					identifierName: "b"
-					end: Object {
-						column: 7
-						line: 1
-					}
-					start: Object {
-						column: 6
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/es2015-arrow-function/arrow-rest-forgetting-comma/input.js 1:6-1:7 (b)
 			}
 		}
 		JSExpressionStatement {
-			loc: Object {
-				filename: "esprima/es2015-arrow-function/arrow-rest-forgetting-comma/input.js"
-				end: Object {
-					column: 8
-					line: 1
-				}
-				start: Object {
-					column: 7
-					line: 1
-				}
-			}
+			loc: SourceLocation esprima/es2015-arrow-function/arrow-rest-forgetting-comma/input.js 1:7-1:8
 			expression: JSReferenceIdentifier {
 				name: "INVALID_PLACEHOLDER"
-				loc: Object {
-					filename: "esprima/es2015-arrow-function/arrow-rest-forgetting-comma/input.js"
-					end: Object {
-						column: 8
-						line: 1
-					}
-					start: Object {
-						column: 7
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/es2015-arrow-function/arrow-rest-forgetting-comma/input.js 1:7-1:8
 			}
 		}
 		JSExpressionStatement {
-			loc: Object {
-				filename: "esprima/es2015-arrow-function/arrow-rest-forgetting-comma/input.js"
-				end: Object {
-					column: 11
-					line: 1
-				}
-				start: Object {
-					column: 9
-					line: 1
-				}
-			}
+			loc: SourceLocation esprima/es2015-arrow-function/arrow-rest-forgetting-comma/input.js 1:9-1:11
 			expression: JSReferenceIdentifier {
 				name: "INVALID_PLACEHOLDER"
-				loc: Object {
-					filename: "esprima/es2015-arrow-function/arrow-rest-forgetting-comma/input.js"
-					end: Object {
-						column: 11
-						line: 1
-					}
-					start: Object {
-						column: 9
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/es2015-arrow-function/arrow-rest-forgetting-comma/input.js 1:9-1:11
 			}
 		}
 		JSExpressionStatement {
-			loc: Object {
-				filename: "esprima/es2015-arrow-function/arrow-rest-forgetting-comma/input.js"
-				end: Object {
-					column: 13
-					line: 1
-				}
-				start: Object {
-					column: 12
-					line: 1
-				}
-			}
+			loc: SourceLocation esprima/es2015-arrow-function/arrow-rest-forgetting-comma/input.js 1:12-1:13
 			expression: JSNumericLiteral {
 				value: 0
 				format: undefined
-				loc: Object {
-					filename: "esprima/es2015-arrow-function/arrow-rest-forgetting-comma/input.js"
-					end: Object {
-						column: 13
-						line: 1
-					}
-					start: Object {
-						column: 12
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/es2015-arrow-function/arrow-rest-forgetting-comma/input.js 1:12-1:13
 			}
 		}
 	]
@@ -232,13 +96,12 @@ JSRoot {
 
  esprima/es2015-arrow-function/arrow-rest-forgetting-comma/input.js:1:3 parse(js) ━━━━━━━━━━━━━━━━━━
 
-  ✖ Unexpected token, expected ,
+  ✖ Unexpected character .
 
     (a ...b) => 0
        ^^^
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  ℹ Expected character ,
 
-✖ Found 1 problem
 
 ```

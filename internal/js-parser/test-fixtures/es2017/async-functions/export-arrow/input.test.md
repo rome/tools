@@ -12,48 +12,18 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "es2017/async-functions/export-arrow/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
 	syntax: Array []
-	loc: Object {
-		filename: "es2017/async-functions/export-arrow/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2017/async-functions/export-arrow/input.js 1:0-2:0
+	path: UIDPath<es2017/async-functions/export-arrow/input.js>
 	body: Array [
 		JSExportDefaultDeclaration {
-			loc: Object {
-				filename: "es2017/async-functions/export-arrow/input.js"
-				end: Object {
-					column: 38
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2017/async-functions/export-arrow/input.js 1:0-1:38
 			declaration: JSArrowFunctionExpression {
-				loc: Object {
-					filename: "es2017/async-functions/export-arrow/input.js"
-					end: Object {
-						column: 38
-						line: 1
-					}
-					start: Object {
-						column: 15
-						line: 1
-					}
-				}
+				loc: SourceLocation es2017/async-functions/export-arrow/input.js 1:15-1:38
 				head: JSFunctionHead {
 					async: true
 					hasHoistedVars: false
@@ -61,57 +31,16 @@ JSRoot {
 					rest: undefined
 					returnType: undefined
 					thisType: undefined
-					loc: Object {
-						filename: "es2017/async-functions/export-arrow/input.js"
-						end: Object {
-							column: 26
-							line: 1
-						}
-						start: Object {
-							column: 15
-							line: 1
-						}
-					}
+					loc: SourceLocation es2017/async-functions/export-arrow/input.js 1:15-1:26
 				}
 				body: JSAwaitExpression {
-					loc: Object {
-						filename: "es2017/async-functions/export-arrow/input.js"
-						end: Object {
-							column: 38
-							line: 1
-						}
-						start: Object {
-							column: 27
-							line: 1
-						}
-					}
+					loc: SourceLocation es2017/async-functions/export-arrow/input.js 1:27-1:38
 					argument: JSCallExpression {
 						arguments: Array []
-						loc: Object {
-							filename: "es2017/async-functions/export-arrow/input.js"
-							end: Object {
-								column: 38
-								line: 1
-							}
-							start: Object {
-								column: 33
-								line: 1
-							}
-						}
+						loc: SourceLocation es2017/async-functions/export-arrow/input.js 1:33-1:38
 						callee: JSReferenceIdentifier {
 							name: "foo"
-							loc: Object {
-								filename: "es2017/async-functions/export-arrow/input.js"
-								identifierName: "foo"
-								end: Object {
-									column: 36
-									line: 1
-								}
-								start: Object {
-									column: 33
-									line: 1
-								}
-							}
+							loc: SourceLocation es2017/async-functions/export-arrow/input.js 1:33-1:36 (foo)
 						}
 					}
 				}
@@ -124,6 +53,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

@@ -8,8 +8,8 @@
 import {isHexDigit} from "@internal/parser-core";
 import {DiagnosticDescription, descriptions} from "@internal/diagnostics";
 import {isEscaped} from "@internal/string-utils";
-import {ob1Coerce0} from "@internal/ob1";
 import {readMarkup} from "@internal/markup";
+import {ZeroIndexed} from "@internal/math";
 
 function unescapeChar(modifier: string): string {
 	switch (modifier) {
@@ -76,7 +76,10 @@ export default function unescapeJSONString(
 		}
 
 		// It's verbatim if it's an escaped backslash or not a backslash
-		if ((isEscaped(ob1Coerce0(index), input) && char === "\\") || char !== "\\") {
+		if (
+			(isEscaped(new ZeroIndexed(index), input) && char === "\\") ||
+			char !== "\\"
+		) {
 			// Validate that this is a valid character
 			const codePoint = char.codePointAt(0);
 			if (codePoint === undefined) {

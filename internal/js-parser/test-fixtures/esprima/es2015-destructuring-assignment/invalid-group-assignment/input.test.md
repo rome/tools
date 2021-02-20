@@ -11,133 +11,52 @@ JSRoot {
 	comments: Array []
 	corrupt: true
 	directives: Array []
-	filename: "esprima/es2015-destructuring-assignment/invalid-group-assignment/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "esprima/es2015-destructuring-assignment/invalid-group-assignment/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation esprima/es2015-destructuring-assignment/invalid-group-assignment/input.js 1:0-2:0
+	path: UIDPath<esprima/es2015-destructuring-assignment/invalid-group-assignment/input.js>
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse"
 				categoryValue: "js"
-				message: Array [
-					RAW_MARKUP {value: "Invalid left-hand side in "}
-					"assignment expression"
-				]
+				category: Array ["parse"]
+				message: RAW_MARKUP {value: "Invalid left-hand side in assignment expression"}
 			}
 			location: Object {
-				filename: "esprima/es2015-destructuring-assignment/invalid-group-assignment/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 4
-					line: 1
-				}
-				start: Object {
-					column: 1
-					line: 1
-				}
+				end: Position 1:4
+				path: UIDPath<esprima/es2015-destructuring-assignment/invalid-group-assignment/input.js>
+				start: Position 1:1
 			}
 		}
 	]
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "esprima/es2015-destructuring-assignment/invalid-group-assignment/input.js"
-				end: Object {
-					column: 12
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation esprima/es2015-destructuring-assignment/invalid-group-assignment/input.js 1:0-1:12
 			expression: JSAssignmentExpression {
 				operator: "="
-				loc: Object {
-					filename: "esprima/es2015-destructuring-assignment/invalid-group-assignment/input.js"
-					end: Object {
-						column: 11
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/es2015-destructuring-assignment/invalid-group-assignment/input.js 1:0-1:11
 				left: JSAssignmentIdentifier {
 					name: "INVALID_PLACEHOLDER"
-					loc: Object {
-						filename: "esprima/es2015-destructuring-assignment/invalid-group-assignment/input.js"
-						end: Object {
-							column: 5
-							line: 1
-						}
-						start: Object {
-							column: 5
-							line: 1
-						}
-					}
+					loc: SourceLocation esprima/es2015-destructuring-assignment/invalid-group-assignment/input.js 1:5-1:5
 				}
 				right: JSSequenceExpression {
-					loc: Object {
-						filename: "esprima/es2015-destructuring-assignment/invalid-group-assignment/input.js"
-						end: Object {
-							column: 10
-							line: 1
-						}
-						start: Object {
-							column: 7
-							line: 1
-						}
-					}
+					loc: SourceLocation esprima/es2015-destructuring-assignment/invalid-group-assignment/input.js 1:7-1:10
 					expressions: Array [
 						JSReferenceIdentifier {
 							name: "c"
-							loc: Object {
-								filename: "esprima/es2015-destructuring-assignment/invalid-group-assignment/input.js"
-								identifierName: "c"
-								end: Object {
-									column: 8
-									line: 1
-								}
-								start: Object {
-									column: 7
-									line: 1
-								}
-							}
+							loc: SourceLocation esprima/es2015-destructuring-assignment/invalid-group-assignment/input.js 1:7-1:8 (c)
 						}
 						JSReferenceIdentifier {
 							name: "d"
-							loc: Object {
-								filename: "esprima/es2015-destructuring-assignment/invalid-group-assignment/input.js"
-								identifierName: "d"
-								end: Object {
-									column: 10
-									line: 1
-								}
-								start: Object {
-									column: 9
-									line: 1
-								}
-							}
+							loc: SourceLocation esprima/es2015-destructuring-assignment/invalid-group-assignment/input.js 1:9-1:10 (d)
 						}
 					]
 				}
@@ -158,8 +77,5 @@ JSRoot {
     (a,b)=(c,d);
      ^^^
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

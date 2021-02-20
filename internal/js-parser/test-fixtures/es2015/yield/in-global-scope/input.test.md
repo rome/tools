@@ -11,103 +11,46 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "es2015/yield/in-global-scope/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2015/yield/in-global-scope/input.js"
-		end: Object {
-			column: 8
-			line: 1
+	loc: SourceLocation es2015/yield/in-global-scope/input.js 1:0-1:8
+	path: UIDPath<es2015/yield/in-global-scope/input.js>
+	body: Array [
+		JSExpressionStatement {
+			loc: SourceLocation es2015/yield/in-global-scope/input.js 1:0-1:5
+			expression: JSReferenceIdentifier {
+				name: "yield"
+				loc: SourceLocation es2015/yield/in-global-scope/input.js 1:0-1:5 (yield)
+			}
 		}
-		start: Object {
-			column: 0
-			line: 1
+		JSExpressionStatement {
+			loc: SourceLocation es2015/yield/in-global-scope/input.js 1:6-1:8
+			expression: JSNumericLiteral {
+				value: 10
+				format: undefined
+				loc: SourceLocation es2015/yield/in-global-scope/input.js 1:6-1:8
+			}
 		}
-	}
+	]
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse"
 				categoryValue: "js"
+				category: Array ["parse"]
 				message: RAW_MARKUP {value: "Expected a semicolon or a line terminator"}
 			}
 			location: Object {
-				filename: "es2015/yield/in-global-scope/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 5
-					line: 1
-				}
-				start: Object {
-					column: 6
-					line: 1
-				}
-			}
-		}
-	]
-	body: Array [
-		JSExpressionStatement {
-			loc: Object {
-				filename: "es2015/yield/in-global-scope/input.js"
-				end: Object {
-					column: 5
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
-			expression: JSReferenceIdentifier {
-				name: "yield"
-				loc: Object {
-					filename: "es2015/yield/in-global-scope/input.js"
-					identifierName: "yield"
-					end: Object {
-						column: 5
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
-			}
-		}
-		JSExpressionStatement {
-			loc: Object {
-				filename: "es2015/yield/in-global-scope/input.js"
-				end: Object {
-					column: 8
-					line: 1
-				}
-				start: Object {
-					column: 6
-					line: 1
-				}
-			}
-			expression: JSNumericLiteral {
-				value: 10
-				format: undefined
-				loc: Object {
-					filename: "es2015/yield/in-global-scope/input.js"
-					end: Object {
-						column: 8
-						line: 1
-					}
-					start: Object {
-						column: 6
-						line: 1
-					}
-				}
+				end: Position 1:5
+				path: UIDPath<es2015/yield/in-global-scope/input.js>
+				start: Position 1:6
 			}
 		}
 	]
@@ -125,8 +68,5 @@ JSRoot {
     yield 10
           ^
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

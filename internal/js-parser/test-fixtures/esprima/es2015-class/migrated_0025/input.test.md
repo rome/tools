@@ -12,93 +12,32 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "esprima/es2015-class/migrated_0025/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "esprima/es2015-class/migrated_0025/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation esprima/es2015-class/migrated_0025/input.js 1:0-2:0
+	path: UIDPath<esprima/es2015-class/migrated_0025/input.js>
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "esprima/es2015-class/migrated_0025/input.js"
-				end: Object {
-					column: 21
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation esprima/es2015-class/migrated_0025/input.js 1:0-1:21
 			expression: JSClassExpression {
 				id: JSBindingIdentifier {
 					name: "A"
-					loc: Object {
-						filename: "esprima/es2015-class/migrated_0025/input.js"
-						identifierName: "A"
-						end: Object {
-							column: 8
-							line: 1
-						}
-						start: Object {
-							column: 7
-							line: 1
-						}
-					}
+					loc: SourceLocation esprima/es2015-class/migrated_0025/input.js 1:7-1:8 (A)
 				}
-				loc: Object {
-					filename: "esprima/es2015-class/migrated_0025/input.js"
-					end: Object {
-						column: 20
-						line: 1
-					}
-					start: Object {
-						column: 1
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/es2015-class/migrated_0025/input.js 1:1-1:20
 				meta: JSClassHead {
 					body: Array []
 					implements: undefined
 					superTypeParameters: undefined
 					typeParameters: undefined
-					loc: Object {
-						filename: "esprima/es2015-class/migrated_0025/input.js"
-						end: Object {
-							column: 20
-							line: 1
-						}
-						start: Object {
-							column: 1
-							line: 1
-						}
-					}
+					loc: SourceLocation esprima/es2015-class/migrated_0025/input.js 1:1-1:20
 					superClass: JSNumericLiteral {
 						value: 0
 						format: undefined
-						loc: Object {
-							filename: "esprima/es2015-class/migrated_0025/input.js"
-							end: Object {
-								column: 18
-								line: 1
-							}
-							start: Object {
-								column: 17
-								line: 1
-							}
-						}
+						loc: SourceLocation esprima/es2015-class/migrated_0025/input.js 1:17-1:18
 					}
 				}
 			}
@@ -110,6 +49,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

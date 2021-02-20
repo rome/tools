@@ -11,37 +11,17 @@ JSRoot {
 	body: Array []
 	comments: Array []
 	corrupt: false
-	filename: "core/uncategorised/360/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "core/uncategorised/360/input.js"
-		end: Object {
-			column: 13
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation core/uncategorised/360/input.js 1:0-1:13
+	path: UIDPath<core/uncategorised/360/input.js>
 	directives: Array [
 		JSDirective {
 			value: "Hello\nWorld"
-			loc: Object {
-				filename: "core/uncategorised/360/input.js"
-				end: Object {
-					column: 13
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation core/uncategorised/360/input.js 1:0-1:13
 		}
 	]
 	diagnostics: Array [
@@ -49,23 +29,17 @@ JSRoot {
 			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse"
 				categoryValue: "js"
+				category: Array ["parse"]
 				message: RAW_MARKUP {value: "Unterminated string constant"}
 			}
 			location: Object {
-				filename: "core/uncategorised/360/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 6
-					line: 1
-				}
-				start: Object {
-					column: 6
-					line: 1
-				}
+				end: Position 1:6
+				path: UIDPath<core/uncategorised/360/input.js>
+				start: Position 1:6
 			}
 		}
 	]
@@ -84,8 +58,5 @@ JSRoot {
       │       ^
     2 │ World"
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

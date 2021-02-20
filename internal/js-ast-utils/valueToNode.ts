@@ -34,6 +34,7 @@ export function valueToNode(
 	ancestry: unknown[] = [],
 ):
 	| JSStringLiteral
+	| JSBigIntLiteral
 	| JSBooleanLiteral
 	| JSNumericLiteral
 	| JSObjectExpression

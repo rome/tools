@@ -12,63 +12,22 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "core/uncategorised/118/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "core/uncategorised/118/input.js"
-		end: Object {
-			column: 13
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation core/uncategorised/118/input.js 1:0-1:13
+	path: UIDPath<core/uncategorised/118/input.js>
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "core/uncategorised/118/input.js"
-				end: Object {
-					column: 13
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation core/uncategorised/118/input.js 1:0-1:13
 			expression: JSCallExpression {
 				arguments: Array []
-				loc: Object {
-					filename: "core/uncategorised/118/input.js"
-					end: Object {
-						column: 13
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation core/uncategorised/118/input.js 1:0-1:13
 				callee: JSReferenceIdentifier {
 					name: "foo"
-					loc: Object {
-						filename: "core/uncategorised/118/input.js"
-						identifierName: "foo"
-						end: Object {
-							column: 8
-							line: 1
-						}
-						start: Object {
-							column: 5
-							line: 1
-						}
-					}
+					loc: SourceLocation core/uncategorised/118/input.js 1:5-1:8 (foo)
 				}
 			}
 		}
@@ -79,6 +38,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

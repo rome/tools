@@ -11,75 +11,39 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "es2015/uncategorised/84/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
 	syntax: Array []
-	loc: Object {
-		filename: "es2015/uncategorised/84/input.js"
-		end: Object {
-			column: 8
-			line: 1
+	loc: SourceLocation es2015/uncategorised/84/input.js 1:0-1:8
+	path: UIDPath<es2015/uncategorised/84/input.js>
+	body: Array [
+		JSExportAllDeclaration {
+			exportKind: undefined
+			loc: SourceLocation es2015/uncategorised/84/input.js 1:0-1:8
+			source: JSStringLiteral {
+				value: ""
+				loc: SourceLocation es2015/uncategorised/84/input.js 1:8-1:8
+			}
 		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	]
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse"
 				categoryValue: "js"
+				category: Array ["parse"]
 				message: RAW_MARKUP {value: "Expected `from` for an export node"}
 			}
 			location: Object {
-				filename: "es2015/uncategorised/84/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 8
-					line: 1
-				}
-				start: Object {
-					column: 8
-					line: 1
-				}
-			}
-		}
-	]
-	body: Array [
-		JSExportAllDeclaration {
-			exportKind: undefined
-			loc: Object {
-				filename: "es2015/uncategorised/84/input.js"
-				end: Object {
-					column: 8
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
-			source: JSStringLiteral {
-				value: ""
-				loc: Object {
-					filename: "es2015/uncategorised/84/input.js"
-					end: Object {
-						column: 8
-						line: 1
-					}
-					start: Object {
-						column: 8
-						line: 1
-					}
-				}
+				end: Position 1:8
+				path: UIDPath<es2015/uncategorised/84/input.js>
+				start: Position 1:8
 			}
 		}
 	]
@@ -97,8 +61,5 @@ JSRoot {
     export *
             ^
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

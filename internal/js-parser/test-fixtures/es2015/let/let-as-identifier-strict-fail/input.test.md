@@ -10,35 +10,33 @@
 JSRoot {
 	comments: Array []
 	corrupt: false
-	filename: "es2015/let/let-as-identifier-strict-fail/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2015/let/let-as-identifier-strict-fail/input.js"
-		end: Object {
-			column: 0
-			line: 3
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2015/let/let-as-identifier-strict-fail/input.js 1:0-3:0
+	path: UIDPath<es2015/let/let-as-identifier-strict-fail/input.js>
 	directives: Array [
 		JSDirective {
 			value: "use strict"
-			loc: Object {
-				filename: "es2015/let/let-as-identifier-strict-fail/input.js"
-				end: Object {
-					column: 13
-					line: 1
+			loc: SourceLocation es2015/let/let-as-identifier-strict-fail/input.js 1:0-1:13
+		}
+	]
+	body: Array [
+		JSExpressionStatement {
+			loc: SourceLocation es2015/let/let-as-identifier-strict-fail/input.js 2:0-2:7
+			expression: JSBinaryExpression {
+				operator: "+"
+				loc: SourceLocation es2015/let/let-as-identifier-strict-fail/input.js 2:0-2:7
+				left: JSReferenceIdentifier {
+					name: "let"
+					loc: SourceLocation es2015/let/let-as-identifier-strict-fail/input.js 2:0-2:3 (let)
 				}
-				start: Object {
-					column: 0
-					line: 1
+				right: JSNumericLiteral {
+					value: 1
+					format: undefined
+					loc: SourceLocation es2015/let/let-as-identifier-strict-fail/input.js 2:6-2:7
 				}
 			}
 		}
@@ -48,85 +46,17 @@ JSRoot {
 			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse"
 				categoryValue: "js"
-				message: Array [
-					"let"
-					RAW_MARKUP {value: " is a reserved word"}
-				]
+				category: Array ["parse"]
+				message: RAW_MARKUP {value: "let is a reserved word"}
 			}
 			location: Object {
-				filename: "es2015/let/let-as-identifier-strict-fail/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 3
-					line: 2
-				}
-				start: Object {
-					column: 0
-					line: 2
-				}
-			}
-		}
-	]
-	body: Array [
-		JSExpressionStatement {
-			loc: Object {
-				filename: "es2015/let/let-as-identifier-strict-fail/input.js"
-				end: Object {
-					column: 7
-					line: 2
-				}
-				start: Object {
-					column: 0
-					line: 2
-				}
-			}
-			expression: JSBinaryExpression {
-				operator: "+"
-				loc: Object {
-					filename: "es2015/let/let-as-identifier-strict-fail/input.js"
-					end: Object {
-						column: 7
-						line: 2
-					}
-					start: Object {
-						column: 0
-						line: 2
-					}
-				}
-				left: JSReferenceIdentifier {
-					name: "let"
-					loc: Object {
-						filename: "es2015/let/let-as-identifier-strict-fail/input.js"
-						identifierName: "let"
-						end: Object {
-							column: 3
-							line: 2
-						}
-						start: Object {
-							column: 0
-							line: 2
-						}
-					}
-				}
-				right: JSNumericLiteral {
-					value: 1
-					format: undefined
-					loc: Object {
-						filename: "es2015/let/let-as-identifier-strict-fail/input.js"
-						end: Object {
-							column: 7
-							line: 2
-						}
-						start: Object {
-							column: 6
-							line: 2
-						}
-					}
-				}
+				end: Position 2:3
+				path: UIDPath<es2015/let/let-as-identifier-strict-fail/input.js>
+				start: Position 2:0
 			}
 		}
 	]
@@ -145,8 +75,5 @@ JSRoot {
   > 2 │ let + 1
       │ ^^^
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

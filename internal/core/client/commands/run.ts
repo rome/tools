@@ -9,12 +9,14 @@ import {commandCategories} from "../../common/commands";
 import {createLocalCommand} from "../commands";
 import ClientRequest from "../ClientRequest";
 import {consumeUnknown} from "@internal/consume";
-import executeMain from "../../common/utils/executeMain";
-import {createAbsoluteFilePath} from "@internal/path";
-import {createSingleDiagnosticError} from "@internal/diagnostics";
+import {
+	DIAGNOSTIC_CATEGORIES,
+	createSingleDiagnosticError,
+} from "@internal/diagnostics";
 import {SourceMapConsumer} from "@internal/codec-source-map";
 import {getEnvVar} from "@internal/cli-environment";
 import {markup} from "@internal/markup";
+import executeMain from "@internal/core/common/utils/executeMain";
 
 export default createLocalCommand({
 	category: commandCategories.PROJECT_MANAGEMENT,
@@ -50,7 +52,7 @@ export default createLocalCommand({
 			return false;
 		}
 
-		const data = consumeUnknown(res.data, "parse", "json");
+		const data = consumeUnknown(res.data, DIAGNOSTIC_CATEGORIES.parse, "json");
 
 		if (data.exists()) {
 			const type = data.get("type").asString();
@@ -60,7 +62,7 @@ export default createLocalCommand({
 					const {syntaxError, exitCode} = await executeMain({
 						// Remove the first argument which will be the file path
 						args: data.get("args").asMappedArray((item) => item.asString()),
-						path: createAbsoluteFilePath(data.get("filename").asString()),
+						path: data.get("path").asAbsoluteFilePath(),
 						code: data.get("code").asString(),
 						sourceMap: SourceMapConsumer.fromJSON(data.get("map").asAny()),
 					});

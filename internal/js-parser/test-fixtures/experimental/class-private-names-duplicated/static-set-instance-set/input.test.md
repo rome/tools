@@ -12,123 +12,41 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "experimental/class-private-names-duplicated/static-set-instance-set/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "experimental/class-private-names-duplicated/static-set-instance-set/input.js"
-		end: Object {
-			column: 1
-			line: 4
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation experimental/class-private-names-duplicated/static-set-instance-set/input.js 1:0-4:1
+	path: UIDPath<experimental/class-private-names-duplicated/static-set-instance-set/input.js>
 	body: Array [
 		JSClassDeclaration {
 			id: JSBindingIdentifier {
 				name: "A"
-				loc: Object {
-					filename: "experimental/class-private-names-duplicated/static-set-instance-set/input.js"
-					identifierName: "A"
-					end: Object {
-						column: 7
-						line: 1
-					}
-					start: Object {
-						column: 6
-						line: 1
-					}
-				}
+				loc: SourceLocation experimental/class-private-names-duplicated/static-set-instance-set/input.js 1:6-1:7 (A)
 			}
-			loc: Object {
-				filename: "experimental/class-private-names-duplicated/static-set-instance-set/input.js"
-				end: Object {
-					column: 1
-					line: 4
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation experimental/class-private-names-duplicated/static-set-instance-set/input.js 1:0-4:1
 			meta: JSClassHead {
 				implements: undefined
 				superClass: undefined
 				superTypeParameters: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "experimental/class-private-names-duplicated/static-set-instance-set/input.js"
-					end: Object {
-						column: 1
-						line: 4
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation experimental/class-private-names-duplicated/static-set-instance-set/input.js 1:0-4:1
 				body: Array [
 					JSClassPrivateMethod {
 						kind: "set"
 						key: JSPrivateName {
 							id: JSIdentifier {
 								name: "x"
-								loc: Object {
-									filename: "experimental/class-private-names-duplicated/static-set-instance-set/input.js"
-									identifierName: "x"
-									end: Object {
-										column: 15
-										line: 2
-									}
-									start: Object {
-										column: 14
-										line: 2
-									}
-								}
+								loc: SourceLocation experimental/class-private-names-duplicated/static-set-instance-set/input.js 2:14-2:15 (x)
 							}
-							loc: Object {
-								filename: "experimental/class-private-names-duplicated/static-set-instance-set/input.js"
-								end: Object {
-									column: 15
-									line: 2
-								}
-								start: Object {
-									column: 13
-									line: 2
-								}
-							}
+							loc: SourceLocation experimental/class-private-names-duplicated/static-set-instance-set/input.js 2:13-2:15
 						}
-						loc: Object {
-							filename: "experimental/class-private-names-duplicated/static-set-instance-set/input.js"
-							end: Object {
-								column: 21
-								line: 2
-							}
-							start: Object {
-								column: 2
-								line: 2
-							}
-						}
+						loc: SourceLocation experimental/class-private-names-duplicated/static-set-instance-set/input.js 2:2-2:21
 						body: JSBlockStatement {
 							body: Array []
 							directives: Array []
-							loc: Object {
-								filename: "experimental/class-private-names-duplicated/static-set-instance-set/input.js"
-								end: Object {
-									column: 21
-									line: 2
-								}
-								start: Object {
-									column: 19
-									line: 2
-								}
-							}
+							loc: SourceLocation experimental/class-private-names-duplicated/static-set-instance-set/input.js 2:19-2:21
 						}
 						meta: JSClassPropertyMeta {
 							abstract: false
@@ -137,21 +55,8 @@ JSRoot {
 							readonly: false
 							static: true
 							typeAnnotation: undefined
-							start: Object {
-								column: 2
-								line: 2
-							}
-							loc: Object {
-								filename: "experimental/class-private-names-duplicated/static-set-instance-set/input.js"
-								end: Object {
-									column: 15
-									line: 2
-								}
-								start: Object {
-									column: 2
-									line: 2
-								}
-							}
+							loc: SourceLocation experimental/class-private-names-duplicated/static-set-instance-set/input.js 2:2-2:15
+							start: Position 2:2
 						}
 						head: JSFunctionHead {
 							async: false
@@ -161,46 +66,15 @@ JSRoot {
 							returnType: undefined
 							thisType: undefined
 							typeParameters: undefined
-							loc: Object {
-								filename: "experimental/class-private-names-duplicated/static-set-instance-set/input.js"
-								end: Object {
-									column: 18
-									line: 2
-								}
-								start: Object {
-									column: 15
-									line: 2
-								}
-							}
+							loc: SourceLocation experimental/class-private-names-duplicated/static-set-instance-set/input.js 2:15-2:18
 							params: Array [
 								JSBindingIdentifier {
 									name: "_"
-									loc: Object {
-										filename: "experimental/class-private-names-duplicated/static-set-instance-set/input.js"
-										identifierName: "_"
-										end: Object {
-											column: 17
-											line: 2
-										}
-										start: Object {
-											column: 16
-											line: 2
-										}
-									}
+									loc: SourceLocation experimental/class-private-names-duplicated/static-set-instance-set/input.js 2:16-2:17 (_)
 									meta: JSPatternMeta {
 										optional: undefined
 										typeAnnotation: undefined
-										loc: Object {
-											filename: "experimental/class-private-names-duplicated/static-set-instance-set/input.js"
-											end: Object {
-												column: 17
-												line: 2
-											}
-											start: Object {
-												column: 16
-												line: 2
-											}
-										}
+										loc: SourceLocation experimental/class-private-names-duplicated/static-set-instance-set/input.js 2:16-2:17
 									}
 								}
 							]
@@ -211,56 +85,15 @@ JSRoot {
 						key: JSPrivateName {
 							id: JSIdentifier {
 								name: "x"
-								loc: Object {
-									filename: "experimental/class-private-names-duplicated/static-set-instance-set/input.js"
-									identifierName: "x"
-									end: Object {
-										column: 8
-										line: 3
-									}
-									start: Object {
-										column: 7
-										line: 3
-									}
-								}
+								loc: SourceLocation experimental/class-private-names-duplicated/static-set-instance-set/input.js 3:7-3:8 (x)
 							}
-							loc: Object {
-								filename: "experimental/class-private-names-duplicated/static-set-instance-set/input.js"
-								end: Object {
-									column: 8
-									line: 3
-								}
-								start: Object {
-									column: 6
-									line: 3
-								}
-							}
+							loc: SourceLocation experimental/class-private-names-duplicated/static-set-instance-set/input.js 3:6-3:8
 						}
-						loc: Object {
-							filename: "experimental/class-private-names-duplicated/static-set-instance-set/input.js"
-							end: Object {
-								column: 14
-								line: 3
-							}
-							start: Object {
-								column: 2
-								line: 3
-							}
-						}
+						loc: SourceLocation experimental/class-private-names-duplicated/static-set-instance-set/input.js 3:2-3:14
 						body: JSBlockStatement {
 							body: Array []
 							directives: Array []
-							loc: Object {
-								filename: "experimental/class-private-names-duplicated/static-set-instance-set/input.js"
-								end: Object {
-									column: 14
-									line: 3
-								}
-								start: Object {
-									column: 12
-									line: 3
-								}
-							}
+							loc: SourceLocation experimental/class-private-names-duplicated/static-set-instance-set/input.js 3:12-3:14
 						}
 						meta: JSClassPropertyMeta {
 							abstract: false
@@ -269,21 +102,8 @@ JSRoot {
 							readonly: false
 							static: false
 							typeAnnotation: undefined
-							start: Object {
-								column: 2
-								line: 3
-							}
-							loc: Object {
-								filename: "experimental/class-private-names-duplicated/static-set-instance-set/input.js"
-								end: Object {
-									column: 8
-									line: 3
-								}
-								start: Object {
-									column: 2
-									line: 3
-								}
-							}
+							loc: SourceLocation experimental/class-private-names-duplicated/static-set-instance-set/input.js 3:2-3:8
+							start: Position 3:2
 						}
 						head: JSFunctionHead {
 							async: false
@@ -293,46 +113,15 @@ JSRoot {
 							returnType: undefined
 							thisType: undefined
 							typeParameters: undefined
-							loc: Object {
-								filename: "experimental/class-private-names-duplicated/static-set-instance-set/input.js"
-								end: Object {
-									column: 11
-									line: 3
-								}
-								start: Object {
-									column: 8
-									line: 3
-								}
-							}
+							loc: SourceLocation experimental/class-private-names-duplicated/static-set-instance-set/input.js 3:8-3:11
 							params: Array [
 								JSBindingIdentifier {
 									name: "_"
-									loc: Object {
-										filename: "experimental/class-private-names-duplicated/static-set-instance-set/input.js"
-										identifierName: "_"
-										end: Object {
-											column: 10
-											line: 3
-										}
-										start: Object {
-											column: 9
-											line: 3
-										}
-									}
+									loc: SourceLocation experimental/class-private-names-duplicated/static-set-instance-set/input.js 3:9-3:10 (_)
 									meta: JSPatternMeta {
 										optional: undefined
 										typeAnnotation: undefined
-										loc: Object {
-											filename: "experimental/class-private-names-duplicated/static-set-instance-set/input.js"
-											end: Object {
-												column: 10
-												line: 3
-											}
-											start: Object {
-												column: 9
-												line: 3
-											}
-										}
+										loc: SourceLocation experimental/class-private-names-duplicated/static-set-instance-set/input.js 3:9-3:10
 									}
 								}
 							]
@@ -348,6 +137,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```
