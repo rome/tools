@@ -17,9 +17,6 @@ disallow unused variables
 **ESLint Equivalent:** [no-unused-vars](https://eslint.org/docs/rules/no-unused-vars)
 <!-- GENERATED:END(id:description) -->
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-
 <!-- GENERATED:START(hash:c1a8d94de044126e95aefe03fbc76c1faef52e25,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
 
