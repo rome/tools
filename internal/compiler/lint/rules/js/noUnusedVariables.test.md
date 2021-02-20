@@ -157,7 +157,6 @@ function foo(b) {
 ### `5`
 
 ```
-<<<<<<< HEAD
 
  lint/js/noUnusedVariables/reject/6/file.ts:1:9 lint/js/noUnusedVariables(foo) ━━━━━━━━━━━━━━━━━━━━━
 
@@ -170,11 +169,6 @@ function foo(b) {
 
   ℹ Unused variables are dead code and usually the result of incomplete refactoring.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
-=======
->>>>>>> main
 
 ```
 
@@ -202,9 +196,6 @@ function foo() {
 
   ℹ Unused variables are dead code and usually the result of incomplete refactoring.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -233,9 +224,6 @@ const foo = () => {
 
   ℹ Unused variables are dead code and usually the result of incomplete refactoring.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -265,9 +253,6 @@ function foo(): typeof foo {
 
   ℹ Unused variables are dead code and usually the result of incomplete refactoring.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -285,7 +270,6 @@ class Foo {
 ### `9`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -318,7 +302,6 @@ foo();
 ### `11`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -335,7 +318,6 @@ function foo() {
 ### `12`
 
 ```
-✔ No known problems!
 
 ```
 
