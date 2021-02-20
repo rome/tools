@@ -37,7 +37,6 @@ import {
 	equalPaths,
 } from "@internal/path";
 import {OneIndexed, ZeroIndexed} from "@internal/math";
-import {createReadStream, exists, lstat} from "@internal/fs";
 import {inferDiagnosticLanguageFromPath} from "@internal/core/common/file-handlers";
 import {markupToJoinedPlainText} from "@internal/cli-layout/format";
 import {sha256} from "@internal/string-utils";
@@ -56,8 +55,8 @@ type PositionLike = {
 const DEFAULT_FILE_HANDLER: Required<DiagnosticsFileHandler> = {
 	async read(path) {
 		if (path.isAbsolute()) {
-			if ((await exists(path)) && (await lstat(path)).isFile()) {
-				return createReadStream(path);
+			if ((await path.exists()) && (await path.lstat()).isFile()) {
+				return path.createReadStream();
 			}
 		}
 
@@ -65,7 +64,7 @@ const DEFAULT_FILE_HANDLER: Required<DiagnosticsFileHandler> = {
 	},
 	async exists(path) {
 		if (path.isAbsolute()) {
-			return await exists(path);
+			return await path.exists();
 		} else {
 			return undefined;
 		}
@@ -723,7 +722,8 @@ export default class DiagnosticsPrinter extends Error {
 			{
 				skipFrame,
 				includeHeaderInAdvice: false,
-				outdated: isOutdated,
+				isMissing,
+				isOutdated,
 			},
 		);
 

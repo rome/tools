@@ -5,10 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import sourceMapManager, {initErrorHooks} from "./sourceMapManager";
-export {initErrorHooks, sourceMapManager};
-
-export * from "./errors";
+export {initErrorHooks, errorSourceMaps} from "./error-frames";
 
 export * from "./utils";
 

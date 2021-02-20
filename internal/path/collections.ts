@@ -6,20 +6,20 @@
  */
 
 import {MappedKeyMap, MappedSet} from "@internal/collections";
+import {AnyPath} from "./types";
+import AbsoluteFilePath from "./classes/AbsoluteFilePath";
+import RelativePath from "./classes/RelativePath";
+import UIDPath from "./classes/UIDPath";
+import URLPath from "./classes/URLPath";
 import {
-	AbsoluteFilePath,
-	AnyPath,
-	RelativePath,
-	UIDPath,
-	URLPath,
 	createAbsoluteFilePath,
 	createAnyPath,
 	createRelativePath,
 	createUIDPath,
 	createURLPath,
-} from "./index";
+} from "./factories";
 
-function concat<FilePath extends AnyPath>(
+function flatten<FilePath extends AnyPath>(
 	items: Iterable<FilePath>[],
 ): FilePath[] {
 	let paths: FilePath[] = [];
@@ -167,7 +167,7 @@ export class AbsoluteFilePathSet extends BasePathSet<AbsoluteFilePath> {
 	}
 
 	public concat(...items: Iterable<AbsoluteFilePath>[]): AbsoluteFilePathSet {
-		return new AbsoluteFilePathSet(concat(items));
+		return new AbsoluteFilePathSet(flatten(items));
 	}
 }
 
@@ -182,7 +182,7 @@ export class RelativePathSet extends BasePathSet<RelativePath> {
 	}
 
 	public concat(...items: Iterable<RelativePath>[]): RelativePathSet {
-		return new RelativePathSet(concat(items));
+		return new RelativePathSet(flatten(items));
 	}
 }
 
@@ -197,7 +197,7 @@ export class URLPathSet extends BasePathSet<URLPath> {
 	}
 
 	public concat(...items: Iterable<URLPath>[]): URLPathSet {
-		return new URLPathSet(concat(items));
+		return new URLPathSet(flatten(items));
 	}
 }
 
@@ -212,7 +212,7 @@ export class UIDPathSet extends BasePathSet<UIDPath> {
 	}
 
 	public concat(...items: Iterable<UIDPath>[]): UIDPathSet {
-		return new UIDPathSet(concat(items));
+		return new UIDPathSet(flatten(items));
 	}
 }
 
@@ -227,7 +227,7 @@ export class MixedPathSet extends BasePathSet<AnyPath> {
 	}
 
 	public concat(...items: Iterable<AnyPath>[]): MixedPathSet {
-		return new MixedPathSet(concat(items));
+		return new MixedPathSet(flatten(items));
 	}
 }
 

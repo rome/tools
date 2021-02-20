@@ -13,12 +13,11 @@ import {
 	createAbsoluteFilePath,
 } from "@internal/path";
 import {json} from "@internal/codec-config";
-import {readFileTextMeta} from "@internal/fs";
 import {
 	DIAGNOSTIC_CATEGORIES,
 	createSingleDiagnosticError,
 	descriptions,
-	provideDiagnosticAdviceForError,
+	decorateErrorWithDiagnostics,
 } from "@internal/diagnostics";
 
 import internalModule = require("module");
@@ -95,7 +94,7 @@ export default class IntegrationLoader<Value> {
 		try {
 			return await callback();
 		} catch (err) {
-			throw provideDiagnosticAdviceForError(
+			throw decorateErrorWithDiagnostics(
 				err,
 				{
 					description: descriptions.INTEGRATIONS.LOAD(this.name),
@@ -127,7 +126,7 @@ export default class IntegrationLoader<Value> {
 			);
 
 			const jsonConsumer = json.consumeValue(
-				await readFileTextMeta(manifestPath),
+				await manifestPath.readFileTextMeta(),
 			);
 			const versionProp = jsonConsumer.get("version");
 

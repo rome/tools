@@ -8,8 +8,6 @@
 import {Reporter, ReporterNamespace} from "@internal/cli-reporter";
 import {
 	DIAGNOSTIC_CATEGORIES,
-	Diagnostic,
-	DiagnosticsError,
 	deriveDiagnosticFromError,
 	descriptions,
 	diagnosticLocationToMarkupFilelink,
@@ -19,7 +17,7 @@ import {TestRef} from "../../common/bridges/TestWorkerBridge";
 import {Server, ServerRequest} from "@internal/core";
 import {DiagnosticsPrinter} from "@internal/cli-diagnostics";
 import {humanizeNumber} from "@internal/string-utils";
-import {AnyBridge, BridgeError} from "@internal/events";
+import {AnyBridge, isBridgeClosedDiagnosticError} from "@internal/events";
 import {CoverageCollector} from "@internal/v8";
 import {ManifestDefinition} from "@internal/codec-js-manifest";
 import {
@@ -37,7 +35,6 @@ import {
 	StaticMarkup,
 	concatMarkup,
 	markup,
-	readMarkup,
 } from "@internal/markup";
 import {MAX_WORKER_COUNT} from "@internal/core/common/constants";
 import net = require("net");
@@ -53,15 +50,6 @@ import {
 import TestServerWorker from "@internal/core/server/testing/TestServerWorker";
 import TestServerFile from "@internal/core/server/testing/TestServerFile";
 import {ExtendedMap} from "@internal/collections";
-
-export class BridgeDiagnosticsError extends DiagnosticsError {
-	constructor(diag: Diagnostic, bridge: AnyBridge) {
-		super(readMarkup(diag.description.message), [diag]);
-		this.bridge = bridge;
-	}
-
-	public bridge: AnyBridge;
-}
 
 function grammarNumberTests(num: number): StaticMarkup {
 	return markup`<grammarNumber plural="tests" singular="test">${String(num)}</grammarNumber>`;
@@ -177,34 +165,14 @@ export default class TestServer {
 		createdSnapshots: number;
 	};
 
-	public handlePossibleBridgeError(err: Error) {
-		let diagnostics = getDiagnosticsFromError(err);
-		let bridge: undefined | AnyBridge;
-
-		if (err instanceof BridgeDiagnosticsError) {
-			bridge = err.bridge;
-		}
-
-		if (err instanceof BridgeError) {
-			bridge = err.bridge;
-			diagnostics = [
-				deriveDiagnosticFromError(
-					err,
-					{
-						description: {
-							category: DIAGNOSTIC_CATEGORIES["tests/failure"],
-						},
-					},
-				),
-			];
-		}
-
-		if (diagnostics === undefined || bridge === undefined) {
+	public handlePossibleBridgeError(err: Error, bridge: AnyBridge) {
+		const diagnostics = getDiagnosticsFromError(err);
+		if (diagnostics === undefined) {
 			throw err;
-		} else {
-			if (!this.ignoreBridgeEndError.has(bridge)) {
-				this.printer.processor.addDiagnostics(diagnostics);
-			}
+		} 
+
+		if (!isBridgeClosedDiagnosticError(err) || !this.ignoreBridgeEndError.has(bridge)) {
+			this.printer.processor.addDiagnostics(diagnostics);
 		}
 	}
 

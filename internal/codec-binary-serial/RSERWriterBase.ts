@@ -33,7 +33,7 @@ import {
 	isPathMap,
 	isPathSet,
 } from "@internal/path";
-import {getErrorStructure} from "@internal/v8";
+import {getErrorStructure} from "@internal/errors";
 import {pretty} from "@internal/pretty-format";
 import {utf8Count} from "./utf8";
 import {

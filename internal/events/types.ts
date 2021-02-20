@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {StructuredError} from "@internal/v8";
+import {StructuredError} from "@internal/errors";
 import {AnyMarkups} from "@internal/markup";
 import {RSERObject, RSERValue} from "@internal/codec-binary-serial";
 import {Dict, VoidCallback} from "@internal/typescript-helpers";

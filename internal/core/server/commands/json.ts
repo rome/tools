@@ -8,7 +8,6 @@
 import {ServerRequest} from "@internal/core";
 import {createServerCommand} from "../commands";
 import {commandCategories} from "../../common/commands";
-import {readFileText} from "@internal/fs";
 import {json} from "@internal/codec-config";
 import {markup} from "@internal/markup";
 
@@ -24,7 +23,7 @@ export default createServerCommand({
 		const {reporter} = req;
 		const path = await req.resolveEntryAssertPathArg(0);
 
-		const file = await readFileText(path);
+		const file = await path.readFileText();
 		const value = json.parse({
 			path,
 			input: file,

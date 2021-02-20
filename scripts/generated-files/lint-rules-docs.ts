@@ -16,7 +16,6 @@ import {dedent} from "@internal/string-utils";
 import {tests} from "@internal/compiler/lint/rules/tests";
 import {ROOT, modifyGeneratedFile} from "../_utils";
 import {getDocRuleDescription, getLintDefs} from "./lint-rules";
-import {readFileText} from "@internal/fs";
 import {OneIndexed} from "@internal/math";
 
 const {worker, performFileOperation} = createMockWorker();
@@ -150,7 +149,7 @@ export async function main() {
 				id: "description",
 			},
 			async () => {
-				const content = await readFileText(docs);
+				const content = await docs.readFileText();
 				const eslintInfo = extractLintRuleInfo(content, "eslint");
 				const tslintInfo = extractLintRuleInfo(content, "tslint");
 

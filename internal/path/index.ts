@@ -5,12 +5,10 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import os = require("os");
 import AbsoluteFilePath from "./classes/AbsoluteFilePath";
 import RelativePath from "./classes/RelativePath";
 import UIDPath from "./classes/UIDPath";
 import URLPath from "./classes/URLPath";
-import {createAbsoluteFilePath, createUIDPath} from "./factories";
 import {AnyPath} from "./types";
 
 export {default as AbsoluteFilePath} from "./classes/AbsoluteFilePath";
@@ -21,11 +19,7 @@ export {default as URLPath} from "./classes/URLPath";
 export * from "./factories";
 export * from "./collections";
 export * from "./types";
-
-export const HOME_PATH = createAbsoluteFilePath(os.userInfo().homedir);
-export const TEMP_PATH = createAbsoluteFilePath(os.tmpdir());
-export const CWD_PATH = createAbsoluteFilePath(process.cwd());
-export const UNKNOWN_PATH = createUIDPath("unknown");
+export * from "./constants";
 
 export function equalPaths(
 	a: undefined | AnyPath,

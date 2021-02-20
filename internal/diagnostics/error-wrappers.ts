@@ -13,9 +13,11 @@ import {readMarkup} from "@internal/markup";
 import {
 	DeriveErrorDiagnosticOptions,
 	deriveDiagnosticFromError,
+	deriveDiagnosticFromErrorStructure,
 } from "./derive";
 import {convertPossibleNodeErrorToDiagnostic} from "./node-errors";
-import {NodeSystemError} from "@internal/node";
+import {getErrorStructure, NodeSystemError} from "@internal/errors";
+import { DiagnosticCategory, equalCategoryNames } from "./categories";
 
 // If printDiagnosticsToString throws a DiagnosticsError then we'll be trapped in a loop forever
 // since we'll continuously be trying to serialize diagnostics
@@ -83,6 +85,14 @@ export class DiagnosticsError extends Error implements NodeSystemError {
 	public suppressions: DiagnosticSuppressions;
 }
 
+export function createRuntimeDiagnosticError(
+	opts: DeriveErrorDiagnosticOptions,
+): DiagnosticsError {
+	const struct = getErrorStructure(new Error(), 1);
+	const diag = deriveDiagnosticFromErrorStructure(struct, opts);
+	return createSingleDiagnosticError(diag)
+}
+
 export function createSingleDiagnosticError(
 	diag: Diagnostic,
 	suppressions?: DiagnosticSuppressions,
@@ -118,17 +128,40 @@ export function getOrDeriveDiagnosticsFromError(
 	}
 }
 
+export function isUserDiagnostic(diag: Diagnostic): boolean {
+	if (diag.tags?.internal) {
+		return false;
+	}
+
+	return true;
+}
+
 export function isUserDiagnosticError(err: Error): boolean {
 	const diagnostics = getDiagnosticsFromError(err);
 	if (diagnostics === undefined) {
 		return false;
 	} else {
 		for (const diag of diagnostics) {
-			if (diag.tags?.internal) {
+			if (!isUserDiagnostic(diag)) {
 				return false;
 			}
 		}
 
 		return true;
+	}
+}
+
+export function isDiagnosticErrorOfCategory(err: Error, category: DiagnosticCategory): boolean {
+	const diagnostics = getDiagnosticsFromError(err);
+	if (diagnostics === undefined) {
+		return false;
+	} else {
+		for (const diag of diagnostics) {
+			if (equalCategoryNames(diag.description.category, category)) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 }

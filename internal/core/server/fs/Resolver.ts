@@ -25,7 +25,6 @@ import {
 } from "@internal/path";
 import {DiagnosticAdvice, DiagnosticLocation} from "@internal/diagnostics";
 import {IMPLICIT_JS_EXTENSIONS} from "../../common/file-handlers/javascript";
-import {exists, writeFile} from "@internal/fs";
 import {MOCKS_DIRECTORY_NAME} from "@internal/core/common/constants";
 import {Consumer} from "@internal/consume";
 import {markup} from "@internal/markup";
@@ -399,7 +398,7 @@ export default class Resolver {
 		}
 
 		// Found an exact match
-		if (await exists(absolute)) {
+		if (await absolute.exists()) {
 			const project = await projectManager.findProject(absolute, true);
 			if (project === undefined) {
 				return undefined;
@@ -459,7 +458,7 @@ export default class Resolver {
 					if (!this.server.memoryFs.exists(remotePath)) {
 						const result = await request(source.join());
 						if (result.type === "DOWNLOADED") {
-							await writeFile(remotePath, result.content);
+							await remotePath.writeFile(result.content);
 						} else {
 							return result;
 						}

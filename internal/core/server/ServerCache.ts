@@ -1,11 +1,5 @@
 import {getEnvVar} from "@internal/cli-environment";
 import {VERSION} from "@internal/core";
-import {
-	createDirectory,
-	exists,
-	readFileText,
-	removeDirectory,
-} from "@internal/fs";
 import {AbsoluteFilePath} from "@internal/path";
 
 import {Server} from "..";
@@ -54,7 +48,7 @@ export default class ServerCache extends Cache {
 
 	public async init() {
 		const {memoryFs} = this.server;
-		await createDirectory(this.directoryPath);
+		await this.directoryPath.createDirectory();
 		await memoryFs.watch(this.directoryPath);
 
 		await this.initBreaker();
@@ -72,8 +66,8 @@ export default class ServerCache extends Cache {
 			return;
 		}
 
-		if (await exists(breakerPath)) {
-			const content = await readFileText(breakerPath);
+		if (await breakerPath.exists()) {
+			const content = await breakerPath.readFileText();
 			if (content === EXPECTED_BREAKER_VALUE) {
 				logger.success(markup`Breaker is correct`);
 				return;
@@ -99,6 +93,6 @@ export default class ServerCache extends Cache {
 	public async clear() {
 		this.pendingWrites.clear();
 		await this.server.fileAllocator.evictAll();
-		await removeDirectory(this.getRootDirectory());
+		await this.getRootDirectory().removeDirectory();
 	}
 }

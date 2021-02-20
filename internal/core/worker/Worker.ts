@@ -35,7 +35,6 @@ import {
 	FSReadStream,
 	FSStats,
 	createFakeStats,
-	createReadStream,
 } from "@internal/fs";
 import {FileReference} from "../common/types/files";
 import {getFileHandlerFromPathAssert} from "../common/file-handlers/index";
@@ -43,7 +42,7 @@ import WorkerAPI from "./WorkerAPI";
 import {applyWorkerBufferPatch} from "./utils/applyWorkerBufferPatch";
 import VirtualModules from "../common/VirtualModules";
 import {markup} from "@internal/markup";
-import {BridgeClient, BridgeError} from "@internal/events";
+import {BridgeClient, isBridgeClosedDiagnosticError} from "@internal/events";
 import {ExtendedMap} from "@internal/collections";
 import WorkerCache from "./WorkerCache";
 import FatalErrorHandler from "../common/FatalErrorHandler";
@@ -88,7 +87,7 @@ export default class Worker {
 					// Dispatch error to the server and trigger a fatal
 					bridge.events.fatalError.send(bridge.serializeError(err));
 				} catch (err) {
-					if (!(err instanceof BridgeError)) {
+					if (!isBridgeClosedDiagnosticError(err)) {
 						console.error(
 							"Worker encountered error while attempting to send a fatal to the server",
 						);
@@ -435,7 +434,7 @@ export default class Worker {
 			return cached;
 		}
 
-		return createReadStream(ref.real);
+		return ref.real.createReadStream();
 	}
 
 	public async parse(

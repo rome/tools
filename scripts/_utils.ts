@@ -1,14 +1,7 @@
 import {
 	AbsoluteFilePath,
-	AbsoluteFilePathSet,
 	createAbsoluteFilePath,
 } from "@internal/path";
-import {
-	lstat,
-	readDirectory,
-	readFileText,
-	writeFile as writeFileReal,
-} from "@internal/fs";
 import {Reporter} from "@internal/cli-reporter";
 import {createMockWorker} from "@internal/test-helpers";
 import {formatAST} from "@internal/formatter";
@@ -68,7 +61,7 @@ export async function modifyGeneratedFile(
 	generated = generated.trim();
 
 	// Read file
-	let file = await readFileText(path);
+	let file = await path.readFileText();
 
 	const startRegex = regex`${COMMENT_START} GENERATED:START\(hash:(.*?),id:${id}\) ${createGeneratedCommentInstructions(
 		scriptName,
@@ -255,7 +248,7 @@ export async function writeFile(path: AbsoluteFilePath, sourceText: string) {
 	}
 
 	// Write
-	await writeFileReal(path, sourceText);
+	await path.writeFile(sourceText);
 	reporter.success(markup`Wrote <emphasis>${path}</emphasis>`);
 }
 
@@ -310,11 +303,11 @@ export async function execDev(args: string[]): Promise<void> {
 	);
 }
 
-async function getSubDirectories(files: AbsoluteFilePathSet): Promise<string[]> {
+async function getSubDirectories(files: Iterable<AbsoluteFilePath>): Promise<string[]> {
 	const subDirs: string[] = [];
 
 	for await (const file of files) {
-		if ((await lstat(file)).isDirectory()) {
+		if ((await file.lstat()).isDirectory()) {
 			subDirs.push(file.getBasename());
 		}
 	}
@@ -324,14 +317,14 @@ async function getSubDirectories(files: AbsoluteFilePathSet): Promise<string[]> 
 
 export async function getLanguages(): Promise<string[]> {
 	const astPath = INTERNAL.append("ast");
-	const astDir = await readDirectory(astPath);
+	const astDir = await astPath.readDirectory();
 
 	return getSubDirectories(astDir);
 }
 
 export async function getLanguageCategories(language: string): Promise<string[]> {
 	const languagePath = INTERNAL.append("ast", language);
-	const languageDir = await readDirectory(languagePath);
+	const languageDir = await languagePath.readDirectory();
 
 	return getSubDirectories(languageDir);
 }

@@ -7,7 +7,6 @@ import SnapshotManager, {
 import {BundleResult, FileReference, ServerRequest} from "@internal/core";
 import TestServer from "@internal/core/server/testing/TestServer";
 import {DiagnosticLocation, descriptions} from "@internal/diagnostics";
-import {removeFile} from "@internal/fs";
 import {pretty} from "@internal/pretty-format";
 
 export default class TestServerFile {
@@ -137,7 +136,7 @@ export default class TestServerFile {
 
 				if (existsOnDisk && !used) {
 					// If a snapshot wasn't used or is empty then delete it!
-					await removeFile(path);
+					await path.removeFile();
 					runner.progress.deletedSnapshots++;
 				} else if (used && formatted !== raw) {
 					// Fresh snapshot!

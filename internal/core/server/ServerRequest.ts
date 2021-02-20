@@ -41,7 +41,7 @@ import {
 	diagnosticLocationToMarkupFilelink,
 	getOrDeriveDiagnosticsFromError,
 	joinCategoryName,
-	provideDiagnosticAdviceForError,
+	decorateErrorWithDiagnostics,
 } from "@internal/diagnostics";
 import {
 	DiagnosticsFileHandler,
@@ -662,6 +662,7 @@ export default class ServerRequest {
 				if (min === 0) {
 					message = markup`Expected no arguments`;
 				} else {
+					excessive = args.length > min;
 					message = markup`Expected exactly <number emphasis>${String(min)}</number> arguments`;
 				}
 			}
@@ -878,7 +879,7 @@ export default class ServerRequest {
 			this.endMarker(marker);
 			return res;
 		} catch (err) {
-			throw provideDiagnosticAdviceForError(
+			throw decorateErrorWithDiagnostics(
 				err,
 				{
 					description: {

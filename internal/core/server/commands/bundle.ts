@@ -9,7 +9,6 @@ import {ServerRequest} from "@internal/core";
 import {commandCategories} from "../../common/commands";
 import {createServerCommand} from "../commands";
 import Bundler from "../bundler/Bundler";
-import {createDirectory, writeFile} from "@internal/fs";
 import {Consumer} from "@internal/consume";
 import {markup} from "@internal/markup";
 
@@ -51,8 +50,8 @@ export default createServerCommand<Flags>({
 					Buffer.byteLength(buff),
 				)}</filesize> <inverse> ${kind} </inverse>`,
 			);
-			await createDirectory(file.getParent());
-			await writeFile(file, buff);
+			await file.getParent().createDirectory();
+			await file.writeFile(buff);
 		}
 
 		await req.flushFiles();

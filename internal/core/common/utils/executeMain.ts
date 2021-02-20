@@ -7,7 +7,6 @@
 
 import {UnknownObject} from "@internal/typescript-helpers";
 import {SourceMapConsumer} from "@internal/codec-source-map";
-import {sourceMapManager} from "@internal/v8";
 import vm = require("vm");
 import {OneIndexed, ZeroIndexed} from "@internal/math";
 import {
@@ -18,6 +17,7 @@ import {
 import {AbsoluteFilePath} from "@internal/path";
 import {Position} from "@internal/parser-core";
 import {getRequire} from "../IntegrationLoader";
+import { errorSourceMaps } from "@internal/v8/error-frames";
 
 type ExecuteMainOptions = {
 	path: AbsoluteFilePath;
@@ -110,7 +110,7 @@ export default async function executeMain(
 
 	// Execute the script if there was no syntax error
 	if (sourceMap !== undefined) {
-		sourceMapManager.add(path, sourceMap);
+		errorSourceMaps.add(path, sourceMap);
 	}
 	const res = await script.runInContext(context);
 

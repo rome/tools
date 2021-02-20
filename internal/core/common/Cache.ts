@@ -3,13 +3,6 @@ import {
 	RSERValue,
 	encodeValueToRSERSingleMessageStream,
 } from "@internal/codec-binary-serial";
-import {
-	createDirectory,
-	exists,
-	removeDirectory,
-	removeFile,
-	writeFile,
-} from "@internal/fs";
 import {AnyMarkups, markup} from "@internal/markup";
 import {AbsoluteFilePath, AbsoluteFilePathMap, UIDPath} from "@internal/path";
 import FatalErrorHandler from "./FatalErrorHandler";
@@ -71,8 +64,8 @@ export default class Cache {
 
 		this.pendingWrites.delete(directory);
 
-		if (await exists(directory)) {
-			await removeDirectory(directory);
+		if (await directory.exists()) {
+			await directory.removeDirectory();
 		}
 	}
 
@@ -105,19 +98,18 @@ export default class Cache {
 		// Write pending files
 		const filelinks: AnyMarkups = [];
 		for (const [directory, ops] of pendingWrites) {
-			await createDirectory(directory);
+			await directory.createDirectory();
 
 			for (const [path, op] of ops) {
 				filelinks.push(markup`${path}`);
 				switch (op.type) {
 					case "delete": {
-						await removeFile(path);
+						await path.removeFile();
 						break;
 					}
 
 					case "update": {
-						await writeFile(
-							path,
+						await path.writeFile(
 							new DataView(encodeValueToRSERSingleMessageStream(op.value)),
 						);
 						break;

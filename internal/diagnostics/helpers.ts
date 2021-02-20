@@ -196,6 +196,10 @@ export function appendAdviceToDiagnostic(
 	diag: Diagnostic,
 	advice: DiagnosticAdvice,
 ): Diagnostic {
+	if (advice.length === 0) {
+		return diag;
+	}
+
 	return {
 		...diag,
 		description: {
@@ -209,6 +213,10 @@ export function prependAdviceToDiagnostic(
 	diag: Diagnostic,
 	advice: DiagnosticAdvice,
 ): Diagnostic {
+	if (advice.length === 0) {
+		return diag;
+	}
+	
 	return {
 		...diag,
 		description: {

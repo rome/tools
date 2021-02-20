@@ -29,7 +29,7 @@ import {
 	getFilenameTimestamp,
 } from "@internal/core/client/Client";
 import {CommandName, commandCategories} from "@internal/core/common/commands";
-import {FSWriteStream, createWriteStream, writeFile} from "@internal/fs";
+import {FSWriteStream} from "@internal/fs";
 import {markupToPlainText} from "@internal/cli-layout";
 import {
 	convertToMarkupFromRandomString,
@@ -87,6 +87,11 @@ export default async function cli() {
 				commandName: "check",
 				description: markup`The <emphasis>check</emphasis> command covers linting, formatting, and more`,
 			},
+		},
+		onRunHiddenCommand(reporter) {
+			reporter.warn(
+				markup`This command has been hidden. Consider its usage to be experimental and do not expect support or backwards compatibility.`,
+			);
 		},
 		defineFlags(
 			c: Consumer,
@@ -513,7 +518,7 @@ export default async function cli() {
 					);
 
 					const str = json.stringify(events);
-					await writeFile(resolvedProfilePath, str);
+					await resolvedProfilePath.writeFile(str);
 
 					client.reporter.success(
 						markup`Wrote CPU profile to <emphasis>${resolvedProfilePath}</emphasis>`,
@@ -525,7 +530,7 @@ export default async function cli() {
 		if (cliFlags.logs) {
 			let fileout: undefined | FSWriteStream;
 			if (cliFlags.logPath !== undefined) {
-				fileout = createWriteStream(clientFlags.cwd.resolve(cliFlags.logPath));
+				fileout = clientFlags.cwd.resolve(cliFlags.logPath).createWriteStream();
 
 				client.endEvent.subscribe(() => {
 					if (fileout !== undefined) {
@@ -583,7 +588,7 @@ export default async function cli() {
 				: cliFlags.markersPath,
 		);
 
-		await writeFile(markersPath, json.stringify(res.markers));
+		await markersPath.writeFile(json.stringify(res.markers));
 
 		client.reporter.success(
 			markup`Wrote markers to <emphasis>${markersPath}</emphasis>`,

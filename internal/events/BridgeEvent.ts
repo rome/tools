@@ -12,11 +12,11 @@ import {
 	EventCallback,
 	EventSubscription,
 } from "./types";
-import BridgeError from "./BridgeError";
+import { BridgeTimeoutError } from "./errors";
 import Event from "./Event";
 import {ErrorCallback, VoidCallback} from "@internal/typescript-helpers";
 import {RSERValue} from "@internal/codec-binary-serial";
-import { provideDiagnosticAdviceForError } from "@internal/diagnostics";
+import { DIAGNOSTIC_CATEGORIES, decorateErrorWithDiagnostics } from "@internal/diagnostics";
 import { markup } from "@internal/markup";
 
 type CallOptions = {
@@ -59,13 +59,14 @@ export class BridgeEvent<Param extends RSERValue, Ret extends RSERValue> {
 
 	public end(err: Error) {
 		for (const {param, reject} of this.requestCallbacks.values()) {
-			reject(provideDiagnosticAdviceForError(err, {
+			reject(decorateErrorWithDiagnostics(err, {
 				description: {
+					category: DIAGNOSTIC_CATEGORIES["bridge/closed"],
 					advice: [
 						{
 							type: "log",
 							category: "info",
-							text: markup`Terminated execution of ${this.backingEvent.displayName} with parameters`,
+							text: markup`Terminated execution of ${this.backingEvent.displayName} with parameter`,
 						},
 						{
 							type: "inspect",
@@ -151,11 +152,10 @@ export class BridgeEvent<Param extends RSERValue, Ret extends RSERValue> {
 
 						// Reject the promise
 						reject(
-							new BridgeError(
+							new BridgeTimeoutError(
 								`Timeout of ${String(timeout)}ms for ${this.name}(${String(
 									JSON.stringify(param),
 								)}) event exceeded`,
-								this.bridge,
 							),
 						);
 					},

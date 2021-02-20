@@ -10,7 +10,6 @@ import {commandCategories} from "../../common/commands";
 import {createServerCommand} from "../commands";
 import {markup} from "@internal/markup";
 import {Diagnostics, descriptions} from "@internal/diagnostics";
-import {exists, readFileText} from "@internal/fs";
 import {RecoveryDiskStore} from "../fs/RecoveryStore";
 import {Consumer} from "@internal/consume";
 
@@ -153,11 +152,11 @@ export const diff = createServerCommand({
 		for (const {originalPath, artifactPath} of store.entries) {
 			// Original may have been deleted
 			let original = "";
-			if (await exists(originalPath)) {
-				original = await readFileText(originalPath);
+			if (await originalPath.exists()) {
+				original = await originalPath.readFileText();
 			}
 
-			const artifact = await readFileText(artifactPath);
+			const artifact = await artifactPath.readFileText();
 
 			diagnostics.push({
 				location: {

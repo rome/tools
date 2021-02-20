@@ -6,7 +6,6 @@
  */
 
 import {AbsoluteFilePath} from "@internal/path";
-import {exists} from "@internal/fs";
 import {spawn} from "@internal/child-process";
 
 export function extractFileList(out: string): string[] {
@@ -79,7 +78,7 @@ class GitVCSClient extends VCSClient {
 export async function getVCSClient(
 	root: AbsoluteFilePath,
 ): Promise<undefined | VCSClient> {
-	if (await exists(root.append(".git"))) {
+	if (await root.append(".git").exists()) {
 		return new GitVCSClient(root);
 	}
 

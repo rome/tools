@@ -26,15 +26,14 @@ import {
 	AbsoluteFilePathMap,
 	UIDPath,
 	createAnyPath,
+	createRelativePath,
 } from "@internal/path";
 import {
 	JSONManifest,
 	ManifestDefinition,
 	convertManifestToJSON,
 } from "@internal/codec-js-manifest";
-
 import {Dict} from "@internal/typescript-helpers";
-import {readFile} from "@internal/fs";
 import {flipPathPatterns} from "@internal/path-match";
 import {json} from "@internal/codec-config";
 import {markup} from "@internal/markup";
@@ -170,7 +169,7 @@ export default class Bundler {
 		let asset: undefined | BundleCompileResult["asset"];
 		let assetPath: undefined | string;
 		if (mod.handler?.isAsset) {
-			const buffer = await readFile(mod.path);
+			const buffer = await mod.path.readFile();
 
 			// Asset path in the form of: BASENAME-SHA1HASH.EXTENSIONS
 			const hash = crypto.createHash("sha1").update(buffer).digest("hex");
@@ -412,7 +411,7 @@ export default class Bundler {
 
 			for (const path of paths) {
 				const relative = manifestDef.directory.relative(path).join();
-				const buffer = await readFile(path);
+				const buffer = await path.readFile();
 				addFile(relative, buffer);
 			}
 		}
@@ -435,7 +434,7 @@ export default class Bundler {
 					{
 						...this.config.resolver,
 						origin: manifestDef.directory,
-						source: createAnyPath(relative).toExplicitRelative(),
+						source: createRelativePath(relative).toExplicitRelative(),
 					},
 					{
 						location,

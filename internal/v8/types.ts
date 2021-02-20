@@ -6,7 +6,6 @@
  */
 
 import {Position} from "@internal/parser-core";
-import {OneIndexed, ZeroIndexed} from "@internal/math";
 import {JSONPropertyValue} from "@internal/codec-config";
 import inspector = require("inspector");
 
@@ -64,20 +63,3 @@ export type CoverageFile = {
 	branches: CoverageFileStats;
 	functions: CoverageFileStats;
 };
-
-export type ErrorFrame = {
-	typeName: undefined | string;
-	functionName: undefined | string;
-	methodName: undefined | string;
-	path: undefined | AnyPath;
-	lineNumber: undefined | OneIndexed;
-	columnNumber: undefined | ZeroIndexed;
-	isTopLevel: boolean;
-	isAsync: boolean;
-	isEval: boolean;
-	isNative: boolean;
-	isConstructor: boolean;
-	resolvedLocation: boolean;
-};
-
-export type ErrorFrames = ErrorFrame[];

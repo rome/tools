@@ -8,3 +8,8 @@ export type AnyFilePath = AbsoluteFilePath | RelativePath;
 export type AnyPath = AbsoluteFilePath | RelativePath | URLPath | UIDPath;
 
 export type PathSegments = string[];
+
+export type PathFormatOptions = {
+  home?: AbsoluteFilePath,
+  cwd?: AbsoluteFilePath,
+};

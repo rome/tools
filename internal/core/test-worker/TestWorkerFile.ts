@@ -56,7 +56,7 @@ import {
 	StructuredError,
 	getDiagnosticLocationFromErrorFrame,
 	getErrorStructure,
-} from "@internal/v8";
+} from "@internal/errors";
 import prettyFormat from "@internal/pretty-format";
 import {TestWorker} from "@internal/core";
 import {ExtendedMap} from "@internal/collections";

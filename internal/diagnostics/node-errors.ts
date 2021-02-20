@@ -2,8 +2,9 @@ import {
 	getDiagnosticLocationFromErrorFrame,
 	getErrorStructure,
 	setErrorFrames,
+	NodeSystemError,
 	setNodeErrorProps,
-} from "@internal/v8";
+} from "@internal/errors";
 import {StaticMarkup, markup} from "@internal/markup";
 import {
 	DIAGNOSTIC_CATEGORIES,
@@ -17,8 +18,6 @@ import {
 } from "@internal/diagnostics";
 import {prettyFormatEager} from "@internal/pretty-format";
 import {UNKNOWN_PATH, createAbsoluteFilePath} from "@internal/path";
-import {lstatSync} from "@internal/fs";
-import {NodeSystemError} from "@internal/node";
 
 function getPathFromNodeError(err: NodeSystemError): undefined | string {
 	return err.path ?? err.address;
@@ -132,7 +131,7 @@ export function convertPossibleNodeErrorToDiagnostic(
 
 			for (const parent of path.getChain()) {
 				try {
-					const stat = lstatSync(parent);
+					const stat = parent.lstatSync();
 
 					advice.push({
 						type: "group",

@@ -36,10 +36,6 @@ import {
 	FSStats,
 	FSWatcher,
 	FileNotFound,
-	exists,
-	lstat,
-	readDirectory,
-	watch,
 } from "@internal/fs";
 import crypto = require("crypto");
 
@@ -294,8 +290,7 @@ export default class MemoryFileSystem {
 					return;
 				}
 
-				const watcher = watch(
-					directoryPath,
+				const watcher = directoryPath.watch(
 					{recursive, persistent: false},
 					(eventType, filename) => {
 						this.logger.info(
@@ -616,7 +611,7 @@ export default class MemoryFileSystem {
 
 	// Query actual file system for stats
 	private async hardStat(path: AbsoluteFilePath): Promise<SimpleStats> {
-		const stats = await lstat(path);
+		const stats = await path.lstat();
 		return toSimpleStats(stats);
 	}
 
@@ -854,7 +849,7 @@ export default class MemoryFileSystem {
 		}
 
 		// Crawl the directory
-		const paths = await readDirectory(directoryPath);
+		const paths = await directoryPath.readDirectory();
 
 		// Declare the file
 		const declareItem = async (path: AbsoluteFilePath) => {
@@ -918,7 +913,7 @@ export default class MemoryFileSystem {
 	public async existsHard(path: AbsoluteFilePath): Promise<boolean> {
 		const resolvedExistence: undefined | boolean = this.exists(path);
 		if (resolvedExistence === undefined) {
-			return exists(path);
+			return path.exists();
 		} else {
 			return resolvedExistence;
 		}

@@ -2,9 +2,7 @@ import {PUBLIC_PACKAGES, ROOT, exec, reporter} from "./_utils";
 import {AbsoluteFilePath} from "@internal/path";
 import https = require("https");
 import http = require("http");
-
 import child = require("child_process");
-import {readFileText} from "@internal/fs";
 import {markup} from "@internal/markup";
 
 async function runNPMVersion(
@@ -50,7 +48,7 @@ export async function main(args: string[]) {
 
 	// Get current version so we can revert to it later if necessary
 	const currentVersion = String(
-		JSON.parse(await readFileText(ROOT.append("package.json"))).version,
+		JSON.parse(await ROOT.append("package.json").readFileText()).version,
 	);
 
 	// Update root

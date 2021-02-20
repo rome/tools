@@ -11,12 +11,11 @@ import {
 	RelativePath,
 	createFilePath,
 } from "@internal/path";
-import {exists, readFileText} from "@internal/fs";
 import {TestServerRunnerOptions} from "../server/testing/types";
 import TestWorkerFile from "./TestWorkerFile";
 import {descriptions} from "@internal/diagnostics";
 import {parseSnapshot, snapshotParser} from "./SnapshotParser";
-import {ErrorFrame} from "@internal/v8";
+import {ErrorFrame} from "@internal/errors";
 import {OneIndexed, ZeroIndexed} from "@internal/math";
 import {prettyFormatToString} from "@internal/pretty-format";
 import {FilePathLocker} from "../../async/lockers";
@@ -208,7 +207,7 @@ export default class SnapshotManager {
 	private async loadSnapshot(
 		path: AbsoluteFilePath,
 	): Promise<undefined | Snapshot> {
-		if (!(await exists(path))) {
+		if (await path.notExists()) {
 			return;
 		}
 
@@ -220,7 +219,7 @@ export default class SnapshotManager {
 					return loadedSnapshot;
 				}
 
-				const content = await readFileText(path);
+				const content = await path.readFileText();
 				const parser = snapshotParser.create({
 					path,
 					input: content,

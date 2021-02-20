@@ -52,8 +52,6 @@ import {IMPLICIT_JS_EXTENSIONS} from "../../common/file-handlers/javascript";
 import {
 	CachedFileReader,
 	FileNotFound,
-	createDirectory,
-	readFileText,
 } from "@internal/fs";
 import {Consumer} from "@internal/consume";
 import {json} from "@internal/codec-config";
@@ -174,7 +172,7 @@ export default class ProjectManager {
 		};
 		const defaultVendorPath = vendorProjectConfig.files.vendorPath;
 		// TODO find a way to do th
-		await createDirectory(defaultVendorPath);
+		await defaultVendorPath.createDirectory();
 		await this.declareProject({
 			isPartial: false,
 			projectDirectory: defaultVendorPath,
@@ -906,7 +904,7 @@ export default class ProjectManager {
 			// Check for package.json
 			const packagePath = dir.append("package.json");
 			if (await this.server.memoryFs.existsHard(packagePath)) {
-				const input = await readFileText(packagePath);
+				const input = await packagePath.readFileText();
 				const consumer = await json.consumeValue({input, path: packagePath});
 				if (consumer.has(PROJECT_CONFIG_PACKAGE_JSON_FIELD)) {
 					if (this.isLoadingBannedProjectPath(dir, packagePath, processor)) {

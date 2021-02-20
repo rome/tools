@@ -31,11 +31,11 @@ import {
 	isPath,
 } from "@internal/path";
 import {
-	ErrorFrames,
-	StructuredNodeSystemErrorProperties,
-	setErrorFrames,
+	NodeSystemErrorProperties,
 	setNodeErrorProps,
-} from "@internal/v8";
+	ErrorFrames,
+	setErrorFrames,
+} from "@internal/errors";
 import {IntSize} from "./int";
 import {utf8Decode} from "./utf8";
 import {CachedKeyDecoder} from "@internal/codec-binary-serial/CachedKeyDecoder";
@@ -754,7 +754,7 @@ export default class RSERBufferParser {
 		err.stack = stack;
 
 		// @ts-ignore: Validating these is expensive but we can be confident on the validity
-		const nodeProps: StructuredNodeSystemErrorProperties = this.decodeObject();
+		const nodeProps: NodeSystemErrorProperties = this.decodeObject();
 		setNodeErrorProps(err, nodeProps);
 
 		// @ts-ignore: ^^

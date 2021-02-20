@@ -13,10 +13,8 @@ import {
 } from "@internal/core";
 import setProcessTitle from "./utils/setProcessTitle";
 import net = require("net");
-
-import {createDirectory, exists, removeFile} from "@internal/fs";
 import {loadUserConfig} from "@internal/core/common/userConfig";
-import { BridgeError } from "@internal/events";
+import { isBridgeClosedDiagnosticError } from "@internal/events";
 
 export default async function server() {
 	setProcessTitle("server");
@@ -35,7 +33,7 @@ export default async function server() {
 		
 		server.fatalErrorHandler.wrapPromise(server.attachToBridge(bridge).catch(err => {
 			// Ignore bridge disconnect errors
-			if (!(err instanceof BridgeError)) {
+			if (!isBridgeClosedDiagnosticError(err)) {
 				throw err;
 			}
 		}));
@@ -45,11 +43,11 @@ export default async function server() {
 		server.fatalErrorHandler.handle(err);
 	});
 
-	if (await exists(SERVER_SOCKET_PATH)) {
-		await removeFile(SERVER_SOCKET_PATH);
+	if (await SERVER_SOCKET_PATH.exists()) {
+		await SERVER_SOCKET_PATH.removeFile();
 	}
 
-	await createDirectory(SERVER_SOCKET_PATH.getParent());
+	await SERVER_SOCKET_PATH.getParent().createDirectory();
 
 	socketServer.listen(
 		SERVER_SOCKET_PATH.join(),

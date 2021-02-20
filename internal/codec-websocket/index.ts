@@ -8,18 +8,14 @@
 import {BuildFrameOpts, Frame, GUID, OPCODES} from "./types";
 import {buildFrame, isCompleteFrame, parseFrame, unmaskPayload} from "./frame";
 import {Event} from "@internal/events";
-import crypto = require("crypto");
-
-import url = require("url");
-
-import http = require("http");
-
-import net = require("net");
-
 import {Reporter} from "@internal/cli-reporter";
 import {markup} from "@internal/markup";
 import prettyFormat from "@internal/pretty-format";
-import {NodeSystemError} from "@internal/node";
+import {NodeSystemError} from "@internal/errors";
+import crypto = require("crypto");
+import url = require("url");
+import http = require("http");
+import net = require("net");
 
 export function createKey(key: string): string {
 	return crypto.createHash("sha1").update(`${key}${GUID}`).digest("base64");

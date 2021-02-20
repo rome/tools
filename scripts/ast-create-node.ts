@@ -7,7 +7,6 @@ import {
 	reporter,
 	writeFile,
 } from "./_utils";
-import {exists} from "@internal/fs";
 import {dedent, toCamelCase} from "@internal/string-utils";
 import {markup} from "@internal/markup";
 import {createAnyPath} from "@internal/path";
@@ -72,7 +71,7 @@ export async function main([filename]: string[]): Promise<number> {
 
 	// Write AST def
 	const astDefPath = INTERNAL.append("ast", `${filename}.ts`);
-	if (await exists(astDefPath)) {
+	if (await astDefPath.exists()) {
 		reporter.error(markup`AST node ${filename} already exists`);
 		return 1;
 	}

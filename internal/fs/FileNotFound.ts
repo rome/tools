@@ -1,5 +1,5 @@
 import {AbsoluteFilePath} from "@internal/path";
-import {NodeSystemError} from "@internal/node";
+import {NodeSystemError} from "@internal/errors";
 
 export type MissingFileReturn<T> =
 	| {

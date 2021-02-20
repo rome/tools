@@ -1,6 +1,5 @@
 import {INTERNAL, reporter} from "./_utils";
 import {main as generateAST} from "./generated-files/ast";
-import {removeFile} from "@internal/fs";
 import {createAnyPath} from "@internal/path";
 import {markup} from "@internal/markup";
 
@@ -21,11 +20,9 @@ export async function main([filename]: string[]) {
 	const [, category, nodeName] = segments;
 
 	// Remove files
-	await removeFile(INTERNAL.append("formatter", "builders", `${filename}.ts`));
-	await removeFile(
-		INTERNAL.append("js-analysis", "evaluators", `${category}/${nodeName}.ts`),
-	);
-	await removeFile(INTERNAL.append("ast", `${filename}.ts`));
+	await INTERNAL.append("formatter", "builders", `${filename}.ts`).removeFile();
+	await	INTERNAL.append("js-analysis", "evaluators", `${category}/${nodeName}.ts`).removeFile();
+	await INTERNAL.append("ast", `${filename}.ts`).removeFile();
 
 	// Regenerate indexes
 	await generateAST();

@@ -1,6 +1,6 @@
 import {Server, ServerRequest, TestWorkerBridge} from "@internal/core";
+import {ErrorFrame} from "@internal/errors";
 import {
-	ErrorFrame,
 	InspectorClient,
 	InspectorClientCloseError,
 	urlToFilename,
@@ -9,10 +9,11 @@ import workerThreads = require("worker_threads");
 import {forkThread} from "@internal/core/common/utils/fork";
 import {createClient} from "@internal/codec-websocket";
 import {TestWorkerFlags} from "@internal/core/test-worker/TestWorker";
-import TestServer, {BridgeDiagnosticsError} from "@internal/core/server/testing/TestServer";
+import TestServer from "@internal/core/server/testing/TestServer";
 import {
 	DIAGNOSTIC_CATEGORIES,
 	deriveDiagnosticFromErrorStructure,
+	createSingleDiagnosticError,
 } from "@internal/diagnostics";
 import {markup} from "@internal/markup";
 import {ReporterProgress} from "@internal/cli-reporter";
@@ -228,7 +229,7 @@ export default class TestServerWorker {
 		}
 
 		await bridge.endWithError(
-			new BridgeDiagnosticsError(
+			createSingleDiagnosticError(
 				deriveDiagnosticFromErrorStructure(
 					{
 						name: "Error",
@@ -248,7 +249,6 @@ export default class TestServerWorker {
 						},
 					},
 				),
-				bridge,
 			),
 		);
 	}
@@ -345,7 +345,7 @@ export default class TestServerWorker {
 				}
 			}
 		} catch (err) {
-			runner.handlePossibleBridgeError(err);
+			runner.handlePossibleBridgeError(err, bridge);
 		}
 
 		lock.release();
@@ -407,7 +407,7 @@ export default class TestServerWorker {
 				await this.runner.files.assert(path).addResult(result);
 			}
 		} catch (err) {
-			runner.handlePossibleBridgeError(err);
+			runner.handlePossibleBridgeError(err, bridge);
 		} finally {
 			if (inspector !== undefined) {
 				if (opts.coverage) {

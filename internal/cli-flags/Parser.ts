@@ -37,7 +37,6 @@ import {
 	DiagnosticsError,
 	descriptions,
 } from "@internal/diagnostics";
-import {exists, readFileText, writeFile} from "@internal/fs";
 import {prettyFormatEager} from "@internal/pretty-format";
 import highlightShell from "@internal/markup-syntax-highlight/highlightShell";
 import {RSERObject} from "@internal/codec-binary-serial";
@@ -86,7 +85,7 @@ export type ParserOptions<T> = {
 	cwd: AbsoluteFilePath;
 	args: string[];
 	defineFlags: (consumer: Consumer) => T;
-
+	onRunHiddenCommand?: (reporter: Reporter) => void;
 	examples?: Examples;
 	usage?: string;
 	description?: StaticMarkup;
@@ -431,7 +430,7 @@ export default class Parser<T> {
 
 		// Write completions
 		const res = await this.generateShellCompletions(shell);
-		await writeFile(path, res);
+		await path.writeFile(res);
 		reporter.success(
 			markup`Wrote shell completions to <emphasis>${path}</emphasis>`,
 		);
@@ -446,7 +445,7 @@ export default class Parser<T> {
 				// Find the profile
 				let profilePath;
 				for (const path of possibleProfiles) {
-					if (await exists(path)) {
+					if (await path.exists()) {
 						profilePath = path;
 						break;
 					}
@@ -461,17 +460,22 @@ export default class Parser<T> {
 						}),
 					);
 				} else {
-					let file = await readFileText(profilePath);
+					let file = await profilePath.readFileText();
 					if (file.includes(path.getBasename())) {
 						reporter.warn(
 							markup`Skipped <emphasis>${profilePath}</emphasis> modifications as looks like it was already included`,
 						);
 					} else {
+						let sourceRelative = path.relative(profilePath);
+						if (sourceRelative.isRelative()) {
+							sourceRelative = sourceRelative.toExplicitRelative();
+						}
+						
 						file = file.trim();
 						file += "\n";
-						file += `source ${path.relative(profilePath).preferExplicitRelative().join()}`;
+						file += `source ${sourceRelative.join()}`;
 						file += "\n";
-						await writeFile(profilePath, file);
+						await profilePath.writeFile(file);
 						reporter.success(
 							markup`Added completions to <emphasis>${profilePath}</emphasis>`,
 						);
@@ -585,10 +589,8 @@ export default class Parser<T> {
 
 		if (definedCommand !== undefined) {
 			this.ranCommand = definedCommand.command;
-			if (definedCommand.command.hidden === true) {
-				this.reporter.warn(
-					markup`This command has been hidden. Consider its usage to be experimental and do not expect support or backwards compatibility.`,
-				);
+			if (definedCommand.command.hidden === true && this.opts.onRunHiddenCommand !== undefined) {
+				this.opts.onRunHiddenCommand(this.reporter);
 			}
 			await definedCommand.command.callback(definedCommand.flags);
 		}

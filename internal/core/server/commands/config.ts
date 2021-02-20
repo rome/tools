@@ -18,7 +18,7 @@ import {
 	consumeConfig,
 	stringifyConfig,
 } from "@internal/codec-config";
-import {CachedFileReader, readFileText, writeFile} from "@internal/fs";
+import {CachedFileReader} from "@internal/fs";
 import {
 	loadUserConfig,
 	normalizeUserConfig,
@@ -90,7 +90,7 @@ async function runCommand(
 		}
 
 		// Load the config file again
-		const configFile = await readFileText(configPath);
+		const configFile = await configPath.readFileText();
 		const res = consumeConfig({
 			path: configPath,
 			input: configFile,
@@ -125,7 +125,7 @@ async function runCommand(
 		);
 
 		// Write it out
-		await writeFile(configPath, stringified);
+		await configPath.writeFile(stringified);
 	}
 
 	try {
@@ -135,7 +135,7 @@ async function runCommand(
 			let configPath: AbsoluteFilePath;
 			if (existingConfigPath === undefined) {
 				configPath = USER_CONFIG_DIRECTORY.append("rome.rjson");
-				await writeFile(configPath, "");
+				await configPath.writeFile("");
 				reporter.info(
 					markup`Created user config at <emphasis>${configPath}</emphasis> as it did not exist`,
 				);

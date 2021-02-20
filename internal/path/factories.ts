@@ -1,4 +1,3 @@
-import {isPath} from ".";
 import AbsoluteFilePath from "./classes/AbsoluteFilePath";
 import RelativePath from "./classes/RelativePath";
 import UIDPath from "./classes/UIDPath";
@@ -64,63 +63,7 @@ export function createAnyPath(
 	param: string,
 	hint: PathTypeHint = "any",
 ): AnyPath {
-	// Allows using the create methods above to be used in places where strings are more ergonomic (eg. in third-party code)
-	if (isPath(param)) {
-		return param;
-	}
-
 	const segments = splitPathSegments(param);
 	const parsed = parsePathSegments(segments, hint);
 	return createPathFromParsed(parsed);
-}
-
-// These are some utility methods so you can pass in `undefined | string`
-export function maybeCreateURLPath(
-	filename: undefined | string,
-): undefined | URLPath {
-	if (filename !== undefined) {
-		return createURLPath(filename);
-	} else {
-		return undefined;
-	}
-}
-
-export function maybeCreateRelativePath(
-	filename: undefined | string,
-): undefined | RelativePath {
-	if (filename !== undefined) {
-		return createRelativePath(filename);
-	} else {
-		return undefined;
-	}
-}
-
-export function maybeCreateAbsoluteFilePath(
-	filename: undefined | string,
-): undefined | AbsoluteFilePath {
-	if (filename !== undefined) {
-		return createAbsoluteFilePath(filename);
-	} else {
-		return undefined;
-	}
-}
-
-export function maybeCreateAnyPath(
-	filename: undefined | string,
-): undefined | AnyPath {
-	if (filename !== undefined) {
-		return createAnyPath(filename, "any");
-	} else {
-		return undefined;
-	}
-}
-
-export function maybeCreateUIDPath(
-	filename: undefined | string,
-): undefined | UIDPath {
-	if (filename !== undefined) {
-		return createUIDPath(filename);
-	} else {
-		return undefined;
-	}
 }

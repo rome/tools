@@ -1,5 +1,4 @@
 import {AbsoluteFilePath, AbsoluteFilePathMap} from "@internal/path";
-import {readFile} from "./index";
 
 export default class CachedFileReader {
 	constructor() {
@@ -18,7 +17,7 @@ export default class CachedFileReader {
 			return cached;
 		}
 
-		const promise = readFile(path);
+		const promise = path.readFile();
 		this.cached.set(path, promise);
 
 		const buff = await promise;

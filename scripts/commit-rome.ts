@@ -1,5 +1,4 @@
 import {TEMP_PATH} from "@internal/path";
-import {copyFile, removeDirectory} from "@internal/fs";
 import {ROOT} from "./_utils";
 import {main as buildRelease} from "./build-release";
 
@@ -10,12 +9,9 @@ export async function main() {
 		await buildRelease([tempFolder.join()]);
 
 		const outPath = ROOT.append("scripts/vendor/rome.cjs");
-		await copyFile(tempFolder.append("bin/rome/index.js"), outPath);
-		await copyFile(
-			tempFolder.append("bin/rome/index.js.map"),
-			outPath.addExtension(".map"),
-		);
+		await tempFolder.append("bin/rome/index.js").copyFileTo(outPath);
+		await tempFolder.append("bin/rome/index.js.map").copyFileTo(outPath.addExtension(".map"));
 	} finally {
-		await removeDirectory(tempFolder);
+		await tempFolder.removeDirectory();
 	}
 }

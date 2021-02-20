@@ -1,20 +1,26 @@
-/**
- * Copyright (c) Facebook, Inc. and its affiliates.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- */
-
 import {Position} from "@internal/parser-core";
-import {ErrorFrame, ErrorFrames} from "./types";
+import {ErrorFrame, ErrorFrames} from "@internal/errors";
 import {isPlainObject} from "@internal/typescript-helpers";
 import {OneIndexed, ZeroIndexed} from "@internal/math";
-import {NodeSystemError} from "@internal/node";
+import {NodeSystemError, NodeSystemErrorProperties} from "./types";
 import {
 	DiagnosticLocation,
 	convertPossibleNodeErrorToDiagnostic,
 } from "@internal/diagnostics";
-import {UNKNOWN_PATH, createUIDPath} from "@internal/path";
+import {UNKNOWN_PATH} from "@internal/path";
+
+export function setNodeErrorProps(
+	err: NodeSystemError,
+	props: Partial<NodeSystemErrorProperties>,
+) {
+	err.address = props.address;
+	err.code = props.code;
+	err.dest = props.dest;
+	err.errno = props.errno;
+	err.path = props.path;
+	err.port = props.port;
+	err.syscall = props.syscall;
+}
 
 export * from "./types";
 
@@ -24,22 +30,12 @@ export type ErrorWithFrames = NodeSystemError & {
 	[ERROR_FRAMES_PROP]?: unknown;
 };
 
-export type StructuredNodeSystemErrorProperties = {
-	address: undefined | string;
-	code: undefined | string;
-	dest: undefined | string;
-	errno: undefined | number;
-	path: undefined | string;
-	port: undefined | string;
-	syscall: undefined | string;
-};
-
 export type StructuredError = {
 	name: string;
 	message?: string;
 	stack?: string;
 	frames: ErrorFrames;
-	node: StructuredNodeSystemErrorProperties;
+	node: NodeSystemErrorProperties;
 };
 
 export function setErrorFrames(
@@ -52,19 +48,6 @@ export function setErrorFrames(
 		writable: true,
 		value: frames,
 	});
-}
-
-export function setNodeErrorProps(
-	err: NodeSystemError,
-	props: Partial<StructuredNodeSystemErrorProperties>,
-) {
-	err.address = props.address;
-	err.code = props.code;
-	err.dest = props.dest;
-	err.errno = props.errno;
-	err.path = props.path;
-	err.port = props.port;
-	err.syscall = props.syscall;
 }
 
 export function getErrorStructure(
@@ -122,7 +105,7 @@ export function getErrorStructure(
 
 export function extractNodeSystemErrorProperties(
 	err: unknown,
-): StructuredNodeSystemErrorProperties {
+): NodeSystemErrorProperties {
 	if (isPlainObject(err)) {
 		return {
 			address: typeof err.address === "string" ? err.address : undefined,
@@ -161,7 +144,7 @@ export function getDiagnosticLocationFromErrorFrame(
 	};
 
 	return {
-		path: frame.path ?? createUIDPath("unknown"),
+		path: frame.path ?? UNKNOWN_PATH,
 		start: pos,
 		end: pos,
 	};

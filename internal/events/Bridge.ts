@@ -19,7 +19,6 @@ import {
 	BridgeType,
 	EventSubscription,
 } from "./types";
-import BridgeError from "./BridgeError";
 import {
 	BridgeEvent,
 	BridgeEventBidirectional,
@@ -32,13 +31,15 @@ import {
 	StructuredError,
 	getErrorStructure,
 	setErrorFrames,
-} from "@internal/v8";
+	NodeSystemError,
+} from "@internal/errors";
 import {AnyMarkups, concatMarkup, markup} from "@internal/markup";
 import {AsyncVoidCallback} from "@internal/typescript-helpers";
 import prettyFormat from "@internal/pretty-format";
-import {NodeSystemError} from "@internal/node";
 import {RSERObject, RSERStream, RSERValue} from "@internal/codec-binary-serial";
 import {ExtendedMap} from "@internal/collections";
+import { createRuntimeDiagnosticError, DIAGNOSTIC_CATEGORIES } from "@internal/diagnostics";
+import { BridgeTimeoutError } from "./errors";
 
 type ErrorSerial<Data extends RSERValue> = {
 	serialize: (err: Error) => Data;
@@ -220,7 +221,7 @@ export default class Bridge<
 				try {
 					await this.heartbeatEvent.call(undefined, {timeout});
 				} catch (err) {
-					if (err instanceof BridgeError) {
+					if (err instanceof BridgeTimeoutError) {
 						if (this.alive) {
 							const took = Date.now() - start;
 							onExceeded({
@@ -439,7 +440,12 @@ export default class Bridge<
 		message: string = "Connection died",
 		gracefulTeardown: boolean = true,
 	) {
-		this.endWithError(new BridgeError(`Bridge ${this.getDisplayName()}: ${message} `, this), gracefulTeardown);
+		this.endWithError(createRuntimeDiagnosticError({
+			description: {
+				message,
+				category: DIAGNOSTIC_CATEGORIES["bridge/closed"],
+			}
+		}), gracefulTeardown);
 	}
 
 	//# Error serialization

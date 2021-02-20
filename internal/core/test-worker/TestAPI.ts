@@ -19,7 +19,7 @@ import SnapshotManager from "./SnapshotManager";
 import {TestServerRunnerOptions} from "../server/testing/types";
 import {Event} from "@internal/events";
 import stringDiff from "@internal/string-diff";
-import {getErrorStructure} from "@internal/v8";
+import {getErrorStructure} from "@internal/errors";
 import {prettyFormatToString} from "@internal/pretty-format";
 import {markup} from "@internal/markup";
 import {

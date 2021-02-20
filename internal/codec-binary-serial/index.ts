@@ -5,7 +5,7 @@ import fs = require("fs");
 import {markup} from "@internal/markup";
 import {
 	DIAGNOSTIC_CATEGORIES,
-	provideDiagnosticAdviceForError,
+	decorateErrorWithDiagnostics,
 } from "@internal/diagnostics";
 import {createAbsoluteFilePath} from "@internal/path";
 import RSERWriterCounter from "./RSERWriterCounter";
@@ -89,7 +89,7 @@ export function decodeSingleMessageRSERStream(
 
 		function handleError(err: Error) {
 			reject(
-				provideDiagnosticAdviceForError(
+				decorateErrorWithDiagnostics(
 					err,
 					{
 						description: {

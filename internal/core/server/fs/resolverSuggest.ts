@@ -160,24 +160,26 @@ export default function resolverSuggest(
 				const humanSuggestions = Array.from(
 					suggestions,
 					([human, absolute]) => {
-						if (human !== absolute.join()) {
-							humanToPath.set(human, absolute);
-							return human;
+						if (human === absolute.join()) {
+							let relativePath = originDirectory.relative(absolute);
+	
+							// If the user didn't use extensions, then neither should we
+							if (!query.source.hasAnyExtensions()) {
+								// TODO only do this if it's an implicit extension
+								relativePath = relativePath.changeBasename(
+									relativePath.getExtensionlessBasename(),
+								);
+							}
+	
+							if (relativePath.isRelative()) {
+								const explicitRelative = relativePath.toExplicitRelative().join();
+								humanToPath.set(explicitRelative, absolute);
+								return explicitRelative;
+							}
 						}
 
-						let relativePath = originDirectory.relative(absolute);
-
-						// If the user didn't use extensions, then neither should we
-						if (!query.source.hasAnyExtensions()) {
-							// TODO only do this if it's an implicit extension
-							relativePath = relativePath.changeBasename(
-								relativePath.getExtensionlessBasename(),
-							);
-						}
-
-						const explicitRelative = relativePath.toExplicitRelative().join();
-						humanToPath.set(explicitRelative, absolute);
-						return explicitRelative;
+						humanToPath.set(human, absolute);
+						return human;
 					},
 				);
 

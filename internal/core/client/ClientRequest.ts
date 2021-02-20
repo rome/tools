@@ -13,10 +13,10 @@ import {LocalCommand, localCommands} from "./commands";
 import Client from "./Client";
 import {consumeUnknown} from "@internal/consume";
 import review from "./review";
-import {BridgeError} from "@internal/events";
 import {DIAGNOSTIC_CATEGORIES} from "@internal/diagnostics";
 import SilentClientError from "./SilentClientError";
 import { ClientQueryResponse } from "../common/types/client";
+import { isBridgeClosedDiagnosticError } from "@internal/events";
 
 export type ClientRequestType = "local" | "server";
 
@@ -117,7 +117,7 @@ export default class ClientRequest {
 			const bridge = await client.findOrStartServer();
 			return await bridge.events.query.call(this.query);
 		} catch (err) {
-			if (err instanceof BridgeError) {
+			if (isBridgeClosedDiagnosticError(err)) {
 				return {
 					type: "CANCELLED",
 					markers: [],

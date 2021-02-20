@@ -7,14 +7,6 @@ import {
 import {
 	FSHandle,
 	FSStats,
-	createDirectory,
-	exists,
-	lstat,
-	openFile,
-	readDirectory,
-	readFileText,
-	removeDirectory,
-	writeFile,
 } from "@internal/fs";
 import {Dict} from "@internal/typescript-helpers";
 import {json} from "@internal/codec-config";
@@ -143,7 +135,7 @@ export default class RecoveryStore {
 	private async readRecoveryDirectory(): Promise<AbsoluteFilePathSet> {
 		const paths: [AbsoluteFilePath, number][] = [];
 
-		for (const path of await readDirectory(this.recoveryDirectoryPath)) {
+		for (const path of await this.recoveryDirectoryPath.readDirectory()) {
 			const basename = path.getBasename();
 			if (basename[0] === ".") {
 				continue;
@@ -165,7 +157,7 @@ export default class RecoveryStore {
 	}
 
 	public async init() {
-		await createDirectory(this.recoveryDirectoryPath);
+		await this.recoveryDirectoryPath.createDirectory();
 
 		// Register initial stores
 		this.evictableStoreIds = Array.from(
@@ -205,7 +197,7 @@ export default class RecoveryStore {
 		this.logger.info(
 			markup`Dropping recovery store <emphasis>${storeId}</emphasis>. Reason: ${reason}`,
 		);
-		await removeDirectory(this.getStoreDirectoryPath(storeId));
+		await this.getStoreDirectoryPath(storeId).removeDirectory();
 	}
 
 	public async getAllStores(): Promise<{
@@ -253,11 +245,11 @@ export default class RecoveryStore {
 		storeId: string,
 	): Promise<undefined | RecoveryDiskStore> {
 		const indexPath = this.getStoreIndexPath(storeId);
-		if (!(await exists(indexPath))) {
+		if (await indexPath.notExists()) {
 			return undefined;
 		}
 
-		const indexContent = await readFileText(indexPath);
+		const indexContent = await indexPath.readFileText();
 		const index = json.consumeValue({
 			input: indexContent,
 			path: indexPath,
@@ -299,7 +291,7 @@ export default class RecoveryStore {
 		this.requestIdToStore.set(req.id, store);
 
 		const path = this.getStoreDirectoryPath(store.storeId);
-		await createDirectory(path);
+		await path.createDirectory();
 		this.logger.info(
 			markup`Created store <emphasis>${store.storeId}</emphasis> at <emphasis>${path}</emphasis>`,
 		);
@@ -329,7 +321,7 @@ export default class RecoveryStore {
 		store.index.files[fileId] = path.join();
 
 		const storePath = this.getStoreDirectoryPath(store.storeId).append(fileId);
-		await writeFile(storePath, content);
+		await storePath.writeFile(content);
 		this.logger.info(
 			markup`Save file from <emphasis>${path}</emphasis> to <emphasis>${storePath}</emphasis>`,
 		);
@@ -359,11 +351,11 @@ export default class RecoveryStore {
 
 			// Calculate mtime we expect
 			let mtimeNs: undefined | bigint;
-			if (await exists(originalPath)) {
-				mtimeNs = (await lstat(originalPath)).mtimeNs;
+			if (await originalPath.exists()) {
+				mtimeNs = (await originalPath.lstat()).mtimeNs;
 			}
 
-			const content = await readFileText(artifactPath);
+			const content = await artifactPath.readFileText();
 
 			req.queueSaveFile(
 				originalPath,
@@ -393,7 +385,7 @@ export default class RecoveryStore {
 		const store = this.requestIdToStore.get(req.id);
 		if (store !== undefined) {
 			const indexPath = this.getStoreIndexPath(store.storeId);
-			await writeFile(indexPath, json.stringify(store.index));
+			await indexPath.writeFile(json.stringify(store.index));
 			this.logger.info(
 				markup`Committed store index to <emphasis>${indexPath}</emphasis>`,
 			);
@@ -412,7 +404,7 @@ export default class RecoveryStore {
 
 		try {
 			if (op.type === "UNSAFE_WRITE") {
-				await writeFile(path, op.content);
+				await path.writeFile(op.content);
 				success = true;
 			} else if (op.type === "WRITE") {
 				const {mtimeNs, content} = op;
@@ -422,7 +414,7 @@ export default class RecoveryStore {
 					try {
 						// `mtime === undefined` means we expect the file to not exist
 						// wx: Open file for writing. Fails if the path exists.
-						fd = await openFile(path, "wx");
+						fd = await path.openFile("wx");
 						await fd.writeFile(content);
 						success = true;
 					} catch (err) {
@@ -436,7 +428,7 @@ export default class RecoveryStore {
 					try {
 						// `mtime !== undefined` means we expect the file to exist
 						// r+: Open file for reading and writing. An exception occurs if the file does not exist.
-						fd = await openFile(path, "r+");
+						fd = await path.openFile("r+");
 
 						// First verify the mtime
 						// @ts-ignore: This is accurate
@@ -496,7 +488,7 @@ export default class RecoveryStore {
 				Array.from(
 					files,
 					async ([path, {content}]) => {
-						await writeFile(path, content);
+						await path.writeFile(content);
 					},
 				),
 			);

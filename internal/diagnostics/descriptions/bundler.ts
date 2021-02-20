@@ -42,6 +42,7 @@ export const bundler = createDiagnosticsCategory({
 					type: "list",
 					reverse: true,
 					ordered: true,
+					truncate: false,
 					list: path.map(formatPart),
 				},
 			],

@@ -19,7 +19,7 @@ import {
 	StructuredError,
 	getDiagnosticLocationFromErrorFrame,
 	getErrorStructure,
-} from "@internal/v8";
+} from "@internal/errors";
 import DiagnosticsNormalizer from "./DiagnosticsNormalizer";
 import {
 	appendAdviceToDiagnostic,
@@ -33,9 +33,10 @@ import {
 	createSingleDiagnosticError,
 	getDiagnosticsFromError,
 	isUserDiagnosticError,
+	isUserDiagnostic,
 } from "./error-wrappers";
 import {AnyPath, MixedPathSet, UNKNOWN_PATH, equalPaths} from "@internal/path";
-import { DIAGNOSTIC_CATEGORIES } from "./categories";
+import { RequiredProps } from "@internal/typescript-helpers";
 
 function normalizeArray<T>(val: undefined | (T[])): T[] {
 	if (Array.isArray(val)) {
@@ -88,11 +89,13 @@ export function deriveRootAdviceFromDiagnostic(
 	{
 		skipFrame = false,
 		includeHeaderInAdvice = true,
-		outdated = false,
+		isOutdated = false,
+		isMissing = false,
 	}: {
 		skipFrame?: boolean;
 		includeHeaderInAdvice?: boolean;
-		outdated?: boolean;
+		isOutdated?: boolean;
+		isMissing?: boolean;
 	} = {},
 ): {
 	advice: DiagnosticAdvice;
@@ -118,8 +121,12 @@ export function deriveRootAdviceFromDiagnostic(
 		header = markup`${header} <inverse> FIXABLE </inverse>`;
 	}
 
-	if (outdated) {
+	if (isOutdated) {
 		header = markup`${header} <inverse><warn> OUTDATED </warn></inverse>`;
+	}
+
+	if (isMissing) {
+		header = markup`${header} <inverse><warn> MISSING </warn></inverse>`;
 	}
 
 	if (tags.fatal) {
@@ -186,7 +193,7 @@ export function deriveRootAdviceFromDiagnostic(
 }
 
 export type DeriveErrorDiagnosticOptions = {
-	description?: Partial<DiagnosticDescription>;
+	description: RequiredProps<Partial<DiagnosticDescription>, "category">;
 	label?: StaticMarkup;
 	// Passing in `internal: true` is redundant
 	tags?: Omit<DiagnosticTags, "internal"> & {
@@ -198,50 +205,77 @@ export type DeriveErrorDiagnosticOptions = {
 	stackAdviceOptions?: DeriveErrorStackAdviceOptions;
 };
 
-export function provideDiagnosticAdviceForError(
+export function decorateErrorWithDiagnostics(
 	error: Error,
 	opts: DeriveErrorDiagnosticOptions,
 ): Error {
 	if (isUserDiagnosticError(error)) {
 		return error;
-	} else {
-		let diagnostics = getDiagnosticsFromError(error);
-
-		if (diagnostics === undefined) {
-			let diag = deriveDiagnosticFromError(error, opts);
-
-			if (opts.description?.message !== undefined) {
-				diag = prependAdviceToDiagnostic(
-					diag,
-					[
-						{
-							type: "log",
-							category: "none",
-							text: markup`${getErrorStructure(error).message}`,
-						},
-					],
-				);
-			}
-
-			return createSingleDiagnosticError(diag);
-		} else {
-			return new DiagnosticsError(
-				error.message,
-				diagnostics.map((diag) => {
-					return appendAdviceToDiagnostic(
-						diag,
-						[
-							{
-								type: "log",
-								category: "info",
-								text: markup`${getErrorStructure(error).message}`,
-							},
-						],
-					);
-				}),
-			);
-		}
 	}
+
+	let diagnostics = getDiagnosticsFromError(error);
+	if (diagnostics !== undefined) {
+		// This is a diagnostics error so add on our intended advice (if any)
+		let addAdvice: DiagnosticAdvice = [
+			...(opts.description.advice || [])
+		];
+		if (opts.description.message !== undefined) {
+			addAdvice.unshift({
+				type: "log",
+				category: "info",
+				text: opts.description.message,
+			});
+		}
+		
+		return new DiagnosticsError(
+			error.message,
+			diagnostics.map((diag) => {
+				// Could be mixed user and runtime diagnostics
+				if (isUserDiagnostic(diag)) {
+					return diag;
+				}
+
+				diag = appendAdviceToDiagnostic(diag, addAdvice);
+
+				if (opts.tags !== undefined) {
+					diag = {
+						...diag,
+						tags: {
+							...diag.tags,
+							...opts.tags,
+						},
+					};
+				}
+
+				if (opts.label !== undefined && diag.label === undefined) {
+					diag = {
+						...diag,
+						label: opts.label,
+					};
+				}
+
+				return diag;
+			}),
+		);
+	}
+
+	let diag = deriveDiagnosticFromError(error, opts);
+
+	// If we specified a custom message then push on the original
+	if (opts.description.message !== undefined) {
+		diag = prependAdviceToDiagnostic(
+			diag,
+			[
+				{
+					type: "log",
+					category: "none",
+					text: markup`${getErrorStructure(error).message}`,
+				},
+			],
+		);
+	}
+
+	return createSingleDiagnosticError(diag);
 }
 
 export function deriveDiagnosticFromErrorStructure(
@@ -296,7 +330,6 @@ export function deriveDiagnosticFromErrorStructure(
 
 	return {
 		description: {
-			category: DIAGNOSTIC_CATEGORIES["internalError/fatal"],
 			message: markup`${message}`,
 			...opts.description,
 			advice: [...advice, ...(opts.description?.advice || [])],

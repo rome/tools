@@ -35,4 +35,15 @@ export default class RelativePath extends BasePath<RelativePath> {
 	public assertRelative(): RelativePath {
 		return this;
 	}
+
+	public toExplicitRelative(): RelativePath {
+		if (this.isExplicitRelative()) {
+			return this;
+		} else {
+			return new RelativePath({
+				...this.parsed,
+				explicitRelative: true,
+			});
+		}
+	}
 }

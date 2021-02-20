@@ -64,6 +64,7 @@ import {
 	createAnyPath,
 	createURLPath,
 	isPath,
+	createRelativePath,
 } from "@internal/path";
 import {StaticMarkup, markup, readMarkup} from "@internal/markup";
 import {consumeUnknown} from ".";
@@ -1181,7 +1182,7 @@ export default class Consumer {
 			return path.assertFilePath();
 		} else {
 			this.unexpected(descriptions.CONSUME.EXPECTED_FILE_PATH);
-			return path.toExplicitRelative();
+			return createRelativePath("unknown");
 		}
 	}
 
@@ -1227,7 +1228,7 @@ export default class Consumer {
 			return path.assertRelative();
 		} else {
 			this.unexpected(descriptions.CONSUME.EXPECTED_RELATIVE_PATH);
-			return path.toExplicitRelative();
+			return createRelativePath("unknown");
 		}
 	}
 

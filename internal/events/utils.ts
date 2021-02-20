@@ -5,6 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
+import { DIAGNOSTIC_CATEGORIES, isDiagnosticErrorOfCategory } from "@internal/diagnostics";
 import {EventSubscription, EventSubscriptions} from "./types";
 
 export function mergeEventSubscriptions(
@@ -64,4 +65,8 @@ export function wrapSubscriptionConsumer<Ret, Args extends unknown[]>(
 			await helper.unsubscribe();
 		}
 	};
+}
+
+export function isBridgeClosedDiagnosticError(err: Error): boolean {
+	return isDiagnosticErrorOfCategory(err, DIAGNOSTIC_CATEGORIES["bridge/closed"]);
 }

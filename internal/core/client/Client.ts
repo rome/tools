@@ -23,11 +23,11 @@ import {
 import {forkProcess} from "../common/utils/fork";
 import {
 	BridgeClient,
-	BridgeError,
 	Event,
 	EventSubscription,
 	createEmptySubscription,
 	createSubscriptionHelper,
+	isBridgeClosedDiagnosticError,
 } from "@internal/events";
 import {Reporter, ReporterDerivedStreams} from "@internal/cli-reporter";
 import prettyFormat from "@internal/pretty-format";
@@ -38,7 +38,6 @@ import {
 	ServerBridgeLog,
 } from "../common/bridges/ServerBridge";
 import {UserConfig, getUserConfigFile} from "../common/userConfig";
-import {createDirectory, createWriteStream, removeFile} from "@internal/fs";
 import {json} from "@internal/codec-config";
 import stream = require("stream");
 import net = require("net");
@@ -60,7 +59,7 @@ import {
 	markupToPlainText,
 } from "@internal/cli-layout";
 import {AbsoluteFilePath} from "@internal/path";
-import {NodeSystemError} from "@internal/node";
+import {NodeSystemError} from "@internal/errors";
 import SilentClientError from "./SilentClientError";
 
 export function getFilenameTimestamp(): string {
@@ -474,7 +473,7 @@ export default class Client {
 
 		this.endEvent.subscribe(async () => {
 			const stream = zlib.createGzip();
-			stream.pipe(createWriteStream(ragePath));
+			stream.pipe(ragePath.createWriteStream());
 
 			const writer = new TarWriter(stream);
 
@@ -559,7 +558,7 @@ export default class Client {
 			} catch (err) {
 				// Swallow BridgeErrors since we expect one to be emitted as the endServer call will be an unanswered request
 				// when the server ends all client sockets
-				if (!(err instanceof BridgeError)) {
+				if (!isBridgeClosedDiagnosticError(err)) {
 					throw err;
 				}
 			}
@@ -695,7 +694,7 @@ export default class Client {
 		let exited = false;
 		let proc: undefined | child.ChildProcess;
 
-		await createDirectory(CLI_SOCKET_PATH.getParent());
+		await CLI_SOCKET_PATH.getParent().createDirectory();
 
 		const attemptConnection = await new Promise<boolean>((resolve, reject) => {
 			const timeout = setTimeout(
@@ -734,7 +733,7 @@ export default class Client {
 				);
 			}
 
-			removeFile(CLI_SOCKET_PATH).finally(() => {
+			CLI_SOCKET_PATH.removeFile().finally(() => {
 				listen();
 			});
 

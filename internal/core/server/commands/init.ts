@@ -4,7 +4,6 @@ import {StaticMarkup, markup} from "@internal/markup";
 import {ServerRequest, VERSION} from "@internal/core";
 import {ExtensionHandler} from "@internal/core/common/file-handlers/types";
 import {dedent} from "@internal/string-utils";
-import {createDirectory, exists, writeFile} from "@internal/fs";
 import {ConfigCommentMap, JSONObject, rjson} from "@internal/codec-config";
 import {getFileHandlerFromPath} from "@internal/core/common/file-handlers";
 import {IndentStyle, PROJECT_CONFIG_DIRECTORY} from "@internal/project";
@@ -186,7 +185,7 @@ export default createServerCommand<Flags>({
 			);
 
 			// Create initial project config
-			await createDirectory(configPath.getParent());
+			await configPath.getParent().createDirectory();
 			await updateConfig({
 				comments,
 				configHandler,
@@ -228,8 +227,7 @@ export default createServerCommand<Flags>({
 								range: parseSemverRange({input: `^${VERSION}`}),
 							},
 						);
-						await writeFile(
-							manifestPath,
+						await manifestPath.writeFile(
 							JSON.stringify(
 								convertManifestToJSON(manifestDefinition.manifest),
 								null,
@@ -239,11 +237,11 @@ export default createServerCommand<Flags>({
 
 						// Run package manager
 						let installCommand;
-						if (await exists(cwd.append("yarn.lock"))) {
+						if (await cwd.append("yarn.lock").exists()) {
 							installCommand = "yarn";
-						} else if (await exists(cwd.append("package-lock.json"))) {
+						} else if (await cwd.append("package-lock.json").exists()) {
 							installCommand = "npm";
-						} else if (await exists(cwd.append("pnpm-lock.yml"))) {
+						} else if (await cwd.append("pnpm-lock.yml").exists()) {
 							installCommand = "pnpm";
 						}
 						if (installCommand !== undefined) {
@@ -262,7 +260,7 @@ export default createServerCommand<Flags>({
 					message: markup`Generating .editorconfig`,
 					async callback() {
 						const editorConfigPath = cwd.append(".editorconfig");
-						if (await exists(editorConfigPath)) {
+						if (await editorConfigPath.exists()) {
 							reporter.warn(
 								markup`<emphasis>${editorConfigPath}</emphasis> already exists`,
 							);
@@ -305,8 +303,7 @@ export default createServerCommand<Flags>({
 							editorConfigPath,
 							markup`Sets editor formatting and indentation options. Documentation: <hyperlink target="https://editorconfig.org/" />`,
 						);
-						await writeFile(
-							editorConfigPath,
+						await editorConfigPath.writeFile(
 							editorConfigTemplate.trim() + "\n",
 						);
 					},

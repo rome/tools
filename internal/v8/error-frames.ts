@@ -5,18 +5,20 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {SourceMapConsumerCollection} from "@internal/codec-source-map";
-import {ErrorFrame} from "@internal/v8";
 import {
 	ERROR_FRAMES_PROP,
+	ErrorFrame,
 	ErrorWithFrames,
 	getErrorStructure,
 	setErrorFrames,
-} from "./errors";
+} from "@internal/errors";
 import {AnyPath, createAnyPath, createUIDPath} from "@internal/path";
 import {OneIndexed} from "@internal/math";
+import { SourceMapConsumerCollection } from "@internal/codec-source-map";
 
 let inited: boolean = false;
+
+export const errorSourceMaps = new SourceMapConsumerCollection();
 
 function prepareStackTrace(err: Error, frames: NodeJS.CallSite[]) {
 	try {
@@ -132,7 +134,7 @@ function addErrorFrames(err: ErrorWithFrames, frames: NodeJS.CallSite[]): void {
 			}
 		}
 
-		const frame: ErrorFrame = {
+		let frame: ErrorFrame = {
 			typeName: noNull(frameApi.getTypeName()),
 			functionName: noNull(frameApi.getFunctionName()),
 			methodName: noNull(frameApi.getMethodName()),
@@ -156,28 +158,26 @@ function addErrorFrames(err: ErrorWithFrames, frames: NodeJS.CallSite[]): void {
 			frame.lineNumber !== undefined &&
 			frame.columnNumber !== undefined
 		) {
-			const {found, line, column, source, name} = sourceMaps.assertApproxOriginalPositionFor(
+			const {found, line, column, source, name} = errorSourceMaps.assertApproxOriginalPositionFor(
 				frame.path,
 				frame.lineNumber,
 				frame.columnNumber,
 			);
-
-			return {
-				...frame,
-				functionName: frame.functionName ?? name,
-				methodName: frame.methodName ?? name,
-				resolvedLocation: found,
-				lineNumber: line,
-				columnNumber: column,
-				path: source,
-			};
-		} else {
-			return frame;
+			if (found) {
+				return {
+					...frame,
+					functionName: frame.functionName ?? name,
+					methodName: frame.methodName ?? name,
+					resolvedLocation: true,
+					lineNumber: line,
+					columnNumber: column,
+					path: source,
+				};
+			}
 		}
+	
+		return frame;
 	});
 
 	setErrorFrames(err, builtFrames);
 }
-
-const sourceMaps = new SourceMapConsumerCollection();
-export default sourceMaps;

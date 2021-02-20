@@ -1,6 +1,6 @@
 import {VERSION} from "@internal/core";
 import {AbsoluteFilePath, AbsoluteFilePathMap, UIDPath} from "@internal/path";
-import {FSStats, createReadStream, exists, lstat} from "@internal/fs";
+import {FSStats} from "@internal/fs";
 import Cache from "../common/Cache";
 import Worker from "./Worker";
 import {
@@ -126,11 +126,11 @@ export class CacheEntry<Value extends RSERValue = RSERValue> {
 		}
 
 		const {path} = this;
-		if (!(await exists(path))) {
+		if (await path.notExists()) {
 			return undefined;
 		}
 
-		const stream = createReadStream(path);
+		const stream = path.createReadStream();
 		const decoded = await decodeSingleMessageRSERStream(stream);
 
 		if (decoded.type === "INCOMPATIBLE") {
@@ -194,7 +194,7 @@ class CacheFile {
 		} else if (worker.virtualModules.isVirtualPath(path)) {
 			stats = worker.virtualModules.getFakeStats(path);
 		} else {
-			stats = await lstat(path);
+			stats = await path.lstat();
 		}
 
 		this.stats = stats;

@@ -1,17 +1,19 @@
-import {AnyFilePath, AnyPath, PathSegments} from "../types";
+import {AnyFilePath, AnyPath, PathFormatOptions, PathSegments} from "../types";
 import AbsoluteFilePath from "./AbsoluteFilePath";
 import RelativePath from "./RelativePath";
 import UIDPath from "./UIDPath";
 import URLPath from "./URLPath";
 import {ParsedPath, parsePathSegments, splitPathSegments} from "../parse";
-import {createRelativePath} from "../index";
 import {enhanceNodeInspectClass} from "@internal/node";
 
-export interface FilePathMemo<Super> {
-	filename: undefined | string;
-	ext: undefined | string;
-	parent: undefined | Super;
-	unique: undefined | Super;
+export interface FilePathMemoBase {
+	filename?: string;
+	ext?: string;
+}
+
+export interface FilePathMemo<Super> extends FilePathMemoBase {
+	parent?: Super;
+	unique?: Super;
 }
 
 function createEmptyMemo<FilePath>(): FilePathMemo<FilePath> {
@@ -57,10 +59,6 @@ export class BasePath<Super extends AnyPath = AnyPath> {
 		parsed;
 		memo;
 		throw new Error("Unimplemented");
-	}
-
-	public toJSON(): string {
-		return this.join();
 	}
 
 	public addExtension(ext: string, clearExt: boolean = false): Super {
@@ -144,22 +142,6 @@ export class BasePath<Super extends AnyPath = AnyPath> {
 		}
 
 		return this.getSegments().slice(0, -1);
-	}
-
-	public preferExplicitRelative(): Super | RelativePath {
-		if (this.isRelative()) {
-			return this.toExplicitRelative();
-		} else {
-			return this._assert();
-		}
-	}
-
-	public toExplicitRelative(): RelativePath {
-		if (this.isExplicitRelative()) {
-			return this.assertRelative();
-		} else {
-			return createRelativePath(".").append(...this.getSegments());
-		}
 	}
 
 	private _unexpected(message: string) {
@@ -372,18 +354,17 @@ export class BasePath<Super extends AnyPath = AnyPath> {
 		return filename;
 	}
 
-	public equal(other: undefined | AnyPath): boolean {
+	public equal(other: undefined | BasePath<AnyPath>): boolean {
 		if (other === undefined) {
 			return false;
 		}
 
-		// @ts-ignore
 		if (other === this) {
 			return true;
 		}
 
 		// Fast path for memoized strings
-		if (this.join() === other.join()) {
+		if (this.memo.filename !== undefined && other.memo.filename !== undefined && this.join() === other.join()) {
 			return true;
 		}
 
@@ -405,8 +386,8 @@ export class BasePath<Super extends AnyPath = AnyPath> {
 		return true;
 	}
 
-	public format(cwd?: AbsoluteFilePath): string {
-		cwd;
+	public format(opts?: PathFormatOptions): string {
+		opts;
 		return this.join();
 	}
 

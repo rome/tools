@@ -20,15 +20,6 @@ import {
 	createUIDPath,
 } from "@internal/path";
 import {JSONObject, json} from "@internal/codec-config";
-import {
-	createDirectory,
-	exists,
-	lstat,
-	readDirectory,
-	readFileText,
-	removeDirectory,
-	writeFile,
-} from "@internal/fs";
 import {DEFAULT_TERMINAL_FEATURES, Stdout} from "@internal/cli-environment";
 import {Dict} from "@internal/typescript-helpers";
 import {DEFAULT_USER_CONFIG, UserConfig} from "../core/common/userConfig";
@@ -87,11 +78,11 @@ export async function generateTempDirectory(
 ): Promise<AbsoluteFilePath> {
 	const key = crypto.randomBytes(16).toString("base64");
 	const path = TEMP_PATH.append(`${prefix}-${key}`);
-	if (await exists(path)) {
+	if (await path.exists()) {
 		// Extremely rare collision which is only possible if we haven't cleaned up
 		return generateTempDirectory(prefix);
 	} else {
-		await createDirectory(path);
+		await path.createDirectory();
 		return path;
 	}
 }
@@ -329,23 +320,23 @@ export function createIntegrationTest(
 		const temp = await generateTempDirectory("rome-integration");
 
 		const projectPath = temp.append("project");
-		await createDirectory(projectPath);
+		await projectPath.createDirectory();
 
 		if (opts.gitInitialize) {
 			await exec("git init", {cwd: projectPath.join()});
 		}
 
 		const virtualModulesPath = temp.append("virtual");
-		await createDirectory(virtualModulesPath);
+		await virtualModulesPath.createDirectory();
 
 		const cachePath = temp.append("cache");
-		await createDirectory(cachePath);
+		await cachePath.createDirectory();
 
 		const remotePath = temp.append("remote");
-		await createDirectory(remotePath);
+		await remotePath.createDirectory();
 
 		const recoveryPath = temp.append("recovery");
-		await createDirectory(recoveryPath);
+		await recoveryPath.createDirectory();
 
 		const userConfig: UserConfig = {
 			configPath: undefined,
@@ -379,10 +370,10 @@ export function createIntegrationTest(
 			// Materialize files
 			for (let basename in files) {
 				const path = projectPath.append(basename);
-				await createDirectory(path.getParent());
+				await path.getParent().createDirectory();
 
 				const content = files[basename];
-				await writeFile(path, content);
+				await path.writeFile(content);
 			}
 
 			// Use this reporter for markup rendering
@@ -469,7 +460,7 @@ export function createIntegrationTest(
 					server,
 					async readFile(relative: RelativePath | string): Promise<string> {
 						const absolute = projectPath.append(relative);
-						return readFileText(absolute);
+						return absolute.readFileText();
 					},
 					async writeFile(
 						relative: RelativePath | string,
@@ -512,14 +503,14 @@ export function createIntegrationTest(
 				let queue: AbsoluteFilePath[] = [projectPath];
 				while (queue.length > 0) {
 					const path = queue.pop()!;
-					const stat = await lstat(path);
+					const stat = await path.lstat();
 
 					if (stat.isDirectory()) {
 						if (path.getBasename() === ".git") {
 							// Don't output the entire .git directory
 							queue = [...queue, path.append("HEAD")];
 						} else {
-							queue = [...queue, ...(await readDirectory(path))];
+							queue = [...queue, ...(await path.readDirectory())];
 						}
 					} else {
 						files.push(projectPath.relative(path).join());
@@ -533,7 +524,7 @@ export function createIntegrationTest(
 					}
 
 					filesSnapshot += `# ${basename}\n`;
-					filesSnapshot += await readFileText(projectPath.append(basename));
+					filesSnapshot += await projectPath.append(basename).readFileText();
 					filesSnapshot += "\n";
 				}
 
@@ -541,7 +532,7 @@ export function createIntegrationTest(
 			}
 		} finally {
 			// Clean up after ourselves. Will be called whether the tests fails or is successful
-			await removeDirectory(temp);
+			await temp.removeDirectory();
 		}
 	};
 }
