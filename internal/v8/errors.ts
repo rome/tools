@@ -46,7 +46,12 @@ export function setErrorFrames(
 	err: ErrorWithFrames,
 	frames: undefined | ErrorFrames,
 ) {
-	err[ERROR_FRAMES_PROP] = frames;
+	Object.defineProperty(err, ERROR_FRAMES_PROP, {
+		enumerable: false,
+		configurable: true,
+		writable: true,
+		value: frames,
+	});
 }
 
 export function setNodeErrorProps(
