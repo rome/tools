@@ -13,6 +13,7 @@ import {Platform} from "./platform";
 import {AbsoluteFilePath, CWD_PATH} from "@internal/path";
 import {ReporterStream} from "@internal/cli-reporter";
 import {TerminalFeatures} from "@internal/cli-environment";
+import { ServerQueryResponse, ServerQueryResponseBase } from "../bridges/ServerBridge";
 
 export const DEFAULT_CLIENT_FLAGS: ClientFlags = {
 	clientName: "unknown",
@@ -66,3 +67,10 @@ export type ClientFlags = {
 };
 
 export type ClientLogsLevel = "all" | "error";
+
+export type ClientQueryErrorResponse = ServerQueryResponseBase & {
+	type: "CLIENT_ERROR";
+	message: string;
+}
+
+export type ClientQueryResponse = ServerQueryResponse | ClientQueryErrorResponse;

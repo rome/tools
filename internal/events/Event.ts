@@ -20,7 +20,7 @@ export default class Event<Param, Ret = void> {
 	}
 
 	public name: string;
-	private displayName: string;
+	public displayName: string;
 	private options: EventOptions;
 
 	private rootCallback: undefined | EventCallback<Param, Ret>;

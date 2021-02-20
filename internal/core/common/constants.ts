@@ -182,7 +182,7 @@ function createPipePath(name: string): AbsoluteFilePath {
 	if (process.platform === "win32") {
 		return createAbsoluteFilePath(String.raw`\\.\pipe\rome-${VERSION}-${name}`);
 	} else {
-		return RUNTIME_DIRECTORY.append(`${VERSION}-wait.sock`);
+		return RUNTIME_DIRECTORY.append(`${VERSION}.sock`);
 	}
 }
 

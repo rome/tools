@@ -564,13 +564,16 @@ export default async function cli() {
 		commandFlags,
 		args,
 		requestFlags,
-		// Daemon would have been started before, so terminate when we complete
-		terminateWhenIdle: cliFlags.temporaryDaemon,
 		// We don't use the data result, so no point transporting it over the bridge
 		// We want it in rage mode though for debugging
 		noData: !cliFlags.rage,
 	});
-	await client.end();
+	
+	if (cliFlags.temporaryDaemon) {
+		await client.shutdownServer();
+	} else {
+		await client.end();
+	}
 
 	// Write markers if we were collecting them
 	if (shouldCollectMarkers && res.markers.length > 0) {
@@ -590,6 +593,11 @@ export default async function cli() {
 	switch (res.type) {
 		case "EXIT": {
 			process.exit(res.code);
+			break;
+		}
+
+		case "CLIENT_ERROR": {
+			process.exit(1);
 			break;
 		}
 

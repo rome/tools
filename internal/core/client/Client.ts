@@ -8,6 +8,7 @@
 import {
 	ClientFlags,
 	ClientLogsLevel,
+	ClientQueryResponse,
 	ClientTerminalFeatures,
 	DEFAULT_CLIENT_FLAGS,
 } from "../common/types/client";
@@ -17,7 +18,6 @@ import {
 	CLI_SOCKET_PATH,
 	SERVER_SOCKET_PATH,
 	ServerBridge,
-	ServerQueryResponse,
 	VERSION,
 } from "@internal/core";
 import {forkProcess} from "../common/utils/fork";
@@ -38,7 +38,7 @@ import {
 	ServerBridgeLog,
 } from "../common/bridges/ServerBridge";
 import {UserConfig, getUserConfigFile} from "../common/userConfig";
-import {createWriteStream, removeFile} from "@internal/fs";
+import {createDirectory, createWriteStream, removeFile} from "@internal/fs";
 import {json} from "@internal/codec-config";
 import stream = require("stream");
 import net = require("net");
@@ -61,6 +61,7 @@ import {
 } from "@internal/cli-layout";
 import {AbsoluteFilePath} from "@internal/path";
 import {NodeSystemError} from "@internal/node";
+import SilentClientError from "./SilentClientError";
 
 export function getFilenameTimestamp(): string {
 	return new Date().toISOString().replace(/[^0-9a-zA-Z]/g, "");
@@ -102,7 +103,7 @@ type BridgeStatusLocal = {
 
 type ClientRequestResponseResult = {
 	request: PartialServerQueryRequest;
-	response: ServerQueryResponse;
+	response: ClientQueryResponse;
 };
 
 export default class Client {
@@ -512,7 +513,7 @@ export default class Client {
 	public async query(
 		query: PartialServerQueryRequest,
 		type?: ClientRequestType,
-	): Promise<ServerQueryResponse> {
+	): Promise<ClientQueryResponse> {
 		const request = new ClientRequest(this, type, query);
 		const res = await request.init();
 		this.requestResponseEvent.send({request: query, response: res});
@@ -523,7 +524,7 @@ export default class Client {
 		query: PartialServerQueryRequest,
 		type?: ClientRequestType,
 	): {
-		promise: Promise<ServerQueryResponse>;
+		promise: Promise<ClientQueryResponse>;
 		cancel: () => Promise<void>;
 	} {
 		const cancelToken = String(this.queryCounter++);
@@ -674,7 +675,7 @@ export default class Client {
 		const daemon = await this.startDaemon();
 		if (daemon === undefined) {
 			this.reporter.error(markup`Failed to start daemon`);
-			throw new Error("Failed to start daemon");
+			throw new SilentClientError("Failed to start daemon");
 		} else {
 			return daemon;
 		}
@@ -694,29 +695,21 @@ export default class Client {
 		let exited = false;
 		let proc: undefined | child.ChildProcess;
 
-		const newDaemon = await new Promise<
-			void | BridgeClient<typeof ServerBridge>
-		>((resolve, reject) => {
+		await createDirectory(CLI_SOCKET_PATH.getParent());
+
+		const attemptConnection = await new Promise<boolean>((resolve, reject) => {
 			const timeout = setTimeout(
 				() => {
 					reporter.error(markup`Daemon connection timed out`);
 					cleanup();
-					resolve();
+					resolve(false);
 				},
 				NEW_SERVER_INIT_TIMEOUT,
 			);
 
-			const socketServer = net.createServer(() => {
-				cleanup();
-
-				resolve(
-					this.tryConnectToExistingDaemon().then((bridge) => {
-						if (bridge !== undefined) {
-							this.reporter.success(markup`Started daemon!`);
-						}
-						return bridge;
-					}),
-				);
+			const socketServer = net.createServer((socket) => {
+				resolve(true);
+				socket.end();
 			});
 
 			socketServer.on("error", reject);
@@ -736,8 +729,7 @@ export default class Client {
 					"close",
 					() => {
 						exited = true;
-						cleanup();
-						resolve();
+						resolve(false);
 					},
 				);
 			}
@@ -751,8 +743,13 @@ export default class Client {
 				socketServer.close();
 			}
 		});
-		if (newDaemon) {
-			return newDaemon;
+
+		if (attemptConnection) {
+			const newDaemon = await this.tryConnectToExistingDaemon();
+			if (newDaemon !== undefined) {
+				this.reporter.success(markup`Started daemon!`);
+				return newDaemon;
+			}
 		}
 
 		// as a final precaution kill the server

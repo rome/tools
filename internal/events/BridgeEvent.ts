@@ -16,6 +16,8 @@ import BridgeError from "./BridgeError";
 import Event from "./Event";
 import {ErrorCallback, VoidCallback} from "@internal/typescript-helpers";
 import {RSERValue} from "@internal/codec-binary-serial";
+import { provideDiagnosticAdviceForError } from "@internal/diagnostics";
+import { markup } from "@internal/markup";
 
 type CallOptions = {
 	timeout?: number;
@@ -56,8 +58,22 @@ export class BridgeEvent<Param extends RSERValue, Ret extends RSERValue> {
 	}
 
 	public end(err: Error) {
-		for (const {reject} of this.requestCallbacks.values()) {
-			reject(err);
+		for (const {param, reject} of this.requestCallbacks.values()) {
+			reject(provideDiagnosticAdviceForError(err, {
+				description: {
+					advice: [
+						{
+							type: "log",
+							category: "info",
+							text: markup`Terminated execution of ${this.backingEvent.displayName} with parameters`,
+						},
+						{
+							type: "inspect",
+							data: param,
+						}
+					],
+				}
+			}));
 		}
 	}
 

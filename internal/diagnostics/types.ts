@@ -9,12 +9,12 @@ import {Position, SourceLocation} from "@internal/parser-core";
 import {Diffs} from "@internal/string-diff";
 import {ConstJSSourceType} from "@internal/ast";
 import {OneIndexed, ZeroIndexed} from "@internal/math";
-import {JSONPropertyValue} from "@internal/codec-config";
 import {DiagnosticCategory} from "./categories";
 import {Dict} from "@internal/typescript-helpers";
 import {ClientRequestFlags, CommandName} from "@internal/core";
 import {StaticMarkup} from "@internal/markup";
 import {AnyPath, MixedPathSet} from "@internal/path";
+import { RSERValue } from "@internal/codec-binary-serial";
 
 export type DiagnosticCategoryDescription = {
 	category: DiagnosticCategory;
@@ -164,7 +164,7 @@ export type DiagnosticAdviceList = {
 
 export type DiagnosticAdviceInspect = {
 	type: "inspect";
-	data: JSONPropertyValue;
+	data: RSERValue;
 };
 
 export type DiagnosticAdviceAction = {

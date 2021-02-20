@@ -107,6 +107,10 @@ export class BridgeFactory<
 
 		socket.binaryType = "arraybuffer";
 
+		socket.onopen = () => {
+			rser.init();
+		};
+
 		socket.onmessage = function(event) {
 			const {data} = event;
 			if (!(data instanceof ArrayBuffer)) {
@@ -118,8 +122,6 @@ export class BridgeFactory<
 		socket.onclose = () => {
 			bridge.end("RPC WebSocket disconnected", false);
 		};
-
-		rser.init();
 
 		return bridge;
 	}
@@ -153,13 +155,19 @@ export class BridgeFactory<
 		);
 
 		socket.on(
-			"end",
-			() => {
-				bridge.end("Socket disconnected", false);
+			"close",
+			(hadError) => {
+				bridge.end(hadError ? "Socket closed due to transmission error" : "Socket closed", false);
 			},
 		);
 
-		rser.init();
+		if (socket.connecting) {
+			socket.on("connect", () => {
+				rser.init();
+			});
+		} else {
+			rser.init();
+		}
 
 		return bridge;
 	}

@@ -13,7 +13,7 @@ import {
 	getErrorStructure,
 	setErrorFrames,
 } from "./errors";
-import {maybeCreateAnyPath} from "@internal/path";
+import {AnyPath, createAnyPath, createUIDPath} from "@internal/path";
 import {OneIndexed} from "@internal/math";
 
 let inited: boolean = false;
@@ -92,7 +92,7 @@ function buildStackString(err: Error): string {
 			lineNumber !== undefined &&
 			columnNumber !== undefined
 		) {
-			parts.push(`(${path.join()}:${lineNumber}:${columnNumber})`);
+			parts.push(`(${path.format()}:${lineNumber}:${columnNumber})`);
 		}
 
 		if (!resolvedLocation) {
@@ -119,9 +119,18 @@ function addErrorFrames(err: ErrorWithFrames, frames: NodeJS.CallSite[]): void {
 	}
 
 	let builtFrames = frames.map((frameApi): ErrorFrame => {
-		const filename = frameApi.getFileName();
+		const filename = noNull(frameApi.getFileName());
 		const lineNumber = frameApi.getLineNumber();
 		const columnNumber = frameApi.getColumnNumber();
+
+		let path: undefined | AnyPath;
+		if (filename !== undefined) {
+			if (filename.startsWith("node:")) {
+				path = createUIDPath(filename);
+			} else {
+				path = createAnyPath(filename);
+			}
+		}
 
 		const frame: ErrorFrame = {
 			typeName: noNull(frameApi.getTypeName()),
@@ -134,7 +143,7 @@ function addErrorFrames(err: ErrorWithFrames, frames: NodeJS.CallSite[]): void {
 			// TODO frameApi.isAsync
 			isAsync: false,
 			resolvedLocation: true,
-			path: maybeCreateAnyPath(noNull(filename)),
+			path,
 			lineNumber: lineNumber == null ? undefined : new OneIndexed(lineNumber),
 			// Rome expects 0-indexed columns, V8 provides 1-indexed
 			columnNumber: columnNumber == null

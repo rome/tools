@@ -126,7 +126,6 @@ export function partialServerQueryRequestToFull(
 		noFileWrites: partialQuery.noFileWrites === true,
 		requestFlags,
 		silent: partialQuery.silent === true || requestFlags.benchmark,
-		terminateWhenIdle: partialQuery.terminateWhenIdle === true,
 		commandFlags: partialQuery.commandFlags === undefined
 			? {}
 			: partialQuery.commandFlags,
@@ -219,8 +218,6 @@ export default class Server {
 		this.clientIdCounter = 0;
 
 		this.logInitBuffer = [];
-		this.requestRunningCounter = 0;
-		this.terminateWhenIdle = false;
 
 		this.clientStartEvent = new Event({
 			name: "Server.clientStart",
@@ -333,8 +330,6 @@ export default class Server {
 	// These __should__ be relatively cheap to retain since we don't do a lot
 	private logInitBuffer: [string, boolean][];
 
-	private requestRunningCounter: number;
-	private terminateWhenIdle: boolean;
 	private clientIdCounter: number;
 	private hadConnectedClient: boolean;
 	private profiling: undefined | ProfilingStartData;
@@ -370,7 +365,11 @@ export default class Server {
 	// This should only be used synchronously as the streams will not stay in sync
 	// Used for very important log messages
 	public getImportantReporter(): Reporter {
-		return Reporter.concat([this.logger, this.connectedReporters]);
+		const reporters: Array<Reporter> = [this.logger, this.connectedReporters];
+		if (this.options.dedicated) {
+			reporters.push(Reporter.fromProcess());
+		}
+		return Reporter.concat(reporters);
 	}
 
 	public createWorkerQueue<M = void>(
@@ -608,6 +607,7 @@ export default class Server {
 		const client = await this.createClient(bridge);
 
 		if (client.version !== VERSION) {
+			console.log(client.version !== VERSION);
 			// TODO this wont ever actually be printed?
 			client.reporter.error(
 				markup`Client version ${client.version} does not match server version ${VERSION}. Goodbye lol.`,
@@ -763,24 +763,10 @@ export default class Server {
 
 		// Hook used by the web server to track and collect server requests
 		await this.requestStartEvent.callOptional(req);
-
-		// Track the amount of running queries for terminateWhenIdle
-		this.requestRunningCounter++;
-
-		// Sometimes we'll want to terminate the process once all queries have finished
-		if (req.query.terminateWhenIdle) {
-			this.terminateWhenIdle = true;
-		}
 	}
 
 	public async handleRequestEnd(req: ServerRequest) {
-		this.requestRunningCounter--;
 		req.logger.info(markup`Request end`);
-
-		// If we're waiting to terminate ourselves when idle, then do so when there's no running requests
-		if (this.terminateWhenIdle && this.requestRunningCounter === 0) {
-			await this.end();
-		}
 	}
 
 	public async handleRequest(

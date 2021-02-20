@@ -405,7 +405,7 @@ export default class Bridge<
 		}
 
 		// Reject any pending requests
-		for (const [, event] of this.eventsMap) {
+		for (const event of this.eventsMap.values()) {
 			event.end(err);
 		}
 		this.clear();
@@ -439,7 +439,7 @@ export default class Bridge<
 		message: string = "Connection died",
 		gracefulTeardown: boolean = true,
 	) {
-		this.endWithError(new BridgeError(message, this), gracefulTeardown);
+		this.endWithError(new BridgeError(`Bridge ${this.getDisplayName()}: ${message} `, this), gracefulTeardown);
 	}
 
 	//# Error serialization

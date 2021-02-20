@@ -156,7 +156,6 @@ export default class LSPServer {
 				silent: true,
 				noData: false,
 				noFileWrites: false,
-				terminateWhenIdle: false,
 			},
 		});
 	}

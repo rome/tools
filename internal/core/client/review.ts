@@ -14,8 +14,7 @@ import {
 	DiagnosticsProcessor,
 	derivePositionlessKeyFromDiagnostic,
 } from "@internal/diagnostics";
-import {ClientRequestFlags, ServerQueryResponse} from "@internal/core";
-
+import {ClientRequestFlags, ClientQueryResponse} from "@internal/core";
 import {Dict} from "@internal/typescript-helpers";
 import {EMPTY_SUCCESS_RESPONSE} from "../server/ServerRequest";
 import {markup} from "@internal/markup";
@@ -30,7 +29,7 @@ type State = {
 async function check(
 	req: ClientRequest,
 	state: State,
-): Promise<ServerQueryResponse> {
+): Promise<ClientQueryResponse> {
 	const {reporter} = req.client;
 
 	reporter.clearScreen();
@@ -82,7 +81,7 @@ async function ask(
 	state: State,
 	showMoreOptions: boolean,
 	totalDiagnostics: number,
-): Promise<ServerQueryResponse> {
+): Promise<ClientQueryResponse> {
 	const {client} = req;
 	const {reporter} = client;
 	reporter.clearScreen();
@@ -256,7 +255,7 @@ async function ask(
 
 export default async function review(
 	req: ClientRequest,
-): Promise<ServerQueryResponse> {
+): Promise<ClientQueryResponse> {
 	const {reporter} = req.client;
 	const state: State = {
 		initial: true,

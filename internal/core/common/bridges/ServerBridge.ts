@@ -29,7 +29,6 @@ export type ServerQueryRequest = {
 	silent: boolean;
 	noData: boolean;
 	noFileWrites: boolean;
-	terminateWhenIdle: boolean;
 	cancelToken?: string;
 };
 
@@ -41,7 +40,7 @@ export type PartialServerQueryRequest = Partial<Omit<
 	commandName: CommandName;
 };
 
-type ServerQueryResponseBase = {
+export type ServerQueryResponseBase = {
 	markers: ServerMarker[];
 };
 
