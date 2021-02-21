@@ -18,6 +18,7 @@ import {
 	BundleResultBundle,
 	BundlerConfig,
 	BundlerFiles,
+	BundlerFile,
 } from "../../common/types/bundler";
 import DependencyGraph from "../dependencies/DependencyGraph";
 import BundleRequest, {BundleOptions} from "./BundleRequest";
@@ -40,6 +41,9 @@ import {markup} from "@internal/markup";
 import {BundleCompileResolvedImports} from "@internal/compiler";
 import {serializeAssembled} from "./utils";
 import crypto = require("crypto");
+import { EventSubscription, Event } from "@internal/events";
+import { Diagnostics, getDiagnosticsFromError } from "@internal/diagnostics";
+import { Locker } from "@internal/async";
 
 export type BundlerEntryResoluton = {
 	manifestDef: undefined | ManifestDefinition;
@@ -52,6 +56,15 @@ type BundleCompileResult = WorkerCompileResult & {
 		buffer: Buffer;
 	};
 };
+
+type BundleWatcher = {
+	subscription: EventSubscription,
+	diagnosticsEvent: Event<Diagnostics, void>,
+	changeEvent: Event<AbsoluteFilePath[], void>;
+	filesEvent: Event<BundleWatcherChange[], void>,
+};
+
+type BundleWatcherChange = [string, undefined | BundlerFile];
 
 export default class Bundler {
 	constructor(req: ServerRequest, config: BundlerConfig) {
@@ -156,10 +169,10 @@ export default class Bundler {
 		const mod = graph.getNode(path);
 
 		// Build a map of relative module sources to module id
-		const relativeSourcesToModuleId: Dict<UIDPath> = {};
+		const relativeSourcesToModuleId: Map<string, UIDPath> = new Map();
 		for (const [relative, absolute] of mod.relativeToAbsolutePath) {
 			const moduleId = graph.getNode(absolute).uid;
-			relativeSourcesToModuleId[relative] = moduleId;
+			relativeSourcesToModuleId.set(relative, moduleId);
 		}
 
 		// Diagnostics would have already been added during the initial DependencyGraph.seed
@@ -297,9 +310,81 @@ export default class Bundler {
 		return map;
 	}
 
+	public bundleManifestWatch(resolution: BundlerEntryResoluton): BundleWatcher {
+		const subscription = this.server.refreshFileEvent.subscribe((paths) => {
+			const graphPaths = [];
+			for (const path of paths) {
+				if (this.graph.hasNode(path)) {
+					graphPaths.push(path);
+				}
+			}
+			if (graphPaths.length > 0) {
+				watcher.changeEvent.send(graphPaths);
+				run();
+			}
+		});
+		this.request.attachEndSubscriptionRemoval(subscription);
+
+		const watcher: BundleWatcher = {
+			subscription,
+			diagnosticsEvent: new Event({
+				name: "diagnosticsEvent",
+			}),
+			changeEvent: new Event({
+				name: "changeEvent",
+			}),
+			filesEvent: new Event({
+				name: "filesEvent",
+			}),
+		};
+
+		const knownFiles: Set<string> = new Set();		
+		const runLock: Locker<void> = new Locker();
+
+		const run = async () => {
+			try {
+				await runLock.wrapLock(async () => {
+					const {files} = await this.bundleManifest(resolution);
+
+					const changes: BundleWatcherChange[] = [];
+
+					// Add deleted files
+					for (const name of knownFiles) {
+						if (!files.has(name)) {
+							changes.push([name, undefined]);
+						}
+					}
+
+					// Add new/updated files
+					for (const [name, def] of files) {
+						knownFiles.add(name);
+						changes.push([name, def]);
+					}
+
+					watcher.filesEvent.send(changes);
+				});
+			} catch (err) {
+				const diagnostics = getDiagnosticsFromError(err);
+				if (diagnostics === undefined) {
+					this.request.handleOutboundError(err);
+				} else {
+					watcher.diagnosticsEvent.send(diagnostics);
+				}
+			}
+		};
+
+		run();
+
+		return watcher;
+	}
+
 	public async bundleManifest(
 		{resolvedEntry, manifestDef}: BundlerEntryResoluton,
-	) {
+	): Promise<{
+		files: BundlerFiles,
+		bundles: BundleResultBundle[],
+		entry: BundleResultBundle,
+	}> {
 		let bundles: BundleResultBundle[] = [];
 		const files: BundlerFiles = new Map();
 

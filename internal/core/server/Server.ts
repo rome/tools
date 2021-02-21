@@ -227,7 +227,7 @@ export default class Server {
 			name: "Server.requestStart",
 		});
 
-		this.refreshFileEvent = new EventQueue();
+		this.refreshFileEvent = new EventQueue({toDedupeKey: (path) => path.join()});
 
 		this.endEvent = new Event({
 			name: "Server.end",

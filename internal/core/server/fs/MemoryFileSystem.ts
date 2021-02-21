@@ -164,9 +164,9 @@ export default class MemoryFileSystem {
 		this.watchers = new AbsoluteFilePathMap();
 		this.activeWatcherIds = new Set();
 
-		this.changedFileEvent = new EventQueue();
-		this.deletedFileEvent = new EventQueue();
-		this.newFileEvent = new EventQueue();
+		this.changedFileEvent = new EventQueue({toDedupeKey: ({path}) => path.join()});
+		this.deletedFileEvent = new EventQueue({toDedupeKey: (path) => path.join()});
+		this.newFileEvent = new EventQueue({toDedupeKey: (path) => path.join()});
 
 		this.processingLock = new GlobalLock();
 		this.processingLock.attachLock(this.changedFileEvent.lock);

@@ -3,8 +3,8 @@ import {
 	ProjectConfigCategoriesWithIgnore,
 	ProjectDefinition,
 } from "@internal/project";
-import {Server} from "@internal/core";
-import {EventSubscription, mergeEventSubscriptions} from "@internal/events";
+import {Server, ServerRequest} from "@internal/core";
+import {createEventSubscription, EventSubscription} from "@internal/events";
 import {
 	PathPatterns,
 	matchPathPatterns,
@@ -34,6 +34,7 @@ export interface GlobOptions {
 	test?: (path: AbsoluteFilePath) => boolean;
 	onWatch?: (sub: EventSubscription) => void;
 	onSearchNoMatch?: (path: AbsoluteFilePath) => void;
+	request?: ServerRequest;
 }
 export type WatchFilesEvent = {
 	paths: AbsoluteFilePathSet;
@@ -49,8 +50,10 @@ export class Globber {
 		this.memoryFs = server.memoryFs;
 		this.ignoresByProject = new WeakMap();
 		this.args = new AbsoluteFilePathSet(opts.args);
+		this.request = opts.request;
 	}
 
+	public request: undefined | ServerRequest;
 	private ignoresByProject: WeakMap<ProjectDefinition, PathPatterns>;
 	private args: AbsoluteFilePathSet;
 	private server: Server;
@@ -200,7 +203,7 @@ class GlobberWatcher {
 	private callback: WatchFilesCallback;
 	private flushLock: GlobalLock;
 
-	isDependentPath(path: AbsoluteFilePath): boolean {
+	private isDependentPath(path: AbsoluteFilePath): boolean {
 		for (const arg of this.args) {
 			if (path.equal(arg) || path.isRelativeTo(arg)) {
 				return true;
@@ -209,7 +212,7 @@ class GlobberWatcher {
 		return false;
 	}
 
-	async flushPaths(paths: AbsoluteFilePath[]) {
+	private async flushPaths(paths: AbsoluteFilePath[]) {
 		let pendingPaths: AbsoluteFilePathSet = new AbsoluteFilePathSet();
 		for (const path of paths) {
 			if (this.isDependentPath(path)) {
@@ -228,7 +231,7 @@ class GlobberWatcher {
 		}
 	}
 
-	async flush(paths: AbsoluteFilePathSet, initial: boolean = false) {
+	private async flush(paths: AbsoluteFilePathSet, initial: boolean = false) {
 		await this.flushLock.wrap(async () => {
 			// We could be evicting a project as the result of a modification made inside of the watch callback
 			// Ensure it's complete before we decide to flush
@@ -242,7 +245,7 @@ class GlobberWatcher {
 		});
 	}
 
-	setupEvents(): EventSubscription[] {
+	private setupEvents(): EventSubscription[] {
 		const {memoryFs, server} = this;
 		const subscriptions: EventSubscription[] = [];
 
@@ -262,17 +265,20 @@ class GlobberWatcher {
 		return subscriptions;
 	}
 
-	async init(): Promise<EventSubscription> {
+	public async init(): Promise<EventSubscription> {
 		const {memoryFs} = this;
 		const subs = this.setupEvents();
-		const finalSubs = mergeEventSubscriptions([
+		const finalSubs = createEventSubscription(
 			...subs,
-			{
-				unsubscribe: async () => {
-					await this.flushLock.wait();
-				},
+			async () => {
+				await this.flushLock.wait();
 			},
-		]);
+		);
+
+		const {request} = this.globber;
+		if (request !== undefined) {
+			request.attachEndSubscriptionRemoval(finalSubs);
+		}
 
 		try {
 			const promises: Promise<unknown>[] = [];

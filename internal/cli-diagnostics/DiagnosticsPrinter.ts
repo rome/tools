@@ -712,7 +712,7 @@ export default class DiagnosticsPrinter extends Error {
 
 				outdatedAdvice.push({
 					type: "list",
-					list: outdatedFilesArr.map((path) => markup`${path}`),
+					list: outdatedFilesArr,
 				});
 			}
 		}

@@ -36,13 +36,12 @@ export type BundleBuddyGraphNode = {
 	target: string | undefined;
 };
 
-export type BundlerFiles = Map<
-	string,
-	{
-		kind: "asset" | "entry" | "sourcemap" | "stats" | "manifest" | "file";
-		content: () => string | Buffer;
-	}
->;
+export type BundlerFile = {
+	kind: "asset" | "entry" | "sourcemap" | "stats" | "manifest" | "file";
+	content: () => string | Buffer;
+};
+
+export type BundlerFiles = Map<string, BundlerFile>;
 
 export type BundleResultBundle = {
 	sourceMap: {

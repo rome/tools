@@ -205,8 +205,8 @@ export function hasScope(parser: JSParser, type: ScopeType): boolean {
 	return scope !== undefined && scope.length > 0;
 }
 
-export function addParenthesized(parser: JSParser, node: AnyNode) {
-	parser.meta.parenthesized.add(derivePositionKey(parser.getLoc(node).start));
+export function addParenthesized(parser: JSParser, start: Position) {
+	parser.meta.parenthesized.add(derivePositionKey(start));
 }
 
 export function isParenthesized(parser: JSParser, node: AnyNode): boolean {

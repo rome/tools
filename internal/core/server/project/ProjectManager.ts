@@ -559,7 +559,6 @@ export default class ProjectManager {
 		const {projectDirectory, configPath, isPartial} = opts;
 
 		return this.projectLoadingLocks.wrapLock(
-			projectDirectory,
 			async () => {
 				if (this.hasLoadedProjectDirectory(projectDirectory)) {
 					// Already defined
@@ -579,6 +578,7 @@ export default class ProjectManager {
 					config,
 				});
 			},
+			projectDirectory,
 		);
 	}
 

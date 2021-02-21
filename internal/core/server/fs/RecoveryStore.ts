@@ -496,7 +496,7 @@ export default class RecoveryStore {
 		}
 
 		const paths: AbsoluteFilePathSet = new AbsoluteFilePathSet(files.keys());
-		const teardowns: (() => Promise<void>)[] = [];
+		const teardowns: (() => Promise<unknown>)[] = [];
 		const {server} = this;
 
 		// Files successfully written

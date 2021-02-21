@@ -38,6 +38,7 @@ import {
 	tagsToOnlyChildren,
 	tagsToOnlyParent,
 } from "./tags";
+import { isPlainObject } from "@internal/typescript-helpers";
 
 //
 function isStringValueChar(
@@ -404,7 +405,7 @@ function parseChild(
 	}
 }
 
-const parseCache: WeakMap<Exclude<StaticMarkup, string>, MarkupParsedChildren> = new WeakMap();
+const parseCache: WeakMap<Extract<StaticMarkup, object>, MarkupParsedChildren> = new WeakMap();
 export function parseMarkup(
 	input: string | AnyMarkup,
 	opts: ParserOptions = {},
@@ -415,7 +416,7 @@ export function parseMarkup(
 	if (typeof input !== "string") {
 		cacheKey = serializeLazyMarkup(input);
 
-		if (typeof cacheKey !== "string") {
+		if (isPlainObject(cacheKey) || Array.isArray(cacheKey)) {
 			const cached = parseCache.get(cacheKey);
 			if (cached !== undefined) {
 				return cached;
@@ -447,7 +448,7 @@ export function parseMarkup(
 		}
 	}
 
-	if (cacheKey !== undefined && typeof cacheKey !== "string") {
+	if (cacheKey !== undefined && (isPlainObject(cacheKey) || Array.isArray(cacheKey))) {
 		parseCache.set(cacheKey, children);
 	}
 

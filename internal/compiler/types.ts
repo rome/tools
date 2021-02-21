@@ -84,7 +84,7 @@ export type BundleCompileOptions = {
 	moduleAll: boolean;
 	moduleId: UIDPath;
 	analyze: AnalyzeDependencyResult;
-	relativeSourcesToModuleId: Dict<UIDPath>;
+	relativeSourcesToModuleId: Map<string, UIDPath>;
 	resolvedImports: BundleCompileResolvedImports;
 	assetPath: undefined | string;
 };

@@ -394,7 +394,6 @@ function _parseMaybeAssign<T extends AnyNode>(
 
 		//if (left.type === 'BindingArrayPattern' || left.type === 'BindingObjectPattern') {
 		//  checkCommaAfterRestFromSpread(parser);
-
 		//}
 		parser.state.commaAfterSpreadAt = oldCommaAfterSpreadAt;
 
@@ -1979,6 +1978,7 @@ export function parseParenAndDistinguishExpression(
 
 	const innerEnd = parser.getPosition();
 	expectClosing(parser, openContext);
+	const outerEnd = parser.getPosition();
 
 	parser.state.maybeInArrowParameters = oldMaybeInArrowParameters;
 
@@ -2078,8 +2078,8 @@ export function parseParenAndDistinguishExpression(
 	let val: AnyJSExpression = filterList[0];
 	if (filterList.length > 1) {
 		val = parser.finishNodeAt(
-			innerStart,
-			innerEnd,
+			startPos,
+			outerEnd,
 			{
 				type: "JSSequenceExpression",
 				expressions: filterList,
@@ -2087,7 +2087,7 @@ export function parseParenAndDistinguishExpression(
 		);
 	}
 
-	addParenthesized(parser, val);
+	addParenthesized(parser, startPos);
 
 	return val;
 }

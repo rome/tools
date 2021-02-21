@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Dict} from "@internal/typescript-helpers";
+import {Dict, isPlainObject} from "@internal/typescript-helpers";
 import {MarkupTagName} from "./types";
 import {AnyPath, URLPath, isPath} from "@internal/path";
 import {OneIndexed, UnknownNumber, ZeroIndexed} from "@internal/math";
@@ -16,7 +16,7 @@ export type LazyMarkupFactory = () => AnyMarkup;
 
 export type StaticMarkups = StaticMarkup[];
 
-export type StaticMarkup = string | RawMarkup | StaticMarkup[];
+export type StaticMarkup = string | AnyPath | UnknownNumber | RawMarkup | StaticMarkup[];
 
 export type AnyMarkup = StaticMarkup | LazyMarkup | LazyMarkupFactory;
 
@@ -34,9 +34,7 @@ type RawMarkup = {
 
 function isRawMarkup(part: LazyMarkupPart): part is RawMarkup {
 	return (
-		typeof part === "object" &&
-		part != null &&
-		!Array.isArray(part) &&
+		isPlainObject(part) &&
 		part.type === "RAW_MARKUP"
 	);
 }
@@ -49,9 +47,7 @@ function isLazyMarkup(
 
 function isLazyMarkupParts(part: LazyMarkupPart): part is LazyMarkup {
 	return (
-		typeof part === "object" &&
-		part != null &&
-		!Array.isArray(part) &&
+		isPlainObject(part) &&
 		part.type === "LAZY_MARKUP"
 	);
 }
@@ -86,9 +82,9 @@ export function filePathToMarkup(
 	);
 }
 
-type InterpolatedValue = undefined | AnyPath | UnknownNumber;
-
 const markupTemplateCache: WeakMap<TemplateStringsArray, AnyMarkup> = new WeakMap();
+
+type InterpolatedValue = undefined;
 
 // A tagged template literal helper that will escape all interpolated strings, ensuring only markup works
 export function markup(
@@ -140,25 +136,10 @@ export function markup(
 }
 
 function normalizeInterpolatedValue(
-	value: StaticMarkup | InterpolatedValue,
-): StaticMarkup;
-function normalizeInterpolatedValue(
-	value: LazyMarkupPart | InterpolatedValue,
-): AnyMarkup;
-function normalizeInterpolatedValue(
-	value: LazyMarkupPart | InterpolatedValue,
+	value: AnyMarkup | InterpolatedValue,
 ): AnyMarkup {
 	if (typeof value === "undefined") {
 		return toRawMarkup("<dim>undefined</dim>");
-	} else if (
-		typeof value === "number" ||
-		typeof value === "bigint" ||
-		value instanceof ZeroIndexed ||
-		value instanceof OneIndexed
-	) {
-		return toRawMarkup(`<number>${String(value.valueOf())}</number>`);
-	} else if (isPath(value)) {
-		return filePathToMarkup(value);
 	} else {
 		return value;
 	}
@@ -166,7 +147,7 @@ function normalizeInterpolatedValue(
 
 // Here we have a cache making serializing markup so we can call it performantly with only the object
 // We can also benefit from a small speed up by common interpolated markup
-const readCache: WeakMap<Exclude<AnyMarkup, string>, string> = new WeakMap();
+const readCache: WeakMap<Extract<AnyMarkup, object>, string> = new WeakMap();
 
 export function readMarkup(item: AnyMarkup): string {
 	if (isLazyMarkupFactory(item)) {
@@ -176,14 +157,27 @@ export function readMarkup(item: AnyMarkup): string {
 	if (typeof item === "string") {
 		return escapeMarkup(item);
 	}
-
-	const cached = readCache.get(item);
-	if (cached !== undefined) {
-		return cached;
+	
+	if (
+		typeof item === "number" ||
+		typeof item === "bigint" ||
+		item instanceof ZeroIndexed ||
+		item instanceof OneIndexed
+	) {
+		return `<number>${String(item.valueOf())}</number>`;
+	}
+	
+	if (isPath(item)) {
+		return readMarkup(filePathToMarkup(item));
 	}
 
 	if (isRawMarkup(item)) {
 		return item.value;
+	}
+
+	const cached = readCache.get(item);
+	if (cached !== undefined) {
+		return cached;
 	}
 
 	let out = "";

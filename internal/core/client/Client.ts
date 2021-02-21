@@ -25,8 +25,7 @@ import {
 	BridgeClient,
 	Event,
 	EventSubscription,
-	createEmptySubscription,
-	createSubscriptionHelper,
+	createEventSubscription,
 	isBridgeClosedDiagnosticError,
 } from "@internal/events";
 import {Reporter, ReporterDerivedStreams} from "@internal/cli-reporter";
@@ -166,7 +165,7 @@ export default class Client {
 		) => Promise<EventSubscription | undefined>,
 	): Promise<EventSubscription> {
 		if (this.bridgeStatus === undefined) {
-			const helper = createSubscriptionHelper();
+			const helper = createEventSubscription();
 
 			helper.add(
 				this.bridgeAttachedEvent.subscribe(async (bridgeStatus) => {
@@ -180,7 +179,7 @@ export default class Client {
 			return helper;
 		} else {
 			const subscription = await callback(this.bridgeStatus);
-			return subscription ?? createEmptySubscription();
+			return subscription ?? createEventSubscription();
 		}
 	}
 

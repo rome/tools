@@ -14,6 +14,7 @@ import {
 	BridgeEventCallOnly,
 	BridgeEventListenOnly,
 } from "./BridgeEvent";
+import Event from "./Event";
 import {BridgeFactories} from "./createBridge";
 import Bridge from "./Bridge";
 
@@ -105,11 +106,14 @@ export type EventOptions = {
 	serial?: boolean;
 };
 
-export type EventSubscription = {
-	unsubscribe: () => Promise<void>;
+export interface PartialEventSubscription {
+	unsubscribe: () => Promise<boolean>;
 };
 
-export type EventSubscriptions = EventSubscription[];
+export interface EventSubscription extends PartialEventSubscription {
+	add: (sub: EventSubscription) => void;
+	onUnsubscribeEvent: Event<void, void>;
+}
 
 export type BridgeHeartbeatExceededOptions = {
 	summary: AnyMarkups;

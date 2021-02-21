@@ -40,6 +40,7 @@ import {RSERObject, RSERStream, RSERValue} from "@internal/codec-binary-serial";
 import {ExtendedMap} from "@internal/collections";
 import { createRuntimeDiagnosticError, DIAGNOSTIC_CATEGORIES } from "@internal/diagnostics";
 import { BridgeTimeoutError } from "./errors";
+import { createEventSubscription } from "./utils";
 
 type ErrorSerial<Data extends RSERValue> = {
 	serialize: (err: Error) => Data;
@@ -79,6 +80,7 @@ export default class Bridge<
 			name: "Bridge.end",
 			serial: true,
 		});
+		this.endSubscriptions = createEventSubscription();
 		this.updatedListenersEvent = new Event({
 			name: "Bridge.updatedListenersEvent",
 		});
@@ -153,10 +155,13 @@ export default class Bridge<
 
 	public sendMessageEvent: Event<BridgeMessage, void>;
 	public endEvent: Event<Error, void>;
+	
 	public alive: boolean;
 	private endError: undefined | Error;
-	protected debugName: string;
+	private endSubscriptions: EventSubscription;
+
 	public type: BridgeType;
+	protected debugName: string;
 
 	private messageIdCounter: number;
 
@@ -174,9 +179,7 @@ export default class Bridge<
 	}
 
 	public attachEndSubscriptionRemoval(subscription: EventSubscription) {
-		this.endEvent.subscribe(async () => {
-			await subscription.unsubscribe();
-		});
+		this.endSubscriptions.add(subscription);
 	}
 
 	private getPendingRequestsSummary(): AnyMarkups {
@@ -434,6 +437,7 @@ export default class Bridge<
 
 		// Notify listeners
 		await this.endEvent.callOptional(err);
+		await this.endSubscriptions.unsubscribe();
 	}
 
 	public async end(

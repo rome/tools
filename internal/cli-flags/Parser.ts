@@ -455,9 +455,7 @@ export default class Parser<T> {
 						markup`Could not find your bash profile. Tried the following:`,
 					);
 					reporter.list(
-						possibleProfiles.map((path) => {
-							return markup`${path}`;
-						}),
+						possibleProfiles
 					);
 				} else {
 					let file = await profilePath.readFileText();

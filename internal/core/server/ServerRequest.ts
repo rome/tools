@@ -63,7 +63,7 @@ import Server, {
 	ServerUnfinishedMarker,
 } from "./Server";
 import {Reporter, ReporterNamespace} from "@internal/cli-reporter";
-import {BridgeServer, Event} from "@internal/events";
+import {BridgeServer, createEventSubscription, Event, EventSubscription} from "@internal/events";
 import {
 	FlagValue,
 	SerializeCLILocation,
@@ -121,7 +121,7 @@ type WrapRequestDiagnosticOpts = {
 
 export type ServerRequestGlobArgs = [AnyFilePath, DiagnosticLocation][];
 
-type ServerRequestGlobOptions = Omit<GlobOptions, "args" | "relativeDirectory"> & {
+type ServerRequestGlobOptions = Omit<GlobOptions, "args" | "relativeDirectory" | "request"> & {
 	args?: ServerRequestGlobArgs;
 	tryAlternateArg?: (path: AnyPath) => undefined | AnyPath;
 	ignoreArgumentMisses?: boolean;
@@ -162,7 +162,7 @@ async function globUnmatched(
 
 			advice.push({
 				type: "list",
-				list: Array.from(withoutIgnore, (path) => markup`${path}`),
+				list: Array.from(withoutIgnore),
 				truncate: true,
 			});
 
@@ -194,7 +194,7 @@ async function globUnmatched(
 	throw createSingleDiagnosticError({
 		location: {
 			...location,
-			marker: markup`${path}`,
+			marker: path,
 		},
 		description: {
 			...descriptions.FLAGS.NO_FILES_FOUND(opts.noun),
@@ -259,6 +259,7 @@ export default class ServerRequest {
 			name: "ServerRequest.end",
 			serial: true,
 		});
+		this.endSubscriptions = createEventSubscription();
 
 		this.args = this.createArgsConsumer();
 
@@ -277,6 +278,7 @@ export default class ServerRequest {
 	public cancelEvent: Event<void, void>;
 	public markerEvent: Event<ServerMarker, void>;
 
+	private endSubscriptions: EventSubscription;
 	private start: number;
 	private normalizedCommandFlags: NormalizedCommandFlags;
 	private markers: ServerMarker[];
@@ -303,6 +305,10 @@ export default class ServerRequest {
 		});
 	}
 
+	public attachEndSubscriptionRemoval(subscription: EventSubscription) {
+		this.endSubscriptions.add(subscription);
+	}
+
 	public queueSaveFile(path: AbsoluteFilePath, opts: RecoverySaveFile) {
 		this.files.set(path, opts);
 	}
@@ -325,7 +331,7 @@ export default class ServerRequest {
 		this.files = new AbsoluteFilePathMap();
 
 		this.logger.info(markup`Flushing files`);
-		logger.list(Array.from(files.keys(), (path) => markup`${path}`));
+		logger.list(Array.from(files.keys()));
 
 		// Need to capture this before as it will be modified by server.writeFiles
 		const totalFiles = files.size;
@@ -400,6 +406,12 @@ export default class ServerRequest {
 		if (this.cancelledReason !== undefined) {
 			throw new ServerRequestCancelled(this.cancelledReason);
 		}
+	}
+
+	// Handle an error that occurs outside of the main execution of a request
+	public async handleOutboundError(err: Error): Promise<void> {
+		await this.teardown(await this.buildResponseFromError(err));
+		await this.cancel(`Outbound error received`);
 	}
 
 	public async cancel(reason: string): Promise<void> {
@@ -494,6 +506,7 @@ export default class ServerRequest {
 			markers: this.markers,
 		};
 
+		await this.endSubscriptions.unsubscribe();
 		await this.endEvent.callOptional(res);
 		await this.server.handleRequestEnd(this);
 		return res;
@@ -1271,6 +1284,7 @@ export default class ServerRequest {
 			{
 				...opts,
 				args,
+				request: this,
 
 				onWatch: (sub) => {
 					this.endEvent.subscribe(async () => {

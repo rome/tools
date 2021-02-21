@@ -6,64 +6,75 @@
  */
 
 import { DIAGNOSTIC_CATEGORIES, isDiagnosticErrorOfCategory } from "@internal/diagnostics";
-import {EventSubscription, EventSubscriptions} from "./types";
+import { AsyncVoidCallback } from "@internal/typescript-helpers";
+import Event from "./Event";
+import {EventSubscription, PartialEventSubscription} from "./types";
 
-export function mergeEventSubscriptions(
-	subs: EventSubscriptions,
-): EventSubscription {
-	if (subs.length === 1) {
-		return subs[0];
+// Allow event subscriptions to be easily merged
+export function createEventSubscription(...seed: (PartialEventSubscription | EventSubscription | AsyncVoidCallback)[]): EventSubscription {
+	let subscriptions: Set<PartialEventSubscription> = new Set();
+	const onUnsubscribeEvent: EventSubscription["onUnsubscribeEvent"] = new Event({
+		name: "onUnsubscribe",
+	});
+	
+	let wrapper: EventSubscription = {
+		add(sub: EventSubscription) {
+			sub.onUnsubscribeEvent.subscribe(() => {
+				subscriptions.delete(sub);
+			});
+
+			subscriptions.add(sub);
+		},
+		onUnsubscribeEvent,
+		async unsubscribe() {
+			// Return true if at least one subscription was unsubscribed
+			let unsubscribed = false;
+
+			let currSubscriptions = subscriptions;
+			subscriptions = new Set();
+			await Promise.all(Array.from(currSubscriptions, async (sub) => {
+				if (await sub.unsubscribe()) {
+					unsubscribed = true;
+				}
+			}));
+
+			if (unsubscribed) {
+				await onUnsubscribeEvent.callOptional();
+			}
+			
+			return unsubscribed;
+		},
+	};
+
+	for (const elem of seed) {
+		if (typeof elem === "function") {
+			subscriptions.add(createSubscriptionFromCallback(elem));
+		} else {
+			if ("onUnsubscribeEvent" in elem) {
+				wrapper.add(elem);
+			} else {
+				subscriptions.add(elem);
+			}
+		}
 	}
 
+	return wrapper;
+}
+
+function createSubscriptionFromCallback(callback: AsyncVoidCallback): PartialEventSubscription {
+	let subscribed = true;
 	return {
 		async unsubscribe() {
-			for (const sub of subs) {
-				await sub.unsubscribe();
+			if (subscribed) {
+				subscribed = false;
+				if (callback !== undefined) {
+					await callback();
+				}
+				return true;
+			} else {
+				return false;
 			}
 		},
-	};
-}
-
-export function createEmptySubscription(): EventSubscription {
-	return {
-		async unsubscribe() {},
-	};
-}
-
-export interface SubscriptionWrapperHelpers extends EventSubscription {
-	add: (sub: EventSubscription) => void;
-}
-
-type SubscriptionWrapperCallback<Ret, Args extends unknown[]> = (
-	helper: SubscriptionWrapperHelpers,
-	...args: Args
-) => Promise<Ret>;
-
-export function createSubscriptionHelper(): SubscriptionWrapperHelpers {
-	const subscriptions: EventSubscriptions = [];
-
-	return {
-		add(sub: EventSubscription) {
-			subscriptions.push(sub);
-		},
-		async unsubscribe() {
-			await mergeEventSubscriptions(subscriptions).unsubscribe();
-		},
-	};
-}
-
-// A safe way to wrap subscriptions and ensure they're properly closed on errors
-export function wrapSubscriptionConsumer<Ret, Args extends unknown[]>(
-	callback: SubscriptionWrapperCallback<Ret, Args>,
-): (...args: Args) => Promise<Ret> {
-	return async function(...args: Args): Promise<Ret> {
-		const helper = createSubscriptionHelper();
-
-		try {
-			return await callback(helper, ...args);
-		} finally {
-			await helper.unsubscribe();
-		}
 	};
 }
 

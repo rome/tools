@@ -94,8 +94,8 @@ abstract class LockerNormalized<RawKey, MapKey> {
 	}
 
 	public async wrapLock<T>(
-		key: RawKey,
 		callback: () => T | Promise<T>,
+		key: RawKey,
 	): Promise<T> {
 		const lock = await this.getLock(key);
 		try {

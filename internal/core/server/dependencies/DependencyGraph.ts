@@ -163,6 +163,10 @@ export default class DependencyGraph {
 		return module;
 	}
 
+	public hasNode(path: AbsoluteFilePath): boolean {
+		return this.nodes.has(path);
+	}
+
 	public maybeGetNode(path: AbsoluteFilePath): undefined | DependencyNode {
 		return this.nodes.get(path);
 	}

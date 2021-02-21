@@ -180,7 +180,7 @@ class CheckRunner {
 		const queue = server.createWorkerQueue({
 			callback: async ({path}) => {
 				const filename = path.join();
-				const progressId = progress.pushText(markup`${path}`);
+				const progressId = progress.pushText(path);
 
 				let compilerOptions = lintCompilerOptionsPerFile[filename];
 

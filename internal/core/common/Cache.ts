@@ -101,7 +101,7 @@ export default class Cache {
 			await directory.createDirectory();
 
 			for (const [path, op] of ops) {
-				filelinks.push(markup`${path}`);
+				filelinks.push(path);
 				switch (op.type) {
 					case "delete": {
 						await path.removeFile();

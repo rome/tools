@@ -8,6 +8,7 @@
 import {ExtendedMap} from "@internal/collections";
 import {humanizeDuration} from "@internal/string-utils";
 import {EventCallback, EventOptions, EventSubscription} from "./types";
+import { createEventSubscription } from "./utils";
 
 export default class Event<Param, Ret = void> {
 	constructor(opts: EventOptions) {
@@ -153,11 +154,11 @@ export default class Event<Param, Ret = void> {
 			);
 		}
 
-		const subscription: EventSubscription = {
+		const subscription: EventSubscription = createEventSubscription({
 			unsubscribe: async () => {
-				this.unsubscribe(callback);
+				return this.unsubscribe(callback);
 			},
-		};
+		});
 		this.subscriptions.set(callback, subscription);
 
 		if (this.rootCallback === callback || this.callbacks.has(callback)) {
@@ -180,13 +181,17 @@ export default class Event<Param, Ret = void> {
 		return subscription;
 	}
 
-	private unsubscribe(callback: EventCallback<Param, Ret>) {
+	private unsubscribe(callback: EventCallback<Param, Ret>): boolean {
+		if (!this.subscriptions.has(callback)) {
+			return false;
+		}
+
 		this.subscriptions.delete(callback);
 
 		if (this.callbacks.has(callback)) {
 			this.callbacks.delete(callback);
 			this.onSubscriptionChange();
-			return;
+			return true;
 		}
 
 		// If this callback was the root subscription, then set it to the next one
@@ -194,7 +199,9 @@ export default class Event<Param, Ret = void> {
 			this.rootCallback = Array.from(this.callbacks)[0];
 			this.callbacks.delete(this.rootCallback);
 			this.onSubscriptionChange();
-			return;
+			return true;
 		}
+
+		throw new Error("Unhandled subscription");
 	}
 }

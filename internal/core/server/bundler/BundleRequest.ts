@@ -125,7 +125,7 @@ export default class BundleRequest {
 
 		const queue = server.createWorkerQueue({
 			callback: async ({path}) => {
-				const progressId = compilingSpinner.pushText(markup`${path}`);
+				const progressId = compilingSpinner.pushText(path);
 
 				const res = await this.bundler.compileJS(path);
 
@@ -299,6 +299,7 @@ export default class BundleRequest {
 			const sourceMapComment = sourceMap.toComment();
 			assembled.push([0, sourceMapComment]);
 		} else {
+			// TODO: URL is wrong
 			assembled.push([
 				0,
 				`//# sourceMappingURL=${this.sourceMap.path.join()}.map`,

@@ -212,7 +212,6 @@ export default class SnapshotManager {
 		}
 
 		return this.fileLocker.wrapLock(
-			path,
 			async () => {
 				const loadedSnapshot = this.snapshots.get(path);
 				if (loadedSnapshot !== undefined) {
@@ -296,6 +295,7 @@ export default class SnapshotManager {
 				}
 				return snapshot;
 			},
+			path,
 		);
 	}
 
