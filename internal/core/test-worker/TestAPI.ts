@@ -151,7 +151,7 @@ export default class TestAPI implements TestHelper {
 		this.snapshotManager = snapshotManager;
 		this.snapshotCounter = 0;
 		this.path = path;
-		this.teardownEvent = new Event({name: "TestAPI.teardown"});
+		this.teardownEvent = new Event("TestAPI.teardown");
 		this.startTime = Date.now();
 		this.onTimeout = onTimeout;
 		this.emitDiagnostic = emitDiagnostic;

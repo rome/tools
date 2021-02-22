@@ -45,9 +45,7 @@ export default class WorkerManager {
 	constructor(server: Server) {
 		this.server = server;
 
-		this.workerStartEvent = new Event({
-			name: "WorkerManager.workerStart",
-		});
+		this.workerStartEvent = new Event("WorkerManager.workerStart");
 		this.selfWorker = true;
 		this.locker = new Locker();
 		this.workers = new ExtendedMap("workers");

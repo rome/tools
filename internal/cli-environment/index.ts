@@ -122,9 +122,7 @@ export function inferTerminalFeatures(
 		force,
 	);
 
-	const updateEvent: Event<TerminalFeatures, void> = new Event({
-		name: "update",
-	});
+	const updateEvent: Event<TerminalFeatures, void> = new Event("update");
 
 	let closeUpdateEvent: InferredTerminalFeatures["closeUpdateEvent"] = () => {};
 	let setupUpdateEvent: InferredTerminalFeatures["setupUpdateEvent"] = () => {};

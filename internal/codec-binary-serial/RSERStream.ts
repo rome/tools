@@ -44,22 +44,10 @@ export default class RSERStream {
 				? createState("IDLE", MAX_MESSAGE_HEADER_SIZE)
 				: createState("INIT", MAX_STREAM_HEADER_SIZE);
 		this.overflow = [];
-
-		this.errorEvent = new Event({
-			name: "RSERStream.error",
-		});
-
-		this.valueEvent = new Event({
-			name: "RSERStream.value",
-		});
-
-		this.sendEvent = new Event({
-			name: "RSERStream.sendEvent",
-		});
-
-		this.incompatibleEvent = new Event({
-			name: "RSERStream.incompatibleEvent",
-		});
+		this.errorEvent = new Event("RSERStream.error");
+		this.valueEvent = new Event("RSERStream.value");
+		this.sendEvent = new Event("RSERStream.sendEvent");
+		this.incompatibleEvent = new Event("RSERStream.incompatibleEvent");
 	}
 
 	public incompatibleEvent: Event<void, void>;

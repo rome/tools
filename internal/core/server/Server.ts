@@ -219,18 +219,13 @@ export default class Server {
 
 		this.logInitBuffer = [];
 
-		this.clientStartEvent = new Event({
-			name: "Server.clientStart",
-		});
+		this.clientStartEvent = new Event("Server.clientStart");
 
-		this.requestStartEvent = new Event({
-			name: "Server.requestStart",
-		});
+		this.requestStartEvent = new Event("Server.requestStart");
 
 		this.refreshFileEvent = new EventQueue({toDedupeKey: (path) => path.join()});
 
-		this.endEvent = new Event({
-			name: "Server.end",
+		this.endEvent = new Event("Server.end", {
 			serial: true,
 		});
 

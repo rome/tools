@@ -124,14 +124,8 @@ export class GlobalLock {
 	constructor() {
 		this.resolves = [];
 		this.dependencies = 0;
-
-		this.incrementEvent = new Event({
-			name: "incrementEvent",
-		});
-
-		this.decrementEvent = new Event({
-			name: "decrementEvent",
-		});
+		this.incrementEvent = new Event("incrementEvent");
+		this.decrementEvent = new Event("decrementEvent");
 	}
 
 	private incrementEvent: Event<void, void>;

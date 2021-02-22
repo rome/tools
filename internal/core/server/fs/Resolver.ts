@@ -438,8 +438,8 @@ export default class Resolver {
 			const protocol = sourceURL.getProtocol();
 
 			switch (protocol) {
-				case "http":
-				case "https": {
+				case "http:":
+				case "https:": {
 					let projectConfig = createDefaultProjectConfig();
 
 					if (origin.isAbsolute()) {
@@ -574,7 +574,7 @@ export default class Resolver {
 				for (const platform of platformAliases) {
 					yield* this._getFilenameVariants(
 						query,
-						path.addExtension(`.${platform}`, true),
+						path.changeExtension(`.${platform}`),
 						[...callees, "implicitPlatform"],
 					);
 				}
@@ -615,7 +615,7 @@ export default class Resolver {
 			type: "FOUND",
 			types,
 			ref: this.server.projectManager.getFileReference(path),
-			path,
+			path: this.server.memoryFs.coalescePath(path),
 		};
 	}
 

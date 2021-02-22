@@ -42,9 +42,9 @@ export class WebSocketInterface {
 		this.alive = true;
 		this.type = type;
 
-		this.completeFrameEvent = new Event({name: "WebSocketInterface.message"});
-		this.errorEvent = new Event({name: "WebSocketInterface.error"});
-		this.endEvent = new Event({name: "WebSocketInterface.end", serial: true});
+		this.completeFrameEvent = new Event("WebSocketInterface.message");
+		this.errorEvent = new Event("WebSocketInterface.error");
+		this.endEvent = new Event("WebSocketInterface.end", {serial: true});
 
 		socket.on(
 			"data",

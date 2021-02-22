@@ -70,20 +70,13 @@ export default class Bridge<
 		this.messageIdCounter = 0;
 		this.eventsMap = new ExtendedMap("events");
 
-		this.sendMessageEvent = new Event({
-			name: "Bridge.sendMessageEvent",
-		});
-		this.handshakeEvent = new Event({
-			name: "Bridge.handshake",
-		});
-		this.endEvent = new Event({
-			name: "Bridge.end",
+		this.sendMessageEvent = new Event("Bridge.sendMessageEvent");
+		this.handshakeEvent = new Event("Bridge.handshake");
+		this.endEvent = new Event("Bridge.end", {
 			serial: true,
 		});
 		this.endSubscriptions = createEventSubscription();
-		this.updatedListenersEvent = new Event({
-			name: "Bridge.updatedListenersEvent",
-		});
+		this.updatedListenersEvent = new Event("Bridge.updatedListenersEvent");
 
 		// A Set of event names that are being listened to on the other end
 		// We track this to avoid sending over subscriptions that aren't needed
@@ -179,7 +172,7 @@ export default class Bridge<
 	}
 
 	public attachEndSubscriptionRemoval(subscription: EventSubscription) {
-		this.endSubscriptions.add(subscription);
+		this.endSubscriptions.addDependency(subscription);
 	}
 
 	private getPendingRequestsSummary(): AnyMarkups {

@@ -57,10 +57,10 @@ export class LSPTransport {
 		this.requestIdCounter = 0;
 		this.requestCallbacks = new Map();
 
-		this.requestEvent = new Event({name: "request"});
-		this.notificationEvent = new Event({name: "notification"});
-		this.writeEvent = new Event({name: "write"});
-		this.errorEvent = new Event({name: "error"});
+		this.requestEvent = new Event("LSPTransport.request");
+		this.notificationEvent = new Event("LSPTransport.notification");
+		this.writeEvent = new Event("LSPTransport.write");
+		this.errorEvent = new Event("LSPTransport.error");
 	}
 
 	private nextHeaders: undefined | Headers;

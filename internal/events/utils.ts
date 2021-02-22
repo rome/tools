@@ -13,12 +13,10 @@ import {EventSubscription, PartialEventSubscription} from "./types";
 // Allow event subscriptions to be easily merged
 export function createEventSubscription(...seed: (PartialEventSubscription | EventSubscription | AsyncVoidCallback)[]): EventSubscription {
 	let subscriptions: Set<PartialEventSubscription> = new Set();
-	const onUnsubscribeEvent: EventSubscription["onUnsubscribeEvent"] = new Event({
-		name: "onUnsubscribe",
-	});
+	const onUnsubscribeEvent: EventSubscription["onUnsubscribeEvent"] = new Event("onUnsubscribe");
 	
 	let wrapper: EventSubscription = {
-		add(sub: EventSubscription) {
+		addDependency(sub: EventSubscription) {
 			sub.onUnsubscribeEvent.subscribe(() => {
 				subscriptions.delete(sub);
 			});
@@ -51,7 +49,7 @@ export function createEventSubscription(...seed: (PartialEventSubscription | Eve
 			subscriptions.add(createSubscriptionFromCallback(elem));
 		} else {
 			if ("onUnsubscribeEvent" in elem) {
-				wrapper.add(elem);
+				wrapper.addDependency(elem);
 			} else {
 				subscriptions.add(elem);
 			}

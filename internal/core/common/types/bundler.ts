@@ -7,7 +7,7 @@
 
 import {Diagnostics} from "@internal/diagnostics";
 import {SourceMapGenerator} from "@internal/codec-source-map";
-import {AbsoluteFilePath} from "@internal/path";
+import {AbsoluteFilePath, RelativePath, RelativePathMap} from "@internal/path";
 import {ResolverOptions} from "../../server/fs/Resolver";
 import BundleRequest from "@internal/core/server/bundler/BundleRequest";
 import Bundler from "@internal/core/server/bundler/Bundler";
@@ -26,7 +26,7 @@ export type BundleRequestResult = {
 	diagnostics: Diagnostics;
 	assembled: AssembledBundle;
 	sourceMap: SourceMapGenerator;
-	assets: Map<string, Buffer>;
+	assets: RelativePathMap<Buffer>;
 };
 
 export type BundleBuddyStats = BundleBuddyGraphNode[];
@@ -41,16 +41,16 @@ export type BundlerFile = {
 	content: () => string | Buffer;
 };
 
-export type BundlerFiles = Map<string, BundlerFile>;
+export type BundlerFiles = RelativePathMap<BundlerFile>;
 
 export type BundleResultBundle = {
 	sourceMap: {
-		path: string;
+		path: RelativePath;
 		map: SourceMapGenerator;
 	};
 	js: {
 		assembled: AssembledBundle;
-		path: string;
+		path: RelativePath;
 		content: () => string;
 	};
 };

@@ -99,7 +99,6 @@ export type BridgeInitCallback<SharedEvents extends BridgeEventsDeclaration> = (
 ) => void;
 
 export type EventOptions = {
-	name: string;
 	displayName?: string;
 	onSubscriptionChange?: VoidCallback;
 	unique?: boolean;
@@ -111,7 +110,7 @@ export interface PartialEventSubscription {
 };
 
 export interface EventSubscription extends PartialEventSubscription {
-	add: (sub: EventSubscription) => void;
+	addDependency: (sub: EventSubscription) => void;
 	onUnsubscribeEvent: Event<void, void>;
 }
 

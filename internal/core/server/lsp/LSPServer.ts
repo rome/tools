@@ -64,7 +64,7 @@ export default class LSPServer {
 		this.fileBuffers = new AbsoluteFilePathSet();
 		this.fileVersions = new AbsoluteFilePathMap();
 
-		this.watchProjectEvent = new Event({name: "watchProject"});
+		this.watchProjectEvent = new Event("LSPServer.watchProject");
 
 		request.endEvent.subscribe(async () => {
 			await this.shutdown();

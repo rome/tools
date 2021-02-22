@@ -249,14 +249,9 @@ export default class ServerRequest {
 			markup`Request #${this.id}`,
 		);
 
-		this.markerEvent = new Event({
-			name: "ServerRequest.marker",
-		});
-		this.cancelEvent = new Event({
-			name: "ServerRequest.cancel",
-		});
-		this.endEvent = new Event({
-			name: "ServerRequest.end",
+		this.markerEvent = new Event("ServerRequest.marker");
+		this.cancelEvent = new Event("ServerRequest.cancel");
+		this.endEvent = new Event("ServerRequest.end", {
 			serial: true,
 		});
 		this.endSubscriptions = createEventSubscription();
@@ -306,7 +301,7 @@ export default class ServerRequest {
 	}
 
 	public attachEndSubscriptionRemoval(subscription: EventSubscription) {
-		this.endSubscriptions.add(subscription);
+		this.endSubscriptions.addDependency(subscription);
 	}
 
 	public queueSaveFile(path: AbsoluteFilePath, opts: RecoverySaveFile) {

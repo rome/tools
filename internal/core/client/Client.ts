@@ -111,15 +111,10 @@ export default class Client {
 		this.queryCounter = 0;
 		this.flags = mergeObjects<ClientFlags>(DEFAULT_CLIENT_FLAGS, opts.flags);
 
-		this.requestResponseEvent = new Event({
-			name: "Client.requestResponseEvent",
-		});
-		this.endEvent = new Event({name: "Client.endEvent", serial: true});
+		this.requestResponseEvent = new Event("Client.requestResponseEvent");
+		this.endEvent = new Event("Client.endEvent", {serial: true});
 		this.bridgeStatus = undefined;
-
-		this.bridgeAttachedEvent = new Event({
-			name: "Client.bridgeAttached",
-		});
+		this.bridgeAttachedEvent = new Event("Client.bridgeAttached");
 
 		this.reporter = new Reporter({
 			stdin: opts.stdin,
@@ -167,11 +162,11 @@ export default class Client {
 		if (this.bridgeStatus === undefined) {
 			const helper = createEventSubscription();
 
-			helper.add(
+			helper.addDependency(
 				this.bridgeAttachedEvent.subscribe(async (bridgeStatus) => {
 					const subscription = await callback(bridgeStatus);
 					if (subscription !== undefined) {
-						helper.add(subscription);
+						helper.addDependency(subscription);
 					}
 				}),
 			);

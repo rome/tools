@@ -203,6 +203,14 @@ export class MappedKeyMap<RealKey, SerialKey extends Primitive, Value>
 
 	public [Symbol.toStringTag]: string;
 
+	// Given a key, if we are holding onto one matching it's serialized key, return it
+	// Otherwise return the input key
+	public normalizeKey(key: RealKey): RealKey {
+		const serialKey = this.serialize(key)[0];
+		const realKey = this.serialToRealKey.get(serialKey);
+		return realKey ?? key;
+	}
+
 	public get size(): number {
 		return this.serialToValue.size;
 	}

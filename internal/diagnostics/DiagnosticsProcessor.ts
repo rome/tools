@@ -130,18 +130,10 @@ export default class DiagnosticsProcessor {
 		this.map = new MixedPathMap();
 		this.cachedFlatDiagnostics = undefined;
 		this.possibleCount = 0;
-
-		this.insertDiagnosticsEvent = new Event({
-			name: "insertDiagnosticsEvent",
-		});
-
-		this.guaranteedDiagnosticsEvent = new Event({
-			name: "visibleDiagnosticsEvent",
-		});
-
-		this.modifiedDiagnosticsForPathEvent = new Event({
-			name: "modifiedDiagnosticsForPathEvent",
-		});
+		
+		this.insertDiagnosticsEvent = new Event("DiagnosticsProcessor.insertDiagnosticsEvent");
+		this.guaranteedDiagnosticsEvent = new Event("DiagnosticsProcessor.visibleDiagnosticsEvent");
+		this.modifiedDiagnosticsForPathEvent = new Event("DiagnosticsProcessor.modifiedDiagnosticsForPathEvent");
 	}
 
 	public normalizer: DiagnosticsNormalizer;

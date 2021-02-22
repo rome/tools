@@ -6,7 +6,7 @@ type Callback<Param, Ret> = (param: Param) => Ret | Promise<Ret>;
 test(
 	"Event basic",
 	async (t) => {
-		const event = new Event<string, void>({name: "testEvent"});
+		const event = new Event<string, void>("testEvent");
 		const fooCalls: string[] = [];
 		const foo: Callback<string, void> = (param) => {
 			fooCalls.push(param);
@@ -45,7 +45,7 @@ test(
 test(
 	"Event send void",
 	async (t) => {
-		const event = new Event<string, string>({name: "testEvent"});
+		const event = new Event<string, string>("testEvent");
 		const fooCalls: string[] = [];
 		const foo: Callback<string, string> = (param) => {
 			fooCalls.push(param);
@@ -69,7 +69,7 @@ test(
 test(
 	"Event subscription order",
 	async (t) => {
-		const event = new Event<string, string>({name: "testEvent"});
+		const event = new Event<string, string>("testEvent");
 		const fooCalls: string[] = [];
 		const foo: Callback<string, string> = (param) => {
 			fooCalls.push(param);
@@ -111,7 +111,7 @@ test(
 test(
 	"Event#wait",
 	async (t) => {
-		const event = new Event<string, string>({name: "testEvent"});
+		const event = new Event<string, string>("testEvent");
 
 		const waitPromise = event.wait("wait arg");
 

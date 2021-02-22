@@ -30,8 +30,7 @@ export class BridgeEvent<Param extends RSERValue, Ret extends RSERValue> {
 		this.name = name;
 		this.requestCallbacks = new Map();
 
-		this.backingEvent = new Event({
-			name,
+		this.backingEvent = new Event(name, {
 			displayName: `event ${this.name} in ${bridge.getDisplayName()}`,
 			onSubscriptionChange: () => {
 				this.bridge.sendSubscriptions();

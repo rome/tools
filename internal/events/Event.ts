@@ -11,11 +11,11 @@ import {EventCallback, EventOptions, EventSubscription} from "./types";
 import { createEventSubscription } from "./utils";
 
 export default class Event<Param, Ret = void> {
-	constructor(opts: EventOptions) {
+	constructor(name: string, opts: EventOptions = {}) {
 		this.subscriptions = new ExtendedMap("subscriptions");
 		this.callbacks = new Set();
 		this.rootCallback = undefined;
-		this.name = opts.name;
+		this.name = name;
 		this.displayName = opts.displayName ?? `event ${this.name}`;
 		this.options = opts;
 	}

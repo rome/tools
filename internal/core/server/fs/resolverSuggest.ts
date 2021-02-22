@@ -292,7 +292,7 @@ function tryPathSuggestions(
 
 		if (memoryFs.exists(path)) {
 			// If this is an absolute match then we should be a suggestion
-			if (i === chain.length) {
+			if (i === chain.length - 1) {
 				suggestions.set(path.join(), path);
 			}
 

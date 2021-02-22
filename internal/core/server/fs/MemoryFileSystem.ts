@@ -198,8 +198,14 @@ export default class MemoryFileSystem {
 	// Used to maintain fake mtimes for file buffers
 	private buffers: AbsoluteFilePathMap<SimpleStats>;
 
-	isActiveWatcherId(id: undefined | number): boolean {
+	private isActiveWatcherId(id: undefined | number): boolean {
 		return id === undefined || this.activeWatcherIds.has(id);
+	}
+
+	// Given a path that exists in our files map, return the instance we have stored that matches the input path
+	// This allows us to use the memoized and cached path derivatives
+	public coalescePath(path: AbsoluteFilePath): AbsoluteFilePath {
+		return this.files.normalizeKey(path);
 	}
 
 	public async init() {
