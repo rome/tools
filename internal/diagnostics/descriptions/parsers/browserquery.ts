@@ -8,11 +8,20 @@ export const browserquery = createDiagnosticsCategory({
 	EXPECTED_VERSION: {
 		message: markup`Expected a browser version`
 	},
+	EXPECTED_NUMBER: {
+		message: markup`Expected a number`
+	},
 	EXPECTED_PERCENTAGE: {
 		message: markup`Expected a percentage`
 	},
 	EXPECTED_REGION: {
 		message: markup`Expected a region`
+	},
+	EXPECTED_DATE: {
+		message: markup`Expected a date such as <emphasis>2021-02-21</emphasis>`
+	},
+	EXPECTED_UNIT: {
+		message: markup`Expected a unit such as <emphasis>years</emphasis>, <emphasis>months</emphasis>, <emphasis>days</emphasis>, <emphasis>versions</emphasis> or <emphasis>major versions</emphasis>`
 	},
 	EXPECTED_NEW_QUERY: {
 		message: markup`Expected a new browser query`,
