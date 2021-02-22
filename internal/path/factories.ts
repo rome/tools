@@ -3,39 +3,38 @@ import RelativePath from "./classes/RelativePath";
 import UIDPath from "./classes/UIDPath";
 import URLPath from "./classes/URLPath";
 import {
-	ParsedPath,
+	AnyParsedPath,
 	PathTypeHint,
 	parsePathSegments,
 	splitPathSegments,
+	ParsePathSegmentsOverrides,
 } from "./parse";
 import {AnyFilePath, AnyPath} from "./types";
 
-function createPathFromParsed(parsed: ParsedPath): AnyPath {
-	switch (parsed.absoluteType) {
+function createPathFromParsed(parsed: AnyParsedPath): AnyPath {
+	switch (parsed.type) {
 		case "windows-drive":
 		case "windows-unc":
-		case "posix": {
-			if (parsed.absoluteTarget !== undefined) {
-				return new AbsoluteFilePath(parsed);
-			}
-			break;
-		}
+		case "unix":
+			return new AbsoluteFilePath(parsed);
 
 		case "url":
 			return new URLPath(parsed);
 
 		case "uid":
 			return new UIDPath(parsed);
-	}
 
-	return new RelativePath(parsed);
+		case "relative":
+			return new RelativePath(parsed);
+	}
 }
 
 export function createPathFromSegments(
 	segments: string[],
 	hint: PathTypeHint,
+	overrides?: ParsePathSegmentsOverrides,
 ): AnyPath {
-	const parsed = parsePathSegments(segments, hint);
+	const parsed = parsePathSegments(segments, hint, overrides);
 	return createPathFromParsed(parsed);
 }
 

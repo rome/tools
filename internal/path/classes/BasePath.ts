@@ -3,27 +3,19 @@ import AbsoluteFilePath from "./AbsoluteFilePath";
 import RelativePath from "./RelativePath";
 import UIDPath from "./UIDPath";
 import URLPath from "./URLPath";
-import {ParsedPath, parsePathSegments, splitPathSegments} from "../parse";
+import {AnyParsedPath, splitPathSegments, normalizeSegments} from "../parse";
 import {enhanceNodeInspectClass} from "@internal/node";
+import { equalArray } from "@internal/typescript-helpers";
 
 export interface FilePathMemoBase {
-	filename?: string;
+	joined?: string;
 	ext?: string;
 }
 
-export interface FilePathMemo<Super> extends FilePathMemoBase {
+export type FilePathMemo<Super> = FilePathMemoBase & {
 	parent?: Super;
 	unique?: Super;
-}
-
-function createEmptyMemo<FilePath>(): FilePathMemo<FilePath> {
-	return {
-		filename: undefined,
-		ext: undefined,
-		parent: undefined,
-		unique: undefined,
-	};
-}
+};
 
 function getExtension(basename: string): string {
 	const match = basename.match(/\.(.*?)$/);
@@ -34,9 +26,9 @@ function getExtension(basename: string): string {
 	}
 }
 
-export class BasePath<Super extends AnyPath = AnyPath> {
-	constructor(parsed: ParsedPath, memo: FilePathMemo<Super> = createEmptyMemo()) {
-		this.segments = parsed.segments;
+export abstract class BasePath<ParsedPath extends AnyParsedPath, Super extends AnyPath = AnyPath> {
+	constructor(parsed: ParsedPath, memo: FilePathMemo<Super> = {}) {
+		this.relativeSegments = parsed.relativeSegments;
 		this.parsed = parsed;
 		this.memo = memo;
 		this.memoizedChildren = new Map();
@@ -44,37 +36,53 @@ export class BasePath<Super extends AnyPath = AnyPath> {
 	}
 
 	public parsed: ParsedPath;
-	protected segments: PathSegments;
+	protected relativeSegments: PathSegments;
 	protected memo: FilePathMemo<Super>;
 	public [Symbol.toStringTag]: string;
 
 	// Memoize children when append() is called with strings
 	private memoizedChildren: Map<string, Super>;
 
-	protected _assert(): Super {
-		throw new Error("Unimplemented");
+	protected abstract _assert(): Super;
+	protected abstract _join(relative: Array<string>): string;
+	protected abstract _equalAbsolute(parsed: AnyParsedPath): boolean;
+	protected abstract _fork(parsed: ParsedPath, memo?: FilePathMemo<Super>): Super;
+	protected abstract _getUnique(): Super;
+
+	protected _forkAppend(segments: PathSegments): Super {
+		return this._fork({
+			...this.parsed,
+			...normalizeSegments([...this.getSegments(), ...segments]),
+		});
 	}
 
-	protected _fork(parsed: ParsedPath, memo?: FilePathMemo<Super>): Super {
-		parsed;
-		memo;
-		throw new Error("Unimplemented");
-	}
-
-	public addExtension(ext: string, clearExt: boolean = false): Super {
-		const newBasename = clearExt
-			? this.getExtensionlessBasename()
-			: this.getBasename();
-		const newExt = clearExt ? ext : this.memo.ext + ext;
-		const segments = this.getParentSegments().concat(newBasename + ext);
+	public changeExtension(ext: string): Super {
+		const newBasename = this.getExtensionlessBasename();
+		const relativeSegments = this.getParentSegments().concat(newBasename + ext);
 
 		return this._fork(
 			{
 				...this.parsed,
-				segments,
+				relativeSegments,
 			},
 			{
-				...createEmptyMemo(),
+				ext,
+				parent: this.memo.parent,
+			},
+		);
+	}
+
+	public addExtension(ext: string): Super {
+		const newBasename = this.getBasename();
+		const newExt = this.memo.ext + ext;
+		const relativeSegments = this.getParentSegments().concat(newBasename + ext);
+
+		return this._fork(
+			{
+				...this.parsed,
+				relativeSegments,
+			},
+			{
 				ext: newExt,
 				parent: this.memo.parent,
 			},
@@ -82,23 +90,21 @@ export class BasePath<Super extends AnyPath = AnyPath> {
 	}
 
 	public changeBasename(newBasename: string): Super {
-		const segments = this.getParentSegments().concat(newBasename);
+		const relativeSegments = this.getParentSegments().concat(newBasename);
 		return this._fork(
 			{
 				...this.parsed,
-				segments,
+				relativeSegments,
 			},
 			{
-				...createEmptyMemo(),
 				parent: this.memo.parent,
 			},
 		);
 	}
 
 	public getBasename(): string {
-		const {segments} = this;
-		const offset = this.isExplicitDirectory() ? 2 : 1;
-		return segments[segments.length - offset] || "";
+		const {relativeSegments: segments} = this;
+		return segments[segments.length - 1] || "";
 	}
 
 	public getExtensionlessBasename(): string {
@@ -112,35 +118,26 @@ export class BasePath<Super extends AnyPath = AnyPath> {
 		}
 	}
 
-	public hasParent() {
-		return !this.isRoot() && this.getParentSegments().length > 0;
-	}
-
 	public getParent(): Super {
 		if (this.memo.parent !== undefined) {
 			return this.memo.parent;
 		}
 
-		const segments = this.getParentSegments();
-		if (segments.length === 0) {
-			throw new Error("No parent segments");
+		const relativeSegments = this.getParentSegments();
+		if (relativeSegments.length === 0 && this.isRoot()) {
+			throw new Error("This path is at the root and cannot go higher");
 		}
 
 		const parent = this._fork({
 			...this.parsed,
-			//explicitDirectory: true,
-			segments,
+			explicitDirectory: true,
+			relativeSegments,
 		});
 		this.memo.parent = parent;
 		return parent;
 	}
 
 	public getParentSegments(): PathSegments {
-		// Should we throw an error?
-		if (this.isRoot()) {
-			return this.segments;
-		}
-
 		return this.getSegments().slice(0, -1);
 	}
 
@@ -169,27 +166,13 @@ export class BasePath<Super extends AnyPath = AnyPath> {
 	}
 
 	public isRoot(): boolean {
-		if (this.segments.length <= 1) {
-			return true;
-		}
-
-		if (this.segments.length === 2) {
-			// Explicit directory reference
-			return this.parsed.absoluteType === "windows-drive";
-		}
-
-		if (this.segments.length === 3) {
-			return this.parsed.absoluteType === "windows-unc";
-		}
-
-		return false;
+		return this.relativeSegments.length === 0;
 	}
 
-	private isWindows(): boolean {
-		const {absoluteType} = this.parsed;
-		return absoluteType === "windows-drive" || absoluteType === "windows-unc";
+	public hasParent() {
+		return this.relativeSegments.length > 1;
 	}
-
+	
 	public isFilePath(): this is AnyFilePath {
 		return false;
 	}
@@ -210,6 +193,14 @@ export class BasePath<Super extends AnyPath = AnyPath> {
 		return false;
 	}
 
+	public isExplicitRelative(): boolean {
+		return false;
+	}
+
+	public isImplicitRelative(): boolean {
+		return false;
+	}
+
 	public isRelativeTo(other: AnyFilePath): boolean {
 		const otherSegments = other.getSegments();
 		const ourSegments = this.getSegments();
@@ -227,14 +218,6 @@ export class BasePath<Super extends AnyPath = AnyPath> {
 		}
 
 		return true;
-	}
-
-	public isImplicitRelative(): boolean {
-		return !(this.isExplicitRelative() || this.isAbsolute() || this.isURL());
-	}
-
-	public isExplicitRelative(): boolean {
-		return this.parsed.explicitRelative;
 	}
 
 	public isExplicitDirectory(): boolean {
@@ -271,11 +254,11 @@ export class BasePath<Super extends AnyPath = AnyPath> {
 	}
 
 	public getSegments(): PathSegments {
-		return this.segments;
+		return this.relativeSegments;
 	}
 
 	public hasSegment(name: string): boolean {
-		return this.segments.includes(name);
+		return this.relativeSegments.includes(name);
 	}
 
 	public getUnique(): Super {
@@ -284,37 +267,17 @@ export class BasePath<Super extends AnyPath = AnyPath> {
 			return memoUnique;
 		}
 
-		// If we don't satisfy the below conditions then we're already unique
-		if (
-			this.isUID() ||
-			!(this.isRoot() || this.isExplicitRelative() || this.isExplicitDirectory())
-		) {
-			return this._assert();
+		let path: Super = this._assert();
+
+		if (this.parsed.explicitDirectory) {
+			path = this._fork({
+				...this.parsed,
+				explicitDirectory: false,
+			}).getUnique() as Super;
+		} else {
+			path = this._getUnique();
 		}
 
-		// Treat all Windows drive paths as case insensitive
-		// Convert all segments to lowercase. Bail if they were all lowercase.
-		// TODO this causes issues with file maps/sets
-		/*if (this.absoluteType === "windows-drive") {
-			const hadSegments = segments !== undefined;
-			if (segments === undefined) {
-				segments = this.getRawSegments();
-			}
-
-			let didModify = false;
-			segments = segments.map((part) => {
-				const lower = part.toLowerCase();
-				if (lower !== part) {
-					didModify = true;
-				}
-				return lower;
-			});
-			if (!didModify && !hadSegments) {
-				segments = undefined;
-			}
-		}*/
-
-		const path = this._fork(parsePathSegments(this.segments, this.parsed.hint));
 		this.memo.unique = path;
 		return path;
 	}
@@ -325,36 +288,35 @@ export class BasePath<Super extends AnyPath = AnyPath> {
 	}
 
 	public join(): string {
-		const memoJoined = this.memo.filename;
+		const memoJoined = this.memo.joined;
 		if (memoJoined !== undefined) {
 			return memoJoined;
 		}
 
-		const segments = [...this.segments];
+		const segments = [...this.relativeSegments];
 
 		if (this.isExplicitDirectory()) {
 			segments.push("");
 		}
 
-		if (this.isExplicitRelative() && segments[0] !== "..") {
-			segments.unshift(".");
-		}
-
-		if (segments.length === 0) {
-			segments.push(".");
-		}
-
-		let filename;
-		if (this.isWindows()) {
-			filename = segments.join("\\");
-		} else {
-			filename = segments.join("/");
-		}
-		this.memo.filename = filename;
-		return filename;
+		const joined = this._join(segments);
+		this.memo.joined = joined;
+		return joined;
 	}
 
-	public equal(other: undefined | BasePath<AnyPath>): boolean {
+	public equalAbsolute(other: undefined | BasePath<AnyParsedPath, AnyPath>): boolean {
+		if (other === undefined) {
+			return false;
+		}
+		
+		if (other === this) {
+			return true;
+		}
+
+		return this._equalAbsolute(other.parsed);
+	}
+
+	public equal(other: undefined | BasePath<AnyParsedPath, AnyPath>): boolean {
 		if (other === undefined) {
 			return false;
 		}
@@ -364,26 +326,15 @@ export class BasePath<Super extends AnyPath = AnyPath> {
 		}
 
 		// Fast path for memoized strings
-		if (this.memo.filename !== undefined && other.memo.filename !== undefined && this.join() === other.join()) {
+		if (this.memo.joined !== undefined && other.memo.joined !== undefined && this.join() === other.join()) {
 			return true;
 		}
 
-		const a = this.getUnique().getSegments();
-		const b = other.getUnique().getSegments();
-
-		// Quick check
-		if (a.length !== b.length) {
+		if (!this.equalAbsolute(other)) {
 			return false;
 		}
 
-		// Check validity of a
-		for (let i = 0; i < a.length; i++) {
-			if (a[i] !== b[i]) {
-				return false;
-			}
-		}
-
-		return true;
+		return equalArray(this.getSegments(), other.getSegments());
 	}
 
 	public format(opts?: PathFormatOptions): string {
@@ -423,12 +374,7 @@ export class BasePath<Super extends AnyPath = AnyPath> {
 			segments = item.getSegments();
 		}
 
-		const parsed = parsePathSegments(
-			[...this.getSegments(), ...segments],
-			this.parsed.hint,
-			this.parsed,
-		);
-		const child = this._fork(parsed);
+		const child = this._forkAppend(segments);
 
 		if (typeof item === "string") {
 			this.memoizedChildren.set(item, child);
@@ -439,6 +385,7 @@ export class BasePath<Super extends AnyPath = AnyPath> {
 }
 
 enhanceNodeInspectClass(
+	// @ts-ignore: We know this is an abstract class but it's ok...
 	BasePath,
 	(path) => {
 		return `${path[Symbol.toStringTag]}<${path.format()}>`;

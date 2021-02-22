@@ -1,21 +1,48 @@
 import {HOME_PATH} from ".";
 import {PathSegments} from "./types";
 
-type ParsedPathAbsoluteType =
-	| "windows-drive"
-	| "windows-unc"
-	| "posix"
-	| "url"
-	| "uid";
-
-export type ParsedPath = {
-	hint: PathTypeHint;
-	absoluteType: ParsedPathAbsoluteType;
-	absoluteTarget: undefined | string;
-	segments: PathSegments;
-	explicitRelative: boolean;
+interface ParsedPathBase {
+	relativeSegments: PathSegments;
 	explicitDirectory: boolean;
-};
+}
+
+export interface ParsedPathWindowsDrive extends ParsedPathBase {
+	type: "windows-drive";
+	letter: string;
+}
+
+export interface ParsedPathWindowsUNC extends ParsedPathBase {
+	type: "windows-unc";
+	servername: string;
+}
+
+export interface ParsedPathUnix extends ParsedPathBase {
+	type: "unix";
+}
+
+export interface ParsedPathRelative extends ParsedPathBase {
+	type: "relative";
+	explicitRelative: boolean;
+}
+
+export interface ParsedPathURL extends ParsedPathBase {
+	type: "url";
+	protocol: string;
+	hostname: string;
+	port: undefined | number;
+	username: undefined | string;
+	password: undefined | string;
+	search: Map<string, string[]>;
+	hash: undefined | string;
+}
+
+export interface ParsedPathUID extends ParsedPathBase {
+	type: "uid";
+}
+
+export type AnyParsedPathAbsolute = ParsedPathWindowsDrive | ParsedPathWindowsUNC | ParsedPathUnix;
+
+export type AnyParsedPath = AnyParsedPathAbsolute | ParsedPathRelative | ParsedPathURL | ParsedPathUID;
 
 export function splitPathSegments(str: string): PathSegments {
 	// Might be better to do a manual loop to detect escaped slashes or some other weirdness
@@ -24,139 +51,214 @@ export function splitPathSegments(str: string): PathSegments {
 
 export type PathTypeHint = "absolute" | "relative" | "url" | "uid" | "any";
 
+export type ParsePathSegmentsOverrides = {
+	explicitDirectory?: boolean;
+};
+
+export function parseRelativePathSegments(
+	segments: PathSegments,
+	overrides?: ParsePathSegmentsOverrides,
+): ParsedPathRelative {
+	return {
+		type: "relative",
+		explicitRelative: (segments[0] === "." || segments[0] === ".."),
+		...normalizeSegments(segments, overrides),
+	};
+}
+
+// Followed is some gnarly regex, be warned!
+export function parseURLPathSegments(
+	segments: PathSegments,
+	overrides?: ParsePathSegmentsOverrides,
+): ParsedPathURL {
+	const protocol = segments[0];
+	let rawHostname: ParsedPathURL["hostname"] = segments[2];
+	const relativeSegments = segments.slice(2);
+
+	// Extract username and password
+	let username: ParsedPathURL["username"];
+	let password: ParsedPathURL["password"];
+	const hostCredentialsMatch = rawHostname.match(/^(.*?)@(.*?)$/);
+	if (hostCredentialsMatch != null) {
+		// If there are multiple @ signs then everything after the last one is the hostname
+		rawHostname = hostCredentialsMatch[1];
+
+		// If there are multiple : signs then everything after the first one is the password
+		const credentialsMatch = hostCredentialsMatch[2].match(/^([^:]+):(.*?)$/g);
+		if (credentialsMatch == null) {
+			username = decodeURIComponent(hostCredentialsMatch[2]);
+		} else {
+			username = decodeURIComponent(credentialsMatch[1]);
+			password = decodeURIComponent(credentialsMatch[2]);
+		}
+	}
+
+	// Extract port
+	let port: ParsedPathURL["port"];
+	const hostPortMatch = rawHostname.match(/^(.*?):(\d+)$/);
+	if (hostPortMatch != null) {
+		const maybePort = Number(hostPortMatch[1]);
+		if (Number.isInteger(maybePort)) {
+			rawHostname = hostPortMatch[0];
+			port = maybePort;
+		}
+	}
+
+	return {
+		type: "url",
+		protocol,
+		hostname: decodeURIComponent(rawHostname),
+		port,
+		username,
+		password,
+		...parseURLPathRelativeSegments(relativeSegments, overrides),
+	};
+}
+
+export function parseURLPathRelativeSegments(
+	segments: PathSegments,
+	overrides?: ParsePathSegmentsOverrides,
+): ParsedPathBase & Pick<ParsedPathURL, "hash" | "search"> {
+	// Extract search and hash
+	const search: ParsedPathURL["search"] = new Map();
+	let hash: ParsedPathURL["hash"];
+	if (segments.length > 0) {
+		let lastSegment = segments.pop()!;
+
+		// Extract hash
+		const hashMatch = lastSegment.match(/^([^#]+)#(.*?)$/);
+		if (hashMatch != null) {
+			lastSegment = hashMatch[1];
+			hash = decodeURIComponent(hashMatch[2]);
+		}
+
+		// Extract search
+		const searchMatch = lastSegment.match(/^([^?]+)\?(.*?)$/);
+		if (searchMatch != null) {
+			lastSegment = searchMatch[1];
+
+			const pairs = searchMatch[2].split("&");
+			for (const pair of pairs) {
+				if (pair === "") {
+					continue;
+				}
+
+				const keyMatch = pair.match(/^([^=]+)=(.*?)$/);
+				let key;
+				let value;
+				if (keyMatch == null) {
+					key = decodeURIComponent(pair);
+					value = "";
+				} else {
+					key = decodeURIComponent(keyMatch[1]);
+					value = decodeURIComponent(keyMatch[2]);
+				}
+
+				let values = search.get(key);
+				if (values === undefined) {
+					values = [];
+					search.set(key, values);
+				}
+				values.push(value);
+			}
+		}
+
+		segments.push(lastSegment);
+	}
+
+	return {
+		search,
+		hash,
+		...normalizeSegments(segments.map((segment) => decodeURIComponent(segment)), overrides),
+	};
+}
+
 export function parsePathSegments(
 	segments: PathSegments,
 	hint: PathTypeHint,
-	overrides: Pick<Partial<ParsedPath>, "explicitRelative" | "explicitDirectory"> = {
-
-	},
-): ParsedPath {
-	let absoluteType: ParsedPathAbsoluteType = "posix";
-	let absoluteTarget: undefined | string;
-	let firstSeg = segments[0] as undefined | string;
-
+	overrides?: ParsePathSegmentsOverrides,
+): AnyParsedPath {
 	// Detect URL
+	let firstSeg = segments[0] as undefined | string;
 	if (
 		firstSeg !== undefined &&
 		!isWindowsDrive(firstSeg) &&
 		firstSeg[firstSeg.length - 1] === ":" &&
 		segments[1] === ""
 	) {
-		absoluteTarget = firstSeg.slice(0, -1);
-
-		switch (absoluteTarget) {
-			case "file":
-				// Automatically normalize a file scheme into an absolute path
-				return parsePathSegments(
-					segments.slice(2).map((segment) => decodeURIComponent(segment)),
-					"absolute",
-				);
-
-			// Explicit `uid://foo`
-			case "uid":
-				return {
-					hint: "uid",
-					absoluteType: "uid",
-					absoluteTarget: undefined,
-					explicitDirectory: false,
-					explicitRelative: false,
-					segments,
-				};
-
-			default: {
-				const absoluteSegments = segments.slice(0, 3);
-				return {
-					hint: "absolute",
-					absoluteType: "url",
-					absoluteTarget,
-					...normalizeSegments(
-						segments,
-						absoluteSegments.length,
-						absoluteSegments,
-					),
-				};
-			}
+		// Explicit `uid://foo`
+		if (firstSeg === "uid:") {
+			return {
+				type: "uid",
+				explicitDirectory: false,
+				relativeSegments: segments.slice(2),
+			};
 		}
+
+		if (firstSeg === "file:") {
+			// Automatically normalize a file scheme into an absolute path
+			return parsePathSegments(segments.slice(2).map((segment) => decodeURIComponent(segment)), "absolute", overrides);
+		}
+
+		return parseURLPathSegments(segments, overrides);
 	}
 
 	// UIDs do not have any special segment handling
 	if (hint === "uid") {
 		return {
-			hint: "uid",
-			absoluteType: "uid",
-			absoluteTarget: undefined,
+			type: "uid",
 			explicitDirectory: false,
-			explicitRelative: false,
-			// UID prefix was not already present
-			segments: ["uid:", "", ...segments],
+			relativeSegments: segments,
 		};
 	}
 
 	// Explode home directory
-	if ((hint === "absolute" || hint === "any") && firstSeg === "~") {
-		segments = [...HOME_PATH.getSegments(), ...segments.slice(1)];
-		firstSeg = segments[0];
+	if ((hint === "absolute" || hint === "any") && segments[0] === "~") {
+		return {
+			...HOME_PATH.parsed,
+			...normalizeSegments([...HOME_PATH.getSegments(), ...segments.slice(1)], overrides),
+		};
 	}
 
-	let segmentOffset = 0;
-
-	// We first extract the "absolute" portion of a path, this includes any Windows drive letters, UNC hostnames etc
-	const absoluteSegments: PathSegments = [];
-	if (firstSeg === "") {
-		// POSIX path
-		absoluteSegments.push("");
-		absoluteTarget = "posix";
-		segmentOffset++;
-
-		// Windows UNC
+	// Detect absolute paths
+	if (segments[0] === "") {
+		// Windows UNC: \\servername\path
 		if (segments[1] === "" && segments.length >= 3 && segments[2] !== "") {
-			const name = segments[2];
-			segmentOffset += 2;
-			absoluteSegments.push("");
-			absoluteSegments.push(name);
-			absoluteType = "windows-unc";
-			absoluteTarget = `unc:${name}`;
+			return {
+				type: "windows-unc",
+				servername: segments[2],
+				...normalizeSegments(segments.slice(3), overrides),
+			};
 		}
-	} else if (firstSeg !== undefined && isWindowsDrive(firstSeg)) {
-		const drive = firstSeg.toUpperCase();
-		absoluteSegments.push(drive);
-		absoluteType = "windows-drive";
-		absoluteTarget = `drive:${drive}`;
-		segmentOffset++;
+
+		// POSIX path: /home/sebmck
+		return {
+			type: "unix",
+			...normalizeSegments(segments.slice(1), overrides),
+		};
+	}
+	
+	// Windows drive: C:\Users\Sebastian
+	if (segments.length > 0 && isWindowsDrive(segments[0])) {
+		return {
+			type: "windows-drive",
+			letter: segments[0][0].toUpperCase(),
+			...normalizeSegments(segments.slice(1), overrides),
+		};
 	}
 
-	const {
-		explicitDirectory,
-		explicitRelative,
-		segments: pathSegments,
-	} = normalizeSegments(segments, segmentOffset, absoluteSegments);
-
-	return {
-		explicitDirectory: overrides.explicitDirectory || explicitDirectory,
-		explicitRelative: overrides.explicitRelative || explicitRelative,
-		segments: pathSegments,
-		absoluteType,
-		absoluteTarget,
-		hint,
-	};
+	return parseRelativePathSegments(segments, overrides);
 }
 
-function normalizeSegments(
+export function normalizeSegments(
 	segments: string[],
-	offset: number,
-	absoluteSegments: string[],
-): {
-	explicitDirectory: boolean;
-	explicitRelative: boolean;
-	segments: string[];
-} {
+	overrides?: ParsePathSegmentsOverrides,
+): ParsedPathBase {
 	let explicitDirectory = false;
-	let explicitRelative = false;
 
 	const relativeSegments: PathSegments = [];
-	for (let i = offset; i < segments.length; i++) {
-		let seg = segments[i];
 
+	for (const seg of segments) {
 		// Ignore dots, we check for explicit relative below
 		if (seg === ".") {
 			continue;
@@ -180,25 +282,18 @@ function normalizeSegments(
 		relativeSegments.push(seg);
 	}
 
-	const finalSegments = [...absoluteSegments, ...relativeSegments];
-
 	// Retain explicit directory
-	if (
-		segments[segments.length - 1] === "" &&
-		finalSegments[finalSegments.length - 1] !== "" &&
-		relativeSegments.length !== 0
-	) {
+	if (relativeSegments[relativeSegments.length - 1] === "") {
 		explicitDirectory = true;
 	}
 
-	explicitRelative =
-		absoluteSegments.length === 0 &&
-		(segments[0] === "." || segments[0] === "..");
+	if (overrides !== undefined && overrides.explicitDirectory) {
+		explicitDirectory = true;
+	}
 
 	return {
 		explicitDirectory,
-		explicitRelative,
-		segments: finalSegments,
+		relativeSegments,
 	};
 }
 

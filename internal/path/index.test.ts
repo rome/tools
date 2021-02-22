@@ -101,7 +101,7 @@ for (let i = 0; i < segmentTests.length; i++) {
 	test(
 		`segments: ${i}: ${loc}`,
 		(t) => {
-			t.looksLike(createAnyPath(loc).parsed.segments, expectedSegments);
+			t.looksLike(createAnyPath(loc).getSegments(), expectedSegments);
 		},
 	);
 }
@@ -109,14 +109,14 @@ for (let i = 0; i < segmentTests.length; i++) {
 test(
 	"tilde doesn't expand with relative hint",
 	(t) => {
-		t.true(createAbsoluteFilePath("~/foo").parsed.segments[0] !== "~");
+		t.true(createAbsoluteFilePath("~/foo").getSegments()[0] !== "~");
 		t.inlineSnapshot(
-			createRelativePath("~/foo").parsed.segments,
+			createRelativePath("~/foo").getSegments(),
 			'Array [\n\t"~"\n\t"foo"\n]',
 		);
 		t.inlineSnapshot(
-			createAbsoluteFilePath("/bar").append("~/foo").parsed.segments,
-			'Array [\n\t""\n\t"bar"\n\t"~"\n\t"foo"\n]',
+			createAbsoluteFilePath("/bar").append("~/foo").getSegments(),
+			'Array [\n\t"bar"\n\t"~"\n\t"foo"\n]',
 		);
 	},
 );

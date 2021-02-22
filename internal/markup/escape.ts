@@ -247,7 +247,7 @@ export function isEmptyMarkup(
 		return isEmptyMarkup(safe.parts, allowLazy);
 	}
 
-	throw new Error("safe should be never");
+	return false;
 }
 
 export function concatMarkup(

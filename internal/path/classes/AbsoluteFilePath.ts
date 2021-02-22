@@ -1,4 +1,4 @@
-import {ParsedPath, parsePathSegments} from "../parse";
+import {AnyParsedPath, AnyParsedPathAbsolute, normalizeSegments, parseRelativePathSegments} from "../parse";
 import {BasePath, FilePathMemo} from "./BasePath";
 import {AnyFilePath, AnyPath, PathFormatOptions, PathSegments} from "../types";
 import {createRelativePath} from "../factories";
@@ -14,9 +14,10 @@ import fs = require("fs");
 type DataCallback<Data> = (err: null | Error, data: Data) => void;
 type VoidCallback = (err: null | Error) => void;
 
-export default class AbsoluteFilePath extends BasePath<AbsoluteFilePath> {
+export default class AbsoluteFilePath extends BasePath<AnyParsedPathAbsolute, AbsoluteFilePath> {
 	public [Symbol.toStringTag] = "AbsoluteFilePath";
 
+	// NB: Does this really need to be kept around? We can always materialize it from the cached parents
 	private chain: undefined | (AbsoluteFilePath[]);
 
 	protected _assert(): AbsoluteFilePath {
@@ -24,10 +25,47 @@ export default class AbsoluteFilePath extends BasePath<AbsoluteFilePath> {
 	}
 
 	protected _fork(
-		parsed: ParsedPath,
+		parsed: AnyParsedPathAbsolute,
 		opts?: FilePathMemo<AbsoluteFilePath>,
 	): AbsoluteFilePath {
 		return new AbsoluteFilePath(parsed, opts);
+	}
+
+	protected _getUnique(): AbsoluteFilePath {
+		return this;
+	}
+
+	protected _equalAbsolute(other: AnyParsedPath): boolean {
+		const {parsed} = this;
+
+		switch (parsed.type) {
+			case "windows-drive":
+				return other.type === "windows-drive" && other.letter === parsed.letter;
+
+			case "windows-unc":
+				return other.type === "windows-unc" && other.servername === parsed.servername;
+
+			case "unix":
+				return other.type === "unix";
+
+			default:
+				return false;
+		}
+	}
+
+	protected _join(relative: Array<string>) {
+		const {parsed} = this;
+
+		switch (parsed.type) {
+			case "windows-drive":
+				return [`${parsed.letter}:`, ...relative].join("\\");
+
+			case "windows-unc":
+				return [`\\\\${parsed.servername}`, ...relative].join("\\");
+
+			case "unix":
+				return `/${relative.join("/")}`;
+		}
 	}
 
 	public isFilePath(): this is AnyFilePath {
@@ -80,19 +118,12 @@ export default class AbsoluteFilePath extends BasePath<AbsoluteFilePath> {
 			return other;
 		}
 
-		return new AbsoluteFilePath(
-			parsePathSegments(
-				[...this.getSegments(), ...other.getSegments()],
-				"absolute",
-				{
-					explicitDirectory: other.isExplicitDirectory(),
-				},
-			),
-		);
-	}
-
-	public toExplicitRelative(): AbsoluteFilePath {
-		return this;
+		return new AbsoluteFilePath({
+			...this.parsed,
+			...normalizeSegments([...this.getSegments(), ...other.getSegments()], {
+				explicitDirectory: other.isExplicitDirectory(),
+			}),
+		});
 	}
 
 	public relativeForce(otherRaw: AbsoluteFilePath | RelativePath): RelativePath {
@@ -108,13 +139,13 @@ export default class AbsoluteFilePath extends BasePath<AbsoluteFilePath> {
 			return createRelativePath(".");
 		}
 
-		const absolute = this.getSegments().slice();
-		const relative = other.getSegments().slice();
-
-		// Impossible to relativize two absolute paths with different roots
-		if (absolute[0] !== relative[0]) {
+		// Impossible to relativize two absolute paths with different absolute targets
+		if (!this.equalAbsolute(other)) {
 			return other;
 		}
+
+		const absolute = this.getSegments().slice();
+		const relative = other.getSegments().slice();
 
 		// Remove common starting segments
 		while (absolute[0] === relative[0]) {
@@ -128,7 +159,7 @@ export default class AbsoluteFilePath extends BasePath<AbsoluteFilePath> {
 		}
 		finalSegments = finalSegments.concat(relative);
 
-		return new RelativePath(parsePathSegments(finalSegments, "relative"));
+		return new RelativePath(parseRelativePathSegments(finalSegments));
 	}
 
 	public format({cwd, home}: PathFormatOptions = {}): string {
@@ -145,12 +176,10 @@ export default class AbsoluteFilePath extends BasePath<AbsoluteFilePath> {
 			// We construct this manually to get around the segment normalization which would explode ~
 			names.push(
 				new RelativePath({
-					hint: "relative",
-					segments: ["~", ...relativeToHome.getSegments()],
-					absoluteType: "posix",
-					absoluteTarget: undefined,
-					explicitDirectory: this.parsed.explicitDirectory,
+					type: "relative",
 					explicitRelative: false,
+					explicitDirectory: this.parsed.explicitDirectory,
+					relativeSegments: ["~", ...relativeToHome.getSegments()],
 				}).join(),
 			);
 		}
