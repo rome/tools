@@ -43,7 +43,7 @@ test(
 		t.is(
 			getBrowser({
 				name: "firefox",
-				version: "84",
+				version: 84,
 			})!.getVersion(),
 			"84",
 		);
@@ -51,7 +51,7 @@ test(
 		t.is(
 			getBrowser({
 				name: "firefox",
-				version: "dgfa",
+				version: 679934,
 			}),
 			undefined,
 		);
@@ -64,13 +64,13 @@ test(
 		t.is(getBrowser({name: "chrome"}), getBrowser({name: "Chr."}));
 
 		t.not(
-			getBrowser({name: "chrome", version: "4"}),
+			getBrowser({name: "chrome", version: 4}),
 			getBrowser({name: "chrome"}),
 		);
 
 		t.is(
-			getBrowser({name: "chrome", version: "4"}),
-			getBrowser({name: "Chr.", version: "4"}),
+			getBrowser({name: "chrome", version: 4}),
+			getBrowser({name: "Chr.", version: 4}),
 		);
 
 		t.is(

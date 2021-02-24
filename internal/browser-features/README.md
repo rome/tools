@@ -15,27 +15,27 @@ browser = new Chrome(); // Get an instance of Chrome.
 
 // Get firefox version 84
 browser = new Firefox({
-	version: "84"
+	version: 84
 });
 
 // Getting an incorrect version throws
 browser = new Firefox({
-	version: "not-a.version"
+	version: 567888678856
 });
-// => Error: Browser "firefox" does not have a version "not-a.version"
+// => Error: Browser "firefox" does not have a version 567888678856
 
 
 // Get a browser using it's id, name or abbreviation (also ignores case)
 browser = getBrowser({
 	name: "firefox", // Or "FF", "Firefox"
-	version: "72"
+	version: 72
 });
 // Same as new Firefox({version: "72"});
 
 // If either the browser or the version doesn't exist, getBrowser() returns undefined
 browser = getBrowser({
 	name: "TotallyNotABrowser",
-	version: "MyAwesomeFakeVersion"
+	version: 567888678856
 });
 // => undefined
 
@@ -48,11 +48,11 @@ browser.getName(); // => "Firefox" (human friendly name, for "and_ff" it's "Fire
 
 browser.getAbbreviation(); // => "FF"
 
-browser.getVersion(); // => "84"
+browser.getVersion(); // => 84
 
 browser.getType(); // => "desktop" (or "mobile")
 
-browser.getCurrentVersion(); // => "85" (as of writing this)
+browser.getCurrentVersion(); // => 85 (as of writing this)
 
 browser.getDefaultPrefix(); // => "moz" (default browser prefix, not version dependant)
 
@@ -64,7 +64,7 @@ browser.getRawReleaseDate(); // => 1607990400000 (ms, can be undefined)
 
 browser.getReleaseDate(); // => Date Tue Dec 15 2020 01:00:00 GMT+0100 (Central European Standard Time) (as a date object, can be undefined)
 
-browser.getVersions(); // => ["2", "3", "3.5", "3.6", "4", ..., "85", "86", "87"]
+browser.getVersions(); // => [2, 3, 3.5, 3.6, 4, ..., 85, 86, 87]
 
 browser.cssFeatureRequiresPrefix("transforms2d"); // => false (for firefox 15 this would be true as it requires '-moz-' prefix)
 

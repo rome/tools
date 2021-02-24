@@ -3,21 +3,21 @@ import {data, regions} from "@internal/browsers-db";
 
 export interface BrowserProps {
 	id: string;
-	version?: string;
+	version?: number;
 }
 
 export type BrowserTypes = "desktop" | "mobile";
 
 export abstract class Browser {
 	private readonly id: string;
-	private readonly version: string | undefined;
+	private readonly version: number | undefined;
 
 	private readonly cssFeatureCache = new Map<string, boolean>();
 
 	protected constructor({id, version}: BrowserProps) {
 		this.id = id;
 		if (version && !this.getVersions().includes(version)) {
-			throw new Error(`Browser "${id}" does not have a version "${version}"`);
+			throw new Error(`Browser "${id}" does not have a version ${version}`);
 		}
 		this.version = version;
 	}
@@ -32,7 +32,7 @@ export abstract class Browser {
 
 	protected getVersionConsumer(): Consumer {
 		return this.getAgentConsumer().get("vs").asImplicitArray().find((value) =>
-			value.get("v").asString() === this.getVersion()
+			value.get("v").asNumber() === this.getVersion()
 		)!;
 	}
 
@@ -40,7 +40,7 @@ export abstract class Browser {
 		return this.id;
 	}
 
-	public getVersion(): string {
+	public getVersion(): number {
 		return this.version ?? this.getCurrentVersion();
 	}
 
@@ -56,8 +56,8 @@ export abstract class Browser {
 		return this.getAgentConsumer().get("t").asString() as BrowserTypes;
 	}
 
-	public getCurrentVersion(): string {
-		return this.getAgentConsumer().get("cv").asString();
+	public getCurrentVersion(): number {
+		return this.getAgentConsumer().get("cv").asNumber();
 	}
 
 	public getDefaultPrefix(): string {
@@ -90,9 +90,9 @@ export abstract class Browser {
 			: undefined;
 	}
 
-	public getVersions(): string[] {
+	public getVersions(): number[] {
 		return this.getAgentConsumer().get("vs").asImplicitArray().map((value) =>
-			value.get("v").asString()
+			value.get("v").asNumber()
 		);
 	}
 
@@ -108,7 +108,7 @@ export abstract class Browser {
 
 		const value = this.getDataConsumer().get("data").get(feature).get("s").get(
 			this.getId(),
-		).get(this.getVersion()).asBoolean(false);
+		).get(this.getVersion().toString()).asBoolean(false);
 		this.cssFeatureCache.set(feature, value);
 		return value;
 	}
@@ -121,7 +121,7 @@ export abstract class Browser {
 	public getRegionUsage(region: string): number | undefined {
 		return consumeUnknown(regions, "parse").get(region).get("data").get(
 			this.getId(),
-		).get(this.getVersion()).asNumberOrVoid();
+		).get(this.getVersion().toString()).asNumberOrVoid();
 	}
 }
 

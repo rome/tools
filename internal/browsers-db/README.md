@@ -30,12 +30,12 @@ consumeUnknown(regions).get(...).as...(); // Recommended to wrap with Consumer
 			p: string, // prefix
 			t: string, // type
 			vs: { // versions
-				v: string, // version
+				v: number, // version
 				g: number, // global usage
 				r?: number, // release date
 				p?: string, // prefix
 			}[],
-			cv: string, // current version
+			cv: number, // current version
 		}
 	},
 	categories: {
@@ -45,7 +45,7 @@ consumeUnknown(regions).get(...).as...(); // Recommended to wrap with Consumer
 		[key: string]: { // feature id
 			s: { // stats
 				[key: string]: { // browser id
-					[key: string]: boolean // browser version: needs prefix
+					[key: number]: boolean // browser version: needs prefix
 				}
 			},
 			c: string[] // categories
@@ -96,7 +96,7 @@ Categories include (will not stay up to date, check `data.categories`).
 		name: string, // full region name
 		data: {
 			[key: string]: { // browser id
-				[key: string]: number // browser version: browser usage
+				[key: number]: number // browser version: browser usage
 			}
 		}
 	}

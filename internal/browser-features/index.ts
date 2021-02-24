@@ -23,8 +23,7 @@ import {consumeUnknown} from "@internal/consume";
 
 interface GetBrowserOptions {
 	name: BrowserIds | string;
-	version?: string;
-	idOnly?: boolean;
+	version?: number;
 }
 
 type BrowserIds =
