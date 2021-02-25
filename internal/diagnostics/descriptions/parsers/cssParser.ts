@@ -123,4 +123,7 @@ export const cssParser = createDiagnosticsCategory({
 	CALC_INCORRECT_NUMBER_VALUE: {
 		message: markup`Incorrect character, expected a number or a parenthesis`,
 	},
+	EXPECTED_ID_HASH: {
+		message: markup`Expected to use identifier after <emphasis>#</emphasis>.`,
+	},
 });
