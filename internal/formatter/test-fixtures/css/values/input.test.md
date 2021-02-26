@@ -29,6 +29,10 @@ bar {
 	background: none
 }
 
+.a {
+	background-color: #111111;
+}
+
 ```
 
 ### `Output`
@@ -48,6 +52,10 @@ foo {
 bar {
 	color: yellow;
 	background: none;
+}
+
+.a {
+	background-color: #111111;
 }
 
 ```
