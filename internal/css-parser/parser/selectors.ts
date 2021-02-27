@@ -8,6 +8,7 @@ import {
 	CSSIdentifier,
 	CSSPseudoClassSelector,
 	CSSPseudoElementSelector,
+	CSSQualifiedName,
 	CSSSelector,
 	CSSString,
 	CSSTypeSelector,
@@ -16,23 +17,95 @@ import {
 } from "@internal/ast";
 import {AnyCSSPattern} from "@internal/ast/css/unions";
 import {CSSParser, Tokens} from "../types";
-import {matchToken, readToken} from "../tokenizer";
+import {matchToken, nextToken, readToken} from "../tokenizer";
 import {descriptions} from "@internal/diagnostics";
 import {parseFunction} from "@internal/css-parser/parser/function";
 
 const ATTRIBUTE_SELECTOR_MATCHERS = ["~=", "|=", "^=", "$=", "*=", "="];
 
-function parseTypeSelector(parser: CSSParser): CSSTypeSelector {
-	const start = parser.getPosition();
-	const token = parser.expectToken("Ident");
-	readToken(parser, "Ident");
-	return parser.finishNode(
-		start,
-		{
-			type: "CSSTypeSelector",
-			value: token.value,
-		},
+function matchDelim(parser: CSSParser, value: string) {
+	return (
+		matchToken(parser, "Delim") &&
+		(parser.getToken() as Tokens["Delim"]).value === value
 	);
+}
+
+function parseNamespacePrefix(parser: CSSParser) {
+	if (matchDelim(parser, "|")) {
+		nextToken(parser);
+		return "";
+	}
+
+	const lookahead = parser.lookaheadToken();
+
+	if (lookahead.type === "Delim" && lookahead.value === "|") {
+		if (matchToken(parser, "Ident")) {
+			const token = readToken(parser, "Ident") as Tokens["Ident"];
+			readToken(parser, "Delim");
+			return token.value;
+		}
+		if (matchDelim(parser, "*")) {
+			const token = readToken(parser, "Delim") as Tokens["Delim"];
+			readToken(parser, "Delim");
+			return token.value;
+		}
+	}
+	return undefined;
+}
+
+function parseQualifiedName(parser: CSSParser): CSSQualifiedName | undefined {
+	const start = parser.getPosition();
+	const namespace = parseNamespacePrefix(parser);
+	const ident = readToken(parser, "Ident");
+	if (ident) {
+		return parser.finishNode(
+			start,
+			{
+				type: "CSSQualifiedName",
+				namespace,
+				localName: ident.value,
+			},
+		);
+	}
+
+	if (matchDelim(parser, "*")) {
+		const delim = readToken(parser, "Delim") as Tokens["Delim"];
+		return parser.finishNode(
+			start,
+			{
+				type: "CSSQualifiedName",
+				namespace,
+				localName: delim.value,
+			},
+		);
+	}
+	return undefined;
+}
+
+function parseTypeSelector(
+	parser: CSSParser,
+): CSSTypeSelector | CSSUniversalSelector | undefined {
+	const start = parser.getPosition();
+	const qualifiedName = parseQualifiedName(parser);
+	if (qualifiedName) {
+		if (qualifiedName.localName === "*") {
+			return parser.finishNode(
+				start,
+				{
+					type: "CSSUniversalSelector",
+					value: qualifiedName,
+				},
+			);
+		}
+		return parser.finishNode(
+			start,
+			{
+				type: "CSSTypeSelector",
+				value: qualifiedName,
+			},
+		);
+	}
+	return undefined;
 }
 
 function parseIdSelector(parser: CSSParser): CSSIdSelector {
@@ -120,21 +193,6 @@ function parsePseudoSelector(
 		description: descriptions.CSS_PARSER.EXPECTED_IDENTIFIER,
 		token: parser.getToken(),
 	});
-	return undefined;
-}
-
-function parseUniversalSelector(
-	parser: CSSParser,
-): CSSUniversalSelector | undefined {
-	const start = parser.getPosition();
-	if (readToken(parser, "Delim")) {
-		return parser.finishNode(
-			start,
-			{
-				type: "CSSUniversalSelector",
-			},
-		);
-	}
 	return undefined;
 }
 
@@ -332,18 +390,14 @@ function tryParseSelector(parser: CSSParser) {
 		return parsePseudoSelector(parser);
 	} else if (matchToken(parser, "Hash")) {
 		return parseIdSelector(parser);
-	} else if (matchToken(parser, "Ident")) {
-		return parseTypeSelector(parser);
-	} else if (matchToken(parser, "Delim")) {
-		const token = parser.getToken() as Tokens["Delim"];
-		if (token.value === ".") {
-			return parseClassSelector(parser);
-		} else if (token.value === "*") {
-			return parseUniversalSelector(parser);
-		}
 	} else if (matchToken(parser, "LeftSquareBracket")) {
 		return parseAttributeSelector(parser);
+	} else if (matchToken(parser, "Ident") || matchDelim(parser, "*")) {
+		return parseTypeSelector(parser);
+	} else if (matchDelim(parser, ".")) {
+		return parseClassSelector(parser);
 	}
+
 	return undefined;
 }
 

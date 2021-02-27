@@ -43,7 +43,11 @@ CSSRoot {
 					loc: SourceLocation invalid/selector2/input.css 1:0-1:7
 					patterns: Array [
 						CSSTypeSelector {
-							value: "span"
+							value: CSSQualifiedName {
+								localName: "span"
+								namespace: undefined
+								loc: SourceLocation invalid/selector2/input.css 1:0-1:4
+							}
 							loc: SourceLocation invalid/selector2/input.css 1:0-1:4
 						}
 					]

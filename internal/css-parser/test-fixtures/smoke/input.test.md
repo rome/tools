@@ -28,7 +28,12 @@ CSSRoot {
 					loc: SourceLocation smoke/input.css 2:0-2:5
 					patterns: Array [
 						CSSTypeSelector {
-							value: "body"
+							value: CSSQualifiedName {
+								leadingComments: undefined
+								localName: "body"
+								namespace: undefined
+								loc: SourceLocation smoke/input.css 2:0-2:4
+							}
 							leadingComments: undefined
 							loc: SourceLocation smoke/input.css 2:0-2:4
 						}
@@ -141,7 +146,11 @@ CSSRoot {
 								loc: SourceLocation smoke/input.css 8:4-8:9
 								patterns: Array [
 									CSSTypeSelector {
-										value: "body"
+										value: CSSQualifiedName {
+											localName: "body"
+											namespace: undefined
+											loc: SourceLocation smoke/input.css 8:4-8:8
+										}
 										loc: SourceLocation smoke/input.css 8:4-8:8
 									}
 								]

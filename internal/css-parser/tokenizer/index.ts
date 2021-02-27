@@ -26,7 +26,10 @@ export function matchToken(parser: CSSParser, type: TokenType) {
 	return parser.matchToken(type);
 }
 
-export function readToken(parser: CSSParser, type: TokenType) {
+export function readToken<Type extends keyof Tokens>(
+	parser: CSSParser,
+	type: Type,
+): undefined | Tokens[Type] {
 	skipComments(parser);
 	return parser.eatToken(type);
 }

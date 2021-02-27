@@ -55,7 +55,11 @@ CSSRoot {
 					loc: SourceLocation invalid/selector6/input.css 1:0-1:8
 					patterns: Array [
 						CSSTypeSelector {
-							value: "a"
+							value: CSSQualifiedName {
+								localName: "a"
+								namespace: undefined
+								loc: SourceLocation invalid/selector6/input.css 1:0-1:1
+							}
 							loc: SourceLocation invalid/selector6/input.css 1:0-1:1
 						}
 					]

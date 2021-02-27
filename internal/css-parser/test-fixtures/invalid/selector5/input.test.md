@@ -87,7 +87,11 @@ CSSRoot {
 					loc: SourceLocation invalid/selector5/input.css 1:0-1:11
 					patterns: Array [
 						CSSTypeSelector {
-							value: "a"
+							value: CSSQualifiedName {
+								localName: "a"
+								namespace: undefined
+								loc: SourceLocation invalid/selector5/input.css 1:0-1:1
+							}
 							loc: SourceLocation invalid/selector5/input.css 1:0-1:1
 						}
 					]
@@ -100,7 +104,11 @@ CSSRoot {
 					loc: SourceLocation invalid/selector5/input.css 1:19-1:22
 					patterns: Array [
 						CSSTypeSelector {
-							value: "i"
+							value: CSSQualifiedName {
+								localName: "i"
+								namespace: undefined
+								loc: SourceLocation invalid/selector5/input.css 1:20-1:21
+							}
 							loc: SourceLocation invalid/selector5/input.css 1:20-1:21
 						}
 					]

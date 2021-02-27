@@ -25,7 +25,11 @@ CSSRoot {
 					loc: SourceLocation selectors/input.css 1:0-1:3
 					patterns: Array [
 						CSSTypeSelector {
-							value: "div"
+							value: CSSQualifiedName {
+								localName: "div"
+								namespace: undefined
+								loc: SourceLocation selectors/input.css 1:0-1:3
+							}
 							loc: SourceLocation selectors/input.css 1:0-1:3
 						}
 					]
@@ -34,7 +38,11 @@ CSSRoot {
 					loc: SourceLocation selectors/input.css 1:3-1:14
 					patterns: Array [
 						CSSTypeSelector {
-							value: "div"
+							value: CSSQualifiedName {
+								localName: "div"
+								namespace: undefined
+								loc: SourceLocation selectors/input.css 1:5-1:8
+							}
 							loc: SourceLocation selectors/input.css 1:5-1:8
 						}
 						CSSCombinator {
@@ -51,7 +59,11 @@ CSSRoot {
 					loc: SourceLocation selectors/input.css 1:14-1:25
 					patterns: Array [
 						CSSTypeSelector {
-							value: "div"
+							value: CSSQualifiedName {
+								localName: "div"
+								namespace: undefined
+								loc: SourceLocation selectors/input.css 1:16-1:19
+							}
 							loc: SourceLocation selectors/input.css 1:16-1:19
 						}
 						CSSCombinator {
@@ -68,7 +80,11 @@ CSSRoot {
 					loc: SourceLocation selectors/input.css 1:25-1:37
 					patterns: Array [
 						CSSTypeSelector {
-							value: "div"
+							value: CSSQualifiedName {
+								localName: "div"
+								namespace: undefined
+								loc: SourceLocation selectors/input.css 1:27-1:30
+							}
 							loc: SourceLocation selectors/input.css 1:27-1:30
 						}
 						CSSCombinator {
@@ -121,7 +137,14 @@ CSSRoot {
 							combinator: "nextSibling"
 							loc: SourceLocation selectors/input.css 9:7-9:9
 						}
-						CSSUniversalSelector {loc: SourceLocation selectors/input.css 9:9-9:10}
+						CSSUniversalSelector {
+							value: CSSQualifiedName {
+								localName: "*"
+								namespace: undefined
+								loc: SourceLocation selectors/input.css 9:9-9:10
+							}
+							loc: SourceLocation selectors/input.css 9:9-9:10
+						}
 					]
 				}
 			]
@@ -150,7 +173,11 @@ CSSRoot {
 					loc: SourceLocation selectors/input.css 13:0-13:9
 					patterns: Array [
 						CSSTypeSelector {
-							value: "a"
+							value: CSSQualifiedName {
+								localName: "a"
+								namespace: undefined
+								loc: SourceLocation selectors/input.css 13:0-13:1
+							}
 							loc: SourceLocation selectors/input.css 13:0-13:1
 						}
 						CSSAttributeSelector {
@@ -191,7 +218,11 @@ CSSRoot {
 					loc: SourceLocation selectors/input.css 17:0-17:19
 					patterns: Array [
 						CSSTypeSelector {
-							value: "a"
+							value: CSSQualifiedName {
+								localName: "a"
+								namespace: undefined
+								loc: SourceLocation selectors/input.css 17:0-17:1
+							}
 							loc: SourceLocation selectors/input.css 17:0-17:1
 						}
 						CSSAttributeSelector {
@@ -235,7 +266,11 @@ CSSRoot {
 					loc: SourceLocation selectors/input.css 21:0-21:20
 					patterns: Array [
 						CSSTypeSelector {
-							value: "a"
+							value: CSSQualifiedName {
+								localName: "a"
+								namespace: undefined
+								loc: SourceLocation selectors/input.css 21:0-21:1
+							}
 							loc: SourceLocation selectors/input.css 21:0-21:1
 						}
 						CSSAttributeSelector {
@@ -279,7 +314,11 @@ CSSRoot {
 					loc: SourceLocation selectors/input.css 25:0-25:38
 					patterns: Array [
 						CSSTypeSelector {
-							value: "a"
+							value: CSSQualifiedName {
+								localName: "a"
+								namespace: undefined
+								loc: SourceLocation selectors/input.css 25:0-25:1
+							}
 							loc: SourceLocation selectors/input.css 25:0-25:1
 						}
 						CSSAttributeSelector {
@@ -324,7 +363,11 @@ CSSRoot {
 					loc: SourceLocation selectors/input.css 29:0-29:22
 					patterns: Array [
 						CSSTypeSelector {
-							value: "p"
+							value: CSSQualifiedName {
+								localName: "p"
+								namespace: undefined
+								loc: SourceLocation selectors/input.css 29:0-29:1
+							}
 							loc: SourceLocation selectors/input.css 29:0-29:1
 						}
 						CSSPseudoClassSelector {

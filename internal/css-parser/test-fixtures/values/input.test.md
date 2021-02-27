@@ -15,21 +15,6 @@ CSSRoot {
 	body: Array [
 		CSSRule {
 			loc: SourceLocation values/input.css 1:0-3:1
-			prelude: Array [
-				CSSSelector {
-					loc: SourceLocation values/input.css 1:0-1:10
-					patterns: Array [
-						CSSTypeSelector {
-							value: "p"
-							loc: SourceLocation values/input.css 1:0-1:1
-						}
-						CSSPseudoElementSelector {
-							value: "before"
-							loc: SourceLocation values/input.css 1:1-1:9
-						}
-					]
-				}
-			]
 			block: CSSBlock {
 				value: Array [
 					CSSDeclaration {
@@ -47,6 +32,25 @@ CSSRoot {
 				startingTokenValue: "{"
 				loc: SourceLocation values/input.css 1:10-3:1
 			}
+			prelude: Array [
+				CSSSelector {
+					loc: SourceLocation values/input.css 1:0-1:10
+					patterns: Array [
+						CSSTypeSelector {
+							value: CSSQualifiedName {
+								localName: "p"
+								namespace: undefined
+								loc: SourceLocation values/input.css 1:0-1:1
+							}
+							loc: SourceLocation values/input.css 1:0-1:1
+						}
+						CSSPseudoElementSelector {
+							value: "before"
+							loc: SourceLocation values/input.css 1:1-1:9
+						}
+					]
+				}
+			]
 		}
 		CSSRule {
 			loc: SourceLocation values/input.css 5:0-10:1
@@ -121,7 +125,11 @@ CSSRoot {
 					loc: SourceLocation values/input.css 12:0-12:4
 					patterns: Array [
 						CSSTypeSelector {
-							value: "foo"
+							value: CSSQualifiedName {
+								localName: "foo"
+								namespace: undefined
+								loc: SourceLocation values/input.css 12:0-12:3
+							}
 							loc: SourceLocation values/input.css 12:0-12:3
 						}
 					]
@@ -152,7 +160,11 @@ CSSRoot {
 					loc: SourceLocation values/input.css 16:0-16:4
 					patterns: Array [
 						CSSTypeSelector {
-							value: "bar"
+							value: CSSQualifiedName {
+								localName: "bar"
+								namespace: undefined
+								loc: SourceLocation values/input.css 16:0-16:3
+							}
 							loc: SourceLocation values/input.css 16:0-16:3
 						}
 					]

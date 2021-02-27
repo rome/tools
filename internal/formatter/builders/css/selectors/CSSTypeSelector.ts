@@ -5,5 +5,5 @@ export default function CSSTypeSelector(
 	builder: Builder,
 	node: CSSTypeSelector,
 ): Token {
-	return node.value;
+	return builder.tokenize(node.value, node);
 }

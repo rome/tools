@@ -37,19 +37,6 @@ CSSRoot {
 		CSSRule {
 			leadingComments: Array ["0"]
 			loc: SourceLocation comment/input.css 5:0-7:1
-			prelude: Array [
-				CSSSelector {
-					leadingComments: undefined
-					loc: SourceLocation comment/input.css 5:0-5:2
-					patterns: Array [
-						CSSTypeSelector {
-							value: "a"
-							leadingComments: undefined
-							loc: SourceLocation comment/input.css 5:0-5:1
-						}
-					]
-				}
-			]
 			block: CSSBlock {
 				value: Array [
 					CSSDeclaration {
@@ -67,6 +54,24 @@ CSSRoot {
 				startingTokenValue: "{"
 				loc: SourceLocation comment/input.css 5:2-7:1
 			}
+			prelude: Array [
+				CSSSelector {
+					leadingComments: undefined
+					loc: SourceLocation comment/input.css 5:0-5:2
+					patterns: Array [
+						CSSTypeSelector {
+							value: CSSQualifiedName {
+								leadingComments: undefined
+								localName: "a"
+								namespace: undefined
+								loc: SourceLocation comment/input.css 5:0-5:1
+							}
+							leadingComments: undefined
+							loc: SourceLocation comment/input.css 5:0-5:1
+						}
+					]
+				}
+			]
 		}
 		CSSRule {
 			loc: SourceLocation comment/input.css 9:0-11:1
@@ -75,7 +80,11 @@ CSSRoot {
 					loc: SourceLocation comment/input.css 9:0-9:2
 					patterns: Array [
 						CSSTypeSelector {
-							value: "a"
+							value: CSSQualifiedName {
+								localName: "a"
+								namespace: undefined
+								loc: SourceLocation comment/input.css 9:0-9:1
+							}
 							loc: SourceLocation comment/input.css 9:0-9:1
 						}
 					]
@@ -107,7 +116,11 @@ CSSRoot {
 					loc: SourceLocation comment/input.css 13:0-13:16
 					patterns: Array [
 						CSSTypeSelector {
-							value: "a"
+							value: CSSQualifiedName {
+								localName: "a"
+								namespace: undefined
+								loc: SourceLocation comment/input.css 13:0-13:1
+							}
 							loc: SourceLocation comment/input.css 13:0-13:1
 						}
 					]
