@@ -25,6 +25,9 @@ export const cssParser = createDiagnosticsCategory({
 		message: markup`Unknown attribute matcher.`,
 		advice: buildSuggestionAdvice(matcher, validMatchers, {minRating: 0}),
 	}),
+	INVALID_ATTRIBUTE_NAME: {
+		message: markup`Invalid attribute name found.`,
+	},
 	UNKNOWN_ATTRIBUTE_MODIFIER: {message: markup`Unknown attribute modifier.`},
 	INVALID_CUSTOM_PROPERTY: {
 		message: markup`Invalid custom property found inside the "var" function.`,

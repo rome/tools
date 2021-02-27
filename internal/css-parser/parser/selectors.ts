@@ -330,24 +330,15 @@ function parseAttributeSelector(
 	parser.nextToken();
 	readToken(parser, "Whitespace");
 
-	if (!matchToken(parser, "Ident")) {
+	const attribute = parseQualifiedName(parser);
+
+	if (!attribute) {
 		parser.unexpectedDiagnostic({
-			description: descriptions.CSS_PARSER.EXPECTED_IDENTIFIER,
+			description: descriptions.CSS_PARSER.INVALID_ATTRIBUTE_NAME,
 			token: parser.getToken(),
 		});
 		return undefined;
 	}
-
-	const ident = parser.getToken() as Tokens["Ident"];
-	const idStart = parser.getPosition();
-	parser.nextToken();
-	const attribute = parser.finishNode(
-		idStart,
-		{
-			type: "CSSIdentifier",
-			value: ident.value,
-		},
-	);
 
 	readToken(parser, "Whitespace");
 
@@ -401,7 +392,11 @@ function tryParseSelector(parser: CSSParser) {
 		return parseIdSelector(parser);
 	} else if (matchToken(parser, "LeftSquareBracket")) {
 		return parseAttributeSelector(parser);
-	} else if (matchToken(parser, "Ident") || matchDelim(parser, "*")) {
+	} else if (
+		matchToken(parser, "Ident") ||
+		matchDelim(parser, "*") ||
+		matchDelim(parser, "|")
+	) {
 		return parseTypeSelector(parser);
 	} else if (matchDelim(parser, ".")) {
 		return parseClassSelector(parser);

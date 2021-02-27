@@ -185,8 +185,9 @@ CSSRoot {
 							matcher: undefined
 							modifier: undefined
 							loc: SourceLocation selectors/input.css 13:1-13:8
-							attribute: CSSIdentifier {
-								value: "title"
+							attribute: CSSQualifiedName {
+								localName: "title"
+								namespace: undefined
 								loc: SourceLocation selectors/input.css 13:2-13:7
 							}
 						}
@@ -233,8 +234,9 @@ CSSRoot {
 							matcher: "="
 							modifier: undefined
 							loc: SourceLocation selectors/input.css 17:1-17:18
-							attribute: CSSIdentifier {
-								value: "title"
+							attribute: CSSQualifiedName {
+								localName: "title"
+								namespace: undefined
 								loc: SourceLocation selectors/input.css 17:2-17:7
 							}
 						}
@@ -281,8 +283,9 @@ CSSRoot {
 							matcher: "~="
 							modifier: "i"
 							loc: SourceLocation selectors/input.css 21:1-21:19
-							attribute: CSSIdentifier {
-								value: "title"
+							attribute: CSSQualifiedName {
+								localName: "title"
+								namespace: undefined
 								loc: SourceLocation selectors/input.css 21:2-21:7
 							}
 						}
@@ -329,8 +332,9 @@ CSSRoot {
 							matcher: "="
 							modifier: undefined
 							loc: SourceLocation selectors/input.css 25:1-25:18
-							attribute: CSSIdentifier {
-								value: "title"
+							attribute: CSSQualifiedName {
+								localName: "title"
+								namespace: undefined
 								loc: SourceLocation selectors/input.css 25:2-25:7
 							}
 						}
@@ -342,8 +346,9 @@ CSSRoot {
 							matcher: "*="
 							modifier: "s"
 							loc: SourceLocation selectors/input.css 25:18-25:37
-							attribute: CSSIdentifier {
-								value: "href"
+							attribute: CSSQualifiedName {
+								localName: "href"
+								namespace: undefined
 								loc: SourceLocation selectors/input.css 25:19-25:23
 							}
 						}

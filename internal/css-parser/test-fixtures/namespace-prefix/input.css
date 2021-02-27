@@ -1,4 +1,4 @@
-ns|div {
+namespace|div {
 
 }
 
@@ -7,5 +7,17 @@ ns|div {
 }
 
 |div {
+
+}
+
+[*|attr] {
+
+}
+
+[namespace|attr] {
+
+}
+
+[|attr] {
 
 }

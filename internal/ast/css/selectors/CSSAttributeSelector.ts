@@ -1,10 +1,10 @@
-import {CSSIdentifier, NodeBaseWithComments} from "@internal/ast";
+import {CSSQualifiedName, NodeBaseWithComments} from "@internal/ast";
 import {AnyCSSValue} from "@internal/css-parser/types";
 import {createBuilder} from "../../utils";
 
 export interface CSSAttributeSelector extends NodeBaseWithComments {
 	readonly type: "CSSAttributeSelector";
-	readonly attribute: CSSIdentifier;
+	readonly attribute: CSSQualifiedName;
 	readonly value?: AnyCSSValue;
 	readonly matcher?: AttributeMatcher;
 	readonly modifier?: AttributeModifier;
