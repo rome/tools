@@ -1,7 +1,8 @@
 import {test} from "rome";
 import {getParsedMappingKey} from "@internal/codec-source-map/SourceMapConsumer";
-import {OneIndexed, ZeroIndexed} from "@internal/math";
+import {OneIndexed, ZeroIndexed} from "@internal/numbers";
 import {SourceMapConsumer} from "@internal/codec-source-map/index";
+import { createRelativePath } from "@internal/path";
 
 test(
 	"Should return `line`:`column`",
@@ -53,7 +54,7 @@ test(
 
 		const world = {
 			found: true,
-			source: "js/test.js",
+			source: createRelativePath("js/test.js"),
 			line: new OneIndexed(2),
 			column: new ZeroIndexed(6),
 			name: "world",
@@ -61,7 +62,7 @@ test(
 
 		const foo = {
 			found: true,
-			source: "js/test.js",
+			source: createRelativePath("js/test.js"),
 			line: new OneIndexed(4),
 			column: new ZeroIndexed(9),
 			name: "foo",
@@ -69,7 +70,7 @@ test(
 
 		const hello = {
 			found: true,
-			source: "js/test.js",
+			source: createRelativePath("js/test.js"),
 			line: new OneIndexed(8),
 			column: new ZeroIndexed(9),
 			name: "hello",

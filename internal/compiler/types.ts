@@ -11,7 +11,7 @@ import {AnyRoot} from "@internal/ast";
 import {ProjectConfig} from "@internal/project";
 import {EnterSignal, ExitSignal} from "./signals";
 import CompilerContext from "./lib/CompilerContext";
-import {AbsoluteFilePath, RelativePath, UIDPath, UIDPathMap} from "@internal/path";
+import {AbsoluteFilePath, AnyPath, UIDPath, UIDPathMap} from "@internal/path";
 import {SourceMap} from "@internal/codec-source-map";
 import {Dict, UnknownObject} from "@internal/typescript-helpers";
 import {DiagnosticCategory} from "@internal/diagnostics";
@@ -86,7 +86,7 @@ export type BundleCompileOptions = {
 	analyze: AnalyzeDependencyResult;
 	relativeSourcesToModuleId: Map<string, UIDPath>;
 	resolvedImports: BundleCompileResolvedImports;
-	assetPath: undefined | RelativePath;
+	assetPath: undefined | AnyPath;
 };
 
 export type LintCompilerOptions = {

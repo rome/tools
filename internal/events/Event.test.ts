@@ -1,5 +1,6 @@
 import Event from "./Event";
 import {test} from "rome";
+import { Duration } from "@internal/numbers";
 
 type Callback<Param, Ret> = (param: Param) => Ret | Promise<Ret>;
 
@@ -21,7 +22,7 @@ test(
 		event.send("hello");
 		event.send("rome");
 
-		event.clear();
+		await event.clear();
 		t.false(event.hasSubscriptions());
 
 		// send and callOptional don't throw if there are no subscriptions
@@ -90,7 +91,7 @@ test(
 		const second = await event.call("rome");
 
 		// bar becomes the rootSubscription
-		fooSub.unsubscribe();
+		fooSub.release();
 		const third = await event.call("test");
 
 		// make foo the rootSubscription
@@ -121,7 +122,7 @@ test(
 		t.is(await waitPromise, "wait for this");
 
 		t.throwsAsync(async () => {
-			await event.wait("will timeout", 0);
+			await event.wait("will timeout", Duration.fromMilliseconds(0));
 		});
 	},
 );

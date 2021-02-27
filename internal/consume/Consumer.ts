@@ -51,7 +51,7 @@ import {
 	OneIndexed,
 	ZeroIndexed,
 	isIndexedNumberish,
-} from "@internal/math";
+} from "@internal/numbers";
 import {isValidIdentifierName} from "@internal/js-ast-utils";
 import {escapeJSString} from "@internal/string-escape";
 import {

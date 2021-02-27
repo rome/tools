@@ -1,4 +1,4 @@
-import {AnyIndexedNumber} from "@internal/math";
+import {AnyIndexedNumber, Duration} from "@internal/numbers";
 import {
 	AbsoluteFilePathMap,
 	AnyPath,
@@ -29,6 +29,7 @@ export type RSERValue =
 	| Error
 	| ArrayBuffer
 	| AnyIndexedNumber
+	| Duration
 	| RSERArrayBufferView
 	| AnyPath
 	| PathSet

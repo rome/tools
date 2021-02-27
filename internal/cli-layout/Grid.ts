@@ -27,13 +27,14 @@ import {
 	GridOutputFormat,
 	GridPointer,
 } from "./types";
-import {OneIndexed} from "@internal/math";
+import {Duration, OneIndexed} from "@internal/numbers";
 import {
-	humanizeDuration,
-	humanizeFileSize,
-	humanizeNumber,
 	splitChars,
 } from "@internal/string-utils";
+import {
+	humanizeFileSize,
+	humanizeNumber,
+} from "@internal/numbers";
 import {escapeXHTMLEntities} from "@internal/html-parser";
 import {ansiFormatText} from "./formatANSI";
 import {htmlFormatText} from "./formatHTML";
@@ -124,6 +125,8 @@ const TAB_PLACEHOLDER_COLUMN = Symbol("TAB_LAYOUT_PLACEHOLDER");
 function isWhitespace(char: Column): boolean {
 	return char === " " || char === "\t" || char === TAB_PLACEHOLDER_COLUMN;
 }
+
+class GridAddedNewline {}
 
 export default class Grid {
 	constructor(opts: GridOptions) {
@@ -442,6 +445,10 @@ export default class Grid {
 
 	private moveCursor(cursor: Cursor) {
 		if (cursor.line !== this.cursor.line) {
+			if (this.options.throwOnNewline) {
+				throw new GridAddedNewline();
+			}
+
 			this.lineStartMeta.softWrapped = false;
 			this.lineStartMeta.indentationCount = 0;
 			this.lineStartMeta.sourceColumn = this.sourceCursor.currentColumn;
@@ -785,10 +792,60 @@ export default class Grid {
 				this.newline();
 			}
 		} else {
-			for (const item of items) {
-				this.writeText("- ", [createTag("dim", createEmptyAttributes())], false);
-				this.drawViewTag(item, ancestry);
-				this.newline();
+			const joinSameLine = tag.attributes.get("joinSameLine").asStringOrVoid();
+			
+			// Try to draw these on a single line first
+			if (joinSameLine !== undefined) {
+				// If we have no grid size then we default to 500. We do this to prevent drawing super long lines when the intent
+				// of this attribute is to reduce excessive newlines.
+				const viewportWidth = this.viewportWidth ?? new OneIndexed(150);
+				const subViewport = viewportWidth.subtract(this.cursor.column);
+
+				const grid = new Grid({
+					...this.options,
+					columns: subViewport,
+					throwOnNewline: true,
+				});
+
+				try {
+					// Draw items separated by the provided attribute
+					for (let i = 0; i < items.length; i++) {
+						const item = items[i];
+						grid.drawTag(item, ancestry);
+						if (i !== items.length - 1) {
+							grid.drawText({
+								type: "Text",
+								source: false,
+								value: joinSameLine,
+							}, ancestry);
+						}
+					}
+
+					// Didn't error so we must be able to fit on the same line!
+					this.drawGrid(grid);
+					this.moveCursor({
+						line: this.cursor.line,
+						column: this.cursor.column.add(grid.width),
+					});
+				} catch (err) {
+					if (err instanceof GridAddedNewline) {
+						// Cannot fit on a newline so indent and draw the rest of the items
+						for (const item of items) {
+							this.newline();
+							this.drawIndent();
+							this.drawViewTag(item, ancestry);
+						}
+						this.newline();
+					} else {
+						throw err;
+					}
+				}
+			} else {
+				for (const item of items) {
+					this.writeText("- ", [createTag("dim", createEmptyAttributes())], false);
+					this.drawViewTag(item, ancestry);
+					this.newline();
+				}
 			}
 		}
 	}
@@ -1208,6 +1265,7 @@ export default class Grid {
 		this.drawViewTag(
 			createTag("view", createEmptyAttributes(), children),
 			ancestry,
+			// We also indent the right side
 			new OneIndexed(levels * 2),
 		);
 	}
@@ -1556,8 +1614,7 @@ export default class Grid {
 									sourceValue: singleInnerText,
 									value: formatApprox(
 										attributes,
-										humanizeDuration(
-											Number(singleInnerText),
+										Duration.fromMilliseconds(Number(singleInnerText)).format(
 											{allowMilliseconds: true},
 										),
 									),

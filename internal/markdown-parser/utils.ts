@@ -1,4 +1,4 @@
-import {ZeroIndexed} from "@internal/math";
+import {ZeroIndexed} from "@internal/numbers";
 import {MarkdownParser} from "@internal/markdown-parser/index";
 import {isDigit} from "@internal/parser-core";
 

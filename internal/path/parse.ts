@@ -1,52 +1,12 @@
 import {HOME_PATH} from ".";
-import {PathSegments} from "./types";
-
-interface ParsedPathBase {
-	relativeSegments: PathSegments;
-	explicitDirectory: boolean;
-}
-
-export interface ParsedPathWindowsDrive extends ParsedPathBase {
-	type: "windows-drive";
-	letter: string;
-}
-
-export interface ParsedPathWindowsUNC extends ParsedPathBase {
-	type: "windows-unc";
-	servername: string;
-}
-
-export interface ParsedPathUnix extends ParsedPathBase {
-	type: "unix";
-}
-
-export interface ParsedPathRelative extends ParsedPathBase {
-	type: "relative";
-	explicitRelative: boolean;
-}
-
-export interface ParsedPathURL extends ParsedPathBase {
-	type: "url";
-	protocol: string;
-	hostname: string;
-	port: undefined | number;
-	username: undefined | string;
-	password: undefined | string;
-	search: Map<string, string[]>;
-	hash: undefined | string;
-}
-
-export interface ParsedPathUID extends ParsedPathBase {
-	type: "uid";
-}
-
-export type AnyParsedPathAbsolute = ParsedPathWindowsDrive | ParsedPathWindowsUNC | ParsedPathUnix;
-
-export type AnyParsedPath = AnyParsedPathAbsolute | ParsedPathRelative | ParsedPathURL | ParsedPathUID;
+import {AnyParsedPath, ParsedPathBase, ParsedPathRelative, ParsedPathURL, ParsedPathWindowsDrive, PathSegments} from "./types";
 
 export function splitPathSegments(str: string): PathSegments {
-	// Might be better to do a manual loop to detect escaped slashes or some other weirdness
-	return str.split(/[\\\/]/g);
+	if (str === "") {
+		return [];
+	} else {
+		return str.split(/[\\\/]/g);
+	}
 }
 
 export type PathTypeHint = "absolute" | "relative" | "url" | "uid" | "any";
@@ -61,8 +21,9 @@ export function parseRelativePathSegments(
 ): ParsedPathRelative {
 	return {
 		type: "relative",
-		explicitRelative: (segments[0] === "." || segments[0] === ".."),
-		...normalizeSegments(segments, overrides),
+		explicitRelative: (segments.length === 0 || segments[0] === "." || segments[0] === ".."),
+		...normalizeSegments(segments),
+		...overrides,
 	};
 }
 
@@ -73,7 +34,7 @@ export function parseURLPathSegments(
 ): ParsedPathURL {
 	const protocol = segments[0];
 	let rawHostname: ParsedPathURL["hostname"] = segments[2];
-	const relativeSegments = segments.slice(2);
+	const relativeSegments = segments.slice(3);
 
 	// Extract username and password
 	let username: ParsedPathURL["username"];
@@ -97,9 +58,9 @@ export function parseURLPathSegments(
 	let port: ParsedPathURL["port"];
 	const hostPortMatch = rawHostname.match(/^(.*?):(\d+)$/);
 	if (hostPortMatch != null) {
-		const maybePort = Number(hostPortMatch[1]);
+		const maybePort = Number(hostPortMatch[2]);
 		if (Number.isInteger(maybePort)) {
-			rawHostname = hostPortMatch[0];
+			rawHostname = hostPortMatch[1];
 			port = maybePort;
 		}
 	}
@@ -169,7 +130,8 @@ export function parseURLPathRelativeSegments(
 	return {
 		search,
 		hash,
-		...normalizeSegments(segments.map((segment) => decodeURIComponent(segment)), overrides),
+		...normalizeSegments(segments.map((segment) => decodeURIComponent(segment))),
+		...overrides,
 	};
 }
 
@@ -216,7 +178,8 @@ export function parsePathSegments(
 	if ((hint === "absolute" || hint === "any") && segments[0] === "~") {
 		return {
 			...HOME_PATH.parsed,
-			...normalizeSegments([...HOME_PATH.getSegments(), ...segments.slice(1)], overrides),
+			...normalizeSegments([...HOME_PATH.getSegments(), ...segments.slice(1)]),
+			...overrides,
 		};
 	}
 
@@ -225,36 +188,90 @@ export function parsePathSegments(
 		// Windows UNC: \\servername\path
 		if (segments[1] === "" && segments.length >= 3 && segments[2] !== "") {
 			return {
-				type: "windows-unc",
+				type: "absolute-windows-unc",
 				servername: segments[2],
-				...normalizeSegments(segments.slice(3), overrides),
+				...normalizeSegments(segments.slice(3)),
+				...overrides,
 			};
 		}
 
 		// POSIX path: /home/sebmck
 		return {
-			type: "unix",
-			...normalizeSegments(segments.slice(1), overrides),
+			type: "absolute-unix",
+			...normalizeSegments(segments.slice(1)),
+			...overrides,
 		};
 	}
 	
 	// Windows drive: C:\Users\Sebastian
 	if (segments.length > 0 && isWindowsDrive(segments[0])) {
 		return {
-			type: "windows-drive",
-			letter: segments[0][0].toUpperCase(),
-			...normalizeSegments(segments.slice(1), overrides),
+			type: "absolute-windows-drive",
+			letter: validateParsedPathWindowsDriveLetter(segments[0][0]),
+			...normalizeSegments(segments.slice(1)),
+			...overrides,
 		};
 	}
 
 	return parseRelativePathSegments(segments, overrides);
 }
 
+// Some maybe excessive validation but better to be safe than sorry
+export function validateParsedPathWindowsDriveLetter(raw: string): ParsedPathWindowsDrive["letter"] {
+	const letter = raw.toUpperCase();
+
+	switch (letter) {
+		case "A":
+		case "B":
+		case "C":
+		case "D":
+		case "E":
+		case "F":
+		case "G":
+		case "H":
+		case "I":
+		case "J":
+		case "K":
+		case "L":
+		case "M":
+		case "N":
+		case "O":
+		case "P":
+		case "Q":
+		case "R":
+		case "S":
+		case "T":
+		case "U":
+		case "V":
+		case "W":
+		case "X":
+		case "Y":
+		case "Z":
+			return letter;
+			
+		default:
+			throw new Error(`"${letter}" is not a valid windows drive letter`);
+	}
+}
+
+function needsSegmentsNormalization(segments: string[]): boolean {
+	for (const seg of segments) {
+		if (seg === "." || seg === ".." || seg === "") {
+			return true;
+		}
+	}
+	return false;
+}
+
 export function normalizeSegments(
 	segments: string[],
-	overrides?: ParsePathSegmentsOverrides,
 ): ParsedPathBase {
-	let explicitDirectory = false;
+	if (!needsSegmentsNormalization(segments)) {
+		return {
+			relativeSegments: segments,
+			explicitDirectory: false,
+		};
+	}
 
 	const relativeSegments: PathSegments = [];
 
@@ -282,17 +299,8 @@ export function normalizeSegments(
 		relativeSegments.push(seg);
 	}
 
-	// Retain explicit directory
-	if (relativeSegments[relativeSegments.length - 1] === "") {
-		explicitDirectory = true;
-	}
-
-	if (overrides !== undefined && overrides.explicitDirectory) {
-		explicitDirectory = true;
-	}
-
 	return {
-		explicitDirectory,
+		explicitDirectory: segments[segments.length - 1] === "",
 		relativeSegments,
 	};
 }

@@ -6,7 +6,7 @@
  */
 
 import SourceMapConsumer from "./SourceMapConsumer";
-import {OneIndexed, ZeroIndexed} from "@internal/math";
+import {OneIndexed, ZeroIndexed} from "@internal/numbers";
 import {ResolvedLocation} from "./types";
 import {AnyPath, MixedPathMap} from "@internal/path";
 

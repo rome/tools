@@ -9,7 +9,7 @@ import {
 	LSPTextEdit,
 } from "./types";
 import stringDiff, {Diffs, diffConstants} from "@internal/string-diff";
-import {ZeroIndexed} from "@internal/math";
+import {ZeroIndexed} from "@internal/numbers";
 import {Position} from "@internal/parser-core";
 import {
 	DiagnosticAdviceAction,
@@ -60,7 +60,7 @@ export function convertDiagnosticsToLSP(
 				nextItem !== undefined &&
 				nextItem.type === "frame"
 			) {
-				const abs = server.projectManager.getFilePathFromUidOrAbsolute(
+				const abs = server.projectManager.getFilePathFromUIDOrAbsolute(
 					nextItem.location.path,
 				);
 				if (abs !== undefined) {

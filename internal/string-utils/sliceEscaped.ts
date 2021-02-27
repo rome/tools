@@ -1,4 +1,4 @@
-import {ZeroIndexed} from "@internal/math";
+import {ZeroIndexed} from "@internal/numbers";
 import {isEscaped} from "./isEscaped";
 
 // When slicing a string the last character could have been a truncated escape

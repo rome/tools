@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {OneIndexed, ZeroIndexed} from "@internal/math";
+import {OneIndexed, ZeroIndexed} from "@internal/numbers";
 import {AnyPath} from "@internal/path";
 import {
 	DiagnosticCategory,
@@ -13,6 +13,7 @@ import {
 	DiagnosticIntegrity,
 	DiagnosticLanguage,
 	DiagnosticLocation,
+	DiagnosticTags,
 } from "@internal/diagnostics";
 import {default as ParserCore} from "./ParserCore";
 import {Dict} from "@internal/typescript-helpers";
@@ -49,6 +50,7 @@ export type ParserCoreOverrides = {
 export type ParserCoreImplementation<Types extends ParserCoreTypes> = {
 	diagnosticLanguage: DiagnosticLanguage;
 	diagnosticCategory?: DiagnosticCategory;
+	diagnosticTags?: DiagnosticTags;
 	diagnosticCategoryValue?: string;
 	ignoreWhitespaceTokens?: boolean;
 	retainCarriageReturn?: boolean;

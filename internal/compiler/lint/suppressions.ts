@@ -7,7 +7,7 @@
 
 import {AnyComment, AnyNode, AnyRoot} from "@internal/ast";
 import {CompilerContext, signals} from "@internal/compiler";
-import {OneIndexed} from "@internal/math";
+import {OneIndexed} from "@internal/numbers";
 import Path from "../lib/Path";
 import {LintCompilerOptionsDecision} from "../types";
 import {injectComment} from "../transforms/helpers";

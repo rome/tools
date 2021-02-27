@@ -7,7 +7,7 @@
 
 import Bundler from "./Bundler";
 import {Mappings, SourceMapGenerator} from "@internal/codec-source-map";
-import {AssembledBundle, BundleRequestResult} from "../../common/types/bundler";
+import {AssembledBundle, BundleAssets, BundleRequestResult} from "../../common/types/bundler";
 import {DependencyOrder} from "../dependencies/DependencyOrderer";
 import {getPrefixedBundleNamespace} from "@internal/compiler";
 import {DiagnosticsProcessor} from "@internal/diagnostics";
@@ -16,6 +16,7 @@ import {
 	AbsoluteFilePathSet,
 	UIDPath,
 	createAnyPath,
+	RelativePathMap,
 } from "@internal/path";
 import {Reporter} from "@internal/cli-reporter";
 import {markup} from "@internal/markup";
@@ -23,6 +24,7 @@ import DependencyGraph from "../dependencies/DependencyGraph";
 import {Server, ServerRequest} from "@internal/core";
 import {dedent} from "@internal/string-utils";
 import DependencyNode from "@internal/core/server/dependencies/DependencyNode";
+import crypto = require("crypto");
 
 export type BundleOptions = {
 	prefix?: string;
@@ -58,13 +60,13 @@ export default class BundleRequest {
 		this.cached = true;
 
 		this.resolvedEntry = resolvedEntry;
-		this.resolvedEntryUid = server.projectManager.getUid(resolvedEntry);
+		this.resolvedEntryUID = server.projectManager.getUID(resolvedEntry);
 
 		this.diagnostics = request.createDiagnosticsProcessor({
 			origins: [
 				{
 					category: "bundler",
-					message: `Requested bundle for ${this.resolvedEntryUid}`,
+					message: `Requested bundle for ${this.resolvedEntryUID}`,
 				},
 			],
 		});
@@ -74,7 +76,7 @@ export default class BundleRequest {
 			path: createAnyPath(this.resolvedEntry.getBasename()),
 		});
 
-		this.assets = new Map();
+		this.assets = new RelativePathMap();
 	}
 
 	public diagnostics: DiagnosticsProcessor;
@@ -87,14 +89,14 @@ export default class BundleRequest {
 	private reporter: Reporter;
 	private bundler: Bundler;
 	private resolvedEntry: AbsoluteFilePath;
-	private resolvedEntryUid: UIDPath;
-	private assets: Map<string, Buffer>;
+	private resolvedEntryUID: UIDPath;
+	private assets: BundleAssets;
 
 	public async stepAnalyze(): Promise<DependencyOrder> {
 		const {reporter, graph} = this;
 
 		const analyzeProgress = reporter.progress({
-			name: `bundler:analyze:${this.resolvedEntryUid}`,
+			name: `bundler:analyze:${this.resolvedEntryUID}`,
 			title: markup`Analyzing`,
 		});
 		this.diagnostics.setThrowAfter(100);
@@ -118,7 +120,7 @@ export default class BundleRequest {
 		this.diagnostics.setThrowAfter(undefined);
 
 		const compilingSpinner = reporter.progress({
-			name: `bundler:compile:${this.resolvedEntryUid}`,
+			name: `bundler:compile:${this.resolvedEntryUID}`,
 			title: markup`Compiling`,
 		});
 		compilingSpinner.setTotal(paths.length);
@@ -130,7 +132,7 @@ export default class BundleRequest {
 				const res = await this.bundler.compileJS(path);
 
 				if (res.asset !== undefined) {
-					this.assets.set(res.asset.path, res.asset.buffer);
+					this.assets.set(res.asset.path, res.asset.value);
 				}
 
 				if (!res.cached) {
@@ -157,6 +159,7 @@ export default class BundleRequest {
 		order: DependencyOrder,
 		forceSourceMaps: boolean = false,
 	): BundleRequestResult {
+		const etagHash = crypto.createHash("sha256");
 		const {sourceMap} = this;
 
 		// We allow deferring the generation of source maps. We don't do this by default as it's slower than generating them upfront
@@ -173,6 +176,7 @@ export default class BundleRequest {
 		let lineOffset: number = 0;
 
 		function track(str: string) {
+			etagHash.update(str);
 			if (!deferredSourceMaps) {
 				lineOffset++;
 				for (let cha of str) {
@@ -244,7 +248,7 @@ export default class BundleRequest {
 		);
 		push('(function() {');
 		addMappings(
-			this.bundler.server.projectManager.getUid(path),
+			this.bundler.server.projectManager.getUID(path),
 			res.src,
 			res.mappings,
 		);
@@ -259,14 +263,14 @@ export default class BundleRequest {
 
 			declaredCJS.add(node.path);
 
-			const uid = this.server.projectManager.getUid(node.path);
+			const uid = this.server.projectManager.getUID(node.path);
 			push(`  var ${getPrefixedBundleNamespace(uid)} = {};`);
 		};
 
 		// Add on files
 		for (const path of order.files) {
 			const node = this.graph.getNode(path);
-			const uid = this.server.projectManager.getUid(path).join();
+			const uid = this.server.projectManager.getUID(path).join();
 
 			for (const path of node.getAbsoluteDependencies()) {
 				declareCJS(this.graph.getNode(path));
@@ -286,8 +290,8 @@ export default class BundleRequest {
 		}
 
 		// push on initial entry require
-		const entryModuleUid = this.server.projectManager.getUid(this.resolvedEntry);
-		push(`  return ${getPrefixedBundleNamespace(entryModuleUid)};`);
+		const entryModuleUID = this.server.projectManager.getUID(this.resolvedEntry);
+		push(`  return ${getPrefixedBundleNamespace(entryModuleUID)};`);
 
 		// push footer
 		push(
@@ -299,14 +303,17 @@ export default class BundleRequest {
 			const sourceMapComment = sourceMap.toComment();
 			assembled.push([0, sourceMapComment]);
 		} else {
-			// TODO: URL is wrong
+			// TODO: URL is wrong. Use bundler.config.basePath
 			assembled.push([
 				0,
 				`//# sourceMappingURL=${this.sourceMap.path.join()}.map`,
 			]);
 		}
 
+		const etag = etagHash.digest("hex");
+
 		return {
+			etag,
 			request: this,
 			diagnostics: this.diagnostics.getDiagnostics(),
 			assembled,
@@ -322,6 +329,7 @@ export default class BundleRequest {
 
 	private abort(): BundleRequestResult {
 		return {
+			etag: "",
 			request: this,
 			sourceMap: this.sourceMap,
 			assembled: [],

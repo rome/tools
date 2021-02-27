@@ -13,7 +13,7 @@ import {
 	setErrorFrames,
 } from "@internal/errors";
 import {AnyPath, createAnyPath, createUIDPath} from "@internal/path";
-import {OneIndexed} from "@internal/math";
+import {OneIndexed} from "@internal/numbers";
 import { SourceMapConsumerCollection } from "@internal/codec-source-map";
 
 let inited: boolean = false;

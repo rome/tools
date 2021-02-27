@@ -1,6 +1,6 @@
 import {test} from "rome";
 import {Mapping} from "@internal/codec-source-map/types";
-import {OneIndexed, ZeroIndexed} from "@internal/math";
+import {OneIndexed, ZeroIndexed} from "@internal/numbers";
 import {
 	SourceMapConsumer,
 	SourceMapGenerator,

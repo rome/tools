@@ -42,7 +42,7 @@ export type TestWorkerRunTestOptions = {
 };
 
 export default createBridge({
-	debugName: "test worker",
+	debugName: "TestWorker",
 
 	shared: {},
 

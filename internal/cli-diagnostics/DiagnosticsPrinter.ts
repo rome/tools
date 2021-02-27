@@ -36,11 +36,11 @@ import {
 	MixedPathSet,
 	equalPaths,
 } from "@internal/path";
-import {OneIndexed, ZeroIndexed} from "@internal/math";
+import {OneIndexed, ZeroIndexed} from "@internal/numbers";
 import {inferDiagnosticLanguageFromPath} from "@internal/core/common/file-handlers";
 import {markupToJoinedPlainText} from "@internal/cli-layout/format";
 import {sha256} from "@internal/string-utils";
-import {Locker} from "@internal/async";
+import {GlobalLock} from "@internal/async";
 
 type RawBanner = {
 	palettes: MarkupRGB[];
@@ -152,7 +152,7 @@ export default class DiagnosticsPrinter extends Error {
 		this.truncatedCount = 0;
 
 		// Ensure we print sequentially
-		this.printLock = new Locker();
+		this.printLock = new GlobalLock();
 
 		this.seenDiagnostics = new Set();
 		this.streaming = opts.streaming ?? false;
@@ -181,7 +181,7 @@ export default class DiagnosticsPrinter extends Error {
 
 	private streaming: boolean;
 	private seenDiagnostics: Set<Diagnostic>;
-	private printLock: Locker<void>;
+	private printLock: GlobalLock;
 	private options: DiagnosticsPrinterOptions;
 	private reporter: Reporter;
 	private onFooterPrintCallbacks: {
@@ -243,7 +243,7 @@ export default class DiagnosticsPrinter extends Error {
 
 	// Only highlight if we have a reporter stream enabled that isn't format: "none"
 	public shouldHighlight(): boolean {
-		for (const {stream} of this.reporter.getStreamHandles()) {
+		for (const stream of this.reporter.getStreams()) {
 			if (stream.format !== "none") {
 				return true;
 			}
@@ -523,13 +523,11 @@ export default class DiagnosticsPrinter extends Error {
 		await this.wrapError(
 			"root",
 			async () => {
-				const lockPromise = this.printLock.getLock();
-				const filteredDiagnostics = this.filterDiagnostics(diagnostics);
-				await this.fetchFileSources(filteredDiagnostics);
-
-				const lock = await lockPromise;
-				await this.printDiagnostics(filteredDiagnostics);
-				lock.release();
+				await this.printLock.series(async () => {
+					const filteredDiagnostics = this.filterDiagnostics(diagnostics);
+					await this.fetchFileSources(filteredDiagnostics);
+					await this.printDiagnostics(filteredDiagnostics);
+				});
 			},
 		);
 	}
@@ -570,7 +568,7 @@ export default class DiagnosticsPrinter extends Error {
 			);
 		}
 
-		reporter.teardown();
+		await reporter.resources.release();
 	}
 
 	public getDiagnosticDependencyMeta(
@@ -871,7 +869,7 @@ export default class DiagnosticsPrinter extends Error {
 	}
 
 	private async printFooter() {
-		await this.printLock.waitLockDrained();
+		await this.printLock.wait();
 
 		await this.wrapError(
 			"footer",
@@ -944,7 +942,7 @@ export default class DiagnosticsPrinter extends Error {
 	}
 
 	private showBanner(banner: RawBanner) {
-		for (const {stream} of this.reporter.getStreamHandles()) {
+		for (const stream of this.reporter.getStreams()) {
 			if (stream.format !== "ansi") {
 				continue;
 			}

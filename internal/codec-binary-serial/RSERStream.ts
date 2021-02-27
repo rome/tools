@@ -113,6 +113,7 @@ export default class RSERStream {
 			this.process();
 		} catch (err) {
 			this.errorEvent.send(err);
+			console.log(err);
 		}
 	}
 
@@ -150,7 +151,7 @@ export default class RSERStream {
 				this.process();
 			}
 		} catch (err) {
-			this.errorEvent.send(err);
+			this.errorEvent.send(err);console.log(err);
 		}
 	}
 

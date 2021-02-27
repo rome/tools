@@ -1,4 +1,4 @@
-import {AnyParsedPath, ParsedPathUID} from "../parse";
+import {AnyParsedPath, ParsedPathUID} from "../types";
 import {BasePath, FilePathMemo} from "./BasePath";
 
 export default class UIDPath extends BasePath<ParsedPathUID, UIDPath> {
@@ -24,15 +24,15 @@ export default class UIDPath extends BasePath<ParsedPathUID, UIDPath> {
 		return new UIDPath(parsed, opts);
 	}
 
+	protected _format(): string {
+		return this.relativeSegments.join("/");
+	}
+
 	public isUID(): this is UIDPath {
 		return true;
 	}
 
 	public assertUID(): UIDPath {
 		return this;
-	}
-
-	public format(): string {
-		return this.relativeSegments.slice(2).join("/");
 	}
 }

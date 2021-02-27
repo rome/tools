@@ -6,7 +6,7 @@
  */
 
 import {Server} from "@internal/core";
-import {ChangedFileEventItem, SimpleStats} from "./MemoryFileSystem";
+import {SimpleStats} from "./MemoryFileSystem";
 import {WorkerContainer} from "../WorkerManager";
 import {FilePathLocker} from "../../../async/lockers";
 import {AbsoluteFilePath, AbsoluteFilePathMap} from "@internal/path";
@@ -14,6 +14,7 @@ import {AnyMarkup, concatMarkup, markup} from "@internal/markup";
 import {ReporterNamespace} from "@internal/cli-reporter";
 import {createSingleDiagnosticError, descriptions} from "@internal/diagnostics";
 import {matchPathPatterns} from "@internal/path-match";
+import { ServerRefreshFile } from "../Server";
 
 export default class FileAllocator {
 	constructor(server: Server) {
@@ -29,13 +30,9 @@ export default class FileAllocator {
 	private logger: ReporterNamespace;
 
 	public init() {
-		this.server.memoryFs.deletedFileEvent.subscribe((paths) => {
-			return this.handleDeleted(paths);
-		});
-
-		this.server.memoryFs.changedFileEvent.subscribe((events) => {
-			return this.handleChange(events);
-		});
+		this.server.resources.add(this.server.refreshFileEvent.subscribe(async (events) => {
+			return this.handleRefresh(events);
+		}));
 	}
 
 	public getAllOwnedFilenames(): AbsoluteFilePath[] {
@@ -127,7 +124,7 @@ export default class FileAllocator {
 
 		// Notify the worker to remove it from it's cache
 		// We do not use a FileReference here as the file might not exist
-		const uid = this.server.projectManager.getUid(path, true);
+		const uid = this.server.projectManager.getUID(path, true);
 		const worker = this.server.workerManager.getWorkerAssert(workerId);
 		await worker.bridge.events.evict.call({
 			real: path,
@@ -139,54 +136,64 @@ export default class FileAllocator {
 		);
 	}
 
-	private async handleDeleted(paths: AbsoluteFilePath[]) {
-		for (const path of paths) {
-			// Find owner
-			const workerId = this.getOwnerId(path);
-			if (workerId === undefined) {
+	private async handleDeleted(path: AbsoluteFilePath) {
+		// Find owner
+		const workerId = this.getOwnerId(path);
+		if (workerId === undefined) {
+			return;
+		}
+
+		// Evict file from 'worker cache
+		await this.evict(path, markup`file deleted`);
+
+		// Disown it from 'our internal map
+		this.fileToWorker.delete(path);
+
+		// Remove the total size from 'this worker so it'll be assigned next
+		const stats = this.server.memoryFs.getFileStatsAssert(path);
+		this.server.workerManager.disown(workerId, stats);
+	}
+
+	private async handleRefresh(events: ServerRefreshFile[]) {
+		const {workerManager} = this.server;
+
+		for (const event of events) {
+			const {path} = event;
+
+			if (event.type === "DELETED") {
+				await this.handleDeleted(path);
 				continue;
 			}
 
-			// Evict file from 'worker cache
-			await this.evict(path, markup`file deleted`);
+			if (event.type === "DISK_UPDATE" || event.type === "BUFFER_UPDATE") {
+				if (this.hasOwner(path)) {
+					// Get the worker
+					const workerId = this.getOwnerId(path);
+					if (workerId === undefined) {
+						throw new Error(`Expected worker id for ${path.join()}`);
+					}
 
-			// Disown it from 'our internal map
-			this.fileToWorker.delete(path);
+					// Evict the file from cache
+					await this.evict(path, markup`file change`);
+					
+					if (event.type === "DISK_UPDATE") {
+						const {newStats, oldStats} = event;
 
-			// Remove the total size from 'this worker so it'll be assigned next
-			const stats = this.server.memoryFs.getFileStatsAssert(path);
-			this.server.workerManager.disown(workerId, stats);
-		}
-	}
+						// Verify that this file doesn't exceed any size limit
+						this.verifySize(path, newStats);
 
-	private async handleChange(events: ChangedFileEventItem[]) {
-		const {workerManager} = this.server;
-
-		for (const {path, oldStats, newStats} of events) {
-			// Send update to worker owner
-			if (this.hasOwner(path)) {
-				// Get the worker
-				const workerId = this.getOwnerId(path);
-				if (workerId === undefined) {
-					throw new Error(`Expected worker id for ${path.join()}`);
+						// Add on the new size, and remove the old
+						if (oldStats === undefined) {
+							throw new Error(
+								"File already has an owner so expected to have old stats but had none",
+							);
+						}
+						workerManager.disown(workerId, oldStats);
+						workerManager.own(workerId, newStats);
+					}
+				} else {
+					this.logger.info(markup`No owner for eviction <emphasis>${path}</emphasis>`);
 				}
-
-				// Evict the file from cache
-				await this.evict(path, markup`file change`);
-
-				// Verify that this file doesn't exceed any size limit
-				this.verifySize(path, newStats);
-
-				// Add on the new size, and remove the old
-				if (oldStats === undefined) {
-					throw new Error(
-						"File already has an owner so expected to have old stats but had none",
-					);
-				}
-				workerManager.disown(workerId, oldStats);
-				workerManager.own(workerId, newStats);
-			} else {
-				this.logger.info(markup`No owner for eviction ${path}`);
 			}
 		}
 

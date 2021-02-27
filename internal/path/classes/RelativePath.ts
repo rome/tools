@@ -1,4 +1,4 @@
-import {AnyParsedPath, ParsedPathRelative} from "../parse";
+import {AnyParsedPath, ParsedPathRelative} from "../types";
 import {BasePath, FilePathMemo} from "./BasePath";
 import {AnyFilePath} from "../types";
 
@@ -24,6 +24,10 @@ export default class RelativePath extends BasePath<ParsedPathRelative, RelativeP
 		} else {
 			return this;
 		}
+	}
+
+	protected _format(): string {
+		return this.join();
 	}
 
 	protected _join(segments: Array<string>): string {

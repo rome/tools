@@ -236,12 +236,8 @@ export default class LSPServer {
 			onRunEnd: ({}) => {},
 		});
 
-		const subscription = await checker.watch(runner);
-
-		req.endEvent.subscribe(() => {
-			subscription.unsubscribe();
-		});
-
+		req.resources.add(await checker.watch(runner));
+		
 		this.projectSessions.set(
 			path,
 			{

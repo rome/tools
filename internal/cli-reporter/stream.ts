@@ -6,7 +6,7 @@ import {
 } from "./types";
 import {LogOptions} from "./Reporter";
 import {ansiEscapes} from "@internal/cli-layout";
-import {ZeroIndexed} from "@internal/math";
+import {ZeroIndexed} from "@internal/numbers";
 
 export function getLeadingNewlineCount({state}: ReporterStreamAttached): number {
 	if (!state.leadingNewline) {

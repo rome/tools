@@ -6,22 +6,23 @@
  */
 
 import {
-	humanizeDuration,
-	humanizeNumber,
 	splitChars,
 } from "@internal/string-utils";
-import {Reporter, ReporterStreamHandle} from "@internal/cli-reporter";
+import {DurationMeasurer, humanizeNumber} from "@internal/numbers";
+import {Reporter} from "@internal/cli-reporter";
 import {
 	ReporterProgressOptions,
 	ReporterStream,
+	ReporterStreamAttached,
 	ReporterStreamLineSnapshot,
 } from "./types";
 import ProgressBase from "./ProgressBase";
 import {AnyMarkup, markup} from "@internal/markup";
 import {formatAnsi} from "@internal/cli-layout";
-import {OneIndexed} from "@internal/math";
+import {Duration, OneIndexed} from "@internal/numbers";
 import * as streamUtils from "./stream";
 import {VoidCallback} from "@internal/typescript-helpers";
+import { createResourceFromCallback, Resource } from "@internal/resources";
 
 type BoldRanges = [number, number][];
 
@@ -40,11 +41,14 @@ export default class Progress extends ProgressBase {
 		super(reporter, opts);
 
 		this.firstRenderLineSnapshot = undefined;
-		this.startTime = Date.now();
+		this.startTime = new DurationMeasurer();
 		this.lastRenderTime = undefined;
 		this.lastNoCursorRenderTime = undefined;
 		this.lastRenderCurrent = 0;
 
+		this.resources = createResourceFromCallback(`ReporterProgress`, () => {
+			this.end();
+		});
 		this.closed = false;
 		this.onEnd = onEnd;
 
@@ -58,6 +62,8 @@ export default class Progress extends ProgressBase {
 		this.initName(opts.name);
 	}
 
+	public resources: Resource;
+
 	private closed: boolean;
 	private delay: number;
 	private renderTimer: undefined | NodeJS.Timeout;
@@ -68,10 +74,10 @@ export default class Progress extends ProgressBase {
 
 	private onEnd: undefined | (VoidCallback);
 	private renderEvery: number;
-	private startTime: number;
+	private startTime: DurationMeasurer;
 	private lastRenderCurrent: number;
-	private lastRenderTime: undefined | number;
-	private lastNoCursorRenderTime: undefined | number;
+	private lastRenderTime: undefined | DurationMeasurer;
+	private lastNoCursorRenderTime: undefined | DurationMeasurer;
 
 	private initName(name: undefined | string) {
 		if (name === undefined) {
@@ -82,13 +88,13 @@ export default class Progress extends ProgressBase {
 	}
 
 	private getElapsedTime(): number {
-		const elapsed = Date.now() - this.startTime - this.pausedElapsed;
-		if (elapsed < 1_000) {
+		const elapsed = this.startTime.since().subtract(this.pausedElapsed);
+		if (elapsed.toSeconds() < 1) {
 			// Sometimes there'll be a small delay between when the initial startTime was set and when the first elapsed is
 			// displayed. If we're under a second then just pretend as if no time has elapsed to prevent displaying a janky time.
 			return 0;
 		} else {
-			return elapsed;
+			return elapsed.toMilliseconds();
 		}
 	}
 
@@ -115,7 +121,7 @@ export default class Progress extends ProgressBase {
 			const elapsedTime = this.getElapsedTime();
 			const elapsedFrames = Math.round(elapsedTime / BOUNCER_INTERVAL);
 
-			for (const {stream} of this.reporter.getStreamHandles()) {
+			for (const stream of this.reporter.getStreams()) {
 				if (
 					!streamUtils.isANSICursorStream(stream) ||
 					stream.features.columns === undefined
@@ -205,6 +211,7 @@ export default class Progress extends ProgressBase {
 	}
 
 	public end() {
+		this.resources.release();
 		this._render(true);
 		this.closed = true;
 		this.endBouncer();
@@ -233,8 +240,7 @@ export default class Progress extends ProgressBase {
 		if (isDue) {
 			// We also make sure that we never force update more often than once a second
 			// This is to ensure that the progress bar isn't negatively effecting performance
-			const timeSinceLastRender: number = Date.now() - this.lastRenderTime;
-			return timeSinceLastRender > 1_000;
+			return this.lastRenderTime.since().toSeconds() > 1;
 		} else {
 			return false;
 		}
@@ -314,7 +320,7 @@ export default class Progress extends ProgressBase {
 
 		// Time elapsed eg: elapsed 1m5s
 		if (this.opts.elapsed) {
-			suffix += `elapsed ${humanizeDuration(elapsed)} `;
+			suffix += `elapsed ${Duration.fromMilliseconds(elapsed).format()} `;
 		}
 
 		// Don't bother with a suffix if we haven't completed a single item
@@ -327,15 +333,15 @@ export default class Progress extends ProgressBase {
 				if (this.opts.eta) {
 					if (this.approximateETA !== undefined && elapsed < this.approximateETA) {
 						// Approximate ETA
-						const left = elapsed - this.approximateETA;
-						suffix += `eta ~${humanizeDuration(left)} `;
+						const left = Duration.fromMilliseconds(elapsed - this.approximateETA);
+						suffix += `eta ~${left.format()} `;
 					} else if (total !== undefined) {
 						// How many items we have left
 						const itemsLeft = total - current;
 
 						// Total estimated time left
-						const eta = itemsLeft * averagePerItem;
-						suffix += `eta ${humanizeDuration(eta)} `;
+						const eta = Duration.fromMilliseconds(itemsLeft * averagePerItem);
+						suffix += `eta ${eta.format()} `;
 					} else {
 						const ops = Math.round(1_000 / averagePerItem);
 						suffix += `${humanizeNumber(ops)} op/s `;
@@ -407,7 +413,7 @@ export default class Progress extends ProgressBase {
 		}
 	}
 
-	private logNoCursor(handle: ReporterStreamHandle, suffix: string) {
+	private logNoCursor(stream: ReporterStreamAttached, suffix: string) {
 		let text = "";
 
 		const {title} = this;
@@ -422,7 +428,7 @@ export default class Progress extends ProgressBase {
 			markup`${text}`,
 			{
 				stderr: true,
-				handles: [handle],
+				streams: [stream],
 			},
 		);
 	}
@@ -439,14 +445,14 @@ export default class Progress extends ProgressBase {
 		this.endRender();
 
 		const {lastNoCursorRenderTime} = this;
-		const now = Date.now();
+		const now = new DurationMeasurer();
 
 		// If the stream isn't an ansi cursor stream, then every 5 seconds we'll output a regular log with some progress
 		// information
 		const isNoCursorDue =
 			force ||
 			lastNoCursorRenderTime === undefined ||
-			now - lastNoCursorRenderTime > 5_000;
+			lastNoCursorRenderTime.since().toSeconds() > 5;
 		if (isNoCursorDue) {
 			this.lastNoCursorRenderTime = now;
 		}
@@ -458,15 +464,14 @@ export default class Progress extends ProgressBase {
 			this.firstRenderLineSnapshot = this.reporter.getLineSnapshot(false);
 		}
 
-		if (!this.reporter.hasStreamHandles()) {
+		if (!this.reporter.hasStreams()) {
 			return;
 		}
 
 		// We can build this up front for all streams since it doesn't rely on any stream information
 		const suffix = this.buildBarSuffix();
 
-		for (const handle of this.reporter.getStreamHandles()) {
-			const {stream} = handle;
+		for (const stream of this.reporter.getStreams()) {
 			if (!stream.features.progress) {
 				continue;
 			}
@@ -486,7 +491,7 @@ export default class Progress extends ProgressBase {
 				);
 			} else {
 				if (isNoCursorDue) {
-					this.logNoCursor(handle, suffix);
+					this.logNoCursor(stream, suffix);
 				}
 			}
 		}

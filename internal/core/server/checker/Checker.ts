@@ -8,10 +8,8 @@
 import {Server, ServerRequest} from "@internal/core";
 import {LINTABLE_EXTENSIONS} from "@internal/core/common/file-handlers";
 import {Diagnostics, DiagnosticsProcessor} from "@internal/diagnostics";
-import {EventSubscription} from "@internal/events";
 import {
 	AbsoluteFilePath,
-	AbsoluteFilePathMap,
 	AbsoluteFilePathSet,
 	AnyPath,
 	MixedPathMap,
@@ -22,11 +20,9 @@ import {
 	ReporterProgress,
 	ReporterProgressOptions,
 } from "@internal/cli-reporter";
-import DependencyNode from "../dependencies/DependencyNode";
 import {
 	LintCompilerOptions,
 	LintCompilerOptionsDecisions,
-	areAnalyzeDependencyResultsEqual,
 } from "@internal/compiler";
 import {StaticMarkup, markup} from "@internal/markup";
 import {Dict, VoidCallback} from "@internal/typescript-helpers";
@@ -34,8 +30,8 @@ import {FileNotFound} from "@internal/fs";
 import {WatchFilesEvent} from "../fs/glob";
 import {WorkerIntegrationTimings} from "@internal/core/worker/types";
 import {ExtendedMap} from "@internal/collections";
-import {humanizeDuration} from "@internal/string-utils";
 import {ServerRequestGlobArgs} from "../ServerRequest";
+import { Resource } from "@internal/resources";
 
 type CheckWatchChange = {
 	path: AnyPath;
@@ -89,7 +85,6 @@ class CheckRunner {
 		this.request = checker.request;
 		this.options = checker.options;
 		this.events = events;
-		this.hadDependencyValidationErrors = new AbsoluteFilePathMap();
 		this.timingsByWorker = new ExtendedMap("timingsByWorker", () => new Map());
 
 		this.pendingChanges = new MixedPathMap();
@@ -102,7 +97,6 @@ class CheckRunner {
 
 	public events: WatchEvents;
 
-	private hadDependencyValidationErrors: AbsoluteFilePathMap<boolean>;
 	private checker: Checker;
 	private server: Server;
 	private request: ServerRequest;
@@ -152,7 +146,7 @@ class CheckRunner {
 						key,
 						{
 							...existingTotal,
-							took: existingTotal.took + timing.took,
+							took: existingTotal.took.add(timing.took),
 						},
 					);
 				}
@@ -229,7 +223,7 @@ class CheckRunner {
 					diagnostics,
 					suppressions,
 					save,
-					timingsNs,
+					timings,
 				} = res.value;
 				this.compilerProcessor.addSuppressions(suppressions);
 				this.compilerProcessor.addDiagnostics(diagnostics);
@@ -240,7 +234,7 @@ class CheckRunner {
 				// Update timings
 				const workerId = server.fileAllocator.getOwnerAssert(path).id;
 				const workerTimings = this.timingsByWorker.assert(workerId);
-				for (let [key, timing] of timingsNs) {
+				for (let [key, timing] of timings) {
 					const existing = workerTimings.get(key);
 					if (existing === undefined) {
 						workerTimings.set(key, timing);
@@ -249,7 +243,7 @@ class CheckRunner {
 							key,
 							{
 								...existing,
-								took: existing.took + timing.took,
+								took: existing.took.add(timing.took),
 							},
 						);
 					}
@@ -312,79 +306,20 @@ class CheckRunner {
 
 	private async runGraph(event: WatchFilesEvent): Promise<void> {
 		const {graph} = this;
-		const evictedPaths = event.paths;
 
-		// Get all the current dependency nodes for the evicted files, and invalidate their nodes
-		const oldEvictedNodes: AbsoluteFilePathMap<DependencyNode> = new AbsoluteFilePathMap();
-		for (const path of evictedPaths) {
-			const node = graph.maybeGetNode(path);
-			if (node !== undefined) {
-				oldEvictedNodes.set(path, node);
-				graph.deleteNode(path);
-			}
-		}
-
-		// Refresh only the evicted paths
-		await this.seedGraph({
-			paths: evictedPaths,
-			progressText: event.initial
-				? markup`Analyzing files`
-				: markup`Analyzing changed files`,
+		const dependencyPaths = await graph.evictNodes(event.paths, async (paths, dependents) => {
+			await this.seedGraph({
+				paths,
+				progressText: dependents
+					? markup`Analyzing dependents` : event.initial
+					? markup`Analyzing files`
+					: markup`Analyzing changed files`,
+			});
 		});
 
-		// Maintain a list of all the dependencies we revalidated
-		const validatedDependencyPaths: AbsoluteFilePathSet = new AbsoluteFilePathSet();
-
-		// Maintain a list of all the dependents that need to be revalidated
-		const validatedDependencyPathDependents: AbsoluteFilePathSet = new AbsoluteFilePathSet();
-
-		// Build a list of dependents to recheck
-		for (const path of evictedPaths) {
-			const newNode = graph.maybeGetNode(path);
-			if (newNode === undefined) {
-				continue;
-			}
-
-			validatedDependencyPaths.add(path);
-
-			// Get the previous node and see if the exports have actually changed
-			const oldNode = oldEvictedNodes.get(path);
-			const sameShape =
-				oldNode !== undefined &&
-				areAnalyzeDependencyResultsEqual(
-					oldNode.analyze.value,
-					newNode.analyze.value,
-				);
-
-			for (const depNode of newNode.getDependents()) {
-				// If the old node has the same shape as the new one, only revalidate the dependent if it had dependency errors
-				if (
-					sameShape &&
-					this.hadDependencyValidationErrors.get(depNode.path) === false
-				) {
-					continue;
-				}
-
-				validatedDependencyPaths.add(depNode.path);
-				validatedDependencyPathDependents.add(depNode.path);
-			}
-		}
-
-		// Revalidate dependents
-		if (validatedDependencyPathDependents.size > 0) {
-			await this.seedGraph({
-				progressText: markup`Analyzing dependents`,
-				paths: validatedDependencyPaths,
-			});
-		}
-
-		// Validate connections
-		for (const path of validatedDependencyPaths) {
+		// Revalidate connections
+		for (const path of dependencyPaths) {
 			graph.validate(graph.getNode(path), this.dependencyProcessor);
-			this.hadDependencyValidationErrors.set(
-				path,
-				this.dependencyProcessor.hasDiagnosticsForPath(path),
-			);
 		}
 	}
 
@@ -581,11 +516,9 @@ export default class Checker {
 
 			const timings = runner.processIntegrationTimings();
 			for (const timing of timings.total.values()) {
-				if (timing.took > 0n) {
-					const ms = Number(timing.took / 1000000n);
+				if (timing.took.valueOf() > 0n) {
 					reporter.warn(
-						markup`Spent <emphasis>${humanizeDuration(
-							ms,
+						markup`Spent <emphasis>${timing.took.format(
 							{longform: true, allowMilliseconds: true},
 						)}</emphasis> running ${timing.displayName}`,
 					);
@@ -606,7 +539,7 @@ export default class Checker {
 		return new CheckRunner(this, {events, graph});
 	}
 
-	public async watch(runner: CheckRunner): Promise<EventSubscription> {
+	public async watch(runner: CheckRunner): Promise<Resource> {
 		const globber = await this.request.glob({
 			args: this.options.args,
 			noun: "lint",
@@ -712,7 +645,7 @@ export default class Checker {
 		});
 
 		const watchEvent = await this.watch(runner);
-		await watchEvent.unsubscribe();
+		await watchEvent.release();
 
 		if (!streaming) {
 			for (const diagnostics of diagnosticsByPath.values()) {

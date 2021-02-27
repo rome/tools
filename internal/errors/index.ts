@@ -1,7 +1,7 @@
 import {Position} from "@internal/parser-core";
 import {ErrorFrame, ErrorFrames} from "@internal/errors";
-import {isPlainObject} from "@internal/typescript-helpers";
-import {OneIndexed, ZeroIndexed} from "@internal/math";
+import {isObject} from "@internal/typescript-helpers";
+import {OneIndexed, ZeroIndexed} from "@internal/numbers";
 import {NodeSystemError, NodeSystemErrorProperties} from "./types";
 import {
 	DiagnosticLocation,
@@ -66,7 +66,7 @@ export function getErrorStructure(
 	let frames: ErrorFrames = [];
 	let looksLikeValidError = false;
 
-	if (isPlainObject<ErrorWithFrames>(err)) {
+	if (isObject(err)) {
 		if (typeof err.name === "string") {
 			looksLikeValidError = true;
 			name = err.name;
@@ -106,7 +106,7 @@ export function getErrorStructure(
 export function extractNodeSystemErrorProperties(
 	err: unknown,
 ): NodeSystemErrorProperties {
-	if (isPlainObject(err)) {
+	if (isObject(err)) {
 		return {
 			address: typeof err.address === "string" ? err.address : undefined,
 			code: typeof err.code === "string" ? err.code : undefined,

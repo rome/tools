@@ -16,7 +16,7 @@ import * as base64 from "./base64";
 import {compareByGeneratedPositionsInflated, toRelativeUrl} from "./util";
 import ArraySet from "./ArraySet";
 import MappingList from "./MappingList";
-import {OneIndexed, ZeroIndexed} from "@internal/math";
+import {OneIndexed, ZeroIndexed} from "@internal/numbers";
 import SourceMapConsumer, {getParsedMappingKey} from "./SourceMapConsumer";
 import {VoidCallback} from "@internal/typescript-helpers";
 import {ExtendedMap} from "@internal/collections";

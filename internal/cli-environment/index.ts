@@ -1,16 +1,16 @@
 import stream = require("stream");
 import tty = require("tty");
 import {Event} from "@internal/events";
-import {VoidCallback, mergeObjects} from "@internal/typescript-helpers";
-import {OneIndexed} from "@internal/math";
+import {mergeObjects} from "@internal/typescript-helpers";
+import {OneIndexed} from "@internal/numbers";
+import { createResource, createResourceFromCallback, Resource } from "@internal/resources";
 
 export type Stdout = stream.Writable | tty.WriteStream;
 
 export type InferredTerminalFeatures = {
 	features: TerminalFeatures;
 	updateEvent: Event<TerminalFeatures, void>;
-	setupUpdateEvent: VoidCallback;
-	closeUpdateEvent: VoidCallback;
+	setupUpdateEvent: () => Resource;
 };
 
 export type TerminalFeatures = {
@@ -57,7 +57,7 @@ export function getEnvVar(key: string): EnvVarStatus {
 	if (value === "0" || value === "false") {
 		return {type: "DISABLED", value: false};
 	}
-	if (value === "1" || value === "true") {
+	if (value === "1" || value === "true" || value === "") {
 		return {type: "ENABLED", value: true};
 	}
 	return {type: "ENABLED", value};
@@ -122,10 +122,11 @@ export function inferTerminalFeatures(
 		force,
 	);
 
-	const updateEvent: Event<TerminalFeatures, void> = new Event("update");
+	const updateEvent: Event<TerminalFeatures, void> = new Event("TerminalFeatures.update");
 
-	let closeUpdateEvent: InferredTerminalFeatures["closeUpdateEvent"] = () => {};
-	let setupUpdateEvent: InferredTerminalFeatures["setupUpdateEvent"] = () => {};
+	let setupUpdateEvent: InferredTerminalFeatures["setupUpdateEvent"] = () => {
+		return createResource("TerminalFeatures.update");
+	};
 
 	// Watch for resizing, unless force.columns has been set and we'll consider it to be fixed
 	if (stdout instanceof tty.WriteStream && force.columns === undefined) {
@@ -141,10 +142,10 @@ export function inferTerminalFeatures(
 
 		setupUpdateEvent = () => {
 			stdout.on("resize", onStdoutResize);
-		};
 
-		closeUpdateEvent = () => {
-			stdout.off("resize", onStdoutResize);
+			return createResourceFromCallback("TerminalFeatures.update", () => {
+				stdout.off("resize", onStdoutResize);
+			});
 		};
 	}
 
@@ -152,7 +153,6 @@ export function inferTerminalFeatures(
 		updateEvent,
 		features,
 		setupUpdateEvent,
-		closeUpdateEvent,
 	};
 }
 

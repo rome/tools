@@ -6,9 +6,9 @@ import {
 	DiagnosticsProcessor,
 	getOrDeriveDiagnosticsFromError,
 } from "@internal/diagnostics";
-import {ErrorCallback, VoidCallback} from "@internal/typescript-helpers";
-
-import workerThreads = require("worker_threads");
+import {ErrorCallback} from "@internal/typescript-helpers";
+import { createResourceFromCallback, Resource } from "@internal/resources";
+import { safeProcessExit } from "@internal/resources";
 
 type FatalErrorHandlerOptions = {
 	getOptions: (
@@ -25,13 +25,16 @@ type FatalErrorHandlerOptions = {
 export default class FatalErrorHandler {
 	constructor(opts: FatalErrorHandlerOptions) {
 		this.options = opts;
+		this.handling = false;
 		this.handleBound = this.handle.bind(this);
 		this.wrapBound = this.wrap.bind(this);
 	}
 
-	private options: FatalErrorHandlerOptions;
 	public handleBound: ErrorCallback;
 	public wrapBound: WrapperFactory;
+
+	private options: FatalErrorHandlerOptions;
+	private handling: boolean;
 
 	public handle(err: Error, overrideSource?: StaticMarkup) {
 		// Swallow promise. Should never throw an error.
@@ -58,42 +61,39 @@ export default class FatalErrorHandler {
 		}) as T;
 	}
 
-	public setupGlobalHandlers(): VoidCallback {
+	public setupGlobalHandlers(): Resource {
 		const onUncaughtException: NodeJS.UncaughtExceptionListener = (err: Error) => {
 			this.handle(err);
 		};
 		process.on("uncaughtException", onUncaughtException);
 
-		const onUnhandledRejection: NodeJS.UnhandledRejectionListener = (
-			reason: unknown,
-			promise: Promise<unknown>,
-		) => {
-			promise.then(() => {
-				throw new Error(
-					"Promise is rejected so should never hit this condition",
-				);
-			}).catch((err) => {
-				this.handle(err);
-			});
+		const onUnhandledRejection: NodeJS.UnhandledRejectionListener = (err: unknown,) => {
+			this.handle(err instanceof Error ? err : new Error(String(err)));
 		};
 		process.on("unhandledRejection", onUnhandledRejection);
 
-		return () => {
+		return createResourceFromCallback("FatalErrorHandlerEvents", () => {
 			process.removeListener("uncaughtException", onUncaughtException);
 			process.removeListener("unhandledRejection", onUnhandledRejection);
-		};
+		});
 	}
 
-	public async handleAsync(error: Error, overrideSource?: StaticMarkup) {
+	public async handleAsync(error: Error, overrideSource?: StaticMarkup): Promise<void> {
 		const {getOptions} = this.options;
 		const options = getOptions(error);
 		if (options === false) {
 			return;
 		}
 
+		if (this.handling) {
+			// Already have a fatal error queued
+			return;
+		}
+		this.handling = true;
+
 		const {reporter, exit = true} = options;
 		const source = overrideSource ?? options.source;
-
+		
 		try {
 			const diagnostics = getOrDeriveDiagnosticsFromError(
 				error,
@@ -126,20 +126,7 @@ export default class FatalErrorHandler {
 			console.error(logErr.stack);
 		} finally {
 			if (exit) {
-				if (workerThreads.isMainThread) {
-					process.exit(1);
-				} else {
-					// Get around an annoying bug(?) in worker_threads where the output streams wont be flushed if
-					// we immediately exit
-					setTimeout(
-						() => {
-							process.exit(1);
-						},
-						0,
-					);
-
-					await new Promise(() => {});
-				}
+				await safeProcessExit(1);
 			}
 		}
 	}

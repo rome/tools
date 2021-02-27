@@ -13,10 +13,6 @@ import {
 	URLPath,
 	URLPathMap,
 	URLPathSet,
-	createAbsoluteFilePath,
-	createRelativePath,
-	createUIDPath,
-	createURLPath,
 } from "@internal/path";
 import {
 	AnyRSERPathMap,
@@ -28,14 +24,14 @@ import RSERParserError from "./RSERParserError";
 export const VERSION = 1;
 
 export function formatCode(code: number): string {
-	if (VALUE_CODES[code] === undefined) {
+	if (CODES[code] === undefined) {
 		return `?(${code})`;
 	} else {
-		return `${VALUE_CODES[code]}(${code})`;
+		return `${CODES[code]}(${code})`;
 	}
 }
 
-export enum VALUE_CODES {
+export enum CODES {
 	STREAM_HEADER,
 	MESSAGE_HEADER,
 
@@ -61,10 +57,12 @@ export enum VALUE_CODES {
 	INT32,
 	INT64,
 	FLOAT,
+	BIGINT,
 	NAN,
 
 	ZERO_INDEXED_NUMBER,
 	ONE_INDEXED_NUMBER,
+	DURATION,
 
 	POSITIVE_INFINITY,
 	NEGATIVE_INFINITY,
@@ -91,53 +89,55 @@ export enum VALUE_CODES {
 	POSITIVE_ONE,
 }
 
-export function validateValueCode(code: number): VALUE_CODES {
+export function validateCode(code: number): CODES {
 	switch (code) {
-		case VALUE_CODES.STREAM_HEADER:
-		case VALUE_CODES.MESSAGE_HEADER:
-		case VALUE_CODES.STRING:
-		case VALUE_CODES.ARRAY:
-		case VALUE_CODES.SET:
-		case VALUE_CODES.MAP:
-		case VALUE_CODES.OBJECT:
-		case VALUE_CODES.SYMBOL:
-		case VALUE_CODES.DATE:
-		case VALUE_CODES.TRUE:
-		case VALUE_CODES.FALSE:
-		case VALUE_CODES.NULL:
-		case VALUE_CODES.UNDEFINED:
-		case VALUE_CODES.INT8:
-		case VALUE_CODES.INT16:
-		case VALUE_CODES.INT32:
-		case VALUE_CODES.INT64:
-		case VALUE_CODES.FLOAT:
-		case VALUE_CODES.NAN:
-		case VALUE_CODES.POSITIVE_INFINITY:
-		case VALUE_CODES.NEGATIVE_INFINITY:
-		case VALUE_CODES.NEGATIVE_ZERO:
-		case VALUE_CODES.PATH:
-		case VALUE_CODES.PATH_SET:
-		case VALUE_CODES.PATH_MAP:
-		case VALUE_CODES.ERROR:
-		case VALUE_CODES.REGEXP:
-		case VALUE_CODES.TEMPLATED_OBJECT_ARRAY:
-		case VALUE_CODES.DECLARE_REFERENCE:
-		case VALUE_CODES.REFERENCE:
-		case VALUE_CODES.ARRAY_BUFFER_VIEW:
-		case VALUE_CODES.ARRAY_BUFFER:
-		case VALUE_CODES.POSITION:
-		case VALUE_CODES.SOURCE_LOCATION:
-		case VALUE_CODES.NEGATIVE_ONE:
-		case VALUE_CODES.POSITIVE_ZERO:
-		case VALUE_CODES.POSITIVE_ONE:
-		case VALUE_CODES.ZERO_INDEXED_NUMBER:
-		case VALUE_CODES.ONE_INDEXED_NUMBER:
-		case VALUE_CODES.MIXED_PATH_SET:
-		case VALUE_CODES.MIXED_PATH_MAP:
+		case CODES.STREAM_HEADER:
+		case CODES.MESSAGE_HEADER:
+		case CODES.STRING:
+		case CODES.ARRAY:
+		case CODES.SET:
+		case CODES.MAP:
+		case CODES.OBJECT:
+		case CODES.SYMBOL:
+		case CODES.DATE:
+		case CODES.TRUE:
+		case CODES.FALSE:
+		case CODES.NULL:
+		case CODES.UNDEFINED:
+		case CODES.INT8:
+		case CODES.INT16:
+		case CODES.INT32:
+		case CODES.INT64:
+		case CODES.BIGINT:
+		case CODES.FLOAT:
+		case CODES.NAN:
+		case CODES.DURATION:
+		case CODES.POSITIVE_INFINITY:
+		case CODES.NEGATIVE_INFINITY:
+		case CODES.NEGATIVE_ZERO:
+		case CODES.PATH:
+		case CODES.PATH_SET:
+		case CODES.PATH_MAP:
+		case CODES.ERROR:
+		case CODES.REGEXP:
+		case CODES.TEMPLATED_OBJECT_ARRAY:
+		case CODES.DECLARE_REFERENCE:
+		case CODES.REFERENCE:
+		case CODES.ARRAY_BUFFER_VIEW:
+		case CODES.ARRAY_BUFFER:
+		case CODES.POSITION:
+		case CODES.SOURCE_LOCATION:
+		case CODES.NEGATIVE_ONE:
+		case CODES.POSITIVE_ZERO:
+		case CODES.POSITIVE_ONE:
+		case CODES.ZERO_INDEXED_NUMBER:
+		case CODES.ONE_INDEXED_NUMBER:
+		case CODES.MIXED_PATH_SET:
+		case CODES.MIXED_PATH_MAP:
 			return code;
 
 		default:
-			throw new RSERParserError(`Invalid value code ${code}`);
+			throw new RSERParserError(`Invalid code ${code}`);
 	}
 }
 
@@ -327,19 +327,28 @@ export function errorCodeToInstance(code: ERROR_CODES): Error {
 	}
 }
 
-export enum TYPED_PATH_CODES {
+export enum PATH_PARSED_CODES {
+	ABSOLUTE_UNIX,
+	ABSOLUTE_WINDOWS_DRIVE,
+	ABSOLUTE_WINDOWS_UNC,
+	RELATIVE,
+	URL,
+	UID,
+}
+
+export enum PATH_COLLECTION_CODES {
 	ABSOLUTE,
 	RELATIVE,
 	URL,
 	UID,
 }
 
-export function validateFileCode(code: number): TYPED_PATH_CODES {
+export function validatePathCollectionCode(code: number): PATH_COLLECTION_CODES {
 	switch (code) {
-		case TYPED_PATH_CODES.ABSOLUTE:
-		case TYPED_PATH_CODES.RELATIVE:
-		case TYPED_PATH_CODES.URL:
-		case TYPED_PATH_CODES.UID:
+		case PATH_COLLECTION_CODES.ABSOLUTE:
+		case PATH_COLLECTION_CODES.RELATIVE:
+		case PATH_COLLECTION_CODES.URL:
+		case PATH_COLLECTION_CODES.UID:
 			return code;
 
 		default:
@@ -347,76 +356,60 @@ export function validateFileCode(code: number): TYPED_PATH_CODES {
 	}
 }
 
-export function pathMapToCode(map: AnyRSERPathMap): TYPED_PATH_CODES {
+export function pathMapToCode(map: AnyRSERPathMap): PATH_COLLECTION_CODES {
 	if (map instanceof RelativePathMap) {
-		return TYPED_PATH_CODES.RELATIVE;
+		return PATH_COLLECTION_CODES.RELATIVE;
 	} else if (map instanceof AbsoluteFilePathMap) {
-		return TYPED_PATH_CODES.ABSOLUTE;
+		return PATH_COLLECTION_CODES.ABSOLUTE;
 	} else if (map instanceof URLPathMap) {
-		return TYPED_PATH_CODES.URL;
+		return PATH_COLLECTION_CODES.URL;
 	} else if (map instanceof UIDPathMap) {
-		return TYPED_PATH_CODES.UID;
+		return PATH_COLLECTION_CODES.UID;
 	} else {
 		throw new RSERParserError("Unknown FilePath type");
 	}
 }
 
-export function pathSetToCode(set: PathSet): TYPED_PATH_CODES {
+export function pathSetToCode(set: PathSet): PATH_COLLECTION_CODES {
 	if (set instanceof RelativePathSet) {
-		return TYPED_PATH_CODES.RELATIVE;
+		return PATH_COLLECTION_CODES.RELATIVE;
 	} else if (set instanceof AbsoluteFilePathSet) {
-		return TYPED_PATH_CODES.ABSOLUTE;
+		return PATH_COLLECTION_CODES.ABSOLUTE;
 	} else if (set instanceof URLPathSet) {
-		return TYPED_PATH_CODES.URL;
+		return PATH_COLLECTION_CODES.URL;
 	} else if (set instanceof UIDPathSet) {
-		return TYPED_PATH_CODES.UID;
+		return PATH_COLLECTION_CODES.UID;
 	} else {
 		throw new RSERParserError("Unknown FilePath type");
 	}
 }
 
-export function pathToCode(path: AnyPath): TYPED_PATH_CODES {
+export function pathToCollectionCode(path: AnyPath): PATH_COLLECTION_CODES {
 	if (path instanceof RelativePath) {
-		return TYPED_PATH_CODES.RELATIVE;
+		return PATH_COLLECTION_CODES.RELATIVE;
 	} else if (path instanceof AbsoluteFilePath) {
-		return TYPED_PATH_CODES.ABSOLUTE;
+		return PATH_COLLECTION_CODES.ABSOLUTE;
 	} else if (path instanceof URLPath) {
-		return TYPED_PATH_CODES.URL;
+		return PATH_COLLECTION_CODES.URL;
 	} else if (path instanceof UIDPath) {
-		return TYPED_PATH_CODES.UID;
+		return PATH_COLLECTION_CODES.UID;
 	} else {
 		throw new RSERParserError("Unknown FilePath type");
 	}
 }
 
-export function pathFromCode(code: TYPED_PATH_CODES, filename: string): AnyPath {
+export function pathMapFromCode(code: PATH_COLLECTION_CODES): AnyRSERPathMap {
 	switch (code) {
-		case TYPED_PATH_CODES.RELATIVE:
-			return createRelativePath(filename);
-
-		case TYPED_PATH_CODES.ABSOLUTE:
-			return createAbsoluteFilePath(filename);
-
-		case TYPED_PATH_CODES.URL:
-			return createURLPath(filename);
-
-		case TYPED_PATH_CODES.UID:
-			return createUIDPath(filename);
-	}
-}
-
-export function pathMapFromCode(code: TYPED_PATH_CODES): AnyRSERPathMap {
-	switch (code) {
-		case TYPED_PATH_CODES.RELATIVE:
+		case PATH_COLLECTION_CODES.RELATIVE:
 			return new RelativePathMap();
 
-		case TYPED_PATH_CODES.ABSOLUTE:
+		case PATH_COLLECTION_CODES.ABSOLUTE:
 			return new AbsoluteFilePathMap();
 
-		case TYPED_PATH_CODES.URL:
+		case PATH_COLLECTION_CODES.URL:
 			return new URLPathMap();
 
-		case TYPED_PATH_CODES.UID:
+		case PATH_COLLECTION_CODES.UID:
 			return new UIDPathMap();
 
 		default:
@@ -424,15 +417,15 @@ export function pathMapFromCode(code: TYPED_PATH_CODES): AnyRSERPathMap {
 	}
 }
 
-export function pathSetFromCode(code: TYPED_PATH_CODES): PathSet {
+export function pathSetFromCode(code: PATH_COLLECTION_CODES): PathSet {
 	switch (code) {
-		case TYPED_PATH_CODES.RELATIVE:
+		case PATH_COLLECTION_CODES.RELATIVE:
 			return new RelativePathSet();
 
-		case TYPED_PATH_CODES.ABSOLUTE:
+		case PATH_COLLECTION_CODES.ABSOLUTE:
 			return new AbsoluteFilePathSet();
 
-		case TYPED_PATH_CODES.UID:
+		case PATH_COLLECTION_CODES.UID:
 			return new UIDPathSet();
 
 		default:

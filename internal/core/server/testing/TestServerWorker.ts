@@ -26,6 +26,7 @@ import {ansiEscapes} from "@internal/cli-layout";
 import {FilePathLocker} from "@internal/async/lockers";
 import TestServerFile from "@internal/core/server/testing/TestServerFile";
 import {BridgeServer} from "@internal/events";
+import { Duration } from "@internal/numbers";
 
 export default class TestServerWorker {
 	constructor(
@@ -108,16 +109,15 @@ export default class TestServerWorker {
 	public async init() {
 		const {bridge, runner} = this;
 
-		await bridge.handshake();
+		bridge.heartbeatExceededEvent.subscribe(() => {
+			this.server.fatalErrorHandler.wrapPromise(
+				this.handleTimeout("10 seconds"),
+			);
+		});
 
-		bridge.monitorHeartbeat(
-			5_000,
-			async () => {
-				this.server.fatalErrorHandler.wrapPromise(
-					this.handleTimeout("10 seconds"),
-				);
-			},
-		);
+		await bridge.handshake({
+			monitorHeartbeat: Duration.fromSeconds(10),
+		});
 
 		// Start debugger
 		const {inspectorUrl} = await bridge.events.inspectorDetails.call();
@@ -299,7 +299,7 @@ export default class TestServerWorker {
 
 		let progressId;
 		if (progress !== undefined) {
-			progressId = progress.pushText(markup`${ref.uid}`);
+			progressId = progress.pushText(ref.uid);
 		}
 
 		try {

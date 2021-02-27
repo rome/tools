@@ -496,8 +496,8 @@ export default class RecoveryStore {
 		}
 
 		const paths: AbsoluteFilePathSet = new AbsoluteFilePathSet(files.keys());
-		const teardowns: (() => Promise<unknown>)[] = [];
 		const {server} = this;
+		const resources = server.resources.addCallback("RecoveryStore.writeFiles", () => {});
 
 		// Files successfully written
 		let fileCount = 0;
@@ -522,8 +522,11 @@ export default class RecoveryStore {
 				}
 			};
 
-			const sub = server.refreshFileEvent.subscribe(registerFile);
-			teardowns.push(() => sub.unsubscribe());
+			resources.add(server.refreshFileEvent.subscribe((events) => {
+				for (const {path} of events) {
+					registerFile([path]);
+				}
+			}));
 		});
 
 		try {
@@ -544,7 +547,7 @@ export default class RecoveryStore {
 
 			// Protects against file events not being emitted and causing hanging
 			const timeoutPromise = new Promise((resolve, reject) => {
-				const timeout = setTimeout(
+				resources.addTimeout("FileHangDetector", setTimeout(
 					() => {
 						const lines = [
 							"File events should have been emitted within a second. Did not receive an event for:",
@@ -555,18 +558,12 @@ export default class RecoveryStore {
 						reject(new Error(lines.join("\n")));
 					},
 					1_000,
-				);
-
-				teardowns.push(async () => {
-					clearTimeout(timeout);
-				});
+				));
 			});
 
 			await Promise.race([waitRefresh, timeoutPromise]);
 		} finally {
-			for (const teardown of teardowns) {
-				await teardown();
-			}
+			await resources.release();
 			await this.server.memoryFs.processingLock.wait();
 		}
 

@@ -13,7 +13,7 @@ import {
 	WorkerParseOptions,
 	WorkerParseResult,
 	WorkerPartialManifest,
-	WorkerPartialManifests,
+	WorkerPartialManifestsTransport,
 	WorkerPrefetchedModuleSignatures,
 	WorkerProject,
 	WorkerProjects,
@@ -42,16 +42,21 @@ import WorkerAPI from "./WorkerAPI";
 import {applyWorkerBufferPatch} from "./utils/applyWorkerBufferPatch";
 import VirtualModules from "../common/VirtualModules";
 import {markup} from "@internal/markup";
-import {BridgeClient, isBridgeClosedDiagnosticError} from "@internal/events";
+import {BridgeClient, isBridgeDisconnectedDiagnosticError} from "@internal/events";
 import {ExtendedMap} from "@internal/collections";
 import WorkerCache from "./WorkerCache";
 import FatalErrorHandler from "../common/FatalErrorHandler";
 import {RSERObject} from "@internal/codec-binary-serial";
 import {ReporterConditionalStream} from "@internal/cli-reporter";
 import {DEFAULT_TERMINAL_FEATURES} from "@internal/cli-environment";
+import { createResourceRoot, Resource } from "@internal/resources";
+import { safeProcessExit } from "@internal/resources";
 
 export default class Worker {
 	constructor(opts: WorkerOptions) {
+		this.resources = createResourceRoot(`Worker<${opts.id}>`);
+		this.resources.add(opts.bridge);
+
 		this.bridge = opts.bridge;
 		this.options = opts;
 
@@ -63,7 +68,7 @@ export default class Worker {
 		this.buffers = new AbsoluteFilePathMap();
 		this.virtualModules = new VirtualModules();
 
-		this.logger = new Logger({}, "worker");
+		this.logger = new Logger(this.resources, {}, "worker");
 
 		this.loggerStream = this.logger.attachConditionalStream({
 			format: "markup",
@@ -85,22 +90,22 @@ export default class Worker {
 					const {bridge} = this;
 
 					// Dispatch error to the server and trigger a fatal
-					bridge.events.fatalError.send(bridge.serializeError(err));
+					bridge.events.fatalError.send(bridge.serializeCustomError(err));
 				} catch (err) {
-					if (!isBridgeClosedDiagnosticError(err)) {
+					if (!isBridgeDisconnectedDiagnosticError(err)) {
 						console.error(
 							"Worker encountered error while attempting to send a fatal to the server",
 						);
 						console.error(err.stack);
 					}
-					process.exit(1);
+					safeProcessExit(1);
 				}
 				return false;
 			},
 		});
 
 		if (opts.dedicated) {
-			this.fatalErrorHandler.setupGlobalHandlers();
+			this.resources.add(this.fatalErrorHandler.setupGlobalHandlers());
 
 			// Pretty sure we'll hit another error condition before this but for completeness
 			/*opts.bridge.monitorHeartbeat(
@@ -122,6 +127,7 @@ export default class Worker {
 	public cache: WorkerCache;
 	public fatalErrorHandler: FatalErrorHandler;
 	public virtualModules: VirtualModules;
+	public resources: Resource;
 
 	private loggerStream: ReporterConditionalStream;
 	private bridge: BridgeClient<typeof WorkerBridge>;
@@ -139,7 +145,6 @@ export default class Worker {
 		this.astCache.clear();
 		this.projects.clear();
 		this.moduleSignatureCache.clear();
-		await this.cache.teardown();
 	}
 
 	public async init() {
@@ -147,7 +152,7 @@ export default class Worker {
 
 		const bridge: BridgeClient<typeof WorkerBridge> = this.bridge;
 
-		bridge.endEvent.subscribe(async () => {
+		bridge.resources.addCallback("WorkerEnd", async () => {
 			await this.end();
 		});
 
@@ -578,8 +583,8 @@ export default class Worker {
 		await this.cache.remove(uid, real);
 	}
 
-	private updateManifests(manifests: WorkerPartialManifests) {
-		for (const {id, manifest} of manifests) {
+	private updateManifests(manifests: WorkerPartialManifestsTransport) {
+		for (const [id, manifest] of manifests) {
 			if (manifest === undefined) {
 				this.partialManifests.delete(id);
 			} else {

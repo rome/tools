@@ -8,7 +8,7 @@
 import {Position, SourceLocation} from "@internal/parser-core";
 import {Diffs} from "@internal/string-diff";
 import {ConstJSSourceType} from "@internal/ast";
-import {OneIndexed, ZeroIndexed} from "@internal/math";
+import {OneIndexed, ZeroIndexed} from "@internal/numbers";
 import {DiagnosticCategory} from "./categories";
 import {Dict} from "@internal/typescript-helpers";
 import {ClientRequestFlags, CommandName} from "@internal/core";
@@ -183,6 +183,7 @@ export type DiagnosticAdviceAction = {
 export type DiagnosticAdviceCode = {
 	type: "code";
 	sourceText: string;
+	truncate?: boolean;
 	sourceTypeJS?: ConstJSSourceType;
 	language: DiagnosticLanguage;
 };

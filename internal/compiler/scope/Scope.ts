@@ -225,8 +225,8 @@ export default class Scope {
 		return this.getBinding(name) !== undefined;
 	}
 
-	public generateUid(name?: string): string {
-		return this.getRootScope().generateUid(name);
+	public generateUID(name?: string): string {
+		return this.getRootScope().generateUID(name);
 	}
 
 	public addGlobal(name: string) {
@@ -338,7 +338,7 @@ export class RootScope extends Scope {
 		return this;
 	}
 
-	public generateUid(name?: string): string {
+	public generateUID(name?: string): string {
 		const prefixed = `${SCOPE_PRIVATE_PREFIX}${name ?? ""}`;
 
 		// Check for invalid names

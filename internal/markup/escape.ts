@@ -8,7 +8,7 @@
 import {Dict, isPlainObject} from "@internal/typescript-helpers";
 import {MarkupTagName} from "./types";
 import {AnyPath, URLPath, isPath} from "@internal/path";
-import {OneIndexed, UnknownNumber, ZeroIndexed} from "@internal/math";
+import {OneIndexed, UnknownNumber, ZeroIndexed, Duration} from "@internal/numbers";
 
 type LazyMarkupPart = StaticMarkup | LazyMarkupFactory | LazyMarkup;
 
@@ -16,7 +16,7 @@ export type LazyMarkupFactory = () => AnyMarkup;
 
 export type StaticMarkups = StaticMarkup[];
 
-export type StaticMarkup = string | AnyPath | UnknownNumber | RawMarkup | StaticMarkup[];
+export type StaticMarkup = string | AnyPath | Duration | UnknownNumber | RawMarkup | StaticMarkup[];
 
 export type AnyMarkup = StaticMarkup | LazyMarkup | LazyMarkupFactory;
 
@@ -61,7 +61,7 @@ export function convertToMarkupFromRandomString(unsafe: string): StaticMarkup {
 	return toRawMarkup(unsafe);
 }
 
-export function filePathToMarkup(
+export function pathToMarkup(
 	path: AnyPath,
 	explicit: boolean = false,
 ): StaticMarkup {
@@ -166,9 +166,13 @@ export function readMarkup(item: AnyMarkup): string {
 	) {
 		return `<number>${String(item.valueOf())}</number>`;
 	}
+
+	if (item instanceof Duration) {
+		return `<duration>${String(item.toNanoseconds())}</duration>`;
+	}
 	
 	if (isPath(item)) {
-		return readMarkup(filePathToMarkup(item));
+		return readMarkup(pathToMarkup(item));
 	}
 
 	if (isRawMarkup(item)) {

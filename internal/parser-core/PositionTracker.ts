@@ -1,4 +1,4 @@
-import {OneIndexed, ZeroIndexed} from "@internal/math";
+import {OneIndexed, ZeroIndexed} from "@internal/numbers";
 import {Position} from "./types";
 import {pretty} from "@internal/pretty-format";
 import {derivePositionKey} from "./utils";

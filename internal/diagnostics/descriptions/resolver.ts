@@ -1,5 +1,5 @@
 import {createDiagnosticsCategory} from "./index";
-import {DiagnosticLocation} from "../types";
+import {DiagnosticAdvice, DiagnosticLocation} from "../types";
 import {markup} from "@internal/markup";
 import {
 	buildSuggestionAdvice,
@@ -15,8 +15,9 @@ import {DIAGNOSTIC_CATEGORIES} from "@internal/diagnostics";
 export const resolver = createDiagnosticsCategory({
 	NOT_FOUND: (
 		responseType: ResolverQueryResponseNotFound["type"],
-		source: string,
-		location: DiagnosticLocation,
+		origin: AnyPath,
+		source: AnyPath,
+		advice: DiagnosticAdvice,
 	) => {
 		let messagePrefix = "";
 		let category: DiagnosticCategory = DIAGNOSTIC_CATEGORIES["resolver/notFound"];
@@ -39,8 +40,9 @@ export const resolver = createDiagnosticsCategory({
 		}
 
 		return {
-			message: markup`${messagePrefix} <emphasis>${source}</emphasis> from <emphasis>${location.path}</emphasis>`,
+			message: markup`${messagePrefix} <emphasis>${source}</emphasis> from <emphasis>${origin}</emphasis>`,
 			category,
+			advice,
 		};
 	},
 	UNKNOWN_EXPORT: (

@@ -21,13 +21,14 @@ import {
 	WorkerOptions,
 } from "@internal/core";
 import {Locker} from "../../async/lockers";
-import {BridgeServer, Event} from "@internal/events";
+import {AnyBridge, BridgeServer, Event} from "@internal/events";
 import {AbsoluteFilePath} from "@internal/path";
 import {markup} from "@internal/markup";
 import prettyFormat from "@internal/pretty-format";
 import {ReporterNamespace} from "@internal/cli-reporter";
 import workerThreads = require("worker_threads");
 import {ExtendedMap} from "@internal/collections";
+import { Duration, DurationMeasurer } from "@internal/numbers";
 
 export type WorkerContainer = {
 	id: number;
@@ -95,21 +96,6 @@ export default class WorkerManager {
 		return this.getWorkers().filter((worker) => worker.thread !== undefined);
 	}
 
-	public async end() {
-		// Shutdown all workers, no need to clean up any internal data structures since they will never be used
-		await Promise.all(
-			Array.from(
-				this.workers.values(),
-				async ({thread, bridge}) => {
-					if (thread !== undefined) {
-						await bridge.end();
-						await thread.terminate();
-					}
-				},
-			),
-		);
-	}
-
 	private getLowestByteCountWorker(): WorkerContainer {
 		// Find the worker with the lowest byteCount value
 		let smallestWorker;
@@ -132,15 +118,28 @@ export default class WorkerManager {
 		}
 	}
 
+	private addLoggerHandler(workerTitle: string, bridge: AnyBridge): void {
+		bridge.sendMessageEvent.subscribe((raw) => {
+			this.logger.info(() => {
+				const msg = bridge.getDebugMessage(raw);
+				return markup`Sending ${workerTitle}: ${prettyFormat(msg)}`;
+			});
+		});
+
+		bridge.receivedMessageEvent.subscribe((raw) => {
+			this.logger.info(() => {
+				const msg = bridge.getDebugMessage(raw);
+				return markup`Received ${workerTitle}: ${prettyFormat(msg)}`;
+			});
+		});
+	}
+
 	public async init(): Promise<void> {
 		// Create the worker
 		const bridges = WorkerBridge.createFromLocal();
+		this.server.resources.add(bridges.server);
 
-		bridges.server.sendMessageEvent.subscribe((data) => {
-			this.logger.info(
-				markup`Sending local worker request: ${prettyFormat(data)}`,
-			);
-		});
+		this.addLoggerHandler("local worker", bridges.server)
 
 		const worker = new Worker({
 			userConfig: this.server.userConfig,
@@ -148,6 +147,7 @@ export default class WorkerManager {
 			dedicated: false,
 			...this.buildPartialWorkerOptions(0),
 		});
+		this.server.resources.add(worker);
 
 		// We make an assumption elsewhere in the code that this is always the first worker
 		// Let's use an invariant here for completeness
@@ -192,13 +192,15 @@ export default class WorkerManager {
 			const newWorker = await this.spawnWorker(this.getNextWorkerId(), true);
 
 			// Transfer buffers to the new worker
-			const buffers = await serverWorker.bridge.events.getFileBuffers.call();
+			if (this.server.memoryFs.hasAnyBuffers()) {
+				const buffers = await serverWorker.bridge.events.getFileBuffers.call();
 
-			for (const [path, buffer] of buffers) {
-				await newWorker.bridge.events.updateBuffer.call({
-					ref: this.server.projectManager.getFileReference(path),
-					buffer,
-				});
+				for (const [path, buffer] of buffers) {
+					await newWorker.bridge.events.updateBuffer.call({
+						ref: this.server.projectManager.getFileReference(path),
+						buffer,
+					});
+				}
 			}
 
 			// End the old worker, will automatically cleanup
@@ -219,6 +221,10 @@ export default class WorkerManager {
 				},
 			);
 			this.workers.delete(newWorker.id);
+
+			this.logger.info(
+				markup`Successfully replaced server worker with a dedicated one`,
+			);
 		} finally {
 			lock.release();
 		}
@@ -233,7 +239,7 @@ export default class WorkerManager {
 
 	private async workerHandshake(worker: WorkerContainer) {
 		const {bridge} = worker;
-		await bridge.handshake({timeout: 3_000});
+		await bridge.handshake({timeout: Duration.fromSeconds(3), monitorHeartbeat: LAG_INTERVAL});
 		await this.server.projectManager.notifyWorkersOfProjects([worker]);
 		worker.ready = true;
 	}
@@ -265,7 +271,7 @@ export default class WorkerManager {
 		isGhost: boolean,
 	): Promise<WorkerContainer> {
 		const fatalErrorSource = markup`worker ${workerId}`;
-		const start = Date.now();
+		const start = new DurationMeasurer();
 
 		const thread = forkThread(
 			"worker",
@@ -273,20 +279,15 @@ export default class WorkerManager {
 				workerData: this.buildPartialWorkerOptions(workerId),
 			},
 		);
+		this.server.resources.addWorkerThread(thread);
 
 		const bridge = WorkerBridge.Server.createFromWorkerThread(thread);
-
-		bridge.sendMessageEvent.subscribe((data) => {
-			this.logger.info(
-				markup`Sending dedicated worker request to ${String(workerId)}: ${prettyFormat(
-					data,
-				)}`,
-			);
-		});
+		this.addLoggerHandler(`dedicated worker #${String(workerId)}`, bridge);
+		this.server.resources.add(bridge);
 
 		bridge.events.fatalError.subscribe((details) => {
 			this.server.fatalErrorHandler.handle(
-				bridge.hydrateError(details),
+				bridge.hydrateCustomError(details),
 				fatalErrorSource,
 			);
 		});
@@ -295,30 +296,25 @@ export default class WorkerManager {
 			this.server.emitLog(chunk, "worker", isError);
 		});
 
-		bridge.monitorHeartbeat(
-			LAG_INTERVAL,
-			({summary, totalTime, iterations}) => {
-				const reporter = this.server.getImportantReporter();
-				reporter.warn(
-					markup`Worker <emphasis>${workerId}</emphasis> has not responded for <emphasis><duration>${String(
-						totalTime,
-					)}</duration> seconds</emphasis>. It is unlikely to become responsive. Currently processing:`,
-				);
-				reporter.list(summary);
-				reporter.info(
-					markup`Please open an issue with the details provided above if necessary`,
-				);
+		bridge.heartbeatExceededEvent.subscribe(({summary, totalTime, attempts}) => {
+			const reporter = this.server.getImportantReporter();
+			reporter.warn(
+				markup`Worker <emphasis>${workerId}</emphasis> has not responded for <emphasis>${totalTime} seconds</emphasis>. It is unlikely to become responsive. Currently processing:`,
+			);
+			reporter.list(summary);
+			reporter.info(
+				markup`Please open an issue with the details provided above if necessary`,
+			);
 
-				if (iterations > 5) {
-					this.server.fatalErrorHandler.handle(
-						new Error(
-							`Did not respond for ${totalTime}ms and was checked ${iterations} times`,
-						),
-						fatalErrorSource,
-					);
-				}
-			},
-		);
+			if (attempts >= 5) {
+				this.server.fatalErrorHandler.handle(
+					new Error(
+						`Did not respond for ${totalTime}ms and was checked ${attempts} times`,
+					),
+					fatalErrorSource,
+				);
+			}
+		});
 
 		const container: WorkerContainer = {
 			id: workerId,
@@ -357,9 +353,7 @@ export default class WorkerManager {
 		this.workerStartEvent.send(container);
 
 		this.logger.info(
-			markup`Worker ${String(workerId)} started after <duration>${String(
-				Date.now() - start,
-			)}</duration>`,
+			markup`Worker ${String(workerId)} started after ${start.since()}`,
 		);
 
 		return container;

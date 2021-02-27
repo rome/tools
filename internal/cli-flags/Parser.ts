@@ -42,6 +42,7 @@ import highlightShell from "@internal/markup-syntax-highlight/highlightShell";
 import {RSERObject} from "@internal/codec-binary-serial";
 import {ExtendedMap} from "@internal/collections";
 import {markupToPlainText} from "@internal/cli-layout";
+import { safeProcessExit } from "@internal/resources";
 
 export type Examples = {
 	description: StaticMarkup;
@@ -484,13 +485,13 @@ export default class Parser<T> {
 		}
 
 		reporter.info(markup`Restart your shell to enable!`);
-		this.exit(0);
+		await this.exit(0);
 	}
 
 	private async logShellCompletions(shell: SupportedCompletionShells) {
 		const res = await this.generateShellCompletions(shell);
 		this.reporter.logRaw(res);
-		this.exit(0);
+		await this.exit(0);
 	}
 
 	public async init(): Promise<T> {
@@ -507,8 +508,8 @@ export default class Parser<T> {
 				},
 			).asBoolean(false);
 			if (shouldDisplayVersion) {
-				this.reporter.log(markup`${version}`);
-				this.exit(0);
+				this.reporter.log(version);
+				await this.exit(0);
 			}
 		}
 
@@ -582,7 +583,7 @@ export default class Parser<T> {
 			await this.showHelp(
 				definedCommand === undefined ? undefined : definedCommand.command,
 			);
-			this.exit(1);
+			await this.exit(1);
 		}
 
 		if (definedCommand !== undefined) {
@@ -1220,9 +1221,9 @@ export default class Parser<T> {
 		return flags;
 	}
 
-	private exit(code: number) {
+	private async exit(code: number): Promise<void> {
 		if (!this.opts.noProcessExit) {
-			process.exit(code);
+			await safeProcessExit(code);
 		}
 	}
 }

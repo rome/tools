@@ -78,10 +78,17 @@ export type UnknownObject = Dict<unknown>;
 
 export type UnknownFunction = (...args: unknown[]) => unknown;
 
-export function isPlainObject<T = UnknownObject>(
+export function isObject(
 	obj: unknown,
-): obj is UnknownObject & T {
+): obj is UnknownObject {
 	return typeof obj === "object" && obj !== null && !Array.isArray(obj);
+}
+
+export function isPlainObject(
+	obj: unknown,
+): obj is UnknownObject {
+	// Weird duck typing for cross-realm objects
+	return isObject(obj) && obj.constructor !== undefined && obj.constructor.name === "Object";
 }
 
 export function isIterable(obj: unknown): obj is Iterable<unknown> {

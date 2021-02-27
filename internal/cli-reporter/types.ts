@@ -8,12 +8,13 @@
 import {Event} from "@internal/events";
 import {TerminalFeatures} from "@internal/cli-environment";
 import {AnyMarkup, AnyMarkups, StaticMarkup} from "@internal/markup";
-import {ZeroIndexed} from "@internal/math";
+import {ZeroIndexed} from "@internal/numbers";
 import {
 	AsyncCallback,
 	AsyncVoidCallback,
 	VoidCallback,
 } from "@internal/typescript-helpers";
+import { Resource } from "@internal/resources";
 
 // rome-ignore lint/ts/noExplicitAny: future cleanup
 export type WrapperFactory = <T extends (...args: any[]) => any>(
@@ -79,38 +80,32 @@ export interface ReporterNamespace {
 }
 
 export type ReporterConditionalStream = {
-	enable: () => void;
-	disable: () => void;
-	update: () => boolean;
+	enable: () => Promise<void>;
+	disable: () => Promise<void>;
+	update: () => Promise<boolean>;
 };
 
 export type ReporterCaptureStream = {
 	read: () => string;
 	readAsMarkup: () => StaticMarkup;
-	remove: VoidCallback;
+	resources: Resource;
 };
 
 export interface ReporterStream {
 	features: TerminalFeatures;
 	format: "markup" | "ansi" | "html" | "none";
 	write: (chunk: string, error: boolean) => void;
-	init?: VoidCallback;
-	teardown?: VoidCallback;
 }
 
 export interface ReporterStreamAttached extends ReporterStream {
-	handles: Set<ReporterStreamHandle>;
 	state: ReporterStreamState;
-	updateFeatures: (features: TerminalFeatures) => void;
-}
-
-export interface ReporterStreamHandle {
-	stream: ReporterStreamAttached;
-	remove: VoidCallback;
+	updateFeatures: (features: TerminalFeatures) => Promise<void>;
+	featuresUpdated: Event<TerminalFeatures, void>;
+	resources: Resource;
 }
 
 export type ReporterDerivedStreams = {
-	handle: ReporterStreamHandle;
+	stream: ReporterStreamAttached;
 	format: ReporterStream["format"];
 	features: TerminalFeatures;
 	featuresUpdated: Event<TerminalFeatures, void>;

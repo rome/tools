@@ -57,7 +57,7 @@ export async function printDiagnosticsToString(
 		features?: Partial<TerminalFeatures>;
 	},
 ): Promise<string> {
-	const reporter = new Reporter();
+	const reporter = new Reporter("DiagnosticsPrinter");
 	const stream = reporter.attachCaptureStream(opts.format, opts.features);
 	await printDiagnostics({
 		...opts,
@@ -67,5 +67,6 @@ export async function printDiagnosticsToString(
 			...opts.printerOptions,
 		},
 	});
+	await reporter.resources.release();
 	return stream.read();
 }

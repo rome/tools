@@ -16,7 +16,7 @@ import {
 } from "@internal/parser-core";
 import {getSPDXLicense, licenseNames} from "./index";
 import {Diagnostics, descriptions} from "@internal/diagnostics";
-import {ZeroIndexed} from "@internal/math";
+import {ZeroIndexed} from "@internal/numbers";
 import {
 	ExpressionNode,
 	LicenseNode,

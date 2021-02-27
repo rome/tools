@@ -15,7 +15,7 @@ import {
 } from "@internal/typescript-helpers";
 import {pretty} from "@internal/pretty-format";
 import {AnyPath, UNKNOWN_PATH, isPath} from "@internal/path";
-import {isIndexedNumberish} from "@internal/math";
+import {isIndexedNumberish} from "@internal/numbers";
 
 export function isDigit(char: undefined | string): boolean {
 	return char !== undefined && /[0-9]/.test(char);

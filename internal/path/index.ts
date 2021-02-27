@@ -16,6 +16,7 @@ export {default as RelativePath} from "./classes/RelativePath";
 export {default as UIDPath} from "./classes/UIDPath";
 export {default as URLPath} from "./classes/URLPath";
 
+export {validateParsedPathWindowsDriveLetter} from "./parse";
 export * from "./factories";
 export * from "./collections";
 export * from "./types";

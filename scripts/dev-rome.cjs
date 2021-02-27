@@ -167,6 +167,7 @@ async function buildTrunk() {
 async function execDev() {
 	const args = [
 		"--trace-warnings",
+		"--unhandled-rejections=strict",
 		"--inspect-publish-uid=http",
 		path.join(tempDevBuildFolder, "index.js"),
 		...process.argv.slice(2),

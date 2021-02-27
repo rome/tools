@@ -16,7 +16,7 @@ import {dedent} from "@internal/string-utils";
 import {tests} from "@internal/compiler/lint/rules/tests";
 import {ROOT, modifyGeneratedFile} from "../_utils";
 import {getDocRuleDescription, getLintDefs} from "./lint-rules";
-import {OneIndexed} from "@internal/math";
+import {OneIndexed} from "@internal/numbers";
 
 const {worker, performFileOperation} = createMockWorker();
 

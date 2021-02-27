@@ -22,7 +22,7 @@ import {
 	markup,
 	normalizeMarkup,
 } from "@internal/markup";
-import {OneIndexed, ZeroIndexed} from "@internal/math";
+import {OneIndexed, ZeroIndexed} from "@internal/numbers";
 import {mergeObjects} from "@internal/typescript-helpers";
 import {AnyPath, MixedPathMap, MixedPathSet} from "@internal/path";
 

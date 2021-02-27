@@ -10,8 +10,8 @@ import {AnyRoot} from "@internal/ast";
 import {TransformStageName} from "@internal/compiler";
 import {Profile} from "@internal/v8";
 import {ProfilingStartData, ServerBridgeLog} from "./ServerBridge";
-import {DiagnosticsError} from "@internal/diagnostics";
-import {BridgeErrorResponseDetails, createBridge} from "@internal/events";
+import {Diagnostics, DiagnosticsError} from "@internal/diagnostics";
+import {BridgeErrorDetails, createBridge} from "@internal/events";
 import {FileReference} from "../types/files";
 import {InlineSnapshotUpdates} from "@internal/core/test-worker/SnapshotManager";
 import {
@@ -32,20 +32,20 @@ import {
 	WorkerLintOptions,
 	WorkerLintResult,
 	WorkerParseOptions,
-	WorkerPartialManifests,
 	WorkerProjects,
 	WorkerStatus,
 	WorkerUpdateInlineSnapshotResult,
 } from "@internal/core";
+import { WorkerPartialManifest } from "@internal/core/worker/types";
 
 export default createBridge({
-	debugName: "worker",
+	debugName: "Worker",
 
 	shared: {},
 
 	server: {
 		log: createBridgeEventDeclaration<Omit<ServerBridgeLog, "origin">, void>(),
-		fatalError: createBridgeEventDeclaration<BridgeErrorResponseDetails, void>(),
+		fatalError: createBridgeEventDeclaration<BridgeErrorDetails, void>(),
 	},
 
 	client: {
@@ -57,7 +57,7 @@ export default createBridge({
 
 		updateManifests: createBridgeEventDeclaration<
 			{
-				manifests: WorkerPartialManifests;
+				manifests: Map<number, undefined | WorkerPartialManifest>;
 			},
 			void
 		>(),
@@ -175,7 +175,10 @@ export default createBridge({
 	},
 
 	init(bridge) {
-		bridge.addErrorTransport(
+		bridge.addCustomErrorTransport<{
+			suffixMessage: undefined | string,
+			path: string,
+		}>(
 			"FileNotFound",
 			{
 				serialize(err: Error) {
@@ -197,7 +200,9 @@ export default createBridge({
 			},
 		);
 
-		bridge.addErrorTransport(
+		bridge.addCustomErrorTransport<{
+			diagnostics: Diagnostics;
+		}>(
 			"DiagnosticsError",
 			{
 				serialize(err: Error) {

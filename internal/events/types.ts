@@ -14,13 +14,14 @@ import {
 	BridgeEventCallOnly,
 	BridgeEventListenOnly,
 } from "./BridgeEvent";
-import Event from "./Event";
 import {BridgeFactories} from "./createBridge";
 import Bridge from "./Bridge";
+import { Resource } from "@internal/resources";
+import { Duration } from "@internal/numbers";
 
 export type EventCallback<Param, Ret> = (
 	param: Param,
-	subscription: EventSubscription,
+	resource: Resource,
 ) => Ret | Promise<Ret>;
 
 export type AnyBridge = Bridge<{}, {}, {}>;
@@ -100,70 +101,63 @@ export type BridgeInitCallback<SharedEvents extends BridgeEventsDeclaration> = (
 
 export type EventOptions = {
 	displayName?: string;
+	requiredSubscriptionResource?: boolean;
 	onSubscriptionChange?: VoidCallback;
 	unique?: boolean;
 	serial?: boolean;
 };
 
-export interface PartialEventSubscription {
-	unsubscribe: () => Promise<boolean>;
-};
-
-export interface EventSubscription extends PartialEventSubscription {
-	addDependency: (sub: EventSubscription) => void;
-	onUnsubscribeEvent: Event<void, void>;
-}
+export type EventSubscriptionOptions = {};
 
 export type BridgeHeartbeatExceededOptions = {
 	summary: AnyMarkups;
-	iterations: number;
-	totalTime: number;
+	attempts: number;
+	totalTime: Duration;
 };
 
-export type BridgeHandshakeMessage = {
-	type: "handshake";
-	subscriptions: Set<string>;
-};
+export enum BridgeMessageCodes {
+	CLIENT_HANDSHAKE,
+	SERVER_HANDSHAKE,
+	SUBSCRIBED,
+	UNSUBSCRIBED,
+	HEARTBEAT,
+	CALL,
+	PRIORITY_CALL,
+	SEND,
+	RESPONSE_SUCCESS,
+	RESPONSE_ERROR_CUSTOM,
+	RESPONSE_ERROR_NATIVE,
+}
 
-export type BridgeSubscriptionsMessage = {
-	type: "subscriptions";
-	names: Set<string>;
-};
+export type BridgeHandshakeMessage = [BridgeMessageCodes.CLIENT_HANDSHAKE, undefined | Duration, Set<number>, Map<number, string>] | [BridgeMessageCodes.SERVER_HANDSHAKE, undefined | Duration, Set<number>];
+export type BridgeSubscriptionsMessage = [BridgeMessageCodes.SUBSCRIBED | BridgeMessageCodes.UNSUBSCRIBED, number];
+export type BridgeRequestCallMessage = [BridgeMessageCodes.CALL | BridgeMessageCodes.PRIORITY_CALL, number, number, RSERValue] | [BridgeMessageCodes.CALL | BridgeMessageCodes.PRIORITY_CALL, number, number];
+export type BridgeRequestSendMessage = [BridgeMessageCodes.SEND, number, RSERValue];
+export type BridgeSuccessResponseMessage = [BridgeMessageCodes.RESPONSE_SUCCESS, number, RSERValue];
+export type BridgeNativeErrorResponseMessage = [BridgeMessageCodes.RESPONSE_ERROR_NATIVE, number, Error];
+export type BridgeCustomErrorResponseMessage = [BridgeMessageCodes.RESPONSE_ERROR_CUSTOM, number, StructuredError, RSERObject];
+export type BridgeHeartbeatMessage = [BridgeMessageCodes.HEARTBEAT];
 
-export type BridgeRequestMessage = {
-	id?: number;
-	event: string;
-	param: RSERValue;
-	type: "request";
-	priority: boolean;
-};
+export type BridgeRequestMessage = BridgeRequestCallMessage | BridgeRequestSendMessage;
 
-export type BridgeSuccessResponseMessage = {
-	id: number;
-	event: string;
-	value: RSERValue;
-	type: "response";
-	responseStatus: "success";
-};
-
-export type BridgeErrorResponseDetails = {
-	value: StructuredError;
-	metadata: RSERObject;
-};
-
-export type BridgeErrorResponseMessage = BridgeErrorResponseDetails & {
-	id: number;
-	event: string;
-	type: "response";
-	responseStatus: "error";
-};
+export type BridgeErrorResponseMessage = BridgeNativeErrorResponseMessage | BridgeCustomErrorResponseMessage;
 
 export type BridgeResponseMessage =
 	| BridgeSuccessResponseMessage
 	| BridgeErrorResponseMessage;
 
 export type BridgeMessage =
+  | BridgeHeartbeatMessage
 	| BridgeHandshakeMessage
 	| BridgeSubscriptionsMessage
 	| BridgeRequestMessage
 	| BridgeResponseMessage;
+
+	export type BridgeErrorDetails = {
+		errorType: "custom";
+		value: StructuredError;
+		metadata: RSERObject;
+	} | {
+		errorType: "native";
+		value: Error;
+	};

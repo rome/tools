@@ -1,69 +1,117 @@
 import { Reporter } from "@internal/cli-reporter";
 import { ServerRequest } from "@internal/core";
-import { BundlerFile } from "@internal/core/common/types/bundler";
-import {Event} from "@internal/events";
+import { BundlerEntryResolution, BundlerFile } from "@internal/core/common/types/bundler";
 import Bundler from "../bundler/Bundler";
 import http = require("http");
+import { markup } from "@internal/markup";
+import { AbsoluteFilePath, AbsoluteFilePathMap, RelativePathMap } from "@internal/path";
+import DevelopRequest from "./DevelopRequest";
+import { Resource } from "@internal/resources";
+
+type DevelopServerOptions = {
+  bundler: Bundler;
+  resolution: BundlerEntryResolution;
+  reporter: Reporter;
+  request: ServerRequest;
+};
 
 export default class DevelopServer {
-  constructor(req: ServerRequest, reporter: Reporter) {
-    this.request = req;
-    this.reporter = reporter;
-    this.bundler = Bundler.createFromServerRequest(req);
-    this.closeEvent = new Event({
-      name: "closeEvent",
-    });
+  constructor(opts: DevelopServerOptions) {
+    this.request = opts.request;
+    this.reporter = opts.reporter;
+    this.bundler = opts.bundler;
 
-    this.knownBundleFiles = new Map();
+    this.resolution = opts.resolution;
+    this.staticPath = opts.resolution.project.directory.append("static");
+    
+    this.resources = this.request.resources.create("DevelopServer");
+    this.ready = false;
+    this.knownBundleFiles = new RelativePathMap();
+    this.staticETags = new AbsoluteFilePathMap();
   }
 
-  private reporter: Reporter;
   private request: ServerRequest;
-  private knownBundleFiles: Map<string, BundlerFile>;
-  private bundler: Bundler;
-  private closeEvent: Event<void, void>;
+  private resources: Resource;
+
+  public reporter: Reporter;
+  public knownBundleFiles: RelativePathMap<BundlerFile>;
+  public bundler: Bundler;
+  public resolution: BundlerEntryResolution;
+  public staticPath: AbsoluteFilePath;
+  public ready: boolean;
+  public staticETags: AbsoluteFilePathMap<{
+    mtime: bigint;
+    etag: string;
+  }>;
 
   public async init() {
-    const {bundler} = this;
-		const resolution = await bundler.getResolvedEntry(".");
-    const {diagnosticsEvent, filesEvent, changeEvent} = bundler.bundleManifestWatch(resolution);
+    const {bundler, reporter, request, resolution} = this;
+    const {diagnosticsEvent, filesEvent, changeEvent, subscription} = bundler.bundleManifestWatch(resolution);
 
     diagnosticsEvent.subscribe(async (diagnostics) => {
       reporter.clearScreen();
-      const printer = req.createDiagnosticsPrinter();
+      const printer = request.createDiagnosticsPrinter();
       printer.processor.addDiagnostics(diagnostics);
       await printer.print();
+
+      // TODO send diagnostics to client rendered as HTML
     });
 
-    filesEvent.subscribe(([name]) => {
-      console.log(name);
+    filesEvent.subscribe((files) => {
+      for (const [name, def] of files) {
+        if (def === undefined) {
+          this.knownBundleFiles.delete(name);
+        } else {
+          this.knownBundleFiles.set(name, def);
+        }
+      }
+
+      // Consider ourselves initialized when we've received our first batch of files
+      this.ready = true;
+
+      this.refresh();
     });
 
+    // TODO this does not respect `static`
     changeEvent.subscribe(paths => {
-      if (paths.length === 1) {
-        reporter.info(markup`File change ${paths[0]}`);
+      if (paths.size === 1) {
+        reporter.info(markup`File change ${Array.from(paths)[0]}`);
       } else {
         reporter.info(markup`Multiple file changes`);
-        reporter.list(paths);
+        reporter.list(Array.from(paths));
       }
     });
+
+    this.resources.add(subscription);
   }
 
-  private async handleRequest(req: http.IncomingMessage, res: http.ServerResponse) {
-
+  private async refresh() {
+    // TODO tell all connected websockets to refresh
   }
 
-  public listen(port: number): http.Server {
-    const server = http.createServer((req: http.IncomingMessage, res: http.ServerResponse) => {
-      this.handleRequest(req, res).catch(err => {
-
+  public async listen(port: number): Promise<http.Server> {
+    const server = http.createServer((request: http.IncomingMessage, response: http.ServerResponse) => {
+      const devRequest = new DevelopRequest({
+        httpServer: server,
+        request,
+        response,
+        server: this,
       });
+      devRequest.handle();
     });
 
-    server.listen(port);
+    return new Promise((resolve, reject) => {
+      server.addListener("error", reject);
 
-    return server;
+      server.listen(port, () => {
+        server.removeListener("error", reject);
+        server.addListener("error", this.request.server.fatalErrorHandler.handleBound);
+        resolve(server);
+      });
+    });
   }
 
-  public close() {}
+  public async close() {
+    await this.resources.release();
+  }
 }

@@ -34,7 +34,7 @@ import {
 } from "@internal/diagnostics";
 import {AnyComment, AnyNode, RootBase} from "@internal/ast";
 import {AnyPath, UNKNOWN_PATH, equalPaths} from "@internal/path";
-import {OneIndexed, ZeroIndexed} from "@internal/math";
+import {OneIndexed, ZeroIndexed} from "@internal/numbers";
 import {CommentsConsumer} from "@internal/js-parser";
 import PositionTracker from "./PositionTracker";
 import {RequiredProps} from "@internal/typescript-helpers";
@@ -150,9 +150,16 @@ export default class ParserCore<Types extends ParserCoreTypes> {
 		this.currColumn =
 			offsetPosition === undefined ? new ZeroIndexed() : offsetPosition.column;
 		this.nextTokenIndex = new ZeroIndexed();
-		this.currentToken = SOF_TOKEN;
-		this.prevToken = SOF_TOKEN;
+
 		this.comments = new CommentsConsumer();
+
+		const sofToken: SOFToken = {
+			type: "SOF",
+			start: new ZeroIndexed(),
+			end: new ZeroIndexed(),
+		};
+		this.currentToken = sofToken;
+		this.prevToken = sofToken;
 
 		let initialState: undefined | Types["state"];
 		if (initialState === undefined && impl.getInitialState !== undefined) {
@@ -252,7 +259,7 @@ export default class ParserCore<Types extends ParserCoreTypes> {
 
 	public getToken(): TokenValues<Types["tokens"]> {
 		const {currentToken} = this;
-		if (currentToken === SOF_TOKEN) {
+		if (currentToken.type === "SOF") {
 			return this.nextToken();
 		} else {
 			return currentToken;
@@ -441,6 +448,7 @@ export default class ParserCore<Types extends ParserCoreTypes> {
 		};
 
 		return {
+			tags: this.impl.diagnosticTags,
 			description: descriptionWithCategory,
 			location,
 		};
@@ -800,10 +808,6 @@ export default class ParserCore<Types extends ParserCoreTypes> {
 		// TODO remove any trailing "eof" diagnostic
 		processor.addDiagnostics(this.state.diagnostics);
 
-		if (processor.hasDiagnostics()) {
-			//process.exit();
-		}
-
 		return processor.getDiagnostics().slice(0, 1);
 	}
 
@@ -827,12 +831,6 @@ export default class ParserCore<Types extends ParserCoreTypes> {
 		this.state.leadingComments.push(comment);
 	}
 }
-
-const SOF_TOKEN: SOFToken = {
-	type: "SOF",
-	start: new ZeroIndexed(),
-	end: new ZeroIndexed(),
-};
 
 type ParserSnapshot<Types extends ParserCoreTypes> = {
 	nextTokenIndex: ZeroIndexed;

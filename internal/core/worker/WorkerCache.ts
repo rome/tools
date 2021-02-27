@@ -387,6 +387,7 @@ export default class WorkerCache extends Cache {
 				writeDisabled: worker.options.cacheWriteDisabled,
 				readDisabled: worker.options.cacheReadDisabled,
 			},
+			worker.resources,
 		);
 		this.worker = worker;
 		this.loadedFiles = new AbsoluteFilePathMap();

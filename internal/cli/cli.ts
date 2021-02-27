@@ -42,6 +42,7 @@ import {satisfiesSemver} from "@internal/codec-semver";
 import {Reporter} from "@internal/cli-reporter";
 import {loadUserConfig} from "@internal/core/common/userConfig";
 import {RSERObject} from "@internal/codec-binary-serial";
+import { safeProcessExit } from "@internal/resources";
 
 type CLIFlags = {
 	logs: undefined | ClientLogsLevel;
@@ -73,7 +74,7 @@ export default async function cli() {
 		reporter.error(
 			markup`Node <emphasis>${REQUIRED_NODE_VERSION_RANGE}</emphasis> is required, but you are on <emphasis>${process.version}</emphasis>`,
 		);
-		process.exit(1);
+		await safeProcessExit(1);
 	}
 
 	const p = parseCLIFlagsFromProcess({
@@ -473,6 +474,7 @@ export default async function cli() {
 	const client = new Client({
 		userConfig,
 		terminalFeatures,
+		dedicated: true,
 		globalErrorHandlers: true,
 		flags: clientFlags,
 		stdin: process.stdin,
@@ -597,12 +599,12 @@ export default async function cli() {
 
 	switch (res.type) {
 		case "EXIT": {
-			process.exit(res.code);
+			await safeProcessExit(res.code);
 			break;
 		}
 
 		case "CLIENT_ERROR": {
-			process.exit(1);
+			await safeProcessExit(1);
 			break;
 		}
 
@@ -610,23 +612,23 @@ export default async function cli() {
 			if (res.showHelp) {
 				await p.showHelp();
 			}
-			process.exit(1);
+			await safeProcessExit(1);
 			break;
 		}
 
 		case "DIAGNOSTICS": {
-			process.exit(res.hasDiagnostics ? 1 : 0);
+			await safeProcessExit(res.hasDiagnostics ? 1 : 0);
 			break;
 		}
 
 		case "CANCELLED": {
 			client.reporter.error(markup`Command cancelled: ${res.reason}`);
-			process.exit(0);
+			await safeProcessExit(0);
 			break;
 		}
 
 		case "SUCCESS": {
-			process.exit(0);
+			await safeProcessExit(0);
 			break;
 		}
 	}

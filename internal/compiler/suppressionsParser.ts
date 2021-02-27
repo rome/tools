@@ -7,7 +7,7 @@ import {
 	formatCategoryDescription,
 	splitPossibleCategoryName,
 } from "@internal/diagnostics";
-import {ZeroIndexed} from "@internal/math";
+import {ZeroIndexed} from "@internal/numbers";
 import {
 	BaseTokens,
 	ParserCore,

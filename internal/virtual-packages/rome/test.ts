@@ -58,11 +58,11 @@ export interface TestHelper {
 	checkTimeout(): void;
 	truthy(value: unknown, message?: string): void;
 	falsy(value: unknown, message?: string): void;
-	true(value: unknown, message?: string): void;
-	false(value: unknown, message?: string): void;
+	true(value: boolean, message?: string): void;
+	false(value: boolean, message?: string): void;
 	is<T extends unknown>(received: T, expected: T, message?: string): void;
 	not(received: unknown, expected: unknown, message?: string): void;
-	looksLike(received: unknown, expected: unknown, message?: string): void;
+	looksLike<T extends unknown>(received: T, expected: T, message?: string): void;
 	notLooksLike(received: unknown, expected: unknown, message?: string): void;
 	throws(
 		thrower: VoidCallback,

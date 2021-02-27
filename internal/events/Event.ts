@@ -5,16 +5,19 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {ExtendedMap} from "@internal/collections";
-import {humanizeDuration} from "@internal/string-utils";
-import {EventCallback, EventOptions, EventSubscription} from "./types";
-import { createEventSubscription } from "./utils";
+import { Duration } from "@internal/numbers";
+import { createResourceFromCallback, Resource } from "@internal/resources";
+import {EventCallback, EventOptions, EventSubscriptionOptions} from "./types";
+
+type EventSubscription<Param, Ret> = {
+	callback: EventCallback<Param, Ret>;
+	resource: Resource;
+};
 
 export default class Event<Param, Ret = void> {
 	constructor(name: string, opts: EventOptions = {}) {
-		this.subscriptions = new ExtendedMap("subscriptions");
-		this.callbacks = new Set();
-		this.rootCallback = undefined;
+		this.subscriptions = new Set();
+		this.rootSubscription = undefined;
 		this.name = name;
 		this.displayName = opts.displayName ?? `event ${this.name}`;
 		this.options = opts;
@@ -22,20 +25,16 @@ export default class Event<Param, Ret = void> {
 
 	public name: string;
 	public displayName: string;
+
 	private options: EventOptions;
+	private rootSubscription: undefined | EventSubscription<Param, Ret>;
+	private subscriptions: Set<EventSubscription<Param, Ret>>;
 
-	private rootCallback: undefined | EventCallback<Param, Ret>;
-	private callbacks: Set<EventCallback<Param, Ret>>;
-	private subscriptions: ExtendedMap<
-		EventCallback<Param, Ret>,
-		EventSubscription
-	>;
-
-	private async callCallback(
-		callback: EventCallback<Param, Ret>,
+	private async callSubscription(
+		sub: EventSubscription<Param, Ret>,
 		param: Param,
 	): Promise<Ret> {
-		return callback(param, this.subscriptions.assert(callback));
+		return sub.callback(param, sub.resource);
 	}
 
 	private onSubscriptionChange() {
@@ -45,50 +44,56 @@ export default class Event<Param, Ret = void> {
 		}
 	}
 
-	public clear() {
-		this.callbacks.clear();
-		this.rootCallback = undefined;
+	public async clear(): Promise<void> {
+		// Release all subscriptions
+		const promises = Array.from(this.subscriptions, (sub) => sub.resource.release());
+		if (this.rootSubscription !== undefined) {
+			promises.push(this.rootSubscription.resource.release());
+		}
+		await Promise.allSettled(promises);
+		this.subscriptions.clear();
+		this.rootSubscription = undefined;
 	}
 
 	public hasSubscriptions(): boolean {
-		return this.rootCallback !== undefined;
+		return this.rootSubscription !== undefined;
 	}
 
 	// Dispatch the event without caring about the return values
 	public send(param: Param, required: boolean = false) {
-		const {rootCallback: rootSubscription} = this;
+		const {rootSubscription} = this;
 		if (rootSubscription === undefined) {
 			if (required) {
-				throw new Error(`No subscription for ${this.displayName}`);
+				throw new Error(`Event.send: No subscriptions for ${this.displayName}`);
 			}
 			return;
 		}
 
-		this.callCallback(rootSubscription, param);
+		this.callSubscription(rootSubscription, param);
 
-		for (const callback of this.callbacks) {
-			this.callCallback(callback, param);
+		for (const sub of this.subscriptions) {
+			this.callSubscription(sub, param);
 		}
 	}
 
 	public async call(param: Param): Promise<Ret> {
-		const {rootCallback, callbacks: subscriptions} = this;
-		if (rootCallback === undefined) {
-			throw new Error(`No subscription for ${this.displayName}`);
+		const {rootSubscription, subscriptions} = this;
+		if (rootSubscription === undefined) {
+			throw new Error(`Event.call: No subscriptions for ${this.displayName}`);
 		}
 
 		if (this.options.serial === true) {
-			const ret = await this.callCallback(rootCallback, param);
-			for (const callback of subscriptions) {
-				await this.callCallback(callback, param);
+			const ret = await this.callSubscription(rootSubscription, param);
+			for (const sub of subscriptions) {
+				await this.callSubscription(sub, param);
 			}
 			return ret;
 		} else {
 			const res = await Promise.all([
-				this.callCallback(rootCallback, param),
+				this.callSubscription(rootSubscription, param),
 				...Array.from(
 					subscriptions,
-					(callback) => this.callCallback(callback, param),
+					(sub) => this.callSubscription(sub, param),
 				),
 			]);
 
@@ -97,30 +102,29 @@ export default class Event<Param, Ret = void> {
 		}
 	}
 
-	public wait(val: Ret, timeout?: number): Promise<Param> {
+	public wait(val: Ret, timeout?: Duration): Promise<Param> {
 		return new Promise((resolve, reject) => {
 			let timeoutId: undefined | NodeJS.Timeout;
 			let timedOut = false;
 
 			if (timeout !== undefined) {
-				timeoutId = setTimeout(
+				timeoutId = timeout.setTimeout(
 					() => {
 						timedOut = true;
-						listener.unsubscribe().then(() => {
+						resource.release().then(() => {
 							reject(
 								new Error(
-									`Timed out after waiting ${humanizeDuration(timeout)} for ${this.displayName}`,
+									`Timed out after waiting ${timeout.format()} for ${this.displayName}`,
 								),
 							);
 						}).catch((err) => {
 							reject(err);
 						});
 					},
-					timeout,
 				);
 			}
 
-			const listener = this.subscribe(async (param, listener) => {
+			const resource = this.subscribe(async (param, resource) => {
 				if (timedOut) {
 					return val;
 				}
@@ -129,15 +133,15 @@ export default class Event<Param, Ret = void> {
 					clearTimeout(timeoutId);
 				}
 
-				await listener.unsubscribe();
 				resolve(param);
+				await resource.release();
 				return val;
 			});
 		});
 	}
 
 	public async callOptional(param: Param): Promise<undefined | Ret> {
-		if (this.rootCallback === undefined) {
+		if (this.rootSubscription === undefined) {
 			return undefined;
 		} else {
 			return this.call(param);
@@ -146,60 +150,49 @@ export default class Event<Param, Ret = void> {
 
 	public subscribe(
 		callback: EventCallback<Param, Ret>,
-		makeRoot?: boolean,
-	): EventSubscription {
-		if (this.options.unique === true && this.callbacks.size !== 0) {
+		opts: EventSubscriptionOptions = {},
+	): Resource {
+		opts;
+		
+		if (this.options.unique === true && this.subscriptions.size !== 0) {
 			throw new Error(
 				`Only allowed a single subscription for ${this.displayName}`,
 			);
 		}
 
-		const subscription: EventSubscription = createEventSubscription({
-			unsubscribe: async () => {
-				return this.unsubscribe(callback);
-			},
-		});
-		this.subscriptions.set(callback, subscription);
+		const resource = createResourceFromCallback(`EventSubscription<${this.name}>`, () => {
+			this.unsubscribe(sub);
+		}, {optional: this.options.requiredSubscriptionResource !== true});
+		
+		const sub: EventSubscription<Param, Ret> = {
+			callback,
+			resource,
+		};
 
-		if (this.rootCallback === callback || this.callbacks.has(callback)) {
-			throw new Error(
-				`Cannot double subscribe a callback for ${this.displayName}`,
-			);
-		}
-
-		if (this.rootCallback === undefined) {
-			this.rootCallback = callback;
-		} else if (makeRoot === true) {
-			this.callbacks.add(this.rootCallback);
-			this.rootCallback = callback;
+		if (this.rootSubscription === undefined) {
+			this.rootSubscription = sub;
 		} else {
-			this.callbacks.add(callback);
+			this.subscriptions.add(sub);
 		}
 
 		this.onSubscriptionChange();
 
-		return subscription;
+		return resource;
 	}
 
-	private unsubscribe(callback: EventCallback<Param, Ret>): boolean {
-		if (!this.subscriptions.has(callback)) {
-			return false;
+	private unsubscribe(sub: EventSubscription<Param, Ret>): void {
+		if (this.subscriptions.has(sub)) {
+			this.subscriptions.delete(sub);
+			this.onSubscriptionChange();
+			return;
 		}
 
-		this.subscriptions.delete(callback);
-
-		if (this.callbacks.has(callback)) {
-			this.callbacks.delete(callback);
+		// If this subscription is root, set it to the next one
+		if (this.rootSubscription === sub) {
+			this.rootSubscription = Array.from(this.subscriptions)[0];
+			this.subscriptions.delete(this.rootSubscription);
 			this.onSubscriptionChange();
-			return true;
-		}
-
-		// If this callback was the root subscription, then set it to the next one
-		if (callback === this.rootCallback) {
-			this.rootCallback = Array.from(this.callbacks)[0];
-			this.callbacks.delete(this.rootCallback);
-			this.onSubscriptionChange();
-			return true;
+			return;
 		}
 
 		throw new Error("Unhandled subscription");

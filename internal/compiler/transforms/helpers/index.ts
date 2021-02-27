@@ -27,7 +27,7 @@ type VariableInjectorState = {
 
 export function injectBinding(
 	path: Path,
-	name: string = path.scope.generateUid(),
+	name: string = path.scope.generateUID(),
 	init?: AnyJSExpression,
 ): [JSReferenceIdentifier, JSAssignmentIdentifier] {
 	const ref = jsReferenceIdentifier.quick(name);

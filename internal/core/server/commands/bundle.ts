@@ -10,7 +10,7 @@ import {commandCategories} from "../../common/commands";
 import {createServerCommand} from "../commands";
 import Bundler from "../bundler/Bundler";
 import {Consumer} from "@internal/consume";
-import {markup} from "@internal/markup";
+import {AnyMarkup, markup} from "@internal/markup";
 
 type Flags = {
 	quiet: boolean;
@@ -54,11 +54,11 @@ export default createServerCommand<Flags>({
 			});
 
 			changeEvent.subscribe(paths => {
-				if (paths.length === 1) {
-					reporter.info(markup`File change ${paths[0]}`);
+				if (paths.size === 1) {
+					reporter.info(markup`File change ${Array.from(paths)[0]}`);
 				} else {
 					reporter.info(markup`Multiple file changes`);
-					reporter.list(paths);
+					reporter.list(Array.from(paths));
 				}
 			});
 			
@@ -66,20 +66,26 @@ export default createServerCommand<Flags>({
 		} else {
 			const {files: outFiles} = await bundler.bundleManifest(resolution);
 
-			const savedList = [];
+			const savedList: AnyMarkup[] = [];
 			const dir = flags.cwd.resolve(outputDirectory);
-			for (const [filename, {kind, content}] of outFiles) {
-				const buff = content();
-				const file = dir.append(filename);
-				const loc = file.join();
+
+			await Promise.all(Array.from(outFiles, async ([filename, {kind, content}]) => {
+				const buff = await content();
+				const path = dir.append(filename);
+				await path.getParent().createDirectory();
+				await path.writeFile(buff);
+
+				let size = 0;
+				if (typeof buff === "string" || Buffer.isBuffer(buff)) {
+					size = Buffer.byteLength(buff);
+				} else {
+					size = buff.bytesRead;
+				}
+
 				savedList.push(
-					markup`<filelink target="${loc}">${filename}</filelink> <filesize dim>${String(
-						Buffer.byteLength(buff),
-					)}</filesize> <inverse> ${kind} </inverse>`,
+					markup`<filelink target="${path.join()}">${filename}</filelink> <filesize dim>${String(size)}</filesize> <inverse> ${kind} </inverse>`,
 				);
-				await file.getParent().createDirectory();
-				await file.writeFile(buff);
-			}
+			}));
 
 			await req.flushFiles();
 
@@ -89,6 +95,7 @@ export default createServerCommand<Flags>({
 				reporter.success(
 					markup`Saved the following files to <emphasis>${dir}</emphasis>`,
 				);
+				// TODO sort this list so it's consistent
 				reporter.list(savedList);
 			}
 		}

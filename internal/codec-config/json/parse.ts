@@ -33,7 +33,7 @@ import {
 	createParser,
 	isDigit,
 } from "@internal/parser-core";
-import {ZeroIndexed} from "@internal/math";
+import {ZeroIndexed} from "@internal/numbers";
 import {isEscaped} from "@internal/string-utils";
 import {isWordChar, isWordStartChar} from "@internal/codec-config/util";
 

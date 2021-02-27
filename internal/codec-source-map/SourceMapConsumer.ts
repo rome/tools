@@ -12,7 +12,7 @@ import {
 	SourceMap,
 } from "./types";
 import {decodeVLQ} from "./base64";
-import {OneIndexed, ZeroIndexed} from "@internal/math";
+import {OneIndexed, ZeroIndexed} from "@internal/numbers";
 import {Dict} from "@internal/typescript-helpers";
 import {AnyPath, createAnyPath} from "@internal/path";
 

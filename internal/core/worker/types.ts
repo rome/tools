@@ -15,7 +15,7 @@ import {BridgeClient} from "@internal/events";
 import {FormatterOptions} from "@internal/formatter";
 import {ModuleSignature} from "@internal/js-analysis";
 import {StaticMarkup} from "@internal/markup";
-import {ZeroIndexed} from "@internal/math";
+import {Duration, ZeroIndexed} from "@internal/numbers";
 import {AbsoluteFilePath, AnyPath} from "@internal/path";
 import {Dict} from "@internal/typescript-helpers";
 import WorkerBridge from "../common/bridges/WorkerBridge";
@@ -56,16 +56,13 @@ export type WorkerProject = Required<CompilerProject> & {
 
 export type WorkerProjects = Map<number, WorkerProject>;
 
+export type WorkerPartialManifestsTransport = Map<number, undefined | WorkerPartialManifest>;
+
 export type WorkerPartialManifest = {
 	path: AbsoluteFilePath;
 	hash: string;
 	type: Manifest["type"];
 };
-
-export type WorkerPartialManifests = {
-	id: number;
-	manifest: undefined | WorkerPartialManifest;
-}[];
 
 // Omit analyze value as the worker will fetch it itself, skips sending over a large payload that it already has in memory
 export type WorkerCompilerOptions = {
@@ -145,7 +142,7 @@ export type WorkerFormatResult = {
 export type WorkerIntegrationTiming = {
 	type: "official" | "plugin";
 	displayName: StaticMarkup;
-	took: bigint;
+	took: Duration;
 };
 
 export type WorkerIntegrationTimings = Map<string, WorkerIntegrationTiming>;
@@ -154,7 +151,7 @@ export type WorkerLintResult = {
 	save: undefined | RecoverySaveFile;
 	diagnostics: Diagnostics;
 	suppressions: DiagnosticSuppressions;
-	timingsNs: WorkerIntegrationTimings;
+	timings: WorkerIntegrationTimings;
 };
 
 export type WorkerBufferPosition = {

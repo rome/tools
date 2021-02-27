@@ -1,5 +1,5 @@
 import {TestHelper, test} from "rome";
-import {OneIndexed, ZeroIndexed} from "@internal/math";
+import {OneIndexed, ZeroIndexed} from "@internal/numbers";
 import {
 	SourceMapConsumer,
 	SourceMapConsumerCollection,

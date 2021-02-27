@@ -5,6 +5,7 @@ import {
 } from "@internal/codec-binary-serial";
 import {AnyMarkups, markup} from "@internal/markup";
 import {AbsoluteFilePath, AbsoluteFilePathMap, UIDPath} from "@internal/path";
+import { Resource } from "@internal/resources";
 import FatalErrorHandler from "./FatalErrorHandler";
 import {UserConfig} from "./userConfig";
 
@@ -30,6 +31,7 @@ export default class Cache {
 			writeDisabled: boolean;
 			readDisabled: boolean;
 		},
+		resources: Resource,
 	) {
 		this.writeDisabled = writeDisabled;
 		this.readDisabled = readDisabled;
@@ -41,6 +43,10 @@ export default class Cache {
 		this.runningWritePromise = undefined;
 		this.pendingWriteTimer = undefined;
 		this.pendingWrites = new AbsoluteFilePathMap();
+
+		resources.addCallback("Cache", async () => {
+			await this.teardown();
+		});
 	}
 
 	public writeDisabled: boolean;
@@ -77,7 +83,7 @@ export default class Cache {
 		return this.getCacheDirectory(uid).append(`${name}.bin`);
 	}
 
-	public async teardown() {
+	private async teardown() {
 		// Wait on possible running writePending
 		await this.runningWritePromise;
 

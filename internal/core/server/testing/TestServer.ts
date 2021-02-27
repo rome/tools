@@ -16,7 +16,7 @@ import {
 import {TestRef} from "../../common/bridges/TestWorkerBridge";
 import {Server, ServerRequest} from "@internal/core";
 import {DiagnosticsPrinter} from "@internal/cli-diagnostics";
-import {humanizeNumber} from "@internal/string-utils";
+import {humanizeNumber} from "@internal/numbers";
 import {AnyBridge, isBridgeClosedDiagnosticError} from "@internal/events";
 import {CoverageCollector} from "@internal/v8";
 import {ManifestDefinition} from "@internal/codec-js-manifest";
@@ -170,10 +170,13 @@ export default class TestServer {
 		if (diagnostics === undefined) {
 			throw err;
 		} 
-
-		if (!isBridgeClosedDiagnosticError(err) || !this.ignoreBridgeEndError.has(bridge)) {
-			this.printer.processor.addDiagnostics(diagnostics);
+		
+		if (isBridgeClosedDiagnosticError(err) || this.ignoreBridgeEndError.has(bridge)) {
+			// TODO I forget why this is necessary?
+			//return;
 		}
+
+		this.printer.processor.addDiagnostics(diagnostics);
 	}
 
 	private async setupWorkers(): Promise<TestServerWorker[]> {
@@ -463,7 +466,7 @@ export default class TestServer {
 			const {path} = file;
 
 			// Get the absolute filename
-			const absolute = server.projectManager.maybeGetFilePathFromUid(path);
+			const absolute = server.projectManager.maybeGetFilePathFromUID(path);
 			if (absolute === undefined) {
 				continue;
 			}
@@ -544,7 +547,7 @@ export default class TestServer {
 				let absolute = file.path;
 
 				// Exchange any UIDs
-				const absolutePath = server.projectManager.maybeGetFilePathFromUid(
+				const absolutePath = server.projectManager.maybeGetFilePathFromUID(
 					file.path,
 				);
 				if (absolutePath !== undefined) {

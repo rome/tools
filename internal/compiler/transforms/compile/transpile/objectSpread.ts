@@ -131,7 +131,7 @@ function transformRestProperty(
 			continue;
 		}
 
-		const uid = path.scope.generateUid();
+		const uid = path.scope.generateUID();
 
 		// push on the initial declaration so we can reference it later
 		nodes.push(

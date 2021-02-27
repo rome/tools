@@ -15,9 +15,10 @@ import {
 import {getEnvVar} from "@internal/cli-environment";
 import os = require("os");
 import {CONFIG_EXTENSIONS} from "@internal/codec-config";
+import { Duration } from "@internal/numbers";
 
 // Node flags to pass to all forked processes
-export const CHILD_ARGS = ["--trace-warnings", "--inspect-publish-uid=http"];
+export const CHILD_ARGS = ["--trace-warnings", "--inspect-publish-uid=http", "--unhandled-rejections=strict"];
 
 export function getBinPath(): AbsoluteFilePath {
 	return createAbsoluteFilePath(__filename);
@@ -45,7 +46,7 @@ if (getEnvVar("ROME_DEV").type === "ENABLED") {
 export const MOCKS_DIRECTORY_NAME = "__rmocks__";
 
 // Used as a heartbeat timeout to indicate if a process is unresponsive
-export const LAG_INTERVAL = 10_000; //3_000;
+export const LAG_INTERVAL = Duration.fromSeconds(10); //3_000;
 
 // # Folders
 // XDG environment variables information:

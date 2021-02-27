@@ -25,12 +25,13 @@ export function convertManifestToJSON(manifest: Manifest): JSONManifest {
 		...manifest.raw,
 		name: manifestNameToString(manifest.name),
 		description: manifest.description,
-		private: manifest.private,
+		// `private` defaults to `false`
+		private: manifest.private === false ? undefined : true,
 		type: manifest.type,
-		homepage: manifest.homepage,
+		homepage: manifest.homepage?.join(),
 		repository: manifest.repository,
 		bugs: manifest.bugs,
-		main: manifest.main,
+		main: manifest.main?.join(),
 		// TODO we now support fallbacks which means manifest.exports is lossy
 		exports: exportsToObject(manifest.exports),
 		author: manifest.author,

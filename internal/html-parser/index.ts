@@ -17,7 +17,7 @@ import {
 	HTMLString,
 	HTMLText,
 } from "@internal/ast";
-import {ZeroIndexed} from "@internal/math";
+import {ZeroIndexed} from "@internal/numbers";
 import {isEscaped} from "@internal/string-utils";
 import {isSelfClosingTagName} from "./tags";
 import {descriptions} from "@internal/diagnostics";

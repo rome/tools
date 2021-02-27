@@ -102,7 +102,7 @@ export type ServerBridgeLog = {
 };
 
 export default createBridge({
-	debugName: "server",
+	debugName: "Server",
 
 	shared: {},
 

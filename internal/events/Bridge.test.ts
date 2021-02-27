@@ -68,12 +68,12 @@ test(
 		await bar();
 
 		t.looksLike(
-			client.getSubscriptions(),
-			new Set(["Bridge.heartbeat", "Bridge.teardown", "greet"]),
+			client.getSubscriptionsForHandshake(),
+			new Set([1, 2, 3]),
 		);
 		t.looksLike(
-			server.getSubscriptions(),
-			new Set(["Bridge.heartbeat", "Bridge.teardown"]),
+			server.getSubscriptionsForHandshake(),
+			new Set([1, 2]),
 		);
 
 		t.looksLike(fooMessages, ["foo"]);

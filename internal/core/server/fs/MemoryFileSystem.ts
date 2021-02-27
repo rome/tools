@@ -22,7 +22,6 @@ import {
 	catchDiagnostics,
 	descriptions,
 } from "@internal/diagnostics";
-import {EventQueue} from "@internal/events";
 import {json} from "@internal/codec-config";
 import {WorkerPartialManifest} from "@internal/core";
 import {
@@ -37,13 +36,13 @@ import {
 	FSWatcher,
 	FileNotFound,
 } from "@internal/fs";
-import crypto = require("crypto");
-
 import {markup} from "@internal/markup";
 import {ReporterNamespace} from "@internal/cli-reporter";
 import {GlobOptions, Globber} from "./glob";
 import {VoidCallback} from "@internal/typescript-helpers";
 import {GlobalLock} from "@internal/async";
+import {DurationMeasurer } from "@internal/numbers";
+import crypto = require("crypto");
 
 // Paths that we will under no circumstance want to include
 const DEFAULT_DENYLIST = [
@@ -164,20 +163,10 @@ export default class MemoryFileSystem {
 		this.watchers = new AbsoluteFilePathMap();
 		this.activeWatcherIds = new Set();
 
-		this.changedFileEvent = new EventQueue({toDedupeKey: ({path}) => path.join()});
-		this.deletedFileEvent = new EventQueue({toDedupeKey: (path) => path.join()});
-		this.newFileEvent = new EventQueue({toDedupeKey: (path) => path.join()});
-
 		this.processingLock = new GlobalLock();
-		this.processingLock.attachLock(this.changedFileEvent.lock);
-		this.processingLock.attachLock(this.deletedFileEvent.lock);
 	}
 
-	public changedFileEvent: EventQueue<ChangedFileEventItem>;
-	public deletedFileEvent: EventQueue<AbsoluteFilePath>;
-	public newFileEvent: EventQueue<AbsoluteFilePath>;
 	public processingLock: GlobalLock;
-
 	private manifestCounter: number;
 	private watcherCounter: number;
 	private server: Server;
@@ -236,6 +225,10 @@ export default class MemoryFileSystem {
 				}
 			}
 		}
+	}
+
+	public hasAnyBuffers(): boolean {
+		return this.buffers.size > 0;
 	}
 
 	public hasBuffer(path: AbsoluteFilePath): boolean {
@@ -300,9 +293,9 @@ export default class MemoryFileSystem {
 					{recursive, persistent: false},
 					(eventType, filename) => {
 						this.logger.info(
-							markup`Raw fs.watch event in <emphasis>${directoryPath}</emphasis> type ${eventType} for ${String(
+							markup`Raw fs.watch event in <emphasis>${directoryPath}</emphasis> type ${eventType} for <emphasis>${String(
 								filename,
-							)}`,
+							)}</emphasis>`,
 						);
 
 						if (filename === null) {
@@ -324,7 +317,7 @@ export default class MemoryFileSystem {
 			// No need to call watch() on the projectDirectory since it will call us
 
 			// Perform an initial crawl
-			const start = Date.now();
+			const start = new DurationMeasurer();
 			const stats = await this.hardStat(projectDirectory);
 			await this.addDirectory(
 				projectDirectory,
@@ -337,11 +330,10 @@ export default class MemoryFileSystem {
 					reader: new CachedFileReader(),
 				},
 			);
-			const took = Date.now() - start;
 			logger.info(
 				markup`[MemoryFileSystem] Finished initial crawl for <emphasis>${projectDirectory}</emphasis>. Added <number>${String(
 					this.countFiles(projectDirectory),
-				)}</number> files. Took <duration>${String(took)}</duration>`,
+				)}</number> files. Took ${start.since()}`,
 			);
 		} finally {
 			activity.end();
@@ -466,10 +458,10 @@ export default class MemoryFileSystem {
 		// Wait for any subscribers that might need the file's stats
 		// Only emit these events for files
 		if (directoryInfo === undefined) {
-			await Promise.all([
-				this.deletedFileEvent.push(path),
-				this.server.refreshFileEvent.push(path),
-			]);
+			await this.server.refreshFileEvent.push({
+				type: "DELETED",
+				path,
+			});
 		}
 
 		// Remove from 'all possible caches
@@ -766,7 +758,7 @@ export default class MemoryFileSystem {
 		// Tell all workers of our discovery
 		for (const worker of this.server.workerManager.getWorkers()) {
 			worker.bridge.events.updateManifests.send({
-				manifests: [{id: def.id, manifest: this.getPartialManifest(def)}],
+				manifests: new Map([[def.id, this.getPartialManifest(def)]]),
 			});
 		}
 	}
@@ -907,10 +899,12 @@ export default class MemoryFileSystem {
 			}
 		}
 
-		// if we're watching the parent directory then we'd have it in our cache if it existed
-		const parent = path.getParent();
-		if (this.directories.has(parent)) {
-			return false;
+		// If we're watching the parent directory then we'd have it in our cache if it existed
+		if (path.hasParent()) {
+			const parent = path.getParent();
+			if (this.directories.has(parent)) {
+				return false;
+			}
 		}
 
 		return undefined;
@@ -1005,7 +999,7 @@ export default class MemoryFileSystem {
 			opts.tick(path);
 		}
 
-		const isNew = !this.files.has(path);
+		const isNew = !this.files.has(path) && opts.reason !== "initial";
 		this.files.set(path, stats);
 		this.addFileToDirectoryListing(path);
 
@@ -1021,10 +1015,7 @@ export default class MemoryFileSystem {
 		if (oldStats !== undefined && opts.reason === "watch") {
 			this.logger.info(markup`File change: <emphasis>${path}</emphasis>`);
 
-			await Promise.all([
-				this.server.refreshFileEvent.push(path),
-				this.changedFileEvent.push({path, oldStats, newStats: stats}),
-			]);
+			await this.server.refreshFileEvent.push({type: "DISK_UPDATE", path, oldStats, newStats: stats});
 
 			// Watcher could have been closed by an event
 			if (!this.isActiveWatcherId(opts.watcherId)) {
@@ -1068,7 +1059,7 @@ export default class MemoryFileSystem {
 		}
 
 		if (isNew) {
-			await this.newFileEvent.push(path);
+			await this.server.refreshFileEvent.push({type: "CREATED", path});
 		}
 
 		return true;

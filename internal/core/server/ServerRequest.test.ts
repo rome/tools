@@ -19,7 +19,7 @@ test(
 			});
 			await h.writeFile("foo.js", "bar");
 			await h.writeFile("foo.txt", "bar");
-			await sub.unsubscribe();
+			await sub.release();
 			t.inlineSnapshot(basenames, 'Array [\n\t"foo.txt"\n\t"foo.txt"\n]');
 		},
 	),
@@ -50,7 +50,7 @@ test(
 
 			await h.writeFile(".config/rome.rjson", "");
 
-			await sub.unsubscribe();
+			await sub.release();
 
 			const afterProject = await h.server.projectManager.assertProject(h.cwd);
 			t.not(beforeProject.id, afterProject.id);

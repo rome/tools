@@ -6,7 +6,7 @@
  */
 
 import {Mapping} from "@internal/codec-source-map";
-import {OneIndexed, ZeroIndexed} from "@internal/math";
+import {OneIndexed, ZeroIndexed} from "@internal/numbers";
 import {Token} from "./tokens";
 
 export type PrinterOptions = {
@@ -303,7 +303,7 @@ export function printTokenToString(
 		flat: false,
 		indent: new Box(options.rootIndent),
 		pendingSpaces: new Box(0),
-		pendingIndent: new Box(0),
+		pendingIndent: new Box(options.rootIndent),
 		generatedIndex: new Box(new ZeroIndexed()),
 		generatedLine: new Box(new OneIndexed()),
 		generatedColumn: new Box(new ZeroIndexed()),

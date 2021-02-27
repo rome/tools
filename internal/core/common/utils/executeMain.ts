@@ -8,7 +8,7 @@
 import {UnknownObject} from "@internal/typescript-helpers";
 import {SourceMapConsumer} from "@internal/codec-source-map";
 import vm = require("vm");
-import {OneIndexed, ZeroIndexed} from "@internal/math";
+import {OneIndexed, ZeroIndexed} from "@internal/numbers";
 import {
 	Diagnostic,
 	descriptions,

@@ -26,7 +26,7 @@ export interface ExtensionCustomLintResult {
 }
 
 export interface ExtensionLintResult extends ExtensionCustomLintResult {
-	timingsNs: WorkerIntegrationTimings;
+	timings: WorkerIntegrationTimings;
 }
 
 export type ExtensionHandlerMethodInfo = {
@@ -55,6 +55,7 @@ export type PartialExtensionHandler = {
 	isAsset?: boolean;
 	canHaveScale?: boolean;
 	language: DiagnosticLanguage;
+	mime: string;
 	hasTabs: boolean;
 
 	capabilities: {

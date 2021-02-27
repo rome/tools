@@ -1,6 +1,6 @@
 import {createDiagnosticsCategory} from "./index";
 import {DiagnosticLocation} from "../types";
-import {filePathToMarkup, markup} from "@internal/markup";
+import {pathToMarkup, markup} from "@internal/markup";
 import {buildSuggestionAdvice} from "../helpers";
 import {AbsoluteFilePath} from "@internal/path";
 import {DIAGNOSTIC_CATEGORIES} from "@internal/diagnostics";
@@ -69,7 +69,7 @@ export const projectManager = createDiagnosticsCategory({
 	},
 	INITING_SENSITIVE: (directory: AbsoluteFilePath) => ({
 		category: DIAGNOSTIC_CATEGORIES["projectManager/sensitiveDirectory"],
-		message: markup`Cannot create a project config in sensitive directory <emphasis>${filePathToMarkup(
+		message: markup`Cannot create a project config in sensitive directory <emphasis>${pathToMarkup(
 			directory,
 			true,
 		)}</emphasis>`,
@@ -83,7 +83,7 @@ export const projectManager = createDiagnosticsCategory({
 	}),
 	LOADING_SENSITIVE: (directory: AbsoluteFilePath) => ({
 		category: DIAGNOSTIC_CATEGORIES["projectManager/sensitiveDirectory"],
-		message: markup`Cannot load a project config in sensitive directory <emphasis>${filePathToMarkup(
+		message: markup`Cannot load a project config in sensitive directory <emphasis>${pathToMarkup(
 			directory,
 			true,
 		)}</emphasis>`,

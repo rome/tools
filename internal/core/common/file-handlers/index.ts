@@ -130,33 +130,36 @@ const DEFAULT_HANDLERS: ExtensionsMap = new Map();
 
 const DEFAULT_ASSET_EXTENSIONS = [
 	// Extra css types to be ignored while we don't have a proper integration
-	"scss",
-	"sass",
-	"less",
-	// Images
-	"png",
-	"jpg",
-	"jpeg",
-	"gif",
-	"svg",
-	// Video
-	"webm",
-	"mp4",
-	"m4v",
-	"avi",
-	"mkv",
-	// Audio
-	"mp3",
-	// Fonts
-	"woff",
-	"woff2",
-	"eot",
-	"ttf",
-	"otf",
+	["scss", "text/css"],
+	["sass", "text/css"],
+	["less", "text/css"],
+
+	["png", "image/png"],
+	["jpg", "image/jpeg"],
+	["jpeg", "image/jpeg"],
+	["gif", "image/gif"],
+	["svg", "image/svg+xml"],
+	["webp", "image/webp"],
+	["apng", "image/apng"],
+	["avif", "image/avif"],
+	["webm", "video/webm"],
+	["mp4", "video/mp4"],
+	["avi", "video/x-msvideo"],
+	["weba", "audio/webm"],
+	["mp3", "audio/mpeg"],
+	["wav", "audio/wav"],
+	["woff", "font/woff"],
+	["woff2", "font/woff2"],
+	["eot", "application/vnd.ms-fontobject"],
+	["ttf", "font/ttf"],
+	["otf", "font/otf"],
 ];
 
-for (const ext of DEFAULT_ASSET_EXTENSIONS) {
-	setHandler(ext, assetHandler);
+for (const [ext, mime] of DEFAULT_ASSET_EXTENSIONS) {
+	setHandler(ext, {
+		...assetHandler,
+		mime,
+	});
 }
 
 setHandler("js", jsHandler);

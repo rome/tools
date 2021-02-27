@@ -4,7 +4,7 @@ import {
 	MarkupParsedChildren,
 } from "@internal/markup";
 import {TerminalFeatures} from "@internal/cli-environment";
-import {OneIndexed} from "@internal/math";
+import {OneIndexed} from "@internal/numbers";
 import {Position} from "@internal/parser-core";
 
 export type GridPointer = {
@@ -28,6 +28,7 @@ export type GridViewOptions = {
 };
 
 export type GridOptions = UserGridOptions & {
+	throwOnNewline?: boolean;
 	sourceText: string;
 	view: GridViewOptions;
 };

@@ -22,7 +22,7 @@ import {
 	Tokens,
 } from "./types";
 import {isEscaped} from "@internal/string-utils";
-import {ZeroIndexed} from "@internal/math";
+import {ZeroIndexed} from "@internal/numbers";
 import {descriptions} from "@internal/diagnostics";
 import {
 	AnyMarkup,
@@ -77,6 +77,10 @@ type MarkupParser = ParserCore<MarkupParserTypes>;
 
 const stringMarkupParser = createParser<MarkupParserTypes>({
 	diagnosticLanguage: "romemarkup",
+	diagnosticTags: {
+		// markup is purely an internal abstraction
+		internal: true,
+	},
 	getInitialState: () => ({inTagHead: false}),
 	tokenizeWithState(parser, index, state) {
 		const escaped = isEscaped(index, parser.input);

@@ -3,7 +3,7 @@ import {SourceLocation} from "@internal/parser-core";
 import {inheritLoc} from "@internal/js-ast-utils/inheritLoc";
 import {jsCommentLine, jsIdentifier} from "@internal/ast";
 import {UNKNOWN_PATH} from "@internal/path";
-import {OneIndexed, ZeroIndexed} from "@internal/math";
+import {OneIndexed, ZeroIndexed} from "@internal/numbers";
 
 test(
 	"returns the node's source location with it's name",

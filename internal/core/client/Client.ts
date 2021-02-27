@@ -24,9 +24,7 @@ import {forkProcess} from "../common/utils/fork";
 import {
 	BridgeClient,
 	Event,
-	EventSubscription,
-	createEventSubscription,
-	isBridgeClosedDiagnosticError,
+	isBridgeDisconnectedDiagnosticError,
 } from "@internal/events";
 import {Reporter, ReporterDerivedStreams} from "@internal/cli-reporter";
 import prettyFormat from "@internal/pretty-format";
@@ -60,6 +58,7 @@ import {
 import {AbsoluteFilePath} from "@internal/path";
 import {NodeSystemError} from "@internal/errors";
 import SilentClientError from "./SilentClientError";
+import { createResourceRoot, Resource } from "@internal/resources";
 
 export function getFilenameTimestamp(): string {
 	return new Date().toISOString().replace(/[^0-9a-zA-Z]/g, "");
@@ -68,6 +67,7 @@ export function getFilenameTimestamp(): string {
 const NEW_SERVER_INIT_TIMEOUT = 10_000;
 
 type ClientOptions = {
+	dedicated: boolean;
 	terminalFeatures: ClientTerminalFeatures;
 	globalErrorHandlers: boolean;
 	stdout: stream.Writable;
@@ -113,10 +113,11 @@ export default class Client {
 
 		this.requestResponseEvent = new Event("Client.requestResponseEvent");
 		this.endEvent = new Event("Client.endEvent", {serial: true});
+		this.resources = createResourceRoot("Client");
 		this.bridgeStatus = undefined;
 		this.bridgeAttachedEvent = new Event("Client.bridgeAttached");
 
-		this.reporter = new Reporter({
+		this.reporter = new Reporter("Client", {
 			stdin: opts.stdin,
 			markupOptions: {
 				userConfig: this.userConfig,
@@ -124,6 +125,7 @@ export default class Client {
 			},
 		});
 		this.reporter.redirectOutToErr(true);
+		this.resources.add(this.reporter);
 
 		this.derivedReporterStreams = this.reporter.attachStdoutStreams(
 			// Suppress stdout when silent is set
@@ -142,6 +144,7 @@ export default class Client {
 	private flags: ClientFlags;
 	private bridgeStatus: undefined | BridgeStatus;
 
+	public resources: Resource;
 	public bridgeAttachedEvent: Event<BridgeStatus, void>;
 	private requestResponseEvent: Event<ClientRequestResponseResult, void>;
 	public endEvent: Event<void, void>;
@@ -157,24 +160,24 @@ export default class Client {
 	private async onBridge(
 		callback: (
 			bridgeStatus: BridgeStatus,
-		) => Promise<EventSubscription | undefined>,
-	): Promise<EventSubscription> {
+		) => Promise<Resource | undefined>,
+	): Promise<Resource> {
 		if (this.bridgeStatus === undefined) {
-			const helper = createEventSubscription();
+			const resc = this.resources.create("Client.onBridge");
 
-			helper.addDependency(
+			resc.add(
 				this.bridgeAttachedEvent.subscribe(async (bridgeStatus) => {
-					const subscription = await callback(bridgeStatus);
-					if (subscription !== undefined) {
-						helper.addDependency(subscription);
+					const addResc = await callback(bridgeStatus);
+					if (addResc !== undefined) {
+						resc.add(addResc);
 					}
 				}),
 			);
 
-			return helper;
+			return resc;
 		} else {
-			const subscription = await callback(this.bridgeStatus);
-			return subscription ?? createEventSubscription();
+			const resc = await callback(this.bridgeStatus);
+			return resc ?? this.resources.create("Client.onBridge");
 		}
 	}
 
@@ -291,7 +294,7 @@ export default class Client {
 			const progress = this.reporter.progress({title: markup`Fetching profiles`});
 			progress.setTotal(fetchers.length);
 			for (const [text, callback] of fetchers) {
-				progress.setText(markup`${text}`);
+				progress.setText(text);
 				const profile = await callback();
 				trace.addProfile(text, profile);
 				progress.tick();
@@ -316,7 +319,7 @@ export default class Client {
 		level: ClientLogsLevel,
 		includeWorker: boolean,
 		callback: (chunk: string) => void,
-	): Promise<EventSubscription> {
+	): Promise<Resource> {
 		return this.onBridge(async ({bridge}) => {
 			await bridge.events.setLogLevel.call({
 				level,
@@ -351,12 +354,7 @@ export default class Client {
 			const formatted =
 				typeof value === "string"
 					? markup`${value}`
-					: prettyFormat(
-							value,
-							{
-								compact: true,
-							},
-						);
+					: prettyFormat(value);
 			summary.push(
 				markup`<emphasis>${name}</emphasis>\n<indent>${formatted}</indent>\n\n`,
 			);
@@ -476,7 +474,7 @@ export default class Client {
 			writer.append({name: "logs.html"}, `<pre><code>${logsHTML}</code></pre>`);
 			writer.append({name: "output.txt"}, output);
 
-			await writeEvent.unsubscribe();
+			await writeEvent.release();
 
 			// Add requests
 			for (let i = 0; i < responses.length; i++) {
@@ -546,13 +544,13 @@ export default class Client {
 
 	private async _shutdownServer() {
 		const status = this.bridgeStatus;
-		if (status?.bridge.alive) {
+		if (status?.bridge.open) {
 			try {
 				await status.bridge.events.endServer.callOptional();
 			} catch (err) {
 				// Swallow BridgeErrors since we expect one to be emitted as the endServer call will be an unanswered request
 				// when the server ends all client sockets
-				if (!isBridgeClosedDiagnosticError(err)) {
+				if (!isBridgeDisconnectedDiagnosticError(err)) {
 					throw err;
 				}
 			}
@@ -561,10 +559,11 @@ export default class Client {
 
 	public async end() {
 		await this.endEvent.callOptional();
+		await this.resources.release();
 
 		const status = this.bridgeStatus;
 
-		if (status?.bridge.alive) {
+		if (status?.bridge.open) {
 			if (status.dedicated) {
 				status.socket.end();
 			} else {
@@ -572,12 +571,11 @@ export default class Client {
 			}
 		}
 
-		this.reporter.teardown();
 		this.bridgeStatus = undefined;
 	}
 
 	private async attachBridge(status: BridgeStatus) {
-		const {handle, featuresUpdated, features, format} = this.derivedReporterStreams;
+		const {stream, featuresUpdated, features, format} = this.derivedReporterStreams;
 		const {terminalFeatures = {}} = this.options;
 
 		if (this.bridgeStatus !== undefined) {
@@ -587,10 +585,11 @@ export default class Client {
 		this.bridgeStatus = status;
 
 		const {bridge} = status;
+		this.resources.add(bridge);
 
 		bridge.events.write.subscribe(([chunk, error]) => {
 			const isError = error && !terminalFeatures.redirectError;
-			handle.stream.write(chunk, isError);
+			stream.write(chunk, isError);
 		});
 
 		// Listen for resize column events if stdout is a TTY
@@ -604,13 +603,13 @@ export default class Client {
 				outputFormat: format,
 				outputSupport: features,
 				streamState: {
-					...handle.stream.state,
+					...stream.state,
 					lineSnapshots: undefined,
 				},
 				flags: this.flags,
 			}),
-			bridge.handshake(),
 			bridge.events.serverReady.wait(),
+			bridge.handshake(),
 		]);
 
 		await this.bridgeAttachedEvent.callOptional(status);
@@ -643,8 +642,9 @@ export default class Client {
 		// Otherwise, start a server inside this process
 		const server = new Server({
 			userConfig: this.userConfig,
-			dedicated: false,
-			globalErrorHandlers: this.options.globalErrorHandlers === true,
+			dedicated: this.options.dedicated,
+			globalErrorHandlers: this.options.globalErrorHandlers,
+			daemon: false,
 			...opts,
 		});
 		await server.init();

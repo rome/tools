@@ -30,7 +30,7 @@ async function testParser<T>(
 		options?: Partial<ParserOptions<T>>;
 	},
 ) {
-	const reporter = new Reporter();
+	const reporter = new Reporter("ParserTest");
 	const stream = reporter.attachCaptureStream();
 
 	const parser = new Parser({

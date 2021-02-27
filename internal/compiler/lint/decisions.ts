@@ -18,7 +18,7 @@ import {
 	LintCompilerOptionsDecision,
 	LintCompilerOptionsDecisionAction,
 } from "../types";
-import {OneIndexed, ZeroIndexed} from "@internal/math";
+import {OneIndexed, ZeroIndexed} from "@internal/numbers";
 import {AbsoluteFilePath, AnyPath} from "@internal/path";
 import {LinterCompilerOptionsPerFile} from "@internal/core/server/checker/Checker";
 import {escapeSplit} from "@internal/string-utils";

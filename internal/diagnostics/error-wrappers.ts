@@ -64,7 +64,7 @@ export class DiagnosticsError extends Error implements NodeSystemError {
 		let message = this._message === undefined ? "" : this._message + "\n";
 		insideDiagnosticsErrorSerial = true;
 
-		const reporter = new Reporter();
+		const reporter = new Reporter("DiagnosticsErrorMessage");
 		const stream = reporter.attachCaptureStream("none", {columns: undefined});
 		const printer = new DiagnosticsPrinter({
 			reporter,
@@ -74,6 +74,7 @@ export class DiagnosticsError extends Error implements NodeSystemError {
 		for (const diag of this.diagnostics) {
 			printer.printDiagnostic(diag, reporter);
 		}
+		reporter.resources.release();
 		message += stream.read();
 		insideDiagnosticsErrorSerial = false;
 

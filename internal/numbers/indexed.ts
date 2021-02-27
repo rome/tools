@@ -1,5 +1,5 @@
 import {enhanceNodeInspectClass} from "@internal/node";
-import {isPlainObject} from "@internal/typescript-helpers";
+import {isObject} from "@internal/typescript-helpers";
 
 abstract class IndexedNumber<Super extends IndexedNumber<AnyIndexedNumber>> {
 	constructor(value: number) {
@@ -96,9 +96,8 @@ function isIndexedNumberInstance(
 	tagName: string,
 ): value is AnyIndexedNumberish {
 	return (
-		isPlainObject<{
-			[Symbol.toStringTag]?: unknown;
-		}>(value) &&
+		isObject(value) &&
+		// @ts-ignore: TS does not support generic symbol indexes...
 		value[Symbol.toStringTag] === tagName &&
 		typeof value.valueOf === "function" &&
 		typeof value.valueOf() === "number"

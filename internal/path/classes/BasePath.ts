@@ -1,20 +1,15 @@
-import {AnyFilePath, AnyPath, PathFormatOptions, PathSegments} from "../types";
+import {AnyParsedPath, AnyFilePath, AnyPath, PathFormatOptions, PathSegments} from "../types";
 import AbsoluteFilePath from "./AbsoluteFilePath";
 import RelativePath from "./RelativePath";
 import UIDPath from "./UIDPath";
 import URLPath from "./URLPath";
-import {AnyParsedPath, splitPathSegments, normalizeSegments} from "../parse";
+import {splitPathSegments, normalizeSegments} from "../parse";
 import {enhanceNodeInspectClass} from "@internal/node";
 import { equalArray } from "@internal/typescript-helpers";
 
-export interface FilePathMemoBase {
-	joined?: string;
+export type FilePathMemo<Super> = {
 	ext?: string;
-}
-
-export type FilePathMemo<Super> = FilePathMemoBase & {
 	parent?: Super;
-	unique?: Super;
 };
 
 function getExtension(basename: string): string {
@@ -31,25 +26,42 @@ export abstract class BasePath<ParsedPath extends AnyParsedPath, Super extends A
 		this.relativeSegments = parsed.relativeSegments;
 		this.parsed = parsed;
 		this.memo = memo;
+		this.memoizedUnique = undefined;
+		this.memoizedJoin = undefined;
+		this.memoizedFormatOptions = undefined;
+		this.memoizedFormat = undefined;
 		this.memoizedChildren = new Map();
 		this[Symbol.toStringTag] = "BasePath";
 	}
 
 	public parsed: ParsedPath;
+	public [Symbol.toStringTag]: string;
+
 	protected relativeSegments: PathSegments;
 	protected memo: FilePathMemo<Super>;
-	public [Symbol.toStringTag]: string;
 
 	// Memoize children when append() is called with strings
 	private memoizedChildren: Map<string, Super>;
+
+	private memoizedUnique: undefined | Super;
+	private memoizedJoin: undefined | string;
+
+	// Allow caching a single formatted value for an options object
+	private memoizedFormat: undefined | string;
+	private memoizedFormatOptions: undefined | [string, undefined | AbsoluteFilePath, undefined | AbsoluteFilePath];
 
 	protected abstract _assert(): Super;
 	protected abstract _join(relative: Array<string>): string;
 	protected abstract _equalAbsolute(parsed: AnyParsedPath): boolean;
 	protected abstract _fork(parsed: ParsedPath, memo?: FilePathMemo<Super>): Super;
 	protected abstract _getUnique(): Super;
+	protected abstract _format(opts?: PathFormatOptions): string;
 
 	protected _forkAppend(segments: PathSegments): Super {
+		if (segments.length === 0) {
+			return this._assert();
+		}
+
 		return this._fork({
 			...this.parsed,
 			...normalizeSegments([...this.getSegments(), ...segments]),
@@ -117,27 +129,30 @@ export abstract class BasePath<ParsedPath extends AnyParsedPath, Super extends A
 			return basename.slice(0, -ext.length);
 		}
 	}
+	
+	public hasParent() {
+		return !this.isRoot();
+	}
 
 	public getParent(): Super {
 		if (this.memo.parent !== undefined) {
 			return this.memo.parent;
 		}
 
-		const relativeSegments = this.getParentSegments();
-		if (relativeSegments.length === 0 && this.isRoot()) {
-			throw new Error("This path is at the root and cannot go higher");
-		}
-
 		const parent = this._fork({
 			...this.parsed,
 			explicitDirectory: true,
-			relativeSegments,
+			relativeSegments: this.getParentSegments(),
 		});
 		this.memo.parent = parent;
 		return parent;
 	}
 
 	public getParentSegments(): PathSegments {
+		if (this.isRoot()) {
+			throw this._unexpected("Already at root and thus have no parent");
+		}
+
 		return this.getSegments().slice(0, -1);
 	}
 
@@ -167,10 +182,6 @@ export abstract class BasePath<ParsedPath extends AnyParsedPath, Super extends A
 
 	public isRoot(): boolean {
 		return this.relativeSegments.length === 0;
-	}
-
-	public hasParent() {
-		return this.relativeSegments.length > 1;
 	}
 	
 	public isFilePath(): this is AnyFilePath {
@@ -262,7 +273,7 @@ export abstract class BasePath<ParsedPath extends AnyParsedPath, Super extends A
 	}
 
 	public getUnique(): Super {
-		const memoUnique = this.memo.unique;
+		const memoUnique = this.memoizedUnique;
 		if (memoUnique !== undefined) {
 			return memoUnique;
 		}
@@ -278,7 +289,7 @@ export abstract class BasePath<ParsedPath extends AnyParsedPath, Super extends A
 			path = this._getUnique();
 		}
 
-		this.memo.unique = path;
+		this.memoizedUnique = path;
 		return path;
 	}
 
@@ -287,8 +298,29 @@ export abstract class BasePath<ParsedPath extends AnyParsedPath, Super extends A
 		return this.join();
 	}
 
+	public format(opts?: PathFormatOptions): string {
+		if (opts === undefined) {
+			if (this.memoizedFormat !== undefined) {
+				return this.memoizedFormat;
+			}
+		} else {
+			const {memoizedFormatOptions} = this;
+			if (memoizedFormatOptions !== undefined && memoizedFormatOptions[1] === opts.cwd && memoizedFormatOptions[2] === opts.home) {
+				return memoizedFormatOptions[0];
+			}
+		}
+
+		const formatted = this._format(opts);
+		if (opts === undefined) {
+			this.memoizedFormat = formatted;
+		} else {
+			this.memoizedFormatOptions = [formatted, opts.cwd, opts.home];
+		}
+		return formatted;
+	}
+
 	public join(): string {
-		const memoJoined = this.memo.joined;
+		const memoJoined = this.memoizedJoin;
 		if (memoJoined !== undefined) {
 			return memoJoined;
 		}
@@ -300,7 +332,7 @@ export abstract class BasePath<ParsedPath extends AnyParsedPath, Super extends A
 		}
 
 		const joined = this._join(segments);
-		this.memo.joined = joined;
+		this.memoizedJoin = joined;
 		return joined;
 	}
 
@@ -326,7 +358,7 @@ export abstract class BasePath<ParsedPath extends AnyParsedPath, Super extends A
 		}
 
 		// Fast path for memoized strings
-		if (this.memo.joined !== undefined && other.memo.joined !== undefined && this.join() === other.join()) {
+		if (this.memoizedJoin !== undefined && other.memoizedJoin === this.memoizedJoin) {
 			return true;
 		}
 
@@ -335,11 +367,6 @@ export abstract class BasePath<ParsedPath extends AnyParsedPath, Super extends A
 		}
 
 		return equalArray(this.getSegments(), other.getSegments());
-	}
-
-	public format(opts?: PathFormatOptions): string {
-		opts;
-		return this.join();
 	}
 
 	public append(...items: Array<RelativePath | string>): Super {

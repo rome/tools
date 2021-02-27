@@ -3,19 +3,18 @@ import RelativePath from "./classes/RelativePath";
 import UIDPath from "./classes/UIDPath";
 import URLPath from "./classes/URLPath";
 import {
-	AnyParsedPath,
 	PathTypeHint,
 	parsePathSegments,
 	splitPathSegments,
 	ParsePathSegmentsOverrides,
 } from "./parse";
-import {AnyFilePath, AnyPath} from "./types";
+import {AnyFilePath, AnyPath, AnyParsedPath} from "./types";
 
-function createPathFromParsed(parsed: AnyParsedPath): AnyPath {
+export function createPathFromParsed(parsed: AnyParsedPath): AnyPath {
 	switch (parsed.type) {
-		case "windows-drive":
-		case "windows-unc":
-		case "unix":
+		case "absolute-windows-drive":
+		case "absolute-windows-unc":
+		case "absolute-unix":
 			return new AbsoluteFilePath(parsed);
 
 		case "url":
@@ -52,6 +51,14 @@ export function createAbsoluteFilePath(filename: string): AbsoluteFilePath {
 
 export function createUIDPath(filename: string): UIDPath {
 	return createAnyPath(filename, "uid").assertUID();
+}
+
+export function createUIDPathFromSegments(relativeSegments: string[]): UIDPath {
+	return new UIDPath({
+		type: "uid",
+		relativeSegments,
+		explicitDirectory: false,
+	});
 }
 
 export function createFilePath(filename: string): AnyFilePath {

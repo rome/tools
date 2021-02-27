@@ -34,6 +34,7 @@ export default class ServerCache extends Cache {
 				writeDisabled: disabled,
 				fatalErrorHandler: server.fatalErrorHandler,
 			},
+			server.resources,
 		);
 		this.server = server;
 		this.breakerPath = this.directoryPath.append(BREAKER_BASENAME);
@@ -52,10 +53,6 @@ export default class ServerCache extends Cache {
 		await memoryFs.watch(this.directoryPath);
 
 		await this.initBreaker();
-
-		this.server.endEvent.subscribe(async () => {
-			await this.teardown();
-		});
 	}
 
 	public async initBreaker(): Promise<void> {

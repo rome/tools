@@ -9,19 +9,19 @@ import {
 	RSERValue,
 } from "./types";
 import {
-	TYPED_PATH_CODES,
-	VALUE_CODES,
+	PATH_COLLECTION_CODES,
+	CODES,
 	VERSION,
 	arrayBufferViewCodeToInstance,
 	errorCodeToInstance,
 	formatCode,
-	pathFromCode,
 	pathMapFromCode,
 	pathSetFromCode,
 	validateArrayBufferViewCode,
 	validateErrorCode,
-	validateFileCode,
-	validateValueCode,
+	validatePathCollectionCode,
+	validateCode,
+	PATH_PARSED_CODES,
 } from "./constants";
 import {
 	AnyPath,
@@ -29,6 +29,11 @@ import {
 	MixedPathSet,
 	PathSet,
 	isPath,
+	createPathFromParsed,
+	ParsedPathBase,
+	AnyParsedPath,
+	validateParsedPathWindowsDriveLetter,
+	ParsedPathURL,
 } from "@internal/path";
 import {
 	NodeSystemErrorProperties,
@@ -41,7 +46,7 @@ import {utf8Decode} from "./utf8";
 import {CachedKeyDecoder} from "@internal/codec-binary-serial/CachedKeyDecoder";
 import {ExtendedMap} from "@internal/collections";
 import RSERParserError from "./RSERParserError";
-import {OneIndexed, ZeroIndexed} from "@internal/math";
+import {Duration, OneIndexed, ZeroIndexed} from "@internal/numbers";
 import {Position, SourceLocation} from "@internal/parser-core";
 
 const sharedCachedKeyDecoder = new CachedKeyDecoder();
@@ -129,7 +134,7 @@ export default class RSERBufferParser {
 		}
 	}
 
-	private peekCode(): VALUE_CODES {
+	private peekCode(): CODES {
 		if (
 			this.peekedCode !== undefined &&
 			this.peekedCodeOffset === this.readOffset
@@ -137,7 +142,7 @@ export default class RSERBufferParser {
 			return this.peekedCode;
 		}
 
-		const code = validateValueCode(this.peekInt(1));
+		const code = validateCode(this.peekInt(1));
 		this.peekedCode = code;
 		this.peekedCodeOffset = this.readOffset;
 		return code;
@@ -178,8 +183,8 @@ export default class RSERBufferParser {
 
 		if (this.canRead(1)) {
 			const got = this.peekCode();
-			if (got === VALUE_CODES.STREAM_HEADER) {
-				this.expectCode(VALUE_CODES.STREAM_HEADER);
+			if (got === CODES.STREAM_HEADER) {
+				this.expectCode(CODES.STREAM_HEADER);
 			} else {
 				return "INCOMPATIBLE";
 			}
@@ -202,18 +207,23 @@ export default class RSERBufferParser {
 	}
 
 	public maybeDecodeMessageHeader(): false | number {
-		if (this.canRead(1)) {
-			this.expectCode(VALUE_CODES.MESSAGE_HEADER);
-		} else {
+		if (!this.canRead(1)) {
 			return false;
 		}
 
-		const num = this.maybeDecodeNumber();
-		if (num !== undefined) {
-			return num;
+		const messageCode = this.peekCode();
+		if (messageCode !== CODES.MESSAGE_HEADER) {
+			throw this.unexpected(`Unknown message header code ${formatCode(messageCode)}`);
+		}
+		this.readOffset++;
+
+		const size = this.maybeDecodeNumber();
+		if (size === undefined) {
+			this.readOffset--;
+			return false;
 		}
 
-		return false;
+		return size;
 	}
 
 	private maybeDecodeNumber(): undefined | number {
@@ -228,9 +238,9 @@ export default class RSERBufferParser {
 
 	private maybeDecodeReference(): undefined | RSERValue {
 		const code = this.peekCode();
-		if (code === VALUE_CODES.REFERENCE) {
+		if (code === CODES.REFERENCE) {
 			return this.decodeReference();
-		} else if (code === VALUE_CODES.DECLARE_REFERENCE) {
+		} else if (code === CODES.DECLARE_REFERENCE) {
 			return this.decodeDeclareReference();
 		} else {
 			return undefined;
@@ -238,53 +248,53 @@ export default class RSERBufferParser {
 	}
 
 	public decodeDeclareReference(): RSERValue {
-		this.expectCode(VALUE_CODES.DECLARE_REFERENCE);
+		this.expectCode(CODES.DECLARE_REFERENCE);
 		const id = this.decodeNumber();
 		const code = this.peekCode();
 
 		switch (code) {
-			case VALUE_CODES.PATH_MAP: {
+			case CODES.PATH_MAP: {
 				this.readOffset++;
-				const code = this.decodePathCode();
+				const code = this.decodePathCollectionCode();
 				const map = pathMapFromCode(code);
 				this.references.set(id, map);
 				return this.decodePathMapValue(map);
 			}
 
-			case VALUE_CODES.MIXED_PATH_MAP: {
+			case CODES.MIXED_PATH_MAP: {
 				this.readOffset++;
 				const map: RSERMixedPathMap = new MixedPathMap();
 				this.references.set(id, map);
 				return this.decodeMixedPathMapValue(map);
 			}
 
-			case VALUE_CODES.SET: {
+			case CODES.SET: {
 				this.readOffset++;
 				const set: RSERSet = new Set();
 				this.references.set(id, set);
 				return this.decodeSetValue(set);
 			}
 
-			case VALUE_CODES.MAP: {
+			case CODES.MAP: {
 				this.readOffset++;
 				const map: RSERMap = new Map();
 				this.references.set(id, map);
 				return this.decodeMapValue(map);
 			}
 
-			case VALUE_CODES.ARRAY: {
+			case CODES.ARRAY: {
 				const arr: RSERArray = this.decodeArrayHead();
 				this.references.set(id, arr);
 				return this.decodeArrayElements(arr);
 			}
 
-			case VALUE_CODES.TEMPLATED_OBJECT_ARRAY: {
+			case CODES.TEMPLATED_OBJECT_ARRAY: {
 				const arr: RSERArray = this.decodeTemplatedObjectArrayHead();
 				this.references.set(id, arr);
 				return this.decodeTemplateObjectArrayValues(arr);
 			}
 
-			case VALUE_CODES.OBJECT: {
+			case CODES.OBJECT: {
 				this.readOffset++;
 				const obj: RSERObject = {};
 				this.references.set(id, obj);
@@ -300,7 +310,7 @@ export default class RSERBufferParser {
 	}
 
 	public decodeReference(): RSERValue {
-		this.expectCode(VALUE_CODES.REFERENCE);
+		this.expectCode(CODES.REFERENCE);
 		const id = this.decodeNumber();
 		return this.references.assert(id);
 	}
@@ -317,30 +327,30 @@ export default class RSERBufferParser {
 	}
 
 	// These are values that can hold other values
-	private decodeReferentialValue(code: VALUE_CODES): undefined | RSERValue {
+	private decodeReferentialValue(code: CODES): undefined | RSERValue {
 		switch (code) {
-			case VALUE_CODES.PATH_MAP:
+			case CODES.PATH_MAP:
 				return this.decodePathMap();
 
-			case VALUE_CODES.SET:
+			case CODES.SET:
 				return this.decodeSet();
 
-			case VALUE_CODES.MAP:
+			case CODES.MAP:
 				return this.decodeMap();
 
-			case VALUE_CODES.ARRAY:
+			case CODES.ARRAY:
 				return this.decodeArray();
 
-			case VALUE_CODES.OBJECT:
+			case CODES.OBJECT:
 				return this.decodeObject();
 
-			case VALUE_CODES.TEMPLATED_OBJECT_ARRAY:
+			case CODES.TEMPLATED_OBJECT_ARRAY:
 				return this.decodeTemplatedObjectArray();
 
-			case VALUE_CODES.REFERENCE:
+			case CODES.REFERENCE:
 				return this.decodeReference();
 
-			case VALUE_CODES.DECLARE_REFERENCE:
+			case CODES.DECLARE_REFERENCE:
 				return this.decodeDeclareReference();
 
 			default:
@@ -348,81 +358,85 @@ export default class RSERBufferParser {
 		}
 	}
 
-	private decodeNonReferentialValue(code: VALUE_CODES): RSERValue {
+	private decodeNonReferentialValue(code: CODES): RSERValue {
 		switch (code) {
-			case VALUE_CODES.INT8:
-			case VALUE_CODES.INT16:
-			case VALUE_CODES.INT32:
-			case VALUE_CODES.FLOAT:
-			case VALUE_CODES.NEGATIVE_ONE:
-			case VALUE_CODES.POSITIVE_ZERO:
-			case VALUE_CODES.POSITIVE_ONE:
-			case VALUE_CODES.POSITIVE_INFINITY:
-			case VALUE_CODES.NEGATIVE_INFINITY:
-			case VALUE_CODES.NEGATIVE_ZERO:
+			case CODES.INT8:
+			case CODES.INT16:
+			case CODES.INT32:
+			case CODES.FLOAT:
+			case CODES.NEGATIVE_ONE:
+			case CODES.POSITIVE_ZERO:
+			case CODES.POSITIVE_ONE:
+			case CODES.POSITIVE_INFINITY:
+			case CODES.NEGATIVE_INFINITY:
+			case CODES.NEGATIVE_ZERO:
 				return this.decodeNumber();
 
-			case VALUE_CODES.ONE_INDEXED_NUMBER:
+			case CODES.ONE_INDEXED_NUMBER:
 				return this.decodeOneIndexedNumber();
 
-			case VALUE_CODES.ZERO_INDEXED_NUMBER:
+			case CODES.ZERO_INDEXED_NUMBER:
 				return this.decodeZeroIndexedNumber();
 
-			case VALUE_CODES.INT64:
+			case CODES.DURATION:
+				return this.decodeDuration();
+
+			case CODES.INT64:
 				return this.decodeInt();
 
-			case VALUE_CODES.SYMBOL:
+			case CODES.BIGINT:
+				return this.decodeBigInt();
+
+			case CODES.SYMBOL:
 				return this.decodeSymbol();
 
-			case VALUE_CODES.TRUE:
-				return this.decodeTrue();
+			case CODES.TRUE:
+			case CODES.FALSE:
+				return this.decodeBoolean();
 
-			case VALUE_CODES.FALSE:
-				return this.decodeFalse();
-
-			case VALUE_CODES.NULL:
+			case CODES.NULL:
 				return this.decodeNull();
 
-			case VALUE_CODES.UNDEFINED:
+			case CODES.UNDEFINED:
 				return this.decodeUndefined();
 
-			case VALUE_CODES.NAN:
+			case CODES.NAN:
 				return this.decodeNaN();
 
-			case VALUE_CODES.PATH:
+			case CODES.PATH:
 				return this.decodePath();
 
-			case VALUE_CODES.PATH_SET:
+			case CODES.PATH_SET:
 				return this.decodePathSet();
 
-			case VALUE_CODES.MIXED_PATH_SET:
+			case CODES.MIXED_PATH_SET:
 				return this.decodeMixedPathSet();
 
-			case VALUE_CODES.MIXED_PATH_MAP:
+			case CODES.MIXED_PATH_MAP:
 				return this.decodeMixedPathMap();
 
-			case VALUE_CODES.ERROR:
+			case CODES.ERROR:
 				return this.decodeError();
 
-			case VALUE_CODES.STRING:
+			case CODES.STRING:
 				return this.decodeString();
 
-			case VALUE_CODES.REGEXP:
+			case CODES.REGEXP:
 				return this.decodeRegExp();
 
-			case VALUE_CODES.DATE:
+			case CODES.DATE:
 				return this.decodeDate();
 
-			case VALUE_CODES.ARRAY_BUFFER_VIEW:
+			case CODES.ARRAY_BUFFER_VIEW:
 				return this.decodeArrayBufferView();
 
-			case VALUE_CODES.ARRAY_BUFFER:
+			case CODES.ARRAY_BUFFER:
 				return this.decodeArrayBuffer();
 
-			case VALUE_CODES.POSITION:
+			case CODES.POSITION:
 				return this.decodePosition();
 
-			case VALUE_CODES.SOURCE_LOCATION:
+			case CODES.SOURCE_LOCATION:
 				return this.decodeSourceLocation();
 
 			default:
@@ -431,7 +445,7 @@ export default class RSERBufferParser {
 	}
 
 	private decodePosition(): Position {
-		this.expectCode(VALUE_CODES.POSITION);
+		this.expectCode(CODES.POSITION);
 		return this.decodePositionValue();
 	}
 
@@ -443,7 +457,7 @@ export default class RSERBufferParser {
 	}
 
 	private decodeSourceLocation(): SourceLocation {
-		this.expectCode(VALUE_CODES.SOURCE_LOCATION);
+		this.expectCode(CODES.SOURCE_LOCATION);
 		return {
 			path: this.decodePath(),
 			identifierName: this.decodeStringOrVoid(),
@@ -480,6 +494,20 @@ export default class RSERBufferParser {
 	private decodeTrue(): true {
 		this.readOffset++;
 		return true;
+	}
+
+	private decodeBoolean(): boolean {
+		const code = this.peekCode();
+		switch (code) {
+			case CODES.TRUE:
+				return this.decodeTrue();
+				
+			case CODES.FALSE:
+				return this.decodeFalse();
+				
+			default:
+				throw this.unexpected(`${formatCode(code)} is not a valid boolean code`);
+		}
 	}
 
 	private decodeFalse(): false {
@@ -521,13 +549,18 @@ export default class RSERBufferParser {
 	}
 
 	private decodeOneIndexedNumber(): OneIndexed {
-		this.expectCode(VALUE_CODES.ONE_INDEXED_NUMBER);
+		this.expectCode(CODES.ONE_INDEXED_NUMBER);
 		return new OneIndexed(this.decodeNumber());
 	}
 
 	private decodeZeroIndexedNumber(): ZeroIndexed {
-		this.expectCode(VALUE_CODES.ZERO_INDEXED_NUMBER);
+		this.expectCode(CODES.ZERO_INDEXED_NUMBER);
 		return new ZeroIndexed(this.decodeNumber());
+	}
+
+	private decodeDuration(): Duration {
+		this.expectCode(CODES.DURATION);
+		return Duration.fromNanoseconds(this.readInt(8));
 	}
 
 	private decodeNegativeZero(): number {
@@ -551,7 +584,7 @@ export default class RSERBufferParser {
 	}
 
 	private decodeRegExp(): RegExp {
-		this.expectCode(VALUE_CODES.REGEXP);
+		this.expectCode(CODES.REGEXP);
 		const pattern = this.readString();
 		const flags = this.readString();
 		return new RegExp(pattern, flags);
@@ -563,7 +596,7 @@ export default class RSERBufferParser {
 	}
 
 	private decodeArrayHead(): RSERArray {
-		this.expectCode(VALUE_CODES.ARRAY);
+		this.expectCode(CODES.ARRAY);
 		const length = this.decodeNumber();
 		return new Array(length);
 	}
@@ -576,7 +609,7 @@ export default class RSERBufferParser {
 	}
 
 	private decodeObject(): RSERObject {
-		this.expectCode(VALUE_CODES.OBJECT);
+		this.expectCode(CODES.OBJECT);
 		return this.decodeObjectValue({});
 	}
 
@@ -593,7 +626,7 @@ export default class RSERBufferParser {
 	private decodeTemplatedObjectArray(): RSERArray {
 		// Sometimes we may encode a templated object array to a regular array (like when there's no elements)
 		const code = this.peekCode();
-		if (code === VALUE_CODES.ARRAY) {
+		if (code === CODES.ARRAY) {
 			return this.decodeArray();
 		} else {
 			const arr = this.decodeTemplatedObjectArrayHead();
@@ -602,7 +635,7 @@ export default class RSERBufferParser {
 	}
 
 	private decodeTemplatedObjectArrayHead(): RSERArray {
-		this.expectCode(VALUE_CODES.TEMPLATED_OBJECT_ARRAY);
+		this.expectCode(CODES.TEMPLATED_OBJECT_ARRAY);
 		const length = this.decodeNumber();
 		return new Array(length);
 	}
@@ -629,13 +662,13 @@ export default class RSERBufferParser {
 	}
 
 	private decodeDate(): Date {
-		this.expectCode(VALUE_CODES.DATE);
+		this.expectCode(CODES.DATE);
 		const time = this.decodeNumber();
 		return new Date(time);
 	}
 
-	private decodePathCode(): TYPED_PATH_CODES {
-		return validateFileCode(this.readInt(1));
+	private decodePathCollectionCode(): PATH_COLLECTION_CODES {
+		return validatePathCollectionCode(this.readInt(1));
 	}
 
 	private decodePath(): AnyPath {
@@ -650,15 +683,123 @@ export default class RSERBufferParser {
 			}
 		}
 
-		this.expectCode(VALUE_CODES.PATH);
-		const code = this.decodePathCode();
-		const str = this.readString();
-		return pathFromCode(code, str);
+		return this._decodePath();
+	}
+	
+	private _decodePath(): AnyPath {
+		this.expectCode(CODES.PATH);
+
+		const explicitDirectory = this.decodeBoolean();
+
+		const segmentCount = this.decodeNumber();
+		const relativeSegments: string[] = new Array(segmentCount);
+		for (let i = 0; i < relativeSegments.length; ++i) {
+			relativeSegments[i] = this.decodeKey();
+		}
+
+		let parsedBase: ParsedPathBase = {
+			relativeSegments,
+			explicitDirectory,
+		};
+
+		let parsed: AnyParsedPath;
+
+		const code = this.readInt(1);
+		switch (code) {
+			case PATH_PARSED_CODES.ABSOLUTE_UNIX: {
+				parsed = {
+					...parsedBase,
+					type: "absolute-unix",
+				};
+				break;
+			}
+
+			case PATH_PARSED_CODES.ABSOLUTE_WINDOWS_DRIVE: {
+				const letter = validateParsedPathWindowsDriveLetter(String.fromCharCode(this.readInt(1)));
+				parsed = {
+					...parsedBase,
+					type: "absolute-windows-drive",
+					letter,
+				};
+				break;
+			}
+
+			case PATH_PARSED_CODES.ABSOLUTE_WINDOWS_UNC: {
+				const servername = this.decodeKey();
+				parsed = {
+					...parsedBase,
+					type: "absolute-windows-unc",
+					servername,
+				};
+				break;
+			}
+
+			case PATH_PARSED_CODES.RELATIVE: {
+				const explicitRelative = this.decodeBoolean();
+				parsed = {
+					...parsedBase,
+					explicitRelative,
+					type: "relative",
+				};
+				break;
+			}
+
+			case PATH_PARSED_CODES.URL: {
+				let protocol = this.decodeKey();
+				let username = this.decodeOptionalKey();
+				let password = this.decodeOptionalKey();
+				let hostname = this.decodeKey();
+				let port = this.decodeNumberOrVoid();
+
+				let search: ParsedPathURL["search"] = new Map();
+				const searchSize = this.decodeNumber();
+				for (let i = 0; i < searchSize; i++) {
+					const key = this.readString();
+
+					const valuesSize = this.decodeNumber();
+					const values: string[] = new Array(valuesSize);
+					for (let i = 0; i < valuesSize; i++) {
+						values[i] = this.readString();
+					}
+
+					search.set(key, values);
+				}
+
+				let hash = this.decodeOptionalKey();
+
+				parsed = {
+					...parsedBase,
+					type: "url",
+					protocol,
+					username,
+					password,
+					hostname,
+					port,
+					search,
+					hash,
+				};
+				break;
+			}
+
+			case PATH_PARSED_CODES.UID: {
+				parsed = {
+					...parsedBase,
+					type: "uid",
+				};
+				break;
+			}
+
+			default: {
+				throw this.unexpected(`${code} is not a valid parsed path code`);
+			}
+		}
+
+		return createPathFromParsed(parsed);
 	}
 
 	private decodePathMap(): AnyRSERPathMap {
-		this.expectCode(VALUE_CODES.PATH_MAP);
-		const code = this.decodePathCode();
+		this.expectCode(CODES.PATH_MAP);
+		const code = this.decodePathCollectionCode();
 		const map = pathMapFromCode(code);
 		return this.decodePathMapValue(map);
 	}
@@ -674,7 +815,7 @@ export default class RSERBufferParser {
 	}
 
 	private decodeMixedPathSet(): MixedPathSet {
-		this.expectCode(VALUE_CODES.MIXED_PATH_SET);
+		this.expectCode(CODES.MIXED_PATH_SET);
 		const set = new MixedPathSet();
 
 		const size = this.decodeNumber();
@@ -686,7 +827,7 @@ export default class RSERBufferParser {
 	}
 
 	private decodeMixedPathMap(): RSERMixedPathMap {
-		this.expectCode(VALUE_CODES.MIXED_PATH_MAP);
+		this.expectCode(CODES.MIXED_PATH_MAP);
 		const map: RSERMixedPathMap = new MixedPathMap();
 		return this.decodeMixedPathMapValue(map);
 	}
@@ -702,9 +843,9 @@ export default class RSERBufferParser {
 	}
 
 	private decodePathSet(): PathSet {
-		this.expectCode(VALUE_CODES.PATH_SET);
+		this.expectCode(CODES.PATH_SET);
 
-		const code = this.decodePathCode();
+		const code = this.decodePathCollectionCode();
 		const set = pathSetFromCode(code);
 
 		const size = this.decodeNumber();
@@ -715,7 +856,7 @@ export default class RSERBufferParser {
 	}
 
 	private decodeSet(): RSERSet {
-		this.expectCode(VALUE_CODES.SET);
+		this.expectCode(CODES.SET);
 		return this.decodeSetValue(new Set());
 	}
 
@@ -728,7 +869,7 @@ export default class RSERBufferParser {
 	}
 
 	private decodeMap(): RSERMap {
-		this.expectCode(VALUE_CODES.MAP);
+		this.expectCode(CODES.MAP);
 		return this.decodeMapValue(new Map());
 	}
 
@@ -778,10 +919,10 @@ export default class RSERBufferParser {
 
 		const code = this.peekCode();
 		switch (code) {
-			case VALUE_CODES.UNDEFINED:
+			case CODES.UNDEFINED:
 				return this.decodeUndefined();
 
-			case VALUE_CODES.STRING:
+			case CODES.STRING:
 				return this.decodeString();
 
 			default:
@@ -805,9 +946,18 @@ export default class RSERBufferParser {
 			return this.readStringSize(size);
 		}
 	}
+	
+	private decodeOptionalKey(): undefined | string {
+		const key = this.decodeKey();
+		if (key.length === 0) {
+			return undefined;
+		} else {
+			return key;
+		}
+	}
 
 	private decodeString(): string {
-		this.expectCode(VALUE_CODES.STRING);
+		this.expectCode(CODES.STRING);
 		return this.readString();
 	}
 
@@ -818,11 +968,28 @@ export default class RSERBufferParser {
 		return this.readInt(size);
 	}
 
-	private decodeNumber(code: VALUE_CODES = this.peekCode()): number {
+	public decodeBigInt(): bigint {
+		this.expectCode(CODES.BIGINT);
+		return BigInt(this.decodeNumber());
+	}
+
+	private decodeNumberOrVoid(): undefined | number {
+		const code = this.peekCode()
 		switch (code) {
-			case VALUE_CODES.INT8:
-			case VALUE_CODES.INT16:
-			case VALUE_CODES.INT32: {
+			case CODES.UNDEFINED:
+				return undefined;
+
+			default:
+				return this.decodeNumber();
+		}
+	}
+
+	private decodeNumber(): number {
+		const code = this.peekCode();
+		switch (code) {
+			case CODES.INT8:
+			case CODES.INT16:
+			case CODES.INT32: {
 				const num = this.decodeInt();
 				if (typeof num === "bigint") {
 					throw this.unexpected("Did not expect a bigint");
@@ -831,28 +998,28 @@ export default class RSERBufferParser {
 				}
 			}
 
-			case VALUE_CODES.FLOAT:
+			case CODES.FLOAT:
 				return this.decodeFloat();
 
-			case VALUE_CODES.NEGATIVE_ONE:
+			case CODES.NEGATIVE_ONE:
 				return this.decodeNegativeOne();
 
-			case VALUE_CODES.POSITIVE_ZERO:
+			case CODES.POSITIVE_ZERO:
 				return this.decodePositiveZero();
 
-			case VALUE_CODES.POSITIVE_ONE:
+			case CODES.POSITIVE_ONE:
 				return this.decodePositiveOne();
 
-			case VALUE_CODES.POSITIVE_INFINITY:
+			case CODES.POSITIVE_INFINITY:
 				return this.decodePositiveInfinity();
 
-			case VALUE_CODES.NEGATIVE_INFINITY:
+			case CODES.NEGATIVE_INFINITY:
 				return this.decodeNegativeInfinity();
 
-			case VALUE_CODES.NEGATIVE_ZERO:
+			case CODES.NEGATIVE_ZERO:
 				return this.decodeNegativeZero();
 
-			case VALUE_CODES.INT64:
+			case CODES.INT64:
 				throw this.unexpected(
 					"Unexpected bigint, only regular numbers accepted",
 				);
@@ -865,24 +1032,24 @@ export default class RSERBufferParser {
 	private getDecodeNumberSize(): IntSize {
 		const code = this.peekInt(1);
 		switch (code) {
-			case VALUE_CODES.NEGATIVE_INFINITY:
-			case VALUE_CODES.POSITIVE_INFINITY:
-			case VALUE_CODES.NEGATIVE_ZERO:
-			case VALUE_CODES.POSITIVE_ZERO:
-			case VALUE_CODES.NEGATIVE_ONE:
-			case VALUE_CODES.POSITIVE_ONE:
+			case CODES.NEGATIVE_INFINITY:
+			case CODES.POSITIVE_INFINITY:
+			case CODES.NEGATIVE_ZERO:
+			case CODES.POSITIVE_ZERO:
+			case CODES.NEGATIVE_ONE:
+			case CODES.POSITIVE_ONE:
 				return 0;
 
-			case VALUE_CODES.INT8:
+			case CODES.INT8:
 				return 1;
 
-			case VALUE_CODES.INT16:
+			case CODES.INT16:
 				return 2;
 
-			case VALUE_CODES.INT32:
+			case CODES.INT32:
 				return 4;
 
-			case VALUE_CODES.INT64:
+			case CODES.INT64:
 				return 8;
 
 			default:

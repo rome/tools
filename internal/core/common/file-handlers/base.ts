@@ -9,6 +9,7 @@ import {parseJS} from "@internal/js-parser";
 export const configHandler: PartialExtensionHandler = {
 	language: "unknown",
 	hasTabs: true,
+	mime: "text/plain",
 
 	capabilities: {
 		lint: false,
@@ -78,6 +79,7 @@ export const ASSET_EXPORT_TEMPORARY_VALUE = "VALUE_INJECTED_BY_BUNDLER";
 export const assetHandler: PartialExtensionHandler = {
 	sourceTypeJS: "module",
 	language: "unknown",
+	mime: "application/octet-stream",
 	hasTabs: false,
 	canHaveScale: true,
 	isAsset: true,

@@ -32,6 +32,7 @@ import https = require("https");
 
 function request(
 	url: string,
+	query: ResolverRemoteQuery,
 ): Promise<
 	| ResolverQueryResponseFetchError
 	| {
@@ -46,7 +47,7 @@ function request(
 				if (res.statusCode !== 200) {
 					resolve({
 						type: "FETCH_ERROR",
-						source: undefined,
+						query,
 						advice: [
 							{
 								type: "log",
@@ -83,7 +84,7 @@ function request(
 			(err) => {
 				resolve({
 					type: "FETCH_ERROR",
-					source: undefined,
+					query,
 					advice: [
 						{
 							type: "log",
@@ -102,6 +103,7 @@ const NODE_MODULES = "node_modules";
 export interface ResolverRemoteQuery extends Omit<ResolverOptions, "origin"> {
 	origin: URLPath | AbsoluteFilePath;
 	source: AnyPath;
+	location?: DiagnosticLocation;
 	// Allows a resolution to stop at a directory or package boundary
 	requestedType?: "package" | "directory";
 	// Treat the source as a path (without being explicitly relative), and then a module/package if it fails to resolve
@@ -116,13 +118,6 @@ export interface ResolverLocalQuery extends Omit<ResolverRemoteQuery, "origin"> 
 export interface ResolverEntryQuery extends ResolverRemoteQuery {
 	allowPartial?: boolean;
 }
-
-export type ResolverQuerySource =
-	| undefined
-	| {
-			source?: string;
-			location?: DiagnosticLocation;
-		};
 
 type ResolverQueryResponseFoundType =
 	| "package"
@@ -142,30 +137,27 @@ export type ResolverQueryResponseFound = {
 
 export type ResolverQueryResponseMissing = {
 	type: "MISSING";
-	source: undefined | ResolverQuerySource;
+	// If `query` is `undefined` then it indicates we can try alternative locations
+	// This is never a ResolverRemoteQuery as we never have misses
+	query: undefined | ResolverLocalQuery;
 	advice?: undefined;
 };
 
 export type ResolverQueryResponseUnsupported = {
 	type: "UNSUPPORTED";
-	source: undefined | ResolverQuerySource;
+	query: ResolverRemoteQuery;
 	advice: DiagnosticAdvice;
 };
 
 export type ResolverQueryResponseFetchError = {
 	type: "FETCH_ERROR";
-	source: undefined | ResolverQuerySource;
+	query: ResolverRemoteQuery;
 	advice: DiagnosticAdvice;
 };
 
 type FilenameVariant = {
 	path: AnyPath;
 	types: ResolverQueryResponseFoundType[];
-};
-
-const QUERY_RESPONSE_MISSING: ResolverQueryResponseMissing = {
-	type: "MISSING",
-	source: undefined,
 };
 
 export type ResolverQueryResponseNotFound =
@@ -176,13 +168,14 @@ export type ResolverQueryResponseNotFound =
 export type ResolverQueryResponse =
 	| ResolverQueryResponseFound
 	| ResolverQueryResponseNotFound;
+	
+const QUERY_RESPONSE_MISSING: ResolverQueryResponseMissing = {
+	type: "MISSING",
+	query: undefined,
+};
 
 function shouldReturnQueryResponse(res: ResolverQueryResponse): boolean {
-	return res.type === "FOUND" || res.source !== undefined;
-}
-
-export function isPathLike(source: AnyPath): boolean {
-	return source.isAbsolute() || source.isExplicitRelative();
+	return res.type === "FOUND" || res.query !== undefined;
 }
 
 function appendTypeQueryResponse(
@@ -214,7 +207,8 @@ type ExportAlias = {
 function attachExportAliasIfUnresolved(
 	res: ResolverQueryResponse,
 	alias: ExportAlias,
-) {
+	query: ResolverLocalQuery,
+): ResolverQueryResponse {
 	if (res.type === "FOUND") {
 		return res;
 	}
@@ -223,12 +217,10 @@ function attachExportAliasIfUnresolved(
 
 	return {
 		...res,
-		source: location === undefined
-			? undefined
-			: {
-					location,
-					source: alias.value.join(),
-				},
+		query: {
+			...query,
+			location,
+		},
 	};
 }
 
@@ -306,7 +298,7 @@ function getPreferredMainKey(
 	if (manifest.main !== undefined) {
 		return {
 			key: consumer.get("main"),
-			value: createRelativePath(manifest.main),
+			value: manifest.main,
 		};
 	}
 
@@ -339,7 +331,6 @@ export default class Resolver {
 
 	public async resolveEntryAssert(
 		query: ResolverEntryQuery,
-		querySource?: ResolverQuerySource,
 	): Promise<ResolverQueryResponseFound> {
 		const attempt = await this.maybeResolveEntryWithoutFileSystem(query);
 		if (attempt !== undefined) {
@@ -347,15 +338,14 @@ export default class Resolver {
 		}
 
 		await this.findProjectFromQuery(query);
-		return this.resolveAssert({...query, entry: true}, querySource);
+		return this.resolveAssert({...query, entry: true});
 	}
 
 	// I found myself wanting only `ref.path` a lot so this is just a helper method
 	public async resolveEntryAssertPath(
 		query: ResolverEntryQuery,
-		querySource?: ResolverQuerySource,
 	): Promise<AbsoluteFilePath> {
-		const res = await this.resolveEntryAssert(query, querySource);
+		const res = await this.resolveEntryAssert(query);
 		return res.path;
 	}
 
@@ -398,7 +388,7 @@ export default class Resolver {
 		}
 
 		// Found an exact match
-		if (await absolute.exists()) {
+		if (await absolute.exists() && (await absolute.lstat()).isFile()) {
 			const project = await projectManager.findProject(absolute, true);
 			if (project === undefined) {
 				return undefined;
@@ -411,8 +401,7 @@ export default class Resolver {
 	}
 
 	public async resolveAssert(
-		query: ResolverRemoteQuery,
-		origQuerySource?: ResolverQuerySource,
+		query: ResolverRemoteQuery
 	): Promise<ResolverQueryResponseFound> {
 		const resolved = await this.resolveRemote(query);
 		if (resolved.type === "FOUND") {
@@ -421,9 +410,8 @@ export default class Resolver {
 			throw resolverSuggest({
 				resolver: this,
 				server: this.server,
-				query,
+				rootQuery: query,
 				resolved,
-				origQuerySource,
 			});
 		}
 	}
@@ -456,7 +444,7 @@ export default class Resolver {
 					);
 
 					if (!this.server.memoryFs.exists(remotePath)) {
-						const result = await request(source.join());
+						const result = await request(source.join(), query);
 						if (result.type === "DOWNLOADED") {
 							await remotePath.writeFile(result.content);
 						} else {
@@ -478,7 +466,7 @@ export default class Resolver {
 				default:
 					return {
 						type: "UNSUPPORTED",
-						source: undefined,
+						query,
 						advice: [
 							{
 								type: "log",
@@ -501,7 +489,7 @@ export default class Resolver {
 				// TODO add support for import maps
 				return {
 					type: "MISSING",
-					source: undefined,
+					query: undefined,
 				};
 			}
 		}
@@ -513,8 +501,8 @@ export default class Resolver {
 	}
 
 	public resolveLocal(query: ResolverLocalQuery): ResolverQueryResponse {
-		// Do some basic checks to determine if this is an absolute or relative path
-		if (isPathLike(query.source)) {
+		// Unambiguously a file path
+		if (query.source.isAbsolute() || query.source.isExplicitRelative()) {
 			return this.resolvePath(query);
 		}
 
@@ -693,17 +681,19 @@ export default class Resolver {
 					query.platform,
 				);
 				if (main !== undefined) {
+					const mainQuery: ResolverLocalQuery = {
+						...query,
+						origin: resolvedOrigin,
+						source: main.value,
+					};
+
 					const resolved = this.resolvePath(
-						{
-							...query,
-							origin: resolvedOrigin,
-							source: main.value,
-						},
+						mainQuery,
 						true,
 						["package"],
 					);
 
-					return attachExportAliasIfUnresolved(resolved, main);
+					return attachExportAliasIfUnresolved(resolved, main, mainQuery);
 				}
 			}
 
@@ -790,15 +780,16 @@ export default class Resolver {
 				}
 
 				// Alias found!
+				const mainQuery = 	{
+					...query,
+					source: manifestDef.directory.append(alias.value),
+				};
 				const resolved = this.resolvePath(
-					{
-						...query,
-						source: manifestDef.directory.append(alias.value),
-					},
+					mainQuery,
 					true,
 					["package"],
 				);
-				return attachExportAliasIfUnresolved(resolved, alias);
+				return attachExportAliasIfUnresolved(resolved, alias, mainQuery);
 			}
 		}
 
@@ -816,7 +807,7 @@ export default class Resolver {
 	private resolveMock(
 		query: ResolverLocalQuery,
 		project: ProjectDefinition | undefined,
-		parentDirectories: AbsoluteFilePath[],
+		parentDirectories: Iterable<AbsoluteFilePath>,
 	): ResolverQueryResponse {
 		if (project === undefined) {
 			return QUERY_RESPONSE_MISSING;

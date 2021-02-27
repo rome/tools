@@ -377,7 +377,7 @@ export function createIntegrationTest(
 			}
 
 			// Use this reporter for markup rendering
-			const reporter = new Reporter();
+			const reporter = new Reporter("IntegrationTest");
 			const clientStream = reporter.attachCaptureStream();
 
 			// Mock and capture stdout
@@ -402,6 +402,7 @@ export function createIntegrationTest(
 
 			// Create a Client. The abstraction used by the CLI.
 			const client = new Client({
+				dedicated: false,
 				userConfig,
 				terminalFeatures: {
 					...DEFAULT_TERMINAL_FEATURES,

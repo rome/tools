@@ -9,6 +9,7 @@ import {WebSocketInterface} from "@internal/codec-websocket";
 import {Socket} from "net";
 import workerThreads = require("worker_threads");
 import {RSERValue} from "@internal/codec-binary-serial";
+import { processResourceRoot } from "@internal/resources";
 
 export function createBridgeEventDeclaration<
 	Param extends RSERValue,
@@ -64,9 +65,7 @@ export class BridgeFactory<
 			inf.send(Buffer.from(buf));
 		});
 
-		bridge.endEvent.subscribe(() => {
-			socket.end();
-		});
+		bridge.resources.addSocket(socket);
 
 		inf.completeFrameEvent.subscribe((frame) => {
 			rser.append(frame.payload.buffer);
@@ -82,7 +81,7 @@ export class BridgeFactory<
 		socket.on(
 			"end",
 			() => {
-				bridge.end("RPC WebSocket died", false);
+				bridge.disconnected("RPC WebSocket died");
 			},
 		);
 
@@ -101,9 +100,7 @@ export class BridgeFactory<
 			socket.send(buf);
 		});
 
-		bridge.endEvent.subscribe(() => {
-			socket.close();
-		});
+		bridge.resources.addWebSocket(socket);
 
 		socket.binaryType = "arraybuffer";
 
@@ -120,7 +117,7 @@ export class BridgeFactory<
 		};
 
 		socket.onclose = () => {
-			bridge.end("RPC WebSocket disconnected", false);
+			bridge.disconnected("RPC WebSocket disconnected");
 		};
 
 		return bridge;
@@ -136,9 +133,7 @@ export class BridgeFactory<
 			socket.write(new Uint8Array(buf));
 		});
 
-		bridge.endEvent.subscribe(() => {
-			socket.end();
-		});
+		bridge.resources.addSocket(socket);
 
 		socket.on(
 			"data",
@@ -157,7 +152,7 @@ export class BridgeFactory<
 		socket.on(
 			"close",
 			(hadError) => {
-				bridge.end(hadError ? "Socket closed due to transmission error" : "Socket closed", false);
+				bridge.disconnected(hadError ? "Socket closed due to transmission error" : "Socket closed");
 			},
 		);
 
@@ -182,9 +177,7 @@ export class BridgeFactory<
 			worker.postMessage(msg, [msg]);
 		});
 
-		bridge.endEvent.subscribe(() => {
-			worker.terminate();
-		});
+		bridge.resources.addWorkerThread(worker);
 
 		worker.on(
 			"message",
@@ -210,7 +203,7 @@ export class BridgeFactory<
 		worker.on(
 			"exit",
 			(code) => {
-				bridge.end(`Worker thread died with exit code ${code}`, false);
+				bridge.disconnected(`Worker thread died with exit code ${code}`);
 			},
 		);
 
@@ -230,15 +223,12 @@ export class BridgeFactory<
 		}
 
 		const bridge = this.create();
+		processResourceRoot.add(bridge);
+		
 		const rser = bridge.attachRSER();
 
 		rser.sendEvent.subscribe((msg) => {
 			parentPort.postMessage(msg, [msg]);
-		});
-
-		bridge.endEvent.subscribe(() => {
-			parentPort.close();
-			process.exit();
 		});
 
 		parentPort.on(
@@ -251,7 +241,7 @@ export class BridgeFactory<
 		parentPort.on(
 			"close",
 			() => {
-				bridge.end("Worker thread parent port closed", false);
+				bridge.disconnected("Worker thread parent port closed");
 			},
 		);
 
@@ -294,10 +284,16 @@ export class BridgeFactories<
 		server.sendMessageEvent.subscribe((data) => {
 			client.handleMessage(data);
 		});
+		server.endEvent.subscribe(() => {
+			client.disconnected(`Server disconnected`);
+		});
 
 		const client = this.Client.create();
 		client.sendMessageEvent.subscribe((data) => {
 			server.handleMessage(data);
+		});
+		client.endEvent.subscribe(() => {
+			server.disconnected(`Client disconnected`);
 		});
 
 		return {server, client};

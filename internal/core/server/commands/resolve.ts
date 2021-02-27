@@ -41,12 +41,10 @@ export default createServerCommand({
 				...req.getResolverOptionsFromFlags(),
 				origin,
 				source: relative.asFilePath(),
-			},
-			{
 				location: relative.getDiagnosticLocation(),
 			},
 		);
-		reporter.log(markup`${resolved.ref.real}`);
+		reporter.log(resolved.ref.real);
 		return resolved.ref.real.join();
 	},
 });

@@ -29,7 +29,7 @@ import {TokenType, types as tt} from "./tokenizer/types";
 import {lineBreak} from "@internal/js-parser-utils";
 import {parseTopLevel} from "./parser/index";
 import {State} from "./tokenizer/state";
-import {OneIndexed, ZeroIndexed} from "@internal/math";
+import {OneIndexed, ZeroIndexed} from "@internal/numbers";
 import {Dict, OptionalProps} from "@internal/typescript-helpers";
 import {types as ct} from "@internal/js-parser/tokenizer/context";
 
@@ -103,14 +103,14 @@ type JSParserTypes = {
 
 export type JSParser = ParserCore<JSParserTypes>;
 
-const EMPTY_POS: Position = {
-	line: new OneIndexed(),
-	column: new ZeroIndexed(),
-};
-
 export const jsParser = createParser<JSParserTypes>({
 	diagnosticLanguage: "js",
 	getInitialState(): State {
+		const EMPTY_POS: Position = {
+			line: new OneIndexed(),
+			column: new ZeroIndexed(),
+		};
+		
 		return {
 			scopes: {},
 			hasHoistedVars: false,

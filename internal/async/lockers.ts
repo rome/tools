@@ -133,7 +133,7 @@ export class GlobalLock {
 	private resolves: VoidCallback[];
 	private dependencies: number;
 
-	attachLock(lock: GlobalLock) {
+	public addDependency(lock: GlobalLock) {
 		lock.incrementEvent.subscribe(() => {
 			this.dependencies++;
 		});
@@ -152,6 +152,15 @@ export class GlobalLock {
 			resolve();
 		}
 		this.resolves = [];
+	}
+
+	public async series<T>(fn: () => Promise<T>): Promise<T> {
+		if (this.dependencies > 0) {
+			await this.wait();
+			return this.series(fn);
+		} else {
+			return this.wrap(fn);
+		}
 	}
 
 	public async wrap<T>(fn: () => Promise<T>): Promise<T> {

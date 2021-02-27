@@ -71,7 +71,7 @@ async function runCommand(
 		validate: (res: ConsumeConfigResult, stringified: string) => Promise<void>,
 	) {
 		if (action === "location") {
-			reporter.log(markup`${configPath.join()}`);
+			reporter.log(configPath);
 			return;
 		}
 

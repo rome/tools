@@ -16,7 +16,7 @@ import TestWorkerFile from "./TestWorkerFile";
 import {descriptions} from "@internal/diagnostics";
 import {parseSnapshot, snapshotParser} from "./SnapshotParser";
 import {ErrorFrame} from "@internal/errors";
-import {OneIndexed, ZeroIndexed} from "@internal/math";
+import {OneIndexed, ZeroIndexed} from "@internal/numbers";
 import {prettyFormatToString} from "@internal/pretty-format";
 import {FilePathLocker} from "../../async/lockers";
 import {naturalCompare} from "@internal/string-utils";
@@ -67,7 +67,7 @@ function stringOrPrettyFormat(value: unknown): string {
 	if (typeof value === "string") {
 		return value;
 	} else {
-		return prettyFormatToString(value);
+		return prettyFormatToString(value, {accurate: true});
 	}
 }
 

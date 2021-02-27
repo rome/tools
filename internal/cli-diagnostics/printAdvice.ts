@@ -293,7 +293,7 @@ function printList(
 	}
 }
 
-function printTruncated(reporter: Reporter, chars: number) {
+function printTruncatedCharacters(reporter: Reporter, chars: number) {
 	reporter.log(markup`<dim>${chars} more characters truncated</dim>`);
 }
 
@@ -303,15 +303,17 @@ function printCode(
 ): PrintAdviceResult {
 	const {reporter} = opts;
 
-	const truncatedLength =
-		!opts.flags.verboseDiagnostics && item.sourceText.length > MAX_CODE_LENGTH;
-	let code = truncatedLength
+	const shouldTruncate =
+		!opts.flags.verboseDiagnostics && item.truncate !== false;
+
+	const didTruncateCharacters = shouldTruncate && item.sourceText.length > MAX_CODE_LENGTH;
+	let code = didTruncateCharacters
 		? item.sourceText.slice(0, MAX_CODE_LENGTH)
 		: item.sourceText;
 
-	const {frame, truncated: truncatedLines} = buildCodeFrame({
+	const {frame, truncated: didTruncateLines} = buildCodeFrame({
 		type: "all",
-		truncateLines: MAX_CODE_LINES,
+		truncateLines: shouldTruncate ? MAX_CODE_LINES : undefined,
 		lines: toLines({
 			input: code,
 			path: createUIDPath("inline"),
@@ -326,13 +328,13 @@ function printCode(
 
 	reporter.log(frame);
 
-	if (truncatedLength) {
-		printTruncated(reporter, item.sourceText.length - MAX_CODE_LENGTH);
+	if (didTruncateCharacters) {
+		printTruncatedCharacters(reporter, item.sourceText.length - MAX_CODE_LENGTH);
 	}
 
 	return {
 		printed: true,
-		truncated: truncatedLines || truncatedLength,
+		truncated: didTruncateLines || didTruncateCharacters,
 	};
 }
 
@@ -410,7 +412,7 @@ function printStacktrace(
 	if (!isFirstPart) {
 		const {title} = item;
 		if (title !== undefined) {
-			opts.reporter.info(markup`${title}`);
+			opts.reporter.info(title);
 			opts.reporter.br({force: true});
 		}
 	}
@@ -570,7 +572,7 @@ function printLog(
 	}
 
 	if (truncated) {
-		printTruncated(reporter, truncatedLength);
+		printTruncatedCharacters(reporter, truncatedLength);
 	}
 
 	return {

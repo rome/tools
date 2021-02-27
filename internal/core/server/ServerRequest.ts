@@ -63,7 +63,7 @@ import Server, {
 	ServerUnfinishedMarker,
 } from "./Server";
 import {Reporter, ReporterNamespace} from "@internal/cli-reporter";
-import {BridgeServer, createEventSubscription, Event, EventSubscription} from "@internal/events";
+import {BridgeServer, Event} from "@internal/events";
 import {
 	FlagValue,
 	SerializeCLILocation,
@@ -80,6 +80,7 @@ import {
 	AbsoluteFilePathSet,
 	AnyFilePath,
 	AnyPath,
+	createAbsoluteFilePath,
 	createUIDPath,
 } from "@internal/path";
 import {Dict, RequiredProps, mergeObjects} from "@internal/typescript-helpers";
@@ -91,8 +92,9 @@ import {FormatterOptions} from "@internal/formatter";
 import {RecoverySaveFile} from "./fs/RecoveryStore";
 import {GlobOptions, Globber} from "./fs/glob";
 import WorkerBridge from "../common/bridges/WorkerBridge";
-import {OneIndexed, ZeroIndexed} from "@internal/math";
+import {DurationMeasurer, OneIndexed, ZeroIndexed} from "@internal/numbers";
 import {Consumer, consume} from "@internal/consume";
+import { Resource } from "@internal/resources";
 
 type ServerRequestOptions = {
 	server: Server;
@@ -230,13 +232,13 @@ export default class ServerRequest {
 		this.query = query;
 		this.server = server;
 		this.bridge = client.bridge;
-		this.reporter = query.silent ? new Reporter() : client.reporter.fork();
+		this.reporter = query.silent ? new Reporter("ServerRequestSilent") : client.reporter.fork();
 		this.client = client;
 
-		this.start = Date.now();
+		this.start = new DurationMeasurer();
 		this.id = requestIdCounter++;
 		this.cancelledReason = undefined;
-		this.toredown = false;
+		this.response = undefined;
 		this.markers = [];
 		this.normalizedCommandFlags = {
 			flags: {},
@@ -254,11 +256,16 @@ export default class ServerRequest {
 		this.endEvent = new Event("ServerRequest.end", {
 			serial: true,
 		});
-		this.endSubscriptions = createEventSubscription();
+		
+		this.resources = client.resources.create(`ServerRequest<${this.id}>`);
+		this.resources.add(this.reporter);
 
 		this.args = this.createArgsConsumer();
 
 		this.client.requestsInFlight.add(this);
+		this.resources.addCallback("ClientRequestsTracker", () => {
+			this.client.requestsInFlight.delete(this);
+		});
 	}
 
 	public id: number;
@@ -269,16 +276,17 @@ export default class ServerRequest {
 	public logger: ReporterNamespace;
 	public server: Server;
 	public reporter: Reporter;
-	public endEvent: Event<ServerQueryResponse, void>;
 	public cancelEvent: Event<void, void>;
 	public markerEvent: Event<ServerMarker, void>;
 
-	private endSubscriptions: EventSubscription;
-	private start: number;
+	public endEvent: Event<ServerQueryResponse, void>;
+	public resources: Resource;
+
+	private start: DurationMeasurer;
 	private normalizedCommandFlags: NormalizedCommandFlags;
 	private markers: ServerMarker[];
 	private cancelledReason: undefined | string;
-	private toredown: boolean;
+	private response: undefined | ServerQueryResponse;
 	private files: AbsoluteFilePathMap<RecoverySaveFile>;
 
 	private createArgsConsumer(): Consumer {
@@ -287,7 +295,7 @@ export default class ServerRequest {
 			context: {
 				category: DIAGNOSTIC_CATEGORIES["args/invalid"],
 				getDiagnosticLocation: (keys) => {
-					if (keys.length === 0 && typeof keys[0] === "number") {
+					if (keys.length === 1 && typeof keys[0] === "number") {
 						return this.getDiagnosticLocationFromFlags({
 							type: "arg",
 							key: keys[0],
@@ -298,10 +306,6 @@ export default class ServerRequest {
 				},
 			},
 		});
-	}
-
-	public attachEndSubscriptionRemoval(subscription: EventSubscription) {
-		this.endSubscriptions.addDependency(subscription);
 	}
 
 	public queueSaveFile(path: AbsoluteFilePath, opts: RecoverySaveFile) {
@@ -421,13 +425,12 @@ export default class ServerRequest {
 
 	public async teardown(
 		res: ServerQueryResponse,
-	): Promise<undefined | ServerQueryResponse> {
-		if (this.toredown) {
-			return;
+	): Promise<ServerQueryResponse> {
+		if (this.response) {
+			return this.response;
 		}
 
-		this.toredown = true;
-		this.client.requestsInFlight.delete(this);
+		this.response = res;
 
 		this.logger.info(markup`Response type: ${String(res?.type)}`);
 		if (res.type === "DIAGNOSTICS") {
@@ -436,9 +439,8 @@ export default class ServerRequest {
 
 		// Output timing information
 		if (this.query.requestFlags.timing) {
-			const end = Date.now();
 			this.reporter.info(
-				markup`Request took <duration emphasis>${String(end - this.start)}</duration>`,
+				markup`Request took <emphasis>${this.start.since()}</emphasis>`,
 			);
 		}
 
@@ -501,8 +503,8 @@ export default class ServerRequest {
 			markers: this.markers,
 		};
 
-		await this.endSubscriptions.unsubscribe();
 		await this.endEvent.callOptional(res);
+		await this.resources.release();
 		await this.server.handleRequestEnd(this);
 		return res;
 	}
@@ -523,9 +525,9 @@ export default class ServerRequest {
 		return await this.server.resolver.resolveEntryAssertPath(
 			{
 				...this.getResolverOptionsFromFlags(),
+				location: arg.getDiagnosticLocation(),
 				source,
 			},
-			{location: arg.getDiagnosticLocation()},
 		);
 	}
 
@@ -714,7 +716,7 @@ export default class ServerRequest {
 			target?: SerializeCLITarget;
 			showHelp?: boolean;
 		},
-	) {
+	): never {
 		const location = this.getDiagnosticLocationFromFlags(target);
 
 		let {category} = description;
@@ -820,6 +822,8 @@ export default class ServerRequest {
 		resolverOpts: Partial<ResolverOptions> = {},
 	): BundlerConfig {
 		return {
+			// TODO allow this to be customized?
+			basePath: createAbsoluteFilePath("/"),
 			inlineSourceMap: false,
 			cwd: this.client.flags.cwd,
 			resolver: mergeObjects(this.getResolverOptionsFromFlags(), resolverOpts),
@@ -860,20 +864,16 @@ export default class ServerRequest {
 		const {server} = this;
 		const owner = await server.fileAllocator.getOrAssignOwner(path);
 		const startMtime = server.memoryFs.maybeGetMtimeNs(path);
-		const start = Date.now();
+		const start = new DurationMeasurer();
 		const lock = await server.requestFileLocker.getLock(path);
 		const ref = server.projectManager.getFileReference(path);
 
-		const interval = setInterval(
+		const interval = LAG_INTERVAL.setInterval(
 			() => {
-				const took = Date.now() - start;
 				this.reporter.warn(
-					markup`Running <emphasis>${method}</emphasis> on <emphasis>${path}</emphasis> seems to be taking longer than expected. Have been waiting for <emphasis><duration>${String(
-						took,
-					)}</duration></emphasis>.`,
+					markup`Running <emphasis>${method}</emphasis> on <emphasis>${path}</emphasis> seems to be taking longer than expected. Have been waiting for <emphasis>${start.since()}</emphasis>.`,
 				);
 			},
-			LAG_INTERVAL,
 		);
 
 		const marker = this.startMarker({
@@ -890,6 +890,7 @@ export default class ServerRequest {
 			throw decorateErrorWithDiagnostics(
 				err,
 				{
+					label: markup`worker ${owner.id}`,
 					description: {
 						category: DIAGNOSTIC_CATEGORIES["internalError/request"],
 						advice: [
@@ -945,7 +946,10 @@ export default class ServerRequest {
 						mtimeNs,
 					},
 				});
-				await this.server.refreshFileEvent.push(path);
+				await this.server.refreshFileEvent.push({
+					type: "BUFFER_UPDATE",
+					path,
+				});
 			},
 			{noRetry: true},
 		);
@@ -963,7 +967,10 @@ export default class ServerRequest {
 			async (bridge, ref) => {
 				const buffer = await bridge.events.patchBuffer.call({ref, patches});
 				this.server.memoryFs.addBuffer(path, buffer);
-				this.server.refreshFileEvent.push(path);
+				this.server.refreshFileEvent.push({
+					type: "BUFFER_UPDATE",
+					path,
+				});
 				return buffer;
 			},
 			{noRetry: true},
@@ -979,7 +986,10 @@ export default class ServerRequest {
 			async (bridge, ref) => {
 				await bridge.events.clearBuffer.call({ref});
 				this.server.memoryFs.clearBuffer(path);
-				this.server.refreshFileEvent.push(path);
+				this.server.refreshFileEvent.push({
+					type: "BUFFER_UPDATE",
+					path,
+				});
 			},
 			{noRetry: true},
 		);
@@ -1229,10 +1239,10 @@ export default class ServerRequest {
 						{
 							...this.getResolverOptionsFromFlags(),
 							source: path,
+							location: loc,
 							// Allow requests to stop at directories
 							requestedType: "directory",
 						},
-						{location: loc},
 					);
 				}
 			}
@@ -1268,8 +1278,8 @@ export default class ServerRequest {
 					{
 						...this.getResolverOptionsFromFlags(),
 						source: path,
+						location: loc,
 					},
-					{location: loc},
 				);
 			}
 		}
@@ -1281,10 +1291,8 @@ export default class ServerRequest {
 				args,
 				request: this,
 
-				onWatch: (sub) => {
-					this.endEvent.subscribe(async () => {
-						await sub.unsubscribe();
-					});
+				onWatch: (resc) => {
+					this.resources.add(resc);
 				},
 
 				onSearchNoMatch: async (path) => {
@@ -1303,7 +1311,7 @@ export default class ServerRequest {
 	public async buildResponseFromError(
 		rawErr: Error,
 	): Promise<ServerQueryResponse> {
-		if (!this.bridge.alive) {
+		if (!this.bridge.open) {
 			// Doesn't matter
 			return {
 				type: "CANCELLED",
@@ -1322,6 +1330,7 @@ export default class ServerRequest {
 			const diagnostics = getOrDeriveDiagnosticsFromError(
 				err,
 				{
+					label: markup`server`,
 					description: {
 						category: DIAGNOSTIC_CATEGORIES["internalError/request"],
 					},
@@ -1352,7 +1361,7 @@ export default class ServerRequest {
 		if (rawErr instanceof ServerRequestInvalid) {
 			shouldPrint = true;
 		}
-		if (!this.bridge.alive) {
+		if (!this.bridge.open) {
 			shouldPrint = false;
 		}
 

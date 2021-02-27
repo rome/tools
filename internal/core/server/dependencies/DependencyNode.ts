@@ -112,6 +112,9 @@ export default class DependencyNode {
 		this.handler = handler;
 
 		this.shallow = false;
+
+		this.hadResolveImportsDiagnostics = undefined;
+		this.resolveImportsCache = undefined;
 	}
 
 	public uid: UIDPath;
@@ -128,7 +131,9 @@ export default class DependencyNode {
 	private graph: DependencyGraph;
 	private absoluteToAnalyzeDependency: AbsoluteFilePathMap<AnalyzeDependency>;
 	private project: ProjectDefinition;
+
 	private resolveImportsCache: undefined | ResolveImportsResult;
+	public hadResolveImportsDiagnostics: undefined | boolean;
 
 	public getIntegrity(): undefined | DiagnosticIntegrity {
 		return this.analyze.integrity;
@@ -405,6 +410,7 @@ export default class DependencyNode {
 			resolved: resolvedImports,
 			diagnostics,
 		};
+		this.hadResolveImportsDiagnostics = result.diagnostics.length > 0;
 		this.resolveImportsCache = result;
 		return result;
 	}

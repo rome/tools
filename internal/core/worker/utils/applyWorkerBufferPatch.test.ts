@@ -2,7 +2,7 @@ import {test} from "rome";
 import {applyWorkerBufferPatch} from "./applyWorkerBufferPatch";
 import {WorkerBufferPatch} from "@internal/core";
 import {dedent} from "@internal/string-utils";
-import {ZeroIndexed} from "@internal/math";
+import {ZeroIndexed} from "@internal/numbers";
 
 function makeRange(
 	startLine: number,

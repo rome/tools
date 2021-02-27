@@ -10,6 +10,7 @@ import {createServerCommand} from "../commands";
 import {commandCategories} from "../../common/commands";
 import {markup} from "@internal/markup";
 import DevelopServer from "../develop/DevelopServer";
+import Bundler from "../bundler/Bundler";
 
 type Flags = {
   port: number,
@@ -26,15 +27,25 @@ export default createServerCommand<Flags>({
     };
 	},
 	async callback(req: ServerRequest, flags: Flags): Promise<void> {
-    const server = new DevelopServer(req, req.reporter);
-    await server.init();
+    const {reporter} = req;
+    const bundler = Bundler.createFromServerRequest(req);
+		const resolution = await bundler.getResolvedEntry(".");
 
-    const http = server.listen(flags.port);
-    req.endEvent.subscribe(() => {
-      server.close();
-      http.close();
+    const server = new DevelopServer({
+      bundler,
+      resolution,
+      request: req,
+      reporter,
     });
 
+    const http = await server.listen(flags.port);
+    reporter.success(markup`Listening at <emphasis><hyperlink target="http://localhost:${String(flags.port)}" /></emphasis>`);
+    req.endEvent.subscribe(async () => {
+      http.close();
+      await server.close();
+    });
+    
+    await server.init();
     await req.endEvent.wait();
 	},
 });

@@ -8,7 +8,7 @@
 import {BaseTokens, SimpleToken, StringToken} from "@internal/parser-core";
 import {AbsoluteFilePath, AnyPath} from "@internal/path";
 import {UserConfig} from "@internal/core";
-import {OneIndexed, ZeroIndexed} from "@internal/math";
+import {OneIndexed, ZeroIndexed} from "@internal/numbers";
 import {Consumer} from "@internal/consume";
 import {GridLocators} from "@internal/cli-layout";
 

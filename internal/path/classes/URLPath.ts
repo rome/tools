@@ -1,4 +1,5 @@
-import {AnyParsedPath, ParsedPathURL, parseURLPathRelativeSegments} from "../parse";
+import {AnyParsedPath, ParsedPathURL} from "../types";
+import {parseURLPathRelativeSegments} from "../parse";
 import {BasePath, FilePathMemo} from "./BasePath";
 import {AnyPath} from "../types";
 import { RelativePath } from "..";
@@ -20,6 +21,10 @@ export default class URLPath extends BasePath<ParsedPathURL, URLPath> {
 			...this.parsed,
 			...newParsed,
 		});
+	}
+
+	protected _format(): string {
+		return this.join();
 	}
 
 	protected _join(relative: Array<string>): string {
@@ -162,7 +167,7 @@ export default class URLPath extends BasePath<ParsedPathURL, URLPath> {
 	public resolve(path: AnyPath): URLPath {
 		if (path.isURL()) {
 			return path.assertURL();
-		} else if (path.isAbsolute() && path.parsed.type === "unix") {
+		} else if (path.isAbsolute() && path.parsed.type === "absolute-unix") {
 			return this.append(...path.getSegments());
 		} else {
 			return this.append(path.assertRelative());

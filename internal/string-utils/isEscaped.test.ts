@@ -1,6 +1,6 @@
 import {isEscaped} from "./isEscaped";
 import {test} from "rome";
-import {ZeroIndexed} from "@internal/math";
+import {ZeroIndexed} from "@internal/numbers";
 
 test(
 	"isEscaped",

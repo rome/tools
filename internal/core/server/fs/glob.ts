@@ -4,7 +4,6 @@ import {
 	ProjectDefinition,
 } from "@internal/project";
 import {Server, ServerRequest} from "@internal/core";
-import {createEventSubscription, EventSubscription} from "@internal/events";
 import {
 	PathPatterns,
 	matchPathPatterns,
@@ -12,6 +11,7 @@ import {
 } from "@internal/path-match";
 import MemoryFileSystem from "@internal/core/server/fs/MemoryFileSystem";
 import {GlobalLock} from "@internal/async";
+import {Resource} from "@internal/resources";
 
 const GLOB_IGNORE: PathPatterns = [parsePathPattern({input: "node_modules"})];
 
@@ -32,7 +32,7 @@ export interface GlobOptions {
 	overrideIgnore?: PathPatterns;
 	configCategory?: ProjectConfigCategoriesWithIgnore;
 	test?: (path: AbsoluteFilePath) => boolean;
-	onWatch?: (sub: EventSubscription) => void;
+	onWatch?: (resource: Resource) => void;
 	onSearchNoMatch?: (path: AbsoluteFilePath) => void;
 	request?: ServerRequest;
 }
@@ -163,7 +163,7 @@ export class Globber {
 		return paths;
 	}
 
-	public async watch(callback: WatchFilesCallback): Promise<EventSubscription> {
+	public async watch(callback: WatchFilesCallback): Promise<Resource> {
 		const watcher = new GlobberWatcher(this, this.server, this.args, callback);
 
 		const sub = await watcher.init();
@@ -245,39 +245,20 @@ class GlobberWatcher {
 		});
 	}
 
-	private setupEvents(): EventSubscription[] {
-		const {memoryFs, server} = this;
-		const subscriptions: EventSubscription[] = [];
-
-		// Emitted when a file appears for the first time
-		subscriptions.push(
-			memoryFs.newFileEvent.subscribe((paths) => {
-				this.flushPaths(paths);
-			}),
-		);
-
-		subscriptions.push(
-			server.refreshFileEvent.subscribe((paths) => {
-				this.flushPaths(paths);
-			}),
-		);
-
-		return subscriptions;
-	}
-
-	public async init(): Promise<EventSubscription> {
+	public async init(): Promise<Resource> {
 		const {memoryFs} = this;
-		const subs = this.setupEvents();
-		const finalSubs = createEventSubscription(
-			...subs,
-			async () => {
-				await this.flushLock.wait();
-			},
-		);
+
+		const refreshSub = this.server.refreshFileEvent.subscribe((events) => {
+			this.flushPaths(Array.from(events, ({path}) => path));
+		});
+
+		refreshSub.addCallback("GlobberWatcher.flushLock", async () => {
+			await this.flushLock.wait();
+		});
 
 		const {request} = this.globber;
 		if (request !== undefined) {
-			request.attachEndSubscriptionRemoval(finalSubs);
+			request.resources.add(refreshSub);
 		}
 
 		try {
@@ -300,9 +281,9 @@ class GlobberWatcher {
 			await this.flush(batchPaths, true);
 			await this.globber.get(true);
 
-			return finalSubs;
+			return refreshSub;
 		} catch (err) {
-			await finalSubs.unsubscribe();
+			await refreshSub.release();
 			throw err;
 		}
 	}

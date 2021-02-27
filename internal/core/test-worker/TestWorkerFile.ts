@@ -186,7 +186,7 @@ export default class TestWorkerFile {
 				} else {
 					text = concatMarkup(
 						args.map((arg) =>
-							serializeLazyMarkup(prettyFormat(arg, {allowCustom: false}))
+							serializeLazyMarkup(prettyFormat(arg, {accurate: true}))
 						),
 						markup` `,
 					);

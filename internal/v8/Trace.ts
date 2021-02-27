@@ -8,7 +8,7 @@
 import {Profile, TraceEvent} from "./types";
 import {urlToFilename} from "./utils";
 import {createAnyPath} from "@internal/path";
-import {ZeroIndexed} from "@internal/math";
+import {ZeroIndexed} from "@internal/numbers";
 import { errorSourceMaps } from "./error-frames";
 
 export default class Trace {

@@ -1,5 +1,5 @@
 import {HighlightCodeResult} from "./types";
-import {concatMarkup, filePathToMarkup, markup} from "@internal/markup";
+import {concatMarkup, pathToMarkup, markup} from "@internal/markup";
 import {concatSplitLinesMarkup, markupToken} from "./utils";
 import {createAnyPath} from "@internal/path";
 import {markupTag} from "@internal/markup/escape";
@@ -29,7 +29,7 @@ export default function highlightShell(
 					return punc;
 				} else {
 					return concatMarkup([
-						filePathToMarkup(createAnyPath(segment.slice(0, -1)), true),
+						pathToMarkup(createAnyPath(segment.slice(0, -1)), true),
 						punc,
 					]);
 				}

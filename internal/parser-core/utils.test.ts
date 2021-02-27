@@ -17,7 +17,7 @@ import {
 	jsNumericLiteral,
 	jsReturnStatement,
 } from "@internal/ast";
-import {OneIndexed, ZeroIndexed} from "@internal/math";
+import {OneIndexed, ZeroIndexed} from "@internal/numbers";
 
 test(
 	"",

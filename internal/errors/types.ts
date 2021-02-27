@@ -1,4 +1,4 @@
-import { OneIndexed, ZeroIndexed } from "@internal/math";
+import { OneIndexed, ZeroIndexed } from "@internal/numbers";
 import { AnyPath } from "@internal/path";
 
 // Similar to TS NodeJS.ErrnoException but with proper properties

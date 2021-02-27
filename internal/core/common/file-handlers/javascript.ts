@@ -30,6 +30,7 @@ function buildJSHandler(
 	return {
 		sourceTypeJS,
 		language: "js",
+		mime: "application/javascript",
 		hasTabs: true,
 		capabilities: {
 			lint: true,

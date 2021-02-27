@@ -1,4 +1,4 @@
-import {ZeroIndexed} from "@internal/math";
+import {ZeroIndexed} from "@internal/numbers";
 import {DiagnosticLanguage, DiagnosticSourceType} from "@internal/diagnostics";
 import {AnyPath} from "@internal/path";
 import {MarkupTokenType, StaticMarkup} from "@internal/markup";

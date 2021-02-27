@@ -31,6 +31,7 @@ import {
 import {cleanFrames} from "./TestWorkerFile";
 import {AsyncVoidCallback, VoidCallback} from "@internal/typescript-helpers";
 import {AbsoluteFilePath} from "@internal/path";
+import { DurationMeasurer } from "@internal/numbers";
 
 function formatExpectedError(expected: ExpectedError): string {
 	if (typeof expected === "string") {
@@ -66,6 +67,10 @@ function matchExpectedError(error: Error, expected: ExpectedError): boolean {
 	}
 
 	return false;
+}
+
+function prettyFormatUntrusted(value: unknown): string {
+	return prettyFormatToString(value, {accurate: true});
 }
 
 export type OnTimeout = (time: number) => void;
@@ -152,7 +157,7 @@ export default class TestAPI implements TestHelper {
 		this.snapshotCounter = 0;
 		this.path = path;
 		this.teardownEvent = new Event("TestAPI.teardown");
-		this.startTime = Date.now();
+		this.startTime = new DurationMeasurer();
 		this.onTimeout = onTimeout;
 		this.emitDiagnostic = emitDiagnostic;
 		this.timeoutMax = 0;
@@ -163,14 +168,14 @@ export default class TestAPI implements TestHelper {
 
 	public teardownEvent: Event<void, void>;
 
-	private startTime: number;
+	private startTime: DurationMeasurer;
 	private options: TestServerRunnerOptions;
 	private path: AbsoluteFilePath;
 	private emitDiagnostic: EmitDiagnostic;
 
 	private onTimeout: OnTimeout;
 	private timeoutId: undefined | NodeJS.Timeout;
-	private timeoutStart: undefined | number;
+	private timeoutStart: undefined | DurationMeasurer;
 	private timeoutMax: undefined | number;
 
 	private advice: UserAdviceItem[];
@@ -216,8 +221,8 @@ export default class TestAPI implements TestHelper {
 			expectedFormat = expected;
 			receivedFormat = received;
 		} else {
-			expectedFormat = prettyFormatToString(expected);
-			receivedFormat = prettyFormatToString(received);
+			expectedFormat = prettyFormatUntrusted(expected);
+			receivedFormat = prettyFormatUntrusted(received);
 		}
 
 		const advice: DiagnosticAdvice = [];
@@ -292,7 +297,7 @@ export default class TestAPI implements TestHelper {
 			throw new Error("No timeout set");
 		}
 
-		const elapsed = Date.now() - timeoutStart;
+		const elapsed = timeoutStart.since().toMilliseconds();
 		const newTime = timeoutMax - elapsed + time;
 		this.setTimeout(newTime);
 	}
@@ -300,7 +305,7 @@ export default class TestAPI implements TestHelper {
 	public setTimeout(time: number): void {
 		this.clearTimeout();
 
-		this.timeoutStart = Date.now();
+		this.timeoutStart = new DurationMeasurer();
 		this.timeoutMax = time;
 
 		this.timeoutId = setTimeout(
@@ -317,7 +322,7 @@ export default class TestAPI implements TestHelper {
 			return;
 		}
 
-		const delta = Date.now() - startTime;
+		const delta = startTime.since().toMilliseconds()
 		if (delta > timeoutMax) {
 			throw new Error(`Test timeout - exceeded ${String(timeoutMax)}ms`);
 		}
@@ -384,7 +389,7 @@ export default class TestAPI implements TestHelper {
 					{
 						type: "code",
 						language: "unknown",
-						sourceText: prettyFormatToString(value),
+						sourceText: prettyFormatUntrusted(value),
 					},
 				],
 				1,
@@ -393,7 +398,7 @@ export default class TestAPI implements TestHelper {
 	}
 
 	public true(
-		value: unknown,
+		value: boolean,
 		message: string = "Expected value to be true",
 	): void {
 		if (value !== true) {
@@ -408,7 +413,7 @@ export default class TestAPI implements TestHelper {
 					{
 						type: "code",
 						language: "unknown",
-						sourceText: prettyFormatToString(value),
+						sourceText: prettyFormatUntrusted(value),
 					},
 				],
 				1,
@@ -417,7 +422,7 @@ export default class TestAPI implements TestHelper {
 	}
 
 	public false(
-		value: unknown,
+		value: boolean,
 		message: string = "Expected value to be false",
 	): void {
 		if (value !== false) {
@@ -432,7 +437,7 @@ export default class TestAPI implements TestHelper {
 					{
 						type: "code",
 						language: "unknown",
-						sourceText: prettyFormatToString(value),
+						sourceText: prettyFormatUntrusted(value),
 					},
 				],
 				1,
@@ -480,13 +485,13 @@ export default class TestAPI implements TestHelper {
 		}
 	}
 
-	public looksLike(
-		received: unknown,
-		expected: unknown,
+	public looksLike<T extends unknown>(
+		received: T,
+		expected: T,
 		message: string = "t.looksLike() failed, using prettyFormat semantics",
 	): void {
-		const actualInspect = prettyFormatToString(received);
-		const expectedInspect = prettyFormatToString(expected);
+		const actualInspect = prettyFormatUntrusted(received);
+		const expectedInspect = prettyFormatUntrusted(expected);
 
 		if (actualInspect !== expectedInspect) {
 			this.fail(message, this.buildMatchAdvice(received, expected), 1);
@@ -498,8 +503,8 @@ export default class TestAPI implements TestHelper {
 		expected: unknown,
 		message: string = "t.notLooksLike() failed, using !prettyFormat semantics",
 	): void {
-		const actualInspect = prettyFormatToString(received);
-		const expectedInspect = prettyFormatToString(expected);
+		const actualInspect = prettyFormatUntrusted(received);
+		const expectedInspect = prettyFormatUntrusted(expected);
 
 		if (actualInspect === expectedInspect) {
 			this.fail(message, this.buildMatchAdvice(received, expected), 1);
@@ -618,7 +623,7 @@ export default class TestAPI implements TestHelper {
 					{
 						type: "code",
 						language: "unknown",
-						sourceText: prettyFormatToString(contents),
+						sourceText: prettyFormatUntrusted(contents),
 					},
 					{
 						type: "log",
@@ -628,7 +633,7 @@ export default class TestAPI implements TestHelper {
 					{
 						type: "code",
 						language: "unknown",
-						sourceText: prettyFormatToString(regex.source),
+						sourceText: prettyFormatUntrusted(regex.source),
 					},
 				],
 				1,
@@ -653,7 +658,7 @@ export default class TestAPI implements TestHelper {
 					{
 						type: "code",
 						language: "unknown",
-						sourceText: prettyFormatToString(contents),
+						sourceText: prettyFormatUntrusted(contents),
 					},
 					{
 						type: "log",
@@ -663,7 +668,7 @@ export default class TestAPI implements TestHelper {
 					{
 						type: "code",
 						language: "unknown",
-						sourceText: prettyFormatToString(regex.source),
+						sourceText: prettyFormatUntrusted(regex.source),
 					},
 				],
 				1,
@@ -762,7 +767,7 @@ export default class TestAPI implements TestHelper {
 		} else {
 			// Close enough syntax highlighting to pretty-format
 			language = "javascript";
-			formatted = prettyFormatToString(expected);
+			formatted = prettyFormatUntrusted(expected);
 		}
 
 		const callError = getErrorStructure(new Error(), 2);

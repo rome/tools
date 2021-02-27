@@ -18,6 +18,7 @@ export type DiagnosticCategory =
 	| ["bundler", "moduleCycle"]
 	| ["bundler", "topLevelAwait"]
 	| ["bridge", "closed"]
+	| ["bridge", "disconnected"]
 	| ["bridge", "timeout"]
 	| ["childProcess", "failure"]
 	| ["commands", "auto-config", "uncommittedChanges"]
@@ -411,6 +412,7 @@ export const DIAGNOSTIC_CATEGORIES: {
 	"analyzeDependencies/cjsExportInES": ["analyzeDependencies", "cjsExportInES"],
 	"args/fileNotFound": ["args", "fileNotFound"],
 	"args/invalid": ["args", "invalid"],
+	"bridge/disconnected": ["bridge", "disconnected"],
 	"bridge/closed": ["bridge", "closed"],
 	"bridge/timeout": ["bridge", "timeout"],
 	"bundler/moduleCycle": ["bundler", "moduleCycle"],

@@ -69,7 +69,7 @@ export default createVisitor<State>({
 		if (node.type === "JSThisExpression" && isInsideArrow(path)) {
 			let id = state.get().id;
 			if (id === undefined) {
-				id = path.scope.generateUid();
+				id = path.scope.generateUID();
 				state.set({id});
 			}
 			return signals.replace(jsReferenceIdentifier.quick(id));

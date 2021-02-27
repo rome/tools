@@ -31,7 +31,7 @@ import {
 	JSRegExpSubExpression,
 } from "@internal/ast";
 import {Diagnostics, descriptions} from "@internal/diagnostics";
-import {ZeroIndexed} from "@internal/math";
+import {ZeroIndexed} from "@internal/numbers";
 
 type Operator =
 	| "^"

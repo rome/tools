@@ -1,11 +1,10 @@
-import {AnyParsedPath, AnyParsedPathAbsolute, normalizeSegments, parseRelativePathSegments} from "../parse";
+import {normalizeSegments, parseRelativePathSegments} from "../parse";
 import {BasePath, FilePathMemo} from "./BasePath";
-import {AnyFilePath, AnyPath, PathFormatOptions, PathSegments} from "../types";
-import {createRelativePath} from "../factories";
+import {AnyFilePath, AnyPath, PathFormatOptions, PathSegments, AnyParsedPath, AnyParsedPathAbsolute} from "../types";
 import RelativePath from "./RelativePath";
 import {createFilePath} from "../factories";
 import {FSWatcher} from "@internal/fs";
-import {AbsoluteFilePathSet} from "../collections";
+import {AbsoluteFilePathSet, MixedPathMap} from "../collections";
 import fs = require("fs");
 
 // This file contains some wrappers around Node's fs module
@@ -15,10 +14,15 @@ type DataCallback<Data> = (err: null | Error, data: Data) => void;
 type VoidCallback = (err: null | Error) => void;
 
 export default class AbsoluteFilePath extends BasePath<AnyParsedPathAbsolute, AbsoluteFilePath> {
+	constructor(parsed: AnyParsedPathAbsolute, memo: FilePathMemo<AbsoluteFilePath> = {}) {
+		super(parsed, memo);
+		this.memoizedRelative = undefined;
+	}
+
 	public [Symbol.toStringTag] = "AbsoluteFilePath";
 
-	// NB: Does this really need to be kept around? We can always materialize it from the cached parents
-	private chain: undefined | (AbsoluteFilePath[]);
+	// We do not always initialize it to save on a bunch of allocations if relative() isn't used
+	private memoizedRelative: undefined | MixedPathMap<AbsoluteFilePath | RelativePath>;
 
 	protected _assert(): AbsoluteFilePath {
 		return this;
@@ -39,14 +43,14 @@ export default class AbsoluteFilePath extends BasePath<AnyParsedPathAbsolute, Ab
 		const {parsed} = this;
 
 		switch (parsed.type) {
-			case "windows-drive":
-				return other.type === "windows-drive" && other.letter === parsed.letter;
+			case "absolute-windows-drive":
+				return other.type === "absolute-windows-drive" && other.letter === parsed.letter;
 
-			case "windows-unc":
-				return other.type === "windows-unc" && other.servername === parsed.servername;
+			case "absolute-windows-unc":
+				return other.type === "absolute-windows-unc" && other.servername === parsed.servername;
 
-			case "unix":
-				return other.type === "unix";
+			case "absolute-unix":
+				return other.type === "absolute-unix";
 
 			default:
 				return false;
@@ -57,112 +61,16 @@ export default class AbsoluteFilePath extends BasePath<AnyParsedPathAbsolute, Ab
 		const {parsed} = this;
 
 		switch (parsed.type) {
-			case "windows-drive":
+			case "absolute-windows-drive":
 				return [`${parsed.letter}:`, ...relative].join("\\");
 
-			case "windows-unc":
+			case "absolute-windows-unc":
 				return [`\\\\${parsed.servername}`, ...relative].join("\\");
 
-			case "unix":
+			case "absolute-unix":
 				return `/${relative.join("/")}`;
 		}
-	}
-
-	public isFilePath(): this is AnyFilePath {
-		return true;
-	}
-
-	public assertFilePath(): AnyFilePath {
-		return this;
-	}
-
-	public isAbsolute(): this is AbsoluteFilePath {
-		return true;
-	}
-
-	public assertAbsolute(): AbsoluteFilePath {
-		return this;
-	}
-
-	public getChain(): AbsoluteFilePath[] {
-		if (this.chain !== undefined) {
-			return this.chain;
-		}
-
-		const paths: AbsoluteFilePath[] = [];
-		this.chain = paths;
-
-		// We use getParent here so we can reuse as much memoized information as possible
-		let target: AbsoluteFilePath = this;
-		while (true) {
-			paths.push(target);
-			if (target.isRoot()) {
-				break;
-			} else {
-				target = target.getParent();
-			}
-		}
-
-		return paths;
-	}
-
-	public resolve(other: string | AnyFilePath): AbsoluteFilePath;
-	public resolve(other: AnyPath): Exclude<AnyPath, RelativePath>;
-	public resolve(
-		other: string | AnyPath,
-	): AbsoluteFilePath | Exclude<AnyPath, RelativePath> {
-		if (typeof other === "string") {
-			other = createFilePath(other);
-		}
-		if (!other.isRelative()) {
-			return other;
-		}
-
-		return new AbsoluteFilePath({
-			...this.parsed,
-			...normalizeSegments([...this.getSegments(), ...other.getSegments()], {
-				explicitDirectory: other.isExplicitDirectory(),
-			}),
-		});
-	}
-
-	public relativeForce(otherRaw: AbsoluteFilePath | RelativePath): RelativePath {
-		return this.relative(otherRaw).assertRelative();
-	}
-
-	public relative(
-		otherRaw: AbsoluteFilePath | RelativePath,
-	): AbsoluteFilePath | RelativePath {
-		const other = this.resolve(otherRaw);
-
-		if (other.equal(this)) {
-			return createRelativePath(".");
-		}
-
-		// Impossible to relativize two absolute paths with different absolute targets
-		if (!this.equalAbsolute(other)) {
-			return other;
-		}
-
-		const absolute = this.getSegments().slice();
-		const relative = other.getSegments().slice();
-
-		// Remove common starting segments
-		while (absolute[0] === relative[0]) {
-			absolute.shift();
-			relative.shift();
-		}
-
-		let finalSegments: PathSegments = [];
-		for (let i = 0; i < absolute.length; i++) {
-			finalSegments.push("..");
-		}
-		finalSegments = finalSegments.concat(relative);
-
-		return new RelativePath(parseRelativePathSegments(finalSegments));
-	}
-
-	public format({cwd, home}: PathFormatOptions = {}): string {
+	}protected _format({cwd, home}: PathFormatOptions = {}): string {
 		const filename = this.join();
 		const names: string[] = [];
 		names.push(filename);
@@ -196,6 +104,111 @@ export default class AbsoluteFilePath extends BasePath<AnyParsedPathAbsolute, Ab
 		} else {
 			return human;
 		}
+	}
+
+	public isFilePath(): this is AnyFilePath {
+		return true;
+	}
+
+	public assertFilePath(): AnyFilePath {
+		return this;
+	}
+
+	public isAbsolute(): this is AbsoluteFilePath {
+		return true;
+	}
+
+	public assertAbsolute(): AbsoluteFilePath {
+		return this;
+	}
+
+	public *getChain(reverse: boolean = false): Iterable<AbsoluteFilePath> {
+		if (!reverse) {
+			yield this;
+		}
+
+		if (!this.isRoot()) {
+			yield* this.getParent().getChain(reverse);
+		}
+
+		if (reverse) {
+			yield this;
+		}
+	}
+
+	public resolve(other: string | AnyFilePath): AbsoluteFilePath;
+	public resolve(other: AnyPath): Exclude<AnyPath, RelativePath>;
+	public resolve(
+		other: string | AnyPath,
+	): AbsoluteFilePath | Exclude<AnyPath, RelativePath> {
+		if (typeof other === "string") {
+			other = createFilePath(other);
+		}
+		if (!other.isRelative()) {
+			return other;
+		}
+
+		return new AbsoluteFilePath({
+			...this.parsed,
+			...normalizeSegments([...this.relativeSegments, ...other.getSegments()]),
+			explicitDirectory: other.isExplicitDirectory(),
+		});
+	}
+
+	public relativeForce(otherRaw: AbsoluteFilePath | RelativePath): RelativePath {
+		return this.relative(otherRaw).assertRelative();
+	}
+
+	public relative(
+		otherRaw: AbsoluteFilePath | RelativePath,
+	): AbsoluteFilePath | RelativePath {
+		if (this.memoizedRelative !== undefined) {
+			const memoized = this.memoizedRelative.get(otherRaw);
+			if (memoized !== undefined) {
+				return memoized;
+			}
+		}
+
+		const other = this.resolve(otherRaw);
+
+		if (other.equal(this)) {
+			return new RelativePath({
+				type: "relative",
+				explicitDirectory: false,
+				explicitRelative: true,
+				relativeSegments: [],
+			});
+		}
+
+		// Impossible to relativize two absolute paths with different absolute targets
+		if (!this.equalAbsolute(other)) {
+			return other;
+		}
+
+		const absolute = this.getSegments().slice();
+		const relative = other.getSegments().slice();
+
+		// Remove common starting segments
+		while (absolute[0] === relative[0]) {
+			absolute.shift();
+			relative.shift();
+		}
+
+		let finalSegments: PathSegments = [];
+		for (let i = 0; i < absolute.length; i++) {
+			finalSegments.push("..");
+		}
+		finalSegments = finalSegments.concat(relative);
+
+		const path = new RelativePath(parseRelativePathSegments(finalSegments));
+
+		// Store in memoize map
+		if (this.memoizedRelative === undefined) {
+			this.memoizedRelative = new MixedPathMap();
+		}
+		this.memoizedRelative.set(otherRaw, path);
+
+		return path;
 	}
 
 	public watch(
@@ -233,11 +246,26 @@ export default class AbsoluteFilePath extends BasePath<AnyParsedPathAbsolute, Ab
 	}
 	
 	public writeFile(
-		content: string | NodeJS.ArrayBufferView,
+		content: string | NodeJS.ArrayBufferView | fs.ReadStream,
 	): Promise<void> {
-		return this.promisifyVoid(
-			(filename, callback) => fs.writeFile(filename, content, callback),
-		);
+		if (content instanceof fs.ReadStream) {
+			return new Promise((resolve, reject) => {
+				const writeStream = this.createWriteStream();
+				content.pipe(writeStream);
+
+				writeStream.on("error", (err) => {
+					reject(err);
+				});
+
+				writeStream.on("close", () => {
+					resolve();
+				});
+			});
+		} else {
+			return this.promisifyVoid(
+				(filename, callback) => fs.writeFile(filename, content, callback),
+			);
+		}
 	}
 	
 	public copyFileTo(

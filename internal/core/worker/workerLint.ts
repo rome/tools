@@ -25,7 +25,7 @@ import {formatAST} from "@internal/formatter";
 import {maybeRunESLint} from "./integrations/eslint";
 
 const EMPTY_LINT_RESULT: WorkerLintResult = {
-	timingsNs: new Map(),
+	timings: new Map(),
 	save: undefined,
 	diagnostics: [],
 	suppressions: [],
@@ -76,7 +76,7 @@ async function lintOrFormat(
 		diagnostics: result.diagnostics,
 		formatted: result.formatted,
 		suppressions: result.suppressions,
-		timingsNs: new Map(),
+		timings: new Map(),
 	};
 }
 
@@ -123,7 +123,7 @@ export async function uncachedLint(
 		diagnostics,
 		suppressions,
 		mtimeNs,
-		timingsNs,
+		timings,
 	}: ExtensionLintResult = res.value;
 
 	const formatted = normalizeFormattedLineEndings(
@@ -137,7 +137,7 @@ export async function uncachedLint(
 	// Autofix if necessary
 	if (options.save && needsSave) {
 		return {
-			timingsNs,
+			timings,
 			save: {
 				type: "WRITE",
 				mtimeNs,
@@ -151,7 +151,7 @@ export async function uncachedLint(
 	// If there's no pending fix then no need for diagnostics
 	if (!needsSave) {
 		return {
-			timingsNs,
+			timings,
 			save: undefined,
 			diagnostics,
 			suppressions,
@@ -160,7 +160,7 @@ export async function uncachedLint(
 
 	// Add pending autofix diagnostic
 	return {
-		timingsNs,
+		timings,
 		save: undefined,
 		suppressions,
 		diagnostics: [
@@ -246,16 +246,16 @@ export async function compilerLint(
 		};
 	}
 
-	let timingsNs: WorkerIntegrationTimings = new Map();
+	let timings: WorkerIntegrationTimings = new Map();
 
 	const eslintResult = await maybeRunESLint({worker, ref, project});
 	if (eslintResult !== undefined) {
-		timingsNs.set(
+		timings.set(
 			"eslint",
 			{
 				type: "official",
 				displayName: "ESLint",
-				took: eslintResult.timingNs,
+				took: eslintResult.timing,
 			},
 		);
 
@@ -264,7 +264,7 @@ export async function compilerLint(
 
 	return worker.api.interceptDiagnostics(
 		{
-			timingsNs,
+			timings,
 			suppressions: res.suppressions,
 			diagnostics,
 			sourceText,

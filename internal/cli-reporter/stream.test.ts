@@ -14,9 +14,9 @@ function createStreamTest(callback: (helper: StreamTestHelper) => void) {
 	return (t: TestHelper) => {
 		let buff = "";
 
-		const reporter = new Reporter();
+		const reporter = new Reporter("ReporterStreamTest");
 
-		const {stream} = reporter.addStream({
+		const stream = reporter.addStream({
 			format: "ansi",
 			features: {
 				...DEFAULT_TERMINAL_FEATURES,

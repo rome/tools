@@ -5,7 +5,7 @@ import {
 } from "@internal/markup-syntax-highlight/utils";
 import {StaticMarkup} from "@internal/markup";
 import {convertToMarkupFromRandomString} from "@internal/markup/escape";
-import {ZeroIndexed} from "@internal/math";
+import {ZeroIndexed} from "@internal/numbers";
 
 const validTokenType = "keyword";
 const fakeToken = "lorem";

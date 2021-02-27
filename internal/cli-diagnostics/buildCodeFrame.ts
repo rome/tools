@@ -15,7 +15,7 @@ import {
 } from "./constants";
 import {Position} from "@internal/parser-core";
 import {ToLines, cleanEquivalentString, showInvisibles} from "./utils";
-import {ZeroIndexed} from "@internal/math";
+import {ZeroIndexed} from "@internal/numbers";
 import {
 	AnyMarkups,
 	StaticMarkup,
@@ -105,18 +105,18 @@ type FormattedLine = {
 export default function buildCodeFrame(
 	{
 		lines: allLines,
-		truncateLines,
 		start,
 		end,
 		type,
 		markerMessage = markup``,
+		truncateLines,
 	}: {
 		lines: ToLines;
 		type: "pointer" | "all";
-		truncateLines?: number;
 		start?: Position;
 		end?: Position;
 		markerMessage?: StaticMarkup;
+		truncateLines?: number;
 	},
 ): {
 	frame: StaticMarkup;
@@ -140,7 +140,7 @@ export default function buildCodeFrame(
 		};
 	}
 
-	// Whether we truncated lines
+	// Whether we truncated any text
 	let truncated = false;
 
 	const startLineIndex =

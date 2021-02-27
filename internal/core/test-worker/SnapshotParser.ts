@@ -16,7 +16,7 @@ import {
 	createParser,
 } from "@internal/parser-core";
 import {isEscaped} from "@internal/string-utils";
-import {ZeroIndexed} from "@internal/math";
+import {ZeroIndexed} from "@internal/numbers";
 import {descriptions} from "@internal/diagnostics";
 
 type Tokens = BaseTokens & {

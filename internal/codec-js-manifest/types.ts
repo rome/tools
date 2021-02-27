@@ -9,7 +9,7 @@ import {ManifestDependencies} from "./dependencies";
 import {SPDXExpressionNode} from "@internal/codec-spdx-license";
 import {SemverVersionNode} from "@internal/codec-semver";
 import {Consumer} from "@internal/consume";
-import {AbsoluteFilePath, RelativePath, RelativePathMap} from "@internal/path";
+import {AbsoluteFilePath, RelativePath, RelativePathMap, URLPath} from "@internal/path";
 import {JSONObject, JSONPropertyValue} from "@internal/codec-config";
 import {Dict} from "@internal/typescript-helpers";
 import {PathPatterns} from "@internal/path-match";
@@ -22,8 +22,6 @@ export type MString = undefined | string;
 export type MStringArray = undefined | (string[]);
 
 export type MStringObject = undefined | StringObject;
-
-export type MBoolean = undefined | boolean;
 
 export type ManifestMap = Map<string, string>;
 
@@ -78,10 +76,10 @@ export type Manifest = {
 	license: undefined | SPDXExpressionNode;
 	private: boolean;
 	type: undefined | "module" | "commonjs";
-	homepage: MString;
+	homepage: undefined | URLPath;
 	repository: undefined | ManifestRepository;
 	bugs: undefined | ManifestBugs;
-	main: MString;
+	main: undefined | RelativePath;
 	exports: boolean | ManifestExports;
 	author: undefined | ManifestPerson;
 	contributors: undefined | (ManifestPerson[]);
@@ -110,12 +108,12 @@ export type JSONManifest = {
 	description: Manifest["description"];
 	version: MString;
 	license: MString;
-	private: Manifest["private"];
+	private: undefined | Manifest["private"];
 	type: Manifest["type"];
-	homepage: Manifest["homepage"];
+	homepage: undefined | string;
 	repository: Manifest["repository"];
 	bugs: Manifest["bugs"];
-	main: Manifest["main"];
+	main: undefined | string;
 	exports: undefined | false | JSONManifestExports;
 	author: Manifest["author"];
 	contributors: Manifest["contributors"];

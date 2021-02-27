@@ -8,7 +8,7 @@ import {
 } from "@internal/parser-core";
 import {DiagnosticCategory} from "@internal/diagnostics";
 import {InlineState} from "@internal/markdown-parser/State";
-import {ZeroIndexed} from "@internal/math";
+import {ZeroIndexed} from "@internal/numbers";
 
 export interface MarkdownParserOptions extends Omit<
 	ParserOptions,
