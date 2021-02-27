@@ -108,17 +108,26 @@ function parseTypeSelector(
 	return undefined;
 }
 
-function parseIdSelector(parser: CSSParser): CSSIdSelector {
+function parseIdSelector(parser: CSSParser): CSSIdSelector | undefined {
 	const start = parser.getPosition();
-	const token = parser.expectToken("Hash");
-	readToken(parser, "Hash");
-	return parser.finishNode(
-		start,
-		{
-			type: "CSSIdSelector",
-			value: token.value,
-		},
-	);
+
+	if (matchToken(parser, "Hash")) {
+		const token = readToken(parser, "Hash") as Tokens["Hash"];
+		if (token.hashType === "id") {
+			return parser.finishNode(
+				start,
+				{
+					type: "CSSIdSelector",
+					value: token.value,
+				},
+			);
+		}
+		parser.unexpectedDiagnostic({
+			description: descriptions.CSS_PARSER.EXPECTED_ID_HASH,
+			token,
+		});
+	}
+	return undefined;
 }
 
 function parseClassSelector(parser: CSSParser): CSSClassSelector | undefined {

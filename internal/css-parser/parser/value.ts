@@ -114,16 +114,14 @@ export function parseComponentValue(parser: CSSParser): AnyCSSValue | undefined 
 
 	if (matchToken(parser, "Hash")) {
 		const hashToken = parser.getToken() as Tokens["Hash"];
-		if (hashToken.hashType === "id") {
-			nextToken(parser);
-			return parser.finishNode(
-				start,
-				{
-					type: "CSSHash",
-					value: `${hashToken.value}`,
-				},
-			);
-		}
+		nextToken(parser);
+		return parser.finishNode(
+			start,
+			{
+				type: "CSSHash",
+				value: `${hashToken.value}`,
+			},
+		);
 	}
 
 	if (matchToken(parser, "String")) {

@@ -24,9 +24,9 @@ CSSRoot {
 				integrity: undefined
 				language: "css"
 				sourceText: undefined
-				end: Position 5:2
+				end: Position 9:1
 				path: RelativePath<namespace-prefix/input.css>
-				start: Position 5:1
+				start: Position 9:0
 			}
 		}
 	]
@@ -63,19 +63,15 @@ CSSRoot {
 			}
 			prelude: Array [
 				CSSSelector {
-					patterns: Array []
-					loc: SourceLocation namespace-prefix/input.css 5:0-5:2
-				}
-				CSSSelector {
-					loc: SourceLocation namespace-prefix/input.css 5:2-5:6
+					loc: SourceLocation namespace-prefix/input.css 5:0-5:6
 					patterns: Array [
 						CSSTypeSelector {
 							value: CSSQualifiedName {
 								localName: "div"
-								namespace: undefined
-								loc: SourceLocation namespace-prefix/input.css 5:2-5:5
+								namespace: "*"
+								loc: SourceLocation namespace-prefix/input.css 5:0-5:5
 							}
-							loc: SourceLocation namespace-prefix/input.css 5:2-5:5
+							loc: SourceLocation namespace-prefix/input.css 5:0-5:5
 						}
 					]
 				}
