@@ -6,7 +6,7 @@ export interface CSSQualifiedName extends NodeBaseWithComments {
 	readonly namespace?: string;
 	readonly localName: string;
 }
-export const cssPercentage = createBuilder<CSSQualifiedName>(
+export const cssQualifiedName = createBuilder<CSSQualifiedName>(
 	"CSSQualifiedName",
 	{
 		bindingKeys: {},
