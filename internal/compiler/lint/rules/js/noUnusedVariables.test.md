@@ -158,15 +158,26 @@ function foo(b) {
 
 ```
 
+ lint/js/noUnusedVariables/reject/6/file.ts:1:9 lint/js/noUnusedVariables(foo) ━━━━━━━━━━━━━━━━━━━━━
+
+  ✖ The function variable foo is unused.
+
+  > 1 │ function foo() {
+      │          ^^^
+    2 │   foo();
+    3 │ }
+
+  ℹ Unused variables are dead code and usually the result of incomplete refactoring.
+
+
 ```
 
 ### `5: formatted`
 
 ```ts
-function foo(_, b) {
-	console.log(b);
+function foo() {
+	foo();
 }
-foo();
 
 ```
 
@@ -174,14 +185,151 @@ foo();
 
 ```
 
+ lint/js/noUnusedVariables/reject/7/file.ts:1:6 lint/js/noUnusedVariables(foo) ━━━━━━━━━━━━━━━━━━━━━
+
+  ✖ The const variable foo is unused.
+
+  > 1 │ const foo = () => {
+      │       ^^^
+    2 │   foo();
+    3 │   console.log(this);
+
+  ℹ Unused variables are dead code and usually the result of incomplete refactoring.
+
+
 ```
 
 ### `6: formatted`
+
+```ts
+const foo = () => {
+	foo();
+	console.log(this);
+};
+
+```
+
+### `7`
+
+```
+
+ lint/js/noUnusedVariables/reject/8/file.ts:1:9 lint/js/noUnusedVariables(foo) ━━━━━━━━━━━━━━━━━━━━━
+
+  ✖ The function variable foo is unused.
+
+  > 1 │ function foo(): typeof foo {
+      │          ^^^
+    2 │     return function () {
+    3 │         return foo;
+
+  ℹ Unused variables are dead code and usually the result of incomplete refactoring.
+
+
+```
+
+### `7: formatted`
+
+```ts
+function foo(): typeof foo {
+	return function() {
+		return foo;
+	};
+}
+
+```
+
+### `8`
+
+```
+
+ lint/js/noUnusedVariables/reject/9/file.ts:1:6 lint/js/noUnusedVariables(Foo) ━━━━━━━━━━━━━━━━━━━━━
+
+  ✖ The class variable Foo is unused.
+
+  > 1 │ class Foo {
+      │       ^^^
+    2 │     init() {
+    3 │       this._foo = new Foo();
+
+  ℹ Unused variables are dead code and usually the result of incomplete refactoring.
+
+
+```
+
+### `8: formatted`
+
+```ts
+class Foo {
+	init() {
+		this._foo = new Foo();
+	}
+}
+
+```
+
+### `9`
+
+```
+
+```
+
+### `9: formatted`
 
 ```ts
 function foo(_, b) {
 	console.log(b);
 }
 foo();
+
+```
+
+### `10`
+
+```
+
+```
+
+### `10: formatted`
+
+```ts
+function foo(_, b) {
+	console.log(b);
+}
+foo();
+
+```
+
+### `11`
+
+```
+
+```
+
+### `11: formatted`
+
+```ts
+foo();
+function foo() {
+	foo();
+}
+
+```
+
+### `12`
+
+```
+
+```
+
+### `12: formatted`
+
+```ts
+class Foo {
+	init() {
+		this._foo = new Foo();
+	}
+}
+const foo = new Foo();
+foo.init();
 
 ```
