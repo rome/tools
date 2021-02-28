@@ -395,12 +395,12 @@ export function parseBrowserQuery(options: ParserOptions): AnyTargetBrowser[] {
 
 					const num = (parser.getToken() as BrowserQueryTokens["Number"]).value.toString();
 
-					dateStr += `-${num.length == 1 ? "0" + num : num}`;
+					dateStr += `-${num.length === 1 ? `0${num}` : num}`;
 				}
 
 				newTarget = {
 					type: "TargetBrowserSince",
-					since: new Date(dateStr + "T00:00:00.000Z").getTime(), // As number for serialization, T0...0Z to use UTC
+					since: new Date(`${dateStr}T00:00:00.000Z`).getTime(), // As number for serialization, T0...0Z to use UTC
 				};
 
 				break;
