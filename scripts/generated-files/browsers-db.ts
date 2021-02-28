@@ -2,6 +2,7 @@ import {INTERNAL, modifyGeneratedFile, reporter, writeFile} from "../_utils";
 import https = require("https");
 import {version as currentVersion} from "@internal/browsers-db";
 import {Consumer, consumeUnknown} from "@internal/consume";
+import {markup} from "@internal/markup";
 
 const browsersDbFolder = INTERNAL.append("browsers-db");
 
@@ -301,6 +302,10 @@ export async function main() {
 		await updateData();
 		await updateRegions();
 		await updateVersion(version);
+
+		reporter.warn(
+			markup`Don't forget to update the snapshots with <code>./rome test internal/codec-browsers/index.test.ts --update-snapshots</code>`,
+		);
 	} else {
 		reporter.success(`[browsers-db] Already using latest version! ${version}`);
 	}
@@ -383,6 +388,13 @@ function generateDataAgents(rawData: Consumer) {
 			continue;
 		}
 
+		const vs = generateDataAgentsVersions(
+			rawData.get("agents").get(agent).get("version_list").asImplicitArray(),
+		);
+		const currentVersion = rawData.get("agents").get(agent).get(
+			"current_version",
+		).asString();
+
 		agents.set(
 			agent,
 			{
@@ -390,8 +402,10 @@ function generateDataAgents(rawData: Consumer) {
 				a: rawData.get("agents").get(agent).get("abbr").asString(),
 				p: rawData.get("agents").get(agent).get("prefix").asString(),
 				t: rawData.get("agents").get(agent).get("type").asString(),
-				vs: generateDataAgentsVersions(rawData.get("agents").get(agent).get("version_list").asImplicitArray()),
-				cv: parseFloat(rawData.get("agents").get(agent).get("current_version").asString()),
+				vs,
+				cv: isNaN(parseFloat(currentVersion))
+					? vs[vs.length - 1].v
+					: parseFloat(currentVersion), // Defaults to last version
 			},
 		);
 	}
@@ -401,7 +415,7 @@ function generateDataAgents(rawData: Consumer) {
 function generateDataAgentsVersions(rawVersions: Consumer[]): Agent["vs"] {
 	const versions: Agent["vs"] = [];
 
-	rawVersions.forEach((v)  => {
+	rawVersions.forEach((v) => {
 		if (v.get("version").asString().includes("-")) {
 			// Could be optimized but copying 3 times works
 			// Converts versions like `12-20` into 2 versions 12 and 20
@@ -424,7 +438,10 @@ function generateDataAgentsVersions(rawVersions: Consumer[]): Agent["vs"] {
 			});
 		} else {
 			versions.push({
-				v: parseFloat(v.get("version").asString()),
+				v: isNaN(parseFloat(v.get("version").asString()))
+					? 1
+					: parseFloat(v.get("version").asString()),
+				// String may be "all", replaced with 1
 				g: v.get("global_usage").asNumber(),
 				r: v.get("release_date").asNumberOrVoid(),
 				p: v.get("prefix").asString().length === 0
@@ -432,7 +449,7 @@ function generateDataAgentsVersions(rawVersions: Consumer[]): Agent["vs"] {
 					: v.get("prefix").asString(),
 			});
 		}
-	})
+	});
 
 	return versions;
 }
@@ -445,10 +462,10 @@ function generateDataData(rawData: Consumer) {
 		if (
 			!rawData.get("cats").get("CSS").asMappedArray((c) => c.asString()).some((
 				c,
-				) =>
-					rawData.get("data").get(feature).get("categories").asMappedArray((c) =>
-						c.asString()
-					).includes(c)
+			) =>
+				rawData.get("data").get(feature).get("categories").asMappedArray((c) =>
+					c.asString()
+				).includes(c)
 			)
 		) {
 			continue;
@@ -472,19 +489,10 @@ function generateDataData(rawData: Consumer) {
 					// Could be optimized but copying 3 times works
 					// Converts versions like `12-20` into 2 versions 12 and 20
 					if (v.includes("-")) {
-						featureAgents.set(
-							parseFloat(v.split("-")[0]),
-							true
-						);
-						featureAgents.set(
-							parseFloat(v.split("-")[1]),
-							true
-						);
+						featureAgents.set(parseFloat(v.split("-")[0]), true);
+						featureAgents.set(parseFloat(v.split("-")[1]), true);
 					} else {
-						featureAgents.set(
-							parseFloat(v),
-							true
-						);
+						featureAgents.set(parseFloat(v), true);
 					}
 				}
 			}

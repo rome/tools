@@ -10,7 +10,7 @@ export type BrowserTypes = "desktop" | "mobile";
 
 export abstract class Browser {
 	private readonly id: string;
-	private readonly version: number | undefined;
+	private readonly version: number;
 
 	private readonly cssFeatureCache = new Map<string, boolean>();
 
@@ -19,7 +19,7 @@ export abstract class Browser {
 		if (version && !this.getVersions().includes(version)) {
 			throw new Error(`Browser "${id}" does not have a version ${version}`);
 		}
-		this.version = version;
+		this.version = version ?? this.getCurrentVersion();
 	}
 
 	protected getDataConsumer(): Consumer {
@@ -88,6 +88,10 @@ export abstract class Browser {
 		return this.getRawReleaseDate() !== undefined
 			? new Date(this.getRawReleaseDate()!)
 			: undefined;
+	}
+
+	public isReleased(): boolean {
+		return this.getRawReleaseDate() != null;
 	}
 
 	public getVersions(): number[] {

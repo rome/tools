@@ -1,5 +1,9 @@
 import {test} from "rome";
-import {getBrowser} from "@internal/browser-features/index";
+import {
+	getAllBrowserNames,
+	getAllBrowserUsages,
+	getBrowser,
+} from "@internal/browser-features/index";
 import {Chrome} from "@internal/browser-features/Browser";
 
 test(
@@ -45,13 +49,13 @@ test(
 				name: "firefox",
 				version: 84,
 			})!.getVersion(),
-			"84",
+			84,
 		);
 
 		t.is(
 			getBrowser({
 				name: "firefox",
-				version: 679934,
+				version: 679_934,
 			}),
 			undefined,
 		);
@@ -77,5 +81,18 @@ test(
 			getBrowser({name: "chrome", version: new Chrome().getCurrentVersion()}),
 			getBrowser({name: "chrome"}),
 		);
+	},
+);
+
+test(
+	"misc browser feature tests",
+	(t) => {
+		t.notThrows(() => {
+			getAllBrowserNames();
+		});
+
+		t.notThrows(() => {
+			getAllBrowserUsages();
+		});
 	},
 );

@@ -40,6 +40,7 @@ type BrowserQueryTokens = BaseTokens & {
 	Years: SimpleToken<"Years">;
 	Months: SimpleToken<"Months">;
 	Days: SimpleToken<"Days">;
+	All: SimpleToken<"All">;
 };
 
 type BrowserQueryParserTypes = {
@@ -59,59 +60,63 @@ export const browserQueryParser = createParser<BrowserQueryParserTypes>({
 	): TokenValues<BrowserQueryTokens> | undefined {
 		const char = parser.getInputCharOnly(index);
 
-		if (parser.getInputRange(index, 14)[0] === "major versions") {
+		if (parser.getInputRange(index, 14)[0].toLowerCase() === "major versions") {
 			return parser.finishToken("MajorVersions", ob1Add(index, 14));
 		}
 
-		if (parser.getInputRange(index, 13)[0] === "major version") {
+		if (parser.getInputRange(index, 13)[0].toLowerCase() === "major version") {
 			return parser.finishToken("MajorVersions", ob1Add(index, 13));
 		}
 
-		if (parser.getInputRange(index, 8)[0] === "versions") {
+		if (parser.getInputRange(index, 8)[0].toLowerCase() === "versions") {
 			return parser.finishToken("Versions", ob1Add(index, 8));
 		}
 
-		if (parser.getInputRange(index, 5)[0] === "cover") {
+		if (parser.getInputRange(index, 3)[0].toLowerCase() === "all") {
+			return parser.finishToken("All", ob1Add(index, 3));
+		}
+
+		if (parser.getInputRange(index, 5)[0].toLowerCase() === "cover") {
 			return parser.finishToken("Cover", ob1Add(index, 5));
 		}
 
-		if (parser.getInputRange(index, 5)[0] === "since") {
+		if (parser.getInputRange(index, 5)[0].toLowerCase() === "since") {
 			return parser.finishToken("Since", ob1Add(index, 5));
 		}
 
-		if (parser.getInputRange(index, 6)[0] === "modern") {
+		if (parser.getInputRange(index, 6)[0].toLowerCase() === "modern") {
 			return parser.finishToken("Modern", ob1Add(index, 6));
 		}
 
-		if (parser.getInputRange(index, 8)[0] === "defaults") {
+		if (parser.getInputRange(index, 8)[0].toLowerCase() === "defaults") {
 			return parser.finishToken("Modern", ob1Add(index, 8));
 		}
 
-		if (parser.getInputRange(index, 7)[0] === "default") {
+		if (parser.getInputRange(index, 7)[0].toLowerCase() === "default") {
 			return parser.finishToken("Modern", ob1Add(index, 7));
 		}
 
-		if (parser.getInputRange(index, 5)[0] === "years") {
+		if (parser.getInputRange(index, 5)[0].toLowerCase() === "years") {
 			return parser.finishToken("Years", ob1Add(index, 5));
 		}
 
-		if (parser.getInputRange(index, 4)[0] === "year") {
+		if (parser.getInputRange(index, 4)[0].toLowerCase() === "year") {
 			return parser.finishToken("Years", ob1Add(index, 4));
 		}
 
-		if (parser.getInputRange(index, 6)[0] === "months") {
+		if (parser.getInputRange(index, 6)[0].toLowerCase() === "months") {
 			return parser.finishToken("Months", ob1Add(index, 6));
 		}
 
-		if (parser.getInputRange(index, 5)[0] === "month") {
+		if (parser.getInputRange(index, 5)[0].toLowerCase() === "month") {
 			return parser.finishToken("Months", ob1Add(index, 5));
 		}
 
-		if (parser.getInputRange(index, 4)[0] === "days") {
+		if (parser.getInputRange(index, 4)[0].toLowerCase() === "days") {
 			return parser.finishToken("Days", ob1Add(index, 4));
 		}
 
-		if (parser.getInputRange(index, 3)[0] === "day") {
+		if (parser.getInputRange(index, 3)[0].toLowerCase() === "day") {
 			return parser.finishToken("Days", ob1Add(index, 3));
 		}
 
@@ -135,42 +140,42 @@ export const browserQueryParser = createParser<BrowserQueryParserTypes>({
 			return parser.finishToken("GT");
 		}
 
-		if (parser.getInputRange(index, 4)[0] === "dead") {
+		if (parser.getInputRange(index, 4)[0].toLowerCase() === "dead") {
 			return parser.finishToken("Dead", ob1Add(index, 4));
 		}
 
-		if (parser.getInputRange(index, 7)[0] === "current") {
+		if (parser.getInputRange(index, 7)[0].toLowerCase() === "current") {
 			return parser.finishToken("Current", ob1Add(index, 7));
 		}
 
-		if (parser.getInputRange(index, 4)[0] === "last") {
+		if (parser.getInputRange(index, 4)[0].toLowerCase() === "last") {
 			return parser.finishToken("Last", ob1Add(index, 4));
 		}
 
-		if (parser.getInputRange(index, 10)[0] === "maintained") {
+		if (parser.getInputRange(index, 10)[0].toLowerCase() === "maintained") {
 			return parser.finishToken("Maintained", ob1Add(index, 10));
 		}
 
-		if (parser.getInputRange(index, 10)[0] === "unreleased") {
+		if (parser.getInputRange(index, 10)[0].toLowerCase() === "unreleased") {
 			return parser.finishToken("Unreleased", ob1Add(index, 10));
 		}
 
-		if (parser.getInputRange(index, 3)[0] === "not") {
+		if (parser.getInputRange(index, 3)[0].toLowerCase() === "not") {
 			return parser.finishToken("Not", ob1Add(index, 3));
 		}
 
-		if (parser.getInputRange(index, 3)[0] === "and") {
+		if (parser.getInputRange(index, 3)[0].toLowerCase() === "and") {
 			return parser.finishToken("And", ob1Add(index, 3));
 		}
 
-		if (parser.getInputRange(index, 2)[0] === "or") {
+		if (parser.getInputRange(index, 2)[0].toLowerCase() === "or") {
 			return parser.finishToken("Or", ob1Add(index, 2));
 		}
 		if (char === ",") {
 			return parser.finishToken("Or");
 		}
 
-		if (parser.getInputRange(index, 2)[0] === "in") {
+		if (parser.getInputRange(index, 2)[0].toLowerCase() === "in") {
 			return parser.finishToken("In", ob1Add(index, 2));
 		}
 
@@ -202,7 +207,7 @@ export const browserQueryParser = createParser<BrowserQueryParserTypes>({
 
 			while (
 				(isAlpha(parser.getInputCharOnly(index)) ||
-				parser.getInputCharOnly(index) === "-") &&
+				parser.getInputCharOnly(index) === "_") &&
 				!parser.isEOF(index)
 			) {
 				value += parser.getInputCharOnly(index);
@@ -241,11 +246,10 @@ export function parseBrowserQuery(options: ParserOptions): AnyTargetBrowser[] {
 						parser.nextToken();
 
 						if (parser.getToken().type !== "Number") {
-							parser.unexpectedDiagnostic({
+							throw parser.unexpected({
 								description: descriptions.BROWSERQUERY.EXPECTED_VERSION,
-								loc: parser.finishLocFromToken(parser.getToken()),
+								token: parser.getToken(),
 							});
-							break;
 						}
 
 						newTarget = {
@@ -278,11 +282,10 @@ export function parseBrowserQuery(options: ParserOptions): AnyTargetBrowser[] {
 						parser.nextToken();
 
 						if (parser.getToken().type !== "Number") {
-							parser.unexpectedDiagnostic({
+							throw parser.unexpected({
 								description: descriptions.BROWSERQUERY.EXPECTED_VERSION,
-								loc: parser.finishLocFromToken(parser.getToken()),
+								token: parser.getToken(),
 							});
-							break;
 						}
 
 						newTarget = {
@@ -294,12 +297,20 @@ export function parseBrowserQuery(options: ParserOptions): AnyTargetBrowser[] {
 						break;
 					}
 
-					default: {
-						parser.unexpectedDiagnostic({
-							description: descriptions.BROWSERQUERY.EXPECTED_OPERATOR_OR_VERSION,
-							loc: parser.finishLocFromToken(parser.getToken()),
-						});
+					case "All": {
+						newTarget = {
+							type: "TargetBrowser",
+							browser,
+							version: "all",
+						};
 						break;
+					}
+
+					default: {
+						throw parser.unexpected({
+							description: descriptions.BROWSERQUERY.EXPECTED_OPERATOR_OR_VERSION,
+							token: parser.getToken(),
+						});
 					}
 				}
 				break;
@@ -318,11 +329,10 @@ export function parseBrowserQuery(options: ParserOptions): AnyTargetBrowser[] {
 				parser.nextToken();
 
 				if (parser.getToken().type !== "Percentage") {
-					parser.unexpectedDiagnostic({
+					throw parser.unexpected({
 						description: descriptions.BROWSERQUERY.EXPECTED_PERCENTAGE,
-						loc: parser.finishLocFromToken(parser.getToken()),
+						token: parser.getToken(),
 					});
-					break;
 				}
 
 				const coverage = (parser.getToken() as BrowserQueryTokens["Percentage"]).value;
@@ -332,6 +342,7 @@ export function parseBrowserQuery(options: ParserOptions): AnyTargetBrowser[] {
 						type: "TargetBrowserCoverage",
 						coverage,
 					};
+					break;
 				}
 
 				// Skip In
@@ -339,11 +350,10 @@ export function parseBrowserQuery(options: ParserOptions): AnyTargetBrowser[] {
 				parser.nextToken();
 
 				if (parser.getToken().type !== "String") {
-					parser.unexpectedDiagnostic({
+					throw parser.unexpected({
 						description: descriptions.BROWSERQUERY.EXPECTED_REGION,
-						loc: parser.finishLocFromToken(parser.getToken()),
+						token: parser.getToken(),
 					});
-					break;
 				}
 
 				newTarget = {
@@ -358,9 +368,9 @@ export function parseBrowserQuery(options: ParserOptions): AnyTargetBrowser[] {
 				parser.nextToken();
 
 				if (parser.getToken().type !== "Number") {
-					parser.unexpectedDiagnostic({
+					throw parser.unexpected({
 						description: descriptions.BROWSERQUERY.EXPECTED_DATE,
-						loc: parser.finishLocFromToken(parser.getToken()),
+						token: parser.getToken(),
 					});
 				}
 
@@ -376,9 +386,9 @@ export function parseBrowserQuery(options: ParserOptions): AnyTargetBrowser[] {
 					parser.nextToken();
 
 					if (parser.getToken().type !== "Number") {
-						parser.unexpectedDiagnostic({
+						throw parser.unexpected({
 							description: descriptions.BROWSERQUERY.EXPECTED_DATE,
-							loc: parser.finishLocFromToken(parser.getToken()),
+							token: parser.getToken(),
 						});
 					}
 
@@ -396,11 +406,10 @@ export function parseBrowserQuery(options: ParserOptions): AnyTargetBrowser[] {
 				parser.nextToken();
 
 				if (parser.getToken().type !== "Number") {
-					parser.unexpectedDiagnostic({
+					throw parser.unexpected({
 						description: descriptions.BROWSERQUERY.EXPECTED_NUMBER,
-						loc: parser.finishLocFromToken(parser.getToken()),
+						token: parser.getToken(),
 					});
-					break;
 				}
 
 				const qty = (parser.getToken() as BrowserQueryTokens["Number"]).value;
@@ -419,11 +428,10 @@ export function parseBrowserQuery(options: ParserOptions): AnyTargetBrowser[] {
 						parser.getToken().type,
 					)
 				) {
-					parser.unexpectedDiagnostic({
+					throw parser.unexpected({
 						description: descriptions.BROWSERQUERY.EXPECTED_UNIT,
-						loc: parser.finishLocFromToken(parser.getToken()),
+						token: parser.getToken(),
 					});
-					break;
 				}
 
 				newTarget = {
@@ -487,11 +495,10 @@ export function parseBrowserQuery(options: ParserOptions): AnyTargetBrowser[] {
 				parser.nextToken();
 
 				if (parser.getToken().type !== "Percentage") {
-					parser.unexpectedDiagnostic({
+					throw parser.unexpected({
 						description: descriptions.BROWSERQUERY.EXPECTED_PERCENTAGE,
-						loc: parser.finishLocFromToken(parser.getToken()),
+						token: parser.getToken(),
 					});
-					break;
 				}
 
 				const usage = (parser.getToken() as BrowserQueryTokens["Percentage"]).value;
@@ -502,6 +509,7 @@ export function parseBrowserQuery(options: ParserOptions): AnyTargetBrowser[] {
 						usage,
 						operator,
 					};
+					break;
 				}
 
 				// Skip In
@@ -509,11 +517,10 @@ export function parseBrowserQuery(options: ParserOptions): AnyTargetBrowser[] {
 				parser.nextToken();
 
 				if (parser.getToken().type !== "String") {
-					parser.unexpectedDiagnostic({
+					throw parser.unexpected({
 						description: descriptions.BROWSERQUERY.EXPECTED_REGION,
-						loc: parser.finishLocFromToken(parser.getToken()),
+						token: parser.getToken(),
 					});
-					break;
 				}
 
 				newTarget = {
@@ -548,19 +555,17 @@ export function parseBrowserQuery(options: ParserOptions): AnyTargetBrowser[] {
 			case "Years":
 			case "Months":
 			case "Days": {
-				parser.unexpectedDiagnostic({
+				throw parser.unexpected({
 					description: descriptions.BROWSERQUERY.EXPECTED_NEW_QUERY,
-					loc: parser.finishLocFromToken(parser.getToken()),
+					token: parser.getToken(),
 				});
-				break;
 			}
 
 			case "Invalid": {
-				parser.unexpectedDiagnostic({
+				throw parser.unexpected({
 					description: {message: markup`Invalid token`},
-					loc: parser.finishLocFromToken(parser.getToken()),
+					token: parser.getToken(),
 				});
-				break;
 			}
 		}
 		if (newTarget != null) {
@@ -573,18 +578,17 @@ export function parseBrowserQuery(options: ParserOptions): AnyTargetBrowser[] {
 
 			if (combination) {
 				if (targets.length === 0) {
-					parser.unexpectedDiagnostic({
-						description: descriptions.BROWSERQUERY.AND_WITHOUT_TARGET,
-						loc: parser.finishLocFromToken(parser.getToken()),
+					throw parser.unexpected({
+						description: descriptions.BROWSERQUERY.AND_WITHOUT_QUERY,
+						token: parser.getToken(),
 					});
-					break;
+				} else {
+					newTarget = {
+						type: "TargetBrowserCombination",
+						target: targets.pop()!,
+						and: newTarget,
+					};
 				}
-
-				newTarget = {
-					type: "TargetBrowserCombination",
-					target: targets.pop()!,
-					and: newTarget,
-				};
 			}
 
 			targets.push(newTarget);
@@ -592,6 +596,7 @@ export function parseBrowserQuery(options: ParserOptions): AnyTargetBrowser[] {
 			// Reset special attributes
 			combination = false;
 			inverted = false;
+			newTarget = undefined;
 		}
 
 		parser.nextToken();

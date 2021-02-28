@@ -171,3 +171,47 @@ export function getBrowser(
 
 	return browser;
 }
+
+let allBrowserNamesCache: string[];
+
+export function getAllBrowserNames(): string[] {
+	if (!allBrowserNamesCache) {
+		allBrowserNamesCache = Object.keys(
+			consumeUnknown(data, "parse").get("agents").asUnknownObject(),
+		);
+	}
+
+	return allBrowserNamesCache;
+}
+
+interface AllBrowserUsage {
+	id: string;
+	version: number;
+	usage: number;
+}
+
+let allBrowserUsagesCache: AllBrowserUsage[];
+
+export function getAllBrowserUsages(region?: string): AllBrowserUsage[] {
+	if (allBrowserUsagesCache) {
+		return allBrowserUsagesCache;
+	}
+
+	const usages: AllBrowserUsage[] = [];
+
+	getAllBrowserNames().forEach((name) => {
+		(getBrowser({name})?.getVersions()).forEach((version) => {
+			const browser = getBrowser({name, version})!;
+			usages.push({
+				id: browser.getId(),
+				version,
+				usage: region
+					? browser.getRegionUsage(region) ?? 0
+					: browser.getGlobalUsage(),
+			});
+		});
+	});
+
+	allBrowserUsagesCache = usages;
+	return usages;
+}
