@@ -57,7 +57,7 @@ Array [
 		unit: "versions"
 	}
 	TargetBrowserCombination {
-		target: TargetBrowserSince {since: 1_525_125_600_000}
+		target: TargetBrowserSince {since: 1_525_132_800_000}
 		and: TargetBrowserUsage {
 			operator: "GT"
 			region: "BE"

@@ -26,7 +26,7 @@ Array [
 ### `targets`
 
 ```javascript
-Array [TargetBrowserSince {since: 1_585_692_000_000}]
+Array [TargetBrowserSince {since: 1_585_699_200_000}]
 ```
 
 ### `tokens`

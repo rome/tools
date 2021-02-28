@@ -13,7 +13,7 @@ Array ["opera:73"]
 ### `targets`
 
 ```javascript
-Array [TargetBrowserSince {since: 1_612_134_000_000}]
+Array [TargetBrowserSince {since: 1_612_137_600_000}]
 ```
 
 ### `tokens`

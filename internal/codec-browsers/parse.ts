@@ -378,7 +378,8 @@ export function parseBrowserQuery(options: ParserOptions): AnyTargetBrowser[] {
 
 				for (let i = 0; i < 2; i++) {
 					if (parser.lookaheadToken().type !== "Hyphen") {
-						break;
+						dateStr += "-01";
+						continue;
 					}
 
 					// Skip Hyphen
@@ -392,12 +393,14 @@ export function parseBrowserQuery(options: ParserOptions): AnyTargetBrowser[] {
 						});
 					}
 
-					dateStr += `-${(parser.getToken() as BrowserQueryTokens["Number"]).value.toString()}`;
+					const num = (parser.getToken() as BrowserQueryTokens["Number"]).value.toString();
+
+					dateStr += `-${num.length == 1 ? "0" + num : num}`;
 				}
 
 				newTarget = {
 					type: "TargetBrowserSince",
-					since: new Date(dateStr).getTime(), // As number for serialization
+					since: new Date(dateStr + "T00:00:00.000Z").getTime(), // As number for serialization, T0...0Z to use UTC
 				};
 
 				break;
