@@ -39,7 +39,6 @@ abstract class IndexedNumber<Super extends IndexedNumber<AnyIndexedNumber>> {
 export class ZeroIndexed extends IndexedNumber<ZeroIndexed> {
 	constructor(value: number = 0) {
 		super(value);
-		this[Symbol.toStringTag] = "ZeroIndexedNumber";
 	}
 
 	protected fork(value: number): ZeroIndexed {
@@ -51,6 +50,8 @@ export class ZeroIndexed extends IndexedNumber<ZeroIndexed> {
 	}
 }
 
+ZeroIndexed.prototype[Symbol.toStringTag] = "ZeroIndexedNumber";
+
 enhanceNodeInspectClass(
 	ZeroIndexed,
 	(inst) => {
@@ -61,7 +62,6 @@ enhanceNodeInspectClass(
 export class OneIndexed extends IndexedNumber<OneIndexed> {
 	constructor(value: number = 1) {
 		super(value);
-		this[Symbol.toStringTag] = "OneIndexedNumber";
 	}
 
 	protected fork(value: number): OneIndexed {
@@ -72,6 +72,8 @@ export class OneIndexed extends IndexedNumber<OneIndexed> {
 		return new ZeroIndexed(this.value - 1);
 	}
 }
+
+OneIndexed.prototype[Symbol.toStringTag] = "OneIndexedNumber";
 
 enhanceNodeInspectClass(
 	OneIndexed,

@@ -1,7 +1,7 @@
-import {Path} from "@internal/compiler";
+import {CompilerPath} from "@internal/compiler";
 import doesNodeMatchReactPattern from "./doesNodeMatchReactPattern";
 
-function checkClassComponentAncestry({node, scope}: Path): boolean {
+function checkClassComponentAncestry({node, scope}: CompilerPath): boolean {
 	return (
 		node.type === "JSClassHead" &&
 		node.superClass !== undefined &&
@@ -12,7 +12,7 @@ function checkClassComponentAncestry({node, scope}: Path): boolean {
 	);
 }
 
-export default function insideClassComponent(path: Path): boolean {
+export default function insideClassComponent(path: CompilerPath): boolean {
 	if (checkClassComponentAncestry(path)) {
 		return true;
 	}

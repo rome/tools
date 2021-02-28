@@ -31,12 +31,12 @@ import {inheritLoc} from "@internal/js-ast-utils";
 
 // Can be used with referential equality to determine if paths are derivatives of each other
 // Import for state retention which requires tracking ownership
-export type PathToken = {
-	type: "PATH_TOKEN";
+export type CompilerPathToken = {
+	type: "COMPILER_PATH_TOKEN";
 };
 
-export type PathOptions = {
-	ancestryPaths?: Path[];
+export type CompilerPathOptions = {
+	ancestryPaths?: CompilerPath[];
 	nodeKey?: string;
 	listKey?: number;
 	parentScope?: Scope;
@@ -47,7 +47,7 @@ export type PathOptions = {
 };
 
 // Given a signal, calculate what the formatted code would be
-function getFormattedCodeFromSignal(signal: ExitSignal, path: Path): string {
+function getFormattedCodeFromSignal(signal: ExitSignal, path: CompilerPath): string {
 	switch (signal.type) {
 		case "REMOVE":
 			return "";
@@ -79,12 +79,12 @@ function getFormattedCodeFromSignal(signal: ExitSignal, path: Path): string {
 	}
 }
 
-export default class Path {
+export default class CompilerPath {
 	constructor(
 		node: AnyNode,
 		context: CompilerContext,
-		opts: PathOptions,
-		token?: PathToken,
+		opts: CompilerPathOptions,
+		token?: CompilerPathToken,
 	) {
 		const ancestryPaths = opts.ancestryPaths || [];
 		this.ancestryPaths = ancestryPaths;
@@ -92,7 +92,7 @@ export default class Path {
 		if (node === MOCK_PARENT) {
 			this.parentPath = this;
 		} else if (ancestryPaths.length === 0) {
-			this.parentPath = new Path(
+			this.parentPath = new CompilerPath(
 				MOCK_PARENT,
 				context,
 				{
@@ -127,23 +127,23 @@ export default class Path {
 
 		this.isMock = opts.isMock === true;
 		this.opts = opts;
-		this.token = token ?? {type: "PATH_TOKEN"};
+		this.token = token ?? {type: "COMPILER_PATH_TOKEN"};
 	}
 
 	public context: CompilerContext;
 	public node: AnyNode;
 	public parent: AnyNode;
 	public scope: Scope;
-	public ancestryPaths: Path[];
-	public parentPath: Path;
-	public token: PathToken;
-	public opts: PathOptions;
+	public ancestryPaths: CompilerPath[];
+	public parentPath: CompilerPath;
+	public token: CompilerPathToken;
+	public opts: CompilerPathOptions;
 
 	private isMock: boolean;
 	private nodeKey: undefined | string;
 	private listKey: undefined | number;
 
-	public findAncestry(callback: (path: Path) => boolean): undefined | Path {
+	public findAncestry(callback: (path: CompilerPath) => boolean): undefined | CompilerPath {
 		for (const path of this.ancestryPaths) {
 			if (callback(path)) {
 				return path;
@@ -152,7 +152,7 @@ export default class Path {
 		return undefined;
 	}
 
-	public getChildPath(key: string): Path {
+	public getChildPath(key: string): CompilerPath {
 		// rome-ignore lint/ts/noExplicitAny: future cleanup
 		const node = (this.node as any)[key];
 		if (node === undefined) {
@@ -161,7 +161,7 @@ export default class Path {
 			);
 		}
 
-		return new Path(
+		return new CompilerPath(
 			node,
 			this.context,
 			{
@@ -172,7 +172,7 @@ export default class Path {
 		);
 	}
 
-	public getChildPaths(key: string): Path[] {
+	public getChildPaths(key: string): CompilerPath[] {
 		// rome-ignore lint/ts/noExplicitAny: future cleanup
 		const nodes = (this.node as any)[key];
 
@@ -189,7 +189,7 @@ export default class Path {
 		const ancestryPaths = this.ancestryPaths.concat([this]);
 
 		return nodes.map((node: AnyNode, i: number) => {
-			return new Path(
+			return new CompilerPath(
 				node,
 				this.context,
 				{
@@ -205,7 +205,7 @@ export default class Path {
 	public getPathKeys(): string[] {
 		const parts = [];
 
-		let path: undefined | Path = this;
+		let path: undefined | CompilerPath = this;
 		while (path !== undefined && !path.isMock) {
 			if (path.listKey !== undefined) {
 				parts.push(String(path.listKey));
@@ -219,18 +219,18 @@ export default class Path {
 		return parts.reverse();
 	}
 
-	public fork(newNode: AnyNode): Path {
-		return new Path(newNode, this.context, this.getPathOptions(), this.token);
+	public fork(newNode: AnyNode): CompilerPath {
+		return new CompilerPath(newNode, this.context, this.getPathOptions(), this.token);
 	}
 
-	private getPathOptions(): PathOptions {
+	private getPathOptions(): CompilerPathOptions {
 		return {
 			...this.opts,
 			parentScope: this.scope === undefined ? undefined : this.scope.parentScope,
 		};
 	}
 
-	public traverse(name: string, callback: (path: Path) => void) {
+	public traverse(name: string, callback: (path: CompilerPath) => void) {
 		this.reduceNode({
 			name,
 			enter(path) {
@@ -242,7 +242,7 @@ export default class Path {
 
 	public reduceNode(
 		visitors: AnyVisitor | AnyVisitors,
-		opts?: Partial<PathOptions>,
+		opts?: Partial<CompilerPathOptions>,
 	): AnyNodes {
 		return reduceNode(
 			this.node,
@@ -254,7 +254,7 @@ export default class Path {
 
 	public reduceSignal(
 		visitors: AnyVisitor | AnyVisitors,
-		opts?: Partial<PathOptions>,
+		opts?: Partial<CompilerPathOptions>,
 	): ExitSignal {
 		return reduceSignal(
 			this.node,

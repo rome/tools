@@ -3,7 +3,7 @@ import {Position} from "./types";
 import {pretty} from "@internal/pretty-format";
 import {derivePositionKey} from "./utils";
 import {ExtendedMap} from "@internal/collections";
-import {AnyPath, equalPaths} from "@internal/path";
+import {Path, equalPaths} from "@internal/path";
 
 type GetPosition = () => Position;
 
@@ -18,7 +18,7 @@ export default class PositionTracker {
 			},
 			getPosition,
 		}: {
-			path: undefined | AnyPath;
+			path: undefined | Path;
 			input: string;
 			offsetPosition?: Position;
 			getPosition?: GetPosition;
@@ -36,7 +36,7 @@ export default class PositionTracker {
 		this.cachedPositions = new Map();
 	}
 
-	private path: undefined | AnyPath;
+	private path: undefined | Path;
 	private input: string;
 	private latestPosition: Position;
 	public cachedPositions: Map<number, Position>;
@@ -45,7 +45,7 @@ export default class PositionTracker {
 
 	public getIndexFromPosition(
 		pos: Position,
-		path: undefined | AnyPath,
+		path: undefined | Path,
 	): ZeroIndexed {
 		if (!equalPaths(path, this.path)) {
 			throw new Error(

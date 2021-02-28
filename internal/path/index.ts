@@ -8,13 +8,15 @@
 import AbsoluteFilePath from "./classes/AbsoluteFilePath";
 import RelativePath from "./classes/RelativePath";
 import UIDPath from "./classes/UIDPath";
+import DataURIPath from "./classes/DataURIPath";
 import URLPath from "./classes/URLPath";
-import {AnyPath} from "./types";
+import {Path} from "./types";
 
 export {default as AbsoluteFilePath} from "./classes/AbsoluteFilePath";
 export {default as RelativePath} from "./classes/RelativePath";
 export {default as UIDPath} from "./classes/UIDPath";
 export {default as URLPath} from "./classes/URLPath";
+export {default as DataURIPath} from "./classes/DataURIPath";
 
 export {validateParsedPathWindowsDriveLetter} from "./parse";
 export * from "./factories";
@@ -23,8 +25,8 @@ export * from "./types";
 export * from "./constants";
 
 export function equalPaths(
-	a: undefined | AnyPath,
-	b: undefined | AnyPath,
+	a: undefined | Path,
+	b: undefined | Path,
 ): boolean {
 	if (a === b) {
 		return true;
@@ -37,11 +39,12 @@ export function equalPaths(
 	return false;
 }
 
-export function isPath(val: unknown): val is AnyPath {
+export function isPath(val: unknown): val is Path {
 	return (
 		val instanceof RelativePath ||
 		val instanceof AbsoluteFilePath ||
 		val instanceof URLPath ||
-		val instanceof UIDPath
+		val instanceof UIDPath ||
+		val instanceof DataURIPath
 	);
 }

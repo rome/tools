@@ -11,7 +11,7 @@ import {highlightCode} from "@internal/markup-syntax-highlight";
 import {inferDiagnosticLanguageFromPath} from "@internal/core/common/file-handlers";
 import {concatMarkup, joinMarkupLines, markup} from "@internal/markup";
 import {markupToHtml} from "@internal/cli-layout";
-import {createAnyPath} from "@internal/path";
+import {createPath} from "@internal/path";
 import {dedent} from "@internal/string-utils";
 import {tests} from "@internal/compiler/lint/rules/tests";
 import {ROOT, modifyGeneratedFile} from "../_utils";
@@ -25,7 +25,7 @@ function pre(inner: string): string {
 }
 
 function highlightPre(filename: string, code: string): string {
-	const path = createAnyPath(filename);
+	const path = createPath(filename);
 	return pre(
 		joinMarkupLines(
 			markupToHtml(
@@ -93,7 +93,7 @@ async function run(
 				markupOptions: {
 					normalizePosition() {
 						return {
-							path: createAnyPath(filename),
+							path: createPath(filename),
 						};
 					},
 				},

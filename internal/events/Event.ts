@@ -104,13 +104,15 @@ export default class Event<Param, Ret = void> {
 
 	public wait(val: Ret, timeout?: Duration): Promise<Param> {
 		return new Promise((resolve, reject) => {
-			let timeoutId: undefined | NodeJS.Timeout;
-			let timedOut = false;
+			const resource = this.subscribe(async (param, resource) => {
+				resolve(param);
+				await resource.release();
+				return val;
+			});
 
 			if (timeout !== undefined) {
-				timeoutId = timeout.setTimeout(
+				resource.addTimeout("WaitTimeout", timeout.setTimeout(
 					() => {
-						timedOut = true;
 						resource.release().then(() => {
 							reject(
 								new Error(
@@ -121,22 +123,8 @@ export default class Event<Param, Ret = void> {
 							reject(err);
 						});
 					},
-				);
+				));
 			}
-
-			const resource = this.subscribe(async (param, resource) => {
-				if (timedOut) {
-					return val;
-				}
-
-				if (timeoutId !== undefined) {
-					clearTimeout(timeoutId);
-				}
-
-				resolve(param);
-				await resource.release();
-				return val;
-			});
 		});
 	}
 

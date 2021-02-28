@@ -2,7 +2,7 @@ import {createDiagnosticsCategory} from "./index";
 import {AnyMarkups, StaticMarkup, markup} from "@internal/markup";
 import {buildSuggestionAdvice} from "../helpers";
 import {SourceLocation} from "@internal/parser-core";
-import {AnyPath} from "@internal/path";
+import {Path} from "@internal/path";
 import {DIAGNOSTIC_CATEGORIES} from "../categories";
 
 // @internal/js-analysis
@@ -37,7 +37,7 @@ export const typeCheck = createDiagnosticsCategory({
 	}),
 	UNKNOWN_IMPORT: (
 		importedName: string,
-		source: AnyPath,
+		source: Path,
 		possibleNames: string[],
 	) => ({
 		category: DIAGNOSTIC_CATEGORIES["typeCheck/unknownImport"],

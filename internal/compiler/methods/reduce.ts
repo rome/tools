@@ -9,8 +9,8 @@ import {
 	AnyVisitors,
 	CompilerContext,
 	ExitSignal,
-	Path,
-	PathOptions,
+	CompilerPath,
+	CompilerPathOptions,
 	signals,
 } from "@internal/compiler";
 import {AnyNode, AnyNodes, visitorKeys as allVisitorKeys} from "@internal/ast";
@@ -29,7 +29,7 @@ import {AnyVisitorState} from "../lib/VisitorState";
 /**
  * Validate the return value of an enter or exit transform
  */
-function validateSignal(transformName: string, signal: ExitSignal, path: Path) {
+function validateSignal(transformName: string, signal: ExitSignal, path: CompilerPath) {
 	// Verify common mistake of forgetting to return something
 	if (typeof signal === "undefined") {
 		throw new Error(
@@ -83,7 +83,7 @@ function isRetainSignal(
 	}
 }
 
-function maybeFork(path: Path, signal: ReplaceSignal | RetainSignal): Path {
+function maybeFork(path: CompilerPath, signal: ReplaceSignal | RetainSignal): CompilerPath {
 	if (isRetainSignal(path.node, signal)) {
 		return path;
 	} else {
@@ -142,7 +142,7 @@ export function reduceNode(
 	ast: AnyNode,
 	visitors: AnyVisitor | AnyVisitors,
 	context: CompilerContext,
-	pathOpts: PathOptions = {},
+	pathOpts: CompilerPathOptions = {},
 ): AnyNodes {
 	const res = _reduceSignal(
 		ast,
@@ -174,7 +174,7 @@ export function reduceSignal(
 	ast: AnyNode,
 	visitors: AnyVisitor | AnyVisitors,
 	context: CompilerContext,
-	pathOpts: PathOptions = {},
+	pathOpts: CompilerPathOptions = {},
 ): ExitSignal {
 	return _reduceSignal(
 		ast,
@@ -191,10 +191,10 @@ function _reduceSignal(
 	origNode: AnyNode,
 	visitors: AnyVisitors,
 	context: CompilerContext,
-	pathOpts: PathOptions,
+	pathOpts: CompilerPathOptions,
 ): ExitSignal {
 	// Initialize first path
-	let path: Path = new Path(origNode, context, pathOpts);
+	let path: CompilerPath = new CompilerPath(origNode, context, pathOpts);
 
 	const popState: PopState = new Set();
 
@@ -242,7 +242,7 @@ function _reduceSignal(
 		if (visitorKeys !== undefined) {
 			// Build the ancestry paths that we'll pass to each child path
 			const ancestryPaths = pathOpts.ancestryPaths || [];
-			let childAncestryPaths: Path[] = [path].concat(ancestryPaths);
+			let childAncestryPaths: CompilerPath[] = [path].concat(ancestryPaths);
 
 			// Reduce the children
 			for (const key of visitorKeys) {

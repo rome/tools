@@ -16,7 +16,7 @@ import {
 	CompileResult,
 	CompilerContext,
 	CompilerOptions,
-	Path,
+	CompilerPath,
 	TransformStageName,
 	analyzeDependencies,
 	compile,
@@ -177,7 +177,7 @@ export default class WorkerAPI {
 		});
 		ast = context.reduceRoot({
 			name: "updateInlineSnapshots",
-			enter(path: Path) {
+			enter(path: CompilerPath) {
 				const {node} = path;
 				if (node.type !== "JSCallExpression" || pendingUpdates.size === 0) {
 					return signals.retain;

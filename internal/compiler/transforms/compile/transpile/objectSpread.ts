@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Path, createVisitor, signals} from "@internal/compiler";
+import {CompilerPath, createVisitor, signals} from "@internal/compiler";
 import {
 	AnyJSObjectMember,
 	AnyJSStatement,
@@ -74,7 +74,7 @@ function getRestProperty(
 }
 
 function transformSpreadProperty(
-	path: Path,
+	path: CompilerPath,
 	node: JSObjectExpression,
 ): JSCallExpression {
 	let props: AnyJSObjectMember[] = [];
@@ -108,7 +108,7 @@ function transformSpreadProperty(
 }
 
 function transformRestProperty(
-	path: Path,
+	path: CompilerPath,
 	node: JSVariableDeclaration,
 ): AnyJSStatement[] {
 	const nodes: AnyJSStatement[] = [];

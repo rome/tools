@@ -4,7 +4,7 @@ import {
 	JSBooleanLiteral,
 	jsUnaryExpression,
 } from "@internal/ast";
-import {Path, Scope, createVisitor, signals} from "@internal/compiler";
+import {CompilerPath, Scope, createVisitor, signals} from "@internal/compiler";
 import {descriptions} from "@internal/diagnostics";
 
 import {resolveIndirection} from "@internal/js-ast-utils";
@@ -77,7 +77,7 @@ export default createVisitor({
 });
 
 function simplifyBinaryExpression(
-	path: Path,
+	path: CompilerPath,
 	toRemove: JSBooleanLiteral,
 	expression: AnyJSExpression,
 	negated: boolean,

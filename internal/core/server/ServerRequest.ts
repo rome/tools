@@ -78,8 +78,8 @@ import {
 	AbsoluteFilePath,
 	AbsoluteFilePathMap,
 	AbsoluteFilePathSet,
-	AnyFilePath,
-	AnyPath,
+	FilePath,
+	Path,
 	createAbsoluteFilePath,
 	createUIDPath,
 } from "@internal/path";
@@ -121,11 +121,11 @@ type WrapRequestDiagnosticOpts = {
 	noRetry?: boolean;
 };
 
-export type ServerRequestGlobArgs = [AnyFilePath, DiagnosticLocation][];
+export type ServerRequestGlobArgs = [FilePath, DiagnosticLocation][];
 
 type ServerRequestGlobOptions = Omit<GlobOptions, "args" | "relativeDirectory" | "request"> & {
 	args?: ServerRequestGlobArgs;
-	tryAlternateArg?: (path: AnyPath) => undefined | AnyPath;
+	tryAlternateArg?: (path: Path) => undefined | Path;
 	ignoreArgumentMisses?: boolean;
 	ignoreProjectIgnore?: boolean;
 	advice?: DiagnosticAdvice;
@@ -345,8 +345,8 @@ export default class ServerRequest {
 					// Maybe a progress bar later?
 				},
 				beforeFileWrite: async (path, fd) => {
-					const content = await fd.readFile();
-					await this.server.recoveryStore.save(this, path, content);
+					const data = await fd.readFile();
+					await this.server.recoveryStore.save(this, path, data.buffer);
 				},
 				unexpectedModified: (path, expectedMtime, actualMtime) => {
 					this.logger.info(
@@ -378,7 +378,7 @@ export default class ServerRequest {
 		await this.server.recoveryStore.commit(this);
 		this.logger.info(markup`Flushed ${totalFiles} files`);
 
-		return files.keysToSet();
+		return new AbsoluteFilePathSet(files.keys());
 	}
 
 	public updateRequestFlags(flags: Partial<ClientRequestFlags>) {
@@ -593,7 +593,7 @@ export default class ServerRequest {
 		});
 	}
 
-	private maybeReadMemoryFile(path: AnyPath): undefined | string {
+	private maybeReadMemoryFile(path: Path): undefined | string {
 		if (path.isUID()) {
 			switch (path.getBasename()) {
 				case "argv":

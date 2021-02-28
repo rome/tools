@@ -206,12 +206,12 @@ export default class MemoryFileSystem {
 		const files = this.server.virtualModules.getStatMap();
 		const reader = new CachedFileReader();
 
-		for (const [path, {stats, content}] of files) {
-			if (stats.isDirectory()) {
-				this.directories.set(path, toSimpleStats(stats));
+		for (const [path, entry] of files) {
+			if (entry.type === "directory") {
+				this.directories.set(path, toSimpleStats(entry.stats));
 			} else {
-				reader.cache(path, Buffer.from(content ?? ""));
-				this.files.set(path, toSimpleStats(stats));
+				reader.cache(path, entry.content);
+				this.files.set(path, toSimpleStats(entry.stats));
 				this.addFileToDirectoryListing(path);
 
 				if (isValidManifest(path)) {

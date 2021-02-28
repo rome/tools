@@ -6,7 +6,7 @@
  */
 
 import {ProjectConfig} from "@internal/project";
-import {AnyPath} from "@internal/path";
+import {Path} from "@internal/path";
 import {ExtensionHandler, PartialExtensionHandler} from "./types";
 import {
 	cjsHandler,
@@ -38,7 +38,7 @@ export type GetFileHandlerResult = {
 };
 
 export function inferDiagnosticLanguageFromPath(
-	path: undefined | AnyPath,
+	path: undefined | Path,
 	existing?: DiagnosticLanguage,
 ): DiagnosticLanguage {
 	if (existing !== undefined && existing !== "unknown") {
@@ -65,7 +65,7 @@ export function getFileHandlerExtensions(
 }
 
 export function getFileHandlerFromPath(
-	path: AnyPath,
+	path: Path,
 	projectConfig: undefined | ProjectConfig,
 ): GetFileHandlerResult {
 	const basename = path.getBasename();
@@ -91,7 +91,7 @@ export function getFileHandlerFromPath(
 }
 
 export function getFileHandlerFromPathAssert(
-	path: AnyPath,
+	path: Path,
 	projectConfig: undefined | ProjectConfig,
 ): Required<GetFileHandlerResult> {
 	const {handler, ext} = getFileHandlerFromPath(path, projectConfig);

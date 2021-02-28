@@ -1,3 +1,4 @@
+import {isSafeInstanceof} from "@internal/typescript-helpers";
 import {
 	CODES,
 	PATH_PARSED_CODES,
@@ -6,7 +7,7 @@ import {
 	instanceToErrorCode,
 	pathMapToCode,
 	pathSetToCode,
-} from "./constants";
+} from "./codes";
 import {
 	Position,
 	SourceLocation,
@@ -22,10 +23,10 @@ import {
 	RSERValue,
 	RSERValueObjects,
 } from "./types";
-import {IntSize} from "./int";
+import {IntSize} from "./utils";
 import {UnionToIntersection, isPlainObject} from "@internal/typescript-helpers";
 import {
-	AnyPath,
+	Path,
 	MixedPathMap,
 	MixedPathSet,
 	PathSet,
@@ -35,7 +36,7 @@ import {
 } from "@internal/path";
 import {getErrorStructure} from "@internal/errors";
 import {pretty} from "@internal/pretty-format";
-import {utf8Count} from "./utf8";
+import {utf8Count} from "../utf8";
 import {
 	AnyIndexedNumber,
 	OneIndexed,
@@ -253,22 +254,28 @@ export default abstract class RSERWriterBase {
 		}
 	}
 
-	private encodePath(path: AnyPath) {
+	private encodePath(path: Path) {
 		if (this.encodePossibleReference(path)) {
 			return;
 		}
 
-		const {parsed} = path;
 		this.writeByte(CODES.PATH);
-		
-		this.encodeBoolean(parsed.explicitDirectory);
 
+		const {parsed} = path;
+		this.encodeBoolean(parsed.explicitDirectory);
 		this.encodeSize(parsed.relativeSegments.length);
 		for (const seg of parsed.relativeSegments) {
 			this.encodeStringValue(seg);
 		}
 
 		switch (parsed.type) {
+			case "data": {
+				this.writeByte(PATH_PARSED_CODES.DATA);
+				this.encodeOptionalStringValue(parsed.mime);
+				this.encodeValue(parsed.data);
+				break;
+			}
+
 			case "absolute-unix": {
 				this.writeByte(PATH_PARSED_CODES.ABSOLUTE_UNIX);
 				break;
@@ -363,6 +370,10 @@ export default abstract class RSERWriterBase {
 
 	private encodeArrayBuffer(val: ArrayBuffer) {
 		this.writeByte(CODES.ARRAY_BUFFER);
+		this.encodeArrayBufferValue(val);
+	}
+
+	private encodeArrayBufferValue(val: ArrayBuffer) {
 		this.encodeSize(val.byteLength);
 		this.writeBytes(new Uint8Array(val));
 	}
@@ -420,31 +431,31 @@ export default abstract class RSERWriterBase {
 			return this.encodePlainObject(val);
 		}
 
-		if (val instanceof Set) {
+		if (isSafeInstanceof(val, Set)) {
 			return this.encodeSet(val);
 		}
-
-		if (val instanceof Map) {
-			return this.encodeMap(val);
-		}
-
+		
 		if (isPathMap(val)) {
 			return this.encodePathMap(val);
+		}
+
+		if (isSafeInstanceof(val, Map)) {
+			return this.encodeMap(val);
 		}
 
 		if (isPathSet(val)) {
 			return this.encodePathSet(val);
 		}
 
-		if (val instanceof Duration) {
+		if (isSafeInstanceof(val, Duration)) {
 			return this.encodeDuration(val);
 		}
 
-		if (val instanceof OneIndexed || val instanceof ZeroIndexed) {
+		if (isSafeInstanceof(val, OneIndexed) || isSafeInstanceof(val, ZeroIndexed)) {
 			return this.encodeIndexedNumber(val);
 		}
 
-		if (val instanceof Date) {
+		if (isSafeInstanceof(val, Date)) {
 			return this.encodeDate(val);
 		}
 
@@ -452,11 +463,11 @@ export default abstract class RSERWriterBase {
 			return this.encodeError(val);
 		}
 
-		if (val instanceof RegExp) {
+		if (isSafeInstanceof(val, RegExp)) {
 			return this.encodeRegExp(val);
 		}
 
-		if (val instanceof ArrayBuffer) {
+		if (isSafeInstanceof(val, ArrayBuffer)) {
 			return this.encodeArrayBuffer(val);
 		}
 

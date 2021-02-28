@@ -187,7 +187,6 @@ export class MappedKeyMap<RealKey, SerialKey extends Primitive, Value>
 		this.serialToRealKey = new Map();
 
 		this.serialize = serialize;
-		this[Symbol.toStringTag] = "MappedMap";
 
 		if (entries !== undefined) {
 			for (const [key, value] of entries) {
@@ -282,3 +281,5 @@ export class MappedKeyMap<RealKey, SerialKey extends Primitive, Value>
 		return this;
 	}
 }
+
+MappedKeyMap.prototype[Symbol.toStringTag] = "MappedKeyMap";

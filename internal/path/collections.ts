@@ -6,228 +6,131 @@
  */
 
 import {MappedKeyMap, MappedSet} from "@internal/collections";
-import {AnyPath} from "./types";
+import {Path} from "./types";
 import AbsoluteFilePath from "./classes/AbsoluteFilePath";
 import RelativePath from "./classes/RelativePath";
 import UIDPath from "./classes/UIDPath";
 import URLPath from "./classes/URLPath";
-import {
-	createAbsoluteFilePath,
-	createAnyPath,
-	createRelativePath,
-	createUIDPath,
-	createURLPath,
-} from "./factories";
-
-function flatten<FilePath extends AnyPath>(
-	items: Iterable<FilePath>[],
-): FilePath[] {
-	let paths: FilePath[] = [];
-	for (const iterable of items) {
-		paths = paths.concat(Array.from(iterable));
-	}
-	return paths;
-}
+import DataURIPath from "./classes/DataURIPath";
 
 // Sometimes we don't want to have to deal with what a FilePath serializes into
 // For those purposes we have these wrappers around Map and Set. Here we can add some custom logic
 // to speed up the usage of FilePaths in these scenarios.
 // The API here attempts to match what is expected from the native classes, however we may deviate from it
 // to avoid the usage of getters and generator/symbol indirection for iteration.
-export abstract class BasePathMap<Path extends AnyPath, Value>
-	extends MappedKeyMap<Path, string, Value> {
-	constructor(entries?: [Path, Value][]) {
+abstract class BasePathMap<PathT extends Path, Value>
+	extends MappedKeyMap<PathT, string, Value> {
+	constructor(entries?: [PathT, Value][]) {
 		super(
 			(path) => {
 				const uniq = path.getUnique();
-				return [uniq.join(), uniq as Path];
+				return [uniq.join(), uniq as PathT];
 			},
 			entries,
 		);
-		this[Symbol.toStringTag] = "BasePathMap";
 	}
 
-	public abstract createKey(str: string): Path;
-
-	public [Symbol.toStringTag]: string;
-
-	public setString(path: string, value: Value) {
-		this.set(this.createKey(path), value);
-	}
+	public abstract setValidated(key: PathT, value: Value): void;
 }
 
 export class AbsoluteFilePathMap<Value>
 	extends BasePathMap<AbsoluteFilePath, Value> {
-	constructor(entries?: [AbsoluteFilePath, Value][]) {
-		super(entries);
-		this[Symbol.toStringTag] = "AbsoluteFilePathMap";
-	}
-
-	public createKey(str: string): AbsoluteFilePath {
-		return createAbsoluteFilePath(str);
-	}
-
-	public keysToSet(): AbsoluteFilePathSet {
-		return new AbsoluteFilePathSet(this.keys());
+	public setValidated(key: Path, value: Value) {
+		this.set(key.assertAbsolute(), value);
 	}
 }
+AbsoluteFilePathMap.prototype[Symbol.toStringTag] = "AbsoluteFilePathMap";
 
 export class RelativePathMap<Value> extends BasePathMap<RelativePath, Value> {
-	constructor(entries?: [RelativePath, Value][]) {
-		super(entries);
-		this[Symbol.toStringTag] = "RelativePathMap";
-	}
-
-	public createKey(str: string): RelativePath {
-		return createRelativePath(str);
-	}
-
-	public keysToSet(): RelativePathSet {
-		return new RelativePathSet(this.keys());
+	public setValidated(key: Path, value: Value) {
+		this.set(key.assertRelative(), value);
 	}
 }
+RelativePathMap.prototype[Symbol.toStringTag] = "RelativePathMap";
 
 export class URLPathMap<Value> extends BasePathMap<URLPath, Value> {
-	constructor(entries?: [URLPath, Value][]) {
-		super(entries);
-		this[Symbol.toStringTag] = "URLPathMap";
-	}
-
-	public createKey(str: string): URLPath {
-		return createURLPath(str);
-	}
-
-	public keysToSet(): URLPathSet {
-		return new URLPathSet(this.keys());
+	public setValidated(key: Path, value: Value) {
+		this.set(key.assertURL(), value);
 	}
 }
+URLPathMap.prototype[Symbol.toStringTag] = "URLPathMap";
+
+export class DataURIPathMap<Value> extends BasePathMap<DataURIPath, Value> {
+	public setValidated(key: Path, value: Value) {
+		this.set(key.assertDataURI(), value);
+	}
+}
+DataURIPathMap.prototype[Symbol.toStringTag] = "DataURIPathMap";
 
 export class UIDPathMap<Value> extends BasePathMap<UIDPath, Value> {
-	constructor(entries?: [UIDPath, Value][]) {
-		super(entries);
-		this[Symbol.toStringTag] = "UIDPathMap";
-	}
-
-	public createKey(str: string): UIDPath {
-		return createUIDPath(str);
-	}
-
-	public keysToSet(): UIDPathSet {
-		return new UIDPathSet(this.keys());
+	public setValidated(key: Path, value: Value) {
+		this.set(key.assertUID(), value);
 	}
 }
+UIDPathMap.prototype[Symbol.toStringTag] = "UIDPathMap";
 
-export class MixedPathMap<Value> extends BasePathMap<AnyPath, Value> {
-	constructor(entries?: [AnyPath, Value][]) {
-		super(entries);
-		this[Symbol.toStringTag] = "MixedPathMap";
-	}
-
-	public createKey(str: string): AnyPath {
-		return createAnyPath(str);
-	}
-
-	public keysToSet(): MixedPathSet {
-		return new MixedPathSet(this.keys());
+export class MixedPathMap<Value> extends BasePathMap<Path, Value> {
+	public setValidated(key: Path, value: Value) {
+		this.set(key, value);
 	}
 }
+MixedPathMap.prototype[Symbol.toStringTag] = "MixedPathMap";
 
 abstract class BasePathSet<
-	Path extends AnyPath,
-	PathMap extends BasePathMap<Path, Path> = BasePathMap<Path, Path>
-> extends MappedSet<Path, string> {
-	constructor(entries?: Iterable<Path>) {
+	PathT extends Path,
+	PathSet extends BasePathSet<PathT, PathSet>
+> extends MappedSet<PathT, string> {
+	constructor(entries?: Iterable<PathT>) {
 		super(
 			(path) => {
 				const uniq = path.getUnique();
-				return [path.join(), uniq as Path];
+				return [path.join(), uniq as PathT];
 			},
 			entries,
 		);
 	}
 
-	abstract addString(str: string): void;
-
-	public addSet(set: BasePathSet<Path, PathMap>): this {
-		for (const path of set) {
-			this.add(path);
-		}
-		return this;
-	}
+	public abstract addValidated(path: PathT): void;
 }
 
-export class AbsoluteFilePathSet extends BasePathSet<AbsoluteFilePath> {
-	constructor(entries?: Iterable<AbsoluteFilePath>) {
-		super(entries);
-		this[Symbol.toStringTag] = "AbsoluteFilePathMap";
-	}
-
-	public addString(str: string): void {
-		this.add(createAbsoluteFilePath(str));
-	}
-
-	public concat(...items: Iterable<AbsoluteFilePath>[]): AbsoluteFilePathSet {
-		return new AbsoluteFilePathSet(flatten(items));
+export class AbsoluteFilePathSet extends BasePathSet<AbsoluteFilePath, AbsoluteFilePathSet> {
+	public addValidated(path: Path) {
+		this.add(path.assertAbsolute());
 	}
 }
+AbsoluteFilePathSet.prototype[Symbol.toStringTag] = "AbsoluteFilePath";
 
-export class RelativePathSet extends BasePathSet<RelativePath> {
-	constructor(entries?: Iterable<RelativePath>) {
-		super(entries);
-		this[Symbol.toStringTag] = "RelativePathSet";
-	}
-
-	public addString(str: string): void {
-		this.add(createRelativePath(str));
-	}
-
-	public concat(...items: Iterable<RelativePath>[]): RelativePathSet {
-		return new RelativePathSet(flatten(items));
+export class RelativePathSet extends BasePathSet<RelativePath, RelativePathSet> {
+	public addValidated(path: Path) {
+		this.add(path.assertRelative());
 	}
 }
+RelativePathSet.prototype[Symbol.toStringTag] = "RelativePath";
 
-export class URLPathSet extends BasePathSet<URLPath> {
-	constructor(entries?: Iterable<URLPath>) {
-		super(entries);
-		this[Symbol.toStringTag] = "URLPathSet";
-	}
-
-	public addString(str: string): void {
-		this.add(createURLPath(str));
-	}
-
-	public concat(...items: Iterable<URLPath>[]): URLPathSet {
-		return new URLPathSet(flatten(items));
+export class URLPathSet extends BasePathSet<URLPath, URLPathSet> {
+	public addValidated(path: Path) {
+		this.add(path.assertURL());
 	}
 }
+URLPathSet.prototype[Symbol.toStringTag] = "URLPath";
 
-export class UIDPathSet extends BasePathSet<UIDPath> {
-	constructor(entries?: Iterable<UIDPath>) {
-		super(entries);
-		this[Symbol.toStringTag] = "UIDPathSet";
-	}
-
-	public addString(str: string): void {
-		this.add(createUIDPath(str));
-	}
-
-	public concat(...items: Iterable<UIDPath>[]): UIDPathSet {
-		return new UIDPathSet(flatten(items));
+export class DataURIPathSet extends BasePathSet<DataURIPath, DataURIPathSet> {
+	public addValidated(path: Path) {
+		this.add(path.assertDataURI());
 	}
 }
+DataURIPathSet.prototype[Symbol.toStringTag] = "DataURIPath";
 
-export class MixedPathSet extends BasePathSet<AnyPath> {
-	constructor(entries?: Iterable<AnyPath>) {
-		super(entries);
-		this[Symbol.toStringTag] = "MixedPathSet";
+export class UIDPathSet extends BasePathSet<UIDPath, UIDPathSet> {
+	public addValidated(path: Path) {
+		this.add(path.assertUID());
 	}
+}
+UIDPathSet.prototype[Symbol.toStringTag] = "UIDPath";
 
-	public addString(str: string): void {
-		this.add(createAnyPath(str));
-	}
-
-	public concat(...items: Iterable<AnyPath>[]): MixedPathSet {
-		return new MixedPathSet(flatten(items));
+export class MixedPathSet extends BasePathSet<Path, MixedPathSet> {
+	public addValidated(path: Path) {
+		this.add(path);
 	}
 }
 
@@ -236,7 +139,8 @@ export type PathSet =
 	| RelativePathSet
 	| URLPathSet
 	| UIDPathSet
-	| MixedPathSet;
+	| MixedPathSet
+	| DataURIPathSet;
 
 export function isPathSet(val: unknown): val is PathSet {
 	return (
@@ -244,7 +148,8 @@ export function isPathSet(val: unknown): val is PathSet {
 		val instanceof RelativePathSet ||
 		val instanceof URLPathSet ||
 		val instanceof UIDPathSet ||
-		val instanceof MixedPathSet
+		val instanceof MixedPathSet ||
+		val instanceof DataURIPathSet
 	);
 }
 
@@ -253,7 +158,8 @@ export type PathMap<Value> =
 	| RelativePathMap<Value>
 	| URLPathMap<Value>
 	| UIDPathMap<Value>
-	| MixedPathMap<Value>;
+	| MixedPathMap<Value>
+	| DataURIPathMap<Value>;
 
 export function isPathMap(val: unknown): val is PathMap<unknown> {
 	return (
@@ -261,10 +167,11 @@ export function isPathMap(val: unknown): val is PathMap<unknown> {
 		val instanceof RelativePathMap ||
 		val instanceof URLPathMap ||
 		val instanceof UIDPathMap ||
-		val instanceof MixedPathMap
+		val instanceof MixedPathMap ||
+		val instanceof DataURIPathMap
 	);
 }
 
-export type PathMapValue<T> = T extends BasePathMap<AnyPath, infer V>
+export type PathMapValue<T> = T extends BasePathMap<Path, infer V>
 	? V
 	: never;

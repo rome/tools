@@ -11,13 +11,13 @@ import {Cache} from "@internal/compiler";
 import {formatAST} from "@internal/formatter";
 import {CompileRequest} from "../types";
 import transform from "../methods/transform";
-import {AnyPath} from "@internal/path";
+import {Path} from "@internal/path";
 
 export type CompileResult = {
 	mappings: Mappings;
 	diagnostics: Diagnostics;
 	suppressions: DiagnosticSuppressions;
-	cacheDependencies: AnyPath[];
+	cacheDependencies: Path[];
 	compiledCode: string;
 	sourceText: string;
 };

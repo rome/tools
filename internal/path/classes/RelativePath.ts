@@ -1,6 +1,6 @@
-import {AnyParsedPath, ParsedPathRelative} from "../types";
-import {BasePath, FilePathMemo} from "./BasePath";
-import {AnyFilePath} from "../types";
+import {ParsedPath, ParsedPathRelative} from "../types";
+import {BasePath, FilePathMemo} from "../bases";
+import {FilePath} from "../types";
 
 export default class RelativePath extends BasePath<ParsedPathRelative, RelativePath> {
 	public [Symbol.toStringTag] = "RelativePath";
@@ -9,7 +9,7 @@ export default class RelativePath extends BasePath<ParsedPathRelative, RelativeP
 	// We use this as a hack.
 	protected type: "relative" = "relative";
 
-	protected _equalAbsolute(other: AnyParsedPath): boolean {
+	protected _equalAbsolute(other: ParsedPath): boolean {
 		return other.type === "relative";
 	}
 	
@@ -30,7 +30,9 @@ export default class RelativePath extends BasePath<ParsedPathRelative, RelativeP
 		return this.join();
 	}
 
-	protected _join(segments: Array<string>): string {
+	protected _join(): string {
+		const segments = this.getDisplaySegments();
+
 		if (this.parsed.explicitRelative && segments[0] !== "..") {
 			segments.unshift(".");
 		}
@@ -53,11 +55,11 @@ export default class RelativePath extends BasePath<ParsedPathRelative, RelativeP
 		return new RelativePath(parsed, opts);
 	}
 
-	public isFilePath(): this is AnyFilePath {
+	public isFilePath(): this is FilePath {
 		return true;
 	}
 
-	public assertFilePath(): AnyFilePath {
+	public assertFilePath(): FilePath {
 		return this;
 	}
 
@@ -91,3 +93,5 @@ export default class RelativePath extends BasePath<ParsedPathRelative, RelativeP
 		}
 	}
 }
+
+RelativePath.prototype[Symbol.toStringTag] = "RelativePath";

@@ -19,7 +19,7 @@ import {
 	LintCompilerOptionsDecisionAction,
 } from "../types";
 import {OneIndexed, ZeroIndexed} from "@internal/numbers";
-import {AbsoluteFilePath, AnyPath} from "@internal/path";
+import {AbsoluteFilePath, Path} from "@internal/path";
 import {LinterCompilerOptionsPerFile} from "@internal/core/server/checker/Checker";
 import {escapeSplit} from "@internal/string-utils";
 import {StaticMarkup} from "@internal/markup";
@@ -68,7 +68,7 @@ function addPartPositionOffset(pos: Position, part: string): Position {
 
 export function parseDecisionStrings(
 	{decisions, cwd, path, unexpected}: {
-		path: AnyPath;
+		path: Path;
 		decisions: {
 			start: Position;
 			value: string;

@@ -11,6 +11,7 @@ import {createServerCommand} from "../commands";
 import Bundler from "../bundler/Bundler";
 import {Consumer} from "@internal/consume";
 import {AnyMarkup, markup} from "@internal/markup";
+import { getByteLength } from "@internal/binary/helpers";
 
 type Flags = {
 	quiet: boolean;
@@ -74,13 +75,7 @@ export default createServerCommand<Flags>({
 				const path = dir.append(filename);
 				await path.getParent().createDirectory();
 				await path.writeFile(buff);
-
-				let size = 0;
-				if (typeof buff === "string" || Buffer.isBuffer(buff)) {
-					size = Buffer.byteLength(buff);
-				} else {
-					size = buff.bytesRead;
-				}
+				const size = getByteLength(buff);
 
 				savedList.push(
 					markup`<filelink target="${path.join()}">${filename}</filelink> <filesize dim>${String(size)}</filesize> <inverse> ${kind} </inverse>`,

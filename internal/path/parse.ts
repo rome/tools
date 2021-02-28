@@ -1,5 +1,6 @@
+import {decodeBase64} from "@internal/binary";
 import {HOME_PATH} from ".";
-import {AnyParsedPath, ParsedPathBase, ParsedPathRelative, ParsedPathURL, ParsedPathWindowsDrive, PathSegments} from "./types";
+import {ParsedPath, ParsedPathBase, ParsedPathDataURI, ParsedPathRelative, ParsedPathURL, ParsedPathWindowsDrive, PathSegments} from "./types";
 
 export function splitPathSegments(str: string): PathSegments {
 	if (str === "") {
@@ -11,26 +12,19 @@ export function splitPathSegments(str: string): PathSegments {
 
 export type PathTypeHint = "absolute" | "relative" | "url" | "uid" | "any";
 
-export type ParsePathSegmentsOverrides = {
-	explicitDirectory?: boolean;
-};
-
 export function parseRelativePathSegments(
 	segments: PathSegments,
-	overrides?: ParsePathSegmentsOverrides,
 ): ParsedPathRelative {
 	return {
 		type: "relative",
 		explicitRelative: (segments.length === 0 || segments[0] === "." || segments[0] === ".."),
-		...normalizeSegments(segments),
-		...overrides,
+		...normalizeRelativeSegments(segments),
 	};
 }
 
 // Followed is some gnarly regex, be warned!
 export function parseURLPathSegments(
 	segments: PathSegments,
-	overrides?: ParsePathSegmentsOverrides,
 ): ParsedPathURL {
 	const protocol = segments[0];
 	let rawHostname: ParsedPathURL["hostname"] = segments[2];
@@ -72,13 +66,12 @@ export function parseURLPathSegments(
 		port,
 		username,
 		password,
-		...parseURLPathRelativeSegments(relativeSegments, overrides),
+		...parseURLPathRelativeSegments(relativeSegments),
 	};
 }
 
 export function parseURLPathRelativeSegments(
 	segments: PathSegments,
-	overrides?: ParsePathSegmentsOverrides,
 ): ParsedPathBase & Pick<ParsedPathURL, "hash" | "search"> {
 	// Extract search and hash
 	const search: ParsedPathURL["search"] = new Map();
@@ -130,56 +123,93 @@ export function parseURLPathRelativeSegments(
 	return {
 		search,
 		hash,
-		...normalizeSegments(segments.map((segment) => decodeURIComponent(segment))),
-		...overrides,
+		...normalizeRelativeSegments(segments.map((segment) => decodeURIComponent(segment))),
 	};
 }
 
-export function parsePathSegments(
+function isURLSegments(segments: string[]): boolean {
+	const firstSeg = segments[0];
+	return firstSeg !== undefined && !isWindowsDrive(firstSeg) && firstSeg[firstSeg.length - 1] === ":" && segments[1] === "";
+}
+
+function parseDataURI(raw: string): ParsedPathDataURI {
+	const match = raw.match(/^data:(.*?)(;base64|),([\s\S]*)$/);
+	if (match == null) {
+		throw new Error("Malformed data URI");
+	}
+
+	const mime = match[1];
+	const isBase64 = match[2] !== "";
+	const content = match[3];
+
+	let data;
+	if (isBase64) {
+		data = decodeBase64(content);
+	} else {
+		data = content;
+	}
+
+	return {
+		type: "data",
+		mime,
+		data,
+		relativeSegments: [],
+		explicitDirectory: false,
+	}
+}
+
+export function parsePath(raw: string, hint: PathTypeHint): ParsedPath {
+	if (isHint("url", hint) && raw.startsWith("data:")) {
+		return parseDataURI(raw);
+	}
+
+	const segments = splitPathSegments(raw);
+	return parsePathSegments(segments, hint);
+}
+
+function isHint(desired: PathTypeHint, hint: PathTypeHint): boolean {
+	return hint === "any" || hint === desired;
+}
+
+function parsePathSegments(
 	segments: PathSegments,
 	hint: PathTypeHint,
-	overrides?: ParsePathSegmentsOverrides,
-): AnyParsedPath {
+): ParsedPath {
 	// Detect URL
-	let firstSeg = segments[0] as undefined | string;
-	if (
-		firstSeg !== undefined &&
-		!isWindowsDrive(firstSeg) &&
-		firstSeg[firstSeg.length - 1] === ":" &&
-		segments[1] === ""
-	) {
+	if (isURLSegments(segments)) {
+		const proto = segments[0];
+
+		// Automatically normalize a file scheme into an absolute path
+		if (proto === "file:") {
+			return parsePathSegments(segments.slice(2).map((segment) => decodeURIComponent(segment)), "absolute");
+		}
+
 		// Explicit `uid://foo`
-		if (firstSeg === "uid:") {
+		if (proto === "uid:") {
 			return {
 				type: "uid",
-				explicitDirectory: false,
 				relativeSegments: segments.slice(2),
+				explicitDirectory: false,
 			};
 		}
 
-		if (firstSeg === "file:") {
-			// Automatically normalize a file scheme into an absolute path
-			return parsePathSegments(segments.slice(2).map((segment) => decodeURIComponent(segment)), "absolute", overrides);
-		}
-
-		return parseURLPathSegments(segments, overrides);
+		return parseURLPathSegments(segments);
 	}
 
 	// UIDs do not have any special segment handling
 	if (hint === "uid") {
 		return {
 			type: "uid",
-			explicitDirectory: false,
 			relativeSegments: segments,
+			explicitDirectory: false,
 		};
 	}
 
 	// Explode home directory
-	if ((hint === "absolute" || hint === "any") && segments[0] === "~") {
+	if (isHint("absolute", hint) && segments[0] === "~") {
 		return {
 			...HOME_PATH.parsed,
-			...normalizeSegments([...HOME_PATH.getSegments(), ...segments.slice(1)]),
-			...overrides,
+			...normalizeRelativeSegments([...HOME_PATH.getSegments(), ...segments.slice(1)]),
 		};
 	}
 
@@ -190,16 +220,14 @@ export function parsePathSegments(
 			return {
 				type: "absolute-windows-unc",
 				servername: segments[2],
-				...normalizeSegments(segments.slice(3)),
-				...overrides,
+				...normalizeRelativeSegments(segments.slice(3)),
 			};
 		}
 
 		// POSIX path: /home/sebmck
 		return {
 			type: "absolute-unix",
-			...normalizeSegments(segments.slice(1)),
-			...overrides,
+			...normalizeRelativeSegments(segments.slice(1)),
 		};
 	}
 	
@@ -208,12 +236,11 @@ export function parsePathSegments(
 		return {
 			type: "absolute-windows-drive",
 			letter: validateParsedPathWindowsDriveLetter(segments[0][0]),
-			...normalizeSegments(segments.slice(1)),
-			...overrides,
+			...normalizeRelativeSegments(segments.slice(1)),
 		};
 	}
 
-	return parseRelativePathSegments(segments, overrides);
+	return parseRelativePathSegments(segments);
 }
 
 // Some maybe excessive validation but better to be safe than sorry
@@ -263,7 +290,7 @@ function needsSegmentsNormalization(segments: string[]): boolean {
 	return false;
 }
 
-export function normalizeSegments(
+export function normalizeRelativeSegments(
 	segments: string[],
 ): ParsedPathBase {
 	if (!needsSegmentsNormalization(segments)) {

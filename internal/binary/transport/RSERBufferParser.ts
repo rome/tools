@@ -22,18 +22,19 @@ import {
 	validatePathCollectionCode,
 	validateCode,
 	PATH_PARSED_CODES,
-} from "./constants";
+} from "./codes";
 import {
-	AnyPath,
+	Path,
 	MixedPathMap,
 	MixedPathSet,
 	PathSet,
 	isPath,
 	createPathFromParsed,
 	ParsedPathBase,
-	AnyParsedPath,
+	ParsedPath,
 	validateParsedPathWindowsDriveLetter,
 	ParsedPathURL,
+	ParsedPathDataURI,
 } from "@internal/path";
 import {
 	NodeSystemErrorProperties,
@@ -41,9 +42,9 @@ import {
 	ErrorFrames,
 	setErrorFrames,
 } from "@internal/errors";
-import {IntSize} from "./int";
-import {utf8Decode} from "./utf8";
-import {CachedKeyDecoder} from "@internal/codec-binary-serial/CachedKeyDecoder";
+import {IntSize} from "./utils";
+import {utf8Decode} from "../utf8";
+import {CachedKeyDecoder} from "./CachedKeyDecoder";
 import {ExtendedMap} from "@internal/collections";
 import RSERParserError from "./RSERParserError";
 import {Duration, OneIndexed, ZeroIndexed} from "@internal/numbers";
@@ -478,6 +479,10 @@ export default class RSERBufferParser {
 
 	private decodeArrayBuffer(): ArrayBuffer {
 		this.readOffset++;
+		return this.decodeArrayBufferValue();
+	}
+
+	private decodeArrayBufferValue(): ArrayBuffer {
 		const offset = this.readOffset;
 		const length = this.decodeNumber();
 		const buffer: ArrayBuffer = this.bytes.subarray(offset, offset + length);
@@ -671,7 +676,7 @@ export default class RSERBufferParser {
 		return validatePathCollectionCode(this.readInt(1));
 	}
 
-	private decodePath(): AnyPath {
+	private decodePath(): Path {
 		const ref = this.maybeDecodeReference();
 		if (ref !== undefined) {
 			if (isPath(ref)) {
@@ -686,7 +691,7 @@ export default class RSERBufferParser {
 		return this._decodePath();
 	}
 	
-	private _decodePath(): AnyPath {
+	private _decodePath(): Path {
 		this.expectCode(CODES.PATH);
 
 		const explicitDirectory = this.decodeBoolean();
@@ -702,7 +707,7 @@ export default class RSERBufferParser {
 			explicitDirectory,
 		};
 
-		let parsed: AnyParsedPath;
+		let parsed: ParsedPath;
 
 		const code = this.readInt(1);
 		switch (code) {
@@ -789,6 +794,25 @@ export default class RSERBufferParser {
 				break;
 			}
 
+			case PATH_PARSED_CODES.DATA: {
+				const mime = this.decodeOptionalKey();
+				
+				let data: ParsedPathDataURI["data"];
+				if (this.peekCode() === CODES.ARRAY_BUFFER) {
+					data = this.decodeArrayBufferValue();
+				} else {
+					data = this.decodeString();
+				}
+
+				parsed = {
+					...parsedBase,
+					type: "data",
+					mime,
+					data,
+				};
+				break;
+			}
+
 			default: {
 				throw this.unexpected(`${code} is not a valid parsed path code`);
 			}
@@ -807,9 +831,9 @@ export default class RSERBufferParser {
 	private decodePathMapValue(map: AnyRSERPathMap): AnyRSERPathMap {
 		const size = this.decodeNumber();
 		for (let i = 0; i < size; ++i) {
-			const str = this.readString();
+			const path = this.decodePath();
 			const value = this.decodeValue();
-			map.setString(str, value);
+			map.setValidated(path, value);
 		}
 		return map;
 	}
@@ -850,7 +874,7 @@ export default class RSERBufferParser {
 
 		const size = this.decodeNumber();
 		for (let i = 0; i < size; ++i) {
-			set.addString(this.readString());
+			set.addValidated(this.decodePath());
 		}
 		return set;
 	}

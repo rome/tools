@@ -29,12 +29,12 @@ import {
 	AbsoluteFilePath,
 	AbsoluteFilePathMap,
 	UIDPath,
-	createAnyPath,
+	createPath,
 	createRelativePath,
 	RelativePathMap,
 	RelativePathSet,
 	RelativePath,
-	AnyPath,
+	Path,
 	AbsoluteFilePathSet,
 } from "@internal/path";
 import {
@@ -91,7 +91,7 @@ export default class Bundler {
 			...this.config.resolver,
 			allowPartial: false,
 			origin: cwd,
-			source: createAnyPath(unresolvedEntry),
+			source: createPath(unresolvedEntry),
 		});
 
 		const {server} = this;
@@ -102,7 +102,7 @@ export default class Bundler {
 			...this.config.resolver,
 			origin: cwd,
 			requestedType: "package",
-			source: createAnyPath(unresolvedEntry),
+			source: createPath(unresolvedEntry),
 		});
 		const manifestRoot: undefined | AbsoluteFilePath =
 			manifestRootResolved.type === "FOUND"
@@ -173,7 +173,7 @@ export default class Bundler {
 		const resolvedImports: BundleCompileResolvedImports = mod.resolveImports().resolved;
 
 		let asset: undefined | BundleCompileResult["asset"];
-		let assetPath: undefined | AnyPath;
+		let assetPath: undefined | Path;
 		if (mod.handler?.isAsset) {
 			// TODO: Maybe add option to allow keeping the contents in memory rather than having a double-read
 			// TODO: Also investigate reusing worker cache hashes
@@ -415,14 +415,14 @@ export default class Bundler {
 				manifestDef,
 				entryBundle,
 				createBundle,
-				(relative, buffer) => {
+				(relative, view) => {
 					if (!files.has(relative)) {
 						files.set(
 							relative,
 							{
 								kind: "file",
 								etag: "TODO",
-								content: async () => buffer,
+								content: async () => view,
 							},
 						);
 					}
@@ -460,7 +460,7 @@ export default class Bundler {
 			resolvedSegment: AbsoluteFilePath,
 			options: BundleOptions,
 		) => Promise<BundleResultBundle>,
-		addFile: (relative: RelativePath, buffer: Buffer | string) => void,
+		addFile: (relative: RelativePath, buff: ArrayBuffer | string) => void,
 	): Promise<JSONManifest> {
 		// TODO figure out some way to use bundleMultiple here
 		const manifest = manifestDef.manifest;

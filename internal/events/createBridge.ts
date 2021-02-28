@@ -8,7 +8,7 @@ import {
 import {WebSocketInterface} from "@internal/codec-websocket";
 import {Socket} from "net";
 import workerThreads = require("worker_threads");
-import {RSERValue} from "@internal/codec-binary-serial";
+import {RSERValue} from "@internal/binary";
 import { processResourceRoot } from "@internal/resources";
 
 export function createBridgeEventDeclaration<

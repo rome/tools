@@ -2,7 +2,7 @@ import RSERWriterMaterial from "./RSERWriterMaterial";
 import {Event} from "@internal/events";
 import {RSERValue} from "./types";
 import RSERBufferParser from "./RSERBufferParser";
-import {encodeValueToRSERMessage} from "@internal/codec-binary-serial/index";
+import {encodeValueToRSERMessage} from "./api";
 import RSERWriterCounter from "./RSERWriterCounter";
 
 type State = {
@@ -138,8 +138,7 @@ export default class RSERStream {
 				let entry = this.overflow[0];
 				const writableSize = writer.getWritableSize();
 
-				const bufferSize = Buffer.byteLength(entry);
-				if (bufferSize > writableSize) {
+				if (entry.byteLength > writableSize) {
 					this.overflow[0] = entry.slice(writableSize);
 					entry = entry.slice(0, writableSize);
 				} else {

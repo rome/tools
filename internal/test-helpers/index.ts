@@ -43,7 +43,7 @@ export type Fixture = {
 export type FixtureFile = {
 	relative: RelativePath;
 	absolute: AbsoluteFilePath;
-	content: Buffer;
+	content: ArrayBuffer;
 };
 
 async function _getFixtures(

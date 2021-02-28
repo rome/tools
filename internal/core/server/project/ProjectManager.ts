@@ -35,7 +35,7 @@ import {
 	AbsoluteFilePath,
 	AbsoluteFilePathMap,
 	AbsoluteFilePathSet,
-	AnyPath,
+	Path,
 	MixedPathMap,
 	MixedPathSet,
 	UIDPath,
@@ -160,7 +160,7 @@ export default class ProjectManager {
 		return this.localPathToRemote.get(path);
 	}
 
-	public maybeGetFilePathFromUID(path: AnyPath): undefined | AbsoluteFilePath {
+	public maybeGetFilePathFromUID(path: Path): undefined | AbsoluteFilePath {
 		if (path.isUID()) {
 			return this.uidToFilename.get(path.assertUID());
 		} else {
@@ -169,7 +169,7 @@ export default class ProjectManager {
 	}
 
 	public getFilePathFromUIDOrAbsolute(
-		path: undefined | AnyPath,
+		path: undefined | Path,
 	): undefined | AbsoluteFilePath {
 		if (path === undefined) {
 			return undefined;
@@ -190,7 +190,7 @@ export default class ProjectManager {
 	}
 
 	public categorizePaths(
-		paths: Iterable<AnyPath>,
+		paths: Iterable<Path>,
 	): {
 		absolutes: AbsoluteFilePathSet;
 		unknowns: MixedPathSet;

@@ -2,10 +2,13 @@ import AbsoluteFilePath from "./classes/AbsoluteFilePath";
 import RelativePath from "./classes/RelativePath";
 import UIDPath from "./classes/UIDPath";
 import URLPath from "./classes/URLPath";
+import DataURIPath from "./classes/DataURIPath";
 
-export type AnyFilePath = AbsoluteFilePath | RelativePath;
+export type ReadablePath = AbsoluteFilePath | DataURIPath;
 
-export type AnyPath = AbsoluteFilePath | RelativePath | URLPath | UIDPath;
+export type FilePath = AbsoluteFilePath | RelativePath;
+
+export type Path = AbsoluteFilePath | RelativePath | URLPath | UIDPath | DataURIPath;
 
 export type PathSegments = string[];
 
@@ -39,6 +42,12 @@ export interface ParsedPathRelative extends ParsedPathBase {
 	explicitRelative: boolean;
 }
 
+export interface ParsedPathDataURI extends ParsedPathBase {
+	type: "data";
+	mime: undefined | string;
+	data: string | ArrayBuffer;
+}
+
 export interface ParsedPathURL extends ParsedPathBase {
 	type: "url";
 	protocol: string;
@@ -54,6 +63,6 @@ export interface ParsedPathUID extends ParsedPathBase {
 	type: "uid";
 }
 
-export type AnyParsedPathAbsolute = ParsedPathWindowsDrive | ParsedPathWindowsUNC | ParsedPathUnix;
+export type ParsedPathAbsolute = ParsedPathWindowsDrive | ParsedPathWindowsUNC | ParsedPathUnix;
 
-export type AnyParsedPath = AnyParsedPathAbsolute | ParsedPathRelative | ParsedPathURL | ParsedPathUID;
+export type ParsedPath = ParsedPathAbsolute | ParsedPathRelative | ParsedPathURL | ParsedPathUID | ParsedPathDataURI;

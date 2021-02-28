@@ -56,12 +56,12 @@ import {isValidIdentifierName} from "@internal/js-ast-utils";
 import {escapeJSString} from "@internal/string-escape";
 import {
 	AbsoluteFilePath,
-	AnyFilePath,
-	AnyPath,
+	FilePath,
+	Path,
 	RelativePath,
 	URLPath,
 	createAbsoluteFilePath,
-	createAnyPath,
+	createPath,
 	createURLPath,
 	isPath,
 	createRelativePath,
@@ -99,7 +99,7 @@ export default class Consumer {
 		this.handleUnexpected = opts.handleUnexpectedDiagnostic;
 	}
 
-	public path: AnyPath;
+	public path: Path;
 
 	private declared: boolean;
 	private handleUnexpected: undefined | ConsumerHandleUnexpected;
@@ -1147,7 +1147,7 @@ export default class Consumer {
 		}
 	}
 
-	public asAnyPath(def?: string): AnyPath {
+	public asAnyPath(def?: string): Path {
 		this.declareDefinition(
 			{
 				type: "string",
@@ -1164,10 +1164,10 @@ export default class Consumer {
 		}
 
 		// Otherwise expect a string
-		return createAnyPath(this.asString(def));
+		return createPath(this.asString(def));
 	}
 
-	public asAnyPathOrVoid(): undefined | AnyPath {
+	public asAnyPathOrVoid(): undefined | Path {
 		if (this.exists()) {
 			return this.asAnyPath();
 		} else {
@@ -1176,7 +1176,7 @@ export default class Consumer {
 		}
 	}
 
-	public asFilePath(def?: string): AnyFilePath {
+	public asFilePath(def?: string): FilePath {
 		const path = this.asAnyPath(def);
 		if (path.isFilePath()) {
 			return path.assertFilePath();
@@ -1186,7 +1186,7 @@ export default class Consumer {
 		}
 	}
 
-	public asFilePathOrVoid(): undefined | AnyFilePath {
+	public asFilePathOrVoid(): undefined | FilePath {
 		const path = this.asAnyPath();
 		if (path.isFilePath()) {
 			return path.assertFilePath();

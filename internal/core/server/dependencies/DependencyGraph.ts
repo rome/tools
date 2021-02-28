@@ -25,7 +25,7 @@ import {
 	AbsoluteFilePath,
 	AbsoluteFilePathMap,
 	AbsoluteFilePathSet,
-	createAnyPath,
+	createPath,
 } from "@internal/path";
 import {markup} from "@internal/markup";
 import FileNotFound, {MissingFileReturn} from "@internal/fs/FileNotFound";
@@ -484,7 +484,7 @@ export default class DependencyGraph {
 							{
 								...this.resolverOpts,
 								origin,
-								source: createAnyPath(source),
+								source: createPath(source),
 								location: dep.loc === undefined
 									? undefined
 									: {

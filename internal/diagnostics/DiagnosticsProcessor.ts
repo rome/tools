@@ -24,7 +24,7 @@ import {matchesSuppression} from "@internal/compiler";
 import {SourceMapConsumerCollection} from "@internal/codec-source-map";
 import DiagnosticsNormalizer, {DiagnosticsNormalizerOptions} from "./DiagnosticsNormalizer";
 import {MarkupFormatNormalizeOptions, readMarkup} from "@internal/markup";
-import {AnyPath, MixedPathMap, MixedPathSet, equalPaths} from "@internal/path";
+import {Path, MixedPathMap, MixedPathSet, equalPaths} from "@internal/path";
 import {Event} from "@internal/events";
 import {formatCategoryDescription} from "./helpers";
 
@@ -139,7 +139,7 @@ export default class DiagnosticsProcessor {
 	public normalizer: DiagnosticsNormalizer;
 	public insertDiagnosticsEvent: Event<void>;
 	public guaranteedDiagnosticsEvent: Event<Diagnostics>;
-	public modifiedDiagnosticsForPathEvent: Event<AnyPath>;
+	public modifiedDiagnosticsForPathEvent: Event<Path>;
 
 	private sourceMaps: SourceMapConsumerCollection;
 	private filters: DiagnosticFilterWithTest[];
@@ -151,7 +151,7 @@ export default class DiagnosticsProcessor {
 	private cachedFlatDiagnostics: undefined | Diagnostics;
 	private possibleCount: number;
 
-	private getMapEntry(path: AnyPath): DiagnosticsMapEntry {
+	private getMapEntry(path: Path): DiagnosticsMapEntry {
 		let entry: undefined | DiagnosticsMapEntry = this.map.get(path);
 		if (entry === undefined) {
 			entry = {
@@ -416,16 +416,16 @@ export default class DiagnosticsProcessor {
 		}
 	}
 
-	public getPaths(): Iterable<AnyPath> {
+	public getPaths(): Iterable<Path> {
 		return this.map.keys();
 	}
 
-	public hasDiagnosticsForPath(path: AnyPath): boolean {
+	public hasDiagnosticsForPath(path: Path): boolean {
 		return this.map.has(path);
 	}
 
 	public getSuppressionsForPath(
-		path: AnyPath,
+		path: Path,
 	): undefined | DiagnosticSuppressions {
 		if (this.map.has(path)) {
 			return Array.from(this.getMapEntry(path).suppressions);
@@ -434,7 +434,7 @@ export default class DiagnosticsProcessor {
 		}
 	}
 
-	public getAllDiagnosticsForPath(path: AnyPath): Diagnostics {
+	public getAllDiagnosticsForPath(path: Path): Diagnostics {
 		const calculated = this.getDiagnosticsForPath(path, true);
 		if (calculated === undefined) {
 			return [];
@@ -444,7 +444,7 @@ export default class DiagnosticsProcessor {
 	}
 
 	public getDiagnosticsForPath(
-		path: AnyPath,
+		path: Path,
 		includeSuppressions: boolean = true,
 	): undefined | CalculatedDiagnostics {
 		const entry = this.map.get(path);
@@ -507,7 +507,7 @@ export default class DiagnosticsProcessor {
 		return calculated;
 	}
 
-	public removePath(path: AnyPath) {
+	public removePath(path: Path) {
 		if (!this.map.has(path)) {
 			return;
 		}

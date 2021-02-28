@@ -1,7 +1,7 @@
-import {IntSize, writeInt} from "./int";
+import {IntSize, writeInt} from "./utils";
 import RSERWriterBase from "./RSERWriterBase";
-import {utf8Encode} from "./utf8";
-import {RSERBufferParser} from ".";
+import {utf8Encode} from "../utf8";
+import RSERBufferParser from "./RSERBufferParser";
 import RSERWriterCounter from "./RSERWriterCounter";
 
 export default class RSERWriterMaterial extends RSERWriterBase {

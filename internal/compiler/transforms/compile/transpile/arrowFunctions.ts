@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Path, createVisitor, signals} from "@internal/compiler";
+import {CompilerPath, createVisitor, signals} from "@internal/compiler";
 import {
 	AnyNode,
 	JSFunctionDeclaration,
@@ -21,7 +21,7 @@ import {
 	jsVariableDeclarator,
 } from "@internal/ast";
 
-function isInsideArrow(path: Path): boolean {
+function isInsideArrow(path: CompilerPath): boolean {
 	for (const ancestor of path.ancestryPaths) {
 		const {type} = ancestor.node;
 

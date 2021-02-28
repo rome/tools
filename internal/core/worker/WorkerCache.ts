@@ -7,7 +7,7 @@ import {
 	RSERValue,
 	decodeSingleMessageRSERStream,
 	hashRSERValue,
-} from "@internal/codec-binary-serial";
+} from "@internal/binary";
 import {FileReference} from "../common/types/files";
 import {Consumer, consumeUnknown} from "@internal/consume";
 import {sha256} from "@internal/string-utils";

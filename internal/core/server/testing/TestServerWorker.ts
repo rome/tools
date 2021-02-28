@@ -20,7 +20,7 @@ import {ReporterProgress} from "@internal/cli-reporter";
 import {
 	AbsoluteFilePathMap,
 	AbsoluteFilePathSet,
-	createAnyPath,
+	createPath,
 } from "@internal/path";
 import {ansiEscapes} from "@internal/cli-layout";
 import {FilePathLocker} from "@internal/async/lockers";
@@ -203,7 +203,7 @@ export default class TestServerWorker {
 			const loc = callFrame.get("location");
 
 			const resolved = this.runner.sourceMaps.assertApproxOriginalPositionFor(
-				createAnyPath(urlToFilename(callFrame.get("url").asString())),
+				createPath(urlToFilename(callFrame.get("url").asString())),
 				loc.get("lineNumber").asZeroIndexedNumber().toOneIndexed(),
 				loc.get("columnNumber").asZeroIndexedNumber(),
 			);

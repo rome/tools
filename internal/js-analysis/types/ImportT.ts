@@ -11,7 +11,7 @@ import {HydrateData} from "../Evaluator";
 import {Scope} from "../scopes";
 import T from "./T";
 import {StaticMarkup, markup} from "@internal/markup";
-import {AnyPath, createAnyPath} from "@internal/path";
+import {Path, createPath} from "@internal/path";
 
 export default class ImportT extends T {
 	constructor(
@@ -19,7 +19,7 @@ export default class ImportT extends T {
 		originNode: undefined | AnyNode,
 		opts: {
 			importedName: undefined | string;
-			originPath?: AnyPath;
+			originPath?: Path;
 			source: string;
 		},
 	) {
@@ -42,12 +42,12 @@ export default class ImportT extends T {
 
 	public static type = "ImportT";
 	private importedName: undefined | string;
-	private absolute: undefined | AnyPath;
+	private absolute: undefined | Path;
 	private resolvedType: undefined | T;
-	private originPath: AnyPath;
+	private originPath: Path;
 	private source: string;
 
-	public setAbsolute(absolute: undefined | AnyPath) {
+	public setAbsolute(absolute: undefined | Path) {
 		this.absolute = absolute;
 	}
 
@@ -74,7 +74,7 @@ export default class ImportT extends T {
 			{
 				importedName: String(data.importedName),
 				source: String(data.source),
-				originPath: createAnyPath(String(data.originPath)),
+				originPath: createPath(String(data.originPath)),
 			},
 		);
 	}

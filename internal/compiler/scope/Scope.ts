@@ -15,7 +15,7 @@ import {
 	isValidIdentifierName,
 	isVariableIdentifier,
 } from "@internal/js-ast-utils";
-import Path from "../lib/Path";
+import CompilerPath from "../lib/CompilerPath";
 
 Error.stackTraceLimit = Infinity;
 
@@ -179,7 +179,7 @@ export default class Scope {
 		return lines.join("\n");
 	}
 
-	public getBindingFromPath(path: Path): undefined | Binding {
+	public getBindingFromPath(path: CompilerPath): undefined | Binding {
 		const {
 			node,
 		} = path;

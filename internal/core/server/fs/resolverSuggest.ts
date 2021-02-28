@@ -17,7 +17,7 @@ import {
 	descriptions,
 } from "@internal/diagnostics";
 import {orderBySimilarity} from "@internal/string-utils";
-import {AbsoluteFilePath, AbsoluteFilePathSet, AnyFilePath} from "@internal/path";
+import {AbsoluteFilePath, AbsoluteFilePathSet, FilePath} from "@internal/path";
 import {PLATFORMS, Server} from "@internal/core";
 import {StaticMarkups, markup} from "@internal/markup";
 import {ExtendedMap} from "@internal/collections";
@@ -134,7 +134,7 @@ export default function resolverSuggest(
 				const originDirectory = resolver.getOriginDirectory(localQuery);
 
 				// Some suggestions may not be absolute paths
-				const humanToPath: ExtendedMap<string, AnyFilePath> = new ExtendedMap(
+				const humanToPath: ExtendedMap<string, FilePath> = new ExtendedMap(
 					"humanToPath",
 				);
 

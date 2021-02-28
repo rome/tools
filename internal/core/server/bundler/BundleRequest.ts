@@ -15,7 +15,7 @@ import {
 	AbsoluteFilePath,
 	AbsoluteFilePathSet,
 	UIDPath,
-	createAnyPath,
+	createPath,
 	RelativePathMap,
 } from "@internal/path";
 import {Reporter} from "@internal/cli-reporter";
@@ -73,7 +73,7 @@ export default class BundleRequest {
 		this.diagnostics.addAllowedUnusedSuppressionPrefix("lint");
 
 		this.sourceMap = new SourceMapGenerator({
-			path: createAnyPath(this.resolvedEntry.getBasename()),
+			path: createPath(this.resolvedEntry.getBasename()),
 		});
 
 		this.assets = new RelativePathMap();

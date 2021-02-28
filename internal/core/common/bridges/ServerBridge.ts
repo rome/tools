@@ -17,7 +17,7 @@ import {ServerMarker} from "../../server/Server";
 import {TerminalFeatures} from "@internal/cli-environment";
 import {Dict} from "@internal/typescript-helpers";
 import {RecoverySaveFile} from "@internal/core/server/fs/RecoveryStore";
-import {RSERObject, RSERValue} from "@internal/codec-binary-serial";
+import {RSERObject, RSERValue} from "@internal/binary";
 import createBridge, {createBridgeEventDeclaration} from "@internal/events/createBridge";
 import {CommandName} from "../commands";
 

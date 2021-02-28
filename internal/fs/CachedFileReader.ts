@@ -1,3 +1,4 @@
+import { decodeUTF8, getArrayBuffer } from "@internal/binary";
 import {AbsoluteFilePath, AbsoluteFilePathMap} from "@internal/path";
 
 export default class CachedFileReader {
@@ -5,16 +6,16 @@ export default class CachedFileReader {
 		this.cached = new AbsoluteFilePathMap();
 	}
 
-	private cached: AbsoluteFilePathMap<Buffer | Promise<Buffer>>;
+	private cached: AbsoluteFilePathMap<string | ArrayBuffer | Promise<string | ArrayBuffer>>;
 
-	cache(path: AbsoluteFilePath, buffer: Buffer) {
-		this.cached.set(path, buffer);
+	public cache(path: AbsoluteFilePath, view: string | ArrayBuffer) {
+		this.cached.set(path, view);
 	}
 
-	async readFile(path: AbsoluteFilePath): Promise<Buffer> {
+	public async readFile(path: AbsoluteFilePath): Promise<ArrayBuffer> {
 		const cached = this.cached.get(path);
 		if (cached !== undefined) {
-			return cached;
+			return getArrayBuffer(await cached);
 		}
 
 		const promise = path.readFile();
@@ -25,7 +26,12 @@ export default class CachedFileReader {
 		return buff;
 	}
 
-	readFileText(path: AbsoluteFilePath): Promise<string> {
-		return this.readFile(path).then((buff) => buff.toString());
+	public async readFileText(path: AbsoluteFilePath): Promise<string> {
+		const cached = this.cached.get(path);
+		if (cached !== undefined) {
+			return decodeUTF8(await cached);
+		}
+
+		return this.readFile(path).then((buff) => decodeUTF8(buff));
 	}
 }

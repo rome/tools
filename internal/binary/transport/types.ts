@@ -1,17 +1,14 @@
 import {AnyIndexedNumber, Duration} from "@internal/numbers";
 import {
 	AbsoluteFilePathMap,
-	AnyPath,
+	Path,
+	DataURIPathMap,
 	MixedPathMap,
 	PathSet,
 	RelativePathMap,
 	UIDPathMap,
 	URLPathMap,
 } from "@internal/path";
-
-export type EqualShapeObjects<Value> = {[key in keyof Value]: Value[key]};
-
-// Value types
 
 export type RSERValueObjects = Extract<RSERValue, object>;
 
@@ -27,11 +24,12 @@ export type RSERValue =
 	| Date
 	| RegExp
 	| Error
+	| Buffer
 	| ArrayBuffer
 	| AnyIndexedNumber
 	| Duration
 	| RSERArrayBufferView
-	| AnyPath
+	| Path
 	| PathSet
 	| AnyRSERPathMap
 	| RSERMap
@@ -44,7 +42,8 @@ export type AnyRSERPathMap =
 	| AbsoluteFilePathMap<RSERValue>
 	| RelativePathMap<RSERValue>
 	| URLPathMap<RSERValue>
-	| UIDPathMap<RSERValue>;
+	| UIDPathMap<RSERValue>
+	| DataURIPathMap<RSERValue>;
 
 export type RSERMixedPathMap = MixedPathMap<RSERValue>;
 
@@ -56,8 +55,6 @@ export type RSERObject = {
 };
 
 export type RSERArray = RSERValue[];
-
-// Boring
 
 export type RSERArrayBufferView =
 	| Int8Array

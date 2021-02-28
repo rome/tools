@@ -1,6 +1,6 @@
-import {normalizeSegments, parseRelativePathSegments} from "../parse";
-import {BasePath, FilePathMemo} from "./BasePath";
-import {AnyFilePath, AnyPath, PathFormatOptions, PathSegments, AnyParsedPath, AnyParsedPathAbsolute} from "../types";
+import {normalizeRelativeSegments, parseRelativePathSegments} from "../parse";
+import {ReadableBasePath, FilePathMemo} from "../bases";
+import {FilePath, Path, PathFormatOptions, PathSegments, ParsedPath, ParsedPathAbsolute} from "../types";
 import RelativePath from "./RelativePath";
 import {createFilePath} from "../factories";
 import {FSWatcher} from "@internal/fs";
@@ -13,8 +13,8 @@ import fs = require("fs");
 type DataCallback<Data> = (err: null | Error, data: Data) => void;
 type VoidCallback = (err: null | Error) => void;
 
-export default class AbsoluteFilePath extends BasePath<AnyParsedPathAbsolute, AbsoluteFilePath> {
-	constructor(parsed: AnyParsedPathAbsolute, memo: FilePathMemo<AbsoluteFilePath> = {}) {
+export default class AbsoluteFilePath extends ReadableBasePath<ParsedPathAbsolute, AbsoluteFilePath> {
+	constructor(parsed: ParsedPathAbsolute, memo: FilePathMemo<AbsoluteFilePath> = {}) {
 		super(parsed, memo);
 		this.memoizedRelative = undefined;
 	}
@@ -29,7 +29,7 @@ export default class AbsoluteFilePath extends BasePath<AnyParsedPathAbsolute, Ab
 	}
 
 	protected _fork(
-		parsed: AnyParsedPathAbsolute,
+		parsed: ParsedPathAbsolute,
 		opts?: FilePathMemo<AbsoluteFilePath>,
 	): AbsoluteFilePath {
 		return new AbsoluteFilePath(parsed, opts);
@@ -39,7 +39,7 @@ export default class AbsoluteFilePath extends BasePath<AnyParsedPathAbsolute, Ab
 		return this;
 	}
 
-	protected _equalAbsolute(other: AnyParsedPath): boolean {
+	protected _equalAbsolute(other: ParsedPath): boolean {
 		const {parsed} = this;
 
 		switch (parsed.type) {
@@ -57,7 +57,8 @@ export default class AbsoluteFilePath extends BasePath<AnyParsedPathAbsolute, Ab
 		}
 	}
 
-	protected _join(relative: Array<string>) {
+	protected _join() {
+		const relative = this.getDisplaySegments();
 		const {parsed} = this;
 
 		switch (parsed.type) {
@@ -70,7 +71,9 @@ export default class AbsoluteFilePath extends BasePath<AnyParsedPathAbsolute, Ab
 			case "absolute-unix":
 				return `/${relative.join("/")}`;
 		}
-	}protected _format({cwd, home}: PathFormatOptions = {}): string {
+	}
+	
+	protected _format({cwd, home}: PathFormatOptions = {}): string {
 		const filename = this.join();
 		const names: string[] = [];
 		names.push(filename);
@@ -106,11 +109,11 @@ export default class AbsoluteFilePath extends BasePath<AnyParsedPathAbsolute, Ab
 		}
 	}
 
-	public isFilePath(): this is AnyFilePath {
+	public isFilePath(): this is FilePath {
 		return true;
 	}
 
-	public assertFilePath(): AnyFilePath {
+	public assertFilePath(): FilePath {
 		return this;
 	}
 
@@ -120,6 +123,14 @@ export default class AbsoluteFilePath extends BasePath<AnyParsedPathAbsolute, Ab
 
 	public assertAbsolute(): AbsoluteFilePath {
 		return this;
+	}
+
+	public assertReadable(): AbsoluteFilePath {
+		return this;
+	}
+
+	public isReadable(): this is AbsoluteFilePath {
+		return true;
 	}
 
 	public *getChain(reverse: boolean = false): Iterable<AbsoluteFilePath> {
@@ -136,11 +147,11 @@ export default class AbsoluteFilePath extends BasePath<AnyParsedPathAbsolute, Ab
 		}
 	}
 
-	public resolve(other: string | AnyFilePath): AbsoluteFilePath;
-	public resolve(other: AnyPath): Exclude<AnyPath, RelativePath>;
+	public resolve(other: string | FilePath): AbsoluteFilePath;
+	public resolve(other: Path): Exclude<Path, RelativePath>;
 	public resolve(
-		other: string | AnyPath,
-	): AbsoluteFilePath | Exclude<AnyPath, RelativePath> {
+		other: string | Path,
+	): AbsoluteFilePath | Exclude<Path, RelativePath> {
 		if (typeof other === "string") {
 			other = createFilePath(other);
 		}
@@ -150,7 +161,7 @@ export default class AbsoluteFilePath extends BasePath<AnyParsedPathAbsolute, Ab
 
 		return new AbsoluteFilePath({
 			...this.parsed,
-			...normalizeSegments([...this.relativeSegments, ...other.getSegments()]),
+			...normalizeRelativeSegments([...this.relativeSegments, ...other.getSegments()]),
 			explicitDirectory: other.isExplicitDirectory(),
 		});
 	}
@@ -224,29 +235,21 @@ export default class AbsoluteFilePath extends BasePath<AnyParsedPathAbsolute, Ab
 		return fs.watch(this.join(), options, listener);
 	}
 	
-	public readFile(): Promise<Buffer> {
-		return this.promisifyData(
+	public async readFile(): Promise<ArrayBuffer> {
+		const data = await this.promisifyData<Buffer>(
 			(filename, callback) => fs.readFile(filename, callback),
 		);
+		return data.buffer;
 	}
 	
 	public async readFileText(): Promise<string> {
-		return (await this.readFile()).toString();
-	}
-	
-	// Return value is meant to be consumed via ParserOptions
-	public async readFileTextMeta(): Promise<{
-		path: AbsoluteFilePath;
-		input: string;
-	}> {
-		return {
-			input: (await this.readFile()).toString(),
-			path: this,
-		};
+		return this.promisifyData(
+			(filename, callback) => fs.readFile(filename, "utf8", callback),
+		);
 	}
 	
 	public writeFile(
-		content: string | NodeJS.ArrayBufferView | fs.ReadStream,
+		content: string | ArrayBuffer | NodeJS.ArrayBufferView | fs.ReadStream,
 	): Promise<void> {
 		if (content instanceof fs.ReadStream) {
 			return new Promise((resolve, reject) => {
@@ -263,7 +266,15 @@ export default class AbsoluteFilePath extends BasePath<AnyParsedPathAbsolute, Ab
 			});
 		} else {
 			return this.promisifyVoid(
-				(filename, callback) => fs.writeFile(filename, content, callback),
+				(filename, callback) => {
+					let buff;
+					if (content instanceof ArrayBuffer) {
+						buff = new DataView(content);
+					} else {
+						buff = content;
+					}
+					fs.writeFile(filename, buff, callback);
+				},
 			);
 		}
 	}
@@ -390,16 +401,12 @@ export default class AbsoluteFilePath extends BasePath<AnyParsedPathAbsolute, Ab
 		);
 	}
 	
-	public createWriteStream(
-		opts?: Parameters<typeof fs.createWriteStream>[1],
-	): fs.WriteStream {
-		return fs.createWriteStream(this.join(), opts);
+	public createWriteStream(): fs.WriteStream {
+		return fs.createWriteStream(this.join());
 	}
 	
-	public createReadStream(
-		opts?: Parameters<typeof fs.createReadStream>[1],
-	): fs.ReadStream {
-		return fs.createReadStream(this.join(), opts);
+	public createReadStream(): fs.ReadStream {
+		return fs.createReadStream(this.join());
 	}
 	
 	// Super special sync methods that we should only use sparingly if there's absolutely no way to do them async
@@ -458,3 +465,5 @@ export default class AbsoluteFilePath extends BasePath<AnyParsedPathAbsolute, Ab
 		return promise;
 	}
 }
+
+AbsoluteFilePath.prototype[Symbol.toStringTag] = "AbsoluteFilePath";

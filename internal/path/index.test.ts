@@ -7,7 +7,6 @@
 
 import {
 	createAbsoluteFilePath,
-	createAnyPath,
 	createFilePath,
 	createRelativePath,
 } from "@internal/path";
@@ -101,7 +100,7 @@ for (let i = 0; i < segmentTests.length; i++) {
 	test(
 		`segments: ${i}: ${loc}`,
 		(t) => {
-			t.looksLike(createAnyPath(loc).getSegments(), expectedSegments);
+			t.looksLike(createRelativePath(loc).getSegments(), expectedSegments);
 		},
 	);
 }

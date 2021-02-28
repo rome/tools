@@ -30,7 +30,7 @@ import {default as successBanner} from "./banners/success.json";
 import {default as errorBanner} from "./banners/error.json";
 import {
 	AbsoluteFilePath,
-	AnyPath,
+	Path,
 	CWD_PATH,
 	MixedPathMap,
 	MixedPathSet,
@@ -101,14 +101,14 @@ export const DEFAULT_PRINTER_FLAGS: DiagnosticsPrinterFlags = {
 // Dependency that may not be included in the output diagnostic but whose changes may effect the validity of this one
 type ChangeFileDependency = {
 	type: "change";
-	path: AnyPath;
+	path: Path;
 	integrity: undefined | DiagnosticIntegrity;
 };
 
 // Dependency that will have a code frame in the output diagnostic
 type ReferenceFileDependency = {
 	type: "reference";
-	path: AnyPath;
+	path: Path;
 	integrity: undefined | DiagnosticIntegrity;
 	sourceTypeJS: undefined | DiagnosticSourceType;
 	language: undefined | DiagnosticLanguage;
@@ -201,7 +201,7 @@ export default class DiagnosticsPrinter extends Error {
 	private filteredCount: number;
 	private truncatedCount: number;
 
-	public normalizePath(path: AnyPath): AnyPath {
+	public normalizePath(path: Path): Path {
 		const {normalizePosition} = this.reporter.markupOptions;
 
 		if (normalizePosition === undefined) {
@@ -251,7 +251,7 @@ export default class DiagnosticsPrinter extends Error {
 		return false;
 	}
 
-	private async checkMissing(path: AnyPath): Promise<void> {
+	private async checkMissing(path: Path): Promise<void> {
 		let exists: undefined | boolean = await this.fileHandler.exists(path);
 		if (exists === undefined && path.isUID()) {
 			exists = true;

@@ -33,7 +33,7 @@ import {
 	joinCategoryName,
 } from "@internal/diagnostics";
 import {AnyComment, AnyNode, RootBase} from "@internal/ast";
-import {AnyPath, UNKNOWN_PATH, equalPaths} from "@internal/path";
+import {Path, UNKNOWN_PATH, equalPaths} from "@internal/path";
 import {OneIndexed, ZeroIndexed} from "@internal/numbers";
 import {CommentsConsumer} from "@internal/js-parser";
 import PositionTracker from "./PositionTracker";
@@ -122,7 +122,7 @@ export default class ParserCore<Types extends ParserCoreTypes> {
 	private impl: ParserCoreImplementation<Types>;
 	private tokenizing: boolean;
 	private eofToken: EOFToken;
-	public path: AnyPath;
+	public path: Path;
 	public input: string;
 	public language: DiagnosticLanguage;
 	public integrity: undefined | DiagnosticIntegrity;

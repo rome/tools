@@ -15,11 +15,11 @@ import {
 } from "@internal/diagnostics";
 import {printDiagnosticsToString} from "@internal/cli-diagnostics";
 import {IntegrationWorker, createMockWorker} from "@internal/test-helpers";
-import {AnyPath, createUIDPath} from "@internal/path";
+import {Path, createUIDPath} from "@internal/path";
 
 type TestLintOptions = {
 	category: DiagnosticCategory;
-	path: AnyPath;
+	path: Path;
 	snapshotFilename?: string;
 	valid?: string[];
 	invalid?: string[];

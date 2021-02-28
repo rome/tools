@@ -305,7 +305,7 @@ export default class RecoveryStore {
 		return store;
 	}
 
-	public async save(req: ServerRequest, path: AbsoluteFilePath, content: Buffer) {
+	public async save(req: ServerRequest, path: AbsoluteFilePath, content: ArrayBuffer) {
 		if (this.blockSave !== undefined) {
 			await this.blockSave;
 		}

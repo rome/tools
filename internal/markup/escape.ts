@@ -7,7 +7,7 @@
 
 import {Dict, isPlainObject} from "@internal/typescript-helpers";
 import {MarkupTagName} from "./types";
-import {AnyPath, URLPath, isPath} from "@internal/path";
+import {Path, URLPath, isPath} from "@internal/path";
 import {OneIndexed, UnknownNumber, ZeroIndexed, Duration} from "@internal/numbers";
 
 type LazyMarkupPart = StaticMarkup | LazyMarkupFactory | LazyMarkup;
@@ -16,7 +16,7 @@ export type LazyMarkupFactory = () => AnyMarkup;
 
 export type StaticMarkups = StaticMarkup[];
 
-export type StaticMarkup = string | AnyPath | Duration | UnknownNumber | RawMarkup | StaticMarkup[];
+export type StaticMarkup = string | Path | Duration | UnknownNumber | RawMarkup | StaticMarkup[];
 
 export type AnyMarkup = StaticMarkup | LazyMarkup | LazyMarkupFactory;
 
@@ -62,7 +62,7 @@ export function convertToMarkupFromRandomString(unsafe: string): StaticMarkup {
 }
 
 export function pathToMarkup(
-	path: AnyPath,
+	path: Path,
 	explicit: boolean = false,
 ): StaticMarkup {
 	let tagName: MarkupTagName = "filelink";

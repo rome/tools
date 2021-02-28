@@ -38,7 +38,7 @@ import {CommandName, SharedCommand} from "../common/commands";
 import {DiagnosticsPrinter} from "@internal/cli-diagnostics";
 import {StaticMarkup} from "@internal/markup";
 import init from "@internal/core/server/commands/init";
-import {RSERValue} from "@internal/codec-binary-serial";
+import {RSERValue} from "@internal/binary";
 
 export type ServerCommandReturn = undefined | Promise<RSERValue>;
 

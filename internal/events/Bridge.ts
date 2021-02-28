@@ -36,7 +36,7 @@ import {
 } from "@internal/errors";
 import {AnyMarkups, concatMarkup, markup} from "@internal/markup";
 import prettyFormat from "@internal/pretty-format";
-import {RSERObject, RSERStream, RSERValue} from "@internal/codec-binary-serial";
+import {RSERObject, RSERStream, RSERValue} from "@internal/binary";
 import {ExtendedMap} from "@internal/collections";
 import { createRuntimeDiagnosticError, DIAGNOSTIC_CATEGORIES } from "@internal/diagnostics";
 import { BridgeTimeoutError } from "./errors";
@@ -678,7 +678,9 @@ export default class Bridge<
 	private async handleHandshakeMessage(msg: BridgeHandshakeMessage): Promise<void> {
 		const heartbeatTimeout = msg[1];
 		if (heartbeatTimeout !== undefined) {
-			this.resources.addTimeout("Heartbeat", heartbeatTimeout.setInterval(() => {
+			// The heartbeatTimeout indicates at least how often we expect to receive a heartbeat. We send them
+			// more often than that to keep the connection alive and mitigate an overloaded event loop.
+			this.resources.addTimeout("Heartbeat", heartbeatTimeout.divide(2).setInterval(() => {
 				this.heartbeatEvent.send();
 			}));
 		}

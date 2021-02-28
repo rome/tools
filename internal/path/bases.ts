@@ -1,11 +1,13 @@
-import {AnyParsedPath, AnyFilePath, AnyPath, PathFormatOptions, PathSegments} from "../types";
-import AbsoluteFilePath from "./AbsoluteFilePath";
-import RelativePath from "./RelativePath";
-import UIDPath from "./UIDPath";
-import URLPath from "./URLPath";
-import {splitPathSegments, normalizeSegments} from "../parse";
+import {FilePath, ParsedPath, Path, PathFormatOptions, PathSegments, ReadablePath} from "./types";
+import AbsoluteFilePath from "./classes/AbsoluteFilePath";
+import RelativePath from "./classes/RelativePath";
+import UIDPath from "./classes/UIDPath";
+import URLPath from "./classes/URLPath";
+import DataURIPath from "./classes/DataURIPath";
+import {splitPathSegments, normalizeRelativeSegments} from "./parse";
 import {enhanceNodeInspectClass} from "@internal/node";
 import { equalArray } from "@internal/typescript-helpers";
+import stream = require("stream");
 
 export type FilePathMemo<Super> = {
 	ext?: string;
@@ -21,20 +23,19 @@ function getExtension(basename: string): string {
 	}
 }
 
-export abstract class BasePath<ParsedPath extends AnyParsedPath, Super extends AnyPath = AnyPath> {
-	constructor(parsed: ParsedPath, memo: FilePathMemo<Super> = {}) {
+export abstract class BasePath<SuperParsed extends ParsedPath = ParsedPath, Super extends Path = Path> {
+	constructor(parsed: SuperParsed, memo: FilePathMemo<Super> = {}) {
 		this.relativeSegments = parsed.relativeSegments;
 		this.parsed = parsed;
 		this.memo = memo;
-		this.memoizedUnique = undefined;
 		this.memoizedJoin = undefined;
 		this.memoizedFormatOptions = undefined;
 		this.memoizedFormat = undefined;
 		this.memoizedChildren = new Map();
-		this[Symbol.toStringTag] = "BasePath";
+		this.memoizedUnique = undefined;
 	}
 
-	public parsed: ParsedPath;
+	public parsed: SuperParsed;
 	public [Symbol.toStringTag]: string;
 
 	protected relativeSegments: PathSegments;
@@ -43,17 +44,17 @@ export abstract class BasePath<ParsedPath extends AnyParsedPath, Super extends A
 	// Memoize children when append() is called with strings
 	private memoizedChildren: Map<string, Super>;
 
-	private memoizedUnique: undefined | Super;
 	private memoizedJoin: undefined | string;
+	private memoizedUnique: undefined | Super;
 
 	// Allow caching a single formatted value for an options object
 	private memoizedFormat: undefined | string;
 	private memoizedFormatOptions: undefined | [string, undefined | AbsoluteFilePath, undefined | AbsoluteFilePath];
 
 	protected abstract _assert(): Super;
-	protected abstract _join(relative: Array<string>): string;
-	protected abstract _equalAbsolute(parsed: AnyParsedPath): boolean;
-	protected abstract _fork(parsed: ParsedPath, memo?: FilePathMemo<Super>): Super;
+	protected abstract _join(): string;
+	protected abstract _equalAbsolute(parsed: ParsedPath): boolean;
+	protected abstract _fork(parsed: SuperParsed, memo?: FilePathMemo<Super>): Super;
 	protected abstract _getUnique(): Super;
 	protected abstract _format(opts?: PathFormatOptions): string;
 
@@ -64,8 +65,16 @@ export abstract class BasePath<ParsedPath extends AnyParsedPath, Super extends A
 
 		return this._fork({
 			...this.parsed,
-			...normalizeSegments([...this.getSegments(), ...segments]),
+			...normalizeRelativeSegments([...this.getSegments(), ...segments]),
 		});
+	}
+
+	protected getDisplaySegments(): PathSegments {
+		let segments = [...this.relativeSegments];
+		if (this.isExplicitDirectory()) {
+			segments.push("");
+		}
+		return segments;
 	}
 
 	public changeExtension(ext: string): Super {
@@ -172,7 +181,11 @@ export abstract class BasePath<ParsedPath extends AnyParsedPath, Super extends A
 		throw this._unexpected("Expected absolute file path");
 	}
 
-	public assertFilePath(): AnyFilePath {
+	public assertReadable(): ReadablePath {
+		throw this._unexpected("Expected absolute or data URL path");
+	}
+
+	public assertFilePath(): FilePath {
 		throw this._unexpected("Expected relative or absolute file path");
 	}
 
@@ -180,15 +193,27 @@ export abstract class BasePath<ParsedPath extends AnyParsedPath, Super extends A
 		throw this._unexpected("Expected URL");
 	}
 
+	public assertDataURI(): DataURIPath {
+		throw this._unexpected("Expected Data URL");
+	}
+
 	public isRoot(): boolean {
 		return this.relativeSegments.length === 0;
 	}
 	
-	public isFilePath(): this is AnyFilePath {
+	public isReadable(): this is ReadablePath {
+		return false;
+	}
+	
+	public isFilePath(): this is FilePath {
 		return false;
 	}
 
 	public isURL(): this is URLPath {
+		return false;
+	}
+
+	public isDataURI(): this is DataURIPath {
 		return false;
 	}
 
@@ -210,29 +235,6 @@ export abstract class BasePath<ParsedPath extends AnyParsedPath, Super extends A
 
 	public isImplicitRelative(): boolean {
 		return false;
-	}
-
-	public isRelativeTo(other: AnyFilePath): boolean {
-		const otherSegments = other.getSegments();
-		const ourSegments = this.getSegments();
-
-		// We can't be relative to a path with more segments than us
-		if (otherSegments.length > ourSegments.length) {
-			return false;
-		}
-
-		// Check that we start with the same segments as the other
-		for (let i = 0; i < otherSegments.length; i++) {
-			if (otherSegments[i] !== ourSegments[i]) {
-				return false;
-			}
-		}
-
-		return true;
-	}
-
-	public isExplicitDirectory(): boolean {
-		return this.parsed.explicitDirectory;
 	}
 
 	public hasEndExtension(ext: string): boolean {
@@ -272,6 +274,8 @@ export abstract class BasePath<ParsedPath extends AnyParsedPath, Super extends A
 		return this.relativeSegments.includes(name);
 	}
 
+	
+
 	public getUnique(): Super {
 		const memoUnique = this.memoizedUnique;
 		if (memoUnique !== undefined) {
@@ -291,6 +295,29 @@ export abstract class BasePath<ParsedPath extends AnyParsedPath, Super extends A
 
 		this.memoizedUnique = path;
 		return path;
+	}
+
+	public isRelativeTo(other: FilePath): boolean {
+		const otherSegments = other.getSegments();
+		const ourSegments = this.getSegments();
+
+		// We can't be relative to a path with more segments than us
+		if (otherSegments.length > ourSegments.length) {
+			return false;
+		}
+
+		// Check that we start with the same segments as the other
+		for (let i = 0; i < otherSegments.length; i++) {
+			if (otherSegments[i] !== ourSegments[i]) {
+				return false;
+			}
+		}
+
+		return true;
+	}
+
+	public isExplicitDirectory(): boolean {
+		return this.parsed.explicitDirectory;
 	}
 
 	// Support some bad string coercion. Such as serialization in CLI flags.
@@ -325,18 +352,12 @@ export abstract class BasePath<ParsedPath extends AnyParsedPath, Super extends A
 			return memoJoined;
 		}
 
-		const segments = [...this.relativeSegments];
-
-		if (this.isExplicitDirectory()) {
-			segments.push("");
-		}
-
-		const joined = this._join(segments);
+		const joined = this._join();
 		this.memoizedJoin = joined;
 		return joined;
 	}
 
-	public equalAbsolute(other: undefined | BasePath<AnyParsedPath, AnyPath>): boolean {
+	public equalAbsolute(other: undefined | BasePath): boolean {
 		if (other === undefined) {
 			return false;
 		}
@@ -348,7 +369,7 @@ export abstract class BasePath<ParsedPath extends AnyParsedPath, Super extends A
 		return this._equalAbsolute(other.parsed);
 	}
 
-	public equal(other: undefined | BasePath<AnyParsedPath, AnyPath>): boolean {
+	public equal(other: undefined | BasePath): boolean {
 		if (other === undefined) {
 			return false;
 		}
@@ -418,3 +439,20 @@ enhanceNodeInspectClass(
 		return `${path[Symbol.toStringTag]}<${path.format()}>`;
 	},
 );
+
+export abstract class ReadableBasePath<Parsed extends ParsedPath, Super extends Path = Path> extends BasePath<Parsed, Super> {
+	public abstract readFile(): Promise<ArrayBuffer>;
+	public abstract readFileText(): Promise<string>;
+	public abstract createReadStream(): stream.Readable;
+
+	// Return value is meant to be consumed via ParserOptions
+	public async readFileTextMeta(): Promise<{
+		path: ReadablePath;
+		input: string;
+	}> {
+		return {
+			input: (await this.readFile()).toString(),
+			path: this.assertReadable(),
+		};
+	}
+}

@@ -9,7 +9,7 @@ import {modules} from "./virtual-modules";
 import {
 	AbsoluteFilePath,
 	AbsoluteFilePathMap,
-	AnyPath,
+	Path,
 	createAbsoluteFilePath,
 } from "@internal/path";
 import {FSStats, createFakeStats} from "@internal/fs";
@@ -26,8 +26,12 @@ export type VirtualModulesMap = Map<
 >;
 
 export type VirtualModuleStatMap = AbsoluteFilePathMap<{
+	type: "file";
 	stats: FSStats;
-	content: undefined | string;
+	content: string;
+} | {
+	type: "directory";
+	stats: FSStats;
 }>;
 
 export default class VirtualModules {
@@ -58,6 +62,7 @@ export default class VirtualModules {
 				statMap.set(
 					this.nullAbsolute.append(moduleName).append(subpath),
 					{
+						type: "file",
 						content,
 						stats: createFakeStats({
 							type: "file",
@@ -92,7 +97,7 @@ export default class VirtualModules {
 				statMap.set(
 					directory,
 					{
-						content: undefined,
+						type: "directory",
 						stats: createFakeStats({
 							type: "directory",
 							date: fileStats.mtime,
@@ -113,11 +118,13 @@ export default class VirtualModules {
 		return segments[0] === "" && segments[1] === "\0";
 	}
 
-	public getPossibleVirtualFileContents(path: AnyPath): undefined | string {
+	public getPossibleVirtualFileContents(path: Path): undefined | string {
 		if (path.isAbsolute()) {
 			if (this.isVirtualPath(path)) {
 				const entry = this.statMap.assert(path);
-				return entry.content;
+				if (entry.type === "file") {
+					return entry.content;
+				}
 			}
 		}
 

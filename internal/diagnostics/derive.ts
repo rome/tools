@@ -35,7 +35,7 @@ import {
 	isUserDiagnosticError,
 	isUserDiagnostic,
 } from "./error-wrappers";
-import {AnyPath, MixedPathSet, UNKNOWN_PATH, equalPaths} from "@internal/path";
+import {Path, MixedPathSet, UNKNOWN_PATH, equalPaths} from "@internal/path";
 import { RequiredProps } from "@internal/typescript-helpers";
 
 function normalizeArray<T>(val: undefined | (T[])): T[] {
@@ -199,7 +199,7 @@ export type DeriveErrorDiagnosticOptions = {
 	tags?: Omit<DiagnosticTags, "internal"> & {
 		internal?: false;
 	};
-	path?: AnyPath;
+	path?: Path;
 	cleanRelativeError?: Error;
 	cleanFrames?: (frames: ErrorFrames) => ErrorFrames;
 	stackAdviceOptions?: DeriveErrorStackAdviceOptions;
@@ -282,7 +282,7 @@ export function deriveDiagnosticFromErrorStructure(
 	struct: Partial<StructuredError>,
 	opts: DeriveErrorDiagnosticOptions,
 ): Diagnostic {
-	let targetPath: AnyPath = opts.path ?? UNKNOWN_PATH;
+	let targetPath: Path = opts.path ?? UNKNOWN_PATH;
 	let targetLoc = undefined;
 
 	let {frames = [], message = "Unknown error"} = struct;

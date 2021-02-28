@@ -11,7 +11,7 @@ import {
 	MOCK_JS_ROOT,
 	NodeBaseWithComments,
 } from "@internal/ast";
-import {AnyVisitors, CompilerContext, Path, signals} from "@internal/compiler";
+import {AnyVisitors, CompilerContext, CompilerPath, signals} from "@internal/compiler";
 import {SourceLocation} from "@internal/parser-core";
 
 function removeProp<T extends {
@@ -25,7 +25,7 @@ function removeProp<T extends {
 const removeLocTransform: AnyVisitors = [
 	{
 		name: "removeLocTransform",
-		enter(path: Path) {
+		enter(path: CompilerPath) {
 			const {node} = path;
 
 			if (node.loc === undefined) {

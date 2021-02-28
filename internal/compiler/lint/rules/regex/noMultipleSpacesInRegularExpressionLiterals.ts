@@ -12,7 +12,7 @@ import {
 	JSRegExpSubExpression,
 	jsRegExpQuantified,
 } from "@internal/ast";
-import {ExitSignal, Path, createVisitor, signals} from "@internal/compiler";
+import {ExitSignal, CompilerPath, createVisitor, signals} from "@internal/compiler";
 import {descriptions} from "@internal/diagnostics";
 
 function isSpaceChar(
@@ -21,7 +21,7 @@ function isSpaceChar(
 	return node?.type === "JSRegExpCharacter" && node.value === " ";
 }
 
-function checkRegex(path: Path, node: JSRegExpSubExpression): ExitSignal {
+function checkRegex(path: CompilerPath, node: JSRegExpSubExpression): ExitSignal {
 	const newBody: AnyJSRegExpBodyItem[] = [];
 	const diagnosticTargets: AnyJSRegExpBodyItem[] = [];
 

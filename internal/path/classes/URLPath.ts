@@ -1,11 +1,12 @@
-import {AnyParsedPath, ParsedPathURL} from "../types";
+import {ParsedPath, ParsedPathURL} from "../types";
 import {parseURLPathRelativeSegments} from "../parse";
-import {BasePath, FilePathMemo} from "./BasePath";
-import {AnyPath} from "../types";
-import { RelativePath } from "..";
+import {BasePath, FilePathMemo} from "../bases";
+import {Path} from "../types";
+import RelativePath from "./RelativePath";
 import { equalArray } from "@internal/typescript-helpers";
 
 export default class URLPath extends BasePath<ParsedPathURL, URLPath> {
+	private memoizedJoinedPathname: undefined | string;
 	public [Symbol.toStringTag] = "URLPath";
 
 	protected _getUnique() {
@@ -27,10 +28,14 @@ export default class URLPath extends BasePath<ParsedPathURL, URLPath> {
 		return this.join();
 	}
 
-	protected _join(relative: Array<string>): string {
-		const {hash, search, protocol, port, hostname, username, password} = this.parsed;
-		
-		const segments: string[] = relative.map(seg => encodeURIComponent(seg));
+	public joinPathname(): string {
+		if (this.memoizedJoinedPathname !== undefined) {
+			return this.memoizedJoinedPathname;
+		}
+
+		const {hash, search} = this.parsed;
+
+		const segments: string[] = this.getDisplaySegments().map(seg => encodeURIComponent(seg));
 
 		if (hash !== undefined || search.size > 0) {
 			let lastSegment = segments.pop() ?? "";
@@ -59,6 +64,14 @@ export default class URLPath extends BasePath<ParsedPathURL, URLPath> {
 			segments.push(lastSegment);
 		}
 
+		const joined = `/${segments.join("/")}`;
+		this.memoizedJoinedPathname = joined;
+		return joined;
+	}
+
+	protected _join(): string {
+		const {protocol, port, hostname, username, password} = this.parsed;
+		
 		// Build prefix
 		let prefix = `${protocol}//`;
 		if (username !== undefined || password !== undefined) {
@@ -68,19 +81,16 @@ export default class URLPath extends BasePath<ParsedPathURL, URLPath> {
 		if (port !== undefined) {
 			prefix += `:${String(port)}`;
 		}
-		if (segments.length > 0) {
-			prefix += `/`;
-		}
 
 		// Join it all together!
-		return prefix + segments.join("/");
+		return prefix + this.joinPathname();
 	}
 
 	protected _assert(): URLPath {
 		return this;
 	}
 
-	protected _equalAbsolute(other: AnyParsedPath): boolean {
+	protected _equalAbsolute(other: ParsedPath): boolean {
 		if (other.type !== "url") {
 			return false;
 		}
@@ -136,6 +146,10 @@ export default class URLPath extends BasePath<ParsedPathURL, URLPath> {
 		return this.parsed.hostname;
 	}
 
+	public getPort(): undefined | number {
+		return this.parsed.port;
+	}
+
 	public getProtocol(): string {
 		return this.parsed.protocol;
 	}
@@ -164,7 +178,7 @@ export default class URLPath extends BasePath<ParsedPathURL, URLPath> {
 		});
 	}
 
-	public resolve(path: AnyPath): URLPath {
+	public resolve(path: Path): URLPath {
 		if (path.isURL()) {
 			return path.assertURL();
 		} else if (path.isAbsolute() && path.parsed.type === "absolute-unix") {
@@ -178,3 +192,5 @@ export default class URLPath extends BasePath<ParsedPathURL, URLPath> {
 		return fetch(this.join(), init);
 	}
 }
+
+URLPath.prototype[Symbol.toStringTag] = "URLPath";

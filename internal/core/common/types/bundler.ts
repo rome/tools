@@ -7,7 +7,7 @@
 
 import {Diagnostics} from "@internal/diagnostics";
 import {SourceMapGenerator} from "@internal/codec-source-map";
-import {AbsoluteFilePath, AbsoluteFilePathSet, AnyPath, RelativePath, RelativePathMap} from "@internal/path";
+import {AbsoluteFilePath, AbsoluteFilePathSet, Path, RelativePath, RelativePathMap} from "@internal/path";
 import {ResolverOptions} from "../../server/fs/Resolver";
 import BundleRequest from "@internal/core/server/bundler/BundleRequest";
 import Bundler from "@internal/core/server/bundler/Bundler";
@@ -19,7 +19,7 @@ import {Event } from "@internal/events";
 import { Resource } from "@internal/resources";
 
 export type BundlerConfig = {
-	basePath: AnyPath;
+	basePath: Path;
 	inlineSourceMap: boolean;
 	cwd: AbsoluteFilePath;
 	resolver: ResolverOptions;
@@ -31,7 +31,7 @@ export type BundleAssets = RelativePathMap<BundleAsset>;
 
 export type BundleAsset = {
 	etag: string;
-	content: () => Promise<string | Buffer | FSReadStream>;
+	content: () => Promise<string | ArrayBuffer | FSReadStream>;
 };
 
 export type BundleRequestResult = {

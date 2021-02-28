@@ -14,7 +14,7 @@ import {
 	isPlainObject,
 } from "@internal/typescript-helpers";
 import {pretty} from "@internal/pretty-format";
-import {AnyPath, UNKNOWN_PATH, isPath} from "@internal/path";
+import {Path, UNKNOWN_PATH, isPath} from "@internal/path";
 import {isIndexedNumberish} from "@internal/numbers";
 
 export function isDigit(char: undefined | string): boolean {
@@ -191,7 +191,7 @@ export function extractSourceLocationRangeFromNodes(
 		return undefined;
 	}
 
-	let path: AnyPath = UNKNOWN_PATH;
+	let path: Path = UNKNOWN_PATH;
 	let hasPath = false;
 	let start: undefined | Position = undefined;
 	let end: undefined | Position = undefined;

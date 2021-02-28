@@ -11,7 +11,7 @@ import {Diagnostics, DiagnosticsProcessor} from "@internal/diagnostics";
 import {
 	AbsoluteFilePath,
 	AbsoluteFilePathSet,
-	AnyPath,
+	Path,
 	MixedPathMap,
 } from "@internal/path";
 import {DiagnosticsPrinter} from "@internal/cli-diagnostics";
@@ -34,7 +34,7 @@ import {ServerRequestGlobArgs} from "../ServerRequest";
 import { Resource } from "@internal/resources";
 
 type CheckWatchChange = {
-	path: AnyPath;
+	path: Path;
 	diagnostics: Diagnostics;
 };
 
@@ -324,7 +324,7 @@ class CheckRunner {
 	}
 
 	public getDiagnosticsForPath(
-		path: AnyPath,
+		path: Path,
 		guaranteedOnly: boolean,
 	): Diagnostics {
 		const processor = new DiagnosticsProcessor();
@@ -359,7 +359,7 @@ class CheckRunner {
 		}
 	}
 
-	private queueChanges(path: AnyPath, guaranteed: boolean) {
+	private queueChanges(path: Path, guaranteed: boolean) {
 		const existing = this.pendingChanges.get(path);
 		if (existing !== undefined && !existing.guaranteed) {
 			return;
@@ -630,7 +630,9 @@ export default class Checker {
 			},
 			onRunEnd: (res) => {
 				// Update counts
-				savedPaths.addSet(res.savedPaths);
+				for (const path of res.savedPaths) {
+					savedPaths.add(path);
+				}
 				paths = new AbsoluteFilePathSet([...paths, ...res.evictedPaths]);
 			},
 		});

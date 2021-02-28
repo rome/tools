@@ -12,7 +12,7 @@ import {
 	JSFunctionDeclaration,
 } from "@internal/ast";
 import {createVisitor, signals} from "@internal/compiler";
-import {AnyPath} from "@internal/path";
+import {Path} from "@internal/path";
 import {renameBindings} from "@internal/js-ast-utils";
 import {descriptions} from "@internal/diagnostics";
 import {normalizeCamelCase} from "./useCamelCase";
@@ -27,7 +27,7 @@ function isValidDeclaration(
 }
 
 export function filenameToId(
-	path: AnyPath,
+	path: Path,
 	capitalize: boolean,
 ): undefined | string {
 	let basename = path.getExtensionlessBasename();

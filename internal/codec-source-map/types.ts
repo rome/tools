@@ -6,7 +6,7 @@
  */
 
 import {OneIndexed, ZeroIndexed} from "@internal/numbers";
-import {AnyPath} from "@internal/path";
+import {Path} from "@internal/path";
 
 export type Mappings = Mapping[];
 
@@ -19,7 +19,7 @@ export type ParsedMapping = {
 		line: OneIndexed;
 		column: ZeroIndexed;
 	};
-	source: undefined | AnyPath;
+	source: undefined | Path;
 	name: undefined | string;
 };
 
@@ -33,7 +33,7 @@ export type ParsedMappings = Map<string, Mapping | ParsedMapping>;
 
 export type ResolvedLocation = {
 	found: boolean;
-	source: AnyPath;
+	source: Path;
 	line: OneIndexed;
 	column: ZeroIndexed;
 	name: undefined | string;

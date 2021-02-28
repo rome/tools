@@ -13,7 +13,7 @@ import {
 import {
 	AnyVisitors,
 	CompilerOptions,
-	PathOptions,
+	CompilerPathOptions,
 	Transforms,
 } from "@internal/compiler";
 import {
@@ -36,7 +36,7 @@ import {reduceNode} from "../methods/reduce";
 import {
 	AbsoluteFilePath,
 	AbsoluteFilePathSet,
-	AnyPath,
+	Path,
 	equalPaths,
 } from "@internal/path";
 import {
@@ -138,7 +138,7 @@ export default class CompilerContext {
 	private visitorStates: ExtendedMap<AnyVisitor, AnyVisitorState>;
 	private integrity: undefined | DiagnosticIntegrity;
 	public displayFilename: string;
-	public path: AnyPath;
+	public path: Path;
 	public project: CompilerProject;
 	public language: DiagnosticLanguage;
 	private sourceTypeJS: undefined | ConstJSSourceType;
@@ -278,7 +278,7 @@ export default class CompilerContext {
 	public reduce(
 		ast: AnyNode,
 		visitors: AnyVisitor | AnyVisitors,
-		pathOpts?: PathOptions,
+		pathOpts?: CompilerPathOptions,
 	): AnyNodes {
 		return reduceNode(ast, visitors, this, pathOpts);
 	}

@@ -7,7 +7,7 @@
 
 import {StructuredError} from "@internal/errors";
 import {AnyMarkups} from "@internal/markup";
-import {RSERObject, RSERValue} from "@internal/codec-binary-serial";
+import {RSERObject, RSERValue} from "@internal/binary";
 import {Dict, VoidCallback} from "@internal/typescript-helpers";
 import {
 	BridgeEventBidirectional,

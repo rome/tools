@@ -9,7 +9,7 @@ import {descriptions} from "@internal/diagnostics";
 import {Scope} from "../../scopes";
 import E, {ErrorDefinition} from "./E";
 import {AnyNode} from "@internal/ast";
-import {AnyPath} from "@internal/path";
+import {Path} from "@internal/path";
 
 export default class UnknownImportE extends E {
 	constructor(
@@ -18,7 +18,7 @@ export default class UnknownImportE extends E {
 		opts: {
 			possibleNames: string[];
 			importedName: string;
-			source: AnyPath;
+			source: Path;
 		},
 	) {
 		super(scope, originNode);
@@ -29,7 +29,7 @@ export default class UnknownImportE extends E {
 
 	public static type = "UnknownImportE";
 	private importedName: string;
-	private source: AnyPath;
+	private source: Path;
 	private possibleNames: string[];
 
 	public getError(): ErrorDefinition {

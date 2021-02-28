@@ -11,20 +11,7 @@ import {createAbsoluteFilePath} from "@internal/path";
 import RSERWriterCounter from "./RSERWriterCounter";
 import RSERWriterHasher from "./RSERWriterHasher";
 import {sha256} from "@internal/string-utils";
-
-export {default as RSERBufferObserver} from "./RSERWriterBase";
-export {default as RSERBufferParser} from "./RSERBufferParser";
-export {default as RSERWriterMaterial} from "./RSERWriterMaterial";
-export {default as RSERStream} from "./RSERStream";
-
-export {
-	AnyRSERPathMap as AnyRSERFilePathMap,
-	RSERArray,
-	RSERMap,
-	RSERObject,
-	RSERSet,
-	RSERValue,
-} from "./types";
+import { getArrayBuffer } from "../helpers";
 
 export function encodeValueToRSERSingleMessageStream(
 	val: RSERValue,
@@ -108,10 +95,7 @@ export function decodeSingleMessageRSERStream(
 		readStream.on(
 			"data",
 			(chunk) => {
-				const nodeBuffer: Buffer =
-					typeof chunk === "string" ? Buffer.from(chunk) : chunk;
-				const arrBuffer: ArrayBuffer = nodeBuffer.buffer;
-				decodeStream.append(arrBuffer);
+				decodeStream.append(getArrayBuffer(chunk));
 			},
 		);
 

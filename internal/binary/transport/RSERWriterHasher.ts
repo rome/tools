@@ -1,5 +1,5 @@
 import RSERWriterBase from "./RSERWriterBase";
-import {IntSize, writeInt} from "./int";
+import {IntSize, writeInt} from "./utils";
 import crypto = require("crypto");
 
 export default class RSERWriterHasher extends RSERWriterBase {

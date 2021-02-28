@@ -1,10 +1,10 @@
-import {Path, createVisitor, signals} from "@internal/compiler";
+import {CompilerPath, createVisitor, signals} from "@internal/compiler";
 import {descriptions} from "@internal/diagnostics";
 import {isFor} from "@internal/js-ast-utils";
 
 function isContinueInsideLastAncestorPath(
-	ancestryArr: Path[],
-	path: Path,
+	ancestryArr: CompilerPath[],
+	path: CompilerPath,
 ): boolean {
 	const length = ancestryArr.length;
 	for (let index = length; index > 1; index--) {
@@ -23,7 +23,7 @@ function isContinueInsideLastAncestorPath(
 	return true;
 }
 
-function isContinueTheLastStatement(ancestryArr: Path[], path: Path): boolean {
+function isContinueTheLastStatement(ancestryArr: CompilerPath[], path: CompilerPath): boolean {
 	const node = ancestryArr[0].node;
 	if (node.type === "JSBlockStatement") {
 		const bodySize = node.body.length;
@@ -35,7 +35,7 @@ function isContinueTheLastStatement(ancestryArr: Path[], path: Path): boolean {
 }
 
 //return true if continue label is undefined or equal to its parent's looplabel
-function containsParentLoopLabel(path: Path, parentPath: Path): boolean {
+function containsParentLoopLabel(path: CompilerPath, parentPath: CompilerPath): boolean {
 	if (path.node.type === "JSContinueStatement" && path.node.label !== undefined) {
 		if (
 			parentPath.parent.type === "JSLabeledStatement" &&
@@ -49,8 +49,8 @@ function containsParentLoopLabel(path: Path, parentPath: Path): boolean {
 	return true;
 }
 
-function isContinueUnNecessary(path: Path): boolean {
-	const ancestryArr: Path[] = [];
+function isContinueUnNecessary(path: CompilerPath): boolean {
+	const ancestryArr: CompilerPath[] = [];
 	const parentPath = path.findAncestry((p) => {
 		if (isFor(p.node) || p.node.type === "JSWhileStatement") {
 			return true;

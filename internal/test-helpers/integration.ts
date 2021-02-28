@@ -15,7 +15,7 @@ import {
 	TEMP_PATH,
 	UIDPath,
 	createAbsoluteFilePath,
-	createAnyPath,
+	createPath,
 	createRelativePath,
 	createUIDPath,
 } from "@internal/path";
@@ -118,7 +118,7 @@ export function findFixtureInput(
 			return {
 				input,
 				handler: getFileHandlerFromPathAssert(
-					createAnyPath(`input.${ext}`),
+					createPath(`input.${ext}`),
 					projectConfig,
 				).handler,
 			};

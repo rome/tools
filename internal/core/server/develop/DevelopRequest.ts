@@ -1,9 +1,9 @@
 import DevelopServer from "./DevelopServer";
-import { AnyPath, createURLPath, RelativePath, URLPath } from "@internal/path";
+import { Path, createURLPath, RelativePath, URLPath } from "@internal/path";
 import { getFileHandlerFromPath } from "@internal/core/common/file-handlers";
 import stream = require("stream");
 import http = require("http");
-import { markup } from "@internal/markup";
+import { AnyMarkup, markup } from "@internal/markup";
 import { sha256 } from "@internal/string-utils";
 
 type DevelopRequestOptions = {
@@ -12,6 +12,10 @@ type DevelopRequestOptions = {
   response: http.ServerResponse;
   server: DevelopServer;
 };
+
+function isLocalAddress(address: undefined | string): boolean {
+  return address === "localhost" || address === "127.0.0.1" || address === "::1";
+}
 
 export default class DevelopRequest {
   constructor({request, response, httpServer, server}: DevelopRequestOptions) {
@@ -53,14 +57,18 @@ export default class DevelopRequest {
   private url: URLPath;
   private pathname: RelativePath;
 
-  private end(chunk?: string | Buffer): Promise<void> {
+  private end(chunk?: string | ArrayBuffer): Promise<void> {
     return new Promise((resolve, reject) => {
+      if (chunk instanceof ArrayBuffer) {
+        chunk = Buffer.from(chunk);
+      }
+      
       this.res.end(chunk, resolve);
     });
   }
 
-  private pipe(val: stream.Readable | string | Buffer): Promise<void> {
-    if (Buffer.isBuffer(val) || typeof val === "string") {
+  private pipe(val: stream.Readable | string | ArrayBuffer): Promise<void> {
+    if (val instanceof ArrayBuffer || typeof val === "string") {
       return this.end(val);
     }
 
@@ -71,7 +79,7 @@ export default class DevelopRequest {
     });
   }
 
-  private setResponseMimeType(path: AnyPath) {
+  private setResponseMimeType(path: Path) {
     const {handler} = getFileHandlerFromPath(path, this.server.resolution.project.config);
     if (handler !== undefined) {
       this.res.setHeader("Content-Type", handler.mime);
@@ -181,7 +189,14 @@ export default class DevelopRequest {
       statusCodeText = markup`<dim>${statusCode}</dim>`;
     }
 
-    this.server.reporter.log(markup`<dim>${req.method}</dim> ${this.url} ${statusCodeText}`);
+    let url: AnyMarkup = this.url;
+
+    // Only include the pathname when it's localhost connecting to itself
+    if (isLocalAddress(this.url.getHostname()) && isLocalAddress(this.req.socket.remoteAddress)) {
+      url = markup`<hyperlink target="${this.url.join()}">${this.url.joinPathname()}</hyperlink>`;
+    }
+
+    this.server.reporter.log(markup`<dim>${req.method}</dim> ${url} ${statusCodeText}`);
   }
 
   public async handle(): Promise<void> {

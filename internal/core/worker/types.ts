@@ -16,7 +16,7 @@ import {FormatterOptions} from "@internal/formatter";
 import {ModuleSignature} from "@internal/js-analysis";
 import {StaticMarkup} from "@internal/markup";
 import {Duration, ZeroIndexed} from "@internal/numbers";
-import {AbsoluteFilePath, AnyPath} from "@internal/path";
+import {AbsoluteFilePath, Path} from "@internal/path";
 import {Dict} from "@internal/typescript-helpers";
 import WorkerBridge from "../common/bridges/WorkerBridge";
 import {AnalyzeDependencyResult} from "../common/types/analyzeDependencies";
@@ -116,7 +116,7 @@ export type WorkerPrefetchedModuleSignatures = {
 	[key: string]:
 		| {
 				type: "USE_CACHED";
-				path: AnyPath;
+				path: Path;
 			}
 		| {
 				type: "RESOLVED";

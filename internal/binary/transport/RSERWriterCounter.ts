@@ -1,5 +1,5 @@
 import RSERWriterBase from "./RSERWriterBase";
-import {IntSize} from "./int";
+import {IntSize} from "./utils";
 
 export default class RSERWriterCounter extends RSERWriterBase {
 	constructor() {

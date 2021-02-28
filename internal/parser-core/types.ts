@@ -6,7 +6,7 @@
  */
 
 import {OneIndexed, ZeroIndexed} from "@internal/numbers";
-import {AnyPath} from "@internal/path";
+import {Path} from "@internal/path";
 import {
 	DiagnosticCategory,
 	DiagnosticDescriptionOptional,
@@ -144,7 +144,7 @@ export type BaseTokens = {
 
 //# Other types
 export type SourceLocation = {
-	path: AnyPath;
+	path: Path;
 	identifierName?: string;
 	start: Position;
 	end: Position;
@@ -161,7 +161,7 @@ export const UNKNOWN_POSITION: Position = {
 };
 
 export type ParserOptions = {
-	path?: AnyPath;
+	path?: Path;
 	integrity?: DiagnosticIntegrity;
 	input?: string;
 	sourceText?: string;

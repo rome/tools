@@ -6,12 +6,12 @@
  */
 
 import {AnalyzeDependencyResult, FileReference} from "@internal/core";
-import {Path} from "@internal/compiler";
+import {CompilerPath} from "@internal/compiler";
 import {AnyRoot} from "@internal/ast";
 import {ProjectConfig} from "@internal/project";
 import {EnterSignal, ExitSignal} from "./signals";
 import CompilerContext from "./lib/CompilerContext";
-import {AbsoluteFilePath, AnyPath, UIDPath, UIDPathMap} from "@internal/path";
+import {AbsoluteFilePath, Path, UIDPath, UIDPathMap} from "@internal/path";
 import {SourceMap} from "@internal/codec-source-map";
 import {Dict, UnknownObject} from "@internal/typescript-helpers";
 import {DiagnosticCategory} from "@internal/diagnostics";
@@ -45,8 +45,8 @@ export type Transforms = Transform[];
 
 export interface Visitor<State extends UnknownObject> {
 	name: string;
-	enter?: (path: Path, state: VisitorStateEnter<State>) => EnterSignal;
-	exit?: (path: Path, state: VisitorStateExit<State>) => ExitSignal;
+	enter?: (path: CompilerPath, state: VisitorStateEnter<State>) => EnterSignal;
+	exit?: (path: CompilerPath, state: VisitorStateExit<State>) => ExitSignal;
 }
 
 // rome-ignore lint/ts/noExplicitAny: future cleanup
@@ -86,7 +86,7 @@ export type BundleCompileOptions = {
 	analyze: AnalyzeDependencyResult;
 	relativeSourcesToModuleId: Map<string, UIDPath>;
 	resolvedImports: BundleCompileResolvedImports;
-	assetPath: undefined | AnyPath;
+	assetPath: undefined | Path;
 };
 
 export type LintCompilerOptions = {

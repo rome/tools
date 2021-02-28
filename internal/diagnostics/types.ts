@@ -13,8 +13,8 @@ import {DiagnosticCategory} from "./categories";
 import {Dict} from "@internal/typescript-helpers";
 import {ClientRequestFlags, CommandName} from "@internal/core";
 import {StaticMarkup} from "@internal/markup";
-import {AnyPath, MixedPathSet} from "@internal/path";
-import { RSERValue } from "@internal/codec-binary-serial";
+import {Path, MixedPathSet} from "@internal/path";
+import { RSERValue } from "@internal/binary";
 
 export type DiagnosticCategoryDescription = {
 	category: DiagnosticCategory;
@@ -24,13 +24,13 @@ export type DiagnosticCategoryDescription = {
 export type DiagnosticFilter = {
 	category?: DiagnosticCategory;
 	message?: StaticMarkup;
-	path?: AnyPath;
+	path?: Path;
 	start?: Position;
 	line?: OneIndexed;
 };
 
 export type DiagnosticSuppression = DiagnosticCategoryDescription & {
-	path: AnyPath;
+	path: Path;
 	startLine: OneIndexed;
 	endLine: OneIndexed;
 	loc: SourceLocation;
@@ -48,7 +48,7 @@ export type DiagnosticLocation = {
 	marker?: StaticMarkup;
 	language?: DiagnosticLanguage;
 	sourceTypeJS?: DiagnosticSourceType;
-	path: AnyPath;
+	path: Path;
 	start?: Position;
 	end?: Position;
 };
@@ -102,7 +102,7 @@ export type Diagnostic = {
 export type Diagnostics = Diagnostic[];
 
 export type DiagnosticDependency = {
-	path: AnyPath;
+	path: Path;
 	integrity?: DiagnosticIntegrity;
 };
 
@@ -219,7 +219,7 @@ export type DiagnosticAdviceStackFrame = {
 	suffix?: string;
 	object?: string;
 	property?: string;
-	path?: AnyPath;
+	path?: Path;
 	line?: OneIndexed;
 	column?: ZeroIndexed;
 	language: undefined | DiagnosticLanguage;

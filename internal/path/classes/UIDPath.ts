@@ -1,5 +1,5 @@
-import {AnyParsedPath, ParsedPathUID} from "../types";
-import {BasePath, FilePathMemo} from "./BasePath";
+import {ParsedPath, ParsedPathUID} from "../types";
+import {BasePath, FilePathMemo} from "../bases";
 
 export default class UIDPath extends BasePath<ParsedPathUID, UIDPath> {
 	public [Symbol.toStringTag] = "UIDPath";
@@ -8,12 +8,12 @@ export default class UIDPath extends BasePath<ParsedPathUID, UIDPath> {
 		return this;
 	}
 
-	protected _equalAbsolute(parsed: AnyParsedPath): boolean {
+	protected _equalAbsolute(parsed: ParsedPath): boolean {
 		return parsed.type === "uid";
 	}
 
-	protected _join(relative: Array<string>): string {
-		return `uid://${relative.join("/")}`;
+	protected _join(): string {
+		return `uid://${this.getDisplaySegments().join("/")}`;
 	}
 
 	protected _getUnique() {
@@ -36,3 +36,5 @@ export default class UIDPath extends BasePath<ParsedPathUID, UIDPath> {
 		return this;
 	}
 }
+
+UIDPath.prototype[Symbol.toStringTag] = "UIDPath";

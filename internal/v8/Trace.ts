@@ -7,7 +7,7 @@
 
 import {Profile, TraceEvent} from "./types";
 import {urlToFilename} from "./utils";
-import {createAnyPath} from "@internal/path";
+import {createPath} from "@internal/path";
 import {ZeroIndexed} from "@internal/numbers";
 import { errorSourceMaps } from "./error-frames";
 
@@ -34,7 +34,7 @@ export default class Trace {
 
 			// Call frame line numbers are 0-index while Rome is 1-indexed
 			const resolved = errorSourceMaps.approxOriginalPositionFor(
-				createAnyPath(urlToFilename(callFrame.url)),
+				createPath(urlToFilename(callFrame.url)),
 				new ZeroIndexed(callFrame.lineNumber).toOneIndexed(),
 				new ZeroIndexed(callFrame.columnNumber),
 			);

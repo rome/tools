@@ -12,7 +12,7 @@ import {
 	getErrorStructure,
 	setErrorFrames,
 } from "@internal/errors";
-import {AnyPath, createAnyPath, createUIDPath} from "@internal/path";
+import {Path, createPath, createUIDPath} from "@internal/path";
 import {OneIndexed} from "@internal/numbers";
 import { SourceMapConsumerCollection } from "@internal/codec-source-map";
 
@@ -125,12 +125,12 @@ function addErrorFrames(err: ErrorWithFrames, frames: NodeJS.CallSite[]): void {
 		const lineNumber = frameApi.getLineNumber();
 		const columnNumber = frameApi.getColumnNumber();
 
-		let path: undefined | AnyPath;
+		let path: undefined | Path;
 		if (filename !== undefined) {
 			if (filename.startsWith("node:")) {
 				path = createUIDPath(filename);
 			} else {
-				path = createAnyPath(filename);
+				path = createPath(filename);
 			}
 		}
 

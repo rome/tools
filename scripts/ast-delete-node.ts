@@ -1,6 +1,6 @@
 import {INTERNAL, reporter} from "./_utils";
 import {main as generateAST} from "./generated-files/ast";
-import {createAnyPath} from "@internal/path";
+import {createRelativePath} from "@internal/path";
 import {markup} from "@internal/markup";
 
 export async function main([filename]: string[]) {
@@ -11,7 +11,7 @@ export async function main([filename]: string[]) {
 		return 1;
 	}
 
-	const segments = createAnyPath(filename).getSegments();
+	const segments = createRelativePath(filename).getSegments();
 	if (segments.length !== 3) {
 		reporter.error(markup`Expected three segments in filename argument`);
 		return 1;

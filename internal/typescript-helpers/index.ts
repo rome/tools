@@ -4,6 +4,7 @@
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  */
+// This file contains generic TypeScript types, and predicate methods
 
 type VoidReturn = void | undefined;
 
@@ -148,4 +149,9 @@ export function equalArray<A extends unknown[], B extends unknown[]>(
 	}
 
 	return true;
+}
+
+// Check if a value is instance of a class, disallowing inheritance
+export function isSafeInstanceof<ClassType extends new (...args: any) => any>(inst: unknown, Class: ClassType): inst is InstanceType<ClassType> {
+	return inst instanceof Class && inst.constructor === Class;
 }

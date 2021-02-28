@@ -2,7 +2,7 @@ import {ReporterNamespace} from "@internal/cli-reporter";
 import {
 	RSERValue,
 	encodeValueToRSERSingleMessageStream,
-} from "@internal/codec-binary-serial";
+} from "@internal/binary";
 import {AnyMarkups, markup} from "@internal/markup";
 import {AbsoluteFilePath, AbsoluteFilePathMap, UIDPath} from "@internal/path";
 import { Resource } from "@internal/resources";

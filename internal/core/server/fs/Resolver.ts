@@ -17,10 +17,10 @@ import {FileReference} from "@internal/core";
 import resolverSuggest from "./resolverSuggest";
 import {
 	AbsoluteFilePath,
-	AnyPath,
+	Path,
 	RelativePath,
 	URLPath,
-	createPathFromSegments,
+	createRelativePathFromSegments,
 	createRelativePath,
 } from "@internal/path";
 import {DiagnosticAdvice, DiagnosticLocation} from "@internal/diagnostics";
@@ -102,7 +102,7 @@ const NODE_MODULES = "node_modules";
 
 export interface ResolverRemoteQuery extends Omit<ResolverOptions, "origin"> {
 	origin: URLPath | AbsoluteFilePath;
-	source: AnyPath;
+	source: Path;
 	location?: DiagnosticLocation;
 	// Allows a resolution to stop at a directory or package boundary
 	requestedType?: "package" | "directory";
@@ -156,7 +156,7 @@ export type ResolverQueryResponseFetchError = {
 };
 
 type FilenameVariant = {
-	path: AnyPath;
+	path: Path;
 	types: ResolverQueryResponseFoundType[];
 };
 
@@ -519,7 +519,7 @@ export default class Resolver {
 
 	private *getFilenameVariants(
 		query: ResolverLocalQuery,
-		path: AnyPath,
+		path: Path,
 	): Iterable<FilenameVariant> {
 		const seen: Set<string> = new Set();
 		for (const variant of this._getFilenameVariants(query, path, [])) {
@@ -535,7 +535,7 @@ export default class Resolver {
 
 	private *_getFilenameVariants(
 		query: ResolverLocalQuery,
-		path: AnyPath,
+		path: Path,
 		callees: ResolverQueryResponseFoundType[],
 	): Iterable<FilenameVariant> {
 		const {platform} = query;
@@ -770,7 +770,7 @@ export default class Resolver {
 			if (manifestDef.manifest.exports !== true) {
 				const alias = getExportsAlias({
 					manifest: manifestDef.manifest,
-					relative: createPathFromSegments(moduleNameParts, "relative").assertRelative(),
+					relative: createRelativePathFromSegments(moduleNameParts),
 					platform: query.platform,
 				});
 
@@ -837,7 +837,7 @@ export default class Resolver {
 	}
 
 	// Given a reference to a module, extract the module name and any trailing relative paths
-	private splitModuleName(path: AnyPath): [string, string[]] {
+	private splitModuleName(path: Path): [string, string[]] {
 		// fetch the first part of the path as that's the module name
 		// possible values of `moduleNameFull` could be `react` or `react/lib/whatever`
 		const [moduleName, ...moduleNameParts] = path.getSegments();

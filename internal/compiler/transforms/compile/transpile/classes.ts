@@ -7,7 +7,7 @@
 
 import {
 	CompilerContext,
-	Path,
+	CompilerPath,
 	createVisitor,
 	signals,
 } from "@internal/compiler";
@@ -39,7 +39,7 @@ import {descriptions} from "@internal/diagnostics";
 
 function transformClass(
 	node: JSClassDeclaration | JSClassExpression,
-	path: Path,
+	path: CompilerPath,
 	context: CompilerContext,
 ): {
 	_constructor: JSFunctionDeclaration;

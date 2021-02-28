@@ -16,7 +16,7 @@ import {SourceLocation} from "@internal/parser-core";
 import {
 	ClassBinding,
 	FunctionBinding,
-	Path,
+	CompilerPath,
 	Scope,
 	TypeBinding,
 } from "@internal/compiler";
@@ -28,7 +28,7 @@ import {
 	AnyAnalyzeExport,
 } from "@internal/core";
 
-export function isOptional(path: Path): boolean {
+export function isOptional(path: CompilerPath): boolean {
 	for (const {node} of path.ancestryPaths) {
 		if (node.type === "JSTryStatement") {
 			return true;

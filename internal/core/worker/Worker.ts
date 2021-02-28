@@ -27,7 +27,7 @@ import {DiagnosticsError} from "@internal/diagnostics";
 import {
 	AbsoluteFilePath,
 	AbsoluteFilePathMap,
-	AnyPath,
+	Path,
 	MixedPathMap,
 	UIDPath,
 } from "@internal/path";
@@ -46,7 +46,7 @@ import {BridgeClient, isBridgeDisconnectedDiagnosticError} from "@internal/event
 import {ExtendedMap} from "@internal/collections";
 import WorkerCache from "./WorkerCache";
 import FatalErrorHandler from "../common/FatalErrorHandler";
-import {RSERObject} from "@internal/codec-binary-serial";
+import {RSERObject} from "@internal/binary";
 import {ReporterConditionalStream} from "@internal/cli-reporter";
 import {DEFAULT_TERMINAL_FEATURES} from "@internal/cli-environment";
 import { createResourceRoot, Resource } from "@internal/resources";
@@ -379,7 +379,7 @@ export default class Worker {
 
 		return {
 			getExportTypes: async (
-				origin: AnyPath,
+				origin: Path,
 				relative: string,
 			): Promise<undefined | ModuleSignature> => {
 				return resolveGraph(`${origin.join()}:${relative}`);

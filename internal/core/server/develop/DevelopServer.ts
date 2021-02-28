@@ -15,6 +15,11 @@ type DevelopServerOptions = {
   request: ServerRequest;
 };
 
+export type DevelopServerListenOptions = {
+  port: number;
+  public: boolean;
+};
+
 export default class DevelopServer {
   constructor(opts: DevelopServerOptions) {
     this.request = opts.request;
@@ -89,7 +94,9 @@ export default class DevelopServer {
     // TODO tell all connected websockets to refresh
   }
 
-  public async listen(port: number): Promise<http.Server> {
+  public async listen(opts: DevelopServerListenOptions): Promise<http.Server> {
+    const {reporter} = this;
+
     const server = http.createServer((request: http.IncomingMessage, response: http.ServerResponse) => {
       const devRequest = new DevelopRequest({
         httpServer: server,
@@ -103,9 +110,21 @@ export default class DevelopServer {
     return new Promise((resolve, reject) => {
       server.addListener("error", reject);
 
-      server.listen(port, () => {
+      const {port} = opts;
+      const address = opts.public ? "0.0.0.0" : "127.0.0.1";
+
+      server.listen(port, address, () => {
         server.removeListener("error", reject);
         server.addListener("error", this.request.server.fatalErrorHandler.handleBound);
+
+        reporter.success(markup`Ready at <emphasis><hyperlink target="http://localhost:${String(port)}" /></emphasis>`);
+        
+        if (opts.public) {
+          reporter.warn(markup`The <emphasis>public</emphasis> flag has been set which makes the server accessible to others on your network, or possibly the whole internet depending on your network configuration. Express caution when using this flag.`);
+        } else {
+          // NB: Not sure if it's worth pointing out that we're on listening on a loopback interface
+        }
+
         resolve(server);
       });
     });

@@ -24,7 +24,7 @@ import {
 } from "@internal/markup";
 import {OneIndexed, ZeroIndexed} from "@internal/numbers";
 import {mergeObjects} from "@internal/typescript-helpers";
-import {AnyPath, MixedPathMap, MixedPathSet} from "@internal/path";
+import {Path, MixedPathMap, MixedPathSet} from "@internal/path";
 
 export type DiagnosticsNormalizerOptions = {
 	tags?: DiagnosticTags;
@@ -79,7 +79,7 @@ export default class DiagnosticsNormalizer {
 	private inlineSourceText: MixedPathMap<string>;
 	private inlinedSourceTextPaths: MixedPathSet;
 
-	public removePath(path: AnyPath) {
+	public removePath(path: Path) {
 		this.inlineSourceText.delete(path);
 		this.inlinedSourceTextPaths.delete(path);
 	}
@@ -122,13 +122,13 @@ export default class DiagnosticsNormalizer {
 		};
 	}
 
-	public setInlineSourceText(path: AnyPath, sourceText: string) {
+	public setInlineSourceText(path: Path, sourceText: string) {
 		this.inlineSourceText.set(path, sourceText);
 	}
 
-	private normalizePath(path: AnyPath): AnyPath;
-	private normalizePath(path: undefined | AnyPath): undefined | AnyPath;
-	private normalizePath(path: undefined | AnyPath): undefined | AnyPath {
+	private normalizePath(path: Path): Path;
+	private normalizePath(path: undefined | Path): undefined | Path;
+	private normalizePath(path: undefined | Path): undefined | Path {
 		const {markupOptions} = this;
 		if (markupOptions === undefined || path === undefined) {
 			return path;

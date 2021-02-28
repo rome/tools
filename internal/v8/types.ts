@@ -10,7 +10,7 @@ import {JSONPropertyValue} from "@internal/codec-config";
 import inspector = require("inspector");
 
 import {InterfaceToObject} from "@internal/typescript-helpers";
-import {AnyPath} from "@internal/path";
+import {Path} from "@internal/path";
 
 export type CPUProfile = InterfaceToObject<inspector.Profiler.Profile>;
 
@@ -43,7 +43,7 @@ export type CoverageRangeWithMetadata = inspector.Profiler.CoverageRange & {
 export type LocationRangeKind = "branch" | "function" | "expression";
 
 export type CoverageLocationRange = {
-	path: AnyPath;
+	path: Path;
 	kind: LocationRangeKind;
 	count: number;
 	start: Position;
@@ -58,7 +58,7 @@ export type CoverageFileStats = {
 };
 
 export type CoverageFile = {
-	path: AnyPath;
+	path: Path;
 	lines: CoverageFileStats;
 	branches: CoverageFileStats;
 	functions: CoverageFileStats;

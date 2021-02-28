@@ -1,4 +1,4 @@
-import {Path, createVisitor, signals} from "@internal/compiler";
+import {CompilerPath, createVisitor, signals} from "@internal/compiler";
 import {descriptions} from "@internal/diagnostics";
 import {
 	cleanJSXText,
@@ -28,7 +28,7 @@ const SVG_SHAPES = [
 ];
 const SVG_GROUP = "g";
 
-function hasSvgTitle(node: JSXElement | HTMLElement, path: Path): boolean {
+function hasSvgTitle(node: JSXElement | HTMLElement, path: CompilerPath): boolean {
 	if (!node.children) {
 		return false;
 	}
@@ -87,7 +87,7 @@ function processChild(
 		| JSXSpreadChild
 		| JSXElement
 		| JSXFragment,
-	path: Path,
+	path: CompilerPath,
 ): boolean {
 	if (node.type !== "JSXElement") {
 		return false;
@@ -106,7 +106,7 @@ function processChild(
 	);
 }
 
-function processHtmlChild(node: AnyHTMLChildNode, path: Path) {
+function processHtmlChild(node: AnyHTMLChildNode, path: CompilerPath) {
 	if (!isHTMLElement(node)) {
 		return false;
 	}

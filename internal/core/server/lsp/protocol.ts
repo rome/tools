@@ -6,6 +6,7 @@ import {Reporter} from "@internal/cli-reporter";
 import {AnyMarkup, markup} from "@internal/markup";
 import prettyFormat from "@internal/pretty-format";
 import {DIAGNOSTIC_CATEGORIES} from "@internal/diagnostics";
+import { getByteLength } from "@internal/binary/helpers";
 
 type Status = "IDLE" | "WAITING_FOR_HEADERS_END" | "WAITING_FOR_RESPONSE_END";
 
@@ -84,7 +85,7 @@ export class LSPTransport {
 
 	public write(res: JSONObject) {
 		const json = JSON.stringify(res);
-		const out = `Content-Length: ${Buffer.byteLength(json)}${HEADERS_END}${json}`;
+		const out = `Content-Length: ${getByteLength(json)}${HEADERS_END}${json}`;
 		this.writeEvent.send(out);
 	}
 
@@ -218,7 +219,7 @@ export class LSPTransport {
 					// Reset headers and trim content
 					this.nextHeaders = undefined;
 					this.buffer = this.buffer.slice(headers.expectedLength);
-					this.bufferLength = Buffer.byteLength(this.buffer);
+					this.bufferLength = getByteLength(this.buffer);
 
 					// Process rest of the buffer
 					this.setStatus("IDLE");
@@ -231,7 +232,7 @@ export class LSPTransport {
 
 	public append(data: string) {
 		this.buffer += data;
-		this.bufferLength += Buffer.byteLength(data);
+		this.bufferLength += getByteLength(data);
 		this.process();
 	}
 }

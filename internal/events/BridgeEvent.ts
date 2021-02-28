@@ -15,7 +15,7 @@ import {
 import { BridgeTimeoutError } from "./errors";
 import Event from "./Event";
 import {ErrorCallback, VoidCallback} from "@internal/typescript-helpers";
-import {RSERValue} from "@internal/codec-binary-serial";
+import {RSERValue} from "@internal/binary";
 import { DIAGNOSTIC_CATEGORIES, decorateErrorWithDiagnostics } from "@internal/diagnostics";
 import { markup } from "@internal/markup";
 import { createResource, Resource } from "@internal/resources";

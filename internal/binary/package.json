@@ -1,5 +1,5 @@
 {
-	"name": "@internal/codec-binary-serial",
+	"name": "@internal/binary",
 	"type": "module",
 	"private": true,
 	"main": "index.ts"
