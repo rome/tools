@@ -39,7 +39,7 @@ import {
 } from "@internal/diagnostics";
 import {prettyFormatEager} from "@internal/pretty-format";
 import highlightShell from "@internal/markup-syntax-highlight/highlightShell";
-import {RSERObject} from "@internal/binary";
+import {RSERObject} from "@internal/binary-transport";
 import {ExtendedMap} from "@internal/collections";
 import {markupToPlainText} from "@internal/cli-layout";
 import { safeProcessExit } from "@internal/resources";

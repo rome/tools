@@ -7,7 +7,7 @@ import {
 	RSERValue,
 	decodeSingleMessageRSERStream,
 	hashRSERValue,
-} from "@internal/binary";
+} from "@internal/binary-transport";
 import {FileReference} from "../common/types/files";
 import {Consumer, consumeUnknown} from "@internal/consume";
 import {sha256} from "@internal/string-utils";
@@ -319,15 +319,15 @@ class CacheFile {
 
 	private async createFreshPortableMetadata(): Promise<PortableCacheMetadataHashless> {
 		const {ref} = this;
-		const project = this.worker.getProject(ref.project);
+		const project = this.worker.getProject(ref);
 		const configCacheKeys: string[] = [];
 
 		for (const key of Object.keys(project.configCacheKeys).sort()) {
 			configCacheKeys.push(`${key}:${project.configCacheKeys[key]}`);
 		}
 
-		if (ref.manifest !== undefined) {
-			const manifest = this.worker.getPartialManifest(ref.manifest);
+		const manifest = this.worker.getPartialManifest(ref);
+		if (manifest !== undefined) {
 			configCacheKeys.push(`manifest:${manifest.hash}`);
 		}
 

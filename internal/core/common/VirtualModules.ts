@@ -115,7 +115,7 @@ export default class VirtualModules {
 
 	public isVirtualPath(path: AbsoluteFilePath): boolean {
 		const segments = path.getSegments();
-		return segments[0] === "" && segments[1] === "\0";
+		return segments[0] === "\0";
 	}
 
 	public getPossibleVirtualFileContents(path: Path): undefined | string {

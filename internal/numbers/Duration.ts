@@ -1,4 +1,5 @@
 import { enhanceNodeInspectClass } from "@internal/node";
+import { createResourceFromCallback, Resource } from "@internal/resources";
 
 type DurationHumanizeOptions = {
   allowMilliseconds?: boolean;
@@ -256,13 +257,25 @@ export default class Duration {
     return buf;
   }
 
-  public setTimeout(callback: () => void): NodeJS.Timeout {
-    return setTimeout(callback, this.toMilliseconds());
+  public setTimeout(callback: () => void): Resource {
+    const timer = setTimeout(() => {
+      callback();
+      resource.release();
+    }, this.toMilliseconds());
+
+    const resource = createTimeoutResource("setTimeout", this, timer);
+    return resource;
   }
 
-  public setInterval(callback: () => void): NodeJS.Timeout {
-    return setInterval(callback, this.toMilliseconds());
+  public setInterval(callback: () => void): Resource {
+    return createTimeoutResource("SetInterval", this, setInterval(callback, this.toMilliseconds()));
   }
+}
+
+function createTimeoutResource(methodName: string, duration: Duration, timeout: NodeJS.Timeout): Resource {
+  return createResourceFromCallback(`${methodName}<${duration.format()}>`, () => {
+    clearTimeout(timeout);
+  }, {optional: true});
 }
 
 enhanceNodeInspectClass(Duration, (inst) => {

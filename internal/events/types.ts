@@ -7,7 +7,7 @@
 
 import {StructuredError} from "@internal/errors";
 import {AnyMarkups} from "@internal/markup";
-import {RSERObject, RSERValue} from "@internal/binary";
+import {RSERObject, RSERValue} from "@internal/binary-transport";
 import {Dict, VoidCallback} from "@internal/typescript-helpers";
 import {
 	BridgeEventBidirectional,
@@ -83,6 +83,10 @@ export type BridgeServer<Factories> = Factories extends BridgeFactories<
 
 export type BridgeType = "server" | "client";
 
+export type BridgeOptions = {
+	ignoreHeartbeat?: boolean;
+};
+
 export type BridgeDefinition<
 	ClientEvents extends BridgeEventsDeclaration,
 	ServerEvents extends BridgeEventsDeclaration,
@@ -129,7 +133,7 @@ export enum BridgeMessageCodes {
 	RESPONSE_ERROR_NATIVE,
 }
 
-export type BridgeHandshakeMessage = [BridgeMessageCodes.CLIENT_HANDSHAKE, undefined | Duration, Set<number>, Map<number, string>] | [BridgeMessageCodes.SERVER_HANDSHAKE, undefined | Duration, Set<number>];
+export type BridgeHandshakeMessage = [BridgeMessageCodes.CLIENT_HANDSHAKE, Set<number>, Map<number, string>] | [BridgeMessageCodes.SERVER_HANDSHAKE, Set<number>];
 export type BridgeSubscriptionsMessage = [BridgeMessageCodes.SUBSCRIBED | BridgeMessageCodes.UNSUBSCRIBED, number];
 export type BridgeRequestCallMessage = [BridgeMessageCodes.CALL | BridgeMessageCodes.PRIORITY_CALL, number, number, RSERValue] | [BridgeMessageCodes.CALL | BridgeMessageCodes.PRIORITY_CALL, number, number];
 export type BridgeRequestSendMessage = [BridgeMessageCodes.SEND, number, RSERValue];

@@ -6,29 +6,39 @@
  */
 
 import setProcessTitle from "./utils/setProcessTitle";
-import {Worker, WorkerBridge} from "@internal/core";
+import {Worker, WorkerBridge, WorkerOptions} from "@internal/core";
 import {loadUserConfig} from "@internal/core/common/userConfig";
 import workerThreads = require("worker_threads");
 import {DIAGNOSTIC_CATEGORIES} from "@internal/diagnostics";
 import {consumeUnknown} from "@internal/consume";
+import { BridgeClient } from "@internal/events";
 
-export default async function worker() {
-	setProcessTitle("worker");
-	const bridge = WorkerBridge.Client.createFromWorkerThreadParentPort();
+async function deriveWorkerOptions(bridge: BridgeClient<typeof WorkerBridge>): Promise<WorkerOptions> {
 	const workerData = consumeUnknown(
 		workerThreads.workerData,
 		DIAGNOSTIC_CATEGORIES.parse,
 	);
 
 	const userConfig = await loadUserConfig();
-	const worker = new Worker({
+	
+	return {
 		userConfig,
 		bridge,
 		dedicated: true,
+		type: workerData.get("type").asStringSet(["processor", "test"]),
 		id: workerData.get("id").asNumber(),
 		cacheWriteDisabled: workerData.get("cacheWriteDisabled").asBoolean(),
 		cacheReadDisabled: workerData.get("cacheReadDisabled").asBoolean(),
-	});
+		inspectorPort: workerData.get("inspectorPort").asNumberOrVoid(),
+	};
+}
+
+export default async function worker() {
+	setProcessTitle("worker");
+	const bridge = WorkerBridge.Client.createFromWorkerThreadParentPort();
+	const opts = await deriveWorkerOptions(bridge);
+
+	const worker = new Worker(opts);
 	await worker.init();
 	await bridge.handshake();
 }

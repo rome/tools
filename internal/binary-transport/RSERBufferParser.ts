@@ -43,7 +43,7 @@ import {
 	setErrorFrames,
 } from "@internal/errors";
 import {IntSize} from "./utils";
-import {utf8Decode} from "../utf8";
+import {utf8Decode} from "@internal/binary";
 import {CachedKeyDecoder} from "./CachedKeyDecoder";
 import {ExtendedMap} from "@internal/collections";
 import RSERParserError from "./RSERParserError";
@@ -654,7 +654,7 @@ export default class RSERBufferParser {
 		}
 
 		// Decode array and objects
-		for (let i = 0; i < length; ++i) {
+		for (let i = 0; i < arr.length; ++i) {
 			const obj: RSERObject = {};
 			for (let keyidx = 0; keyidx < keys.length; ++keyidx) {
 				const val = this.decodeValue();

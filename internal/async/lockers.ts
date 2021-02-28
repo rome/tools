@@ -114,7 +114,7 @@ export class Locker<Key> extends LockerNormalized<Key, Key> {
 	}
 }
 
-export class FilePathLocker extends LockerNormalized<Path, string> {
+export class PathLocker extends LockerNormalized<Path, string> {
 	protected normalizeKey(path: Path): string {
 		return path.join();
 	}

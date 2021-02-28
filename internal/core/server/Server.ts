@@ -64,7 +64,7 @@ import ServerReporter from "./ServerReporter";
 import VirtualModules from "../common/VirtualModules";
 import {DiagnosticsProcessorOptions} from "@internal/diagnostics/DiagnosticsProcessor";
 import {toKebabCase} from "@internal/string-utils";
-import {FilePathLocker} from "../../async/lockers";
+import {PathLocker} from "../../async/lockers";
 import {DEFAULT_TERMINAL_FEATURES, getEnvVar} from "@internal/cli-environment";
 import {markup} from "@internal/markup";
 import prettyFormat from "@internal/pretty-format";
@@ -222,7 +222,7 @@ export default class Server {
 				};
 			},
 		});
-		this.requestFileLocker = new FilePathLocker();
+		this.requestFileLocker = new PathLocker();
 		this.connectedReporters = new ServerReporter(this);
 		this.resources.add(this.connectedReporters);
 
@@ -266,7 +266,7 @@ export default class Server {
 					},
 				},
 			},
-			"server",
+			"Server",
 		);
 
 		this.loggerStream = this.logger.attachConditionalStream(
@@ -329,7 +329,7 @@ export default class Server {
 	public cache: ServerCache;
 	public connectedReporters: ServerReporter;
 	public logger: Logger;
-	public requestFileLocker: FilePathLocker;
+	public requestFileLocker: PathLocker;
 
 	private loggerStream: ReporterConditionalStream;
 

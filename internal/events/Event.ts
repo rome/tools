@@ -111,7 +111,7 @@ export default class Event<Param, Ret = void> {
 			});
 
 			if (timeout !== undefined) {
-				resource.addTimeout("WaitTimeout", timeout.setTimeout(
+				resource.add(timeout.setTimeout(
 					() => {
 						resource.release().then(() => {
 							reject(

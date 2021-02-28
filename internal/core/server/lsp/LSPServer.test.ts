@@ -4,7 +4,7 @@ import LSPServer from "@internal/core/server/lsp/LSPServer";
 import {JSONObject} from "@internal/codec-config";
 import {Consumer, consumeUnknown} from "@internal/consume";
 import {DIAGNOSTIC_CATEGORIES} from "@internal/diagnostics";
-import { getByteLength } from "@internal/binary/helpers";
+import { getByteLength } from "@internal/binary";
 
 function makeRange(
 	startLine: number,

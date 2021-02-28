@@ -43,7 +43,7 @@ import {
 import {
 	InlineSnapshotUpdate,
 	InlineSnapshotUpdates,
-} from "../test-worker/SnapshotManager";
+} from "./test/SnapshotManager";
 import {formatAST} from "@internal/formatter";
 import {getNodeReferenceParts, valueToNode} from "@internal/js-ast-utils";
 import {markup} from "@internal/markup";
@@ -142,7 +142,7 @@ export default class WorkerAPI {
 			ast,
 			project,
 			provider: await this.worker.getTypeCheckProvider(
-				ref.project,
+				ref,
 				{},
 				parseOptions,
 			),
@@ -299,7 +299,7 @@ export default class WorkerAPI {
 		ref: FileReference,
 		parseOptions: WorkerParseOptions,
 	): Promise<AnalyzeDependencyResult> {
-		const project = this.worker.getProject(ref.project);
+		const project = this.worker.getProject(ref);
 		this.logger.info(markup`Analyze dependencies: ${ref.real}`);
 
 		const parseResult = await catchDiagnostics(async () =>

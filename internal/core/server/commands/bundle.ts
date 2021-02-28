@@ -11,7 +11,7 @@ import {createServerCommand} from "../commands";
 import Bundler from "../bundler/Bundler";
 import {Consumer} from "@internal/consume";
 import {AnyMarkup, markup} from "@internal/markup";
-import { getByteLength } from "@internal/binary/helpers";
+import { getByteLength } from "@internal/binary";
 
 type Flags = {
 	quiet: boolean;

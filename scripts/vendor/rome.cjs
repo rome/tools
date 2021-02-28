@@ -124586,19 +124586,16 @@ class ___R$project$rome$$internal$core$server$dependencies$DependencyOrderer_ts$
 
 			// We flag a possible cycle when a dependency has yet to have it's own transitive dependencies resolve but it ends up going back to itself
 			const isPossibleCycle =
-				this.orderedNodes.has(node) === false && ancestry.includes(filename);
-			if (isPossibleCycle) {
-				const ourCyclePath = ancestry.concat([filename]);
-				const existingCycle = this.possibleCyclePaths.get(node);
-
-				// We want to get the shortest cycle path since it's likely the most easily resolved
-				const isShortestCycle =
-					existingCycle === undefined ||
-					existingCycle.length > ourCyclePath.length;
-				if (isShortestCycle) {
-					this.possibleCyclePaths.set(node, ourCyclePath);
-				}
+			this.orderedNodes.has(node) === false && ancestry.includes(filename);
+		if (isPossibleCycle) {
+			const ourCyclePath = ancestry.concat([filename]);
+			let existingCycles = this.possibleCyclePaths.get(node);
+			if (existingCycles === undefined) {
+				existingCycles = [];
+				this.possibleCyclePaths.set(node, existingCycles);
 			}
+			existingCycles.push(ourCyclePath);
+		}
 		}
 
 		addFile(path, ancestry) {
@@ -124664,9 +124661,19 @@ class ___R$project$rome$$internal$core$server$dependencies$DependencyOrderer_ts$
 		}
 
 		flagCycle(node, dep, imp) {
-			const path = this.possibleCyclePaths.get(dep);
-			if (!path) {
+			const paths = this.possibleCyclePaths.get(dep);
+			if (!paths) {
 				// idk??
+				return;
+			}
+
+			let path;
+			for (const tryPath of paths) {
+				if ((path === undefined || path.length > tryPath.length) && tryPath.includes(dep.path.join()) && tryPath.includes(node.path.join())) {
+					path = tryPath;
+				}
+			}
+			if (path === undefined) {
 				return;
 			}
 

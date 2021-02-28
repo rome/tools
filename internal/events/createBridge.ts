@@ -3,12 +3,13 @@ import {
 	BridgeDefinition,
 	BridgeEventDeclaration,
 	BridgeEventsDeclaration,
+	BridgeOptions,
 	BridgeType,
 } from "./types";
 import {WebSocketInterface} from "@internal/codec-websocket";
 import {Socket} from "net";
 import workerThreads = require("worker_threads");
-import {RSERValue} from "@internal/binary";
+import {RSERValue} from "@internal/binary-transport";
 import { processResourceRoot } from "@internal/resources";
 
 export function createBridgeEventDeclaration<
@@ -44,9 +45,10 @@ export class BridgeFactory<
 	private type: BridgeType;
 	private def: BridgeDefinition<{}, {}, SharedEvents>;
 
-	create(): Bridge<ListenEvents, CallEvents, SharedEvents> {
+	public create(opts: BridgeOptions = {}): Bridge<ListenEvents, CallEvents, SharedEvents> {
 		return new Bridge(
 			this.type,
+			opts,
 			this.def,
 			this.listenEvents,
 			this.callEvents,
@@ -54,7 +56,7 @@ export class BridgeFactory<
 		);
 	}
 
-	createFromWebSocketInterface(
+	public createFromWebSocketInterface(
 		inf: WebSocketInterface,
 	): Bridge<ListenEvents, CallEvents, SharedEvents> {
 		const bridge = this.create();
@@ -90,7 +92,7 @@ export class BridgeFactory<
 		return bridge;
 	}
 
-	createFromBrowserWebSocket(
+	public createFromBrowserWebSocket(
 		socket: WebSocket,
 	): Bridge<ListenEvents, CallEvents, SharedEvents> {
 		const bridge = this.create();
@@ -123,7 +125,7 @@ export class BridgeFactory<
 		return bridge;
 	}
 
-	createFromSocket(
+	public createFromSocket(
 		socket: Socket,
 	): Bridge<ListenEvents, CallEvents, SharedEvents> {
 		const bridge = this.create();
@@ -167,7 +169,7 @@ export class BridgeFactory<
 		return bridge;
 	}
 
-	createFromWorkerThread(
+	public createFromWorkerThread(
 		worker: workerThreads.Worker,
 	): Bridge<ListenEvents, CallEvents, SharedEvents> {
 		const bridge = this.create();
@@ -212,7 +214,7 @@ export class BridgeFactory<
 		return bridge;
 	}
 
-	createFromWorkerThreadParentPort(): Bridge<
+	public createFromWorkerThreadParentPort(): Bridge<
 		ListenEvents,
 		CallEvents,
 		SharedEvents
@@ -276,11 +278,11 @@ export class BridgeFactories<
 	public Server: BridgeFactory<ServerEvents, ClientEvents, SharedEvents>;
 	public Client: BridgeFactory<ClientEvents, ServerEvents, SharedEvents>;
 
-	createFromLocal(): {
+	public createFromLocal(): {
 		server: Bridge<ServerEvents, ClientEvents, SharedEvents>;
 		client: Bridge<ClientEvents, ServerEvents, SharedEvents>;
 	} {
-		const server = this.Server.create();
+		const server = this.Server.create({ignoreHeartbeat: true});
 		server.sendMessageEvent.subscribe((data) => {
 			client.handleMessage(data);
 		});
@@ -288,7 +290,7 @@ export class BridgeFactories<
 			client.disconnected(`Server disconnected`);
 		});
 
-		const client = this.Client.create();
+		const client = this.Client.create({ignoreHeartbeat: true});
 		client.sendMessageEvent.subscribe((data) => {
 			server.handleMessage(data);
 		});

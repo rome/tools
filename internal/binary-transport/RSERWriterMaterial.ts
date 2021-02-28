@@ -1,6 +1,6 @@
 import {IntSize, writeInt} from "./utils";
 import RSERWriterBase from "./RSERWriterBase";
-import {utf8Encode} from "../utf8";
+import {encodeUTF8Into} from "@internal/binary";
 import RSERBufferParser from "./RSERBufferParser";
 import RSERWriterCounter from "./RSERWriterCounter";
 
@@ -67,7 +67,7 @@ export default class RSERWriterMaterial extends RSERWriterBase {
 		}
 
 		const offset = this.assertWritableSize(size);
-		utf8Encode(text, this.bytes, offset, size);
+		encodeUTF8Into(text, this.bytes, offset, size);
 	}
 
 	protected writeByte(value: number) {

@@ -41,7 +41,7 @@ import {getEnvVar} from "@internal/cli-environment";
 import {satisfiesSemver} from "@internal/codec-semver";
 import {Reporter} from "@internal/cli-reporter";
 import {loadUserConfig} from "@internal/core/common/userConfig";
-import {RSERObject} from "@internal/binary";
+import {RSERObject} from "@internal/binary-transport";
 import { safeProcessExit } from "@internal/resources";
 
 type CLIFlags = {

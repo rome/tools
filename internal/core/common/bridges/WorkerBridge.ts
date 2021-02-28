@@ -10,14 +10,15 @@ import {AnyRoot} from "@internal/ast";
 import {TransformStageName} from "@internal/compiler";
 import {Profile} from "@internal/v8";
 import {ProfilingStartData, ServerBridgeLog} from "./ServerBridge";
-import {Diagnostics, DiagnosticsError} from "@internal/diagnostics";
+import {Diagnostics, Diagnostic, DiagnosticOrigin, DiagnosticsError} from "@internal/diagnostics";
 import {BridgeErrorDetails, createBridge} from "@internal/events";
 import {FileReference} from "../types/files";
-import {InlineSnapshotUpdates} from "@internal/core/test-worker/SnapshotManager";
+import {InlineSnapshotUpdates} from "@internal/core/worker/test/SnapshotManager";
 import {
 	AbsoluteFilePath,
 	UIDPath,
 	createAbsoluteFilePath,
+	AbsoluteFilePathMap,
 } from "@internal/path";
 import {createBridgeEventDeclaration} from "@internal/events/createBridge";
 import {FileNotFound} from "@internal/fs";
@@ -35,8 +36,13 @@ import {
 	WorkerProjects,
 	WorkerStatus,
 	WorkerUpdateInlineSnapshotResult,
+	TestWorkerPrepareTestOptions,
+	TestWorkerPrepareTestResult,
+	TestWorkerRunTestOptions,
+	TestRef,
 } from "@internal/core";
 import { WorkerPartialManifest } from "@internal/core/worker/types";
+import { TestWorkerFileResult } from "@internal/core/worker/test/TestWorkerFile";
 
 export default createBridge({
 	debugName: "Worker",
@@ -45,7 +51,33 @@ export default createBridge({
 
 	server: {
 		log: createBridgeEventDeclaration<Omit<ServerBridgeLog, "origin">, void>(),
+
 		fatalError: createBridgeEventDeclaration<BridgeErrorDetails, void>(),
+
+		testStart: createBridgeEventDeclaration<
+			{
+				ref: TestRef;
+				timeout: undefined | number;
+			},
+			void
+		>(),
+
+		testDiagnostic: createBridgeEventDeclaration<
+			{
+				testPath: undefined | AbsoluteFilePath;
+				diagnostic: Diagnostic;
+				origin: undefined | DiagnosticOrigin;
+			},
+			void
+		>(),
+
+		testFinish: createBridgeEventDeclaration<
+			{
+				success: boolean;
+				ref: TestRef;
+			},
+			void
+		>(),
 	},
 
 	client: {
@@ -171,6 +203,30 @@ export default createBridge({
 				ref: FileReference;
 			},
 			void
+		>(),
+
+		inspectorDetails: createBridgeEventDeclaration<
+			void,
+			{
+				inspectorUrl: undefined | string;
+			}
+		>(),
+
+		receiveCompiledTestDependency: createBridgeEventDeclaration<
+			AbsoluteFilePathMap<string>,
+			void
+		>(),
+
+		prepareTest: createBridgeEventDeclaration<
+			TestWorkerPrepareTestOptions,
+			TestWorkerPrepareTestResult
+		>(),
+
+		runTest: createBridgeEventDeclaration<TestWorkerRunTestOptions, void>(),
+
+		teardownTest: createBridgeEventDeclaration<
+			AbsoluteFilePath,
+			TestWorkerFileResult
 		>(),
 	},
 

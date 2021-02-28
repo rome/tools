@@ -87,7 +87,7 @@ import {Dict, RequiredProps, mergeObjects} from "@internal/typescript-helpers";
 import {markup, readMarkup} from "@internal/markup";
 import {DiagnosticsProcessorOptions} from "@internal/diagnostics/DiagnosticsProcessor";
 import {VCSClient} from "@internal/vcs";
-import {InlineSnapshotUpdates} from "../test-worker/SnapshotManager";
+import {InlineSnapshotUpdates} from "../worker/test/SnapshotManager";
 import {FormatterOptions} from "@internal/formatter";
 import {RecoverySaveFile} from "./fs/RecoveryStore";
 import {GlobOptions, Globber} from "./fs/glob";
@@ -877,7 +877,7 @@ export default class ServerRequest {
 		);
 
 		const marker = this.startMarker({
-			label: `${method}: ${ref.relative}`,
+			label: `${method}: ${ref.uid.format()}`,
 			facet: method,
 			rowId: `worker ${owner.id}`,
 		});
@@ -905,8 +905,10 @@ export default class ServerRequest {
 			);
 		} finally {
 			lock.release();
-			clearInterval(interval);
+			await interval.release();
 
+			// If this file changed while we were waiting on the request, resend it
+			// NB: We could actually resend this instantly by watching for file changes
 			const endMtime = this.server.memoryFs.maybeGetMtimeNs(path);
 			if (endMtime !== startMtime && !opts.noRetry) {
 				return this.wrapRequestDiagnostic(method, path, factory);

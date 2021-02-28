@@ -15,7 +15,7 @@ import {
 import { BridgeTimeoutError } from "./errors";
 import Event from "./Event";
 import {ErrorCallback, VoidCallback} from "@internal/typescript-helpers";
-import {RSERValue} from "@internal/binary";
+import {RSERValue} from "@internal/binary-transport";
 import { DIAGNOSTIC_CATEGORIES, decorateErrorWithDiagnostics } from "@internal/diagnostics";
 import { markup } from "@internal/markup";
 import { createResource, Resource } from "@internal/resources";
@@ -178,7 +178,7 @@ export class BridgeEvent<Param extends RSERValue, Ret extends RSERValue> {
 				};
 			}
 
-			const resource = createResource(`${this[Symbol.toStringTag]}.Request<${id}>`);
+			const resource = createResource(`${this[Symbol.toStringTag]}.Request<${id}>`, {optional: true});
 			this.resources.add(resource);
 
 			this.requestCallbacks.set(

@@ -2,7 +2,7 @@ import RSERWriterMaterial from "./RSERWriterMaterial";
 import {Event} from "@internal/events";
 import {RSERValue} from "./types";
 import RSERBufferParser from "./RSERBufferParser";
-import {encodeValueToRSERMessage} from "./api";
+import {encodeValueToRSERMessage} from ".";
 import RSERWriterCounter from "./RSERWriterCounter";
 
 type State = {

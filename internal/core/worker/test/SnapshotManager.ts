@@ -11,14 +11,14 @@ import {
 	RelativePath,
 	createFilePath,
 } from "@internal/path";
-import {TestServerRunnerOptions} from "../server/testing/types";
+import {TestServerRunnerOptions} from "../../server/testing/types";
 import TestWorkerFile from "./TestWorkerFile";
 import {descriptions} from "@internal/diagnostics";
 import {parseSnapshot, snapshotParser} from "./SnapshotParser";
 import {ErrorFrame} from "@internal/errors";
 import {OneIndexed, ZeroIndexed} from "@internal/numbers";
 import {prettyFormatToString} from "@internal/pretty-format";
-import {FilePathLocker} from "../../async/lockers";
+import {PathLocker} from "../../../async/lockers";
 import {naturalCompare} from "@internal/string-utils";
 import {ExtendedMap} from "@internal/collections";
 
@@ -79,14 +79,14 @@ export default class SnapshotManager {
 		this.runner = runner;
 		this.options = runner.globalOptions;
 		this.snapshots = new AbsoluteFilePathMap();
-		this.fileLocker = new FilePathLocker();
+		this.fileLocker = new PathLocker();
 		this.inlineSnapshotsUpdates = [];
 	}
 
 	public inlineSnapshotsUpdates: InlineSnapshotUpdate[];
 	public snapshots: AbsoluteFilePathMap<Snapshot>;
 	private defaultSnapshotPath: AbsoluteFilePath;
-	private fileLocker: FilePathLocker;
+	private fileLocker: PathLocker;
 	private runner: TestWorkerFile;
 	private options: TestServerRunnerOptions;
 

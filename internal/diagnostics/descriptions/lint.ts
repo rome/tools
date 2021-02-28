@@ -7,7 +7,6 @@
 
 import {
 	DiagnosticAdvice,
-	DiagnosticAdviceAction,
 	DiagnosticLanguage,
 	DiagnosticLocation,
 } from "../types";
@@ -1122,20 +1121,21 @@ export const lint = createDiagnosticsCategory({
 		message: markup`The specifiers of the import declaration should be sorted alphabetically.`,
 	},
 	PENDING_FIXES: (
-		relativeFilename: string,
+		relativeFilename: undefined | string,
 		language: DiagnosticLanguage,
 		original: string,
 		formatted: string,
-	) => ({
-		category: DIAGNOSTIC_CATEGORIES["lint/pendingFixes"],
-		message: markup`Pending formatting and safe fixes`,
-		advice: [
+	) => {
+		const advice: DiagnosticAdvice = [
 			{
 				type: "diff",
 				language,
 				diff: stringDiff(original, formatted),
 			},
-			{
+		];
+
+		if (relativeFilename !== undefined) {
+			advice.push({
 				type: "action",
 				command: "check",
 				shortcut: "f",
@@ -1145,8 +1145,9 @@ export const lint = createDiagnosticsCategory({
 				commandFlags: {
 					apply: true,
 				},
-			},
-			{
+			});
+
+			advice.push({
 				type: "action",
 				hidden: true,
 				command: "check",
@@ -1157,9 +1158,15 @@ export const lint = createDiagnosticsCategory({
 				commandFlags: {
 					format: true,
 				},
-			} as DiagnosticAdviceAction,
-		],
-	}),
+			});
+		}
+
+		return {
+			category: DIAGNOSTIC_CATEGORIES["lint/pendingFixes"],
+			message: markup`Pending formatting and safe fixes`,
+			advice,
+		};
+	},
 	TS_NO_EXPLICIT_ANY: {
 		category: DIAGNOSTIC_CATEGORIES["lint/ts/noExplicitAny"],
 		message: markup`Avoid using the <emphasis>any</emphasis> type.`,

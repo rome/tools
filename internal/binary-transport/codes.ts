@@ -20,7 +20,7 @@ import {
 import {
 	AnyRSERPathMap,
 	RSERArrayBufferView,
-} from "@internal/binary";
+} from "./types";
 import RSERParserError from "./RSERParserError";
 import { Class, isSafeInstanceof } from "@internal/typescript-helpers";
 

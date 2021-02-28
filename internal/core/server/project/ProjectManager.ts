@@ -19,8 +19,7 @@ import {
 	createMockProjectConfigMeta,
 	loadCompleteProjectConfig,
 } from "@internal/project";
-import {WorkerPartialManifestsTransport, WorkerProjects} from "@internal/core";
-import {WorkerContainer} from "../WorkerManager";
+import {WorkerPartialManifestsTransport, WorkerProjects, WorkerContainer} from "@internal/core";
 import {
 	DiagnosticLocation,
 	DiagnosticsProcessor,
@@ -55,7 +54,7 @@ import {
 import {Consumer} from "@internal/consume";
 import {json} from "@internal/codec-config";
 import {VCSClient, getVCSClient} from "@internal/vcs";
-import {FilePathLocker} from "@internal/async/lockers";
+import {PathLocker} from "@internal/async/lockers";
 import {markup} from "@internal/markup";
 import {ReporterNamespace} from "@internal/cli-reporter";
 import {ExtendedMap} from "@internal/collections";
@@ -72,7 +71,7 @@ export default class ProjectManager {
 
 		this.projectIdCounter = 0;
 		this.projectConfigDependenciesToIds = new AbsoluteFilePathMap();
-		this.projectLoadingLocks = new FilePathLocker();
+		this.projectLoadingLocks = new PathLocker();
 		this.projectDirectoryToProject = new AbsoluteFilePathMap();
 		this.projects = new ExtendedMap("projects");
 
@@ -93,7 +92,7 @@ export default class ProjectManager {
 	private localPathToRemote: AbsoluteFilePathMap<URLPath>;
 
 	// Lock to prevent race conditions that result in the same project being loaded multiple times at once
-	private projectLoadingLocks: FilePathLocker;
+	private projectLoadingLocks: PathLocker;
 
 	private projects: ExtendedMap<number, ProjectDefinition>;
 	private projectDirectoryToProject: AbsoluteFilePathMap<ProjectDefinition>;
@@ -273,14 +272,23 @@ export default class ProjectManager {
 		const pkg = this.server.memoryFs.getOwnedManifest(path);
 
 		// TODO should we cache this?
-		return {
+		const ref: FileReference = {
 			uid,
 			project: project.id,
 			real: path,
 			manifest: pkg === undefined ? undefined : pkg.id,
 			relative: project.directory.relativeForce(path),
-			remote: this.localPathToRemote.has(path),
 		};
+		
+		const remote = this.localPathToRemote.has(path);
+		if (remote) {
+			return {
+				...ref,
+				remote,
+			};
+		} else {
+			return ref;
+		}
 	}
 
 	public getURLFileReference(
@@ -652,7 +660,7 @@ export default class ProjectManager {
 			);
 
 			for (const [id, def] of project.manifests) {
-				manifestsSerial.set(id, this.server.memoryFs.getPartialManifest(def));
+				manifestsSerial.set(id, this.server.memoryFs.getPartialManifest(def, project));
 			}
 		}
 

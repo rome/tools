@@ -36,7 +36,7 @@ import {
 } from "@internal/path";
 import {getErrorStructure} from "@internal/errors";
 import {pretty} from "@internal/pretty-format";
-import {utf8Count} from "../utf8";
+import {getUTF8ByteLength} from "@internal/binary";
 import {
 	AnyIndexedNumber,
 	OneIndexed,
@@ -72,7 +72,7 @@ export default abstract class RSERWriterBase {
 	}
 
 	protected encodeStringValue(val: string) {
-		const byteLength = utf8Count(val);
+		const byteLength = getUTF8ByteLength(val);
 		this.encodeSize(byteLength);
 		this.writeString(val, byteLength);
 	}

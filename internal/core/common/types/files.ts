@@ -13,5 +13,5 @@ export type FileReference = {
 	uid: UIDPath;
 	relative: RelativePath;
 	real: AbsoluteFilePath;
-	remote: boolean;
+	remote?: boolean;
 };

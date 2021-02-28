@@ -44,13 +44,13 @@ export type ExtensionParseInfo = ExtensionHandlerMethodInfo & {
 	path: Path;
 };
 
-export type ExtensionHandlerParseResult = {
+export type ExtensionHandlerParseResult<ParseRoot extends AnyRoot = AnyRoot> = {
 	sourceText: string;
 	astModifiedFromSource: boolean;
-	ast: AnyRoot;
+	ast: ParseRoot;
 };
 
-export type PartialExtensionHandler = {
+export type PartialExtensionHandler<ParseRoot extends AnyRoot = AnyRoot> = {
 	sourceTypeJS?: ConstJSSourceType;
 	isAsset?: boolean;
 	canHaveScale?: boolean;
@@ -67,9 +67,9 @@ export type PartialExtensionHandler = {
 		info: ExtensionHandlerMethodInfo,
 	) => Promise<ExtensionCustomLintResult>;
 
-	parse: (opts: ExtensionParseInfo) => Promise<ExtensionHandlerParseResult>;
+	parse: (opts: ExtensionParseInfo) => Promise<ExtensionHandlerParseResult<ParseRoot>>;
 };
 
-export type ExtensionHandler = PartialExtensionHandler & {
+export type ExtensionHandler<ParseRoot extends AnyRoot = AnyRoot> = PartialExtensionHandler<ParseRoot> & {
 	ext: string;
 };

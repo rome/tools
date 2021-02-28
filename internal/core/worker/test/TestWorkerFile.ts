@@ -24,20 +24,13 @@ import {
 	TestCallback,
 	TestOptions,
 } from "@internal/virtual-rome/test";
-import {
-	TestRef,
-	default as TestWorkerBridge,
-	TestWorkerPrepareTestOptions,
-	TestWorkerPrepareTestResult,
-	TestWorkerRunTestOptions,
-} from "../common/bridges/TestWorkerBridge";
-import {TestServerRunnerOptions} from "../server/testing/types";
+import {TestServerRunnerOptions} from "../../server/testing/types";
 import SnapshotManager, {
 	InlineSnapshotUpdate,
 	Snapshot,
 } from "./SnapshotManager";
 import TestAPI, {OnTimeout} from "./TestAPI";
-import executeMain from "../common/utils/executeMain";
+import executeMain from "../../common/utils/executeMain";
 import {
 	AbsoluteFilePath,
 	AbsoluteFilePathMap,
@@ -58,9 +51,17 @@ import {
 	getErrorStructure,
 } from "@internal/errors";
 import prettyFormat from "@internal/pretty-format";
-import {TestWorker} from "@internal/core";
+import {
+	Worker,
+	TestRef,
+	TestWorkerPrepareTestOptions,
+	TestWorkerPrepareTestResult,
+	TestWorkerRunTestOptions,
+	WorkerBridge,
+} from "@internal/core";
 import {ExtendedMap} from "@internal/collections";
 import {BridgeClient} from "@internal/events";
+import WorkerTests from "./WorkerTests";
 
 export function cleanFrames(frames: ErrorFrames): ErrorFrames {
 	// TODO we should actually get the frames before module init and do it that way
@@ -122,8 +123,8 @@ export type FocusedTest = {
 
 export default class TestWorkerFile {
 	constructor(
-		worker: TestWorker,
-		bridge: BridgeClient<typeof TestWorkerBridge>,
+		worker: Worker,
+		tests: WorkerTests,
 		opts: TestWorkerPrepareTestOptions,
 	) {
 		this.opts = opts;
@@ -131,8 +132,8 @@ export default class TestWorkerFile {
 		this.path = opts.path;
 		this.options = opts;
 		this.globalOptions = opts.globalOptions;
-		this.bridge = bridge;
-		this.worker = worker;
+		this.bridge = worker.bridge;
+		this.tests = tests;
 		this.projectDirectory = createAbsoluteFilePath(opts.projectDirectory);
 
 		this.snapshotManager = new SnapshotManager(this, opts.path);
@@ -152,10 +153,10 @@ export default class TestWorkerFile {
 	public globalOptions: TestServerRunnerOptions;
 	public options: TestWorkerPrepareTestOptions;
 
-	private worker: TestWorker;
+	private tests: WorkerTests;
 	private foundTests: ExtendedMap<string, FoundTest>;
 	private focusedTests: FocusedTest[];
-	private bridge: BridgeClient<typeof TestWorkerBridge>;
+	private bridge: BridgeClient<typeof WorkerBridge>;
 	private snapshotManager: SnapshotManager;
 	private opts: TestWorkerPrepareTestOptions;
 	private locked: boolean;
@@ -272,7 +273,7 @@ export default class TestWorkerFile {
 
 	// execute the test file and discover tests
 	private async discoverTests() {
-		const code = this.worker.serializeAssembled(this.opts.assembled);
+		const code = this.tests.serializeAssembled(this.opts.assembled);
 
 		try {
 			const res = await executeMain({

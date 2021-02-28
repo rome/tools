@@ -16,7 +16,7 @@ import {
 	getErrorStackAdvice,
 } from "@internal/diagnostics";
 import SnapshotManager from "./SnapshotManager";
-import {TestServerRunnerOptions} from "../server/testing/types";
+import {TestServerRunnerOptions} from "../../server/testing/types";
 import {Event} from "@internal/events";
 import stringDiff from "@internal/string-diff";
 import {getErrorStructure} from "@internal/errors";

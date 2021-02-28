@@ -42,6 +42,12 @@ process.on("beforeExit", () => {
 });
 
 export async function safeProcessExit(code: number = 0): Promise<never> {
-  await processResourceRoot.release();
-  process.exit(code);
+  try {
+    await processResourceRoot.release();
+    process.exit(code);
+  } catch (err) {
+    console.error(`Error occured while trying to safe exit with code ${code}`);
+    console.error(err.stack);
+    process.exit(1);
+  }
 }

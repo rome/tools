@@ -6,7 +6,7 @@
  */
 
 import {BuildFrameOpts, Frame} from "./types";
-import { getByteLength } from "@internal/binary/helpers";
+import { getByteLength } from "@internal/binary";
 
 import crypto = require("crypto");
 

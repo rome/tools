@@ -86,7 +86,7 @@ export async function uncachedLint(
 	const {worker, ref, options} = param;
 	worker.logger.info(markup`Linting: ${ref.real}`);
 
-	const project = worker.getProject(ref.project);
+	const project = worker.getProject(ref);
 
 	// Get the extension handler
 	const {handler} = getFileHandlerFromPathAssert(ref.real, project.config);
@@ -184,7 +184,7 @@ export async function uncachedLint(
 export async function compilerLint(
 	{worker, ref, options, parseOptions}: Param<WorkerLintOptions>,
 ): Promise<ExtensionLintResult> {
-	const project = worker.getProject(ref.project);
+	const project = worker.getProject(ref);
 	let sourceText: string;
 	let mtimeNs: bigint;
 	let astModifiedFromSource: boolean = false;
@@ -222,7 +222,7 @@ export async function compilerLint(
 		// Run type checking if necessary
 		if (typeCheckingEnabled && ast.type === "JSRoot") {
 			const typeCheckProvider = await worker.getTypeCheckProvider(
-				ref.project,
+				ref,
 				options.prefetchedModuleSignatures,
 				parseOptions,
 			);
@@ -284,7 +284,7 @@ export async function uncachedFormat(
 			result: WorkerFormatResult;
 		}
 > {
-	const project = worker.getProject(ref.project);
+	const project = worker.getProject(ref);
 
 	worker.logger.info(markup`Formatting: ${ref.real}`);
 

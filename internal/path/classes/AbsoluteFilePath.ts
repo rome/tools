@@ -149,6 +149,7 @@ export default class AbsoluteFilePath extends ReadableBasePath<ParsedPathAbsolut
 
 	public resolve(other: string | FilePath): AbsoluteFilePath;
 	public resolve(other: Path): Exclude<Path, RelativePath>;
+	public resolve(other: string | Path): AbsoluteFilePath | Exclude<Path, RelativePath>;
 	public resolve(
 		other: string | Path,
 	): AbsoluteFilePath | Exclude<Path, RelativePath> {

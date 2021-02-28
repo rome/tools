@@ -9,7 +9,6 @@ import {initErrorHooks, errorSourceMaps} from "@internal/v8";
 import {VERSION, getBinPath} from "@internal/core";
 import cli from "../cli";
 import server from "../server";
-import testWorker from "../testWorker";
 import worker from "../worker";
 import {SourceMapConsumer} from "@internal/codec-source-map";
 import {Reporter} from "@internal/cli-reporter";
@@ -26,9 +25,6 @@ async function main(): Promise<void> {
 
 		case "worker":
 			return worker();
-
-		case "test-worker":
-			return testWorker();
 
 		default:
 			return cli();

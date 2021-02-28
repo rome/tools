@@ -94,7 +94,8 @@ export default class Resource {
       });
 
       const timeout = setTimeout(() => {
-        console.log(`Resource ${this[Symbol.toStringTag]} has not been released after 3 seconds`);
+        // TODO reject?
+        console.log(`${this[Symbol.toStringTag]} has not been released after 3 seconds`);
       }, 3000);
 
       promises.push(selfPromise.finally(() => {
@@ -162,8 +163,8 @@ export default class Resource {
 
   public addWorkerThread(worker: workerThreads.Worker): Resource {
     const resource = this.create("worker_threads.Worker", {
-      release: () => {
-        worker.terminate();
+      release: async () => {
+        await worker.terminate();
       },
     });
     worker.on("exit", () => {

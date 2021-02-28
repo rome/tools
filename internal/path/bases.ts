@@ -444,6 +444,7 @@ export abstract class ReadableBasePath<Parsed extends ParsedPath, Super extends 
 	public abstract readFile(): Promise<ArrayBuffer>;
 	public abstract readFileText(): Promise<string>;
 	public abstract createReadStream(): stream.Readable;
+	public abstract exists(): Promise<boolean>;
 
 	// Return value is meant to be consumed via ParserOptions
 	public async readFileTextMeta(): Promise<{

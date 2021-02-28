@@ -494,6 +494,14 @@ export default class Resolver {
 			}
 		}
 
+		if (source.isDataURI()) {
+			// TODO
+		}
+
+		if (origin.isDataURI()) {
+			return QUERY_RESPONSE_MISSING;
+		}
+
 		return this.resolveLocal({
 			...query,
 			origin: query.origin.assertAbsolute(),

@@ -13,8 +13,7 @@ import {
 	diagnosticLocationToMarkupFilelink,
 	getDiagnosticsFromError,
 } from "@internal/diagnostics";
-import {TestRef} from "../../common/bridges/TestWorkerBridge";
-import {Server, ServerRequest} from "@internal/core";
+import {Server, ServerRequest, TestRef} from "@internal/core";
 import {DiagnosticsPrinter} from "@internal/cli-diagnostics";
 import {humanizeNumber} from "@internal/numbers";
 import {AnyBridge, isBridgeClosedDiagnosticError} from "@internal/events";
@@ -38,14 +37,14 @@ import {
 } from "@internal/markup";
 import {MAX_WORKER_COUNT} from "@internal/core/common/constants";
 import net = require("net");
-import {FocusedTest} from "@internal/core/test-worker/TestWorkerFile";
+import {FocusedTest} from "@internal/core/worker/test/TestWorkerFile";
 import {SourceMapConsumerCollection} from "@internal/codec-source-map";
 import {VoidCallback} from "@internal/typescript-helpers";
 import Bundler from "@internal/core/server/bundler/Bundler";
 import {
 	AbsoluteFilePath,
-	AbsoluteFilePathMap,
 	AbsoluteFilePathSet,
+	AbsoluteFilePathMap,
 } from "@internal/path";
 import TestServerWorker from "@internal/core/server/testing/TestServerWorker";
 import TestServerFile from "@internal/core/server/testing/TestServerFile";
@@ -180,13 +179,21 @@ export default class TestServer {
 	}
 
 	private async setupWorkers(): Promise<TestServerWorker[]> {
-		// TODO some smarter logic. we may not need all these workers
+		// TODO some smarter logic. we may not need all these workers, and can start them in parallel
 		const workers: Promise<TestServerWorker>[] = [];
 		for (let i = 0; i < MAX_WORKER_COUNT; i++) {
 			const inspectorPort = await findAvailablePort();
+
+			const container = await this.server.workerManager.spawnWorkerUnsafe({
+				type: "test",
+				ghost: true,
+				inspectorPort,
+			});
+
 			const worker = new TestServerWorker({
 				runner: this,
-				flags: {inspectorPort},
+				bridge: container.bridge,
+				thread: container.thread,
 				server: this.server,
 				request: this.request,
 			});

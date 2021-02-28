@@ -131,7 +131,7 @@ export default class DependencyOrderer {
 		imp: AnalyzeDependencyImportUsageItem,
 	): void {
 		const path = this.possibleCyclePaths.get(dep);
-		if (!path) {
+		if (path === undefined) {
 			// idk??
 			return;
 		}

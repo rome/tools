@@ -21,7 +21,7 @@ export const TEXT_DECODER_THRESHOLD = 200;
 
 const CHUNK_SIZE = 0x1000;
 
-export function utf8Count(str: string): number {
+export function getUTF8ByteLength(str: string): number {
 	const strLength = str.length;
 
 	let byteLength = 0;
@@ -60,7 +60,7 @@ export function utf8Count(str: string): number {
 	return byteLength;
 }
 
-export function utf8Encode(
+export function encodeUTF8Into(
 	str: string,
 	output: Uint8Array,
 	outputOffset: number,

@@ -1614,7 +1614,7 @@ export default class Grid {
 									sourceValue: singleInnerText,
 									value: formatApprox(
 										attributes,
-										Duration.fromMilliseconds(Number(singleInnerText)).format(
+										Duration.fromNanoseconds(BigInt(singleInnerText)).format(
 											{allowMilliseconds: true},
 										),
 									),

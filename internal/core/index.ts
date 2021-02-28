@@ -19,7 +19,6 @@ export {
 	ServerQueryRequest,
 	ServerQueryResponse,
 } from "./common/bridges/ServerBridge";
-export {default as TestWorkerBridge} from "./common/bridges/TestWorkerBridge";
 export {UserConfig} from "./common/userConfig";
 export * from "./common/types/platform";
 export * from "./common/types/bundler";
@@ -33,6 +32,4 @@ export {serverCommands} from "./server/commands";
 export {default as ServerRequest} from "./server/ServerRequest";
 
 export {default as Worker} from "./worker/Worker";
-
-export {default as TestAPI} from "./test-worker/TestAPI";
-export {default as TestWorker} from "./test-worker/TestWorker";
+export {default as TestAPI} from "./worker/test/TestAPI";

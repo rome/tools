@@ -1,9 +1,9 @@
 import {AbsoluteFilePath, AbsoluteFilePathMap} from "@internal/path";
-import {TestWorkerFileResult} from "@internal/core/test-worker/TestWorkerFile";
+import {TestWorkerFileResult} from "@internal/core/worker/test/TestWorkerFile";
 import SnapshotManager, {
 	InlineSnapshotUpdates,
 	Snapshot,
-} from "@internal/core/test-worker/SnapshotManager";
+} from "@internal/core/worker/test/SnapshotManager";
 import {BundleResult, FileReference, ServerRequest} from "@internal/core";
 import TestServer from "@internal/core/server/testing/TestServer";
 import {DiagnosticLocation, descriptions} from "@internal/diagnostics";
@@ -20,7 +20,7 @@ export default class TestServerFile {
 	) {
 		this.request = request;
 		this.runner = runner;
-		this.path = ref.real;
+		this.path = ref.real.assertAbsolute();
 		this.ref = ref;
 		this.bundle = bundle;
 

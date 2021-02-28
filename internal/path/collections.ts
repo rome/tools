@@ -6,7 +6,7 @@
  */
 
 import {MappedKeyMap, MappedSet} from "@internal/collections";
-import {Path} from "./types";
+import {Path, ReadablePath} from "./types";
 import AbsoluteFilePath from "./classes/AbsoluteFilePath";
 import RelativePath from "./classes/RelativePath";
 import UIDPath from "./classes/UIDPath";
@@ -32,6 +32,14 @@ abstract class BasePathMap<PathT extends Path, Value>
 
 	public abstract setValidated(key: PathT, value: Value): void;
 }
+
+export class ReadablePathMap<Value>
+	extends BasePathMap<ReadablePath, Value> {
+	public setValidated(key: Path, value: Value) {
+		this.set(key.assertReadable(), value);
+	}
+}
+ReadablePathMap.prototype[Symbol.toStringTag] = "ReadablePathMap";
 
 export class AbsoluteFilePathMap<Value>
 	extends BasePathMap<AbsoluteFilePath, Value> {
@@ -93,46 +101,54 @@ abstract class BasePathSet<
 	public abstract addValidated(path: PathT): void;
 }
 
+export class ReadablePathSet extends BasePathSet<ReadablePath, ReadablePathSet> {
+	public addValidated(path: Path) {
+		this.add(path.assertReadable());
+	}
+}
+ReadablePathSet.prototype[Symbol.toStringTag] = "ReadablePathSet";
+
 export class AbsoluteFilePathSet extends BasePathSet<AbsoluteFilePath, AbsoluteFilePathSet> {
 	public addValidated(path: Path) {
 		this.add(path.assertAbsolute());
 	}
 }
-AbsoluteFilePathSet.prototype[Symbol.toStringTag] = "AbsoluteFilePath";
+AbsoluteFilePathSet.prototype[Symbol.toStringTag] = "AbsoluteFilePathSet";
 
 export class RelativePathSet extends BasePathSet<RelativePath, RelativePathSet> {
 	public addValidated(path: Path) {
 		this.add(path.assertRelative());
 	}
 }
-RelativePathSet.prototype[Symbol.toStringTag] = "RelativePath";
+RelativePathSet.prototype[Symbol.toStringTag] = "RelativePathSet";
 
 export class URLPathSet extends BasePathSet<URLPath, URLPathSet> {
 	public addValidated(path: Path) {
 		this.add(path.assertURL());
 	}
 }
-URLPathSet.prototype[Symbol.toStringTag] = "URLPath";
+URLPathSet.prototype[Symbol.toStringTag] = "URLPathSet";
 
 export class DataURIPathSet extends BasePathSet<DataURIPath, DataURIPathSet> {
 	public addValidated(path: Path) {
 		this.add(path.assertDataURI());
 	}
 }
-DataURIPathSet.prototype[Symbol.toStringTag] = "DataURIPath";
+DataURIPathSet.prototype[Symbol.toStringTag] = "DataURIPathSet";
 
 export class UIDPathSet extends BasePathSet<UIDPath, UIDPathSet> {
 	public addValidated(path: Path) {
 		this.add(path.assertUID());
 	}
 }
-UIDPathSet.prototype[Symbol.toStringTag] = "UIDPath";
+UIDPathSet.prototype[Symbol.toStringTag] = "UIDPathSet";
 
 export class MixedPathSet extends BasePathSet<Path, MixedPathSet> {
 	public addValidated(path: Path) {
 		this.add(path);
 	}
 }
+MixedPathSet.prototype[Symbol.toStringTag] = "MixedPathSet";
 
 export type PathSet =
 	| AbsoluteFilePathSet

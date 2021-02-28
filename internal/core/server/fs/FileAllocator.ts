@@ -5,10 +5,9 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Server} from "@internal/core";
+import {Server, WorkerContainer} from "@internal/core";
 import {SimpleStats} from "./MemoryFileSystem";
-import {WorkerContainer} from "../WorkerManager";
-import {FilePathLocker} from "../../../async/lockers";
+import {PathLocker} from "../../../async/lockers";
 import {AbsoluteFilePath, AbsoluteFilePathMap} from "@internal/path";
 import {AnyMarkup, concatMarkup, markup} from "@internal/markup";
 import {ReporterNamespace} from "@internal/cli-reporter";
@@ -20,12 +19,12 @@ export default class FileAllocator {
 	constructor(server: Server) {
 		this.server = server;
 		this.fileToWorker = new AbsoluteFilePathMap();
-		this.locker = new FilePathLocker();
+		this.locker = new PathLocker();
 		this.logger = server.logger.namespace(markup`FileAllocator`);
 	}
 
 	private server: Server;
-	private locker: FilePathLocker;
+	private locker: PathLocker;
 	private fileToWorker: AbsoluteFilePathMap<number>;
 	private logger: ReporterNamespace;
 
@@ -197,8 +196,8 @@ export default class FileAllocator {
 			}
 		}
 
-		const paths = events.map((event) => event.path);
-		if (await this.server.projectManager.maybeEvictProjects(paths)) {
+		const paths = events.filter(event => event.type !== "CREATED").map((event) => event.path);
+		if (paths.length > 0 && await this.server.projectManager.maybeEvictProjects(paths)) {
 			const displayPaths = concatMarkup(
 				paths.map((path) => markup`<emphasis>${path}</emphasis>`),
 				markup`, `,

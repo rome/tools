@@ -95,6 +95,10 @@ export default class DataURIPath extends ReadableBasePath<ParsedPathDataURI, Dat
 		return true;
 	}
 
+	public async exists(): Promise<boolean> {
+		return true;
+	}
+
 	public async readFile(): Promise<ArrayBuffer> {
 		return getArrayBuffer(this.parsed.data);
 	}

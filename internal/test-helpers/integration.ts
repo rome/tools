@@ -140,11 +140,13 @@ export function createMockWorker(force: boolean = false): IntegrationWorker {
 	}
 
 	const worker = new Worker({
+		type: "processor",
 		id: 0,
 		dedicated: false,
 		userConfig: DEFAULT_USER_CONFIG,
 		cacheWriteDisabled: true,
 		cacheReadDisabled: true,
+		inspectorPort: undefined,
 
 		// This wont actually be used, it's just for setting up subscriptions
 		bridge: WorkerBridge.createFromLocal().client,

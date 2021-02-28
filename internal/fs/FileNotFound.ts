@@ -1,4 +1,4 @@
-import {AbsoluteFilePath} from "@internal/path";
+import {AbsoluteFilePath, ReadablePath} from "@internal/path";
 import {NodeSystemError} from "@internal/errors";
 
 export type MissingFileReturn<T> =
@@ -42,7 +42,7 @@ export default class FileNotFound extends Error implements NodeSystemError {
 	}
 
 	public static async allowMissing<T>(
-		path: AbsoluteFilePath,
+		path: ReadablePath,
 		factory: () => T | Promise<T>,
 	): Promise<MissingFileReturn<T>> {
 		try {

@@ -11,18 +11,22 @@ import {
 	DiagnosticSuppressions,
 	Diagnostics,
 } from "@internal/diagnostics";
-import {BridgeClient} from "@internal/events";
+import {BridgeClient, BridgeServer} from "@internal/events";
 import {FormatterOptions} from "@internal/formatter";
 import {ModuleSignature} from "@internal/js-analysis";
 import {StaticMarkup} from "@internal/markup";
 import {Duration, ZeroIndexed} from "@internal/numbers";
 import {AbsoluteFilePath, Path} from "@internal/path";
-import {Dict} from "@internal/typescript-helpers";
+import {Dict, OptionalProps} from "@internal/typescript-helpers";
 import WorkerBridge from "../common/bridges/WorkerBridge";
 import {AnalyzeDependencyResult} from "../common/types/analyzeDependencies";
+import { AssembledBundle } from "../common/types/bundler";
 import {FileReference} from "../common/types/files";
 import {UserConfig} from "../common/userConfig";
 import {RecoverySaveFile} from "../server/fs/RecoveryStore";
+import { TestServerRunnerOptions } from "../server/testing/types";
+import { FocusedTest } from "./test/TestWorkerFile";
+import workerThreads = require("worker_threads");
 
 export type WorkerParseResult = {
 	ast: AnyRoot;
@@ -40,13 +44,36 @@ export type WorkerBuffer = {
 	mtimeNs: bigint;
 };
 
-export type WorkerOptions = {
-	userConfig: UserConfig;
-	dedicated: boolean;
-	bridge: BridgeClient<typeof WorkerBridge>;
+export type WorkerType = "test" | "processor";
+
+export type ThreadWorkerContainer = {
+	type: WorkerType;
+	id: number;
+	fileCount: number;
+	byteCount: bigint;
+	bridge: BridgeServer<typeof WorkerBridge>;
+	displayName: StaticMarkup;
+	thread: workerThreads.Worker;
+	// Whether we've completed a handshake with the worker and it's ready to receive requests
+	ready: boolean;
+	// Whether we should assign files to this worker
+	ghost: boolean;
+};
+
+export type WorkerContainer = OptionalProps<ThreadWorkerContainer, "thread">;
+
+export type PartialWorkerOptions = {
+	type: WorkerType;
 	id: number;
 	cacheWriteDisabled: boolean;
 	cacheReadDisabled: boolean;
+	inspectorPort: undefined | number;
+};
+
+export type WorkerOptions = PartialWorkerOptions & {
+	userConfig: UserConfig;
+	dedicated: boolean;
+	bridge: BridgeClient<typeof WorkerBridge>;
 };
 
 export type WorkerProject = Required<CompilerProject> & {
@@ -59,6 +86,7 @@ export type WorkerProjects = Map<number, WorkerProject>;
 export type WorkerPartialManifestsTransport = Map<number, undefined | WorkerPartialManifest>;
 
 export type WorkerPartialManifest = {
+	project: number;
 	path: AbsoluteFilePath;
 	hash: string;
 	type: Manifest["type"];
@@ -170,4 +198,29 @@ export type WorkerBufferPatch = {
 export type WorkerUpdateInlineSnapshotResult = {
 	diagnostics: Diagnostics;
 	file: undefined | RecoverySaveFile;
+};
+
+export type TestRef = {
+	path: AbsoluteFilePath;
+	testName: string;
+};
+
+export type TestWorkerPrepareTestOptions = {
+	partial: boolean;
+	path: AbsoluteFilePath;
+	projectDirectory: string;
+	assembled: AssembledBundle;
+	cwd: string;
+	globalOptions: TestServerRunnerOptions;
+	logFound: boolean;
+};
+
+export type TestWorkerPrepareTestResult = {
+	foundTests: string[];
+	focusedTests: FocusedTest[];
+};
+
+export type TestWorkerRunTestOptions = {
+	path: AbsoluteFilePath;
+	testNames: string[];
 };

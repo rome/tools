@@ -9,6 +9,8 @@ import {CHILD_ARGS, VERSION, getBinPath} from "@internal/core";
 import workerThreads = require("worker_threads");
 import child = require("child_process");
 
+type ProcessType = "server" | "worker";
+
 function createEnv(
 	processType: string,
 	env?: NodeJS.ProcessEnv,
@@ -22,7 +24,7 @@ function createEnv(
 }
 
 export function forkProcess(
-	processType: string,
+	processType: ProcessType,
 	opts: child.ForkOptions = {},
 	args: string[] = [],
 ): child.ChildProcess {
@@ -39,7 +41,7 @@ export function forkProcess(
 }
 
 export function forkThread(
-	processType: string,
+	processType: ProcessType,
 	opts: Omit<workerThreads.WorkerOptions, "env"> & {
 		env?: NodeJS.ProcessEnv;
 	} = {},

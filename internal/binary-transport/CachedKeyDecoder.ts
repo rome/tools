@@ -13,7 +13,7 @@
  * PERFORMANCE OF THIS SOFTWARE.
  */
 
-import {utf8Decode} from "../utf8";
+import {utf8Decode} from "@internal/binary";
 
 interface KeyCacheRecord {
 	readonly bytes: Uint8Array;

@@ -12,6 +12,7 @@ import {
 	normalizeManifest,
 } from "@internal/codec-js-manifest";
 import {
+	ProjectDefinition,
 	PROJECT_CONFIG_DIRECTORY,
 	PROJECT_CONFIG_FILENAMES,
 	PROJECT_CONFIG_PACKAGE_JSON_FIELD,
@@ -25,10 +26,10 @@ import {
 import {json} from "@internal/codec-config";
 import {WorkerPartialManifest} from "@internal/core";
 import {
-	AbsoluteFilePath,
 	AbsoluteFilePathMap,
-	AbsoluteFilePathSet,
 	createRelativePath,
+	AbsoluteFilePath,
+	AbsoluteFilePathSet,
 } from "@internal/path";
 import {
 	CachedFileReader,
@@ -420,8 +421,9 @@ export default class MemoryFileSystem {
 		return undefined;
 	}
 
-	public getPartialManifest(def: ManifestDefinition): WorkerPartialManifest {
+	public getPartialManifest(def: ManifestDefinition, project: ProjectDefinition): WorkerPartialManifest {
 		return {
+			project: project.id,
 			path: def.path,
 			hash: def.hash,
 			type: def.manifest.type,
@@ -622,15 +624,6 @@ export default class MemoryFileSystem {
 		}
 	}
 
-	public getMtimeNs(path: AbsoluteFilePath): bigint {
-		const mtimeNs = this.maybeGetMtimeNs(path);
-		if (mtimeNs === undefined) {
-			throw new FileNotFound(path, "Not found in memory file system");
-		} else {
-			return mtimeNs;
-		}
-	}
-
 	public getFileStats(path: AbsoluteFilePath): undefined | SimpleStats {
 		return this.files.get(path);
 	}
@@ -758,7 +751,7 @@ export default class MemoryFileSystem {
 		// Tell all workers of our discovery
 		for (const worker of this.server.workerManager.getWorkers()) {
 			worker.bridge.events.updateManifests.send({
-				manifests: new Map([[def.id, this.getPartialManifest(def)]]),
+				manifests: new Map([[def.id, this.getPartialManifest(def, project)]]),
 			});
 		}
 	}
@@ -999,7 +992,7 @@ export default class MemoryFileSystem {
 			opts.tick(path);
 		}
 
-		const isNew = !this.files.has(path) && opts.reason !== "initial";
+		const isNew = !this.files.has(path);
 		this.files.set(path, stats);
 		this.addFileToDirectoryListing(path);
 
@@ -1059,7 +1052,7 @@ export default class MemoryFileSystem {
 		}
 
 		if (isNew) {
-			await this.server.refreshFileEvent.push({type: "CREATED", path});
+			this.server.refreshFileEvent.push({type: "CREATED", path});
 		}
 
 		return true;

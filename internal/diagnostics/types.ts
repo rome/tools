@@ -14,7 +14,7 @@ import {Dict} from "@internal/typescript-helpers";
 import {ClientRequestFlags, CommandName} from "@internal/core";
 import {StaticMarkup} from "@internal/markup";
 import {Path, MixedPathSet} from "@internal/path";
-import { RSERValue } from "@internal/binary";
+import { RSERValue } from "@internal/binary-transport";
 
 export type DiagnosticCategoryDescription = {
 	category: DiagnosticCategory;

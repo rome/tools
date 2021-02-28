@@ -1,4 +1,4 @@
-import {Server, ServerRequest, TestWorkerBridge} from "@internal/core";
+import {Server, ServerRequest, WorkerBridge} from "@internal/core";
 import {ErrorFrame} from "@internal/errors";
 import {
 	InspectorClient,
@@ -6,9 +6,7 @@ import {
 	urlToFilename,
 } from "@internal/v8";
 import workerThreads = require("worker_threads");
-import {forkThread} from "@internal/core/common/utils/fork";
 import {createClient} from "@internal/codec-websocket";
-import {TestWorkerFlags} from "@internal/core/test-worker/TestWorker";
 import TestServer from "@internal/core/server/testing/TestServer";
 import {
 	DIAGNOSTIC_CATEGORIES,
@@ -23,31 +21,30 @@ import {
 	createPath,
 } from "@internal/path";
 import {ansiEscapes} from "@internal/cli-layout";
-import {FilePathLocker} from "@internal/async/lockers";
+import {PathLocker} from "@internal/async/lockers";
 import TestServerFile from "@internal/core/server/testing/TestServerFile";
 import {BridgeServer} from "@internal/events";
-import { Duration } from "@internal/numbers";
+import {Duration} from "@internal/numbers";
 
 export default class TestServerWorker {
 	constructor(
-		{server, request, runner, flags}: {
+		{server, request, runner, bridge, thread}: {
 			server: Server;
 			runner: TestServer;
-			flags: TestWorkerFlags;
 			request: ServerRequest;
+			bridge: BridgeServer<typeof WorkerBridge>;
+			thread: workerThreads.Worker;
 		},
 	) {
 		this.server = server;
 		this.runner = runner;
 		this.request = request;
-
-		this.thread = this.createThread(flags);
-
-		this.bridge = TestWorkerBridge.Server.createFromWorkerThread(this.thread);
+		this.thread = thread;
+		this.bridge = bridge;
 
 		this.inspector = undefined;
 
-		this.prepareLock = new FilePathLocker();
+		this.prepareLock = new PathLocker();
 		this.preparedPaths = new AbsoluteFilePathSet();
 		this.transferredCompiled = new AbsoluteFilePathSet();
 	}
@@ -57,66 +54,19 @@ export default class TestServerWorker {
 	private runner: TestServer;
 	private transferredCompiled: AbsoluteFilePathSet;
 	private preparedPaths: AbsoluteFilePathSet;
-	private prepareLock: FilePathLocker;
+	private prepareLock: PathLocker;
 
-	public bridge: BridgeServer<typeof TestWorkerBridge>;
+	public bridge: BridgeServer<typeof WorkerBridge>;
 	public thread: workerThreads.Worker;
 	public inspector: undefined | InspectorClient;
-
-	private createThread(flags: TestWorkerFlags): workerThreads.Worker {
-		const thread = forkThread(
-			"test-worker",
-			{
-				workerData: flags,
-				stdin: true,
-				stdout: true,
-				stderr: true,
-				env: {
-					NODE_ENV: "test",
-				},
-			},
-		);
-
-		const {stdout, stderr} = thread;
-
-		stdout.on(
-			"data",
-			(chunk) => {
-				process.stdout.write(chunk);
-			},
-		);
-
-		// Suppress any debugger logs
-		stderr.on(
-			"data",
-			(chunk) => {
-				const str = chunk.toString();
-
-				if (str.startsWith("Waiting for the debugger to disconnect...")) {
-					if (this.inspector !== undefined) {
-						this.inspector.end();
-						return;
-					}
-				}
-
-				process.stderr.write(chunk);
-			},
-		);
-
-		return thread;
-	}
 
 	public async init() {
 		const {bridge, runner} = this;
 
-		bridge.heartbeatExceededEvent.subscribe(() => {
+		bridge.startHeartbeatMonitor(Duration.fromSeconds(10), () => {
 			this.server.fatalErrorHandler.wrapPromise(
 				this.handleTimeout("10 seconds"),
 			);
-		});
-
-		await bridge.handshake({
-			monitorHeartbeat: Duration.fromSeconds(10),
 		});
 
 		// Start debugger
@@ -320,7 +270,7 @@ export default class TestServerWorker {
 				}
 			}
 			if (pending.size > 0) {
-				await bridge.events.receiveCompiled.call(pending);
+				await bridge.events.receiveCompiledTestDependency.call(pending);
 			}
 
 			const {focusedTests, foundTests} = await bridge.events.prepareTest.call({

@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {WorkerContainer} from "./WorkerManager";
+import {WorkerContainer} from "@internal/core";
 import Server from "./Server";
 import {AbsoluteFilePath} from "@internal/path";
 import {FileNotFound} from "@internal/fs";

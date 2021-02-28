@@ -13,7 +13,7 @@ import {
 	createAbsoluteFilePath,
 } from "@internal/path";
 import {TestHelper, test} from "rome";
-import {encodeValueToRSERMessage} from "./api";
+import {encodeValueToRSERMessage} from ".";
 
 function assert(t: TestHelper, val: RSERValue) {
 	const buf = encodeValueToRSERMessage(val);

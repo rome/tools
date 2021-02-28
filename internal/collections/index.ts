@@ -101,7 +101,6 @@ export class MappedSet<Real, Serial extends Primitive> implements Set<Real> {
 		this.map = new Map();
 		this.set = new Set();
 		this.serialize = serialize;
-		this[Symbol.toStringTag] = "MappedSet";
 
 		if (entries !== undefined) {
 			for (const path of entries) {
@@ -171,6 +170,8 @@ export class MappedSet<Real, Serial extends Primitive> implements Set<Real> {
 		this.map.clear();
 	}
 }
+
+MappedSet.prototype[Symbol.toStringTag] = "MappedSet";
 
 type MappedKeyMapSerializer<RealKey, SerialKey extends Primitive> = (
 	real: RealKey,

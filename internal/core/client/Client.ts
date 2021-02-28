@@ -88,15 +88,15 @@ type ProfileCallback = (profile: TraceEvent[]) => Promise<void>;
 type BridgeStatus = BridgeStatusDedicated | BridgeStatusLocal;
 
 type BridgeStatusDedicated = {
-	bridge: BridgeClient<typeof ServerBridge>;
 	dedicated: true;
+	bridge: BridgeClient<typeof ServerBridge>;
 	socket: net.Socket;
 };
 
 type BridgeStatusLocal = {
+	dedicated: false;
 	bridge: BridgeClient<typeof ServerBridge>;
 	server: Server;
-	dedicated: false;
 };
 
 type ClientRequestResponseResult = {
@@ -538,15 +538,11 @@ export default class Client {
 	}
 
 	public async shutdownServer() {
-		await this._shutdownServer();
-		await this.end();
-	}
-
-	private async _shutdownServer() {
 		const status = this.bridgeStatus;
 		if (status?.bridge.open) {
 			try {
 				await status.bridge.events.endServer.callOptional();
+				throw new Error("endServer should have never resolved");
 			} catch (err) {
 				// Swallow BridgeErrors since we expect one to be emitted as the endServer call will be an unanswered request
 				// when the server ends all client sockets
@@ -555,23 +551,12 @@ export default class Client {
 				}
 			}
 		}
+		await this.end();
 	}
 
 	public async end() {
 		await this.endEvent.callOptional();
 		await this.resources.release();
-
-		const status = this.bridgeStatus;
-
-		if (status?.bridge.open) {
-			if (status.dedicated) {
-				status.socket.end();
-			} else {
-				await this._shutdownServer();
-			}
-		}
-
-		this.bridgeStatus = undefined;
 	}
 
 	private async attachBridge(status: BridgeStatus) {
@@ -586,6 +571,9 @@ export default class Client {
 
 		const {bridge} = status;
 		this.resources.add(bridge);
+		bridge.resources.addCallback("ClientBridgeStatus", () => {
+			this.bridgeStatus = undefined;
+		});
 
 		bridge.events.write.subscribe(([chunk, error]) => {
 			const isError = error && !terminalFeatures.redirectError;
