@@ -34,26 +34,26 @@ Array [
 Array [
 	String {
 		value: "Firefox"
-		end: 8
-		start: 0
+		end: ZeroIndexedNumber<8>
+		start: ZeroIndexedNumber<0>
 	}
 	Number {
 		value: 80
-		end: 10
-		start: 8
+		end: ZeroIndexedNumber<10>
+		start: ZeroIndexedNumber<8>
 	}
 	Hyphen {
-		end: 11
-		start: 10
+		end: ZeroIndexedNumber<11>
+		start: ZeroIndexedNumber<10>
 	}
 	Number {
 		value: 84
-		end: 13
-		start: 11
+		end: ZeroIndexedNumber<13>
+		start: ZeroIndexedNumber<11>
 	}
 	EOF {
-		end: 14
-		start: 14
+		end: ZeroIndexedNumber<14>
+		start: ZeroIndexedNumber<14>
 	}
 ]
 ```

@@ -39,16 +39,16 @@ Array [TargetBrowserState {state: "current"}]
 ```javascript
 Array [
 	Current {
-		end: 7
-		start: 0
+		end: ZeroIndexedNumber<7>
+		start: ZeroIndexedNumber<0>
 	}
 	Versions {
-		end: 16
-		start: 8
+		end: ZeroIndexedNumber<16>
+		start: ZeroIndexedNumber<8>
 	}
 	EOF {
-		end: 17
-		start: 17
+		end: ZeroIndexedNumber<17>
+		start: ZeroIndexedNumber<17>
 	}
 ]
 ```

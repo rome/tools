@@ -29,21 +29,21 @@ Array [
 ```javascript
 Array [
 	Unreleased {
-		end: 10
-		start: 0
+		end: ZeroIndexedNumber<10>
+		start: ZeroIndexedNumber<0>
 	}
 	String {
 		value: "Firefox"
-		end: 19
-		start: 11
+		end: ZeroIndexedNumber<19>
+		start: ZeroIndexedNumber<11>
 	}
 	Versions {
-		end: 27
-		start: 19
+		end: ZeroIndexedNumber<27>
+		start: ZeroIndexedNumber<19>
 	}
 	EOF {
-		end: 28
-		start: 28
+		end: ZeroIndexedNumber<28>
+		start: ZeroIndexedNumber<28>
 	}
 ]
 ```

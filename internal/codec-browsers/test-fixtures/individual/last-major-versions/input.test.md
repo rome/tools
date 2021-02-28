@@ -51,21 +51,21 @@ Array [
 ```javascript
 Array [
 	Last {
-		end: 4
-		start: 0
+		end: ZeroIndexedNumber<4>
+		start: ZeroIndexedNumber<0>
 	}
 	Number {
 		value: 2
-		end: 6
-		start: 5
+		end: ZeroIndexedNumber<6>
+		start: ZeroIndexedNumber<5>
 	}
 	MajorVersions {
-		end: 21
-		start: 7
+		end: ZeroIndexedNumber<21>
+		start: ZeroIndexedNumber<7>
 	}
 	EOF {
-		end: 22
-		start: 22
+		end: ZeroIndexedNumber<22>
+		start: ZeroIndexedNumber<22>
 	}
 ]
 ```

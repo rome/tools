@@ -28,16 +28,16 @@ Array [TargetBrowserState {state: "unreleased"}]
 ```javascript
 Array [
 	Unreleased {
-		end: 10
-		start: 0
+		end: ZeroIndexedNumber<10>
+		start: ZeroIndexedNumber<0>
 	}
 	Versions {
-		end: 19
-		start: 11
+		end: ZeroIndexedNumber<19>
+		start: ZeroIndexedNumber<11>
 	}
 	EOF {
-		end: 20
-		start: 20
+		end: ZeroIndexedNumber<20>
+		start: ZeroIndexedNumber<20>
 	}
 ]
 ```

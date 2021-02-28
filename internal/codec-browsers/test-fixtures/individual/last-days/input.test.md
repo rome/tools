@@ -40,21 +40,21 @@ Array [
 ```javascript
 Array [
 	Last {
-		end: 4
-		start: 0
+		end: ZeroIndexedNumber<4>
+		start: ZeroIndexedNumber<0>
 	}
 	Number {
 		value: 356
-		end: 8
-		start: 5
+		end: ZeroIndexedNumber<8>
+		start: ZeroIndexedNumber<5>
 	}
 	Days {
-		end: 13
-		start: 9
+		end: ZeroIndexedNumber<13>
+		start: ZeroIndexedNumber<9>
 	}
 	EOF {
-		end: 14
-		start: 14
+		end: ZeroIndexedNumber<14>
+		start: ZeroIndexedNumber<14>
 	}
 ]
 ```

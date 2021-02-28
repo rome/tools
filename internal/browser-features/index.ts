@@ -157,7 +157,7 @@ export function getBrowser(
 				return undefined;
 		}
 	} catch (error) {
-		if (error.toString().includes('" does not have a version "')) {
+		if (error.toString().includes('" does not have a version ')) {
 			return undefined;
 		}
 		throw error;
@@ -178,7 +178,7 @@ let allBrowserNamesCache: string[];
 export function getAllBrowserNames(): string[] {
 	if (!allBrowserNamesCache) {
 		allBrowserNamesCache = Object.keys(
-			consumeUnknown(data, "parse").get("agents").asUnknownObject(),
+			consumeUnknown(data, DIAGNOSTIC_CATEGORIES.parse).get("agents").asUnknownObject(),
 		);
 	}
 
@@ -201,7 +201,7 @@ export function getAllBrowserUsages(region?: string): AllBrowserUsage[] {
 	const usages: AllBrowserUsage[] = [];
 
 	getAllBrowserNames().forEach((name) => {
-		(getBrowser({name})?.getVersions()).forEach((version) => {
+		getBrowser({name})!.getVersions().forEach((version) => {
 			const browser = getBrowser({name, version})!;
 			usages.push({
 				id: browser.getId(),

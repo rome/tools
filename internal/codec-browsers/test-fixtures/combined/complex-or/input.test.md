@@ -199,52 +199,52 @@ Array [
 Array [
 	String {
 		value: "Firefox"
-		end: 8
-		start: 0
+		end: ZeroIndexedNumber<8>
+		start: ZeroIndexedNumber<0>
 	}
 	LE {
-		end: 10
-		start: 8
+		end: ZeroIndexedNumber<10>
+		start: ZeroIndexedNumber<8>
 	}
 	Number {
 		value: 84
-		end: 13
-		start: 11
+		end: ZeroIndexedNumber<13>
+		start: ZeroIndexedNumber<11>
 	}
 	Or {
-		end: 16
-		start: 14
+		end: ZeroIndexedNumber<16>
+		start: ZeroIndexedNumber<14>
 	}
 	String {
 		value: "Chrome"
-		end: 24
-		start: 17
+		end: ZeroIndexedNumber<24>
+		start: ZeroIndexedNumber<17>
 	}
 	LT {
-		end: 25
-		start: 24
+		end: ZeroIndexedNumber<25>
+		start: ZeroIndexedNumber<24>
 	}
 	Number {
 		value: 76
-		end: 28
-		start: 26
+		end: ZeroIndexedNumber<28>
+		start: ZeroIndexedNumber<26>
 	}
 	Or {
-		end: 31
-		start: 29
+		end: ZeroIndexedNumber<31>
+		start: ZeroIndexedNumber<29>
 	}
 	GT {
-		end: 33
-		start: 32
+		end: ZeroIndexedNumber<33>
+		start: ZeroIndexedNumber<32>
 	}
 	Percentage {
 		value: 5
-		end: 36
-		start: 34
+		end: ZeroIndexedNumber<36>
+		start: ZeroIndexedNumber<34>
 	}
 	EOF {
-		end: 37
-		start: 37
+		end: ZeroIndexedNumber<37>
+		start: ZeroIndexedNumber<37>
 	}
 ]
 ```

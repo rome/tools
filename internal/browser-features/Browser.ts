@@ -126,7 +126,7 @@ export abstract class Browser {
 	public getRegionUsage(region: string): number | undefined {
 		return consumeUnknown(regions, DIAGNOSTIC_CATEGORIES.parse).get(region).get(
 			"data",
-		).get(this.getId()).get(this.getVersion()).asNumberOrVoid();
+		).get(this.getId()).get(this.getVersion().toString()).asNumberOrVoid();
 	}
 }
 

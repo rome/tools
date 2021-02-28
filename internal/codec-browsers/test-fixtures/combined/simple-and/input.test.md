@@ -33,30 +33,30 @@ Array [
 Array [
 	String {
 		value: "Firefox"
-		end: 8
-		start: 0
+		end: ZeroIndexedNumber<8>
+		start: ZeroIndexedNumber<0>
 	}
 	Number {
 		value: 84
-		end: 10
-		start: 8
+		end: ZeroIndexedNumber<10>
+		start: ZeroIndexedNumber<8>
 	}
 	And {
-		end: 14
-		start: 11
+		end: ZeroIndexedNumber<14>
+		start: ZeroIndexedNumber<11>
 	}
 	GT {
-		end: 16
-		start: 15
+		end: ZeroIndexedNumber<16>
+		start: ZeroIndexedNumber<15>
 	}
 	Percentage {
 		value: 5
-		end: 19
-		start: 17
+		end: ZeroIndexedNumber<19>
+		start: ZeroIndexedNumber<17>
 	}
 	EOF {
-		end: 20
-		start: 20
+		end: ZeroIndexedNumber<20>
+		start: ZeroIndexedNumber<20>
 	}
 ]
 ```

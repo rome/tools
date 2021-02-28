@@ -21,26 +21,26 @@ Array [TargetBrowserSince {since: 1_612_134_000_000}]
 ```javascript
 Array [
 	Since {
-		end: 5
-		start: 0
+		end: ZeroIndexedNumber<5>
+		start: ZeroIndexedNumber<0>
 	}
 	Number {
 		value: 2_021
-		end: 10
-		start: 6
+		end: ZeroIndexedNumber<10>
+		start: ZeroIndexedNumber<6>
 	}
 	Hyphen {
-		end: 11
-		start: 10
+		end: ZeroIndexedNumber<11>
+		start: ZeroIndexedNumber<10>
 	}
 	Number {
 		value: 2
-		end: 13
-		start: 11
+		end: ZeroIndexedNumber<13>
+		start: ZeroIndexedNumber<11>
 	}
 	EOF {
-		end: 14
-		start: 14
+		end: ZeroIndexedNumber<14>
+		start: ZeroIndexedNumber<14>
 	}
 ]
 ```

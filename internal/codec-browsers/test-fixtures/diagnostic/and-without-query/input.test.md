@@ -7,7 +7,7 @@
 ### `error`
 
 ```javascript
-___R$project$rome$$internal$diagnostics$errors_ts$DiagnosticsError {
+___R$project$rome$$internal$diagnostics$error$wrappers_ts$DiagnosticsError {
 	name: "DiagnosticsError"
 	_memoMessage: undefined
 	_message: "Expected a query before \"<emphasis>and</emphasis>\""
@@ -19,12 +19,12 @@ ___R$project$rome$$internal$diagnostics$errors_ts$DiagnosticsError {
 				language: "browserquery"
 				sourceText: undefined
 				end: Position 1:8
-				path: RelativeFilePath<diagnostic/and-without-query/input.txt>
+				path: RelativePath<diagnostic/and-without-query/input.txt>
 				start: Position 1:6
 			}
 			description: Object {
-				category: "parse"
 				categoryValue: "browserquery"
+				category: Array ["parse"]
 				message: RAW_MARKUP {value: "Expected a query before \"<emphasis>and</emphasis>\""}
 				advice: Array [
 					log {

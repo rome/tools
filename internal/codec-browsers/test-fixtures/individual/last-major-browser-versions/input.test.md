@@ -30,26 +30,26 @@ Array [
 ```javascript
 Array [
 	Last {
-		end: 4
-		start: 0
+		end: ZeroIndexedNumber<4>
+		start: ZeroIndexedNumber<0>
 	}
 	Number {
 		value: 2
-		end: 6
-		start: 5
+		end: ZeroIndexedNumber<6>
+		start: ZeroIndexedNumber<5>
 	}
 	String {
 		value: "Firefox"
-		end: 15
-		start: 7
+		end: ZeroIndexedNumber<15>
+		start: ZeroIndexedNumber<7>
 	}
 	MajorVersions {
-		end: 29
-		start: 15
+		end: ZeroIndexedNumber<29>
+		start: ZeroIndexedNumber<15>
 	}
 	EOF {
-		end: 30
-		start: 30
+		end: ZeroIndexedNumber<30>
+		start: ZeroIndexedNumber<30>
 	}
 ]
 ```

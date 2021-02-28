@@ -40,21 +40,21 @@ Array [
 Array [
 	String {
 		value: "Firefox"
-		end: 8
-		start: 0
+		end: ZeroIndexedNumber<8>
+		start: ZeroIndexedNumber<0>
 	}
 	LE {
-		end: 10
-		start: 8
+		end: ZeroIndexedNumber<10>
+		start: ZeroIndexedNumber<8>
 	}
 	Number {
 		value: 10
-		end: 13
-		start: 11
+		end: ZeroIndexedNumber<13>
+		start: ZeroIndexedNumber<11>
 	}
 	EOF {
-		end: 14
-		start: 14
+		end: ZeroIndexedNumber<14>
+		start: ZeroIndexedNumber<14>
 	}
 ]
 ```

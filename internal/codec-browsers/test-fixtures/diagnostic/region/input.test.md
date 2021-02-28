@@ -7,7 +7,7 @@
 ### `error`
 
 ```javascript
-___R$project$rome$$internal$diagnostics$errors_ts$DiagnosticsError {
+___R$project$rome$$internal$diagnostics$error$wrappers_ts$DiagnosticsError {
 	name: "DiagnosticsError"
 	_memoMessage: undefined
 	_message: "Expected a region"
@@ -16,8 +16,8 @@ ___R$project$rome$$internal$diagnostics$errors_ts$DiagnosticsError {
 		Object {
 			description: Object {
 				advice: Array []
-				category: "parse"
 				categoryValue: "browserquery"
+				category: Array ["parse"]
 				message: RAW_MARKUP {value: "Expected a region"}
 			}
 			location: Object {
@@ -25,7 +25,7 @@ ___R$project$rome$$internal$diagnostics$errors_ts$DiagnosticsError {
 				language: "browserquery"
 				sourceText: undefined
 				end: Position 2:0
-				path: RelativeFilePath<diagnostic/region/input.txt>
+				path: RelativePath<diagnostic/region/input.txt>
 				start: Position 2:0
 			}
 		}

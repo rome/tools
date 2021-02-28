@@ -4,31 +4,54 @@
 
 ## `individual > modern`
 
-### `error`
+### `result`
 
 ```javascript
-___R$project$rome$$internal$diagnostics$errors_ts$DiagnosticsError {
-	name: "DiagnosticsError"
-	_memoMessage: undefined
-	_message: "Expected an operator such as \"<emphasis>></emphasis>\", \"<emphasis>\\<</emphasis>\", \"<emphasis>>=</emphasis>\", \"<emphasis>\\<=</emphasis>\" or a version"
-	suppressions: Array []
-	diagnostics: Array [
-		Object {
-			description: Object {
-				advice: Array []
-				category: "parse"
-				categoryValue: "browserquery"
-				message: RAW_MARKUP {value: "Expected an operator such as \"<emphasis>></emphasis>\", \"<emphasis>\\<</emphasis>\", \"<emphasis>>=</emphasis>\", \"<emphasis>\\<=</emphasis>\" or a version"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "browserquery"
-				sourceText: undefined
-				end: Position 1:25
-				path: UIDPath<unknown>
-				start: Position 1:25
-			}
-		}
-	]
-}
+Array [
+	"edge:88"
+	"edge:87"
+	"firefox:87"
+	"firefox:86"
+	"chrome:91"
+	"chrome:90"
+	"safari:14"
+	"safari:13.1"
+	"opera:73"
+	"opera:72"
+	"ios_saf:14.4"
+	"ios_saf:14"
+	"op_mini:1"
+	"android:81"
+	"android:4.4"
+	"op_mob:59"
+	"and_chr:88"
+	"and_ff:85"
+	"and_uc:12.12"
+	"samsung:13"
+	"samsung:12"
+	"and_qq:10.4"
+	"baidu:7.12"
+	"kaios:2.5"
+]
+```
+
+### `targets`
+
+```javascript
+Array [TargetBrowserPreset {preset: "modern"}]
+```
+
+### `tokens`
+
+```javascript
+Array [
+	Modern {
+		end: ZeroIndexedNumber<6>
+		start: ZeroIndexedNumber<0>
+	}
+	EOF {
+		end: ZeroIndexedNumber<7>
+		start: ZeroIndexedNumber<7>
+	}
+]
 ```

@@ -9,10 +9,10 @@ import {
 	isAlpha,
 	isDigit,
 } from "@internal/parser-core";
-import {Number0, ob1Add, ob1Inc} from "@internal/ob1";
 import {markup} from "@internal/markup";
 import {AnyTargetBrowser} from "@internal/codec-browsers/resolve";
 import {descriptions} from "@internal/diagnostics";
+import {ZeroIndexed} from "@internal/math";
 
 type BrowserQueryTokens = BaseTokens & {
 	String: ValueToken<"String", string>;
@@ -56,68 +56,68 @@ export const browserQueryParser = createParser<BrowserQueryParserTypes>({
 
 	tokenize(
 		parser: ParserCore<BrowserQueryParserTypes>,
-		index: Number0,
+		index: ZeroIndexed,
 	): TokenValues<BrowserQueryTokens> | undefined {
 		const char = parser.getInputCharOnly(index);
 
 		if (parser.getInputRange(index, 14)[0].toLowerCase() === "major versions") {
-			return parser.finishToken("MajorVersions", ob1Add(index, 14));
+			return parser.finishToken("MajorVersions", index.add(14));
 		}
 
 		if (parser.getInputRange(index, 13)[0].toLowerCase() === "major version") {
-			return parser.finishToken("MajorVersions", ob1Add(index, 13));
+			return parser.finishToken("MajorVersions", index.add(13));
 		}
 
 		if (parser.getInputRange(index, 8)[0].toLowerCase() === "versions") {
-			return parser.finishToken("Versions", ob1Add(index, 8));
+			return parser.finishToken("Versions", index.add(8));
 		}
 
 		if (parser.getInputRange(index, 3)[0].toLowerCase() === "all") {
-			return parser.finishToken("All", ob1Add(index, 3));
+			return parser.finishToken("All", index.add(3));
 		}
 
 		if (parser.getInputRange(index, 5)[0].toLowerCase() === "cover") {
-			return parser.finishToken("Cover", ob1Add(index, 5));
+			return parser.finishToken("Cover", index.add(5));
 		}
 
 		if (parser.getInputRange(index, 5)[0].toLowerCase() === "since") {
-			return parser.finishToken("Since", ob1Add(index, 5));
+			return parser.finishToken("Since", index.add(5));
 		}
 
 		if (parser.getInputRange(index, 6)[0].toLowerCase() === "modern") {
-			return parser.finishToken("Modern", ob1Add(index, 6));
+			return parser.finishToken("Modern", index.add(6));
 		}
 
 		if (parser.getInputRange(index, 8)[0].toLowerCase() === "defaults") {
-			return parser.finishToken("Modern", ob1Add(index, 8));
+			return parser.finishToken("Modern", index.add(8));
 		}
 
 		if (parser.getInputRange(index, 7)[0].toLowerCase() === "default") {
-			return parser.finishToken("Modern", ob1Add(index, 7));
+			return parser.finishToken("Modern", index.add(7));
 		}
 
 		if (parser.getInputRange(index, 5)[0].toLowerCase() === "years") {
-			return parser.finishToken("Years", ob1Add(index, 5));
+			return parser.finishToken("Years", index.add(5));
 		}
 
 		if (parser.getInputRange(index, 4)[0].toLowerCase() === "year") {
-			return parser.finishToken("Years", ob1Add(index, 4));
+			return parser.finishToken("Years", index.add(4));
 		}
 
 		if (parser.getInputRange(index, 6)[0].toLowerCase() === "months") {
-			return parser.finishToken("Months", ob1Add(index, 6));
+			return parser.finishToken("Months", index.add(6));
 		}
 
 		if (parser.getInputRange(index, 5)[0].toLowerCase() === "month") {
-			return parser.finishToken("Months", ob1Add(index, 5));
+			return parser.finishToken("Months", index.add(5));
 		}
 
 		if (parser.getInputRange(index, 4)[0].toLowerCase() === "days") {
-			return parser.finishToken("Days", ob1Add(index, 4));
+			return parser.finishToken("Days", index.add(4));
 		}
 
 		if (parser.getInputRange(index, 3)[0].toLowerCase() === "day") {
-			return parser.finishToken("Days", ob1Add(index, 3));
+			return parser.finishToken("Days", index.add(3));
 		}
 
 		if (char === "-") {
@@ -125,11 +125,11 @@ export const browserQueryParser = createParser<BrowserQueryParserTypes>({
 		}
 
 		if (parser.getInputRange(index, 2)[0] === ">=") {
-			return parser.finishToken("GE", ob1Add(index, 2));
+			return parser.finishToken("GE", index.add(2));
 		}
 
 		if (parser.getInputRange(index, 2)[0] === "<=") {
-			return parser.finishToken("LE", ob1Add(index, 2));
+			return parser.finishToken("LE", index.add(2));
 		}
 
 		if (char === "<") {
@@ -141,42 +141,42 @@ export const browserQueryParser = createParser<BrowserQueryParserTypes>({
 		}
 
 		if (parser.getInputRange(index, 4)[0].toLowerCase() === "dead") {
-			return parser.finishToken("Dead", ob1Add(index, 4));
+			return parser.finishToken("Dead", index.add(4));
 		}
 
 		if (parser.getInputRange(index, 7)[0].toLowerCase() === "current") {
-			return parser.finishToken("Current", ob1Add(index, 7));
+			return parser.finishToken("Current", index.add(7));
 		}
 
 		if (parser.getInputRange(index, 4)[0].toLowerCase() === "last") {
-			return parser.finishToken("Last", ob1Add(index, 4));
+			return parser.finishToken("Last", index.add(4));
 		}
 
 		if (parser.getInputRange(index, 10)[0].toLowerCase() === "maintained") {
-			return parser.finishToken("Maintained", ob1Add(index, 10));
+			return parser.finishToken("Maintained", index.add(10));
 		}
 
 		if (parser.getInputRange(index, 10)[0].toLowerCase() === "unreleased") {
-			return parser.finishToken("Unreleased", ob1Add(index, 10));
+			return parser.finishToken("Unreleased", index.add(10));
 		}
 
 		if (parser.getInputRange(index, 3)[0].toLowerCase() === "not") {
-			return parser.finishToken("Not", ob1Add(index, 3));
+			return parser.finishToken("Not", index.add(3));
 		}
 
 		if (parser.getInputRange(index, 3)[0].toLowerCase() === "and") {
-			return parser.finishToken("And", ob1Add(index, 3));
+			return parser.finishToken("And", index.add(3));
 		}
 
 		if (parser.getInputRange(index, 2)[0].toLowerCase() === "or") {
-			return parser.finishToken("Or", ob1Add(index, 2));
+			return parser.finishToken("Or", index.add(2));
 		}
 		if (char === ",") {
 			return parser.finishToken("Or");
 		}
 
 		if (parser.getInputRange(index, 2)[0].toLowerCase() === "in") {
-			return parser.finishToken("In", ob1Add(index, 2));
+			return parser.finishToken("In", index.add(2));
 		}
 
 		if (isDigit(char) || char === ".") {
@@ -188,14 +188,14 @@ export const browserQueryParser = createParser<BrowserQueryParserTypes>({
 				!parser.isEOF(index)
 			) {
 				value += parser.getInputCharOnly(index);
-				index = ob1Inc(index);
+				index = index.increment();
 			}
 
 			if (parser.getInputCharOnly(index) === "%") {
 				return parser.finishValueToken(
 					"Percentage",
 					parseFloat(value),
-					ob1Inc(index),
+					index.increment(),
 				);
 			}
 
@@ -211,10 +211,10 @@ export const browserQueryParser = createParser<BrowserQueryParserTypes>({
 				!parser.isEOF(index)
 			) {
 				value += parser.getInputCharOnly(index);
-				index = ob1Inc(index);
+				index = index.increment();
 			}
 
-			return parser.finishValueToken("String", value, ob1Inc(index));
+			return parser.finishValueToken("String", value, index.increment());
 		}
 
 		return parser.finishValueToken("Invalid", char);

@@ -34,35 +34,35 @@ Array [TargetBrowserSince {since: 1_585_692_000_000}]
 ```javascript
 Array [
 	Since {
-		end: 5
-		start: 0
+		end: ZeroIndexedNumber<5>
+		start: ZeroIndexedNumber<0>
 	}
 	Number {
 		value: 2_020
-		end: 10
-		start: 6
+		end: ZeroIndexedNumber<10>
+		start: ZeroIndexedNumber<6>
 	}
 	Hyphen {
-		end: 11
-		start: 10
+		end: ZeroIndexedNumber<11>
+		start: ZeroIndexedNumber<10>
 	}
 	Number {
 		value: 4
-		end: 13
-		start: 11
+		end: ZeroIndexedNumber<13>
+		start: ZeroIndexedNumber<11>
 	}
 	Hyphen {
-		end: 14
-		start: 13
+		end: ZeroIndexedNumber<14>
+		start: ZeroIndexedNumber<13>
 	}
 	Number {
 		value: 1
-		end: 16
-		start: 14
+		end: ZeroIndexedNumber<16>
+		start: ZeroIndexedNumber<14>
 	}
 	EOF {
-		end: 17
-		start: 17
+		end: ZeroIndexedNumber<17>
+		start: ZeroIndexedNumber<17>
 	}
 ]
 ```

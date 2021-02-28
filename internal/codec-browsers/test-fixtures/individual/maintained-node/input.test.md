@@ -26,21 +26,21 @@ Array [
 ```javascript
 Array [
 	Maintained {
-		end: 10
-		start: 0
+		end: ZeroIndexedNumber<10>
+		start: ZeroIndexedNumber<0>
 	}
 	String {
 		value: "node"
-		end: 16
-		start: 11
+		end: ZeroIndexedNumber<16>
+		start: ZeroIndexedNumber<11>
 	}
 	Versions {
-		end: 24
-		start: 16
+		end: ZeroIndexedNumber<24>
+		start: ZeroIndexedNumber<16>
 	}
 	EOF {
-		end: 25
-		start: 25
+		end: ZeroIndexedNumber<25>
+		start: ZeroIndexedNumber<25>
 	}
 ]
 ```

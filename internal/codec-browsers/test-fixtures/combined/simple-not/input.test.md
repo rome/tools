@@ -28,22 +28,22 @@ Array [
 ```javascript
 Array [
 	Not {
-		end: 3
-		start: 0
+		end: ZeroIndexedNumber<3>
+		start: ZeroIndexedNumber<0>
 	}
 	String {
 		value: "Chrome"
-		end: 11
-		start: 4
+		end: ZeroIndexedNumber<11>
+		start: ZeroIndexedNumber<4>
 	}
 	Number {
 		value: 80
-		end: 13
-		start: 11
+		end: ZeroIndexedNumber<13>
+		start: ZeroIndexedNumber<11>
 	}
 	EOF {
-		end: 14
-		start: 14
+		end: ZeroIndexedNumber<14>
+		start: ZeroIndexedNumber<14>
 	}
 ]
 ```

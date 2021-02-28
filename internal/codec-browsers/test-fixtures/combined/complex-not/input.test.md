@@ -37,35 +37,35 @@ Array [
 ```javascript
 Array [
 	GT {
-		end: 1
-		start: 0
+		end: ZeroIndexedNumber<1>
+		start: ZeroIndexedNumber<0>
 	}
 	Percentage {
 		value: 5
-		end: 4
-		start: 2
+		end: ZeroIndexedNumber<4>
+		start: ZeroIndexedNumber<2>
 	}
 	Or {
-		end: 5
-		start: 4
+		end: ZeroIndexedNumber<5>
+		start: ZeroIndexedNumber<4>
 	}
 	Not {
-		end: 9
-		start: 6
+		end: ZeroIndexedNumber<9>
+		start: ZeroIndexedNumber<6>
 	}
 	String {
 		value: "Chrome"
-		end: 17
-		start: 10
+		end: ZeroIndexedNumber<17>
+		start: ZeroIndexedNumber<10>
 	}
 	Number {
 		value: 80
-		end: 19
-		start: 17
+		end: ZeroIndexedNumber<19>
+		start: ZeroIndexedNumber<17>
 	}
 	EOF {
-		end: 20
-		start: 20
+		end: ZeroIndexedNumber<20>
+		start: ZeroIndexedNumber<20>
 	}
 ]
 ```

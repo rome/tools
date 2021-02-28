@@ -26,21 +26,21 @@ Array [
 ```javascript
 Array [
 	Current {
-		end: 7
-		start: 0
+		end: ZeroIndexedNumber<7>
+		start: ZeroIndexedNumber<0>
 	}
 	String {
 		value: "Firefox"
-		end: 16
-		start: 8
+		end: ZeroIndexedNumber<16>
+		start: ZeroIndexedNumber<8>
 	}
 	Versions {
-		end: 24
-		start: 16
+		end: ZeroIndexedNumber<24>
+		start: ZeroIndexedNumber<16>
 	}
 	EOF {
-		end: 25
-		start: 25
+		end: ZeroIndexedNumber<25>
+		start: ZeroIndexedNumber<25>
 	}
 ]
 ```

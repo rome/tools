@@ -49,26 +49,26 @@ Array [
 ```javascript
 Array [
 	GT {
-		end: 1
-		start: 0
+		end: ZeroIndexedNumber<1>
+		start: ZeroIndexedNumber<0>
 	}
 	Percentage {
 		value: 0.2
-		end: 5
-		start: 2
+		end: ZeroIndexedNumber<5>
+		start: ZeroIndexedNumber<2>
 	}
 	In {
-		end: 8
-		start: 6
+		end: ZeroIndexedNumber<8>
+		start: ZeroIndexedNumber<6>
 	}
 	String {
 		value: "BE"
-		end: 12
-		start: 9
+		end: ZeroIndexedNumber<12>
+		start: ZeroIndexedNumber<9>
 	}
 	EOF {
-		end: 12
-		start: 12
+		end: ZeroIndexedNumber<12>
+		start: ZeroIndexedNumber<12>
 	}
 ]
 ```

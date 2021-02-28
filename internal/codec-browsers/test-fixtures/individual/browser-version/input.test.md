@@ -27,17 +27,17 @@ Array [
 Array [
 	String {
 		value: "Firefox"
-		end: 8
-		start: 0
+		end: ZeroIndexedNumber<8>
+		start: ZeroIndexedNumber<0>
 	}
 	Number {
 		value: 84
-		end: 10
-		start: 8
+		end: ZeroIndexedNumber<10>
+		start: ZeroIndexedNumber<8>
 	}
 	EOF {
-		end: 11
-		start: 11
+		end: ZeroIndexedNumber<11>
+		start: ZeroIndexedNumber<11>
 	}
 ]
 ```

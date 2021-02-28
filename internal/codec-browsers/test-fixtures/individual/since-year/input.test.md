@@ -28,17 +28,17 @@ Array [TargetBrowserSince {since: 1_609_459_200_000}]
 ```javascript
 Array [
 	Since {
-		end: 5
-		start: 0
+		end: ZeroIndexedNumber<5>
+		start: ZeroIndexedNumber<0>
 	}
 	Number {
 		value: 2_021
-		end: 10
-		start: 6
+		end: ZeroIndexedNumber<10>
+		start: ZeroIndexedNumber<6>
 	}
 	EOF {
-		end: 11
-		start: 11
+		end: ZeroIndexedNumber<11>
+		start: ZeroIndexedNumber<11>
 	}
 ]
 ```

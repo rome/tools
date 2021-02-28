@@ -31,12 +31,12 @@ Array [TargetBrowserPreset {preset: "dead"}]
 ```javascript
 Array [
 	Dead {
-		end: 4
-		start: 0
+		end: ZeroIndexedNumber<4>
+		start: ZeroIndexedNumber<0>
 	}
 	EOF {
-		end: 5
-		start: 5
+		end: ZeroIndexedNumber<5>
+		start: ZeroIndexedNumber<5>
 	}
 ]
 ```

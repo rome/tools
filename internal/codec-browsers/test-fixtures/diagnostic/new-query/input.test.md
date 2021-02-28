@@ -7,7 +7,7 @@
 ### `error`
 
 ```javascript
-___R$project$rome$$internal$diagnostics$errors_ts$DiagnosticsError {
+___R$project$rome$$internal$diagnostics$error$wrappers_ts$DiagnosticsError {
 	name: "DiagnosticsError"
 	_memoMessage: undefined
 	_message: "Expected a new browser query"
@@ -19,12 +19,12 @@ ___R$project$rome$$internal$diagnostics$errors_ts$DiagnosticsError {
 				language: "browserquery"
 				sourceText: undefined
 				end: Position 1:1
-				path: RelativeFilePath<diagnostic/new-query/input.txt>
+				path: RelativePath<diagnostic/new-query/input.txt>
 				start: Position 1:0
 			}
 			description: Object {
-				category: "parse"
 				categoryValue: "browserquery"
+				category: Array ["parse"]
 				message: RAW_MARKUP {value: "Expected a new browser query"}
 				advice: Array [
 					log {

@@ -116,16 +116,16 @@ Array [
 Array [
 	String {
 		value: "Firefox"
-		end: 8
-		start: 0
+		end: ZeroIndexedNumber<8>
+		start: ZeroIndexedNumber<0>
 	}
 	All {
-		end: 11
-		start: 8
+		end: ZeroIndexedNumber<11>
+		start: ZeroIndexedNumber<8>
 	}
 	EOF {
-		end: 12
-		start: 12
+		end: ZeroIndexedNumber<12>
+		start: ZeroIndexedNumber<12>
 	}
 ]
 ```

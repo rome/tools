@@ -31,17 +31,17 @@ Array [
 ```javascript
 Array [
 	GT {
-		end: 1
-		start: 0
+		end: ZeroIndexedNumber<1>
+		start: ZeroIndexedNumber<0>
 	}
 	Percentage {
 		value: 5
-		end: 4
-		start: 2
+		end: ZeroIndexedNumber<4>
+		start: ZeroIndexedNumber<2>
 	}
 	EOF {
-		end: 5
-		start: 5
+		end: ZeroIndexedNumber<5>
+		start: ZeroIndexedNumber<5>
 	}
 ]
 ```

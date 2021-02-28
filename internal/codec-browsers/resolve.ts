@@ -104,14 +104,16 @@ export function resolveTargets(
 		switch (target.type) {
 			case "TargetBrowser": {
 				if (target.version === "all") {
-					(getBrowser({name: target.browser})?.getVersions()).forEach((version) => {
-						browsers.add(
-							getBrowser({
-								name: target.browser,
-								version,
-							})!,
-						);
-					});
+					if (getBrowser({name: target.browser})) {
+						getBrowser({name: target.browser})!.getVersions().forEach((version) => {
+							browsers.add(
+								getBrowser({
+									name: target.browser,
+									version,
+								})!,
+							);
+						});
+					}
 
 					break;
 				}
@@ -334,21 +336,27 @@ export function resolveTargets(
 						}
 						case "versions": {
 							// `b - a` reverses the list
-							(getBrowser({name})?.getVersions()).sort((a, b) => b - a).slice(
-								0,
-								target.qty,
-							).forEach((version) => browsers.add(getBrowser({name, version})!));
+							if (getBrowser({name})) {
+								getBrowser({name})!.getVersions().sort((a, b) => b - a).slice(
+									0,
+									target.qty,
+								).forEach((version) =>
+									browsers.add(getBrowser({name, version})!)
+								);
+							}
 							break;
 						}
 						case "majorversions": {
 							// `b - a` reverses the list
 							// v % 1 checks if the number is whole
-							(getBrowser({name})?.getVersions()).filter((v) => v % 1 === 0).sort((
-								a,
-								b,
-							) => b - a).slice(0, target.qty).forEach((version) =>
-								browsers.add(getBrowser({name, version})!)
-							);
+							if (getBrowser({name})) {
+								getBrowser({name})!.getVersions().filter((v) => v % 1 === 0).sort((
+									a,
+									b,
+								) => b - a).slice(0, target.qty).forEach((version) =>
+									browsers.add(getBrowser({name, version})!)
+								);
+							}
 							break;
 						}
 					}
