@@ -11,13 +11,13 @@ export function parseParagraph(
 ): MarkdownParagraph {
 	const start = parser.getPosition();
 	const children: AnyMarkdownInlineNode[] = [];
-	while (!(parser.matchToken("EOF") || isBlockToken(parser))) {
+	while (!(parser.matchToken("EOF") || isBlockToken(parser.getToken()) || isBreakingNewLine(parser))) {
 		const token = parser.getToken();
 
 		if (isList && token.type === "NewLine") {
-			parser.nextToken();
 			break;
 		}
+
 		switch (token.type) {
 			case "Strong":
 			case "Emphasis": {
@@ -47,6 +47,7 @@ export function parseParagraph(
 			}
 			case "NewLine": {
 				const pos = parser.getPosition();
+				parser.nextToken();
 				children.push(
 					parser.finishNode(
 						pos,
@@ -56,7 +57,6 @@ export function parseParagraph(
 						},
 					),
 				);
-				parser.nextToken();
 				break;
 			}
 			case "OpenSquareBracket": {
@@ -73,6 +73,7 @@ export function parseParagraph(
 				// TODO: to remove once all cases are handled
 				parser.unexpectedDiagnostic({
 					description: descriptions.MARKDOWN_PARSER.INVALID_SEQUENCE,
+					token: token,
 				});
 				parser.nextToken();
 			}
@@ -86,4 +87,9 @@ export function parseParagraph(
 			children,
 		},
 	);
+}
+
+function isBreakingNewLine(parser: MarkdownParser) {
+	const nextToken = parser.lookaheadToken();
+	return parser.matchToken("NewLine") && (nextToken.type === "NewLine" || nextToken.type === "EOF" || isBlockToken(nextToken))
 }

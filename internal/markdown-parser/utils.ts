@@ -1,3 +1,5 @@
+import { Tokens } from './types';
+import { TokenValues } from '@internal/parser-core';
 import {ZeroIndexed} from "@internal/math";
 import {MarkdownParser} from "@internal/markdown-parser/index";
 import {isDigit} from "@internal/parser-core";
@@ -106,13 +108,12 @@ export function isntInlineCharacter(char: string) {
 	return !INLINE_HOT_CHARACTERS.has(char);
 }
 
-export function isBlockToken(parser: MarkdownParser) {
+export function isBlockToken(token: TokenValues<Tokens>) {
 	return (
-		parser.matchToken("NewLine") ||
-		parser.matchToken("Code") ||
-		parser.matchToken("Break") ||
-		parser.matchToken("HeadingLevel") ||
-		parser.matchToken("ListItem")
+		token.type === "Code" ||
+		token.type === "Break" ||
+		token.type === "HeadingLevel" ||
+		token.type === "ListItem"
 	);
 }
 
@@ -164,4 +165,11 @@ export function isBlock(
 
 export function readUntilEndOfParagraph(char: string): boolean {
 	return char !== "\n";
+}
+
+export function isBeginningOfLine(parser: MarkdownParser): boolean {
+	return (
+		parser.getCurrentToken().type === "NewLine" ||
+		parser.getCurrentToken().type === "SOF"
+	);
 }
