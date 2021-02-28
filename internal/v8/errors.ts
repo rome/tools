@@ -8,12 +8,12 @@
 import {Position} from "@internal/parser-core";
 import {ErrorFrame, ErrorFrames} from "./types";
 import {isPlainObject} from "@internal/typescript-helpers";
-import {ob1Number0, ob1Number1} from "@internal/ob1";
+import {OneIndexed, ZeroIndexed} from "@internal/math";
+import {NodeSystemError} from "@internal/node";
 import {
-	NodeSystemError,
+	DiagnosticLocation,
 	convertPossibleNodeErrorToDiagnostic,
-} from "@internal/node";
-import {DiagnosticLocation} from "@internal/diagnostics";
+} from "@internal/diagnostics";
 import {UNKNOWN_PATH, createUIDPath} from "@internal/path";
 
 export * from "./types";
@@ -151,8 +151,8 @@ export function getDiagnosticLocationFromErrorFrame(
 	}
 
 	const pos: Position = {
-		line: frame.lineNumber ?? ob1Number1,
-		column: frame.columnNumber ?? ob1Number0,
+		line: frame.lineNumber ?? new OneIndexed(),
+		column: frame.columnNumber ?? new ZeroIndexed(),
 	};
 
 	return {

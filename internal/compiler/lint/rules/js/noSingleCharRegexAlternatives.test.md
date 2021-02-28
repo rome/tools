@@ -21,9 +21,6 @@ lint/js/noSingleCharRegexAlternatives  FIXABLE  ━━━━━━━━━━�
   - a|b
   + [ab]
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -51,9 +48,6 @@ lint/js/noSingleCharRegexAlternatives  FIXABLE  ━━━━━━━━━━�
   - a|b|c
   + [abc]
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -67,7 +61,6 @@ lint/js/noSingleCharRegexAlternatives  FIXABLE  ━━━━━━━━━━�
 ### `2`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -81,7 +74,6 @@ lint/js/noSingleCharRegexAlternatives  FIXABLE  ━━━━━━━━━━�
 ### `3`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -95,7 +87,6 @@ lint/js/noSingleCharRegexAlternatives  FIXABLE  ━━━━━━━━━━�
 ### `4`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -109,7 +100,6 @@ lint/js/noSingleCharRegexAlternatives  FIXABLE  ━━━━━━━━━━�
 ### `5`
 
 ```
-✔ No known problems!
 
 ```
 

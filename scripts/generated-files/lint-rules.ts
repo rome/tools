@@ -126,16 +126,18 @@ export async function main() {
 		},
 		async () => {
 			const lines = ["export type DiagnosticLintCategory ="];
-			for (const {ruleName} of defs) {
-				lines.push(`	| "lint/${ruleName}"`);
+			for (const {category, basename} of defs) {
+				lines.push(`	| ["lint", "${category}", "${basename}"]`);
 			}
 			lines.push(";");
 
 			lines.push(
-				"const lintCategoryNameMap: {[name in DiagnosticLintCategory]: true} = {",
+				"const lintCategoryNameMap: {[name in DiagnosticLintCategoryString]: DiagnosticLintCategory} = {",
 			);
-			for (const {ruleName} of defs) {
-				lines.push(`  "lint/${ruleName}": true,`);
+			for (const {ruleName, category, basename} of defs) {
+				lines.push(
+					`  "lint/${ruleName}": ["lint", "${category}", "${basename}"],`,
+				);
 			}
 			lines.push("};");
 			return {lines};
@@ -158,9 +160,12 @@ export async function main() {
 			}
 			lines.push("");
 			lines.push("export const tests: Tests = {");
-			for (const {basename, ruleName, hasRJSON} of defs) {
+			for (const {basename, ruleName, category, hasRJSON} of defs) {
 				if (hasRJSON) {
-					lines.push(`	"${ruleName}": ${basename},`);
+					lines.push(`	"${ruleName}": {`);
+					lines.push(`    category: ["lint", "${category}", "${basename}"],`);
+					lines.push(`    cases: ${basename},`);
+					lines.push("  },");
 				}
 			}
 			lines.push("};");

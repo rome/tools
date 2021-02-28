@@ -32,6 +32,7 @@ import {
 	readMarkup,
 } from "@internal/markup";
 import {
+	DIAGNOSTIC_CATEGORIES,
 	Diagnostic,
 	DiagnosticsError,
 	descriptions,
@@ -296,7 +297,7 @@ export default class Parser<T> {
 				}
 			},
 			context: {
-				category: "flags/invalid",
+				category: DIAGNOSTIC_CATEGORIES["flags/invalid"],
 				normalizeKey: (key) => {
 					return this.incorrectCaseFlags.has(key) ? key : toKebabCase(key);
 				},

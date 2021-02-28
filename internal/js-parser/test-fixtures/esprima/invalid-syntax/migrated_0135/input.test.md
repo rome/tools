@@ -30,20 +30,13 @@ JSRoot {
 				start: Position 1:13
 			}
 			description: Object {
-				category: "parse"
 				categoryValue: "js"
-				message: Array [
-					RAW_MARKUP {value: "Unclosed "}
-					"catch clause param"
-				]
+				category: Array ["parse"]
+				message: RAW_MARKUP {value: "Unclosed <emphasis>catch clause param</emphasis>"}
 				advice: Array [
 					log {
 						category: "info"
-						text: Array [
-							RAW_MARKUP {value: "We expected to find the closing character <emphasis>"}
-							")"
-							RAW_MARKUP {value: "</emphasis> here"}
-						]
+						text: RAW_MARKUP {value: "We expected to find the closing character <emphasis>)</emphasis> here"}
 					}
 					frame {location: SourceLocation esprima/invalid-syntax/migrated_0135/input.js 1:20-1:20}
 				]
@@ -104,13 +97,13 @@ JSRoot {
 
   ✖ Unclosed catch clause param
 
+    try {} catch (answer()) {}
+                 ^
+
   ℹ We expected to find the closing character ) here
 
     try {} catch (answer()) {}
                         ^
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

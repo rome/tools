@@ -18,6 +18,25 @@ JSRoot {
 	loc: SourceLocation typescript/class/extends-implements-empty/input.ts 1:0-3:0
 	path: UIDPath<typescript/class/extends-implements-empty/input.ts>
 	syntax: Array ["ts"]
+	diagnostics: Array [
+		Object {
+			origins: Array [Object {category: "parse"}]
+			description: Object {
+				advice: Array []
+				categoryValue: "js"
+				category: Array ["parse"]
+				message: RAW_MARKUP {value: "implements list cannot be empty"}
+			}
+			location: Object {
+				integrity: undefined
+				language: "js"
+				sourceText: undefined
+				end: Position 1:33
+				path: UIDPath<typescript/class/extends-implements-empty/input.ts>
+				start: Position 1:33
+			}
+		}
+	]
 	body: Array [
 		JSClassDeclaration {
 			id: JSBindingIdentifier {
@@ -38,28 +57,6 @@ JSRoot {
 			}
 		}
 	]
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:33
-				path: UIDPath<typescript/class/extends-implements-empty/input.ts>
-				start: Position 1:33
-			}
-			description: Object {
-				advice: Array []
-				category: "parse"
-				categoryValue: "js"
-				message: Array [
-					"implements"
-					RAW_MARKUP {value: " list cannot be empty"}
-				]
-			}
-		}
-	]
 }
 ```
 
@@ -75,8 +72,5 @@ JSRoot {
       │                                  ^
     2 │ }
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

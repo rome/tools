@@ -30,13 +30,9 @@ JSRoot {
 				start: Position 1:10
 			}
 			description: Object {
-				category: "parse"
 				categoryValue: "js"
-				message: Array [
-					RAW_MARKUP {value: "A "}
-					"type annotation"
-					RAW_MARKUP {value: " is only valid inside of a TypeScript file"}
-				]
+				category: Array ["parse"]
+				message: RAW_MARKUP {value: "A type annotation is only valid inside of a TypeScript file"}
 				advice: Array [
 					log {
 						category: "info"
@@ -107,8 +103,5 @@ JSRoot {
 
   ℹ To enable TypeScript support, the file extension should end in .ts or .tsx
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

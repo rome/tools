@@ -9,10 +9,19 @@ import Scope from "../Scope";
 import {TypeBinding} from "@internal/compiler";
 import {AnyNode, tsTypeParameter} from "@internal/ast";
 import {createScopeEvaluator} from "./index";
+import {TypeBindingKind} from "../bindings";
 
 export default createScopeEvaluator({
 	inject(node: AnyNode, parent: AnyNode, scope: Scope) {
 		node = tsTypeParameter.assert(node);
+		let typeKind: TypeBindingKind = "parameter";
+
+		if (parent.type === "TSMappedType") {
+			typeKind = "mapped type";
+		} else if (parent.type === "TSInferType") {
+			typeKind = "infer type";
+		}
+
 		scope.addBinding(
 			new TypeBinding(
 				{
@@ -21,7 +30,7 @@ export default createScopeEvaluator({
 					scope,
 				},
 				node,
-				parent.type === "TSMappedType" ? "mapped type" : "parameter",
+				typeKind,
 			),
 		);
 	},

@@ -10,7 +10,7 @@ CSSRoot {
 	corrupt: false
 	integrity: undefined
 	loc: SourceLocation invalid/selector3/input.css 1:0-2:1
-	path: RelativeFilePath<invalid/selector3/input.css>
+	path: RelativePath<invalid/selector3/input.css>
 	body: Array [
 		CSSRule {
 			loc: SourceLocation invalid/selector3/input.css 1:0-2:1
@@ -32,16 +32,16 @@ CSSRoot {
 			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse"
 				categoryValue: "css"
-				message: RAW_MARKUP {value: "Unexpected empty selectors"}
+				category: Array ["parse"]
+				message: RAW_MARKUP {value: "Unexpected empty selectors."}
 			}
 			location: Object {
 				integrity: undefined
 				language: "css"
 				sourceText: undefined
 				end: Position 1:3
-				path: RelativeFilePath<invalid/selector3/input.css>
+				path: RelativePath<invalid/selector3/input.css>
 				start: Position 1:2
 			}
 		}

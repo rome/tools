@@ -30,9 +30,9 @@ Array [
 					path: UIDPath<unknown>
 					propertyMetadata: Object {getDiagnosticLocation: Function getDiagnosticLocation}
 					context: Object {
-						category: "parse"
 						categoryValue: "romemarkup"
 						getDiagnosticLocation: Function getDiagnosticLocation
+						category: Array ["parse"]
 					}
 				}
 			]
@@ -45,9 +45,9 @@ Array [
 			usedNames: Set ["target"]
 			path: UIDPath<unknown>
 			context: Object {
-				category: "parse"
 				categoryValue: "romemarkup"
 				getDiagnosticLocation: Function getDiagnosticLocation
+				category: Array ["parse"]
 			}
 		}
 	}
@@ -80,9 +80,9 @@ Array [
 			usedNames: Set []
 			path: UIDPath<unknown>
 			context: Object {
-				category: "parse"
 				categoryValue: "romemarkup"
 				getDiagnosticLocation: Function getDiagnosticLocation
+				category: Array ["parse"]
 			}
 		}
 	}
@@ -113,9 +113,9 @@ Array [
 			usedNames: Set []
 			path: UIDPath<unknown>
 			context: Object {
-				category: "parse"
 				categoryValue: "romemarkup"
 				getDiagnosticLocation: Function getDiagnosticLocation
+				category: Array ["parse"]
 			}
 		}
 		children: Array [
@@ -141,9 +141,9 @@ Array [
 					usedNames: Set []
 					path: UIDPath<unknown>
 					context: Object {
-						category: "parse"
 						categoryValue: "romemarkup"
 						getDiagnosticLocation: Function getDiagnosticLocation
+						category: Array ["parse"]
 					}
 				}
 			}

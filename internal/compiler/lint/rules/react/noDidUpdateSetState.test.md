@@ -12,19 +12,9 @@
 
   ✖ Avoid calling this.setState in the componentDidUpdate method.
 
-    1 │ class Hello extends React.Component {
-    2 │   componentDidUpdate() {
-  > 3 │     this.setState({
-      │     ^^^^^^^^^^^^^
-    4 │       name: 'John'
-    5 │     });
-
   ℹ Updating state immediately after a previous update causes a second render that can cause
     visual layout thrashing.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -49,19 +39,9 @@ class Hello extends React.Component {
 
   ✖ Avoid calling this.setState in the componentDidUpdate method.
 
-    2 │   componentDidUpdate() {
-    3 │     foo();
-  > 4 │     this.setState({
-      │     ^^^^^^^^^^^^^
-    5 │       name: 'John'
-    6 │     });
-
   ℹ Updating state immediately after a previous update causes a second render that can cause
     visual layout thrashing.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -87,19 +67,9 @@ class Hello extends React.Component {
 
   ✖ Avoid calling this.setState in the componentDidUpdate method.
 
-    1 │ class Hello extends Component {
-    2 │   componentDidUpdate() {
-  > 3 │     this.setState({
-      │     ^^^^^^^^^^^^^
-    4 │       name: 'John'
-    5 │     });
-
   ℹ Updating state immediately after a previous update causes a second render that can cause
     visual layout thrashing.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -124,19 +94,9 @@ class Hello extends Component {
 
   ✖ Avoid calling this.setState in the componentDidUpdate method.
 
-    2 │   componentDidUpdate() {
-    3 │     foo();
-  > 4 │     this.setState({
-      │     ^^^^^^^^^^^^^
-    5 │       name: 'John'
-    6 │     });
-
   ℹ Updating state immediately after a previous update causes a second render that can cause
     visual layout thrashing.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -157,7 +117,6 @@ class Hello extends Component {
 ### `4`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -179,7 +138,6 @@ class Hello extends React.Component {
 ### `5`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -200,7 +158,6 @@ class Hello extends React.Component {
 ### `6`
 
 ```
-✔ No known problems!
 
 ```
 

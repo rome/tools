@@ -18,9 +18,6 @@
     3 │     this.setState({value: this.state.value + 1});
     4 │   }
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -44,9 +41,6 @@ undefined
     3 │     this.setState({value: 1 + this.state.value});
     4 │   }
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -70,9 +64,6 @@ undefined
     3 │     this.setState({
     4 │       value: !this.state.value
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -96,9 +87,6 @@ undefined
     3 │     this.setState({
     4 │       value: !!this.state.value
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -116,22 +104,8 @@ undefined
 
   ✖ Avoid using this.state within a this.setState call.
 
-    1 │ class MyComponent extends Component {
-    2 │   update() {
-  > 3 │     this.setState({
-      │     ^^^^^^^^^^^^^^^
-  > 4 │       foo: bar,
-  > 5 │       value: 1 + this.state.value
-  > 6 │     });
-      │ ^^^^^^
-    7 │   }
-    8 │ }
-
   ℹ Batched state calls could result in unexpected errors due to stale state data.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -157,22 +131,8 @@ class MyComponent extends Component {
 
   ✖ Avoid using this.state within a this.setState call.
 
-    1 │ class MyComponent extends Component {
-    2 │   update() {
-  > 3 │     this.setState({
-      │     ^^^^^^^^^^^^^^^
-  > 4 │       foo: bar,
-  > 5 │       value: this.state.value + 1
-  > 6 │     });
-      │ ^^^^^^
-    7 │   }
-    8 │ }
-
   ℹ Batched state calls could result in unexpected errors due to stale state data.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -198,21 +158,8 @@ class MyComponent extends Component {
 
   ✖ Avoid using this.state within a this.setState call.
 
-    1 │ class MyComponent extends Component {
-    2 │   update() {
-  > 3 │     this.setState({
-      │     ^^^^^^^^^^^^^^^
-  > 4 │       value: this.state.value
-  > 5 │     });
-      │ ^^^^^^
-    6 │   }
-    7 │ }
-
   ℹ Batched state calls could result in unexpected errors due to stale state data.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -237,22 +184,8 @@ class MyComponent extends Component {
 
   ✖ Avoid using this.state within a this.setState call.
 
-    1 │ class MyComponent extends Component {
-    2 │   update() {
-  > 3 │     this.setState({
-      │     ^^^^^^^^^^^^^^^
-  > 4 │       foo: bar,
-  > 5 │       value: this.state.value
-  > 6 │     });
-      │ ^^^^^^
-    7 │   }
-    8 │ }
-
   ℹ Batched state calls could result in unexpected errors due to stale state data.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -273,7 +206,6 @@ class MyComponent extends Component {
 ### `8`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -293,7 +225,6 @@ class MyComponent extends Component {
 ### `9`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -311,7 +242,6 @@ class MyComponent extends Component {
 ### `10`
 
 ```
-✔ No known problems!
 
 ```
 

@@ -19,7 +19,7 @@ import {
 	descriptions,
 } from "@internal/diagnostics";
 import {orderBySimilarity} from "@internal/string-utils";
-import {AbsoluteFilePath, createAnyPath} from "@internal/path";
+import {AbsoluteFilePath, AnyFilePath, createAnyPath} from "@internal/path";
 import {PLATFORMS, Server} from "@internal/core";
 import {StaticMarkups, markup} from "@internal/markup";
 import {ExtendedMap} from "@internal/collections";
@@ -152,16 +152,16 @@ export default function resolverSuggest(
 			if (suggestions.size > 0) {
 				const originDirectory = resolver.getOriginDirectory(localQuery);
 
-				// Relative paths to absolute
-				const relativeToAbsolute: ExtendedMap<string, string> = new ExtendedMap(
-					"relativeToAbsolute",
+				// Some suggestions may not be absolute paths
+				const humanToPath: ExtendedMap<string, AnyFilePath> = new ExtendedMap(
+					"humanToPath",
 				);
 
-				const relativeSuggestions = Array.from(
+				const humanSuggestions = Array.from(
 					suggestions,
 					([human, absolute]) => {
-						if (human !== absolute) {
-							relativeToAbsolute.set(human, absolute);
+						if (human !== absolute.join()) {
+							humanToPath.set(human, absolute);
 							return human;
 						}
 
@@ -175,9 +175,9 @@ export default function resolverSuggest(
 							);
 						}
 
-						const relativeStr = relativePath.toExplicitRelative().join();
-						relativeToAbsolute.set(relativeStr, absolute);
-						return relativeStr;
+						const explicitRelative = relativePath.toExplicitRelative().join();
+						humanToPath.set(explicitRelative, absolute);
+						return explicitRelative;
 					},
 				);
 
@@ -185,10 +185,10 @@ export default function resolverSuggest(
 					...advice,
 					...buildSuggestionAdvice(
 						query.source.join(),
-						relativeSuggestions,
+						humanSuggestions,
 						{
 							formatItem: (relative) => {
-								const absolute = relativeToAbsolute.assert(relative);
+								const absolute = humanToPath.assert(relative);
 								return markup`<filelink target="${absolute}">${relative}</filelink>`;
 							},
 						},
@@ -227,16 +227,20 @@ export default function resolverSuggest(
 	});
 }
 
-type Suggestions = Map<string, string>;
+type Suggestions = Map<string, AbsoluteFilePath>;
 
 function getPathSuggestions(
 	server: Server,
 	resolver: Resolver,
 	query: ResolverLocalQuery,
 ): Suggestions {
-	const {source} = query;
-	const originDirectory = resolver.getOriginDirectory(query);
 	const suggestions: Suggestions = new Map();
+	const {source} = query;
+	if (!source.isFilePath()) {
+		return suggestions;
+	}
+
+	const originDirectory = resolver.getOriginDirectory(query);
 
 	// Try normal resolved
 	tryPathSuggestions({
@@ -253,7 +257,6 @@ function getPathSuggestions(
 	}
 
 	// Try parent directories of the origin
-
 	for (const path of originDirectory.getChain()) {
 		tryPathSuggestions({
 			server,
@@ -288,8 +291,7 @@ function tryPathSuggestions(
 		if (memoryFs.exists(path)) {
 			// If this is an absolute match then we should be a suggestion
 			if (i === chain.length) {
-				const filename = path.join();
-				suggestions.set(filename, filename);
+				suggestions.set(path.join(), path);
 			}
 
 			// Otherwise this segment exists and should have been dealt with previously in the loop
@@ -334,7 +336,7 @@ function getPackageSuggestions(
 	server: Server,
 	query: ResolverLocalQuery,
 ): Suggestions {
-	const possibleGlobalPackages: ExtendedMap<string, string> = new ExtendedMap(
+	const possibleGlobalPackages: ExtendedMap<string, AbsoluteFilePath> = new ExtendedMap(
 		"possibleGlobalPackages",
 	);
 
@@ -344,13 +346,13 @@ function getPackageSuggestions(
 
 		for (const project of projects) {
 			for (const [name, value] of project.packages) {
-				possibleGlobalPackages.set(name, value.directory.join());
+				possibleGlobalPackages.set(name, value.directory);
 			}
 		}
 	}
 
 	// TODO Add node_modules
-	const matches: [string, string][] = orderBySimilarity(
+	const matches: [string, AbsoluteFilePath][] = orderBySimilarity(
 		query.source.join(),
 		Array.from(possibleGlobalPackages.keys()),
 		{minRating: MIN_SIMILARITY},

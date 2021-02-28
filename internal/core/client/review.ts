@@ -177,8 +177,8 @@ async function ask(
 		reporter,
 		wrapErrors: true,
 	});
-	diag = printer.processor.addDiagnosticAssert(diag);
-	await printer.print();
+	diag = printer.processor.normalizer.normalizeDiagnostic(diag);
+	await printer.print({showFooter: false});
 
 	const answer = await reporter.radio(
 		markup`How do you want to resolve this?`,
@@ -189,12 +189,10 @@ async function ask(
 
 	// Check if this diagnostic is now out of date
 	await printer.fetchFileSources([diag]);
-	const {outdatedPaths: outdatedFiles} = printer.getDiagnosticDependencyMeta(
-		diag,
-	);
-	if (outdatedFiles.size > 0) {
+	const {outdatedPaths} = printer.getDiagnosticDependencyMeta(diag);
+	if (outdatedPaths.size > 0) {
 		const files = Array.from(
-			outdatedFiles,
+			outdatedPaths,
 			(path) => markup`<emphasis>${path}</emphasis>`,
 		);
 

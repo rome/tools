@@ -5,6 +5,7 @@ import {LSPRequestMessage, LSPResponseMessage} from "./types";
 import {Reporter} from "@internal/cli-reporter";
 import {AnyMarkup, markup} from "@internal/markup";
 import prettyFormat from "@internal/pretty-format";
+import {DIAGNOSTIC_CATEGORIES} from "@internal/diagnostics";
 
 type Status = "IDLE" | "WAITING_FOR_HEADERS_END" | "WAITING_FOR_RESPONSE_END";
 
@@ -98,7 +99,7 @@ export class LSPTransport {
 	private normalizeMessage(content: string): undefined | Consumer {
 		try {
 			const data = JSON.parse(content);
-			const consumer = consumeUnknown(data, "parse", "json");
+			const consumer = consumeUnknown(data, DIAGNOSTIC_CATEGORIES.parse, "json");
 			return consumer;
 		} catch (err) {
 			if (err instanceof SyntaxError) {

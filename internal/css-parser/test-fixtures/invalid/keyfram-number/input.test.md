@@ -10,7 +10,7 @@ CSSRoot {
 	corrupt: false
 	integrity: undefined
 	loc: SourceLocation invalid/keyfram-number/input.css 1:0-5:1
-	path: RelativeFilePath<invalid/keyfram-number/input.css>
+	path: RelativePath<invalid/keyfram-number/input.css>
 	body: Array [
 		CSSAtRule {
 			name: "keyframes"
@@ -37,17 +37,17 @@ CSSRoot {
 				language: "css"
 				sourceText: undefined
 				end: Position 2:3
-				path: RelativeFilePath<invalid/keyfram-number/input.css>
+				path: RelativePath<invalid/keyfram-number/input.css>
 				start: Position 2:1
 			}
 			description: Object {
-				category: "parse"
 				categoryValue: "css"
+				category: Array ["parse"]
 				message: RAW_MARKUP {value: "The selector name of the keyframe is not correct."}
 				advice: Array [
 					log {
 						category: "info"
-						text: RAW_MARKUP {value: "The only valid values are percentages, and the keywords <emphasis>from</emphasis> and <emphasis>to</emphasis>"}
+						text: RAW_MARKUP {value: "The only valid values are percentages, and the keywords <emphasis>from</emphasis> and <emphasis>to</emphasis>."}
 					}
 				]
 			}

@@ -30,13 +30,9 @@ JSRoot {
 				start: Position 1:5
 			}
 			description: Object {
-				category: "parse"
 				categoryValue: "js"
-				message: Array [
-					RAW_MARKUP {value: "Argument <emphasis>"}
-					"b"
-					RAW_MARKUP {value: "</emphasis> name clash in strict mode"}
-				]
+				category: Array ["parse"]
+				message: RAW_MARKUP {value: "Argument <emphasis>b</emphasis> name clash in strict mode"}
 				advice: Array [
 					log {
 						category: "info"
@@ -109,8 +105,5 @@ JSRoot {
     ([a,[b],...b])=>0;
          ^
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

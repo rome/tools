@@ -113,7 +113,6 @@ import {
 	parseTargetBindingPattern,
 	toTargetAssignmentPattern,
 } from "./index";
-import {ob1Add, ob1Get0, ob1Inc, ob1Number0} from "@internal/ob1";
 import {descriptions} from "@internal/diagnostics";
 
 const loopLabel: Label = {kind: "loop"};
@@ -124,7 +123,7 @@ export function parseTopLevel(parser: JSParser): JSRoot {
 	const openContext: OpeningContext = {
 		name: "top-level",
 		start,
-		indent: ob1Number0,
+		indent: 0,
 		open: tt.eof,
 		close: tt.eof,
 	};
@@ -156,10 +155,7 @@ export function parsePossibleInterpreterDirective(
 	parser: JSParser,
 ): undefined | JSInterpreterDirective {
 	// Check for #!
-	if (
-		match(parser, tt.hash) &&
-		parser.input[ob1Get0(parser.state.endIndex)] === "!"
-	) {
+	if (match(parser, tt.hash) && parser.input[parser.state.endIndex] === "!") {
 		const directive = skipInterpreterDirective(parser, 1);
 
 		// Advance to next token
@@ -201,14 +197,14 @@ export function isLetStart(parser: JSParser, context?: string): boolean {
 		return false;
 	}
 
-	skipWhiteSpace.lastIndex = ob1Get0(parser.state.index);
+	skipWhiteSpace.lastIndex = parser.state.index;
 	const skip = skipWhiteSpace.exec(parser.input);
 	if (skip == null) {
 		throw new Error("Should never be true");
 	}
 
-	const next = ob1Add(parser.state.index, skip[0].length);
-	const nextCh = parser.input.charCodeAt(ob1Get0(next));
+	const next = parser.state.index + skip[0].length;
+	const nextCh = parser.input.charCodeAt(next);
 
 	// For ambiguous cases, determine if a LexicalDeclaration (or only a
 	// Statement) is allowed here. If context is not empty then only a Statement
@@ -227,9 +223,9 @@ export function isLetStart(parser: JSParser, context?: string): boolean {
 	}
 
 	if (isIdentifierStart(nextCh)) {
-		let pos = ob1Add(next, 1);
-		while (isIdentifierChar(parser.input.charCodeAt(ob1Get0(pos)))) {
-			pos = ob1Inc(pos);
+		let pos = next + 1;
+		while (isIdentifierChar(parser.input.charCodeAt(pos))) {
+			pos++;
 		}
 
 		const ident = parser.getRawInput(next, pos);
@@ -475,20 +471,19 @@ export function isAsyncFunctionDeclarationStart(parser: JSParser): boolean {
 	const {input} = parser;
 	const {index} = parser.state;
 
-	skipWhiteSpace.lastIndex = ob1Get0(index);
+	skipWhiteSpace.lastIndex = index;
 	const skip = skipWhiteSpace.exec(input);
 
 	if (!skip || skip.length === 0) {
 		return false;
 	}
 
-	const next = ob1Add(index, skip[0].length);
+	const next = index + skip[0].length;
 
 	return (
 		!lineBreak.test(parser.getRawInput(index, next)) &&
-		parser.getRawInput(next, ob1Add(next, 8)) === "function" &&
-		(ob1Get0(next) + 8 === input.length ||
-		!isIdentifierChar(input.charCodeAt(ob1Get0(next) + 8)))
+		parser.getRawInput(next, next + 8) === "function" &&
+		(next + 8 === input.length || !isIdentifierChar(input.charCodeAt(next + 8)))
 	);
 }
 
@@ -668,7 +663,7 @@ export function parseForStatement(
 		return parseFor(parser, start, openContext, init);
 	}
 
-	const refShorthandDefaultPos: IndexTracker = {index: ob1Number0};
+	const refShorthandDefaultPos: IndexTracker = {index: 0};
 	let init = parseExpression(parser, "for init", true, refShorthandDefaultPos);
 
 	if (match(parser, tt._in) || isContextual(parser, "of")) {
@@ -680,7 +675,7 @@ export function parseForStatement(
 		return parseForIn(parser, start, openContext, initPattern, awaitAt);
 	}
 
-	if (ob1Get0(refShorthandDefaultPos.index) > 0) {
+	if (refShorthandDefaultPos.index > 0) {
 		unexpectedToken(
 			parser,
 			parser.getPositionFromIndex(refShorthandDefaultPos.index),
@@ -1090,11 +1085,11 @@ export function parseLabeledStatement(
 		kind = "switch";
 	}
 
-	const startIndex = parser.getIndexFromPosition(start, parser.path);
+	const startIndex = parser.getIndexFromPosition(start);
 	for (let i = parser.state.labels.length - 1; i >= 0; i--) {
 		const label = parser.state.labels[i];
-		if (label.statementStart === startIndex) {
-			label.statementStart = parser.getIndex();
+		if (startIndex.equal(label.statementStart)) {
+			label.statementStart = parser.state.startIndex;
 			label.kind = kind;
 		} else {
 			break;
@@ -1105,7 +1100,7 @@ export function parseLabeledStatement(
 		name: maybeName,
 		kind,
 		loc: parser.getLoc(expr),
-		statementStart: parser.getIndex(),
+		statementStart: parser.state.startIndex,
 	});
 
 	let statementContext: StatementContext = "label";
@@ -1651,8 +1646,8 @@ export function parseFunction(
 	pushScope(parser, "ASYNC", isAsync);
 	pushScope(parser, "CLASS_PROPERTY", false);
 	pushScope(parser, "NON_ARROW_FUNCTION");
-	parser.state.yieldPos = ob1Number0;
-	parser.state.awaitPos = ob1Number0;
+	parser.state.yieldPos = 0;
+	parser.state.awaitPos = 0;
 
 	if (!isStatement) {
 		id = parseFunctionId(parser, false);

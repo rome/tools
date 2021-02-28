@@ -21,6 +21,12 @@ JSRoot {
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
+			description: Object {
+				advice: Array []
+				categoryValue: "js"
+				category: Array ["parse"]
+				message: RAW_MARKUP {value: "The only valid meta property for new is new.target"}
+			}
 			location: Object {
 				integrity: undefined
 				language: "js"
@@ -28,19 +34,6 @@ JSRoot {
 				end: Position 1:41
 				path: UIDPath<esprima/es2015-meta-property/unknown-property/input.js>
 				start: Position 1:25
-			}
-			description: Object {
-				advice: Array []
-				category: "parse"
-				categoryValue: "js"
-				message: Array [
-					RAW_MARKUP {value: "The only valid meta property for "}
-					"new"
-					RAW_MARKUP {value: " is "}
-					"new"
-					RAW_MARKUP {value: "."}
-					"target"
-				]
 			}
 		}
 	]
@@ -111,8 +104,5 @@ JSRoot {
     var f = function() { new.unknown_property; }
                              ^^^^^^^^^^^^^^^^
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

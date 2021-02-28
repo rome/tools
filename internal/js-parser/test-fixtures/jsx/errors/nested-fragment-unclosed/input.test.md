@@ -44,8 +44,8 @@ JSRoot {
 				start: Position 1:7
 			}
 			description: Object {
-				category: "parse"
 				categoryValue: "js"
+				category: Array ["parse"]
 				message: RAW_MARKUP {value: "Unclosed JSX element"}
 				advice: Array [
 					log {
@@ -68,13 +68,13 @@ JSRoot {
 
   ✖ Unclosed JSX element
 
+    <><></>
+           ^
+
   ℹ Originated from this opening tag
 
     <><></>
     ^^
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

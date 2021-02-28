@@ -1,6 +1,5 @@
 import {CommitRoot} from "@internal/ast";
 import {descriptions} from "@internal/diagnostics";
-import {ob1Add} from "@internal/ob1";
 import {ParserOptions, TokenValues, createParser} from "@internal/parser-core";
 
 import {Symbols, Tokens} from "./types";
@@ -25,7 +24,7 @@ const commitParser = createParser<CommitParserTypes>({
 					parser.getInputCharOnly(index) === Symbols.Space ||
 					parser.getInputCharOnly(index) === Symbols.Tab
 				) {
-					index = ob1Add(index, 1);
+					index = index.increment();
 				}
 				return parser.finishToken("Whitespace", index);
 			}

@@ -7,7 +7,6 @@
 
 import {SourceMapConsumerCollection} from "@internal/codec-source-map";
 import {ErrorFrame} from "@internal/v8";
-import {ob1Coerce1, ob1Coerce1To0} from "@internal/ob1";
 import {
 	ERROR_FRAMES_PROP,
 	ErrorWithFrames,
@@ -15,6 +14,7 @@ import {
 	setErrorFrames,
 } from "./errors";
 import {maybeCreateAnyPath} from "@internal/path";
+import {OneIndexed} from "@internal/math";
 
 let inited: boolean = false;
 
@@ -135,11 +135,11 @@ function addErrorFrames(err: ErrorWithFrames, frames: NodeJS.CallSite[]): void {
 			isAsync: false,
 			resolvedLocation: true,
 			path: maybeCreateAnyPath(noNull(filename)),
-			lineNumber: lineNumber == null ? undefined : ob1Coerce1(lineNumber),
+			lineNumber: lineNumber == null ? undefined : new OneIndexed(lineNumber),
 			// Rome expects 0-indexed columns, V8 provides 1-indexed
 			columnNumber: columnNumber == null
 				? undefined
-				: ob1Coerce1To0(columnNumber),
+				: new OneIndexed(columnNumber).toZeroIndexed(),
 		};
 
 		if (

@@ -3,6 +3,7 @@ import https = require("https");
 import {version as currentVersion} from "@internal/browsers-db";
 import {Consumer, consumeUnknown} from "@internal/consume";
 import {markup} from "@internal/markup";
+import {DIAGNOSTIC_CATEGORIES} from "@internal/diagnostics";
 
 const browsersDbFolder = INTERNAL.append("browsers-db");
 
@@ -292,9 +293,10 @@ function get(url: string): Promise<unknown> {
 }
 
 export async function main() {
-	const version = consumeUnknown(await get(packageJsonUrl), "parse").get(
-		"version",
-	).asString();
+	const version = consumeUnknown(
+		await get(packageJsonUrl),
+		DIAGNOSTIC_CATEGORIES.parse,
+	).get("version").asString();
 	if (currentVersion !== version) {
 		reporter.success(
 			`[browsers-db] Update found! ${currentVersion} -> ${version}`,
@@ -361,7 +363,10 @@ type RegionsFormat = Map<string, RegionFormat>;
 async function updateData() {
 	const progress = reporter.progress({title: "Updating data"});
 
-	const rawData = consumeUnknown(await get(fulldataUrl), "parse");
+	const rawData = consumeUnknown(
+		await get(fulldataUrl),
+		DIAGNOSTIC_CATEGORIES.parse,
+	);
 
 	const data: DataFormat = {
 		agents: generateDataAgents(rawData),
@@ -527,7 +532,7 @@ async function updateRegions() {
 
 		const rawRegionUsage = consumeUnknown(
 			await get(regionUsageUrl.replace("<REGION>", region)),
-			"parse",
+			DIAGNOSTIC_CATEGORIES.parse,
 		);
 
 		regionsUsage.set(

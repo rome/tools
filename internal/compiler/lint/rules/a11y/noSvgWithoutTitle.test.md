@@ -17,9 +17,6 @@
 
   ℹ For accessibility purposes, SVGs should have an alternative text, provided via title element.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -49,9 +46,6 @@
 
   ℹ For accessibility purposes, SVGs should have an alternative text, provided via title element.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -68,7 +62,6 @@
 ### `2`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -96,7 +89,6 @@
 ### `3`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -125,9 +117,6 @@
 
   ℹ For accessibility purposes, SVGs should have an alternative text, provided via title element.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -157,9 +146,6 @@
 
   ℹ For accessibility purposes, SVGs should have an alternative text, provided via title element.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -178,7 +164,6 @@
 ### `6`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -212,7 +197,6 @@
 ### `7`
 
 ```
-✔ No known problems!
 
 ```
 

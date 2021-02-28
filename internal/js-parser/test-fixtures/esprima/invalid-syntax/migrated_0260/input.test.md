@@ -30,20 +30,13 @@ JSRoot {
 				start: Position 1:10
 			}
 			description: Object {
-				category: "parse"
 				categoryValue: "js"
-				message: Array [
-					RAW_MARKUP {value: "Unclosed "}
-					"function params"
-				]
+				category: Array ["parse"]
+				message: RAW_MARKUP {value: "Unclosed <emphasis>function params</emphasis>"}
 				advice: Array [
 					log {
 						category: "info"
-						text: Array [
-							RAW_MARKUP {value: "We expected to find the closing character <emphasis>"}
-							")"
-							RAW_MARKUP {value: "</emphasis> here"}
-						]
+						text: RAW_MARKUP {value: "We expected to find the closing character <emphasis>)</emphasis> here"}
 					}
 					frame {location: SourceLocation esprima/invalid-syntax/migrated_0260/input.js 1:16-1:16}
 				]
@@ -122,13 +115,13 @@ JSRoot {
 
   ✖ Unclosed function params
 
+    function x(...a = 1){}
+              ^
+
   ℹ We expected to find the closing character ) here
 
     function x(...a = 1){}
                     ^
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

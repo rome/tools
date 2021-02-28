@@ -54,13 +54,9 @@ JSRoot {
 				start: Position 1:11
 			}
 			description: Object {
-				category: "parse"
 				categoryValue: "js"
-				message: Array [
-					RAW_MARKUP {value: "Label <emphasis>"}
-					"__proto__"
-					RAW_MARKUP {value: "</emphasis> is already declared"}
-				]
+				category: Array ["parse"]
+				message: RAW_MARKUP {value: "Label <emphasis>__proto__</emphasis> is already declared"}
 				advice: Array [
 					log {
 						category: "info"
@@ -82,13 +78,13 @@ JSRoot {
 
   ✖ Label __proto__ is already declared
 
+    __proto__: __proto__: 42;
+               ^^^^^^^^^
+
   ℹ Defined already here
 
     __proto__: __proto__: 42;
     ^^^^^^^^^
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

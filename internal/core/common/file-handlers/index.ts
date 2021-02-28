@@ -6,7 +6,7 @@
  */
 
 import {ProjectConfig} from "@internal/project";
-import {AnyPath, createAnyPath} from "@internal/path";
+import {AnyPath} from "@internal/path";
 import {ExtensionHandler, PartialExtensionHandler} from "./types";
 import {
 	cjsHandler,
@@ -37,15 +37,15 @@ export type GetFileHandlerResult = {
 	handler?: ExtensionHandler;
 };
 
-export function inferDiagnosticLanguageFromFilename(
-	filename: undefined | AnyPath | string,
+export function inferDiagnosticLanguageFromPath(
+	path: undefined | AnyPath,
 	existing?: DiagnosticLanguage,
 ): DiagnosticLanguage {
 	if (existing !== undefined && existing !== "unknown") {
 		return existing;
 	}
-	if (filename !== undefined) {
-		const {handler} = getFileHandlerFromPath(createAnyPath(filename), undefined);
+	if (path !== undefined) {
+		const {handler} = getFileHandlerFromPath(path, undefined);
 		if (handler !== undefined) {
 			return handler.language;
 		}

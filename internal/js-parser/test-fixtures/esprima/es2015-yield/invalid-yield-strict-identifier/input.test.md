@@ -26,6 +26,12 @@ JSRoot {
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
+			description: Object {
+				advice: Array []
+				categoryValue: "js"
+				category: Array ["parse"]
+				message: RAW_MARKUP {value: "yield is a reserved word"}
+			}
 			location: Object {
 				integrity: undefined
 				language: "js"
@@ -33,15 +39,6 @@ JSRoot {
 				end: Position 1:34
 				path: UIDPath<esprima/es2015-yield/invalid-yield-strict-identifier/input.js>
 				start: Position 1:29
-			}
-			description: Object {
-				advice: Array []
-				category: "parse"
-				categoryValue: "js"
-				message: Array [
-					"yield"
-					RAW_MARKUP {value: " is a reserved word"}
-				]
 			}
 		}
 	]
@@ -92,8 +89,5 @@ JSRoot {
     "use strict"; function f() { yield }
                                  ^^^^^
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

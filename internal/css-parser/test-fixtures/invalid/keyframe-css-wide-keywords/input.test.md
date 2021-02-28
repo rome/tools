@@ -10,7 +10,31 @@ CSSRoot {
 	corrupt: false
 	integrity: undefined
 	loc: SourceLocation invalid/keyframe-css-wide-keywords/input.css 1:0-3:19
-	path: RelativeFilePath<invalid/keyframe-css-wide-keywords/input.css>
+	path: RelativePath<invalid/keyframe-css-wide-keywords/input.css>
+	diagnostics: Array [
+		Object {
+			origins: Array [Object {category: "parse"}]
+			location: Object {
+				integrity: undefined
+				language: "css"
+				sourceText: undefined
+				end: Position 1:18
+				path: RelativePath<invalid/keyframe-css-wide-keywords/input.css>
+				start: Position 1:11
+			}
+			description: Object {
+				categoryValue: "css"
+				category: Array ["parse"]
+				message: RAW_MARKUP {value: "The identifier <emphasis>initial</emphasis> can't be used here."}
+				advice: Array [
+					log {
+						category: "info"
+						text: RAW_MARKUP {value: "In this position, the words <emphasis>unset</emphasis>, <emphasis>initial</emphasis>, <emphasis>inherit</emphasis>,  are CSS-wide keywords, so they are reserved."}
+					}
+				]
+			}
+		}
+	]
 	body: Array [
 		CSSAtRule {
 			name: "keyframes"
@@ -55,54 +79,6 @@ CSSRoot {
 				value: Array []
 				startingTokenValue: "{"
 				loc: SourceLocation invalid/keyframe-css-wide-keywords/input.css 3:17-3:19
-			}
-		}
-	]
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			location: Object {
-				integrity: undefined
-				language: "css"
-				sourceText: undefined
-				end: Position 1:18
-				path: RelativeFilePath<invalid/keyframe-css-wide-keywords/input.css>
-				start: Position 1:11
-			}
-			description: Object {
-				category: "parse"
-				categoryValue: "css"
-				message: Array [
-					RAW_MARKUP {value: "The identifier <emphasis>"}
-					"initial"
-					RAW_MARKUP {value: "</emphasis> can't be used here"}
-				]
-				advice: Array [
-					log {
-						category: "info"
-						text: Array [
-							RAW_MARKUP {value: "In this position, the words "}
-							Array [
-								Array [
-									RAW_MARKUP {value: "<emphasis>"}
-									"unset"
-									RAW_MARKUP {value: "</emphasis>, "}
-								]
-								Array [
-									RAW_MARKUP {value: "<emphasis>"}
-									"initial"
-									RAW_MARKUP {value: "</emphasis>, "}
-								]
-								Array [
-									RAW_MARKUP {value: "<emphasis>"}
-									"inherit"
-									RAW_MARKUP {value: "</emphasis>, "}
-								]
-							]
-							RAW_MARKUP {value: " are CSS-wide keywords, so they are reserved"}
-						]
-					}
-				]
 			}
 		}
 	]

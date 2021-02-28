@@ -8,28 +8,36 @@
 import {test} from "rome";
 import {parseDependencyPattern} from "./dependencies";
 import {consumeUnknown} from "@internal/consume";
+import {DIAGNOSTIC_CATEGORIES} from "@internal/diagnostics";
 
 test(
 	"can parse npm dependency patterns",
 	async (t) => {
 		t.snapshot(
-			parseDependencyPattern(consumeUnknown("npm:foo", "parse", "json"), false),
-		);
-		t.snapshot(
 			parseDependencyPattern(
-				consumeUnknown("npm:@foo/bar", "parse", "json"),
+				consumeUnknown("npm:foo", DIAGNOSTIC_CATEGORIES.parse, "json"),
 				false,
 			),
 		);
 		t.snapshot(
 			parseDependencyPattern(
-				consumeUnknown("npm:foo@1.0.0", "parse", "json"),
+				consumeUnknown("npm:@foo/bar", DIAGNOSTIC_CATEGORIES.parse, "json"),
 				false,
 			),
 		);
 		t.snapshot(
 			parseDependencyPattern(
-				consumeUnknown("npm:@foo/bar@1.0.0", "parse", "json"),
+				consumeUnknown("npm:foo@1.0.0", DIAGNOSTIC_CATEGORIES.parse, "json"),
+				false,
+			),
+		);
+		t.snapshot(
+			parseDependencyPattern(
+				consumeUnknown(
+					"npm:@foo/bar@1.0.0",
+					DIAGNOSTIC_CATEGORIES.parse,
+					"json",
+				),
 				false,
 			),
 		);
@@ -41,7 +49,7 @@ test(
 	async (t) => {
 		t.snapshot(
 			parseDependencyPattern(
-				consumeUnknown("gist:123456", "parse", "json"),
+				consumeUnknown("gist:123456", DIAGNOSTIC_CATEGORIES.parse, "json"),
 				false,
 			),
 		);
@@ -53,7 +61,7 @@ test(
 	async (t) => {
 		t.snapshot(
 			parseDependencyPattern(
-				consumeUnknown("workspace:*", "parse", "json"),
+				consumeUnknown("workspace:*", DIAGNOSTIC_CATEGORIES.parse, "json"),
 				false,
 			),
 		);

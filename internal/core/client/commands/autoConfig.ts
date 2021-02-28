@@ -3,6 +3,7 @@ import {CommandName, commandCategories} from "@internal/core/common/commands";
 import {markup} from "@internal/markup";
 import ClientRequest from "@internal/core/client/ClientRequest";
 import {consumeUnknown} from "@internal/consume";
+import {DIAGNOSTIC_CATEGORIES} from "@internal/diagnostics";
 
 interface Flags {
 	allowDirty: boolean;
@@ -57,7 +58,7 @@ export default createLocalCommand({
 			);
 			return true;
 		}
-		const data = consumeUnknown(res.data, "parse", "json");
+		const data = consumeUnknown(res.data, DIAGNOSTIC_CATEGORIES.parse, "json");
 
 		if (!data.exists()) {
 			reporter.log(markup`No problems or updates found in you project.`);

@@ -10,22 +10,22 @@ CSSRoot {
 	corrupt: false
 	integrity: undefined
 	loc: SourceLocation invalid/var/input.css 1:0-5:1
-	path: RelativeFilePath<invalid/var/input.css>
+	path: RelativePath<invalid/var/input.css>
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse"
 				categoryValue: "css"
-				message: RAW_MARKUP {value: "Invalid custom property found inside the \"var\" function"}
+				category: Array ["parse"]
+				message: RAW_MARKUP {value: "Invalid custom property found inside the \"var\" function."}
 			}
 			location: Object {
 				integrity: undefined
 				language: "css"
 				sourceText: undefined
 				end: Position 2:18
-				path: RelativeFilePath<invalid/var/input.css>
+				path: RelativePath<invalid/var/input.css>
 				start: Position 2:17
 			}
 		}
@@ -70,23 +70,44 @@ CSSRoot {
 								name: "var"
 								loc: SourceLocation invalid/var/input.css 3:9-3:31
 								params: Array [
-									CSSFunction {
+									CSSCalcFunction {
 										name: "calc"
-										loc: SourceLocation invalid/var/input.css 3:13-3:30
+										loc: SourceLocation invalid/var/input.css 3:18-3:30
 										params: Array [
-											CSSDimension {
-												value: 10
-												unit: "px"
-												loc: SourceLocation invalid/var/input.css 3:18-3:22
-											}
-											CSSRaw {
-												value: "+"
-												loc: SourceLocation invalid/var/input.css 3:23-3:24
-											}
-											CSSDimension {
-												value: 10
-												unit: "px"
-												loc: SourceLocation invalid/var/input.css 3:25-3:29
+											CSSCalcSum {
+												value: Array [
+													CSSCalcProduct {
+														value: Array [
+															CSSCalcValue {
+																value: CSSDimension {
+																	value: 10
+																	unit: "px"
+																	loc: SourceLocation invalid/var/input.css 3:18-3:18
+																}
+																loc: SourceLocation invalid/var/input.css 3:18-3:22
+															}
+														]
+														loc: SourceLocation invalid/var/input.css 3:22-3:23
+													}
+													CSSCalcOperation {
+														value: "+"
+														loc: SourceLocation invalid/var/input.css 3:24-3:25
+													}
+													CSSCalcProduct {
+														value: Array [
+															CSSCalcValue {
+																value: CSSDimension {
+																	value: 10
+																	unit: "px"
+																	loc: SourceLocation invalid/var/input.css 3:25-3:25
+																}
+																loc: SourceLocation invalid/var/input.css 3:25-3:29
+															}
+														]
+														loc: SourceLocation invalid/var/input.css 3:29-3:29
+													}
+												]
+												loc: SourceLocation invalid/var/input.css 3:18-3:29
 											}
 										]
 									}

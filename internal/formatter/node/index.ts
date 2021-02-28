@@ -6,7 +6,6 @@
  */
 
 import {AnyNode} from "@internal/ast";
-import {ob1Get1} from "@internal/ob1";
 import {SourceLocation, comparePositions} from "@internal/parser-core";
 import parentheses from "./parentheses";
 
@@ -42,7 +41,7 @@ function orderLoc(
 export function getLinesBetween(aNode: AnyNode, bNode: AnyNode): number {
 	if (aNode.loc && bNode.loc) {
 		const [a, b] = orderLoc(aNode.loc, bNode.loc);
-		return ob1Get1(b.start.line) - ob1Get1(a.end.line);
+		return b.start.line.valueOf() - a.end.line.valueOf();
 	} else {
 		return 0;
 	}
@@ -69,7 +68,7 @@ export function needsParens(
 
 export function isOnSameLine(aNode: AnyNode, bNode: AnyNode): boolean {
 	if (aNode.loc && bNode.loc) {
-		return aNode.loc.end.line === bNode.loc.start.line;
+		return aNode.loc.end.line.equal(bNode.loc.start.line);
 	} else {
 		return false;
 	}

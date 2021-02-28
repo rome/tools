@@ -21,7 +21,6 @@ import {Reporter} from "@internal/cli-reporter";
 import {markup} from "@internal/markup";
 import DependencyGraph from "../dependencies/DependencyGraph";
 import {Server, ServerRequest} from "@internal/core";
-import {ob1Add} from "@internal/ob1";
 import {dedent} from "@internal/string-utils";
 import DependencyNode from "@internal/core/server/dependencies/DependencyNode";
 
@@ -204,7 +203,7 @@ export default class BundleRequest {
 					...mapping,
 					generated: {
 						...mapping.generated,
-						line: ob1Add(lineOffset, mapping.generated.line),
+						line: mapping.generated.line.add(lineOffset),
 					},
 				});
 			}

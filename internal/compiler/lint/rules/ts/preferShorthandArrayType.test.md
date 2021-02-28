@@ -21,9 +21,6 @@
   - Array<foo>
   + foo[]
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -55,14 +52,14 @@ let invalid: bar[];
 
   ✖ Use shorthand T[] syntax instead of Array<T> syntax.
 
+    let invalid: Array<foo, Array<string>>;
+                            ^^^^^^^^^^^^^
+
   ℹ Safe fix
 
   - Array<string>
   + string[]
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 2 problems
 
 ```
 
@@ -89,9 +86,6 @@ let invalid: foo[] | (string[])[];
   - Array<string>
   + string[]
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -118,9 +112,6 @@ let invalid: Promise<string[]>;
   - Array<Foo<Bar>>
   + Foo<Bar>[]
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -134,7 +125,6 @@ let invalid: Foo<Bar>[];
 ### `4`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -148,7 +138,6 @@ let valid: Array<foo | bar>;
 ### `5`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -162,7 +151,6 @@ let valid: Array<Foo | Bar>;
 ### `6`
 
 ```
-✔ No known problems!
 
 ```
 

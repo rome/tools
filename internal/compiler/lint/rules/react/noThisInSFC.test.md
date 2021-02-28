@@ -15,9 +15,6 @@
     const Foo = () => <div>{this.props.bar</div>
                                                 ^
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -44,9 +41,6 @@ undefined
 
   ℹ The this keyword has no binding in functional components. Use hooks instead.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -77,9 +71,6 @@ const Foo = () => {
 
   ℹ The this keyword has no binding in functional components. Use hooks instead.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -112,9 +103,6 @@ const Foo = () => {
 
   ℹ The this keyword has no binding in functional components. Use hooks instead.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -145,9 +133,6 @@ function Foo(props) {
 
   ℹ The this keyword has no binding in functional components. Use hooks instead.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -184,11 +169,15 @@ function Foo(props) {
 
   ✖ Avoid using this in stateless functional components.
 
+    2 │   return (
+    3 │     <div>
+  > 4 │       {this.context.foo ? this.props.bar : ''}
+      │                           ^^^^
+    5 │     </div>
+    6 │   );
+
   ℹ The this keyword has no binding in functional components. Use hooks instead.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 2 problems
 
 ```
 
@@ -223,11 +212,15 @@ function Foo(props, context) {
 
   ✖ Avoid using this in stateless functional components.
 
+    1 │ function Foo(props, context) {
+    2 │   const { foo } = this.context;
+  > 3 │   const { bar } = this.props;
+      │                   ^^^^
+    4 │   return (
+    5 │     <div>
+
   ℹ The this keyword has no binding in functional components. Use hooks instead.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 2 problems
 
 ```
 
@@ -264,11 +257,15 @@ function Foo(props, context) {
 
   ✖ Avoid using this in stateless functional components.
 
+    5 │   return (
+    6 │     <div>
+  > 7 │       {this.props.bar}
+      │        ^^^^
+    8 │     </div>
+    9 │   );
+
   ℹ The this keyword has no binding in functional components. Use hooks instead.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 2 problems
 
 ```
 
@@ -306,11 +303,15 @@ function Foo(props) {
 
   ✖ Avoid using this in stateless functional components.
 
+    1 │ function Foo(props) {
+    2 │   const { loading } = this.state;
+  > 3 │   const { bar } = this.props;
+      │                   ^^^^
+    4 │   if (loading) {
+    5 │     return <Loader />;
+
   ℹ The this keyword has no binding in functional components. Use hooks instead.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 2 problems
 
 ```
 
@@ -338,18 +339,8 @@ function Foo(props) {
 
   ✖ Avoid using this in stateless functional components.
 
-    2 │   function Foo(props) {
-    3 │     return (
-  > 4 │       <div>{this.props.bar}</div>
-      │             ^^^^
-    5 │     );
-    6 │   }
-
   ℹ The this keyword has no binding in functional components. Use hooks instead.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -372,18 +363,8 @@ React.memo(function Foo(props) {
 
   ✖ Avoid using this in stateless functional components.
 
-    1 │ React.forwardRef((props, ref) => (
-    2 │   <div>
-  > 3 │     {this.props.bar}
-      │      ^^^^
-    4 │   </div>
-    5 │ ));
-
   ℹ The this keyword has no binding in functional components. Use hooks instead.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -406,18 +387,8 @@ React.forwardRef((props, ref) =>
 
   ✖ Avoid using this in stateless functional components.
 
-    1 │ const Foo = React.forwardRef((props, ref) => (
-    2 │   <div>
-  > 3 │     {this.props.bar}
-      │      ^^^^
-    4 │   </div>
-    5 │ ));
-
   ℹ The this keyword has no binding in functional components. Use hooks instead.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -440,18 +411,8 @@ const Foo = React.forwardRef((props, ref) =>
 
   ✖ Avoid using this in stateless functional components.
 
-    1 │ const Foo = React.memo((props, ref) => (
-    2 │     <div>
-  > 3 │       {this.props.bar}
-      │        ^^^^
-    4 │     </div>
-    5 │   )
-
   ℹ The this keyword has no binding in functional components. Use hooks instead.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -469,7 +430,6 @@ const Foo = React.memo((props, ref) =>
 ### `13`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -487,7 +447,6 @@ function Foo(bar) {
 ### `14`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -505,7 +464,6 @@ function Foo(props) {
 ### `15`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -524,7 +482,6 @@ function Foo(props) {
 ### `16`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -542,7 +499,6 @@ function Foo({bar}) {
 ### `17`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -560,7 +516,6 @@ function Foo(props, context) {
 ### `18`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -580,7 +535,6 @@ function Foo(props, context) {
 ### `19`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -598,7 +552,6 @@ function Foo({bar}, {foo}) {
 ### `20`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -622,7 +575,6 @@ class MyComponent extends React.Component {
 ### `21`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -640,7 +592,6 @@ React.memo(function Foo(props) {
 ### `22`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -658,7 +609,6 @@ React.forwardRef((props, ref) =>
 ### `23`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -676,7 +626,6 @@ const Foo = React.forwardRef((props, ref) =>
 ### `24`
 
 ```
-✔ No known problems!
 
 ```
 

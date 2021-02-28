@@ -7,6 +7,7 @@
 
 import {Reporter, ReporterNamespace} from "@internal/cli-reporter";
 import {
+	DIAGNOSTIC_CATEGORIES,
 	Diagnostic,
 	DiagnosticsError,
 	deriveDiagnosticFromError,
@@ -191,7 +192,7 @@ export default class TestServer {
 					err,
 					{
 						description: {
-							category: "tests/failure",
+							category: DIAGNOSTIC_CATEGORIES["tests/failure"],
 						},
 					},
 				),
@@ -398,7 +399,7 @@ export default class TestServer {
 								label: markup`${ref.testName}`,
 								path: ref.path,
 								description: {
-									category: "tests/failure",
+									category: DIAGNOSTIC_CATEGORIES["tests/failure"],
 								},
 								tags: {
 									internal: false,

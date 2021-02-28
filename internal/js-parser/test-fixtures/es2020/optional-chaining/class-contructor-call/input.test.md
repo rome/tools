@@ -30,8 +30,8 @@ JSRoot {
 				start: Position 1:10
 			}
 			description: Object {
-				category: "parse"
 				categoryValue: "js"
+				category: Array ["parse"]
 				message: RAW_MARKUP {value: "constructors in/after an Optional Chain are not allowed"}
 				advice: Array [
 					log {
@@ -90,13 +90,13 @@ JSRoot {
 
   ✖ constructors in/after an Optional Chain are not allowed
 
+    new C?.b.d()
+              ^
+
   ℹ Optional chain member responsible
 
     new C?.b.d()
         ^^^^
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

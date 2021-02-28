@@ -36,6 +36,12 @@ JSRoot {
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
+			description: Object {
+				advice: Array []
+				categoryValue: "js"
+				category: Array ["parse"]
+				message: RAW_MARKUP {value: "extends list cannot be empty"}
+			}
 			location: Object {
 				integrity: undefined
 				language: "js"
@@ -43,15 +49,6 @@ JSRoot {
 				end: Position 1:22
 				path: UIDPath<typescript/class/extends-empty/input.ts>
 				start: Position 1:22
-			}
-			description: Object {
-				advice: Array []
-				category: "parse"
-				categoryValue: "js"
-				message: Array [
-					"extends"
-					RAW_MARKUP {value: " list cannot be empty"}
-				]
 			}
 		}
 	]
@@ -70,8 +67,5 @@ JSRoot {
       │                       ^
     2 │ }
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

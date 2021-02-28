@@ -15,10 +15,12 @@ import {
 import {json} from "@internal/codec-config";
 import {readFileTextMeta} from "@internal/fs";
 import {
+	DIAGNOSTIC_CATEGORIES,
 	createSingleDiagnosticError,
 	descriptions,
 	provideDiagnosticAdviceForError,
 } from "@internal/diagnostics";
+
 import internalModule = require("module");
 
 const requires: AbsoluteFilePathMap<NodeRequire> = new AbsoluteFilePathMap();
@@ -157,7 +159,11 @@ export default class IntegrationLoader<Value> {
 			return require(filename);
 		});
 
-		const consumer = consumeUnknown(value, "integration/load", this.name);
+		const consumer = consumeUnknown(
+			value,
+			DIAGNOSTIC_CATEGORIES["integration/load"],
+			this.name,
+		);
 		const module = this.normalize(consumer, cwd, version);
 
 		const entry: IntegrationLoaderEntry<Value> = {version, module};

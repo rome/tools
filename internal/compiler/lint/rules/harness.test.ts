@@ -1,7 +1,6 @@
 import {test} from "rome";
 import {tests} from "./tests";
 import {testLint} from "../utils/testing";
-import {DiagnosticCategory} from "@internal/diagnostics";
 import {dedent} from "@internal/string-utils";
 import {createAnyPath} from "@internal/path";
 
@@ -10,8 +9,10 @@ for (const name in tests) {
 		name,
 		async (t) => {
 			t.extendTimeout(10_000);
-			let cases = tests[name];
+			const def = tests[name];
+			const {category} = def;
 
+			let {cases} = def;
 			if (!Array.isArray(cases)) {
 				cases = [cases];
 			}
@@ -24,7 +25,7 @@ for (const name in tests) {
 							{
 								invalid: invalid ? invalid.map((str) => dedent(str)) : [],
 								valid: valid ? valid.map((str) => dedent(str)) : [],
-								category: `lint/${name}` as DiagnosticCategory,
+								category,
 								snapshotFilename: `${name}.test.md`,
 								path: createAnyPath(filename),
 							},
@@ -37,7 +38,7 @@ for (const name in tests) {
 						{
 							invalid: invalid ? invalid.map((str) => dedent(str)) : [],
 							valid: valid ? valid.map((str) => dedent(str)) : [],
-							category: `lint/${name}` as DiagnosticCategory,
+							category,
 							snapshotFilename: `${name}.test.md`,
 							path: createAnyPath(filename),
 						},

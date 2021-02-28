@@ -18,9 +18,6 @@
   ℹ Meaningful alternative text on elements helps users relying on screen readers to understand
     content's purpose within a page.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -45,9 +42,6 @@
   ℹ Meaningful alternative text on elements helps users relying on screen readers to understand
     content's purpose within a page.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -72,9 +66,6 @@
   ℹ Meaningful alternative text on elements helps users relying on screen readers to understand
     content's purpose within a page.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -99,9 +90,6 @@
   ℹ Meaningful alternative text on elements helps users relying on screen readers to understand
     content's purpose within a page.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -126,9 +114,6 @@
   ℹ Meaningful alternative text on elements helps users relying on screen readers to understand
     content's purpose within a page.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -153,9 +138,6 @@
   ℹ Meaningful alternative text on elements helps users relying on screen readers to understand
     content's purpose within a page.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -180,9 +162,6 @@
   ℹ Meaningful alternative text on elements helps users relying on screen readers to understand
     content's purpose within a page.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -207,9 +186,6 @@
   ℹ Meaningful alternative text on elements helps users relying on screen readers to understand
     content's purpose within a page.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -234,9 +210,6 @@
   ℹ Meaningful alternative text on elements helps users relying on screen readers to understand
     content's purpose within a page.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -261,9 +234,6 @@
   ℹ Meaningful alternative text on elements helps users relying on screen readers to understand
     content's purpose within a page.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -288,9 +258,6 @@
   ℹ Meaningful alternative text on elements helps users relying on screen readers to understand
     content's purpose within a page.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -304,7 +271,6 @@
 ### `11`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -318,7 +284,6 @@
 ### `12`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -332,7 +297,6 @@
 ### `13`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -346,7 +310,6 @@
 ### `14`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -360,7 +323,6 @@
 ### `15`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -374,7 +336,6 @@
 ### `16`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -388,7 +349,6 @@
 ### `17`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -402,7 +362,6 @@
 ### `18`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -416,7 +375,6 @@
 ### `19`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -430,7 +388,6 @@
 ### `20`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -446,7 +403,6 @@
 ### `21`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -462,7 +418,6 @@
 ### `22`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -476,7 +431,6 @@
 ### `23`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -490,7 +444,6 @@
 ### `24`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -504,7 +457,6 @@
 ### `25`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -518,7 +470,6 @@
 ### `26`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -532,7 +483,6 @@
 ### `27`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -546,7 +496,6 @@
 ### `28`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -560,7 +509,6 @@
 ### `29`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -574,7 +522,6 @@
 ### `30`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -599,9 +546,6 @@
   ℹ Meaningful alternative text on elements helps users relying on screen readers to understand
     content's purpose within a page.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -626,9 +570,6 @@
   ℹ Meaningful alternative text on elements helps users relying on screen readers to understand
     content's purpose within a page.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -653,9 +594,6 @@
   ℹ Meaningful alternative text on elements helps users relying on screen readers to understand
     content's purpose within a page.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -680,9 +618,6 @@
   ℹ Meaningful alternative text on elements helps users relying on screen readers to understand
     content's purpose within a page.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -707,9 +642,6 @@
   ℹ Meaningful alternative text on elements helps users relying on screen readers to understand
     content's purpose within a page.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -735,9 +667,6 @@
   ℹ Meaningful alternative text on elements helps users relying on screen readers to understand
     content's purpose within a page.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -762,9 +691,6 @@
   ℹ Meaningful alternative text on elements helps users relying on screen readers to understand
     content's purpose within a page.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -789,9 +715,6 @@
   ℹ Meaningful alternative text on elements helps users relying on screen readers to understand
     content's purpose within a page.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -816,9 +739,6 @@
   ℹ Meaningful alternative text on elements helps users relying on screen readers to understand
     content's purpose within a page.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -832,7 +752,6 @@
 ### `40`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -846,7 +765,6 @@
 ### `41`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -861,7 +779,6 @@
 ### `42`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -876,7 +793,6 @@
 ### `43`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -891,7 +807,6 @@
 ### `44`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -905,7 +820,6 @@
 ### `45`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -919,7 +833,6 @@
 ### `46`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -933,7 +846,6 @@
 ### `47`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -947,7 +859,6 @@
 ### `48`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -961,7 +872,6 @@
 ### `49`
 
 ```
-✔ No known problems!
 
 ```
 

@@ -12,14 +12,8 @@
 
   ✖ Use a button element instead of an a element.
 
-    <a href='#' onClick={foo} />
-    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
   ℹ Anchor elements should only be used for default section or page navigation.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -38,14 +32,8 @@
 
   ✖ Use a button element instead of an a element.
 
-    <a href={'#'} onClick={foo} />
-    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
   ℹ Anchor elements should only be used for default section or page navigation.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -64,14 +52,8 @@
 
   ✖ Use a button element instead of an a element.
 
-    <a href={`#`} onClick={foo} />
-    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
   ℹ Anchor elements should only be used for default section or page navigation.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -90,14 +72,8 @@
 
   ✖ Use a button element instead of an a element.
 
-    <a onClick={foo} />
-    ^^^^^^^^^^^^^^^^^^^
-
   ℹ Anchor elements should only be used for default section or page navigation.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -116,14 +92,8 @@
 
   ✖ Use a button element instead of an a element.
 
-    <a href='javascript:void(0)' onClick={foo} />
-    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
   ℹ Anchor elements should only be used for default section or page navigation.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -142,14 +112,8 @@
 
   ✖ Use a button element instead of an a element.
 
-    <a href={'javascript:void(0)'} onClick={foo} />
-    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
   ℹ Anchor elements should only be used for default section or page navigation.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -168,14 +132,8 @@
 
   ✖ Use a button element instead of an a element.
 
-    <a href={`javascript:void(0)`} onClick={foo} />
-    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
   ℹ Anchor elements should only be used for default section or page navigation.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -194,14 +152,8 @@
 
   ✖ Provide a href attribute for the a element.
 
-    <a />
-    ^^^^^
-
   ℹ Anchor elements should only be used for default section or page navigation.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -220,14 +172,8 @@
 
   ✖ Provide a href attribute for the a element.
 
-    <a href={undefined} />
-    ^^^^^^^^^^^^^^^^^^^^^^
-
   ℹ Anchor elements should only be used for default section or page navigation.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -246,14 +192,8 @@
 
   ✖ Provide a href attribute for the a element.
 
-    <a href={null} />
-    ^^^^^^^^^^^^^^^^^
-
   ℹ Anchor elements should only be used for default section or page navigation.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -272,9 +212,6 @@
 
   ✖ Provide a valid href attribute for the a element.
 
-    <a href='#' />
-    ^^^^^^^^^^^^^^
-
   ℹ Anchor elements should only be used for default section or page navigation.
 
  lint/jsx-a11y/useValidAnchor/reject/11/file.jsx:1 lint/jsx-a11y/useValidAnchor ━━━━━━━━━━━━━━━━━━━━
@@ -283,9 +220,6 @@
 
   ℹ Anchor elements should only be used for default section or page navigation.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 2 problems
 
 ```
 
@@ -304,9 +238,6 @@
 
   ✖ Provide a valid href attribute for the a element.
 
-    <a href={'#'} />
-    ^^^^^^^^^^^^^^^^
-
   ℹ Anchor elements should only be used for default section or page navigation.
 
  lint/jsx-a11y/useValidAnchor/reject/12/file.jsx:1 lint/jsx-a11y/useValidAnchor ━━━━━━━━━━━━━━━━━━━━
@@ -315,9 +246,6 @@
 
   ℹ Anchor elements should only be used for default section or page navigation.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 2 problems
 
 ```
 
@@ -336,9 +264,6 @@
 
   ✖ Provide a valid href attribute for the a element.
 
-    <a href={`#`} />
-    ^^^^^^^^^^^^^^^^
-
   ℹ Anchor elements should only be used for default section or page navigation.
 
  lint/jsx-a11y/useValidAnchor/reject/13/file.jsx:1 lint/jsx-a11y/useValidAnchor ━━━━━━━━━━━━━━━━━━━━
@@ -347,9 +272,6 @@
 
   ℹ Anchor elements should only be used for default section or page navigation.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 2 problems
 
 ```
 
@@ -368,9 +290,6 @@
 
   ✖ Provide a valid href attribute for the a element.
 
-    <a href='javascript:void(0)' />
-    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
   ℹ Anchor elements should only be used for default section or page navigation.
 
  lint/jsx-a11y/useValidAnchor/reject/14/file.jsx:1 lint/jsx-a11y/useValidAnchor ━━━━━━━━━━━━━━━━━━━━
@@ -379,9 +298,6 @@
 
   ℹ Anchor elements should only be used for default section or page navigation.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 2 problems
 
 ```
 
@@ -400,9 +316,6 @@
 
   ✖ Provide a valid href attribute for the a element.
 
-    <a href={'javascript:void(0)'} />
-    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
   ℹ Anchor elements should only be used for default section or page navigation.
 
  lint/jsx-a11y/useValidAnchor/reject/15/file.jsx:1 lint/jsx-a11y/useValidAnchor ━━━━━━━━━━━━━━━━━━━━
@@ -411,9 +324,6 @@
 
   ℹ Anchor elements should only be used for default section or page navigation.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 2 problems
 
 ```
 
@@ -432,9 +342,6 @@
 
   ✖ Provide a valid href attribute for the a element.
 
-    <a href={`javascript:void(0)`} />
-    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
   ℹ Anchor elements should only be used for default section or page navigation.
 
  lint/jsx-a11y/useValidAnchor/reject/16/file.jsx:1 lint/jsx-a11y/useValidAnchor ━━━━━━━━━━━━━━━━━━━━
@@ -443,9 +350,6 @@
 
   ℹ Anchor elements should only be used for default section or page navigation.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 2 problems
 
 ```
 
@@ -459,7 +363,6 @@
 ### `16`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -473,7 +376,6 @@
 ### `17`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -487,7 +389,6 @@
 ### `18`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -501,7 +402,6 @@
 ### `19`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -515,7 +415,6 @@
 ### `20`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -529,7 +428,6 @@
 ### `21`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -543,7 +441,6 @@
 ### `22`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -557,7 +454,6 @@
 ### `23`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -571,7 +467,6 @@
 ### `24`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -585,7 +480,6 @@
 ### `25`
 
 ```
-✔ No known problems!
 
 ```
 

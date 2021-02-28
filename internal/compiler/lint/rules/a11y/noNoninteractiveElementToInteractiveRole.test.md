@@ -18,9 +18,6 @@ lint/a11y/noNoninteractiveElementToInteractiveRole ━━━━━━━━━�
 
   ℹ Replace h1 with a div or a span.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -34,7 +31,6 @@ lint/a11y/noNoninteractiveElementToInteractiveRole ━━━━━━━━━�
 ### `1`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -59,9 +55,6 @@ lint/a11y/noNoninteractiveElementToInteractiveRole ━━━━━━━━━�
 
   ℹ Replace h1 with a div or a span.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -76,7 +69,6 @@ lint/a11y/noNoninteractiveElementToInteractiveRole ━━━━━━━━━�
 ### `3`
 
 ```
-✔ No known problems!
 
 ```
 

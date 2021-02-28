@@ -1,6 +1,6 @@
 import {test} from "rome";
 import {createIntegrationTest} from "@internal/test-helpers";
-import {AbsoluteFilePath, createRelativeFilePath} from "@internal/path";
+import {AbsoluteFilePath, createRelativePath} from "@internal/path";
 import {ResolverQueryResponseFound} from "./Resolver";
 
 function foundToRelativePath(
@@ -26,7 +26,7 @@ test(
 					cwd,
 					await server.resolver.resolveEntryAssert({
 						origin: cwd,
-						source: createRelativeFilePath("./index"),
+						source: createRelativePath("./index"),
 					}),
 				),
 				"index.js",
@@ -38,7 +38,7 @@ test(
 					cwd,
 					await server.resolver.resolveEntryAssert({
 						origin: cwd,
-						source: createRelativeFilePath("./index"),
+						source: createRelativePath("./index"),
 						platform: "ios",
 					}),
 				),

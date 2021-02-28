@@ -30,13 +30,9 @@ JSRoot {
 				start: Position 1:18
 			}
 			description: Object {
-				category: "parse"
 				categoryValue: "js"
-				message: Array [
-					RAW_MARKUP {value: "Label <emphasis>"}
-					"x"
-					RAW_MARKUP {value: "</emphasis> is already declared"}
-				]
+				category: Array ["parse"]
+				message: RAW_MARKUP {value: "Label <emphasis>x</emphasis> is already declared"}
 				advice: Array [
 					log {
 						category: "info"
@@ -99,13 +95,13 @@ JSRoot {
 
   ✖ Label x is already declared
 
+    x: while (true) { x: while (true) { } }
+                      ^
+
   ℹ Defined already here
 
     x: while (true) { x: while (true) { } }
     ^
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

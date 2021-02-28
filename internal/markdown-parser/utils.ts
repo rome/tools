@@ -1,4 +1,4 @@
-import {Number0, ob1Get0} from "@internal/ob1";
+import {ZeroIndexed} from "@internal/math";
 import {MarkdownParser} from "@internal/markdown-parser/index";
 import {isDigit} from "@internal/parser-core";
 
@@ -47,22 +47,22 @@ export function hasThematicBreak(input: string): boolean {
 }
 
 interface CalculateFlanking {
-	startIndex: Number0;
+	startIndex: ZeroIndexed;
 	input: string;
-	endIndex: Number0;
+	endIndex: ZeroIndexed;
 }
 
 export function canBeLeftFlankingDelimiter(
 	{input, endIndex, startIndex}: CalculateFlanking,
 ): boolean {
-	const nextCharIsNotWhiteSpace = input[ob1Get0(endIndex) + 1] !== " ";
-	const previousCharIsWhiteSpace = input[ob1Get0(startIndex) - 1] === " ";
+	const nextCharIsNotWhiteSpace = input[endIndex.valueOf() + 1] !== " ";
+	const previousCharIsWhiteSpace = input[startIndex.valueOf() - 1] === " ";
 
 	const nextCharIsPunctuation = PUNCTUATION_CHARACTERS.has(
-		input[ob1Get0(endIndex) + 1],
+		input[endIndex.valueOf() + 1],
 	);
 	const previousCharIsPunctuation = PUNCTUATION_CHARACTERS.has(
-		input[ob1Get0(startIndex) - 1],
+		input[startIndex.valueOf() - 1],
 	);
 
 	// https://github.github.com/gfm/#left-flanking-delimiter-run
@@ -80,14 +80,14 @@ export function canBeLeftFlankingDelimiter(
 export function canBeRightFlankingDelimiter(
 	{input, endIndex, startIndex}: CalculateFlanking,
 ): boolean {
-	const nextCharIsWhiteSpace = input[ob1Get0(endIndex) + 1] === " ";
-	const previousCharIsNotWhiteSpace = input[ob1Get0(startIndex) - 1] !== " ";
+	const nextCharIsWhiteSpace = input[endIndex.valueOf() + 1] === " ";
+	const previousCharIsNotWhiteSpace = input[startIndex.valueOf() - 1] !== " ";
 
 	const nextCharIsPunctuation = PUNCTUATION_CHARACTERS.has(
-		input[ob1Get0(endIndex) + 1],
+		input[endIndex.valueOf() + 1],
 	);
 	const previousCharIsPunctuation = PUNCTUATION_CHARACTERS.has(
-		input[ob1Get0(startIndex) - 1],
+		input[startIndex.valueOf() - 1],
 	);
 
 	// https://github.github.com/gfm/#right-flanking-delimiter-run
@@ -118,7 +118,7 @@ export function isBlockToken(parser: MarkdownParser) {
 
 export function hasBlockTokens(
 	char: string,
-	index: Number0,
+	index: ZeroIndexed,
 	input: string,
 ): boolean {
 	return (
@@ -130,10 +130,14 @@ export function hasBlockTokens(
 	);
 }
 
-export function isListItem(char: string, index: Number0, input: string): boolean {
-	const nextChar = input[ob1Get0(index) + 1];
-	const nextNextChar = input[ob1Get0(index) + 2];
-	const previousChar = input[ob1Get0(index) - 1];
+export function isListItem(
+	char: string,
+	index: ZeroIndexed,
+	input: string,
+): boolean {
+	const nextChar = input[index.valueOf() + 1];
+	const nextNextChar = input[index.valueOf() + 2];
+	const previousChar = input[index.valueOf() - 1];
 	if (isDigit(char)) {
 		return nextChar === "." && nextNextChar === " ";
 	}
@@ -145,12 +149,12 @@ export function isListItem(char: string, index: Number0, input: string): boolean
 
 export function isBlock(
 	char: string,
-	index: Number0,
+	index: ZeroIndexed,
 	input: string,
 	charToCheck: string,
 ): boolean {
-	const nextChar = input[ob1Get0(index) + 1];
-	const nextNextChar = input[ob1Get0(index) + 2];
+	const nextChar = input[index.valueOf() + 1];
+	const nextNextChar = input[index.valueOf() + 2];
 	return (
 		char === charToCheck &&
 		nextChar === charToCheck &&

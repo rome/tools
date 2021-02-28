@@ -25,17 +25,19 @@ JSRoot {
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Position 2:25
+				end: Position 2:23
 				path: UIDPath<typescript/export/declare/input.ts>
 				start: Position 2:24
 			}
 			description: Object {
-				advice: Array []
-				category: "parse"
 				categoryValue: "js"
-				message: Array [
-					RAW_MARKUP {value: "Unexpected token, expected "}
-					"("
+				category: Array ["parse"]
+				message: RAW_MARKUP {value: "Unexpected character <emphasis>f</emphasis>"}
+				advice: Array [
+					log {
+						category: "info"
+						text: RAW_MARKUP {value: "Expected the opening function params character <emphasis>(</emphasis>"}
+					}
 				]
 			}
 		}
@@ -249,7 +251,7 @@ JSRoot {
 
  typescript/export/declare/input.ts:2:24 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ Unexpected token, expected (
+  ✖ Unexpected character f
 
     1 │ export declare const x: number;
   > 2 │ export declare function f(): void;
@@ -257,8 +259,7 @@ JSRoot {
     3 │ export declare class C {}
     4 │ export declare interface I {}
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  ℹ Expected the opening function params character (
 
-✖ Found 1 problem
 
 ```

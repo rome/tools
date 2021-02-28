@@ -35,13 +35,9 @@ JSRoot {
 				start: Position 1:36
 			}
 			description: Object {
-				category: "parse"
 				categoryValue: "js"
-				message: Array [
-					RAW_MARKUP {value: "Argument <emphasis>"}
-					"__proto__"
-					RAW_MARKUP {value: "</emphasis> name clash in strict mode"}
-				]
+				category: Array ["parse"]
+				message: RAW_MARKUP {value: "Argument <emphasis>__proto__</emphasis> name clash in strict mode"}
 				advice: Array [
 					log {
 						category: "info"
@@ -112,8 +108,5 @@ JSRoot {
     "use strict"; function t(__proto__, __proto__) { }
                                         ^^^^^^^^^
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

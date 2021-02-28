@@ -18,6 +18,31 @@ JSRoot {
 	syntax: Array []
 	loc: SourceLocation esprima/invalid-syntax/migrated_0256/input.js 1:0-2:0
 	path: UIDPath<esprima/invalid-syntax/migrated_0256/input.js>
+	diagnostics: Array [
+		Object {
+			origins: Array [Object {category: "parse"}]
+			location: Object {
+				integrity: undefined
+				language: "js"
+				sourceText: undefined
+				end: Position 1:13
+				path: UIDPath<esprima/invalid-syntax/migrated_0256/input.js>
+				start: Position 1:13
+			}
+			description: Object {
+				categoryValue: "js"
+				category: Array ["parse"]
+				message: RAW_MARKUP {value: "Unclosed <emphasis>block</emphasis>"}
+				advice: Array [
+					log {
+						category: "info"
+						text: RAW_MARKUP {value: "We expected to find the closing character <emphasis>}</emphasis> here"}
+					}
+					frame {location: SourceLocation esprima/invalid-syntax/migrated_0256/input.js 2:0-2:0}
+				]
+			}
+		}
+	]
 	body: Array [
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
@@ -46,38 +71,6 @@ JSRoot {
 			}
 		}
 	]
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:13
-				path: UIDPath<esprima/invalid-syntax/migrated_0256/input.js>
-				start: Position 1:13
-			}
-			description: Object {
-				category: "parse"
-				categoryValue: "js"
-				message: Array [
-					RAW_MARKUP {value: "Unclosed "}
-					"block"
-				]
-				advice: Array [
-					log {
-						category: "info"
-						text: Array [
-							RAW_MARKUP {value: "We expected to find the closing character <emphasis>"}
-							"}"
-							RAW_MARKUP {value: "</emphasis> here"}
-						]
-					}
-					frame {location: SourceLocation esprima/invalid-syntax/migrated_0256/input.js 2:0-2:0}
-				]
-			}
-		}
-	]
 }
 ```
 
@@ -89,12 +82,12 @@ JSRoot {
 
   ✖ Unclosed block
 
+    function t() { ;  ;
+                 ^
+
   ℹ We expected to find the closing character } here
 
     function t() { ;  ;
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

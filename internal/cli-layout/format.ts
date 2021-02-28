@@ -15,7 +15,6 @@ import {
 } from "@internal/markup";
 import {GridOutputFormat, UserGridOptions} from "./types";
 import Grid from "./Grid";
-import {ob1Get1} from "@internal/ob1";
 import {splitChars, splitLines} from "@internal/string-utils";
 
 export function renderGrid(
@@ -53,7 +52,7 @@ export function renderGrid(
 	grid.drawChildren(grid.parse(safe, undefined), []);
 	return {
 		locators: grid.locators,
-		width: ob1Get1(grid.getWidth()),
+		width: grid.getWidth().valueOf(),
 		lines: grid.getLines(format),
 	};
 }

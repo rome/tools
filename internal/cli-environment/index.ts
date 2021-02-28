@@ -2,7 +2,7 @@ import stream = require("stream");
 import tty = require("tty");
 import {Event} from "@internal/events";
 import {VoidCallback, mergeObjects} from "@internal/typescript-helpers";
-import {Number1, ob1Coerce1} from "@internal/ob1";
+import {OneIndexed} from "@internal/math";
 
 export type Stdout = stream.Writable | tty.WriteStream;
 
@@ -14,7 +14,7 @@ export type InferredTerminalFeatures = {
 };
 
 export type TerminalFeatures = {
-	columns?: Number1;
+	columns?: OneIndexed;
 	progress: boolean;
 	isTTY: boolean;
 	background: "dark" | "light" | "unknown";
@@ -27,7 +27,7 @@ export type TerminalFeatures = {
 export const DEFAULT_TERMINAL_FEATURES: TerminalFeatures = {
 	background: "unknown",
 	isTTY: false,
-	columns: ob1Coerce1(100),
+	columns: new OneIndexed(100),
 	progress: false,
 	cursor: false,
 	unicode: true,
@@ -67,7 +67,7 @@ export function inferTerminalFeatures(
 	stdout?: Stdout,
 	force: Partial<TerminalFeatures> = {},
 ): InferredTerminalFeatures {
-	let columns: Number1 = ob1Coerce1(100);
+	let columns: OneIndexed = new OneIndexed(100);
 	let colorDepth: TerminalFeatures["colorDepth"] = 1;
 	let isTTY = force.isTTY === true;
 	let unicode = false;
@@ -76,7 +76,7 @@ export function inferTerminalFeatures(
 
 	// Increase column size for CI
 	if (isCI) {
-		columns = ob1Coerce1(200);
+		columns = new OneIndexed(200);
 		colorDepth = 4;
 	}
 
@@ -87,7 +87,7 @@ export function inferTerminalFeatures(
 		isTTY = true;
 		unicode = process.platform !== "win32";
 		colorDepth = stdout.getColorDepth() as TerminalFeatures["colorDepth"];
-		columns = ob1Coerce1(stdout.columns);
+		columns = new OneIndexed(stdout.columns);
 
 		// Sniff for the background
 		// https://github.com/vim/vim/blob/e3f915d12c8fe0466918a29ab4eaef153f71a2cd/src/term.c#L2943-L2952
@@ -135,7 +135,7 @@ export function inferTerminalFeatures(
 			if (stdout instanceof tty.WriteStream) {
 				features = {
 					...features,
-					columns: ob1Coerce1(stdout.columns),
+					columns: new OneIndexed(stdout.columns),
 				};
 				updateEvent.send(features);
 			}

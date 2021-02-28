@@ -37,12 +37,12 @@ import {
 } from "@internal/markup";
 import {DiagnosticsPrinterFlags} from "./types";
 import DiagnosticsPrinter, {DiagnosticsPrinterFileSources} from "./DiagnosticsPrinter";
-import {MixedPathSet, UNKNOWN_PATH, createUIDPath} from "@internal/path";
+import {MixedPathSet, createUIDPath} from "@internal/path";
 import {MAX_CODE_LENGTH, MAX_CODE_LINES, MAX_LOG_LENGTH} from "./constants";
 import {Diffs, diffConstants} from "@internal/string-diff";
 import {removeCarriageReturn} from "@internal/string-utils";
 import {serializeCLIFlags} from "@internal/cli-flags";
-import {inferDiagnosticLanguageFromFilename} from "@internal/core/common/file-handlers";
+import {inferDiagnosticLanguageFromPath} from "@internal/core/common/file-handlers";
 
 type AdvicePrintOptions = {
 	printer: DiagnosticsPrinter;
@@ -343,10 +343,7 @@ function printFrame(
 	const {reporter} = opts;
 	const {marker, start, end} = item.location;
 	let {sourceText} = item.location;
-	const path =
-		item.location.path === undefined
-			? UNKNOWN_PATH
-			: opts.printer.normalizePath(item.location.path);
+	const path = opts.printer.normalizePath(item.location.path);
 
 	let lines: ToLines = [];
 	if (sourceText !== undefined) {
@@ -354,27 +351,23 @@ function printFrame(
 			path,
 			input: sourceText,
 			sourceTypeJS: item.location.sourceTypeJS,
-			language: inferDiagnosticLanguageFromFilename(
-				path,
-				item.location.language,
-			),
+			language: inferDiagnosticLanguageFromPath(path, item.location.language),
 			highlight: opts.printer.shouldHighlight(),
 		});
 	} else if (path !== undefined) {
 		const source = opts.fileSources.get(path);
 		if (source === undefined) {
-			if (
-				path.isAbsolute() &&
-				opts.missingFileSources.has(path.assertAbsolute())
-			) {
+			if (opts.missingFileSources.has(path)) {
 				return printLog(
 					{
 						type: "log",
 						category: "warn",
-						text: markup`File ${path} does not exist`,
+						text: markup`Cannot render frame as ${path} does not exist`,
 					},
 					opts,
 				);
+			} else {
+				return DID_NOT_PRINT;
 			}
 		} else {
 			lines = source.lines;

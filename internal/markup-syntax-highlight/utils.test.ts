@@ -3,9 +3,9 @@ import {
 	markupToken,
 	reduceParserCore,
 } from "@internal/markup-syntax-highlight/utils";
-import {ob1Coerce0} from "@internal/ob1";
 import {StaticMarkup} from "@internal/markup";
 import {convertToMarkupFromRandomString} from "@internal/markup/escape";
+import {ZeroIndexed} from "@internal/math";
 
 const validTokenType = "keyword";
 const fakeToken = "lorem";
@@ -32,8 +32,8 @@ test(
 		const fakeTokensCount = 10;
 		const fakeTokens = Array.from(Array(fakeTokensCount).keys()).map((i) => ({
 			type: `token${i}`,
-			start: ob1Coerce0(i * 7),
-			end: ob1Coerce0(i * 7 + 6),
+			start: new ZeroIndexed(i * 7),
+			end: new ZeroIndexed(i * 7 + 6),
 		}));
 		const fakeInput = `${fakeTokens.map((token) => token.type).join(" ")} invalid`;
 
@@ -43,13 +43,13 @@ test(
 				...fakeTokens,
 				{
 					type: "Invalid",
-					start: ob1Coerce0(fakeTokensCount * 7),
-					end: ob1Coerce0(fakeTokensCount * 7 + 7),
+					start: new ZeroIndexed(fakeTokensCount * 7),
+					end: new ZeroIndexed(fakeTokensCount * 7 + 7),
 				},
 				{
 					type: "EOF",
-					start: ob1Coerce0(fakeTokensCount * 7 + 8),
-					end: ob1Coerce0(fakeTokensCount * 7 + 9),
+					start: new ZeroIndexed(fakeTokensCount * 7 + 8),
+					end: new ZeroIndexed(fakeTokensCount * 7 + 9),
 				},
 			],
 			(token, value, prev, next) => {

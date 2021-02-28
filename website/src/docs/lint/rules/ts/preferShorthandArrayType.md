@@ -15,7 +15,7 @@ MISSING DOCUMENTATION
 When expressing array types, this rule promotes the usage of `[]` shorthand instead
 of `Array<>`.
 
-<!-- GENERATED:START(hash:e1a7f0e0780ed406950094c37a6326c41d0fe790,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+<!-- GENERATED:START(hash:88c7071800ffce914fde4e92ccd215f518d39c1b,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
 
 ### Invalid
@@ -57,6 +57,9 @@ of `Array<>`.
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.ts:1:24</span> <strong>lint/ts/preferShorthandArrayType</strong> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Use </span><span style="color: Tomato;"><strong>shorthand T[] syntax</strong></span><span style="color: Tomato;"> instead of </span><span style="color: Tomato;"><strong>Array&lt;T&gt; syntax</strong></span><span style="color: Tomato;">.</span>
+
+    <span class="token keyword">let</span> <span class="token variable">invalid</span><span class="token punctuation">:</span> <span class="token variable">Array</span><span class="token operator">&lt;</span><span class="token variable">foo</span><span class="token punctuation">,</span> <span class="token variable">Array</span><span class="token operator">&lt;</span><span class="token variable">string</span><span class="token operator">&gt;</span><span class="token operator">&gt;</span><span class="token punctuation">;</span>
+                            <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
 
   <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">Safe fix</span>
 

@@ -2,9 +2,9 @@ import {test} from "rome";
 import {catchDiagnosticsSync} from "@internal/diagnostics";
 import {markupToAnsi, markupToPlainText} from "./format";
 import {printDiagnosticsToString} from "@internal/cli-diagnostics";
-import {ob1Coerce1} from "@internal/ob1";
 import {markup} from "../markup/escape";
 import {joinMarkupLines} from "@internal/markup";
+import {OneIndexed} from "@internal/math";
 
 const SYNTAX_ERROR_TESTS = [
 	markup`<view pointerChar="<emphasis" pointerLine="1" pointerStart="1" pointerEnd="3">foobar</view>`,
@@ -18,7 +18,7 @@ test(
 				markupToPlainText(
 					input,
 					{
-						columns: ob1Coerce1(400),
+						columns: new OneIndexed(400),
 					},
 				);
 			});

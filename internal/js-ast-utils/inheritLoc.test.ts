@@ -1,9 +1,9 @@
 import {test} from "rome";
 import {SourceLocation} from "@internal/parser-core";
-import {ob1Coerce0, ob1Coerce1} from "@internal/ob1";
 import {inheritLoc} from "@internal/js-ast-utils/inheritLoc";
 import {jsCommentLine, jsIdentifier} from "@internal/ast";
 import {UNKNOWN_PATH} from "@internal/path";
+import {OneIndexed, ZeroIndexed} from "@internal/math";
 
 test(
 	"returns the node's source location with it's name",
@@ -11,12 +11,12 @@ test(
 		const commentLoc: SourceLocation = {
 			path: UNKNOWN_PATH,
 			start: {
-				line: ob1Coerce1(1),
-				column: ob1Coerce0(0),
+				line: new OneIndexed(),
+				column: new ZeroIndexed(),
 			},
 			end: {
-				line: ob1Coerce1(1),
-				column: ob1Coerce0(13),
+				line: new OneIndexed(),
+				column: new ZeroIndexed(13),
 			},
 		};
 
@@ -38,12 +38,12 @@ test(
 		const identifierLoc: SourceLocation = {
 			path: UNKNOWN_PATH,
 			start: {
-				line: ob1Coerce1(3),
-				column: ob1Coerce0(0),
+				line: new OneIndexed(3),
+				column: new ZeroIndexed(),
 			},
 			end: {
-				line: ob1Coerce1(3),
-				column: ob1Coerce0(15),
+				line: new OneIndexed(3),
+				column: new ZeroIndexed(15),
 			},
 		};
 

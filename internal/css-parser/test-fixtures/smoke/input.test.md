@@ -10,7 +10,7 @@ CSSRoot {
 	diagnostics: Array []
 	integrity: undefined
 	loc: SourceLocation smoke/input.css 1:0-12:1
-	path: RelativeFilePath<smoke/input.css>
+	path: RelativePath<smoke/input.css>
 	comments: Array [
 		CommentBlock {
 			id: "0"
@@ -51,22 +51,43 @@ CSSRoot {
 					CSSDeclaration {
 						name: "width"
 						value: Array [
-							CSSFunction {
+							CSSCalcFunction {
 								name: "calc"
-								loc: SourceLocation smoke/input.css 4:11-4:25
+								loc: SourceLocation smoke/input.css 4:16-4:25
 								params: Array [
-									CSSDimension {
-										value: 1
-										unit: "px"
-										loc: SourceLocation smoke/input.css 4:16-4:19
-									}
-									CSSRaw {
-										value: "+"
-										loc: SourceLocation smoke/input.css 4:20-4:21
-									}
-									CSSPercentage {
-										value: 2
-										loc: SourceLocation smoke/input.css 4:22-4:24
+									CSSCalcSum {
+										value: Array [
+											CSSCalcProduct {
+												value: Array [
+													CSSCalcValue {
+														value: CSSDimension {
+															value: 1
+															unit: "px"
+															loc: SourceLocation smoke/input.css 4:16-4:16
+														}
+														loc: SourceLocation smoke/input.css 4:16-4:19
+													}
+												]
+												loc: SourceLocation smoke/input.css 4:19-4:20
+											}
+											CSSCalcOperation {
+												value: "+"
+												loc: SourceLocation smoke/input.css 4:21-4:22
+											}
+											CSSCalcProduct {
+												value: Array [
+													CSSCalcValue {
+														value: CSSPercentage {
+															value: 2
+															loc: SourceLocation smoke/input.css 4:22-4:22
+														}
+														loc: SourceLocation smoke/input.css 4:22-4:24
+													}
+												]
+												loc: SourceLocation smoke/input.css 4:24-4:24
+											}
+										]
+										loc: SourceLocation smoke/input.css 4:16-4:24
 									}
 								]
 							}
@@ -142,22 +163,43 @@ CSSRoot {
 								CSSDeclaration {
 									name: "width"
 									value: Array [
-										CSSFunction {
+										CSSCalcFunction {
 											name: "calc"
-											loc: SourceLocation smoke/input.css 10:15-10:29
+											loc: SourceLocation smoke/input.css 10:20-10:29
 											params: Array [
-												CSSDimension {
-													value: 2
-													unit: "px"
-													loc: SourceLocation smoke/input.css 10:20-10:23
-												}
-												CSSRaw {
-													value: "+"
-													loc: SourceLocation smoke/input.css 10:24-10:25
-												}
-												CSSPercentage {
-													value: 3
-													loc: SourceLocation smoke/input.css 10:26-10:28
+												CSSCalcSum {
+													value: Array [
+														CSSCalcProduct {
+															value: Array [
+																CSSCalcValue {
+																	value: CSSDimension {
+																		value: 2
+																		unit: "px"
+																		loc: SourceLocation smoke/input.css 10:20-10:20
+																	}
+																	loc: SourceLocation smoke/input.css 10:20-10:23
+																}
+															]
+															loc: SourceLocation smoke/input.css 10:23-10:24
+														}
+														CSSCalcOperation {
+															value: "+"
+															loc: SourceLocation smoke/input.css 10:25-10:26
+														}
+														CSSCalcProduct {
+															value: Array [
+																CSSCalcValue {
+																	value: CSSPercentage {
+																		value: 3
+																		loc: SourceLocation smoke/input.css 10:26-10:26
+																	}
+																	loc: SourceLocation smoke/input.css 10:26-10:28
+																}
+															]
+															loc: SourceLocation smoke/input.css 10:28-10:28
+														}
+													]
+													loc: SourceLocation smoke/input.css 10:20-10:28
 												}
 											]
 										}

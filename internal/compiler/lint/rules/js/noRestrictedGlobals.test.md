@@ -17,9 +17,6 @@
 
   ℹ Use a local variable instead.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -38,14 +35,8 @@ console.log(event);
 
   ✖ Do not use the global variable event.
 
-    foo(event)
-        ^^^^^
-
   ℹ Use a local variable instead.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -59,7 +50,6 @@ foo(event);
 ### `2`
 
 ```
-✔ No known problems!
 
 ```
 

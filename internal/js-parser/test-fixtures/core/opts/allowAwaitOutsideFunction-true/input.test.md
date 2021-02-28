@@ -25,17 +25,19 @@ JSRoot {
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Position 1:9
+				end: Position 1:3
 				path: UIDPath<core/opts/allowAwaitOutsideFunction-true/input.js>
 				start: Position 1:4
 			}
 			description: Object {
-				advice: Array []
-				category: "parse"
 				categoryValue: "js"
-				message: Array [
-					RAW_MARKUP {value: "Unexpected token, expected "}
-					"("
+				category: Array ["parse"]
+				message: RAW_MARKUP {value: "Unexpected character <emphasis>a</emphasis>"}
+				advice: Array [
+					log {
+						category: "info"
+						text: RAW_MARKUP {value: "Expected the opening for head character <emphasis>(</emphasis>"}
+					}
 				]
 			}
 		}
@@ -94,13 +96,12 @@ JSRoot {
 
  core/opts/allowAwaitOutsideFunction-true/input.js:1:4 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ Unexpected token, expected (
+  ✖ Unexpected character a
 
     for await (const i of imports) {}
-        ^^^^^
+        ^
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  ℹ Expected the opening for head character (
 
-✖ Found 1 problem
 
 ```

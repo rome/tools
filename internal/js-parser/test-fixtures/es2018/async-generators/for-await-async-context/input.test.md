@@ -25,17 +25,19 @@ JSRoot {
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Position 2:11
+				end: Position 2:5
 				path: UIDPath<es2018/async-generators/for-await-async-context/input.js>
 				start: Position 2:6
 			}
 			description: Object {
-				advice: Array []
-				category: "parse"
 				categoryValue: "js"
-				message: Array [
-					RAW_MARKUP {value: "Unexpected token, expected "}
-					"("
+				category: Array ["parse"]
+				message: RAW_MARKUP {value: "Unexpected character <emphasis>a</emphasis>"}
+				advice: Array [
+					log {
+						category: "info"
+						text: RAW_MARKUP {value: "Expected the opening for head character <emphasis>(</emphasis>"}
+					}
 				]
 			}
 		}
@@ -113,15 +115,14 @@ JSRoot {
 
  es2018/async-generators/for-await-async-context/input.js:2:6 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ Unexpected token, expected (
+  ✖ Unexpected character a
 
     1 │ function f() {
   > 2 │   for await (let x of y);
-      │       ^^^^^
+      │       ^
     3 │ }
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  ℹ Expected the opening for head character (
 
-✖ Found 1 problem
 
 ```

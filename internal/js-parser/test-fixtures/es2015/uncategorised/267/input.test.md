@@ -30,20 +30,13 @@ JSRoot {
 				start: Position 1:7
 			}
 			description: Object {
-				category: "parse"
 				categoryValue: "js"
-				message: Array [
-					RAW_MARKUP {value: "Unclosed "}
-					"template expression value"
-				]
+				category: Array ["parse"]
+				message: RAW_MARKUP {value: "Unclosed <emphasis>template expression value</emphasis>"}
 				advice: Array [
 					log {
 						category: "info"
-						text: Array [
-							RAW_MARKUP {value: "We expected to find the closing character <emphasis>"}
-							"}"
-							RAW_MARKUP {value: "</emphasis> here"}
-						]
+						text: RAW_MARKUP {value: "We expected to find the closing character <emphasis>}</emphasis> here"}
 					}
 					frame {location: SourceLocation es2015/uncategorised/267/input.js 1:11-1:11}
 				]
@@ -116,13 +109,13 @@ JSRoot {
 
   ✖ Unclosed template expression value
 
+    `hello ${10;test`
+           ^
+
   ℹ We expected to find the closing character } here
 
     `hello ${10;test`
                ^
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

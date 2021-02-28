@@ -10,8 +10,9 @@ import {
 	DiagnosticCategory,
 	DiagnosticLocation,
 	DiagnosticSuppression,
+	equalCategoryNames,
 } from "@internal/diagnostics";
-import {ob1Coerce0, ob1Number1} from "@internal/ob1";
+import {OneIndexed, ZeroIndexed} from "@internal/math";
 import {addPositions} from "@internal/parser-core";
 import {equalPaths} from "@internal/path";
 import CompilerContext from "./lib/CompilerContext";
@@ -42,7 +43,7 @@ function extractSuppressionsFromComment(
 			? undefined
 			: addPositions(
 					comment.loc.start,
-					{line: ob1Number1, column: ob1Coerce0(2)},
+					{line: new OneIndexed(), column: new ZeroIndexed(2)},
 				),
 	});
 
@@ -93,12 +94,12 @@ export function matchesSuppression(
 	suppression: DiagnosticSuppression,
 ): boolean {
 	return (
-		category === suppression.category &&
+		equalCategoryNames(category, suppression.category) &&
 		equalPaths(path, suppression.path) &&
 		start !== undefined &&
 		end !== undefined &&
-		start.line >= suppression.startLine &&
-		end.line <= suppression.endLine &&
+		start.line.valueOf() >= suppression.startLine.valueOf() &&
+		end.line.valueOf() <= suppression.endLine.valueOf() &&
 		(suppression.categoryValue === undefined ||
 		categoryValue === suppression.categoryValue)
 	);

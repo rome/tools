@@ -16,7 +16,7 @@ import {
 } from "@internal/parser-core";
 import {getSPDXLicense, licenseNames} from "./index";
 import {Diagnostics, descriptions} from "@internal/diagnostics";
-import {Number0} from "@internal/ob1";
+import {ZeroIndexed} from "@internal/math";
 import {
 	ExpressionNode,
 	LicenseNode,
@@ -63,7 +63,7 @@ export interface SPDXLicenseParseResult {
 const spdxLicenseParser = createParser<SPDXParserTypes>({
 	diagnosticLanguage: "spdxlicense",
 	ignoreWhitespaceTokens: true,
-	tokenize(parser: SPDXParser, index: Number0) {
+	tokenize(parser: SPDXParser, index: ZeroIndexed) {
 		const char = parser.getInputCharOnly(index);
 
 		if (char === "+") {

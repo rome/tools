@@ -25,17 +25,19 @@ JSRoot {
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Position 1:23
+				end: Position 1:21
 				path: UIDPath<es2015/uncategorised/342/input.js>
 				start: Position 1:22
 			}
 			description: Object {
-				advice: Array []
-				category: "parse"
 				categoryValue: "js"
-				message: Array [
-					RAW_MARKUP {value: "Unexpected token, expected "}
-					"{"
+				category: Array ["parse"]
+				message: RAW_MARKUP {value: "Unexpected character <emphasis>v</emphasis>"}
+				advice: Array [
+					log {
+						category: "info"
+						text: RAW_MARKUP {value: "Expected the opening block character <emphasis>{</emphasis>"}
+					}
 				]
 			}
 		}
@@ -120,13 +122,12 @@ JSRoot {
 
  es2015/uncategorised/342/input.js:1:22 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ Unexpected token, expected {
+  ✖ Unexpected character v
 
     x = { set method(val) v = val }
                           ^
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  ℹ Expected the opening block character {
 
-✖ Found 1 problem
 
 ```

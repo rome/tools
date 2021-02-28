@@ -12,14 +12,14 @@
 
   ✖ Avoid duplicate component props. Check the foo prop.
 
+    <Hello foo='bar' foo='baz' />
+           ^^^^^^^^^
+
   ℹ Defined already here
 
     <Hello foo='bar' foo='baz' />
                      ^^^^^^^^^
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -38,6 +38,9 @@
 
   ✖ Avoid duplicate component props. Check the style prop.
 
+    <div style='{}' style='{}' id='foo' id='bar' />
+         ^^^^^^^^^^
+
   ℹ Defined already here
 
     <div style='{}' style='{}' id='foo' id='bar' />
@@ -47,11 +50,14 @@
 
   ✖ Avoid duplicate component props. Check the id prop.
 
+    <div style='{}' style='{}' id='foo' id='bar' />
+                               ^^^^^^^^
+
   ℹ Defined already here
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    <div style='{}' style='{}' id='foo' id='bar' />
+                                        ^^^^^^^^
 
-✖ Found 2 problems
 
 ```
 
@@ -65,7 +71,6 @@
 ### `2`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -79,7 +84,6 @@
 ### `3`
 
 ```
-✔ No known problems!
 
 ```
 

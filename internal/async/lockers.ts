@@ -49,7 +49,7 @@ abstract class LockerNormalized<RawKey, MapKey> {
 
 	public locks: Map<MapKey, Lock<RawKey, MapKey>>;
 
-	protected abstract normalizeKey(rawKey: RawKey): MapKey
+	protected abstract normalizeKey(rawKey: RawKey): MapKey;
 
 	public hasLock(key: RawKey): boolean {
 		return this.locks.has(this.normalizeKey(key));

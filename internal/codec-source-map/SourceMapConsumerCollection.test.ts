@@ -1,11 +1,11 @@
 import {TestHelper, test} from "rome";
-import {ob1Coerce0, ob1Coerce1} from "@internal/ob1";
+import {OneIndexed, ZeroIndexed} from "@internal/math";
 import {
 	SourceMapConsumer,
 	SourceMapConsumerCollection,
 } from "@internal/codec-source-map/index";
 import {ResolvedLocation} from "@internal/codec-source-map/types";
-import {AnyPath, createRelativeFilePath} from "@internal/path";
+import {AnyPath, createRelativePath} from "@internal/path";
 import {SourceMap} from "@internal/codec-source-map";
 
 /* Source test1
@@ -75,8 +75,8 @@ const jsonSourceMap2: SourceMap = {
 test(
 	"Verify hasAny, add, has are correct",
 	async (t) => {
-		const test1Path = createRelativeFilePath("test1");
-		const test2Path = createRelativeFilePath("test2");
+		const test1Path = createRelativePath("test1");
+		const test2Path = createRelativePath("test2");
 		const consumerCollection = new SourceMapConsumerCollection();
 
 		t.false(consumerCollection.hasAny());
@@ -97,17 +97,17 @@ test(
 
 		t.true(consumerCollection.has(test1Path));
 		t.true(consumerCollection.has(test2Path));
-		t.false(consumerCollection.has(createRelativeFilePath("other")));
+		t.false(consumerCollection.has(createRelativePath("other")));
 	},
 );
 
 test(
 	"Should return the position of the targeted anchor in the sources files",
 	async (t) => {
-		const test1Path = createRelativeFilePath("test1");
-		const test2Path = createRelativeFilePath("test2");
-		const test1JSPath = createRelativeFilePath("js/test1.js");
-		const test2JSPath = createRelativeFilePath("js/test2.js");
+		const test1Path = createRelativePath("test1");
+		const test2Path = createRelativePath("test2");
+		const test1JSPath = createRelativePath("js/test1.js");
+		const test2JSPath = createRelativePath("js/test2.js");
 
 		const consumerCollection = new SourceMapConsumerCollection();
 		consumerCollection.add(
@@ -129,8 +129,8 @@ test(
 			t.looksLike(
 				consumerCollection.approxOriginalPositionFor(
 					path,
-					ob1Coerce1(line),
-					ob1Coerce0(column + 1),
+					new OneIndexed(line),
+					new ZeroIndexed(column + 1),
 				),
 				expected,
 			);
@@ -138,8 +138,8 @@ test(
 			t.looksLike(
 				consumerCollection.exactOriginalPositionFor(
 					path,
-					ob1Coerce1(line),
-					ob1Coerce0(column),
+					new OneIndexed(line),
+					new ZeroIndexed(column),
 				),
 				expected,
 			);
@@ -153,8 +153,8 @@ test(
 			{
 				found: true,
 				source: test1JSPath,
-				line: ob1Coerce1(2),
-				column: ob1Coerce0(6),
+				line: new OneIndexed(2),
+				column: new ZeroIndexed(6),
 				name: "world",
 			},
 		);
@@ -167,8 +167,8 @@ test(
 			{
 				found: true,
 				source: test1JSPath,
-				line: ob1Coerce1(4),
-				column: ob1Coerce0(9),
+				line: new OneIndexed(4),
+				column: new ZeroIndexed(9),
 				name: "foo",
 			},
 		);
@@ -181,8 +181,8 @@ test(
 			{
 				found: true,
 				source: test1JSPath,
-				line: ob1Coerce1(8),
-				column: ob1Coerce0(9),
+				line: new OneIndexed(8),
+				column: new ZeroIndexed(9),
 				name: "hello",
 			},
 		);
@@ -195,8 +195,8 @@ test(
 			{
 				found: true,
 				source: test2JSPath,
-				line: ob1Coerce1(2),
-				column: ob1Coerce0(4),
+				line: new OneIndexed(2),
+				column: new ZeroIndexed(4),
 				name: "firstName",
 			},
 		);
@@ -209,8 +209,8 @@ test(
 			{
 				found: true,
 				source: test2JSPath,
-				line: ob1Coerce1(3),
-				column: ob1Coerce0(6),
+				line: new OneIndexed(3),
+				column: new ZeroIndexed(6),
 				name: "lastname",
 			},
 		);
@@ -223,8 +223,8 @@ test(
 			{
 				found: true,
 				source: test2JSPath,
-				line: ob1Coerce1(5),
-				column: ob1Coerce0(9),
+				line: new OneIndexed(5),
+				column: new ZeroIndexed(9),
 				name: "changeName",
 			},
 		);
@@ -237,8 +237,8 @@ test(
 			{
 				found: true,
 				source: test2JSPath,
-				line: ob1Coerce1(9),
-				column: ob1Coerce0(9),
+				line: new OneIndexed(9),
+				column: new ZeroIndexed(9),
 				name: "fullName",
 			},
 		);

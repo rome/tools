@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Number0, ob1Add, ob1Coerce0, ob1Inc, ob1Number0} from "@internal/ob1";
+import {ZeroIndexed} from "@internal/math";
 import {
 	DiagnosticDescriptionOptional,
 	descriptions,
@@ -15,8 +15,8 @@ import {ManifestName} from "./types";
 type NormalizeNameUnexpected = (
 	opts: {
 		description: DiagnosticDescriptionOptional;
-		start?: Number0;
-		end?: Number0;
+		start?: ZeroIndexed;
+		end?: ZeroIndexed;
 		at?: "prefix";
 	},
 ) => void;
@@ -25,7 +25,7 @@ type ValidateNamePartOptions = {
 	name: string;
 	isOrg: boolean;
 	isOrgPart: boolean;
-	offset: Number0;
+	offset: ZeroIndexed;
 };
 
 type NormalizeNameOptions = {
@@ -46,7 +46,7 @@ function validateNamePart(
 		if (isOrg && char === "@" && i === 0) {
 			unexpected({
 				description: descriptions.MANIFEST.REDUNDANT_ORG_NAME_START,
-				start: ob1Add(offset, i),
+				start: offset.add(i),
 			});
 		} else if (!isOrgPart && char === "/") {
 			/*unexpected({
@@ -75,7 +75,7 @@ function validateNamePart(
 		} else {
 			unexpected({
 				description: descriptions.MANIFEST.INVALID_NAME_CHAR(char),
-				start: ob1Add(offset, i),
+				start: offset.add(i),
 			});
 		}
 	}
@@ -112,7 +112,7 @@ export function normalizeName(opts: NormalizeNameOptions): ManifestName {
 		unexpected({
 			at: "prefix",
 			description: descriptions.MANIFEST.INVALID_NAME_START,
-			start: ob1Number0,
+			start: new ZeroIndexed(),
 		});
 		name = name.slice(1);
 	}
@@ -122,7 +122,7 @@ export function normalizeName(opts: NormalizeNameOptions): ManifestName {
 		const [rawOrg, rawPackageName, ...other] = name.slice(1).split("/");
 
 		// Leading @
-		let offset: Number0 = ob1Coerce0(1);
+		let offset: ZeroIndexed = new ZeroIndexed(1);
 
 		// Org
 		const sanitizedOrg = validateNamePart(
@@ -134,7 +134,7 @@ export function normalizeName(opts: NormalizeNameOptions): ManifestName {
 				offset,
 			},
 		);
-		offset = ob1Add(offset, rawOrg.length);
+		offset = offset.add(rawOrg.length);
 		org = sanitizedOrg;
 
 		if (rawPackageName === undefined) {
@@ -145,7 +145,7 @@ export function normalizeName(opts: NormalizeNameOptions): ManifestName {
 			});
 		} else {
 			// Forward slashSeparator
-			offset = ob1Inc(offset);
+			offset = offset.increment();
 
 			// Package name
 			const sanitizedPackageName = validateNamePart(
@@ -157,7 +157,7 @@ export function normalizeName(opts: NormalizeNameOptions): ManifestName {
 					offset,
 				},
 			);
-			offset = ob1Add(offset, rawPackageName.length);
+			offset = offset.add(rawPackageName.length);
 
 			// Complain on excess separators
 			if (other.length > 0) {
@@ -175,7 +175,7 @@ export function normalizeName(opts: NormalizeNameOptions): ManifestName {
 			opts,
 			{
 				name,
-				offset: ob1Number0,
+				offset: new ZeroIndexed(),
 				isOrg: false,
 				isOrgPart: false,
 			},

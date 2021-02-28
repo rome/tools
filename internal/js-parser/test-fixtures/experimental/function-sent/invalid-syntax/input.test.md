@@ -23,9 +23,9 @@ JSRoot {
 			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse"
 				categoryValue: "js"
-				message: RAW_MARKUP {value: "Unexpected token"}
+				category: Array ["parse"]
+				message: RAW_MARKUP {value: "Unexpected character <emphasis>;</emphasis>"}
 			}
 			location: Object {
 				integrity: undefined
@@ -94,15 +94,12 @@ JSRoot {
 
  experimental/function-sent/invalid-syntax/input.js:2:21 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ Unexpected token
+  ✖ Unexpected character ;
 
     1 │ function* foo() {
   > 2 │   if (true) function.;
       │                      ^
     3 │ }
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

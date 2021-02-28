@@ -17,66 +17,101 @@ import {
 } from "./escape";
 import {sliceEscaped} from "@internal/string-utils";
 import {buildFileLink, formatGrammarNumber} from "./util";
+import {Dict} from "@internal/typescript-helpers";
 
 function buildTag(
 	tag: MarkupParsedTag,
 	inner: AnyMarkup,
 	opts: MarkupFormatNormalizeOptions,
-): StaticMarkup {
+): {
+	modified: boolean;
+	value: StaticMarkup;
+} {
 	let {attributes} = tag;
 
+	let originalAttributes = attributes.asMappedObject((value) => {
+		if (!value.exists()) {
+			return undefined;
+		}
+
+		let raw = value.asUnknown();
+		if (raw === true) {
+			return true;
+		} else {
+			return String(raw);
+		}
+	});
+
+	let modified = false;
+	let setAttributes: Dict<undefined | string> = {};
+
 	switch (tag.name) {
-		// Normalize filename of <filelink target>
 		case "filelink": {
-			// Clone
-			attributes = attributes.copy();
-
 			const {path, line, column, text} = buildFileLink(attributes, opts);
-
-			attributes.get("target").setValue(path.join());
+			setAttributes.target = path.join();
 
 			if (isEmptyMarkup(inner) || opts.stripFilelinkText) {
 				inner = markup`${text}`;
+				modified = true;
 			}
 
 			if (opts.stripPositions) {
-				attributes.get("line").setValue(undefined);
-				attributes.get("column").setValue(undefined);
+				setAttributes.line = undefined;
+				setAttributes.column = undefined;
 			} else {
-				attributes.get("column").setValue(column);
-				attributes.get("line").setValue(line);
+				setAttributes.column = column;
+				setAttributes.line = line;
 			}
+
 			break;
 		}
 
 		// We don't technically need to normalize this but it's one less tag to have to support
 		// if other tools need to consume it
 		case "grammarNumber":
-			return markup`${formatGrammarNumber(attributes, readMarkup(inner))}`;
+			return {
+				value: markup`${formatGrammarNumber(attributes, readMarkup(inner))}`,
+				modified: true,
+			};
 	}
 
 	let open = `<${tag.name}`;
 
-	// Print attributes
-	for (const [key, value] of attributes.asMap()) {
-		if (!value.exists()) {
+	let finalAttributes = {
+		...originalAttributes,
+		...setAttributes,
+	};
+	for (const key in finalAttributes) {
+		const val = finalAttributes[key];
+		if (val === undefined) {
 			continue;
 		}
 
-		const raw = value.asUnknown();
-		if (raw === true) {
+		if (val === true) {
 			open += ` ${key}`;
 		} else {
-			open += readMarkup(markup` ${key}="${String(raw)}"`);
+			open += readMarkup(markup` ${key}="${val}"`);
+		}
+	}
+
+	for (let key in setAttributes) {
+		if (originalAttributes[key] !== setAttributes[key]) {
+			modified = true;
 		}
 	}
 
 	if (isEmptyMarkup(inner)) {
-		return convertToMarkupFromRandomString(`${open} />`);
+		return {
+			value: convertToMarkupFromRandomString(`${open} />`),
+			modified,
+		};
 	} else {
-		return convertToMarkupFromRandomString(
-			`${open}>${readMarkup(inner)}</${tag.name}>`,
-		);
+		return {
+			value: convertToMarkupFromRandomString(
+				`${open}>${readMarkup(inner)}</${tag.name}>`,
+			),
+			modified,
+		};
 	}
 }
 
@@ -87,13 +122,15 @@ function normalizeMarkupChildren(
 ): {
 	textLength: number;
 	text: StaticMarkup;
+	modified: boolean;
 } {
 	// Sometimes we'll populate the inner text of a tag with no children
 	if (children.length === 0) {
-		return {text: markup``, textLength: 0};
+		return {text: markup``, textLength: 0, modified: false};
 	}
 
 	let textLength = 0;
+	let modified = false;
 
 	let parts: AnyMarkups = [];
 
@@ -118,9 +155,19 @@ function normalizeMarkupChildren(
 				remainingChars,
 			);
 
-			if (remainingChars > 0) {
-				parts.push(buildTag(child, inner.text, opts));
+			if (inner.modified) {
+				modified = true;
 			}
+
+			if (remainingChars > 0) {
+				const tag = buildTag(child, inner.text, opts);
+				parts.push(tag.value);
+
+				if (tag.modified) {
+					modified = true;
+				}
+			}
+
 			textLength += inner.textLength;
 			remainingChars -= inner.textLength;
 		} else {
@@ -131,6 +178,7 @@ function normalizeMarkupChildren(
 	return {
 		text: concatMarkup(parts),
 		textLength,
+		modified,
 	};
 }
 
@@ -149,8 +197,10 @@ export function normalizeMarkup(
 	text: StaticMarkup;
 	truncated: boolean;
 } {
-	const {textLength, text} = normalizeMarkupChildren(
-		parseMarkup(readMarkup(input)),
+	const inputRead = readMarkup(input);
+
+	const {textLength, text, modified} = normalizeMarkupChildren(
+		parseMarkup(inputRead),
 		opts,
 		maxLength,
 	);
@@ -159,7 +209,7 @@ export function normalizeMarkup(
 
 	return {
 		textLength,
-		text,
+		text: modified ? text : convertToMarkupFromRandomString(inputRead),
 		truncated: isTruncated,
 		visibleTextLength: isTruncated ? maxLength : textLength,
 		truncatedLength: isTruncated ? textLength - maxLength : 0,

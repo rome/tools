@@ -28,17 +28,19 @@ JSRoot {
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Position 1:22
+				end: Position 1:20
 				path: UIDPath<typescript/tsx/anonymous-function-generator-invalid/input.tsx>
 				start: Position 1:21
 			}
 			description: Object {
-				advice: Array []
-				category: "parse"
 				categoryValue: "js"
-				message: Array [
-					RAW_MARKUP {value: "Unexpected token, expected "}
-					"("
+				category: Array ["parse"]
+				message: RAW_MARKUP {value: "Unexpected character <emphasis>\\<</emphasis>"}
+				advice: Array [
+					log {
+						category: "info"
+						text: RAW_MARKUP {value: "Expected the opening function params character <emphasis>(</emphasis>"}
+					}
 				]
 			}
 		}
@@ -148,15 +150,14 @@ JSRoot {
 
  typescript/tsx/anonymous-function-generator-invalid/input.tsx:1:21 parse(js) ━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ Unexpected token, expected (
+  ✖ Unexpected character <
 
   > 1 │ const fn = function* <,>(input: T): Generator<number> {
       │                      ^
     2 │   yield 2;
     3 │ }
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  ℹ Expected the opening function params character (
 
-✖ Found 1 problem
 
 ```

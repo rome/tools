@@ -30,8 +30,8 @@ JSRoot {
 				start: Position 4:13
 			}
 			description: Object {
-				category: "parse"
 				categoryValue: "js"
+				category: Array ["parse"]
 				message: RAW_MARKUP {value: "super() is only valid inside a class constructor of a subclass"}
 				advice: Array [
 					log {
@@ -166,8 +166,5 @@ JSRoot {
 
   ℹ Maybe a typo in the method name ('constructor') or not extending another class?
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

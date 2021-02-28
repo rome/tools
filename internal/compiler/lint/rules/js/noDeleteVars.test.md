@@ -18,9 +18,6 @@
 
   ℹ Only object properties can be deleted.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -35,7 +32,6 @@ delete foo;
 ### `1`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -50,7 +46,6 @@ arr[0][2] = undefined;
 ### `2`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -65,7 +60,6 @@ obj.a.b.c = undefined;
 ### `3`
 
 ```
-✔ No known problems!
 
 ```
 

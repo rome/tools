@@ -5,12 +5,13 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Number0, ob1Dec, ob1Get0} from "@internal/ob1";
-export function isEscaped(index: Number0, input: string): boolean {
-	const prevChar = input[ob1Get0(index) - 1];
+import {ZeroIndexed} from "@internal/math";
+
+export function isEscaped(index: ZeroIndexed, input: string): boolean {
+	const prevChar = input[index.valueOf() - 1];
 
 	if (prevChar === "\\") {
-		return !isEscaped(ob1Dec(index), input);
+		return !isEscaped(index.decrement(), input);
 	} else {
 		return false;
 	}

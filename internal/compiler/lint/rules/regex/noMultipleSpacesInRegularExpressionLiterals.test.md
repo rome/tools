@@ -24,9 +24,6 @@ lint/regex/noMultipleSpacesInRegularExpressionLiterals  FIXABLE  ━━━━━
   - ···
   + ·{3}
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -57,9 +54,6 @@ lint/regex/noMultipleSpacesInRegularExpressionLiterals  FIXABLE  ━━━━━
   - ··foo
   + ·{2}foo
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -90,9 +84,6 @@ lint/regex/noMultipleSpacesInRegularExpressionLiterals  FIXABLE  ━━━━━
   - foo···
   + foo·{3}
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -123,9 +114,6 @@ lint/regex/noMultipleSpacesInRegularExpressionLiterals  FIXABLE  ━━━━━
   - foo··bar
   + foo·{2}bar
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -156,9 +144,6 @@ lint/regex/noMultipleSpacesInRegularExpressionLiterals  FIXABLE  ━━━━━
   - foo···bar····baz
   + foo·{3}bar·{4}baz
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -189,9 +174,6 @@ lint/regex/noMultipleSpacesInRegularExpressionLiterals  FIXABLE  ━━━━━
   - foo·[ba]r··b(a|z)
   + foo·[ba]r·{2}b(a|z)
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -205,7 +187,6 @@ lint/regex/noMultipleSpacesInRegularExpressionLiterals  FIXABLE  ━━━━━
 ### `6`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -219,7 +200,6 @@ lint/regex/noMultipleSpacesInRegularExpressionLiterals  FIXABLE  ━━━━━
 ### `7`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -233,7 +213,6 @@ lint/regex/noMultipleSpacesInRegularExpressionLiterals  FIXABLE  ━━━━━
 ### `8`
 
 ```
-✔ No known problems!
 
 ```
 

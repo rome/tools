@@ -17,9 +17,6 @@
 
   ℹ Adding non-interactive elements to the keyboard navigation flow can confuse users.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -43,9 +40,6 @@
 
   ℹ Adding non-interactive elements to the keyboard navigation flow can confuse users.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -69,9 +63,6 @@
 
   ℹ Adding non-interactive elements to the keyboard navigation flow can confuse users.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -85,7 +76,6 @@
 ### `3`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -99,7 +89,6 @@
 ### `4`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -113,7 +102,6 @@
 ### `5`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -127,7 +115,6 @@
 ### `6`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -141,7 +128,6 @@
 ### `7`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -155,7 +141,6 @@
 ### `8`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -169,7 +154,6 @@
 ### `9`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -183,7 +167,6 @@
 ### `10`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -197,7 +180,6 @@
 ### `11`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -211,7 +193,6 @@
 ### `12`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -235,9 +216,6 @@
 
   ℹ Adding non-interactive elements to the keyboard navigation flow can confuse users.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -262,9 +240,6 @@
 
   ℹ Adding non-interactive elements to the keyboard navigation flow can confuse users.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -279,7 +254,6 @@
 ### `15`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -294,7 +268,6 @@
 ### `16`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -309,7 +282,6 @@
 ### `17`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -324,7 +296,6 @@
 ### `18`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -339,7 +310,6 @@
 ### `19`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -354,7 +324,6 @@
 ### `20`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -369,7 +338,6 @@
 ### `21`
 
 ```
-✔ No known problems!
 
 ```
 

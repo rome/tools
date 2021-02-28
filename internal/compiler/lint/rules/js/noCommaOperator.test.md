@@ -17,9 +17,6 @@
 
   ℹ If you want multiple expressions, then break it up.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -43,9 +40,6 @@
 
   ℹ If you want multiple expressions, then break it up.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -59,7 +53,6 @@ test(), rome();
 ### `2`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -73,7 +66,6 @@ foo(0, 1, 2);
 ### `3`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -87,7 +79,6 @@ foo(0, 1, 2);
 ### `4`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -101,7 +92,6 @@ foo(0, 1, 2);
 ### `5`
 
 ```
-✔ No known problems!
 
 ```
 

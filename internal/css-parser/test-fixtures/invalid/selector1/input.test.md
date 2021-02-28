@@ -10,7 +10,7 @@ CSSRoot {
 	corrupt: false
 	integrity: undefined
 	loc: SourceLocation invalid/selector1/input.css 1:0-3:1
-	path: RelativeFilePath<invalid/selector1/input.css>
+	path: RelativePath<invalid/selector1/input.css>
 	body: Array [
 		CSSRule {
 			loc: SourceLocation invalid/selector1/input.css 1:0-3:1
@@ -32,16 +32,16 @@ CSSRoot {
 			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse"
 				categoryValue: "css"
-				message: RAW_MARKUP {value: "Expected a selector"}
+				category: Array ["parse"]
+				message: RAW_MARKUP {value: "Expected a selector."}
 			}
 			location: Object {
 				integrity: undefined
 				language: "css"
 				sourceText: undefined
 				end: Position 1:3
-				path: RelativeFilePath<invalid/selector1/input.css>
+				path: RelativePath<invalid/selector1/input.css>
 				start: Position 1:2
 			}
 		}

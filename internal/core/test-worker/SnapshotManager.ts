@@ -8,7 +8,8 @@
 import {
 	AbsoluteFilePath,
 	AbsoluteFilePathMap,
-	RelativeFilePath,
+	RelativePath,
+	createFilePath,
 } from "@internal/path";
 import {exists, readFileText} from "@internal/fs";
 import {TestServerRunnerOptions} from "../server/testing/types";
@@ -16,7 +17,7 @@ import TestWorkerFile from "./TestWorkerFile";
 import {descriptions} from "@internal/diagnostics";
 import {parseSnapshot, snapshotParser} from "./SnapshotParser";
 import {ErrorFrame} from "@internal/v8";
-import {Number0, Number1} from "@internal/ob1";
+import {OneIndexed, ZeroIndexed} from "@internal/math";
 import {prettyFormatToString} from "@internal/pretty-format";
 import {FilePathLocker} from "../../async/lockers";
 import {naturalCompare} from "@internal/string-utils";
@@ -56,8 +57,8 @@ function buildEntriesKey(testName: string, entryName: string): string {
 }
 
 export type InlineSnapshotUpdate = {
-	line: Number1;
-	column: Number0;
+	line: OneIndexed;
+	column: ZeroIndexed;
 	snapshot: boolean | number | string | null;
 };
 
@@ -93,7 +94,7 @@ export default class SnapshotManager {
 	public static buildSnapshot(
 		{entries, absolute, relative}: {
 			absolute: AbsoluteFilePath;
-			relative: RelativeFilePath;
+			relative: RelativePath;
 			entries: Iterable<SnapshotEntry>;
 		},
 	): string {
@@ -191,7 +192,7 @@ export default class SnapshotManager {
 			return this.defaultSnapshotPath;
 		}
 
-		const path = this.runner.path.getParent().resolve(filename);
+		const path = this.runner.path.getParent().resolve(createFilePath(filename));
 		const ext = path.getExtensions();
 		if (ext.endsWith(SNAPSHOT_EXT)) {
 			return path;
@@ -303,9 +304,15 @@ export default class SnapshotManager {
 		callFrame: ErrorFrame,
 		received: unknown,
 		expected?: InlineSnapshotUpdate["snapshot"],
-	): {
-		status: "MATCH" | "NO_MATCH" | "UPDATE";
-	} {
+	):
+		| {
+				status: "MATCH" | "UPDATE";
+			}
+		| {
+				status: "NO_MATCH";
+				receivedFormat: string;
+				expectedFormat: string;
+			} {
 		let receivedFormat = stringOrPrettyFormat(received);
 		let expectedFormat = stringOrPrettyFormat(expected);
 
@@ -342,7 +349,7 @@ export default class SnapshotManager {
 			return {status: "UPDATE"};
 		}
 
-		return {status: "NO_MATCH"};
+		return {status: "NO_MATCH", receivedFormat, expectedFormat};
 	}
 
 	public async get(

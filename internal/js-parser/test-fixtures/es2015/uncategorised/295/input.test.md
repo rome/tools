@@ -30,20 +30,13 @@ JSRoot {
 				start: Position 1:14
 			}
 			description: Object {
-				category: "parse"
 				categoryValue: "js"
-				message: Array [
-					RAW_MARKUP {value: "Unclosed "}
-					"switch body"
-				]
+				category: Array ["parse"]
+				message: RAW_MARKUP {value: "Unclosed <emphasis>switch body</emphasis>"}
 				advice: Array [
 					log {
 						category: "info"
-						text: Array [
-							RAW_MARKUP {value: "We expected to find the closing character <emphasis>"}
-							"}"
-							RAW_MARKUP {value: "</emphasis> here"}
-						]
+						text: RAW_MARKUP {value: "We expected to find the closing character <emphasis>}</emphasis> here"}
 					}
 					frame {location: SourceLocation es2015/uncategorised/295/input.js 2:0-2:0}
 				]
@@ -103,12 +96,12 @@ JSRoot {
 
   ✖ Unclosed switch body
 
+    switch (cond) { case 10: let a = 20;
+                  ^
+
   ℹ We expected to find the closing character } here
 
     switch (cond) { case 10: let a = 20;
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

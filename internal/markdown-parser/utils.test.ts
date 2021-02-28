@@ -3,7 +3,7 @@ import {
 	canBeLeftFlankingDelimiter,
 	canBeRightFlankingDelimiter,
 } from "@internal/markdown-parser/utils";
-import {ob1Coerce0} from "@internal/ob1";
+import {ZeroIndexed} from "@internal/math";
 
 test(
 	"correctly check the left-flanking delimiters",
@@ -11,8 +11,8 @@ test(
 		t.is(
 			canBeLeftFlankingDelimiter({
 				input: ' **"abc" ',
-				endIndex: ob1Coerce0(2),
-				startIndex: ob1Coerce0(1),
+				endIndex: new ZeroIndexed(2),
+				startIndex: new ZeroIndexed(1),
 			}),
 			true,
 		);
@@ -20,16 +20,16 @@ test(
 		t.is(
 			canBeLeftFlankingDelimiter({
 				input: " ***abc ",
-				endIndex: ob1Coerce0(2),
-				startIndex: ob1Coerce0(1),
+				endIndex: new ZeroIndexed(2),
+				startIndex: new ZeroIndexed(1),
 			}),
 			true,
 		);
 		t.is(
 			canBeLeftFlankingDelimiter({
 				input: " _abc",
-				endIndex: ob1Coerce0(1),
-				startIndex: ob1Coerce0(1),
+				endIndex: new ZeroIndexed(1),
+				startIndex: new ZeroIndexed(1),
 			}),
 			true,
 		);
@@ -37,8 +37,8 @@ test(
 		t.is(
 			canBeLeftFlankingDelimiter({
 				input: ' _"abc"',
-				endIndex: ob1Coerce0(1),
-				startIndex: ob1Coerce0(1),
+				endIndex: new ZeroIndexed(1),
+				startIndex: new ZeroIndexed(1),
 			}),
 			true,
 		);
@@ -51,8 +51,8 @@ test(
 		t.is(
 			canBeRightFlankingDelimiter({
 				input: "abc*** ",
-				endIndex: ob1Coerce0(4),
-				startIndex: ob1Coerce0(5),
+				endIndex: new ZeroIndexed(4),
+				startIndex: new ZeroIndexed(5),
 			}),
 			true,
 		);
@@ -60,8 +60,8 @@ test(
 		t.is(
 			canBeRightFlankingDelimiter({
 				input: "abc_ ",
-				endIndex: ob1Coerce0(3),
-				startIndex: ob1Coerce0(3),
+				endIndex: new ZeroIndexed(3),
+				startIndex: new ZeroIndexed(3),
 			}),
 			true,
 		);
@@ -69,8 +69,8 @@ test(
 		t.is(
 			canBeRightFlankingDelimiter({
 				input: '"abc"** ',
-				endIndex: ob1Coerce0(6),
-				startIndex: ob1Coerce0(5),
+				endIndex: new ZeroIndexed(6),
+				startIndex: new ZeroIndexed(5),
 			}),
 			true,
 		);
@@ -78,8 +78,8 @@ test(
 		t.is(
 			canBeRightFlankingDelimiter({
 				input: '"abc"_ ',
-				endIndex: ob1Coerce0(5),
-				startIndex: ob1Coerce0(5),
+				endIndex: new ZeroIndexed(5),
+				startIndex: new ZeroIndexed(5),
 			}),
 			true,
 		);

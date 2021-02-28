@@ -11,7 +11,7 @@ CSSRoot {
 	diagnostics: Array []
 	integrity: undefined
 	loc: SourceLocation keyframe/input.css 1:0-18:1
-	path: RelativeFilePath<keyframe/input.css>
+	path: RelativePath<keyframe/input.css>
 	body: Array [
 		CSSAtRule {
 			name: "keyframes"

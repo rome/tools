@@ -151,13 +151,6 @@ import {
 	tsCheckLiteralForConstantContext,
 	tsNextThenParseType,
 } from "./index";
-import {
-	Number0,
-	ob1Get0,
-	ob1Inc,
-	ob1Number0,
-	ob1Number0Neg1,
-} from "@internal/ob1";
 import {splitFunctionParams} from "./statement";
 import {parseRegExp} from "@internal/codec-js-regexp";
 import {descriptions} from "@internal/diagnostics";
@@ -363,7 +356,7 @@ function _parseMaybeAssign<T extends AnyNode>(
 	}
 
 	const oldCommaAfterSpreadAt = parser.state.commaAfterSpreadAt;
-	parser.state.commaAfterSpreadAt = ob1Number0Neg1;
+	parser.state.commaAfterSpreadAt = -1;
 
 	let failOnShorthandAssign;
 	if (refShorthandDefaultPos) {
@@ -374,7 +367,7 @@ function _parseMaybeAssign<T extends AnyNode>(
 	}
 
 	if (match(parser, tt.parenL) || match(parser, tt.name)) {
-		parser.state.potentialArrowAt = parser.getIndex();
+		parser.state.potentialArrowAt = parser.state.startIndex;
 	}
 
 	let left: AnyJSExpression | T = parseMaybeConditional(
@@ -393,7 +386,7 @@ function _parseMaybeAssign<T extends AnyNode>(
 		const leftPatt = toAssignmentPattern(parser, left, "assignment expression");
 
 		// reset because shorthand default was used correctly
-		refShorthandDefaultPos.index = ob1Number0;
+		refShorthandDefaultPos.index = 0;
 
 		checkLVal(parser, leftPatt, undefined, undefined, "assignment expression");
 
@@ -416,7 +409,7 @@ function _parseMaybeAssign<T extends AnyNode>(
 				right,
 			},
 		);
-	} else if (failOnShorthandAssign && ob1Get0(refShorthandDefaultPos.index) > 0) {
+	} else if (failOnShorthandAssign && refShorthandDefaultPos.index > 0) {
 		unexpectedToken(
 			parser,
 			parser.getPositionFromIndex(refShorthandDefaultPos.index),
@@ -441,12 +434,12 @@ export function parseMaybeConditional(
 
 	if (
 		expr.type === "JSArrowFunctionExpression" &&
-		parser.getInputStartIndex(expr) === potentialArrowAt
+		parser.getInputStartIndex(expr).equal(potentialArrowAt)
 	) {
 		return expr;
 	}
 
-	if (refShorthandDefaultPos && ob1Get0(refShorthandDefaultPos.index) > 0) {
+	if (refShorthandDefaultPos && refShorthandDefaultPos.index > 0) {
 		return expr;
 	}
 
@@ -465,7 +458,7 @@ export function tryParseConditionalConsequent(
 	}>(parser);
 
 	brancher.add(() => {
-		parser.state.noArrowParamsConversionAt.push(parser.getIndex());
+		parser.state.noArrowParamsConversionAt.push(parser.state.startIndex);
 		const consequent = parseMaybeAssign(parser, "conditional consequent");
 		parser.state.noArrowParamsConversionAt.pop();
 		return {
@@ -504,7 +497,7 @@ export function parseConditional(
 		if (branch.hasBranch()) {
 			return branch.pick();
 		} else {
-			refNeedsArrowPos.index = parser.getIndex();
+			refNeedsArrowPos.index = parser.state.startIndex;
 			return expr;
 		}
 	}
@@ -556,11 +549,11 @@ export function forwardNoArrowParamsConversionAt<T>(
 ): T {
 	if (
 		parser.state.noArrowParamsConversionAt.includes(
-			parser.getIndexFromPosition(start, parser.path),
+			parser.getIndexFromPosition(start).valueOf(),
 		)
 	) {
 		let result: T;
-		parser.state.noArrowParamsConversionAt.push(parser.getIndex());
+		parser.state.noArrowParamsConversionAt.push(parser.state.startIndex);
 		result = parse();
 		parser.state.noArrowParamsConversionAt.pop();
 		return result;
@@ -605,11 +598,11 @@ export function parseExpressionOps(
 
 	if (
 		expr.type === "JSArrowFunctionExpression" &&
-		parser.getInputStartIndex(expr) === potentialArrowAt
+		parser.getInputStartIndex(expr).equal(potentialArrowAt)
 	) {
 		return expr;
 	}
-	if (refShorthandDefaultPos && ob1Get0(refShorthandDefaultPos.index) > 0) {
+	if (refShorthandDefaultPos && refShorthandDefaultPos.index > 0) {
 		return expr;
 	}
 
@@ -753,7 +746,7 @@ export function parseMaybeUnary(
 
 		const argument = parseMaybeUnary(parser, context);
 
-		if (refShorthandDefaultPos && ob1Get0(refShorthandDefaultPos.index) > 0) {
+		if (refShorthandDefaultPos && refShorthandDefaultPos.index > 0) {
 			unexpectedToken(
 				parser,
 				parser.getPositionFromIndex(refShorthandDefaultPos.index),
@@ -826,7 +819,7 @@ export function parseMaybeUnary(
 		context,
 		refShorthandDefaultPos,
 	);
-	if (refShorthandDefaultPos && ob1Get0(refShorthandDefaultPos.index) > 0) {
+	if (refShorthandDefaultPos && refShorthandDefaultPos.index > 0) {
 		return expr;
 	}
 
@@ -862,12 +855,12 @@ export function parseExpressionWithPossibleSubscripts(
 
 	if (
 		expr.type === "JSArrowFunctionExpression" &&
-		parser.getInputStartIndex(expr) === potentialArrowAt
+		parser.getInputStartIndex(expr).equal(potentialArrowAt)
 	) {
 		return expr;
 	}
 
-	if (refShorthandDefaultPos && ob1Get0(refShorthandDefaultPos.index) > 0) {
+	if (refShorthandDefaultPos && refShorthandDefaultPos.index > 0) {
 		return expr;
 	}
 
@@ -886,7 +879,7 @@ export function parseSubscripts(
 		base.type === "JSReferenceIdentifier" &&
 		base.name === "async" &&
 		parser.state.noArrowAt.includes(
-			parser.getIndexFromPosition(startPos, parser.path),
+			parser.getIndexFromPosition(startPos).valueOf(),
 		)
 	) {
 		const argsStart = parser.getPosition();
@@ -1234,8 +1227,8 @@ export function parseExpressionSubscript(
 		const oldYieldPos = parser.state.yieldPos;
 		const oldAwaitPos = parser.state.awaitPos;
 		parser.state.maybeInArrowParameters = true;
-		parser.state.yieldPos = ob1Number0;
-		parser.state.awaitPos = ob1Number0;
+		parser.state.yieldPos = 0;
+		parser.state.awaitPos = 0;
 
 		const argsStart = parser.getPosition();
 		const openContext = expectOpening(
@@ -1247,7 +1240,7 @@ export function parseExpressionSubscript(
 		const callee = base;
 
 		const oldCommaAfterSpreadAt = parser.state.commaAfterSpreadAt;
-		parser.state.commaAfterSpreadAt = ob1Number0Neg1;
+		parser.state.commaAfterSpreadAt = -1;
 
 		let {args, params} = parseCallExpressionArguments(
 			parser,
@@ -1332,8 +1325,8 @@ export function parseTaggedTemplateExpression(
 
 export function checkYieldAwaitInDefaultParams(parser: JSParser) {
 	if (
-		ob1Get0(parser.state.yieldPos) > 0 &&
-		(parser.state.awaitPos === ob1Number0 ||
+		parser.state.yieldPos > 0 &&
+		(parser.state.awaitPos === 0 ||
 		parser.state.yieldPos < parser.state.awaitPos)
 	) {
 		unexpectedDiagnostic(
@@ -1345,7 +1338,7 @@ export function checkYieldAwaitInDefaultParams(parser: JSParser) {
 		);
 	}
 
-	if (ob1Get0(parser.state.awaitPos) > 0) {
+	if (parser.state.awaitPos > 0) {
 		unexpectedDiagnostic(
 			parser,
 			{
@@ -1365,7 +1358,7 @@ export function atPossibleAsync(
 	return (
 		base.type === "JSReferenceIdentifier" &&
 		base.name === "async" &&
-		parser.state.lastEndIndex === end &&
+		parser.state.lastEndIndex === end.valueOf() &&
 		!canInsertSemicolon(parser) &&
 		parser.getRawInput(start, end) === "async"
 	);
@@ -1613,13 +1606,12 @@ export function parseExpressionAtom(
 		readRegexp(parser);
 	}
 
-	const canBeArrow = parser.state.potentialArrowAt === parser.getIndex();
+	const canBeArrow = parser.state.potentialArrowAt === parser.state.startIndex;
 
 	// We don't want to match <! as it's the start of a HTML comment
 	if (
 		isRelational(parser, "<") &&
-		parser.input.charCodeAt(ob1Get0(parser.state.index)) !==
-		charCodes.exclamationMark
+		parser.input.charCodeAt(parser.state.index) !== charCodes.exclamationMark
 	) {
 		// In case we encounter an lt token here it will always be the start of
 		// jsx as the lt sign is not allowed in places that expect an expression
@@ -1905,7 +1897,7 @@ export function parseParenAndDistinguishExpression(
 	canBeArrow: boolean,
 ): AnyJSExpression {
 	const startPos = parser.getPosition();
-	const startIndex = parser.getIndex();
+	const startIndex = parser.state.startIndex;
 
 	if (parser.state.noArrowAt.includes(startIndex)) {
 		canBeArrow = false;
@@ -1924,8 +1916,8 @@ export function parseParenAndDistinguishExpression(
 	const oldYield = parser.state.yieldInPossibleArrowParameters;
 	parser.state.maybeInArrowParameters = true;
 	parser.state.yieldInPossibleArrowParameters = undefined;
-	parser.state.yieldPos = ob1Number0;
-	parser.state.awaitPos = ob1Number0;
+	parser.state.yieldPos = 0;
+	parser.state.awaitPos = 0;
 
 	const innerStart = parser.getPosition();
 	const exprList: ToReferencedItem[] = [];
@@ -1943,7 +1935,7 @@ export function parseParenAndDistinguishExpression(
 				!expect(
 					parser,
 					tt.comma,
-					refNeedsArrowPos.index === ob1Number0
+					refNeedsArrowPos.index === 0
 						? undefined
 						: parser.getPositionFromIndex(refNeedsArrowPos.index),
 				)
@@ -2067,14 +2059,14 @@ export function parseParenAndDistinguishExpression(
 		unexpectedToken(parser, spreadStart);
 	}
 
-	if (ob1Get0(refShorthandDefaultPos.index) > 0) {
+	if (refShorthandDefaultPos.index > 0) {
 		unexpectedToken(
 			parser,
 			parser.getPositionFromIndex(refShorthandDefaultPos.index),
 		);
 	}
 
-	if (ob1Get0(refNeedsArrowPos.index) > 0) {
+	if (refNeedsArrowPos.index > 0) {
 		unexpectedToken(parser, parser.getPositionFromIndex(refNeedsArrowPos.index));
 	}
 
@@ -2727,7 +2719,7 @@ type ParseObjectMethodOpts = {
 	isGenerator: boolean;
 	isAsync: boolean;
 	isPattern: boolean;
-	escapePosition: undefined | Number0;
+	escapePosition: undefined | number;
 };
 
 export function parseObjectMethod(
@@ -2893,8 +2885,8 @@ export function parseObjectProperty(
 			);
 
 			if (match(parser, tt.eq) && refShorthandDefaultPos) {
-				if (refShorthandDefaultPos.index === ob1Number0) {
-					refShorthandDefaultPos.index = parser.getIndex();
+				if (refShorthandDefaultPos.index === 0) {
+					refShorthandDefaultPos.index = parser.state.startIndex;
 				}
 
 				value = parseMaybeDefault(parser, start, value);
@@ -2930,7 +2922,7 @@ type ParseObjectPropValueOpts = {
 	isAsync: boolean;
 	isPattern: boolean;
 	refShorthandDefaultPos: undefined | IndexTracker;
-	escapePosition: undefined | Number0;
+	escapePosition: undefined | number;
 };
 
 export function parseObjectPropertyValue(
@@ -2949,7 +2941,7 @@ export function parseObjectPropertyValue(
 	| JSObjectMethod
 	| JSObjectProperty
 	| JSBindingObjectPatternProperty {
-	// parse type parameters for object method shorthand
+	// Parse type parameters for object method shorthand
 	let typeParameters = maybeParseTSTypeParameters(parser);
 	if (typeParameters !== undefined && !match(parser, tt.parenL)) {
 		unexpectedToken(parser);
@@ -3074,8 +3066,8 @@ export function parseMethod(
 	pushScope(parser, "NON_ARROW_FUNCTION");
 	pushScope(parser, "METHOD", kind);
 	pushScope(parser, "GENERATOR", isGenerator);
-	parser.state.yieldPos = ob1Number0;
-	parser.state.awaitPos = ob1Number0;
+	parser.state.yieldPos = 0;
+	parser.state.awaitPos = 0;
 
 	const allowTSModifiers = isConstructor;
 	const headStart = parser.getPosition();
@@ -3177,8 +3169,8 @@ export function parseArrowExpression(
 	const oldMaybeInArrowParameters = parser.state.maybeInArrowParameters;
 	pushScope(parser, "GENERATOR", false);
 	parser.state.maybeInArrowParameters = false;
-	parser.state.yieldPos = ob1Number0;
-	parser.state.awaitPos = ob1Number0;
+	parser.state.yieldPos = 0;
+	parser.state.awaitPos = 0;
 
 	const headEnd = parser.getLastEndPosition();
 
@@ -3450,11 +3442,12 @@ export function checkFunctionNameAndParams(
 		}
 	}
 
-	const startIndex = parser.getIndexFromPosition(start, parser.path);
 	if (
 		isArrowFunction &&
 		!force &&
-		parser.state.noArrowParamsConversionAt.includes(startIndex)
+		parser.state.noArrowParamsConversionAt.includes(
+			parser.getIndexFromPosition(start).valueOf(),
+		)
 	) {
 		return undefined;
 	}
@@ -3587,7 +3580,7 @@ export function parseCallArgument(
 		);
 
 		if (refTrailingCommaPos && match(parser, tt.comma)) {
-			refTrailingCommaPos.index = parser.getIndex();
+			refTrailingCommaPos.index = parser.state.startIndex;
 		}
 
 		return elt;
@@ -3729,9 +3722,8 @@ export function parseIdentifierName(
 		// context-managing code already ignored the keyword
 		if (
 			(name === "class" || name === "function") &&
-			(parser.state.lastEndIndex !== ob1Inc(parser.state.lastStartIndex) ||
-			parser.input.charCodeAt(ob1Get0(parser.state.lastStartIndex)) !==
-			charCodes.dot)
+			(parser.state.lastEndIndex !== parser.state.lastStartIndex + 1 ||
+			parser.input.charCodeAt(parser.state.lastStartIndex) !== charCodes.dot)
 		) {
 			parser.state.context.pop();
 		}
@@ -4000,10 +3992,10 @@ function parseRegExpLiteral(parser: JSParser): JSRegExpLiteral {
 	const {flags, pattern} = value;
 
 	const {diagnostics, expression} = parseRegExp({
-		// Advance past first slash
 		offsetPosition: {
 			line: start.line,
-			column: ob1Inc(start.column),
+			// Advance past first slash
+			column: start.column.add(1),
 		},
 		path: parser.path,
 		input: pattern,

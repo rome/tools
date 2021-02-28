@@ -26,6 +26,12 @@ JSRoot {
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
+			description: Object {
+				advice: Array []
+				categoryValue: "js"
+				category: Array ["parse"]
+				message: RAW_MARKUP {value: "arguments is a reserved word"}
+			}
 			location: Object {
 				integrity: undefined
 				language: "js"
@@ -33,15 +39,6 @@ JSRoot {
 				end: Position 2:17
 				path: UIDPath<core/uncategorised/547/input.js>
 				start: Position 2:8
-			}
-			description: Object {
-				advice: Array []
-				category: "parse"
-				categoryValue: "js"
-				message: Array [
-					"arguments"
-					RAW_MARKUP {value: " is a reserved word"}
-				]
 			}
 		}
 	]
@@ -102,8 +99,5 @@ JSRoot {
   > 2 │ const { arguments } = foo();
       │         ^^^^^^^^^
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

@@ -8,6 +8,7 @@
 		"jsx": "react",
 		"resolveJsonModule": true,
 		"noImplicitAny": true,
+		"noImplicitThis": true,
 		"allowSyntheticDefaultImports": true,
 		"downlevelIteration": true,
 		"noUnusedLocals": true,

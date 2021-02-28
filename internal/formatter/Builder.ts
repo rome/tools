@@ -16,7 +16,6 @@ import {
 import builders from "./builders/index";
 import * as n from "./node/index";
 import {Token, Tokens, concat, hardline, indent, join, mark} from "./tokens";
-import {ob1Get1} from "@internal/ob1";
 import {isRoot} from "@internal/ast-utils";
 import {DiagnosticLanguage} from "@internal/diagnostics";
 import {inferDiagnosticLanguageFromRootAST} from "@internal/cli-diagnostics";
@@ -231,8 +230,8 @@ export default class Builder {
 			return 0;
 		}
 
-		let aEndLine = ob1Get1(a.loc.end.line);
-		let bStartLine = ob1Get1(b.loc.start.line);
+		let aEndLine = a.loc.end.line.valueOf();
+		let bStartLine = b.loc.start.line.valueOf();
 
 		// Simple cases:
 		//  1. `a` and `b` are on the same line
@@ -264,7 +263,7 @@ export default class Builder {
 					seenComments.add(comment);
 
 					if (comment.loc !== undefined) {
-						aEndLine = Math.max(aEndLine, ob1Get1(comment.loc.end.line));
+						aEndLine = Math.max(aEndLine, comment.loc.end.line.valueOf());
 					}
 				}
 			}
@@ -277,7 +276,7 @@ export default class Builder {
 					}
 
 					if (comment.loc !== undefined) {
-						bStartLine = Math.min(bStartLine, ob1Get1(comment.loc.start.line));
+						bStartLine = Math.min(bStartLine, comment.loc.start.line.valueOf());
 					}
 				}
 			}

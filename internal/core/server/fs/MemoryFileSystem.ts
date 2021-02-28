@@ -29,6 +29,7 @@ import {
 	AbsoluteFilePath,
 	AbsoluteFilePathMap,
 	AbsoluteFilePathSet,
+	createRelativePath,
 } from "@internal/path";
 import {
 	CachedFileReader,
@@ -308,7 +309,7 @@ export default class MemoryFileSystem {
 							return;
 						}
 
-						const path = directoryPath.resolve(filename);
+						const path = directoryPath.resolve(createRelativePath(filename));
 						this.refreshPath(
 							path,
 							{onFoundDirectory, watcherId: id},

@@ -39,8 +39,8 @@ JSRoot {
 				start: Position 1:0
 			}
 			description: Object {
-				category: "parse"
 				categoryValue: "js"
+				category: Array ["parse"]
 				message: RAW_MARKUP {value: "Expected JSX closing fragment tag"}
 				advice: Array [
 					log {
@@ -68,8 +68,5 @@ JSRoot {
     <></something>
     ^^
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

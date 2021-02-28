@@ -7,6 +7,7 @@
 
 import {UnknownObject} from "@internal/typescript-helpers";
 import {
+	DIAGNOSTIC_CATEGORIES,
 	Diagnostic,
 	DiagnosticAdvice,
 	DiagnosticLocation,
@@ -134,10 +135,7 @@ export default class TestWorkerFile {
 		this.worker = worker;
 		this.projectDirectory = createAbsoluteFilePath(opts.projectDirectory);
 
-		this.snapshotManager = new SnapshotManager(
-			this,
-			createAbsoluteFilePath(opts.path),
-		);
+		this.snapshotManager = new SnapshotManager(this, opts.path);
 
 		this.onlyFocusedTests = false;
 		this.hasDiagnostics = false;
@@ -419,12 +417,15 @@ export default class TestWorkerFile {
 			struct,
 			{
 				description: {
-					category: "tests/failure",
+					category: DIAGNOSTIC_CATEGORIES["tests/failure"],
 				},
 				path: this.path,
 				cleanFrames,
 				stackAdviceOptions: {
 					importantPaths: new MixedPathSet([this.path]),
+				},
+				tags: {
+					internal: false,
 				},
 			},
 		);

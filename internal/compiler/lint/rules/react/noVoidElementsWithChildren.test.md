@@ -23,9 +23,6 @@ FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━�
     3   │ - </br>
       1 │ + <br·className={"dont-remove-class"}·/>
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -45,9 +42,6 @@ FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━�
 
   ✖ img is a void element tag and must not have children.
 
-    <img>invalid children</img>
-    ^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
   ℹ Safe fix
 
     1   │ - <img>
@@ -55,9 +49,6 @@ FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━�
     3   │ - </img>
       1 │ + <img·/>
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -77,17 +68,11 @@ FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━�
 
   ✖ hr is a void element tag and must not have children.
 
-    <hr children={'invalid children'} />
-    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
   ℹ Safe fix
 
   - <hr·children={"invalid·children"}·/>
   + <hr·/>
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -107,18 +92,12 @@ FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━�
 
   ✖ area is a void element tag and must not have dangerouslySetInnerHTML.
 
-    <area dangerouslySetInnerHTML={{__html: ''}}></area>
-    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
   ℹ Safe fix
 
     1   │ - <area·dangerouslySetInnerHTML={{__html:·""}}>
     2   │ - </area>
       1 │ + <area·/>
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -138,10 +117,6 @@ FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━�
 
   ✖ img is a void element tag and must not have children, or dangerouslySetInnerHTML.
 
-    <img dangerouslySetInnerHTML={{__html: ''}} children={'invalid children'}>invalid
-    children</img>
-    ^^^^^^^^^^^^^^^^^^
-
   ℹ Safe fix
 
     1   │ - <img·dangerouslySetInnerHTML={{__html:·""}}·children={"invalid·children"}>
@@ -149,9 +124,6 @@ FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━�
     3   │ - </img>
       1 │ + <img·/>
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -171,16 +143,10 @@ FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━�
 
   ✖ img is a void element tag and must not have children.
 
-    React.createElement('img', {children: 'child'})
-                                ^^^^^^^^^^^^^^^^^
-
   ℹ Safe fix
 
   - React.createElement("img",·{children:·"child"})
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -200,16 +166,10 @@ FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━�
 
   ✖ img is a void element tag and must not have dangerouslySetInnerHTML.
 
-    React.createElement('img', {dangerouslySetInnerHTML: {__html: 'child'}})
-                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
   ℹ Safe fix
 
   - React.createElement("img",·{dangerouslySetInnerHTML:·{__html:·"child"}})
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -237,9 +197,6 @@ FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━�
   - React.createElement("img",·{},·"child")
   + React.createElement("img",·{})
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -259,16 +216,10 @@ React.createElement("img", {});
 
   ✖ img is a void element tag and must not have children.
 
-    createElement('img', {children: 'child'})
-                          ^^^^^^^^^^^^^^^^^
-
   ℹ Safe fix
 
   - createElement("img",·{children:·"child"})
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -288,16 +239,10 @@ React.createElement("img", {});
 
   ✖ img is a void element tag and must not have dangerouslySetInnerHTML.
 
-    createElement('img', {dangerouslySetInnerHTML: {__html: 'child'}})
-                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
   ℹ Safe fix
 
   - createElement("img",·{dangerouslySetInnerHTML:·{__html:·"child"}})
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -325,9 +270,6 @@ React.createElement("img", {});
   - createElement("img",·{},·"child")
   + createElement("img",·{})
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -341,7 +283,6 @@ createElement("img", {});
 ### `11`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -357,7 +298,6 @@ createElement("img", {});
 ### `12`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -371,7 +311,6 @@ createElement("img", {});
 ### `13`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -385,7 +324,6 @@ createElement("img", {});
 ### `14`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -399,7 +337,6 @@ createElement("img", {});
 ### `15`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -413,7 +350,6 @@ React.createElement("img", {});
 ### `16`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -427,7 +363,6 @@ React.createElement("div", {dangerouslySetInnerHTML: {__html: "child"}});
 ### `17`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -441,7 +376,6 @@ React.createElement("div", {}, "child");
 ### `18`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -455,7 +389,6 @@ createElement("img", {});
 ### `19`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -469,7 +402,6 @@ createElement("div", {dangerouslySetInnerHTML: {__html: "child"}});
 ### `20`
 
 ```
-✔ No known problems!
 
 ```
 

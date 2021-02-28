@@ -3,15 +3,16 @@ import {AnyMarkups, StaticMarkup, markup} from "@internal/markup";
 import {buildSuggestionAdvice} from "../helpers";
 import {SourceLocation} from "@internal/parser-core";
 import {AnyPath} from "@internal/path";
+import {DIAGNOSTIC_CATEGORIES} from "../categories";
 
 // @internal/js-analysis
 export const typeCheck = createDiagnosticsCategory({
 	NOT_CALLABLE: {
-		category: "typeCheck/uncallable",
+		category: DIAGNOSTIC_CATEGORIES["typeCheck/uncallable"],
 		message: markup`This type isn't callable`,
 	},
 	INCOMPATIBILITY: (upper: StaticMarkup, originLoc: undefined | SourceLocation) => ({
-		category: "typeCheck/incompatible",
+		category: DIAGNOSTIC_CATEGORIES["typeCheck/incompatible"],
 		message: markup`Type incompatibility found`,
 		advice: [
 			{
@@ -39,27 +40,27 @@ export const typeCheck = createDiagnosticsCategory({
 		source: AnyPath,
 		possibleNames: string[],
 	) => ({
-		category: "typeCheck/unknownImport",
+		category: DIAGNOSTIC_CATEGORIES["typeCheck/unknownImport"],
 		message: markup`Unknown import '${importedName}' in '${source}'`,
 		advice: buildSuggestionAdvice(importedName, possibleNames),
 	}),
 	UNKNOWN_PROP: (key: string, possibleNames: string[]) => ({
 		message: markup`Property ${key} not found in`,
-		category: "typeCheck/unknownProperty",
+		category: DIAGNOSTIC_CATEGORIES["typeCheck/unknownProperty"],
 		advice: buildSuggestionAdvice(key, possibleNames),
 	}),
 	UNDECLARED_VARIABLE: (name: string, possibleNames: string[]) => ({
-		category: "typeCheck/undeclaredVariable",
+		category: DIAGNOSTIC_CATEGORIES["typeCheck/undeclaredVariable"],
 		message: markup`Undeclared variable ${name}`,
 		advice: buildSuggestionAdvice(name, possibleNames),
 	}),
 	NOT_EXHAUSTIVE: (only: StaticMarkup, target: StaticMarkup) => ({
-		category: "typeCheck/notExhaustive",
+		category: DIAGNOSTIC_CATEGORIES["typeCheck/notExhaustive"],
 		//message += `but allows ${this.extraenous.map(type => this.utils.humanize(type)).join(' | ')}`;
 		message: markup`Expected only a ${only} but got ${target}`,
 	}),
 	MISSING_CONDITION: (missing: AnyMarkups) => ({
-		category: "typeCheck/missingCondition",
+		category: DIAGNOSTIC_CATEGORIES["typeCheck/missingCondition"],
 		message: markup`Missing the conditions ${missing.join(", ")}`,
 	}),
 });

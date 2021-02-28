@@ -1,4 +1,4 @@
-import {Number0} from "@internal/ob1";
+import {ZeroIndexed} from "@internal/math";
 import {DiagnosticLanguage, DiagnosticSourceType} from "@internal/diagnostics";
 import {AnyPath} from "@internal/path";
 import {MarkupTokenType, StaticMarkup} from "@internal/markup";
@@ -13,8 +13,8 @@ export type AnsiHighlightOptions = {
 };
 
 export type TokenShape = {
-	start: Number0;
-	end: Number0;
+	start: ZeroIndexed;
+	end: ZeroIndexed;
 };
 
 export type ReduceCallbackResult = {

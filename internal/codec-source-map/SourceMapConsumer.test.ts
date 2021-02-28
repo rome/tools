@@ -1,14 +1,17 @@
 import {test} from "rome";
 import {getParsedMappingKey} from "@internal/codec-source-map/SourceMapConsumer";
-import {ob1Coerce0, ob1Coerce1} from "@internal/ob1";
+import {OneIndexed, ZeroIndexed} from "@internal/math";
 import {SourceMapConsumer} from "@internal/codec-source-map/index";
 
 test(
 	"Should return `line`:`column`",
 	async (t) => {
-		t.is(getParsedMappingKey(ob1Coerce1(1), ob1Coerce0(0)), "1:0");
-		t.is(getParsedMappingKey(ob1Coerce1(5), ob1Coerce0(76)), "5:76");
-		t.is(getParsedMappingKey(ob1Coerce1(2_780), ob1Coerce0(4_392)), "2780:4392");
+		t.is(getParsedMappingKey(new OneIndexed(), new ZeroIndexed()), "1:0");
+		t.is(getParsedMappingKey(new OneIndexed(5), new ZeroIndexed(76)), "5:76");
+		t.is(
+			getParsedMappingKey(new OneIndexed(2_780), new ZeroIndexed(4_392)),
+			"2780:4392",
+		);
 	},
 );
 
@@ -51,51 +54,51 @@ test(
 		const world = {
 			found: true,
 			source: "js/test.js",
-			line: ob1Coerce1(2),
-			column: ob1Coerce0(6),
+			line: new OneIndexed(2),
+			column: new ZeroIndexed(6),
 			name: "world",
 		};
 
 		const foo = {
 			found: true,
 			source: "js/test.js",
-			line: ob1Coerce1(4),
-			column: ob1Coerce0(9),
+			line: new OneIndexed(4),
+			column: new ZeroIndexed(9),
 			name: "foo",
 		};
 
 		const hello = {
 			found: true,
 			source: "js/test.js",
-			line: ob1Coerce1(8),
-			column: ob1Coerce0(9),
+			line: new OneIndexed(8),
+			column: new ZeroIndexed(9),
 			name: "hello",
 		};
 
 		t.looksLike(
-			consumer.approxOriginalPositionFor(ob1Coerce1(2), ob1Coerce0(5)),
+			consumer.approxOriginalPositionFor(new OneIndexed(2), new ZeroIndexed(5)),
 			world,
 		);
 		t.looksLike(
-			consumer.exactOriginalPositionFor(ob1Coerce1(2), ob1Coerce0(4)),
+			consumer.exactOriginalPositionFor(new OneIndexed(2), new ZeroIndexed(4)),
 			world,
 		);
 
 		t.looksLike(
-			consumer.approxOriginalPositionFor(ob1Coerce1(2), ob1Coerce0(24)),
+			consumer.approxOriginalPositionFor(new OneIndexed(2), new ZeroIndexed(24)),
 			foo,
 		);
 		t.looksLike(
-			consumer.exactOriginalPositionFor(ob1Coerce1(2), ob1Coerce0(23)),
+			consumer.exactOriginalPositionFor(new OneIndexed(2), new ZeroIndexed(23)),
 			foo,
 		);
 
 		t.looksLike(
-			consumer.approxOriginalPositionFor(ob1Coerce1(2), ob1Coerce0(49)),
+			consumer.approxOriginalPositionFor(new OneIndexed(2), new ZeroIndexed(49)),
 			hello,
 		);
 		t.looksLike(
-			consumer.exactOriginalPositionFor(ob1Coerce1(2), ob1Coerce0(48)),
+			consumer.exactOriginalPositionFor(new OneIndexed(2), new ZeroIndexed(48)),
 			hello,
 		);
 	},

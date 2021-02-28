@@ -2,6 +2,7 @@ import {createDiagnosticsCategory} from "./index";
 import {markup} from "@internal/markup";
 import {AbsoluteFilePath, AnyPath} from "@internal/path";
 import {DiagnosticAdvice} from "../types";
+import {DIAGNOSTIC_CATEGORIES} from "@internal/diagnostics";
 
 export const files = createDiagnosticsCategory({
 	NO_FILE_HANDLER: (path: AnyPath) => {
@@ -18,7 +19,7 @@ export const files = createDiagnosticsCategory({
 		}
 
 		return {
-			category: "files/missingHandler",
+			category: DIAGNOSTIC_CATEGORIES["files/missingHandler"],
 			message: markup`No file handler found for <emphasis>${path}</emphasis>`,
 			advice,
 		};
@@ -32,7 +33,7 @@ export const files = createDiagnosticsCategory({
 		const relative = projectPath.relative(path).join();
 
 		return {
-			category: "files/tooBig",
+			category: DIAGNOSTIC_CATEGORIES["files/tooBig"],
 			message: markup`Size of <emphasis>${path}</emphasis> is <filesize>${String(
 				size,
 			)}</filesize> which exceeds the project maximum of <filesize>${String(

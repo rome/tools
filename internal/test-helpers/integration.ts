@@ -11,12 +11,12 @@ import {
 import {
 	AbsoluteFilePath,
 	AbsoluteFilePathMap,
-	RelativeFilePath,
+	RelativePath,
 	TEMP_PATH,
 	UIDPath,
 	createAbsoluteFilePath,
 	createAnyPath,
-	createRelativeFilePath,
+	createRelativePath,
 	createUIDPath,
 } from "@internal/path";
 import {JSONObject, json} from "@internal/codec-config";
@@ -68,11 +68,8 @@ type IntegrationTestHelper = {
 	bridge: BridgeClient<typeof ServerBridge>;
 	client: Client;
 	server: Server;
-	readFile: (relative: RelativeFilePath | string) => Promise<string>;
-	writeFile: (
-		relative: RelativeFilePath | string,
-		content: string,
-	) => Promise<void>;
+	readFile: (relative: RelativePath | string) => Promise<string>;
+	writeFile: (relative: RelativePath | string, content: string) => Promise<void>;
 	createRequest: (query?: PartialServerQueryRequest) => Promise<ServerRequest>;
 };
 
@@ -165,31 +162,39 @@ export function createMockWorker(force: boolean = false): IntegrationWorker {
 	let projectIdCounter = 0;
 
 	async function performFileOperation<T>(
-		{
-			project = defaultProjectId,
-			real,
-			sourceText,
-			uid,
-		}: IntegrationWorkerFileRefOptions,
+		opts: IntegrationWorkerFileRefOptions,
 		callback: (ref: FileReference) => Promise<T>,
 	): Promise<T> {
-		let relative = createRelativeFilePath(uid);
+		const {
+			project = defaultProjectId,
+			sourceText,
+		} = opts;
 
-		if (real === undefined && sourceText === undefined) {
+		let relative = createRelativePath(
+			typeof opts.uid === "string" ? opts.uid : opts.uid.format(),
+		);
+
+		if (opts.real === undefined && opts.sourceText === undefined) {
 			throw new Error("real and sourceText cannot be undefined");
 		}
 
-		if (real === undefined) {
+		let real: AbsoluteFilePath;
+		if (opts.real === undefined) {
 			real = createAbsoluteFilePath(`/project-${project}`).append(relative);
+		} else if (typeof opts.real === "string") {
+			real = createAbsoluteFilePath(opts.real);
 		} else {
-			real = createAbsoluteFilePath(real);
+			real = opts.real;
 		}
+
+		const uid =
+			typeof opts.uid === "string" ? createUIDPath(opts.uid) : opts.uid;
 
 		const ref: FileReference = {
 			project,
 			manifest: undefined,
 			remote: false,
-			uid: createUIDPath(uid),
+			uid,
 			relative,
 			real,
 		};
@@ -462,12 +467,12 @@ export function createIntegrationTest(
 					bridge,
 					client,
 					server,
-					async readFile(relative: RelativeFilePath | string): Promise<string> {
+					async readFile(relative: RelativePath | string): Promise<string> {
 						const absolute = projectPath.append(relative);
 						return readFileText(absolute);
 					},
 					async writeFile(
-						relative: RelativeFilePath | string,
+						relative: RelativePath | string,
 						content: string,
 					): Promise<void> {
 						const absolute = projectPath.append(relative);

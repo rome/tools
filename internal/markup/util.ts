@@ -2,11 +2,12 @@ import {Consumer, consumeUnknown} from "@internal/consume";
 import {MarkupFormatOptions, MarkupParsedAttributes} from "./types";
 import {humanizeNumber} from "@internal/string-utils";
 import {AnyPath, createAnyPath} from "@internal/path";
-import {ob1Coerce0, ob1Coerce1, ob1Get0, ob1Get1} from "@internal/ob1";
 import {StaticMarkup} from "./escape";
+import {DIAGNOSTIC_CATEGORIES} from "@internal/diagnostics";
+import {OneIndexed, ZeroIndexed} from "@internal/math";
 
 export function createEmptyAttributes(): Consumer {
-	return consumeUnknown({}, "parse", "romemarkup");
+	return consumeUnknown({}, DIAGNOSTIC_CATEGORIES.parse, "romemarkup");
 }
 
 export function isSingleEscaped(markup: StaticMarkup): markup is [string] {
@@ -47,16 +48,16 @@ export function buildFileLink(
 	if (opts.normalizePosition !== undefined) {
 		const pos = opts.normalizePosition(
 			path,
-			line === undefined ? undefined : ob1Coerce1(line),
-			column === undefined ? undefined : ob1Coerce0(column),
+			line === undefined ? undefined : new OneIndexed(line),
+			column === undefined ? undefined : new ZeroIndexed(column),
 		);
 		if (pos !== undefined) {
 			path = pos.path;
 			if (pos.line !== undefined) {
-				line = ob1Get1(pos.line);
+				line = pos.line.valueOf();
 			}
 			if (pos.column !== undefined) {
-				column = ob1Get0(pos.column);
+				column = pos.column.valueOf();
 			}
 		}
 	}

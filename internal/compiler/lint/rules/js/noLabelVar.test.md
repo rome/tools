@@ -18,9 +18,6 @@
 
   ℹ Creating a label with the same name as an in-scope variable leads to confusion.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -35,7 +32,6 @@ x: expr;
 ### `1`
 
 ```
-✔ No known problems!
 
 ```
 

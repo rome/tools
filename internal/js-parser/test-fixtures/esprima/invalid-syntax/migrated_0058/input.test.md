@@ -36,6 +36,12 @@ JSRoot {
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
+			description: Object {
+				advice: Array []
+				categoryValue: "js"
+				category: Array ["parse"]
+				message: RAW_MARKUP {value: "Unknown start to an array element"}
+			}
 			location: Object {
 				integrity: undefined
 				language: "js"
@@ -43,15 +49,6 @@ JSRoot {
 				end: Position 1:2
 				path: UIDPath<esprima/invalid-syntax/migrated_0058/input.js>
 				start: Position 2:0
-			}
-			description: Object {
-				advice: Array []
-				category: "parse"
-				categoryValue: "js"
-				message: Array [
-					RAW_MARKUP {value: "Unknown start to an "}
-					"array element"
-				]
 			}
 		}
 	]
@@ -68,8 +65,5 @@ JSRoot {
 
     [,
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

@@ -10,14 +10,14 @@ CSSRoot {
 	corrupt: false
 	integrity: undefined
 	loc: SourceLocation invalid/selector4/input.css 1:0-3:1
-	path: RelativeFilePath<invalid/selector4/input.css>
+	path: RelativePath<invalid/selector4/input.css>
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse"
 				categoryValue: "css"
+				category: Array ["parse"]
 				message: RAW_MARKUP {value: "Expected to close attribute selector with a right square bracket <emphasis>]</emphasis>."}
 			}
 			location: Object {
@@ -25,7 +25,7 @@ CSSRoot {
 				language: "css"
 				sourceText: undefined
 				end: Position 1:14
-				path: RelativeFilePath<invalid/selector4/input.css>
+				path: RelativePath<invalid/selector4/input.css>
 				start: Position 1:13
 			}
 		}

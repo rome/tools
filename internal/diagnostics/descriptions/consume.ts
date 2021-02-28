@@ -1,7 +1,7 @@
 import {createDiagnosticsCategory} from "./index";
 import {markup} from "@internal/markup";
 import {buildSuggestionAdvice} from "../helpers";
-import {UnknownNumber, ob1Get} from "@internal/ob1";
+import {UnknownNumber} from "@internal/math";
 
 // @internal/consume
 export const consume = createDiagnosticsCategory({
@@ -19,6 +19,7 @@ export const consume = createDiagnosticsCategory({
 	EXPECTED_NUMBER: {message: markup`Expected a number`},
 	EXPECTED_URL: {message: markup`Expected a URL`},
 	EXPECTED_VALID_NUMBER: {message: markup`Expected valid number`},
+	EXPECTED_FILE_PATH: {message: markup`Expected a file path`},
 	EXPECTED_ABSOLUTE_PATH: {message: markup`Expected an absolute file path`},
 	EXPECTED_RELATIVE_PATH: {message: markup`Expected a relative file path`},
 	EXPECTED_EXPLICIT_RELATIVE_PATH: {
@@ -26,15 +27,15 @@ export const consume = createDiagnosticsCategory({
 	},
 	INVALID: {message: markup`Invalid value`},
 	EXPECTED_NUMBER_BETWEEN: (min: UnknownNumber, max: UnknownNumber) => ({
-		message: markup`Expected number between ${String(ob1Get(min))} and ${String(
-			ob1Get(max),
+		message: markup`Expected number between ${String(min.valueOf())} and ${String(
+			max.valueOf(),
 		)}`,
 	}),
 	EXPECTED_NUMBER_HIGHER: (num: UnknownNumber) => ({
-		message: markup`Expected number higher than ${String(ob1Get(num))}`,
+		message: markup`Expected number higher than ${String(num.valueOf())}`,
 	}),
 	EXPECTED_NUMBER_LOWER: (num: UnknownNumber) => ({
-		message: markup`Expected number lower than ${String(ob1Get(num))}`,
+		message: markup`Expected number lower than ${String(num.valueOf())}`,
 	}),
 	INVALID_NUMBER_SET_VALUE: (value: number, validValues: number[]) => ({
 		message: markup`Invalid number <emphasis>${value}</emphasis>`,

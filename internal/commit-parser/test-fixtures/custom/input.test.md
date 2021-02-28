@@ -16,6 +16,6 @@ CommitRoot {
 	rawBody: "commit with a custom commit type"
 	scope: ""
 	loc: SourceLocation custom/input.txt 1:0-1:39
-	path: RelativeFilePath<custom/input.txt>
+	path: RelativePath<custom/input.txt>
 }
 ```

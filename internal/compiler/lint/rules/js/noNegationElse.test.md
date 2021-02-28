@@ -26,9 +26,6 @@
       4 │ + → consequent;
     5 5 │   }
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -59,9 +56,6 @@ if (true) {
   - !true·?·consequent·:·alternate
   + true·?·alternate·:·consequent
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -75,7 +69,6 @@ true ? alternate : consequent;
 ### `2`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -91,7 +84,6 @@ if (!true) {
 ### `3`
 
 ```
-✔ No known problems!
 
 ```
 

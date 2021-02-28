@@ -524,27 +524,52 @@ export const jsParser = createDiagnosticsCategory({
 		message: markup`${word} is a reserved word`,
 	}),
 	UNEXPECTED_KEYWORD: (keyword: string) => ({
-		message: markup`Unexpected keyword ${keyword}`,
+		message: markup`Unexpected keyword <emphasis>${keyword}</emphasis>`,
 	}),
 	UNEXPECTED_TOKEN: (
-		expected: undefined | string,
-		possibleShiftMistake: boolean,
-	) => ({
-		message: expected === undefined
-			? markup`Unexpected token`
-			: markup`Unexpected token, expected ${expected}`,
-		advice: possibleShiftMistake
-			? [
-					{
-						type: "log",
-						category: "info",
-						text: markup`Did you accidently hold shift?`,
-					},
-				]
-			: [],
-	}),
+		{
+			expectedOpeningName,
+			receivedChar,
+			expectedChar,
+			possibleShiftMistake,
+		}: {
+			receivedChar: string;
+			expectedChar: undefined | string;
+			possibleShiftMistake: boolean;
+			expectedOpeningName?: string;
+		},
+	) => {
+		const advice: DiagnosticAdvice = [];
+
+		if (expectedChar !== undefined) {
+			let text;
+			if (expectedOpeningName === undefined) {
+				text = markup`Expected character <emphasis>${expectedChar}</emphasis>`;
+			} else {
+				text = markup`Expected the opening ${expectedOpeningName} character <emphasis>${expectedChar}</emphasis>`;
+			}
+			advice.push({
+				type: "log",
+				category: "info",
+				text,
+			});
+		}
+
+		if (possibleShiftMistake) {
+			advice.push({
+				type: "log",
+				category: "info",
+				text: markup`Did you accidently hold shift?`,
+			});
+		}
+
+		return {
+			message: markup`Unexpected character <emphasis>${receivedChar}</emphasis>`,
+			advice,
+		};
+	},
 	EXPECTED_CLOSING: (name: string, char: string, location: DiagnosticLocation) => ({
-		message: markup`Unclosed ${name}`,
+		message: markup`Unclosed <emphasis>${name}</emphasis>`,
 		advice: [
 			{
 				type: "log",
@@ -558,16 +583,16 @@ export const jsParser = createDiagnosticsCategory({
 		],
 	}),
 	EXPECTED_KEYWORD: (keyword: string) => ({
-		message: markup`Expected keyword ${keyword}`,
+		message: markup`Expected keyword <emphasis>${keyword}</emphasis>`,
 	}),
 	ESCAPE_SEQUENCE_IN_WORD: (word: string) => ({
-		message: markup`${word} can't contain a unicode escape`,
+		message: markup`<emphasis>${word}</emphasis> can't contain a unicode escape`,
 	}),
 	EXPECTED_ENABLE_SYNTAX: (syntaxName: string) => ({
-		message: markup`Expected ${syntaxName} syntax to be enabled`,
+		message: markup`Expected <emphasis>${syntaxName}</emphasis> syntax to be enabled`,
 	}),
 	UNEXPECTED_HASH: (exclamationFollowed: boolean) => ({
-		message: markup`Unexpected character #`,
+		message: markup`Unexpected character <emphasis>#</emphasis>`,
 		advice: exclamationFollowed
 			? [
 					{
@@ -594,12 +619,12 @@ export const jsParser = createDiagnosticsCategory({
 		],
 	}),
 	EXPECTED_NUMBER_IN_RADIX: (radix: number) => ({
-		message: markup`Expected number in radix ${String(radix)}`,
+		message: markup`Expected number in radix <emphasis>${String(radix)}</emphasis>`,
 	}),
 	INVALID_IDENTIFIER_NAME: (name: string) => ({
-		message: markup`Invalid identifier ${name}`,
+		message: markup`Invalid identifier <emphasis>${name}</emphasis>`,
 	}),
 	ESCAPE_SEQUENCE_IN_KEYWORD: (keyword: string) => ({
-		message: markup`Escape sequence in keyword ${keyword}`,
+		message: markup`Escape sequence in keyword <emphasis>${keyword}</emphasis>`,
 	}),
 });

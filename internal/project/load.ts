@@ -402,7 +402,7 @@ export async function normalizeProjectConfig(
 	if (categoryExists(files)) {
 		if (files.has("vendorPath")) {
 			config.files.vendorPath = projectDirectory.resolve(
-				files.get("vendorPath").asString(),
+				files.get("vendorPath").asFilePath(),
 			);
 		}
 
@@ -426,7 +426,7 @@ export async function normalizeProjectConfig(
 	const vcs = consumer.get("vcs");
 	if (categoryExists(vcs)) {
 		if (vcs.has("root")) {
-			config.vcs.root = projectDirectory.resolve(vcs.get("root").asString());
+			config.vcs.root = projectDirectory.resolve(vcs.get("root").asFilePath());
 		}
 		vcs.enforceUsedProperties("vcs config property");
 	}
@@ -503,9 +503,9 @@ async function normalizeTypeCheckingLibs(
 	const libFiles: AbsoluteFilePathSet = new AbsoluteFilePathSet();
 
 	// Normalize library directories
-	const directories: AbsoluteFilePath[] = arrayOfStrings(consumer).map((
-		libDirectory,
-	) => projectDirectory.resolve(libDirectory));
+	const directories: AbsoluteFilePath[] = consumer.asMappedArray((item) =>
+		projectDirectory.resolve(item.asFilePath())
+	);
 
 	// Crawl library directories and add their files
 	for (const directory of directories) {
@@ -531,9 +531,9 @@ async function extendProjectConfig(
 	context: LoadProjectConfigContext,
 	{partial: config, meta}: NormalizedPartial,
 ): Promise<NormalizedPartial> {
-	const extendsRelative = extendsStrConsumer.asString();
+	const extendsRelative = extendsStrConsumer.asFilePath();
 
-	if (extendsRelative === "parent") {
+	if (extendsRelative.join() === "parent") {
 		// TODO maybe do some magic here?
 	}
 

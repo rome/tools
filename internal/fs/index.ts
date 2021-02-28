@@ -10,10 +10,8 @@ import {
 	AbsoluteFilePathSet,
 	createAbsoluteFilePath,
 } from "@internal/path";
-import {
-	NodeSystemError,
-	convertPossibleNodeErrorToDiagnostic,
-} from "@internal/node";
+import {NodeSystemError} from "@internal/node";
+import {convertPossibleNodeErrorToDiagnostic} from "@internal/diagnostics";
 import {getEnvVar} from "@internal/cli-environment";
 import {
 	getErrorStructure,

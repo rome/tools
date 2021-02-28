@@ -39,6 +39,12 @@ JSRoot {
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
+			description: Object {
+				advice: Array []
+				categoryValue: "js"
+				category: Array ["parse"]
+				message: RAW_MARKUP {value: "Expected number in radix <emphasis>2</emphasis>"}
+			}
 			location: Object {
 				integrity: undefined
 				language: "js"
@@ -46,15 +52,6 @@ JSRoot {
 				end: Position 1:2
 				path: UIDPath<experimental/numeric-separator/invalid-26/input.js>
 				start: Position 1:2
-			}
-			description: Object {
-				advice: Array []
-				category: "parse"
-				categoryValue: "js"
-				message: Array [
-					RAW_MARKUP {value: "Expected number in radix "}
-					"2"
-				]
 			}
 		}
 	]
@@ -72,8 +69,5 @@ JSRoot {
     0b2_1
       ^
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

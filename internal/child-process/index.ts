@@ -3,6 +3,7 @@
 import childProcess = require("child_process");
 import {AbsoluteFilePath} from "@internal/path";
 import {
+	DIAGNOSTIC_CATEGORIES,
 	DiagnosticCategory,
 	createSingleDiagnosticError,
 } from "@internal/diagnostics";
@@ -79,7 +80,7 @@ export class ChildProcess {
 
 	public unexpected(
 		message: StaticMarkup,
-		category: DiagnosticCategory = "childProcess/failure",
+		category: DiagnosticCategory = DIAGNOSTIC_CATEGORIES["childProcess/failure"],
 	) {
 		throw createSingleDiagnosticError({
 			description: {

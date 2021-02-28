@@ -1,5 +1,5 @@
 {
-	"name": "@internal/ob1",
+	"name": "@internal/math",
 	"private": true,
 	"type": "module",
 	"main": "index.ts"

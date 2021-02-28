@@ -40,6 +40,12 @@ JSRoot {
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
+			description: Object {
+				advice: Array []
+				categoryValue: "js"
+				category: Array ["parse"]
+				message: RAW_MARKUP {value: "Unexpected character <emphasis>\u{1f012}</emphasis>"}
+			}
 			location: Object {
 				integrity: undefined
 				language: "js"
@@ -47,16 +53,6 @@ JSRoot {
 				end: Position 1:3
 				path: UIDPath<esprima/es2015-identifier/invalid_id_smp/input.js>
 				start: Position 1:4
-			}
-			description: Object {
-				advice: Array []
-				category: "parse"
-				categoryValue: "js"
-				message: Array [
-					RAW_MARKUP {value: "Unexpected character <emphasis>"}
-					"\u{1f012}"
-					RAW_MARKUP {value: "</emphasis>"}
-				]
 			}
 		}
 	]
@@ -74,8 +70,5 @@ JSRoot {
     var 🀒
         ^
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

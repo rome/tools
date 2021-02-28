@@ -18,9 +18,6 @@
   ℹ Deprecated blink are difficult to read and distract attention away from page content,
     especially for users with visual impairments.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -45,9 +42,6 @@
   ℹ Deprecated marquee are difficult to read and distract attention away from page content,
     especially for users with visual impairments.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -61,7 +55,6 @@
 ### `2`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -75,7 +68,6 @@
 ### `3`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -100,9 +92,6 @@
   ℹ Deprecated blink are difficult to read and distract attention away from page content,
     especially for users with visual impairments.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -128,9 +117,6 @@
   ℹ Deprecated marquee are difficult to read and distract attention away from page content,
     especially for users with visual impairments.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -145,7 +131,6 @@
 ### `6`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -160,7 +145,6 @@
 ### `7`
 
 ```
-✔ No known problems!
 
 ```
 

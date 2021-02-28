@@ -12,15 +12,8 @@
 
   ✖ The imported variable x is read-only.
 
-    1 │ import x from 'y';
-  > 2 │ x=1;
-      │ ^
-
   ℹ Use a local variable instead of reassigning an import.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -40,15 +33,8 @@ x = 1;
 
   ✖ The imported variable x is read-only.
 
-    1 │ import x from 'y';
-  > 2 │ [x]=1;
-      │  ^
-
   ℹ Use a local variable instead of reassigning an import.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -68,15 +54,8 @@ import x from "y";
 
   ✖ The imported variable x is read-only.
 
-    1 │ import x from 'y';
-  > 2 │ ({x}=1);
-      │   ^
-
   ℹ Use a local variable instead of reassigning an import.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -96,15 +75,8 @@ import x from "y";
 
   ✖ The imported variable x is read-only.
 
-    1 │ import x from 'y';
-  > 2 │ x++
-      │ ^
-
   ℹ Use a local variable instead of reassigning an import.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -124,15 +96,8 @@ x++;
 
   ✖ The imported variable x is read-only.
 
-    1 │ import x from 'y';
-  > 2 │ [...x]=1;
-      │     ^
-
   ℹ Use a local variable instead of reassigning an import.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -152,15 +117,8 @@ import x from "y";
 
   ✖ The imported variable x is read-only.
 
-    1 │ import x from 'y';
-  > 2 │ ({...x}=1);
-      │      ^
-
   ℹ Use a local variable instead of reassigning an import.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -180,15 +138,8 @@ import x from "y";
 
   ✖ The imported variable x is read-only.
 
-    1 │ import x from 'y';
-  > 2 │ for (x in y);
-      │      ^
-
   ℹ Use a local variable instead of reassigning an import.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -210,15 +161,8 @@ for (x in y) {
 
   ✖ The imported variable x is read-only.
 
-    1 │ import x from 'y';
-  > 2 │ x+=1
-      │ ^
-
   ℹ Use a local variable instead of reassigning an import.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -244,9 +188,6 @@ x += 1;
 
   ℹ Use a local variable instead of reassigning an import.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -272,9 +213,6 @@ x = 1;
 
   ℹ Use a local variable instead of reassigning an import.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
