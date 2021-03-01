@@ -100,7 +100,7 @@ type DiagnosticCategoryString = StringConverter<DiagnosticCategory>;
 
 type DiagnosticLintCategoryString = StringConverter<DiagnosticLintCategory>;
 
-/* GENERATED:START(hash:73d4d80f2f19e5e0af1a581d3749fd5ac177d9ac,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. */
+/* GENERATED:START(hash:3b94ccb81510bc041899cfb140e04143c7fafe99,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. */
 export type DiagnosticLintCategory =
 	| ["lint", "a11y", "noAriaUnsupportedElements"]
 	| ["lint", "a11y", "noDistractingElements"]
@@ -110,6 +110,7 @@ export type DiagnosticLintCategory =
 	| ["lint", "a11y", "useAltText"]
 	| ["lint", "a11y", "useAriaProptypes"]
 	| ["lint", "a11y", "useHtmlLang"]
+	| ["lint", "a11y", "useIframeTitle"]
 	| ["lint", "a11y", "useMediaCaption"]
 	| ["lint", "a11y", "useValidLang"]
 	| ["lint", "html", "useClosingNonVoid"]
@@ -173,7 +174,6 @@ export type DiagnosticLintCategory =
 	| ["lint", "jsx-a11y", "useAriaProps"]
 	| ["lint", "jsx-a11y", "useAriaPropsForRole"]
 	| ["lint", "jsx-a11y", "useHeadingContent"]
-	| ["lint", "jsx-a11y", "useIframeTitle"]
 	| ["lint", "jsx-a11y", "useKeyWithClickEvents"]
 	| ["lint", "jsx-a11y", "useKeyWithMouseEvents"]
 	| ["lint", "jsx-a11y", "useValidAnchor"]
@@ -240,6 +240,7 @@ const lintCategoryNameMap: {
 	"lint/a11y/useAltText": ["lint", "a11y", "useAltText"],
 	"lint/a11y/useAriaProptypes": ["lint", "a11y", "useAriaProptypes"],
 	"lint/a11y/useHtmlLang": ["lint", "a11y", "useHtmlLang"],
+	"lint/a11y/useIframeTitle": ["lint", "a11y", "useIframeTitle"],
 	"lint/a11y/useMediaCaption": ["lint", "a11y", "useMediaCaption"],
 	"lint/a11y/useValidLang": ["lint", "a11y", "useValidLang"],
 	"lint/html/useClosingNonVoid": ["lint", "html", "useClosingNonVoid"],
@@ -315,7 +316,6 @@ const lintCategoryNameMap: {
 		"useAriaPropsForRole",
 	],
 	"lint/jsx-a11y/useHeadingContent": ["lint", "jsx-a11y", "useHeadingContent"],
-	"lint/jsx-a11y/useIframeTitle": ["lint", "jsx-a11y", "useIframeTitle"],
 	"lint/jsx-a11y/useKeyWithClickEvents": [
 		"lint",
 		"jsx-a11y",

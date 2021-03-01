@@ -23,8 +23,7 @@
 ### `0: formatted`
 
 ```tsx
-<iframe />;
-
+<iframe />
 ```
 
 ### `1`
@@ -46,8 +45,7 @@
 ### `1: formatted`
 
 ```tsx
-<iframe {...props} />;
-
+<iframe {...props} />
 ```
 
 ### `2`
@@ -69,8 +67,7 @@
 ### `2: formatted`
 
 ```tsx
-<iframe title="" />;
-
+<iframe title="" />
 ```
 
 ### `3`
@@ -92,8 +89,7 @@
 ### `3: formatted`
 
 ```tsx
-<iframe title={""} />;
-
+<iframe title={""} />
 ```
 
 ### `4`
@@ -115,8 +111,7 @@
 ### `4: formatted`
 
 ```tsx
-<iframe title={""} />;
-
+<iframe title={""} />
 ```
 
 ### `5`
@@ -138,8 +133,7 @@
 ### `5: formatted`
 
 ```tsx
-<iframe title={undefined} />;
-
+<iframe title={undefined} />
 ```
 
 ### `6`
@@ -161,8 +155,7 @@
 ### `6: formatted`
 
 ```tsx
-<iframe title={false} />;
-
+<iframe title={false} />
 ```
 
 ### `7`
@@ -184,8 +177,7 @@
 ### `7: formatted`
 
 ```tsx
-<iframe title={true} />;
-
+<iframe title={true} />
 ```
 
 ### `8`
@@ -207,8 +199,7 @@
 ### `8: formatted`
 
 ```tsx
-<iframe title={42} />;
-
+<iframe title={42} />
 ```
 
 ### `9`
@@ -220,8 +211,7 @@
 ### `9: formatted`
 
 ```tsx
-<iframe title="title" />;
-
+<iframe title="title" />
 ```
 
 ### `10`
@@ -233,6 +223,5 @@
 ### `10: formatted`
 
 ```tsx
-<Iframe title="title" />;
-
+<Iframe title="title" />
 ```
