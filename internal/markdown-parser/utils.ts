@@ -1,8 +1,7 @@
-import { Tokens } from './types';
-import { TokenValues } from '@internal/parser-core';
+import {Tokens} from "./types";
+import {TokenValues, isDigit} from "@internal/parser-core";
 import {ZeroIndexed} from "@internal/math";
 import {MarkdownParser} from "@internal/markdown-parser/index";
-import {isDigit} from "@internal/parser-core";
 
 const THEMATIC_BREAKS = new Set(["***", "---", "___"]);
 
