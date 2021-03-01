@@ -4,43 +4,31 @@
 
 ## `individual > current-browser-version`
 
-### `result`
+### `error`
 
 ```javascript
-Array ["firefox:85"]
-```
-
-### `targets`
-
-```javascript
-Array [
-	TargetBrowserState {
-		browser: "Firefox"
-		state: "current"
-	}
-]
-```
-
-### `tokens`
-
-```javascript
-Array [
-	Current {
-		end: ZeroIndexedNumber<7>
-		start: ZeroIndexedNumber<0>
-	}
-	String {
-		value: "Firefox"
-		end: ZeroIndexedNumber<16>
-		start: ZeroIndexedNumber<8>
-	}
-	Versions {
-		end: ZeroIndexedNumber<24>
-		start: ZeroIndexedNumber<16>
-	}
-	EOF {
-		end: ZeroIndexedNumber<25>
-		start: ZeroIndexedNumber<25>
-	}
-]
+___R$project$rome$$internal$diagnostics$error$wrappers_ts$DiagnosticsError {
+	name: "DiagnosticsError"
+	_memoMessage: undefined
+	_message: "Expected an operator such as \"<emphasis>></emphasis>\", \"<emphasis>\\<</emphasis>\", \"<emphasis>>=</emphasis>\", \"<emphasis>\\<=</emphasis>\" or a version"
+	suppressions: Array []
+	diagnostics: Array [
+		Object {
+			description: Object {
+				advice: Array []
+				categoryValue: "browserquery"
+				category: Array ["parse"]
+				message: RAW_MARKUP {value: "Expected an operator such as \"<emphasis>></emphasis>\", \"<emphasis>\\<</emphasis>\", \"<emphasis>>=</emphasis>\", \"<emphasis>\\<=</emphasis>\" or a version"}
+			}
+			location: Object {
+				integrity: undefined
+				language: "browserquery"
+				sourceText: undefined
+				end: Position 2:0
+				path: RelativePath<individual/current-browser-version/input.txt>
+				start: Position 2:0
+			}
+		}
+	]
+}
 ```

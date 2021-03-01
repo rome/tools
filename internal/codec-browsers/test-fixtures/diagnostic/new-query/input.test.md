@@ -29,7 +29,7 @@ ___R$project$rome$$internal$diagnostics$error$wrappers_ts$DiagnosticsError {
 				advice: Array [
 					log {
 						category: "info"
-						text: RAW_MARKUP {value: "Available browser queries can be found at <hyperlink target=\"https://github.com/rome/tools/blob/main/internal/codec-browsers/README.md\"/>"}
+						text: RAW_MARKUP {value: "Available browser queries can be found at <hyperlink target=\"https://github.com/rome/tools/blob/main/internal/codec-browsers/README.md#queries\"/>"}
 					}
 				]
 			}
