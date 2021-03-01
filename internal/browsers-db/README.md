@@ -19,6 +19,12 @@ regions; // Region usage (check below)
 consumeUnknown(regions).get(...).as...(); // Recommended to wrap with Consumer
 ```
 
+## Browsers
+Currently supported browsers:
+
+`edge`, `firefox`, `chrome`, `safari`, `opera`, `ios_saf`, `op_mini`, `android`, `bb`, `op_mob`, `and_chr`, `and_ff`,
+`and_uc`, `samsung`, `and_qq`, `baidu`, `kaios`.
+
 ## Format
 ### data
 ```ts

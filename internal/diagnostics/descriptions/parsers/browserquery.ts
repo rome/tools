@@ -29,7 +29,7 @@ export const browserquery = createDiagnosticsCategory({
 			{
 				type: "log",
 				category: "info",
-				text: markup`Available browser queries can be found at <hyperlink target="https://github.com/rome/tools/blob/main/internal/codec-browsers/README.md"/>`,
+				text: markup`Available browser queries can be found at <hyperlink target="https://github.com/rome/tools/blob/main/internal/codec-browsers/README.md#queries"/>`,
 			},
 		],
 	},
@@ -39,7 +39,7 @@ export const browserquery = createDiagnosticsCategory({
 			{
 				type: "log",
 				category: "info",
-				text: markup`Available browser queries can be found at <hyperlink target="https://github.com/rome/tools/blob/main/internal/codec-browsers/README.md"/>`,
+				text: markup`Available browser queries can be found at <hyperlink target="https://github.com/rome/tools/blob/main/internal/codec-browsers/README.md#queries"/>`,
 			},
 		],
 	},
