@@ -7,14 +7,12 @@
 
 import {
 	Diagnostic,
-	DiagnosticAdvice,
 	DiagnosticIntegrity,
 	DiagnosticLanguage,
 	DiagnosticLocation,
 	DiagnosticSourceType,
 	Diagnostics,
 	DiagnosticsProcessor,
-	deriveRootAdviceFromDiagnostic,
 } from "@internal/diagnostics";
 import {MarkupRGB, StaticMarkup, markup} from "@internal/markup";
 import {Reporter} from "@internal/cli-reporter";
@@ -30,26 +28,20 @@ import {default as successBanner} from "./banners/success.json";
 import {default as errorBanner} from "./banners/error.json";
 import {
 	AbsoluteFilePath,
-	Path,
 	CWD_PATH,
 	MixedPathMap,
 	MixedPathSet,
-	equalPaths,
+	Path,
 } from "@internal/path";
-import {OneIndexed, ZeroIndexed} from "@internal/numbers";
 import {inferDiagnosticLanguageFromPath} from "@internal/core/common/file-handlers";
 import {markupToJoinedPlainText} from "@internal/cli-layout/format";
 import {sha256} from "@internal/string-utils";
 import {GlobalLock} from "@internal/async";
+import {buildDisplayDiagnostic} from "./displayDiagnostic";
 
 type RawBanner = {
 	palettes: MarkupRGB[];
 	rows: Array<Array<number | MarkupRGB>>;
-};
-
-type PositionLike = {
-	line?: undefined | OneIndexed;
-	column?: undefined | ZeroIndexed;
 };
 
 const DEFAULT_FILE_HANDLER: Required<DiagnosticsFileHandler> = {
@@ -71,21 +63,6 @@ const DEFAULT_FILE_HANDLER: Required<DiagnosticsFileHandler> = {
 	},
 };
 
-function equalPosition(
-	a: undefined | PositionLike,
-	b: undefined | PositionLike,
-): boolean {
-	if (a === undefined || b === undefined) {
-		return false;
-	}
-
-	if (a.line !== b.line || a.column !== b.column) {
-		return false;
-	}
-
-	return true;
-}
-
 type FooterPrintCallback = (reporter: Reporter, error: boolean) => Promise<void>;
 
 export const DEFAULT_PRINTER_FLAGS: DiagnosticsPrinterFlags = {
@@ -94,6 +71,7 @@ export const DEFAULT_PRINTER_FLAGS: DiagnosticsPrinterFlags = {
 	inverseGrep: false,
 	showAllDiagnostics: true,
 	fieri: false,
+	truncateDiagnostics: true,
 	verboseDiagnostics: false,
 	maxDiagnostics: 20,
 };
@@ -574,14 +552,21 @@ export default class DiagnosticsPrinter extends Error {
 	public getDiagnosticDependencyMeta(
 		diag: Diagnostic,
 	): {
+		missingPaths: MixedPathSet;
 		outdatedPaths: MixedPathSet;
 	} {
-		let outdatedPaths: MixedPathSet = new MixedPathSet();
+		const outdatedPaths: MixedPathSet = new MixedPathSet();
+		const missingPaths: MixedPathSet = new MixedPathSet();
 
 		for (const {
 			path,
 			integrity: expectedIntegrity,
 		} of this.getDependenciesFromDiagnostics([diag])) {
+			if (this.missingFileSources.has(path)) {
+				missingPaths.add(path);
+				continue;
+			}
+
 			if (expectedIntegrity === undefined) {
 				continue;
 			}
@@ -593,7 +578,7 @@ export default class DiagnosticsPrinter extends Error {
 			}
 		}
 
-		return {outdatedPaths};
+		return {outdatedPaths, missingPaths};
 	}
 
 	private printAuxiliaryDiagnostic(diag: Diagnostic) {
@@ -634,110 +619,19 @@ export default class DiagnosticsPrinter extends Error {
 	}
 
 	public printDiagnostic(diag: Diagnostic, reporter: Reporter) {
-		const {start, end, path} = diag.location;
-		let advice = [...diag.description.advice];
+		const {outdatedPaths, missingPaths} = this.getDiagnosticDependencyMeta(diag);
+		const {advice, header} = buildDisplayDiagnostic({
+			diagnostic: diag,
+			flags: this.flags,
+			outdatedPaths,
+			missingPaths,
+		});
 
-		// Remove stacktrace from beginning if it contains only one frame that matches the root diagnostic location
-		const firstAdvice = advice[0];
-		if (firstAdvice?.type === "stacktrace" && firstAdvice.frames.length === 1) {
-			const frame = firstAdvice.frames[0];
-			if (equalPaths(frame.path, path) && equalPosition(frame, start)) {
-				advice.shift();
-			}
-		}
-
-		// Determine if we should skip showing the frame at the top of the diagnostic output
-		// We check if there are any frame advice entries that match us exactly, this is
-		// useful for simplifying stacktraces
-		let skipFrame = false;
-		if (start !== undefined && end !== undefined) {
-			adviceLoop: for (const item of advice) {
-				if (
-					item.type === "frame" &&
-					equalPaths(item.location.path, path) &&
-					equalPosition(item.location.start, start) &&
-					equalPosition(item.location.end, end)
-				) {
-					skipFrame = true;
-					break;
-				}
-
-				if (item.type === "stacktrace") {
-					for (const frame of item.frames) {
-						if (equalPaths(frame.path, path) && equalPosition(frame, start)) {
-							skipFrame = true;
-							break adviceLoop;
-						}
-					}
-				}
-			}
-		}
-
-		// Check for outdated files
-		const outdatedAdvice: DiagnosticAdvice = [];
-		const {outdatedPaths} = this.getDiagnosticDependencyMeta(diag);
-
-		// Check if this file doesn't even exist
-		const isMissing = this.missingFileSources.has(path);
-		if (isMissing) {
-			outdatedAdvice.push({
-				type: "log",
-				category: "warn",
-				text: markup`This diagnostic refers to a file that does not exist`,
-			});
-			// Don't need to duplicate this path
-			outdatedPaths.delete(path);
-			skipFrame = true;
-		}
-
-		// List outdated
-		const isOutdated = outdatedPaths.size > 0;
-		if (isOutdated) {
-			const outdatedFilesArr = Array.from(outdatedPaths);
-
-			if (outdatedFilesArr.length === 1 && outdatedFilesArr[0].equal(path)) {
-				outdatedAdvice.push({
-					type: "log",
-					category: "warn",
-					text: markup`This file has been changed since the diagnostic was produced and may be out of date`,
-				});
-			} else {
-				outdatedAdvice.push({
-					type: "log",
-					category: "warn",
-					text: markup`This diagnostic may be out of date as it relies on the following files that have been changed since the diagnostic was generated`,
-				});
-
-				outdatedAdvice.push({
-					type: "list",
-					list: outdatedFilesArr,
-				});
-			}
-		}
-
-		const derived = deriveRootAdviceFromDiagnostic(
-			diag,
-			{
-				skipFrame,
-				includeHeaderInAdvice: false,
-				isMissing,
-				isOutdated,
-			},
-		);
-
-		reporter.hr(derived.header);
+		reporter.hr(header);
 
 		reporter.indentSync(() => {
-			// Concat all the advice together
-			const allAdvice: DiagnosticAdvice = [
-				...derived.advice,
-				...advice,
-				...derived.lastAdvice,
-				...outdatedAdvice,
-			];
-
 			const {truncated} = printAdvice(
-				allAdvice,
+				advice,
 				{
 					printer: this,
 					flags: this.flags,
@@ -750,27 +644,6 @@ export default class DiagnosticsPrinter extends Error {
 
 			if (truncated) {
 				this.hasTruncatedDiagnostics = true;
-			}
-
-			// Print verbose information
-			if (this.flags.verboseDiagnostics === true) {
-				const {origins} = diag;
-
-				if (origins !== undefined && origins.length > 0) {
-					reporter.br();
-					reporter.info(markup`Why are you seeing this diagnostic?`);
-					reporter.br();
-					reporter.list(
-						origins.map((origin) => {
-							let res = markup`<emphasis>${origin.category}</emphasis>`;
-							if (origin.message !== undefined) {
-								res = markup`${res}: ${origin.message}`;
-							}
-							return res;
-						}),
-						{ordered: true},
-					);
-				}
 			}
 		});
 	}
@@ -894,7 +767,7 @@ export default class DiagnosticsPrinter extends Error {
 
 				if (this.hasTruncatedDiagnostics) {
 					reporter.warn(
-						markup`Some diagnostics have been truncated. Use the --verbose-diagnostics flag to disable truncation.`,
+						markup`Some diagnostics have been truncated. Use the --no-truncate-diagnostics flag to disable truncation.`,
 					);
 				}
 

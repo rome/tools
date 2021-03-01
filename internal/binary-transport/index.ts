@@ -11,7 +11,7 @@ import {createAbsoluteFilePath} from "@internal/path";
 import RSERWriterCounter from "./RSERWriterCounter";
 import RSERWriterHasher from "./RSERWriterHasher";
 import {sha256} from "@internal/string-utils";
-import { getArrayBuffer } from "@internal/binary";
+import {getArrayBuffer} from "@internal/binary";
 
 export {default as RSERBufferObserver} from "./RSERWriterBase";
 export {default as RSERBufferParser} from "./RSERBufferParser";
@@ -21,11 +21,11 @@ export {default as RSERStream} from "./RSERStream";
 export {
 	AnyRSERPathMap,
 	RSERArray,
+	RSERArrayBufferView,
 	RSERMap,
 	RSERObject,
 	RSERSet,
 	RSERValue,
-	RSERArrayBufferView
 } from "./types";
 
 export function encodeValueToRSERSingleMessageStream(

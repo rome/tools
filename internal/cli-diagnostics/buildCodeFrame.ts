@@ -19,8 +19,8 @@ import {ZeroIndexed} from "@internal/numbers";
 import {
 	AnyMarkups,
 	StaticMarkup,
-	concatMarkup,
 	isEmptyMarkup,
+	joinMarkup,
 	markup,
 	markupTag,
 	readMarkup,
@@ -87,7 +87,7 @@ function formatLineView(
 		);
 	}
 
-	return markupTag("view", concatMarkup(parts), attributes);
+	return markupTag("view", joinMarkup(parts), attributes);
 }
 
 type Marker = {
@@ -343,6 +343,6 @@ export default function buildCodeFrame(
 
 	return {
 		truncated,
-		frame: concatMarkup(result, markup`\n`),
+		frame: joinMarkup(result, markup`\n`),
 	};
 }

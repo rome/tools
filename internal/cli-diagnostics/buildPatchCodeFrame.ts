@@ -16,7 +16,7 @@ import {Diffs, diffConstants, stringDiffUnified} from "@internal/string-diff";
 import {
 	AnyMarkups,
 	StaticMarkup,
-	concatMarkup,
+	joinMarkup,
 	markup,
 	markupTag,
 	readMarkup,
@@ -26,7 +26,7 @@ import {DiagnosticAdviceDiff} from "@internal/diagnostics";
 function formatDiffLine(diffs: Diffs) {
 	let atLineStart = true;
 
-	return concatMarkup(
+	return joinMarkup(
 		diffs.map(([type, text], i) => {
 			const escapedText = markup`${text}`;
 
@@ -123,7 +123,7 @@ export default function buildPatchCodeFrame(
 			parts.push(markup`${String(afterLine)}`);
 		}
 		parts.push(markup`</pad></emphasis>`);
-		return concatMarkup(parts);
+		return joinMarkup(parts);
 	}
 
 	// Build the actual frame
@@ -185,7 +185,7 @@ export default function buildPatchCodeFrame(
 				);
 			}
 		} else {
-			let prefixes = concatMarkup([
+			let prefixes = joinMarkup([
 				markup`<viewLinePrefix type="first">${createLineNos(
 					beforeLine,
 					afterLine,
@@ -226,6 +226,6 @@ export default function buildPatchCodeFrame(
 
 	return {
 		truncated,
-		frame: concatMarkup(frame, markup`\n`),
+		frame: joinMarkup(frame, markup`\n`),
 	};
 }

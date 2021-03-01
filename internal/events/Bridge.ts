@@ -12,6 +12,7 @@ import {
 	BridgeEventsDeclaration,
 	BridgeEventsDeclarationToInstances,
 	BridgeHandshakeMessage,
+	BridgeHeartbeatExceededOptions,
 	BridgeMessage,
 	BridgeMessageCodes,
 	BridgeOptions,
@@ -19,7 +20,6 @@ import {
 	BridgeRequestSendMessage,
 	BridgeResponseMessage,
 	BridgeType,
-	BridgeHeartbeatExceededOptions,
 } from "./types";
 import {
 	BridgeEvent,
@@ -30,19 +30,25 @@ import {
 import Event from "./Event";
 import {
 	ErrorWithFrames,
+	NodeSystemError,
 	StructuredError,
 	getErrorStructure,
 	setErrorFrames,
-	NodeSystemError,
 } from "@internal/errors";
-import {AnyMarkups, concatMarkup, markup} from "@internal/markup";
+import {AnyMarkups, joinMarkup, markup} from "@internal/markup";
 import prettyFormat from "@internal/pretty-format";
 import {RSERObject, RSERStream, RSERValue} from "@internal/binary-transport";
 import {ExtendedMap} from "@internal/collections";
-import { createRuntimeDiagnosticError, DIAGNOSTIC_CATEGORIES } from "@internal/diagnostics";
-import { createResourceFromCallback, Resource } from "@internal/resources";
-import { isBridgeResponseMessage, isBridgeDisconnectedDiagnosticError } from "./utils";
-import { Duration, DurationMeasurer } from "@internal/numbers";
+import {
+	DIAGNOSTIC_CATEGORIES,
+	createRuntimeDiagnosticError,
+} from "@internal/diagnostics";
+import {Resource, createResourceFromCallback} from "@internal/resources";
+import {
+	isBridgeDisconnectedDiagnosticError,
+	isBridgeResponseMessage,
+} from "./utils";
+import {Duration, DurationMeasurer} from "@internal/numbers";
 
 type ErrorSerial<Data extends RSERObject> = {
 	serialize: (err: Error) => Data;
@@ -91,9 +97,12 @@ export default class Bridge<
 		this.endEvent = new Event(`${debugPrefix}.endEvent`);
 		this.disconnectEvent = new Event(`${debugPrefix}.disconnectEvent`);
 
-		this.resources = createResourceFromCallback(debugPrefix, async () => {
-			await this.end("Resource released");
-		});
+		this.resources = createResourceFromCallback(
+			debugPrefix,
+			async () => {
+				await this.end("Resource released");
+			},
+		);
 
 		// A Set of event names that are being listened to on the other end
 		// We track this to avoid sending over subscriptions that aren't needed
@@ -109,7 +118,7 @@ export default class Bridge<
 		this.events = {};
 		this.eventsIdCounter = 0;
 
-		this.teardownEvent = this.createInternalBiEvent(`teardown`);
+		this.teardownEvent = this.createInternalBiEvent("teardown");
 		this.teardownEvent.subscribe(async () => {
 			await this.end("Graceful teardown requested", false);
 		});
@@ -166,7 +175,7 @@ export default class Bridge<
 	public resources: Resource;
 	public disconnectEvent: Event<void, void>;
 	public endEvent: Event<Error, void>;
-	
+
 	private connected: boolean;
 	private endError: undefined | Error;
 
@@ -186,8 +195,13 @@ export default class Bridge<
 		return `${this.debugName}(${this.type})`;
 	}
 
-	private createInternalBiEvent<Param extends RSERValue, Ret extends RSERValue>(name: string): BridgeEventBidirectional<Param, Ret> {
-		const event: BridgeEventBidirectional<Param, Ret> = new BridgeEventBidirectional(`@${name}`, this);
+	private createInternalBiEvent<Param extends RSERValue, Ret extends RSERValue>(
+		name: string,
+	): BridgeEventBidirectional<Param, Ret> {
+		const event: BridgeEventBidirectional<Param, Ret> = new BridgeEventBidirectional(
+			`@${name}`,
+			this,
+		);
 		this.registerEvent(event);
 		return event;
 	}
@@ -206,7 +220,7 @@ export default class Bridge<
 				);
 
 				summaries.push(
-					markup`<emphasis>${event.name}</emphasis> x ${requestCount}\n<ul>${concatMarkup(
+					markup`<emphasis>${event.name}</emphasis> x ${requestCount}\n<ul>${joinMarkup(
 						list,
 					)}</ul>`,
 				);
@@ -218,7 +232,7 @@ export default class Bridge<
 
 	// Ensure we are sending a message at least once per second
 	private queueHeartbeat(): void {
-		if (!this.hasHandshook || !this.open) {
+		if (!(this.hasHandshook && this.open)) {
 			return;
 		}
 
@@ -226,19 +240,30 @@ export default class Bridge<
 			clearTimeout(this.heartbeatTimeout);
 		}
 
-		this.heartbeatTimeout = setTimeout(() => {
-			this.sendMessage([BridgeMessageCodes.HEARTBEAT])
-		}, 1000);
+		this.heartbeatTimeout = setTimeout(
+			() => {
+				this.sendMessage([BridgeMessageCodes.HEARTBEAT]);
+			},
+			1_000,
+		);
 	}
 
-	public startHeartbeatMonitor(timeout: Duration, callback: (opts: BridgeHeartbeatExceededOptions) => void) {
+	public startHeartbeatMonitor(
+		timeout: Duration,
+		callback: (opts: BridgeHeartbeatExceededOptions) => void,
+	) {
 		if (this.options.ignoreHeartbeat) {
 			return;
 		}
 
 		function checkFresh() {
 			// We use setTimeout so that check is called without a call stack
-			setTimeout(() => { check(); }, 0);
+			setTimeout(
+				() => {
+					check();
+				},
+				0,
+			);
 		}
 
 		const check = async () => {
@@ -295,7 +320,11 @@ export default class Bridge<
 				idMap.set(event.id, name);
 			}
 
-			this.sendMessage([BridgeMessageCodes.CLIENT_HANDSHAKE, this.getSubscriptionsForHandshake(), idMap]);
+			this.sendMessage([
+				BridgeMessageCodes.CLIENT_HANDSHAKE,
+				this.getSubscriptionsForHandshake(),
+				idMap,
+			]);
 		}
 
 		// Reject if the bridge ends while waiting on our handshake
@@ -317,7 +346,10 @@ export default class Bridge<
 		}
 
 		if (isServer) {
-			this.sendMessage([BridgeMessageCodes.SERVER_HANDSHAKE, this.getSubscriptionsForHandshake()]);
+			this.sendMessage([
+				BridgeMessageCodes.SERVER_HANDSHAKE,
+				this.getSubscriptionsForHandshake(),
+			]);
 		}
 
 		this.hasHandshook = true;
@@ -414,7 +446,6 @@ export default class Bridge<
 	//# Connection death
 	public assertOpen(): void {
 		if (this.endError !== undefined) {
-			console.trace();
 			throw this.endError;
 		}
 	}
@@ -436,7 +467,7 @@ export default class Bridge<
 		// Do this after we dispatch the teardown event request
 		this.open = false;
 		this.endError = err;
-		
+
 		// Clear any pending heartbeat
 		if (this.heartbeatTimeout !== undefined) {
 			clearTimeout(this.heartbeatTimeout);
@@ -470,7 +501,7 @@ export default class Bridge<
 			description: {
 				message,
 				category: DIAGNOSTIC_CATEGORIES["bridge/disconnected"],
-			}
+			},
 		});
 
 		// Terminate pending requests. This happens in endWithError too but if this disconnect happens inside of a previous end call
@@ -491,12 +522,15 @@ export default class Bridge<
 		message: string = "Connection died",
 		gracefulTeardown: boolean = true,
 	) {
-		await this.endWithError(createRuntimeDiagnosticError({
-			description: {
-				message,
-				category: DIAGNOSTIC_CATEGORIES["bridge/closed"],
-			}
-		}), gracefulTeardown);
+		await this.endWithError(
+			createRuntimeDiagnosticError({
+				description: {
+					message,
+					category: DIAGNOSTIC_CATEGORIES["bridge/closed"],
+				},
+			}),
+			gracefulTeardown,
+		);
 	}
 
 	//# Error serialization
@@ -545,13 +579,21 @@ export default class Bridge<
 	): BridgeErrorResponseMessage {
 		const details = this.serializeCustomError(errRaw);
 		if (details.errorType === "custom") {
-			return [BridgeMessageCodes.RESPONSE_ERROR_CUSTOM, id, details.value, details.metadata];
+			return [
+				BridgeMessageCodes.RESPONSE_ERROR_CUSTOM,
+				id,
+				details.value,
+				details.metadata,
+			];
 		} else {
 			return [BridgeMessageCodes.RESPONSE_ERROR_NATIVE, id, details.value];
 		}
 	}
 
-	public addCustomErrorTransport<T extends RSERObject>(name: string, transport: ErrorSerial<T>) {
+	public addCustomErrorTransport<T extends RSERObject>(
+		name: string,
+		transport: ErrorSerial<T>,
+	) {
 		// @ts-ignore: Dynamicism
 		this.customErrorTransports.set(name, transport);
 	}
@@ -562,8 +604,12 @@ export default class Bridge<
 	// We need to be specific for handleMessage because it could come from anywhere
 	public sendMessage(msg: BridgeMessage) {
 		this.assertOpen();
-		
-		if (msg[0] !== BridgeMessageCodes.CLIENT_HANDSHAKE && msg[0] !== BridgeMessageCodes.SERVER_HANDSHAKE && !this.hasHandshook) {
+
+		if (
+			msg[0] !== BridgeMessageCodes.CLIENT_HANDSHAKE &&
+			msg[0] !== BridgeMessageCodes.SERVER_HANDSHAKE &&
+			!this.hasHandshook
+		) {
 			this.postHandshakeQueue.push(msg);
 			return;
 		}
@@ -594,7 +640,7 @@ export default class Bridge<
 
 			switch (msg[0]) {
 				case BridgeMessageCodes.SERVER_HANDSHAKE:
-				case BridgeMessageCodes.CLIENT_HANDSHAKE:{
+				case BridgeMessageCodes.CLIENT_HANDSHAKE: {
 					await this.handleHandshakeMessage(msg);
 					break;
 				}
@@ -667,13 +713,11 @@ export default class Bridge<
 				break;
 			}
 		}
-	
+
 		return msg;
 	}
 
-	private handleResponseMessage(
-		data: BridgeResponseMessage,
-	) {
+	private handleResponseMessage(data: BridgeResponseMessage) {
 		const id = data[1];
 		if (id === undefined) {
 			throw new Error("Expected id");
@@ -694,14 +738,18 @@ export default class Bridge<
 		});
 	}
 
-	private async handleHandshakeMessage(msg: BridgeHandshakeMessage): Promise<void> {
+	private async handleHandshakeMessage(
+		msg: BridgeHandshakeMessage,
+	): Promise<void> {
 		this.listeners = msg[1];
 
 		// If we received a client handshake, then make sure our internal event IDs match what it gave us
 		// This is so later we can support a backwards compatible bridge for a backend service that has multiple supported interfaces
 		if (msg[0] === BridgeMessageCodes.CLIENT_HANDSHAKE) {
-			const unusedEvents: Set<AnyBridgeEvent> = new Set(this.nameToEventMap.values());
-		
+			const unusedEvents: Set<AnyBridgeEvent> = new Set(
+				this.nameToEventMap.values(),
+			);
+
 			// Reset eventsIdCounter
 			this.eventsIdCounter = 0;
 

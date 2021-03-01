@@ -1133,27 +1133,25 @@ export const lint = createDiagnosticsCategory({
 				diff: stringDiff(original, formatted),
 			},
 		];
+		const verboseAdvice: DiagnosticAdvice = [];
 
 		if (relativeFilename !== undefined) {
 			advice.push({
 				type: "action",
 				command: "check",
-				shortcut: "f",
-				instruction: markup`To apply fixes and formatting run`,
-				noun: markup`Apply fixes and format`,
+				suggestedKeyboardShortcut: "f",
+				description: markup`Apply fixes and format`,
 				args: [relativeFilename],
 				commandFlags: {
 					apply: true,
 				},
 			});
 
-			advice.push({
+			verboseAdvice.push({
 				type: "action",
-				hidden: true,
 				command: "check",
-				shortcut: "o",
-				instruction: markup`To format this file without any fixes run`,
-				noun: markup`Only format`,
+				suggestedKeyboardShortcut: "o",
+				description: markup`Only format without any fixes`,
 				args: [relativeFilename],
 				commandFlags: {
 					format: true,
@@ -1165,6 +1163,7 @@ export const lint = createDiagnosticsCategory({
 			category: DIAGNOSTIC_CATEGORIES["lint/pendingFixes"],
 			message: markup`Pending formatting and safe fixes`,
 			advice,
+			verboseAdvice,
 		};
 	},
 	TS_NO_EXPLICIT_ANY: {

@@ -303,9 +303,7 @@ export default createServerCommand<Flags>({
 							editorConfigPath,
 							markup`Sets editor formatting and indentation options. Documentation: <hyperlink target="https://editorconfig.org/" />`,
 						);
-						await editorConfigPath.writeFile(
-							editorConfigTemplate.trim() + "\n",
-						);
+						await editorConfigPath.writeFile(editorConfigTemplate.trim() + "\n");
 					},
 				},
 			]);

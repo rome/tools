@@ -13,8 +13,8 @@ import {DiagnosticCategory} from "./categories";
 import {Dict} from "@internal/typescript-helpers";
 import {ClientRequestFlags, CommandName} from "@internal/core";
 import {StaticMarkup} from "@internal/markup";
-import {Path, MixedPathSet} from "@internal/path";
-import { RSERValue } from "@internal/binary-transport";
+import {MixedPathSet, Path} from "@internal/path";
+import {RSERValue} from "@internal/binary-transport";
 
 export type DiagnosticCategoryDescription = {
 	category: DiagnosticCategory;
@@ -115,6 +115,7 @@ export type DiagnosticIntegrity = {
 export type DiagnosticDescription = DiagnosticCategoryDescription & {
 	message: StaticMarkup;
 	advice: DiagnosticAdvice;
+	verboseAdvice?: DiagnosticAdvice;
 };
 
 export type DiagnosticDescriptionOptional = {
@@ -151,7 +152,6 @@ export type DiagnosticAdviceLog = {
 	type: "log";
 	category: DiagnosticLogCategory;
 	text: StaticMarkup;
-	compact?: boolean;
 };
 
 export type DiagnosticAdviceList = {
@@ -169,15 +169,19 @@ export type DiagnosticAdviceInspect = {
 
 export type DiagnosticAdviceAction = {
 	type: "action";
-	hidden?: boolean;
-	extra?: boolean;
-	shortcut?: string;
-	instruction: StaticMarkup;
-	noun: StaticMarkup;
 	command: CommandName;
 	commandFlags?: Dict<boolean | string | (string[])>;
 	requestFlags?: ClientRequestFlags;
 	args?: string[];
+
+	// What will running this command do?
+	description: StaticMarkup;
+
+	// Marks actions that aren't important and could be hidden behind a submenu, or ranked at the bottom
+	secondary?: boolean;
+
+	// Suggestion for keyboard shortcut to use for interactive execution in an editor or CLI
+	suggestedKeyboardShortcut?: string;
 };
 
 export type DiagnosticAdviceCode = {

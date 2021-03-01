@@ -10,7 +10,7 @@ import {CheckProvider} from "../types";
 import {ModuleSignatureManager} from "../Evaluator";
 import Hub from "../Hub";
 import {CompilerProject} from "@internal/compiler";
-import {Path, MixedPathMap} from "@internal/path";
+import {MixedPathMap, Path} from "@internal/path";
 
 export default async function buildGraph(
 	opts: {

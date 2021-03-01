@@ -405,7 +405,7 @@ function parseClassMemberWithIsStatic(
 			unexpectedDiagnostic(
 				parser,
 				{
-					loc: key.loc,
+					node: key,
 					description: descriptions.JS_PARSER.GENERATOR_CLASS_CONSTRUCTOR,
 				},
 			);
@@ -457,7 +457,7 @@ function parseClassMemberWithIsStatic(
 				unexpectedDiagnostic(
 					parser,
 					{
-						loc: key.loc,
+						node: key,
 						description: descriptions.JS_PARSER.DUPLICATE_CLASS_CONSTRUCTOR,
 					},
 				);
@@ -535,7 +535,7 @@ function parseClassMemberWithIsStatic(
 				unexpectedDiagnostic(
 					parser,
 					{
-						loc: key.loc,
+						node: key,
 						description: descriptions.JS_PARSER.ASYNC_CLASS_CONSTRUCTOR,
 					},
 				);
@@ -593,7 +593,7 @@ function parseClassMemberWithIsStatic(
 				unexpectedDiagnostic(
 					parser,
 					{
-						loc: methodKey.loc,
+						node: methodKey,
 						description: descriptions.JS_PARSER.GET_SET_CLASS_CONSTRUCTOR,
 					},
 				);
@@ -651,7 +651,7 @@ function parseClassPropertyMeta(
 		unexpectedDiagnostic(
 			parser,
 			{
-				loc: key.loc,
+				node: key,
 				description: descriptions.JS_PARSER.CLASS_STATIC_PROTOTYPE_PROPERTY,
 			},
 		);
@@ -661,7 +661,7 @@ function parseClassPropertyMeta(
 		unexpectedDiagnostic(
 			parser,
 			{
-				loc: key.loc,
+				node: key,
 				description: descriptions.JS_PARSER.CLASS_PRIVATE_FIELD_NAMED_CONSTRUCTOR,
 			},
 		);
@@ -699,7 +699,7 @@ function pushClassProperty(
 		unexpectedDiagnostic(
 			parser,
 			{
-				loc: key.loc,
+				node: key,
 				description: descriptions.JS_PARSER.CLASS_PROPERTY_NAME_CONSTRUCTOR,
 			},
 		);

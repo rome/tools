@@ -156,10 +156,13 @@ const DEFAULT_ASSET_EXTENSIONS = [
 ];
 
 for (const [ext, mime] of DEFAULT_ASSET_EXTENSIONS) {
-	setHandler(ext, {
-		...assetHandler,
-		mime,
-	});
+	setHandler(
+		ext,
+		{
+			...assetHandler,
+			mime,
+		},
+	);
 }
 
 setHandler("js", jsHandler);

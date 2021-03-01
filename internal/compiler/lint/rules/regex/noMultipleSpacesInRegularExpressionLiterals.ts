@@ -12,7 +12,12 @@ import {
 	JSRegExpSubExpression,
 	jsRegExpQuantified,
 } from "@internal/ast";
-import {ExitSignal, CompilerPath, createVisitor, signals} from "@internal/compiler";
+import {
+	CompilerPath,
+	ExitSignal,
+	createVisitor,
+	signals,
+} from "@internal/compiler";
 import {descriptions} from "@internal/diagnostics";
 
 function isSpaceChar(

@@ -8,9 +8,9 @@
 import {
 	AnyVisitors,
 	CompilerContext,
-	ExitSignal,
 	CompilerPath,
 	CompilerPathOptions,
+	ExitSignal,
 	signals,
 } from "@internal/compiler";
 import {AnyNode, AnyNodes, visitorKeys as allVisitorKeys} from "@internal/ast";
@@ -29,7 +29,11 @@ import {AnyVisitorState} from "../lib/VisitorState";
 /**
  * Validate the return value of an enter or exit transform
  */
-function validateSignal(transformName: string, signal: ExitSignal, path: CompilerPath) {
+function validateSignal(
+	transformName: string,
+	signal: ExitSignal,
+	path: CompilerPath,
+) {
 	// Verify common mistake of forgetting to return something
 	if (typeof signal === "undefined") {
 		throw new Error(
@@ -83,7 +87,10 @@ function isRetainSignal(
 	}
 }
 
-function maybeFork(path: CompilerPath, signal: ReplaceSignal | RetainSignal): CompilerPath {
+function maybeFork(
+	path: CompilerPath,
+	signal: ReplaceSignal | RetainSignal,
+): CompilerPath {
 	if (isRetainSignal(path.node, signal)) {
 		return path;
 	} else {

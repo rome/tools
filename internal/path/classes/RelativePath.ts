@@ -1,8 +1,8 @@
-import {ParsedPath, ParsedPathRelative} from "../types";
+import {FilePath, ParsedPath, ParsedPathRelative} from "../types";
 import {BasePath, FilePathMemo} from "../bases";
-import {FilePath} from "../types";
 
-export default class RelativePath extends BasePath<ParsedPathRelative, RelativePath> {
+export default class RelativePath
+	extends BasePath<ParsedPathRelative, RelativePath> {
 	public [Symbol.toStringTag] = "RelativePath";
 
 	// TypeScript is structurally typed whereas here we would prefer nominal typing
@@ -12,15 +12,18 @@ export default class RelativePath extends BasePath<ParsedPathRelative, RelativeP
 	protected _equalAbsolute(other: ParsedPath): boolean {
 		return other.type === "relative";
 	}
-	
+
 	protected _getUnique() {
 		if (this.parsed.explicitRelative) {
-			return this._fork({
-				...this.parsed,
-				explicitRelative: false,
-			}, {
-				parent: this.memo.parent,
-			});
+			return this._fork(
+				{
+					...this.parsed,
+					explicitRelative: false,
+				},
+				{
+					parent: this.memo.parent,
+				},
+			);
 		} else {
 			return this;
 		}
@@ -83,13 +86,16 @@ export default class RelativePath extends BasePath<ParsedPathRelative, RelativeP
 		if (this.isExplicitRelative()) {
 			return this;
 		} else {
-			return new RelativePath({
-				...this.parsed,
-				explicitRelative: true,
-			}, {
-				ext: this.memo.ext,
-				parent: this.memo.parent,
-			});
+			return new RelativePath(
+				{
+					...this.parsed,
+					explicitRelative: true,
+				},
+				{
+					ext: this.memo.ext,
+					parent: this.memo.parent,
+				},
+			);
 		}
 	}
 }

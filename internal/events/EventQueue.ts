@@ -1,7 +1,7 @@
 import {AsyncVoidCallback, VoidCallback} from "@internal/typescript-helpers";
 import createDeferredPromise from "@internal/async/createDeferredPromise";
 import {GlobalLock} from "@internal/async";
-import { createResourceFromCallback, Resource } from "@internal/resources";
+import {Resource, createResourceFromCallback} from "@internal/resources";
 
 type EventQueueCallack<Value> = AsyncVoidCallback<[Value[]]>;
 
@@ -15,10 +15,13 @@ type ToDedupeKey<Value> = (value: Value) => unknown;
 type EventQueueOptions<Value> = {
 	debounce?: number;
 	toDedupeKey?: ToDedupeKey<Value>;
-}
+};
 
 export default class EventQueue<Value> {
-	constructor(name: string, {debounce = 100, toDedupeKey}: EventQueueOptions<Value>) {
+	constructor(
+		name: string,
+		{debounce = 100, toDedupeKey}: EventQueueOptions<Value>,
+	) {
 		this.name = name;
 		this.subscriptions = new Set();
 		this.queue = new Map();
@@ -34,11 +37,14 @@ export default class EventQueue<Value> {
 	private name: string;
 	private subscriptions: Set<EventQueueItem<Value>>;
 	private timeout: undefined | [VoidCallback, NodeJS.Timeout];
-	private queue: Map<unknown, {
-		promise: Promise<void>;
-		resolve: VoidCallback;
-		value: Value;
-	}>;
+	private queue: Map<
+		unknown,
+		{
+			promise: Promise<void>;
+			resolve: VoidCallback;
+			value: Value;
+		}
+	>;
 	private debounce: number;
 	private toDedupeKey: undefined | ToDedupeKey<Value>;
 
@@ -76,10 +82,13 @@ export default class EventQueue<Value> {
 
 		// Take over the queued value
 		if (existing !== undefined) {
-			this.queue.set(key, {
-				...existing,
-				value,
-			});
+			this.queue.set(
+				key,
+				{
+					...existing,
+					value,
+				},
+			);
 			return existing.promise;
 		}
 
@@ -100,10 +109,13 @@ export default class EventQueue<Value> {
 	}
 
 	public subscribe(callback: EventQueueCallack<Value>): Resource {
-		const resource = createResourceFromCallback(`EventQueueSubscription<${this.name}>`, async () => {
-			await this.flush();
-			this.subscriptions.delete(item);
-		});
+		const resource = createResourceFromCallback(
+			`EventQueueSubscription<${this.name}>`,
+			async () => {
+				await this.flush();
+				this.subscriptions.delete(item);
+			},
+		);
 
 		const item: EventQueueItem<Value> = {resource, callback};
 		this.subscriptions.add(item);

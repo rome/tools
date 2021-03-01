@@ -168,7 +168,7 @@ function parseJSXAttributeValue(
 				unexpectedDiagnostic(
 					parser,
 					{
-						loc: node.loc,
+						node,
 						description: descriptions.JS_PARSER.JSX_EMPTY_ATTRIBUTE_VALUE,
 					},
 				);

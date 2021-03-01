@@ -89,9 +89,7 @@ export type MarkupFormatPositionNormalizer = (
 	column?: ZeroIndexed;
 };
 
-export type MarkupFormatFilenameHumanizer = (
-	path: Path,
-) => undefined | string;
+export type MarkupFormatFilenameHumanizer = (path: Path) => undefined | string;
 
 export type MarkupFormatOptions = {
 	userConfig?: UserConfig;

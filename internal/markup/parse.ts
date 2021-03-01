@@ -38,7 +38,7 @@ import {
 	tagsToOnlyChildren,
 	tagsToOnlyParent,
 } from "./tags";
-import { isPlainObject } from "@internal/typescript-helpers";
+import {isPlainObject} from "@internal/typescript-helpers";
 
 //
 function isStringValueChar(
@@ -452,7 +452,10 @@ export function parseMarkup(
 		}
 	}
 
-	if (cacheKey !== undefined && (isPlainObject(cacheKey) || Array.isArray(cacheKey))) {
+	if (
+		cacheKey !== undefined &&
+		(isPlainObject(cacheKey) || Array.isArray(cacheKey))
+	) {
 		parseCache.set(cacheKey, children);
 	}
 

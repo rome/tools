@@ -1,5 +1,5 @@
 import {HighlightCodeResult} from "./types";
-import {concatMarkup, pathToMarkup, markup} from "@internal/markup";
+import {joinMarkup, markup, pathToMarkup} from "@internal/markup";
 import {concatSplitLinesMarkup, markupToken} from "./utils";
 import {createPath} from "@internal/path";
 import {markupTag} from "@internal/markup/escape";
@@ -28,7 +28,7 @@ export default function highlightShell(
 				if (segment.length === 1) {
 					return punc;
 				} else {
-					return concatMarkup([
+					return joinMarkup([
 						pathToMarkup(createPath(segment.slice(0, -1)), true),
 						punc,
 					]);
@@ -53,5 +53,5 @@ export default function highlightShell(
 		return markup`<dim>${segment}</dim>`;
 	});
 
-	return concatSplitLinesMarkup([concatMarkup(parts, markup` `)]);
+	return concatSplitLinesMarkup([joinMarkup(parts, markup` `)]);
 }

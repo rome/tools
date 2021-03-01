@@ -47,7 +47,10 @@ export type CompilerPathOptions = {
 };
 
 // Given a signal, calculate what the formatted code would be
-function getFormattedCodeFromSignal(signal: ExitSignal, path: CompilerPath): string {
+function getFormattedCodeFromSignal(
+	signal: ExitSignal,
+	path: CompilerPath,
+): string {
 	switch (signal.type) {
 		case "REMOVE":
 			return "";
@@ -143,7 +146,9 @@ export default class CompilerPath {
 	private nodeKey: undefined | string;
 	private listKey: undefined | number;
 
-	public findAncestry(callback: (path: CompilerPath) => boolean): undefined | CompilerPath {
+	public findAncestry(
+		callback: (path: CompilerPath) => boolean,
+	): undefined | CompilerPath {
 		for (const path of this.ancestryPaths) {
 			if (callback(path)) {
 				return path;
@@ -220,7 +225,12 @@ export default class CompilerPath {
 	}
 
 	public fork(newNode: AnyNode): CompilerPath {
-		return new CompilerPath(newNode, this.context, this.getPathOptions(), this.token);
+		return new CompilerPath(
+			newNode,
+			this.context,
+			this.getPathOptions(),
+			this.token,
+		);
 	}
 
 	private getPathOptions(): CompilerPathOptions {
@@ -284,6 +294,7 @@ export default class CompilerPath {
 
 		const {category, categoryValue} = description;
 		const advice = [...description.advice];
+		const verboseAdvice = [...(description.verboseAdvice ?? [])];
 		const loc = context.getLoc(target);
 		const canFormat = this.context.project.config.format.enabled;
 
@@ -320,27 +331,25 @@ export default class CompilerPath {
 						text: markup`Unable to find target location`,
 					});
 				} else {
-					advice.push(
+					verboseAdvice.push(
 						buildLintDecisionAdviceAction({
-							filename: context.displayFilename,
+							path: context.displayPath,
 							decision: buildLintDecisionString({
 								action: "fix",
-								filename: context.displayFilename,
+								path: context.displayPath,
 								category,
 								categoryValue,
 								start: loc.start,
 							}),
 							shortcut: "f",
-							noun: markup`Apply fix`,
-							instruction: markup`To apply this fix run`,
+							description: markup`Apply this fix`,
 						}),
 					);
 
-					advice.push(
+					verboseAdvice.push(
 						buildLintDecisionAdviceAction({
-							extra: true,
-							noun: markup`Apply fix for ALL files with this category`,
-							instruction: markup`To apply fix for ALL files with this category run`,
+							secondary: true,
+							description: markup`Apply fix for ALL files with this category`,
 							decision: buildLintDecisionGlobalString(
 								"fix",
 								category,
@@ -410,16 +419,15 @@ export default class CompilerPath {
 							text: markup`Unable to find target location`,
 						});
 					} else {
-						advice.push(
+						verboseAdvice.push(
 							buildLintDecisionAdviceAction({
-								noun: suggestions.length === 1
+								description: suggestions.length === 1
 									? markup`Apply suggested fix`
 									: markup`Apply suggested fix "${suggestion.title}"`,
 								shortcut: String(num),
-								instruction: markup`To apply this fix run`,
-								filename: context.displayFilename,
+								path: context.displayPath,
 								decision: buildLintDecisionString({
-									filename: context.displayFilename,
+									path: context.displayPath,
 									action: "fix",
 									category,
 									categoryValue,

@@ -5,7 +5,12 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {ImportBinding, CompilerPath, createVisitor, signals} from "@internal/compiler";
+import {
+	CompilerPath,
+	ImportBinding,
+	createVisitor,
+	signals,
+} from "@internal/compiler";
 import {
 	JSExportExternalDeclaration,
 	JSExportLocalDeclaration,

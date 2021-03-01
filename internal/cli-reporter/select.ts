@@ -6,7 +6,7 @@
  */
 
 import {ansiEscapes} from "@internal/cli-layout";
-import {AnyMarkup, StaticMarkup, concatMarkup, markup} from "@internal/markup";
+import {AnyMarkup, StaticMarkup, joinMarkup, markup} from "@internal/markup";
 import Reporter from "./Reporter";
 import {
 	SelectArguments,
@@ -228,7 +228,7 @@ export default async function select<Options extends SelectOptions>(
 
 			prompt = markup`${prompt}: `;
 			if (selectedOptions.size > 0) {
-				prompt = markup`${prompt}${concatMarkup(
+				prompt = markup`${prompt}${joinMarkup(
 					Array.from(selectedOptions, (key) => options[key]!.label),
 					markup`, `,
 				)}`;

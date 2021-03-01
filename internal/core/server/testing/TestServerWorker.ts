@@ -10,8 +10,8 @@ import {createClient} from "@internal/codec-websocket";
 import TestServer from "@internal/core/server/testing/TestServer";
 import {
 	DIAGNOSTIC_CATEGORIES,
-	deriveDiagnosticFromErrorStructure,
 	createSingleDiagnosticError,
+	deriveDiagnosticFromErrorStructure,
 } from "@internal/diagnostics";
 import {markup} from "@internal/markup";
 import {ReporterProgress} from "@internal/cli-reporter";
@@ -63,11 +63,14 @@ export default class TestServerWorker {
 	public async init() {
 		const {bridge, runner} = this;
 
-		bridge.startHeartbeatMonitor(Duration.fromSeconds(10), () => {
-			this.server.fatalErrorHandler.wrapPromise(
-				this.handleTimeout("10 seconds"),
-			);
-		});
+		bridge.startHeartbeatMonitor(
+			Duration.fromSeconds(10),
+			() => {
+				this.server.fatalErrorHandler.wrapPromise(
+					this.handleTimeout("10 seconds"),
+				);
+			},
+		);
 
 		// Start debugger
 		const {inspectorUrl} = await bridge.events.inspectorDetails.call();

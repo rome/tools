@@ -11,16 +11,18 @@ import {loadUserConfig} from "@internal/core/common/userConfig";
 import workerThreads = require("worker_threads");
 import {DIAGNOSTIC_CATEGORIES} from "@internal/diagnostics";
 import {consumeUnknown} from "@internal/consume";
-import { BridgeClient } from "@internal/events";
+import {BridgeClient} from "@internal/events";
 
-async function deriveWorkerOptions(bridge: BridgeClient<typeof WorkerBridge>): Promise<WorkerOptions> {
+async function deriveWorkerOptions(
+	bridge: BridgeClient<typeof WorkerBridge>,
+): Promise<WorkerOptions> {
 	const workerData = consumeUnknown(
 		workerThreads.workerData,
 		DIAGNOSTIC_CATEGORIES.parse,
 	);
 
 	const userConfig = await loadUserConfig();
-	
+
 	return {
 		userConfig,
 		bridge,

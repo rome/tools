@@ -16,11 +16,11 @@ import {
 import {
 	MAX_WORKER_COUNT,
 	Server,
+	ThreadWorkerContainer,
 	Worker,
 	WorkerBridge,
 	WorkerContainer,
 	WorkerType,
-	ThreadWorkerContainer,
 } from "@internal/core";
 import {Locker} from "../../async/lockers";
 import {Event} from "@internal/events";
@@ -29,8 +29,8 @@ import {markup} from "@internal/markup";
 import prettyFormat from "@internal/pretty-format";
 import {ReporterNamespace} from "@internal/cli-reporter";
 import {ExtendedMap} from "@internal/collections";
-import { Duration, DurationMeasurer } from "@internal/numbers";
-import { PartialWorkerOptions } from "../worker/types";
+import {Duration, DurationMeasurer} from "@internal/numbers";
+import {PartialWorkerOptions} from "../worker/types";
 
 export default class WorkerManager {
 	constructor(server: Server) {
@@ -90,11 +90,10 @@ export default class WorkerManager {
 		return Array.from(this.workers.values());
 	}
 
-	// Get worker count, excluding ghost workers
-	private getWorkerCount(): number {
+	private getProcessorWorkerCount(): number {
 		let count = 0;
 		for (const worker of this.workers.values()) {
-			if (worker.ghost === false) {
+			if (worker.type === "processor" && !worker.ghost) {
 				count++;
 			}
 		}
@@ -113,6 +112,7 @@ export default class WorkerManager {
 		for (const worker of this.workers.values()) {
 			if (
 				!worker.ghost &&
+				worker.type === "processor" &&
 				(byteCount === undefined || byteCount > worker.byteCount)
 			) {
 				smallestWorker = worker;
@@ -155,7 +155,7 @@ export default class WorkerManager {
 
 		const container: WorkerContainer = {
 			type: "processor",
-			displayName: markup`local worker`,
+			displayName: "local worker",
 			id: 0,
 			fileCount: 0,
 			byteCount: 0n,
@@ -260,25 +260,26 @@ export default class WorkerManager {
 				inspectorPort: undefined,
 			});
 
-			container.bridge.startHeartbeatMonitor(LAG_INTERVAL, ({summary, totalTime, attempts}) => {
-				const reporter = this.server.getImportantReporter();
-				reporter.warn(
-					markup`Worker <emphasis>${id}</emphasis> has not responded for <emphasis>${totalTime}</emphasis>. It is unlikely to become responsive. Currently processing:`,
-				);
-				reporter.list(summary);
-				reporter.info(
-					markup`Please open an issue with the details provided above if necessary`,
-				);
-
-				if (attempts >= 5) {
-					this.server.fatalErrorHandler.handle(
-						new Error(
-							`Did not respond for ${totalTime.toMilliseconds()}ms and was checked ${attempts} times`,
-						),
-						container.displayName,
+			container.bridge.startHeartbeatMonitor(
+				LAG_INTERVAL,
+				({summary, totalTime, attempts}) => {
+					const reporter = this.server.getImportantReporter();
+					reporter.warn(
+						markup`Worker <emphasis>${id}</emphasis> has not responded for <emphasis>${totalTime}</emphasis>. It is unlikely to become responsive. Currently processing:`,
 					);
-				}
-			});
+					reporter.list(summary);
+					reporter.info(
+						markup`Please open an issue with the details provided above if necessary`,
+					);
+
+					if (attempts >= 5) {
+						this.server.fatalErrorHandler.handle(
+							new Error(`Unresponsive for ${totalTime.format()}`),
+							container.displayName,
+						);
+					}
+				},
+			);
 
 			return container;
 		} finally {
@@ -286,7 +287,9 @@ export default class WorkerManager {
 		}
 	}
 
-	private buildPartialWorkerOptions(opts: Pick<PartialWorkerOptions, "id" | "inspectorPort" | "type">): PartialWorkerOptions {
+	private buildPartialWorkerOptions(
+		opts: Pick<PartialWorkerOptions, "id" | "inspectorPort" | "type">,
+	): PartialWorkerOptions {
 		return {
 			cacheReadDisabled: this.server.cache.readDisabled,
 			cacheWriteDisabled: this.server.cache.writeDisabled,
@@ -306,11 +309,11 @@ export default class WorkerManager {
 			type: WorkerType;
 			ghost: boolean;
 			inspectorPort: undefined | number;
-		}
+		},
 	): Promise<ThreadWorkerContainer> {
-		let displayName = markup`worker ${id}`;
+		let displayName = `worker ${id}`;
 		if (type === "test") {
-			displayName = markup`test ${displayName}`;
+			displayName = `test ${displayName}`;
 		}
 
 		const start = new DurationMeasurer();
@@ -339,7 +342,7 @@ export default class WorkerManager {
 
 		const container: ThreadWorkerContainer = {
 			type,
-			id: id,
+			id,
 			fileCount: 0,
 			byteCount: 0n,
 			thread,
@@ -349,9 +352,12 @@ export default class WorkerManager {
 			displayName,
 		};
 		this.setWorker(container);
-		bridge.resources.addCallback("WorkerManagerRegistration", () => {
-			this.workers.delete(id);
-		})
+		bridge.resources.addCallback(
+			"WorkerManagerRegistration",
+			() => {
+				this.workers.delete(id);
+			},
+		);
 
 		thread.once(
 			"error",
@@ -378,9 +384,7 @@ export default class WorkerManager {
 
 		this.workerStartEvent.send(container);
 
-		this.logger.info(
-			markup`Started ${displayName} in ${start.since()}`,
-		);
+		this.logger.info(markup`Started ${displayName} in ${start.since()}`);
 
 		return container;
 	}
@@ -438,7 +442,7 @@ export default class WorkerManager {
 		// our max worker limit, then let's start a new one
 		if (
 			smallestWorker.byteCount > MAX_WORKER_BYTES_BEFORE_ADD &&
-			this.getWorkerCount() < MAX_WORKER_COUNT
+			this.getProcessorWorkerCount() < MAX_WORKER_COUNT
 		) {
 			logger.info(
 				markup`[WorkerManager] Spawning a new worker as we've exceeded ${String(

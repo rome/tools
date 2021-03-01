@@ -7,8 +7,11 @@ import {
 	getOrDeriveDiagnosticsFromError,
 } from "@internal/diagnostics";
 import {ErrorCallback} from "@internal/typescript-helpers";
-import { createResourceFromCallback, Resource } from "@internal/resources";
-import { safeProcessExit } from "@internal/resources";
+import {
+	Resource,
+	createResourceFromCallback,
+	safeProcessExit,
+} from "@internal/resources";
 
 type FatalErrorHandlerOptions = {
 	getOptions: (
@@ -67,18 +70,26 @@ export default class FatalErrorHandler {
 		};
 		process.on("uncaughtException", onUncaughtException);
 
-		const onUnhandledRejection: NodeJS.UnhandledRejectionListener = (err: unknown,) => {
+		const onUnhandledRejection: NodeJS.UnhandledRejectionListener = (
+			err: unknown,
+		) => {
 			this.handle(err instanceof Error ? err : new Error(String(err)));
 		};
 		process.on("unhandledRejection", onUnhandledRejection);
 
-		return createResourceFromCallback("FatalErrorHandlerEvents", () => {
-			process.removeListener("uncaughtException", onUncaughtException);
-			process.removeListener("unhandledRejection", onUnhandledRejection);
-		});
+		return createResourceFromCallback(
+			"FatalErrorHandlerEvents",
+			() => {
+				process.removeListener("uncaughtException", onUncaughtException);
+				process.removeListener("unhandledRejection", onUnhandledRejection);
+			},
+		);
 	}
 
-	public async handleAsync(error: Error, overrideSource?: StaticMarkup): Promise<void> {
+	public async handleAsync(
+		error: Error,
+		overrideSource?: StaticMarkup,
+	): Promise<void> {
 		const {getOptions} = this.options;
 		const options = getOptions(error);
 		if (options === false) {
@@ -93,7 +104,7 @@ export default class FatalErrorHandler {
 
 		const {reporter, exit = true} = options;
 		const source = overrideSource ?? options.source;
-		
+
 		try {
 			const diagnostics = getOrDeriveDiagnosticsFromError(
 				error,

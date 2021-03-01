@@ -2,7 +2,7 @@ import IntegrationLoader from "@internal/core/common/IntegrationLoader";
 import {FileReference} from "@internal/core/common/types/files";
 import {DIAGNOSTIC_CATEGORIES, Diagnostics} from "@internal/diagnostics";
 import {markup} from "@internal/markup";
-import { Duration, DurationMeasurer } from "@internal/numbers";
+import {Duration, DurationMeasurer} from "@internal/numbers";
 import {Position} from "@internal/parser-core";
 import {WorkerProject} from "../types";
 import Worker from "../Worker";

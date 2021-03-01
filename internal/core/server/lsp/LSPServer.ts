@@ -19,6 +19,7 @@ import {
 	DiagnosticsProcessor,
 	catchDiagnostics,
 	formatCategoryDescription,
+	getActionAdviceFromDiagnostic,
 } from "@internal/diagnostics";
 import {
 	PartialServerQueryRequest,
@@ -48,6 +49,7 @@ import {markup, readMarkup} from "@internal/markup";
 import {LSPCodeAction} from "./types";
 import {Event} from "@internal/events";
 import {CommandName} from "@internal/core/common/commands";
+import {markupToPlainText} from "@internal/cli-layout";
 
 type LSPProjectSession = {
 	request: ServerRequest;
@@ -237,7 +239,7 @@ export default class LSPServer {
 		});
 
 		req.resources.add(await checker.watch(runner));
-		
+
 		this.projectSessions.set(
 			path,
 			{
@@ -338,19 +340,19 @@ export default class LSPServer {
 					if (!doRangesOverlap(diagRange, codeActionRange)) {
 						continue;
 					}
-					for (const advice of diag.description.advice) {
-						if (advice.type !== "action" || advice.extra === true) {
+					for (const item of getActionAdviceFromDiagnostic(diag)) {
+						if (item.secondary) {
 							continue;
 						}
 
-						const decision = getDecisionFromAdviceAction(advice);
+						const decision = getDecisionFromAdviceAction(item);
 						if (decision === undefined || seenDecisions.has(decision)) {
 							continue;
 						}
 						seenDecisions.add(decision);
 
 						codeActions.push({
-							title: `${readMarkup(advice.noun)}: ${formatCategoryDescription(
+							title: `${markupToPlainText(item.description)}: ${formatCategoryDescription(
 								diag.description,
 							)}`,
 							command: {

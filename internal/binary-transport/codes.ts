@@ -2,27 +2,24 @@ import {
 	AbsoluteFilePath,
 	AbsoluteFilePathMap,
 	AbsoluteFilePathSet,
+	DataURIPath,
 	DataURIPathMap,
 	DataURIPathSet,
+	Path,
 	PathSet,
+	RelativePath,
 	RelativePathMap,
 	RelativePathSet,
+	UIDPath,
 	UIDPathMap,
 	UIDPathSet,
+	URLPath,
 	URLPathMap,
 	URLPathSet,
-	RelativePath,
-	URLPath,
-	DataURIPath,
-	UIDPath,
-	Path,
 } from "@internal/path";
-import {
-	AnyRSERPathMap,
-	RSERArrayBufferView,
-} from "./types";
+import {AnyRSERPathMap, RSERArrayBufferView} from "./types";
 import RSERParserError from "./RSERParserError";
-import { Class, isSafeInstanceof } from "@internal/typescript-helpers";
+import {Class, isSafeInstanceof} from "@internal/typescript-helpers";
 
 // Bump whenever we make backwards incompatible changes
 export const VERSION = 1;
@@ -128,12 +125,22 @@ export function validateArrayBufferViewCode(
 	}
 }
 
-const arrayBufferViewTypes: Map<ARRAY_BUFFER_VIEW_CODES, {
-	new(buffer: ArrayBufferLike, byteOffset?: number, length?: number): RSERArrayBufferView
-}> = new Map();
+const arrayBufferViewTypes: Map<
+	ARRAY_BUFFER_VIEW_CODES,
+	{
+		new (
+			buffer: ArrayBufferLike,
+			byteOffset?: number,
+			length?: number,
+		): RSERArrayBufferView;
+	}
+> = new Map();
 arrayBufferViewTypes.set(ARRAY_BUFFER_VIEW_CODES.INT_8, Int8Array);
 arrayBufferViewTypes.set(ARRAY_BUFFER_VIEW_CODES.UINT_8, Uint8Array);
-arrayBufferViewTypes.set(ARRAY_BUFFER_VIEW_CODES.UINT_8_CLAMPED, Uint8ClampedArray);
+arrayBufferViewTypes.set(
+	ARRAY_BUFFER_VIEW_CODES.UINT_8_CLAMPED,
+	Uint8ClampedArray,
+);
 arrayBufferViewTypes.set(ARRAY_BUFFER_VIEW_CODES.INT_16, Int16Array);
 arrayBufferViewTypes.set(ARRAY_BUFFER_VIEW_CODES.UINT_16, Uint16Array);
 arrayBufferViewTypes.set(ARRAY_BUFFER_VIEW_CODES.INT_32, Int32Array);
@@ -197,8 +204,8 @@ export function validateErrorCode(code: number): ERROR_CODES {
 }
 
 export function instanceToErrorCode(err: Error): ERROR_CODES {
-	for (const [code, Error] of errorTypes) {
-		if (isSafeInstanceof(err, Error)) {
+	for (const [code, ErrorClass] of errorTypes) {
+		if (isSafeInstanceof(err, ErrorClass)) {
 			return code;
 		}
 	}
@@ -206,11 +213,11 @@ export function instanceToErrorCode(err: Error): ERROR_CODES {
 }
 
 export function errorCodeToInstance(code: ERROR_CODES): Error {
-	const Error = errorTypes.get(code);
-	if (Error === undefined) {
+	const ErrorClass = errorTypes.get(code);
+	if (ErrorClass === undefined) {
 		throw new RSERParserError(`Invalid error code ${code}`);
 	} else {
-		return new Error();
+		return new ErrorClass();
 	}
 }
 
@@ -232,41 +239,59 @@ export enum PATH_COLLECTION_CODES {
 	UID,
 }
 
-const pathCollectionTypes: Map<PATH_COLLECTION_CODES, {
-	Path: Class<Path>;
-	Map: Class<AnyRSERPathMap>;
-	Set: Class<PathSet>;
-}> = new Map();
+const pathCollectionTypes: Map<
+	PATH_COLLECTION_CODES,
+	{
+		Path: Class<Path>;
+		PathMap: Class<AnyRSERPathMap>;
+		PathSet: Class<PathSet>;
+	}
+> = new Map();
 
-pathCollectionTypes.set(PATH_COLLECTION_CODES.ABSOLUTE, {
-	Path: AbsoluteFilePath,
-	Map: AbsoluteFilePathMap,
-	Set: AbsoluteFilePathSet,
-});
+pathCollectionTypes.set(
+	PATH_COLLECTION_CODES.ABSOLUTE,
+	{
+		Path: AbsoluteFilePath,
+		PathMap: AbsoluteFilePathMap,
+		PathSet: AbsoluteFilePathSet,
+	},
+);
 
-pathCollectionTypes.set(PATH_COLLECTION_CODES.RELATIVE, {
-	Path: RelativePath,
-	Map: RelativePathMap,
-	Set: RelativePathSet,
-});
+pathCollectionTypes.set(
+	PATH_COLLECTION_CODES.RELATIVE,
+	{
+		Path: RelativePath,
+		PathMap: RelativePathMap,
+		PathSet: RelativePathSet,
+	},
+);
 
-pathCollectionTypes.set(PATH_COLLECTION_CODES.URL, {
-	Path: URLPath,
-	Map: URLPathMap,
-	Set: URLPathSet,
-});
+pathCollectionTypes.set(
+	PATH_COLLECTION_CODES.URL,
+	{
+		Path: URLPath,
+		PathMap: URLPathMap,
+		PathSet: URLPathSet,
+	},
+);
 
-pathCollectionTypes.set(PATH_COLLECTION_CODES.DATA, {
-	Path: DataURIPath,
-	Map: DataURIPathMap,
-	Set: DataURIPathSet,
-});
+pathCollectionTypes.set(
+	PATH_COLLECTION_CODES.DATA,
+	{
+		Path: DataURIPath,
+		PathMap: DataURIPathMap,
+		PathSet: DataURIPathSet,
+	},
+);
 
-pathCollectionTypes.set(PATH_COLLECTION_CODES.UID, {
-	Path: UIDPath,
-	Map: UIDPathMap,
-	Set: UIDPathSet,
-});
+pathCollectionTypes.set(
+	PATH_COLLECTION_CODES.UID,
+	{
+		Path: UIDPath,
+		PathMap: UIDPathMap,
+		PathSet: UIDPathSet,
+	},
+);
 
 export function validatePathCollectionCode(code: number): PATH_COLLECTION_CODES {
 	if (pathCollectionTypes.has(code)) {
@@ -277,8 +302,8 @@ export function validatePathCollectionCode(code: number): PATH_COLLECTION_CODES 
 }
 
 export function pathMapToCode(map: AnyRSERPathMap): PATH_COLLECTION_CODES {
-	for (const [code, {Map}] of pathCollectionTypes) {
-		if (isSafeInstanceof(map, Map)) {
+	for (const [code, {PathMap}] of pathCollectionTypes) {
+		if (isSafeInstanceof(map, PathMap)) {
 			return code;
 		}
 	}
@@ -286,8 +311,8 @@ export function pathMapToCode(map: AnyRSERPathMap): PATH_COLLECTION_CODES {
 }
 
 export function pathSetToCode(set: PathSet): PATH_COLLECTION_CODES {
-	for (const [code, {Set}] of pathCollectionTypes) {
-		if (isSafeInstanceof(set, Set)) {
+	for (const [code, {PathSet}] of pathCollectionTypes) {
+		if (isSafeInstanceof(set, PathSet)) {
 			return code;
 		}
 	}
@@ -299,7 +324,7 @@ export function pathMapFromCode(code: PATH_COLLECTION_CODES): AnyRSERPathMap {
 	if (types === undefined) {
 		throw new RSERParserError(`Unknown path code ${code}`);
 	} else {
-		return new types.Map();
+		return new types.PathMap();
 	}
 }
 
@@ -308,6 +333,6 @@ export function pathSetFromCode(code: PATH_COLLECTION_CODES): PathSet {
 	if (types === undefined) {
 		throw new RSERParserError(`Unknown path code ${code}`);
 	} else {
-		return new types.Set();
+		return new types.PathSet();
 	}
 }

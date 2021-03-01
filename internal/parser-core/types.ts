@@ -12,11 +12,11 @@ import {
 	DiagnosticDescriptionOptional,
 	DiagnosticIntegrity,
 	DiagnosticLanguage,
-	DiagnosticLocation,
 	DiagnosticTags,
 } from "@internal/diagnostics";
 import {default as ParserCore} from "./ParserCore";
 import {Dict} from "@internal/typescript-helpers";
+import {AnyNode} from "@internal/ast";
 
 // rome-ignore lint/ts/noExplicitAny: future cleanup
 export type AnyParserCore = ParserCore<{
@@ -155,6 +155,11 @@ export type Position = {
 	column: ZeroIndexed;
 };
 
+export type PositionLike = {
+	line?: undefined | OneIndexed;
+	column?: undefined | ZeroIndexed;
+};
+
 export const UNKNOWN_POSITION: Position = {
 	line: new OneIndexed(-1),
 	column: new ZeroIndexed(-1),
@@ -171,6 +176,7 @@ export type ParserOptions = {
 
 export type ParserUnexpectedOptions = {
 	description?: DiagnosticDescriptionOptional;
+	node?: AnyNode;
 	loc?: SourceLocation;
 	start?: Position;
 	end?: Position;
@@ -178,7 +184,6 @@ export type ParserUnexpectedOptions = {
 	index?: number | ZeroIndexed;
 	startIndex?: number | ZeroIndexed;
 	endIndex?: number | ZeroIndexed;
-	location?: DiagnosticLocation;
 };
 
 export type TokenValues<Tokens extends TokensShape> = TokenBase &

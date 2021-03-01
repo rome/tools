@@ -41,7 +41,10 @@ function getKeyValue(path: CompilerPath): string | undefined {
 	return keyValue;
 }
 
-function getReactChildrenArrayMethod(path: CompilerPath, scope: Scope): CompilerPath | undefined {
+function getReactChildrenArrayMethod(
+	path: CompilerPath,
+	scope: Scope,
+): CompilerPath | undefined {
 	return path.findAncestry(({node}) => {
 		if (
 			node.type === "JSExpressionStatement" &&

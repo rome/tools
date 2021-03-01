@@ -101,6 +101,11 @@ export type ServerBridgeLog = {
 	chunk: string;
 };
 
+export type ServerProfileWorker = {
+	id: number;
+	displayName: string;
+};
+
 export default createBridge({
 	debugName: "Server",
 
@@ -129,7 +134,10 @@ export default createBridge({
 			ServerQueryResponse
 		>(),
 		cancelQuery: createBridgeEventDeclaration<string, void>(),
-		profilingGetWorkers: createBridgeEventDeclaration<void, number[]>(),
+		profilingGetWorkers: createBridgeEventDeclaration<
+			void,
+			ServerProfileWorker[]
+		>(),
 		profilingStart: createBridgeEventDeclaration<ProfilingStartData, void>(),
 		profilingStop: createBridgeEventDeclaration<void, Profile>(),
 		profilingStopWorker: createBridgeEventDeclaration<number, Profile>(),

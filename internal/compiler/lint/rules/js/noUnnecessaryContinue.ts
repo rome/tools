@@ -23,7 +23,10 @@ function isContinueInsideLastAncestorPath(
 	return true;
 }
 
-function isContinueTheLastStatement(ancestryArr: CompilerPath[], path: CompilerPath): boolean {
+function isContinueTheLastStatement(
+	ancestryArr: CompilerPath[],
+	path: CompilerPath,
+): boolean {
 	const node = ancestryArr[0].node;
 	if (node.type === "JSBlockStatement") {
 		const bodySize = node.body.length;
@@ -35,7 +38,10 @@ function isContinueTheLastStatement(ancestryArr: CompilerPath[], path: CompilerP
 }
 
 //return true if continue label is undefined or equal to its parent's looplabel
-function containsParentLoopLabel(path: CompilerPath, parentPath: CompilerPath): boolean {
+function containsParentLoopLabel(
+	path: CompilerPath,
+	parentPath: CompilerPath,
+): boolean {
 	if (path.node.type === "JSContinueStatement" && path.node.label !== undefined) {
 		if (
 			parentPath.parent.type === "JSLabeledStatement" &&

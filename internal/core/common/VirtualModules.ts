@@ -25,14 +25,17 @@ export type VirtualModulesMap = Map<
 	>
 >;
 
-export type VirtualModuleStatMap = AbsoluteFilePathMap<{
-	type: "file";
-	stats: FSStats;
-	content: string;
-} | {
-	type: "directory";
-	stats: FSStats;
-}>;
+export type VirtualModuleStatMap = AbsoluteFilePathMap<
+	| {
+			type: "file";
+			stats: FSStats;
+			content: string;
+		}
+	| {
+			type: "directory";
+			stats: FSStats;
+		}
+>;
 
 export default class VirtualModules {
 	constructor() {

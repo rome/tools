@@ -1,9 +1,10 @@
 import {ParsedPath, ParsedPathDataURI} from "../types";
-import {ReadableBasePath, FilePathMemo} from "../bases";
-import { decodeUTF8, encodeBase64, getArrayBuffer } from "@internal/binary";
+import {FilePathMemo, ReadableBasePath} from "../bases";
+import {decodeUTF8, encodeBase64, getArrayBuffer} from "@internal/binary";
 import stream = require("stream");
 
-export default class DataURIPath extends ReadableBasePath<ParsedPathDataURI, DataURIPath> {
+export default class DataURIPath
+	extends ReadableBasePath<ParsedPathDataURI, DataURIPath> {
 	protected frozen = true;
 	public [Symbol.toStringTag] = "DataURIPath";
 
@@ -15,7 +16,10 @@ export default class DataURIPath extends ReadableBasePath<ParsedPathDataURI, Dat
 		return this;
 	}
 
-	protected _fork(parsed: ParsedPathDataURI, opts: FilePathMemo<DataURIPath>): DataURIPath {
+	protected _fork(
+		parsed: ParsedPathDataURI,
+		opts: FilePathMemo<DataURIPath>,
+	): DataURIPath {
 		throw new Error("Cannot fork a DataURIPath");
 	}
 

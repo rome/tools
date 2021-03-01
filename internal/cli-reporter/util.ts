@@ -10,7 +10,7 @@ import Reporter from "./Reporter";
 import readline = require("readline");
 import {AnyMarkup, markup} from "@internal/markup";
 import {VoidCallback} from "@internal/typescript-helpers";
-import { safeProcessExit } from "@internal/resources";
+import {safeProcessExit} from "@internal/resources";
 
 export function mergeProgresses(
 	progresses: ReporterProgress[],

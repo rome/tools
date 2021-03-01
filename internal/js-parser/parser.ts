@@ -110,7 +110,7 @@ export const jsParser = createParser<JSParserTypes>({
 			line: new OneIndexed(),
 			column: new ZeroIndexed(),
 		};
-		
+
 		return {
 			scopes: {},
 			hasHoistedVars: false,

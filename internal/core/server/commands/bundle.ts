@@ -11,7 +11,7 @@ import {createServerCommand} from "../commands";
 import Bundler from "../bundler/Bundler";
 import {Consumer} from "@internal/consume";
 import {AnyMarkup, markup} from "@internal/markup";
-import { getByteLength } from "@internal/binary";
+import {getByteLength} from "@internal/binary";
 
 type Flags = {
 	quiet: boolean;
@@ -41,7 +41,9 @@ export default createServerCommand<Flags>({
 		const resolution = await bundler.getResolvedEntry(entryFilename);
 
 		if (req.query.requestFlags.watch) {
-			const {diagnosticsEvent, filesEvent, changeEvent} = bundler.bundleManifestWatch(resolution);
+			const {diagnosticsEvent, filesEvent, changeEvent} = bundler.bundleManifestWatch(
+				resolution,
+			);
 
 			diagnosticsEvent.subscribe(async (diagnostics) => {
 				reporter.clearScreen();
@@ -51,10 +53,11 @@ export default createServerCommand<Flags>({
 			});
 
 			filesEvent.subscribe(([name]) => {
-				console.log(name);
+				// TODO write
+				name;
 			});
 
-			changeEvent.subscribe(paths => {
+			changeEvent.subscribe((paths) => {
 				if (paths.size === 1) {
 					reporter.info(markup`File change ${Array.from(paths)[0]}`);
 				} else {
@@ -62,7 +65,7 @@ export default createServerCommand<Flags>({
 					reporter.list(Array.from(paths));
 				}
 			});
-			
+
 			await req.endEvent.wait();
 		} else {
 			const {files: outFiles} = await bundler.bundleManifest(resolution);
@@ -70,17 +73,24 @@ export default createServerCommand<Flags>({
 			const savedList: AnyMarkup[] = [];
 			const dir = flags.cwd.resolve(outputDirectory);
 
-			await Promise.all(Array.from(outFiles, async ([filename, {kind, content}]) => {
-				const buff = await content();
-				const path = dir.append(filename);
-				await path.getParent().createDirectory();
-				await path.writeFile(buff);
-				const size = getByteLength(buff);
+			await Promise.all(
+				Array.from(
+					outFiles,
+					async ([filename, {kind, content}]) => {
+						const buff = await content();
+						const path = dir.append(filename);
+						await path.getParent().createDirectory();
+						await path.writeFile(buff);
+						const size = getByteLength(buff);
 
-				savedList.push(
-					markup`<filelink target="${path.join()}">${filename}</filelink> <filesize dim>${String(size)}</filesize> <inverse> ${kind} </inverse>`,
-				);
-			}));
+						savedList.push(
+							markup`<filelink target="${path.join()}">${filename}</filelink> <filesize dim>${String(
+								size,
+							)}</filesize> <inverse> ${kind} </inverse>`,
+						);
+					},
+				),
+			);
 
 			await req.flushFiles();
 

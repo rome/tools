@@ -252,9 +252,12 @@ class GlobberWatcher {
 			this.flushPaths(Array.from(events, ({path}) => path));
 		});
 
-		refreshSub.addCallback("GlobberWatcher.flushLock", async () => {
-			await this.flushLock.wait();
-		});
+		refreshSub.addCallback(
+			"GlobberWatcher.flushLock",
+			async () => {
+				await this.flushLock.wait();
+			},
+		);
 
 		const {request} = this.globber;
 		if (request !== undefined) {

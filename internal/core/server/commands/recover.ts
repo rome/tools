@@ -12,7 +12,7 @@ import {markup} from "@internal/markup";
 import {Diagnostics, descriptions} from "@internal/diagnostics";
 import {RecoveryDiskStore} from "../fs/RecoveryStore";
 import {Consumer} from "@internal/consume";
-import { Duration } from "@internal/numbers";
+import {Duration} from "@internal/numbers";
 
 async function applyStore(req: ServerRequest, storeId: string) {
 	const {server, reporter} = req;
@@ -91,7 +91,9 @@ export const list = createServerCommand({
 				await reporter.section(
 					markup`${storeId}`,
 					() => {
-						const since = Duration.fromMilliseconds(Date.now() - new Date(timestamp).valueOf());
+						const since = Duration.fromMilliseconds(
+							Date.now() - new Date(timestamp).valueOf(),
+						);
 						reporter.log(
 							markup`<emphasis>Ran ${since} ago</emphasis> <dim>(${timestamp})</dim>`,
 						);

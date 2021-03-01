@@ -15,8 +15,8 @@ import {
 import {SourceLocation} from "@internal/parser-core";
 import {
 	ClassBinding,
-	FunctionBinding,
 	CompilerPath,
+	FunctionBinding,
 	Scope,
 	TypeBinding,
 } from "@internal/compiler";

@@ -1,10 +1,9 @@
 import {Consumer, consumeUnknown} from "@internal/consume";
 import {MarkupFormatOptions, MarkupParsedAttributes} from "./types";
-import {humanizeNumber} from "@internal/numbers";
-import {Path, createPath, HOME_PATH} from "@internal/path";
+import {OneIndexed, ZeroIndexed, humanizeNumber} from "@internal/numbers";
+import {HOME_PATH, Path, createPath} from "@internal/path";
 import {StaticMarkup} from "./escape";
 import {DIAGNOSTIC_CATEGORIES} from "@internal/diagnostics";
-import {OneIndexed, ZeroIndexed} from "@internal/numbers";
 
 export function createEmptyAttributes(): Consumer {
 	return consumeUnknown({}, DIAGNOSTIC_CATEGORIES.parse, "romemarkup");

@@ -1,7 +1,4 @@
-import {
-	AbsoluteFilePath,
-	createAbsoluteFilePath,
-} from "@internal/path";
+import {AbsoluteFilePath, createAbsoluteFilePath} from "@internal/path";
 import {Reporter} from "@internal/cli-reporter";
 import {createMockWorker} from "@internal/test-helpers";
 import {formatAST} from "@internal/formatter";
@@ -303,7 +300,9 @@ export async function execDev(args: string[]): Promise<void> {
 	);
 }
 
-async function getSubDirectories(files: Iterable<AbsoluteFilePath>): Promise<string[]> {
+async function getSubDirectories(
+	files: Iterable<AbsoluteFilePath>,
+): Promise<string[]> {
 	const subDirs: string[] = [];
 
 	for await (const file of files) {

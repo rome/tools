@@ -4,7 +4,11 @@ import {getJSXAttribute, hasJSXAttribute} from "@internal/js-ast-utils";
 import {JSXAttribute, JSXElement} from "@internal/ast";
 import {isJSXDOMElement} from "@internal/js-ast-utils/isJSXDOMElement";
 
-function createDiagnostic(path: CompilerPath, node: JSXElement, attribute: JSXAttribute) {
+function createDiagnostic(
+	path: CompilerPath,
+	node: JSXElement,
+	attribute: JSXAttribute,
+) {
 	return path.addFixableDiagnostic(
 		{
 			target: attribute,

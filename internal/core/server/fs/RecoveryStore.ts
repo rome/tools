@@ -4,10 +4,7 @@ import {
 	AbsoluteFilePathMap,
 	AbsoluteFilePathSet,
 } from "@internal/path";
-import {
-	FSHandle,
-	FSStats,
-} from "@internal/fs";
+import {FSHandle, FSStats} from "@internal/fs";
 import {Dict} from "@internal/typescript-helpers";
 import {json} from "@internal/codec-config";
 import {
@@ -305,7 +302,11 @@ export default class RecoveryStore {
 		return store;
 	}
 
-	public async save(req: ServerRequest, path: AbsoluteFilePath, content: ArrayBuffer) {
+	public async save(
+		req: ServerRequest,
+		path: AbsoluteFilePath,
+		content: ArrayBuffer,
+	) {
 		if (this.blockSave !== undefined) {
 			await this.blockSave;
 		}
@@ -460,7 +461,7 @@ export default class RecoveryStore {
 			}
 
 			// We want writeFiles to only return once all the refreshFileEvent handlers have ran
-			// We call maybeRefreshPath to do a hard check on the filesystem and update our in memory fs
+			// We call refreshPath to do a hard check on the filesystem and update our in memory fs
 			// This mitigates slow watch events
 			server.fatalErrorHandler.wrapPromise(
 				server.memoryFs.refreshPath(path, {}, "Server.writeFiles"),
@@ -497,7 +498,10 @@ export default class RecoveryStore {
 
 		const paths: AbsoluteFilePathSet = new AbsoluteFilePathSet(files.keys());
 		const {server} = this;
-		const resources = server.resources.addCallback("RecoveryStore.writeFiles", () => {});
+		const resources = server.resources.addCallback(
+			"RecoveryStore.writeFiles",
+			() => {},
+		);
 
 		// Files successfully written
 		let fileCount = 0;
@@ -522,11 +526,13 @@ export default class RecoveryStore {
 				}
 			};
 
-			resources.add(server.refreshFileEvent.subscribe((events) => {
-				for (const {path} of events) {
-					registerFile([path]);
-				}
-			}));
+			resources.add(
+				server.refreshFileEvent.subscribe((events) => {
+					for (const {path} of events) {
+						registerFile([path]);
+					}
+				}),
+			);
 		});
 
 		try {
@@ -547,18 +553,21 @@ export default class RecoveryStore {
 
 			// Protects against file events not being emitted and causing hanging
 			const timeoutPromise = new Promise((resolve, reject) => {
-				resources.addTimeout("FileHangDetector", setTimeout(
-					() => {
-						const lines = [
-							"File events should have been emitted within a second. Did not receive an event for:",
-						];
-						for (const path of paths) {
-							lines.push(` - ${path.join()}`);
-						}
-						reject(new Error(lines.join("\n")));
-					},
-					1_000,
-				));
+				resources.addTimeout(
+					"FileHangDetector",
+					setTimeout(
+						() => {
+							const lines = [
+								"File events should have been emitted within a second. Did not receive an event for:",
+							];
+							for (const path of paths) {
+								lines.push(` - ${path.join()}`);
+							}
+							reject(new Error(lines.join("\n")));
+						},
+						1_000,
+					),
+				);
 			});
 
 			await Promise.race([waitRefresh, timeoutPromise]);

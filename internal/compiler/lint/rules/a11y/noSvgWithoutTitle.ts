@@ -28,7 +28,10 @@ const SVG_SHAPES = [
 ];
 const SVG_GROUP = "g";
 
-function hasSvgTitle(node: JSXElement | HTMLElement, path: CompilerPath): boolean {
+function hasSvgTitle(
+	node: JSXElement | HTMLElement,
+	path: CompilerPath,
+): boolean {
 	if (!node.children) {
 		return false;
 	}

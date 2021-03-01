@@ -29,7 +29,7 @@ import {
 } from "@internal/path";
 import {markup} from "@internal/markup";
 import FileNotFound, {MissingFileReturn} from "@internal/fs/FileNotFound";
-import { areAnalyzeDependencyResultsEqual } from "@internal/compiler";
+import {areAnalyzeDependencyResultsEqual} from "@internal/compiler";
 
 export type DependencyGraphSeedResult = {
 	node: DependencyNode;
@@ -112,9 +112,7 @@ export default class DependencyGraph {
 	private nodes: AbsoluteFilePathMap<DependencyNode>;
 	private locker: Locker<string>;
 
-	public close() {
-		
-	}
+	public close() {}
 
 	public getNodes(): Iterable<DependencyNode> {
 		return this.nodes.values();
@@ -286,7 +284,10 @@ export default class DependencyGraph {
 		diagnosticsProcessor.addDiagnostics(resolvedImports.diagnostics);
 	}
 
-	public async evictNodes(paths: AbsoluteFilePathSet, reseed: (paths: AbsoluteFilePathSet, dependents: boolean) => Promise<void>): Promise<AbsoluteFilePathSet> {
+	public async evictNodes(
+		paths: AbsoluteFilePathSet,
+		reseed: (paths: AbsoluteFilePathSet, dependents: boolean) => Promise<void>,
+	): Promise<AbsoluteFilePathSet> {
 		// Get all the current dependency nodes for the evicted files, and invalidate their nodes
 		const oldEvictedNodes: AbsoluteFilePathMap<DependencyNode> = new AbsoluteFilePathMap();
 		for (const path of paths) {
@@ -327,10 +328,7 @@ export default class DependencyGraph {
 			for (const depNode of newNode.getDependents()) {
 				// If the old node has the same shape as the new one, only revalidate the dependent if it had dependency errors
 				// NB: We might want to revalidate if it depended on an evictedPath that was deleted
-				if (
-					sameShape &&
-					depNode.hadResolveImportsDiagnostics === false
-				) {
+				if (sameShape && depNode.hadResolveImportsDiagnostics === false) {
 					continue;
 				}
 
@@ -480,20 +478,18 @@ export default class DependencyGraph {
 
 				const {diagnostics} = await catchDiagnostics(
 					async () => {
-						const resolved = await server.resolver.resolveAssert(
-							{
-								...this.resolverOpts,
-								origin,
-								source: createPath(source),
-								location: dep.loc === undefined
-									? undefined
-									: {
+						const resolved = await server.resolver.resolveAssert({
+							...this.resolverOpts,
+							origin,
+							source: createPath(source),
+							location: dep.loc === undefined
+								? undefined
+								: {
 										...dep.loc,
 										sourceText: undefined,
 										integrity: undefined,
 									},
-							},
-						);
+						});
 
 						node!.addDependency(source, resolved.path, dep);
 					},

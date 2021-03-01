@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {initErrorHooks, errorSourceMaps} from "@internal/v8";
+import {errorSourceMaps, initErrorHooks} from "@internal/v8";
 import {VERSION, getBinPath} from "@internal/core";
 import cli from "../cli";
 import server from "../server";

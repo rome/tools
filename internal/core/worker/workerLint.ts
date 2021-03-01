@@ -171,7 +171,7 @@ export async function uncachedLint(
 					path: ref.uid,
 				},
 				description: descriptions.LINT.PENDING_FIXES(
-					ref.relative.join(),
+					project.directory.relativeForce(ref.real).join(),
 					handler.language,
 					sourceText,
 					formatted,

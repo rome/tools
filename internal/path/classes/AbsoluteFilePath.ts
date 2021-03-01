@@ -1,6 +1,13 @@
 import {normalizeRelativeSegments, parseRelativePathSegments} from "../parse";
-import {ReadableBasePath, FilePathMemo} from "../bases";
-import {FilePath, Path, PathFormatOptions, PathSegments, ParsedPath, ParsedPathAbsolute} from "../types";
+import {FilePathMemo, ReadableBasePath} from "../bases";
+import {
+	FilePath,
+	ParsedPath,
+	ParsedPathAbsolute,
+	Path,
+	PathFormatOptions,
+	PathSegments,
+} from "../types";
 import RelativePath from "./RelativePath";
 import {createFilePath} from "../factories";
 import {FSWatcher} from "@internal/fs";
@@ -13,8 +20,12 @@ import fs = require("fs");
 type DataCallback<Data> = (err: null | Error, data: Data) => void;
 type VoidCallback = (err: null | Error) => void;
 
-export default class AbsoluteFilePath extends ReadableBasePath<ParsedPathAbsolute, AbsoluteFilePath> {
-	constructor(parsed: ParsedPathAbsolute, memo: FilePathMemo<AbsoluteFilePath> = {}) {
+export default class AbsoluteFilePath
+	extends ReadableBasePath<ParsedPathAbsolute, AbsoluteFilePath> {
+	constructor(
+		parsed: ParsedPathAbsolute,
+		memo: FilePathMemo<AbsoluteFilePath> = {},
+	) {
 		super(parsed, memo);
 		this.memoizedRelative = undefined;
 	}
@@ -22,7 +33,9 @@ export default class AbsoluteFilePath extends ReadableBasePath<ParsedPathAbsolut
 	public [Symbol.toStringTag] = "AbsoluteFilePath";
 
 	// We do not always initialize it to save on a bunch of allocations if relative() isn't used
-	private memoizedRelative: undefined | MixedPathMap<AbsoluteFilePath | RelativePath>;
+	private memoizedRelative:
+		| undefined
+		| MixedPathMap<AbsoluteFilePath | RelativePath>;
 
 	protected _assert(): AbsoluteFilePath {
 		return this;
@@ -44,10 +57,16 @@ export default class AbsoluteFilePath extends ReadableBasePath<ParsedPathAbsolut
 
 		switch (parsed.type) {
 			case "absolute-windows-drive":
-				return other.type === "absolute-windows-drive" && other.letter === parsed.letter;
+				return (
+					other.type === "absolute-windows-drive" &&
+					other.letter === parsed.letter
+				);
 
 			case "absolute-windows-unc":
-				return other.type === "absolute-windows-unc" && other.servername === parsed.servername;
+				return (
+					other.type === "absolute-windows-unc" &&
+					other.servername === parsed.servername
+				);
 
 			case "absolute-unix":
 				return other.type === "absolute-unix";
@@ -72,7 +91,7 @@ export default class AbsoluteFilePath extends ReadableBasePath<ParsedPathAbsolut
 				return `/${relative.join("/")}`;
 		}
 	}
-	
+
 	protected _format({cwd, home}: PathFormatOptions = {}): string {
 		const filename = this.join();
 		const names: string[] = [];
@@ -149,7 +168,9 @@ export default class AbsoluteFilePath extends ReadableBasePath<ParsedPathAbsolut
 
 	public resolve(other: string | FilePath): AbsoluteFilePath;
 	public resolve(other: Path): Exclude<Path, RelativePath>;
-	public resolve(other: string | Path): AbsoluteFilePath | Exclude<Path, RelativePath>;
+	public resolve(
+		other: string | Path,
+	): AbsoluteFilePath | Exclude<Path, RelativePath>;
 	public resolve(
 		other: string | Path,
 	): AbsoluteFilePath | Exclude<Path, RelativePath> {
@@ -162,7 +183,10 @@ export default class AbsoluteFilePath extends ReadableBasePath<ParsedPathAbsolut
 
 		return new AbsoluteFilePath({
 			...this.parsed,
-			...normalizeRelativeSegments([...this.relativeSegments, ...other.getSegments()]),
+			...normalizeRelativeSegments([
+				...this.relativeSegments,
+				...other.getSegments(),
+			]),
 			explicitDirectory: other.isExplicitDirectory(),
 		});
 	}
@@ -235,20 +259,20 @@ export default class AbsoluteFilePath extends ReadableBasePath<ParsedPathAbsolut
 	): FSWatcher {
 		return fs.watch(this.join(), options, listener);
 	}
-	
+
 	public async readFile(): Promise<ArrayBuffer> {
-		const data = await this.promisifyData<Buffer>(
-			(filename, callback) => fs.readFile(filename, callback),
+		const data = await this.promisifyData<Buffer>((filename, callback) =>
+			fs.readFile(filename, callback)
 		);
 		return data.buffer;
 	}
-	
+
 	public async readFileText(): Promise<string> {
-		return this.promisifyData(
-			(filename, callback) => fs.readFile(filename, "utf8", callback),
+		return this.promisifyData((filename, callback) =>
+			fs.readFile(filename, "utf8", callback)
 		);
 	}
-	
+
 	public writeFile(
 		content: string | ArrayBuffer | NodeJS.ArrayBufferView | fs.ReadStream,
 	): Promise<void> {
@@ -257,37 +281,39 @@ export default class AbsoluteFilePath extends ReadableBasePath<ParsedPathAbsolut
 				const writeStream = this.createWriteStream();
 				content.pipe(writeStream);
 
-				writeStream.on("error", (err) => {
-					reject(err);
-				});
+				writeStream.on(
+					"error",
+					(err) => {
+						reject(err);
+					},
+				);
 
-				writeStream.on("close", () => {
-					resolve();
-				});
+				writeStream.on(
+					"close",
+					() => {
+						resolve();
+					},
+				);
 			});
 		} else {
-			return this.promisifyVoid(
-				(filename, callback) => {
-					let buff;
-					if (content instanceof ArrayBuffer) {
-						buff = new DataView(content);
-					} else {
-						buff = content;
-					}
-					fs.writeFile(filename, buff, callback);
-				},
-			);
+			return this.promisifyVoid((filename, callback) => {
+				let buff;
+				if (content instanceof ArrayBuffer) {
+					buff = new DataView(content);
+				} else {
+					buff = content;
+				}
+				fs.writeFile(filename, buff, callback);
+			});
 		}
 	}
-	
-	public copyFileTo(
-		dest: AbsoluteFilePath,
-	): Promise<void> {
-		return this.promisifyVoid(
-			(src, callback) => fs.copyFile(src, dest.join(), callback),
+
+	public copyFileTo(dest: AbsoluteFilePath): Promise<void> {
+		return this.promisifyVoid((src, callback) =>
+			fs.copyFile(src, dest.join(), callback)
 		);
 	}
-	
+
 	public readDirectory(): Promise<AbsoluteFilePathSet> {
 		return this.wrapReject(
 			new Promise((resolve, reject) => {
@@ -295,9 +321,13 @@ export default class AbsoluteFilePath extends ReadableBasePath<ParsedPathAbsolut
 					this.join(),
 					(err, files) => {
 						if (err === null) {
-							resolve(new AbsoluteFilePathSet(files.sort().map((basename) => {
-								return this.append(basename);
-							})));
+							resolve(
+								new AbsoluteFilePathSet(
+									files.sort().map((basename) => {
+										return this.append(basename);
+									}),
+								),
+							);
 						} else {
 							reject(err);
 						}
@@ -307,12 +337,10 @@ export default class AbsoluteFilePath extends ReadableBasePath<ParsedPathAbsolut
 			1,
 		);
 	}
-	
+
 	public lstat(): Promise<fs.BigIntStats> {
-		return this.promisifyData(
-			(filename, callback) =>
-				(fs.lstat as typeof fs.stat)(filename, {bigint: true}, callback)
-			,
+		return this.promisifyData((filename, callback) =>
+			(fs.lstat as typeof fs.stat)(filename, {bigint: true}, callback)
 		);
 	}
 
@@ -320,7 +348,7 @@ export default class AbsoluteFilePath extends ReadableBasePath<ParsedPathAbsolut
 	public async notExists(): Promise<boolean> {
 		return !(await this.exists());
 	}
-	
+
 	public exists(): Promise<boolean> {
 		return new Promise((resolve) => {
 			fs.exists(
@@ -331,24 +359,22 @@ export default class AbsoluteFilePath extends ReadableBasePath<ParsedPathAbsolut
 			);
 		});
 	}
-	
+
 	public removeFile(): Promise<void> {
-		return this.promisifyVoid(
-			(filename, callback) =>
-				fs.unlink(
-					filename,
-					(err) => {
-						if (err != null && err.code !== "ENOENT") {
-							callback(err);
-						} else {
-							callback(null);
-						}
-					},
-				)
-			,
+		return this.promisifyVoid((filename, callback) =>
+			fs.unlink(
+				filename,
+				(err) => {
+					if (err != null && err.code !== "ENOENT") {
+						callback(err);
+					} else {
+						callback(null);
+					}
+				},
+			)
 		);
 	}
-	
+
 	// We previously just use fs.rmdir with the `recursive: true` flag but it was added in Node 12.10 and we need to support 12.8.1
 	// NB: There are probably race conditions, we could switch to openFile and openDirectory if it's a problem
 	// https://github.com/rome/tools/issues/1001
@@ -356,7 +382,7 @@ export default class AbsoluteFilePath extends ReadableBasePath<ParsedPathAbsolut
 		if (await this.notExists()) {
 			return;
 		}
-	
+
 		// Delete all inner files
 		for (const subpath of await this.readDirectory()) {
 			const stats = await subpath.lstat();
@@ -366,56 +392,52 @@ export default class AbsoluteFilePath extends ReadableBasePath<ParsedPathAbsolut
 				await subpath.removeFile();
 			}
 		}
-	
+
 		// Remove directory with all files deleted
-		return this.promisifyVoid(
-			(filename, callback) => fs.rmdir(filename, callback),
+		return this.promisifyVoid((filename, callback) =>
+			fs.rmdir(filename, callback)
 		);
 	}
-	
+
 	public createDirectory(): Promise<void> {
-		return this.promisifyVoid(
-			(filename, callback) =>
-				fs.mkdir(
-					filename,
-					{
-						recursive: true,
-					},
-					callback,
-				)
-			,
+		return this.promisifyVoid((filename, callback) =>
+			fs.mkdir(
+				filename,
+				{
+					recursive: true,
+				},
+				callback,
+			)
 		);
 	}
-	
+
 	public openFile(
 		flags: fs.OpenMode = "r",
 		mode?: fs.Mode,
 	): Promise<fs.promises.FileHandle> {
 		return fs.promises.open(this.join(), flags, mode);
 	}
-	
-	public openDirectory(
-		opts: fs.OpenDirOptions = {},
-	): Promise<fs.Dir> {
-		return this.promisifyData(
-			(filename, callback) => fs.opendir(filename, opts, callback),
+
+	public openDirectory(opts: fs.OpenDirOptions = {}): Promise<fs.Dir> {
+		return this.promisifyData((filename, callback) =>
+			fs.opendir(filename, opts, callback)
 		);
 	}
-	
+
 	public createWriteStream(): fs.WriteStream {
 		return fs.createWriteStream(this.join());
 	}
-	
+
 	public createReadStream(): fs.ReadStream {
 		return fs.createReadStream(this.join());
 	}
-	
+
 	// Super special sync methods that we should only use sparingly if there's absolutely no way to do them async
-	
+
 	public readFileTextSync(): string {
 		return fs.readFileSync(this.join(), "utf8");
 	}
-	
+
 	public lstatSync(): fs.Stats {
 		return fs.lstatSync(this.join());
 	}

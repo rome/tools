@@ -6,6 +6,7 @@ import {
 	ParserCoreTypes,
 	ParserOptions,
 	Position,
+	PositionLike,
 	SourceLocation,
 } from "./types";
 import {catchDiagnosticsSync} from "@internal/diagnostics";
@@ -168,6 +169,21 @@ export function comparePositions(
 	throw new Error(
 		"Not a possible condition...? All possible states of a.line and b.line should have been handled above",
 	);
+}
+
+export function equalPositions(
+	a: undefined | PositionLike,
+	b: undefined | PositionLike,
+): boolean {
+	if (a === undefined || b === undefined) {
+		return false;
+	}
+
+	if (a.line !== b.line || a.column !== b.column) {
+		return false;
+	}
+
+	return true;
 }
 
 export function derivePositionKey(pos: Position): string {

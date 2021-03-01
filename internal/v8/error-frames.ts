@@ -14,7 +14,7 @@ import {
 } from "@internal/errors";
 import {Path, createPath, createUIDPath} from "@internal/path";
 import {OneIndexed} from "@internal/numbers";
-import { SourceMapConsumerCollection } from "@internal/codec-source-map";
+import {SourceMapConsumerCollection} from "@internal/codec-source-map";
 
 let inited: boolean = false;
 
@@ -175,7 +175,7 @@ function addErrorFrames(err: ErrorWithFrames, frames: NodeJS.CallSite[]): void {
 				};
 			}
 		}
-	
+
 		return frame;
 	});
 

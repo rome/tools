@@ -1,21 +1,21 @@
-import { AssembledBundle } from "@internal/core/common/types/bundler";
-import { serializeAssembled } from "@internal/core/server/bundler/utils";
-import { AbsoluteFilePathMap } from "@internal/path";
+import {AssembledBundle} from "@internal/core/common/types/bundler";
+import {serializeAssembled} from "@internal/core/server/bundler/utils";
+import {AbsoluteFilePathMap} from "@internal/path";
 import Worker from "../Worker";
 import TestWorkerFile from "./TestWorkerFile";
 
 export default class WorkerTests {
-  constructor(worker: Worker) {
-    this.worker = worker;
+	constructor(worker: Worker) {
+		this.worker = worker;
 
 		this.runners = new AbsoluteFilePathMap();
 		this.compiled = new AbsoluteFilePathMap();
-  }
+	}
 
-  private worker: Worker;
+	private worker: Worker;
 
 	private runners: AbsoluteFilePathMap<TestWorkerFile>;
-  private compiled: AbsoluteFilePathMap<string>;
+	private compiled: AbsoluteFilePathMap<string>;
 
 	public serializeAssembled(assembled: AssembledBundle): string {
 		return serializeAssembled(
@@ -25,9 +25,9 @@ export default class WorkerTests {
 			},
 		);
 	}
-  
-  public init() {
-    const {bridge} = this.worker;
+
+	public init() {
+		const {bridge} = this.worker;
 
 		bridge.events.prepareTest.subscribe(async (opts) => {
 			const runner = new TestWorkerFile(this.worker, this, opts);
@@ -51,5 +51,5 @@ export default class WorkerTests {
 				this.compiled.set(path, content);
 			}
 		});
-  }
+	}
 }

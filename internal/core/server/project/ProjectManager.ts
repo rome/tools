@@ -19,7 +19,11 @@ import {
 	createMockProjectConfigMeta,
 	loadCompleteProjectConfig,
 } from "@internal/project";
-import {WorkerPartialManifestsTransport, WorkerProjects, WorkerContainer} from "@internal/core";
+import {
+	WorkerContainer,
+	WorkerPartialManifestsTransport,
+	WorkerProjects,
+} from "@internal/core";
 import {
 	DiagnosticLocation,
 	DiagnosticsProcessor,
@@ -34,9 +38,9 @@ import {
 	AbsoluteFilePath,
 	AbsoluteFilePathMap,
 	AbsoluteFilePathSet,
-	Path,
 	MixedPathMap,
 	MixedPathSet,
+	Path,
 	UIDPath,
 	UIDPathMap,
 	URLPath,
@@ -47,10 +51,7 @@ import {
 	GetFileHandlerResult,
 	getFileHandlerFromPath,
 } from "../../common/file-handlers/index";
-import {
-	CachedFileReader,
-	FileNotFound,
-} from "@internal/fs";
+import {CachedFileReader, FileNotFound} from "@internal/fs";
 import {Consumer} from "@internal/consume";
 import {json} from "@internal/codec-config";
 import {VCSClient, getVCSClient} from "@internal/vcs";
@@ -102,13 +103,15 @@ export default class ProjectManager {
 	public async init() {
 		await this.injectVirtualModules();
 
-		this.server.resources.add(this.server.refreshFileEvent.subscribe((events) => {
-			for (const {path, type} of events) {
-				if (type === "DELETED") {
-					this.handleDeleted(path);
+		this.server.resources.add(
+			this.server.refreshFileEvent.subscribe((events) => {
+				for (const {path, type} of events) {
+					if (type === "DELETED") {
+						this.handleDeleted(path);
+					}
 				}
-			}
-		}));
+			}),
+		);
 
 		const vendorProjectConfig: ProjectConfig = {
 			...createDefaultProjectConfig(),
@@ -266,21 +269,29 @@ export default class ProjectManager {
 		return uid;
 	}
 
-	public getFileReference(path: AbsoluteFilePath): FileReference {
-		const project = this.assertProjectExisting(path);
-		const uid = this.getUID(path);
-		const pkg = this.server.memoryFs.getOwnedManifest(path);
+	public getFileReference(real: AbsoluteFilePath): FileReference {
+		const project = this.assertProjectExisting(real);
+		const uid = this.getUID(real);
+		const pkg = this.server.memoryFs.getOwnedManifest(real);
 
 		// TODO should we cache this?
-		const ref: FileReference = {
-			uid,
-			project: project.id,
-			real: path,
-			manifest: pkg === undefined ? undefined : pkg.id,
-			relative: project.directory.relativeForce(path),
-		};
-		
-		const remote = this.localPathToRemote.has(path);
+		let ref: FileReference;
+
+		if (pkg === undefined) {
+			ref = {
+				uid,
+				real,
+				project: project.id,
+			};
+		} else {
+			ref = {
+				uid,
+				real,
+				manifest: pkg.id,
+			};
+		}
+
+		const remote = this.localPathToRemote.has(real);
 		if (remote) {
 			return {
 				...ref,
@@ -370,10 +381,9 @@ export default class ProjectManager {
 
 				// Evict packages
 				bridge.events.updateManifests.send({
-					manifests: new Map(Array.from(
-						project.manifests.keys(),
-						(id) => [id, undefined],
-					)),
+					manifests: new Map(
+						Array.from(project.manifests.keys(), (id) => [id, undefined]),
+					),
 				});
 			}
 
@@ -388,9 +398,6 @@ export default class ProjectManager {
 			const ownedPaths: AbsoluteFilePath[] = Array.from(
 				this.server.memoryFs.glob(project.directory),
 			);
-			for (const path of ownedPaths) {
-				this.handleDeleted(path);
-			}
 			await Promise.all(
 				ownedPaths.map((path) =>
 					this.server.fileAllocator.evict(
@@ -399,6 +406,9 @@ export default class ProjectManager {
 					)
 				),
 			);
+			for (const path of ownedPaths) {
+				this.handleDeleted(path);
+			}
 
 			// Tell the MemoryFileSystem to clear it's maps
 			this.server.memoryFs.unwatch(project.directory);
@@ -660,7 +670,10 @@ export default class ProjectManager {
 			);
 
 			for (const [id, def] of project.manifests) {
-				manifestsSerial.set(id, this.server.memoryFs.getPartialManifest(def, project));
+				manifestsSerial.set(
+					id,
+					this.server.memoryFs.getPartialManifest(def, project),
+				);
 			}
 		}
 

@@ -7,8 +7,8 @@ import {
 import {
 	MarkupTokenType,
 	StaticMarkup,
-	concatMarkup,
 	convertToMarkupFromRandomString,
+	joinMarkup,
 	markup,
 	markupTag,
 	readMarkup,
@@ -76,7 +76,7 @@ export function markupToken(
 }
 
 export function concatSplitLinesMarkup(parts: AnyMarkups): AnyMarkups {
-	return splitLines(readMarkup(concatMarkup(parts))).map((line) =>
+	return splitLines(readMarkup(joinMarkup(parts))).map((line) =>
 		convertToMarkupFromRandomString(line)
 	);
 }

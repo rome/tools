@@ -7,16 +7,22 @@
 
 import {Diagnostics} from "@internal/diagnostics";
 import {SourceMapGenerator} from "@internal/codec-source-map";
-import {AbsoluteFilePath, AbsoluteFilePathSet, Path, RelativePath, RelativePathMap} from "@internal/path";
+import {
+	AbsoluteFilePath,
+	AbsoluteFilePathSet,
+	Path,
+	RelativePath,
+	RelativePathMap,
+} from "@internal/path";
 import {ResolverOptions} from "../../server/fs/Resolver";
 import BundleRequest from "@internal/core/server/bundler/BundleRequest";
 import Bundler from "@internal/core/server/bundler/Bundler";
-import { FSReadStream } from "@internal/fs";
-import { ProjectDefinition } from "@internal/project";
-import { ManifestDefinition } from "@internal/codec-js-manifest";
-import { WorkerCompileResult } from "@internal/core/worker/types";
-import {Event } from "@internal/events";
-import { Resource } from "@internal/resources";
+import {FSReadStream} from "@internal/fs";
+import {ProjectDefinition} from "@internal/project";
+import {ManifestDefinition} from "@internal/codec-js-manifest";
+import {WorkerCompileResult} from "@internal/core/worker/types";
+import {Event} from "@internal/events";
+import {Resource} from "@internal/resources";
 
 export type BundlerConfig = {
 	basePath: Path;
@@ -64,10 +70,10 @@ export type BundleCompileResult = WorkerCompileResult & {
 };
 
 export type BundleWatcher = {
-	subscription: Resource,
-	diagnosticsEvent: Event<Diagnostics, void>,
+	subscription: Resource;
+	diagnosticsEvent: Event<Diagnostics, void>;
 	changeEvent: Event<AbsoluteFilePathSet, void>;
-	filesEvent: Event<BundleWatcherFiles, void>,
+	filesEvent: Event<BundleWatcherFiles, void>;
 };
 
 export type BundleWatcherFiles = RelativePathMap<undefined | BundlerFile>;

@@ -1,6 +1,6 @@
 import {
-	ExitSignal,
 	CompilerPath,
+	ExitSignal,
 	Scope,
 	createVisitor,
 	signals,

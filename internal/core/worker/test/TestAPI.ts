@@ -31,7 +31,7 @@ import {
 import {cleanFrames} from "./TestWorkerFile";
 import {AsyncVoidCallback, VoidCallback} from "@internal/typescript-helpers";
 import {AbsoluteFilePath} from "@internal/path";
-import { DurationMeasurer } from "@internal/numbers";
+import {DurationMeasurer} from "@internal/numbers";
 
 function formatExpectedError(expected: ExpectedError): string {
 	if (typeof expected === "string") {
@@ -322,7 +322,7 @@ export default class TestAPI implements TestHelper {
 			return;
 		}
 
-		const delta = startTime.since().toMilliseconds()
+		const delta = startTime.since().toMilliseconds();
 		if (delta > timeoutMax) {
 			throw new Error(`Test timeout - exceeded ${String(timeoutMax)}ms`);
 		}
@@ -401,7 +401,7 @@ export default class TestAPI implements TestHelper {
 		value: boolean,
 		message: string = "Expected value to be true",
 	): void {
-		if (value !== true) {
+		if (!value) {
 			this.fail(
 				message,
 				[
@@ -425,7 +425,7 @@ export default class TestAPI implements TestHelper {
 		value: boolean,
 		message: string = "Expected value to be false",
 	): void {
-		if (value !== false) {
+		if (value) {
 			this.fail(
 				message,
 				[

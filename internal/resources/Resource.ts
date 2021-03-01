@@ -95,7 +95,6 @@ export default class Resource {
 
       const timeout = setTimeout(() => {
         // TODO reject?
-        console.log(`${this[Symbol.toStringTag]} has not been released after 3 seconds`);
       }, 3000);
 
       promises.push(selfPromise.finally(() => {

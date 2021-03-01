@@ -97,7 +97,10 @@ type CommentState = {
 	comments: AnyComment[];
 };
 
-export function injectComment(path: CompilerPath, comment: AnyCommentOptionalId): string {
+export function injectComment(
+	path: CompilerPath,
+	comment: AnyCommentOptionalId,
+): string {
 	let commentWithId: AnyComment;
 	const {id} = comment;
 

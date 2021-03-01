@@ -1,9 +1,9 @@
 import {AnyIndexedNumber, Duration} from "@internal/numbers";
 import {
 	AbsoluteFilePathMap,
-	Path,
 	DataURIPathMap,
 	MixedPathMap,
+	Path,
 	PathSet,
 	RelativePathMap,
 	UIDPathMap,

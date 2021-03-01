@@ -16,8 +16,8 @@ import {
 	deriveDiagnosticFromErrorStructure,
 } from "./derive";
 import {convertPossibleNodeErrorToDiagnostic} from "./node-errors";
-import {getErrorStructure, NodeSystemError} from "@internal/errors";
-import { DiagnosticCategory, equalCategoryNames } from "./categories";
+import {NodeSystemError, getErrorStructure} from "@internal/errors";
+import {DiagnosticCategory, equalCategoryNames} from "./categories";
 
 // If printDiagnosticsToString throws a DiagnosticsError then we'll be trapped in a loop forever
 // since we'll continuously be trying to serialize diagnostics
@@ -91,7 +91,7 @@ export function createRuntimeDiagnosticError(
 ): DiagnosticsError {
 	const struct = getErrorStructure(new Error(), 1);
 	const diag = deriveDiagnosticFromErrorStructure(struct, opts);
-	return createSingleDiagnosticError(diag)
+	return createSingleDiagnosticError(diag);
 }
 
 export function createSingleDiagnosticError(
@@ -152,7 +152,10 @@ export function isUserDiagnosticError(err: Error): boolean {
 	}
 }
 
-export function isDiagnosticErrorOfCategory(err: Error, category: DiagnosticCategory): boolean {
+export function isDiagnosticErrorOfCategory(
+	err: Error,
+	category: DiagnosticCategory,
+): boolean {
 	const diagnostics = getDiagnosticsFromError(err);
 	if (diagnostics === undefined) {
 		return false;

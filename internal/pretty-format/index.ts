@@ -8,8 +8,8 @@
 import {
 	UnknownObject,
 	isIterable,
-	mergeObjects,
 	isPlainObject,
+	mergeObjects,
 } from "@internal/typescript-helpers";
 import {escapeJSString} from "@internal/string-escape";
 import {naturalCompare} from "@internal/string-utils";
@@ -17,7 +17,7 @@ import {
 	AnyMarkup,
 	LazyMarkupFactory,
 	StaticMarkup,
-	concatMarkup,
+	joinMarkup,
 	markup,
 	markupTag,
 	serializeLazyMarkup,
@@ -55,7 +55,10 @@ const DEFAULT_OPTIONS: FormatOptions = {
 
 const NODE_UTIL_INSPECT_CUSTOM = Symbol.for("nodejs.util.inspect.custom");
 
-export function prettyFormatToString(value: unknown, opts?: FormatPartialOptions): string {
+export function prettyFormatToString(
+	value: unknown,
+	opts?: FormatPartialOptions,
+): string {
 	return markupToJoinedPlainText(prettyFormat(value, opts));
 }
 
@@ -219,7 +222,7 @@ function formatFunction(val: Function, opts: FormatOptions): AnyMarkup {
 	let type = "Function";
 
 	if (isNativeFunction(val)) {
-		type = `NativeFunction`;
+		type = "NativeFunction";
 	}
 
 	let label = markup`${formatLabel(type)} ${name}`;
@@ -258,7 +261,9 @@ function getExtraObjectProps(
 				if (Array.isArray(item) && item.length === 2) {
 					const [key, val] = item;
 					const formattedKey =
-						typeof key === "string" ? formatKey(key) : prettyFormat(key, opts);
+						typeof key === "string"
+							? formatKey(key, true)
+							: prettyFormat(key, opts);
 					props.push(markup`${formattedKey} => ${prettyFormat(val, elemOpts)}`);
 				} else {
 					props.push(prettyFormat(item, elemOpts));
@@ -285,10 +290,10 @@ function getExtraObjectProps(
 	return {ignoreKeys, props};
 }
 
-function formatKey(rawKey: string): StaticMarkup {
+function formatKey(rawKey: string, forceString: boolean = false): StaticMarkup {
 	// Format as a string if it contains any special characters
-	if (/[^A-Za-z0-9_$]/g.test(rawKey)) {
-		return formatString(rawKey);
+	if (forceString || /[^A-Za-z0-9_$]/g.test(rawKey)) {
+		return markupTag("token", formatString(rawKey), {type: "string"});
 	} else {
 		return markup`${rawKey}`;
 	}
@@ -447,18 +452,18 @@ function formatObject(
 	parts.push(open);
 
 	if (props.length > 0) {
-		if (!opts.accurate) {
-			const inner = concatMarkup(props.map(prop => markup`<li>${prop}</li>`));
-			parts.push(markup`<ul joinSameLine=", ">${inner}</ul>`);
-		} else {
-			const inner = concatMarkup(props, `\n`);
+		if (opts.accurate) {
+			const inner = joinMarkup(props, "\n");
 			parts.push(markup`\n${inner}\n`);
+		} else {
+			const inner = joinMarkup(props.map((prop) => markup`<li>${prop}</li>`));
+			parts.push(markup`<ul joinSameLine=", ">${inner}</ul>`);
 		}
 	}
 
 	parts.push(close);
 
-	return concatMarkup(parts);
+	return joinMarkup(parts);
 }
 
 function formatRegExp(val: RegExp): StaticMarkup {

@@ -1,6 +1,6 @@
 import {createDiagnosticsCategory} from "./index";
 import {DiagnosticLocation} from "../types";
-import {pathToMarkup, markup} from "@internal/markup";
+import {markup, pathToMarkup} from "@internal/markup";
 import {buildSuggestionAdvice} from "../helpers";
 import {AbsoluteFilePath} from "@internal/path";
 import {DIAGNOSTIC_CATEGORIES} from "@internal/diagnostics";

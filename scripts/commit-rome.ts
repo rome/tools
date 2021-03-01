@@ -10,7 +10,9 @@ export async function main() {
 
 		const outPath = ROOT.append("scripts/vendor/rome.cjs");
 		await tempFolder.append("bin/rome/index.js").copyFileTo(outPath);
-		await tempFolder.append("bin/rome/index.js.map").copyFileTo(outPath.addExtension(".map"));
+		await tempFolder.append("bin/rome/index.js.map").copyFileTo(
+			outPath.addExtension(".map"),
+		);
 	} finally {
 		await tempFolder.removeDirectory();
 	}

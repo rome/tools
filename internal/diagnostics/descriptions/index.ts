@@ -43,7 +43,7 @@ import {initCommand} from "./commands/initCommand";
 import {
 	StaticMarkup,
 	StaticMarkups,
-	concatMarkup,
+	joinMarkup,
 	markup,
 } from "@internal/markup";
 import {tomlParser} from "./parsers/tomlParser";
@@ -55,10 +55,7 @@ export function join(conjunction: string, items: StaticMarkups): StaticMarkup {
 		return items[0];
 	} else {
 		const popped = items.pop()!;
-		return concatMarkup(
-			[...items, markup`${conjunction} ${popped}`],
-			markup`, `,
-		);
+		return joinMarkup([...items, markup`${conjunction} ${popped}`], markup`, `);
 	}
 }
 

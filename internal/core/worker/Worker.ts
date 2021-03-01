@@ -27,30 +27,33 @@ import {DiagnosticsError} from "@internal/diagnostics";
 import {
 	AbsoluteFilePath,
 	AbsoluteFilePathMap,
-	Path,
 	MixedPathMap,
+	Path,
 	UIDPath,
 } from "@internal/path";
-import {
-	FSReadStream,
-	FSStats,
-	createFakeStats,
-} from "@internal/fs";
+import {FSReadStream, FSStats, createFakeStats} from "@internal/fs";
 import {FileReference} from "../common/types/files";
 import {getFileHandlerFromPathAssert} from "../common/file-handlers/index";
 import WorkerAPI from "./WorkerAPI";
 import {applyWorkerBufferPatch} from "./utils/applyWorkerBufferPatch";
 import VirtualModules from "../common/VirtualModules";
 import {markup} from "@internal/markup";
-import {BridgeClient, isBridgeDisconnectedDiagnosticError} from "@internal/events";
+import {
+	BridgeClient,
+	isBridgeDisconnectedDiagnosticError,
+} from "@internal/events";
 import {ExtendedMap} from "@internal/collections";
 import WorkerCache from "./WorkerCache";
 import FatalErrorHandler from "../common/FatalErrorHandler";
 import {RSERObject} from "@internal/binary-transport";
 import {ReporterConditionalStream} from "@internal/cli-reporter";
 import {DEFAULT_TERMINAL_FEATURES} from "@internal/cli-environment";
-import {createResourceRoot, Resource} from "@internal/resources";
-import {safeProcessExit} from "@internal/resources";
+import {
+	Resource,
+	createResourceRoot,
+	safeProcessExit,
+} from "@internal/resources";
+
 import WorkerTests from "./test/WorkerTests";
 import inspector = require("inspector");
 
@@ -143,13 +146,38 @@ export default class Worker {
 	private moduleSignatureCache: MixedPathMap<ModuleSignature>;
 	private buffers: AbsoluteFilePathMap<WorkerBuffer>;
 
-	public getPartialManifest(ref: FileReference): undefined | WorkerPartialManifest {
-		const id = ref.manifest;
-		if (id === undefined) {
+	public getPartialManifest(
+		ref: FileReference,
+	): undefined | WorkerPartialManifest {
+		if ("manifest" in ref) {
+			return this.partialManifests.assert(ref.manifest);
+		} else {
 			return undefined;
 		}
+	}
 
-		return this.partialManifests.get(id);
+	public getProject(ref: FileReference): WorkerProject {
+		let id: number;
+		if ("project" in ref) {
+			id = ref.project;
+		} else {
+			const manifest = this.getPartialManifest(ref);
+			if (manifest === undefined) {
+				throw new Error(
+					"FileReference: Inferring project from manifest, but it does not exist",
+				);
+			}
+			id = manifest.project;
+		}
+
+		const config = this.projects.get(id);
+		if (config === undefined) {
+			throw new Error(
+				`Unknown project ${id}, known projects are ${this.projects.keys()}`,
+			);
+		}
+
+		return config;
 	}
 
 	private async end() {
@@ -169,9 +197,12 @@ export default class Worker {
 
 		const {bridge} = this;
 
-		bridge.resources.addCallback("WorkerEnd", async () => {
-			await this.end();
-		});
+		bridge.resources.addCallback(
+			"WorkerEnd",
+			async () => {
+				await this.end();
+			},
+		);
 
 		let profiler: undefined | Profiler;
 		bridge.events.profilingStart.subscribe(async (data) => {
@@ -489,7 +520,7 @@ export default class Worker {
 			sourceTypeJS = "script";
 
 			const manifest = this.getPartialManifest(ref);
-			if (manifest !== undefined && manifest.type === "module") {
+			if (manifest?.type === "module") {
 				sourceTypeJS = "module";
 			}
 		}
@@ -581,17 +612,6 @@ export default class Worker {
 		}
 
 		return res;
-	}
-
-	public getProject(ref: FileReference): WorkerProject {
-		const id = ref.project;
-		const config = this.projects.get(id);
-		if (config === undefined) {
-			throw new Error(
-				`Unknown project ${id}, known projects are ${this.projects.keys()}`,
-			);
-		}
-		return config;
 	}
 
 	private async evict(

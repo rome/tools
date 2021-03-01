@@ -143,7 +143,7 @@ export default function resolverSuggest(
 					([human, absolute]) => {
 						if (human === absolute.join()) {
 							let relativePath = originDirectory.relative(absolute);
-	
+
 							// If the user didn't use extensions, then neither should we
 							if (!query.source.hasAnyExtensions()) {
 								// TODO only do this if it's an implicit extension
@@ -151,8 +151,7 @@ export default function resolverSuggest(
 									relativePath.getExtensionlessBasename(),
 								);
 							}
-							
-	
+
 							if (relativePath.isRelative()) {
 								if (query.source.isExplicitRelative()) {
 									relativePath = relativePath.toExplicitRelative();
@@ -228,7 +227,12 @@ export default function resolverSuggest(
 
 	throw createSingleDiagnosticError({
 		location,
-		description: descriptions.RESOLVER.NOT_FOUND(resolved.type, query.origin, query.source, advice),
+		description: descriptions.RESOLVER.NOT_FOUND(
+			resolved.type,
+			query.origin,
+			query.source,
+			advice,
+		),
 	});
 }
 
@@ -277,7 +281,7 @@ function tryPathSuggestions(
 		resolver: Resolver;
 		suggestions: Suggestions;
 		path: AbsoluteFilePath;
-		seen: AbsoluteFilePathSet,
+		seen: AbsoluteFilePathSet;
 	},
 ) {
 	if (seen.has(path)) {

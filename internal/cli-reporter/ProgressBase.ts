@@ -9,7 +9,7 @@ import Reporter from "./Reporter";
 import {ReporterProgress, ReporterProgressOptions} from "./types";
 import {mergeObjects} from "@internal/typescript-helpers";
 import {AnyMarkup, AnyMarkups, isEmptyMarkup, markup} from "@internal/markup";
-import { Duration, DurationMeasurer } from "@internal/numbers";
+import {Duration, DurationMeasurer} from "@internal/numbers";
 
 const DEFAULT_PROGRESS_OPTIONS: ReporterProgressOptions = {
 	name: undefined,

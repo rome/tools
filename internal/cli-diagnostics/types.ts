@@ -17,7 +17,8 @@ export type DiagnosticsPrinterFlags = {
 	grep: string;
 	fieri: boolean;
 	inverseGrep: boolean;
-	verboseDiagnostics: boolean | "NO_TRUNCATE";
+	truncateDiagnostics: boolean;
+	verboseDiagnostics: boolean;
 	maxDiagnostics: number;
 	showAllDiagnostics: boolean;
 };

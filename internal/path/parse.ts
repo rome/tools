@@ -1,6 +1,14 @@
 import {decodeBase64} from "@internal/binary";
 import {HOME_PATH} from ".";
-import {ParsedPath, ParsedPathBase, ParsedPathDataURI, ParsedPathRelative, ParsedPathURL, ParsedPathWindowsDrive, PathSegments} from "./types";
+import {
+	ParsedPath,
+	ParsedPathBase,
+	ParsedPathDataURI,
+	ParsedPathRelative,
+	ParsedPathURL,
+	ParsedPathWindowsDrive,
+	PathSegments,
+} from "./types";
 
 export function splitPathSegments(str: string): PathSegments {
 	if (str === "") {
@@ -17,15 +25,15 @@ export function parseRelativePathSegments(
 ): ParsedPathRelative {
 	return {
 		type: "relative",
-		explicitRelative: (segments.length === 0 || segments[0] === "." || segments[0] === ".."),
+		explicitRelative: segments.length === 0 ||
+		segments[0] === "." ||
+		segments[0] === "..",
 		...normalizeRelativeSegments(segments),
 	};
 }
 
 // Followed is some gnarly regex, be warned!
-export function parseURLPathSegments(
-	segments: PathSegments,
-): ParsedPathURL {
+export function parseURLPathSegments(segments: PathSegments): ParsedPathURL {
 	const protocol = segments[0];
 	let rawHostname: ParsedPathURL["hostname"] = segments[2];
 	const relativeSegments = segments.slice(3);
@@ -123,13 +131,20 @@ export function parseURLPathRelativeSegments(
 	return {
 		search,
 		hash,
-		...normalizeRelativeSegments(segments.map((segment) => decodeURIComponent(segment))),
+		...normalizeRelativeSegments(
+			segments.map((segment) => decodeURIComponent(segment)),
+		),
 	};
 }
 
 function isURLSegments(segments: string[]): boolean {
 	const firstSeg = segments[0];
-	return firstSeg !== undefined && !isWindowsDrive(firstSeg) && firstSeg[firstSeg.length - 1] === ":" && segments[1] === "";
+	return (
+		firstSeg !== undefined &&
+		!isWindowsDrive(firstSeg) &&
+		firstSeg[firstSeg.length - 1] === ":" &&
+		segments[1] === ""
+	);
 }
 
 function parseDataURI(raw: string): ParsedPathDataURI {
@@ -155,7 +170,7 @@ function parseDataURI(raw: string): ParsedPathDataURI {
 		data,
 		relativeSegments: [],
 		explicitDirectory: false,
-	}
+	};
 }
 
 export function parsePath(raw: string, hint: PathTypeHint): ParsedPath {
@@ -181,7 +196,10 @@ function parsePathSegments(
 
 		// Automatically normalize a file scheme into an absolute path
 		if (proto === "file:") {
-			return parsePathSegments(segments.slice(2).map((segment) => decodeURIComponent(segment)), "absolute");
+			return parsePathSegments(
+				segments.slice(2).map((segment) => decodeURIComponent(segment)),
+				"absolute",
+			);
 		}
 
 		// Explicit `uid://foo`
@@ -209,7 +227,10 @@ function parsePathSegments(
 	if (isHint("absolute", hint) && segments[0] === "~") {
 		return {
 			...HOME_PATH.parsed,
-			...normalizeRelativeSegments([...HOME_PATH.getSegments(), ...segments.slice(1)]),
+			...normalizeRelativeSegments([
+				...HOME_PATH.getSegments(),
+				...segments.slice(1),
+			]),
 		};
 	}
 
@@ -230,7 +251,7 @@ function parsePathSegments(
 			...normalizeRelativeSegments(segments.slice(1)),
 		};
 	}
-	
+
 	// Windows drive: C:\Users\Sebastian
 	if (segments.length > 0 && isWindowsDrive(segments[0])) {
 		return {
@@ -244,7 +265,9 @@ function parsePathSegments(
 }
 
 // Some maybe excessive validation but better to be safe than sorry
-export function validateParsedPathWindowsDriveLetter(raw: string): ParsedPathWindowsDrive["letter"] {
+export function validateParsedPathWindowsDriveLetter(
+	raw: string,
+): ParsedPathWindowsDrive["letter"] {
 	const letter = raw.toUpperCase();
 
 	switch (letter) {
@@ -275,7 +298,7 @@ export function validateParsedPathWindowsDriveLetter(raw: string): ParsedPathWin
 		case "Y":
 		case "Z":
 			return letter;
-			
+
 		default:
 			throw new Error(`"${letter}" is not a valid windows drive letter`);
 	}
@@ -290,9 +313,7 @@ function needsSegmentsNormalization(segments: string[]): boolean {
 	return false;
 }
 
-export function normalizeRelativeSegments(
-	segments: string[],
-): ParsedPathBase {
+export function normalizeRelativeSegments(segments: string[]): ParsedPathBase {
 	if (!needsSegmentsNormalization(segments)) {
 		return {
 			relativeSegments: segments,

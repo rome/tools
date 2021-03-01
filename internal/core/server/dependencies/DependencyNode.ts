@@ -28,8 +28,8 @@ import {
 	getFileHandlerFromPath,
 } from "@internal/core";
 import {
-	AbsoluteFilePathMap,
 	AbsoluteFilePath,
+	AbsoluteFilePathMap,
 	UIDPath,
 	UIDPathMap,
 } from "@internal/path";

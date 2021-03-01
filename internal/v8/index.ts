@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-export {initErrorHooks, errorSourceMaps} from "./error-frames";
+export {errorSourceMaps, initErrorHooks} from "./error-frames";
 
 export * from "./utils";
 

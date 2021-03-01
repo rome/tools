@@ -5,11 +5,11 @@ import URLPath from "./classes/URLPath";
 import DataURIPath from "./classes/DataURIPath";
 import {
 	PathTypeHint,
-	parsePath,
 	normalizeRelativeSegments,
+	parsePath,
 	parseRelativePathSegments,
 } from "./parse";
-import {FilePath, Path, ParsedPath} from "./types";
+import {FilePath, ParsedPath, Path} from "./types";
 
 export function createPathFromParsed(parsed: ParsedPath): Path {
 	switch (parsed.type) {
@@ -67,9 +67,6 @@ export function createFilePath(str: string): FilePath {
 	return createPath(str, "absolute").assertFilePath();
 }
 
-export function createPath(
-	param: string,
-	hint: PathTypeHint = "any",
-): Path {
+export function createPath(param: string, hint: PathTypeHint = "any"): Path {
 	return createPathFromParsed(parsePath(param, hint));
 }

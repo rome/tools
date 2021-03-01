@@ -1,10 +1,9 @@
-import { OneIndexed, ZeroIndexed } from "@internal/numbers";
-import { Path } from "@internal/path";
+import {OneIndexed, ZeroIndexed} from "@internal/numbers";
+import {Path} from "@internal/path";
 
 // Similar to TS NodeJS.ErrnoException but with proper properties
 // https://nodejs.org/api/errors.html#errors_class_systemerror
-export type NodeSystemError = Error &
-	Partial<NodeSystemErrorProperties>;
+export type NodeSystemError = Error & Partial<NodeSystemErrorProperties>;
 
 export type NodeSystemErrorProperties = {
 	address: undefined | string;

@@ -8,7 +8,7 @@
 import SourceMapConsumer from "./SourceMapConsumer";
 import {OneIndexed, ZeroIndexed} from "@internal/numbers";
 import {ResolvedLocation} from "./types";
-import {Path, MixedPathMap} from "@internal/path";
+import {MixedPathMap, Path} from "@internal/path";
 
 export default class SourceMapConsumerCollection {
 	constructor() {

@@ -481,19 +481,15 @@ export default class ParserCore<Types extends ParserCoreTypes> {
 			end = this.getPositionFromIndex(opts.endIndex);
 		}
 
-		if (opts.location !== undefined) {
-			start = opts.location.start;
-			end = opts.location.end;
-		}
-
 		if (token !== undefined) {
 			start = this.getPositionFromIndex(token.start);
 			end = this.getPositionFromIndex(token.end);
 		}
 
-		if (start === undefined && end === undefined && opts.loc !== undefined) {
-			start = opts.loc.start;
-			end = opts.loc.end;
+		const loc = opts.loc ?? opts.node?.loc;
+		if (start === undefined && end === undefined && loc !== undefined) {
+			start = loc.start;
+			end = loc.end;
 		}
 
 		// If we weren't given a start then default to the provided end, or the current token start

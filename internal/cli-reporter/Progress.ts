@@ -5,10 +5,13 @@
  * LICENSE file in the root directory of this source tree.
  */
 
+import {splitChars} from "@internal/string-utils";
 import {
-	splitChars,
-} from "@internal/string-utils";
-import {DurationMeasurer, humanizeNumber} from "@internal/numbers";
+	Duration,
+	DurationMeasurer,
+	OneIndexed,
+	humanizeNumber,
+} from "@internal/numbers";
 import {Reporter} from "@internal/cli-reporter";
 import {
 	ReporterProgressOptions,
@@ -19,10 +22,10 @@ import {
 import ProgressBase from "./ProgressBase";
 import {AnyMarkup, markup} from "@internal/markup";
 import {formatAnsi} from "@internal/cli-layout";
-import {Duration, OneIndexed} from "@internal/numbers";
+
 import * as streamUtils from "./stream";
 import {VoidCallback} from "@internal/typescript-helpers";
-import { createResourceFromCallback, Resource } from "@internal/resources";
+import {Resource, createResourceFromCallback} from "@internal/resources";
 
 type BoldRanges = [number, number][];
 
@@ -46,9 +49,12 @@ export default class Progress extends ProgressBase {
 		this.lastNoCursorRenderTime = undefined;
 		this.lastRenderCurrent = 0;
 
-		this.resources = createResourceFromCallback(`ReporterProgress`, () => {
-			this.end();
-		});
+		this.resources = createResourceFromCallback(
+			"ReporterProgress",
+			() => {
+				this.end();
+			},
+		);
 		this.closed = false;
 		this.onEnd = onEnd;
 
@@ -333,7 +339,9 @@ export default class Progress extends ProgressBase {
 				if (this.opts.eta) {
 					if (this.approximateETA !== undefined && elapsed < this.approximateETA) {
 						// Approximate ETA
-						const left = Duration.fromMilliseconds(elapsed - this.approximateETA);
+						const left = Duration.fromMilliseconds(
+							elapsed - this.approximateETA,
+						);
 						suffix += `eta ~${left.format()} `;
 					} else if (total !== undefined) {
 						// How many items we have left

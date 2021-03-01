@@ -62,9 +62,9 @@ import {
 	URLPath,
 	createAbsoluteFilePath,
 	createPath,
+	createRelativePath,
 	createURLPath,
 	isPath,
-	createRelativePath,
 } from "@internal/path";
 import {StaticMarkup, markup, readMarkup} from "@internal/markup";
 import {consumeUnknown} from ".";

@@ -33,8 +33,7 @@ abstract class BasePathMap<PathT extends Path, Value>
 	public abstract setValidated(key: PathT, value: Value): void;
 }
 
-export class ReadablePathMap<Value>
-	extends BasePathMap<ReadablePath, Value> {
+export class ReadablePathMap<Value> extends BasePathMap<ReadablePath, Value> {
 	public setValidated(key: Path, value: Value) {
 		this.set(key.assertReadable(), value);
 	}
@@ -108,7 +107,8 @@ export class ReadablePathSet extends BasePathSet<ReadablePath, ReadablePathSet> 
 }
 ReadablePathSet.prototype[Symbol.toStringTag] = "ReadablePathSet";
 
-export class AbsoluteFilePathSet extends BasePathSet<AbsoluteFilePath, AbsoluteFilePathSet> {
+export class AbsoluteFilePathSet
+	extends BasePathSet<AbsoluteFilePath, AbsoluteFilePathSet> {
 	public addValidated(path: Path) {
 		this.add(path.assertAbsolute());
 	}
@@ -188,6 +188,4 @@ export function isPathMap(val: unknown): val is PathMap<unknown> {
 	);
 }
 
-export type PathMapValue<T> = T extends BasePathMap<Path, infer V>
-	? V
-	: never;
+export type PathMapValue<T> = T extends BasePathMap<Path, infer V> ? V : never;

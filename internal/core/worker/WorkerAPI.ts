@@ -141,11 +141,7 @@ export default class WorkerAPI {
 		const res = await jsAnalysis.getModuleSignature({
 			ast,
 			project,
-			provider: await this.worker.getTypeCheckProvider(
-				ref,
-				{},
-				parseOptions,
-			),
+			provider: await this.worker.getTypeCheckProvider(ref, {}, parseOptions),
 		});
 
 		cacheEntry.update(res);

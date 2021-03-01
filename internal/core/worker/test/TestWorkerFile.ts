@@ -38,8 +38,8 @@ import {
 	createAbsoluteFilePath,
 } from "@internal/path";
 import {
-	concatMarkup,
 	isEmptyMarkup,
+	joinMarkup,
 	markup,
 	readMarkup,
 	serializeLazyMarkup,
@@ -52,11 +52,11 @@ import {
 } from "@internal/errors";
 import prettyFormat from "@internal/pretty-format";
 import {
-	Worker,
 	TestRef,
 	TestWorkerPrepareTestOptions,
 	TestWorkerPrepareTestResult,
 	TestWorkerRunTestOptions,
+	Worker,
 	WorkerBridge,
 } from "@internal/core";
 import {ExtendedMap} from "@internal/collections";
@@ -185,7 +185,7 @@ export default class TestWorkerFile {
 				if (args.length === 1 && typeof args[0] === "string") {
 					text = markup`${args[0]}`;
 				} else {
-					text = concatMarkup(
+					text = joinMarkup(
 						args.map((arg) =>
 							serializeLazyMarkup(prettyFormat(arg, {accurate: true}))
 						),

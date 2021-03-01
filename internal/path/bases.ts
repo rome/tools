@@ -1,12 +1,19 @@
-import {FilePath, ParsedPath, Path, PathFormatOptions, PathSegments, ReadablePath} from "./types";
+import {
+	FilePath,
+	ParsedPath,
+	Path,
+	PathFormatOptions,
+	PathSegments,
+	ReadablePath,
+} from "./types";
 import AbsoluteFilePath from "./classes/AbsoluteFilePath";
 import RelativePath from "./classes/RelativePath";
 import UIDPath from "./classes/UIDPath";
 import URLPath from "./classes/URLPath";
 import DataURIPath from "./classes/DataURIPath";
-import {splitPathSegments, normalizeRelativeSegments} from "./parse";
+import {normalizeRelativeSegments, splitPathSegments} from "./parse";
 import {enhanceNodeInspectClass} from "@internal/node";
-import { equalArray } from "@internal/typescript-helpers";
+import {equalArray} from "@internal/typescript-helpers";
 import stream = require("stream");
 
 export type FilePathMemo<Super> = {
@@ -23,7 +30,10 @@ function getExtension(basename: string): string {
 	}
 }
 
-export abstract class BasePath<SuperParsed extends ParsedPath = ParsedPath, Super extends Path = Path> {
+export abstract class BasePath<
+	SuperParsed extends ParsedPath = ParsedPath,
+	Super extends Path = Path
+> {
 	constructor(parsed: SuperParsed, memo: FilePathMemo<Super> = {}) {
 		this.relativeSegments = parsed.relativeSegments;
 		this.parsed = parsed;
@@ -49,12 +59,17 @@ export abstract class BasePath<SuperParsed extends ParsedPath = ParsedPath, Supe
 
 	// Allow caching a single formatted value for an options object
 	private memoizedFormat: undefined | string;
-	private memoizedFormatOptions: undefined | [string, undefined | AbsoluteFilePath, undefined | AbsoluteFilePath];
+	private memoizedFormatOptions:
+		| undefined
+		| [string, undefined | AbsoluteFilePath, undefined | AbsoluteFilePath];
 
 	protected abstract _assert(): Super;
 	protected abstract _join(): string;
 	protected abstract _equalAbsolute(parsed: ParsedPath): boolean;
-	protected abstract _fork(parsed: SuperParsed, memo?: FilePathMemo<Super>): Super;
+	protected abstract _fork(
+		parsed: SuperParsed,
+		memo?: FilePathMemo<Super>,
+	): Super;
 	protected abstract _getUnique(): Super;
 	protected abstract _format(opts?: PathFormatOptions): string;
 
@@ -138,7 +153,7 @@ export abstract class BasePath<SuperParsed extends ParsedPath = ParsedPath, Supe
 			return basename.slice(0, -ext.length);
 		}
 	}
-	
+
 	public hasParent() {
 		return !this.isRoot();
 	}
@@ -200,11 +215,11 @@ export abstract class BasePath<SuperParsed extends ParsedPath = ParsedPath, Supe
 	public isRoot(): boolean {
 		return this.relativeSegments.length === 0;
 	}
-	
+
 	public isReadable(): this is ReadablePath {
 		return false;
 	}
-	
+
 	public isFilePath(): this is FilePath {
 		return false;
 	}
@@ -274,8 +289,6 @@ export abstract class BasePath<SuperParsed extends ParsedPath = ParsedPath, Supe
 		return this.relativeSegments.includes(name);
 	}
 
-	
-
 	public getUnique(): Super {
 		const memoUnique = this.memoizedUnique;
 		if (memoUnique !== undefined) {
@@ -332,7 +345,11 @@ export abstract class BasePath<SuperParsed extends ParsedPath = ParsedPath, Supe
 			}
 		} else {
 			const {memoizedFormatOptions} = this;
-			if (memoizedFormatOptions !== undefined && memoizedFormatOptions[1] === opts.cwd && memoizedFormatOptions[2] === opts.home) {
+			if (
+				memoizedFormatOptions !== undefined &&
+				memoizedFormatOptions[1] === opts.cwd &&
+				memoizedFormatOptions[2] === opts.home
+			) {
 				return memoizedFormatOptions[0];
 			}
 		}
@@ -361,7 +378,7 @@ export abstract class BasePath<SuperParsed extends ParsedPath = ParsedPath, Supe
 		if (other === undefined) {
 			return false;
 		}
-		
+
 		if (other === this) {
 			return true;
 		}
@@ -379,7 +396,10 @@ export abstract class BasePath<SuperParsed extends ParsedPath = ParsedPath, Supe
 		}
 
 		// Fast path for memoized strings
-		if (this.memoizedJoin !== undefined && other.memoizedJoin === this.memoizedJoin) {
+		if (
+			this.memoizedJoin !== undefined &&
+			other.memoizedJoin === this.memoizedJoin
+		) {
 			return true;
 		}
 
@@ -440,7 +460,10 @@ enhanceNodeInspectClass(
 	},
 );
 
-export abstract class ReadableBasePath<Parsed extends ParsedPath, Super extends Path = Path> extends BasePath<Parsed, Super> {
+export abstract class ReadableBasePath<
+	Parsed extends ParsedPath,
+	Super extends Path = Path
+> extends BasePath<Parsed, Super> {
 	public abstract readFile(): Promise<ArrayBuffer>;
 	public abstract readFileText(): Promise<string>;
 	public abstract createReadStream(): stream.Readable;

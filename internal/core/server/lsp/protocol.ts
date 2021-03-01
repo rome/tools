@@ -6,7 +6,7 @@ import {Reporter} from "@internal/cli-reporter";
 import {AnyMarkup, markup} from "@internal/markup";
 import prettyFormat from "@internal/pretty-format";
 import {DIAGNOSTIC_CATEGORIES} from "@internal/diagnostics";
-import { getByteLength } from "@internal/binary";
+import {getByteLength} from "@internal/binary";
 
 type Status = "IDLE" | "WAITING_FOR_HEADERS_END" | "WAITING_FOR_RESPONSE_END";
 

@@ -7,16 +7,20 @@
 
 import Bundler from "./Bundler";
 import {Mappings, SourceMapGenerator} from "@internal/codec-source-map";
-import {AssembledBundle, BundleAssets, BundleRequestResult} from "../../common/types/bundler";
+import {
+	AssembledBundle,
+	BundleAssets,
+	BundleRequestResult,
+} from "../../common/types/bundler";
 import {DependencyOrder} from "../dependencies/DependencyOrderer";
 import {getPrefixedBundleNamespace} from "@internal/compiler";
 import {DiagnosticsProcessor} from "@internal/diagnostics";
 import {
 	AbsoluteFilePath,
 	AbsoluteFilePathSet,
+	RelativePathMap,
 	UIDPath,
 	createPath,
-	RelativePathMap,
 } from "@internal/path";
 import {Reporter} from "@internal/cli-reporter";
 import {markup} from "@internal/markup";

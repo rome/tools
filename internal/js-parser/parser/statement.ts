@@ -330,7 +330,7 @@ export function parseStatement(
 					parser,
 					{
 						description: descriptions.JS_PARSER.ILLEGAL_GENERATOR_DEFINITION,
-						loc: result.loc,
+						node: result,
 					},
 				);
 			}
@@ -503,7 +503,7 @@ export function assertModuleNodeAllowed(parser: JSParser, node: AnyNode): void {
 		unexpectedDiagnostic(
 			parser,
 			{
-				loc: node.loc,
+				node,
 				description: descriptions.JS_PARSER.IMPORT_EXPORT_IN_SCRIPT(
 					parser.options.manifestPath,
 				),
@@ -848,7 +848,7 @@ export function parseSwitchStatement(
 					unexpectedDiagnostic(
 						parser,
 						{
-							loc: stmt.loc,
+							node: stmt,
 							description: descriptions.JS_PARSER.SWITCH_STATEMENT_OUTSIDE_CASE,
 						},
 					);
@@ -1068,7 +1068,7 @@ export function parseLabeledStatement(
 			unexpectedDiagnostic(
 				parser,
 				{
-					loc: expr.loc,
+					node: expr,
 					description: descriptions.JS_PARSER.DUPLICATE_LABEL(
 						maybeName,
 						label.loc,
@@ -1347,7 +1347,7 @@ export function parseForIn(
 		unexpectedDiagnostic(
 			parser,
 			{
-				loc: init.loc,
+				node: init,
 				description: descriptions.JS_PARSER.FOR_IN_OF_WITH_INITIALIZER,
 			},
 		);
@@ -1419,7 +1419,7 @@ export function parseVar(
 						parser,
 						{
 							description: descriptions.JS_PARSER.CONST_WITHOUT_INITIALIZER,
-							loc: id.loc,
+							node: id,
 						},
 					);
 				}
@@ -1734,7 +1734,7 @@ export function parseFunctionParams(
 			unexpectedDiagnostic(
 				parser,
 				{
-					loc: typeParameters.loc,
+					node: typeParameters,
 					description: descriptions.JS_PARSER.ACCESSOR_WITH_TYPE_PARAMS,
 				},
 			);

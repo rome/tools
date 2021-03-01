@@ -24,7 +24,7 @@ import {matchesSuppression} from "@internal/compiler";
 import {SourceMapConsumerCollection} from "@internal/codec-source-map";
 import DiagnosticsNormalizer, {DiagnosticsNormalizerOptions} from "./DiagnosticsNormalizer";
 import {MarkupFormatNormalizeOptions, readMarkup} from "@internal/markup";
-import {Path, MixedPathMap, MixedPathSet, equalPaths} from "@internal/path";
+import {MixedPathMap, MixedPathSet, Path, equalPaths} from "@internal/path";
 import {Event} from "@internal/events";
 import {formatCategoryDescription} from "./helpers";
 
@@ -130,10 +130,16 @@ export default class DiagnosticsProcessor {
 		this.map = new MixedPathMap();
 		this.cachedFlatDiagnostics = undefined;
 		this.possibleCount = 0;
-		
-		this.insertDiagnosticsEvent = new Event("DiagnosticsProcessor.insertDiagnosticsEvent");
-		this.guaranteedDiagnosticsEvent = new Event("DiagnosticsProcessor.visibleDiagnosticsEvent");
-		this.modifiedDiagnosticsForPathEvent = new Event("DiagnosticsProcessor.modifiedDiagnosticsForPathEvent");
+
+		this.insertDiagnosticsEvent = new Event(
+			"DiagnosticsProcessor.insertDiagnosticsEvent",
+		);
+		this.guaranteedDiagnosticsEvent = new Event(
+			"DiagnosticsProcessor.visibleDiagnosticsEvent",
+		);
+		this.modifiedDiagnosticsForPathEvent = new Event(
+			"DiagnosticsProcessor.modifiedDiagnosticsForPathEvent",
+		);
 	}
 
 	public normalizer: DiagnosticsNormalizer;
@@ -424,9 +430,7 @@ export default class DiagnosticsProcessor {
 		return this.map.has(path);
 	}
 
-	public getSuppressionsForPath(
-		path: Path,
-	): undefined | DiagnosticSuppressions {
+	public getSuppressionsForPath(path: Path): undefined | DiagnosticSuppressions {
 		if (this.map.has(path)) {
 			return Array.from(this.getMapEntry(path).suppressions);
 		} else {

@@ -35,11 +35,7 @@ export const typeCheck = createDiagnosticsCategory({
 					},
 		],
 	}),
-	UNKNOWN_IMPORT: (
-		importedName: string,
-		source: Path,
-		possibleNames: string[],
-	) => ({
+	UNKNOWN_IMPORT: (importedName: string, source: Path, possibleNames: string[]) => ({
 		category: DIAGNOSTIC_CATEGORIES["typeCheck/unknownImport"],
 		message: markup`Unknown import '${importedName}' in '${source}'`,
 		advice: buildSuggestionAdvice(importedName, possibleNames),

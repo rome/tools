@@ -1,4 +1,4 @@
-import { decodeUTF8, getArrayBuffer } from "@internal/binary";
+import {decodeUTF8, getArrayBuffer} from "@internal/binary";
 import {AbsoluteFilePath, AbsoluteFilePathMap} from "@internal/path";
 
 export default class CachedFileReader {
@@ -6,7 +6,9 @@ export default class CachedFileReader {
 		this.cached = new AbsoluteFilePathMap();
 	}
 
-	private cached: AbsoluteFilePathMap<string | ArrayBuffer | Promise<string | ArrayBuffer>>;
+	private cached: AbsoluteFilePathMap<
+		string | ArrayBuffer | Promise<string | ArrayBuffer>
+	>;
 
 	public cache(path: AbsoluteFilePath, view: string | ArrayBuffer) {
 		this.cached.set(path, view);

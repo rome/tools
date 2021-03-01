@@ -12,7 +12,7 @@ import {
 	PathComments,
 } from "../types";
 import {Consumer} from "@internal/consume";
-import {sortKeys, formatNumber} from "@internal/pretty-format";
+import {formatNumber, sortKeys} from "@internal/pretty-format";
 import {escapeJSString} from "@internal/string-escape";
 import {markupToJoinedPlainText} from "@internal/cli-layout";
 import {isValidWord} from "@internal/codec-config/util";

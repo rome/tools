@@ -14,28 +14,28 @@ import {
 } from "@internal/core";
 import {Reporter} from "@internal/cli-reporter";
 import {
+	BundleCompileResult,
 	BundleResult,
 	BundleResultBundle,
-	BundlerConfig,
-	BundlerFiles,
-	BundleCompileResult,
-	BundlerEntryResolution,
 	BundleWatcher,
 	BundleWatcherFiles,
+	BundlerConfig,
+	BundlerEntryResolution,
+	BundlerFiles,
 } from "../../common/types/bundler";
 import DependencyGraph from "../dependencies/DependencyGraph";
 import BundleRequest, {BundleOptions} from "./BundleRequest";
 import {
 	AbsoluteFilePath,
 	AbsoluteFilePathMap,
+	AbsoluteFilePathSet,
+	Path,
+	RelativePath,
+	RelativePathMap,
+	RelativePathSet,
 	UIDPath,
 	createPath,
 	createRelativePath,
-	RelativePathMap,
-	RelativePathSet,
-	RelativePath,
-	Path,
-	AbsoluteFilePathSet,
 } from "@internal/path";
 import {
 	JSONManifest,
@@ -116,7 +116,9 @@ export default class Bundler {
 			}
 		}
 
-		const project = this.server.projectManager.assertProjectExisting(resolvedEntry);
+		const project = this.server.projectManager.assertProjectExisting(
+			resolvedEntry,
+		);
 
 		return {manifestDef, resolvedEntry, project};
 	}
@@ -177,7 +179,6 @@ export default class Bundler {
 		if (mod.handler?.isAsset) {
 			// TODO: Maybe add option to allow keeping the contents in memory rather than having a double-read
 			// TODO: Also investigate reusing worker cache hashes
-			
 			// Asset path in the form of: BASENAME-HASH.EXTENSIONS
 			const hash = await sha256.async(mod.path.createReadStream());
 			const basename = mod.path.getExtensionlessBasename();
@@ -319,9 +320,7 @@ export default class Bundler {
 			}
 			if (graphPaths.size > 0) {
 				watcher.changeEvent.send(graphPaths);
-				await this.graph.evictNodes(graphPaths, async (paths) => {
-					
-				});
+				await this.graph.evictNodes(graphPaths, async () => {});
 				run();
 			}
 		});
@@ -377,9 +376,9 @@ export default class Bundler {
 	public async bundleManifest(
 		{resolvedEntry, manifestDef}: BundlerEntryResolution,
 	): Promise<{
-		files: BundlerFiles,
-		bundles: BundleResultBundle[],
-		entry: BundleResultBundle,
+		files: BundlerFiles;
+		bundles: BundleResultBundle[];
+		entry: BundleResultBundle;
 	}> {
 		let bundles: BundleResultBundle[] = [];
 		const files: BundlerFiles = new RelativePathMap();
@@ -514,14 +513,12 @@ export default class Bundler {
 					? binConsumer
 					: binConsumer.get(binName)).getDiagnosticLocation("inner-value");
 
-				const absolute = await this.server.resolver.resolveAssert(
-					{
-						...this.config.resolver,
-						origin: manifestDef.directory,
-						source: createRelativePath(relative).toExplicitRelative(),
-						location,
-					},
-				);
+				const absolute = await this.server.resolver.resolveAssert({
+					...this.config.resolver,
+					origin: manifestDef.directory,
+					source: createRelativePath(relative).toExplicitRelative(),
+					location,
+				});
 
 				const res = await createBundle(
 					absolute.path,

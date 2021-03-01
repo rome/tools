@@ -26,7 +26,7 @@ import {Dict} from "@internal/typescript-helpers";
 import {
 	AnyMarkups,
 	StaticMarkup,
-	concatMarkup,
+	joinMarkup,
 	joinMarkupLines,
 	markup,
 	readMarkup,
@@ -42,7 +42,7 @@ import highlightShell from "@internal/markup-syntax-highlight/highlightShell";
 import {RSERObject} from "@internal/binary-transport";
 import {ExtendedMap} from "@internal/collections";
 import {markupToPlainText} from "@internal/cli-layout";
-import { safeProcessExit } from "@internal/resources";
+import {safeProcessExit} from "@internal/resources";
 
 export type Examples = {
 	description: StaticMarkup;
@@ -455,9 +455,7 @@ export default class Parser<T> {
 					reporter.error(
 						markup`Could not find your bash profile. Tried the following:`,
 					);
-					reporter.list(
-						possibleProfiles
-					);
+					reporter.list(possibleProfiles);
 				} else {
 					let file = await profilePath.readFileText();
 					if (file.includes(path.getBasename())) {
@@ -469,7 +467,7 @@ export default class Parser<T> {
 						if (sourceRelative.isRelative()) {
 							sourceRelative = sourceRelative.toExplicitRelative();
 						}
-						
+
 						file = file.trim();
 						file += "\n";
 						file += `source ${sourceRelative.join()}`;
@@ -588,7 +586,10 @@ export default class Parser<T> {
 
 		if (definedCommand !== undefined) {
 			this.ranCommand = definedCommand.command;
-			if (definedCommand.command.hidden === true && this.opts.onRunHiddenCommand !== undefined) {
+			if (
+				definedCommand.command.hidden === true &&
+				this.opts.onRunHiddenCommand !== undefined
+			) {
 				this.opts.onRunHiddenCommand(this.reporter);
 			}
 			await definedCommand.command.callback(definedCommand.flags);
@@ -661,7 +662,7 @@ export default class Parser<T> {
 					isDisplayableHelpValue(item)
 				);
 				if (displayAllowedValues !== undefined) {
-					const printedValues = concatMarkup(
+					const printedValues = joinMarkup(
 						displayAllowedValues.map((value) => prettyFormatEager(value)),
 						markup` `,
 					);
@@ -671,7 +672,7 @@ export default class Parser<T> {
 
 			optionOutput.push({
 				argName,
-				arg: concatMarkup(
+				arg: joinMarkup(
 					highlightShell({input: argCol, isShorthand: !!metadata.alternateName}),
 					markup` `,
 				),

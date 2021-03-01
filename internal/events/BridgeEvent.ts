@@ -12,14 +12,17 @@ import {
 	BridgeResponseMessage,
 	EventCallback,
 } from "./types";
-import { BridgeTimeoutError } from "./errors";
+import {BridgeTimeoutError} from "./errors";
 import Event from "./Event";
 import {ErrorCallback, VoidCallback} from "@internal/typescript-helpers";
 import {RSERValue} from "@internal/binary-transport";
-import { DIAGNOSTIC_CATEGORIES, decorateErrorWithDiagnostics } from "@internal/diagnostics";
-import { markup } from "@internal/markup";
-import { createResource, Resource } from "@internal/resources";
-import { Duration } from "@internal/numbers";
+import {
+	DIAGNOSTIC_CATEGORIES,
+	decorateErrorWithDiagnostics,
+} from "@internal/diagnostics";
+import {markup} from "@internal/markup";
+import {Resource, createResource} from "@internal/resources";
+import {Duration} from "@internal/numbers";
 
 type CallOptions = {
 	timeout?: number;
@@ -37,12 +40,18 @@ export class BridgeEvent<Param extends RSERValue, Ret extends RSERValue> {
 		this.resources = createResource(this[Symbol.toStringTag]);
 		bridge.resources.add(this);
 
-		this.backingEvent = new Event(name, {
-			displayName: `event ${name} in ${bridge.getDisplayName()}`,
-			onSubscriptionChange: () => {
-				this.bridge.onSubscriptionChange(this.id, this.backingEvent.hasSubscriptions());
+		this.backingEvent = new Event(
+			name,
+			{
+				displayName: `event ${name} in ${bridge.getDisplayName()}`,
+				onSubscriptionChange: () => {
+					this.bridge.onSubscriptionChange(
+						this.id,
+						this.backingEvent.hasSubscriptions(),
+					);
+				},
 			},
-		});
+		);
 	}
 
 	public name: string;
@@ -64,12 +73,17 @@ export class BridgeEvent<Param extends RSERValue, Ret extends RSERValue> {
 
 	public end(err: Error) {
 		for (const {reject} of this.requestCallbacks.values()) {
-			reject(decorateErrorWithDiagnostics(err, {
-				description: {
-					message: markup`Terminated execution of ${this.backingEvent.displayName}`,
-					category: DIAGNOSTIC_CATEGORIES["bridge/closed"],
-				}
-			}));
+			reject(
+				decorateErrorWithDiagnostics(
+					err,
+					{
+						description: {
+							message: markup`Terminated execution of ${this.backingEvent.displayName}`,
+							category: DIAGNOSTIC_CATEGORIES["bridge/closed"],
+						},
+					},
+				),
+			);
 		}
 	}
 
@@ -77,10 +91,7 @@ export class BridgeEvent<Param extends RSERValue, Ret extends RSERValue> {
 		return this.backingEvent.call(param);
 	}
 
-	public dispatchResponse(
-		id: number,
-		msg: BridgeResponseMessage,
-	): void {
+	public dispatchResponse(id: number, msg: BridgeResponseMessage): void {
 		const callbacks = this.requestCallbacks.get(id);
 		if (!callbacks) {
 			// ???
@@ -98,17 +109,19 @@ export class BridgeEvent<Param extends RSERValue, Ret extends RSERValue> {
 
 			case BridgeMessageCodes.RESPONSE_ERROR_CUSTOM: {
 				try {
-					callbacks.reject(this.bridge.hydrateCustomError({
-						errorType: "custom",
-						value: msg[2],
-						metadata: msg[3],
-					}));
+					callbacks.reject(
+						this.bridge.hydrateCustomError({
+							errorType: "custom",
+							value: msg[2],
+							metadata: msg[3],
+						}),
+					);
 				} catch (err) {
 					callbacks.reject(err);
 				}
 				break;
 			}
-			
+
 			case BridgeMessageCodes.RESPONSE_ERROR_NATIVE: {
 				callbacks.reject(msg[2]);
 				break;
@@ -142,7 +155,11 @@ export class BridgeEvent<Param extends RSERValue, Ret extends RSERValue> {
 
 	protected async _call(param: Param, opts: CallOptions = {}): Promise<Ret> {
 		if (!this.hasSubscribers()) {
-			return Promise.reject(new Error(`Cannot call ${this.backingEvent.displayName} as it has no subscribers`));
+			return Promise.reject(
+				new Error(
+					`Cannot call ${this.backingEvent.displayName} as it has no subscribers`,
+				),
+			);
 		}
 
 		const {priority = false, timeout} = opts;
@@ -178,7 +195,10 @@ export class BridgeEvent<Param extends RSERValue, Ret extends RSERValue> {
 				};
 			}
 
-			const resource = createResource(`${this[Symbol.toStringTag]}.Request<${id}>`, {optional: true});
+			const resource = createResource(
+				`${this[Symbol.toStringTag]}.Request<${id}>`,
+				{optional: true},
+			);
 			this.resources.add(resource);
 
 			this.requestCallbacks.set(
@@ -192,7 +212,9 @@ export class BridgeEvent<Param extends RSERValue, Ret extends RSERValue> {
 				},
 			);
 
-			const code = priority ? BridgeMessageCodes.PRIORITY_CALL : BridgeMessageCodes.CALL;
+			const code = priority
+				? BridgeMessageCodes.PRIORITY_CALL
+				: BridgeMessageCodes.CALL;
 			let msg: BridgeRequestCallMessage;
 			if (param === undefined) {
 				// Make the message a little more compact by omitting the param element

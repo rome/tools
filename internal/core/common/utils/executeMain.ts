@@ -17,7 +17,7 @@ import {
 import {AbsoluteFilePath} from "@internal/path";
 import {Position} from "@internal/parser-core";
 import {getRequire} from "../IntegrationLoader";
-import { errorSourceMaps } from "@internal/v8/error-frames";
+import {errorSourceMaps} from "@internal/v8/error-frames";
 
 type ExecuteMainOptions = {
 	path: AbsoluteFilePath;

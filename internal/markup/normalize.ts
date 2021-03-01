@@ -9,9 +9,9 @@ import {
 	AnyMarkup,
 	AnyMarkups,
 	StaticMarkup,
-	concatMarkup,
 	convertToMarkupFromRandomString,
 	isEmptyMarkup,
+	joinMarkup,
 	markup,
 	readMarkup,
 } from "./escape";
@@ -176,7 +176,7 @@ function normalizeMarkupChildren(
 	}
 
 	return {
-		text: concatMarkup(parts),
+		text: joinMarkup(parts),
 		textLength,
 		modified,
 	};

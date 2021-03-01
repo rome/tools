@@ -1,10 +1,10 @@
-import { enhanceNodeInspectClass } from "@internal/node";
-import { createResourceFromCallback, Resource } from "@internal/resources";
+import {enhanceNodeInspectClass} from "@internal/node";
+import {Resource, createResourceFromCallback} from "@internal/resources";
 
 type DurationHumanizeOptions = {
-  allowMilliseconds?: boolean;
-  secondFractionDigits?: number;
-  longform?: boolean;
+	allowMilliseconds?: boolean;
+	secondFractionDigits?: number;
+	longform?: boolean;
 };
 
 const shortSuffixes = {
@@ -39,257 +39,326 @@ function format(
 }
 
 type DurationOptions = {
-  approx?: boolean;
-  decimal?: number;
-  value: bigint;
+	approx?: boolean;
+	decimal?: number;
+	value: bigint;
 };
 
 type DurationFromBigIntOptions = Omit<DurationOptions, "value">;
 type DurationFromNumberOptions = Omit<DurationOptions, "value" | "precision">;
 
-type BigIntWithDecimal = {value: bigint, decimal: number};
+type BigIntWithDecimal = {
+	value: bigint;
+	decimal: number;
+};
 
-function convertToMultipliedBigInt(num: bigint | number, factorNum: number, factorBig: bigint): BigIntWithDecimal {
-  if (typeof num === "bigint") {
-    return {
-      value: num * factorBig,
-      decimal: 0,
-    };
-  }
+function convertToMultipliedBigInt(
+	num: bigint | number,
+	factorNum: number,
+	factorBig: bigint,
+): BigIntWithDecimal {
+	if (typeof num === "bigint") {
+		return {
+			value: num * factorBig,
+			decimal: 0,
+		};
+	}
 
-  if (num === 0) {
-    // Fast path
-    return {
-      value: 0n,
-      decimal: 0,
-    };
-  }
+	if (num === 0) {
+		// Fast path
+		return {
+			value: 0n,
+			decimal: 0,
+		};
+	}
 
-  const factored = num * factorNum;
+	const factored = num * factorNum;
 
-  if (factored < Number.MAX_VALUE) {
-    return convertToBigInt(factored);
-  } else {
-    const big = convertToBigInt(num);
-    let value = big.value * factorBig;
-    
-    let {value: decimalOverflow, decimal} = convertToMultipliedBigInt(big.decimal, factorNum, factorBig);
-    value += decimalOverflow;
-    
-    return {
-      value,
-      decimal,
-    };
-  }
+	if (factored < Number.MAX_VALUE) {
+		return convertToBigInt(factored);
+	} else {
+		const big = convertToBigInt(num);
+		let value = big.value * factorBig;
+
+		let {value: decimalOverflow, decimal} = convertToMultipliedBigInt(
+			big.decimal,
+			factorNum,
+			factorBig,
+		);
+		value += decimalOverflow;
+
+		return {
+			value,
+			decimal,
+		};
+	}
 }
 
 function convertToBigInt(num: bigint | number): BigIntWithDecimal {
-  if (typeof num === "bigint") {
-    return {
-      value: num,
-      decimal: 0,
-    };
-  }
+	if (typeof num === "bigint") {
+		return {
+			value: num,
+			decimal: 0,
+		};
+	}
 
-  if (Number.isInteger(num)) {
-    return {
-      value: BigInt(num),
-      decimal: 0,
-    };
-  }
+	if (Number.isInteger(num)) {
+		return {
+			value: BigInt(num),
+			decimal: 0,
+		};
+	}
 
-  const int = Math.floor(num);
-  const decimal = num - int;
-  return {
-    value: BigInt(int),
-    decimal,
-  };
+	const int = Math.floor(num);
+	const decimal = num - int;
+	return {
+		value: BigInt(int),
+		decimal,
+	};
 }
 
-function fromDerivedDurations(a: Duration, b: Duration, opts: DurationOptions): Duration {
-  let {value, decimal, approx} = opts;
+function fromDerivedDurations(
+	a: Duration,
+	b: Duration,
+	opts: DurationOptions,
+): Duration {
+	let {value, decimal, approx} = opts;
 
-  if (decimal !== undefined) {
-    // Add together the decimals, if they overflow over 1, then add it to the value
-    const {decimal: trueDecimal, value: decimalOverflow} = convertToBigInt(decimal);
-    decimal = trueDecimal;
-    value += decimalOverflow;
-  }
+	if (decimal !== undefined) {
+		// Add together the decimals, if they overflow over 1, then add it to the value
+		const {decimal: trueDecimal, value: decimalOverflow} = convertToBigInt(
+			decimal,
+		);
+		decimal = trueDecimal;
+		value += decimalOverflow;
+	}
 
-  if (approx === undefined) {
-    approx = a.approx || b.approx;
-  }
+	if (approx === undefined) {
+		approx = a.approx || b.approx;
+	}
 
-  return new Duration({
-    approx,
-    value,
-    decimal,
-  });
+	return new Duration({
+		approx,
+		value,
+		decimal,
+	});
 }
 
 export default class Duration {
-  constructor({value, decimal = 0, approx = false}: DurationOptions) {
-    this.value = value;
-    this.approx = approx;
-    this.decimal = decimal;
-  }
+	constructor({value, decimal = 0, approx = false}: DurationOptions) {
+		this.value = value;
+		this.approx = approx;
+		this.decimal = decimal;
+	}
 
-  public approx: boolean;
-  private value: bigint;
-  private decimal: number;
+	public approx: boolean;
+	private value: bigint;
+	private decimal: number;
 
-  public add(other: Duration, approx?: boolean): Duration {
-    return fromDerivedDurations(this, other, {
-      value: this.value + other.value,
-      decimal: this.decimal + other.decimal,
-      approx,
-    });
-  }
+	public add(other: Duration, approx?: boolean): Duration {
+		return fromDerivedDurations(
+			this,
+			other,
+			{
+				value: this.value + other.value,
+				decimal: this.decimal + other.decimal,
+				approx,
+			},
+		);
+	}
 
-  public subtract(other: Duration, approx?: boolean): Duration {
-    return fromDerivedDurations(this, other, {
-      value: this.value - other.value,
-      decimal: this.decimal - other.decimal,
-      approx,
-    });
-  }
+	public subtract(other: Duration, approx?: boolean): Duration {
+		return fromDerivedDurations(
+			this,
+			other,
+			{
+				value: this.value - other.value,
+				decimal: this.decimal - other.decimal,
+				approx,
+			},
+		);
+	}
 
-  public divide(num: number, approx?: boolean): Duration {
-    return new Duration({
-      value: this.value / BigInt(num),
-      decimal: this.decimal / num,
-      approx,
-    });
-  }
+	public divide(num: number, approx?: boolean): Duration {
+		return new Duration({
+			value: this.value / BigInt(num),
+			decimal: this.decimal / num,
+			approx,
+		});
+	}
 
-  public static fromSeconds(s: number, opts?: DurationFromNumberOptions): Duration {
-    return new Duration({
-      ...opts,
-      ...convertToMultipliedBigInt(s, 1000000000, 1000000000n),
-    });
-  }
+	public static fromSeconds(
+		s: number,
+		opts?: DurationFromNumberOptions,
+	): Duration {
+		return new Duration({
+			...opts,
+			...convertToMultipliedBigInt(s, 1_000_000_000, 1000000000n),
+		});
+	}
 
-  public static fromMilliseconds(ms: number, opts?: DurationFromNumberOptions): Duration {
-    return new Duration({
-      ...opts,
-      ...convertToMultipliedBigInt(ms, 1000000, 1000000n),
-    });
-  }
+	public static fromMilliseconds(
+		ms: number,
+		opts?: DurationFromNumberOptions,
+	): Duration {
+		return new Duration({
+			...opts,
+			...convertToMultipliedBigInt(ms, 1_000_000, 1000000n),
+		});
+	}
 
-  public static fromMicroseconds(micro: number | bigint, opts?: DurationFromBigIntOptions): Duration {
-    return new Duration({
-      ...opts,
-      ...convertToMultipliedBigInt(micro, 1000, 1000n),
-    });
-  }
+	public static fromMicroseconds(
+		micro: number | bigint,
+		opts?: DurationFromBigIntOptions,
+	): Duration {
+		return new Duration({
+			...opts,
+			...convertToMultipliedBigInt(micro, 1_000, 1000n),
+		});
+	}
 
-  public static fromNanoseconds(ns: number | bigint, opts?: DurationFromBigIntOptions): Duration {
-    return new Duration({
-      ...opts,
-      ...convertToBigInt(ns),
-    });
-  }
+	public static fromNanoseconds(
+		ns: number | bigint,
+		opts?: DurationFromBigIntOptions,
+	): Duration {
+		return new Duration({
+			...opts,
+			...convertToBigInt(ns),
+		});
+	}
 
-  public toSeconds(): number {
-    return Number(this.value / 1000000000n);
-  }
+	public toSeconds(): number {
+		return Number(this.value / 1000000000n);
+	}
 
-  public toMilliseconds(): number {
-    // Bigint division loses some precision, so get it back
-    const int = Number(this.value / 1000000n) + (Number(this.value % 1000000n) / 1000000);
-    const decimal = this.decimal / 1000000;
-    return int + decimal;
-  }
+	public toMilliseconds(): number {
+		// Bigint division loses some precision, so get it back
+		const int =
+			Number(this.value / 1000000n) + Number(this.value % 1000000n) / 1_000_000;
+		const decimal = this.decimal / 1_000_000;
+		return int + decimal;
+	}
 
-  public toNanoseconds(): bigint {
-    return this.value;
-  }
+	public toNanoseconds(): bigint {
+		return this.value;
+	}
 
-  public format(
-    {allowMilliseconds = false, longform = false, secondFractionDigits = 2}: DurationHumanizeOptions = {},
-  ): string {
-    const ms = this.toMilliseconds();
+	public format(
+		{allowMilliseconds = false, longform = false, secondFractionDigits = 2}: DurationHumanizeOptions = {
 
-    if (ms === 0) {
-      if (allowMilliseconds) {
-        return format("ms", 0, longform);
-      } else {
-        return format("s", 0, longform);
-      }
-    }
-  
-    const s = Math.floor(ms / 1_000);
-    const m = Math.floor(s / 60);
-    const h = Math.floor(m / 60);
-  
-    if (h === 0 && m === 0 && s === 0) {
-      if (allowMilliseconds) {
-        return format("ms", ms, longform);
-      } else {
-        return format("s", (ms / 1_000).toFixed(secondFractionDigits), longform);
-      }
-    }
-  
-    let buf = "";
-  
-    if (h > 0) {
-      buf += format("h", h, longform);
-    }
-  
-    if (m > 0) {
-      buf += format("m", m % 60, longform);
-    }
-  
-    if (allowMilliseconds) {
-      buf += format(
-        "s",
-        (ms / 1_000 % 60).toFixed(secondFractionDigits),
-        longform,
-      );
-    } else {
-      buf += format("s", s % 60, longform);
-    }
-  
-    if (longform) {
-      buf = buf.trimRight();
-    }
-  
-    return buf;
-  }
+		},
+	): string {
+		const ms = this.toMilliseconds();
 
-  public setTimeout(callback: () => void): Resource {
-    const timer = setTimeout(() => {
-      callback();
-      resource.release();
-    }, this.toMilliseconds());
+		if (ms === 0) {
+			if (allowMilliseconds) {
+				return format("ms", 0, longform);
+			} else {
+				return format("s", 0, longform);
+			}
+		}
 
-    const resource = createTimeoutResource("setTimeout", this, timer);
-    return resource;
-  }
+		const s = Math.floor(ms / 1_000);
+		const m = Math.floor(s / 60);
+		const h = Math.floor(m / 60);
 
-  public setInterval(callback: () => void): Resource {
-    return createTimeoutResource("SetInterval", this, setInterval(callback, this.toMilliseconds()));
-  }
+		if (h === 0 && m === 0 && s === 0) {
+			if (allowMilliseconds) {
+				return format("ms", ms, longform);
+			} else {
+				return format("s", toFixed(ms / 1_000, secondFractionDigits), longform);
+			}
+		}
+
+		let buf = "";
+
+		if (h > 0) {
+			buf += format("h", h, longform);
+		}
+
+		if (m > 0) {
+			buf += format("m", m % 60, longform);
+		}
+
+		if (allowMilliseconds) {
+			buf += format(
+				"s",
+				toFixed(ms / 1_000 % 60, secondFractionDigits),
+				longform,
+			);
+		} else {
+			buf += format("s", s % 60, longform);
+		}
+
+		if (longform) {
+			buf = buf.trimRight();
+		}
+
+		return buf;
+	}
+
+	public setTimeout(callback: () => void): Resource {
+		const timer = setTimeout(
+			() => {
+				callback();
+				resource.release();
+			},
+			this.toMilliseconds(),
+		);
+
+		const resource = createTimeoutResource("setTimeout", this, timer);
+		return resource;
+	}
+
+	public setInterval(callback: () => void): Resource {
+		return createTimeoutResource(
+			"SetInterval",
+			this,
+			setInterval(callback, this.toMilliseconds()),
+		);
+	}
 }
 
-function createTimeoutResource(methodName: string, duration: Duration, timeout: NodeJS.Timeout): Resource {
-  return createResourceFromCallback(`${methodName}<${duration.format()}>`, () => {
-    clearTimeout(timeout);
-  }, {optional: true});
+function toFixed(num: number, digits: number): string {
+	const fixed = num.toFixed(digits);
+
+	// Super hacky and gross way to omit the decimal if it's been rounded away
+	if (fixed.endsWith(`.${"0".repeat(digits)}`)) {
+		return String(num);
+	} else {
+		return fixed;
+	}
 }
 
-enhanceNodeInspectClass(Duration, (inst) => {
-  let inner = "";
-  const s = inst.toSeconds();
-  if (Number.isInteger(s)) {
-    inner = `${s}s`;
-  } else {
-    const ms = inst.toMilliseconds();
-    if (Number.isInteger(ms)) {
-      inner = `${ms}ms`;
-    } else {
-      inner = `${String(inst.toNanoseconds)}ns`;
-    }
-  }
-  return `Duration<${inner}>`;
-})
+function createTimeoutResource(
+	methodName: string,
+	duration: Duration,
+	timeout: NodeJS.Timeout,
+): Resource {
+	return createResourceFromCallback(
+		`${methodName}<${duration.format()}>`,
+		() => {
+			clearTimeout(timeout);
+		},
+		{optional: true},
+	);
+}
+
+enhanceNodeInspectClass(
+	Duration,
+	(inst) => {
+		let inner = "";
+		const s = inst.toSeconds();
+		if (Number.isInteger(s)) {
+			inner = `${s}s`;
+		} else {
+			const ms = inst.toMilliseconds();
+			if (Number.isInteger(ms)) {
+				inner = `${ms}ms`;
+			} else {
+				inner = `${String(inst.toNanoseconds)}ns`;
+			}
+		}
+		return `Duration<${inner}>`;
+	},
+);

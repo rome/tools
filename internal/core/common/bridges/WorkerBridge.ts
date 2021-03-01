@@ -10,19 +10,28 @@ import {AnyRoot} from "@internal/ast";
 import {TransformStageName} from "@internal/compiler";
 import {Profile} from "@internal/v8";
 import {ProfilingStartData, ServerBridgeLog} from "./ServerBridge";
-import {Diagnostics, Diagnostic, DiagnosticOrigin, DiagnosticsError} from "@internal/diagnostics";
+import {
+	Diagnostic,
+	DiagnosticOrigin,
+	Diagnostics,
+	DiagnosticsError,
+} from "@internal/diagnostics";
 import {BridgeErrorDetails, createBridge} from "@internal/events";
 import {FileReference} from "../types/files";
 import {InlineSnapshotUpdates} from "@internal/core/worker/test/SnapshotManager";
 import {
 	AbsoluteFilePath,
+	AbsoluteFilePathMap,
 	UIDPath,
 	createAbsoluteFilePath,
-	AbsoluteFilePathMap,
 } from "@internal/path";
 import {createBridgeEventDeclaration} from "@internal/events/createBridge";
 import {FileNotFound} from "@internal/fs";
 import {
+	TestRef,
+	TestWorkerPrepareTestOptions,
+	TestWorkerPrepareTestResult,
+	TestWorkerRunTestOptions,
 	WorkerAnalyzeDependencyResult,
 	WorkerBuffer,
 	WorkerBufferPatch,
@@ -36,13 +45,9 @@ import {
 	WorkerProjects,
 	WorkerStatus,
 	WorkerUpdateInlineSnapshotResult,
-	TestWorkerPrepareTestOptions,
-	TestWorkerPrepareTestResult,
-	TestWorkerRunTestOptions,
-	TestRef,
 } from "@internal/core";
-import { WorkerPartialManifest } from "@internal/core/worker/types";
-import { TestWorkerFileResult } from "@internal/core/worker/test/TestWorkerFile";
+import {WorkerPartialManifest} from "@internal/core/worker/types";
+import {TestWorkerFileResult} from "@internal/core/worker/test/TestWorkerFile";
 
 export default createBridge({
 	debugName: "Worker",
@@ -232,8 +237,8 @@ export default createBridge({
 
 	init(bridge) {
 		bridge.addCustomErrorTransport<{
-			suffixMessage: undefined | string,
-			path: string,
+			suffixMessage: undefined | string;
+			path: string;
 		}>(
 			"FileNotFound",
 			{

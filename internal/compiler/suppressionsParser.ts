@@ -354,7 +354,7 @@ export function parseCommentSuppressions(opts: Options): ExtractedSuppressions {
 							description: descriptions.SUPPRESSIONS.INVALID_CATEGORY_NAME(
 								categoryToken.value,
 							),
-							location: loc,
+							loc,
 						});
 					} else {
 						const category = categoryToken.value;

@@ -1,6 +1,6 @@
 import Event from "./Event";
 import {test} from "rome";
-import { Duration } from "@internal/numbers";
+import {Duration} from "@internal/numbers";
 
 type Callback<Param, Ret> = (param: Param) => Ret | Promise<Ret>;
 

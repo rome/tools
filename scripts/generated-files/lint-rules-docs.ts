@@ -9,7 +9,7 @@ import {
 import {printDiagnosticsToString} from "@internal/cli-diagnostics";
 import {highlightCode} from "@internal/markup-syntax-highlight";
 import {inferDiagnosticLanguageFromPath} from "@internal/core/common/file-handlers";
-import {concatMarkup, joinMarkupLines, markup} from "@internal/markup";
+import {joinMarkup, joinMarkupLines, markup} from "@internal/markup";
 import {markupToHtml} from "@internal/cli-layout";
 import {createPath} from "@internal/path";
 import {dedent} from "@internal/string-utils";
@@ -29,7 +29,7 @@ function highlightPre(filename: string, code: string): string {
 	return pre(
 		joinMarkupLines(
 			markupToHtml(
-				concatMarkup(
+				joinMarkup(
 					highlightCode({
 						path,
 						input: code,

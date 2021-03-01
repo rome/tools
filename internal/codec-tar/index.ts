@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import { getByteLength } from "@internal/binary";
+import {getByteLength} from "@internal/binary";
 import stream = require("stream");
 
 type HeaderType =

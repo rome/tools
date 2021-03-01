@@ -19,9 +19,9 @@ import {
 	MarkupFormatOptions,
 	MarkupTagName,
 	StaticMarkup,
-	concatMarkup,
 	convertToMarkupFromRandomString,
 	isEmptyMarkup,
+	joinMarkup,
 	markup,
 	markupTag,
 	normalizeMarkup,
@@ -67,7 +67,12 @@ import {
 	mergeObjects,
 } from "@internal/typescript-helpers";
 import highlightShell from "@internal/markup-syntax-highlight/highlightShell";
-import { createResource, createResourceRoot, processResourceRoot, Resource } from "@internal/resources";
+import {
+	Resource,
+	createResource,
+	createResourceRoot,
+	processResourceRoot,
+} from "@internal/resources";
 
 export type ReporterOptions = {
 	shouldRedirectOutToErr?: boolean;
@@ -147,11 +152,14 @@ export default class Reporter implements ReporterNamespace {
 			return cachedFromProcess;
 		}
 
-		const reporter = new Reporter("Process", {
-			markupOptions: {
-				cwd: CWD_PATH,
+		const reporter = new Reporter(
+			"Process",
+			{
+				markupOptions: {
+					cwd: CWD_PATH,
+				},
 			},
-		});
+		);
 
 		if (!unique) {
 			cachedFromProcess = reporter;
@@ -172,9 +180,12 @@ export default class Reporter implements ReporterNamespace {
 			}
 		}
 
-		return new Reporter(reporters.map((reporter) => reporter[Symbol.toStringTag]).join(" & "), {
-			streams: Array.from(streams),
-		});
+		return new Reporter(
+			reporters.map((reporter) => reporter[Symbol.toStringTag]).join(" & "),
+			{
+				streams: Array.from(streams),
+			},
+		);
 	}
 
 	public getLineSnapshot(populate: boolean = true): ReporterStreamLineSnapshot {
@@ -324,9 +335,12 @@ export default class Reporter implements ReporterNamespace {
 	}
 
 	public addAttachedStream(stream: ReporterStreamAttached): void {
-		stream.resources.addCallback("ReporterStreamHandle", () => {
-			this.streams.delete(stream);
-		})
+		stream.resources.addCallback(
+			"ReporterStreamHandle",
+			() => {
+				this.streams.delete(stream);
+			},
+		);
 		stream.featuresUpdated.subscribe(() => {
 			this.refreshActiveElements();
 		});
@@ -534,12 +548,15 @@ export default class Reporter implements ReporterNamespace {
 	}
 
 	public fork(opts: Partial<ReporterOptions> = {}) {
-		return new Reporter(this.name, {
-			streams: [...this.streams],
-			markupOptions: this.markupOptions,
-			wrapperFactory: this.wrapperFactory,
-			...opts,
-		});
+		return new Reporter(
+			this.name,
+			{
+				streams: [...this.streams],
+				markupOptions: this.markupOptions,
+				wrapperFactory: this.wrapperFactory,
+				...opts,
+			},
+		);
 	}
 
 	public table(head: AnyMarkups, rawBody: AnyMarkups[]) {
@@ -561,7 +578,7 @@ export default class Reporter implements ReporterNamespace {
 			body.push(markup`</tr>`);
 		}
 
-		this.log(markup`<table>${concatMarkup(body)}</table>`);
+		this.log(markup`<table>${joinMarkup(body)}</table>`);
 	}
 
 	public inspect(value: unknown, opts?: LogOptions) {
@@ -869,7 +886,7 @@ export default class Reporter implements ReporterNamespace {
 	}
 
 	public command(command: string, prefix: boolean = true) {
-		let highlighted = concatMarkup(
+		let highlighted = joinMarkup(
 			highlightShell({
 				input: command,
 			}),
@@ -884,7 +901,7 @@ export default class Reporter implements ReporterNamespace {
 	}
 
 	public namespace(...prefixes: AnyMarkup[]): ReporterNamespace {
-		const prefix = concatMarkup(prefixes.map((prefix) => markup`[${prefix}]`));
+		const prefix = joinMarkup(prefixes.map((prefix) => markup`[${prefix}]`));
 
 		return {
 			namespace: (...addPrefixes) => {

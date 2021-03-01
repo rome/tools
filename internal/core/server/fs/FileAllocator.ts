@@ -9,11 +9,11 @@ import {Server, WorkerContainer} from "@internal/core";
 import {SimpleStats} from "./MemoryFileSystem";
 import {PathLocker} from "../../../async/lockers";
 import {AbsoluteFilePath, AbsoluteFilePathMap} from "@internal/path";
-import {AnyMarkup, concatMarkup, markup} from "@internal/markup";
+import {AnyMarkup, joinMarkup, markup} from "@internal/markup";
 import {ReporterNamespace} from "@internal/cli-reporter";
 import {createSingleDiagnosticError, descriptions} from "@internal/diagnostics";
 import {matchPathPatterns} from "@internal/path-match";
-import { ServerRefreshFile } from "../Server";
+import {ServerRefreshFile} from "../Server";
 
 export default class FileAllocator {
 	constructor(server: Server) {
@@ -29,9 +29,11 @@ export default class FileAllocator {
 	private logger: ReporterNamespace;
 
 	public init() {
-		this.server.resources.add(this.server.refreshFileEvent.subscribe(async (events) => {
-			return this.handleRefresh(events);
-		}));
+		this.server.resources.add(
+			this.server.refreshFileEvent.subscribe(async (events) => {
+				return this.handleRefresh(events);
+			}),
+		);
 	}
 
 	public getAllOwnedFilenames(): AbsoluteFilePath[] {
@@ -174,7 +176,7 @@ export default class FileAllocator {
 
 					// Evict the file from cache
 					await this.evict(path, markup`file change`);
-					
+
 					if (event.type === "DISK_UPDATE") {
 						const {newStats, oldStats} = event;
 
@@ -191,14 +193,21 @@ export default class FileAllocator {
 						workerManager.own(workerId, newStats);
 					}
 				} else {
-					this.logger.info(markup`No owner for eviction <emphasis>${path}</emphasis>`);
+					this.logger.info(
+						markup`No owner for eviction <emphasis>${path}</emphasis>`,
+					);
 				}
 			}
 		}
 
-		const paths = events.filter(event => event.type !== "CREATED").map((event) => event.path);
-		if (paths.length > 0 && await this.server.projectManager.maybeEvictProjects(paths)) {
-			const displayPaths = concatMarkup(
+		const paths = events.filter((event) => event.type !== "CREATED").map((event) =>
+			event.path
+		);
+		if (
+			paths.length > 0 &&
+			(await this.server.projectManager.maybeEvictProjects(paths))
+		) {
+			const displayPaths = joinMarkup(
 				paths.map((path) => markup`<emphasis>${path}</emphasis>`),
 				markup`, `,
 			);

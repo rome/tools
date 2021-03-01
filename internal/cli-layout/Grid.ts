@@ -27,14 +27,14 @@ import {
 	GridOutputFormat,
 	GridPointer,
 } from "./types";
-import {Duration, OneIndexed} from "@internal/numbers";
 import {
-	splitChars,
-} from "@internal/string-utils";
-import {
+	Duration,
+	OneIndexed,
 	humanizeFileSize,
 	humanizeNumber,
 } from "@internal/numbers";
+import {splitChars} from "@internal/string-utils";
+
 import {escapeXHTMLEntities} from "@internal/html-parser";
 import {ansiFormatText} from "./formatANSI";
 import {htmlFormatText} from "./formatHTML";
@@ -793,7 +793,7 @@ export default class Grid {
 			}
 		} else {
 			const joinSameLine = tag.attributes.get("joinSameLine").asStringOrVoid();
-			
+
 			// Try to draw these on a single line first
 			if (joinSameLine !== undefined) {
 				// If we have no grid size then we default to 500. We do this to prevent drawing super long lines when the intent
@@ -813,11 +813,14 @@ export default class Grid {
 						const item = items[i];
 						grid.drawTag(item, ancestry);
 						if (i !== items.length - 1) {
-							grid.drawText({
-								type: "Text",
-								source: false,
-								value: joinSameLine,
-							}, ancestry);
+							grid.drawText(
+								{
+									type: "Text",
+									source: false,
+									value: joinSameLine,
+								},
+								ancestry,
+							);
 						}
 					}
 
@@ -842,7 +845,11 @@ export default class Grid {
 				}
 			} else {
 				for (const item of items) {
-					this.writeText("- ", [createTag("dim", createEmptyAttributes())], false);
+					this.writeText(
+						"- ",
+						[createTag("dim", createEmptyAttributes())],
+						false,
+					);
 					this.drawViewTag(item, ancestry);
 					this.newline();
 				}
@@ -1614,9 +1621,9 @@ export default class Grid {
 									sourceValue: singleInnerText,
 									value: formatApprox(
 										attributes,
-										Duration.fromNanoseconds(BigInt(singleInnerText)).format(
-											{allowMilliseconds: true},
-										),
+										Duration.fromNanoseconds(BigInt(singleInnerText)).format({
+											allowMilliseconds: true,
+										}),
 									),
 								},
 							],

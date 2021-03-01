@@ -36,14 +36,12 @@ export default createServerCommand({
 			relative = req.args.getIndex(0);
 		}
 
-		const resolved = await server.resolver.resolveEntryAssert(
-			{
-				...req.getResolverOptionsFromFlags(),
-				origin,
-				source: relative.asFilePath(),
-				location: relative.getDiagnosticLocation(),
-			},
-		);
+		const resolved = await server.resolver.resolveEntryAssert({
+			...req.getResolverOptionsFromFlags(),
+			origin,
+			source: relative.asFilePath(),
+			location: relative.getDiagnosticLocation(),
+		});
 		reporter.log(resolved.ref.real);
 		return resolved.ref.real.join();
 	},

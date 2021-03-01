@@ -14,7 +14,7 @@ import {
 import setProcessTitle from "./utils/setProcessTitle";
 import net = require("net");
 import {loadUserConfig} from "@internal/core/common/userConfig";
-import { isBridgeDisconnectedDiagnosticError } from "@internal/events";
+import {isBridgeDisconnectedDiagnosticError} from "@internal/events";
 
 export default async function server() {
 	setProcessTitle("server");
@@ -31,18 +31,23 @@ export default async function server() {
 
 	const socketServer = net.createServer(function(socket) {
 		const bridge = ServerBridge.Server.createFromSocket(socket);
-		
-		server.fatalErrorHandler.wrapPromise(server.attachToBridge(bridge).catch(err => {
-			// Ignore bridge disconnect errors
-			if (!isBridgeDisconnectedDiagnosticError(err)) {
-				throw err;
-			}
-		}));
+
+		server.fatalErrorHandler.wrapPromise(
+			server.attachToBridge(bridge).catch((err) => {
+				// Ignore bridge disconnect errors
+				if (!isBridgeDisconnectedDiagnosticError(err)) {
+					throw err;
+				}
+			}),
+		);
 	});
 
-	socketServer.on("error", (err) => {
-		server.fatalErrorHandler.handle(err);
-	});
+	socketServer.on(
+		"error",
+		(err) => {
+			server.fatalErrorHandler.handle(err);
+		},
+	);
 
 	if (await SERVER_SOCKET_PATH.exists()) {
 		await SERVER_SOCKET_PATH.removeFile();

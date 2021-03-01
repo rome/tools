@@ -16,8 +16,8 @@ import {json} from "@internal/codec-config";
 import {
 	DIAGNOSTIC_CATEGORIES,
 	createSingleDiagnosticError,
-	descriptions,
 	decorateErrorWithDiagnostics,
+	descriptions,
 } from "@internal/diagnostics";
 
 import internalModule = require("module");

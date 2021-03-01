@@ -6,7 +6,7 @@ import {
 	AnsiHighlightOptions,
 	highlightCode,
 } from "@internal/markup-syntax-highlight";
-import {concatMarkup, markup, readMarkup} from "@internal/markup";
+import {joinMarkup, markup, readMarkup} from "@internal/markup";
 import {dedent} from "@internal/string-utils";
 
 test(
@@ -111,7 +111,7 @@ function testCase(
 ) {
 	return async (t: TestHelper) => {
 		const highlighted = highlightCode(craftTestInput(input, language));
-		callback(t, readMarkup(concatMarkup(highlighted, markup`\n`)));
+		callback(t, readMarkup(joinMarkup(highlighted, markup`\n`)));
 	};
 }
 

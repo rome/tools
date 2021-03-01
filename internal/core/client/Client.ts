@@ -44,8 +44,8 @@ import child = require("child_process");
 import {Dict, mergeObjects} from "@internal/typescript-helpers";
 import {
 	AnyMarkup,
-	concatMarkup,
 	convertToMarkupFromRandomString,
+	joinMarkup,
 	joinMarkupLines,
 	markup,
 } from "@internal/markup";
@@ -58,7 +58,7 @@ import {
 import {AbsoluteFilePath} from "@internal/path";
 import {NodeSystemError} from "@internal/errors";
 import SilentClientError from "./SilentClientError";
-import { createResourceRoot, Resource } from "@internal/resources";
+import {Resource, createResourceRoot} from "@internal/resources";
 
 export function getFilenameTimestamp(): string {
 	return new Date().toISOString().replace(/[^0-9a-zA-Z]/g, "");
@@ -117,13 +117,16 @@ export default class Client {
 		this.bridgeStatus = undefined;
 		this.bridgeAttachedEvent = new Event("Client.bridgeAttached");
 
-		this.reporter = new Reporter("Client", {
-			stdin: opts.stdin,
-			markupOptions: {
-				userConfig: this.userConfig,
-				cwd: this.flags.cwd,
+		this.reporter = new Reporter(
+			"Client",
+			{
+				stdin: opts.stdin,
+				markupOptions: {
+					userConfig: this.userConfig,
+					cwd: this.flags.cwd,
+				},
 			},
-		});
+		);
 		this.reporter.redirectOutToErr(true);
 		this.resources.add(this.reporter);
 
@@ -158,9 +161,7 @@ export default class Client {
 	}
 
 	private async onBridge(
-		callback: (
-			bridgeStatus: BridgeStatus,
-		) => Promise<Resource | undefined>,
+		callback: (bridgeStatus: BridgeStatus) => Promise<Resource | undefined>,
 	): Promise<Resource> {
 		if (this.bridgeStatus === undefined) {
 			const resc = this.resources.create("Client.onBridge");
@@ -275,9 +276,9 @@ export default class Client {
 			// Workers
 			if (includeWorkers) {
 				const workerIds = await bridge.events.profilingGetWorkers.call();
-				for (const id of workerIds) {
+				for (const {id, displayName} of workerIds) {
 					fetchers.push([
-						`Worker ${id}`,
+						displayName,
 						async () => {
 							return await bridge.events.profilingStopWorker.call(
 								id,
@@ -352,9 +353,7 @@ export default class Client {
 
 		function push(name: string, value: unknown) {
 			const formatted =
-				typeof value === "string"
-					? markup`${value}`
-					: prettyFormat(value);
+				typeof value === "string" ? markup`${value}` : prettyFormat(value);
 			summary.push(
 				markup`<emphasis>${name}</emphasis>\n<indent>${formatted}</indent>\n\n`,
 			);
@@ -414,7 +413,7 @@ export default class Client {
 			}
 		}
 
-		return concatMarkup(summary);
+		return joinMarkup(summary);
 	}
 
 	public async rage(
@@ -571,9 +570,12 @@ export default class Client {
 
 		const {bridge} = status;
 		this.resources.add(bridge);
-		bridge.resources.addCallback("ClientBridgeStatus", () => {
-			this.bridgeStatus = undefined;
-		});
+		bridge.resources.addCallback(
+			"ClientBridgeStatus",
+			() => {
+				this.bridgeStatus = undefined;
+			},
+		);
 
 		bridge.events.write.subscribe(([chunk, error]) => {
 			const isError = error && !terminalFeatures.redirectError;

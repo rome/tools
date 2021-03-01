@@ -25,18 +25,14 @@ import {
 	printDiagnostics,
 } from "@internal/cli-diagnostics";
 import {ConsumePath, consume} from "@internal/consume";
-import {
-	BridgeServer,
-	Event,
-	EventQueue,
-} from "@internal/events";
+import {BridgeServer, Event, EventQueue} from "@internal/events";
 import ServerRequest, {EMPTY_SUCCESS_RESPONSE} from "./ServerRequest";
 import ProjectManager from "./project/ProjectManager";
 import WorkerManager from "./WorkerManager";
 import Resolver from "./fs/Resolver";
 import FileAllocator from "./fs/FileAllocator";
 import Logger from "../common/utils/Logger";
-import MemoryFileSystem, { SimpleStats } from "./fs/MemoryFileSystem";
+import MemoryFileSystem, {SimpleStats} from "./fs/MemoryFileSystem";
 import ServerCache from "./ServerCache";
 import {
 	Reporter,
@@ -50,6 +46,7 @@ import {
 	PartialServerQueryRequest,
 	ProfilingStartData,
 	ServerBridgeLog,
+	ServerProfileWorker,
 } from "../common/bridges/ServerBridge";
 import {
 	ClientFlags,
@@ -71,8 +68,12 @@ import prettyFormat from "@internal/pretty-format";
 import RecoveryStore from "./fs/RecoveryStore";
 import WorkerQueue, {WorkerQueueOptions} from "./WorkerQueue";
 import FatalErrorHandler from "../common/FatalErrorHandler";
-import { Resource, createResourceRoot, createResource } from "@internal/resources";
-import { DurationMeasurer } from "@internal/numbers";
+import {
+	Resource,
+	createResource,
+	createResourceRoot,
+} from "@internal/resources";
+import {DurationMeasurer} from "@internal/numbers";
 
 export type ServerClient = {
 	id: number;
@@ -188,26 +189,30 @@ function sendLog(
 	}
 }
 
-export type ServerRefreshFile = {
-	type: "DELETED";
-	path: AbsoluteFilePath;
-} | {
-	type: "CREATED";
-	path: AbsoluteFilePath;
-} | {
-	type: "DISK_UPDATE";
-	path: AbsoluteFilePath;
-	oldStats: undefined | SimpleStats;
-	newStats: SimpleStats;
-} | {
-	type: "BUFFER_UPDATE";
-	path: AbsoluteFilePath;
-};
+export type ServerRefreshFile =
+	| {
+			type: "DELETED";
+			path: AbsoluteFilePath;
+		}
+	| {
+			type: "CREATED";
+			path: AbsoluteFilePath;
+		}
+	| {
+			type: "DISK_UPDATE";
+			path: AbsoluteFilePath;
+			oldStats: undefined | SimpleStats;
+			newStats: SimpleStats;
+		}
+	| {
+			type: "BUFFER_UPDATE";
+			path: AbsoluteFilePath;
+		};
 
 export default class Server {
 	constructor(opts: ServerOptions) {
 		this.resources = createResourceRoot("Server");
-		
+
 		this.profiling = undefined;
 		this.options = opts;
 		this.userConfig = opts.userConfig;
@@ -238,7 +243,10 @@ export default class Server {
 
 		this.clientStartEvent = new Event("Server.clientStart");
 		this.requestStartEvent = new Event("Server.requestStart");
-		this.refreshFileEvent = new EventQueue("Server.refreshFileEvent", {toDedupeKey: ({path}) => path.join()});
+		this.refreshFileEvent = new EventQueue(
+			"Server.refreshFileEvent",
+			{toDedupeKey: ({path}) => path.join()},
+		);
 
 		this.logger = new Logger(
 			this.resources,
@@ -372,7 +380,7 @@ export default class Server {
 	// This should only be used synchronously as new clients will not be added after creation
 	// Used for very important log messages
 	public getImportantReporter(): Reporter {
-		const reporters: Array<Reporter> = [this.logger];
+		const reporters: Reporter[] = [this.logger];
 		for (const client of this.connectedClients) {
 			if (!this.connectedClientsListeningForLogs.has(client)) {
 				reporters.push(client.reporter);
@@ -435,9 +443,7 @@ export default class Server {
 	private async handleDisconnectedDiagnostics(diagnostics: Diagnostics) {
 		const reporter = this.getImportantReporter();
 
-		reporter.error(
-			markup`Generated diagnostics without a current request`,
-		);
+		reporter.error(markup`Generated diagnostics without a current request`);
 
 		await printDiagnostics({
 			diagnostics,
@@ -596,11 +602,11 @@ export default class Server {
 		});
 
 		bridge.events.profilingGetWorkers.subscribe(async () => {
-			const ids: number[] = [];
-			for (const {id} of this.workerManager.getExternalWorkers()) {
-				ids.push(id);
+			const workers: ServerProfileWorker[] = [];
+			for (const {id, displayName} of this.workerManager.getExternalWorkers()) {
+				workers.push({id, displayName});
 			}
-			return ids;
+			return workers;
 		});
 
 		bridge.events.profilingStopWorker.subscribe(async (id) => {
@@ -608,18 +614,20 @@ export default class Server {
 			return await worker.bridge.events.profilingStop.call();
 		});
 
-		bridge.resources.addCallback("BridgeEndServerRequestCancellationHandler", async () => {
-			for (const req of client.requestsInFlight) {
-				await req.cancel("client disconnected");
-			}
-		});
+		bridge.resources.addCallback(
+			"BridgeEndServerRequestCancellationHandler",
+			async () => {
+				for (const req of client.requestsInFlight) {
+					await req.cancel("client disconnected");
+				}
+			},
+		);
 
 		await bridge.handshake();
 
 		const client = await this.createClient({id, bridge, resources});
 
 		if (client.version !== VERSION) {
-			console.log(client.version !== VERSION);
 			// TODO this wont ever actually be printed?
 			client.reporter.error(
 				markup`Client version ${client.version} does not match server version ${VERSION}. Goodbye lol.`,
@@ -664,13 +672,16 @@ export default class Server {
 		} = await bridge.events.getClientInfo.call();
 
 		// Initialize the reporter
-		const reporter = new Reporter("ServerClient", {
-			wrapperFactory: this.fatalErrorHandler.wrapBound,
-			markupOptions: {
-				...this.logger.markupOptions,
-				cwd: flags.cwd,
+		const reporter = new Reporter(
+			"ServerClient",
+			{
+				wrapperFactory: this.fatalErrorHandler.wrapBound,
+				markupOptions: {
+					...this.logger.markupOptions,
+					cwd: flags.cwd,
+				},
 			},
-		});
+		);
 		resources.add(reporter);
 
 		const stream = reporter.addStream(
@@ -810,10 +821,7 @@ export default class Server {
 
 		// Warmup
 		const warmupStart = new DurationMeasurer();
-		const result = await this.dispatchRequest(
-			req,
-			["benchmark"],
-		);
+		const result = await this.dispatchRequest(req, ["benchmark"]);
 		const warmupTook = warmupStart.since();
 
 		// Benchmark

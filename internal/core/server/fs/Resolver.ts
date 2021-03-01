@@ -20,8 +20,8 @@ import {
 	Path,
 	RelativePath,
 	URLPath,
-	createRelativePathFromSegments,
 	createRelativePath,
+	createRelativePathFromSegments,
 } from "@internal/path";
 import {DiagnosticAdvice, DiagnosticLocation} from "@internal/diagnostics";
 import {IMPLICIT_JS_EXTENSIONS} from "../../common/file-handlers/javascript";
@@ -168,7 +168,7 @@ export type ResolverQueryResponseNotFound =
 export type ResolverQueryResponse =
 	| ResolverQueryResponseFound
 	| ResolverQueryResponseNotFound;
-	
+
 const QUERY_RESPONSE_MISSING: ResolverQueryResponseMissing = {
 	type: "MISSING",
 	query: undefined,
@@ -388,7 +388,7 @@ export default class Resolver {
 		}
 
 		// Found an exact match
-		if (await absolute.exists() && (await absolute.lstat()).isFile()) {
+		if ((await absolute.exists()) && (await absolute.lstat()).isFile()) {
 			const project = await projectManager.findProject(absolute, true);
 			if (project === undefined) {
 				return undefined;
@@ -401,7 +401,7 @@ export default class Resolver {
 	}
 
 	public async resolveAssert(
-		query: ResolverRemoteQuery
+		query: ResolverRemoteQuery,
 	): Promise<ResolverQueryResponseFound> {
 		const resolved = await this.resolveRemote(query);
 		if (resolved.type === "FOUND") {
@@ -695,11 +695,7 @@ export default class Resolver {
 						source: main.value,
 					};
 
-					const resolved = this.resolvePath(
-						mainQuery,
-						true,
-						["package"],
-					);
+					const resolved = this.resolvePath(mainQuery, true, ["package"]);
 
 					return attachExportAliasIfUnresolved(resolved, main, mainQuery);
 				}
@@ -788,15 +784,11 @@ export default class Resolver {
 				}
 
 				// Alias found!
-				const mainQuery = 	{
+				const mainQuery = {
 					...query,
 					source: manifestDef.directory.append(alias.value),
 				};
-				const resolved = this.resolvePath(
-					mainQuery,
-					true,
-					["package"],
-				);
+				const resolved = this.resolvePath(mainQuery, true, ["package"]);
 				return attachExportAliasIfUnresolved(resolved, alias, mainQuery);
 			}
 		}

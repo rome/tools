@@ -24,7 +24,7 @@ import {
 } from "@internal/markup";
 import {OneIndexed, ZeroIndexed} from "@internal/numbers";
 import {mergeObjects} from "@internal/typescript-helpers";
-import {Path, MixedPathMap, MixedPathSet} from "@internal/path";
+import {MixedPathMap, MixedPathSet, Path} from "@internal/path";
 
 export type DiagnosticsNormalizerOptions = {
 	tags?: DiagnosticTags;
@@ -290,6 +290,15 @@ export default class DiagnosticsNormalizer {
 		const {sourceMaps} = this;
 
 		switch (item.type) {
+			case "group":
+				return maybeMerge(
+					item,
+					{
+						title: this.normalizeMarkup(item.title),
+						advice: this.normalizeAdvice(item.advice),
+					},
+				);
+
 			case "frame":
 				return maybeMerge(
 					item,
@@ -437,11 +446,16 @@ export default class DiagnosticsNormalizer {
 		description: DiagnosticDescription,
 	): DiagnosticDescription {
 		const advice = this.normalizeAdvice(description.advice);
+		const verboseAdvice =
+			description.verboseAdvice === undefined
+				? undefined
+				: this.normalizeAdvice(description.verboseAdvice);
 		return maybeMerge(
 			description,
 			{
 				message: this.normalizeMarkup(description.message),
 				advice,
+				verboseAdvice,
 			},
 		);
 	}

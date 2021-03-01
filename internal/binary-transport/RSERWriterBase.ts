@@ -1,4 +1,8 @@
-import {isSafeInstanceof} from "@internal/typescript-helpers";
+import {
+	UnionToIntersection,
+	isPlainObject,
+	isSafeInstanceof,
+} from "@internal/typescript-helpers";
 import {
 	CODES,
 	PATH_PARSED_CODES,
@@ -24,11 +28,11 @@ import {
 	RSERValueObjects,
 } from "./types";
 import {IntSize} from "./utils";
-import {UnionToIntersection, isPlainObject} from "@internal/typescript-helpers";
+
 import {
-	Path,
 	MixedPathMap,
 	MixedPathSet,
+	Path,
 	PathSet,
 	isPath,
 	isPathMap,
@@ -39,15 +43,15 @@ import {pretty} from "@internal/pretty-format";
 import {getUTF8ByteLength} from "@internal/binary";
 import {
 	AnyIndexedNumber,
+	Duration,
 	OneIndexed,
 	ZeroIndexed,
-	Duration,
 } from "@internal/numbers";
 
 const MAX_INT8 = 127;
 const MAX_INT16 = 32_767;
 const MAX_INT32 = 2_147_483_647;
-const MAX_INT32_BIG = 2_147_483_647n;
+const MAX_INT32_BIG = 2147483647n;
 
 export type RSERWriterBaseReferences = Map<RSERValue, number>;
 
@@ -299,7 +303,7 @@ export default abstract class RSERWriterBase {
 				this.encodeOptionalStringValue(parsed.username);
 				this.encodeOptionalStringValue(parsed.password);
 				this.encodeStringValue(parsed.hostname);
-				
+
 				if (parsed.port === undefined) {
 					this.encodeUndefined();
 				} else {
@@ -323,7 +327,7 @@ export default abstract class RSERWriterBase {
 				this.writeByte(PATH_PARSED_CODES.UID);
 				break;
 			}
-			
+
 			case "relative": {
 				this.writeByte(PATH_PARSED_CODES.RELATIVE);
 				this.encodeBoolean(parsed.explicitRelative);
@@ -434,7 +438,7 @@ export default abstract class RSERWriterBase {
 		if (isSafeInstanceof(val, Set)) {
 			return this.encodeSet(val);
 		}
-		
+
 		if (isPathMap(val)) {
 			return this.encodePathMap(val);
 		}

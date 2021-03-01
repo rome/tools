@@ -20,12 +20,12 @@ import {AbsoluteFilePath, Path} from "@internal/path";
 import {Dict, OptionalProps} from "@internal/typescript-helpers";
 import WorkerBridge from "../common/bridges/WorkerBridge";
 import {AnalyzeDependencyResult} from "../common/types/analyzeDependencies";
-import { AssembledBundle } from "../common/types/bundler";
+import {AssembledBundle} from "../common/types/bundler";
 import {FileReference} from "../common/types/files";
 import {UserConfig} from "../common/userConfig";
 import {RecoverySaveFile} from "../server/fs/RecoveryStore";
-import { TestServerRunnerOptions } from "../server/testing/types";
-import { FocusedTest } from "./test/TestWorkerFile";
+import {TestServerRunnerOptions} from "../server/testing/types";
+import {FocusedTest} from "./test/TestWorkerFile";
 import workerThreads = require("worker_threads");
 
 export type WorkerParseResult = {
@@ -52,7 +52,7 @@ export type ThreadWorkerContainer = {
 	fileCount: number;
 	byteCount: bigint;
 	bridge: BridgeServer<typeof WorkerBridge>;
-	displayName: StaticMarkup;
+	displayName: string;
 	thread: workerThreads.Worker;
 	// Whether we've completed a handshake with the worker and it's ready to receive requests
 	ready: boolean;
@@ -83,7 +83,10 @@ export type WorkerProject = Required<CompilerProject> & {
 
 export type WorkerProjects = Map<number, WorkerProject>;
 
-export type WorkerPartialManifestsTransport = Map<number, undefined | WorkerPartialManifest>;
+export type WorkerPartialManifestsTransport = Map<
+	number,
+	undefined | WorkerPartialManifest
+>;
 
 export type WorkerPartialManifest = {
 	project: number;

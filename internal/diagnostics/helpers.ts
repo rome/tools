@@ -216,7 +216,7 @@ export function prependAdviceToDiagnostic(
 	if (advice.length === 0) {
 		return diag;
 	}
-	
+
 	return {
 		...diag,
 		description: {

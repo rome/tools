@@ -67,7 +67,9 @@ export type PartialExtensionHandler<ParseRoot extends AnyRoot = AnyRoot> = {
 		info: ExtensionHandlerMethodInfo,
 	) => Promise<ExtensionCustomLintResult>;
 
-	parse: (opts: ExtensionParseInfo) => Promise<ExtensionHandlerParseResult<ParseRoot>>;
+	parse: (
+		opts: ExtensionParseInfo,
+	) => Promise<ExtensionHandlerParseResult<ParseRoot>>;
 };
 
 export type ExtensionHandler<ParseRoot extends AnyRoot = AnyRoot> = PartialExtensionHandler<ParseRoot> & {

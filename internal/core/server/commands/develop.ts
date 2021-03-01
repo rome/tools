@@ -19,29 +19,32 @@ export default createServerCommand<DevelopServerListenOptions>({
 	examples: [],
 	defineFlags(c) {
 		return {
-      public: c.get("public").asBoolean(false),
-      port: c.get("port").asNumber(8080),
-    };
+			public: c.get("public").asBoolean(false),
+			port: c.get("port").asNumber(8_080),
+		};
 	},
-	async callback(req: ServerRequest, flags: DevelopServerListenOptions): Promise<void> {
-    const {reporter} = req;
-    const bundler = Bundler.createFromServerRequest(req);
+	async callback(
+		req: ServerRequest,
+		flags: DevelopServerListenOptions,
+	): Promise<void> {
+		const {reporter} = req;
+		const bundler = Bundler.createFromServerRequest(req);
 		const resolution = await bundler.getResolvedEntry(".");
 
-    const server = new DevelopServer({
-      bundler,
-      resolution,
-      request: req,
-      reporter,
-    });
+		const server = new DevelopServer({
+			bundler,
+			resolution,
+			request: req,
+			reporter,
+		});
 
-    const http = await server.listen(flags);
-    req.endEvent.subscribe(async () => {
-      http.close();
-      await server.close();
-    });
-    
-    await server.init();
-    await req.endEvent.wait();
+		const http = await server.listen(flags);
+		req.endEvent.subscribe(async () => {
+			http.close();
+			await server.close();
+		});
+
+		await server.init();
+		await req.endEvent.wait();
 	},
 });

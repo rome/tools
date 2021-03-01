@@ -152,7 +152,7 @@ export function toAssignmentPattern(
 						unexpectedDiagnostic(
 							parser,
 							{
-								loc: arg.loc,
+								node: arg,
 								description: descriptions.JS_PARSER.INVALID_OBJECT_REST_ARGUMENT,
 							},
 						);
@@ -189,7 +189,7 @@ export function toAssignmentPattern(
 				unexpectedDiagnostic(
 					parser,
 					{
-						loc: parser.getLoc(node.left),
+						node: node.left,
 						description: descriptions.JS_PARSER.INVALID_ASSIGNMENT_PATTERN_OPERATOR,
 					},
 				);
@@ -208,7 +208,7 @@ export function toAssignmentPattern(
 			unexpectedDiagnostic(
 				parser,
 				{
-					loc: node.loc,
+					node,
 					description: descriptions.JS_PARSER.INVALID_LEFT_HAND_SIDE(
 						contextDescription,
 					),
@@ -243,7 +243,7 @@ export function toTargetAssignmentPattern(
 			unexpectedDiagnostic(
 				parser,
 				{
-					loc: node.loc,
+					node,
 					description: descriptions.JS_PARSER.INVALID_ASSIGNMENT_TARGET,
 				},
 			);
@@ -306,7 +306,7 @@ export function toBindingPattern(
 		unexpectedDiagnostic(
 			parser,
 			{
-				loc: node.loc,
+				node,
 				description: descriptions.JS_PARSER.BINDING_MEMBER_EXPRESSION,
 			},
 		);
@@ -395,7 +395,7 @@ export function toAssignmentObjectProperty(
 			unexpectedDiagnostic(
 				parser,
 				{
-					loc: prop.key.loc,
+					node: prop.key,
 					description: descriptions.JS_PARSER.OBJECT_PATTERN_CANNOT_CONTAIN_METHODS,
 				},
 			);
@@ -437,7 +437,7 @@ export function toAssignmentObjectProperty(
 			unexpectedDiagnostic(
 				parser,
 				{
-					loc: prop.loc,
+					node: prop,
 					description: descriptions.JS_PARSER.INVALID_OBJECT_PATTERN_PROPERTY,
 				},
 			);
@@ -523,7 +523,7 @@ export function toAssignableList(
 			unexpectedDiagnostic(
 				parser,
 				{
-					loc: expr.loc,
+					node: expr,
 					description: descriptions.JS_PARSER.TS_UNEXPECTED_CAST_IN_PARAMETER_POSITION,
 				},
 			);
@@ -655,7 +655,7 @@ export function normalizeReferencedItem(
 	unexpectedDiagnostic(
 		parser,
 		{
-			loc: expr.loc,
+			node: expr,
 			description: descriptions.JS_PARSER.FLOW_TYPE_CAST_IN_TS,
 		},
 	);
@@ -664,7 +664,7 @@ export function normalizeReferencedItem(
 		unexpectedDiagnostic(
 			parser,
 			{
-				loc: expr.loc,
+				node: expr,
 				description: descriptions.JS_PARSER.TYPE_CAST_EXPECTED_PARENS,
 			},
 		);
@@ -674,7 +674,7 @@ export function normalizeReferencedItem(
 		unexpectedDiagnostic(
 			parser,
 			{
-				loc: expr.loc,
+				node: expr,
 				description: descriptions.JS_PARSER.TYPE_CAST_CANNOT_BE_OPTIONAL,
 			},
 		);
@@ -686,7 +686,7 @@ export function normalizeReferencedItem(
 		unexpectedDiagnostic(
 			parser,
 			{
-				loc: expr.loc,
+				node: expr,
 				description: descriptions.JS_PARSER.TYPE_CAST_WITHOUT_ANNOTATION,
 			},
 		);
@@ -969,7 +969,7 @@ export function parseBindingListItemTypes(
 			unexpectedDiagnostic(
 				parser,
 				{
-					loc: param.loc,
+					node: param,
 					description: descriptions.JS_PARSER.TYPE_BINDING_PARAMETER_OPTIONAL,
 				},
 			);
@@ -1033,7 +1033,7 @@ export function parseMaybeDefault(
 		unexpectedDiagnostic(
 			parser,
 			{
-				loc: target.meta.typeAnnotation.loc,
+				node: target.meta.typeAnnotation,
 				description: descriptions.JS_PARSER.TYPE_ANNOTATION_AFTER_ASSIGNMENT,
 			},
 		);
@@ -1086,7 +1086,7 @@ export function checkLVal(
 				description: descriptions.JS_PARSER.INVALID_PARENTEHSIZED_LVAL(
 					patternType,
 				),
-				loc: expr.loc,
+				node: expr,
 			},
 		);
 	}
@@ -1115,7 +1115,7 @@ export function checkLVal(
 				unexpectedDiagnostic(
 					parser,
 					{
-						loc: expr.loc,
+						node: expr,
 						description: descriptions.JS_PARSER.RESERVED_WORD(expr.name),
 					},
 				);
@@ -1134,7 +1134,7 @@ export function checkLVal(
 								expr.name,
 								expr.loc,
 							),
-							loc: expr.loc,
+							node: expr,
 						},
 					);
 				}
@@ -1213,7 +1213,7 @@ export function checkToRestConversion(
 		unexpectedDiagnostic(
 			parser,
 			{
-				loc: node.argument.loc,
+				node: node.argument,
 				description: descriptions.JS_PARSER.REST_INVALID_ARGUMENT,
 			},
 		);

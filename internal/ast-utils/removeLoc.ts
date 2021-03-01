@@ -11,7 +11,12 @@ import {
 	MOCK_JS_ROOT,
 	NodeBaseWithComments,
 } from "@internal/ast";
-import {AnyVisitors, CompilerContext, CompilerPath, signals} from "@internal/compiler";
+import {
+	AnyVisitors,
+	CompilerContext,
+	CompilerPath,
+	signals,
+} from "@internal/compiler";
 import {SourceLocation} from "@internal/parser-core";
 
 function removeProp<T extends {

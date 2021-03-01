@@ -24,10 +24,7 @@ export * from "./collections";
 export * from "./types";
 export * from "./constants";
 
-export function equalPaths(
-	a: undefined | Path,
-	b: undefined | Path,
-): boolean {
+export function equalPaths(a: undefined | Path, b: undefined | Path): boolean {
 	if (a === b) {
 		return true;
 	}

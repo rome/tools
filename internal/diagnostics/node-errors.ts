@@ -1,8 +1,8 @@
 import {
+	NodeSystemError,
 	getDiagnosticLocationFromErrorFrame,
 	getErrorStructure,
 	setErrorFrames,
-	NodeSystemError,
 	setNodeErrorProps,
 } from "@internal/errors";
 import {StaticMarkup, markup} from "@internal/markup";

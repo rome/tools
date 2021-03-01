@@ -1,9 +1,9 @@
-import {ParsedPath, ParsedPathURL} from "../types";
+import {ParsedPath, ParsedPathURL, Path} from "../types";
 import {parseURLPathRelativeSegments} from "../parse";
 import {BasePath, FilePathMemo} from "../bases";
-import {Path} from "../types";
+
 import RelativePath from "./RelativePath";
-import { equalArray } from "@internal/typescript-helpers";
+import {equalArray} from "@internal/typescript-helpers";
 
 export default class URLPath extends BasePath<ParsedPathURL, URLPath> {
 	private memoizedJoinedPathname: undefined | string;
@@ -13,7 +13,7 @@ export default class URLPath extends BasePath<ParsedPathURL, URLPath> {
 		return this;
 	}
 
-	protected _forkAppend(segments: Array<string>): URLPath {
+	protected _forkAppend(segments: string[]): URLPath {
 		const newParsed = parseURLPathRelativeSegments([
 			...this.getSegments(),
 			...segments,
@@ -35,7 +35,9 @@ export default class URLPath extends BasePath<ParsedPathURL, URLPath> {
 
 		const {hash, search} = this.parsed;
 
-		const segments: string[] = this.getDisplaySegments().map(seg => encodeURIComponent(seg));
+		const segments: string[] = this.getDisplaySegments().map((seg) =>
+			encodeURIComponent(seg)
+		);
 
 		if (hash !== undefined || search.size > 0) {
 			let lastSegment = segments.pop() ?? "";
@@ -49,7 +51,7 @@ export default class URLPath extends BasePath<ParsedPathURL, URLPath> {
 						if (value === "") {
 							searchPairs.push(encodedKey);
 						} else {
-							searchPairs.push(`${encodedKey}=${encodeURIComponent(value)}`)
+							searchPairs.push(`${encodedKey}=${encodeURIComponent(value)}`);
 						}
 					}
 				}
@@ -71,11 +73,13 @@ export default class URLPath extends BasePath<ParsedPathURL, URLPath> {
 
 	protected _join(): string {
 		const {protocol, port, hostname, username, password} = this.parsed;
-		
+
 		// Build prefix
 		let prefix = `${protocol}//`;
 		if (username !== undefined || password !== undefined) {
-			prefix += `${encodeURIComponent(username ?? "")}:${encodeURIComponent(password ?? "")}@`;
+			prefix += `${encodeURIComponent(username ?? "")}:${encodeURIComponent(
+				password ?? "",
+			)}@`;
 		}
 		prefix += encodeURIComponent(hostname);
 		if (port !== undefined) {
@@ -187,7 +191,7 @@ export default class URLPath extends BasePath<ParsedPathURL, URLPath> {
 			return this.append(path.assertRelative());
 		}
 	}
-	
+
 	public fetch(init?: RequestInit): Promise<Response> {
 		return fetch(this.join(), init);
 	}

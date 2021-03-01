@@ -8,7 +8,12 @@
 import {Dict, isPlainObject} from "@internal/typescript-helpers";
 import {MarkupTagName} from "./types";
 import {Path, URLPath, isPath} from "@internal/path";
-import {OneIndexed, UnknownNumber, ZeroIndexed, Duration} from "@internal/numbers";
+import {
+	Duration,
+	OneIndexed,
+	UnknownNumber,
+	ZeroIndexed,
+} from "@internal/numbers";
 
 type LazyMarkupPart = StaticMarkup | LazyMarkupFactory | LazyMarkup;
 
@@ -16,7 +21,13 @@ export type LazyMarkupFactory = () => AnyMarkup;
 
 export type StaticMarkups = StaticMarkup[];
 
-export type StaticMarkup = string | Path | Duration | UnknownNumber | RawMarkup | StaticMarkup[];
+export type StaticMarkup =
+	| string
+	| Path
+	| Duration
+	| UnknownNumber
+	| RawMarkup
+	| StaticMarkup[];
 
 export type AnyMarkup = StaticMarkup | LazyMarkup | LazyMarkupFactory;
 
@@ -33,10 +44,7 @@ type RawMarkup = {
 };
 
 function isRawMarkup(part: LazyMarkupPart): part is RawMarkup {
-	return (
-		isPlainObject(part) &&
-		part.type === "RAW_MARKUP"
-	);
+	return isPlainObject(part) && part.type === "RAW_MARKUP";
 }
 
 function isLazyMarkup(
@@ -46,10 +54,7 @@ function isLazyMarkup(
 }
 
 function isLazyMarkupParts(part: LazyMarkupPart): part is LazyMarkup {
-	return (
-		isPlainObject(part) &&
-		part.type === "LAZY_MARKUP"
-	);
+	return isPlainObject(part) && part.type === "LAZY_MARKUP";
 }
 
 function isLazyMarkupFactory(part: LazyMarkupPart): part is LazyMarkupFactory {
@@ -125,7 +130,7 @@ export function markup(
 		parts.push(normalizeInterpolatedValue(values[i]));
 	}
 
-	const obj = concatMarkup(parts);
+	const obj = joinMarkup(parts);
 
 	// No interpolated values so result is static
 	if (values.length === 0) {
@@ -157,7 +162,7 @@ export function readMarkup(item: AnyMarkup): string {
 	if (typeof item === "string") {
 		return escapeMarkup(item);
 	}
-	
+
 	if (
 		typeof item === "number" ||
 		typeof item === "bigint" ||
@@ -170,7 +175,7 @@ export function readMarkup(item: AnyMarkup): string {
 	if (item instanceof Duration) {
 		return `<duration>${String(item.toNanoseconds())}</duration>`;
 	}
-	
+
 	if (isPath(item)) {
 		return readMarkup(pathToMarkup(item));
 	}
@@ -254,18 +259,12 @@ export function isEmptyMarkup(
 	return false;
 }
 
-export function concatMarkup(
+export function joinMarkup(
 	items: AnyMarkups,
 	separator?: StaticMarkup,
 ): StaticMarkup;
-export function concatMarkup(
-	items: AnyMarkup[],
-	separator?: AnyMarkup,
-): AnyMarkup;
-export function concatMarkup(
-	items: AnyMarkup[],
-	separator?: AnyMarkup,
-): AnyMarkup {
+export function joinMarkup(items: AnyMarkup[], separator?: AnyMarkup): AnyMarkup;
+export function joinMarkup(items: AnyMarkup[], separator?: AnyMarkup): AnyMarkup {
 	let hasLazy = separator !== undefined && isLazyMarkup(separator);
 	let hasSeparator = separator !== undefined && !isEmptyMarkup(separator, false);
 	let canSimplify =

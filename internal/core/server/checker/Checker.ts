@@ -11,8 +11,8 @@ import {Diagnostics, DiagnosticsProcessor} from "@internal/diagnostics";
 import {
 	AbsoluteFilePath,
 	AbsoluteFilePathSet,
-	Path,
 	MixedPathMap,
+	Path,
 } from "@internal/path";
 import {DiagnosticsPrinter} from "@internal/cli-diagnostics";
 import DependencyGraph from "../dependencies/DependencyGraph";
@@ -31,7 +31,7 @@ import {WatchFilesEvent} from "../fs/glob";
 import {WorkerIntegrationTimings} from "@internal/core/worker/types";
 import {ExtendedMap} from "@internal/collections";
 import {ServerRequestGlobArgs} from "../ServerRequest";
-import { Resource } from "@internal/resources";
+import {Resource} from "@internal/resources";
 
 type CheckWatchChange = {
 	path: Path;
@@ -307,15 +307,23 @@ class CheckRunner {
 	private async runGraph(event: WatchFilesEvent): Promise<void> {
 		const {graph} = this;
 
-		const dependencyPaths = await graph.evictNodes(event.paths, async (paths, dependents) => {
-			await this.seedGraph({
-				paths,
-				progressText: dependents
-					? markup`Analyzing dependents` : event.initial
-					? markup`Analyzing files`
-					: markup`Analyzing changed files`,
-			});
-		});
+		const dependencyPaths = await graph.evictNodes(
+			event.paths,
+			async (paths, dependents) => {
+				let progressText;
+				if (dependents) {
+					progressText = markup`Analyzing dependents`;
+				} else if (event.initial) {
+					progressText = markup`Analyzing files`;
+				} else {
+					progressText = markup`Analyzing changed files`;
+				}
+				await this.seedGraph({
+					paths,
+					progressText,
+				});
+			},
+		);
 
 		// Revalidate connections
 		for (const path of dependencyPaths) {
@@ -323,10 +331,7 @@ class CheckRunner {
 		}
 	}
 
-	public getDiagnosticsForPath(
-		path: Path,
-		guaranteedOnly: boolean,
-	): Diagnostics {
+	public getDiagnosticsForPath(path: Path, guaranteedOnly: boolean): Diagnostics {
 		const processor = new DiagnosticsProcessor();
 
 		for (const subprocessor of this.processors) {
@@ -518,9 +523,10 @@ export default class Checker {
 			for (const timing of timings.total.values()) {
 				if (timing.took.valueOf() > 0n) {
 					reporter.warn(
-						markup`Spent <emphasis>${timing.took.format(
-							{longform: true, allowMilliseconds: true},
-						)}</emphasis> running ${timing.displayName}`,
+						markup`Spent <emphasis>${timing.took.format({
+							longform: true,
+							allowMilliseconds: true,
+						})}</emphasis> running ${timing.displayName}`,
 					);
 				}
 			}

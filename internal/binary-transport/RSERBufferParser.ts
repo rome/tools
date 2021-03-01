@@ -9,8 +9,9 @@ import {
 	RSERValue,
 } from "./types";
 import {
-	PATH_COLLECTION_CODES,
 	CODES,
+	PATH_COLLECTION_CODES,
+	PATH_PARSED_CODES,
 	VERSION,
 	arrayBufferViewCodeToInstance,
 	errorCodeToInstance,
@@ -18,29 +19,28 @@ import {
 	pathMapFromCode,
 	pathSetFromCode,
 	validateArrayBufferViewCode,
+	validateCode,
 	validateErrorCode,
 	validatePathCollectionCode,
-	validateCode,
-	PATH_PARSED_CODES,
 } from "./codes";
 import {
-	Path,
 	MixedPathMap,
 	MixedPathSet,
-	PathSet,
-	isPath,
-	createPathFromParsed,
-	ParsedPathBase,
 	ParsedPath,
-	validateParsedPathWindowsDriveLetter,
-	ParsedPathURL,
+	ParsedPathBase,
 	ParsedPathDataURI,
+	ParsedPathURL,
+	Path,
+	PathSet,
+	createPathFromParsed,
+	isPath,
+	validateParsedPathWindowsDriveLetter,
 } from "@internal/path";
 import {
-	NodeSystemErrorProperties,
-	setNodeErrorProps,
 	ErrorFrames,
+	NodeSystemErrorProperties,
 	setErrorFrames,
+	setNodeErrorProps,
 } from "@internal/errors";
 import {IntSize} from "./utils";
 import {utf8Decode} from "@internal/binary";
@@ -214,7 +214,9 @@ export default class RSERBufferParser {
 
 		const messageCode = this.peekCode();
 		if (messageCode !== CODES.MESSAGE_HEADER) {
-			throw this.unexpected(`Unknown message header code ${formatCode(messageCode)}`);
+			throw this.unexpected(
+				`Unknown message header code ${formatCode(messageCode)}`,
+			);
 		}
 		this.readOffset++;
 
@@ -506,10 +508,10 @@ export default class RSERBufferParser {
 		switch (code) {
 			case CODES.TRUE:
 				return this.decodeTrue();
-				
+
 			case CODES.FALSE:
 				return this.decodeFalse();
-				
+
 			default:
 				throw this.unexpected(`${formatCode(code)} is not a valid boolean code`);
 		}
@@ -690,7 +692,7 @@ export default class RSERBufferParser {
 
 		return this._decodePath();
 	}
-	
+
 	private _decodePath(): Path {
 		this.expectCode(CODES.PATH);
 
@@ -720,7 +722,9 @@ export default class RSERBufferParser {
 			}
 
 			case PATH_PARSED_CODES.ABSOLUTE_WINDOWS_DRIVE: {
-				const letter = validateParsedPathWindowsDriveLetter(String.fromCharCode(this.readInt(1)));
+				const letter = validateParsedPathWindowsDriveLetter(
+					String.fromCharCode(this.readInt(1)),
+				);
 				parsed = {
 					...parsedBase,
 					type: "absolute-windows-drive",
@@ -796,7 +800,7 @@ export default class RSERBufferParser {
 
 			case PATH_PARSED_CODES.DATA: {
 				const mime = this.decodeOptionalKey();
-				
+
 				let data: ParsedPathDataURI["data"];
 				if (this.peekCode() === CODES.ARRAY_BUFFER) {
 					data = this.decodeArrayBufferValue();
@@ -970,7 +974,7 @@ export default class RSERBufferParser {
 			return this.readStringSize(size);
 		}
 	}
-	
+
 	private decodeOptionalKey(): undefined | string {
 		const key = this.decodeKey();
 		if (key.length === 0) {
@@ -998,7 +1002,7 @@ export default class RSERBufferParser {
 	}
 
 	private decodeNumberOrVoid(): undefined | number {
-		const code = this.peekCode()
+		const code = this.peekCode();
 		switch (code) {
 			case CODES.UNDEFINED:
 				return undefined;

@@ -5,8 +5,8 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import { Duration } from "@internal/numbers";
-import { createResourceFromCallback, Resource } from "@internal/resources";
+import {Duration} from "@internal/numbers";
+import {Resource, createResourceFromCallback} from "@internal/resources";
 import {EventCallback, EventOptions, EventSubscriptionOptions} from "./types";
 
 type EventSubscription<Param, Ret> = {
@@ -46,7 +46,10 @@ export default class Event<Param, Ret = void> {
 
 	public async clear(): Promise<void> {
 		// Release all subscriptions
-		const promises = Array.from(this.subscriptions, (sub) => sub.resource.release());
+		const promises = Array.from(
+			this.subscriptions,
+			(sub) => sub.resource.release(),
+		);
 		if (this.rootSubscription !== undefined) {
 			promises.push(this.rootSubscription.resource.release());
 		}
@@ -91,10 +94,7 @@ export default class Event<Param, Ret = void> {
 		} else {
 			const res = await Promise.all([
 				this.callSubscription(rootSubscription, param),
-				...Array.from(
-					subscriptions,
-					(sub) => this.callSubscription(sub, param),
-				),
+				...Array.from(subscriptions, (sub) => this.callSubscription(sub, param)),
 			]);
 
 			// Return the root subscription value
@@ -111,8 +111,8 @@ export default class Event<Param, Ret = void> {
 			});
 
 			if (timeout !== undefined) {
-				resource.add(timeout.setTimeout(
-					() => {
+				resource.add(
+					timeout.setTimeout(() => {
 						resource.release().then(() => {
 							reject(
 								new Error(
@@ -122,8 +122,8 @@ export default class Event<Param, Ret = void> {
 						}).catch((err) => {
 							reject(err);
 						});
-					},
-				));
+					}),
+				);
 			}
 		});
 	}
@@ -141,17 +141,21 @@ export default class Event<Param, Ret = void> {
 		opts: EventSubscriptionOptions = {},
 	): Resource {
 		opts;
-		
+
 		if (this.options.unique === true && this.subscriptions.size !== 0) {
 			throw new Error(
 				`Only allowed a single subscription for ${this.displayName}`,
 			);
 		}
 
-		const resource = createResourceFromCallback(`EventSubscription<${this.name}>`, () => {
-			this.unsubscribe(sub);
-		}, {optional: this.options.requiredSubscriptionResource !== true});
-		
+		const resource = createResourceFromCallback(
+			`EventSubscription<${this.name}>`,
+			() => {
+				this.unsubscribe(sub);
+			},
+			{optional: this.options.requiredSubscriptionResource !== true},
+		);
+
 		const sub: EventSubscription<Param, Ret> = {
 			callback,
 			resource,

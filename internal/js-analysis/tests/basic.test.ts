@@ -30,11 +30,5 @@ test(
 	"discovers require('module') call",
 	async () => {
 		testCheck;
-
-		/*const diagnostics = await testCheck(`
-    const a: number = '';
-  `);
-
-  console.log(diagnostics);*/
 	},
 );

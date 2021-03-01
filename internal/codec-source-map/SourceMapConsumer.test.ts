@@ -2,7 +2,7 @@ import {test} from "rome";
 import {getParsedMappingKey} from "@internal/codec-source-map/SourceMapConsumer";
 import {OneIndexed, ZeroIndexed} from "@internal/numbers";
 import {SourceMapConsumer} from "@internal/codec-source-map/index";
-import { createRelativePath } from "@internal/path";
+import {createRelativePath} from "@internal/path";
 
 test(
 	"Should return `line`:`column`",

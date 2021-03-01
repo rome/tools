@@ -67,14 +67,8 @@ test(
 		foo();
 		await bar();
 
-		t.looksLike(
-			client.getSubscriptionsForHandshake(),
-			new Set([1, 2, 3]),
-		);
-		t.looksLike(
-			server.getSubscriptionsForHandshake(),
-			new Set([1, 2]),
-		);
+		t.looksLike(client.getSubscriptionsForHandshake(), new Set([1, 2, 3]));
+		t.looksLike(server.getSubscriptionsForHandshake(), new Set([1, 2]));
 
 		t.looksLike(fooMessages, ["foo"]);
 

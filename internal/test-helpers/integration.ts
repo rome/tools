@@ -185,10 +185,7 @@ export function createMockWorker(force: boolean = false): IntegrationWorker {
 
 		const ref: FileReference = {
 			project,
-			manifest: undefined,
-			remote: false,
 			uid,
-			relative,
 			real,
 		};
 

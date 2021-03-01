@@ -21,7 +21,11 @@ export async function main([filename]: string[]) {
 
 	// Remove files
 	await INTERNAL.append("formatter", "builders", `${filename}.ts`).removeFile();
-	await	INTERNAL.append("js-analysis", "evaluators", `${category}/${nodeName}.ts`).removeFile();
+	await INTERNAL.append(
+		"js-analysis",
+		"evaluators",
+		`${category}/${nodeName}.ts`,
+	).removeFile();
 	await INTERNAL.append("ast", `${filename}.ts`).removeFile();
 
 	// Regenerate indexes

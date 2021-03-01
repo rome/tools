@@ -14,7 +14,7 @@ import {
 	AsyncVoidCallback,
 	VoidCallback,
 } from "@internal/typescript-helpers";
-import { Resource } from "@internal/resources";
+import {Resource} from "@internal/resources";
 
 // rome-ignore lint/ts/noExplicitAny: future cleanup
 export type WrapperFactory = <T extends (...args: any[]) => any>(

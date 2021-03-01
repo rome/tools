@@ -7,7 +7,7 @@
 
 import {Reporter, ReporterOptions} from "@internal/cli-reporter";
 import {AnyMarkup, markup} from "@internal/markup";
-import { Resource } from "@internal/resources";
+import {Resource} from "@internal/resources";
 import workerThreads = require("worker_threads");
 
 export default class Logger extends Reporter {

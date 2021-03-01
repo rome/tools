@@ -3,7 +3,11 @@ import tty = require("tty");
 import {Event} from "@internal/events";
 import {mergeObjects} from "@internal/typescript-helpers";
 import {OneIndexed} from "@internal/numbers";
-import { createResource, createResourceFromCallback, Resource } from "@internal/resources";
+import {
+	Resource,
+	createResource,
+	createResourceFromCallback,
+} from "@internal/resources";
 
 export type Stdout = stream.Writable | tty.WriteStream;
 
@@ -122,7 +126,9 @@ export function inferTerminalFeatures(
 		force,
 	);
 
-	const updateEvent: Event<TerminalFeatures, void> = new Event("TerminalFeatures.update");
+	const updateEvent: Event<TerminalFeatures, void> = new Event(
+		"TerminalFeatures.update",
+	);
 
 	let setupUpdateEvent: InferredTerminalFeatures["setupUpdateEvent"] = () => {
 		return createResource("TerminalFeatures.update");
@@ -143,9 +149,12 @@ export function inferTerminalFeatures(
 		setupUpdateEvent = () => {
 			stdout.on("resize", onStdoutResize);
 
-			return createResourceFromCallback("TerminalFeatures.update", () => {
-				stdout.off("resize", onStdoutResize);
-			});
+			return createResourceFromCallback(
+				"TerminalFeatures.update",
+				() => {
+					stdout.off("resize", onStdoutResize);
+				},
+			);
 		};
 	}
 

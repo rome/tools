@@ -1,4 +1,8 @@
-import {AbsoluteFilePath, AbsoluteFilePathMap} from "@internal/path";
+import {
+	AbsoluteFilePath,
+	AbsoluteFilePathMap,
+	RelativePath,
+} from "@internal/path";
 import {TestWorkerFileResult} from "@internal/core/worker/test/TestWorkerFile";
 import SnapshotManager, {
 	InlineSnapshotUpdates,
@@ -20,9 +24,14 @@ export default class TestServerFile {
 	) {
 		this.request = request;
 		this.runner = runner;
-		this.path = ref.real.assertAbsolute();
+		this.path = ref.real;
 		this.ref = ref;
 		this.bundle = bundle;
+
+		// Test file relative to the project
+		this.relative = request.server.projectManager.assertProjectExisting(
+			ref.real,
+		).directory.relativeForce(ref.real);
 
 		this.hasDiagnostics = false;
 		this.pendingTests = new Set();
@@ -34,6 +43,7 @@ export default class TestServerFile {
 	public path: AbsoluteFilePath;
 	public ref: FileReference;
 
+	private relative: RelativePath;
 	private hasDiagnostics: boolean;
 	private pendingTests: Set<string>;
 	private request: ServerRequest;
@@ -107,7 +117,7 @@ export default class TestServerFile {
 			const formatted = SnapshotManager.buildSnapshot({
 				entries: Array.from(entries.values()),
 				absolute: this.path,
-				relative: this.ref.relative,
+				relative: this.relative,
 			});
 
 			const location: DiagnosticLocation = {

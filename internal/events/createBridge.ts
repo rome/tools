@@ -10,7 +10,7 @@ import {WebSocketInterface} from "@internal/codec-websocket";
 import {Socket} from "net";
 import workerThreads = require("worker_threads");
 import {RSERValue} from "@internal/binary-transport";
-import { processResourceRoot } from "@internal/resources";
+import {processResourceRoot} from "@internal/resources";
 
 export function createBridgeEventDeclaration<
 	Param extends RSERValue,
@@ -45,7 +45,9 @@ export class BridgeFactory<
 	private type: BridgeType;
 	private def: BridgeDefinition<{}, {}, SharedEvents>;
 
-	public create(opts: BridgeOptions = {}): Bridge<ListenEvents, CallEvents, SharedEvents> {
+	public create(
+		opts: BridgeOptions = {},
+	): Bridge<ListenEvents, CallEvents, SharedEvents> {
 		return new Bridge(
 			this.type,
 			opts,
@@ -154,14 +156,19 @@ export class BridgeFactory<
 		socket.on(
 			"close",
 			(hadError) => {
-				bridge.disconnected(hadError ? "Socket closed due to transmission error" : "Socket closed");
+				bridge.disconnected(
+					hadError ? "Socket closed due to transmission error" : "Socket closed",
+				);
 			},
 		);
 
 		if (socket.connecting) {
-			socket.on("connect", () => {
-				rser.init();
-			});
+			socket.on(
+				"connect",
+				() => {
+					rser.init();
+				},
+			);
 		} else {
 			rser.init();
 		}
@@ -226,7 +233,7 @@ export class BridgeFactory<
 
 		const bridge = this.create();
 		processResourceRoot.add(bridge);
-		
+
 		const rser = bridge.attachRSER();
 
 		rser.sendEvent.subscribe((msg) => {
@@ -287,7 +294,7 @@ export class BridgeFactories<
 			client.handleMessage(data);
 		});
 		server.endEvent.subscribe(() => {
-			client.disconnected(`Server disconnected`);
+			client.disconnected("Server disconnected");
 		});
 
 		const client = this.Client.create({ignoreHeartbeat: true});
@@ -295,7 +302,7 @@ export class BridgeFactories<
 			server.handleMessage(data);
 		});
 		client.endEvent.subscribe(() => {
-			server.disconnected(`Client disconnected`);
+			server.disconnected("Client disconnected");
 		});
 
 		return {server, client};

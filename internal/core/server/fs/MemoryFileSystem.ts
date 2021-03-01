@@ -12,10 +12,10 @@ import {
 	normalizeManifest,
 } from "@internal/codec-js-manifest";
 import {
-	ProjectDefinition,
 	PROJECT_CONFIG_DIRECTORY,
 	PROJECT_CONFIG_FILENAMES,
 	PROJECT_CONFIG_PACKAGE_JSON_FIELD,
+	ProjectDefinition,
 } from "@internal/project";
 import {
 	Diagnostics,
@@ -26,23 +26,18 @@ import {
 import {json} from "@internal/codec-config";
 import {WorkerPartialManifest} from "@internal/core";
 import {
-	AbsoluteFilePathMap,
-	createRelativePath,
 	AbsoluteFilePath,
+	AbsoluteFilePathMap,
 	AbsoluteFilePathSet,
+	createRelativePath,
 } from "@internal/path";
-import {
-	CachedFileReader,
-	FSStats,
-	FSWatcher,
-	FileNotFound,
-} from "@internal/fs";
+import {CachedFileReader, FSStats, FSWatcher, FileNotFound} from "@internal/fs";
 import {markup} from "@internal/markup";
 import {ReporterNamespace} from "@internal/cli-reporter";
 import {GlobOptions, Globber} from "./glob";
 import {VoidCallback} from "@internal/typescript-helpers";
 import {GlobalLock} from "@internal/async";
-import {DurationMeasurer } from "@internal/numbers";
+import {DurationMeasurer} from "@internal/numbers";
 import crypto = require("crypto");
 
 // Paths that we will under no circumstance want to include
@@ -421,7 +416,10 @@ export default class MemoryFileSystem {
 		return undefined;
 	}
 
-	public getPartialManifest(def: ManifestDefinition, project: ProjectDefinition): WorkerPartialManifest {
+	public getPartialManifest(
+		def: ManifestDefinition,
+		project: ProjectDefinition,
+	): WorkerPartialManifest {
 		return {
 			project: project.id,
 			path: def.path,
@@ -1008,7 +1006,12 @@ export default class MemoryFileSystem {
 		if (oldStats !== undefined && opts.reason === "watch") {
 			this.logger.info(markup`File change: <emphasis>${path}</emphasis>`);
 
-			await this.server.refreshFileEvent.push({type: "DISK_UPDATE", path, oldStats, newStats: stats});
+			await this.server.refreshFileEvent.push({
+				type: "DISK_UPDATE",
+				path,
+				oldStats,
+				newStats: stats,
+			});
 
 			// Watcher could have been closed by an event
 			if (!this.isActiveWatcherId(opts.watcherId)) {

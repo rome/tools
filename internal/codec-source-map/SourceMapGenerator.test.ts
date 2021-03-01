@@ -1,9 +1,7 @@
 import {test} from "rome";
 import {Mapping} from "@internal/codec-source-map/types";
 import {OneIndexed, ZeroIndexed} from "@internal/numbers";
-import {
-	SourceMapGenerator,
-} from "@internal/codec-source-map/index";
+import {SourceMapGenerator} from "@internal/codec-source-map/index";
 import {dedent} from "@internal/string-utils";
 import {createPath, createRelativePath} from "@internal/path";
 

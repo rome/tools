@@ -42,12 +42,16 @@ export function setErrorFrames(
 	err: ErrorWithFrames,
 	frames: undefined | ErrorFrames,
 ) {
-	Object.defineProperty(err, ERROR_FRAMES_PROP, {
-		enumerable: false,
-		configurable: true,
-		writable: true,
-		value: frames,
-	});
+	Object.defineProperty(
+		err,
+		ERROR_FRAMES_PROP,
+		{
+			enumerable: false,
+			configurable: true,
+			writable: true,
+			value: frames,
+		},
+	);
 }
 
 export function getErrorStructure(

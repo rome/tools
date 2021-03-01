@@ -29,12 +29,7 @@ import {
 	percentInsideCoverageDirectory,
 	sortMapKeys,
 } from "./utils";
-import {
-	AnyMarkups,
-	StaticMarkup,
-	concatMarkup,
-	markup,
-} from "@internal/markup";
+import {AnyMarkups, StaticMarkup, joinMarkup, markup} from "@internal/markup";
 import {MAX_WORKER_COUNT} from "@internal/core/common/constants";
 import net = require("net");
 import {FocusedTest} from "@internal/core/worker/test/TestWorkerFile";
@@ -43,8 +38,8 @@ import {VoidCallback} from "@internal/typescript-helpers";
 import Bundler from "@internal/core/server/bundler/Bundler";
 import {
 	AbsoluteFilePath,
-	AbsoluteFilePathSet,
 	AbsoluteFilePathMap,
+	AbsoluteFilePathSet,
 } from "@internal/path";
 import TestServerWorker from "@internal/core/server/testing/TestServerWorker";
 import TestServerFile from "@internal/core/server/testing/TestServerFile";
@@ -168,9 +163,12 @@ export default class TestServer {
 		const diagnostics = getDiagnosticsFromError(err);
 		if (diagnostics === undefined) {
 			throw err;
-		} 
-		
-		if (isBridgeClosedDiagnosticError(err) || this.ignoreBridgeEndError.has(bridge)) {
+		}
+
+		if (
+			isBridgeClosedDiagnosticError(err) ||
+			this.ignoreBridgeEndError.has(bridge)
+		) {
 			// TODO I forget why this is necessary?
 			//return;
 		}
@@ -665,7 +663,7 @@ export default class TestServer {
 				);
 			}
 			words.push(markup`${noun}`);
-			return concatMarkup(words, markup` `);
+			return joinMarkup(words, markup` `);
 		});
 		for (const msg of formatted) {
 			reporter.info(msg);

@@ -1,136 +1,161 @@
-import { Reporter } from "@internal/cli-reporter";
-import { ServerRequest } from "@internal/core";
-import { BundlerEntryResolution, BundlerFile } from "@internal/core/common/types/bundler";
+import {Reporter} from "@internal/cli-reporter";
+import {ServerRequest} from "@internal/core";
+import {
+	BundlerEntryResolution,
+	BundlerFile,
+} from "@internal/core/common/types/bundler";
 import Bundler from "../bundler/Bundler";
 import http = require("http");
-import { markup } from "@internal/markup";
-import { AbsoluteFilePath, AbsoluteFilePathMap, RelativePathMap } from "@internal/path";
+import {markup} from "@internal/markup";
+import {
+	AbsoluteFilePath,
+	AbsoluteFilePathMap,
+	RelativePathMap,
+} from "@internal/path";
 import DevelopRequest from "./DevelopRequest";
-import { Resource } from "@internal/resources";
+import {Resource} from "@internal/resources";
 
 type DevelopServerOptions = {
-  bundler: Bundler;
-  resolution: BundlerEntryResolution;
-  reporter: Reporter;
-  request: ServerRequest;
+	bundler: Bundler;
+	resolution: BundlerEntryResolution;
+	reporter: Reporter;
+	request: ServerRequest;
 };
 
 export type DevelopServerListenOptions = {
-  port: number;
-  public: boolean;
+	port: number;
+	public: boolean;
 };
 
 export default class DevelopServer {
-  constructor(opts: DevelopServerOptions) {
-    this.request = opts.request;
-    this.reporter = opts.reporter;
-    this.bundler = opts.bundler;
+	constructor(opts: DevelopServerOptions) {
+		this.request = opts.request;
+		this.reporter = opts.reporter;
+		this.bundler = opts.bundler;
 
-    this.resolution = opts.resolution;
-    this.staticPath = opts.resolution.project.directory.append("static");
-    
-    this.resources = this.request.resources.create("DevelopServer");
-    this.ready = false;
-    this.knownBundleFiles = new RelativePathMap();
-    this.staticETags = new AbsoluteFilePathMap();
-  }
+		this.resolution = opts.resolution;
+		this.staticPath = opts.resolution.project.directory.append("static");
 
-  private request: ServerRequest;
-  private resources: Resource;
+		this.resources = this.request.resources.create("DevelopServer");
+		this.ready = false;
+		this.knownBundleFiles = new RelativePathMap();
+		this.staticETags = new AbsoluteFilePathMap();
+	}
 
-  public reporter: Reporter;
-  public knownBundleFiles: RelativePathMap<BundlerFile>;
-  public bundler: Bundler;
-  public resolution: BundlerEntryResolution;
-  public staticPath: AbsoluteFilePath;
-  public ready: boolean;
-  public staticETags: AbsoluteFilePathMap<{
-    mtime: bigint;
-    etag: string;
-  }>;
+	private request: ServerRequest;
+	private resources: Resource;
 
-  public async init() {
-    const {bundler, reporter, request, resolution} = this;
-    const {diagnosticsEvent, filesEvent, changeEvent, subscription} = bundler.bundleManifestWatch(resolution);
+	public reporter: Reporter;
+	public knownBundleFiles: RelativePathMap<BundlerFile>;
+	public bundler: Bundler;
+	public resolution: BundlerEntryResolution;
+	public staticPath: AbsoluteFilePath;
+	public ready: boolean;
+	public staticETags: AbsoluteFilePathMap<{
+		mtime: bigint;
+		etag: string;
+	}>;
 
-    diagnosticsEvent.subscribe(async (diagnostics) => {
-      reporter.clearScreen();
-      const printer = request.createDiagnosticsPrinter();
-      printer.processor.addDiagnostics(diagnostics);
-      await printer.print();
+	public async init() {
+		const {bundler, reporter, request, resolution} = this;
+		const {diagnosticsEvent, filesEvent, changeEvent, subscription} = bundler.bundleManifestWatch(
+			resolution,
+		);
 
-      // TODO send diagnostics to client rendered as HTML
-    });
+		diagnosticsEvent.subscribe(async (diagnostics) => {
+			reporter.clearScreen();
+			const printer = request.createDiagnosticsPrinter();
+			printer.processor.addDiagnostics(diagnostics);
+			await printer.print();
 
-    filesEvent.subscribe((files) => {
-      for (const [name, def] of files) {
-        if (def === undefined) {
-          this.knownBundleFiles.delete(name);
-        } else {
-          this.knownBundleFiles.set(name, def);
-        }
-      }
+			// TODO send diagnostics to client rendered as HTML
+		});
 
-      // Consider ourselves initialized when we've received our first batch of files
-      this.ready = true;
+		filesEvent.subscribe((files) => {
+			for (const [name, def] of files) {
+				if (def === undefined) {
+					this.knownBundleFiles.delete(name);
+				} else {
+					this.knownBundleFiles.set(name, def);
+				}
+			}
 
-      this.refresh();
-    });
+			// Consider ourselves initialized when we've received our first batch of files
+			this.ready = true;
 
-    // TODO this does not respect `static`
-    changeEvent.subscribe(paths => {
-      if (paths.size === 1) {
-        reporter.info(markup`File change ${Array.from(paths)[0]}`);
-      } else {
-        reporter.info(markup`Multiple file changes`);
-        reporter.list(Array.from(paths));
-      }
-    });
+			this.refresh();
+		});
 
-    this.resources.add(subscription);
-  }
+		// TODO this does not respect `static`
+		changeEvent.subscribe((paths) => {
+			if (paths.size === 1) {
+				reporter.info(markup`File change ${Array.from(paths)[0]}`);
+			} else {
+				reporter.info(markup`Multiple file changes`);
+				reporter.list(Array.from(paths));
+			}
+		});
 
-  private async refresh() {
-    // TODO tell all connected websockets to refresh
-  }
+		this.resources.add(subscription);
+	}
 
-  public async listen(opts: DevelopServerListenOptions): Promise<http.Server> {
-    const {reporter} = this;
+	private async refresh() {
+		// TODO tell all connected websockets to refresh
+	}
 
-    const server = http.createServer((request: http.IncomingMessage, response: http.ServerResponse) => {
-      const devRequest = new DevelopRequest({
-        httpServer: server,
-        request,
-        response,
-        server: this,
-      });
-      devRequest.handle();
-    });
+	public async listen(opts: DevelopServerListenOptions): Promise<http.Server> {
+		const {reporter} = this;
 
-    return new Promise((resolve, reject) => {
-      server.addListener("error", reject);
+		const server = http.createServer((
+			request: http.IncomingMessage,
+			response: http.ServerResponse,
+		) => {
+			const devRequest = new DevelopRequest({
+				httpServer: server,
+				request,
+				response,
+				server: this,
+			});
+			devRequest.handle();
+		});
 
-      const {port} = opts;
-      const address = opts.public ? "0.0.0.0" : "127.0.0.1";
+		return new Promise((resolve, reject) => {
+			server.addListener("error", reject);
 
-      server.listen(port, address, () => {
-        server.removeListener("error", reject);
-        server.addListener("error", this.request.server.fatalErrorHandler.handleBound);
+			const {port} = opts;
+			const address = opts.public ? "0.0.0.0" : "127.0.0.1";
 
-        reporter.success(markup`Ready at <emphasis><hyperlink target="http://localhost:${String(port)}" /></emphasis>`);
-        
-        if (opts.public) {
-          reporter.warn(markup`The <emphasis>public</emphasis> flag has been set which makes the server accessible to others on your network, or possibly the whole internet depending on your network configuration. Express caution when using this flag.`);
-        } else {
-          // NB: Not sure if it's worth pointing out that we're on listening on a loopback interface
-        }
+			server.listen(
+				port,
+				address,
+				() => {
+					server.removeListener("error", reject);
+					server.addListener(
+						"error",
+						this.request.server.fatalErrorHandler.handleBound,
+					);
 
-        resolve(server);
-      });
-    });
-  }
+					reporter.success(
+						markup`Ready at <emphasis><hyperlink target="http://localhost:${String(
+							port,
+						)}" /></emphasis>`,
+					);
 
-  public async close() {
-    await this.resources.release();
-  }
+					if (opts.public) {
+						reporter.warn(
+							markup`The <emphasis>public</emphasis> flag has been set which makes the server accessible to others on your network, or possibly the whole internet depending on your network configuration. Express caution when using this flag.`,
+						);
+					} else {
+						// NB: Not sure if it's worth pointing out that we're on listening on a loopback interface
+					}
+
+					resolve(server);
+				},
+			);
+		});
+	}
+
+	public async close() {
+		await this.resources.release();
+	}
 }

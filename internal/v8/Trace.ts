@@ -9,7 +9,7 @@ import {Profile, TraceEvent} from "./types";
 import {urlToFilename} from "./utils";
 import {createPath} from "@internal/path";
 import {ZeroIndexed} from "@internal/numbers";
-import { errorSourceMaps } from "./error-frames";
+import {errorSourceMaps} from "./error-frames";
 
 export default class Trace {
 	constructor() {

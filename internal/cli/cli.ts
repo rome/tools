@@ -42,7 +42,7 @@ import {satisfiesSemver} from "@internal/codec-semver";
 import {Reporter} from "@internal/cli-reporter";
 import {loadUserConfig} from "@internal/core/common/userConfig";
 import {RSERObject} from "@internal/binary-transport";
-import { safeProcessExit } from "@internal/resources";
+import {safeProcessExit} from "@internal/resources";
 
 type CLIFlags = {
 	logs: undefined | ClientLogsLevel;
@@ -307,14 +307,18 @@ export default async function cli() {
 						description: markup`Cap the amount of diagnostics displayed`,
 					},
 				).asNumber(DEFAULT_CLIENT_REQUEST_FLAGS.maxDiagnostics),
-				// DiagnosticsPrinterFlags["verboseDiagnostics"] can be a boolean or some string constants
-				// But we only want to allow booleans in the CLI
 				verboseDiagnostics: c.get(
 					"verboseDiagnostics",
 					{
-						description: markup`Display hidden and truncated diagnostic information`,
+						description: markup`Display additional hidden diagnostic information`,
 					},
 				).asBoolean(false),
+				truncateDiagnostics: c.get(
+					"truncateDiagnostics",
+					{
+						description: markup`Display truncated diagnostic information`,
+					},
+				).asBoolean(true),
 				showAllDiagnostics: c.get(
 					"showAllDiagnostics",
 					{
@@ -575,7 +579,7 @@ export default async function cli() {
 		// We want it in rage mode though for debugging
 		noData: !cliFlags.rage,
 	});
-	
+
 	if (cliFlags.temporaryDaemon) {
 		await client.shutdownServer();
 	} else {
