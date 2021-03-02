@@ -14,10 +14,10 @@ import {
 } from "@internal/numbers";
 import {Reporter} from "@internal/cli-reporter";
 import {
+	ActiveElement,
 	ReporterProgressOptions,
 	ReporterStream,
 	ReporterStreamAttached,
-	ReporterStreamLineSnapshot,
 } from "./types";
 import ProgressBase from "./ProgressBase";
 import {AnyMarkup, markup} from "@internal/markup";
@@ -38,16 +38,18 @@ const BOUNCER_WIDTH = 20;
 export default class Progress extends ProgressBase {
 	constructor(
 		reporter: Reporter,
+		id: number,
 		opts: ReporterProgressOptions = {},
 		onEnd?: VoidCallback,
 	) {
 		super(reporter, opts);
 
-		this.firstRenderLineSnapshot = undefined;
 		this.startTime = new DurationMeasurer();
 		this.lastRenderTime = undefined;
 		this.lastNoCursorRenderTime = undefined;
 		this.lastRenderCurrent = 0;
+		this.activeElement = streamUtils.createActiveElementToken();
+		this.id = id;
 
 		this.resources = createResourceFromCallback(
 			"ReporterProgress",
@@ -68,12 +70,13 @@ export default class Progress extends ProgressBase {
 		this.initName(opts.name);
 	}
 
+	public id: number;
 	public resources: Resource;
 
+	private activeElement: ActiveElement;
 	private closed: boolean;
 	private delay: number;
 	private renderTimer: undefined | NodeJS.Timeout;
-	private firstRenderLineSnapshot: undefined | ReporterStreamLineSnapshot;
 
 	private streamToBouncerStart: Map<ReporterStream, number>;
 	private bouncerTimer: undefined | NodeJS.Timeout;
@@ -222,12 +225,6 @@ export default class Progress extends ProgressBase {
 		this.closed = true;
 		this.endBouncer();
 		this.endRender();
-
-		const {firstRenderLineSnapshot} = this;
-		if (firstRenderLineSnapshot !== undefined) {
-			this.reporter.removeLine(firstRenderLineSnapshot);
-			firstRenderLineSnapshot.close();
-		}
 
 		if (this.onEnd !== undefined) {
 			this.onEnd();
@@ -467,11 +464,7 @@ export default class Progress extends ProgressBase {
 
 		this.lastRenderCurrent = this.current;
 		this.lastRenderTime = now;
-
-		if (this.firstRenderLineSnapshot === undefined) {
-			this.firstRenderLineSnapshot = this.reporter.getLineSnapshot(false);
-		}
-
+		
 		if (!this.reporter.hasStreams()) {
 			return;
 		}
@@ -492,10 +485,10 @@ export default class Progress extends ProgressBase {
 					stream,
 					this.buildBar(stream, suffix, stream.features.columns),
 					{
-						replaceLineSnapshot: this.firstRenderLineSnapshot,
-						preferNoNewline: true,
 						stderr: true,
+						noNewline: true,
 					},
+					this.activeElement,
 				);
 			} else {
 				if (isNoCursorDue) {

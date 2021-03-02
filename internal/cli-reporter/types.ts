@@ -57,16 +57,10 @@ export interface ReporterListOptions {
 	start?: number;
 }
 
-export type ReporterStreamLineSnapshot = {
-	close: VoidCallback;
-};
-
 export type ReporterStreamState = {
-	lineSnapshots: Map<ReporterStreamLineSnapshot, ZeroIndexed>;
 	currentLine: ZeroIndexed;
 	buffer: string[];
 	leadingNewline: boolean;
-	nextLineInsertLeadingNewline: boolean;
 };
 
 export interface ReporterNamespace {
@@ -98,6 +92,7 @@ export interface ReporterStream {
 }
 
 export interface ReporterStreamAttached extends ReporterStream {
+	activeElements: Set<ActiveElement>;
 	state: ReporterStreamState;
 	updateFeatures: (features: TerminalFeatures) => Promise<void>;
 	featuresUpdated: Event<TerminalFeatures, void>;
@@ -109,6 +104,10 @@ export type ReporterDerivedStreams = {
 	format: ReporterStream["format"];
 	features: TerminalFeatures;
 	featuresUpdated: Event<TerminalFeatures, void>;
+};
+
+export type ActiveElement = {
+	rendered: Set<ReporterStreamAttached>;
 };
 
 export type ReporterProgressOptions = {

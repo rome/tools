@@ -38,7 +38,6 @@ import {
 	ReporterStepCallback,
 	ReporterStream,
 	ReporterStreamAttached,
-	ReporterStreamLineSnapshot,
 	ReporterStreamState,
 	SelectArguments,
 	SelectOptions,
@@ -83,11 +82,9 @@ export type ReporterOptions = {
 };
 
 export type LogOptions = {
-	replaceLineSnapshot?: ReporterStreamLineSnapshot;
 	streams?: ReporterStreamAttached[];
 	stderr?: boolean;
 	noNewline?: boolean;
-	preferNoNewline?: boolean;
 };
 
 export type LogCategoryUserOptions = Pick<LogOptions, "stderr" | "streams">;
@@ -186,24 +183,6 @@ export default class Reporter implements ReporterNamespace {
 				streams: Array.from(streams),
 			},
 		);
-	}
-
-	public getLineSnapshot(populate: boolean = true): ReporterStreamLineSnapshot {
-		const snapshot: ReporterStreamLineSnapshot = {
-			close: () => {
-				for (const stream of this.getStreams()) {
-					stream.state.lineSnapshots.delete(snapshot);
-				}
-			},
-		};
-
-		if (populate) {
-			for (const stream of this.getStreams()) {
-				stream.state.lineSnapshots.set(snapshot, stream.state.currentLine);
-			}
-		}
-
-		return snapshot;
 	}
 
 	public attachStdoutStreams(
@@ -353,6 +332,7 @@ export default class Reporter implements ReporterNamespace {
 	): ReporterStreamAttached {
 		const stream: ReporterStreamAttached = {
 			...unattached,
+			activeElements: new Set(),
 			state: mergeObjects(streamUtils.createStreamState(), state),
 			updateFeatures: async (newFeatures) => {
 				stream.features = newFeatures;
@@ -652,16 +632,7 @@ export default class Reporter implements ReporterNamespace {
 		this.br(opts);
 	}
 
-	public removeLine(
-		snapshot: ReporterStreamLineSnapshot,
-		opts?: LogCategoryUserOptions,
-	) {
-		for (const stream of this.getStreams(opts)) {
-			streamUtils.removeLine(stream, snapshot, opts?.stderr);
-		}
-	}
-
-	public async steps(callbacks: ReporterStepCallback[], clear: boolean = true) {
+	public async steps(callbacks: ReporterStepCallback[]) {
 		let total = 0;
 		let current = 1;
 
@@ -674,19 +645,9 @@ export default class Reporter implements ReporterNamespace {
 		}
 
 		for (const {message, callback} of filteredCallbacks) {
-			const lineSnapshot = this.getLineSnapshot();
-
-			try {
-				this.step(current, total, message);
-
-				await callback();
-
-				if (clear) {
-					this.removeLine(lineSnapshot);
-				}
-			} finally {
-				lineSnapshot.close();
-			}
+			this.step(current, total, message);
+			await callback();
+			current++;
 		}
 	}
 
@@ -796,7 +757,6 @@ export default class Reporter implements ReporterNamespace {
 					stderr: opts.stderr || this.shouldRedirectOutToErr,
 					noNewline: i === lines.length - 1 ? opts.noNewline : false,
 				},
-				i,
 			);
 		}
 	}
@@ -1002,6 +962,7 @@ export default class Reporter implements ReporterNamespace {
 	): ReporterProgress {
 		const bar = new Progress(
 			this,
+			this.activeElements.size,
 			opts,
 			() => {
 				this.activeElements.delete(bar);
