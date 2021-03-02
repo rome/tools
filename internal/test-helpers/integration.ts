@@ -51,7 +51,7 @@ import child = require("child_process");
 import util = require("util");
 import {Reporter} from "@internal/cli-reporter";
 import {BridgeClient} from "@internal/events";
-import { decodeUTF8 } from "@internal/binary";
+import {decodeUTF8} from "@internal/binary";
 
 const exec = util.promisify(child.exec);
 

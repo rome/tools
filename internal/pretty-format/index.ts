@@ -101,7 +101,10 @@ export function prettyFormatEager(
 }
 
 // By default we return lazy markup to avoid prettifying expensive values that never end up being printed
-export default function prettyFormat(obj: unknown, opts: FormatPartialOptions = {}): LazyMarkupFactory {
+export default function prettyFormat(
+	obj: unknown,
+	opts: FormatPartialOptions = {},
+): LazyMarkupFactory {
 	return () => prettyFormatEager(obj, opts);
 }
 
@@ -495,7 +498,10 @@ type Objectish = {
 	[Symbol.toStringTag]?: unknown;
 };
 
-function formatObjectish(val: null | Objectish, opts: FormatOptions): StaticMarkup {
+function formatObjectish(
+	val: null | Objectish,
+	opts: FormatOptions,
+): StaticMarkup {
 	if (val === null) {
 		return markupTag("emphasis", formatNull());
 	}

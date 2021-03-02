@@ -256,7 +256,9 @@ export default class WorkerManager {
 		worker.ready = true;
 	}
 
-	private async spawnProcessorWorker(opts: Omit<SpawnWorkerOptions, "type" | "id"> = {}): Promise<WorkerContainer> {
+	private async spawnProcessorWorker(
+		opts: Omit<SpawnWorkerOptions, "type" | "id"> = {},
+	): Promise<WorkerContainer> {
 		const id = this.getNextWorkerId();
 		const lock = this.locker.getNewLock(id);
 		try {
@@ -331,13 +333,19 @@ export default class WorkerManager {
 
 		const logger = this.logger.namespace(markup`[${displayName}]`);
 
-		thread.stdout.on("data", (chunk) => {
-			logger.info(`stdout: ${String(chunk)}`);
-		});
+		thread.stdout.on(
+			"data",
+			(chunk) => {
+				logger.info(`stdout: ${String(chunk)}`);
+			},
+		);
 
-		thread.stderr.on("data", (chunk) => {
-			logger.error(`stderr: ${String(chunk)}`);
-		});
+		thread.stderr.on(
+			"data",
+			(chunk) => {
+				logger.error(`stderr: ${String(chunk)}`);
+			},
+		);
 
 		const bridge = WorkerBridge.Server.createFromWorkerThread(thread);
 		this.server.resources.add(bridge);

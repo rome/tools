@@ -136,7 +136,7 @@ export default class Client {
 			opts.stderr,
 			this.options.terminalFeatures,
 		);
-		
+
 		this.fatalErrorHandler = new FatalErrorHandler({
 			source: markup`cli`,
 			exit: this.options.dedicated,

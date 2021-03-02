@@ -25,9 +25,7 @@ import {
 	TestOptions,
 } from "@internal/virtual-rome/test";
 import {TestServerRunnerOptions} from "../../server/testing/types";
-import SnapshotManager, {
-	Snapshot, SnapshotEntry,
-} from "./SnapshotManager";
+import SnapshotManager, {Snapshot, SnapshotEntry} from "./SnapshotManager";
 import TestAPI, {OnTimeout} from "./TestAPI";
 import executeMain from "../../common/utils/executeMain";
 import {
@@ -177,15 +175,13 @@ export default class TestWorkerFile {
 			const struct = getErrorStructure(err);
 			const frames = cleanFrames(struct.frames.slice(2));
 
-			const adviceFactory = (): DiagnosticAdvice => {
+			function adviceFactory(): DiagnosticAdvice {
 				let text;
 				if (args.length === 1 && typeof args[0] === "string") {
 					text = markup`${args[0]}`;
 				} else {
 					text = joinMarkup(
-						args.map((arg) =>
-							serializeLazyMarkup(prettyFormat(arg))
-						),
+						args.map((arg) => serializeLazyMarkup(prettyFormat(arg))),
 						markup` `,
 					);
 				}
@@ -202,7 +198,7 @@ export default class TestWorkerFile {
 					},
 					...getErrorStackAdvice({...struct, frames}),
 				];
-			};
+			}
 
 			this.consoleAdvice.push([adviceFactory, Date.now()]);
 		};
@@ -270,7 +266,7 @@ export default class TestWorkerFile {
 			process: {
 				// Suppress process events
 				on() {},
-			}
+			},
 		};
 	}
 
@@ -445,7 +441,10 @@ export default class TestWorkerFile {
 		});
 	}
 
-	public emitSnapshotEntry(snapshotPath: AbsoluteFilePath, entry: SnapshotEntry): void {
+	public emitSnapshotEntry(
+		snapshotPath: AbsoluteFilePath,
+		entry: SnapshotEntry,
+	): void {
 		this.bridge.events.testSnapshotEntry.send({
 			testPath: this.path,
 			snapshotPath,

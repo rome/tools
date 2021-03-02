@@ -41,7 +41,9 @@ export default class TestWorker {
 		});
 
 		bridge.events.testGetRawSnapshot.subscribe(async ({path, snapshotPath}) => {
-			return this.runners.assert(path).snapshotManager.getRawSnapshot(snapshotPath);
+			return this.runners.assert(path).snapshotManager.getRawSnapshot(
+				snapshotPath,
+			);
 		});
 
 		bridge.events.testRun.subscribe(async (opts) => {

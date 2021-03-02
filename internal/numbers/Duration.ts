@@ -206,13 +206,9 @@ export default class Duration {
 		return this.value;
 	}
 
-	public format(
-		{longform = false}: FormatOptions = {
-
-		},
-	): string {
+	public format({longform = false}: FormatOptions = {}): string {
 		const ms = this.toMilliseconds();
-		if (ms === 0 || ms < 1000) {
+		if (ms === 0 || ms < 1_000) {
 			return formatUnit("milliseconds", 0, longform);
 		}
 
@@ -258,16 +254,21 @@ export default class Duration {
 	}
 }
 
-
 type FormatOptions = {
 	longform?: boolean;
 };
 
-type FormatUnit = "milliseconds" | "seconds" | "minutes" | "hours" | "days" | "weeks" | "months" | "years";
+type FormatUnit =
+	| "milliseconds"
+	| "seconds"
+	| "minutes"
+	| "hours"
+	| "days"
+	| "weeks"
+	| "months"
+	| "years";
 
-const formatUnitSuffixes: {
-	[Key in FormatUnit]: [string, string]
-} = {
+const formatUnitSuffixes: {[Key in FormatUnit]: [string, string]} = {
 	milliseconds: ["ms", "millisecond"],
 	seconds: ["s", "second"],
 	minutes: ["m", "minute"],
@@ -280,20 +281,16 @@ const formatUnitSuffixes: {
 };
 
 const formatUnitOrder: [FormatUnit, number][] = [
-	["years", 31557600000],
-	["months", 2629800000],
-	["weeks", 604800000],
-	["days", 86400000],
-	["hours", 3600000],
-	["minutes", 60000],
+	["years", 31_557_600_000],
+	["months", 2_629_800_000],
+	["weeks", 604_800_000],
+	["days", 86_400_000],
+	["hours", 3_600_000],
+	["minutes", 60_000],
 	["seconds", 1_000],
 ];
 
-function formatUnit(
-	unit: FormatUnit,
-	num: number,
-	longform: boolean,
-): string {
+function formatUnit(unit: FormatUnit, num: number, longform: boolean): string {
 	const fixed = Math.round(num * 100) / 100;
 	const str = Number.isInteger(fixed) ? String(fixed) : fixed.toFixed(2);
 	const suffixes = formatUnitSuffixes[unit];

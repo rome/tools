@@ -37,7 +37,7 @@ import {
 } from "@internal/errors";
 import {AnyMarkups, joinMarkup, markup} from "@internal/markup";
 import prettyFormat from "@internal/pretty-format";
-import {RSERObject, RSERStream, RSERValue} from "@internal/binary-transport";
+import {RSERObject, RSERStream} from "@internal/binary-transport";
 import {ExtendedMap} from "@internal/collections";
 import {
 	DIAGNOSTIC_CATEGORIES,
@@ -57,7 +57,7 @@ type ErrorSerial<Data extends RSERObject> = {
 };
 
 // rome-ignore lint/ts/noExplicitAny: future cleanup
-export type AnyBridgeEvent = BridgeEvent<any, any>;
+export type AnyBridgeEvent = BridgeEvent<string, any, any>;
 
 export default class Bridge<
 	ListenEvents extends BridgeEventsDeclaration,
@@ -107,7 +107,7 @@ export default class Bridge<
 			},
 			{
 				optional: opts.optionalResource,
-			}
+			},
 		);
 
 		// A Set of event names that are being listened to on the other end
@@ -125,24 +125,15 @@ export default class Bridge<
 		this.eventsIdCounter = 0;
 
 		for (const name in callEvents) {
-			const event = new BridgeEventCallOnly(name, this);
-			// @ts-ignore
-			this.events[name] = event;
-			this.registerEvent(event);
+			this.registerEvent(new BridgeEventCallOnly(name, this));
 		}
 
 		for (const name in listenEvents) {
-			const event = new BridgeEventListenOnly(name, this);
-			// @ts-ignore
-			this.events[name] = event;
-			this.registerEvent(event);
+			this.registerEvent(new BridgeEventListenOnly(name, this));
 		}
 
 		for (const name in SharedEvents) {
-			const event = new BridgeEventBidirectional(name, this);
-			// @ts-ignore
-			this.events[name] = event;
-			this.registerEvent(event);
+			this.registerEvent(new BridgeEventBidirectional(name, this));
 		}
 
 		if (def.init !== undefined) {
@@ -191,17 +182,6 @@ export default class Bridge<
 	public listeners: Set<number>;
 	private lastSentSubscriptionChange: Map<number, boolean>;
 	private customErrorTransports: Map<string, ErrorSerial<RSERObject>>;
-
-	private createInternalBiEvent<Param extends RSERValue, Ret extends RSERValue>(
-		name: string,
-	): BridgeEventBidirectional<Param, Ret> {
-		const event: BridgeEventBidirectional<Param, Ret> = new BridgeEventBidirectional(
-			`@${name}`,
-			this,
-		);
-		this.registerEvent(event);
-		return event;
-	}
 
 	private getPendingRequestsSummary(): AnyMarkups {
 		const summaries: AnyMarkups = [];
@@ -424,20 +404,21 @@ export default class Bridge<
 		return id;
 	}
 
-	public registerEvent<Param extends RSERValue, Ret extends RSERValue>(
-		event: BridgeEvent<Param, Ret>,
-	): BridgeEvent<Param, Ret> {
-		if (this.nameToEventMap.has(event.name)) {
+	public registerEvent(event: AnyBridgeEvent): void {
+		const {name, id} = event;
+
+		if (this.nameToEventMap.has(name)) {
 			throw new Error(`Duplicate event name "${event.name}"`);
 		}
-		this.nameToEventMap.set(event.name, event);
+		this.nameToEventMap.set(name, event);
 
-		if (this.idToEventMap.has(event.id)) {
-			throw new Error(`Duplicate event id "${event.id}"`);
+		if (this.idToEventMap.has(id)) {
+			throw new Error(`Duplicate event id "${id}"`);
 		}
-		this.idToEventMap.set(event.id, event);
+		this.idToEventMap.set(id, event);
 
-		return event;
+		// @ts-ignore: Necessary evil XqjWidsMhvM
+		this.events[name] = event;
 	}
 
 	//# Connection death
@@ -551,7 +532,9 @@ export default class Bridge<
 
 	public serializeCustomError(errRaw: unknown): BridgeErrorDetails {
 		// Just in case something that wasn't an Error was thrown
-		const err = util.types.isNativeError(errRaw) ? errRaw : new Error(String(errRaw));
+		const err = util.types.isNativeError(errRaw)
+			? errRaw
+			: new Error(String(errRaw));
 
 		// If we have no custom error transport then we'll just rely on the binary codec transport
 		const transport = this.customErrorTransports.get(err.name);

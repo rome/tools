@@ -29,8 +29,8 @@ type CallOptions = {
 	priority?: boolean;
 };
 
-export class BridgeEvent<Param extends RSERValue, Ret extends RSERValue> {
-	constructor(name: string, bridge: AnyBridge) {
+export class BridgeEvent<Name extends string, Param extends RSERValue, Ret extends RSERValue> {
+	constructor(name: Name, bridge: AnyBridge) {
 		this.id = ++bridge.eventsIdCounter;
 		this.bridge = bridge;
 		this.name = name;
@@ -54,7 +54,7 @@ export class BridgeEvent<Param extends RSERValue, Ret extends RSERValue> {
 		);
 	}
 
-	public name: string;
+	public name: Name;
 	public id: number;
 	public backingEvent: Event<Param, Ret>;
 	public bridge: AnyBridge;
@@ -245,8 +245,8 @@ export class BridgeEvent<Param extends RSERValue, Ret extends RSERValue> {
 	}
 }
 
-export class BridgeEventCallOnly<Param extends RSERValue, Ret extends RSERValue>
-	extends BridgeEvent<Param, Ret> {
+export class BridgeEventCallOnly<Name extends string, Param extends RSERValue, Ret extends RSERValue>
+	extends BridgeEvent<Name, Param, Ret> {
 	public send(param: Param): void {
 		return this._send(param);
 	}
@@ -261,9 +261,10 @@ export class BridgeEventCallOnly<Param extends RSERValue, Ret extends RSERValue>
 }
 
 export class BridgeEventListenOnly<
+	Name extends string,
 	Param extends RSERValue,
 	Ret extends RSERValue
-> extends BridgeEvent<Param, Ret> {
+> extends BridgeEvent<Name, Param, Ret> {
 	public subscribe(callback: EventCallback<Param, Ret>): Resource {
 		return this._subscribe(callback);
 	}
@@ -274,9 +275,10 @@ export class BridgeEventListenOnly<
 }
 
 export class BridgeEventBidirectional<
+	Name extends string,
 	Param extends RSERValue,
 	Ret extends RSERValue
-> extends BridgeEvent<Param, Ret> {
+> extends BridgeEvent<Name, Param, Ret> {
 	public subscribe(callback: EventCallback<Param, Ret>): Resource {
 		return this._subscribe(callback);
 	}

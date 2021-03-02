@@ -92,8 +92,13 @@ export default class TestServerWorker {
 			});
 		}
 
-		bridge.events.testDiskSnapshotDiscovered.subscribe(({testPath, snapshotPath}) => {
-			this.runner.files.assert(testPath).discoveredDiskSnapshot(snapshotPath, this);
+		bridge.events.testDiskSnapshotDiscovered.subscribe((
+			{testPath, snapshotPath},
+		) => {
+			this.runner.files.assert(testPath).discoveredDiskSnapshot(
+				snapshotPath,
+				this,
+			);
 		});
 
 		bridge.events.testSnapshotEntry.subscribe(({testPath, snapshotPath, entry}) => {
@@ -337,16 +342,13 @@ export default class TestServerWorker {
 				});
 				if (file.markCompletedTest()) {
 					// Start this async
-					await Promise.all([
-						file.teardown(),
-						this.runTest(),
-					]);
+					await Promise.all([file.teardown(), this.runTest()]);
 					return;
 				} else {
 					return this.runTest();
 				}
 			}
-			
+
 			// Exhausted all tests in this file, no longer consider it for future tests
 			this.preparedPaths.delete(path);
 		}

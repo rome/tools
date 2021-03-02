@@ -18,7 +18,10 @@ import {
 } from "@internal/diagnostics";
 import {BridgeErrorDetails, createBridge} from "@internal/events";
 import {FileReference} from "../types/files";
-import {InlineSnapshotUpdates, SnapshotEntry} from "@internal/core/worker/test/SnapshotManager";
+import {
+	InlineSnapshotUpdates,
+	SnapshotEntry,
+} from "@internal/core/worker/test/SnapshotManager";
 import {
 	AbsoluteFilePath,
 	AbsoluteFilePathMap,
@@ -47,7 +50,7 @@ import {
 	WorkerUpdateInlineSnapshotResult,
 } from "@internal/core";
 import {WorkerPartialManifest} from "@internal/core/worker/types";
-import { TestConsoleAdvice } from "@internal/core/worker/test/TestWorkerFile";
+import {TestConsoleAdvice} from "@internal/core/worker/test/TestWorkerFile";
 
 export default createBridge({
 	debugName: "Worker",
@@ -58,7 +61,7 @@ export default createBridge({
 		log: createBridgeEventDeclaration<Omit<ServerBridgeLog, "origin">, void>(),
 
 		fatalError: createBridgeEventDeclaration<BridgeErrorDetails, void>(),
-		
+
 		testInlineSnapshots: createBridgeEventDeclaration<
 			{
 				testPath: AbsoluteFilePath;
@@ -66,7 +69,7 @@ export default createBridge({
 			},
 			void
 		>(),
-		
+
 		testSnapshotEntry: createBridgeEventDeclaration<
 			{
 				testPath: AbsoluteFilePath;
@@ -254,9 +257,18 @@ export default createBridge({
 
 		testRun: createBridgeEventDeclaration<TestWorkerRunTestOptions, void>(),
 
-		testGetConsoleAdvice: createBridgeEventDeclaration<AbsoluteFilePath, TestConsoleAdvice>(),
+		testGetConsoleAdvice: createBridgeEventDeclaration<
+			AbsoluteFilePath,
+			TestConsoleAdvice
+		>(),
 
-		testGetRawSnapshot: createBridgeEventDeclaration<{path: AbsoluteFilePath; snapshotPath: AbsoluteFilePath}, string>(),
+		testGetRawSnapshot: createBridgeEventDeclaration<
+			{
+				path: AbsoluteFilePath;
+				snapshotPath: AbsoluteFilePath;
+			},
+			string
+		>(),
 	},
 
 	init(bridge) {

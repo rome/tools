@@ -25,10 +25,7 @@ test(
 		);
 
 		const longOpts = {longform: true};
-		t.inlineSnapshot(
-			Duration.fromMilliseconds(1).format(longOpts),
-			"0 seconds",
-		);
+		t.inlineSnapshot(Duration.fromMilliseconds(1).format(longOpts), "0 seconds");
 		t.inlineSnapshot(
 			Duration.fromMilliseconds(10).format(longOpts),
 			"0.01 seconds",

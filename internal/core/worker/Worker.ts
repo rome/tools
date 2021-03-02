@@ -23,7 +23,11 @@ import {ConstJSSourceType, JSRoot} from "@internal/ast";
 import Logger from "../common/utils/Logger";
 import {Profiler} from "@internal/v8";
 import {UserConfig} from "@internal/core";
-import {deriveDiagnosticFromError, DiagnosticsError, DIAGNOSTIC_CATEGORIES} from "@internal/diagnostics";
+import {
+	DIAGNOSTIC_CATEGORIES,
+	DiagnosticsError,
+	deriveDiagnosticFromError,
+} from "@internal/diagnostics";
 import {
 	AbsoluteFilePath,
 	AbsoluteFilePathMap,
@@ -48,10 +52,7 @@ import FatalErrorHandler from "../common/FatalErrorHandler";
 import {RSERObject} from "@internal/binary-transport";
 import {ReporterConditionalStream} from "@internal/cli-reporter";
 import {DEFAULT_TERMINAL_FEATURES} from "@internal/cli-environment";
-import {
-	Resource,
-	createResourceRoot,
-} from "@internal/resources";
+import {Resource, createResourceRoot} from "@internal/resources";
 
 import TestWorker from "./test/TestWorker";
 import inspector = require("inspector");
@@ -107,7 +108,7 @@ export default class Worker {
 								},
 								tags: {
 									internal: false,
-								}
+								},
 							},
 						),
 					});
@@ -134,7 +135,7 @@ export default class Worker {
 		if (opts.dedicated) {
 			this.resources.add(this.fatalErrorHandler.setupGlobalHandlers());
 
-			this.bridge.endEvent.subscribe(err => {
+			this.bridge.endEvent.subscribe((err) => {
 				this.fatalErrorHandler.handle(err);
 			});
 		}

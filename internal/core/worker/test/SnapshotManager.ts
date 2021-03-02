@@ -393,9 +393,6 @@ export default class SnapshotManager {
 		};
 		this.runner.emitSnapshotEntry(snapshotPath, entry);
 
-		snapshot.entries.set(
-			buildEntriesKey(testName, entryName),
-			entry,
-		);
+		snapshot.entries.set(buildEntriesKey(testName, entryName), entry);
 	}
 }

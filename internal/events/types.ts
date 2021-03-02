@@ -49,20 +49,23 @@ export type BridgeEventsDeclarationToInstances<
 	CallEvents extends BridgeEventsDeclaration,
 	SharedEvents extends BridgeEventsDeclaration
 > = {
-	[Key in keyof ListenEvents]: BridgeEventListenOnly<
+	[Key in keyof ListenEvents]: Key extends string ? BridgeEventListenOnly<
+		Key,
 		ExtractEventTypes<ListenEvents[Key]>[0],
 		ExtractEventTypes<ListenEvents[Key]>[1]
-	>
+	> : never
 } & {
-	[Key in keyof CallEvents]: BridgeEventCallOnly<
+	[Key in keyof CallEvents]: Key extends string ? BridgeEventCallOnly<
+		Key,
 		ExtractEventTypes<CallEvents[Key]>[0],
 		ExtractEventTypes<CallEvents[Key]>[1]
-	>
+	> : never
 } & {
-	[Key in keyof SharedEvents]: BridgeEventBidirectional<
+	[Key in keyof SharedEvents]: Key extends string ? BridgeEventBidirectional<
+		Key,
 		ExtractEventTypes<SharedEvents[Key]>[0],
 		ExtractEventTypes<SharedEvents[Key]>[1]
-	>
+	> : never
 };
 
 export type BridgeClient<Factories> = Factories extends BridgeFactories<

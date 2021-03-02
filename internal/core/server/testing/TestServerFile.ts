@@ -10,7 +10,11 @@ import SnapshotManager, {
 } from "@internal/core/worker/test/SnapshotManager";
 import {BundleResult, FileReference, ServerRequest} from "@internal/core";
 import TestServer from "@internal/core/server/testing/TestServer";
-import {DiagnosticLocation, descriptions, DiagnosticAdvice} from "@internal/diagnostics";
+import {
+	DiagnosticAdvice,
+	DiagnosticLocation,
+	descriptions,
+} from "@internal/diagnostics";
 import {pretty} from "@internal/pretty-format";
 import TestServerWorker from "./TestServerWorker";
 
@@ -96,7 +100,10 @@ export default class TestServerFile {
 		this.pendingTests.clear();
 	}
 
-	public discoveredDiskSnapshot(snapshotPath: AbsoluteFilePath, worker: TestServerWorker) {
+	public discoveredDiskSnapshot(
+		snapshotPath: AbsoluteFilePath,
+		worker: TestServerWorker,
+	) {
 		if (!this.snapshots.has(snapshotPath)) {
 			this.snapshots.set(snapshotPath, []);
 		}
@@ -113,10 +120,7 @@ export default class TestServerFile {
 	}
 
 	public addInlineSnapshotUpdates(updates: InlineSnapshotUpdates) {
-		this.inlineSnapshotUpdates = [
-			...this.inlineSnapshotUpdates,
-			...updates,
-		];
+		this.inlineSnapshotUpdates = [...this.inlineSnapshotUpdates, ...updates];
 	}
 
 	private async getRawSnapshot(snapshotPath: AbsoluteFilePath): Promise<string> {
@@ -132,7 +136,7 @@ export default class TestServerFile {
 		if (snapshots.size === 0) {
 			return;
 		}
-		
+
 		// Could be hiding tests that use snapshots
 		if (runner.hasFocusedTests()) {
 			return;
@@ -156,12 +160,12 @@ export default class TestServerFile {
 				location: {
 					path,
 				},
-			}
+			};
 
 			if (runner.options.freezeSnapshots) {
-				await this.writeFrozenSnapshot(opts);	
+				await this.writeFrozenSnapshot(opts);
 			} else {
-				await this.writeSnapshot(opts);	
+				await this.writeSnapshot(opts);
 			}
 		}
 
@@ -172,9 +176,11 @@ export default class TestServerFile {
 		await this.request.flushFiles();
 	}
 
-	private async writeSnapshot({path, used, existsOnDisk, formatted}: SnapshotWriteOptions): Promise<void> {
+	private async writeSnapshot(
+		{path, used, existsOnDisk, formatted}: SnapshotWriteOptions,
+	): Promise<void> {
 		const {runner, request} = this;
-		
+
 		// Don't delete or write a snapshot if there are test failures as those failures may be hiding snapshot usages
 		if (this.hasDiagnostics && !runner.options.updateSnapshots) {
 			return;
@@ -212,7 +218,9 @@ export default class TestServerFile {
 		}
 	}
 
-	private async writeFrozenSnapshot({path, used, existsOnDisk, location, formatted}: SnapshotWriteOptions): Promise<void> {
+	private async writeFrozenSnapshot(
+		{path, used, existsOnDisk, location, formatted}: SnapshotWriteOptions,
+	): Promise<void> {
 		const {processor} = this.runner.printer;
 
 		if (used && existsOnDisk) {
@@ -231,7 +239,7 @@ export default class TestServerFile {
 				location,
 			});
 		}
-		
+
 		if (!used && existsOnDisk) {
 			processor.addDiagnostic({
 				description: descriptions.SNAPSHOTS.REDUNDANT,
@@ -292,13 +300,20 @@ export default class TestServerFile {
 		if (!this.hasDiagnostics) {
 			return;
 		}
-		
+
 		// Fetch console advice from all workers who ran a test
 		let allConsoleAdvice: TestConsoleAdvice = [];
-		await Promise.all(Array.from(this.workers, async (worker) => {
-			const consoleAdvice = await worker.bridge.events.testGetConsoleAdvice.call(this.path);
-			allConsoleAdvice = allConsoleAdvice.concat(consoleAdvice);
-		}));
+		await Promise.all(
+			Array.from(
+				this.workers,
+				async (worker) => {
+					const consoleAdvice = await worker.bridge.events.testGetConsoleAdvice.call(
+						this.path,
+					);
+					allConsoleAdvice = allConsoleAdvice.concat(consoleAdvice);
+				},
+			),
+		);
 
 		// Regain chronological order
 		allConsoleAdvice = allConsoleAdvice.sort((a, b) => a[1] - b[1]);

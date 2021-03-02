@@ -271,7 +271,7 @@ export default class TestServer {
 				},
 			},
 		]);
-		
+
 		this.throwPrinter();
 	}
 

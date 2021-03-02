@@ -809,7 +809,11 @@ export default class Grid {
 		}
 	}
 
-	private drawULJoinSameLine(joinSameLine: string, items: MarkupParsedTag[], ancestry: Ancestry) {
+	private drawULJoinSameLine(
+		joinSameLine: string,
+		items: MarkupParsedTag[],
+		ancestry: Ancestry,
+	) {
 		// If we have no grid size then we default to 500. We do this to prevent drawing super long lines when the intent
 		// of this attribute is to reduce excessive newlines.
 		const viewportWidth = this.viewportWidth ?? new OneIndexed(150);

@@ -60,7 +60,7 @@ export class BridgeFactory<
 
 	public createFromWebSocketInterface(
 		inf: WebSocketInterface,
-		opts?: BridgeOptions
+		opts?: BridgeOptions,
 	): Bridge<ListenEvents, CallEvents, SharedEvents> {
 		const bridge = this.create(opts);
 		const {socket} = inf;
@@ -97,7 +97,7 @@ export class BridgeFactory<
 
 	public createFromBrowserWebSocket(
 		socket: WebSocket,
-		opts?: BridgeOptions
+		opts?: BridgeOptions,
 	): Bridge<ListenEvents, CallEvents, SharedEvents> {
 		const bridge = this.create(opts);
 		const rser = bridge.attachRSER();
@@ -131,7 +131,7 @@ export class BridgeFactory<
 
 	public createFromSocket(
 		socket: Socket,
-		opts?: BridgeOptions
+		opts?: BridgeOptions,
 	): Bridge<ListenEvents, CallEvents, SharedEvents> {
 		const bridge = this.create(opts);
 		const rser = bridge.attachRSER();
@@ -225,11 +225,9 @@ export class BridgeFactory<
 		return bridge;
 	}
 
-	public createFromWorkerThreadParentPort(opts?: BridgeOptions): Bridge<
-		ListenEvents,
-		CallEvents,
-		SharedEvents
-	> {
+	public createFromWorkerThreadParentPort(
+		opts?: BridgeOptions,
+	): Bridge<ListenEvents, CallEvents, SharedEvents> {
 		const {parentPort} = workerThreads;
 		if (parentPort == null) {
 			throw new Error("No worker_threads parentPort found");
@@ -289,7 +287,9 @@ export class BridgeFactories<
 	public Server: BridgeFactory<ServerEvents, ClientEvents, SharedEvents>;
 	public Client: BridgeFactory<ClientEvents, ServerEvents, SharedEvents>;
 
-	public createFromLocal(opts?: BridgeOptions): {
+	public createFromLocal(
+		opts?: BridgeOptions,
+	): {
 		server: Bridge<ServerEvents, ClientEvents, SharedEvents>;
 		client: Bridge<ClientEvents, ServerEvents, SharedEvents>;
 	} {

@@ -8,7 +8,7 @@
 import {CompilerProject, TransformRequest} from "../types";
 import {AnyRoot} from "@internal/ast";
 import {JSONObject} from "@internal/codec-config";
-import { hashRSERValue } from "@internal/binary-transport";
+import {hashRSERValue} from "@internal/binary-transport";
 
 type CacheQuery = {
 	key: string;

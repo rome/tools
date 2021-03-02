@@ -21,7 +21,6 @@ export default class DevelopRequest {
 	constructor({request, response, httpServer, server}: DevelopRequestOptions) {
 		this.req = request;
 		this.res = response;
-		this.httpServer = httpServer;
 		this.server = server;
 
 		// Infer `host`
@@ -52,7 +51,6 @@ export default class DevelopRequest {
 		this.pathname = this.url.getPathname();
 	}
 
-	private httpServer: http.Server;
 	private req: http.IncomingMessage;
 	private res: http.ServerResponse;
 	private server: DevelopServer;

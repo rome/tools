@@ -7,10 +7,7 @@ import {
 	getOrDeriveDiagnosticsFromError,
 } from "@internal/diagnostics";
 import {ErrorCallback} from "@internal/typescript-helpers";
-import {
-	Resource,
-	createResourceFromCallback,
-} from "@internal/resources";
+import {Resource, createResourceFromCallback} from "@internal/resources";
 import util = require("util");
 
 type FatalErrorHandlerOptions = {
@@ -79,11 +76,8 @@ export default class FatalErrorHandler {
 			},
 		);
 	}
-	
-	public handle(
-		error: Error,
-		overrideSource?: StaticMarkup,
-	): void {
+
+	public handle(error: Error, overrideSource?: StaticMarkup): void {
 		const {getReporter, overrideHandle} = this.options;
 		if (overrideHandle !== undefined) {
 			const handled = overrideHandle(error);

@@ -464,7 +464,7 @@ export default class Progress extends ProgressBase {
 
 		this.lastRenderCurrent = this.current;
 		this.lastRenderTime = now;
-		
+
 		if (!this.reporter.hasStreams()) {
 			return;
 		}
