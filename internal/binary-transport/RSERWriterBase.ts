@@ -254,7 +254,7 @@ export default abstract class RSERWriterBase {
 			this.writeByte(pathSetToCode(set));
 			this.encodeSize(set.size);
 			for (const path of set) {
-				this.encodeStringValue(path.join());
+				this.encodePath(path);
 			}
 		}
 	}
