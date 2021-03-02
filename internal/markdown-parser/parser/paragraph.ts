@@ -18,8 +18,26 @@ export function parseParagraph(
 	) {
 		const token = parser.getToken();
 
-		if (isList && token.type === "NewLine") {
-			break;
+		if (token.type === "NewLine") {
+			if (isList) {
+				break;
+			}
+			const currentPos = parser.getPosition();
+			const next = parser.nextToken();
+			if (next.type === "NewLine" || next.type === "EOF" || isBlockToken(next)) {
+				break;
+			} else {
+				children.push(
+					parser.finishNode(
+						currentPos,
+						{
+							type: "MarkdownText",
+							value: "\n",
+						},
+					),
+				);
+				continue;
+			}
 		}
 
 		switch (token.type) {
@@ -47,20 +65,6 @@ export function parseParagraph(
 			case "Text": {
 				children.push(parseText(parser));
 				parser.nextToken();
-				break;
-			}
-			case "NewLine": {
-				const pos = parser.getPosition();
-				parser.nextToken();
-				children.push(
-					parser.finishNode(
-						pos,
-						{
-							type: "MarkdownText",
-							value: "\n",
-						},
-					),
-				);
 				break;
 			}
 			case "OpenSquareBracket": {
