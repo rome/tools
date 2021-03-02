@@ -38,7 +38,7 @@ export interface DimensionData {
 }
 
 export interface HashData {
-	hashType?: string;
+	hashType?: "id";
 	value: string;
 }
 

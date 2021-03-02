@@ -11,7 +11,7 @@ eleventyNavigation:
 
 # Rules
 
-<!-- GENERATED:START(hash:a84121d08a825f38c8f1ccad3433756a29808fd7,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. -->
+<!-- GENERATED:START(hash:8afb883d7e5f4ac1d4377e4b2d08f0475a1bf947,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. -->
 <section>
 <h2>JavaScript</h2>
 <p>Rule semantics and descriptions taken from <a href="https://eslint.org/">ESLint</a>. See individual rule docs for direct references.</p>
@@ -444,6 +444,13 @@ enforce ARIA state and property values are valid
 the `lang` attribute is mandatory
 </div>
 <div class="rule">
+<h3 data-toc-exclude id="useIframeTitle">
+	<a href="/docs/lint/rules/a11y/useIframeTitle">useIframeTitle</a>
+	<a class="header-anchor" href="#useIframeTitle"></a>
+</h3>
+enforce `iframe` elements have a title attribute
+</div>
+<div class="rule">
 <h3 data-toc-exclude id="useMediaCaption">
 	<a href="/docs/lint/rules/a11y/useMediaCaption">useMediaCaption</a>
 	<a class="header-anchor" href="#useMediaCaption"></a>
@@ -544,13 +551,6 @@ enforce that elements with ARIA roles must have all required attributes for that
 	<a class="header-anchor" href="#useHeadingContent"></a>
 </h3>
 enforce heading (`h1`, `h2`, etc) elements contain accessible content
-</div>
-<div class="rule">
-<h3 data-toc-exclude id="useIframeTitle">
-	<a href="/docs/lint/rules/jsx-a11y/useIframeTitle">useIframeTitle</a>
-	<a class="header-anchor" href="#useIframeTitle"></a>
-</h3>
-enforce `iframe` elements have a title attribute
 </div>
 <div class="rule">
 <h3 data-toc-exclude id="useKeyWithClickEvents">

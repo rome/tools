@@ -29,7 +29,11 @@ type CallOptions = {
 	priority?: boolean;
 };
 
-export class BridgeEvent<Name extends string, Param extends RSERValue, Ret extends RSERValue> {
+export class BridgeEvent<
+	Name extends string,
+	Param extends RSERValue,
+	Ret extends RSERValue
+> {
 	constructor(name: Name, bridge: AnyBridge) {
 		this.id = ++bridge.eventsIdCounter;
 		this.bridge = bridge;
@@ -245,8 +249,11 @@ export class BridgeEvent<Name extends string, Param extends RSERValue, Ret exten
 	}
 }
 
-export class BridgeEventCallOnly<Name extends string, Param extends RSERValue, Ret extends RSERValue>
-	extends BridgeEvent<Name, Param, Ret> {
+export class BridgeEventCallOnly<
+	Name extends string,
+	Param extends RSERValue,
+	Ret extends RSERValue
+> extends BridgeEvent<Name, Param, Ret> {
 	public send(param: Param): void {
 		return this._send(param);
 	}

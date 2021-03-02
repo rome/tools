@@ -18,6 +18,31 @@ invalid: [
 							console.log('foo');
 						};
 					"
+	"
+					function foo() {
+						foo();
+					}
+					"
+	"
+					const foo = () => {
+						foo();
+						console.log(this);
+					};
+					"
+	"
+					function foo(): typeof foo {
+							return function () {
+									return foo;
+							};
+					}
+					"
+	"
+					class Foo {
+							init() {
+								this._foo = new Foo();
+							}
+					}
+					"
 ]
 valid: [
 	"
@@ -31,5 +56,20 @@ valid: [
 							console.log(b)
 						};
 						foo();
+					"
+	"
+					foo();
+					function foo() {
+						foo();
+					}
+					"
+	"
+					class Foo {
+							init() {
+								this._foo = new Foo();
+							}
+					}
+					const foo = new Foo();
+					foo.init();
 					"
 ]

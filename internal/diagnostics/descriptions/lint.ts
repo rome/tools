@@ -434,8 +434,8 @@ export const lint = createDiagnosticsCategory({
 			},
 		],
 	},
-	JSX_A11Y_IFRAME_USE_TITLE: {
-		category: DIAGNOSTIC_CATEGORIES["lint/jsx-a11y/useIframeTitle"],
+	A11Y_IFRAME_USE_TITLE: {
+		category: DIAGNOSTIC_CATEGORIES["lint/a11y/useIframeTitle"],
 		message: markup`Provide a <emphasis>title</emphasis> attribute when using <emphasis>iframe</emphasis> elements.`,
 		advice: [
 			{

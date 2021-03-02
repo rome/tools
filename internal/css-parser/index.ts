@@ -37,9 +37,9 @@ export const cssParser = createParser<CSSParserTypes>({
 			index = index.add(2);
 			let value = "";
 			while (
-				parser.getInputCharOnly(index) !== "*" &&
-				parser.getInputCharOnly(index.increment()) !== "/" &&
-				!parser.isEOF(index)
+				!((parser.getInputCharOnly(index) === "*" &&
+				parser.getInputCharOnly(index.increment()) === "/") ||
+				parser.isEOF(index))
 			) {
 				value += parser.getInputCharOnly(index);
 				index = index.add(1);
