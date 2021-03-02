@@ -525,7 +525,6 @@ export default class Checker {
 					reporter.warn(
 						markup`Spent <emphasis>${timing.took.format({
 							longform: true,
-							allowMilliseconds: true,
 						})}</emphasis> running ${timing.displayName}`,
 					);
 				}

@@ -92,6 +92,18 @@ export default class TestServerWorker {
 			});
 		}
 
+		bridge.events.testDiskSnapshotDiscovered.subscribe(({testPath, snapshotPath}) => {
+			this.runner.files.assert(testPath).discoveredDiskSnapshot(snapshotPath, this);
+		});
+
+		bridge.events.testSnapshotEntry.subscribe(({testPath, snapshotPath, entry}) => {
+			this.runner.files.assert(testPath).addSnapshotEntry(snapshotPath, entry);
+		});
+
+		bridge.events.testInlineSnapshots.subscribe(({testPath, updates}) => {
+			this.runner.files.assert(testPath).addInlineSnapshotUpdates(updates);
+		});
+
 		bridge.events.testDiagnostic.subscribe(({testPath, diagnostic, origin}) => {
 			if (testPath !== undefined) {
 				this.runner.files.assert(testPath).onDiagnostics();
@@ -273,10 +285,10 @@ export default class TestServerWorker {
 				}
 			}
 			if (pending.size > 0) {
-				await bridge.events.receiveCompiledTestDependency.call(pending);
+				await bridge.events.testReceiveCompiledDependency.call(pending);
 			}
 
-			const {focusedTests, foundTests} = await bridge.events.prepareTest.call({
+			const {focusedTests, foundTests} = await bridge.events.testPrepare.call({
 				globalOptions,
 				partial,
 				projectDirectory: req.server.projectManager.assertProjectExisting(
@@ -309,7 +321,7 @@ export default class TestServerWorker {
 		}
 	}
 
-	private async runTest() {
+	private async runTest(): Promise<void> {
 		const {bridge} = this;
 
 		// Find a test we've already prepared
@@ -317,17 +329,29 @@ export default class TestServerWorker {
 			const file = this.runner.files.assert(path);
 
 			for (const testName of file.getPendingTests()) {
-				file.removePendingTest(testName);
+				file.removePendingTest(testName, this);
 				await this.prepareLock.waitLock(path);
-				await bridge.events.runTest.call({
+				await bridge.events.testRun.call({
 					path,
 					testNames: [testName],
 				});
-				await this.runTest();
+				if (file.markCompletedTest()) {
+					// Start this async
+					await Promise.all([
+						file.teardown(),
+						this.runTest(),
+					]);
+					return;
+				} else {
+					return this.runTest();
+				}
 			}
+			
+			// Exhausted all tests in this file, no longer consider it for future tests
+			this.preparedPaths.delete(path);
 		}
 
-		// Prepare another
+		// Prepare another file with pending tests
 		while (this.runner.testFilesStack.length > 0) {
 			const path = this.runner.testFilesStack.shift()!;
 			const file = this.runner.files.assert(path);
@@ -340,7 +364,7 @@ export default class TestServerWorker {
 			}
 
 			await this.prepareTest({partial: true, file, progress: undefined});
-			await this.runTest();
+			return this.runTest();
 		}
 	}
 
@@ -354,11 +378,6 @@ export default class TestServerWorker {
 				promises.push(this.runTest());
 			}
 			await Promise.all(promises);
-
-			for (const path of this.preparedPaths) {
-				const result = await bridge.events.teardownTest.call(path);
-				await this.runner.files.assert(path).addResult(result);
-			}
 		} catch (err) {
 			runner.handlePossibleBridgeError(err, bridge);
 		} finally {

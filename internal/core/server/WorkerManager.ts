@@ -32,6 +32,14 @@ import {ExtendedMap} from "@internal/collections";
 import {Duration, DurationMeasurer} from "@internal/numbers";
 import {PartialWorkerOptions} from "../worker/types";
 
+type SpawnWorkerOptions = {
+	type: WorkerType;
+	ghost?: boolean;
+	inspectorPort?: number;
+	id?: number;
+	displayID?: number;
+};
+
 export default class WorkerManager {
 	constructor(server: Server) {
 		this.server = server;
@@ -61,19 +69,19 @@ export default class WorkerManager {
 	private setWorker(container: WorkerContainer) {
 		this.workers.set(container.id, container);
 
-		const {bridge, displayName} = container;
+		const {bridge, logger} = container;
 
 		bridge.sendMessageEvent.subscribe((raw) => {
-			this.logger.info(() => {
+			logger.info(() => {
 				const msg = bridge.getDebugMessage(raw);
-				return markup`Sending ${displayName}: ${prettyFormat(msg)}`;
+				return markup`Sending message ${prettyFormat(msg)}`;
 			});
 		});
 
 		bridge.receivedMessageEvent.subscribe((raw) => {
-			this.logger.info(() => {
+			logger.info(() => {
 				const msg = bridge.getDebugMessage(raw);
-				return markup`Received ${displayName}: ${prettyFormat(msg)}`;
+				return markup`Received message ${prettyFormat(msg)}`;
 			});
 		});
 	}
@@ -137,7 +145,6 @@ export default class WorkerManager {
 			userConfig: this.server.userConfig,
 			bridge: bridges.client,
 			dedicated: false,
-			inspectorPort: undefined,
 			...this.buildPartialWorkerOptions({
 				type: "processor",
 				id: 0,
@@ -163,6 +170,7 @@ export default class WorkerManager {
 			bridge: bridges.server,
 			ghost: false,
 			ready: false,
+			logger: this.logger.namespace(markup`local worker`),
 		};
 		this.setWorker(container);
 		await worker.init();
@@ -188,7 +196,10 @@ export default class WorkerManager {
 			this.selfWorker = false;
 
 			// Spawn a new worker
-			const newWorker = await this.spawnProcessorWorker(true);
+			const newWorker = await this.spawnProcessorWorker({
+				displayID: 0,
+				ghost: true,
+			});
 
 			// Transfer buffers to the new worker
 			if (this.server.memoryFs.hasAnyBuffers()) {
@@ -210,13 +221,11 @@ export default class WorkerManager {
 			this.workers.set(
 				0,
 				{
+					...newWorker,
 					type: "processor",
 					id: 0,
-					displayName: newWorker.displayName,
 					fileCount: serverWorker.fileCount,
 					byteCount: serverWorker.byteCount,
-					bridge: newWorker.bridge,
-					thread: newWorker.thread,
 					ghost: false,
 					ready: true,
 				},
@@ -247,22 +256,20 @@ export default class WorkerManager {
 		worker.ready = true;
 	}
 
-	private async spawnProcessorWorker(
-		ghost: boolean = false,
-	): Promise<WorkerContainer> {
+	private async spawnProcessorWorker(opts: Omit<SpawnWorkerOptions, "type" | "id"> = {}): Promise<WorkerContainer> {
 		const id = this.getNextWorkerId();
 		const lock = this.locker.getNewLock(id);
 		try {
 			const container = await this.spawnWorkerUnsafe({
+				...opts,
 				type: "processor",
 				id,
-				ghost,
-				inspectorPort: undefined,
 			});
 
 			container.bridge.startHeartbeatMonitor(
 				LAG_INTERVAL,
 				({summary, totalTime, attempts}) => {
+					return;
 					const reporter = this.server.getImportantReporter();
 					reporter.warn(
 						markup`Worker <emphasis>${id}</emphasis> has not responded for <emphasis>${totalTime}</emphasis>. It is unlikely to become responsive. Currently processing:`,
@@ -300,18 +307,14 @@ export default class WorkerManager {
 	// Considered unsafe as we have no locks
 	public async spawnWorkerUnsafe(
 		{
-			id = this.getNextWorkerId(),
 			type,
-			ghost,
+			id = this.getNextWorkerId(),
+			displayID = id,
+			ghost = false,
 			inspectorPort,
-		}: {
-			id?: number;
-			type: WorkerType;
-			ghost: boolean;
-			inspectorPort: undefined | number;
-		},
+		}: SpawnWorkerOptions,
 	): Promise<ThreadWorkerContainer> {
-		let displayName = `worker ${id}`;
+		let displayName = `worker ${displayID}`;
 		if (type === "test") {
 			displayName = `test ${displayName}`;
 		}
@@ -326,11 +329,21 @@ export default class WorkerManager {
 		);
 		this.server.resources.addWorkerThread(thread);
 
+		const logger = this.logger.namespace(markup`[${displayName}]`);
+
+		thread.stdout.on("data", (chunk) => {
+			logger.info(`stdout: ${String(chunk)}`);
+		});
+
+		thread.stderr.on("data", (chunk) => {
+			logger.error(`stderr: ${String(chunk)}`);
+		});
+
 		const bridge = WorkerBridge.Server.createFromWorkerThread(thread);
 		this.server.resources.add(bridge);
 
-		bridge.events.fatalError.subscribe((details) => {
-			this.server.fatalErrorHandler.handle(
+		bridge.events.fatalError.subscribe(async (details) => {
+			await this.server.fatalErrorHandler.handle(
 				bridge.hydrateCustomError(details),
 				displayName,
 			);
@@ -350,6 +363,7 @@ export default class WorkerManager {
 			ghost,
 			ready: false,
 			displayName,
+			logger,
 		};
 		this.setWorker(container);
 		bridge.resources.addCallback(
@@ -384,7 +398,7 @@ export default class WorkerManager {
 
 		this.workerStartEvent.send(container);
 
-		this.logger.info(markup`Started ${displayName} in ${start.since()}`);
+		container.logger.info(markup`Started in ${start.since()}`);
 
 		return container;
 	}

@@ -9,7 +9,6 @@ import {
 	UnknownObject,
 	isIterable,
 	isPlainObject,
-	mergeObjects,
 } from "@internal/typescript-helpers";
 import {escapeJSString} from "@internal/string-escape";
 import {naturalCompare} from "@internal/string-utils";
@@ -20,10 +19,10 @@ import {
 	joinMarkup,
 	markup,
 	markupTag,
-	serializeLazyMarkup,
 } from "@internal/markup";
 import {markupToJoinedPlainText} from "@internal/cli-layout";
 import {Position, isPositionish, isSourceLocation} from "@internal/parser-core";
+import util = require("util");
 
 type RecursiveStack = unknown[];
 
@@ -34,23 +33,16 @@ type FormatOptions = {
 	path: (number | string)[];
 	insertLocator: undefined | (number | string)[];
 	accurate: boolean;
+	referencedStack: Set<unknown>;
 };
 
 type FormatPartialOptions = {
 	maxDepth?: number;
 	path?: FormatOptions["path"];
 	stack?: RecursiveStack;
+	referencedStack?: Set<unknown>;
 	insertLocator?: FormatOptions["insertLocator"];
 	accurate?: boolean;
-};
-
-const DEFAULT_OPTIONS: FormatOptions = {
-	maxDepth: Infinity,
-	depth: 0,
-	stack: [],
-	path: [],
-	insertLocator: undefined,
-	accurate: false,
 };
 
 const NODE_UTIL_INSPECT_CUSTOM = Symbol.for("nodejs.util.inspect.custom");
@@ -81,28 +73,39 @@ export function pretty(strs: TemplateStringsArray, ...values: unknown[]): string
 
 export function prettyFormatEager(
 	obj: unknown,
-	opts?: FormatPartialOptions,
+	{
+		maxDepth = Infinity,
+		referencedStack = new Set(),
+		stack = [],
+		path = [],
+		insertLocator = undefined,
+		accurate = false,
+	}: FormatPartialOptions = {},
 ): StaticMarkup {
-	return serializeLazyMarkup(prettyFormat(obj, opts));
-}
-
-export default function prettyFormat(
-	obj: unknown,
-	rawOpts?: FormatPartialOptions,
-): LazyMarkupFactory {
-	return () => {
-		const opts: FormatOptions = mergeObjects(DEFAULT_OPTIONS, rawOpts);
-		const value = formatValue(obj, opts);
-
-		if (needsLocator(opts)) {
-			return markup`<locator>${value}</locator>`;
-		} else {
-			return value;
-		}
+	const opts: FormatOptions = {
+		maxDepth,
+		depth: 0,
+		referencedStack,
+		stack,
+		path,
+		insertLocator,
+		accurate,
 	};
+	const value = formatValue(obj, opts);
+
+	if (needsLocator(opts)) {
+		return markup`<locator>${value}</locator>`;
+	} else {
+		return value;
+	}
 }
 
-function formatValue(obj: unknown, opts: FormatOptions): AnyMarkup {
+// By default we return lazy markup to avoid prettifying expensive values that never end up being printed
+export default function prettyFormat(obj: unknown, opts: FormatPartialOptions = {}): LazyMarkupFactory {
+	return () => prettyFormatEager(obj, opts);
+}
+
+function formatValue(obj: unknown, opts: FormatOptions): StaticMarkup {
 	if (opts.maxDepth === opts.depth) {
 		return markup`[depth exceeded]`;
 	}
@@ -217,7 +220,7 @@ function formatBoolean(val: boolean): StaticMarkup {
 	return val ? markup`true` : markup`false`;
 }
 
-function formatFunction(val: Function, opts: FormatOptions): AnyMarkup {
+function formatFunction(val: Function, opts: FormatOptions): StaticMarkup {
 	const name = val.name === "" ? "anonymous" : val.name;
 	let type = "Function";
 
@@ -341,12 +344,14 @@ function formatObject(
 	obj: Objectish,
 	opts: FormatOptions,
 	labelKeys: string[],
-): AnyMarkup {
+): StaticMarkup {
 	// Detect circular references, and create a pointer to the specific value
-	const {stack} = opts;
-	if (stack.length > 0 && stack.includes(obj)) {
-		label = `Circular ${label} ${String(stack.indexOf(obj))}`;
-		return formatLabel(label);
+	const {stack, referencedStack} = opts;
+
+	const existingIndex = stack.indexOf(obj);
+	if (existingIndex >= 0) {
+		referencedStack.add(obj);
+		return formatLabel(`Circular ${String(existingIndex)}`);
 	}
 
 	if (!opts.accurate) {
@@ -357,14 +362,14 @@ function formatObject(
 			if (typeof customValue === "string") {
 				inner = markup`${customValue}`;
 			} else {
-				inner = prettyFormat(
+				inner = prettyFormatEager(
 					customValue,
 					{
 						stack: opts.stack,
 					},
 				);
 			}
-			return markupTag("dim", inner);
+			return markupTag("italic", inner);
 		}
 
 		if (isPositionish(obj)) {
@@ -449,6 +454,11 @@ function formatObject(
 		parts.push(markup`${formatLabel(label)} `);
 	}
 
+	// Check if we were referenced circularly
+	if (referencedStack.has(obj)) {
+		parts.push(`<Ref ${String(stack.length)}>`);
+	}
+
 	parts.push(open);
 
 	if (props.length > 0) {
@@ -485,16 +495,16 @@ type Objectish = {
 	[Symbol.toStringTag]?: unknown;
 };
 
-function formatObjectish(val: null | Objectish, opts: FormatOptions): AnyMarkup {
+function formatObjectish(val: null | Objectish, opts: FormatOptions): StaticMarkup {
 	if (val === null) {
 		return markupTag("emphasis", formatNull());
 	}
 
-	if (val instanceof RegExp) {
+	if (util.types.isRegExp(val)) {
 		return markupTag("color", formatRegExp(val), {fg: "red"});
 	}
 
-	if (val instanceof Date) {
+	if (util.types.isDate(val)) {
 		const str = formatDate(val);
 		return markupTag("color", str, {fg: "magenta"});
 	}

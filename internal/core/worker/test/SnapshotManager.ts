@@ -43,8 +43,6 @@ export type SnapshotEntry = {
 };
 
 export type Snapshot = {
-	existsOnDisk: boolean;
-	used: boolean;
 	raw: string;
 	entries: Map<string, SnapshotEntry>;
 };
@@ -62,14 +60,6 @@ export type InlineSnapshotUpdate = {
 };
 
 export type InlineSnapshotUpdates = InlineSnapshotUpdate[];
-
-function stringOrPrettyFormat(value: unknown): string {
-	if (typeof value === "string") {
-		return value;
-	} else {
-		return prettyFormatToString(value, {accurate: true});
-	}
-}
 
 export default class SnapshotManager {
 	constructor(runner: TestWorkerFile, testPath: AbsoluteFilePath) {
@@ -89,6 +79,16 @@ export default class SnapshotManager {
 	private fileLocker: PathLocker;
 	private runner: TestWorkerFile;
 	private options: TestServerRunnerOptions;
+
+	public formatValue(value: unknown): string {
+		if (typeof value === "string") {
+			return value;
+		} else {
+			// We do not pass `accurate: true` here like in TestAPI as we are more liberal and it's better to have
+			// something nicer to display here
+			return prettyFormatToString(value);
+		}
+	}
 
 	public static buildSnapshot(
 		{entries, absolute, relative}: {
@@ -158,34 +158,6 @@ export default class SnapshotManager {
 		return lines.join("\n");
 	}
 
-	public getModifiedSnapshots(): AbsoluteFilePathMap<Snapshot> {
-		const snapshots: AbsoluteFilePathMap<Snapshot> = new AbsoluteFilePathMap();
-
-		for (const [name, snapshot] of this.snapshots) {
-			let filteredEntries = snapshot.entries;
-
-			// If we are a partial runner, then filter all unused entries as they'll be dispatched by the dedicated runner
-			if (!this.runner.options.partial) {
-				filteredEntries = new Map(snapshot.entries);
-				for (const [name, entry] of filteredEntries) {
-					if (!entry.used) {
-						filteredEntries.delete(name);
-					}
-				}
-			}
-
-			snapshots.set(
-				name,
-				{
-					...snapshot,
-					entries: filteredEntries,
-				},
-			);
-		}
-
-		return snapshots;
-	}
-
 	public normalizeSnapshotPath(filename: undefined | string): AbsoluteFilePath {
 		if (filename === undefined) {
 			return this.defaultSnapshotPath;
@@ -202,6 +174,10 @@ export default class SnapshotManager {
 
 	public async init() {
 		await this.loadSnapshot(this.defaultSnapshotPath);
+	}
+
+	public getRawSnapshot(path: AbsoluteFilePath): string {
+		return this.snapshots.assert(path).raw;
 	}
 
 	private async loadSnapshot(
@@ -226,12 +202,11 @@ export default class SnapshotManager {
 				const nodes = parseSnapshot(parser);
 
 				const snapshot: Snapshot = {
-					existsOnDisk: true,
-					used: false,
 					raw: parser.input,
 					entries: new Map(),
 				};
 				this.snapshots.set(path, snapshot);
+				this.runner.emitSnapshotDiscovery(path);
 
 				while (nodes.length > 0) {
 					const node = nodes.shift()!;
@@ -312,8 +287,8 @@ export default class SnapshotManager {
 				receivedFormat: string;
 				expectedFormat: string;
 			} {
-		let receivedFormat = stringOrPrettyFormat(received);
-		let expectedFormat = stringOrPrettyFormat(expected);
+		let receivedFormat = this.formatValue(received);
+		let expectedFormat = this.formatValue(expected);
 
 		// Matches, no need to do anything
 		if (receivedFormat === expectedFormat) {
@@ -367,8 +342,6 @@ export default class SnapshotManager {
 			return undefined;
 		}
 
-		snapshot.used = true;
-
 		// If we're force updating, pretend that there was no entry
 		if (this.options.updateSnapshots) {
 			return undefined;
@@ -378,7 +351,10 @@ export default class SnapshotManager {
 		if (entry === undefined) {
 			return undefined;
 		} else {
-			entry.used = true;
+			if (!entry.used) {
+				entry.used = true;
+				this.runner.emitSnapshotEntry(snapshotPath, entry);
+			}
 			return entry.value;
 		}
 	}
@@ -403,22 +379,23 @@ export default class SnapshotManager {
 		if (snapshot === undefined) {
 			snapshot = {
 				raw: "",
-				existsOnDisk: false,
-				used: true,
 				entries: new Map(),
 			};
 			this.snapshots.set(snapshotPath, snapshot);
 		}
 
+		const entry: SnapshotEntry = {
+			testName,
+			entryName,
+			language,
+			value,
+			used: true,
+		};
+		this.runner.emitSnapshotEntry(snapshotPath, entry);
+
 		snapshot.entries.set(
 			buildEntriesKey(testName, entryName),
-			{
-				testName,
-				entryName,
-				language,
-				value,
-				used: true,
-			},
+			entry,
 		);
 	}
 }

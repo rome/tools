@@ -91,7 +91,6 @@ export type ServerOptions = {
 	userConfig: UserConfig;
 	dedicated: boolean;
 	daemon: boolean;
-	globalErrorHandlers: boolean;
 };
 
 export type ServerUnfinishedMarker = {
@@ -218,19 +217,15 @@ export default class Server {
 		this.userConfig = opts.userConfig;
 
 		this.fatalErrorHandler = new FatalErrorHandler({
-			getOptions: () => {
-				//console.dir(this.resources.buildTree(), {depth: null, customInspect: true});
-				return {
-					source: markup`server`,
-					reporter: this.getImportantReporter(),
-					exit: this.options.dedicated,
-				};
+			source: markup`server`,
+			exit: this.options.dedicated,
+			getReporter: () => {
+				return this.getImportantReporter();
 			},
 		});
+
 		this.requestFileLocker = new PathLocker();
 		this.connectedReporters = new ServerReporter(this);
-		this.resources.add(this.connectedReporters);
-
 		this.connectedClientsListeningForWorkerLogs = new Set();
 		this.connectedClientsListeningForLogs = new Map();
 		this.connectedLSPServers = new Set();
@@ -308,6 +303,12 @@ export default class Server {
 		this.logger.info(
 			markup`[Server] Created Server with options: ${prettyFormat(opts)}`,
 		);
+
+		this.resources.add(this.connectedReporters);
+
+		if (this.options.daemon) {
+			this.resources.add(this.fatalErrorHandler.setupGlobalHandlers());
+		}
 	}
 
 	public userConfig: UserConfig;
@@ -511,14 +512,7 @@ export default class Server {
 		return processor;
 	}
 
-	private maybeSetupGlobalErrorHandlers() {
-		if (this.options.globalErrorHandlers) {
-			this.resources.add(this.fatalErrorHandler.setupGlobalHandlers());
-		}
-	}
-
 	public async init() {
-		this.maybeSetupGlobalErrorHandlers();
 		await this.recoveryStore.init();
 		await this.virtualModules.init();
 		await this.projectManager.init();
@@ -807,7 +801,7 @@ export default class Server {
 			res = await req.teardown(res);
 			return res;
 		} catch (err) {
-			await this.fatalErrorHandler.handleAsync(err);
+			this.fatalErrorHandler.handle(err);
 			throw new Error("Process should have quit already");
 		}
 	}

@@ -47,6 +47,7 @@ import {
 	OneIndexed,
 	ZeroIndexed,
 } from "@internal/numbers";
+import util = require("util");
 
 const MAX_INT8 = 127;
 const MAX_INT16 = 32_767;
@@ -235,7 +236,7 @@ export default abstract class RSERWriterBase {
 			this.writeByte(pathMapToCode(map));
 			this.encodeSize(map.size);
 			for (const [path, value] of map) {
-				this.encodeStringValue(path.join());
+				this.encodePath(path);
 				this.encodeValue(value);
 			}
 		}
@@ -435,20 +436,20 @@ export default abstract class RSERWriterBase {
 			return this.encodePlainObject(val);
 		}
 
-		if (isSafeInstanceof(val, Set)) {
-			return this.encodeSet(val);
-		}
-
 		if (isPathMap(val)) {
 			return this.encodePathMap(val);
 		}
 
-		if (isSafeInstanceof(val, Map)) {
+		if (util.types.isMap(val)) {
 			return this.encodeMap(val);
 		}
 
 		if (isPathSet(val)) {
 			return this.encodePathSet(val);
+		}
+
+		if (util.types.isSet(val)) {
+			return this.encodeSet(val);
 		}
 
 		if (isSafeInstanceof(val, Duration)) {
@@ -459,19 +460,19 @@ export default abstract class RSERWriterBase {
 			return this.encodeIndexedNumber(val);
 		}
 
-		if (isSafeInstanceof(val, Date)) {
+		if (util.types.isDate(val)) {
 			return this.encodeDate(val);
 		}
 
-		if (val instanceof Error) {
+		if (util.types.isNativeError(val)) {
 			return this.encodeError(val);
 		}
 
-		if (isSafeInstanceof(val, RegExp)) {
+		if (util.types.isRegExp(val)) {
 			return this.encodeRegExp(val);
 		}
 
-		if (isSafeInstanceof(val, ArrayBuffer)) {
+		if (util.types.isArrayBuffer(val)) {
 			return this.encodeArrayBuffer(val);
 		}
 

@@ -27,6 +27,7 @@ import {RecoverySaveFile} from "../server/fs/RecoveryStore";
 import {TestServerRunnerOptions} from "../server/testing/types";
 import {FocusedTest} from "./test/TestWorkerFile";
 import workerThreads = require("worker_threads");
+import { ReporterNamespace } from "@internal/cli-reporter";
 
 export type WorkerParseResult = {
 	ast: AnyRoot;
@@ -53,6 +54,7 @@ export type ThreadWorkerContainer = {
 	byteCount: bigint;
 	bridge: BridgeServer<typeof WorkerBridge>;
 	displayName: string;
+	logger: ReporterNamespace;
 	thread: workerThreads.Worker;
 	// Whether we've completed a handshake with the worker and it's ready to receive requests
 	ready: boolean;

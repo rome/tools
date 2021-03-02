@@ -50,7 +50,7 @@ if (getEnvVar("ROME_DEV").type === "ENABLED") {
 export const MOCKS_DIRECTORY_NAME = "__rmocks__";
 
 // Used as a heartbeat timeout to indicate if a process is unresponsive
-export const LAG_INTERVAL = Duration.fromSeconds(10); //3_000;
+export const LAG_INTERVAL = Duration.fromSeconds(3); //3_000;
 
 // # Folders
 // XDG environment variables information:

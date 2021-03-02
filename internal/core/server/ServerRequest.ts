@@ -875,7 +875,6 @@ export default class ServerRequest {
 		const start = new DurationMeasurer();
 		const lock = await server.requestFileLocker.getLock(path);
 		const ref = server.projectManager.getFileReference(path);
-
 		const interval = LAG_INTERVAL.setInterval(() => {
 			this.reporter.warn(
 				markup`Running <emphasis>${method}</emphasis> on <emphasis>${path}</emphasis> seems to be taking longer than expected. Have been waiting for <emphasis>${start.since()}</emphasis>.`,

@@ -16,7 +16,7 @@ import {
 import {Server, ServerRequest, TestRef} from "@internal/core";
 import {DiagnosticsPrinter} from "@internal/cli-diagnostics";
 import {humanizeNumber} from "@internal/numbers";
-import {AnyBridge, isBridgeClosedDiagnosticError} from "@internal/events";
+import {AnyBridge, isBridgeDisconnectedDiagnosticError} from "@internal/events";
 import {CoverageCollector} from "@internal/v8";
 import {ManifestDefinition} from "@internal/codec-js-manifest";
 import {
@@ -166,18 +166,16 @@ export default class TestServer {
 		}
 
 		if (
-			isBridgeClosedDiagnosticError(err) ||
+			isBridgeDisconnectedDiagnosticError(err) ||
 			this.ignoreBridgeEndError.has(bridge)
 		) {
-			// TODO I forget why this is necessary?
-			//return;
+			return;
 		}
 
 		this.printer.processor.addDiagnostics(diagnostics);
 	}
 
 	private async setupWorkers(): Promise<TestServerWorker[]> {
-		// TODO some smarter logic. we may not need all these workers, and can start them in parallel
 		const workers: Promise<TestServerWorker>[] = [];
 		for (let i = 0; i < MAX_WORKER_COUNT; i++) {
 			const inspectorPort = await findAvailablePort();
@@ -253,7 +251,7 @@ export default class TestServer {
 					progress.end();
 
 					// If we have focused tests, clear the pending queues and populate it with only ours
-					if (this.focusedTests.length > 0) {
+					if (this.hasFocusedTests()) {
 						for (const file of this.files.values()) {
 							file.clearPendingTests();
 						}
@@ -273,18 +271,16 @@ export default class TestServer {
 				},
 			},
 		]);
-
-		if (this.focusedTests.length === 0) {
-			for (const file of this.files.values()) {
-				await file.finish();
-			}
-		}
-		await this.request.flushFiles();
+		
 		this.throwPrinter();
 	}
 
+	public hasFocusedTests(): boolean {
+		return this.focusedTests.length > 0;
+	}
+
 	private getTotalTests(): number {
-		if (this.focusedTests.length > 0) {
+		if (this.hasFocusedTests()) {
 			return this.focusedTests.length;
 		} else {
 			return this.progress.totalTests;
@@ -591,7 +587,7 @@ export default class TestServer {
 
 	private printFocusedTestWarning(reporter: Reporter) {
 		const {focusedTests} = this;
-		if (focusedTests.length === 0) {
+		if (!this.hasFocusedTests()) {
 			return;
 		}
 

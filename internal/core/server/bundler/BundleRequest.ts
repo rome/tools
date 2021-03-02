@@ -70,7 +70,7 @@ export default class BundleRequest {
 			origins: [
 				{
 					category: "bundler",
-					message: `Requested bundle for ${this.resolvedEntryUID}`,
+					message: markup`Requested bundle for ${this.resolvedEntryUID}`,
 				},
 			],
 		});

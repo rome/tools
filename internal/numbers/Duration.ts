@@ -1,43 +1,6 @@
 import {enhanceNodeInspectClass} from "@internal/node";
 import {Resource, createResourceFromCallback} from "@internal/resources";
 
-type DurationHumanizeOptions = {
-	allowMilliseconds?: boolean;
-	secondFractionDigits?: number;
-	longform?: boolean;
-};
-
-const shortSuffixes = {
-	ms: "ms",
-	s: "s",
-	m: "m",
-	h: "h",
-};
-
-const longSuffixes = {
-	ms: "millisecond",
-	s: "second",
-	m: "minute",
-	h: "hour",
-};
-
-function format(
-	key: keyof typeof shortSuffixes,
-	num: string | number,
-	longform: boolean,
-): string {
-	const str = String(num);
-	if (longform) {
-		let suffix = longSuffixes[key];
-		if (str !== "1") {
-			suffix += "s";
-		}
-		return `${str} ${suffix} `;
-	} else {
-		return `${str}${shortSuffixes[key]}`;
-	}
-}
-
 type DurationOptions = {
 	approx?: boolean;
 	decimal?: number;
@@ -244,57 +207,33 @@ export default class Duration {
 	}
 
 	public format(
-		{allowMilliseconds = false, longform = false, secondFractionDigits = 2}: DurationHumanizeOptions = {
+		{longform = false}: FormatOptions = {
 
 		},
 	): string {
 		const ms = this.toMilliseconds();
+		if (ms === 0 || ms < 1000) {
+			return formatUnit("milliseconds", 0, longform);
+		}
 
-		if (ms === 0) {
-			if (allowMilliseconds) {
-				return format("ms", 0, longform);
-			} else {
-				return format("s", 0, longform);
+		let parts: string[] = [];
+		let left = ms;
+
+		for (const [key, factor] of formatUnitOrder) {
+			if (left < factor && key !== "seconds") {
+				continue;
+			}
+
+			const float = left / factor;
+			const value = key === "seconds" ? float : Math.floor(float);
+
+			if (value > 0) {
+				parts.push(formatUnit(key, value, longform));
+				left -= value * factor;
 			}
 		}
 
-		const s = Math.floor(ms / 1_000);
-		const m = Math.floor(s / 60);
-		const h = Math.floor(m / 60);
-
-		if (h === 0 && m === 0 && s === 0) {
-			if (allowMilliseconds) {
-				return format("ms", ms, longform);
-			} else {
-				return format("s", toFixed(ms / 1_000, secondFractionDigits), longform);
-			}
-		}
-
-		let buf = "";
-
-		if (h > 0) {
-			buf += format("h", h, longform);
-		}
-
-		if (m > 0) {
-			buf += format("m", m % 60, longform);
-		}
-
-		if (allowMilliseconds) {
-			buf += format(
-				"s",
-				toFixed(ms / 1_000 % 60, secondFractionDigits),
-				longform,
-			);
-		} else {
-			buf += format("s", s % 60, longform);
-		}
-
-		if (longform) {
-			buf = buf.trimRight();
-		}
-
-		return buf;
+		return parts.join(longform ? " " : "");
 	}
 
 	public setTimeout(callback: () => void): Resource {
@@ -319,14 +258,54 @@ export default class Duration {
 	}
 }
 
-function toFixed(num: number, digits: number): string {
-	const fixed = num.toFixed(digits);
 
-	// Super hacky and gross way to omit the decimal if it's been rounded away
-	if (fixed.endsWith(`.${"0".repeat(digits)}`)) {
-		return String(num);
+type FormatOptions = {
+	longform?: boolean;
+};
+
+type FormatUnit = "milliseconds" | "seconds" | "minutes" | "hours" | "days" | "weeks" | "months" | "years";
+
+const formatUnitSuffixes: {
+	[Key in FormatUnit]: [string, string]
+} = {
+	milliseconds: ["ms", "millisecond"],
+	seconds: ["s", "second"],
+	minutes: ["m", "minute"],
+	hours: ["h", "hour"],
+	days: ["d", "day"],
+	weeks: ["w", "week"],
+	// Same shorthand as minutes but the placement will remove ambiguity
+	months: ["m", "month"],
+	years: ["y", "year"],
+};
+
+const formatUnitOrder: [FormatUnit, number][] = [
+	["years", 31557600000],
+	["months", 2629800000],
+	["weeks", 604800000],
+	["days", 86400000],
+	["hours", 3600000],
+	["minutes", 60000],
+	["seconds", 1_000],
+];
+
+function formatUnit(
+	unit: FormatUnit,
+	num: number,
+	longform: boolean,
+): string {
+	const fixed = Math.round(num * 100) / 100;
+	const str = Number.isInteger(fixed) ? String(fixed) : fixed.toFixed(2);
+	const suffixes = formatUnitSuffixes[unit];
+
+	if (longform) {
+		let suffix = suffixes[1];
+		if (str !== "1") {
+			suffix += "s";
+		}
+		return `${str} ${suffix}`;
 	} else {
-		return fixed;
+		return `${str}${suffixes[0]}`;
 	}
 }
 

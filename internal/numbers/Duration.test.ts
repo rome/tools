@@ -11,7 +11,7 @@ import {test} from "rome";
 test(
 	"Duration.format",
 	(t) => {
-		t.inlineSnapshot(Duration.fromMilliseconds(1).format(), "0.00s");
+		t.inlineSnapshot(Duration.fromMilliseconds(1).format(), "0s");
 		t.inlineSnapshot(Duration.fromMilliseconds(10).format(), "0.01s");
 		t.inlineSnapshot(Duration.fromMilliseconds(100).format(), "0.10s");
 		t.inlineSnapshot(Duration.fromMilliseconds(1_000).format(), "1s");
@@ -24,41 +24,18 @@ test(
 			"27h46m40s",
 		);
 
-		const opts = {allowMilliseconds: true};
-		t.inlineSnapshot(Duration.fromMilliseconds(1).format(opts), "1ms");
-		t.inlineSnapshot(Duration.fromMilliseconds(10).format(opts), "10ms");
-		t.inlineSnapshot(Duration.fromMilliseconds(100).format(opts), "100ms");
-		t.inlineSnapshot(Duration.fromMilliseconds(1_000).format(opts), "1.00s");
-		t.inlineSnapshot(Duration.fromMilliseconds(10_000).format(opts), "10.00s");
-		t.inlineSnapshot(
-			Duration.fromMilliseconds(100_000).format(opts),
-			"1m40.00s",
-		);
-		t.inlineSnapshot(
-			Duration.fromMilliseconds(1_000_000).format(opts),
-			"16m40.00s",
-		);
-		t.inlineSnapshot(
-			Duration.fromMilliseconds(10_000_000).format(opts),
-			"2h46m40.00s",
-		);
-		t.inlineSnapshot(
-			Duration.fromMilliseconds(100_000_000).format(opts),
-			"27h46m40.00s",
-		);
-
 		const longOpts = {longform: true};
 		t.inlineSnapshot(
 			Duration.fromMilliseconds(1).format(longOpts),
-			"0.00 seconds ",
+			"0 seconds",
 		);
 		t.inlineSnapshot(
 			Duration.fromMilliseconds(10).format(longOpts),
-			"0.01 seconds ",
+			"0.01 seconds",
 		);
 		t.inlineSnapshot(
 			Duration.fromMilliseconds(100).format(longOpts),
-			"0.10 seconds ",
+			"0.10 seconds",
 		);
 		t.inlineSnapshot(
 			Duration.fromMilliseconds(1_000).format(longOpts),

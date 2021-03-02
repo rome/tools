@@ -11,7 +11,6 @@ import cli from "../cli";
 import server from "../server";
 import worker from "../worker";
 import {SourceMapConsumer} from "@internal/codec-source-map";
-import {Reporter} from "@internal/cli-reporter";
 import {markup} from "@internal/markup";
 import FatalErrorHandler from "@internal/core/common/FatalErrorHandler";
 
@@ -51,12 +50,7 @@ export function executeCLIMain() {
 	);
 
 	const fatalErrorHandler = new FatalErrorHandler({
-		getOptions() {
-			return {
-				source: markup`cli`,
-				reporter: Reporter.fromProcess(),
-			};
-		},
+		source: markup`cli`,
 	});
 
 	fatalErrorHandler.wrapPromise(main());

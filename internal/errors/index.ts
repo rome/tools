@@ -8,6 +8,7 @@ import {
 	convertPossibleNodeErrorToDiagnostic,
 } from "@internal/diagnostics";
 import {UNKNOWN_PATH} from "@internal/path";
+import util = require("util");
 
 export function setNodeErrorProps(
 	err: NodeSystemError,
@@ -60,7 +61,7 @@ export function getErrorStructure(
 	shouldConvertPossibleNodeError: boolean = true,
 ): StructuredError {
 	// Make some node errors more pretty
-	if (err instanceof Error && shouldConvertPossibleNodeError) {
+	if (util.types.isNativeError(err) && shouldConvertPossibleNodeError) {
 		err = convertPossibleNodeErrorToDiagnostic(err);
 	}
 

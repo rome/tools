@@ -479,7 +479,6 @@ export default async function cli() {
 		userConfig,
 		terminalFeatures,
 		dedicated: true,
-		globalErrorHandlers: true,
 		flags: clientFlags,
 		stdin: process.stdin,
 		stdout: process.stdout,

@@ -55,7 +55,7 @@ export type DiagnosticLocation = {
 
 export type DiagnosticOrigin = {
 	category: string;
-	message?: string;
+	message?: StaticMarkup;
 };
 
 export type DiagnosticLogCategory = "none" | "info" | "warn" | "error";

@@ -1,4 +1,4 @@
-import {printDiagnostics} from "@internal/cli-diagnostics";
+import {DiagnosticsPrinter} from "@internal/cli-diagnostics";
 import {Reporter, WrapperFactory} from "@internal/cli-reporter";
 import {StaticMarkup} from "@internal/markup";
 import {
@@ -10,25 +10,19 @@ import {ErrorCallback} from "@internal/typescript-helpers";
 import {
 	Resource,
 	createResourceFromCallback,
-	safeProcessExit,
 } from "@internal/resources";
+import util = require("util");
 
 type FatalErrorHandlerOptions = {
-	getOptions: (
-		err: Error,
-	) =>
-		| false
-		| {
-				source: StaticMarkup;
-				reporter: Reporter;
-				exit?: boolean;
-			};
+	exit?: boolean;
+	source?: StaticMarkup;
+	overrideHandle?: (err: Error) => boolean;
+	getReporter?: () => Reporter;
 };
 
 export default class FatalErrorHandler {
 	constructor(opts: FatalErrorHandlerOptions) {
 		this.options = opts;
-		this.handling = false;
 		this.handleBound = this.handle.bind(this);
 		this.wrapBound = this.wrap.bind(this);
 	}
@@ -37,12 +31,6 @@ export default class FatalErrorHandler {
 	public wrapBound: WrapperFactory;
 
 	private options: FatalErrorHandlerOptions;
-	private handling: boolean;
-
-	public handle(err: Error, overrideSource?: StaticMarkup) {
-		// Swallow promise. Should never throw an error.
-		this.handleAsync(err, overrideSource).then();
-	}
 
 	public wrapPromise(promise: Promise<unknown>) {
 		promise.catch(this.handleBound);
@@ -71,9 +59,15 @@ export default class FatalErrorHandler {
 		process.on("uncaughtException", onUncaughtException);
 
 		const onUnhandledRejection: NodeJS.UnhandledRejectionListener = (
-			err: unknown,
+			errRaw: unknown,
 		) => {
-			this.handle(err instanceof Error ? err : new Error(String(err)));
+			let err: Error;
+			if (util.types.isNativeError(errRaw)) {
+				err = errRaw;
+			} else {
+				err = new Error(String(errRaw));
+			}
+			this.handle(err);
 		};
 		process.on("unhandledRejection", onUnhandledRejection);
 
@@ -85,25 +79,25 @@ export default class FatalErrorHandler {
 			},
 		);
 	}
-
-	public async handleAsync(
+	
+	public handle(
 		error: Error,
 		overrideSource?: StaticMarkup,
-	): Promise<void> {
-		const {getOptions} = this.options;
-		const options = getOptions(error);
-		if (options === false) {
-			return;
+	): void {
+		const {getReporter, overrideHandle} = this.options;
+		if (overrideHandle !== undefined) {
+			const handled = overrideHandle(error);
+			if (handled) {
+				return;
+			}
 		}
 
-		if (this.handling) {
-			// Already have a fatal error queued
-			return;
+		let reporter: Reporter;
+		if (getReporter === undefined) {
+			reporter = Reporter.fromProcess();
+		} else {
+			reporter = getReporter();
 		}
-		this.handling = true;
-
-		const {reporter, exit = true} = options;
-		const source = overrideSource ?? options.source;
 
 		try {
 			const diagnostics = getOrDeriveDiagnosticsFromError(
@@ -112,22 +106,20 @@ export default class FatalErrorHandler {
 					description: {
 						category: DIAGNOSTIC_CATEGORIES["internalError/fatal"],
 					},
-					label: source,
+					label: overrideSource ?? this.options.source,
 					tags: {
 						fatal: true,
 					},
 				},
 			);
 
-			await printDiagnostics({
-				diagnostics,
-				suppressions: [],
-				excludeFooter: true,
-				printerOptions: {
-					reporter,
-					processor: new DiagnosticsProcessor(),
-				},
+			const processor = new DiagnosticsProcessor();
+			processor.addDiagnostics(diagnostics);
+			const printer = new DiagnosticsPrinter({
+				reporter,
+				processor,
 			});
+			printer.printBodySync();
 		} catch (logErr) {
 			console.error(
 				"Failed to output detailed fatal error information. Original error:",
@@ -136,8 +128,9 @@ export default class FatalErrorHandler {
 			console.error("Log error:");
 			console.error(logErr.stack);
 		} finally {
-			if (exit) {
-				await safeProcessExit(1);
+			if (this.options.exit !== false) {
+				// Deliberately do not use safeProcessExit
+				process.exit(1);
 			}
 		}
 	}

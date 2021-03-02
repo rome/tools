@@ -177,7 +177,7 @@ async function execDev() {
 	}
 
 	const res = child.spawnSync(
-		process.execPath,
+		process.env.ROME_DEV_NODE || process.execPath,
 		[...process.execArgv, ...args],
 		{
 			stdio: "inherit",

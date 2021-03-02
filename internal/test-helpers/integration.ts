@@ -407,7 +407,6 @@ export function createIntegrationTest(
 					...DEFAULT_TERMINAL_FEATURES,
 					format: "markup",
 				},
-				globalErrorHandlers: false,
 				flags: {
 					realCwd: projectPath,
 					cwd: projectPath,

@@ -3,15 +3,24 @@ import {
 	AbsoluteFilePathMap,
 	RelativePath,
 } from "@internal/path";
-import {TestWorkerFileResult} from "@internal/core/worker/test/TestWorkerFile";
+import {TestConsoleAdvice} from "@internal/core/worker/test/TestWorkerFile";
 import SnapshotManager, {
 	InlineSnapshotUpdates,
-	Snapshot,
+	SnapshotEntry,
 } from "@internal/core/worker/test/SnapshotManager";
 import {BundleResult, FileReference, ServerRequest} from "@internal/core";
 import TestServer from "@internal/core/server/testing/TestServer";
-import {DiagnosticLocation, descriptions} from "@internal/diagnostics";
+import {DiagnosticLocation, descriptions, DiagnosticAdvice} from "@internal/diagnostics";
 import {pretty} from "@internal/pretty-format";
+import TestServerWorker from "./TestServerWorker";
+
+type SnapshotWriteOptions = {
+	path: AbsoluteFilePath;
+	existsOnDisk: boolean;
+	used: boolean;
+	location: DiagnosticLocation;
+	formatted: string;
+};
 
 export default class TestServerFile {
 	constructor(
@@ -34,22 +43,30 @@ export default class TestServerFile {
 		).directory.relativeForce(ref.real);
 
 		this.hasDiagnostics = false;
+		this.finishedTests = 0;
+		this.totalTests = 0;
 		this.pendingTests = new Set();
 		this.snapshots = new AbsoluteFilePathMap();
+		this.diskSnapshotsToWorker = new AbsoluteFilePathMap();
 		this.inlineSnapshotUpdates = [];
+		this.workers = new Set();
 	}
 
 	public bundle: BundleResult;
 	public path: AbsoluteFilePath;
 	public ref: FileReference;
 
+	private workers: Set<TestServerWorker>;
+	private finishedTests: number;
+	private totalTests: number;
 	private relative: RelativePath;
 	private hasDiagnostics: boolean;
 	private pendingTests: Set<string>;
 	private request: ServerRequest;
 	private runner: TestServer;
 	private inlineSnapshotUpdates: InlineSnapshotUpdates;
-	private snapshots: AbsoluteFilePathMap<Snapshot>;
+	private snapshots: AbsoluteFilePathMap<SnapshotEntry[]>;
+	private diskSnapshotsToWorker: AbsoluteFilePathMap<TestServerWorker>;
 
 	public onDiagnostics() {
 		this.hasDiagnostics = true;
@@ -59,115 +76,171 @@ export default class TestServerFile {
 		return this.pendingTests;
 	}
 
-	public removePendingTest(testName: string) {
+	public removePendingTest(testName: string, worker: TestServerWorker) {
 		this.pendingTests.delete(testName);
+		this.workers.add(worker);
 	}
 
 	public addPendingTest(testName: string) {
+		this.totalTests++;
 		this.pendingTests.add(testName);
 	}
 
+	public markCompletedTest(): boolean {
+		this.finishedTests++;
+		return this.finishedTests === this.totalTests;
+	}
+
 	public clearPendingTests() {
+		this.totalTests = 0;
 		this.pendingTests.clear();
 	}
 
-	public addResult(result: TestWorkerFileResult) {
-		for (const [path, snapshot] of result.snapshots) {
-			const existing = this.snapshots.get(path);
-			if (existing === undefined) {
-				this.snapshots.set(path, snapshot);
-				continue;
-			}
-
-			const mergedEntries: Snapshot["entries"] = new Map(existing.entries);
-
-			for (const [name, entry] of snapshot.entries) {
-				const existing = mergedEntries.get(name);
-				if (existing === undefined || entry.used) {
-					mergedEntries.set(name, entry);
-				}
-			}
-
-			const merged: Snapshot = {
-				// This should be the same. Maybe validate?
-				existsOnDisk: existing.existsOnDisk,
-				raw: existing.raw,
-				used: existing.used || snapshot.used,
-				entries: mergedEntries,
-			};
-			this.snapshots.set(path, merged);
+	public discoveredDiskSnapshot(snapshotPath: AbsoluteFilePath, worker: TestServerWorker) {
+		if (!this.snapshots.has(snapshotPath)) {
+			this.snapshots.set(snapshotPath, []);
 		}
+		this.diskSnapshotsToWorker.set(snapshotPath, worker);
+	}
 
+	public addSnapshotEntry(snapshotPath: AbsoluteFilePath, entry: SnapshotEntry) {
+		let entries = this.snapshots.get(snapshotPath);
+		if (entries === undefined) {
+			entries = [];
+			this.snapshots.set(snapshotPath, entries);
+		}
+		entries.push(entry);
+	}
+
+	public addInlineSnapshotUpdates(updates: InlineSnapshotUpdates) {
 		this.inlineSnapshotUpdates = [
 			...this.inlineSnapshotUpdates,
-			...result.inlineSnapshotUpdates,
+			...updates,
 		];
 	}
 
+	private async getRawSnapshot(snapshotPath: AbsoluteFilePath): Promise<string> {
+		const worker = this.diskSnapshotsToWorker.assert(snapshotPath);
+		return worker.bridge.events.testGetRawSnapshot.call({
+			snapshotPath,
+			path: this.path,
+		});
+	}
+
 	private async writeSnapshots() {
-		const {snapshots, runner, request} = this;
+		const {snapshots, runner} = this;
 		if (snapshots.size === 0) {
 			return;
 		}
+		
+		// Could be hiding tests that use snapshots
+		if (runner.hasFocusedTests()) {
+			return;
+		}
 
-		const {hasDiagnostics} = this;
-		const {processor} = runner.printer;
+		for (const [path, usedEntries] of this.snapshots) {
+			const existsOnDisk = this.diskSnapshotsToWorker.has(path);
+			const used = usedEntries.length > 0;
 
-		for (const [path, {used, existsOnDisk, raw, entries}] of this.snapshots) {
 			const formatted = SnapshotManager.buildSnapshot({
-				entries: Array.from(entries.values()),
+				entries: Array.from(usedEntries.values()),
 				absolute: this.path,
 				relative: this.relative,
 			});
 
-			const location: DiagnosticLocation = {
+			const opts: SnapshotWriteOptions = {
+				existsOnDisk,
+				used,
+				formatted,
 				path,
-			};
+				location: {
+					path,
+				},
+			}
 
 			if (runner.options.freezeSnapshots) {
-				if (used) {
-					if (formatted !== raw) {
-						processor.addDiagnostic({
-							description: descriptions.SNAPSHOTS.INCORRECT(raw, formatted),
-							location,
-						});
-					}
-				} else {
-					processor.addDiagnostic({
-						description: descriptions.SNAPSHOTS.REDUNDANT,
-						location,
-					});
-				}
+				await this.writeFrozenSnapshot(opts);	
 			} else {
-				// Don't delete or write a snapshot if there are test failures as those failures may be hiding snapshot usages
-				if (hasDiagnostics && !runner.options.updateSnapshots) {
-					continue;
-				}
-
-				if (existsOnDisk && !used) {
-					// If a snapshot wasn't used or is empty then delete it!
-					await path.removeFile();
-					runner.progress.deletedSnapshots++;
-				} else if (used && formatted !== raw) {
-					// Fresh snapshot!
-					request.queueSaveFile(
-						path,
-						{
-							type: "UNSAFE_WRITE",
-							content: formatted,
-						},
-					);
-					if (existsOnDisk) {
-						runner.progress.updatedSnapshots++;
-					} else {
-						runner.progress.createdSnapshots++;
-					}
-				}
+				await this.writeSnapshot(opts);	
 			}
+		}
+
+		// Clear the memory as snapshots can be huge
+		this.snapshots.clear();
+
+		// Perform actual writes
+		await this.request.flushFiles();
+	}
+
+	private async writeSnapshot({path, used, existsOnDisk, formatted}: SnapshotWriteOptions): Promise<void> {
+		const {runner, request} = this;
+		
+		// Don't delete or write a snapshot if there are test failures as those failures may be hiding snapshot usages
+		if (this.hasDiagnostics && !runner.options.updateSnapshots) {
+			return;
+		}
+
+		if (!used) {
+			// If a snapshot wasn't used or is empty then delete it!
+			if (existsOnDisk) {
+				await path.removeFile();
+				runner.progress.deletedSnapshots++;
+			}
+			return;
+		}
+
+		if (existsOnDisk) {
+			const raw = await this.getRawSnapshot(path);
+			if (raw === formatted) {
+				// Already up to date
+				return;
+			}
+		}
+
+		// Fresh snapshot!
+		request.queueSaveFile(
+			path,
+			{
+				type: "UNSAFE_WRITE",
+				content: formatted,
+			},
+		);
+		if (existsOnDisk) {
+			runner.progress.updatedSnapshots++;
+		} else {
+			runner.progress.createdSnapshots++;
 		}
 	}
 
-	private async writeInlineSnapshots() {
+	private async writeFrozenSnapshot({path, used, existsOnDisk, location, formatted}: SnapshotWriteOptions): Promise<void> {
+		const {processor} = this.runner.printer;
+
+		if (used && existsOnDisk) {
+			const raw = await this.getRawSnapshot(path);
+			if (formatted !== raw) {
+				processor.addDiagnostic({
+					description: descriptions.SNAPSHOTS.INCORRECT(raw, formatted),
+					location,
+				});
+			}
+		}
+
+		if (used && !existsOnDisk) {
+			processor.addDiagnostic({
+				description: descriptions.SNAPSHOTS.MISSING,
+				location,
+			});
+		}
+		
+		if (!used && existsOnDisk) {
+			processor.addDiagnostic({
+				description: descriptions.SNAPSHOTS.REDUNDANT,
+				location,
+			});
+		}
+	}
+
+	public async writeInlineSnapshots() {
 		let {inlineSnapshotUpdates, path, ref, request, runner} = this;
 		if (inlineSnapshotUpdates.length === 0) {
 			return;
@@ -198,6 +271,9 @@ export default class TestServerFile {
 			};
 		});
 
+		// Clear snapshot updates
+		this.inlineSnapshotUpdates = [];
+
 		const {diagnostics, file} = await request.requestWorkerUpdateInlineSnapshots(
 			path,
 			inlineSnapshotUpdates,
@@ -210,8 +286,42 @@ export default class TestServerFile {
 		}
 	}
 
-	public async finish() {
-		await this.writeSnapshots();
-		await this.writeInlineSnapshots();
+	// NB: This could be further optimizing by having workers notify us if they have console advice
+	public async emitConsoleAdvice(): Promise<void> {
+		// We do not show console advice when there are no test failures
+		if (!this.hasDiagnostics) {
+			return;
+		}
+		
+		// Fetch console advice from all workers who ran a test
+		let allConsoleAdvice: TestConsoleAdvice = [];
+		await Promise.all(Array.from(this.workers, async (worker) => {
+			const consoleAdvice = await worker.bridge.events.testGetConsoleAdvice.call(this.path);
+			allConsoleAdvice = allConsoleAdvice.concat(consoleAdvice);
+		}));
+
+		// Regain chronological order
+		allConsoleAdvice = allConsoleAdvice.sort((a, b) => a[1] - b[1]);
+
+		// Flatten
+		let advice: DiagnosticAdvice = allConsoleAdvice.map(([advice]) => advice).flat();
+
+		// Emit diagnostic if we had any console advice
+		if (advice.length > 0) {
+			this.runner.printer.processor.addDiagnostic({
+				description: descriptions.TESTS.LOGS(advice),
+				location: {
+					path: this.path,
+				},
+			});
+		}
+	}
+
+	public async teardown(): Promise<void> {
+		await Promise.all([
+			this.emitConsoleAdvice(),
+			this.writeSnapshots(),
+			this.writeInlineSnapshots(),
+		]);
 	}
 }

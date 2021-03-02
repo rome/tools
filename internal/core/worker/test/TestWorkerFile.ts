@@ -26,8 +26,7 @@ import {
 } from "@internal/virtual-rome/test";
 import {TestServerRunnerOptions} from "../../server/testing/types";
 import SnapshotManager, {
-	InlineSnapshotUpdate,
-	Snapshot,
+	Snapshot, SnapshotEntry,
 } from "./SnapshotManager";
 import TestAPI, {OnTimeout} from "./TestAPI";
 import executeMain from "../../common/utils/executeMain";
@@ -61,7 +60,7 @@ import {
 } from "@internal/core";
 import {ExtendedMap} from "@internal/collections";
 import {BridgeClient} from "@internal/events";
-import WorkerTests from "./WorkerTests";
+import TestWorker from "./TestWorker";
 
 export function cleanFrames(frames: ErrorFrames): ErrorFrames {
 	// TODO we should actually get the frames before module init and do it that way
@@ -106,7 +105,6 @@ export function cleanFrames(frames: ErrorFrames): ErrorFrames {
 
 export type TestWorkerFileResult = {
 	snapshots: AbsoluteFilePathMap<Snapshot>;
-	inlineSnapshotUpdates: InlineSnapshotUpdate[];
 };
 
 type FoundTest = {
@@ -121,10 +119,13 @@ export type FocusedTest = {
 	location: DiagnosticLocation;
 };
 
+// This is just using milliseconds which probably isn't precise enough, but could lead to items appearing out of order when merged
+export type TestConsoleAdvice = [DiagnosticAdvice, number][];
+
 export default class TestWorkerFile {
 	constructor(
 		worker: Worker,
-		tests: WorkerTests,
+		tests: TestWorker,
 		opts: TestWorkerPrepareTestOptions,
 	) {
 		this.opts = opts;
@@ -139,31 +140,27 @@ export default class TestWorkerFile {
 		this.snapshotManager = new SnapshotManager(this, opts.path);
 
 		this.onlyFocusedTests = false;
-		this.hasDiagnostics = false;
+		this.hasUserDiagnostics = false;
 		this.consoleAdvice = [];
 		this.focusedTests = [];
-		this.pendingDiagnostics = [];
 		this.foundTests = new ExtendedMap("foundTests");
 	}
 
-	public hasDiagnostics: boolean;
+	public hasUserDiagnostics: boolean;
 	public onlyFocusedTests: boolean;
 	public path: AbsoluteFilePath;
 	public projectDirectory: AbsoluteFilePath;
 	public globalOptions: TestServerRunnerOptions;
 	public options: TestWorkerPrepareTestOptions;
+	public snapshotManager: SnapshotManager;
 
-	private tests: WorkerTests;
+	private tests: TestWorker;
 	private foundTests: ExtendedMap<string, FoundTest>;
 	private focusedTests: FocusedTest[];
 	private bridge: BridgeClient<typeof WorkerBridge>;
-	private snapshotManager: SnapshotManager;
 	private opts: TestWorkerPrepareTestOptions;
 	private locked: boolean;
-	private consoleAdvice: (() => DiagnosticAdvice)[];
-
-	// Diagnostics that shouldn't result in console logs being output
-	private pendingDiagnostics: Diagnostic[];
+	private consoleAdvice: [(() => DiagnosticAdvice), number][];
 
 	private createTestRef(test: FoundTest): TestRef {
 		return {
@@ -180,14 +177,14 @@ export default class TestWorkerFile {
 			const struct = getErrorStructure(err);
 			const frames = cleanFrames(struct.frames.slice(2));
 
-			this.consoleAdvice.push(() => {
+			const adviceFactory = (): DiagnosticAdvice => {
 				let text;
 				if (args.length === 1 && typeof args[0] === "string") {
 					text = markup`${args[0]}`;
 				} else {
 					text = joinMarkup(
 						args.map((arg) =>
-							serializeLazyMarkup(prettyFormat(arg, {accurate: true}))
+							serializeLazyMarkup(prettyFormat(arg))
 						),
 						markup` `,
 					);
@@ -205,7 +202,9 @@ export default class TestWorkerFile {
 					},
 					...getErrorStackAdvice({...struct, frames}),
 				];
-			});
+			};
+
+			this.consoleAdvice.push([adviceFactory, Date.now()]);
 		};
 
 		function log(...args: unknown[]): void {
@@ -268,6 +267,10 @@ export default class TestWorkerFile {
 		return {
 			__ROME__TEST_OPTIONS__: testOptions,
 			console: this.createConsole(),
+			process: {
+				// Suppress process events
+				on() {},
+			}
 		};
 	}
 
@@ -312,7 +315,7 @@ export default class TestWorkerFile {
 
 		// Emit error about no found tests. If we already have diagnostics then there was an issue
 		// during initialization.
-		if (this.foundTests.size === 0 && !this.hasDiagnostics) {
+		if (this.foundTests.size === 0 && !this.hasUserDiagnostics) {
 			await this.emitDiagnostic({
 				location: {
 					path: this.path,
@@ -377,7 +380,7 @@ export default class TestWorkerFile {
 			if (!this.globalOptions.focusAllowed) {
 				const diag = this.deriveDiagnosticFromErrorStructure(callsiteStruct);
 
-				this.pendingDiagnostics.push({
+				this.emitDiagnostic({
 					...diag,
 					description: {
 						...diag.description,
@@ -403,7 +406,10 @@ export default class TestWorkerFile {
 			},
 		};
 
-		this.hasDiagnostics = true;
+		if (test !== undefined) {
+			this.hasUserDiagnostics = true;
+		}
+
 		await this.bridge.events.testDiagnostic.call({
 			diagnostic: diag,
 			origin: undefined,
@@ -430,6 +436,21 @@ export default class TestWorkerFile {
 				},
 			},
 		);
+	}
+
+	public emitSnapshotDiscovery(snapshotPath: AbsoluteFilePath) {
+		this.bridge.events.testDiskSnapshotDiscovered.send({
+			testPath: this.path,
+			snapshotPath,
+		});
+	}
+
+	public emitSnapshotEntry(snapshotPath: AbsoluteFilePath, entry: SnapshotEntry): void {
+		this.bridge.events.testSnapshotEntry.send({
+			testPath: this.path,
+			snapshotPath,
+			entry,
+		});
 	}
 
 	private async emitError(
@@ -632,28 +653,12 @@ export default class TestWorkerFile {
 		}
 	}
 
-	public async teardown(): Promise<TestWorkerFileResult> {
-		if (this.hasDiagnostics && this.consoleAdvice.length > 0) {
-			let advice: DiagnosticAdvice = [];
-			for (const factory of this.consoleAdvice) {
-				advice = advice.concat(factory());
-			}
-			await this.emitDiagnostic({
-				description: descriptions.TESTS.LOGS(advice),
-				location: {
-					path: this.path,
-				},
-			});
+	public getConsoleAdvice(): TestConsoleAdvice {
+		const advice: TestConsoleAdvice = [];
+		for (const [factory, time] of this.consoleAdvice) {
+			advice.push([factory(), time]);
 		}
-
-		for (const diag of this.pendingDiagnostics) {
-			await this.emitDiagnostic(diag);
-		}
-
-		return {
-			snapshots: this.snapshotManager.getModifiedSnapshots(),
-			inlineSnapshotUpdates: this.snapshotManager.inlineSnapshotsUpdates,
-		};
+		return advice;
 	}
 
 	private async wrap(callback: () => Promise<void>): Promise<void> {

@@ -18,7 +18,7 @@ import {
 } from "@internal/diagnostics";
 import {BridgeErrorDetails, createBridge} from "@internal/events";
 import {FileReference} from "../types/files";
-import {InlineSnapshotUpdates} from "@internal/core/worker/test/SnapshotManager";
+import {InlineSnapshotUpdates, SnapshotEntry} from "@internal/core/worker/test/SnapshotManager";
 import {
 	AbsoluteFilePath,
 	AbsoluteFilePathMap,
@@ -47,7 +47,7 @@ import {
 	WorkerUpdateInlineSnapshotResult,
 } from "@internal/core";
 import {WorkerPartialManifest} from "@internal/core/worker/types";
-import {TestWorkerFileResult} from "@internal/core/worker/test/TestWorkerFile";
+import { TestConsoleAdvice } from "@internal/core/worker/test/TestWorkerFile";
 
 export default createBridge({
 	debugName: "Worker",
@@ -58,6 +58,31 @@ export default createBridge({
 		log: createBridgeEventDeclaration<Omit<ServerBridgeLog, "origin">, void>(),
 
 		fatalError: createBridgeEventDeclaration<BridgeErrorDetails, void>(),
+		
+		testInlineSnapshots: createBridgeEventDeclaration<
+			{
+				testPath: AbsoluteFilePath;
+				updates: InlineSnapshotUpdates;
+			},
+			void
+		>(),
+		
+		testSnapshotEntry: createBridgeEventDeclaration<
+			{
+				testPath: AbsoluteFilePath;
+				snapshotPath: AbsoluteFilePath;
+				entry: SnapshotEntry;
+			},
+			void
+		>(),
+
+		testDiskSnapshotDiscovered: createBridgeEventDeclaration<
+			{
+				testPath: AbsoluteFilePath;
+				snapshotPath: AbsoluteFilePath;
+			},
+			void
+		>(),
 
 		testStart: createBridgeEventDeclaration<
 			{
@@ -217,22 +242,21 @@ export default createBridge({
 			}
 		>(),
 
-		receiveCompiledTestDependency: createBridgeEventDeclaration<
+		testReceiveCompiledDependency: createBridgeEventDeclaration<
 			AbsoluteFilePathMap<string>,
 			void
 		>(),
 
-		prepareTest: createBridgeEventDeclaration<
+		testPrepare: createBridgeEventDeclaration<
 			TestWorkerPrepareTestOptions,
 			TestWorkerPrepareTestResult
 		>(),
 
-		runTest: createBridgeEventDeclaration<TestWorkerRunTestOptions, void>(),
+		testRun: createBridgeEventDeclaration<TestWorkerRunTestOptions, void>(),
 
-		teardownTest: createBridgeEventDeclaration<
-			AbsoluteFilePath,
-			TestWorkerFileResult
-		>(),
+		testGetConsoleAdvice: createBridgeEventDeclaration<AbsoluteFilePath, TestConsoleAdvice>(),
+
+		testGetRawSnapshot: createBridgeEventDeclaration<{path: AbsoluteFilePath; snapshotPath: AbsoluteFilePath}, string>(),
 	},
 
 	init(bridge) {

@@ -187,6 +187,7 @@ export enum ERROR_CODES {
 }
 
 const errorTypes: Map<ERROR_CODES, Class<Error>> = new Map();
+errorTypes.set(ERROR_CODES.REGULAR, Error);
 errorTypes.set(ERROR_CODES.EVAL, EvalError);
 errorTypes.set(ERROR_CODES.REFERENCE, ReferenceError);
 errorTypes.set(ERROR_CODES.SYNTAX, SyntaxError);
@@ -205,7 +206,7 @@ export function validateErrorCode(code: number): ERROR_CODES {
 
 export function instanceToErrorCode(err: Error): ERROR_CODES {
 	for (const [code, ErrorClass] of errorTypes) {
-		if (isSafeInstanceof(err, ErrorClass)) {
+		if (err.name === ErrorClass.name || isSafeInstanceof(err, ErrorClass)) {
 			return code;
 		}
 	}

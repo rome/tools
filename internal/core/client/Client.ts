@@ -59,6 +59,7 @@ import {AbsoluteFilePath} from "@internal/path";
 import {NodeSystemError} from "@internal/errors";
 import SilentClientError from "./SilentClientError";
 import {Resource, createResourceRoot} from "@internal/resources";
+import FatalErrorHandler from "../common/FatalErrorHandler";
 
 export function getFilenameTimestamp(): string {
 	return new Date().toISOString().replace(/[^0-9a-zA-Z]/g, "");
@@ -69,7 +70,6 @@ const NEW_SERVER_INIT_TIMEOUT = 10_000;
 type ClientOptions = {
 	dedicated: boolean;
 	terminalFeatures: ClientTerminalFeatures;
-	globalErrorHandlers: boolean;
 	stdout: stream.Writable;
 	stderr: stream.Writable;
 	stdin: NodeJS.ReadStream;
@@ -136,11 +136,24 @@ export default class Client {
 			opts.stderr,
 			this.options.terminalFeatures,
 		);
+		
+		this.fatalErrorHandler = new FatalErrorHandler({
+			source: markup`cli`,
+			exit: this.options.dedicated,
+			getReporter: () => {
+				return this.reporter;
+			},
+		});
+
+		if (this.options.dedicated) {
+			this.resources.add(this.fatalErrorHandler.setupGlobalHandlers());
+		}
 	}
 
 	public reporter: Reporter;
 	public derivedReporterStreams: ReporterDerivedStreams;
 
+	private fatalErrorHandler: FatalErrorHandler;
 	private queryCounter: number;
 	private userConfig: UserConfig;
 	private options: ClientOptions;
@@ -633,7 +646,6 @@ export default class Client {
 		const server = new Server({
 			userConfig: this.userConfig,
 			dedicated: this.options.dedicated,
-			globalErrorHandlers: this.options.globalErrorHandlers,
 			daemon: false,
 			...opts,
 		});

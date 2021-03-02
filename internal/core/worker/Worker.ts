@@ -23,7 +23,7 @@ import {ConstJSSourceType, JSRoot} from "@internal/ast";
 import Logger from "../common/utils/Logger";
 import {Profiler} from "@internal/v8";
 import {UserConfig} from "@internal/core";
-import {DiagnosticsError} from "@internal/diagnostics";
+import {deriveDiagnosticFromError, DiagnosticsError, DIAGNOSTIC_CATEGORIES} from "@internal/diagnostics";
 import {
 	AbsoluteFilePath,
 	AbsoluteFilePathMap,
@@ -51,10 +51,9 @@ import {DEFAULT_TERMINAL_FEATURES} from "@internal/cli-environment";
 import {
 	Resource,
 	createResourceRoot,
-	safeProcessExit,
 } from "@internal/resources";
 
-import WorkerTests from "./test/WorkerTests";
+import TestWorker from "./test/TestWorker";
 import inspector = require("inspector");
 
 export default class Worker {
@@ -90,13 +89,29 @@ export default class Worker {
 
 		this.cache = new WorkerCache(this);
 		this.api = new WorkerAPI(this, this.logger, this.cache);
-		this.tests = new WorkerTests(this);
+		this.tests = new TestWorker(this);
 
 		this.fatalErrorHandler = new FatalErrorHandler({
-			getOptions: (err) => {
-				try {
-					const {bridge} = this;
+			overrideHandle: (err) => {
+				const {bridge} = this;
 
+				if (opts.type === "test") {
+					bridge.events.testDiagnostic.send({
+						testPath: undefined,
+						origin: undefined,
+						diagnostic: deriveDiagnosticFromError(
+							err,
+							{
+								description: {
+									category: DIAGNOSTIC_CATEGORIES["tests/unhandledRejection"],
+								},
+							},
+						),
+					});
+					return true;
+				}
+
+				try {
 					// Dispatch error to the server and trigger a fatal
 					bridge.events.fatalError.send(bridge.serializeCustomError(err));
 				} catch (err) {
@@ -106,25 +121,19 @@ export default class Worker {
 						);
 						console.error(err.stack);
 					}
-					safeProcessExit(1);
+					process.exit(1);
 				}
-				return false;
+
+				return true;
 			},
 		});
 
 		if (opts.dedicated) {
 			this.resources.add(this.fatalErrorHandler.setupGlobalHandlers());
 
-			// Pretty sure we'll hit another error condition before this but for completeness
-			/*opts.bridge.monitorHeartbeat(
-				LAG_INTERVAL,
-				({iterations, totalTime}) => {
-					if (iterations >= 5) {
-						console.error(`Server has not responded for ${totalTime}ms. Exiting.`)
-						process.exit(1);
-					}
-				},
-			);*/
+			this.bridge.endEvent.subscribe(err => {
+				this.fatalErrorHandler.handle(err);
+			});
 		}
 	}
 
@@ -138,7 +147,7 @@ export default class Worker {
 	public resources: Resource;
 	public bridge: BridgeClient<typeof WorkerBridge>;
 
-	private tests: WorkerTests;
+	private tests: TestWorker;
 	private loggerStream: ReporterConditionalStream;
 	private partialManifests: ExtendedMap<number, WorkerPartialManifest>;
 	private projects: WorkerProjects;
@@ -188,7 +197,7 @@ export default class Worker {
 
 	public async init() {
 		const {inspectorPort} = this.options;
-		if (inspectorPort !== undefined) {
+		if (inspectorPort !== undefined && inspector.url() === undefined) {
 			inspector.open(inspectorPort);
 		}
 

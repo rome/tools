@@ -49,6 +49,7 @@ import {
 	isBridgeResponseMessage,
 } from "./utils";
 import {Duration, DurationMeasurer} from "@internal/numbers";
+import util = require("util");
 
 type ErrorSerial<Data extends RSERObject> = {
 	serialize: (err: Error) => Data;
@@ -80,6 +81,7 @@ export default class Bridge<
 		this.hasHandshook = false;
 		this.endError = undefined;
 		this.debugName = def.debugName;
+		this.displayName = `${def.debugName}(${type})`;
 		this.type = type;
 		this.options = opts;
 
@@ -91,6 +93,7 @@ export default class Bridge<
 		const debugPrefix = `Bridge.${type}<${this.debugName}>`;
 		this[Symbol.toStringTag] = debugPrefix;
 
+		this.heartbeatEvent = new Event(`${debugPrefix}.heartbeatEvent`);
 		this.receivedMessageEvent = new Event(`${debugPrefix}.receivedMessageEvent`);
 		this.sendMessageEvent = new Event(`${debugPrefix}.sendMessageEvent`);
 		this.handshakeEvent = new Event(`${debugPrefix}.handshake`);
@@ -169,7 +172,9 @@ export default class Bridge<
 	public eventsIdCounter: number;
 
 	public type: BridgeType;
+	public displayName: string;
 	public open: boolean;
+	public heartbeatEvent: Event<void, void>;
 	public receivedMessageEvent: Event<BridgeMessage, void>;
 	public sendMessageEvent: Event<BridgeMessage, void>;
 	public resources: Resource;
@@ -190,10 +195,6 @@ export default class Bridge<
 	public listeners: Set<number>;
 	private lastSentSubscriptionChange: Map<number, boolean>;
 	private customErrorTransports: Map<string, ErrorSerial<RSERObject>>;
-
-	public getDisplayName(): string {
-		return `${this.debugName}(${this.type})`;
-	}
 
 	private createInternalBiEvent<Param extends RSERValue, Ret extends RSERValue>(
 		name: string,
@@ -280,7 +281,7 @@ export default class Bridge<
 				});
 			});
 
-			await this.receivedMessageEvent.wait(undefined);
+			await this.heartbeatEvent.wait(undefined);
 			timer.release();
 			checkFresh();
 		};
@@ -555,7 +556,7 @@ export default class Bridge<
 
 	public serializeCustomError(errRaw: unknown): BridgeErrorDetails {
 		// Just in case something that wasn't an Error was thrown
-		const err = errRaw instanceof Error ? errRaw : new Error(String(errRaw));
+		const err = util.types.isNativeError(errRaw) ? errRaw : new Error(String(errRaw));
 
 		// If we have no custom error transport then we'll just rely on the binary codec transport
 		const transport = this.customErrorTransports.get(err.name);
@@ -636,6 +637,7 @@ export default class Bridge<
 	public async handleMessage(msg: BridgeMessage) {
 		try {
 			this.assertOpen();
+			this.heartbeatEvent.send();
 			this.receivedMessageEvent.send(msg);
 
 			switch (msg[0]) {
@@ -646,7 +648,7 @@ export default class Bridge<
 				}
 
 				case BridgeMessageCodes.HEARTBEAT: {
-					// Only valuable for receivedMessageEvent
+					// Doesn't need to be handled as we just want it for the events
 					break;
 				}
 

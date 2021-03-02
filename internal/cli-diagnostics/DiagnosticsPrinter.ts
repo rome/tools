@@ -801,6 +801,26 @@ export default class DiagnosticsPrinter extends Error {
 			},
 		);
 	}
+	
+	// Do NOT use this method. It is for usage in FatalErrorHandler only as it needs to terminate immediately.
+	// We lose out on essential file data by performing this synchronously, do not have a footer, and perform no filtering.
+	public printBodySync(): void {
+		const diagnostics = this.processor.getDiagnostics();
+		
+		const reporter = this.reporter.fork({
+			shouldRedirectOutToErr: true,
+		});
+
+		for (const diag of diagnostics) {
+			this.printAuxiliaryDiagnostic(diag);
+		}
+
+		for (const diag of diagnostics) {
+			this.printDiagnostic(diag, reporter)
+		}
+
+		reporter.resources.release();
+	}
 
 	public async print(
 		{showFooter = true}: {

@@ -761,13 +761,9 @@ export default class TestAPI implements TestHelper {
 	): string {
 		let language: undefined | string = opts.language;
 
-		let formatted = "";
-		if (typeof expected === "string") {
-			formatted = expected;
-		} else {
-			// Close enough syntax highlighting to pretty-format
+		let formatted = this.snapshotManager.formatValue(expected);
+		if (typeof expected !== "string") {
 			language = "javascript";
-			formatted = prettyFormatUntrusted(expected);
 		}
 
 		const callError = getErrorStructure(new Error(), 2);

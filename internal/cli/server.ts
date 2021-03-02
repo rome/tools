@@ -24,7 +24,6 @@ export default async function server() {
 		userConfig,
 		dedicated: true,
 		daemon: true,
-		globalErrorHandlers: true,
 	});
 
 	await server.init();
