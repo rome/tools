@@ -8,42 +8,31 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation core/uncategorised/184/input.js 1:0-1:11
-	path: UIDPath<core/uncategorised/184/input.js>
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation core/uncategorised/184/input.js 1:0-1:11
 			expression: JSBinaryExpression {
-				operator: "<<"
-				loc: SourceLocation core/uncategorised/184/input.js 1:0-1:11
-				right: JSReferenceIdentifier {
-					name: "z"
-					loc: SourceLocation core/uncategorised/184/input.js 1:10-1:11 (z)
-				}
 				left: JSBinaryExpression {
+					left: JSReferenceIdentifier {name: "x", loc: SourceLocation core/uncategorised/184/input.js 1:0-1:1 (x)}
 					operator: "<<"
+					right: JSReferenceIdentifier {name: "y", loc: SourceLocation core/uncategorised/184/input.js 1:5-1:6 (y)}
 					loc: SourceLocation core/uncategorised/184/input.js 1:0-1:6
-					left: JSReferenceIdentifier {
-						name: "x"
-						loc: SourceLocation core/uncategorised/184/input.js 1:0-1:1 (x)
-					}
-					right: JSReferenceIdentifier {
-						name: "y"
-						loc: SourceLocation core/uncategorised/184/input.js 1:5-1:6 (y)
-					}
 				}
+				operator: "<<"
+				right: JSReferenceIdentifier {name: "z", loc: SourceLocation core/uncategorised/184/input.js 1:10-1:11 (z)}
+				loc: SourceLocation core/uncategorised/184/input.js 1:0-1:11
 			}
+			loc: SourceLocation core/uncategorised/184/input.js 1:0-1:11
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	path: UIDPath<core/uncategorised/184/input.js>
+	sourceType: "script"
+	syntax: []
+	loc: SourceLocation core/uncategorised/184/input.js 1:0-1:11
 }
 ```
 

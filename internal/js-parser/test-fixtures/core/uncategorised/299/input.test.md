@@ -8,42 +8,31 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation core/uncategorised/299/input.js 1:0-1:14
-	path: UIDPath<core/uncategorised/299/input.js>
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation core/uncategorised/299/input.js 1:0-1:14
 			expression: JSFunctionExpression {
-				id: undefined
-				loc: SourceLocation core/uncategorised/299/input.js 1:1-1:13
-				body: JSBlockStatement {
-					body: Array []
-					directives: Array []
-					loc: SourceLocation core/uncategorised/299/input.js 1:11-1:13
-				}
+				body: JSBlockStatement {body: [], directives: [], loc: SourceLocation core/uncategorised/299/input.js 1:11-1:13}
 				head: JSFunctionHead {
 					async: false
 					generator: false
 					hasHoistedVars: false
-					params: Array []
-					rest: undefined
-					returnType: undefined
-					thisType: undefined
-					typeParameters: undefined
+					params: []
 					loc: SourceLocation core/uncategorised/299/input.js 1:9-1:11
 				}
+				loc: SourceLocation core/uncategorised/299/input.js 1:1-1:13
 			}
+			loc: SourceLocation core/uncategorised/299/input.js 1:0-1:14
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	path: UIDPath<core/uncategorised/299/input.js>
+	sourceType: "script"
+	syntax: []
+	loc: SourceLocation core/uncategorised/299/input.js 1:0-1:14
 }
 ```
 

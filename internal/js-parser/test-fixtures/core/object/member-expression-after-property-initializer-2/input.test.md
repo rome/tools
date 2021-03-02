@@ -8,115 +8,86 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: true
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation core/object/member-expression-after-property-initializer-2/input.js 1:0-1:24
-	path: UIDPath<core/object/member-expression-after-property-initializer-2/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:5
-				path: UIDPath<core/object/member-expression-after-property-initializer-2/input.js>
-				start: Position 1:4
-			}
-			description: Object {
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Unexpected character <emphasis>=</emphasis>"}
-				advice: Array [
-					log {
-						category: "info"
-						text: RAW_MARKUP {value: "Expected character <emphasis>,</emphasis>"}
-					}
-				]
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation core/object/member-expression-after-property-initializer-2/input.js 1:0-1:17
 			expression: JSMemberExpression {
-				loc: SourceLocation core/object/member-expression-after-property-initializer-2/input.js 1:0-1:17
-				property: JSStaticMemberProperty {
-					value: JSIdentifier {
-						name: "d"
-						loc: SourceLocation core/object/member-expression-after-property-initializer-2/input.js 1:16-1:17 (d)
-					}
-					loc: SourceLocation core/object/member-expression-after-property-initializer-2/input.js 1:16-1:17 (d)
-				}
 				object: JSSequenceExpression {
-					loc: SourceLocation core/object/member-expression-after-property-initializer-2/input.js 1:1-1:15
-					expressions: Array [
+					expressions: [
 						JSAssignmentExpression {
-							operator: "="
-							loc: SourceLocation core/object/member-expression-after-property-initializer-2/input.js 1:1-1:8
-							right: JSNumericLiteral {
-								value: 42
-								format: undefined
-								loc: SourceLocation core/object/member-expression-after-property-initializer-2/input.js 1:6-1:8
-							}
 							left: JSAssignmentObjectPattern {
-								rest: undefined
-								loc: SourceLocation core/object/member-expression-after-property-initializer-2/input.js 1:1-1:3
-								properties: Array [
+								properties: [
 									JSAssignmentObjectPatternProperty {
 										key: JSStaticPropertyKey {
-											value: JSIdentifier {
-												name: "a"
-												loc: SourceLocation core/object/member-expression-after-property-initializer-2/input.js 1:2-1:3 (a)
-											}
+											value: JSIdentifier {name: "a", loc: SourceLocation core/object/member-expression-after-property-initializer-2/input.js 1:2-1:3 (a)}
 											loc: SourceLocation core/object/member-expression-after-property-initializer-2/input.js 1:2-1:3
 										}
-										value: JSAssignmentIdentifier {
-											name: "a"
-											loc: SourceLocation core/object/member-expression-after-property-initializer-2/input.js 1:2-1:3 (a)
-										}
+										value: JSAssignmentIdentifier {name: "a", loc: SourceLocation core/object/member-expression-after-property-initializer-2/input.js 1:2-1:3 (a)}
 										loc: SourceLocation core/object/member-expression-after-property-initializer-2/input.js 1:2-1:3
 									}
 								]
+								loc: SourceLocation core/object/member-expression-after-property-initializer-2/input.js 1:1-1:3
 							}
+							operator: "="
+							right: JSNumericLiteral {value: 42, loc: SourceLocation core/object/member-expression-after-property-initializer-2/input.js 1:6-1:8}
+							loc: SourceLocation core/object/member-expression-after-property-initializer-2/input.js 1:1-1:8
 						}
-						JSReferenceIdentifier {
-							name: "b"
-							loc: SourceLocation core/object/member-expression-after-property-initializer-2/input.js 1:10-1:11 (b)
-						}
+						JSReferenceIdentifier {name: "b", loc: SourceLocation core/object/member-expression-after-property-initializer-2/input.js 1:10-1:11 (b)}
 					]
+					loc: SourceLocation core/object/member-expression-after-property-initializer-2/input.js 1:0-1:15
 				}
+				property: JSStaticMemberProperty {
+					value: JSIdentifier {name: "d", loc: SourceLocation core/object/member-expression-after-property-initializer-2/input.js 1:16-1:17 (d)}
+					loc: SourceLocation core/object/member-expression-after-property-initializer-2/input.js 1:16-1:17 (d)
+				}
+				loc: SourceLocation core/object/member-expression-after-property-initializer-2/input.js 1:0-1:17
 			}
+			loc: SourceLocation core/object/member-expression-after-property-initializer-2/input.js 1:0-1:17
 		}
 		JSExpressionStatement {
-			loc: SourceLocation core/object/member-expression-after-property-initializer-2/input.js 1:17-1:23
 			expression: JSAssignmentExpression {
-				operator: "="
-				loc: SourceLocation core/object/member-expression-after-property-initializer-2/input.js 1:17-1:23
 				left: JSAssignmentIdentifier {
 					name: "INVALID_PLACEHOLDER"
 					loc: SourceLocation core/object/member-expression-after-property-initializer-2/input.js 1:17-1:18
 				}
-				right: JSObjectExpression {
-					properties: Array []
-					loc: SourceLocation core/object/member-expression-after-property-initializer-2/input.js 1:21-1:23
-				}
+				operator: "="
+				right: JSObjectExpression {properties: [], loc: SourceLocation core/object/member-expression-after-property-initializer-2/input.js 1:21-1:23}
+				loc: SourceLocation core/object/member-expression-after-property-initializer-2/input.js 1:17-1:23
 			}
+			loc: SourceLocation core/object/member-expression-after-property-initializer-2/input.js 1:17-1:23
 		}
 		JSExpressionStatement {
-			loc: SourceLocation core/object/member-expression-after-property-initializer-2/input.js 1:23-1:24
 			expression: JSReferenceIdentifier {
 				name: "INVALID_PLACEHOLDER"
 				loc: SourceLocation core/object/member-expression-after-property-initializer-2/input.js 1:23-1:24
 			}
+			loc: SourceLocation core/object/member-expression-after-property-initializer-2/input.js 1:23-1:24
 		}
 	]
+	comments: []
+	corrupt: true
+	diagnostics: [
+		{
+			description: {
+				advice: [log {category: "info", text: RAW_MARKUP {value: "Expected character <emphasis>,</emphasis>"}}]
+				category: ["parse"]
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "Unexpected character <emphasis>=</emphasis>"}
+			}
+			location: {
+				language: "js"
+				path: UIDPath<core/object/member-expression-after-property-initializer-2/input.js>
+				end: Position 1:5
+				start: Position 1:4
+			}
+			origins: [{category: "parse"}]
+		}
+	]
+	directives: []
+	hasHoistedVars: false
+	path: UIDPath<core/object/member-expression-after-property-initializer-2/input.js>
+	sourceType: "script"
+	syntax: []
+	loc: SourceLocation core/object/member-expression-after-property-initializer-2/input.js 1:0-1:24
 }
 ```
 

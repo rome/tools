@@ -6,63 +6,22 @@
 
 ```javascript
 CSSRoot {
-	comments: Array []
-	corrupt: false
-	integrity: undefined
-	loc: SourceLocation invalid/calc-division/input.css 1:0-3:1
-	path: RelativePath<invalid/calc-division/input.css>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "css"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Incorrect character, expected a number or a parenthesis"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "css"
-				sourceText: undefined
-				end: Position 2:20
-				path: RelativePath<invalid/calc-division/input.css>
-				start: Position 2:17
-			}
-		}
-	]
-	body: Array [
+	body: [
 		CSSRule {
-			loc: SourceLocation invalid/calc-division/input.css 1:0-3:1
-			prelude: Array [
-				CSSSelector {
-					loc: SourceLocation invalid/calc-division/input.css 1:0-1:7
-					patterns: Array [
-						CSSClassSelector {
-							value: "style"
-							loc: SourceLocation invalid/calc-division/input.css 1:0-1:6
-						}
-					]
-				}
-			]
 			block: CSSBlock {
-				value: Array [
+				value: [
 					CSSDeclaration {
 						name: "width"
-						value: Array [
+						value: [
 							CSSCalcFunction {
 								name: "calc"
-								loc: SourceLocation invalid/calc-division/input.css 2:13-2:20
-								params: Array [
+								params: [
 									CSSCalcSum {
-										value: Array [
+										value: [
 											CSSCalcProduct {
-												value: Array [
+												value: [
 													CSSCalcValue {
-														value: CSSDimension {
-															value: 2
-															unit: "px"
-															loc: SourceLocation invalid/calc-division/input.css 2:13-2:13
-														}
+														value: CSSDimension {value: 2, unit: "px", loc: SourceLocation invalid/calc-division/input.css 2:13-2:13}
 														loc: SourceLocation invalid/calc-division/input.css 2:13-2:16
 													}
 												]
@@ -72,11 +31,9 @@ CSSRoot {
 										loc: SourceLocation invalid/calc-division/input.css 2:13-2:17
 									}
 								]
+								loc: SourceLocation invalid/calc-division/input.css 2:13-2:20
 							}
-							CSSRaw {
-								value: undefined
-								loc: SourceLocation invalid/calc-division/input.css 2:20-2:21
-							}
+							CSSRaw {loc: SourceLocation invalid/calc-division/input.css 2:20-2:21}
 						]
 						important: false
 						loc: SourceLocation invalid/calc-division/input.css 2:1-2:21
@@ -85,7 +42,30 @@ CSSRoot {
 				startingTokenValue: "{"
 				loc: SourceLocation invalid/calc-division/input.css 1:7-3:1
 			}
+			prelude: [
+				CSSSelector {
+					patterns: [CSSClassSelector {value: "style", loc: SourceLocation invalid/calc-division/input.css 1:0-1:6}]
+					loc: SourceLocation invalid/calc-division/input.css 1:0-1:7
+				}
+			]
+			loc: SourceLocation invalid/calc-division/input.css 1:0-3:1
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "css"
+				message: RAW_MARKUP {value: "Incorrect character, expected a number or a parenthesis"}
+			}
+			location: {language: "css", path: RelativePath<invalid/calc-division/input.css>, end: Position 2:20, start: Position 2:17}
+			origins: [{category: "parse"}]
+		}
+	]
+	path: RelativePath<invalid/calc-division/input.css>
+	loc: SourceLocation invalid/calc-division/input.css 1:0-3:1
 }
 ```

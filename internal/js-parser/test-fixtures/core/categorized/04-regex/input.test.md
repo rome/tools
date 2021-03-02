@@ -8,69 +8,33 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation core/categorized/04-regex/input.js 1:0-6:0
-	path: UIDPath<core/categorized/04-regex/input.js>
-	body: Array [
+	body: [
 		JSFunctionDeclaration {
-			id: JSBindingIdentifier {
-				name: "fn"
-				loc: SourceLocation core/categorized/04-regex/input.js 1:9-1:11 (fn)
-			}
-			loc: SourceLocation core/categorized/04-regex/input.js 1:0-5:1
-			head: JSFunctionHead {
-				async: false
-				generator: false
-				hasHoistedVars: false
-				params: Array []
-				rest: undefined
-				returnType: undefined
-				thisType: undefined
-				typeParameters: undefined
-				loc: SourceLocation core/categorized/04-regex/input.js 1:11-1:13
-			}
+			id: JSBindingIdentifier {name: "fn", loc: SourceLocation core/categorized/04-regex/input.js 1:9-1:11 (fn)}
 			body: JSBlockStatement {
-				directives: Array []
-				loc: SourceLocation core/categorized/04-regex/input.js 1:14-5:1
-				body: Array [
-					JSReturnStatement {
-						argument: undefined
-						loc: SourceLocation core/categorized/04-regex/input.js 2:2-2:8
-					}
+				body: [
+					JSReturnStatement {loc: SourceLocation core/categorized/04-regex/input.js 2:2-2:8}
 					JSFunctionDeclaration {
-						id: JSBindingIdentifier {
-							name: "foo"
-							loc: SourceLocation core/categorized/04-regex/input.js 3:11-3:14 (foo)
-						}
-						loc: SourceLocation core/categorized/04-regex/input.js 3:2-3:19
-						body: JSBlockStatement {
-							body: Array []
-							directives: Array []
-							loc: SourceLocation core/categorized/04-regex/input.js 3:17-3:19
-						}
+						id: JSBindingIdentifier {name: "foo", loc: SourceLocation core/categorized/04-regex/input.js 3:11-3:14 (foo)}
+						body: JSBlockStatement {body: [], directives: [], loc: SourceLocation core/categorized/04-regex/input.js 3:17-3:19}
 						head: JSFunctionHead {
 							async: false
 							generator: false
 							hasHoistedVars: false
-							params: Array []
-							rest: undefined
-							returnType: undefined
-							thisType: undefined
-							typeParameters: undefined
+							params: []
 							loc: SourceLocation core/categorized/04-regex/input.js 3:14-3:16
 						}
+						loc: SourceLocation core/categorized/04-regex/input.js 3:2-3:19
 					}
 					JSExpressionStatement {
-						loc: SourceLocation core/categorized/04-regex/input.js 4:2-4:7
 						expression: JSRegExpLiteral {
+							expression: JSRegExpSubExpression {
+								body: [
+									JSRegExpCharacter {value: "4", loc: SourceLocation core/categorized/04-regex/input.js 4:3-4:4}
+									JSRegExpCharacter {value: "2", loc: SourceLocation core/categorized/04-regex/input.js 4:4-4:5}
+								]
+								loc: SourceLocation core/categorized/04-regex/input.js 4:3-4:5
+							}
 							global: false
 							insensitive: true
 							multiline: false
@@ -78,25 +42,32 @@ JSRoot {
 							sticky: false
 							unicode: false
 							loc: SourceLocation core/categorized/04-regex/input.js 4:2-4:7
-							expression: JSRegExpSubExpression {
-								loc: SourceLocation core/categorized/04-regex/input.js 4:3-4:5
-								body: Array [
-									JSRegExpCharacter {
-										value: "4"
-										loc: SourceLocation core/categorized/04-regex/input.js 4:3-4:4
-									}
-									JSRegExpCharacter {
-										value: "2"
-										loc: SourceLocation core/categorized/04-regex/input.js 4:4-4:5
-									}
-								]
-							}
 						}
+						loc: SourceLocation core/categorized/04-regex/input.js 4:2-4:7
 					}
 				]
+				directives: []
+				loc: SourceLocation core/categorized/04-regex/input.js 1:14-5:1
 			}
+			head: JSFunctionHead {
+				async: false
+				generator: false
+				hasHoistedVars: false
+				params: []
+				loc: SourceLocation core/categorized/04-regex/input.js 1:11-1:13
+			}
+			loc: SourceLocation core/categorized/04-regex/input.js 1:0-5:1
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	path: UIDPath<core/categorized/04-regex/input.js>
+	sourceType: "script"
+	syntax: []
+	loc: SourceLocation core/categorized/04-regex/input.js 1:0-6:0
 }
 ```
 

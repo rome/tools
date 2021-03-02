@@ -8,58 +8,42 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: true
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation core/uncategorised/296/input.js 1:0-1:29
-	path: UIDPath<core/uncategorised/296/input.js>
-	body: Array [
+	body: [
 		JSVariableDeclarationStatement {
-			loc: SourceLocation core/uncategorised/296/input.js 1:0-1:29
 			declaration: JSVariableDeclaration {
 				kind: "var"
-				loc: SourceLocation core/uncategorised/296/input.js 1:0-1:29
-				declarations: Array [
+				declarations: [
 					JSVariableDeclarator {
-						id: JSBindingIdentifier {
-							name: "hi"
-							loc: SourceLocation core/uncategorised/296/input.js 1:4-1:6 (hi)
-						}
-						loc: SourceLocation core/uncategorised/296/input.js 1:4-1:28
+						id: JSBindingIdentifier {name: "hi", loc: SourceLocation core/uncategorised/296/input.js 1:4-1:6 (hi)}
 						init: JSFunctionExpression {
-							id: JSBindingIdentifier {
-								name: "eval"
-								loc: SourceLocation core/uncategorised/296/input.js 1:18-1:22 (eval)
-							}
-							loc: SourceLocation core/uncategorised/296/input.js 1:9-1:28
-							body: JSBlockStatement {
-								body: Array []
-								directives: Array []
-								loc: SourceLocation core/uncategorised/296/input.js 1:25-1:28
-							}
+							id: JSBindingIdentifier {name: "eval", loc: SourceLocation core/uncategorised/296/input.js 1:18-1:22 (eval)}
+							body: JSBlockStatement {body: [], directives: [], loc: SourceLocation core/uncategorised/296/input.js 1:25-1:28}
 							head: JSFunctionHead {
 								async: false
 								generator: false
 								hasHoistedVars: false
-								params: Array []
-								rest: undefined
-								returnType: undefined
-								thisType: undefined
-								typeParameters: undefined
+								params: []
 								loc: SourceLocation core/uncategorised/296/input.js 1:22-1:24
 							}
+							loc: SourceLocation core/uncategorised/296/input.js 1:9-1:28
 						}
+						loc: SourceLocation core/uncategorised/296/input.js 1:4-1:28
 					}
 				]
+				loc: SourceLocation core/uncategorised/296/input.js 1:0-1:29
 			}
+			loc: SourceLocation core/uncategorised/296/input.js 1:0-1:29
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: true
+	path: UIDPath<core/uncategorised/296/input.js>
+	sourceType: "script"
+	syntax: []
+	loc: SourceLocation core/uncategorised/296/input.js 1:0-1:29
 }
 ```
 

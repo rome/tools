@@ -21,7 +21,7 @@ const relativeTests: [string, string, string][] = [
 	["c:/aaaa/bbbb", "c:/aaaa/cccc", "../cccc"],
 	["c:/aaaa/", "c:/aaaa/cccc", "cccc"],
 	["c:/", "c:\\aaaa\\bbbb", "aaaa/bbbb"],
-	["c:/aaaa/bbbb", "d:\\", "D:"],
+	["c:/aaaa/bbbb", "d:\\", "D:\\"],
 	["c:/aaaaa/", "c:/aaaa/cccc", "../aaaa/cccc"],
 	["C:\\foo\\bar\\baz\\quux", "C:\\", "../../../.."],
 	["C:\\foo\\test", "C:\\foo\\test\\bar\\package.json", "bar/package.json"],

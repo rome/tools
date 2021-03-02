@@ -8,31 +8,29 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: true
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation core/uncategorised/105/input.js 1:0-1:17
-	path: UIDPath<core/uncategorised/105/input.js>
-	body: Array [
+	body: [
 		JSVariableDeclarationStatement {
-			loc: SourceLocation core/uncategorised/105/input.js 1:0-1:17
 			declaration: JSVariableDeclaration {
 				kind: "var"
-				loc: SourceLocation core/uncategorised/105/input.js 1:0-1:17
-				declarations: Array [
+				declarations: [
 					JSVariableDeclarator {
-						id: JSBindingIdentifier {
-							name: "x"
-							loc: SourceLocation core/uncategorised/105/input.js 1:4-1:5 (x)
-						}
-						loc: SourceLocation core/uncategorised/105/input.js 1:4-1:17
+						id: JSBindingIdentifier {name: "x", loc: SourceLocation core/uncategorised/105/input.js 1:4-1:5 (x)}
 						init: JSRegExpLiteral {
+							expression: JSRegExpSubExpression {
+								body: [
+									JSRegExpCharSet {
+										body: [
+											JSRegExpCharacter {value: "P", loc: SourceLocation core/uncategorised/105/input.js 1:10-1:11}
+											JSRegExpCharacter {value: " ", loc: SourceLocation core/uncategorised/105/input.js 1:11-1:12}
+											JSRegExpCharacter {value: "Q", loc: SourceLocation core/uncategorised/105/input.js 1:12-1:13}
+											JSRegExpCharacter {value: "R", loc: SourceLocation core/uncategorised/105/input.js 1:13-1:14}
+										]
+										invert: false
+										loc: SourceLocation core/uncategorised/105/input.js 1:9-1:14
+									}
+								]
+								loc: SourceLocation core/uncategorised/105/input.js 1:9-1:14
+							}
 							global: false
 							insensitive: true
 							multiline: false
@@ -40,39 +38,24 @@ JSRoot {
 							sticky: false
 							unicode: false
 							loc: SourceLocation core/uncategorised/105/input.js 1:8-1:17
-							expression: JSRegExpSubExpression {
-								loc: SourceLocation core/uncategorised/105/input.js 1:9-1:14
-								body: Array [
-									JSRegExpCharSet {
-										invert: false
-										loc: SourceLocation core/uncategorised/105/input.js 1:9-1:14
-										body: Array [
-											JSRegExpCharacter {
-												value: "P"
-												loc: SourceLocation core/uncategorised/105/input.js 1:10-1:11
-											}
-											JSRegExpCharacter {
-												value: " "
-												loc: SourceLocation core/uncategorised/105/input.js 1:11-1:12
-											}
-											JSRegExpCharacter {
-												value: "Q"
-												loc: SourceLocation core/uncategorised/105/input.js 1:12-1:13
-											}
-											JSRegExpCharacter {
-												value: "R"
-												loc: SourceLocation core/uncategorised/105/input.js 1:13-1:14
-											}
-										]
-									}
-								]
-							}
 						}
+						loc: SourceLocation core/uncategorised/105/input.js 1:4-1:17
 					}
 				]
+				loc: SourceLocation core/uncategorised/105/input.js 1:0-1:17
 			}
+			loc: SourceLocation core/uncategorised/105/input.js 1:0-1:17
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: true
+	path: UIDPath<core/uncategorised/105/input.js>
+	sourceType: "script"
+	syntax: []
+	loc: SourceLocation core/uncategorised/105/input.js 1:0-1:17
 }
 ```
 

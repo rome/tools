@@ -8,43 +8,32 @@
 
 ```javascript
 JSRoot {
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation comments/basic/block-trailing-comment/input.js 1:0-5:0
-	path: UIDPath<comments/basic/block-trailing-comment/input.js>
-	comments: Array [
-		CommentLine {
-			id: "0"
-			value: "comment"
-			loc: SourceLocation comments/basic/block-trailing-comment/input.js 3:4-3:13
-		}
-	]
-	body: Array [
+	body: [
 		JSBlockStatement {
-			directives: Array []
-			loc: SourceLocation comments/basic/block-trailing-comment/input.js 1:0-4:1
-			body: Array [
+			body: [
 				JSExpressionStatement {
-					loc: SourceLocation comments/basic/block-trailing-comment/input.js 2:4-2:8
-					trailingComments: Array ["0"]
 					expression: JSCallExpression {
-						arguments: Array []
+						arguments: []
+						callee: JSReferenceIdentifier {name: "a", loc: SourceLocation comments/basic/block-trailing-comment/input.js 2:4-2:5 (a)}
 						loc: SourceLocation comments/basic/block-trailing-comment/input.js 2:4-2:7
-						callee: JSReferenceIdentifier {
-							name: "a"
-							loc: SourceLocation comments/basic/block-trailing-comment/input.js 2:4-2:5 (a)
-						}
 					}
+					trailingComments: ["0"]
+					loc: SourceLocation comments/basic/block-trailing-comment/input.js 2:4-2:8
 				}
 			]
+			directives: []
+			loc: SourceLocation comments/basic/block-trailing-comment/input.js 1:0-4:1
 		}
 	]
+	comments: [CommentLine {id: "0", value: "comment", loc: SourceLocation comments/basic/block-trailing-comment/input.js 3:4-3:13}]
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	path: UIDPath<comments/basic/block-trailing-comment/input.js>
+	sourceType: "script"
+	syntax: []
+	loc: SourceLocation comments/basic/block-trailing-comment/input.js 1:0-5:0
 }
 ```
 

@@ -6,52 +6,13 @@
 
 ```javascript
 CSSRoot {
-	corrupt: false
-	diagnostics: Array []
-	integrity: undefined
-	loc: SourceLocation comment/input.css 1:0-11:1
-	path: RelativePath<comment/input.css>
-	comments: Array [
-		CommentBlock {
-			id: "0"
-			value: " comment "
-			loc: SourceLocation comment/input.css 2:15-2:28
-		}
-		CommentBlock {
-			id: "1"
-			value: " comment "
-			loc: SourceLocation comment/input.css 6:8-6:21
-		}
-		CommentBlock {
-			id: "2"
-			value: " comment "
-			loc: SourceLocation comment/input.css 9:2-9:15
-		}
-	]
-	body: Array [
+	body: [
 		CSSRule {
-			loc: SourceLocation comment/input.css 1:0-3:1
-			prelude: Array [
-				CSSSelector {
-					loc: SourceLocation comment/input.css 1:0-1:2
-					patterns: Array [
-						CSSTypeSelector {
-							value: "a"
-							loc: SourceLocation comment/input.css 1:0-1:1
-						}
-					]
-				}
-			]
 			block: CSSBlock {
-				value: Array [
+				value: [
 					CSSDeclaration {
 						name: "color"
-						value: Array [
-							CSSIdentifier {
-								value: "white"
-								loc: SourceLocation comment/input.css 2:8-2:13
-							}
-						]
+						value: [CSSIdentifier {value: "white", loc: SourceLocation comment/input.css 2:8-2:13}]
 						important: false
 						loc: SourceLocation comment/input.css 2:1-2:13
 					}
@@ -59,31 +20,17 @@ CSSRoot {
 				startingTokenValue: "{"
 				loc: SourceLocation comment/input.css 1:2-3:1
 			}
+			prelude: [
+				CSSSelector {patterns: [CSSTypeSelector {value: "a", loc: SourceLocation comment/input.css 1:0-1:1}], loc: SourceLocation comment/input.css 1:0-1:2}
+			]
+			loc: SourceLocation comment/input.css 1:0-3:1
 		}
 		CSSRule {
-			loc: SourceLocation comment/input.css 5:0-7:1
-			prelude: Array [
-				CSSSelector {
-					loc: SourceLocation comment/input.css 5:0-5:2
-					patterns: Array [
-						CSSTypeSelector {
-							value: "a"
-							loc: SourceLocation comment/input.css 5:0-5:1
-						}
-					]
-				}
-			]
 			block: CSSBlock {
-				value: Array [
+				value: [
 					CSSDeclaration {
 						name: "color"
-						value: Array [
-							CSSIdentifier {
-								value: "white"
-								leadingComments: Array ["1"]
-								loc: SourceLocation comment/input.css 6:22-6:27
-							}
-						]
+						value: [CSSIdentifier {value: "white", leadingComments: ["1"], loc: SourceLocation comment/input.css 6:22-6:27}]
 						important: false
 						loc: SourceLocation comment/input.css 6:1-6:27
 					}
@@ -91,30 +38,17 @@ CSSRoot {
 				startingTokenValue: "{"
 				loc: SourceLocation comment/input.css 5:2-7:1
 			}
+			prelude: [
+				CSSSelector {patterns: [CSSTypeSelector {value: "a", loc: SourceLocation comment/input.css 5:0-5:1}], loc: SourceLocation comment/input.css 5:0-5:2}
+			]
+			loc: SourceLocation comment/input.css 5:0-7:1
 		}
 		CSSRule {
-			loc: SourceLocation comment/input.css 9:0-11:1
-			prelude: Array [
-				CSSSelector {
-					loc: SourceLocation comment/input.css 9:0-9:16
-					patterns: Array [
-						CSSTypeSelector {
-							value: "a"
-							loc: SourceLocation comment/input.css 9:0-9:1
-						}
-					]
-				}
-			]
 			block: CSSBlock {
-				value: Array [
+				value: [
 					CSSDeclaration {
 						name: "color"
-						value: Array [
-							CSSIdentifier {
-								value: "white"
-								loc: SourceLocation comment/input.css 10:8-10:13
-							}
-						]
+						value: [CSSIdentifier {value: "white", loc: SourceLocation comment/input.css 10:8-10:13}]
 						important: false
 						loc: SourceLocation comment/input.css 10:1-10:13
 					}
@@ -122,7 +56,20 @@ CSSRoot {
 				startingTokenValue: "{"
 				loc: SourceLocation comment/input.css 9:16-11:1
 			}
+			prelude: [
+				CSSSelector {patterns: [CSSTypeSelector {value: "a", loc: SourceLocation comment/input.css 9:0-9:1}], loc: SourceLocation comment/input.css 9:0-9:16}
+			]
+			loc: SourceLocation comment/input.css 9:0-11:1
 		}
 	]
+	comments: [
+		CommentBlock {id: "0", value: " comment ", loc: SourceLocation comment/input.css 2:15-2:28}
+		CommentBlock {id: "1", value: " comment ", loc: SourceLocation comment/input.css 6:8-6:21}
+		CommentBlock {id: "2", value: " comment ", loc: SourceLocation comment/input.css 9:2-9:15}
+	]
+	corrupt: false
+	diagnostics: []
+	path: RelativePath<comment/input.css>
+	loc: SourceLocation comment/input.css 1:0-11:1
 }
 ```

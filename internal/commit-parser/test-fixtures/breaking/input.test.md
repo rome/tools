@@ -7,15 +7,14 @@
 ```javascript
 CommitRoot {
 	breaking: true
-	comments: Array []
+	comments: []
 	commitType: "custom"
 	corrupt: false
 	custom: true
-	diagnostics: Array []
-	integrity: undefined
+	diagnostics: []
+	path: RelativePath<breaking/input.txt>
 	rawBody: "commit with a breaking change indicator"
 	scope: ""
 	loc: SourceLocation breaking/input.txt 1:0-1:47
-	path: RelativePath<breaking/input.txt>
 }
 ```

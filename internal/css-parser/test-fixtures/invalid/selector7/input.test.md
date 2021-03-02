@@ -6,54 +6,29 @@
 
 ```javascript
 CSSRoot {
-	comments: Array []
-	corrupt: false
-	integrity: undefined
-	loc: SourceLocation invalid/selector7/input.css 1:0-2:1
-	path: RelativePath<invalid/selector7/input.css>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "css"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Expected an identifier."}
-			}
-			location: Object {
-				integrity: undefined
-				language: "css"
-				sourceText: undefined
-				end: Position 1:4
-				path: RelativePath<invalid/selector7/input.css>
-				start: Position 1:3
-			}
-		}
-	]
-	body: Array [
+	body: [
 		CSSRule {
-			loc: SourceLocation invalid/selector7/input.css 1:0-2:1
-			block: CSSBlock {
-				value: Array []
-				startingTokenValue: "{"
-				loc: SourceLocation invalid/selector7/input.css 1:5-2:1
-			}
-			prelude: Array [
+			block: CSSBlock {value: [], startingTokenValue: "{", loc: SourceLocation invalid/selector7/input.css 1:5-2:1}
+			prelude: [
 				CSSSelector {
+					patterns: [CSSTypeSelector {value: "a", loc: SourceLocation invalid/selector7/input.css 1:0-1:1}]
 					loc: SourceLocation invalid/selector7/input.css 1:0-1:4
-					patterns: Array [
-						CSSTypeSelector {
-							value: "a"
-							loc: SourceLocation invalid/selector7/input.css 1:0-1:1
-						}
-					]
 				}
-				CSSSelector {
-					patterns: Array []
-					loc: SourceLocation invalid/selector7/input.css 1:4-1:5
-				}
+				CSSSelector {patterns: [], loc: SourceLocation invalid/selector7/input.css 1:4-1:5}
 			]
+			loc: SourceLocation invalid/selector7/input.css 1:0-2:1
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			description: {advice: [], category: ["parse"], categoryValue: "css", message: RAW_MARKUP {value: "Expected an identifier."}}
+			location: {language: "css", path: RelativePath<invalid/selector7/input.css>, end: Position 1:4, start: Position 1:3}
+			origins: [{category: "parse"}]
+		}
+	]
+	path: RelativePath<invalid/selector7/input.css>
+	loc: SourceLocation invalid/selector7/input.css 1:0-2:1
 }
 ```

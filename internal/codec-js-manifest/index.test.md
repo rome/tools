@@ -5,122 +5,71 @@
 ## `export nested condition`
 
 ```javascript
-Object {
-	type: undefined
-	name: Object {
-		org: undefined
-		packageName: "test-name"
-	}
-	author: undefined
+{
+	name: {packageName: "test-name"}
 	bin: Map []
-	bugs: undefined
-	bundledDependencies: Array []
-	contributors: undefined
-	cpu: Array []
+	bundledDependencies: []
+	cpu: []
 	dependencies: Map []
-	description: undefined
 	devDependencies: Map []
+	diagnostics: {}
 	engines: Map []
 	exports: true
-	files: Array []
-	homepage: undefined
-	keywords: Array []
-	license: undefined
-	main: undefined
-	maintainers: undefined
+	files: []
+	keywords: []
 	optionalDependencies: Map []
-	os: Array []
+	os: []
 	peerDependencies: Map []
 	private: false
-	repository: undefined
+	raw: {name: "test-name", exports: {node: {"./foo": "./bar"}}}
 	scripts: Map []
-	version: undefined
-	diagnostics: Object {license: undefined}
-	raw: Object {
-		name: "test-name"
-		exports: Object {node: Object {"./foo": "./bar"}}
-	}
 }
 ```
 
 ## `export string condition`
 
 ```javascript
-Object {
-	type: undefined
-	name: Object {
-		org: undefined
-		packageName: "test-name"
-	}
-	author: undefined
+{
+	name: {packageName: "test-name"}
 	bin: Map []
-	bugs: undefined
-	bundledDependencies: Array []
-	contributors: undefined
-	cpu: Array []
+	bundledDependencies: []
+	cpu: []
 	dependencies: Map []
-	description: undefined
 	devDependencies: Map []
+	diagnostics: {}
 	engines: Map []
 	exports: true
-	files: Array []
-	homepage: undefined
-	keywords: Array []
-	license: undefined
-	main: undefined
-	maintainers: undefined
+	files: []
+	keywords: []
 	optionalDependencies: Map []
-	os: Array []
+	os: []
 	peerDependencies: Map []
 	private: false
-	repository: undefined
+	raw: {name: "test-name", exports: {"./foo": "./bar"}}
 	scripts: Map []
-	version: undefined
-	diagnostics: Object {license: undefined}
-	raw: Object {
-		name: "test-name"
-		exports: Object {"./foo": "./bar"}
-	}
 }
 ```
 
 ## `export subpath condition`
 
 ```javascript
-Object {
-	type: undefined
-	name: Object {
-		org: undefined
-		packageName: "test-name"
-	}
-	author: undefined
+{
+	name: {packageName: "test-name"}
 	bin: Map []
-	bugs: undefined
-	bundledDependencies: Array []
-	contributors: undefined
-	cpu: Array []
+	bundledDependencies: []
+	cpu: []
 	dependencies: Map []
-	description: undefined
 	devDependencies: Map []
+	diagnostics: {}
 	engines: Map []
 	exports: true
-	files: Array []
-	homepage: undefined
-	keywords: Array []
-	license: undefined
-	main: undefined
-	maintainers: undefined
+	files: []
+	keywords: []
 	optionalDependencies: Map []
-	os: Array []
+	os: []
 	peerDependencies: Map []
 	private: false
-	repository: undefined
+	raw: {name: "test-name", exports: {"./foo": {node: "./bar"}}}
 	scripts: Map []
-	version: undefined
-	diagnostics: Object {license: undefined}
-	raw: Object {
-		name: "test-name"
-		exports: Object {"./foo": Object {node: "./bar"}}
-	}
 }
 ```

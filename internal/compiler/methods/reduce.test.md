@@ -8,33 +8,22 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
+	body: [JSIfStatement {consequent: JSBlockStatement {body: [], directives: []}, test: JSReferenceIdentifier {name: "foo"}}]
+	comments: []
 	corrupt: false
-	diagnostics: Array []
-	directives: Array []
+	diagnostics: []
+	directives: []
 	hasHoistedVars: false
-	sourceType: "script"
-	syntax: Array []
 	path: UIDPath<unknown>
-	body: Array [
-		JSIfStatement {
-			test: JSReferenceIdentifier {name: "foo"}
-			consequent: JSBlockStatement {
-				body: Array []
-				directives: Array []
-			}
-		}
-	]
+	sourceType: "script"
+	syntax: []
 }
 ```
 
 ### `formatted`
 
 ```javascript
-Object {
-	code: "if (foo) {\n}\n"
-	mappings: Array []
-}
+{code: "if (foo) {\n}\n", mappings: []}
 ```
 
 ## `parent replace signal complicated`
@@ -43,33 +32,27 @@ Object {
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	sourceType: "script"
-	syntax: Array []
-	path: UIDPath<unknown>
-	body: Array [
+	body: [
 		JSForStatement {
+			body: JSBlockStatement {body: [JSExpressionStatement {expression: JSReferenceIdentifier {name: "no"}}], directives: []}
 			init: JSReferenceIdentifier {name: "condition"}
-			body: JSBlockStatement {
-				directives: Array []
-				body: Array [JSExpressionStatement {expression: JSReferenceIdentifier {name: "no"}}]
-			}
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	path: UIDPath<unknown>
+	sourceType: "script"
+	syntax: []
 }
 ```
 
 ### `formatted`
 
 ```javascript
-Object {
-	code: "for (condition; ; ) {\n\tno;\n}\n"
-	mappings: Array []
-}
+{code: "for (condition; ; ) {\n\tno;\n}\n", mappings: []}
 ```
 
 ## `remove signal (element)`
@@ -78,33 +61,22 @@ Object {
 
 ```javascript
 JSRoot {
-	comments: Array []
+	body: [JSIfStatement {consequent: JSBlockStatement {body: [], directives: []}, test: JSReferenceIdentifier {name: "foo"}}]
+	comments: []
 	corrupt: false
-	diagnostics: Array []
-	directives: Array []
+	diagnostics: []
+	directives: []
 	hasHoistedVars: false
-	sourceType: "script"
-	syntax: Array []
 	path: UIDPath<unknown>
-	body: Array [
-		JSIfStatement {
-			test: JSReferenceIdentifier {name: "foo"}
-			consequent: JSBlockStatement {
-				body: Array []
-				directives: Array []
-			}
-		}
-	]
+	sourceType: "script"
+	syntax: []
 }
 ```
 
 ### `formatted`
 
 ```javascript
-Object {
-	code: "if (foo) {\n}\n"
-	mappings: Array []
-}
+{code: "if (foo) {\n}\n", mappings: []}
 ```
 
 ## `remove signal (property)`
@@ -113,30 +85,20 @@ Object {
 
 ```javascript
 JSRoot {
-	comments: Array []
+	body: [JSForStatement {body: JSBlockStatement {body: [], directives: []}}]
+	comments: []
 	corrupt: false
-	diagnostics: Array []
-	directives: Array []
+	diagnostics: []
+	directives: []
 	hasHoistedVars: false
-	sourceType: "script"
-	syntax: Array []
 	path: UIDPath<unknown>
-	body: Array [
-		JSForStatement {
-			body: JSBlockStatement {
-				body: Array []
-				directives: Array []
-			}
-		}
-	]
+	sourceType: "script"
+	syntax: []
 }
 ```
 
 ### `formatted`
 
 ```javascript
-Object {
-	code: "for (;;) {}\n"
-	mappings: Array []
-}
+{code: "for (;;) {}\n", mappings: []}
 ```

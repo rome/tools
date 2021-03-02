@@ -8,28 +8,16 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation core/categorized/regex-after-star/input.js 1:0-2:0
-	path: UIDPath<core/categorized/regex-after-star/input.js>
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation core/categorized/regex-after-star/input.js 1:0-1:7
 			expression: JSBinaryExpression {
+				left: JSReferenceIdentifier {name: "a", loc: SourceLocation core/categorized/regex-after-star/input.js 1:0-1:1 (a)}
 				operator: "*"
-				loc: SourceLocation core/categorized/regex-after-star/input.js 1:0-1:7
-				left: JSReferenceIdentifier {
-					name: "a"
-					loc: SourceLocation core/categorized/regex-after-star/input.js 1:0-1:1 (a)
-				}
 				right: JSRegExpLiteral {
+					expression: JSRegExpSubExpression {
+						body: [JSRegExpCharacter {value: "b", loc: SourceLocation core/categorized/regex-after-star/input.js 1:5-1:6}]
+						loc: SourceLocation core/categorized/regex-after-star/input.js 1:5-1:6
+					}
 					global: false
 					insensitive: false
 					multiline: false
@@ -37,19 +25,21 @@ JSRoot {
 					sticky: false
 					unicode: false
 					loc: SourceLocation core/categorized/regex-after-star/input.js 1:4-1:7
-					expression: JSRegExpSubExpression {
-						loc: SourceLocation core/categorized/regex-after-star/input.js 1:5-1:6
-						body: Array [
-							JSRegExpCharacter {
-								value: "b"
-								loc: SourceLocation core/categorized/regex-after-star/input.js 1:5-1:6
-							}
-						]
-					}
 				}
+				loc: SourceLocation core/categorized/regex-after-star/input.js 1:0-1:7
 			}
+			loc: SourceLocation core/categorized/regex-after-star/input.js 1:0-1:7
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	path: UIDPath<core/categorized/regex-after-star/input.js>
+	sourceType: "script"
+	syntax: []
+	loc: SourceLocation core/categorized/regex-after-star/input.js 1:0-2:0
 }
 ```
 

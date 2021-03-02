@@ -8,48 +8,35 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: true
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation core/uncategorised/230/input.js 1:0-1:23
-	path: UIDPath<core/uncategorised/230/input.js>
-	body: Array [
+	body: [
 		JSIfStatement {
-			alternate: undefined
-			loc: SourceLocation core/uncategorised/230/input.js 1:0-1:23
-			test: JSReferenceIdentifier {
-				name: "morning"
-				loc: SourceLocation core/uncategorised/230/input.js 1:4-1:11 (morning)
-			}
 			consequent: JSVariableDeclarationStatement {
-				loc: SourceLocation core/uncategorised/230/input.js 1:13-1:23
 				declaration: JSVariableDeclaration {
 					kind: "var"
-					loc: SourceLocation core/uncategorised/230/input.js 1:13-1:23
-					declarations: Array [
+					declarations: [
 						JSVariableDeclarator {
-							id: JSBindingIdentifier {
-								name: "x"
-								loc: SourceLocation core/uncategorised/230/input.js 1:17-1:18 (x)
-							}
+							id: JSBindingIdentifier {name: "x", loc: SourceLocation core/uncategorised/230/input.js 1:17-1:18 (x)}
+							init: JSNumericLiteral {value: 0, loc: SourceLocation core/uncategorised/230/input.js 1:21-1:22}
 							loc: SourceLocation core/uncategorised/230/input.js 1:17-1:22
-							init: JSNumericLiteral {
-								value: 0
-								format: undefined
-								loc: SourceLocation core/uncategorised/230/input.js 1:21-1:22
-							}
 						}
 					]
+					loc: SourceLocation core/uncategorised/230/input.js 1:13-1:23
 				}
+				loc: SourceLocation core/uncategorised/230/input.js 1:13-1:23
 			}
+			test: JSReferenceIdentifier {name: "morning", loc: SourceLocation core/uncategorised/230/input.js 1:4-1:11 (morning)}
+			loc: SourceLocation core/uncategorised/230/input.js 1:0-1:23
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: true
+	path: UIDPath<core/uncategorised/230/input.js>
+	sourceType: "script"
+	syntax: []
+	loc: SourceLocation core/uncategorised/230/input.js 1:0-1:23
 }
 ```
 

@@ -8,88 +8,62 @@
 
 ```javascript
 JSRoot {
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation comments/basic/call-expression-function-argument/input.js 1:0-7:0
-	path: UIDPath<comments/basic/call-expression-function-argument/input.js>
-	comments: Array [
-		CommentLine {
-			id: "0"
-			value: " one"
-			loc: SourceLocation comments/basic/call-expression-function-argument/input.js 3:2-3:8
-		}
-		CommentLine {
-			id: "1"
-			value: " two"
-			loc: SourceLocation comments/basic/call-expression-function-argument/input.js 5:0-5:6
-		}
-	]
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation comments/basic/call-expression-function-argument/input.js 1:0-6:2
 			expression: JSCallExpression {
-				loc: SourceLocation comments/basic/call-expression-function-argument/input.js 1:0-6:1
-				callee: JSReferenceIdentifier {
-					name: "test"
-					loc: SourceLocation comments/basic/call-expression-function-argument/input.js 1:0-1:4 (test)
-				}
-				arguments: Array [
+				arguments: [
 					JSFunctionExpression {
-						id: undefined
-						loc: SourceLocation comments/basic/call-expression-function-argument/input.js 1:5-4:1
-						trailingComments: Array ["1"]
+						body: JSBlockStatement {
+							body: [
+								JSVariableDeclarationStatement {
+									declaration: JSVariableDeclaration {
+										kind: "var"
+										declarations: [
+											JSVariableDeclarator {
+												id: JSBindingIdentifier {name: "a", loc: SourceLocation comments/basic/call-expression-function-argument/input.js 2:6-2:7 (a)}
+												init: JSNumericLiteral {value: 1, loc: SourceLocation comments/basic/call-expression-function-argument/input.js 2:10-2:11}
+												loc: SourceLocation comments/basic/call-expression-function-argument/input.js 2:6-2:11
+											}
+										]
+										loc: SourceLocation comments/basic/call-expression-function-argument/input.js 2:2-2:12
+									}
+									trailingComments: ["0"]
+									loc: SourceLocation comments/basic/call-expression-function-argument/input.js 2:2-2:12
+								}
+							]
+							directives: []
+							trailingComments: ["1"]
+							loc: SourceLocation comments/basic/call-expression-function-argument/input.js 1:16-4:1
+						}
 						head: JSFunctionHead {
 							async: false
 							generator: false
 							hasHoistedVars: true
-							params: Array []
-							rest: undefined
-							returnType: undefined
-							thisType: undefined
-							typeParameters: undefined
+							params: []
 							loc: SourceLocation comments/basic/call-expression-function-argument/input.js 1:13-1:15
 						}
-						body: JSBlockStatement {
-							directives: Array []
-							loc: SourceLocation comments/basic/call-expression-function-argument/input.js 1:16-4:1
-							trailingComments: Array ["1"]
-							body: Array [
-								JSVariableDeclarationStatement {
-									loc: SourceLocation comments/basic/call-expression-function-argument/input.js 2:2-2:12
-									trailingComments: Array ["0"]
-									declaration: JSVariableDeclaration {
-										kind: "var"
-										trailingComments: undefined
-										loc: SourceLocation comments/basic/call-expression-function-argument/input.js 2:2-2:12
-										declarations: Array [
-											JSVariableDeclarator {
-												id: JSBindingIdentifier {
-													name: "a"
-													loc: SourceLocation comments/basic/call-expression-function-argument/input.js 2:6-2:7 (a)
-												}
-												loc: SourceLocation comments/basic/call-expression-function-argument/input.js 2:6-2:11
-												init: JSNumericLiteral {
-													value: 1
-													format: undefined
-													loc: SourceLocation comments/basic/call-expression-function-argument/input.js 2:10-2:11
-												}
-											}
-										]
-									}
-								}
-							]
-						}
+						trailingComments: ["1"]
+						loc: SourceLocation comments/basic/call-expression-function-argument/input.js 1:5-4:1
 					}
 				]
+				callee: JSReferenceIdentifier {name: "test", loc: SourceLocation comments/basic/call-expression-function-argument/input.js 1:0-1:4 (test)}
+				loc: SourceLocation comments/basic/call-expression-function-argument/input.js 1:0-6:1
 			}
+			loc: SourceLocation comments/basic/call-expression-function-argument/input.js 1:0-6:2
 		}
 	]
+	comments: [
+		CommentLine {id: "0", value: " one", loc: SourceLocation comments/basic/call-expression-function-argument/input.js 3:2-3:8}
+		CommentLine {id: "1", value: " two", loc: SourceLocation comments/basic/call-expression-function-argument/input.js 5:0-5:6}
+	]
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	path: UIDPath<comments/basic/call-expression-function-argument/input.js>
+	sourceType: "script"
+	syntax: []
+	loc: SourceLocation comments/basic/call-expression-function-argument/input.js 1:0-7:0
 }
 ```
 

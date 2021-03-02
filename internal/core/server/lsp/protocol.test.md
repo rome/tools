@@ -6,10 +6,7 @@
 
 ```
 ℹ  Status: WAITING_FOR_HEADERS_END
-ℹ  Headers for next message: Object {
-    expectedLength: 321
-    extra: Map []
-  }
+ℹ  Headers for next message: {expectedLength: 321, extra: Map []}
 ℹ  Status: WAITING_FOR_RESPONSE_END
 ℹ  Received message content:
   {"jsonrpc":"2.0","method":"textDocument/didChange","params":{"textDocument":{"uri":"file:///Users/

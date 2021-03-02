@@ -8,60 +8,40 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation core/uncategorised/293/input.js 1:0-1:30
-	path: UIDPath<core/uncategorised/293/input.js>
-	body: Array [
+	body: [
 		JSFunctionDeclaration {
-			id: JSBindingIdentifier {
-				name: "hello"
-				loc: SourceLocation core/uncategorised/293/input.js 1:9-1:14 (hello)
-			}
-			loc: SourceLocation core/uncategorised/293/input.js 1:0-1:30
-			body: JSBlockStatement {
-				body: Array []
-				directives: Array []
-				loc: SourceLocation core/uncategorised/293/input.js 1:27-1:30
-			}
+			id: JSBindingIdentifier {name: "hello", loc: SourceLocation core/uncategorised/293/input.js 1:9-1:14 (hello)}
+			body: JSBlockStatement {body: [], directives: [], loc: SourceLocation core/uncategorised/293/input.js 1:27-1:30}
 			head: JSFunctionHead {
 				async: false
 				generator: false
 				hasHoistedVars: false
-				returnType: undefined
-				thisType: undefined
-				typeParameters: undefined
-				loc: SourceLocation core/uncategorised/293/input.js 1:14-1:26
-				rest: JSBindingIdentifier {
-					name: "rest"
-					loc: SourceLocation core/uncategorised/293/input.js 1:21-1:25 (rest)
-					meta: JSPatternMeta {
-						optional: undefined
-						typeAnnotation: undefined
-						loc: SourceLocation core/uncategorised/293/input.js 1:21-1:25
-					}
-				}
-				params: Array [
+				params: [
 					JSBindingIdentifier {
 						name: "a"
+						meta: JSPatternMeta {loc: SourceLocation core/uncategorised/293/input.js 1:15-1:16}
 						loc: SourceLocation core/uncategorised/293/input.js 1:15-1:16 (a)
-						meta: JSPatternMeta {
-							optional: undefined
-							typeAnnotation: undefined
-							loc: SourceLocation core/uncategorised/293/input.js 1:15-1:16
-						}
 					}
 				]
+				rest: JSBindingIdentifier {
+					name: "rest"
+					meta: JSPatternMeta {loc: SourceLocation core/uncategorised/293/input.js 1:21-1:25}
+					loc: SourceLocation core/uncategorised/293/input.js 1:21-1:25 (rest)
+				}
+				loc: SourceLocation core/uncategorised/293/input.js 1:14-1:26
 			}
+			loc: SourceLocation core/uncategorised/293/input.js 1:0-1:30
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	path: UIDPath<core/uncategorised/293/input.js>
+	sourceType: "script"
+	syntax: []
+	loc: SourceLocation core/uncategorised/293/input.js 1:0-1:30
 }
 ```
 

@@ -8,59 +8,36 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: true
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation core/regression/T2921/input.js 1:0-2:0
-	path: UIDPath<core/regression/T2921/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Unknown start to an statement expression"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:4
-				path: UIDPath<core/regression/T2921/input.js>
-				start: Position 1:4
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation core/regression/T2921/input.js 1:0-1:5
 			expression: JSBinaryExpression {
+				left: JSReferenceIdentifier {name: "a", loc: SourceLocation core/regression/T2921/input.js 1:0-1:1 (a)}
 				operator: "<="
+				right: JSReferenceIdentifier {name: "INVALID_PLACEHOLDER", loc: SourceLocation core/regression/T2921/input.js 1:4-1:5}
 				loc: SourceLocation core/regression/T2921/input.js 1:0-1:5
-				left: JSReferenceIdentifier {
-					name: "a"
-					loc: SourceLocation core/regression/T2921/input.js 1:0-1:1 (a)
-				}
-				right: JSReferenceIdentifier {
-					name: "INVALID_PLACEHOLDER"
-					loc: SourceLocation core/regression/T2921/input.js 1:4-1:5
-				}
 			}
+			loc: SourceLocation core/regression/T2921/input.js 1:0-1:5
 		}
 		JSExpressionStatement {
+			expression: JSReferenceIdentifier {name: "b", loc: SourceLocation core/regression/T2921/input.js 1:6-1:7 (b)}
 			loc: SourceLocation core/regression/T2921/input.js 1:6-1:8
-			expression: JSReferenceIdentifier {
-				name: "b"
-				loc: SourceLocation core/regression/T2921/input.js 1:6-1:7 (b)
-			}
 		}
 	]
+	comments: []
+	corrupt: true
+	diagnostics: [
+		{
+			description: {advice: [], category: ["parse"], categoryValue: "js", message: RAW_MARKUP {value: "Unknown start to an statement expression"}}
+			location: {language: "js", path: UIDPath<core/regression/T2921/input.js>, end: Position 1:4, start: Position 1:4}
+			origins: [{category: "parse"}]
+		}
+	]
+	directives: []
+	hasHoistedVars: false
+	path: UIDPath<core/regression/T2921/input.js>
+	sourceType: "script"
+	syntax: []
+	loc: SourceLocation core/regression/T2921/input.js 1:0-2:0
 }
 ```
 

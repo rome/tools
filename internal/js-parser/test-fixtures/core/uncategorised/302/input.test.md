@@ -8,44 +8,31 @@
 
 ```javascript
 JSRoot {
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: true
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation core/uncategorised/302/input.js 1:0-1:20
-	path: UIDPath<core/uncategorised/302/input.js>
-	comments: Array [
-		CommentBlock {
-			id: "0"
-			value: " comment "
-			loc: SourceLocation core/uncategorised/302/input.js 1:6-1:19
-		}
-	]
-	body: Array [
+	body: [
 		JSVariableDeclarationStatement {
-			loc: SourceLocation core/uncategorised/302/input.js 1:0-1:20
 			declaration: JSVariableDeclaration {
 				kind: "var"
-				loc: SourceLocation core/uncategorised/302/input.js 1:0-1:20
-				declarations: Array [
+				declarations: [
 					JSVariableDeclarator {
-						id: JSBindingIdentifier {
-							name: "x"
-							trailingComments: undefined
-							loc: SourceLocation core/uncategorised/302/input.js 1:4-1:5 (x)
-						}
-						init: undefined
+						id: JSBindingIdentifier {name: "x", loc: SourceLocation core/uncategorised/302/input.js 1:4-1:5 (x)}
+						trailingComments: ["0"]
 						loc: SourceLocation core/uncategorised/302/input.js 1:4-1:5
-						trailingComments: Array ["0"]
 					}
 				]
+				loc: SourceLocation core/uncategorised/302/input.js 1:0-1:20
 			}
+			loc: SourceLocation core/uncategorised/302/input.js 1:0-1:20
 		}
 	]
+	comments: [CommentBlock {id: "0", value: " comment ", loc: SourceLocation core/uncategorised/302/input.js 1:6-1:19}]
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: true
+	path: UIDPath<core/uncategorised/302/input.js>
+	sourceType: "script"
+	syntax: []
+	loc: SourceLocation core/uncategorised/302/input.js 1:0-1:20
 }
 ```
 

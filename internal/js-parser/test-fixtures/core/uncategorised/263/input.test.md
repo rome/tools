@@ -8,46 +8,30 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation core/uncategorised/263/input.js 1:0-1:36
-	path: UIDPath<core/uncategorised/263/input.js>
-	directives: Array [
-		JSDirective {
-			value: "use\\x20strict"
-			loc: SourceLocation core/uncategorised/263/input.js 1:0-1:16
-		}
-	]
-	body: Array [
+	body: [
 		JSWithStatement {
-			loc: SourceLocation core/uncategorised/263/input.js 1:17-1:36
-			object: JSReferenceIdentifier {
-				name: "x"
-				loc: SourceLocation core/uncategorised/263/input.js 1:23-1:24 (x)
-			}
 			body: JSExpressionStatement {
-				loc: SourceLocation core/uncategorised/263/input.js 1:26-1:36
 				expression: JSAssignmentExpression {
+					left: JSAssignmentIdentifier {name: "foo", loc: SourceLocation core/uncategorised/263/input.js 1:26-1:29 (foo)}
 					operator: "="
+					right: JSReferenceIdentifier {name: "bar", loc: SourceLocation core/uncategorised/263/input.js 1:32-1:35 (bar)}
 					loc: SourceLocation core/uncategorised/263/input.js 1:26-1:35
-					left: JSAssignmentIdentifier {
-						name: "foo"
-						loc: SourceLocation core/uncategorised/263/input.js 1:26-1:29 (foo)
-					}
-					right: JSReferenceIdentifier {
-						name: "bar"
-						loc: SourceLocation core/uncategorised/263/input.js 1:32-1:35 (bar)
-					}
 				}
+				loc: SourceLocation core/uncategorised/263/input.js 1:26-1:36
 			}
+			object: JSReferenceIdentifier {name: "x", loc: SourceLocation core/uncategorised/263/input.js 1:23-1:24 (x)}
+			loc: SourceLocation core/uncategorised/263/input.js 1:17-1:36
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: [JSDirective {value: "use\\x20strict", loc: SourceLocation core/uncategorised/263/input.js 1:0-1:16}]
+	hasHoistedVars: false
+	path: UIDPath<core/uncategorised/263/input.js>
+	sourceType: "script"
+	syntax: []
+	loc: SourceLocation core/uncategorised/263/input.js 1:0-1:36
 }
 ```
 

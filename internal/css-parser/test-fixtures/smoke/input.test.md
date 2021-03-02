@@ -6,90 +6,43 @@
 
 ```javascript
 CSSRoot {
-	corrupt: false
-	diagnostics: Array []
-	integrity: undefined
-	loc: SourceLocation smoke/input.css 1:0-12:1
-	path: RelativePath<smoke/input.css>
-	comments: Array [
-		CommentBlock {
-			id: "0"
-			value: "This is a comment"
-			loc: SourceLocation smoke/input.css 1:0-1:21
-		}
-	]
-	body: Array [
+	body: [
 		CSSRule {
-			leadingComments: Array ["0"]
-			loc: SourceLocation smoke/input.css 2:0-5:1
-			prelude: Array [
-				CSSSelector {
-					leadingComments: undefined
-					loc: SourceLocation smoke/input.css 2:0-2:5
-					patterns: Array [
-						CSSTypeSelector {
-							value: "body"
-							leadingComments: undefined
-							loc: SourceLocation smoke/input.css 2:0-2:4
-						}
-					]
-				}
-			]
 			block: CSSBlock {
-				value: Array [
+				value: [
 					CSSDeclaration {
 						name: "background"
-						value: Array [
-							CSSIdentifier {
-								value: "red"
-								loc: SourceLocation smoke/input.css 3:16-3:19
-							}
-						]
+						value: [CSSIdentifier {value: "red", loc: SourceLocation smoke/input.css 3:16-3:19}]
 						important: false
 						loc: SourceLocation smoke/input.css 3:4-3:19
 					}
 					CSSDeclaration {
 						name: "width"
-						value: Array [
+						value: [
 							CSSCalcFunction {
 								name: "calc"
-								loc: SourceLocation smoke/input.css 4:16-4:25
-								params: Array [
+								params: [
 									CSSCalcSum {
-										value: Array [
+										value: [
 											CSSCalcProduct {
-												value: Array [
+												value: [
 													CSSCalcValue {
-														value: CSSDimension {
-															value: 1
-															unit: "px"
-															loc: SourceLocation smoke/input.css 4:16-4:16
-														}
+														value: CSSDimension {value: 1, unit: "px", loc: SourceLocation smoke/input.css 4:16-4:16}
 														loc: SourceLocation smoke/input.css 4:16-4:19
 													}
 												]
 												loc: SourceLocation smoke/input.css 4:19-4:20
 											}
-											CSSCalcOperation {
-												value: "+"
-												loc: SourceLocation smoke/input.css 4:21-4:22
-											}
+											CSSCalcOperation {value: "+", loc: SourceLocation smoke/input.css 4:21-4:22}
 											CSSCalcProduct {
-												value: Array [
-													CSSCalcValue {
-														value: CSSPercentage {
-															value: 2
-															loc: SourceLocation smoke/input.css 4:22-4:22
-														}
-														loc: SourceLocation smoke/input.css 4:22-4:24
-													}
-												]
+												value: [CSSCalcValue {value: CSSPercentage {value: 2, loc: SourceLocation smoke/input.css 4:22-4:22}, loc: SourceLocation smoke/input.css 4:22-4:24}]
 												loc: SourceLocation smoke/input.css 4:24-4:24
 											}
 										]
 										loc: SourceLocation smoke/input.css 4:16-4:24
 									}
 								]
+								loc: SourceLocation smoke/input.css 4:16-4:25
 							}
 						]
 						important: false
@@ -99,102 +52,46 @@ CSSRoot {
 				startingTokenValue: "{"
 				loc: SourceLocation smoke/input.css 2:5-5:1
 			}
+			leadingComments: ["0"]
+			prelude: [
+				CSSSelector {patterns: [CSSTypeSelector {value: "body", loc: SourceLocation smoke/input.css 2:0-2:4}], loc: SourceLocation smoke/input.css 2:0-2:5}
+			]
+			loc: SourceLocation smoke/input.css 2:0-5:1
 		}
 		CSSAtRule {
 			name: "media"
-			loc: SourceLocation smoke/input.css 7:0-12:1
-			prelude: Array [
-				CSSIdentifier {
-					value: "screen"
-					loc: SourceLocation smoke/input.css 7:7-7:13
-				}
-				CSSIdentifier {
-					value: "and"
-					loc: SourceLocation smoke/input.css 7:14-7:17
-				}
-				CSSBlock {
-					value: Array [
-						CSSIdentifier {
-							value: "min-width"
-							loc: SourceLocation smoke/input.css 7:19-7:28
-						}
-						CSSRaw {
-							value: ":"
-							loc: SourceLocation smoke/input.css 7:28-7:29
-						}
-						CSSDimension {
-							value: 1_337
-							unit: "px"
-							loc: SourceLocation smoke/input.css 7:30-7:36
-						}
-					]
-					startingTokenValue: "("
-					loc: SourceLocation smoke/input.css 7:18-7:37
-				}
-			]
 			block: CSSBlock {
-				value: Array [
+				value: [
 					CSSRule {
-						loc: SourceLocation smoke/input.css 8:4-11:5
-						prelude: Array [
-							CSSSelector {
-								loc: SourceLocation smoke/input.css 8:4-8:9
-								patterns: Array [
-									CSSTypeSelector {
-										value: "body"
-										loc: SourceLocation smoke/input.css 8:4-8:8
-									}
-								]
-							}
-						]
 						block: CSSBlock {
-							value: Array [
+							value: [
 								CSSDeclaration {
 									name: "background"
-									value: Array [
-										CSSIdentifier {
-											value: "blue"
-											loc: SourceLocation smoke/input.css 9:20-9:24
-										}
-									]
+									value: [CSSIdentifier {value: "blue", loc: SourceLocation smoke/input.css 9:20-9:24}]
 									important: false
 									loc: SourceLocation smoke/input.css 9:8-9:24
 								}
 								CSSDeclaration {
 									name: "width"
-									value: Array [
+									value: [
 										CSSCalcFunction {
 											name: "calc"
-											loc: SourceLocation smoke/input.css 10:20-10:29
-											params: Array [
+											params: [
 												CSSCalcSum {
-													value: Array [
+													value: [
 														CSSCalcProduct {
-															value: Array [
+															value: [
 																CSSCalcValue {
-																	value: CSSDimension {
-																		value: 2
-																		unit: "px"
-																		loc: SourceLocation smoke/input.css 10:20-10:20
-																	}
+																	value: CSSDimension {value: 2, unit: "px", loc: SourceLocation smoke/input.css 10:20-10:20}
 																	loc: SourceLocation smoke/input.css 10:20-10:23
 																}
 															]
 															loc: SourceLocation smoke/input.css 10:23-10:24
 														}
-														CSSCalcOperation {
-															value: "+"
-															loc: SourceLocation smoke/input.css 10:25-10:26
-														}
+														CSSCalcOperation {value: "+", loc: SourceLocation smoke/input.css 10:25-10:26}
 														CSSCalcProduct {
-															value: Array [
-																CSSCalcValue {
-																	value: CSSPercentage {
-																		value: 3
-																		loc: SourceLocation smoke/input.css 10:26-10:26
-																	}
-																	loc: SourceLocation smoke/input.css 10:26-10:28
-																}
+															value: [
+																CSSCalcValue {value: CSSPercentage {value: 3, loc: SourceLocation smoke/input.css 10:26-10:26}, loc: SourceLocation smoke/input.css 10:26-10:28}
 															]
 															loc: SourceLocation smoke/input.css 10:28-10:28
 														}
@@ -202,6 +99,7 @@ CSSRoot {
 													loc: SourceLocation smoke/input.css 10:20-10:28
 												}
 											]
+											loc: SourceLocation smoke/input.css 10:20-10:29
 										}
 									]
 									important: false
@@ -211,12 +109,35 @@ CSSRoot {
 							startingTokenValue: "{"
 							loc: SourceLocation smoke/input.css 8:9-11:5
 						}
+						prelude: [
+							CSSSelector {patterns: [CSSTypeSelector {value: "body", loc: SourceLocation smoke/input.css 8:4-8:8}], loc: SourceLocation smoke/input.css 8:4-8:9}
+						]
+						loc: SourceLocation smoke/input.css 8:4-11:5
 					}
 				]
 				startingTokenValue: "{"
 				loc: SourceLocation smoke/input.css 7:38-12:1
 			}
+			prelude: [
+				CSSIdentifier {value: "screen", loc: SourceLocation smoke/input.css 7:7-7:13}
+				CSSIdentifier {value: "and", loc: SourceLocation smoke/input.css 7:14-7:17}
+				CSSBlock {
+					value: [
+						CSSIdentifier {value: "min-width", loc: SourceLocation smoke/input.css 7:19-7:28}
+						CSSRaw {value: ":", loc: SourceLocation smoke/input.css 7:28-7:29}
+						CSSDimension {value: 1_337, unit: "px", loc: SourceLocation smoke/input.css 7:30-7:36}
+					]
+					startingTokenValue: "("
+					loc: SourceLocation smoke/input.css 7:18-7:37
+				}
+			]
+			loc: SourceLocation smoke/input.css 7:0-12:1
 		}
 	]
+	comments: [CommentBlock {id: "0", value: "This is a comment", loc: SourceLocation smoke/input.css 1:0-1:21}]
+	corrupt: false
+	diagnostics: []
+	path: RelativePath<smoke/input.css>
+	loc: SourceLocation smoke/input.css 1:0-12:1
 }
 ```

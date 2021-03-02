@@ -8,24 +8,16 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
+	body: [JSBlockStatement {body: [], directives: [], loc: SourceLocation core/uncategorised/215/input.js 1:0-1:2}]
+	comments: []
 	corrupt: false
-	diagnostics: Array []
-	directives: Array []
+	diagnostics: []
+	directives: []
 	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation core/uncategorised/215/input.js 1:0-1:2
 	path: UIDPath<core/uncategorised/215/input.js>
-	body: Array [
-		JSBlockStatement {
-			body: Array []
-			directives: Array []
-			loc: SourceLocation core/uncategorised/215/input.js 1:0-1:2
-		}
-	]
+	sourceType: "script"
+	syntax: []
+	loc: SourceLocation core/uncategorised/215/input.js 1:0-1:2
 }
 ```
 

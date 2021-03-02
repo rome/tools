@@ -8,49 +8,38 @@
 
 ```javascript
 JSRoot {
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: true
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation core/categorized/filename-specified/input.js 1:0-3:0
-	path: UIDPath<core/categorized/filename-specified/input.js>
-	comments: Array [
+	body: [
+		JSVariableDeclarationStatement {
+			declaration: JSVariableDeclaration {
+				kind: "var"
+				declarations: [
+					JSVariableDeclarator {
+						id: JSBindingIdentifier {name: "node", loc: SourceLocation core/categorized/filename-specified/input.js 2:4-2:8 (node)}
+						init: JSStringLiteral {value: "shouldHaveFilenameLocProp", loc: SourceLocation core/categorized/filename-specified/input.js 2:11-2:38}
+						loc: SourceLocation core/categorized/filename-specified/input.js 2:4-2:38
+					}
+				]
+				loc: SourceLocation core/categorized/filename-specified/input.js 2:0-2:39
+			}
+			leadingComments: ["0"]
+			loc: SourceLocation core/categorized/filename-specified/input.js 2:0-2:39
+		}
+	]
+	comments: [
 		CommentLine {
 			id: "0"
 			value: " This comment should have a filename prop attached to loc"
 			loc: SourceLocation core/categorized/filename-specified/input.js 1:0-1:59
 		}
 	]
-	body: Array [
-		JSVariableDeclarationStatement {
-			leadingComments: Array ["0"]
-			loc: SourceLocation core/categorized/filename-specified/input.js 2:0-2:39
-			declaration: JSVariableDeclaration {
-				kind: "var"
-				leadingComments: undefined
-				loc: SourceLocation core/categorized/filename-specified/input.js 2:0-2:39
-				declarations: Array [
-					JSVariableDeclarator {
-						id: JSBindingIdentifier {
-							name: "node"
-							leadingComments: undefined
-							loc: SourceLocation core/categorized/filename-specified/input.js 2:4-2:8 (node)
-						}
-						leadingComments: undefined
-						loc: SourceLocation core/categorized/filename-specified/input.js 2:4-2:38
-						init: JSStringLiteral {
-							value: "shouldHaveFilenameLocProp"
-							loc: SourceLocation core/categorized/filename-specified/input.js 2:11-2:38
-						}
-					}
-				]
-			}
-		}
-	]
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: true
+	path: UIDPath<core/categorized/filename-specified/input.js>
+	sourceType: "script"
+	syntax: []
+	loc: SourceLocation core/categorized/filename-specified/input.js 1:0-3:0
 }
 ```
 

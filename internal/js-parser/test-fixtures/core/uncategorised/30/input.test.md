@@ -8,62 +8,46 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation core/uncategorised/30/input.js 1:0-1:22
-	path: UIDPath<core/uncategorised/30/input.js>
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation core/uncategorised/30/input.js 1:0-1:22
 			expression: JSAssignmentExpression {
+				left: JSAssignmentIdentifier {name: "x", loc: SourceLocation core/uncategorised/30/input.js 1:0-1:1 (x)}
 				operator: "="
-				loc: SourceLocation core/uncategorised/30/input.js 1:0-1:22
-				left: JSAssignmentIdentifier {
-					name: "x"
-					loc: SourceLocation core/uncategorised/30/input.js 1:0-1:1 (x)
-				}
 				right: JSObjectExpression {
-					loc: SourceLocation core/uncategorised/30/input.js 1:4-1:22
-					properties: Array [
+					properties: [
 						JSObjectMethod {
-							kind: "get"
 							key: JSStaticPropertyKey {
-								value: JSIdentifier {
-									name: "undef"
-									loc: SourceLocation core/uncategorised/30/input.js 1:10-1:15 (undef)
-								}
+								value: JSIdentifier {name: "undef", loc: SourceLocation core/uncategorised/30/input.js 1:10-1:15 (undef)}
 								loc: SourceLocation core/uncategorised/30/input.js 1:10-1:15
 							}
-							loc: SourceLocation core/uncategorised/30/input.js 1:6-1:20
-							body: JSBlockStatement {
-								body: Array []
-								directives: Array []
-								loc: SourceLocation core/uncategorised/30/input.js 1:18-1:20
-							}
+							kind: "get"
+							body: JSBlockStatement {body: [], directives: [], loc: SourceLocation core/uncategorised/30/input.js 1:18-1:20}
 							head: JSFunctionHead {
 								async: false
 								generator: false
 								hasHoistedVars: false
-								params: Array []
-								rest: undefined
-								returnType: undefined
-								thisType: undefined
-								typeParameters: undefined
+								params: []
 								loc: SourceLocation core/uncategorised/30/input.js 1:15-1:17
 							}
+							loc: SourceLocation core/uncategorised/30/input.js 1:6-1:20
 						}
 					]
+					loc: SourceLocation core/uncategorised/30/input.js 1:4-1:22
 				}
+				loc: SourceLocation core/uncategorised/30/input.js 1:0-1:22
 			}
+			loc: SourceLocation core/uncategorised/30/input.js 1:0-1:22
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	path: UIDPath<core/uncategorised/30/input.js>
+	sourceType: "script"
+	syntax: []
+	loc: SourceLocation core/uncategorised/30/input.js 1:0-1:22
 }
 ```
 

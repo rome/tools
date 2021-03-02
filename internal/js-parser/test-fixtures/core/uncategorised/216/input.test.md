@@ -8,36 +8,30 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: true
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation core/uncategorised/216/input.js 1:0-1:5
-	path: UIDPath<core/uncategorised/216/input.js>
-	body: Array [
+	body: [
 		JSVariableDeclarationStatement {
-			loc: SourceLocation core/uncategorised/216/input.js 1:0-1:5
 			declaration: JSVariableDeclaration {
 				kind: "var"
-				loc: SourceLocation core/uncategorised/216/input.js 1:0-1:5
-				declarations: Array [
+				declarations: [
 					JSVariableDeclarator {
-						id: JSBindingIdentifier {
-							name: "x"
-							loc: SourceLocation core/uncategorised/216/input.js 1:4-1:5 (x)
-						}
-						init: undefined
+						id: JSBindingIdentifier {name: "x", loc: SourceLocation core/uncategorised/216/input.js 1:4-1:5 (x)}
 						loc: SourceLocation core/uncategorised/216/input.js 1:4-1:5
 					}
 				]
+				loc: SourceLocation core/uncategorised/216/input.js 1:0-1:5
 			}
+			loc: SourceLocation core/uncategorised/216/input.js 1:0-1:5
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: true
+	path: UIDPath<core/uncategorised/216/input.js>
+	sourceType: "script"
+	syntax: []
+	loc: SourceLocation core/uncategorised/216/input.js 1:0-1:5
 }
 ```
 

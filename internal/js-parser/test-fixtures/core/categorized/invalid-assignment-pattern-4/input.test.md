@@ -8,77 +8,58 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation core/categorized/invalid-assignment-pattern-4/input.js 1:0-1:23
-	path: UIDPath<core/categorized/invalid-assignment-pattern-4/input.js>
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation core/categorized/invalid-assignment-pattern-4/input.js 1:0-1:22
 			expression: JSAssignmentExpression {
-				operator: "="
-				loc: SourceLocation core/categorized/invalid-assignment-pattern-4/input.js 1:0-1:22
-				right: JSReferenceIdentifier {
-					name: "t"
-					loc: SourceLocation core/categorized/invalid-assignment-pattern-4/input.js 1:21-1:22 (t)
-				}
 				left: JSAssignmentArrayPattern {
-					rest: undefined
-					loc: SourceLocation core/categorized/invalid-assignment-pattern-4/input.js 1:0-1:18
-					elements: Array [
+					elements: [
 						JSAssignmentObjectPattern {
-							rest: undefined
-							loc: SourceLocation core/categorized/invalid-assignment-pattern-4/input.js 1:1-1:17
-							properties: Array [
+							properties: [
 								JSAssignmentObjectPatternProperty {
 									key: JSStaticPropertyKey {
-										value: JSIdentifier {
-											name: "b"
-											loc: SourceLocation core/categorized/invalid-assignment-pattern-4/input.js 1:2-1:3 (b)
-										}
+										value: JSIdentifier {name: "b", loc: SourceLocation core/categorized/invalid-assignment-pattern-4/input.js 1:2-1:3 (b)}
 										loc: SourceLocation core/categorized/invalid-assignment-pattern-4/input.js 1:2-1:3
 									}
 									value: JSAssignmentArrayPattern {
-										rest: undefined
-										loc: SourceLocation core/categorized/invalid-assignment-pattern-4/input.js 1:5-1:16
-										elements: Array [
+										elements: [
 											JSAssignmentArrayPattern {
-												rest: undefined
-												loc: SourceLocation core/categorized/invalid-assignment-pattern-4/input.js 1:7-1:14
-												elements: Array [
+												elements: [
 													JSAssignmentAssignmentPattern {
+														left: JSAssignmentIdentifier {name: "a", loc: SourceLocation core/categorized/invalid-assignment-pattern-4/input.js 1:8-1:9 (a)}
 														operator: "="
+														right: JSNumericLiteral {value: 1, loc: SourceLocation core/categorized/invalid-assignment-pattern-4/input.js 1:12-1:13}
 														loc: SourceLocation core/categorized/invalid-assignment-pattern-4/input.js 1:8-1:13
-														left: JSAssignmentIdentifier {
-															name: "a"
-															loc: SourceLocation core/categorized/invalid-assignment-pattern-4/input.js 1:8-1:9 (a)
-														}
-														right: JSNumericLiteral {
-															value: 1
-															format: undefined
-															loc: SourceLocation core/categorized/invalid-assignment-pattern-4/input.js 1:12-1:13
-														}
 													}
 												]
+												loc: SourceLocation core/categorized/invalid-assignment-pattern-4/input.js 1:7-1:14
 											}
 										]
+										loc: SourceLocation core/categorized/invalid-assignment-pattern-4/input.js 1:5-1:16
 									}
 									loc: SourceLocation core/categorized/invalid-assignment-pattern-4/input.js 1:2-1:16
 								}
 							]
+							loc: SourceLocation core/categorized/invalid-assignment-pattern-4/input.js 1:1-1:17
 						}
 					]
+					loc: SourceLocation core/categorized/invalid-assignment-pattern-4/input.js 1:0-1:18
 				}
+				operator: "="
+				right: JSReferenceIdentifier {name: "t", loc: SourceLocation core/categorized/invalid-assignment-pattern-4/input.js 1:21-1:22 (t)}
+				loc: SourceLocation core/categorized/invalid-assignment-pattern-4/input.js 1:0-1:22
 			}
+			loc: SourceLocation core/categorized/invalid-assignment-pattern-4/input.js 1:0-1:22
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	path: UIDPath<core/categorized/invalid-assignment-pattern-4/input.js>
+	sourceType: "script"
+	syntax: []
+	loc: SourceLocation core/categorized/invalid-assignment-pattern-4/input.js 1:0-1:23
 }
 ```
 

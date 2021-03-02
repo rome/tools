@@ -8,45 +8,32 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	syntax: Array []
-	loc: SourceLocation core/regression/non-octal-float-strict-mode/input.js 1:0-2:0
-	path: UIDPath<core/regression/non-octal-float-strict-mode/input.js>
-	body: Array [
+	body: [
 		JSExpressionStatement {
+			expression: JSNumericLiteral {value: 9.5, loc: SourceLocation core/regression/non-octal-float-strict-mode/input.js 1:0-1:4}
 			loc: SourceLocation core/regression/non-octal-float-strict-mode/input.js 1:0-1:4
-			expression: JSNumericLiteral {
-				value: 9.5
-				format: undefined
-				loc: SourceLocation core/regression/non-octal-float-strict-mode/input.js 1:0-1:4
-			}
 		}
 	]
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			description: {
+				advice: []
+				category: ["parse"]
 				categoryValue: "js"
-				category: Array ["parse"]
 				message: RAW_MARKUP {value: "Legacy octal literals are not allowed in strict mode"}
 			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:2
-				path: UIDPath<core/regression/non-octal-float-strict-mode/input.js>
-				start: Position 1:2
-			}
+			location: {language: "js", path: UIDPath<core/regression/non-octal-float-strict-mode/input.js>, end: Position 1:2, start: Position 1:2}
+			origins: [{category: "parse"}]
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	path: UIDPath<core/regression/non-octal-float-strict-mode/input.js>
+	sourceType: "module"
+	syntax: []
+	loc: SourceLocation core/regression/non-octal-float-strict-mode/input.js 1:0-2:0
 }
 ```
 

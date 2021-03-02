@@ -6,47 +6,21 @@
 
 ```javascript
 CSSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	integrity: undefined
-	loc: SourceLocation calc/input.css 1:0-10:1
-	path: RelativePath<calc/input.css>
-	body: Array [
+	body: [
 		CSSRule {
-			loc: SourceLocation calc/input.css 1:0-10:1
-			prelude: Array [
-				CSSSelector {
-					loc: SourceLocation calc/input.css 1:0-1:7
-					patterns: Array [
-						CSSClassSelector {
-							value: "style"
-							loc: SourceLocation calc/input.css 1:0-1:6
-						}
-					]
-				}
-			]
 			block: CSSBlock {
-				value: Array [
+				value: [
 					CSSDeclaration {
 						name: "width"
-						value: Array [
+						value: [
 							CSSCalcFunction {
 								name: "calc"
-								loc: SourceLocation calc/input.css 2:13-2:17
-								params: Array [
+								params: [
 									CSSCalcSum {
-										value: Array [
+										value: [
 											CSSCalcProduct {
-												value: Array [
-													CSSCalcValue {
-														value: CSSDimension {
-															value: 2
-															unit: "px"
-															loc: SourceLocation calc/input.css 2:13-2:13
-														}
-														loc: SourceLocation calc/input.css 2:13-2:16
-													}
+												value: [
+													CSSCalcValue {value: CSSDimension {value: 2, unit: "px", loc: SourceLocation calc/input.css 2:13-2:13}, loc: SourceLocation calc/input.css 2:13-2:16}
 												]
 												loc: SourceLocation calc/input.css 2:16-2:16
 											}
@@ -54,6 +28,7 @@ CSSRoot {
 										loc: SourceLocation calc/input.css 2:13-2:16
 									}
 								]
+								loc: SourceLocation calc/input.css 2:13-2:17
 							}
 						]
 						important: false
@@ -61,40 +36,22 @@ CSSRoot {
 					}
 					CSSDeclaration {
 						name: "width"
-						value: Array [
+						value: [
 							CSSCalcFunction {
 								name: "calc"
-								loc: SourceLocation calc/input.css 3:13-3:23
-								params: Array [
+								params: [
 									CSSCalcSum {
-										value: Array [
+										value: [
 											CSSCalcProduct {
-												value: Array [
-													CSSCalcValue {
-														value: CSSDimension {
-															value: 2
-															unit: "px"
-															loc: SourceLocation calc/input.css 3:13-3:13
-														}
-														loc: SourceLocation calc/input.css 3:13-3:16
-													}
+												value: [
+													CSSCalcValue {value: CSSDimension {value: 2, unit: "px", loc: SourceLocation calc/input.css 3:13-3:13}, loc: SourceLocation calc/input.css 3:13-3:16}
 												]
 												loc: SourceLocation calc/input.css 3:16-3:17
 											}
-											CSSCalcOperation {
-												value: "+"
-												loc: SourceLocation calc/input.css 3:18-3:19
-											}
+											CSSCalcOperation {value: "+", loc: SourceLocation calc/input.css 3:18-3:19}
 											CSSCalcProduct {
-												value: Array [
-													CSSCalcValue {
-														value: CSSDimension {
-															value: 1
-															unit: "px"
-															loc: SourceLocation calc/input.css 3:19-3:19
-														}
-														loc: SourceLocation calc/input.css 3:19-3:22
-													}
+												value: [
+													CSSCalcValue {value: CSSDimension {value: 1, unit: "px", loc: SourceLocation calc/input.css 3:19-3:19}, loc: SourceLocation calc/input.css 3:19-3:22}
 												]
 												loc: SourceLocation calc/input.css 3:22-3:22
 											}
@@ -102,6 +59,7 @@ CSSRoot {
 										loc: SourceLocation calc/input.css 3:13-3:22
 									}
 								]
+								loc: SourceLocation calc/input.css 3:13-3:23
 							}
 						]
 						important: false
@@ -109,46 +67,28 @@ CSSRoot {
 					}
 					CSSDeclaration {
 						name: "width"
-						value: Array [
+						value: [
 							CSSCalcFunction {
 								name: "calc"
-								loc: SourceLocation calc/input.css 4:13-4:22
-								params: Array [
+								params: [
 									CSSCalcSum {
-										value: Array [
+										value: [
 											CSSCalcProduct {
-												value: Array [
-													CSSCalcValue {
-														value: CSSDimension {
-															value: 2
-															unit: "em"
-															loc: SourceLocation calc/input.css 4:13-4:13
-														}
-														loc: SourceLocation calc/input.css 4:13-4:16
-													}
+												value: [
+													CSSCalcValue {value: CSSDimension {value: 2, unit: "em", loc: SourceLocation calc/input.css 4:13-4:13}, loc: SourceLocation calc/input.css 4:13-4:16}
 												]
 												loc: SourceLocation calc/input.css 4:16-4:17
 											}
-											CSSCalcOperation {
-												value: "+"
-												loc: SourceLocation calc/input.css 4:18-4:19
-											}
+											CSSCalcOperation {value: "+", loc: SourceLocation calc/input.css 4:18-4:19}
 											CSSCalcProduct {
-												value: Array [
-													CSSCalcValue {
-														value: CSSPercentage {
-															value: 1
-															loc: SourceLocation calc/input.css 4:19-4:19
-														}
-														loc: SourceLocation calc/input.css 4:19-4:21
-													}
-												]
+												value: [CSSCalcValue {value: CSSPercentage {value: 1, loc: SourceLocation calc/input.css 4:19-4:19}, loc: SourceLocation calc/input.css 4:19-4:21}]
 												loc: SourceLocation calc/input.css 4:21-4:21
 											}
 										]
 										loc: SourceLocation calc/input.css 4:13-4:21
 									}
 								]
+								loc: SourceLocation calc/input.css 4:13-4:22
 							}
 						]
 						important: false
@@ -156,46 +96,19 @@ CSSRoot {
 					}
 					CSSDeclaration {
 						name: "width"
-						value: Array [
+						value: [
 							CSSCalcFunction {
 								name: "calc"
-								loc: SourceLocation calc/input.css 5:13-5:28
-								params: Array [
+								params: [
 									CSSCalcSum {
-										value: Array [
+										value: [
 											CSSCalcProduct {
-												value: Array [
-													CSSCalcValue {
-														value: CSSDimension {
-															value: 2
-															unit: "em"
-															loc: SourceLocation calc/input.css 5:13-5:13
-														}
-														loc: SourceLocation calc/input.css 5:13-5:16
-													}
-													CSSCalcOperation {
-														value: "*"
-														loc: SourceLocation calc/input.css 5:17-5:19
-													}
-													CSSCalcValue {
-														value: CSSPercentage {
-															value: 2
-															loc: SourceLocation calc/input.css 5:19-5:19
-														}
-														loc: SourceLocation calc/input.css 5:19-5:21
-													}
-													CSSCalcOperation {
-														value: "*"
-														loc: SourceLocation calc/input.css 5:22-5:24
-													}
-													CSSCalcValue {
-														value: CSSDimension {
-															value: 3
-															unit: "px"
-															loc: SourceLocation calc/input.css 5:24-5:24
-														}
-														loc: SourceLocation calc/input.css 5:24-5:27
-													}
+												value: [
+													CSSCalcValue {value: CSSDimension {value: 2, unit: "em", loc: SourceLocation calc/input.css 5:13-5:13}, loc: SourceLocation calc/input.css 5:13-5:16}
+													CSSCalcOperation {value: "*", loc: SourceLocation calc/input.css 5:17-5:19}
+													CSSCalcValue {value: CSSPercentage {value: 2, loc: SourceLocation calc/input.css 5:19-5:19}, loc: SourceLocation calc/input.css 5:19-5:21}
+													CSSCalcOperation {value: "*", loc: SourceLocation calc/input.css 5:22-5:24}
+													CSSCalcValue {value: CSSDimension {value: 3, unit: "px", loc: SourceLocation calc/input.css 5:24-5:24}, loc: SourceLocation calc/input.css 5:24-5:27}
 												]
 												loc: SourceLocation calc/input.css 5:16-5:27
 											}
@@ -203,6 +116,7 @@ CSSRoot {
 										loc: SourceLocation calc/input.css 5:13-5:27
 									}
 								]
+								loc: SourceLocation calc/input.css 5:13-5:28
 							}
 						]
 						important: false
@@ -210,45 +124,23 @@ CSSRoot {
 					}
 					CSSDeclaration {
 						name: "width"
-						value: Array [
+						value: [
 							CSSCalcFunction {
 								name: "calc"
-								loc: SourceLocation calc/input.css 6:13-6:25
-								params: Array [
+								params: [
 									CSSCalcSum {
-										value: Array [
+										value: [
 											CSSCalcProduct {
-												value: Array [
-													CSSCalcValue {
-														value: CSSDimension {
-															value: 2
-															unit: "em"
-															loc: SourceLocation calc/input.css 6:13-6:13
-														}
-														loc: SourceLocation calc/input.css 6:13-6:16
-													}
-													CSSCalcOperation {
-														value: "/"
-														loc: SourceLocation calc/input.css 6:17-6:19
-													}
+												value: [
+													CSSCalcValue {value: CSSDimension {value: 2, unit: "em", loc: SourceLocation calc/input.css 6:13-6:13}, loc: SourceLocation calc/input.css 6:13-6:16}
+													CSSCalcOperation {value: "/", loc: SourceLocation calc/input.css 6:17-6:19}
 													CSSCalcNumberValue {
-														value: CSSNumber {
-															value: 2
-															raw: "2"
-															loc: SourceLocation calc/input.css 6:19-6:20
-														}
+														value: CSSNumber {value: 2, raw: "2", loc: SourceLocation calc/input.css 6:19-6:20}
 														loc: SourceLocation calc/input.css 6:19-6:20
 													}
-													CSSCalcOperation {
-														value: "/"
-														loc: SourceLocation calc/input.css 6:21-6:23
-													}
+													CSSCalcOperation {value: "/", loc: SourceLocation calc/input.css 6:21-6:23}
 													CSSCalcNumberValue {
-														value: CSSNumber {
-															value: 3
-															raw: "3"
-															loc: SourceLocation calc/input.css 6:23-6:24
-														}
+														value: CSSNumber {value: 3, raw: "3", loc: SourceLocation calc/input.css 6:23-6:24}
 														loc: SourceLocation calc/input.css 6:23-6:24
 													}
 												]
@@ -258,6 +150,7 @@ CSSRoot {
 										loc: SourceLocation calc/input.css 6:13-6:24
 									}
 								]
+								loc: SourceLocation calc/input.css 6:13-6:25
 							}
 						]
 						important: false
@@ -265,55 +158,33 @@ CSSRoot {
 					}
 					CSSDeclaration {
 						name: "width"
-						value: Array [
+						value: [
 							CSSCalcFunction {
 								name: "calc"
-								loc: SourceLocation calc/input.css 7:13-7:37
-								params: Array [
+								params: [
 									CSSCalcSum {
-										value: Array [
+										value: [
 											CSSCalcProduct {
-												value: Array [
-													CSSCalcValue {
-														value: CSSDimension {
-															value: 2
-															unit: "em"
-															loc: SourceLocation calc/input.css 7:13-7:13
-														}
-														loc: SourceLocation calc/input.css 7:13-7:16
-													}
-													CSSCalcOperation {
-														value: "/"
-														loc: SourceLocation calc/input.css 7:17-7:19
-													}
+												value: [
+													CSSCalcValue {value: CSSDimension {value: 2, unit: "em", loc: SourceLocation calc/input.css 7:13-7:13}, loc: SourceLocation calc/input.css 7:13-7:16}
+													CSSCalcOperation {value: "/", loc: SourceLocation calc/input.css 7:17-7:19}
 													CSSCalcNumberValue {
 														value: CSSCalcNumberSum {
-															value: Array [
+															value: [
 																CSSCalcNumberProduct {
-																	value: Array [
+																	value: [
 																		CSSCalcNumberValue {
-																			value: CSSNumber {
-																				value: 2
-																				raw: "2"
-																				loc: SourceLocation calc/input.css 7:20-7:21
-																			}
+																			value: CSSNumber {value: 2, raw: "2", loc: SourceLocation calc/input.css 7:20-7:21}
 																			loc: SourceLocation calc/input.css 7:20-7:21
 																		}
 																	]
 																	loc: SourceLocation calc/input.css 7:21-7:22
 																}
-																CSSCalcOperation {
-																	value: "-"
-																	loc: SourceLocation calc/input.css 7:23-7:24
-																}
+																CSSCalcOperation {value: "-", loc: SourceLocation calc/input.css 7:23-7:24}
 																CSSCalcNumberProduct {
-																	value: Array [
+																	value: [
 																		CSSCalcNumberValue {
-																			value: CSSNumber {
-																				value: 3
-																				raw: "3"
-																				loc: SourceLocation calc/input.css 7:24-7:25
-																			}
+																			value: CSSNumber {value: 3, raw: "3", loc: SourceLocation calc/input.css 7:24-7:25}
 																			loc: SourceLocation calc/input.css 7:24-7:25
 																		}
 																	]
@@ -324,38 +195,24 @@ CSSRoot {
 														}
 														loc: SourceLocation calc/input.css 7:19-7:26
 													}
-													CSSCalcOperation {
-														value: "/"
-														loc: SourceLocation calc/input.css 7:27-7:29
-													}
+													CSSCalcOperation {value: "/", loc: SourceLocation calc/input.css 7:27-7:29}
 													CSSCalcNumberValue {
 														value: CSSCalcNumberSum {
-															value: Array [
+															value: [
 																CSSCalcNumberProduct {
-																	value: Array [
+																	value: [
 																		CSSCalcNumberValue {
-																			value: CSSNumber {
-																				value: 2
-																				raw: "2"
-																				loc: SourceLocation calc/input.css 7:30-7:31
-																			}
+																			value: CSSNumber {value: 2, raw: "2", loc: SourceLocation calc/input.css 7:30-7:31}
 																			loc: SourceLocation calc/input.css 7:30-7:31
 																		}
 																	]
 																	loc: SourceLocation calc/input.css 7:31-7:32
 																}
-																CSSCalcOperation {
-																	value: "-"
-																	loc: SourceLocation calc/input.css 7:33-7:34
-																}
+																CSSCalcOperation {value: "-", loc: SourceLocation calc/input.css 7:33-7:34}
 																CSSCalcNumberProduct {
-																	value: Array [
+																	value: [
 																		CSSCalcNumberValue {
-																			value: CSSNumber {
-																				value: 6
-																				raw: "6"
-																				loc: SourceLocation calc/input.css 7:34-7:35
-																			}
+																			value: CSSNumber {value: 6, raw: "6", loc: SourceLocation calc/input.css 7:34-7:35}
 																			loc: SourceLocation calc/input.css 7:34-7:35
 																		}
 																	]
@@ -373,6 +230,7 @@ CSSRoot {
 										loc: SourceLocation calc/input.css 7:13-7:36
 									}
 								]
+								loc: SourceLocation calc/input.css 7:13-7:37
 							}
 						]
 						important: false
@@ -380,52 +238,24 @@ CSSRoot {
 					}
 					CSSDeclaration {
 						name: "width"
-						value: Array [
+						value: [
 							CSSCalcFunction {
 								name: "calc"
-								loc: SourceLocation calc/input.css 8:13-8:25
-								params: Array [
+								params: [
 									CSSCalcSum {
-										value: Array [
+										value: [
 											CSSCalcProduct {
-												value: Array [
-													CSSCalcValue {
-														value: CSSDimension {
-															value: 2
-															unit: "em"
-															loc: SourceLocation calc/input.css 8:13-8:13
-														}
-														loc: SourceLocation calc/input.css 8:13-8:16
-													}
-													CSSCalcOperation {
-														value: "*"
-														loc: SourceLocation calc/input.css 8:17-8:19
-													}
-													CSSCalcValue {
-														value: CSSNumber {
-															value: 2
-															raw: "2"
-															loc: SourceLocation calc/input.css 8:19-8:19
-														}
-														loc: SourceLocation calc/input.css 8:19-8:20
-													}
+												value: [
+													CSSCalcValue {value: CSSDimension {value: 2, unit: "em", loc: SourceLocation calc/input.css 8:13-8:13}, loc: SourceLocation calc/input.css 8:13-8:16}
+													CSSCalcOperation {value: "*", loc: SourceLocation calc/input.css 8:17-8:19}
+													CSSCalcValue {value: CSSNumber {value: 2, raw: "2", loc: SourceLocation calc/input.css 8:19-8:19}, loc: SourceLocation calc/input.css 8:19-8:20}
 												]
 												loc: SourceLocation calc/input.css 8:16-8:21
 											}
-											CSSCalcOperation {
-												value: "+"
-												loc: SourceLocation calc/input.css 8:22-8:23
-											}
+											CSSCalcOperation {value: "+", loc: SourceLocation calc/input.css 8:22-8:23}
 											CSSCalcProduct {
-												value: Array [
-													CSSCalcValue {
-														value: CSSNumber {
-															value: 3
-															raw: "3"
-															loc: SourceLocation calc/input.css 8:23-8:23
-														}
-														loc: SourceLocation calc/input.css 8:23-8:24
-													}
+												value: [
+													CSSCalcValue {value: CSSNumber {value: 3, raw: "3", loc: SourceLocation calc/input.css 8:23-8:23}, loc: SourceLocation calc/input.css 8:23-8:24}
 												]
 												loc: SourceLocation calc/input.css 8:24-8:24
 											}
@@ -433,6 +263,7 @@ CSSRoot {
 										loc: SourceLocation calc/input.css 8:13-8:24
 									}
 								]
+								loc: SourceLocation calc/input.css 8:13-8:25
 							}
 						]
 						important: false
@@ -440,79 +271,34 @@ CSSRoot {
 					}
 					CSSDeclaration {
 						name: "width"
-						value: Array [
+						value: [
 							CSSCalcFunction {
 								name: "calc"
-								loc: SourceLocation calc/input.css 9:13-9:35
-								params: Array [
+								params: [
 									CSSCalcSum {
-										value: Array [
+										value: [
 											CSSCalcProduct {
-												value: Array [
-													CSSCalcValue {
-														value: CSSDimension {
-															value: 2
-															unit: "em"
-															loc: SourceLocation calc/input.css 9:13-9:13
-														}
-														loc: SourceLocation calc/input.css 9:13-9:16
-													}
-													CSSCalcOperation {
-														value: "*"
-														loc: SourceLocation calc/input.css 9:17-9:19
-													}
-													CSSCalcValue {
-														value: CSSNumber {
-															value: 2
-															raw: "2"
-															loc: SourceLocation calc/input.css 9:19-9:19
-														}
-														loc: SourceLocation calc/input.css 9:19-9:20
-													}
+												value: [
+													CSSCalcValue {value: CSSDimension {value: 2, unit: "em", loc: SourceLocation calc/input.css 9:13-9:13}, loc: SourceLocation calc/input.css 9:13-9:16}
+													CSSCalcOperation {value: "*", loc: SourceLocation calc/input.css 9:17-9:19}
+													CSSCalcValue {value: CSSNumber {value: 2, raw: "2", loc: SourceLocation calc/input.css 9:19-9:19}, loc: SourceLocation calc/input.css 9:19-9:20}
 												]
 												loc: SourceLocation calc/input.css 9:16-9:21
 											}
-											CSSCalcOperation {
-												value: "-"
-												loc: SourceLocation calc/input.css 9:22-9:23
-											}
+											CSSCalcOperation {value: "-", loc: SourceLocation calc/input.css 9:22-9:23}
 											CSSCalcProduct {
-												value: Array [
-													CSSCalcValue {
-														value: CSSNumber {
-															value: 3
-															raw: "3"
-															loc: SourceLocation calc/input.css 9:23-9:23
-														}
-														loc: SourceLocation calc/input.css 9:23-9:24
-													}
+												value: [
+													CSSCalcValue {value: CSSNumber {value: 3, raw: "3", loc: SourceLocation calc/input.css 9:23-9:23}, loc: SourceLocation calc/input.css 9:23-9:24}
 												]
 												loc: SourceLocation calc/input.css 9:24-9:25
 											}
-											CSSCalcOperation {
-												value: "+"
-												loc: SourceLocation calc/input.css 9:26-9:27
-											}
+											CSSCalcOperation {value: "+", loc: SourceLocation calc/input.css 9:26-9:27}
 											CSSCalcProduct {
-												value: Array [
-													CSSCalcValue {
-														value: CSSDimension {
-															value: 3
-															unit: "em"
-															loc: SourceLocation calc/input.css 9:27-9:27
-														}
-														loc: SourceLocation calc/input.css 9:27-9:30
-													}
-													CSSCalcOperation {
-														value: "/"
-														loc: SourceLocation calc/input.css 9:31-9:33
-													}
+												value: [
+													CSSCalcValue {value: CSSDimension {value: 3, unit: "em", loc: SourceLocation calc/input.css 9:27-9:27}, loc: SourceLocation calc/input.css 9:27-9:30}
+													CSSCalcOperation {value: "/", loc: SourceLocation calc/input.css 9:31-9:33}
 													CSSCalcNumberValue {
-														value: CSSNumber {
-															value: 5
-															raw: "5"
-															loc: SourceLocation calc/input.css 9:33-9:34
-														}
+														value: CSSNumber {value: 5, raw: "5", loc: SourceLocation calc/input.css 9:33-9:34}
 														loc: SourceLocation calc/input.css 9:33-9:34
 													}
 												]
@@ -522,6 +308,7 @@ CSSRoot {
 										loc: SourceLocation calc/input.css 9:13-9:34
 									}
 								]
+								loc: SourceLocation calc/input.css 9:13-9:35
 							}
 						]
 						important: false
@@ -531,7 +318,16 @@ CSSRoot {
 				startingTokenValue: "{"
 				loc: SourceLocation calc/input.css 1:7-10:1
 			}
+			prelude: [
+				CSSSelector {patterns: [CSSClassSelector {value: "style", loc: SourceLocation calc/input.css 1:0-1:6}], loc: SourceLocation calc/input.css 1:0-1:7}
+			]
+			loc: SourceLocation calc/input.css 1:0-10:1
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	path: RelativePath<calc/input.css>
+	loc: SourceLocation calc/input.css 1:0-10:1
 }
 ```

@@ -9,6 +9,7 @@ import {printDiagnosticsToString} from "@internal/cli-diagnostics";
 import {formatAST} from "@internal/formatter/index";
 import {template} from "@internal/js-ast-utils";
 import {createDefaultProjectConfig} from "@internal/project";
+import { decodeUTF8 } from "@internal/binary";
 
 test(
 	"space indent",
@@ -41,7 +42,7 @@ const promise = createFixtureTests(async (fixture, t) => {
 
 	const filename = input.relative;
 	const format = options.get("format").asStringSetOrVoid(["pretty", "compact"]);
-	const content = removeCarriageReturn(input.content.toString());
+	const content = removeCarriageReturn(decodeUTF8(input.content));
 
 	const res = await performFileOperation(
 		{

@@ -8,45 +8,28 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: true
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation core/categorized/malformed-switch/input.js 1:0-3:1
-	path: UIDPath<core/categorized/malformed-switch/input.js>
-	body: Array [
+	body: [
 		JSSwitchStatement {
-			cases: Array []
+			cases: []
+			discriminant: JSReferenceIdentifier {name: "x", loc: SourceLocation core/categorized/malformed-switch/input.js 1:8-1:9 (x)}
 			loc: SourceLocation core/categorized/malformed-switch/input.js 1:0-3:1
-			discriminant: JSReferenceIdentifier {
-				name: "x"
-				loc: SourceLocation core/categorized/malformed-switch/input.js 1:8-1:9 (x)
-			}
 		}
 	]
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Statement outside of a case or default block"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 2:12
-				path: UIDPath<core/categorized/malformed-switch/input.js>
-				start: Position 2:2
-			}
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			description: {advice: [], category: ["parse"], categoryValue: "js", message: RAW_MARKUP {value: "Statement outside of a case or default block"}}
+			location: {language: "js", path: UIDPath<core/categorized/malformed-switch/input.js>, end: Position 2:12, start: Position 2:2}
+			origins: [{category: "parse"}]
 		}
 	]
+	directives: []
+	hasHoistedVars: true
+	path: UIDPath<core/categorized/malformed-switch/input.js>
+	sourceType: "script"
+	syntax: []
+	loc: SourceLocation core/categorized/malformed-switch/input.js 1:0-3:1
 }
 ```
 

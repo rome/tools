@@ -8,255 +8,159 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation core/regression/invalid-octal-strict-directive-function/input.js 1:0-33:0
-	path: UIDPath<core/regression/invalid-octal-strict-directive-function/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Octal literal in strict mode"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 2:4
-				path: UIDPath<core/regression/invalid-octal-strict-directive-function/input.js>
-				start: Position 2:4
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSFunctionDeclaration {
-			id: JSBindingIdentifier {
-				name: "a"
-				loc: SourceLocation core/regression/invalid-octal-strict-directive-function/input.js 1:9-1:10 (a)
+			id: JSBindingIdentifier {name: "a", loc: SourceLocation core/regression/invalid-octal-strict-directive-function/input.js 1:9-1:10 (a)}
+			body: JSBlockStatement {
+				body: []
+				directives: [
+					JSDirective {value: "\\5", loc: SourceLocation core/regression/invalid-octal-strict-directive-function/input.js 2:2-2:7}
+					JSDirective {value: "use strict", loc: SourceLocation core/regression/invalid-octal-strict-directive-function/input.js 3:2-3:15}
+				]
+				loc: SourceLocation core/regression/invalid-octal-strict-directive-function/input.js 1:13-4:1
 			}
-			loc: SourceLocation core/regression/invalid-octal-strict-directive-function/input.js 1:0-4:1
 			head: JSFunctionHead {
 				async: false
 				generator: false
 				hasHoistedVars: false
-				params: Array []
-				rest: undefined
-				returnType: undefined
-				thisType: undefined
-				typeParameters: undefined
+				params: []
 				loc: SourceLocation core/regression/invalid-octal-strict-directive-function/input.js 1:10-1:12
 			}
-			body: JSBlockStatement {
-				body: Array []
-				loc: SourceLocation core/regression/invalid-octal-strict-directive-function/input.js 1:13-4:1
-				directives: Array [
-					JSDirective {
-						value: "\\5"
-						loc: SourceLocation core/regression/invalid-octal-strict-directive-function/input.js 2:2-2:7
-					}
-					JSDirective {
-						value: "use strict"
-						loc: SourceLocation core/regression/invalid-octal-strict-directive-function/input.js 3:2-3:15
-					}
-				]
-			}
+			loc: SourceLocation core/regression/invalid-octal-strict-directive-function/input.js 1:0-4:1
 		}
 		JSFunctionDeclaration {
-			id: JSBindingIdentifier {
-				name: "b"
-				loc: SourceLocation core/regression/invalid-octal-strict-directive-function/input.js 6:9-6:10 (b)
+			id: JSBindingIdentifier {name: "b", loc: SourceLocation core/regression/invalid-octal-strict-directive-function/input.js 6:9-6:10 (b)}
+			body: JSBlockStatement {
+				body: []
+				directives: [
+					JSDirective {value: "\\4", loc: SourceLocation core/regression/invalid-octal-strict-directive-function/input.js 7:2-7:7}
+					JSDirective {value: "\\5", loc: SourceLocation core/regression/invalid-octal-strict-directive-function/input.js 8:2-8:7}
+					JSDirective {value: "use strict", loc: SourceLocation core/regression/invalid-octal-strict-directive-function/input.js 9:2-9:15}
+				]
+				loc: SourceLocation core/regression/invalid-octal-strict-directive-function/input.js 6:13-10:1
 			}
-			loc: SourceLocation core/regression/invalid-octal-strict-directive-function/input.js 6:0-10:1
 			head: JSFunctionHead {
 				async: false
 				generator: false
 				hasHoistedVars: false
-				params: Array []
-				rest: undefined
-				returnType: undefined
-				thisType: undefined
-				typeParameters: undefined
+				params: []
 				loc: SourceLocation core/regression/invalid-octal-strict-directive-function/input.js 6:10-6:12
 			}
-			body: JSBlockStatement {
-				body: Array []
-				loc: SourceLocation core/regression/invalid-octal-strict-directive-function/input.js 6:13-10:1
-				directives: Array [
-					JSDirective {
-						value: "\\4"
-						loc: SourceLocation core/regression/invalid-octal-strict-directive-function/input.js 7:2-7:7
-					}
-					JSDirective {
-						value: "\\5"
-						loc: SourceLocation core/regression/invalid-octal-strict-directive-function/input.js 8:2-8:7
-					}
-					JSDirective {
-						value: "use strict"
-						loc: SourceLocation core/regression/invalid-octal-strict-directive-function/input.js 9:2-9:15
-					}
-				]
-			}
+			loc: SourceLocation core/regression/invalid-octal-strict-directive-function/input.js 6:0-10:1
 		}
 		JSFunctionDeclaration {
-			id: JSBindingIdentifier {
-				name: "c"
-				loc: SourceLocation core/regression/invalid-octal-strict-directive-function/input.js 12:9-12:10 (c)
+			id: JSBindingIdentifier {name: "c", loc: SourceLocation core/regression/invalid-octal-strict-directive-function/input.js 12:9-12:10 (c)}
+			body: JSBlockStatement {
+				body: []
+				directives: [
+					JSDirective {value: "use strict", loc: SourceLocation core/regression/invalid-octal-strict-directive-function/input.js 13:2-13:15}
+					JSDirective {value: "\\5", loc: SourceLocation core/regression/invalid-octal-strict-directive-function/input.js 14:2-14:7}
+				]
+				loc: SourceLocation core/regression/invalid-octal-strict-directive-function/input.js 12:13-15:1
 			}
-			loc: SourceLocation core/regression/invalid-octal-strict-directive-function/input.js 12:0-15:1
 			head: JSFunctionHead {
 				async: false
 				generator: false
 				hasHoistedVars: false
-				params: Array []
-				rest: undefined
-				returnType: undefined
-				thisType: undefined
-				typeParameters: undefined
+				params: []
 				loc: SourceLocation core/regression/invalid-octal-strict-directive-function/input.js 12:10-12:12
 			}
-			body: JSBlockStatement {
-				body: Array []
-				loc: SourceLocation core/regression/invalid-octal-strict-directive-function/input.js 12:13-15:1
-				directives: Array [
-					JSDirective {
-						value: "use strict"
-						loc: SourceLocation core/regression/invalid-octal-strict-directive-function/input.js 13:2-13:15
-					}
-					JSDirective {
-						value: "\\5"
-						loc: SourceLocation core/regression/invalid-octal-strict-directive-function/input.js 14:2-14:7
-					}
-				]
-			}
+			loc: SourceLocation core/regression/invalid-octal-strict-directive-function/input.js 12:0-15:1
 		}
 		JSFunctionDeclaration {
-			id: JSBindingIdentifier {
-				name: "d"
-				loc: SourceLocation core/regression/invalid-octal-strict-directive-function/input.js 17:9-17:10 (d)
+			id: JSBindingIdentifier {name: "d", loc: SourceLocation core/regression/invalid-octal-strict-directive-function/input.js 17:9-17:10 (d)}
+			body: JSBlockStatement {
+				body: []
+				directives: [
+					JSDirective {value: "use strict", loc: SourceLocation core/regression/invalid-octal-strict-directive-function/input.js 18:2-18:15}
+					JSDirective {value: "\\4", loc: SourceLocation core/regression/invalid-octal-strict-directive-function/input.js 19:2-19:7}
+					JSDirective {value: "\\5", loc: SourceLocation core/regression/invalid-octal-strict-directive-function/input.js 20:2-20:7}
+				]
+				loc: SourceLocation core/regression/invalid-octal-strict-directive-function/input.js 17:13-21:1
 			}
-			loc: SourceLocation core/regression/invalid-octal-strict-directive-function/input.js 17:0-21:1
 			head: JSFunctionHead {
 				async: false
 				generator: false
 				hasHoistedVars: false
-				params: Array []
-				rest: undefined
-				returnType: undefined
-				thisType: undefined
-				typeParameters: undefined
+				params: []
 				loc: SourceLocation core/regression/invalid-octal-strict-directive-function/input.js 17:10-17:12
 			}
-			body: JSBlockStatement {
-				body: Array []
-				loc: SourceLocation core/regression/invalid-octal-strict-directive-function/input.js 17:13-21:1
-				directives: Array [
-					JSDirective {
-						value: "use strict"
-						loc: SourceLocation core/regression/invalid-octal-strict-directive-function/input.js 18:2-18:15
-					}
-					JSDirective {
-						value: "\\4"
-						loc: SourceLocation core/regression/invalid-octal-strict-directive-function/input.js 19:2-19:7
-					}
-					JSDirective {
-						value: "\\5"
-						loc: SourceLocation core/regression/invalid-octal-strict-directive-function/input.js 20:2-20:7
-					}
-				]
-			}
+			loc: SourceLocation core/regression/invalid-octal-strict-directive-function/input.js 17:0-21:1
 		}
 		JSFunctionDeclaration {
-			id: JSBindingIdentifier {
-				name: "c"
-				loc: SourceLocation core/regression/invalid-octal-strict-directive-function/input.js 23:9-23:10 (c)
-			}
-			loc: SourceLocation core/regression/invalid-octal-strict-directive-function/input.js 23:0-26:1
-			head: JSFunctionHead {
-				async: false
-				generator: false
-				hasHoistedVars: false
-				params: Array []
-				rest: undefined
-				returnType: undefined
-				thisType: undefined
-				typeParameters: undefined
-				loc: SourceLocation core/regression/invalid-octal-strict-directive-function/input.js 23:10-23:12
-			}
+			id: JSBindingIdentifier {name: "c", loc: SourceLocation core/regression/invalid-octal-strict-directive-function/input.js 23:9-23:10 (c)}
 			body: JSBlockStatement {
-				loc: SourceLocation core/regression/invalid-octal-strict-directive-function/input.js 23:13-26:1
-				directives: Array [
-					JSDirective {
-						value: "use strict"
-						loc: SourceLocation core/regression/invalid-octal-strict-directive-function/input.js 24:2-24:15
-					}
-				]
-				body: Array [
+				body: [
 					JSExpressionStatement {
-						loc: SourceLocation core/regression/invalid-octal-strict-directive-function/input.js 25:2-25:5
 						expression: JSNumericLiteral {
 							value: 5
 							format: "octal"
 							loc: SourceLocation core/regression/invalid-octal-strict-directive-function/input.js 25:2-25:4
 						}
+						loc: SourceLocation core/regression/invalid-octal-strict-directive-function/input.js 25:2-25:5
 					}
 				]
+				directives: [JSDirective {value: "use strict", loc: SourceLocation core/regression/invalid-octal-strict-directive-function/input.js 24:2-24:15}]
+				loc: SourceLocation core/regression/invalid-octal-strict-directive-function/input.js 23:13-26:1
 			}
-		}
-		JSFunctionDeclaration {
-			id: JSBindingIdentifier {
-				name: "d"
-				loc: SourceLocation core/regression/invalid-octal-strict-directive-function/input.js 28:9-28:10 (d)
-			}
-			loc: SourceLocation core/regression/invalid-octal-strict-directive-function/input.js 28:0-32:1
 			head: JSFunctionHead {
 				async: false
 				generator: false
 				hasHoistedVars: false
-				params: Array []
-				rest: undefined
-				returnType: undefined
-				thisType: undefined
-				typeParameters: undefined
-				loc: SourceLocation core/regression/invalid-octal-strict-directive-function/input.js 28:10-28:12
+				params: []
+				loc: SourceLocation core/regression/invalid-octal-strict-directive-function/input.js 23:10-23:12
 			}
+			loc: SourceLocation core/regression/invalid-octal-strict-directive-function/input.js 23:0-26:1
+		}
+		JSFunctionDeclaration {
+			id: JSBindingIdentifier {name: "d", loc: SourceLocation core/regression/invalid-octal-strict-directive-function/input.js 28:9-28:10 (d)}
 			body: JSBlockStatement {
-				loc: SourceLocation core/regression/invalid-octal-strict-directive-function/input.js 28:13-32:1
-				directives: Array [
-					JSDirective {
-						value: "use strict"
-						loc: SourceLocation core/regression/invalid-octal-strict-directive-function/input.js 29:2-29:15
-					}
-				]
-				body: Array [
+				body: [
 					JSExpressionStatement {
-						loc: SourceLocation core/regression/invalid-octal-strict-directive-function/input.js 30:2-30:5
 						expression: JSNumericLiteral {
 							value: 4
 							format: "octal"
 							loc: SourceLocation core/regression/invalid-octal-strict-directive-function/input.js 30:2-30:4
 						}
+						loc: SourceLocation core/regression/invalid-octal-strict-directive-function/input.js 30:2-30:5
 					}
 					JSExpressionStatement {
-						loc: SourceLocation core/regression/invalid-octal-strict-directive-function/input.js 31:2-31:5
 						expression: JSNumericLiteral {
 							value: 5
 							format: "octal"
 							loc: SourceLocation core/regression/invalid-octal-strict-directive-function/input.js 31:2-31:4
 						}
+						loc: SourceLocation core/regression/invalid-octal-strict-directive-function/input.js 31:2-31:5
 					}
 				]
+				directives: [JSDirective {value: "use strict", loc: SourceLocation core/regression/invalid-octal-strict-directive-function/input.js 29:2-29:15}]
+				loc: SourceLocation core/regression/invalid-octal-strict-directive-function/input.js 28:13-32:1
 			}
+			head: JSFunctionHead {
+				async: false
+				generator: false
+				hasHoistedVars: false
+				params: []
+				loc: SourceLocation core/regression/invalid-octal-strict-directive-function/input.js 28:10-28:12
+			}
+			loc: SourceLocation core/regression/invalid-octal-strict-directive-function/input.js 28:0-32:1
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			description: {advice: [], category: ["parse"], categoryValue: "js", message: RAW_MARKUP {value: "Octal literal in strict mode"}}
+			location: {language: "js", path: UIDPath<core/regression/invalid-octal-strict-directive-function/input.js>, end: Position 2:4, start: Position 2:4}
+			origins: [{category: "parse"}]
+		}
+	]
+	directives: []
+	hasHoistedVars: false
+	path: UIDPath<core/regression/invalid-octal-strict-directive-function/input.js>
+	sourceType: "script"
+	syntax: []
+	loc: SourceLocation core/regression/invalid-octal-strict-directive-function/input.js 1:0-33:0
 }
 ```
 

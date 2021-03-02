@@ -8,128 +8,78 @@
 
 ```javascript
 MarkdownRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	integrity: undefined
-	loc: SourceLocation reference/input.md 1:0-14:0
-	path: UIDPath<reference/input.md>
-	body: Array [
+	body: [
 		MarkdownReferenceInline {
 			value: ""
+			reference: [MarkdownText {value: "lorem", loc: SourceLocation reference/input.md 1:1-1:1}]
 			loc: SourceLocation reference/input.md 1:0-1:7
-			reference: Array [
-				MarkdownText {
-					value: "lorem"
-					loc: SourceLocation reference/input.md 1:1-1:1
-				}
-			]
 		}
 		MarkdownReferenceInline {
 			value: ""
-			loc: SourceLocation reference/input.md 3:0-3:9
-			reference: Array [
+			reference: [
 				MarkdownEmphasisInline {
-					value: Array [
-						MarkdownText {
-							value: "lorem"
-							loc: SourceLocation reference/input.md 3:2-3:2
-						}
-					]
+					value: [MarkdownText {value: "lorem", loc: SourceLocation reference/input.md 3:2-3:2}]
 					loc: SourceLocation reference/input.md 3:1-3:7
 				}
 			]
+			loc: SourceLocation reference/input.md 3:0-3:9
 		}
 		MarkdownReferenceInline {
 			value: ""
-			loc: SourceLocation reference/input.md 5:0-5:11
-			reference: Array [
+			reference: [
 				MarkdownEmphasisInline {
-					value: Array [
-						MarkdownText {
-							value: "ipsum"
-							loc: SourceLocation reference/input.md 5:3-5:3
-						}
-					]
+					value: [MarkdownText {value: "ipsum", loc: SourceLocation reference/input.md 5:3-5:3}]
 					loc: SourceLocation reference/input.md 5:1-5:8
 				}
 			]
+			loc: SourceLocation reference/input.md 5:0-5:11
 		}
 		MarkdownReferenceInline {
 			value: ""
-			loc: SourceLocation reference/input.md 7:0-7:11
-			reference: Array [
+			reference: [
 				MarkdownEmphasisInline {
-					value: Array [
-						MarkdownText {
-							value: "lorem"
-							loc: SourceLocation reference/input.md 7:3-7:3
-						}
-					]
+					value: [MarkdownText {value: "lorem", loc: SourceLocation reference/input.md 7:3-7:3}]
 					loc: SourceLocation reference/input.md 7:1-7:8
 				}
 			]
+			loc: SourceLocation reference/input.md 7:0-7:11
 		}
 		MarkdownReferenceInline {
 			value: ""
-			loc: SourceLocation reference/input.md 9:0-9:9
-			reference: Array [
+			reference: [
 				MarkdownEmphasisInline {
-					value: Array [
-						MarkdownText {
-							value: "lorem"
-							loc: SourceLocation reference/input.md 9:2-9:2
-						}
-					]
+					value: [MarkdownText {value: "lorem", loc: SourceLocation reference/input.md 9:2-9:2}]
 					loc: SourceLocation reference/input.md 9:1-9:7
 				}
 			]
+			loc: SourceLocation reference/input.md 9:0-9:9
 		}
 		MarkdownReferenceInline {
 			value: ""
+			reference: [
+				MarkdownText {value: "lorem", loc: SourceLocation reference/input.md 11:1-11:1}
+				MarkdownText {value: "*", loc: SourceLocation reference/input.md 11:6-11:6}
+				MarkdownText {value: " ipsum", loc: SourceLocation reference/input.md 11:7-11:7}
+				MarkdownText {value: "**", loc: SourceLocation reference/input.md 11:13-11:13}
+			]
 			loc: SourceLocation reference/input.md 11:0-11:16
-			reference: Array [
-				MarkdownText {
-					value: "lorem"
-					loc: SourceLocation reference/input.md 11:1-11:1
-				}
-				MarkdownText {
-					value: "*"
-					loc: SourceLocation reference/input.md 11:6-11:6
-				}
-				MarkdownText {
-					value: " ipsum"
-					loc: SourceLocation reference/input.md 11:7-11:7
-				}
-				MarkdownText {
-					value: "**"
-					loc: SourceLocation reference/input.md 11:13-11:13
-				}
-			]
 		}
 		MarkdownReferenceInline {
 			value: ""
-			loc: SourceLocation reference/input.md 13:0-13:16
-			reference: Array [
-				MarkdownText {
-					value: "*"
-					loc: SourceLocation reference/input.md 13:1-13:1
-				}
-				MarkdownText {
-					value: "lorem "
-					loc: SourceLocation reference/input.md 13:2-13:2
-				}
-				MarkdownText {
-					value: "**"
-					loc: SourceLocation reference/input.md 13:8-13:8
-				}
-				MarkdownText {
-					value: "ipsum"
-					loc: SourceLocation reference/input.md 13:10-13:10
-				}
+			reference: [
+				MarkdownText {value: "*", loc: SourceLocation reference/input.md 13:1-13:1}
+				MarkdownText {value: "lorem ", loc: SourceLocation reference/input.md 13:2-13:2}
+				MarkdownText {value: "**", loc: SourceLocation reference/input.md 13:8-13:8}
+				MarkdownText {value: "ipsum", loc: SourceLocation reference/input.md 13:10-13:10}
 			]
+			loc: SourceLocation reference/input.md 13:0-13:16
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	path: UIDPath<reference/input.md>
+	loc: SourceLocation reference/input.md 1:0-14:0
 }
 ```
 

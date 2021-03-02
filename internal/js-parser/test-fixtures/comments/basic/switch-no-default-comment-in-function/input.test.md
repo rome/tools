@@ -8,98 +8,57 @@
 
 ```javascript
 JSRoot {
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation comments/basic/switch-no-default-comment-in-function/input.js 1:0-10:0
-	path: UIDPath<comments/basic/switch-no-default-comment-in-function/input.js>
-	comments: Array [
-		CommentLine {
-			id: "0"
-			value: "no default"
-			loc: SourceLocation comments/basic/switch-no-default-comment-in-function/input.js 7:8-7:20
-		}
-	]
-	body: Array [
+	body: [
 		JSFunctionDeclaration {
-			id: JSBindingIdentifier {
-				name: "bar"
-				loc: SourceLocation comments/basic/switch-no-default-comment-in-function/input.js 1:9-1:12 (bar)
+			id: JSBindingIdentifier {name: "bar", loc: SourceLocation comments/basic/switch-no-default-comment-in-function/input.js 1:9-1:12 (bar)}
+			body: JSBlockStatement {
+				body: [
+					JSSwitchStatement {
+						cases: [
+							JSSwitchCase {
+								consequent: [JSBreakStatement {loc: SourceLocation comments/basic/switch-no-default-comment-in-function/input.js 4:12-4:18}]
+								test: JSNumericLiteral {value: 2, loc: SourceLocation comments/basic/switch-no-default-comment-in-function/input.js 3:13-3:14}
+								loc: SourceLocation comments/basic/switch-no-default-comment-in-function/input.js 3:8-4:18
+							}
+							JSSwitchCase {
+								consequent: [JSBreakStatement {loc: SourceLocation comments/basic/switch-no-default-comment-in-function/input.js 6:12-6:18}]
+								test: JSNumericLiteral {value: 1, loc: SourceLocation comments/basic/switch-no-default-comment-in-function/input.js 5:13-5:14}
+								trailingComments: ["0"]
+								loc: SourceLocation comments/basic/switch-no-default-comment-in-function/input.js 5:8-6:18
+							}
+						]
+						discriminant: JSReferenceIdentifier {name: "a", loc: SourceLocation comments/basic/switch-no-default-comment-in-function/input.js 2:12-2:13 (a)}
+						loc: SourceLocation comments/basic/switch-no-default-comment-in-function/input.js 2:4-8:5
+					}
+				]
+				directives: []
+				loc: SourceLocation comments/basic/switch-no-default-comment-in-function/input.js 1:16-9:1
 			}
-			loc: SourceLocation comments/basic/switch-no-default-comment-in-function/input.js 1:0-9:1
 			head: JSFunctionHead {
 				async: false
 				generator: false
 				hasHoistedVars: false
-				rest: undefined
-				returnType: undefined
-				thisType: undefined
-				typeParameters: undefined
-				loc: SourceLocation comments/basic/switch-no-default-comment-in-function/input.js 1:12-1:15
-				params: Array [
+				params: [
 					JSBindingIdentifier {
 						name: "a"
+						meta: JSPatternMeta {loc: SourceLocation comments/basic/switch-no-default-comment-in-function/input.js 1:13-1:14}
 						loc: SourceLocation comments/basic/switch-no-default-comment-in-function/input.js 1:13-1:14 (a)
-						meta: JSPatternMeta {
-							optional: undefined
-							typeAnnotation: undefined
-							loc: SourceLocation comments/basic/switch-no-default-comment-in-function/input.js 1:13-1:14
-						}
 					}
 				]
+				loc: SourceLocation comments/basic/switch-no-default-comment-in-function/input.js 1:12-1:15
 			}
-			body: JSBlockStatement {
-				directives: Array []
-				loc: SourceLocation comments/basic/switch-no-default-comment-in-function/input.js 1:16-9:1
-				body: Array [
-					JSSwitchStatement {
-						loc: SourceLocation comments/basic/switch-no-default-comment-in-function/input.js 2:4-8:5
-						discriminant: JSReferenceIdentifier {
-							name: "a"
-							loc: SourceLocation comments/basic/switch-no-default-comment-in-function/input.js 2:12-2:13 (a)
-						}
-						cases: Array [
-							JSSwitchCase {
-								loc: SourceLocation comments/basic/switch-no-default-comment-in-function/input.js 3:8-4:18
-								test: JSNumericLiteral {
-									value: 2
-									format: undefined
-									loc: SourceLocation comments/basic/switch-no-default-comment-in-function/input.js 3:13-3:14
-								}
-								consequent: Array [
-									JSBreakStatement {
-										label: undefined
-										loc: SourceLocation comments/basic/switch-no-default-comment-in-function/input.js 4:12-4:18
-									}
-								]
-							}
-							JSSwitchCase {
-								loc: SourceLocation comments/basic/switch-no-default-comment-in-function/input.js 5:8-6:18
-								trailingComments: Array ["0"]
-								test: JSNumericLiteral {
-									value: 1
-									format: undefined
-									loc: SourceLocation comments/basic/switch-no-default-comment-in-function/input.js 5:13-5:14
-								}
-								consequent: Array [
-									JSBreakStatement {
-										label: undefined
-										trailingComments: undefined
-										loc: SourceLocation comments/basic/switch-no-default-comment-in-function/input.js 6:12-6:18
-									}
-								]
-							}
-						]
-					}
-				]
-			}
+			loc: SourceLocation comments/basic/switch-no-default-comment-in-function/input.js 1:0-9:1
 		}
 	]
+	comments: [CommentLine {id: "0", value: "no default", loc: SourceLocation comments/basic/switch-no-default-comment-in-function/input.js 7:8-7:20}]
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	path: UIDPath<comments/basic/switch-no-default-comment-in-function/input.js>
+	sourceType: "script"
+	syntax: []
+	loc: SourceLocation comments/basic/switch-no-default-comment-in-function/input.js 1:0-10:0
 }
 ```
 

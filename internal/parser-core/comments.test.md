@@ -8,35 +8,22 @@
 
 ```javascript
 JSRoot {
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation unknown 1:0-1:22
-	path: UIDPath<unknown>
-	comments: Array [
-		CommentBlock {
-			id: "0"
-			value: " block comment "
-			loc: SourceLocation unknown 1:0-1:19
-		}
-	]
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			leadingComments: Array ["0"]
+			expression: JSNumericLiteral {value: 42, loc: SourceLocation unknown 1:20-1:22}
+			leadingComments: ["0"]
 			loc: SourceLocation unknown 1:20-1:22
-			expression: JSNumericLiteral {
-				value: 42
-				format: undefined
-				leadingComments: undefined
-				loc: SourceLocation unknown 1:20-1:22
-			}
 		}
 	]
+	comments: [CommentBlock {id: "0", value: " block comment ", loc: SourceLocation unknown 1:0-1:19}]
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	path: UIDPath<unknown>
+	sourceType: "script"
+	syntax: []
+	loc: SourceLocation unknown 1:0-1:22
 }
 ```
 
@@ -44,43 +31,25 @@ JSRoot {
 
 ```javascript
 JSRoot {
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation unknown 1:0-1:46
-	path: UIDPath<unknown>
-	comments: Array [
-		CommentBlock {
-			id: "0"
-			value: " block comment 1 "
-			loc: SourceLocation unknown 1:3-1:24
-		}
-		CommentBlock {
-			id: "1"
-			value: " block comment 2 "
-			loc: SourceLocation unknown 1:25-1:46
-		}
-	]
-	body: Array [
+	body: [
 		JSExpressionStatement {
+			expression: JSNumericLiteral {value: 42, loc: SourceLocation unknown 1:0-1:2}
+			trailingComments: ["0", "1"]
 			loc: SourceLocation unknown 1:0-1:2
-			trailingComments: Array [
-				"0"
-				"1"
-			]
-			expression: JSNumericLiteral {
-				value: 42
-				format: undefined
-				trailingComments: undefined
-				loc: SourceLocation unknown 1:0-1:2
-			}
 		}
 	]
+	comments: [
+		CommentBlock {id: "0", value: " block comment 1 ", loc: SourceLocation unknown 1:3-1:24}
+		CommentBlock {id: "1", value: " block comment 2 ", loc: SourceLocation unknown 1:25-1:46}
+	]
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	path: UIDPath<unknown>
+	sourceType: "script"
+	syntax: []
+	loc: SourceLocation unknown 1:0-1:46
 }
 ```
 
@@ -88,52 +57,31 @@ JSRoot {
 
 ```javascript
 JSRoot {
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: true
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation unknown 1:0-1:50
-	path: UIDPath<unknown>
-	comments: Array [
-		CommentBlock {
-			id: "0"
-			value: " block comment 1 "
-			loc: SourceLocation unknown 1:7-1:28
-		}
-		CommentBlock {
-			id: "1"
-			value: " block comment 2 "
-			loc: SourceLocation unknown 1:29-1:50
-		}
-	]
-	body: Array [
+	body: [
 		JSVariableDeclarationStatement {
-			loc: SourceLocation unknown 1:0-1:7
-			trailingComments: Array [
-				"0"
-				"1"
-			]
 			declaration: JSVariableDeclaration {
 				kind: "var"
-				trailingComments: undefined
-				loc: SourceLocation unknown 1:0-1:7
-				declarations: Array [
-					JSVariableDeclarator {
-						id: JSBindingIdentifier {
-							name: "p1"
-							loc: SourceLocation unknown 1:4-1:6 (p1)
-						}
-						init: undefined
-						loc: SourceLocation unknown 1:4-1:6
-					}
+				declarations: [
+					JSVariableDeclarator {id: JSBindingIdentifier {name: "p1", loc: SourceLocation unknown 1:4-1:6 (p1)}, loc: SourceLocation unknown 1:4-1:6}
 				]
+				loc: SourceLocation unknown 1:0-1:7
 			}
+			trailingComments: ["0", "1"]
+			loc: SourceLocation unknown 1:0-1:7
 		}
 	]
+	comments: [
+		CommentBlock {id: "0", value: " block comment 1 ", loc: SourceLocation unknown 1:7-1:28}
+		CommentBlock {id: "1", value: " block comment 2 ", loc: SourceLocation unknown 1:29-1:50}
+	]
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: true
+	path: UIDPath<unknown>
+	sourceType: "script"
+	syntax: []
+	loc: SourceLocation unknown 1:0-1:50
 }
 ```
 
@@ -141,26 +89,18 @@ JSRoot {
 
 ```javascript
 JSRoot {
-	body: Array []
+	body: []
+	comments: [CommentBlock {id: "0", value: "42", loc: SourceLocation unknown 1:0-1:6}]
 	corrupt: false
-	diagnostics: Array []
-	directives: Array []
+	diagnostics: []
+	directives: []
 	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	trailingComments: Array []
-	innerComments: Array ["0"]
-	loc: SourceLocation unknown 1:0-1:6
+	innerComments: ["0"]
 	path: UIDPath<unknown>
-	comments: Array [
-		CommentBlock {
-			id: "0"
-			value: "42"
-			loc: SourceLocation unknown 1:0-1:6
-		}
-	]
+	sourceType: "script"
+	syntax: []
+	trailingComments: []
+	loc: SourceLocation unknown 1:0-1:6
 }
 ```
 
@@ -168,49 +108,31 @@ JSRoot {
 
 ```javascript
 JSRoot {
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation unknown 1:0-1:28
-	path: UIDPath<unknown>
-	comments: Array [
-		CommentBlock {
-			id: "0"
-			value: " assignment "
-			loc: SourceLocation unknown 1:5-1:21
-		}
-	]
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation unknown 1:0-1:28
 			expression: JSBinaryExpression {
-				operator: "*"
-				loc: SourceLocation unknown 1:0-1:28
-				right: JSReferenceIdentifier {
-					name: "c"
-					loc: SourceLocation unknown 1:27-1:28 (c)
-				}
 				left: JSBinaryExpression {
+					left: JSReferenceIdentifier {name: "a", loc: SourceLocation unknown 1:1-1:2 (a)}
 					operator: "+"
+					right: JSReferenceIdentifier {name: "b", leadingComments: ["0"], loc: SourceLocation unknown 1:21-1:22 (b)}
 					loc: SourceLocation unknown 1:1-1:22
-					left: JSReferenceIdentifier {
-						name: "a"
-						loc: SourceLocation unknown 1:1-1:2 (a)
-					}
-					right: JSReferenceIdentifier {
-						name: "b"
-						leadingComments: Array ["0"]
-						loc: SourceLocation unknown 1:21-1:22 (b)
-					}
 				}
+				operator: "*"
+				right: JSReferenceIdentifier {name: "c", loc: SourceLocation unknown 1:27-1:28 (c)}
+				loc: SourceLocation unknown 1:0-1:28
 			}
+			loc: SourceLocation unknown 1:0-1:28
 		}
 	]
+	comments: [CommentBlock {id: "0", value: " assignment ", loc: SourceLocation unknown 1:5-1:21}]
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	path: UIDPath<unknown>
+	sourceType: "script"
+	syntax: []
+	loc: SourceLocation unknown 1:0-1:28
 }
 ```
 
@@ -218,86 +140,56 @@ JSRoot {
 
 ```javascript
 JSRoot {
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation unknown 1:0-1:54
-	path: UIDPath<unknown>
-	comments: Array [
-		CommentBlock {
-			id: "0"
-			value: " sync "
-			loc: SourceLocation unknown 1:30-1:40
-		}
-	]
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation unknown 1:0-1:54
 			expression: JSCallExpression {
-				arguments: Array [JSThisExpression {loc: SourceLocation unknown 1:49-1:53}]
-				loc: SourceLocation unknown 1:0-1:54
+				arguments: [JSThisExpression {loc: SourceLocation unknown 1:49-1:53}]
 				callee: JSMemberExpression {
-					loc: SourceLocation unknown 1:0-1:48
-					property: JSStaticMemberProperty {
-						value: JSIdentifier {
-							name: "call"
-							loc: SourceLocation unknown 1:44-1:48 (call)
-						}
-						loc: SourceLocation unknown 1:44-1:48 (call)
-					}
 					object: JSFunctionExpression {
-						id: undefined
-						loc: SourceLocation unknown 1:1-1:42
-						head: JSFunctionHead {
-							async: false
-							generator: false
-							hasHoistedVars: true
-							params: Array []
-							rest: undefined
-							returnType: undefined
-							thisType: undefined
-							typeParameters: undefined
-							loc: SourceLocation unknown 1:9-1:11
-						}
 						body: JSBlockStatement {
-							directives: Array []
-							loc: SourceLocation unknown 1:11-1:42
-							body: Array [
+							body: [
 								JSVariableDeclarationStatement {
-									loc: SourceLocation unknown 1:13-1:29
-									trailingComments: Array ["0"]
 									declaration: JSVariableDeclaration {
 										kind: "var"
-										trailingComments: undefined
-										loc: SourceLocation unknown 1:13-1:29
-										declarations: Array [
+										declarations: [
 											JSVariableDeclarator {
-												id: JSBindingIdentifier {
-													name: "version"
-													loc: SourceLocation unknown 1:17-1:24 (version)
-												}
+												id: JSBindingIdentifier {name: "version", loc: SourceLocation unknown 1:17-1:24 (version)}
+												init: JSNumericLiteral {value: 1, loc: SourceLocation unknown 1:27-1:28}
 												loc: SourceLocation unknown 1:17-1:28
-												init: JSNumericLiteral {
-													value: 1
-													format: undefined
-													loc: SourceLocation unknown 1:27-1:28
-												}
 											}
 										]
+										loc: SourceLocation unknown 1:13-1:29
 									}
+									trailingComments: ["0"]
+									loc: SourceLocation unknown 1:13-1:29
 								}
 							]
+							directives: []
+							loc: SourceLocation unknown 1:11-1:42
 						}
+						head: JSFunctionHead {async: false, generator: false, hasHoistedVars: true, params: [], loc: SourceLocation unknown 1:9-1:11}
+						loc: SourceLocation unknown 1:1-1:42
 					}
+					property: JSStaticMemberProperty {
+						value: JSIdentifier {name: "call", loc: SourceLocation unknown 1:44-1:48 (call)}
+						loc: SourceLocation unknown 1:44-1:48 (call)
+					}
+					loc: SourceLocation unknown 1:0-1:48
 				}
+				loc: SourceLocation unknown 1:0-1:54
 			}
+			loc: SourceLocation unknown 1:0-1:54
 		}
 	]
+	comments: [CommentBlock {id: "0", value: " sync ", loc: SourceLocation unknown 1:30-1:40}]
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	path: UIDPath<unknown>
+	sourceType: "script"
+	syntax: []
+	loc: SourceLocation unknown 1:0-1:54
 }
 ```
 
@@ -305,50 +197,24 @@ JSRoot {
 
 ```javascript
 JSRoot {
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation unknown 1:0-1:20
-	path: UIDPath<unknown>
-	comments: Array [
-		CommentBlock {
-			id: "0"
-			value: ""
-			loc: SourceLocation unknown 1:0-1:4
-		}
-	]
-	body: Array [
+	body: [
 		JSFunctionDeclaration {
-			id: JSBindingIdentifier {
-				name: "a"
-				leadingComments: undefined
-				loc: SourceLocation unknown 1:14-1:15 (a)
-			}
-			leadingComments: Array ["0"]
+			id: JSBindingIdentifier {name: "a", loc: SourceLocation unknown 1:14-1:15 (a)}
+			body: JSBlockStatement {body: [], directives: [], loc: SourceLocation unknown 1:18-1:20}
+			head: JSFunctionHead {async: false, generator: false, hasHoistedVars: false, params: [], loc: SourceLocation unknown 1:15-1:17}
+			leadingComments: ["0"]
 			loc: SourceLocation unknown 1:5-1:20
-			body: JSBlockStatement {
-				body: Array []
-				directives: Array []
-				loc: SourceLocation unknown 1:18-1:20
-			}
-			head: JSFunctionHead {
-				async: false
-				generator: false
-				hasHoistedVars: false
-				params: Array []
-				rest: undefined
-				returnType: undefined
-				thisType: undefined
-				typeParameters: undefined
-				loc: SourceLocation unknown 1:15-1:17
-			}
 		}
 	]
+	comments: [CommentBlock {id: "0", value: "", loc: SourceLocation unknown 1:0-1:4}]
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	path: UIDPath<unknown>
+	sourceType: "script"
+	syntax: []
+	loc: SourceLocation unknown 1:0-1:20
 }
 ```
 
@@ -356,43 +222,25 @@ JSRoot {
 
 ```javascript
 JSRoot {
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation unknown 1:0-4:2
-	path: UIDPath<unknown>
-	comments: Array [
-		CommentLine {
-			id: "0"
-			value: " Hello, world!"
-			loc: SourceLocation unknown 1:0-1:16
-		}
-		CommentLine {
-			id: "1"
-			value: "   Another hello"
-			loc: SourceLocation unknown 3:0-3:18
-		}
-	]
-	body: Array [
+	body: [
 		JSExpressionStatement {
+			expression: JSNumericLiteral {value: 42, loc: SourceLocation unknown 4:0-4:2}
+			leadingComments: ["0", "1"]
 			loc: SourceLocation unknown 4:0-4:2
-			leadingComments: Array [
-				"0"
-				"1"
-			]
-			expression: JSNumericLiteral {
-				value: 42
-				format: undefined
-				leadingComments: undefined
-				loc: SourceLocation unknown 4:0-4:2
-			}
 		}
 	]
+	comments: [
+		CommentLine {id: "0", value: " Hello, world!", loc: SourceLocation unknown 1:0-1:16}
+		CommentLine {id: "1", value: "   Another hello", loc: SourceLocation unknown 3:0-3:18}
+	]
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	path: UIDPath<unknown>
+	sourceType: "script"
+	syntax: []
+	loc: SourceLocation unknown 1:0-4:2
 }
 ```
 
@@ -400,38 +248,21 @@ JSRoot {
 
 ```javascript
 JSRoot {
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation unknown 1:0-5:1
-	path: UIDPath<unknown>
-	comments: Array [
-		CommentBlock {
-			id: "0"
-			value: "*\n\t * comments in empty block\n\t "
-			loc: SourceLocation unknown 2:1-4:4
-		}
-	]
-	body: Array [
+	body: [
 		JSWhileStatement {
+			body: JSBlockStatement {body: [], directives: [], innerComments: ["0"], trailingComments: [], loc: SourceLocation unknown 1:13-5:1}
+			test: JSBooleanLiteral {value: true, loc: SourceLocation unknown 1:7-1:11}
 			loc: SourceLocation unknown 1:0-5:1
-			test: JSBooleanLiteral {
-				value: true
-				loc: SourceLocation unknown 1:7-1:11
-			}
-			body: JSBlockStatement {
-				body: Array []
-				directives: Array []
-				trailingComments: Array []
-				innerComments: Array ["0"]
-				loc: SourceLocation unknown 1:13-5:1
-			}
 		}
 	]
+	comments: [CommentBlock {id: "0", value: "*\n\t * comments in empty block\n\t ", loc: SourceLocation unknown 2:1-4:4}]
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	path: UIDPath<unknown>
+	sourceType: "script"
+	syntax: []
+	loc: SourceLocation unknown 1:0-5:1
 }
 ```

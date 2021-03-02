@@ -8,42 +8,31 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation core/uncategorised/177/input.js 1:0-1:9
-	path: UIDPath<core/uncategorised/177/input.js>
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation core/uncategorised/177/input.js 1:0-1:9
 			expression: JSBinaryExpression {
+				left: JSReferenceIdentifier {name: "x", loc: SourceLocation core/uncategorised/177/input.js 1:0-1:1 (x)}
 				operator: "+"
-				loc: SourceLocation core/uncategorised/177/input.js 1:0-1:9
-				left: JSReferenceIdentifier {
-					name: "x"
-					loc: SourceLocation core/uncategorised/177/input.js 1:0-1:1 (x)
-				}
 				right: JSBinaryExpression {
+					left: JSReferenceIdentifier {name: "y", loc: SourceLocation core/uncategorised/177/input.js 1:4-1:5 (y)}
 					operator: "*"
+					right: JSReferenceIdentifier {name: "z", loc: SourceLocation core/uncategorised/177/input.js 1:8-1:9 (z)}
 					loc: SourceLocation core/uncategorised/177/input.js 1:4-1:9
-					left: JSReferenceIdentifier {
-						name: "y"
-						loc: SourceLocation core/uncategorised/177/input.js 1:4-1:5 (y)
-					}
-					right: JSReferenceIdentifier {
-						name: "z"
-						loc: SourceLocation core/uncategorised/177/input.js 1:8-1:9 (z)
-					}
 				}
+				loc: SourceLocation core/uncategorised/177/input.js 1:0-1:9
 			}
+			loc: SourceLocation core/uncategorised/177/input.js 1:0-1:9
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	path: UIDPath<core/uncategorised/177/input.js>
+	sourceType: "script"
+	syntax: []
+	loc: SourceLocation core/uncategorised/177/input.js 1:0-1:9
 }
 ```
 

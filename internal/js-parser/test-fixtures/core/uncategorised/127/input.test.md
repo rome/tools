@@ -8,66 +8,46 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation core/uncategorised/127/input.js 1:0-1:45
-	path: UIDPath<core/uncategorised/127/input.js>
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation core/uncategorised/127/input.js 1:0-1:45
 			expression: JSCallExpression {
-				loc: SourceLocation core/uncategorised/127/input.js 1:0-1:45
-				arguments: Array [
-					JSNumericLiteral {
-						value: 2_014
-						format: undefined
-						loc: SourceLocation core/uncategorised/127/input.js 1:40-1:44
-					}
-				]
+				arguments: [JSNumericLiteral {value: 2_014, loc: SourceLocation core/uncategorised/127/input.js 1:40-1:44}]
 				callee: JSMemberExpression {
-					loc: SourceLocation core/uncategorised/127/input.js 1:0-1:39
-					property: JSStaticMemberProperty {
-						value: JSIdentifier {
-							name: "prepareForElection"
-							loc: SourceLocation core/uncategorised/127/input.js 1:21-1:39 (prepareForElection)
-						}
-						loc: SourceLocation core/uncategorised/127/input.js 1:21-1:39 (prepareForElection)
-					}
 					object: JSMemberExpression {
-						loc: SourceLocation core/uncategorised/127/input.js 1:0-1:20
-						property: JSStaticMemberProperty {
-							value: JSIdentifier {
-								name: "Indonesia"
-								loc: SourceLocation core/uncategorised/127/input.js 1:11-1:20 (Indonesia)
-							}
-							loc: SourceLocation core/uncategorised/127/input.js 1:11-1:20 (Indonesia)
-						}
 						object: JSMemberExpression {
-							loc: SourceLocation core/uncategorised/127/input.js 1:0-1:10
-							object: JSReferenceIdentifier {
-								name: "earth"
-								loc: SourceLocation core/uncategorised/127/input.js 1:0-1:5 (earth)
-							}
+							object: JSReferenceIdentifier {name: "earth", loc: SourceLocation core/uncategorised/127/input.js 1:0-1:5 (earth)}
 							property: JSStaticMemberProperty {
-								value: JSIdentifier {
-									name: "asia"
-									loc: SourceLocation core/uncategorised/127/input.js 1:6-1:10 (asia)
-								}
+								value: JSIdentifier {name: "asia", loc: SourceLocation core/uncategorised/127/input.js 1:6-1:10 (asia)}
 								loc: SourceLocation core/uncategorised/127/input.js 1:6-1:10 (asia)
 							}
+							loc: SourceLocation core/uncategorised/127/input.js 1:0-1:10
 						}
+						property: JSStaticMemberProperty {
+							value: JSIdentifier {name: "Indonesia", loc: SourceLocation core/uncategorised/127/input.js 1:11-1:20 (Indonesia)}
+							loc: SourceLocation core/uncategorised/127/input.js 1:11-1:20 (Indonesia)
+						}
+						loc: SourceLocation core/uncategorised/127/input.js 1:0-1:20
 					}
+					property: JSStaticMemberProperty {
+						value: JSIdentifier {name: "prepareForElection", loc: SourceLocation core/uncategorised/127/input.js 1:21-1:39 (prepareForElection)}
+						loc: SourceLocation core/uncategorised/127/input.js 1:21-1:39 (prepareForElection)
+					}
+					loc: SourceLocation core/uncategorised/127/input.js 1:0-1:39
 				}
+				loc: SourceLocation core/uncategorised/127/input.js 1:0-1:45
 			}
+			loc: SourceLocation core/uncategorised/127/input.js 1:0-1:45
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	path: UIDPath<core/uncategorised/127/input.js>
+	sourceType: "script"
+	syntax: []
+	loc: SourceLocation core/uncategorised/127/input.js 1:0-1:45
 }
 ```
 

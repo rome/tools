@@ -6,45 +6,23 @@
 
 ```javascript
 CSSRoot {
-	comments: Array []
-	corrupt: false
-	integrity: undefined
-	loc: SourceLocation invalid/selector1/input.css 1:0-3:1
-	path: RelativePath<invalid/selector1/input.css>
-	body: Array [
+	body: [
 		CSSRule {
+			block: CSSBlock {value: [], startingTokenValue: "{", loc: SourceLocation invalid/selector1/input.css 1:2-3:1}
+			prelude: [CSSSelector {patterns: [], loc: SourceLocation invalid/selector1/input.css 1:0-1:2}]
 			loc: SourceLocation invalid/selector1/input.css 1:0-3:1
-			block: CSSBlock {
-				value: Array []
-				startingTokenValue: "{"
-				loc: SourceLocation invalid/selector1/input.css 1:2-3:1
-			}
-			prelude: Array [
-				CSSSelector {
-					patterns: Array []
-					loc: SourceLocation invalid/selector1/input.css 1:0-1:2
-				}
-			]
 		}
 	]
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "css"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Expected a selector."}
-			}
-			location: Object {
-				integrity: undefined
-				language: "css"
-				sourceText: undefined
-				end: Position 1:3
-				path: RelativePath<invalid/selector1/input.css>
-				start: Position 1:2
-			}
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			description: {advice: [], category: ["parse"], categoryValue: "css", message: RAW_MARKUP {value: "Expected a selector."}}
+			location: {language: "css", path: RelativePath<invalid/selector1/input.css>, end: Position 1:3, start: Position 1:2}
+			origins: [{category: "parse"}]
 		}
 	]
+	path: RelativePath<invalid/selector1/input.css>
+	loc: SourceLocation invalid/selector1/input.css 1:0-3:1
 }
 ```

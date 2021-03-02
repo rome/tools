@@ -8,70 +8,55 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: true
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation core/uncategorised/298/input.js 1:0-1:38
-	path: UIDPath<core/uncategorised/298/input.js>
-	body: Array [
+	body: [
 		JSVariableDeclarationStatement {
-			loc: SourceLocation core/uncategorised/298/input.js 1:0-1:38
 			declaration: JSVariableDeclaration {
 				kind: "var"
-				loc: SourceLocation core/uncategorised/298/input.js 1:0-1:38
-				declarations: Array [
+				declarations: [
 					JSVariableDeclarator {
-						id: JSBindingIdentifier {
-							name: "hello"
-							loc: SourceLocation core/uncategorised/298/input.js 1:4-1:9 (hello)
-						}
-						loc: SourceLocation core/uncategorised/298/input.js 1:4-1:37
+						id: JSBindingIdentifier {name: "hello", loc: SourceLocation core/uncategorised/298/input.js 1:4-1:9 (hello)}
 						init: JSFunctionExpression {
-							id: JSBindingIdentifier {
-								name: "hi"
-								loc: SourceLocation core/uncategorised/298/input.js 1:21-1:23 (hi)
+							id: JSBindingIdentifier {name: "hi", loc: SourceLocation core/uncategorised/298/input.js 1:21-1:23 (hi)}
+							body: JSBlockStatement {
+								body: [
+									JSExpressionStatement {
+										expression: JSCallExpression {
+											arguments: []
+											callee: JSReferenceIdentifier {name: "sayHi", loc: SourceLocation core/uncategorised/298/input.js 1:28-1:33 (sayHi)}
+											loc: SourceLocation core/uncategorised/298/input.js 1:28-1:35
+										}
+										loc: SourceLocation core/uncategorised/298/input.js 1:28-1:35
+									}
+								]
+								directives: []
+								loc: SourceLocation core/uncategorised/298/input.js 1:26-1:37
 							}
-							loc: SourceLocation core/uncategorised/298/input.js 1:12-1:37
 							head: JSFunctionHead {
 								async: false
 								generator: false
 								hasHoistedVars: false
-								params: Array []
-								rest: undefined
-								returnType: undefined
-								thisType: undefined
-								typeParameters: undefined
+								params: []
 								loc: SourceLocation core/uncategorised/298/input.js 1:23-1:25
 							}
-							body: JSBlockStatement {
-								directives: Array []
-								loc: SourceLocation core/uncategorised/298/input.js 1:26-1:37
-								body: Array [
-									JSExpressionStatement {
-										loc: SourceLocation core/uncategorised/298/input.js 1:28-1:35
-										expression: JSCallExpression {
-											arguments: Array []
-											loc: SourceLocation core/uncategorised/298/input.js 1:28-1:35
-											callee: JSReferenceIdentifier {
-												name: "sayHi"
-												loc: SourceLocation core/uncategorised/298/input.js 1:28-1:33 (sayHi)
-											}
-										}
-									}
-								]
-							}
+							loc: SourceLocation core/uncategorised/298/input.js 1:12-1:37
 						}
+						loc: SourceLocation core/uncategorised/298/input.js 1:4-1:37
 					}
 				]
+				loc: SourceLocation core/uncategorised/298/input.js 1:0-1:38
 			}
+			loc: SourceLocation core/uncategorised/298/input.js 1:0-1:38
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: true
+	path: UIDPath<core/uncategorised/298/input.js>
+	sourceType: "script"
+	syntax: []
+	loc: SourceLocation core/uncategorised/298/input.js 1:0-1:38
 }
 ```
 

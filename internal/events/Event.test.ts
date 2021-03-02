@@ -91,21 +91,16 @@ test(
 		const second = await event.call("rome");
 
 		// bar becomes the rootSubscription
-		fooSub.release();
+		await fooSub.release();
 		const third = await event.call("test");
-
-		// make foo the rootSubscription
-		event.subscribe(foo, true);
-		const fourth = await event.call("hi");
 
 		// return value from event.call is return value of rootSubscription
 		t.is(first, "foo returns");
 		t.is(second, "foo returns");
 		t.is(third, "bar returns");
-		t.is(fourth, "foo returns");
 
-		t.looksLike(fooCalls, ["hello", "rome", "hi"]);
-		t.looksLike(barCalls, ["rome", "test", "hi"]);
+		t.looksLike(fooCalls, ["hello", "rome"]);
+		t.looksLike(barCalls, ["rome", "test"]);
 	},
 );
 

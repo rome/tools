@@ -8,116 +8,69 @@
 
 ```javascript
 HTMLRoot {
-	corrupt: false
-	diagnostics: Array []
-	integrity: undefined
-	loc: SourceLocation smoke/input.html 1:0-19:6
-	path: UIDPath<smoke/input.html>
-	comments: Array [
-		CommentBlock {
-			id: "0"
-			value: " I am a comment "
-			loc: SourceLocation smoke/input.html 1:0-1:23
-		}
-		CommentBlock {
-			id: "1"
-			value: " I am another comment "
-			loc: SourceLocation smoke/input.html 17:1-17:30
-		}
-	]
-	body: Array [
+	body: [
 		HTMLElement {
-			name: HTMLIdentifier {
-				name: "foo"
-				leadingComments: undefined
-				loc: SourceLocation smoke/input.html 2:1-2:4
-			}
-			attributes: Array []
-			selfClosing: false
-			leadingComments: Array ["0"]
-			loc: SourceLocation smoke/input.html 2:0-19:6
-			children: Array [
+			name: HTMLIdentifier {name: "foo", loc: SourceLocation smoke/input.html 2:1-2:4}
+			attributes: []
+			children: [
 				HTMLElement {
-					name: HTMLIdentifier {
-						name: "input"
-						loc: SourceLocation smoke/input.html 3:2-3:7
-					}
-					children: Array []
-					selfClosing: true
-					loc: SourceLocation smoke/input.html 3:1-3:26
-					attributes: Array [
+					name: HTMLIdentifier {name: "input", loc: SourceLocation smoke/input.html 3:2-3:7}
+					attributes: [
 						HTMLAttribute {
-							name: HTMLIdentifier {
-								name: "placeholder"
-								loc: SourceLocation smoke/input.html 3:8-3:19
-							}
-							value: HTMLString {
-								value: "ok"
-								loc: SourceLocation smoke/input.html 3:20-3:24
-							}
+							name: HTMLIdentifier {name: "placeholder", loc: SourceLocation smoke/input.html 3:8-3:19}
+							value: HTMLString {value: "ok", loc: SourceLocation smoke/input.html 3:20-3:24}
 							loc: SourceLocation smoke/input.html 3:8-3:24
 						}
 					]
+					children: []
+					selfClosing: true
+					loc: SourceLocation smoke/input.html 3:1-3:26
 				}
-				HTMLText {
-					value: "yesiamatextdocumentasdfhahahaok"
-					loc: SourceLocation smoke/input.html 4:1-14:6
-				}
+				HTMLText {value: "yesiamatextdocumentasdfhahahaok", loc: SourceLocation smoke/input.html 4:1-14:6}
 				HTMLElement {
-					name: HTMLIdentifier {
-						name: "span"
-						loc: SourceLocation smoke/input.html 14:7-14:11
-					}
-					attributes: Array []
-					selfClosing: false
-					loc: SourceLocation smoke/input.html 14:6-14:48
-					children: Array [
+					name: HTMLIdentifier {name: "span", loc: SourceLocation smoke/input.html 14:7-14:11}
+					attributes: []
+					children: [
 						HTMLElement {
-							name: HTMLIdentifier {
-								name: "span"
-								loc: SourceLocation smoke/input.html 14:13-14:17
-							}
-							attributes: Array []
-							selfClosing: false
-							loc: SourceLocation smoke/input.html 14:12-14:41
-							children: Array [
+							name: HTMLIdentifier {name: "span", loc: SourceLocation smoke/input.html 14:13-14:17}
+							attributes: []
+							children: [
 								HTMLElement {
-									name: HTMLIdentifier {
-										name: "span"
-										loc: SourceLocation smoke/input.html 14:19-14:23
-									}
-									attributes: Array []
+									name: HTMLIdentifier {name: "span", loc: SourceLocation smoke/input.html 14:19-14:23}
+									attributes: []
+									children: [HTMLText {value: "lol", loc: SourceLocation smoke/input.html 14:24-14:27}]
 									selfClosing: false
 									loc: SourceLocation smoke/input.html 14:18-14:34
-									children: Array [
-										HTMLText {
-											value: "lol"
-											loc: SourceLocation smoke/input.html 14:24-14:27
-										}
-									]
 								}
 							]
+							selfClosing: false
+							loc: SourceLocation smoke/input.html 14:12-14:41
 						}
 					]
+					selfClosing: false
+					loc: SourceLocation smoke/input.html 14:6-14:48
 				}
 				HTMLElement {
-					name: HTMLIdentifier {
-						name: "yeah"
-						loc: SourceLocation smoke/input.html 16:2-16:6
-					}
-					attributes: Array []
+					name: HTMLIdentifier {name: "yeah", loc: SourceLocation smoke/input.html 16:2-16:6}
+					attributes: []
+					children: [HTMLText {value: "mate", loc: SourceLocation smoke/input.html 16:7-16:11}]
 					selfClosing: false
 					loc: SourceLocation smoke/input.html 16:1-16:18
-					children: Array [
-						HTMLText {
-							value: "mate"
-							loc: SourceLocation smoke/input.html 16:7-16:11
-						}
-					]
 				}
 			]
+			leadingComments: ["0"]
+			selfClosing: false
+			loc: SourceLocation smoke/input.html 2:0-19:6
 		}
 	]
+	comments: [
+		CommentBlock {id: "0", value: " I am a comment ", loc: SourceLocation smoke/input.html 1:0-1:23}
+		CommentBlock {id: "1", value: " I am another comment ", loc: SourceLocation smoke/input.html 17:1-17:30}
+	]
+	corrupt: false
+	diagnostics: []
+	path: UIDPath<smoke/input.html>
+	loc: SourceLocation smoke/input.html 1:0-19:6
 }
 ```
 

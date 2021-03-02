@@ -5,240 +5,165 @@
 ## `correctly identifies a file with cjs exports as cjs`
 
 ```javascript
-Object {
-	dependencies: Array []
-	firstTopAwaitLocation: undefined
-	importFirstUsage: Array []
-	moduleType: "es"
-	topLevelLocalBindings: Object {}
-	exports: Array [
-		local {
-			kind: "value"
-			name: "foo"
-			valueType: "other"
-			loc: SourceLocation unknown 1:14-1:19
-		}
-	]
-	diagnostics: Array [
-		Object {
-			tags: undefined
-			origins: Array [Object {category: "analyzeDependencies"}]
-			location: Object {
-				integrity: undefined
-				language: "js"
-				marker: undefined
-				sourceTypeJS: "module"
-				end: Position 1:19
-				path: UIDPath<unknown>
-				start: Position 1:0
-			}
-			description: Object {
+{
+	dependencies: []
+	diagnostics: [
+		{
+			description: {
+				advice: []
+				category: ["analyzeDependencies", "cjsExportInES"]
 				message: RAW_MARKUP {value: "You cannot use CommonJS exports in an ES module"}
-				category: Array [
-					"analyzeDependencies"
-					"cjsExportInES"
-				]
-				advice: Array [
+				verboseAdvice: [
 					action {
+						args: ["uid://unknown"]
 						command: "check"
-						extra: undefined
-						hidden: true
-						shortcut: "s"
-						args: Array ["uid://unknown"]
-						commandFlags: Object {decisions: Array ["suppress-analyzeDependencies/cjsExportInES-uid://unknown-1"]}
-						instruction: RAW_MARKUP {value: "To suppress this error run"}
-						noun: RAW_MARKUP {value: "Add suppression comment"}
+						commandFlags: {decisions: ["suppress-analyzeDependencies/cjsExportInES-uid://unknown-1"]}
+						description: RAW_MARKUP {value: "Add suppression comment"}
+						suggestedKeyboardShortcut: "s"
 					}
 					action {
-						args: Array []
+						args: []
 						command: "check"
-						extra: true
-						hidden: true
-						shortcut: undefined
-						commandFlags: Object {decisions: Array ["global-suppress-analyzeDependencies/cjsExportInES"]}
-						instruction: RAW_MARKUP {value: "To add suppression comments for ALL files with this category run"}
-						noun: RAW_MARKUP {value: "Add suppression comments for ALL files with this category"}
+						commandFlags: {decisions: ["global-suppress-analyzeDependencies/cjsExportInES"]}
+						description: RAW_MARKUP {value: "Add suppression comments for ALL files with this category"}
+						secondary: true
 					}
 				]
 			}
+			location: {language: "js", path: UIDPath<unknown>, sourceTypeJS: "module", end: Position 1:19, start: Position 1:0}
+			origins: [{category: "analyzeDependencies"}]
 		}
 	]
+	exports: [local {kind: "value", name: "foo", valueType: "other", loc: SourceLocation unknown 1:14-1:19}]
+	importFirstUsage: []
+	moduleType: "es"
+	topLevelLocalBindings: {}
 }
 ```
 
 ## `correctly identifies a file with es exports as es`
 
 ```javascript
-Object {
-	dependencies: Array []
-	diagnostics: Array []
-	firstTopAwaitLocation: undefined
-	importFirstUsage: Array []
+{
+	dependencies: []
+	diagnostics: []
+	exports: [local {kind: "value", name: "foo", valueType: "other", loc: SourceLocation unknown 1:13-1:16 (foo)}]
+	importFirstUsage: []
 	moduleType: "es"
-	topLevelLocalBindings: Object {foo: SourceLocation unknown 1:13-1:16 (foo)}
-	exports: Array [
-		local {
-			kind: "value"
-			name: "foo"
-			valueType: "other"
-			loc: SourceLocation unknown 1:13-1:16 (foo)
-		}
-	]
+	topLevelLocalBindings: {foo: SourceLocation unknown 1:13-1:16 (foo)}
 }
 ```
 
 ## `correctly identifies a file with es imports as es`
 
 ```javascript
-Object {
-	diagnostics: Array []
-	exports: Array []
-	firstTopAwaitLocation: undefined
-	importFirstUsage: Array []
-	moduleType: "es"
-	topLevelLocalBindings: Object {}
-	dependencies: Array [
+{
+	dependencies: [
 		es {
 			kind: "value"
 			all: false
 			async: false
 			exported: false
 			imported: true
-			names: Array []
+			names: []
 			optional: false
 			source: "bar"
 			loc: SourceLocation unknown 1:7-1:12
 		}
 	]
+	diagnostics: []
+	exports: []
+	importFirstUsage: []
+	moduleType: "es"
+	topLevelLocalBindings: {}
 }
 ```
 
 ## `correctly identifies a file with no imports or exports as unknown`
 
 ```javascript
-Object {
-	dependencies: Array []
-	diagnostics: Array []
-	exports: Array []
-	firstTopAwaitLocation: undefined
-	importFirstUsage: Array []
-	moduleType: "es"
-	topLevelLocalBindings: Object {}
-}
+{dependencies: [], diagnostics: [], exports: [], importFirstUsage: [], moduleType: "es", topLevelLocalBindings: {}}
 ```
 
 ## `defines topLevelLocalBindings`
 
 ```javascript
-Object {
-	diagnostics: Array []
-	exports: Array []
-	firstTopAwaitLocation: undefined
-	importFirstUsage: Array []
-	moduleType: "es"
-	topLevelLocalBindings: Object {
-		bar: SourceLocation unknown 1:8-1:11 (bar)
-		foo: SourceLocation unknown 2:6-2:9 (foo)
-	}
-	dependencies: Array [
+{
+	dependencies: [
 		es {
 			kind: "value"
 			all: false
 			async: false
 			exported: false
 			imported: true
+			names: [value {name: "bar", loc: SourceLocation unknown 1:8-1:11}]
 			optional: false
 			source: "foo"
 			loc: SourceLocation unknown 1:18-1:23
-			names: Array [
-				value {
-					name: "bar"
-					loc: SourceLocation unknown 1:8-1:11
-				}
-			]
 		}
 	]
+	diagnostics: []
+	exports: []
+	importFirstUsage: []
+	moduleType: "es"
+	topLevelLocalBindings: {bar: SourceLocation unknown 1:8-1:11 (bar), foo: SourceLocation unknown 2:6-2:9 (foo)}
 }
 ```
 
 ## `disallow mix of es and cjs exports`
 
 ```javascript
-Object {
-	dependencies: Array []
-	firstTopAwaitLocation: undefined
-	importFirstUsage: Array []
-	moduleType: "cjs"
-	topLevelLocalBindings: Object {foo: SourceLocation unknown 1:13-1:16 (foo)}
-	exports: Array [
-		local {
-			kind: "value"
-			name: "foo"
-			valueType: "other"
-			loc: SourceLocation unknown 1:13-1:16 (foo)
-		}
-		local {
-			kind: "value"
-			name: "bar"
-			valueType: "other"
-			loc: SourceLocation unknown 2:14-2:19
-		}
-		local {
-			kind: "value"
-			name: "default"
-			loc: undefined
-			valueType: "other"
-		}
-	]
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: "export const foo = 'bar';\nexports.bar = 'foo';"
-				end: Position 1:25
-				path: UIDPath<unknown>
-				start: Position 1:0
-			}
-			description: Object {
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "<emphasis>import</emphasis> and <emphasis>export</emphasis> can only appear in a module"}
-				advice: Array [
+{
+	dependencies: []
+	diagnostics: [
+		{
+			description: {
+				advice: [
+					log {category: "info", text: RAW_MARKUP {value: "Change the extension to <emphasis>.mjs</emphasis> to turn this file into a module"}}
 					log {
 						category: "info"
-						text: RAW_MARKUP {value: "Change the extension to <emphasis>.mjs</emphasis> to turn this file into a module"}
-					}
-					log {
-						category: "info"
-						text: RAW_MARKUP {value: "Add <emphasis>\\\"type\\\": \\\"module\\\"</emphasis> to your <filelink emphasis target=\"package.json\">package.json</filelink>"}
+						text: RAW_MARKUP {
+							value: "Add <emphasis>\\\"type\\\": \\\"module\\\"</emphasis> to your <filelink emphasis target=\"package.json\">package.json</filelink>"
+						}
 					}
 				]
+				category: ["parse"]
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "<emphasis>import</emphasis> and <emphasis>export</emphasis> can only appear in a module"}
 			}
+			location: {
+				language: "js"
+				path: UIDPath<unknown>
+				sourceText: "export const foo = 'bar';\nexports.bar = 'foo';"
+				end: Position 1:25
+				start: Position 1:0
+			}
+			origins: [{category: "parse"}]
 		}
 	]
+	exports: [
+		local {kind: "value", name: "foo", valueType: "other", loc: SourceLocation unknown 1:13-1:16 (foo)}
+		local {kind: "value", name: "bar", valueType: "other", loc: SourceLocation unknown 2:14-2:19}
+		local {kind: "value", name: "default", valueType: "other"}
+	]
+	importFirstUsage: []
+	moduleType: "cjs"
+	topLevelLocalBindings: {foo: SourceLocation unknown 1:13-1:16 (foo)}
 }
 ```
 
 ## `discovers async import('foo')`
 
 ```javascript
-Object {
-	diagnostics: Array []
-	exports: Array []
-	firstTopAwaitLocation: undefined
-	importFirstUsage: Array []
-	moduleType: "es"
-	topLevelLocalBindings: Object {yes: SourceLocation unknown 3:9-3:12 (yes)}
-	dependencies: Array [
+{
+	dependencies: [
 		es {
 			kind: "value"
 			all: true
 			async: true
 			exported: false
 			imported: true
-			names: Array []
+			names: []
 			optional: false
 			source: "./foo"
 			loc: SourceLocation unknown 1:7-1:14
@@ -249,387 +174,260 @@ Object {
 			async: true
 			exported: false
 			imported: true
-			names: Array []
+			names: []
 			optional: false
 			source: "./bar"
 			loc: SourceLocation unknown 4:9-4:16
 		}
 	]
+	diagnostics: []
+	exports: []
+	importFirstUsage: []
+	moduleType: "es"
+	topLevelLocalBindings: {yes: SourceLocation unknown 3:9-3:12 (yes)}
 }
 ```
 
 ## `discovers commonjs exports`
 
 ```javascript
-Object {
-	dependencies: Array []
-	diagnostics: Array []
-	firstTopAwaitLocation: undefined
-	importFirstUsage: Array []
-	moduleType: "cjs"
-	topLevelLocalBindings: Object {}
-	exports: Array [
-		local {
-			kind: "value"
-			name: "yes"
-			valueType: "other"
-			loc: SourceLocation unknown 1:14-1:27
-		}
-		local {
-			kind: "value"
-			name: "default"
-			loc: undefined
-			valueType: "other"
-		}
+{
+	dependencies: []
+	diagnostics: []
+	exports: [
+		local {kind: "value", name: "yes", valueType: "other", loc: SourceLocation unknown 1:14-1:27}
+		local {kind: "value", name: "default", valueType: "other"}
 	]
+	importFirstUsage: []
+	moduleType: "cjs"
+	topLevelLocalBindings: {}
 }
 ```
 
 ## `discovers commonjs module.exports`
 
 ```javascript
-Object {
-	dependencies: Array []
-	diagnostics: Array []
-	firstTopAwaitLocation: undefined
-	importFirstUsage: Array []
-	moduleType: "cjs"
-	topLevelLocalBindings: Object {}
-	exports: Array [
-		local {
-			kind: "value"
-			name: "default"
-			valueType: "other"
-			loc: SourceLocation unknown 1:17-1:30
-		}
-		local {
-			kind: "value"
-			name: "default"
-			loc: undefined
-			valueType: "other"
-		}
+{
+	dependencies: []
+	diagnostics: []
+	exports: [
+		local {kind: "value", name: "default", valueType: "other", loc: SourceLocation unknown 1:17-1:30}
+		local {kind: "value", name: "default", valueType: "other"}
 	]
+	importFirstUsage: []
+	moduleType: "cjs"
+	topLevelLocalBindings: {}
 }
 ```
 
 ## `discovers export declarations`
 
 ```javascript
-Object {
-	dependencies: Array []
-	diagnostics: Array []
-	firstTopAwaitLocation: undefined
-	importFirstUsage: Array []
+{
+	dependencies: []
+	diagnostics: []
+	exports: [
+		local {kind: "value", name: "yes", valueType: "other", loc: SourceLocation unknown 1:13-1:16 (yes)}
+		local {kind: "value", name: "foo", valueType: "function", loc: SourceLocation unknown 2:16-2:19 (foo)}
+		local {kind: "value", name: "Bar", valueType: "class", loc: SourceLocation unknown 3:13-3:16 (Bar)}
+	]
+	importFirstUsage: []
 	moduleType: "es"
-	topLevelLocalBindings: Object {
+	topLevelLocalBindings: {
 		Bar: SourceLocation unknown 3:13-3:16 (Bar)
 		foo: SourceLocation unknown 2:16-2:19 (foo)
 		yes: SourceLocation unknown 1:13-1:16 (yes)
 	}
-	exports: Array [
-		local {
-			kind: "value"
-			name: "yes"
-			valueType: "other"
-			loc: SourceLocation unknown 1:13-1:16 (yes)
-		}
-		local {
-			kind: "value"
-			name: "foo"
-			valueType: "function"
-			loc: SourceLocation unknown 2:16-2:19 (foo)
-		}
-		local {
-			kind: "value"
-			name: "Bar"
-			valueType: "class"
-			loc: SourceLocation unknown 3:13-3:16 (Bar)
-		}
-	]
 }
 ```
 
 ## `discovers export default`
 
 ```javascript
-Object {
-	dependencies: Array []
-	diagnostics: Array []
-	firstTopAwaitLocation: undefined
-	importFirstUsage: Array []
+{
+	dependencies: []
+	diagnostics: []
+	exports: [local {kind: "value", name: "default", valueType: "other", loc: SourceLocation unknown 1:15-1:20}]
+	importFirstUsage: []
 	moduleType: "es"
-	topLevelLocalBindings: Object {}
-	exports: Array [
-		local {
-			kind: "value"
-			name: "default"
-			valueType: "other"
-			loc: SourceLocation unknown 1:15-1:20
-		}
-	]
+	topLevelLocalBindings: {}
 }
 ```
 
 ## `discovers export from`
 
 ```javascript
-Object {
-	diagnostics: Array []
-	firstTopAwaitLocation: undefined
-	importFirstUsage: Array []
-	moduleType: "es"
-	topLevelLocalBindings: Object {}
-	dependencies: Array [
+{
+	dependencies: [
 		es {
 			kind: "value"
 			all: false
 			async: false
 			exported: true
 			imported: false
+			names: [
+				value {name: "foo", loc: SourceLocation unknown 1:8-1:11}
+				value {name: "bar", loc: SourceLocation unknown 1:13-1:16}
+				value {name: "default", loc: SourceLocation unknown 1:18-1:31}
+				value {name: "boo", loc: SourceLocation unknown 1:33-1:43}
+			]
 			optional: false
 			source: "foobar"
 			loc: SourceLocation unknown 1:50-1:58
-			names: Array [
-				value {
-					name: "foo"
-					loc: SourceLocation unknown 1:8-1:11
-				}
-				value {
-					name: "bar"
-					loc: SourceLocation unknown 1:13-1:16
-				}
-				value {
-					name: "default"
-					loc: SourceLocation unknown 1:18-1:31
-				}
-				value {
-					name: "boo"
-					loc: SourceLocation unknown 1:33-1:43
-				}
-			]
 		}
 	]
-	exports: Array [
-		external {
-			kind: "value"
-			exported: "foo"
-			imported: "foo"
-			source: "foobar"
-			loc: SourceLocation unknown 1:8-1:11
-		}
-		external {
-			kind: "value"
-			exported: "bar"
-			imported: "bar"
-			source: "foobar"
-			loc: SourceLocation unknown 1:13-1:16
-		}
-		external {
-			kind: "value"
-			exported: "no"
-			imported: "default"
-			source: "foobar"
-			loc: SourceLocation unknown 1:18-1:31
-		}
-		external {
-			kind: "value"
-			exported: "noo"
-			imported: "boo"
-			source: "foobar"
-			loc: SourceLocation unknown 1:33-1:43
-		}
+	diagnostics: []
+	exports: [
+		external {kind: "value", exported: "foo", imported: "foo", source: "foobar", loc: SourceLocation unknown 1:8-1:11}
+		external {kind: "value", exported: "bar", imported: "bar", source: "foobar", loc: SourceLocation unknown 1:13-1:16}
+		external {kind: "value", exported: "no", imported: "default", source: "foobar", loc: SourceLocation unknown 1:18-1:31}
+		external {kind: "value", exported: "noo", imported: "boo", source: "foobar", loc: SourceLocation unknown 1:33-1:43}
 	]
+	importFirstUsage: []
+	moduleType: "es"
+	topLevelLocalBindings: {}
 }
 ```
 
 ## `discovers export star`
 
 ```javascript
-Object {
-	diagnostics: Array []
-	firstTopAwaitLocation: undefined
-	importFirstUsage: Array []
-	moduleType: "es"
-	topLevelLocalBindings: Object {}
-	exports: Array [
-		externalAll {
-			kind: "value"
-			source: "foobar"
-			loc: SourceLocation unknown 1:0-1:23
-		}
-	]
-	dependencies: Array [
+{
+	dependencies: [
 		es {
 			kind: "value"
 			all: true
 			async: false
 			exported: true
 			imported: false
-			names: Array []
+			names: []
 			optional: false
 			source: "foobar"
 			loc: SourceLocation unknown 1:14-1:22
 		}
 	]
+	diagnostics: []
+	exports: [externalAll {kind: "value", source: "foobar", loc: SourceLocation unknown 1:0-1:23}]
+	importFirstUsage: []
+	moduleType: "es"
+	topLevelLocalBindings: {}
 }
 ```
 
 ## `discovers import default`
 
 ```javascript
-Object {
-	diagnostics: Array []
-	exports: Array []
-	firstTopAwaitLocation: undefined
-	importFirstUsage: Array []
-	moduleType: "es"
-	topLevelLocalBindings: Object {bar: SourceLocation unknown 1:7-1:10 (bar)}
-	dependencies: Array [
+{
+	dependencies: [
 		es {
 			kind: "value"
 			all: false
 			async: false
 			exported: false
 			imported: true
+			names: [value {name: "default", loc: SourceLocation unknown 1:0-1:10}]
 			optional: false
 			source: "foobar"
 			loc: SourceLocation unknown 1:16-1:24
-			names: Array [
-				value {
-					name: "default"
-					loc: SourceLocation unknown 1:0-1:10
-				}
-			]
 		}
 	]
+	diagnostics: []
+	exports: []
+	importFirstUsage: []
+	moduleType: "es"
+	topLevelLocalBindings: {bar: SourceLocation unknown 1:7-1:10 (bar)}
 }
 ```
 
 ## `discovers import specifiers`
 
 ```javascript
-Object {
-	diagnostics: Array []
-	exports: Array []
-	firstTopAwaitLocation: undefined
-	importFirstUsage: Array []
-	moduleType: "es"
-	topLevelLocalBindings: Object {
-		bar: SourceLocation unknown 1:8-1:11 (bar)
-		foo: SourceLocation unknown 1:13-1:16 (foo)
-		lol: SourceLocation unknown 1:29-1:32 (lol)
-		to: SourceLocation unknown 1:40-1:42 (to)
-	}
-	dependencies: Array [
+{
+	dependencies: [
 		es {
 			kind: "value"
 			all: false
 			async: false
 			exported: false
 			imported: true
+			names: [
+				value {name: "bar", loc: SourceLocation unknown 1:8-1:11}
+				value {name: "foo", loc: SourceLocation unknown 1:13-1:16}
+				value {name: "default", loc: SourceLocation unknown 1:18-1:32}
+				value {name: "ya", loc: SourceLocation unknown 1:34-1:42}
+			]
 			optional: false
 			source: "foobar"
 			loc: SourceLocation unknown 1:49-1:57
-			names: Array [
-				value {
-					name: "bar"
-					loc: SourceLocation unknown 1:8-1:11
-				}
-				value {
-					name: "foo"
-					loc: SourceLocation unknown 1:13-1:16
-				}
-				value {
-					name: "default"
-					loc: SourceLocation unknown 1:18-1:32
-				}
-				value {
-					name: "ya"
-					loc: SourceLocation unknown 1:34-1:42
-				}
-			]
 		}
 	]
+	diagnostics: []
+	exports: []
+	importFirstUsage: []
+	moduleType: "es"
+	topLevelLocalBindings: {
+		bar: SourceLocation unknown 1:8-1:11 (bar)
+		foo: SourceLocation unknown 1:13-1:16 (foo)
+		lol: SourceLocation unknown 1:29-1:32 (lol)
+		to: SourceLocation unknown 1:40-1:42 (to)
+	}
 }
 ```
 
 ## `discovers import star`
 
 ```javascript
-Object {
-	diagnostics: Array []
-	exports: Array []
-	firstTopAwaitLocation: undefined
-	importFirstUsage: Array []
-	moduleType: "es"
-	topLevelLocalBindings: Object {}
-	dependencies: Array [
+{
+	dependencies: [
 		es {
 			kind: "value"
 			all: false
 			async: false
 			exported: false
 			imported: true
-			names: Array []
+			names: []
 			optional: false
 			source: "foobar"
 			loc: SourceLocation unknown 1:21-1:29
 		}
 	]
+	diagnostics: []
+	exports: []
+	importFirstUsage: []
+	moduleType: "es"
+	topLevelLocalBindings: {}
 }
 ```
 
 ## `discovers local export specifiers`
 
 ```javascript
-Object {
-	dependencies: Array []
-	diagnostics: Array []
-	firstTopAwaitLocation: undefined
-	importFirstUsage: Array []
-	moduleType: "es"
-	topLevelLocalBindings: Object {}
-	exports: Array [
-		local {
-			kind: "value"
-			name: "foo"
-			valueType: "other"
-			loc: SourceLocation unknown 1:8-1:11 (foo)
-		}
-		local {
-			kind: "value"
-			name: "bar"
-			valueType: "other"
-			loc: SourceLocation unknown 1:13-1:16 (bar)
-		}
-		local {
-			kind: "value"
-			name: "no"
-			valueType: "other"
-			loc: SourceLocation unknown 1:18-1:21 (yes)
-		}
+{
+	dependencies: []
+	diagnostics: []
+	exports: [
+		local {kind: "value", name: "foo", valueType: "other", loc: SourceLocation unknown 1:8-1:11 (foo)}
+		local {kind: "value", name: "bar", valueType: "other", loc: SourceLocation unknown 1:13-1:16 (bar)}
+		local {kind: "value", name: "no", valueType: "other", loc: SourceLocation unknown 1:18-1:21 (yes)}
 	]
+	importFirstUsage: []
+	moduleType: "es"
+	topLevelLocalBindings: {}
 }
 ```
 
 ## `discovers require('module') call`
 
 ```javascript
-Object {
-	diagnostics: Array []
-	exports: Array []
-	firstTopAwaitLocation: undefined
-	importFirstUsage: Array []
-	moduleType: "es"
-	topLevelLocalBindings: Object {yeah: SourceLocation unknown 3:9-3:13 (yeah)}
-	dependencies: Array [
+{
+	dependencies: [
 		es {
 			kind: "value"
 			all: false
 			async: false
 			exported: false
 			imported: true
-			names: Array []
+			names: []
 			optional: false
 			source: "foo"
 			loc: SourceLocation unknown 1:21-1:26
@@ -640,60 +438,49 @@ Object {
 			async: false
 			exported: false
 			imported: true
-			names: Array []
+			names: []
 			optional: false
 			source: "bar"
 			loc: SourceLocation unknown 4:2-4:16
 		}
 	]
+	diagnostics: []
+	exports: []
+	importFirstUsage: []
+	moduleType: "es"
+	topLevelLocalBindings: {yeah: SourceLocation unknown 3:9-3:13 (yeah)}
 }
 ```
 
 ## `discovers top level await`
 
 ```javascript
-Object {
-	dependencies: Array []
-	diagnostics: Array []
-	exports: Array []
-	importFirstUsage: Array []
-	moduleType: "es"
-	topLevelLocalBindings: Object {}
+{
+	dependencies: []
+	diagnostics: []
+	exports: []
 	firstTopAwaitLocation: SourceLocation unknown 1:0-1:14
+	importFirstUsage: []
+	moduleType: "es"
+	topLevelLocalBindings: {}
 }
 ```
 
 ## `ignores require() call if shadowed`
 
 ```javascript
-Object {
-	dependencies: Array []
-	diagnostics: Array []
-	firstTopAwaitLocation: undefined
-	importFirstUsage: Array []
+{
+	dependencies: []
+	diagnostics: []
+	exports: [local {kind: "value", name: "default", valueType: "other"}]
+	importFirstUsage: []
 	moduleType: "cjs"
-	topLevelLocalBindings: Object {yes: SourceLocation unknown 6:9-6:12 (yes)}
-	exports: Array [
-		local {
-			kind: "value"
-			name: "default"
-			loc: undefined
-			valueType: "other"
-		}
-	]
+	topLevelLocalBindings: {yes: SourceLocation unknown 6:9-6:12 (yes)}
 }
 ```
 
 ## `ignores require(dynamic) call`
 
 ```javascript
-Object {
-	dependencies: Array []
-	diagnostics: Array []
-	exports: Array []
-	firstTopAwaitLocation: undefined
-	importFirstUsage: Array []
-	moduleType: "es"
-	topLevelLocalBindings: Object {}
-}
+{dependencies: [], diagnostics: [], exports: [], importFirstUsage: [], moduleType: "es", topLevelLocalBindings: {}}
 ```

@@ -8,18 +8,12 @@
 
 ```javascript
 HTMLRoot {
-	comments: Array []
+	body: [HTMLDoctypeTag {value: "html", loc: SourceLocation doctype/input.html 1:1-5:2}]
+	comments: []
 	corrupt: false
-	diagnostics: Array []
-	integrity: undefined
-	loc: SourceLocation doctype/input.html 1:0-5:2
+	diagnostics: []
 	path: UIDPath<doctype/input.html>
-	body: Array [
-		HTMLDoctypeTag {
-			value: "html"
-			loc: SourceLocation doctype/input.html 1:1-5:2
-		}
-	]
+	loc: SourceLocation doctype/input.html 1:0-5:2
 }
 ```
 

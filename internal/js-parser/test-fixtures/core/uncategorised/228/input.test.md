@@ -8,38 +8,29 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation core/uncategorised/228/input.js 1:0-1:26
-	path: UIDPath<core/uncategorised/228/input.js>
-	body: Array [
+	body: [
 		JSIfStatement {
-			alternate: undefined
-			loc: SourceLocation core/uncategorised/228/input.js 1:0-1:26
-			test: JSReferenceIdentifier {
-				name: "morning"
-				loc: SourceLocation core/uncategorised/228/input.js 1:4-1:11 (morning)
-			}
 			consequent: JSExpressionStatement {
-				loc: SourceLocation core/uncategorised/228/input.js 1:13-1:26
 				expression: JSCallExpression {
-					arguments: Array []
+					arguments: []
+					callee: JSReferenceIdentifier {name: "goodMorning", loc: SourceLocation core/uncategorised/228/input.js 1:13-1:24 (goodMorning)}
 					loc: SourceLocation core/uncategorised/228/input.js 1:13-1:26
-					callee: JSReferenceIdentifier {
-						name: "goodMorning"
-						loc: SourceLocation core/uncategorised/228/input.js 1:13-1:24 (goodMorning)
-					}
 				}
+				loc: SourceLocation core/uncategorised/228/input.js 1:13-1:26
 			}
+			test: JSReferenceIdentifier {name: "morning", loc: SourceLocation core/uncategorised/228/input.js 1:4-1:11 (morning)}
+			loc: SourceLocation core/uncategorised/228/input.js 1:0-1:26
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	path: UIDPath<core/uncategorised/228/input.js>
+	sourceType: "script"
+	syntax: []
+	loc: SourceLocation core/uncategorised/228/input.js 1:0-1:26
 }
 ```
 

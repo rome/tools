@@ -8,72 +8,54 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: true
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation core/escape-keyword/invalid/input.js 1:0-4:0
-	path: UIDPath<core/escape-keyword/invalid/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Escape sequence in keyword <emphasis>break</emphasis>"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 2:4
-				path: UIDPath<core/escape-keyword/invalid/input.js>
-				start: Position 2:4
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSVariableDeclarationStatement {
-			loc: SourceLocation core/escape-keyword/invalid/input.js 1:0-3:2
 			declaration: JSVariableDeclaration {
 				kind: "var"
-				loc: SourceLocation core/escape-keyword/invalid/input.js 1:0-3:2
-				declarations: Array [
+				declarations: [
 					JSVariableDeclarator {
-						id: JSBindingIdentifier {
-							name: "a"
-							loc: SourceLocation core/escape-keyword/invalid/input.js 1:4-1:5 (a)
-						}
-						loc: SourceLocation core/escape-keyword/invalid/input.js 1:4-3:1
+						id: JSBindingIdentifier {name: "a", loc: SourceLocation core/escape-keyword/invalid/input.js 1:4-1:5 (a)}
 						init: JSObjectExpression {
-							loc: SourceLocation core/escape-keyword/invalid/input.js 1:8-3:1
-							properties: Array [
+							properties: [
 								JSObjectProperty {
 									key: JSStaticPropertyKey {
-										value: JSIdentifier {
-											name: "break"
-											loc: SourceLocation core/escape-keyword/invalid/input.js 2:2-2:12 (break)
-										}
+										value: JSIdentifier {name: "break", loc: SourceLocation core/escape-keyword/invalid/input.js 2:2-2:12 (break)}
 										loc: SourceLocation core/escape-keyword/invalid/input.js 2:2-2:12
 									}
-									value: JSReferenceIdentifier {
-										name: "break"
-										loc: SourceLocation core/escape-keyword/invalid/input.js 2:2-2:12 (break)
-									}
+									value: JSReferenceIdentifier {name: "break", loc: SourceLocation core/escape-keyword/invalid/input.js 2:2-2:12 (break)}
 									loc: SourceLocation core/escape-keyword/invalid/input.js 2:2-2:12
 								}
 							]
+							loc: SourceLocation core/escape-keyword/invalid/input.js 1:8-3:1
 						}
+						loc: SourceLocation core/escape-keyword/invalid/input.js 1:4-3:1
 					}
 				]
+				loc: SourceLocation core/escape-keyword/invalid/input.js 1:0-3:2
 			}
+			loc: SourceLocation core/escape-keyword/invalid/input.js 1:0-3:2
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "Escape sequence in keyword <emphasis>break</emphasis>"}
+			}
+			location: {language: "js", path: UIDPath<core/escape-keyword/invalid/input.js>, end: Position 2:4, start: Position 2:4}
+			origins: [{category: "parse"}]
+		}
+	]
+	directives: []
+	hasHoistedVars: true
+	path: UIDPath<core/escape-keyword/invalid/input.js>
+	sourceType: "script"
+	syntax: []
+	loc: SourceLocation core/escape-keyword/invalid/input.js 1:0-4:0
 }
 ```
 

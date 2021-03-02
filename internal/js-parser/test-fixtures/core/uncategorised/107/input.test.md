@@ -8,31 +8,41 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: true
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation core/uncategorised/107/input.js 1:0-1:21
-	path: UIDPath<core/uncategorised/107/input.js>
-	body: Array [
+	body: [
 		JSVariableDeclarationStatement {
-			loc: SourceLocation core/uncategorised/107/input.js 1:0-1:21
 			declaration: JSVariableDeclaration {
 				kind: "var"
-				loc: SourceLocation core/uncategorised/107/input.js 1:0-1:21
-				declarations: Array [
+				declarations: [
 					JSVariableDeclarator {
-						id: JSBindingIdentifier {
-							name: "x"
-							loc: SourceLocation core/uncategorised/107/input.js 1:4-1:5 (x)
-						}
-						loc: SourceLocation core/uncategorised/107/input.js 1:4-1:21
+						id: JSBindingIdentifier {name: "x", loc: SourceLocation core/uncategorised/107/input.js 1:4-1:5 (x)}
 						init: JSRegExpLiteral {
+							expression: JSRegExpSubExpression {
+								body: [
+									JSRegExpCharacter {value: "=", loc: SourceLocation core/uncategorised/107/input.js 1:9-1:10}
+									JSRegExpQuantified {
+										lazy: false
+										min: 1
+										target: JSRegExpGroupCapture {
+											expression: JSRegExpSubExpression {
+												body: [
+													JSRegExpCharSet {
+														body: [
+															JSRegExpCharacter {value: "=", loc: SourceLocation core/uncategorised/107/input.js 1:13-1:14}
+															JSRegExpWhiteSpaceCharacter {loc: SourceLocation core/uncategorised/107/input.js 1:14-1:16}
+														]
+														invert: true
+														loc: SourceLocation core/uncategorised/107/input.js 1:11-1:17
+													}
+												]
+												loc: SourceLocation core/uncategorised/107/input.js 1:11-1:17
+											}
+											loc: SourceLocation core/uncategorised/107/input.js 1:10-1:18
+										}
+										loc: SourceLocation core/uncategorised/107/input.js 1:10-1:18
+									}
+								]
+								loc: SourceLocation core/uncategorised/107/input.js 1:9-1:18
+							}
 							global: true
 							insensitive: false
 							multiline: false
@@ -40,47 +50,24 @@ JSRoot {
 							sticky: false
 							unicode: false
 							loc: SourceLocation core/uncategorised/107/input.js 1:8-1:21
-							expression: JSRegExpSubExpression {
-								loc: SourceLocation core/uncategorised/107/input.js 1:9-1:18
-								body: Array [
-									JSRegExpCharacter {
-										value: "="
-										loc: SourceLocation core/uncategorised/107/input.js 1:9-1:10
-									}
-									JSRegExpQuantified {
-										lazy: false
-										max: undefined
-										min: 1
-										loc: SourceLocation core/uncategorised/107/input.js 1:10-1:18
-										target: JSRegExpGroupCapture {
-											name: undefined
-											loc: SourceLocation core/uncategorised/107/input.js 1:10-1:18
-											expression: JSRegExpSubExpression {
-												loc: SourceLocation core/uncategorised/107/input.js 1:11-1:17
-												body: Array [
-													JSRegExpCharSet {
-														invert: true
-														loc: SourceLocation core/uncategorised/107/input.js 1:11-1:17
-														body: Array [
-															JSRegExpCharacter {
-																value: "="
-																loc: SourceLocation core/uncategorised/107/input.js 1:13-1:14
-															}
-															JSRegExpWhiteSpaceCharacter {loc: SourceLocation core/uncategorised/107/input.js 1:14-1:16}
-														]
-													}
-												]
-											}
-										}
-									}
-								]
-							}
 						}
+						loc: SourceLocation core/uncategorised/107/input.js 1:4-1:21
 					}
 				]
+				loc: SourceLocation core/uncategorised/107/input.js 1:0-1:21
 			}
+			loc: SourceLocation core/uncategorised/107/input.js 1:0-1:21
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: true
+	path: UIDPath<core/uncategorised/107/input.js>
+	sourceType: "script"
+	syntax: []
+	loc: SourceLocation core/uncategorised/107/input.js 1:0-1:21
 }
 ```
 

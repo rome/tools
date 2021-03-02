@@ -8,88 +8,51 @@
 
 ```javascript
 JSRoot {
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation comments/basic/object-expression-trailing-comma/input.js 1:0-6:18
-	path: UIDPath<comments/basic/object-expression-trailing-comma/input.js>
-	comments: Array [
-		CommentBlock {
-			id: "0"
-			value: " One "
-			loc: SourceLocation comments/basic/object-expression-trailing-comma/input.js 2:2-2:11
-		}
-		CommentBlock {
-			id: "1"
-			value: " Two "
-			loc: SourceLocation comments/basic/object-expression-trailing-comma/input.js 4:2-4:11
-		}
-		CommentBlock {
-			id: "2"
-			value: " Three "
-			loc: SourceLocation comments/basic/object-expression-trailing-comma/input.js 5:2-5:13
-		}
-		CommentBlock {
-			id: "3"
-			value: " Four "
-			loc: SourceLocation comments/basic/object-expression-trailing-comma/input.js 6:2-6:12
-		}
-	]
-	body: Array [
+	body: [
 		JSVariableDeclarationStatement {
-			loc: SourceLocation comments/basic/object-expression-trailing-comma/input.js 1:0-6:18
 			declaration: JSVariableDeclaration {
 				kind: "const"
-				loc: SourceLocation comments/basic/object-expression-trailing-comma/input.js 1:0-6:18
-				declarations: Array [
+				declarations: [
 					JSVariableDeclarator {
 						id: JSBindingObjectPattern {
-							rest: undefined
-							loc: SourceLocation comments/basic/object-expression-trailing-comma/input.js 1:6-6:1
-							trailingComments: Array ["3"]
-							properties: Array [
+							properties: [
 								JSBindingObjectPatternProperty {
 									key: JSStaticPropertyKey {
-										value: JSIdentifier {
-											name: "x"
-											leadingComments: undefined
-											trailingComments: undefined
-											loc: SourceLocation comments/basic/object-expression-trailing-comma/input.js 3:2-3:3 (x)
-										}
-										leadingComments: undefined
-										trailingComments: undefined
+										value: JSIdentifier {name: "x", loc: SourceLocation comments/basic/object-expression-trailing-comma/input.js 3:2-3:3 (x)}
 										loc: SourceLocation comments/basic/object-expression-trailing-comma/input.js 3:2-3:3
 									}
-									value: JSBindingIdentifier {
-										name: "x"
-										leadingComments: undefined
-										trailingComments: undefined
-										loc: SourceLocation comments/basic/object-expression-trailing-comma/input.js 3:2-3:3 (x)
-									}
-									leadingComments: Array ["0"]
+									value: JSBindingIdentifier {name: "x", loc: SourceLocation comments/basic/object-expression-trailing-comma/input.js 3:2-3:3 (x)}
+									leadingComments: ["0"]
+									trailingComments: ["1", "2"]
 									loc: SourceLocation comments/basic/object-expression-trailing-comma/input.js 3:2-3:3
-									trailingComments: Array [
-										"1"
-										"2"
-									]
 								}
 							]
+							trailingComments: ["3"]
+							loc: SourceLocation comments/basic/object-expression-trailing-comma/input.js 1:6-6:1
 						}
+						init: JSObjectExpression {properties: [], loc: SourceLocation comments/basic/object-expression-trailing-comma/input.js 6:15-6:17}
 						loc: SourceLocation comments/basic/object-expression-trailing-comma/input.js 1:6-6:17
-						init: JSObjectExpression {
-							properties: Array []
-							loc: SourceLocation comments/basic/object-expression-trailing-comma/input.js 6:15-6:17
-						}
 					}
 				]
+				loc: SourceLocation comments/basic/object-expression-trailing-comma/input.js 1:0-6:18
 			}
+			loc: SourceLocation comments/basic/object-expression-trailing-comma/input.js 1:0-6:18
 		}
 	]
+	comments: [
+		CommentBlock {id: "0", value: " One ", loc: SourceLocation comments/basic/object-expression-trailing-comma/input.js 2:2-2:11}
+		CommentBlock {id: "1", value: " Two ", loc: SourceLocation comments/basic/object-expression-trailing-comma/input.js 4:2-4:11}
+		CommentBlock {id: "2", value: " Three ", loc: SourceLocation comments/basic/object-expression-trailing-comma/input.js 5:2-5:13}
+		CommentBlock {id: "3", value: " Four ", loc: SourceLocation comments/basic/object-expression-trailing-comma/input.js 6:2-6:12}
+	]
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	path: UIDPath<comments/basic/object-expression-trailing-comma/input.js>
+	sourceType: "script"
+	syntax: []
+	loc: SourceLocation comments/basic/object-expression-trailing-comma/input.js 1:0-6:18
 }
 ```
 

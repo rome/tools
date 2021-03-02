@@ -7,15 +7,14 @@
 ```javascript
 CommitRoot {
 	breaking: true
-	comments: Array []
+	comments: []
 	commitType: "custom"
 	corrupt: false
 	custom: true
-	diagnostics: Array []
-	integrity: undefined
+	diagnostics: []
+	path: RelativePath<smoke/input.txt>
 	rawBody: "everything included!"
 	scope: "some scope"
 	loc: SourceLocation smoke/input.txt 1:0-1:40
-	path: RelativePath<smoke/input.txt>
 }
 ```

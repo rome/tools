@@ -8,63 +8,37 @@
 
 ```javascript
 JSRoot {
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	syntax: Array []
-	loc: SourceLocation comments/regression/10892/input.js 1:0-8:0
-	path: UIDPath<comments/regression/10892/input.js>
-	comments: Array [
-		CommentBlock {
-			id: "0"
-			value: "*\n * lost comment\n "
-			loc: SourceLocation comments/regression/10892/input.js 3:0-5:3
-		}
-	]
-	body: Array [
+	body: [
 		JSImportDeclaration {
-			defaultSpecifier: undefined
-			importKind: undefined
-			namespaceSpecifier: undefined
-			loc: SourceLocation comments/regression/10892/input.js 1:0-1:25
-			trailingComments: Array ["0"]
-			source: JSStringLiteral {
-				value: "bar"
-				trailingComments: undefined
-				loc: SourceLocation comments/regression/10892/input.js 1:20-1:25
-			}
-			namedSpecifiers: Array [
+			namedSpecifiers: [
 				JSImportSpecifier {
-					loc: SourceLocation comments/regression/10892/input.js 1:9-1:12
-					imported: JSIdentifier {
-						name: "foo"
-						loc: SourceLocation comments/regression/10892/input.js 1:9-1:12 (foo)
-					}
+					imported: JSIdentifier {name: "foo", loc: SourceLocation comments/regression/10892/input.js 1:9-1:12 (foo)}
 					local: JSImportSpecifierLocal {
-						name: JSBindingIdentifier {
-							name: "foo"
-							loc: SourceLocation comments/regression/10892/input.js 1:9-1:12 (foo)
-						}
-						importKind: undefined
+						name: JSBindingIdentifier {name: "foo", loc: SourceLocation comments/regression/10892/input.js 1:9-1:12 (foo)}
 						loc: SourceLocation comments/regression/10892/input.js 1:9-1:12
 					}
+					loc: SourceLocation comments/regression/10892/input.js 1:9-1:12
 				}
 			]
+			source: JSStringLiteral {value: "bar", loc: SourceLocation comments/regression/10892/input.js 1:20-1:25}
+			trailingComments: ["0"]
+			loc: SourceLocation comments/regression/10892/input.js 1:0-1:25
 		}
 		JSExportDefaultDeclaration {
-			leadingComments: Array ["0"]
+			declaration: JSObjectExpression {properties: [], loc: SourceLocation comments/regression/10892/input.js 6:15-7:1}
+			leadingComments: ["0"]
 			loc: SourceLocation comments/regression/10892/input.js 6:0-7:1
-			declaration: JSObjectExpression {
-				leadingComments: undefined
-				properties: Array []
-				loc: SourceLocation comments/regression/10892/input.js 6:15-7:1
-			}
 		}
 	]
+	comments: [CommentBlock {id: "0", value: "*\n * lost comment\n ", loc: SourceLocation comments/regression/10892/input.js 3:0-5:3}]
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	path: UIDPath<comments/regression/10892/input.js>
+	sourceType: "module"
+	syntax: []
+	loc: SourceLocation comments/regression/10892/input.js 1:0-8:0
 }
 ```
 

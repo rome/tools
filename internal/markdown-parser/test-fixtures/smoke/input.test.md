@@ -8,323 +8,175 @@
 
 ```javascript
 MarkdownRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	integrity: undefined
-	loc: SourceLocation smoke/input.md 1:0-30:64
-	path: UIDPath<smoke/input.md>
-	body: Array [
-		MarkdownHeadingBlock {
-			value: "Title"
-			level: 1
-			loc: SourceLocation smoke/input.md 1:0-1:7
-		}
-		MarkdownHeadingBlock {
-			value: "Title"
-			level: 2
-			loc: SourceLocation smoke/input.md 2:0-2:8
-		}
-		MarkdownHeadingBlock {
-			value: "Title"
-			level: 3
-			loc: SourceLocation smoke/input.md 3:0-3:9
-		}
-		MarkdownHeadingBlock {
-			value: "Title"
-			level: 4
-			loc: SourceLocation smoke/input.md 4:0-4:10
-		}
-		MarkdownHeadingBlock {
-			value: "Title"
-			level: 5
-			loc: SourceLocation smoke/input.md 5:0-5:11
-		}
-		MarkdownHeadingBlock {
-			value: "Title"
-			level: 6
-			loc: SourceLocation smoke/input.md 6:0-6:12
-		}
+	body: [
+		MarkdownHeadingBlock {value: "Title", level: 1, loc: SourceLocation smoke/input.md 1:0-1:7}
+		MarkdownHeadingBlock {value: "Title", level: 2, loc: SourceLocation smoke/input.md 2:0-2:8}
+		MarkdownHeadingBlock {value: "Title", level: 3, loc: SourceLocation smoke/input.md 3:0-3:9}
+		MarkdownHeadingBlock {value: "Title", level: 4, loc: SourceLocation smoke/input.md 4:0-4:10}
+		MarkdownHeadingBlock {value: "Title", level: 5, loc: SourceLocation smoke/input.md 5:0-5:11}
+		MarkdownHeadingBlock {value: "Title", level: 6, loc: SourceLocation smoke/input.md 6:0-6:12}
 		MarkdownParagraph {
+			children: [MarkdownText {value: "####### this will be a paragraph", loc: SourceLocation smoke/input.md 7:0-7:0}]
 			loc: SourceLocation smoke/input.md 7:0-7:32
-			children: Array [
-				MarkdownText {
-					value: "####### this will be a paragraph"
-					loc: SourceLocation smoke/input.md 7:0-7:0
+		}
+		MarkdownHeadingBlock {value: "Another title", level: 3, loc: SourceLocation smoke/input.md 13:0-13:17}
+		MarkdownDividerBlock {value: "___", loc: SourceLocation smoke/input.md 14:3-14:3}
+		MarkdownListBlock {
+			children: [
+				MarkdownListItem {
+					children: [
+						MarkdownParagraph {
+							children: [MarkdownText {value: "first item", loc: SourceLocation smoke/input.md 15:3-15:3}]
+							loc: SourceLocation smoke/input.md 15:3-15:13
+						}
+					]
+					loc: SourceLocation smoke/input.md 15:3-15:13
 				}
 			]
-		}
-		MarkdownHeadingBlock {
-			value: "Another title"
-			level: 3
-			loc: SourceLocation smoke/input.md 13:0-13:17
-		}
-		MarkdownDividerBlock {
-			value: "___"
-			loc: SourceLocation smoke/input.md 14:3-14:3
-		}
-		MarkdownListBlock {
 			ordered: true
 			loc: SourceLocation smoke/input.md 15:0-15:13
-			children: Array [
-				MarkdownListItem {
-					value: undefined
-					checked: undefined
-					loc: SourceLocation smoke/input.md 15:3-15:13
-					children: Array [
-						MarkdownParagraph {
-							loc: SourceLocation smoke/input.md 15:3-15:13
-							children: Array [
-								MarkdownText {
-									value: "first item"
-									loc: SourceLocation smoke/input.md 15:3-15:3
-								}
-							]
-						}
-					]
-				}
-			]
 		}
 		MarkdownListBlock {
+			children: [
+				MarkdownListItem {
+					children: [
+						MarkdownParagraph {
+							children: [MarkdownText {value: "second item", loc: SourceLocation smoke/input.md 16:3-16:3}]
+							loc: SourceLocation smoke/input.md 16:3-16:14
+						}
+					]
+					loc: SourceLocation smoke/input.md 16:3-16:14
+				}
+			]
 			ordered: true
 			loc: SourceLocation smoke/input.md 16:0-16:14
-			children: Array [
-				MarkdownListItem {
-					value: undefined
-					checked: undefined
-					loc: SourceLocation smoke/input.md 16:3-16:14
-					children: Array [
-						MarkdownParagraph {
-							loc: SourceLocation smoke/input.md 16:3-16:14
-							children: Array [
-								MarkdownText {
-									value: "second item"
-									loc: SourceLocation smoke/input.md 16:3-16:3
-								}
-							]
-						}
-					]
-				}
-			]
 		}
 		MarkdownListBlock {
+			children: [
+				MarkdownListItem {
+					value: "-"
+					children: [
+						MarkdownParagraph {
+							children: [MarkdownText {value: "first item", loc: SourceLocation smoke/input.md 17:2-17:2}]
+							loc: SourceLocation smoke/input.md 17:2-17:12
+						}
+					]
+					loc: SourceLocation smoke/input.md 17:2-17:12
+				}
+			]
 			ordered: false
 			loc: SourceLocation smoke/input.md 17:0-17:12
-			children: Array [
-				MarkdownListItem {
-					value: "-"
-					checked: undefined
-					loc: SourceLocation smoke/input.md 17:2-17:12
-					children: Array [
-						MarkdownParagraph {
-							loc: SourceLocation smoke/input.md 17:2-17:12
-							children: Array [
-								MarkdownText {
-									value: "first item"
-									loc: SourceLocation smoke/input.md 17:2-17:2
-								}
-							]
-						}
-					]
-				}
-			]
 		}
 		MarkdownListBlock {
+			children: [
+				MarkdownListItem {
+					value: "-"
+					children: [
+						MarkdownParagraph {
+							children: [MarkdownText {value: "second item", loc: SourceLocation smoke/input.md 18:2-18:2}]
+							loc: SourceLocation smoke/input.md 18:2-18:13
+						}
+					]
+					loc: SourceLocation smoke/input.md 18:2-18:13
+				}
+			]
 			ordered: false
 			loc: SourceLocation smoke/input.md 18:0-18:13
-			children: Array [
-				MarkdownListItem {
-					value: "-"
-					checked: undefined
-					loc: SourceLocation smoke/input.md 18:2-18:13
-					children: Array [
-						MarkdownParagraph {
-							loc: SourceLocation smoke/input.md 18:2-18:13
-							children: Array [
-								MarkdownText {
-									value: "second item"
-									loc: SourceLocation smoke/input.md 18:2-18:2
-								}
-							]
-						}
-					]
-				}
-			]
 		}
 		MarkdownListBlock {
+			children: [
+				MarkdownListItem {
+					value: "*"
+					children: [
+						MarkdownParagraph {
+							children: [MarkdownText {value: "first item", loc: SourceLocation smoke/input.md 19:2-19:2}]
+							loc: SourceLocation smoke/input.md 19:2-19:12
+						}
+					]
+					loc: SourceLocation smoke/input.md 19:2-19:12
+				}
+			]
 			ordered: false
 			loc: SourceLocation smoke/input.md 19:0-19:12
-			children: Array [
-				MarkdownListItem {
-					value: "*"
-					checked: undefined
-					loc: SourceLocation smoke/input.md 19:2-19:12
-					children: Array [
-						MarkdownParagraph {
-							loc: SourceLocation smoke/input.md 19:2-19:12
-							children: Array [
-								MarkdownText {
-									value: "first item"
-									loc: SourceLocation smoke/input.md 19:2-19:2
-								}
-							]
-						}
-					]
-				}
-			]
 		}
 		MarkdownListBlock {
-			ordered: false
-			loc: SourceLocation smoke/input.md 20:0-20:13
-			children: Array [
+			children: [
 				MarkdownListItem {
 					value: "*"
-					checked: undefined
-					loc: SourceLocation smoke/input.md 20:2-20:13
-					children: Array [
+					children: [
 						MarkdownParagraph {
+							children: [MarkdownText {value: "second item", loc: SourceLocation smoke/input.md 20:2-20:2}]
 							loc: SourceLocation smoke/input.md 20:2-20:13
-							children: Array [
-								MarkdownText {
-									value: "second item"
-									loc: SourceLocation smoke/input.md 20:2-20:2
-								}
-							]
 						}
 					]
+					loc: SourceLocation smoke/input.md 20:2-20:13
 				}
 			]
+			ordered: false
+			loc: SourceLocation smoke/input.md 20:0-20:13
 		}
 		MarkdownParagraph {
+			children: [
+				MarkdownText {value: "*", loc: SourceLocation smoke/input.md 21:0-21:0}
+				MarkdownText {value: "paragraph", loc: SourceLocation smoke/input.md 21:1-21:1}
+			]
 			loc: SourceLocation smoke/input.md 21:0-21:10
-			children: Array [
-				MarkdownText {
-					value: "*"
-					loc: SourceLocation smoke/input.md 21:0-21:0
-				}
-				MarkdownText {
-					value: "paragraph"
-					loc: SourceLocation smoke/input.md 21:1-21:1
-				}
-			]
 		}
-		MarkdownDividerBlock {
-			value: "---"
-			loc: SourceLocation smoke/input.md 22:3-22:3
-		}
+		MarkdownDividerBlock {value: "---", loc: SourceLocation smoke/input.md 22:3-22:3}
 		MarkdownParagraph {
+			children: [MarkdownText {value: "Paragraph", loc: SourceLocation smoke/input.md 23:0-23:0}]
 			loc: SourceLocation smoke/input.md 23:0-23:9
-			children: Array [
-				MarkdownText {
-					value: "Paragraph"
-					loc: SourceLocation smoke/input.md 23:0-23:0
-				}
-			]
 		}
-		MarkdownDividerBlock {
-			value: "***"
-			loc: SourceLocation smoke/input.md 24:3-24:3
-		}
+		MarkdownDividerBlock {value: "***", loc: SourceLocation smoke/input.md 24:3-24:3}
 		MarkdownParagraph {
-			loc: SourceLocation smoke/input.md 26:0-26:60
-			children: Array [
-				MarkdownText {
-					value: "Lorem "
-					loc: SourceLocation smoke/input.md 26:0-26:0
-				}
+			children: [
+				MarkdownText {value: "Lorem ", loc: SourceLocation smoke/input.md 26:0-26:0}
 				MarkdownEmphasisInline {
-					value: Array [
-						MarkdownText {
-							value: "ipsum dolor sit"
-							loc: SourceLocation smoke/input.md 26:7-26:7
-						}
-					]
+					value: [MarkdownText {value: "ipsum dolor sit", loc: SourceLocation smoke/input.md 26:7-26:7}]
 					loc: SourceLocation smoke/input.md 26:6-26:22
 				}
-				MarkdownText {
-					value: " amet, "
-					loc: SourceLocation smoke/input.md 26:23-26:23
-				}
+				MarkdownText {value: " amet, ", loc: SourceLocation smoke/input.md 26:23-26:23}
 				MarkdownEmphasisInline {
-					value: Array [
-						MarkdownText {
-							value: "consectetur adipiscing elit"
-							loc: SourceLocation smoke/input.md 26:31-26:31
-						}
-					]
+					value: [MarkdownText {value: "consectetur adipiscing elit", loc: SourceLocation smoke/input.md 26:31-26:31}]
 					loc: SourceLocation smoke/input.md 26:30-26:58
 				}
-				MarkdownText {
-					value: "."
-					loc: SourceLocation smoke/input.md 26:59-26:59
-				}
+				MarkdownText {value: ".", loc: SourceLocation smoke/input.md 26:59-26:59}
 			]
+			loc: SourceLocation smoke/input.md 26:0-26:60
 		}
 		MarkdownParagraph {
-			loc: SourceLocation smoke/input.md 28:0-28:64
-			children: Array [
-				MarkdownText {
-					value: "Lorem "
-					loc: SourceLocation smoke/input.md 28:0-28:0
-				}
+			children: [
+				MarkdownText {value: "Lorem ", loc: SourceLocation smoke/input.md 28:0-28:0}
 				MarkdownEmphasisInline {
-					value: Array [
-						MarkdownText {
-							value: "ipsum dolor"
-							loc: SourceLocation smoke/input.md 28:8-28:8
-						}
-					]
+					value: [MarkdownText {value: "ipsum dolor", loc: SourceLocation smoke/input.md 28:8-28:8}]
 					loc: SourceLocation smoke/input.md 28:6-28:19
 				}
-				MarkdownText {
-					value: " sit amet, "
-					loc: SourceLocation smoke/input.md 28:21-28:21
-				}
+				MarkdownText {value: " sit amet, ", loc: SourceLocation smoke/input.md 28:21-28:21}
 				MarkdownEmphasisInline {
-					value: Array [
-						MarkdownText {
-							value: "consectetur adipiscing"
-							loc: SourceLocation smoke/input.md 28:34-28:34
-						}
-					]
+					value: [MarkdownText {value: "consectetur adipiscing", loc: SourceLocation smoke/input.md 28:34-28:34}]
 					loc: SourceLocation smoke/input.md 28:32-28:56
 				}
-				MarkdownText {
-					value: " elit."
-					loc: SourceLocation smoke/input.md 28:58-28:58
-				}
+				MarkdownText {value: " elit.", loc: SourceLocation smoke/input.md 28:58-28:58}
 			]
+			loc: SourceLocation smoke/input.md 28:0-28:64
 		}
 		MarkdownParagraph {
-			loc: SourceLocation smoke/input.md 30:0-30:64
-			children: Array [
-				MarkdownText {
-					value: "Lorem ipsum "
-					loc: SourceLocation smoke/input.md 30:0-30:0
-				}
-				MarkdownEmphasisInline {
-					value: Array []
-					loc: SourceLocation smoke/input.md 30:12-30:14
-				}
-				MarkdownText {
-					value: "dolor sit amet, consectetur"
-					loc: SourceLocation smoke/input.md 30:16-30:16
-				}
-				MarkdownText {
-					value: "**"
-					loc: SourceLocation smoke/input.md 30:43-30:43
-				}
-				MarkdownText {
-					value: "__"
-					loc: SourceLocation smoke/input.md 30:45-30:45
-				}
-				MarkdownText {
-					value: " adipiscing elit."
-					loc: SourceLocation smoke/input.md 30:47-30:47
-				}
+			children: [
+				MarkdownText {value: "Lorem ipsum ", loc: SourceLocation smoke/input.md 30:0-30:0}
+				MarkdownEmphasisInline {value: [], loc: SourceLocation smoke/input.md 30:12-30:14}
+				MarkdownText {value: "dolor sit amet, consectetur", loc: SourceLocation smoke/input.md 30:16-30:16}
+				MarkdownText {value: "**", loc: SourceLocation smoke/input.md 30:43-30:43}
+				MarkdownText {value: "__", loc: SourceLocation smoke/input.md 30:45-30:45}
+				MarkdownText {value: " adipiscing elit.", loc: SourceLocation smoke/input.md 30:47-30:47}
 			]
+			loc: SourceLocation smoke/input.md 30:0-30:64
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	path: UIDPath<smoke/input.md>
+	loc: SourceLocation smoke/input.md 1:0-30:64
 }
 ```
 

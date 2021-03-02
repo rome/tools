@@ -8,63 +8,42 @@
 
 ```javascript
 JSRoot {
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation core/uncategorised/312/input.js 1:0-2:15
-	path: UIDPath<core/uncategorised/312/input.js>
-	comments: Array [
-		CommentBlock {
-			id: "0"
-			value: " Multiline\nComment "
-			loc: SourceLocation core/uncategorised/312/input.js 1:19-2:10
-		}
-	]
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation core/uncategorised/312/input.js 1:0-2:15
 			expression: JSFunctionExpression {
-				id: undefined
-				loc: SourceLocation core/uncategorised/312/input.js 1:1-2:14
+				body: JSBlockStatement {
+					body: [
+						JSReturnStatement {trailingComments: ["0"], loc: SourceLocation core/uncategorised/312/input.js 1:13-1:19}
+						JSExpressionStatement {
+							expression: JSReferenceIdentifier {name: "x", loc: SourceLocation core/uncategorised/312/input.js 2:10-2:11 (x)}
+							leadingComments: ["0"]
+							loc: SourceLocation core/uncategorised/312/input.js 2:10-2:12
+						}
+					]
+					directives: []
+					loc: SourceLocation core/uncategorised/312/input.js 1:11-2:14
+				}
 				head: JSFunctionHead {
 					async: false
 					generator: false
 					hasHoistedVars: false
-					params: Array []
-					rest: undefined
-					returnType: undefined
-					thisType: undefined
-					typeParameters: undefined
+					params: []
 					loc: SourceLocation core/uncategorised/312/input.js 1:9-1:11
 				}
-				body: JSBlockStatement {
-					directives: Array []
-					loc: SourceLocation core/uncategorised/312/input.js 1:11-2:14
-					body: Array [
-						JSReturnStatement {
-							argument: undefined
-							loc: SourceLocation core/uncategorised/312/input.js 1:13-1:19
-							trailingComments: Array ["0"]
-						}
-						JSExpressionStatement {
-							leadingComments: Array ["0"]
-							loc: SourceLocation core/uncategorised/312/input.js 2:10-2:12
-							expression: JSReferenceIdentifier {
-								name: "x"
-								leadingComments: undefined
-								loc: SourceLocation core/uncategorised/312/input.js 2:10-2:11 (x)
-							}
-						}
-					]
-				}
+				loc: SourceLocation core/uncategorised/312/input.js 1:1-2:14
 			}
+			loc: SourceLocation core/uncategorised/312/input.js 1:0-2:15
 		}
 	]
+	comments: [CommentBlock {id: "0", value: " Multiline\nComment ", loc: SourceLocation core/uncategorised/312/input.js 1:19-2:10}]
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	path: UIDPath<core/uncategorised/312/input.js>
+	sourceType: "script"
+	syntax: []
+	loc: SourceLocation core/uncategorised/312/input.js 1:0-2:15
 }
 ```
 

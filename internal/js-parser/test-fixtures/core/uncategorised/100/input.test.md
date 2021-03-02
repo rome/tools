@@ -8,23 +8,16 @@
 
 ```javascript
 JSRoot {
-	body: Array []
-	comments: Array []
+	body: []
+	comments: []
 	corrupt: false
-	diagnostics: Array []
+	diagnostics: []
+	directives: [JSDirective {value: "Hello\\\nworld", loc: SourceLocation core/uncategorised/100/input.js 1:0-2:6}]
 	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation core/uncategorised/100/input.js 1:0-2:6
 	path: UIDPath<core/uncategorised/100/input.js>
-	directives: Array [
-		JSDirective {
-			value: "Hello\\\nworld"
-			loc: SourceLocation core/uncategorised/100/input.js 1:0-2:6
-		}
-	]
+	sourceType: "script"
+	syntax: []
+	loc: SourceLocation core/uncategorised/100/input.js 1:0-2:6
 }
 ```
 

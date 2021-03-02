@@ -8,36 +8,28 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation core/uncategorised/130/input.js 1:0-1:14
-	path: UIDPath<core/uncategorised/130/input.js>
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation core/uncategorised/130/input.js 1:0-1:14
 			expression: JSMemberExpression {
-				loc: SourceLocation core/uncategorised/130/input.js 1:0-1:14
-				object: JSReferenceIdentifier {
-					name: "universe"
-					loc: SourceLocation core/uncategorised/130/input.js 1:0-1:8 (universe)
-				}
+				object: JSReferenceIdentifier {name: "universe", loc: SourceLocation core/uncategorised/130/input.js 1:0-1:8 (universe)}
 				property: JSStaticMemberProperty {
-					value: JSIdentifier {
-						name: "false"
-						loc: SourceLocation core/uncategorised/130/input.js 1:9-1:14 (false)
-					}
+					value: JSIdentifier {name: "false", loc: SourceLocation core/uncategorised/130/input.js 1:9-1:14 (false)}
 					loc: SourceLocation core/uncategorised/130/input.js 1:9-1:14 (false)
 				}
+				loc: SourceLocation core/uncategorised/130/input.js 1:0-1:14
 			}
+			loc: SourceLocation core/uncategorised/130/input.js 1:0-1:14
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	path: UIDPath<core/uncategorised/130/input.js>
+	sourceType: "script"
+	syntax: []
+	loc: SourceLocation core/uncategorised/130/input.js 1:0-1:14
 }
 ```
 

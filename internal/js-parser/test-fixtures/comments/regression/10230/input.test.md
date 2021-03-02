@@ -8,74 +8,48 @@
 
 ```javascript
 JSRoot {
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation comments/regression/10230/input.js 1:0-8:0
-	path: UIDPath<comments/regression/10230/input.js>
-	comments: Array [
-		CommentLine {
-			id: "0"
-			value: " One"
-			loc: SourceLocation comments/regression/10230/input.js 3:2-3:8
-		}
-		CommentLine {
-			id: "1"
-			value: " Two"
-			loc: SourceLocation comments/regression/10230/input.js 6:0-6:6
-		}
-	]
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation comments/regression/10230/input.js 1:0-4:1
-			trailingComments: Array ["1"]
 			expression: JSAssignmentExpression {
+				left: JSAssignmentIdentifier {name: "A", loc: SourceLocation comments/regression/10230/input.js 1:0-1:1 (A)}
 				operator: "="
-				trailingComments: undefined
-				loc: SourceLocation comments/regression/10230/input.js 1:0-4:1
-				left: JSAssignmentIdentifier {
-					name: "A"
-					loc: SourceLocation comments/regression/10230/input.js 1:0-1:1 (A)
-				}
 				right: JSObjectExpression {
-					trailingComments: undefined
-					loc: SourceLocation comments/regression/10230/input.js 1:4-4:1
-					properties: Array [
+					properties: [
 						JSObjectProperty {
 							key: JSStaticPropertyKey {
-								value: JSIdentifier {
-									name: "a"
-									loc: SourceLocation comments/regression/10230/input.js 2:2-2:3 (a)
-								}
+								value: JSIdentifier {name: "a", loc: SourceLocation comments/regression/10230/input.js 2:2-2:3 (a)}
 								loc: SourceLocation comments/regression/10230/input.js 2:2-2:3
 							}
-							value: JSNumericLiteral {
-								value: 42
-								format: undefined
-								loc: SourceLocation comments/regression/10230/input.js 2:5-2:7
-							}
+							value: JSNumericLiteral {value: 42, loc: SourceLocation comments/regression/10230/input.js 2:5-2:7}
+							trailingComments: ["0"]
 							loc: SourceLocation comments/regression/10230/input.js 2:2-2:7
-							trailingComments: Array ["0"]
 						}
 					]
+					loc: SourceLocation comments/regression/10230/input.js 1:4-4:1
 				}
+				loc: SourceLocation comments/regression/10230/input.js 1:0-4:1
 			}
+			trailingComments: ["1"]
+			loc: SourceLocation comments/regression/10230/input.js 1:0-4:1
 		}
 		JSExpressionStatement {
-			leadingComments: Array ["1"]
+			expression: JSReferenceIdentifier {name: "B", loc: SourceLocation comments/regression/10230/input.js 7:0-7:1 (B)}
+			leadingComments: ["1"]
 			loc: SourceLocation comments/regression/10230/input.js 7:0-7:1
-			expression: JSReferenceIdentifier {
-				name: "B"
-				leadingComments: undefined
-				loc: SourceLocation comments/regression/10230/input.js 7:0-7:1 (B)
-			}
 		}
 	]
+	comments: [
+		CommentLine {id: "0", value: " One", loc: SourceLocation comments/regression/10230/input.js 3:2-3:8}
+		CommentLine {id: "1", value: " Two", loc: SourceLocation comments/regression/10230/input.js 6:0-6:6}
+	]
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	path: UIDPath<comments/regression/10230/input.js>
+	sourceType: "script"
+	syntax: []
+	loc: SourceLocation comments/regression/10230/input.js 1:0-8:0
 }
 ```
 

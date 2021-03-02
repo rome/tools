@@ -8,79 +8,45 @@
 
 ```javascript
 JSRoot {
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation comments/regression/10448/input.js 1:0-2:1
-	path: UIDPath<comments/regression/10448/input.js>
-	comments: Array [
-		CommentBlock {
-			id: "0"
-			value: " not used "
-			loc: SourceLocation comments/regression/10448/input.js 1:19-1:33
-		}
-		CommentBlock {
-			id: "1"
-			value: " not used "
-			loc: SourceLocation comments/regression/10448/input.js 1:35-1:49
-		}
-	]
-	body: Array [
+	body: [
 		JSFunctionDeclaration {
-			id: JSBindingIdentifier {
-				name: "foo"
-				loc: SourceLocation comments/regression/10448/input.js 1:9-1:12 (foo)
-			}
-			loc: SourceLocation comments/regression/10448/input.js 1:0-2:1
-			body: JSBlockStatement {
-				body: Array []
-				directives: Array []
-				loc: SourceLocation comments/regression/10448/input.js 1:52-2:1
-			}
+			id: JSBindingIdentifier {name: "foo", loc: SourceLocation comments/regression/10448/input.js 1:9-1:12 (foo)}
+			body: JSBlockStatement {body: [], directives: [], loc: SourceLocation comments/regression/10448/input.js 1:52-2:1}
 			head: JSFunctionHead {
 				async: false
 				generator: false
 				hasHoistedVars: false
-				rest: undefined
-				returnType: undefined
-				thisType: undefined
-				typeParameters: undefined
-				loc: SourceLocation comments/regression/10448/input.js 1:12-1:51
-				params: Array [
+				params: [
 					JSBindingArrayPattern {
-						rest: undefined
-						loc: SourceLocation comments/regression/10448/input.js 1:13-1:50
-						meta: JSPatternMeta {
-							optional: undefined
-							typeAnnotation: undefined
-							loc: SourceLocation comments/regression/10448/input.js 1:13-1:50
-						}
-						elements: Array [
+						elements: [
 							JSBindingIdentifier {
 								name: "foo"
+								meta: JSPatternMeta {loc: SourceLocation comments/regression/10448/input.js 1:14-1:17}
 								loc: SourceLocation comments/regression/10448/input.js 1:14-1:17 (foo)
-								meta: JSPatternMeta {
-									optional: undefined
-									typeAnnotation: undefined
-									loc: SourceLocation comments/regression/10448/input.js 1:14-1:17
-								}
 							}
-							JSArrayHole {
-								leadingComments: Array ["0"]
-								loc: SourceLocation comments/regression/10448/input.js 1:33-1:18
-								trailingComments: Array ["1"]
-							}
+							JSArrayHole {leadingComments: ["0"], trailingComments: ["1"], loc: SourceLocation comments/regression/10448/input.js 1:33-1:18}
 						]
+						meta: JSPatternMeta {loc: SourceLocation comments/regression/10448/input.js 1:13-1:50}
+						loc: SourceLocation comments/regression/10448/input.js 1:13-1:50
 					}
 				]
+				loc: SourceLocation comments/regression/10448/input.js 1:12-1:51
 			}
+			loc: SourceLocation comments/regression/10448/input.js 1:0-2:1
 		}
 	]
+	comments: [
+		CommentBlock {id: "0", value: " not used ", loc: SourceLocation comments/regression/10448/input.js 1:19-1:33}
+		CommentBlock {id: "1", value: " not used ", loc: SourceLocation comments/regression/10448/input.js 1:35-1:49}
+	]
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	path: UIDPath<comments/regression/10448/input.js>
+	sourceType: "script"
+	syntax: []
+	loc: SourceLocation comments/regression/10448/input.js 1:0-2:1
 }
 ```
 

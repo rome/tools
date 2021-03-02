@@ -8,67 +8,47 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation core/categorized/06-regex/input.js 1:0-2:0
-	path: UIDPath<core/categorized/06-regex/input.js>
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation core/categorized/06-regex/input.js 1:0-1:24
 			expression: JSBinaryExpression {
-				operator: "/"
-				loc: SourceLocation core/categorized/06-regex/input.js 1:0-1:23
-				right: JSReferenceIdentifier {
-					name: "i"
-					loc: SourceLocation core/categorized/06-regex/input.js 1:22-1:23 (i)
-				}
 				left: JSBinaryExpression {
-					operator: "/"
-					loc: SourceLocation core/categorized/06-regex/input.js 1:0-1:21
-					right: JSNumericLiteral {
-						value: 42
-						format: undefined
-						loc: SourceLocation core/categorized/06-regex/input.js 1:19-1:21
-					}
 					left: JSUnaryExpression {
-						operator: "!"
-						prefix: true
-						loc: SourceLocation core/categorized/06-regex/input.js 1:0-1:17
 						argument: JSFunctionExpression {
-							id: JSBindingIdentifier {
-								name: "fn"
-								loc: SourceLocation core/categorized/06-regex/input.js 1:10-1:12 (fn)
-							}
-							loc: SourceLocation core/categorized/06-regex/input.js 1:1-1:17
-							body: JSBlockStatement {
-								body: Array []
-								directives: Array []
-								loc: SourceLocation core/categorized/06-regex/input.js 1:15-1:17
-							}
+							id: JSBindingIdentifier {name: "fn", loc: SourceLocation core/categorized/06-regex/input.js 1:10-1:12 (fn)}
+							body: JSBlockStatement {body: [], directives: [], loc: SourceLocation core/categorized/06-regex/input.js 1:15-1:17}
 							head: JSFunctionHead {
 								async: false
 								generator: false
 								hasHoistedVars: false
-								params: Array []
-								rest: undefined
-								returnType: undefined
-								thisType: undefined
-								typeParameters: undefined
+								params: []
 								loc: SourceLocation core/categorized/06-regex/input.js 1:12-1:14
 							}
+							loc: SourceLocation core/categorized/06-regex/input.js 1:1-1:17
 						}
+						operator: "!"
+						prefix: true
+						loc: SourceLocation core/categorized/06-regex/input.js 1:0-1:17
 					}
+					operator: "/"
+					right: JSNumericLiteral {value: 42, loc: SourceLocation core/categorized/06-regex/input.js 1:19-1:21}
+					loc: SourceLocation core/categorized/06-regex/input.js 1:0-1:21
 				}
+				operator: "/"
+				right: JSReferenceIdentifier {name: "i", loc: SourceLocation core/categorized/06-regex/input.js 1:22-1:23 (i)}
+				loc: SourceLocation core/categorized/06-regex/input.js 1:0-1:23
 			}
+			loc: SourceLocation core/categorized/06-regex/input.js 1:0-1:24
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	path: UIDPath<core/categorized/06-regex/input.js>
+	sourceType: "script"
+	syntax: []
+	loc: SourceLocation core/categorized/06-regex/input.js 1:0-2:0
 }
 ```
 

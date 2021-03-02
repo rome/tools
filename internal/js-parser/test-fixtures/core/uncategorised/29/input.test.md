@@ -8,70 +8,55 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation core/uncategorised/29/input.js 1:0-1:38
-	path: UIDPath<core/uncategorised/29/input.js>
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation core/uncategorised/29/input.js 1:0-1:38
 			expression: JSAssignmentExpression {
+				left: JSAssignmentIdentifier {name: "x", loc: SourceLocation core/uncategorised/29/input.js 1:0-1:1 (x)}
 				operator: "="
-				loc: SourceLocation core/uncategorised/29/input.js 1:0-1:38
-				left: JSAssignmentIdentifier {
-					name: "x"
-					loc: SourceLocation core/uncategorised/29/input.js 1:0-1:1 (x)
-				}
 				right: JSObjectExpression {
-					loc: SourceLocation core/uncategorised/29/input.js 1:4-1:38
-					properties: Array [
+					properties: [
 						JSObjectMethod {
-							kind: "get"
 							key: JSStaticPropertyKey {
-								value: JSIdentifier {
-									name: "width"
-									loc: SourceLocation core/uncategorised/29/input.js 1:10-1:15 (width)
-								}
+								value: JSIdentifier {name: "width", loc: SourceLocation core/uncategorised/29/input.js 1:10-1:15 (width)}
 								loc: SourceLocation core/uncategorised/29/input.js 1:10-1:15
 							}
-							loc: SourceLocation core/uncategorised/29/input.js 1:6-1:36
+							kind: "get"
+							body: JSBlockStatement {
+								body: [
+									JSReturnStatement {
+										argument: JSReferenceIdentifier {name: "m_width", loc: SourceLocation core/uncategorised/29/input.js 1:27-1:34 (m_width)}
+										loc: SourceLocation core/uncategorised/29/input.js 1:20-1:34
+									}
+								]
+								directives: []
+								loc: SourceLocation core/uncategorised/29/input.js 1:18-1:36
+							}
 							head: JSFunctionHead {
 								async: false
 								generator: false
 								hasHoistedVars: false
-								params: Array []
-								rest: undefined
-								returnType: undefined
-								thisType: undefined
-								typeParameters: undefined
+								params: []
 								loc: SourceLocation core/uncategorised/29/input.js 1:15-1:17
 							}
-							body: JSBlockStatement {
-								directives: Array []
-								loc: SourceLocation core/uncategorised/29/input.js 1:18-1:36
-								body: Array [
-									JSReturnStatement {
-										loc: SourceLocation core/uncategorised/29/input.js 1:20-1:34
-										argument: JSReferenceIdentifier {
-											name: "m_width"
-											loc: SourceLocation core/uncategorised/29/input.js 1:27-1:34 (m_width)
-										}
-									}
-								]
-							}
+							loc: SourceLocation core/uncategorised/29/input.js 1:6-1:36
 						}
 					]
+					loc: SourceLocation core/uncategorised/29/input.js 1:4-1:38
 				}
+				loc: SourceLocation core/uncategorised/29/input.js 1:0-1:38
 			}
+			loc: SourceLocation core/uncategorised/29/input.js 1:0-1:38
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	path: UIDPath<core/uncategorised/29/input.js>
+	sourceType: "script"
+	syntax: []
+	loc: SourceLocation core/uncategorised/29/input.js 1:0-1:38
 }
 ```
 

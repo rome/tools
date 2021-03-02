@@ -8,69 +8,52 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation core/uncategorised/281/input.js 1:0-1:38
-	path: UIDPath<core/uncategorised/281/input.js>
-	body: Array [
+	body: [
 		JSTryStatement {
-			finalizer: undefined
-			loc: SourceLocation core/uncategorised/281/input.js 1:0-1:38
 			block: JSBlockStatement {
-				directives: Array []
-				loc: SourceLocation core/uncategorised/281/input.js 1:4-1:17
-				body: Array [
+				body: [
 					JSExpressionStatement {
-						loc: SourceLocation core/uncategorised/281/input.js 1:6-1:15
 						expression: JSCallExpression {
-							arguments: Array []
+							arguments: []
+							callee: JSReferenceIdentifier {name: "doThat", loc: SourceLocation core/uncategorised/281/input.js 1:6-1:12 (doThat)}
 							loc: SourceLocation core/uncategorised/281/input.js 1:6-1:14
-							callee: JSReferenceIdentifier {
-								name: "doThat"
-								loc: SourceLocation core/uncategorised/281/input.js 1:6-1:12 (doThat)
-							}
 						}
+						loc: SourceLocation core/uncategorised/281/input.js 1:6-1:15
 					}
 				]
+				directives: []
+				loc: SourceLocation core/uncategorised/281/input.js 1:4-1:17
 			}
 			handler: JSCatchClause {
-				loc: SourceLocation core/uncategorised/281/input.js 1:18-1:38
-				param: JSBindingIdentifier {
-					name: "e"
-					loc: SourceLocation core/uncategorised/281/input.js 1:25-1:26 (e)
-				}
 				body: JSBlockStatement {
-					directives: Array []
-					loc: SourceLocation core/uncategorised/281/input.js 1:28-1:38
-					body: Array [
+					body: [
 						JSExpressionStatement {
-							loc: SourceLocation core/uncategorised/281/input.js 1:30-1:36
 							expression: JSCallExpression {
+								arguments: [JSReferenceIdentifier {name: "e", loc: SourceLocation core/uncategorised/281/input.js 1:34-1:35 (e)}]
+								callee: JSReferenceIdentifier {name: "say", loc: SourceLocation core/uncategorised/281/input.js 1:30-1:33 (say)}
 								loc: SourceLocation core/uncategorised/281/input.js 1:30-1:36
-								callee: JSReferenceIdentifier {
-									name: "say"
-									loc: SourceLocation core/uncategorised/281/input.js 1:30-1:33 (say)
-								}
-								arguments: Array [
-									JSReferenceIdentifier {
-										name: "e"
-										loc: SourceLocation core/uncategorised/281/input.js 1:34-1:35 (e)
-									}
-								]
 							}
+							loc: SourceLocation core/uncategorised/281/input.js 1:30-1:36
 						}
 					]
+					directives: []
+					loc: SourceLocation core/uncategorised/281/input.js 1:28-1:38
 				}
+				param: JSBindingIdentifier {name: "e", loc: SourceLocation core/uncategorised/281/input.js 1:25-1:26 (e)}
+				loc: SourceLocation core/uncategorised/281/input.js 1:18-1:38
 			}
+			loc: SourceLocation core/uncategorised/281/input.js 1:0-1:38
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	path: UIDPath<core/uncategorised/281/input.js>
+	sourceType: "script"
+	syntax: []
+	loc: SourceLocation core/uncategorised/281/input.js 1:0-1:38
 }
 ```
 

@@ -8,67 +8,45 @@
 
 ```javascript
 JSRoot {
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation comments/basic/function-trailing-comma-shorthand/input.js 1:0-2:0
-	path: UIDPath<comments/basic/function-trailing-comma-shorthand/input.js>
-	comments: Array [
-		CommentBlock {
-			id: "0"
-			value: " comment 1 "
-			loc: SourceLocation comments/basic/function-trailing-comma-shorthand/input.js 1:13-1:28
-		}
-		CommentBlock {
-			id: "1"
-			value: " comment 2 "
-			loc: SourceLocation comments/basic/function-trailing-comma-shorthand/input.js 1:30-1:45
-		}
-	]
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation comments/basic/function-trailing-comma-shorthand/input.js 1:0-1:46
 			expression: JSCallExpression {
-				loc: SourceLocation comments/basic/function-trailing-comma-shorthand/input.js 1:0-1:29
-				trailingComments: Array ["1"]
-				callee: JSReferenceIdentifier {
-					name: "fn"
-					loc: SourceLocation comments/basic/function-trailing-comma-shorthand/input.js 1:0-1:2 (fn)
-				}
-				arguments: Array [
-					JSReferenceIdentifier {
-						name: "a"
-						loc: SourceLocation comments/basic/function-trailing-comma-shorthand/input.js 1:3-1:4 (a)
-					}
+				arguments: [
+					JSReferenceIdentifier {name: "a", loc: SourceLocation comments/basic/function-trailing-comma-shorthand/input.js 1:3-1:4 (a)}
 					JSObjectExpression {
-						trailingComments: Array []
-						loc: SourceLocation comments/basic/function-trailing-comma-shorthand/input.js 1:6-1:11
-						properties: Array [
+						properties: [
 							JSObjectProperty {
 								key: JSStaticPropertyKey {
-									value: JSIdentifier {
-										name: "b"
-										loc: SourceLocation comments/basic/function-trailing-comma-shorthand/input.js 1:8-1:9 (b)
-									}
+									value: JSIdentifier {name: "b", loc: SourceLocation comments/basic/function-trailing-comma-shorthand/input.js 1:8-1:9 (b)}
 									loc: SourceLocation comments/basic/function-trailing-comma-shorthand/input.js 1:8-1:9
 								}
-								value: JSReferenceIdentifier {
-									name: "b"
-									loc: SourceLocation comments/basic/function-trailing-comma-shorthand/input.js 1:8-1:9 (b)
-								}
+								value: JSReferenceIdentifier {name: "b", loc: SourceLocation comments/basic/function-trailing-comma-shorthand/input.js 1:8-1:9 (b)}
 								loc: SourceLocation comments/basic/function-trailing-comma-shorthand/input.js 1:8-1:9
 							}
 						]
+						trailingComments: []
+						loc: SourceLocation comments/basic/function-trailing-comma-shorthand/input.js 1:6-1:11
 					}
 				]
+				callee: JSReferenceIdentifier {name: "fn", loc: SourceLocation comments/basic/function-trailing-comma-shorthand/input.js 1:0-1:2 (fn)}
+				trailingComments: ["1"]
+				loc: SourceLocation comments/basic/function-trailing-comma-shorthand/input.js 1:0-1:29
 			}
+			loc: SourceLocation comments/basic/function-trailing-comma-shorthand/input.js 1:0-1:46
 		}
 	]
+	comments: [
+		CommentBlock {id: "0", value: " comment 1 ", loc: SourceLocation comments/basic/function-trailing-comma-shorthand/input.js 1:13-1:28}
+		CommentBlock {id: "1", value: " comment 2 ", loc: SourceLocation comments/basic/function-trailing-comma-shorthand/input.js 1:30-1:45}
+	]
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	path: UIDPath<comments/basic/function-trailing-comma-shorthand/input.js>
+	sourceType: "script"
+	syntax: []
+	loc: SourceLocation comments/basic/function-trailing-comma-shorthand/input.js 1:0-2:0
 }
 ```
 

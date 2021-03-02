@@ -8,47 +8,35 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation core/uncategorised/259/input.js 1:0-1:22
-	path: UIDPath<core/uncategorised/259/input.js>
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation core/uncategorised/259/input.js 1:0-1:22
 			expression: JSFunctionExpression {
-				id: undefined
-				loc: SourceLocation core/uncategorised/259/input.js 1:1-1:21
 				body: JSBlockStatement {
-					directives: Array []
+					body: [JSReturnStatement {loc: SourceLocation core/uncategorised/259/input.js 1:13-1:19}]
+					directives: []
 					loc: SourceLocation core/uncategorised/259/input.js 1:11-1:21
-					body: Array [
-						JSReturnStatement {
-							argument: undefined
-							loc: SourceLocation core/uncategorised/259/input.js 1:13-1:19
-						}
-					]
 				}
 				head: JSFunctionHead {
 					async: false
 					generator: false
 					hasHoistedVars: false
-					params: Array []
-					rest: undefined
-					returnType: undefined
-					thisType: undefined
-					typeParameters: undefined
+					params: []
 					loc: SourceLocation core/uncategorised/259/input.js 1:9-1:11
 				}
+				loc: SourceLocation core/uncategorised/259/input.js 1:1-1:21
 			}
+			loc: SourceLocation core/uncategorised/259/input.js 1:0-1:22
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	path: UIDPath<core/uncategorised/259/input.js>
+	sourceType: "script"
+	syntax: []
+	loc: SourceLocation core/uncategorised/259/input.js 1:0-1:22
 }
 ```
 

@@ -7,15 +7,14 @@
 ```javascript
 CommitRoot {
 	breaking: true
-	comments: Array []
+	comments: []
 	commitType: "feat"
 	corrupt: false
 	custom: false
-	diagnostics: Array []
-	integrity: undefined
+	diagnostics: []
+	path: RelativePath<footer/input.txt>
 	rawBody: "commit with a breaking change footer\n\nMore description\n\nBREAKING CHANGE: breaking change footer"
 	scope: ""
 	loc: SourceLocation footer/input.txt 1:0-5:38
-	path: RelativePath<footer/input.txt>
 }
 ```

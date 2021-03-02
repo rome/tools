@@ -13,43 +13,21 @@ gist {id: "123456"}
 ### `0`
 
 ```javascript
-npm {
-	name: Object {
-		org: undefined
-		packageName: "foo"
-	}
-	range: undefined
-}
+npm {name: {packageName: "foo"}}
 ```
 
 ### `1`
 
 ```javascript
-npm {
-	name: Object {
-		org: undefined
-		packageName: "@foo/bar"
-	}
-	range: undefined
-}
+npm {name: {packageName: "@foo/bar"}}
 ```
 
 ### `2`
 
 ```javascript
 npm {
-	name: Object {
-		org: undefined
-		packageName: "foo"
-	}
-	range: AbsoluteVersion {
-		build: Array []
-		major: 1
-		minor: 0
-		patch: 0
-		prerelease: Array []
-		loc: SourceLocation unknown 1:0-1:4
-	}
+	name: {packageName: "foo"}
+	range: AbsoluteVersion {build: [], major: 1, minor: 0, patch: 0, prerelease: [], loc: SourceLocation unknown 1:0-1:4}
 }
 ```
 
@@ -57,18 +35,8 @@ npm {
 
 ```javascript
 npm {
-	name: Object {
-		org: undefined
-		packageName: "@foo/bar"
-	}
-	range: AbsoluteVersion {
-		build: Array []
-		major: 1
-		minor: 0
-		patch: 0
-		prerelease: Array []
-		loc: SourceLocation unknown 1:0-1:4
-	}
+	name: {packageName: "@foo/bar"}
+	range: AbsoluteVersion {build: [], major: 1, minor: 0, patch: 0, prerelease: [], loc: SourceLocation unknown 1:0-1:4}
 }
 ```
 

@@ -8,65 +8,46 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation core/uncategorised/28/input.js 1:0-1:18
-	path: UIDPath<core/uncategorised/28/input.js>
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation core/uncategorised/28/input.js 1:0-1:18
 			expression: JSAssignmentExpression {
+				left: JSAssignmentIdentifier {name: "x", loc: SourceLocation core/uncategorised/28/input.js 1:0-1:1 (x)}
 				operator: "="
-				loc: SourceLocation core/uncategorised/28/input.js 1:0-1:18
-				left: JSAssignmentIdentifier {
-					name: "x"
-					loc: SourceLocation core/uncategorised/28/input.js 1:0-1:1 (x)
-				}
 				right: JSObjectExpression {
-					loc: SourceLocation core/uncategorised/28/input.js 1:4-1:18
-					properties: Array [
+					properties: [
 						JSObjectProperty {
 							key: JSStaticPropertyKey {
-								value: JSIdentifier {
-									name: "x"
-									loc: SourceLocation core/uncategorised/28/input.js 1:6-1:7 (x)
-								}
+								value: JSIdentifier {name: "x", loc: SourceLocation core/uncategorised/28/input.js 1:6-1:7 (x)}
 								loc: SourceLocation core/uncategorised/28/input.js 1:6-1:7
 							}
-							value: JSNumericLiteral {
-								value: 1
-								format: undefined
-								loc: SourceLocation core/uncategorised/28/input.js 1:9-1:10
-							}
+							value: JSNumericLiteral {value: 1, loc: SourceLocation core/uncategorised/28/input.js 1:9-1:10}
 							loc: SourceLocation core/uncategorised/28/input.js 1:6-1:10
 						}
 						JSObjectProperty {
 							key: JSStaticPropertyKey {
-								value: JSIdentifier {
-									name: "x"
-									loc: SourceLocation core/uncategorised/28/input.js 1:12-1:13 (x)
-								}
+								value: JSIdentifier {name: "x", loc: SourceLocation core/uncategorised/28/input.js 1:12-1:13 (x)}
 								loc: SourceLocation core/uncategorised/28/input.js 1:12-1:13
 							}
-							value: JSNumericLiteral {
-								value: 2
-								format: undefined
-								loc: SourceLocation core/uncategorised/28/input.js 1:15-1:16
-							}
+							value: JSNumericLiteral {value: 2, loc: SourceLocation core/uncategorised/28/input.js 1:15-1:16}
 							loc: SourceLocation core/uncategorised/28/input.js 1:12-1:16
 						}
 					]
+					loc: SourceLocation core/uncategorised/28/input.js 1:4-1:18
 				}
+				loc: SourceLocation core/uncategorised/28/input.js 1:0-1:18
 			}
+			loc: SourceLocation core/uncategorised/28/input.js 1:0-1:18
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	path: UIDPath<core/uncategorised/28/input.js>
+	sourceType: "script"
+	syntax: []
+	loc: SourceLocation core/uncategorised/28/input.js 1:0-1:18
 }
 ```
 

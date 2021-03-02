@@ -8,50 +8,34 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation core/uncategorised/292/input.js 1:0-1:27
-	path: UIDPath<core/uncategorised/292/input.js>
-	body: Array [
+	body: [
 		JSFunctionDeclaration {
-			id: JSBindingIdentifier {
-				name: "hello"
-				loc: SourceLocation core/uncategorised/292/input.js 1:9-1:14 (hello)
-			}
-			loc: SourceLocation core/uncategorised/292/input.js 1:0-1:27
-			body: JSBlockStatement {
-				body: Array []
-				directives: Array []
-				loc: SourceLocation core/uncategorised/292/input.js 1:24-1:27
-			}
+			id: JSBindingIdentifier {name: "hello", loc: SourceLocation core/uncategorised/292/input.js 1:9-1:14 (hello)}
+			body: JSBlockStatement {body: [], directives: [], loc: SourceLocation core/uncategorised/292/input.js 1:24-1:27}
 			head: JSFunctionHead {
 				async: false
 				generator: false
 				hasHoistedVars: false
-				params: Array []
-				returnType: undefined
-				thisType: undefined
-				typeParameters: undefined
-				loc: SourceLocation core/uncategorised/292/input.js 1:14-1:23
+				params: []
 				rest: JSBindingIdentifier {
 					name: "rest"
+					meta: JSPatternMeta {loc: SourceLocation core/uncategorised/292/input.js 1:18-1:22}
 					loc: SourceLocation core/uncategorised/292/input.js 1:18-1:22 (rest)
-					meta: JSPatternMeta {
-						optional: undefined
-						typeAnnotation: undefined
-						loc: SourceLocation core/uncategorised/292/input.js 1:18-1:22
-					}
 				}
+				loc: SourceLocation core/uncategorised/292/input.js 1:14-1:23
 			}
+			loc: SourceLocation core/uncategorised/292/input.js 1:0-1:27
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	path: UIDPath<core/uncategorised/292/input.js>
+	sourceType: "script"
+	syntax: []
+	loc: SourceLocation core/uncategorised/292/input.js 1:0-1:27
 }
 ```
 

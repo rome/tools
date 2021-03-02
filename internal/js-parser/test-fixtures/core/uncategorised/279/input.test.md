@@ -8,57 +8,39 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation core/uncategorised/279/input.js 1:0-1:28
-	path: UIDPath<core/uncategorised/279/input.js>
-	body: Array [
+	body: [
 		JSTryStatement {
-			finalizer: undefined
-			loc: SourceLocation core/uncategorised/279/input.js 1:0-1:28
-			block: JSBlockStatement {
-				body: Array []
-				directives: Array []
-				loc: SourceLocation core/uncategorised/279/input.js 1:4-1:7
-			}
+			block: JSBlockStatement {body: [], directives: [], loc: SourceLocation core/uncategorised/279/input.js 1:4-1:7}
 			handler: JSCatchClause {
-				loc: SourceLocation core/uncategorised/279/input.js 1:8-1:28
-				param: JSBindingIdentifier {
-					name: "e"
-					loc: SourceLocation core/uncategorised/279/input.js 1:15-1:16 (e)
-				}
 				body: JSBlockStatement {
-					directives: Array []
-					loc: SourceLocation core/uncategorised/279/input.js 1:18-1:28
-					body: Array [
+					body: [
 						JSExpressionStatement {
-							loc: SourceLocation core/uncategorised/279/input.js 1:20-1:26
 							expression: JSCallExpression {
+								arguments: [JSReferenceIdentifier {name: "e", loc: SourceLocation core/uncategorised/279/input.js 1:24-1:25 (e)}]
+								callee: JSReferenceIdentifier {name: "say", loc: SourceLocation core/uncategorised/279/input.js 1:20-1:23 (say)}
 								loc: SourceLocation core/uncategorised/279/input.js 1:20-1:26
-								callee: JSReferenceIdentifier {
-									name: "say"
-									loc: SourceLocation core/uncategorised/279/input.js 1:20-1:23 (say)
-								}
-								arguments: Array [
-									JSReferenceIdentifier {
-										name: "e"
-										loc: SourceLocation core/uncategorised/279/input.js 1:24-1:25 (e)
-									}
-								]
 							}
+							loc: SourceLocation core/uncategorised/279/input.js 1:20-1:26
 						}
 					]
+					directives: []
+					loc: SourceLocation core/uncategorised/279/input.js 1:18-1:28
 				}
+				param: JSBindingIdentifier {name: "e", loc: SourceLocation core/uncategorised/279/input.js 1:15-1:16 (e)}
+				loc: SourceLocation core/uncategorised/279/input.js 1:8-1:28
 			}
+			loc: SourceLocation core/uncategorised/279/input.js 1:0-1:28
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	path: UIDPath<core/uncategorised/279/input.js>
+	sourceType: "script"
+	syntax: []
+	loc: SourceLocation core/uncategorised/279/input.js 1:0-1:28
 }
 ```
 

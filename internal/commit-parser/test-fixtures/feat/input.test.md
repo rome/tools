@@ -7,15 +7,14 @@
 ```javascript
 CommitRoot {
 	breaking: false
-	comments: Array []
+	comments: []
 	commitType: "feat"
 	corrupt: false
 	custom: false
-	diagnostics: Array []
-	integrity: undefined
+	diagnostics: []
+	path: RelativePath<feat/input.txt>
 	rawBody: "commit with a feat commit type"
 	scope: ""
 	loc: SourceLocation feat/input.txt 1:0-1:35
-	path: RelativePath<feat/input.txt>
 }
 ```

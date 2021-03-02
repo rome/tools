@@ -8,37 +8,28 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	syntax: Array []
-	loc: SourceLocation core/opts/allowUndeclaredExports/input.js 1:0-1:15
-	path: UIDPath<core/opts/allowUndeclaredExports/input.js>
-	body: Array [
+	body: [
 		JSExportLocalDeclaration {
-			declaration: undefined
 			exportKind: "value"
-			loc: SourceLocation core/opts/allowUndeclaredExports/input.js 1:0-1:15
-			specifiers: Array [
+			specifiers: [
 				JSExportLocalSpecifier {
+					exported: JSIdentifier {name: "foo", loc: SourceLocation core/opts/allowUndeclaredExports/input.js 1:9-1:12 (foo)}
+					local: JSReferenceIdentifier {name: "foo", loc: SourceLocation core/opts/allowUndeclaredExports/input.js 1:9-1:12 (foo)}
 					loc: SourceLocation core/opts/allowUndeclaredExports/input.js 1:9-1:12
-					exported: JSIdentifier {
-						name: "foo"
-						loc: SourceLocation core/opts/allowUndeclaredExports/input.js 1:9-1:12 (foo)
-					}
-					local: JSReferenceIdentifier {
-						name: "foo"
-						loc: SourceLocation core/opts/allowUndeclaredExports/input.js 1:9-1:12 (foo)
-					}
 				}
 			]
+			loc: SourceLocation core/opts/allowUndeclaredExports/input.js 1:0-1:15
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	path: UIDPath<core/opts/allowUndeclaredExports/input.js>
+	sourceType: "module"
+	syntax: []
+	loc: SourceLocation core/opts/allowUndeclaredExports/input.js 1:0-1:15
 }
 ```
 

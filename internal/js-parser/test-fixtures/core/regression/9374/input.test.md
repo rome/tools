@@ -8,60 +8,40 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation core/regression/9374/input.js 1:0-4:0
-	path: UIDPath<core/regression/9374/input.js>
-	body: Array [
+	body: [
 		JSFunctionDeclaration {
-			id: JSBindingIdentifier {
-				name: "test"
-				loc: SourceLocation core/regression/9374/input.js 1:10-1:14 (test)
-			}
-			loc: SourceLocation core/regression/9374/input.js 1:0-3:1
-			head: JSFunctionHead {
-				async: false
-				generator: true
-				hasHoistedVars: false
-				params: Array []
-				rest: undefined
-				returnType: undefined
-				thisType: undefined
-				typeParameters: undefined
-				loc: SourceLocation core/regression/9374/input.js 1:14-1:16
-			}
+			id: JSBindingIdentifier {name: "test", loc: SourceLocation core/regression/9374/input.js 1:10-1:14 (test)}
 			body: JSBlockStatement {
-				directives: Array []
-				loc: SourceLocation core/regression/9374/input.js 1:17-3:1
-				body: Array [
+				body: [
 					JSExpressionStatement {
-						loc: SourceLocation core/regression/9374/input.js 2:2-2:18
 						expression: JSYieldExpression {
+							argument: JSNewExpression {
+								arguments: []
+								callee: JSReferenceIdentifier {name: "Foo", loc: SourceLocation core/regression/9374/input.js 2:12-2:15 (Foo)}
+								loc: SourceLocation core/regression/9374/input.js 2:8-2:17
+							}
 							delegate: false
 							loc: SourceLocation core/regression/9374/input.js 2:2-2:17
-							argument: JSNewExpression {
-								arguments: Array []
-								optional: undefined
-								typeArguments: undefined
-								loc: SourceLocation core/regression/9374/input.js 2:8-2:17
-								callee: JSReferenceIdentifier {
-									name: "Foo"
-									loc: SourceLocation core/regression/9374/input.js 2:12-2:15 (Foo)
-								}
-							}
 						}
+						loc: SourceLocation core/regression/9374/input.js 2:2-2:18
 					}
 				]
+				directives: []
+				loc: SourceLocation core/regression/9374/input.js 1:17-3:1
 			}
+			head: JSFunctionHead {async: false, generator: true, hasHoistedVars: false, params: [], loc: SourceLocation core/regression/9374/input.js 1:14-1:16}
+			loc: SourceLocation core/regression/9374/input.js 1:0-3:1
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	path: UIDPath<core/regression/9374/input.js>
+	sourceType: "script"
+	syntax: []
+	loc: SourceLocation core/regression/9374/input.js 1:0-4:0
 }
 ```
 

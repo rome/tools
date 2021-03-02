@@ -8,182 +8,105 @@
 
 ```javascript
 JSRoot {
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation comments/basic/array-expression-trailing-comma/input.js 1:0-19:0
-	path: UIDPath<comments/basic/array-expression-trailing-comma/input.js>
-	comments: Array [
-		CommentLine {
-			id: "0"
-			value: " One"
-			loc: SourceLocation comments/basic/array-expression-trailing-comma/input.js 2:9-2:15
-		}
-		CommentLine {
-			id: "1"
-			value: " Two"
-			loc: SourceLocation comments/basic/array-expression-trailing-comma/input.js 3:3-3:9
-		}
-		CommentLine {
-			id: "2"
-			value: " Three"
-			loc: SourceLocation comments/basic/array-expression-trailing-comma/input.js 4:8-4:16
-		}
-		CommentLine {
-			id: "3"
-			value: " Four"
-			loc: SourceLocation comments/basic/array-expression-trailing-comma/input.js 5:2-5:9
-		}
-		CommentLine {
-			id: "4"
-			value: " One"
-			loc: SourceLocation comments/basic/array-expression-trailing-comma/input.js 9:9-9:15
-		}
-		CommentLine {
-			id: "5"
-			value: " Two"
-			loc: SourceLocation comments/basic/array-expression-trailing-comma/input.js 10:3-10:9
-		}
-		CommentLine {
-			id: "6"
-			value: " Three"
-			loc: SourceLocation comments/basic/array-expression-trailing-comma/input.js 11:9-11:17
-		}
-		CommentLine {
-			id: "7"
-			value: " Four"
-			loc: SourceLocation comments/basic/array-expression-trailing-comma/input.js 12:2-12:9
-		}
-		CommentLine {
-			id: "8"
-			value: " One"
-			loc: SourceLocation comments/basic/array-expression-trailing-comma/input.js 16:9-16:15
-		}
-		CommentLine {
-			id: "9"
-			value: " Two"
-			loc: SourceLocation comments/basic/array-expression-trailing-comma/input.js 17:3-17:9
-		}
-		CommentLine {
-			id: "10"
-			value: " Three"
-			loc: SourceLocation comments/basic/array-expression-trailing-comma/input.js 18:2-18:10
-		}
-	]
-	body: Array [
+	body: [
 		JSVariableDeclarationStatement {
-			loc: SourceLocation comments/basic/array-expression-trailing-comma/input.js 1:0-6:1
 			declaration: JSVariableDeclaration {
 				kind: "const"
-				loc: SourceLocation comments/basic/array-expression-trailing-comma/input.js 1:0-6:1
-				declarations: Array [
+				declarations: [
 					JSVariableDeclarator {
-						id: JSBindingIdentifier {
-							name: "nonTrailing"
-							loc: SourceLocation comments/basic/array-expression-trailing-comma/input.js 1:6-1:17 (nonTrailing)
-						}
-						loc: SourceLocation comments/basic/array-expression-trailing-comma/input.js 1:6-6:1
+						id: JSBindingIdentifier {name: "nonTrailing", loc: SourceLocation comments/basic/array-expression-trailing-comma/input.js 1:6-1:17 (nonTrailing)}
 						init: JSArrayExpression {
-							loc: SourceLocation comments/basic/array-expression-trailing-comma/input.js 1:20-6:1
-							elements: Array [
-								JSStringLiteral {
-									value: "One"
-									loc: SourceLocation comments/basic/array-expression-trailing-comma/input.js 2:2-2:7
-								}
+							elements: [
+								JSStringLiteral {value: "One", loc: SourceLocation comments/basic/array-expression-trailing-comma/input.js 2:2-2:7}
 								JSStringLiteral {
 									value: "Two"
+									leadingComments: ["0", "1"]
+									trailingComments: ["2", "3"]
 									loc: SourceLocation comments/basic/array-expression-trailing-comma/input.js 4:2-4:7
-									leadingComments: Array [
-										"0"
-										"1"
-									]
-									trailingComments: Array [
-										"2"
-										"3"
-									]
 								}
 							]
+							loc: SourceLocation comments/basic/array-expression-trailing-comma/input.js 1:20-6:1
 						}
+						loc: SourceLocation comments/basic/array-expression-trailing-comma/input.js 1:6-6:1
 					}
 				]
+				loc: SourceLocation comments/basic/array-expression-trailing-comma/input.js 1:0-6:1
 			}
+			loc: SourceLocation comments/basic/array-expression-trailing-comma/input.js 1:0-6:1
 		}
 		JSVariableDeclarationStatement {
-			loc: SourceLocation comments/basic/array-expression-trailing-comma/input.js 8:0-13:1
 			declaration: JSVariableDeclaration {
 				kind: "const"
-				loc: SourceLocation comments/basic/array-expression-trailing-comma/input.js 8:0-13:1
-				declarations: Array [
+				declarations: [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "trailingAfterComma"
 							loc: SourceLocation comments/basic/array-expression-trailing-comma/input.js 8:6-8:24 (trailingAfterComma)
 						}
-						loc: SourceLocation comments/basic/array-expression-trailing-comma/input.js 8:6-13:1
 						init: JSArrayExpression {
-							loc: SourceLocation comments/basic/array-expression-trailing-comma/input.js 8:27-13:1
-							elements: Array [
-								JSStringLiteral {
-									value: "One"
-									loc: SourceLocation comments/basic/array-expression-trailing-comma/input.js 9:2-9:7
-								}
+							elements: [
+								JSStringLiteral {value: "One", loc: SourceLocation comments/basic/array-expression-trailing-comma/input.js 9:2-9:7}
 								JSStringLiteral {
 									value: "Two"
+									leadingComments: ["4", "5"]
+									trailingComments: ["6", "7"]
 									loc: SourceLocation comments/basic/array-expression-trailing-comma/input.js 11:2-11:7
-									leadingComments: Array [
-										"4"
-										"5"
-									]
-									trailingComments: Array [
-										"6"
-										"7"
-									]
 								}
 							]
+							loc: SourceLocation comments/basic/array-expression-trailing-comma/input.js 8:27-13:1
 						}
+						loc: SourceLocation comments/basic/array-expression-trailing-comma/input.js 8:6-13:1
 					}
 				]
+				loc: SourceLocation comments/basic/array-expression-trailing-comma/input.js 8:0-13:1
 			}
+			loc: SourceLocation comments/basic/array-expression-trailing-comma/input.js 8:0-13:1
 		}
 		JSVariableDeclarationStatement {
-			loc: SourceLocation comments/basic/array-expression-trailing-comma/input.js 15:0-18:1
-			trailingComments: Array ["10"]
 			declaration: JSVariableDeclaration {
 				kind: "const"
-				trailingComments: undefined
-				loc: SourceLocation comments/basic/array-expression-trailing-comma/input.js 15:0-18:1
-				declarations: Array [
+				declarations: [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "trailingAfterArray"
 							loc: SourceLocation comments/basic/array-expression-trailing-comma/input.js 15:6-15:24 (trailingAfterArray)
 						}
-						trailingComments: undefined
-						loc: SourceLocation comments/basic/array-expression-trailing-comma/input.js 15:6-18:1
 						init: JSArrayExpression {
-							trailingComments: undefined
-							loc: SourceLocation comments/basic/array-expression-trailing-comma/input.js 15:27-18:1
-							elements: Array [
-								JSStringLiteral {
-									value: "One"
-									loc: SourceLocation comments/basic/array-expression-trailing-comma/input.js 16:2-16:7
-									trailingComments: Array [
-										"8"
-										"9"
-									]
-								}
+							elements: [
+								JSStringLiteral {value: "One", trailingComments: ["8", "9"], loc: SourceLocation comments/basic/array-expression-trailing-comma/input.js 16:2-16:7}
 							]
+							loc: SourceLocation comments/basic/array-expression-trailing-comma/input.js 15:27-18:1
 						}
+						loc: SourceLocation comments/basic/array-expression-trailing-comma/input.js 15:6-18:1
 					}
 				]
+				loc: SourceLocation comments/basic/array-expression-trailing-comma/input.js 15:0-18:1
 			}
+			trailingComments: ["10"]
+			loc: SourceLocation comments/basic/array-expression-trailing-comma/input.js 15:0-18:1
 		}
 	]
+	comments: [
+		CommentLine {id: "0", value: " One", loc: SourceLocation comments/basic/array-expression-trailing-comma/input.js 2:9-2:15}
+		CommentLine {id: "1", value: " Two", loc: SourceLocation comments/basic/array-expression-trailing-comma/input.js 3:3-3:9}
+		CommentLine {id: "2", value: " Three", loc: SourceLocation comments/basic/array-expression-trailing-comma/input.js 4:8-4:16}
+		CommentLine {id: "3", value: " Four", loc: SourceLocation comments/basic/array-expression-trailing-comma/input.js 5:2-5:9}
+		CommentLine {id: "4", value: " One", loc: SourceLocation comments/basic/array-expression-trailing-comma/input.js 9:9-9:15}
+		CommentLine {id: "5", value: " Two", loc: SourceLocation comments/basic/array-expression-trailing-comma/input.js 10:3-10:9}
+		CommentLine {id: "6", value: " Three", loc: SourceLocation comments/basic/array-expression-trailing-comma/input.js 11:9-11:17}
+		CommentLine {id: "7", value: " Four", loc: SourceLocation comments/basic/array-expression-trailing-comma/input.js 12:2-12:9}
+		CommentLine {id: "8", value: " One", loc: SourceLocation comments/basic/array-expression-trailing-comma/input.js 16:9-16:15}
+		CommentLine {id: "9", value: " Two", loc: SourceLocation comments/basic/array-expression-trailing-comma/input.js 17:3-17:9}
+		CommentLine {id: "10", value: " Three", loc: SourceLocation comments/basic/array-expression-trailing-comma/input.js 18:2-18:10}
+	]
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	path: UIDPath<comments/basic/array-expression-trailing-comma/input.js>
+	sourceType: "script"
+	syntax: []
+	loc: SourceLocation comments/basic/array-expression-trailing-comma/input.js 1:0-19:0
 }
 ```
 

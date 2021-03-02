@@ -8,18 +8,16 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
+	body: [JSEmptyStatement {loc: SourceLocation core/uncategorised/223/input.js 1:0-1:1}]
+	comments: []
 	corrupt: false
-	diagnostics: Array []
-	directives: Array []
+	diagnostics: []
+	directives: []
 	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	body: Array [JSEmptyStatement {loc: SourceLocation core/uncategorised/223/input.js 1:0-1:1}]
-	loc: SourceLocation core/uncategorised/223/input.js 1:0-1:1
 	path: UIDPath<core/uncategorised/223/input.js>
+	sourceType: "script"
+	syntax: []
+	loc: SourceLocation core/uncategorised/223/input.js 1:0-1:1
 }
 ```
 

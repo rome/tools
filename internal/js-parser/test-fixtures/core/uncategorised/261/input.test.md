@@ -8,50 +8,40 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation core/uncategorised/261/input.js 1:0-1:25
-	path: UIDPath<core/uncategorised/261/input.js>
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation core/uncategorised/261/input.js 1:0-1:25
 			expression: JSFunctionExpression {
-				id: undefined
-				loc: SourceLocation core/uncategorised/261/input.js 1:1-1:24
+				body: JSBlockStatement {
+					body: [
+						JSReturnStatement {
+							argument: JSReferenceIdentifier {name: "x", loc: SourceLocation core/uncategorised/261/input.js 1:20-1:21 (x)}
+							loc: SourceLocation core/uncategorised/261/input.js 1:13-1:22
+						}
+					]
+					directives: []
+					loc: SourceLocation core/uncategorised/261/input.js 1:11-1:24
+				}
 				head: JSFunctionHead {
 					async: false
 					generator: false
 					hasHoistedVars: false
-					params: Array []
-					rest: undefined
-					returnType: undefined
-					thisType: undefined
-					typeParameters: undefined
+					params: []
 					loc: SourceLocation core/uncategorised/261/input.js 1:9-1:11
 				}
-				body: JSBlockStatement {
-					directives: Array []
-					loc: SourceLocation core/uncategorised/261/input.js 1:11-1:24
-					body: Array [
-						JSReturnStatement {
-							loc: SourceLocation core/uncategorised/261/input.js 1:13-1:22
-							argument: JSReferenceIdentifier {
-								name: "x"
-								loc: SourceLocation core/uncategorised/261/input.js 1:20-1:21 (x)
-							}
-						}
-					]
-				}
+				loc: SourceLocation core/uncategorised/261/input.js 1:1-1:24
 			}
+			loc: SourceLocation core/uncategorised/261/input.js 1:0-1:25
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	path: UIDPath<core/uncategorised/261/input.js>
+	sourceType: "script"
+	syntax: []
+	loc: SourceLocation core/uncategorised/261/input.js 1:0-1:25
 }
 ```
 

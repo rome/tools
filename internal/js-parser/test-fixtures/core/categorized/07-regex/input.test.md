@@ -8,44 +8,28 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation core/categorized/07-regex/input.js 1:0-2:0
-	path: UIDPath<core/categorized/07-regex/input.js>
-	body: Array [
+	body: [
 		JSFunctionDeclaration {
-			id: JSBindingIdentifier {
-				name: "foo"
-				loc: SourceLocation core/categorized/07-regex/input.js 1:9-1:12 (foo)
-			}
-			loc: SourceLocation core/categorized/07-regex/input.js 1:0-1:17
-			body: JSBlockStatement {
-				body: Array []
-				directives: Array []
-				loc: SourceLocation core/categorized/07-regex/input.js 1:15-1:17
-			}
+			id: JSBindingIdentifier {name: "foo", loc: SourceLocation core/categorized/07-regex/input.js 1:9-1:12 (foo)}
+			body: JSBlockStatement {body: [], directives: [], loc: SourceLocation core/categorized/07-regex/input.js 1:15-1:17}
 			head: JSFunctionHead {
 				async: false
 				generator: false
 				hasHoistedVars: false
-				params: Array []
-				rest: undefined
-				returnType: undefined
-				thisType: undefined
-				typeParameters: undefined
+				params: []
 				loc: SourceLocation core/categorized/07-regex/input.js 1:12-1:14
 			}
+			loc: SourceLocation core/categorized/07-regex/input.js 1:0-1:17
 		}
 		JSExpressionStatement {
-			loc: SourceLocation core/categorized/07-regex/input.js 1:18-1:23
 			expression: JSRegExpLiteral {
+				expression: JSRegExpSubExpression {
+					body: [
+						JSRegExpCharacter {value: "4", loc: SourceLocation core/categorized/07-regex/input.js 1:19-1:20}
+						JSRegExpCharacter {value: "2", loc: SourceLocation core/categorized/07-regex/input.js 1:20-1:21}
+					]
+					loc: SourceLocation core/categorized/07-regex/input.js 1:19-1:21
+				}
 				global: false
 				insensitive: true
 				multiline: false
@@ -53,22 +37,19 @@ JSRoot {
 				sticky: false
 				unicode: false
 				loc: SourceLocation core/categorized/07-regex/input.js 1:18-1:23
-				expression: JSRegExpSubExpression {
-					loc: SourceLocation core/categorized/07-regex/input.js 1:19-1:21
-					body: Array [
-						JSRegExpCharacter {
-							value: "4"
-							loc: SourceLocation core/categorized/07-regex/input.js 1:19-1:20
-						}
-						JSRegExpCharacter {
-							value: "2"
-							loc: SourceLocation core/categorized/07-regex/input.js 1:20-1:21
-						}
-					]
-				}
 			}
+			loc: SourceLocation core/categorized/07-regex/input.js 1:18-1:23
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	path: UIDPath<core/categorized/07-regex/input.js>
+	sourceType: "script"
+	syntax: []
+	loc: SourceLocation core/categorized/07-regex/input.js 1:0-2:0
 }
 ```
 

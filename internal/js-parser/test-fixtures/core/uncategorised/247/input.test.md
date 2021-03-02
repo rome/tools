@@ -8,56 +8,39 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: true
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation core/uncategorised/247/input.js 1:0-1:31
-	path: UIDPath<core/uncategorised/247/input.js>
-	body: Array [
+	body: [
 		JSForInStatement {
-			loc: SourceLocation core/uncategorised/247/input.js 1:0-1:31
-			right: JSReferenceIdentifier {
-				name: "list"
-				loc: SourceLocation core/uncategorised/247/input.js 1:14-1:18 (list)
+			body: JSExpressionStatement {
+				expression: JSCallExpression {
+					arguments: [JSReferenceIdentifier {name: "x", loc: SourceLocation core/uncategorised/247/input.js 1:28-1:29 (x)}]
+					callee: JSReferenceIdentifier {name: "process", loc: SourceLocation core/uncategorised/247/input.js 1:20-1:27 (process)}
+					loc: SourceLocation core/uncategorised/247/input.js 1:20-1:30
+				}
+				loc: SourceLocation core/uncategorised/247/input.js 1:20-1:31
 			}
 			left: JSVariableDeclaration {
 				kind: "var"
-				loc: SourceLocation core/uncategorised/247/input.js 1:5-1:10
-				declarations: Array [
+				declarations: [
 					JSVariableDeclarator {
-						id: JSBindingIdentifier {
-							name: "x"
-							loc: SourceLocation core/uncategorised/247/input.js 1:9-1:10 (x)
-						}
-						init: undefined
+						id: JSBindingIdentifier {name: "x", loc: SourceLocation core/uncategorised/247/input.js 1:9-1:10 (x)}
 						loc: SourceLocation core/uncategorised/247/input.js 1:9-1:10
 					}
 				]
+				loc: SourceLocation core/uncategorised/247/input.js 1:5-1:10
 			}
-			body: JSExpressionStatement {
-				loc: SourceLocation core/uncategorised/247/input.js 1:20-1:31
-				expression: JSCallExpression {
-					loc: SourceLocation core/uncategorised/247/input.js 1:20-1:30
-					callee: JSReferenceIdentifier {
-						name: "process"
-						loc: SourceLocation core/uncategorised/247/input.js 1:20-1:27 (process)
-					}
-					arguments: Array [
-						JSReferenceIdentifier {
-							name: "x"
-							loc: SourceLocation core/uncategorised/247/input.js 1:28-1:29 (x)
-						}
-					]
-				}
-			}
+			right: JSReferenceIdentifier {name: "list", loc: SourceLocation core/uncategorised/247/input.js 1:14-1:18 (list)}
+			loc: SourceLocation core/uncategorised/247/input.js 1:0-1:31
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: true
+	path: UIDPath<core/uncategorised/247/input.js>
+	sourceType: "script"
+	syntax: []
+	loc: SourceLocation core/uncategorised/247/input.js 1:0-1:31
 }
 ```
 

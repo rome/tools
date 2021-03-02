@@ -8,40 +8,32 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation core/categorized/label-kind-switch/input.js 1:0-4:1
-	path: UIDPath<core/categorized/label-kind-switch/input.js>
-	body: Array [
+	body: [
 		JSBlockStatement {
-			directives: Array []
-			loc: SourceLocation core/categorized/label-kind-switch/input.js 1:0-4:1
-			body: Array [
+			body: [
 				JSLabeledStatement {
-					loc: SourceLocation core/categorized/label-kind-switch/input.js 2:2-3:3
-					label: JSIdentifier {
-						name: "a"
-						loc: SourceLocation core/categorized/label-kind-switch/input.js 2:2-2:3 (a)
-					}
 					body: JSSwitchStatement {
-						cases: Array []
+						cases: []
+						discriminant: JSReferenceIdentifier {name: "i", loc: SourceLocation core/categorized/label-kind-switch/input.js 2:13-2:14 (i)}
 						loc: SourceLocation core/categorized/label-kind-switch/input.js 2:5-3:3
-						discriminant: JSReferenceIdentifier {
-							name: "i"
-							loc: SourceLocation core/categorized/label-kind-switch/input.js 2:13-2:14 (i)
-						}
 					}
+					label: JSIdentifier {name: "a", loc: SourceLocation core/categorized/label-kind-switch/input.js 2:2-2:3 (a)}
+					loc: SourceLocation core/categorized/label-kind-switch/input.js 2:2-3:3
 				}
 			]
+			directives: []
+			loc: SourceLocation core/categorized/label-kind-switch/input.js 1:0-4:1
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	path: UIDPath<core/categorized/label-kind-switch/input.js>
+	sourceType: "script"
+	syntax: []
+	loc: SourceLocation core/categorized/label-kind-switch/input.js 1:0-4:1
 }
 ```
 

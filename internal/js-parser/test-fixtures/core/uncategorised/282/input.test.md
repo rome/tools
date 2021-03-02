@@ -8,90 +8,66 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation core/uncategorised/282/input.js 1:0-1:65
-	path: UIDPath<core/uncategorised/282/input.js>
-	body: Array [
+	body: [
 		JSTryStatement {
-			loc: SourceLocation core/uncategorised/282/input.js 1:0-1:65
 			block: JSBlockStatement {
-				directives: Array []
-				loc: SourceLocation core/uncategorised/282/input.js 1:4-1:17
-				body: Array [
+				body: [
 					JSExpressionStatement {
-						loc: SourceLocation core/uncategorised/282/input.js 1:6-1:15
 						expression: JSCallExpression {
-							arguments: Array []
+							arguments: []
+							callee: JSReferenceIdentifier {name: "doThat", loc: SourceLocation core/uncategorised/282/input.js 1:6-1:12 (doThat)}
 							loc: SourceLocation core/uncategorised/282/input.js 1:6-1:14
-							callee: JSReferenceIdentifier {
-								name: "doThat"
-								loc: SourceLocation core/uncategorised/282/input.js 1:6-1:12 (doThat)
-							}
 						}
+						loc: SourceLocation core/uncategorised/282/input.js 1:6-1:15
 					}
 				]
+				directives: []
+				loc: SourceLocation core/uncategorised/282/input.js 1:4-1:17
 			}
 			finalizer: JSBlockStatement {
-				directives: Array []
-				loc: SourceLocation core/uncategorised/282/input.js 1:47-1:65
-				body: Array [
+				body: [
 					JSExpressionStatement {
-						loc: SourceLocation core/uncategorised/282/input.js 1:49-1:63
 						expression: JSCallExpression {
+							arguments: [JSReferenceIdentifier {name: "stuff", loc: SourceLocation core/uncategorised/282/input.js 1:57-1:62 (stuff)}]
+							callee: JSReferenceIdentifier {name: "cleanup", loc: SourceLocation core/uncategorised/282/input.js 1:49-1:56 (cleanup)}
 							loc: SourceLocation core/uncategorised/282/input.js 1:49-1:63
-							callee: JSReferenceIdentifier {
-								name: "cleanup"
-								loc: SourceLocation core/uncategorised/282/input.js 1:49-1:56 (cleanup)
-							}
-							arguments: Array [
-								JSReferenceIdentifier {
-									name: "stuff"
-									loc: SourceLocation core/uncategorised/282/input.js 1:57-1:62 (stuff)
-								}
-							]
 						}
+						loc: SourceLocation core/uncategorised/282/input.js 1:49-1:63
 					}
 				]
+				directives: []
+				loc: SourceLocation core/uncategorised/282/input.js 1:47-1:65
 			}
 			handler: JSCatchClause {
-				loc: SourceLocation core/uncategorised/282/input.js 1:18-1:38
-				param: JSBindingIdentifier {
-					name: "e"
-					loc: SourceLocation core/uncategorised/282/input.js 1:25-1:26 (e)
-				}
 				body: JSBlockStatement {
-					directives: Array []
-					loc: SourceLocation core/uncategorised/282/input.js 1:28-1:38
-					body: Array [
+					body: [
 						JSExpressionStatement {
-							loc: SourceLocation core/uncategorised/282/input.js 1:30-1:36
 							expression: JSCallExpression {
+								arguments: [JSReferenceIdentifier {name: "e", loc: SourceLocation core/uncategorised/282/input.js 1:34-1:35 (e)}]
+								callee: JSReferenceIdentifier {name: "say", loc: SourceLocation core/uncategorised/282/input.js 1:30-1:33 (say)}
 								loc: SourceLocation core/uncategorised/282/input.js 1:30-1:36
-								callee: JSReferenceIdentifier {
-									name: "say"
-									loc: SourceLocation core/uncategorised/282/input.js 1:30-1:33 (say)
-								}
-								arguments: Array [
-									JSReferenceIdentifier {
-										name: "e"
-										loc: SourceLocation core/uncategorised/282/input.js 1:34-1:35 (e)
-									}
-								]
 							}
+							loc: SourceLocation core/uncategorised/282/input.js 1:30-1:36
 						}
 					]
+					directives: []
+					loc: SourceLocation core/uncategorised/282/input.js 1:28-1:38
 				}
+				param: JSBindingIdentifier {name: "e", loc: SourceLocation core/uncategorised/282/input.js 1:25-1:26 (e)}
+				loc: SourceLocation core/uncategorised/282/input.js 1:18-1:38
 			}
+			loc: SourceLocation core/uncategorised/282/input.js 1:0-1:65
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	path: UIDPath<core/uncategorised/282/input.js>
+	sourceType: "script"
+	syntax: []
+	loc: SourceLocation core/uncategorised/282/input.js 1:0-1:65
 }
 ```
 
