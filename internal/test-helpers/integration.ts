@@ -51,6 +51,7 @@ import child = require("child_process");
 import util = require("util");
 import {Reporter} from "@internal/cli-reporter";
 import {BridgeClient} from "@internal/events";
+import { decodeUTF8 } from "@internal/binary";
 
 const exec = util.promisify(child.exec);
 
@@ -139,6 +140,9 @@ export function createMockWorker(force: boolean = false): IntegrationWorker {
 		return cachedIntegrationWorker;
 	}
 
+	// This wont actually be used, it's just for setting up subscriptions
+	const bridges = WorkerBridge.createFromLocal({optionalResource: true});
+
 	const worker = new Worker({
 		type: "processor",
 		id: 0,
@@ -147,9 +151,7 @@ export function createMockWorker(force: boolean = false): IntegrationWorker {
 		cacheWriteDisabled: true,
 		cacheReadDisabled: true,
 		inspectorPort: undefined,
-
-		// This wont actually be used, it's just for setting up subscriptions
-		bridge: WorkerBridge.createFromLocal().client,
+		bridge: bridges.client,
 	});
 
 	let projectIdCounter = 0;
@@ -257,7 +259,7 @@ export async function declareParserTests() {
 			"script",
 			"module",
 		]);
-		const inputContent = removeCarriageReturn(input.content.toString());
+		const inputContent = removeCarriageReturn(decodeUTF8(input.content));
 
 		const {ast} = await performFileOperation(
 			{
