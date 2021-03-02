@@ -17,7 +17,7 @@ enforce `iframe` elements have a title attribute
 **ESLint Equivalent:** [iframe-has-title](https://github.com/jsx-eslint/eslint-plugin-a11y/blob/master/docs/rules/iframe-has-title.md)
 <!-- GENERATED:END(id:description) -->
 
-<!-- GENERATED:START(hash:2c66c6e3972ad33c9d59c7a5c3a192239d54fd24,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+<!-- GENERATED:START(hash:3e329edd7e0bc6f8acdcb688418df629ca71945b,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
 
 ### Invalid
@@ -197,6 +197,6 @@ enforce `iframe` elements have a title attribute
 
 {% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token variable">iframe</span> <span class="token attr-name">title</span><span class="token operator">=</span><span class="token string">&apos;title&apos;</span> <span class="token operator">/</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token variable">Iframe</span> <span class="token attr-name">title</span><span class="token operator">=</span><span class="token string">&apos;title&apos;</span> <span class="token operator">/</span>&gt;</code></pre>{% endraw %}
-{% raw %}<pre class="language-text"><code class="language-text"><span class="token punctuation">&lt;</span><span class="token tag">iframe</span> <span class="token attr-name">title</span><span class="token attr-equals">=</span>&apos;Tour&apos;&gt;<span class="token punctuation">&lt;/</span><span class="token attr-name">iframe</span><span class="token punctuation">&gt;</span></code></pre>{% endraw %}
-{% raw %}<pre class="language-text"><code class="language-text"><span class="token punctuation">&lt;</span><span class="token tag">iframe</span> <span class="token attr-name">title</span><span class="token attr-equals">=</span>&apos;Camping&apos;&gt;<span class="token punctuation">&lt;/</span><span class="token attr-name">iframe</span><span class="token punctuation">&gt;</span></code></pre>{% endraw %}
+{% raw %}<pre class="language-text"><code class="language-text"><span class="token punctuation">&lt;</span><span class="token tag">iframe</span> <span class="token attr-name">title</span><span class="token attr-equals">=</span><span class="token attr-value">&quot;Tour&quot;</span><span class="token punctuation">&gt;</span><span class="token punctuation">&lt;/</span><span class="token attr-name">iframe</span><span class="token punctuation">&gt;</span></code></pre>{% endraw %}
+{% raw %}<pre class="language-text"><code class="language-text"><span class="token punctuation">&lt;</span><span class="token tag">iframe</span> <span class="token attr-name">title</span><span class="token attr-equals">=</span><span class="token attr-value">&quot;Camping&quot;</span><span class="token punctuation">&gt;</span><span class="token punctuation">&lt;/</span><span class="token attr-name">iframe</span><span class="token punctuation">&gt;</span></code></pre>{% endraw %}
 <!-- GENERATED:END(id:examples) -->

@@ -24,8 +24,8 @@
 			"<iframe title=\"\"></iframe>"
 	]
 		valid: [
-			"<iframe title='Tour'></iframe>"
-			"<iframe title='Camping'></iframe>"
+			"<iframe title=\"Tour\"></iframe>"
+			"<iframe title=\"Camping\"></iframe>"
 	]
 }
 ]

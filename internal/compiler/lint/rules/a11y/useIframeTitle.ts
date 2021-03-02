@@ -8,6 +8,8 @@ import {
 import {JSXElement} from "@internal/ast";
 import {createVisitor, signals} from "@internal/compiler";
 import {isJSXDOMElement} from "@internal/js-ast-utils/isJSXDOMElement";
+import getHTMLAttribute from "@internal/js-ast-utils/getHTMLAttribute";
+import isHTMLElement from "@internal/js-ast-utils/isHTMLElement";
 
 function validTitle(node: JSXElement) {
 	if (isJSXDOMElement(node) && hasJSXAttribute(node, "title")) {
@@ -43,9 +45,9 @@ export default createVisitor({
 					descriptions.LINT.A11Y_IFRAME_USE_TITLE,
 				);
 			}
-		} else if (node.type === "HTMLElement" && node.name.name === "iframe") {
-			const titleAttr = node.attributes.find((a) => a.name.name === "title");
-			if (!titleAttr || titleAttr?.value?.value === "") {
+		} else if (isHTMLElement(node) && node.name.name === "iframe") {
+			const titleAttribute = getHTMLAttribute(node, "title");
+			if (!titleAttribute || titleAttribute.value?.value === "") {
 				path.context.addNodeDiagnostic(
 					node,
 					descriptions.LINT.A11Y_IFRAME_USE_TITLE,
