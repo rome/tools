@@ -105,6 +105,9 @@ export default class Bridge<
 			async () => {
 				await this.end("Resource released");
 			},
+			{
+				optional: opts.optionalResource,
+			}
 		);
 
 		// A Set of event names that are being listened to on the other end
@@ -120,11 +123,6 @@ export default class Bridge<
 		// @ts-ignore: Cannot safely type this but the code to build it is fine
 		this.events = {};
 		this.eventsIdCounter = 0;
-
-		this.teardownEvent = this.createInternalBiEvent("teardown");
-		this.teardownEvent.subscribe(async () => {
-			await this.end("Graceful teardown requested", false);
-		});
 
 		for (const name in callEvents) {
 			const event = new BridgeEventCallOnly(name, this);
@@ -151,8 +149,6 @@ export default class Bridge<
 			def.init(this);
 		}
 	}
-
-	private teardownEvent: BridgeEventBidirectional<void, void>;
 
 	private heartbeatTimeout: undefined | NodeJS.Timeout;
 
@@ -459,10 +455,9 @@ export default class Bridge<
 		// Reject any pending requests
 		this.terminateEventRequests(err);
 
-		// Request a teardown if necessary
-		let gracefulTeardownPromise;
+		// Send teardown message that will be handled async
 		if (gracefulTeardown) {
-			gracefulTeardownPromise = this.teardownEvent.call();
+			this.sendMessage([BridgeMessageCodes.TEARDOWN]);
 		}
 
 		// Do this after we dispatch the teardown event request
@@ -474,11 +469,11 @@ export default class Bridge<
 			clearTimeout(this.heartbeatTimeout);
 		}
 
-		// Wait on other teardown if necessary as if we call our end listeners at the same time then it will
-		// close the connection
-		if (gracefulTeardownPromise !== undefined) {
+		// Wait on a disconnect when requesting a graceful teardown
+		if (gracefulTeardown) {
 			try {
-				await gracefulTeardownPromise;
+				// NB: Might be good to have a timer here
+				await this.disconnectEvent.wait();
 			} catch (err) {
 				// We expect the bridge to disconnect as the indicator that it has finished
 				if (!isBridgeDisconnectedDiagnosticError(err)) {
@@ -644,6 +639,11 @@ export default class Bridge<
 				case BridgeMessageCodes.SERVER_HANDSHAKE:
 				case BridgeMessageCodes.CLIENT_HANDSHAKE: {
 					await this.handleHandshakeMessage(msg);
+					break;
+				}
+
+				case BridgeMessageCodes.TEARDOWN: {
+					await this.end("Graceful teardown requested", false);
 					break;
 				}
 

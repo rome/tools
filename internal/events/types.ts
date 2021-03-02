@@ -85,6 +85,7 @@ export type BridgeType = "server" | "client";
 
 export type BridgeOptions = {
 	ignoreHeartbeat?: boolean;
+	optionalResource?: boolean;
 };
 
 export type BridgeDefinition<
@@ -131,15 +132,18 @@ export enum BridgeMessageCodes {
 	RESPONSE_SUCCESS,
 	RESPONSE_ERROR_CUSTOM,
 	RESPONSE_ERROR_NATIVE,
+	TEARDOWN,
 }
 
 export type BridgeHandshakeMessage =
 	| [BridgeMessageCodes.CLIENT_HANDSHAKE, Set<number>, Map<number, string>]
 	| [BridgeMessageCodes.SERVER_HANDSHAKE, Set<number>];
+
 export type BridgeSubscriptionsMessage = [
 	BridgeMessageCodes.SUBSCRIBED | BridgeMessageCodes.UNSUBSCRIBED,
 	number
 ];
+
 export type BridgeRequestCallMessage =
 	| [
 			BridgeMessageCodes.CALL | BridgeMessageCodes.PRIORITY_CALL,
@@ -148,27 +152,34 @@ export type BridgeRequestCallMessage =
 			RSERValue
 		]
 	| [BridgeMessageCodes.CALL | BridgeMessageCodes.PRIORITY_CALL, number, number];
+
 export type BridgeRequestSendMessage = [
 	BridgeMessageCodes.SEND,
 	number,
 	RSERValue
 ];
+
 export type BridgeSuccessResponseMessage = [
 	BridgeMessageCodes.RESPONSE_SUCCESS,
 	number,
 	RSERValue
 ];
+
 export type BridgeNativeErrorResponseMessage = [
 	BridgeMessageCodes.RESPONSE_ERROR_NATIVE,
 	number,
 	Error
 ];
+
 export type BridgeCustomErrorResponseMessage = [
 	BridgeMessageCodes.RESPONSE_ERROR_CUSTOM,
 	number,
 	StructuredError,
 	RSERObject
 ];
+
+export type BridgeTeardownMessage = [BridgeMessageCodes.TEARDOWN];
+
 export type BridgeHeartbeatMessage = [BridgeMessageCodes.HEARTBEAT];
 
 export type BridgeRequestMessage =
@@ -185,6 +196,7 @@ export type BridgeResponseMessage =
 
 export type BridgeMessage =
 	| BridgeHeartbeatMessage
+	| BridgeTeardownMessage
 	| BridgeHandshakeMessage
 	| BridgeSubscriptionsMessage
 	| BridgeRequestMessage
