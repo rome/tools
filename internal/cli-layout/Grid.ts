@@ -793,57 +793,7 @@ export default class Grid {
 			}
 		} else {
 			const joinSameLine = tag.attributes.get("joinSameLine").asStringOrVoid();
-
-			// Try to draw these on a single line first
-			if (joinSameLine !== undefined) {
-				// If we have no grid size then we default to 500. We do this to prevent drawing super long lines when the intent
-				// of this attribute is to reduce excessive newlines.
-				const viewportWidth = this.viewportWidth ?? new OneIndexed(150);
-				const subViewport = viewportWidth.subtract(this.cursor.column);
-
-				const grid = new Grid({
-					...this.options,
-					columns: subViewport,
-					throwOnNewline: true,
-				});
-
-				try {
-					// Draw items separated by the provided attribute
-					for (let i = 0; i < items.length; i++) {
-						const item = items[i];
-						grid.drawTag(item, ancestry);
-						if (i !== items.length - 1) {
-							grid.drawText(
-								{
-									type: "Text",
-									source: false,
-									value: joinSameLine,
-								},
-								ancestry,
-							);
-						}
-					}
-
-					// Didn't error so we must be able to fit on the same line!
-					this.drawGrid(grid);
-					this.moveCursor({
-						line: this.cursor.line,
-						column: this.cursor.column.add(grid.width),
-					});
-				} catch (err) {
-					if (err instanceof GridAddedNewline) {
-						// Cannot fit on a newline so indent and draw the rest of the items
-						for (const item of items) {
-							this.newline();
-							this.drawIndent();
-							this.drawViewTag(item, ancestry);
-						}
-						this.newline();
-					} else {
-						throw err;
-					}
-				}
-			} else {
+			if (joinSameLine === undefined) {
 				for (const item of items) {
 					this.writeText(
 						"- ",
@@ -853,6 +803,58 @@ export default class Grid {
 					this.drawViewTag(item, ancestry);
 					this.newline();
 				}
+			} else {
+				this.drawULJoinSameLine(joinSameLine, items, ancestry);
+			}
+		}
+	}
+
+	private drawULJoinSameLine(joinSameLine: string, items: MarkupParsedTag[], ancestry: Ancestry) {
+		// If we have no grid size then we default to 500. We do this to prevent drawing super long lines when the intent
+		// of this attribute is to reduce excessive newlines.
+		const viewportWidth = this.viewportWidth ?? new OneIndexed(150);
+		const subViewport = viewportWidth.subtract(this.cursor.column);
+
+		const grid = new Grid({
+			...this.options,
+			columns: subViewport,
+			throwOnNewline: true,
+		});
+
+		try {
+			// Draw items separated by the provided attribute
+			for (let i = 0; i < items.length; i++) {
+				const item = items[i];
+				grid.drawTag(item, ancestry);
+				if (i !== items.length - 1) {
+					grid.drawText(
+						{
+							type: "Text",
+							source: false,
+							value: joinSameLine,
+						},
+						ancestry,
+					);
+				}
+			}
+
+			// Didn't error so we must be able to fit on the same line!
+			this.drawGrid(grid);
+			this.moveCursor({
+				line: this.cursor.line,
+				column: this.cursor.column.add(grid.width),
+			});
+		} catch (err) {
+			if (err instanceof GridAddedNewline) {
+				// Cannot fit on a newline so indent and draw the rest of the items
+				for (const item of items) {
+					this.newline();
+					this.drawIndent();
+					this.drawViewTag(item, ancestry);
+				}
+				this.newline();
+			} else {
+				throw err;
 			}
 		}
 	}
