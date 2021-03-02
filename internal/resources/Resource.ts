@@ -102,7 +102,7 @@ export default class Resource {
       }));
     }
     
-    await Promise.allSettled(promises);
+    await Promise.all(promises);
 
     // Remove ourselves from resources we've been added as a dependency to
     for (const owner of this.owners) {

@@ -53,7 +53,7 @@ export default class Event<Param, Ret = void> {
 		if (this.rootSubscription !== undefined) {
 			promises.push(this.rootSubscription.resource.release());
 		}
-		await Promise.allSettled(promises);
+		await Promise.all(promises);
 		this.subscriptions.clear();
 		this.rootSubscription = undefined;
 	}
