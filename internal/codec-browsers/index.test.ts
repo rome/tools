@@ -23,6 +23,13 @@ const promise = createFixtureTests(async (fixture, t) => {
 		inputFile.absolute.getExtensionlessBasename(),
 	).join();
 
+	t.namedSnapshot(
+		"tokens",
+		parser.getAllTokens(),
+		undefined,
+		{filename: outputFile},
+	);
+
 	try {
 		const parsed = parseBrowserQuery({
 			input: inputContent,
@@ -31,13 +38,6 @@ const promise = createFixtureTests(async (fixture, t) => {
 
 		const result = Array.from(resolveTargets(parsed)).map((browser) =>
 			`${browser.getId()}:${browser.getVersion()}`
-		);
-
-		t.namedSnapshot(
-			"tokens",
-			parser.getAllTokens(),
-			undefined,
-			{filename: outputFile},
 		);
 
 		t.namedSnapshot("targets", parsed, undefined, {filename: outputFile});

@@ -34,7 +34,7 @@ Array [
 	}
 	String {
 		value: "Firefox"
-		end: ZeroIndexedNumber<19>
+		end: ZeroIndexedNumber<18>
 		start: ZeroIndexedNumber<11>
 	}
 	Versions {

@@ -94,7 +94,7 @@ Array [
 	}
 	String {
 		value: "Firefox"
-		end: ZeroIndexedNumber<25>
+		end: ZeroIndexedNumber<24>
 		start: ZeroIndexedNumber<17>
 	}
 	Number {
@@ -126,7 +126,7 @@ Array [
 	}
 	String {
 		value: "Chrome"
-		end: ZeroIndexedNumber<46>
+		end: ZeroIndexedNumber<45>
 		start: ZeroIndexedNumber<39>
 	}
 	Versions {
@@ -174,7 +174,7 @@ Array [
 	}
 	String {
 		value: "BE"
-		end: ZeroIndexedNumber<88>
+		end: ZeroIndexedNumber<87>
 		start: ZeroIndexedNumber<85>
 	}
 	EOF {

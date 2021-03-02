@@ -6,12 +6,15 @@ import {ParserOptions} from "@internal/parser-core";
 export function resolveBrowsers(
 	queries: string | string[] | ParserOptions,
 ): Browser[] {
-	const opt =
-		typeof queries === "object"
-			? queries as ParserOptions
-			: {
-					input: Array.isArray(queries) ? queries.join(", ") : queries,
-				};
+	let opt: ParserOptions;
+
+	if (typeof queries === "string" || Array.isArray(queries)) {
+		opt = {
+			input: Array.isArray(queries) ? queries.join(", ") : queries,
+		};
+	} else {
+		opt = queries;
+	}
 
 	return Array.from(resolveTargets(parseBrowserQuery(opt)));
 }

@@ -1,6 +1,7 @@
 # `codec-browsers`
 
 Used to parse browser target syntax.
+Thanks to [browserslist ](https://github.com/browserslist/browserslist) for the idea and syntax.
 
 ## Usage
 
@@ -53,6 +54,7 @@ For illustration purposes, browser implementations will be shown as `<browser>:<
 	`> 5%, not chrome all` would result in all browser versions used by more than 5% but not chrome.
 
 ### Syntax
+Case insensitive.
 
 * `modern`, `default`: Rome's modern (default) browser targets (`last 2 versions, not dead`).
 * `firefox 84`: Firefox (desktop) version 84.

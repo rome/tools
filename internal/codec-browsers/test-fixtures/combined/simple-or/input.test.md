@@ -34,7 +34,7 @@ Array [
 Array [
 	String {
 		value: "Firefox"
-		end: ZeroIndexedNumber<8>
+		end: ZeroIndexedNumber<7>
 		start: ZeroIndexedNumber<0>
 	}
 	Number {
@@ -48,7 +48,7 @@ Array [
 	}
 	String {
 		value: "Chrome"
-		end: ZeroIndexedNumber<21>
+		end: ZeroIndexedNumber<20>
 		start: ZeroIndexedNumber<14>
 	}
 	Number {

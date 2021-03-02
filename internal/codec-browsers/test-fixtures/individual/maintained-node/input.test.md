@@ -31,7 +31,7 @@ Array [
 	}
 	String {
 		value: "node"
-		end: ZeroIndexedNumber<16>
+		end: ZeroIndexedNumber<15>
 		start: ZeroIndexedNumber<11>
 	}
 	Versions {

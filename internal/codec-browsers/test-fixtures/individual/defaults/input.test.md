@@ -46,7 +46,7 @@ Array [TargetBrowserPreset {preset: "modern"}]
 ```javascript
 Array [
 	Modern {
-		end: ZeroIndexedNumber<8>
+		end: ZeroIndexedNumber<15>
 		start: ZeroIndexedNumber<0>
 	}
 	EOF {

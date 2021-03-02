@@ -199,7 +199,7 @@ Array [
 Array [
 	String {
 		value: "Firefox"
-		end: ZeroIndexedNumber<8>
+		end: ZeroIndexedNumber<7>
 		start: ZeroIndexedNumber<0>
 	}
 	LE {
@@ -217,7 +217,7 @@ Array [
 	}
 	String {
 		value: "Chrome"
-		end: ZeroIndexedNumber<24>
+		end: ZeroIndexedNumber<23>
 		start: ZeroIndexedNumber<17>
 	}
 	LT {

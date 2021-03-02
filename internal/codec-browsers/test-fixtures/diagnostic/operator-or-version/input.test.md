@@ -10,7 +10,7 @@
 ___R$project$rome$$internal$diagnostics$error$wrappers_ts$DiagnosticsError {
 	name: "DiagnosticsError"
 	_memoMessage: undefined
-	_message: "Expected an operator such as \"<emphasis>></emphasis>\", \"<emphasis>\\<</emphasis>\", \"<emphasis>>=</emphasis>\", \"<emphasis>\\<=</emphasis>\" or a version"
+	_message: "Expected an operator such as \"<emphasis>></emphasis>\", \"<emphasis>\\<</emphasis>\", \"<emphasis>>=</emphasis>\", \"<emphasis>\\<=</emphasis>\" or a version."
 	suppressions: Array []
 	diagnostics: Array [
 		Object {
@@ -18,7 +18,7 @@ ___R$project$rome$$internal$diagnostics$error$wrappers_ts$DiagnosticsError {
 				advice: Array []
 				categoryValue: "browserquery"
 				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Expected an operator such as \"<emphasis>></emphasis>\", \"<emphasis>\\<</emphasis>\", \"<emphasis>>=</emphasis>\", \"<emphasis>\\<=</emphasis>\" or a version"}
+				message: RAW_MARKUP {value: "Expected an operator such as \"<emphasis>></emphasis>\", \"<emphasis>\\<</emphasis>\", \"<emphasis>>=</emphasis>\", \"<emphasis>\\<=</emphasis>\" or a version."}
 			}
 			location: Object {
 				integrity: undefined
@@ -31,4 +31,20 @@ ___R$project$rome$$internal$diagnostics$error$wrappers_ts$DiagnosticsError {
 		}
 	]
 }
+```
+
+### `tokens`
+
+```javascript
+Array [
+	String {
+		value: "firefox"
+		end: ZeroIndexedNumber<7>
+		start: ZeroIndexedNumber<0>
+	}
+	EOF {
+		end: ZeroIndexedNumber<8>
+		start: ZeroIndexedNumber<8>
+	}
+]
 ```

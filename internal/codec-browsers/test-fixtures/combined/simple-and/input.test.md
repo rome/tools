@@ -33,7 +33,7 @@ Array [
 Array [
 	String {
 		value: "Firefox"
-		end: ZeroIndexedNumber<8>
+		end: ZeroIndexedNumber<7>
 		start: ZeroIndexedNumber<0>
 	}
 	Number {

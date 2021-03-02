@@ -33,7 +33,7 @@ Array [
 	}
 	String {
 		value: "Chrome"
-		end: ZeroIndexedNumber<11>
+		end: ZeroIndexedNumber<10>
 		start: ZeroIndexedNumber<4>
 	}
 	Number {

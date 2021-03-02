@@ -63,7 +63,7 @@ Array [
 	}
 	String {
 		value: "BE"
-		end: ZeroIndexedNumber<12>
+		end: ZeroIndexedNumber<11>
 		start: ZeroIndexedNumber<9>
 	}
 	EOF {

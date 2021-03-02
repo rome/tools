@@ -10,7 +10,7 @@
 ___R$project$rome$$internal$diagnostics$error$wrappers_ts$DiagnosticsError {
 	name: "DiagnosticsError"
 	_memoMessage: undefined
-	_message: "Expected a percentage"
+	_message: "Expected a percentage."
 	suppressions: Array []
 	diagnostics: Array [
 		Object {
@@ -18,17 +18,32 @@ ___R$project$rome$$internal$diagnostics$error$wrappers_ts$DiagnosticsError {
 				advice: Array []
 				categoryValue: "browserquery"
 				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Expected a percentage"}
+				message: RAW_MARKUP {value: "Expected a percentage."}
 			}
 			location: Object {
 				integrity: undefined
 				language: "browserquery"
 				sourceText: undefined
-				end: Position 2:0
+				end: Position 1:5
 				path: RelativePath<diagnostic/percentage/input.txt>
 				start: Position 2:0
 			}
 		}
 	]
 }
+```
+
+### `tokens`
+
+```javascript
+Array [
+	Cover {
+		end: ZeroIndexedNumber<5>
+		start: ZeroIndexedNumber<0>
+	}
+	EOF {
+		end: ZeroIndexedNumber<6>
+		start: ZeroIndexedNumber<6>
+	}
+]
 ```

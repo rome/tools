@@ -10,7 +10,7 @@
 ___R$project$rome$$internal$diagnostics$error$wrappers_ts$DiagnosticsError {
 	name: "DiagnosticsError"
 	_memoMessage: undefined
-	_message: "Expected a region"
+	_message: "Expected a region."
 	suppressions: Array []
 	diagnostics: Array [
 		Object {
@@ -18,17 +18,41 @@ ___R$project$rome$$internal$diagnostics$error$wrappers_ts$DiagnosticsError {
 				advice: Array []
 				categoryValue: "browserquery"
 				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Expected a region"}
+				message: RAW_MARKUP {value: "Expected a region."}
 			}
 			location: Object {
 				integrity: undefined
 				language: "browserquery"
 				sourceText: undefined
-				end: Position 2:0
+				end: Position 1:7
 				path: RelativePath<diagnostic/region/input.txt>
 				start: Position 2:0
 			}
 		}
 	]
 }
+```
+
+### `tokens`
+
+```javascript
+Array [
+	GT {
+		end: ZeroIndexedNumber<1>
+		start: ZeroIndexedNumber<0>
+	}
+	Percentage {
+		value: 5
+		end: ZeroIndexedNumber<4>
+		start: ZeroIndexedNumber<2>
+	}
+	In {
+		end: ZeroIndexedNumber<7>
+		start: ZeroIndexedNumber<5>
+	}
+	EOF {
+		end: ZeroIndexedNumber<8>
+		start: ZeroIndexedNumber<8>
+	}
+]
 ```

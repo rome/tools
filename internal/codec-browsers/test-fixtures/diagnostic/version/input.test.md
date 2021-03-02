@@ -10,7 +10,7 @@
 ___R$project$rome$$internal$diagnostics$error$wrappers_ts$DiagnosticsError {
 	name: "DiagnosticsError"
 	_memoMessage: undefined
-	_message: "Expected a browser version"
+	_message: "Expected a browser version."
 	suppressions: Array []
 	diagnostics: Array [
 		Object {
@@ -18,17 +18,37 @@ ___R$project$rome$$internal$diagnostics$error$wrappers_ts$DiagnosticsError {
 				advice: Array []
 				categoryValue: "browserquery"
 				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Expected a browser version"}
+				message: RAW_MARKUP {value: "Expected a browser version."}
 			}
 			location: Object {
 				integrity: undefined
 				language: "browserquery"
 				sourceText: undefined
-				end: Position 2:0
+				end: Position 1:10
 				path: RelativePath<diagnostic/version/input.txt>
 				start: Position 2:0
 			}
 		}
 	]
 }
+```
+
+### `tokens`
+
+```javascript
+Array [
+	String {
+		value: "firefox"
+		end: ZeroIndexedNumber<7>
+		start: ZeroIndexedNumber<0>
+	}
+	GE {
+		end: ZeroIndexedNumber<10>
+		start: ZeroIndexedNumber<8>
+	}
+	EOF {
+		end: ZeroIndexedNumber<11>
+		start: ZeroIndexedNumber<11>
+	}
+]
 ```

@@ -7,6 +7,15 @@ import {
 import {parseBrowserQuery} from "@internal/codec-browsers/parse";
 import {dead, modern} from "@internal/codec-browsers/presets";
 
+export type TargetOperator = "GT" | "LT" | "GE" | "LE";
+export type TargetState = "current" | "unreleased" | "maintained";
+export type TargetUnit =
+	| "years"
+	| "months"
+	| "days"
+	| "versions"
+	| "majorversions";
+
 export type AnyTargetBrowser =
 	| TargetBrowser
 	| TargetBrowserState
@@ -20,69 +29,69 @@ export type AnyTargetBrowser =
 	| TargetBrowserLast
 	| TargetBrowserInversion;
 
-interface TargetBrowser {
+export interface TargetBrowser {
 	readonly type: "TargetBrowser";
 	browser: string;
 	version: number | "all";
 }
 
-interface TargetBrowserState {
+export interface TargetBrowserState {
 	readonly type: "TargetBrowserState";
 	browser?: string;
-	state: "current" | "unreleased" | "maintained";
+	state: TargetState;
 }
 
-interface TargetBrowserRange {
+export interface TargetBrowserRange {
 	readonly type: "TargetBrowserRange";
 	browser: string;
 	version: number;
 	to: number;
 }
 
-interface TargetBrowserRangeOperator {
+export interface TargetBrowserRangeOperator {
 	readonly type: "TargetBrowserRangeOperator";
 	browser: string;
 	version: number;
-	operator: "GT" | "LT" | "GE" | "LE";
+	operator: TargetOperator;
 }
 
-interface TargetBrowserPreset {
+export interface TargetBrowserPreset {
 	readonly type: "TargetBrowserPreset";
 	preset: "modern" | "dead";
 }
 
-interface TargetBrowserCombination {
+export interface TargetBrowserCombination {
 	readonly type: "TargetBrowserCombination";
 	target: AnyTargetBrowser;
 	and: AnyTargetBrowser;
 }
 
-interface TargetBrowserCoverage {
+export interface TargetBrowserCoverage {
 	readonly type: "TargetBrowserCoverage";
 	coverage: number;
 	region?: string;
 }
 
-interface TargetBrowserUsage {
+export interface TargetBrowserUsage {
 	readonly type: "TargetBrowserUsage";
 	usage: number;
-	operator: "GT" | "LT" | "GE" | "LE";
+	operator: TargetOperator;
 	region?: string;
 }
 
-interface TargetBrowserSince {
+export interface TargetBrowserSince {
 	readonly type: "TargetBrowserSince";
 	since: number;
 }
 
-interface TargetBrowserLast {
+export interface TargetBrowserLast {
 	readonly type: "TargetBrowserLast";
 	qty: number;
-	unit: "years" | "months" | "days" | "versions" | "majorversions";
+	unit: TargetUnit;
 	browser?: string;
 }
 
-interface TargetBrowserInversion {
+export interface TargetBrowserInversion {
 	readonly type: "TargetBrowserInversion";
 	target: Exclude<
 		AnyTargetBrowser,

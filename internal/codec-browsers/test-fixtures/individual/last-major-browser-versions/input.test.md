@@ -40,7 +40,7 @@ Array [
 	}
 	String {
 		value: "Firefox"
-		end: ZeroIndexedNumber<15>
+		end: ZeroIndexedNumber<14>
 		start: ZeroIndexedNumber<7>
 	}
 	MajorVersions {
