@@ -13,7 +13,7 @@ export type ValidFeatures = "width"
 | "monochrome"
 | "resolution"
 | "scan"
-| "gri"
+| "grid"
 
 export interface CSSMediaType extends NodeBaseWithComments {
 	readonly type: "CSSMediaType";

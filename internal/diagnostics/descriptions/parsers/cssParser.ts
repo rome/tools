@@ -129,6 +129,9 @@ export const cssParser = createDiagnosticsCategory({
 
 	MEDIA_QUERY_UNKNOWN_MEDIA_TYPES: {},
 	MEDIA_QUERY_UNKNOWN_MEDIA_FEATURES: {},
-	MEDIA_QUERY_UNKNOWN_MEDIA_FEATURE_VALUE: {},
+	MEDIA_QUERY_UNKNOWN_MEDIA_FEATURE_VALUE: (wrongValue: string, supportedFeatures: string[]) => ({
+		message: markup`Unknown feature provided to the media query`,
+		advice: buildSuggestionAdvice(wrongValue, supportedFeatures, { minRating: 0 })
+	}),
 	MALFORMED_MEDIA_QUERY: {},
 });
