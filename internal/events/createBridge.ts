@@ -60,8 +60,9 @@ export class BridgeFactory<
 
 	public createFromWebSocketInterface(
 		inf: WebSocketInterface,
+		opts?: BridgeOptions
 	): Bridge<ListenEvents, CallEvents, SharedEvents> {
-		const bridge = this.create();
+		const bridge = this.create(opts);
 		const {socket} = inf;
 		const rser = bridge.attachRSER();
 
@@ -96,8 +97,9 @@ export class BridgeFactory<
 
 	public createFromBrowserWebSocket(
 		socket: WebSocket,
+		opts?: BridgeOptions
 	): Bridge<ListenEvents, CallEvents, SharedEvents> {
-		const bridge = this.create();
+		const bridge = this.create(opts);
 		const rser = bridge.attachRSER();
 
 		rser.sendEvent.subscribe((buf) => {
@@ -129,8 +131,9 @@ export class BridgeFactory<
 
 	public createFromSocket(
 		socket: Socket,
+		opts?: BridgeOptions
 	): Bridge<ListenEvents, CallEvents, SharedEvents> {
-		const bridge = this.create();
+		const bridge = this.create(opts);
 		const rser = bridge.attachRSER();
 
 		rser.sendEvent.subscribe((buf) => {
@@ -178,8 +181,9 @@ export class BridgeFactory<
 
 	public createFromWorkerThread(
 		worker: workerThreads.Worker,
+		opts?: BridgeOptions,
 	): Bridge<ListenEvents, CallEvents, SharedEvents> {
-		const bridge = this.create();
+		const bridge = this.create(opts);
 		const rser = bridge.attachRSER();
 
 		rser.sendEvent.subscribe((msg) => {
@@ -221,7 +225,7 @@ export class BridgeFactory<
 		return bridge;
 	}
 
-	public createFromWorkerThreadParentPort(): Bridge<
+	public createFromWorkerThreadParentPort(opts?: BridgeOptions): Bridge<
 		ListenEvents,
 		CallEvents,
 		SharedEvents
@@ -231,7 +235,7 @@ export class BridgeFactory<
 			throw new Error("No worker_threads parentPort found");
 		}
 
-		const bridge = this.create();
+		const bridge = this.create(opts);
 		processResourceRoot.add(bridge);
 
 		const rser = bridge.attachRSER();
@@ -285,11 +289,11 @@ export class BridgeFactories<
 	public Server: BridgeFactory<ServerEvents, ClientEvents, SharedEvents>;
 	public Client: BridgeFactory<ClientEvents, ServerEvents, SharedEvents>;
 
-	public createFromLocal(): {
+	public createFromLocal(opts?: BridgeOptions): {
 		server: Bridge<ServerEvents, ClientEvents, SharedEvents>;
 		client: Bridge<ClientEvents, ServerEvents, SharedEvents>;
 	} {
-		const server = this.Server.create({ignoreHeartbeat: true});
+		const server = this.Server.create({...opts, ignoreHeartbeat: true});
 		server.sendMessageEvent.subscribe((data) => {
 			client.handleMessage(data);
 		});
@@ -297,7 +301,7 @@ export class BridgeFactories<
 			client.disconnected("Server disconnected");
 		});
 
-		const client = this.Client.create({ignoreHeartbeat: true});
+		const client = this.Client.create({...opts, ignoreHeartbeat: true});
 		client.sendMessageEvent.subscribe((data) => {
 			server.handleMessage(data);
 		});
