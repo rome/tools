@@ -105,6 +105,9 @@ export default class Worker {
 								description: {
 									category: DIAGNOSTIC_CATEGORIES["tests/unhandledRejection"],
 								},
+								tags: {
+									internal: false,
+								}
 							},
 						),
 					});
