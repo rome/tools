@@ -1,4 +1,4 @@
-/* GENERATED:START(hash:4c54e7af704a3b972adddcc5e51ba95a8b481b03,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. */
+/* GENERATED:START(hash:faf4e375ca7405d0bb228c8feccf6b11a88eff8f,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. */
 import noAriaUnsupportedElements from "./a11y/noAriaUnsupportedElements";
 import noDistractingElements from "./a11y/noDistractingElements";
 import noNoninteractiveElementToInteractiveRole from "./a11y/noNoninteractiveElementToInteractiveRole";
@@ -7,6 +7,7 @@ import noSvgWithoutTitle from "./a11y/noSvgWithoutTitle";
 import useAltText from "./a11y/useAltText";
 import useAriaProptypes from "./a11y/useAriaProptypes";
 import useHtmlLang from "./a11y/useHtmlLang";
+import useIframeTitle from "./a11y/useIframeTitle";
 import useMediaCaption from "./a11y/useMediaCaption";
 import useValidLang from "./a11y/useValidLang";
 import useClosingNonVoid from "./html/useClosingNonVoid";
@@ -70,7 +71,6 @@ import useAnchorContent from "./jsx-a11y/useAnchorContent";
 import useAriaProps from "./jsx-a11y/useAriaProps";
 import useAriaPropsForRole from "./jsx-a11y/useAriaPropsForRole";
 import useHeadingContent from "./jsx-a11y/useHeadingContent";
-import useIframeTitle from "./jsx-a11y/useIframeTitle";
 import useKeyWithClickEvents from "./jsx-a11y/useKeyWithClickEvents";
 import useKeyWithMouseEvents from "./jsx-a11y/useKeyWithMouseEvents";
 import useValidAnchor from "./jsx-a11y/useValidAnchor";
@@ -128,6 +128,7 @@ lintTransforms.set("a11y/noSvgWithoutTitle", noSvgWithoutTitle);
 lintTransforms.set("a11y/useAltText", useAltText);
 lintTransforms.set("a11y/useAriaProptypes", useAriaProptypes);
 lintTransforms.set("a11y/useHtmlLang", useHtmlLang);
+lintTransforms.set("a11y/useIframeTitle", useIframeTitle);
 lintTransforms.set("a11y/useMediaCaption", useMediaCaption);
 lintTransforms.set("a11y/useValidLang", useValidLang);
 lintTransforms.set("html/useClosingNonVoid", useClosingNonVoid);
@@ -197,7 +198,6 @@ lintTransforms.set("jsx-a11y/useAnchorContent", useAnchorContent);
 lintTransforms.set("jsx-a11y/useAriaProps", useAriaProps);
 lintTransforms.set("jsx-a11y/useAriaPropsForRole", useAriaPropsForRole);
 lintTransforms.set("jsx-a11y/useHeadingContent", useHeadingContent);
-lintTransforms.set("jsx-a11y/useIframeTitle", useIframeTitle);
 lintTransforms.set("jsx-a11y/useKeyWithClickEvents", useKeyWithClickEvents);
 lintTransforms.set("jsx-a11y/useKeyWithMouseEvents", useKeyWithMouseEvents);
 lintTransforms.set("jsx-a11y/useValidAnchor", useValidAnchor);
@@ -272,6 +272,7 @@ export const lintRuleNames: LintRuleName[] = [
 	"a11y/useAltText",
 	"a11y/useAriaProptypes",
 	"a11y/useHtmlLang",
+	"a11y/useIframeTitle",
 	"a11y/useMediaCaption",
 	"a11y/useValidLang",
 	"html/useClosingNonVoid",
@@ -335,7 +336,6 @@ export const lintRuleNames: LintRuleName[] = [
 	"jsx-a11y/useAriaProps",
 	"jsx-a11y/useAriaPropsForRole",
 	"jsx-a11y/useHeadingContent",
-	"jsx-a11y/useIframeTitle",
 	"jsx-a11y/useKeyWithClickEvents",
 	"jsx-a11y/useKeyWithMouseEvents",
 	"jsx-a11y/useValidAnchor",
@@ -390,6 +390,7 @@ export type LintRuleName =
 	| "a11y/useAltText"
 	| "a11y/useAriaProptypes"
 	| "a11y/useHtmlLang"
+	| "a11y/useIframeTitle"
 	| "a11y/useMediaCaption"
 	| "a11y/useValidLang"
 	| "html/useClosingNonVoid"
@@ -453,7 +454,6 @@ export type LintRuleName =
 	| "jsx-a11y/useAriaProps"
 	| "jsx-a11y/useAriaPropsForRole"
 	| "jsx-a11y/useHeadingContent"
-	| "jsx-a11y/useIframeTitle"
 	| "jsx-a11y/useKeyWithClickEvents"
 	| "jsx-a11y/useKeyWithMouseEvents"
 	| "jsx-a11y/useValidAnchor"

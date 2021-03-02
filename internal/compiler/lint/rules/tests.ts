@@ -12,7 +12,7 @@ type Tests = Dict<{
 	cases: Test | (Test[]) | (Test[][]);
 }>;
 
-/* GENERATED:START(hash:dc6d907fbe31d034b0e660cd5366c15b40b3c20f,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. */
+/* GENERATED:START(hash:7c338129a77fa5641ec09fc8d7de4672265d412c,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. */
 // @ts-ignore
 import noAriaUnsupportedElements from "./a11y/noAriaUnsupportedElements.test.rjson";
 // @ts-ignore
@@ -29,6 +29,8 @@ import useAltText from "./a11y/useAltText.test.rjson";
 import useAriaProptypes from "./a11y/useAriaProptypes.test.rjson";
 // @ts-ignore
 import useHtmlLang from "./a11y/useHtmlLang.test.rjson";
+// @ts-ignore
+import useIframeTitle from "./a11y/useIframeTitle.test.rjson";
 // @ts-ignore
 import useMediaCaption from "./a11y/useMediaCaption.test.rjson";
 // @ts-ignore
@@ -154,8 +156,6 @@ import useAriaPropsForRole from "./jsx-a11y/useAriaPropsForRole.test.rjson";
 // @ts-ignore
 import useHeadingContent from "./jsx-a11y/useHeadingContent.test.rjson";
 // @ts-ignore
-import useIframeTitle from "./jsx-a11y/useIframeTitle.test.rjson";
-// @ts-ignore
 import useKeyWithClickEvents from "./jsx-a11y/useKeyWithClickEvents.test.rjson";
 // @ts-ignore
 import useKeyWithMouseEvents from "./jsx-a11y/useKeyWithMouseEvents.test.rjson";
@@ -266,6 +266,10 @@ export const tests: Tests = {
 	"a11y/useHtmlLang": {
 		category: ["lint", "a11y", "useHtmlLang"],
 		cases: useHtmlLang,
+	},
+	"a11y/useIframeTitle": {
+		category: ["lint", "a11y", "useIframeTitle"],
+		cases: useIframeTitle,
 	},
 	"a11y/useMediaCaption": {
 		category: ["lint", "a11y", "useMediaCaption"],
@@ -514,10 +518,6 @@ export const tests: Tests = {
 	"jsx-a11y/useHeadingContent": {
 		category: ["lint", "jsx-a11y", "useHeadingContent"],
 		cases: useHeadingContent,
-	},
-	"jsx-a11y/useIframeTitle": {
-		category: ["lint", "jsx-a11y", "useIframeTitle"],
-		cases: useIframeTitle,
 	},
 	"jsx-a11y/useKeyWithClickEvents": {
 		category: ["lint", "jsx-a11y", "useKeyWithClickEvents"],

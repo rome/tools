@@ -1,0 +1,31 @@
+[
+	{
+		filename: "file.tsx"
+		invalid: [
+			"<iframe />"
+			"<iframe {...props} />"
+			"<iframe title=\"\" />"
+			"<iframe title={\"\"} />"
+			"<iframe title={``} />"
+			"<iframe title={undefined} />"
+			"<iframe title={false} />"
+			"<iframe title={true} />"
+			"<iframe title={42} />"
+	]
+		valid: [
+			"<iframe title='title' />"
+			"<Iframe title='title' />"
+	]
+}
+	{
+		filename: "file.html"
+		invalid: [
+			"<iframe></iframe>"
+			"<iframe title=\"\"></iframe>"
+	]
+		valid: [
+			"<iframe title=\"Tour\"></iframe>"
+			"<iframe title=\"Camping\"></iframe>"
+	]
+}
+]
