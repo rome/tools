@@ -6,7 +6,7 @@
  */
 
 import {StructuredError} from "@internal/errors";
-import {AnyMarkups} from "@internal/markup";
+import {Markup} from "@internal/markup";
 import {RSERObject, RSERValue} from "@internal/binary-transport";
 import {Dict, VoidCallback} from "@internal/typescript-helpers";
 import {
@@ -124,7 +124,7 @@ export type EventOptions = {
 export type EventSubscriptionOptions = {};
 
 export type BridgeHeartbeatExceededOptions = {
-	summary: AnyMarkups;
+	summary: Markup[];
 	attempts: number;
 	totalTime: Duration;
 };

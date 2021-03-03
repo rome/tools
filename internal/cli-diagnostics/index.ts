@@ -7,7 +7,7 @@
 
 import {
 	DiagnosticSuppressions,
-	Diagnostics,
+	Diagnostic,
 	DiagnosticsProcessor,
 } from "@internal/diagnostics";
 import {DiagnosticsPrinterOptions} from "./types";
@@ -32,7 +32,7 @@ export async function printDiagnostics(
 		printerOptions,
 		excludeFooter,
 	}: {
-		diagnostics: Diagnostics;
+		diagnostics: Diagnostic[];
 		suppressions: DiagnosticSuppressions;
 		printerOptions: DiagnosticsPrinterOptions;
 		excludeFooter?: boolean;
@@ -49,7 +49,7 @@ export async function printDiagnostics(
 
 export async function printDiagnosticsToString(
 	opts: {
-		diagnostics: Diagnostics;
+		diagnostics: Diagnostic[];
 		suppressions: DiagnosticSuppressions;
 		printerOptions?: Partial<DiagnosticsPrinterOptions>;
 		format?: ReporterStream["format"];

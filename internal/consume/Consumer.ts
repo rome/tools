@@ -10,10 +10,9 @@ import {
 	DiagnosticAdvice,
 	DiagnosticDescriptionOptional,
 	DiagnosticLocation,
-	Diagnostics,
 	DiagnosticsError,
 	catchDiagnosticsSync,
-	createSingleDiagnosticError,
+	createSingleDiagnosticsError,
 	descriptions,
 } from "@internal/diagnostics";
 import {
@@ -47,7 +46,7 @@ import {
 } from "./types";
 import {SourceLocation, UNKNOWN_POSITION} from "@internal/parser-core";
 import {
-	AnyIndexedNumber,
+	IndexedNumber,
 	OneIndexed,
 	ZeroIndexed,
 	isIndexedNumberish,
@@ -117,9 +116,9 @@ export default class Consumer {
 	public capture(): {
 		consumer: Consumer;
 		definitions: ConsumePropertyDefinition[];
-		diagnostics: Diagnostics;
+		diagnostics: Diagnostic[];
 	} {
-		let diagnostics: Diagnostics = [];
+		let diagnostics: Diagnostic[] = [];
 		const definitions: ConsumePropertyDefinition[] = [];
 
 		const consumer = this.cloneConsumer({
@@ -452,7 +451,7 @@ export default class Consumer {
 			},
 		};
 
-		const err = createSingleDiagnosticError(diagnostic);
+		const err = createSingleDiagnosticsError(diagnostic);
 
 		if (this.handleUnexpected === undefined) {
 			throw err;
@@ -1337,11 +1336,11 @@ export default class Consumer {
 
 	public asNumberInRange(
 		opts: {
-			min?: number | AnyIndexedNumber;
-			max?: number | AnyIndexedNumber;
-			default?: number | AnyIndexedNumber;
+			min?: number | IndexedNumber;
+			max?: number | IndexedNumber;
+			default?: number | IndexedNumber;
 		},
-	): number | AnyIndexedNumber {
+	): number | IndexedNumber {
 		const min = opts.min === undefined ? undefined : opts.min.valueOf();
 		const max = opts.max === undefined ? undefined : opts.max.valueOf();
 		const def = opts.default === undefined ? undefined : opts.default.valueOf();

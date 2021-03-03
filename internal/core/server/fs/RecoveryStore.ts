@@ -9,9 +9,9 @@ import {Dict} from "@internal/typescript-helpers";
 import {json} from "@internal/codec-config";
 import {
 	DiagnosticLocation,
-	Diagnostics,
+	Diagnostic,
 	catchDiagnostics,
-	createSingleDiagnosticError,
+	createSingleDiagnosticsError,
 	descriptions,
 } from "@internal/diagnostics";
 import {markup} from "@internal/markup";
@@ -198,11 +198,11 @@ export default class RecoveryStore {
 	}
 
 	public async getAllStores(): Promise<{
-		diagnostics: Diagnostics;
+		diagnostics: Diagnostic[];
 		stores: RecoveryDiskStore[];
 	}> {
 		const stores: RecoveryDiskStore[] = [];
-		let diagnostics: Diagnostics = [];
+		let diagnostics: Diagnostic[] = [];
 
 		for (const path of await this.readRecoveryDirectory()) {
 			const {diagnostics: storeDiagnostics} = await catchDiagnostics(async () => {
@@ -228,7 +228,7 @@ export default class RecoveryStore {
 			if (location === undefined) {
 				throw new Error(`Recovery store ${storeId} not found`);
 			} else {
-				throw createSingleDiagnosticError({
+				throw createSingleDiagnosticsError({
 					description: descriptions.RECOVERY_STORE.NOT_FOUND(storeId),
 					location,
 				});

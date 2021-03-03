@@ -208,8 +208,17 @@ export default class Duration {
 
 	public format({longform = false}: FormatOptions = {}): string {
 		const ms = this.toMilliseconds();
-		if (ms === 0 || ms < 1_000) {
-			return formatUnit("milliseconds", 0, longform);
+
+		// Show milliseconds if:
+		// - we took less than 100 milliseconds
+		// - less than a second, and would have reduced precision if formatted as a second decimal
+		if (ms < 100 || (ms < 1_000 && ms % 10 > 0)) {
+			return formatUnit("milliseconds", ms, longform);
+		}
+
+		// We display seconds when it's zero as it's shorter and more easily understood
+		if (ms === 0) {
+			return formatUnit("seconds", 0, longform);
 		}
 
 		let parts: string[] = [];

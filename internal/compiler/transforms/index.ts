@@ -7,11 +7,11 @@
 
 import {ProjectConfig} from "@internal/project";
 import {
-	AnyVisitors,
+	AnyVisitor,
 	CompilerOptions,
 	TransformStageFactories,
 	TransformStageName,
-	Transforms,
+	Transform,
 } from "../types";
 import classProperties from "./compile/transpile/classProperties";
 import paramlessCatch from "./compile/transpile/paramlessCatch";
@@ -43,7 +43,7 @@ export const stageOrder: TransformStageName[] = [
 	"compileForBundle",
 ];
 
-export const helperVisitors: AnyVisitors = [
+export const helperVisitors: AnyVisitor[] = [
 	variableInjectorVisitor,
 	commentInjectorVisitor,
 ];
@@ -67,7 +67,7 @@ export const stageTransforms: TransformStageFactories = {
 			throw new Error("Expected bundle options for compileForBundle stage");
 		}
 
-		const transforms: Transforms = [];
+		const transforms: Transform[] = [];
 
 		if (opts.assetPath !== undefined) {
 			transforms.push(assetTransform);

@@ -8,7 +8,7 @@
 import {CheckProvider} from "../types";
 import {
 	DiagnosticAdvice,
-	Diagnostics,
+	Diagnostic,
 	descriptions,
 } from "@internal/diagnostics";
 import {JSRoot} from "@internal/ast";
@@ -25,7 +25,7 @@ export default async function check(
 		project?: CompilerProject;
 		provider: CheckProvider;
 	},
-): Promise<Diagnostics> {
+): Promise<Diagnostic[]> {
 	const hub = await buildGraph({
 		ast: opts.ast,
 		connected: true,
@@ -40,7 +40,7 @@ function isError(t: undefined | T): boolean {
 	return t !== undefined && t instanceof E;
 }
 
-function resolveGraph(hub: Hub): Diagnostics {
+function resolveGraph(hub: Hub): Diagnostic[] {
 	const {graph, utils, context} = hub;
 
 	// we track caught errors here as if a normal type returns a error in it's reduce() method

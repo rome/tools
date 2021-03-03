@@ -9,10 +9,10 @@ import {
 	Diagnostic,
 	DiagnosticAdvice,
 	DiagnosticAdviceItem,
-	DiagnosticDependencies,
 	DiagnosticDescription,
 	DiagnosticLocation,
 	DiagnosticSuppression,
+	DiagnosticDependency,
 	DiagnosticTags,
 } from "./types";
 import {SourceMapConsumerCollection} from "@internal/codec-source-map";
@@ -262,8 +262,8 @@ export default class DiagnosticsNormalizer {
 	}
 
 	private normalizeDependencies(
-		deps: DiagnosticDependencies,
-	): DiagnosticDependencies {
+		deps: DiagnosticDependency[],
+	): DiagnosticDependency[] {
 		return maybeMap(
 			deps,
 			(dep) => {

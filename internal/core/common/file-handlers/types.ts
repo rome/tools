@@ -11,7 +11,7 @@ import {
 	DiagnosticIntegrity,
 	DiagnosticLanguage,
 	DiagnosticSuppressions,
-	Diagnostics,
+	Diagnostic,
 } from "@internal/diagnostics";
 import {AnyRoot, ConstJSSourceType} from "@internal/ast";
 import {Path} from "@internal/path";
@@ -20,7 +20,7 @@ import {WorkerIntegrationTimings} from "@internal/core/worker/types";
 export interface ExtensionCustomLintResult {
 	mtimeNs: bigint;
 	sourceText: string;
-	diagnostics: Diagnostics;
+	diagnostics: Diagnostic[];
 	formatted: string;
 	suppressions: DiagnosticSuppressions;
 }

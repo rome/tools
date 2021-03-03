@@ -6,7 +6,7 @@
  */
 
 import {ansiEscapes} from "@internal/cli-layout";
-import {AnyMarkup, StaticMarkup, joinMarkup, markup} from "@internal/markup";
+import {Markup, StaticMarkup, joinMarkup, markup} from "@internal/markup";
 import Reporter from "./Reporter";
 import {
 	SelectArguments,
@@ -26,7 +26,7 @@ function formatShortcut({shortcut}: SelectOption): StaticMarkup {
 
 export default async function select<Options extends SelectOptions>(
 	reporter: Reporter,
-	message: AnyMarkup,
+	message: Markup,
 	{
 		options,
 		defaults = [],

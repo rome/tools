@@ -10,7 +10,7 @@ import {createClient} from "@internal/codec-websocket";
 import TestServer from "@internal/core/server/testing/TestServer";
 import {
 	DIAGNOSTIC_CATEGORIES,
-	createSingleDiagnosticError,
+	createSingleDiagnosticsError,
 	deriveDiagnosticFromErrorStructure,
 } from "@internal/diagnostics";
 import {markup} from "@internal/markup";
@@ -199,7 +199,7 @@ export default class TestServerWorker {
 		}
 
 		await bridge.endWithError(
-			createSingleDiagnosticError(
+			createSingleDiagnosticsError(
 				deriveDiagnosticFromErrorStructure(
 					{
 						name: "Error",

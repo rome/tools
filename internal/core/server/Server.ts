@@ -15,7 +15,7 @@ import {
 import {
 	DIAGNOSTIC_CATEGORIES,
 	DiagnosticOrigin,
-	Diagnostics,
+	Diagnostic,
 	DiagnosticsProcessor,
 	descriptions,
 } from "@internal/diagnostics";
@@ -441,7 +441,7 @@ export default class Server {
 		return mergeProgresses(progresses);
 	}
 
-	private async handleDisconnectedDiagnostics(diagnostics: Diagnostics) {
+	private async handleDisconnectedDiagnostics(diagnostics: Diagnostic[]) {
 		const reporter = this.getImportantReporter();
 
 		reporter.error(markup`Generated diagnostics without a current request`);

@@ -29,7 +29,7 @@ export default class FatalErrorHandler {
 
 	private options: FatalErrorHandlerOptions;
 
-	public wrapPromise(promise: Promise<unknown>) {
+	public wrapPromise(promise: Promise<unknown>): void {
 		promise.catch(this.handleBound);
 	}
 

@@ -17,18 +17,17 @@ import {
 } from "./types";
 import {
 	DIAGNOSTIC_CATEGORIES,
-	Diagnostic,
 	DiagnosticCategory,
 	DiagnosticDescription,
 	DiagnosticFilter,
 	DiagnosticIntegrity,
 	DiagnosticLanguage,
 	DiagnosticLocation,
-	Diagnostics,
+	Diagnostic,
 	DiagnosticsError,
 	DiagnosticsProcessor,
 	catchDiagnosticsSync,
-	createSingleDiagnosticError,
+	createSingleDiagnosticsError,
 	descriptions,
 	joinCategoryName,
 } from "@internal/diagnostics";
@@ -48,7 +47,7 @@ export type ParserCoreState = {
 	leadingComments: AnyComment[];
 	commentStack: AnyNode[];
 	commentPreviousNode: undefined | AnyNode;
-	diagnostics: Diagnostics;
+	diagnostics: Diagnostic[];
 	diagnosticFilters: DiagnosticFilter[];
 	corrupt: boolean;
 };
@@ -456,7 +455,7 @@ export default class ParserCore<Types extends ParserCoreTypes> {
 
 	// Return an error to indicate a parser error, this must be thrown at the callsite for refinement
 	public unexpected(opts: ParserUnexpectedOptions = {}): DiagnosticsError {
-		return createSingleDiagnosticError(this.createDiagnostic(opts));
+		return createSingleDiagnosticsError(this.createDiagnostic(opts));
 	}
 
 	public unexpectedDiagnostic(opts: ParserUnexpectedOptions = {}) {
@@ -788,7 +787,7 @@ export default class ParserCore<Types extends ParserCoreTypes> {
 
 	//# Diagnostics
 
-	public getDiagnostics(): Diagnostics {
+	public getDiagnostics(): Diagnostic[] {
 		const processor = new DiagnosticsProcessor({
 			origins: [
 				{
@@ -815,7 +814,7 @@ export default class ParserCore<Types extends ParserCoreTypes> {
 		this.state.diagnosticFilters.push(diag);
 	}
 
-	public addCompleteDiagnostic(diags: Diagnostics) {
+	public addCompleteDiagnostic(diags: Diagnostic[]) {
 		this.state.diagnostics = [...this.state.diagnostics, ...diags];
 	}
 

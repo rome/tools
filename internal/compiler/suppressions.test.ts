@@ -13,7 +13,7 @@ import * as signals from "./signals";
 import {
 	DIAGNOSTIC_CATEGORIES,
 	DiagnosticSuppressions,
-	Diagnostics,
+	Diagnostic,
 	equalCategoryNames,
 } from "@internal/diagnostics";
 
@@ -21,7 +21,7 @@ function extractSuppressionsFromSource(
 	sourceText: string,
 ): {
 	suppressions: DiagnosticSuppressions;
-	diagnostics: Diagnostics;
+	diagnostics: Diagnostic[];
 } {
 	const ast = parseJS({
 		sourceType: "script",

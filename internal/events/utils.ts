@@ -7,7 +7,7 @@
 
 import {
 	DIAGNOSTIC_CATEGORIES,
-	isDiagnosticErrorOfCategory,
+	isDiagnosticsErrorOfCategory,
 } from "@internal/diagnostics";
 import {
 	BridgeMessage,
@@ -15,15 +15,15 @@ import {
 	BridgeResponseMessage,
 } from "./types";
 
-export function isBridgeClosedDiagnosticError(err: Error): boolean {
-	return isDiagnosticErrorOfCategory(
+export function isBridgeClosedDiagnosticsError(err: Error): boolean {
+	return isDiagnosticsErrorOfCategory(
 		err,
 		DIAGNOSTIC_CATEGORIES["bridge/closed"],
 	);
 }
 
-export function isBridgeDisconnectedDiagnosticError(err: Error): boolean {
-	return isDiagnosticErrorOfCategory(
+export function isBridgeDisconnectedDiagnosticsError(err: Error): boolean {
+	return isDiagnosticsErrorOfCategory(
 		err,
 		DIAGNOSTIC_CATEGORIES["bridge/disconnected"],
 	);

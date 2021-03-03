@@ -11,7 +11,7 @@ import {AbsoluteFilePathMap} from "@internal/path";
 import {
 	Diagnostic,
 	catchDiagnosticsSync,
-	createSingleDiagnosticError,
+	createSingleDiagnosticsError,
 	descriptions,
 } from "@internal/diagnostics";
 import {convertManifestToJSON} from "@internal/codec-js-manifest";
@@ -103,7 +103,7 @@ export default createServerCommand<Flags>({
 					description: descriptions.PROJECT_MANAGER.INITING_SENSITIVE(cwd),
 					location: req.getDiagnosticLocationFromFlags("cwd"),
 				};
-				throw createSingleDiagnosticError(diagnostic);
+				throw createSingleDiagnosticsError(diagnostic);
 			}
 
 			// Don't allow if we're already in a project

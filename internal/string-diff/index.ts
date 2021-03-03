@@ -32,8 +32,6 @@
 
 export type Diff = [-1 | 0 | 1, string];
 
-export type Diffs = Diff[];
-
 type HalfMatch = undefined | [string, string, string, string, string];
 
 /**
@@ -59,14 +57,14 @@ export type UnifiedDiff = {
 export type GroupDiffsLine = {
 	beforeLine?: number;
 	afterLine?: number;
-	diffs: Diffs;
+	diffs: Diff[];
 };
 
 export function generateLineKey(beforeLine?: number, afterLine?: number) {
 	return `${beforeLine || ""}:${afterLine || ""}`;
 }
 
-export function stringDiffUnified(rawDiffs: Diffs): UnifiedDiff {
+export function stringDiffUnified(rawDiffs: Diff[]): UnifiedDiff {
 	const modifiedLines: Set<string> = new Set();
 	const insertedLines: Map<string, GroupDiffsLine> = new Map();
 	const beforeLineToAfter: Map<number, number> = new Map();
@@ -246,7 +244,7 @@ export function stringDiffUnified(rawDiffs: Diffs): UnifiedDiff {
 	};
 }
 
-export default function stringDiff(text1: string, text2: string): Diffs {
+export default function stringDiff(text1: string, text2: string): Diff[] {
 	// only pass fix_unicode=true at the top level, not when main is
 	// recursively invoked
 	return main(text1, text2, true);
@@ -264,7 +262,7 @@ export function main(
 	text1: string,
 	text2: string,
 	fixUnicode: boolean = false,
-): Diffs {
+): Diff[] {
 	// Check for equality
 	if (text1 === text2) {
 		if (text1) {
@@ -306,8 +304,8 @@ export function main(
  * @param {string} text2 New string to be diffed.
  * @return {Array} Array of diff tuples.
  */
-function compute(text1: string, text2: string): Diffs {
-	let diffs: Diffs = [];
+function compute(text1: string, text2: string): Diff[] {
+	let diffs: Diff[] = [];
 
 	if (!text1) {
 		// Just add some text (speedup).
@@ -352,8 +350,8 @@ function compute(text1: string, text2: string): Diffs {
 		let text2B = hm[3];
 		let midCommon = hm[4];
 		// Send both pairs off for separate processing.
-		let diffsA: Diffs = main(text1A, text2A);
-		let diffsB: Diffs = main(text1B, text2B);
+		let diffsA: Diff[] = main(text1A, text2A);
+		let diffsB: Diff[] = main(text1B, text2B);
 		// Merge the results.
 		return diffsA.concat([[DIFF_EQUAL, midCommon]], diffsB);
 	}
@@ -370,7 +368,7 @@ function compute(text1: string, text2: string): Diffs {
  * @return {Array} Array of diff tuples.
  * @private
  */
-export function bisect(text1: string, text2: string): Diffs {
+export function bisect(text1: string, text2: string): Diff[] {
 	// Cache the text lengths to prevent multiple calls.
 	let text1Length = text1.length;
 	let text2Length = text2.length;
@@ -495,7 +493,7 @@ export function bisect(text1: string, text2: string): Diffs {
  * @param {number} y Index of split point in text2.
  * @return {Array} Array of diff tuples.
  */
-function bisectSplit(text1: string, text2: string, x: number, y: number): Diffs {
+function bisectSplit(text1: string, text2: string, x: number, y: number): Diff[] {
 	let text1A = text1.substring(0, x);
 	let text2A = text2.substring(0, y);
 	let text1B = text1.substring(x);
@@ -713,7 +711,7 @@ function halfMatchI(
  * @param {Array} diffs Array of diff tuples.
  * @param {boolean} fix_unicode Whether to normalize to a unicode-correct diff
  */
-export function cleanupMerge(diffs: Diffs, fixUnicode: boolean) {
+export function cleanupMerge(diffs: Diff[], fixUnicode: boolean) {
 	diffs.push([DIFF_EQUAL, ""]); // Add a dummy entry at the end.
 	let pointer = 0;
 	let countDelete = 0;

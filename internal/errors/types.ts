@@ -29,5 +29,3 @@ export type ErrorFrame = {
 	isConstructor: boolean;
 	resolvedLocation: boolean;
 };
-
-export type ErrorFrames = ErrorFrame[];

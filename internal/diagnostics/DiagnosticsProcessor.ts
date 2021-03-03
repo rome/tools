@@ -11,7 +11,6 @@ import {
 	DiagnosticOrigin,
 	DiagnosticSuppression,
 	DiagnosticSuppressions,
-	Diagnostics,
 } from "./types";
 import {addOriginsToDiagnostics} from "./derive";
 import {DiagnosticsError} from "./error-wrappers";
@@ -59,8 +58,8 @@ type DiagnosticsMap = MixedPathMap<DiagnosticsMapEntry>;
 
 type CalculatedDiagnostics = {
 	suppressions: DiagnosticSuppressions;
-	guaranteed: Diagnostics;
-	complete: Diagnostics;
+	guaranteed: Diagnostic[];
+	complete: Diagnostic[];
 };
 
 type DiagnosticVisibility = "hidden" | "guaranteed" | "maybe";
@@ -144,7 +143,7 @@ export default class DiagnosticsProcessor {
 
 	public normalizer: DiagnosticsNormalizer;
 	public insertDiagnosticsEvent: Event<void>;
-	public guaranteedDiagnosticsEvent: Event<Diagnostics>;
+	public guaranteedDiagnosticsEvent: Event<Diagnostic[]>;
 	public modifiedDiagnosticsForPathEvent: Event<Path>;
 
 	private sourceMaps: SourceMapConsumerCollection;
@@ -154,7 +153,7 @@ export default class DiagnosticsProcessor {
 	private origins: DiagnosticOrigin[];
 
 	private map: DiagnosticsMap;
-	private cachedFlatDiagnostics: undefined | Diagnostics;
+	private cachedFlatDiagnostics: undefined | Diagnostic[];
 	private possibleCount: number;
 
 	private getMapEntry(path: Path): DiagnosticsMapEntry {
@@ -246,7 +245,7 @@ export default class DiagnosticsProcessor {
 	public addFilters(filters: DiagnosticFilterWithTest[]) {
 		if (this.map.size > 0) {
 			throw new Error(
-				"DiagnosticProcessor: Filters cannot be added after diagnostics already injected",
+				"DiagnosticsProcessor: Filters cannot be added after diagnostics already injected",
 			);
 		}
 		this.filters = this.filters.concat(filters);
@@ -356,7 +355,7 @@ export default class DiagnosticsProcessor {
 		this.addDiagnostics([diag], origin);
 	}
 
-	public addDiagnostics(diags: Diagnostics, origin?: DiagnosticOrigin): void {
+	public addDiagnostics(diags: Diagnostic[], origin?: DiagnosticOrigin): void {
 		if (diags.length === 0) {
 			return;
 		}
@@ -373,7 +372,7 @@ export default class DiagnosticsProcessor {
 		// Normalize
 		diags = diags.map((diag) => this.normalizer.normalizeDiagnostic(diag));
 
-		let guaranteed: undefined | Diagnostics;
+		let guaranteed: undefined | Diagnostic[];
 		if (this.guaranteedDiagnosticsEvent.hasSubscriptions()) {
 			guaranteed = [];
 		}
@@ -438,7 +437,7 @@ export default class DiagnosticsProcessor {
 		}
 	}
 
-	public getAllDiagnosticsForPath(path: Path): Diagnostics {
+	public getAllDiagnosticsForPath(path: Path): Diagnostic[] {
 		const calculated = this.getDiagnosticsForPath(path, true);
 		if (calculated === undefined) {
 			return [];
@@ -460,8 +459,8 @@ export default class DiagnosticsProcessor {
 			return entry.cachedCalculated.value;
 		}
 
-		const complete: Diagnostics = [];
-		const guaranteed: Diagnostics = [];
+		const complete: Diagnostic[] = [];
+		const guaranteed: Diagnostic[] = [];
 
 		const unusedSuppressions: Set<DiagnosticSuppression> = new Set(
 			entry.suppressions,
@@ -538,13 +537,13 @@ export default class DiagnosticsProcessor {
 		}
 	}
 
-	public getDiagnostics(): Diagnostics {
+	public getDiagnostics(): Diagnostic[] {
 		const {cachedFlatDiagnostics: cachedDiagnostics} = this;
 		if (cachedDiagnostics !== undefined) {
 			return cachedDiagnostics;
 		}
 
-		let diagnostics: Diagnostics = [];
+		let diagnostics: Diagnostic[] = [];
 
 		for (const path of this.map.keys()) {
 			const pathDiagnostics = this.getDiagnosticsForPath(path);

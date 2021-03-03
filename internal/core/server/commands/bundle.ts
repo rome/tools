@@ -10,7 +10,7 @@ import {commandCategories} from "../../common/commands";
 import {createServerCommand} from "../commands";
 import Bundler from "../bundler/Bundler";
 import {Consumer} from "@internal/consume";
-import {AnyMarkup, markup} from "@internal/markup";
+import {Markup, markup} from "@internal/markup";
 import {getByteLength} from "@internal/binary";
 
 type Flags = {
@@ -70,7 +70,7 @@ export default createServerCommand<Flags>({
 		} else {
 			const {files: outFiles} = await bundler.bundleManifest(resolution);
 
-			const savedList: AnyMarkup[] = [];
+			const savedList: Markup[] = [];
 			const dir = flags.cwd.resolve(outputDirectory);
 
 			await Promise.all(

@@ -7,7 +7,7 @@
 
 import {AnyNode, AnyNodes, MOCK_PARENT} from "@internal/ast";
 import {
-	AnyVisitors,
+	AnyVisitor,
 	CompilerContext,
 	ExitSignal,
 	Scope,
@@ -26,7 +26,6 @@ import {
 	buildLintDecisionString,
 	deriveDecisionPositionKey,
 } from "../lint/decisions";
-import {AnyVisitor} from "../types";
 import {inheritLoc} from "@internal/js-ast-utils";
 
 // Can be used with referential equality to determine if paths are derivatives of each other
@@ -251,7 +250,7 @@ export default class CompilerPath {
 	}
 
 	public reduceNode(
-		visitors: AnyVisitor | AnyVisitors,
+		visitors: AnyVisitor | AnyVisitor[],
 		opts?: Partial<CompilerPathOptions>,
 	): AnyNodes {
 		return reduceNode(
@@ -263,7 +262,7 @@ export default class CompilerPath {
 	}
 
 	public reduceSignal(
-		visitors: AnyVisitor | AnyVisitors,
+		visitors: AnyVisitor | AnyVisitor[],
 		opts?: Partial<CompilerPathOptions>,
 	): ExitSignal {
 		return reduceSignal(

@@ -13,13 +13,12 @@ import {ProfilingStartData, ServerBridgeLog} from "./ServerBridge";
 import {
 	Diagnostic,
 	DiagnosticOrigin,
-	Diagnostics,
 	DiagnosticsError,
 } from "@internal/diagnostics";
 import {BridgeErrorDetails, createBridge} from "@internal/events";
 import {FileReference} from "../types/files";
 import {
-	InlineSnapshotUpdates,
+	InlineSnapshotUpdate,
 	SnapshotEntry,
 } from "@internal/core/worker/test/SnapshotManager";
 import {
@@ -65,7 +64,7 @@ export default createBridge({
 		testInlineSnapshots: createBridgeEventDeclaration<
 			{
 				testPath: AbsoluteFilePath;
-				updates: InlineSnapshotUpdates;
+				updates: InlineSnapshotUpdate[];
 			},
 			void
 		>(),
@@ -178,7 +177,7 @@ export default createBridge({
 		updateInlineSnapshots: createBridgeEventDeclaration<
 			{
 				ref: FileReference;
-				updates: InlineSnapshotUpdates;
+				updates: InlineSnapshotUpdate[];
 				parseOptions: WorkerParseOptions;
 			},
 			WorkerUpdateInlineSnapshotResult
@@ -298,7 +297,7 @@ export default createBridge({
 		);
 
 		bridge.addCustomErrorTransport<{
-			diagnostics: Diagnostics;
+			diagnostics: Diagnostic[];
 		}>(
 			"DiagnosticsError",
 			{

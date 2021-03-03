@@ -5,7 +5,7 @@ import {
 } from "@internal/path";
 import {TestConsoleAdvice} from "@internal/core/worker/test/TestWorkerFile";
 import SnapshotManager, {
-	InlineSnapshotUpdates,
+	InlineSnapshotUpdate,
 	SnapshotEntry,
 } from "@internal/core/worker/test/SnapshotManager";
 import {BundleResult, FileReference, ServerRequest} from "@internal/core";
@@ -68,7 +68,7 @@ export default class TestServerFile {
 	private pendingTests: Set<string>;
 	private request: ServerRequest;
 	private runner: TestServer;
-	private inlineSnapshotUpdates: InlineSnapshotUpdates;
+	private inlineSnapshotUpdates: InlineSnapshotUpdate[];
 	private snapshots: AbsoluteFilePathMap<SnapshotEntry[]>;
 	private diskSnapshotsToWorker: AbsoluteFilePathMap<TestServerWorker>;
 
@@ -119,7 +119,7 @@ export default class TestServerFile {
 		entries.push(entry);
 	}
 
-	public addInlineSnapshotUpdates(updates: InlineSnapshotUpdates) {
+	public addInlineSnapshotUpdates(updates: InlineSnapshotUpdate[]) {
 		this.inlineSnapshotUpdates = [...this.inlineSnapshotUpdates, ...updates];
 	}
 

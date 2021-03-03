@@ -19,7 +19,7 @@ import {
 import {htmlHandler} from "./html";
 import {
 	DiagnosticLanguage,
-	createSingleDiagnosticError,
+	createSingleDiagnosticsError,
 	descriptions,
 } from "@internal/diagnostics";
 import {markdownHandler} from "@internal/core/common/file-handlers/markdown";
@@ -97,7 +97,7 @@ export function getFileHandlerFromPathAssert(
 	const {handler, ext} = getFileHandlerFromPath(path, projectConfig);
 
 	if (handler === undefined) {
-		throw createSingleDiagnosticError({
+		throw createSingleDiagnosticsError({
 			description: descriptions.FILES.NO_FILE_HANDLER(path),
 			location: {
 				path,

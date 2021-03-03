@@ -14,7 +14,7 @@ import {
 import setProcessTitle from "./utils/setProcessTitle";
 import net = require("net");
 import {loadUserConfig} from "@internal/core/common/userConfig";
-import {isBridgeDisconnectedDiagnosticError} from "@internal/events";
+import {isBridgeDisconnectedDiagnosticsError} from "@internal/events";
 
 export default async function server() {
 	setProcessTitle("server");
@@ -34,7 +34,7 @@ export default async function server() {
 		server.fatalErrorHandler.wrapPromise(
 			server.attachToBridge(bridge).catch((err) => {
 				// Ignore bridge disconnect errors
-				if (!isBridgeDisconnectedDiagnosticError(err)) {
+				if (!isBridgeDisconnectedDiagnosticsError(err)) {
 					throw err;
 				}
 			}),

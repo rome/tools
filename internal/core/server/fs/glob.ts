@@ -5,7 +5,7 @@ import {
 } from "@internal/project";
 import {Server, ServerRequest} from "@internal/core";
 import {
-	PathPatterns,
+	PathPattern,
 	matchPathPatterns,
 	parsePathPattern,
 } from "@internal/path-match";
@@ -13,9 +13,9 @@ import MemoryFileSystem from "@internal/core/server/fs/MemoryFileSystem";
 import {GlobalLock} from "@internal/async";
 import {Resource} from "@internal/resources";
 
-const GLOB_IGNORE: PathPatterns = [parsePathPattern({input: "node_modules"})];
+const GLOB_IGNORE: PathPattern[] = [parsePathPattern({input: "node_modules"})];
 
-function concatGlobIgnore(patterns: PathPatterns): PathPatterns {
+function concatGlobIgnore(patterns: PathPattern[]): PathPattern[] {
 	// If there are any negate patterns then it'll never include GLOB_IGNORE
 	for (const pattern of patterns) {
 		if (pattern.type === "PathPattern" && pattern.negate) {
@@ -29,7 +29,7 @@ function concatGlobIgnore(patterns: PathPatterns): PathPatterns {
 export interface GlobOptions {
 	args: Iterable<AbsoluteFilePath>;
 	extensions?: string[];
-	overrideIgnore?: PathPatterns;
+	overrideIgnore?: PathPattern[];
 	configCategory?: ProjectConfigCategoriesWithIgnore;
 	test?: (path: AbsoluteFilePath) => boolean;
 	onWatch?: (resource: Resource) => void;
@@ -54,17 +54,17 @@ export class Globber {
 	}
 
 	public request: undefined | ServerRequest;
-	private ignoresByProject: WeakMap<ProjectDefinition, PathPatterns>;
+	private ignoresByProject: WeakMap<ProjectDefinition, PathPattern[]>;
 	private args: AbsoluteFilePathSet;
 	private server: Server;
 	private memoryFs: MemoryFileSystem;
 	private opts: GlobOptions;
 
-	private getIgnore(path: AbsoluteFilePath): PathPatterns {
+	private getIgnore(path: AbsoluteFilePath): PathPattern[] {
 		const {configCategory, overrideIgnore} = this.opts;
 		const project = this.server.projectManager.findLoadedProject(path);
 
-		let ignore: PathPatterns = overrideIgnore ?? [];
+		let ignore: PathPattern[] = overrideIgnore ?? [];
 		if (configCategory === undefined || project === undefined) {
 			return ignore;
 		}

@@ -6,7 +6,7 @@
  */
 
 import {Profile} from "@internal/v8";
-import {Diagnostics} from "@internal/diagnostics";
+import {Diagnostic} from "@internal/diagnostics";
 import {
 	ClientFlags,
 	ClientLogsLevel,
@@ -54,13 +54,13 @@ export type ServerQueryResponseSuccess = ServerQueryResponseBase & {
 export type ServerQueryResponseDiagnostics = ServerQueryResponseBase & {
 	type: "DIAGNOSTICS";
 	hasDiagnostics: boolean;
-	diagnostics: Diagnostics;
+	diagnostics: Diagnostic[];
 	files: Dict<RecoverySaveFile>;
 };
 
 export type ServerQueryResponseInvalid = ServerQueryResponseBase & {
 	type: "INVALID_REQUEST";
-	diagnostics: Diagnostics;
+	diagnostics: Diagnostic[];
 	showHelp: boolean;
 };
 

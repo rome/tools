@@ -13,11 +13,12 @@ import {
 	DiagnosticLocation,
 	DiagnosticLogCategory,
 	catchDiagnostics,
-	createSingleDiagnosticError,
+	createSingleDiagnosticsError,
 	deriveDiagnosticFromErrorStructure,
 	descriptions,
 	diagnosticLocationToMarkupFilelink,
 	getErrorStackAdvice,
+	DeriveErrorDiagnosticOptions,
 } from "@internal/diagnostics";
 import {
 	GlobalTestOptions,
@@ -42,7 +43,7 @@ import {
 	serializeLazyMarkup,
 } from "@internal/markup";
 import {
-	ErrorFrames,
+	ErrorFrame,
 	StructuredError,
 	getDiagnosticLocationFromErrorFrame,
 	getErrorStructure,
@@ -60,7 +61,7 @@ import {ExtendedMap} from "@internal/collections";
 import {BridgeClient} from "@internal/events";
 import TestWorker from "./TestWorker";
 
-export function cleanFrames(frames: ErrorFrames): ErrorFrames {
+export function cleanFrames(frames: ErrorFrame[]): ErrorFrame[] {
 	// TODO we should actually get the frames before module init and do it that way
 	// Remove everything before the original module factory
 	let latestTestWorkerFrame = frames.find((frame, i) => {
@@ -105,7 +106,7 @@ export type TestWorkerFileResult = {
 	snapshots: AbsoluteFilePathMap<Snapshot>;
 };
 
-type FoundTest = {
+export type TestDetails = {
 	name: string;
 	options: TestOptions;
 	callback: TestCallback;
@@ -153,14 +154,14 @@ export default class TestWorkerFile {
 	public snapshotManager: SnapshotManager;
 
 	private tests: TestWorker;
-	private foundTests: ExtendedMap<string, FoundTest>;
+	private foundTests: ExtendedMap<string, TestDetails>;
 	private focusedTests: FocusedTest[];
 	private bridge: BridgeClient<typeof WorkerBridge>;
 	private opts: TestWorkerPrepareTestOptions;
 	private locked: boolean;
 	private consoleAdvice: [(() => DiagnosticAdvice), number][];
 
-	private createTestRef(test: FoundTest): TestRef {
+	private createTestRef(test: TestDetails): TestRef {
 		return {
 			testName: test.name,
 			path: this.path,
@@ -286,7 +287,7 @@ export default class TestWorkerFile {
 					res.syntaxError.description.message,
 				)}`;
 
-				throw createSingleDiagnosticError({
+				throw createSingleDiagnosticsError({
 					...res.syntaxError,
 					description: {
 						...res.syntaxError.description,
@@ -358,7 +359,7 @@ export default class TestWorkerFile {
 			callsiteStruct.frames[0],
 		);
 
-		const foundTest: FoundTest = {
+		const foundTest: TestDetails = {
 			callsiteLocation,
 			name: testName,
 			callback,
@@ -387,7 +388,7 @@ export default class TestWorkerFile {
 		}
 	}
 
-	public async emitDiagnostic(diag: Diagnostic, test?: FoundTest) {
+	public async emitDiagnostic(diag: Diagnostic, test?: TestDetails) {
 		let label = diag.label;
 		if (label === undefined && test !== undefined) {
 			label = markup`${test.name}`;
@@ -413,8 +414,9 @@ export default class TestWorkerFile {
 		});
 	}
 
-	private deriveDiagnosticFromErrorStructure(
+	public deriveDiagnosticFromErrorStructure(
 		struct: StructuredError,
+		opts?: DeriveErrorDiagnosticOptions
 	): Diagnostic {
 		return deriveDiagnosticFromErrorStructure(
 			struct,
@@ -422,14 +424,13 @@ export default class TestWorkerFile {
 				description: {
 					category: DIAGNOSTIC_CATEGORIES["tests/failure"],
 				},
+				internal: false,
 				path: this.path,
 				cleanFrames,
 				stackAdviceOptions: {
 					importantPaths: new MixedPathSet([this.path]),
 				},
-				tags: {
-					internal: false,
-				},
+				...opts,
 			},
 		);
 	}
@@ -464,11 +465,11 @@ export default class TestWorkerFile {
 					}
 				| {
 						type: "TEST";
-						test: FoundTest;
+						test: TestDetails;
 					}
 				| {
 						type: "TEARDOWN";
-						test: FoundTest;
+						test: TestDetails;
 					};
 			trailingAdvice?: DiagnosticAdvice;
 		},
@@ -480,7 +481,7 @@ export default class TestWorkerFile {
 		);
 		let {location} = diagnostic;
 		let {advice} = diagnostic.description;
-		let test: undefined | FoundTest;
+		let test: undefined | TestDetails;
 
 		switch (origin.type) {
 			case "EXECUTING": {
@@ -553,7 +554,7 @@ export default class TestWorkerFile {
 		await this.emitDiagnostic(diagnostic, test);
 	}
 
-	private async teardownTest(test: FoundTest, api: TestAPI): Promise<boolean> {
+	private async teardownTest(test: TestDetails, api: TestAPI): Promise<boolean> {
 		api.clearTimeout();
 
 		try {
@@ -569,8 +570,8 @@ export default class TestWorkerFile {
 		}
 	}
 
-	private async runTest(test: FoundTest) {
-		const {callback, name: testName} = test;
+	private async runTest(test: TestDetails) {
+		const {callback} = test;
 
 		let onTimeout: OnTimeout = () => {
 			throw new Error("Promise wasn't created. Should be impossible.");
@@ -582,27 +583,8 @@ export default class TestWorkerFile {
 			};
 		});
 
-		const emitDiagnostic = (diag: Diagnostic): Promise<void> => {
-			return this.emitDiagnostic(
-				{
-					...diag,
-					description: {
-						...diag.description,
-						advice: api.getAdvice(diag.description.advice),
-					},
-				},
-				test,
-			);
-		};
 
-		const api = new TestAPI({
-			path: this.path,
-			testName,
-			onTimeout,
-			snapshotManager: this.snapshotManager,
-			options: this.globalOptions,
-			emitDiagnostic,
-		});
+		const api = new TestAPI(this, test, onTimeout);
 
 		let testSuccess = false;
 
@@ -610,7 +592,6 @@ export default class TestWorkerFile {
 			const {diagnostics} = await catchDiagnostics(async () => {
 				const res = callback(api);
 
-				// Ducktyping this to detect a cross-realm Promise
 				if (res !== undefined && typeof res.then === "function") {
 					await Promise.race([timeoutPromise, res]);
 				}
@@ -618,7 +599,7 @@ export default class TestWorkerFile {
 
 			if (diagnostics !== undefined) {
 				for (const diag of diagnostics) {
-					await emitDiagnostic(diag);
+					await api.emitDiagnostic(diag);
 				}
 			}
 

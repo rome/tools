@@ -1,5 +1,5 @@
 import {Position} from "@internal/parser-core";
-import {ErrorFrame, ErrorFrames} from "@internal/errors";
+import {ErrorFrame} from "@internal/errors";
 import {isObject} from "@internal/typescript-helpers";
 import {OneIndexed, ZeroIndexed} from "@internal/numbers";
 import {NodeSystemError, NodeSystemErrorProperties} from "./types";
@@ -35,13 +35,13 @@ export type StructuredError = {
 	name: string;
 	message?: string;
 	stack?: string;
-	frames: ErrorFrames;
+	frames: ErrorFrame[];
 	node: NodeSystemErrorProperties;
 };
 
 export function setErrorFrames(
 	err: ErrorWithFrames,
-	frames: undefined | ErrorFrames,
+	frames: undefined | ErrorFrame[],
 ) {
 	Object.defineProperty(
 		err,
@@ -68,7 +68,7 @@ export function getErrorStructure(
 	let name = "Error";
 	let message = "Unknown message";
 	let stack = undefined;
-	let frames: ErrorFrames = [];
+	let frames: ErrorFrame[] = [];
 	let looksLikeValidError = false;
 
 	if (isObject(err)) {

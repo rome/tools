@@ -17,9 +17,7 @@ import {
 
 type LazyMarkupPart = StaticMarkup | LazyMarkupFactory | LazyMarkup;
 
-export type LazyMarkupFactory = () => AnyMarkup;
-
-export type StaticMarkups = StaticMarkup[];
+export type LazyMarkupFactory = () => Markup;
 
 export type StaticMarkup =
 	| string
@@ -29,9 +27,7 @@ export type StaticMarkup =
 	| RawMarkup
 	| StaticMarkup[];
 
-export type AnyMarkup = StaticMarkup | LazyMarkup | LazyMarkupFactory;
-
-export type AnyMarkups = AnyMarkup[];
+export type Markup = StaticMarkup | LazyMarkup | LazyMarkupFactory;
 
 type LazyMarkup = {
 	type: "LAZY_MARKUP";
@@ -87,7 +83,7 @@ export function pathToMarkup(
 	);
 }
 
-const markupTemplateCache: WeakMap<TemplateStringsArray, AnyMarkup> = new WeakMap();
+const markupTemplateCache: WeakMap<TemplateStringsArray, Markup> = new WeakMap();
 
 type InterpolatedValue = undefined;
 
@@ -99,11 +95,11 @@ export function markup(
 export function markup(
 	strs: TemplateStringsArray,
 	...values: Array<LazyMarkupPart | InterpolatedValue>
-): AnyMarkup;
+): Markup;
 export function markup(
 	strs: TemplateStringsArray,
 	...values: Array<LazyMarkupPart | InterpolatedValue>
-): AnyMarkup {
+): Markup {
 	if (values.length === 0) {
 		const cached = markupTemplateCache.get(strs);
 		if (cached !== undefined) {
@@ -141,8 +137,8 @@ export function markup(
 }
 
 function normalizeInterpolatedValue(
-	value: AnyMarkup | InterpolatedValue,
-): AnyMarkup {
+	value: Markup | InterpolatedValue,
+): Markup {
 	if (typeof value === "undefined") {
 		return toRawMarkup("<dim>undefined</dim>");
 	} else {
@@ -152,9 +148,9 @@ function normalizeInterpolatedValue(
 
 // Here we have a cache making serializing markup so we can call it performantly with only the object
 // We can also benefit from a small speed up by common interpolated markup
-const readCache: WeakMap<Extract<AnyMarkup, object>, string> = new WeakMap();
+const readCache: WeakMap<Extract<Markup, object>, string> = new WeakMap();
 
-export function readMarkup(item: AnyMarkup): string {
+export function readMarkup(item: Markup): string {
 	if (isLazyMarkupFactory(item)) {
 		return readMarkup(serializeLazyMarkup(item));
 	}
@@ -205,9 +201,9 @@ export function readMarkup(item: AnyMarkup): string {
 	return out;
 }
 
-const factoryCache: WeakMap<LazyMarkupFactory, AnyMarkup> = new WeakMap();
+const factoryCache: WeakMap<LazyMarkupFactory, Markup> = new WeakMap();
 
-export function serializeLazyMarkup(markup: AnyMarkup): StaticMarkup {
+export function serializeLazyMarkup(markup: Markup): StaticMarkup {
 	if (isLazyMarkupParts(markup)) {
 		return [toRawMarkup(readMarkup(markup))];
 	} else if (isLazyMarkupFactory(markup)) {
@@ -223,7 +219,7 @@ export function serializeLazyMarkup(markup: AnyMarkup): StaticMarkup {
 }
 
 export function isEmptyMarkup(
-	safe: AnyMarkup | StaticMarkup | LazyMarkupPart[],
+	safe: Markup | StaticMarkup | LazyMarkupPart[],
 	allowLazy: boolean = true,
 ): boolean {
 	if (Array.isArray(safe)) {
@@ -260,11 +256,11 @@ export function isEmptyMarkup(
 }
 
 export function joinMarkup(
-	items: AnyMarkups,
+	items: Markup[],
 	separator?: StaticMarkup,
 ): StaticMarkup;
-export function joinMarkup(items: AnyMarkup[], separator?: AnyMarkup): AnyMarkup;
-export function joinMarkup(items: AnyMarkup[], separator?: AnyMarkup): AnyMarkup {
+export function joinMarkup(items: Markup[], separator?: Markup): Markup;
+export function joinMarkup(items: Markup[], separator?: Markup): Markup {
 	let hasLazy = separator !== undefined && isLazyMarkup(separator);
 	let hasSeparator = separator !== undefined && !isEmptyMarkup(separator, false);
 	let canSimplify =
@@ -337,7 +333,7 @@ export function joinMarkup(items: AnyMarkup[], separator?: AnyMarkup): AnyMarkup
 			parts,
 		};
 	} else {
-		return parts as StaticMarkups;
+		return parts as StaticMarkup[];
 	}
 }
 
@@ -376,14 +372,14 @@ export function markupTag(
 ): StaticMarkup;
 export function markupTag(
 	tagName: MarkupTagName,
-	text: AnyMarkup,
+	text: Markup,
 	attrs?: MarkupTagAttributes,
-): AnyMarkup;
+): Markup;
 export function markupTag(
 	tagName: MarkupTagName,
-	text: AnyMarkup,
+	text: Markup,
 	attrs?: MarkupTagAttributes,
-): AnyMarkup {
+): Markup {
 	let ret = `<${tagName}`;
 
 	if (attrs !== undefined) {

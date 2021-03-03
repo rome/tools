@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {DiagnosticOrigin, Diagnostics} from "./types";
+import {DiagnosticOrigin, Diagnostic} from "./types";
 import {addOriginsToDiagnostics} from "./derive";
 import {DiagnosticsError, getDiagnosticsFromError} from "./error-wrappers";
 import DiagnosticsProcessor from "./DiagnosticsProcessor";
@@ -17,7 +17,7 @@ type WrapResult<T> =
 		}
 	| {
 			readonly value: undefined;
-			readonly diagnostics: Diagnostics;
+			readonly diagnostics: Diagnostic[];
 		};
 
 export async function catchDiagnostics<T>(
@@ -45,7 +45,7 @@ export async function catchDiagnostics<T>(
 }
 
 export async function interceptDiagnostics<T extends {
-	diagnostics?: Diagnostics;
+	diagnostics?: Diagnostic[];
 }>(
 	promise: () => Promise<T>,
 	process: (processor: DiagnosticsProcessor) => void,

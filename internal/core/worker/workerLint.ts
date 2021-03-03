@@ -1,6 +1,6 @@
 import {LintResult, lint} from "@internal/compiler";
 import {
-	Diagnostics,
+	Diagnostic,
 	catchDiagnostics,
 	descriptions,
 } from "@internal/diagnostics";
@@ -189,7 +189,7 @@ export async function compilerLint(
 	let mtimeNs: bigint;
 	let astModifiedFromSource: boolean = false;
 	let res: LintResult;
-	let diagnostics: Diagnostics = [];
+	let diagnostics: Diagnostic[] = [];
 
 	// If lint and format are disabled then we could just be a glorified ESLint runner and there's no point running the compiler
 	if (project.config.lint.enabled || project.config.format.enabled) {

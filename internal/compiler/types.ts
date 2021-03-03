@@ -22,15 +22,13 @@ export type CompilerProject = {
 	directory?: undefined | AbsoluteFilePath;
 };
 
-export type CompilerProjects = CompilerProject[];
-
 //
 export type TransformStageName = "pre" | "compile" | "compileForBundle";
 
 export type TransformStageFactory = (
 	projectConfig: ProjectConfig,
 	options: Object,
-) => Transforms;
+) => Transform[];
 
 export type TransformStageFactories = {
 	[key in TransformStageName]: TransformStageFactory
@@ -41,8 +39,6 @@ export type Transform =
 	| AnyVisitor
 	| ((context: CompilerContext) => Visitor<UnknownObject>);
 
-export type Transforms = Transform[];
-
 export interface Visitor<State extends UnknownObject> {
 	name: string;
 	enter?: (path: CompilerPath, state: VisitorStateEnter<State>) => EnterSignal;
@@ -51,8 +47,6 @@ export interface Visitor<State extends UnknownObject> {
 
 // rome-ignore lint/ts/noExplicitAny: future cleanup
 export type AnyVisitor = Visitor<any>;
-
-export type AnyVisitors = AnyVisitor[];
 
 export type CompileRequest = TransformRequest & {
 	inputSourceMap?: SourceMap;

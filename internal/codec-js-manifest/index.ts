@@ -34,9 +34,9 @@ import {
 	createRelativePath,
 } from "@internal/path";
 import {toCamelCase} from "@internal/string-utils";
-import {PathPatterns, parsePathPattern} from "@internal/path-match";
+import {PathPattern, parsePathPattern} from "@internal/path-match";
 import {normalizeCompatManifest} from "@internal/codec-js-manifest/compat";
-import {CompilerProjects} from "@internal/compiler";
+import {CompilerProject} from "@internal/compiler";
 
 export * from "./types";
 
@@ -58,7 +58,7 @@ const TYPO_KEYS: Map<string, string> = new Map([
 	["script", "scripts"],
 ]);
 
-function normalizePathPatterns(consumer: Consumer, loose: boolean): PathPatterns {
+function normalizePathPatterns(consumer: Consumer, loose: boolean): PathPattern[] {
 	return normalizeStringArray(consumer, loose).map((str) =>
 		parsePathPattern({
 			input: str,
@@ -157,7 +157,7 @@ function normalizeLicense(
 		name: undefined | string;
 		version: undefined | SemverVersionNode;
 		loose: boolean;
-		projects: CompilerProjects;
+		projects: CompilerProject[];
 	},
 ): undefined | SPDXLicenseParseResult {
 	if (!consumer.has("license")) {
@@ -596,7 +596,7 @@ function checkDependencyKeyTypo(key: string, prop: Consumer) {
 export async function normalizeManifest(
 	path: AbsoluteFilePath,
 	consumer: Consumer,
-	projects: CompilerProjects,
+	projects: CompilerProject[],
 ): Promise<Manifest> {
 	const loose = consumer.path.hasSegment("node_modules");
 

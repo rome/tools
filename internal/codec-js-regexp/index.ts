@@ -30,7 +30,7 @@ import {
 	JSRegExpQuantified,
 	JSRegExpSubExpression,
 } from "@internal/ast";
-import {Diagnostics, descriptions} from "@internal/diagnostics";
+import {Diagnostic, descriptions} from "@internal/diagnostics";
 import {ZeroIndexed} from "@internal/numbers";
 
 type Operator =
@@ -1159,7 +1159,7 @@ export function parseRegExp(
 	opts: RegExpParserOptions,
 ): {
 	expression: AnyJSRegExpExpression;
-	diagnostics: Diagnostics;
+	diagnostics: Diagnostic[];
 } {
 	const parser = regExpParser.create(opts);
 	return {

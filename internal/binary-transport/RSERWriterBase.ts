@@ -19,7 +19,7 @@ import {
 	isSourceLocation,
 } from "@internal/parser-core";
 import {
-	AnyRSERPathMap,
+	RSERPathMap,
 	RSERArray,
 	RSERMap,
 	RSERObject,
@@ -42,7 +42,7 @@ import {getErrorStructure} from "@internal/errors";
 import {pretty} from "@internal/pretty-format";
 import {getUTF8ByteLength} from "@internal/binary";
 import {
-	AnyIndexedNumber,
+	IndexedNumber,
 	Duration,
 	OneIndexed,
 	ZeroIndexed,
@@ -195,7 +195,7 @@ export default abstract class RSERWriterBase {
 		this.writeInt(dur.toNanoseconds(), 8);
 	}
 
-	private encodeIndexedNumber(num: AnyIndexedNumber) {
+	private encodeIndexedNumber(num: IndexedNumber) {
 		if (num instanceof OneIndexed) {
 			this.writeByte(CODES.ONE_INDEXED_NUMBER);
 		} else if (num instanceof ZeroIndexed) {
@@ -223,7 +223,7 @@ export default abstract class RSERWriterBase {
 		}
 	}
 
-	private encodePathMap(map: AnyRSERPathMap) {
+	private encodePathMap(map: RSERPathMap) {
 		if (map instanceof MixedPathMap) {
 			this.writeByte(CODES.MIXED_PATH_MAP);
 			this.encodeSize(map.size);

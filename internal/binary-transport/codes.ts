@@ -17,7 +17,7 @@ import {
 	URLPathMap,
 	URLPathSet,
 } from "@internal/path";
-import {AnyRSERPathMap, RSERArrayBufferView} from "./types";
+import {RSERPathMap, RSERArrayBufferView} from "./types";
 import RSERParserError from "./RSERParserError";
 import {Class, isSafeInstanceof} from "@internal/typescript-helpers";
 
@@ -244,7 +244,7 @@ const pathCollectionTypes: Map<
 	PATH_COLLECTION_CODES,
 	{
 		Path: Class<Path>;
-		PathMap: Class<AnyRSERPathMap>;
+		PathMap: Class<RSERPathMap>;
 		PathSet: Class<PathSet>;
 	}
 > = new Map();
@@ -302,7 +302,7 @@ export function validatePathCollectionCode(code: number): PATH_COLLECTION_CODES 
 	}
 }
 
-export function pathMapToCode(map: AnyRSERPathMap): PATH_COLLECTION_CODES {
+export function pathMapToCode(map: RSERPathMap): PATH_COLLECTION_CODES {
 	for (const [code, {PathMap}] of pathCollectionTypes) {
 		if (isSafeInstanceof(map, PathMap)) {
 			return code;
@@ -320,7 +320,7 @@ export function pathSetToCode(set: PathSet): PATH_COLLECTION_CODES {
 	throw new RSERParserError("Unknown Path type");
 }
 
-export function pathMapFromCode(code: PATH_COLLECTION_CODES): AnyRSERPathMap {
+export function pathMapFromCode(code: PATH_COLLECTION_CODES): RSERPathMap {
 	const types = pathCollectionTypes.get(code);
 	if (types === undefined) {
 		throw new RSERParserError(`Unknown path code ${code}`);

@@ -9,7 +9,7 @@ import {
 import {
 	DiagnosticIntegrity,
 	DiagnosticSuppressions,
-	Diagnostics,
+	Diagnostic,
 } from "@internal/diagnostics";
 import {BridgeClient, BridgeServer} from "@internal/events";
 import {FormatterOptions} from "@internal/formatter";
@@ -168,7 +168,7 @@ export type WorkerPrefetchedModuleSignatures = {
 export type WorkerFormatResult = {
 	original: string;
 	formatted: string;
-	diagnostics: Diagnostics;
+	diagnostics: Diagnostic[];
 	suppressions: DiagnosticSuppressions;
 };
 
@@ -182,7 +182,7 @@ export type WorkerIntegrationTimings = Map<string, WorkerIntegrationTiming>;
 
 export type WorkerLintResult = {
 	save: undefined | RecoverySaveFile;
-	diagnostics: Diagnostics;
+	diagnostics: Diagnostic[];
 	suppressions: DiagnosticSuppressions;
 	timings: WorkerIntegrationTimings;
 };
@@ -201,7 +201,7 @@ export type WorkerBufferPatch = {
 };
 
 export type WorkerUpdateInlineSnapshotResult = {
-	diagnostics: Diagnostics;
+	diagnostics: Diagnostic[];
 	file: undefined | RecoverySaveFile;
 };
 

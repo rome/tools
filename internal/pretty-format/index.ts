@@ -9,11 +9,12 @@ import {
 	UnknownObject,
 	isIterable,
 	isPlainObject,
+	isObject,
 } from "@internal/typescript-helpers";
 import {escapeJSString} from "@internal/string-escape";
 import {naturalCompare} from "@internal/string-utils";
 import {
-	AnyMarkup,
+	Markup,
 	LazyMarkupFactory,
 	StaticMarkup,
 	joinMarkup,
@@ -245,10 +246,10 @@ function getExtraObjectProps(
 	obj: Objectish,
 	opts: FormatOptions,
 ): {
-	props: AnyMarkup[];
+	props: Markup[];
 	ignoreKeys: UnknownObject;
 } {
-	const props: AnyMarkup[] = [];
+	const props: Markup[] = [];
 	const ignoreKeys: UnknownObject = {};
 
 	if (isIterable(obj)) {
@@ -393,13 +394,13 @@ function formatObject(
 		}
 	}
 
-	//
 	const nextOpts: FormatOptions = {
 		...opts,
 		stack: [...stack, obj],
 		depth: opts.depth + 1,
 	};
 	const {ignoreKeys, props} = getExtraObjectProps(obj, nextOpts);
+	let hasObjectProp = false;
 
 	// Get string props
 	for (const key of sortKeys(Object.keys(obj))) {
@@ -421,6 +422,10 @@ function formatObject(
 			...nextOpts,
 			path: [...nextOpts.path, key],
 		};
+	
+		if (isObject(val)) {
+			hasObjectProp = true;
+		}
 
 		const prop = markup`${formatKey(key)}: ${prettyFormat(val, propOpts)}`;
 		props.push(prop);
@@ -429,6 +434,11 @@ function formatObject(
 	// Get symbol props
 	for (const sym of Object.getOwnPropertySymbols(obj)) {
 		const val: unknown = Reflect.get(obj, sym);
+	
+		if (isObject(val)) {
+			hasObjectProp = true;
+		}
+
 		props.push(
 			markup`${prettyFormat(sym, opts)}: ${prettyFormat(val, nextOpts)}`,
 		);
@@ -442,7 +452,7 @@ function formatObject(
 		close = "]";
 	}
 
-	const parts: AnyMarkup = [];
+	const parts: Markup = [];
 
 	// Hide labels for arrays and objects in compact mode
 	let includeLabel = true;
@@ -465,7 +475,7 @@ function formatObject(
 	parts.push(open);
 
 	if (props.length > 0) {
-		if (opts.accurate) {
+		if (opts.accurate || hasObjectProp) {
 			const inner = joinMarkup(props, "\n");
 			parts.push(markup`\n${inner}\n`);
 		} else {

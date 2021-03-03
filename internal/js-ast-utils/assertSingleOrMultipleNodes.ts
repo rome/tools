@@ -5,11 +5,11 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyNode, AnyNodes} from "@internal/ast";
+import {AnyNodes} from "@internal/ast";
 
 export function assertSingleOrMultipleNodes(
 	result: AnyNodes,
-): AnyNode | (AnyNode[]) {
+): AnyNodes {
 	if (result === undefined) {
 		throw new Error("Expected node or node list but got null");
 	} else if (typeof result === "symbol") {

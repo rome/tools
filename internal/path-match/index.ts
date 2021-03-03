@@ -5,12 +5,12 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {PathPattern, PathPatternNode, PathPatterns} from "./types";
+import {PathPattern, PathPatternNode} from "./types";
 import {parsePattern, parsePatternsFile} from "./parse";
 import match from "./match";
 import {AbsoluteFilePath, PathSegments} from "@internal/path";
 
-export {PathPattern, PathPatterns};
+export {PathPattern};
 
 export {
 	parsePattern as parsePathPattern,
@@ -19,7 +19,7 @@ export {
 
 export {stringifyPathPattern} from "./stringify";
 
-export function flipPathPatterns(patterns: PathPatterns): PathPatterns {
+export function flipPathPatterns(patterns: PathPattern[]): PathPattern[] {
 	return patterns.map((pattern) => {
 		if (pattern.type === "Comment") {
 			return pattern;
@@ -80,7 +80,7 @@ type Matches = {
 
 export function matchPathPatterns(
 	path: AbsoluteFilePath,
-	patterns: PathPatterns,
+	patterns: PathPattern[],
 	cwd?: AbsoluteFilePath,
 ): MatchPatternResult {
 	// Bail out if there are no patterns

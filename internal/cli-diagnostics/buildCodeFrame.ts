@@ -17,7 +17,7 @@ import {Position} from "@internal/parser-core";
 import {ToLines, cleanEquivalentString, showInvisibles} from "./utils";
 import {ZeroIndexed} from "@internal/numbers";
 import {
-	AnyMarkups,
+	Markup,
 	StaticMarkup,
 	isEmptyMarkup,
 	joinMarkup,
@@ -36,7 +36,7 @@ function formatLineView(
 		// NB: The `word-break` default is probably better? lineWrap: "char-break",
 	};
 
-	const parts: AnyMarkups = [line];
+	const parts: Markup[] = [line];
 
 	if (gutterLength > 0) {
 		parts.push(
@@ -323,7 +323,7 @@ export default function buildCodeFrame(
 	)}">...</pad></emphasis>${GUTTER}`;
 
 	// Build the frame
-	const result: AnyMarkups = [];
+	const result: Markup[] = [];
 	for (const selection of formattedLines) {
 		if (!selection) {
 			result.push(omittedLine);

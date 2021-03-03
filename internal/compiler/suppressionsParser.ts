@@ -2,7 +2,7 @@ import {AnyNode} from "@internal/ast";
 import {
 	DiagnosticCategory,
 	DiagnosticSuppressions,
-	Diagnostics,
+	Diagnostic,
 	descriptions,
 	formatCategoryDescription,
 	splitPossibleCategoryName,
@@ -36,7 +36,7 @@ export const INCORRECT_SUPPRESSION_START = [
 
 export type ExtractedSuppressions = {
 	suppressions: DiagnosticSuppressions;
-	diagnostics: Diagnostics;
+	diagnostics: Diagnostic[];
 };
 
 type Tokens = BaseTokens & {

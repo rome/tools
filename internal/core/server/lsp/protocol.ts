@@ -3,7 +3,7 @@ import {JSONObject, JSONPropertyValue} from "@internal/codec-config";
 import {Consumer, consumeUnknown} from "@internal/consume";
 import {LSPRequestMessage, LSPResponseMessage} from "./types";
 import {Reporter} from "@internal/cli-reporter";
-import {AnyMarkup, markup} from "@internal/markup";
+import {Markup, markup} from "@internal/markup";
 import prettyFormat from "@internal/pretty-format";
 import {DIAGNOSTIC_CATEGORIES} from "@internal/diagnostics";
 import {getByteLength} from "@internal/binary";
@@ -167,7 +167,7 @@ export class LSPTransport {
 		}
 	}
 
-	private log(message: AnyMarkup) {
+	private log(message: Markup) {
 		this.reporter.info(markup` ${message}`);
 	}
 

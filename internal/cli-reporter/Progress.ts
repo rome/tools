@@ -20,7 +20,7 @@ import {
 	ReporterStreamAttached,
 } from "./types";
 import ProgressBase from "./ProgressBase";
-import {AnyMarkup, markup} from "@internal/markup";
+import {Markup, markup} from "@internal/markup";
 import {formatAnsi} from "@internal/cli-layout";
 
 import * as streamUtils from "./stream";
@@ -178,7 +178,7 @@ export default class Progress extends ProgressBase {
 		this.endBouncer();
 	}
 
-	public setText(text: AnyMarkup) {
+	public setText(text: Markup) {
 		if (this.closed) {
 			return;
 		}

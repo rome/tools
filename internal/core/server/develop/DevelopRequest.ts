@@ -3,7 +3,7 @@ import {Path, RelativePath, URLPath, createURLPath} from "@internal/path";
 import {getFileHandlerFromPath} from "@internal/core/common/file-handlers";
 import stream = require("stream");
 import http = require("http");
-import {AnyMarkup, markup} from "@internal/markup";
+import {Markup, markup} from "@internal/markup";
 import {sha256} from "@internal/string-utils";
 
 type DevelopRequestOptions = {
@@ -197,7 +197,7 @@ export default class DevelopRequest {
 			statusCodeText = markup`<dim>${statusCode}</dim>`;
 		}
 
-		let url: AnyMarkup = this.url;
+		let url: Markup = this.url;
 
 		// Only include the pathname when it's localhost connecting to itself
 		if (

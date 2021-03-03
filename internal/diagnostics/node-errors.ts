@@ -13,7 +13,7 @@ import {
 	DiagnosticCategory,
 	DiagnosticLocation,
 	DiagnosticsError,
-	createSingleDiagnosticError,
+	createSingleDiagnosticsError,
 	getErrorStackAdvice,
 } from "@internal/diagnostics";
 import {prettyFormatEager} from "@internal/pretty-format";
@@ -176,7 +176,7 @@ export function convertPossibleNodeErrorToDiagnostic(
 	};
 
 	// Create diagnostic error
-	const diagErr: NodeSystemError = createSingleDiagnosticError(diag);
+	const diagErr: NodeSystemError = createSingleDiagnosticsError(diag);
 
 	// Add on remaining regular error props so it can be treated as a normal error if necessary
 

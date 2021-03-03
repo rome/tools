@@ -42,13 +42,12 @@ import {markdownParser} from "./parsers/markdownParser";
 import {initCommand} from "./commands/initCommand";
 import {
 	StaticMarkup,
-	StaticMarkups,
 	joinMarkup,
 	markup,
 } from "@internal/markup";
 import {tomlParser} from "./parsers/tomlParser";
 
-export function join(conjunction: string, items: StaticMarkups): StaticMarkup {
+export function join(conjunction: string, items: StaticMarkup[]): StaticMarkup {
 	if (items.length === 0) {
 		return markup``;
 	} else if (items.length === 1) {
@@ -59,15 +58,15 @@ export function join(conjunction: string, items: StaticMarkups): StaticMarkup {
 	}
 }
 
-export function andJoin(items: StaticMarkups): StaticMarkup {
+export function andJoin(items: StaticMarkup[]): StaticMarkup {
 	return join("and", items);
 }
 
-export function orJoin(items: StaticMarkups): StaticMarkup {
+export function orJoin(items: StaticMarkup[]): StaticMarkup {
 	return join("or", items);
 }
 
-export function addEmphasis(items: StaticMarkups): StaticMarkups {
+export function addEmphasis(items: StaticMarkup[]): StaticMarkup[] {
 	return items.map((item) => markup`<emphasis>${item}</emphasis>`);
 }
 

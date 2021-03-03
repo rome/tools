@@ -6,7 +6,7 @@
  */
 
 import {
-	AnyMarkup,
+	Markup,
 	MarkupLineWrapMode,
 	MarkupParsedChild,
 	MarkupParsedChildren,
@@ -56,7 +56,6 @@ type Rows = (MarkupParsedTag[])[];
 type Ancestry = MarkupParsedTag[];
 
 type Column = string | symbol;
-type Columns = Column[];
 
 function createTag(
 	name: MarkupParsedTag["name"],
@@ -71,12 +70,12 @@ function createTag(
 	};
 }
 
-function joinColumns(columns: Columns): string {
+function joinColumns(columns: Column[]): string {
 	return columns.filter((column) => typeof column === "string").join("");
 }
 
 function sliceColumns(
-	columns: Columns,
+	columns: Column[],
 	start: OneIndexed,
 	end: OneIndexed,
 ): string {
@@ -117,7 +116,7 @@ type GridLine = {
 		end: OneIndexed;
 		ancestry: Ancestry;
 	}[];
-	columns: Columns;
+	columns: Column[];
 };
 
 const TAB_PLACEHOLDER_COLUMN = Symbol("TAB_LAYOUT_PLACEHOLDER");
@@ -171,7 +170,7 @@ export default class Grid {
 		// TODO make the tab width customizable in userConfig
 		this.tabSize = 2;
 
-		const indentColumns: Columns = [];
+		const indentColumns: Column[] = [];
 		for (let i = 0; i < this.tabSize; i++) {
 			let char: Column = " ";
 			if (!this.options.convertTabs) {
@@ -182,7 +181,7 @@ export default class Grid {
 		this.indentColumns = indentColumns;
 	}
 
-	private indentColumns: Columns;
+	private indentColumns: Column[];
 	private tabSize: number;
 
 	public locators: GridLocators;
@@ -528,8 +527,8 @@ export default class Grid {
 	}
 
 	// Build up columns with as many tabs as we can and then spaces
-	private getSpaces(count: number): Columns {
-		let columns: Columns = [];
+	private getSpaces(count: number): Column[] {
+		let columns: Column[] = [];
 		if (count === 0) {
 			return columns;
 		}
@@ -930,7 +929,7 @@ export default class Grid {
 	}
 
 	public parse(
-		sub: undefined | string | AnyMarkup,
+		sub: undefined | string | Markup,
 		offsetPosition: undefined | Position,
 	): MarkupParsedChildren {
 		if (sub === undefined) {

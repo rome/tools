@@ -6,7 +6,7 @@
  */
 
 import Bundler from "./Bundler";
-import {Mappings, SourceMapGenerator} from "@internal/codec-source-map";
+import {Mapping, SourceMapGenerator} from "@internal/codec-source-map";
 import {
 	AssembledBundle,
 	BundleAssets,
@@ -199,7 +199,7 @@ export default class BundleRequest {
 		function addMappings(
 			filename: string,
 			sourceContent: string,
-			mappings: Mappings,
+			mappings: Mapping[],
 		) {
 			if (deferredSourceMaps) {
 				return;

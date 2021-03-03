@@ -1,7 +1,7 @@
 import {enhanceNodeInspectClass} from "@internal/node";
 import {isObject} from "@internal/typescript-helpers";
 
-abstract class IndexedNumber<Super extends IndexedNumber<AnyIndexedNumber>> {
+abstract class IndexedNumberBase<Super extends IndexedNumberBase<IndexedNumber>> {
 	constructor(value: number) {
 		this.value = value;
 	}
@@ -36,7 +36,7 @@ abstract class IndexedNumber<Super extends IndexedNumber<AnyIndexedNumber>> {
 	}
 }
 
-export class ZeroIndexed extends IndexedNumber<ZeroIndexed> {
+export class ZeroIndexed extends IndexedNumberBase<ZeroIndexed> {
 	constructor(value: number = 0) {
 		super(value);
 	}
@@ -59,7 +59,7 @@ enhanceNodeInspectClass(
 	},
 );
 
-export class OneIndexed extends IndexedNumber<OneIndexed> {
+export class OneIndexed extends IndexedNumberBase<OneIndexed> {
 	constructor(value: number = 1) {
 		super(value);
 	}
@@ -82,11 +82,11 @@ enhanceNodeInspectClass(
 	},
 );
 
-export type AnyIndexedNumber = OneIndexed | ZeroIndexed;
+export type IndexedNumber = OneIndexed | ZeroIndexed;
 
-export type UnknownNumber = AnyIndexedNumber | bigint | number;
+export type UnknownNumber = IndexedNumber | bigint | number;
 
-export type AnyIndexedNumberish = {
+export type IndexedNumberish = {
 	[Symbol.toStringTag]: "OneIndexedNumber" | "ZeroIndexedNumber";
 	valueOf: () => number;
 };
@@ -96,7 +96,7 @@ export type AnyIndexedNumberish = {
 function isIndexedNumberInstance(
 	value: unknown,
 	tagName: string,
-): value is AnyIndexedNumberish {
+): value is IndexedNumberish {
 	return (
 		isObject(value) &&
 		// @ts-ignore: TS does not support generic symbol indexes...
@@ -108,17 +108,17 @@ function isIndexedNumberInstance(
 
 export function isOneIndexedNumberish(
 	value: unknown,
-): value is AnyIndexedNumberish {
+): value is IndexedNumberish {
 	return isIndexedNumberInstance(value, "OneIndexedNumber");
 }
 
 export function isZeroIndexedNumberish(
 	value: unknown,
-): value is AnyIndexedNumberish {
+): value is IndexedNumberish {
 	return isIndexedNumberInstance(value, "ZeroIndexedNumber");
 }
 
-export function isIndexedNumberish(value: unknown): value is AnyIndexedNumberish {
+export function isIndexedNumberish(value: unknown): value is IndexedNumberish {
 	return (
 		value instanceof OneIndexed ||
 		value instanceof ZeroIndexed ||

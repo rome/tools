@@ -14,8 +14,7 @@ import {
 	markupToPlainText,
 } from "@internal/cli-layout";
 import {
-	AnyMarkup,
-	AnyMarkups,
+	Markup,
 	MarkupFormatOptions,
 	MarkupTagName,
 	StaticMarkup,
@@ -297,7 +296,7 @@ export default class Reporter implements ReporterNamespace {
 		};
 	}
 
-	protected getMessagePrefix(): AnyMarkup {
+	protected getMessagePrefix(): Markup {
 		return markup``;
 	}
 
@@ -355,7 +354,7 @@ export default class Reporter implements ReporterNamespace {
 	}
 
 	public async question(
-		message: AnyMarkup,
+		message: Markup,
 		{hint, default: def = "", yes = false}: QuestionOptions = {},
 	): Promise<string> {
 		if (yes) {
@@ -419,7 +418,7 @@ export default class Reporter implements ReporterNamespace {
 	}
 
 	public async questionValidate<T>(
-		message: AnyMarkup,
+		message: Markup,
 		validate: (value: string) => QuestionValidateResult<T>,
 		options: Omit<QuestionOptions, "normalize"> = {},
 	): Promise<T> {
@@ -454,7 +453,7 @@ export default class Reporter implements ReporterNamespace {
 		}
 	}
 
-	public async radioConfirm(message: AnyMarkup): Promise<boolean> {
+	public async radioConfirm(message: Markup): Promise<boolean> {
 		const answer = await this.radio(
 			message,
 			{
@@ -493,7 +492,7 @@ export default class Reporter implements ReporterNamespace {
 	}
 
 	public async radio<Options extends SelectOptions>(
-		message: AnyMarkup,
+		message: Markup,
 		arg: SelectArguments<Options>,
 	): Promise<SelectOptionsKeys<Options>> {
 		const set = await this.select(message, {...arg, radio: true});
@@ -503,7 +502,7 @@ export default class Reporter implements ReporterNamespace {
 	}
 
 	public async select<Options extends SelectOptions>(
-		message: AnyMarkup,
+		message: Markup,
 		args: SelectArguments<Options>,
 	): Promise<Set<SelectOptionsKeys<Options>>> {
 		return select(this, message, args);
@@ -539,8 +538,8 @@ export default class Reporter implements ReporterNamespace {
 		);
 	}
 
-	public table(head: AnyMarkups, rawBody: AnyMarkups[]) {
-		let body: AnyMarkups = [];
+	public table(head: Markup[], rawBody: Markup[][]) {
+		let body: Markup[] = [];
 
 		if (head.length > 0) {
 			body.push(markup`<tr>`);
@@ -585,7 +584,7 @@ export default class Reporter implements ReporterNamespace {
 		}
 	}
 
-	public heading(text: AnyMarkup) {
+	public heading(text: Markup) {
 		this.br();
 		this.log(markup`<inverse><emphasis> ${text} </emphasis></inverse>`);
 		this.br();
@@ -624,7 +623,7 @@ export default class Reporter implements ReporterNamespace {
 		this.br(opts);
 	}
 
-	public hr(text: AnyMarkup = markup``, opts?: LogCategoryUserOptions) {
+	public hr(text: Markup = markup``, opts?: LogCategoryUserOptions) {
 		this.br(opts);
 		for (const stream of this.getStreams(opts)) {
 			this._logMarkup(stream, markup`<hr>${text}</hr>`);
@@ -651,7 +650,7 @@ export default class Reporter implements ReporterNamespace {
 		}
 	}
 
-	public step(current: number, total: number, msg: AnyMarkup, opts?: LogOptions) {
+	public step(current: number, total: number, msg: Markup, opts?: LogOptions) {
 		this.log(
 			markup`<dim>[${String(current)}/${String(total)}]</dim> ${msg}`,
 			opts,
@@ -680,11 +679,11 @@ export default class Reporter implements ReporterNamespace {
 		}
 	};
 
-	public stripMarkup(str: AnyMarkup): string {
+	public stripMarkup(str: Markup): string {
 		return markupToJoinedPlainText(str, this.markupOptions);
 	}
 
-	private format(stream: ReporterStreamAttached, str: AnyMarkup): string[] {
+	private format(stream: ReporterStreamAttached, str: Markup): string[] {
 		if (isEmptyMarkup(str)) {
 			return [""];
 		}
@@ -725,7 +724,7 @@ export default class Reporter implements ReporterNamespace {
 		}
 	}
 
-	public log(msg: AnyMarkup, opts: LogOptions = {}) {
+	public log(msg: Markup, opts: LogOptions = {}) {
 		for (const stream of this.getStreams(opts)) {
 			this._logMarkup(stream, msg, opts);
 		}
@@ -744,7 +743,7 @@ export default class Reporter implements ReporterNamespace {
 
 	private _logMarkup(
 		stream: ReporterStreamAttached,
-		msg: AnyMarkup,
+		msg: Markup,
 		opts: LogOptions = {},
 	) {
 		const lines = this.format(stream, msg);
@@ -761,7 +760,7 @@ export default class Reporter implements ReporterNamespace {
 		}
 	}
 
-	private logCategory(rawInner: AnyMarkup, opts: LogCategoryOptions) {
+	private logCategory(rawInner: Markup, opts: LogCategoryOptions) {
 		if (!this.hasStreams(opts)) {
 			return;
 		}
@@ -787,7 +786,7 @@ export default class Reporter implements ReporterNamespace {
 		}
 	}
 
-	public success(msg: AnyMarkup, opts?: LogCategoryUserOptions) {
+	public success(msg: Markup, opts?: LogCategoryUserOptions) {
 		this.logCategory(
 			msg,
 			mergeObjects<LogCategoryOptions>(
@@ -801,7 +800,7 @@ export default class Reporter implements ReporterNamespace {
 		);
 	}
 
-	public error(msg: AnyMarkup, opts?: LogOptions) {
+	public error(msg: Markup, opts?: LogOptions) {
 		this.logCategory(
 			msg,
 			mergeObjects<LogCategoryOptions>(
@@ -816,7 +815,7 @@ export default class Reporter implements ReporterNamespace {
 		);
 	}
 
-	public info(msg: AnyMarkup, opts?: LogOptions) {
+	public info(msg: Markup, opts?: LogOptions) {
 		this.logCategory(
 			msg,
 			mergeObjects<LogCategoryOptions>(
@@ -830,7 +829,7 @@ export default class Reporter implements ReporterNamespace {
 		);
 	}
 
-	public warn(msg: AnyMarkup, opts?: LogOptions) {
+	public warn(msg: Markup, opts?: LogOptions) {
 		this.logCategory(
 			msg,
 			mergeObjects<LogCategoryOptions>(
@@ -860,7 +859,7 @@ export default class Reporter implements ReporterNamespace {
 		this.log(highlighted);
 	}
 
-	public namespace(...prefixes: AnyMarkup[]): ReporterNamespace {
+	public namespace(...prefixes: Markup[]): ReporterNamespace {
 		const prefix = joinMarkup(prefixes.map((prefix) => markup`[${prefix}]`));
 
 		return {
@@ -887,7 +886,7 @@ export default class Reporter implements ReporterNamespace {
 
 	public processedList<T>(
 		items: T[],
-		callback: (reporter: Reporter, item: T) => void | AnyMarkup,
+		callback: (reporter: Reporter, item: T) => void | Markup,
 		opts: ReporterListOptions = {},
 	): {
 		truncated: boolean;
@@ -906,7 +905,7 @@ export default class Reporter implements ReporterNamespace {
 			start += truncatedCount;
 		}
 
-		let buff: AnyMarkup = markup``;
+		let buff: Markup = markup``;
 
 		for (let i = 0; i < items.length; i++) {
 			const item = items[i];
@@ -946,7 +945,7 @@ export default class Reporter implements ReporterNamespace {
 		return {truncated: truncatedCount > 0};
 	}
 
-	public list(items: AnyMarkups, opts: ReporterListOptions = {}) {
+	public list(items: Markup[], opts: ReporterListOptions = {}) {
 		return this.processedList(
 			items,
 			(reporter, str) => {

@@ -24,7 +24,7 @@ import {forkProcess} from "../common/utils/fork";
 import {
 	BridgeClient,
 	Event,
-	isBridgeDisconnectedDiagnosticError,
+	isBridgeDisconnectedDiagnosticsError,
 } from "@internal/events";
 import {Reporter, ReporterDerivedStreams} from "@internal/cli-reporter";
 import prettyFormat from "@internal/pretty-format";
@@ -43,7 +43,7 @@ import os = require("os");
 import child = require("child_process");
 import {Dict, mergeObjects} from "@internal/typescript-helpers";
 import {
-	AnyMarkup,
+	Markup,
 	convertToMarkupFromRandomString,
 	joinMarkup,
 	joinMarkupLines,
@@ -361,8 +361,8 @@ export default class Client {
 		});
 	}
 
-	public async generateRageSummary(): Promise<AnyMarkup> {
-		let summary: AnyMarkup[] = [];
+	public async generateRageSummary(): Promise<Markup> {
+		let summary: Markup[] = [];
 
 		function push(name: string, value: unknown) {
 			const formatted =
@@ -558,7 +558,7 @@ export default class Client {
 			} catch (err) {
 				// Swallow BridgeErrors since we expect one to be emitted as the endServer call will be an unanswered request
 				// when the server ends all client sockets
-				if (!isBridgeDisconnectedDiagnosticError(err)) {
+				if (!isBridgeDisconnectedDiagnosticsError(err)) {
 					throw err;
 				}
 			}

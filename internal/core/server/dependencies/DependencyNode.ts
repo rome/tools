@@ -13,7 +13,6 @@ import {
 	Diagnostic,
 	DiagnosticIntegrity,
 	DiagnosticLocation,
-	Diagnostics,
 	descriptions,
 } from "@internal/diagnostics";
 import {ProjectDefinition} from "@internal/project";
@@ -82,7 +81,7 @@ function equalKind(
 }
 
 type ResolveImportsResult = {
-	diagnostics: Diagnostics;
+	diagnostics: Diagnostic[];
 	resolved: BundleCompileResolvedImports;
 };
 
@@ -359,7 +358,7 @@ export default class DependencyNode {
 		const resolvedImports: BundleCompileResolvedImports = new UIDPathMap();
 
 		// Diagnostics for unknown imports
-		const diagnostics: Diagnostics = [];
+		const diagnostics: Diagnostic[] = [];
 
 		// Go through all of our dependencies and check if they have any external exports to forward
 		for (const absolute of this.relativeToAbsolutePath.values()) {

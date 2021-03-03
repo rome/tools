@@ -10,8 +10,7 @@ import {
 	Diagnostic,
 	DiagnosticAdvice,
 	DiagnosticAdviceItem,
-	createSingleDiagnosticError,
-	deriveDiagnosticFromErrorStructure,
+	createSingleDiagnosticsError,
 	descriptions,
 	getErrorStackAdvice,
 } from "@internal/diagnostics";
@@ -28,7 +27,7 @@ import {
 	TestHelper,
 	TestSnapshotOptions,
 } from "@internal/virtual-rome/test";
-import {cleanFrames} from "./TestWorkerFile";
+import TestWorkerFile, {TestDetails} from "./TestWorkerFile";
 import {AsyncVoidCallback, VoidCallback} from "@internal/typescript-helpers";
 import {AbsoluteFilePath} from "@internal/path";
 import {DurationMeasurer} from "@internal/numbers";
@@ -82,8 +81,6 @@ type SnapshotOptions = {
 	opts?: TestSnapshotOptions;
 };
 
-type EmitDiagnostic = (diag: Diagnostic) => Promise<void>;
-
 function normalizeUserAdvice(advice: UserAdviceItem[]): DiagnosticAdvice {
 	return advice.map((item) => {
 		if (typeof item === "function") {
@@ -135,31 +132,19 @@ type UserAdviceItem =
 
 export default class TestAPI implements TestHelper {
 	constructor(
-		{
-			testName,
-			onTimeout,
-			path,
-			snapshotManager,
-			options,
-			emitDiagnostic,
-		}: {
-			emitDiagnostic: EmitDiagnostic;
-			path: AbsoluteFilePath;
-			testName: string;
-			onTimeout: OnTimeout;
-			snapshotManager: SnapshotManager;
-			options: TestServerRunnerOptions;
-		},
+		file: TestWorkerFile,
+		testDetails: TestDetails,
+		onTimeout: OnTimeout,
 	) {
-		this.testName = testName;
-		this.options = options;
-		this.snapshotManager = snapshotManager;
+		this.testDetails = testDetails;
+		this.options = file.globalOptions;
+		this.snapshotManager = file.snapshotManager;
 		this.snapshotCounter = 0;
-		this.path = path;
+		this.file = file;
+		this.path = file.path;
 		this.teardownEvent = new Event("TestAPI.teardown");
 		this.startTime = new DurationMeasurer();
 		this.onTimeout = onTimeout;
-		this.emitDiagnostic = emitDiagnostic;
 		this.timeoutMax = 0;
 		this.timeoutId = undefined;
 		this.setTimeout(5_000);
@@ -168,10 +153,10 @@ export default class TestAPI implements TestHelper {
 
 	public teardownEvent: Event<void, void>;
 
+	private file: TestWorkerFile;
 	private startTime: DurationMeasurer;
 	private options: TestServerRunnerOptions;
 	private path: AbsoluteFilePath;
-	private emitDiagnostic: EmitDiagnostic;
 
 	private onTimeout: OnTimeout;
 	private timeoutId: undefined | NodeJS.Timeout;
@@ -179,9 +164,22 @@ export default class TestAPI implements TestHelper {
 	private timeoutMax: undefined | number;
 
 	private advice: UserAdviceItem[];
-	private testName: string;
+	private testDetails: TestDetails;
 	private snapshotCounter: number;
 	private snapshotManager: SnapshotManager;
+
+	public async emitDiagnostic(diag: Diagnostic): Promise<void> {
+		return this.file.emitDiagnostic(
+			{
+				...diag,
+				description: {
+					...diag.description,
+					advice: this.getAdvice(diag.description.advice),
+				},
+			},
+			this.testDetails,
+		);
+	}
 
 	public getAdvice(startAdvice: DiagnosticAdvice = []): DiagnosticAdvice {
 		const {advice} = this;
@@ -333,7 +331,7 @@ export default class TestAPI implements TestHelper {
 		advice: DiagnosticAdvice = [],
 		framesToShift: number = 0,
 	): never {
-		const diag = deriveDiagnosticFromErrorStructure(
+		const diag = this.file.deriveDiagnosticFromErrorStructure(
 			getErrorStructure(new Error(), framesToShift + 1),
 			{
 				description: {
@@ -341,12 +339,9 @@ export default class TestAPI implements TestHelper {
 					message: markup`${message}`,
 					advice,
 				},
-				tags: {
-					internal: false,
-				},
 			},
 		);
-		throw createSingleDiagnosticError(diag);
+		throw createSingleDiagnosticsError(diag);
 	}
 
 	public truthy(
@@ -689,11 +684,10 @@ export default class TestAPI implements TestHelper {
 
 			if (res.status === "UPDATE" && this.options.freezeSnapshots) {
 				await this.emitDiagnostic(
-					deriveDiagnosticFromErrorStructure(
+					this.file.deriveDiagnosticFromErrorStructure(
 						callError,
 						{
 							description: descriptions.SNAPSHOTS.INLINE_FROZEN,
-							cleanFrames,
 						},
 					),
 				);
@@ -701,10 +695,9 @@ export default class TestAPI implements TestHelper {
 
 			if (res.status === "NO_MATCH") {
 				await this.emitDiagnostic(
-					deriveDiagnosticFromErrorStructure(
+					this.file.deriveDiagnosticFromErrorStructure(
 						callError,
 						{
-							cleanFrames,
 							description: {
 								...descriptions.SNAPSHOTS.INLINE_BAD_MATCH,
 								advice: this.buildMatchAdvice(
@@ -771,17 +764,16 @@ export default class TestAPI implements TestHelper {
 		this.onTeardown(async () => {
 			// Get the current snapshot
 			const existingSnapshot = await this.snapshotManager.get(
-				this.testName,
+				this.testDetails.name,
 				entryName,
 				opts.filename,
 			);
 			if (existingSnapshot === undefined) {
 				if (this.options.freezeSnapshots) {
 					await this.emitDiagnostic(
-						deriveDiagnosticFromErrorStructure(
+						this.file.deriveDiagnosticFromErrorStructure(
 							callError,
 							{
-								cleanFrames,
 								description: descriptions.SNAPSHOTS.FROZEN,
 							},
 						),
@@ -789,7 +781,7 @@ export default class TestAPI implements TestHelper {
 				} else {
 					// No snapshot exists, let's save this one!
 					this.snapshotManager.set({
-						testName: this.testName,
+						testName: this.testDetails.name,
 						entryName,
 						value: formatted,
 						language,
@@ -834,10 +826,9 @@ export default class TestAPI implements TestHelper {
 				});
 
 				await this.emitDiagnostic(
-					deriveDiagnosticFromErrorStructure(
+					this.file.deriveDiagnosticFromErrorStructure(
 						callError,
 						{
-							cleanFrames,
 							description: {
 								category: DIAGNOSTIC_CATEGORIES["tests/snapshots/incorrect"],
 								message: markupMessage,

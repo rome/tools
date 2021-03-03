@@ -12,7 +12,7 @@ import {
 import {nonASCIIwhitespace} from "@internal/js-parser-utils";
 import {removeCarriageReturn, splitLines} from "@internal/string-utils";
 import {
-	AnyMarkup,
+	Markup,
 	StaticMarkup,
 	convertToMarkupFromRandomString,
 	markup,
@@ -153,7 +153,7 @@ export function cleanEquivalentString(safe: string | StaticMarkup): string {
 	return str;
 }
 
-export type ToLines = [string, AnyMarkup][];
+export type ToLines = [string, Markup][];
 
 export function toLines(opts: AnsiHighlightOptions): ToLines {
 	const input = removeCarriageReturn(opts.input);

@@ -16,7 +16,7 @@ import {
 import {Server, ServerRequest, TestRef} from "@internal/core";
 import {DiagnosticsPrinter} from "@internal/cli-diagnostics";
 import {humanizeNumber} from "@internal/numbers";
-import {AnyBridge, isBridgeDisconnectedDiagnosticError} from "@internal/events";
+import {AnyBridge, isBridgeDisconnectedDiagnosticsError} from "@internal/events";
 import {CoverageCollector} from "@internal/v8";
 import {ManifestDefinition} from "@internal/codec-js-manifest";
 import {
@@ -29,7 +29,7 @@ import {
 	percentInsideCoverageDirectory,
 	sortMapKeys,
 } from "./utils";
-import {AnyMarkups, StaticMarkup, joinMarkup, markup} from "@internal/markup";
+import {Markup, StaticMarkup, joinMarkup, markup} from "@internal/markup";
 import {MAX_WORKER_COUNT} from "@internal/core/common/constants";
 import net = require("net");
 import {FocusedTest} from "@internal/core/worker/test/TestWorkerFile";
@@ -166,7 +166,7 @@ export default class TestServer {
 		}
 
 		if (
-			isBridgeDisconnectedDiagnosticError(err) ||
+			isBridgeDisconnectedDiagnosticsError(err) ||
 			this.ignoreBridgeEndError.has(bridge)
 		) {
 			return;
@@ -373,9 +373,7 @@ export default class TestServer {
 								description: {
 									category: DIAGNOSTIC_CATEGORIES["tests/failure"],
 								},
-								tags: {
-									internal: false,
-								},
+								internal: false,
 							},
 						);
 
@@ -520,7 +518,7 @@ export default class TestServer {
 			};
 		}
 
-		const rows: AnyMarkups[] = [];
+		const rows: Markup[][] = [];
 
 		// If there's more than 15 files to show, and we don't have the explicit showAllCoverage flag
 		// then truncate the output
@@ -679,7 +677,7 @@ export default class TestServer {
 				reporter.success(
 					markup`<emphasis>${humanizeNumber(totalCount)}</emphasis> ${grammarNumberTests(
 						totalCount,
-					)} passed!`,
+					)} passed${isError ? "" : "!"}`,
 				);
 				if (!isError) {
 					printer.disableDefaultFooter();

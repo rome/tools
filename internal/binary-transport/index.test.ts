@@ -1,6 +1,6 @@
 import RSERBufferParser from "./RSERBufferParser";
 import {
-	AnyRSERPathMap,
+	RSERPathMap,
 	RSERArray,
 	RSERMap,
 	RSERObject,
@@ -87,7 +87,7 @@ test(
 		obj.foo = obj;
 		assert(t, obj);
 
-		const pathMap: AnyRSERPathMap = new AbsoluteFilePathMap();
+		const pathMap: RSERPathMap = new AbsoluteFilePathMap();
 		pathMap.set(createAbsoluteFilePath("/"), pathMap);
 		assert(t, pathMap);
 	},

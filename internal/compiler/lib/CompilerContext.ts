@@ -11,10 +11,9 @@ import {
 	extractSourceLocationRangeFromNodes,
 } from "@internal/parser-core";
 import {
-	AnyVisitors,
 	CompilerOptions,
 	CompilerPathOptions,
-	Transforms,
+	Transform,
 } from "@internal/compiler";
 import {
 	Diagnostic,
@@ -185,7 +184,7 @@ export default class CompilerContext {
 		return state as VisitorState<State>;
 	}
 
-	public async normalizeTransforms(transforms: Transforms): Promise<AnyVisitors> {
+	public async normalizeTransforms(transforms: Transform[]): Promise<AnyVisitor[]> {
 		return Promise.all(
 			transforms.map(async (visitor) => {
 				if (typeof visitor === "function") {
@@ -253,7 +252,7 @@ export default class CompilerContext {
 	}
 
 	public reduceRoot(
-		visitors: AnyVisitor | AnyVisitors,
+		visitors: AnyVisitor | AnyVisitor[],
 		ast: AnyRoot = this.ast,
 	): AnyRoot {
 		if (this.reducedRoot) {
@@ -285,7 +284,7 @@ export default class CompilerContext {
 
 	public reduce(
 		ast: AnyNode,
-		visitors: AnyVisitor | AnyVisitors,
+		visitors: AnyVisitor | AnyVisitor[],
 		pathOpts?: CompilerPathOptions,
 	): AnyNodes {
 		return reduceNode(ast, visitors, this, pathOpts);

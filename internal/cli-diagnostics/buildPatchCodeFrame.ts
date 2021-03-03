@@ -12,9 +12,9 @@ import {
 	MAX_PATCH_LINES,
 } from "./constants";
 import {showInvisibles} from "./utils";
-import {Diffs, diffConstants, stringDiffUnified} from "@internal/string-diff";
+import {Diff, diffConstants, stringDiffUnified} from "@internal/string-diff";
 import {
-	AnyMarkups,
+	Markup,
 	StaticMarkup,
 	joinMarkup,
 	markup,
@@ -23,7 +23,7 @@ import {
 } from "@internal/markup";
 import {DiagnosticAdviceDiff} from "@internal/diagnostics";
 
-function formatDiffLine(diffs: Diffs) {
+function formatDiffLine(diffs: Diff[]) {
 	let atLineStart = true;
 
 	return joinMarkup(
@@ -93,7 +93,7 @@ export default function buildPatchCodeFrame(
 	const singleLine = beforeLineCount === 1 && afterLineCount === 1;
 
 	const {legend} = item;
-	const frame: AnyMarkups = [];
+	const frame: Markup[] = [];
 	let displayedLines = 0;
 	let truncated = false;
 	let lastDisplayedLine = -1;
@@ -107,7 +107,7 @@ export default function buildPatchCodeFrame(
 		beforeLine?: string | number,
 		afterLine?: string | number,
 	): StaticMarkup {
-		let parts: AnyMarkups = [];
+		let parts: Markup[] = [];
 		parts.push(
 			markup`<emphasis>${CODE_FRAME_INDENT}<pad align="right" width="${String(
 				beforeNoLength,

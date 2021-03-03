@@ -25,7 +25,7 @@ import {isEscaped} from "@internal/string-utils";
 import {ZeroIndexed} from "@internal/numbers";
 import {descriptions} from "@internal/diagnostics";
 import {
-	AnyMarkup,
+	Markup,
 	StaticMarkup,
 	readMarkup,
 	serializeLazyMarkup,
@@ -411,7 +411,7 @@ function parseChild(
 
 const parseCache: WeakMap<Extract<StaticMarkup, object>, MarkupParsedChildren> = new WeakMap();
 export function parseMarkup(
-	input: string | AnyMarkup,
+	input: string | Markup,
 	opts: ParserOptions = {},
 ): MarkupParsedChildren {
 	let cacheKey: undefined | StaticMarkup;

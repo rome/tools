@@ -1,5 +1,5 @@
 import {createDiagnosticsCategory} from "./index";
-import {AnyMarkups, StaticMarkup, markup} from "@internal/markup";
+import {Markup, StaticMarkup, markup} from "@internal/markup";
 import {buildSuggestionAdvice} from "../helpers";
 import {SourceLocation} from "@internal/parser-core";
 import {Path} from "@internal/path";
@@ -55,7 +55,7 @@ export const typeCheck = createDiagnosticsCategory({
 		//message += `but allows ${this.extraenous.map(type => this.utils.humanize(type)).join(' | ')}`;
 		message: markup`Expected only a ${only} but got ${target}`,
 	}),
-	MISSING_CONDITION: (missing: AnyMarkups) => ({
+	MISSING_CONDITION: (missing: Markup[]) => ({
 		category: DIAGNOSTIC_CATEGORIES["typeCheck/missingCondition"],
 		message: markup`Missing the conditions ${missing.join(", ")}`,
 	}),

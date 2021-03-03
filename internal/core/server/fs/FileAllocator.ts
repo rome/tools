@@ -9,9 +9,9 @@ import {Server, WorkerContainer} from "@internal/core";
 import {SimpleStats} from "./MemoryFileSystem";
 import {PathLocker} from "../../../async/lockers";
 import {AbsoluteFilePath, AbsoluteFilePathMap} from "@internal/path";
-import {AnyMarkup, joinMarkup, markup} from "@internal/markup";
+import {Markup, joinMarkup, markup} from "@internal/markup";
 import {ReporterNamespace} from "@internal/cli-reporter";
-import {createSingleDiagnosticError, descriptions} from "@internal/diagnostics";
+import {createSingleDiagnosticsError, descriptions} from "@internal/diagnostics";
 import {matchPathPatterns} from "@internal/path-match";
 import {ServerRefreshFile} from "../Server";
 
@@ -63,7 +63,7 @@ export default class FileAllocator {
 				project.directory,
 			).type === "NO_MATCH"
 		) {
-			throw createSingleDiagnosticError({
+			throw createSingleDiagnosticsError({
 				description: descriptions.FILES.TOO_BIG(
 					path,
 					project.directory,
@@ -116,7 +116,7 @@ export default class FileAllocator {
 		await queue.spin();
 	}
 
-	public async evict(path: AbsoluteFilePath, reason: AnyMarkup) {
+	public async evict(path: AbsoluteFilePath, reason: Markup) {
 		// Find owner
 		const workerId = this.getOwnerId(path);
 		if (workerId === undefined) {

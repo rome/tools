@@ -6,7 +6,7 @@
  */
 
 import {Position, SourceLocation} from "@internal/parser-core";
-import {Diffs} from "@internal/string-diff";
+import {Diff} from "@internal/string-diff";
 import {ConstJSSourceType} from "@internal/ast";
 import {OneIndexed, ZeroIndexed} from "@internal/numbers";
 import {DiagnosticCategory} from "./categories";
@@ -95,18 +95,14 @@ export type Diagnostic = {
 	location: DiagnosticLocation;
 	label?: StaticMarkup;
 	origins?: DiagnosticOrigin[];
-	dependencies?: DiagnosticDependencies;
+	dependencies?: DiagnosticDependency[];
 	tags?: DiagnosticTags;
 };
-
-export type Diagnostics = Diagnostic[];
 
 export type DiagnosticDependency = {
 	path: Path;
 	integrity?: DiagnosticIntegrity;
 };
-
-export type DiagnosticDependencies = DiagnosticDependency[];
 
 export type DiagnosticIntegrity = {
 	hash: string;
@@ -199,7 +195,7 @@ export type DiagnosticAdviceFrame = {
 
 export type DiagnosticAdviceDiff = {
 	type: "diff";
-	diff: Diffs;
+	diff: Diff[];
 	language: DiagnosticLanguage;
 	sourceTypeJS?: ConstJSSourceType;
 	legend?: {

@@ -15,7 +15,7 @@ import {
 import {json} from "@internal/codec-config";
 import {
 	DIAGNOSTIC_CATEGORIES,
-	createSingleDiagnosticError,
+	createSingleDiagnosticsError,
 	decorateErrorWithDiagnostics,
 	descriptions,
 } from "@internal/diagnostics";
@@ -77,7 +77,7 @@ export default class IntegrationLoader<Value> {
 			return require.resolve(id);
 		} catch (err) {
 			if (err.code === "MODULE_NOT_FOUND") {
-				throw createSingleDiagnosticError({
+				throw createSingleDiagnosticsError({
 					description: descriptions.INTEGRATIONS.NOT_FOUND(this.name),
 					location: {
 						path,

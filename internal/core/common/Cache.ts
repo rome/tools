@@ -3,7 +3,7 @@ import {
 	RSERValue,
 	encodeValueToRSERSingleMessageStream,
 } from "@internal/binary-transport";
-import {AnyMarkups, markup} from "@internal/markup";
+import {Markup, markup} from "@internal/markup";
 import {AbsoluteFilePath, AbsoluteFilePathMap, UIDPath} from "@internal/path";
 import {Resource} from "@internal/resources";
 import FatalErrorHandler from "./FatalErrorHandler";
@@ -105,7 +105,7 @@ export default class Cache {
 		this.pendingWrites = new AbsoluteFilePathMap();
 
 		// Write pending files
-		const filelinks: AnyMarkups = [];
+		const filelinks: Markup[] = [];
 		for (const [directory, ops] of pendingWrites) {
 			await directory.createDirectory();
 

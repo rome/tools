@@ -5,9 +5,9 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Diagnostics, DiagnosticsProcessor} from "@internal/diagnostics";
+import {Diagnostic, DiagnosticsProcessor} from "@internal/diagnostics";
 import {DiagnosticsPrinter} from "@internal/cli-diagnostics";
-import {Diagnostic, DiagnosticSuppressions} from "./types";
+import {DiagnosticSuppressions} from "./types";
 import {Reporter} from "@internal/cli-reporter";
 import {readMarkup} from "@internal/markup";
 import {
@@ -26,7 +26,7 @@ let insideDiagnosticsErrorSerial = false;
 export class DiagnosticsError extends Error implements NodeSystemError {
 	constructor(
 		message: undefined | string,
-		diagnostics: Diagnostics,
+		diagnostics: Diagnostic[],
 		suppressions: DiagnosticSuppressions = [],
 	) {
 		if (diagnostics.length === 0) {
@@ -82,19 +82,19 @@ export class DiagnosticsError extends Error implements NodeSystemError {
 		return message;
 	}
 
-	public diagnostics: Diagnostics;
+	public diagnostics: Diagnostic[];
 	public suppressions: DiagnosticSuppressions;
 }
 
-export function createRuntimeDiagnosticError(
+export function createRuntimeDiagnosticsError(
 	opts: DeriveErrorDiagnosticOptions,
 ): DiagnosticsError {
 	const struct = getErrorStructure(new Error(), 1);
 	const diag = deriveDiagnosticFromErrorStructure(struct, opts);
-	return createSingleDiagnosticError(diag);
+	return createSingleDiagnosticsError(diag);
 }
 
-export function createSingleDiagnosticError(
+export function createSingleDiagnosticsError(
 	diag: Diagnostic,
 	suppressions?: DiagnosticSuppressions,
 ): DiagnosticsError {
@@ -105,7 +105,7 @@ export function createSingleDiagnosticError(
 	);
 }
 
-export function getDiagnosticsFromError(err: Error): undefined | Diagnostics {
+export function getDiagnosticsFromError(err: Error): undefined | Diagnostic[] {
 	if (err instanceof DiagnosticsError) {
 		const processor = new DiagnosticsProcessor({});
 		processor.addSuppressions(err.suppressions);
@@ -119,7 +119,7 @@ export function getDiagnosticsFromError(err: Error): undefined | Diagnostics {
 export function getOrDeriveDiagnosticsFromError(
 	err: Error,
 	opts: DeriveErrorDiagnosticOptions,
-): Diagnostics {
+): Diagnostic[] {
 	err = convertPossibleNodeErrorToDiagnostic(err);
 	const diagnostics = getDiagnosticsFromError(err);
 	if (diagnostics === undefined) {
@@ -137,7 +137,7 @@ export function isUserDiagnostic(diag: Diagnostic): boolean {
 	return true;
 }
 
-export function isUserDiagnosticError(err: Error): boolean {
+export function isUserDiagnosticsError(err: Error): boolean {
 	const diagnostics = getDiagnosticsFromError(err);
 	if (diagnostics === undefined) {
 		return false;
@@ -152,7 +152,7 @@ export function isUserDiagnosticError(err: Error): boolean {
 	}
 }
 
-export function isDiagnosticErrorOfCategory(
+export function isDiagnosticsErrorOfCategory(
 	err: Error,
 	category: DiagnosticCategory,
 ): boolean {

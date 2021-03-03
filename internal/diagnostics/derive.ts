@@ -13,10 +13,9 @@ import {
 	DiagnosticDescription,
 	DiagnosticOrigin,
 	DiagnosticTags,
-	Diagnostics,
 } from "./types";
 import {
-	ErrorFrames,
+	ErrorFrame,
 	StructuredError,
 	getDiagnosticLocationFromErrorFrame,
 	getErrorStructure,
@@ -26,10 +25,10 @@ import {appendAdviceToDiagnostic, prependAdviceToDiagnostic} from "./helpers";
 import {StaticMarkup, isEmptyMarkup, markup} from "@internal/markup";
 import {
 	DiagnosticsError,
-	createSingleDiagnosticError,
+	createSingleDiagnosticsError,
 	getDiagnosticsFromError,
 	isUserDiagnostic,
-	isUserDiagnosticError,
+	isUserDiagnosticsError,
 } from "./error-wrappers";
 import {MixedPathSet, Path, UNKNOWN_PATH, equalPaths} from "@internal/path";
 import {RequiredProps} from "@internal/typescript-helpers";
@@ -73,13 +72,12 @@ function filterActionAdvice(
 export type DeriveErrorDiagnosticOptions = {
 	description: RequiredProps<Partial<DiagnosticDescription>, "category">;
 	label?: StaticMarkup;
-	// Passing in `internal: true` is redundant
-	tags?: Omit<DiagnosticTags, "internal"> & {
-		internal?: false;
-	};
+	// Use `internal` as it's always on by default
+	tags?: Omit<DiagnosticTags, "internal">;
+	internal?: false;
 	path?: Path;
 	cleanRelativeError?: Error;
-	cleanFrames?: (frames: ErrorFrames) => ErrorFrames;
+	cleanFrames?: (frames: ErrorFrame[]) => ErrorFrame[];
 	stackAdviceOptions?: DeriveErrorStackAdviceOptions;
 };
 
@@ -87,7 +85,7 @@ export function decorateErrorWithDiagnostics(
 	error: Error,
 	opts: DeriveErrorDiagnosticOptions,
 ): Error {
-	if (isUserDiagnosticError(error)) {
+	if (isUserDiagnosticsError(error)) {
 		return error;
 	}
 
@@ -151,7 +149,7 @@ export function decorateErrorWithDiagnostics(
 		);
 	}
 
-	return createSingleDiagnosticError(diag);
+	return createSingleDiagnosticsError(diag);
 }
 
 export function deriveDiagnosticFromErrorStructure(
@@ -217,7 +215,7 @@ export function deriveDiagnosticFromErrorStructure(
 		},
 		label: opts.label,
 		tags: {
-			internal: true,
+			internal: opts.internal !== false,
 			...opts.tags,
 		},
 	};
@@ -350,8 +348,8 @@ export function getErrorStackAdvice(
 
 export function addOriginsToDiagnostics(
 	origins: DiagnosticOrigin[],
-	diagnostics: Diagnostics,
-): Diagnostics {
+	diagnostics: Diagnostic[],
+): Diagnostic[] {
 	if (origins.length === 0) {
 		return diagnostics;
 	}

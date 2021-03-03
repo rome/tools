@@ -6,8 +6,7 @@ import {
 } from "./types";
 import {parseMarkup} from "./parse";
 import {
-	AnyMarkup,
-	AnyMarkups,
+	Markup,
 	StaticMarkup,
 	convertToMarkupFromRandomString,
 	isEmptyMarkup,
@@ -21,7 +20,7 @@ import {Dict} from "@internal/typescript-helpers";
 
 function buildTag(
 	tag: MarkupParsedTag,
-	inner: AnyMarkup,
+	inner: Markup,
 	opts: MarkupFormatNormalizeOptions,
 ): {
 	modified: boolean;
@@ -132,7 +131,7 @@ function normalizeMarkupChildren(
 	let textLength = 0;
 	let modified = false;
 
-	let parts: AnyMarkups = [];
+	let parts: Markup[] = [];
 
 	for (const child of children) {
 		if (child.type === "Text") {
@@ -187,7 +186,7 @@ export function joinMarkupLines({lines}: MarkupLinesAndWidth): string {
 }
 
 export function normalizeMarkup(
-	input: AnyMarkup,
+	input: Markup,
 	opts: MarkupFormatNormalizeOptions = {},
 	maxLength: number = Infinity,
 ): {

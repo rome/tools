@@ -15,7 +15,7 @@ import {
 } from "@internal/path";
 import {
 	DIAGNOSTIC_CATEGORIES,
-	Diagnostics,
+	Diagnostic,
 	DiagnosticsProcessor,
 	catchDiagnostics,
 	formatCategoryDescription,
@@ -124,7 +124,7 @@ export default class LSPServer {
 		});
 	}
 
-	private logDiagnostics(path: AbsoluteFilePath, diagnostics: Diagnostics = []) {
+	private logDiagnostics(path: AbsoluteFilePath, diagnostics: Diagnostic[] = []) {
 		if (diagnostics.length === 0) {
 			return;
 		}

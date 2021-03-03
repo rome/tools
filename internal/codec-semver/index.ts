@@ -10,7 +10,6 @@ import {
 	RangeNode,
 	UserRange,
 	UserVersion,
-	UserVersions,
 } from "./types";
 import {satisfiesFromAst} from "./satisfies";
 import {compareFromAst} from "./compare";
@@ -32,7 +31,7 @@ export {parseSemverRange, parseSemverVersion};
 export {default as stringifySemver} from "./stringify";
 
 export function sortSemverVersions(
-	rawVersions: UserVersions,
+	rawVersions: UserVersion[],
 	opts?: SemverParserOptions,
 ): AbsoluteVersionNode[] {
 	const versions = rawVersions.map((ver) => normalizeUserVersion(ver, opts));
@@ -40,7 +39,7 @@ export function sortSemverVersions(
 }
 
 export function maxSatisfyingSemver(
-	rawVersions: UserVersions,
+	rawVersions: UserVersion[],
 	rawRange: UserRange,
 	opts: SemverParserOptions,
 ): undefined | AbsoluteVersionNode {
@@ -57,7 +56,7 @@ export function maxSatisfyingSemver(
 }
 
 export function minSatisfyingSemver(
-	rawVersions: UserVersions,
+	rawVersions: UserVersion[],
 	rawRange: UserRange,
 	opts?: SemverParserOptions,
 ): undefined | AbsoluteVersionNode {

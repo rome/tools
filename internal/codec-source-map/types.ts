@@ -8,8 +8,6 @@
 import {OneIndexed, ZeroIndexed} from "@internal/numbers";
 import {Path} from "@internal/path";
 
-export type Mappings = Mapping[];
-
 export type ParsedMapping = {
 	generated: {
 		line: OneIndexed;

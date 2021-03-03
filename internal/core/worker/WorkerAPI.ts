@@ -8,7 +8,7 @@
 import {FileReference, Worker} from "@internal/core";
 import {AnyNode, AnyRoot} from "@internal/ast";
 import {
-	Diagnostics,
+	Diagnostic,
 	catchDiagnostics,
 	descriptions,
 } from "@internal/diagnostics";
@@ -42,7 +42,6 @@ import {
 } from "../common/types/analyzeDependencies";
 import {
 	InlineSnapshotUpdate,
-	InlineSnapshotUpdates,
 } from "./test/SnapshotManager";
 import {formatAST} from "@internal/formatter";
 import {getNodeReferenceParts, valueToNode} from "@internal/js-ast-utils";
@@ -83,7 +82,7 @@ export default class WorkerAPI {
 	private cache: WorkerCache;
 
 	public interceptDiagnostics<T extends {
-		diagnostics: Diagnostics;
+		diagnostics: Diagnostic[];
 	}>(
 		val: T,
 		{astModifiedFromSource}: {
@@ -151,7 +150,7 @@ export default class WorkerAPI {
 
 	public async updateInlineSnapshots(
 		ref: FileReference,
-		updates: InlineSnapshotUpdates,
+		updates: InlineSnapshotUpdate[],
 		parseOptions: WorkerParseOptions,
 	): Promise<WorkerUpdateInlineSnapshotResult> {
 		let {ast, mtimeNs, project} = await this.worker.parse(ref, parseOptions);

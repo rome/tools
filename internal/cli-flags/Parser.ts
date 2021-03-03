@@ -24,7 +24,7 @@ import {
 import {AbsoluteFilePath, HOME_PATH, createUIDPath} from "@internal/path";
 import {Dict} from "@internal/typescript-helpers";
 import {
-	AnyMarkups,
+	Markup,
 	StaticMarkup,
 	joinMarkup,
 	joinMarkupLines,
@@ -598,7 +598,7 @@ export default class Parser<T> {
 		return rootFlags;
 	}
 
-	private buildOptionsHelp(keys: string[]): AnyMarkups[] {
+	private buildOptionsHelp(keys: string[]): Markup[][] {
 		const optionOutput: {
 			argName: string;
 			arg: StaticMarkup;

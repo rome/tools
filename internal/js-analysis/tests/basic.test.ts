@@ -5,12 +5,12 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Diagnostics} from "@internal/diagnostics";
+import {Diagnostic} from "@internal/diagnostics";
 import {test} from "rome";
 import {check} from "@internal/js-analysis";
 import {parseJS} from "@internal/js-parser";
 
-async function testCheck(code: string): Promise<Diagnostics> {
+async function testCheck(code: string): Promise<Diagnostic[]> {
 	const ast = parseJS({
 		input: code,
 		sourceType: "module",

@@ -17,8 +17,8 @@ import {DIAGNOSTIC_CATEGORIES} from "@internal/diagnostics";
 import SilentClientError from "./SilentClientError";
 import {ClientQueryResponse} from "../common/types/client";
 import {
-	isBridgeClosedDiagnosticError,
-	isBridgeDisconnectedDiagnosticError,
+	isBridgeClosedDiagnosticsError,
+	isBridgeDisconnectedDiagnosticsError,
 } from "@internal/events";
 
 export type ClientRequestType = "local" | "server";
@@ -121,8 +121,8 @@ export default class ClientRequest {
 			return await bridge.events.query.call(this.query);
 		} catch (err) {
 			if (
-				isBridgeClosedDiagnosticError(err) ||
-				isBridgeDisconnectedDiagnosticError(err)
+				isBridgeClosedDiagnosticsError(err) ||
+				isBridgeDisconnectedDiagnosticsError(err)
 			) {
 				return {
 					type: "CANCELLED",

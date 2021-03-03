@@ -10,10 +10,10 @@ import {AbsoluteFilePath, Path} from "@internal/path";
 import {DiagnosticsProcessor} from "@internal/diagnostics";
 import {FSReadStream} from "@internal/fs";
 
-export type DiagnosticPrinterAuxiliaryFormat = undefined | "github-actions";
+export type DiagnosticsPrinterAuxiliaryFormat = undefined | "github-actions";
 
 export type DiagnosticsPrinterFlags = {
-	auxiliaryDiagnosticFormat: DiagnosticPrinterAuxiliaryFormat;
+	auxiliaryDiagnosticFormat: DiagnosticsPrinterAuxiliaryFormat;
 	grep: string;
 	fieri: boolean;
 	inverseGrep: boolean;

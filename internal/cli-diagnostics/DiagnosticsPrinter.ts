@@ -11,7 +11,6 @@ import {
 	DiagnosticLanguage,
 	DiagnosticLocation,
 	DiagnosticSourceType,
-	Diagnostics,
 	DiagnosticsProcessor,
 } from "@internal/diagnostics";
 import {MarkupRGB, StaticMarkup, markup} from "@internal/markup";
@@ -424,7 +423,7 @@ export default class DiagnosticsPrinter extends Error {
 	}
 
 	private getDependenciesFromDiagnostics(
-		diagnostics: Diagnostics,
+		diagnostics: Diagnostic[],
 	): FileDependency[] {
 		let deps: FileDependency[] = [];
 		for (const diag of diagnostics) {
@@ -488,7 +487,7 @@ export default class DiagnosticsPrinter extends Error {
 		return Array.from(depsMap.values());
 	}
 
-	public async fetchFileSources(diagnostics: Diagnostics) {
+	public async fetchFileSources(diagnostics: Diagnostic[]) {
 		for (const dep of this.getDependenciesFromDiagnostics(diagnostics)) {
 			await this.wrapError(
 				`addFileSource(${dep.path.join()})`,
@@ -497,7 +496,7 @@ export default class DiagnosticsPrinter extends Error {
 		}
 	}
 
-	public async printBody(diagnostics: Diagnostics) {
+	public async printBody(diagnostics: Diagnostic[]) {
 		await this.wrapError(
 			"root",
 			async () => {
@@ -530,7 +529,7 @@ export default class DiagnosticsPrinter extends Error {
 		}
 	}
 
-	private async printDiagnostics(diagnostics: Diagnostics) {
+	private async printDiagnostics(diagnostics: Diagnostic[]) {
 		const reporter = this.reporter.fork({
 			shouldRedirectOutToErr: true,
 		});
@@ -648,8 +647,8 @@ export default class DiagnosticsPrinter extends Error {
 		});
 	}
 
-	private filterDiagnostics(diagnostics: Diagnostics): Diagnostics {
-		const filteredDiagnostics: Diagnostics = [];
+	private filterDiagnostics(diagnostics: Diagnostic[]): Diagnostic[] {
+		const filteredDiagnostics: Diagnostic[] = [];
 
 		for (const diag of diagnostics) {
 			if (this.seenDiagnostics.has(diag)) {

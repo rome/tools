@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Diagnostics} from "@internal/diagnostics";
+import {Diagnostic} from "@internal/diagnostics";
 import {ConstJSExportModuleKind, ConstJSImportModuleKind} from "@internal/ast";
 import {SourceLocation} from "@internal/parser-core";
 import {Dict} from "@internal/typescript-helpers";
@@ -81,7 +81,7 @@ export type AnalyzeDependencyTopLevelLocalBindings = Dict<
 
 export type AnalyzeDependencyResult = {
 	moduleType: AnalyzeModuleType;
-	diagnostics: Diagnostics;
+	diagnostics: Diagnostic[];
 	topLevelLocalBindings: AnalyzeDependencyTopLevelLocalBindings;
 	firstTopAwaitLocation: undefined | SourceLocation;
 	importFirstUsage: AnalyzeDependencyImportFirstUsage;

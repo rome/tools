@@ -17,8 +17,8 @@ import {
 } from "@internal/path";
 import {JSONObject, JSONPropertyValue} from "@internal/codec-config";
 import {Dict} from "@internal/typescript-helpers";
-import {PathPatterns} from "@internal/path-match";
-import {Diagnostics} from "@internal/diagnostics";
+import {PathPattern} from "@internal/path-match";
+import {Diagnostic} from "@internal/diagnostics";
 
 export type StringObject = Dict<string>;
 
@@ -89,7 +89,7 @@ export type Manifest = {
 	author: undefined | ManifestPerson;
 	contributors: undefined | (ManifestPerson[]);
 	maintainers: undefined | (ManifestPerson[]);
-	files: PathPatterns;
+	files: PathPattern[];
 	keywords: string[];
 	cpu: string[];
 	os: string[];
@@ -103,7 +103,7 @@ export type Manifest = {
 	bundledDependencies: string[];
 	raw: JSONObject;
 	diagnostics: {
-		license: Diagnostics | undefined;
+		license: Diagnostic[] | undefined;
 	};
 };
 

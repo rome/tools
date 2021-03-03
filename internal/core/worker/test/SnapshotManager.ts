@@ -59,8 +59,6 @@ export type InlineSnapshotUpdate = {
 	snapshot: boolean | number | string | null;
 };
 
-export type InlineSnapshotUpdates = InlineSnapshotUpdate[];
-
 export default class SnapshotManager {
 	constructor(runner: TestWorkerFile, testPath: AbsoluteFilePath) {
 		this.defaultSnapshotPath = testPath.getParent().append(

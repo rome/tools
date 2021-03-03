@@ -27,7 +27,7 @@ import {
 import {
 	DiagnosticLocation,
 	DiagnosticsProcessor,
-	createSingleDiagnosticError,
+	createSingleDiagnosticsError,
 	descriptions,
 } from "@internal/diagnostics";
 import {
@@ -481,7 +481,7 @@ export default class ProjectManager {
 					? consumer.getDiagnosticLocation()
 					: rootConfigLocation;
 
-			throw createSingleDiagnosticError({
+			throw createSingleDiagnosticsError({
 				description: descriptions.PROJECT_MANAGER.NO_VCS(rootConfigLocation),
 				location,
 			});
@@ -708,7 +708,7 @@ export default class ProjectManager {
 				)} for ${path.join()}`,
 			);
 		} else {
-			throw createSingleDiagnosticError({
+			throw createSingleDiagnosticsError({
 				location,
 				description: descriptions.PROJECT_MANAGER.NOT_FOUND,
 			});

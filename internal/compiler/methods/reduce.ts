@@ -6,7 +6,7 @@
  */
 
 import {
-	AnyVisitors,
+	AnyVisitor,
 	CompilerContext,
 	CompilerPath,
 	CompilerPathOptions,
@@ -15,7 +15,6 @@ import {
 } from "@internal/compiler";
 import {AnyNode, AnyNodes, visitorKeys as allVisitorKeys} from "@internal/ast";
 import {isNodeLike} from "@internal/js-ast-utils";
-import {AnyVisitor} from "../types";
 import {pretty} from "@internal/pretty-format";
 import {
 	EnterSignal,
@@ -147,7 +146,7 @@ function shouldBailReduce(
 
 export function reduceNode(
 	ast: AnyNode,
-	visitors: AnyVisitor | AnyVisitors,
+	visitors: AnyVisitor | AnyVisitor[],
 	context: CompilerContext,
 	pathOpts: CompilerPathOptions = {},
 ): AnyNodes {
@@ -179,7 +178,7 @@ export function reduceNode(
 
 export function reduceSignal(
 	ast: AnyNode,
-	visitors: AnyVisitor | AnyVisitors,
+	visitors: AnyVisitor | AnyVisitor[],
 	context: CompilerContext,
 	pathOpts: CompilerPathOptions = {},
 ): ExitSignal {
@@ -196,7 +195,7 @@ type PopState = Set<AnyVisitorState>;
 // This method is pretty gnarly and deeply nested but is very important from a performance perspective
 function _reduceSignal(
 	origNode: AnyNode,
-	visitors: AnyVisitors,
+	visitors: AnyVisitor[],
 	context: CompilerContext,
 	pathOpts: CompilerPathOptions,
 ): ExitSignal {

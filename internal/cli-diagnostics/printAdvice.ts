@@ -27,7 +27,7 @@ import {ToLines, toLines} from "./utils";
 import buildPatchCodeFrame from "./buildPatchCodeFrame";
 import buildCodeFrame from "./buildCodeFrame";
 import {
-	AnyMarkups,
+	Markup,
 	isEmptyMarkup,
 	joinMarkup,
 	markup,
@@ -39,7 +39,7 @@ import {DiagnosticsPrinterFlags} from "./types";
 import DiagnosticsPrinter, {DiagnosticsPrinterFileSources} from "./DiagnosticsPrinter";
 import {MixedPathSet, createUIDPath} from "@internal/path";
 import {MAX_CODE_LENGTH, MAX_CODE_LINES, MAX_LOG_LENGTH} from "./constants";
-import {Diffs, diffConstants} from "@internal/string-diff";
+import {Diff, diffConstants} from "@internal/string-diff";
 import {removeCarriageReturn} from "@internal/string-utils";
 import {serializeCLIFlags} from "@internal/cli-flags";
 import {inferDiagnosticLanguageFromPath} from "@internal/core/common/file-handlers";
@@ -153,7 +153,7 @@ function printAction(
 	opts: AdvicePrintOptions,
 ): PrintAdviceResult {
 	opts.reporter.info(
-		`<emphasis>Command Suggestion:</emphasis> ${item.description}`,
+		markup`<emphasis>Command Suggestion:</emphasis> ${item.description}`,
 	);
 
 	const command = serializeCLIFlags(
@@ -191,7 +191,7 @@ function printInspect(
 	return DID_PRINT;
 }
 
-function generateDiffHint(diffs: Diffs): undefined | DiagnosticAdviceItem {
+function generateDiffHint(diffs: Diff[]): undefined | DiagnosticAdviceItem {
 	let expected = "";
 	let received = "";
 
@@ -433,7 +433,7 @@ function printStacktrace(
 				sourceText: code,
 			} = frame;
 
-			const logParts: AnyMarkups = [];
+			const logParts: Markup[] = [];
 
 			// Add prefix
 			if (prefix !== undefined) {
@@ -441,7 +441,7 @@ function printStacktrace(
 			}
 
 			// Build path
-			const objParts: AnyMarkups = [];
+			const objParts: Markup[] = [];
 			if (object !== undefined) {
 				objParts.push(markupTag("highlight", markup`${object}`, {i: 0}));
 			}

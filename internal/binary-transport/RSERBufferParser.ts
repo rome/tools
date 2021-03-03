@@ -1,5 +1,5 @@
 import {
-	AnyRSERPathMap,
+	RSERPathMap,
 	RSERArray,
 	RSERArrayBufferView,
 	RSERMap,
@@ -37,7 +37,7 @@ import {
 	validateParsedPathWindowsDriveLetter,
 } from "@internal/path";
 import {
-	ErrorFrames,
+	ErrorFrame,
 	NodeSystemErrorProperties,
 	setErrorFrames,
 	setNodeErrorProps,
@@ -825,14 +825,14 @@ export default class RSERBufferParser {
 		return createPathFromParsed(parsed);
 	}
 
-	private decodePathMap(): AnyRSERPathMap {
+	private decodePathMap(): RSERPathMap {
 		this.expectCode(CODES.PATH_MAP);
 		const code = this.decodePathCollectionCode();
 		const map = pathMapFromCode(code);
 		return this.decodePathMapValue(map);
 	}
 
-	private decodePathMapValue(map: AnyRSERPathMap): AnyRSERPathMap {
+	private decodePathMapValue(map: RSERPathMap): RSERPathMap {
 		const size = this.decodeNumber();
 		for (let i = 0; i < size; ++i) {
 			const path = this.decodePath();
@@ -927,7 +927,7 @@ export default class RSERBufferParser {
 		setNodeErrorProps(err, nodeProps);
 
 		// @ts-ignore: ^^
-		const frames: ErrorFrames = this.decodeTemplatedObjectArray();
+		const frames: ErrorFrame[] = this.decodeTemplatedObjectArray();
 		setErrorFrames(err, frames);
 
 		return err;

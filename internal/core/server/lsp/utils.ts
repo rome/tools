@@ -8,13 +8,13 @@ import {
 	LSPRange,
 	LSPTextEdit,
 } from "./types";
-import stringDiff, {Diffs, diffConstants} from "@internal/string-diff";
+import stringDiff, {Diff, diffConstants} from "@internal/string-diff";
 import {ZeroIndexed} from "@internal/numbers";
 import {Position} from "@internal/parser-core";
 import {
 	DiagnosticAdviceAction,
 	DiagnosticLocation,
-	Diagnostics,
+	Diagnostic,
 	formatCategoryDescription,
 } from "@internal/diagnostics";
 import {Server, WorkerBufferPatch} from "@internal/core";
@@ -43,7 +43,7 @@ export function convertDiagnosticLocationToLSPRange(
 }
 
 export function convertDiagnosticsToLSP(
-	diagnostics: Diagnostics,
+	diagnostics: Diagnostic[],
 	server: Server,
 ): LSPDiagnostic[] {
 	const lspDiagnostics: LSPDiagnostic[] = [];
@@ -95,7 +95,7 @@ export function getPathFromTextDocument(consumer: Consumer): AbsoluteFilePath {
 export function diffTextEdits(original: string, desired: string): LSPTextEdit[] {
 	const edits: LSPTextEdit[] = [];
 
-	const diffs: Diffs = stringDiff(original, desired);
+	const diffs: Diff[] = stringDiff(original, desired);
 
 	let currLine: ZeroIndexed = new ZeroIndexed();
 	let currChar: ZeroIndexed = new ZeroIndexed();

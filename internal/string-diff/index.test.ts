@@ -26,7 +26,7 @@ import {
 	DIFF_DELETE,
 	DIFF_EQUAL,
 	DIFF_INSERT,
-	Diffs,
+	Diff,
 	bisect,
 	cleanupMerge,
 	commonPrefix,
@@ -282,7 +282,7 @@ test(
 	"cleanup merge",
 	async (t) => {
 		// Null case.
-		let diffs: Diffs = [];
+		let diffs: Diff[] = [];
 		cleanupMerge(diffs, false);
 		t.looksLike([], diffs);
 

@@ -11,7 +11,7 @@
  * http://opensource.org/licenses/BSD-3-Clause
  */
 
-import {Mapping, Mappings, ParsedMappings, SourceMap} from "./types";
+import {Mapping, ParsedMappings, SourceMap} from "./types";
 import * as base64 from "./base64";
 import {compareByGeneratedPositionsInflated, toRelativeUrl} from "./util";
 import ArraySet from "./ArraySet";
@@ -281,7 +281,7 @@ export default class SourceMapGenerator {
 		);
 	}
 
-	private getMappings(): Mappings {
+	private getMappings(): Mapping[] {
 		this.materialize();
 		return this.mappings.toArray();
 	}

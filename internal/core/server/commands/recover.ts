@@ -9,7 +9,7 @@ import {ServerRequest} from "@internal/core";
 import {commandCategories} from "../../common/commands";
 import {createServerCommand} from "../commands";
 import {markup} from "@internal/markup";
-import {Diagnostics, descriptions} from "@internal/diagnostics";
+import {Diagnostic, descriptions} from "@internal/diagnostics";
 import {RecoveryDiskStore} from "../fs/RecoveryStore";
 import {Consumer} from "@internal/consume";
 import {Duration} from "@internal/numbers";
@@ -141,7 +141,7 @@ export const diff = createServerCommand({
 		const {server} = req;
 		req.expectArgumentLength(1);
 		const storeId = req.query.args[0];
-		const diagnostics: Diagnostics = [];
+		const diagnostics: Diagnostic[] = [];
 
 		const store = await server.recoveryStore.getStore(
 			storeId,

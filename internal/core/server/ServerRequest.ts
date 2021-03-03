@@ -27,16 +27,15 @@ import {
 } from "@internal/core";
 import {
 	DIAGNOSTIC_CATEGORIES,
-	Diagnostic,
 	DiagnosticAdvice,
 	DiagnosticCategory,
 	DiagnosticDescription,
 	DiagnosticLocation,
 	DiagnosticSuppressions,
-	Diagnostics,
+	Diagnostic,
 	DiagnosticsError,
 	DiagnosticsProcessor,
-	createSingleDiagnosticError,
+	createSingleDiagnosticsError,
 	decorateErrorWithDiagnostics,
 	descriptions,
 	diagnosticLocationToMarkupFilelink,
@@ -87,7 +86,7 @@ import {Dict, RequiredProps, mergeObjects} from "@internal/typescript-helpers";
 import {markup, readMarkup} from "@internal/markup";
 import {DiagnosticsProcessorOptions} from "@internal/diagnostics/DiagnosticsProcessor";
 import {VCSClient} from "@internal/vcs";
-import {InlineSnapshotUpdates} from "../worker/test/SnapshotManager";
+import {InlineSnapshotUpdate} from "../worker/test/SnapshotManager";
 import {FormatterOptions} from "@internal/formatter";
 import {RecoverySaveFile} from "./fs/RecoveryStore";
 import {GlobOptions, Globber} from "./fs/glob";
@@ -196,7 +195,7 @@ async function globUnmatched(
 		}
 	}
 
-	throw createSingleDiagnosticError({
+	throw createSingleDiagnosticsError({
 		location: {
 			...location,
 			marker: path,
@@ -210,7 +209,7 @@ async function globUnmatched(
 }
 
 export class ServerRequestInvalid extends DiagnosticsError {
-	constructor(message: string, diagnostics: Diagnostics, showHelp: boolean) {
+	constructor(message: string, diagnostics: Diagnostic[], showHelp: boolean) {
 		super(message, diagnostics);
 		this.showHelp = showHelp;
 	}
@@ -558,7 +557,7 @@ export default class ServerRequest {
 		);
 	}
 
-	private logDiagnostics(diagnostics: Diagnostics) {
+	private logDiagnostics(diagnostics: Diagnostic[]) {
 		for (const diag of diagnostics) {
 			this.logger.error(
 				markup`Encountered diagnostic: ${diag.description.message}. Category: ${joinCategoryName(
@@ -570,7 +569,7 @@ export default class ServerRequest {
 
 	public async printDiagnostics(
 		{diagnostics, suppressions = [], printerOptions, excludeFooter}: {
-			diagnostics: Diagnostics;
+			diagnostics: Diagnostic[];
 			suppressions?: DiagnosticSuppressions;
 			printerOptions?: DiagnosticsPrinterOptions;
 			excludeFooter?: boolean;
@@ -1018,7 +1017,7 @@ export default class ServerRequest {
 
 	public async requestWorkerUpdateInlineSnapshots(
 		path: AbsoluteFilePath,
-		updates: InlineSnapshotUpdates,
+		updates: InlineSnapshotUpdate[],
 		parseOptions: WorkerParseOptions,
 	): Promise<WorkerUpdateInlineSnapshotResult> {
 		this.checkCancelled();

@@ -5,7 +5,7 @@ import {
 	formatCategoryDescription,
 } from "@internal/diagnostics";
 import {
-	AnyMarkup,
+	Markup,
 	StaticMarkup,
 	isEmptyMarkup,
 	joinMarkup,
@@ -39,7 +39,7 @@ function buildDisplayHeader(
 ): StaticMarkup {
 	const {description, location, label, tags = {}} = diagnostic;
 
-	const headerParts: AnyMarkup[] = [];
+	const headerParts: Markup[] = [];
 
 	if (label !== undefined) {
 		headerParts.push(markup`<emphasis>${label}</emphasis>`);

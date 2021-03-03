@@ -18,7 +18,7 @@ import {
 	ProjectDefinition,
 } from "@internal/project";
 import {
-	Diagnostics,
+	Diagnostic,
 	DiagnosticsProcessor,
 	catchDiagnostics,
 	descriptions,
@@ -692,7 +692,7 @@ export default class MemoryFileSystem {
 
 		// If manifest is undefined then we failed to validate and have diagnostics
 		if (rawDiagnostics.length > 0) {
-			const normalizedDiagnostics: Diagnostics = rawDiagnostics.map((diag) => ({
+			const normalizedDiagnostics: Diagnostic[] = rawDiagnostics.map((diag) => ({
 				...diag,
 				description: {
 					...diag.description,

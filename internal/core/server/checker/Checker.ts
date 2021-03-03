@@ -7,7 +7,7 @@
 
 import {Server, ServerRequest} from "@internal/core";
 import {LINTABLE_EXTENSIONS} from "@internal/core/common/file-handlers";
-import {Diagnostics, DiagnosticsProcessor} from "@internal/diagnostics";
+import {Diagnostic, DiagnosticsProcessor} from "@internal/diagnostics";
 import {
 	AbsoluteFilePath,
 	AbsoluteFilePathSet,
@@ -35,7 +35,7 @@ import {Resource} from "@internal/resources";
 
 type CheckWatchChange = {
 	path: Path;
-	diagnostics: Diagnostics;
+	diagnostics: Diagnostic[];
 };
 
 export type LinterCompilerOptionsPerFile = Dict<Required<LintCompilerOptions>>;
@@ -331,7 +331,7 @@ class CheckRunner {
 		}
 	}
 
-	public getDiagnosticsForPath(path: Path, guaranteedOnly: boolean): Diagnostics {
+	public getDiagnosticsForPath(path: Path, guaranteedOnly: boolean): Diagnostic[] {
 		const processor = new DiagnosticsProcessor();
 
 		for (const subprocessor of this.processors) {
@@ -562,7 +562,7 @@ export default class Checker {
 		const {request} = this;
 		const {reporter} = request;
 
-		const diagnosticsByPath: MixedPathMap<Diagnostics> = new MixedPathMap();
+		const diagnosticsByPath: MixedPathMap<Diagnostic[]> = new MixedPathMap();
 
 		const runner = this.createRunner({
 			onRunStart: () => {
@@ -608,7 +608,7 @@ export default class Checker {
 		const {request} = this;
 		const {reporter} = request;
 
-		const diagnosticsByPath: MixedPathMap<Diagnostics> = new MixedPathMap();
+		const diagnosticsByPath: MixedPathMap<Diagnostic[]> = new MixedPathMap();
 
 		let savedPaths: AbsoluteFilePathSet = new AbsoluteFilePathSet();
 		let paths: AbsoluteFilePathSet = new AbsoluteFilePathSet();

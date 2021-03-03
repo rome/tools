@@ -1,4 +1,4 @@
-import {AnyIndexedNumber, Duration} from "@internal/numbers";
+import {IndexedNumber, Duration} from "@internal/numbers";
 import {
 	AbsoluteFilePathMap,
 	DataURIPathMap,
@@ -26,18 +26,18 @@ export type RSERValue =
 	| Error
 	| Buffer
 	| ArrayBuffer
-	| AnyIndexedNumber
+	| IndexedNumber
 	| Duration
 	| RSERArrayBufferView
 	| Path
 	| PathSet
-	| AnyRSERPathMap
+	| RSERPathMap
 	| RSERMap
 	| RSERSet
 	| RSERObject
 	| RSERArray;
 
-export type AnyRSERPathMap =
+export type RSERPathMap =
 	| RSERMixedPathMap
 	| AbsoluteFilePathMap<RSERValue>
 	| RelativePathMap<RSERValue>

@@ -14,7 +14,7 @@ import {
 	readMarkup,
 } from "@internal/markup";
 import {splitLines} from "@internal/string-utils";
-import {AnyMarkups} from "@internal/markup/escape";
+import {Markup} from "@internal/markup/escape";
 
 export function reduce<Token extends TokenShape>(
 	input: string,
@@ -22,7 +22,7 @@ export function reduce<Token extends TokenShape>(
 	callback: ReduceCallback<Token>,
 ): HighlightCodeResult {
 	let prevEnd = 0;
-	let parts: AnyMarkups = [];
+	let parts: Markup[] = [];
 
 	for (let i = 0; i < tokens.length; i++) {
 		const token = tokens[i];
@@ -75,7 +75,7 @@ export function markupToken(
 	return markupTag("token", markup`${value}`, {type});
 }
 
-export function concatSplitLinesMarkup(parts: AnyMarkups): AnyMarkups {
+export function concatSplitLinesMarkup(parts: Markup[]): Markup[] {
 	return splitLines(readMarkup(joinMarkup(parts))).map((line) =>
 		convertToMarkupFromRandomString(line)
 	);

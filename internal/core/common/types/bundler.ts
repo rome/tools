@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Diagnostics} from "@internal/diagnostics";
+import {Diagnostic} from "@internal/diagnostics";
 import {SourceMapGenerator} from "@internal/codec-source-map";
 import {
 	AbsoluteFilePath,
@@ -43,7 +43,7 @@ export type BundleAsset = {
 export type BundleRequestResult = {
 	request: BundleRequest;
 	cached: boolean;
-	diagnostics: Diagnostics;
+	diagnostics: Diagnostic[];
 	assembled: AssembledBundle;
 	sourceMap: SourceMapGenerator;
 	assets: BundleAssets;
@@ -71,7 +71,7 @@ export type BundleCompileResult = WorkerCompileResult & {
 
 export type BundleWatcher = {
 	subscription: Resource;
-	diagnosticsEvent: Event<Diagnostics, void>;
+	diagnosticsEvent: Event<Diagnostic[], void>;
 	changeEvent: Event<AbsoluteFilePathSet, void>;
 	filesEvent: Event<BundleWatcherFiles, void>;
 };

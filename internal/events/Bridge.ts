@@ -35,17 +35,17 @@ import {
 	getErrorStructure,
 	setErrorFrames,
 } from "@internal/errors";
-import {AnyMarkups, joinMarkup, markup} from "@internal/markup";
+import {Markup, joinMarkup, markup} from "@internal/markup";
 import prettyFormat from "@internal/pretty-format";
 import {RSERObject, RSERStream} from "@internal/binary-transport";
 import {ExtendedMap} from "@internal/collections";
 import {
 	DIAGNOSTIC_CATEGORIES,
-	createRuntimeDiagnosticError,
+	createRuntimeDiagnosticsError,
 } from "@internal/diagnostics";
 import {Resource, createResourceFromCallback} from "@internal/resources";
 import {
-	isBridgeDisconnectedDiagnosticError,
+	isBridgeDisconnectedDiagnosticsError,
 	isBridgeResponseMessage,
 } from "./utils";
 import {Duration, DurationMeasurer} from "@internal/numbers";
@@ -183,8 +183,8 @@ export default class Bridge<
 	private lastSentSubscriptionChange: Map<number, boolean>;
 	private customErrorTransports: Map<string, ErrorSerial<RSERObject>>;
 
-	private getPendingRequestsSummary(): AnyMarkups {
-		const summaries: AnyMarkups = [];
+	private getPendingRequestsSummary(): Markup[] {
+		const summaries: Markup[] = [];
 
 		for (const event of this.nameToEventMap.values()) {
 			const requestCount = event.requestCallbacks.size;
@@ -457,7 +457,7 @@ export default class Bridge<
 				await this.disconnectEvent.wait();
 			} catch (err) {
 				// We expect the bridge to disconnect as the indicator that it has finished
-				if (!isBridgeDisconnectedDiagnosticError(err)) {
+				if (!isBridgeDisconnectedDiagnosticsError(err)) {
 					throw err;
 				}
 			}
@@ -474,7 +474,7 @@ export default class Bridge<
 		}
 
 		this.connected = false;
-		const err = createRuntimeDiagnosticError({
+		const err = createRuntimeDiagnosticsError({
 			description: {
 				message,
 				category: DIAGNOSTIC_CATEGORIES["bridge/disconnected"],
@@ -500,7 +500,7 @@ export default class Bridge<
 		gracefulTeardown: boolean = true,
 	) {
 		await this.endWithError(
-			createRuntimeDiagnosticError({
+			createRuntimeDiagnosticsError({
 				description: {
 					message,
 					category: DIAGNOSTIC_CATEGORIES["bridge/closed"],

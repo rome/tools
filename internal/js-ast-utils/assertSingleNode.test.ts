@@ -1,10 +1,10 @@
 import {test} from "rome";
 import {assertSingleNode} from "./assertSingleNode";
-import {AnyNode, AnyNodes} from "@internal/ast";
+import {AnyNode} from "@internal/ast";
 import {template} from "@internal/js-ast-utils";
 
 const node: AnyNode = template.statement`let a`;
-const nodeArray: AnyNodes = [node, node];
+const nodeArray: AnyNode[] = [node, node];
 
 test(
 	"returns back the node when asserted with a single node or a list with single node",

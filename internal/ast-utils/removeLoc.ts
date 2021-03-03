@@ -12,7 +12,7 @@ import {
 	NodeBaseWithComments,
 } from "@internal/ast";
 import {
-	AnyVisitors,
+	AnyVisitor,
 	CompilerContext,
 	CompilerPath,
 	signals,
@@ -27,7 +27,7 @@ function removeProp<T extends {
 	return locless;
 }
 
-const removeLocTransform: AnyVisitors = [
+const removeLocTransform: AnyVisitor[] = [
 	{
 		name: "removeLocTransform",
 		enter(path: CompilerPath) {

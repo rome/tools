@@ -19,7 +19,7 @@ export {default as RSERWriterMaterial} from "./RSERWriterMaterial";
 export {default as RSERStream} from "./RSERStream";
 
 export {
-	AnyRSERPathMap,
+	RSERPathMap as AnyRSERPathMap,
 	RSERArray,
 	RSERArrayBufferView,
 	RSERMap,

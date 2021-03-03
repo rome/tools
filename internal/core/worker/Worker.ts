@@ -44,7 +44,7 @@ import VirtualModules from "../common/VirtualModules";
 import {markup} from "@internal/markup";
 import {
 	BridgeClient,
-	isBridgeDisconnectedDiagnosticError,
+	isBridgeDisconnectedDiagnosticsError,
 } from "@internal/events";
 import {ExtendedMap} from "@internal/collections";
 import WorkerCache from "./WorkerCache";
@@ -106,9 +106,7 @@ export default class Worker {
 								description: {
 									category: DIAGNOSTIC_CATEGORIES["tests/unhandledRejection"],
 								},
-								tags: {
-									internal: false,
-								},
+								internal: false,
 							},
 						),
 					});
@@ -119,7 +117,7 @@ export default class Worker {
 					// Dispatch error to the server and trigger a fatal
 					bridge.events.fatalError.send(bridge.serializeCustomError(err));
 				} catch (err) {
-					if (!isBridgeDisconnectedDiagnosticError(err)) {
+					if (!isBridgeDisconnectedDiagnosticsError(err)) {
 						console.error(
 							"Worker encountered error while attempting to send a fatal to the server",
 						);

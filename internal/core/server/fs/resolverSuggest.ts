@@ -13,13 +13,13 @@ import Resolver, {
 import {
 	DiagnosticAdvice,
 	buildSuggestionAdvice,
-	createSingleDiagnosticError,
+	createSingleDiagnosticsError,
 	descriptions,
 } from "@internal/diagnostics";
 import {orderBySimilarity} from "@internal/string-utils";
 import {AbsoluteFilePath, AbsoluteFilePathSet, FilePath} from "@internal/path";
 import {PLATFORMS, Server} from "@internal/core";
-import {StaticMarkups, markup} from "@internal/markup";
+import {StaticMarkup, markup} from "@internal/markup";
 import {ExtendedMap} from "@internal/collections";
 
 export default function resolverSuggest(
@@ -87,7 +87,7 @@ export default function resolverSuggest(
 		let skipSimilaritySuggestions = false;
 
 		// Try other platforms
-		const validPlatforms: StaticMarkups = [];
+		const validPlatforms: StaticMarkup[] = [];
 		for (const PLATFORM of PLATFORMS) {
 			if (PLATFORM === query.platform) {
 				continue;
@@ -225,7 +225,7 @@ export default function resolverSuggest(
 		advice = advice.concat(resolved.advice);
 	}
 
-	throw createSingleDiagnosticError({
+	throw createSingleDiagnosticsError({
 		location,
 		description: descriptions.RESOLVER.NOT_FOUND(
 			resolved.type,
