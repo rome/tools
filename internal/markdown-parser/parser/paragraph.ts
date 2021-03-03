@@ -4,6 +4,7 @@ import {parseInline} from "@internal/markdown-parser/parser/inline";
 import {descriptions} from "@internal/diagnostics";
 import {parseText} from "@internal/markdown-parser/parser/text";
 import {parseReference} from "@internal/markdown-parser/parser/reference";
+import {Position} from "@internal/parser-core";
 
 export function parseParagraph(
 	parser: MarkdownParser,
@@ -11,11 +12,8 @@ export function parseParagraph(
 ): MarkdownParagraph {
 	const start = parser.getPosition();
 	const children: AnyMarkdownInlineNode[] = [];
-	while (
-		!(parser.matchToken("EOF") ||
-		isBlockToken(parser.getToken()) ||
-		isBreakingNewLine(parser))
-	) {
+	let endPos: Position | null = null;
+	while (!parser.matchToken("EOF")) {
 		const token = parser.getToken();
 
 		if (token.type === "NewLine") {
@@ -25,6 +23,8 @@ export function parseParagraph(
 			const currentPos = parser.getPosition();
 			const next = parser.nextToken();
 			if (next.type === "NewLine" || next.type === "EOF" || isBlockToken(next)) {
+				// avoid including NewLine or EOF in paragraph
+				endPos = currentPos;
 				break;
 			} else {
 				children.push(
@@ -88,21 +88,12 @@ export function parseParagraph(
 		}
 	}
 
-	return parser.finishNode(
+	return parser.finishNodeAt(
 		start,
+		endPos || parser.getLastEndPosition(),
 		{
 			type: "MarkdownParagraph",
 			children,
 		},
-	);
-}
-
-function isBreakingNewLine(parser: MarkdownParser) {
-	const nextToken = parser.lookaheadToken();
-	return (
-		parser.matchToken("NewLine") &&
-		(nextToken.type === "NewLine" ||
-		nextToken.type === "EOF" ||
-		isBlockToken(nextToken))
 	);
 }
