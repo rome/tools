@@ -8,30 +8,25 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	syntax: Array []
-	loc: SourceLocation esprima/es2015-import-declaration/import-module/input.js 1:0-2:0
-	path: UIDPath<esprima/es2015-import-declaration/import-module/input.js>
-	body: Array [
+	body: [
 		JSImportDeclaration {
-			defaultSpecifier: undefined
-			importKind: undefined
-			namedSpecifiers: Array []
-			namespaceSpecifier: undefined
-			loc: SourceLocation esprima/es2015-import-declaration/import-module/input.js 1:0-1:13
+			namedSpecifiers: []
 			source: JSStringLiteral {
 				value: "foo"
 				loc: SourceLocation esprima/es2015-import-declaration/import-module/input.js 1:7-1:12
 			}
+			loc: SourceLocation esprima/es2015-import-declaration/import-module/input.js 1:0-1:13
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: []
+	path: UIDPath<esprima/es2015-import-declaration/import-module/input.js>
+	loc: SourceLocation esprima/es2015-import-declaration/import-module/input.js 1:0-2:0
 }
 ```
 

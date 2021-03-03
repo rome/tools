@@ -8,78 +8,69 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation esprima/es2015-yield/invalid-yield-generator-variable-declaration/input.js 1:0-2:0
-	path: UIDPath<esprima/es2015-yield/invalid-yield-generator-variable-declaration/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Can not use 'yield' as identifier inside a generator"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:25
-				path: UIDPath<esprima/es2015-yield/invalid-yield-generator-variable-declaration/input.js>
-				start: Position 1:20
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "g"
 				loc: SourceLocation esprima/es2015-yield/invalid-yield-generator-variable-declaration/input.js 1:10-1:11 (g)
 			}
-			loc: SourceLocation esprima/es2015-yield/invalid-yield-generator-variable-declaration/input.js 1:0-1:28
-			head: JSFunctionHead {
-				async: false
-				generator: true
-				hasHoistedVars: true
-				params: Array []
-				rest: undefined
-				returnType: undefined
-				thisType: undefined
-				typeParameters: undefined
-				loc: SourceLocation esprima/es2015-yield/invalid-yield-generator-variable-declaration/input.js 1:11-1:13
-			}
 			body: JSBlockStatement {
-				directives: Array []
-				loc: SourceLocation esprima/es2015-yield/invalid-yield-generator-variable-declaration/input.js 1:14-1:28
-				body: Array [
+				body: [
 					JSVariableDeclarationStatement {
-						loc: SourceLocation esprima/es2015-yield/invalid-yield-generator-variable-declaration/input.js 1:16-1:26
 						declaration: JSVariableDeclaration {
 							kind: "var"
-							loc: SourceLocation esprima/es2015-yield/invalid-yield-generator-variable-declaration/input.js 1:16-1:26
-							declarations: Array [
+							declarations: [
 								JSVariableDeclarator {
 									id: JSBindingIdentifier {
 										name: "yield"
 										loc: SourceLocation esprima/es2015-yield/invalid-yield-generator-variable-declaration/input.js 1:20-1:25 (yield)
 									}
-									init: undefined
 									loc: SourceLocation esprima/es2015-yield/invalid-yield-generator-variable-declaration/input.js 1:20-1:25
 								}
 							]
+							loc: SourceLocation esprima/es2015-yield/invalid-yield-generator-variable-declaration/input.js 1:16-1:26
 						}
+						loc: SourceLocation esprima/es2015-yield/invalid-yield-generator-variable-declaration/input.js 1:16-1:26
 					}
 				]
+				directives: []
+				loc: SourceLocation esprima/es2015-yield/invalid-yield-generator-variable-declaration/input.js 1:14-1:28
+			}
+			head: JSFunctionHead {
+				async: false
+				generator: true
+				hasHoistedVars: true
+				params: []
+				loc: SourceLocation esprima/es2015-yield/invalid-yield-generator-variable-declaration/input.js 1:11-1:13
+			}
+			loc: SourceLocation esprima/es2015-yield/invalid-yield-generator-variable-declaration/input.js 1:0-1:28
+		}
+	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "Can not use 'yield' as identifier inside a generator"}
+			}
+			location: {
+				language: "js"
+				path: UIDPath<esprima/es2015-yield/invalid-yield-generator-variable-declaration/input.js>
+				end: Position 1:25
+				start: Position 1:20
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<esprima/es2015-yield/invalid-yield-generator-variable-declaration/input.js>
+	loc: SourceLocation esprima/es2015-yield/invalid-yield-generator-variable-declaration/input.js 1:0-2:0
 }
 ```
 
@@ -92,7 +83,9 @@ JSRoot {
   ✖ Can not use 'yield' as identifier inside a generator
 
     function *g() { var yield; }
-                        ^^^^^
+                        <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
+                          <error><emphasis>^</emphasis></error>
+    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
 
 
 ```

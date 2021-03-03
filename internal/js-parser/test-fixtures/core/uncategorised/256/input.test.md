@@ -14,17 +14,26 @@ JSRoot {
 				body: JSBlockStatement {
 					body: [
 						JSBreakStatement {
-							label: JSIdentifier {name: "done", loc: SourceLocation core/uncategorised/256/input.js 1:27-1:31 (done)}
+							label: JSIdentifier {
+								name: "done"
+								loc: SourceLocation core/uncategorised/256/input.js 1:27-1:31 (done)
+							}
 							loc: SourceLocation core/uncategorised/256/input.js 1:21-1:32
 						}
 					]
 					directives: []
 					loc: SourceLocation core/uncategorised/256/input.js 1:19-1:34
 				}
-				test: JSBooleanLiteral {value: true, loc: SourceLocation core/uncategorised/256/input.js 1:13-1:17}
+				test: JSBooleanLiteral {
+					value: true
+					loc: SourceLocation core/uncategorised/256/input.js 1:13-1:17
+				}
 				loc: SourceLocation core/uncategorised/256/input.js 1:6-1:34
 			}
-			label: JSIdentifier {name: "done", loc: SourceLocation core/uncategorised/256/input.js 1:0-1:4 (done)}
+			label: JSIdentifier {
+				name: "done"
+				loc: SourceLocation core/uncategorised/256/input.js 1:0-1:4 (done)
+			}
 			loc: SourceLocation core/uncategorised/256/input.js 1:0-1:34
 		}
 	]
@@ -33,9 +42,9 @@ JSRoot {
 	diagnostics: []
 	directives: []
 	hasHoistedVars: false
-	path: UIDPath<core/uncategorised/256/input.js>
 	sourceType: "script"
 	syntax: []
+	path: UIDPath<core/uncategorised/256/input.js>
 	loc: SourceLocation core/uncategorised/256/input.js 1:0-1:34
 }
 ```

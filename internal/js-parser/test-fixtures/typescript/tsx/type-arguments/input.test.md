@@ -8,99 +8,89 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	loc: SourceLocation typescript/tsx/type-arguments/input.tsx 1:0-3:14
-	path: UIDPath<typescript/tsx/type-arguments/input.tsx>
-	syntax: Array [
-		"ts"
-		"jsx"
-	]
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation typescript/tsx/type-arguments/input.tsx 1:0-1:7
 			expression: JSCallExpression {
-				arguments: Array []
-				loc: SourceLocation typescript/tsx/type-arguments/input.tsx 1:0-1:6
+				arguments: []
 				callee: JSReferenceIdentifier {
 					name: "f"
 					loc: SourceLocation typescript/tsx/type-arguments/input.tsx 1:0-1:1 (f)
 				}
 				typeArguments: TSTypeParameterInstantiation {
-					loc: SourceLocation typescript/tsx/type-arguments/input.tsx 1:1-1:4
-					params: Array [
+					params: [
 						TSTypeReference {
-							typeParameters: undefined
-							loc: SourceLocation typescript/tsx/type-arguments/input.tsx 1:2-1:3
 							typeName: JSReferenceIdentifier {
 								name: "T"
 								loc: SourceLocation typescript/tsx/type-arguments/input.tsx 1:2-1:3 (T)
 							}
+							loc: SourceLocation typescript/tsx/type-arguments/input.tsx 1:2-1:3
 						}
 					]
+					loc: SourceLocation typescript/tsx/type-arguments/input.tsx 1:1-1:4
 				}
+				loc: SourceLocation typescript/tsx/type-arguments/input.tsx 1:0-1:6
 			}
+			loc: SourceLocation typescript/tsx/type-arguments/input.tsx 1:0-1:7
 		}
 		JSExpressionStatement {
-			loc: SourceLocation typescript/tsx/type-arguments/input.tsx 2:0-2:11
 			expression: JSNewExpression {
-				arguments: Array []
-				optional: undefined
-				loc: SourceLocation typescript/tsx/type-arguments/input.tsx 2:0-2:10
+				arguments: []
 				callee: JSReferenceIdentifier {
 					name: "C"
 					loc: SourceLocation typescript/tsx/type-arguments/input.tsx 2:4-2:5 (C)
 				}
 				typeArguments: TSTypeParameterInstantiation {
-					loc: SourceLocation typescript/tsx/type-arguments/input.tsx 2:5-2:8
-					params: Array [
+					params: [
 						TSTypeReference {
-							typeParameters: undefined
-							loc: SourceLocation typescript/tsx/type-arguments/input.tsx 2:6-2:7
 							typeName: JSReferenceIdentifier {
 								name: "T"
 								loc: SourceLocation typescript/tsx/type-arguments/input.tsx 2:6-2:7 (T)
 							}
+							loc: SourceLocation typescript/tsx/type-arguments/input.tsx 2:6-2:7
 						}
 					]
+					loc: SourceLocation typescript/tsx/type-arguments/input.tsx 2:5-2:8
 				}
+				loc: SourceLocation typescript/tsx/type-arguments/input.tsx 2:0-2:10
 			}
+			loc: SourceLocation typescript/tsx/type-arguments/input.tsx 2:0-2:11
 		}
 		TSTypeAlias {
 			id: JSBindingIdentifier {
 				name: "A"
 				loc: SourceLocation typescript/tsx/type-arguments/input.tsx 3:5-3:6 (A)
 			}
-			typeParameters: undefined
-			loc: SourceLocation typescript/tsx/type-arguments/input.tsx 3:0-3:14
 			right: TSTypeReference {
-				loc: SourceLocation typescript/tsx/type-arguments/input.tsx 3:9-3:13
 				typeName: JSReferenceIdentifier {
 					name: "T"
 					loc: SourceLocation typescript/tsx/type-arguments/input.tsx 3:9-3:10 (T)
 				}
 				typeParameters: TSTypeParameterInstantiation {
-					loc: SourceLocation typescript/tsx/type-arguments/input.tsx 3:10-3:13
-					params: Array [
+					params: [
 						TSTypeReference {
-							typeParameters: undefined
-							loc: SourceLocation typescript/tsx/type-arguments/input.tsx 3:11-3:12
 							typeName: JSReferenceIdentifier {
 								name: "T"
 								loc: SourceLocation typescript/tsx/type-arguments/input.tsx 3:11-3:12 (T)
 							}
+							loc: SourceLocation typescript/tsx/type-arguments/input.tsx 3:11-3:12
 						}
 					]
+					loc: SourceLocation typescript/tsx/type-arguments/input.tsx 3:10-3:13
 				}
+				loc: SourceLocation typescript/tsx/type-arguments/input.tsx 3:9-3:13
 			}
+			loc: SourceLocation typescript/tsx/type-arguments/input.tsx 3:0-3:14
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: ["ts", "jsx"]
+	path: UIDPath<typescript/tsx/type-arguments/input.tsx>
+	loc: SourceLocation typescript/tsx/type-arguments/input.tsx 1:0-3:14
 }
 ```
 

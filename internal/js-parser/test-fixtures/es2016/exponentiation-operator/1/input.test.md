@@ -8,36 +8,32 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2016/exponentiation-operator/1/input.js 1:0-2:0
-	path: UIDPath<es2016/exponentiation-operator/1/input.js>
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation es2016/exponentiation-operator/1/input.js 1:0-1:7
 			expression: JSBinaryExpression {
 				operator: "**"
-				loc: SourceLocation es2016/exponentiation-operator/1/input.js 1:0-1:6
 				left: JSNumericLiteral {
 					value: 3
-					format: undefined
 					loc: SourceLocation es2016/exponentiation-operator/1/input.js 1:0-1:1
 				}
 				right: JSNumericLiteral {
 					value: 2
-					format: undefined
 					loc: SourceLocation es2016/exponentiation-operator/1/input.js 1:5-1:6
 				}
+				loc: SourceLocation es2016/exponentiation-operator/1/input.js 1:0-1:6
 			}
+			loc: SourceLocation es2016/exponentiation-operator/1/input.js 1:0-1:7
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2016/exponentiation-operator/1/input.js>
+	loc: SourceLocation es2016/exponentiation-operator/1/input.js 1:0-2:0
 }
 ```
 

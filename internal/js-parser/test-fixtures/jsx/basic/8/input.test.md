@@ -8,73 +8,68 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	loc: SourceLocation jsx/basic/8/input.jsx 1:0-1:27
-	path: UIDPath<jsx/basic/8/input.jsx>
-	syntax: Array ["jsx"]
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation jsx/basic/8/input.jsx 1:0-1:27
 			expression: JSXElement {
-				name: JSXIdentifier {
-					name: "a"
-					loc: SourceLocation jsx/basic/8/input.jsx 1:1-1:2
-				}
-				children: Array []
-				selfClosing: true
-				typeArguments: undefined
-				loc: SourceLocation jsx/basic/8/input.jsx 1:0-1:27
-				attributes: Array [
+				attributes: [
 					JSXAttribute {
 						name: JSXIdentifier {
 							name: "b"
 							loc: SourceLocation jsx/basic/8/input.jsx 1:3-1:4
 						}
 						value: JSXExpressionContainer {
-							loc: SourceLocation jsx/basic/8/input.jsx 1:5-1:24
 							expression: JSConditionalExpression {
-								loc: SourceLocation jsx/basic/8/input.jsx 1:6-1:23
-								test: JSReferenceIdentifier {
-									name: "x"
-									loc: SourceLocation jsx/basic/8/input.jsx 1:6-1:7 (x)
-								}
 								alternate: JSXElement {
+									attributes: []
+									children: []
+									selfClosing: true
 									name: JSXIdentifier {
 										name: "d"
 										loc: SourceLocation jsx/basic/8/input.jsx 1:19-1:20
 									}
-									attributes: Array []
-									children: Array []
-									selfClosing: true
-									typeArguments: undefined
 									loc: SourceLocation jsx/basic/8/input.jsx 1:18-1:23
 								}
 								consequent: JSXElement {
+									attributes: []
+									children: []
+									selfClosing: true
 									name: JSXIdentifier {
 										name: "c"
 										loc: SourceLocation jsx/basic/8/input.jsx 1:11-1:12
 									}
-									attributes: Array []
-									children: Array []
-									selfClosing: true
-									typeArguments: undefined
 									loc: SourceLocation jsx/basic/8/input.jsx 1:10-1:15
 								}
+								test: JSReferenceIdentifier {
+									name: "x"
+									loc: SourceLocation jsx/basic/8/input.jsx 1:6-1:7 (x)
+								}
+								loc: SourceLocation jsx/basic/8/input.jsx 1:6-1:23
 							}
+							loc: SourceLocation jsx/basic/8/input.jsx 1:5-1:24
 						}
 						loc: SourceLocation jsx/basic/8/input.jsx 1:3-1:24
 					}
 				]
+				children: []
+				selfClosing: true
+				name: JSXIdentifier {
+					name: "a"
+					loc: SourceLocation jsx/basic/8/input.jsx 1:1-1:2
+				}
+				loc: SourceLocation jsx/basic/8/input.jsx 1:0-1:27
 			}
+			loc: SourceLocation jsx/basic/8/input.jsx 1:0-1:27
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: ["jsx"]
+	path: UIDPath<jsx/basic/8/input.jsx>
+	loc: SourceLocation jsx/basic/8/input.jsx 1:0-1:27
 }
 ```
 

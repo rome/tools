@@ -8,58 +8,54 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2015/uncategorised/224/input.js 1:0-2:5
-	path: UIDPath<es2015/uncategorised/224/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Expected a semicolon or a line terminator"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 2:3
-				path: UIDPath<es2015/uncategorised/224/input.js>
-				start: Position 2:4
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation es2015/uncategorised/224/input.js 1:0-1:1
 			expression: JSReferenceIdentifier {
 				name: "x"
 				loc: SourceLocation es2015/uncategorised/224/input.js 1:0-1:1 (x)
 			}
+			loc: SourceLocation es2015/uncategorised/224/input.js 1:0-1:1
 		}
 		JSExpressionStatement {
-			loc: SourceLocation es2015/uncategorised/224/input.js 2:1-2:3
 			expression: JSReferenceIdentifier {
 				name: "is"
 				loc: SourceLocation es2015/uncategorised/224/input.js 2:1-2:3 (is)
 			}
+			loc: SourceLocation es2015/uncategorised/224/input.js 2:1-2:3
 		}
 		JSExpressionStatement {
-			loc: SourceLocation es2015/uncategorised/224/input.js 2:4-2:5
 			expression: JSReferenceIdentifier {
 				name: "y"
 				loc: SourceLocation es2015/uncategorised/224/input.js 2:4-2:5 (y)
 			}
+			loc: SourceLocation es2015/uncategorised/224/input.js 2:4-2:5
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "Expected a semicolon or a line terminator"}
+			}
+			location: {
+				language: "js"
+				path: UIDPath<es2015/uncategorised/224/input.js>
+				end: Position 2:3
+				start: Position 2:4
+			}
+		}
+	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2015/uncategorised/224/input.js>
+	loc: SourceLocation es2015/uncategorised/224/input.js 1:0-2:5
 }
 ```
 
@@ -73,7 +69,7 @@ JSRoot {
 
     1 │ x·
   > 2 │  is y
-      │     ^
+      │     <error><emphasis>^</emphasis></error>
 
 
 ```

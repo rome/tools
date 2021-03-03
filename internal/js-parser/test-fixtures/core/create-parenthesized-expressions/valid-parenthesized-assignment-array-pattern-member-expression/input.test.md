@@ -11,6 +11,7 @@ JSRoot {
 	body: [
 		JSExpressionStatement {
 			expression: JSAssignmentExpression {
+				operator: "="
 				left: JSAssignmentArrayPattern {
 					elements: [
 						JSMemberExpression {
@@ -30,7 +31,6 @@ JSRoot {
 					]
 					loc: SourceLocation core/create-parenthesized-expressions/valid-parenthesized-assignment-array-pattern-member-expression/input.js 1:0-1:7
 				}
-				operator: "="
 				right: JSReferenceIdentifier {
 					name: "t"
 					loc: SourceLocation core/create-parenthesized-expressions/valid-parenthesized-assignment-array-pattern-member-expression/input.js 1:10-1:11 (t)
@@ -45,9 +45,9 @@ JSRoot {
 	diagnostics: []
 	directives: []
 	hasHoistedVars: false
-	path: UIDPath<core/create-parenthesized-expressions/valid-parenthesized-assignment-array-pattern-member-expression/input.js>
 	sourceType: "script"
 	syntax: []
+	path: UIDPath<core/create-parenthesized-expressions/valid-parenthesized-assignment-array-pattern-member-expression/input.js>
 	loc: SourceLocation core/create-parenthesized-expressions/valid-parenthesized-assignment-array-pattern-member-expression/input.js 1:0-1:12
 }
 ```

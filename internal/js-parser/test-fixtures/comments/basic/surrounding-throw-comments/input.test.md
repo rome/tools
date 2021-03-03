@@ -10,13 +10,19 @@
 JSRoot {
 	body: [
 		JSFunctionDeclaration {
-			id: JSBindingIdentifier {name: "a", loc: SourceLocation comments/basic/surrounding-throw-comments/input.js 1:9-1:10 (a)}
+			id: JSBindingIdentifier {
+				name: "a"
+				loc: SourceLocation comments/basic/surrounding-throw-comments/input.js 1:9-1:10 (a)
+			}
 			body: JSBlockStatement {
 				body: [
 					JSThrowStatement {
-						argument: JSNumericLiteral {value: 55, loc: SourceLocation comments/basic/surrounding-throw-comments/input.js 3:10-3:12}
 						leadingComments: ["0"]
 						trailingComments: ["1"]
+						argument: JSNumericLiteral {
+							value: 55
+							loc: SourceLocation comments/basic/surrounding-throw-comments/input.js 3:10-3:12
+						}
 						loc: SourceLocation comments/basic/surrounding-throw-comments/input.js 3:4-3:13
 					}
 				]
@@ -34,16 +40,24 @@ JSRoot {
 		}
 	]
 	comments: [
-		CommentBlock {id: "0", value: " before ", loc: SourceLocation comments/basic/surrounding-throw-comments/input.js 2:4-2:16}
-		CommentBlock {id: "1", value: " after ", loc: SourceLocation comments/basic/surrounding-throw-comments/input.js 4:4-4:15}
+		CommentBlock {
+			id: "0"
+			value: " before "
+			loc: SourceLocation comments/basic/surrounding-throw-comments/input.js 2:4-2:16
+		}
+		CommentBlock {
+			id: "1"
+			value: " after "
+			loc: SourceLocation comments/basic/surrounding-throw-comments/input.js 4:4-4:15
+		}
 	]
 	corrupt: false
 	diagnostics: []
 	directives: []
 	hasHoistedVars: false
-	path: UIDPath<comments/basic/surrounding-throw-comments/input.js>
 	sourceType: "script"
 	syntax: []
+	path: UIDPath<comments/basic/surrounding-throw-comments/input.js>
 	loc: SourceLocation comments/basic/surrounding-throw-comments/input.js 1:0-6:0
 }
 ```

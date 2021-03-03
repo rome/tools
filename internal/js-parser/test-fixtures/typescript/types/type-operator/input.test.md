@@ -8,149 +8,144 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	loc: SourceLocation typescript/types/type-operator/input.ts 1:0-5:0
-	path: UIDPath<typescript/types/type-operator/input.ts>
-	syntax: Array ["ts"]
-	body: Array [
+	body: [
 		JSVariableDeclarationStatement {
-			loc: SourceLocation typescript/types/type-operator/input.ts 1:0-1:15
 			declaration: JSVariableDeclaration {
 				kind: "let"
-				loc: SourceLocation typescript/types/type-operator/input.ts 1:0-1:15
-				declarations: Array [
+				declarations: [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "x"
-							loc: SourceLocation typescript/types/type-operator/input.ts 1:4-1:14
 							meta: JSPatternMeta {
-								definite: undefined
-								loc: SourceLocation typescript/types/type-operator/input.ts 1:4-1:14
 								typeAnnotation: TSTypeOperator {
 									operator: "keyof"
-									loc: SourceLocation typescript/types/type-operator/input.ts 1:7-1:14
 									typeAnnotation: TSTypeReference {
-										typeParameters: undefined
-										loc: SourceLocation typescript/types/type-operator/input.ts 1:13-1:14
 										typeName: JSReferenceIdentifier {
 											name: "T"
 											loc: SourceLocation typescript/types/type-operator/input.ts 1:13-1:14 (T)
 										}
+										loc: SourceLocation typescript/types/type-operator/input.ts 1:13-1:14
 									}
+									loc: SourceLocation typescript/types/type-operator/input.ts 1:7-1:14
 								}
+								loc: SourceLocation typescript/types/type-operator/input.ts 1:4-1:14
 							}
+							loc: SourceLocation typescript/types/type-operator/input.ts 1:4-1:14
 						}
-						init: undefined
 						loc: SourceLocation typescript/types/type-operator/input.ts 1:4-1:14
 					}
 				]
+				loc: SourceLocation typescript/types/type-operator/input.ts 1:0-1:15
 			}
+			loc: SourceLocation typescript/types/type-operator/input.ts 1:0-1:15
 		}
 		JSVariableDeclarationStatement {
-			loc: SourceLocation typescript/types/type-operator/input.ts 2:0-2:21
 			declaration: JSVariableDeclaration {
 				kind: "let"
-				loc: SourceLocation typescript/types/type-operator/input.ts 2:0-2:21
-				declarations: Array [
+				declarations: [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "y"
-							loc: SourceLocation typescript/types/type-operator/input.ts 2:4-2:20
 							meta: JSPatternMeta {
-								definite: undefined
-								loc: SourceLocation typescript/types/type-operator/input.ts 2:4-2:20
 								typeAnnotation: TSTypeOperator {
 									operator: "unique"
+									typeAnnotation: TSSymbolKeywordTypeAnnotation {
+										loc: SourceLocation typescript/types/type-operator/input.ts 2:14-2:20
+									}
 									loc: SourceLocation typescript/types/type-operator/input.ts 2:7-2:20
-									typeAnnotation: TSSymbolKeywordTypeAnnotation {loc: SourceLocation typescript/types/type-operator/input.ts 2:14-2:20}
 								}
+								loc: SourceLocation typescript/types/type-operator/input.ts 2:4-2:20
 							}
+							loc: SourceLocation typescript/types/type-operator/input.ts 2:4-2:20
 						}
-						init: undefined
 						loc: SourceLocation typescript/types/type-operator/input.ts 2:4-2:20
 					}
 				]
+				loc: SourceLocation typescript/types/type-operator/input.ts 2:0-2:21
 			}
+			loc: SourceLocation typescript/types/type-operator/input.ts 2:0-2:21
 		}
 		JSVariableDeclarationStatement {
-			loc: SourceLocation typescript/types/type-operator/input.ts 3:0-3:25
 			declaration: JSVariableDeclaration {
 				kind: "let"
-				loc: SourceLocation typescript/types/type-operator/input.ts 3:0-3:25
-				declarations: Array [
+				declarations: [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "z"
-							loc: SourceLocation typescript/types/type-operator/input.ts 3:4-3:24
 							meta: JSPatternMeta {
-								definite: undefined
-								loc: SourceLocation typescript/types/type-operator/input.ts 3:4-3:24
 								typeAnnotation: TSTypeOperator {
 									operator: "readonly"
-									loc: SourceLocation typescript/types/type-operator/input.ts 3:7-3:24
 									typeAnnotation: TSArrayType {
-										elementType: TSNumberKeywordTypeAnnotation {loc: SourceLocation typescript/types/type-operator/input.ts 3:16-3:22}
+										elementType: TSNumberKeywordTypeAnnotation {
+											loc: SourceLocation typescript/types/type-operator/input.ts 3:16-3:22
+										}
 										loc: SourceLocation typescript/types/type-operator/input.ts 3:16-3:24
 									}
+									loc: SourceLocation typescript/types/type-operator/input.ts 3:7-3:24
 								}
+								loc: SourceLocation typescript/types/type-operator/input.ts 3:4-3:24
 							}
+							loc: SourceLocation typescript/types/type-operator/input.ts 3:4-3:24
 						}
-						init: undefined
 						loc: SourceLocation typescript/types/type-operator/input.ts 3:4-3:24
 					}
 				]
+				loc: SourceLocation typescript/types/type-operator/input.ts 3:0-3:25
 			}
+			loc: SourceLocation typescript/types/type-operator/input.ts 3:0-3:25
 		}
 		JSVariableDeclarationStatement {
-			loc: SourceLocation typescript/types/type-operator/input.ts 4:0-4:34
 			declaration: JSVariableDeclaration {
 				kind: "let"
-				loc: SourceLocation typescript/types/type-operator/input.ts 4:0-4:34
-				declarations: Array [
+				declarations: [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "z1"
-							loc: SourceLocation typescript/types/type-operator/input.ts 4:4-4:33
 							meta: JSPatternMeta {
-								definite: undefined
-								loc: SourceLocation typescript/types/type-operator/input.ts 4:4-4:33
 								typeAnnotation: TSTypeOperator {
 									operator: "readonly"
-									loc: SourceLocation typescript/types/type-operator/input.ts 4:8-4:33
 									typeAnnotation: TSTupleType {
-										loc: SourceLocation typescript/types/type-operator/input.ts 4:17-4:33
-										elementTypes: Array [
+										elementTypes: [
 											TSTupleElement {
-												name: undefined
 												optional: false
+												typeAnnotation: TSNumberKeywordTypeAnnotation {
+													loc: SourceLocation typescript/types/type-operator/input.ts 4:18-4:24
+												}
 												loc: SourceLocation typescript/types/type-operator/input.ts 4:18-4:24
-												typeAnnotation: TSNumberKeywordTypeAnnotation {loc: SourceLocation typescript/types/type-operator/input.ts 4:18-4:24}
 											}
 											TSTupleElement {
-												name: undefined
 												optional: false
+												typeAnnotation: TSNumberKeywordTypeAnnotation {
+													loc: SourceLocation typescript/types/type-operator/input.ts 4:26-4:32
+												}
 												loc: SourceLocation typescript/types/type-operator/input.ts 4:26-4:32
-												typeAnnotation: TSNumberKeywordTypeAnnotation {loc: SourceLocation typescript/types/type-operator/input.ts 4:26-4:32}
 											}
 										]
+										loc: SourceLocation typescript/types/type-operator/input.ts 4:17-4:33
 									}
+									loc: SourceLocation typescript/types/type-operator/input.ts 4:8-4:33
 								}
+								loc: SourceLocation typescript/types/type-operator/input.ts 4:4-4:33
 							}
+							loc: SourceLocation typescript/types/type-operator/input.ts 4:4-4:33
 						}
-						init: undefined
 						loc: SourceLocation typescript/types/type-operator/input.ts 4:4-4:33
 					}
 				]
+				loc: SourceLocation typescript/types/type-operator/input.ts 4:0-4:34
 			}
+			loc: SourceLocation typescript/types/type-operator/input.ts 4:0-4:34
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: ["ts"]
+	path: UIDPath<typescript/types/type-operator/input.ts>
+	loc: SourceLocation typescript/types/type-operator/input.ts 1:0-5:0
 }
 ```
 

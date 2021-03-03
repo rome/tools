@@ -8,51 +8,51 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	loc: SourceLocation typescript/types/reference-generic/input.ts 1:0-2:0
-	path: UIDPath<typescript/types/reference-generic/input.ts>
-	syntax: Array ["ts"]
-	body: Array [
+	body: [
 		JSVariableDeclarationStatement {
-			loc: SourceLocation typescript/types/reference-generic/input.ts 1:0-1:21
 			declaration: JSVariableDeclaration {
 				kind: "let"
-				loc: SourceLocation typescript/types/reference-generic/input.ts 1:0-1:21
-				declarations: Array [
+				declarations: [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "x"
-							loc: SourceLocation typescript/types/reference-generic/input.ts 1:4-1:20
 							meta: JSPatternMeta {
-								definite: undefined
-								loc: SourceLocation typescript/types/reference-generic/input.ts 1:4-1:20
 								typeAnnotation: TSTypeReference {
-									loc: SourceLocation typescript/types/reference-generic/input.ts 1:7-1:20
 									typeName: JSReferenceIdentifier {
 										name: "Array"
 										loc: SourceLocation typescript/types/reference-generic/input.ts 1:7-1:12 (Array)
 									}
 									typeParameters: TSTypeParameterInstantiation {
+										params: [
+											TSNumberKeywordTypeAnnotation {
+												loc: SourceLocation typescript/types/reference-generic/input.ts 1:13-1:19
+											}
+										]
 										loc: SourceLocation typescript/types/reference-generic/input.ts 1:12-1:20
-										params: Array [TSNumberKeywordTypeAnnotation {loc: SourceLocation typescript/types/reference-generic/input.ts 1:13-1:19}]
 									}
+									loc: SourceLocation typescript/types/reference-generic/input.ts 1:7-1:20
 								}
+								loc: SourceLocation typescript/types/reference-generic/input.ts 1:4-1:20
 							}
+							loc: SourceLocation typescript/types/reference-generic/input.ts 1:4-1:20
 						}
-						init: undefined
 						loc: SourceLocation typescript/types/reference-generic/input.ts 1:4-1:20
 					}
 				]
+				loc: SourceLocation typescript/types/reference-generic/input.ts 1:0-1:21
 			}
+			loc: SourceLocation typescript/types/reference-generic/input.ts 1:0-1:21
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: ["ts"]
+	path: UIDPath<typescript/types/reference-generic/input.ts>
+	loc: SourceLocation typescript/types/reference-generic/input.ts 1:0-2:0
 }
 ```
 

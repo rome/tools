@@ -8,23 +8,10 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	syntax: Array []
-	loc: SourceLocation es2015/modules/xml-comment-in-module/input.js 1:0-2:0
-	path: UIDPath<es2015/modules/xml-comment-in-module/input.js>
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation es2015/modules/xml-comment-in-module/input.js 1:0-1:11
 			expression: JSBinaryExpression {
 				operator: "<"
-				loc: SourceLocation es2015/modules/xml-comment-in-module/input.js 1:0-1:11
 				left: JSReferenceIdentifier {
 					name: "foo"
 					loc: SourceLocation es2015/modules/xml-comment-in-module/input.js 1:0-1:3 (foo)
@@ -32,20 +19,31 @@ JSRoot {
 				right: JSUnaryExpression {
 					operator: "!"
 					prefix: true
-					loc: SourceLocation es2015/modules/xml-comment-in-module/input.js 1:5-1:11
 					argument: JSUpdateExpression {
 						operator: "--"
 						prefix: true
-						loc: SourceLocation es2015/modules/xml-comment-in-module/input.js 1:6-1:11
 						argument: JSReferenceIdentifier {
 							name: "bar"
 							loc: SourceLocation es2015/modules/xml-comment-in-module/input.js 1:8-1:11 (bar)
 						}
+						loc: SourceLocation es2015/modules/xml-comment-in-module/input.js 1:6-1:11
 					}
+					loc: SourceLocation es2015/modules/xml-comment-in-module/input.js 1:5-1:11
 				}
+				loc: SourceLocation es2015/modules/xml-comment-in-module/input.js 1:0-1:11
 			}
+			loc: SourceLocation es2015/modules/xml-comment-in-module/input.js 1:0-1:11
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: []
+	path: UIDPath<es2015/modules/xml-comment-in-module/input.js>
+	loc: SourceLocation es2015/modules/xml-comment-in-module/input.js 1:0-2:0
 }
 ```
 

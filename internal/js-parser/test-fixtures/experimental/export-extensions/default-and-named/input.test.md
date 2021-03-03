@@ -8,36 +8,10 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	syntax: Array []
-	loc: SourceLocation experimental/export-extensions/default-and-named/input.js 1:0-1:31
-	path: UIDPath<experimental/export-extensions/default-and-named/input.js>
-	body: Array [
+	body: [
 		JSExportExternalDeclaration {
-			exportKind: undefined
-			namespaceSpecifier: undefined
-			loc: SourceLocation experimental/export-extensions/default-and-named/input.js 1:0-1:31
-			source: JSStringLiteral {
-				value: "bar"
-				loc: SourceLocation experimental/export-extensions/default-and-named/input.js 1:25-1:30
-			}
-			defaultSpecifier: JSExportDefaultSpecifier {
-				loc: SourceLocation experimental/export-extensions/default-and-named/input.js 1:7-1:10
-				exported: JSIdentifier {
-					name: "foo"
-					loc: SourceLocation experimental/export-extensions/default-and-named/input.js 1:7-1:10 (foo)
-				}
-			}
-			namedSpecifiers: Array [
+			namedSpecifiers: [
 				JSExportExternalSpecifier {
-					loc: SourceLocation experimental/export-extensions/default-and-named/input.js 1:14-1:17
 					exported: JSIdentifier {
 						name: "bar"
 						loc: SourceLocation experimental/export-extensions/default-and-named/input.js 1:14-1:17 (bar)
@@ -46,10 +20,32 @@ JSRoot {
 						name: "bar"
 						loc: SourceLocation experimental/export-extensions/default-and-named/input.js 1:14-1:17 (bar)
 					}
+					loc: SourceLocation experimental/export-extensions/default-and-named/input.js 1:14-1:17
 				}
 			]
+			defaultSpecifier: JSExportDefaultSpecifier {
+				exported: JSIdentifier {
+					name: "foo"
+					loc: SourceLocation experimental/export-extensions/default-and-named/input.js 1:7-1:10 (foo)
+				}
+				loc: SourceLocation experimental/export-extensions/default-and-named/input.js 1:7-1:10
+			}
+			source: JSStringLiteral {
+				value: "bar"
+				loc: SourceLocation experimental/export-extensions/default-and-named/input.js 1:25-1:30
+			}
+			loc: SourceLocation experimental/export-extensions/default-and-named/input.js 1:0-1:31
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: []
+	path: UIDPath<experimental/export-extensions/default-and-named/input.js>
+	loc: SourceLocation experimental/export-extensions/default-and-named/input.js 1:0-1:31
 }
 ```
 

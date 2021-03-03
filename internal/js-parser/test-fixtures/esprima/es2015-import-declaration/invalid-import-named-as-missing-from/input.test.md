@@ -8,48 +8,10 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	syntax: Array []
-	loc: SourceLocation esprima/es2015-import-declaration/invalid-import-named-as-missing-from/input.js 1:0-2:0
-	path: UIDPath<esprima/es2015-import-declaration/invalid-import-named-as-missing-from/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Expected keyword <emphasis>from</emphasis>"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:23
-				path: UIDPath<esprima/es2015-import-declaration/invalid-import-named-as-missing-from/input.js>
-				start: Position 2:0
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSImportDeclaration {
-			defaultSpecifier: undefined
-			importKind: undefined
-			namespaceSpecifier: undefined
-			loc: SourceLocation esprima/es2015-import-declaration/invalid-import-named-as-missing-from/input.js 1:0-1:23
-			source: JSStringLiteral {
-				value: ""
-				loc: SourceLocation esprima/es2015-import-declaration/invalid-import-named-as-missing-from/input.js 1:0-1:23
-			}
-			namedSpecifiers: Array [
+			namedSpecifiers: [
 				JSImportSpecifier {
-					loc: SourceLocation esprima/es2015-import-declaration/invalid-import-named-as-missing-from/input.js 1:8-1:22
 					imported: JSIdentifier {
 						name: "default"
 						loc: SourceLocation esprima/es2015-import-declaration/invalid-import-named-as-missing-from/input.js 1:8-1:15 (default)
@@ -59,13 +21,43 @@ JSRoot {
 							name: "foo"
 							loc: SourceLocation esprima/es2015-import-declaration/invalid-import-named-as-missing-from/input.js 1:19-1:22 (foo)
 						}
-						importKind: undefined
 						loc: SourceLocation esprima/es2015-import-declaration/invalid-import-named-as-missing-from/input.js 1:8-1:22
 					}
+					loc: SourceLocation esprima/es2015-import-declaration/invalid-import-named-as-missing-from/input.js 1:8-1:22
 				}
 			]
+			source: JSStringLiteral {
+				value: ""
+				loc: SourceLocation esprima/es2015-import-declaration/invalid-import-named-as-missing-from/input.js 1:0-1:23
+			}
+			loc: SourceLocation esprima/es2015-import-declaration/invalid-import-named-as-missing-from/input.js 1:0-1:23
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "js"
+				message: [RAW_MARKUP {value: "Expected keyword <emphasis>"}, "from", RAW_MARKUP {value: "</emphasis>"}]
+			}
+			location: {
+				language: "js"
+				path: UIDPath<esprima/es2015-import-declaration/invalid-import-named-as-missing-from/input.js>
+				end: Position 1:23
+				start: Position 2:0
+			}
+		}
+	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: []
+	path: UIDPath<esprima/es2015-import-declaration/invalid-import-named-as-missing-from/input.js>
+	loc: SourceLocation esprima/es2015-import-declaration/invalid-import-named-as-missing-from/input.js 1:0-2:0
 }
 ```
 

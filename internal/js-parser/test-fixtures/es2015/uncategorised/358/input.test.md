@@ -8,43 +8,41 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2015/uncategorised/358/input.js 1:0-2:0
-	path: UIDPath<es2015/uncategorised/358/input.js>
-	body: Array [
+	body: [
 		JSVariableDeclarationStatement {
-			loc: SourceLocation es2015/uncategorised/358/input.js 1:0-1:20
 			declaration: JSVariableDeclaration {
 				kind: "const"
-				loc: SourceLocation es2015/uncategorised/358/input.js 1:0-1:20
-				declarations: Array [
+				declarations: [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "await"
 							loc: SourceLocation es2015/uncategorised/358/input.js 1:6-1:11 (await)
 						}
-						loc: SourceLocation es2015/uncategorised/358/input.js 1:6-1:19
 						init: JSCallExpression {
-							arguments: Array []
-							loc: SourceLocation es2015/uncategorised/358/input.js 1:14-1:19
+							arguments: []
 							callee: JSReferenceIdentifier {
 								name: "foo"
 								loc: SourceLocation es2015/uncategorised/358/input.js 1:14-1:17 (foo)
 							}
+							loc: SourceLocation es2015/uncategorised/358/input.js 1:14-1:19
 						}
+						loc: SourceLocation es2015/uncategorised/358/input.js 1:6-1:19
 					}
 				]
+				loc: SourceLocation es2015/uncategorised/358/input.js 1:0-1:20
 			}
+			loc: SourceLocation es2015/uncategorised/358/input.js 1:0-1:20
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2015/uncategorised/358/input.js>
+	loc: SourceLocation es2015/uncategorised/358/input.js 1:0-2:0
 }
 ```
 

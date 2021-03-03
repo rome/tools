@@ -8,67 +8,59 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2015/statements/label-invalid-func-async/input.js 1:0-2:0
-	path: UIDPath<es2015/statements/label-invalid-func-async/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Async functions can only be declared at the top level or inside a block"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:4
-				path: UIDPath<es2015/statements/label-invalid-func-async/input.js>
-				start: Position 1:5
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSLabeledStatement {
-			loc: SourceLocation es2015/statements/label-invalid-func-async/input.js 1:0-1:28
-			label: JSIdentifier {
-				name: "foo"
-				loc: SourceLocation es2015/statements/label-invalid-func-async/input.js 1:0-1:3 (foo)
-			}
 			body: JSFunctionDeclaration {
 				id: JSBindingIdentifier {
 					name: "bar"
 					loc: SourceLocation es2015/statements/label-invalid-func-async/input.js 1:20-1:23 (bar)
 				}
-				loc: SourceLocation es2015/statements/label-invalid-func-async/input.js 1:5-1:28
 				body: JSBlockStatement {
-					body: Array []
-					directives: Array []
+					body: []
+					directives: []
 					loc: SourceLocation es2015/statements/label-invalid-func-async/input.js 1:26-1:28
 				}
 				head: JSFunctionHead {
 					async: true
 					generator: false
 					hasHoistedVars: false
-					params: Array []
-					rest: undefined
-					returnType: undefined
-					thisType: undefined
-					typeParameters: undefined
+					params: []
 					loc: SourceLocation es2015/statements/label-invalid-func-async/input.js 1:23-1:25
 				}
+				loc: SourceLocation es2015/statements/label-invalid-func-async/input.js 1:5-1:28
+			}
+			label: JSIdentifier {
+				name: "foo"
+				loc: SourceLocation es2015/statements/label-invalid-func-async/input.js 1:0-1:3 (foo)
+			}
+			loc: SourceLocation es2015/statements/label-invalid-func-async/input.js 1:0-1:28
+		}
+	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "Async functions can only be declared at the top level or inside a block"}
+			}
+			location: {
+				language: "js"
+				path: UIDPath<es2015/statements/label-invalid-func-async/input.js>
+				end: Position 1:4
+				start: Position 1:5
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2015/statements/label-invalid-func-async/input.js>
+	loc: SourceLocation es2015/statements/label-invalid-func-async/input.js 1:0-2:0
 }
 ```
 
@@ -81,7 +73,7 @@ JSRoot {
   ✖ Async functions can only be declared at the top level or inside a block
 
     foo: async function bar() {}
-         ^
+         <error><emphasis>^</emphasis></error>
 
 
 ```

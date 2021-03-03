@@ -14,15 +14,24 @@ JSRoot {
 				kind: "var"
 				declarations: [
 					JSVariableDeclarator {
-						id: JSBindingIdentifier {name: "a", loc: SourceLocation core/escape-keyword/used-as-property/input.js 1:4-1:5 (a)}
+						id: JSBindingIdentifier {
+							name: "a"
+							loc: SourceLocation core/escape-keyword/used-as-property/input.js 1:4-1:5 (a)
+						}
 						init: JSObjectExpression {
 							properties: [
 								JSObjectProperty {
 									key: JSStaticPropertyKey {
-										value: JSIdentifier {name: "break", loc: SourceLocation core/escape-keyword/used-as-property/input.js 2:2-2:12 (break)}
+										value: JSIdentifier {
+											name: "break"
+											loc: SourceLocation core/escape-keyword/used-as-property/input.js 2:2-2:12 (break)
+										}
 										loc: SourceLocation core/escape-keyword/used-as-property/input.js 2:2-2:12
 									}
-									value: JSNumericLiteral {value: 2, loc: SourceLocation core/escape-keyword/used-as-property/input.js 2:14-2:15}
+									value: JSNumericLiteral {
+										value: 2
+										loc: SourceLocation core/escape-keyword/used-as-property/input.js 2:14-2:15
+									}
 									loc: SourceLocation core/escape-keyword/used-as-property/input.js 2:2-2:15
 								}
 							]
@@ -40,21 +49,26 @@ JSRoot {
 	corrupt: false
 	diagnostics: [
 		{
+			origins: [{category: "parse"}]
 			description: {
 				advice: []
 				category: ["parse"]
 				categoryValue: "js"
-				message: RAW_MARKUP {value: "Escape sequence in keyword <emphasis>break</emphasis>"}
+				message: [RAW_MARKUP {value: "Escape sequence in keyword <emphasis>"}, "break", RAW_MARKUP {value: "</emphasis>"}]
 			}
-			location: {language: "js", path: UIDPath<core/escape-keyword/used-as-property/input.js>, end: Position 2:4, start: Position 2:4}
-			origins: [{category: "parse"}]
+			location: {
+				language: "js"
+				path: UIDPath<core/escape-keyword/used-as-property/input.js>
+				end: Position 2:4
+				start: Position 2:4
+			}
 		}
 	]
 	directives: []
 	hasHoistedVars: true
-	path: UIDPath<core/escape-keyword/used-as-property/input.js>
 	sourceType: "script"
 	syntax: []
+	path: UIDPath<core/escape-keyword/used-as-property/input.js>
 	loc: SourceLocation core/escape-keyword/used-as-property/input.js 1:0-4:0
 }
 ```
@@ -69,7 +83,7 @@ JSRoot {
 
     1 │ var a = {
   > 2 │   br\u{65}ak: 2
-      │     ^
+      │     <error><emphasis>^</emphasis></error>
     3 │ };
 
 

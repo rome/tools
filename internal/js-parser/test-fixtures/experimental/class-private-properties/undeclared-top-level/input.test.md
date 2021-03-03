@@ -8,50 +8,17 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: true
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation experimental/class-private-properties/undeclared-top-level/input.js 1:0-1:21
-	path: UIDPath<experimental/class-private-properties/undeclared-top-level/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Unexpected character <emphasis>#</emphasis>"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:15
-				path: UIDPath<experimental/class-private-properties/undeclared-top-level/input.js>
-				start: Position 1:15
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSVariableDeclarationStatement {
-			loc: SourceLocation experimental/class-private-properties/undeclared-top-level/input.js 1:0-1:21
 			declaration: JSVariableDeclaration {
 				kind: "var"
-				loc: SourceLocation experimental/class-private-properties/undeclared-top-level/input.js 1:0-1:21
-				declarations: Array [
+				declarations: [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "prop"
 							loc: SourceLocation experimental/class-private-properties/undeclared-top-level/input.js 1:4-1:8 (prop)
 						}
-						loc: SourceLocation experimental/class-private-properties/undeclared-top-level/input.js 1:4-1:20
 						init: JSMemberExpression {
-							loc: SourceLocation experimental/class-private-properties/undeclared-top-level/input.js 1:11-1:20
 							object: JSReferenceIdentifier {
 								name: "foo"
 								loc: SourceLocation experimental/class-private-properties/undeclared-top-level/input.js 1:11-1:14 (foo)
@@ -63,12 +30,41 @@ JSRoot {
 								}
 								loc: SourceLocation experimental/class-private-properties/undeclared-top-level/input.js 1:16-1:20 (priv)
 							}
+							loc: SourceLocation experimental/class-private-properties/undeclared-top-level/input.js 1:11-1:20
 						}
+						loc: SourceLocation experimental/class-private-properties/undeclared-top-level/input.js 1:4-1:20
 					}
 				]
+				loc: SourceLocation experimental/class-private-properties/undeclared-top-level/input.js 1:0-1:21
+			}
+			loc: SourceLocation experimental/class-private-properties/undeclared-top-level/input.js 1:0-1:21
+		}
+	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "Unexpected character <emphasis>#</emphasis>"}
+			}
+			location: {
+				language: "js"
+				path: UIDPath<experimental/class-private-properties/undeclared-top-level/input.js>
+				end: Position 1:15
+				start: Position 1:15
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: true
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<experimental/class-private-properties/undeclared-top-level/input.js>
+	loc: SourceLocation experimental/class-private-properties/undeclared-top-level/input.js 1:0-1:21
 }
 ```
 
@@ -81,7 +77,7 @@ JSRoot {
   ✖ Unexpected character #
 
     var prop = foo.#priv;
-                   ^
+                   <error><emphasis>^</emphasis></error>
 
 
 ```

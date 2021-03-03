@@ -11,16 +11,25 @@ JSRoot {
 	body: [
 		JSExpressionStatement {
 			expression: JSAssignmentExpression {
-				left: JSAssignmentIdentifier {name: "x", loc: SourceLocation core/uncategorised/23/input.js 1:0-1:1 (x)}
 				operator: "="
+				left: JSAssignmentIdentifier {
+					name: "x"
+					loc: SourceLocation core/uncategorised/23/input.js 1:0-1:1 (x)
+				}
 				right: JSObjectExpression {
 					properties: [
 						JSObjectProperty {
 							key: JSStaticPropertyKey {
-								value: JSIdentifier {name: "if", loc: SourceLocation core/uncategorised/23/input.js 1:6-1:8 (if)}
+								value: JSIdentifier {
+									name: "if"
+									loc: SourceLocation core/uncategorised/23/input.js 1:6-1:8 (if)
+								}
 								loc: SourceLocation core/uncategorised/23/input.js 1:6-1:8
 							}
-							value: JSNumericLiteral {value: 42, loc: SourceLocation core/uncategorised/23/input.js 1:10-1:12}
+							value: JSNumericLiteral {
+								value: 42
+								loc: SourceLocation core/uncategorised/23/input.js 1:10-1:12
+							}
 							loc: SourceLocation core/uncategorised/23/input.js 1:6-1:12
 						}
 					]
@@ -36,9 +45,9 @@ JSRoot {
 	diagnostics: []
 	directives: []
 	hasHoistedVars: false
-	path: UIDPath<core/uncategorised/23/input.js>
 	sourceType: "script"
 	syntax: []
+	path: UIDPath<core/uncategorised/23/input.js>
 	loc: SourceLocation core/uncategorised/23/input.js 1:0-1:14
 }
 ```

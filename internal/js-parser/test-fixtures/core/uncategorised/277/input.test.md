@@ -10,10 +10,21 @@
 JSRoot {
 	body: [
 		JSTryStatement {
-			block: JSBlockStatement {body: [], directives: [], loc: SourceLocation core/uncategorised/277/input.js 1:4-1:7}
+			block: JSBlockStatement {
+				body: []
+				directives: []
+				loc: SourceLocation core/uncategorised/277/input.js 1:4-1:7
+			}
 			handler: JSCatchClause {
-				body: JSBlockStatement {body: [], directives: [], loc: SourceLocation core/uncategorised/277/input.js 1:21-1:24}
-				param: JSBindingIdentifier {name: "eval", loc: SourceLocation core/uncategorised/277/input.js 1:15-1:19 (eval)}
+				body: JSBlockStatement {
+					body: []
+					directives: []
+					loc: SourceLocation core/uncategorised/277/input.js 1:21-1:24
+				}
+				param: JSBindingIdentifier {
+					name: "eval"
+					loc: SourceLocation core/uncategorised/277/input.js 1:15-1:19 (eval)
+				}
 				loc: SourceLocation core/uncategorised/277/input.js 1:8-1:24
 			}
 			loc: SourceLocation core/uncategorised/277/input.js 1:0-1:24
@@ -24,9 +35,9 @@ JSRoot {
 	diagnostics: []
 	directives: []
 	hasHoistedVars: false
-	path: UIDPath<core/uncategorised/277/input.js>
 	sourceType: "script"
 	syntax: []
+	path: UIDPath<core/uncategorised/277/input.js>
 	loc: SourceLocation core/uncategorised/277/input.js 1:0-1:24
 }
 ```

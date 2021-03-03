@@ -335,7 +335,7 @@ class CheckRunner {
 		const processor = new DiagnosticsProcessor();
 
 		for (const subprocessor of this.processors) {
-			const diagnostics = subprocessor.getDiagnosticsForPath(path, false);
+			const diagnostics = subprocessor.calculatePath(path, false);
 			if (diagnostics !== undefined) {
 				processor.addDiagnostics(
 					guaranteedOnly ? diagnostics.guaranteed : diagnostics.complete,
@@ -403,7 +403,7 @@ class CheckRunner {
 		// Queue complete diagnostics if they are different than guaranteed
 		for (const processor of this.processors) {
 			for (const path of processor.getPaths()) {
-				const diagnostics = processor.getDiagnosticsForPath(path);
+				const diagnostics = processor.calculatePath(path);
 				if (diagnostics !== undefined) {
 					if (diagnostics.complete.length !== diagnostics.guaranteed.length) {
 						this.queueChanges(path, false);
@@ -445,6 +445,7 @@ export default class Checker {
 
 	public createDiagnosticsProcessor(): DiagnosticsProcessor {
 		const processor = this.request.createDiagnosticsProcessor({
+			mutable: true,
 			origins: [
 				{
 					category: "lint",

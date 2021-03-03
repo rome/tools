@@ -8,50 +8,12 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation esprima/es2015-destructuring-assignment-object-pattern/invalid-pattern-with-method/input.js 1:0-2:0
-	path: UIDPath<esprima/es2015-destructuring-assignment-object-pattern/invalid-pattern-with-method/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Object pattern cannot contains methods"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:3
-				path: UIDPath<esprima/es2015-destructuring-assignment-object-pattern/invalid-pattern-with-method/input.js>
-				start: Position 1:2
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation esprima/es2015-destructuring-assignment-object-pattern/invalid-pattern-with-method/input.js 1:0-1:11
 			expression: JSAssignmentExpression {
 				operator: "="
-				loc: SourceLocation esprima/es2015-destructuring-assignment-object-pattern/invalid-pattern-with-method/input.js 1:1-1:10
-				right: JSNumericLiteral {
-					value: 0
-					format: undefined
-					loc: SourceLocation esprima/es2015-destructuring-assignment-object-pattern/invalid-pattern-with-method/input.js 1:9-1:10
-				}
 				left: JSAssignmentObjectPattern {
-					rest: undefined
-					loc: SourceLocation esprima/es2015-destructuring-assignment-object-pattern/invalid-pattern-with-method/input.js 1:1-1:8
-					properties: Array [
+					properties: [
 						JSAssignmentObjectPatternProperty {
 							key: JSStaticPropertyKey {
 								value: JSIdentifier {
@@ -67,10 +29,42 @@ JSRoot {
 							loc: SourceLocation esprima/es2015-destructuring-assignment-object-pattern/invalid-pattern-with-method/input.js 1:2-1:7
 						}
 					]
+					loc: SourceLocation esprima/es2015-destructuring-assignment-object-pattern/invalid-pattern-with-method/input.js 1:1-1:8
 				}
+				right: JSNumericLiteral {
+					value: 0
+					loc: SourceLocation esprima/es2015-destructuring-assignment-object-pattern/invalid-pattern-with-method/input.js 1:9-1:10
+				}
+				loc: SourceLocation esprima/es2015-destructuring-assignment-object-pattern/invalid-pattern-with-method/input.js 1:1-1:10
+			}
+			loc: SourceLocation esprima/es2015-destructuring-assignment-object-pattern/invalid-pattern-with-method/input.js 1:0-1:11
+		}
+	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "Object pattern cannot contains methods"}
+			}
+			location: {
+				language: "js"
+				path: UIDPath<esprima/es2015-destructuring-assignment-object-pattern/invalid-pattern-with-method/input.js>
+				end: Position 1:3
+				start: Position 1:2
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<esprima/es2015-destructuring-assignment-object-pattern/invalid-pattern-with-method/input.js>
+	loc: SourceLocation esprima/es2015-destructuring-assignment-object-pattern/invalid-pattern-with-method/input.js 1:0-2:0
 }
 ```
 
@@ -84,7 +78,7 @@ parse(js) ━━━━━━━━━━━━━━━━━━━━━━━�
   ✖ Object pattern cannot contains methods
 
     ({a(){}}=0)
-      ^
+      <error><emphasis>^</emphasis></error>
 
 
 ```

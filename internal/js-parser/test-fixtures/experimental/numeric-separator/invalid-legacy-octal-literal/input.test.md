@@ -8,27 +8,25 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation experimental/numeric-separator/invalid-legacy-octal-literal/input.js 1:0-1:4
-	path: UIDPath<experimental/numeric-separator/invalid-legacy-octal-literal/input.js>
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation experimental/numeric-separator/invalid-legacy-octal-literal/input.js 1:0-1:4
 			expression: JSNumericLiteral {
 				value: 0
 				format: "octal"
 				loc: SourceLocation experimental/numeric-separator/invalid-legacy-octal-literal/input.js 1:0-1:4
 			}
+			loc: SourceLocation experimental/numeric-separator/invalid-legacy-octal-literal/input.js 1:0-1:4
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<experimental/numeric-separator/invalid-legacy-octal-literal/input.js>
+	loc: SourceLocation experimental/numeric-separator/invalid-legacy-octal-literal/input.js 1:0-1:4
 }
 ```
 

@@ -8,23 +8,21 @@
 
 ```javascript
 JSRoot {
-	body: Array []
-	comments: Array []
+	body: []
+	comments: []
 	corrupt: false
-	diagnostics: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2015/uncategorised/2/input.js 1:0-1:27
-	path: UIDPath<es2015/uncategorised/2/input.js>
-	directives: Array [
+	diagnostics: []
+	directives: [
 		JSDirective {
 			value: "\\u{20BB7}\\u{91CE}\\u{5BB6}"
 			loc: SourceLocation es2015/uncategorised/2/input.js 1:0-1:27
 		}
 	]
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2015/uncategorised/2/input.js>
+	loc: SourceLocation es2015/uncategorised/2/input.js 1:0-1:27
 }
 ```
 

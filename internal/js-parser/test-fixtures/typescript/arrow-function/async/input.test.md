@@ -8,22 +8,9 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	loc: SourceLocation typescript/arrow-function/async/input.ts 1:0-2:0
-	path: UIDPath<typescript/arrow-function/async/input.ts>
-	syntax: Array ["ts"]
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation typescript/arrow-function/async/input.ts 1:0-1:29
 			expression: JSArrowFunctionExpression {
-				loc: SourceLocation typescript/arrow-function/async/input.ts 1:0-1:28
 				body: JSReferenceIdentifier {
 					name: "x"
 					loc: SourceLocation typescript/arrow-function/async/input.ts 1:27-1:28 (x)
@@ -31,25 +18,38 @@ JSRoot {
 				head: JSFunctionHead {
 					async: true
 					hasHoistedVars: false
-					rest: undefined
-					thisType: undefined
-					loc: SourceLocation typescript/arrow-function/async/input.ts 1:0-1:26
-					returnType: TSAnyKeywordTypeAnnotation {loc: SourceLocation typescript/arrow-function/async/input.ts 1:20-1:23}
-					params: Array [
+					params: [
 						JSBindingIdentifier {
 							name: "x"
-							loc: SourceLocation typescript/arrow-function/async/input.ts 1:27-1:26
 							meta: JSPatternMeta {
 								optional: true
+								typeAnnotation: TSNumberKeywordTypeAnnotation {
+									loc: SourceLocation typescript/arrow-function/async/input.ts 1:11-1:17
+								}
 								loc: SourceLocation typescript/arrow-function/async/input.ts 1:27-1:26
-								typeAnnotation: TSNumberKeywordTypeAnnotation {loc: SourceLocation typescript/arrow-function/async/input.ts 1:11-1:17}
 							}
+							loc: SourceLocation typescript/arrow-function/async/input.ts 1:27-1:26
 						}
 					]
+					returnType: TSAnyKeywordTypeAnnotation {
+						loc: SourceLocation typescript/arrow-function/async/input.ts 1:20-1:23
+					}
+					loc: SourceLocation typescript/arrow-function/async/input.ts 1:0-1:26
 				}
+				loc: SourceLocation typescript/arrow-function/async/input.ts 1:0-1:28
 			}
+			loc: SourceLocation typescript/arrow-function/async/input.ts 1:0-1:29
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: ["ts"]
+	path: UIDPath<typescript/arrow-function/async/input.ts>
+	loc: SourceLocation typescript/arrow-function/async/input.ts 1:0-2:0
 }
 ```
 

@@ -8,29 +8,14 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2015/let/let-at-binding-list-fail-2/input.js 1:0-2:0
-	path: UIDPath<es2015/let/let-at-binding-list-fail-2/input.js>
-	body: Array [
+	body: [
 		JSVariableDeclarationStatement {
-			loc: SourceLocation es2015/let/let-at-binding-list-fail-2/input.js 1:0-1:19
 			declaration: JSVariableDeclaration {
 				kind: "const"
-				loc: SourceLocation es2015/let/let-at-binding-list-fail-2/input.js 1:0-1:19
-				declarations: Array [
+				declarations: [
 					JSVariableDeclarator {
 						id: JSBindingObjectPattern {
-							rest: undefined
-							loc: SourceLocation es2015/let/let-at-binding-list-fail-2/input.js 1:6-1:13
-							properties: Array [
+							properties: [
 								JSBindingObjectPatternProperty {
 									key: JSStaticPropertyKey {
 										value: JSIdentifier {
@@ -46,17 +31,29 @@ JSRoot {
 									loc: SourceLocation es2015/let/let-at-binding-list-fail-2/input.js 1:8-1:11
 								}
 							]
+							loc: SourceLocation es2015/let/let-at-binding-list-fail-2/input.js 1:6-1:13
 						}
-						loc: SourceLocation es2015/let/let-at-binding-list-fail-2/input.js 1:6-1:18
 						init: JSObjectExpression {
-							properties: Array []
+							properties: []
 							loc: SourceLocation es2015/let/let-at-binding-list-fail-2/input.js 1:16-1:18
 						}
+						loc: SourceLocation es2015/let/let-at-binding-list-fail-2/input.js 1:6-1:18
 					}
 				]
+				loc: SourceLocation es2015/let/let-at-binding-list-fail-2/input.js 1:0-1:19
 			}
+			loc: SourceLocation es2015/let/let-at-binding-list-fail-2/input.js 1:0-1:19
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2015/let/let-at-binding-list-fail-2/input.js>
+	loc: SourceLocation es2015/let/let-at-binding-list-fail-2/input.js 1:0-2:0
 }
 ```
 

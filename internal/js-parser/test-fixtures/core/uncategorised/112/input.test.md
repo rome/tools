@@ -14,7 +14,10 @@ JSRoot {
 				arguments: []
 				callee: JSNewExpression {
 					arguments: []
-					callee: JSReferenceIdentifier {name: "foo", loc: SourceLocation core/uncategorised/112/input.js 1:8-1:11 (foo)}
+					callee: JSReferenceIdentifier {
+						name: "foo"
+						loc: SourceLocation core/uncategorised/112/input.js 1:8-1:11 (foo)
+					}
 					loc: SourceLocation core/uncategorised/112/input.js 1:4-1:13
 				}
 				loc: SourceLocation core/uncategorised/112/input.js 1:0-1:13
@@ -27,9 +30,9 @@ JSRoot {
 	diagnostics: []
 	directives: []
 	hasHoistedVars: false
-	path: UIDPath<core/uncategorised/112/input.js>
 	sourceType: "script"
 	syntax: []
+	path: UIDPath<core/uncategorised/112/input.js>
 	loc: SourceLocation core/uncategorised/112/input.js 1:0-1:13
 }
 ```

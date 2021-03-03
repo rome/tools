@@ -8,31 +8,14 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation experimental/uncategorised/43/input.js 1:0-1:26
-	path: UIDPath<experimental/uncategorised/43/input.js>
-	body: Array [
+	body: [
 		JSClassDeclaration {
 			id: JSBindingIdentifier {
 				name: "Foo"
 				loc: SourceLocation experimental/uncategorised/43/input.js 1:6-1:9 (Foo)
 			}
-			loc: SourceLocation experimental/uncategorised/43/input.js 1:0-1:26
 			meta: JSClassHead {
-				implements: undefined
-				superClass: undefined
-				superTypeParameters: undefined
-				typeParameters: undefined
-				loc: SourceLocation experimental/uncategorised/43/input.js 1:0-1:26
-				body: Array [
+				body: [
 					JSClassProperty {
 						key: JSStaticPropertyKey {
 							value: JSIdentifier {
@@ -45,24 +28,31 @@ JSRoot {
 							value: "bar"
 							loc: SourceLocation experimental/uncategorised/43/input.js 1:18-1:23
 						}
-						definite: undefined
-						typeAnnotation: undefined
-						loc: SourceLocation experimental/uncategorised/43/input.js 1:12-1:24
 						meta: JSClassPropertyMeta {
 							abstract: false
-							accessibility: undefined
 							optional: false
 							readonly: false
 							static: false
-							typeAnnotation: undefined
 							loc: SourceLocation experimental/uncategorised/43/input.js 1:12-1:15
 							start: Position 1:12
 						}
+						loc: SourceLocation experimental/uncategorised/43/input.js 1:12-1:24
 					}
 				]
+				loc: SourceLocation experimental/uncategorised/43/input.js 1:0-1:26
 			}
+			loc: SourceLocation experimental/uncategorised/43/input.js 1:0-1:26
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<experimental/uncategorised/43/input.js>
+	loc: SourceLocation experimental/uncategorised/43/input.js 1:0-1:26
 }
 ```
 

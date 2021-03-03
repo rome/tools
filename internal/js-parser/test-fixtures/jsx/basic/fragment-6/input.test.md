@@ -8,54 +8,51 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	loc: SourceLocation jsx/basic/fragment-6/input.jsx 1:0-2:0
-	path: UIDPath<jsx/basic/fragment-6/input.jsx>
-	syntax: Array ["jsx"]
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation jsx/basic/fragment-6/input.jsx 1:0-1:59
 			expression: JSXFragment {
-				loc: SourceLocation jsx/basic/fragment-6/input.jsx 1:0-1:59
-				children: Array [
+				children: [
 					JSXElement {
-						name: JSXIdentifier {
-							name: "div"
-							loc: SourceLocation jsx/basic/fragment-6/input.jsx 1:3-1:6
-						}
-						attributes: Array []
-						selfClosing: false
-						typeArguments: undefined
-						loc: SourceLocation jsx/basic/fragment-6/input.jsx 1:2-1:23
-						children: Array [
+						attributes: []
+						children: [
 							JSXText {
 								value: "JSXElement"
 								loc: SourceLocation jsx/basic/fragment-6/input.jsx 1:7-1:17
 							}
 						]
+						selfClosing: false
+						name: JSXIdentifier {
+							name: "div"
+							loc: SourceLocation jsx/basic/fragment-6/input.jsx 1:3-1:6
+						}
+						loc: SourceLocation jsx/basic/fragment-6/input.jsx 1:2-1:23
 					}
 					JSXText {
 						value: "JSXText"
 						loc: SourceLocation jsx/basic/fragment-6/input.jsx 1:23-1:30
 					}
 					JSXExpressionContainer {
-						loc: SourceLocation jsx/basic/fragment-6/input.jsx 1:30-1:56
 						expression: JSStringLiteral {
 							value: "JSXExpressionContainer"
 							loc: SourceLocation jsx/basic/fragment-6/input.jsx 1:31-1:55
 						}
+						loc: SourceLocation jsx/basic/fragment-6/input.jsx 1:30-1:56
 					}
 				]
+				loc: SourceLocation jsx/basic/fragment-6/input.jsx 1:0-1:59
 			}
+			loc: SourceLocation jsx/basic/fragment-6/input.jsx 1:0-1:59
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: ["jsx"]
+	path: UIDPath<jsx/basic/fragment-6/input.jsx>
+	loc: SourceLocation jsx/basic/fragment-6/input.jsx 1:0-2:0
 }
 ```
 

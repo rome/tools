@@ -8,50 +8,19 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: true
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	syntax: Array []
-	loc: SourceLocation experimental/module-attributes/invalid-spread-element-import-call/input.js 1:0-2:0
-	path: UIDPath<experimental/module-attributes/invalid-spread-element-import-call/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Trailing comma is disallowed inside import(...) arguments"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:20
-				path: UIDPath<experimental/module-attributes/invalid-spread-element-import-call/input.js>
-				start: Position 1:19
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation experimental/module-attributes/invalid-spread-element-import-call/input.js 1:0-1:20
 			expression: JSImportCall {
-				loc: SourceLocation experimental/module-attributes/invalid-spread-element-import-call/input.js 1:6-1:20
 				argument: JSStringLiteral {
 					value: "./foo.json"
 					loc: SourceLocation experimental/module-attributes/invalid-spread-element-import-call/input.js 1:7-1:19
 				}
+				loc: SourceLocation experimental/module-attributes/invalid-spread-element-import-call/input.js 1:6-1:20
 			}
+			loc: SourceLocation experimental/module-attributes/invalid-spread-element-import-call/input.js 1:0-1:20
 		}
 		JSExpressionStatement {
-			loc: SourceLocation experimental/module-attributes/invalid-spread-element-import-call/input.js 1:21-1:26
 			expression: JSMemberExpression {
-				loc: SourceLocation experimental/module-attributes/invalid-spread-element-import-call/input.js 1:21-1:26
 				object: JSReferenceIdentifier {
 					name: "INVALID_PLACEHOLDER"
 					loc: SourceLocation experimental/module-attributes/invalid-spread-element-import-call/input.js 1:21-1:24
@@ -63,16 +32,43 @@ JSRoot {
 					}
 					loc: SourceLocation experimental/module-attributes/invalid-spread-element-import-call/input.js 1:24-1:26
 				}
+				loc: SourceLocation experimental/module-attributes/invalid-spread-element-import-call/input.js 1:21-1:26
 			}
+			loc: SourceLocation experimental/module-attributes/invalid-spread-element-import-call/input.js 1:21-1:26
 		}
 		JSExpressionStatement {
-			loc: SourceLocation experimental/module-attributes/invalid-spread-element-import-call/input.js 1:26-1:28
 			expression: JSReferenceIdentifier {
 				name: "INVALID_PLACEHOLDER"
 				loc: SourceLocation experimental/module-attributes/invalid-spread-element-import-call/input.js 1:26-1:27
 			}
+			loc: SourceLocation experimental/module-attributes/invalid-spread-element-import-call/input.js 1:26-1:28
 		}
 	]
+	comments: []
+	corrupt: true
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "Trailing comma is disallowed inside import(...) arguments"}
+			}
+			location: {
+				language: "js"
+				path: UIDPath<experimental/module-attributes/invalid-spread-element-import-call/input.js>
+				end: Position 1:20
+				start: Position 1:19
+			}
+		}
+	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: []
+	path: UIDPath<experimental/module-attributes/invalid-spread-element-import-call/input.js>
+	loc: SourceLocation experimental/module-attributes/invalid-spread-element-import-call/input.js 1:0-2:0
 }
 ```
 
@@ -85,7 +81,7 @@ JSRoot {
   ✖ Trailing comma is disallowed inside import(...) arguments
 
     import("./foo.json", ...[]);
-                       ^
+                       <error><emphasis>^</emphasis></error>
 
 
 ```

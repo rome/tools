@@ -8,71 +8,64 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2017/async-functions/await-inside-arguments-of-async-function-call/input.js 1:0-3:1
-	path: UIDPath<es2017/async-functions/await-inside-arguments-of-async-function-call/input.js>
-	body: Array [
+	body: [
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "fn"
 				loc: SourceLocation es2017/async-functions/await-inside-arguments-of-async-function-call/input.js 1:15-1:17 (fn)
 			}
-			loc: SourceLocation es2017/async-functions/await-inside-arguments-of-async-function-call/input.js 1:0-3:1
-			head: JSFunctionHead {
-				async: true
-				generator: false
-				hasHoistedVars: false
-				params: Array []
-				rest: undefined
-				returnType: undefined
-				thisType: undefined
-				typeParameters: undefined
-				loc: SourceLocation es2017/async-functions/await-inside-arguments-of-async-function-call/input.js 1:17-1:19
-			}
 			body: JSBlockStatement {
-				directives: Array []
-				loc: SourceLocation es2017/async-functions/await-inside-arguments-of-async-function-call/input.js 1:20-3:1
-				body: Array [
+				body: [
 					JSExpressionStatement {
-						loc: SourceLocation es2017/async-functions/await-inside-arguments-of-async-function-call/input.js 2:2-2:21
 						expression: JSCallExpression {
-							loc: SourceLocation es2017/async-functions/await-inside-arguments-of-async-function-call/input.js 2:2-2:20
-							callee: JSReferenceIdentifier {
-								name: "async"
-								loc: SourceLocation es2017/async-functions/await-inside-arguments-of-async-function-call/input.js 2:2-2:7 (async)
-							}
-							arguments: Array [
+							arguments: [
 								JSAssignmentExpression {
 									operator: "="
-									loc: SourceLocation es2017/async-functions/await-inside-arguments-of-async-function-call/input.js 2:8-2:19
 									left: JSAssignmentIdentifier {
 										name: "x"
 										loc: SourceLocation es2017/async-functions/await-inside-arguments-of-async-function-call/input.js 2:8-2:9 (x)
 									}
 									right: JSAwaitExpression {
-										loc: SourceLocation es2017/async-functions/await-inside-arguments-of-async-function-call/input.js 2:12-2:19
 										argument: JSNumericLiteral {
 											value: 2
-											format: undefined
 											loc: SourceLocation es2017/async-functions/await-inside-arguments-of-async-function-call/input.js 2:18-2:19
 										}
+										loc: SourceLocation es2017/async-functions/await-inside-arguments-of-async-function-call/input.js 2:12-2:19
 									}
+									loc: SourceLocation es2017/async-functions/await-inside-arguments-of-async-function-call/input.js 2:8-2:19
 								}
 							]
+							callee: JSReferenceIdentifier {
+								name: "async"
+								loc: SourceLocation es2017/async-functions/await-inside-arguments-of-async-function-call/input.js 2:2-2:7 (async)
+							}
+							loc: SourceLocation es2017/async-functions/await-inside-arguments-of-async-function-call/input.js 2:2-2:20
 						}
+						loc: SourceLocation es2017/async-functions/await-inside-arguments-of-async-function-call/input.js 2:2-2:21
 					}
 				]
+				directives: []
+				loc: SourceLocation es2017/async-functions/await-inside-arguments-of-async-function-call/input.js 1:20-3:1
 			}
+			head: JSFunctionHead {
+				async: true
+				generator: false
+				hasHoistedVars: false
+				params: []
+				loc: SourceLocation es2017/async-functions/await-inside-arguments-of-async-function-call/input.js 1:17-1:19
+			}
+			loc: SourceLocation es2017/async-functions/await-inside-arguments-of-async-function-call/input.js 1:0-3:1
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2017/async-functions/await-inside-arguments-of-async-function-call/input.js>
+	loc: SourceLocation es2017/async-functions/await-inside-arguments-of-async-function-call/input.js 1:0-3:1
 }
 ```
 

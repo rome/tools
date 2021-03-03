@@ -8,52 +8,44 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: true
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation esprima/invalid-syntax/migrated_0262/input.js 1:0-2:0
-	path: UIDPath<esprima/invalid-syntax/migrated_0262/input.js>
-	body: Array [
+	body: [
 		JSClassDeclaration {
 			id: JSBindingIdentifier {
 				name: "INVALID_PLACEHOLDER"
 				loc: SourceLocation esprima/invalid-syntax/migrated_0262/input.js 2:0-1:5
 			}
-			loc: SourceLocation esprima/invalid-syntax/migrated_0262/input.js 1:0-1:5
 			meta: JSClassHead {
-				body: Array []
-				implements: undefined
-				superClass: undefined
-				superTypeParameters: undefined
-				typeParameters: undefined
+				body: []
 				loc: SourceLocation esprima/invalid-syntax/migrated_0262/input.js 1:0-1:5
 			}
+			loc: SourceLocation esprima/invalid-syntax/migrated_0262/input.js 1:0-1:5
 		}
 	]
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
+	comments: []
+	corrupt: true
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {
+				advice: []
+				category: ["parse"]
 				categoryValue: "js"
-				category: Array ["parse"]
 				message: RAW_MARKUP {value: "Class name is required"}
 			}
-			location: Object {
-				integrity: undefined
+			location: {
 				language: "js"
-				sourceText: undefined
-				end: Position 1:5
 				path: UIDPath<esprima/invalid-syntax/migrated_0262/input.js>
+				end: Position 1:5
 				start: Position 2:0
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<esprima/invalid-syntax/migrated_0262/input.js>
+	loc: SourceLocation esprima/invalid-syntax/migrated_0262/input.js 1:0-2:0
 }
 ```
 

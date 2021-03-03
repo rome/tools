@@ -8,66 +8,59 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	syntax: Array []
-	loc: SourceLocation es2015/uncategorised/388/input.js 1:0-2:0
-	path: UIDPath<es2015/uncategorised/388/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Expected an identifier"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:15
-				path: UIDPath<es2015/uncategorised/388/input.js>
-				start: Position 1:15
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSExportLocalDeclaration {
 			exportKind: "value"
-			specifiers: undefined
-			loc: SourceLocation es2015/uncategorised/388/input.js 1:0-1:20
 			declaration: JSFunctionDeclaration {
 				id: JSBindingIdentifier {
 					name: ""
 					loc: SourceLocation es2015/uncategorised/388/input.js 1:15-1:16 ()
 				}
-				loc: SourceLocation es2015/uncategorised/388/input.js 1:7-1:20
 				body: JSBlockStatement {
-					body: Array []
-					directives: Array []
+					body: []
+					directives: []
 					loc: SourceLocation es2015/uncategorised/388/input.js 1:18-1:20
 				}
 				head: JSFunctionHead {
 					async: false
 					generator: false
 					hasHoistedVars: false
-					params: Array []
-					rest: undefined
-					returnType: undefined
-					thisType: undefined
-					typeParameters: undefined
+					params: []
 					loc: SourceLocation es2015/uncategorised/388/input.js 1:16-1:17
 				}
+				loc: SourceLocation es2015/uncategorised/388/input.js 1:7-1:20
+			}
+			loc: SourceLocation es2015/uncategorised/388/input.js 1:0-1:20
+		}
+		JSEmptyStatement {
+			loc: SourceLocation es2015/uncategorised/388/input.js 1:20-1:21
+		}
+	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "Expected an identifier"}
+			}
+			location: {
+				language: "js"
+				path: UIDPath<es2015/uncategorised/388/input.js>
+				end: Position 1:15
+				start: Position 1:15
 			}
 		}
-		JSEmptyStatement {loc: SourceLocation es2015/uncategorised/388/input.js 1:20-1:21}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: []
+	path: UIDPath<es2015/uncategorised/388/input.js>
+	loc: SourceLocation es2015/uncategorised/388/input.js 1:0-2:0
 }
 ```
 
@@ -80,7 +73,7 @@ JSRoot {
   ✖ Expected an identifier
 
     export function() {};
-                   ^
+                   <error><emphasis>^</emphasis></error>
 
 
 ```

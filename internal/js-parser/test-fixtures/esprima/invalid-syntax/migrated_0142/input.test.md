@@ -8,66 +8,60 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation esprima/invalid-syntax/migrated_0142/input.js 1:0-2:0
-	path: UIDPath<esprima/invalid-syntax/migrated_0142/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Lexical declaration cannot appear in a single-statement context"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:8
-				path: UIDPath<esprima/invalid-syntax/migrated_0142/input.js>
-				start: Position 1:9
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSIfStatement {
-			alternate: undefined
-			loc: SourceLocation esprima/invalid-syntax/migrated_0142/input.js 1:0-1:21
-			test: JSBooleanLiteral {
-				value: true
-				loc: SourceLocation esprima/invalid-syntax/migrated_0142/input.js 1:3-1:7
-			}
 			consequent: JSVariableDeclarationStatement {
-				loc: SourceLocation esprima/invalid-syntax/migrated_0142/input.js 1:9-1:21
 				declaration: JSVariableDeclaration {
 					kind: "const"
-					loc: SourceLocation esprima/invalid-syntax/migrated_0142/input.js 1:9-1:21
-					declarations: Array [
+					declarations: [
 						JSVariableDeclarator {
 							id: JSBindingIdentifier {
 								name: "a"
 								loc: SourceLocation esprima/invalid-syntax/migrated_0142/input.js 1:15-1:16 (a)
 							}
-							loc: SourceLocation esprima/invalid-syntax/migrated_0142/input.js 1:15-1:20
 							init: JSNumericLiteral {
 								value: 1
-								format: undefined
 								loc: SourceLocation esprima/invalid-syntax/migrated_0142/input.js 1:19-1:20
 							}
+							loc: SourceLocation esprima/invalid-syntax/migrated_0142/input.js 1:15-1:20
 						}
 					]
+					loc: SourceLocation esprima/invalid-syntax/migrated_0142/input.js 1:9-1:21
 				}
+				loc: SourceLocation esprima/invalid-syntax/migrated_0142/input.js 1:9-1:21
+			}
+			test: JSBooleanLiteral {
+				value: true
+				loc: SourceLocation esprima/invalid-syntax/migrated_0142/input.js 1:3-1:7
+			}
+			loc: SourceLocation esprima/invalid-syntax/migrated_0142/input.js 1:0-1:21
+		}
+	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "Lexical declaration cannot appear in a single-statement context"}
+			}
+			location: {
+				language: "js"
+				path: UIDPath<esprima/invalid-syntax/migrated_0142/input.js>
+				end: Position 1:8
+				start: Position 1:9
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<esprima/invalid-syntax/migrated_0142/input.js>
+	loc: SourceLocation esprima/invalid-syntax/migrated_0142/input.js 1:0-2:0
 }
 ```
 
@@ -80,7 +74,7 @@ JSRoot {
   ✖ Lexical declaration cannot appear in a single-statement context
 
     if(true) const a = 1;
-             ^
+             <error><emphasis>^</emphasis></error>
 
 
 ```

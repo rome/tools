@@ -27,7 +27,7 @@ function getMessageFromNodeError(
 	err: NodeSystemError,
 ): {
 	message: StaticMarkup;
-	advice?: DiagnosticAdvice;
+	advice?: DiagnosticAdvice[];
 } {
 	const path = getPathFromNodeError(err);
 

@@ -8,37 +8,31 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	syntax: Array []
-	loc: SourceLocation es2015/modules/export-default-class-expression/input.js 1:0-2:0
-	path: UIDPath<es2015/modules/export-default-class-expression/input.js>
-	body: Array [
+	body: [
 		JSExportDefaultDeclaration {
-			loc: SourceLocation es2015/modules/export-default-class-expression/input.js 1:0-1:30
 			declaration: JSClassExpression {
 				id: JSBindingIdentifier {
 					name: "Foo"
 					loc: SourceLocation es2015/modules/export-default-class-expression/input.js 1:22-1:25 (Foo)
 				}
-				loc: SourceLocation es2015/modules/export-default-class-expression/input.js 1:16-1:28
 				meta: JSClassHead {
-					body: Array []
-					implements: undefined
-					superClass: undefined
-					superTypeParameters: undefined
-					typeParameters: undefined
+					body: []
 					loc: SourceLocation es2015/modules/export-default-class-expression/input.js 1:16-1:28
 				}
+				loc: SourceLocation es2015/modules/export-default-class-expression/input.js 1:16-1:28
 			}
+			loc: SourceLocation es2015/modules/export-default-class-expression/input.js 1:0-1:30
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: []
+	path: UIDPath<es2015/modules/export-default-class-expression/input.js>
+	loc: SourceLocation es2015/modules/export-default-class-expression/input.js 1:0-2:0
 }
 ```
 

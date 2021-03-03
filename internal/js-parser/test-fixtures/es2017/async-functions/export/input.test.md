@@ -8,73 +8,62 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	syntax: Array []
-	loc: SourceLocation es2017/async-functions/export/input.js 1:0-3:0
-	path: UIDPath<es2017/async-functions/export/input.js>
-	body: Array [
+	body: [
 		JSExportLocalDeclaration {
 			exportKind: "value"
-			specifiers: undefined
-			loc: SourceLocation es2017/async-functions/export/input.js 1:0-1:30
 			declaration: JSFunctionDeclaration {
 				id: JSBindingIdentifier {
 					name: "foo"
 					loc: SourceLocation es2017/async-functions/export/input.js 1:22-1:25 (foo)
 				}
-				loc: SourceLocation es2017/async-functions/export/input.js 1:7-1:30
 				body: JSBlockStatement {
-					body: Array []
-					directives: Array []
+					body: []
+					directives: []
 					loc: SourceLocation es2017/async-functions/export/input.js 1:28-1:30
 				}
 				head: JSFunctionHead {
 					async: true
 					generator: false
 					hasHoistedVars: false
-					params: Array []
-					rest: undefined
-					returnType: undefined
-					thisType: undefined
-					typeParameters: undefined
+					params: []
 					loc: SourceLocation es2017/async-functions/export/input.js 1:25-1:27
 				}
+				loc: SourceLocation es2017/async-functions/export/input.js 1:7-1:30
 			}
+			loc: SourceLocation es2017/async-functions/export/input.js 1:0-1:30
 		}
 		JSExportDefaultDeclaration {
-			loc: SourceLocation es2017/async-functions/export/input.js 2:0-2:38
 			declaration: JSFunctionDeclaration {
 				id: JSBindingIdentifier {
 					name: "bar"
 					loc: SourceLocation es2017/async-functions/export/input.js 2:30-2:33 (bar)
 				}
-				loc: SourceLocation es2017/async-functions/export/input.js 2:15-2:38
 				body: JSBlockStatement {
-					body: Array []
-					directives: Array []
+					body: []
+					directives: []
 					loc: SourceLocation es2017/async-functions/export/input.js 2:36-2:38
 				}
 				head: JSFunctionHead {
 					async: true
 					generator: false
 					hasHoistedVars: false
-					params: Array []
-					rest: undefined
-					returnType: undefined
-					thisType: undefined
-					typeParameters: undefined
+					params: []
 					loc: SourceLocation es2017/async-functions/export/input.js 2:33-2:35
 				}
+				loc: SourceLocation es2017/async-functions/export/input.js 2:15-2:38
 			}
+			loc: SourceLocation es2017/async-functions/export/input.js 2:0-2:38
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: []
+	path: UIDPath<es2017/async-functions/export/input.js>
+	loc: SourceLocation es2017/async-functions/export/input.js 1:0-3:0
 }
 ```
 

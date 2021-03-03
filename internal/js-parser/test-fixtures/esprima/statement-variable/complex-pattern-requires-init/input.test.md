@@ -8,55 +8,49 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
+	body: [
+		JSVariableDeclarationStatement {
+			declaration: JSVariableDeclaration {
+				kind: "var"
+				declarations: [
+					JSVariableDeclarator {
+						id: JSBindingArrayPattern {
+							elements: []
+							loc: SourceLocation esprima/statement-variable/complex-pattern-requires-init/input.js 1:4-1:6
+						}
+						loc: SourceLocation esprima/statement-variable/complex-pattern-requires-init/input.js 1:4-1:6
+					}
+				]
+				loc: SourceLocation esprima/statement-variable/complex-pattern-requires-init/input.js 1:0-1:6
+			}
+			loc: SourceLocation esprima/statement-variable/complex-pattern-requires-init/input.js 1:0-1:6
+		}
+	]
+	comments: []
 	corrupt: false
-	directives: Array []
-	hasHoistedVars: true
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation esprima/statement-variable/complex-pattern-requires-init/input.js 1:0-2:0
-	path: UIDPath<esprima/statement-variable/complex-pattern-requires-init/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {
+				advice: []
+				category: ["parse"]
 				categoryValue: "js"
-				category: Array ["parse"]
 				message: RAW_MARKUP {value: "Complex binding patterns require an initialization value"}
 			}
-			location: Object {
-				integrity: undefined
+			location: {
 				language: "js"
-				sourceText: undefined
-				end: Position 1:6
 				path: UIDPath<esprima/statement-variable/complex-pattern-requires-init/input.js>
+				end: Position 1:6
 				start: Position 1:6
 			}
 		}
 	]
-	body: Array [
-		JSVariableDeclarationStatement {
-			loc: SourceLocation esprima/statement-variable/complex-pattern-requires-init/input.js 1:0-1:6
-			declaration: JSVariableDeclaration {
-				kind: "var"
-				loc: SourceLocation esprima/statement-variable/complex-pattern-requires-init/input.js 1:0-1:6
-				declarations: Array [
-					JSVariableDeclarator {
-						id: JSBindingArrayPattern {
-							elements: Array []
-							rest: undefined
-							loc: SourceLocation esprima/statement-variable/complex-pattern-requires-init/input.js 1:4-1:6
-						}
-						init: undefined
-						loc: SourceLocation esprima/statement-variable/complex-pattern-requires-init/input.js 1:4-1:6
-					}
-				]
-			}
-		}
-	]
+	directives: []
+	hasHoistedVars: true
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<esprima/statement-variable/complex-pattern-requires-init/input.js>
+	loc: SourceLocation esprima/statement-variable/complex-pattern-requires-init/input.js 1:0-2:0
 }
 ```
 
@@ -69,7 +63,7 @@ JSRoot {
   ✖ Complex binding patterns require an initialization value
 
     var []
-          ^
+          <error><emphasis>^</emphasis></error>
 
 
 ```

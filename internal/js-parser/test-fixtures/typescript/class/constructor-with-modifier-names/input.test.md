@@ -8,31 +8,14 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	loc: SourceLocation typescript/class/constructor-with-modifier-names/input.ts 1:0-5:0
-	path: UIDPath<typescript/class/constructor-with-modifier-names/input.ts>
-	syntax: Array ["ts"]
-	body: Array [
+	body: [
 		JSClassDeclaration {
 			id: JSBindingIdentifier {
 				name: "Foo"
 				loc: SourceLocation typescript/class/constructor-with-modifier-names/input.ts 1:6-1:9 (Foo)
 			}
-			loc: SourceLocation typescript/class/constructor-with-modifier-names/input.ts 1:0-4:1
 			meta: JSClassHead {
-				implements: undefined
-				superClass: undefined
-				superTypeParameters: undefined
-				typeParameters: undefined
-				loc: SourceLocation typescript/class/constructor-with-modifier-names/input.ts 1:0-4:1
-				body: Array [
+				body: [
 					JSClassMethod {
 						kind: "constructor"
 						key: JSStaticPropertyKey {
@@ -42,52 +25,42 @@ JSRoot {
 							}
 							loc: SourceLocation typescript/class/constructor-with-modifier-names/input.ts 2:2-2:13
 						}
-						loc: SourceLocation typescript/class/constructor-with-modifier-names/input.ts 2:2-2:31
 						body: JSBlockStatement {
-							body: Array []
-							directives: Array []
+							body: []
+							directives: []
 							loc: SourceLocation typescript/class/constructor-with-modifier-names/input.ts 2:29-2:31
-						}
-						meta: JSClassPropertyMeta {
-							abstract: false
-							accessibility: undefined
-							optional: false
-							readonly: false
-							static: false
-							typeAnnotation: undefined
-							loc: SourceLocation typescript/class/constructor-with-modifier-names/input.ts 2:2-2:13
-							start: Position 2:2
 						}
 						head: JSFunctionHead {
 							async: false
 							generator: false
 							hasHoistedVars: false
-							rest: undefined
-							returnType: undefined
-							thisType: undefined
-							typeParameters: undefined
-							loc: SourceLocation typescript/class/constructor-with-modifier-names/input.ts 2:13-2:28
-							params: Array [
+							params: [
 								JSBindingIdentifier {
 									name: "set"
-									loc: SourceLocation typescript/class/constructor-with-modifier-names/input.ts 2:14-2:17 (set)
 									meta: JSPatternMeta {
-										optional: undefined
-										typeAnnotation: undefined
 										loc: SourceLocation typescript/class/constructor-with-modifier-names/input.ts 2:14-2:17
 									}
+									loc: SourceLocation typescript/class/constructor-with-modifier-names/input.ts 2:14-2:17 (set)
 								}
 								JSBindingIdentifier {
 									name: "readonly"
-									loc: SourceLocation typescript/class/constructor-with-modifier-names/input.ts 2:19-2:27 (readonly)
 									meta: JSPatternMeta {
-										optional: undefined
-										typeAnnotation: undefined
 										loc: SourceLocation typescript/class/constructor-with-modifier-names/input.ts 2:19-2:27
 									}
+									loc: SourceLocation typescript/class/constructor-with-modifier-names/input.ts 2:19-2:27 (readonly)
 								}
 							]
+							loc: SourceLocation typescript/class/constructor-with-modifier-names/input.ts 2:13-2:28
 						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							optional: false
+							readonly: false
+							static: false
+							loc: SourceLocation typescript/class/constructor-with-modifier-names/input.ts 2:2-2:13
+							start: Position 2:2
+						}
+						loc: SourceLocation typescript/class/constructor-with-modifier-names/input.ts 2:2-2:31
 					}
 					JSClassMethod {
 						kind: "constructor"
@@ -98,57 +71,64 @@ JSRoot {
 							}
 							loc: SourceLocation typescript/class/constructor-with-modifier-names/input.ts 3:2-3:13
 						}
-						loc: SourceLocation typescript/class/constructor-with-modifier-names/input.ts 3:2-3:45
 						body: JSBlockStatement {
-							body: Array []
-							directives: Array []
+							body: []
+							directives: []
 							loc: SourceLocation typescript/class/constructor-with-modifier-names/input.ts 3:43-3:45
-						}
-						meta: JSClassPropertyMeta {
-							abstract: false
-							accessibility: undefined
-							optional: false
-							readonly: false
-							static: false
-							typeAnnotation: undefined
-							loc: SourceLocation typescript/class/constructor-with-modifier-names/input.ts 3:2-3:13
-							start: Position 3:2
 						}
 						head: JSFunctionHead {
 							async: false
 							generator: false
 							hasHoistedVars: false
-							rest: undefined
-							returnType: undefined
-							thisType: undefined
-							typeParameters: undefined
-							loc: SourceLocation typescript/class/constructor-with-modifier-names/input.ts 3:13-3:42
-							params: Array [
+							params: [
 								JSBindingIdentifier {
 									name: "set"
-									loc: SourceLocation typescript/class/constructor-with-modifier-names/input.ts 3:14-3:17 (set)
 									meta: JSPatternMeta {
-										optional: undefined
+										typeAnnotation: TSAnyKeywordTypeAnnotation {
+											loc: SourceLocation typescript/class/constructor-with-modifier-names/input.ts 3:19-3:22
+										}
 										loc: SourceLocation typescript/class/constructor-with-modifier-names/input.ts 3:14-3:22
-										typeAnnotation: TSAnyKeywordTypeAnnotation {loc: SourceLocation typescript/class/constructor-with-modifier-names/input.ts 3:19-3:22}
 									}
+									loc: SourceLocation typescript/class/constructor-with-modifier-names/input.ts 3:14-3:17 (set)
 								}
 								JSBindingIdentifier {
 									name: "readonly"
-									loc: SourceLocation typescript/class/constructor-with-modifier-names/input.ts 3:24-3:32 (readonly)
 									meta: JSPatternMeta {
-										optional: undefined
+										typeAnnotation: TSBooleanKeywordTypeAnnotation {
+											loc: SourceLocation typescript/class/constructor-with-modifier-names/input.ts 3:34-3:41
+										}
 										loc: SourceLocation typescript/class/constructor-with-modifier-names/input.ts 3:24-3:41
-										typeAnnotation: TSBooleanKeywordTypeAnnotation {loc: SourceLocation typescript/class/constructor-with-modifier-names/input.ts 3:34-3:41}
 									}
+									loc: SourceLocation typescript/class/constructor-with-modifier-names/input.ts 3:24-3:32 (readonly)
 								}
 							]
+							loc: SourceLocation typescript/class/constructor-with-modifier-names/input.ts 3:13-3:42
 						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							optional: false
+							readonly: false
+							static: false
+							loc: SourceLocation typescript/class/constructor-with-modifier-names/input.ts 3:2-3:13
+							start: Position 3:2
+						}
+						loc: SourceLocation typescript/class/constructor-with-modifier-names/input.ts 3:2-3:45
 					}
 				]
+				loc: SourceLocation typescript/class/constructor-with-modifier-names/input.ts 1:0-4:1
 			}
+			loc: SourceLocation typescript/class/constructor-with-modifier-names/input.ts 1:0-4:1
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: ["ts"]
+	path: UIDPath<typescript/class/constructor-with-modifier-names/input.ts>
+	loc: SourceLocation typescript/class/constructor-with-modifier-names/input.ts 1:0-5:0
 }
 ```
 

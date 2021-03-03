@@ -8,46 +8,18 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2015/regression/6864/input.js 1:0-6:0
-	path: UIDPath<es2015/regression/6864/input.js>
-	body: Array [
+	body: [
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "f"
 				loc: SourceLocation es2015/regression/6864/input.js 1:10-1:11 (f)
 			}
-			loc: SourceLocation es2015/regression/6864/input.js 1:0-5:1
-			head: JSFunctionHead {
-				async: false
-				generator: true
-				hasHoistedVars: false
-				params: Array []
-				rest: undefined
-				returnType: undefined
-				thisType: undefined
-				typeParameters: undefined
-				loc: SourceLocation es2015/regression/6864/input.js 1:11-1:13
-			}
 			body: JSBlockStatement {
-				directives: Array []
-				loc: SourceLocation es2015/regression/6864/input.js 1:14-5:1
-				body: Array [
+				body: [
 					JSExpressionStatement {
-						loc: SourceLocation es2015/regression/6864/input.js 2:2-2:17
 						expression: JSYieldExpression {
 							delegate: false
-							loc: SourceLocation es2015/regression/6864/input.js 2:3-2:15
 							argument: JSArrowFunctionExpression {
-								loc: SourceLocation es2015/regression/6864/input.js 2:9-2:15
 								body: JSReferenceIdentifier {
 									name: "a"
 									loc: SourceLocation es2015/regression/6864/input.js 2:14-2:15 (a)
@@ -55,26 +27,24 @@ JSRoot {
 								head: JSFunctionHead {
 									async: false
 									hasHoistedVars: false
-									rest: undefined
-									thisType: undefined
-									loc: SourceLocation es2015/regression/6864/input.js 2:9-2:13
-									params: Array [
+									params: [
 										JSBindingIdentifier {
 											name: "a"
 											loc: SourceLocation es2015/regression/6864/input.js 2:9-2:10 (a)
 										}
 									]
+									loc: SourceLocation es2015/regression/6864/input.js 2:9-2:13
 								}
+								loc: SourceLocation es2015/regression/6864/input.js 2:9-2:15
 							}
+							loc: SourceLocation es2015/regression/6864/input.js 2:3-2:15
 						}
+						loc: SourceLocation es2015/regression/6864/input.js 2:2-2:17
 					}
 					JSExpressionStatement {
-						loc: SourceLocation es2015/regression/6864/input.js 3:2-3:23
 						expression: JSYieldExpression {
 							delegate: false
-							loc: SourceLocation es2015/regression/6864/input.js 3:3-3:21
 							argument: JSArrowFunctionExpression {
-								loc: SourceLocation es2015/regression/6864/input.js 3:9-3:21
 								body: JSReferenceIdentifier {
 									name: "a"
 									loc: SourceLocation es2015/regression/6864/input.js 3:20-3:21 (a)
@@ -82,26 +52,24 @@ JSRoot {
 								head: JSFunctionHead {
 									async: true
 									hasHoistedVars: false
-									rest: undefined
-									thisType: undefined
-									loc: SourceLocation es2015/regression/6864/input.js 3:9-3:19
-									params: Array [
+									params: [
 										JSBindingIdentifier {
 											name: "a"
 											loc: SourceLocation es2015/regression/6864/input.js 3:15-3:16 (a)
 										}
 									]
+									loc: SourceLocation es2015/regression/6864/input.js 3:9-3:19
 								}
+								loc: SourceLocation es2015/regression/6864/input.js 3:9-3:21
 							}
+							loc: SourceLocation es2015/regression/6864/input.js 3:3-3:21
 						}
+						loc: SourceLocation es2015/regression/6864/input.js 3:2-3:23
 					}
 					JSExpressionStatement {
-						loc: SourceLocation es2015/regression/6864/input.js 4:2-4:25
 						expression: JSYieldExpression {
 							delegate: false
-							loc: SourceLocation es2015/regression/6864/input.js 4:3-4:23
 							argument: JSArrowFunctionExpression {
-								loc: SourceLocation es2015/regression/6864/input.js 4:9-4:23
 								body: JSReferenceIdentifier {
 									name: "a"
 									loc: SourceLocation es2015/regression/6864/input.js 4:22-4:23 (a)
@@ -109,24 +77,43 @@ JSRoot {
 								head: JSFunctionHead {
 									async: true
 									hasHoistedVars: false
-									rest: undefined
-									returnType: undefined
-									thisType: undefined
-									loc: SourceLocation es2015/regression/6864/input.js 4:9-4:21
-									params: Array [
+									params: [
 										JSBindingIdentifier {
 											name: "a"
 											loc: SourceLocation es2015/regression/6864/input.js 4:16-4:17 (a)
 										}
 									]
+									loc: SourceLocation es2015/regression/6864/input.js 4:9-4:21
 								}
+								loc: SourceLocation es2015/regression/6864/input.js 4:9-4:23
 							}
+							loc: SourceLocation es2015/regression/6864/input.js 4:3-4:23
 						}
+						loc: SourceLocation es2015/regression/6864/input.js 4:2-4:25
 					}
 				]
+				directives: []
+				loc: SourceLocation es2015/regression/6864/input.js 1:14-5:1
 			}
+			head: JSFunctionHead {
+				async: false
+				generator: true
+				hasHoistedVars: false
+				params: []
+				loc: SourceLocation es2015/regression/6864/input.js 1:11-1:13
+			}
+			loc: SourceLocation es2015/regression/6864/input.js 1:0-5:1
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2015/regression/6864/input.js>
+	loc: SourceLocation es2015/regression/6864/input.js 1:0-6:0
 }
 ```
 

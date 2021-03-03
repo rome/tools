@@ -11,13 +11,17 @@ JSRoot {
 	body: [
 		JSExpressionStatement {
 			expression: JSAssignmentExpression {
+				operator: "="
 				left: JSAssignmentArrayPattern {
 					elements: [
 						JSAssignmentObjectPattern {
 							properties: [
 								JSAssignmentObjectPatternProperty {
 									key: JSStaticPropertyKey {
-										value: JSIdentifier {name: "b", loc: SourceLocation core/categorized/invalid-assignment-pattern-4/input.js 1:2-1:3 (b)}
+										value: JSIdentifier {
+											name: "b"
+											loc: SourceLocation core/categorized/invalid-assignment-pattern-4/input.js 1:2-1:3 (b)
+										}
 										loc: SourceLocation core/categorized/invalid-assignment-pattern-4/input.js 1:2-1:3
 									}
 									value: JSAssignmentArrayPattern {
@@ -25,9 +29,15 @@ JSRoot {
 											JSAssignmentArrayPattern {
 												elements: [
 													JSAssignmentAssignmentPattern {
-														left: JSAssignmentIdentifier {name: "a", loc: SourceLocation core/categorized/invalid-assignment-pattern-4/input.js 1:8-1:9 (a)}
 														operator: "="
-														right: JSNumericLiteral {value: 1, loc: SourceLocation core/categorized/invalid-assignment-pattern-4/input.js 1:12-1:13}
+														left: JSAssignmentIdentifier {
+															name: "a"
+															loc: SourceLocation core/categorized/invalid-assignment-pattern-4/input.js 1:8-1:9 (a)
+														}
+														right: JSNumericLiteral {
+															value: 1
+															loc: SourceLocation core/categorized/invalid-assignment-pattern-4/input.js 1:12-1:13
+														}
 														loc: SourceLocation core/categorized/invalid-assignment-pattern-4/input.js 1:8-1:13
 													}
 												]
@@ -44,8 +54,10 @@ JSRoot {
 					]
 					loc: SourceLocation core/categorized/invalid-assignment-pattern-4/input.js 1:0-1:18
 				}
-				operator: "="
-				right: JSReferenceIdentifier {name: "t", loc: SourceLocation core/categorized/invalid-assignment-pattern-4/input.js 1:21-1:22 (t)}
+				right: JSReferenceIdentifier {
+					name: "t"
+					loc: SourceLocation core/categorized/invalid-assignment-pattern-4/input.js 1:21-1:22 (t)
+				}
 				loc: SourceLocation core/categorized/invalid-assignment-pattern-4/input.js 1:0-1:22
 			}
 			loc: SourceLocation core/categorized/invalid-assignment-pattern-4/input.js 1:0-1:22
@@ -56,9 +68,9 @@ JSRoot {
 	diagnostics: []
 	directives: []
 	hasHoistedVars: false
-	path: UIDPath<core/categorized/invalid-assignment-pattern-4/input.js>
 	sourceType: "script"
 	syntax: []
+	path: UIDPath<core/categorized/invalid-assignment-pattern-4/input.js>
 	loc: SourceLocation core/categorized/invalid-assignment-pattern-4/input.js 1:0-1:23
 }
 ```

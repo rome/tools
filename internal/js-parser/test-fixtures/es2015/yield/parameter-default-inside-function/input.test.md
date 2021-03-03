@@ -8,59 +8,51 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2015/yield/parameter-default-inside-function/input.js 1:0-1:25
-	path: UIDPath<es2015/yield/parameter-default-inside-function/input.js>
-	body: Array [
+	body: [
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "fn"
 				loc: SourceLocation es2015/yield/parameter-default-inside-function/input.js 1:9-1:11 (fn)
 			}
-			loc: SourceLocation es2015/yield/parameter-default-inside-function/input.js 1:0-1:25
 			body: JSBlockStatement {
-				body: Array []
-				directives: Array []
+				body: []
+				directives: []
 				loc: SourceLocation es2015/yield/parameter-default-inside-function/input.js 1:23-1:25
 			}
 			head: JSFunctionHead {
 				async: false
 				generator: false
 				hasHoistedVars: false
-				rest: undefined
-				returnType: undefined
-				thisType: undefined
-				typeParameters: undefined
-				loc: SourceLocation es2015/yield/parameter-default-inside-function/input.js 1:11-1:22
-				params: Array [
+				params: [
 					JSBindingAssignmentPattern {
-						loc: SourceLocation es2015/yield/parameter-default-inside-function/input.js 1:12-1:21
+						left: JSBindingIdentifier {
+							name: "x"
+							meta: JSPatternMeta {
+								loc: SourceLocation es2015/yield/parameter-default-inside-function/input.js 1:12-1:13
+							}
+							loc: SourceLocation es2015/yield/parameter-default-inside-function/input.js 1:12-1:13 (x)
+						}
 						right: JSReferenceIdentifier {
 							name: "yield"
 							loc: SourceLocation es2015/yield/parameter-default-inside-function/input.js 1:16-1:21 (yield)
 						}
-						left: JSBindingIdentifier {
-							name: "x"
-							loc: SourceLocation es2015/yield/parameter-default-inside-function/input.js 1:12-1:13 (x)
-							meta: JSPatternMeta {
-								optional: undefined
-								typeAnnotation: undefined
-								loc: SourceLocation es2015/yield/parameter-default-inside-function/input.js 1:12-1:13
-							}
-						}
+						loc: SourceLocation es2015/yield/parameter-default-inside-function/input.js 1:12-1:21
 					}
 				]
+				loc: SourceLocation es2015/yield/parameter-default-inside-function/input.js 1:11-1:22
 			}
+			loc: SourceLocation es2015/yield/parameter-default-inside-function/input.js 1:0-1:25
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2015/yield/parameter-default-inside-function/input.js>
+	loc: SourceLocation es2015/yield/parameter-default-inside-function/input.js 1:0-1:25
 }
 ```
 

@@ -8,50 +8,12 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: true
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation esprima/es2015-destructuring-assignment-object-pattern/invalid-lhs-01/input.js 1:0-2:0
-	path: UIDPath<esprima/es2015-destructuring-assignment-object-pattern/invalid-lhs-01/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Invalid left-hand side in assignment object property value"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:8
-				path: UIDPath<esprima/es2015-destructuring-assignment-object-pattern/invalid-lhs-01/input.js>
-				start: Position 1:4
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation esprima/es2015-destructuring-assignment-object-pattern/invalid-lhs-01/input.js 1:0-1:12
 			expression: JSAssignmentExpression {
 				operator: "="
-				loc: SourceLocation esprima/es2015-destructuring-assignment-object-pattern/invalid-lhs-01/input.js 1:1-1:11
-				right: JSNumericLiteral {
-					value: 0
-					format: undefined
-					loc: SourceLocation esprima/es2015-destructuring-assignment-object-pattern/invalid-lhs-01/input.js 1:10-1:11
-				}
 				left: JSAssignmentObjectPattern {
-					rest: undefined
-					loc: SourceLocation esprima/es2015-destructuring-assignment-object-pattern/invalid-lhs-01/input.js 1:1-1:9
-					properties: Array [
+					properties: [
 						JSAssignmentObjectPatternProperty {
 							key: JSStaticPropertyKey {
 								value: JSIdentifier {
@@ -67,10 +29,42 @@ JSRoot {
 							loc: SourceLocation esprima/es2015-destructuring-assignment-object-pattern/invalid-lhs-01/input.js 1:2-1:8
 						}
 					]
+					loc: SourceLocation esprima/es2015-destructuring-assignment-object-pattern/invalid-lhs-01/input.js 1:1-1:9
 				}
+				right: JSNumericLiteral {
+					value: 0
+					loc: SourceLocation esprima/es2015-destructuring-assignment-object-pattern/invalid-lhs-01/input.js 1:10-1:11
+				}
+				loc: SourceLocation esprima/es2015-destructuring-assignment-object-pattern/invalid-lhs-01/input.js 1:1-1:11
+			}
+			loc: SourceLocation esprima/es2015-destructuring-assignment-object-pattern/invalid-lhs-01/input.js 1:0-1:12
+		}
+	]
+	comments: []
+	corrupt: true
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "js"
+				message: [RAW_MARKUP {value: "Invalid left-hand side in "}, "assignment object property value"]
+			}
+			location: {
+				language: "js"
+				path: UIDPath<esprima/es2015-destructuring-assignment-object-pattern/invalid-lhs-01/input.js>
+				end: Position 1:8
+				start: Position 1:4
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<esprima/es2015-destructuring-assignment-object-pattern/invalid-lhs-01/input.js>
+	loc: SourceLocation esprima/es2015-destructuring-assignment-object-pattern/invalid-lhs-01/input.js 1:0-2:0
 }
 ```
 
@@ -83,7 +77,8 @@ JSRoot {
   ✖ Invalid left-hand side in assignment object property value
 
     ({a:this}=0)
-        ^^^^
+        <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
+    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
 
 
 ```

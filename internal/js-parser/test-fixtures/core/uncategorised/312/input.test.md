@@ -13,10 +13,16 @@ JSRoot {
 			expression: JSFunctionExpression {
 				body: JSBlockStatement {
 					body: [
-						JSReturnStatement {trailingComments: ["0"], loc: SourceLocation core/uncategorised/312/input.js 1:13-1:19}
+						JSReturnStatement {
+							trailingComments: ["0"]
+							loc: SourceLocation core/uncategorised/312/input.js 1:13-1:19
+						}
 						JSExpressionStatement {
-							expression: JSReferenceIdentifier {name: "x", loc: SourceLocation core/uncategorised/312/input.js 2:10-2:11 (x)}
 							leadingComments: ["0"]
+							expression: JSReferenceIdentifier {
+								name: "x"
+								loc: SourceLocation core/uncategorised/312/input.js 2:10-2:11 (x)
+							}
 							loc: SourceLocation core/uncategorised/312/input.js 2:10-2:12
 						}
 					]
@@ -35,14 +41,20 @@ JSRoot {
 			loc: SourceLocation core/uncategorised/312/input.js 1:0-2:15
 		}
 	]
-	comments: [CommentBlock {id: "0", value: " Multiline\nComment ", loc: SourceLocation core/uncategorised/312/input.js 1:19-2:10}]
+	comments: [
+		CommentBlock {
+			id: "0"
+			value: " Multiline\nComment "
+			loc: SourceLocation core/uncategorised/312/input.js 1:19-2:10
+		}
+	]
 	corrupt: false
 	diagnostics: []
 	directives: []
 	hasHoistedVars: false
-	path: UIDPath<core/uncategorised/312/input.js>
 	sourceType: "script"
 	syntax: []
+	path: UIDPath<core/uncategorised/312/input.js>
 	loc: SourceLocation core/uncategorised/312/input.js 1:0-2:15
 }
 ```

@@ -12,32 +12,50 @@ JSRoot {
 		JSImportDeclaration {
 			namedSpecifiers: [
 				JSImportSpecifier {
-					imported: JSIdentifier {name: "foo", loc: SourceLocation comments/regression/10892/input.js 1:9-1:12 (foo)}
+					imported: JSIdentifier {
+						name: "foo"
+						loc: SourceLocation comments/regression/10892/input.js 1:9-1:12 (foo)
+					}
 					local: JSImportSpecifierLocal {
-						name: JSBindingIdentifier {name: "foo", loc: SourceLocation comments/regression/10892/input.js 1:9-1:12 (foo)}
+						name: JSBindingIdentifier {
+							name: "foo"
+							loc: SourceLocation comments/regression/10892/input.js 1:9-1:12 (foo)
+						}
 						loc: SourceLocation comments/regression/10892/input.js 1:9-1:12
 					}
 					loc: SourceLocation comments/regression/10892/input.js 1:9-1:12
 				}
 			]
-			source: JSStringLiteral {value: "bar", loc: SourceLocation comments/regression/10892/input.js 1:20-1:25}
 			trailingComments: ["0"]
+			source: JSStringLiteral {
+				value: "bar"
+				loc: SourceLocation comments/regression/10892/input.js 1:20-1:25
+			}
 			loc: SourceLocation comments/regression/10892/input.js 1:0-1:25
 		}
 		JSExportDefaultDeclaration {
-			declaration: JSObjectExpression {properties: [], loc: SourceLocation comments/regression/10892/input.js 6:15-7:1}
 			leadingComments: ["0"]
+			declaration: JSObjectExpression {
+				properties: []
+				loc: SourceLocation comments/regression/10892/input.js 6:15-7:1
+			}
 			loc: SourceLocation comments/regression/10892/input.js 6:0-7:1
 		}
 	]
-	comments: [CommentBlock {id: "0", value: "*\n * lost comment\n ", loc: SourceLocation comments/regression/10892/input.js 3:0-5:3}]
+	comments: [
+		CommentBlock {
+			id: "0"
+			value: "*\n * lost comment\n "
+			loc: SourceLocation comments/regression/10892/input.js 3:0-5:3
+		}
+	]
 	corrupt: false
 	diagnostics: []
 	directives: []
 	hasHoistedVars: false
-	path: UIDPath<comments/regression/10892/input.js>
 	sourceType: "module"
 	syntax: []
+	path: UIDPath<comments/regression/10892/input.js>
 	loc: SourceLocation comments/regression/10892/input.js 1:0-8:0
 }
 ```

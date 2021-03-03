@@ -8,65 +8,52 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation core/uncategorised/513/input.js 1:0-1:35
-	path: UIDPath<core/uncategorised/513/input.js>
-	directives: Array [
-		JSDirective {
-			value: "use strict"
-			loc: SourceLocation core/uncategorised/513/input.js 1:0-1:13
-		}
-	]
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "static is a reserved word"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:29
-				path: UIDPath<core/uncategorised/513/input.js>
-				start: Position 1:23
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "static"
 				loc: SourceLocation core/uncategorised/513/input.js 1:23-1:29 (static)
 			}
-			loc: SourceLocation core/uncategorised/513/input.js 1:14-1:35
 			body: JSBlockStatement {
-				body: Array []
-				directives: Array []
+				body: []
+				directives: []
 				loc: SourceLocation core/uncategorised/513/input.js 1:32-1:35
 			}
 			head: JSFunctionHead {
 				async: false
 				generator: false
 				hasHoistedVars: false
-				params: Array []
-				rest: undefined
-				returnType: undefined
-				thisType: undefined
-				typeParameters: undefined
+				params: []
 				loc: SourceLocation core/uncategorised/513/input.js 1:29-1:31
+			}
+			loc: SourceLocation core/uncategorised/513/input.js 1:14-1:35
+		}
+	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {advice: [], category: ["parse"], categoryValue: "js", message: ["static", RAW_MARKUP {value: " is a reserved word"}]}
+			location: {
+				language: "js"
+				path: UIDPath<core/uncategorised/513/input.js>
+				end: Position 1:29
+				start: Position 1:23
 			}
 		}
 	]
+	directives: [
+		JSDirective {
+			value: "use strict"
+			loc: SourceLocation core/uncategorised/513/input.js 1:0-1:13
+		}
+	]
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<core/uncategorised/513/input.js>
+	loc: SourceLocation core/uncategorised/513/input.js 1:0-1:35
 }
 ```
 
@@ -79,7 +66,10 @@ JSRoot {
   ✖ static is a reserved word
 
     "use strict"; function static() { }
-                           ^^^^^^
+                           <error><emphasis>^</emphasis></error>
+    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
+    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
+    <error><emphasis>^</emphasis></error>
 
 
 ```

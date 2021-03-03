@@ -11,25 +11,42 @@ JSRoot {
 	body: [
 		JSExpressionStatement {
 			expression: JSCallExpression {
-				arguments: [JSNumericLiteral {value: 2_014, loc: SourceLocation core/uncategorised/127/input.js 1:40-1:44}]
+				arguments: [
+					JSNumericLiteral {
+						value: 2_014
+						loc: SourceLocation core/uncategorised/127/input.js 1:40-1:44
+					}
+				]
 				callee: JSMemberExpression {
 					object: JSMemberExpression {
 						object: JSMemberExpression {
-							object: JSReferenceIdentifier {name: "earth", loc: SourceLocation core/uncategorised/127/input.js 1:0-1:5 (earth)}
+							object: JSReferenceIdentifier {
+								name: "earth"
+								loc: SourceLocation core/uncategorised/127/input.js 1:0-1:5 (earth)
+							}
 							property: JSStaticMemberProperty {
-								value: JSIdentifier {name: "asia", loc: SourceLocation core/uncategorised/127/input.js 1:6-1:10 (asia)}
+								value: JSIdentifier {
+									name: "asia"
+									loc: SourceLocation core/uncategorised/127/input.js 1:6-1:10 (asia)
+								}
 								loc: SourceLocation core/uncategorised/127/input.js 1:6-1:10 (asia)
 							}
 							loc: SourceLocation core/uncategorised/127/input.js 1:0-1:10
 						}
 						property: JSStaticMemberProperty {
-							value: JSIdentifier {name: "Indonesia", loc: SourceLocation core/uncategorised/127/input.js 1:11-1:20 (Indonesia)}
+							value: JSIdentifier {
+								name: "Indonesia"
+								loc: SourceLocation core/uncategorised/127/input.js 1:11-1:20 (Indonesia)
+							}
 							loc: SourceLocation core/uncategorised/127/input.js 1:11-1:20 (Indonesia)
 						}
 						loc: SourceLocation core/uncategorised/127/input.js 1:0-1:20
 					}
 					property: JSStaticMemberProperty {
-						value: JSIdentifier {name: "prepareForElection", loc: SourceLocation core/uncategorised/127/input.js 1:21-1:39 (prepareForElection)}
+						value: JSIdentifier {
+							name: "prepareForElection"
+							loc: SourceLocation core/uncategorised/127/input.js 1:21-1:39 (prepareForElection)
+						}
 						loc: SourceLocation core/uncategorised/127/input.js 1:21-1:39 (prepareForElection)
 					}
 					loc: SourceLocation core/uncategorised/127/input.js 1:0-1:39
@@ -44,9 +61,9 @@ JSRoot {
 	diagnostics: []
 	directives: []
 	hasHoistedVars: false
-	path: UIDPath<core/uncategorised/127/input.js>
 	sourceType: "script"
 	syntax: []
+	path: UIDPath<core/uncategorised/127/input.js>
 	loc: SourceLocation core/uncategorised/127/input.js 1:0-1:45
 }
 ```

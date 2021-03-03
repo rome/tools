@@ -8,79 +8,65 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: true
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation esprima/es2015-generator/incomplete-yield-delegate/input.js 1:0-2:0
-	path: UIDPath<esprima/es2015-generator/incomplete-yield-delegate/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Unknown start to an yield argument"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:21
-				path: UIDPath<esprima/es2015-generator/incomplete-yield-delegate/input.js>
-				start: Position 1:22
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation esprima/es2015-generator/incomplete-yield-delegate/input.js 1:0-1:24
 			expression: JSFunctionExpression {
-				id: undefined
-				loc: SourceLocation esprima/es2015-generator/incomplete-yield-delegate/input.js 1:1-1:24
-				head: JSFunctionHead {
-					async: false
-					generator: true
-					hasHoistedVars: false
-					params: Array []
-					rest: undefined
-					returnType: undefined
-					thisType: undefined
-					typeParameters: undefined
-					loc: SourceLocation esprima/es2015-generator/incomplete-yield-delegate/input.js 1:10-1:12
-				}
 				body: JSBlockStatement {
-					directives: Array []
-					loc: SourceLocation esprima/es2015-generator/incomplete-yield-delegate/input.js 1:13-1:24
-					body: Array [
+					body: [
 						JSExpressionStatement {
-							loc: SourceLocation esprima/es2015-generator/incomplete-yield-delegate/input.js 1:15-1:23
 							expression: JSYieldExpression {
 								delegate: true
-								loc: SourceLocation esprima/es2015-generator/incomplete-yield-delegate/input.js 1:15-1:23
 								argument: JSReferenceIdentifier {
 									name: "INVALID_PLACEHOLDER"
 									loc: SourceLocation esprima/es2015-generator/incomplete-yield-delegate/input.js 1:22-1:23
 								}
+								loc: SourceLocation esprima/es2015-generator/incomplete-yield-delegate/input.js 1:15-1:23
 							}
+							loc: SourceLocation esprima/es2015-generator/incomplete-yield-delegate/input.js 1:15-1:23
 						}
 						JSExpressionStatement {
-							loc: SourceLocation esprima/es2015-generator/incomplete-yield-delegate/input.js 1:23-1:24
 							expression: JSReferenceIdentifier {
 								name: "INVALID_PLACEHOLDER"
 								loc: SourceLocation esprima/es2015-generator/incomplete-yield-delegate/input.js 1:23-1:24
 							}
+							loc: SourceLocation esprima/es2015-generator/incomplete-yield-delegate/input.js 1:23-1:24
 						}
 					]
+					directives: []
+					loc: SourceLocation esprima/es2015-generator/incomplete-yield-delegate/input.js 1:13-1:24
 				}
+				head: JSFunctionHead {
+					async: false
+					generator: true
+					hasHoistedVars: false
+					params: []
+					loc: SourceLocation esprima/es2015-generator/incomplete-yield-delegate/input.js 1:10-1:12
+				}
+				loc: SourceLocation esprima/es2015-generator/incomplete-yield-delegate/input.js 1:1-1:24
+			}
+			loc: SourceLocation esprima/es2015-generator/incomplete-yield-delegate/input.js 1:0-1:24
+		}
+	]
+	comments: []
+	corrupt: true
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {advice: [], category: ["parse"], categoryValue: "js", message: [RAW_MARKUP {value: "Unknown start to an "}, "yield argument"]}
+			location: {
+				language: "js"
+				path: UIDPath<esprima/es2015-generator/incomplete-yield-delegate/input.js>
+				end: Position 1:21
+				start: Position 1:22
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<esprima/es2015-generator/incomplete-yield-delegate/input.js>
+	loc: SourceLocation esprima/es2015-generator/incomplete-yield-delegate/input.js 1:0-2:0
 }
 ```
 
@@ -93,7 +79,7 @@ JSRoot {
   ✖ Unknown start to an yield argument
 
     (function*() { yield* })
-                          ^
+                          <error><emphasis>^</emphasis></error>
 
 
 ```

@@ -8,34 +8,14 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2020/optional-chaining/super-method-class/input.js 1:0-6:0
-	path: UIDPath<es2020/optional-chaining/super-method-class/input.js>
-	body: Array [
+	body: [
 		JSClassDeclaration {
 			id: JSBindingIdentifier {
 				name: "A"
 				loc: SourceLocation es2020/optional-chaining/super-method-class/input.js 1:6-1:7 (A)
 			}
-			loc: SourceLocation es2020/optional-chaining/super-method-class/input.js 1:0-5:1
 			meta: JSClassHead {
-				implements: undefined
-				superTypeParameters: undefined
-				typeParameters: undefined
-				loc: SourceLocation es2020/optional-chaining/super-method-class/input.js 1:0-5:1
-				superClass: JSReferenceIdentifier {
-					name: "B"
-					loc: SourceLocation es2020/optional-chaining/super-method-class/input.js 1:16-1:17 (B)
-				}
-				body: Array [
+				body: [
 					JSClassMethod {
 						kind: "constructor"
 						key: JSStaticPropertyKey {
@@ -45,58 +25,69 @@ JSRoot {
 							}
 							loc: SourceLocation es2020/optional-chaining/super-method-class/input.js 2:4-2:15
 						}
-						loc: SourceLocation es2020/optional-chaining/super-method-class/input.js 2:4-4:5
-						meta: JSClassPropertyMeta {
-							abstract: false
-							accessibility: undefined
-							optional: false
-							readonly: false
-							static: false
-							typeAnnotation: undefined
-							loc: SourceLocation es2020/optional-chaining/super-method-class/input.js 2:4-2:15
-							start: Position 2:4
+						body: JSBlockStatement {
+							body: [
+								JSExpressionStatement {
+									expression: JSMemberExpression {
+										object: JSCallExpression {
+											arguments: []
+											callee: JSSuper {
+												loc: SourceLocation es2020/optional-chaining/super-method-class/input.js 3:8-3:13
+											}
+											loc: SourceLocation es2020/optional-chaining/super-method-class/input.js 3:8-3:15
+										}
+										property: JSStaticMemberProperty {
+											optional: true
+											value: JSIdentifier {
+												name: "b"
+												loc: SourceLocation es2020/optional-chaining/super-method-class/input.js 3:17-3:18 (b)
+											}
+											loc: SourceLocation es2020/optional-chaining/super-method-class/input.js 3:17-3:18 (b)
+										}
+										loc: SourceLocation es2020/optional-chaining/super-method-class/input.js 3:8-3:18
+									}
+									loc: SourceLocation es2020/optional-chaining/super-method-class/input.js 3:8-3:19
+								}
+							]
+							directives: []
+							loc: SourceLocation es2020/optional-chaining/super-method-class/input.js 2:17-4:5
 						}
 						head: JSFunctionHead {
 							async: false
 							generator: false
 							hasHoistedVars: false
-							params: Array []
-							rest: undefined
-							returnType: undefined
-							thisType: undefined
-							typeParameters: undefined
+							params: []
 							loc: SourceLocation es2020/optional-chaining/super-method-class/input.js 2:15-2:17
 						}
-						body: JSBlockStatement {
-							directives: Array []
-							loc: SourceLocation es2020/optional-chaining/super-method-class/input.js 2:17-4:5
-							body: Array [
-								JSExpressionStatement {
-									loc: SourceLocation es2020/optional-chaining/super-method-class/input.js 3:8-3:19
-									expression: JSMemberExpression {
-										loc: SourceLocation es2020/optional-chaining/super-method-class/input.js 3:8-3:18
-										object: JSCallExpression {
-											arguments: Array []
-											callee: JSSuper {loc: SourceLocation es2020/optional-chaining/super-method-class/input.js 3:8-3:13}
-											loc: SourceLocation es2020/optional-chaining/super-method-class/input.js 3:8-3:15
-										}
-										property: JSStaticMemberProperty {
-											value: JSIdentifier {
-												name: "b"
-												loc: SourceLocation es2020/optional-chaining/super-method-class/input.js 3:17-3:18 (b)
-											}
-											optional: true
-											loc: SourceLocation es2020/optional-chaining/super-method-class/input.js 3:17-3:18 (b)
-										}
-									}
-								}
-							]
+						meta: JSClassPropertyMeta {
+							abstract: false
+							optional: false
+							readonly: false
+							static: false
+							loc: SourceLocation es2020/optional-chaining/super-method-class/input.js 2:4-2:15
+							start: Position 2:4
 						}
+						loc: SourceLocation es2020/optional-chaining/super-method-class/input.js 2:4-4:5
 					}
 				]
+				superClass: JSReferenceIdentifier {
+					name: "B"
+					loc: SourceLocation es2020/optional-chaining/super-method-class/input.js 1:16-1:17 (B)
+				}
+				loc: SourceLocation es2020/optional-chaining/super-method-class/input.js 1:0-5:1
 			}
+			loc: SourceLocation es2020/optional-chaining/super-method-class/input.js 1:0-5:1
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2020/optional-chaining/super-method-class/input.js>
+	loc: SourceLocation es2020/optional-chaining/super-method-class/input.js 1:0-6:0
 }
 ```
 

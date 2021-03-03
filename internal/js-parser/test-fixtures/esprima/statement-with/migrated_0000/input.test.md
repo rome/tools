@@ -8,29 +8,11 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation esprima/statement-with/migrated_0000/input.js 1:0-2:0
-	path: UIDPath<esprima/statement-with/migrated_0000/input.js>
-	body: Array [
+	body: [
 		JSWithStatement {
-			loc: SourceLocation esprima/statement-with/migrated_0000/input.js 1:0-1:18
-			object: JSReferenceIdentifier {
-				name: "x"
-				loc: SourceLocation esprima/statement-with/migrated_0000/input.js 1:6-1:7 (x)
-			}
 			body: JSExpressionStatement {
-				loc: SourceLocation esprima/statement-with/migrated_0000/input.js 1:9-1:18
 				expression: JSAssignmentExpression {
 					operator: "="
-					loc: SourceLocation esprima/statement-with/migrated_0000/input.js 1:9-1:18
 					left: JSAssignmentIdentifier {
 						name: "foo"
 						loc: SourceLocation esprima/statement-with/migrated_0000/input.js 1:9-1:12 (foo)
@@ -39,10 +21,26 @@ JSRoot {
 						name: "bar"
 						loc: SourceLocation esprima/statement-with/migrated_0000/input.js 1:15-1:18 (bar)
 					}
+					loc: SourceLocation esprima/statement-with/migrated_0000/input.js 1:9-1:18
 				}
+				loc: SourceLocation esprima/statement-with/migrated_0000/input.js 1:9-1:18
 			}
+			object: JSReferenceIdentifier {
+				name: "x"
+				loc: SourceLocation esprima/statement-with/migrated_0000/input.js 1:6-1:7 (x)
+			}
+			loc: SourceLocation esprima/statement-with/migrated_0000/input.js 1:0-1:18
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<esprima/statement-with/migrated_0000/input.js>
+	loc: SourceLocation esprima/statement-with/migrated_0000/input.js 1:0-2:0
 }
 ```
 

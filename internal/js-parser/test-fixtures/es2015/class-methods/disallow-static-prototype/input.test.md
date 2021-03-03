@@ -8,49 +8,14 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2015/class-methods/disallow-static-prototype/input.js 1:0-3:1
-	path: UIDPath<es2015/class-methods/disallow-static-prototype/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Classes may not have static property named prototype"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 2:18
-				path: UIDPath<es2015/class-methods/disallow-static-prototype/input.js>
-				start: Position 2:9
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSClassDeclaration {
 			id: JSBindingIdentifier {
 				name: "A"
 				loc: SourceLocation es2015/class-methods/disallow-static-prototype/input.js 1:6-1:7 (A)
 			}
-			loc: SourceLocation es2015/class-methods/disallow-static-prototype/input.js 1:0-3:1
 			meta: JSClassHead {
-				implements: undefined
-				superClass: undefined
-				superTypeParameters: undefined
-				typeParameters: undefined
-				loc: SourceLocation es2015/class-methods/disallow-static-prototype/input.js 1:0-3:1
-				body: Array [
+				body: [
 					JSClassMethod {
 						kind: "method"
 						key: JSStaticPropertyKey {
@@ -60,38 +25,59 @@ JSRoot {
 							}
 							loc: SourceLocation es2015/class-methods/disallow-static-prototype/input.js 2:9-2:18
 						}
-						loc: SourceLocation es2015/class-methods/disallow-static-prototype/input.js 2:2-2:23
 						body: JSBlockStatement {
-							body: Array []
-							directives: Array []
+							body: []
+							directives: []
 							loc: SourceLocation es2015/class-methods/disallow-static-prototype/input.js 2:21-2:23
-						}
-						meta: JSClassPropertyMeta {
-							abstract: false
-							accessibility: undefined
-							optional: false
-							readonly: false
-							static: true
-							typeAnnotation: undefined
-							loc: SourceLocation es2015/class-methods/disallow-static-prototype/input.js 2:2-2:18
-							start: Position 2:2
 						}
 						head: JSFunctionHead {
 							async: false
 							generator: false
 							hasHoistedVars: false
-							params: Array []
-							rest: undefined
-							returnType: undefined
-							thisType: undefined
-							typeParameters: undefined
+							params: []
 							loc: SourceLocation es2015/class-methods/disallow-static-prototype/input.js 2:18-2:20
 						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							optional: false
+							readonly: false
+							static: true
+							loc: SourceLocation es2015/class-methods/disallow-static-prototype/input.js 2:2-2:18
+							start: Position 2:2
+						}
+						loc: SourceLocation es2015/class-methods/disallow-static-prototype/input.js 2:2-2:23
 					}
 				]
+				loc: SourceLocation es2015/class-methods/disallow-static-prototype/input.js 1:0-3:1
+			}
+			loc: SourceLocation es2015/class-methods/disallow-static-prototype/input.js 1:0-3:1
+		}
+	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "Classes may not have static property named prototype"}
+			}
+			location: {
+				language: "js"
+				path: UIDPath<es2015/class-methods/disallow-static-prototype/input.js>
+				end: Position 2:18
+				start: Position 2:9
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2015/class-methods/disallow-static-prototype/input.js>
+	loc: SourceLocation es2015/class-methods/disallow-static-prototype/input.js 1:0-3:1
 }
 ```
 
@@ -105,7 +91,11 @@ JSRoot {
 
     1 │ class A {
   > 2 │   static prototype() {}
-      │          ^^^^^^^^^
+    → │          <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
+    → │ <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
+    → │ <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
+    → │ <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
+      │ <error><emphasis>^</emphasis></error>
     3 │ }
 
 

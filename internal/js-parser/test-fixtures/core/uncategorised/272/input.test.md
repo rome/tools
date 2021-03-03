@@ -12,13 +12,22 @@ JSRoot {
 		JSLabeledStatement {
 			body: JSWhileStatement {
 				body: JSBreakStatement {
-					label: JSIdentifier {name: "start", loc: SourceLocation core/uncategorised/272/input.js 1:26-1:31 (start)}
+					label: JSIdentifier {
+						name: "start"
+						loc: SourceLocation core/uncategorised/272/input.js 1:26-1:31 (start)
+					}
 					loc: SourceLocation core/uncategorised/272/input.js 1:20-1:31
 				}
-				test: JSBooleanLiteral {value: true, loc: SourceLocation core/uncategorised/272/input.js 1:14-1:18}
+				test: JSBooleanLiteral {
+					value: true
+					loc: SourceLocation core/uncategorised/272/input.js 1:14-1:18
+				}
 				loc: SourceLocation core/uncategorised/272/input.js 1:7-1:31
 			}
-			label: JSIdentifier {name: "start", loc: SourceLocation core/uncategorised/272/input.js 1:0-1:5 (start)}
+			label: JSIdentifier {
+				name: "start"
+				loc: SourceLocation core/uncategorised/272/input.js 1:0-1:5 (start)
+			}
 			loc: SourceLocation core/uncategorised/272/input.js 1:0-1:31
 		}
 	]
@@ -27,9 +36,9 @@ JSRoot {
 	diagnostics: []
 	directives: []
 	hasHoistedVars: false
-	path: UIDPath<core/uncategorised/272/input.js>
 	sourceType: "script"
 	syntax: []
+	path: UIDPath<core/uncategorised/272/input.js>
 	loc: SourceLocation core/uncategorised/272/input.js 1:0-1:31
 }
 ```

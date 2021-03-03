@@ -8,39 +8,12 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	loc: SourceLocation typescript/optional-chaining/type-arguments/input.ts 1:0-2:0
-	path: UIDPath<typescript/optional-chaining/type-arguments/input.ts>
-	syntax: Array ["ts"]
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation typescript/optional-chaining/type-arguments/input.ts 1:0-1:30
 			expression: JSCallExpression {
-				arguments: Array []
-				loc: SourceLocation typescript/optional-chaining/type-arguments/input.ts 1:0-1:30
-				typeArguments: TSTypeParameterInstantiation {
-					loc: SourceLocation typescript/optional-chaining/type-arguments/input.ts 1:20-1:28
-					params: Array [TSStringKeywordTypeAnnotation {loc: SourceLocation typescript/optional-chaining/type-arguments/input.ts 1:21-1:27}]
-				}
+				arguments: []
 				callee: JSMemberExpression {
-					loc: SourceLocation typescript/optional-chaining/type-arguments/input.ts 1:0-1:20
-					property: JSStaticMemberProperty {
-						value: JSIdentifier {
-							name: "greet"
-							loc: SourceLocation typescript/optional-chaining/type-arguments/input.ts 1:15-1:20 (greet)
-						}
-						optional: true
-						loc: SourceLocation typescript/optional-chaining/type-arguments/input.ts 1:15-1:20 (greet)
-					}
 					object: JSMemberExpression {
-						loc: SourceLocation typescript/optional-chaining/type-arguments/input.ts 1:0-1:13
 						object: JSReferenceIdentifier {
 							name: "example"
 							loc: SourceLocation typescript/optional-chaining/type-arguments/input.ts 1:0-1:7 (example)
@@ -52,11 +25,40 @@ JSRoot {
 							}
 							loc: SourceLocation typescript/optional-chaining/type-arguments/input.ts 1:8-1:13 (inner)
 						}
+						loc: SourceLocation typescript/optional-chaining/type-arguments/input.ts 1:0-1:13
 					}
+					property: JSStaticMemberProperty {
+						optional: true
+						value: JSIdentifier {
+							name: "greet"
+							loc: SourceLocation typescript/optional-chaining/type-arguments/input.ts 1:15-1:20 (greet)
+						}
+						loc: SourceLocation typescript/optional-chaining/type-arguments/input.ts 1:15-1:20 (greet)
+					}
+					loc: SourceLocation typescript/optional-chaining/type-arguments/input.ts 1:0-1:20
 				}
+				typeArguments: TSTypeParameterInstantiation {
+					params: [
+						TSStringKeywordTypeAnnotation {
+							loc: SourceLocation typescript/optional-chaining/type-arguments/input.ts 1:21-1:27
+						}
+					]
+					loc: SourceLocation typescript/optional-chaining/type-arguments/input.ts 1:20-1:28
+				}
+				loc: SourceLocation typescript/optional-chaining/type-arguments/input.ts 1:0-1:30
 			}
+			loc: SourceLocation typescript/optional-chaining/type-arguments/input.ts 1:0-1:30
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: ["ts"]
+	path: UIDPath<typescript/optional-chaining/type-arguments/input.ts>
+	loc: SourceLocation typescript/optional-chaining/type-arguments/input.ts 1:0-2:0
 }
 ```
 

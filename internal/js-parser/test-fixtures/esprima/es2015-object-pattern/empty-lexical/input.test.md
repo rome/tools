@@ -8,41 +8,37 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation esprima/es2015-object-pattern/empty-lexical/input.js 1:0-2:0
-	path: UIDPath<esprima/es2015-object-pattern/empty-lexical/input.js>
-	body: Array [
+	body: [
 		JSVariableDeclarationStatement {
-			loc: SourceLocation esprima/es2015-object-pattern/empty-lexical/input.js 1:0-1:10
 			declaration: JSVariableDeclaration {
 				kind: "let"
-				loc: SourceLocation esprima/es2015-object-pattern/empty-lexical/input.js 1:0-1:10
-				declarations: Array [
+				declarations: [
 					JSVariableDeclarator {
 						id: JSBindingObjectPattern {
-							properties: Array []
-							rest: undefined
+							properties: []
 							loc: SourceLocation esprima/es2015-object-pattern/empty-lexical/input.js 1:4-1:6
 						}
-						loc: SourceLocation esprima/es2015-object-pattern/empty-lexical/input.js 1:4-1:10
 						init: JSNumericLiteral {
 							value: 0
-							format: undefined
 							loc: SourceLocation esprima/es2015-object-pattern/empty-lexical/input.js 1:9-1:10
 						}
+						loc: SourceLocation esprima/es2015-object-pattern/empty-lexical/input.js 1:4-1:10
 					}
 				]
+				loc: SourceLocation esprima/es2015-object-pattern/empty-lexical/input.js 1:0-1:10
 			}
+			loc: SourceLocation esprima/es2015-object-pattern/empty-lexical/input.js 1:0-1:10
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<esprima/es2015-object-pattern/empty-lexical/input.js>
+	loc: SourceLocation esprima/es2015-object-pattern/empty-lexical/input.js 1:0-2:0
 }
 ```
 

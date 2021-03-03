@@ -8,31 +8,14 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	loc: SourceLocation typescript/class/method-optional/input.ts 1:0-4:0
-	path: UIDPath<typescript/class/method-optional/input.ts>
-	syntax: Array ["ts"]
-	body: Array [
+	body: [
 		JSClassDeclaration {
 			id: JSBindingIdentifier {
 				name: "C"
 				loc: SourceLocation typescript/class/method-optional/input.ts 1:6-1:7 (C)
 			}
-			loc: SourceLocation typescript/class/method-optional/input.ts 1:0-3:1
 			meta: JSClassHead {
-				implements: undefined
-				superClass: undefined
-				superTypeParameters: undefined
-				typeParameters: undefined
-				loc: SourceLocation typescript/class/method-optional/input.ts 1:0-3:1
-				body: Array [
+				body: [
 					JSClassMethod {
 						kind: "method"
 						key: JSStaticPropertyKey {
@@ -42,38 +25,46 @@ JSRoot {
 							}
 							loc: SourceLocation typescript/class/method-optional/input.ts 2:4-2:5
 						}
-						loc: SourceLocation typescript/class/method-optional/input.ts 2:4-2:17
 						body: JSBlockStatement {
-							body: Array []
-							directives: Array []
+							body: []
+							directives: []
 							loc: SourceLocation typescript/class/method-optional/input.ts 2:15-2:17
-						}
-						meta: JSClassPropertyMeta {
-							abstract: false
-							accessibility: undefined
-							optional: true
-							readonly: false
-							static: false
-							typeAnnotation: undefined
-							loc: SourceLocation typescript/class/method-optional/input.ts 2:4-2:6
-							start: Position 2:4
 						}
 						head: JSFunctionHead {
 							async: false
 							generator: false
 							hasHoistedVars: false
-							params: Array []
-							rest: undefined
-							thisType: undefined
-							typeParameters: undefined
+							params: []
+							returnType: TSVoidKeywordTypeAnnotation {
+								loc: SourceLocation typescript/class/method-optional/input.ts 2:10-2:14
+							}
 							loc: SourceLocation typescript/class/method-optional/input.ts 2:6-2:14
-							returnType: TSVoidKeywordTypeAnnotation {loc: SourceLocation typescript/class/method-optional/input.ts 2:10-2:14}
 						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							optional: true
+							readonly: false
+							static: false
+							loc: SourceLocation typescript/class/method-optional/input.ts 2:4-2:6
+							start: Position 2:4
+						}
+						loc: SourceLocation typescript/class/method-optional/input.ts 2:4-2:17
 					}
 				]
+				loc: SourceLocation typescript/class/method-optional/input.ts 1:0-3:1
 			}
+			loc: SourceLocation typescript/class/method-optional/input.ts 1:0-3:1
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: ["ts"]
+	path: UIDPath<typescript/class/method-optional/input.ts>
+	loc: SourceLocation typescript/class/method-optional/input.ts 1:0-4:0
 }
 ```
 

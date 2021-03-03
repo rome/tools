@@ -29,6 +29,10 @@ export type DiagnosticFilter = {
 	line?: OneIndexed;
 };
 
+export type DiagnosticFilterWithTest = DiagnosticFilter & {
+	test?: (diagnostic: Diagnostic) => boolean;
+};
+
 export type DiagnosticSuppression = DiagnosticCategoryDescription & {
 	path: Path;
 	startLine: OneIndexed;
@@ -37,10 +41,6 @@ export type DiagnosticSuppression = DiagnosticCategoryDescription & {
 };
 
 export type DiagnosticSuppressions = DiagnosticSuppression[];
-
-export type DiagnosticFilterWithTest = DiagnosticFilter & {
-	test?: (diagnostic: Diagnostic) => boolean;
-};
 
 export type DiagnosticLocation = {
 	sourceText?: string;
@@ -110,24 +110,25 @@ export type DiagnosticIntegrity = {
 
 export type DiagnosticDescription = DiagnosticCategoryDescription & {
 	message: StaticMarkup;
-	advice: DiagnosticAdvice;
-	verboseAdvice?: DiagnosticAdvice;
+	advice: DiagnosticAdvice[];
+	verboseAdvice?: DiagnosticAdvice[];
 };
 
 export type DiagnosticDescriptionOptional = {
 	category?: DiagnosticCategory;
 	categoryValue?: string;
 	message: StaticMarkup;
-	advice?: DiagnosticAdvice;
+	advice?: DiagnosticAdvice[];
 };
 
-export type DiagnosticAdviceItem =
+export type DiagnosticAdvice =
 	| DiagnosticAdviceLog
 	| DiagnosticAdviceList
 	| DiagnosticAdviceInspect
 	| DiagnosticAdviceCode
 	| DiagnosticAdviceFrame
 	| DiagnosticAdviceDiff
+	| DiagnosticAdviceDiffStrings
 	| DiagnosticAdviceStacktrace
 	| DiagnosticAdviceCommand
 	| DiagnosticAdviceAction
@@ -136,7 +137,7 @@ export type DiagnosticAdviceItem =
 export type DiagnosticAdviceGroup = {
 	type: "group";
 	title: StaticMarkup;
-	advice: DiagnosticAdvice;
+	advice: DiagnosticAdvice[];
 };
 
 export type DiagnosticAdviceCommand = {
@@ -193,15 +194,25 @@ export type DiagnosticAdviceFrame = {
 	location: DiagnosticLocation;
 };
 
-export type DiagnosticAdviceDiff = {
-	type: "diff";
-	diff: Diff[];
+type DiagnosticAdviceDiffBase = {
 	language: DiagnosticLanguage;
 	sourceTypeJS?: ConstJSSourceType;
 	legend?: {
 		add: string;
 		delete: string;
 	};
+};
+
+// This will be normalized away in DiagnosticsNormalizer and never end up at the diagnostics printer
+export type DiagnosticAdviceDiffStrings = DiagnosticAdviceDiffBase & {
+	type: "diff-strings";
+	before: string;
+	after: string;
+};
+
+export type DiagnosticAdviceDiff = DiagnosticAdviceDiffBase & {
+	type: "diff";
+	diff: Diff[];
 };
 
 export type DiagnosticAdviceStacktrace = {
@@ -211,8 +222,6 @@ export type DiagnosticAdviceStacktrace = {
 	importantPaths?: MixedPathSet;
 	frames: DiagnosticAdviceStackFrame[];
 };
-
-export type DiagnosticAdvice = DiagnosticAdviceItem[];
 
 export type DiagnosticAdviceStackFrame = {
 	prefix?: string;

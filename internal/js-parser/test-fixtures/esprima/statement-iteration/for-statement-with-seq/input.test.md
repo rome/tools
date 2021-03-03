@@ -8,26 +8,13 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation esprima/statement-iteration/for-statement-with-seq/input.js 1:0-2:0
-	path: UIDPath<esprima/statement-iteration/for-statement-with-seq/input.js>
-	body: Array [
+	body: [
 		JSForStatement {
-			test: undefined
-			update: undefined
-			body: JSEmptyStatement {loc: SourceLocation esprima/statement-iteration/for-statement-with-seq/input.js 1:12-1:13}
-			loc: SourceLocation esprima/statement-iteration/for-statement-with-seq/input.js 1:0-1:13
+			body: JSEmptyStatement {
+				loc: SourceLocation esprima/statement-iteration/for-statement-with-seq/input.js 1:12-1:13
+			}
 			init: JSSequenceExpression {
-				loc: SourceLocation esprima/statement-iteration/for-statement-with-seq/input.js 1:4-1:9
-				expressions: Array [
+				expressions: [
 					JSReferenceIdentifier {
 						name: "a"
 						loc: SourceLocation esprima/statement-iteration/for-statement-with-seq/input.js 1:4-1:5 (a)
@@ -41,9 +28,20 @@ JSRoot {
 						loc: SourceLocation esprima/statement-iteration/for-statement-with-seq/input.js 1:8-1:9 (c)
 					}
 				]
+				loc: SourceLocation esprima/statement-iteration/for-statement-with-seq/input.js 1:4-1:9
 			}
+			loc: SourceLocation esprima/statement-iteration/for-statement-with-seq/input.js 1:0-1:13
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<esprima/statement-iteration/for-statement-with-seq/input.js>
+	loc: SourceLocation esprima/statement-iteration/for-statement-with-seq/input.js 1:0-2:0
 }
 ```
 

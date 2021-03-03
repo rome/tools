@@ -8,42 +8,41 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	syntax: Array []
-	loc: SourceLocation experimental/top-level-await/for-await-module/input.js 1:0-1:25
-	path: UIDPath<experimental/top-level-await/for-await-module/input.js>
-	body: Array [
+	body: [
 		JSForOfStatement {
 			await: true
-			body: JSEmptyStatement {loc: SourceLocation experimental/top-level-await/for-await-module/input.js 1:24-1:25}
-			loc: SourceLocation experimental/top-level-await/for-await-module/input.js 1:0-1:25
-			right: JSReferenceIdentifier {
-				name: "b"
-				loc: SourceLocation experimental/top-level-await/for-await-module/input.js 1:22-1:23 (b)
+			body: JSEmptyStatement {
+				loc: SourceLocation experimental/top-level-await/for-await-module/input.js 1:24-1:25
 			}
 			left: JSVariableDeclaration {
 				kind: "const"
-				loc: SourceLocation experimental/top-level-await/for-await-module/input.js 1:11-1:18
-				declarations: Array [
+				declarations: [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "a"
 							loc: SourceLocation experimental/top-level-await/for-await-module/input.js 1:17-1:18 (a)
 						}
-						init: undefined
 						loc: SourceLocation experimental/top-level-await/for-await-module/input.js 1:17-1:18
 					}
 				]
+				loc: SourceLocation experimental/top-level-await/for-await-module/input.js 1:11-1:18
 			}
+			right: JSReferenceIdentifier {
+				name: "b"
+				loc: SourceLocation experimental/top-level-await/for-await-module/input.js 1:22-1:23 (b)
+			}
+			loc: SourceLocation experimental/top-level-await/for-await-module/input.js 1:0-1:25
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: []
+	path: UIDPath<experimental/top-level-await/for-await-module/input.js>
+	loc: SourceLocation experimental/top-level-await/for-await-module/input.js 1:0-1:25
 }
 ```
 

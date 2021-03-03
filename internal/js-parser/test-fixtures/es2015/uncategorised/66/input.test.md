@@ -8,50 +8,45 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2015/uncategorised/66/input.js 1:0-1:12
-	path: UIDPath<es2015/uncategorised/66/input.js>
-	body: Array [
+	body: [
 		JSVariableDeclarationStatement {
-			loc: SourceLocation es2015/uncategorised/66/input.js 1:0-1:12
 			declaration: JSVariableDeclaration {
 				kind: "let"
-				loc: SourceLocation es2015/uncategorised/66/input.js 1:0-1:12
-				declarations: Array [
+				declarations: [
 					JSVariableDeclarator {
 						id: JSBindingArrayPattern {
-							rest: undefined
-							loc: SourceLocation es2015/uncategorised/66/input.js 1:4-1:7
-							elements: Array [
+							elements: [
 								JSBindingIdentifier {
 									name: "a"
-									loc: SourceLocation es2015/uncategorised/66/input.js 1:5-1:6 (a)
 									meta: JSPatternMeta {
-										optional: undefined
-										typeAnnotation: undefined
 										loc: SourceLocation es2015/uncategorised/66/input.js 1:5-1:6
 									}
+									loc: SourceLocation es2015/uncategorised/66/input.js 1:5-1:6 (a)
 								}
 							]
+							loc: SourceLocation es2015/uncategorised/66/input.js 1:4-1:7
 						}
-						loc: SourceLocation es2015/uncategorised/66/input.js 1:4-1:12
 						init: JSArrayExpression {
-							elements: Array []
+							elements: []
 							loc: SourceLocation es2015/uncategorised/66/input.js 1:10-1:12
 						}
+						loc: SourceLocation es2015/uncategorised/66/input.js 1:4-1:12
 					}
 				]
+				loc: SourceLocation es2015/uncategorised/66/input.js 1:0-1:12
 			}
+			loc: SourceLocation es2015/uncategorised/66/input.js 1:0-1:12
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2015/uncategorised/66/input.js>
+	loc: SourceLocation es2015/uncategorised/66/input.js 1:0-1:12
 }
 ```
 

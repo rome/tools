@@ -8,54 +8,49 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2015/uncategorised/231/input.js 1:0-1:11
-	path: UIDPath<es2015/uncategorised/231/input.js>
-	body: Array [
+	body: [
 		JSVariableDeclarationStatement {
-			loc: SourceLocation es2015/uncategorised/231/input.js 1:0-1:11
 			declaration: JSVariableDeclaration {
 				kind: "let"
-				loc: SourceLocation es2015/uncategorised/231/input.js 1:0-1:11
-				declarations: Array [
+				declarations: [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "default"
 							loc: SourceLocation es2015/uncategorised/231/input.js 1:4-1:11 (default)
 						}
-						init: undefined
 						loc: SourceLocation es2015/uncategorised/231/input.js 1:4-1:11
 					}
 				]
+				loc: SourceLocation es2015/uncategorised/231/input.js 1:0-1:11
 			}
+			loc: SourceLocation es2015/uncategorised/231/input.js 1:0-1:11
 		}
 	]
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {
+				advice: []
+				category: ["parse"]
 				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Unexpected keyword <emphasis>default</emphasis>"}
+				message: [RAW_MARKUP {value: "Unexpected keyword <emphasis>"}, "default", RAW_MARKUP {value: "</emphasis>"}]
 			}
-			location: Object {
-				integrity: undefined
+			location: {
 				language: "js"
-				sourceText: undefined
-				end: Position 1:11
 				path: UIDPath<es2015/uncategorised/231/input.js>
+				end: Position 1:11
 				start: Position 1:4
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2015/uncategorised/231/input.js>
+	loc: SourceLocation es2015/uncategorised/231/input.js 1:0-1:11
 }
 ```
 
@@ -68,7 +63,10 @@ JSRoot {
   ✖ Unexpected keyword default
 
     let default
-        ^^^^^^^
+        <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
+    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
+    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
+    <error><emphasis>^</emphasis></error>
 
 
 ```

@@ -12,12 +12,15 @@ JSRoot {
 		JSBlockStatement {
 			body: [
 				JSExpressionStatement {
+					trailingComments: ["0"]
 					expression: JSCallExpression {
 						arguments: []
-						callee: JSReferenceIdentifier {name: "a", loc: SourceLocation comments/basic/block-trailing-comment/input.js 2:4-2:5 (a)}
+						callee: JSReferenceIdentifier {
+							name: "a"
+							loc: SourceLocation comments/basic/block-trailing-comment/input.js 2:4-2:5 (a)
+						}
 						loc: SourceLocation comments/basic/block-trailing-comment/input.js 2:4-2:7
 					}
-					trailingComments: ["0"]
 					loc: SourceLocation comments/basic/block-trailing-comment/input.js 2:4-2:8
 				}
 			]
@@ -25,14 +28,20 @@ JSRoot {
 			loc: SourceLocation comments/basic/block-trailing-comment/input.js 1:0-4:1
 		}
 	]
-	comments: [CommentLine {id: "0", value: "comment", loc: SourceLocation comments/basic/block-trailing-comment/input.js 3:4-3:13}]
+	comments: [
+		CommentLine {
+			id: "0"
+			value: "comment"
+			loc: SourceLocation comments/basic/block-trailing-comment/input.js 3:4-3:13
+		}
+	]
 	corrupt: false
 	diagnostics: []
 	directives: []
 	hasHoistedVars: false
-	path: UIDPath<comments/basic/block-trailing-comment/input.js>
 	sourceType: "script"
 	syntax: []
+	path: UIDPath<comments/basic/block-trailing-comment/input.js>
 	loc: SourceLocation comments/basic/block-trailing-comment/input.js 1:0-5:0
 }
 ```

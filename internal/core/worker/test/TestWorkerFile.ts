@@ -119,7 +119,7 @@ export type FocusedTest = {
 };
 
 // This is just using milliseconds which probably isn't precise enough, but could lead to items appearing out of order when merged
-export type TestConsoleAdvice = [DiagnosticAdvice, number][];
+export type TestConsoleAdvice = [DiagnosticAdvice[], number][];
 
 export default class TestWorkerFile {
 	constructor(
@@ -139,13 +139,14 @@ export default class TestWorkerFile {
 		this.snapshotManager = new SnapshotManager(this, opts.path);
 
 		this.onlyFocusedTests = false;
-		this.hasUserDiagnostics = false;
+		this.hasFailedTests = false;
 		this.consoleAdvice = [];
 		this.focusedTests = [];
 		this.foundTests = new ExtendedMap("foundTests");
+		this.failedTests = new Set();
 	}
 
-	public hasUserDiagnostics: boolean;
+	public hasFailedTests: boolean;
 	public onlyFocusedTests: boolean;
 	public path: AbsoluteFilePath;
 	public projectDirectory: AbsoluteFilePath;
@@ -154,12 +155,13 @@ export default class TestWorkerFile {
 	public snapshotManager: SnapshotManager;
 
 	private tests: TestWorker;
+	private failedTests: Set<string>;
 	private foundTests: ExtendedMap<string, TestDetails>;
 	private focusedTests: FocusedTest[];
 	private bridge: BridgeClient<typeof WorkerBridge>;
 	private opts: TestWorkerPrepareTestOptions;
 	private locked: boolean;
-	private consoleAdvice: [(() => DiagnosticAdvice), number][];
+	private consoleAdvice: [(() => DiagnosticAdvice[]), number][];
 
 	private createTestRef(test: TestDetails): TestRef {
 		return {
@@ -176,7 +178,7 @@ export default class TestWorkerFile {
 			const struct = getErrorStructure(err);
 			const frames = cleanFrames(struct.frames.slice(2));
 
-			function adviceFactory(): DiagnosticAdvice {
+			function adviceFactory(): DiagnosticAdvice[] {
 				let text;
 				if (args.length === 1 && typeof args[0] === "string") {
 					text = markup`${args[0]}`;
@@ -312,7 +314,7 @@ export default class TestWorkerFile {
 
 		// Emit error about no found tests. If we already have diagnostics then there was an issue
 		// during initialization.
-		if (this.foundTests.size === 0 && !this.hasUserDiagnostics) {
+		if (this.foundTests.size === 0 && !this.hasFailedTests) {
 			await this.emitDiagnostic({
 				location: {
 					path: this.path,
@@ -404,7 +406,8 @@ export default class TestWorkerFile {
 		};
 
 		if (test !== undefined) {
-			this.hasUserDiagnostics = true;
+			this.hasFailedTests = true;
+			this.failedTests.add(test.name);
 		}
 
 		await this.bridge.events.testDiagnostic.call({
@@ -471,7 +474,7 @@ export default class TestWorkerFile {
 						type: "TEARDOWN";
 						test: TestDetails;
 					};
-			trailingAdvice?: DiagnosticAdvice;
+			trailingAdvice?: DiagnosticAdvice[];
 		},
 	): Promise<void> {
 		const {origin, error, trailingAdvice = []} = opts;
@@ -554,19 +557,17 @@ export default class TestWorkerFile {
 		await this.emitDiagnostic(diagnostic, test);
 	}
 
-	private async teardownTest(test: TestDetails, api: TestAPI): Promise<boolean> {
+	private async teardownTest(test: TestDetails, api: TestAPI): Promise<void> {
 		api.clearTimeout();
 
 		try {
 			await api.teardownEvent.callOptional();
-			return true;
 		} catch (err) {
 			await this.emitError({
 				origin: {type: "TEARDOWN", test},
 				error: err,
 				trailingAdvice: api.getAdvice(),
 			});
-			return false;
 		}
 	}
 
@@ -586,8 +587,6 @@ export default class TestWorkerFile {
 
 		const api = new TestAPI(this, test, onTimeout);
 
-		let testSuccess = false;
-
 		try {
 			const {diagnostics} = await catchDiagnostics(async () => {
 				const res = callback(api);
@@ -602,8 +601,6 @@ export default class TestWorkerFile {
 					await api.emitDiagnostic(diag);
 				}
 			}
-
-			testSuccess = true;
 		} catch (err) {
 			await this.emitError({
 				origin: {type: "TEST", test},
@@ -611,9 +608,9 @@ export default class TestWorkerFile {
 				trailingAdvice: api.getAdvice(),
 			});
 		} finally {
-			const teardownSuccess = await this.teardownTest(test, api);
+			await this.teardownTest(test, api);
 			await this.bridge.events.testFinish.call({
-				success: testSuccess && teardownSuccess,
+				success: !this.failedTests.has(test.name),
 				ref: this.createTestRef(test),
 			});
 		}

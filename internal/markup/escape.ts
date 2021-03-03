@@ -15,9 +15,11 @@ import {
 	ZeroIndexed,
 } from "@internal/numbers";
 
-type LazyMarkupPart = StaticMarkup | LazyMarkupFactory | LazyMarkup;
+type LazyMarkupPart = StaticMarkup | LazyMarkup;
 
 export type LazyMarkupFactory = () => Markup;
+
+type LazyMarkup = LazyMarkupContainer | LazyMarkupFactory;
 
 export type StaticMarkup =
 	| string
@@ -27,9 +29,9 @@ export type StaticMarkup =
 	| RawMarkup
 	| StaticMarkup[];
 
-export type Markup = StaticMarkup | LazyMarkup | LazyMarkupFactory;
+export type Markup = StaticMarkup | LazyMarkup;
 
-type LazyMarkup = {
+type LazyMarkupContainer = {
 	type: "LAZY_MARKUP";
 	parts: LazyMarkupPart[];
 };
@@ -45,11 +47,11 @@ function isRawMarkup(part: LazyMarkupPart): part is RawMarkup {
 
 function isLazyMarkup(
 	part: LazyMarkupPart,
-): part is LazyMarkup | LazyMarkupFactory {
+): part is LazyMarkupContainer | LazyMarkupFactory {
 	return isLazyMarkupParts(part) || isLazyMarkupFactory(part);
 }
 
-function isLazyMarkupParts(part: LazyMarkupPart): part is LazyMarkup {
+function isLazyMarkupParts(part: LazyMarkupPart): part is LazyMarkupContainer {
 	return isPlainObject(part) && part.type === "LAZY_MARKUP";
 }
 
@@ -201,6 +203,10 @@ export function readMarkup(item: Markup): string {
 	return out;
 }
 
+export function isStaticMarkup(markup: Markup): markup is StaticMarkup {
+	return !isLazyMarkup(markup);
+}
+
 const factoryCache: WeakMap<LazyMarkupFactory, Markup> = new WeakMap();
 
 export function serializeLazyMarkup(markup: Markup): StaticMarkup {
@@ -209,7 +215,7 @@ export function serializeLazyMarkup(markup: Markup): StaticMarkup {
 	} else if (isLazyMarkupFactory(markup)) {
 		let res = factoryCache.get(markup);
 		if (res === undefined) {
-			res = markup();
+		res = markup();
 			factoryCache.set(markup, res);
 		}
 		return serializeLazyMarkup(res);

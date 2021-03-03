@@ -8,73 +8,17 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2015/uncategorised/228/input.js 1:0-1:49
-	path: UIDPath<es2015/uncategorised/228/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:38
-				path: UIDPath<es2015/uncategorised/228/input.js>
-				start: Position 1:37
-			}
-			description: Object {
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Argument <emphasis>t</emphasis> name clash in strict mode"}
-				advice: Array [
-					log {
-						category: "info"
-						text: RAW_MARKUP {value: "Defined already here"}
-					}
-					frame {location: SourceLocation es2015/uncategorised/228/input.js 1:37-1:38 (t)}
-				]
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "a"
 				loc: SourceLocation es2015/uncategorised/228/input.js 1:9-1:10 (a)
 			}
-			loc: SourceLocation es2015/uncategorised/228/input.js 1:0-1:49
-			head: JSFunctionHead {
-				async: false
-				generator: false
-				hasHoistedVars: false
-				params: Array []
-				rest: undefined
-				returnType: undefined
-				thisType: undefined
-				typeParameters: undefined
-				loc: SourceLocation es2015/uncategorised/228/input.js 1:10-1:12
-			}
 			body: JSBlockStatement {
-				loc: SourceLocation es2015/uncategorised/228/input.js 1:13-1:49
-				directives: Array [
-					JSDirective {
-						value: "use strict"
-						loc: SourceLocation es2015/uncategorised/228/input.js 1:15-1:28
-					}
-				]
-				body: Array [
+				body: [
 					JSExpressionStatement {
-						loc: SourceLocation es2015/uncategorised/228/input.js 1:29-1:47
 						expression: JSObjectExpression {
-							loc: SourceLocation es2015/uncategorised/228/input.js 1:30-1:45
-							properties: Array [
+							properties: [
 								JSObjectMethod {
 									kind: "method"
 									key: JSStaticPropertyKey {
@@ -84,50 +28,92 @@ JSRoot {
 										}
 										loc: SourceLocation es2015/uncategorised/228/input.js 1:32-1:33
 									}
-									loc: SourceLocation es2015/uncategorised/228/input.js 1:32-1:43
 									body: JSBlockStatement {
-										body: Array []
-										directives: Array []
+										body: []
+										directives: []
 										loc: SourceLocation es2015/uncategorised/228/input.js 1:40-1:43
 									}
 									head: JSFunctionHead {
 										async: false
 										generator: false
 										hasHoistedVars: false
-										rest: undefined
-										returnType: undefined
-										thisType: undefined
-										typeParameters: undefined
-										loc: SourceLocation es2015/uncategorised/228/input.js 1:33-1:39
-										params: Array [
+										params: [
 											JSBindingIdentifier {
 												name: "t"
-												loc: SourceLocation es2015/uncategorised/228/input.js 1:34-1:35 (t)
 												meta: JSPatternMeta {
-													optional: undefined
-													typeAnnotation: undefined
 													loc: SourceLocation es2015/uncategorised/228/input.js 1:34-1:35
 												}
+												loc: SourceLocation es2015/uncategorised/228/input.js 1:34-1:35 (t)
 											}
 											JSBindingIdentifier {
 												name: "t"
-												loc: SourceLocation es2015/uncategorised/228/input.js 1:37-1:38 (t)
 												meta: JSPatternMeta {
-													optional: undefined
-													typeAnnotation: undefined
 													loc: SourceLocation es2015/uncategorised/228/input.js 1:37-1:38
 												}
+												loc: SourceLocation es2015/uncategorised/228/input.js 1:37-1:38 (t)
 											}
 										]
+										loc: SourceLocation es2015/uncategorised/228/input.js 1:33-1:39
 									}
+									loc: SourceLocation es2015/uncategorised/228/input.js 1:32-1:43
 								}
 							]
+							loc: SourceLocation es2015/uncategorised/228/input.js 1:30-1:45
 						}
+						loc: SourceLocation es2015/uncategorised/228/input.js 1:29-1:47
 					}
 				]
+				directives: [
+					JSDirective {
+						value: "use strict"
+						loc: SourceLocation es2015/uncategorised/228/input.js 1:15-1:28
+					}
+				]
+				loc: SourceLocation es2015/uncategorised/228/input.js 1:13-1:49
+			}
+			head: JSFunctionHead {
+				async: false
+				generator: false
+				hasHoistedVars: false
+				params: []
+				loc: SourceLocation es2015/uncategorised/228/input.js 1:10-1:12
+			}
+			loc: SourceLocation es2015/uncategorised/228/input.js 1:0-1:49
+		}
+	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {
+				advice: [
+					log {
+						category: "info"
+						text: RAW_MARKUP {value: "Defined already here"}
+					}
+					frame {
+						location: SourceLocation es2015/uncategorised/228/input.js 1:37-1:38 (t)
+					}
+				]
+				category: ["parse"]
+				categoryValue: "js"
+				message: [RAW_MARKUP {value: "Argument <emphasis>"}, "t", RAW_MARKUP {value: "</emphasis> name clash in strict mode"}]
+			}
+			location: {
+				language: "js"
+				path: UIDPath<es2015/uncategorised/228/input.js>
+				end: Position 1:38
+				start: Position 1:37
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2015/uncategorised/228/input.js>
+	loc: SourceLocation es2015/uncategorised/228/input.js 1:0-1:49
 }
 ```
 
@@ -142,7 +128,7 @@ JSRoot {
   ℹ Defined already here
 
     function a() { "use strict"; ({ b(t, t) { } }); }
-                                         ^
+                                         <error><emphasis>^</emphasis></error>
 
 
 ```

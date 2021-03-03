@@ -8,27 +8,25 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation experimental/numeric-separator/valid-6/input.js 1:0-1:5
-	path: UIDPath<experimental/numeric-separator/valid-6/input.js>
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation experimental/numeric-separator/valid-6/input.js 1:0-1:5
 			expression: JSNumericLiteral {
 				value: 161
 				format: "hex"
 				loc: SourceLocation experimental/numeric-separator/valid-6/input.js 1:0-1:5
 			}
+			loc: SourceLocation experimental/numeric-separator/valid-6/input.js 1:0-1:5
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<experimental/numeric-separator/valid-6/input.js>
+	loc: SourceLocation experimental/numeric-separator/valid-6/input.js 1:0-1:5
 }
 ```
 

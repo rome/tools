@@ -8,23 +8,10 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2015/uncategorised/156/input.js 1:0-1:23
-	path: UIDPath<es2015/uncategorised/156/input.js>
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation es2015/uncategorised/156/input.js 1:0-1:23
 			expression: JSObjectExpression {
-				loc: SourceLocation es2015/uncategorised/156/input.js 1:1-1:22
-				properties: Array [
+				properties: [
 					JSObjectMethod {
 						kind: "method"
 						key: JSStaticPropertyKey {
@@ -34,53 +21,19 @@ JSRoot {
 							}
 							loc: SourceLocation es2015/uncategorised/156/input.js 1:2-1:3
 						}
-						loc: SourceLocation es2015/uncategorised/156/input.js 1:2-1:21
 						body: JSBlockStatement {
-							body: Array []
-							directives: Array []
+							body: []
+							directives: []
 							loc: SourceLocation es2015/uncategorised/156/input.js 1:19-1:21
 						}
 						head: JSFunctionHead {
 							async: false
 							generator: false
 							hasHoistedVars: false
-							rest: undefined
-							returnType: undefined
-							thisType: undefined
-							typeParameters: undefined
-							loc: SourceLocation es2015/uncategorised/156/input.js 1:3-1:18
-							params: Array [
+							params: [
 								JSBindingAssignmentPattern {
-									loc: SourceLocation es2015/uncategorised/156/input.js 1:4-1:17
-									right: JSObjectExpression {
-										loc: SourceLocation es2015/uncategorised/156/input.js 1:10-1:17
-										properties: Array [
-											JSObjectProperty {
-												key: JSStaticPropertyKey {
-													value: JSIdentifier {
-														name: "x"
-														loc: SourceLocation es2015/uncategorised/156/input.js 1:11-1:12 (x)
-													}
-													loc: SourceLocation es2015/uncategorised/156/input.js 1:11-1:12
-												}
-												value: JSNumericLiteral {
-													value: 10
-													format: undefined
-													loc: SourceLocation es2015/uncategorised/156/input.js 1:14-1:16
-												}
-												loc: SourceLocation es2015/uncategorised/156/input.js 1:11-1:16
-											}
-										]
-									}
 									left: JSBindingObjectPattern {
-										rest: undefined
-										loc: SourceLocation es2015/uncategorised/156/input.js 1:4-1:7
-										meta: JSPatternMeta {
-											optional: undefined
-											typeAnnotation: undefined
-											loc: SourceLocation es2015/uncategorised/156/input.js 1:4-1:7
-										}
-										properties: Array [
+										properties: [
 											JSBindingObjectPatternProperty {
 												key: JSStaticPropertyKey {
 													value: JSIdentifier {
@@ -96,15 +49,52 @@ JSRoot {
 												loc: SourceLocation es2015/uncategorised/156/input.js 1:5-1:6
 											}
 										]
+										meta: JSPatternMeta {
+											loc: SourceLocation es2015/uncategorised/156/input.js 1:4-1:7
+										}
+										loc: SourceLocation es2015/uncategorised/156/input.js 1:4-1:7
 									}
+									right: JSObjectExpression {
+										properties: [
+											JSObjectProperty {
+												key: JSStaticPropertyKey {
+													value: JSIdentifier {
+														name: "x"
+														loc: SourceLocation es2015/uncategorised/156/input.js 1:11-1:12 (x)
+													}
+													loc: SourceLocation es2015/uncategorised/156/input.js 1:11-1:12
+												}
+												value: JSNumericLiteral {
+													value: 10
+													loc: SourceLocation es2015/uncategorised/156/input.js 1:14-1:16
+												}
+												loc: SourceLocation es2015/uncategorised/156/input.js 1:11-1:16
+											}
+										]
+										loc: SourceLocation es2015/uncategorised/156/input.js 1:10-1:17
+									}
+									loc: SourceLocation es2015/uncategorised/156/input.js 1:4-1:17
 								}
 							]
+							loc: SourceLocation es2015/uncategorised/156/input.js 1:3-1:18
 						}
+						loc: SourceLocation es2015/uncategorised/156/input.js 1:2-1:21
 					}
 				]
+				loc: SourceLocation es2015/uncategorised/156/input.js 1:1-1:22
 			}
+			loc: SourceLocation es2015/uncategorised/156/input.js 1:0-1:23
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2015/uncategorised/156/input.js>
+	loc: SourceLocation es2015/uncategorised/156/input.js 1:0-1:23
 }
 ```
 

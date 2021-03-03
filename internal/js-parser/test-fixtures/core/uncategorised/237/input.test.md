@@ -14,18 +14,24 @@ JSRoot {
 				body: [
 					JSExpressionStatement {
 						expression: JSUpdateExpression {
-							argument: JSReferenceIdentifier {name: "x", loc: SourceLocation core/uncategorised/237/input.js 1:17-1:18 (x)}
 							operator: "++"
 							prefix: false
+							argument: JSReferenceIdentifier {
+								name: "x"
+								loc: SourceLocation core/uncategorised/237/input.js 1:17-1:18 (x)
+							}
 							loc: SourceLocation core/uncategorised/237/input.js 1:17-1:20
 						}
 						loc: SourceLocation core/uncategorised/237/input.js 1:17-1:21
 					}
 					JSExpressionStatement {
 						expression: JSUpdateExpression {
-							argument: JSReferenceIdentifier {name: "y", loc: SourceLocation core/uncategorised/237/input.js 1:22-1:23 (y)}
 							operator: "--"
 							prefix: false
+							argument: JSReferenceIdentifier {
+								name: "y"
+								loc: SourceLocation core/uncategorised/237/input.js 1:22-1:23 (y)
+							}
 							loc: SourceLocation core/uncategorised/237/input.js 1:22-1:25
 						}
 						loc: SourceLocation core/uncategorised/237/input.js 1:22-1:26
@@ -35,9 +41,15 @@ JSRoot {
 				loc: SourceLocation core/uncategorised/237/input.js 1:15-1:28
 			}
 			test: JSBinaryExpression {
-				left: JSReferenceIdentifier {name: "x", loc: SourceLocation core/uncategorised/237/input.js 1:7-1:8 (x)}
 				operator: "<"
-				right: JSNumericLiteral {value: 10, loc: SourceLocation core/uncategorised/237/input.js 1:11-1:13}
+				left: JSReferenceIdentifier {
+					name: "x"
+					loc: SourceLocation core/uncategorised/237/input.js 1:7-1:8 (x)
+				}
+				right: JSNumericLiteral {
+					value: 10
+					loc: SourceLocation core/uncategorised/237/input.js 1:11-1:13
+				}
 				loc: SourceLocation core/uncategorised/237/input.js 1:7-1:13
 			}
 			loc: SourceLocation core/uncategorised/237/input.js 1:0-1:28
@@ -48,9 +60,9 @@ JSRoot {
 	diagnostics: []
 	directives: []
 	hasHoistedVars: false
-	path: UIDPath<core/uncategorised/237/input.js>
 	sourceType: "script"
 	syntax: []
+	path: UIDPath<core/uncategorised/237/input.js>
 	loc: SourceLocation core/uncategorised/237/input.js 1:0-1:28
 }
 ```

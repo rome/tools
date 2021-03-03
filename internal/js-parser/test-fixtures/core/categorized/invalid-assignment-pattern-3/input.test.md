@@ -11,21 +11,31 @@ JSRoot {
 	body: [
 		JSExpressionStatement {
 			expression: JSAssignmentExpression {
+				operator: "="
 				left: JSAssignmentArrayPattern {
 					elements: [
 						JSAssignmentObjectPattern {
 							properties: [
 								JSAssignmentObjectPatternProperty {
 									key: JSStaticPropertyKey {
-										value: JSIdentifier {name: "a", loc: SourceLocation core/categorized/invalid-assignment-pattern-3/input.js 1:4-1:5 (a)}
+										value: JSIdentifier {
+											name: "a"
+											loc: SourceLocation core/categorized/invalid-assignment-pattern-3/input.js 1:4-1:5 (a)
+										}
 										loc: SourceLocation core/categorized/invalid-assignment-pattern-3/input.js 1:4-1:5
 									}
 									value: JSAssignmentArrayPattern {
 										elements: [
 											JSAssignmentAssignmentPattern {
-												left: JSAssignmentIdentifier {name: "b", loc: SourceLocation core/categorized/invalid-assignment-pattern-3/input.js 1:8-1:9 (b)}
 												operator: "="
-												right: JSNumericLiteral {value: 2, loc: SourceLocation core/categorized/invalid-assignment-pattern-3/input.js 1:12-1:13}
+												left: JSAssignmentIdentifier {
+													name: "b"
+													loc: SourceLocation core/categorized/invalid-assignment-pattern-3/input.js 1:8-1:9 (b)
+												}
+												right: JSNumericLiteral {
+													value: 2
+													loc: SourceLocation core/categorized/invalid-assignment-pattern-3/input.js 1:12-1:13
+												}
 												loc: SourceLocation core/categorized/invalid-assignment-pattern-3/input.js 1:8-1:13
 											}
 										]
@@ -39,8 +49,10 @@ JSRoot {
 					]
 					loc: SourceLocation core/categorized/invalid-assignment-pattern-3/input.js 1:0-1:17
 				}
-				operator: "="
-				right: JSReferenceIdentifier {name: "t", loc: SourceLocation core/categorized/invalid-assignment-pattern-3/input.js 1:20-1:21 (t)}
+				right: JSReferenceIdentifier {
+					name: "t"
+					loc: SourceLocation core/categorized/invalid-assignment-pattern-3/input.js 1:20-1:21 (t)
+				}
 				loc: SourceLocation core/categorized/invalid-assignment-pattern-3/input.js 1:0-1:21
 			}
 			loc: SourceLocation core/categorized/invalid-assignment-pattern-3/input.js 1:0-1:21
@@ -50,16 +62,26 @@ JSRoot {
 	corrupt: false
 	diagnostics: [
 		{
-			description: {advice: [], category: ["parse"], categoryValue: "js", message: RAW_MARKUP {value: "Invalid parenthesized binding"}}
-			location: {language: "js", path: UIDPath<core/categorized/invalid-assignment-pattern-3/input.js>, end: Position 1:15, start: Position 1:2}
 			origins: [{category: "parse"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "Invalid parenthesized binding"}
+			}
+			location: {
+				language: "js"
+				path: UIDPath<core/categorized/invalid-assignment-pattern-3/input.js>
+				end: Position 1:15
+				start: Position 1:2
+			}
 		}
 	]
 	directives: []
 	hasHoistedVars: false
-	path: UIDPath<core/categorized/invalid-assignment-pattern-3/input.js>
 	sourceType: "script"
 	syntax: []
+	path: UIDPath<core/categorized/invalid-assignment-pattern-3/input.js>
 	loc: SourceLocation core/categorized/invalid-assignment-pattern-3/input.js 1:0-1:21
 }
 ```
@@ -73,7 +95,13 @@ JSRoot {
   ✖ Invalid parenthesized binding
 
     [({ a: [b = 2]})] = t
-      ^^^^^^^^^^^^^
+      <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
+    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
+    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
+    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
+    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
+    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
+    <error><emphasis>^</emphasis></error>
 
 
 ```

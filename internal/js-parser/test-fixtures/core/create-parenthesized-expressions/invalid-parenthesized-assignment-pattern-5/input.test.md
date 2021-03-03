@@ -11,19 +11,19 @@ JSRoot {
 	body: [
 		JSExpressionStatement {
 			expression: JSAssignmentExpression {
+				operator: "="
 				left: JSAssignmentAssignmentPattern {
+					operator: "="
 					left: JSAssignmentIdentifier {
 						name: "a"
 						loc: SourceLocation core/create-parenthesized-expressions/invalid-parenthesized-assignment-pattern-5/input.js 1:1-1:2 (a)
 					}
-					operator: "="
 					right: JSNumericLiteral {
 						value: 1
 						loc: SourceLocation core/create-parenthesized-expressions/invalid-parenthesized-assignment-pattern-5/input.js 1:5-1:6
 					}
 					loc: SourceLocation core/create-parenthesized-expressions/invalid-parenthesized-assignment-pattern-5/input.js 1:1-1:6
 				}
-				operator: "="
 				right: JSReferenceIdentifier {
 					name: "t"
 					loc: SourceLocation core/create-parenthesized-expressions/invalid-parenthesized-assignment-pattern-5/input.js 1:10-1:11 (t)
@@ -37,21 +37,26 @@ JSRoot {
 	corrupt: false
 	diagnostics: [
 		{
-			description: {advice: [], category: ["parse"], categoryValue: "js", message: RAW_MARKUP {value: "Invalid parenthesized binding"}}
+			origins: [{category: "parse"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "Invalid parenthesized binding"}
+			}
 			location: {
 				language: "js"
 				path: UIDPath<core/create-parenthesized-expressions/invalid-parenthesized-assignment-pattern-5/input.js>
 				end: Position 1:6
 				start: Position 1:1
 			}
-			origins: [{category: "parse"}]
 		}
 	]
 	directives: []
 	hasHoistedVars: false
-	path: UIDPath<core/create-parenthesized-expressions/invalid-parenthesized-assignment-pattern-5/input.js>
 	sourceType: "script"
 	syntax: []
+	path: UIDPath<core/create-parenthesized-expressions/invalid-parenthesized-assignment-pattern-5/input.js>
 	loc: SourceLocation core/create-parenthesized-expressions/invalid-parenthesized-assignment-pattern-5/input.js 1:0-1:11
 }
 ```
@@ -66,7 +71,9 @@ parse(js) ━━━━━━━━━━━━━━━━━━━━━━━�
   ✖ Invalid parenthesized binding
 
     (a = 1) = t
-     ^^^^^
+     <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
+    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
+    <error><emphasis>^</emphasis></error>
 
 
 ```

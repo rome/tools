@@ -8,60 +8,55 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation esprima/directive-prolog/migrated_0000/input.js 1:0-2:0
-	path: UIDPath<esprima/directive-prolog/migrated_0000/input.js>
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation esprima/directive-prolog/migrated_0000/input.js 1:0-1:46
 			expression: JSCallExpression {
-				arguments: Array []
-				loc: SourceLocation esprima/directive-prolog/migrated_0000/input.js 1:1-1:45
+				arguments: []
 				callee: JSFunctionExpression {
-					id: undefined
-					loc: SourceLocation esprima/directive-prolog/migrated_0000/input.js 1:1-1:43
-					head: JSFunctionHead {
-						async: false
-						generator: false
-						hasHoistedVars: false
-						params: Array []
-						rest: undefined
-						returnType: undefined
-						thisType: undefined
-						typeParameters: undefined
-						loc: SourceLocation esprima/directive-prolog/migrated_0000/input.js 1:10-1:12
-					}
 					body: JSBlockStatement {
-						loc: SourceLocation esprima/directive-prolog/migrated_0000/input.js 1:13-1:43
-						directives: Array [
+						body: [
+							JSWithStatement {
+								body: JSEmptyStatement {
+									loc: SourceLocation esprima/directive-prolog/migrated_0000/input.js 1:40-1:41
+								}
+								object: JSReferenceIdentifier {
+									name: "i"
+									loc: SourceLocation esprima/directive-prolog/migrated_0000/input.js 1:38-1:39 (i)
+								}
+								loc: SourceLocation esprima/directive-prolog/migrated_0000/input.js 1:32-1:41
+							}
+						]
+						directives: [
 							JSDirective {
 								value: "use\\x20strict"
 								loc: SourceLocation esprima/directive-prolog/migrated_0000/input.js 1:15-1:31
 							}
 						]
-						body: Array [
-							JSWithStatement {
-								body: JSEmptyStatement {loc: SourceLocation esprima/directive-prolog/migrated_0000/input.js 1:40-1:41}
-								loc: SourceLocation esprima/directive-prolog/migrated_0000/input.js 1:32-1:41
-								object: JSReferenceIdentifier {
-									name: "i"
-									loc: SourceLocation esprima/directive-prolog/migrated_0000/input.js 1:38-1:39 (i)
-								}
-							}
-						]
+						loc: SourceLocation esprima/directive-prolog/migrated_0000/input.js 1:13-1:43
 					}
+					head: JSFunctionHead {
+						async: false
+						generator: false
+						hasHoistedVars: false
+						params: []
+						loc: SourceLocation esprima/directive-prolog/migrated_0000/input.js 1:10-1:12
+					}
+					loc: SourceLocation esprima/directive-prolog/migrated_0000/input.js 1:1-1:43
 				}
+				loc: SourceLocation esprima/directive-prolog/migrated_0000/input.js 1:1-1:45
 			}
+			loc: SourceLocation esprima/directive-prolog/migrated_0000/input.js 1:0-1:46
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<esprima/directive-prolog/migrated_0000/input.js>
+	loc: SourceLocation esprima/directive-prolog/migrated_0000/input.js 1:0-2:0
 }
 ```
 

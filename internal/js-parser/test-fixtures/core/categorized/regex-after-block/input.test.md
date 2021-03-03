@@ -10,26 +10,42 @@
 JSRoot {
 	body: [
 		JSIfStatement {
-			consequent: JSBlockStatement {body: [], directives: [], loc: SourceLocation core/categorized/regex-after-block/input.js 1:10-2:1}
-			test: JSBooleanLiteral {value: true, loc: SourceLocation core/categorized/regex-after-block/input.js 1:4-1:8}
+			consequent: JSBlockStatement {
+				body: []
+				directives: []
+				loc: SourceLocation core/categorized/regex-after-block/input.js 1:10-2:1
+			}
+			test: JSBooleanLiteral {
+				value: true
+				loc: SourceLocation core/categorized/regex-after-block/input.js 1:4-1:8
+			}
 			loc: SourceLocation core/categorized/regex-after-block/input.js 1:0-2:1
 		}
 		JSExpressionStatement {
 			expression: JSRegExpLiteral {
-				expression: JSRegExpSubExpression {
-					body: [
-						JSRegExpCharacter {value: "f", loc: SourceLocation core/categorized/regex-after-block/input.js 4:1-4:2}
-						JSRegExpCharacter {value: "o", loc: SourceLocation core/categorized/regex-after-block/input.js 4:2-4:3}
-						JSRegExpCharacter {value: "o", loc: SourceLocation core/categorized/regex-after-block/input.js 4:3-4:4}
-					]
-					loc: SourceLocation core/categorized/regex-after-block/input.js 4:1-4:4
-				}
 				global: false
 				insensitive: false
 				multiline: false
 				noDotNewline: false
 				sticky: false
 				unicode: false
+				expression: JSRegExpSubExpression {
+					body: [
+						JSRegExpCharacter {
+							value: "f"
+							loc: SourceLocation core/categorized/regex-after-block/input.js 4:1-4:2
+						}
+						JSRegExpCharacter {
+							value: "o"
+							loc: SourceLocation core/categorized/regex-after-block/input.js 4:2-4:3
+						}
+						JSRegExpCharacter {
+							value: "o"
+							loc: SourceLocation core/categorized/regex-after-block/input.js 4:3-4:4
+						}
+					]
+					loc: SourceLocation core/categorized/regex-after-block/input.js 4:1-4:4
+				}
 				loc: SourceLocation core/categorized/regex-after-block/input.js 4:0-4:5
 			}
 			loc: SourceLocation core/categorized/regex-after-block/input.js 4:0-4:5
@@ -40,9 +56,9 @@ JSRoot {
 	diagnostics: []
 	directives: []
 	hasHoistedVars: false
-	path: UIDPath<core/categorized/regex-after-block/input.js>
 	sourceType: "script"
 	syntax: []
+	path: UIDPath<core/categorized/regex-after-block/input.js>
 	loc: SourceLocation core/categorized/regex-after-block/input.js 1:0-4:5
 }
 ```

@@ -8,55 +8,12 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: true
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2015/uncategorised/308/input.js 1:0-1:14
-	path: UIDPath<es2015/uncategorised/308/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:5
-				path: UIDPath<es2015/uncategorised/308/input.js>
-				start: Position 1:4
-			}
-			description: Object {
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Unexpected character <emphasis>=</emphasis>"}
-				advice: Array [
-					log {
-						category: "info"
-						text: RAW_MARKUP {value: "Expected character <emphasis>,</emphasis>"}
-					}
-				]
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation es2015/uncategorised/308/input.js 1:0-1:7
 			expression: JSAssignmentExpression {
 				operator: "="
-				loc: SourceLocation es2015/uncategorised/308/input.js 1:1-1:7
-				right: JSNumericLiteral {
-					value: 0
-					format: undefined
-					loc: SourceLocation es2015/uncategorised/308/input.js 1:6-1:7
-				}
 				left: JSAssignmentObjectPattern {
-					rest: undefined
-					loc: SourceLocation es2015/uncategorised/308/input.js 1:1-1:3
-					properties: Array [
+					properties: [
 						JSAssignmentObjectPatternProperty {
 							key: JSStaticPropertyKey {
 								value: JSIdentifier {
@@ -72,38 +29,70 @@ JSRoot {
 							loc: SourceLocation es2015/uncategorised/308/input.js 1:2-1:3
 						}
 					]
+					loc: SourceLocation es2015/uncategorised/308/input.js 1:1-1:3
 				}
+				right: JSNumericLiteral {
+					value: 0
+					loc: SourceLocation es2015/uncategorised/308/input.js 1:6-1:7
+				}
+				loc: SourceLocation es2015/uncategorised/308/input.js 1:1-1:7
 			}
+			loc: SourceLocation es2015/uncategorised/308/input.js 1:0-1:7
 		}
 		JSExpressionStatement {
-			loc: SourceLocation es2015/uncategorised/308/input.js 1:7-1:8
 			expression: JSReferenceIdentifier {
 				name: "INVALID_PLACEHOLDER"
 				loc: SourceLocation es2015/uncategorised/308/input.js 1:7-1:8
 			}
+			loc: SourceLocation es2015/uncategorised/308/input.js 1:7-1:8
 		}
 		JSExpressionStatement {
-			loc: SourceLocation es2015/uncategorised/308/input.js 1:8-1:9
 			expression: JSReferenceIdentifier {
 				name: "INVALID_PLACEHOLDER"
 				loc: SourceLocation es2015/uncategorised/308/input.js 1:8-1:9
 			}
+			loc: SourceLocation es2015/uncategorised/308/input.js 1:8-1:9
 		}
 		JSExpressionStatement {
-			loc: SourceLocation es2015/uncategorised/308/input.js 1:10-1:12
 			expression: JSReferenceIdentifier {
 				name: "INVALID_PLACEHOLDER"
 				loc: SourceLocation es2015/uncategorised/308/input.js 1:10-1:12
 			}
+			loc: SourceLocation es2015/uncategorised/308/input.js 1:10-1:12
 		}
 		JSExpressionStatement {
-			loc: SourceLocation es2015/uncategorised/308/input.js 1:13-1:14
 			expression: JSReferenceIdentifier {
 				name: "x"
 				loc: SourceLocation es2015/uncategorised/308/input.js 1:13-1:14 (x)
 			}
+			loc: SourceLocation es2015/uncategorised/308/input.js 1:13-1:14
 		}
 	]
+	comments: []
+	corrupt: true
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {
+				advice: [log {category: "info", text: [RAW_MARKUP {value: "Expected character <emphasis>"}, ",", RAW_MARKUP {value: "</emphasis>"}]}]
+				category: ["parse"]
+				categoryValue: "js"
+				message: [RAW_MARKUP {value: "Unexpected character <emphasis>"}, "=", RAW_MARKUP {value: "</emphasis>"}]
+			}
+			location: {
+				language: "js"
+				path: UIDPath<es2015/uncategorised/308/input.js>
+				end: Position 1:5
+				start: Position 1:4
+			}
+		}
+	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2015/uncategorised/308/input.js>
+	loc: SourceLocation es2015/uncategorised/308/input.js 1:0-1:14
 }
 ```
 
@@ -116,7 +105,7 @@ JSRoot {
   ✖ Unexpected character =
 
     ({x = 0}) => x
-        ^
+        <error><emphasis>^</emphasis></error>
 
   ℹ Expected character ,
 

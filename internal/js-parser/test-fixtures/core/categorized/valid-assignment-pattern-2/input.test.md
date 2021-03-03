@@ -11,12 +11,20 @@ JSRoot {
 	body: [
 		JSExpressionStatement {
 			expression: JSAssignmentExpression {
+				operator: "="
 				left: JSAssignmentArrayPattern {
-					elements: [JSAssignmentIdentifier {name: "x", loc: SourceLocation core/categorized/valid-assignment-pattern-2/input.js 1:2-1:3 (x)}]
+					elements: [
+						JSAssignmentIdentifier {
+							name: "x"
+							loc: SourceLocation core/categorized/valid-assignment-pattern-2/input.js 1:2-1:3 (x)
+						}
+					]
 					loc: SourceLocation core/categorized/valid-assignment-pattern-2/input.js 1:0-1:5
 				}
-				operator: "="
-				right: JSReferenceIdentifier {name: "t", loc: SourceLocation core/categorized/valid-assignment-pattern-2/input.js 1:8-1:9 (t)}
+				right: JSReferenceIdentifier {
+					name: "t"
+					loc: SourceLocation core/categorized/valid-assignment-pattern-2/input.js 1:8-1:9 (t)
+				}
 				loc: SourceLocation core/categorized/valid-assignment-pattern-2/input.js 1:0-1:9
 			}
 			loc: SourceLocation core/categorized/valid-assignment-pattern-2/input.js 1:0-1:10
@@ -26,16 +34,26 @@ JSRoot {
 	corrupt: false
 	diagnostics: [
 		{
-			description: {advice: [], category: ["parse"], categoryValue: "js", message: RAW_MARKUP {value: "Invalid parenthesized binding"}}
-			location: {language: "js", path: UIDPath<core/categorized/valid-assignment-pattern-2/input.js>, end: Position 1:3, start: Position 1:2}
 			origins: [{category: "parse"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "Invalid parenthesized binding"}
+			}
+			location: {
+				language: "js"
+				path: UIDPath<core/categorized/valid-assignment-pattern-2/input.js>
+				end: Position 1:3
+				start: Position 1:2
+			}
 		}
 	]
 	directives: []
 	hasHoistedVars: false
-	path: UIDPath<core/categorized/valid-assignment-pattern-2/input.js>
 	sourceType: "script"
 	syntax: []
+	path: UIDPath<core/categorized/valid-assignment-pattern-2/input.js>
 	loc: SourceLocation core/categorized/valid-assignment-pattern-2/input.js 1:0-1:10
 }
 ```
@@ -49,7 +67,7 @@ JSRoot {
   ✖ Invalid parenthesized binding
 
     [(x)] = t;
-      ^
+      <error><emphasis>^</emphasis></error>
 
 
 ```

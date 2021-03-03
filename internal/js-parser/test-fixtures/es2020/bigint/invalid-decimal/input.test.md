@@ -8,44 +8,40 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2020/bigint/invalid-decimal/input.js 1:0-2:0
-	path: UIDPath<es2020/bigint/invalid-decimal/input.js>
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation es2020/bigint/invalid-decimal/input.js 1:0-1:4
 			expression: JSBigIntLiteral {
 				value: "1.0"
 				loc: SourceLocation es2020/bigint/invalid-decimal/input.js 1:0-1:4
 			}
+			loc: SourceLocation es2020/bigint/invalid-decimal/input.js 1:0-1:4
 		}
 	]
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {
+				advice: []
+				category: ["parse"]
 				categoryValue: "js"
-				category: Array ["parse"]
 				message: RAW_MARKUP {value: "A bigint can't have a decimal"}
 			}
-			location: Object {
-				integrity: undefined
+			location: {
 				language: "js"
-				sourceText: undefined
-				end: Position 1:3
 				path: UIDPath<es2020/bigint/invalid-decimal/input.js>
+				end: Position 1:3
 				start: Position 1:3
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2020/bigint/invalid-decimal/input.js>
+	loc: SourceLocation es2020/bigint/invalid-decimal/input.js 1:0-2:0
 }
 ```
 
@@ -58,7 +54,7 @@ JSRoot {
   ✖ A bigint can't have a decimal
 
     1.0n
-       ^
+       <error><emphasis>^</emphasis></error>
 
 
 ```

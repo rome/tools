@@ -8,72 +8,65 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	syntax: Array []
-	loc: SourceLocation es2015/modules/invalid-escape-import-from/input.js 1:0-2:0
-	path: UIDPath<es2015/modules/invalid-escape-import-from/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Expected keyword <emphasis>from</emphasis>"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:8
-				path: UIDPath<es2015/modules/invalid-escape-import-from/input.js>
-				start: Position 1:9
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSImportDeclaration {
-			importKind: undefined
-			namedSpecifiers: Array []
-			namespaceSpecifier: undefined
-			loc: SourceLocation es2015/modules/invalid-escape-import-from/input.js 1:0-1:8
-			source: JSStringLiteral {
-				value: ""
-				loc: SourceLocation es2015/modules/invalid-escape-import-from/input.js 1:0-1:8
-			}
+			namedSpecifiers: []
 			defaultSpecifier: JSImportDefaultSpecifier {
-				loc: SourceLocation es2015/modules/invalid-escape-import-from/input.js 1:0-1:8
 				local: JSImportSpecifierLocal {
 					name: JSBindingIdentifier {
 						name: "X"
 						loc: SourceLocation es2015/modules/invalid-escape-import-from/input.js 1:7-1:8 (X)
 					}
-					importKind: undefined
 					loc: SourceLocation es2015/modules/invalid-escape-import-from/input.js 1:7-1:8
 				}
+				loc: SourceLocation es2015/modules/invalid-escape-import-from/input.js 1:0-1:8
 			}
+			source: JSStringLiteral {
+				value: ""
+				loc: SourceLocation es2015/modules/invalid-escape-import-from/input.js 1:0-1:8
+			}
+			loc: SourceLocation es2015/modules/invalid-escape-import-from/input.js 1:0-1:8
 		}
 		JSExpressionStatement {
-			loc: SourceLocation es2015/modules/invalid-escape-import-from/input.js 1:9-1:18
 			expression: JSReferenceIdentifier {
 				name: "from"
 				loc: SourceLocation es2015/modules/invalid-escape-import-from/input.js 1:9-1:18 (from)
 			}
+			loc: SourceLocation es2015/modules/invalid-escape-import-from/input.js 1:9-1:18
 		}
 		JSExpressionStatement {
-			loc: SourceLocation es2015/modules/invalid-escape-import-from/input.js 1:19-1:22
 			expression: JSStringLiteral {
 				value: "x"
 				loc: SourceLocation es2015/modules/invalid-escape-import-from/input.js 1:19-1:22
 			}
+			loc: SourceLocation es2015/modules/invalid-escape-import-from/input.js 1:19-1:22
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "js"
+				message: [RAW_MARKUP {value: "Expected keyword <emphasis>"}, "from", RAW_MARKUP {value: "</emphasis>"}]
+			}
+			location: {
+				language: "js"
+				path: UIDPath<es2015/modules/invalid-escape-import-from/input.js>
+				end: Position 1:8
+				start: Position 1:9
+			}
+		}
+	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: []
+	path: UIDPath<es2015/modules/invalid-escape-import-from/input.js>
+	loc: SourceLocation es2015/modules/invalid-escape-import-from/input.js 1:0-2:0
 }
 ```
 
@@ -86,7 +79,7 @@ JSRoot {
   ✖ Expected keyword from
 
     import X fro\u006d 'x'
-             ^
+             <error><emphasis>^</emphasis></error>
 
 
 ```

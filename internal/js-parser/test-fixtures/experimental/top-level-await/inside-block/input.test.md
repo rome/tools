@@ -8,44 +8,40 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	syntax: Array []
-	loc: SourceLocation experimental/top-level-await/inside-block/input.js 1:0-3:1
-	path: UIDPath<experimental/top-level-await/inside-block/input.js>
-	body: Array [
+	body: [
 		JSIfStatement {
-			alternate: undefined
-			loc: SourceLocation experimental/top-level-await/inside-block/input.js 1:0-3:1
+			consequent: JSBlockStatement {
+				body: [
+					JSExpressionStatement {
+						expression: JSAwaitExpression {
+							argument: JSNumericLiteral {
+								value: 0
+								loc: SourceLocation experimental/top-level-await/inside-block/input.js 2:8-2:9
+							}
+							loc: SourceLocation experimental/top-level-await/inside-block/input.js 2:2-2:9
+						}
+						loc: SourceLocation experimental/top-level-await/inside-block/input.js 2:2-2:10
+					}
+				]
+				directives: []
+				loc: SourceLocation experimental/top-level-await/inside-block/input.js 1:10-3:1
+			}
 			test: JSBooleanLiteral {
 				value: true
 				loc: SourceLocation experimental/top-level-await/inside-block/input.js 1:4-1:8
 			}
-			consequent: JSBlockStatement {
-				directives: Array []
-				loc: SourceLocation experimental/top-level-await/inside-block/input.js 1:10-3:1
-				body: Array [
-					JSExpressionStatement {
-						loc: SourceLocation experimental/top-level-await/inside-block/input.js 2:2-2:10
-						expression: JSAwaitExpression {
-							loc: SourceLocation experimental/top-level-await/inside-block/input.js 2:2-2:9
-							argument: JSNumericLiteral {
-								value: 0
-								format: undefined
-								loc: SourceLocation experimental/top-level-await/inside-block/input.js 2:8-2:9
-							}
-						}
-					}
-				]
-			}
+			loc: SourceLocation experimental/top-level-await/inside-block/input.js 1:0-3:1
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: []
+	path: UIDPath<experimental/top-level-await/inside-block/input.js>
+	loc: SourceLocation experimental/top-level-await/inside-block/input.js 1:0-3:1
 }
 ```
 

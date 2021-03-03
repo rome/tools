@@ -14,13 +14,9 @@ export type DiagnosticsPrinterAuxiliaryFormat = undefined | "github-actions";
 
 export type DiagnosticsPrinterFlags = {
 	auxiliaryDiagnosticFormat: DiagnosticsPrinterAuxiliaryFormat;
-	grep: string;
 	fieri: boolean;
-	inverseGrep: boolean;
 	truncateDiagnostics: boolean;
 	verboseDiagnostics: boolean;
-	maxDiagnostics: number;
-	showAllDiagnostics: boolean;
 };
 
 export type DiagnosticsFileHandler = {

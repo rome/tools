@@ -11,17 +11,25 @@ JSRoot {
 	body: [
 		JSExpressionStatement {
 			expression: JSAssignmentExpression {
+				operator: "="
 				left: JSAssignmentArrayPattern {
 					elements: [
 						JSAssignmentArrayPattern {
-							elements: [JSAssignmentIdentifier {name: "x", loc: SourceLocation core/categorized/invalid-assignment-pattern-5/input.js 1:3-1:4 (x)}]
+							elements: [
+								JSAssignmentIdentifier {
+									name: "x"
+									loc: SourceLocation core/categorized/invalid-assignment-pattern-5/input.js 1:3-1:4 (x)
+								}
+							]
 							loc: SourceLocation core/categorized/invalid-assignment-pattern-5/input.js 1:2-1:5
 						}
 					]
 					loc: SourceLocation core/categorized/invalid-assignment-pattern-5/input.js 1:0-1:7
 				}
-				operator: "="
-				right: JSReferenceIdentifier {name: "t", loc: SourceLocation core/categorized/invalid-assignment-pattern-5/input.js 1:10-1:11 (t)}
+				right: JSReferenceIdentifier {
+					name: "t"
+					loc: SourceLocation core/categorized/invalid-assignment-pattern-5/input.js 1:10-1:11 (t)
+				}
 				loc: SourceLocation core/categorized/invalid-assignment-pattern-5/input.js 1:0-1:11
 			}
 			loc: SourceLocation core/categorized/invalid-assignment-pattern-5/input.js 1:0-1:12
@@ -31,16 +39,26 @@ JSRoot {
 	corrupt: false
 	diagnostics: [
 		{
-			description: {advice: [], category: ["parse"], categoryValue: "js", message: RAW_MARKUP {value: "Invalid parenthesized binding"}}
-			location: {language: "js", path: UIDPath<core/categorized/invalid-assignment-pattern-5/input.js>, end: Position 1:5, start: Position 1:2}
 			origins: [{category: "parse"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "Invalid parenthesized binding"}
+			}
+			location: {
+				language: "js"
+				path: UIDPath<core/categorized/invalid-assignment-pattern-5/input.js>
+				end: Position 1:5
+				start: Position 1:2
+			}
 		}
 	]
 	directives: []
 	hasHoistedVars: false
-	path: UIDPath<core/categorized/invalid-assignment-pattern-5/input.js>
 	sourceType: "script"
 	syntax: []
+	path: UIDPath<core/categorized/invalid-assignment-pattern-5/input.js>
 	loc: SourceLocation core/categorized/invalid-assignment-pattern-5/input.js 1:0-1:12
 }
 ```
@@ -54,7 +72,8 @@ JSRoot {
   ✖ Invalid parenthesized binding
 
     [([x])] = t;
-      ^^^
+      <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
+    <error><emphasis>^</emphasis></error>
 
 
 ```

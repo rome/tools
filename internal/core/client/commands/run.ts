@@ -33,13 +33,6 @@ export default createLocalCommand({
 			return false;
 		}
 
-		process.on(
-			"unhandledRejection",
-			(error) => {
-				error;
-			},
-		);
-
 		const res = await req.client.query(
 			{
 				commandName: "run",

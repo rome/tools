@@ -8,30 +8,10 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	syntax: Array []
-	loc: SourceLocation es2015/uncategorised/97/input.js 1:0-1:33
-	path: UIDPath<es2015/uncategorised/97/input.js>
-	body: Array [
+	body: [
 		JSImportDeclaration {
-			defaultSpecifier: undefined
-			importKind: undefined
-			namespaceSpecifier: undefined
-			loc: SourceLocation es2015/uncategorised/97/input.js 1:0-1:33
-			source: JSStringLiteral {
-				value: "bar"
-				loc: SourceLocation es2015/uncategorised/97/input.js 1:28-1:33
-			}
-			namedSpecifiers: Array [
+			namedSpecifiers: [
 				JSImportSpecifier {
-					loc: SourceLocation es2015/uncategorised/97/input.js 1:9-1:20
 					imported: JSIdentifier {
 						name: "null"
 						loc: SourceLocation es2015/uncategorised/97/input.js 1:9-1:13 (null)
@@ -41,13 +21,27 @@ JSRoot {
 							name: "nil"
 							loc: SourceLocation es2015/uncategorised/97/input.js 1:17-1:20 (nil)
 						}
-						importKind: undefined
 						loc: SourceLocation es2015/uncategorised/97/input.js 1:9-1:20
 					}
+					loc: SourceLocation es2015/uncategorised/97/input.js 1:9-1:20
 				}
 			]
+			source: JSStringLiteral {
+				value: "bar"
+				loc: SourceLocation es2015/uncategorised/97/input.js 1:28-1:33
+			}
+			loc: SourceLocation es2015/uncategorised/97/input.js 1:0-1:33
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: []
+	path: UIDPath<es2015/uncategorised/97/input.js>
+	loc: SourceLocation es2015/uncategorised/97/input.js 1:0-1:33
 }
 ```
 

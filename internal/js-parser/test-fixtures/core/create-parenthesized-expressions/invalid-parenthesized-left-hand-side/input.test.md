@@ -11,12 +11,15 @@ JSRoot {
 	body: [
 		JSExpressionStatement {
 			expression: JSAssignmentExpression {
+				operator: "+="
 				left: JSAssignmentIdentifier {
 					name: "INVALID_PLACEHOLDER"
 					loc: SourceLocation core/create-parenthesized-expressions/invalid-parenthesized-left-hand-side/input.js 1:5-1:4
 				}
-				operator: "+="
-				right: JSNumericLiteral {value: 1, loc: SourceLocation core/create-parenthesized-expressions/invalid-parenthesized-left-hand-side/input.js 1:8-1:9}
+				right: JSNumericLiteral {
+					value: 1
+					loc: SourceLocation core/create-parenthesized-expressions/invalid-parenthesized-left-hand-side/input.js 1:8-1:9
+				}
 				loc: SourceLocation core/create-parenthesized-expressions/invalid-parenthesized-left-hand-side/input.js 1:0-1:9
 			}
 			loc: SourceLocation core/create-parenthesized-expressions/invalid-parenthesized-left-hand-side/input.js 1:0-1:9
@@ -26,21 +29,26 @@ JSRoot {
 	corrupt: true
 	diagnostics: [
 		{
-			description: {advice: [], category: ["parse"], categoryValue: "js", message: RAW_MARKUP {value: "Invalid left-hand side in assignment expression"}}
+			origins: [{category: "parse"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "js"
+				message: [RAW_MARKUP {value: "Invalid left-hand side in "}, "assignment expression"]
+			}
 			location: {
 				language: "js"
 				path: UIDPath<core/create-parenthesized-expressions/invalid-parenthesized-left-hand-side/input.js>
 				end: Position 1:3
 				start: Position 1:1
 			}
-			origins: [{category: "parse"}]
 		}
 	]
 	directives: []
 	hasHoistedVars: false
-	path: UIDPath<core/create-parenthesized-expressions/invalid-parenthesized-left-hand-side/input.js>
 	sourceType: "script"
 	syntax: []
+	path: UIDPath<core/create-parenthesized-expressions/invalid-parenthesized-left-hand-side/input.js>
 	loc: SourceLocation core/create-parenthesized-expressions/invalid-parenthesized-left-hand-side/input.js 1:0-2:0
 }
 ```
@@ -54,7 +62,7 @@ JSRoot {
   ✖ Invalid left-hand side in assignment expression
 
     (!a) += 1
-     ^^
+     <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
 
 
 ```

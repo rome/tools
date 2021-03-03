@@ -11,43 +11,77 @@ JSRoot {
 	body: [
 		JSForStatement {
 			body: JSExpressionStatement {
-				expression: JSReferenceIdentifier {name: "imports", loc: SourceLocation core/opts/allowAwaitOutsideFunction-false/input.js 1:22-1:29 (imports)}
+				expression: JSReferenceIdentifier {
+					name: "imports"
+					loc: SourceLocation core/opts/allowAwaitOutsideFunction-false/input.js 1:22-1:29 (imports)
+				}
 				loc: SourceLocation core/opts/allowAwaitOutsideFunction-false/input.js 1:22-1:29
 			}
 			init: JSCallExpression {
-				arguments: [JSReferenceIdentifier {name: "INVALID_PLACEHOLDER", loc: SourceLocation core/opts/allowAwaitOutsideFunction-false/input.js 1:11-1:16}]
-				callee: JSReferenceIdentifier {name: "await", loc: SourceLocation core/opts/allowAwaitOutsideFunction-false/input.js 1:4-1:9 (await)}
+				arguments: [
+					JSReferenceIdentifier {
+						name: "INVALID_PLACEHOLDER"
+						loc: SourceLocation core/opts/allowAwaitOutsideFunction-false/input.js 1:11-1:16
+					}
+				]
+				callee: JSReferenceIdentifier {
+					name: "await"
+					loc: SourceLocation core/opts/allowAwaitOutsideFunction-false/input.js 1:4-1:9 (await)
+				}
 				loc: SourceLocation core/opts/allowAwaitOutsideFunction-false/input.js 1:4-1:16
 			}
-			test: JSReferenceIdentifier {name: "i", loc: SourceLocation core/opts/allowAwaitOutsideFunction-false/input.js 1:17-1:18 (i)}
-			update: JSReferenceIdentifier {name: "of", loc: SourceLocation core/opts/allowAwaitOutsideFunction-false/input.js 1:19-1:21 (of)}
+			test: JSReferenceIdentifier {
+				name: "i"
+				loc: SourceLocation core/opts/allowAwaitOutsideFunction-false/input.js 1:17-1:18 (i)
+			}
+			update: JSReferenceIdentifier {
+				name: "of"
+				loc: SourceLocation core/opts/allowAwaitOutsideFunction-false/input.js 1:19-1:21 (of)
+			}
 			loc: SourceLocation core/opts/allowAwaitOutsideFunction-false/input.js 1:0-1:29
 		}
 		JSExpressionStatement {
-			expression: JSReferenceIdentifier {name: "INVALID_PLACEHOLDER", loc: SourceLocation core/opts/allowAwaitOutsideFunction-false/input.js 1:29-1:30}
+			expression: JSReferenceIdentifier {
+				name: "INVALID_PLACEHOLDER"
+				loc: SourceLocation core/opts/allowAwaitOutsideFunction-false/input.js 1:29-1:30
+			}
 			loc: SourceLocation core/opts/allowAwaitOutsideFunction-false/input.js 1:29-1:30
 		}
-		JSBlockStatement {body: [], directives: [], loc: SourceLocation core/opts/allowAwaitOutsideFunction-false/input.js 1:31-1:33}
+		JSBlockStatement {
+			body: []
+			directives: []
+			loc: SourceLocation core/opts/allowAwaitOutsideFunction-false/input.js 1:31-1:33
+		}
 	]
 	comments: []
 	corrupt: true
 	diagnostics: [
 		{
+			origins: [{category: "parse"}]
 			description: {
-				advice: [log {category: "info", text: RAW_MARKUP {value: "Expected the opening for head character <emphasis>(</emphasis>"}}]
+				advice: [
+					log {
+						category: "info"
+						text: [RAW_MARKUP {value: "Expected the opening "}, "for head", RAW_MARKUP {value: " character <emphasis>"}, "(", RAW_MARKUP {value: "</emphasis>"}]
+					}
+				]
 				category: ["parse"]
 				categoryValue: "js"
-				message: RAW_MARKUP {value: "Unexpected character <emphasis>a</emphasis>"}
+				message: [RAW_MARKUP {value: "Unexpected character <emphasis>"}, "a", RAW_MARKUP {value: "</emphasis>"}]
 			}
-			location: {language: "js", path: UIDPath<core/opts/allowAwaitOutsideFunction-false/input.js>, end: Position 1:3, start: Position 1:4}
-			origins: [{category: "parse"}]
+			location: {
+				language: "js"
+				path: UIDPath<core/opts/allowAwaitOutsideFunction-false/input.js>
+				end: Position 1:3
+				start: Position 1:4
+			}
 		}
 	]
 	directives: []
 	hasHoistedVars: false
-	path: UIDPath<core/opts/allowAwaitOutsideFunction-false/input.js>
 	sourceType: "script"
 	syntax: []
+	path: UIDPath<core/opts/allowAwaitOutsideFunction-false/input.js>
 	loc: SourceLocation core/opts/allowAwaitOutsideFunction-false/input.js 1:0-2:0
 }
 ```
@@ -61,7 +95,7 @@ JSRoot {
   ✖ Unexpected character a
 
     for await (const i of imports) {}
-        ^
+        <error><emphasis>^</emphasis></error>
 
   ℹ Expected the opening for head character (
 

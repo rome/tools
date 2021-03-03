@@ -12,14 +12,20 @@ JSRoot {
 		JSBlockStatement {
 			body: [
 				JSExpressionStatement {
-					expression: JSReferenceIdentifier {name: "x", loc: SourceLocation core/uncategorised/301/input.js 1:2-1:3 (x)}
+					expression: JSReferenceIdentifier {
+						name: "x"
+						loc: SourceLocation core/uncategorised/301/input.js 1:2-1:3 (x)
+					}
 					loc: SourceLocation core/uncategorised/301/input.js 1:2-1:3
 				}
 				JSExpressionStatement {
 					expression: JSUpdateExpression {
-						argument: JSReferenceIdentifier {name: "y", loc: SourceLocation core/uncategorised/301/input.js 2:2-2:3 (y)}
 						operator: "--"
 						prefix: true
+						argument: JSReferenceIdentifier {
+							name: "y"
+							loc: SourceLocation core/uncategorised/301/input.js 2:2-2:3 (y)
+						}
 						loc: SourceLocation core/uncategorised/301/input.js 2:0-2:3
 					}
 					loc: SourceLocation core/uncategorised/301/input.js 2:0-2:3
@@ -34,9 +40,9 @@ JSRoot {
 	diagnostics: []
 	directives: []
 	hasHoistedVars: false
-	path: UIDPath<core/uncategorised/301/input.js>
 	sourceType: "script"
 	syntax: []
+	path: UIDPath<core/uncategorised/301/input.js>
 	loc: SourceLocation core/uncategorised/301/input.js 1:0-2:5
 }
 ```

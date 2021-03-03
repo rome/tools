@@ -11,6 +11,7 @@ JSRoot {
 	body: [
 		JSExpressionStatement {
 			expression: JSAssignmentExpression {
+				operator: "="
 				left: JSAssignmentArrayPattern {
 					elements: [
 						JSAssignmentObjectPattern {
@@ -28,11 +29,11 @@ JSRoot {
 											JSAssignmentArrayPattern {
 												elements: [
 													JSAssignmentAssignmentPattern {
+														operator: "="
 														left: JSAssignmentIdentifier {
 															name: "a"
 															loc: SourceLocation core/create-parenthesized-expressions/invalid-parenthesized-assignment-pattern-2/input.js 1:8-1:9 (a)
 														}
-														operator: "="
 														right: JSNumericLiteral {
 															value: 1
 															loc: SourceLocation core/create-parenthesized-expressions/invalid-parenthesized-assignment-pattern-2/input.js 1:12-1:13
@@ -53,7 +54,6 @@ JSRoot {
 					]
 					loc: SourceLocation core/create-parenthesized-expressions/invalid-parenthesized-assignment-pattern-2/input.js 1:0-1:18
 				}
-				operator: "="
 				right: JSReferenceIdentifier {
 					name: "t"
 					loc: SourceLocation core/create-parenthesized-expressions/invalid-parenthesized-assignment-pattern-2/input.js 1:21-1:22 (t)
@@ -68,9 +68,9 @@ JSRoot {
 	diagnostics: []
 	directives: []
 	hasHoistedVars: false
-	path: UIDPath<core/create-parenthesized-expressions/invalid-parenthesized-assignment-pattern-2/input.js>
 	sourceType: "script"
 	syntax: []
+	path: UIDPath<core/create-parenthesized-expressions/invalid-parenthesized-assignment-pattern-2/input.js>
 	loc: SourceLocation core/create-parenthesized-expressions/invalid-parenthesized-assignment-pattern-2/input.js 1:0-1:22
 }
 ```

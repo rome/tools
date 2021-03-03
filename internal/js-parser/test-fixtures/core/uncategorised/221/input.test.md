@@ -14,15 +14,24 @@ JSRoot {
 				kind: "var"
 				declarations: [
 					JSVariableDeclarator {
-						id: JSBindingIdentifier {name: "implements", loc: SourceLocation core/uncategorised/221/input.js 1:4-1:14 (implements)}
+						id: JSBindingIdentifier {
+							name: "implements"
+							loc: SourceLocation core/uncategorised/221/input.js 1:4-1:14 (implements)
+						}
 						loc: SourceLocation core/uncategorised/221/input.js 1:4-1:14
 					}
 					JSVariableDeclarator {
-						id: JSBindingIdentifier {name: "interface", loc: SourceLocation core/uncategorised/221/input.js 1:16-1:25 (interface)}
+						id: JSBindingIdentifier {
+							name: "interface"
+							loc: SourceLocation core/uncategorised/221/input.js 1:16-1:25 (interface)
+						}
 						loc: SourceLocation core/uncategorised/221/input.js 1:16-1:25
 					}
 					JSVariableDeclarator {
-						id: JSBindingIdentifier {name: "package", loc: SourceLocation core/uncategorised/221/input.js 1:27-1:34 (package)}
+						id: JSBindingIdentifier {
+							name: "package"
+							loc: SourceLocation core/uncategorised/221/input.js 1:27-1:34 (package)
+						}
 						loc: SourceLocation core/uncategorised/221/input.js 1:27-1:34
 					}
 				]
@@ -36,9 +45,9 @@ JSRoot {
 	diagnostics: []
 	directives: []
 	hasHoistedVars: true
-	path: UIDPath<core/uncategorised/221/input.js>
 	sourceType: "script"
 	syntax: []
+	path: UIDPath<core/uncategorised/221/input.js>
 	loc: SourceLocation core/uncategorised/221/input.js 1:0-1:34
 }
 ```

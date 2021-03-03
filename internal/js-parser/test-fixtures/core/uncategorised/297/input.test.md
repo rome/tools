@@ -14,10 +14,20 @@ JSRoot {
 				kind: "var"
 				declarations: [
 					JSVariableDeclarator {
-						id: JSBindingIdentifier {name: "hi", loc: SourceLocation core/uncategorised/297/input.js 1:4-1:6 (hi)}
+						id: JSBindingIdentifier {
+							name: "hi"
+							loc: SourceLocation core/uncategorised/297/input.js 1:4-1:6 (hi)
+						}
 						init: JSFunctionExpression {
-							id: JSBindingIdentifier {name: "arguments", loc: SourceLocation core/uncategorised/297/input.js 1:18-1:27 (arguments)}
-							body: JSBlockStatement {body: [], directives: [], loc: SourceLocation core/uncategorised/297/input.js 1:30-1:33}
+							id: JSBindingIdentifier {
+								name: "arguments"
+								loc: SourceLocation core/uncategorised/297/input.js 1:18-1:27 (arguments)
+							}
+							body: JSBlockStatement {
+								body: []
+								directives: []
+								loc: SourceLocation core/uncategorised/297/input.js 1:30-1:33
+							}
 							head: JSFunctionHead {
 								async: false
 								generator: false
@@ -40,9 +50,9 @@ JSRoot {
 	diagnostics: []
 	directives: []
 	hasHoistedVars: true
-	path: UIDPath<core/uncategorised/297/input.js>
 	sourceType: "script"
 	syntax: []
+	path: UIDPath<core/uncategorised/297/input.js>
 	loc: SourceLocation core/uncategorised/297/input.js 1:0-1:34
 }
 ```

@@ -8,31 +8,14 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2015/uncategorised/134/input.js 1:0-1:51
-	path: UIDPath<es2015/uncategorised/134/input.js>
-	body: Array [
+	body: [
 		JSClassDeclaration {
 			id: JSBindingIdentifier {
 				name: "A"
 				loc: SourceLocation es2015/uncategorised/134/input.js 1:6-1:7 (A)
 			}
-			loc: SourceLocation es2015/uncategorised/134/input.js 1:0-1:51
 			meta: JSClassHead {
-				implements: undefined
-				superClass: undefined
-				superTypeParameters: undefined
-				typeParameters: undefined
-				loc: SourceLocation es2015/uncategorised/134/input.js 1:0-1:51
-				body: Array [
+				body: [
 					JSClassMethod {
 						kind: "get"
 						key: JSStaticPropertyKey {
@@ -42,33 +25,27 @@ JSRoot {
 							}
 							loc: SourceLocation es2015/uncategorised/134/input.js 1:21-1:24
 						}
-						loc: SourceLocation es2015/uncategorised/134/input.js 1:10-1:29
 						body: JSBlockStatement {
-							body: Array []
-							directives: Array []
+							body: []
+							directives: []
 							loc: SourceLocation es2015/uncategorised/134/input.js 1:27-1:29
-						}
-						meta: JSClassPropertyMeta {
-							abstract: false
-							accessibility: undefined
-							optional: false
-							readonly: false
-							static: true
-							typeAnnotation: undefined
-							loc: SourceLocation es2015/uncategorised/134/input.js 1:10-1:24
-							start: Position 1:10
 						}
 						head: JSFunctionHead {
 							async: false
 							generator: false
 							hasHoistedVars: false
-							params: Array []
-							rest: undefined
-							returnType: undefined
-							thisType: undefined
-							typeParameters: undefined
+							params: []
 							loc: SourceLocation es2015/uncategorised/134/input.js 1:24-1:26
 						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							optional: false
+							readonly: false
+							static: true
+							loc: SourceLocation es2015/uncategorised/134/input.js 1:10-1:24
+							start: Position 1:10
+						}
+						loc: SourceLocation es2015/uncategorised/134/input.js 1:10-1:29
 					}
 					JSClassMethod {
 						kind: "get"
@@ -79,38 +56,43 @@ JSRoot {
 							}
 							loc: SourceLocation es2015/uncategorised/134/input.js 1:41-1:44
 						}
-						loc: SourceLocation es2015/uncategorised/134/input.js 1:30-1:49
 						body: JSBlockStatement {
-							body: Array []
-							directives: Array []
+							body: []
+							directives: []
 							loc: SourceLocation es2015/uncategorised/134/input.js 1:47-1:49
-						}
-						meta: JSClassPropertyMeta {
-							abstract: false
-							accessibility: undefined
-							optional: false
-							readonly: false
-							static: true
-							typeAnnotation: undefined
-							loc: SourceLocation es2015/uncategorised/134/input.js 1:30-1:44
-							start: Position 1:30
 						}
 						head: JSFunctionHead {
 							async: false
 							generator: false
 							hasHoistedVars: false
-							params: Array []
-							rest: undefined
-							returnType: undefined
-							thisType: undefined
-							typeParameters: undefined
+							params: []
 							loc: SourceLocation es2015/uncategorised/134/input.js 1:44-1:46
 						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							optional: false
+							readonly: false
+							static: true
+							loc: SourceLocation es2015/uncategorised/134/input.js 1:30-1:44
+							start: Position 1:30
+						}
+						loc: SourceLocation es2015/uncategorised/134/input.js 1:30-1:49
 					}
 				]
+				loc: SourceLocation es2015/uncategorised/134/input.js 1:0-1:51
 			}
+			loc: SourceLocation es2015/uncategorised/134/input.js 1:0-1:51
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2015/uncategorised/134/input.js>
+	loc: SourceLocation es2015/uncategorised/134/input.js 1:0-1:51
 }
 ```
 

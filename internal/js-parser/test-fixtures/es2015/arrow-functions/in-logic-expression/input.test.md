@@ -8,50 +8,34 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2015/arrow-functions/in-logic-expression/input.js 1:0-2:19
-	path: UIDPath<es2015/arrow-functions/in-logic-expression/input.js>
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation es2015/arrow-functions/in-logic-expression/input.js 1:0-1:19
 			expression: JSLogicalExpression {
 				operator: "||"
-				loc: SourceLocation es2015/arrow-functions/in-logic-expression/input.js 1:0-1:18
-				right: JSBooleanLiteral {
-					value: true
-					loc: SourceLocation es2015/arrow-functions/in-logic-expression/input.js 1:14-1:18
-				}
 				left: JSArrowFunctionExpression {
-					loc: SourceLocation es2015/arrow-functions/in-logic-expression/input.js 1:1-1:9
 					body: JSBlockStatement {
-						body: Array []
-						directives: Array []
+						body: []
+						directives: []
 						loc: SourceLocation es2015/arrow-functions/in-logic-expression/input.js 1:7-1:9
 					}
 					head: JSFunctionHead {
 						async: false
 						hasHoistedVars: false
-						params: Array []
-						rest: undefined
-						returnType: undefined
-						thisType: undefined
+						params: []
 						loc: SourceLocation es2015/arrow-functions/in-logic-expression/input.js 1:1-1:6
 					}
+					loc: SourceLocation es2015/arrow-functions/in-logic-expression/input.js 1:1-1:9
 				}
+				right: JSBooleanLiteral {
+					value: true
+					loc: SourceLocation es2015/arrow-functions/in-logic-expression/input.js 1:14-1:18
+				}
+				loc: SourceLocation es2015/arrow-functions/in-logic-expression/input.js 1:0-1:18
 			}
+			loc: SourceLocation es2015/arrow-functions/in-logic-expression/input.js 1:0-1:19
 		}
 		JSExpressionStatement {
-			loc: SourceLocation es2015/arrow-functions/in-logic-expression/input.js 2:0-2:19
 			expression: JSConditionalExpression {
-				loc: SourceLocation es2015/arrow-functions/in-logic-expression/input.js 2:0-2:18
 				alternate: JSReferenceIdentifier {
 					name: "b"
 					loc: SourceLocation es2015/arrow-functions/in-logic-expression/input.js 2:17-2:18 (b)
@@ -61,25 +45,33 @@ JSRoot {
 					loc: SourceLocation es2015/arrow-functions/in-logic-expression/input.js 2:13-2:14 (a)
 				}
 				test: JSArrowFunctionExpression {
-					loc: SourceLocation es2015/arrow-functions/in-logic-expression/input.js 2:1-2:9
 					body: JSBlockStatement {
-						body: Array []
-						directives: Array []
+						body: []
+						directives: []
 						loc: SourceLocation es2015/arrow-functions/in-logic-expression/input.js 2:7-2:9
 					}
 					head: JSFunctionHead {
 						async: false
 						hasHoistedVars: false
-						params: Array []
-						rest: undefined
-						returnType: undefined
-						thisType: undefined
+						params: []
 						loc: SourceLocation es2015/arrow-functions/in-logic-expression/input.js 2:1-2:6
 					}
+					loc: SourceLocation es2015/arrow-functions/in-logic-expression/input.js 2:1-2:9
 				}
+				loc: SourceLocation es2015/arrow-functions/in-logic-expression/input.js 2:0-2:18
 			}
+			loc: SourceLocation es2015/arrow-functions/in-logic-expression/input.js 2:0-2:19
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2015/arrow-functions/in-logic-expression/input.js>
+	loc: SourceLocation es2015/arrow-functions/in-logic-expression/input.js 1:0-2:19
 }
 ```
 

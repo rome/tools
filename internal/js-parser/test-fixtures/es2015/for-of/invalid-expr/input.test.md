@@ -8,91 +8,88 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: true
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2015/for-of/invalid-expr/input.js 1:0-2:0
-	path: UIDPath<es2015/for-of/invalid-expr/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:4
-				path: UIDPath<es2015/for-of/invalid-expr/input.js>
-				start: Position 1:4
-			}
-			description: Object {
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Unclosed <emphasis>for head</emphasis>"}
-				advice: Array [
-					log {
-						category: "info"
-						text: RAW_MARKUP {value: "We expected to find the closing character <emphasis>)</emphasis> here"}
-					}
-					frame {location: SourceLocation es2015/for-of/invalid-expr/input.js 1:15-1:15}
-				]
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSForOfStatement {
 			await: false
-			loc: SourceLocation es2015/for-of/invalid-expr/input.js 1:0-1:16
-			right: JSReferenceIdentifier {
-				name: "y"
-				loc: SourceLocation es2015/for-of/invalid-expr/input.js 1:14-1:15 (y)
-			}
 			body: JSExpressionStatement {
-				loc: SourceLocation es2015/for-of/invalid-expr/input.js 1:15-1:16
 				expression: JSReferenceIdentifier {
 					name: "INVALID_PLACEHOLDER"
 					loc: SourceLocation es2015/for-of/invalid-expr/input.js 1:15-1:16
 				}
+				loc: SourceLocation es2015/for-of/invalid-expr/input.js 1:15-1:16
 			}
 			left: JSVariableDeclaration {
 				kind: "let"
-				loc: SourceLocation es2015/for-of/invalid-expr/input.js 1:5-1:10
-				declarations: Array [
+				declarations: [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "x"
 							loc: SourceLocation es2015/for-of/invalid-expr/input.js 1:9-1:10 (x)
 						}
-						init: undefined
 						loc: SourceLocation es2015/for-of/invalid-expr/input.js 1:9-1:10
 					}
 				]
+				loc: SourceLocation es2015/for-of/invalid-expr/input.js 1:5-1:10
 			}
+			right: JSReferenceIdentifier {
+				name: "y"
+				loc: SourceLocation es2015/for-of/invalid-expr/input.js 1:14-1:15 (y)
+			}
+			loc: SourceLocation es2015/for-of/invalid-expr/input.js 1:0-1:16
 		}
 		JSExpressionStatement {
-			loc: SourceLocation es2015/for-of/invalid-expr/input.js 1:17-1:18
 			expression: JSReferenceIdentifier {
 				name: "z"
 				loc: SourceLocation es2015/for-of/invalid-expr/input.js 1:17-1:18 (z)
 			}
+			loc: SourceLocation es2015/for-of/invalid-expr/input.js 1:17-1:18
 		}
 		JSExpressionStatement {
-			loc: SourceLocation es2015/for-of/invalid-expr/input.js 1:18-1:19
 			expression: JSReferenceIdentifier {
 				name: "INVALID_PLACEHOLDER"
 				loc: SourceLocation es2015/for-of/invalid-expr/input.js 1:18-1:19
 			}
+			loc: SourceLocation es2015/for-of/invalid-expr/input.js 1:18-1:19
 		}
 		JSBlockStatement {
-			body: Array []
-			directives: Array []
+			body: []
+			directives: []
 			loc: SourceLocation es2015/for-of/invalid-expr/input.js 1:20-1:22
 		}
 	]
+	comments: []
+	corrupt: true
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {
+				advice: [
+					log {
+						category: "info"
+						text: [RAW_MARKUP {value: "We expected to find the closing character <emphasis>"}, ")", RAW_MARKUP {value: "</emphasis> here"}]
+					}
+					frame {
+						location: SourceLocation es2015/for-of/invalid-expr/input.js 1:15-1:15
+					}
+				]
+				category: ["parse"]
+				categoryValue: "js"
+				message: [RAW_MARKUP {value: "Unclosed <emphasis>"}, "for head", RAW_MARKUP {value: "</emphasis>"}]
+			}
+			location: {
+				language: "js"
+				path: UIDPath<es2015/for-of/invalid-expr/input.js>
+				end: Position 1:4
+				start: Position 1:4
+			}
+		}
+	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2015/for-of/invalid-expr/input.js>
+	loc: SourceLocation es2015/for-of/invalid-expr/input.js 1:0-2:0
 }
 ```
 
@@ -105,12 +102,12 @@ JSRoot {
   ✖ Unclosed for head
 
     for (let x of y, z) {}
-        ^
+        <error><emphasis>^</emphasis></error>
 
   ℹ We expected to find the closing character ) here
 
     for (let x of y, z) {}
-                   ^
+                   <error><emphasis>^</emphasis></error>
 
 
 ```

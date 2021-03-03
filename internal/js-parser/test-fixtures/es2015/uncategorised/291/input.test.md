@@ -8,57 +8,48 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2015/uncategorised/291/input.js 1:0-1:22
-	path: UIDPath<es2015/uncategorised/291/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "'import' and 'export' may only appear at the top level"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:22
-				path: UIDPath<es2015/uncategorised/291/input.js>
-				start: Position 1:22
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSIfStatement {
-			alternate: undefined
-			loc: SourceLocation es2015/uncategorised/291/input.js 1:0-1:22
-			test: JSNumericLiteral {
-				value: 1
-				format: undefined
-				loc: SourceLocation es2015/uncategorised/291/input.js 1:4-1:5
-			}
 			consequent: JSImportDeclaration {
-				defaultSpecifier: undefined
-				importKind: undefined
-				namedSpecifiers: Array []
-				namespaceSpecifier: undefined
-				loc: SourceLocation es2015/uncategorised/291/input.js 1:7-1:22
+				namedSpecifiers: []
 				source: JSStringLiteral {
 					value: "acorn"
 					loc: SourceLocation es2015/uncategorised/291/input.js 1:14-1:21
 				}
+				loc: SourceLocation es2015/uncategorised/291/input.js 1:7-1:22
+			}
+			test: JSNumericLiteral {
+				value: 1
+				loc: SourceLocation es2015/uncategorised/291/input.js 1:4-1:5
+			}
+			loc: SourceLocation es2015/uncategorised/291/input.js 1:0-1:22
+		}
+	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "'import' and 'export' may only appear at the top level"}
+			}
+			location: {
+				language: "js"
+				path: UIDPath<es2015/uncategorised/291/input.js>
+				end: Position 1:22
+				start: Position 1:22
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2015/uncategorised/291/input.js>
+	loc: SourceLocation es2015/uncategorised/291/input.js 1:0-1:22
 }
 ```
 
@@ -71,7 +62,7 @@ JSRoot {
   ✖ 'import' and 'export' may only appear at the top level
 
     if (1) import "acorn";
-                          ^
+                          <error><emphasis>^</emphasis></error>
 
 
 ```

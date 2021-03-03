@@ -9,7 +9,6 @@ import {
 	DIAGNOSTIC_CATEGORIES,
 	Diagnostic,
 	DiagnosticAdvice,
-	DiagnosticAdviceItem,
 	createSingleDiagnosticsError,
 	descriptions,
 	getErrorStackAdvice,
@@ -17,13 +16,12 @@ import {
 import SnapshotManager from "./SnapshotManager";
 import {TestServerRunnerOptions} from "../../server/testing/types";
 import {Event} from "@internal/events";
-import stringDiff from "@internal/string-diff";
 import {getErrorStructure} from "@internal/errors";
 import {prettyFormatToString} from "@internal/pretty-format";
 import {markup} from "@internal/markup";
 import {
 	ExpectedError,
-	TestDiagnosticAdviceItem,
+	TestDiagnosticAdvice,
 	TestHelper,
 	TestSnapshotOptions,
 } from "@internal/virtual-rome/test";
@@ -81,7 +79,7 @@ type SnapshotOptions = {
 	opts?: TestSnapshotOptions;
 };
 
-function normalizeUserAdvice(advice: UserAdviceItem[]): DiagnosticAdvice {
+function normalizeUserAdvice(advice: UserAdviceItem[]): DiagnosticAdvice[] {
 	return advice.map((item) => {
 		if (typeof item === "function") {
 			return normalizeUserAdviceItem(item());
@@ -93,8 +91,8 @@ function normalizeUserAdvice(advice: UserAdviceItem[]): DiagnosticAdvice {
 
 // Once we have a public test framework we should perform normalization here
 function normalizeUserAdviceItem(
-	item: TestDiagnosticAdviceItem,
-): DiagnosticAdviceItem {
+	item: TestDiagnosticAdvice,
+): DiagnosticAdvice {
 	switch (item.type) {
 		case "code":
 			return {
@@ -127,8 +125,8 @@ function normalizeUserAdviceItem(
 }
 
 type UserAdviceItem =
-	| TestDiagnosticAdviceItem
-	| (() => TestDiagnosticAdviceItem);
+	| TestDiagnosticAdvice
+	| (() => TestDiagnosticAdvice);
 
 export default class TestAPI implements TestHelper {
 	constructor(
@@ -181,7 +179,7 @@ export default class TestAPI implements TestHelper {
 		);
 	}
 
-	public getAdvice(startAdvice: DiagnosticAdvice = []): DiagnosticAdvice {
+	public getAdvice(startAdvice: DiagnosticAdvice[] = []): DiagnosticAdvice[] {
 		const {advice} = this;
 
 		if (advice.length === 0) {
@@ -212,7 +210,7 @@ export default class TestAPI implements TestHelper {
 			expectedAlias?: string;
 			receivedAlias?: string;
 		} = {},
-	): DiagnosticAdvice {
+	): DiagnosticAdvice[] {
 		let expectedFormat;
 		let receivedFormat;
 		if (typeof received === "string" && typeof expected === "string") {
@@ -223,7 +221,7 @@ export default class TestAPI implements TestHelper {
 			receivedFormat = prettyFormatUntrusted(received);
 		}
 
-		const advice: DiagnosticAdvice = [];
+		const advice: DiagnosticAdvice[] = [];
 
 		if (expectedFormat === receivedFormat) {
 			// Better error message when both values are visually identical
@@ -254,9 +252,10 @@ export default class TestAPI implements TestHelper {
 			});
 
 			advice.push({
-				type: "diff",
+				type: "diff-strings",
 				language: "unknown",
-				diff: stringDiff(expectedFormat, receivedFormat),
+				before: expectedFormat,
+				after: receivedFormat,
 				legend: {
 					add: receivedAlias ? receivedAlias : "Received",
 					delete: expectedAlias ? expectedAlias : "Expected",
@@ -328,7 +327,7 @@ export default class TestAPI implements TestHelper {
 
 	public fail(
 		message: string = "Test failure triggered by t.fail()",
-		advice: DiagnosticAdvice = [],
+		advice: DiagnosticAdvice[] = [],
 		framesToShift: number = 0,
 	): never {
 		const diag = this.file.deriveDiagnosticFromErrorStructure(
@@ -796,7 +795,7 @@ export default class TestAPI implements TestHelper {
 				opts.filename,
 			);
 			if (formatted !== existingSnapshot) {
-				const advice: DiagnosticAdvice = this.buildMatchAdvice(
+				const advice: DiagnosticAdvice[] = this.buildMatchAdvice(
 					formatted,
 					existingSnapshot,
 					{

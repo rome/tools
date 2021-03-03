@@ -11,8 +11,15 @@ JSRoot {
 	body: [
 		JSWhileStatement {
 			body: JSFunctionDeclaration {
-				id: JSBindingIdentifier {name: "foo", loc: SourceLocation core/categorized/invalid-fn-decl-inside-loop/input.js 1:19-1:22 (foo)}
-				body: JSBlockStatement {body: [], directives: [], loc: SourceLocation core/categorized/invalid-fn-decl-inside-loop/input.js 1:24-1:26}
+				id: JSBindingIdentifier {
+					name: "foo"
+					loc: SourceLocation core/categorized/invalid-fn-decl-inside-loop/input.js 1:19-1:22 (foo)
+				}
+				body: JSBlockStatement {
+					body: []
+					directives: []
+					loc: SourceLocation core/categorized/invalid-fn-decl-inside-loop/input.js 1:24-1:26
+				}
 				head: JSFunctionHead {
 					async: false
 					generator: false
@@ -22,7 +29,10 @@ JSRoot {
 				}
 				loc: SourceLocation core/categorized/invalid-fn-decl-inside-loop/input.js 1:10-1:26
 			}
-			test: JSNumericLiteral {value: 1, loc: SourceLocation core/categorized/invalid-fn-decl-inside-loop/input.js 1:7-1:8}
+			test: JSNumericLiteral {
+				value: 1
+				loc: SourceLocation core/categorized/invalid-fn-decl-inside-loop/input.js 1:7-1:8
+			}
 			loc: SourceLocation core/categorized/invalid-fn-decl-inside-loop/input.js 1:0-1:26
 		}
 	]
@@ -30,6 +40,7 @@ JSRoot {
 	corrupt: false
 	diagnostics: [
 		{
+			origins: [{category: "parse"}]
 			description: {
 				advice: []
 				category: ["parse"]
@@ -38,15 +49,19 @@ JSRoot {
 					value: "In non-strict mode code, functions can only be declared at top level, inside a block, or as the body of an if statement"
 				}
 			}
-			location: {language: "js", path: UIDPath<core/categorized/invalid-fn-decl-inside-loop/input.js>, end: Position 1:9, start: Position 1:10}
-			origins: [{category: "parse"}]
+			location: {
+				language: "js"
+				path: UIDPath<core/categorized/invalid-fn-decl-inside-loop/input.js>
+				end: Position 1:9
+				start: Position 1:10
+			}
 		}
 	]
 	directives: []
 	hasHoistedVars: false
-	path: UIDPath<core/categorized/invalid-fn-decl-inside-loop/input.js>
 	sourceType: "script"
 	syntax: []
+	path: UIDPath<core/categorized/invalid-fn-decl-inside-loop/input.js>
 	loc: SourceLocation core/categorized/invalid-fn-decl-inside-loop/input.js 1:0-1:26
 }
 ```
@@ -61,7 +76,7 @@ JSRoot {
     the body of an if statement
 
     while (1) function foo(){}
-              ^
+              <error><emphasis>^</emphasis></error>
 
 
 ```

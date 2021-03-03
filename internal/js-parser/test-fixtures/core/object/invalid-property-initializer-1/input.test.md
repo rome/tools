@@ -14,36 +14,57 @@ JSRoot {
 				kind: "const"
 				declarations: [
 					JSVariableDeclarator {
-						id: JSBindingIdentifier {name: "obj", loc: SourceLocation core/object/invalid-property-initializer-1/input.js 1:6-1:9 (obj)}
+						id: JSBindingIdentifier {
+							name: "obj"
+							loc: SourceLocation core/object/invalid-property-initializer-1/input.js 1:6-1:9 (obj)
+						}
 						init: JSAssignmentExpression {
+							operator: "="
 							left: JSAssignmentObjectPattern {
 								properties: [
 									JSAssignmentObjectPatternProperty {
 										key: JSStaticPropertyKey {
-											value: JSIdentifier {name: "bar", loc: SourceLocation core/object/invalid-property-initializer-1/input.js 2:2-2:5 (bar)}
+											value: JSIdentifier {
+												name: "bar"
+												loc: SourceLocation core/object/invalid-property-initializer-1/input.js 2:2-2:5 (bar)
+											}
 											loc: SourceLocation core/object/invalid-property-initializer-1/input.js 2:2-2:5
 										}
 										value: JSAssignmentAssignmentPattern {
-											left: JSAssignmentIdentifier {name: "x", loc: SourceLocation core/object/invalid-property-initializer-1/input.js 2:7-2:8 (x)}
 											operator: "="
-											right: JSNumericLiteral {value: 123, loc: SourceLocation core/object/invalid-property-initializer-1/input.js 2:11-2:14}
+											left: JSAssignmentIdentifier {
+												name: "x"
+												loc: SourceLocation core/object/invalid-property-initializer-1/input.js 2:7-2:8 (x)
+											}
+											right: JSNumericLiteral {
+												value: 123
+												loc: SourceLocation core/object/invalid-property-initializer-1/input.js 2:11-2:14
+											}
 											loc: SourceLocation core/object/invalid-property-initializer-1/input.js 2:7-2:14
 										}
 										loc: SourceLocation core/object/invalid-property-initializer-1/input.js 2:2-2:14
 									}
 									JSAssignmentObjectPatternProperty {
 										key: JSStaticPropertyKey {
-											value: JSIdentifier {name: "foo", loc: SourceLocation core/object/invalid-property-initializer-1/input.js 3:2-3:5 (foo)}
+											value: JSIdentifier {
+												name: "foo"
+												loc: SourceLocation core/object/invalid-property-initializer-1/input.js 3:2-3:5 (foo)
+											}
 											loc: SourceLocation core/object/invalid-property-initializer-1/input.js 3:2-3:5
 										}
-										value: JSAssignmentIdentifier {name: "foo", loc: SourceLocation core/object/invalid-property-initializer-1/input.js 3:2-3:5 (foo)}
+										value: JSAssignmentIdentifier {
+											name: "foo"
+											loc: SourceLocation core/object/invalid-property-initializer-1/input.js 3:2-3:5 (foo)
+										}
 										loc: SourceLocation core/object/invalid-property-initializer-1/input.js 3:2-3:5
 									}
 								]
 								loc: SourceLocation core/object/invalid-property-initializer-1/input.js 1:12-3:5
 							}
-							operator: "="
-							right: JSNumericLiteral {value: 123, loc: SourceLocation core/object/invalid-property-initializer-1/input.js 3:8-3:11}
+							right: JSNumericLiteral {
+								value: 123
+								loc: SourceLocation core/object/invalid-property-initializer-1/input.js 3:8-3:11
+							}
 							loc: SourceLocation core/object/invalid-property-initializer-1/input.js 1:12-3:11
 						}
 						loc: SourceLocation core/object/invalid-property-initializer-1/input.js 1:6-3:11
@@ -54,7 +75,10 @@ JSRoot {
 			loc: SourceLocation core/object/invalid-property-initializer-1/input.js 1:0-3:11
 		}
 		JSExpressionStatement {
-			expression: JSReferenceIdentifier {name: "INVALID_PLACEHOLDER", loc: SourceLocation core/object/invalid-property-initializer-1/input.js 4:0-4:1}
+			expression: JSReferenceIdentifier {
+				name: "INVALID_PLACEHOLDER"
+				loc: SourceLocation core/object/invalid-property-initializer-1/input.js 4:0-4:1
+			}
 			loc: SourceLocation core/object/invalid-property-initializer-1/input.js 4:0-4:2
 		}
 	]
@@ -62,21 +86,26 @@ JSRoot {
 	corrupt: true
 	diagnostics: [
 		{
+			origins: [{category: "parse"}]
 			description: {
-				advice: [log {category: "info", text: RAW_MARKUP {value: "Expected character <emphasis>,</emphasis>"}}]
+				advice: [log {category: "info", text: [RAW_MARKUP {value: "Expected character <emphasis>"}, ",", RAW_MARKUP {value: "</emphasis>"}]}]
 				category: ["parse"]
 				categoryValue: "js"
-				message: RAW_MARKUP {value: "Unexpected character <emphasis>=</emphasis>"}
+				message: [RAW_MARKUP {value: "Unexpected character <emphasis>"}, "=", RAW_MARKUP {value: "</emphasis>"}]
 			}
-			location: {language: "js", path: UIDPath<core/object/invalid-property-initializer-1/input.js>, end: Position 3:7, start: Position 3:6}
-			origins: [{category: "parse"}]
+			location: {
+				language: "js"
+				path: UIDPath<core/object/invalid-property-initializer-1/input.js>
+				end: Position 3:7
+				start: Position 3:6
+			}
 		}
 	]
 	directives: []
 	hasHoistedVars: false
-	path: UIDPath<core/object/invalid-property-initializer-1/input.js>
 	sourceType: "script"
 	syntax: []
+	path: UIDPath<core/object/invalid-property-initializer-1/input.js>
 	loc: SourceLocation core/object/invalid-property-initializer-1/input.js 1:0-5:0
 }
 ```
@@ -92,7 +121,7 @@ JSRoot {
     1 │ const obj = {
     2 │   bar: x = 123,
   > 3 │   foo = 123
-      │       ^
+      │       <error><emphasis>^</emphasis></error>
     4 │ };
 
   ℹ Expected character ,

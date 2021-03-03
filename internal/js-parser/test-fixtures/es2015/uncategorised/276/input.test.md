@@ -8,53 +8,48 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2015/uncategorised/276/input.js 1:0-1:14
-	path: UIDPath<es2015/uncategorised/276/input.js>
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation es2015/uncategorised/276/input.js 1:0-1:14
 			expression: JSAssignmentExpression {
 				operator: "="
-				loc: SourceLocation es2015/uncategorised/276/input.js 1:0-1:14
+				left: JSAssignmentObjectPattern {
+					properties: []
+					loc: SourceLocation es2015/uncategorised/276/input.js 1:1-1:7
+				}
 				right: JSReferenceIdentifier {
 					name: "obj"
 					loc: SourceLocation es2015/uncategorised/276/input.js 1:11-1:14 (obj)
 				}
-				left: JSAssignmentObjectPattern {
-					properties: Array []
-					rest: undefined
-					loc: SourceLocation es2015/uncategorised/276/input.js 1:1-1:7
-				}
+				loc: SourceLocation es2015/uncategorised/276/input.js 1:0-1:14
 			}
+			loc: SourceLocation es2015/uncategorised/276/input.js 1:0-1:14
 		}
 	]
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {
+				advice: []
+				category: ["parse"]
 				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Unexpected character <emphasis>}</emphasis>"}
+				message: [RAW_MARKUP {value: "Unexpected character <emphasis>"}, "}", RAW_MARKUP {value: "</emphasis>"}]
 			}
-			location: Object {
-				integrity: undefined
+			location: {
 				language: "js"
-				sourceText: undefined
-				end: Position 1:7
 				path: UIDPath<es2015/uncategorised/276/input.js>
+				end: Position 1:7
 				start: Position 1:6
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2015/uncategorised/276/input.js>
+	loc: SourceLocation es2015/uncategorised/276/input.js 1:0-1:14
 }
 ```
 
@@ -67,7 +62,7 @@ JSRoot {
   ✖ Unexpected character }
 
     ({ 42 }) = obj
-          ^
+          <error><emphasis>^</emphasis></error>
 
 
 ```

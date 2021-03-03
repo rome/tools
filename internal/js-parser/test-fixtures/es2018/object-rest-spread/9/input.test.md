@@ -8,50 +8,14 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2018/object-rest-spread/9/input.js 1:0-2:0
-	path: UIDPath<es2018/object-rest-spread/9/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Cannot have multiple rest elements when destructuring"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:19
-				path: UIDPath<es2018/object-rest-spread/9/input.js>
-				start: Position 1:18
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSVariableDeclarationStatement {
-			loc: SourceLocation es2018/object-rest-spread/9/input.js 1:0-1:28
 			declaration: JSVariableDeclaration {
 				kind: "let"
-				loc: SourceLocation es2018/object-rest-spread/9/input.js 1:0-1:28
-				declarations: Array [
+				declarations: [
 					JSVariableDeclarator {
 						id: JSBindingObjectPattern {
-							loc: SourceLocation es2018/object-rest-spread/9/input.js 1:4-1:21
-							rest: JSBindingIdentifier {
-								name: "z"
-								loc: SourceLocation es2018/object-rest-spread/9/input.js 1:18-1:19 (z)
-							}
-							properties: Array [
+							properties: [
 								JSBindingObjectPatternProperty {
 									key: JSStaticPropertyKey {
 										value: JSIdentifier {
@@ -67,17 +31,49 @@ JSRoot {
 									loc: SourceLocation es2018/object-rest-spread/9/input.js 1:6-1:7
 								}
 							]
+							rest: JSBindingIdentifier {
+								name: "z"
+								loc: SourceLocation es2018/object-rest-spread/9/input.js 1:18-1:19 (z)
+							}
+							loc: SourceLocation es2018/object-rest-spread/9/input.js 1:4-1:21
 						}
-						loc: SourceLocation es2018/object-rest-spread/9/input.js 1:4-1:27
 						init: JSReferenceIdentifier {
 							name: "obj"
 							loc: SourceLocation es2018/object-rest-spread/9/input.js 1:24-1:27 (obj)
 						}
+						loc: SourceLocation es2018/object-rest-spread/9/input.js 1:4-1:27
 					}
 				]
+				loc: SourceLocation es2018/object-rest-spread/9/input.js 1:0-1:28
+			}
+			loc: SourceLocation es2018/object-rest-spread/9/input.js 1:0-1:28
+		}
+	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "Cannot have multiple rest elements when destructuring"}
+			}
+			location: {
+				language: "js"
+				path: UIDPath<es2018/object-rest-spread/9/input.js>
+				end: Position 1:19
+				start: Position 1:18
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2018/object-rest-spread/9/input.js>
+	loc: SourceLocation es2018/object-rest-spread/9/input.js 1:0-2:0
 }
 ```
 
@@ -90,7 +86,7 @@ JSRoot {
   ✖ Cannot have multiple rest elements when destructuring
 
     let { x, ...y, ...z } = obj;
-                      ^
+                      <error><emphasis>^</emphasis></error>
 
 
 ```

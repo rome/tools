@@ -8,34 +8,32 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	loc: SourceLocation typescript/type-arguments/empty/input.ts 1:0-2:0
-	path: UIDPath<typescript/type-arguments/empty/input.ts>
-	syntax: Array ["ts"]
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation typescript/type-arguments/empty/input.ts 1:0-1:7
 			expression: JSCallExpression {
-				arguments: Array []
-				loc: SourceLocation typescript/type-arguments/empty/input.ts 1:0-1:7
+				arguments: []
 				callee: JSReferenceIdentifier {
 					name: "foo"
 					loc: SourceLocation typescript/type-arguments/empty/input.ts 1:0-1:3 (foo)
 				}
 				typeArguments: TSTypeParameterInstantiation {
-					params: Array []
+					params: []
 					loc: SourceLocation typescript/type-arguments/empty/input.ts 1:3-1:5
 				}
+				loc: SourceLocation typescript/type-arguments/empty/input.ts 1:0-1:7
 			}
+			loc: SourceLocation typescript/type-arguments/empty/input.ts 1:0-1:7
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: ["ts"]
+	path: UIDPath<typescript/type-arguments/empty/input.ts>
+	loc: SourceLocation typescript/type-arguments/empty/input.ts 1:0-2:0
 }
 ```
 

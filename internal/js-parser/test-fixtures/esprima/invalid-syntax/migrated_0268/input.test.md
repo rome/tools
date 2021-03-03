@@ -8,54 +8,14 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation esprima/invalid-syntax/migrated_0268/input.js 1:0-2:0
-	path: UIDPath<esprima/invalid-syntax/migrated_0268/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:10
-				path: UIDPath<esprima/invalid-syntax/migrated_0268/input.js>
-				start: Position 1:10
-			}
-			description: Object {
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "A type annotation is only valid inside of a TypeScript file"}
-				advice: Array [
-					log {
-						category: "info"
-						text: RAW_MARKUP {value: "To enable <emphasis>TypeScript</emphasis> support, the file extension should end in <emphasis>.ts</emphasis> or <emphasis>.tsx</emphasis>"}
-					}
-				]
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSClassDeclaration {
 			id: JSBindingIdentifier {
 				name: "A"
 				loc: SourceLocation esprima/invalid-syntax/migrated_0268/input.js 1:6-1:7 (A)
 			}
-			loc: SourceLocation esprima/invalid-syntax/migrated_0268/input.js 1:0-1:13
 			meta: JSClassHead {
-				implements: undefined
-				superClass: undefined
-				superTypeParameters: undefined
-				typeParameters: undefined
-				loc: SourceLocation esprima/invalid-syntax/migrated_0268/input.js 1:0-1:13
-				body: Array [
+				body: [
 					JSClassProperty {
 						key: JSStaticPropertyKey {
 							value: JSIdentifier {
@@ -64,29 +24,58 @@ JSRoot {
 							}
 							loc: SourceLocation esprima/invalid-syntax/migrated_0268/input.js 1:9-1:10
 						}
-						value: undefined
-						definite: undefined
-						loc: SourceLocation esprima/invalid-syntax/migrated_0268/input.js 1:9-1:12
-						typeAnnotation: TSNumericLiteralTypeAnnotation {
-							value: 0
-							format: undefined
-							loc: SourceLocation esprima/invalid-syntax/migrated_0268/input.js 1:11-1:12
-						}
 						meta: JSClassPropertyMeta {
 							abstract: false
-							accessibility: undefined
 							optional: false
 							readonly: false
 							static: false
-							typeAnnotation: undefined
 							loc: SourceLocation esprima/invalid-syntax/migrated_0268/input.js 1:9-1:10
 							start: Position 1:9
 						}
+						typeAnnotation: TSNumericLiteralTypeAnnotation {
+							value: 0
+							loc: SourceLocation esprima/invalid-syntax/migrated_0268/input.js 1:11-1:12
+						}
+						loc: SourceLocation esprima/invalid-syntax/migrated_0268/input.js 1:9-1:12
 					}
 				]
+				loc: SourceLocation esprima/invalid-syntax/migrated_0268/input.js 1:0-1:13
+			}
+			loc: SourceLocation esprima/invalid-syntax/migrated_0268/input.js 1:0-1:13
+		}
+	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {
+				advice: [
+					log {
+						category: "info"
+						text: RAW_MARKUP {
+							value: "To enable <emphasis>TypeScript</emphasis> support, the file extension should end in <emphasis>.ts</emphasis> or <emphasis>.tsx</emphasis>"
+						}
+					}
+				]
+				category: ["parse"]
+				categoryValue: "js"
+				message: [RAW_MARKUP {value: "A "}, "type annotation", RAW_MARKUP {value: " is only valid inside of a TypeScript file"}]
+			}
+			location: {
+				language: "js"
+				path: UIDPath<esprima/invalid-syntax/migrated_0268/input.js>
+				end: Position 1:10
+				start: Position 1:10
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<esprima/invalid-syntax/migrated_0268/input.js>
+	loc: SourceLocation esprima/invalid-syntax/migrated_0268/input.js 1:0-2:0
 }
 ```
 
@@ -99,7 +88,7 @@ JSRoot {
   ✖ A type annotation is only valid inside of a TypeScript file
 
     class A {a:0}
-              ^
+              <error><emphasis>^</emphasis></error>
 
   ℹ To enable TypeScript support, the file extension should end in .ts or .tsx
 

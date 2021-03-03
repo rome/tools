@@ -8,52 +8,21 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2015/yield/function-name-class-wrapped/input.js 1:0-4:0
-	path: UIDPath<es2015/yield/function-name-class-wrapped/input.js>
-	body: Array [
+	body: [
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "wrap"
 				loc: SourceLocation es2015/yield/function-name-class-wrapped/input.js 1:10-1:14 (wrap)
 			}
-			loc: SourceLocation es2015/yield/function-name-class-wrapped/input.js 1:0-3:1
-			head: JSFunctionHead {
-				async: false
-				generator: true
-				hasHoistedVars: false
-				params: Array []
-				rest: undefined
-				returnType: undefined
-				thisType: undefined
-				typeParameters: undefined
-				loc: SourceLocation es2015/yield/function-name-class-wrapped/input.js 1:14-1:16
-			}
 			body: JSBlockStatement {
-				directives: Array []
-				loc: SourceLocation es2015/yield/function-name-class-wrapped/input.js 1:17-3:1
-				body: Array [
+				body: [
 					JSClassDeclaration {
 						id: JSBindingIdentifier {
 							name: "A"
 							loc: SourceLocation es2015/yield/function-name-class-wrapped/input.js 2:10-2:11 (A)
 						}
-						loc: SourceLocation es2015/yield/function-name-class-wrapped/input.js 2:4-2:25
 						meta: JSClassHead {
-							implements: undefined
-							superClass: undefined
-							superTypeParameters: undefined
-							typeParameters: undefined
-							loc: SourceLocation es2015/yield/function-name-class-wrapped/input.js 2:4-2:25
-							body: Array [
+							body: [
 								JSClassMethod {
 									kind: "method"
 									key: JSStaticPropertyKey {
@@ -63,41 +32,56 @@ JSRoot {
 										}
 										loc: SourceLocation es2015/yield/function-name-class-wrapped/input.js 2:14-2:19
 									}
-									loc: SourceLocation es2015/yield/function-name-class-wrapped/input.js 2:13-2:24
 									body: JSBlockStatement {
-										body: Array []
-										directives: Array []
+										body: []
+										directives: []
 										loc: SourceLocation es2015/yield/function-name-class-wrapped/input.js 2:22-2:24
-									}
-									meta: JSClassPropertyMeta {
-										abstract: false
-										accessibility: undefined
-										optional: false
-										readonly: false
-										static: false
-										typeAnnotation: undefined
-										loc: SourceLocation es2015/yield/function-name-class-wrapped/input.js 2:13-2:19
-										start: Position 2:13
 									}
 									head: JSFunctionHead {
 										async: false
 										generator: true
 										hasHoistedVars: false
-										params: Array []
-										rest: undefined
-										returnType: undefined
-										thisType: undefined
-										typeParameters: undefined
+										params: []
 										loc: SourceLocation es2015/yield/function-name-class-wrapped/input.js 2:19-2:21
 									}
+									meta: JSClassPropertyMeta {
+										abstract: false
+										optional: false
+										readonly: false
+										static: false
+										loc: SourceLocation es2015/yield/function-name-class-wrapped/input.js 2:13-2:19
+										start: Position 2:13
+									}
+									loc: SourceLocation es2015/yield/function-name-class-wrapped/input.js 2:13-2:24
 								}
 							]
+							loc: SourceLocation es2015/yield/function-name-class-wrapped/input.js 2:4-2:25
 						}
+						loc: SourceLocation es2015/yield/function-name-class-wrapped/input.js 2:4-2:25
 					}
 				]
+				directives: []
+				loc: SourceLocation es2015/yield/function-name-class-wrapped/input.js 1:17-3:1
 			}
+			head: JSFunctionHead {
+				async: false
+				generator: true
+				hasHoistedVars: false
+				params: []
+				loc: SourceLocation es2015/yield/function-name-class-wrapped/input.js 1:14-1:16
+			}
+			loc: SourceLocation es2015/yield/function-name-class-wrapped/input.js 1:0-3:1
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2015/yield/function-name-class-wrapped/input.js>
+	loc: SourceLocation es2015/yield/function-name-class-wrapped/input.js 1:0-4:0
 }
 ```
 

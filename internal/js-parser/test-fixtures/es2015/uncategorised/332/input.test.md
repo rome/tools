@@ -8,61 +8,52 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
+	body: [
+		JSExpressionStatement {
+			expression: JSAssignmentExpression {
+				operator: "="
+				left: JSAssignmentArrayPattern {
+					elements: []
+					rest: JSAssignmentIdentifier {
+						name: "eval"
+						loc: SourceLocation es2015/uncategorised/332/input.js 1:18-1:22 (eval)
+					}
+					loc: SourceLocation es2015/uncategorised/332/input.js 1:14-1:23
+				}
+				right: JSReferenceIdentifier {
+					name: "arr"
+					loc: SourceLocation es2015/uncategorised/332/input.js 1:26-1:29 (arr)
+				}
+				loc: SourceLocation es2015/uncategorised/332/input.js 1:14-1:29
+			}
+			loc: SourceLocation es2015/uncategorised/332/input.js 1:14-1:29
+		}
+	]
+	comments: []
 	corrupt: false
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2015/uncategorised/332/input.js 1:0-1:29
-	path: UIDPath<es2015/uncategorised/332/input.js>
-	directives: Array [
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {advice: [], category: ["parse"], categoryValue: "js", message: ["eval", RAW_MARKUP {value: " is a reserved word"}]}
+			location: {
+				language: "js"
+				path: UIDPath<es2015/uncategorised/332/input.js>
+				end: Position 1:22
+				start: Position 1:18
+			}
+		}
+	]
+	directives: [
 		JSDirective {
 			value: "use strict"
 			loc: SourceLocation es2015/uncategorised/332/input.js 1:0-1:13
 		}
 	]
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "eval is a reserved word"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:22
-				path: UIDPath<es2015/uncategorised/332/input.js>
-				start: Position 1:18
-			}
-		}
-	]
-	body: Array [
-		JSExpressionStatement {
-			loc: SourceLocation es2015/uncategorised/332/input.js 1:14-1:29
-			expression: JSAssignmentExpression {
-				operator: "="
-				loc: SourceLocation es2015/uncategorised/332/input.js 1:14-1:29
-				right: JSReferenceIdentifier {
-					name: "arr"
-					loc: SourceLocation es2015/uncategorised/332/input.js 1:26-1:29 (arr)
-				}
-				left: JSAssignmentArrayPattern {
-					elements: Array []
-					loc: SourceLocation es2015/uncategorised/332/input.js 1:14-1:23
-					rest: JSAssignmentIdentifier {
-						name: "eval"
-						loc: SourceLocation es2015/uncategorised/332/input.js 1:18-1:22 (eval)
-					}
-				}
-			}
-		}
-	]
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2015/uncategorised/332/input.js>
+	loc: SourceLocation es2015/uncategorised/332/input.js 1:0-1:29
 }
 ```
 
@@ -75,7 +66,8 @@ JSRoot {
   ✖ eval is a reserved word
 
     'use strict'; [...eval] = arr
-                      ^^^^
+                      <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
+    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
 
 
 ```

@@ -186,7 +186,7 @@ export function joinMarkupLines({lines}: MarkupLinesAndWidth): string {
 }
 
 export function normalizeMarkup(
-	input: Markup,
+	input: StaticMarkup,
 	opts: MarkupFormatNormalizeOptions = {},
 	maxLength: number = Infinity,
 ): {
@@ -196,10 +196,8 @@ export function normalizeMarkup(
 	text: StaticMarkup;
 	truncated: boolean;
 } {
-	const inputRead = readMarkup(input);
-
 	const {textLength, text, modified} = normalizeMarkupChildren(
-		parseMarkup(inputRead),
+		parseMarkup(input),
 		opts,
 		maxLength,
 	);
@@ -208,7 +206,8 @@ export function normalizeMarkup(
 
 	return {
 		textLength,
-		text: modified ? text : convertToMarkupFromRandomString(inputRead),
+		// Return original markup unless modified
+		text: modified ? text : input,
 		truncated: isTruncated,
 		visibleTextLength: isTruncated ? maxLength : textLength,
 		truncatedLength: isTruncated ? textLength - maxLength : 0,

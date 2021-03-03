@@ -11,10 +11,19 @@ JSRoot {
 	body: [
 		JSExpressionStatement {
 			expression: JSBinaryExpression {
+				operator: "/"
 				left: JSBinaryExpression {
+					operator: "/"
 					left: JSFunctionExpression {
-						id: JSBindingIdentifier {name: "foo", loc: SourceLocation core/categorized/02-regex/input.js 1:10-1:13 (foo)}
-						body: JSBlockStatement {body: [], directives: [], loc: SourceLocation core/categorized/02-regex/input.js 1:16-1:18}
+						id: JSBindingIdentifier {
+							name: "foo"
+							loc: SourceLocation core/categorized/02-regex/input.js 1:10-1:13 (foo)
+						}
+						body: JSBlockStatement {
+							body: []
+							directives: []
+							loc: SourceLocation core/categorized/02-regex/input.js 1:16-1:18
+						}
 						head: JSFunctionHead {
 							async: false
 							generator: false
@@ -24,12 +33,16 @@ JSRoot {
 						}
 						loc: SourceLocation core/categorized/02-regex/input.js 1:1-1:18
 					}
-					operator: "/"
-					right: JSNumericLiteral {value: 42, loc: SourceLocation core/categorized/02-regex/input.js 1:20-1:22}
+					right: JSNumericLiteral {
+						value: 42
+						loc: SourceLocation core/categorized/02-regex/input.js 1:20-1:22
+					}
 					loc: SourceLocation core/categorized/02-regex/input.js 1:1-1:22
 				}
-				operator: "/"
-				right: JSReferenceIdentifier {name: "i", loc: SourceLocation core/categorized/02-regex/input.js 1:23-1:24 (i)}
+				right: JSReferenceIdentifier {
+					name: "i"
+					loc: SourceLocation core/categorized/02-regex/input.js 1:23-1:24 (i)
+				}
 				loc: SourceLocation core/categorized/02-regex/input.js 1:1-1:24
 			}
 			loc: SourceLocation core/categorized/02-regex/input.js 1:0-1:25
@@ -40,9 +53,9 @@ JSRoot {
 	diagnostics: []
 	directives: []
 	hasHoistedVars: false
-	path: UIDPath<core/categorized/02-regex/input.js>
 	sourceType: "script"
 	syntax: []
+	path: UIDPath<core/categorized/02-regex/input.js>
 	loc: SourceLocation core/categorized/02-regex/input.js 1:0-2:0
 }
 ```

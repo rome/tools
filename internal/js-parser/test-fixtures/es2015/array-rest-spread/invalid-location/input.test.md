@@ -8,49 +8,12 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: true
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2015/array-rest-spread/invalid-location/input.js 1:0-1:13
-	path: UIDPath<es2015/array-rest-spread/invalid-location/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "The rest element has to be the last element when destructuring"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:5
-				path: UIDPath<es2015/array-rest-spread/invalid-location/input.js>
-				start: Position 1:1
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation es2015/array-rest-spread/invalid-location/input.js 1:0-1:13
 			expression: JSAssignmentExpression {
 				operator: "="
-				loc: SourceLocation es2015/array-rest-spread/invalid-location/input.js 1:0-1:13
-				right: JSReferenceIdentifier {
-					name: "c"
-					loc: SourceLocation es2015/array-rest-spread/invalid-location/input.js 1:12-1:13 (c)
-				}
 				left: JSAssignmentArrayPattern {
-					rest: undefined
-					loc: SourceLocation es2015/array-rest-spread/invalid-location/input.js 1:0-1:9
-					elements: Array [
+					elements: [
 						JSAssignmentIdentifier {
 							name: "INVALID_PLACEHOLDER"
 							loc: SourceLocation es2015/array-rest-spread/invalid-location/input.js 1:10-1:9
@@ -60,10 +23,42 @@ JSRoot {
 							loc: SourceLocation es2015/array-rest-spread/invalid-location/input.js 1:7-1:8 (b)
 						}
 					]
+					loc: SourceLocation es2015/array-rest-spread/invalid-location/input.js 1:0-1:9
 				}
+				right: JSReferenceIdentifier {
+					name: "c"
+					loc: SourceLocation es2015/array-rest-spread/invalid-location/input.js 1:12-1:13 (c)
+				}
+				loc: SourceLocation es2015/array-rest-spread/invalid-location/input.js 1:0-1:13
+			}
+			loc: SourceLocation es2015/array-rest-spread/invalid-location/input.js 1:0-1:13
+		}
+	]
+	comments: []
+	corrupt: true
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "The rest element has to be the last element when destructuring"}
+			}
+			location: {
+				language: "js"
+				path: UIDPath<es2015/array-rest-spread/invalid-location/input.js>
+				end: Position 1:5
+				start: Position 1:1
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2015/array-rest-spread/invalid-location/input.js>
+	loc: SourceLocation es2015/array-rest-spread/invalid-location/input.js 1:0-1:13
 }
 ```
 
@@ -76,7 +71,8 @@ JSRoot {
   ✖ The rest element has to be the last element when destructuring
 
     [...a, b] = c
-     ^^^^
+     <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
+    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
 
 
 ```

@@ -8,30 +8,17 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	loc: SourceLocation typescript/interface/property-named-public/input.ts 1:0-4:0
-	path: UIDPath<typescript/interface/property-named-public/input.ts>
-	syntax: Array ["ts"]
-	body: Array [
+	body: [
 		TSInterfaceDeclaration {
 			id: JSBindingIdentifier {
 				name: "I"
 				loc: SourceLocation typescript/interface/property-named-public/input.ts 1:10-1:11 (I)
 			}
-			extends: undefined
-			typeParameters: undefined
-			loc: SourceLocation typescript/interface/property-named-public/input.ts 1:0-3:1
 			body: TSInterfaceBody {
-				loc: SourceLocation typescript/interface/property-named-public/input.ts 1:12-3:1
-				body: Array [
+				body: [
 					TSPropertySignature {
+						optional: false
+						readonly: false
 						key: JSStaticPropertyKey {
 							value: JSIdentifier {
 								name: "public"
@@ -39,15 +26,26 @@ JSRoot {
 							}
 							loc: SourceLocation typescript/interface/property-named-public/input.ts 2:1-2:7
 						}
-						optional: false
-						readonly: false
+						typeAnnotation: TSNumberKeywordTypeAnnotation {
+							loc: SourceLocation typescript/interface/property-named-public/input.ts 2:9-2:15
+						}
 						loc: SourceLocation typescript/interface/property-named-public/input.ts 2:1-2:16
-						typeAnnotation: TSNumberKeywordTypeAnnotation {loc: SourceLocation typescript/interface/property-named-public/input.ts 2:9-2:15}
 					}
 				]
+				loc: SourceLocation typescript/interface/property-named-public/input.ts 1:12-3:1
 			}
+			loc: SourceLocation typescript/interface/property-named-public/input.ts 1:0-3:1
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: ["ts"]
+	path: UIDPath<typescript/interface/property-named-public/input.ts>
+	loc: SourceLocation typescript/interface/property-named-public/input.ts 1:0-4:0
 }
 ```
 

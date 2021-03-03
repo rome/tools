@@ -14,18 +14,36 @@ JSRoot {
 				kind: "var"
 				declarations: [
 					JSVariableDeclarator {
-						id: JSBindingIdentifier {name: "x", loc: SourceLocation core/uncategorised/220/input.js 1:4-1:5 (x)}
-						init: JSNumericLiteral {value: 14, loc: SourceLocation core/uncategorised/220/input.js 1:8-1:10}
+						id: JSBindingIdentifier {
+							name: "x"
+							loc: SourceLocation core/uncategorised/220/input.js 1:4-1:5 (x)
+						}
+						init: JSNumericLiteral {
+							value: 14
+							loc: SourceLocation core/uncategorised/220/input.js 1:8-1:10
+						}
 						loc: SourceLocation core/uncategorised/220/input.js 1:4-1:10
 					}
 					JSVariableDeclarator {
-						id: JSBindingIdentifier {name: "y", loc: SourceLocation core/uncategorised/220/input.js 1:12-1:13 (y)}
-						init: JSNumericLiteral {value: 3, loc: SourceLocation core/uncategorised/220/input.js 1:16-1:17}
+						id: JSBindingIdentifier {
+							name: "y"
+							loc: SourceLocation core/uncategorised/220/input.js 1:12-1:13 (y)
+						}
+						init: JSNumericLiteral {
+							value: 3
+							loc: SourceLocation core/uncategorised/220/input.js 1:16-1:17
+						}
 						loc: SourceLocation core/uncategorised/220/input.js 1:12-1:17
 					}
 					JSVariableDeclarator {
-						id: JSBindingIdentifier {name: "z", loc: SourceLocation core/uncategorised/220/input.js 1:19-1:20 (z)}
-						init: JSNumericLiteral {value: 1_977, loc: SourceLocation core/uncategorised/220/input.js 1:23-1:27}
+						id: JSBindingIdentifier {
+							name: "z"
+							loc: SourceLocation core/uncategorised/220/input.js 1:19-1:20 (z)
+						}
+						init: JSNumericLiteral {
+							value: 1_977
+							loc: SourceLocation core/uncategorised/220/input.js 1:23-1:27
+						}
 						loc: SourceLocation core/uncategorised/220/input.js 1:19-1:27
 					}
 				]
@@ -39,9 +57,9 @@ JSRoot {
 	diagnostics: []
 	directives: []
 	hasHoistedVars: true
-	path: UIDPath<core/uncategorised/220/input.js>
 	sourceType: "script"
 	syntax: []
+	path: UIDPath<core/uncategorised/220/input.js>
 	loc: SourceLocation core/uncategorised/220/input.js 1:0-1:27
 }
 ```

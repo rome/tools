@@ -8,41 +8,10 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2015/uncategorised/349/input.js 1:0-1:34
-	path: UIDPath<es2015/uncategorised/349/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Redefinition of __proto__ property"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:28
-				path: UIDPath<es2015/uncategorised/349/input.js>
-				start: Position 1:19
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation es2015/uncategorised/349/input.js 1:0-1:34
 			expression: JSObjectExpression {
-				loc: SourceLocation es2015/uncategorised/349/input.js 1:1-1:33
-				properties: Array [
+				properties: [
 					JSObjectProperty {
 						key: JSStaticPropertyKey {
 							value: JSStringLiteral {
@@ -53,7 +22,6 @@ JSRoot {
 						}
 						value: JSNumericLiteral {
 							value: 1
-							format: undefined
 							loc: SourceLocation es2015/uncategorised/349/input.js 1:16-1:17
 						}
 						loc: SourceLocation es2015/uncategorised/349/input.js 1:3-1:17
@@ -68,15 +36,41 @@ JSRoot {
 						}
 						value: JSNumericLiteral {
 							value: 2
-							format: undefined
 							loc: SourceLocation es2015/uncategorised/349/input.js 1:30-1:31
 						}
 						loc: SourceLocation es2015/uncategorised/349/input.js 1:19-1:31
 					}
 				]
+				loc: SourceLocation es2015/uncategorised/349/input.js 1:1-1:33
+			}
+			loc: SourceLocation es2015/uncategorised/349/input.js 1:0-1:34
+		}
+	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "Redefinition of __proto__ property"}
+			}
+			location: {
+				language: "js"
+				path: UIDPath<es2015/uncategorised/349/input.js>
+				end: Position 1:28
+				start: Position 1:19
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2015/uncategorised/349/input.js>
+	loc: SourceLocation es2015/uncategorised/349/input.js 1:0-1:34
 }
 ```
 
@@ -89,7 +83,11 @@ JSRoot {
   ✖ Redefinition of __proto__ property
 
     ({ '__proto__': 1, __proto__: 2 })
-                       ^^^^^^^^^
+                       <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
+    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
+    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
+    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
+    <error><emphasis>^</emphasis></error>
 
 
 ```

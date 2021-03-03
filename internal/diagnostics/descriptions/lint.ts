@@ -43,7 +43,7 @@ export const lint = createDiagnosticsCategory({
 		attributeName: string,
 		values?: Array<string | boolean>,
 	) => {
-		let advice: DiagnosticAdvice = [];
+		let advice: DiagnosticAdvice[] = [];
 		if (values) {
 			advice.push({
 				type: "log",
@@ -128,7 +128,7 @@ export const lint = createDiagnosticsCategory({
 		message: markup`JSX elements without children should be marked as self-closing. In JSX, it is valid for any element to be self-closing.`,
 	},
 	JS_NO_SHOUTY_CONSTANTS: (constantLocation: undefined | DiagnosticLocation) => {
-		const advice: DiagnosticAdvice = [
+		const advice: DiagnosticAdvice[] = [
 			{
 				type: "log",
 				category: "info",
@@ -1126,14 +1126,14 @@ export const lint = createDiagnosticsCategory({
 		original: string,
 		formatted: string,
 	) => {
-		const advice: DiagnosticAdvice = [
+		const advice: DiagnosticAdvice[] = [
 			{
 				type: "diff",
 				language,
 				diff: stringDiff(original, formatted),
 			},
 		];
-		const verboseAdvice: DiagnosticAdvice = [];
+		const verboseAdvice: DiagnosticAdvice[] = [];
 
 		if (relativeFilename !== undefined) {
 			advice.push({

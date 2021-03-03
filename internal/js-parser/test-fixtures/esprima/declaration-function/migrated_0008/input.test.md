@@ -8,67 +8,60 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: true
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation esprima/declaration-function/migrated_0008/input.js 1:0-2:0
-	path: UIDPath<esprima/declaration-function/migrated_0008/input.js>
-	body: Array [
+	body: [
 		JSVariableDeclarationStatement {
-			loc: SourceLocation esprima/declaration-function/migrated_0008/input.js 1:0-1:32
 			declaration: JSVariableDeclaration {
 				kind: "var"
-				loc: SourceLocation esprima/declaration-function/migrated_0008/input.js 1:0-1:32
-				declarations: Array [
+				declarations: [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "hi"
 							loc: SourceLocation esprima/declaration-function/migrated_0008/input.js 1:4-1:6 (hi)
 						}
-						loc: SourceLocation esprima/declaration-function/migrated_0008/input.js 1:4-1:31
 						init: JSFunctionExpression {
-							id: undefined
-							loc: SourceLocation esprima/declaration-function/migrated_0008/input.js 1:9-1:31
-							head: JSFunctionHead {
-								async: false
-								generator: false
-								hasHoistedVars: false
-								params: Array []
-								rest: undefined
-								returnType: undefined
-								thisType: undefined
-								typeParameters: undefined
-								loc: SourceLocation esprima/declaration-function/migrated_0008/input.js 1:17-1:19
-							}
 							body: JSBlockStatement {
-								directives: Array []
-								loc: SourceLocation esprima/declaration-function/migrated_0008/input.js 1:20-1:31
-								body: Array [
+								body: [
 									JSExpressionStatement {
-										loc: SourceLocation esprima/declaration-function/migrated_0008/input.js 1:22-1:29
 										expression: JSCallExpression {
-											arguments: Array []
-											loc: SourceLocation esprima/declaration-function/migrated_0008/input.js 1:22-1:29
+											arguments: []
 											callee: JSReferenceIdentifier {
 												name: "sayHi"
 												loc: SourceLocation esprima/declaration-function/migrated_0008/input.js 1:22-1:27 (sayHi)
 											}
+											loc: SourceLocation esprima/declaration-function/migrated_0008/input.js 1:22-1:29
 										}
+										loc: SourceLocation esprima/declaration-function/migrated_0008/input.js 1:22-1:29
 									}
 								]
+								directives: []
+								loc: SourceLocation esprima/declaration-function/migrated_0008/input.js 1:20-1:31
 							}
+							head: JSFunctionHead {
+								async: false
+								generator: false
+								hasHoistedVars: false
+								params: []
+								loc: SourceLocation esprima/declaration-function/migrated_0008/input.js 1:17-1:19
+							}
+							loc: SourceLocation esprima/declaration-function/migrated_0008/input.js 1:9-1:31
 						}
+						loc: SourceLocation esprima/declaration-function/migrated_0008/input.js 1:4-1:31
 					}
 				]
+				loc: SourceLocation esprima/declaration-function/migrated_0008/input.js 1:0-1:32
 			}
+			loc: SourceLocation esprima/declaration-function/migrated_0008/input.js 1:0-1:32
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: true
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<esprima/declaration-function/migrated_0008/input.js>
+	loc: SourceLocation esprima/declaration-function/migrated_0008/input.js 1:0-2:0
 }
 ```
 

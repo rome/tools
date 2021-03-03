@@ -8,44 +8,40 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation esprima/statement-expression/migrated_0004/input.js 1:0-2:0
-	path: UIDPath<esprima/statement-expression/migrated_0004/input.js>
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation esprima/statement-expression/migrated_0004/input.js 1:0-1:8
 			expression: JSReferenceIdentifier {
 				name: "\0u0061a"
 				loc: SourceLocation esprima/statement-expression/migrated_0004/input.js 1:0-1:8 (\0u0061a)
 			}
+			loc: SourceLocation esprima/statement-expression/migrated_0004/input.js 1:0-1:8
 		}
 	]
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {
+				advice: []
+				category: ["parse"]
 				categoryValue: "js"
-				category: Array ["parse"]
 				message: RAW_MARKUP {value: "Expecting Unicode escape sequence \\uXXXX"}
 			}
-			location: Object {
-				integrity: undefined
+			location: {
 				language: "js"
-				sourceText: undefined
-				end: Position 1:1
 				path: UIDPath<esprima/statement-expression/migrated_0004/input.js>
+				end: Position 1:1
 				start: Position 1:1
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<esprima/statement-expression/migrated_0004/input.js>
+	loc: SourceLocation esprima/statement-expression/migrated_0004/input.js 1:0-2:0
 }
 ```
 
@@ -58,7 +54,7 @@ JSRoot {
   ✖ Expecting Unicode escape sequence \uXXXX
 
     \\u0061a
-     ^
+     <error><emphasis>^</emphasis></error>
 
 
 ```

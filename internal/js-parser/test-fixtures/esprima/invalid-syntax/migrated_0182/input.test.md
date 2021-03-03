@@ -8,82 +8,80 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation esprima/invalid-syntax/migrated_0182/input.js 1:0-2:0
-	path: UIDPath<esprima/invalid-syntax/migrated_0182/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:19
-				path: UIDPath<esprima/invalid-syntax/migrated_0182/input.js>
-				start: Position 1:18
-			}
-			description: Object {
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Label <emphasis>x</emphasis> is already declared"}
-				advice: Array [
-					log {
-						category: "info"
-						text: RAW_MARKUP {value: "Defined already here"}
-					}
-					frame {location: SourceLocation esprima/invalid-syntax/migrated_0182/input.js 1:0-1:1 (x)}
-				]
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSLabeledStatement {
-			loc: SourceLocation esprima/invalid-syntax/migrated_0182/input.js 1:0-1:39
-			label: JSIdentifier {
-				name: "x"
-				loc: SourceLocation esprima/invalid-syntax/migrated_0182/input.js 1:0-1:1 (x)
-			}
 			body: JSWhileStatement {
-				loc: SourceLocation esprima/invalid-syntax/migrated_0182/input.js 1:3-1:39
-				test: JSBooleanLiteral {
-					value: true
-					loc: SourceLocation esprima/invalid-syntax/migrated_0182/input.js 1:10-1:14
-				}
 				body: JSBlockStatement {
-					directives: Array []
-					loc: SourceLocation esprima/invalid-syntax/migrated_0182/input.js 1:16-1:39
-					body: Array [
+					body: [
 						JSLabeledStatement {
-							loc: SourceLocation esprima/invalid-syntax/migrated_0182/input.js 1:18-1:37
-							label: JSIdentifier {
-								name: "x"
-								loc: SourceLocation esprima/invalid-syntax/migrated_0182/input.js 1:18-1:19 (x)
-							}
 							body: JSWhileStatement {
-								loc: SourceLocation esprima/invalid-syntax/migrated_0182/input.js 1:21-1:37
+								body: JSBlockStatement {
+									body: []
+									directives: []
+									loc: SourceLocation esprima/invalid-syntax/migrated_0182/input.js 1:34-1:37
+								}
 								test: JSBooleanLiteral {
 									value: true
 									loc: SourceLocation esprima/invalid-syntax/migrated_0182/input.js 1:28-1:32
 								}
-								body: JSBlockStatement {
-									body: Array []
-									directives: Array []
-									loc: SourceLocation esprima/invalid-syntax/migrated_0182/input.js 1:34-1:37
-								}
+								loc: SourceLocation esprima/invalid-syntax/migrated_0182/input.js 1:21-1:37
 							}
+							label: JSIdentifier {
+								name: "x"
+								loc: SourceLocation esprima/invalid-syntax/migrated_0182/input.js 1:18-1:19 (x)
+							}
+							loc: SourceLocation esprima/invalid-syntax/migrated_0182/input.js 1:18-1:37
 						}
 					]
+					directives: []
+					loc: SourceLocation esprima/invalid-syntax/migrated_0182/input.js 1:16-1:39
 				}
+				test: JSBooleanLiteral {
+					value: true
+					loc: SourceLocation esprima/invalid-syntax/migrated_0182/input.js 1:10-1:14
+				}
+				loc: SourceLocation esprima/invalid-syntax/migrated_0182/input.js 1:3-1:39
+			}
+			label: JSIdentifier {
+				name: "x"
+				loc: SourceLocation esprima/invalid-syntax/migrated_0182/input.js 1:0-1:1 (x)
+			}
+			loc: SourceLocation esprima/invalid-syntax/migrated_0182/input.js 1:0-1:39
+		}
+	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {
+				advice: [
+					log {
+						category: "info"
+						text: RAW_MARKUP {value: "Defined already here"}
+					}
+					frame {
+						location: SourceLocation esprima/invalid-syntax/migrated_0182/input.js 1:0-1:1 (x)
+					}
+				]
+				category: ["parse"]
+				categoryValue: "js"
+				message: [RAW_MARKUP {value: "Label <emphasis>"}, "x", RAW_MARKUP {value: "</emphasis> is already declared"}]
+			}
+			location: {
+				language: "js"
+				path: UIDPath<esprima/invalid-syntax/migrated_0182/input.js>
+				end: Position 1:19
+				start: Position 1:18
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<esprima/invalid-syntax/migrated_0182/input.js>
+	loc: SourceLocation esprima/invalid-syntax/migrated_0182/input.js 1:0-2:0
 }
 ```
 
@@ -96,12 +94,12 @@ JSRoot {
   ✖ Label x is already declared
 
     x: while (true) { x: while (true) { } }
-                      ^
+                      <error><emphasis>^</emphasis></error>
 
   ℹ Defined already here
 
     x: while (true) { x: while (true) { } }
-    ^
+    <error><emphasis>^</emphasis></error>
 
 
 ```

@@ -331,7 +331,7 @@ export default class WorkerManager {
 		);
 		this.server.resources.addWorkerThread(thread);
 
-		const logger = this.logger.namespace(markup`[${displayName}]`);
+		const logger = this.logger.namespace(markup`${displayName}`);
 
 		thread.stdout.on(
 			"data",

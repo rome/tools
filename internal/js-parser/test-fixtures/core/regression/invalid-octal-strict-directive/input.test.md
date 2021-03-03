@@ -10,15 +10,26 @@
 JSRoot {
 	body: [
 		JSExpressionStatement {
-			expression: JSNumericLiteral {value: 4, format: "octal", loc: SourceLocation core/regression/invalid-octal-strict-directive/input.js 11:0-11:2}
+			expression: JSNumericLiteral {
+				value: 4
+				format: "octal"
+				loc: SourceLocation core/regression/invalid-octal-strict-directive/input.js 11:0-11:2
+			}
 			loc: SourceLocation core/regression/invalid-octal-strict-directive/input.js 11:0-11:3
 		}
 		JSExpressionStatement {
-			expression: JSNumericLiteral {value: 5, format: "octal", loc: SourceLocation core/regression/invalid-octal-strict-directive/input.js 12:0-12:2}
+			expression: JSNumericLiteral {
+				value: 5
+				format: "octal"
+				loc: SourceLocation core/regression/invalid-octal-strict-directive/input.js 12:0-12:2
+			}
 			loc: SourceLocation core/regression/invalid-octal-strict-directive/input.js 12:0-12:3
 		}
 		JSExpressionStatement {
-			expression: JSStringLiteral {value: "\x04 foo \x05 bar \x06", loc: SourceLocation core/regression/invalid-octal-strict-directive/input.js 14:0-14:21}
+			expression: JSStringLiteral {
+				value: "\x04 foo \x05 bar \x06"
+				loc: SourceLocation core/regression/invalid-octal-strict-directive/input.js 14:0-14:21
+			}
 			loc: SourceLocation core/regression/invalid-octal-strict-directive/input.js 14:0-14:22
 		}
 	]
@@ -26,23 +37,51 @@ JSRoot {
 	corrupt: false
 	diagnostics: [
 		{
-			description: {advice: [], category: ["parse"], categoryValue: "js", message: RAW_MARKUP {value: "Octal literal in strict mode"}}
-			location: {language: "js", path: UIDPath<core/regression/invalid-octal-strict-directive/input.js>, end: Position 8:2, start: Position 8:2}
 			origins: [{category: "parse"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "Octal literal in strict mode"}
+			}
+			location: {
+				language: "js"
+				path: UIDPath<core/regression/invalid-octal-strict-directive/input.js>
+				end: Position 8:2
+				start: Position 8:2
+			}
 		}
 	]
 	directives: [
-		JSDirective {value: "\\01 foo \\02 bar \\03", loc: SourceLocation core/regression/invalid-octal-strict-directive/input.js 1:0-1:22}
-		JSDirective {value: "\\4", loc: SourceLocation core/regression/invalid-octal-strict-directive/input.js 3:0-3:5}
-		JSDirective {value: "\\5", loc: SourceLocation core/regression/invalid-octal-strict-directive/input.js 4:0-4:5}
-		JSDirective {value: "use strict", loc: SourceLocation core/regression/invalid-octal-strict-directive/input.js 6:0-6:13}
-		JSDirective {value: "\\4", loc: SourceLocation core/regression/invalid-octal-strict-directive/input.js 8:0-8:5}
-		JSDirective {value: "\\5", loc: SourceLocation core/regression/invalid-octal-strict-directive/input.js 9:0-9:5}
+		JSDirective {
+			value: "\\01 foo \\02 bar \\03"
+			loc: SourceLocation core/regression/invalid-octal-strict-directive/input.js 1:0-1:22
+		}
+		JSDirective {
+			value: "\\4"
+			loc: SourceLocation core/regression/invalid-octal-strict-directive/input.js 3:0-3:5
+		}
+		JSDirective {
+			value: "\\5"
+			loc: SourceLocation core/regression/invalid-octal-strict-directive/input.js 4:0-4:5
+		}
+		JSDirective {
+			value: "use strict"
+			loc: SourceLocation core/regression/invalid-octal-strict-directive/input.js 6:0-6:13
+		}
+		JSDirective {
+			value: "\\4"
+			loc: SourceLocation core/regression/invalid-octal-strict-directive/input.js 8:0-8:5
+		}
+		JSDirective {
+			value: "\\5"
+			loc: SourceLocation core/regression/invalid-octal-strict-directive/input.js 9:0-9:5
+		}
 	]
 	hasHoistedVars: false
-	path: UIDPath<core/regression/invalid-octal-strict-directive/input.js>
 	sourceType: "script"
 	syntax: []
+	path: UIDPath<core/regression/invalid-octal-strict-directive/input.js>
 	loc: SourceLocation core/regression/invalid-octal-strict-directive/input.js 1:0-15:0
 }
 ```
@@ -58,7 +97,7 @@ JSRoot {
      6 │ "use strict";
      7 │
    > 8 │ "\4";
-       │   ^
+       │   <error><emphasis>^</emphasis></error>
      9 │ "\5";
 
 

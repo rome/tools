@@ -8,49 +8,14 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	loc: SourceLocation typescript/class/declare-method/input.ts 1:0-4:0
-	path: UIDPath<typescript/class/declare-method/input.ts>
-	syntax: Array ["ts"]
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Unknown class property start"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 2:9
-				path: UIDPath<typescript/class/declare-method/input.ts>
-				start: Position 2:10
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSClassDeclaration {
 			id: JSBindingIdentifier {
 				name: "A"
 				loc: SourceLocation typescript/class/declare-method/input.ts 1:6-1:7 (A)
 			}
-			loc: SourceLocation typescript/class/declare-method/input.ts 1:0-3:1
 			meta: JSClassHead {
-				implements: undefined
-				superClass: undefined
-				superTypeParameters: undefined
-				typeParameters: undefined
-				loc: SourceLocation typescript/class/declare-method/input.ts 1:0-3:1
-				body: Array [
+				body: [
 					JSClassMethod {
 						kind: "method"
 						key: JSStaticPropertyKey {
@@ -60,38 +25,59 @@ JSRoot {
 							}
 							loc: SourceLocation typescript/class/declare-method/input.ts 2:10-2:13
 						}
-						loc: SourceLocation typescript/class/declare-method/input.ts 2:10-2:18
 						body: JSBlockStatement {
-							body: Array []
-							directives: Array []
+							body: []
+							directives: []
 							loc: SourceLocation typescript/class/declare-method/input.ts 2:16-2:18
-						}
-						meta: JSClassPropertyMeta {
-							abstract: false
-							accessibility: undefined
-							optional: false
-							readonly: false
-							static: false
-							typeAnnotation: undefined
-							loc: SourceLocation typescript/class/declare-method/input.ts 2:10-2:13
-							start: Position 2:10
 						}
 						head: JSFunctionHead {
 							async: false
 							generator: false
 							hasHoistedVars: false
-							params: Array []
-							rest: undefined
-							returnType: undefined
-							thisType: undefined
-							typeParameters: undefined
+							params: []
 							loc: SourceLocation typescript/class/declare-method/input.ts 2:13-2:15
 						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							optional: false
+							readonly: false
+							static: false
+							loc: SourceLocation typescript/class/declare-method/input.ts 2:10-2:13
+							start: Position 2:10
+						}
+						loc: SourceLocation typescript/class/declare-method/input.ts 2:10-2:18
 					}
 				]
+				loc: SourceLocation typescript/class/declare-method/input.ts 1:0-3:1
+			}
+			loc: SourceLocation typescript/class/declare-method/input.ts 1:0-3:1
+		}
+	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "Unknown class property start"}
+			}
+			location: {
+				language: "js"
+				path: UIDPath<typescript/class/declare-method/input.ts>
+				end: Position 2:9
+				start: Position 2:10
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: ["ts"]
+	path: UIDPath<typescript/class/declare-method/input.ts>
+	loc: SourceLocation typescript/class/declare-method/input.ts 1:0-4:0
 }
 ```
 
@@ -105,7 +91,7 @@ JSRoot {
 
     1 │ class A {
   > 2 │   declare foo() {}
-      │           ^
+      │           <error><emphasis>^</emphasis></error>
     3 │ }
 
 

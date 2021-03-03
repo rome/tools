@@ -8,50 +8,45 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2015/identifiers/invalid-escape-seq-if/input.js 1:0-2:0
-	path: UIDPath<es2015/identifiers/invalid-escape-seq-if/input.js>
-	body: Array [
+	body: [
 		JSIfStatement {
-			alternate: undefined
-			loc: SourceLocation es2015/identifiers/invalid-escape-seq-if/input.js 1:0-1:22
+			consequent: JSBlockStatement {
+				body: []
+				directives: []
+				loc: SourceLocation es2015/identifiers/invalid-escape-seq-if/input.js 1:20-1:22
+			}
 			test: JSBooleanLiteral {
 				value: true
 				loc: SourceLocation es2015/identifiers/invalid-escape-seq-if/input.js 1:14-1:18
 			}
-			consequent: JSBlockStatement {
-				body: Array []
-				directives: Array []
-				loc: SourceLocation es2015/identifiers/invalid-escape-seq-if/input.js 1:20-1:22
-			}
+			loc: SourceLocation es2015/identifiers/invalid-escape-seq-if/input.js 1:0-1:22
 		}
 	]
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {
+				advice: []
+				category: ["parse"]
 				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Escape sequence in keyword <emphasis>if</emphasis>"}
+				message: [RAW_MARKUP {value: "Escape sequence in keyword <emphasis>"}, "if", RAW_MARKUP {value: "</emphasis>"}]
 			}
-			location: Object {
-				integrity: undefined
+			location: {
 				language: "js"
-				sourceText: undefined
-				end: Position 1:6
 				path: UIDPath<es2015/identifiers/invalid-escape-seq-if/input.js>
+				end: Position 1:6
 				start: Position 1:6
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2015/identifiers/invalid-escape-seq-if/input.js>
+	loc: SourceLocation es2015/identifiers/invalid-escape-seq-if/input.js 1:0-2:0
 }
 ```
 
@@ -64,7 +59,7 @@ JSRoot {
   ✖ Escape sequence in keyword if
 
     \u0069\u{66} (true) {}
-          ^
+          <error><emphasis>^</emphasis></error>
 
 
 ```

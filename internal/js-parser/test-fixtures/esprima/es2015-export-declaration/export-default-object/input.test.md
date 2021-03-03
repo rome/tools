@@ -8,23 +8,10 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	syntax: Array []
-	loc: SourceLocation esprima/es2015-export-declaration/export-default-object/input.js 1:0-2:0
-	path: UIDPath<esprima/es2015-export-declaration/export-default-object/input.js>
-	body: Array [
+	body: [
 		JSExportDefaultDeclaration {
-			loc: SourceLocation esprima/es2015-export-declaration/export-default-object/input.js 1:0-1:26
 			declaration: JSObjectExpression {
-				loc: SourceLocation esprima/es2015-export-declaration/export-default-object/input.js 1:15-1:25
-				properties: Array [
+				properties: [
 					JSObjectProperty {
 						key: JSStaticPropertyKey {
 							value: JSIdentifier {
@@ -35,15 +22,25 @@ JSRoot {
 						}
 						value: JSNumericLiteral {
 							value: 1
-							format: undefined
 							loc: SourceLocation esprima/es2015-export-declaration/export-default-object/input.js 1:22-1:23
 						}
 						loc: SourceLocation esprima/es2015-export-declaration/export-default-object/input.js 1:17-1:23
 					}
 				]
+				loc: SourceLocation esprima/es2015-export-declaration/export-default-object/input.js 1:15-1:25
 			}
+			loc: SourceLocation esprima/es2015-export-declaration/export-default-object/input.js 1:0-1:26
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: []
+	path: UIDPath<esprima/es2015-export-declaration/export-default-object/input.js>
+	loc: SourceLocation esprima/es2015-export-declaration/export-default-object/input.js 1:0-2:0
 }
 ```
 

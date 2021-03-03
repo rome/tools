@@ -319,7 +319,7 @@ export default class TestServerFile {
 		allConsoleAdvice = allConsoleAdvice.sort((a, b) => a[1] - b[1]);
 
 		// Flatten
-		let advice: DiagnosticAdvice = allConsoleAdvice.map(([advice]) => advice).flat();
+		let advice: DiagnosticAdvice[] = allConsoleAdvice.map(([advice]) => advice).flat();
 
 		// Emit diagnostic if we had any console advice
 		if (advice.length > 0) {

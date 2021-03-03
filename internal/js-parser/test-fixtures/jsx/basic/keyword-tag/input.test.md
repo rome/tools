@@ -8,33 +8,30 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	loc: SourceLocation jsx/basic/keyword-tag/input.jsx 1:0-2:0
-	path: UIDPath<jsx/basic/keyword-tag/input.jsx>
-	syntax: Array ["jsx"]
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation jsx/basic/keyword-tag/input.jsx 1:0-1:12
 			expression: JSXElement {
+				attributes: []
+				children: []
+				selfClosing: false
 				name: JSXReferenceIdentifier {
 					name: "var"
 					loc: SourceLocation jsx/basic/keyword-tag/input.jsx 1:1-1:4
 				}
-				attributes: Array []
-				children: Array []
-				selfClosing: false
-				typeArguments: undefined
 				loc: SourceLocation jsx/basic/keyword-tag/input.jsx 1:0-1:11
 			}
+			loc: SourceLocation jsx/basic/keyword-tag/input.jsx 1:0-1:12
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: ["jsx"]
+	path: UIDPath<jsx/basic/keyword-tag/input.jsx>
+	loc: SourceLocation jsx/basic/keyword-tag/input.jsx 1:0-2:0
 }
 ```
 

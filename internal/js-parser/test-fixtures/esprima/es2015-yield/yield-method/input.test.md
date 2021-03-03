@@ -8,23 +8,10 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation esprima/es2015-yield/yield-method/input.js 1:0-2:0
-	path: UIDPath<esprima/es2015-yield/yield-method/input.js>
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation esprima/es2015-yield/yield-method/input.js 1:0-1:16
 			expression: JSObjectExpression {
-				loc: SourceLocation esprima/es2015-yield/yield-method/input.js 1:1-1:15
-				properties: Array [
+				properties: [
 					JSObjectMethod {
 						kind: "method"
 						key: JSStaticPropertyKey {
@@ -34,28 +21,35 @@ JSRoot {
 							}
 							loc: SourceLocation esprima/es2015-yield/yield-method/input.js 1:3-1:8
 						}
-						loc: SourceLocation esprima/es2015-yield/yield-method/input.js 1:3-1:13
 						body: JSBlockStatement {
-							body: Array []
-							directives: Array []
+							body: []
+							directives: []
 							loc: SourceLocation esprima/es2015-yield/yield-method/input.js 1:11-1:13
 						}
 						head: JSFunctionHead {
 							async: false
 							generator: false
 							hasHoistedVars: false
-							params: Array []
-							rest: undefined
-							returnType: undefined
-							thisType: undefined
-							typeParameters: undefined
+							params: []
 							loc: SourceLocation esprima/es2015-yield/yield-method/input.js 1:8-1:10
 						}
+						loc: SourceLocation esprima/es2015-yield/yield-method/input.js 1:3-1:13
 					}
 				]
+				loc: SourceLocation esprima/es2015-yield/yield-method/input.js 1:1-1:15
 			}
+			loc: SourceLocation esprima/es2015-yield/yield-method/input.js 1:0-1:16
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<esprima/es2015-yield/yield-method/input.js>
+	loc: SourceLocation esprima/es2015-yield/yield-method/input.js 1:0-2:0
 }
 ```
 

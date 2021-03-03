@@ -10,17 +10,29 @@
 JSRoot {
 	body: [
 		JSExportDefaultDeclaration {
+			leadingComments: ["0"]
 			declaration: JSClassDeclaration {
-				id: JSBindingIdentifier {name: "*default*", loc: SourceLocation comments/basic/export-default-anonymous-class/input.js 4:15-10:1}
+				id: JSBindingIdentifier {
+					name: "*default*"
+					loc: SourceLocation comments/basic/export-default-anonymous-class/input.js 4:15-10:1
+				}
 				meta: JSClassHead {
 					body: [
 						JSClassMethod {
+							kind: "method"
+							leadingComments: ["1"]
 							key: JSStaticPropertyKey {
-								value: JSIdentifier {name: "method1", loc: SourceLocation comments/basic/export-default-anonymous-class/input.js 8:4-8:11 (method1)}
+								value: JSIdentifier {
+									name: "method1"
+									loc: SourceLocation comments/basic/export-default-anonymous-class/input.js 8:4-8:11 (method1)
+								}
 								loc: SourceLocation comments/basic/export-default-anonymous-class/input.js 8:4-8:11
 							}
-							kind: "method"
-							body: JSBlockStatement {body: [], directives: [], loc: SourceLocation comments/basic/export-default-anonymous-class/input.js 8:13-9:5}
+							body: JSBlockStatement {
+								body: []
+								directives: []
+								loc: SourceLocation comments/basic/export-default-anonymous-class/input.js 8:13-9:5
+							}
 							head: JSFunctionHead {
 								async: false
 								generator: false
@@ -28,7 +40,6 @@ JSRoot {
 								params: []
 								loc: SourceLocation comments/basic/export-default-anonymous-class/input.js 8:11-8:13
 							}
-							leadingComments: ["1"]
 							meta: JSClassPropertyMeta {
 								abstract: false
 								optional: false
@@ -44,7 +55,6 @@ JSRoot {
 				}
 				loc: SourceLocation comments/basic/export-default-anonymous-class/input.js 4:15-10:1
 			}
-			leadingComments: ["0"]
 			loc: SourceLocation comments/basic/export-default-anonymous-class/input.js 4:0-10:1
 		}
 	]
@@ -64,9 +74,9 @@ JSRoot {
 	diagnostics: []
 	directives: []
 	hasHoistedVars: false
-	path: UIDPath<comments/basic/export-default-anonymous-class/input.js>
 	sourceType: "module"
 	syntax: []
+	path: UIDPath<comments/basic/export-default-anonymous-class/input.js>
 	loc: SourceLocation comments/basic/export-default-anonymous-class/input.js 1:0-11:0
 }
 ```

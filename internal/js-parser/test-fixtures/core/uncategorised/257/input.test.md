@@ -15,20 +15,32 @@ JSRoot {
 					body: JSBlockStatement {
 						body: [
 							JSContinueStatement {
-								label: JSIdentifier {name: "target1", loc: SourceLocation core/uncategorised/257/input.js 1:42-1:49 (target1)}
+								label: JSIdentifier {
+									name: "target1"
+									loc: SourceLocation core/uncategorised/257/input.js 1:42-1:49 (target1)
+								}
 								loc: SourceLocation core/uncategorised/257/input.js 1:33-1:50
 							}
 						]
 						directives: []
 						loc: SourceLocation core/uncategorised/257/input.js 1:31-1:52
 					}
-					test: JSBooleanLiteral {value: true, loc: SourceLocation core/uncategorised/257/input.js 1:25-1:29}
+					test: JSBooleanLiteral {
+						value: true
+						loc: SourceLocation core/uncategorised/257/input.js 1:25-1:29
+					}
 					loc: SourceLocation core/uncategorised/257/input.js 1:18-1:52
 				}
-				label: JSIdentifier {name: "target2", loc: SourceLocation core/uncategorised/257/input.js 1:9-1:16 (target2)}
+				label: JSIdentifier {
+					name: "target2"
+					loc: SourceLocation core/uncategorised/257/input.js 1:9-1:16 (target2)
+				}
 				loc: SourceLocation core/uncategorised/257/input.js 1:9-1:52
 			}
-			label: JSIdentifier {name: "target1", loc: SourceLocation core/uncategorised/257/input.js 1:0-1:7 (target1)}
+			label: JSIdentifier {
+				name: "target1"
+				loc: SourceLocation core/uncategorised/257/input.js 1:0-1:7 (target1)
+			}
 			loc: SourceLocation core/uncategorised/257/input.js 1:0-1:52
 		}
 	]
@@ -37,9 +49,9 @@ JSRoot {
 	diagnostics: []
 	directives: []
 	hasHoistedVars: false
-	path: UIDPath<core/uncategorised/257/input.js>
 	sourceType: "script"
 	syntax: []
+	path: UIDPath<core/uncategorised/257/input.js>
 	loc: SourceLocation core/uncategorised/257/input.js 1:0-1:52
 }
 ```

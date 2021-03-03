@@ -10,7 +10,6 @@ import {WebSocketInterface} from "@internal/codec-websocket";
 import {Socket} from "net";
 import workerThreads = require("worker_threads");
 import {RSERValue} from "@internal/binary-transport";
-import {processResourceRoot} from "@internal/resources";
 
 export function createBridgeEventDeclaration<
 	Param extends RSERValue,
@@ -226,15 +225,17 @@ export class BridgeFactory<
 	}
 
 	public createFromWorkerThreadParentPort(
-		opts?: BridgeOptions,
+		opts?: Omit<BridgeOptions, "optionalResource">,
 	): Bridge<ListenEvents, CallEvents, SharedEvents> {
 		const {parentPort} = workerThreads;
 		if (parentPort == null) {
 			throw new Error("No worker_threads parentPort found");
 		}
 
-		const bridge = this.create(opts);
-		processResourceRoot.add(bridge);
+		const bridge = this.create({
+			...opts,
+			optionalResource: true,
+		});
 
 		const rser = bridge.attachRSER();
 

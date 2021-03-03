@@ -15,9 +15,15 @@ JSRoot {
 					body: [
 						JSReturnStatement {
 							argument: JSBinaryExpression {
-								left: JSReferenceIdentifier {name: "x", loc: SourceLocation core/uncategorised/262/input.js 1:20-1:21 (x)}
 								operator: "*"
-								right: JSReferenceIdentifier {name: "y", loc: SourceLocation core/uncategorised/262/input.js 1:24-1:25 (y)}
+								left: JSReferenceIdentifier {
+									name: "x"
+									loc: SourceLocation core/uncategorised/262/input.js 1:20-1:21 (x)
+								}
+								right: JSReferenceIdentifier {
+									name: "y"
+									loc: SourceLocation core/uncategorised/262/input.js 1:24-1:25 (y)
+								}
 								loc: SourceLocation core/uncategorised/262/input.js 1:20-1:25
 							}
 							loc: SourceLocation core/uncategorised/262/input.js 1:13-1:25
@@ -43,9 +49,9 @@ JSRoot {
 	diagnostics: []
 	directives: []
 	hasHoistedVars: false
-	path: UIDPath<core/uncategorised/262/input.js>
 	sourceType: "script"
 	syntax: []
+	path: UIDPath<core/uncategorised/262/input.js>
 	loc: SourceLocation core/uncategorised/262/input.js 1:0-1:28
 }
 ```

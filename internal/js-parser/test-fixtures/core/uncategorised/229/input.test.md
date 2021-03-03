@@ -12,7 +12,11 @@ JSRoot {
 		JSIfStatement {
 			consequent: JSExpressionStatement {
 				expression: JSFunctionExpression {
-					body: JSBlockStatement {body: [], directives: [], loc: SourceLocation core/uncategorised/229/input.js 1:24-1:26}
+					body: JSBlockStatement {
+						body: []
+						directives: []
+						loc: SourceLocation core/uncategorised/229/input.js 1:24-1:26
+					}
 					head: JSFunctionHead {
 						async: false
 						generator: false
@@ -24,7 +28,10 @@ JSRoot {
 				}
 				loc: SourceLocation core/uncategorised/229/input.js 1:13-1:27
 			}
-			test: JSReferenceIdentifier {name: "morning", loc: SourceLocation core/uncategorised/229/input.js 1:4-1:11 (morning)}
+			test: JSReferenceIdentifier {
+				name: "morning"
+				loc: SourceLocation core/uncategorised/229/input.js 1:4-1:11 (morning)
+			}
 			loc: SourceLocation core/uncategorised/229/input.js 1:0-1:27
 		}
 	]
@@ -33,9 +40,9 @@ JSRoot {
 	diagnostics: []
 	directives: []
 	hasHoistedVars: false
-	path: UIDPath<core/uncategorised/229/input.js>
 	sourceType: "script"
 	syntax: []
+	path: UIDPath<core/uncategorised/229/input.js>
 	loc: SourceLocation core/uncategorised/229/input.js 1:0-1:27
 }
 ```

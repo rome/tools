@@ -14,11 +14,17 @@ JSRoot {
 				kind: "var"
 				declarations: [
 					JSVariableDeclarator {
-						id: JSBindingIdentifier {name: "x", loc: SourceLocation core/uncategorised/217/input.js 1:4-1:5 (x)}
+						id: JSBindingIdentifier {
+							name: "x"
+							loc: SourceLocation core/uncategorised/217/input.js 1:4-1:5 (x)
+						}
 						loc: SourceLocation core/uncategorised/217/input.js 1:4-1:5
 					}
 					JSVariableDeclarator {
-						id: JSBindingIdentifier {name: "y", loc: SourceLocation core/uncategorised/217/input.js 1:7-1:8 (y)}
+						id: JSBindingIdentifier {
+							name: "y"
+							loc: SourceLocation core/uncategorised/217/input.js 1:7-1:8 (y)
+						}
 						loc: SourceLocation core/uncategorised/217/input.js 1:7-1:8
 					}
 				]
@@ -32,9 +38,9 @@ JSRoot {
 	diagnostics: []
 	directives: []
 	hasHoistedVars: true
-	path: UIDPath<core/uncategorised/217/input.js>
 	sourceType: "script"
 	syntax: []
+	path: UIDPath<core/uncategorised/217/input.js>
 	loc: SourceLocation core/uncategorised/217/input.js 1:0-1:9
 }
 ```

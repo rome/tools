@@ -8,45 +8,41 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	syntax: Array []
-	loc: SourceLocation esprima/es2015-export-declaration/export-const-number/input.js 1:0-2:0
-	path: UIDPath<esprima/es2015-export-declaration/export-const-number/input.js>
-	body: Array [
+	body: [
 		JSExportLocalDeclaration {
 			exportKind: "value"
-			specifiers: undefined
-			loc: SourceLocation esprima/es2015-export-declaration/export-const-number/input.js 1:0-1:21
 			declaration: JSVariableDeclarationStatement {
-				loc: SourceLocation esprima/es2015-export-declaration/export-const-number/input.js 1:7-1:21
 				declaration: JSVariableDeclaration {
 					kind: "const"
-					loc: SourceLocation esprima/es2015-export-declaration/export-const-number/input.js 1:7-1:21
-					declarations: Array [
+					declarations: [
 						JSVariableDeclarator {
 							id: JSBindingIdentifier {
 								name: "foo"
 								loc: SourceLocation esprima/es2015-export-declaration/export-const-number/input.js 1:13-1:16 (foo)
 							}
-							loc: SourceLocation esprima/es2015-export-declaration/export-const-number/input.js 1:13-1:20
 							init: JSNumericLiteral {
 								value: 1
-								format: undefined
 								loc: SourceLocation esprima/es2015-export-declaration/export-const-number/input.js 1:19-1:20
 							}
+							loc: SourceLocation esprima/es2015-export-declaration/export-const-number/input.js 1:13-1:20
 						}
 					]
+					loc: SourceLocation esprima/es2015-export-declaration/export-const-number/input.js 1:7-1:21
 				}
+				loc: SourceLocation esprima/es2015-export-declaration/export-const-number/input.js 1:7-1:21
 			}
+			loc: SourceLocation esprima/es2015-export-declaration/export-const-number/input.js 1:0-1:21
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: []
+	path: UIDPath<esprima/es2015-export-declaration/export-const-number/input.js>
+	loc: SourceLocation esprima/es2015-export-declaration/export-const-number/input.js 1:0-2:0
 }
 ```
 

@@ -8,39 +8,35 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	loc: SourceLocation typescript/declare/interface-new-line/input.ts 1:0-3:0
-	path: UIDPath<typescript/declare/interface-new-line/input.ts>
-	syntax: Array ["ts"]
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation typescript/declare/interface-new-line/input.ts 1:0-1:7
 			expression: JSReferenceIdentifier {
 				name: "declare"
 				loc: SourceLocation typescript/declare/interface-new-line/input.ts 1:0-1:7 (declare)
 			}
+			loc: SourceLocation typescript/declare/interface-new-line/input.ts 1:0-1:7
 		}
 		TSInterfaceDeclaration {
 			id: JSBindingIdentifier {
 				name: "I"
 				loc: SourceLocation typescript/declare/interface-new-line/input.ts 2:10-2:11 (I)
 			}
-			extends: undefined
-			typeParameters: undefined
-			loc: SourceLocation typescript/declare/interface-new-line/input.ts 2:0-2:14
 			body: TSInterfaceBody {
-				body: Array []
+				body: []
 				loc: SourceLocation typescript/declare/interface-new-line/input.ts 2:12-2:14
 			}
+			loc: SourceLocation typescript/declare/interface-new-line/input.ts 2:0-2:14
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: ["ts"]
+	path: UIDPath<typescript/declare/interface-new-line/input.ts>
+	loc: SourceLocation typescript/declare/interface-new-line/input.ts 1:0-3:0
 }
 ```
 

@@ -8,37 +8,31 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation esprima/es2015-class/migrated_0023/input.js 1:0-2:0
-	path: UIDPath<esprima/es2015-class/migrated_0023/input.js>
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation esprima/es2015-class/migrated_0023/input.js 1:0-1:12
 			expression: JSClassExpression {
 				id: JSBindingIdentifier {
 					name: "A"
 					loc: SourceLocation esprima/es2015-class/migrated_0023/input.js 1:7-1:8 (A)
 				}
-				loc: SourceLocation esprima/es2015-class/migrated_0023/input.js 1:1-1:11
 				meta: JSClassHead {
-					body: Array []
-					implements: undefined
-					superClass: undefined
-					superTypeParameters: undefined
-					typeParameters: undefined
+					body: []
 					loc: SourceLocation esprima/es2015-class/migrated_0023/input.js 1:1-1:11
 				}
+				loc: SourceLocation esprima/es2015-class/migrated_0023/input.js 1:1-1:11
 			}
+			loc: SourceLocation esprima/es2015-class/migrated_0023/input.js 1:0-1:12
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<esprima/es2015-class/migrated_0023/input.js>
+	loc: SourceLocation esprima/es2015-class/migrated_0023/input.js 1:0-2:0
 }
 ```
 

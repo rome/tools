@@ -8,65 +8,59 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: true
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	loc: SourceLocation typescript/types/literal-bigint/input.ts 1:0-2:0
-	path: UIDPath<typescript/types/literal-bigint/input.ts>
-	syntax: Array ["ts"]
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Unknown TS non array type start"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:6
-				path: UIDPath<typescript/types/literal-bigint/input.ts>
-				start: Position 1:7
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSVariableDeclarationStatement {
-			loc: SourceLocation typescript/types/literal-bigint/input.ts 1:0-1:10
 			declaration: JSVariableDeclaration {
 				kind: "let"
-				loc: SourceLocation typescript/types/literal-bigint/input.ts 1:0-1:10
-				declarations: Array [
+				declarations: [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "x"
-							loc: SourceLocation typescript/types/literal-bigint/input.ts 1:4-1:9
 							meta: JSPatternMeta {
-								definite: undefined
-								loc: SourceLocation typescript/types/literal-bigint/input.ts 1:4-1:9
 								typeAnnotation: TSTypeReference {
-									loc: SourceLocation typescript/types/literal-bigint/input.ts 1:9-1:9
 									typeName: JSReferenceIdentifier {
 										name: "INVALID_PLACEHOLDER"
 										loc: SourceLocation typescript/types/literal-bigint/input.ts 1:9-1:9
 									}
+									loc: SourceLocation typescript/types/literal-bigint/input.ts 1:9-1:9
 								}
+								loc: SourceLocation typescript/types/literal-bigint/input.ts 1:4-1:9
 							}
+							loc: SourceLocation typescript/types/literal-bigint/input.ts 1:4-1:9
 						}
-						init: undefined
 						loc: SourceLocation typescript/types/literal-bigint/input.ts 1:4-1:9
 					}
 				]
+				loc: SourceLocation typescript/types/literal-bigint/input.ts 1:0-1:10
+			}
+			loc: SourceLocation typescript/types/literal-bigint/input.ts 1:0-1:10
+		}
+	]
+	comments: []
+	corrupt: true
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "Unknown TS non array type start"}
+			}
+			location: {
+				language: "js"
+				path: UIDPath<typescript/types/literal-bigint/input.ts>
+				end: Position 1:6
+				start: Position 1:7
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: ["ts"]
+	path: UIDPath<typescript/types/literal-bigint/input.ts>
+	loc: SourceLocation typescript/types/literal-bigint/input.ts 1:0-2:0
 }
 ```
 
@@ -79,7 +73,7 @@ JSRoot {
   ✖ Unknown TS non array type start
 
     let x: 0n;
-           ^
+           <error><emphasis>^</emphasis></error>
 
 
 ```

@@ -8,23 +8,10 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation experimental/logical-assignment-operator/qq-equals-no-plugin/input.js 1:0-3:0
-	path: UIDPath<experimental/logical-assignment-operator/qq-equals-no-plugin/input.js>
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation experimental/logical-assignment-operator/qq-equals-no-plugin/input.js 1:0-1:8
 			expression: JSAssignmentExpression {
 				operator: "??="
-				loc: SourceLocation experimental/logical-assignment-operator/qq-equals-no-plugin/input.js 1:0-1:7
 				left: JSAssignmentIdentifier {
 					name: "a"
 					loc: SourceLocation experimental/logical-assignment-operator/qq-equals-no-plugin/input.js 1:0-1:1 (a)
@@ -33,19 +20,14 @@ JSRoot {
 					name: "b"
 					loc: SourceLocation experimental/logical-assignment-operator/qq-equals-no-plugin/input.js 1:6-1:7 (b)
 				}
+				loc: SourceLocation experimental/logical-assignment-operator/qq-equals-no-plugin/input.js 1:0-1:7
 			}
+			loc: SourceLocation experimental/logical-assignment-operator/qq-equals-no-plugin/input.js 1:0-1:8
 		}
 		JSExpressionStatement {
-			loc: SourceLocation experimental/logical-assignment-operator/qq-equals-no-plugin/input.js 2:0-2:12
 			expression: JSAssignmentExpression {
 				operator: "??="
-				loc: SourceLocation experimental/logical-assignment-operator/qq-equals-no-plugin/input.js 2:0-2:11
-				right: JSReferenceIdentifier {
-					name: "b"
-					loc: SourceLocation experimental/logical-assignment-operator/qq-equals-no-plugin/input.js 2:10-2:11 (b)
-				}
 				left: JSMemberExpression {
-					loc: SourceLocation experimental/logical-assignment-operator/qq-equals-no-plugin/input.js 2:0-2:5
 					object: JSReferenceIdentifier {
 						name: "obj"
 						loc: SourceLocation experimental/logical-assignment-operator/qq-equals-no-plugin/input.js 2:0-2:3 (obj)
@@ -57,10 +39,26 @@ JSRoot {
 						}
 						loc: SourceLocation experimental/logical-assignment-operator/qq-equals-no-plugin/input.js 2:4-2:5 (a)
 					}
+					loc: SourceLocation experimental/logical-assignment-operator/qq-equals-no-plugin/input.js 2:0-2:5
 				}
+				right: JSReferenceIdentifier {
+					name: "b"
+					loc: SourceLocation experimental/logical-assignment-operator/qq-equals-no-plugin/input.js 2:10-2:11 (b)
+				}
+				loc: SourceLocation experimental/logical-assignment-operator/qq-equals-no-plugin/input.js 2:0-2:11
 			}
+			loc: SourceLocation experimental/logical-assignment-operator/qq-equals-no-plugin/input.js 2:0-2:12
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<experimental/logical-assignment-operator/qq-equals-no-plugin/input.js>
+	loc: SourceLocation experimental/logical-assignment-operator/qq-equals-no-plugin/input.js 1:0-3:0
 }
 ```
 

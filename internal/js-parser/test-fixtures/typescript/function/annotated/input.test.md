@@ -8,76 +8,68 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	loc: SourceLocation typescript/function/annotated/input.ts 1:0-2:0
-	path: UIDPath<typescript/function/annotated/input.ts>
-	syntax: Array ["ts"]
-	body: Array [
+	body: [
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "f"
 				loc: SourceLocation typescript/function/annotated/input.ts 1:9-1:10 (f)
 			}
-			loc: SourceLocation typescript/function/annotated/input.ts 1:0-1:26
 			body: JSBlockStatement {
-				body: Array []
-				directives: Array []
+				body: []
+				directives: []
 				loc: SourceLocation typescript/function/annotated/input.ts 1:24-1:26
 			}
 			head: JSFunctionHead {
 				async: false
 				generator: false
 				hasHoistedVars: false
-				rest: undefined
-				thisType: undefined
-				loc: SourceLocation typescript/function/annotated/input.ts 1:10-1:23
-				returnType: TSTypeReference {
-					typeParameters: undefined
-					loc: SourceLocation typescript/function/annotated/input.ts 1:22-1:23
-					typeName: JSReferenceIdentifier {
-						name: "T"
-						loc: SourceLocation typescript/function/annotated/input.ts 1:22-1:23 (T)
-					}
-				}
-				typeParameters: TSTypeParameterDeclaration {
-					loc: SourceLocation typescript/function/annotated/input.ts 1:10-1:13
-					params: Array [
-						TSTypeParameter {
-							name: "T"
-							constraint: undefined
-							default: undefined
-							loc: SourceLocation typescript/function/annotated/input.ts 1:11-1:12
-						}
-					]
-				}
-				params: Array [
+				params: [
 					JSBindingIdentifier {
 						name: "x"
-						loc: SourceLocation typescript/function/annotated/input.ts 1:14-1:15 (x)
 						meta: JSPatternMeta {
 							optional: true
-							loc: SourceLocation typescript/function/annotated/input.ts 1:14-1:19
 							typeAnnotation: TSTypeReference {
-								typeParameters: undefined
-								loc: SourceLocation typescript/function/annotated/input.ts 1:18-1:19
 								typeName: JSReferenceIdentifier {
 									name: "T"
 									loc: SourceLocation typescript/function/annotated/input.ts 1:18-1:19 (T)
 								}
+								loc: SourceLocation typescript/function/annotated/input.ts 1:18-1:19
 							}
+							loc: SourceLocation typescript/function/annotated/input.ts 1:14-1:19
 						}
+						loc: SourceLocation typescript/function/annotated/input.ts 1:14-1:15 (x)
 					}
 				]
+				returnType: TSTypeReference {
+					typeName: JSReferenceIdentifier {
+						name: "T"
+						loc: SourceLocation typescript/function/annotated/input.ts 1:22-1:23 (T)
+					}
+					loc: SourceLocation typescript/function/annotated/input.ts 1:22-1:23
+				}
+				typeParameters: TSTypeParameterDeclaration {
+					params: [
+						TSTypeParameter {
+							name: "T"
+							loc: SourceLocation typescript/function/annotated/input.ts 1:11-1:12
+						}
+					]
+					loc: SourceLocation typescript/function/annotated/input.ts 1:10-1:13
+				}
+				loc: SourceLocation typescript/function/annotated/input.ts 1:10-1:23
 			}
+			loc: SourceLocation typescript/function/annotated/input.ts 1:0-1:26
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: ["ts"]
+	path: UIDPath<typescript/function/annotated/input.ts>
+	loc: SourceLocation typescript/function/annotated/input.ts 1:0-2:0
 }
 ```
 

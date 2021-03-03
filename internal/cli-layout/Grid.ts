@@ -6,7 +6,6 @@
  */
 
 import {
-	Markup,
 	MarkupLineWrapMode,
 	MarkupParsedChild,
 	MarkupParsedChildren,
@@ -20,6 +19,7 @@ import {
 	formatNumber,
 	lineWrapValidator,
 	parseMarkup,
+	Markup,
 } from "@internal/markup";
 import {
 	GridLocators,
@@ -929,15 +929,16 @@ export default class Grid {
 	}
 
 	public parse(
-		sub: undefined | string | Markup,
+		sub: undefined | Markup,
 		offsetPosition: undefined | Position,
+		cache: boolean,
 	): MarkupParsedChildren {
 		if (sub === undefined) {
 			return [];
 		}
 
 		return this.normalizeChildren(
-			parseMarkup(sub, {offsetPosition, sourceText: this.options.sourceText}),
+			parseMarkup(sub, {offsetPosition, sourceText: this.options.sourceText}, cache),
 		);
 	}
 
@@ -1049,6 +1050,7 @@ export default class Grid {
 			char: this.parse(
 				attributes.get("char").asString(""),
 				attributes.get("char").getDiagnosticLocation("inner-value").start,
+				false,
 			),
 			message: children,
 			line: attributes.get("line").asOneIndexedNumber(0),

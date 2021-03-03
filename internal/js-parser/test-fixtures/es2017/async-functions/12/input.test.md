@@ -8,63 +8,55 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2017/async-functions/12/input.js 1:0-1:46
-	path: UIDPath<es2017/async-functions/12/input.js>
-	body: Array [
+	body: [
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "foo"
 				loc: SourceLocation es2017/async-functions/12/input.js 1:15-1:18 (foo)
 			}
-			loc: SourceLocation es2017/async-functions/12/input.js 1:0-1:46
 			body: JSBlockStatement {
-				directives: Array []
-				loc: SourceLocation es2017/async-functions/12/input.js 1:28-1:46
-				body: Array [
+				body: [
 					JSExpressionStatement {
-						loc: SourceLocation es2017/async-functions/12/input.js 1:30-1:44
 						expression: JSAwaitExpression {
-							loc: SourceLocation es2017/async-functions/12/input.js 1:30-1:43
 							argument: JSReferenceIdentifier {
 								name: "promise"
 								loc: SourceLocation es2017/async-functions/12/input.js 1:36-1:43 (promise)
 							}
+							loc: SourceLocation es2017/async-functions/12/input.js 1:30-1:43
 						}
+						loc: SourceLocation es2017/async-functions/12/input.js 1:30-1:44
 					}
 				]
+				directives: []
+				loc: SourceLocation es2017/async-functions/12/input.js 1:28-1:46
 			}
 			head: JSFunctionHead {
 				async: true
 				generator: false
 				hasHoistedVars: false
-				rest: undefined
-				returnType: undefined
-				thisType: undefined
-				typeParameters: undefined
-				loc: SourceLocation es2017/async-functions/12/input.js 1:18-1:27
-				params: Array [
+				params: [
 					JSBindingIdentifier {
 						name: "promise"
-						loc: SourceLocation es2017/async-functions/12/input.js 1:19-1:26 (promise)
 						meta: JSPatternMeta {
-							optional: undefined
-							typeAnnotation: undefined
 							loc: SourceLocation es2017/async-functions/12/input.js 1:19-1:26
 						}
+						loc: SourceLocation es2017/async-functions/12/input.js 1:19-1:26 (promise)
 					}
 				]
+				loc: SourceLocation es2017/async-functions/12/input.js 1:18-1:27
 			}
+			loc: SourceLocation es2017/async-functions/12/input.js 1:0-1:46
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2017/async-functions/12/input.js>
+	loc: SourceLocation es2017/async-functions/12/input.js 1:0-1:46
 }
 ```
 

@@ -8,64 +8,61 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: true
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation esprima/es2015-for-of/invalid-var-init/input.js 1:0-2:0
-	path: UIDPath<esprima/es2015-for-of/invalid-var-init/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Loop variable declaration may not have an initializer"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:14
-				path: UIDPath<esprima/es2015-for-of/invalid-var-init/input.js>
-				start: Position 1:5
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSForOfStatement {
 			await: false
-			body: JSEmptyStatement {loc: SourceLocation esprima/es2015-for-of/invalid-var-init/input.js 1:20-1:21}
-			loc: SourceLocation esprima/es2015-for-of/invalid-var-init/input.js 1:0-1:21
-			right: JSReferenceIdentifier {
-				name: "y"
-				loc: SourceLocation esprima/es2015-for-of/invalid-var-init/input.js 1:18-1:19 (y)
+			body: JSEmptyStatement {
+				loc: SourceLocation esprima/es2015-for-of/invalid-var-init/input.js 1:20-1:21
 			}
 			left: JSVariableDeclaration {
 				kind: "var"
-				loc: SourceLocation esprima/es2015-for-of/invalid-var-init/input.js 1:5-1:14
-				declarations: Array [
+				declarations: [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "x"
 							loc: SourceLocation esprima/es2015-for-of/invalid-var-init/input.js 1:9-1:10 (x)
 						}
-						loc: SourceLocation esprima/es2015-for-of/invalid-var-init/input.js 1:9-1:14
 						init: JSNumericLiteral {
 							value: 1
-							format: undefined
 							loc: SourceLocation esprima/es2015-for-of/invalid-var-init/input.js 1:13-1:14
 						}
+						loc: SourceLocation esprima/es2015-for-of/invalid-var-init/input.js 1:9-1:14
 					}
 				]
+				loc: SourceLocation esprima/es2015-for-of/invalid-var-init/input.js 1:5-1:14
+			}
+			right: JSReferenceIdentifier {
+				name: "y"
+				loc: SourceLocation esprima/es2015-for-of/invalid-var-init/input.js 1:18-1:19 (y)
+			}
+			loc: SourceLocation esprima/es2015-for-of/invalid-var-init/input.js 1:0-1:21
+		}
+	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "Loop variable declaration may not have an initializer"}
+			}
+			location: {
+				language: "js"
+				path: UIDPath<esprima/es2015-for-of/invalid-var-init/input.js>
+				end: Position 1:14
+				start: Position 1:5
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: true
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<esprima/es2015-for-of/invalid-var-init/input.js>
+	loc: SourceLocation esprima/es2015-for-of/invalid-var-init/input.js 1:0-2:0
 }
 ```
 
@@ -78,7 +75,11 @@ JSRoot {
   ✖ Loop variable declaration may not have an initializer
 
     for (var x = 1 of y);
-         ^^^^^^^^^
+         <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
+    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
+    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
+    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
+    <error><emphasis>^</emphasis></error>
 
 
 ```

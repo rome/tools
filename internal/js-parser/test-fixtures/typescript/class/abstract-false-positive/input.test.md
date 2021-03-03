@@ -8,34 +8,31 @@
 
 ```javascript
 JSRoot {
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	loc: SourceLocation typescript/class/abstract-false-positive/input.ts 1:0-3:0
-	path: UIDPath<typescript/class/abstract-false-positive/input.ts>
-	syntax: Array ["ts"]
-	comments: Array [
+	body: [
+		JSExportDefaultDeclaration {
+			leadingComments: ["0"]
+			declaration: JSReferenceIdentifier {
+				name: "abstract"
+				loc: SourceLocation typescript/class/abstract-false-positive/input.ts 2:15-2:23 (abstract)
+			}
+			loc: SourceLocation typescript/class/abstract-false-positive/input.ts 2:0-2:24
+		}
+	]
+	comments: [
 		CommentLine {
 			id: "0"
 			value: " Exports an identifier, doesn't try parsing `abstract class`"
 			loc: SourceLocation typescript/class/abstract-false-positive/input.ts 1:0-1:62
 		}
 	]
-	body: Array [
-		JSExportDefaultDeclaration {
-			leadingComments: Array ["0"]
-			loc: SourceLocation typescript/class/abstract-false-positive/input.ts 2:0-2:24
-			declaration: JSReferenceIdentifier {
-				name: "abstract"
-				leadingComments: undefined
-				loc: SourceLocation typescript/class/abstract-false-positive/input.ts 2:15-2:23 (abstract)
-			}
-		}
-	]
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: ["ts"]
+	path: UIDPath<typescript/class/abstract-false-positive/input.ts>
+	loc: SourceLocation typescript/class/abstract-false-positive/input.ts 1:0-3:0
 }
 ```
 

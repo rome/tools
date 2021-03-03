@@ -8,19 +8,8 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation core/uncategorised/364/input.js 1:0-1:2
-	path: UIDPath<core/uncategorised/364/input.js>
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation core/uncategorised/364/input.js 1:0-1:2
 			expression: JSRegExpLiteral {
 				global: false
 				insensitive: false
@@ -28,33 +17,40 @@ JSRoot {
 				noDotNewline: false
 				sticky: false
 				unicode: false
-				loc: SourceLocation core/uncategorised/364/input.js 1:0-1:2
 				expression: JSRegExpSubExpression {
-					body: Array []
+					body: []
 					loc: SourceLocation core/uncategorised/364/input.js 1:1-1:1
 				}
+				loc: SourceLocation core/uncategorised/364/input.js 1:0-1:2
 			}
+			loc: SourceLocation core/uncategorised/364/input.js 1:0-1:2
 		}
 	]
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {
+				advice: []
+				category: ["parse"]
 				categoryValue: "js"
-				category: Array ["parse"]
 				message: RAW_MARKUP {value: "Unterminated regular expression"}
 			}
-			location: Object {
-				integrity: undefined
+			location: {
 				language: "js"
-				sourceText: undefined
-				end: Position 1:1
 				path: UIDPath<core/uncategorised/364/input.js>
+				end: Position 1:1
 				start: Position 1:1
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<core/uncategorised/364/input.js>
+	loc: SourceLocation core/uncategorised/364/input.js 1:0-1:2
 }
 ```
 
@@ -67,7 +63,7 @@ JSRoot {
   ✖ Unterminated regular expression
 
     /
-     ^
+     <error><emphasis>^</emphasis></error>
 
 
 ```

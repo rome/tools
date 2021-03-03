@@ -8,149 +8,61 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: true
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation esprima/es2015-arrow-function/object-binding-pattern-nested-cover-grammar/input.js 1:0-2:0
-	path: UIDPath<esprima/es2015-arrow-function/object-binding-pattern-nested-cover-grammar/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:24
-				path: UIDPath<esprima/es2015-arrow-function/object-binding-pattern-nested-cover-grammar/input.js>
-				start: Position 1:23
-			}
-			description: Object {
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Unexpected character <emphasis>=</emphasis>"}
-				advice: Array [
-					log {
-						category: "info"
-						text: RAW_MARKUP {value: "Expected character <emphasis>,</emphasis>"}
-					}
-				]
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation esprima/es2015-arrow-function/object-binding-pattern-nested-cover-grammar/input.js 1:0-1:51
 			expression: JSArrowFunctionExpression {
-				loc: SourceLocation esprima/es2015-arrow-function/object-binding-pattern-nested-cover-grammar/input.js 1:0-1:50
 				body: JSNumericLiteral {
 					value: 0
-					format: undefined
 					loc: SourceLocation esprima/es2015-arrow-function/object-binding-pattern-nested-cover-grammar/input.js 1:49-1:50
 				}
 				head: JSFunctionHead {
 					async: false
 					hasHoistedVars: false
-					rest: undefined
-					returnType: undefined
-					thisType: undefined
-					loc: SourceLocation esprima/es2015-arrow-function/object-binding-pattern-nested-cover-grammar/input.js 1:0-1:49
-					params: Array [
+					params: [
 						JSBindingArrayPattern {
-							rest: undefined
-							loc: SourceLocation esprima/es2015-arrow-function/object-binding-pattern-nested-cover-grammar/input.js 1:1-1:46
-							elements: Array [
+							elements: [
 								JSBindingArrayPattern {
-									rest: undefined
-									loc: SourceLocation esprima/es2015-arrow-function/object-binding-pattern-nested-cover-grammar/input.js 1:2-1:45
-									elements: Array [
+									elements: [
 										JSBindingArrayPattern {
-											rest: undefined
-											loc: SourceLocation esprima/es2015-arrow-function/object-binding-pattern-nested-cover-grammar/input.js 1:3-1:44
-											elements: Array [
+											elements: [
 												JSBindingArrayPattern {
-													rest: undefined
-													loc: SourceLocation esprima/es2015-arrow-function/object-binding-pattern-nested-cover-grammar/input.js 1:4-1:43
-													elements: Array [
+													elements: [
 														JSBindingArrayPattern {
-															rest: undefined
-															loc: SourceLocation esprima/es2015-arrow-function/object-binding-pattern-nested-cover-grammar/input.js 1:5-1:42
-															elements: Array [
+															elements: [
 																JSBindingArrayPattern {
-																	rest: undefined
-																	loc: SourceLocation esprima/es2015-arrow-function/object-binding-pattern-nested-cover-grammar/input.js 1:6-1:41
-																	elements: Array [
+																	elements: [
 																		JSBindingArrayPattern {
-																			rest: undefined
-																			loc: SourceLocation esprima/es2015-arrow-function/object-binding-pattern-nested-cover-grammar/input.js 1:7-1:40
-																			elements: Array [
+																			elements: [
 																				JSBindingArrayPattern {
-																					rest: undefined
-																					loc: SourceLocation esprima/es2015-arrow-function/object-binding-pattern-nested-cover-grammar/input.js 1:8-1:39
-																					elements: Array [
+																					elements: [
 																						JSBindingArrayPattern {
-																							rest: undefined
-																							loc: SourceLocation esprima/es2015-arrow-function/object-binding-pattern-nested-cover-grammar/input.js 1:9-1:38
-																							elements: Array [
+																							elements: [
 																								JSBindingArrayPattern {
-																									rest: undefined
-																									loc: SourceLocation esprima/es2015-arrow-function/object-binding-pattern-nested-cover-grammar/input.js 1:10-1:37
-																									elements: Array [
+																									elements: [
 																										JSBindingArrayPattern {
-																											rest: undefined
-																											loc: SourceLocation esprima/es2015-arrow-function/object-binding-pattern-nested-cover-grammar/input.js 1:11-1:36
-																											elements: Array [
+																											elements: [
 																												JSBindingArrayPattern {
-																													rest: undefined
-																													loc: SourceLocation esprima/es2015-arrow-function/object-binding-pattern-nested-cover-grammar/input.js 1:12-1:35
-																													elements: Array [
+																													elements: [
 																														JSBindingArrayPattern {
-																															rest: undefined
-																															loc: SourceLocation esprima/es2015-arrow-function/object-binding-pattern-nested-cover-grammar/input.js 1:13-1:34
-																															elements: Array [
+																															elements: [
 																																JSBindingArrayPattern {
-																																	rest: undefined
-																																	loc: SourceLocation esprima/es2015-arrow-function/object-binding-pattern-nested-cover-grammar/input.js 1:14-1:33
-																																	elements: Array [
+																																	elements: [
 																																		JSBindingArrayPattern {
-																																			rest: undefined
-																																			loc: SourceLocation esprima/es2015-arrow-function/object-binding-pattern-nested-cover-grammar/input.js 1:15-1:32
-																																			elements: Array [
+																																			elements: [
 																																				JSBindingArrayPattern {
-																																					rest: undefined
-																																					loc: SourceLocation esprima/es2015-arrow-function/object-binding-pattern-nested-cover-grammar/input.js 1:16-1:31
-																																					elements: Array [
+																																					elements: [
 																																						JSBindingArrayPattern {
-																																							rest: undefined
-																																							loc: SourceLocation esprima/es2015-arrow-function/object-binding-pattern-nested-cover-grammar/input.js 1:17-1:30
-																																							elements: Array [
+																																							elements: [
 																																								JSBindingArrayPattern {
-																																									rest: undefined
-																																									loc: SourceLocation esprima/es2015-arrow-function/object-binding-pattern-nested-cover-grammar/input.js 1:18-1:29
-																																									elements: Array [
+																																									elements: [
 																																										JSBindingArrayPattern {
-																																											rest: undefined
-																																											loc: SourceLocation esprima/es2015-arrow-function/object-binding-pattern-nested-cover-grammar/input.js 1:19-1:28
-																																											elements: Array [
+																																											elements: [
 																																												JSBindingArrayPattern {
-																																													rest: undefined
-																																													loc: SourceLocation esprima/es2015-arrow-function/object-binding-pattern-nested-cover-grammar/input.js 1:20-1:27
-																																													elements: Array [
+																																													elements: [
 																																														JSBindingAssignmentPattern {
 																																															operator: "="
-																																															loc: SourceLocation esprima/es2015-arrow-function/object-binding-pattern-nested-cover-grammar/input.js 1:21-1:25
-																																															right: JSReferenceIdentifier {
-																																																name: "b"
-																																																loc: SourceLocation esprima/es2015-arrow-function/object-binding-pattern-nested-cover-grammar/input.js 1:24-1:25 (b)
-																																															}
 																																															left: JSBindingObjectPattern {
-																																																rest: undefined
-																																																loc: SourceLocation esprima/es2015-arrow-function/object-binding-pattern-nested-cover-grammar/input.js 1:21-1:23
-																																																properties: Array [
+																																																properties: [
 																																																	JSBindingObjectPatternProperty {
 																																																		key: JSStaticPropertyKey {
 																																																			value: JSIdentifier {
@@ -166,57 +78,111 @@ JSRoot {
 																																																		loc: SourceLocation esprima/es2015-arrow-function/object-binding-pattern-nested-cover-grammar/input.js 1:22-1:23
 																																																	}
 																																																]
+																																																loc: SourceLocation esprima/es2015-arrow-function/object-binding-pattern-nested-cover-grammar/input.js 1:21-1:23
 																																															}
+																																															right: JSReferenceIdentifier {
+																																																name: "b"
+																																																loc: SourceLocation esprima/es2015-arrow-function/object-binding-pattern-nested-cover-grammar/input.js 1:24-1:25 (b)
+																																															}
+																																															loc: SourceLocation esprima/es2015-arrow-function/object-binding-pattern-nested-cover-grammar/input.js 1:21-1:25
 																																														}
 																																														JSBindingIdentifier {
 																																															name: "INVALID_PLACEHOLDER"
 																																															loc: SourceLocation esprima/es2015-arrow-function/object-binding-pattern-nested-cover-grammar/input.js 1:25-1:26
 																																														}
 																																													]
+																																													loc: SourceLocation esprima/es2015-arrow-function/object-binding-pattern-nested-cover-grammar/input.js 1:20-1:27
 																																												}
 																																											]
+																																											loc: SourceLocation esprima/es2015-arrow-function/object-binding-pattern-nested-cover-grammar/input.js 1:19-1:28
 																																										}
 																																									]
+																																									loc: SourceLocation esprima/es2015-arrow-function/object-binding-pattern-nested-cover-grammar/input.js 1:18-1:29
 																																								}
 																																							]
+																																							loc: SourceLocation esprima/es2015-arrow-function/object-binding-pattern-nested-cover-grammar/input.js 1:17-1:30
 																																						}
 																																					]
+																																					loc: SourceLocation esprima/es2015-arrow-function/object-binding-pattern-nested-cover-grammar/input.js 1:16-1:31
 																																				}
 																																			]
+																																			loc: SourceLocation esprima/es2015-arrow-function/object-binding-pattern-nested-cover-grammar/input.js 1:15-1:32
 																																		}
 																																	]
+																																	loc: SourceLocation esprima/es2015-arrow-function/object-binding-pattern-nested-cover-grammar/input.js 1:14-1:33
 																																}
 																															]
+																															loc: SourceLocation esprima/es2015-arrow-function/object-binding-pattern-nested-cover-grammar/input.js 1:13-1:34
 																														}
 																													]
+																													loc: SourceLocation esprima/es2015-arrow-function/object-binding-pattern-nested-cover-grammar/input.js 1:12-1:35
 																												}
 																											]
+																											loc: SourceLocation esprima/es2015-arrow-function/object-binding-pattern-nested-cover-grammar/input.js 1:11-1:36
 																										}
 																									]
+																									loc: SourceLocation esprima/es2015-arrow-function/object-binding-pattern-nested-cover-grammar/input.js 1:10-1:37
 																								}
 																							]
+																							loc: SourceLocation esprima/es2015-arrow-function/object-binding-pattern-nested-cover-grammar/input.js 1:9-1:38
 																						}
 																					]
+																					loc: SourceLocation esprima/es2015-arrow-function/object-binding-pattern-nested-cover-grammar/input.js 1:8-1:39
 																				}
 																			]
+																			loc: SourceLocation esprima/es2015-arrow-function/object-binding-pattern-nested-cover-grammar/input.js 1:7-1:40
 																		}
 																	]
+																	loc: SourceLocation esprima/es2015-arrow-function/object-binding-pattern-nested-cover-grammar/input.js 1:6-1:41
 																}
 															]
+															loc: SourceLocation esprima/es2015-arrow-function/object-binding-pattern-nested-cover-grammar/input.js 1:5-1:42
 														}
 													]
+													loc: SourceLocation esprima/es2015-arrow-function/object-binding-pattern-nested-cover-grammar/input.js 1:4-1:43
 												}
 											]
+											loc: SourceLocation esprima/es2015-arrow-function/object-binding-pattern-nested-cover-grammar/input.js 1:3-1:44
 										}
 									]
+									loc: SourceLocation esprima/es2015-arrow-function/object-binding-pattern-nested-cover-grammar/input.js 1:2-1:45
 								}
 							]
+							loc: SourceLocation esprima/es2015-arrow-function/object-binding-pattern-nested-cover-grammar/input.js 1:1-1:46
 						}
 					]
+					loc: SourceLocation esprima/es2015-arrow-function/object-binding-pattern-nested-cover-grammar/input.js 1:0-1:49
 				}
+				loc: SourceLocation esprima/es2015-arrow-function/object-binding-pattern-nested-cover-grammar/input.js 1:0-1:50
+			}
+			loc: SourceLocation esprima/es2015-arrow-function/object-binding-pattern-nested-cover-grammar/input.js 1:0-1:51
+		}
+	]
+	comments: []
+	corrupt: true
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {
+				advice: [log {category: "info", text: [RAW_MARKUP {value: "Expected character <emphasis>"}, ",", RAW_MARKUP {value: "</emphasis>"}]}]
+				category: ["parse"]
+				categoryValue: "js"
+				message: [RAW_MARKUP {value: "Unexpected character <emphasis>"}, "=", RAW_MARKUP {value: "</emphasis>"}]
+			}
+			location: {
+				language: "js"
+				path: UIDPath<esprima/es2015-arrow-function/object-binding-pattern-nested-cover-grammar/input.js>
+				end: Position 1:24
+				start: Position 1:23
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<esprima/es2015-arrow-function/object-binding-pattern-nested-cover-grammar/input.js>
+	loc: SourceLocation esprima/es2015-arrow-function/object-binding-pattern-nested-cover-grammar/input.js 1:0-2:0
 }
 ```
 
@@ -229,7 +195,7 @@ JSRoot {
   ✖ Unexpected character =
 
     ([[[[[[[[[[[[[[[[[[[[{a=b}]]]]]]]]]]]]]]]]]]]])=>0;
-                           ^
+                           <error><emphasis>^</emphasis></error>
 
   ℹ Expected character ,
 

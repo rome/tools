@@ -25,6 +25,7 @@ import {
 	markupTag,
 	normalizeMarkup,
 	readMarkup,
+	serializeLazyMarkup,
 } from "@internal/markup";
 import {
 	ReporterCaptureStream,
@@ -69,7 +70,6 @@ import {
 	Resource,
 	createResource,
 	createResourceRoot,
-	processResourceRoot,
 } from "@internal/resources";
 
 export type ReporterOptions = {
@@ -109,8 +109,7 @@ export default class Reporter implements ReporterNamespace {
 	constructor(name: string, opts: ReporterOptions = {}) {
 		this.activeElements = new Set();
 		this.indentLevel = 0;
-		this.markupOptions =
-			opts.markupOptions === undefined ? {} : opts.markupOptions;
+		this.markupOptions = opts.markupOptions;
 		this.shouldRedirectOutToErr = opts.shouldRedirectOutToErr ?? false;
 		this.stdin = opts.stdin;
 		this.wrapperFactory = opts.wrapperFactory;
@@ -127,7 +126,7 @@ export default class Reporter implements ReporterNamespace {
 		}
 	}
 
-	public markupOptions: MarkupFormatOptions;
+	public markupOptions: undefined | MarkupFormatOptions;
 	public resources: Resource;
 	public [Symbol.toStringTag]: string;
 
@@ -162,7 +161,6 @@ export default class Reporter implements ReporterNamespace {
 		}
 
 		reporter.attachStdoutStreams(process.stdout, process.stderr);
-		processResourceRoot.add(reporter);
 
 		return reporter;
 	}
@@ -719,8 +717,14 @@ export default class Reporter implements ReporterNamespace {
 			case "none":
 				return markupToPlainText(built, gridMarkupOptions).lines;
 
-			case "markup":
-				return [readMarkup(normalizeMarkup(built, this.markupOptions).text)];
+			case "markup": {
+				const lazy = serializeLazyMarkup(built);
+				if (this.markupOptions === undefined) {
+					return [readMarkup(lazy)];
+				} else {
+					return [readMarkup(normalizeMarkup(lazy, this.markupOptions).text)];
+				}
+			}
 		}
 	}
 
@@ -885,12 +889,19 @@ export default class Reporter implements ReporterNamespace {
 	}
 
 	public processedList<T>(
-		items: T[],
+		iterable: Iterable<T>,
 		callback: (reporter: Reporter, item: T) => void | Markup,
 		opts: ReporterListOptions = {},
 	): {
 		truncated: boolean;
 	} {
+		// Avoid the overhead if there's nobody listening
+		if (!this.hasStreams()) {
+			return {truncated: false};
+		}
+
+		let items: Array<T> = Array.from(iterable);
+
 		if (items.length === 0) {
 			// We make some assumptions that there's at least one item
 			return {truncated: false};
@@ -945,7 +956,7 @@ export default class Reporter implements ReporterNamespace {
 		return {truncated: truncatedCount > 0};
 	}
 
-	public list(items: Markup[], opts: ReporterListOptions = {}) {
+	public list(items: Iterable<Markup>, opts: ReporterListOptions = {}) {
 		return this.processedList(
 			items,
 			(reporter, str) => {

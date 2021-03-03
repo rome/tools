@@ -27,7 +27,7 @@ export const spdx = createDiagnosticsCategory({
 			exceptions,
 		}: UnknownLicenseArg,
 	) => {
-		const advice: DiagnosticAdvice = [
+		const advice: DiagnosticAdvice[] = [
 			...buildSuggestionAdvice(id, knownLicenses, {ignoreCase: true}),
 			{
 				type: "log",

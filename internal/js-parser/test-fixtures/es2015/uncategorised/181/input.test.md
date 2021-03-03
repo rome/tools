@@ -8,53 +8,48 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2015/uncategorised/181/input.js 1:0-1:17
-	path: UIDPath<es2015/uncategorised/181/input.js>
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation es2015/uncategorised/181/input.js 1:0-1:17
 			expression: JSArrowFunctionExpression {
-				loc: SourceLocation es2015/uncategorised/181/input.js 1:0-1:17
 				body: JSBlockStatement {
-					body: Array []
-					directives: Array []
+					body: []
+					directives: []
 					loc: SourceLocation es2015/uncategorised/181/input.js 1:15-1:17
 				}
 				head: JSFunctionHead {
 					async: false
 					hasHoistedVars: false
-					returnType: undefined
-					thisType: undefined
-					loc: SourceLocation es2015/uncategorised/181/input.js 1:0-1:14
-					params: Array [
+					params: [
 						JSBindingIdentifier {
 							name: "a"
 							loc: SourceLocation es2015/uncategorised/181/input.js 1:1-1:2 (a)
 						}
 					]
 					rest: JSBindingArrayPattern {
-						rest: undefined
-						loc: SourceLocation es2015/uncategorised/181/input.js 1:7-1:10
-						elements: Array [
+						elements: [
 							JSBindingIdentifier {
 								name: "b"
 								loc: SourceLocation es2015/uncategorised/181/input.js 1:8-1:9 (b)
 							}
 						]
+						loc: SourceLocation es2015/uncategorised/181/input.js 1:7-1:10
 					}
+					loc: SourceLocation es2015/uncategorised/181/input.js 1:0-1:14
 				}
+				loc: SourceLocation es2015/uncategorised/181/input.js 1:0-1:17
 			}
+			loc: SourceLocation es2015/uncategorised/181/input.js 1:0-1:17
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2015/uncategorised/181/input.js>
+	loc: SourceLocation es2015/uncategorised/181/input.js 1:0-1:17
 }
 ```
 

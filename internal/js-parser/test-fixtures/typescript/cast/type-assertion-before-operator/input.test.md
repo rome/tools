@@ -8,40 +8,38 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	loc: SourceLocation typescript/cast/type-assertion-before-operator/input.ts 1:0-2:0
-	path: UIDPath<typescript/cast/type-assertion-before-operator/input.ts>
-	syntax: Array ["ts"]
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation typescript/cast/type-assertion-before-operator/input.ts 1:0-1:15
 			expression: JSBinaryExpression {
 				operator: "+"
-				loc: SourceLocation typescript/cast/type-assertion-before-operator/input.ts 1:0-1:14
-				right: JSNumericLiteral {
-					value: 1
-					format: undefined
-					loc: SourceLocation typescript/cast/type-assertion-before-operator/input.ts 1:13-1:14
-				}
 				left: TSTypeAssertion {
-					loc: SourceLocation typescript/cast/type-assertion-before-operator/input.ts 1:0-1:10
-					typeAnnotation: TSNumberKeywordTypeAnnotation {loc: SourceLocation typescript/cast/type-assertion-before-operator/input.ts 1:1-1:7}
 					expression: JSNumericLiteral {
 						value: 1
-						format: undefined
 						loc: SourceLocation typescript/cast/type-assertion-before-operator/input.ts 1:9-1:10
 					}
+					typeAnnotation: TSNumberKeywordTypeAnnotation {
+						loc: SourceLocation typescript/cast/type-assertion-before-operator/input.ts 1:1-1:7
+					}
+					loc: SourceLocation typescript/cast/type-assertion-before-operator/input.ts 1:0-1:10
 				}
+				right: JSNumericLiteral {
+					value: 1
+					loc: SourceLocation typescript/cast/type-assertion-before-operator/input.ts 1:13-1:14
+				}
+				loc: SourceLocation typescript/cast/type-assertion-before-operator/input.ts 1:0-1:14
 			}
+			loc: SourceLocation typescript/cast/type-assertion-before-operator/input.ts 1:0-1:15
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: ["ts"]
+	path: UIDPath<typescript/cast/type-assertion-before-operator/input.ts>
+	loc: SourceLocation typescript/cast/type-assertion-before-operator/input.ts 1:0-2:0
 }
 ```
 

@@ -10,13 +10,21 @@
 JSRoot {
 	body: [
 		JSForStatement {
-			body: JSEmptyStatement {loc: SourceLocation core/uncategorised/241/input.js 1:16-1:17}
+			body: JSEmptyStatement {
+				loc: SourceLocation core/uncategorised/241/input.js 1:16-1:17
+			}
 			init: JSVariableDeclaration {
 				kind: "var"
 				declarations: [
 					JSVariableDeclarator {
-						id: JSBindingIdentifier {name: "x", loc: SourceLocation core/uncategorised/241/input.js 1:8-1:9 (x)}
-						init: JSNumericLiteral {value: 0, loc: SourceLocation core/uncategorised/241/input.js 1:12-1:13}
+						id: JSBindingIdentifier {
+							name: "x"
+							loc: SourceLocation core/uncategorised/241/input.js 1:8-1:9 (x)
+						}
+						init: JSNumericLiteral {
+							value: 0
+							loc: SourceLocation core/uncategorised/241/input.js 1:12-1:13
+						}
 						loc: SourceLocation core/uncategorised/241/input.js 1:8-1:13
 					}
 				]
@@ -30,9 +38,9 @@ JSRoot {
 	diagnostics: []
 	directives: []
 	hasHoistedVars: true
-	path: UIDPath<core/uncategorised/241/input.js>
 	sourceType: "script"
 	syntax: []
+	path: UIDPath<core/uncategorised/241/input.js>
 	loc: SourceLocation core/uncategorised/241/input.js 1:0-1:17
 }
 ```

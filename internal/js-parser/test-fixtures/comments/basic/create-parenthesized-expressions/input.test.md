@@ -10,18 +10,28 @@
 JSRoot {
 	body: [
 		JSExpressionStatement {
-			expression: JSNumericLiteral {value: 1, loc: SourceLocation comments/basic/create-parenthesized-expressions/input.js 2:1-2:2}
 			leadingComments: ["0"]
 			trailingComments: ["1"]
+			expression: JSNumericLiteral {
+				value: 1
+				loc: SourceLocation comments/basic/create-parenthesized-expressions/input.js 2:1-2:2
+			}
 			loc: SourceLocation comments/basic/create-parenthesized-expressions/input.js 2:0-2:4
 		}
 		JSExpressionStatement {
-			expression: JSNumericLiteral {value: 2, loc: SourceLocation comments/basic/create-parenthesized-expressions/input.js 5:1-5:2}
 			leadingComments: ["1"]
+			expression: JSNumericLiteral {
+				value: 2
+				loc: SourceLocation comments/basic/create-parenthesized-expressions/input.js 5:1-5:2
+			}
 			loc: SourceLocation comments/basic/create-parenthesized-expressions/input.js 5:0-5:4
 		}
 		JSExpressionStatement {
-			expression: JSNumericLiteral {value: 3, leadingComments: ["2"], loc: SourceLocation comments/basic/create-parenthesized-expressions/input.js 9:2-9:3}
+			expression: JSNumericLiteral {
+				value: 3
+				leadingComments: ["2"]
+				loc: SourceLocation comments/basic/create-parenthesized-expressions/input.js 9:2-9:3
+			}
 			loc: SourceLocation comments/basic/create-parenthesized-expressions/input.js 7:0-10:2
 		}
 		JSExpressionStatement {
@@ -34,18 +44,34 @@ JSRoot {
 		}
 	]
 	comments: [
-		CommentLine {id: "0", value: " One", loc: SourceLocation comments/basic/create-parenthesized-expressions/input.js 1:0-1:6}
-		CommentBlock {id: "1", value: " Two ", loc: SourceLocation comments/basic/create-parenthesized-expressions/input.js 4:0-4:9}
-		CommentLine {id: "2", value: " Three", loc: SourceLocation comments/basic/create-parenthesized-expressions/input.js 8:2-8:10}
-		CommentBlock {id: "3", value: " Four ", loc: SourceLocation comments/basic/create-parenthesized-expressions/input.js 12:1-12:11}
+		CommentLine {
+			id: "0"
+			value: " One"
+			loc: SourceLocation comments/basic/create-parenthesized-expressions/input.js 1:0-1:6
+		}
+		CommentBlock {
+			id: "1"
+			value: " Two "
+			loc: SourceLocation comments/basic/create-parenthesized-expressions/input.js 4:0-4:9
+		}
+		CommentLine {
+			id: "2"
+			value: " Three"
+			loc: SourceLocation comments/basic/create-parenthesized-expressions/input.js 8:2-8:10
+		}
+		CommentBlock {
+			id: "3"
+			value: " Four "
+			loc: SourceLocation comments/basic/create-parenthesized-expressions/input.js 12:1-12:11
+		}
 	]
 	corrupt: false
 	diagnostics: []
 	directives: []
 	hasHoistedVars: false
-	path: UIDPath<comments/basic/create-parenthesized-expressions/input.js>
 	sourceType: "script"
 	syntax: []
+	path: UIDPath<comments/basic/create-parenthesized-expressions/input.js>
 	loc: SourceLocation comments/basic/create-parenthesized-expressions/input.js 1:0-13:0
 }
 ```

@@ -31,14 +31,14 @@ import {
 	serializeLazyMarkup,
 	unescapeTextValue,
 } from "./escape";
-import {createEmptyAttributes, isSingleEscaped} from "./util";
+import {createEmptyAttributes} from "./util";
 import {
 	globalAttributes,
 	tags,
 	tagsToOnlyChildren,
 	tagsToOnlyParent,
 } from "./tags";
-import {isPlainObject} from "@internal/typescript-helpers";
+import {isObject} from "@internal/typescript-helpers";
 
 //
 function isStringValueChar(
@@ -411,39 +411,45 @@ function parseChild(
 
 const parseCache: WeakMap<Extract<StaticMarkup, object>, MarkupParsedChildren> = new WeakMap();
 export function parseMarkup(
-	input: string | Markup,
+	raw: Markup,
 	opts: ParserOptions = {},
+	cache: boolean = true,
 ): MarkupParsedChildren {
-	let cacheKey: undefined | StaticMarkup;
 	let children: undefined | MarkupParsedChildren;
-
-	if (typeof input !== "string") {
-		cacheKey = serializeLazyMarkup(input);
-
-		if (isPlainObject(cacheKey) || Array.isArray(cacheKey)) {
-			const cached = parseCache.get(cacheKey);
-			if (cached !== undefined) {
-				return cached;
-			}
+	let cacheKey: undefined | Extract<StaticMarkup, object>;
+	
+	if (cache) {
+		const possibleCacheKey = serializeLazyMarkup(raw);
+		if (isObject(possibleCacheKey) || Array.isArray(possibleCacheKey)) {
+			cacheKey = possibleCacheKey;
 		}
+	}
 
-		// Don't need to parse a single escaped
-		if (isSingleEscaped(cacheKey)) {
-			children = [
-				{
-					type: "Text",
-					value: cacheKey[0],
-					source: true,
-				},
-			];
+	if (cacheKey !== undefined) {
+		const cached = parseCache.get(cacheKey);
+		if (cached !== undefined) {
+			return cached;
 		}
+	}
 
-		input = readMarkup(input);
+	// Don't need to parse a single escaped
+	if (typeof cacheKey === "string") {
+		children = [
+			{
+				type: "Text",
+				value: cacheKey,
+				source: true,
+			},
+		];
 	}
 
 	if (children === undefined) {
 		children = [];
-		const parser = stringMarkupParser.create({...opts, input});
+
+		const parser = stringMarkupParser.create({
+			...opts,
+			input: readMarkup(raw),
+		});
 		while (!parser.matchToken("EOF")) {
 			const child = parseChild(parser, undefined);
 			if (child !== undefined) {
@@ -452,10 +458,7 @@ export function parseMarkup(
 		}
 	}
 
-	if (
-		cacheKey !== undefined &&
-		(isPlainObject(cacheKey) || Array.isArray(cacheKey))
-	) {
+	if (cacheKey !== undefined) {
 		parseCache.set(cacheKey, children);
 	}
 

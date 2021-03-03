@@ -8,31 +8,14 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation experimental/class-properties/yield-in-generator-in-class-property/input.js 1:0-4:0
-	path: UIDPath<experimental/class-properties/yield-in-generator-in-class-property/input.js>
-	body: Array [
+	body: [
 		JSClassDeclaration {
 			id: JSBindingIdentifier {
 				name: "C"
 				loc: SourceLocation experimental/class-properties/yield-in-generator-in-class-property/input.js 1:6-1:7 (C)
 			}
-			loc: SourceLocation experimental/class-properties/yield-in-generator-in-class-property/input.js 1:0-3:1
 			meta: JSClassHead {
-				implements: undefined
-				superClass: undefined
-				superTypeParameters: undefined
-				typeParameters: undefined
-				loc: SourceLocation experimental/class-properties/yield-in-generator-in-class-property/input.js 1:0-3:1
-				body: Array [
+				body: [
 					JSClassProperty {
 						key: JSStaticPropertyKey {
 							value: JSIdentifier {
@@ -42,61 +25,62 @@ JSRoot {
 							loc: SourceLocation experimental/class-properties/yield-in-generator-in-class-property/input.js 2:2-2:3
 						}
 						value: JSFunctionExpression {
-							id: undefined
-							loc: SourceLocation experimental/class-properties/yield-in-generator-in-class-property/input.js 2:6-2:33
+							body: JSBlockStatement {
+								body: [
+									JSExpressionStatement {
+										expression: JSYieldExpression {
+											delegate: false
+											argument: JSUnaryExpression {
+												operator: "+"
+												prefix: true
+												argument: JSNumericLiteral {
+													value: 42
+													loc: SourceLocation experimental/class-properties/yield-in-generator-in-class-property/input.js 2:29-2:31
+												}
+												loc: SourceLocation experimental/class-properties/yield-in-generator-in-class-property/input.js 2:27-2:31
+											}
+											loc: SourceLocation experimental/class-properties/yield-in-generator-in-class-property/input.js 2:21-2:31
+										}
+										loc: SourceLocation experimental/class-properties/yield-in-generator-in-class-property/input.js 2:21-2:31
+									}
+								]
+								directives: []
+								loc: SourceLocation experimental/class-properties/yield-in-generator-in-class-property/input.js 2:19-2:33
+							}
 							head: JSFunctionHead {
 								async: false
 								generator: true
 								hasHoistedVars: false
-								params: Array []
-								rest: undefined
-								returnType: undefined
-								thisType: undefined
-								typeParameters: undefined
+								params: []
 								loc: SourceLocation experimental/class-properties/yield-in-generator-in-class-property/input.js 2:16-2:18
 							}
-							body: JSBlockStatement {
-								directives: Array []
-								loc: SourceLocation experimental/class-properties/yield-in-generator-in-class-property/input.js 2:19-2:33
-								body: Array [
-									JSExpressionStatement {
-										loc: SourceLocation experimental/class-properties/yield-in-generator-in-class-property/input.js 2:21-2:31
-										expression: JSYieldExpression {
-											delegate: false
-											loc: SourceLocation experimental/class-properties/yield-in-generator-in-class-property/input.js 2:21-2:31
-											argument: JSUnaryExpression {
-												operator: "+"
-												prefix: true
-												loc: SourceLocation experimental/class-properties/yield-in-generator-in-class-property/input.js 2:27-2:31
-												argument: JSNumericLiteral {
-													value: 42
-													format: undefined
-													loc: SourceLocation experimental/class-properties/yield-in-generator-in-class-property/input.js 2:29-2:31
-												}
-											}
-										}
-									}
-								]
-							}
+							loc: SourceLocation experimental/class-properties/yield-in-generator-in-class-property/input.js 2:6-2:33
 						}
-						definite: undefined
-						typeAnnotation: undefined
-						loc: SourceLocation experimental/class-properties/yield-in-generator-in-class-property/input.js 2:2-2:34
 						meta: JSClassPropertyMeta {
 							abstract: false
-							accessibility: undefined
 							optional: false
 							readonly: false
 							static: false
-							typeAnnotation: undefined
 							loc: SourceLocation experimental/class-properties/yield-in-generator-in-class-property/input.js 2:2-2:3
 							start: Position 2:2
 						}
+						loc: SourceLocation experimental/class-properties/yield-in-generator-in-class-property/input.js 2:2-2:34
 					}
 				]
+				loc: SourceLocation experimental/class-properties/yield-in-generator-in-class-property/input.js 1:0-3:1
 			}
+			loc: SourceLocation experimental/class-properties/yield-in-generator-in-class-property/input.js 1:0-3:1
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<experimental/class-properties/yield-in-generator-in-class-property/input.js>
+	loc: SourceLocation experimental/class-properties/yield-in-generator-in-class-property/input.js 1:0-4:0
 }
 ```
 

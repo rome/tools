@@ -8,49 +8,14 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation esprima/invalid-syntax/migrated_0269/input.js 1:0-2:0
-	path: UIDPath<esprima/invalid-syntax/migrated_0269/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Expected an identifier"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:14
-				path: UIDPath<esprima/invalid-syntax/migrated_0269/input.js>
-				start: Position 1:14
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSClassDeclaration {
 			id: JSBindingIdentifier {
 				name: "A"
 				loc: SourceLocation esprima/invalid-syntax/migrated_0269/input.js 1:6-1:7 (A)
 			}
-			loc: SourceLocation esprima/invalid-syntax/migrated_0269/input.js 1:0-1:21
 			meta: JSClassHead {
-				implements: undefined
-				superClass: undefined
-				superTypeParameters: undefined
-				typeParameters: undefined
-				loc: SourceLocation esprima/invalid-syntax/migrated_0269/input.js 1:0-1:21
-				body: Array [
+				body: [
 					JSClassMethod {
 						kind: "method"
 						key: JSStaticPropertyKey {
@@ -60,33 +25,27 @@ JSRoot {
 							}
 							loc: SourceLocation esprima/invalid-syntax/migrated_0269/input.js 1:9-1:10
 						}
-						loc: SourceLocation esprima/invalid-syntax/migrated_0269/input.js 1:9-1:14
 						body: JSBlockStatement {
-							body: Array []
-							directives: Array []
+							body: []
+							directives: []
 							loc: SourceLocation esprima/invalid-syntax/migrated_0269/input.js 1:12-1:14
-						}
-						meta: JSClassPropertyMeta {
-							abstract: false
-							accessibility: undefined
-							optional: false
-							readonly: false
-							static: false
-							typeAnnotation: undefined
-							loc: SourceLocation esprima/invalid-syntax/migrated_0269/input.js 1:9-1:10
-							start: Position 1:9
 						}
 						head: JSFunctionHead {
 							async: false
 							generator: false
 							hasHoistedVars: false
-							params: Array []
-							rest: undefined
-							returnType: undefined
-							thisType: undefined
-							typeParameters: undefined
+							params: []
 							loc: SourceLocation esprima/invalid-syntax/migrated_0269/input.js 1:10-1:12
 						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							optional: false
+							readonly: false
+							static: false
+							loc: SourceLocation esprima/invalid-syntax/migrated_0269/input.js 1:9-1:10
+							start: Position 1:9
+						}
+						loc: SourceLocation esprima/invalid-syntax/migrated_0269/input.js 1:9-1:14
 					}
 					JSClassMethod {
 						kind: "method"
@@ -97,38 +56,59 @@ JSRoot {
 							}
 							loc: SourceLocation esprima/invalid-syntax/migrated_0269/input.js 1:15-1:16
 						}
-						loc: SourceLocation esprima/invalid-syntax/migrated_0269/input.js 1:15-1:20
 						body: JSBlockStatement {
-							body: Array []
-							directives: Array []
+							body: []
+							directives: []
 							loc: SourceLocation esprima/invalid-syntax/migrated_0269/input.js 1:18-1:20
-						}
-						meta: JSClassPropertyMeta {
-							abstract: false
-							accessibility: undefined
-							optional: false
-							readonly: false
-							static: false
-							typeAnnotation: undefined
-							loc: SourceLocation esprima/invalid-syntax/migrated_0269/input.js 1:15-1:16
-							start: Position 1:15
 						}
 						head: JSFunctionHead {
 							async: false
 							generator: false
 							hasHoistedVars: false
-							params: Array []
-							rest: undefined
-							returnType: undefined
-							thisType: undefined
-							typeParameters: undefined
+							params: []
 							loc: SourceLocation esprima/invalid-syntax/migrated_0269/input.js 1:16-1:18
 						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							optional: false
+							readonly: false
+							static: false
+							loc: SourceLocation esprima/invalid-syntax/migrated_0269/input.js 1:15-1:16
+							start: Position 1:15
+						}
+						loc: SourceLocation esprima/invalid-syntax/migrated_0269/input.js 1:15-1:20
 					}
 				]
+				loc: SourceLocation esprima/invalid-syntax/migrated_0269/input.js 1:0-1:21
+			}
+			loc: SourceLocation esprima/invalid-syntax/migrated_0269/input.js 1:0-1:21
+		}
+	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "Expected an identifier"}
+			}
+			location: {
+				language: "js"
+				path: UIDPath<esprima/invalid-syntax/migrated_0269/input.js>
+				end: Position 1:14
+				start: Position 1:14
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<esprima/invalid-syntax/migrated_0269/input.js>
+	loc: SourceLocation esprima/invalid-syntax/migrated_0269/input.js 1:0-2:0
 }
 ```
 
@@ -141,7 +121,7 @@ JSRoot {
   ✖ Expected an identifier
 
     class A {a(){},b(){}}
-                  ^
+                  <error><emphasis>^</emphasis></error>
 
 
 ```

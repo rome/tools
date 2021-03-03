@@ -8,46 +8,18 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation experimental/function-sent/enabled-call/input.js 1:0-4:0
-	path: UIDPath<experimental/function-sent/enabled-call/input.js>
-	body: Array [
+	body: [
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "foo"
 				loc: SourceLocation experimental/function-sent/enabled-call/input.js 1:10-1:13 (foo)
 			}
-			loc: SourceLocation experimental/function-sent/enabled-call/input.js 1:0-3:1
-			head: JSFunctionHead {
-				async: false
-				generator: true
-				hasHoistedVars: false
-				params: Array []
-				rest: undefined
-				returnType: undefined
-				thisType: undefined
-				typeParameters: undefined
-				loc: SourceLocation experimental/function-sent/enabled-call/input.js 1:13-1:15
-			}
 			body: JSBlockStatement {
-				directives: Array []
-				loc: SourceLocation experimental/function-sent/enabled-call/input.js 1:16-3:1
-				body: Array [
+				body: [
 					JSExpressionStatement {
-						loc: SourceLocation experimental/function-sent/enabled-call/input.js 2:2-2:20
 						expression: JSCallExpression {
-							arguments: Array []
-							loc: SourceLocation experimental/function-sent/enabled-call/input.js 2:3-2:18
+							arguments: []
 							callee: JSMetaProperty {
-								loc: SourceLocation experimental/function-sent/enabled-call/input.js 2:3-2:16
 								meta: JSIdentifier {
 									name: "function"
 									loc: SourceLocation experimental/function-sent/enabled-call/input.js 2:3-2:11 (function)
@@ -56,13 +28,35 @@ JSRoot {
 									name: "sent"
 									loc: SourceLocation experimental/function-sent/enabled-call/input.js 2:12-2:16 (sent)
 								}
+								loc: SourceLocation experimental/function-sent/enabled-call/input.js 2:3-2:16
 							}
+							loc: SourceLocation experimental/function-sent/enabled-call/input.js 2:3-2:18
 						}
+						loc: SourceLocation experimental/function-sent/enabled-call/input.js 2:2-2:20
 					}
 				]
+				directives: []
+				loc: SourceLocation experimental/function-sent/enabled-call/input.js 1:16-3:1
 			}
+			head: JSFunctionHead {
+				async: false
+				generator: true
+				hasHoistedVars: false
+				params: []
+				loc: SourceLocation experimental/function-sent/enabled-call/input.js 1:13-1:15
+			}
+			loc: SourceLocation experimental/function-sent/enabled-call/input.js 1:0-3:1
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<experimental/function-sent/enabled-call/input.js>
+	loc: SourceLocation experimental/function-sent/enabled-call/input.js 1:0-4:0
 }
 ```
 

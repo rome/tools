@@ -8,35 +8,12 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation esprima/es2015-destructuring-assignment-array-pattern/dup-assignment/input.js 1:0-2:0
-	path: UIDPath<esprima/es2015-destructuring-assignment-array-pattern/dup-assignment/input.js>
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation esprima/es2015-destructuring-assignment-array-pattern/dup-assignment/input.js 1:0-1:14
 			expression: JSAssignmentExpression {
 				operator: "="
-				loc: SourceLocation esprima/es2015-destructuring-assignment-array-pattern/dup-assignment/input.js 1:0-1:13
-				right: JSNumericLiteral {
-					value: 0
-					format: undefined
-					loc: SourceLocation esprima/es2015-destructuring-assignment-array-pattern/dup-assignment/input.js 1:12-1:13
-				}
 				left: JSAssignmentArrayPattern {
-					loc: SourceLocation esprima/es2015-destructuring-assignment-array-pattern/dup-assignment/input.js 1:0-1:11
-					rest: JSAssignmentIdentifier {
-						name: "a"
-						loc: SourceLocation esprima/es2015-destructuring-assignment-array-pattern/dup-assignment/input.js 1:9-1:10 (a)
-					}
-					elements: Array [
+					elements: [
 						JSAssignmentIdentifier {
 							name: "a"
 							loc: SourceLocation esprima/es2015-destructuring-assignment-array-pattern/dup-assignment/input.js 1:1-1:2 (a)
@@ -45,12 +22,34 @@ JSRoot {
 							name: "a"
 							loc: SourceLocation esprima/es2015-destructuring-assignment-array-pattern/dup-assignment/input.js 1:3-1:4 (a)
 						}
-						JSArrayHole {loc: SourceLocation esprima/es2015-destructuring-assignment-array-pattern/dup-assignment/input.js 1:5-1:5}
+						JSArrayHole {
+							loc: SourceLocation esprima/es2015-destructuring-assignment-array-pattern/dup-assignment/input.js 1:5-1:5
+						}
 					]
+					rest: JSAssignmentIdentifier {
+						name: "a"
+						loc: SourceLocation esprima/es2015-destructuring-assignment-array-pattern/dup-assignment/input.js 1:9-1:10 (a)
+					}
+					loc: SourceLocation esprima/es2015-destructuring-assignment-array-pattern/dup-assignment/input.js 1:0-1:11
 				}
+				right: JSNumericLiteral {
+					value: 0
+					loc: SourceLocation esprima/es2015-destructuring-assignment-array-pattern/dup-assignment/input.js 1:12-1:13
+				}
+				loc: SourceLocation esprima/es2015-destructuring-assignment-array-pattern/dup-assignment/input.js 1:0-1:13
 			}
+			loc: SourceLocation esprima/es2015-destructuring-assignment-array-pattern/dup-assignment/input.js 1:0-1:14
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<esprima/es2015-destructuring-assignment-array-pattern/dup-assignment/input.js>
+	loc: SourceLocation esprima/es2015-destructuring-assignment-array-pattern/dup-assignment/input.js 1:0-2:0
 }
 ```
 

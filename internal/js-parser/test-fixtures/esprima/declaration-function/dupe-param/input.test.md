@@ -8,90 +8,80 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation esprima/declaration-function/dupe-param/input.js 1:0-2:0
-	path: UIDPath<esprima/declaration-function/dupe-param/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:15
-				path: UIDPath<esprima/declaration-function/dupe-param/input.js>
-				start: Position 1:14
-			}
-			description: Object {
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Argument <emphasis>x</emphasis> name clash in strict mode"}
-				advice: Array [
-					log {
-						category: "info"
-						text: RAW_MARKUP {value: "Defined already here"}
-					}
-					frame {location: SourceLocation esprima/declaration-function/dupe-param/input.js 1:14-1:15 (x)}
-				]
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "a"
 				loc: SourceLocation esprima/declaration-function/dupe-param/input.js 1:9-1:10 (a)
 			}
-			loc: SourceLocation esprima/declaration-function/dupe-param/input.js 1:0-1:32
 			body: JSBlockStatement {
-				body: Array []
-				loc: SourceLocation esprima/declaration-function/dupe-param/input.js 1:17-1:32
-				directives: Array [
+				body: []
+				directives: [
 					JSDirective {
 						value: "use strict"
 						loc: SourceLocation esprima/declaration-function/dupe-param/input.js 1:18-1:31
 					}
 				]
+				loc: SourceLocation esprima/declaration-function/dupe-param/input.js 1:17-1:32
 			}
 			head: JSFunctionHead {
 				async: false
 				generator: false
 				hasHoistedVars: false
-				rest: undefined
-				returnType: undefined
-				thisType: undefined
-				typeParameters: undefined
-				loc: SourceLocation esprima/declaration-function/dupe-param/input.js 1:10-1:16
-				params: Array [
+				params: [
 					JSBindingIdentifier {
 						name: "x"
-						loc: SourceLocation esprima/declaration-function/dupe-param/input.js 1:11-1:12 (x)
 						meta: JSPatternMeta {
-							optional: undefined
-							typeAnnotation: undefined
 							loc: SourceLocation esprima/declaration-function/dupe-param/input.js 1:11-1:12
 						}
+						loc: SourceLocation esprima/declaration-function/dupe-param/input.js 1:11-1:12 (x)
 					}
 					JSBindingIdentifier {
 						name: "x"
-						loc: SourceLocation esprima/declaration-function/dupe-param/input.js 1:14-1:15 (x)
 						meta: JSPatternMeta {
-							optional: undefined
-							typeAnnotation: undefined
 							loc: SourceLocation esprima/declaration-function/dupe-param/input.js 1:14-1:15
 						}
+						loc: SourceLocation esprima/declaration-function/dupe-param/input.js 1:14-1:15 (x)
 					}
 				]
+				loc: SourceLocation esprima/declaration-function/dupe-param/input.js 1:10-1:16
+			}
+			loc: SourceLocation esprima/declaration-function/dupe-param/input.js 1:0-1:32
+		}
+	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {
+				advice: [
+					log {
+						category: "info"
+						text: RAW_MARKUP {value: "Defined already here"}
+					}
+					frame {
+						location: SourceLocation esprima/declaration-function/dupe-param/input.js 1:14-1:15 (x)
+					}
+				]
+				category: ["parse"]
+				categoryValue: "js"
+				message: [RAW_MARKUP {value: "Argument <emphasis>"}, "x", RAW_MARKUP {value: "</emphasis> name clash in strict mode"}]
+			}
+			location: {
+				language: "js"
+				path: UIDPath<esprima/declaration-function/dupe-param/input.js>
+				end: Position 1:15
+				start: Position 1:14
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<esprima/declaration-function/dupe-param/input.js>
+	loc: SourceLocation esprima/declaration-function/dupe-param/input.js 1:0-2:0
 }
 ```
 
@@ -106,7 +96,7 @@ JSRoot {
   ℹ Defined already here
 
     function a(x, x) {'use strict';}
-                  ^
+                  <error><emphasis>^</emphasis></error>
 
 
 ```

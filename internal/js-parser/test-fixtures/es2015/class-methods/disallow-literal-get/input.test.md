@@ -8,49 +8,14 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2015/class-methods/disallow-literal-get/input.js 1:0-4:0
-	path: UIDPath<es2015/class-methods/disallow-literal-get/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Unknown class property start"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 2:7
-				path: UIDPath<es2015/class-methods/disallow-literal-get/input.js>
-				start: Position 2:8
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSClassDeclaration {
 			id: JSBindingIdentifier {
 				name: "A"
 				loc: SourceLocation es2015/class-methods/disallow-literal-get/input.js 1:6-1:7 (A)
 			}
-			loc: SourceLocation es2015/class-methods/disallow-literal-get/input.js 1:0-3:1
 			meta: JSClassHead {
-				implements: undefined
-				superClass: undefined
-				superTypeParameters: undefined
-				typeParameters: undefined
-				loc: SourceLocation es2015/class-methods/disallow-literal-get/input.js 1:0-3:1
-				body: Array [
+				body: [
 					JSClassMethod {
 						kind: "method"
 						key: JSStaticPropertyKey {
@@ -60,38 +25,59 @@ JSRoot {
 							}
 							loc: SourceLocation es2015/class-methods/disallow-literal-get/input.js 2:8-2:9
 						}
-						loc: SourceLocation es2015/class-methods/disallow-literal-get/input.js 2:8-2:14
 						body: JSBlockStatement {
-							body: Array []
-							directives: Array []
+							body: []
+							directives: []
 							loc: SourceLocation es2015/class-methods/disallow-literal-get/input.js 2:12-2:14
-						}
-						meta: JSClassPropertyMeta {
-							abstract: false
-							accessibility: undefined
-							optional: false
-							readonly: false
-							static: false
-							typeAnnotation: undefined
-							loc: SourceLocation es2015/class-methods/disallow-literal-get/input.js 2:8-2:9
-							start: Position 2:8
 						}
 						head: JSFunctionHead {
 							async: false
 							generator: false
 							hasHoistedVars: false
-							params: Array []
-							rest: undefined
-							returnType: undefined
-							thisType: undefined
-							typeParameters: undefined
+							params: []
 							loc: SourceLocation es2015/class-methods/disallow-literal-get/input.js 2:9-2:11
 						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							optional: false
+							readonly: false
+							static: false
+							loc: SourceLocation es2015/class-methods/disallow-literal-get/input.js 2:8-2:9
+							start: Position 2:8
+						}
+						loc: SourceLocation es2015/class-methods/disallow-literal-get/input.js 2:8-2:14
 					}
 				]
+				loc: SourceLocation es2015/class-methods/disallow-literal-get/input.js 1:0-3:1
+			}
+			loc: SourceLocation es2015/class-methods/disallow-literal-get/input.js 1:0-3:1
+		}
+	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "Unknown class property start"}
+			}
+			location: {
+				language: "js"
+				path: UIDPath<es2015/class-methods/disallow-literal-get/input.js>
+				end: Position 2:7
+				start: Position 2:8
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2015/class-methods/disallow-literal-get/input.js>
+	loc: SourceLocation es2015/class-methods/disallow-literal-get/input.js 1:0-4:0
 }
 ```
 
@@ -105,7 +91,7 @@ JSRoot {
 
     1 │ class A {
   > 2 │   "get" a() {}
-      │         ^
+      │         <error><emphasis>^</emphasis></error>
     3 │ }
 
 

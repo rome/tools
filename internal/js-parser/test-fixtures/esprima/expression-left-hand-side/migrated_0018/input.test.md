@@ -8,49 +8,18 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation esprima/expression-left-hand-side/migrated_0018/input.js 1:0-2:0
-	path: UIDPath<esprima/expression-left-hand-side/migrated_0018/input.js>
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation esprima/expression-left-hand-side/migrated_0018/input.js 1:0-1:45
 			expression: JSCallExpression {
-				loc: SourceLocation esprima/expression-left-hand-side/migrated_0018/input.js 1:0-1:45
-				arguments: Array [
+				arguments: [
 					JSNumericLiteral {
 						value: 2_014
-						format: undefined
 						loc: SourceLocation esprima/expression-left-hand-side/migrated_0018/input.js 1:40-1:44
 					}
 				]
 				callee: JSMemberExpression {
-					loc: SourceLocation esprima/expression-left-hand-side/migrated_0018/input.js 1:0-1:39
-					property: JSStaticMemberProperty {
-						value: JSIdentifier {
-							name: "prepareForElection"
-							loc: SourceLocation esprima/expression-left-hand-side/migrated_0018/input.js 1:21-1:39 (prepareForElection)
-						}
-						loc: SourceLocation esprima/expression-left-hand-side/migrated_0018/input.js 1:21-1:39 (prepareForElection)
-					}
 					object: JSMemberExpression {
-						loc: SourceLocation esprima/expression-left-hand-side/migrated_0018/input.js 1:0-1:20
-						property: JSStaticMemberProperty {
-							value: JSIdentifier {
-								name: "Indonesia"
-								loc: SourceLocation esprima/expression-left-hand-side/migrated_0018/input.js 1:11-1:20 (Indonesia)
-							}
-							loc: SourceLocation esprima/expression-left-hand-side/migrated_0018/input.js 1:11-1:20 (Indonesia)
-						}
 						object: JSMemberExpression {
-							loc: SourceLocation esprima/expression-left-hand-side/migrated_0018/input.js 1:0-1:10
 							object: JSReferenceIdentifier {
 								name: "earth"
 								loc: SourceLocation esprima/expression-left-hand-side/migrated_0018/input.js 1:0-1:5 (earth)
@@ -62,12 +31,40 @@ JSRoot {
 								}
 								loc: SourceLocation esprima/expression-left-hand-side/migrated_0018/input.js 1:6-1:10 (asia)
 							}
+							loc: SourceLocation esprima/expression-left-hand-side/migrated_0018/input.js 1:0-1:10
 						}
+						property: JSStaticMemberProperty {
+							value: JSIdentifier {
+								name: "Indonesia"
+								loc: SourceLocation esprima/expression-left-hand-side/migrated_0018/input.js 1:11-1:20 (Indonesia)
+							}
+							loc: SourceLocation esprima/expression-left-hand-side/migrated_0018/input.js 1:11-1:20 (Indonesia)
+						}
+						loc: SourceLocation esprima/expression-left-hand-side/migrated_0018/input.js 1:0-1:20
 					}
+					property: JSStaticMemberProperty {
+						value: JSIdentifier {
+							name: "prepareForElection"
+							loc: SourceLocation esprima/expression-left-hand-side/migrated_0018/input.js 1:21-1:39 (prepareForElection)
+						}
+						loc: SourceLocation esprima/expression-left-hand-side/migrated_0018/input.js 1:21-1:39 (prepareForElection)
+					}
+					loc: SourceLocation esprima/expression-left-hand-side/migrated_0018/input.js 1:0-1:39
 				}
+				loc: SourceLocation esprima/expression-left-hand-side/migrated_0018/input.js 1:0-1:45
 			}
+			loc: SourceLocation esprima/expression-left-hand-side/migrated_0018/input.js 1:0-1:45
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<esprima/expression-left-hand-side/migrated_0018/input.js>
+	loc: SourceLocation esprima/expression-left-hand-side/migrated_0018/input.js 1:0-2:0
 }
 ```
 

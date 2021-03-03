@@ -8,58 +8,53 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation esprima/invalid-syntax/migrated_0134/input.js 1:0-2:0
-	path: UIDPath<esprima/invalid-syntax/migrated_0134/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Expected an identifier"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:14
-				path: UIDPath<esprima/invalid-syntax/migrated_0134/input.js>
-				start: Position 1:14
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSTryStatement {
-			finalizer: undefined
-			loc: SourceLocation esprima/invalid-syntax/migrated_0134/input.js 1:0-1:20
 			block: JSBlockStatement {
-				body: Array []
-				directives: Array []
+				body: []
+				directives: []
 				loc: SourceLocation esprima/invalid-syntax/migrated_0134/input.js 1:4-1:6
 			}
 			handler: JSCatchClause {
-				loc: SourceLocation esprima/invalid-syntax/migrated_0134/input.js 1:7-1:20
+				body: JSBlockStatement {
+					body: []
+					directives: []
+					loc: SourceLocation esprima/invalid-syntax/migrated_0134/input.js 1:18-1:20
+				}
 				param: JSBindingIdentifier {
 					name: ""
 					loc: SourceLocation esprima/invalid-syntax/migrated_0134/input.js 1:14-1:16 ()
 				}
-				body: JSBlockStatement {
-					body: Array []
-					directives: Array []
-					loc: SourceLocation esprima/invalid-syntax/migrated_0134/input.js 1:18-1:20
-				}
+				loc: SourceLocation esprima/invalid-syntax/migrated_0134/input.js 1:7-1:20
+			}
+			loc: SourceLocation esprima/invalid-syntax/migrated_0134/input.js 1:0-1:20
+		}
+	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "Expected an identifier"}
+			}
+			location: {
+				language: "js"
+				path: UIDPath<esprima/invalid-syntax/migrated_0134/input.js>
+				end: Position 1:14
+				start: Position 1:14
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<esprima/invalid-syntax/migrated_0134/input.js>
+	loc: SourceLocation esprima/invalid-syntax/migrated_0134/input.js 1:0-2:0
 }
 ```
 
@@ -72,7 +67,7 @@ JSRoot {
   ✖ Expected an identifier
 
     try {} catch (42) {}
-                  ^
+                  <error><emphasis>^</emphasis></error>
 
 
 ```

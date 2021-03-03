@@ -8,52 +8,14 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	syntax: Array []
-	loc: SourceLocation typescript/class/async-optional-method/input.js 1:0-3:1
-	path: UIDPath<typescript/class/async-optional-method/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Expected <emphasis>ts</emphasis> syntax to be enabled"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 2:14
-				path: UIDPath<typescript/class/async-optional-method/input.js>
-				start: Position 2:14
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSClassDeclaration {
 			id: JSBindingIdentifier {
 				name: "A"
 				loc: SourceLocation typescript/class/async-optional-method/input.js 1:6-1:7 (A)
 			}
-			loc: SourceLocation typescript/class/async-optional-method/input.js 1:0-3:1
 			meta: JSClassHead {
-				implements: undefined
-				superTypeParameters: undefined
-				typeParameters: undefined
-				loc: SourceLocation typescript/class/async-optional-method/input.js 1:0-3:1
-				superClass: JSReferenceIdentifier {
-					name: "B"
-					loc: SourceLocation typescript/class/async-optional-method/input.js 1:16-1:17 (B)
-				}
-				body: Array [
+				body: [
 					TSDeclareMethod {
 						kind: "method"
 						key: JSStaticPropertyKey {
@@ -63,54 +25,84 @@ JSRoot {
 							}
 							loc: SourceLocation typescript/class/async-optional-method/input.js 2:8-2:14
 						}
-						body: undefined
-						loc: SourceLocation typescript/class/async-optional-method/input.js 2:2-2:44
-						meta: JSClassPropertyMeta {
-							abstract: false
-							accessibility: undefined
-							optional: true
-							readonly: false
-							static: false
-							typeAnnotation: undefined
-							loc: SourceLocation typescript/class/async-optional-method/input.js 2:2-2:15
-							start: Position 2:2
-						}
 						head: JSFunctionHead {
 							async: true
 							generator: false
 							hasHoistedVars: false
-							rest: undefined
-							thisType: undefined
-							typeParameters: undefined
-							loc: SourceLocation typescript/class/async-optional-method/input.js 2:15-2:43
-							params: Array [
+							params: [
 								JSBindingIdentifier {
 									name: "val"
-									loc: SourceLocation typescript/class/async-optional-method/input.js 2:16-2:19 (val)
 									meta: JSPatternMeta {
-										optional: undefined
+										typeAnnotation: TSStringKeywordTypeAnnotation {
+											loc: SourceLocation typescript/class/async-optional-method/input.js 2:21-2:27
+										}
 										loc: SourceLocation typescript/class/async-optional-method/input.js 2:16-2:27
-										typeAnnotation: TSStringKeywordTypeAnnotation {loc: SourceLocation typescript/class/async-optional-method/input.js 2:21-2:27}
 									}
+									loc: SourceLocation typescript/class/async-optional-method/input.js 2:16-2:19 (val)
 								}
 							]
 							returnType: TSTypeReference {
-								loc: SourceLocation typescript/class/async-optional-method/input.js 2:30-2:43
 								typeName: JSReferenceIdentifier {
 									name: "Promise"
 									loc: SourceLocation typescript/class/async-optional-method/input.js 2:30-2:37 (Promise)
 								}
 								typeParameters: TSTypeParameterInstantiation {
+									params: [
+										TSVoidKeywordTypeAnnotation {
+											loc: SourceLocation typescript/class/async-optional-method/input.js 2:38-2:42
+										}
+									]
 									loc: SourceLocation typescript/class/async-optional-method/input.js 2:37-2:43
-									params: Array [TSVoidKeywordTypeAnnotation {loc: SourceLocation typescript/class/async-optional-method/input.js 2:38-2:42}]
 								}
+								loc: SourceLocation typescript/class/async-optional-method/input.js 2:30-2:43
 							}
+							loc: SourceLocation typescript/class/async-optional-method/input.js 2:15-2:43
 						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							optional: true
+							readonly: false
+							static: false
+							loc: SourceLocation typescript/class/async-optional-method/input.js 2:2-2:15
+							start: Position 2:2
+						}
+						loc: SourceLocation typescript/class/async-optional-method/input.js 2:2-2:44
 					}
 				]
+				superClass: JSReferenceIdentifier {
+					name: "B"
+					loc: SourceLocation typescript/class/async-optional-method/input.js 1:16-1:17 (B)
+				}
+				loc: SourceLocation typescript/class/async-optional-method/input.js 1:0-3:1
+			}
+			loc: SourceLocation typescript/class/async-optional-method/input.js 1:0-3:1
+		}
+	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "js"
+				message: [RAW_MARKUP {value: "Expected <emphasis>"}, "ts", RAW_MARKUP {value: "</emphasis> syntax to be enabled"}]
+			}
+			location: {
+				language: "js"
+				path: UIDPath<typescript/class/async-optional-method/input.js>
+				end: Position 2:14
+				start: Position 2:14
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: []
+	path: UIDPath<typescript/class/async-optional-method/input.js>
+	loc: SourceLocation typescript/class/async-optional-method/input.js 1:0-3:1
 }
 ```
 
@@ -124,7 +116,7 @@ JSRoot {
 
     1 │ class A extends B {
   > 2 │   async method?(val: string): Promise<void>;
-      │               ^
+      │               <error><emphasis>^</emphasis></error>
     3 │ }
 
 

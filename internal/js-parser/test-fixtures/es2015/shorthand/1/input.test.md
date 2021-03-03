@@ -8,51 +8,18 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: true
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2015/shorthand/1/input.js 1:0-2:0
-	path: UIDPath<es2015/shorthand/1/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Unexpected keyword <emphasis>const</emphasis>"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:16
-				path: UIDPath<es2015/shorthand/1/input.js>
-				start: Position 1:11
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSVariableDeclarationStatement {
-			loc: SourceLocation es2015/shorthand/1/input.js 1:0-1:20
 			declaration: JSVariableDeclaration {
 				kind: "var"
-				loc: SourceLocation es2015/shorthand/1/input.js 1:0-1:20
-				declarations: Array [
+				declarations: [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "x"
 							loc: SourceLocation es2015/shorthand/1/input.js 1:4-1:5 (x)
 						}
-						loc: SourceLocation es2015/shorthand/1/input.js 1:4-1:19
 						init: JSObjectExpression {
-							loc: SourceLocation es2015/shorthand/1/input.js 1:9-1:18
-							properties: Array [
+							properties: [
 								JSObjectProperty {
 									key: JSStaticPropertyKey {
 										value: JSIdentifier {
@@ -68,12 +35,41 @@ JSRoot {
 									loc: SourceLocation es2015/shorthand/1/input.js 1:11-1:16
 								}
 							]
+							loc: SourceLocation es2015/shorthand/1/input.js 1:9-1:18
 						}
+						loc: SourceLocation es2015/shorthand/1/input.js 1:4-1:19
 					}
 				]
+				loc: SourceLocation es2015/shorthand/1/input.js 1:0-1:20
+			}
+			loc: SourceLocation es2015/shorthand/1/input.js 1:0-1:20
+		}
+	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "js"
+				message: [RAW_MARKUP {value: "Unexpected keyword <emphasis>"}, "const", RAW_MARKUP {value: "</emphasis>"}]
+			}
+			location: {
+				language: "js"
+				path: UIDPath<es2015/shorthand/1/input.js>
+				end: Position 1:16
+				start: Position 1:11
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: true
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2015/shorthand/1/input.js>
+	loc: SourceLocation es2015/shorthand/1/input.js 1:0-2:0
 }
 ```
 
@@ -86,7 +82,9 @@ JSRoot {
   ✖ Unexpected keyword const
 
     var x = ({ const });
-               ^^^^^
+               <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
+    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
+    <error><emphasis>^</emphasis></error>
 
 
 ```

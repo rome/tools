@@ -8,76 +8,66 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2015/yield/in-plain-function/input.js 1:0-1:26
-	path: UIDPath<es2015/yield/in-plain-function/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Expected a semicolon or a line terminator"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:20
-				path: UIDPath<es2015/yield/in-plain-function/input.js>
-				start: Position 1:21
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation es2015/yield/in-plain-function/input.js 1:0-1:26
 			expression: JSFunctionExpression {
-				id: undefined
-				loc: SourceLocation es2015/yield/in-plain-function/input.js 1:1-1:25
-				head: JSFunctionHead {
-					async: false
-					generator: false
-					hasHoistedVars: false
-					params: Array []
-					rest: undefined
-					returnType: undefined
-					thisType: undefined
-					typeParameters: undefined
-					loc: SourceLocation es2015/yield/in-plain-function/input.js 1:10-1:12
-				}
 				body: JSBlockStatement {
-					directives: Array []
-					loc: SourceLocation es2015/yield/in-plain-function/input.js 1:13-1:25
-					body: Array [
+					body: [
 						JSExpressionStatement {
-							loc: SourceLocation es2015/yield/in-plain-function/input.js 1:15-1:20
 							expression: JSReferenceIdentifier {
 								name: "yield"
 								loc: SourceLocation es2015/yield/in-plain-function/input.js 1:15-1:20 (yield)
 							}
+							loc: SourceLocation es2015/yield/in-plain-function/input.js 1:15-1:20
 						}
 						JSExpressionStatement {
-							loc: SourceLocation es2015/yield/in-plain-function/input.js 1:21-1:23
 							expression: JSNumericLiteral {
 								value: 10
-								format: undefined
 								loc: SourceLocation es2015/yield/in-plain-function/input.js 1:21-1:23
 							}
+							loc: SourceLocation es2015/yield/in-plain-function/input.js 1:21-1:23
 						}
 					]
+					directives: []
+					loc: SourceLocation es2015/yield/in-plain-function/input.js 1:13-1:25
 				}
+				head: JSFunctionHead {
+					async: false
+					generator: false
+					hasHoistedVars: false
+					params: []
+					loc: SourceLocation es2015/yield/in-plain-function/input.js 1:10-1:12
+				}
+				loc: SourceLocation es2015/yield/in-plain-function/input.js 1:1-1:25
+			}
+			loc: SourceLocation es2015/yield/in-plain-function/input.js 1:0-1:26
+		}
+	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "Expected a semicolon or a line terminator"}
+			}
+			location: {
+				language: "js"
+				path: UIDPath<es2015/yield/in-plain-function/input.js>
+				end: Position 1:20
+				start: Position 1:21
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2015/yield/in-plain-function/input.js>
+	loc: SourceLocation es2015/yield/in-plain-function/input.js 1:0-1:26
 }
 ```
 
@@ -90,7 +80,7 @@ JSRoot {
   ✖ Expected a semicolon or a line terminator
 
     (function () { yield 10 })
-                         ^
+                         <error><emphasis>^</emphasis></error>
 
 
 ```

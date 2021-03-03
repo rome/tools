@@ -8,31 +8,14 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation experimental/class-private-methods/async/input.js 1:0-6:0
-	path: UIDPath<experimental/class-private-methods/async/input.js>
-	body: Array [
+	body: [
 		JSClassDeclaration {
 			id: JSBindingIdentifier {
 				name: "Hotel"
 				loc: SourceLocation experimental/class-private-methods/async/input.js 1:6-1:11 (Hotel)
 			}
-			loc: SourceLocation experimental/class-private-methods/async/input.js 1:0-5:1
 			meta: JSClassHead {
-				implements: undefined
-				superClass: undefined
-				superTypeParameters: undefined
-				typeParameters: undefined
-				loc: SourceLocation experimental/class-private-methods/async/input.js 1:0-5:1
-				body: Array [
+				body: [
 					JSClassPrivateMethod {
 						kind: "method"
 						key: JSPrivateName {
@@ -42,53 +25,58 @@ JSRoot {
 							}
 							loc: SourceLocation experimental/class-private-methods/async/input.js 2:8-2:13
 						}
-						loc: SourceLocation experimental/class-private-methods/async/input.js 2:2-4:3
-						meta: JSClassPropertyMeta {
-							abstract: false
-							accessibility: undefined
-							optional: false
-							readonly: false
-							static: false
-							typeAnnotation: undefined
-							loc: SourceLocation experimental/class-private-methods/async/input.js 2:2-2:13
-							start: Position 2:2
+						body: JSBlockStatement {
+							body: [
+								JSExpressionStatement {
+									expression: JSAwaitExpression {
+										argument: JSCallExpression {
+											arguments: []
+											callee: JSReferenceIdentifier {
+												name: "notReally"
+												loc: SourceLocation experimental/class-private-methods/async/input.js 3:10-3:19 (notReally)
+											}
+											loc: SourceLocation experimental/class-private-methods/async/input.js 3:10-3:21
+										}
+										loc: SourceLocation experimental/class-private-methods/async/input.js 3:4-3:21
+									}
+									loc: SourceLocation experimental/class-private-methods/async/input.js 3:4-3:22
+								}
+							]
+							directives: []
+							loc: SourceLocation experimental/class-private-methods/async/input.js 2:16-4:3
 						}
 						head: JSFunctionHead {
 							async: true
 							generator: false
 							hasHoistedVars: false
-							params: Array []
-							rest: undefined
-							returnType: undefined
-							thisType: undefined
-							typeParameters: undefined
+							params: []
 							loc: SourceLocation experimental/class-private-methods/async/input.js 2:13-2:15
 						}
-						body: JSBlockStatement {
-							directives: Array []
-							loc: SourceLocation experimental/class-private-methods/async/input.js 2:16-4:3
-							body: Array [
-								JSExpressionStatement {
-									loc: SourceLocation experimental/class-private-methods/async/input.js 3:4-3:22
-									expression: JSAwaitExpression {
-										loc: SourceLocation experimental/class-private-methods/async/input.js 3:4-3:21
-										argument: JSCallExpression {
-											arguments: Array []
-											loc: SourceLocation experimental/class-private-methods/async/input.js 3:10-3:21
-											callee: JSReferenceIdentifier {
-												name: "notReally"
-												loc: SourceLocation experimental/class-private-methods/async/input.js 3:10-3:19 (notReally)
-											}
-										}
-									}
-								}
-							]
+						meta: JSClassPropertyMeta {
+							abstract: false
+							optional: false
+							readonly: false
+							static: false
+							loc: SourceLocation experimental/class-private-methods/async/input.js 2:2-2:13
+							start: Position 2:2
 						}
+						loc: SourceLocation experimental/class-private-methods/async/input.js 2:2-4:3
 					}
 				]
+				loc: SourceLocation experimental/class-private-methods/async/input.js 1:0-5:1
 			}
+			loc: SourceLocation experimental/class-private-methods/async/input.js 1:0-5:1
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<experimental/class-private-methods/async/input.js>
+	loc: SourceLocation experimental/class-private-methods/async/input.js 1:0-6:0
 }
 ```
 

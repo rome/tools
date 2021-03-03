@@ -8,25 +8,11 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	syntax: Array []
-	loc: SourceLocation es2015/modules/duplicate-named-export-destructuring-assignment/input.js 1:0-3:0
-	path: UIDPath<es2015/modules/duplicate-named-export-destructuring-assignment/input.js>
-	body: Array [
+	body: [
 		JSExportLocalDeclaration {
-			declaration: undefined
 			exportKind: "value"
-			loc: SourceLocation es2015/modules/duplicate-named-export-destructuring-assignment/input.js 1:0-1:15
-			specifiers: Array [
+			specifiers: [
 				JSExportLocalSpecifier {
-					loc: SourceLocation es2015/modules/duplicate-named-export-destructuring-assignment/input.js 1:9-1:12
 					exported: JSIdentifier {
 						name: "foo"
 						loc: SourceLocation es2015/modules/duplicate-named-export-destructuring-assignment/input.js 1:9-1:12 (foo)
@@ -35,24 +21,20 @@ JSRoot {
 						name: "foo"
 						loc: SourceLocation es2015/modules/duplicate-named-export-destructuring-assignment/input.js 1:9-1:12 (foo)
 					}
+					loc: SourceLocation es2015/modules/duplicate-named-export-destructuring-assignment/input.js 1:9-1:12
 				}
 			]
+			loc: SourceLocation es2015/modules/duplicate-named-export-destructuring-assignment/input.js 1:0-1:15
 		}
 		JSExportLocalDeclaration {
 			exportKind: "value"
-			specifiers: undefined
-			loc: SourceLocation es2015/modules/duplicate-named-export-destructuring-assignment/input.js 2:0-2:31
 			declaration: JSVariableDeclarationStatement {
-				loc: SourceLocation es2015/modules/duplicate-named-export-destructuring-assignment/input.js 2:7-2:31
 				declaration: JSVariableDeclaration {
 					kind: "const"
-					loc: SourceLocation es2015/modules/duplicate-named-export-destructuring-assignment/input.js 2:7-2:31
-					declarations: Array [
+					declarations: [
 						JSVariableDeclarator {
 							id: JSBindingObjectPattern {
-								rest: undefined
-								loc: SourceLocation es2015/modules/duplicate-named-export-destructuring-assignment/input.js 2:13-2:24
-								properties: Array [
+								properties: [
 									JSBindingObjectPatternProperty {
 										key: JSStaticPropertyKey {
 											value: JSIdentifier {
@@ -62,32 +44,44 @@ JSRoot {
 											loc: SourceLocation es2015/modules/duplicate-named-export-destructuring-assignment/input.js 2:15-2:18
 										}
 										value: JSBindingAssignmentPattern {
-											loc: SourceLocation es2015/modules/duplicate-named-export-destructuring-assignment/input.js 2:15-2:22
 											left: JSBindingIdentifier {
 												name: "foo"
 												loc: SourceLocation es2015/modules/duplicate-named-export-destructuring-assignment/input.js 2:15-2:18 (foo)
 											}
 											right: JSNumericLiteral {
 												value: 1
-												format: undefined
 												loc: SourceLocation es2015/modules/duplicate-named-export-destructuring-assignment/input.js 2:21-2:22
 											}
+											loc: SourceLocation es2015/modules/duplicate-named-export-destructuring-assignment/input.js 2:15-2:22
 										}
 										loc: SourceLocation es2015/modules/duplicate-named-export-destructuring-assignment/input.js 2:15-2:22
 									}
 								]
+								loc: SourceLocation es2015/modules/duplicate-named-export-destructuring-assignment/input.js 2:13-2:24
 							}
-							loc: SourceLocation es2015/modules/duplicate-named-export-destructuring-assignment/input.js 2:13-2:30
 							init: JSReferenceIdentifier {
 								name: "bar"
 								loc: SourceLocation es2015/modules/duplicate-named-export-destructuring-assignment/input.js 2:27-2:30 (bar)
 							}
+							loc: SourceLocation es2015/modules/duplicate-named-export-destructuring-assignment/input.js 2:13-2:30
 						}
 					]
+					loc: SourceLocation es2015/modules/duplicate-named-export-destructuring-assignment/input.js 2:7-2:31
 				}
+				loc: SourceLocation es2015/modules/duplicate-named-export-destructuring-assignment/input.js 2:7-2:31
 			}
+			loc: SourceLocation es2015/modules/duplicate-named-export-destructuring-assignment/input.js 2:0-2:31
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: []
+	path: UIDPath<es2015/modules/duplicate-named-export-destructuring-assignment/input.js>
+	loc: SourceLocation es2015/modules/duplicate-named-export-destructuring-assignment/input.js 1:0-3:0
 }
 ```
 

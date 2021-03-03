@@ -8,112 +8,92 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation esprima/es2015-yield/invalid-yield-generator-strict-function-parameter/input.js 1:0-2:0
-	path: UIDPath<esprima/es2015-yield/invalid-yield-generator-strict-function-parameter/input.js>
-	directives: Array [
-		JSDirective {
-			value: "use strict"
-			loc: SourceLocation esprima/es2015-yield/invalid-yield-generator-strict-function-parameter/input.js 1:0-1:13
-		}
-	]
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "yield is a reserved word"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:52
-				path: UIDPath<esprima/es2015-yield/invalid-yield-generator-strict-function-parameter/input.js>
-				start: Position 1:47
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "g"
 				loc: SourceLocation esprima/es2015-yield/invalid-yield-generator-strict-function-parameter/input.js 1:24-1:25 (g)
 			}
-			loc: SourceLocation esprima/es2015-yield/invalid-yield-generator-strict-function-parameter/input.js 1:14-1:58
-			head: JSFunctionHead {
-				async: false
-				generator: true
-				hasHoistedVars: true
-				params: Array []
-				rest: undefined
-				returnType: undefined
-				thisType: undefined
-				typeParameters: undefined
-				loc: SourceLocation esprima/es2015-yield/invalid-yield-generator-strict-function-parameter/input.js 1:25-1:27
-			}
 			body: JSBlockStatement {
-				directives: Array []
-				loc: SourceLocation esprima/es2015-yield/invalid-yield-generator-strict-function-parameter/input.js 1:28-1:58
-				body: Array [
+				body: [
 					JSVariableDeclarationStatement {
-						loc: SourceLocation esprima/es2015-yield/invalid-yield-generator-strict-function-parameter/input.js 1:30-1:56
 						declaration: JSVariableDeclaration {
 							kind: "var"
-							loc: SourceLocation esprima/es2015-yield/invalid-yield-generator-strict-function-parameter/input.js 1:30-1:56
-							declarations: Array [
+							declarations: [
 								JSVariableDeclarator {
 									id: JSBindingIdentifier {
 										name: "z"
 										loc: SourceLocation esprima/es2015-yield/invalid-yield-generator-strict-function-parameter/input.js 1:34-1:35 (z)
 									}
-									loc: SourceLocation esprima/es2015-yield/invalid-yield-generator-strict-function-parameter/input.js 1:34-1:56
 									init: JSFunctionExpression {
-										id: undefined
-										loc: SourceLocation esprima/es2015-yield/invalid-yield-generator-strict-function-parameter/input.js 1:38-1:56
 										body: JSBlockStatement {
-											body: Array []
-											directives: Array []
+											body: []
+											directives: []
 											loc: SourceLocation esprima/es2015-yield/invalid-yield-generator-strict-function-parameter/input.js 1:54-1:56
 										}
 										head: JSFunctionHead {
 											async: false
 											generator: false
 											hasHoistedVars: false
-											rest: undefined
-											returnType: undefined
-											thisType: undefined
-											typeParameters: undefined
-											loc: SourceLocation esprima/es2015-yield/invalid-yield-generator-strict-function-parameter/input.js 1:46-1:53
-											params: Array [
+											params: [
 												JSBindingIdentifier {
 													name: "yield"
-													loc: SourceLocation esprima/es2015-yield/invalid-yield-generator-strict-function-parameter/input.js 1:47-1:52 (yield)
 													meta: JSPatternMeta {
-														optional: undefined
-														typeAnnotation: undefined
 														loc: SourceLocation esprima/es2015-yield/invalid-yield-generator-strict-function-parameter/input.js 1:47-1:52
 													}
+													loc: SourceLocation esprima/es2015-yield/invalid-yield-generator-strict-function-parameter/input.js 1:47-1:52 (yield)
 												}
 											]
+											loc: SourceLocation esprima/es2015-yield/invalid-yield-generator-strict-function-parameter/input.js 1:46-1:53
 										}
+										loc: SourceLocation esprima/es2015-yield/invalid-yield-generator-strict-function-parameter/input.js 1:38-1:56
 									}
+									loc: SourceLocation esprima/es2015-yield/invalid-yield-generator-strict-function-parameter/input.js 1:34-1:56
 								}
 							]
+							loc: SourceLocation esprima/es2015-yield/invalid-yield-generator-strict-function-parameter/input.js 1:30-1:56
 						}
+						loc: SourceLocation esprima/es2015-yield/invalid-yield-generator-strict-function-parameter/input.js 1:30-1:56
 					}
 				]
+				directives: []
+				loc: SourceLocation esprima/es2015-yield/invalid-yield-generator-strict-function-parameter/input.js 1:28-1:58
+			}
+			head: JSFunctionHead {
+				async: false
+				generator: true
+				hasHoistedVars: true
+				params: []
+				loc: SourceLocation esprima/es2015-yield/invalid-yield-generator-strict-function-parameter/input.js 1:25-1:27
+			}
+			loc: SourceLocation esprima/es2015-yield/invalid-yield-generator-strict-function-parameter/input.js 1:14-1:58
+		}
+	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {advice: [], category: ["parse"], categoryValue: "js", message: ["yield", RAW_MARKUP {value: " is a reserved word"}]}
+			location: {
+				language: "js"
+				path: UIDPath<esprima/es2015-yield/invalid-yield-generator-strict-function-parameter/input.js>
+				end: Position 1:52
+				start: Position 1:47
 			}
 		}
 	]
+	directives: [
+		JSDirective {
+			value: "use strict"
+			loc: SourceLocation esprima/es2015-yield/invalid-yield-generator-strict-function-parameter/input.js 1:0-1:13
+		}
+	]
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<esprima/es2015-yield/invalid-yield-generator-strict-function-parameter/input.js>
+	loc: SourceLocation esprima/es2015-yield/invalid-yield-generator-strict-function-parameter/input.js 1:0-2:0
 }
 ```
 
@@ -126,7 +106,9 @@ JSRoot {
   ✖ yield is a reserved word
 
     "use strict"; function *g() { var z = function(yield) {} }
-                                                   ^^^^^
+                                                   <error><emphasis>^</emphasis></error>
+    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
+    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
 
 
 ```

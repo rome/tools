@@ -8,57 +8,52 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: true
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	syntax: Array []
-	loc: SourceLocation esprima/es2015-export-declaration/invalid-export-batch-token/input.js 1:0-2:0
-	path: UIDPath<esprima/es2015-export-declaration/invalid-export-batch-token/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Expected `from` for an export node"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:8
-				path: UIDPath<esprima/es2015-export-declaration/invalid-export-batch-token/input.js>
-				start: Position 1:9
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSExportAllDeclaration {
-			exportKind: undefined
-			loc: SourceLocation esprima/es2015-export-declaration/invalid-export-batch-token/input.js 1:0-1:8
 			source: JSStringLiteral {
 				value: ""
 				loc: SourceLocation esprima/es2015-export-declaration/invalid-export-batch-token/input.js 1:9-1:8
 			}
+			loc: SourceLocation esprima/es2015-export-declaration/invalid-export-batch-token/input.js 1:0-1:8
 		}
 		JSExpressionStatement {
-			loc: SourceLocation esprima/es2015-export-declaration/invalid-export-batch-token/input.js 1:9-2:0
 			expression: JSUnaryExpression {
 				operator: "+"
 				prefix: true
-				loc: SourceLocation esprima/es2015-export-declaration/invalid-export-batch-token/input.js 1:9-2:0
 				argument: JSReferenceIdentifier {
 					name: "INVALID_PLACEHOLDER"
 					loc: SourceLocation esprima/es2015-export-declaration/invalid-export-batch-token/input.js 2:0-2:0
 				}
+				loc: SourceLocation esprima/es2015-export-declaration/invalid-export-batch-token/input.js 1:9-2:0
+			}
+			loc: SourceLocation esprima/es2015-export-declaration/invalid-export-batch-token/input.js 1:9-2:0
+		}
+	]
+	comments: []
+	corrupt: true
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "Expected `from` for an export node"}
+			}
+			location: {
+				language: "js"
+				path: UIDPath<esprima/es2015-export-declaration/invalid-export-batch-token/input.js>
+				end: Position 1:8
+				start: Position 1:9
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: []
+	path: UIDPath<esprima/es2015-export-declaration/invalid-export-batch-token/input.js>
+	loc: SourceLocation esprima/es2015-export-declaration/invalid-export-batch-token/input.js 1:0-2:0
 }
 ```
 
@@ -71,7 +66,7 @@ JSRoot {
   ✖ Expected `from` for an export node
 
     export * +
-             ^
+             <error><emphasis>^</emphasis></error>
 
 
 ```

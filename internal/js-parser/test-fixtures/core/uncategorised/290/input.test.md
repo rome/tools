@@ -10,13 +10,19 @@
 JSRoot {
 	body: [
 		JSFunctionDeclaration {
-			id: JSBindingIdentifier {name: "hello", loc: SourceLocation core/uncategorised/290/input.js 1:9-1:14 (hello)}
+			id: JSBindingIdentifier {
+				name: "hello"
+				loc: SourceLocation core/uncategorised/290/input.js 1:9-1:14 (hello)
+			}
 			body: JSBlockStatement {
 				body: [
 					JSExpressionStatement {
 						expression: JSCallExpression {
 							arguments: []
-							callee: JSReferenceIdentifier {name: "sayHi", loc: SourceLocation core/uncategorised/290/input.js 1:20-1:25 (sayHi)}
+							callee: JSReferenceIdentifier {
+								name: "sayHi"
+								loc: SourceLocation core/uncategorised/290/input.js 1:20-1:25 (sayHi)
+							}
 							loc: SourceLocation core/uncategorised/290/input.js 1:20-1:27
 						}
 						loc: SourceLocation core/uncategorised/290/input.js 1:20-1:28
@@ -32,7 +38,9 @@ JSRoot {
 				params: [
 					JSBindingIdentifier {
 						name: "a"
-						meta: JSPatternMeta {loc: SourceLocation core/uncategorised/290/input.js 1:15-1:16}
+						meta: JSPatternMeta {
+							loc: SourceLocation core/uncategorised/290/input.js 1:15-1:16
+						}
 						loc: SourceLocation core/uncategorised/290/input.js 1:15-1:16 (a)
 					}
 				]
@@ -46,9 +54,9 @@ JSRoot {
 	diagnostics: []
 	directives: []
 	hasHoistedVars: false
-	path: UIDPath<core/uncategorised/290/input.js>
 	sourceType: "script"
 	syntax: []
+	path: UIDPath<core/uncategorised/290/input.js>
 	loc: SourceLocation core/uncategorised/290/input.js 1:0-1:30
 }
 ```

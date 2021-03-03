@@ -11,9 +11,15 @@ JSRoot {
 	body: [
 		JSExpressionStatement {
 			expression: JSBinaryExpression {
-				left: JSReferenceIdentifier {name: "x", loc: SourceLocation core/uncategorised/167/input.js 1:0-1:1 (x)}
 				operator: "!="
-				right: JSReferenceIdentifier {name: "y", loc: SourceLocation core/uncategorised/167/input.js 1:5-1:6 (y)}
+				left: JSReferenceIdentifier {
+					name: "x"
+					loc: SourceLocation core/uncategorised/167/input.js 1:0-1:1 (x)
+				}
+				right: JSReferenceIdentifier {
+					name: "y"
+					loc: SourceLocation core/uncategorised/167/input.js 1:5-1:6 (y)
+				}
 				loc: SourceLocation core/uncategorised/167/input.js 1:0-1:6
 			}
 			loc: SourceLocation core/uncategorised/167/input.js 1:0-1:6
@@ -24,9 +30,9 @@ JSRoot {
 	diagnostics: []
 	directives: []
 	hasHoistedVars: false
-	path: UIDPath<core/uncategorised/167/input.js>
 	sourceType: "script"
 	syntax: []
+	path: UIDPath<core/uncategorised/167/input.js>
 	loc: SourceLocation core/uncategorised/167/input.js 1:0-1:6
 }
 ```

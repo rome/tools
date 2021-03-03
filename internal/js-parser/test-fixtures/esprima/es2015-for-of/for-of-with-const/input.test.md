@@ -8,42 +8,41 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation esprima/es2015-for-of/for-of-with-const/input.js 1:0-2:0
-	path: UIDPath<esprima/es2015-for-of/for-of-with-const/input.js>
-	body: Array [
+	body: [
 		JSForOfStatement {
 			await: false
-			body: JSEmptyStatement {loc: SourceLocation esprima/es2015-for-of/for-of-with-const/input.js 1:21-1:22}
-			loc: SourceLocation esprima/es2015-for-of/for-of-with-const/input.js 1:0-1:22
-			right: JSReferenceIdentifier {
-				name: "list"
-				loc: SourceLocation esprima/es2015-for-of/for-of-with-const/input.js 1:16-1:20 (list)
+			body: JSEmptyStatement {
+				loc: SourceLocation esprima/es2015-for-of/for-of-with-const/input.js 1:21-1:22
 			}
 			left: JSVariableDeclaration {
 				kind: "const"
-				loc: SourceLocation esprima/es2015-for-of/for-of-with-const/input.js 1:5-1:12
-				declarations: Array [
+				declarations: [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "y"
 							loc: SourceLocation esprima/es2015-for-of/for-of-with-const/input.js 1:11-1:12 (y)
 						}
-						init: undefined
 						loc: SourceLocation esprima/es2015-for-of/for-of-with-const/input.js 1:11-1:12
 					}
 				]
+				loc: SourceLocation esprima/es2015-for-of/for-of-with-const/input.js 1:5-1:12
 			}
+			right: JSReferenceIdentifier {
+				name: "list"
+				loc: SourceLocation esprima/es2015-for-of/for-of-with-const/input.js 1:16-1:20 (list)
+			}
+			loc: SourceLocation esprima/es2015-for-of/for-of-with-const/input.js 1:0-1:22
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<esprima/es2015-for-of/for-of-with-const/input.js>
+	loc: SourceLocation esprima/es2015-for-of/for-of-with-const/input.js 1:0-2:0
 }
 ```
 

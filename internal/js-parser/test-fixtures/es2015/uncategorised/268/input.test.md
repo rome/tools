@@ -8,84 +8,72 @@
 
 ```javascript
 JSRoot {
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2015/uncategorised/268/input.js 1:0-1:53
-	path: UIDPath<es2015/uncategorised/268/input.js>
-	comments: Array [
+	body: [
+		JSFunctionDeclaration {
+			trailingComments: ["0"]
+			id: JSBindingIdentifier {
+				name: "a"
+				loc: SourceLocation es2015/uncategorised/268/input.js 1:9-1:10 (a)
+			}
+			body: JSBlockStatement {
+				body: [
+					JSExpressionStatement {
+						expression: JSNumericLiteral {
+							value: 1
+							loc: SourceLocation es2015/uncategorised/268/input.js 1:13-1:14
+						}
+						loc: SourceLocation es2015/uncategorised/268/input.js 1:13-1:14
+					}
+				]
+				directives: []
+				loc: SourceLocation es2015/uncategorised/268/input.js 1:13-1:14
+			}
+			head: JSFunctionHead {
+				async: false
+				generator: false
+				hasHoistedVars: false
+				params: []
+				loc: SourceLocation es2015/uncategorised/268/input.js 1:10-1:12
+			}
+			loc: SourceLocation es2015/uncategorised/268/input.js 1:0-1:14
+		}
+	]
+	comments: [
 		CommentLine {
 			id: "0"
 			value: " expression closure is not supported"
 			loc: SourceLocation es2015/uncategorised/268/input.js 1:15-1:53
 		}
 	]
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:12
-				path: UIDPath<es2015/uncategorised/268/input.js>
-				start: Position 1:13
-			}
-			description: Object {
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Unexpected character <emphasis>1</emphasis>"}
-				advice: Array [
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {
+				advice: [
 					log {
 						category: "info"
-						text: RAW_MARKUP {value: "Expected the opening block character <emphasis>{</emphasis>"}
+						text: [RAW_MARKUP {value: "Expected the opening "}, "block", RAW_MARKUP {value: " character <emphasis>"}, "{", RAW_MARKUP {value: "</emphasis>"}]
 					}
 				]
+				category: ["parse"]
+				categoryValue: "js"
+				message: [RAW_MARKUP {value: "Unexpected character <emphasis>"}, "1", RAW_MARKUP {value: "</emphasis>"}]
+			}
+			location: {
+				language: "js"
+				path: UIDPath<es2015/uncategorised/268/input.js>
+				end: Position 1:12
+				start: Position 1:13
 			}
 		}
 	]
-	body: Array [
-		JSFunctionDeclaration {
-			id: JSBindingIdentifier {
-				name: "a"
-				loc: SourceLocation es2015/uncategorised/268/input.js 1:9-1:10 (a)
-			}
-			loc: SourceLocation es2015/uncategorised/268/input.js 1:0-1:14
-			trailingComments: Array ["0"]
-			head: JSFunctionHead {
-				async: false
-				generator: false
-				hasHoistedVars: false
-				params: Array []
-				rest: undefined
-				returnType: undefined
-				thisType: undefined
-				typeParameters: undefined
-				loc: SourceLocation es2015/uncategorised/268/input.js 1:10-1:12
-			}
-			body: JSBlockStatement {
-				directives: Array []
-				trailingComments: undefined
-				loc: SourceLocation es2015/uncategorised/268/input.js 1:13-1:14
-				body: Array [
-					JSExpressionStatement {
-						trailingComments: undefined
-						loc: SourceLocation es2015/uncategorised/268/input.js 1:13-1:14
-						expression: JSNumericLiteral {
-							value: 1
-							format: undefined
-							trailingComments: undefined
-							loc: SourceLocation es2015/uncategorised/268/input.js 1:13-1:14
-						}
-					}
-				]
-			}
-		}
-	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2015/uncategorised/268/input.js>
+	loc: SourceLocation es2015/uncategorised/268/input.js 1:0-1:53
 }
 ```
 
@@ -98,7 +86,7 @@ JSRoot {
   ✖ Unexpected character 1
 
     function a() 1 // expression closure is not supported
-                 ^
+                 <error><emphasis>^</emphasis></error>
 
   ℹ Expected the opening block character {
 

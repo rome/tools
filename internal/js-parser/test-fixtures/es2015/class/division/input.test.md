@@ -8,163 +8,141 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2015/class/division/input.js 1:0-10:0
-	path: UIDPath<es2015/class/division/input.js>
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation es2015/class/division/input.js 1:0-1:17
 			expression: JSAssignmentExpression {
 				operator: "="
-				loc: SourceLocation es2015/class/division/input.js 1:0-1:17
 				left: JSAssignmentIdentifier {
 					name: "x"
 					loc: SourceLocation es2015/class/division/input.js 1:0-1:1 (x)
 				}
 				right: JSBinaryExpression {
 					operator: "/"
-					loc: SourceLocation es2015/class/division/input.js 1:4-1:17
+					left: JSClassExpression {
+						meta: JSClassHead {
+							body: []
+							loc: SourceLocation es2015/class/division/input.js 1:4-1:11
+						}
+						loc: SourceLocation es2015/class/division/input.js 1:4-1:11
+					}
 					right: JSReferenceIdentifier {
 						name: "foo"
 						loc: SourceLocation es2015/class/division/input.js 1:14-1:17 (foo)
 					}
-					left: JSClassExpression {
-						id: undefined
-						loc: SourceLocation es2015/class/division/input.js 1:4-1:11
-						meta: JSClassHead {
-							body: Array []
-							implements: undefined
-							superClass: undefined
-							superTypeParameters: undefined
-							typeParameters: undefined
-							loc: SourceLocation es2015/class/division/input.js 1:4-1:11
-						}
-					}
+					loc: SourceLocation es2015/class/division/input.js 1:4-1:17
 				}
+				loc: SourceLocation es2015/class/division/input.js 1:0-1:17
 			}
+			loc: SourceLocation es2015/class/division/input.js 1:0-1:17
 		}
 		JSExpressionStatement {
-			loc: SourceLocation es2015/class/division/input.js 3:0-9:10
 			expression: JSAssignmentExpression {
 				operator: "="
-				loc: SourceLocation es2015/class/division/input.js 3:0-9:10
 				left: JSAssignmentIdentifier {
 					name: "x"
 					loc: SourceLocation es2015/class/division/input.js 3:0-3:1 (x)
 				}
 				right: JSBinaryExpression {
 					operator: "/"
-					loc: SourceLocation es2015/class/division/input.js 3:4-9:10
 					left: JSBinaryExpression {
 						operator: "/"
-						loc: SourceLocation es2015/class/division/input.js 3:4-4:5
+						left: JSClassExpression {
+							meta: JSClassHead {
+								body: []
+								loc: SourceLocation es2015/class/division/input.js 3:4-3:11
+							}
+							loc: SourceLocation es2015/class/division/input.js 3:4-3:11
+						}
 						right: JSReferenceIdentifier {
 							name: "foo"
 							loc: SourceLocation es2015/class/division/input.js 4:2-4:5 (foo)
 						}
-						left: JSClassExpression {
-							id: undefined
-							loc: SourceLocation es2015/class/division/input.js 3:4-3:11
-							meta: JSClassHead {
-								body: Array []
-								implements: undefined
-								superClass: undefined
-								superTypeParameters: undefined
-								typeParameters: undefined
-								loc: SourceLocation es2015/class/division/input.js 3:4-3:11
-							}
-						}
+						loc: SourceLocation es2015/class/division/input.js 3:4-4:5
 					}
 					right: JSCallExpression {
-						loc: SourceLocation es2015/class/division/input.js 4:8-9:10
-						callee: JSCallExpression {
-							loc: SourceLocation es2015/class/division/input.js 4:8-6:19
-							callee: JSReferenceIdentifier {
-								name: "g"
-								loc: SourceLocation es2015/class/division/input.js 4:8-4:9 (g)
-							}
-							arguments: Array [
-								JSAssignmentExpression {
-									operator: "="
-									loc: SourceLocation es2015/class/division/input.js 6:1-6:18
-									left: JSAssignmentIdentifier {
-										name: "x"
-										loc: SourceLocation es2015/class/division/input.js 6:1-6:2 (x)
-									}
-									right: JSBinaryExpression {
-										operator: "/"
-										loc: SourceLocation es2015/class/division/input.js 6:5-6:18
-										right: JSReferenceIdentifier {
-											name: "foo"
-											loc: SourceLocation es2015/class/division/input.js 6:15-6:18 (foo)
-										}
-										left: JSClassExpression {
-											id: undefined
-											loc: SourceLocation es2015/class/division/input.js 6:5-6:12
-											meta: JSClassHead {
-												body: Array []
-												implements: undefined
-												superClass: undefined
-												superTypeParameters: undefined
-												typeParameters: undefined
-												loc: SourceLocation es2015/class/division/input.js 6:5-6:12
-											}
-										}
-									}
-								}
-							]
-						}
-						arguments: Array [
+						arguments: [
 							JSAssignmentExpression {
 								operator: "="
-								loc: SourceLocation es2015/class/division/input.js 8:1-9:9
 								left: JSAssignmentIdentifier {
 									name: "x"
 									loc: SourceLocation es2015/class/division/input.js 8:1-8:2 (x)
 								}
 								right: JSBinaryExpression {
 									operator: "/"
-									loc: SourceLocation es2015/class/division/input.js 8:5-9:9
-									right: JSReferenceIdentifier {
-										name: "g"
-										loc: SourceLocation es2015/class/division/input.js 9:8-9:9 (g)
-									}
 									left: JSBinaryExpression {
 										operator: "/"
-										loc: SourceLocation es2015/class/division/input.js 8:5-9:5
+										left: JSClassExpression {
+											meta: JSClassHead {
+												body: []
+												loc: SourceLocation es2015/class/division/input.js 8:5-8:12
+											}
+											loc: SourceLocation es2015/class/division/input.js 8:5-8:12
+										}
 										right: JSReferenceIdentifier {
 											name: "foo"
 											loc: SourceLocation es2015/class/division/input.js 9:2-9:5 (foo)
 										}
-										left: JSClassExpression {
-											id: undefined
-											loc: SourceLocation es2015/class/division/input.js 8:5-8:12
-											meta: JSClassHead {
-												body: Array []
-												implements: undefined
-												superClass: undefined
-												superTypeParameters: undefined
-												typeParameters: undefined
-												loc: SourceLocation es2015/class/division/input.js 8:5-8:12
-											}
-										}
+										loc: SourceLocation es2015/class/division/input.js 8:5-9:5
 									}
+									right: JSReferenceIdentifier {
+										name: "g"
+										loc: SourceLocation es2015/class/division/input.js 9:8-9:9 (g)
+									}
+									loc: SourceLocation es2015/class/division/input.js 8:5-9:9
 								}
+								loc: SourceLocation es2015/class/division/input.js 8:1-9:9
 							}
 						]
+						callee: JSCallExpression {
+							arguments: [
+								JSAssignmentExpression {
+									operator: "="
+									left: JSAssignmentIdentifier {
+										name: "x"
+										loc: SourceLocation es2015/class/division/input.js 6:1-6:2 (x)
+									}
+									right: JSBinaryExpression {
+										operator: "/"
+										left: JSClassExpression {
+											meta: JSClassHead {
+												body: []
+												loc: SourceLocation es2015/class/division/input.js 6:5-6:12
+											}
+											loc: SourceLocation es2015/class/division/input.js 6:5-6:12
+										}
+										right: JSReferenceIdentifier {
+											name: "foo"
+											loc: SourceLocation es2015/class/division/input.js 6:15-6:18 (foo)
+										}
+										loc: SourceLocation es2015/class/division/input.js 6:5-6:18
+									}
+									loc: SourceLocation es2015/class/division/input.js 6:1-6:18
+								}
+							]
+							callee: JSReferenceIdentifier {
+								name: "g"
+								loc: SourceLocation es2015/class/division/input.js 4:8-4:9 (g)
+							}
+							loc: SourceLocation es2015/class/division/input.js 4:8-6:19
+						}
+						loc: SourceLocation es2015/class/division/input.js 4:8-9:10
 					}
+					loc: SourceLocation es2015/class/division/input.js 3:4-9:10
 				}
+				loc: SourceLocation es2015/class/division/input.js 3:0-9:10
 			}
+			loc: SourceLocation es2015/class/division/input.js 3:0-9:10
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2015/class/division/input.js>
+	loc: SourceLocation es2015/class/division/input.js 1:0-10:0
 }
 ```
 

@@ -8,30 +8,10 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	syntax: Array []
-	loc: SourceLocation es2015/uncategorised/90/input.js 1:0-1:31
-	path: UIDPath<es2015/uncategorised/90/input.js>
-	body: Array [
+	body: [
 		JSExportExternalDeclaration {
-			defaultSpecifier: undefined
-			exportKind: undefined
-			namespaceSpecifier: undefined
-			loc: SourceLocation es2015/uncategorised/90/input.js 1:0-1:31
-			source: JSStringLiteral {
-				value: "other"
-				loc: SourceLocation es2015/uncategorised/90/input.js 1:24-1:31
-			}
-			namedSpecifiers: Array [
+			namedSpecifiers: [
 				JSExportExternalSpecifier {
-					loc: SourceLocation es2015/uncategorised/90/input.js 1:9-1:16
 					exported: JSIdentifier {
 						name: "default"
 						loc: SourceLocation es2015/uncategorised/90/input.js 1:9-1:16 (default)
@@ -40,10 +20,25 @@ JSRoot {
 						name: "default"
 						loc: SourceLocation es2015/uncategorised/90/input.js 1:9-1:16 (default)
 					}
+					loc: SourceLocation es2015/uncategorised/90/input.js 1:9-1:16
 				}
 			]
+			source: JSStringLiteral {
+				value: "other"
+				loc: SourceLocation es2015/uncategorised/90/input.js 1:24-1:31
+			}
+			loc: SourceLocation es2015/uncategorised/90/input.js 1:0-1:31
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: []
+	path: UIDPath<es2015/uncategorised/90/input.js>
+	loc: SourceLocation es2015/uncategorised/90/input.js 1:0-1:31
 }
 ```
 

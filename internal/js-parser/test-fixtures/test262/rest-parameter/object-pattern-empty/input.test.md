@@ -8,51 +8,43 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation test262/rest-parameter/object-pattern-empty/input.js 1:0-2:0
-	path: UIDPath<test262/rest-parameter/object-pattern-empty/input.js>
-	body: Array [
+	body: [
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "empty"
 				loc: SourceLocation test262/rest-parameter/object-pattern-empty/input.js 1:9-1:14 (empty)
 			}
-			loc: SourceLocation test262/rest-parameter/object-pattern-empty/input.js 1:0-1:24
 			body: JSBlockStatement {
-				body: Array []
-				directives: Array []
+				body: []
+				directives: []
 				loc: SourceLocation test262/rest-parameter/object-pattern-empty/input.js 1:22-1:24
 			}
 			head: JSFunctionHead {
 				async: false
 				generator: false
 				hasHoistedVars: false
-				params: Array []
-				returnType: undefined
-				thisType: undefined
-				typeParameters: undefined
-				loc: SourceLocation test262/rest-parameter/object-pattern-empty/input.js 1:14-1:21
+				params: []
 				rest: JSBindingObjectPattern {
-					properties: Array []
-					rest: undefined
-					loc: SourceLocation test262/rest-parameter/object-pattern-empty/input.js 1:18-1:20
+					properties: []
 					meta: JSPatternMeta {
-						optional: undefined
-						typeAnnotation: undefined
 						loc: SourceLocation test262/rest-parameter/object-pattern-empty/input.js 1:18-1:20
 					}
+					loc: SourceLocation test262/rest-parameter/object-pattern-empty/input.js 1:18-1:20
 				}
+				loc: SourceLocation test262/rest-parameter/object-pattern-empty/input.js 1:14-1:21
 			}
+			loc: SourceLocation test262/rest-parameter/object-pattern-empty/input.js 1:0-1:24
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<test262/rest-parameter/object-pattern-empty/input.js>
+	loc: SourceLocation test262/rest-parameter/object-pattern-empty/input.js 1:0-2:0
 }
 ```
 

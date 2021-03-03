@@ -8,29 +8,14 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: true
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2015/uncategorised/303/input.js 1:0-1:16
-	path: UIDPath<es2015/uncategorised/303/input.js>
-	body: Array [
+	body: [
 		JSVariableDeclarationStatement {
-			loc: SourceLocation es2015/uncategorised/303/input.js 1:0-1:16
 			declaration: JSVariableDeclaration {
 				kind: "var"
-				loc: SourceLocation es2015/uncategorised/303/input.js 1:0-1:16
-				declarations: Array [
+				declarations: [
 					JSVariableDeclarator {
 						id: JSBindingObjectPattern {
-							rest: undefined
-							loc: SourceLocation es2015/uncategorised/303/input.js 1:4-1:9
-							properties: Array [
+							properties: [
 								JSBindingObjectPatternProperty {
 									key: JSStaticPropertyKey {
 										value: JSIdentifier {
@@ -46,17 +31,29 @@ JSRoot {
 									loc: SourceLocation es2015/uncategorised/303/input.js 1:5-1:8
 								}
 							]
+							loc: SourceLocation es2015/uncategorised/303/input.js 1:4-1:9
 						}
-						loc: SourceLocation es2015/uncategorised/303/input.js 1:4-1:15
 						init: JSReferenceIdentifier {
 							name: "obj"
 							loc: SourceLocation es2015/uncategorised/303/input.js 1:12-1:15 (obj)
 						}
+						loc: SourceLocation es2015/uncategorised/303/input.js 1:4-1:15
 					}
 				]
+				loc: SourceLocation es2015/uncategorised/303/input.js 1:0-1:16
 			}
+			loc: SourceLocation es2015/uncategorised/303/input.js 1:0-1:16
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: true
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2015/uncategorised/303/input.js>
+	loc: SourceLocation es2015/uncategorised/303/input.js 1:0-1:16
 }
 ```
 

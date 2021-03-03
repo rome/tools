@@ -8,52 +8,14 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: true
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation esprima/es2015-yield/invalid-yield-binding-property/input.js 1:0-2:0
-	path: UIDPath<esprima/es2015-yield/invalid-yield-binding-property/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:19
-				path: UIDPath<esprima/es2015-yield/invalid-yield-binding-property/input.js>
-				start: Position 1:18
-			}
-			description: Object {
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Unexpected character <emphasis>3</emphasis>"}
-				advice: Array [
-					log {
-						category: "info"
-						text: RAW_MARKUP {value: "Expected character <emphasis>,</emphasis>"}
-					}
-				]
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSVariableDeclarationStatement {
-			loc: SourceLocation esprima/es2015-yield/invalid-yield-binding-property/input.js 1:0-1:25
 			declaration: JSVariableDeclaration {
 				kind: "var"
-				loc: SourceLocation esprima/es2015-yield/invalid-yield-binding-property/input.js 1:0-1:25
-				declarations: Array [
+				declarations: [
 					JSVariableDeclarator {
 						id: JSBindingObjectPattern {
-							rest: undefined
-							loc: SourceLocation esprima/es2015-yield/invalid-yield-binding-property/input.js 1:4-1:20
-							properties: Array [
+							properties: [
 								JSBindingObjectPatternProperty {
 									key: JSStaticPropertyKey {
 										value: JSIdentifier {
@@ -63,7 +25,6 @@ JSRoot {
 										loc: SourceLocation esprima/es2015-yield/invalid-yield-binding-property/input.js 1:5-1:6
 									}
 									value: JSBindingAssignmentPattern {
-										loc: SourceLocation esprima/es2015-yield/invalid-yield-binding-property/input.js 1:8-1:17
 										left: JSBindingIdentifier {
 											name: "y"
 											loc: SourceLocation esprima/es2015-yield/invalid-yield-binding-property/input.js 1:8-1:9 (y)
@@ -72,21 +33,50 @@ JSRoot {
 											name: "yield"
 											loc: SourceLocation esprima/es2015-yield/invalid-yield-binding-property/input.js 1:12-1:17 (yield)
 										}
+										loc: SourceLocation esprima/es2015-yield/invalid-yield-binding-property/input.js 1:8-1:17
 									}
 									loc: SourceLocation esprima/es2015-yield/invalid-yield-binding-property/input.js 1:5-1:17
 								}
 							]
+							loc: SourceLocation esprima/es2015-yield/invalid-yield-binding-property/input.js 1:4-1:20
 						}
-						loc: SourceLocation esprima/es2015-yield/invalid-yield-binding-property/input.js 1:4-1:24
 						init: JSReferenceIdentifier {
 							name: "z"
 							loc: SourceLocation esprima/es2015-yield/invalid-yield-binding-property/input.js 1:23-1:24 (z)
 						}
+						loc: SourceLocation esprima/es2015-yield/invalid-yield-binding-property/input.js 1:4-1:24
 					}
 				]
+				loc: SourceLocation esprima/es2015-yield/invalid-yield-binding-property/input.js 1:0-1:25
+			}
+			loc: SourceLocation esprima/es2015-yield/invalid-yield-binding-property/input.js 1:0-1:25
+		}
+	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {
+				advice: [log {category: "info", text: [RAW_MARKUP {value: "Expected character <emphasis>"}, ",", RAW_MARKUP {value: "</emphasis>"}]}]
+				category: ["parse"]
+				categoryValue: "js"
+				message: [RAW_MARKUP {value: "Unexpected character <emphasis>"}, "3", RAW_MARKUP {value: "</emphasis>"}]
+			}
+			location: {
+				language: "js"
+				path: UIDPath<esprima/es2015-yield/invalid-yield-binding-property/input.js>
+				end: Position 1:19
+				start: Position 1:18
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: true
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<esprima/es2015-yield/invalid-yield-binding-property/input.js>
+	loc: SourceLocation esprima/es2015-yield/invalid-yield-binding-property/input.js 1:0-2:0
 }
 ```
 
@@ -99,7 +89,7 @@ JSRoot {
   ✖ Unexpected character 3
 
     var {x: y = yield 3} = z;
-                      ^
+                      <error><emphasis>^</emphasis></error>
 
   ℹ Expected character ,
 

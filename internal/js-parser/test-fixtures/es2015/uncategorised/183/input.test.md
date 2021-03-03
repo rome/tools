@@ -8,42 +8,20 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2015/uncategorised/183/input.js 1:0-1:33
-	path: UIDPath<es2015/uncategorised/183/input.js>
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation es2015/uncategorised/183/input.js 1:0-1:33
 			expression: JSArrowFunctionExpression {
-				loc: SourceLocation es2015/uncategorised/183/input.js 1:0-1:33
 				body: JSBlockStatement {
-					body: Array []
-					directives: Array []
+					body: []
+					directives: []
 					loc: SourceLocation es2015/uncategorised/183/input.js 1:31-1:33
 				}
 				head: JSFunctionHead {
 					async: false
 					hasHoistedVars: false
-					returnType: undefined
-					thisType: undefined
-					loc: SourceLocation es2015/uncategorised/183/input.js 1:0-1:30
-					rest: JSBindingIdentifier {
-						name: "f"
-						loc: SourceLocation es2015/uncategorised/183/input.js 1:25-1:26 (f)
-					}
-					params: Array [
+					params: [
 						JSBindingObjectPattern {
-							rest: undefined
-							loc: SourceLocation es2015/uncategorised/183/input.js 1:1-1:12
-							properties: Array [
+							properties: [
 								JSBindingObjectPatternProperty {
 									key: JSStaticPropertyKey {
 										value: JSIdentifier {
@@ -73,11 +51,10 @@ JSRoot {
 									loc: SourceLocation es2015/uncategorised/183/input.js 1:9-1:10
 								}
 							]
+							loc: SourceLocation es2015/uncategorised/183/input.js 1:1-1:12
 						}
 						JSBindingArrayPattern {
-							rest: undefined
-							loc: SourceLocation es2015/uncategorised/183/input.js 1:14-1:20
-							elements: Array [
+							elements: [
 								JSBindingIdentifier {
 									name: "d"
 									loc: SourceLocation es2015/uncategorised/183/input.js 1:15-1:16 (d)
@@ -87,12 +64,29 @@ JSRoot {
 									loc: SourceLocation es2015/uncategorised/183/input.js 1:18-1:19 (e)
 								}
 							]
+							loc: SourceLocation es2015/uncategorised/183/input.js 1:14-1:20
 						}
 					]
+					rest: JSBindingIdentifier {
+						name: "f"
+						loc: SourceLocation es2015/uncategorised/183/input.js 1:25-1:26 (f)
+					}
+					loc: SourceLocation es2015/uncategorised/183/input.js 1:0-1:30
 				}
+				loc: SourceLocation es2015/uncategorised/183/input.js 1:0-1:33
 			}
+			loc: SourceLocation es2015/uncategorised/183/input.js 1:0-1:33
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2015/uncategorised/183/input.js>
+	loc: SourceLocation es2015/uncategorised/183/input.js 1:0-1:33
 }
 ```
 

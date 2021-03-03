@@ -8,18 +8,7 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	loc: SourceLocation typescript/export/as-namespace/input.ts 1:0-2:0
-	path: UIDPath<typescript/export/as-namespace/input.ts>
-	syntax: Array ["ts"]
-	body: Array [
+	body: [
 		TSNamespaceExportDeclaration {
 			id: JSIdentifier {
 				name: "A"
@@ -28,6 +17,15 @@ JSRoot {
 			loc: SourceLocation typescript/export/as-namespace/input.ts 1:0-1:22
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: ["ts"]
+	path: UIDPath<typescript/export/as-namespace/input.ts>
+	loc: SourceLocation typescript/export/as-namespace/input.ts 1:0-2:0
 }
 ```
 

@@ -8,30 +8,17 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	loc: SourceLocation typescript/interface/separators/input.ts 1:0-7:0
-	path: UIDPath<typescript/interface/separators/input.ts>
-	syntax: Array ["ts"]
-	body: Array [
+	body: [
 		TSInterfaceDeclaration {
 			id: JSBindingIdentifier {
 				name: "Comma"
 				loc: SourceLocation typescript/interface/separators/input.ts 1:10-1:15 (Comma)
 			}
-			extends: undefined
-			typeParameters: undefined
-			loc: SourceLocation typescript/interface/separators/input.ts 1:0-1:40
 			body: TSInterfaceBody {
-				loc: SourceLocation typescript/interface/separators/input.ts 1:16-1:40
-				body: Array [
+				body: [
 					TSPropertySignature {
+						optional: false
+						readonly: false
 						key: JSStaticPropertyKey {
 							value: JSIdentifier {
 								name: "x"
@@ -39,12 +26,14 @@ JSRoot {
 							}
 							loc: SourceLocation typescript/interface/separators/input.ts 1:18-1:19
 						}
-						optional: false
-						readonly: false
+						typeAnnotation: TSNumberKeywordTypeAnnotation {
+							loc: SourceLocation typescript/interface/separators/input.ts 1:21-1:27
+						}
 						loc: SourceLocation typescript/interface/separators/input.ts 1:18-1:28
-						typeAnnotation: TSNumberKeywordTypeAnnotation {loc: SourceLocation typescript/interface/separators/input.ts 1:21-1:27}
 					}
 					TSPropertySignature {
+						optional: false
+						readonly: false
 						key: JSStaticPropertyKey {
 							value: JSIdentifier {
 								name: "y"
@@ -52,26 +41,26 @@ JSRoot {
 							}
 							loc: SourceLocation typescript/interface/separators/input.ts 1:29-1:30
 						}
-						optional: false
-						readonly: false
+						typeAnnotation: TSNumberKeywordTypeAnnotation {
+							loc: SourceLocation typescript/interface/separators/input.ts 1:32-1:38
+						}
 						loc: SourceLocation typescript/interface/separators/input.ts 1:29-1:38
-						typeAnnotation: TSNumberKeywordTypeAnnotation {loc: SourceLocation typescript/interface/separators/input.ts 1:32-1:38}
 					}
 				]
+				loc: SourceLocation typescript/interface/separators/input.ts 1:16-1:40
 			}
+			loc: SourceLocation typescript/interface/separators/input.ts 1:0-1:40
 		}
 		TSInterfaceDeclaration {
 			id: JSBindingIdentifier {
 				name: "Semi"
 				loc: SourceLocation typescript/interface/separators/input.ts 2:10-2:14 (Semi)
 			}
-			extends: undefined
-			typeParameters: undefined
-			loc: SourceLocation typescript/interface/separators/input.ts 2:0-2:39
 			body: TSInterfaceBody {
-				loc: SourceLocation typescript/interface/separators/input.ts 2:15-2:39
-				body: Array [
+				body: [
 					TSPropertySignature {
+						optional: false
+						readonly: false
 						key: JSStaticPropertyKey {
 							value: JSIdentifier {
 								name: "x"
@@ -79,12 +68,14 @@ JSRoot {
 							}
 							loc: SourceLocation typescript/interface/separators/input.ts 2:17-2:18
 						}
-						optional: false
-						readonly: false
+						typeAnnotation: TSNumberKeywordTypeAnnotation {
+							loc: SourceLocation typescript/interface/separators/input.ts 2:20-2:26
+						}
 						loc: SourceLocation typescript/interface/separators/input.ts 2:17-2:27
-						typeAnnotation: TSNumberKeywordTypeAnnotation {loc: SourceLocation typescript/interface/separators/input.ts 2:20-2:26}
 					}
 					TSPropertySignature {
+						optional: false
+						readonly: false
 						key: JSStaticPropertyKey {
 							value: JSIdentifier {
 								name: "y"
@@ -92,26 +83,26 @@ JSRoot {
 							}
 							loc: SourceLocation typescript/interface/separators/input.ts 2:28-2:29
 						}
-						optional: false
-						readonly: false
+						typeAnnotation: TSNumberKeywordTypeAnnotation {
+							loc: SourceLocation typescript/interface/separators/input.ts 2:31-2:37
+						}
 						loc: SourceLocation typescript/interface/separators/input.ts 2:28-2:37
-						typeAnnotation: TSNumberKeywordTypeAnnotation {loc: SourceLocation typescript/interface/separators/input.ts 2:31-2:37}
 					}
 				]
+				loc: SourceLocation typescript/interface/separators/input.ts 2:15-2:39
 			}
+			loc: SourceLocation typescript/interface/separators/input.ts 2:0-2:39
 		}
 		TSInterfaceDeclaration {
 			id: JSBindingIdentifier {
 				name: "Newline"
 				loc: SourceLocation typescript/interface/separators/input.ts 3:10-3:17 (Newline)
 			}
-			extends: undefined
-			typeParameters: undefined
-			loc: SourceLocation typescript/interface/separators/input.ts 3:0-6:1
 			body: TSInterfaceBody {
-				loc: SourceLocation typescript/interface/separators/input.ts 3:18-6:1
-				body: Array [
+				body: [
 					TSPropertySignature {
+						optional: false
+						readonly: false
 						key: JSStaticPropertyKey {
 							value: JSIdentifier {
 								name: "x"
@@ -119,12 +110,14 @@ JSRoot {
 							}
 							loc: SourceLocation typescript/interface/separators/input.ts 4:4-4:5
 						}
-						optional: false
-						readonly: false
+						typeAnnotation: TSNumberKeywordTypeAnnotation {
+							loc: SourceLocation typescript/interface/separators/input.ts 4:7-4:13
+						}
 						loc: SourceLocation typescript/interface/separators/input.ts 4:4-4:13
-						typeAnnotation: TSNumberKeywordTypeAnnotation {loc: SourceLocation typescript/interface/separators/input.ts 4:7-4:13}
 					}
 					TSPropertySignature {
+						optional: false
+						readonly: false
 						key: JSStaticPropertyKey {
 							value: JSIdentifier {
 								name: "y"
@@ -132,15 +125,26 @@ JSRoot {
 							}
 							loc: SourceLocation typescript/interface/separators/input.ts 5:4-5:5
 						}
-						optional: false
-						readonly: false
+						typeAnnotation: TSNumberKeywordTypeAnnotation {
+							loc: SourceLocation typescript/interface/separators/input.ts 5:7-5:13
+						}
 						loc: SourceLocation typescript/interface/separators/input.ts 5:4-5:13
-						typeAnnotation: TSNumberKeywordTypeAnnotation {loc: SourceLocation typescript/interface/separators/input.ts 5:7-5:13}
 					}
 				]
+				loc: SourceLocation typescript/interface/separators/input.ts 3:18-6:1
 			}
+			loc: SourceLocation typescript/interface/separators/input.ts 3:0-6:1
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: ["ts"]
+	path: UIDPath<typescript/interface/separators/input.ts>
+	loc: SourceLocation typescript/interface/separators/input.ts 1:0-7:0
 }
 ```
 

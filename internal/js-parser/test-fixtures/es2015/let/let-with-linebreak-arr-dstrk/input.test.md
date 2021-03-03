@@ -8,56 +8,50 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2015/let/let-with-linebreak-arr-dstrk/input.js 1:0-3:0
-	path: UIDPath<es2015/let/let-with-linebreak-arr-dstrk/input.js>
-	body: Array [
+	body: [
 		JSVariableDeclarationStatement {
-			loc: SourceLocation es2015/let/let-with-linebreak-arr-dstrk/input.js 1:0-2:14
 			declaration: JSVariableDeclaration {
 				kind: "let"
-				loc: SourceLocation es2015/let/let-with-linebreak-arr-dstrk/input.js 1:0-2:14
-				declarations: Array [
+				declarations: [
 					JSVariableDeclarator {
 						id: JSBindingArrayPattern {
-							rest: undefined
-							loc: SourceLocation es2015/let/let-with-linebreak-arr-dstrk/input.js 2:4-2:7
-							elements: Array [
+							elements: [
 								JSBindingIdentifier {
 									name: "a"
-									loc: SourceLocation es2015/let/let-with-linebreak-arr-dstrk/input.js 2:5-2:6 (a)
 									meta: JSPatternMeta {
-										optional: undefined
-										typeAnnotation: undefined
 										loc: SourceLocation es2015/let/let-with-linebreak-arr-dstrk/input.js 2:5-2:6
 									}
+									loc: SourceLocation es2015/let/let-with-linebreak-arr-dstrk/input.js 2:5-2:6 (a)
 								}
 							]
+							loc: SourceLocation es2015/let/let-with-linebreak-arr-dstrk/input.js 2:4-2:7
 						}
-						loc: SourceLocation es2015/let/let-with-linebreak-arr-dstrk/input.js 2:4-2:13
 						init: JSArrayExpression {
-							loc: SourceLocation es2015/let/let-with-linebreak-arr-dstrk/input.js 2:10-2:13
-							elements: Array [
+							elements: [
 								JSNumericLiteral {
 									value: 1
-									format: undefined
 									loc: SourceLocation es2015/let/let-with-linebreak-arr-dstrk/input.js 2:11-2:12
 								}
 							]
+							loc: SourceLocation es2015/let/let-with-linebreak-arr-dstrk/input.js 2:10-2:13
 						}
+						loc: SourceLocation es2015/let/let-with-linebreak-arr-dstrk/input.js 2:4-2:13
 					}
 				]
+				loc: SourceLocation es2015/let/let-with-linebreak-arr-dstrk/input.js 1:0-2:14
 			}
+			loc: SourceLocation es2015/let/let-with-linebreak-arr-dstrk/input.js 1:0-2:14
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2015/let/let-with-linebreak-arr-dstrk/input.js>
+	loc: SourceLocation es2015/let/let-with-linebreak-arr-dstrk/input.js 1:0-3:0
 }
 ```
 

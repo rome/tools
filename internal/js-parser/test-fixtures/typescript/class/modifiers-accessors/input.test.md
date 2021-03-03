@@ -8,40 +8,16 @@
 
 ```javascript
 JSRoot {
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	loc: SourceLocation typescript/class/modifiers-accessors/input.ts 1:0-12:0
-	path: UIDPath<typescript/class/modifiers-accessors/input.ts>
-	syntax: Array ["ts"]
-	comments: Array [
-		CommentLine {
-			id: "0"
-			value: " Copy of modifiers-methods with 'get'"
-			loc: SourceLocation typescript/class/modifiers-accessors/input.ts 1:0-1:39
-		}
-	]
-	body: Array [
+	body: [
 		JSClassDeclaration {
+			abstract: true
+			leadingComments: ["0"]
 			id: JSBindingIdentifier {
 				name: "C"
 				loc: SourceLocation typescript/class/modifiers-accessors/input.ts 2:15-2:16 (C)
 			}
-			abstract: true
-			leadingComments: Array ["0"]
-			loc: SourceLocation typescript/class/modifiers-accessors/input.ts 2:0-11:1
 			meta: JSClassHead {
-				implements: undefined
-				leadingComments: undefined
-				superClass: undefined
-				superTypeParameters: undefined
-				typeParameters: undefined
-				loc: SourceLocation typescript/class/modifiers-accessors/input.ts 2:0-11:1
-				body: Array [
+				body: [
 					TSDeclareMethod {
 						kind: "get"
 						key: JSStaticPropertyKey {
@@ -51,29 +27,22 @@ JSRoot {
 							}
 							loc: SourceLocation typescript/class/modifiers-accessors/input.ts 3:17-3:18
 						}
-						body: undefined
-						loc: SourceLocation typescript/class/modifiers-accessors/input.ts 3:4-3:21
-						meta: JSClassPropertyMeta {
-							abstract: true
-							accessibility: undefined
-							optional: false
-							readonly: false
-							static: false
-							typeAnnotation: undefined
-							loc: SourceLocation typescript/class/modifiers-accessors/input.ts 3:4-3:18
-							start: Position 3:4
-						}
 						head: JSFunctionHead {
 							async: false
 							generator: false
 							hasHoistedVars: false
-							params: Array []
-							rest: undefined
-							returnType: undefined
-							thisType: undefined
-							typeParameters: undefined
+							params: []
 							loc: SourceLocation typescript/class/modifiers-accessors/input.ts 3:18-3:20
 						}
+						meta: JSClassPropertyMeta {
+							abstract: true
+							optional: false
+							readonly: false
+							static: false
+							loc: SourceLocation typescript/class/modifiers-accessors/input.ts 3:4-3:18
+							start: Position 3:4
+						}
+						loc: SourceLocation typescript/class/modifiers-accessors/input.ts 3:4-3:21
 					}
 					JSClassMethod {
 						kind: "get"
@@ -84,42 +53,35 @@ JSRoot {
 							}
 							loc: SourceLocation typescript/class/modifiers-accessors/input.ts 4:15-4:16
 						}
-						loc: SourceLocation typescript/class/modifiers-accessors/input.ts 4:4-4:32
-						meta: JSClassPropertyMeta {
-							abstract: false
-							accessibility: undefined
-							optional: false
-							readonly: false
-							static: true
-							typeAnnotation: undefined
-							loc: SourceLocation typescript/class/modifiers-accessors/input.ts 4:4-4:16
-							start: Position 4:4
+						body: JSBlockStatement {
+							body: [
+								JSReturnStatement {
+									argument: JSNumericLiteral {
+										value: 0
+										loc: SourceLocation typescript/class/modifiers-accessors/input.ts 4:28-4:29
+									}
+									loc: SourceLocation typescript/class/modifiers-accessors/input.ts 4:21-4:30
+								}
+							]
+							directives: []
+							loc: SourceLocation typescript/class/modifiers-accessors/input.ts 4:19-4:32
 						}
 						head: JSFunctionHead {
 							async: false
 							generator: false
 							hasHoistedVars: false
-							params: Array []
-							rest: undefined
-							returnType: undefined
-							thisType: undefined
-							typeParameters: undefined
+							params: []
 							loc: SourceLocation typescript/class/modifiers-accessors/input.ts 4:16-4:18
 						}
-						body: JSBlockStatement {
-							directives: Array []
-							loc: SourceLocation typescript/class/modifiers-accessors/input.ts 4:19-4:32
-							body: Array [
-								JSReturnStatement {
-									loc: SourceLocation typescript/class/modifiers-accessors/input.ts 4:21-4:30
-									argument: JSNumericLiteral {
-										value: 0
-										format: undefined
-										loc: SourceLocation typescript/class/modifiers-accessors/input.ts 4:28-4:29
-									}
-								}
-							]
+						meta: JSClassPropertyMeta {
+							abstract: false
+							optional: false
+							readonly: false
+							static: true
+							loc: SourceLocation typescript/class/modifiers-accessors/input.ts 4:4-4:16
+							start: Position 4:4
 						}
+						loc: SourceLocation typescript/class/modifiers-accessors/input.ts 4:4-4:32
 					}
 					TSDeclareMethod {
 						kind: "get"
@@ -130,29 +92,23 @@ JSRoot {
 							}
 							loc: SourceLocation typescript/class/modifiers-accessors/input.ts 5:24-5:27
 						}
-						body: undefined
-						loc: SourceLocation typescript/class/modifiers-accessors/input.ts 5:4-5:30
+						head: JSFunctionHead {
+							async: false
+							generator: false
+							hasHoistedVars: false
+							params: []
+							loc: SourceLocation typescript/class/modifiers-accessors/input.ts 5:27-5:29
+						}
 						meta: JSClassPropertyMeta {
 							abstract: true
 							accessibility: "public"
 							optional: false
 							readonly: false
 							static: false
-							typeAnnotation: undefined
 							loc: SourceLocation typescript/class/modifiers-accessors/input.ts 5:4-5:27
 							start: Position 5:4
 						}
-						head: JSFunctionHead {
-							async: false
-							generator: false
-							hasHoistedVars: false
-							params: Array []
-							rest: undefined
-							returnType: undefined
-							thisType: undefined
-							typeParameters: undefined
-							loc: SourceLocation typescript/class/modifiers-accessors/input.ts 5:27-5:29
-						}
+						loc: SourceLocation typescript/class/modifiers-accessors/input.ts 5:4-5:30
 					}
 					JSClassMethod {
 						kind: "get"
@@ -163,42 +119,36 @@ JSRoot {
 							}
 							loc: SourceLocation typescript/class/modifiers-accessors/input.ts 6:22-6:25
 						}
-						loc: SourceLocation typescript/class/modifiers-accessors/input.ts 6:4-6:41
+						body: JSBlockStatement {
+							body: [
+								JSReturnStatement {
+									argument: JSNumericLiteral {
+										value: 0
+										loc: SourceLocation typescript/class/modifiers-accessors/input.ts 6:37-6:38
+									}
+									loc: SourceLocation typescript/class/modifiers-accessors/input.ts 6:30-6:39
+								}
+							]
+							directives: []
+							loc: SourceLocation typescript/class/modifiers-accessors/input.ts 6:28-6:41
+						}
+						head: JSFunctionHead {
+							async: false
+							generator: false
+							hasHoistedVars: false
+							params: []
+							loc: SourceLocation typescript/class/modifiers-accessors/input.ts 6:25-6:27
+						}
 						meta: JSClassPropertyMeta {
 							abstract: false
 							accessibility: "public"
 							optional: false
 							readonly: false
 							static: true
-							typeAnnotation: undefined
 							loc: SourceLocation typescript/class/modifiers-accessors/input.ts 6:4-6:25
 							start: Position 6:4
 						}
-						head: JSFunctionHead {
-							async: false
-							generator: false
-							hasHoistedVars: false
-							params: Array []
-							rest: undefined
-							returnType: undefined
-							thisType: undefined
-							typeParameters: undefined
-							loc: SourceLocation typescript/class/modifiers-accessors/input.ts 6:25-6:27
-						}
-						body: JSBlockStatement {
-							directives: Array []
-							loc: SourceLocation typescript/class/modifiers-accessors/input.ts 6:28-6:41
-							body: Array [
-								JSReturnStatement {
-									loc: SourceLocation typescript/class/modifiers-accessors/input.ts 6:30-6:39
-									argument: JSNumericLiteral {
-										value: 0
-										format: undefined
-										loc: SourceLocation typescript/class/modifiers-accessors/input.ts 6:37-6:38
-									}
-								}
-							]
-						}
+						loc: SourceLocation typescript/class/modifiers-accessors/input.ts 6:4-6:41
 					}
 					JSClassMethod {
 						kind: "get"
@@ -209,42 +159,36 @@ JSRoot {
 							}
 							loc: SourceLocation typescript/class/modifiers-accessors/input.ts 8:15-8:17
 						}
-						loc: SourceLocation typescript/class/modifiers-accessors/input.ts 8:4-8:33
+						body: JSBlockStatement {
+							body: [
+								JSReturnStatement {
+									argument: JSNumericLiteral {
+										value: 0
+										loc: SourceLocation typescript/class/modifiers-accessors/input.ts 8:29-8:30
+									}
+									loc: SourceLocation typescript/class/modifiers-accessors/input.ts 8:22-8:31
+								}
+							]
+							directives: []
+							loc: SourceLocation typescript/class/modifiers-accessors/input.ts 8:20-8:33
+						}
+						head: JSFunctionHead {
+							async: false
+							generator: false
+							hasHoistedVars: false
+							params: []
+							loc: SourceLocation typescript/class/modifiers-accessors/input.ts 8:17-8:19
+						}
 						meta: JSClassPropertyMeta {
 							abstract: false
 							accessibility: "public"
 							optional: false
 							readonly: false
 							static: false
-							typeAnnotation: undefined
 							loc: SourceLocation typescript/class/modifiers-accessors/input.ts 8:4-8:17
 							start: Position 8:4
 						}
-						head: JSFunctionHead {
-							async: false
-							generator: false
-							hasHoistedVars: false
-							params: Array []
-							rest: undefined
-							returnType: undefined
-							thisType: undefined
-							typeParameters: undefined
-							loc: SourceLocation typescript/class/modifiers-accessors/input.ts 8:17-8:19
-						}
-						body: JSBlockStatement {
-							directives: Array []
-							loc: SourceLocation typescript/class/modifiers-accessors/input.ts 8:20-8:33
-							body: Array [
-								JSReturnStatement {
-									loc: SourceLocation typescript/class/modifiers-accessors/input.ts 8:22-8:31
-									argument: JSNumericLiteral {
-										value: 0
-										format: undefined
-										loc: SourceLocation typescript/class/modifiers-accessors/input.ts 8:29-8:30
-									}
-								}
-							]
-						}
+						loc: SourceLocation typescript/class/modifiers-accessors/input.ts 8:4-8:33
 					}
 					JSClassMethod {
 						kind: "get"
@@ -255,42 +199,36 @@ JSRoot {
 							}
 							loc: SourceLocation typescript/class/modifiers-accessors/input.ts 9:18-9:20
 						}
-						loc: SourceLocation typescript/class/modifiers-accessors/input.ts 9:4-9:36
+						body: JSBlockStatement {
+							body: [
+								JSReturnStatement {
+									argument: JSNumericLiteral {
+										value: 0
+										loc: SourceLocation typescript/class/modifiers-accessors/input.ts 9:32-9:33
+									}
+									loc: SourceLocation typescript/class/modifiers-accessors/input.ts 9:25-9:34
+								}
+							]
+							directives: []
+							loc: SourceLocation typescript/class/modifiers-accessors/input.ts 9:23-9:36
+						}
+						head: JSFunctionHead {
+							async: false
+							generator: false
+							hasHoistedVars: false
+							params: []
+							loc: SourceLocation typescript/class/modifiers-accessors/input.ts 9:20-9:22
+						}
 						meta: JSClassPropertyMeta {
 							abstract: false
 							accessibility: "protected"
 							optional: false
 							readonly: false
 							static: false
-							typeAnnotation: undefined
 							loc: SourceLocation typescript/class/modifiers-accessors/input.ts 9:4-9:20
 							start: Position 9:4
 						}
-						head: JSFunctionHead {
-							async: false
-							generator: false
-							hasHoistedVars: false
-							params: Array []
-							rest: undefined
-							returnType: undefined
-							thisType: undefined
-							typeParameters: undefined
-							loc: SourceLocation typescript/class/modifiers-accessors/input.ts 9:20-9:22
-						}
-						body: JSBlockStatement {
-							directives: Array []
-							loc: SourceLocation typescript/class/modifiers-accessors/input.ts 9:23-9:36
-							body: Array [
-								JSReturnStatement {
-									loc: SourceLocation typescript/class/modifiers-accessors/input.ts 9:25-9:34
-									argument: JSNumericLiteral {
-										value: 0
-										format: undefined
-										loc: SourceLocation typescript/class/modifiers-accessors/input.ts 9:32-9:33
-									}
-								}
-							]
-						}
+						loc: SourceLocation typescript/class/modifiers-accessors/input.ts 9:4-9:36
 					}
 					JSClassMethod {
 						kind: "get"
@@ -301,47 +239,58 @@ JSRoot {
 							}
 							loc: SourceLocation typescript/class/modifiers-accessors/input.ts 10:16-10:18
 						}
-						loc: SourceLocation typescript/class/modifiers-accessors/input.ts 10:4-10:34
+						body: JSBlockStatement {
+							body: [
+								JSReturnStatement {
+									argument: JSNumericLiteral {
+										value: 0
+										loc: SourceLocation typescript/class/modifiers-accessors/input.ts 10:30-10:31
+									}
+									loc: SourceLocation typescript/class/modifiers-accessors/input.ts 10:23-10:32
+								}
+							]
+							directives: []
+							loc: SourceLocation typescript/class/modifiers-accessors/input.ts 10:21-10:34
+						}
+						head: JSFunctionHead {
+							async: false
+							generator: false
+							hasHoistedVars: false
+							params: []
+							loc: SourceLocation typescript/class/modifiers-accessors/input.ts 10:18-10:20
+						}
 						meta: JSClassPropertyMeta {
 							abstract: false
 							accessibility: "private"
 							optional: false
 							readonly: false
 							static: false
-							typeAnnotation: undefined
 							loc: SourceLocation typescript/class/modifiers-accessors/input.ts 10:4-10:18
 							start: Position 10:4
 						}
-						head: JSFunctionHead {
-							async: false
-							generator: false
-							hasHoistedVars: false
-							params: Array []
-							rest: undefined
-							returnType: undefined
-							thisType: undefined
-							typeParameters: undefined
-							loc: SourceLocation typescript/class/modifiers-accessors/input.ts 10:18-10:20
-						}
-						body: JSBlockStatement {
-							directives: Array []
-							loc: SourceLocation typescript/class/modifiers-accessors/input.ts 10:21-10:34
-							body: Array [
-								JSReturnStatement {
-									loc: SourceLocation typescript/class/modifiers-accessors/input.ts 10:23-10:32
-									argument: JSNumericLiteral {
-										value: 0
-										format: undefined
-										loc: SourceLocation typescript/class/modifiers-accessors/input.ts 10:30-10:31
-									}
-								}
-							]
-						}
+						loc: SourceLocation typescript/class/modifiers-accessors/input.ts 10:4-10:34
 					}
 				]
+				loc: SourceLocation typescript/class/modifiers-accessors/input.ts 2:0-11:1
 			}
+			loc: SourceLocation typescript/class/modifiers-accessors/input.ts 2:0-11:1
 		}
 	]
+	comments: [
+		CommentLine {
+			id: "0"
+			value: " Copy of modifiers-methods with 'get'"
+			loc: SourceLocation typescript/class/modifiers-accessors/input.ts 1:0-1:39
+		}
+	]
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: ["ts"]
+	path: UIDPath<typescript/class/modifiers-accessors/input.ts>
+	loc: SourceLocation typescript/class/modifiers-accessors/input.ts 1:0-12:0
 }
 ```
 

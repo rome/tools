@@ -8,45 +8,38 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation esprima/es2015-array-binding-pattern/array-binding-pattern-empty/input.js 1:0-2:0
-	path: UIDPath<esprima/es2015-array-binding-pattern/array-binding-pattern-empty/input.js>
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation esprima/es2015-array-binding-pattern/array-binding-pattern-empty/input.js 1:0-1:8
 			expression: JSArrowFunctionExpression {
-				loc: SourceLocation esprima/es2015-array-binding-pattern/array-binding-pattern-empty/input.js 1:0-1:7
 				body: JSNumericLiteral {
 					value: 0
-					format: undefined
 					loc: SourceLocation esprima/es2015-array-binding-pattern/array-binding-pattern-empty/input.js 1:6-1:7
 				}
 				head: JSFunctionHead {
 					async: false
 					hasHoistedVars: false
-					rest: undefined
-					returnType: undefined
-					thisType: undefined
-					loc: SourceLocation esprima/es2015-array-binding-pattern/array-binding-pattern-empty/input.js 1:0-1:6
-					params: Array [
+					params: [
 						JSBindingArrayPattern {
-							elements: Array []
-							rest: undefined
+							elements: []
 							loc: SourceLocation esprima/es2015-array-binding-pattern/array-binding-pattern-empty/input.js 1:1-1:3
 						}
 					]
+					loc: SourceLocation esprima/es2015-array-binding-pattern/array-binding-pattern-empty/input.js 1:0-1:6
 				}
+				loc: SourceLocation esprima/es2015-array-binding-pattern/array-binding-pattern-empty/input.js 1:0-1:7
 			}
+			loc: SourceLocation esprima/es2015-array-binding-pattern/array-binding-pattern-empty/input.js 1:0-1:8
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<esprima/es2015-array-binding-pattern/array-binding-pattern-empty/input.js>
+	loc: SourceLocation esprima/es2015-array-binding-pattern/array-binding-pattern-empty/input.js 1:0-2:0
 }
 ```
 

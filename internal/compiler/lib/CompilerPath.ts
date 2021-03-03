@@ -15,7 +15,6 @@ import {
 } from "@internal/compiler";
 import {reduceNode, reduceSignal} from "../methods/reduce";
 import {isRoot} from "@internal/ast-utils";
-import stringDiff from "@internal/string-diff";
 import {formatAST} from "@internal/formatter";
 import {StaticMarkup, markup} from "@internal/markup";
 import {DiagnosticDescription, equalCategoryNames} from "@internal/diagnostics";
@@ -314,12 +313,10 @@ export default class CompilerPath {
 			});
 
 			advice.push({
-				type: "diff",
+				type: "diff-strings",
 				language: context.language,
-				diff: stringDiff(
-					getFormattedCodeFromSignal(signals.replace(old), this),
-					getFormattedCodeFromSignal(defaultFixed, this),
-				),
+				before: getFormattedCodeFromSignal(signals.replace(old), this),
+				after: getFormattedCodeFromSignal(defaultFixed, this),
 			});
 
 			if (canFormat) {
@@ -396,12 +393,10 @@ export default class CompilerPath {
 				});
 
 				advice.push({
-					type: "diff",
+					type: "diff-strings",
 					language: context.language,
-					diff: stringDiff(
-						getFormattedCodeFromSignal(signals.replace(old), this),
-						getFormattedCodeFromSignal(suggestion.fixed, this),
-					),
+					before: getFormattedCodeFromSignal(signals.replace(old), this),
+					after: getFormattedCodeFromSignal(suggestion.fixed, this),
 				});
 
 				advice.push({

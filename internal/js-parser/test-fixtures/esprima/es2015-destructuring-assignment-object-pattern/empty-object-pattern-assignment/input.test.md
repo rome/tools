@@ -8,36 +8,32 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation esprima/es2015-destructuring-assignment-object-pattern/empty-object-pattern-assignment/input.js 1:0-2:0
-	path: UIDPath<esprima/es2015-destructuring-assignment-object-pattern/empty-object-pattern-assignment/input.js>
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation esprima/es2015-destructuring-assignment-object-pattern/empty-object-pattern-assignment/input.js 1:0-1:9
 			expression: JSAssignmentExpression {
 				operator: "="
-				loc: SourceLocation esprima/es2015-destructuring-assignment-object-pattern/empty-object-pattern-assignment/input.js 1:1-1:7
 				left: JSAssignmentObjectPattern {
-					properties: Array []
-					rest: undefined
+					properties: []
 					loc: SourceLocation esprima/es2015-destructuring-assignment-object-pattern/empty-object-pattern-assignment/input.js 1:1-1:3
 				}
 				right: JSNumericLiteral {
 					value: 0
-					format: undefined
 					loc: SourceLocation esprima/es2015-destructuring-assignment-object-pattern/empty-object-pattern-assignment/input.js 1:6-1:7
 				}
+				loc: SourceLocation esprima/es2015-destructuring-assignment-object-pattern/empty-object-pattern-assignment/input.js 1:1-1:7
 			}
+			loc: SourceLocation esprima/es2015-destructuring-assignment-object-pattern/empty-object-pattern-assignment/input.js 1:0-1:9
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<esprima/es2015-destructuring-assignment-object-pattern/empty-object-pattern-assignment/input.js>
+	loc: SourceLocation esprima/es2015-destructuring-assignment-object-pattern/empty-object-pattern-assignment/input.js 1:0-2:0
 }
 ```
 

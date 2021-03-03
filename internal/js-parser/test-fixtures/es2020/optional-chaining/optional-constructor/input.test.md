@@ -8,50 +8,44 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2020/optional-chaining/optional-constructor/input.js 1:0-1:10
-	path: UIDPath<es2020/optional-chaining/optional-constructor/input.js>
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation es2020/optional-chaining/optional-constructor/input.js 1:0-1:10
 			expression: JSNewExpression {
-				arguments: Array []
-				optional: undefined
-				typeArguments: undefined
-				loc: SourceLocation es2020/optional-chaining/optional-constructor/input.js 1:0-1:9
+				arguments: []
 				callee: JSReferenceIdentifier {
 					name: "a"
 					loc: SourceLocation es2020/optional-chaining/optional-constructor/input.js 1:4-1:5 (a)
 				}
+				loc: SourceLocation es2020/optional-chaining/optional-constructor/input.js 1:0-1:9
 			}
+			loc: SourceLocation es2020/optional-chaining/optional-constructor/input.js 1:0-1:10
 		}
 	]
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {
+				advice: []
+				category: ["parse"]
 				categoryValue: "js"
-				category: Array ["parse"]
 				message: RAW_MARKUP {value: "constructors in/after an Optional Chain are not allowed"}
 			}
-			location: Object {
-				integrity: undefined
+			location: {
 				language: "js"
-				sourceText: undefined
-				end: Position 1:7
 				path: UIDPath<es2020/optional-chaining/optional-constructor/input.js>
+				end: Position 1:7
 				start: Position 1:7
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2020/optional-chaining/optional-constructor/input.js>
+	loc: SourceLocation es2020/optional-chaining/optional-constructor/input.js 1:0-1:10
 }
 ```
 
@@ -64,7 +58,7 @@ JSRoot {
   ✖ constructors in/after an Optional Chain are not allowed
 
     new a?.();
-           ^
+           <error><emphasis>^</emphasis></error>
 
 
 ```

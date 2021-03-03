@@ -8,59 +8,51 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2015/yield/yield-yield/input.js 1:0-1:33
-	path: UIDPath<es2015/yield/yield-yield/input.js>
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation es2015/yield/yield-yield/input.js 1:0-1:33
 			expression: JSFunctionExpression {
-				id: undefined
-				loc: SourceLocation es2015/yield/yield-yield/input.js 1:1-1:32
+				body: JSBlockStatement {
+					body: [
+						JSExpressionStatement {
+							expression: JSYieldExpression {
+								delegate: false
+								argument: JSYieldExpression {
+									delegate: false
+									argument: JSNumericLiteral {
+										value: 10
+										loc: SourceLocation es2015/yield/yield-yield/input.js 1:28-1:30
+									}
+									loc: SourceLocation es2015/yield/yield-yield/input.js 1:22-1:30
+								}
+								loc: SourceLocation es2015/yield/yield-yield/input.js 1:16-1:30
+							}
+							loc: SourceLocation es2015/yield/yield-yield/input.js 1:16-1:30
+						}
+					]
+					directives: []
+					loc: SourceLocation es2015/yield/yield-yield/input.js 1:14-1:32
+				}
 				head: JSFunctionHead {
 					async: false
 					generator: true
 					hasHoistedVars: false
-					params: Array []
-					rest: undefined
-					returnType: undefined
-					thisType: undefined
-					typeParameters: undefined
+					params: []
 					loc: SourceLocation es2015/yield/yield-yield/input.js 1:11-1:13
 				}
-				body: JSBlockStatement {
-					directives: Array []
-					loc: SourceLocation es2015/yield/yield-yield/input.js 1:14-1:32
-					body: Array [
-						JSExpressionStatement {
-							loc: SourceLocation es2015/yield/yield-yield/input.js 1:16-1:30
-							expression: JSYieldExpression {
-								delegate: false
-								loc: SourceLocation es2015/yield/yield-yield/input.js 1:16-1:30
-								argument: JSYieldExpression {
-									delegate: false
-									loc: SourceLocation es2015/yield/yield-yield/input.js 1:22-1:30
-									argument: JSNumericLiteral {
-										value: 10
-										format: undefined
-										loc: SourceLocation es2015/yield/yield-yield/input.js 1:28-1:30
-									}
-								}
-							}
-						}
-					]
-				}
+				loc: SourceLocation es2015/yield/yield-yield/input.js 1:1-1:32
 			}
+			loc: SourceLocation es2015/yield/yield-yield/input.js 1:0-1:33
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2015/yield/yield-yield/input.js>
+	loc: SourceLocation es2015/yield/yield-yield/input.js 1:0-1:33
 }
 ```
 

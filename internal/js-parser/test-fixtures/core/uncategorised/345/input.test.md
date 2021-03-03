@@ -8,48 +8,46 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation core/uncategorised/345/input.js 1:0-1:1
-	path: UIDPath<core/uncategorised/345/input.js>
-	body: Array [
+	body: [
 		JSBlockStatement {
-			body: Array []
-			directives: Array []
+			body: []
+			directives: []
 			loc: SourceLocation core/uncategorised/345/input.js 1:0-1:1
 		}
 	]
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:0
-				path: UIDPath<core/uncategorised/345/input.js>
-				start: Position 1:0
-			}
-			description: Object {
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Unclosed <emphasis>block</emphasis>"}
-				advice: Array [
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {
+				advice: [
 					log {
 						category: "info"
-						text: RAW_MARKUP {value: "We expected to find the closing character <emphasis>}</emphasis> here"}
+						text: [RAW_MARKUP {value: "We expected to find the closing character <emphasis>"}, "}", RAW_MARKUP {value: "</emphasis> here"}]
 					}
-					frame {location: SourceLocation core/uncategorised/345/input.js 1:1-1:1}
+					frame {
+						location: SourceLocation core/uncategorised/345/input.js 1:1-1:1
+					}
 				]
+				category: ["parse"]
+				categoryValue: "js"
+				message: [RAW_MARKUP {value: "Unclosed <emphasis>"}, "block", RAW_MARKUP {value: "</emphasis>"}]
+			}
+			location: {
+				language: "js"
+				path: UIDPath<core/uncategorised/345/input.js>
+				end: Position 1:0
+				start: Position 1:0
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<core/uncategorised/345/input.js>
+	loc: SourceLocation core/uncategorised/345/input.js 1:0-1:1
 }
 ```
 
@@ -62,12 +60,12 @@ JSRoot {
   ✖ Unclosed block
 
     {
-    ^
+    <error><emphasis>^</emphasis></error>
 
   ℹ We expected to find the closing character } here
 
     {
-     ^
+     <error><emphasis>^</emphasis></error>
 
 
 ```

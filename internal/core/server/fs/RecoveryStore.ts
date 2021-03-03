@@ -453,7 +453,7 @@ export default class RecoveryStore {
 				}
 			}
 		} catch (err) {
-			registerFile([path]);
+			throw err;
 		} finally {
 			// Close file descriptor
 			if (fd !== undefined) {

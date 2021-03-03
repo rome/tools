@@ -42,7 +42,6 @@ import {satisfiesSemver} from "@internal/codec-semver";
 import {Reporter} from "@internal/cli-reporter";
 import {loadUserConfig} from "@internal/core/common/userConfig";
 import {RSERObject} from "@internal/binary-transport";
-import {safeProcessExit} from "@internal/resources";
 
 type CLIFlags = {
 	logs: undefined | ClientLogsLevel;
@@ -57,6 +56,7 @@ type CLIFlags = {
 	profileSampling: number;
 	profileWorkers: boolean;
 	temporaryDaemon: boolean;
+	showAllDiagnostics: boolean;
 };
 
 export default async function cli() {
@@ -74,7 +74,7 @@ export default async function cli() {
 		reporter.error(
 			markup`Node <emphasis>${REQUIRED_NODE_VERSION_RANGE}</emphasis> is required, but you are on <emphasis>${process.version}</emphasis>`,
 		);
-		await safeProcessExit(1);
+		process.exit(1);
 	}
 
 	const p = parseCLIFlagsFromProcess({
@@ -158,6 +158,12 @@ export default async function cli() {
 			};
 
 			const cliFlags: CLIFlags = {
+				showAllDiagnostics: c.get(
+					"showAllDiagnostics",
+					{
+						description: markup`Display all diagnostics ignoring caps`,
+					},
+				).asBoolean(false),
 				markersPath: c.get(
 					"markersPath",
 					{
@@ -319,12 +325,6 @@ export default async function cli() {
 						description: markup`Display truncated diagnostic information`,
 					},
 				).asBoolean(true),
-				showAllDiagnostics: c.get(
-					"showAllDiagnostics",
-					{
-						description: markup`Display all diagnostics ignoring caps`,
-					},
-				).asBoolean(DEFAULT_CLIENT_REQUEST_FLAGS.showAllDiagnostics),
 				resolverPlatform: c.get(
 					"resolverPlatform",
 					{
@@ -450,6 +450,11 @@ export default async function cli() {
 		...cliFlags,
 		...overrideCLIFlags,
 	};
+
+	// --show-all-diagnostics is just a shorthand for setting this to Infinity as there's no way to specify that via CLI args
+	if (cliFlags.showAllDiagnostics) {
+		requestFlags.maxDiagnostics = Infinity;
+	}
 
 	// Default according to env vars
 	if (requestFlags.auxiliaryDiagnosticFormat === undefined) {
@@ -602,12 +607,12 @@ export default async function cli() {
 
 	switch (res.type) {
 		case "EXIT": {
-			await safeProcessExit(res.code);
+			process.exit(res.code);
 			break;
 		}
 
 		case "CLIENT_ERROR": {
-			await safeProcessExit(1);
+			process.exit(1);
 			break;
 		}
 
@@ -615,23 +620,23 @@ export default async function cli() {
 			if (res.showHelp) {
 				await p.showHelp();
 			}
-			await safeProcessExit(1);
+			process.exit(1);
 			break;
 		}
 
 		case "DIAGNOSTICS": {
-			await safeProcessExit(res.hasDiagnostics ? 1 : 0);
+			process.exit(res.hasDiagnostics ? 1 : 0);
 			break;
 		}
 
 		case "CANCELLED": {
 			client.reporter.error(markup`Command cancelled: ${res.reason}`);
-			await safeProcessExit(0);
+			process.exit(0);
 			break;
 		}
 
 		case "SUCCESS": {
-			await safeProcessExit(0);
+			process.exit(0);
 			break;
 		}
 	}

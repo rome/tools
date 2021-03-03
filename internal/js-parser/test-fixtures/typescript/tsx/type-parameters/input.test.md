@@ -8,64 +8,55 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	loc: SourceLocation typescript/tsx/type-parameters/input.tsx 1:0-2:0
-	path: UIDPath<typescript/tsx/type-parameters/input.tsx>
-	syntax: Array [
-		"ts"
-		"jsx"
-	]
-	body: Array [
+	body: [
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "f"
 				loc: SourceLocation typescript/tsx/type-parameters/input.tsx 1:9-1:10 (f)
 			}
-			loc: SourceLocation typescript/tsx/type-parameters/input.tsx 1:0-1:32
 			body: JSBlockStatement {
-				body: Array []
-				directives: Array []
+				body: []
+				directives: []
 				loc: SourceLocation typescript/tsx/type-parameters/input.tsx 1:30-1:32
 			}
 			head: JSFunctionHead {
 				async: false
 				generator: false
 				hasHoistedVars: false
-				params: Array []
-				rest: undefined
-				thisType: undefined
-				typeParameters: undefined
-				loc: SourceLocation typescript/tsx/type-parameters/input.tsx 1:10-1:29
+				params: []
 				returnType: TSFunctionType {
-					loc: SourceLocation typescript/tsx/type-parameters/input.tsx 1:14-1:29
-					typeAnnotation: TSNumberKeywordTypeAnnotation {loc: SourceLocation typescript/tsx/type-parameters/input.tsx 1:23-1:29}
 					meta: TSSignatureDeclarationMeta {
-						parameters: Array []
-						rest: undefined
-						loc: SourceLocation typescript/tsx/type-parameters/input.tsx 1:14-1:29
+						parameters: []
 						typeParameters: TSTypeParameterDeclaration {
-							loc: SourceLocation typescript/tsx/type-parameters/input.tsx 1:14-1:17
-							params: Array [
+							params: [
 								TSTypeParameter {
 									name: "T"
-									constraint: undefined
-									default: undefined
 									loc: SourceLocation typescript/tsx/type-parameters/input.tsx 1:15-1:16
 								}
 							]
+							loc: SourceLocation typescript/tsx/type-parameters/input.tsx 1:14-1:17
 						}
+						loc: SourceLocation typescript/tsx/type-parameters/input.tsx 1:14-1:29
 					}
+					typeAnnotation: TSNumberKeywordTypeAnnotation {
+						loc: SourceLocation typescript/tsx/type-parameters/input.tsx 1:23-1:29
+					}
+					loc: SourceLocation typescript/tsx/type-parameters/input.tsx 1:14-1:29
 				}
+				loc: SourceLocation typescript/tsx/type-parameters/input.tsx 1:10-1:29
 			}
+			loc: SourceLocation typescript/tsx/type-parameters/input.tsx 1:0-1:32
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: ["ts", "jsx"]
+	path: UIDPath<typescript/tsx/type-parameters/input.tsx>
+	loc: SourceLocation typescript/tsx/type-parameters/input.tsx 1:0-2:0
 }
 ```
 

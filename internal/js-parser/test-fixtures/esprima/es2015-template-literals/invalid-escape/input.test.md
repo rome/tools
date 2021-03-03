@@ -8,23 +8,11 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation esprima/es2015-template-literals/invalid-escape/input.js 1:0-2:0
-	path: UIDPath<esprima/es2015-template-literals/invalid-escape/input.js>
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation esprima/es2015-template-literals/invalid-escape/input.js 1:0-1:5
 			expression: JSTemplateLiteral {
-				expressions: Array []
-				loc: SourceLocation esprima/es2015-template-literals/invalid-escape/input.js 1:0-1:4
-				quasis: Array [
+				expressions: []
+				quasis: [
 					JSTemplateElement {
 						cooked: "\\1"
 						raw: "\\1"
@@ -32,28 +20,36 @@ JSRoot {
 						loc: SourceLocation esprima/es2015-template-literals/invalid-escape/input.js 1:1-1:3
 					}
 				]
+				loc: SourceLocation esprima/es2015-template-literals/invalid-escape/input.js 1:0-1:4
 			}
+			loc: SourceLocation esprima/es2015-template-literals/invalid-escape/input.js 1:0-1:5
 		}
 	]
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {
+				advice: []
+				category: ["parse"]
 				categoryValue: "js"
-				category: Array ["parse"]
 				message: RAW_MARKUP {value: "Invalid escape sequence in template"}
 			}
-			location: Object {
-				integrity: undefined
+			location: {
 				language: "js"
-				sourceText: undefined
-				end: Position 1:2
 				path: UIDPath<esprima/es2015-template-literals/invalid-escape/input.js>
+				end: Position 1:2
 				start: Position 1:2
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<esprima/es2015-template-literals/invalid-escape/input.js>
+	loc: SourceLocation esprima/es2015-template-literals/invalid-escape/input.js 1:0-2:0
 }
 ```
 
@@ -66,7 +62,7 @@ JSRoot {
   ✖ Invalid escape sequence in template
 
     `\1`;
-      ^
+      <error><emphasis>^</emphasis></error>
 
 
 ```

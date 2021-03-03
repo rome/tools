@@ -8,51 +8,31 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	loc: SourceLocation typescript/types/import-type-declaration/input.ts 1:0-4:0
-	path: UIDPath<typescript/types/import-type-declaration/input.ts>
-	syntax: Array ["ts"]
-	body: Array [
+	body: [
 		JSImportDeclaration {
 			importKind: "type"
-			namedSpecifiers: Array []
-			namespaceSpecifier: undefined
-			loc: SourceLocation typescript/types/import-type-declaration/input.ts 1:0-1:27
-			source: JSStringLiteral {
-				value: "./mod"
-				loc: SourceLocation typescript/types/import-type-declaration/input.ts 1:19-1:26
-			}
+			namedSpecifiers: []
 			defaultSpecifier: JSImportDefaultSpecifier {
-				loc: SourceLocation typescript/types/import-type-declaration/input.ts 1:0-1:13
 				local: JSImportSpecifierLocal {
+					importKind: "type"
 					name: JSBindingIdentifier {
 						name: "T"
 						loc: SourceLocation typescript/types/import-type-declaration/input.ts 1:12-1:13 (T)
 					}
-					importKind: "type"
 					loc: SourceLocation typescript/types/import-type-declaration/input.ts 1:12-1:13
 				}
+				loc: SourceLocation typescript/types/import-type-declaration/input.ts 1:0-1:13
 			}
-		}
-		JSImportDeclaration {
-			defaultSpecifier: undefined
-			importKind: "type"
-			namespaceSpecifier: undefined
-			loc: SourceLocation typescript/types/import-type-declaration/input.ts 2:0-2:34
 			source: JSStringLiteral {
 				value: "./mod"
-				loc: SourceLocation typescript/types/import-type-declaration/input.ts 2:26-2:33
+				loc: SourceLocation typescript/types/import-type-declaration/input.ts 1:19-1:26
 			}
-			namedSpecifiers: Array [
+			loc: SourceLocation typescript/types/import-type-declaration/input.ts 1:0-1:27
+		}
+		JSImportDeclaration {
+			importKind: "type"
+			namedSpecifiers: [
 				JSImportSpecifier {
-					loc: SourceLocation typescript/types/import-type-declaration/input.ts 2:14-2:15
 					imported: JSIdentifier {
 						name: "A"
 						loc: SourceLocation typescript/types/import-type-declaration/input.ts 2:14-2:15 (A)
@@ -62,12 +42,11 @@ JSRoot {
 							name: "A"
 							loc: SourceLocation typescript/types/import-type-declaration/input.ts 2:14-2:15 (A)
 						}
-						importKind: undefined
 						loc: SourceLocation typescript/types/import-type-declaration/input.ts 2:14-2:15
 					}
+					loc: SourceLocation typescript/types/import-type-declaration/input.ts 2:14-2:15
 				}
 				JSImportSpecifier {
-					loc: SourceLocation typescript/types/import-type-declaration/input.ts 2:17-2:18
 					imported: JSIdentifier {
 						name: "B"
 						loc: SourceLocation typescript/types/import-type-declaration/input.ts 2:17-2:18 (B)
@@ -77,34 +56,47 @@ JSRoot {
 							name: "B"
 							loc: SourceLocation typescript/types/import-type-declaration/input.ts 2:17-2:18 (B)
 						}
-						importKind: undefined
 						loc: SourceLocation typescript/types/import-type-declaration/input.ts 2:17-2:18
 					}
+					loc: SourceLocation typescript/types/import-type-declaration/input.ts 2:17-2:18
 				}
 			]
-		}
-		JSImportDeclaration {
-			defaultSpecifier: undefined
-			importKind: "type"
-			namedSpecifiers: Array []
-			loc: SourceLocation typescript/types/import-type-declaration/input.ts 3:0-3:36
 			source: JSStringLiteral {
 				value: "./mod"
-				loc: SourceLocation typescript/types/import-type-declaration/input.ts 3:28-3:35
+				loc: SourceLocation typescript/types/import-type-declaration/input.ts 2:26-2:33
 			}
+			loc: SourceLocation typescript/types/import-type-declaration/input.ts 2:0-2:34
+		}
+		JSImportDeclaration {
+			importKind: "type"
+			namedSpecifiers: []
 			namespaceSpecifier: JSImportNamespaceSpecifier {
-				loc: SourceLocation typescript/types/import-type-declaration/input.ts 3:0-3:22
 				local: JSImportSpecifierLocal {
+					importKind: "type"
 					name: JSBindingIdentifier {
 						name: "Types"
 						loc: SourceLocation typescript/types/import-type-declaration/input.ts 3:17-3:22 (Types)
 					}
-					importKind: "type"
 					loc: SourceLocation typescript/types/import-type-declaration/input.ts 3:17-3:22
 				}
+				loc: SourceLocation typescript/types/import-type-declaration/input.ts 3:0-3:22
 			}
+			source: JSStringLiteral {
+				value: "./mod"
+				loc: SourceLocation typescript/types/import-type-declaration/input.ts 3:28-3:35
+			}
+			loc: SourceLocation typescript/types/import-type-declaration/input.ts 3:0-3:36
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: ["ts"]
+	path: UIDPath<typescript/types/import-type-declaration/input.ts>
+	loc: SourceLocation typescript/types/import-type-declaration/input.ts 1:0-4:0
 }
 ```
 

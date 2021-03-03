@@ -8,32 +8,15 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	loc: SourceLocation typescript/enum/members-reserved-words/input.ts 1:0-5:0
-	path: UIDPath<typescript/enum/members-reserved-words/input.ts>
-	syntax: Array ["ts"]
-	body: Array [
+	body: [
 		TSEnumDeclaration {
-			id: JSBindingIdentifier {
-				name: "E"
-				loc: SourceLocation typescript/enum/members-reserved-words/input.ts 1:5-1:6 (E)
-			}
 			const: false
-			loc: SourceLocation typescript/enum/members-reserved-words/input.ts 1:0-4:1
-			members: Array [
+			members: [
 				TSEnumMember {
 					id: JSIdentifier {
 						name: "const"
 						loc: SourceLocation typescript/enum/members-reserved-words/input.ts 2:4-2:9 (const)
 					}
-					initializer: undefined
 					loc: SourceLocation typescript/enum/members-reserved-words/input.ts 2:4-2:9
 				}
 				TSEnumMember {
@@ -41,12 +24,25 @@ JSRoot {
 						name: "default"
 						loc: SourceLocation typescript/enum/members-reserved-words/input.ts 3:4-3:11 (default)
 					}
-					initializer: undefined
 					loc: SourceLocation typescript/enum/members-reserved-words/input.ts 3:4-3:11
 				}
 			]
+			id: JSBindingIdentifier {
+				name: "E"
+				loc: SourceLocation typescript/enum/members-reserved-words/input.ts 1:5-1:6 (E)
+			}
+			loc: SourceLocation typescript/enum/members-reserved-words/input.ts 1:0-4:1
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: ["ts"]
+	path: UIDPath<typescript/enum/members-reserved-words/input.ts>
+	loc: SourceLocation typescript/enum/members-reserved-words/input.ts 1:0-5:0
 }
 ```
 

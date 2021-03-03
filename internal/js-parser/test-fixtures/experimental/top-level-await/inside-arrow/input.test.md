@@ -8,40 +8,9 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	syntax: Array []
-	loc: SourceLocation experimental/top-level-await/inside-arrow/input.js 1:0-2:0
-	path: UIDPath<experimental/top-level-await/inside-arrow/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Can't use await outside of an async function"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:11
-				path: UIDPath<experimental/top-level-await/inside-arrow/input.js>
-				start: Position 1:6
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation experimental/top-level-await/inside-arrow/input.js 1:0-1:11
 			expression: JSArrowFunctionExpression {
-				loc: SourceLocation experimental/top-level-await/inside-arrow/input.js 1:0-1:11
 				body: JSReferenceIdentifier {
 					name: "await"
 					loc: SourceLocation experimental/top-level-await/inside-arrow/input.js 1:6-1:11 (await)
@@ -49,23 +18,46 @@ JSRoot {
 				head: JSFunctionHead {
 					async: false
 					hasHoistedVars: false
-					params: Array []
-					rest: undefined
-					returnType: undefined
-					thisType: undefined
+					params: []
 					loc: SourceLocation experimental/top-level-await/inside-arrow/input.js 1:0-1:5
 				}
+				loc: SourceLocation experimental/top-level-await/inside-arrow/input.js 1:0-1:11
 			}
+			loc: SourceLocation experimental/top-level-await/inside-arrow/input.js 1:0-1:11
 		}
 		JSExpressionStatement {
-			loc: SourceLocation experimental/top-level-await/inside-arrow/input.js 1:12-1:14
 			expression: JSNumericLiteral {
 				value: 0
-				format: undefined
 				loc: SourceLocation experimental/top-level-await/inside-arrow/input.js 1:12-1:13
+			}
+			loc: SourceLocation experimental/top-level-await/inside-arrow/input.js 1:12-1:14
+		}
+	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "Can't use await outside of an async function"}
+			}
+			location: {
+				language: "js"
+				path: UIDPath<experimental/top-level-await/inside-arrow/input.js>
+				end: Position 1:11
+				start: Position 1:6
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: []
+	path: UIDPath<experimental/top-level-await/inside-arrow/input.js>
+	loc: SourceLocation experimental/top-level-await/inside-arrow/input.js 1:0-2:0
 }
 ```
 
@@ -78,7 +70,9 @@ JSRoot {
   ✖ Can't use await outside of an async function
 
     () => await 0;
-          ^^^^^
+          <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
+    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
+    <error><emphasis>^</emphasis></error>
 
 
 ```

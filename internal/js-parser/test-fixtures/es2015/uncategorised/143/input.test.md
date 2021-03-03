@@ -8,23 +8,10 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2015/uncategorised/143/input.js 1:0-1:22
-	path: UIDPath<es2015/uncategorised/143/input.js>
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation es2015/uncategorised/143/input.js 1:0-1:22
 			expression: JSObjectExpression {
-				loc: SourceLocation es2015/uncategorised/143/input.js 1:1-1:21
-				properties: Array [
+				properties: [
 					JSObjectProperty {
 						key: JSComputedPropertyKey {
 							value: JSReferenceIdentifier {
@@ -34,31 +21,37 @@ JSRoot {
 							loc: SourceLocation es2015/uncategorised/143/input.js 1:2-1:5
 						}
 						value: JSFunctionExpression {
-							id: undefined
-							loc: SourceLocation es2015/uncategorised/143/input.js 1:7-1:20
 							body: JSBlockStatement {
-								body: Array []
-								directives: Array []
+								body: []
+								directives: []
 								loc: SourceLocation es2015/uncategorised/143/input.js 1:18-1:20
 							}
 							head: JSFunctionHead {
 								async: false
 								generator: false
 								hasHoistedVars: false
-								params: Array []
-								rest: undefined
-								returnType: undefined
-								thisType: undefined
-								typeParameters: undefined
+								params: []
 								loc: SourceLocation es2015/uncategorised/143/input.js 1:15-1:17
 							}
+							loc: SourceLocation es2015/uncategorised/143/input.js 1:7-1:20
 						}
 						loc: SourceLocation es2015/uncategorised/143/input.js 1:2-1:20
 					}
 				]
+				loc: SourceLocation es2015/uncategorised/143/input.js 1:1-1:21
 			}
+			loc: SourceLocation es2015/uncategorised/143/input.js 1:0-1:22
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2015/uncategorised/143/input.js>
+	loc: SourceLocation es2015/uncategorised/143/input.js 1:0-1:22
 }
 ```
 

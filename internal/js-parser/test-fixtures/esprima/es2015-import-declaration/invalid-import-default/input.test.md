@@ -8,53 +8,10 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	syntax: Array []
-	loc: SourceLocation esprima/es2015-import-declaration/invalid-import-default/input.js 1:0-2:0
-	path: UIDPath<esprima/es2015-import-declaration/invalid-import-default/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:6
-				path: UIDPath<esprima/es2015-import-declaration/invalid-import-default/input.js>
-				start: Position 1:7
-			}
-			description: Object {
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Unexpected character <emphasis>d</emphasis>"}
-				advice: Array [
-					log {
-						category: "info"
-						text: RAW_MARKUP {value: "Expected the opening import specifiers character <emphasis>{</emphasis>"}
-					}
-				]
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSImportDeclaration {
-			defaultSpecifier: undefined
-			importKind: undefined
-			namespaceSpecifier: undefined
-			loc: SourceLocation esprima/es2015-import-declaration/invalid-import-default/input.js 1:0-1:25
-			source: JSStringLiteral {
-				value: ""
-				loc: SourceLocation esprima/es2015-import-declaration/invalid-import-default/input.js 1:0-1:25
-			}
-			namedSpecifiers: Array [
+			namedSpecifiers: [
 				JSImportSpecifier {
-					loc: SourceLocation esprima/es2015-import-declaration/invalid-import-default/input.js 1:7-1:14
 					imported: JSIdentifier {
 						name: "default"
 						loc: SourceLocation esprima/es2015-import-declaration/invalid-import-default/input.js 1:7-1:14 (default)
@@ -64,12 +21,11 @@ JSRoot {
 							name: "default"
 							loc: SourceLocation esprima/es2015-import-declaration/invalid-import-default/input.js 1:7-1:14 (default)
 						}
-						importKind: undefined
 						loc: SourceLocation esprima/es2015-import-declaration/invalid-import-default/input.js 1:7-1:14
 					}
+					loc: SourceLocation esprima/es2015-import-declaration/invalid-import-default/input.js 1:7-1:14
 				}
 				JSImportSpecifier {
-					loc: SourceLocation esprima/es2015-import-declaration/invalid-import-default/input.js 1:15-1:19
 					imported: JSIdentifier {
 						name: "from"
 						loc: SourceLocation esprima/es2015-import-declaration/invalid-import-default/input.js 1:15-1:19 (from)
@@ -79,12 +35,11 @@ JSRoot {
 							name: "from"
 							loc: SourceLocation esprima/es2015-import-declaration/invalid-import-default/input.js 1:15-1:19 (from)
 						}
-						importKind: undefined
 						loc: SourceLocation esprima/es2015-import-declaration/invalid-import-default/input.js 1:15-1:19
 					}
+					loc: SourceLocation esprima/es2015-import-declaration/invalid-import-default/input.js 1:15-1:19
 				}
 				JSImportSpecifier {
-					loc: SourceLocation esprima/es2015-import-declaration/invalid-import-default/input.js 1:20-1:25
 					imported: JSIdentifier {
 						name: ""
 						loc: SourceLocation esprima/es2015-import-declaration/invalid-import-default/input.js 1:20-1:25 ()
@@ -94,13 +49,54 @@ JSRoot {
 							name: ""
 							loc: SourceLocation esprima/es2015-import-declaration/invalid-import-default/input.js 1:20-1:25 ()
 						}
-						importKind: undefined
 						loc: SourceLocation esprima/es2015-import-declaration/invalid-import-default/input.js 1:20-1:25
 					}
+					loc: SourceLocation esprima/es2015-import-declaration/invalid-import-default/input.js 1:20-1:25
 				}
 			]
+			source: JSStringLiteral {
+				value: ""
+				loc: SourceLocation esprima/es2015-import-declaration/invalid-import-default/input.js 1:0-1:25
+			}
+			loc: SourceLocation esprima/es2015-import-declaration/invalid-import-default/input.js 1:0-1:25
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {
+				advice: [
+					log {
+						category: "info"
+						text: [
+							RAW_MARKUP {value: "Expected the opening "}
+							"import specifiers"
+							RAW_MARKUP {value: " character <emphasis>"}
+							"{"
+							RAW_MARKUP {value: "</emphasis>"}
+						]
+					}
+				]
+				category: ["parse"]
+				categoryValue: "js"
+				message: [RAW_MARKUP {value: "Unexpected character <emphasis>"}, "d", RAW_MARKUP {value: "</emphasis>"}]
+			}
+			location: {
+				language: "js"
+				path: UIDPath<esprima/es2015-import-declaration/invalid-import-default/input.js>
+				end: Position 1:6
+				start: Position 1:7
+			}
+		}
+	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: []
+	path: UIDPath<esprima/es2015-import-declaration/invalid-import-default/input.js>
+	loc: SourceLocation esprima/es2015-import-declaration/invalid-import-default/input.js 1:0-2:0
 }
 ```
 
@@ -113,7 +109,7 @@ JSRoot {
   ✖ Unexpected character d
 
     import default from "foo"
-           ^
+           <error><emphasis>^</emphasis></error>
 
   ℹ Expected the opening import specifiers character {
 

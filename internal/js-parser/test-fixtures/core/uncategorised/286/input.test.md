@@ -10,8 +10,15 @@
 JSRoot {
 	body: [
 		JSFunctionDeclaration {
-			id: JSBindingIdentifier {name: "arguments", loc: SourceLocation core/uncategorised/286/input.js 1:9-1:18 (arguments)}
-			body: JSBlockStatement {body: [], directives: [], loc: SourceLocation core/uncategorised/286/input.js 1:21-1:24}
+			id: JSBindingIdentifier {
+				name: "arguments"
+				loc: SourceLocation core/uncategorised/286/input.js 1:9-1:18 (arguments)
+			}
+			body: JSBlockStatement {
+				body: []
+				directives: []
+				loc: SourceLocation core/uncategorised/286/input.js 1:21-1:24
+			}
 			head: JSFunctionHead {
 				async: false
 				generator: false
@@ -27,9 +34,9 @@ JSRoot {
 	diagnostics: []
 	directives: []
 	hasHoistedVars: false
-	path: UIDPath<core/uncategorised/286/input.js>
 	sourceType: "script"
 	syntax: []
+	path: UIDPath<core/uncategorised/286/input.js>
 	loc: SourceLocation core/uncategorised/286/input.js 1:0-1:24
 }
 ```

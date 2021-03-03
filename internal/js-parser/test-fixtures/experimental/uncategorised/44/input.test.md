@@ -8,31 +8,14 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation experimental/uncategorised/44/input.js 1:0-1:18
-	path: UIDPath<experimental/uncategorised/44/input.js>
-	body: Array [
+	body: [
 		JSClassDeclaration {
 			id: JSBindingIdentifier {
 				name: "Foo"
 				loc: SourceLocation experimental/uncategorised/44/input.js 1:6-1:9 (Foo)
 			}
-			loc: SourceLocation experimental/uncategorised/44/input.js 1:0-1:18
 			meta: JSClassHead {
-				implements: undefined
-				superClass: undefined
-				superTypeParameters: undefined
-				typeParameters: undefined
-				loc: SourceLocation experimental/uncategorised/44/input.js 1:0-1:18
-				body: Array [
+				body: [
 					JSClassProperty {
 						key: JSStaticPropertyKey {
 							value: JSIdentifier {
@@ -41,25 +24,31 @@ JSRoot {
 							}
 							loc: SourceLocation experimental/uncategorised/44/input.js 1:12-1:15
 						}
-						value: undefined
-						definite: undefined
-						typeAnnotation: undefined
-						loc: SourceLocation experimental/uncategorised/44/input.js 1:12-1:16
 						meta: JSClassPropertyMeta {
 							abstract: false
-							accessibility: undefined
 							optional: false
 							readonly: false
 							static: false
-							typeAnnotation: undefined
 							loc: SourceLocation experimental/uncategorised/44/input.js 1:12-1:15
 							start: Position 1:12
 						}
+						loc: SourceLocation experimental/uncategorised/44/input.js 1:12-1:16
 					}
 				]
+				loc: SourceLocation experimental/uncategorised/44/input.js 1:0-1:18
 			}
+			loc: SourceLocation experimental/uncategorised/44/input.js 1:0-1:18
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<experimental/uncategorised/44/input.js>
+	loc: SourceLocation experimental/uncategorised/44/input.js 1:0-1:18
 }
 ```
 

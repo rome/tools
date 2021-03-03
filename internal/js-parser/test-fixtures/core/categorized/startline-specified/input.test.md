@@ -11,16 +11,32 @@ JSRoot {
 	body: [
 		JSExpressionStatement {
 			expression: JSCallExpression {
-				arguments: [JSNumericLiteral {value: 1, loc: SourceLocation core/categorized/startline-specified/input.js 1:5-1:6}]
-				callee: JSReferenceIdentifier {name: "call", loc: SourceLocation core/categorized/startline-specified/input.js 1:0-1:4 (call)}
+				arguments: [
+					JSNumericLiteral {
+						value: 1
+						loc: SourceLocation core/categorized/startline-specified/input.js 1:5-1:6
+					}
+				]
+				callee: JSReferenceIdentifier {
+					name: "call"
+					loc: SourceLocation core/categorized/startline-specified/input.js 1:0-1:4 (call)
+				}
 				loc: SourceLocation core/categorized/startline-specified/input.js 1:0-1:7
 			}
 			loc: SourceLocation core/categorized/startline-specified/input.js 1:0-1:8
 		}
 		JSExpressionStatement {
 			expression: JSCallExpression {
-				arguments: [JSNumericLiteral {value: 2, loc: SourceLocation core/categorized/startline-specified/input.js 2:4-2:5}]
-				callee: JSReferenceIdentifier {name: "run", loc: SourceLocation core/categorized/startline-specified/input.js 2:0-2:3 (run)}
+				arguments: [
+					JSNumericLiteral {
+						value: 2
+						loc: SourceLocation core/categorized/startline-specified/input.js 2:4-2:5
+					}
+				]
+				callee: JSReferenceIdentifier {
+					name: "run"
+					loc: SourceLocation core/categorized/startline-specified/input.js 2:0-2:3 (run)
+				}
 				loc: SourceLocation core/categorized/startline-specified/input.js 2:0-2:6
 			}
 			loc: SourceLocation core/categorized/startline-specified/input.js 2:0-2:7
@@ -31,9 +47,9 @@ JSRoot {
 	diagnostics: []
 	directives: []
 	hasHoistedVars: false
-	path: UIDPath<core/categorized/startline-specified/input.js>
 	sourceType: "script"
 	syntax: []
+	path: UIDPath<core/categorized/startline-specified/input.js>
 	loc: SourceLocation core/categorized/startline-specified/input.js 1:0-3:0
 }
 ```

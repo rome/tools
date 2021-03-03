@@ -11,9 +11,12 @@ JSRoot {
 	body: [
 		JSExpressionStatement {
 			expression: JSUnaryExpression {
-				argument: JSReferenceIdentifier {name: "x", loc: SourceLocation core/uncategorised/144/input.js 1:1-1:2 (x)}
 				operator: "+"
 				prefix: true
+				argument: JSReferenceIdentifier {
+					name: "x"
+					loc: SourceLocation core/uncategorised/144/input.js 1:1-1:2 (x)
+				}
 				loc: SourceLocation core/uncategorised/144/input.js 1:0-1:2
 			}
 			loc: SourceLocation core/uncategorised/144/input.js 1:0-1:2
@@ -24,9 +27,9 @@ JSRoot {
 	diagnostics: []
 	directives: []
 	hasHoistedVars: false
-	path: UIDPath<core/uncategorised/144/input.js>
 	sourceType: "script"
 	syntax: []
+	path: UIDPath<core/uncategorised/144/input.js>
 	loc: SourceLocation core/uncategorised/144/input.js 1:0-1:2
 }
 ```

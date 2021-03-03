@@ -8,56 +8,49 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation experimental/throw-expression/expression/input.js 1:0-4:0
-	path: UIDPath<experimental/throw-expression/expression/input.js>
-	body: Array [
+	body: [
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "test"
 				loc: SourceLocation experimental/throw-expression/expression/input.js 1:9-1:13 (test)
 			}
-			loc: SourceLocation experimental/throw-expression/expression/input.js 1:0-3:1
+			body: JSBlockStatement {
+				body: [
+					JSExpressionStatement {
+						expression: JSUnaryExpression {
+							operator: "throw"
+							prefix: true
+							argument: JSNumericLiteral {
+								value: 1
+								loc: SourceLocation experimental/throw-expression/expression/input.js 2:9-2:10
+							}
+							loc: SourceLocation experimental/throw-expression/expression/input.js 2:3-2:10
+						}
+						loc: SourceLocation experimental/throw-expression/expression/input.js 2:2-2:12
+					}
+				]
+				directives: []
+				loc: SourceLocation experimental/throw-expression/expression/input.js 1:16-3:1
+			}
 			head: JSFunctionHead {
 				async: false
 				generator: false
 				hasHoistedVars: false
-				params: Array []
-				rest: undefined
-				returnType: undefined
-				thisType: undefined
-				typeParameters: undefined
+				params: []
 				loc: SourceLocation experimental/throw-expression/expression/input.js 1:13-1:15
 			}
-			body: JSBlockStatement {
-				directives: Array []
-				loc: SourceLocation experimental/throw-expression/expression/input.js 1:16-3:1
-				body: Array [
-					JSExpressionStatement {
-						loc: SourceLocation experimental/throw-expression/expression/input.js 2:2-2:12
-						expression: JSUnaryExpression {
-							operator: "throw"
-							prefix: true
-							loc: SourceLocation experimental/throw-expression/expression/input.js 2:3-2:10
-							argument: JSNumericLiteral {
-								value: 1
-								format: undefined
-								loc: SourceLocation experimental/throw-expression/expression/input.js 2:9-2:10
-							}
-						}
-					}
-				]
-			}
+			loc: SourceLocation experimental/throw-expression/expression/input.js 1:0-3:1
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<experimental/throw-expression/expression/input.js>
+	loc: SourceLocation experimental/throw-expression/expression/input.js 1:0-4:0
 }
 ```
 

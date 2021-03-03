@@ -8,52 +8,48 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: true
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation experimental/dynamic-import/invalid-lone-import/input.js 1:0-2:0
-	path: UIDPath<experimental/dynamic-import/invalid-lone-import/input.js>
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation experimental/dynamic-import/invalid-lone-import/input.js 1:0-1:8
 			expression: JSImportCall {
-				loc: SourceLocation experimental/dynamic-import/invalid-lone-import/input.js 1:7-1:8
 				argument: JSReferenceIdentifier {
 					name: "INVALID_PLACEHOLDER"
 					loc: SourceLocation experimental/dynamic-import/invalid-lone-import/input.js 1:7-1:7
 				}
+				loc: SourceLocation experimental/dynamic-import/invalid-lone-import/input.js 1:7-1:8
 			}
+			loc: SourceLocation experimental/dynamic-import/invalid-lone-import/input.js 1:0-1:8
 		}
 	]
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:7
-				path: UIDPath<experimental/dynamic-import/invalid-lone-import/input.js>
-				start: Position 1:7
-			}
-			description: Object {
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Unexpected character <emphasis>)</emphasis>"}
-				advice: Array [
+	comments: []
+	corrupt: true
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {
+				advice: [
 					log {
 						category: "info"
-						text: RAW_MARKUP {value: "Expected the opening array character <emphasis>(</emphasis>"}
+						text: [RAW_MARKUP {value: "Expected the opening "}, "array", RAW_MARKUP {value: " character <emphasis>"}, "(", RAW_MARKUP {value: "</emphasis>"}]
 					}
 				]
+				category: ["parse"]
+				categoryValue: "js"
+				message: [RAW_MARKUP {value: "Unexpected character <emphasis>"}, ")", RAW_MARKUP {value: "</emphasis>"}]
+			}
+			location: {
+				language: "js"
+				path: UIDPath<experimental/dynamic-import/invalid-lone-import/input.js>
+				end: Position 1:7
+				start: Position 1:7
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<experimental/dynamic-import/invalid-lone-import/input.js>
+	loc: SourceLocation experimental/dynamic-import/invalid-lone-import/input.js 1:0-2:0
 }
 ```
 
@@ -66,7 +62,7 @@ JSRoot {
   ✖ Unexpected character )
 
     (import)
-           ^
+           <error><emphasis>^</emphasis></error>
 
   ℹ Expected the opening array character (
 

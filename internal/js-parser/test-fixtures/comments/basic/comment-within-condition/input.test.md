@@ -10,23 +10,39 @@
 JSRoot {
 	body: [
 		JSIfStatement {
-			consequent: JSBlockStatement {body: [], directives: [], loc: SourceLocation comments/basic/comment-within-condition/input.js 2:18-2:20}
 			leadingComments: ["0"]
-			test: JSReferenceIdentifier {name: "a", leadingComments: ["1"], loc: SourceLocation comments/basic/comment-within-condition/input.js 2:15-2:16 (a)}
+			consequent: JSBlockStatement {
+				body: []
+				directives: []
+				loc: SourceLocation comments/basic/comment-within-condition/input.js 2:18-2:20
+			}
+			test: JSReferenceIdentifier {
+				name: "a"
+				leadingComments: ["1"]
+				loc: SourceLocation comments/basic/comment-within-condition/input.js 2:15-2:16 (a)
+			}
 			loc: SourceLocation comments/basic/comment-within-condition/input.js 2:0-2:20
 		}
 	]
 	comments: [
-		CommentBlock {id: "0", value: " foo ", loc: SourceLocation comments/basic/comment-within-condition/input.js 1:0-1:9}
-		CommentBlock {id: "1", value: " bar ", loc: SourceLocation comments/basic/comment-within-condition/input.js 2:4-2:13}
+		CommentBlock {
+			id: "0"
+			value: " foo "
+			loc: SourceLocation comments/basic/comment-within-condition/input.js 1:0-1:9
+		}
+		CommentBlock {
+			id: "1"
+			value: " bar "
+			loc: SourceLocation comments/basic/comment-within-condition/input.js 2:4-2:13
+		}
 	]
 	corrupt: false
 	diagnostics: []
 	directives: []
 	hasHoistedVars: false
-	path: UIDPath<comments/basic/comment-within-condition/input.js>
 	sourceType: "script"
 	syntax: []
+	path: UIDPath<comments/basic/comment-within-condition/input.js>
 	loc: SourceLocation comments/basic/comment-within-condition/input.js 1:0-3:0
 }
 ```

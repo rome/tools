@@ -8,31 +8,14 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation esprima/invalid-syntax/migrated_0273/input.js 1:0-2:0
-	path: UIDPath<esprima/invalid-syntax/migrated_0273/input.js>
-	body: Array [
+	body: [
 		JSClassDeclaration {
 			id: JSBindingIdentifier {
 				name: "A"
 				loc: SourceLocation esprima/invalid-syntax/migrated_0273/input.js 1:6-1:7 (A)
 			}
-			loc: SourceLocation esprima/invalid-syntax/migrated_0273/input.js 1:0-1:30
 			meta: JSClassHead {
-				implements: undefined
-				superClass: undefined
-				superTypeParameters: undefined
-				typeParameters: undefined
-				loc: SourceLocation esprima/invalid-syntax/migrated_0273/input.js 1:0-1:30
-				body: Array [
+				body: [
 					JSClassMethod {
 						kind: "set"
 						key: JSStaticPropertyKey {
@@ -42,48 +25,51 @@ JSRoot {
 							}
 							loc: SourceLocation esprima/invalid-syntax/migrated_0273/input.js 1:13-1:24
 						}
-						loc: SourceLocation esprima/invalid-syntax/migrated_0273/input.js 1:9-1:29
 						body: JSBlockStatement {
-							body: Array []
-							directives: Array []
+							body: []
+							directives: []
 							loc: SourceLocation esprima/invalid-syntax/migrated_0273/input.js 1:27-1:29
-						}
-						meta: JSClassPropertyMeta {
-							abstract: false
-							accessibility: undefined
-							optional: false
-							readonly: false
-							static: false
-							typeAnnotation: undefined
-							loc: SourceLocation esprima/invalid-syntax/migrated_0273/input.js 1:9-1:24
-							start: Position 1:9
 						}
 						head: JSFunctionHead {
 							async: false
 							generator: false
 							hasHoistedVars: false
-							rest: undefined
-							returnType: undefined
-							thisType: undefined
-							typeParameters: undefined
-							loc: SourceLocation esprima/invalid-syntax/migrated_0273/input.js 1:24-1:27
-							params: Array [
+							params: [
 								JSBindingIdentifier {
 									name: "m"
-									loc: SourceLocation esprima/invalid-syntax/migrated_0273/input.js 1:25-1:26 (m)
 									meta: JSPatternMeta {
-										optional: undefined
-										typeAnnotation: undefined
 										loc: SourceLocation esprima/invalid-syntax/migrated_0273/input.js 1:25-1:26
 									}
+									loc: SourceLocation esprima/invalid-syntax/migrated_0273/input.js 1:25-1:26 (m)
 								}
 							]
+							loc: SourceLocation esprima/invalid-syntax/migrated_0273/input.js 1:24-1:27
 						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							optional: false
+							readonly: false
+							static: false
+							loc: SourceLocation esprima/invalid-syntax/migrated_0273/input.js 1:9-1:24
+							start: Position 1:9
+						}
+						loc: SourceLocation esprima/invalid-syntax/migrated_0273/input.js 1:9-1:29
 					}
 				]
+				loc: SourceLocation esprima/invalid-syntax/migrated_0273/input.js 1:0-1:30
 			}
+			loc: SourceLocation esprima/invalid-syntax/migrated_0273/input.js 1:0-1:30
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<esprima/invalid-syntax/migrated_0273/input.js>
+	loc: SourceLocation esprima/invalid-syntax/migrated_0273/input.js 1:0-2:0
 }
 ```
 

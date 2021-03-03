@@ -8,29 +8,14 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: true
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2015/uncategorised/304/input.js 1:0-1:45
-	path: UIDPath<es2015/uncategorised/304/input.js>
-	body: Array [
+	body: [
 		JSVariableDeclarationStatement {
-			loc: SourceLocation es2015/uncategorised/304/input.js 1:0-1:45
 			declaration: JSVariableDeclaration {
 				kind: "var"
-				loc: SourceLocation es2015/uncategorised/304/input.js 1:0-1:45
-				declarations: Array [
+				declarations: [
 					JSVariableDeclarator {
 						id: JSBindingObjectPattern {
-							rest: undefined
-							loc: SourceLocation es2015/uncategorised/304/input.js 1:4-1:39
-							properties: Array [
+							properties: [
 								JSBindingObjectPatternProperty {
 									key: JSStaticPropertyKey {
 										value: JSIdentifier {
@@ -40,7 +25,6 @@ JSRoot {
 										loc: SourceLocation es2015/uncategorised/304/input.js 1:5-1:13
 									}
 									value: JSBindingAssignmentPattern {
-										loc: SourceLocation es2015/uncategorised/304/input.js 1:15-1:38
 										left: JSBindingIdentifier {
 											name: "localVar"
 											loc: SourceLocation es2015/uncategorised/304/input.js 1:15-1:23 (localVar)
@@ -49,21 +33,34 @@ JSRoot {
 											name: "defaultValue"
 											loc: SourceLocation es2015/uncategorised/304/input.js 1:26-1:38 (defaultValue)
 										}
+										loc: SourceLocation es2015/uncategorised/304/input.js 1:15-1:38
 									}
 									loc: SourceLocation es2015/uncategorised/304/input.js 1:5-1:38
 								}
 							]
+							loc: SourceLocation es2015/uncategorised/304/input.js 1:4-1:39
 						}
-						loc: SourceLocation es2015/uncategorised/304/input.js 1:4-1:45
 						init: JSReferenceIdentifier {
 							name: "obj"
 							loc: SourceLocation es2015/uncategorised/304/input.js 1:42-1:45 (obj)
 						}
+						loc: SourceLocation es2015/uncategorised/304/input.js 1:4-1:45
 					}
 				]
+				loc: SourceLocation es2015/uncategorised/304/input.js 1:0-1:45
 			}
+			loc: SourceLocation es2015/uncategorised/304/input.js 1:0-1:45
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: true
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2015/uncategorised/304/input.js>
+	loc: SourceLocation es2015/uncategorised/304/input.js 1:0-1:45
 }
 ```
 

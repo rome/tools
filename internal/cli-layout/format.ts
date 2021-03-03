@@ -49,7 +49,7 @@ export function renderGrid(
 		sourceText: input,
 		view: {},
 	});
-	grid.drawChildren(grid.parse(safe, undefined), []);
+	grid.drawChildren(grid.parse(safe, undefined, true), []);
 	return {
 		locators: grid.locators,
 		width: grid.getWidth().valueOf(),

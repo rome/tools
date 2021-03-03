@@ -94,7 +94,15 @@ export default class Worker {
 
 		this.fatalErrorHandler = new FatalErrorHandler({
 			overrideHandle: (err) => {
+				console.error(err);
 				const {bridge} = this;
+
+				if (!bridge.open) {
+					console.error(
+						"Worker encountered fatal error but no server bridge available to emit",
+					);
+					return false;
+				}
 
 				if (opts.type === "test") {
 					bridge.events.testDiagnostic.send({
@@ -112,7 +120,7 @@ export default class Worker {
 					});
 					return true;
 				}
-
+				
 				try {
 					// Dispatch error to the server and trigger a fatal
 					bridge.events.fatalError.send(bridge.serializeCustomError(err));

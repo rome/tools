@@ -8,38 +8,36 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	loc: SourceLocation typescript/module-namespace/module-new-line/input.ts 1:0-4:0
-	path: UIDPath<typescript/module-namespace/module-new-line/input.ts>
-	syntax: Array ["ts"]
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation typescript/module-namespace/module-new-line/input.ts 1:0-1:6
 			expression: JSReferenceIdentifier {
 				name: "module"
 				loc: SourceLocation typescript/module-namespace/module-new-line/input.ts 1:0-1:6 (module)
 			}
+			loc: SourceLocation typescript/module-namespace/module-new-line/input.ts 1:0-1:6
 		}
 		JSExpressionStatement {
-			loc: SourceLocation typescript/module-namespace/module-new-line/input.ts 2:0-2:3
 			expression: JSReferenceIdentifier {
 				name: "Foo"
 				loc: SourceLocation typescript/module-namespace/module-new-line/input.ts 2:0-2:3 (Foo)
 			}
+			loc: SourceLocation typescript/module-namespace/module-new-line/input.ts 2:0-2:3
 		}
 		JSBlockStatement {
-			body: Array []
-			directives: Array []
+			body: []
+			directives: []
 			loc: SourceLocation typescript/module-namespace/module-new-line/input.ts 3:0-3:2
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: ["ts"]
+	path: UIDPath<typescript/module-namespace/module-new-line/input.ts>
+	loc: SourceLocation typescript/module-namespace/module-new-line/input.ts 1:0-4:0
 }
 ```
 

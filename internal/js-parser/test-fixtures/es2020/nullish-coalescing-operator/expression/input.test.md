@@ -8,35 +8,32 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2020/nullish-coalescing-operator/expression/input.js 1:0-2:0
-	path: UIDPath<es2020/nullish-coalescing-operator/expression/input.js>
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation es2020/nullish-coalescing-operator/expression/input.js 1:0-1:9
 			expression: JSLogicalExpression {
 				operator: "??"
-				loc: SourceLocation es2020/nullish-coalescing-operator/expression/input.js 1:0-1:8
 				left: JSReferenceIdentifier {
 					name: "foo"
 					loc: SourceLocation es2020/nullish-coalescing-operator/expression/input.js 1:0-1:3 (foo)
 				}
 				right: JSNumericLiteral {
 					value: 1
-					format: undefined
 					loc: SourceLocation es2020/nullish-coalescing-operator/expression/input.js 1:7-1:8
 				}
+				loc: SourceLocation es2020/nullish-coalescing-operator/expression/input.js 1:0-1:8
 			}
+			loc: SourceLocation es2020/nullish-coalescing-operator/expression/input.js 1:0-1:9
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2020/nullish-coalescing-operator/expression/input.js>
+	loc: SourceLocation es2020/nullish-coalescing-operator/expression/input.js 1:0-2:0
 }
 ```
 

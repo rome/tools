@@ -8,31 +8,14 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	loc: SourceLocation typescript/assert-predicate/asserts-this/input.ts 1:0-4:0
-	path: UIDPath<typescript/assert-predicate/asserts-this/input.ts>
-	syntax: Array ["ts"]
-	body: Array [
+	body: [
 		JSClassDeclaration {
 			id: JSBindingIdentifier {
 				name: "C"
 				loc: SourceLocation typescript/assert-predicate/asserts-this/input.ts 1:6-1:7 (C)
 			}
-			loc: SourceLocation typescript/assert-predicate/asserts-this/input.ts 1:0-3:1
 			meta: JSClassHead {
-				implements: undefined
-				superClass: undefined
-				superTypeParameters: undefined
-				typeParameters: undefined
-				loc: SourceLocation typescript/assert-predicate/asserts-this/input.ts 1:0-3:1
-				body: Array [
+				body: [
 					JSClassMethod {
 						kind: "method"
 						key: JSStaticPropertyKey {
@@ -42,46 +25,51 @@ JSRoot {
 							}
 							loc: SourceLocation typescript/assert-predicate/asserts-this/input.ts 2:2-2:3
 						}
-						loc: SourceLocation typescript/assert-predicate/asserts-this/input.ts 2:2-2:22
 						body: JSBlockStatement {
-							body: Array []
-							directives: Array []
+							body: []
+							directives: []
 							loc: SourceLocation typescript/assert-predicate/asserts-this/input.ts 2:20-2:22
-						}
-						meta: JSClassPropertyMeta {
-							abstract: false
-							accessibility: undefined
-							optional: false
-							readonly: false
-							static: false
-							typeAnnotation: undefined
-							loc: SourceLocation typescript/assert-predicate/asserts-this/input.ts 2:2-2:3
-							start: Position 2:2
 						}
 						head: JSFunctionHead {
 							async: false
 							generator: false
 							hasHoistedVars: false
-							params: Array []
-							rest: undefined
-							thisType: undefined
-							typeParameters: undefined
-							loc: SourceLocation typescript/assert-predicate/asserts-this/input.ts 2:3-2:19
+							params: []
 							returnType: TSTypePredicate {
 								asserts: true
-								typeAnnotation: undefined
-								loc: SourceLocation typescript/assert-predicate/asserts-this/input.ts 2:5-2:19
 								parameterName: JSIdentifier {
 									name: "this"
 									loc: SourceLocation typescript/assert-predicate/asserts-this/input.ts 2:15-2:19 (this)
 								}
+								loc: SourceLocation typescript/assert-predicate/asserts-this/input.ts 2:5-2:19
 							}
+							loc: SourceLocation typescript/assert-predicate/asserts-this/input.ts 2:3-2:19
 						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							optional: false
+							readonly: false
+							static: false
+							loc: SourceLocation typescript/assert-predicate/asserts-this/input.ts 2:2-2:3
+							start: Position 2:2
+						}
+						loc: SourceLocation typescript/assert-predicate/asserts-this/input.ts 2:2-2:22
 					}
 				]
+				loc: SourceLocation typescript/assert-predicate/asserts-this/input.ts 1:0-3:1
 			}
+			loc: SourceLocation typescript/assert-predicate/asserts-this/input.ts 1:0-3:1
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: ["ts"]
+	path: UIDPath<typescript/assert-predicate/asserts-this/input.ts>
+	loc: SourceLocation typescript/assert-predicate/asserts-this/input.ts 1:0-4:0
 }
 ```
 

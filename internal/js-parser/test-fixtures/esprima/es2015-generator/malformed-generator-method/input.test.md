@@ -8,41 +8,10 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation esprima/es2015-generator/malformed-generator-method/input.js 1:0-2:0
-	path: UIDPath<esprima/es2015-generator/malformed-generator-method/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Expected an identifier"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:4
-				path: UIDPath<esprima/es2015-generator/malformed-generator-method/input.js>
-				start: Position 1:5
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation esprima/es2015-generator/malformed-generator-method/input.js 1:0-1:7
 			expression: JSObjectExpression {
-				loc: SourceLocation esprima/es2015-generator/malformed-generator-method/input.js 1:1-1:7
-				properties: Array [
+				properties: [
 					JSObjectMethod {
 						kind: "method"
 						key: JSStaticPropertyKey {
@@ -52,28 +21,51 @@ JSRoot {
 							}
 							loc: SourceLocation esprima/es2015-generator/malformed-generator-method/input.js 1:5-1:6
 						}
-						loc: SourceLocation esprima/es2015-generator/malformed-generator-method/input.js 1:3-1:7
 						body: JSBlockStatement {
-							body: Array []
-							directives: Array []
+							body: []
+							directives: []
 							loc: SourceLocation esprima/es2015-generator/malformed-generator-method/input.js 2:0-1:7
 						}
 						head: JSFunctionHead {
 							async: false
 							generator: true
 							hasHoistedVars: false
-							params: Array []
-							rest: undefined
-							returnType: undefined
-							thisType: undefined
-							typeParameters: undefined
+							params: []
 							loc: SourceLocation esprima/es2015-generator/malformed-generator-method/input.js 1:6-1:7
 						}
+						loc: SourceLocation esprima/es2015-generator/malformed-generator-method/input.js 1:3-1:7
 					}
 				]
+				loc: SourceLocation esprima/es2015-generator/malformed-generator-method/input.js 1:1-1:7
+			}
+			loc: SourceLocation esprima/es2015-generator/malformed-generator-method/input.js 1:0-1:7
+		}
+	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "Expected an identifier"}
+			}
+			location: {
+				language: "js"
+				path: UIDPath<esprima/es2015-generator/malformed-generator-method/input.js>
+				end: Position 1:4
+				start: Position 1:5
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<esprima/es2015-generator/malformed-generator-method/input.js>
+	loc: SourceLocation esprima/es2015-generator/malformed-generator-method/input.js 1:0-2:0
 }
 ```
 
@@ -86,7 +78,7 @@ JSRoot {
   ✖ Expected an identifier
 
     ({ * })
-         ^
+         <error><emphasis>^</emphasis></error>
 
 
 ```

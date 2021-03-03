@@ -8,53 +8,17 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation experimental/class-private-properties/invalid-ts-type-literal/input.js 1:0-4:0
-	path: UIDPath<experimental/class-private-properties/invalid-ts-type-literal/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:0
-				path: UIDPath<experimental/class-private-properties/invalid-ts-type-literal/input.js>
-				start: Position 1:0
-			}
-			description: Object {
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "A interface declaration is only valid inside of a TypeScript file"}
-				advice: Array [
-					log {
-						category: "info"
-						text: RAW_MARKUP {value: "To enable <emphasis>TypeScript</emphasis> support, the file extension should end in <emphasis>.ts</emphasis> or <emphasis>.tsx</emphasis>"}
-					}
-				]
-			}
-		}
-	]
-	body: Array [
+	body: [
 		TSInterfaceDeclaration {
 			id: JSBindingIdentifier {
 				name: "I"
 				loc: SourceLocation experimental/class-private-properties/invalid-ts-type-literal/input.js 1:10-1:11 (I)
 			}
-			extends: undefined
-			typeParameters: undefined
-			loc: SourceLocation experimental/class-private-properties/invalid-ts-type-literal/input.js 1:0-3:1
 			body: TSInterfaceBody {
-				loc: SourceLocation experimental/class-private-properties/invalid-ts-type-literal/input.js 1:12-3:1
-				body: Array [
+				body: [
 					TSPropertySignature {
+						optional: false
+						readonly: false
 						key: JSStaticPropertyKey {
 							value: JSIdentifier {
 								name: "p"
@@ -62,15 +26,49 @@ JSRoot {
 							}
 							loc: SourceLocation experimental/class-private-properties/invalid-ts-type-literal/input.js 2:3-2:4
 						}
-						optional: false
-						readonly: false
+						typeAnnotation: TSStringKeywordTypeAnnotation {
+							loc: SourceLocation experimental/class-private-properties/invalid-ts-type-literal/input.js 2:6-2:12
+						}
 						loc: SourceLocation experimental/class-private-properties/invalid-ts-type-literal/input.js 2:3-2:12
-						typeAnnotation: TSStringKeywordTypeAnnotation {loc: SourceLocation experimental/class-private-properties/invalid-ts-type-literal/input.js 2:6-2:12}
 					}
 				]
+				loc: SourceLocation experimental/class-private-properties/invalid-ts-type-literal/input.js 1:12-3:1
+			}
+			loc: SourceLocation experimental/class-private-properties/invalid-ts-type-literal/input.js 1:0-3:1
+		}
+	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {
+				advice: [
+					log {
+						category: "info"
+						text: RAW_MARKUP {
+							value: "To enable <emphasis>TypeScript</emphasis> support, the file extension should end in <emphasis>.ts</emphasis> or <emphasis>.tsx</emphasis>"
+						}
+					}
+				]
+				category: ["parse"]
+				categoryValue: "js"
+				message: [RAW_MARKUP {value: "A "}, "interface declaration", RAW_MARKUP {value: " is only valid inside of a TypeScript file"}]
+			}
+			location: {
+				language: "js"
+				path: UIDPath<experimental/class-private-properties/invalid-ts-type-literal/input.js>
+				end: Position 1:0
+				start: Position 1:0
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<experimental/class-private-properties/invalid-ts-type-literal/input.js>
+	loc: SourceLocation experimental/class-private-properties/invalid-ts-type-literal/input.js 1:0-4:0
 }
 ```
 
@@ -83,7 +81,7 @@ JSRoot {
   ✖ A interface declaration is only valid inside of a TypeScript file
 
   > 1 │ interface I {
-      │ ^
+      │ <error><emphasis>^</emphasis></error>
     2 │   #p: string
     3 │ }
 

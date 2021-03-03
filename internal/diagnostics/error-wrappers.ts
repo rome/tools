@@ -7,7 +7,6 @@
 
 import {Diagnostic, DiagnosticsProcessor} from "@internal/diagnostics";
 import {DiagnosticsPrinter} from "@internal/cli-diagnostics";
-import {DiagnosticSuppressions} from "./types";
 import {Reporter} from "@internal/cli-reporter";
 import {readMarkup} from "@internal/markup";
 import {
@@ -27,7 +26,6 @@ export class DiagnosticsError extends Error implements NodeSystemError {
 	constructor(
 		message: undefined | string,
 		diagnostics: Diagnostic[],
-		suppressions: DiagnosticSuppressions = [],
 	) {
 		if (diagnostics.length === 0) {
 			throw new Error("No diagnostics");
@@ -37,7 +35,6 @@ export class DiagnosticsError extends Error implements NodeSystemError {
 		this._memoMessage = undefined;
 		this._message = message;
 		this.diagnostics = diagnostics;
-		this.suppressions = suppressions;
 		this.name = "DiagnosticsError";
 	}
 
@@ -83,7 +80,6 @@ export class DiagnosticsError extends Error implements NodeSystemError {
 	}
 
 	public diagnostics: Diagnostic[];
-	public suppressions: DiagnosticSuppressions;
 }
 
 export function createRuntimeDiagnosticsError(
@@ -94,21 +90,16 @@ export function createRuntimeDiagnosticsError(
 	return createSingleDiagnosticsError(diag);
 }
 
-export function createSingleDiagnosticsError(
-	diag: Diagnostic,
-	suppressions?: DiagnosticSuppressions,
-): DiagnosticsError {
+export function createSingleDiagnosticsError(diag: Diagnostic,): DiagnosticsError {
 	return new DiagnosticsError(
 		readMarkup(diag.description.message),
 		[diag],
-		suppressions,
 	);
 }
 
 export function getDiagnosticsFromError(err: Error): undefined | Diagnostic[] {
 	if (err instanceof DiagnosticsError) {
 		const processor = new DiagnosticsProcessor({});
-		processor.addSuppressions(err.suppressions);
 		processor.addDiagnostics(err.diagnostics);
 		return processor.getDiagnostics();
 	}

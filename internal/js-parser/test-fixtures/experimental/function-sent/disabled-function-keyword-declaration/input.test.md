@@ -8,64 +8,18 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation experimental/function-sent/disabled-function-keyword-declaration/input.js 1:0-4:0
-	path: UIDPath<experimental/function-sent/disabled-function-keyword-declaration/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Expected a semicolon or a line terminator"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 2:17
-				path: UIDPath<experimental/function-sent/disabled-function-keyword-declaration/input.js>
-				start: Position 2:18
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "foo"
 				loc: SourceLocation experimental/function-sent/disabled-function-keyword-declaration/input.js 1:10-1:13 (foo)
 			}
-			loc: SourceLocation experimental/function-sent/disabled-function-keyword-declaration/input.js 1:0-3:1
-			head: JSFunctionHead {
-				async: false
-				generator: true
-				hasHoistedVars: false
-				params: Array []
-				rest: undefined
-				returnType: undefined
-				thisType: undefined
-				typeParameters: undefined
-				loc: SourceLocation experimental/function-sent/disabled-function-keyword-declaration/input.js 1:13-1:15
-			}
 			body: JSBlockStatement {
-				directives: Array []
-				loc: SourceLocation experimental/function-sent/disabled-function-keyword-declaration/input.js 1:16-3:1
-				body: Array [
+				body: [
 					JSExpressionStatement {
-						loc: SourceLocation experimental/function-sent/disabled-function-keyword-declaration/input.js 2:2-2:17
 						expression: JSCallExpression {
-							arguments: Array []
-							loc: SourceLocation experimental/function-sent/disabled-function-keyword-declaration/input.js 2:2-2:17
+							arguments: []
 							callee: JSMetaProperty {
-								loc: SourceLocation experimental/function-sent/disabled-function-keyword-declaration/input.js 2:2-2:15
 								meta: JSIdentifier {
 									name: "function"
 									loc: SourceLocation experimental/function-sent/disabled-function-keyword-declaration/input.js 2:2-2:10 (function)
@@ -74,18 +28,56 @@ JSRoot {
 									name: "sent"
 									loc: SourceLocation experimental/function-sent/disabled-function-keyword-declaration/input.js 2:11-2:15 (sent)
 								}
+								loc: SourceLocation experimental/function-sent/disabled-function-keyword-declaration/input.js 2:2-2:15
 							}
+							loc: SourceLocation experimental/function-sent/disabled-function-keyword-declaration/input.js 2:2-2:17
 						}
+						loc: SourceLocation experimental/function-sent/disabled-function-keyword-declaration/input.js 2:2-2:17
 					}
 					JSBlockStatement {
-						body: Array []
-						directives: Array []
+						body: []
+						directives: []
 						loc: SourceLocation experimental/function-sent/disabled-function-keyword-declaration/input.js 2:18-2:20
 					}
 				]
+				directives: []
+				loc: SourceLocation experimental/function-sent/disabled-function-keyword-declaration/input.js 1:16-3:1
+			}
+			head: JSFunctionHead {
+				async: false
+				generator: true
+				hasHoistedVars: false
+				params: []
+				loc: SourceLocation experimental/function-sent/disabled-function-keyword-declaration/input.js 1:13-1:15
+			}
+			loc: SourceLocation experimental/function-sent/disabled-function-keyword-declaration/input.js 1:0-3:1
+		}
+	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "Expected a semicolon or a line terminator"}
+			}
+			location: {
+				language: "js"
+				path: UIDPath<experimental/function-sent/disabled-function-keyword-declaration/input.js>
+				end: Position 2:17
+				start: Position 2:18
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<experimental/function-sent/disabled-function-keyword-declaration/input.js>
+	loc: SourceLocation experimental/function-sent/disabled-function-keyword-declaration/input.js 1:0-4:0
 }
 ```
 
@@ -99,7 +91,7 @@ JSRoot {
 
     1 │ function* foo() {
   > 2 │   function.sent() {}
-      │                   ^
+      │                   <error><emphasis>^</emphasis></error>
     3 │ }
 
 

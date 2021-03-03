@@ -8,36 +8,21 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	loc: SourceLocation typescript/declare/destructure-new-line/input.ts 1:0-3:0
-	path: UIDPath<typescript/declare/destructure-new-line/input.ts>
-	syntax: Array ["ts"]
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation typescript/declare/destructure-new-line/input.ts 1:0-1:7
 			expression: JSReferenceIdentifier {
 				name: "declare"
 				loc: SourceLocation typescript/declare/destructure-new-line/input.ts 1:0-1:7 (declare)
 			}
+			loc: SourceLocation typescript/declare/destructure-new-line/input.ts 1:0-1:7
 		}
 		JSVariableDeclarationStatement {
-			loc: SourceLocation typescript/declare/destructure-new-line/input.ts 2:0-2:41
 			declaration: JSVariableDeclaration {
 				kind: "const"
-				loc: SourceLocation typescript/declare/destructure-new-line/input.ts 2:0-2:41
-				declarations: Array [
+				declarations: [
 					JSVariableDeclarator {
 						id: JSBindingObjectPattern {
-							rest: undefined
-							loc: SourceLocation typescript/declare/destructure-new-line/input.ts 2:6-2:40
-							properties: Array [
+							properties: [
 								JSBindingObjectPatternProperty {
 									key: JSStaticPropertyKey {
 										value: JSIdentifier {
@@ -68,12 +53,11 @@ JSRoot {
 								}
 							]
 							meta: JSPatternMeta {
-								definite: undefined
-								loc: SourceLocation typescript/declare/destructure-new-line/input.ts 2:6-2:40
 								typeAnnotation: TSObjectTypeAnnotation {
-									loc: SourceLocation typescript/declare/destructure-new-line/input.ts 2:16-2:40
-									members: Array [
+									members: [
 										TSPropertySignature {
+											optional: false
+											readonly: false
 											key: JSStaticPropertyKey {
 												value: JSIdentifier {
 													name: "x"
@@ -81,12 +65,14 @@ JSRoot {
 												}
 												loc: SourceLocation typescript/declare/destructure-new-line/input.ts 2:18-2:19
 											}
-											optional: false
-											readonly: false
+											typeAnnotation: TSNumberKeywordTypeAnnotation {
+												loc: SourceLocation typescript/declare/destructure-new-line/input.ts 2:21-2:27
+											}
 											loc: SourceLocation typescript/declare/destructure-new-line/input.ts 2:18-2:28
-											typeAnnotation: TSNumberKeywordTypeAnnotation {loc: SourceLocation typescript/declare/destructure-new-line/input.ts 2:21-2:27}
 										}
 										TSPropertySignature {
+											optional: false
+											readonly: false
 											key: JSStaticPropertyKey {
 												value: JSIdentifier {
 													name: "y"
@@ -94,22 +80,35 @@ JSRoot {
 												}
 												loc: SourceLocation typescript/declare/destructure-new-line/input.ts 2:29-2:30
 											}
-											optional: false
-											readonly: false
+											typeAnnotation: TSNumberKeywordTypeAnnotation {
+												loc: SourceLocation typescript/declare/destructure-new-line/input.ts 2:32-2:38
+											}
 											loc: SourceLocation typescript/declare/destructure-new-line/input.ts 2:29-2:38
-											typeAnnotation: TSNumberKeywordTypeAnnotation {loc: SourceLocation typescript/declare/destructure-new-line/input.ts 2:32-2:38}
 										}
 									]
+									loc: SourceLocation typescript/declare/destructure-new-line/input.ts 2:16-2:40
 								}
+								loc: SourceLocation typescript/declare/destructure-new-line/input.ts 2:6-2:40
 							}
+							loc: SourceLocation typescript/declare/destructure-new-line/input.ts 2:6-2:40
 						}
-						init: undefined
 						loc: SourceLocation typescript/declare/destructure-new-line/input.ts 2:6-2:40
 					}
 				]
+				loc: SourceLocation typescript/declare/destructure-new-line/input.ts 2:0-2:41
 			}
+			loc: SourceLocation typescript/declare/destructure-new-line/input.ts 2:0-2:41
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: ["ts"]
+	path: UIDPath<typescript/declare/destructure-new-line/input.ts>
+	loc: SourceLocation typescript/declare/destructure-new-line/input.ts 1:0-3:0
 }
 ```
 

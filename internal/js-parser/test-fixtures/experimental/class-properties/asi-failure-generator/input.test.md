@@ -8,49 +8,14 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: true
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation experimental/class-properties/asi-failure-generator/input.js 1:0-5:0
-	path: UIDPath<experimental/class-properties/asi-failure-generator/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Expected a semicolon or a line terminator"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 3:7
-				path: UIDPath<experimental/class-properties/asi-failure-generator/input.js>
-				start: Position 3:8
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSClassDeclaration {
 			id: JSBindingIdentifier {
 				name: "Foo"
 				loc: SourceLocation experimental/class-properties/asi-failure-generator/input.js 1:6-1:9 (Foo)
 			}
-			loc: SourceLocation experimental/class-properties/asi-failure-generator/input.js 1:0-3:10
 			meta: JSClassHead {
-				implements: undefined
-				superClass: undefined
-				superTypeParameters: undefined
-				typeParameters: undefined
-				loc: SourceLocation experimental/class-properties/asi-failure-generator/input.js 1:0-3:10
-				body: Array [
+				body: [
 					JSClassProperty {
 						key: JSStaticPropertyKey {
 							value: JSIdentifier {
@@ -61,33 +26,29 @@ JSRoot {
 						}
 						value: JSBinaryExpression {
 							operator: "*"
-							loc: SourceLocation experimental/class-properties/asi-failure-generator/input.js 2:6-3:7
 							left: JSReferenceIdentifier {
 								name: "x"
 								loc: SourceLocation experimental/class-properties/asi-failure-generator/input.js 2:6-2:7 (x)
 							}
 							right: JSCallExpression {
-								arguments: Array []
-								loc: SourceLocation experimental/class-properties/asi-failure-generator/input.js 3:3-3:7
+								arguments: []
 								callee: JSReferenceIdentifier {
 									name: "m"
 									loc: SourceLocation experimental/class-properties/asi-failure-generator/input.js 3:3-3:4 (m)
 								}
+								loc: SourceLocation experimental/class-properties/asi-failure-generator/input.js 3:3-3:7
 							}
+							loc: SourceLocation experimental/class-properties/asi-failure-generator/input.js 2:6-3:7
 						}
-						definite: undefined
-						typeAnnotation: undefined
-						loc: SourceLocation experimental/class-properties/asi-failure-generator/input.js 2:2-3:7
 						meta: JSClassPropertyMeta {
 							abstract: false
-							accessibility: undefined
 							optional: false
 							readonly: false
 							static: false
-							typeAnnotation: undefined
 							loc: SourceLocation experimental/class-properties/asi-failure-generator/input.js 2:2-2:3
 							start: Position 2:2
 						}
+						loc: SourceLocation experimental/class-properties/asi-failure-generator/input.js 2:2-3:7
 					}
 					JSClassProperty {
 						key: JSStaticPropertyKey {
@@ -97,32 +58,54 @@ JSRoot {
 							}
 							loc: SourceLocation experimental/class-properties/asi-failure-generator/input.js 3:8-3:9
 						}
-						value: undefined
-						definite: undefined
-						typeAnnotation: undefined
-						loc: SourceLocation experimental/class-properties/asi-failure-generator/input.js 3:8-3:9
 						meta: JSClassPropertyMeta {
 							abstract: false
-							accessibility: undefined
 							optional: false
 							readonly: false
 							static: false
-							typeAnnotation: undefined
 							loc: SourceLocation experimental/class-properties/asi-failure-generator/input.js 3:8-3:9
 							start: Position 3:8
 						}
+						loc: SourceLocation experimental/class-properties/asi-failure-generator/input.js 3:8-3:9
 					}
 				]
+				loc: SourceLocation experimental/class-properties/asi-failure-generator/input.js 1:0-3:10
 			}
+			loc: SourceLocation experimental/class-properties/asi-failure-generator/input.js 1:0-3:10
 		}
 		JSExpressionStatement {
-			loc: SourceLocation experimental/class-properties/asi-failure-generator/input.js 4:0-4:1
 			expression: JSReferenceIdentifier {
 				name: "INVALID_PLACEHOLDER"
 				loc: SourceLocation experimental/class-properties/asi-failure-generator/input.js 4:0-4:1
 			}
+			loc: SourceLocation experimental/class-properties/asi-failure-generator/input.js 4:0-4:1
 		}
 	]
+	comments: []
+	corrupt: true
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "Expected a semicolon or a line terminator"}
+			}
+			location: {
+				language: "js"
+				path: UIDPath<experimental/class-properties/asi-failure-generator/input.js>
+				end: Position 3:7
+				start: Position 3:8
+			}
+		}
+	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<experimental/class-properties/asi-failure-generator/input.js>
+	loc: SourceLocation experimental/class-properties/asi-failure-generator/input.js 1:0-5:0
 }
 ```
 
@@ -137,7 +120,7 @@ JSRoot {
     1 │ class Foo {
     2 │   p = x
   > 3 │   *m () {}
-      │         ^
+      │         <error><emphasis>^</emphasis></error>
     4 │ }
 
 

@@ -8,31 +8,14 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2015/class-methods/linebreaks/input.js 1:0-42:1
-	path: UIDPath<es2015/class-methods/linebreaks/input.js>
-	body: Array [
+	body: [
 		JSClassDeclaration {
 			id: JSBindingIdentifier {
 				name: "A"
 				loc: SourceLocation es2015/class-methods/linebreaks/input.js 1:6-1:7 (A)
 			}
-			loc: SourceLocation es2015/class-methods/linebreaks/input.js 1:0-42:1
 			meta: JSClassHead {
-				implements: undefined
-				superClass: undefined
-				superTypeParameters: undefined
-				typeParameters: undefined
-				loc: SourceLocation es2015/class-methods/linebreaks/input.js 1:0-42:1
-				body: Array [
+				body: [
 					JSClassMethod {
 						kind: "get"
 						key: JSStaticPropertyKey {
@@ -42,33 +25,27 @@ JSRoot {
 							}
 							loc: SourceLocation es2015/class-methods/linebreaks/input.js 3:2-3:3
 						}
-						loc: SourceLocation es2015/class-methods/linebreaks/input.js 2:2-4:7
 						body: JSBlockStatement {
-							body: Array []
-							directives: Array []
+							body: []
+							directives: []
 							loc: SourceLocation es2015/class-methods/linebreaks/input.js 4:5-4:7
-						}
-						meta: JSClassPropertyMeta {
-							abstract: false
-							accessibility: undefined
-							optional: false
-							readonly: false
-							static: false
-							typeAnnotation: undefined
-							loc: SourceLocation es2015/class-methods/linebreaks/input.js 2:2-3:3
-							start: Position 2:2
 						}
 						head: JSFunctionHead {
 							async: false
 							generator: false
 							hasHoistedVars: false
-							params: Array []
-							rest: undefined
-							returnType: undefined
-							thisType: undefined
-							typeParameters: undefined
+							params: []
 							loc: SourceLocation es2015/class-methods/linebreaks/input.js 4:2-4:4
 						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							optional: false
+							readonly: false
+							static: false
+							loc: SourceLocation es2015/class-methods/linebreaks/input.js 2:2-3:3
+							start: Position 2:2
+						}
+						loc: SourceLocation es2015/class-methods/linebreaks/input.js 2:2-4:7
 					}
 					JSClassMethod {
 						kind: "set"
@@ -79,43 +56,35 @@ JSRoot {
 							}
 							loc: SourceLocation es2015/class-methods/linebreaks/input.js 7:2-7:3
 						}
-						loc: SourceLocation es2015/class-methods/linebreaks/input.js 6:2-8:8
 						body: JSBlockStatement {
-							body: Array []
-							directives: Array []
+							body: []
+							directives: []
 							loc: SourceLocation es2015/class-methods/linebreaks/input.js 8:6-8:8
-						}
-						meta: JSClassPropertyMeta {
-							abstract: false
-							accessibility: undefined
-							optional: false
-							readonly: false
-							static: false
-							typeAnnotation: undefined
-							loc: SourceLocation es2015/class-methods/linebreaks/input.js 6:2-7:3
-							start: Position 6:2
 						}
 						head: JSFunctionHead {
 							async: false
 							generator: false
 							hasHoistedVars: false
-							rest: undefined
-							returnType: undefined
-							thisType: undefined
-							typeParameters: undefined
-							loc: SourceLocation es2015/class-methods/linebreaks/input.js 8:2-8:5
-							params: Array [
+							params: [
 								JSBindingIdentifier {
 									name: "a"
-									loc: SourceLocation es2015/class-methods/linebreaks/input.js 8:3-8:4 (a)
 									meta: JSPatternMeta {
-										optional: undefined
-										typeAnnotation: undefined
 										loc: SourceLocation es2015/class-methods/linebreaks/input.js 8:3-8:4
 									}
+									loc: SourceLocation es2015/class-methods/linebreaks/input.js 8:3-8:4 (a)
 								}
 							]
+							loc: SourceLocation es2015/class-methods/linebreaks/input.js 8:2-8:5
 						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							optional: false
+							readonly: false
+							static: false
+							loc: SourceLocation es2015/class-methods/linebreaks/input.js 6:2-7:3
+							start: Position 6:2
+						}
+						loc: SourceLocation es2015/class-methods/linebreaks/input.js 6:2-8:8
 					}
 					JSClassMethod {
 						kind: "constructor"
@@ -126,33 +95,27 @@ JSRoot {
 							}
 							loc: SourceLocation es2015/class-methods/linebreaks/input.js 10:2-10:13
 						}
-						loc: SourceLocation es2015/class-methods/linebreaks/input.js 10:2-11:7
 						body: JSBlockStatement {
-							body: Array []
-							directives: Array []
+							body: []
+							directives: []
 							loc: SourceLocation es2015/class-methods/linebreaks/input.js 11:5-11:7
-						}
-						meta: JSClassPropertyMeta {
-							abstract: false
-							accessibility: undefined
-							optional: false
-							readonly: false
-							static: false
-							typeAnnotation: undefined
-							loc: SourceLocation es2015/class-methods/linebreaks/input.js 10:2-10:13
-							start: Position 10:2
 						}
 						head: JSFunctionHead {
 							async: false
 							generator: false
 							hasHoistedVars: false
-							params: Array []
-							rest: undefined
-							returnType: undefined
-							thisType: undefined
-							typeParameters: undefined
+							params: []
 							loc: SourceLocation es2015/class-methods/linebreaks/input.js 11:2-11:4
 						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							optional: false
+							readonly: false
+							static: false
+							loc: SourceLocation es2015/class-methods/linebreaks/input.js 10:2-10:13
+							start: Position 10:2
+						}
+						loc: SourceLocation es2015/class-methods/linebreaks/input.js 10:2-11:7
 					}
 					JSClassMethod {
 						kind: "method"
@@ -163,33 +126,27 @@ JSRoot {
 							}
 							loc: SourceLocation es2015/class-methods/linebreaks/input.js 13:2-13:3
 						}
-						loc: SourceLocation es2015/class-methods/linebreaks/input.js 13:2-14:7
 						body: JSBlockStatement {
-							body: Array []
-							directives: Array []
+							body: []
+							directives: []
 							loc: SourceLocation es2015/class-methods/linebreaks/input.js 14:5-14:7
-						}
-						meta: JSClassPropertyMeta {
-							abstract: false
-							accessibility: undefined
-							optional: false
-							readonly: false
-							static: false
-							typeAnnotation: undefined
-							loc: SourceLocation es2015/class-methods/linebreaks/input.js 13:2-13:3
-							start: Position 13:2
 						}
 						head: JSFunctionHead {
 							async: false
 							generator: false
 							hasHoistedVars: false
-							params: Array []
-							rest: undefined
-							returnType: undefined
-							thisType: undefined
-							typeParameters: undefined
+							params: []
 							loc: SourceLocation es2015/class-methods/linebreaks/input.js 14:2-14:4
 						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							optional: false
+							readonly: false
+							static: false
+							loc: SourceLocation es2015/class-methods/linebreaks/input.js 13:2-13:3
+							start: Position 13:2
+						}
+						loc: SourceLocation es2015/class-methods/linebreaks/input.js 13:2-14:7
 					}
 					JSClassMethod {
 						kind: "method"
@@ -200,33 +157,27 @@ JSRoot {
 							}
 							loc: SourceLocation es2015/class-methods/linebreaks/input.js 17:2-17:3
 						}
-						loc: SourceLocation es2015/class-methods/linebreaks/input.js 16:2-18:7
 						body: JSBlockStatement {
-							body: Array []
-							directives: Array []
+							body: []
+							directives: []
 							loc: SourceLocation es2015/class-methods/linebreaks/input.js 18:5-18:7
-						}
-						meta: JSClassPropertyMeta {
-							abstract: false
-							accessibility: undefined
-							optional: false
-							readonly: false
-							static: false
-							typeAnnotation: undefined
-							loc: SourceLocation es2015/class-methods/linebreaks/input.js 16:2-17:3
-							start: Position 16:2
 						}
 						head: JSFunctionHead {
 							async: false
 							generator: true
 							hasHoistedVars: false
-							params: Array []
-							rest: undefined
-							returnType: undefined
-							thisType: undefined
-							typeParameters: undefined
+							params: []
 							loc: SourceLocation es2015/class-methods/linebreaks/input.js 18:2-18:4
 						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							optional: false
+							readonly: false
+							static: false
+							loc: SourceLocation es2015/class-methods/linebreaks/input.js 16:2-17:3
+							start: Position 16:2
+						}
+						loc: SourceLocation es2015/class-methods/linebreaks/input.js 16:2-18:7
 					}
 					JSClassMethod {
 						kind: "get"
@@ -237,33 +188,27 @@ JSRoot {
 							}
 							loc: SourceLocation es2015/class-methods/linebreaks/input.js 22:2-22:3
 						}
-						loc: SourceLocation es2015/class-methods/linebreaks/input.js 20:2-23:7
 						body: JSBlockStatement {
-							body: Array []
-							directives: Array []
+							body: []
+							directives: []
 							loc: SourceLocation es2015/class-methods/linebreaks/input.js 23:5-23:7
-						}
-						meta: JSClassPropertyMeta {
-							abstract: false
-							accessibility: undefined
-							optional: false
-							readonly: false
-							static: true
-							typeAnnotation: undefined
-							loc: SourceLocation es2015/class-methods/linebreaks/input.js 20:2-22:3
-							start: Position 20:2
 						}
 						head: JSFunctionHead {
 							async: false
 							generator: false
 							hasHoistedVars: false
-							params: Array []
-							rest: undefined
-							returnType: undefined
-							thisType: undefined
-							typeParameters: undefined
+							params: []
 							loc: SourceLocation es2015/class-methods/linebreaks/input.js 23:2-23:4
 						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							optional: false
+							readonly: false
+							static: true
+							loc: SourceLocation es2015/class-methods/linebreaks/input.js 20:2-22:3
+							start: Position 20:2
+						}
+						loc: SourceLocation es2015/class-methods/linebreaks/input.js 20:2-23:7
 					}
 					JSClassMethod {
 						kind: "set"
@@ -274,43 +219,35 @@ JSRoot {
 							}
 							loc: SourceLocation es2015/class-methods/linebreaks/input.js 27:2-27:3
 						}
-						loc: SourceLocation es2015/class-methods/linebreaks/input.js 25:2-28:8
 						body: JSBlockStatement {
-							body: Array []
-							directives: Array []
+							body: []
+							directives: []
 							loc: SourceLocation es2015/class-methods/linebreaks/input.js 28:6-28:8
-						}
-						meta: JSClassPropertyMeta {
-							abstract: false
-							accessibility: undefined
-							optional: false
-							readonly: false
-							static: true
-							typeAnnotation: undefined
-							loc: SourceLocation es2015/class-methods/linebreaks/input.js 25:2-27:3
-							start: Position 25:2
 						}
 						head: JSFunctionHead {
 							async: false
 							generator: false
 							hasHoistedVars: false
-							rest: undefined
-							returnType: undefined
-							thisType: undefined
-							typeParameters: undefined
-							loc: SourceLocation es2015/class-methods/linebreaks/input.js 28:2-28:5
-							params: Array [
+							params: [
 								JSBindingIdentifier {
 									name: "a"
-									loc: SourceLocation es2015/class-methods/linebreaks/input.js 28:3-28:4 (a)
 									meta: JSPatternMeta {
-										optional: undefined
-										typeAnnotation: undefined
 										loc: SourceLocation es2015/class-methods/linebreaks/input.js 28:3-28:4
 									}
+									loc: SourceLocation es2015/class-methods/linebreaks/input.js 28:3-28:4 (a)
 								}
 							]
+							loc: SourceLocation es2015/class-methods/linebreaks/input.js 28:2-28:5
 						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							optional: false
+							readonly: false
+							static: true
+							loc: SourceLocation es2015/class-methods/linebreaks/input.js 25:2-27:3
+							start: Position 25:2
+						}
+						loc: SourceLocation es2015/class-methods/linebreaks/input.js 25:2-28:8
 					}
 					JSClassMethod {
 						kind: "method"
@@ -321,33 +258,27 @@ JSRoot {
 							}
 							loc: SourceLocation es2015/class-methods/linebreaks/input.js 31:2-31:13
 						}
-						loc: SourceLocation es2015/class-methods/linebreaks/input.js 30:2-32:7
 						body: JSBlockStatement {
-							body: Array []
-							directives: Array []
+							body: []
+							directives: []
 							loc: SourceLocation es2015/class-methods/linebreaks/input.js 32:5-32:7
-						}
-						meta: JSClassPropertyMeta {
-							abstract: false
-							accessibility: undefined
-							optional: false
-							readonly: false
-							static: true
-							typeAnnotation: undefined
-							loc: SourceLocation es2015/class-methods/linebreaks/input.js 30:2-31:13
-							start: Position 30:2
 						}
 						head: JSFunctionHead {
 							async: false
 							generator: false
 							hasHoistedVars: false
-							params: Array []
-							rest: undefined
-							returnType: undefined
-							thisType: undefined
-							typeParameters: undefined
+							params: []
 							loc: SourceLocation es2015/class-methods/linebreaks/input.js 32:2-32:4
 						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							optional: false
+							readonly: false
+							static: true
+							loc: SourceLocation es2015/class-methods/linebreaks/input.js 30:2-31:13
+							start: Position 30:2
+						}
+						loc: SourceLocation es2015/class-methods/linebreaks/input.js 30:2-32:7
 					}
 					JSClassMethod {
 						kind: "method"
@@ -358,33 +289,27 @@ JSRoot {
 							}
 							loc: SourceLocation es2015/class-methods/linebreaks/input.js 35:2-35:3
 						}
-						loc: SourceLocation es2015/class-methods/linebreaks/input.js 34:2-36:7
 						body: JSBlockStatement {
-							body: Array []
-							directives: Array []
+							body: []
+							directives: []
 							loc: SourceLocation es2015/class-methods/linebreaks/input.js 36:5-36:7
-						}
-						meta: JSClassPropertyMeta {
-							abstract: false
-							accessibility: undefined
-							optional: false
-							readonly: false
-							static: true
-							typeAnnotation: undefined
-							loc: SourceLocation es2015/class-methods/linebreaks/input.js 34:2-35:3
-							start: Position 34:2
 						}
 						head: JSFunctionHead {
 							async: false
 							generator: false
 							hasHoistedVars: false
-							params: Array []
-							rest: undefined
-							returnType: undefined
-							thisType: undefined
-							typeParameters: undefined
+							params: []
 							loc: SourceLocation es2015/class-methods/linebreaks/input.js 36:2-36:4
 						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							optional: false
+							readonly: false
+							static: true
+							loc: SourceLocation es2015/class-methods/linebreaks/input.js 34:2-35:3
+							start: Position 34:2
+						}
+						loc: SourceLocation es2015/class-methods/linebreaks/input.js 34:2-36:7
 					}
 					JSClassMethod {
 						kind: "method"
@@ -395,38 +320,43 @@ JSRoot {
 							}
 							loc: SourceLocation es2015/class-methods/linebreaks/input.js 40:2-40:3
 						}
-						loc: SourceLocation es2015/class-methods/linebreaks/input.js 38:2-41:7
 						body: JSBlockStatement {
-							body: Array []
-							directives: Array []
+							body: []
+							directives: []
 							loc: SourceLocation es2015/class-methods/linebreaks/input.js 41:5-41:7
-						}
-						meta: JSClassPropertyMeta {
-							abstract: false
-							accessibility: undefined
-							optional: false
-							readonly: false
-							static: true
-							typeAnnotation: undefined
-							loc: SourceLocation es2015/class-methods/linebreaks/input.js 38:2-40:3
-							start: Position 38:2
 						}
 						head: JSFunctionHead {
 							async: false
 							generator: true
 							hasHoistedVars: false
-							params: Array []
-							rest: undefined
-							returnType: undefined
-							thisType: undefined
-							typeParameters: undefined
+							params: []
 							loc: SourceLocation es2015/class-methods/linebreaks/input.js 41:2-41:4
 						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							optional: false
+							readonly: false
+							static: true
+							loc: SourceLocation es2015/class-methods/linebreaks/input.js 38:2-40:3
+							start: Position 38:2
+						}
+						loc: SourceLocation es2015/class-methods/linebreaks/input.js 38:2-41:7
 					}
 				]
+				loc: SourceLocation es2015/class-methods/linebreaks/input.js 1:0-42:1
 			}
+			loc: SourceLocation es2015/class-methods/linebreaks/input.js 1:0-42:1
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2015/class-methods/linebreaks/input.js>
+	loc: SourceLocation es2015/class-methods/linebreaks/input.js 1:0-42:1
 }
 ```
 

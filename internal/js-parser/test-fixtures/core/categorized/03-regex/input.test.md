@@ -15,10 +15,19 @@ JSRoot {
 					body: [
 						JSReturnStatement {
 							argument: JSBinaryExpression {
+								operator: "/"
 								left: JSBinaryExpression {
+									operator: "/"
 									left: JSFunctionExpression {
-										id: JSBindingIdentifier {name: "fn", loc: SourceLocation core/categorized/03-regex/input.js 2:18-2:20 (fn)}
-										body: JSBlockStatement {body: [], directives: [], loc: SourceLocation core/categorized/03-regex/input.js 2:23-2:25}
+										id: JSBindingIdentifier {
+											name: "fn"
+											loc: SourceLocation core/categorized/03-regex/input.js 2:18-2:20 (fn)
+										}
+										body: JSBlockStatement {
+											body: []
+											directives: []
+											loc: SourceLocation core/categorized/03-regex/input.js 2:23-2:25
+										}
 										head: JSFunctionHead {
 											async: false
 											generator: false
@@ -28,12 +37,16 @@ JSRoot {
 										}
 										loc: SourceLocation core/categorized/03-regex/input.js 2:9-2:25
 									}
-									operator: "/"
-									right: JSNumericLiteral {value: 42, loc: SourceLocation core/categorized/03-regex/input.js 2:27-2:29}
+									right: JSNumericLiteral {
+										value: 42
+										loc: SourceLocation core/categorized/03-regex/input.js 2:27-2:29
+									}
 									loc: SourceLocation core/categorized/03-regex/input.js 2:9-2:29
 								}
-								operator: "/"
-								right: JSReferenceIdentifier {name: "i", loc: SourceLocation core/categorized/03-regex/input.js 2:30-2:31 (i)}
+								right: JSReferenceIdentifier {
+									name: "i"
+									loc: SourceLocation core/categorized/03-regex/input.js 2:30-2:31 (i)
+								}
 								loc: SourceLocation core/categorized/03-regex/input.js 2:9-2:31
 							}
 							loc: SourceLocation core/categorized/03-regex/input.js 2:2-2:31
@@ -59,9 +72,9 @@ JSRoot {
 	diagnostics: []
 	directives: []
 	hasHoistedVars: false
-	path: UIDPath<core/categorized/03-regex/input.js>
 	sourceType: "script"
 	syntax: []
+	path: UIDPath<core/categorized/03-regex/input.js>
 	loc: SourceLocation core/categorized/03-regex/input.js 1:0-4:0
 }
 ```

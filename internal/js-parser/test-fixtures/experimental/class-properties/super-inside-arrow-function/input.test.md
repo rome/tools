@@ -8,34 +8,14 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation experimental/class-properties/super-inside-arrow-function/input.js 1:0-4:0
-	path: UIDPath<experimental/class-properties/super-inside-arrow-function/input.js>
-	body: Array [
+	body: [
 		JSClassDeclaration {
 			id: JSBindingIdentifier {
 				name: "A"
 				loc: SourceLocation experimental/class-properties/super-inside-arrow-function/input.js 1:6-1:7 (A)
 			}
-			loc: SourceLocation experimental/class-properties/super-inside-arrow-function/input.js 1:0-3:1
 			meta: JSClassHead {
-				implements: undefined
-				superTypeParameters: undefined
-				typeParameters: undefined
-				loc: SourceLocation experimental/class-properties/super-inside-arrow-function/input.js 1:0-3:1
-				superClass: JSReferenceIdentifier {
-					name: "B"
-					loc: SourceLocation experimental/class-properties/super-inside-arrow-function/input.js 1:16-1:17 (B)
-				}
-				body: Array [
+				body: [
 					JSClassProperty {
 						key: JSStaticPropertyKey {
 							value: JSIdentifier {
@@ -45,22 +25,12 @@ JSRoot {
 							loc: SourceLocation experimental/class-properties/super-inside-arrow-function/input.js 2:2-2:5
 						}
 						value: JSArrowFunctionExpression {
-							loc: SourceLocation experimental/class-properties/super-inside-arrow-function/input.js 2:8-2:23
-							head: JSFunctionHead {
-								async: false
-								hasHoistedVars: false
-								params: Array []
-								rest: undefined
-								returnType: undefined
-								thisType: undefined
-								loc: SourceLocation experimental/class-properties/super-inside-arrow-function/input.js 2:8-2:13
-							}
 							body: JSCallExpression {
-								arguments: Array []
-								loc: SourceLocation experimental/class-properties/super-inside-arrow-function/input.js 2:14-2:23
+								arguments: []
 								callee: JSMemberExpression {
-									loc: SourceLocation experimental/class-properties/super-inside-arrow-function/input.js 2:14-2:21
-									object: JSSuper {loc: SourceLocation experimental/class-properties/super-inside-arrow-function/input.js 2:14-2:19}
+									object: JSSuper {
+										loc: SourceLocation experimental/class-properties/super-inside-arrow-function/input.js 2:14-2:19
+									}
 									property: JSStaticMemberProperty {
 										value: JSIdentifier {
 											name: "x"
@@ -68,27 +38,47 @@ JSRoot {
 										}
 										loc: SourceLocation experimental/class-properties/super-inside-arrow-function/input.js 2:20-2:21 (x)
 									}
+									loc: SourceLocation experimental/class-properties/super-inside-arrow-function/input.js 2:14-2:21
 								}
+								loc: SourceLocation experimental/class-properties/super-inside-arrow-function/input.js 2:14-2:23
 							}
+							head: JSFunctionHead {
+								async: false
+								hasHoistedVars: false
+								params: []
+								loc: SourceLocation experimental/class-properties/super-inside-arrow-function/input.js 2:8-2:13
+							}
+							loc: SourceLocation experimental/class-properties/super-inside-arrow-function/input.js 2:8-2:23
 						}
-						definite: undefined
-						typeAnnotation: undefined
-						loc: SourceLocation experimental/class-properties/super-inside-arrow-function/input.js 2:2-2:24
 						meta: JSClassPropertyMeta {
 							abstract: false
-							accessibility: undefined
 							optional: false
 							readonly: false
 							static: false
-							typeAnnotation: undefined
 							loc: SourceLocation experimental/class-properties/super-inside-arrow-function/input.js 2:2-2:5
 							start: Position 2:2
 						}
+						loc: SourceLocation experimental/class-properties/super-inside-arrow-function/input.js 2:2-2:24
 					}
 				]
+				superClass: JSReferenceIdentifier {
+					name: "B"
+					loc: SourceLocation experimental/class-properties/super-inside-arrow-function/input.js 1:16-1:17 (B)
+				}
+				loc: SourceLocation experimental/class-properties/super-inside-arrow-function/input.js 1:0-3:1
 			}
+			loc: SourceLocation experimental/class-properties/super-inside-arrow-function/input.js 1:0-3:1
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<experimental/class-properties/super-inside-arrow-function/input.js>
+	loc: SourceLocation experimental/class-properties/super-inside-arrow-function/input.js 1:0-4:0
 }
 ```
 

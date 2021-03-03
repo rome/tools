@@ -8,64 +8,61 @@
 
 ```javascript
 JSRoot {
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	loc: SourceLocation typescript/types/read-only-3/input.ts 1:0-2:0
-	path: UIDPath<typescript/types/read-only-3/input.ts>
-	syntax: Array ["ts"]
-	comments: Array [
+	body: [
+		TSTypeAlias {
+			trailingComments: ["0"]
+			id: JSBindingIdentifier {
+				name: "T32"
+				loc: SourceLocation typescript/types/read-only-3/input.ts 1:5-1:8 (T32)
+			}
+			right: TSTypeOperator {
+				operator: "readonly"
+				typeAnnotation: TSTypeOperator {
+					operator: "readonly"
+					typeAnnotation: TSArrayType {
+						elementType: TSStringKeywordTypeAnnotation {
+							loc: SourceLocation typescript/types/read-only-3/input.ts 1:29-1:35
+						}
+						loc: SourceLocation typescript/types/read-only-3/input.ts 1:29-1:37
+					}
+					loc: SourceLocation typescript/types/read-only-3/input.ts 1:20-1:37
+				}
+				loc: SourceLocation typescript/types/read-only-3/input.ts 1:11-1:37
+			}
+			loc: SourceLocation typescript/types/read-only-3/input.ts 1:0-1:38
+		}
+	]
+	comments: [
 		CommentLine {
 			id: "0"
 			value: " Error"
 			loc: SourceLocation typescript/types/read-only-3/input.ts 1:40-1:48
 		}
 	]
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {
+				advice: []
+				category: ["parse"]
 				categoryValue: "js"
-				category: Array ["parse"]
 				message: RAW_MARKUP {value: "'readonly' type modifier is only permitted on array and tuple literal types."}
 			}
-			location: Object {
-				integrity: undefined
+			location: {
 				language: "js"
-				sourceText: undefined
-				end: Position 1:37
 				path: UIDPath<typescript/types/read-only-3/input.ts>
+				end: Position 1:37
 				start: Position 1:20
 			}
 		}
 	]
-	body: Array [
-		TSTypeAlias {
-			id: JSBindingIdentifier {
-				name: "T32"
-				loc: SourceLocation typescript/types/read-only-3/input.ts 1:5-1:8 (T32)
-			}
-			typeParameters: undefined
-			loc: SourceLocation typescript/types/read-only-3/input.ts 1:0-1:38
-			trailingComments: Array ["0"]
-			right: TSTypeOperator {
-				operator: "readonly"
-				loc: SourceLocation typescript/types/read-only-3/input.ts 1:11-1:37
-				typeAnnotation: TSTypeOperator {
-					operator: "readonly"
-					loc: SourceLocation typescript/types/read-only-3/input.ts 1:20-1:37
-					typeAnnotation: TSArrayType {
-						elementType: TSStringKeywordTypeAnnotation {loc: SourceLocation typescript/types/read-only-3/input.ts 1:29-1:35}
-						loc: SourceLocation typescript/types/read-only-3/input.ts 1:29-1:37
-					}
-				}
-			}
-		}
-	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: ["ts"]
+	path: UIDPath<typescript/types/read-only-3/input.ts>
+	loc: SourceLocation typescript/types/read-only-3/input.ts 1:0-2:0
 }
 ```
 
@@ -78,7 +75,15 @@ JSRoot {
   ✖ 'readonly' type modifier is only permitted on array and tuple literal types.
 
     type T32 = readonly readonly string[];  // Error
-                        ^^^^^^^^^^^^^^^^^
+                        <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
+                          <error><emphasis>^</emphasis></error>
+    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
+    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
+    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
+    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
+    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
+    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
+    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
 
 
 ```

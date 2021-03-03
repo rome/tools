@@ -8,82 +8,72 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2016/simple-parameter-list/default/input.js 1:0-4:0
-	path: UIDPath<es2016/simple-parameter-list/default/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Illegal 'use strict' directive in function with non-simple parameter list"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 2:15
-				path: UIDPath<es2016/simple-parameter-list/default/input.js>
-				start: Position 2:2
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "a"
 				loc: SourceLocation es2016/simple-parameter-list/default/input.js 1:9-1:10 (a)
 			}
-			loc: SourceLocation es2016/simple-parameter-list/default/input.js 1:0-3:1
 			body: JSBlockStatement {
-				body: Array []
-				loc: SourceLocation es2016/simple-parameter-list/default/input.js 1:25-3:1
-				directives: Array [
+				body: []
+				directives: [
 					JSDirective {
 						value: "use strict"
 						loc: SourceLocation es2016/simple-parameter-list/default/input.js 2:2-2:15
 					}
 				]
+				loc: SourceLocation es2016/simple-parameter-list/default/input.js 1:25-3:1
 			}
 			head: JSFunctionHead {
 				async: false
 				generator: false
 				hasHoistedVars: false
-				rest: undefined
-				returnType: undefined
-				thisType: undefined
-				typeParameters: undefined
-				loc: SourceLocation es2016/simple-parameter-list/default/input.js 1:10-1:24
-				params: Array [
+				params: [
 					JSBindingAssignmentPattern {
-						loc: SourceLocation es2016/simple-parameter-list/default/input.js 1:11-1:23
-						right: JSObjectExpression {
-							properties: Array []
-							loc: SourceLocation es2016/simple-parameter-list/default/input.js 1:21-1:23
-						}
 						left: JSBindingIdentifier {
 							name: "options"
-							loc: SourceLocation es2016/simple-parameter-list/default/input.js 1:11-1:18 (options)
 							meta: JSPatternMeta {
-								optional: undefined
-								typeAnnotation: undefined
 								loc: SourceLocation es2016/simple-parameter-list/default/input.js 1:11-1:18
 							}
+							loc: SourceLocation es2016/simple-parameter-list/default/input.js 1:11-1:18 (options)
 						}
+						right: JSObjectExpression {
+							properties: []
+							loc: SourceLocation es2016/simple-parameter-list/default/input.js 1:21-1:23
+						}
+						loc: SourceLocation es2016/simple-parameter-list/default/input.js 1:11-1:23
 					}
 				]
+				loc: SourceLocation es2016/simple-parameter-list/default/input.js 1:10-1:24
+			}
+			loc: SourceLocation es2016/simple-parameter-list/default/input.js 1:0-3:1
+		}
+	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "Illegal 'use strict' directive in function with non-simple parameter list"}
+			}
+			location: {
+				language: "js"
+				path: UIDPath<es2016/simple-parameter-list/default/input.js>
+				end: Position 2:15
+				start: Position 2:2
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2016/simple-parameter-list/default/input.js>
+	loc: SourceLocation es2016/simple-parameter-list/default/input.js 1:0-4:0
 }
 ```
 
@@ -97,7 +87,13 @@ JSRoot {
 
     1 │ function a(options = {}) {
   > 2 │   "use strict";
-      │   ^^^^^^^^^^^^^
+    → │   <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
+    → │ <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
+    → │ <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
+    → │ <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
+    → │ <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
+    → │ <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
+      │ <error><emphasis>^</emphasis></error>
     3 │ }
 
 

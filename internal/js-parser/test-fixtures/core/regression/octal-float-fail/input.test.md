@@ -10,11 +10,18 @@
 JSRoot {
 	body: [
 		JSExpressionStatement {
-			expression: JSNumericLiteral {value: 7, format: "octal", loc: SourceLocation core/regression/octal-float-fail/input.js 1:0-1:2}
+			expression: JSNumericLiteral {
+				value: 7
+				format: "octal"
+				loc: SourceLocation core/regression/octal-float-fail/input.js 1:0-1:2
+			}
 			loc: SourceLocation core/regression/octal-float-fail/input.js 1:0-1:2
 		}
 		JSExpressionStatement {
-			expression: JSNumericLiteral {value: 0.5, loc: SourceLocation core/regression/octal-float-fail/input.js 1:2-1:4}
+			expression: JSNumericLiteral {
+				value: 0.5
+				loc: SourceLocation core/regression/octal-float-fail/input.js 1:2-1:4
+			}
 			loc: SourceLocation core/regression/octal-float-fail/input.js 1:2-1:4
 		}
 	]
@@ -22,16 +29,26 @@ JSRoot {
 	corrupt: false
 	diagnostics: [
 		{
-			description: {advice: [], category: ["parse"], categoryValue: "js", message: RAW_MARKUP {value: "Expected a semicolon or a line terminator"}}
-			location: {language: "js", path: UIDPath<core/regression/octal-float-fail/input.js>, end: Position 1:2, start: Position 1:2}
 			origins: [{category: "parse"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "Expected a semicolon or a line terminator"}
+			}
+			location: {
+				language: "js"
+				path: UIDPath<core/regression/octal-float-fail/input.js>
+				end: Position 1:2
+				start: Position 1:2
+			}
 		}
 	]
 	directives: []
 	hasHoistedVars: false
-	path: UIDPath<core/regression/octal-float-fail/input.js>
 	sourceType: "script"
 	syntax: []
+	path: UIDPath<core/regression/octal-float-fail/input.js>
 	loc: SourceLocation core/regression/octal-float-fail/input.js 1:0-2:0
 }
 ```
@@ -45,7 +62,7 @@ JSRoot {
   ✖ Expected a semicolon or a line terminator
 
     07.5
-      ^
+      <error><emphasis>^</emphasis></error>
 
 
 ```

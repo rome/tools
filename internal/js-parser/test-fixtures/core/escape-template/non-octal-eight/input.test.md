@@ -12,7 +12,14 @@ JSRoot {
 		JSExpressionStatement {
 			expression: JSTemplateLiteral {
 				expressions: []
-				quasis: [JSTemplateElement {cooked: "8", raw: "\\8", tail: true, loc: SourceLocation core/escape-template/non-octal-eight/input.js 1:1-1:3}]
+				quasis: [
+					JSTemplateElement {
+						cooked: "8"
+						raw: "\\8"
+						tail: true
+						loc: SourceLocation core/escape-template/non-octal-eight/input.js 1:1-1:3
+					}
+				]
 				loc: SourceLocation core/escape-template/non-octal-eight/input.js 1:0-1:4
 			}
 			loc: SourceLocation core/escape-template/non-octal-eight/input.js 1:0-1:5
@@ -23,9 +30,9 @@ JSRoot {
 	diagnostics: []
 	directives: []
 	hasHoistedVars: false
-	path: UIDPath<core/escape-template/non-octal-eight/input.js>
 	sourceType: "script"
 	syntax: []
+	path: UIDPath<core/escape-template/non-octal-eight/input.js>
 	loc: SourceLocation core/escape-template/non-octal-eight/input.js 1:0-2:0
 }
 ```

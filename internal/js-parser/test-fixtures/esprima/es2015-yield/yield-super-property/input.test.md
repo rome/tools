@@ -8,34 +8,14 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation esprima/es2015-yield/yield-super-property/input.js 1:0-2:0
-	path: UIDPath<esprima/es2015-yield/yield-super-property/input.js>
-	body: Array [
+	body: [
 		JSClassDeclaration {
 			id: JSBindingIdentifier {
 				name: "A"
 				loc: SourceLocation esprima/es2015-yield/yield-super-property/input.js 1:6-1:7 (A)
 			}
-			loc: SourceLocation esprima/es2015-yield/yield-super-property/input.js 1:0-1:41
 			meta: JSClassHead {
-				implements: undefined
-				superTypeParameters: undefined
-				typeParameters: undefined
-				loc: SourceLocation esprima/es2015-yield/yield-super-property/input.js 1:0-1:41
-				superClass: JSReferenceIdentifier {
-					name: "B"
-					loc: SourceLocation esprima/es2015-yield/yield-super-property/input.js 1:16-1:17 (B)
-				}
-				body: Array [
+				body: [
 					JSClassMethod {
 						kind: "method"
 						key: JSStaticPropertyKey {
@@ -45,37 +25,13 @@ JSRoot {
 							}
 							loc: SourceLocation esprima/es2015-yield/yield-super-property/input.js 1:20-1:21
 						}
-						loc: SourceLocation esprima/es2015-yield/yield-super-property/input.js 1:20-1:39
-						meta: JSClassPropertyMeta {
-							abstract: false
-							accessibility: undefined
-							optional: false
-							readonly: false
-							static: false
-							typeAnnotation: undefined
-							loc: SourceLocation esprima/es2015-yield/yield-super-property/input.js 1:20-1:21
-							start: Position 1:20
-						}
-						head: JSFunctionHead {
-							async: false
-							generator: false
-							hasHoistedVars: false
-							params: Array []
-							rest: undefined
-							returnType: undefined
-							thisType: undefined
-							typeParameters: undefined
-							loc: SourceLocation esprima/es2015-yield/yield-super-property/input.js 1:21-1:23
-						}
 						body: JSBlockStatement {
-							directives: Array []
-							loc: SourceLocation esprima/es2015-yield/yield-super-property/input.js 1:24-1:39
-							body: Array [
+							body: [
 								JSExpressionStatement {
-									loc: SourceLocation esprima/es2015-yield/yield-super-property/input.js 1:26-1:37
 									expression: JSMemberExpression {
-										loc: SourceLocation esprima/es2015-yield/yield-super-property/input.js 1:26-1:37
-										object: JSSuper {loc: SourceLocation esprima/es2015-yield/yield-super-property/input.js 1:26-1:31}
+										object: JSSuper {
+											loc: SourceLocation esprima/es2015-yield/yield-super-property/input.js 1:26-1:31
+										}
 										property: JSStaticMemberProperty {
 											value: JSIdentifier {
 												name: "yield"
@@ -83,15 +39,50 @@ JSRoot {
 											}
 											loc: SourceLocation esprima/es2015-yield/yield-super-property/input.js 1:32-1:37 (yield)
 										}
+										loc: SourceLocation esprima/es2015-yield/yield-super-property/input.js 1:26-1:37
 									}
+									loc: SourceLocation esprima/es2015-yield/yield-super-property/input.js 1:26-1:37
 								}
 							]
+							directives: []
+							loc: SourceLocation esprima/es2015-yield/yield-super-property/input.js 1:24-1:39
 						}
+						head: JSFunctionHead {
+							async: false
+							generator: false
+							hasHoistedVars: false
+							params: []
+							loc: SourceLocation esprima/es2015-yield/yield-super-property/input.js 1:21-1:23
+						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							optional: false
+							readonly: false
+							static: false
+							loc: SourceLocation esprima/es2015-yield/yield-super-property/input.js 1:20-1:21
+							start: Position 1:20
+						}
+						loc: SourceLocation esprima/es2015-yield/yield-super-property/input.js 1:20-1:39
 					}
 				]
+				superClass: JSReferenceIdentifier {
+					name: "B"
+					loc: SourceLocation esprima/es2015-yield/yield-super-property/input.js 1:16-1:17 (B)
+				}
+				loc: SourceLocation esprima/es2015-yield/yield-super-property/input.js 1:0-1:41
 			}
+			loc: SourceLocation esprima/es2015-yield/yield-super-property/input.js 1:0-1:41
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<esprima/es2015-yield/yield-super-property/input.js>
+	loc: SourceLocation esprima/es2015-yield/yield-super-property/input.js 1:0-2:0
 }
 ```
 

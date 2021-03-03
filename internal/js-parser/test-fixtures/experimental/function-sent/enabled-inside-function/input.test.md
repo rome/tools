@@ -8,107 +8,98 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation experimental/function-sent/enabled-inside-function/input.js 1:0-4:0
-	path: UIDPath<experimental/function-sent/enabled-inside-function/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 2:17
-				path: UIDPath<experimental/function-sent/enabled-inside-function/input.js>
-				start: Position 2:17
-			}
-			description: Object {
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Unexpected character <emphasis>.</emphasis>"}
-				advice: Array [
-					log {
-						category: "info"
-						text: RAW_MARKUP {value: "Expected the opening function params character <emphasis>(</emphasis>"}
-					}
-				]
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "foo"
 				loc: SourceLocation experimental/function-sent/enabled-inside-function/input.js 1:9-1:12 (foo)
 			}
-			loc: SourceLocation experimental/function-sent/enabled-inside-function/input.js 1:0-3:1
-			head: JSFunctionHead {
-				async: false
-				generator: false
-				hasHoistedVars: false
-				params: Array []
-				rest: undefined
-				returnType: undefined
-				thisType: undefined
-				typeParameters: undefined
-				loc: SourceLocation experimental/function-sent/enabled-inside-function/input.js 1:12-1:14
-			}
 			body: JSBlockStatement {
-				directives: Array []
-				loc: SourceLocation experimental/function-sent/enabled-inside-function/input.js 1:15-3:1
-				body: Array [
+				body: [
 					JSReturnStatement {
-						loc: SourceLocation experimental/function-sent/enabled-inside-function/input.js 2:2-3:1
 						argument: JSFunctionExpression {
-							id: undefined
-							loc: SourceLocation experimental/function-sent/enabled-inside-function/input.js 2:9-3:1
 							body: JSBlockStatement {
-								directives: Array []
-								loc: SourceLocation experimental/function-sent/enabled-inside-function/input.js 2:18-3:1
-								body: Array [
+								body: [
 									JSExpressionStatement {
-										loc: SourceLocation experimental/function-sent/enabled-inside-function/input.js 2:18-2:23
 										expression: JSReferenceIdentifier {
 											name: "sent"
 											loc: SourceLocation experimental/function-sent/enabled-inside-function/input.js 2:18-2:22 (sent)
 										}
+										loc: SourceLocation experimental/function-sent/enabled-inside-function/input.js 2:18-2:23
 									}
 								]
+								directives: []
+								loc: SourceLocation experimental/function-sent/enabled-inside-function/input.js 2:18-3:1
 							}
 							head: JSFunctionHead {
 								async: false
 								generator: false
 								hasHoistedVars: false
-								rest: undefined
-								returnType: undefined
-								thisType: undefined
-								typeParameters: undefined
-								loc: SourceLocation experimental/function-sent/enabled-inside-function/input.js 2:17-2:18
-								params: Array [
+								params: [
 									JSBindingIdentifier {
 										name: ""
-										loc: SourceLocation experimental/function-sent/enabled-inside-function/input.js 2:17-2:18 ()
 										meta: JSPatternMeta {
-											optional: undefined
-											typeAnnotation: undefined
 											loc: SourceLocation experimental/function-sent/enabled-inside-function/input.js 2:17-2:18
 										}
+										loc: SourceLocation experimental/function-sent/enabled-inside-function/input.js 2:17-2:18 ()
 									}
 								]
+								loc: SourceLocation experimental/function-sent/enabled-inside-function/input.js 2:17-2:18
 							}
+							loc: SourceLocation experimental/function-sent/enabled-inside-function/input.js 2:9-3:1
 						}
+						loc: SourceLocation experimental/function-sent/enabled-inside-function/input.js 2:2-3:1
 					}
 				]
+				directives: []
+				loc: SourceLocation experimental/function-sent/enabled-inside-function/input.js 1:15-3:1
+			}
+			head: JSFunctionHead {
+				async: false
+				generator: false
+				hasHoistedVars: false
+				params: []
+				loc: SourceLocation experimental/function-sent/enabled-inside-function/input.js 1:12-1:14
+			}
+			loc: SourceLocation experimental/function-sent/enabled-inside-function/input.js 1:0-3:1
+		}
+	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {
+				advice: [
+					log {
+						category: "info"
+						text: [
+							RAW_MARKUP {value: "Expected the opening "}
+							"function params"
+							RAW_MARKUP {value: " character <emphasis>"}
+							"("
+							RAW_MARKUP {value: "</emphasis>"}
+						]
+					}
+				]
+				category: ["parse"]
+				categoryValue: "js"
+				message: [RAW_MARKUP {value: "Unexpected character <emphasis>"}, ".", RAW_MARKUP {value: "</emphasis>"}]
+			}
+			location: {
+				language: "js"
+				path: UIDPath<experimental/function-sent/enabled-inside-function/input.js>
+				end: Position 2:17
+				start: Position 2:17
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<experimental/function-sent/enabled-inside-function/input.js>
+	loc: SourceLocation experimental/function-sent/enabled-inside-function/input.js 1:0-4:0
 }
 ```
 
@@ -122,7 +113,7 @@ JSRoot {
 
     1 │ function foo() {
   > 2 │   return function.sent;
-      │                  ^
+      │                  <error><emphasis>^</emphasis></error>
     3 │ }
 
   ℹ Expected the opening function params character (

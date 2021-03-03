@@ -8,49 +8,14 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2015/class/invalid-escape-set/input.js 1:0-2:0
-	path: UIDPath<es2015/class/invalid-escape-set/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "<emphasis>set</emphasis> can't contain a unicode escape"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:12
-				path: UIDPath<es2015/class/invalid-escape-set/input.js>
-				start: Position 1:12
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSClassDeclaration {
 			id: JSBindingIdentifier {
 				name: "X"
 				loc: SourceLocation es2015/class/invalid-escape-set/input.js 1:6-1:7 (X)
 			}
-			loc: SourceLocation es2015/class/invalid-escape-set/input.js 1:0-1:32
 			meta: JSClassHead {
-				implements: undefined
-				superClass: undefined
-				superTypeParameters: undefined
-				typeParameters: undefined
-				loc: SourceLocation es2015/class/invalid-escape-set/input.js 1:0-1:32
-				body: Array [
+				body: [
 					JSClassMethod {
 						kind: "set"
 						key: JSStaticPropertyKey {
@@ -60,48 +25,67 @@ JSRoot {
 							}
 							loc: SourceLocation es2015/class/invalid-escape-set/input.js 1:19-1:20
 						}
-						loc: SourceLocation es2015/class/invalid-escape-set/input.js 1:10-1:30
 						body: JSBlockStatement {
-							body: Array []
-							directives: Array []
+							body: []
+							directives: []
 							loc: SourceLocation es2015/class/invalid-escape-set/input.js 1:28-1:30
-						}
-						meta: JSClassPropertyMeta {
-							abstract: false
-							accessibility: undefined
-							optional: false
-							readonly: false
-							static: false
-							typeAnnotation: undefined
-							loc: SourceLocation es2015/class/invalid-escape-set/input.js 1:10-1:20
-							start: Position 1:10
 						}
 						head: JSFunctionHead {
 							async: false
 							generator: false
 							hasHoistedVars: false
-							rest: undefined
-							returnType: undefined
-							thisType: undefined
-							typeParameters: undefined
-							loc: SourceLocation es2015/class/invalid-escape-set/input.js 1:20-1:27
-							params: Array [
+							params: [
 								JSBindingIdentifier {
 									name: "value"
-									loc: SourceLocation es2015/class/invalid-escape-set/input.js 1:21-1:26 (value)
 									meta: JSPatternMeta {
-										optional: undefined
-										typeAnnotation: undefined
 										loc: SourceLocation es2015/class/invalid-escape-set/input.js 1:21-1:26
 									}
+									loc: SourceLocation es2015/class/invalid-escape-set/input.js 1:21-1:26 (value)
 								}
 							]
+							loc: SourceLocation es2015/class/invalid-escape-set/input.js 1:20-1:27
 						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							optional: false
+							readonly: false
+							static: false
+							loc: SourceLocation es2015/class/invalid-escape-set/input.js 1:10-1:20
+							start: Position 1:10
+						}
+						loc: SourceLocation es2015/class/invalid-escape-set/input.js 1:10-1:30
 					}
 				]
+				loc: SourceLocation es2015/class/invalid-escape-set/input.js 1:0-1:32
+			}
+			loc: SourceLocation es2015/class/invalid-escape-set/input.js 1:0-1:32
+		}
+	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "js"
+				message: [RAW_MARKUP {value: "<emphasis>"}, "set", RAW_MARKUP {value: "</emphasis> can't contain a unicode escape"}]
+			}
+			location: {
+				language: "js"
+				path: UIDPath<es2015/class/invalid-escape-set/input.js>
+				end: Position 1:12
+				start: Position 1:12
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2015/class/invalid-escape-set/input.js>
+	loc: SourceLocation es2015/class/invalid-escape-set/input.js 1:0-2:0
 }
 ```
 
@@ -114,7 +98,7 @@ JSRoot {
   ✖ set can't contain a unicode escape
 
     class X { se\u0074 x(value) {} }
-                ^
+                <error><emphasis>^</emphasis></error>
 
 
 ```

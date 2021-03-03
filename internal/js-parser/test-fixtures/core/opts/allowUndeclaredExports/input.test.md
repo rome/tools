@@ -13,8 +13,14 @@ JSRoot {
 			exportKind: "value"
 			specifiers: [
 				JSExportLocalSpecifier {
-					exported: JSIdentifier {name: "foo", loc: SourceLocation core/opts/allowUndeclaredExports/input.js 1:9-1:12 (foo)}
-					local: JSReferenceIdentifier {name: "foo", loc: SourceLocation core/opts/allowUndeclaredExports/input.js 1:9-1:12 (foo)}
+					exported: JSIdentifier {
+						name: "foo"
+						loc: SourceLocation core/opts/allowUndeclaredExports/input.js 1:9-1:12 (foo)
+					}
+					local: JSReferenceIdentifier {
+						name: "foo"
+						loc: SourceLocation core/opts/allowUndeclaredExports/input.js 1:9-1:12 (foo)
+					}
 					loc: SourceLocation core/opts/allowUndeclaredExports/input.js 1:9-1:12
 				}
 			]
@@ -26,9 +32,9 @@ JSRoot {
 	diagnostics: []
 	directives: []
 	hasHoistedVars: false
-	path: UIDPath<core/opts/allowUndeclaredExports/input.js>
 	sourceType: "module"
 	syntax: []
+	path: UIDPath<core/opts/allowUndeclaredExports/input.js>
 	loc: SourceLocation core/opts/allowUndeclaredExports/input.js 1:0-1:15
 }
 ```

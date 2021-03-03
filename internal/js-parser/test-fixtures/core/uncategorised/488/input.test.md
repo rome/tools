@@ -8,72 +8,59 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation core/uncategorised/488/input.js 1:0-1:36
-	path: UIDPath<core/uncategorised/488/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "eval is a reserved word"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:14
-				path: UIDPath<core/uncategorised/488/input.js>
-				start: Position 1:10
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation core/uncategorised/488/input.js 1:0-1:36
 			expression: JSCallExpression {
-				arguments: Array []
-				loc: SourceLocation core/uncategorised/488/input.js 1:0-1:36
+				arguments: []
 				callee: JSFunctionExpression {
 					id: JSBindingIdentifier {
 						name: "eval"
 						loc: SourceLocation core/uncategorised/488/input.js 1:10-1:14 (eval)
 					}
-					loc: SourceLocation core/uncategorised/488/input.js 1:1-1:33
 					body: JSBlockStatement {
-						body: Array []
-						loc: SourceLocation core/uncategorised/488/input.js 1:17-1:33
-						directives: Array [
+						body: []
+						directives: [
 							JSDirective {
 								value: "use strict"
 								loc: SourceLocation core/uncategorised/488/input.js 1:18-1:31
 							}
 						]
+						loc: SourceLocation core/uncategorised/488/input.js 1:17-1:33
 					}
 					head: JSFunctionHead {
 						async: false
 						generator: false
 						hasHoistedVars: false
-						params: Array []
-						rest: undefined
-						returnType: undefined
-						thisType: undefined
-						typeParameters: undefined
+						params: []
 						loc: SourceLocation core/uncategorised/488/input.js 1:14-1:16
 					}
+					loc: SourceLocation core/uncategorised/488/input.js 1:1-1:33
 				}
+				loc: SourceLocation core/uncategorised/488/input.js 1:0-1:36
+			}
+			loc: SourceLocation core/uncategorised/488/input.js 1:0-1:36
+		}
+	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {advice: [], category: ["parse"], categoryValue: "js", message: ["eval", RAW_MARKUP {value: " is a reserved word"}]}
+			location: {
+				language: "js"
+				path: UIDPath<core/uncategorised/488/input.js>
+				end: Position 1:14
+				start: Position 1:10
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<core/uncategorised/488/input.js>
+	loc: SourceLocation core/uncategorised/488/input.js 1:0-1:36
 }
 ```
 
@@ -86,7 +73,8 @@ JSRoot {
   ✖ eval is a reserved word
 
     (function eval() {'use strict'; })()
-              ^^^^
+              <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
+    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
 
 
 ```

@@ -8,50 +8,17 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: true
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation core/uncategorised/554/input.js 1:0-1:14
-	path: UIDPath<core/uncategorised/554/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Expected an identifier"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:13
-				path: UIDPath<core/uncategorised/554/input.js>
-				start: Position 1:13
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSVariableDeclarationStatement {
-			loc: SourceLocation core/uncategorised/554/input.js 1:0-1:14
 			declaration: JSVariableDeclaration {
 				kind: "var"
-				loc: SourceLocation core/uncategorised/554/input.js 1:0-1:14
-				declarations: Array [
+				declarations: [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "a"
 							loc: SourceLocation core/uncategorised/554/input.js 1:4-1:5 (a)
 						}
-						loc: SourceLocation core/uncategorised/554/input.js 1:4-1:14
 						init: JSMemberExpression {
-							loc: SourceLocation core/uncategorised/554/input.js 1:8-1:14
 							object: JSNumericLiteral {
 								value: 83
 								format: "octal"
@@ -64,12 +31,41 @@ JSRoot {
 								}
 								loc: SourceLocation core/uncategorised/554/input.js 1:13-1:14 ()
 							}
+							loc: SourceLocation core/uncategorised/554/input.js 1:8-1:14
 						}
+						loc: SourceLocation core/uncategorised/554/input.js 1:4-1:14
 					}
 				]
+				loc: SourceLocation core/uncategorised/554/input.js 1:0-1:14
+			}
+			loc: SourceLocation core/uncategorised/554/input.js 1:0-1:14
+		}
+	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "Expected an identifier"}
+			}
+			location: {
+				language: "js"
+				path: UIDPath<core/uncategorised/554/input.js>
+				end: Position 1:13
+				start: Position 1:13
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: true
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<core/uncategorised/554/input.js>
+	loc: SourceLocation core/uncategorised/554/input.js 1:0-1:14
 }
 ```
 
@@ -82,7 +78,7 @@ JSRoot {
   ✖ Expected an identifier
 
     var a = 0123.;
-                 ^
+                 <error><emphasis>^</emphasis></error>
 
 
 ```

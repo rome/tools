@@ -8,49 +8,14 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: true
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2015/uncategorised/263/input.js 1:0-1:13
-	path: UIDPath<es2015/uncategorised/263/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Class name is required"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:5
-				path: UIDPath<es2015/uncategorised/263/input.js>
-				start: Position 1:6
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSClassDeclaration {
 			id: JSBindingIdentifier {
 				name: "INVALID_PLACEHOLDER"
 				loc: SourceLocation es2015/uncategorised/263/input.js 1:6-1:5
 			}
-			loc: SourceLocation es2015/uncategorised/263/input.js 1:0-1:13
 			meta: JSClassHead {
-				implements: undefined
-				superClass: undefined
-				superTypeParameters: undefined
-				typeParameters: undefined
-				loc: SourceLocation es2015/uncategorised/263/input.js 1:0-1:13
-				body: Array [
+				body: [
 					JSClassProperty {
 						key: JSStaticPropertyKey {
 							value: JSIdentifier {
@@ -59,25 +24,47 @@ JSRoot {
 							}
 							loc: SourceLocation es2015/uncategorised/263/input.js 1:6-1:13
 						}
-						value: undefined
-						definite: undefined
-						typeAnnotation: undefined
-						loc: SourceLocation es2015/uncategorised/263/input.js 1:6-1:13
 						meta: JSClassPropertyMeta {
 							abstract: false
-							accessibility: undefined
 							optional: false
 							readonly: false
 							static: false
-							typeAnnotation: undefined
 							loc: SourceLocation es2015/uncategorised/263/input.js 1:6-1:13
 							start: Position 1:6
 						}
+						loc: SourceLocation es2015/uncategorised/263/input.js 1:6-1:13
 					}
 				]
+				loc: SourceLocation es2015/uncategorised/263/input.js 1:0-1:13
+			}
+			loc: SourceLocation es2015/uncategorised/263/input.js 1:0-1:13
+		}
+	]
+	comments: []
+	corrupt: true
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "Class name is required"}
+			}
+			location: {
+				language: "js"
+				path: UIDPath<es2015/uncategorised/263/input.js>
+				end: Position 1:5
+				start: Position 1:6
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2015/uncategorised/263/input.js>
+	loc: SourceLocation es2015/uncategorised/263/input.js 1:0-1:13
 }
 ```
 
@@ -90,7 +77,7 @@ JSRoot {
   ✖ Class name is required
 
     class default
-          ^
+          <error><emphasis>^</emphasis></error>
 
 
 ```

@@ -8,37 +8,14 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2020/nullish-coalescing-operator/no-paren-nullish-or/input.js 1:0-2:0
-	path: UIDPath<es2020/nullish-coalescing-operator/no-paren-nullish-or/input.js>
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation es2020/nullish-coalescing-operator/no-paren-nullish-or/input.js 1:0-1:17
 			expression: JSLogicalExpression {
 				operator: "||"
-				loc: SourceLocation es2020/nullish-coalescing-operator/no-paren-nullish-or/input.js 1:0-1:16
-				right: JSReferenceIdentifier {
-					name: "h"
-					loc: SourceLocation es2020/nullish-coalescing-operator/no-paren-nullish-or/input.js 1:15-1:16 (h)
-				}
 				left: JSLogicalExpression {
 					operator: "??"
-					loc: SourceLocation es2020/nullish-coalescing-operator/no-paren-nullish-or/input.js 1:0-1:11
-					right: JSReferenceIdentifier {
-						name: "g"
-						loc: SourceLocation es2020/nullish-coalescing-operator/no-paren-nullish-or/input.js 1:10-1:11 (g)
-					}
 					left: JSLogicalExpression {
 						operator: "??"
-						loc: SourceLocation es2020/nullish-coalescing-operator/no-paren-nullish-or/input.js 1:0-1:6
 						left: JSReferenceIdentifier {
 							name: "e"
 							loc: SourceLocation es2020/nullish-coalescing-operator/no-paren-nullish-or/input.js 1:0-1:1 (e)
@@ -47,11 +24,32 @@ JSRoot {
 							name: "f"
 							loc: SourceLocation es2020/nullish-coalescing-operator/no-paren-nullish-or/input.js 1:5-1:6 (f)
 						}
+						loc: SourceLocation es2020/nullish-coalescing-operator/no-paren-nullish-or/input.js 1:0-1:6
 					}
+					right: JSReferenceIdentifier {
+						name: "g"
+						loc: SourceLocation es2020/nullish-coalescing-operator/no-paren-nullish-or/input.js 1:10-1:11 (g)
+					}
+					loc: SourceLocation es2020/nullish-coalescing-operator/no-paren-nullish-or/input.js 1:0-1:11
 				}
+				right: JSReferenceIdentifier {
+					name: "h"
+					loc: SourceLocation es2020/nullish-coalescing-operator/no-paren-nullish-or/input.js 1:15-1:16 (h)
+				}
+				loc: SourceLocation es2020/nullish-coalescing-operator/no-paren-nullish-or/input.js 1:0-1:16
 			}
+			loc: SourceLocation es2020/nullish-coalescing-operator/no-paren-nullish-or/input.js 1:0-1:17
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2020/nullish-coalescing-operator/no-paren-nullish-or/input.js>
+	loc: SourceLocation es2020/nullish-coalescing-operator/no-paren-nullish-or/input.js 1:0-2:0
 }
 ```
 

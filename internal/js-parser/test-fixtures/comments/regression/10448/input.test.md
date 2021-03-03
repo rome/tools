@@ -10,8 +10,15 @@
 JSRoot {
 	body: [
 		JSFunctionDeclaration {
-			id: JSBindingIdentifier {name: "foo", loc: SourceLocation comments/regression/10448/input.js 1:9-1:12 (foo)}
-			body: JSBlockStatement {body: [], directives: [], loc: SourceLocation comments/regression/10448/input.js 1:52-2:1}
+			id: JSBindingIdentifier {
+				name: "foo"
+				loc: SourceLocation comments/regression/10448/input.js 1:9-1:12 (foo)
+			}
+			body: JSBlockStatement {
+				body: []
+				directives: []
+				loc: SourceLocation comments/regression/10448/input.js 1:52-2:1
+			}
 			head: JSFunctionHead {
 				async: false
 				generator: false
@@ -21,12 +28,20 @@ JSRoot {
 						elements: [
 							JSBindingIdentifier {
 								name: "foo"
-								meta: JSPatternMeta {loc: SourceLocation comments/regression/10448/input.js 1:14-1:17}
+								meta: JSPatternMeta {
+									loc: SourceLocation comments/regression/10448/input.js 1:14-1:17
+								}
 								loc: SourceLocation comments/regression/10448/input.js 1:14-1:17 (foo)
 							}
-							JSArrayHole {leadingComments: ["0"], trailingComments: ["1"], loc: SourceLocation comments/regression/10448/input.js 1:33-1:18}
+							JSArrayHole {
+								leadingComments: ["0"]
+								trailingComments: ["1"]
+								loc: SourceLocation comments/regression/10448/input.js 1:33-1:18
+							}
 						]
-						meta: JSPatternMeta {loc: SourceLocation comments/regression/10448/input.js 1:13-1:50}
+						meta: JSPatternMeta {
+							loc: SourceLocation comments/regression/10448/input.js 1:13-1:50
+						}
 						loc: SourceLocation comments/regression/10448/input.js 1:13-1:50
 					}
 				]
@@ -36,16 +51,24 @@ JSRoot {
 		}
 	]
 	comments: [
-		CommentBlock {id: "0", value: " not used ", loc: SourceLocation comments/regression/10448/input.js 1:19-1:33}
-		CommentBlock {id: "1", value: " not used ", loc: SourceLocation comments/regression/10448/input.js 1:35-1:49}
+		CommentBlock {
+			id: "0"
+			value: " not used "
+			loc: SourceLocation comments/regression/10448/input.js 1:19-1:33
+		}
+		CommentBlock {
+			id: "1"
+			value: " not used "
+			loc: SourceLocation comments/regression/10448/input.js 1:35-1:49
+		}
 	]
 	corrupt: false
 	diagnostics: []
 	directives: []
 	hasHoistedVars: false
-	path: UIDPath<comments/regression/10448/input.js>
 	sourceType: "script"
 	syntax: []
+	path: UIDPath<comments/regression/10448/input.js>
 	loc: SourceLocation comments/regression/10448/input.js 1:0-2:1
 }
 ```

@@ -8,31 +8,14 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation experimental/class-properties/new-target/input.js 1:0-11:0
-	path: UIDPath<experimental/class-properties/new-target/input.js>
-	body: Array [
+	body: [
 		JSClassDeclaration {
 			id: JSBindingIdentifier {
 				name: "X"
 				loc: SourceLocation experimental/class-properties/new-target/input.js 1:6-1:7 (X)
 			}
-			loc: SourceLocation experimental/class-properties/new-target/input.js 1:0-10:1
 			meta: JSClassHead {
-				implements: undefined
-				superClass: undefined
-				superTypeParameters: undefined
-				typeParameters: undefined
-				loc: SourceLocation experimental/class-properties/new-target/input.js 1:0-10:1
-				body: Array [
+				body: [
 					JSClassProperty {
 						key: JSStaticPropertyKey {
 							value: JSIdentifier {
@@ -42,7 +25,6 @@ JSRoot {
 							loc: SourceLocation experimental/class-properties/new-target/input.js 2:9-2:10
 						}
 						value: JSMetaProperty {
-							loc: SourceLocation experimental/class-properties/new-target/input.js 2:13-2:23
 							meta: JSIdentifier {
 								name: "new"
 								loc: SourceLocation experimental/class-properties/new-target/input.js 2:13-2:16 (new)
@@ -51,20 +33,17 @@ JSRoot {
 								name: "target"
 								loc: SourceLocation experimental/class-properties/new-target/input.js 2:17-2:23 (target)
 							}
+							loc: SourceLocation experimental/class-properties/new-target/input.js 2:13-2:23
 						}
-						definite: undefined
-						typeAnnotation: undefined
-						loc: SourceLocation experimental/class-properties/new-target/input.js 2:2-2:24
 						meta: JSClassPropertyMeta {
 							abstract: false
-							accessibility: undefined
 							optional: false
 							readonly: false
 							static: true
-							typeAnnotation: undefined
 							loc: SourceLocation experimental/class-properties/new-target/input.js 2:2-2:10
 							start: Position 2:2
 						}
+						loc: SourceLocation experimental/class-properties/new-target/input.js 2:2-2:24
 					}
 					JSClassProperty {
 						key: JSStaticPropertyKey {
@@ -76,28 +55,19 @@ JSRoot {
 						}
 						value: JSAssignmentExpression {
 							operator: "="
-							loc: SourceLocation experimental/class-properties/new-target/input.js 3:14-3:39
 							left: JSAssignmentIdentifier {
 								name: "foo"
 								loc: SourceLocation experimental/class-properties/new-target/input.js 3:14-3:17 (foo)
 							}
 							right: JSBinaryExpression {
 								operator: "+"
-								loc: SourceLocation experimental/class-properties/new-target/input.js 3:20-3:39
 								left: JSNumericLiteral {
 									value: 1
-									format: undefined
 									loc: SourceLocation experimental/class-properties/new-target/input.js 3:20-3:21
 								}
 								right: JSCallExpression {
-									loc: SourceLocation experimental/class-properties/new-target/input.js 3:24-3:39
-									callee: JSReferenceIdentifier {
-										name: "bar"
-										loc: SourceLocation experimental/class-properties/new-target/input.js 3:24-3:27 (bar)
-									}
-									arguments: Array [
+									arguments: [
 										JSMetaProperty {
-											loc: SourceLocation experimental/class-properties/new-target/input.js 3:28-3:38
 											meta: JSIdentifier {
 												name: "new"
 												loc: SourceLocation experimental/class-properties/new-target/input.js 3:28-3:31 (new)
@@ -106,24 +76,28 @@ JSRoot {
 												name: "target"
 												loc: SourceLocation experimental/class-properties/new-target/input.js 3:32-3:38 (target)
 											}
+											loc: SourceLocation experimental/class-properties/new-target/input.js 3:28-3:38
 										}
 									]
+									callee: JSReferenceIdentifier {
+										name: "bar"
+										loc: SourceLocation experimental/class-properties/new-target/input.js 3:24-3:27 (bar)
+									}
+									loc: SourceLocation experimental/class-properties/new-target/input.js 3:24-3:39
 								}
+								loc: SourceLocation experimental/class-properties/new-target/input.js 3:20-3:39
 							}
+							loc: SourceLocation experimental/class-properties/new-target/input.js 3:14-3:39
 						}
-						definite: undefined
-						typeAnnotation: undefined
-						loc: SourceLocation experimental/class-properties/new-target/input.js 3:2-3:41
 						meta: JSClassPropertyMeta {
 							abstract: false
-							accessibility: undefined
 							optional: false
 							readonly: false
 							static: true
-							typeAnnotation: undefined
 							loc: SourceLocation experimental/class-properties/new-target/input.js 3:2-3:10
 							start: Position 3:2
 						}
+						loc: SourceLocation experimental/class-properties/new-target/input.js 3:2-3:41
 					}
 					JSClassProperty {
 						key: JSStaticPropertyKey {
@@ -134,18 +108,7 @@ JSRoot {
 							loc: SourceLocation experimental/class-properties/new-target/input.js 4:9-4:10
 						}
 						value: JSArrowFunctionExpression {
-							loc: SourceLocation experimental/class-properties/new-target/input.js 4:13-4:29
-							head: JSFunctionHead {
-								async: false
-								hasHoistedVars: false
-								params: Array []
-								rest: undefined
-								returnType: undefined
-								thisType: undefined
-								loc: SourceLocation experimental/class-properties/new-target/input.js 4:13-4:18
-							}
 							body: JSMetaProperty {
-								loc: SourceLocation experimental/class-properties/new-target/input.js 4:19-4:29
 								meta: JSIdentifier {
 									name: "new"
 									loc: SourceLocation experimental/class-properties/new-target/input.js 4:19-4:22 (new)
@@ -154,21 +117,25 @@ JSRoot {
 									name: "target"
 									loc: SourceLocation experimental/class-properties/new-target/input.js 4:23-4:29 (target)
 								}
+								loc: SourceLocation experimental/class-properties/new-target/input.js 4:19-4:29
 							}
+							head: JSFunctionHead {
+								async: false
+								hasHoistedVars: false
+								params: []
+								loc: SourceLocation experimental/class-properties/new-target/input.js 4:13-4:18
+							}
+							loc: SourceLocation experimental/class-properties/new-target/input.js 4:13-4:29
 						}
-						definite: undefined
-						typeAnnotation: undefined
-						loc: SourceLocation experimental/class-properties/new-target/input.js 4:2-4:30
 						meta: JSClassPropertyMeta {
 							abstract: false
-							accessibility: undefined
 							optional: false
 							readonly: false
 							static: true
-							typeAnnotation: undefined
 							loc: SourceLocation experimental/class-properties/new-target/input.js 4:2-4:10
 							start: Position 4:2
 						}
+						loc: SourceLocation experimental/class-properties/new-target/input.js 4:2-4:30
 					}
 					JSClassProperty {
 						key: JSStaticPropertyKey {
@@ -179,29 +146,22 @@ JSRoot {
 							loc: SourceLocation experimental/class-properties/new-target/input.js 5:9-5:10
 						}
 						value: JSArrowFunctionExpression {
-							loc: SourceLocation experimental/class-properties/new-target/input.js 5:13-5:37
 							body: JSBlockStatement {
-								body: Array []
-								directives: Array []
+								body: []
+								directives: []
 								loc: SourceLocation experimental/class-properties/new-target/input.js 5:35-5:37
 							}
 							head: JSFunctionHead {
 								async: false
 								hasHoistedVars: false
-								rest: undefined
-								returnType: undefined
-								thisType: undefined
-								loc: SourceLocation experimental/class-properties/new-target/input.js 5:13-5:34
-								params: Array [
+								params: [
 									JSBindingAssignmentPattern {
 										operator: "="
-										loc: SourceLocation experimental/class-properties/new-target/input.js 5:14-5:30
 										left: JSBindingIdentifier {
 											name: "foo"
 											loc: SourceLocation experimental/class-properties/new-target/input.js 5:14-5:17 (foo)
 										}
 										right: JSMetaProperty {
-											loc: SourceLocation experimental/class-properties/new-target/input.js 5:20-5:30
 											meta: JSIdentifier {
 												name: "new"
 												loc: SourceLocation experimental/class-properties/new-target/input.js 5:20-5:23 (new)
@@ -210,24 +170,24 @@ JSRoot {
 												name: "target"
 												loc: SourceLocation experimental/class-properties/new-target/input.js 5:24-5:30 (target)
 											}
+											loc: SourceLocation experimental/class-properties/new-target/input.js 5:20-5:30
 										}
+										loc: SourceLocation experimental/class-properties/new-target/input.js 5:14-5:30
 									}
 								]
+								loc: SourceLocation experimental/class-properties/new-target/input.js 5:13-5:34
 							}
+							loc: SourceLocation experimental/class-properties/new-target/input.js 5:13-5:37
 						}
-						definite: undefined
-						typeAnnotation: undefined
-						loc: SourceLocation experimental/class-properties/new-target/input.js 5:2-5:38
 						meta: JSClassPropertyMeta {
 							abstract: false
-							accessibility: undefined
 							optional: false
 							readonly: false
 							static: true
-							typeAnnotation: undefined
 							loc: SourceLocation experimental/class-properties/new-target/input.js 5:2-5:10
 							start: Position 5:2
 						}
+						loc: SourceLocation experimental/class-properties/new-target/input.js 5:2-5:38
 					}
 					JSClassProperty {
 						key: JSStaticPropertyKey {
@@ -238,7 +198,6 @@ JSRoot {
 							loc: SourceLocation experimental/class-properties/new-target/input.js 6:2-6:3
 						}
 						value: JSMetaProperty {
-							loc: SourceLocation experimental/class-properties/new-target/input.js 6:6-6:16
 							meta: JSIdentifier {
 								name: "new"
 								loc: SourceLocation experimental/class-properties/new-target/input.js 6:6-6:9 (new)
@@ -247,20 +206,17 @@ JSRoot {
 								name: "target"
 								loc: SourceLocation experimental/class-properties/new-target/input.js 6:10-6:16 (target)
 							}
+							loc: SourceLocation experimental/class-properties/new-target/input.js 6:6-6:16
 						}
-						definite: undefined
-						typeAnnotation: undefined
-						loc: SourceLocation experimental/class-properties/new-target/input.js 6:2-6:17
 						meta: JSClassPropertyMeta {
 							abstract: false
-							accessibility: undefined
 							optional: false
 							readonly: false
 							static: false
-							typeAnnotation: undefined
 							loc: SourceLocation experimental/class-properties/new-target/input.js 6:2-6:3
 							start: Position 6:2
 						}
+						loc: SourceLocation experimental/class-properties/new-target/input.js 6:2-6:17
 					}
 					JSClassProperty {
 						key: JSStaticPropertyKey {
@@ -272,28 +228,19 @@ JSRoot {
 						}
 						value: JSAssignmentExpression {
 							operator: "="
-							loc: SourceLocation experimental/class-properties/new-target/input.js 7:7-7:32
 							left: JSAssignmentIdentifier {
 								name: "foo"
 								loc: SourceLocation experimental/class-properties/new-target/input.js 7:7-7:10 (foo)
 							}
 							right: JSBinaryExpression {
 								operator: "+"
-								loc: SourceLocation experimental/class-properties/new-target/input.js 7:13-7:32
 								left: JSNumericLiteral {
 									value: 1
-									format: undefined
 									loc: SourceLocation experimental/class-properties/new-target/input.js 7:13-7:14
 								}
 								right: JSCallExpression {
-									loc: SourceLocation experimental/class-properties/new-target/input.js 7:17-7:32
-									callee: JSReferenceIdentifier {
-										name: "bar"
-										loc: SourceLocation experimental/class-properties/new-target/input.js 7:17-7:20 (bar)
-									}
-									arguments: Array [
+									arguments: [
 										JSMetaProperty {
-											loc: SourceLocation experimental/class-properties/new-target/input.js 7:21-7:31
 											meta: JSIdentifier {
 												name: "new"
 												loc: SourceLocation experimental/class-properties/new-target/input.js 7:21-7:24 (new)
@@ -302,24 +249,28 @@ JSRoot {
 												name: "target"
 												loc: SourceLocation experimental/class-properties/new-target/input.js 7:25-7:31 (target)
 											}
+											loc: SourceLocation experimental/class-properties/new-target/input.js 7:21-7:31
 										}
 									]
+									callee: JSReferenceIdentifier {
+										name: "bar"
+										loc: SourceLocation experimental/class-properties/new-target/input.js 7:17-7:20 (bar)
+									}
+									loc: SourceLocation experimental/class-properties/new-target/input.js 7:17-7:32
 								}
+								loc: SourceLocation experimental/class-properties/new-target/input.js 7:13-7:32
 							}
+							loc: SourceLocation experimental/class-properties/new-target/input.js 7:7-7:32
 						}
-						definite: undefined
-						typeAnnotation: undefined
-						loc: SourceLocation experimental/class-properties/new-target/input.js 7:2-7:34
 						meta: JSClassPropertyMeta {
 							abstract: false
-							accessibility: undefined
 							optional: false
 							readonly: false
 							static: false
-							typeAnnotation: undefined
 							loc: SourceLocation experimental/class-properties/new-target/input.js 7:2-7:3
 							start: Position 7:2
 						}
+						loc: SourceLocation experimental/class-properties/new-target/input.js 7:2-7:34
 					}
 					JSClassProperty {
 						key: JSStaticPropertyKey {
@@ -330,18 +281,7 @@ JSRoot {
 							loc: SourceLocation experimental/class-properties/new-target/input.js 8:2-8:3
 						}
 						value: JSArrowFunctionExpression {
-							loc: SourceLocation experimental/class-properties/new-target/input.js 8:6-8:22
-							head: JSFunctionHead {
-								async: false
-								hasHoistedVars: false
-								params: Array []
-								rest: undefined
-								returnType: undefined
-								thisType: undefined
-								loc: SourceLocation experimental/class-properties/new-target/input.js 8:6-8:11
-							}
 							body: JSMetaProperty {
-								loc: SourceLocation experimental/class-properties/new-target/input.js 8:12-8:22
 								meta: JSIdentifier {
 									name: "new"
 									loc: SourceLocation experimental/class-properties/new-target/input.js 8:12-8:15 (new)
@@ -350,21 +290,25 @@ JSRoot {
 									name: "target"
 									loc: SourceLocation experimental/class-properties/new-target/input.js 8:16-8:22 (target)
 								}
+								loc: SourceLocation experimental/class-properties/new-target/input.js 8:12-8:22
 							}
+							head: JSFunctionHead {
+								async: false
+								hasHoistedVars: false
+								params: []
+								loc: SourceLocation experimental/class-properties/new-target/input.js 8:6-8:11
+							}
+							loc: SourceLocation experimental/class-properties/new-target/input.js 8:6-8:22
 						}
-						definite: undefined
-						typeAnnotation: undefined
-						loc: SourceLocation experimental/class-properties/new-target/input.js 8:2-8:23
 						meta: JSClassPropertyMeta {
 							abstract: false
-							accessibility: undefined
 							optional: false
 							readonly: false
 							static: false
-							typeAnnotation: undefined
 							loc: SourceLocation experimental/class-properties/new-target/input.js 8:2-8:3
 							start: Position 8:2
 						}
+						loc: SourceLocation experimental/class-properties/new-target/input.js 8:2-8:23
 					}
 					JSClassProperty {
 						key: JSStaticPropertyKey {
@@ -375,29 +319,22 @@ JSRoot {
 							loc: SourceLocation experimental/class-properties/new-target/input.js 9:2-9:3
 						}
 						value: JSArrowFunctionExpression {
-							loc: SourceLocation experimental/class-properties/new-target/input.js 9:6-9:30
 							body: JSBlockStatement {
-								body: Array []
-								directives: Array []
+								body: []
+								directives: []
 								loc: SourceLocation experimental/class-properties/new-target/input.js 9:28-9:30
 							}
 							head: JSFunctionHead {
 								async: false
 								hasHoistedVars: false
-								rest: undefined
-								returnType: undefined
-								thisType: undefined
-								loc: SourceLocation experimental/class-properties/new-target/input.js 9:6-9:27
-								params: Array [
+								params: [
 									JSBindingAssignmentPattern {
 										operator: "="
-										loc: SourceLocation experimental/class-properties/new-target/input.js 9:7-9:23
 										left: JSBindingIdentifier {
 											name: "foo"
 											loc: SourceLocation experimental/class-properties/new-target/input.js 9:7-9:10 (foo)
 										}
 										right: JSMetaProperty {
-											loc: SourceLocation experimental/class-properties/new-target/input.js 9:13-9:23
 											meta: JSIdentifier {
 												name: "new"
 												loc: SourceLocation experimental/class-properties/new-target/input.js 9:13-9:16 (new)
@@ -406,29 +343,40 @@ JSRoot {
 												name: "target"
 												loc: SourceLocation experimental/class-properties/new-target/input.js 9:17-9:23 (target)
 											}
+											loc: SourceLocation experimental/class-properties/new-target/input.js 9:13-9:23
 										}
+										loc: SourceLocation experimental/class-properties/new-target/input.js 9:7-9:23
 									}
 								]
+								loc: SourceLocation experimental/class-properties/new-target/input.js 9:6-9:27
 							}
+							loc: SourceLocation experimental/class-properties/new-target/input.js 9:6-9:30
 						}
-						definite: undefined
-						typeAnnotation: undefined
-						loc: SourceLocation experimental/class-properties/new-target/input.js 9:2-9:31
 						meta: JSClassPropertyMeta {
 							abstract: false
-							accessibility: undefined
 							optional: false
 							readonly: false
 							static: false
-							typeAnnotation: undefined
 							loc: SourceLocation experimental/class-properties/new-target/input.js 9:2-9:3
 							start: Position 9:2
 						}
+						loc: SourceLocation experimental/class-properties/new-target/input.js 9:2-9:31
 					}
 				]
+				loc: SourceLocation experimental/class-properties/new-target/input.js 1:0-10:1
 			}
+			loc: SourceLocation experimental/class-properties/new-target/input.js 1:0-10:1
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<experimental/class-properties/new-target/input.js>
+	loc: SourceLocation experimental/class-properties/new-target/input.js 1:0-11:0
 }
 ```
 

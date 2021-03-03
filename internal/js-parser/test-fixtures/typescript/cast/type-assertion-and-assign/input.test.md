@@ -8,39 +8,38 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	loc: SourceLocation typescript/cast/type-assertion-and-assign/input.ts 1:0-2:0
-	path: UIDPath<typescript/cast/type-assertion-and-assign/input.ts>
-	syntax: Array ["ts"]
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation typescript/cast/type-assertion-and-assign/input.ts 1:0-1:18
 			expression: JSAssignmentExpression {
 				operator: "+="
-				loc: SourceLocation typescript/cast/type-assertion-and-assign/input.ts 1:0-1:17
-				right: JSNumericLiteral {
-					value: 1
-					format: undefined
-					loc: SourceLocation typescript/cast/type-assertion-and-assign/input.ts 1:16-1:17
-				}
 				left: TSAssignmentTypeAssertion {
-					loc: SourceLocation typescript/cast/type-assertion-and-assign/input.ts 1:1-1:11
-					typeAnnotation: TSNumberKeywordTypeAnnotation {loc: SourceLocation typescript/cast/type-assertion-and-assign/input.ts 1:2-1:8}
 					expression: JSAssignmentIdentifier {
 						name: "x"
 						loc: SourceLocation typescript/cast/type-assertion-and-assign/input.ts 1:10-1:11 (x)
 					}
+					typeAnnotation: TSNumberKeywordTypeAnnotation {
+						loc: SourceLocation typescript/cast/type-assertion-and-assign/input.ts 1:2-1:8
+					}
+					loc: SourceLocation typescript/cast/type-assertion-and-assign/input.ts 1:1-1:11
 				}
+				right: JSNumericLiteral {
+					value: 1
+					loc: SourceLocation typescript/cast/type-assertion-and-assign/input.ts 1:16-1:17
+				}
+				loc: SourceLocation typescript/cast/type-assertion-and-assign/input.ts 1:0-1:17
 			}
+			loc: SourceLocation typescript/cast/type-assertion-and-assign/input.ts 1:0-1:18
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: ["ts"]
+	path: UIDPath<typescript/cast/type-assertion-and-assign/input.ts>
+	loc: SourceLocation typescript/cast/type-assertion-and-assign/input.ts 1:0-2:0
 }
 ```
 

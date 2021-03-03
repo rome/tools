@@ -8,52 +8,44 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation esprima/declaration-function/migrated_0013/input.js 1:0-2:0
-	path: UIDPath<esprima/declaration-function/migrated_0013/input.js>
-	body: Array [
+	body: [
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "universe"
 				loc: SourceLocation esprima/declaration-function/migrated_0013/input.js 1:9-1:17 (universe)
 			}
-			loc: SourceLocation esprima/declaration-function/migrated_0013/input.js 1:0-1:32
 			body: JSBlockStatement {
-				body: Array []
-				directives: Array []
+				body: []
+				directives: []
 				loc: SourceLocation esprima/declaration-function/migrated_0013/input.js 1:29-1:32
 			}
 			head: JSFunctionHead {
 				async: false
 				generator: false
 				hasHoistedVars: false
-				rest: undefined
-				returnType: undefined
-				thisType: undefined
-				typeParameters: undefined
-				loc: SourceLocation esprima/declaration-function/migrated_0013/input.js 1:17-1:28
-				params: Array [
+				params: [
 					JSBindingIdentifier {
 						name: "__proto__"
-						loc: SourceLocation esprima/declaration-function/migrated_0013/input.js 1:18-1:27 (__proto__)
 						meta: JSPatternMeta {
-							optional: undefined
-							typeAnnotation: undefined
 							loc: SourceLocation esprima/declaration-function/migrated_0013/input.js 1:18-1:27
 						}
+						loc: SourceLocation esprima/declaration-function/migrated_0013/input.js 1:18-1:27 (__proto__)
 					}
 				]
+				loc: SourceLocation esprima/declaration-function/migrated_0013/input.js 1:17-1:28
 			}
+			loc: SourceLocation esprima/declaration-function/migrated_0013/input.js 1:0-1:32
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<esprima/declaration-function/migrated_0013/input.js>
+	loc: SourceLocation esprima/declaration-function/migrated_0013/input.js 1:0-2:0
 }
 ```
 

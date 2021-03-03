@@ -12,7 +12,10 @@ JSRoot {
 		JSExpressionStatement {
 			expression: JSNewExpression {
 				arguments: []
-				callee: JSReferenceIdentifier {name: "Button", loc: SourceLocation core/uncategorised/110/input.js 1:4-1:10 (Button)}
+				callee: JSReferenceIdentifier {
+					name: "Button"
+					loc: SourceLocation core/uncategorised/110/input.js 1:4-1:10 (Button)
+				}
 				loc: SourceLocation core/uncategorised/110/input.js 1:0-1:12
 			}
 			loc: SourceLocation core/uncategorised/110/input.js 1:0-1:12
@@ -23,9 +26,9 @@ JSRoot {
 	diagnostics: []
 	directives: []
 	hasHoistedVars: false
-	path: UIDPath<core/uncategorised/110/input.js>
 	sourceType: "script"
 	syntax: []
+	path: UIDPath<core/uncategorised/110/input.js>
 	loc: SourceLocation core/uncategorised/110/input.js 1:0-1:12
 }
 ```

@@ -8,80 +8,74 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: true
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation esprima/es2015-identifier/invalid_expression_await/input.js 1:0-2:0
-	path: UIDPath<esprima/es2015-identifier/invalid_expression_await/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:30
-				path: UIDPath<esprima/es2015-identifier/invalid_expression_await/input.js>
-				start: Position 1:0
-			}
-			description: Object {
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "<emphasis>import</emphasis> and <emphasis>export</emphasis> can only appear in a module"}
-				advice: Array [
-					log {
-						category: "info"
-						text: RAW_MARKUP {value: "Change the extension to <emphasis>.mjs</emphasis> to turn this file into a module"}
-					}
-					log {
-						category: "info"
-						text: RAW_MARKUP {value: "Add <emphasis>\\\"type\\\": \\\"module\\\"</emphasis> to your <filelink emphasis target=\"\\<dim>undefined\\</dim>\">\\<dim>undefined\\</dim></filelink>"}
-					}
-				]
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSExportLocalDeclaration {
 			exportKind: "value"
-			specifiers: undefined
-			loc: SourceLocation esprima/es2015-identifier/invalid_expression_await/input.js 1:0-1:30
 			declaration: JSVariableDeclarationStatement {
-				loc: SourceLocation esprima/es2015-identifier/invalid_expression_await/input.js 1:7-1:30
 				declaration: JSVariableDeclaration {
 					kind: "var"
-					loc: SourceLocation esprima/es2015-identifier/invalid_expression_await/input.js 1:7-1:30
-					declarations: Array [
+					declarations: [
 						JSVariableDeclarator {
 							id: JSBindingIdentifier {
 								name: "answer"
 								loc: SourceLocation esprima/es2015-identifier/invalid_expression_await/input.js 1:11-1:17 (answer)
 							}
-							loc: SourceLocation esprima/es2015-identifier/invalid_expression_await/input.js 1:11-1:29
 							init: JSBinaryExpression {
 								operator: "+"
-								loc: SourceLocation esprima/es2015-identifier/invalid_expression_await/input.js 1:20-1:29
 								left: JSReferenceIdentifier {
 									name: "await"
 									loc: SourceLocation esprima/es2015-identifier/invalid_expression_await/input.js 1:20-1:25 (await)
 								}
 								right: JSNumericLiteral {
 									value: 1
-									format: undefined
 									loc: SourceLocation esprima/es2015-identifier/invalid_expression_await/input.js 1:28-1:29
 								}
+								loc: SourceLocation esprima/es2015-identifier/invalid_expression_await/input.js 1:20-1:29
 							}
+							loc: SourceLocation esprima/es2015-identifier/invalid_expression_await/input.js 1:11-1:29
 						}
 					]
+					loc: SourceLocation esprima/es2015-identifier/invalid_expression_await/input.js 1:7-1:30
 				}
+				loc: SourceLocation esprima/es2015-identifier/invalid_expression_await/input.js 1:7-1:30
+			}
+			loc: SourceLocation esprima/es2015-identifier/invalid_expression_await/input.js 1:0-1:30
+		}
+	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {
+				advice: [
+					log {
+						category: "info"
+						text: RAW_MARKUP {value: "Change the extension to <emphasis>.mjs</emphasis> to turn this file into a module"}
+					}
+					log {
+						category: "info"
+						text: RAW_MARKUP {value: "Add <emphasis>\"type\": \"module\"</emphasis> to your <filelink emphasis target=\"<dim>undefined</dim>\" />"}
+					}
+				]
+				category: ["parse"]
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "<emphasis>import</emphasis> and <emphasis>export</emphasis> can only appear in a module"}
+			}
+			location: {
+				language: "js"
+				path: UIDPath<esprima/es2015-identifier/invalid_expression_await/input.js>
+				end: Position 1:30
+				start: Position 1:0
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: true
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<esprima/es2015-identifier/invalid_expression_await/input.js>
+	loc: SourceLocation esprima/es2015-identifier/invalid_expression_await/input.js 1:0-2:0
 }
 ```
 
@@ -94,7 +88,21 @@ JSRoot {
   ✖ import and export can only appear in a module
 
     export var answer = await + 1;
-    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
+    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
+    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
+    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
+    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
+    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
+    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
+    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
+    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
+    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
+    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
+    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
+    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
+    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
+    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
 
   ℹ Change the extension to .mjs to turn this file into a module
 

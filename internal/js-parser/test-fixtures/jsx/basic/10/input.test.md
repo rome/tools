@@ -8,47 +8,44 @@
 
 ```javascript
 JSRoot {
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	loc: SourceLocation jsx/basic/10/input.jsx 1:0-1:32
-	path: UIDPath<jsx/basic/10/input.jsx>
-	syntax: Array ["jsx"]
-	comments: Array [
+	body: [
+		JSExpressionStatement {
+			expression: JSXElement {
+				attributes: []
+				children: [
+					JSXExpressionContainer {
+						expression: JSXEmptyExpression {
+							trailingComments: ["1"]
+							loc: SourceLocation jsx/basic/10/input.jsx 1:4-1:4
+						}
+						loc: SourceLocation jsx/basic/10/input.jsx 1:3-1:28
+					}
+				]
+				selfClosing: false
+				name: JSXIdentifier {
+					name: "a"
+					loc: SourceLocation jsx/basic/10/input.jsx 1:1-1:2
+				}
+				loc: SourceLocation jsx/basic/10/input.jsx 1:0-1:32
+			}
+			loc: SourceLocation jsx/basic/10/input.jsx 1:0-1:32
+		}
+	]
+	comments: [
 		CommentBlock {
 			id: "1"
 			value: " this is a comment "
 			loc: SourceLocation jsx/basic/10/input.jsx 1:4-1:27
 		}
 	]
-	body: Array [
-		JSExpressionStatement {
-			loc: SourceLocation jsx/basic/10/input.jsx 1:0-1:32
-			expression: JSXElement {
-				name: JSXIdentifier {
-					name: "a"
-					loc: SourceLocation jsx/basic/10/input.jsx 1:1-1:2
-				}
-				attributes: Array []
-				selfClosing: false
-				typeArguments: undefined
-				loc: SourceLocation jsx/basic/10/input.jsx 1:0-1:32
-				children: Array [
-					JSXExpressionContainer {
-						loc: SourceLocation jsx/basic/10/input.jsx 1:3-1:28
-						expression: JSXEmptyExpression {
-							loc: SourceLocation jsx/basic/10/input.jsx 1:4-1:4
-							trailingComments: Array ["1"]
-						}
-					}
-				]
-			}
-		}
-	]
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: ["jsx"]
+	path: UIDPath<jsx/basic/10/input.jsx>
+	loc: SourceLocation jsx/basic/10/input.jsx 1:0-1:32
 }
 ```
 

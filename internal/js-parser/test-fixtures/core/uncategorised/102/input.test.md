@@ -14,16 +14,31 @@ JSRoot {
 				kind: "var"
 				declarations: [
 					JSVariableDeclarator {
-						id: JSBindingIdentifier {name: "x", loc: SourceLocation core/uncategorised/102/input.js 1:4-1:5 (x)}
+						id: JSBindingIdentifier {
+							name: "x"
+							loc: SourceLocation core/uncategorised/102/input.js 1:4-1:5 (x)
+						}
 						init: JSRegExpLiteral {
+							global: false
+							insensitive: true
+							multiline: false
+							noDotNewline: false
+							sticky: false
+							unicode: false
 							expression: JSRegExpSubExpression {
 								body: [
 									JSRegExpCharSet {
 										body: [
 											JSRegExpCharSetRange {
-												end: JSRegExpCharacter {value: "z", loc: SourceLocation core/uncategorised/102/input.js 1:12-1:13}
+												end: JSRegExpCharacter {
+													value: "z"
+													loc: SourceLocation core/uncategorised/102/input.js 1:12-1:13
+												}
 												loc: SourceLocation core/uncategorised/102/input.js 1:10-1:13
-												start: JSRegExpCharacter {value: "a", loc: SourceLocation core/uncategorised/102/input.js 1:10-1:11}
+												start: JSRegExpCharacter {
+													value: "a"
+													loc: SourceLocation core/uncategorised/102/input.js 1:10-1:11
+												}
 											}
 										]
 										invert: false
@@ -32,12 +47,6 @@ JSRoot {
 								]
 								loc: SourceLocation core/uncategorised/102/input.js 1:9-1:13
 							}
-							global: false
-							insensitive: true
-							multiline: false
-							noDotNewline: false
-							sticky: false
-							unicode: false
 							loc: SourceLocation core/uncategorised/102/input.js 1:8-1:16
 						}
 						loc: SourceLocation core/uncategorised/102/input.js 1:4-1:16
@@ -53,9 +62,9 @@ JSRoot {
 	diagnostics: []
 	directives: []
 	hasHoistedVars: true
-	path: UIDPath<core/uncategorised/102/input.js>
 	sourceType: "script"
 	syntax: []
+	path: UIDPath<core/uncategorised/102/input.js>
 	loc: SourceLocation core/uncategorised/102/input.js 1:0-1:16
 }
 ```

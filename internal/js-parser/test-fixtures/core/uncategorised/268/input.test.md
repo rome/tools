@@ -11,7 +11,10 @@ JSRoot {
 	body: [
 		JSSwitchStatement {
 			cases: []
-			discriminant: JSReferenceIdentifier {name: "x", loc: SourceLocation core/uncategorised/268/input.js 1:8-1:9 (x)}
+			discriminant: JSReferenceIdentifier {
+				name: "x"
+				loc: SourceLocation core/uncategorised/268/input.js 1:8-1:9 (x)
+			}
 			loc: SourceLocation core/uncategorised/268/input.js 1:0-1:13
 		}
 	]
@@ -20,9 +23,9 @@ JSRoot {
 	diagnostics: []
 	directives: []
 	hasHoistedVars: false
-	path: UIDPath<core/uncategorised/268/input.js>
 	sourceType: "script"
 	syntax: []
+	path: UIDPath<core/uncategorised/268/input.js>
 	loc: SourceLocation core/uncategorised/268/input.js 1:0-1:13
 }
 ```

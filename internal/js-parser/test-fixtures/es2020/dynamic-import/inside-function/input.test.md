@@ -8,62 +8,24 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2020/dynamic-import/inside-function/input.js 1:0-4:0
-	path: UIDPath<es2020/dynamic-import/inside-function/input.js>
-	body: Array [
+	body: [
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "loadImport"
 				loc: SourceLocation es2020/dynamic-import/inside-function/input.js 1:9-1:19 (loadImport)
 			}
-			loc: SourceLocation es2020/dynamic-import/inside-function/input.js 1:0-3:1
-			head: JSFunctionHead {
-				async: false
-				generator: false
-				hasHoistedVars: false
-				rest: undefined
-				returnType: undefined
-				thisType: undefined
-				typeParameters: undefined
-				loc: SourceLocation es2020/dynamic-import/inside-function/input.js 1:19-1:25
-				params: Array [
-					JSBindingIdentifier {
-						name: "file"
-						loc: SourceLocation es2020/dynamic-import/inside-function/input.js 1:20-1:24 (file)
-						meta: JSPatternMeta {
-							optional: undefined
-							typeAnnotation: undefined
-							loc: SourceLocation es2020/dynamic-import/inside-function/input.js 1:20-1:24
-						}
-					}
-				]
-			}
 			body: JSBlockStatement {
-				directives: Array []
-				loc: SourceLocation es2020/dynamic-import/inside-function/input.js 1:26-3:1
-				body: Array [
+				body: [
 					JSReturnStatement {
-						loc: SourceLocation es2020/dynamic-import/inside-function/input.js 2:2-2:35
 						argument: JSImportCall {
-							loc: SourceLocation es2020/dynamic-import/inside-function/input.js 2:15-2:34
 							argument: JSTemplateLiteral {
-								loc: SourceLocation es2020/dynamic-import/inside-function/input.js 2:16-2:33
-								expressions: Array [
+								expressions: [
 									JSReferenceIdentifier {
 										name: "file"
 										loc: SourceLocation es2020/dynamic-import/inside-function/input.js 2:24-2:28 (file)
 									}
 								]
-								quasis: Array [
+								quasis: [
 									JSTemplateElement {
 										cooked: "test/"
 										raw: "test/"
@@ -77,13 +39,43 @@ JSRoot {
 										loc: SourceLocation es2020/dynamic-import/inside-function/input.js 2:29-2:32
 									}
 								]
+								loc: SourceLocation es2020/dynamic-import/inside-function/input.js 2:16-2:33
 							}
+							loc: SourceLocation es2020/dynamic-import/inside-function/input.js 2:15-2:34
 						}
+						loc: SourceLocation es2020/dynamic-import/inside-function/input.js 2:2-2:35
 					}
 				]
+				directives: []
+				loc: SourceLocation es2020/dynamic-import/inside-function/input.js 1:26-3:1
 			}
+			head: JSFunctionHead {
+				async: false
+				generator: false
+				hasHoistedVars: false
+				params: [
+					JSBindingIdentifier {
+						name: "file"
+						meta: JSPatternMeta {
+							loc: SourceLocation es2020/dynamic-import/inside-function/input.js 1:20-1:24
+						}
+						loc: SourceLocation es2020/dynamic-import/inside-function/input.js 1:20-1:24 (file)
+					}
+				]
+				loc: SourceLocation es2020/dynamic-import/inside-function/input.js 1:19-1:25
+			}
+			loc: SourceLocation es2020/dynamic-import/inside-function/input.js 1:0-3:1
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2020/dynamic-import/inside-function/input.js>
+	loc: SourceLocation es2020/dynamic-import/inside-function/input.js 1:0-4:0
 }
 ```
 

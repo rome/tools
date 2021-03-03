@@ -8,45 +8,12 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2020/optional-chaining/optional-tagged-template-literals/input.js 1:0-1:9
-	path: UIDPath<es2020/optional-chaining/optional-tagged-template-literals/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Tagged Template Literals are not allowed in optionalChain"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:4
-				path: UIDPath<es2020/optional-chaining/optional-tagged-template-literals/input.js>
-				start: Position 1:4
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation es2020/optional-chaining/optional-tagged-template-literals/input.js 1:0-1:9
 			expression: JSTaggedTemplateExpression {
-				typeArguments: undefined
-				loc: SourceLocation es2020/optional-chaining/optional-tagged-template-literals/input.js 1:0-1:9
 				quasi: JSTemplateLiteral {
-					expressions: Array []
-					loc: SourceLocation es2020/optional-chaining/optional-tagged-template-literals/input.js 1:4-1:9
-					quasis: Array [
+					expressions: []
+					quasis: [
 						JSTemplateElement {
 							cooked: "foo"
 							raw: "foo"
@@ -54,25 +21,53 @@ JSRoot {
 							loc: SourceLocation es2020/optional-chaining/optional-tagged-template-literals/input.js 1:5-1:8
 						}
 					]
+					loc: SourceLocation es2020/optional-chaining/optional-tagged-template-literals/input.js 1:4-1:9
 				}
 				tag: JSMemberExpression {
-					loc: SourceLocation es2020/optional-chaining/optional-tagged-template-literals/input.js 1:0-1:4
 					object: JSReferenceIdentifier {
 						name: "a"
 						loc: SourceLocation es2020/optional-chaining/optional-tagged-template-literals/input.js 1:0-1:1 (a)
 					}
 					property: JSStaticMemberProperty {
+						optional: true
 						value: JSIdentifier {
 							name: "b"
 							loc: SourceLocation es2020/optional-chaining/optional-tagged-template-literals/input.js 1:3-1:4 (b)
 						}
-						optional: true
 						loc: SourceLocation es2020/optional-chaining/optional-tagged-template-literals/input.js 1:3-1:4 (b)
 					}
+					loc: SourceLocation es2020/optional-chaining/optional-tagged-template-literals/input.js 1:0-1:4
 				}
+				loc: SourceLocation es2020/optional-chaining/optional-tagged-template-literals/input.js 1:0-1:9
+			}
+			loc: SourceLocation es2020/optional-chaining/optional-tagged-template-literals/input.js 1:0-1:9
+		}
+	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "Tagged Template Literals are not allowed in optionalChain"}
+			}
+			location: {
+				language: "js"
+				path: UIDPath<es2020/optional-chaining/optional-tagged-template-literals/input.js>
+				end: Position 1:4
+				start: Position 1:4
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2020/optional-chaining/optional-tagged-template-literals/input.js>
+	loc: SourceLocation es2020/optional-chaining/optional-tagged-template-literals/input.js 1:0-1:9
 }
 ```
 
@@ -85,7 +80,7 @@ JSRoot {
   ✖ Tagged Template Literals are not allowed in optionalChain
 
     a?.b`foo`
-        ^
+        <error><emphasis>^</emphasis></error>
 
 
 ```

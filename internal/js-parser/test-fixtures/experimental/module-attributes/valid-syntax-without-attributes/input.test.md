@@ -8,40 +8,35 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	syntax: Array []
-	loc: SourceLocation experimental/module-attributes/valid-syntax-without-attributes/input.js 1:0-2:0
-	path: UIDPath<experimental/module-attributes/valid-syntax-without-attributes/input.js>
-	body: Array [
+	body: [
 		JSImportDeclaration {
-			importKind: undefined
-			namedSpecifiers: Array []
-			namespaceSpecifier: undefined
-			loc: SourceLocation experimental/module-attributes/valid-syntax-without-attributes/input.js 1:0-1:27
-			source: JSStringLiteral {
-				value: "foo.json"
-				loc: SourceLocation experimental/module-attributes/valid-syntax-without-attributes/input.js 1:16-1:26
-			}
+			namedSpecifiers: []
 			defaultSpecifier: JSImportDefaultSpecifier {
-				loc: SourceLocation experimental/module-attributes/valid-syntax-without-attributes/input.js 1:0-1:10
 				local: JSImportSpecifierLocal {
 					name: JSBindingIdentifier {
 						name: "foo"
 						loc: SourceLocation experimental/module-attributes/valid-syntax-without-attributes/input.js 1:7-1:10 (foo)
 					}
-					importKind: undefined
 					loc: SourceLocation experimental/module-attributes/valid-syntax-without-attributes/input.js 1:7-1:10
 				}
+				loc: SourceLocation experimental/module-attributes/valid-syntax-without-attributes/input.js 1:0-1:10
 			}
+			source: JSStringLiteral {
+				value: "foo.json"
+				loc: SourceLocation experimental/module-attributes/valid-syntax-without-attributes/input.js 1:16-1:26
+			}
+			loc: SourceLocation experimental/module-attributes/valid-syntax-without-attributes/input.js 1:0-1:27
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: []
+	path: UIDPath<experimental/module-attributes/valid-syntax-without-attributes/input.js>
+	loc: SourceLocation experimental/module-attributes/valid-syntax-without-attributes/input.js 1:0-2:0
 }
 ```
 

@@ -10,13 +10,19 @@
 JSRoot {
 	body: [
 		JSFunctionDeclaration {
-			id: JSBindingIdentifier {name: "hello", loc: SourceLocation core/uncategorised/291/input.js 1:9-1:14 (hello)}
+			id: JSBindingIdentifier {
+				name: "hello"
+				loc: SourceLocation core/uncategorised/291/input.js 1:9-1:14 (hello)
+			}
 			body: JSBlockStatement {
 				body: [
 					JSExpressionStatement {
 						expression: JSCallExpression {
 							arguments: []
-							callee: JSReferenceIdentifier {name: "sayHi", loc: SourceLocation core/uncategorised/291/input.js 1:23-1:28 (sayHi)}
+							callee: JSReferenceIdentifier {
+								name: "sayHi"
+								loc: SourceLocation core/uncategorised/291/input.js 1:23-1:28 (sayHi)
+							}
 							loc: SourceLocation core/uncategorised/291/input.js 1:23-1:30
 						}
 						loc: SourceLocation core/uncategorised/291/input.js 1:23-1:31
@@ -32,12 +38,16 @@ JSRoot {
 				params: [
 					JSBindingIdentifier {
 						name: "a"
-						meta: JSPatternMeta {loc: SourceLocation core/uncategorised/291/input.js 1:15-1:16}
+						meta: JSPatternMeta {
+							loc: SourceLocation core/uncategorised/291/input.js 1:15-1:16
+						}
 						loc: SourceLocation core/uncategorised/291/input.js 1:15-1:16 (a)
 					}
 					JSBindingIdentifier {
 						name: "b"
-						meta: JSPatternMeta {loc: SourceLocation core/uncategorised/291/input.js 1:18-1:19}
+						meta: JSPatternMeta {
+							loc: SourceLocation core/uncategorised/291/input.js 1:18-1:19
+						}
 						loc: SourceLocation core/uncategorised/291/input.js 1:18-1:19 (b)
 					}
 				]
@@ -51,9 +61,9 @@ JSRoot {
 	diagnostics: []
 	directives: []
 	hasHoistedVars: false
-	path: UIDPath<core/uncategorised/291/input.js>
 	sourceType: "script"
 	syntax: []
+	path: UIDPath<core/uncategorised/291/input.js>
 	loc: SourceLocation core/uncategorised/291/input.js 1:0-1:33
 }
 ```

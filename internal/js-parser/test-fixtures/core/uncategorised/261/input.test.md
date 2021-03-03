@@ -14,7 +14,10 @@ JSRoot {
 				body: JSBlockStatement {
 					body: [
 						JSReturnStatement {
-							argument: JSReferenceIdentifier {name: "x", loc: SourceLocation core/uncategorised/261/input.js 1:20-1:21 (x)}
+							argument: JSReferenceIdentifier {
+								name: "x"
+								loc: SourceLocation core/uncategorised/261/input.js 1:20-1:21 (x)
+							}
 							loc: SourceLocation core/uncategorised/261/input.js 1:13-1:22
 						}
 					]
@@ -38,9 +41,9 @@ JSRoot {
 	diagnostics: []
 	directives: []
 	hasHoistedVars: false
-	path: UIDPath<core/uncategorised/261/input.js>
 	sourceType: "script"
 	syntax: []
+	path: UIDPath<core/uncategorised/261/input.js>
 	loc: SourceLocation core/uncategorised/261/input.js 1:0-1:25
 }
 ```

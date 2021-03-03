@@ -8,81 +8,77 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
+	body: [
+		JSVariableDeclarationStatement {
+			declaration: JSVariableDeclaration {
+				kind: "let"
+				declarations: [
+					JSVariableDeclarator {
+						id: JSBindingIdentifier {
+							name: "x"
+							meta: JSPatternMeta {
+								typeAnnotation: TSTupleType {
+									elementTypes: [
+										TSTupleElement {
+											optional: false
+											typeAnnotation: TSRestType {
+												argument: TSArrayType {
+													elementType: TSNumberKeywordTypeAnnotation {
+														loc: SourceLocation typescript/types/tuple-rest-invalid/input.ts 1:11-1:17
+													}
+													loc: SourceLocation typescript/types/tuple-rest-invalid/input.ts 1:11-1:19
+												}
+												loc: SourceLocation typescript/types/tuple-rest-invalid/input.ts 1:8-1:19
+											}
+											loc: SourceLocation typescript/types/tuple-rest-invalid/input.ts 1:8-1:19
+										}
+										TSTupleElement {
+											optional: false
+											typeAnnotation: TSStringKeywordTypeAnnotation {
+												loc: SourceLocation typescript/types/tuple-rest-invalid/input.ts 1:21-1:27
+											}
+											loc: SourceLocation typescript/types/tuple-rest-invalid/input.ts 1:21-1:27
+										}
+									]
+									loc: SourceLocation typescript/types/tuple-rest-invalid/input.ts 1:7-1:28
+								}
+								loc: SourceLocation typescript/types/tuple-rest-invalid/input.ts 1:4-1:28
+							}
+							loc: SourceLocation typescript/types/tuple-rest-invalid/input.ts 1:4-1:28
+						}
+						loc: SourceLocation typescript/types/tuple-rest-invalid/input.ts 1:4-1:28
+					}
+				]
+				loc: SourceLocation typescript/types/tuple-rest-invalid/input.ts 1:0-1:28
+			}
+			loc: SourceLocation typescript/types/tuple-rest-invalid/input.ts 1:0-1:28
+		}
+	]
+	comments: []
 	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	loc: SourceLocation typescript/types/tuple-rest-invalid/input.ts 1:0-2:0
-	path: UIDPath<typescript/types/tuple-rest-invalid/input.ts>
-	syntax: Array ["ts"]
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {
+				advice: []
+				category: ["parse"]
 				categoryValue: "js"
-				category: Array ["parse"]
 				message: RAW_MARKUP {value: "The rest element has to be the last element when destructuring"}
 			}
-			location: Object {
-				integrity: undefined
+			location: {
 				language: "js"
-				sourceText: undefined
-				end: Position 1:19
 				path: UIDPath<typescript/types/tuple-rest-invalid/input.ts>
+				end: Position 1:19
 				start: Position 1:19
 			}
 		}
 	]
-	body: Array [
-		JSVariableDeclarationStatement {
-			loc: SourceLocation typescript/types/tuple-rest-invalid/input.ts 1:0-1:28
-			declaration: JSVariableDeclaration {
-				kind: "let"
-				loc: SourceLocation typescript/types/tuple-rest-invalid/input.ts 1:0-1:28
-				declarations: Array [
-					JSVariableDeclarator {
-						id: JSBindingIdentifier {
-							name: "x"
-							loc: SourceLocation typescript/types/tuple-rest-invalid/input.ts 1:4-1:28
-							meta: JSPatternMeta {
-								definite: undefined
-								loc: SourceLocation typescript/types/tuple-rest-invalid/input.ts 1:4-1:28
-								typeAnnotation: TSTupleType {
-									loc: SourceLocation typescript/types/tuple-rest-invalid/input.ts 1:7-1:28
-									elementTypes: Array [
-										TSTupleElement {
-											name: undefined
-											optional: false
-											loc: SourceLocation typescript/types/tuple-rest-invalid/input.ts 1:8-1:19
-											typeAnnotation: TSRestType {
-												loc: SourceLocation typescript/types/tuple-rest-invalid/input.ts 1:8-1:19
-												argument: TSArrayType {
-													elementType: TSNumberKeywordTypeAnnotation {loc: SourceLocation typescript/types/tuple-rest-invalid/input.ts 1:11-1:17}
-													loc: SourceLocation typescript/types/tuple-rest-invalid/input.ts 1:11-1:19
-												}
-											}
-										}
-										TSTupleElement {
-											name: undefined
-											optional: false
-											loc: SourceLocation typescript/types/tuple-rest-invalid/input.ts 1:21-1:27
-											typeAnnotation: TSStringKeywordTypeAnnotation {loc: SourceLocation typescript/types/tuple-rest-invalid/input.ts 1:21-1:27}
-										}
-									]
-								}
-							}
-						}
-						init: undefined
-						loc: SourceLocation typescript/types/tuple-rest-invalid/input.ts 1:4-1:28
-					}
-				]
-			}
-		}
-	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: ["ts"]
+	path: UIDPath<typescript/types/tuple-rest-invalid/input.ts>
+	loc: SourceLocation typescript/types/tuple-rest-invalid/input.ts 1:0-2:0
 }
 ```
 
@@ -95,7 +91,7 @@ JSRoot {
   ✖ The rest element has to be the last element when destructuring
 
     let x: [...number[], string]
-                       ^
+                       <error><emphasis>^</emphasis></error>
 
 
 ```

@@ -12,7 +12,10 @@ JSRoot {
 		JSExpressionStatement {
 			expression: JSCallExpression {
 				arguments: []
-				callee: JSReferenceIdentifier {name: "async", loc: SourceLocation core/escape-keyword/async/input.js 1:1-1:11 (async)}
+				callee: JSReferenceIdentifier {
+					name: "async"
+					loc: SourceLocation core/escape-keyword/async/input.js 1:1-1:11 (async)
+				}
 				loc: SourceLocation core/escape-keyword/async/input.js 1:1-1:14
 			}
 			loc: SourceLocation core/escape-keyword/async/input.js 1:0-1:15
@@ -23,9 +26,9 @@ JSRoot {
 	diagnostics: []
 	directives: []
 	hasHoistedVars: false
-	path: UIDPath<core/escape-keyword/async/input.js>
 	sourceType: "script"
 	syntax: []
+	path: UIDPath<core/escape-keyword/async/input.js>
 	loc: SourceLocation core/escape-keyword/async/input.js 1:0-2:0
 }
 ```

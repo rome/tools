@@ -8,41 +8,10 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation esprima/es2015-object-initialiser/invalid-proto-identifiers/input.js 1:0-2:0
-	path: UIDPath<esprima/es2015-object-initialiser/invalid-proto-identifiers/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Redefinition of __proto__ property"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:29
-				path: UIDPath<esprima/es2015-object-initialiser/invalid-proto-identifiers/input.js>
-				start: Position 1:20
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation esprima/es2015-object-initialiser/invalid-proto-identifiers/input.js 1:0-1:38
 			expression: JSObjectExpression {
-				loc: SourceLocation esprima/es2015-object-initialiser/invalid-proto-identifiers/input.js 1:1-1:37
-				properties: Array [
+				properties: [
 					JSObjectProperty {
 						key: JSStaticPropertyKey {
 							value: JSIdentifier {
@@ -51,7 +20,9 @@ JSRoot {
 							}
 							loc: SourceLocation esprima/es2015-object-initialiser/invalid-proto-identifiers/input.js 1:3-1:12
 						}
-						value: JSNullLiteral {loc: SourceLocation esprima/es2015-object-initialiser/invalid-proto-identifiers/input.js 1:14-1:18}
+						value: JSNullLiteral {
+							loc: SourceLocation esprima/es2015-object-initialiser/invalid-proto-identifiers/input.js 1:14-1:18
+						}
 						loc: SourceLocation esprima/es2015-object-initialiser/invalid-proto-identifiers/input.js 1:3-1:18
 					}
 					JSObjectProperty {
@@ -62,13 +33,42 @@ JSRoot {
 							}
 							loc: SourceLocation esprima/es2015-object-initialiser/invalid-proto-identifiers/input.js 1:20-1:29
 						}
-						value: JSNullLiteral {loc: SourceLocation esprima/es2015-object-initialiser/invalid-proto-identifiers/input.js 1:31-1:35}
+						value: JSNullLiteral {
+							loc: SourceLocation esprima/es2015-object-initialiser/invalid-proto-identifiers/input.js 1:31-1:35
+						}
 						loc: SourceLocation esprima/es2015-object-initialiser/invalid-proto-identifiers/input.js 1:20-1:35
 					}
 				]
+				loc: SourceLocation esprima/es2015-object-initialiser/invalid-proto-identifiers/input.js 1:1-1:37
+			}
+			loc: SourceLocation esprima/es2015-object-initialiser/invalid-proto-identifiers/input.js 1:0-1:38
+		}
+	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "Redefinition of __proto__ property"}
+			}
+			location: {
+				language: "js"
+				path: UIDPath<esprima/es2015-object-initialiser/invalid-proto-identifiers/input.js>
+				end: Position 1:29
+				start: Position 1:20
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<esprima/es2015-object-initialiser/invalid-proto-identifiers/input.js>
+	loc: SourceLocation esprima/es2015-object-initialiser/invalid-proto-identifiers/input.js 1:0-2:0
 }
 ```
 
@@ -81,7 +81,11 @@ JSRoot {
   ✖ Redefinition of __proto__ property
 
     ({ __proto__: null, __proto__: null })
-                        ^^^^^^^^^
+                        <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
+                          <error><emphasis>^</emphasis></error>
+    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
+    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
+    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
 
 
 ```

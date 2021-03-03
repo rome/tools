@@ -11,6 +11,7 @@ JSRoot {
 	body: [
 		JSExpressionStatement {
 			expression: JSAssignmentExpression {
+				operator: "="
 				left: JSAssignmentObjectPattern {
 					properties: [
 						JSAssignmentObjectPatternProperty {
@@ -30,7 +31,6 @@ JSRoot {
 					]
 					loc: SourceLocation core/create-parenthesized-expressions/invalid-parenthesized-assignment-pattern/input.js 1:1-1:4
 				}
-				operator: "="
 				right: JSObjectExpression {
 					properties: [
 						JSObjectProperty {
@@ -59,21 +59,26 @@ JSRoot {
 	corrupt: false
 	diagnostics: [
 		{
-			description: {advice: [], category: ["parse"], categoryValue: "js", message: RAW_MARKUP {value: "Invalid parenthesized binding"}}
+			origins: [{category: "parse"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "Invalid parenthesized binding"}
+			}
 			location: {
 				language: "js"
 				path: UIDPath<core/create-parenthesized-expressions/invalid-parenthesized-assignment-pattern/input.js>
 				end: Position 1:4
 				start: Position 1:1
 			}
-			origins: [{category: "parse"}]
 		}
 	]
 	directives: []
 	hasHoistedVars: false
-	path: UIDPath<core/create-parenthesized-expressions/invalid-parenthesized-assignment-pattern/input.js>
 	sourceType: "script"
 	syntax: []
+	path: UIDPath<core/create-parenthesized-expressions/invalid-parenthesized-assignment-pattern/input.js>
 	loc: SourceLocation core/create-parenthesized-expressions/invalid-parenthesized-assignment-pattern/input.js 1:0-2:0
 }
 ```
@@ -88,7 +93,8 @@ parse(js) ━━━━━━━━━━━━━━━━━━━━━━━�
   ✖ Invalid parenthesized binding
 
     ({x}) = {x: 1};
-     ^^^
+     <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
+    <error><emphasis>^</emphasis></error>
 
 
 ```

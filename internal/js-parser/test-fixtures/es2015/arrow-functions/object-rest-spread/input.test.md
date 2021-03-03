@@ -8,52 +8,28 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: true
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2015/arrow-functions/object-rest-spread/input.js 1:0-4:0
-	path: UIDPath<es2015/arrow-functions/object-rest-spread/input.js>
-	body: Array [
+	body: [
 		JSVariableDeclarationStatement {
-			loc: SourceLocation es2015/arrow-functions/object-rest-spread/input.js 1:0-3:2
 			declaration: JSVariableDeclaration {
 				kind: "var"
-				loc: SourceLocation es2015/arrow-functions/object-rest-spread/input.js 1:0-3:2
-				declarations: Array [
+				declarations: [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "foo"
 							loc: SourceLocation es2015/arrow-functions/object-rest-spread/input.js 1:4-1:7 (foo)
 						}
-						loc: SourceLocation es2015/arrow-functions/object-rest-spread/input.js 1:4-3:1
 						init: JSArrowFunctionExpression {
-							loc: SourceLocation es2015/arrow-functions/object-rest-spread/input.js 1:10-3:1
 							body: JSBlockStatement {
-								body: Array []
-								directives: Array []
+								body: []
+								directives: []
 								loc: SourceLocation es2015/arrow-functions/object-rest-spread/input.js 1:37-3:1
 							}
 							head: JSFunctionHead {
 								async: false
 								hasHoistedVars: false
-								rest: undefined
-								returnType: undefined
-								thisType: undefined
-								loc: SourceLocation es2015/arrow-functions/object-rest-spread/input.js 1:10-1:36
-								params: Array [
+								params: [
 									JSBindingObjectPattern {
-										loc: SourceLocation es2015/arrow-functions/object-rest-spread/input.js 1:12-1:31
-										rest: JSBindingIdentifier {
-											name: "other"
-											loc: SourceLocation es2015/arrow-functions/object-rest-spread/input.js 1:24-1:29 (other)
-										}
-										properties: Array [
+										properties: [
 											JSBindingObjectPatternProperty {
 												key: JSStaticPropertyKey {
 													value: JSIdentifier {
@@ -69,15 +45,34 @@ JSRoot {
 												loc: SourceLocation es2015/arrow-functions/object-rest-spread/input.js 1:14-1:19
 											}
 										]
+										rest: JSBindingIdentifier {
+											name: "other"
+											loc: SourceLocation es2015/arrow-functions/object-rest-spread/input.js 1:24-1:29 (other)
+										}
+										loc: SourceLocation es2015/arrow-functions/object-rest-spread/input.js 1:12-1:31
 									}
 								]
+								loc: SourceLocation es2015/arrow-functions/object-rest-spread/input.js 1:10-1:36
 							}
+							loc: SourceLocation es2015/arrow-functions/object-rest-spread/input.js 1:10-3:1
 						}
+						loc: SourceLocation es2015/arrow-functions/object-rest-spread/input.js 1:4-3:1
 					}
 				]
+				loc: SourceLocation es2015/arrow-functions/object-rest-spread/input.js 1:0-3:2
 			}
+			loc: SourceLocation es2015/arrow-functions/object-rest-spread/input.js 1:0-3:2
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: true
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2015/arrow-functions/object-rest-spread/input.js>
+	loc: SourceLocation es2015/arrow-functions/object-rest-spread/input.js 1:0-4:0
 }
 ```
 

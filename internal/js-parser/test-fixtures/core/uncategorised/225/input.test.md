@@ -12,8 +12,14 @@ JSRoot {
 		JSExpressionStatement {
 			expression: JSSequenceExpression {
 				expressions: [
-					JSReferenceIdentifier {name: "x", loc: SourceLocation core/uncategorised/225/input.js 1:0-1:1 (x)}
-					JSReferenceIdentifier {name: "y", loc: SourceLocation core/uncategorised/225/input.js 1:3-1:4 (y)}
+					JSReferenceIdentifier {
+						name: "x"
+						loc: SourceLocation core/uncategorised/225/input.js 1:0-1:1 (x)
+					}
+					JSReferenceIdentifier {
+						name: "y"
+						loc: SourceLocation core/uncategorised/225/input.js 1:3-1:4 (y)
+					}
 				]
 				loc: SourceLocation core/uncategorised/225/input.js 1:0-1:4
 			}
@@ -25,9 +31,9 @@ JSRoot {
 	diagnostics: []
 	directives: []
 	hasHoistedVars: false
-	path: UIDPath<core/uncategorised/225/input.js>
 	sourceType: "script"
 	syntax: []
+	path: UIDPath<core/uncategorised/225/input.js>
 	loc: SourceLocation core/uncategorised/225/input.js 1:0-1:4
 }
 ```

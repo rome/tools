@@ -8,29 +8,14 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2015/let/let-at-binding-list-fail-1/input.js 1:0-2:0
-	path: UIDPath<es2015/let/let-at-binding-list-fail-1/input.js>
-	body: Array [
+	body: [
 		JSVariableDeclarationStatement {
-			loc: SourceLocation es2015/let/let-at-binding-list-fail-1/input.js 1:0-1:17
 			declaration: JSVariableDeclaration {
 				kind: "let"
-				loc: SourceLocation es2015/let/let-at-binding-list-fail-1/input.js 1:0-1:17
-				declarations: Array [
+				declarations: [
 					JSVariableDeclarator {
 						id: JSBindingObjectPattern {
-							rest: undefined
-							loc: SourceLocation es2015/let/let-at-binding-list-fail-1/input.js 1:4-1:11
-							properties: Array [
+							properties: [
 								JSBindingObjectPatternProperty {
 									key: JSStaticPropertyKey {
 										value: JSIdentifier {
@@ -46,17 +31,29 @@ JSRoot {
 									loc: SourceLocation es2015/let/let-at-binding-list-fail-1/input.js 1:6-1:9
 								}
 							]
+							loc: SourceLocation es2015/let/let-at-binding-list-fail-1/input.js 1:4-1:11
 						}
-						loc: SourceLocation es2015/let/let-at-binding-list-fail-1/input.js 1:4-1:16
 						init: JSObjectExpression {
-							properties: Array []
+							properties: []
 							loc: SourceLocation es2015/let/let-at-binding-list-fail-1/input.js 1:14-1:16
 						}
+						loc: SourceLocation es2015/let/let-at-binding-list-fail-1/input.js 1:4-1:16
 					}
 				]
+				loc: SourceLocation es2015/let/let-at-binding-list-fail-1/input.js 1:0-1:17
 			}
+			loc: SourceLocation es2015/let/let-at-binding-list-fail-1/input.js 1:0-1:17
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2015/let/let-at-binding-list-fail-1/input.js>
+	loc: SourceLocation es2015/let/let-at-binding-list-fail-1/input.js 1:0-2:0
 }
 ```
 

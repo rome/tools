@@ -81,7 +81,7 @@ type OuputMessagesFactoryReturn<Ret extends Partial<DiagnosticDescription>> = Om
 	Ret,
 	"message" | "advice"
 > & {
-	advice: DiagnosticAdvice;
+	advice: DiagnosticAdvice[];
 	message: StaticMarkup;
 };
 
@@ -92,7 +92,7 @@ type OutputMessagesFactory<Func extends InputMessagesFactory> = (
 type OutputMessagesValue<Value> = Value extends StaticMarkup
 	? {
 			message: StaticMarkup;
-			advice: DiagnosticAdvice;
+			advice: DiagnosticAdvice[];
 		}
 	: Value extends Partial<DiagnosticDescription>
 		? OuputMessagesFactoryReturn<Value>

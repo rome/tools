@@ -8,76 +8,69 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: true
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	loc: SourceLocation typescript/cast/arrow-in-parens/input.ts 1:0-2:0
-	path: UIDPath<typescript/cast/arrow-in-parens/input.ts>
-	syntax: Array ["ts"]
-	body: Array [
+	body: [
 		JSVariableDeclarationStatement {
-			loc: SourceLocation typescript/cast/arrow-in-parens/input.ts 1:0-1:44
 			declaration: JSVariableDeclaration {
 				kind: "var"
-				loc: SourceLocation typescript/cast/arrow-in-parens/input.ts 1:0-1:44
-				declarations: Array [
+				declarations: [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "asserted1"
 							loc: SourceLocation typescript/cast/arrow-in-parens/input.ts 1:4-1:13 (asserted1)
 						}
-						loc: SourceLocation typescript/cast/arrow-in-parens/input.ts 1:4-1:43
 						init: JSArrowFunctionExpression {
-							loc: SourceLocation typescript/cast/arrow-in-parens/input.ts 1:16-1:42
 							body: JSBlockStatement {
-								directives: Array []
-								loc: SourceLocation typescript/cast/arrow-in-parens/input.ts 1:29-1:42
-								body: Array [
+								body: [
 									JSReturnStatement {
-										loc: SourceLocation typescript/cast/arrow-in-parens/input.ts 1:31-1:40
 										argument: JSReferenceIdentifier {
 											name: "n"
 											loc: SourceLocation typescript/cast/arrow-in-parens/input.ts 1:38-1:39 (n)
 										}
+										loc: SourceLocation typescript/cast/arrow-in-parens/input.ts 1:31-1:40
 									}
 								]
+								directives: []
+								loc: SourceLocation typescript/cast/arrow-in-parens/input.ts 1:29-1:42
 							}
 							head: JSFunctionHead {
 								async: false
 								hasHoistedVars: false
-								rest: undefined
-								returnType: undefined
-								thisType: undefined
-								loc: SourceLocation typescript/cast/arrow-in-parens/input.ts 1:22-1:28
-								params: Array [
+								params: [
 									JSBindingIdentifier {
 										name: "n"
 										loc: SourceLocation typescript/cast/arrow-in-parens/input.ts 1:23-1:24 (n)
 									}
 								]
 								typeParameters: TSTypeParameterDeclaration {
-									loc: SourceLocation typescript/cast/arrow-in-parens/input.ts 1:16-1:21
-									params: Array [
+									params: [
 										TSTypeParameter {
 											name: "any"
-											constraint: undefined
-											default: undefined
 											loc: SourceLocation typescript/cast/arrow-in-parens/input.ts 1:17-1:20
 										}
 									]
+									loc: SourceLocation typescript/cast/arrow-in-parens/input.ts 1:16-1:21
 								}
+								loc: SourceLocation typescript/cast/arrow-in-parens/input.ts 1:22-1:28
 							}
+							loc: SourceLocation typescript/cast/arrow-in-parens/input.ts 1:16-1:42
 						}
+						loc: SourceLocation typescript/cast/arrow-in-parens/input.ts 1:4-1:43
 					}
 				]
+				loc: SourceLocation typescript/cast/arrow-in-parens/input.ts 1:0-1:44
 			}
+			loc: SourceLocation typescript/cast/arrow-in-parens/input.ts 1:0-1:44
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: true
+	sourceType: "module"
+	syntax: ["ts"]
+	path: UIDPath<typescript/cast/arrow-in-parens/input.ts>
+	loc: SourceLocation typescript/cast/arrow-in-parens/input.ts 1:0-2:0
 }
 ```
 

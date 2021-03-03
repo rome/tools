@@ -8,23 +8,10 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation esprima/statement-expression/migrated_0001/input.js 1:0-2:0
-	path: UIDPath<esprima/statement-expression/migrated_0001/input.js>
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation esprima/statement-expression/migrated_0001/input.js 1:0-1:4
 			expression: JSSequenceExpression {
-				loc: SourceLocation esprima/statement-expression/migrated_0001/input.js 1:0-1:4
-				expressions: Array [
+				expressions: [
 					JSReferenceIdentifier {
 						name: "x"
 						loc: SourceLocation esprima/statement-expression/migrated_0001/input.js 1:0-1:1 (x)
@@ -34,9 +21,20 @@ JSRoot {
 						loc: SourceLocation esprima/statement-expression/migrated_0001/input.js 1:3-1:4 (y)
 					}
 				]
+				loc: SourceLocation esprima/statement-expression/migrated_0001/input.js 1:0-1:4
 			}
+			loc: SourceLocation esprima/statement-expression/migrated_0001/input.js 1:0-1:4
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<esprima/statement-expression/migrated_0001/input.js>
+	loc: SourceLocation esprima/statement-expression/migrated_0001/input.js 1:0-2:0
 }
 ```
 

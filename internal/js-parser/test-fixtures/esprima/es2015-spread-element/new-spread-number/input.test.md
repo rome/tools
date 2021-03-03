@@ -8,41 +8,36 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation esprima/es2015-spread-element/new-spread-number/input.js 1:0-2:0
-	path: UIDPath<esprima/es2015-spread-element/new-spread-number/input.js>
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation esprima/es2015-spread-element/new-spread-number/input.js 1:0-1:13
 			expression: JSNewExpression {
-				optional: undefined
-				typeArguments: undefined
-				loc: SourceLocation esprima/es2015-spread-element/new-spread-number/input.js 1:0-1:12
+				arguments: [
+					JSSpreadElement {
+						argument: JSNumericLiteral {
+							value: 0.5
+							loc: SourceLocation esprima/es2015-spread-element/new-spread-number/input.js 1:9-1:11
+						}
+						loc: SourceLocation esprima/es2015-spread-element/new-spread-number/input.js 1:6-1:11
+					}
+				]
 				callee: JSReferenceIdentifier {
 					name: "f"
 					loc: SourceLocation esprima/es2015-spread-element/new-spread-number/input.js 1:4-1:5 (f)
 				}
-				arguments: Array [
-					JSSpreadElement {
-						loc: SourceLocation esprima/es2015-spread-element/new-spread-number/input.js 1:6-1:11
-						argument: JSNumericLiteral {
-							value: 0.5
-							format: undefined
-							loc: SourceLocation esprima/es2015-spread-element/new-spread-number/input.js 1:9-1:11
-						}
-					}
-				]
+				loc: SourceLocation esprima/es2015-spread-element/new-spread-number/input.js 1:0-1:12
 			}
+			loc: SourceLocation esprima/es2015-spread-element/new-spread-number/input.js 1:0-1:13
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<esprima/es2015-spread-element/new-spread-number/input.js>
+	loc: SourceLocation esprima/es2015-spread-element/new-spread-number/input.js 1:0-2:0
 }
 ```
 

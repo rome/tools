@@ -8,79 +8,72 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	loc: SourceLocation typescript/types/import-type-escaped-error/input.ts 1:0-2:0
-	path: UIDPath<typescript/types/import-type-escaped-error/input.ts>
-	syntax: Array ["ts"]
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Expected keyword <emphasis>from</emphasis>"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:16
-				path: UIDPath<typescript/types/import-type-escaped-error/input.ts>
-				start: Position 1:17
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSImportDeclaration {
-			importKind: undefined
-			namedSpecifiers: Array []
-			namespaceSpecifier: undefined
-			loc: SourceLocation typescript/types/import-type-escaped-error/input.ts 1:0-1:16
-			source: JSStringLiteral {
-				value: ""
-				loc: SourceLocation typescript/types/import-type-escaped-error/input.ts 1:0-1:16
-			}
+			namedSpecifiers: []
 			defaultSpecifier: JSImportDefaultSpecifier {
-				loc: SourceLocation typescript/types/import-type-escaped-error/input.ts 1:0-1:16
 				local: JSImportSpecifierLocal {
 					name: JSBindingIdentifier {
 						name: "type"
 						loc: SourceLocation typescript/types/import-type-escaped-error/input.ts 1:7-1:16 (type)
 					}
-					importKind: undefined
 					loc: SourceLocation typescript/types/import-type-escaped-error/input.ts 1:7-1:16
 				}
+				loc: SourceLocation typescript/types/import-type-escaped-error/input.ts 1:0-1:16
 			}
+			source: JSStringLiteral {
+				value: ""
+				loc: SourceLocation typescript/types/import-type-escaped-error/input.ts 1:0-1:16
+			}
+			loc: SourceLocation typescript/types/import-type-escaped-error/input.ts 1:0-1:16
 		}
 		JSExpressionStatement {
-			loc: SourceLocation typescript/types/import-type-escaped-error/input.ts 1:17-1:27
 			expression: JSReferenceIdentifier {
 				name: "typescript"
 				loc: SourceLocation typescript/types/import-type-escaped-error/input.ts 1:17-1:27 (typescript)
 			}
+			loc: SourceLocation typescript/types/import-type-escaped-error/input.ts 1:17-1:27
 		}
 		JSExpressionStatement {
-			loc: SourceLocation typescript/types/import-type-escaped-error/input.ts 1:28-1:32
 			expression: JSReferenceIdentifier {
 				name: "from"
 				loc: SourceLocation typescript/types/import-type-escaped-error/input.ts 1:28-1:32 (from)
 			}
+			loc: SourceLocation typescript/types/import-type-escaped-error/input.ts 1:28-1:32
 		}
 		JSExpressionStatement {
-			loc: SourceLocation typescript/types/import-type-escaped-error/input.ts 1:33-1:46
 			expression: JSStringLiteral {
 				value: "typescript"
 				loc: SourceLocation typescript/types/import-type-escaped-error/input.ts 1:33-1:45
 			}
+			loc: SourceLocation typescript/types/import-type-escaped-error/input.ts 1:33-1:46
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "js"
+				message: [RAW_MARKUP {value: "Expected keyword <emphasis>"}, "from", RAW_MARKUP {value: "</emphasis>"}]
+			}
+			location: {
+				language: "js"
+				path: UIDPath<typescript/types/import-type-escaped-error/input.ts>
+				end: Position 1:16
+				start: Position 1:17
+			}
+		}
+	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: ["ts"]
+	path: UIDPath<typescript/types/import-type-escaped-error/input.ts>
+	loc: SourceLocation typescript/types/import-type-escaped-error/input.ts 1:0-2:0
 }
 ```
 
@@ -93,7 +86,7 @@ JSRoot {
   ✖ Expected keyword from
 
     import typ\u{65} typescript from "typescript";
-                     ^
+                     <error><emphasis>^</emphasis></error>
 
 
 ```

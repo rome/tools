@@ -11,12 +11,21 @@ JSRoot {
 	body: [
 		JSExpressionStatement {
 			expression: JSLogicalExpression {
-				left: JSReferenceIdentifier {name: "x", loc: SourceLocation core/uncategorised/195/input.js 1:0-1:1 (x)}
 				operator: "||"
+				left: JSReferenceIdentifier {
+					name: "x"
+					loc: SourceLocation core/uncategorised/195/input.js 1:0-1:1 (x)
+				}
 				right: JSLogicalExpression {
-					left: JSReferenceIdentifier {name: "y", loc: SourceLocation core/uncategorised/195/input.js 1:5-1:6 (y)}
 					operator: "&&"
-					right: JSReferenceIdentifier {name: "z", loc: SourceLocation core/uncategorised/195/input.js 1:10-1:11 (z)}
+					left: JSReferenceIdentifier {
+						name: "y"
+						loc: SourceLocation core/uncategorised/195/input.js 1:5-1:6 (y)
+					}
+					right: JSReferenceIdentifier {
+						name: "z"
+						loc: SourceLocation core/uncategorised/195/input.js 1:10-1:11 (z)
+					}
 					loc: SourceLocation core/uncategorised/195/input.js 1:5-1:11
 				}
 				loc: SourceLocation core/uncategorised/195/input.js 1:0-1:11
@@ -29,9 +38,9 @@ JSRoot {
 	diagnostics: []
 	directives: []
 	hasHoistedVars: false
-	path: UIDPath<core/uncategorised/195/input.js>
 	sourceType: "script"
 	syntax: []
+	path: UIDPath<core/uncategorised/195/input.js>
 	loc: SourceLocation core/uncategorised/195/input.js 1:0-1:11
 }
 ```

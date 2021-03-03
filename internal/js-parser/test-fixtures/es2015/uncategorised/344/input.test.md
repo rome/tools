@@ -8,41 +8,39 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2015/uncategorised/344/input.js 1:0-1:5
-	path: UIDPath<es2015/uncategorised/344/input.js>
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			expression: JSSuper {loc: SourceLocation es2015/uncategorised/344/input.js 1:0-1:5}
+			expression: JSSuper {
+				loc: SourceLocation es2015/uncategorised/344/input.js 1:0-1:5
+			}
 			loc: SourceLocation es2015/uncategorised/344/input.js 1:0-1:5
 		}
 	]
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {
+				advice: []
+				category: ["parse"]
 				categoryValue: "js"
-				category: Array ["parse"]
 				message: RAW_MARKUP {value: "super is only allowed in object methods and classes"}
 			}
-			location: Object {
-				integrity: undefined
+			location: {
 				language: "js"
-				sourceText: undefined
-				end: Position 1:0
 				path: UIDPath<es2015/uncategorised/344/input.js>
+				end: Position 1:0
 				start: Position 1:0
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2015/uncategorised/344/input.js>
+	loc: SourceLocation es2015/uncategorised/344/input.js 1:0-1:5
 }
 ```
 
@@ -55,7 +53,7 @@ JSRoot {
   ✖ super is only allowed in object methods and classes
 
     super
-    ^
+    <error><emphasis>^</emphasis></error>
 
 
 ```

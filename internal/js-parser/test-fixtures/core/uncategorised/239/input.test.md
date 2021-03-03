@@ -10,7 +10,11 @@
 JSRoot {
 	body: [
 		JSForStatement {
-			body: JSBlockStatement {body: [], directives: [], loc: SourceLocation core/uncategorised/239/input.js 1:7-1:9}
+			body: JSBlockStatement {
+				body: []
+				directives: []
+				loc: SourceLocation core/uncategorised/239/input.js 1:7-1:9
+			}
 			loc: SourceLocation core/uncategorised/239/input.js 1:0-1:9
 		}
 	]
@@ -19,9 +23,9 @@ JSRoot {
 	diagnostics: []
 	directives: []
 	hasHoistedVars: false
-	path: UIDPath<core/uncategorised/239/input.js>
 	sourceType: "script"
 	syntax: []
+	path: UIDPath<core/uncategorised/239/input.js>
 	loc: SourceLocation core/uncategorised/239/input.js 1:0-1:9
 }
 ```

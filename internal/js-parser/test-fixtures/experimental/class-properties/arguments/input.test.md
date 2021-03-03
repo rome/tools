@@ -8,70 +8,21 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation experimental/class-properties/arguments/input.js 1:0-5:1
-	path: UIDPath<experimental/class-properties/arguments/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "'arguments' is not allowed in class field initializer"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 3:19
-				path: UIDPath<experimental/class-properties/arguments/input.js>
-				start: Position 3:10
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "fn"
 				loc: SourceLocation experimental/class-properties/arguments/input.js 1:9-1:11 (fn)
 			}
-			loc: SourceLocation experimental/class-properties/arguments/input.js 1:0-5:1
-			head: JSFunctionHead {
-				async: false
-				generator: false
-				hasHoistedVars: false
-				params: Array []
-				rest: undefined
-				returnType: undefined
-				thisType: undefined
-				typeParameters: undefined
-				loc: SourceLocation experimental/class-properties/arguments/input.js 1:11-1:13
-			}
 			body: JSBlockStatement {
-				directives: Array []
-				loc: SourceLocation experimental/class-properties/arguments/input.js 1:14-5:1
-				body: Array [
+				body: [
 					JSClassDeclaration {
 						id: JSBindingIdentifier {
 							name: "A"
 							loc: SourceLocation experimental/class-properties/arguments/input.js 2:8-2:9 (A)
 						}
-						loc: SourceLocation experimental/class-properties/arguments/input.js 2:2-4:3
 						meta: JSClassHead {
-							implements: undefined
-							superClass: undefined
-							superTypeParameters: undefined
-							typeParameters: undefined
-							loc: SourceLocation experimental/class-properties/arguments/input.js 2:2-4:3
-							body: Array [
+							body: [
 								JSClassProperty {
 									key: JSStaticPropertyKey {
 										value: JSIdentifier {
@@ -84,27 +35,60 @@ JSRoot {
 										name: "arguments"
 										loc: SourceLocation experimental/class-properties/arguments/input.js 3:10-3:19 (arguments)
 									}
-									definite: undefined
-									typeAnnotation: undefined
-									loc: SourceLocation experimental/class-properties/arguments/input.js 3:4-3:20
 									meta: JSClassPropertyMeta {
 										abstract: false
-										accessibility: undefined
 										optional: false
 										readonly: false
 										static: false
-										typeAnnotation: undefined
 										loc: SourceLocation experimental/class-properties/arguments/input.js 3:4-3:7
 										start: Position 3:4
 									}
+									loc: SourceLocation experimental/class-properties/arguments/input.js 3:4-3:20
 								}
 							]
+							loc: SourceLocation experimental/class-properties/arguments/input.js 2:2-4:3
 						}
+						loc: SourceLocation experimental/class-properties/arguments/input.js 2:2-4:3
 					}
 				]
+				directives: []
+				loc: SourceLocation experimental/class-properties/arguments/input.js 1:14-5:1
+			}
+			head: JSFunctionHead {
+				async: false
+				generator: false
+				hasHoistedVars: false
+				params: []
+				loc: SourceLocation experimental/class-properties/arguments/input.js 1:11-1:13
+			}
+			loc: SourceLocation experimental/class-properties/arguments/input.js 1:0-5:1
+		}
+	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "'arguments' is not allowed in class field initializer"}
+			}
+			location: {
+				language: "js"
+				path: UIDPath<experimental/class-properties/arguments/input.js>
+				end: Position 3:19
+				start: Position 3:10
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<experimental/class-properties/arguments/input.js>
+	loc: SourceLocation experimental/class-properties/arguments/input.js 1:0-5:1
 }
 ```
 
@@ -119,7 +103,11 @@ JSRoot {
     1 │ function fn() {
     2 │   class A {
   > 3 │     foo = arguments;
-      │           ^^^^^^^^^
+    → │           <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
+    → │ <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
+    → │ <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
+    → │ <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
+      │ <error><emphasis>^</emphasis></error>
     4 │   }
     5 │ }
 

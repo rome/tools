@@ -8,67 +8,45 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	loc: SourceLocation typescript/types/import-type-dynamic/input.ts 1:0-4:0
-	path: UIDPath<typescript/types/import-type-dynamic/input.ts>
-	syntax: Array ["ts"]
-	body: Array [
+	body: [
 		JSVariableDeclarationStatement {
-			loc: SourceLocation typescript/types/import-type-dynamic/input.ts 1:0-1:28
 			declaration: JSVariableDeclaration {
 				kind: "let"
-				loc: SourceLocation typescript/types/import-type-dynamic/input.ts 1:0-1:28
-				declarations: Array [
+				declarations: [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "x"
-							loc: SourceLocation typescript/types/import-type-dynamic/input.ts 1:4-1:27
 							meta: JSPatternMeta {
-								definite: undefined
-								loc: SourceLocation typescript/types/import-type-dynamic/input.ts 1:4-1:27
 								typeAnnotation: TSTypeQuery {
-									loc: SourceLocation typescript/types/import-type-dynamic/input.ts 1:7-1:27
 									exprName: TSImportType {
-										qualifier: undefined
-										typeParameters: undefined
-										loc: SourceLocation typescript/types/import-type-dynamic/input.ts 1:14-1:27
 										argument: JSStringLiteral {
 											value: "./x"
 											loc: SourceLocation typescript/types/import-type-dynamic/input.ts 1:21-1:26
 										}
+										loc: SourceLocation typescript/types/import-type-dynamic/input.ts 1:14-1:27
 									}
+									loc: SourceLocation typescript/types/import-type-dynamic/input.ts 1:7-1:27
 								}
+								loc: SourceLocation typescript/types/import-type-dynamic/input.ts 1:4-1:27
 							}
+							loc: SourceLocation typescript/types/import-type-dynamic/input.ts 1:4-1:27
 						}
-						init: undefined
 						loc: SourceLocation typescript/types/import-type-dynamic/input.ts 1:4-1:27
 					}
 				]
+				loc: SourceLocation typescript/types/import-type-dynamic/input.ts 1:0-1:28
 			}
+			loc: SourceLocation typescript/types/import-type-dynamic/input.ts 1:0-1:28
 		}
 		JSVariableDeclarationStatement {
-			loc: SourceLocation typescript/types/import-type-dynamic/input.ts 2:0-2:23
 			declaration: JSVariableDeclaration {
 				kind: "let"
-				loc: SourceLocation typescript/types/import-type-dynamic/input.ts 2:0-2:23
-				declarations: Array [
+				declarations: [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "Y"
-							loc: SourceLocation typescript/types/import-type-dynamic/input.ts 2:4-2:22
 							meta: JSPatternMeta {
-								definite: undefined
-								loc: SourceLocation typescript/types/import-type-dynamic/input.ts 2:4-2:22
 								typeAnnotation: TSImportType {
-									typeParameters: undefined
-									loc: SourceLocation typescript/types/import-type-dynamic/input.ts 2:7-2:22
 									argument: JSStringLiteral {
 										value: "./y"
 										loc: SourceLocation typescript/types/import-type-dynamic/input.ts 2:14-2:19
@@ -77,40 +55,33 @@ JSRoot {
 										name: "Y"
 										loc: SourceLocation typescript/types/import-type-dynamic/input.ts 2:21-2:22 (Y)
 									}
+									loc: SourceLocation typescript/types/import-type-dynamic/input.ts 2:7-2:22
 								}
+								loc: SourceLocation typescript/types/import-type-dynamic/input.ts 2:4-2:22
 							}
+							loc: SourceLocation typescript/types/import-type-dynamic/input.ts 2:4-2:22
 						}
-						init: undefined
 						loc: SourceLocation typescript/types/import-type-dynamic/input.ts 2:4-2:22
 					}
 				]
+				loc: SourceLocation typescript/types/import-type-dynamic/input.ts 2:0-2:23
 			}
+			loc: SourceLocation typescript/types/import-type-dynamic/input.ts 2:0-2:23
 		}
 		JSVariableDeclarationStatement {
-			loc: SourceLocation typescript/types/import-type-dynamic/input.ts 3:0-3:36
 			declaration: JSVariableDeclaration {
 				kind: "let"
-				loc: SourceLocation typescript/types/import-type-dynamic/input.ts 3:0-3:36
-				declarations: Array [
+				declarations: [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "z"
-							loc: SourceLocation typescript/types/import-type-dynamic/input.ts 3:4-3:35
 							meta: JSPatternMeta {
-								definite: undefined
-								loc: SourceLocation typescript/types/import-type-dynamic/input.ts 3:4-3:35
 								typeAnnotation: TSImportType {
-									loc: SourceLocation typescript/types/import-type-dynamic/input.ts 3:7-3:35
 									argument: JSStringLiteral {
 										value: "/z"
 										loc: SourceLocation typescript/types/import-type-dynamic/input.ts 3:14-3:18
 									}
-									typeParameters: TSTypeParameterInstantiation {
-										loc: SourceLocation typescript/types/import-type-dynamic/input.ts 3:27-3:35
-										params: Array [TSStringKeywordTypeAnnotation {loc: SourceLocation typescript/types/import-type-dynamic/input.ts 3:28-3:34}]
-									}
 									qualifier: TSQualifiedName {
-										loc: SourceLocation typescript/types/import-type-dynamic/input.ts 3:20-3:27
 										left: JSReferenceIdentifier {
 											name: "foo"
 											loc: SourceLocation typescript/types/import-type-dynamic/input.ts 3:20-3:23 (foo)
@@ -119,17 +90,39 @@ JSRoot {
 											name: "bar"
 											loc: SourceLocation typescript/types/import-type-dynamic/input.ts 3:24-3:27 (bar)
 										}
+										loc: SourceLocation typescript/types/import-type-dynamic/input.ts 3:20-3:27
 									}
+									typeParameters: TSTypeParameterInstantiation {
+										params: [
+											TSStringKeywordTypeAnnotation {
+												loc: SourceLocation typescript/types/import-type-dynamic/input.ts 3:28-3:34
+											}
+										]
+										loc: SourceLocation typescript/types/import-type-dynamic/input.ts 3:27-3:35
+									}
+									loc: SourceLocation typescript/types/import-type-dynamic/input.ts 3:7-3:35
 								}
+								loc: SourceLocation typescript/types/import-type-dynamic/input.ts 3:4-3:35
 							}
+							loc: SourceLocation typescript/types/import-type-dynamic/input.ts 3:4-3:35
 						}
-						init: undefined
 						loc: SourceLocation typescript/types/import-type-dynamic/input.ts 3:4-3:35
 					}
 				]
+				loc: SourceLocation typescript/types/import-type-dynamic/input.ts 3:0-3:36
 			}
+			loc: SourceLocation typescript/types/import-type-dynamic/input.ts 3:0-3:36
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: ["ts"]
+	path: UIDPath<typescript/types/import-type-dynamic/input.ts>
+	loc: SourceLocation typescript/types/import-type-dynamic/input.ts 1:0-4:0
 }
 ```
 

@@ -8,43 +8,40 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation esprima/es2015-object-pattern/empty-for-lex/input.js 1:0-2:0
-	path: UIDPath<esprima/es2015-object-pattern/empty-for-lex/input.js>
-	body: Array [
+	body: [
 		JSForInStatement {
-			body: JSEmptyStatement {loc: SourceLocation esprima/es2015-object-pattern/empty-for-lex/input.js 1:17-1:18}
-			loc: SourceLocation esprima/es2015-object-pattern/empty-for-lex/input.js 1:0-1:18
-			right: JSNumericLiteral {
-				value: 0
-				format: undefined
-				loc: SourceLocation esprima/es2015-object-pattern/empty-for-lex/input.js 1:15-1:16
+			body: JSEmptyStatement {
+				loc: SourceLocation esprima/es2015-object-pattern/empty-for-lex/input.js 1:17-1:18
 			}
 			left: JSVariableDeclaration {
 				kind: "let"
-				loc: SourceLocation esprima/es2015-object-pattern/empty-for-lex/input.js 1:5-1:11
-				declarations: Array [
+				declarations: [
 					JSVariableDeclarator {
 						id: JSBindingObjectPattern {
-							properties: Array []
-							rest: undefined
+							properties: []
 							loc: SourceLocation esprima/es2015-object-pattern/empty-for-lex/input.js 1:9-1:11
 						}
-						init: undefined
 						loc: SourceLocation esprima/es2015-object-pattern/empty-for-lex/input.js 1:9-1:11
 					}
 				]
+				loc: SourceLocation esprima/es2015-object-pattern/empty-for-lex/input.js 1:5-1:11
 			}
+			right: JSNumericLiteral {
+				value: 0
+				loc: SourceLocation esprima/es2015-object-pattern/empty-for-lex/input.js 1:15-1:16
+			}
+			loc: SourceLocation esprima/es2015-object-pattern/empty-for-lex/input.js 1:0-1:18
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<esprima/es2015-object-pattern/empty-for-lex/input.js>
+	loc: SourceLocation esprima/es2015-object-pattern/empty-for-lex/input.js 1:0-2:0
 }
 ```
 

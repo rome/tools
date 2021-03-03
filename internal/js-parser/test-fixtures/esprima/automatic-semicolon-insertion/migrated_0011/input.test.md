@@ -8,63 +8,54 @@
 
 ```javascript
 JSRoot {
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation esprima/automatic-semicolon-insertion/migrated_0011/input.js 1:0-3:0
-	path: UIDPath<esprima/automatic-semicolon-insertion/migrated_0011/input.js>
-	comments: Array [
+	body: [
+		JSExpressionStatement {
+			expression: JSFunctionExpression {
+				body: JSBlockStatement {
+					body: [
+						JSReturnStatement {
+							trailingComments: ["0"]
+							loc: SourceLocation esprima/automatic-semicolon-insertion/migrated_0011/input.js 1:13-1:19
+						}
+						JSExpressionStatement {
+							leadingComments: ["0"]
+							expression: JSReferenceIdentifier {
+								name: "x"
+								loc: SourceLocation esprima/automatic-semicolon-insertion/migrated_0011/input.js 2:0-2:1 (x)
+							}
+							loc: SourceLocation esprima/automatic-semicolon-insertion/migrated_0011/input.js 2:0-2:2
+						}
+					]
+					directives: []
+					loc: SourceLocation esprima/automatic-semicolon-insertion/migrated_0011/input.js 1:11-2:4
+				}
+				head: JSFunctionHead {
+					async: false
+					generator: false
+					hasHoistedVars: false
+					params: []
+					loc: SourceLocation esprima/automatic-semicolon-insertion/migrated_0011/input.js 1:9-1:11
+				}
+				loc: SourceLocation esprima/automatic-semicolon-insertion/migrated_0011/input.js 1:1-2:4
+			}
+			loc: SourceLocation esprima/automatic-semicolon-insertion/migrated_0011/input.js 1:0-2:5
+		}
+	]
+	comments: [
 		CommentLine {
 			id: "0"
 			value: " Comment"
 			loc: SourceLocation esprima/automatic-semicolon-insertion/migrated_0011/input.js 1:20-1:30
 		}
 	]
-	body: Array [
-		JSExpressionStatement {
-			loc: SourceLocation esprima/automatic-semicolon-insertion/migrated_0011/input.js 1:0-2:5
-			expression: JSFunctionExpression {
-				id: undefined
-				loc: SourceLocation esprima/automatic-semicolon-insertion/migrated_0011/input.js 1:1-2:4
-				head: JSFunctionHead {
-					async: false
-					generator: false
-					hasHoistedVars: false
-					params: Array []
-					rest: undefined
-					returnType: undefined
-					thisType: undefined
-					typeParameters: undefined
-					loc: SourceLocation esprima/automatic-semicolon-insertion/migrated_0011/input.js 1:9-1:11
-				}
-				body: JSBlockStatement {
-					directives: Array []
-					loc: SourceLocation esprima/automatic-semicolon-insertion/migrated_0011/input.js 1:11-2:4
-					body: Array [
-						JSReturnStatement {
-							argument: undefined
-							loc: SourceLocation esprima/automatic-semicolon-insertion/migrated_0011/input.js 1:13-1:19
-							trailingComments: Array ["0"]
-						}
-						JSExpressionStatement {
-							leadingComments: Array ["0"]
-							loc: SourceLocation esprima/automatic-semicolon-insertion/migrated_0011/input.js 2:0-2:2
-							expression: JSReferenceIdentifier {
-								name: "x"
-								leadingComments: undefined
-								loc: SourceLocation esprima/automatic-semicolon-insertion/migrated_0011/input.js 2:0-2:1 (x)
-							}
-						}
-					]
-				}
-			}
-		}
-	]
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<esprima/automatic-semicolon-insertion/migrated_0011/input.js>
+	loc: SourceLocation esprima/automatic-semicolon-insertion/migrated_0011/input.js 1:0-3:0
 }
 ```
 

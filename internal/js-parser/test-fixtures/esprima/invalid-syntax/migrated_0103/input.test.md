@@ -8,60 +8,56 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: true
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation esprima/invalid-syntax/migrated_0103/input.js 1:0-2:0
-	path: UIDPath<esprima/invalid-syntax/migrated_0103/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Unexpected character <emphasis>/</emphasis>"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:10
-				path: UIDPath<esprima/invalid-syntax/migrated_0103/input.js>
-				start: Position 1:9
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation esprima/invalid-syntax/migrated_0103/input.js 1:0-1:12
 			expression: JSAssignmentExpression {
 				operator: "="
-				loc: SourceLocation esprima/invalid-syntax/migrated_0103/input.js 1:0-1:12
 				left: JSAssignmentIdentifier {
 					name: "p"
 					loc: SourceLocation esprima/invalid-syntax/migrated_0103/input.js 1:0-1:1 (p)
 				}
 				right: JSBinaryExpression {
 					operator: "/"
-					loc: SourceLocation esprima/invalid-syntax/migrated_0103/input.js 1:4-1:12
 					left: JSObjectExpression {
-						properties: Array []
+						properties: []
 						loc: SourceLocation esprima/invalid-syntax/migrated_0103/input.js 1:4-1:9
 					}
 					right: JSReferenceIdentifier {
 						name: "INVALID_PLACEHOLDER"
 						loc: SourceLocation esprima/invalid-syntax/migrated_0103/input.js 1:11-1:12
 					}
+					loc: SourceLocation esprima/invalid-syntax/migrated_0103/input.js 1:4-1:12
 				}
+				loc: SourceLocation esprima/invalid-syntax/migrated_0103/input.js 1:0-1:12
+			}
+			loc: SourceLocation esprima/invalid-syntax/migrated_0103/input.js 1:0-1:12
+		}
+	]
+	comments: []
+	corrupt: true
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "js"
+				message: [RAW_MARKUP {value: "Unexpected character <emphasis>"}, "/", RAW_MARKUP {value: "</emphasis>"}]
+			}
+			location: {
+				language: "js"
+				path: UIDPath<esprima/invalid-syntax/migrated_0103/input.js>
+				end: Position 1:10
+				start: Position 1:9
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<esprima/invalid-syntax/migrated_0103/input.js>
+	loc: SourceLocation esprima/invalid-syntax/migrated_0103/input.js 1:0-2:0
 }
 ```
 
@@ -74,7 +70,7 @@ JSRoot {
   ✖ Unexpected character /
 
     p = { "q"/ }
-             ^
+             <error><emphasis>^</emphasis></error>
 
 
 ```

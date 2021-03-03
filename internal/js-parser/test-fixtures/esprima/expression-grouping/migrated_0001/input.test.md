@@ -8,45 +8,40 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation esprima/expression-grouping/migrated_0001/input.js 1:0-2:0
-	path: UIDPath<esprima/expression-grouping/migrated_0001/input.js>
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation esprima/expression-grouping/migrated_0001/input.js 1:0-1:12
 			expression: JSBinaryExpression {
 				operator: "<<"
-				loc: SourceLocation esprima/expression-grouping/migrated_0001/input.js 1:0-1:12
-				right: JSNumericLiteral {
-					value: 6
-					format: undefined
-					loc: SourceLocation esprima/expression-grouping/migrated_0001/input.js 1:10-1:11
-				}
 				left: JSBinaryExpression {
 					operator: "+"
-					loc: SourceLocation esprima/expression-grouping/migrated_0001/input.js 1:0-1:5
 					left: JSNumericLiteral {
 						value: 4
-						format: undefined
 						loc: SourceLocation esprima/expression-grouping/migrated_0001/input.js 1:0-1:1
 					}
 					right: JSNumericLiteral {
 						value: 5
-						format: undefined
 						loc: SourceLocation esprima/expression-grouping/migrated_0001/input.js 1:4-1:5
 					}
+					loc: SourceLocation esprima/expression-grouping/migrated_0001/input.js 1:0-1:5
 				}
+				right: JSNumericLiteral {
+					value: 6
+					loc: SourceLocation esprima/expression-grouping/migrated_0001/input.js 1:10-1:11
+				}
+				loc: SourceLocation esprima/expression-grouping/migrated_0001/input.js 1:0-1:12
 			}
+			loc: SourceLocation esprima/expression-grouping/migrated_0001/input.js 1:0-1:12
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<esprima/expression-grouping/migrated_0001/input.js>
+	loc: SourceLocation esprima/expression-grouping/migrated_0001/input.js 1:0-2:0
 }
 ```
 

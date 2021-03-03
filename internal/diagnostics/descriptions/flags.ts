@@ -57,7 +57,7 @@ export const flags = createDiagnosticsCategory({
 			suggestedCommand?: string;
 		},
 	) => {
-		const advice: DiagnosticAdvice = [];
+		const advice: DiagnosticAdvice[] = [];
 
 		if (suggestedName !== undefined) {
 			const description =

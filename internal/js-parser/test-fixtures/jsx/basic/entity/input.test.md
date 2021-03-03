@@ -8,38 +8,35 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	loc: SourceLocation jsx/basic/entity/input.jsx 1:0-1:16
-	path: UIDPath<jsx/basic/entity/input.jsx>
-	syntax: Array ["jsx"]
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation jsx/basic/entity/input.jsx 1:0-1:16
 			expression: JSXElement {
-				name: JSXReferenceIdentifier {
-					name: "A"
-					loc: SourceLocation jsx/basic/entity/input.jsx 1:1-1:2
-				}
-				attributes: Array []
-				selfClosing: false
-				typeArguments: undefined
-				loc: SourceLocation jsx/basic/entity/input.jsx 1:0-1:16
-				children: Array [
+				attributes: []
+				children: [
 					JSXText {
 						value: "\u{1f4a9}"
 						loc: SourceLocation jsx/basic/entity/input.jsx 1:3-1:12
 					}
 				]
+				selfClosing: false
+				name: JSXReferenceIdentifier {
+					name: "A"
+					loc: SourceLocation jsx/basic/entity/input.jsx 1:1-1:2
+				}
+				loc: SourceLocation jsx/basic/entity/input.jsx 1:0-1:16
 			}
+			loc: SourceLocation jsx/basic/entity/input.jsx 1:0-1:16
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: ["jsx"]
+	path: UIDPath<jsx/basic/entity/input.jsx>
+	loc: SourceLocation jsx/basic/entity/input.jsx 1:0-1:16
 }
 ```
 

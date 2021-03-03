@@ -13,24 +13,36 @@ JSRoot {
 			expression: JSSequenceExpression {
 				expressions: [
 					JSAssignmentExpression {
+						operator: "="
 						left: JSAssignmentObjectPattern {
 							properties: [
 								JSAssignmentObjectPatternProperty {
 									key: JSStaticPropertyKey {
-										value: JSIdentifier {name: "a", loc: SourceLocation core/object/member-expression-after-property-initializer-1/input.js 1:2-1:3 (a)}
+										value: JSIdentifier {
+											name: "a"
+											loc: SourceLocation core/object/member-expression-after-property-initializer-1/input.js 1:2-1:3 (a)
+										}
 										loc: SourceLocation core/object/member-expression-after-property-initializer-1/input.js 1:2-1:3
 									}
-									value: JSAssignmentIdentifier {name: "a", loc: SourceLocation core/object/member-expression-after-property-initializer-1/input.js 1:2-1:3 (a)}
+									value: JSAssignmentIdentifier {
+										name: "a"
+										loc: SourceLocation core/object/member-expression-after-property-initializer-1/input.js 1:2-1:3 (a)
+									}
 									loc: SourceLocation core/object/member-expression-after-property-initializer-1/input.js 1:2-1:3
 								}
 							]
 							loc: SourceLocation core/object/member-expression-after-property-initializer-1/input.js 1:1-1:3
 						}
-						operator: "="
-						right: JSNumericLiteral {value: 42, loc: SourceLocation core/object/member-expression-after-property-initializer-1/input.js 1:6-1:8}
+						right: JSNumericLiteral {
+							value: 42
+							loc: SourceLocation core/object/member-expression-after-property-initializer-1/input.js 1:6-1:8
+						}
 						loc: SourceLocation core/object/member-expression-after-property-initializer-1/input.js 1:1-1:8
 					}
-					JSReferenceIdentifier {name: "b", loc: SourceLocation core/object/member-expression-after-property-initializer-1/input.js 1:10-1:11 (b)}
+					JSReferenceIdentifier {
+						name: "b"
+						loc: SourceLocation core/object/member-expression-after-property-initializer-1/input.js 1:10-1:11 (b)
+					}
 				]
 				loc: SourceLocation core/object/member-expression-after-property-initializer-1/input.js 1:0-1:19
 			}
@@ -38,12 +50,15 @@ JSRoot {
 		}
 		JSExpressionStatement {
 			expression: JSAssignmentExpression {
+				operator: "="
 				left: JSAssignmentIdentifier {
 					name: "INVALID_PLACEHOLDER"
 					loc: SourceLocation core/object/member-expression-after-property-initializer-1/input.js 1:19-1:20
 				}
-				operator: "="
-				right: JSObjectExpression {properties: [], loc: SourceLocation core/object/member-expression-after-property-initializer-1/input.js 1:23-1:25}
+				right: JSObjectExpression {
+					properties: []
+					loc: SourceLocation core/object/member-expression-after-property-initializer-1/input.js 1:23-1:25
+				}
 				loc: SourceLocation core/object/member-expression-after-property-initializer-1/input.js 1:19-1:25
 			}
 			loc: SourceLocation core/object/member-expression-after-property-initializer-1/input.js 1:19-1:25
@@ -60,11 +75,12 @@ JSRoot {
 	corrupt: true
 	diagnostics: [
 		{
+			origins: [{category: "parse"}]
 			description: {
-				advice: [log {category: "info", text: RAW_MARKUP {value: "Expected character <emphasis>,</emphasis>"}}]
+				advice: [log {category: "info", text: [RAW_MARKUP {value: "Expected character <emphasis>"}, ",", RAW_MARKUP {value: "</emphasis>"}]}]
 				category: ["parse"]
 				categoryValue: "js"
-				message: RAW_MARKUP {value: "Unexpected character <emphasis>=</emphasis>"}
+				message: [RAW_MARKUP {value: "Unexpected character <emphasis>"}, "=", RAW_MARKUP {value: "</emphasis>"}]
 			}
 			location: {
 				language: "js"
@@ -72,14 +88,13 @@ JSRoot {
 				end: Position 1:5
 				start: Position 1:4
 			}
-			origins: [{category: "parse"}]
 		}
 	]
 	directives: []
 	hasHoistedVars: false
-	path: UIDPath<core/object/member-expression-after-property-initializer-1/input.js>
 	sourceType: "script"
 	syntax: []
+	path: UIDPath<core/object/member-expression-after-property-initializer-1/input.js>
 	loc: SourceLocation core/object/member-expression-after-property-initializer-1/input.js 1:0-1:26
 }
 ```
@@ -93,7 +108,7 @@ JSRoot {
   ✖ Unexpected character =
 
     ({a = 42, b: test.d} = {})
-        ^
+        <error><emphasis>^</emphasis></error>
 
   ℹ Expected character ,
 

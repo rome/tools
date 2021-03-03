@@ -8,31 +8,14 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation experimental/class-private-names-duplicated/instance-field-instance-field/input.js 1:0-4:1
-	path: UIDPath<experimental/class-private-names-duplicated/instance-field-instance-field/input.js>
-	body: Array [
+	body: [
 		JSClassDeclaration {
 			id: JSBindingIdentifier {
 				name: "A"
 				loc: SourceLocation experimental/class-private-names-duplicated/instance-field-instance-field/input.js 1:6-1:7 (A)
 			}
-			loc: SourceLocation experimental/class-private-names-duplicated/instance-field-instance-field/input.js 1:0-4:1
 			meta: JSClassHead {
-				implements: undefined
-				superClass: undefined
-				superTypeParameters: undefined
-				typeParameters: undefined
-				loc: SourceLocation experimental/class-private-names-duplicated/instance-field-instance-field/input.js 1:0-4:1
-				body: Array [
+				body: [
 					JSClassPrivateProperty {
 						key: JSPrivateName {
 							id: JSIdentifier {
@@ -43,21 +26,17 @@ JSRoot {
 						}
 						value: JSNumericLiteral {
 							value: 0
-							format: undefined
 							loc: SourceLocation experimental/class-private-names-duplicated/instance-field-instance-field/input.js 2:7-2:8
 						}
-						typeAnnotation: undefined
-						loc: SourceLocation experimental/class-private-names-duplicated/instance-field-instance-field/input.js 2:2-2:9
 						meta: JSClassPropertyMeta {
 							abstract: false
-							accessibility: undefined
 							optional: false
 							readonly: false
 							static: false
-							typeAnnotation: undefined
 							loc: SourceLocation experimental/class-private-names-duplicated/instance-field-instance-field/input.js 2:2-2:4
 							start: Position 2:2
 						}
+						loc: SourceLocation experimental/class-private-names-duplicated/instance-field-instance-field/input.js 2:2-2:9
 					}
 					JSClassPrivateProperty {
 						key: JSPrivateName {
@@ -69,26 +48,33 @@ JSRoot {
 						}
 						value: JSNumericLiteral {
 							value: 0
-							format: undefined
 							loc: SourceLocation experimental/class-private-names-duplicated/instance-field-instance-field/input.js 3:7-3:8
 						}
-						typeAnnotation: undefined
-						loc: SourceLocation experimental/class-private-names-duplicated/instance-field-instance-field/input.js 3:2-3:9
 						meta: JSClassPropertyMeta {
 							abstract: false
-							accessibility: undefined
 							optional: false
 							readonly: false
 							static: false
-							typeAnnotation: undefined
 							loc: SourceLocation experimental/class-private-names-duplicated/instance-field-instance-field/input.js 3:2-3:4
 							start: Position 3:2
 						}
+						loc: SourceLocation experimental/class-private-names-duplicated/instance-field-instance-field/input.js 3:2-3:9
 					}
 				]
+				loc: SourceLocation experimental/class-private-names-duplicated/instance-field-instance-field/input.js 1:0-4:1
 			}
+			loc: SourceLocation experimental/class-private-names-duplicated/instance-field-instance-field/input.js 1:0-4:1
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<experimental/class-private-names-duplicated/instance-field-instance-field/input.js>
+	loc: SourceLocation experimental/class-private-names-duplicated/instance-field-instance-field/input.js 1:0-4:1
 }
 ```
 

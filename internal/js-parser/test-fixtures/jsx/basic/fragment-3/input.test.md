@@ -8,71 +8,67 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	loc: SourceLocation jsx/basic/fragment-3/input.jsx 1:0-7:0
-	path: UIDPath<jsx/basic/fragment-3/input.jsx>
-	syntax: Array ["jsx"]
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation jsx/basic/fragment-3/input.jsx 1:0-6:3
 			expression: JSXFragment {
-				loc: SourceLocation jsx/basic/fragment-3/input.jsx 1:0-6:3
-				children: Array [
+				children: [
 					JSXText {
 						value: "\n  "
 						loc: SourceLocation jsx/basic/fragment-3/input.jsx 1:3-2:2
 					}
 					JSXElement {
-						name: JSXIdentifier {
-							name: "span"
-							loc: SourceLocation jsx/basic/fragment-3/input.jsx 2:3-2:7
-						}
-						attributes: Array []
-						selfClosing: false
-						typeArguments: undefined
-						loc: SourceLocation jsx/basic/fragment-3/input.jsx 2:2-4:9
-						children: Array [
+						attributes: []
+						children: [
 							JSXText {
 								value: "\n    hi\n  "
 								loc: SourceLocation jsx/basic/fragment-3/input.jsx 2:8-4:2
 							}
 						]
+						selfClosing: false
+						name: JSXIdentifier {
+							name: "span"
+							loc: SourceLocation jsx/basic/fragment-3/input.jsx 2:3-2:7
+						}
+						loc: SourceLocation jsx/basic/fragment-3/input.jsx 2:2-4:9
 					}
 					JSXText {
 						value: "\n  "
 						loc: SourceLocation jsx/basic/fragment-3/input.jsx 4:9-5:2
 					}
 					JSXElement {
-						name: JSXIdentifier {
-							name: "div"
-							loc: SourceLocation jsx/basic/fragment-3/input.jsx 5:3-5:6
-						}
-						attributes: Array []
-						selfClosing: false
-						typeArguments: undefined
-						loc: SourceLocation jsx/basic/fragment-3/input.jsx 5:2-5:16
-						children: Array [
+						attributes: []
+						children: [
 							JSXText {
 								value: "bye"
 								loc: SourceLocation jsx/basic/fragment-3/input.jsx 5:7-5:10
 							}
 						]
+						selfClosing: false
+						name: JSXIdentifier {
+							name: "div"
+							loc: SourceLocation jsx/basic/fragment-3/input.jsx 5:3-5:6
+						}
+						loc: SourceLocation jsx/basic/fragment-3/input.jsx 5:2-5:16
 					}
 					JSXText {
 						value: "\n"
 						loc: SourceLocation jsx/basic/fragment-3/input.jsx 5:16-6:0
 					}
 				]
+				loc: SourceLocation jsx/basic/fragment-3/input.jsx 1:0-6:3
 			}
+			loc: SourceLocation jsx/basic/fragment-3/input.jsx 1:0-6:3
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: ["jsx"]
+	path: UIDPath<jsx/basic/fragment-3/input.jsx>
+	loc: SourceLocation jsx/basic/fragment-3/input.jsx 1:0-7:0
 }
 ```
 

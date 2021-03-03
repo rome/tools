@@ -8,36 +8,33 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2015/let/let-with-linebreak/input.js 1:0-3:0
-	path: UIDPath<es2015/let/let-with-linebreak/input.js>
-	body: Array [
+	body: [
 		JSVariableDeclarationStatement {
-			loc: SourceLocation es2015/let/let-with-linebreak/input.js 1:0-2:6
 			declaration: JSVariableDeclaration {
 				kind: "let"
-				loc: SourceLocation es2015/let/let-with-linebreak/input.js 1:0-2:6
-				declarations: Array [
+				declarations: [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "a"
 							loc: SourceLocation es2015/let/let-with-linebreak/input.js 2:4-2:5 (a)
 						}
-						init: undefined
 						loc: SourceLocation es2015/let/let-with-linebreak/input.js 2:4-2:5
 					}
 				]
+				loc: SourceLocation es2015/let/let-with-linebreak/input.js 1:0-2:6
 			}
+			loc: SourceLocation es2015/let/let-with-linebreak/input.js 1:0-2:6
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2015/let/let-with-linebreak/input.js>
+	loc: SourceLocation es2015/let/let-with-linebreak/input.js 1:0-3:0
 }
 ```
 

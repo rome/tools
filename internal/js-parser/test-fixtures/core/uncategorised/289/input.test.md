@@ -10,14 +10,25 @@
 JSRoot {
 	body: [
 		JSFunctionDeclaration {
-			id: JSBindingIdentifier {name: "eval", loc: SourceLocation core/uncategorised/289/input.js 1:9-1:13 (eval)}
+			id: JSBindingIdentifier {
+				name: "eval"
+				loc: SourceLocation core/uncategorised/289/input.js 1:9-1:13 (eval)
+			}
 			body: JSBlockStatement {
 				body: [
 					JSFunctionDeclaration {
-						id: JSBindingIdentifier {name: "inner", loc: SourceLocation core/uncategorised/289/input.js 1:27-1:32 (inner)}
+						id: JSBindingIdentifier {
+							name: "inner"
+							loc: SourceLocation core/uncategorised/289/input.js 1:27-1:32 (inner)
+						}
 						body: JSBlockStatement {
 							body: []
-							directives: [JSDirective {value: "use strict", loc: SourceLocation core/uncategorised/289/input.js 1:37-1:49}]
+							directives: [
+								JSDirective {
+									value: "use strict"
+									loc: SourceLocation core/uncategorised/289/input.js 1:37-1:49
+								}
+							]
 							loc: SourceLocation core/uncategorised/289/input.js 1:35-1:51
 						}
 						head: JSFunctionHead {
@@ -48,9 +59,9 @@ JSRoot {
 	diagnostics: []
 	directives: []
 	hasHoistedVars: false
-	path: UIDPath<core/uncategorised/289/input.js>
 	sourceType: "script"
 	syntax: []
+	path: UIDPath<core/uncategorised/289/input.js>
 	loc: SourceLocation core/uncategorised/289/input.js 1:0-1:53
 }
 ```

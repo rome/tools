@@ -8,58 +8,53 @@
 
 ```javascript
 JSRoot {
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation core/uncategorised/65/input.js 1:0-1:50
-	path: UIDPath<core/uncategorised/65/input.js>
-	comments: Array [
+	body: [
+		JSSwitchStatement {
+			cases: [
+				JSSwitchCase {
+					consequent: [
+						JSExpressionStatement {
+							leadingComments: ["0"]
+							expression: JSCallExpression {
+								arguments: []
+								callee: JSReferenceIdentifier {
+									name: "bingo"
+									loc: SourceLocation core/uncategorised/65/input.js 1:41-1:46 (bingo)
+								}
+								loc: SourceLocation core/uncategorised/65/input.js 1:41-1:48
+							}
+							loc: SourceLocation core/uncategorised/65/input.js 1:41-1:48
+						}
+					]
+					test: JSNumericLiteral {
+						value: 42
+						loc: SourceLocation core/uncategorised/65/input.js 1:23-1:25
+					}
+					loc: SourceLocation core/uncategorised/65/input.js 1:18-1:48
+				}
+			]
+			discriminant: JSReferenceIdentifier {
+				name: "answer"
+				loc: SourceLocation core/uncategorised/65/input.js 1:8-1:14 (answer)
+			}
+			loc: SourceLocation core/uncategorised/65/input.js 1:0-1:50
+		}
+	]
+	comments: [
 		CommentBlock {
 			id: "0"
 			value: " perfect "
 			loc: SourceLocation core/uncategorised/65/input.js 1:27-1:40
 		}
 	]
-	body: Array [
-		JSSwitchStatement {
-			loc: SourceLocation core/uncategorised/65/input.js 1:0-1:50
-			discriminant: JSReferenceIdentifier {
-				name: "answer"
-				loc: SourceLocation core/uncategorised/65/input.js 1:8-1:14 (answer)
-			}
-			cases: Array [
-				JSSwitchCase {
-					loc: SourceLocation core/uncategorised/65/input.js 1:18-1:48
-					test: JSNumericLiteral {
-						value: 42
-						format: undefined
-						loc: SourceLocation core/uncategorised/65/input.js 1:23-1:25
-					}
-					consequent: Array [
-						JSExpressionStatement {
-							leadingComments: Array ["0"]
-							loc: SourceLocation core/uncategorised/65/input.js 1:41-1:48
-							expression: JSCallExpression {
-								arguments: Array []
-								leadingComments: undefined
-								loc: SourceLocation core/uncategorised/65/input.js 1:41-1:48
-								callee: JSReferenceIdentifier {
-									name: "bingo"
-									leadingComments: undefined
-									loc: SourceLocation core/uncategorised/65/input.js 1:41-1:46 (bingo)
-								}
-							}
-						}
-					]
-				}
-			]
-		}
-	]
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<core/uncategorised/65/input.js>
+	loc: SourceLocation core/uncategorised/65/input.js 1:0-1:50
 }
 ```
 

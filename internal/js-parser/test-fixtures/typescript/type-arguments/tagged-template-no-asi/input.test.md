@@ -8,35 +8,14 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	loc: SourceLocation typescript/type-arguments/tagged-template-no-asi/input.ts 1:0-3:0
-	path: UIDPath<typescript/type-arguments/tagged-template-no-asi/input.ts>
-	syntax: Array ["ts"]
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation typescript/type-arguments/tagged-template-no-asi/input.ts 1:0-2:2
 			expression: JSNewExpression {
-				arguments: Array []
-				optional: undefined
-				typeArguments: undefined
-				loc: SourceLocation typescript/type-arguments/tagged-template-no-asi/input.ts 1:0-2:2
+				arguments: []
 				callee: JSTaggedTemplateExpression {
-					loc: SourceLocation typescript/type-arguments/tagged-template-no-asi/input.ts 1:4-2:2
-					tag: JSReferenceIdentifier {
-						name: "C"
-						loc: SourceLocation typescript/type-arguments/tagged-template-no-asi/input.ts 1:4-1:5 (C)
-					}
 					quasi: JSTemplateLiteral {
-						expressions: Array []
-						loc: SourceLocation typescript/type-arguments/tagged-template-no-asi/input.ts 2:0-2:2
-						quasis: Array [
+						expressions: []
+						quasis: [
 							JSTemplateElement {
 								cooked: ""
 								raw: ""
@@ -44,24 +23,40 @@ JSRoot {
 								loc: SourceLocation typescript/type-arguments/tagged-template-no-asi/input.ts 2:1-2:1
 							}
 						]
+						loc: SourceLocation typescript/type-arguments/tagged-template-no-asi/input.ts 2:0-2:2
+					}
+					tag: JSReferenceIdentifier {
+						name: "C"
+						loc: SourceLocation typescript/type-arguments/tagged-template-no-asi/input.ts 1:4-1:5 (C)
 					}
 					typeArguments: TSTypeParameterInstantiation {
-						loc: SourceLocation typescript/type-arguments/tagged-template-no-asi/input.ts 1:5-1:8
-						params: Array [
+						params: [
 							TSTypeReference {
-								typeParameters: undefined
-								loc: SourceLocation typescript/type-arguments/tagged-template-no-asi/input.ts 1:6-1:7
 								typeName: JSReferenceIdentifier {
 									name: "T"
 									loc: SourceLocation typescript/type-arguments/tagged-template-no-asi/input.ts 1:6-1:7 (T)
 								}
+								loc: SourceLocation typescript/type-arguments/tagged-template-no-asi/input.ts 1:6-1:7
 							}
 						]
+						loc: SourceLocation typescript/type-arguments/tagged-template-no-asi/input.ts 1:5-1:8
 					}
+					loc: SourceLocation typescript/type-arguments/tagged-template-no-asi/input.ts 1:4-2:2
 				}
+				loc: SourceLocation typescript/type-arguments/tagged-template-no-asi/input.ts 1:0-2:2
 			}
+			loc: SourceLocation typescript/type-arguments/tagged-template-no-asi/input.ts 1:0-2:2
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: ["ts"]
+	path: UIDPath<typescript/type-arguments/tagged-template-no-asi/input.ts>
+	loc: SourceLocation typescript/type-arguments/tagged-template-no-asi/input.ts 1:0-3:0
 }
 ```
 

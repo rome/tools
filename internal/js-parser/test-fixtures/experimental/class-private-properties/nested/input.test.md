@@ -8,31 +8,14 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation experimental/class-private-properties/nested/input.js 1:0-40:0
-	path: UIDPath<experimental/class-private-properties/nested/input.js>
-	body: Array [
+	body: [
 		JSClassDeclaration {
 			id: JSBindingIdentifier {
 				name: "Point"
 				loc: SourceLocation experimental/class-private-properties/nested/input.js 1:6-1:11 (Point)
 			}
-			loc: SourceLocation experimental/class-private-properties/nested/input.js 1:0-39:1
 			meta: JSClassHead {
-				implements: undefined
-				superClass: undefined
-				superTypeParameters: undefined
-				typeParameters: undefined
-				loc: SourceLocation experimental/class-private-properties/nested/input.js 1:0-39:1
-				body: Array [
+				body: [
 					JSClassPrivateProperty {
 						key: JSPrivateName {
 							id: JSIdentifier {
@@ -43,21 +26,17 @@ JSRoot {
 						}
 						value: JSNumericLiteral {
 							value: 1
-							format: undefined
 							loc: SourceLocation experimental/class-private-properties/nested/input.js 2:7-2:8
 						}
-						typeAnnotation: undefined
-						loc: SourceLocation experimental/class-private-properties/nested/input.js 2:2-2:9
 						meta: JSClassPropertyMeta {
 							abstract: false
-							accessibility: undefined
 							optional: false
 							readonly: false
 							static: false
-							typeAnnotation: undefined
 							loc: SourceLocation experimental/class-private-properties/nested/input.js 2:2-2:4
 							start: Position 2:2
 						}
+						loc: SourceLocation experimental/class-private-properties/nested/input.js 2:2-2:9
 					}
 					JSClassPrivateProperty {
 						key: JSPrivateName {
@@ -69,21 +48,17 @@ JSRoot {
 						}
 						value: JSNumericLiteral {
 							value: 2
-							format: undefined
 							loc: SourceLocation experimental/class-private-properties/nested/input.js 3:7-3:8
 						}
-						typeAnnotation: undefined
-						loc: SourceLocation experimental/class-private-properties/nested/input.js 3:2-3:9
 						meta: JSClassPropertyMeta {
 							abstract: false
-							accessibility: undefined
 							optional: false
 							readonly: false
 							static: false
-							typeAnnotation: undefined
 							loc: SourceLocation experimental/class-private-properties/nested/input.js 3:2-3:4
 							start: Position 3:2
 						}
+						loc: SourceLocation experimental/class-private-properties/nested/input.js 3:2-3:9
 					}
 					JSClassMethod {
 						kind: "constructor"
@@ -94,84 +69,15 @@ JSRoot {
 							}
 							loc: SourceLocation experimental/class-private-properties/nested/input.js 5:2-5:13
 						}
-						loc: SourceLocation experimental/class-private-properties/nested/input.js 5:2-28:3
-						meta: JSClassPropertyMeta {
-							abstract: false
-							accessibility: undefined
-							optional: false
-							readonly: false
-							static: false
-							typeAnnotation: undefined
-							loc: SourceLocation experimental/class-private-properties/nested/input.js 5:2-5:13
-							start: Position 5:2
-						}
-						head: JSFunctionHead {
-							async: false
-							generator: false
-							hasHoistedVars: false
-							rest: undefined
-							returnType: undefined
-							thisType: undefined
-							typeParameters: undefined
-							loc: SourceLocation experimental/class-private-properties/nested/input.js 5:13-5:27
-							params: Array [
-								JSBindingAssignmentPattern {
-									loc: SourceLocation experimental/class-private-properties/nested/input.js 5:14-5:19
-									right: JSNumericLiteral {
-										value: 0
-										format: undefined
-										loc: SourceLocation experimental/class-private-properties/nested/input.js 5:18-5:19
-									}
-									left: JSBindingIdentifier {
-										name: "x"
-										loc: SourceLocation experimental/class-private-properties/nested/input.js 5:14-5:15 (x)
-										meta: JSPatternMeta {
-											optional: undefined
-											typeAnnotation: undefined
-											loc: SourceLocation experimental/class-private-properties/nested/input.js 5:14-5:15
-										}
-									}
-								}
-								JSBindingAssignmentPattern {
-									loc: SourceLocation experimental/class-private-properties/nested/input.js 5:21-5:26
-									right: JSNumericLiteral {
-										value: 0
-										format: undefined
-										loc: SourceLocation experimental/class-private-properties/nested/input.js 5:25-5:26
-									}
-									left: JSBindingIdentifier {
-										name: "y"
-										loc: SourceLocation experimental/class-private-properties/nested/input.js 5:21-5:22 (y)
-										meta: JSPatternMeta {
-											optional: undefined
-											typeAnnotation: undefined
-											loc: SourceLocation experimental/class-private-properties/nested/input.js 5:21-5:22
-										}
-									}
-								}
-							]
-						}
 						body: JSBlockStatement {
-							directives: Array []
-							loc: SourceLocation experimental/class-private-properties/nested/input.js 5:28-28:3
-							body: Array [
+							body: [
 								JSExpressionStatement {
-									loc: SourceLocation experimental/class-private-properties/nested/input.js 6:4-6:17
 									expression: JSAssignmentExpression {
 										operator: "="
-										loc: SourceLocation experimental/class-private-properties/nested/input.js 6:4-6:16
-										right: JSUnaryExpression {
-											operator: "+"
-											prefix: true
-											loc: SourceLocation experimental/class-private-properties/nested/input.js 6:14-6:16
-											argument: JSReferenceIdentifier {
-												name: "x"
-												loc: SourceLocation experimental/class-private-properties/nested/input.js 6:15-6:16 (x)
-											}
-										}
 										left: JSMemberExpression {
-											loc: SourceLocation experimental/class-private-properties/nested/input.js 6:4-6:11
-											object: JSThisExpression {loc: SourceLocation experimental/class-private-properties/nested/input.js 6:4-6:8}
+											object: JSThisExpression {
+												loc: SourceLocation experimental/class-private-properties/nested/input.js 6:4-6:8
+											}
 											property: JSStaticMemberProperty {
 												value: JSPrivateName {
 													id: JSIdentifier {
@@ -182,26 +88,28 @@ JSRoot {
 												}
 												loc: SourceLocation experimental/class-private-properties/nested/input.js 6:9-6:11
 											}
+											loc: SourceLocation experimental/class-private-properties/nested/input.js 6:4-6:11
 										}
-									}
-								}
-								JSExpressionStatement {
-									loc: SourceLocation experimental/class-private-properties/nested/input.js 7:4-7:17
-									expression: JSAssignmentExpression {
-										operator: "="
-										loc: SourceLocation experimental/class-private-properties/nested/input.js 7:4-7:16
 										right: JSUnaryExpression {
 											operator: "+"
 											prefix: true
-											loc: SourceLocation experimental/class-private-properties/nested/input.js 7:14-7:16
 											argument: JSReferenceIdentifier {
-												name: "y"
-												loc: SourceLocation experimental/class-private-properties/nested/input.js 7:15-7:16 (y)
+												name: "x"
+												loc: SourceLocation experimental/class-private-properties/nested/input.js 6:15-6:16 (x)
 											}
+											loc: SourceLocation experimental/class-private-properties/nested/input.js 6:14-6:16
 										}
+										loc: SourceLocation experimental/class-private-properties/nested/input.js 6:4-6:16
+									}
+									loc: SourceLocation experimental/class-private-properties/nested/input.js 6:4-6:17
+								}
+								JSExpressionStatement {
+									expression: JSAssignmentExpression {
+										operator: "="
 										left: JSMemberExpression {
-											loc: SourceLocation experimental/class-private-properties/nested/input.js 7:4-7:11
-											object: JSThisExpression {loc: SourceLocation experimental/class-private-properties/nested/input.js 7:4-7:8}
+											object: JSThisExpression {
+												loc: SourceLocation experimental/class-private-properties/nested/input.js 7:4-7:8
+											}
 											property: JSStaticMemberProperty {
 												value: JSPrivateName {
 													id: JSIdentifier {
@@ -212,17 +120,28 @@ JSRoot {
 												}
 												loc: SourceLocation experimental/class-private-properties/nested/input.js 7:9-7:11
 											}
+											loc: SourceLocation experimental/class-private-properties/nested/input.js 7:4-7:11
 										}
+										right: JSUnaryExpression {
+											operator: "+"
+											prefix: true
+											argument: JSReferenceIdentifier {
+												name: "y"
+												loc: SourceLocation experimental/class-private-properties/nested/input.js 7:15-7:16 (y)
+											}
+											loc: SourceLocation experimental/class-private-properties/nested/input.js 7:14-7:16
+										}
+										loc: SourceLocation experimental/class-private-properties/nested/input.js 7:4-7:16
 									}
+									loc: SourceLocation experimental/class-private-properties/nested/input.js 7:4-7:17
 								}
 								JSExpressionStatement {
-									loc: SourceLocation experimental/class-private-properties/nested/input.js 9:4-27:6
 									expression: JSAssignmentExpression {
 										operator: "="
-										loc: SourceLocation experimental/class-private-properties/nested/input.js 9:4-27:5
 										left: JSMemberExpression {
-											loc: SourceLocation experimental/class-private-properties/nested/input.js 9:4-9:12
-											object: JSThisExpression {loc: SourceLocation experimental/class-private-properties/nested/input.js 9:4-9:8}
+											object: JSThisExpression {
+												loc: SourceLocation experimental/class-private-properties/nested/input.js 9:4-9:8
+											}
 											property: JSStaticMemberProperty {
 												value: JSIdentifier {
 													name: "foo"
@@ -230,17 +149,11 @@ JSRoot {
 												}
 												loc: SourceLocation experimental/class-private-properties/nested/input.js 9:9-9:12 (foo)
 											}
+											loc: SourceLocation experimental/class-private-properties/nested/input.js 9:4-9:12
 										}
 										right: JSClassExpression {
-											id: undefined
-											loc: SourceLocation experimental/class-private-properties/nested/input.js 9:15-27:5
 											meta: JSClassHead {
-												implements: undefined
-												superClass: undefined
-												superTypeParameters: undefined
-												typeParameters: undefined
-												loc: SourceLocation experimental/class-private-properties/nested/input.js 9:15-27:5
-												body: Array [
+												body: [
 													JSClassPrivateProperty {
 														key: JSPrivateName {
 															id: JSIdentifier {
@@ -251,21 +164,17 @@ JSRoot {
 														}
 														value: JSNumericLiteral {
 															value: 1
-															format: undefined
 															loc: SourceLocation experimental/class-private-properties/nested/input.js 10:11-10:12
 														}
-														typeAnnotation: undefined
-														loc: SourceLocation experimental/class-private-properties/nested/input.js 10:6-10:13
 														meta: JSClassPropertyMeta {
 															abstract: false
-															accessibility: undefined
 															optional: false
 															readonly: false
 															static: false
-															typeAnnotation: undefined
 															loc: SourceLocation experimental/class-private-properties/nested/input.js 10:6-10:8
 															start: Position 10:6
 														}
+														loc: SourceLocation experimental/class-private-properties/nested/input.js 10:6-10:13
 													}
 													JSClassPrivateProperty {
 														key: JSPrivateName {
@@ -277,21 +186,17 @@ JSRoot {
 														}
 														value: JSNumericLiteral {
 															value: 2
-															format: undefined
 															loc: SourceLocation experimental/class-private-properties/nested/input.js 11:11-11:12
 														}
-														typeAnnotation: undefined
-														loc: SourceLocation experimental/class-private-properties/nested/input.js 11:6-11:13
 														meta: JSClassPropertyMeta {
 															abstract: false
-															accessibility: undefined
 															optional: false
 															readonly: false
 															static: false
-															typeAnnotation: undefined
 															loc: SourceLocation experimental/class-private-properties/nested/input.js 11:6-11:8
 															start: Position 11:6
 														}
+														loc: SourceLocation experimental/class-private-properties/nested/input.js 11:6-11:13
 													}
 													JSClassMethod {
 														kind: "constructor"
@@ -302,84 +207,15 @@ JSRoot {
 															}
 															loc: SourceLocation experimental/class-private-properties/nested/input.js 13:6-13:17
 														}
-														loc: SourceLocation experimental/class-private-properties/nested/input.js 13:6-16:7
-														meta: JSClassPropertyMeta {
-															abstract: false
-															accessibility: undefined
-															optional: false
-															readonly: false
-															static: false
-															typeAnnotation: undefined
-															loc: SourceLocation experimental/class-private-properties/nested/input.js 13:6-13:17
-															start: Position 13:6
-														}
-														head: JSFunctionHead {
-															async: false
-															generator: false
-															hasHoistedVars: false
-															rest: undefined
-															returnType: undefined
-															thisType: undefined
-															typeParameters: undefined
-															loc: SourceLocation experimental/class-private-properties/nested/input.js 13:17-13:31
-															params: Array [
-																JSBindingAssignmentPattern {
-																	loc: SourceLocation experimental/class-private-properties/nested/input.js 13:18-13:23
-																	right: JSNumericLiteral {
-																		value: 0
-																		format: undefined
-																		loc: SourceLocation experimental/class-private-properties/nested/input.js 13:22-13:23
-																	}
-																	left: JSBindingIdentifier {
-																		name: "x"
-																		loc: SourceLocation experimental/class-private-properties/nested/input.js 13:18-13:19 (x)
-																		meta: JSPatternMeta {
-																			optional: undefined
-																			typeAnnotation: undefined
-																			loc: SourceLocation experimental/class-private-properties/nested/input.js 13:18-13:19
-																		}
-																	}
-																}
-																JSBindingAssignmentPattern {
-																	loc: SourceLocation experimental/class-private-properties/nested/input.js 13:25-13:30
-																	right: JSNumericLiteral {
-																		value: 0
-																		format: undefined
-																		loc: SourceLocation experimental/class-private-properties/nested/input.js 13:29-13:30
-																	}
-																	left: JSBindingIdentifier {
-																		name: "y"
-																		loc: SourceLocation experimental/class-private-properties/nested/input.js 13:25-13:26 (y)
-																		meta: JSPatternMeta {
-																			optional: undefined
-																			typeAnnotation: undefined
-																			loc: SourceLocation experimental/class-private-properties/nested/input.js 13:25-13:26
-																		}
-																	}
-																}
-															]
-														}
 														body: JSBlockStatement {
-															directives: Array []
-															loc: SourceLocation experimental/class-private-properties/nested/input.js 13:32-16:7
-															body: Array [
+															body: [
 																JSExpressionStatement {
-																	loc: SourceLocation experimental/class-private-properties/nested/input.js 14:8-14:21
 																	expression: JSAssignmentExpression {
 																		operator: "="
-																		loc: SourceLocation experimental/class-private-properties/nested/input.js 14:8-14:20
-																		right: JSUnaryExpression {
-																			operator: "+"
-																			prefix: true
-																			loc: SourceLocation experimental/class-private-properties/nested/input.js 14:18-14:20
-																			argument: JSReferenceIdentifier {
-																				name: "x"
-																				loc: SourceLocation experimental/class-private-properties/nested/input.js 14:19-14:20 (x)
-																			}
-																		}
 																		left: JSMemberExpression {
-																			loc: SourceLocation experimental/class-private-properties/nested/input.js 14:8-14:15
-																			object: JSThisExpression {loc: SourceLocation experimental/class-private-properties/nested/input.js 14:8-14:12}
+																			object: JSThisExpression {
+																				loc: SourceLocation experimental/class-private-properties/nested/input.js 14:8-14:12
+																			}
 																			property: JSStaticMemberProperty {
 																				value: JSPrivateName {
 																					id: JSIdentifier {
@@ -390,26 +226,28 @@ JSRoot {
 																				}
 																				loc: SourceLocation experimental/class-private-properties/nested/input.js 14:13-14:15
 																			}
+																			loc: SourceLocation experimental/class-private-properties/nested/input.js 14:8-14:15
 																		}
-																	}
-																}
-																JSExpressionStatement {
-																	loc: SourceLocation experimental/class-private-properties/nested/input.js 15:8-15:21
-																	expression: JSAssignmentExpression {
-																		operator: "="
-																		loc: SourceLocation experimental/class-private-properties/nested/input.js 15:8-15:20
 																		right: JSUnaryExpression {
 																			operator: "+"
 																			prefix: true
-																			loc: SourceLocation experimental/class-private-properties/nested/input.js 15:18-15:20
 																			argument: JSReferenceIdentifier {
-																				name: "y"
-																				loc: SourceLocation experimental/class-private-properties/nested/input.js 15:19-15:20 (y)
+																				name: "x"
+																				loc: SourceLocation experimental/class-private-properties/nested/input.js 14:19-14:20 (x)
 																			}
+																			loc: SourceLocation experimental/class-private-properties/nested/input.js 14:18-14:20
 																		}
+																		loc: SourceLocation experimental/class-private-properties/nested/input.js 14:8-14:20
+																	}
+																	loc: SourceLocation experimental/class-private-properties/nested/input.js 14:8-14:21
+																}
+																JSExpressionStatement {
+																	expression: JSAssignmentExpression {
+																		operator: "="
 																		left: JSMemberExpression {
-																			loc: SourceLocation experimental/class-private-properties/nested/input.js 15:8-15:15
-																			object: JSThisExpression {loc: SourceLocation experimental/class-private-properties/nested/input.js 15:8-15:12}
+																			object: JSThisExpression {
+																				loc: SourceLocation experimental/class-private-properties/nested/input.js 15:8-15:12
+																			}
 																			property: JSStaticMemberProperty {
 																				value: JSPrivateName {
 																					id: JSIdentifier {
@@ -420,11 +258,70 @@ JSRoot {
 																				}
 																				loc: SourceLocation experimental/class-private-properties/nested/input.js 15:13-15:15
 																			}
+																			loc: SourceLocation experimental/class-private-properties/nested/input.js 15:8-15:15
 																		}
+																		right: JSUnaryExpression {
+																			operator: "+"
+																			prefix: true
+																			argument: JSReferenceIdentifier {
+																				name: "y"
+																				loc: SourceLocation experimental/class-private-properties/nested/input.js 15:19-15:20 (y)
+																			}
+																			loc: SourceLocation experimental/class-private-properties/nested/input.js 15:18-15:20
+																		}
+																		loc: SourceLocation experimental/class-private-properties/nested/input.js 15:8-15:20
 																	}
+																	loc: SourceLocation experimental/class-private-properties/nested/input.js 15:8-15:21
 																}
 															]
+															directives: []
+															loc: SourceLocation experimental/class-private-properties/nested/input.js 13:32-16:7
 														}
+														head: JSFunctionHead {
+															async: false
+															generator: false
+															hasHoistedVars: false
+															params: [
+																JSBindingAssignmentPattern {
+																	left: JSBindingIdentifier {
+																		name: "x"
+																		meta: JSPatternMeta {
+																			loc: SourceLocation experimental/class-private-properties/nested/input.js 13:18-13:19
+																		}
+																		loc: SourceLocation experimental/class-private-properties/nested/input.js 13:18-13:19 (x)
+																	}
+																	right: JSNumericLiteral {
+																		value: 0
+																		loc: SourceLocation experimental/class-private-properties/nested/input.js 13:22-13:23
+																	}
+																	loc: SourceLocation experimental/class-private-properties/nested/input.js 13:18-13:23
+																}
+																JSBindingAssignmentPattern {
+																	left: JSBindingIdentifier {
+																		name: "y"
+																		meta: JSPatternMeta {
+																			loc: SourceLocation experimental/class-private-properties/nested/input.js 13:25-13:26
+																		}
+																		loc: SourceLocation experimental/class-private-properties/nested/input.js 13:25-13:26 (y)
+																	}
+																	right: JSNumericLiteral {
+																		value: 0
+																		loc: SourceLocation experimental/class-private-properties/nested/input.js 13:29-13:30
+																	}
+																	loc: SourceLocation experimental/class-private-properties/nested/input.js 13:25-13:30
+																}
+															]
+															loc: SourceLocation experimental/class-private-properties/nested/input.js 13:17-13:31
+														}
+														meta: JSClassPropertyMeta {
+															abstract: false
+															optional: false
+															readonly: false
+															static: false
+															loc: SourceLocation experimental/class-private-properties/nested/input.js 13:6-13:17
+															start: Position 13:6
+														}
+														loc: SourceLocation experimental/class-private-properties/nested/input.js 13:6-16:7
 													}
 													JSClassMethod {
 														kind: "get"
@@ -435,37 +332,13 @@ JSRoot {
 															}
 															loc: SourceLocation experimental/class-private-properties/nested/input.js 18:10-18:11
 														}
-														loc: SourceLocation experimental/class-private-properties/nested/input.js 18:6-18:32
-														meta: JSClassPropertyMeta {
-															abstract: false
-															accessibility: undefined
-															optional: false
-															readonly: false
-															static: false
-															typeAnnotation: undefined
-															loc: SourceLocation experimental/class-private-properties/nested/input.js 18:6-18:11
-															start: Position 18:6
-														}
-														head: JSFunctionHead {
-															async: false
-															generator: false
-															hasHoistedVars: false
-															params: Array []
-															rest: undefined
-															returnType: undefined
-															thisType: undefined
-															typeParameters: undefined
-															loc: SourceLocation experimental/class-private-properties/nested/input.js 18:11-18:13
-														}
 														body: JSBlockStatement {
-															directives: Array []
-															loc: SourceLocation experimental/class-private-properties/nested/input.js 18:14-18:32
-															body: Array [
+															body: [
 																JSReturnStatement {
-																	loc: SourceLocation experimental/class-private-properties/nested/input.js 18:16-18:30
 																	argument: JSMemberExpression {
-																		loc: SourceLocation experimental/class-private-properties/nested/input.js 18:23-18:30
-																		object: JSThisExpression {loc: SourceLocation experimental/class-private-properties/nested/input.js 18:23-18:27}
+																		object: JSThisExpression {
+																			loc: SourceLocation experimental/class-private-properties/nested/input.js 18:23-18:27
+																		}
 																		property: JSStaticMemberProperty {
 																			value: JSPrivateName {
 																				id: JSIdentifier {
@@ -476,10 +349,30 @@ JSRoot {
 																			}
 																			loc: SourceLocation experimental/class-private-properties/nested/input.js 18:28-18:30
 																		}
+																		loc: SourceLocation experimental/class-private-properties/nested/input.js 18:23-18:30
 																	}
+																	loc: SourceLocation experimental/class-private-properties/nested/input.js 18:16-18:30
 																}
 															]
+															directives: []
+															loc: SourceLocation experimental/class-private-properties/nested/input.js 18:14-18:32
 														}
+														head: JSFunctionHead {
+															async: false
+															generator: false
+															hasHoistedVars: false
+															params: []
+															loc: SourceLocation experimental/class-private-properties/nested/input.js 18:11-18:13
+														}
+														meta: JSClassPropertyMeta {
+															abstract: false
+															optional: false
+															readonly: false
+															static: false
+															loc: SourceLocation experimental/class-private-properties/nested/input.js 18:6-18:11
+															start: Position 18:6
+														}
+														loc: SourceLocation experimental/class-private-properties/nested/input.js 18:6-18:32
 													}
 													JSClassMethod {
 														kind: "set"
@@ -490,59 +383,15 @@ JSRoot {
 															}
 															loc: SourceLocation experimental/class-private-properties/nested/input.js 19:10-19:11
 														}
-														loc: SourceLocation experimental/class-private-properties/nested/input.js 19:6-19:39
-														meta: JSClassPropertyMeta {
-															abstract: false
-															accessibility: undefined
-															optional: false
-															readonly: false
-															static: false
-															typeAnnotation: undefined
-															loc: SourceLocation experimental/class-private-properties/nested/input.js 19:6-19:11
-															start: Position 19:6
-														}
-														head: JSFunctionHead {
-															async: false
-															generator: false
-															hasHoistedVars: false
-															rest: undefined
-															returnType: undefined
-															thisType: undefined
-															typeParameters: undefined
-															loc: SourceLocation experimental/class-private-properties/nested/input.js 19:11-19:18
-															params: Array [
-																JSBindingIdentifier {
-																	name: "value"
-																	loc: SourceLocation experimental/class-private-properties/nested/input.js 19:12-19:17 (value)
-																	meta: JSPatternMeta {
-																		optional: undefined
-																		typeAnnotation: undefined
-																		loc: SourceLocation experimental/class-private-properties/nested/input.js 19:12-19:17
-																	}
-																}
-															]
-														}
 														body: JSBlockStatement {
-															directives: Array []
-															loc: SourceLocation experimental/class-private-properties/nested/input.js 19:19-19:39
-															body: Array [
+															body: [
 																JSExpressionStatement {
-																	loc: SourceLocation experimental/class-private-properties/nested/input.js 19:21-19:37
 																	expression: JSAssignmentExpression {
 																		operator: "="
-																		loc: SourceLocation experimental/class-private-properties/nested/input.js 19:21-19:37
-																		right: JSUnaryExpression {
-																			operator: "+"
-																			prefix: true
-																			loc: SourceLocation experimental/class-private-properties/nested/input.js 19:31-19:37
-																			argument: JSReferenceIdentifier {
-																				name: "value"
-																				loc: SourceLocation experimental/class-private-properties/nested/input.js 19:32-19:37 (value)
-																			}
-																		}
 																		left: JSMemberExpression {
-																			loc: SourceLocation experimental/class-private-properties/nested/input.js 19:21-19:28
-																			object: JSThisExpression {loc: SourceLocation experimental/class-private-properties/nested/input.js 19:21-19:25}
+																			object: JSThisExpression {
+																				loc: SourceLocation experimental/class-private-properties/nested/input.js 19:21-19:25
+																			}
 																			property: JSStaticMemberProperty {
 																				value: JSPrivateName {
 																					id: JSIdentifier {
@@ -553,11 +402,49 @@ JSRoot {
 																				}
 																				loc: SourceLocation experimental/class-private-properties/nested/input.js 19:26-19:28
 																			}
+																			loc: SourceLocation experimental/class-private-properties/nested/input.js 19:21-19:28
 																		}
+																		right: JSUnaryExpression {
+																			operator: "+"
+																			prefix: true
+																			argument: JSReferenceIdentifier {
+																				name: "value"
+																				loc: SourceLocation experimental/class-private-properties/nested/input.js 19:32-19:37 (value)
+																			}
+																			loc: SourceLocation experimental/class-private-properties/nested/input.js 19:31-19:37
+																		}
+																		loc: SourceLocation experimental/class-private-properties/nested/input.js 19:21-19:37
 																	}
+																	loc: SourceLocation experimental/class-private-properties/nested/input.js 19:21-19:37
 																}
 															]
+															directives: []
+															loc: SourceLocation experimental/class-private-properties/nested/input.js 19:19-19:39
 														}
+														head: JSFunctionHead {
+															async: false
+															generator: false
+															hasHoistedVars: false
+															params: [
+																JSBindingIdentifier {
+																	name: "value"
+																	meta: JSPatternMeta {
+																		loc: SourceLocation experimental/class-private-properties/nested/input.js 19:12-19:17
+																	}
+																	loc: SourceLocation experimental/class-private-properties/nested/input.js 19:12-19:17 (value)
+																}
+															]
+															loc: SourceLocation experimental/class-private-properties/nested/input.js 19:11-19:18
+														}
+														meta: JSClassPropertyMeta {
+															abstract: false
+															optional: false
+															readonly: false
+															static: false
+															loc: SourceLocation experimental/class-private-properties/nested/input.js 19:6-19:11
+															start: Position 19:6
+														}
+														loc: SourceLocation experimental/class-private-properties/nested/input.js 19:6-19:39
 													}
 													JSClassMethod {
 														kind: "get"
@@ -568,37 +455,13 @@ JSRoot {
 															}
 															loc: SourceLocation experimental/class-private-properties/nested/input.js 21:10-21:11
 														}
-														loc: SourceLocation experimental/class-private-properties/nested/input.js 21:6-21:32
-														meta: JSClassPropertyMeta {
-															abstract: false
-															accessibility: undefined
-															optional: false
-															readonly: false
-															static: false
-															typeAnnotation: undefined
-															loc: SourceLocation experimental/class-private-properties/nested/input.js 21:6-21:11
-															start: Position 21:6
-														}
-														head: JSFunctionHead {
-															async: false
-															generator: false
-															hasHoistedVars: false
-															params: Array []
-															rest: undefined
-															returnType: undefined
-															thisType: undefined
-															typeParameters: undefined
-															loc: SourceLocation experimental/class-private-properties/nested/input.js 21:11-21:13
-														}
 														body: JSBlockStatement {
-															directives: Array []
-															loc: SourceLocation experimental/class-private-properties/nested/input.js 21:14-21:32
-															body: Array [
+															body: [
 																JSReturnStatement {
-																	loc: SourceLocation experimental/class-private-properties/nested/input.js 21:16-21:30
 																	argument: JSMemberExpression {
-																		loc: SourceLocation experimental/class-private-properties/nested/input.js 21:23-21:30
-																		object: JSThisExpression {loc: SourceLocation experimental/class-private-properties/nested/input.js 21:23-21:27}
+																		object: JSThisExpression {
+																			loc: SourceLocation experimental/class-private-properties/nested/input.js 21:23-21:27
+																		}
 																		property: JSStaticMemberProperty {
 																			value: JSPrivateName {
 																				id: JSIdentifier {
@@ -609,10 +472,30 @@ JSRoot {
 																			}
 																			loc: SourceLocation experimental/class-private-properties/nested/input.js 21:28-21:30
 																		}
+																		loc: SourceLocation experimental/class-private-properties/nested/input.js 21:23-21:30
 																	}
+																	loc: SourceLocation experimental/class-private-properties/nested/input.js 21:16-21:30
 																}
 															]
+															directives: []
+															loc: SourceLocation experimental/class-private-properties/nested/input.js 21:14-21:32
 														}
+														head: JSFunctionHead {
+															async: false
+															generator: false
+															hasHoistedVars: false
+															params: []
+															loc: SourceLocation experimental/class-private-properties/nested/input.js 21:11-21:13
+														}
+														meta: JSClassPropertyMeta {
+															abstract: false
+															optional: false
+															readonly: false
+															static: false
+															loc: SourceLocation experimental/class-private-properties/nested/input.js 21:6-21:11
+															start: Position 21:6
+														}
+														loc: SourceLocation experimental/class-private-properties/nested/input.js 21:6-21:32
 													}
 													JSClassMethod {
 														kind: "set"
@@ -623,59 +506,15 @@ JSRoot {
 															}
 															loc: SourceLocation experimental/class-private-properties/nested/input.js 22:10-22:11
 														}
-														loc: SourceLocation experimental/class-private-properties/nested/input.js 22:6-22:39
-														meta: JSClassPropertyMeta {
-															abstract: false
-															accessibility: undefined
-															optional: false
-															readonly: false
-															static: false
-															typeAnnotation: undefined
-															loc: SourceLocation experimental/class-private-properties/nested/input.js 22:6-22:11
-															start: Position 22:6
-														}
-														head: JSFunctionHead {
-															async: false
-															generator: false
-															hasHoistedVars: false
-															rest: undefined
-															returnType: undefined
-															thisType: undefined
-															typeParameters: undefined
-															loc: SourceLocation experimental/class-private-properties/nested/input.js 22:11-22:18
-															params: Array [
-																JSBindingIdentifier {
-																	name: "value"
-																	loc: SourceLocation experimental/class-private-properties/nested/input.js 22:12-22:17 (value)
-																	meta: JSPatternMeta {
-																		optional: undefined
-																		typeAnnotation: undefined
-																		loc: SourceLocation experimental/class-private-properties/nested/input.js 22:12-22:17
-																	}
-																}
-															]
-														}
 														body: JSBlockStatement {
-															directives: Array []
-															loc: SourceLocation experimental/class-private-properties/nested/input.js 22:19-22:39
-															body: Array [
+															body: [
 																JSExpressionStatement {
-																	loc: SourceLocation experimental/class-private-properties/nested/input.js 22:21-22:37
 																	expression: JSAssignmentExpression {
 																		operator: "="
-																		loc: SourceLocation experimental/class-private-properties/nested/input.js 22:21-22:37
-																		right: JSUnaryExpression {
-																			operator: "+"
-																			prefix: true
-																			loc: SourceLocation experimental/class-private-properties/nested/input.js 22:31-22:37
-																			argument: JSReferenceIdentifier {
-																				name: "value"
-																				loc: SourceLocation experimental/class-private-properties/nested/input.js 22:32-22:37 (value)
-																			}
-																		}
 																		left: JSMemberExpression {
-																			loc: SourceLocation experimental/class-private-properties/nested/input.js 22:21-22:28
-																			object: JSThisExpression {loc: SourceLocation experimental/class-private-properties/nested/input.js 22:21-22:25}
+																			object: JSThisExpression {
+																				loc: SourceLocation experimental/class-private-properties/nested/input.js 22:21-22:25
+																			}
 																			property: JSStaticMemberProperty {
 																				value: JSPrivateName {
 																					id: JSIdentifier {
@@ -686,11 +525,49 @@ JSRoot {
 																				}
 																				loc: SourceLocation experimental/class-private-properties/nested/input.js 22:26-22:28
 																			}
+																			loc: SourceLocation experimental/class-private-properties/nested/input.js 22:21-22:28
 																		}
+																		right: JSUnaryExpression {
+																			operator: "+"
+																			prefix: true
+																			argument: JSReferenceIdentifier {
+																				name: "value"
+																				loc: SourceLocation experimental/class-private-properties/nested/input.js 22:32-22:37 (value)
+																			}
+																			loc: SourceLocation experimental/class-private-properties/nested/input.js 22:31-22:37
+																		}
+																		loc: SourceLocation experimental/class-private-properties/nested/input.js 22:21-22:37
 																	}
+																	loc: SourceLocation experimental/class-private-properties/nested/input.js 22:21-22:37
 																}
 															]
+															directives: []
+															loc: SourceLocation experimental/class-private-properties/nested/input.js 22:19-22:39
 														}
+														head: JSFunctionHead {
+															async: false
+															generator: false
+															hasHoistedVars: false
+															params: [
+																JSBindingIdentifier {
+																	name: "value"
+																	meta: JSPatternMeta {
+																		loc: SourceLocation experimental/class-private-properties/nested/input.js 22:12-22:17
+																	}
+																	loc: SourceLocation experimental/class-private-properties/nested/input.js 22:12-22:17 (value)
+																}
+															]
+															loc: SourceLocation experimental/class-private-properties/nested/input.js 22:11-22:18
+														}
+														meta: JSClassPropertyMeta {
+															abstract: false
+															optional: false
+															readonly: false
+															static: false
+															loc: SourceLocation experimental/class-private-properties/nested/input.js 22:6-22:11
+															start: Position 22:6
+														}
+														loc: SourceLocation experimental/class-private-properties/nested/input.js 22:6-22:39
 													}
 													JSClassMethod {
 														kind: "method"
@@ -701,53 +578,17 @@ JSRoot {
 															}
 															loc: SourceLocation experimental/class-private-properties/nested/input.js 24:6-24:12
 														}
-														loc: SourceLocation experimental/class-private-properties/nested/input.js 24:6-24:63
-														meta: JSClassPropertyMeta {
-															abstract: false
-															accessibility: undefined
-															optional: false
-															readonly: false
-															static: false
-															typeAnnotation: undefined
-															loc: SourceLocation experimental/class-private-properties/nested/input.js 24:6-24:12
-															start: Position 24:6
-														}
-														head: JSFunctionHead {
-															async: false
-															generator: false
-															hasHoistedVars: false
-															rest: undefined
-															returnType: undefined
-															thisType: undefined
-															typeParameters: undefined
-															loc: SourceLocation experimental/class-private-properties/nested/input.js 24:12-24:15
-															params: Array [
-																JSBindingIdentifier {
-																	name: "p"
-																	loc: SourceLocation experimental/class-private-properties/nested/input.js 24:13-24:14 (p)
-																	meta: JSPatternMeta {
-																		optional: undefined
-																		typeAnnotation: undefined
-																		loc: SourceLocation experimental/class-private-properties/nested/input.js 24:13-24:14
-																	}
-																}
-															]
-														}
 														body: JSBlockStatement {
-															directives: Array []
-															loc: SourceLocation experimental/class-private-properties/nested/input.js 24:16-24:63
-															body: Array [
+															body: [
 																JSReturnStatement {
-																	loc: SourceLocation experimental/class-private-properties/nested/input.js 24:18-24:61
 																	argument: JSLogicalExpression {
 																		operator: "&&"
-																		loc: SourceLocation experimental/class-private-properties/nested/input.js 24:25-24:61
 																		left: JSBinaryExpression {
 																			operator: "==="
-																			loc: SourceLocation experimental/class-private-properties/nested/input.js 24:25-24:41
 																			left: JSMemberExpression {
-																				loc: SourceLocation experimental/class-private-properties/nested/input.js 24:25-24:32
-																				object: JSThisExpression {loc: SourceLocation experimental/class-private-properties/nested/input.js 24:25-24:29}
+																				object: JSThisExpression {
+																					loc: SourceLocation experimental/class-private-properties/nested/input.js 24:25-24:29
+																				}
 																				property: JSStaticMemberProperty {
 																					value: JSPrivateName {
 																						id: JSIdentifier {
@@ -758,9 +599,9 @@ JSRoot {
 																					}
 																					loc: SourceLocation experimental/class-private-properties/nested/input.js 24:30-24:32
 																				}
+																				loc: SourceLocation experimental/class-private-properties/nested/input.js 24:25-24:32
 																			}
 																			right: JSMemberExpression {
-																				loc: SourceLocation experimental/class-private-properties/nested/input.js 24:37-24:41
 																				object: JSReferenceIdentifier {
 																					name: "p"
 																					loc: SourceLocation experimental/class-private-properties/nested/input.js 24:37-24:38 (p)
@@ -775,14 +616,16 @@ JSRoot {
 																					}
 																					loc: SourceLocation experimental/class-private-properties/nested/input.js 24:39-24:41
 																				}
+																				loc: SourceLocation experimental/class-private-properties/nested/input.js 24:37-24:41
 																			}
+																			loc: SourceLocation experimental/class-private-properties/nested/input.js 24:25-24:41
 																		}
 																		right: JSBinaryExpression {
 																			operator: "==="
-																			loc: SourceLocation experimental/class-private-properties/nested/input.js 24:45-24:61
 																			left: JSMemberExpression {
-																				loc: SourceLocation experimental/class-private-properties/nested/input.js 24:45-24:52
-																				object: JSThisExpression {loc: SourceLocation experimental/class-private-properties/nested/input.js 24:45-24:49}
+																				object: JSThisExpression {
+																					loc: SourceLocation experimental/class-private-properties/nested/input.js 24:45-24:49
+																				}
 																				property: JSStaticMemberProperty {
 																					value: JSPrivateName {
 																						id: JSIdentifier {
@@ -793,9 +636,9 @@ JSRoot {
 																					}
 																					loc: SourceLocation experimental/class-private-properties/nested/input.js 24:50-24:52
 																				}
+																				loc: SourceLocation experimental/class-private-properties/nested/input.js 24:45-24:52
 																			}
 																			right: JSMemberExpression {
-																				loc: SourceLocation experimental/class-private-properties/nested/input.js 24:57-24:61
 																				object: JSReferenceIdentifier {
 																					name: "p"
 																					loc: SourceLocation experimental/class-private-properties/nested/input.js 24:57-24:58 (p)
@@ -810,12 +653,42 @@ JSRoot {
 																					}
 																					loc: SourceLocation experimental/class-private-properties/nested/input.js 24:59-24:61
 																				}
+																				loc: SourceLocation experimental/class-private-properties/nested/input.js 24:57-24:61
 																			}
+																			loc: SourceLocation experimental/class-private-properties/nested/input.js 24:45-24:61
 																		}
+																		loc: SourceLocation experimental/class-private-properties/nested/input.js 24:25-24:61
 																	}
+																	loc: SourceLocation experimental/class-private-properties/nested/input.js 24:18-24:61
 																}
 															]
+															directives: []
+															loc: SourceLocation experimental/class-private-properties/nested/input.js 24:16-24:63
 														}
+														head: JSFunctionHead {
+															async: false
+															generator: false
+															hasHoistedVars: false
+															params: [
+																JSBindingIdentifier {
+																	name: "p"
+																	meta: JSPatternMeta {
+																		loc: SourceLocation experimental/class-private-properties/nested/input.js 24:13-24:14
+																	}
+																	loc: SourceLocation experimental/class-private-properties/nested/input.js 24:13-24:14 (p)
+																}
+															]
+															loc: SourceLocation experimental/class-private-properties/nested/input.js 24:12-24:15
+														}
+														meta: JSClassPropertyMeta {
+															abstract: false
+															optional: false
+															readonly: false
+															static: false
+															loc: SourceLocation experimental/class-private-properties/nested/input.js 24:6-24:12
+															start: Position 24:6
+														}
+														loc: SourceLocation experimental/class-private-properties/nested/input.js 24:6-24:63
 													}
 													JSClassMethod {
 														kind: "method"
@@ -826,37 +699,45 @@ JSRoot {
 															}
 															loc: SourceLocation experimental/class-private-properties/nested/input.js 26:6-26:14
 														}
-														loc: SourceLocation experimental/class-private-properties/nested/input.js 26:6-26:62
-														meta: JSClassPropertyMeta {
-															abstract: false
-															accessibility: undefined
-															optional: false
-															readonly: false
-															static: false
-															typeAnnotation: undefined
-															loc: SourceLocation experimental/class-private-properties/nested/input.js 26:6-26:14
-															start: Position 26:6
-														}
-														head: JSFunctionHead {
-															async: false
-															generator: false
-															hasHoistedVars: false
-															params: Array []
-															rest: undefined
-															returnType: undefined
-															thisType: undefined
-															typeParameters: undefined
-															loc: SourceLocation experimental/class-private-properties/nested/input.js 26:14-26:16
-														}
 														body: JSBlockStatement {
-															directives: Array []
-															loc: SourceLocation experimental/class-private-properties/nested/input.js 26:17-26:62
-															body: Array [
+															body: [
 																JSReturnStatement {
-																	loc: SourceLocation experimental/class-private-properties/nested/input.js 26:19-26:60
 																	argument: JSTemplateLiteral {
-																		loc: SourceLocation experimental/class-private-properties/nested/input.js 26:26-26:60
-																		quasis: Array [
+																		expressions: [
+																			JSMemberExpression {
+																				object: JSThisExpression {
+																					loc: SourceLocation experimental/class-private-properties/nested/input.js 26:36-26:40
+																				}
+																				property: JSStaticMemberProperty {
+																					value: JSPrivateName {
+																						id: JSIdentifier {
+																							name: "x"
+																							loc: SourceLocation experimental/class-private-properties/nested/input.js 26:42-26:43 (x)
+																						}
+																						loc: SourceLocation experimental/class-private-properties/nested/input.js 26:41-26:43
+																					}
+																					loc: SourceLocation experimental/class-private-properties/nested/input.js 26:41-26:43
+																				}
+																				loc: SourceLocation experimental/class-private-properties/nested/input.js 26:36-26:43
+																			}
+																			JSMemberExpression {
+																				object: JSThisExpression {
+																					loc: SourceLocation experimental/class-private-properties/nested/input.js 26:49-26:53
+																				}
+																				property: JSStaticMemberProperty {
+																					value: JSPrivateName {
+																						id: JSIdentifier {
+																							name: "y"
+																							loc: SourceLocation experimental/class-private-properties/nested/input.js 26:55-26:56 (y)
+																						}
+																						loc: SourceLocation experimental/class-private-properties/nested/input.js 26:54-26:56
+																					}
+																					loc: SourceLocation experimental/class-private-properties/nested/input.js 26:54-26:56
+																				}
+																				loc: SourceLocation experimental/class-private-properties/nested/input.js 26:49-26:56
+																			}
+																		]
+																		quasis: [
 																			JSTemplateElement {
 																				cooked: "Point<"
 																				raw: "Point<"
@@ -876,48 +757,89 @@ JSRoot {
 																				loc: SourceLocation experimental/class-private-properties/nested/input.js 26:58-26:59
 																			}
 																		]
-																		expressions: Array [
-																			JSMemberExpression {
-																				loc: SourceLocation experimental/class-private-properties/nested/input.js 26:36-26:43
-																				object: JSThisExpression {loc: SourceLocation experimental/class-private-properties/nested/input.js 26:36-26:40}
-																				property: JSStaticMemberProperty {
-																					value: JSPrivateName {
-																						id: JSIdentifier {
-																							name: "x"
-																							loc: SourceLocation experimental/class-private-properties/nested/input.js 26:42-26:43 (x)
-																						}
-																						loc: SourceLocation experimental/class-private-properties/nested/input.js 26:41-26:43
-																					}
-																					loc: SourceLocation experimental/class-private-properties/nested/input.js 26:41-26:43
-																				}
-																			}
-																			JSMemberExpression {
-																				loc: SourceLocation experimental/class-private-properties/nested/input.js 26:49-26:56
-																				object: JSThisExpression {loc: SourceLocation experimental/class-private-properties/nested/input.js 26:49-26:53}
-																				property: JSStaticMemberProperty {
-																					value: JSPrivateName {
-																						id: JSIdentifier {
-																							name: "y"
-																							loc: SourceLocation experimental/class-private-properties/nested/input.js 26:55-26:56 (y)
-																						}
-																						loc: SourceLocation experimental/class-private-properties/nested/input.js 26:54-26:56
-																					}
-																					loc: SourceLocation experimental/class-private-properties/nested/input.js 26:54-26:56
-																				}
-																			}
-																		]
+																		loc: SourceLocation experimental/class-private-properties/nested/input.js 26:26-26:60
 																	}
+																	loc: SourceLocation experimental/class-private-properties/nested/input.js 26:19-26:60
 																}
 															]
+															directives: []
+															loc: SourceLocation experimental/class-private-properties/nested/input.js 26:17-26:62
 														}
+														head: JSFunctionHead {
+															async: false
+															generator: false
+															hasHoistedVars: false
+															params: []
+															loc: SourceLocation experimental/class-private-properties/nested/input.js 26:14-26:16
+														}
+														meta: JSClassPropertyMeta {
+															abstract: false
+															optional: false
+															readonly: false
+															static: false
+															loc: SourceLocation experimental/class-private-properties/nested/input.js 26:6-26:14
+															start: Position 26:6
+														}
+														loc: SourceLocation experimental/class-private-properties/nested/input.js 26:6-26:62
 													}
 												]
+												loc: SourceLocation experimental/class-private-properties/nested/input.js 9:15-27:5
 											}
+											loc: SourceLocation experimental/class-private-properties/nested/input.js 9:15-27:5
 										}
+										loc: SourceLocation experimental/class-private-properties/nested/input.js 9:4-27:5
 									}
+									loc: SourceLocation experimental/class-private-properties/nested/input.js 9:4-27:6
 								}
 							]
+							directives: []
+							loc: SourceLocation experimental/class-private-properties/nested/input.js 5:28-28:3
 						}
+						head: JSFunctionHead {
+							async: false
+							generator: false
+							hasHoistedVars: false
+							params: [
+								JSBindingAssignmentPattern {
+									left: JSBindingIdentifier {
+										name: "x"
+										meta: JSPatternMeta {
+											loc: SourceLocation experimental/class-private-properties/nested/input.js 5:14-5:15
+										}
+										loc: SourceLocation experimental/class-private-properties/nested/input.js 5:14-5:15 (x)
+									}
+									right: JSNumericLiteral {
+										value: 0
+										loc: SourceLocation experimental/class-private-properties/nested/input.js 5:18-5:19
+									}
+									loc: SourceLocation experimental/class-private-properties/nested/input.js 5:14-5:19
+								}
+								JSBindingAssignmentPattern {
+									left: JSBindingIdentifier {
+										name: "y"
+										meta: JSPatternMeta {
+											loc: SourceLocation experimental/class-private-properties/nested/input.js 5:21-5:22
+										}
+										loc: SourceLocation experimental/class-private-properties/nested/input.js 5:21-5:22 (y)
+									}
+									right: JSNumericLiteral {
+										value: 0
+										loc: SourceLocation experimental/class-private-properties/nested/input.js 5:25-5:26
+									}
+									loc: SourceLocation experimental/class-private-properties/nested/input.js 5:21-5:26
+								}
+							]
+							loc: SourceLocation experimental/class-private-properties/nested/input.js 5:13-5:27
+						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							optional: false
+							readonly: false
+							static: false
+							loc: SourceLocation experimental/class-private-properties/nested/input.js 5:2-5:13
+							start: Position 5:2
+						}
+						loc: SourceLocation experimental/class-private-properties/nested/input.js 5:2-28:3
 					}
 					JSClassMethod {
 						kind: "get"
@@ -928,37 +850,13 @@ JSRoot {
 							}
 							loc: SourceLocation experimental/class-private-properties/nested/input.js 30:6-30:7
 						}
-						loc: SourceLocation experimental/class-private-properties/nested/input.js 30:2-30:28
-						meta: JSClassPropertyMeta {
-							abstract: false
-							accessibility: undefined
-							optional: false
-							readonly: false
-							static: false
-							typeAnnotation: undefined
-							loc: SourceLocation experimental/class-private-properties/nested/input.js 30:2-30:7
-							start: Position 30:2
-						}
-						head: JSFunctionHead {
-							async: false
-							generator: false
-							hasHoistedVars: false
-							params: Array []
-							rest: undefined
-							returnType: undefined
-							thisType: undefined
-							typeParameters: undefined
-							loc: SourceLocation experimental/class-private-properties/nested/input.js 30:7-30:9
-						}
 						body: JSBlockStatement {
-							directives: Array []
-							loc: SourceLocation experimental/class-private-properties/nested/input.js 30:10-30:28
-							body: Array [
+							body: [
 								JSReturnStatement {
-									loc: SourceLocation experimental/class-private-properties/nested/input.js 30:12-30:26
 									argument: JSMemberExpression {
-										loc: SourceLocation experimental/class-private-properties/nested/input.js 30:19-30:26
-										object: JSThisExpression {loc: SourceLocation experimental/class-private-properties/nested/input.js 30:19-30:23}
+										object: JSThisExpression {
+											loc: SourceLocation experimental/class-private-properties/nested/input.js 30:19-30:23
+										}
 										property: JSStaticMemberProperty {
 											value: JSPrivateName {
 												id: JSIdentifier {
@@ -969,10 +867,30 @@ JSRoot {
 											}
 											loc: SourceLocation experimental/class-private-properties/nested/input.js 30:24-30:26
 										}
+										loc: SourceLocation experimental/class-private-properties/nested/input.js 30:19-30:26
 									}
+									loc: SourceLocation experimental/class-private-properties/nested/input.js 30:12-30:26
 								}
 							]
+							directives: []
+							loc: SourceLocation experimental/class-private-properties/nested/input.js 30:10-30:28
 						}
+						head: JSFunctionHead {
+							async: false
+							generator: false
+							hasHoistedVars: false
+							params: []
+							loc: SourceLocation experimental/class-private-properties/nested/input.js 30:7-30:9
+						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							optional: false
+							readonly: false
+							static: false
+							loc: SourceLocation experimental/class-private-properties/nested/input.js 30:2-30:7
+							start: Position 30:2
+						}
+						loc: SourceLocation experimental/class-private-properties/nested/input.js 30:2-30:28
 					}
 					JSClassMethod {
 						kind: "set"
@@ -983,59 +901,15 @@ JSRoot {
 							}
 							loc: SourceLocation experimental/class-private-properties/nested/input.js 31:6-31:7
 						}
-						loc: SourceLocation experimental/class-private-properties/nested/input.js 31:2-31:35
-						meta: JSClassPropertyMeta {
-							abstract: false
-							accessibility: undefined
-							optional: false
-							readonly: false
-							static: false
-							typeAnnotation: undefined
-							loc: SourceLocation experimental/class-private-properties/nested/input.js 31:2-31:7
-							start: Position 31:2
-						}
-						head: JSFunctionHead {
-							async: false
-							generator: false
-							hasHoistedVars: false
-							rest: undefined
-							returnType: undefined
-							thisType: undefined
-							typeParameters: undefined
-							loc: SourceLocation experimental/class-private-properties/nested/input.js 31:7-31:14
-							params: Array [
-								JSBindingIdentifier {
-									name: "value"
-									loc: SourceLocation experimental/class-private-properties/nested/input.js 31:8-31:13 (value)
-									meta: JSPatternMeta {
-										optional: undefined
-										typeAnnotation: undefined
-										loc: SourceLocation experimental/class-private-properties/nested/input.js 31:8-31:13
-									}
-								}
-							]
-						}
 						body: JSBlockStatement {
-							directives: Array []
-							loc: SourceLocation experimental/class-private-properties/nested/input.js 31:15-31:35
-							body: Array [
+							body: [
 								JSExpressionStatement {
-									loc: SourceLocation experimental/class-private-properties/nested/input.js 31:17-31:33
 									expression: JSAssignmentExpression {
 										operator: "="
-										loc: SourceLocation experimental/class-private-properties/nested/input.js 31:17-31:33
-										right: JSUnaryExpression {
-											operator: "+"
-											prefix: true
-											loc: SourceLocation experimental/class-private-properties/nested/input.js 31:27-31:33
-											argument: JSReferenceIdentifier {
-												name: "value"
-												loc: SourceLocation experimental/class-private-properties/nested/input.js 31:28-31:33 (value)
-											}
-										}
 										left: JSMemberExpression {
-											loc: SourceLocation experimental/class-private-properties/nested/input.js 31:17-31:24
-											object: JSThisExpression {loc: SourceLocation experimental/class-private-properties/nested/input.js 31:17-31:21}
+											object: JSThisExpression {
+												loc: SourceLocation experimental/class-private-properties/nested/input.js 31:17-31:21
+											}
 											property: JSStaticMemberProperty {
 												value: JSPrivateName {
 													id: JSIdentifier {
@@ -1046,11 +920,49 @@ JSRoot {
 												}
 												loc: SourceLocation experimental/class-private-properties/nested/input.js 31:22-31:24
 											}
+											loc: SourceLocation experimental/class-private-properties/nested/input.js 31:17-31:24
 										}
+										right: JSUnaryExpression {
+											operator: "+"
+											prefix: true
+											argument: JSReferenceIdentifier {
+												name: "value"
+												loc: SourceLocation experimental/class-private-properties/nested/input.js 31:28-31:33 (value)
+											}
+											loc: SourceLocation experimental/class-private-properties/nested/input.js 31:27-31:33
+										}
+										loc: SourceLocation experimental/class-private-properties/nested/input.js 31:17-31:33
 									}
+									loc: SourceLocation experimental/class-private-properties/nested/input.js 31:17-31:33
 								}
 							]
+							directives: []
+							loc: SourceLocation experimental/class-private-properties/nested/input.js 31:15-31:35
 						}
+						head: JSFunctionHead {
+							async: false
+							generator: false
+							hasHoistedVars: false
+							params: [
+								JSBindingIdentifier {
+									name: "value"
+									meta: JSPatternMeta {
+										loc: SourceLocation experimental/class-private-properties/nested/input.js 31:8-31:13
+									}
+									loc: SourceLocation experimental/class-private-properties/nested/input.js 31:8-31:13 (value)
+								}
+							]
+							loc: SourceLocation experimental/class-private-properties/nested/input.js 31:7-31:14
+						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							optional: false
+							readonly: false
+							static: false
+							loc: SourceLocation experimental/class-private-properties/nested/input.js 31:2-31:7
+							start: Position 31:2
+						}
+						loc: SourceLocation experimental/class-private-properties/nested/input.js 31:2-31:35
 					}
 					JSClassMethod {
 						kind: "get"
@@ -1061,37 +973,13 @@ JSRoot {
 							}
 							loc: SourceLocation experimental/class-private-properties/nested/input.js 33:6-33:7
 						}
-						loc: SourceLocation experimental/class-private-properties/nested/input.js 33:2-33:28
-						meta: JSClassPropertyMeta {
-							abstract: false
-							accessibility: undefined
-							optional: false
-							readonly: false
-							static: false
-							typeAnnotation: undefined
-							loc: SourceLocation experimental/class-private-properties/nested/input.js 33:2-33:7
-							start: Position 33:2
-						}
-						head: JSFunctionHead {
-							async: false
-							generator: false
-							hasHoistedVars: false
-							params: Array []
-							rest: undefined
-							returnType: undefined
-							thisType: undefined
-							typeParameters: undefined
-							loc: SourceLocation experimental/class-private-properties/nested/input.js 33:7-33:9
-						}
 						body: JSBlockStatement {
-							directives: Array []
-							loc: SourceLocation experimental/class-private-properties/nested/input.js 33:10-33:28
-							body: Array [
+							body: [
 								JSReturnStatement {
-									loc: SourceLocation experimental/class-private-properties/nested/input.js 33:12-33:26
 									argument: JSMemberExpression {
-										loc: SourceLocation experimental/class-private-properties/nested/input.js 33:19-33:26
-										object: JSThisExpression {loc: SourceLocation experimental/class-private-properties/nested/input.js 33:19-33:23}
+										object: JSThisExpression {
+											loc: SourceLocation experimental/class-private-properties/nested/input.js 33:19-33:23
+										}
 										property: JSStaticMemberProperty {
 											value: JSPrivateName {
 												id: JSIdentifier {
@@ -1102,10 +990,30 @@ JSRoot {
 											}
 											loc: SourceLocation experimental/class-private-properties/nested/input.js 33:24-33:26
 										}
+										loc: SourceLocation experimental/class-private-properties/nested/input.js 33:19-33:26
 									}
+									loc: SourceLocation experimental/class-private-properties/nested/input.js 33:12-33:26
 								}
 							]
+							directives: []
+							loc: SourceLocation experimental/class-private-properties/nested/input.js 33:10-33:28
 						}
+						head: JSFunctionHead {
+							async: false
+							generator: false
+							hasHoistedVars: false
+							params: []
+							loc: SourceLocation experimental/class-private-properties/nested/input.js 33:7-33:9
+						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							optional: false
+							readonly: false
+							static: false
+							loc: SourceLocation experimental/class-private-properties/nested/input.js 33:2-33:7
+							start: Position 33:2
+						}
+						loc: SourceLocation experimental/class-private-properties/nested/input.js 33:2-33:28
 					}
 					JSClassMethod {
 						kind: "set"
@@ -1116,59 +1024,15 @@ JSRoot {
 							}
 							loc: SourceLocation experimental/class-private-properties/nested/input.js 34:6-34:7
 						}
-						loc: SourceLocation experimental/class-private-properties/nested/input.js 34:2-34:35
-						meta: JSClassPropertyMeta {
-							abstract: false
-							accessibility: undefined
-							optional: false
-							readonly: false
-							static: false
-							typeAnnotation: undefined
-							loc: SourceLocation experimental/class-private-properties/nested/input.js 34:2-34:7
-							start: Position 34:2
-						}
-						head: JSFunctionHead {
-							async: false
-							generator: false
-							hasHoistedVars: false
-							rest: undefined
-							returnType: undefined
-							thisType: undefined
-							typeParameters: undefined
-							loc: SourceLocation experimental/class-private-properties/nested/input.js 34:7-34:14
-							params: Array [
-								JSBindingIdentifier {
-									name: "value"
-									loc: SourceLocation experimental/class-private-properties/nested/input.js 34:8-34:13 (value)
-									meta: JSPatternMeta {
-										optional: undefined
-										typeAnnotation: undefined
-										loc: SourceLocation experimental/class-private-properties/nested/input.js 34:8-34:13
-									}
-								}
-							]
-						}
 						body: JSBlockStatement {
-							directives: Array []
-							loc: SourceLocation experimental/class-private-properties/nested/input.js 34:15-34:35
-							body: Array [
+							body: [
 								JSExpressionStatement {
-									loc: SourceLocation experimental/class-private-properties/nested/input.js 34:17-34:33
 									expression: JSAssignmentExpression {
 										operator: "="
-										loc: SourceLocation experimental/class-private-properties/nested/input.js 34:17-34:33
-										right: JSUnaryExpression {
-											operator: "+"
-											prefix: true
-											loc: SourceLocation experimental/class-private-properties/nested/input.js 34:27-34:33
-											argument: JSReferenceIdentifier {
-												name: "value"
-												loc: SourceLocation experimental/class-private-properties/nested/input.js 34:28-34:33 (value)
-											}
-										}
 										left: JSMemberExpression {
-											loc: SourceLocation experimental/class-private-properties/nested/input.js 34:17-34:24
-											object: JSThisExpression {loc: SourceLocation experimental/class-private-properties/nested/input.js 34:17-34:21}
+											object: JSThisExpression {
+												loc: SourceLocation experimental/class-private-properties/nested/input.js 34:17-34:21
+											}
 											property: JSStaticMemberProperty {
 												value: JSPrivateName {
 													id: JSIdentifier {
@@ -1179,11 +1043,49 @@ JSRoot {
 												}
 												loc: SourceLocation experimental/class-private-properties/nested/input.js 34:22-34:24
 											}
+											loc: SourceLocation experimental/class-private-properties/nested/input.js 34:17-34:24
 										}
+										right: JSUnaryExpression {
+											operator: "+"
+											prefix: true
+											argument: JSReferenceIdentifier {
+												name: "value"
+												loc: SourceLocation experimental/class-private-properties/nested/input.js 34:28-34:33 (value)
+											}
+											loc: SourceLocation experimental/class-private-properties/nested/input.js 34:27-34:33
+										}
+										loc: SourceLocation experimental/class-private-properties/nested/input.js 34:17-34:33
 									}
+									loc: SourceLocation experimental/class-private-properties/nested/input.js 34:17-34:33
 								}
 							]
+							directives: []
+							loc: SourceLocation experimental/class-private-properties/nested/input.js 34:15-34:35
 						}
+						head: JSFunctionHead {
+							async: false
+							generator: false
+							hasHoistedVars: false
+							params: [
+								JSBindingIdentifier {
+									name: "value"
+									meta: JSPatternMeta {
+										loc: SourceLocation experimental/class-private-properties/nested/input.js 34:8-34:13
+									}
+									loc: SourceLocation experimental/class-private-properties/nested/input.js 34:8-34:13 (value)
+								}
+							]
+							loc: SourceLocation experimental/class-private-properties/nested/input.js 34:7-34:14
+						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							optional: false
+							readonly: false
+							static: false
+							loc: SourceLocation experimental/class-private-properties/nested/input.js 34:2-34:7
+							start: Position 34:2
+						}
+						loc: SourceLocation experimental/class-private-properties/nested/input.js 34:2-34:35
 					}
 					JSClassMethod {
 						kind: "method"
@@ -1194,53 +1096,17 @@ JSRoot {
 							}
 							loc: SourceLocation experimental/class-private-properties/nested/input.js 36:2-36:8
 						}
-						loc: SourceLocation experimental/class-private-properties/nested/input.js 36:2-36:59
-						meta: JSClassPropertyMeta {
-							abstract: false
-							accessibility: undefined
-							optional: false
-							readonly: false
-							static: false
-							typeAnnotation: undefined
-							loc: SourceLocation experimental/class-private-properties/nested/input.js 36:2-36:8
-							start: Position 36:2
-						}
-						head: JSFunctionHead {
-							async: false
-							generator: false
-							hasHoistedVars: false
-							rest: undefined
-							returnType: undefined
-							thisType: undefined
-							typeParameters: undefined
-							loc: SourceLocation experimental/class-private-properties/nested/input.js 36:8-36:11
-							params: Array [
-								JSBindingIdentifier {
-									name: "p"
-									loc: SourceLocation experimental/class-private-properties/nested/input.js 36:9-36:10 (p)
-									meta: JSPatternMeta {
-										optional: undefined
-										typeAnnotation: undefined
-										loc: SourceLocation experimental/class-private-properties/nested/input.js 36:9-36:10
-									}
-								}
-							]
-						}
 						body: JSBlockStatement {
-							directives: Array []
-							loc: SourceLocation experimental/class-private-properties/nested/input.js 36:12-36:59
-							body: Array [
+							body: [
 								JSReturnStatement {
-									loc: SourceLocation experimental/class-private-properties/nested/input.js 36:14-36:57
 									argument: JSLogicalExpression {
 										operator: "&&"
-										loc: SourceLocation experimental/class-private-properties/nested/input.js 36:21-36:57
 										left: JSBinaryExpression {
 											operator: "==="
-											loc: SourceLocation experimental/class-private-properties/nested/input.js 36:21-36:37
 											left: JSMemberExpression {
-												loc: SourceLocation experimental/class-private-properties/nested/input.js 36:21-36:28
-												object: JSThisExpression {loc: SourceLocation experimental/class-private-properties/nested/input.js 36:21-36:25}
+												object: JSThisExpression {
+													loc: SourceLocation experimental/class-private-properties/nested/input.js 36:21-36:25
+												}
 												property: JSStaticMemberProperty {
 													value: JSPrivateName {
 														id: JSIdentifier {
@@ -1251,9 +1117,9 @@ JSRoot {
 													}
 													loc: SourceLocation experimental/class-private-properties/nested/input.js 36:26-36:28
 												}
+												loc: SourceLocation experimental/class-private-properties/nested/input.js 36:21-36:28
 											}
 											right: JSMemberExpression {
-												loc: SourceLocation experimental/class-private-properties/nested/input.js 36:33-36:37
 												object: JSReferenceIdentifier {
 													name: "p"
 													loc: SourceLocation experimental/class-private-properties/nested/input.js 36:33-36:34 (p)
@@ -1268,14 +1134,16 @@ JSRoot {
 													}
 													loc: SourceLocation experimental/class-private-properties/nested/input.js 36:35-36:37
 												}
+												loc: SourceLocation experimental/class-private-properties/nested/input.js 36:33-36:37
 											}
+											loc: SourceLocation experimental/class-private-properties/nested/input.js 36:21-36:37
 										}
 										right: JSBinaryExpression {
 											operator: "==="
-											loc: SourceLocation experimental/class-private-properties/nested/input.js 36:41-36:57
 											left: JSMemberExpression {
-												loc: SourceLocation experimental/class-private-properties/nested/input.js 36:41-36:48
-												object: JSThisExpression {loc: SourceLocation experimental/class-private-properties/nested/input.js 36:41-36:45}
+												object: JSThisExpression {
+													loc: SourceLocation experimental/class-private-properties/nested/input.js 36:41-36:45
+												}
 												property: JSStaticMemberProperty {
 													value: JSPrivateName {
 														id: JSIdentifier {
@@ -1286,9 +1154,9 @@ JSRoot {
 													}
 													loc: SourceLocation experimental/class-private-properties/nested/input.js 36:46-36:48
 												}
+												loc: SourceLocation experimental/class-private-properties/nested/input.js 36:41-36:48
 											}
 											right: JSMemberExpression {
-												loc: SourceLocation experimental/class-private-properties/nested/input.js 36:53-36:57
 												object: JSReferenceIdentifier {
 													name: "p"
 													loc: SourceLocation experimental/class-private-properties/nested/input.js 36:53-36:54 (p)
@@ -1303,12 +1171,42 @@ JSRoot {
 													}
 													loc: SourceLocation experimental/class-private-properties/nested/input.js 36:55-36:57
 												}
+												loc: SourceLocation experimental/class-private-properties/nested/input.js 36:53-36:57
 											}
+											loc: SourceLocation experimental/class-private-properties/nested/input.js 36:41-36:57
 										}
+										loc: SourceLocation experimental/class-private-properties/nested/input.js 36:21-36:57
 									}
+									loc: SourceLocation experimental/class-private-properties/nested/input.js 36:14-36:57
 								}
 							]
+							directives: []
+							loc: SourceLocation experimental/class-private-properties/nested/input.js 36:12-36:59
 						}
+						head: JSFunctionHead {
+							async: false
+							generator: false
+							hasHoistedVars: false
+							params: [
+								JSBindingIdentifier {
+									name: "p"
+									meta: JSPatternMeta {
+										loc: SourceLocation experimental/class-private-properties/nested/input.js 36:9-36:10
+									}
+									loc: SourceLocation experimental/class-private-properties/nested/input.js 36:9-36:10 (p)
+								}
+							]
+							loc: SourceLocation experimental/class-private-properties/nested/input.js 36:8-36:11
+						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							optional: false
+							readonly: false
+							static: false
+							loc: SourceLocation experimental/class-private-properties/nested/input.js 36:2-36:8
+							start: Position 36:2
+						}
+						loc: SourceLocation experimental/class-private-properties/nested/input.js 36:2-36:59
 					}
 					JSClassMethod {
 						kind: "method"
@@ -1319,37 +1217,45 @@ JSRoot {
 							}
 							loc: SourceLocation experimental/class-private-properties/nested/input.js 38:2-38:10
 						}
-						loc: SourceLocation experimental/class-private-properties/nested/input.js 38:2-38:58
-						meta: JSClassPropertyMeta {
-							abstract: false
-							accessibility: undefined
-							optional: false
-							readonly: false
-							static: false
-							typeAnnotation: undefined
-							loc: SourceLocation experimental/class-private-properties/nested/input.js 38:2-38:10
-							start: Position 38:2
-						}
-						head: JSFunctionHead {
-							async: false
-							generator: false
-							hasHoistedVars: false
-							params: Array []
-							rest: undefined
-							returnType: undefined
-							thisType: undefined
-							typeParameters: undefined
-							loc: SourceLocation experimental/class-private-properties/nested/input.js 38:10-38:12
-						}
 						body: JSBlockStatement {
-							directives: Array []
-							loc: SourceLocation experimental/class-private-properties/nested/input.js 38:13-38:58
-							body: Array [
+							body: [
 								JSReturnStatement {
-									loc: SourceLocation experimental/class-private-properties/nested/input.js 38:15-38:56
 									argument: JSTemplateLiteral {
-										loc: SourceLocation experimental/class-private-properties/nested/input.js 38:22-38:56
-										quasis: Array [
+										expressions: [
+											JSMemberExpression {
+												object: JSThisExpression {
+													loc: SourceLocation experimental/class-private-properties/nested/input.js 38:32-38:36
+												}
+												property: JSStaticMemberProperty {
+													value: JSPrivateName {
+														id: JSIdentifier {
+															name: "x"
+															loc: SourceLocation experimental/class-private-properties/nested/input.js 38:38-38:39 (x)
+														}
+														loc: SourceLocation experimental/class-private-properties/nested/input.js 38:37-38:39
+													}
+													loc: SourceLocation experimental/class-private-properties/nested/input.js 38:37-38:39
+												}
+												loc: SourceLocation experimental/class-private-properties/nested/input.js 38:32-38:39
+											}
+											JSMemberExpression {
+												object: JSThisExpression {
+													loc: SourceLocation experimental/class-private-properties/nested/input.js 38:45-38:49
+												}
+												property: JSStaticMemberProperty {
+													value: JSPrivateName {
+														id: JSIdentifier {
+															name: "y"
+															loc: SourceLocation experimental/class-private-properties/nested/input.js 38:51-38:52 (y)
+														}
+														loc: SourceLocation experimental/class-private-properties/nested/input.js 38:50-38:52
+													}
+													loc: SourceLocation experimental/class-private-properties/nested/input.js 38:50-38:52
+												}
+												loc: SourceLocation experimental/class-private-properties/nested/input.js 38:45-38:52
+											}
+										]
+										quasis: [
 											JSTemplateElement {
 												cooked: "Point<"
 												raw: "Point<"
@@ -1369,45 +1275,46 @@ JSRoot {
 												loc: SourceLocation experimental/class-private-properties/nested/input.js 38:54-38:55
 											}
 										]
-										expressions: Array [
-											JSMemberExpression {
-												loc: SourceLocation experimental/class-private-properties/nested/input.js 38:32-38:39
-												object: JSThisExpression {loc: SourceLocation experimental/class-private-properties/nested/input.js 38:32-38:36}
-												property: JSStaticMemberProperty {
-													value: JSPrivateName {
-														id: JSIdentifier {
-															name: "x"
-															loc: SourceLocation experimental/class-private-properties/nested/input.js 38:38-38:39 (x)
-														}
-														loc: SourceLocation experimental/class-private-properties/nested/input.js 38:37-38:39
-													}
-													loc: SourceLocation experimental/class-private-properties/nested/input.js 38:37-38:39
-												}
-											}
-											JSMemberExpression {
-												loc: SourceLocation experimental/class-private-properties/nested/input.js 38:45-38:52
-												object: JSThisExpression {loc: SourceLocation experimental/class-private-properties/nested/input.js 38:45-38:49}
-												property: JSStaticMemberProperty {
-													value: JSPrivateName {
-														id: JSIdentifier {
-															name: "y"
-															loc: SourceLocation experimental/class-private-properties/nested/input.js 38:51-38:52 (y)
-														}
-														loc: SourceLocation experimental/class-private-properties/nested/input.js 38:50-38:52
-													}
-													loc: SourceLocation experimental/class-private-properties/nested/input.js 38:50-38:52
-												}
-											}
-										]
+										loc: SourceLocation experimental/class-private-properties/nested/input.js 38:22-38:56
 									}
+									loc: SourceLocation experimental/class-private-properties/nested/input.js 38:15-38:56
 								}
 							]
+							directives: []
+							loc: SourceLocation experimental/class-private-properties/nested/input.js 38:13-38:58
 						}
+						head: JSFunctionHead {
+							async: false
+							generator: false
+							hasHoistedVars: false
+							params: []
+							loc: SourceLocation experimental/class-private-properties/nested/input.js 38:10-38:12
+						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							optional: false
+							readonly: false
+							static: false
+							loc: SourceLocation experimental/class-private-properties/nested/input.js 38:2-38:10
+							start: Position 38:2
+						}
+						loc: SourceLocation experimental/class-private-properties/nested/input.js 38:2-38:58
 					}
 				]
+				loc: SourceLocation experimental/class-private-properties/nested/input.js 1:0-39:1
 			}
+			loc: SourceLocation experimental/class-private-properties/nested/input.js 1:0-39:1
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<experimental/class-private-properties/nested/input.js>
+	loc: SourceLocation experimental/class-private-properties/nested/input.js 1:0-40:0
 }
 ```
 

@@ -8,44 +8,31 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	loc: SourceLocation typescript/class/declare/input.ts 1:0-8:0
-	path: UIDPath<typescript/class/declare/input.ts>
-	syntax: Array ["ts"]
-	body: Array [
+	body: [
 		JSClassDeclaration {
+			declare: true
 			id: JSBindingIdentifier {
 				name: "C"
 				loc: SourceLocation typescript/class/declare/input.ts 1:14-1:15 (C)
 			}
-			declare: true
-			loc: SourceLocation typescript/class/declare/input.ts 1:0-7:1
 			meta: JSClassHead {
-				implements: undefined
-				superClass: undefined
-				superTypeParameters: undefined
-				typeParameters: undefined
-				loc: SourceLocation typescript/class/declare/input.ts 1:0-7:1
-				body: Array [
+				body: [
 					TSIndexSignature {
+						readonly: false
 						key: JSBindingIdentifier {
 							name: "x"
-							loc: SourceLocation typescript/class/declare/input.ts 2:5-2:14
 							meta: JSPatternMeta {
+								typeAnnotation: TSStringKeywordTypeAnnotation {
+									loc: SourceLocation typescript/class/declare/input.ts 2:8-2:14
+								}
 								loc: SourceLocation typescript/class/declare/input.ts 2:5-2:14
-								typeAnnotation: TSStringKeywordTypeAnnotation {loc: SourceLocation typescript/class/declare/input.ts 2:8-2:14}
 							}
+							loc: SourceLocation typescript/class/declare/input.ts 2:5-2:14
 						}
-						readonly: false
+						typeAnnotation: TSAnyKeywordTypeAnnotation {
+							loc: SourceLocation typescript/class/declare/input.ts 2:17-2:20
+						}
 						loc: SourceLocation typescript/class/declare/input.ts 2:4-2:21
-						typeAnnotation: TSAnyKeywordTypeAnnotation {loc: SourceLocation typescript/class/declare/input.ts 2:17-2:20}
 					}
 					JSClassProperty {
 						key: JSStaticPropertyKey {
@@ -55,20 +42,15 @@ JSRoot {
 							}
 							loc: SourceLocation typescript/class/declare/input.ts 3:4-3:5
 						}
-						value: undefined
-						definite: undefined
-						typeAnnotation: undefined
-						loc: SourceLocation typescript/class/declare/input.ts 3:4-3:6
 						meta: JSClassPropertyMeta {
 							abstract: false
-							accessibility: undefined
 							optional: false
 							readonly: false
 							static: false
-							typeAnnotation: undefined
 							loc: SourceLocation typescript/class/declare/input.ts 3:4-3:5
 							start: Position 3:4
 						}
+						loc: SourceLocation typescript/class/declare/input.ts 3:4-3:6
 					}
 					JSClassProperty {
 						key: JSStaticPropertyKey {
@@ -78,20 +60,18 @@ JSRoot {
 							}
 							loc: SourceLocation typescript/class/declare/input.ts 4:4-4:5
 						}
-						value: undefined
-						definite: undefined
-						loc: SourceLocation typescript/class/declare/input.ts 4:4-4:14
-						typeAnnotation: TSNumberKeywordTypeAnnotation {loc: SourceLocation typescript/class/declare/input.ts 4:7-4:13}
 						meta: JSClassPropertyMeta {
 							abstract: false
-							accessibility: undefined
 							optional: false
 							readonly: false
 							static: false
-							typeAnnotation: undefined
 							loc: SourceLocation typescript/class/declare/input.ts 4:4-4:5
 							start: Position 4:4
 						}
+						typeAnnotation: TSNumberKeywordTypeAnnotation {
+							loc: SourceLocation typescript/class/declare/input.ts 4:7-4:13
+						}
+						loc: SourceLocation typescript/class/declare/input.ts 4:4-4:14
 					}
 					TSDeclareMethod {
 						kind: "method"
@@ -102,29 +82,22 @@ JSRoot {
 							}
 							loc: SourceLocation typescript/class/declare/input.ts 5:4-5:5
 						}
-						body: undefined
-						loc: SourceLocation typescript/class/declare/input.ts 5:4-5:8
-						meta: JSClassPropertyMeta {
-							abstract: false
-							accessibility: undefined
-							optional: false
-							readonly: false
-							static: false
-							typeAnnotation: undefined
-							loc: SourceLocation typescript/class/declare/input.ts 5:4-5:5
-							start: Position 5:4
-						}
 						head: JSFunctionHead {
 							async: false
 							generator: false
 							hasHoistedVars: false
-							params: Array []
-							rest: undefined
-							returnType: undefined
-							thisType: undefined
-							typeParameters: undefined
+							params: []
 							loc: SourceLocation typescript/class/declare/input.ts 5:5-5:7
 						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							optional: false
+							readonly: false
+							static: false
+							loc: SourceLocation typescript/class/declare/input.ts 5:4-5:5
+							start: Position 5:4
+						}
+						loc: SourceLocation typescript/class/declare/input.ts 5:4-5:8
 					}
 					TSDeclareMethod {
 						kind: "method"
@@ -135,34 +108,41 @@ JSRoot {
 							}
 							loc: SourceLocation typescript/class/declare/input.ts 6:4-6:5
 						}
-						body: undefined
-						loc: SourceLocation typescript/class/declare/input.ts 6:4-6:14
-						meta: JSClassPropertyMeta {
-							abstract: false
-							accessibility: undefined
-							optional: false
-							readonly: false
-							static: false
-							typeAnnotation: undefined
-							loc: SourceLocation typescript/class/declare/input.ts 6:4-6:5
-							start: Position 6:4
-						}
 						head: JSFunctionHead {
 							async: false
 							generator: false
 							hasHoistedVars: false
-							params: Array []
-							rest: undefined
-							thisType: undefined
-							typeParameters: undefined
+							params: []
+							returnType: TSVoidKeywordTypeAnnotation {
+								loc: SourceLocation typescript/class/declare/input.ts 6:9-6:13
+							}
 							loc: SourceLocation typescript/class/declare/input.ts 6:5-6:13
-							returnType: TSVoidKeywordTypeAnnotation {loc: SourceLocation typescript/class/declare/input.ts 6:9-6:13}
 						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							optional: false
+							readonly: false
+							static: false
+							loc: SourceLocation typescript/class/declare/input.ts 6:4-6:5
+							start: Position 6:4
+						}
+						loc: SourceLocation typescript/class/declare/input.ts 6:4-6:14
 					}
 				]
+				loc: SourceLocation typescript/class/declare/input.ts 1:0-7:1
 			}
+			loc: SourceLocation typescript/class/declare/input.ts 1:0-7:1
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: ["ts"]
+	path: UIDPath<typescript/class/declare/input.ts>
+	loc: SourceLocation typescript/class/declare/input.ts 1:0-8:0
 }
 ```
 

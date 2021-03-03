@@ -8,56 +8,52 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	loc: SourceLocation typescript/module-namespace/module-new-line-error/input.ts 1:0-3:0
-	path: UIDPath<typescript/module-namespace/module-new-line-error/input.ts>
-	syntax: Array ["ts"]
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Expected a semicolon or a line terminator"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 2:3
-				path: UIDPath<typescript/module-namespace/module-new-line-error/input.ts>
-				start: Position 2:4
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation typescript/module-namespace/module-new-line-error/input.ts 1:0-1:6
 			expression: JSReferenceIdentifier {
 				name: "module"
 				loc: SourceLocation typescript/module-namespace/module-new-line-error/input.ts 1:0-1:6 (module)
 			}
+			loc: SourceLocation typescript/module-namespace/module-new-line-error/input.ts 1:0-1:6
 		}
 		JSExpressionStatement {
-			loc: SourceLocation typescript/module-namespace/module-new-line-error/input.ts 2:0-2:3
 			expression: JSReferenceIdentifier {
 				name: "Foo"
 				loc: SourceLocation typescript/module-namespace/module-new-line-error/input.ts 2:0-2:3 (Foo)
 			}
+			loc: SourceLocation typescript/module-namespace/module-new-line-error/input.ts 2:0-2:3
 		}
 		JSBlockStatement {
-			body: Array []
-			directives: Array []
+			body: []
+			directives: []
 			loc: SourceLocation typescript/module-namespace/module-new-line-error/input.ts 2:4-2:6
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "Expected a semicolon or a line terminator"}
+			}
+			location: {
+				language: "js"
+				path: UIDPath<typescript/module-namespace/module-new-line-error/input.ts>
+				end: Position 2:3
+				start: Position 2:4
+			}
+		}
+	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: ["ts"]
+	path: UIDPath<typescript/module-namespace/module-new-line-error/input.ts>
+	loc: SourceLocation typescript/module-namespace/module-new-line-error/input.ts 1:0-3:0
 }
 ```
 
@@ -71,7 +67,7 @@ JSRoot {
 
     1 │ module
   > 2 │ Foo {}
-      │     ^
+      │     <error><emphasis>^</emphasis></error>
 
 
 ```

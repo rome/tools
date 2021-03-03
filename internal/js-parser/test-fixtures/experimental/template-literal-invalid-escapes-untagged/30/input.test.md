@@ -8,48 +8,16 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation experimental/template-literal-invalid-escapes-untagged/30/input.js 1:0-1:17
-	path: UIDPath<experimental/template-literal-invalid-escapes-untagged/30/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Invalid escape sequence in template"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:5
-				path: UIDPath<experimental/template-literal-invalid-escapes-untagged/30/input.js>
-				start: Position 1:5
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation experimental/template-literal-invalid-escapes-untagged/30/input.js 1:0-1:17
 			expression: JSTemplateLiteral {
-				loc: SourceLocation experimental/template-literal-invalid-escapes-untagged/30/input.js 1:0-1:17
-				expressions: Array [
+				expressions: [
 					JSNumericLiteral {
 						value: 0
-						format: undefined
 						loc: SourceLocation experimental/template-literal-invalid-escapes-untagged/30/input.js 1:9-1:10
 					}
 				]
-				quasis: Array [
+				quasis: [
 					JSTemplateElement {
 						cooked: "\\u000g"
 						raw: "\\u000g"
@@ -63,9 +31,36 @@ JSRoot {
 						loc: SourceLocation experimental/template-literal-invalid-escapes-untagged/30/input.js 1:11-1:16
 					}
 				]
+				loc: SourceLocation experimental/template-literal-invalid-escapes-untagged/30/input.js 1:0-1:17
+			}
+			loc: SourceLocation experimental/template-literal-invalid-escapes-untagged/30/input.js 1:0-1:17
+		}
+	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "Invalid escape sequence in template"}
+			}
+			location: {
+				language: "js"
+				path: UIDPath<experimental/template-literal-invalid-escapes-untagged/30/input.js>
+				end: Position 1:5
+				start: Position 1:5
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<experimental/template-literal-invalid-escapes-untagged/30/input.js>
+	loc: SourceLocation experimental/template-literal-invalid-escapes-untagged/30/input.js 1:0-1:17
 }
 ```
 
@@ -78,7 +73,7 @@ JSRoot {
   ✖ Invalid escape sequence in template
 
     `\u000g${0}right`
-         ^
+         <error><emphasis>^</emphasis></error>
 
 
 ```

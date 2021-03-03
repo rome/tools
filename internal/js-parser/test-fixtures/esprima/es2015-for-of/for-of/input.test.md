@@ -8,22 +8,12 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation esprima/es2015-for-of/for-of/input.js 1:0-2:0
-	path: UIDPath<esprima/es2015-for-of/for-of/input.js>
-	body: Array [
+	body: [
 		JSForOfStatement {
 			await: false
-			body: JSEmptyStatement {loc: SourceLocation esprima/es2015-for-of/for-of/input.js 1:12-1:13}
-			loc: SourceLocation esprima/es2015-for-of/for-of/input.js 1:0-1:13
+			body: JSEmptyStatement {
+				loc: SourceLocation esprima/es2015-for-of/for-of/input.js 1:12-1:13
+			}
 			left: JSAssignmentIdentifier {
 				name: "p"
 				loc: SourceLocation esprima/es2015-for-of/for-of/input.js 1:5-1:6 (p)
@@ -32,8 +22,18 @@ JSRoot {
 				name: "q"
 				loc: SourceLocation esprima/es2015-for-of/for-of/input.js 1:10-1:11 (q)
 			}
+			loc: SourceLocation esprima/es2015-for-of/for-of/input.js 1:0-1:13
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<esprima/es2015-for-of/for-of/input.js>
+	loc: SourceLocation esprima/es2015-for-of/for-of/input.js 1:0-2:0
 }
 ```
 

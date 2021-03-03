@@ -8,30 +8,10 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	syntax: Array []
-	loc: SourceLocation esprima/es2015-export-declaration/export-from-named-as-specifier/input.js 1:0-2:0
-	path: UIDPath<esprima/es2015-export-declaration/export-from-named-as-specifier/input.js>
-	body: Array [
+	body: [
 		JSExportExternalDeclaration {
-			defaultSpecifier: undefined
-			exportKind: undefined
-			namespaceSpecifier: undefined
-			loc: SourceLocation esprima/es2015-export-declaration/export-from-named-as-specifier/input.js 1:0-1:31
-			source: JSStringLiteral {
-				value: "foo"
-				loc: SourceLocation esprima/es2015-export-declaration/export-from-named-as-specifier/input.js 1:25-1:30
-			}
-			namedSpecifiers: Array [
+			namedSpecifiers: [
 				JSExportExternalSpecifier {
-					loc: SourceLocation esprima/es2015-export-declaration/export-from-named-as-specifier/input.js 1:8-1:18
 					exported: JSIdentifier {
 						name: "bar"
 						loc: SourceLocation esprima/es2015-export-declaration/export-from-named-as-specifier/input.js 1:15-1:18 (bar)
@@ -40,10 +20,25 @@ JSRoot {
 						name: "foo"
 						loc: SourceLocation esprima/es2015-export-declaration/export-from-named-as-specifier/input.js 1:8-1:11 (foo)
 					}
+					loc: SourceLocation esprima/es2015-export-declaration/export-from-named-as-specifier/input.js 1:8-1:18
 				}
 			]
+			source: JSStringLiteral {
+				value: "foo"
+				loc: SourceLocation esprima/es2015-export-declaration/export-from-named-as-specifier/input.js 1:25-1:30
+			}
+			loc: SourceLocation esprima/es2015-export-declaration/export-from-named-as-specifier/input.js 1:0-1:31
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: []
+	path: UIDPath<esprima/es2015-export-declaration/export-from-named-as-specifier/input.js>
+	loc: SourceLocation esprima/es2015-export-declaration/export-from-named-as-specifier/input.js 1:0-2:0
 }
 ```
 

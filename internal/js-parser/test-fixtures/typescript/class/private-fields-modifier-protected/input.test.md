@@ -8,31 +8,14 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	loc: SourceLocation typescript/class/private-fields-modifier-protected/input.ts 1:0-4:0
-	path: UIDPath<typescript/class/private-fields-modifier-protected/input.ts>
-	syntax: Array ["ts"]
-	body: Array [
+	body: [
 		JSClassDeclaration {
 			id: JSBindingIdentifier {
 				name: "A"
 				loc: SourceLocation typescript/class/private-fields-modifier-protected/input.ts 1:6-1:7 (A)
 			}
-			loc: SourceLocation typescript/class/private-fields-modifier-protected/input.ts 1:0-3:1
 			meta: JSClassHead {
-				implements: undefined
-				superClass: undefined
-				superTypeParameters: undefined
-				typeParameters: undefined
-				loc: SourceLocation typescript/class/private-fields-modifier-protected/input.ts 1:0-3:1
-				body: Array [
+				body: [
 					JSClassPrivateProperty {
 						key: JSPrivateName {
 							id: JSIdentifier {
@@ -41,24 +24,32 @@ JSRoot {
 							}
 							loc: SourceLocation typescript/class/private-fields-modifier-protected/input.ts 2:12-2:14
 						}
-						value: undefined
-						typeAnnotation: undefined
-						loc: SourceLocation typescript/class/private-fields-modifier-protected/input.ts 2:2-2:15
 						meta: JSClassPropertyMeta {
 							abstract: false
 							accessibility: "protected"
 							optional: false
 							readonly: false
 							static: false
-							typeAnnotation: undefined
 							loc: SourceLocation typescript/class/private-fields-modifier-protected/input.ts 2:2-2:14
 							start: Position 2:2
 						}
+						loc: SourceLocation typescript/class/private-fields-modifier-protected/input.ts 2:2-2:15
 					}
 				]
+				loc: SourceLocation typescript/class/private-fields-modifier-protected/input.ts 1:0-3:1
 			}
+			loc: SourceLocation typescript/class/private-fields-modifier-protected/input.ts 1:0-3:1
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: ["ts"]
+	path: UIDPath<typescript/class/private-fields-modifier-protected/input.ts>
+	loc: SourceLocation typescript/class/private-fields-modifier-protected/input.ts 1:0-4:0
 }
 ```
 

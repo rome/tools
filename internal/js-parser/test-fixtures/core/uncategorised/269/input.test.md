@@ -16,18 +16,29 @@ JSRoot {
 						JSExpressionStatement {
 							expression: JSCallExpression {
 								arguments: []
-								callee: JSReferenceIdentifier {name: "hi", loc: SourceLocation core/uncategorised/269/input.js 1:27-1:29 (hi)}
+								callee: JSReferenceIdentifier {
+									name: "hi"
+									loc: SourceLocation core/uncategorised/269/input.js 1:27-1:29 (hi)
+								}
 								loc: SourceLocation core/uncategorised/269/input.js 1:27-1:31
 							}
 							loc: SourceLocation core/uncategorised/269/input.js 1:27-1:32
 						}
-						JSBreakStatement {loc: SourceLocation core/uncategorised/269/input.js 1:33-1:39}
+						JSBreakStatement {
+							loc: SourceLocation core/uncategorised/269/input.js 1:33-1:39
+						}
 					]
-					test: JSNumericLiteral {value: 42, loc: SourceLocation core/uncategorised/269/input.js 1:23-1:25}
+					test: JSNumericLiteral {
+						value: 42
+						loc: SourceLocation core/uncategorised/269/input.js 1:23-1:25
+					}
 					loc: SourceLocation core/uncategorised/269/input.js 1:18-1:39
 				}
 			]
-			discriminant: JSReferenceIdentifier {name: "answer", loc: SourceLocation core/uncategorised/269/input.js 1:8-1:14 (answer)}
+			discriminant: JSReferenceIdentifier {
+				name: "answer"
+				loc: SourceLocation core/uncategorised/269/input.js 1:8-1:14 (answer)
+			}
 			loc: SourceLocation core/uncategorised/269/input.js 1:0-1:41
 		}
 	]
@@ -36,9 +47,9 @@ JSRoot {
 	diagnostics: []
 	directives: []
 	hasHoistedVars: false
-	path: UIDPath<core/uncategorised/269/input.js>
 	sourceType: "script"
 	syntax: []
+	path: UIDPath<core/uncategorised/269/input.js>
 	loc: SourceLocation core/uncategorised/269/input.js 1:0-1:41
 }
 ```

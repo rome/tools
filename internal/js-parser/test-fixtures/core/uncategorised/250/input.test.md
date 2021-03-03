@@ -11,11 +11,18 @@ JSRoot {
 	body: [
 		JSWhileStatement {
 			body: JSBlockStatement {
-				body: [JSContinueStatement {loc: SourceLocation core/uncategorised/250/input.js 1:15-1:24}]
+				body: [
+					JSContinueStatement {
+						loc: SourceLocation core/uncategorised/250/input.js 1:15-1:24
+					}
+				]
 				directives: []
 				loc: SourceLocation core/uncategorised/250/input.js 1:13-1:26
 			}
-			test: JSBooleanLiteral {value: true, loc: SourceLocation core/uncategorised/250/input.js 1:7-1:11}
+			test: JSBooleanLiteral {
+				value: true
+				loc: SourceLocation core/uncategorised/250/input.js 1:7-1:11
+			}
 			loc: SourceLocation core/uncategorised/250/input.js 1:0-1:26
 		}
 	]
@@ -24,9 +31,9 @@ JSRoot {
 	diagnostics: []
 	directives: []
 	hasHoistedVars: false
-	path: UIDPath<core/uncategorised/250/input.js>
 	sourceType: "script"
 	syntax: []
+	path: UIDPath<core/uncategorised/250/input.js>
 	loc: SourceLocation core/uncategorised/250/input.js 1:0-1:26
 }
 ```

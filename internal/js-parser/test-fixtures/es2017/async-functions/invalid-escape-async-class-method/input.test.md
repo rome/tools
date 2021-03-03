@@ -8,49 +8,14 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2017/async-functions/invalid-escape-async-class-method/input.js 1:0-2:0
-	path: UIDPath<es2017/async-functions/invalid-escape-async-class-method/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "<emphasis>async</emphasis> can't contain a unicode escape"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:10
-				path: UIDPath<es2017/async-functions/invalid-escape-async-class-method/input.js>
-				start: Position 1:10
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSClassDeclaration {
 			id: JSBindingIdentifier {
 				name: "X"
 				loc: SourceLocation es2017/async-functions/invalid-escape-async-class-method/input.js 1:6-1:7 (X)
 			}
-			loc: SourceLocation es2017/async-functions/invalid-escape-async-class-method/input.js 1:0-1:38
 			meta: JSClassHead {
-				implements: undefined
-				superClass: undefined
-				superTypeParameters: undefined
-				typeParameters: undefined
-				loc: SourceLocation es2017/async-functions/invalid-escape-async-class-method/input.js 1:0-1:38
-				body: Array [
+				body: [
 					JSClassMethod {
 						kind: "method"
 						key: JSStaticPropertyKey {
@@ -60,49 +25,70 @@ JSRoot {
 							}
 							loc: SourceLocation es2017/async-functions/invalid-escape-async-class-method/input.js 1:21-1:22
 						}
-						loc: SourceLocation es2017/async-functions/invalid-escape-async-class-method/input.js 1:10-1:36
-						meta: JSClassPropertyMeta {
-							abstract: false
-							accessibility: undefined
-							optional: false
-							readonly: false
-							static: false
-							typeAnnotation: undefined
-							loc: SourceLocation es2017/async-functions/invalid-escape-async-class-method/input.js 1:10-1:22
-							start: Position 1:10
+						body: JSBlockStatement {
+							body: [
+								JSExpressionStatement {
+									expression: JSAwaitExpression {
+										argument: JSReferenceIdentifier {
+											name: "x"
+											loc: SourceLocation es2017/async-functions/invalid-escape-async-class-method/input.js 1:33-1:34 (x)
+										}
+										loc: SourceLocation es2017/async-functions/invalid-escape-async-class-method/input.js 1:27-1:34
+									}
+									loc: SourceLocation es2017/async-functions/invalid-escape-async-class-method/input.js 1:27-1:34
+								}
+							]
+							directives: []
+							loc: SourceLocation es2017/async-functions/invalid-escape-async-class-method/input.js 1:25-1:36
 						}
 						head: JSFunctionHead {
 							async: true
 							generator: false
 							hasHoistedVars: false
-							params: Array []
-							rest: undefined
-							returnType: undefined
-							thisType: undefined
-							typeParameters: undefined
+							params: []
 							loc: SourceLocation es2017/async-functions/invalid-escape-async-class-method/input.js 1:22-1:24
 						}
-						body: JSBlockStatement {
-							directives: Array []
-							loc: SourceLocation es2017/async-functions/invalid-escape-async-class-method/input.js 1:25-1:36
-							body: Array [
-								JSExpressionStatement {
-									loc: SourceLocation es2017/async-functions/invalid-escape-async-class-method/input.js 1:27-1:34
-									expression: JSAwaitExpression {
-										loc: SourceLocation es2017/async-functions/invalid-escape-async-class-method/input.js 1:27-1:34
-										argument: JSReferenceIdentifier {
-											name: "x"
-											loc: SourceLocation es2017/async-functions/invalid-escape-async-class-method/input.js 1:33-1:34 (x)
-										}
-									}
-								}
-							]
+						meta: JSClassPropertyMeta {
+							abstract: false
+							optional: false
+							readonly: false
+							static: false
+							loc: SourceLocation es2017/async-functions/invalid-escape-async-class-method/input.js 1:10-1:22
+							start: Position 1:10
 						}
+						loc: SourceLocation es2017/async-functions/invalid-escape-async-class-method/input.js 1:10-1:36
 					}
 				]
+				loc: SourceLocation es2017/async-functions/invalid-escape-async-class-method/input.js 1:0-1:38
+			}
+			loc: SourceLocation es2017/async-functions/invalid-escape-async-class-method/input.js 1:0-1:38
+		}
+	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "js"
+				message: [RAW_MARKUP {value: "<emphasis>"}, "async", RAW_MARKUP {value: "</emphasis> can't contain a unicode escape"}]
+			}
+			location: {
+				language: "js"
+				path: UIDPath<es2017/async-functions/invalid-escape-async-class-method/input.js>
+				end: Position 1:10
+				start: Position 1:10
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2017/async-functions/invalid-escape-async-class-method/input.js>
+	loc: SourceLocation es2017/async-functions/invalid-escape-async-class-method/input.js 1:0-2:0
 }
 ```
 
@@ -115,7 +101,7 @@ JSRoot {
   ✖ async can't contain a unicode escape
 
     class X { \u0061sync x() { await x } }
-              ^
+              <error><emphasis>^</emphasis></error>
 
 
 ```

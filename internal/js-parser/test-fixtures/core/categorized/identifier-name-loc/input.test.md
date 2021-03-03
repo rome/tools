@@ -11,8 +11,16 @@ JSRoot {
 	body: [
 		JSExpressionStatement {
 			expression: JSCallExpression {
-				arguments: [JSReferenceIdentifier {name: "bar", loc: SourceLocation core/categorized/identifier-name-loc/input.js 1:4-1:7 (bar)}]
-				callee: JSReferenceIdentifier {name: "foo", loc: SourceLocation core/categorized/identifier-name-loc/input.js 1:0-1:3 (foo)}
+				arguments: [
+					JSReferenceIdentifier {
+						name: "bar"
+						loc: SourceLocation core/categorized/identifier-name-loc/input.js 1:4-1:7 (bar)
+					}
+				]
+				callee: JSReferenceIdentifier {
+					name: "foo"
+					loc: SourceLocation core/categorized/identifier-name-loc/input.js 1:0-1:3 (foo)
+				}
 				loc: SourceLocation core/categorized/identifier-name-loc/input.js 1:0-1:8
 			}
 			loc: SourceLocation core/categorized/identifier-name-loc/input.js 1:0-1:9
@@ -23,9 +31,9 @@ JSRoot {
 	diagnostics: []
 	directives: []
 	hasHoistedVars: false
-	path: UIDPath<core/categorized/identifier-name-loc/input.js>
 	sourceType: "script"
 	syntax: []
+	path: UIDPath<core/categorized/identifier-name-loc/input.js>
 	loc: SourceLocation core/categorized/identifier-name-loc/input.js 1:0-2:0
 }
 ```

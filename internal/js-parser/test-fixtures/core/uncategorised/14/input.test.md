@@ -11,9 +11,15 @@ JSRoot {
 	body: [
 		JSExpressionStatement {
 			expression: JSAssignmentExpression {
-				left: JSAssignmentIdentifier {name: "\u65e5\u672c\u8a9e", loc: SourceLocation core/uncategorised/14/input.js 1:0-1:3 (\u65e5\u672c\u8a9e)}
 				operator: "="
-				right: JSArrayExpression {elements: [], loc: SourceLocation core/uncategorised/14/input.js 1:6-1:8}
+				left: JSAssignmentIdentifier {
+					name: "\u65e5\u672c\u8a9e"
+					loc: SourceLocation core/uncategorised/14/input.js 1:0-1:3 (\u65e5\u672c\u8a9e)
+				}
+				right: JSArrayExpression {
+					elements: []
+					loc: SourceLocation core/uncategorised/14/input.js 1:6-1:8
+				}
 				loc: SourceLocation core/uncategorised/14/input.js 1:0-1:8
 			}
 			loc: SourceLocation core/uncategorised/14/input.js 1:0-1:8
@@ -24,9 +30,9 @@ JSRoot {
 	diagnostics: []
 	directives: []
 	hasHoistedVars: false
-	path: UIDPath<core/uncategorised/14/input.js>
 	sourceType: "script"
 	syntax: []
+	path: UIDPath<core/uncategorised/14/input.js>
 	loc: SourceLocation core/uncategorised/14/input.js 1:0-1:8
 }
 ```

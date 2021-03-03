@@ -8,21 +8,9 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: true
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation core/uncategorised/450/input.js 1:0-1:6
-	path: UIDPath<core/uncategorised/450/input.js>
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation core/uncategorised/450/input.js 1:2-1:6
 			expression: JSMemberExpression {
-				loc: SourceLocation core/uncategorised/450/input.js 1:2-1:6
 				object: JSReferenceIdentifier {
 					name: "INVALID_PLACEHOLDER"
 					loc: SourceLocation core/uncategorised/450/input.js 1:2-1:3
@@ -34,28 +22,36 @@ JSRoot {
 					}
 					loc: SourceLocation core/uncategorised/450/input.js 1:4-1:6
 				}
+				loc: SourceLocation core/uncategorised/450/input.js 1:2-1:6
 			}
+			loc: SourceLocation core/uncategorised/450/input.js 1:2-1:6
 		}
 	]
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
+	comments: []
+	corrupt: true
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {
+				advice: []
+				category: ["parse"]
 				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Unexpected character <emphasis>\u200c</emphasis>"}
+				message: [RAW_MARKUP {value: "Unexpected character <emphasis>"}, "\u200c", RAW_MARKUP {value: "</emphasis>"}]
 			}
-			location: Object {
-				integrity: undefined
+			location: {
 				language: "js"
-				sourceText: undefined
-				end: Position 1:0
 				path: UIDPath<core/uncategorised/450/input.js>
+				end: Position 1:0
 				start: Position 1:0
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<core/uncategorised/450/input.js>
+	loc: SourceLocation core/uncategorised/450/input.js 1:0-1:6
 }
 ```
 
@@ -68,7 +64,7 @@ JSRoot {
   ✖ Unexpected character ‌
 
     ‌ = []
-    ^
+    <error><emphasis>^</emphasis></error>
 
 
 ```

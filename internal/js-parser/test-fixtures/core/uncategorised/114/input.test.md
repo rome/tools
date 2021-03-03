@@ -13,9 +13,15 @@ JSRoot {
 			expression: JSNewExpression {
 				arguments: []
 				callee: JSMemberExpression {
-					object: JSReferenceIdentifier {name: "foo", loc: SourceLocation core/uncategorised/114/input.js 1:4-1:7 (foo)}
+					object: JSReferenceIdentifier {
+						name: "foo"
+						loc: SourceLocation core/uncategorised/114/input.js 1:4-1:7 (foo)
+					}
 					property: JSComputedMemberProperty {
-						value: JSReferenceIdentifier {name: "bar", loc: SourceLocation core/uncategorised/114/input.js 1:8-1:11 (bar)}
+						value: JSReferenceIdentifier {
+							name: "bar"
+							loc: SourceLocation core/uncategorised/114/input.js 1:8-1:11 (bar)
+						}
 						loc: SourceLocation core/uncategorised/114/input.js 1:7-1:12
 					}
 					loc: SourceLocation core/uncategorised/114/input.js 1:4-1:12
@@ -30,9 +36,9 @@ JSRoot {
 	diagnostics: []
 	directives: []
 	hasHoistedVars: false
-	path: UIDPath<core/uncategorised/114/input.js>
 	sourceType: "script"
 	syntax: []
+	path: UIDPath<core/uncategorised/114/input.js>
 	loc: SourceLocation core/uncategorised/114/input.js 1:0-1:12
 }
 ```

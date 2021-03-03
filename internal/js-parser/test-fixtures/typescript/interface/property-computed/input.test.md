@@ -8,33 +8,19 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	loc: SourceLocation typescript/interface/property-computed/input.ts 1:0-5:0
-	path: UIDPath<typescript/interface/property-computed/input.ts>
-	syntax: Array ["ts"]
-	body: Array [
+	body: [
 		TSInterfaceDeclaration {
 			id: JSBindingIdentifier {
 				name: "I"
 				loc: SourceLocation typescript/interface/property-computed/input.ts 1:10-1:11 (I)
 			}
-			extends: undefined
-			typeParameters: undefined
-			loc: SourceLocation typescript/interface/property-computed/input.ts 1:0-4:1
 			body: TSInterfaceBody {
-				loc: SourceLocation typescript/interface/property-computed/input.ts 1:12-4:1
-				body: Array [
+				body: [
 					TSPropertySignature {
+						optional: false
+						readonly: false
 						key: JSComputedPropertyKey {
 							value: JSMemberExpression {
-								loc: SourceLocation typescript/interface/property-computed/input.ts 2:5-2:20
 								object: JSReferenceIdentifier {
 									name: "Symbol"
 									loc: SourceLocation typescript/interface/property-computed/input.ts 2:5-2:11 (Symbol)
@@ -46,18 +32,20 @@ JSRoot {
 									}
 									loc: SourceLocation typescript/interface/property-computed/input.ts 2:12-2:20 (iterator)
 								}
+								loc: SourceLocation typescript/interface/property-computed/input.ts 2:5-2:20
 							}
 							loc: SourceLocation typescript/interface/property-computed/input.ts 2:4-2:21
 						}
-						optional: false
-						readonly: false
+						typeAnnotation: TSNumberKeywordTypeAnnotation {
+							loc: SourceLocation typescript/interface/property-computed/input.ts 2:23-2:29
+						}
 						loc: SourceLocation typescript/interface/property-computed/input.ts 2:4-2:30
-						typeAnnotation: TSNumberKeywordTypeAnnotation {loc: SourceLocation typescript/interface/property-computed/input.ts 2:23-2:29}
 					}
 					TSPropertySignature {
+						optional: true
+						readonly: false
 						key: JSComputedPropertyKey {
 							value: JSMemberExpression {
-								loc: SourceLocation typescript/interface/property-computed/input.ts 3:5-3:20
 								object: JSReferenceIdentifier {
 									name: "Symbol"
 									loc: SourceLocation typescript/interface/property-computed/input.ts 3:5-3:11 (Symbol)
@@ -69,18 +57,30 @@ JSRoot {
 									}
 									loc: SourceLocation typescript/interface/property-computed/input.ts 3:12-3:20 (iterator)
 								}
+								loc: SourceLocation typescript/interface/property-computed/input.ts 3:5-3:20
 							}
 							loc: SourceLocation typescript/interface/property-computed/input.ts 3:4-3:21
 						}
-						optional: true
-						readonly: false
+						typeAnnotation: TSNumberKeywordTypeAnnotation {
+							loc: SourceLocation typescript/interface/property-computed/input.ts 3:24-3:30
+						}
 						loc: SourceLocation typescript/interface/property-computed/input.ts 3:4-3:31
-						typeAnnotation: TSNumberKeywordTypeAnnotation {loc: SourceLocation typescript/interface/property-computed/input.ts 3:24-3:30}
 					}
 				]
+				loc: SourceLocation typescript/interface/property-computed/input.ts 1:12-4:1
 			}
+			loc: SourceLocation typescript/interface/property-computed/input.ts 1:0-4:1
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: ["ts"]
+	path: UIDPath<typescript/interface/property-computed/input.ts>
+	loc: SourceLocation typescript/interface/property-computed/input.ts 1:0-5:0
 }
 ```
 

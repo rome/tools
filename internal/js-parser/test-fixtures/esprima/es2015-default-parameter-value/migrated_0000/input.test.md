@@ -8,68 +8,58 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation esprima/es2015-default-parameter-value/migrated_0000/input.js 1:0-2:0
-	path: UIDPath<esprima/es2015-default-parameter-value/migrated_0000/input.js>
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation esprima/es2015-default-parameter-value/migrated_0000/input.js 1:0-1:22
 			expression: JSAssignmentExpression {
 				operator: "="
-				loc: SourceLocation esprima/es2015-default-parameter-value/migrated_0000/input.js 1:0-1:22
 				left: JSAssignmentIdentifier {
 					name: "x"
 					loc: SourceLocation esprima/es2015-default-parameter-value/migrated_0000/input.js 1:0-1:1 (x)
 				}
 				right: JSFunctionExpression {
-					id: undefined
-					loc: SourceLocation esprima/es2015-default-parameter-value/migrated_0000/input.js 1:4-1:22
 					body: JSBlockStatement {
-						body: Array []
-						directives: Array []
+						body: []
+						directives: []
 						loc: SourceLocation esprima/es2015-default-parameter-value/migrated_0000/input.js 1:20-1:22
 					}
 					head: JSFunctionHead {
 						async: false
 						generator: false
 						hasHoistedVars: false
-						rest: undefined
-						returnType: undefined
-						thisType: undefined
-						typeParameters: undefined
-						loc: SourceLocation esprima/es2015-default-parameter-value/migrated_0000/input.js 1:12-1:19
-						params: Array [
+						params: [
 							JSBindingAssignmentPattern {
-								loc: SourceLocation esprima/es2015-default-parameter-value/migrated_0000/input.js 1:13-1:18
-								right: JSNumericLiteral {
-									value: 1
-									format: undefined
-									loc: SourceLocation esprima/es2015-default-parameter-value/migrated_0000/input.js 1:17-1:18
-								}
 								left: JSBindingIdentifier {
 									name: "y"
-									loc: SourceLocation esprima/es2015-default-parameter-value/migrated_0000/input.js 1:13-1:14 (y)
 									meta: JSPatternMeta {
-										optional: undefined
-										typeAnnotation: undefined
 										loc: SourceLocation esprima/es2015-default-parameter-value/migrated_0000/input.js 1:13-1:14
 									}
+									loc: SourceLocation esprima/es2015-default-parameter-value/migrated_0000/input.js 1:13-1:14 (y)
 								}
+								right: JSNumericLiteral {
+									value: 1
+									loc: SourceLocation esprima/es2015-default-parameter-value/migrated_0000/input.js 1:17-1:18
+								}
+								loc: SourceLocation esprima/es2015-default-parameter-value/migrated_0000/input.js 1:13-1:18
 							}
 						]
+						loc: SourceLocation esprima/es2015-default-parameter-value/migrated_0000/input.js 1:12-1:19
 					}
+					loc: SourceLocation esprima/es2015-default-parameter-value/migrated_0000/input.js 1:4-1:22
 				}
+				loc: SourceLocation esprima/es2015-default-parameter-value/migrated_0000/input.js 1:0-1:22
 			}
+			loc: SourceLocation esprima/es2015-default-parameter-value/migrated_0000/input.js 1:0-1:22
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<esprima/es2015-default-parameter-value/migrated_0000/input.js>
+	loc: SourceLocation esprima/es2015-default-parameter-value/migrated_0000/input.js 1:0-2:0
 }
 ```
 

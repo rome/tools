@@ -8,75 +8,68 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: true
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2015/arrow-functions/inner-parens/input.js 1:0-2:0
-	path: UIDPath<es2015/arrow-functions/inner-parens/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Function parameters can't be parenthesized"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:15
-				path: UIDPath<es2015/arrow-functions/inner-parens/input.js>
-				start: Position 1:12
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSVariableDeclarationStatement {
-			loc: SourceLocation es2015/arrow-functions/inner-parens/input.js 1:0-1:24
 			declaration: JSVariableDeclaration {
 				kind: "var"
-				loc: SourceLocation es2015/arrow-functions/inner-parens/input.js 1:0-1:24
-				declarations: Array [
+				declarations: [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "foo"
 							loc: SourceLocation es2015/arrow-functions/inner-parens/input.js 1:4-1:7 (foo)
 						}
-						loc: SourceLocation es2015/arrow-functions/inner-parens/input.js 1:4-1:23
 						init: JSArrowFunctionExpression {
-							loc: SourceLocation es2015/arrow-functions/inner-parens/input.js 1:10-1:23
 							body: JSBlockStatement {
-								body: Array []
-								directives: Array []
+								body: []
+								directives: []
 								loc: SourceLocation es2015/arrow-functions/inner-parens/input.js 1:21-1:23
 							}
 							head: JSFunctionHead {
 								async: false
 								hasHoistedVars: false
-								rest: undefined
-								returnType: undefined
-								thisType: undefined
-								loc: SourceLocation es2015/arrow-functions/inner-parens/input.js 1:10-1:20
-								params: Array [
+								params: [
 									JSBindingIdentifier {
 										name: "foo"
 										loc: SourceLocation es2015/arrow-functions/inner-parens/input.js 1:12-1:15 (foo)
 									}
 								]
+								loc: SourceLocation es2015/arrow-functions/inner-parens/input.js 1:10-1:20
 							}
+							loc: SourceLocation es2015/arrow-functions/inner-parens/input.js 1:10-1:23
 						}
+						loc: SourceLocation es2015/arrow-functions/inner-parens/input.js 1:4-1:23
 					}
 				]
+				loc: SourceLocation es2015/arrow-functions/inner-parens/input.js 1:0-1:24
+			}
+			loc: SourceLocation es2015/arrow-functions/inner-parens/input.js 1:0-1:24
+		}
+	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "Function parameters can't be parenthesized"}
+			}
+			location: {
+				language: "js"
+				path: UIDPath<es2015/arrow-functions/inner-parens/input.js>
+				end: Position 1:15
+				start: Position 1:12
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: true
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2015/arrow-functions/inner-parens/input.js>
+	loc: SourceLocation es2015/arrow-functions/inner-parens/input.js 1:0-2:0
 }
 ```
 
@@ -89,7 +82,8 @@ JSRoot {
   ✖ Function parameters can't be parenthesized
 
     var foo = ((foo)) => {};
-                ^^^
+                <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
+    <error><emphasis>^</emphasis></error>
 
 
 ```

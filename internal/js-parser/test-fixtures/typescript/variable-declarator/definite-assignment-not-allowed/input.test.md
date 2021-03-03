@@ -8,73 +8,69 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: true
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	loc: SourceLocation typescript/variable-declarator/definite-assignment-not-allowed/input.ts 1:0-1:13
-	path: UIDPath<typescript/variable-declarator/definite-assignment-not-allowed/input.ts>
-	syntax: Array ["ts"]
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Complex binding patterns require an initialization value"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:6
-				path: UIDPath<typescript/variable-declarator/definite-assignment-not-allowed/input.ts>
-				start: Position 1:6
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSVariableDeclarationStatement {
-			loc: SourceLocation typescript/variable-declarator/definite-assignment-not-allowed/input.ts 1:0-1:6
 			declaration: JSVariableDeclaration {
 				kind: "let"
-				loc: SourceLocation typescript/variable-declarator/definite-assignment-not-allowed/input.ts 1:0-1:6
-				declarations: Array [
+				declarations: [
 					JSVariableDeclarator {
 						id: JSBindingObjectPattern {
-							properties: Array []
-							rest: undefined
+							properties: []
 							loc: SourceLocation typescript/variable-declarator/definite-assignment-not-allowed/input.ts 1:4-1:6
 						}
-						init: undefined
 						loc: SourceLocation typescript/variable-declarator/definite-assignment-not-allowed/input.ts 1:4-1:6
 					}
 				]
+				loc: SourceLocation typescript/variable-declarator/definite-assignment-not-allowed/input.ts 1:0-1:6
 			}
+			loc: SourceLocation typescript/variable-declarator/definite-assignment-not-allowed/input.ts 1:0-1:6
 		}
 		JSExpressionStatement {
-			loc: SourceLocation typescript/variable-declarator/definite-assignment-not-allowed/input.ts 1:6-1:9
 			expression: JSUnaryExpression {
 				operator: "!"
 				prefix: true
-				loc: SourceLocation typescript/variable-declarator/definite-assignment-not-allowed/input.ts 1:6-1:9
 				argument: JSReferenceIdentifier {
 					name: "INVALID_PLACEHOLDER"
 					loc: SourceLocation typescript/variable-declarator/definite-assignment-not-allowed/input.ts 1:8-1:9
 				}
+				loc: SourceLocation typescript/variable-declarator/definite-assignment-not-allowed/input.ts 1:6-1:9
 			}
+			loc: SourceLocation typescript/variable-declarator/definite-assignment-not-allowed/input.ts 1:6-1:9
 		}
 		JSBlockStatement {
-			body: Array []
-			directives: Array []
+			body: []
+			directives: []
 			loc: SourceLocation typescript/variable-declarator/definite-assignment-not-allowed/input.ts 1:10-1:12
 		}
-		JSEmptyStatement {loc: SourceLocation typescript/variable-declarator/definite-assignment-not-allowed/input.ts 1:12-1:13}
+		JSEmptyStatement {
+			loc: SourceLocation typescript/variable-declarator/definite-assignment-not-allowed/input.ts 1:12-1:13
+		}
 	]
+	comments: []
+	corrupt: true
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "Complex binding patterns require an initialization value"}
+			}
+			location: {
+				language: "js"
+				path: UIDPath<typescript/variable-declarator/definite-assignment-not-allowed/input.ts>
+				end: Position 1:6
+				start: Position 1:6
+			}
+		}
+	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: ["ts"]
+	path: UIDPath<typescript/variable-declarator/definite-assignment-not-allowed/input.ts>
+	loc: SourceLocation typescript/variable-declarator/definite-assignment-not-allowed/input.ts 1:0-1:13
 }
 ```
 
@@ -87,7 +83,7 @@ JSRoot {
   ✖ Complex binding patterns require an initialization value
 
     let {}! = {};
-          ^
+          <error><emphasis>^</emphasis></error>
 
 
 ```

@@ -8,69 +8,62 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2015/uncategorised/328/input.js 1:0-1:18
-	path: UIDPath<es2015/uncategorised/328/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Expected a semicolon or a line terminator"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:10
-				path: UIDPath<es2015/uncategorised/328/input.js>
-				start: Position 1:11
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSIfStatement {
-			alternate: undefined
-			loc: SourceLocation es2015/uncategorised/328/input.js 1:0-1:10
-			test: JSNumericLiteral {
-				value: 1
-				format: undefined
-				loc: SourceLocation es2015/uncategorised/328/input.js 1:4-1:5
-			}
 			consequent: JSExpressionStatement {
-				loc: SourceLocation es2015/uncategorised/328/input.js 1:7-1:10
 				expression: JSReferenceIdentifier {
 					name: "let"
 					loc: SourceLocation es2015/uncategorised/328/input.js 1:7-1:10 (let)
 				}
+				loc: SourceLocation es2015/uncategorised/328/input.js 1:7-1:10
 			}
+			test: JSNumericLiteral {
+				value: 1
+				loc: SourceLocation es2015/uncategorised/328/input.js 1:4-1:5
+			}
+			loc: SourceLocation es2015/uncategorised/328/input.js 1:0-1:10
 		}
 		JSExpressionStatement {
-			loc: SourceLocation es2015/uncategorised/328/input.js 1:11-1:18
 			expression: JSAssignmentExpression {
 				operator: "="
-				loc: SourceLocation es2015/uncategorised/328/input.js 1:11-1:17
 				left: JSAssignmentIdentifier {
 					name: "x"
 					loc: SourceLocation es2015/uncategorised/328/input.js 1:11-1:12 (x)
 				}
 				right: JSNumericLiteral {
 					value: 10
-					format: undefined
 					loc: SourceLocation es2015/uncategorised/328/input.js 1:15-1:17
 				}
+				loc: SourceLocation es2015/uncategorised/328/input.js 1:11-1:17
+			}
+			loc: SourceLocation es2015/uncategorised/328/input.js 1:11-1:18
+		}
+	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "Expected a semicolon or a line terminator"}
+			}
+			location: {
+				language: "js"
+				path: UIDPath<es2015/uncategorised/328/input.js>
+				end: Position 1:10
+				start: Position 1:11
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2015/uncategorised/328/input.js>
+	loc: SourceLocation es2015/uncategorised/328/input.js 1:0-1:18
 }
 ```
 
@@ -83,7 +76,7 @@ JSRoot {
   ✖ Expected a semicolon or a line terminator
 
     if (1) let x = 10;
-               ^
+               <error><emphasis>^</emphasis></error>
 
 
 ```

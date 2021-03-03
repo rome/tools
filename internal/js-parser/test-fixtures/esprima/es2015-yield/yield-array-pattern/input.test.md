@@ -8,40 +8,37 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation esprima/es2015-yield/yield-array-pattern/input.js 1:0-2:0
-	path: UIDPath<esprima/es2015-yield/yield-array-pattern/input.js>
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation esprima/es2015-yield/yield-array-pattern/input.js 1:0-1:13
 			expression: JSAssignmentExpression {
 				operator: "="
-				loc: SourceLocation esprima/es2015-yield/yield-array-pattern/input.js 1:1-1:12
-				right: JSReferenceIdentifier {
-					name: "x"
-					loc: SourceLocation esprima/es2015-yield/yield-array-pattern/input.js 1:11-1:12 (x)
-				}
 				left: JSAssignmentArrayPattern {
-					rest: undefined
-					loc: SourceLocation esprima/es2015-yield/yield-array-pattern/input.js 1:1-1:8
-					elements: Array [
+					elements: [
 						JSAssignmentIdentifier {
 							name: "yield"
 							loc: SourceLocation esprima/es2015-yield/yield-array-pattern/input.js 1:2-1:7 (yield)
 						}
 					]
+					loc: SourceLocation esprima/es2015-yield/yield-array-pattern/input.js 1:1-1:8
 				}
+				right: JSReferenceIdentifier {
+					name: "x"
+					loc: SourceLocation esprima/es2015-yield/yield-array-pattern/input.js 1:11-1:12 (x)
+				}
+				loc: SourceLocation esprima/es2015-yield/yield-array-pattern/input.js 1:1-1:12
 			}
+			loc: SourceLocation esprima/es2015-yield/yield-array-pattern/input.js 1:0-1:13
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<esprima/es2015-yield/yield-array-pattern/input.js>
+	loc: SourceLocation esprima/es2015-yield/yield-array-pattern/input.js 1:0-2:0
 }
 ```
 

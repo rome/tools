@@ -8,22 +8,9 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation esprima/es2015-arrow-function/migrated_0020/input.js 1:0-2:0
-	path: UIDPath<esprima/es2015-arrow-function/migrated_0020/input.js>
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation esprima/es2015-arrow-function/migrated_0020/input.js 1:0-1:14
 			expression: JSArrowFunctionExpression {
-				loc: SourceLocation esprima/es2015-arrow-function/migrated_0020/input.js 1:0-1:14
 				body: JSReferenceIdentifier {
 					name: "earth"
 					loc: SourceLocation esprima/es2015-arrow-function/migrated_0020/input.js 1:9-1:14 (earth)
@@ -31,20 +18,28 @@ JSRoot {
 				head: JSFunctionHead {
 					async: false
 					hasHoistedVars: false
-					rest: undefined
-					returnType: undefined
-					thisType: undefined
-					loc: SourceLocation esprima/es2015-arrow-function/migrated_0020/input.js 1:0-1:8
-					params: Array [
+					params: [
 						JSBindingIdentifier {
 							name: "sun"
 							loc: SourceLocation esprima/es2015-arrow-function/migrated_0020/input.js 1:1-1:4 (sun)
 						}
 					]
+					loc: SourceLocation esprima/es2015-arrow-function/migrated_0020/input.js 1:0-1:8
 				}
+				loc: SourceLocation esprima/es2015-arrow-function/migrated_0020/input.js 1:0-1:14
 			}
+			loc: SourceLocation esprima/es2015-arrow-function/migrated_0020/input.js 1:0-1:14
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<esprima/es2015-arrow-function/migrated_0020/input.js>
+	loc: SourceLocation esprima/es2015-arrow-function/migrated_0020/input.js 1:0-2:0
 }
 ```
 

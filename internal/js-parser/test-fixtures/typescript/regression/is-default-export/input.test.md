@@ -8,65 +8,59 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	loc: SourceLocation typescript/regression/is-default-export/input.ts 1:0-4:0
-	path: UIDPath<typescript/regression/is-default-export/input.ts>
-	syntax: Array ["ts"]
-	body: Array [
+	body: [
 		JSExportLocalDeclaration {
 			exportKind: "type"
-			specifiers: undefined
-			loc: SourceLocation typescript/regression/is-default-export/input.ts 1:0-1:23
 			declaration: TSTypeAlias {
 				id: JSBindingIdentifier {
 					name: "T"
 					loc: SourceLocation typescript/regression/is-default-export/input.ts 1:12-1:13 (T)
 				}
-				typeParameters: undefined
+				right: TSNumberKeywordTypeAnnotation {
+					loc: SourceLocation typescript/regression/is-default-export/input.ts 1:16-1:22
+				}
 				loc: SourceLocation typescript/regression/is-default-export/input.ts 1:7-1:23
-				right: TSNumberKeywordTypeAnnotation {loc: SourceLocation typescript/regression/is-default-export/input.ts 1:16-1:22}
 			}
+			loc: SourceLocation typescript/regression/is-default-export/input.ts 1:0-1:23
 		}
 		JSExportLocalDeclaration {
 			exportKind: "value"
-			specifiers: undefined
-			loc: SourceLocation typescript/regression/is-default-export/input.ts 2:0-2:16
 			declaration: TSEnumDeclaration {
+				const: false
+				members: []
 				id: JSBindingIdentifier {
 					name: "E"
 					loc: SourceLocation typescript/regression/is-default-export/input.ts 2:12-2:13 (E)
 				}
-				const: false
-				members: Array []
 				loc: SourceLocation typescript/regression/is-default-export/input.ts 2:7-2:16
 			}
+			loc: SourceLocation typescript/regression/is-default-export/input.ts 2:0-2:16
 		}
 		JSExportLocalDeclaration {
 			exportKind: "type"
-			specifiers: undefined
-			loc: SourceLocation typescript/regression/is-default-export/input.ts 3:0-3:21
 			declaration: TSInterfaceDeclaration {
 				id: JSBindingIdentifier {
 					name: "I"
 					loc: SourceLocation typescript/regression/is-default-export/input.ts 3:17-3:18 (I)
 				}
-				extends: undefined
-				typeParameters: undefined
-				loc: SourceLocation typescript/regression/is-default-export/input.ts 3:7-3:21
 				body: TSInterfaceBody {
-					body: Array []
+					body: []
 					loc: SourceLocation typescript/regression/is-default-export/input.ts 3:19-3:21
 				}
+				loc: SourceLocation typescript/regression/is-default-export/input.ts 3:7-3:21
 			}
+			loc: SourceLocation typescript/regression/is-default-export/input.ts 3:0-3:21
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: ["ts"]
+	path: UIDPath<typescript/regression/is-default-export/input.ts>
+	loc: SourceLocation typescript/regression/is-default-export/input.ts 1:0-4:0
 }
 ```
 

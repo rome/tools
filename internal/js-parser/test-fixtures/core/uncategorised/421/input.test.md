@@ -8,51 +8,42 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: true
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation core/uncategorised/421/input.js 1:0-1:2
-	path: UIDPath<core/uncategorised/421/input.js>
-	body: Array [
+	body: [
 		JSDoWhileStatement {
-			loc: SourceLocation core/uncategorised/421/input.js 1:0-1:2
-			test: JSReferenceIdentifier {
-				name: "INVALID_PLACEHOLDER"
-				loc: SourceLocation core/uncategorised/421/input.js 1:2-1:2
-			}
 			body: JSExpressionStatement {
-				loc: SourceLocation core/uncategorised/421/input.js 1:2-1:2
 				expression: JSReferenceIdentifier {
 					name: "INVALID_PLACEHOLDER"
 					loc: SourceLocation core/uncategorised/421/input.js 1:2-1:2
 				}
+				loc: SourceLocation core/uncategorised/421/input.js 1:2-1:2
 			}
+			test: JSReferenceIdentifier {
+				name: "INVALID_PLACEHOLDER"
+				loc: SourceLocation core/uncategorised/421/input.js 1:2-1:2
+			}
+			loc: SourceLocation core/uncategorised/421/input.js 1:0-1:2
 		}
 	]
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Unknown start to an statement expression"}
-			}
-			location: Object {
-				integrity: undefined
+	comments: []
+	corrupt: true
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {advice: [], category: ["parse"], categoryValue: "js", message: [RAW_MARKUP {value: "Unknown start to an "}, "statement expression"]}
+			location: {
 				language: "js"
-				sourceText: undefined
-				end: Position 1:2
 				path: UIDPath<core/uncategorised/421/input.js>
+				end: Position 1:2
 				start: Position 1:2
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<core/uncategorised/421/input.js>
+	loc: SourceLocation core/uncategorised/421/input.js 1:0-1:2
 }
 ```
 
@@ -65,7 +56,7 @@ JSRoot {
   ✖ Unknown start to an statement expression
 
     do
-      ^
+      <error><emphasis>^</emphasis></error>
 
 
 ```

@@ -10,14 +10,26 @@
 JSRoot {
 	body: [
 		JSVariableDeclarationStatement {
+			trailingComments: ["0"]
 			declaration: JSVariableDeclaration {
 				kind: "const"
 				declarations: [
 					JSVariableDeclarator {
-						id: JSBindingIdentifier {name: "socket", loc: SourceLocation comments/regression/10432/input.js 1:6-1:12 (socket)}
+						id: JSBindingIdentifier {
+							name: "socket"
+							loc: SourceLocation comments/regression/10432/input.js 1:6-1:12 (socket)
+						}
 						init: JSCallExpression {
-							arguments: [JSReferenceIdentifier {name: "address", loc: SourceLocation comments/regression/10432/input.js 1:28-1:35 (address)}]
-							callee: JSReferenceIdentifier {name: "socketClient", loc: SourceLocation comments/regression/10432/input.js 1:15-1:27 (socketClient)}
+							arguments: [
+								JSReferenceIdentifier {
+									name: "address"
+									loc: SourceLocation comments/regression/10432/input.js 1:28-1:35 (address)
+								}
+							]
+							callee: JSReferenceIdentifier {
+								name: "socketClient"
+								loc: SourceLocation comments/regression/10432/input.js 1:15-1:27 (socketClient)
+							}
 							loc: SourceLocation comments/regression/10432/input.js 1:15-1:36
 						}
 						loc: SourceLocation comments/regression/10432/input.js 1:6-1:36
@@ -25,13 +37,16 @@ JSRoot {
 				]
 				loc: SourceLocation comments/regression/10432/input.js 1:0-1:36
 			}
-			trailingComments: ["0"]
 			loc: SourceLocation comments/regression/10432/input.js 1:0-1:36
 		}
 		JSExpressionStatement {
+			leadingComments: ["0"]
 			expression: JSCallExpression {
 				arguments: [
-					JSStringLiteral {value: "connect", loc: SourceLocation comments/regression/10432/input.js 3:10-3:19}
+					JSStringLiteral {
+						value: "connect"
+						loc: SourceLocation comments/regression/10432/input.js 3:10-3:19
+					}
 					JSFunctionExpression {
 						body: JSBlockStatement {
 							body: [
@@ -39,13 +54,22 @@ JSRoot {
 									expression: JSCallExpression {
 										arguments: [
 											JSBinaryExpression {
-												left: JSStringLiteral {value: "Connected to ", loc: SourceLocation comments/regression/10432/input.js 4:8-4:23}
 												operator: "+"
-												right: JSReferenceIdentifier {name: "address", loc: SourceLocation comments/regression/10432/input.js 4:26-4:33 (address)}
+												left: JSStringLiteral {
+													value: "Connected to "
+													loc: SourceLocation comments/regression/10432/input.js 4:8-4:23
+												}
+												right: JSReferenceIdentifier {
+													name: "address"
+													loc: SourceLocation comments/regression/10432/input.js 4:26-4:33 (address)
+												}
 												loc: SourceLocation comments/regression/10432/input.js 4:8-4:33
 											}
 										]
-										callee: JSReferenceIdentifier {name: "debug", loc: SourceLocation comments/regression/10432/input.js 4:2-4:7 (debug)}
+										callee: JSReferenceIdentifier {
+											name: "debug"
+											loc: SourceLocation comments/regression/10432/input.js 4:2-4:7 (debug)
+										}
 										loc: SourceLocation comments/regression/10432/input.js 4:2-4:34
 									}
 									loc: SourceLocation comments/regression/10432/input.js 4:2-4:34
@@ -65,27 +89,38 @@ JSRoot {
 					}
 				]
 				callee: JSMemberExpression {
-					object: JSReferenceIdentifier {name: "socket", loc: SourceLocation comments/regression/10432/input.js 3:0-3:6 (socket)}
+					object: JSReferenceIdentifier {
+						name: "socket"
+						loc: SourceLocation comments/regression/10432/input.js 3:0-3:6 (socket)
+					}
 					property: JSStaticMemberProperty {
-						value: JSIdentifier {name: "on", loc: SourceLocation comments/regression/10432/input.js 3:7-3:9 (on)}
+						value: JSIdentifier {
+							name: "on"
+							loc: SourceLocation comments/regression/10432/input.js 3:7-3:9 (on)
+						}
 						loc: SourceLocation comments/regression/10432/input.js 3:7-3:9 (on)
 					}
 					loc: SourceLocation comments/regression/10432/input.js 3:0-3:9
 				}
 				loc: SourceLocation comments/regression/10432/input.js 3:0-5:2
 			}
-			leadingComments: ["0"]
 			loc: SourceLocation comments/regression/10432/input.js 3:0-5:2
 		}
 	]
-	comments: [CommentBlock {id: "0", value: " istanbul ignore next ", loc: SourceLocation comments/regression/10432/input.js 2:0-2:26}]
+	comments: [
+		CommentBlock {
+			id: "0"
+			value: " istanbul ignore next "
+			loc: SourceLocation comments/regression/10432/input.js 2:0-2:26
+		}
+	]
 	corrupt: false
 	diagnostics: []
 	directives: []
 	hasHoistedVars: false
-	path: UIDPath<comments/regression/10432/input.js>
 	sourceType: "script"
 	syntax: []
+	path: UIDPath<comments/regression/10432/input.js>
 	loc: SourceLocation comments/regression/10432/input.js 1:0-6:0
 }
 ```

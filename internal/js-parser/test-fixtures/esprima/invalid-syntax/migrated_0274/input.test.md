@@ -8,49 +8,14 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation esprima/invalid-syntax/migrated_0274/input.js 1:0-2:0
-	path: UIDPath<esprima/invalid-syntax/migrated_0274/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Duplicate constructor in the same class"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:38
-				path: UIDPath<esprima/invalid-syntax/migrated_0274/input.js>
-				start: Position 1:25
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSClassDeclaration {
 			id: JSBindingIdentifier {
 				name: "A"
 				loc: SourceLocation esprima/invalid-syntax/migrated_0274/input.js 1:6-1:7 (A)
 			}
-			loc: SourceLocation esprima/invalid-syntax/migrated_0274/input.js 1:0-1:43
 			meta: JSClassHead {
-				implements: undefined
-				superClass: undefined
-				superTypeParameters: undefined
-				typeParameters: undefined
-				loc: SourceLocation esprima/invalid-syntax/migrated_0274/input.js 1:0-1:43
-				body: Array [
+				body: [
 					JSClassMethod {
 						kind: "constructor"
 						key: JSStaticPropertyKey {
@@ -60,33 +25,27 @@ JSRoot {
 							}
 							loc: SourceLocation esprima/invalid-syntax/migrated_0274/input.js 1:9-1:20
 						}
-						loc: SourceLocation esprima/invalid-syntax/migrated_0274/input.js 1:9-1:24
 						body: JSBlockStatement {
-							body: Array []
-							directives: Array []
+							body: []
+							directives: []
 							loc: SourceLocation esprima/invalid-syntax/migrated_0274/input.js 1:22-1:24
-						}
-						meta: JSClassPropertyMeta {
-							abstract: false
-							accessibility: undefined
-							optional: false
-							readonly: false
-							static: false
-							typeAnnotation: undefined
-							loc: SourceLocation esprima/invalid-syntax/migrated_0274/input.js 1:9-1:20
-							start: Position 1:9
 						}
 						head: JSFunctionHead {
 							async: false
 							generator: false
 							hasHoistedVars: false
-							params: Array []
-							rest: undefined
-							returnType: undefined
-							thisType: undefined
-							typeParameters: undefined
+							params: []
 							loc: SourceLocation esprima/invalid-syntax/migrated_0274/input.js 1:20-1:22
 						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							optional: false
+							readonly: false
+							static: false
+							loc: SourceLocation esprima/invalid-syntax/migrated_0274/input.js 1:9-1:20
+							start: Position 1:9
+						}
+						loc: SourceLocation esprima/invalid-syntax/migrated_0274/input.js 1:9-1:24
 					}
 					JSClassMethod {
 						kind: "constructor"
@@ -97,38 +56,59 @@ JSRoot {
 							}
 							loc: SourceLocation esprima/invalid-syntax/migrated_0274/input.js 1:25-1:38
 						}
-						loc: SourceLocation esprima/invalid-syntax/migrated_0274/input.js 1:25-1:42
 						body: JSBlockStatement {
-							body: Array []
-							directives: Array []
+							body: []
+							directives: []
 							loc: SourceLocation esprima/invalid-syntax/migrated_0274/input.js 1:40-1:42
-						}
-						meta: JSClassPropertyMeta {
-							abstract: false
-							accessibility: undefined
-							optional: false
-							readonly: false
-							static: false
-							typeAnnotation: undefined
-							loc: SourceLocation esprima/invalid-syntax/migrated_0274/input.js 1:25-1:38
-							start: Position 1:25
 						}
 						head: JSFunctionHead {
 							async: false
 							generator: false
 							hasHoistedVars: false
-							params: Array []
-							rest: undefined
-							returnType: undefined
-							thisType: undefined
-							typeParameters: undefined
+							params: []
 							loc: SourceLocation esprima/invalid-syntax/migrated_0274/input.js 1:38-1:40
 						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							optional: false
+							readonly: false
+							static: false
+							loc: SourceLocation esprima/invalid-syntax/migrated_0274/input.js 1:25-1:38
+							start: Position 1:25
+						}
+						loc: SourceLocation esprima/invalid-syntax/migrated_0274/input.js 1:25-1:42
 					}
 				]
+				loc: SourceLocation esprima/invalid-syntax/migrated_0274/input.js 1:0-1:43
+			}
+			loc: SourceLocation esprima/invalid-syntax/migrated_0274/input.js 1:0-1:43
+		}
+	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "Duplicate constructor in the same class"}
+			}
+			location: {
+				language: "js"
+				path: UIDPath<esprima/invalid-syntax/migrated_0274/input.js>
+				end: Position 1:38
+				start: Position 1:25
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<esprima/invalid-syntax/migrated_0274/input.js>
+	loc: SourceLocation esprima/invalid-syntax/migrated_0274/input.js 1:0-2:0
 }
 ```
 
@@ -141,7 +121,13 @@ JSRoot {
   ✖ Duplicate constructor in the same class
 
     class A {constructor(){} "constructor"(){}}
-                             ^^^^^^^^^^^^^
+                             <error><emphasis>^</emphasis></error>
+    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
+    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
+    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
+    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
+    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
+    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
 
 
 ```

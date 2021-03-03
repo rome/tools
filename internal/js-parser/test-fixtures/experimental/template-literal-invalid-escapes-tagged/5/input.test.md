@@ -8,31 +8,12 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation experimental/template-literal-invalid-escapes-tagged/5/input.js 1:0-1:13
-	path: UIDPath<experimental/template-literal-invalid-escapes-tagged/5/input.js>
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation experimental/template-literal-invalid-escapes-tagged/5/input.js 1:0-1:13
 			expression: JSTaggedTemplateExpression {
-				typeArguments: undefined
-				loc: SourceLocation experimental/template-literal-invalid-escapes-tagged/5/input.js 1:0-1:13
-				tag: JSReferenceIdentifier {
-					name: "sampleTag"
-					loc: SourceLocation experimental/template-literal-invalid-escapes-tagged/5/input.js 1:0-1:9 (sampleTag)
-				}
 				quasi: JSTemplateLiteral {
-					expressions: Array []
-					loc: SourceLocation experimental/template-literal-invalid-escapes-tagged/5/input.js 1:9-1:13
-					quasis: Array [
+					expressions: []
+					quasis: [
 						JSTemplateElement {
 							cooked: "\\1"
 							raw: "\\1"
@@ -40,10 +21,26 @@ JSRoot {
 							loc: SourceLocation experimental/template-literal-invalid-escapes-tagged/5/input.js 1:10-1:12
 						}
 					]
+					loc: SourceLocation experimental/template-literal-invalid-escapes-tagged/5/input.js 1:9-1:13
 				}
+				tag: JSReferenceIdentifier {
+					name: "sampleTag"
+					loc: SourceLocation experimental/template-literal-invalid-escapes-tagged/5/input.js 1:0-1:9 (sampleTag)
+				}
+				loc: SourceLocation experimental/template-literal-invalid-escapes-tagged/5/input.js 1:0-1:13
 			}
+			loc: SourceLocation experimental/template-literal-invalid-escapes-tagged/5/input.js 1:0-1:13
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<experimental/template-literal-invalid-escapes-tagged/5/input.js>
+	loc: SourceLocation experimental/template-literal-invalid-escapes-tagged/5/input.js 1:0-1:13
 }
 ```
 

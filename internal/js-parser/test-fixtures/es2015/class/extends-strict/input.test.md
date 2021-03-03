@@ -8,94 +8,85 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2015/class/extends-strict/input.js 1:0-5:0
-	path: UIDPath<es2015/class/extends-strict/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "'with' in strict mode"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 2:12
-				path: UIDPath<es2015/class/extends-strict/input.js>
-				start: Position 2:2
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSClassDeclaration {
 			id: JSBindingIdentifier {
 				name: "C"
 				loc: SourceLocation es2015/class/extends-strict/input.js 1:6-1:7 (C)
 			}
-			loc: SourceLocation es2015/class/extends-strict/input.js 1:0-4:7
 			meta: JSClassHead {
-				body: Array []
-				implements: undefined
-				superTypeParameters: undefined
-				typeParameters: undefined
-				loc: SourceLocation es2015/class/extends-strict/input.js 1:0-4:7
+				body: []
 				superClass: JSCallExpression {
-					arguments: Array []
-					loc: SourceLocation es2015/class/extends-strict/input.js 1:17-4:3
+					arguments: []
 					callee: JSFunctionExpression {
 						id: JSBindingIdentifier {
 							name: "B"
 							loc: SourceLocation es2015/class/extends-strict/input.js 1:26-1:27 (B)
 						}
-						loc: SourceLocation es2015/class/extends-strict/input.js 1:17-4:1
-						head: JSFunctionHead {
-							async: false
-							generator: false
-							hasHoistedVars: false
-							params: Array []
-							rest: undefined
-							returnType: undefined
-							thisType: undefined
-							typeParameters: undefined
-							loc: SourceLocation es2015/class/extends-strict/input.js 1:27-1:29
-						}
 						body: JSBlockStatement {
-							directives: Array []
-							loc: SourceLocation es2015/class/extends-strict/input.js 1:30-4:1
-							body: Array [
+							body: [
 								JSWithStatement {
-									body: JSEmptyStatement {loc: SourceLocation es2015/class/extends-strict/input.js 2:11-2:12}
-									loc: SourceLocation es2015/class/extends-strict/input.js 2:2-2:12
+									body: JSEmptyStatement {
+										loc: SourceLocation es2015/class/extends-strict/input.js 2:11-2:12
+									}
 									object: JSObjectExpression {
-										properties: Array []
+										properties: []
 										loc: SourceLocation es2015/class/extends-strict/input.js 2:8-2:10
 									}
+									loc: SourceLocation es2015/class/extends-strict/input.js 2:2-2:12
 								}
 								JSReturnStatement {
-									loc: SourceLocation es2015/class/extends-strict/input.js 3:2-3:11
 									argument: JSReferenceIdentifier {
 										name: "B"
 										loc: SourceLocation es2015/class/extends-strict/input.js 3:9-3:10 (B)
 									}
+									loc: SourceLocation es2015/class/extends-strict/input.js 3:2-3:11
 								}
 							]
+							directives: []
+							loc: SourceLocation es2015/class/extends-strict/input.js 1:30-4:1
 						}
+						head: JSFunctionHead {
+							async: false
+							generator: false
+							hasHoistedVars: false
+							params: []
+							loc: SourceLocation es2015/class/extends-strict/input.js 1:27-1:29
+						}
+						loc: SourceLocation es2015/class/extends-strict/input.js 1:17-4:1
 					}
+					loc: SourceLocation es2015/class/extends-strict/input.js 1:17-4:3
 				}
+				loc: SourceLocation es2015/class/extends-strict/input.js 1:0-4:7
+			}
+			loc: SourceLocation es2015/class/extends-strict/input.js 1:0-4:7
+		}
+	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "'with' in strict mode"}
+			}
+			location: {
+				language: "js"
+				path: UIDPath<es2015/class/extends-strict/input.js>
+				end: Position 2:12
+				start: Position 2:2
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2015/class/extends-strict/input.js>
+	loc: SourceLocation es2015/class/extends-strict/input.js 1:0-5:0
 }
 ```
 
@@ -109,7 +100,11 @@ JSRoot {
 
     1 │ class C extends (function B() {
   > 2 │   with ({});
-      │   ^^^^^^^^^^
+    → │   <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
+    → │ <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
+    → │ <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
+    → │ <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
+      │ <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
     3 │   return B;
     4 │ }()) {}
 

@@ -8,23 +8,10 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2015/uncategorised/352/input.js 1:0-1:48
-	path: UIDPath<es2015/uncategorised/352/input.js>
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation es2015/uncategorised/352/input.js 1:0-1:48
 			expression: JSObjectExpression {
-				loc: SourceLocation es2015/uncategorised/352/input.js 1:1-1:47
-				properties: Array [
+				properties: [
 					JSObjectMethod {
 						kind: "get"
 						key: JSStaticPropertyKey {
@@ -34,32 +21,27 @@ JSRoot {
 							}
 							loc: SourceLocation es2015/uncategorised/352/input.js 1:7-1:16
 						}
-						loc: SourceLocation es2015/uncategorised/352/input.js 1:3-1:31
+						body: JSBlockStatement {
+							body: [
+								JSReturnStatement {
+									argument: JSNumericLiteral {
+										value: 1
+										loc: SourceLocation es2015/uncategorised/352/input.js 1:28-1:29
+									}
+									loc: SourceLocation es2015/uncategorised/352/input.js 1:21-1:29
+								}
+							]
+							directives: []
+							loc: SourceLocation es2015/uncategorised/352/input.js 1:19-1:31
+						}
 						head: JSFunctionHead {
 							async: false
 							generator: false
 							hasHoistedVars: false
-							params: Array []
-							rest: undefined
-							returnType: undefined
-							thisType: undefined
-							typeParameters: undefined
+							params: []
 							loc: SourceLocation es2015/uncategorised/352/input.js 1:16-1:18
 						}
-						body: JSBlockStatement {
-							directives: Array []
-							loc: SourceLocation es2015/uncategorised/352/input.js 1:19-1:31
-							body: Array [
-								JSReturnStatement {
-									loc: SourceLocation es2015/uncategorised/352/input.js 1:21-1:29
-									argument: JSNumericLiteral {
-										value: 1
-										format: undefined
-										loc: SourceLocation es2015/uncategorised/352/input.js 1:28-1:29
-									}
-								}
-							]
-						}
+						loc: SourceLocation es2015/uncategorised/352/input.js 1:3-1:31
 					}
 					JSObjectProperty {
 						key: JSStaticPropertyKey {
@@ -71,15 +53,25 @@ JSRoot {
 						}
 						value: JSNumericLiteral {
 							value: 2
-							format: undefined
 							loc: SourceLocation es2015/uncategorised/352/input.js 1:44-1:45
 						}
 						loc: SourceLocation es2015/uncategorised/352/input.js 1:33-1:45
 					}
 				]
+				loc: SourceLocation es2015/uncategorised/352/input.js 1:1-1:47
 			}
+			loc: SourceLocation es2015/uncategorised/352/input.js 1:0-1:48
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2015/uncategorised/352/input.js>
+	loc: SourceLocation es2015/uncategorised/352/input.js 1:0-1:48
 }
 ```
 

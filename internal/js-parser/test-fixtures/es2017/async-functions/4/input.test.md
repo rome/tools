@@ -8,46 +8,10 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2017/async-functions/4/input.js 1:0-2:0
-	path: UIDPath<es2017/async-functions/4/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:10
-				path: UIDPath<es2017/async-functions/4/input.js>
-				start: Position 1:11
-			}
-			description: Object {
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Unexpected character <emphasis>}</emphasis>"}
-				advice: Array [
-					log {
-						category: "info"
-						text: RAW_MARKUP {value: "Expected the opening function params character <emphasis>(</emphasis>"}
-					}
-				]
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation es2017/async-functions/4/input.js 1:0-1:14
 			expression: JSObjectExpression {
-				loc: SourceLocation es2017/async-functions/4/input.js 1:1-1:14
-				properties: Array [
+				properties: [
 					JSObjectMethod {
 						kind: "method"
 						key: JSStaticPropertyKey {
@@ -57,38 +21,74 @@ JSRoot {
 							}
 							loc: SourceLocation es2017/async-functions/4/input.js 1:9-1:10
 						}
-						loc: SourceLocation es2017/async-functions/4/input.js 1:3-1:14
 						body: JSBlockStatement {
-							directives: Array []
-							body: Array [JSEmptyStatement {loc: SourceLocation es2017/async-functions/4/input.js 1:13-1:14}]
+							body: [
+								JSEmptyStatement {
+									loc: SourceLocation es2017/async-functions/4/input.js 1:13-1:14
+								}
+							]
+							directives: []
 							loc: SourceLocation es2017/async-functions/4/input.js 1:13-1:14
 						}
 						head: JSFunctionHead {
 							async: true
 							generator: false
 							hasHoistedVars: false
-							rest: undefined
-							returnType: undefined
-							thisType: undefined
-							typeParameters: undefined
-							loc: SourceLocation es2017/async-functions/4/input.js 1:11-1:13
-							params: Array [
+							params: [
 								JSBindingIdentifier {
 									name: ""
-									loc: SourceLocation es2017/async-functions/4/input.js 1:11-1:12 ()
 									meta: JSPatternMeta {
-										optional: undefined
-										typeAnnotation: undefined
 										loc: SourceLocation es2017/async-functions/4/input.js 1:11-1:12
 									}
+									loc: SourceLocation es2017/async-functions/4/input.js 1:11-1:12 ()
 								}
 							]
+							loc: SourceLocation es2017/async-functions/4/input.js 1:11-1:13
 						}
+						loc: SourceLocation es2017/async-functions/4/input.js 1:3-1:14
 					}
 				]
+				loc: SourceLocation es2017/async-functions/4/input.js 1:1-1:14
+			}
+			loc: SourceLocation es2017/async-functions/4/input.js 1:0-1:14
+		}
+	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {
+				advice: [
+					log {
+						category: "info"
+						text: [
+							RAW_MARKUP {value: "Expected the opening "}
+							"function params"
+							RAW_MARKUP {value: " character <emphasis>"}
+							"("
+							RAW_MARKUP {value: "</emphasis>"}
+						]
+					}
+				]
+				category: ["parse"]
+				categoryValue: "js"
+				message: [RAW_MARKUP {value: "Unexpected character <emphasis>"}, "}", RAW_MARKUP {value: "</emphasis>"}]
+			}
+			location: {
+				language: "js"
+				path: UIDPath<es2017/async-functions/4/input.js>
+				end: Position 1:10
+				start: Position 1:11
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2017/async-functions/4/input.js>
+	loc: SourceLocation es2017/async-functions/4/input.js 1:0-2:0
 }
 ```
 
@@ -101,7 +101,7 @@ JSRoot {
   ✖ Unexpected character }
 
     ({ async a });
-               ^
+               <error><emphasis>^</emphasis></error>
 
   ℹ Expected the opening function params character (
 

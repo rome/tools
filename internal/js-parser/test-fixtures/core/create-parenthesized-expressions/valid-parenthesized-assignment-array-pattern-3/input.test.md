@@ -11,6 +11,7 @@ JSRoot {
 	body: [
 		JSExpressionStatement {
 			expression: JSAssignmentExpression {
+				operator: "="
 				left: JSAssignmentArrayPattern {
 					elements: [
 						JSAssignmentArrayPattern {
@@ -25,7 +26,6 @@ JSRoot {
 					]
 					loc: SourceLocation core/create-parenthesized-expressions/valid-parenthesized-assignment-array-pattern-3/input.js 1:0-1:7
 				}
-				operator: "="
 				right: JSReferenceIdentifier {
 					name: "t"
 					loc: SourceLocation core/create-parenthesized-expressions/valid-parenthesized-assignment-array-pattern-3/input.js 1:10-1:11 (t)
@@ -39,21 +39,26 @@ JSRoot {
 	corrupt: false
 	diagnostics: [
 		{
-			description: {advice: [], category: ["parse"], categoryValue: "js", message: RAW_MARKUP {value: "Invalid parenthesized binding"}}
+			origins: [{category: "parse"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "Invalid parenthesized binding"}
+			}
 			location: {
 				language: "js"
 				path: UIDPath<core/create-parenthesized-expressions/valid-parenthesized-assignment-array-pattern-3/input.js>
 				end: Position 1:5
 				start: Position 1:2
 			}
-			origins: [{category: "parse"}]
 		}
 	]
 	directives: []
 	hasHoistedVars: false
-	path: UIDPath<core/create-parenthesized-expressions/valid-parenthesized-assignment-array-pattern-3/input.js>
 	sourceType: "script"
 	syntax: []
+	path: UIDPath<core/create-parenthesized-expressions/valid-parenthesized-assignment-array-pattern-3/input.js>
 	loc: SourceLocation core/create-parenthesized-expressions/valid-parenthesized-assignment-array-pattern-3/input.js 1:0-1:12
 }
 ```
@@ -68,7 +73,8 @@ parse(js) ━━━━━━━━━━━━━━━━━━━━━━━�
   ✖ Invalid parenthesized binding
 
     [([x])] = t;
-      ^^^
+      <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
+    <error><emphasis>^</emphasis></error>
 
 
 ```

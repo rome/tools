@@ -8,41 +8,28 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	loc: SourceLocation jsx/errors/member-in-namespace-1/input.jsx 1:0-2:0
-	path: UIDPath<jsx/errors/member-in-namespace-1/input.jsx>
-	syntax: Array ["jsx"]
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Unknown JSX identifier token"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:4
-				path: UIDPath<jsx/errors/member-in-namespace-1/input.jsx>
-				start: Position 1:4
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation jsx/errors/member-in-namespace-1/input.jsx 1:0-1:9
 			expression: JSXElement {
+				attributes: [
+					JSXAttribute {
+						name: JSXIdentifier {
+							name: ""
+							loc: SourceLocation jsx/errors/member-in-namespace-1/input.jsx 1:4-1:5
+						}
+						loc: SourceLocation jsx/errors/member-in-namespace-1/input.jsx 1:4-1:5
+					}
+					JSXAttribute {
+						name: JSXIdentifier {
+							name: "c"
+							loc: SourceLocation jsx/errors/member-in-namespace-1/input.jsx 1:5-1:6
+						}
+						loc: SourceLocation jsx/errors/member-in-namespace-1/input.jsx 1:5-1:6
+					}
+				]
+				children: []
+				selfClosing: true
 				name: JSXMemberExpression {
-					loc: SourceLocation jsx/errors/member-in-namespace-1/input.jsx 1:1-1:4
 					object: JSXIdentifier {
 						name: "a"
 						loc: SourceLocation jsx/errors/member-in-namespace-1/input.jsx 1:1-1:2
@@ -51,32 +38,38 @@ JSRoot {
 						name: "b"
 						loc: SourceLocation jsx/errors/member-in-namespace-1/input.jsx 1:3-1:4
 					}
+					loc: SourceLocation jsx/errors/member-in-namespace-1/input.jsx 1:1-1:4
 				}
-				children: Array []
-				selfClosing: true
-				typeArguments: undefined
 				loc: SourceLocation jsx/errors/member-in-namespace-1/input.jsx 1:0-1:9
-				attributes: Array [
-					JSXAttribute {
-						name: JSXIdentifier {
-							name: ""
-							loc: SourceLocation jsx/errors/member-in-namespace-1/input.jsx 1:4-1:5
-						}
-						value: undefined
-						loc: SourceLocation jsx/errors/member-in-namespace-1/input.jsx 1:4-1:5
-					}
-					JSXAttribute {
-						name: JSXIdentifier {
-							name: "c"
-							loc: SourceLocation jsx/errors/member-in-namespace-1/input.jsx 1:5-1:6
-						}
-						value: undefined
-						loc: SourceLocation jsx/errors/member-in-namespace-1/input.jsx 1:5-1:6
-					}
-				]
+			}
+			loc: SourceLocation jsx/errors/member-in-namespace-1/input.jsx 1:0-1:9
+		}
+	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "Unknown JSX identifier token"}
+			}
+			location: {
+				language: "js"
+				path: UIDPath<jsx/errors/member-in-namespace-1/input.jsx>
+				end: Position 1:4
+				start: Position 1:4
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: ["jsx"]
+	path: UIDPath<jsx/errors/member-in-namespace-1/input.jsx>
+	loc: SourceLocation jsx/errors/member-in-namespace-1/input.jsx 1:0-2:0
 }
 ```
 
@@ -89,7 +82,7 @@ JSRoot {
   ✖ Unknown JSX identifier token
 
     <a.b:c />
-        ^
+        <error><emphasis>^</emphasis></error>
 
 
 ```

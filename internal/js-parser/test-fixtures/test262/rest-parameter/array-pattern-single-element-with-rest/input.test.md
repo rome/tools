@@ -8,59 +8,50 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation test262/rest-parameter/array-pattern-single-element-with-rest/input.js 1:0-2:0
-	path: UIDPath<test262/rest-parameter/array-pattern-single-element-with-rest/input.js>
-	body: Array [
+	body: [
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "singleElementWithRest"
 				loc: SourceLocation test262/rest-parameter/array-pattern-single-element-with-rest/input.js 1:9-1:30 (singleElementWithRest)
 			}
-			loc: SourceLocation test262/rest-parameter/array-pattern-single-element-with-rest/input.js 1:0-1:44
 			body: JSBlockStatement {
-				body: Array []
-				directives: Array []
+				body: []
+				directives: []
 				loc: SourceLocation test262/rest-parameter/array-pattern-single-element-with-rest/input.js 1:42-1:44
 			}
 			head: JSFunctionHead {
 				async: false
 				generator: false
 				hasHoistedVars: false
-				params: Array []
-				returnType: undefined
-				thisType: undefined
-				typeParameters: undefined
-				loc: SourceLocation test262/rest-parameter/array-pattern-single-element-with-rest/input.js 1:30-1:41
+				params: []
 				rest: JSBindingArrayPattern {
-					elements: Array []
-					loc: SourceLocation test262/rest-parameter/array-pattern-single-element-with-rest/input.js 1:34-1:40
+					elements: []
 					meta: JSPatternMeta {
-						optional: undefined
-						typeAnnotation: undefined
 						loc: SourceLocation test262/rest-parameter/array-pattern-single-element-with-rest/input.js 1:34-1:40
 					}
 					rest: JSBindingIdentifier {
 						name: "a"
-						loc: SourceLocation test262/rest-parameter/array-pattern-single-element-with-rest/input.js 1:38-1:39 (a)
 						meta: JSPatternMeta {
-							optional: undefined
-							typeAnnotation: undefined
 							loc: SourceLocation test262/rest-parameter/array-pattern-single-element-with-rest/input.js 1:38-1:39
 						}
+						loc: SourceLocation test262/rest-parameter/array-pattern-single-element-with-rest/input.js 1:38-1:39 (a)
 					}
+					loc: SourceLocation test262/rest-parameter/array-pattern-single-element-with-rest/input.js 1:34-1:40
 				}
+				loc: SourceLocation test262/rest-parameter/array-pattern-single-element-with-rest/input.js 1:30-1:41
 			}
+			loc: SourceLocation test262/rest-parameter/array-pattern-single-element-with-rest/input.js 1:0-1:44
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<test262/rest-parameter/array-pattern-single-element-with-rest/input.js>
+	loc: SourceLocation test262/rest-parameter/array-pattern-single-element-with-rest/input.js 1:0-2:0
 }
 ```
 

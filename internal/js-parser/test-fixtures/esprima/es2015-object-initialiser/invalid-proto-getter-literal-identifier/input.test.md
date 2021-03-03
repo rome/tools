@@ -8,41 +8,10 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation esprima/es2015-object-initialiser/invalid-proto-getter-literal-identifier/input.js 1:0-2:0
-	path: UIDPath<esprima/es2015-object-initialiser/invalid-proto-getter-literal-identifier/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Redefinition of __proto__ property"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:48
-				path: UIDPath<esprima/es2015-object-initialiser/invalid-proto-getter-literal-identifier/input.js>
-				start: Position 1:39
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation esprima/es2015-object-initialiser/invalid-proto-getter-literal-identifier/input.js 1:0-1:58
 			expression: JSObjectExpression {
-				loc: SourceLocation esprima/es2015-object-initialiser/invalid-proto-getter-literal-identifier/input.js 1:1-1:57
-				properties: Array [
+				properties: [
 					JSObjectMethod {
 						kind: "get"
 						key: JSStaticPropertyKey {
@@ -52,23 +21,19 @@ JSRoot {
 							}
 							loc: SourceLocation esprima/es2015-object-initialiser/invalid-proto-getter-literal-identifier/input.js 1:7-1:14
 						}
-						loc: SourceLocation esprima/es2015-object-initialiser/invalid-proto-getter-literal-identifier/input.js 1:3-1:18
 						body: JSBlockStatement {
-							body: Array []
-							directives: Array []
+							body: []
+							directives: []
 							loc: SourceLocation esprima/es2015-object-initialiser/invalid-proto-getter-literal-identifier/input.js 1:16-1:18
 						}
 						head: JSFunctionHead {
 							async: false
 							generator: false
 							hasHoistedVars: false
-							params: Array []
-							rest: undefined
-							returnType: undefined
-							thisType: undefined
-							typeParameters: undefined
+							params: []
 							loc: SourceLocation esprima/es2015-object-initialiser/invalid-proto-getter-literal-identifier/input.js 1:14-1:16
 						}
+						loc: SourceLocation esprima/es2015-object-initialiser/invalid-proto-getter-literal-identifier/input.js 1:3-1:18
 					}
 					JSObjectProperty {
 						key: JSStaticPropertyKey {
@@ -78,7 +43,9 @@ JSRoot {
 							}
 							loc: SourceLocation esprima/es2015-object-initialiser/invalid-proto-getter-literal-identifier/input.js 1:20-1:31
 						}
-						value: JSNullLiteral {loc: SourceLocation esprima/es2015-object-initialiser/invalid-proto-getter-literal-identifier/input.js 1:33-1:37}
+						value: JSNullLiteral {
+							loc: SourceLocation esprima/es2015-object-initialiser/invalid-proto-getter-literal-identifier/input.js 1:33-1:37
+						}
 						loc: SourceLocation esprima/es2015-object-initialiser/invalid-proto-getter-literal-identifier/input.js 1:20-1:37
 					}
 					JSObjectProperty {
@@ -89,13 +56,42 @@ JSRoot {
 							}
 							loc: SourceLocation esprima/es2015-object-initialiser/invalid-proto-getter-literal-identifier/input.js 1:39-1:48
 						}
-						value: JSNullLiteral {loc: SourceLocation esprima/es2015-object-initialiser/invalid-proto-getter-literal-identifier/input.js 1:50-1:54}
+						value: JSNullLiteral {
+							loc: SourceLocation esprima/es2015-object-initialiser/invalid-proto-getter-literal-identifier/input.js 1:50-1:54
+						}
 						loc: SourceLocation esprima/es2015-object-initialiser/invalid-proto-getter-literal-identifier/input.js 1:39-1:54
 					}
 				]
+				loc: SourceLocation esprima/es2015-object-initialiser/invalid-proto-getter-literal-identifier/input.js 1:1-1:57
+			}
+			loc: SourceLocation esprima/es2015-object-initialiser/invalid-proto-getter-literal-identifier/input.js 1:0-1:58
+		}
+	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "Redefinition of __proto__ property"}
+			}
+			location: {
+				language: "js"
+				path: UIDPath<esprima/es2015-object-initialiser/invalid-proto-getter-literal-identifier/input.js>
+				end: Position 1:48
+				start: Position 1:39
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<esprima/es2015-object-initialiser/invalid-proto-getter-literal-identifier/input.js>
+	loc: SourceLocation esprima/es2015-object-initialiser/invalid-proto-getter-literal-identifier/input.js 1:0-2:0
 }
 ```
 
@@ -108,7 +104,11 @@ JSRoot {
   ✖ Redefinition of __proto__ property
 
     ({ get __proto(){}, "__proto__": null, __proto__: null, })
-                                           ^^^^^^^^^
+                                           <error><emphasis>^</emphasis></error>
+    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
+    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
+    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
+    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
 
 
 ```

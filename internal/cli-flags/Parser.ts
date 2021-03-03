@@ -42,7 +42,6 @@ import highlightShell from "@internal/markup-syntax-highlight/highlightShell";
 import {RSERObject} from "@internal/binary-transport";
 import {ExtendedMap} from "@internal/collections";
 import {markupToPlainText} from "@internal/cli-layout";
-import {safeProcessExit} from "@internal/resources";
 
 export type Examples = {
 	description: StaticMarkup;
@@ -1224,7 +1223,7 @@ export default class Parser<T> {
 
 	private async exit(code: number): Promise<void> {
 		if (!this.opts.noProcessExit) {
-			await safeProcessExit(code);
+			process.exit(code);
 		}
 	}
 }

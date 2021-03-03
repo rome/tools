@@ -15,11 +15,22 @@ JSRoot {
 					consequent: [
 						JSExpressionStatement {
 							expression: JSCallExpression {
-								arguments: [JSStringLiteral {value: "1", loc: SourceLocation comments/basic/switch-function-call-no-semicolon/input.js 3:16-3:19}]
+								arguments: [
+									JSStringLiteral {
+										value: "1"
+										loc: SourceLocation comments/basic/switch-function-call-no-semicolon/input.js 3:16-3:19
+									}
+								]
 								callee: JSMemberExpression {
-									object: JSReferenceIdentifier {name: "console", loc: SourceLocation comments/basic/switch-function-call-no-semicolon/input.js 3:4-3:11 (console)}
+									object: JSReferenceIdentifier {
+										name: "console"
+										loc: SourceLocation comments/basic/switch-function-call-no-semicolon/input.js 3:4-3:11 (console)
+									}
 									property: JSStaticMemberProperty {
-										value: JSIdentifier {name: "log", loc: SourceLocation comments/basic/switch-function-call-no-semicolon/input.js 3:12-3:15 (log)}
+										value: JSIdentifier {
+											name: "log"
+											loc: SourceLocation comments/basic/switch-function-call-no-semicolon/input.js 3:12-3:15 (log)
+										}
 										loc: SourceLocation comments/basic/switch-function-call-no-semicolon/input.js 3:12-3:15 (log)
 									}
 									loc: SourceLocation comments/basic/switch-function-call-no-semicolon/input.js 3:4-3:15
@@ -29,28 +40,44 @@ JSRoot {
 							loc: SourceLocation comments/basic/switch-function-call-no-semicolon/input.js 3:4-3:20
 						}
 					]
-					test: JSNumericLiteral {value: 1, loc: SourceLocation comments/basic/switch-function-call-no-semicolon/input.js 2:7-2:8}
 					trailingComments: ["0"]
+					test: JSNumericLiteral {
+						value: 1
+						loc: SourceLocation comments/basic/switch-function-call-no-semicolon/input.js 2:7-2:8
+					}
 					loc: SourceLocation comments/basic/switch-function-call-no-semicolon/input.js 2:2-3:20
 				}
 				JSSwitchCase {
-					consequent: [JSBreakStatement {loc: SourceLocation comments/basic/switch-function-call-no-semicolon/input.js 6:4-6:10}]
+					consequent: [
+						JSBreakStatement {
+							loc: SourceLocation comments/basic/switch-function-call-no-semicolon/input.js 6:4-6:10
+						}
+					]
 					leadingComments: ["0"]
 					loc: SourceLocation comments/basic/switch-function-call-no-semicolon/input.js 5:2-6:10
 				}
 			]
-			discriminant: JSReferenceIdentifier {name: "x", loc: SourceLocation comments/basic/switch-function-call-no-semicolon/input.js 1:7-1:8 (x)}
+			discriminant: JSReferenceIdentifier {
+				name: "x"
+				loc: SourceLocation comments/basic/switch-function-call-no-semicolon/input.js 1:7-1:8 (x)
+			}
 			loc: SourceLocation comments/basic/switch-function-call-no-semicolon/input.js 1:0-7:1
 		}
 	]
-	comments: [CommentLine {id: "0", value: " comment", loc: SourceLocation comments/basic/switch-function-call-no-semicolon/input.js 4:4-4:14}]
+	comments: [
+		CommentLine {
+			id: "0"
+			value: " comment"
+			loc: SourceLocation comments/basic/switch-function-call-no-semicolon/input.js 4:4-4:14
+		}
+	]
 	corrupt: false
 	diagnostics: []
 	directives: []
 	hasHoistedVars: false
-	path: UIDPath<comments/basic/switch-function-call-no-semicolon/input.js>
 	sourceType: "script"
 	syntax: []
+	path: UIDPath<comments/basic/switch-function-call-no-semicolon/input.js>
 	loc: SourceLocation comments/basic/switch-function-call-no-semicolon/input.js 1:0-8:0
 }
 ```

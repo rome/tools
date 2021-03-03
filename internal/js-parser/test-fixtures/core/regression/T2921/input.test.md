@@ -11,15 +11,24 @@ JSRoot {
 	body: [
 		JSExpressionStatement {
 			expression: JSBinaryExpression {
-				left: JSReferenceIdentifier {name: "a", loc: SourceLocation core/regression/T2921/input.js 1:0-1:1 (a)}
 				operator: "<="
-				right: JSReferenceIdentifier {name: "INVALID_PLACEHOLDER", loc: SourceLocation core/regression/T2921/input.js 1:4-1:5}
+				left: JSReferenceIdentifier {
+					name: "a"
+					loc: SourceLocation core/regression/T2921/input.js 1:0-1:1 (a)
+				}
+				right: JSReferenceIdentifier {
+					name: "INVALID_PLACEHOLDER"
+					loc: SourceLocation core/regression/T2921/input.js 1:4-1:5
+				}
 				loc: SourceLocation core/regression/T2921/input.js 1:0-1:5
 			}
 			loc: SourceLocation core/regression/T2921/input.js 1:0-1:5
 		}
 		JSExpressionStatement {
-			expression: JSReferenceIdentifier {name: "b", loc: SourceLocation core/regression/T2921/input.js 1:6-1:7 (b)}
+			expression: JSReferenceIdentifier {
+				name: "b"
+				loc: SourceLocation core/regression/T2921/input.js 1:6-1:7 (b)
+			}
 			loc: SourceLocation core/regression/T2921/input.js 1:6-1:8
 		}
 	]
@@ -27,16 +36,21 @@ JSRoot {
 	corrupt: true
 	diagnostics: [
 		{
-			description: {advice: [], category: ["parse"], categoryValue: "js", message: RAW_MARKUP {value: "Unknown start to an statement expression"}}
-			location: {language: "js", path: UIDPath<core/regression/T2921/input.js>, end: Position 1:4, start: Position 1:4}
 			origins: [{category: "parse"}]
+			description: {advice: [], category: ["parse"], categoryValue: "js", message: [RAW_MARKUP {value: "Unknown start to an "}, "statement expression"]}
+			location: {
+				language: "js"
+				path: UIDPath<core/regression/T2921/input.js>
+				end: Position 1:4
+				start: Position 1:4
+			}
 		}
 	]
 	directives: []
 	hasHoistedVars: false
-	path: UIDPath<core/regression/T2921/input.js>
 	sourceType: "script"
 	syntax: []
+	path: UIDPath<core/regression/T2921/input.js>
 	loc: SourceLocation core/regression/T2921/input.js 1:0-2:0
 }
 ```
@@ -50,7 +64,7 @@ JSRoot {
   ✖ Unknown start to an statement expression
 
     a <== b;
-        ^
+        <error><emphasis>^</emphasis></error>
 
 
 ```

@@ -8,49 +8,14 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation experimental/class-private-methods/failure-name-constructor/input.js 1:0-4:0
-	path: UIDPath<experimental/class-private-methods/failure-name-constructor/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Classes may not have a private field named '#constructor'"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 2:14
-				path: UIDPath<experimental/class-private-methods/failure-name-constructor/input.js>
-				start: Position 2:2
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSClassDeclaration {
 			id: JSBindingIdentifier {
 				name: "Foo"
 				loc: SourceLocation experimental/class-private-methods/failure-name-constructor/input.js 1:6-1:9 (Foo)
 			}
-			loc: SourceLocation experimental/class-private-methods/failure-name-constructor/input.js 1:0-3:1
 			meta: JSClassHead {
-				implements: undefined
-				superClass: undefined
-				superTypeParameters: undefined
-				typeParameters: undefined
-				loc: SourceLocation experimental/class-private-methods/failure-name-constructor/input.js 1:0-3:1
-				body: Array [
+				body: [
 					JSClassPrivateMethod {
 						kind: "method"
 						key: JSPrivateName {
@@ -60,38 +25,59 @@ JSRoot {
 							}
 							loc: SourceLocation experimental/class-private-methods/failure-name-constructor/input.js 2:2-2:14
 						}
-						loc: SourceLocation experimental/class-private-methods/failure-name-constructor/input.js 2:2-2:19
 						body: JSBlockStatement {
-							body: Array []
-							directives: Array []
+							body: []
+							directives: []
 							loc: SourceLocation experimental/class-private-methods/failure-name-constructor/input.js 2:17-2:19
-						}
-						meta: JSClassPropertyMeta {
-							abstract: false
-							accessibility: undefined
-							optional: false
-							readonly: false
-							static: false
-							typeAnnotation: undefined
-							loc: SourceLocation experimental/class-private-methods/failure-name-constructor/input.js 2:2-2:14
-							start: Position 2:2
 						}
 						head: JSFunctionHead {
 							async: false
 							generator: false
 							hasHoistedVars: false
-							params: Array []
-							rest: undefined
-							returnType: undefined
-							thisType: undefined
-							typeParameters: undefined
+							params: []
 							loc: SourceLocation experimental/class-private-methods/failure-name-constructor/input.js 2:14-2:16
 						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							optional: false
+							readonly: false
+							static: false
+							loc: SourceLocation experimental/class-private-methods/failure-name-constructor/input.js 2:2-2:14
+							start: Position 2:2
+						}
+						loc: SourceLocation experimental/class-private-methods/failure-name-constructor/input.js 2:2-2:19
 					}
 				]
+				loc: SourceLocation experimental/class-private-methods/failure-name-constructor/input.js 1:0-3:1
+			}
+			loc: SourceLocation experimental/class-private-methods/failure-name-constructor/input.js 1:0-3:1
+		}
+	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "Classes may not have a private field named '#constructor'"}
+			}
+			location: {
+				language: "js"
+				path: UIDPath<experimental/class-private-methods/failure-name-constructor/input.js>
+				end: Position 2:14
+				start: Position 2:2
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<experimental/class-private-methods/failure-name-constructor/input.js>
+	loc: SourceLocation experimental/class-private-methods/failure-name-constructor/input.js 1:0-4:0
 }
 ```
 
@@ -105,7 +91,12 @@ JSRoot {
 
     1 │ class Foo {
   > 2 │   #constructor() {};
-      │   ^^^^^^^^^^^^
+    → │   <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
+    → │ <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
+    → │ <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
+    → │ <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
+    → │ <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
+      │ <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
     3 │ }
 
 

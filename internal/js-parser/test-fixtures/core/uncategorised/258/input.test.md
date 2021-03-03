@@ -16,23 +16,38 @@ JSRoot {
 						body: JSBlockStatement {
 							body: [
 								JSContinueStatement {
-									label: JSIdentifier {name: "target1", loc: SourceLocation core/uncategorised/258/input.js 1:51-1:58 (target1)}
+									label: JSIdentifier {
+										name: "target1"
+										loc: SourceLocation core/uncategorised/258/input.js 1:51-1:58 (target1)
+									}
 									loc: SourceLocation core/uncategorised/258/input.js 1:42-1:59
 								}
 							]
 							directives: []
 							loc: SourceLocation core/uncategorised/258/input.js 1:40-1:61
 						}
-						test: JSBooleanLiteral {value: true, loc: SourceLocation core/uncategorised/258/input.js 1:34-1:38}
+						test: JSBooleanLiteral {
+							value: true
+							loc: SourceLocation core/uncategorised/258/input.js 1:34-1:38
+						}
 						loc: SourceLocation core/uncategorised/258/input.js 1:27-1:61
 					}
-					label: JSIdentifier {name: "target3", loc: SourceLocation core/uncategorised/258/input.js 1:18-1:25 (target3)}
+					label: JSIdentifier {
+						name: "target3"
+						loc: SourceLocation core/uncategorised/258/input.js 1:18-1:25 (target3)
+					}
 					loc: SourceLocation core/uncategorised/258/input.js 1:18-1:61
 				}
-				label: JSIdentifier {name: "target2", loc: SourceLocation core/uncategorised/258/input.js 1:9-1:16 (target2)}
+				label: JSIdentifier {
+					name: "target2"
+					loc: SourceLocation core/uncategorised/258/input.js 1:9-1:16 (target2)
+				}
 				loc: SourceLocation core/uncategorised/258/input.js 1:9-1:61
 			}
-			label: JSIdentifier {name: "target1", loc: SourceLocation core/uncategorised/258/input.js 1:0-1:7 (target1)}
+			label: JSIdentifier {
+				name: "target1"
+				loc: SourceLocation core/uncategorised/258/input.js 1:0-1:7 (target1)
+			}
 			loc: SourceLocation core/uncategorised/258/input.js 1:0-1:61
 		}
 	]
@@ -41,9 +56,9 @@ JSRoot {
 	diagnostics: []
 	directives: []
 	hasHoistedVars: false
-	path: UIDPath<core/uncategorised/258/input.js>
 	sourceType: "script"
 	syntax: []
+	path: UIDPath<core/uncategorised/258/input.js>
 	loc: SourceLocation core/uncategorised/258/input.js 1:0-1:61
 }
 ```

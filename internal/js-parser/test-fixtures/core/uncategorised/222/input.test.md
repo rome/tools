@@ -14,19 +14,31 @@ JSRoot {
 				kind: "var"
 				declarations: [
 					JSVariableDeclarator {
-						id: JSBindingIdentifier {name: "private", loc: SourceLocation core/uncategorised/222/input.js 1:4-1:11 (private)}
+						id: JSBindingIdentifier {
+							name: "private"
+							loc: SourceLocation core/uncategorised/222/input.js 1:4-1:11 (private)
+						}
 						loc: SourceLocation core/uncategorised/222/input.js 1:4-1:11
 					}
 					JSVariableDeclarator {
-						id: JSBindingIdentifier {name: "protected", loc: SourceLocation core/uncategorised/222/input.js 1:13-1:22 (protected)}
+						id: JSBindingIdentifier {
+							name: "protected"
+							loc: SourceLocation core/uncategorised/222/input.js 1:13-1:22 (protected)
+						}
 						loc: SourceLocation core/uncategorised/222/input.js 1:13-1:22
 					}
 					JSVariableDeclarator {
-						id: JSBindingIdentifier {name: "public", loc: SourceLocation core/uncategorised/222/input.js 1:24-1:30 (public)}
+						id: JSBindingIdentifier {
+							name: "public"
+							loc: SourceLocation core/uncategorised/222/input.js 1:24-1:30 (public)
+						}
 						loc: SourceLocation core/uncategorised/222/input.js 1:24-1:30
 					}
 					JSVariableDeclarator {
-						id: JSBindingIdentifier {name: "static", loc: SourceLocation core/uncategorised/222/input.js 1:32-1:38 (static)}
+						id: JSBindingIdentifier {
+							name: "static"
+							loc: SourceLocation core/uncategorised/222/input.js 1:32-1:38 (static)
+						}
 						loc: SourceLocation core/uncategorised/222/input.js 1:32-1:38
 					}
 				]
@@ -40,9 +52,9 @@ JSRoot {
 	diagnostics: []
 	directives: []
 	hasHoistedVars: true
-	path: UIDPath<core/uncategorised/222/input.js>
 	sourceType: "script"
 	syntax: []
+	path: UIDPath<core/uncategorised/222/input.js>
 	loc: SourceLocation core/uncategorised/222/input.js 1:0-1:38
 }
 ```

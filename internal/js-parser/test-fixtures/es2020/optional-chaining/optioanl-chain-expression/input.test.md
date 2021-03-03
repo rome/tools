@@ -8,35 +8,12 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2020/optional-chaining/optioanl-chain-expression/input.js 1:0-1:8
-	path: UIDPath<es2020/optional-chaining/optioanl-chain-expression/input.js>
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation es2020/optional-chaining/optioanl-chain-expression/input.js 1:0-1:8
 			expression: JSOptionalCallExpression {
-				arguments: Array []
-				loc: SourceLocation es2020/optional-chaining/optioanl-chain-expression/input.js 1:0-1:8
+				arguments: []
 				callee: JSMemberExpression {
-					loc: SourceLocation es2020/optional-chaining/optioanl-chain-expression/input.js 1:0-1:6
-					property: JSStaticMemberProperty {
-						value: JSIdentifier {
-							name: "c"
-							loc: SourceLocation es2020/optional-chaining/optioanl-chain-expression/input.js 1:5-1:6 (c)
-						}
-						optional: true
-						loc: SourceLocation es2020/optional-chaining/optioanl-chain-expression/input.js 1:5-1:6 (c)
-					}
 					object: JSMemberExpression {
-						loc: SourceLocation es2020/optional-chaining/optioanl-chain-expression/input.js 1:0-1:3
 						object: JSReferenceIdentifier {
 							name: "a"
 							loc: SourceLocation es2020/optional-chaining/optioanl-chain-expression/input.js 1:0-1:1 (a)
@@ -48,11 +25,32 @@ JSRoot {
 							}
 							loc: SourceLocation es2020/optional-chaining/optioanl-chain-expression/input.js 1:2-1:3 (b)
 						}
+						loc: SourceLocation es2020/optional-chaining/optioanl-chain-expression/input.js 1:0-1:3
 					}
+					property: JSStaticMemberProperty {
+						optional: true
+						value: JSIdentifier {
+							name: "c"
+							loc: SourceLocation es2020/optional-chaining/optioanl-chain-expression/input.js 1:5-1:6 (c)
+						}
+						loc: SourceLocation es2020/optional-chaining/optioanl-chain-expression/input.js 1:5-1:6 (c)
+					}
+					loc: SourceLocation es2020/optional-chaining/optioanl-chain-expression/input.js 1:0-1:6
 				}
+				loc: SourceLocation es2020/optional-chaining/optioanl-chain-expression/input.js 1:0-1:8
 			}
+			loc: SourceLocation es2020/optional-chaining/optioanl-chain-expression/input.js 1:0-1:8
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2020/optional-chaining/optioanl-chain-expression/input.js>
+	loc: SourceLocation es2020/optional-chaining/optioanl-chain-expression/input.js 1:0-1:8
 }
 ```
 

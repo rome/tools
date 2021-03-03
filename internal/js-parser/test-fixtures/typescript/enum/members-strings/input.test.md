@@ -8,32 +8,15 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	loc: SourceLocation typescript/enum/members-strings/input.ts 1:0-5:0
-	path: UIDPath<typescript/enum/members-strings/input.ts>
-	syntax: Array ["ts"]
-	body: Array [
+	body: [
 		TSEnumDeclaration {
-			id: JSBindingIdentifier {
-				name: "E"
-				loc: SourceLocation typescript/enum/members-strings/input.ts 1:5-1:6 (E)
-			}
 			const: false
-			loc: SourceLocation typescript/enum/members-strings/input.ts 1:0-4:1
-			members: Array [
+			members: [
 				TSEnumMember {
 					id: JSStringLiteral {
 						value: "foo"
 						loc: SourceLocation typescript/enum/members-strings/input.ts 2:4-2:9
 					}
-					initializer: undefined
 					loc: SourceLocation typescript/enum/members-strings/input.ts 2:4-2:9
 				}
 				TSEnumMember {
@@ -41,16 +24,29 @@ JSRoot {
 						value: "bar"
 						loc: SourceLocation typescript/enum/members-strings/input.ts 3:4-3:9
 					}
-					loc: SourceLocation typescript/enum/members-strings/input.ts 3:4-3:13
 					initializer: JSNumericLiteral {
 						value: 1
-						format: undefined
 						loc: SourceLocation typescript/enum/members-strings/input.ts 3:12-3:13
 					}
+					loc: SourceLocation typescript/enum/members-strings/input.ts 3:4-3:13
 				}
 			]
+			id: JSBindingIdentifier {
+				name: "E"
+				loc: SourceLocation typescript/enum/members-strings/input.ts 1:5-1:6 (E)
+			}
+			loc: SourceLocation typescript/enum/members-strings/input.ts 1:0-4:1
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: ["ts"]
+	path: UIDPath<typescript/enum/members-strings/input.ts>
+	loc: SourceLocation typescript/enum/members-strings/input.ts 1:0-5:0
 }
 ```
 

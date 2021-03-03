@@ -8,63 +8,50 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	syntax: Array []
-	loc: SourceLocation esprima/es2015-yield/invalid-yield-generator-export-default/input.js 1:0-2:0
-	path: UIDPath<esprima/es2015-yield/invalid-yield-generator-export-default/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "yield is a reserved word"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:30
-				path: UIDPath<esprima/es2015-yield/invalid-yield-generator-export-default/input.js>
-				start: Position 1:25
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSExportDefaultDeclaration {
-			loc: SourceLocation esprima/es2015-yield/invalid-yield-generator-export-default/input.js 1:0-1:35
 			declaration: JSFunctionDeclaration {
 				id: JSBindingIdentifier {
 					name: "yield"
 					loc: SourceLocation esprima/es2015-yield/invalid-yield-generator-export-default/input.js 1:25-1:30 (yield)
 				}
-				loc: SourceLocation esprima/es2015-yield/invalid-yield-generator-export-default/input.js 1:15-1:35
 				body: JSBlockStatement {
-					body: Array []
-					directives: Array []
+					body: []
+					directives: []
 					loc: SourceLocation esprima/es2015-yield/invalid-yield-generator-export-default/input.js 1:33-1:35
 				}
 				head: JSFunctionHead {
 					async: false
 					generator: true
 					hasHoistedVars: false
-					params: Array []
-					rest: undefined
-					returnType: undefined
-					thisType: undefined
-					typeParameters: undefined
+					params: []
 					loc: SourceLocation esprima/es2015-yield/invalid-yield-generator-export-default/input.js 1:30-1:32
 				}
+				loc: SourceLocation esprima/es2015-yield/invalid-yield-generator-export-default/input.js 1:15-1:35
+			}
+			loc: SourceLocation esprima/es2015-yield/invalid-yield-generator-export-default/input.js 1:0-1:35
+		}
+	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {advice: [], category: ["parse"], categoryValue: "js", message: ["yield", RAW_MARKUP {value: " is a reserved word"}]}
+			location: {
+				language: "js"
+				path: UIDPath<esprima/es2015-yield/invalid-yield-generator-export-default/input.js>
+				end: Position 1:30
+				start: Position 1:25
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: []
+	path: UIDPath<esprima/es2015-yield/invalid-yield-generator-export-default/input.js>
+	loc: SourceLocation esprima/es2015-yield/invalid-yield-generator-export-default/input.js 1:0-2:0
 }
 ```
 
@@ -77,7 +64,9 @@ JSRoot {
   ✖ yield is a reserved word
 
     export default function *yield() {}
-                             ^^^^^
+                             <error><emphasis>^</emphasis></error>
+    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
+    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
 
 
 ```

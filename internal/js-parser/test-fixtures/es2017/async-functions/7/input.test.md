@@ -8,30 +8,12 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2017/async-functions/7/input.js 1:0-2:0
-	path: UIDPath<es2017/async-functions/7/input.js>
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation es2017/async-functions/7/input.js 1:0-1:15
 			expression: JSCallExpression {
-				loc: SourceLocation es2017/async-functions/7/input.js 1:0-1:14
-				callee: JSReferenceIdentifier {
-					name: "foo"
-					loc: SourceLocation es2017/async-functions/7/input.js 1:0-1:3 (foo)
-				}
-				arguments: Array [
+				arguments: [
 					JSObjectExpression {
-						loc: SourceLocation es2017/async-functions/7/input.js 1:4-1:13
-						properties: Array [
+						properties: [
 							JSObjectProperty {
 								key: JSStaticPropertyKey {
 									value: JSIdentifier {
@@ -47,11 +29,27 @@ JSRoot {
 								loc: SourceLocation es2017/async-functions/7/input.js 1:6-1:11
 							}
 						]
+						loc: SourceLocation es2017/async-functions/7/input.js 1:4-1:13
 					}
 				]
+				callee: JSReferenceIdentifier {
+					name: "foo"
+					loc: SourceLocation es2017/async-functions/7/input.js 1:0-1:3 (foo)
+				}
+				loc: SourceLocation es2017/async-functions/7/input.js 1:0-1:14
 			}
+			loc: SourceLocation es2017/async-functions/7/input.js 1:0-1:15
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2017/async-functions/7/input.js>
+	loc: SourceLocation es2017/async-functions/7/input.js 1:0-2:0
 }
 ```
 

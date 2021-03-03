@@ -8,21 +8,12 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: true
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation esprima/es2015-for-of/invalid-lhs-init/input.js 1:0-2:0
-	path: UIDPath<esprima/es2015-for-of/invalid-lhs-init/input.js>
-	body: Array [
+	body: [
 		JSForOfStatement {
 			await: false
-			body: JSEmptyStatement {loc: SourceLocation esprima/es2015-for-of/invalid-lhs-init/input.js 1:18-1:19}
-			loc: SourceLocation esprima/es2015-for-of/invalid-lhs-init/input.js 1:0-1:19
+			body: JSEmptyStatement {
+				loc: SourceLocation esprima/es2015-for-of/invalid-lhs-init/input.js 1:18-1:19
+			}
 			left: JSAssignmentIdentifier {
 				name: "INVALID_PLACEHOLDER"
 				loc: SourceLocation esprima/es2015-for-of/invalid-lhs-init/input.js 1:10-1:9
@@ -31,27 +22,29 @@ JSRoot {
 				name: "that"
 				loc: SourceLocation esprima/es2015-for-of/invalid-lhs-init/input.js 1:13-1:17 (that)
 			}
+			loc: SourceLocation esprima/es2015-for-of/invalid-lhs-init/input.js 1:0-1:19
 		}
 	]
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Invalid left-hand side in for-of statement"}
-			}
-			location: Object {
-				integrity: undefined
+	comments: []
+	corrupt: true
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {advice: [], category: ["parse"], categoryValue: "js", message: [RAW_MARKUP {value: "Invalid left-hand side in "}, "for-of statement"]}
+			location: {
 				language: "js"
-				sourceText: undefined
-				end: Position 1:9
 				path: UIDPath<esprima/es2015-for-of/invalid-lhs-init/input.js>
+				end: Position 1:9
 				start: Position 1:5
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<esprima/es2015-for-of/invalid-lhs-init/input.js>
+	loc: SourceLocation esprima/es2015-for-of/invalid-lhs-init/input.js 1:0-2:0
 }
 ```
 
@@ -64,7 +57,8 @@ JSRoot {
   ✖ Invalid left-hand side in for-of statement
 
     for (this of that);
-         ^^^^
+         <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
+    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
 
 
 ```

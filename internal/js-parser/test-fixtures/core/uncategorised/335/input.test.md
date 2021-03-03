@@ -8,38 +8,14 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation core/uncategorised/335/input.js 1:0-1:17
-	path: UIDPath<core/uncategorised/335/input.js>
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation core/uncategorised/335/input.js 1:0-1:17
 			expression: JSBinaryExpression {
 				operator: "/"
-				loc: SourceLocation core/uncategorised/335/input.js 1:0-1:17
-				right: JSNumericLiteral {
-					value: 2
-					format: undefined
-					loc: SourceLocation core/uncategorised/335/input.js 1:16-1:17
-				}
 				left: JSBinaryExpression {
 					operator: "+"
-					loc: SourceLocation core/uncategorised/335/input.js 1:1-1:12
-					right: JSArrayExpression {
-						elements: Array []
-						loc: SourceLocation core/uncategorised/335/input.js 1:10-1:12
-					}
 					left: JSObjectExpression {
-						loc: SourceLocation core/uncategorised/335/input.js 1:1-1:9
-						properties: Array [
+						properties: [
 							JSObjectProperty {
 								key: JSStaticPropertyKey {
 									value: JSIdentifier {
@@ -49,23 +25,43 @@ JSRoot {
 									loc: SourceLocation core/uncategorised/335/input.js 1:2-1:3
 								}
 								value: JSArrayExpression {
-									loc: SourceLocation core/uncategorised/335/input.js 1:5-1:8
-									elements: Array [
+									elements: [
 										JSNumericLiteral {
 											value: 1
-											format: undefined
 											loc: SourceLocation core/uncategorised/335/input.js 1:6-1:7
 										}
 									]
+									loc: SourceLocation core/uncategorised/335/input.js 1:5-1:8
 								}
 								loc: SourceLocation core/uncategorised/335/input.js 1:2-1:8
 							}
 						]
+						loc: SourceLocation core/uncategorised/335/input.js 1:1-1:9
 					}
+					right: JSArrayExpression {
+						elements: []
+						loc: SourceLocation core/uncategorised/335/input.js 1:10-1:12
+					}
+					loc: SourceLocation core/uncategorised/335/input.js 1:1-1:12
 				}
+				right: JSNumericLiteral {
+					value: 2
+					loc: SourceLocation core/uncategorised/335/input.js 1:16-1:17
+				}
+				loc: SourceLocation core/uncategorised/335/input.js 1:0-1:17
 			}
+			loc: SourceLocation core/uncategorised/335/input.js 1:0-1:17
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<core/uncategorised/335/input.js>
+	loc: SourceLocation core/uncategorised/335/input.js 1:0-1:17
 }
 ```
 

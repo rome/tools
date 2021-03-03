@@ -8,41 +8,40 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	loc: SourceLocation typescript/variable-declarator/definite-assignment/input.ts 1:0-2:0
-	path: UIDPath<typescript/variable-declarator/definite-assignment/input.ts>
-	syntax: Array ["ts"]
-	body: Array [
+	body: [
 		JSVariableDeclarationStatement {
-			loc: SourceLocation typescript/variable-declarator/definite-assignment/input.ts 1:0-1:15
 			declaration: JSVariableDeclaration {
 				kind: "let"
-				loc: SourceLocation typescript/variable-declarator/definite-assignment/input.ts 1:0-1:15
-				declarations: Array [
+				declarations: [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "x"
-							loc: SourceLocation typescript/variable-declarator/definite-assignment/input.ts 1:4-1:14
 							meta: JSPatternMeta {
 								definite: true
+								typeAnnotation: TSNumberKeywordTypeAnnotation {
+									loc: SourceLocation typescript/variable-declarator/definite-assignment/input.ts 1:8-1:14
+								}
 								loc: SourceLocation typescript/variable-declarator/definite-assignment/input.ts 1:4-1:14
-								typeAnnotation: TSNumberKeywordTypeAnnotation {loc: SourceLocation typescript/variable-declarator/definite-assignment/input.ts 1:8-1:14}
 							}
+							loc: SourceLocation typescript/variable-declarator/definite-assignment/input.ts 1:4-1:14
 						}
-						init: undefined
 						loc: SourceLocation typescript/variable-declarator/definite-assignment/input.ts 1:4-1:14
 					}
 				]
+				loc: SourceLocation typescript/variable-declarator/definite-assignment/input.ts 1:0-1:15
 			}
+			loc: SourceLocation typescript/variable-declarator/definite-assignment/input.ts 1:0-1:15
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: ["ts"]
+	path: UIDPath<typescript/variable-declarator/definite-assignment/input.ts>
+	loc: SourceLocation typescript/variable-declarator/definite-assignment/input.ts 1:0-2:0
 }
 ```
 

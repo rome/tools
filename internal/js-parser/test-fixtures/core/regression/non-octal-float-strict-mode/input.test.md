@@ -10,7 +10,10 @@
 JSRoot {
 	body: [
 		JSExpressionStatement {
-			expression: JSNumericLiteral {value: 9.5, loc: SourceLocation core/regression/non-octal-float-strict-mode/input.js 1:0-1:4}
+			expression: JSNumericLiteral {
+				value: 9.5
+				loc: SourceLocation core/regression/non-octal-float-strict-mode/input.js 1:0-1:4
+			}
 			loc: SourceLocation core/regression/non-octal-float-strict-mode/input.js 1:0-1:4
 		}
 	]
@@ -18,21 +21,26 @@ JSRoot {
 	corrupt: false
 	diagnostics: [
 		{
+			origins: [{category: "parse"}]
 			description: {
 				advice: []
 				category: ["parse"]
 				categoryValue: "js"
 				message: RAW_MARKUP {value: "Legacy octal literals are not allowed in strict mode"}
 			}
-			location: {language: "js", path: UIDPath<core/regression/non-octal-float-strict-mode/input.js>, end: Position 1:2, start: Position 1:2}
-			origins: [{category: "parse"}]
+			location: {
+				language: "js"
+				path: UIDPath<core/regression/non-octal-float-strict-mode/input.js>
+				end: Position 1:2
+				start: Position 1:2
+			}
 		}
 	]
 	directives: []
 	hasHoistedVars: false
-	path: UIDPath<core/regression/non-octal-float-strict-mode/input.js>
 	sourceType: "module"
 	syntax: []
+	path: UIDPath<core/regression/non-octal-float-strict-mode/input.js>
 	loc: SourceLocation core/regression/non-octal-float-strict-mode/input.js 1:0-2:0
 }
 ```
@@ -46,7 +54,7 @@ JSRoot {
   ✖ Legacy octal literals are not allowed in strict mode
 
     09.5
-      ^
+      <error><emphasis>^</emphasis></error>
 
 
 ```

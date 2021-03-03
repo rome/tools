@@ -10,13 +10,25 @@
 JSRoot {
 	body: [
 		JSTryStatement {
-			block: JSBlockStatement {body: [], directives: [], loc: SourceLocation core/uncategorised/280/input.js 1:4-1:7}
+			block: JSBlockStatement {
+				body: []
+				directives: []
+				loc: SourceLocation core/uncategorised/280/input.js 1:4-1:7
+			}
 			finalizer: JSBlockStatement {
 				body: [
 					JSExpressionStatement {
 						expression: JSCallExpression {
-							arguments: [JSReferenceIdentifier {name: "stuff", loc: SourceLocation core/uncategorised/280/input.js 1:26-1:31 (stuff)}]
-							callee: JSReferenceIdentifier {name: "cleanup", loc: SourceLocation core/uncategorised/280/input.js 1:18-1:25 (cleanup)}
+							arguments: [
+								JSReferenceIdentifier {
+									name: "stuff"
+									loc: SourceLocation core/uncategorised/280/input.js 1:26-1:31 (stuff)
+								}
+							]
+							callee: JSReferenceIdentifier {
+								name: "cleanup"
+								loc: SourceLocation core/uncategorised/280/input.js 1:18-1:25 (cleanup)
+							}
 							loc: SourceLocation core/uncategorised/280/input.js 1:18-1:32
 						}
 						loc: SourceLocation core/uncategorised/280/input.js 1:18-1:32
@@ -33,9 +45,9 @@ JSRoot {
 	diagnostics: []
 	directives: []
 	hasHoistedVars: false
-	path: UIDPath<core/uncategorised/280/input.js>
 	sourceType: "script"
 	syntax: []
+	path: UIDPath<core/uncategorised/280/input.js>
 	loc: SourceLocation core/uncategorised/280/input.js 1:0-1:34
 }
 ```

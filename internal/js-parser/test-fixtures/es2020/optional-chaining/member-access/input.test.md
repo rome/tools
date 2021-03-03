@@ -8,79 +8,57 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2020/optional-chaining/member-access/input.js 1:0-5:12
-	path: UIDPath<es2020/optional-chaining/member-access/input.js>
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation es2020/optional-chaining/member-access/input.js 1:0-1:8
 			expression: JSMemberExpression {
-				loc: SourceLocation es2020/optional-chaining/member-access/input.js 1:0-1:8
 				object: JSReferenceIdentifier {
 					name: "foo"
 					loc: SourceLocation es2020/optional-chaining/member-access/input.js 1:0-1:3 (foo)
 				}
 				property: JSStaticMemberProperty {
+					optional: true
 					value: JSIdentifier {
 						name: "bar"
 						loc: SourceLocation es2020/optional-chaining/member-access/input.js 1:5-1:8 (bar)
 					}
-					optional: true
 					loc: SourceLocation es2020/optional-chaining/member-access/input.js 1:5-1:8 (bar)
 				}
+				loc: SourceLocation es2020/optional-chaining/member-access/input.js 1:0-1:8
 			}
+			loc: SourceLocation es2020/optional-chaining/member-access/input.js 1:0-1:8
 		}
 		JSExpressionStatement {
-			loc: SourceLocation es2020/optional-chaining/member-access/input.js 3:0-3:13
 			expression: JSMemberExpression {
-				loc: SourceLocation es2020/optional-chaining/member-access/input.js 3:0-3:13
-				property: JSStaticMemberProperty {
-					value: JSIdentifier {
-						name: "baz"
-						loc: SourceLocation es2020/optional-chaining/member-access/input.js 3:10-3:13 (baz)
-					}
-					optional: true
-					loc: SourceLocation es2020/optional-chaining/member-access/input.js 3:10-3:13 (baz)
-				}
 				object: JSMemberExpression {
-					loc: SourceLocation es2020/optional-chaining/member-access/input.js 3:0-3:8
 					object: JSReferenceIdentifier {
 						name: "foo"
 						loc: SourceLocation es2020/optional-chaining/member-access/input.js 3:0-3:3 (foo)
 					}
 					property: JSStaticMemberProperty {
+						optional: true
 						value: JSIdentifier {
 							name: "bar"
 							loc: SourceLocation es2020/optional-chaining/member-access/input.js 3:5-3:8 (bar)
 						}
-						optional: true
 						loc: SourceLocation es2020/optional-chaining/member-access/input.js 3:5-3:8 (bar)
 					}
+					loc: SourceLocation es2020/optional-chaining/member-access/input.js 3:0-3:8
 				}
-			}
-		}
-		JSExpressionStatement {
-			loc: SourceLocation es2020/optional-chaining/member-access/input.js 5:0-5:12
-			expression: JSMemberExpression {
-				loc: SourceLocation es2020/optional-chaining/member-access/input.js 5:0-5:12
 				property: JSStaticMemberProperty {
+					optional: true
 					value: JSIdentifier {
 						name: "baz"
-						loc: SourceLocation es2020/optional-chaining/member-access/input.js 5:9-5:12 (baz)
+						loc: SourceLocation es2020/optional-chaining/member-access/input.js 3:10-3:13 (baz)
 					}
-					optional: true
-					loc: SourceLocation es2020/optional-chaining/member-access/input.js 5:9-5:12 (baz)
+					loc: SourceLocation es2020/optional-chaining/member-access/input.js 3:10-3:13 (baz)
 				}
+				loc: SourceLocation es2020/optional-chaining/member-access/input.js 3:0-3:13
+			}
+			loc: SourceLocation es2020/optional-chaining/member-access/input.js 3:0-3:13
+		}
+		JSExpressionStatement {
+			expression: JSMemberExpression {
 				object: JSMemberExpression {
-					loc: SourceLocation es2020/optional-chaining/member-access/input.js 5:0-5:7
 					object: JSReferenceIdentifier {
 						name: "foo"
 						loc: SourceLocation es2020/optional-chaining/member-access/input.js 5:0-5:3 (foo)
@@ -92,10 +70,30 @@ JSRoot {
 						}
 						loc: SourceLocation es2020/optional-chaining/member-access/input.js 5:4-5:7 (bar)
 					}
+					loc: SourceLocation es2020/optional-chaining/member-access/input.js 5:0-5:7
 				}
+				property: JSStaticMemberProperty {
+					optional: true
+					value: JSIdentifier {
+						name: "baz"
+						loc: SourceLocation es2020/optional-chaining/member-access/input.js 5:9-5:12 (baz)
+					}
+					loc: SourceLocation es2020/optional-chaining/member-access/input.js 5:9-5:12 (baz)
+				}
+				loc: SourceLocation es2020/optional-chaining/member-access/input.js 5:0-5:12
 			}
+			loc: SourceLocation es2020/optional-chaining/member-access/input.js 5:0-5:12
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2020/optional-chaining/member-access/input.js>
+	loc: SourceLocation es2020/optional-chaining/member-access/input.js 1:0-5:12
 }
 ```
 

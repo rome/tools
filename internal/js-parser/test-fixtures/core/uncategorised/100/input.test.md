@@ -12,11 +12,16 @@ JSRoot {
 	comments: []
 	corrupt: false
 	diagnostics: []
-	directives: [JSDirective {value: "Hello\\\nworld", loc: SourceLocation core/uncategorised/100/input.js 1:0-2:6}]
+	directives: [
+		JSDirective {
+			value: "Hello\\\nworld"
+			loc: SourceLocation core/uncategorised/100/input.js 1:0-2:6
+		}
+	]
 	hasHoistedVars: false
-	path: UIDPath<core/uncategorised/100/input.js>
 	sourceType: "script"
 	syntax: []
+	path: UIDPath<core/uncategorised/100/input.js>
 	loc: SourceLocation core/uncategorised/100/input.js 1:0-2:6
 }
 ```

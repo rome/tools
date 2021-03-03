@@ -11,12 +11,21 @@ JSRoot {
 	body: [
 		JSExpressionStatement {
 			expression: JSMemberExpression {
-				object: JSReferenceIdentifier {name: "universe", loc: SourceLocation core/uncategorised/122/input.js 1:0-1:8 (universe)}
+				object: JSReferenceIdentifier {
+					name: "universe"
+					loc: SourceLocation core/uncategorised/122/input.js 1:0-1:8 (universe)
+				}
 				property: JSComputedMemberProperty {
 					value: JSSequenceExpression {
 						expressions: [
-							JSReferenceIdentifier {name: "galaxyName", loc: SourceLocation core/uncategorised/122/input.js 1:9-1:19 (galaxyName)}
-							JSReferenceIdentifier {name: "otherUselessName", loc: SourceLocation core/uncategorised/122/input.js 1:21-1:37 (otherUselessName)}
+							JSReferenceIdentifier {
+								name: "galaxyName"
+								loc: SourceLocation core/uncategorised/122/input.js 1:9-1:19 (galaxyName)
+							}
+							JSReferenceIdentifier {
+								name: "otherUselessName"
+								loc: SourceLocation core/uncategorised/122/input.js 1:21-1:37 (otherUselessName)
+							}
 						]
 						loc: SourceLocation core/uncategorised/122/input.js 1:9-1:37
 					}
@@ -32,9 +41,9 @@ JSRoot {
 	diagnostics: []
 	directives: []
 	hasHoistedVars: false
-	path: UIDPath<core/uncategorised/122/input.js>
 	sourceType: "script"
 	syntax: []
+	path: UIDPath<core/uncategorised/122/input.js>
 	loc: SourceLocation core/uncategorised/122/input.js 1:0-1:38
 }
 ```

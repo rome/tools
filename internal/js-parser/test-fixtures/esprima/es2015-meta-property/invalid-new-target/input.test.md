@@ -8,50 +8,17 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: true
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation esprima/es2015-meta-property/invalid-new-target/input.js 1:0-2:0
-	path: UIDPath<esprima/es2015-meta-property/invalid-new-target/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "new.target can only be used in functions or class properties"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:18
-				path: UIDPath<esprima/es2015-meta-property/invalid-new-target/input.js>
-				start: Position 1:8
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSVariableDeclarationStatement {
-			loc: SourceLocation esprima/es2015-meta-property/invalid-new-target/input.js 1:0-1:19
 			declaration: JSVariableDeclaration {
 				kind: "var"
-				loc: SourceLocation esprima/es2015-meta-property/invalid-new-target/input.js 1:0-1:19
-				declarations: Array [
+				declarations: [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "x"
 							loc: SourceLocation esprima/es2015-meta-property/invalid-new-target/input.js 1:4-1:5 (x)
 						}
-						loc: SourceLocation esprima/es2015-meta-property/invalid-new-target/input.js 1:4-1:18
 						init: JSMetaProperty {
-							loc: SourceLocation esprima/es2015-meta-property/invalid-new-target/input.js 1:8-1:18
 							meta: JSIdentifier {
 								name: "new"
 								loc: SourceLocation esprima/es2015-meta-property/invalid-new-target/input.js 1:8-1:11 (new)
@@ -60,12 +27,41 @@ JSRoot {
 								name: "target"
 								loc: SourceLocation esprima/es2015-meta-property/invalid-new-target/input.js 1:12-1:18 (target)
 							}
+							loc: SourceLocation esprima/es2015-meta-property/invalid-new-target/input.js 1:8-1:18
 						}
+						loc: SourceLocation esprima/es2015-meta-property/invalid-new-target/input.js 1:4-1:18
 					}
 				]
+				loc: SourceLocation esprima/es2015-meta-property/invalid-new-target/input.js 1:0-1:19
+			}
+			loc: SourceLocation esprima/es2015-meta-property/invalid-new-target/input.js 1:0-1:19
+		}
+	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "new.target can only be used in functions or class properties"}
+			}
+			location: {
+				language: "js"
+				path: UIDPath<esprima/es2015-meta-property/invalid-new-target/input.js>
+				end: Position 1:18
+				start: Position 1:8
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: true
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<esprima/es2015-meta-property/invalid-new-target/input.js>
+	loc: SourceLocation esprima/es2015-meta-property/invalid-new-target/input.js 1:0-2:0
 }
 ```
 
@@ -78,7 +74,11 @@ JSRoot {
   ✖ new.target can only be used in functions or class properties
 
     var x = new.target;
-            ^^^^^^^^^^
+            <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
+    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
+    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
+    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
+    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
 
 
 ```

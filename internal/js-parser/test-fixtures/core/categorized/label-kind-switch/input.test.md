@@ -14,10 +14,16 @@ JSRoot {
 				JSLabeledStatement {
 					body: JSSwitchStatement {
 						cases: []
-						discriminant: JSReferenceIdentifier {name: "i", loc: SourceLocation core/categorized/label-kind-switch/input.js 2:13-2:14 (i)}
+						discriminant: JSReferenceIdentifier {
+							name: "i"
+							loc: SourceLocation core/categorized/label-kind-switch/input.js 2:13-2:14 (i)
+						}
 						loc: SourceLocation core/categorized/label-kind-switch/input.js 2:5-3:3
 					}
-					label: JSIdentifier {name: "a", loc: SourceLocation core/categorized/label-kind-switch/input.js 2:2-2:3 (a)}
+					label: JSIdentifier {
+						name: "a"
+						loc: SourceLocation core/categorized/label-kind-switch/input.js 2:2-2:3 (a)
+					}
 					loc: SourceLocation core/categorized/label-kind-switch/input.js 2:2-3:3
 				}
 			]
@@ -30,9 +36,9 @@ JSRoot {
 	diagnostics: []
 	directives: []
 	hasHoistedVars: false
-	path: UIDPath<core/categorized/label-kind-switch/input.js>
 	sourceType: "script"
 	syntax: []
+	path: UIDPath<core/categorized/label-kind-switch/input.js>
 	loc: SourceLocation core/categorized/label-kind-switch/input.js 1:0-4:1
 }
 ```

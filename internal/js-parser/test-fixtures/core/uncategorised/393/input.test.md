@@ -8,46 +8,10 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: true
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation core/uncategorised/393/input.js 1:0-1:22
-	path: UIDPath<core/uncategorised/393/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:17
-				path: UIDPath<core/uncategorised/393/input.js>
-				start: Position 1:16
-			}
-			description: Object {
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Unexpected character <emphasis>{</emphasis>"}
-				advice: Array [
-					log {
-						category: "info"
-						text: RAW_MARKUP {value: "Expected character <emphasis>,</emphasis>"}
-					}
-				]
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation core/uncategorised/393/input.js 1:0-1:15
 			expression: JSObjectExpression {
-				loc: SourceLocation core/uncategorised/393/input.js 1:1-1:15
-				properties: Array [
+				properties: [
 					JSObjectProperty {
 						key: JSStaticPropertyKey {
 							value: JSIdentifier {
@@ -57,12 +21,7 @@ JSRoot {
 							loc: SourceLocation core/uncategorised/393/input.js 1:3-1:6
 						}
 						value: JSCallExpression {
-							loc: SourceLocation core/uncategorised/393/input.js 1:8-1:15
-							callee: JSReferenceIdentifier {
-								name: "s"
-								loc: SourceLocation core/uncategorised/393/input.js 1:8-1:9 (s)
-							}
-							arguments: Array [
+							arguments: [
 								JSReferenceIdentifier {
 									name: "a"
 									loc: SourceLocation core/uncategorised/393/input.js 1:10-1:11 (a)
@@ -72,32 +31,64 @@ JSRoot {
 									loc: SourceLocation core/uncategorised/393/input.js 1:13-1:14 (b)
 								}
 							]
+							callee: JSReferenceIdentifier {
+								name: "s"
+								loc: SourceLocation core/uncategorised/393/input.js 1:8-1:9 (s)
+							}
+							loc: SourceLocation core/uncategorised/393/input.js 1:8-1:15
 						}
 						loc: SourceLocation core/uncategorised/393/input.js 1:3-1:15
 					}
 				]
+				loc: SourceLocation core/uncategorised/393/input.js 1:1-1:15
 			}
+			loc: SourceLocation core/uncategorised/393/input.js 1:0-1:15
 		}
 		JSBlockStatement {
-			body: Array []
-			directives: Array []
+			body: []
+			directives: []
 			loc: SourceLocation core/uncategorised/393/input.js 1:16-1:19
 		}
 		JSExpressionStatement {
-			loc: SourceLocation core/uncategorised/393/input.js 1:20-1:21
 			expression: JSReferenceIdentifier {
 				name: "INVALID_PLACEHOLDER"
 				loc: SourceLocation core/uncategorised/393/input.js 1:20-1:21
 			}
+			loc: SourceLocation core/uncategorised/393/input.js 1:20-1:21
 		}
 		JSExpressionStatement {
-			loc: SourceLocation core/uncategorised/393/input.js 1:21-1:22
 			expression: JSReferenceIdentifier {
 				name: "INVALID_PLACEHOLDER"
 				loc: SourceLocation core/uncategorised/393/input.js 1:21-1:22
 			}
+			loc: SourceLocation core/uncategorised/393/input.js 1:21-1:22
 		}
 	]
+	comments: []
+	corrupt: true
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {
+				advice: [log {category: "info", text: [RAW_MARKUP {value: "Expected character <emphasis>"}, ",", RAW_MARKUP {value: "</emphasis>"}]}]
+				category: ["parse"]
+				categoryValue: "js"
+				message: [RAW_MARKUP {value: "Unexpected character <emphasis>"}, "{", RAW_MARKUP {value: "</emphasis>"}]
+			}
+			location: {
+				language: "js"
+				path: UIDPath<core/uncategorised/393/input.js>
+				end: Position 1:17
+				start: Position 1:16
+			}
+		}
+	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<core/uncategorised/393/input.js>
+	loc: SourceLocation core/uncategorised/393/input.js 1:0-1:22
 }
 ```
 
@@ -110,7 +101,7 @@ JSRoot {
   ✖ Unexpected character {
 
     ({ set: s(a, b) { } })
-                    ^
+                    <error><emphasis>^</emphasis></error>
 
   ℹ Expected character ,
 

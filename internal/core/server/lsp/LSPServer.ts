@@ -229,7 +229,7 @@ export default class LSPServer {
 					params: {
 						uri: `file://${path.join()}`,
 						diagnostics: convertDiagnosticsToLSP(
-							this.diagnosticsProcessor.getAllDiagnosticsForPath(path),
+							this.diagnosticsProcessor.getDiagnosticsForPath(path),
 							this.server,
 						),
 					},
@@ -327,7 +327,7 @@ export default class LSPServer {
 				const codeActions: LSPCodeAction[] = [];
 				const seenDecisions = new Set<string>();
 
-				const diagnostics = this.diagnosticsProcessor.getAllDiagnosticsForPath(
+				const diagnostics = this.diagnosticsProcessor.getDiagnosticsForPath(
 					path,
 				);
 				if (diagnostics.length === 0) {

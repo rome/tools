@@ -8,49 +8,14 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: true
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation experimental/class-private-properties/failure-shorthand/input.js 1:0-7:0
-	path: UIDPath<experimental/class-private-properties/failure-shorthand/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Unknown start to an statement expression"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 4:10
-				path: UIDPath<experimental/class-private-properties/failure-shorthand/input.js>
-				start: Position 4:11
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSClassDeclaration {
 			id: JSBindingIdentifier {
 				name: "Foo"
 				loc: SourceLocation experimental/class-private-properties/failure-shorthand/input.js 1:6-1:9 (Foo)
 			}
-			loc: SourceLocation experimental/class-private-properties/failure-shorthand/input.js 1:0-6:1
 			meta: JSClassHead {
-				implements: undefined
-				superClass: undefined
-				superTypeParameters: undefined
-				typeParameters: undefined
-				loc: SourceLocation experimental/class-private-properties/failure-shorthand/input.js 1:0-6:1
-				body: Array [
+				body: [
 					JSClassPrivateProperty {
 						key: JSPrivateName {
 							id: JSIdentifier {
@@ -59,19 +24,15 @@ JSRoot {
 							}
 							loc: SourceLocation experimental/class-private-properties/failure-shorthand/input.js 2:2-2:4
 						}
-						value: undefined
-						typeAnnotation: undefined
-						loc: SourceLocation experimental/class-private-properties/failure-shorthand/input.js 2:2-2:5
 						meta: JSClassPropertyMeta {
 							abstract: false
-							accessibility: undefined
 							optional: false
 							readonly: false
 							static: false
-							typeAnnotation: undefined
 							loc: SourceLocation experimental/class-private-properties/failure-shorthand/input.js 2:2-2:4
 							start: Position 2:2
 						}
+						loc: SourceLocation experimental/class-private-properties/failure-shorthand/input.js 2:2-2:5
 					}
 					JSClassMethod {
 						kind: "constructor"
@@ -82,58 +43,74 @@ JSRoot {
 							}
 							loc: SourceLocation experimental/class-private-properties/failure-shorthand/input.js 3:2-3:13
 						}
-						loc: SourceLocation experimental/class-private-properties/failure-shorthand/input.js 3:2-5:3
-						meta: JSClassPropertyMeta {
-							abstract: false
-							accessibility: undefined
-							optional: false
-							readonly: false
-							static: false
-							typeAnnotation: undefined
-							loc: SourceLocation experimental/class-private-properties/failure-shorthand/input.js 3:2-3:13
-							start: Position 3:2
+						body: JSBlockStatement {
+							body: [
+								JSExpressionStatement {
+									expression: JSUnaryExpression {
+										operator: "delete"
+										prefix: true
+										argument: JSReferenceIdentifier {
+											name: "INVALID_PLACEHOLDER"
+											loc: SourceLocation experimental/class-private-properties/failure-shorthand/input.js 4:11-4:12
+										}
+										loc: SourceLocation experimental/class-private-properties/failure-shorthand/input.js 4:4-4:12
+									}
+									loc: SourceLocation experimental/class-private-properties/failure-shorthand/input.js 4:4-4:12
+								}
+								JSExpressionStatement {
+									expression: JSReferenceIdentifier {
+										name: "x"
+										loc: SourceLocation experimental/class-private-properties/failure-shorthand/input.js 4:12-4:13 (x)
+									}
+									loc: SourceLocation experimental/class-private-properties/failure-shorthand/input.js 4:12-4:14
+								}
+							]
+							directives: []
+							loc: SourceLocation experimental/class-private-properties/failure-shorthand/input.js 3:16-5:3
 						}
 						head: JSFunctionHead {
 							async: false
 							generator: false
 							hasHoistedVars: false
-							params: Array []
-							rest: undefined
-							returnType: undefined
-							thisType: undefined
-							typeParameters: undefined
+							params: []
 							loc: SourceLocation experimental/class-private-properties/failure-shorthand/input.js 3:13-3:15
 						}
-						body: JSBlockStatement {
-							directives: Array []
-							loc: SourceLocation experimental/class-private-properties/failure-shorthand/input.js 3:16-5:3
-							body: Array [
-								JSExpressionStatement {
-									loc: SourceLocation experimental/class-private-properties/failure-shorthand/input.js 4:4-4:12
-									expression: JSUnaryExpression {
-										operator: "delete"
-										prefix: true
-										loc: SourceLocation experimental/class-private-properties/failure-shorthand/input.js 4:4-4:12
-										argument: JSReferenceIdentifier {
-											name: "INVALID_PLACEHOLDER"
-											loc: SourceLocation experimental/class-private-properties/failure-shorthand/input.js 4:11-4:12
-										}
-									}
-								}
-								JSExpressionStatement {
-									loc: SourceLocation experimental/class-private-properties/failure-shorthand/input.js 4:12-4:14
-									expression: JSReferenceIdentifier {
-										name: "x"
-										loc: SourceLocation experimental/class-private-properties/failure-shorthand/input.js 4:12-4:13 (x)
-									}
-								}
-							]
+						meta: JSClassPropertyMeta {
+							abstract: false
+							optional: false
+							readonly: false
+							static: false
+							loc: SourceLocation experimental/class-private-properties/failure-shorthand/input.js 3:2-3:13
+							start: Position 3:2
 						}
+						loc: SourceLocation experimental/class-private-properties/failure-shorthand/input.js 3:2-5:3
 					}
 				]
+				loc: SourceLocation experimental/class-private-properties/failure-shorthand/input.js 1:0-6:1
+			}
+			loc: SourceLocation experimental/class-private-properties/failure-shorthand/input.js 1:0-6:1
+		}
+	]
+	comments: []
+	corrupt: true
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {advice: [], category: ["parse"], categoryValue: "js", message: [RAW_MARKUP {value: "Unknown start to an "}, "statement expression"]}
+			location: {
+				language: "js"
+				path: UIDPath<experimental/class-private-properties/failure-shorthand/input.js>
+				end: Position 4:10
+				start: Position 4:11
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<experimental/class-private-properties/failure-shorthand/input.js>
+	loc: SourceLocation experimental/class-private-properties/failure-shorthand/input.js 1:0-7:0
 }
 ```
 
@@ -148,7 +125,7 @@ JSRoot {
     2 │   #x;
     3 │   constructor() {
   > 4 │     delete #x;
-      │            ^
+      │            <error><emphasis>^</emphasis></error>
     5 │   }
     6 │ }
 

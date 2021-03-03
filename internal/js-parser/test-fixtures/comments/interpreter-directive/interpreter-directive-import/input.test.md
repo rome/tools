@@ -12,15 +12,24 @@ JSRoot {
 		JSImportDeclaration {
 			namedSpecifiers: [
 				JSImportSpecifier {
-					imported: JSIdentifier {name: "spawn", loc: SourceLocation comments/interpreter-directive/interpreter-directive-import/input.js 3:8-3:13 (spawn)}
+					imported: JSIdentifier {
+						name: "spawn"
+						loc: SourceLocation comments/interpreter-directive/interpreter-directive-import/input.js 3:8-3:13 (spawn)
+					}
 					local: JSImportSpecifierLocal {
-						name: JSBindingIdentifier {name: "spawn", loc: SourceLocation comments/interpreter-directive/interpreter-directive-import/input.js 3:8-3:13 (spawn)}
+						name: JSBindingIdentifier {
+							name: "spawn"
+							loc: SourceLocation comments/interpreter-directive/interpreter-directive-import/input.js 3:8-3:13 (spawn)
+						}
 						loc: SourceLocation comments/interpreter-directive/interpreter-directive-import/input.js 3:8-3:13
 					}
 					loc: SourceLocation comments/interpreter-directive/interpreter-directive-import/input.js 3:8-3:13
 				}
 			]
-			source: JSStringLiteral {value: "foobar", loc: SourceLocation comments/interpreter-directive/interpreter-directive-import/input.js 3:20-3:28}
+			source: JSStringLiteral {
+				value: "foobar"
+				loc: SourceLocation comments/interpreter-directive/interpreter-directive-import/input.js 3:20-3:28
+			}
 			loc: SourceLocation comments/interpreter-directive/interpreter-directive-import/input.js 3:0-3:29
 		}
 	]
@@ -29,13 +38,13 @@ JSRoot {
 	diagnostics: []
 	directives: []
 	hasHoistedVars: false
+	sourceType: "module"
+	syntax: []
 	interpreter: JSInterpreterDirective {
 		value: "/usr/bin/env babel-node"
 		loc: SourceLocation comments/interpreter-directive/interpreter-directive-import/input.js 1:1-1:25
 	}
 	path: UIDPath<comments/interpreter-directive/interpreter-directive-import/input.js>
-	sourceType: "module"
-	syntax: []
 	loc: SourceLocation comments/interpreter-directive/interpreter-directive-import/input.js 1:0-4:0
 }
 ```

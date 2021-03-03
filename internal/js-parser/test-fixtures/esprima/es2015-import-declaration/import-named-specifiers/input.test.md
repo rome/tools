@@ -8,30 +8,10 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	syntax: Array []
-	loc: SourceLocation esprima/es2015-import-declaration/import-named-specifiers/input.js 1:0-2:0
-	path: UIDPath<esprima/es2015-import-declaration/import-named-specifiers/input.js>
-	body: Array [
+	body: [
 		JSImportDeclaration {
-			defaultSpecifier: undefined
-			importKind: undefined
-			namespaceSpecifier: undefined
-			loc: SourceLocation esprima/es2015-import-declaration/import-named-specifiers/input.js 1:0-1:29
-			source: JSStringLiteral {
-				value: "foo"
-				loc: SourceLocation esprima/es2015-import-declaration/import-named-specifiers/input.js 1:23-1:28
-			}
-			namedSpecifiers: Array [
+			namedSpecifiers: [
 				JSImportSpecifier {
-					loc: SourceLocation esprima/es2015-import-declaration/import-named-specifiers/input.js 1:8-1:11
 					imported: JSIdentifier {
 						name: "bar"
 						loc: SourceLocation esprima/es2015-import-declaration/import-named-specifiers/input.js 1:8-1:11 (bar)
@@ -41,12 +21,11 @@ JSRoot {
 							name: "bar"
 							loc: SourceLocation esprima/es2015-import-declaration/import-named-specifiers/input.js 1:8-1:11 (bar)
 						}
-						importKind: undefined
 						loc: SourceLocation esprima/es2015-import-declaration/import-named-specifiers/input.js 1:8-1:11
 					}
+					loc: SourceLocation esprima/es2015-import-declaration/import-named-specifiers/input.js 1:8-1:11
 				}
 				JSImportSpecifier {
-					loc: SourceLocation esprima/es2015-import-declaration/import-named-specifiers/input.js 1:13-1:16
 					imported: JSIdentifier {
 						name: "baz"
 						loc: SourceLocation esprima/es2015-import-declaration/import-named-specifiers/input.js 1:13-1:16 (baz)
@@ -56,13 +35,27 @@ JSRoot {
 							name: "baz"
 							loc: SourceLocation esprima/es2015-import-declaration/import-named-specifiers/input.js 1:13-1:16 (baz)
 						}
-						importKind: undefined
 						loc: SourceLocation esprima/es2015-import-declaration/import-named-specifiers/input.js 1:13-1:16
 					}
+					loc: SourceLocation esprima/es2015-import-declaration/import-named-specifiers/input.js 1:13-1:16
 				}
 			]
+			source: JSStringLiteral {
+				value: "foo"
+				loc: SourceLocation esprima/es2015-import-declaration/import-named-specifiers/input.js 1:23-1:28
+			}
+			loc: SourceLocation esprima/es2015-import-declaration/import-named-specifiers/input.js 1:0-1:29
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: []
+	path: UIDPath<esprima/es2015-import-declaration/import-named-specifiers/input.js>
+	loc: SourceLocation esprima/es2015-import-declaration/import-named-specifiers/input.js 1:0-2:0
 }
 ```
 

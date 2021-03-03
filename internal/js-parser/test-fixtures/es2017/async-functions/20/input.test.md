@@ -8,48 +8,46 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: true
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2017/async-functions/20/input.js 1:0-1:17
-	path: UIDPath<es2017/async-functions/20/input.js>
-	body: Array [
+	body: [
 		JSVariableDeclarationStatement {
-			loc: SourceLocation es2017/async-functions/20/input.js 1:0-1:17
 			declaration: JSVariableDeclaration {
 				kind: "var"
-				loc: SourceLocation es2017/async-functions/20/input.js 1:0-1:17
-				declarations: Array [
+				declarations: [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "ok"
 							loc: SourceLocation es2017/async-functions/20/input.js 1:4-1:6 (ok)
 						}
-						loc: SourceLocation es2017/async-functions/20/input.js 1:4-1:17
 						init: JSCallExpression {
-							loc: SourceLocation es2017/async-functions/20/input.js 1:9-1:17
-							callee: JSReferenceIdentifier {
-								name: "async"
-								loc: SourceLocation es2017/async-functions/20/input.js 1:9-1:14 (async)
-							}
-							arguments: Array [
+							arguments: [
 								JSReferenceIdentifier {
 									name: "x"
 									loc: SourceLocation es2017/async-functions/20/input.js 1:15-1:16 (x)
 								}
 							]
+							callee: JSReferenceIdentifier {
+								name: "async"
+								loc: SourceLocation es2017/async-functions/20/input.js 1:9-1:14 (async)
+							}
+							loc: SourceLocation es2017/async-functions/20/input.js 1:9-1:17
 						}
+						loc: SourceLocation es2017/async-functions/20/input.js 1:4-1:17
 					}
 				]
+				loc: SourceLocation es2017/async-functions/20/input.js 1:0-1:17
 			}
+			loc: SourceLocation es2017/async-functions/20/input.js 1:0-1:17
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: true
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2017/async-functions/20/input.js>
+	loc: SourceLocation es2017/async-functions/20/input.js 1:0-1:17
 }
 ```
 

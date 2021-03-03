@@ -8,30 +8,11 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation core/uncategorised/344/input.js 1:0-2:16
-	path: UIDPath<core/uncategorised/344/input.js>
-	directives: Array [
-		JSDirective {
-			value: "use strict"
-			loc: SourceLocation core/uncategorised/344/input.js 1:0-1:13
-		}
-	]
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation core/uncategorised/344/input.js 2:0-2:16
 			expression: JSCallExpression {
-				arguments: Array []
-				loc: SourceLocation core/uncategorised/344/input.js 2:0-2:15
+				arguments: []
 				callee: JSMemberExpression {
-					loc: SourceLocation core/uncategorised/344/input.js 2:0-2:13
 					object: JSReferenceIdentifier {
 						name: "object"
 						loc: SourceLocation core/uncategorised/344/input.js 2:0-2:6 (object)
@@ -43,10 +24,27 @@ JSRoot {
 						}
 						loc: SourceLocation core/uncategorised/344/input.js 2:7-2:13 (static)
 					}
+					loc: SourceLocation core/uncategorised/344/input.js 2:0-2:13
 				}
+				loc: SourceLocation core/uncategorised/344/input.js 2:0-2:15
 			}
+			loc: SourceLocation core/uncategorised/344/input.js 2:0-2:16
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: [
+		JSDirective {
+			value: "use strict"
+			loc: SourceLocation core/uncategorised/344/input.js 1:0-1:13
+		}
+	]
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<core/uncategorised/344/input.js>
+	loc: SourceLocation core/uncategorised/344/input.js 1:0-2:16
 }
 ```
 

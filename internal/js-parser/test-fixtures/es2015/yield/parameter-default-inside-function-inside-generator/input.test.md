@@ -8,83 +8,71 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2015/yield/parameter-default-inside-function-inside-generator/input.js 1:0-3:1
-	path: UIDPath<es2015/yield/parameter-default-inside-function-inside-generator/input.js>
-	body: Array [
+	body: [
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "fn"
 				loc: SourceLocation es2015/yield/parameter-default-inside-function-inside-generator/input.js 1:10-1:12 (fn)
 			}
-			loc: SourceLocation es2015/yield/parameter-default-inside-function-inside-generator/input.js 1:0-3:1
-			head: JSFunctionHead {
-				async: false
-				generator: true
-				hasHoistedVars: false
-				params: Array []
-				rest: undefined
-				returnType: undefined
-				thisType: undefined
-				typeParameters: undefined
-				loc: SourceLocation es2015/yield/parameter-default-inside-function-inside-generator/input.js 1:12-1:14
-			}
 			body: JSBlockStatement {
-				directives: Array []
-				loc: SourceLocation es2015/yield/parameter-default-inside-function-inside-generator/input.js 1:15-3:1
-				body: Array [
+				body: [
 					JSFunctionDeclaration {
 						id: JSBindingIdentifier {
 							name: "fn2"
 							loc: SourceLocation es2015/yield/parameter-default-inside-function-inside-generator/input.js 2:11-2:14 (fn2)
 						}
-						loc: SourceLocation es2015/yield/parameter-default-inside-function-inside-generator/input.js 2:2-2:28
 						body: JSBlockStatement {
-							body: Array []
-							directives: Array []
+							body: []
+							directives: []
 							loc: SourceLocation es2015/yield/parameter-default-inside-function-inside-generator/input.js 2:26-2:28
 						}
 						head: JSFunctionHead {
 							async: false
 							generator: false
 							hasHoistedVars: false
-							rest: undefined
-							returnType: undefined
-							thisType: undefined
-							typeParameters: undefined
-							loc: SourceLocation es2015/yield/parameter-default-inside-function-inside-generator/input.js 2:14-2:25
-							params: Array [
+							params: [
 								JSBindingAssignmentPattern {
-									loc: SourceLocation es2015/yield/parameter-default-inside-function-inside-generator/input.js 2:15-2:24
+									left: JSBindingIdentifier {
+										name: "x"
+										meta: JSPatternMeta {
+											loc: SourceLocation es2015/yield/parameter-default-inside-function-inside-generator/input.js 2:15-2:16
+										}
+										loc: SourceLocation es2015/yield/parameter-default-inside-function-inside-generator/input.js 2:15-2:16 (x)
+									}
 									right: JSReferenceIdentifier {
 										name: "yield"
 										loc: SourceLocation es2015/yield/parameter-default-inside-function-inside-generator/input.js 2:19-2:24 (yield)
 									}
-									left: JSBindingIdentifier {
-										name: "x"
-										loc: SourceLocation es2015/yield/parameter-default-inside-function-inside-generator/input.js 2:15-2:16 (x)
-										meta: JSPatternMeta {
-											optional: undefined
-											typeAnnotation: undefined
-											loc: SourceLocation es2015/yield/parameter-default-inside-function-inside-generator/input.js 2:15-2:16
-										}
-									}
+									loc: SourceLocation es2015/yield/parameter-default-inside-function-inside-generator/input.js 2:15-2:24
 								}
 							]
+							loc: SourceLocation es2015/yield/parameter-default-inside-function-inside-generator/input.js 2:14-2:25
 						}
+						loc: SourceLocation es2015/yield/parameter-default-inside-function-inside-generator/input.js 2:2-2:28
 					}
 				]
+				directives: []
+				loc: SourceLocation es2015/yield/parameter-default-inside-function-inside-generator/input.js 1:15-3:1
 			}
+			head: JSFunctionHead {
+				async: false
+				generator: true
+				hasHoistedVars: false
+				params: []
+				loc: SourceLocation es2015/yield/parameter-default-inside-function-inside-generator/input.js 1:12-1:14
+			}
+			loc: SourceLocation es2015/yield/parameter-default-inside-function-inside-generator/input.js 1:0-3:1
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2015/yield/parameter-default-inside-function-inside-generator/input.js>
+	loc: SourceLocation es2015/yield/parameter-default-inside-function-inside-generator/input.js 1:0-3:1
 }
 ```
 

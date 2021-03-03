@@ -8,27 +8,14 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	loc: SourceLocation typescript/import/equals/input.ts 1:0-2:0
-	path: UIDPath<typescript/import/equals/input.ts>
-	syntax: Array ["ts"]
-	body: Array [
+	body: [
 		TSImportEqualsDeclaration {
+			isExport: false
 			id: JSBindingIdentifier {
 				name: "A"
 				loc: SourceLocation typescript/import/equals/input.ts 1:7-1:8 (A)
 			}
-			isExport: false
-			loc: SourceLocation typescript/import/equals/input.ts 1:0-1:15
 			moduleReference: TSQualifiedName {
-				loc: SourceLocation typescript/import/equals/input.ts 1:11-1:14
 				left: JSReferenceIdentifier {
 					name: "B"
 					loc: SourceLocation typescript/import/equals/input.ts 1:11-1:12 (B)
@@ -37,9 +24,20 @@ JSRoot {
 					name: "C"
 					loc: SourceLocation typescript/import/equals/input.ts 1:13-1:14 (C)
 				}
+				loc: SourceLocation typescript/import/equals/input.ts 1:11-1:14
 			}
+			loc: SourceLocation typescript/import/equals/input.ts 1:0-1:15
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: ["ts"]
+	path: UIDPath<typescript/import/equals/input.ts>
+	loc: SourceLocation typescript/import/equals/input.ts 1:0-2:0
 }
 ```
 

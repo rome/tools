@@ -8,47 +8,24 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	loc: SourceLocation jsx/regression/issue-8891/input.jsx 1:0-7:0
-	path: UIDPath<jsx/regression/issue-8891/input.jsx>
-	syntax: Array ["jsx"]
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation jsx/regression/issue-8891/input.jsx 1:0-6:3
 			expression: JSXFragment {
-				loc: SourceLocation jsx/regression/issue-8891/input.jsx 1:0-6:3
-				children: Array [
+				children: [
 					JSXText {
 						value: "\n"
 						loc: SourceLocation jsx/regression/issue-8891/input.jsx 1:2-2:0
 					}
 					JSXElement {
-						name: JSXReferenceIdentifier {
-							name: "Select"
-							loc: SourceLocation jsx/regression/issue-8891/input.jsx 2:1-2:7
-						}
-						children: Array []
-						selfClosing: true
-						typeArguments: undefined
-						loc: SourceLocation jsx/regression/issue-8891/input.jsx 2:0-2:38
-						attributes: Array [
+						attributes: [
 							JSXAttribute {
 								name: JSXIdentifier {
 									name: "prop"
 									loc: SourceLocation jsx/regression/issue-8891/input.jsx 2:8-2:12
 								}
 								value: JSXExpressionContainer {
-									loc: SourceLocation jsx/regression/issue-8891/input.jsx 2:13-2:35
 									expression: JSObjectExpression {
-										loc: SourceLocation jsx/regression/issue-8891/input.jsx 2:14-2:34
-										properties: Array [
+										properties: [
 											JSObjectProperty {
 												key: JSStaticPropertyKey {
 													value: JSIdentifier {
@@ -64,36 +41,35 @@ JSRoot {
 												loc: SourceLocation jsx/regression/issue-8891/input.jsx 2:16-2:32
 											}
 										]
+										loc: SourceLocation jsx/regression/issue-8891/input.jsx 2:14-2:34
 									}
+									loc: SourceLocation jsx/regression/issue-8891/input.jsx 2:13-2:35
 								}
 								loc: SourceLocation jsx/regression/issue-8891/input.jsx 2:8-2:35
 							}
 						]
+						children: []
+						selfClosing: true
+						name: JSXReferenceIdentifier {
+							name: "Select"
+							loc: SourceLocation jsx/regression/issue-8891/input.jsx 2:1-2:7
+						}
+						loc: SourceLocation jsx/regression/issue-8891/input.jsx 2:0-2:38
 					}
 					JSXText {
 						value: "\n"
 						loc: SourceLocation jsx/regression/issue-8891/input.jsx 2:38-3:0
 					}
 					JSXElement {
-						name: JSXReferenceIdentifier {
-							name: "Select"
-							loc: SourceLocation jsx/regression/issue-8891/input.jsx 3:1-3:7
-						}
-						children: Array []
-						selfClosing: true
-						typeArguments: undefined
-						loc: SourceLocation jsx/regression/issue-8891/input.jsx 3:0-3:35
-						attributes: Array [
+						attributes: [
 							JSXAttribute {
 								name: JSXIdentifier {
 									name: "prop"
 									loc: SourceLocation jsx/regression/issue-8891/input.jsx 3:8-3:12
 								}
 								value: JSXExpressionContainer {
-									loc: SourceLocation jsx/regression/issue-8891/input.jsx 3:13-3:32
 									expression: JSObjectExpression {
-										loc: SourceLocation jsx/regression/issue-8891/input.jsx 3:14-3:31
-										properties: Array [
+										properties: [
 											JSObjectProperty {
 												key: JSStaticPropertyKey {
 													value: JSIdentifier {
@@ -109,36 +85,35 @@ JSRoot {
 												loc: SourceLocation jsx/regression/issue-8891/input.jsx 3:16-3:29
 											}
 										]
+										loc: SourceLocation jsx/regression/issue-8891/input.jsx 3:14-3:31
 									}
+									loc: SourceLocation jsx/regression/issue-8891/input.jsx 3:13-3:32
 								}
 								loc: SourceLocation jsx/regression/issue-8891/input.jsx 3:8-3:32
 							}
 						]
+						children: []
+						selfClosing: true
+						name: JSXReferenceIdentifier {
+							name: "Select"
+							loc: SourceLocation jsx/regression/issue-8891/input.jsx 3:1-3:7
+						}
+						loc: SourceLocation jsx/regression/issue-8891/input.jsx 3:0-3:35
 					}
 					JSXText {
 						value: "\n"
 						loc: SourceLocation jsx/regression/issue-8891/input.jsx 3:35-4:0
 					}
 					JSXElement {
-						name: JSXReferenceIdentifier {
-							name: "Select"
-							loc: SourceLocation jsx/regression/issue-8891/input.jsx 4:1-4:7
-						}
-						children: Array []
-						selfClosing: true
-						typeArguments: undefined
-						loc: SourceLocation jsx/regression/issue-8891/input.jsx 4:0-4:36
-						attributes: Array [
+						attributes: [
 							JSXAttribute {
 								name: JSXIdentifier {
 									name: "prop"
 									loc: SourceLocation jsx/regression/issue-8891/input.jsx 4:8-4:12
 								}
 								value: JSXExpressionContainer {
-									loc: SourceLocation jsx/regression/issue-8891/input.jsx 4:13-4:33
 									expression: JSObjectExpression {
-										loc: SourceLocation jsx/regression/issue-8891/input.jsx 4:14-4:32
-										properties: Array [
+										properties: [
 											JSObjectProperty {
 												key: JSStaticPropertyKey {
 													value: JSIdentifier {
@@ -154,36 +129,35 @@ JSRoot {
 												loc: SourceLocation jsx/regression/issue-8891/input.jsx 4:16-4:30
 											}
 										]
+										loc: SourceLocation jsx/regression/issue-8891/input.jsx 4:14-4:32
 									}
+									loc: SourceLocation jsx/regression/issue-8891/input.jsx 4:13-4:33
 								}
 								loc: SourceLocation jsx/regression/issue-8891/input.jsx 4:8-4:33
 							}
 						]
+						children: []
+						selfClosing: true
+						name: JSXReferenceIdentifier {
+							name: "Select"
+							loc: SourceLocation jsx/regression/issue-8891/input.jsx 4:1-4:7
+						}
+						loc: SourceLocation jsx/regression/issue-8891/input.jsx 4:0-4:36
 					}
 					JSXText {
 						value: "\n"
 						loc: SourceLocation jsx/regression/issue-8891/input.jsx 4:36-5:0
 					}
 					JSXElement {
-						name: JSXReferenceIdentifier {
-							name: "Select"
-							loc: SourceLocation jsx/regression/issue-8891/input.jsx 5:1-5:7
-						}
-						children: Array []
-						selfClosing: true
-						typeArguments: undefined
-						loc: SourceLocation jsx/regression/issue-8891/input.jsx 5:0-5:34
-						attributes: Array [
+						attributes: [
 							JSXAttribute {
 								name: JSXIdentifier {
 									name: "prop"
 									loc: SourceLocation jsx/regression/issue-8891/input.jsx 5:8-5:12
 								}
 								value: JSXExpressionContainer {
-									loc: SourceLocation jsx/regression/issue-8891/input.jsx 5:13-5:31
 									expression: JSObjectExpression {
-										loc: SourceLocation jsx/regression/issue-8891/input.jsx 5:14-5:30
-										properties: Array [
+										properties: [
 											JSObjectProperty {
 												key: JSStaticPropertyKey {
 													value: JSIdentifier {
@@ -199,20 +173,40 @@ JSRoot {
 												loc: SourceLocation jsx/regression/issue-8891/input.jsx 5:16-5:28
 											}
 										]
+										loc: SourceLocation jsx/regression/issue-8891/input.jsx 5:14-5:30
 									}
+									loc: SourceLocation jsx/regression/issue-8891/input.jsx 5:13-5:31
 								}
 								loc: SourceLocation jsx/regression/issue-8891/input.jsx 5:8-5:31
 							}
 						]
+						children: []
+						selfClosing: true
+						name: JSXReferenceIdentifier {
+							name: "Select"
+							loc: SourceLocation jsx/regression/issue-8891/input.jsx 5:1-5:7
+						}
+						loc: SourceLocation jsx/regression/issue-8891/input.jsx 5:0-5:34
 					}
 					JSXText {
 						value: "\n"
 						loc: SourceLocation jsx/regression/issue-8891/input.jsx 5:34-6:0
 					}
 				]
+				loc: SourceLocation jsx/regression/issue-8891/input.jsx 1:0-6:3
 			}
+			loc: SourceLocation jsx/regression/issue-8891/input.jsx 1:0-6:3
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: ["jsx"]
+	path: UIDPath<jsx/regression/issue-8891/input.jsx>
+	loc: SourceLocation jsx/regression/issue-8891/input.jsx 1:0-7:0
 }
 ```
 

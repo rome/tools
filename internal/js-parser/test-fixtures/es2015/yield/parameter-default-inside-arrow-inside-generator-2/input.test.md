@@ -8,108 +8,47 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2015/yield/parameter-default-inside-arrow-inside-generator-2/input.js 1:0-3:1
-	path: UIDPath<es2015/yield/parameter-default-inside-arrow-inside-generator-2/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "yield is not allowed in generator parameters"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 2:20
-				path: UIDPath<es2015/yield/parameter-default-inside-arrow-inside-generator-2/input.js>
-				start: Position 2:20
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "fn"
 				loc: SourceLocation es2015/yield/parameter-default-inside-arrow-inside-generator-2/input.js 1:10-1:12 (fn)
 			}
-			loc: SourceLocation es2015/yield/parameter-default-inside-arrow-inside-generator-2/input.js 1:0-3:1
-			head: JSFunctionHead {
-				async: false
-				generator: true
-				hasHoistedVars: false
-				params: Array []
-				rest: undefined
-				returnType: undefined
-				thisType: undefined
-				typeParameters: undefined
-				loc: SourceLocation es2015/yield/parameter-default-inside-arrow-inside-generator-2/input.js 1:12-1:14
-			}
 			body: JSBlockStatement {
-				directives: Array []
-				loc: SourceLocation es2015/yield/parameter-default-inside-arrow-inside-generator-2/input.js 1:15-3:1
-				body: Array [
+				body: [
 					JSExpressionStatement {
-						loc: SourceLocation es2015/yield/parameter-default-inside-arrow-inside-generator-2/input.js 2:2-2:34
 						expression: JSArrowFunctionExpression {
-							loc: SourceLocation es2015/yield/parameter-default-inside-arrow-inside-generator-2/input.js 2:2-2:33
 							body: JSBlockStatement {
-								body: Array []
-								directives: Array []
+								body: []
+								directives: []
 								loc: SourceLocation es2015/yield/parameter-default-inside-arrow-inside-generator-2/input.js 2:31-2:33
 							}
 							head: JSFunctionHead {
 								async: false
 								hasHoistedVars: false
-								rest: undefined
-								returnType: undefined
-								thisType: undefined
-								loc: SourceLocation es2015/yield/parameter-default-inside-arrow-inside-generator-2/input.js 2:2-2:30
-								params: Array [
+								params: [
 									JSBindingAssignmentPattern {
 										operator: "="
-										loc: SourceLocation es2015/yield/parameter-default-inside-arrow-inside-generator-2/input.js 2:3-2:26
 										left: JSBindingIdentifier {
 											name: "x"
 											loc: SourceLocation es2015/yield/parameter-default-inside-arrow-inside-generator-2/input.js 2:3-2:4 (x)
 										}
 										right: JSBinaryExpression {
 											operator: "+"
-											loc: SourceLocation es2015/yield/parameter-default-inside-arrow-inside-generator-2/input.js 2:7-2:26
 											left: JSNumericLiteral {
 												value: 3
-												format: undefined
 												loc: SourceLocation es2015/yield/parameter-default-inside-arrow-inside-generator-2/input.js 2:7-2:8
 											}
 											right: JSBinaryExpression {
 												operator: "**"
-												loc: SourceLocation es2015/yield/parameter-default-inside-arrow-inside-generator-2/input.js 2:11-2:26
-												right: JSNumericLiteral {
-													value: 2
-													format: undefined
-													loc: SourceLocation es2015/yield/parameter-default-inside-arrow-inside-generator-2/input.js 2:25-2:26
-												}
 												left: JSCallExpression {
-													loc: SourceLocation es2015/yield/parameter-default-inside-arrow-inside-generator-2/input.js 2:11-2:21
-													arguments: Array [
+													arguments: [
 														JSYieldExpression {
-															argument: undefined
 															delegate: false
 															loc: SourceLocation es2015/yield/parameter-default-inside-arrow-inside-generator-2/input.js 2:15-2:20
 														}
 													]
 													callee: JSMemberExpression {
-														loc: SourceLocation es2015/yield/parameter-default-inside-arrow-inside-generator-2/input.js 2:11-2:14
 														object: JSReferenceIdentifier {
 															name: "a"
 															loc: SourceLocation es2015/yield/parameter-default-inside-arrow-inside-generator-2/input.js 2:11-2:12 (a)
@@ -121,19 +60,66 @@ JSRoot {
 															}
 															loc: SourceLocation es2015/yield/parameter-default-inside-arrow-inside-generator-2/input.js 2:13-2:14 (b)
 														}
+														loc: SourceLocation es2015/yield/parameter-default-inside-arrow-inside-generator-2/input.js 2:11-2:14
 													}
+													loc: SourceLocation es2015/yield/parameter-default-inside-arrow-inside-generator-2/input.js 2:11-2:21
 												}
+												right: JSNumericLiteral {
+													value: 2
+													loc: SourceLocation es2015/yield/parameter-default-inside-arrow-inside-generator-2/input.js 2:25-2:26
+												}
+												loc: SourceLocation es2015/yield/parameter-default-inside-arrow-inside-generator-2/input.js 2:11-2:26
 											}
+											loc: SourceLocation es2015/yield/parameter-default-inside-arrow-inside-generator-2/input.js 2:7-2:26
 										}
+										loc: SourceLocation es2015/yield/parameter-default-inside-arrow-inside-generator-2/input.js 2:3-2:26
 									}
 								]
+								loc: SourceLocation es2015/yield/parameter-default-inside-arrow-inside-generator-2/input.js 2:2-2:30
 							}
+							loc: SourceLocation es2015/yield/parameter-default-inside-arrow-inside-generator-2/input.js 2:2-2:33
 						}
+						loc: SourceLocation es2015/yield/parameter-default-inside-arrow-inside-generator-2/input.js 2:2-2:34
 					}
 				]
+				directives: []
+				loc: SourceLocation es2015/yield/parameter-default-inside-arrow-inside-generator-2/input.js 1:15-3:1
+			}
+			head: JSFunctionHead {
+				async: false
+				generator: true
+				hasHoistedVars: false
+				params: []
+				loc: SourceLocation es2015/yield/parameter-default-inside-arrow-inside-generator-2/input.js 1:12-1:14
+			}
+			loc: SourceLocation es2015/yield/parameter-default-inside-arrow-inside-generator-2/input.js 1:0-3:1
+		}
+	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "yield is not allowed in generator parameters"}
+			}
+			location: {
+				language: "js"
+				path: UIDPath<es2015/yield/parameter-default-inside-arrow-inside-generator-2/input.js>
+				end: Position 2:20
+				start: Position 2:20
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2015/yield/parameter-default-inside-arrow-inside-generator-2/input.js>
+	loc: SourceLocation es2015/yield/parameter-default-inside-arrow-inside-generator-2/input.js 1:0-3:1
 }
 ```
 
@@ -147,7 +133,7 @@ JSRoot {
 
     1 │ function* fn() {
   > 2 │   (x = 3 + a.b(yield) ** 2) => {};
-      │                     ^
+      │                     <error><emphasis>^</emphasis></error>
     3 │ }
 
 

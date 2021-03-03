@@ -8,22 +8,24 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2020/optional-chaining/parenthised-chain/input.js 1:0-5:15
-	path: UIDPath<es2020/optional-chaining/parenthised-chain/input.js>
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation es2020/optional-chaining/parenthised-chain/input.js 1:0-1:9
 			expression: JSMemberExpression {
-				loc: SourceLocation es2020/optional-chaining/parenthised-chain/input.js 1:0-1:8
+				object: JSMemberExpression {
+					object: JSReferenceIdentifier {
+						name: "a"
+						loc: SourceLocation es2020/optional-chaining/parenthised-chain/input.js 1:1-1:2 (a)
+					}
+					property: JSStaticMemberProperty {
+						optional: true
+						value: JSIdentifier {
+							name: "b"
+							loc: SourceLocation es2020/optional-chaining/parenthised-chain/input.js 1:4-1:5 (b)
+						}
+						loc: SourceLocation es2020/optional-chaining/parenthised-chain/input.js 1:4-1:5 (b)
+					}
+					loc: SourceLocation es2020/optional-chaining/parenthised-chain/input.js 1:1-1:5
+				}
 				property: JSStaticMemberProperty {
 					value: JSIdentifier {
 						name: "c"
@@ -31,30 +33,29 @@ JSRoot {
 					}
 					loc: SourceLocation es2020/optional-chaining/parenthised-chain/input.js 1:7-1:8 (c)
 				}
-				object: JSMemberExpression {
-					loc: SourceLocation es2020/optional-chaining/parenthised-chain/input.js 1:1-1:5
-					object: JSReferenceIdentifier {
-						name: "a"
-						loc: SourceLocation es2020/optional-chaining/parenthised-chain/input.js 1:1-1:2 (a)
-					}
-					property: JSStaticMemberProperty {
-						value: JSIdentifier {
-							name: "b"
-							loc: SourceLocation es2020/optional-chaining/parenthised-chain/input.js 1:4-1:5 (b)
-						}
-						optional: true
-						loc: SourceLocation es2020/optional-chaining/parenthised-chain/input.js 1:4-1:5 (b)
-					}
-				}
+				loc: SourceLocation es2020/optional-chaining/parenthised-chain/input.js 1:0-1:8
 			}
+			loc: SourceLocation es2020/optional-chaining/parenthised-chain/input.js 1:0-1:9
 		}
 		JSExpressionStatement {
-			loc: SourceLocation es2020/optional-chaining/parenthised-chain/input.js 3:0-3:11
 			expression: JSCallExpression {
-				arguments: Array []
-				loc: SourceLocation es2020/optional-chaining/parenthised-chain/input.js 3:0-3:10
+				arguments: []
 				callee: JSMemberExpression {
-					loc: SourceLocation es2020/optional-chaining/parenthised-chain/input.js 3:0-3:8
+					object: JSMemberExpression {
+						object: JSReferenceIdentifier {
+							name: "a"
+							loc: SourceLocation es2020/optional-chaining/parenthised-chain/input.js 3:1-3:2 (a)
+						}
+						property: JSStaticMemberProperty {
+							optional: true
+							value: JSIdentifier {
+								name: "b"
+								loc: SourceLocation es2020/optional-chaining/parenthised-chain/input.js 3:4-3:5 (b)
+							}
+							loc: SourceLocation es2020/optional-chaining/parenthised-chain/input.js 3:4-3:5 (b)
+						}
+						loc: SourceLocation es2020/optional-chaining/parenthised-chain/input.js 3:1-3:5
+					}
 					property: JSStaticMemberProperty {
 						value: JSIdentifier {
 							name: "c"
@@ -62,38 +63,41 @@ JSRoot {
 						}
 						loc: SourceLocation es2020/optional-chaining/parenthised-chain/input.js 3:7-3:8 (c)
 					}
-					object: JSMemberExpression {
-						loc: SourceLocation es2020/optional-chaining/parenthised-chain/input.js 3:1-3:5
-						object: JSReferenceIdentifier {
-							name: "a"
-							loc: SourceLocation es2020/optional-chaining/parenthised-chain/input.js 3:1-3:2 (a)
-						}
-						property: JSStaticMemberProperty {
-							value: JSIdentifier {
-								name: "b"
-								loc: SourceLocation es2020/optional-chaining/parenthised-chain/input.js 3:4-3:5 (b)
-							}
-							optional: true
-							loc: SourceLocation es2020/optional-chaining/parenthised-chain/input.js 3:4-3:5 (b)
-						}
-					}
+					loc: SourceLocation es2020/optional-chaining/parenthised-chain/input.js 3:0-3:8
 				}
+				loc: SourceLocation es2020/optional-chaining/parenthised-chain/input.js 3:0-3:10
 			}
+			loc: SourceLocation es2020/optional-chaining/parenthised-chain/input.js 3:0-3:11
 		}
 		JSExpressionStatement {
-			loc: SourceLocation es2020/optional-chaining/parenthised-chain/input.js 5:0-5:15
 			expression: JSMemberExpression {
-				loc: SourceLocation es2020/optional-chaining/parenthised-chain/input.js 5:0-5:14
-				property: JSStaticMemberProperty {
-					value: JSIdentifier {
-						name: "e"
-						loc: SourceLocation es2020/optional-chaining/parenthised-chain/input.js 5:13-5:14 (e)
-					}
-					optional: true
-					loc: SourceLocation es2020/optional-chaining/parenthised-chain/input.js 5:13-5:14 (e)
-				}
 				object: JSMemberExpression {
-					loc: SourceLocation es2020/optional-chaining/parenthised-chain/input.js 5:0-5:11
+					object: JSMemberExpression {
+						object: JSMemberExpression {
+							object: JSReferenceIdentifier {
+								name: "a"
+								loc: SourceLocation es2020/optional-chaining/parenthised-chain/input.js 5:1-5:2 (a)
+							}
+							property: JSStaticMemberProperty {
+								optional: true
+								value: JSIdentifier {
+									name: "b"
+									loc: SourceLocation es2020/optional-chaining/parenthised-chain/input.js 5:4-5:5 (b)
+								}
+								loc: SourceLocation es2020/optional-chaining/parenthised-chain/input.js 5:4-5:5 (b)
+							}
+							loc: SourceLocation es2020/optional-chaining/parenthised-chain/input.js 5:1-5:5
+						}
+						property: JSStaticMemberProperty {
+							optional: true
+							value: JSIdentifier {
+								name: "c"
+								loc: SourceLocation es2020/optional-chaining/parenthised-chain/input.js 5:8-5:9 (c)
+							}
+							loc: SourceLocation es2020/optional-chaining/parenthised-chain/input.js 5:8-5:9 (c)
+						}
+						loc: SourceLocation es2020/optional-chaining/parenthised-chain/input.js 5:0-5:9
+					}
 					property: JSStaticMemberProperty {
 						value: JSIdentifier {
 							name: "d"
@@ -101,36 +105,30 @@ JSRoot {
 						}
 						loc: SourceLocation es2020/optional-chaining/parenthised-chain/input.js 5:10-5:11 (d)
 					}
-					object: JSMemberExpression {
-						loc: SourceLocation es2020/optional-chaining/parenthised-chain/input.js 5:0-5:9
-						property: JSStaticMemberProperty {
-							value: JSIdentifier {
-								name: "c"
-								loc: SourceLocation es2020/optional-chaining/parenthised-chain/input.js 5:8-5:9 (c)
-							}
-							optional: true
-							loc: SourceLocation es2020/optional-chaining/parenthised-chain/input.js 5:8-5:9 (c)
-						}
-						object: JSMemberExpression {
-							loc: SourceLocation es2020/optional-chaining/parenthised-chain/input.js 5:1-5:5
-							object: JSReferenceIdentifier {
-								name: "a"
-								loc: SourceLocation es2020/optional-chaining/parenthised-chain/input.js 5:1-5:2 (a)
-							}
-							property: JSStaticMemberProperty {
-								value: JSIdentifier {
-									name: "b"
-									loc: SourceLocation es2020/optional-chaining/parenthised-chain/input.js 5:4-5:5 (b)
-								}
-								optional: true
-								loc: SourceLocation es2020/optional-chaining/parenthised-chain/input.js 5:4-5:5 (b)
-							}
-						}
-					}
+					loc: SourceLocation es2020/optional-chaining/parenthised-chain/input.js 5:0-5:11
 				}
+				property: JSStaticMemberProperty {
+					optional: true
+					value: JSIdentifier {
+						name: "e"
+						loc: SourceLocation es2020/optional-chaining/parenthised-chain/input.js 5:13-5:14 (e)
+					}
+					loc: SourceLocation es2020/optional-chaining/parenthised-chain/input.js 5:13-5:14 (e)
+				}
+				loc: SourceLocation es2020/optional-chaining/parenthised-chain/input.js 5:0-5:14
 			}
+			loc: SourceLocation es2020/optional-chaining/parenthised-chain/input.js 5:0-5:15
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2020/optional-chaining/parenthised-chain/input.js>
+	loc: SourceLocation es2020/optional-chaining/parenthised-chain/input.js 1:0-5:15
 }
 ```
 

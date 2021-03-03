@@ -8,49 +8,14 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation experimental/class-private-properties/optional-chain-start-member/input.js 1:0-8:0
-	path: UIDPath<experimental/class-private-properties/optional-chain-start-member/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Expected an identifier"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 5:16
-				path: UIDPath<experimental/class-private-properties/optional-chain-start-member/input.js>
-				start: Position 5:16
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSClassDeclaration {
 			id: JSBindingIdentifier {
 				name: "Foo"
 				loc: SourceLocation experimental/class-private-properties/optional-chain-start-member/input.js 1:6-1:9 (Foo)
 			}
-			loc: SourceLocation experimental/class-private-properties/optional-chain-start-member/input.js 1:0-7:1
 			meta: JSClassHead {
-				implements: undefined
-				superClass: undefined
-				superTypeParameters: undefined
-				typeParameters: undefined
-				loc: SourceLocation experimental/class-private-properties/optional-chain-start-member/input.js 1:0-7:1
-				body: Array [
+				body: [
 					JSClassPrivateProperty {
 						key: JSPrivateName {
 							id: JSIdentifier {
@@ -61,21 +26,17 @@ JSRoot {
 						}
 						value: JSNumericLiteral {
 							value: 1
-							format: undefined
 							loc: SourceLocation experimental/class-private-properties/optional-chain-start-member/input.js 2:14-2:15
 						}
-						typeAnnotation: undefined
-						loc: SourceLocation experimental/class-private-properties/optional-chain-start-member/input.js 2:2-2:16
 						meta: JSClassPropertyMeta {
 							abstract: false
-							accessibility: undefined
 							optional: false
 							readonly: false
 							static: true
-							typeAnnotation: undefined
 							loc: SourceLocation experimental/class-private-properties/optional-chain-start-member/input.js 2:2-2:11
 							start: Position 2:2
 						}
+						loc: SourceLocation experimental/class-private-properties/optional-chain-start-member/input.js 2:2-2:16
 					}
 					JSClassMethod {
 						kind: "method"
@@ -86,54 +47,28 @@ JSRoot {
 							}
 							loc: SourceLocation experimental/class-private-properties/optional-chain-start-member/input.js 4:9-4:13
 						}
-						loc: SourceLocation experimental/class-private-properties/optional-chain-start-member/input.js 4:2-6:3
-						meta: JSClassPropertyMeta {
-							abstract: false
-							accessibility: undefined
-							optional: false
-							readonly: false
-							static: true
-							typeAnnotation: undefined
-							loc: SourceLocation experimental/class-private-properties/optional-chain-start-member/input.js 4:2-4:13
-							start: Position 4:2
-						}
-						head: JSFunctionHead {
-							async: false
-							generator: false
-							hasHoistedVars: false
-							params: Array []
-							rest: undefined
-							returnType: undefined
-							thisType: undefined
-							typeParameters: undefined
-							loc: SourceLocation experimental/class-private-properties/optional-chain-start-member/input.js 4:13-4:15
-						}
 						body: JSBlockStatement {
-							directives: Array []
-							loc: SourceLocation experimental/class-private-properties/optional-chain-start-member/input.js 4:16-6:3
-							body: Array [
+							body: [
 								JSReturnStatement {
-									loc: SourceLocation experimental/class-private-properties/optional-chain-start-member/input.js 5:4-5:17
 									argument: JSMemberExpression {
-										loc: SourceLocation experimental/class-private-properties/optional-chain-start-member/input.js 5:11-5:17
 										object: JSReferenceIdentifier {
 											name: "Foo"
 											loc: SourceLocation experimental/class-private-properties/optional-chain-start-member/input.js 5:11-5:14 (Foo)
 										}
 										property: JSStaticMemberProperty {
+											optional: true
 											value: JSIdentifier {
 												name: ""
 												loc: SourceLocation experimental/class-private-properties/optional-chain-start-member/input.js 5:16-5:17 ()
 											}
-											optional: true
 											loc: SourceLocation experimental/class-private-properties/optional-chain-start-member/input.js 5:16-5:17 ()
 										}
+										loc: SourceLocation experimental/class-private-properties/optional-chain-start-member/input.js 5:11-5:17
 									}
+									loc: SourceLocation experimental/class-private-properties/optional-chain-start-member/input.js 5:4-5:17
 								}
 								JSExpressionStatement {
-									loc: SourceLocation experimental/class-private-properties/optional-chain-start-member/input.js 5:17-5:27
 									expression: JSMemberExpression {
-										loc: SourceLocation experimental/class-private-properties/optional-chain-start-member/input.js 5:17-5:26
 										object: JSReferenceIdentifier {
 											name: "x"
 											loc: SourceLocation experimental/class-private-properties/optional-chain-start-member/input.js 5:17-5:18 (x)
@@ -145,15 +80,62 @@ JSRoot {
 											}
 											loc: SourceLocation experimental/class-private-properties/optional-chain-start-member/input.js 5:19-5:26 (toFixed)
 										}
+										loc: SourceLocation experimental/class-private-properties/optional-chain-start-member/input.js 5:17-5:26
 									}
+									loc: SourceLocation experimental/class-private-properties/optional-chain-start-member/input.js 5:17-5:27
 								}
 							]
+							directives: []
+							loc: SourceLocation experimental/class-private-properties/optional-chain-start-member/input.js 4:16-6:3
 						}
+						head: JSFunctionHead {
+							async: false
+							generator: false
+							hasHoistedVars: false
+							params: []
+							loc: SourceLocation experimental/class-private-properties/optional-chain-start-member/input.js 4:13-4:15
+						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							optional: false
+							readonly: false
+							static: true
+							loc: SourceLocation experimental/class-private-properties/optional-chain-start-member/input.js 4:2-4:13
+							start: Position 4:2
+						}
+						loc: SourceLocation experimental/class-private-properties/optional-chain-start-member/input.js 4:2-6:3
 					}
 				]
+				loc: SourceLocation experimental/class-private-properties/optional-chain-start-member/input.js 1:0-7:1
+			}
+			loc: SourceLocation experimental/class-private-properties/optional-chain-start-member/input.js 1:0-7:1
+		}
+	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "Expected an identifier"}
+			}
+			location: {
+				language: "js"
+				path: UIDPath<experimental/class-private-properties/optional-chain-start-member/input.js>
+				end: Position 5:16
+				start: Position 5:16
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<experimental/class-private-properties/optional-chain-start-member/input.js>
+	loc: SourceLocation experimental/class-private-properties/optional-chain-start-member/input.js 1:0-8:0
 }
 ```
 
@@ -167,7 +149,7 @@ JSRoot {
 
     4 │   static test() {
   > 5 │     return Foo?.#x.toFixed;
-      │                 ^
+      │                 <error><emphasis>^</emphasis></error>
     6 │   }
     7 │ }
 

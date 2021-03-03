@@ -8,46 +8,29 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	syntax: Array []
-	loc: SourceLocation es2015/uncategorised/88/input.js 1:0-3:0
-	path: UIDPath<es2015/uncategorised/88/input.js>
-	body: Array [
+	body: [
 		JSImportDeclaration {
-			importKind: undefined
-			namedSpecifiers: Array []
-			namespaceSpecifier: undefined
-			loc: SourceLocation es2015/uncategorised/88/input.js 1:0-1:23
-			source: JSStringLiteral {
-				value: ""
-				loc: SourceLocation es2015/uncategorised/88/input.js 1:20-1:22
-			}
+			namedSpecifiers: []
 			defaultSpecifier: JSImportDefaultSpecifier {
-				loc: SourceLocation es2015/uncategorised/88/input.js 1:0-1:14
 				local: JSImportSpecifierLocal {
 					name: JSBindingIdentifier {
 						name: "encrypt"
 						loc: SourceLocation es2015/uncategorised/88/input.js 1:7-1:14 (encrypt)
 					}
-					importKind: undefined
 					loc: SourceLocation es2015/uncategorised/88/input.js 1:7-1:14
 				}
+				loc: SourceLocation es2015/uncategorised/88/input.js 1:0-1:14
 			}
+			source: JSStringLiteral {
+				value: ""
+				loc: SourceLocation es2015/uncategorised/88/input.js 1:20-1:22
+			}
+			loc: SourceLocation es2015/uncategorised/88/input.js 1:0-1:23
 		}
 		JSExportLocalDeclaration {
-			declaration: undefined
 			exportKind: "value"
-			loc: SourceLocation es2015/uncategorised/88/input.js 2:0-2:29
-			specifiers: Array [
+			specifiers: [
 				JSExportLocalSpecifier {
-					loc: SourceLocation es2015/uncategorised/88/input.js 2:9-2:27
 					exported: JSIdentifier {
 						name: "default"
 						loc: SourceLocation es2015/uncategorised/88/input.js 2:20-2:27 (default)
@@ -56,10 +39,21 @@ JSRoot {
 						name: "encrypt"
 						loc: SourceLocation es2015/uncategorised/88/input.js 2:9-2:16 (encrypt)
 					}
+					loc: SourceLocation es2015/uncategorised/88/input.js 2:9-2:27
 				}
 			]
+			loc: SourceLocation es2015/uncategorised/88/input.js 2:0-2:29
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: []
+	path: UIDPath<es2015/uncategorised/88/input.js>
+	loc: SourceLocation es2015/uncategorised/88/input.js 1:0-3:0
 }
 ```
 

@@ -8,35 +8,10 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	loc: SourceLocation jsx/basic/7/input.jsx 1:0-5:10
-	path: UIDPath<jsx/basic/7/input.jsx>
-	syntax: Array ["jsx"]
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation jsx/basic/7/input.jsx 1:0-5:10
 			expression: JSXElement {
-				name: JSXReferenceIdentifier {
-					name: "AbC-def"
-					loc: SourceLocation jsx/basic/7/input.jsx 1:1-1:8
-				}
-				selfClosing: false
-				typeArguments: undefined
-				loc: SourceLocation jsx/basic/7/input.jsx 1:0-5:10
-				children: Array [
-					JSXText {
-						value: "\nbar\nbaz\n"
-						loc: SourceLocation jsx/basic/7/input.jsx 2:23-5:0
-					}
-				]
-				attributes: Array [
+				attributes: [
 					JSXAttribute {
 						name: JSXIdentifier {
 							name: "test"
@@ -49,9 +24,31 @@ JSRoot {
 						loc: SourceLocation jsx/basic/7/input.jsx 2:2-2:22
 					}
 				]
+				children: [
+					JSXText {
+						value: "\nbar\nbaz\n"
+						loc: SourceLocation jsx/basic/7/input.jsx 2:23-5:0
+					}
+				]
+				selfClosing: false
+				name: JSXReferenceIdentifier {
+					name: "AbC-def"
+					loc: SourceLocation jsx/basic/7/input.jsx 1:1-1:8
+				}
+				loc: SourceLocation jsx/basic/7/input.jsx 1:0-5:10
 			}
+			loc: SourceLocation jsx/basic/7/input.jsx 1:0-5:10
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: ["jsx"]
+	path: UIDPath<jsx/basic/7/input.jsx>
+	loc: SourceLocation jsx/basic/7/input.jsx 1:0-5:10
 }
 ```
 

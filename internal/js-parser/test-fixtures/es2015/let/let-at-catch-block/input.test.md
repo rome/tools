@@ -8,58 +8,54 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2015/let/let-at-catch-block/input.js 1:0-3:1
-	path: UIDPath<es2015/let/let-at-catch-block/input.js>
-	body: Array [
+	body: [
 		JSTryStatement {
-			finalizer: undefined
-			loc: SourceLocation es2015/let/let-at-catch-block/input.js 1:0-3:1
 			block: JSBlockStatement {
-				body: Array []
-				directives: Array []
+				body: []
+				directives: []
 				loc: SourceLocation es2015/let/let-at-catch-block/input.js 1:4-1:6
 			}
 			handler: JSCatchClause {
-				loc: SourceLocation es2015/let/let-at-catch-block/input.js 1:7-3:1
-				param: JSBindingIdentifier {
-					name: "err"
-					loc: SourceLocation es2015/let/let-at-catch-block/input.js 1:14-1:17 (err)
-				}
 				body: JSBlockStatement {
-					directives: Array []
-					loc: SourceLocation es2015/let/let-at-catch-block/input.js 1:19-3:1
-					body: Array [
+					body: [
 						JSVariableDeclarationStatement {
-							loc: SourceLocation es2015/let/let-at-catch-block/input.js 2:2-2:10
 							declaration: JSVariableDeclaration {
 								kind: "let"
-								loc: SourceLocation es2015/let/let-at-catch-block/input.js 2:2-2:10
-								declarations: Array [
+								declarations: [
 									JSVariableDeclarator {
 										id: JSBindingIdentifier {
 											name: "let"
 											loc: SourceLocation es2015/let/let-at-catch-block/input.js 2:6-2:9 (let)
 										}
-										init: undefined
 										loc: SourceLocation es2015/let/let-at-catch-block/input.js 2:6-2:9
 									}
 								]
+								loc: SourceLocation es2015/let/let-at-catch-block/input.js 2:2-2:10
 							}
+							loc: SourceLocation es2015/let/let-at-catch-block/input.js 2:2-2:10
 						}
 					]
+					directives: []
+					loc: SourceLocation es2015/let/let-at-catch-block/input.js 1:19-3:1
 				}
+				param: JSBindingIdentifier {
+					name: "err"
+					loc: SourceLocation es2015/let/let-at-catch-block/input.js 1:14-1:17 (err)
+				}
+				loc: SourceLocation es2015/let/let-at-catch-block/input.js 1:7-3:1
 			}
+			loc: SourceLocation es2015/let/let-at-catch-block/input.js 1:0-3:1
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2015/let/let-at-catch-block/input.js>
+	loc: SourceLocation es2015/let/let-at-catch-block/input.js 1:0-3:1
 }
 ```
 

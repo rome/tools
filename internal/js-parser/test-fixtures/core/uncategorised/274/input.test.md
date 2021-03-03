@@ -11,9 +11,15 @@ JSRoot {
 	body: [
 		JSThrowStatement {
 			argument: JSBinaryExpression {
-				left: JSReferenceIdentifier {name: "x", loc: SourceLocation core/uncategorised/274/input.js 1:6-1:7 (x)}
 				operator: "*"
-				right: JSReferenceIdentifier {name: "y", loc: SourceLocation core/uncategorised/274/input.js 1:10-1:11 (y)}
+				left: JSReferenceIdentifier {
+					name: "x"
+					loc: SourceLocation core/uncategorised/274/input.js 1:6-1:7 (x)
+				}
+				right: JSReferenceIdentifier {
+					name: "y"
+					loc: SourceLocation core/uncategorised/274/input.js 1:10-1:11 (y)
+				}
 				loc: SourceLocation core/uncategorised/274/input.js 1:6-1:11
 			}
 			loc: SourceLocation core/uncategorised/274/input.js 1:0-1:11
@@ -24,9 +30,9 @@ JSRoot {
 	diagnostics: []
 	directives: []
 	hasHoistedVars: false
-	path: UIDPath<core/uncategorised/274/input.js>
 	sourceType: "script"
 	syntax: []
+	path: UIDPath<core/uncategorised/274/input.js>
 	loc: SourceLocation core/uncategorised/274/input.js 1:0-1:11
 }
 ```

@@ -8,57 +8,55 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	loc: SourceLocation jsx/basic/fragment-4/input.jsx 1:0-8:0
-	path: UIDPath<jsx/basic/fragment-4/input.jsx>
-	syntax: Array ["jsx"]
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation jsx/basic/fragment-4/input.jsx 1:0-7:3
 			expression: JSXFragment {
-				loc: SourceLocation jsx/basic/fragment-4/input.jsx 1:0-7:3
-				children: Array [
+				children: [
 					JSXText {
 						value: "\n  "
 						loc: SourceLocation jsx/basic/fragment-4/input.jsx 1:2-2:2
 					}
 					JSXFragment {
-						loc: SourceLocation jsx/basic/fragment-4/input.jsx 2:2-6:5
-						children: Array [
+						children: [
 							JSXText {
 								value: "\n    "
 								loc: SourceLocation jsx/basic/fragment-4/input.jsx 2:4-3:4
 							}
 							JSXFragment {
-								loc: SourceLocation jsx/basic/fragment-4/input.jsx 3:4-5:7
-								children: Array [
+								children: [
 									JSXText {
 										value: "\n      super deep\n    "
 										loc: SourceLocation jsx/basic/fragment-4/input.jsx 3:6-5:4
 									}
 								]
+								loc: SourceLocation jsx/basic/fragment-4/input.jsx 3:4-5:7
 							}
 							JSXText {
 								value: "\n  "
 								loc: SourceLocation jsx/basic/fragment-4/input.jsx 5:7-6:2
 							}
 						]
+						loc: SourceLocation jsx/basic/fragment-4/input.jsx 2:2-6:5
 					}
 					JSXText {
 						value: "\n"
 						loc: SourceLocation jsx/basic/fragment-4/input.jsx 6:5-7:0
 					}
 				]
+				loc: SourceLocation jsx/basic/fragment-4/input.jsx 1:0-7:3
 			}
+			loc: SourceLocation jsx/basic/fragment-4/input.jsx 1:0-7:3
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: ["jsx"]
+	path: UIDPath<jsx/basic/fragment-4/input.jsx>
+	loc: SourceLocation jsx/basic/fragment-4/input.jsx 1:0-8:0
 }
 ```
 

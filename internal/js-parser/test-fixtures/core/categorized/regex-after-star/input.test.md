@@ -11,19 +11,27 @@ JSRoot {
 	body: [
 		JSExpressionStatement {
 			expression: JSBinaryExpression {
-				left: JSReferenceIdentifier {name: "a", loc: SourceLocation core/categorized/regex-after-star/input.js 1:0-1:1 (a)}
 				operator: "*"
+				left: JSReferenceIdentifier {
+					name: "a"
+					loc: SourceLocation core/categorized/regex-after-star/input.js 1:0-1:1 (a)
+				}
 				right: JSRegExpLiteral {
-					expression: JSRegExpSubExpression {
-						body: [JSRegExpCharacter {value: "b", loc: SourceLocation core/categorized/regex-after-star/input.js 1:5-1:6}]
-						loc: SourceLocation core/categorized/regex-after-star/input.js 1:5-1:6
-					}
 					global: false
 					insensitive: false
 					multiline: false
 					noDotNewline: false
 					sticky: false
 					unicode: false
+					expression: JSRegExpSubExpression {
+						body: [
+							JSRegExpCharacter {
+								value: "b"
+								loc: SourceLocation core/categorized/regex-after-star/input.js 1:5-1:6
+							}
+						]
+						loc: SourceLocation core/categorized/regex-after-star/input.js 1:5-1:6
+					}
 					loc: SourceLocation core/categorized/regex-after-star/input.js 1:4-1:7
 				}
 				loc: SourceLocation core/categorized/regex-after-star/input.js 1:0-1:7
@@ -36,9 +44,9 @@ JSRoot {
 	diagnostics: []
 	directives: []
 	hasHoistedVars: false
-	path: UIDPath<core/categorized/regex-after-star/input.js>
 	sourceType: "script"
 	syntax: []
+	path: UIDPath<core/categorized/regex-after-star/input.js>
 	loc: SourceLocation core/categorized/regex-after-star/input.js 1:0-2:0
 }
 ```

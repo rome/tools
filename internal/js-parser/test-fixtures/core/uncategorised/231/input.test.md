@@ -13,7 +13,10 @@ JSRoot {
 			alternate: JSExpressionStatement {
 				expression: JSCallExpression {
 					arguments: []
-					callee: JSReferenceIdentifier {name: "goodDay", loc: SourceLocation core/uncategorised/231/input.js 1:33-1:40 (goodDay)}
+					callee: JSReferenceIdentifier {
+						name: "goodDay"
+						loc: SourceLocation core/uncategorised/231/input.js 1:33-1:40 (goodDay)
+					}
 					loc: SourceLocation core/uncategorised/231/input.js 1:33-1:42
 				}
 				loc: SourceLocation core/uncategorised/231/input.js 1:33-1:42
@@ -21,12 +24,18 @@ JSRoot {
 			consequent: JSExpressionStatement {
 				expression: JSCallExpression {
 					arguments: []
-					callee: JSReferenceIdentifier {name: "goodMorning", loc: SourceLocation core/uncategorised/231/input.js 1:13-1:24 (goodMorning)}
+					callee: JSReferenceIdentifier {
+						name: "goodMorning"
+						loc: SourceLocation core/uncategorised/231/input.js 1:13-1:24 (goodMorning)
+					}
 					loc: SourceLocation core/uncategorised/231/input.js 1:13-1:26
 				}
 				loc: SourceLocation core/uncategorised/231/input.js 1:13-1:27
 			}
-			test: JSReferenceIdentifier {name: "morning", loc: SourceLocation core/uncategorised/231/input.js 1:4-1:11 (morning)}
+			test: JSReferenceIdentifier {
+				name: "morning"
+				loc: SourceLocation core/uncategorised/231/input.js 1:4-1:11 (morning)
+			}
 			loc: SourceLocation core/uncategorised/231/input.js 1:0-1:42
 		}
 	]
@@ -35,9 +44,9 @@ JSRoot {
 	diagnostics: []
 	directives: []
 	hasHoistedVars: false
-	path: UIDPath<core/uncategorised/231/input.js>
 	sourceType: "script"
 	syntax: []
+	path: UIDPath<core/uncategorised/231/input.js>
 	loc: SourceLocation core/uncategorised/231/input.js 1:0-1:42
 }
 ```

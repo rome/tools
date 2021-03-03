@@ -8,19 +8,8 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2015/regex/duplicate-flags/input.js 1:0-2:0
-	path: UIDPath<es2015/regex/duplicate-flags/input.js>
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation es2015/regex/duplicate-flags/input.js 1:0-1:7
 			expression: JSRegExpLiteral {
 				global: true
 				insensitive: true
@@ -28,33 +17,44 @@ JSRoot {
 				noDotNewline: false
 				sticky: false
 				unicode: false
-				loc: SourceLocation es2015/regex/duplicate-flags/input.js 1:0-1:6
 				expression: JSRegExpSubExpression {
-					body: Array [JSRegExpAnyCharacter {loc: SourceLocation es2015/regex/duplicate-flags/input.js 1:1-1:2}]
+					body: [
+						JSRegExpAnyCharacter {
+							loc: SourceLocation es2015/regex/duplicate-flags/input.js 1:1-1:2
+						}
+					]
 					loc: SourceLocation es2015/regex/duplicate-flags/input.js 1:1-1:2
 				}
+				loc: SourceLocation es2015/regex/duplicate-flags/input.js 1:0-1:6
 			}
+			loc: SourceLocation es2015/regex/duplicate-flags/input.js 1:0-1:7
 		}
 	]
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {
+				advice: []
+				category: ["parse"]
 				categoryValue: "js"
-				category: Array ["parse"]
 				message: RAW_MARKUP {value: "Duplicate regular expression flag"}
 			}
-			location: Object {
-				integrity: undefined
+			location: {
 				language: "js"
-				sourceText: undefined
-				end: Position 1:5
 				path: UIDPath<es2015/regex/duplicate-flags/input.js>
+				end: Position 1:5
 				start: Position 1:5
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2015/regex/duplicate-flags/input.js>
+	loc: SourceLocation es2015/regex/duplicate-flags/input.js 1:0-2:0
 }
 ```
 
@@ -67,7 +67,7 @@ JSRoot {
   ✖ Duplicate regular expression flag
 
     /./gii;
-         ^
+         <error><emphasis>^</emphasis></error>
 
 
 ```

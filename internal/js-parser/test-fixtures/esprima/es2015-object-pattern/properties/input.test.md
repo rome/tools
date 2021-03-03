@@ -8,29 +8,14 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation esprima/es2015-object-pattern/properties/input.js 1:0-2:0
-	path: UIDPath<esprima/es2015-object-pattern/properties/input.js>
-	body: Array [
+	body: [
 		JSVariableDeclarationStatement {
-			loc: SourceLocation esprima/es2015-object-pattern/properties/input.js 1:0-1:31
 			declaration: JSVariableDeclaration {
 				kind: "let"
-				loc: SourceLocation esprima/es2015-object-pattern/properties/input.js 1:0-1:31
-				declarations: Array [
+				declarations: [
 					JSVariableDeclarator {
 						id: JSBindingObjectPattern {
-							rest: undefined
-							loc: SourceLocation esprima/es2015-object-pattern/properties/input.js 1:4-1:29
-							properties: Array [
+							properties: [
 								JSBindingObjectPatternProperty {
 									key: JSStaticPropertyKey {
 										value: JSIdentifier {
@@ -54,16 +39,15 @@ JSRoot {
 										loc: SourceLocation esprima/es2015-object-pattern/properties/input.js 1:7-1:8
 									}
 									value: JSBindingAssignmentPattern {
-										loc: SourceLocation esprima/es2015-object-pattern/properties/input.js 1:7-1:10
 										left: JSBindingIdentifier {
 											name: "b"
 											loc: SourceLocation esprima/es2015-object-pattern/properties/input.js 1:7-1:8 (b)
 										}
 										right: JSNumericLiteral {
 											value: 0
-											format: undefined
 											loc: SourceLocation esprima/es2015-object-pattern/properties/input.js 1:9-1:10
 										}
+										loc: SourceLocation esprima/es2015-object-pattern/properties/input.js 1:7-1:10
 									}
 									loc: SourceLocation esprima/es2015-object-pattern/properties/input.js 1:7-1:10
 								}
@@ -90,16 +74,15 @@ JSRoot {
 										loc: SourceLocation esprima/es2015-object-pattern/properties/input.js 1:15-1:16
 									}
 									value: JSBindingAssignmentPattern {
-										loc: SourceLocation esprima/es2015-object-pattern/properties/input.js 1:17-1:20
 										left: JSBindingIdentifier {
 											name: "f"
 											loc: SourceLocation esprima/es2015-object-pattern/properties/input.js 1:17-1:18 (f)
 										}
 										right: JSNumericLiteral {
 											value: 0
-											format: undefined
 											loc: SourceLocation esprima/es2015-object-pattern/properties/input.js 1:19-1:20
 										}
+										loc: SourceLocation esprima/es2015-object-pattern/properties/input.js 1:17-1:20
 									}
 									loc: SourceLocation esprima/es2015-object-pattern/properties/input.js 1:15-1:20
 								}
@@ -112,35 +95,43 @@ JSRoot {
 										loc: SourceLocation esprima/es2015-object-pattern/properties/input.js 1:21-1:24
 									}
 									value: JSBindingArrayPattern {
-										rest: undefined
-										loc: SourceLocation esprima/es2015-object-pattern/properties/input.js 1:25-1:28
-										elements: Array [
+										elements: [
 											JSBindingIdentifier {
 												name: "h"
-												loc: SourceLocation esprima/es2015-object-pattern/properties/input.js 1:26-1:27 (h)
 												meta: JSPatternMeta {
-													optional: undefined
-													typeAnnotation: undefined
 													loc: SourceLocation esprima/es2015-object-pattern/properties/input.js 1:26-1:27
 												}
+												loc: SourceLocation esprima/es2015-object-pattern/properties/input.js 1:26-1:27 (h)
 											}
 										]
+										loc: SourceLocation esprima/es2015-object-pattern/properties/input.js 1:25-1:28
 									}
 									loc: SourceLocation esprima/es2015-object-pattern/properties/input.js 1:21-1:28
 								}
 							]
+							loc: SourceLocation esprima/es2015-object-pattern/properties/input.js 1:4-1:29
 						}
-						loc: SourceLocation esprima/es2015-object-pattern/properties/input.js 1:4-1:31
 						init: JSNumericLiteral {
 							value: 0
-							format: undefined
 							loc: SourceLocation esprima/es2015-object-pattern/properties/input.js 1:30-1:31
 						}
+						loc: SourceLocation esprima/es2015-object-pattern/properties/input.js 1:4-1:31
 					}
 				]
+				loc: SourceLocation esprima/es2015-object-pattern/properties/input.js 1:0-1:31
 			}
+			loc: SourceLocation esprima/es2015-object-pattern/properties/input.js 1:0-1:31
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<esprima/es2015-object-pattern/properties/input.js>
+	loc: SourceLocation esprima/es2015-object-pattern/properties/input.js 1:0-2:0
 }
 ```
 

@@ -8,42 +8,36 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2015/uncategorised/364/input.js 1:0-2:0
-	path: UIDPath<es2015/uncategorised/364/input.js>
-	body: Array [
+	body: [
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "await"
 				loc: SourceLocation es2015/uncategorised/364/input.js 1:9-1:14 (await)
 			}
-			loc: SourceLocation es2015/uncategorised/364/input.js 1:0-1:19
 			body: JSBlockStatement {
-				body: Array []
-				directives: Array []
+				body: []
+				directives: []
 				loc: SourceLocation es2015/uncategorised/364/input.js 1:17-1:19
 			}
 			head: JSFunctionHead {
 				async: false
 				generator: false
 				hasHoistedVars: false
-				params: Array []
-				rest: undefined
-				returnType: undefined
-				thisType: undefined
-				typeParameters: undefined
+				params: []
 				loc: SourceLocation es2015/uncategorised/364/input.js 1:14-1:16
 			}
+			loc: SourceLocation es2015/uncategorised/364/input.js 1:0-1:19
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2015/uncategorised/364/input.js>
+	loc: SourceLocation es2015/uncategorised/364/input.js 1:0-2:0
 }
 ```
 

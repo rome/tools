@@ -11,11 +11,22 @@ JSRoot {
 	body: [
 		JSExpressionStatement {
 			expression: JSBinaryExpression {
+				operator: "/"
 				left: JSBinaryExpression {
+					operator: "/"
 					left: JSUnaryExpression {
+						operator: "!"
+						prefix: true
 						argument: JSFunctionExpression {
-							id: JSBindingIdentifier {name: "fn", loc: SourceLocation core/categorized/06-regex/input.js 1:10-1:12 (fn)}
-							body: JSBlockStatement {body: [], directives: [], loc: SourceLocation core/categorized/06-regex/input.js 1:15-1:17}
+							id: JSBindingIdentifier {
+								name: "fn"
+								loc: SourceLocation core/categorized/06-regex/input.js 1:10-1:12 (fn)
+							}
+							body: JSBlockStatement {
+								body: []
+								directives: []
+								loc: SourceLocation core/categorized/06-regex/input.js 1:15-1:17
+							}
 							head: JSFunctionHead {
 								async: false
 								generator: false
@@ -25,16 +36,18 @@ JSRoot {
 							}
 							loc: SourceLocation core/categorized/06-regex/input.js 1:1-1:17
 						}
-						operator: "!"
-						prefix: true
 						loc: SourceLocation core/categorized/06-regex/input.js 1:0-1:17
 					}
-					operator: "/"
-					right: JSNumericLiteral {value: 42, loc: SourceLocation core/categorized/06-regex/input.js 1:19-1:21}
+					right: JSNumericLiteral {
+						value: 42
+						loc: SourceLocation core/categorized/06-regex/input.js 1:19-1:21
+					}
 					loc: SourceLocation core/categorized/06-regex/input.js 1:0-1:21
 				}
-				operator: "/"
-				right: JSReferenceIdentifier {name: "i", loc: SourceLocation core/categorized/06-regex/input.js 1:22-1:23 (i)}
+				right: JSReferenceIdentifier {
+					name: "i"
+					loc: SourceLocation core/categorized/06-regex/input.js 1:22-1:23 (i)
+				}
 				loc: SourceLocation core/categorized/06-regex/input.js 1:0-1:23
 			}
 			loc: SourceLocation core/categorized/06-regex/input.js 1:0-1:24
@@ -45,9 +58,9 @@ JSRoot {
 	diagnostics: []
 	directives: []
 	hasHoistedVars: false
-	path: UIDPath<core/categorized/06-regex/input.js>
 	sourceType: "script"
 	syntax: []
+	path: UIDPath<core/categorized/06-regex/input.js>
 	loc: SourceLocation core/categorized/06-regex/input.js 1:0-2:0
 }
 ```

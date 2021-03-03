@@ -8,51 +8,18 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2020/optional-chaining/optional-super-property/input.js 1:0-5:1
-	path: UIDPath<es2020/optional-chaining/optional-super-property/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Invalid super suffix operator"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 3:20
-				path: UIDPath<es2020/optional-chaining/optional-super-property/input.js>
-				start: Position 3:20
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSVariableDeclarationStatement {
-			loc: SourceLocation es2020/optional-chaining/optional-super-property/input.js 1:0-5:1
 			declaration: JSVariableDeclaration {
 				kind: "const"
-				loc: SourceLocation es2020/optional-chaining/optional-super-property/input.js 1:0-5:1
-				declarations: Array [
+				declarations: [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "a"
 							loc: SourceLocation es2020/optional-chaining/optional-super-property/input.js 1:6-1:7 (a)
 						}
-						loc: SourceLocation es2020/optional-chaining/optional-super-property/input.js 1:6-5:1
 						init: JSObjectExpression {
-							loc: SourceLocation es2020/optional-chaining/optional-super-property/input.js 1:10-5:1
-							properties: Array [
+							properties: [
 								JSObjectMethod {
 									kind: "method"
 									key: JSStaticPropertyKey {
@@ -62,47 +29,74 @@ JSRoot {
 										}
 										loc: SourceLocation es2020/optional-chaining/optional-super-property/input.js 2:4-2:5
 									}
-									loc: SourceLocation es2020/optional-chaining/optional-super-property/input.js 2:4-4:5
-									head: JSFunctionHead {
-										async: false
-										generator: false
-										hasHoistedVars: false
-										params: Array []
-										rest: undefined
-										returnType: undefined
-										thisType: undefined
-										typeParameters: undefined
-										loc: SourceLocation es2020/optional-chaining/optional-super-property/input.js 2:5-2:7
-									}
 									body: JSBlockStatement {
-										directives: Array []
-										loc: SourceLocation es2020/optional-chaining/optional-super-property/input.js 2:7-4:5
-										body: Array [
+										body: [
 											JSReturnStatement {
-												loc: SourceLocation es2020/optional-chaining/optional-super-property/input.js 3:8-3:24
 												argument: JSMemberExpression {
-													loc: SourceLocation es2020/optional-chaining/optional-super-property/input.js 3:15-3:23
-													object: JSSuper {loc: SourceLocation es2020/optional-chaining/optional-super-property/input.js 3:15-3:20}
+													object: JSSuper {
+														loc: SourceLocation es2020/optional-chaining/optional-super-property/input.js 3:15-3:20
+													}
 													property: JSStaticMemberProperty {
+														optional: true
 														value: JSIdentifier {
 															name: "c"
 															loc: SourceLocation es2020/optional-chaining/optional-super-property/input.js 3:22-3:23 (c)
 														}
-														optional: true
 														loc: SourceLocation es2020/optional-chaining/optional-super-property/input.js 3:22-3:23 (c)
 													}
+													loc: SourceLocation es2020/optional-chaining/optional-super-property/input.js 3:15-3:23
 												}
+												loc: SourceLocation es2020/optional-chaining/optional-super-property/input.js 3:8-3:24
 											}
 										]
+										directives: []
+										loc: SourceLocation es2020/optional-chaining/optional-super-property/input.js 2:7-4:5
 									}
+									head: JSFunctionHead {
+										async: false
+										generator: false
+										hasHoistedVars: false
+										params: []
+										loc: SourceLocation es2020/optional-chaining/optional-super-property/input.js 2:5-2:7
+									}
+									loc: SourceLocation es2020/optional-chaining/optional-super-property/input.js 2:4-4:5
 								}
 							]
+							loc: SourceLocation es2020/optional-chaining/optional-super-property/input.js 1:10-5:1
 						}
+						loc: SourceLocation es2020/optional-chaining/optional-super-property/input.js 1:6-5:1
 					}
 				]
+				loc: SourceLocation es2020/optional-chaining/optional-super-property/input.js 1:0-5:1
+			}
+			loc: SourceLocation es2020/optional-chaining/optional-super-property/input.js 1:0-5:1
+		}
+	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "Invalid super suffix operator"}
+			}
+			location: {
+				language: "js"
+				path: UIDPath<es2020/optional-chaining/optional-super-property/input.js>
+				end: Position 3:20
+				start: Position 3:20
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2020/optional-chaining/optional-super-property/input.js>
+	loc: SourceLocation es2020/optional-chaining/optional-super-property/input.js 1:0-5:1
 }
 ```
 
@@ -117,7 +111,7 @@ JSRoot {
     1 │ const a = {
     2 │     b(){
   > 3 │         return super?.c;
-      │                     ^
+      │                     <error><emphasis>^</emphasis></error>
     4 │     }
     5 │ }
 

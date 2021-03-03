@@ -8,36 +8,33 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: true
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation esprima/statement-variable/migrated_0000/input.js 1:0-2:0
-	path: UIDPath<esprima/statement-variable/migrated_0000/input.js>
-	body: Array [
+	body: [
 		JSVariableDeclarationStatement {
-			loc: SourceLocation esprima/statement-variable/migrated_0000/input.js 1:0-1:5
 			declaration: JSVariableDeclaration {
 				kind: "var"
-				loc: SourceLocation esprima/statement-variable/migrated_0000/input.js 1:0-1:5
-				declarations: Array [
+				declarations: [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "x"
 							loc: SourceLocation esprima/statement-variable/migrated_0000/input.js 1:4-1:5 (x)
 						}
-						init: undefined
 						loc: SourceLocation esprima/statement-variable/migrated_0000/input.js 1:4-1:5
 					}
 				]
+				loc: SourceLocation esprima/statement-variable/migrated_0000/input.js 1:0-1:5
 			}
+			loc: SourceLocation esprima/statement-variable/migrated_0000/input.js 1:0-1:5
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: true
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<esprima/statement-variable/migrated_0000/input.js>
+	loc: SourceLocation esprima/statement-variable/migrated_0000/input.js 1:0-2:0
 }
 ```
 

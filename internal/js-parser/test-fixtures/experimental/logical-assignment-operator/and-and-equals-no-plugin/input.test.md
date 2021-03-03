@@ -8,41 +8,10 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: true
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation experimental/logical-assignment-operator/and-and-equals-no-plugin/input.js 1:0-3:0
-	path: UIDPath<experimental/logical-assignment-operator/and-and-equals-no-plugin/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Unknown start to an statement expression"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:4
-				path: UIDPath<experimental/logical-assignment-operator/and-and-equals-no-plugin/input.js>
-				start: Position 1:4
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation experimental/logical-assignment-operator/and-and-equals-no-plugin/input.js 1:0-1:5
 			expression: JSLogicalExpression {
 				operator: "&&"
-				loc: SourceLocation experimental/logical-assignment-operator/and-and-equals-no-plugin/input.js 1:0-1:5
 				left: JSReferenceIdentifier {
 					name: "a"
 					loc: SourceLocation experimental/logical-assignment-operator/and-and-equals-no-plugin/input.js 1:0-1:1 (a)
@@ -51,26 +20,21 @@ JSRoot {
 					name: "INVALID_PLACEHOLDER"
 					loc: SourceLocation experimental/logical-assignment-operator/and-and-equals-no-plugin/input.js 1:4-1:5
 				}
+				loc: SourceLocation experimental/logical-assignment-operator/and-and-equals-no-plugin/input.js 1:0-1:5
 			}
+			loc: SourceLocation experimental/logical-assignment-operator/and-and-equals-no-plugin/input.js 1:0-1:5
 		}
 		JSExpressionStatement {
-			loc: SourceLocation experimental/logical-assignment-operator/and-and-equals-no-plugin/input.js 1:6-1:8
 			expression: JSReferenceIdentifier {
 				name: "b"
 				loc: SourceLocation experimental/logical-assignment-operator/and-and-equals-no-plugin/input.js 1:6-1:7 (b)
 			}
+			loc: SourceLocation experimental/logical-assignment-operator/and-and-equals-no-plugin/input.js 1:6-1:8
 		}
 		JSExpressionStatement {
-			loc: SourceLocation experimental/logical-assignment-operator/and-and-equals-no-plugin/input.js 2:0-2:9
 			expression: JSLogicalExpression {
 				operator: "&&"
-				loc: SourceLocation experimental/logical-assignment-operator/and-and-equals-no-plugin/input.js 2:0-2:9
-				right: JSReferenceIdentifier {
-					name: "INVALID_PLACEHOLDER"
-					loc: SourceLocation experimental/logical-assignment-operator/and-and-equals-no-plugin/input.js 2:8-2:9
-				}
 				left: JSMemberExpression {
-					loc: SourceLocation experimental/logical-assignment-operator/and-and-equals-no-plugin/input.js 2:0-2:5
 					object: JSReferenceIdentifier {
 						name: "obj"
 						loc: SourceLocation experimental/logical-assignment-operator/and-and-equals-no-plugin/input.js 2:0-2:3 (obj)
@@ -82,17 +46,44 @@ JSRoot {
 						}
 						loc: SourceLocation experimental/logical-assignment-operator/and-and-equals-no-plugin/input.js 2:4-2:5 (a)
 					}
+					loc: SourceLocation experimental/logical-assignment-operator/and-and-equals-no-plugin/input.js 2:0-2:5
 				}
+				right: JSReferenceIdentifier {
+					name: "INVALID_PLACEHOLDER"
+					loc: SourceLocation experimental/logical-assignment-operator/and-and-equals-no-plugin/input.js 2:8-2:9
+				}
+				loc: SourceLocation experimental/logical-assignment-operator/and-and-equals-no-plugin/input.js 2:0-2:9
 			}
+			loc: SourceLocation experimental/logical-assignment-operator/and-and-equals-no-plugin/input.js 2:0-2:9
 		}
 		JSExpressionStatement {
-			loc: SourceLocation experimental/logical-assignment-operator/and-and-equals-no-plugin/input.js 2:10-2:12
 			expression: JSReferenceIdentifier {
 				name: "b"
 				loc: SourceLocation experimental/logical-assignment-operator/and-and-equals-no-plugin/input.js 2:10-2:11 (b)
 			}
+			loc: SourceLocation experimental/logical-assignment-operator/and-and-equals-no-plugin/input.js 2:10-2:12
 		}
 	]
+	comments: []
+	corrupt: true
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {advice: [], category: ["parse"], categoryValue: "js", message: [RAW_MARKUP {value: "Unknown start to an "}, "statement expression"]}
+			location: {
+				language: "js"
+				path: UIDPath<experimental/logical-assignment-operator/and-and-equals-no-plugin/input.js>
+				end: Position 1:4
+				start: Position 1:4
+			}
+		}
+	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<experimental/logical-assignment-operator/and-and-equals-no-plugin/input.js>
+	loc: SourceLocation experimental/logical-assignment-operator/and-and-equals-no-plugin/input.js 1:0-3:0
 }
 ```
 
@@ -105,7 +96,7 @@ JSRoot {
   ✖ Unknown start to an statement expression
 
   > 1 │ a &&= b;
-      │     ^
+      │     <error><emphasis>^</emphasis></error>
     2 │ obj.a &&= b;
 
 

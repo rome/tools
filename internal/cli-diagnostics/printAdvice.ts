@@ -16,7 +16,6 @@ import {
 	DiagnosticAdviceFrame,
 	DiagnosticAdviceGroup,
 	DiagnosticAdviceInspect,
-	DiagnosticAdviceItem,
 	DiagnosticAdviceList,
 	DiagnosticAdviceLog,
 	DiagnosticAdviceStacktrace,
@@ -69,7 +68,7 @@ const DID_NOT_PRINT: PrintAdviceResult = {
 };
 
 export function printAdvice(
-	advice: DiagnosticAdvice,
+	advice: DiagnosticAdvice[],
 	opts: AdvicePrintOptions,
 ): PrintAdviceResult {
 	let truncated = false;
@@ -93,7 +92,7 @@ export function printAdvice(
 }
 
 function printAdviceItem(
-	item: DiagnosticAdviceItem,
+	item: DiagnosticAdvice,
 	opts: AdvicePrintOptions,
 ): PrintAdviceResult {
 	switch (item.type) {
@@ -108,6 +107,9 @@ function printAdviceItem(
 
 		case "diff":
 			return printDiff(item, opts);
+
+		case "diff-strings":
+			throw new Error(`Should have been filtered by DiagnosticsNormalizer`);
 
 		case "code":
 			return printCode(item, opts);
@@ -191,7 +193,7 @@ function printInspect(
 	return DID_PRINT;
 }
 
-function generateDiffHint(diffs: Diff[]): undefined | DiagnosticAdviceItem {
+function generateDiffHint(diffs: Diff[]): undefined | DiagnosticAdvice {
 	let expected = "";
 	let received = "";
 

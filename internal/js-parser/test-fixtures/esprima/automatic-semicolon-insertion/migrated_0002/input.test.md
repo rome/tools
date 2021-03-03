@@ -8,44 +8,40 @@
 
 ```javascript
 JSRoot {
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: true
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation esprima/automatic-semicolon-insertion/migrated_0002/input.js 1:0-2:0
-	path: UIDPath<esprima/automatic-semicolon-insertion/migrated_0002/input.js>
-	comments: Array [
+	body: [
+		JSVariableDeclarationStatement {
+			declaration: JSVariableDeclaration {
+				kind: "var"
+				declarations: [
+					JSVariableDeclarator {
+						trailingComments: ["0"]
+						id: JSBindingIdentifier {
+							name: "x"
+							loc: SourceLocation esprima/automatic-semicolon-insertion/migrated_0002/input.js 1:4-1:5 (x)
+						}
+						loc: SourceLocation esprima/automatic-semicolon-insertion/migrated_0002/input.js 1:4-1:5
+					}
+				]
+				loc: SourceLocation esprima/automatic-semicolon-insertion/migrated_0002/input.js 1:0-1:20
+			}
+			loc: SourceLocation esprima/automatic-semicolon-insertion/migrated_0002/input.js 1:0-1:20
+		}
+	]
+	comments: [
 		CommentBlock {
 			id: "0"
 			value: " comment "
 			loc: SourceLocation esprima/automatic-semicolon-insertion/migrated_0002/input.js 1:6-1:19
 		}
 	]
-	body: Array [
-		JSVariableDeclarationStatement {
-			loc: SourceLocation esprima/automatic-semicolon-insertion/migrated_0002/input.js 1:0-1:20
-			declaration: JSVariableDeclaration {
-				kind: "var"
-				loc: SourceLocation esprima/automatic-semicolon-insertion/migrated_0002/input.js 1:0-1:20
-				declarations: Array [
-					JSVariableDeclarator {
-						id: JSBindingIdentifier {
-							name: "x"
-							trailingComments: undefined
-							loc: SourceLocation esprima/automatic-semicolon-insertion/migrated_0002/input.js 1:4-1:5 (x)
-						}
-						init: undefined
-						loc: SourceLocation esprima/automatic-semicolon-insertion/migrated_0002/input.js 1:4-1:5
-						trailingComments: Array ["0"]
-					}
-				]
-			}
-		}
-	]
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: true
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<esprima/automatic-semicolon-insertion/migrated_0002/input.js>
+	loc: SourceLocation esprima/automatic-semicolon-insertion/migrated_0002/input.js 1:0-2:0
 }
 ```
 

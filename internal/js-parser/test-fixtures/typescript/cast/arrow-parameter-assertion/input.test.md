@@ -8,62 +8,55 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: true
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	loc: SourceLocation typescript/cast/arrow-parameter-assertion/input.ts 1:0-1:14
-	path: UIDPath<typescript/cast/arrow-parameter-assertion/input.ts>
-	syntax: Array ["ts"]
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Unexpected type cast in parameter position"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:6
-				path: UIDPath<typescript/cast/arrow-parameter-assertion/input.ts>
-				start: Position 1:1
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation typescript/cast/arrow-parameter-assertion/input.ts 1:0-1:14
 			expression: JSArrowFunctionExpression {
-				loc: SourceLocation typescript/cast/arrow-parameter-assertion/input.ts 1:0-1:13
 				body: JSBlockStatement {
-					body: Array []
-					directives: Array []
+					body: []
+					directives: []
 					loc: SourceLocation typescript/cast/arrow-parameter-assertion/input.ts 1:11-1:13
 				}
 				head: JSFunctionHead {
 					async: false
 					hasHoistedVars: false
-					rest: undefined
-					returnType: undefined
-					thisType: undefined
-					loc: SourceLocation typescript/cast/arrow-parameter-assertion/input.ts 1:0-1:10
-					params: Array [
+					params: [
 						JSBindingIdentifier {
 							name: "INVALID_PLACEHOLDER"
 							loc: SourceLocation typescript/cast/arrow-parameter-assertion/input.ts 1:11-1:10
 						}
 					]
+					loc: SourceLocation typescript/cast/arrow-parameter-assertion/input.ts 1:0-1:10
 				}
+				loc: SourceLocation typescript/cast/arrow-parameter-assertion/input.ts 1:0-1:13
+			}
+			loc: SourceLocation typescript/cast/arrow-parameter-assertion/input.ts 1:0-1:14
+		}
+	]
+	comments: []
+	corrupt: true
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "Unexpected type cast in parameter position"}
+			}
+			location: {
+				language: "js"
+				path: UIDPath<typescript/cast/arrow-parameter-assertion/input.ts>
+				end: Position 1:6
+				start: Position 1:1
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: ["ts"]
+	path: UIDPath<typescript/cast/arrow-parameter-assertion/input.ts>
+	loc: SourceLocation typescript/cast/arrow-parameter-assertion/input.ts 1:0-1:14
 }
 ```
 
@@ -76,7 +69,9 @@ JSRoot {
   ✖ Unexpected type cast in parameter position
 
     (<T> a) => {};
-     ^^^^^
+     <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
+    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
+    <error><emphasis>^</emphasis></error>
 
 
 ```

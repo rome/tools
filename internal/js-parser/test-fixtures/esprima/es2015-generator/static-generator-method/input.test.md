@@ -8,31 +8,14 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation esprima/es2015-generator/static-generator-method/input.js 1:0-2:0
-	path: UIDPath<esprima/es2015-generator/static-generator-method/input.js>
-	body: Array [
+	body: [
 		JSClassDeclaration {
 			id: JSBindingIdentifier {
 				name: "Foo"
 				loc: SourceLocation esprima/es2015-generator/static-generator-method/input.js 1:6-1:9 (Foo)
 			}
-			loc: SourceLocation esprima/es2015-generator/static-generator-method/input.js 1:0-1:30
 			meta: JSClassHead {
-				implements: undefined
-				superClass: undefined
-				superTypeParameters: undefined
-				typeParameters: undefined
-				loc: SourceLocation esprima/es2015-generator/static-generator-method/input.js 1:0-1:30
-				body: Array [
+				body: [
 					JSClassMethod {
 						kind: "method"
 						key: JSStaticPropertyKey {
@@ -42,38 +25,43 @@ JSRoot {
 							}
 							loc: SourceLocation esprima/es2015-generator/static-generator-method/input.js 1:20-1:23
 						}
-						loc: SourceLocation esprima/es2015-generator/static-generator-method/input.js 1:12-1:28
 						body: JSBlockStatement {
-							body: Array []
-							directives: Array []
+							body: []
+							directives: []
 							loc: SourceLocation esprima/es2015-generator/static-generator-method/input.js 1:26-1:28
-						}
-						meta: JSClassPropertyMeta {
-							abstract: false
-							accessibility: undefined
-							optional: false
-							readonly: false
-							static: true
-							typeAnnotation: undefined
-							loc: SourceLocation esprima/es2015-generator/static-generator-method/input.js 1:12-1:23
-							start: Position 1:12
 						}
 						head: JSFunctionHead {
 							async: false
 							generator: true
 							hasHoistedVars: false
-							params: Array []
-							rest: undefined
-							returnType: undefined
-							thisType: undefined
-							typeParameters: undefined
+							params: []
 							loc: SourceLocation esprima/es2015-generator/static-generator-method/input.js 1:23-1:25
 						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							optional: false
+							readonly: false
+							static: true
+							loc: SourceLocation esprima/es2015-generator/static-generator-method/input.js 1:12-1:23
+							start: Position 1:12
+						}
+						loc: SourceLocation esprima/es2015-generator/static-generator-method/input.js 1:12-1:28
 					}
 				]
+				loc: SourceLocation esprima/es2015-generator/static-generator-method/input.js 1:0-1:30
 			}
+			loc: SourceLocation esprima/es2015-generator/static-generator-method/input.js 1:0-1:30
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<esprima/es2015-generator/static-generator-method/input.js>
+	loc: SourceLocation esprima/es2015-generator/static-generator-method/input.js 1:0-2:0
 }
 ```
 

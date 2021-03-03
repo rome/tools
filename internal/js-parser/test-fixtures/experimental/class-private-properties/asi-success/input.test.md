@@ -8,31 +8,14 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation experimental/class-private-properties/asi-success/input.js 1:0-5:0
-	path: UIDPath<experimental/class-private-properties/asi-success/input.js>
-	body: Array [
+	body: [
 		JSClassDeclaration {
 			id: JSBindingIdentifier {
 				name: "Foo"
 				loc: SourceLocation experimental/class-private-properties/asi-success/input.js 1:6-1:9 (Foo)
 			}
-			loc: SourceLocation experimental/class-private-properties/asi-success/input.js 1:0-4:1
 			meta: JSClassHead {
-				implements: undefined
-				superClass: undefined
-				superTypeParameters: undefined
-				typeParameters: undefined
-				loc: SourceLocation experimental/class-private-properties/asi-success/input.js 1:0-4:1
-				body: Array [
+				body: [
 					JSClassPrivateProperty {
 						key: JSPrivateName {
 							id: JSIdentifier {
@@ -41,19 +24,15 @@ JSRoot {
 							}
 							loc: SourceLocation experimental/class-private-properties/asi-success/input.js 2:2-2:4
 						}
-						value: undefined
-						typeAnnotation: undefined
-						loc: SourceLocation experimental/class-private-properties/asi-success/input.js 2:2-2:4
 						meta: JSClassPropertyMeta {
 							abstract: false
-							accessibility: undefined
 							optional: false
 							readonly: false
 							static: false
-							typeAnnotation: undefined
 							loc: SourceLocation experimental/class-private-properties/asi-success/input.js 2:2-2:4
 							start: Position 2:2
 						}
+						loc: SourceLocation experimental/class-private-properties/asi-success/input.js 2:2-2:4
 					}
 					JSClassPrivateProperty {
 						key: JSPrivateName {
@@ -63,24 +42,31 @@ JSRoot {
 							}
 							loc: SourceLocation experimental/class-private-properties/asi-success/input.js 3:2-3:4
 						}
-						value: undefined
-						typeAnnotation: undefined
-						loc: SourceLocation experimental/class-private-properties/asi-success/input.js 3:2-3:4
 						meta: JSClassPropertyMeta {
 							abstract: false
-							accessibility: undefined
 							optional: false
 							readonly: false
 							static: false
-							typeAnnotation: undefined
 							loc: SourceLocation experimental/class-private-properties/asi-success/input.js 3:2-3:4
 							start: Position 3:2
 						}
+						loc: SourceLocation experimental/class-private-properties/asi-success/input.js 3:2-3:4
 					}
 				]
+				loc: SourceLocation experimental/class-private-properties/asi-success/input.js 1:0-4:1
 			}
+			loc: SourceLocation experimental/class-private-properties/asi-success/input.js 1:0-4:1
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<experimental/class-private-properties/asi-success/input.js>
+	loc: SourceLocation experimental/class-private-properties/asi-success/input.js 1:0-5:0
 }
 ```
 

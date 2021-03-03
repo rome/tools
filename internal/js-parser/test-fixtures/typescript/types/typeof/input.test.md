@@ -8,35 +8,17 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	loc: SourceLocation typescript/types/typeof/input.ts 1:0-2:0
-	path: UIDPath<typescript/types/typeof/input.ts>
-	syntax: Array ["ts"]
-	body: Array [
+	body: [
 		JSVariableDeclarationStatement {
-			loc: SourceLocation typescript/types/typeof/input.ts 1:0-1:18
 			declaration: JSVariableDeclaration {
 				kind: "let"
-				loc: SourceLocation typescript/types/typeof/input.ts 1:0-1:18
-				declarations: Array [
+				declarations: [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "x"
-							loc: SourceLocation typescript/types/typeof/input.ts 1:4-1:17
 							meta: JSPatternMeta {
-								definite: undefined
-								loc: SourceLocation typescript/types/typeof/input.ts 1:4-1:17
 								typeAnnotation: TSTypeQuery {
-									loc: SourceLocation typescript/types/typeof/input.ts 1:7-1:17
 									exprName: TSQualifiedName {
-										loc: SourceLocation typescript/types/typeof/input.ts 1:14-1:17
 										left: JSReferenceIdentifier {
 											name: "y"
 											loc: SourceLocation typescript/types/typeof/input.ts 1:14-1:15 (y)
@@ -45,17 +27,31 @@ JSRoot {
 											name: "z"
 											loc: SourceLocation typescript/types/typeof/input.ts 1:16-1:17 (z)
 										}
+										loc: SourceLocation typescript/types/typeof/input.ts 1:14-1:17
 									}
+									loc: SourceLocation typescript/types/typeof/input.ts 1:7-1:17
 								}
+								loc: SourceLocation typescript/types/typeof/input.ts 1:4-1:17
 							}
+							loc: SourceLocation typescript/types/typeof/input.ts 1:4-1:17
 						}
-						init: undefined
 						loc: SourceLocation typescript/types/typeof/input.ts 1:4-1:17
 					}
 				]
+				loc: SourceLocation typescript/types/typeof/input.ts 1:0-1:18
 			}
+			loc: SourceLocation typescript/types/typeof/input.ts 1:0-1:18
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: ["ts"]
+	path: UIDPath<typescript/types/typeof/input.ts>
+	loc: SourceLocation typescript/types/typeof/input.ts 1:0-2:0
 }
 ```
 

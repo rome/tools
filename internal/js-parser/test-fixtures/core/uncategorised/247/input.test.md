@@ -12,8 +12,16 @@ JSRoot {
 		JSForInStatement {
 			body: JSExpressionStatement {
 				expression: JSCallExpression {
-					arguments: [JSReferenceIdentifier {name: "x", loc: SourceLocation core/uncategorised/247/input.js 1:28-1:29 (x)}]
-					callee: JSReferenceIdentifier {name: "process", loc: SourceLocation core/uncategorised/247/input.js 1:20-1:27 (process)}
+					arguments: [
+						JSReferenceIdentifier {
+							name: "x"
+							loc: SourceLocation core/uncategorised/247/input.js 1:28-1:29 (x)
+						}
+					]
+					callee: JSReferenceIdentifier {
+						name: "process"
+						loc: SourceLocation core/uncategorised/247/input.js 1:20-1:27 (process)
+					}
 					loc: SourceLocation core/uncategorised/247/input.js 1:20-1:30
 				}
 				loc: SourceLocation core/uncategorised/247/input.js 1:20-1:31
@@ -22,13 +30,19 @@ JSRoot {
 				kind: "var"
 				declarations: [
 					JSVariableDeclarator {
-						id: JSBindingIdentifier {name: "x", loc: SourceLocation core/uncategorised/247/input.js 1:9-1:10 (x)}
+						id: JSBindingIdentifier {
+							name: "x"
+							loc: SourceLocation core/uncategorised/247/input.js 1:9-1:10 (x)
+						}
 						loc: SourceLocation core/uncategorised/247/input.js 1:9-1:10
 					}
 				]
 				loc: SourceLocation core/uncategorised/247/input.js 1:5-1:10
 			}
-			right: JSReferenceIdentifier {name: "list", loc: SourceLocation core/uncategorised/247/input.js 1:14-1:18 (list)}
+			right: JSReferenceIdentifier {
+				name: "list"
+				loc: SourceLocation core/uncategorised/247/input.js 1:14-1:18 (list)
+			}
 			loc: SourceLocation core/uncategorised/247/input.js 1:0-1:31
 		}
 	]
@@ -37,9 +51,9 @@ JSRoot {
 	diagnostics: []
 	directives: []
 	hasHoistedVars: true
-	path: UIDPath<core/uncategorised/247/input.js>
 	sourceType: "script"
 	syntax: []
+	path: UIDPath<core/uncategorised/247/input.js>
 	loc: SourceLocation core/uncategorised/247/input.js 1:0-1:31
 }
 ```

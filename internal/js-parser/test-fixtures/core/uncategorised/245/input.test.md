@@ -12,28 +12,51 @@ JSRoot {
 		JSForStatement {
 			body: JSExpressionStatement {
 				expression: JSCallExpression {
-					arguments: [JSReferenceIdentifier {name: "x", loc: SourceLocation core/uncategorised/245/input.js 1:32-1:33 (x)}]
-					callee: JSReferenceIdentifier {name: "process", loc: SourceLocation core/uncategorised/245/input.js 1:24-1:31 (process)}
+					arguments: [
+						JSReferenceIdentifier {
+							name: "x"
+							loc: SourceLocation core/uncategorised/245/input.js 1:32-1:33 (x)
+						}
+					]
+					callee: JSReferenceIdentifier {
+						name: "process"
+						loc: SourceLocation core/uncategorised/245/input.js 1:24-1:31 (process)
+					}
 					loc: SourceLocation core/uncategorised/245/input.js 1:24-1:34
 				}
 				loc: SourceLocation core/uncategorised/245/input.js 1:24-1:35
 			}
 			init: JSAssignmentExpression {
-				left: JSAssignmentIdentifier {name: "x", loc: SourceLocation core/uncategorised/245/input.js 1:4-1:5 (x)}
 				operator: "="
-				right: JSNumericLiteral {value: 0, loc: SourceLocation core/uncategorised/245/input.js 1:8-1:9}
+				left: JSAssignmentIdentifier {
+					name: "x"
+					loc: SourceLocation core/uncategorised/245/input.js 1:4-1:5 (x)
+				}
+				right: JSNumericLiteral {
+					value: 0
+					loc: SourceLocation core/uncategorised/245/input.js 1:8-1:9
+				}
 				loc: SourceLocation core/uncategorised/245/input.js 1:4-1:9
 			}
 			test: JSBinaryExpression {
-				left: JSReferenceIdentifier {name: "x", loc: SourceLocation core/uncategorised/245/input.js 1:11-1:12 (x)}
 				operator: "<"
-				right: JSNumericLiteral {value: 42, loc: SourceLocation core/uncategorised/245/input.js 1:15-1:17}
+				left: JSReferenceIdentifier {
+					name: "x"
+					loc: SourceLocation core/uncategorised/245/input.js 1:11-1:12 (x)
+				}
+				right: JSNumericLiteral {
+					value: 42
+					loc: SourceLocation core/uncategorised/245/input.js 1:15-1:17
+				}
 				loc: SourceLocation core/uncategorised/245/input.js 1:11-1:17
 			}
 			update: JSUpdateExpression {
-				argument: JSReferenceIdentifier {name: "x", loc: SourceLocation core/uncategorised/245/input.js 1:19-1:20 (x)}
 				operator: "++"
 				prefix: false
+				argument: JSReferenceIdentifier {
+					name: "x"
+					loc: SourceLocation core/uncategorised/245/input.js 1:19-1:20 (x)
+				}
 				loc: SourceLocation core/uncategorised/245/input.js 1:19-1:22
 			}
 			loc: SourceLocation core/uncategorised/245/input.js 1:0-1:35
@@ -44,9 +67,9 @@ JSRoot {
 	diagnostics: []
 	directives: []
 	hasHoistedVars: false
-	path: UIDPath<core/uncategorised/245/input.js>
 	sourceType: "script"
 	syntax: []
+	path: UIDPath<core/uncategorised/245/input.js>
 	loc: SourceLocation core/uncategorised/245/input.js 1:0-1:35
 }
 ```

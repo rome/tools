@@ -72,7 +72,7 @@ function resolveGraph(hub: Hub): Diagnostic[] {
 				continue;
 			}
 
-			let advice: DiagnosticAdvice = [];
+			let advice: DiagnosticAdvice[] = [];
 
 			if (upperTarget !== undefined) {
 				const marker =

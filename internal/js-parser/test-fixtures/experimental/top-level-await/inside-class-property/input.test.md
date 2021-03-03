@@ -8,35 +8,16 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	syntax: Array []
-	loc: SourceLocation experimental/top-level-await/inside-class-property/input.js 1:0-4:0
-	path: UIDPath<experimental/top-level-await/inside-class-property/input.js>
-	body: Array [
+	body: [
 		JSExportLocalDeclaration {
 			exportKind: "value"
-			specifiers: undefined
-			loc: SourceLocation experimental/top-level-await/inside-class-property/input.js 1:0-3:1
 			declaration: JSClassDeclaration {
 				id: JSBindingIdentifier {
 					name: "C"
 					loc: SourceLocation experimental/top-level-await/inside-class-property/input.js 1:13-1:14 (C)
 				}
-				loc: SourceLocation experimental/top-level-await/inside-class-property/input.js 1:7-3:1
 				meta: JSClassHead {
-					implements: undefined
-					superClass: undefined
-					superTypeParameters: undefined
-					typeParameters: undefined
-					loc: SourceLocation experimental/top-level-await/inside-class-property/input.js 1:7-3:1
-					body: Array [
+					body: [
 						JSClassProperty {
 							key: JSStaticPropertyKey {
 								value: JSIdentifier {
@@ -46,32 +27,39 @@ JSRoot {
 								loc: SourceLocation experimental/top-level-await/inside-class-property/input.js 2:2-2:3
 							}
 							value: JSAwaitExpression {
-								loc: SourceLocation experimental/top-level-await/inside-class-property/input.js 2:6-2:13
 								argument: JSNumericLiteral {
 									value: 0
-									format: undefined
 									loc: SourceLocation experimental/top-level-await/inside-class-property/input.js 2:12-2:13
 								}
+								loc: SourceLocation experimental/top-level-await/inside-class-property/input.js 2:6-2:13
 							}
-							definite: undefined
-							typeAnnotation: undefined
-							loc: SourceLocation experimental/top-level-await/inside-class-property/input.js 2:2-2:14
 							meta: JSClassPropertyMeta {
 								abstract: false
-								accessibility: undefined
 								optional: false
 								readonly: false
 								static: false
-								typeAnnotation: undefined
 								loc: SourceLocation experimental/top-level-await/inside-class-property/input.js 2:2-2:3
 								start: Position 2:2
 							}
+							loc: SourceLocation experimental/top-level-await/inside-class-property/input.js 2:2-2:14
 						}
 					]
+					loc: SourceLocation experimental/top-level-await/inside-class-property/input.js 1:7-3:1
 				}
+				loc: SourceLocation experimental/top-level-await/inside-class-property/input.js 1:7-3:1
 			}
+			loc: SourceLocation experimental/top-level-await/inside-class-property/input.js 1:0-3:1
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: []
+	path: UIDPath<experimental/top-level-await/inside-class-property/input.js>
+	loc: SourceLocation experimental/top-level-await/inside-class-property/input.js 1:0-4:0
 }
 ```
 

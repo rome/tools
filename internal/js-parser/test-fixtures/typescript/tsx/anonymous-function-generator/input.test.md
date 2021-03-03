@@ -8,144 +8,134 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: true
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	loc: SourceLocation typescript/tsx/anonymous-function-generator/input.tsx 1:0-4:0
-	path: UIDPath<typescript/tsx/anonymous-function-generator/input.tsx>
-	syntax: Array [
-		"ts"
-		"jsx"
-	]
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:20
-				path: UIDPath<typescript/tsx/anonymous-function-generator/input.tsx>
-				start: Position 1:21
-			}
-			description: Object {
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Unexpected character <emphasis>\\<</emphasis>"}
-				advice: Array [
-					log {
-						category: "info"
-						text: RAW_MARKUP {value: "Expected the opening function params character <emphasis>(</emphasis>"}
-					}
-				]
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSVariableDeclarationStatement {
-			loc: SourceLocation typescript/tsx/anonymous-function-generator/input.tsx 1:0-2:10
 			declaration: JSVariableDeclaration {
 				kind: "const"
-				loc: SourceLocation typescript/tsx/anonymous-function-generator/input.tsx 1:0-2:10
-				declarations: Array [
+				declarations: [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "fn"
 							loc: SourceLocation typescript/tsx/anonymous-function-generator/input.tsx 1:6-1:8 (fn)
 						}
-						loc: SourceLocation typescript/tsx/anonymous-function-generator/input.tsx 1:6-2:10
 						init: JSFunctionExpression {
-							id: undefined
-							loc: SourceLocation typescript/tsx/anonymous-function-generator/input.tsx 1:11-2:10
-							head: JSFunctionHead {
-								async: false
-								generator: true
-								hasHoistedVars: false
-								rest: undefined
-								returnType: undefined
-								thisType: undefined
-								typeParameters: undefined
-								loc: SourceLocation typescript/tsx/anonymous-function-generator/input.tsx 1:21-1:22
-								params: Array [
-									JSBindingIdentifier {
-										name: ""
-										loc: SourceLocation typescript/tsx/anonymous-function-generator/input.tsx 1:21-1:22 ()
-										meta: JSPatternMeta {
-											optional: undefined
-											typeAnnotation: undefined
-											loc: SourceLocation typescript/tsx/anonymous-function-generator/input.tsx 1:21-1:22
-										}
-									}
-								]
-							}
 							body: JSBlockStatement {
-								directives: Array []
-								loc: SourceLocation typescript/tsx/anonymous-function-generator/input.tsx 1:22-2:10
-								body: Array [
+								body: [
 									JSExpressionStatement {
-										loc: SourceLocation typescript/tsx/anonymous-function-generator/input.tsx 1:22-1:23
 										expression: JSReferenceIdentifier {
 											name: "INVALID_PLACEHOLDER"
 											loc: SourceLocation typescript/tsx/anonymous-function-generator/input.tsx 1:22-1:23
 										}
+										loc: SourceLocation typescript/tsx/anonymous-function-generator/input.tsx 1:22-1:23
 									}
 									JSExpressionStatement {
-										loc: SourceLocation typescript/tsx/anonymous-function-generator/input.tsx 1:23-1:24
 										expression: JSReferenceIdentifier {
 											name: "INVALID_PLACEHOLDER"
 											loc: SourceLocation typescript/tsx/anonymous-function-generator/input.tsx 1:23-1:24
 										}
+										loc: SourceLocation typescript/tsx/anonymous-function-generator/input.tsx 1:23-1:24
 									}
 									JSExpressionStatement {
-										loc: SourceLocation typescript/tsx/anonymous-function-generator/input.tsx 1:24-1:45
 										expression: JSReferenceIdentifier {
 											name: "INVALID_PLACEHOLDER"
 											loc: SourceLocation typescript/tsx/anonymous-function-generator/input.tsx 1:24-1:45
 										}
+										loc: SourceLocation typescript/tsx/anonymous-function-generator/input.tsx 1:24-1:45
 									}
 									JSExpressionStatement {
-										loc: SourceLocation typescript/tsx/anonymous-function-generator/input.tsx 1:45-2:10
 										expression: JSXElement {
-											name: JSXIdentifier {
-												name: "number"
-												loc: SourceLocation typescript/tsx/anonymous-function-generator/input.tsx 1:46-1:52
-											}
-											attributes: Array []
-											selfClosing: false
-											typeArguments: undefined
-											loc: SourceLocation typescript/tsx/anonymous-function-generator/input.tsx 1:45-2:9
-											children: Array [
+											attributes: []
+											children: [
 												JSXText {
 													value: " "
 													loc: SourceLocation typescript/tsx/anonymous-function-generator/input.tsx 1:53-1:54
 												}
 												JSXExpressionContainer {
-													loc: SourceLocation typescript/tsx/anonymous-function-generator/input.tsx 1:54-2:9
 													expression: JSYieldExpression {
 														delegate: false
-														loc: SourceLocation typescript/tsx/anonymous-function-generator/input.tsx 2:2-2:9
 														argument: JSNumericLiteral {
 															value: 2
-															format: undefined
 															loc: SourceLocation typescript/tsx/anonymous-function-generator/input.tsx 2:8-2:9
 														}
+														loc: SourceLocation typescript/tsx/anonymous-function-generator/input.tsx 2:2-2:9
 													}
+													loc: SourceLocation typescript/tsx/anonymous-function-generator/input.tsx 1:54-2:9
 												}
 											]
+											selfClosing: false
+											name: JSXIdentifier {
+												name: "number"
+												loc: SourceLocation typescript/tsx/anonymous-function-generator/input.tsx 1:46-1:52
+											}
+											loc: SourceLocation typescript/tsx/anonymous-function-generator/input.tsx 1:45-2:9
 										}
+										loc: SourceLocation typescript/tsx/anonymous-function-generator/input.tsx 1:45-2:10
 									}
 								]
+								directives: []
+								loc: SourceLocation typescript/tsx/anonymous-function-generator/input.tsx 1:22-2:10
 							}
+							head: JSFunctionHead {
+								async: false
+								generator: true
+								hasHoistedVars: false
+								params: [
+									JSBindingIdentifier {
+										name: ""
+										meta: JSPatternMeta {
+											loc: SourceLocation typescript/tsx/anonymous-function-generator/input.tsx 1:21-1:22
+										}
+										loc: SourceLocation typescript/tsx/anonymous-function-generator/input.tsx 1:21-1:22 ()
+									}
+								]
+								loc: SourceLocation typescript/tsx/anonymous-function-generator/input.tsx 1:21-1:22
+							}
+							loc: SourceLocation typescript/tsx/anonymous-function-generator/input.tsx 1:11-2:10
 						}
+						loc: SourceLocation typescript/tsx/anonymous-function-generator/input.tsx 1:6-2:10
 					}
 				]
+				loc: SourceLocation typescript/tsx/anonymous-function-generator/input.tsx 1:0-2:10
+			}
+			loc: SourceLocation typescript/tsx/anonymous-function-generator/input.tsx 1:0-2:10
+		}
+	]
+	comments: []
+	corrupt: true
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {
+				advice: [
+					log {
+						category: "info"
+						text: [
+							RAW_MARKUP {value: "Expected the opening "}
+							"function params"
+							RAW_MARKUP {value: " character <emphasis>"}
+							"("
+							RAW_MARKUP {value: "</emphasis>"}
+						]
+					}
+				]
+				category: ["parse"]
+				categoryValue: "js"
+				message: [RAW_MARKUP {value: "Unexpected character <emphasis>"}, "<", RAW_MARKUP {value: "</emphasis>"}]
+			}
+			location: {
+				language: "js"
+				path: UIDPath<typescript/tsx/anonymous-function-generator/input.tsx>
+				end: Position 1:20
+				start: Position 1:21
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: ["ts", "jsx"]
+	path: UIDPath<typescript/tsx/anonymous-function-generator/input.tsx>
+	loc: SourceLocation typescript/tsx/anonymous-function-generator/input.tsx 1:0-4:0
 }
 ```
 
@@ -158,7 +148,7 @@ JSRoot {
   ✖ Unexpected character <
 
   > 1 │ const fn = function* <T>(input: T): Generator<number> {
-      │                      ^
+      │                      <error><emphasis>^</emphasis></error>
     2 │   yield 2;
     3 │ }
 

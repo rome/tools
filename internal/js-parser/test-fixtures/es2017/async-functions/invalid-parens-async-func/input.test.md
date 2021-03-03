@@ -8,77 +8,67 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2017/async-functions/invalid-parens-async-func/input.js 1:0-2:0
-	path: UIDPath<es2017/async-functions/invalid-parens-async-func/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Expected a semicolon or a line terminator"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:7
-				path: UIDPath<es2017/async-functions/invalid-parens-async-func/input.js>
-				start: Position 1:8
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation es2017/async-functions/invalid-parens-async-func/input.js 1:0-1:7
 			expression: JSReferenceIdentifier {
 				name: "async"
 				loc: SourceLocation es2017/async-functions/invalid-parens-async-func/input.js 1:1-1:6 (async)
 			}
+			loc: SourceLocation es2017/async-functions/invalid-parens-async-func/input.js 1:0-1:7
 		}
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "x"
 				loc: SourceLocation es2017/async-functions/invalid-parens-async-func/input.js 1:17-1:18 (x)
 			}
-			loc: SourceLocation es2017/async-functions/invalid-parens-async-func/input.js 1:8-1:25
 			body: JSBlockStatement {
-				body: Array []
-				directives: Array []
+				body: []
+				directives: []
 				loc: SourceLocation es2017/async-functions/invalid-parens-async-func/input.js 1:23-1:25
 			}
 			head: JSFunctionHead {
 				async: false
 				generator: false
 				hasHoistedVars: false
-				rest: undefined
-				returnType: undefined
-				thisType: undefined
-				typeParameters: undefined
-				loc: SourceLocation es2017/async-functions/invalid-parens-async-func/input.js 1:19-1:22
-				params: Array [
+				params: [
 					JSBindingIdentifier {
 						name: "a"
-						loc: SourceLocation es2017/async-functions/invalid-parens-async-func/input.js 1:20-1:21 (a)
 						meta: JSPatternMeta {
-							optional: undefined
-							typeAnnotation: undefined
 							loc: SourceLocation es2017/async-functions/invalid-parens-async-func/input.js 1:20-1:21
 						}
+						loc: SourceLocation es2017/async-functions/invalid-parens-async-func/input.js 1:20-1:21 (a)
 					}
 				]
+				loc: SourceLocation es2017/async-functions/invalid-parens-async-func/input.js 1:19-1:22
+			}
+			loc: SourceLocation es2017/async-functions/invalid-parens-async-func/input.js 1:8-1:25
+		}
+	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "Expected a semicolon or a line terminator"}
+			}
+			location: {
+				language: "js"
+				path: UIDPath<es2017/async-functions/invalid-parens-async-func/input.js>
+				end: Position 1:7
+				start: Position 1:8
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2017/async-functions/invalid-parens-async-func/input.js>
+	loc: SourceLocation es2017/async-functions/invalid-parens-async-func/input.js 1:0-2:0
 }
 ```
 
@@ -91,7 +81,7 @@ JSRoot {
   ✖ Expected a semicolon or a line terminator
 
     (async) function x (a) {}
-            ^
+            <error><emphasis>^</emphasis></error>
 
 
 ```

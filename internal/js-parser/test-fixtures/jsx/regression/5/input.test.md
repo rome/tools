@@ -8,48 +8,45 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	loc: SourceLocation jsx/regression/5/input.jsx 1:0-1:17
-	path: UIDPath<jsx/regression/5/input.jsx>
-	syntax: Array ["jsx"]
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation jsx/regression/5/input.jsx 1:0-1:17
 			expression: JSXElement {
-				name: JSXIdentifier {
-					name: "div"
-					loc: SourceLocation jsx/regression/5/input.jsx 1:1-1:4
-				}
-				attributes: Array []
-				selfClosing: false
-				typeArguments: undefined
-				loc: SourceLocation jsx/regression/5/input.jsx 1:0-1:17
-				children: Array [
+				attributes: []
+				children: [
 					JSXExpressionContainer {
-						loc: SourceLocation jsx/regression/5/input.jsx 1:5-1:8
 						expression: JSReferenceIdentifier {
 							name: "a"
 							loc: SourceLocation jsx/regression/5/input.jsx 1:6-1:7 (a)
 						}
+						loc: SourceLocation jsx/regression/5/input.jsx 1:5-1:8
 					}
 					JSXExpressionContainer {
-						loc: SourceLocation jsx/regression/5/input.jsx 1:8-1:11
 						expression: JSReferenceIdentifier {
 							name: "b"
 							loc: SourceLocation jsx/regression/5/input.jsx 1:9-1:10 (b)
 						}
+						loc: SourceLocation jsx/regression/5/input.jsx 1:8-1:11
 					}
 				]
+				selfClosing: false
+				name: JSXIdentifier {
+					name: "div"
+					loc: SourceLocation jsx/regression/5/input.jsx 1:1-1:4
+				}
+				loc: SourceLocation jsx/regression/5/input.jsx 1:0-1:17
 			}
+			loc: SourceLocation jsx/regression/5/input.jsx 1:0-1:17
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: ["jsx"]
+	path: UIDPath<jsx/regression/5/input.jsx>
+	loc: SourceLocation jsx/regression/5/input.jsx 1:0-1:17
 }
 ```
 

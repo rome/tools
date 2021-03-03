@@ -8,53 +8,48 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: true
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation core/uncategorised/369/input.js 1:0-1:12
-	path: UIDPath<core/uncategorised/369/input.js>
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation core/uncategorised/369/input.js 1:0-1:12
 			expression: JSAssignmentExpression {
 				operator: "="
-				loc: SourceLocation core/uncategorised/369/input.js 1:0-1:12
 				left: JSAssignmentIdentifier {
 					name: "INVALID_PLACEHOLDER"
 					loc: SourceLocation core/uncategorised/369/input.js 1:8-1:7
 				}
 				right: JSNumericLiteral {
 					value: 10
-					format: undefined
 					loc: SourceLocation core/uncategorised/369/input.js 1:10-1:12
 				}
+				loc: SourceLocation core/uncategorised/369/input.js 1:0-1:12
 			}
+			loc: SourceLocation core/uncategorised/369/input.js 1:0-1:12
 		}
 	]
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
+	comments: []
+	corrupt: true
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {
+				advice: []
+				category: ["parse"]
 				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Invalid left-hand side in assignment expression"}
+				message: [RAW_MARKUP {value: "Invalid left-hand side in "}, "assignment expression"]
 			}
-			location: Object {
-				integrity: undefined
+			location: {
 				language: "js"
-				sourceText: undefined
-				end: Position 1:6
 				path: UIDPath<core/uncategorised/369/input.js>
+				end: Position 1:6
 				start: Position 1:1
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<core/uncategorised/369/input.js>
+	loc: SourceLocation core/uncategorised/369/input.js 1:0-1:12
 }
 ```
 
@@ -67,7 +62,9 @@ JSRoot {
   ✖ Invalid left-hand side in assignment expression
 
     (1 + 1) = 10
-     ^^^^^
+     <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
+    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
+    <error><emphasis>^</emphasis></error>
 
 
 ```

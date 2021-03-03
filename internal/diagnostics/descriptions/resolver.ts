@@ -17,7 +17,7 @@ export const resolver = createDiagnosticsCategory({
 		responseType: ResolverQueryResponseNotFound["type"],
 		origin: Path,
 		source: Path,
-		advice: DiagnosticAdvice,
+		advice: DiagnosticAdvice[],
 	) => {
 		let messagePrefix = "";
 		let category: DiagnosticCategory = DIAGNOSTIC_CATEGORIES["resolver/notFound"];

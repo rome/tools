@@ -8,71 +8,59 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation esprima/es2015-array-pattern/with-default-fn/input.js 1:0-2:0
-	path: UIDPath<esprima/es2015-array-pattern/with-default-fn/input.js>
-	body: Array [
+	body: [
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "a"
 				loc: SourceLocation esprima/es2015-array-pattern/with-default-fn/input.js 1:9-1:10 (a)
 			}
-			loc: SourceLocation esprima/es2015-array-pattern/with-default-fn/input.js 1:0-1:20
 			body: JSBlockStatement {
-				body: Array []
-				directives: Array []
+				body: []
+				directives: []
 				loc: SourceLocation esprima/es2015-array-pattern/with-default-fn/input.js 1:18-1:20
 			}
 			head: JSFunctionHead {
 				async: false
 				generator: false
 				hasHoistedVars: false
-				rest: undefined
-				returnType: undefined
-				thisType: undefined
-				typeParameters: undefined
-				loc: SourceLocation esprima/es2015-array-pattern/with-default-fn/input.js 1:10-1:17
-				params: Array [
+				params: [
 					JSBindingArrayPattern {
-						rest: undefined
-						loc: SourceLocation esprima/es2015-array-pattern/with-default-fn/input.js 1:11-1:16
-						meta: JSPatternMeta {
-							optional: undefined
-							typeAnnotation: undefined
-							loc: SourceLocation esprima/es2015-array-pattern/with-default-fn/input.js 1:11-1:16
-						}
-						elements: Array [
+						elements: [
 							JSBindingAssignmentPattern {
-								loc: SourceLocation esprima/es2015-array-pattern/with-default-fn/input.js 1:12-1:15
-								right: JSNumericLiteral {
-									value: 0
-									format: undefined
-									loc: SourceLocation esprima/es2015-array-pattern/with-default-fn/input.js 1:14-1:15
-								}
 								left: JSBindingIdentifier {
 									name: "a"
-									loc: SourceLocation esprima/es2015-array-pattern/with-default-fn/input.js 1:12-1:13 (a)
 									meta: JSPatternMeta {
-										optional: undefined
-										typeAnnotation: undefined
 										loc: SourceLocation esprima/es2015-array-pattern/with-default-fn/input.js 1:12-1:13
 									}
+									loc: SourceLocation esprima/es2015-array-pattern/with-default-fn/input.js 1:12-1:13 (a)
 								}
+								right: JSNumericLiteral {
+									value: 0
+									loc: SourceLocation esprima/es2015-array-pattern/with-default-fn/input.js 1:14-1:15
+								}
+								loc: SourceLocation esprima/es2015-array-pattern/with-default-fn/input.js 1:12-1:15
 							}
 						]
+						meta: JSPatternMeta {
+							loc: SourceLocation esprima/es2015-array-pattern/with-default-fn/input.js 1:11-1:16
+						}
+						loc: SourceLocation esprima/es2015-array-pattern/with-default-fn/input.js 1:11-1:16
 					}
 				]
+				loc: SourceLocation esprima/es2015-array-pattern/with-default-fn/input.js 1:10-1:17
 			}
+			loc: SourceLocation esprima/es2015-array-pattern/with-default-fn/input.js 1:0-1:20
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<esprima/es2015-array-pattern/with-default-fn/input.js>
+	loc: SourceLocation esprima/es2015-array-pattern/with-default-fn/input.js 1:0-2:0
 }
 ```
 

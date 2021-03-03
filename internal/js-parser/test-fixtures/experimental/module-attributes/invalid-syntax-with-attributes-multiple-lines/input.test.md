@@ -8,69 +8,62 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: true
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	syntax: Array []
-	loc: SourceLocation experimental/module-attributes/invalid-syntax-with-attributes-multiple-lines/input.js 1:0-3:0
-	path: UIDPath<experimental/module-attributes/invalid-syntax-with-attributes-multiple-lines/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Expected a semicolon or a line terminator"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:10
-				path: UIDPath<experimental/module-attributes/invalid-syntax-with-attributes-multiple-lines/input.js>
-				start: Position 1:11
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSImportDeclaration {
-			defaultSpecifier: undefined
-			importKind: undefined
-			namedSpecifiers: Array []
-			namespaceSpecifier: undefined
-			loc: SourceLocation experimental/module-attributes/invalid-syntax-with-attributes-multiple-lines/input.js 1:0-1:10
+			namedSpecifiers: []
 			source: JSStringLiteral {
 				value: "x"
 				loc: SourceLocation experimental/module-attributes/invalid-syntax-with-attributes-multiple-lines/input.js 1:7-1:10
 			}
+			loc: SourceLocation experimental/module-attributes/invalid-syntax-with-attributes-multiple-lines/input.js 1:0-1:10
 		}
 		JSWithStatement {
-			loc: SourceLocation experimental/module-attributes/invalid-syntax-with-attributes-multiple-lines/input.js 1:11-2:5
-			object: JSReferenceIdentifier {
-				name: "type"
-				loc: SourceLocation experimental/module-attributes/invalid-syntax-with-attributes-multiple-lines/input.js 2:0-2:4 (type)
-			}
 			body: JSExpressionStatement {
-				loc: SourceLocation experimental/module-attributes/invalid-syntax-with-attributes-multiple-lines/input.js 2:4-2:5
 				expression: JSReferenceIdentifier {
 					name: "INVALID_PLACEHOLDER"
 					loc: SourceLocation experimental/module-attributes/invalid-syntax-with-attributes-multiple-lines/input.js 2:4-2:5
 				}
+				loc: SourceLocation experimental/module-attributes/invalid-syntax-with-attributes-multiple-lines/input.js 2:4-2:5
 			}
+			object: JSReferenceIdentifier {
+				name: "type"
+				loc: SourceLocation experimental/module-attributes/invalid-syntax-with-attributes-multiple-lines/input.js 2:0-2:4 (type)
+			}
+			loc: SourceLocation experimental/module-attributes/invalid-syntax-with-attributes-multiple-lines/input.js 1:11-2:5
 		}
 		JSExpressionStatement {
-			loc: SourceLocation experimental/module-attributes/invalid-syntax-with-attributes-multiple-lines/input.js 2:6-2:12
 			expression: JSStringLiteral {
 				value: "json"
 				loc: SourceLocation experimental/module-attributes/invalid-syntax-with-attributes-multiple-lines/input.js 2:6-2:12
 			}
+			loc: SourceLocation experimental/module-attributes/invalid-syntax-with-attributes-multiple-lines/input.js 2:6-2:12
 		}
 	]
+	comments: []
+	corrupt: true
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "Expected a semicolon or a line terminator"}
+			}
+			location: {
+				language: "js"
+				path: UIDPath<experimental/module-attributes/invalid-syntax-with-attributes-multiple-lines/input.js>
+				end: Position 1:10
+				start: Position 1:11
+			}
+		}
+	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: []
+	path: UIDPath<experimental/module-attributes/invalid-syntax-with-attributes-multiple-lines/input.js>
+	loc: SourceLocation experimental/module-attributes/invalid-syntax-with-attributes-multiple-lines/input.js 1:0-3:0
 }
 ```
 
@@ -84,7 +77,7 @@ parse(js) ━━━━━━━━━━━━━━━━━━━━━━━�
   ✖ Expected a semicolon or a line terminator
 
   > 1 │ import "x" with
-      │            ^
+      │            <error><emphasis>^</emphasis></error>
     2 │ type: "json"
 
 

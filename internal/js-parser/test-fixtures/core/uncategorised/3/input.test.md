@@ -10,7 +10,10 @@
 JSRoot {
 	body: [
 		JSExpressionStatement {
-			expression: JSNumericLiteral {value: 42, loc: SourceLocation core/uncategorised/3/input.js 2:4-2:6}
+			expression: JSNumericLiteral {
+				value: 42
+				loc: SourceLocation core/uncategorised/3/input.js 2:4-2:6
+			}
 			loc: SourceLocation core/uncategorised/3/input.js 2:4-2:6
 		}
 	]
@@ -19,9 +22,9 @@ JSRoot {
 	diagnostics: []
 	directives: []
 	hasHoistedVars: false
-	path: UIDPath<core/uncategorised/3/input.js>
 	sourceType: "script"
 	syntax: []
+	path: UIDPath<core/uncategorised/3/input.js>
 	loc: SourceLocation core/uncategorised/3/input.js 1:0-4:0
 }
 ```

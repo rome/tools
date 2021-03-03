@@ -8,41 +8,36 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation core/uncategorised/411/input.js 1:0-2:0
-	path: UIDPath<core/uncategorised/411/input.js>
-	body: Array [
+	body: [
 		JSContinueStatement {
-			label: undefined
 			loc: SourceLocation core/uncategorised/411/input.js 1:0-1:8
 		}
 	]
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {
+				advice: []
+				category: ["parse"]
 				categoryValue: "js"
-				category: Array ["parse"]
 				message: RAW_MARKUP {value: "No loop label found"}
 			}
-			location: Object {
-				integrity: undefined
+			location: {
 				language: "js"
-				sourceText: undefined
-				end: Position 1:0
 				path: UIDPath<core/uncategorised/411/input.js>
+				end: Position 1:0
 				start: Position 1:0
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<core/uncategorised/411/input.js>
+	loc: SourceLocation core/uncategorised/411/input.js 1:0-2:0
 }
 ```
 
@@ -55,7 +50,7 @@ JSRoot {
   ✖ No loop label found
 
     continue
-    ^
+    <error><emphasis>^</emphasis></error>
 
 
 ```

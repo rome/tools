@@ -14,16 +14,37 @@ JSRoot {
 				kind: "var"
 				declarations: [
 					JSVariableDeclarator {
-						id: JSBindingIdentifier {name: "x", loc: SourceLocation core/uncategorised/108/input.js 1:4-1:5 (x)}
+						id: JSBindingIdentifier {
+							name: "x"
+							loc: SourceLocation core/uncategorised/108/input.js 1:4-1:5 (x)
+						}
 						init: JSRegExpLiteral {
+							global: true
+							insensitive: false
+							multiline: false
+							noDotNewline: false
+							sticky: false
+							unicode: false
 							expression: JSRegExpSubExpression {
 								body: [
 									JSRegExpCharSet {
 										body: [
-											JSRegExpCharacter {value: "P", loc: SourceLocation core/uncategorised/108/input.js 1:10-1:11}
-											JSRegExpCharacter {value: " ", loc: SourceLocation core/uncategorised/108/input.js 1:11-1:12}
-											JSRegExpCharacter {value: "Q", loc: SourceLocation core/uncategorised/108/input.js 1:12-1:13}
-											JSRegExpCharacter {value: "R", loc: SourceLocation core/uncategorised/108/input.js 1:13-1:14}
+											JSRegExpCharacter {
+												value: "P"
+												loc: SourceLocation core/uncategorised/108/input.js 1:10-1:11
+											}
+											JSRegExpCharacter {
+												value: " "
+												loc: SourceLocation core/uncategorised/108/input.js 1:11-1:12
+											}
+											JSRegExpCharacter {
+												value: "Q"
+												loc: SourceLocation core/uncategorised/108/input.js 1:12-1:13
+											}
+											JSRegExpCharacter {
+												value: "R"
+												loc: SourceLocation core/uncategorised/108/input.js 1:13-1:14
+											}
 										]
 										invert: false
 										loc: SourceLocation core/uncategorised/108/input.js 1:9-1:14
@@ -31,12 +52,6 @@ JSRoot {
 								]
 								loc: SourceLocation core/uncategorised/108/input.js 1:9-1:14
 							}
-							global: true
-							insensitive: false
-							multiline: false
-							noDotNewline: false
-							sticky: false
-							unicode: false
 							loc: SourceLocation core/uncategorised/108/input.js 1:8-1:22
 						}
 						loc: SourceLocation core/uncategorised/108/input.js 1:4-1:22
@@ -51,21 +66,26 @@ JSRoot {
 	corrupt: false
 	diagnostics: [
 		{
+			origins: [{category: "parse"}]
 			description: {
 				advice: []
 				category: ["parse"]
 				categoryValue: "js"
 				message: RAW_MARKUP {value: "Regular expression flags can't contain unicode escapes"}
 			}
-			location: {language: "js", path: UIDPath<core/uncategorised/108/input.js>, end: Position 1:16, start: Position 1:16}
-			origins: [{category: "parse"}]
+			location: {
+				language: "js"
+				path: UIDPath<core/uncategorised/108/input.js>
+				end: Position 1:16
+				start: Position 1:16
+			}
 		}
 	]
 	directives: []
 	hasHoistedVars: true
-	path: UIDPath<core/uncategorised/108/input.js>
 	sourceType: "script"
 	syntax: []
+	path: UIDPath<core/uncategorised/108/input.js>
 	loc: SourceLocation core/uncategorised/108/input.js 1:0-1:22
 }
 ```
@@ -79,7 +99,7 @@ JSRoot {
   ✖ Regular expression flags can't contain unicode escapes
 
     var x = /[P QR]/\u0067
-                    ^
+                    <error><emphasis>^</emphasis></error>
 
 
 ```

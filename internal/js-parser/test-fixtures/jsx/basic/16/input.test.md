@@ -8,41 +8,38 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	loc: SourceLocation jsx/basic/16/input.jsx 1:0-1:14
-	path: UIDPath<jsx/basic/16/input.jsx>
-	syntax: Array ["jsx"]
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation jsx/basic/16/input.jsx 1:0-1:14
 			expression: JSBinaryExpression {
 				operator: "<"
-				loc: SourceLocation jsx/basic/16/input.jsx 1:0-1:13
-				right: JSReferenceIdentifier {
-					name: "x"
-					loc: SourceLocation jsx/basic/16/input.jsx 1:12-1:13 (x)
-				}
 				left: JSXElement {
+					attributes: []
+					children: []
+					selfClosing: true
 					name: JSXIdentifier {
 						name: "div"
 						loc: SourceLocation jsx/basic/16/input.jsx 1:2-1:5
 					}
-					attributes: Array []
-					children: Array []
-					selfClosing: true
-					typeArguments: undefined
 					loc: SourceLocation jsx/basic/16/input.jsx 1:1-1:8
 				}
+				right: JSReferenceIdentifier {
+					name: "x"
+					loc: SourceLocation jsx/basic/16/input.jsx 1:12-1:13 (x)
+				}
+				loc: SourceLocation jsx/basic/16/input.jsx 1:0-1:13
 			}
+			loc: SourceLocation jsx/basic/16/input.jsx 1:0-1:14
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: ["jsx"]
+	path: UIDPath<jsx/basic/16/input.jsx>
+	loc: SourceLocation jsx/basic/16/input.jsx 1:0-1:14
 }
 ```
 

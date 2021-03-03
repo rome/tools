@@ -15,14 +15,22 @@ JSRoot {
 					consequent: [
 						JSExpressionStatement {
 							expression: JSCallExpression {
-								arguments: [JSStringLiteral {value: "1", loc: SourceLocation comments/basic/switch-function-call-no-semicolon-no-default/input.js 3:16-3:19}]
+								arguments: [
+									JSStringLiteral {
+										value: "1"
+										loc: SourceLocation comments/basic/switch-function-call-no-semicolon-no-default/input.js 3:16-3:19
+									}
+								]
 								callee: JSMemberExpression {
 									object: JSReferenceIdentifier {
 										name: "console"
 										loc: SourceLocation comments/basic/switch-function-call-no-semicolon-no-default/input.js 3:4-3:11 (console)
 									}
 									property: JSStaticMemberProperty {
-										value: JSIdentifier {name: "log", loc: SourceLocation comments/basic/switch-function-call-no-semicolon-no-default/input.js 3:12-3:15 (log)}
+										value: JSIdentifier {
+											name: "log"
+											loc: SourceLocation comments/basic/switch-function-call-no-semicolon-no-default/input.js 3:12-3:15 (log)
+										}
 										loc: SourceLocation comments/basic/switch-function-call-no-semicolon-no-default/input.js 3:12-3:15 (log)
 									}
 									loc: SourceLocation comments/basic/switch-function-call-no-semicolon-no-default/input.js 3:4-3:15
@@ -32,25 +40,35 @@ JSRoot {
 							loc: SourceLocation comments/basic/switch-function-call-no-semicolon-no-default/input.js 3:4-3:20
 						}
 					]
-					test: JSNumericLiteral {value: 1, loc: SourceLocation comments/basic/switch-function-call-no-semicolon-no-default/input.js 2:7-2:8}
 					trailingComments: ["0"]
+					test: JSNumericLiteral {
+						value: 1
+						loc: SourceLocation comments/basic/switch-function-call-no-semicolon-no-default/input.js 2:7-2:8
+					}
 					loc: SourceLocation comments/basic/switch-function-call-no-semicolon-no-default/input.js 2:2-3:20
 				}
 			]
-			discriminant: JSReferenceIdentifier {name: "x", loc: SourceLocation comments/basic/switch-function-call-no-semicolon-no-default/input.js 1:8-1:9 (x)}
+			discriminant: JSReferenceIdentifier {
+				name: "x"
+				loc: SourceLocation comments/basic/switch-function-call-no-semicolon-no-default/input.js 1:8-1:9 (x)
+			}
 			loc: SourceLocation comments/basic/switch-function-call-no-semicolon-no-default/input.js 1:0-5:1
 		}
 	]
 	comments: [
-		CommentLine {id: "0", value: " comment", loc: SourceLocation comments/basic/switch-function-call-no-semicolon-no-default/input.js 4:4-4:14}
+		CommentLine {
+			id: "0"
+			value: " comment"
+			loc: SourceLocation comments/basic/switch-function-call-no-semicolon-no-default/input.js 4:4-4:14
+		}
 	]
 	corrupt: false
 	diagnostics: []
 	directives: []
 	hasHoistedVars: false
-	path: UIDPath<comments/basic/switch-function-call-no-semicolon-no-default/input.js>
 	sourceType: "script"
 	syntax: []
+	path: UIDPath<comments/basic/switch-function-call-no-semicolon-no-default/input.js>
 	loc: SourceLocation comments/basic/switch-function-call-no-semicolon-no-default/input.js 1:0-6:0
 }
 ```

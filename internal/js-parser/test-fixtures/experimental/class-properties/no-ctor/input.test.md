@@ -8,49 +8,14 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation experimental/class-properties/no-ctor/input.js 1:0-4:0
-	path: UIDPath<experimental/class-properties/no-ctor/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Classes may not have a non-static field named 'constructor'"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 2:13
-				path: UIDPath<experimental/class-properties/no-ctor/input.js>
-				start: Position 2:2
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSClassDeclaration {
 			id: JSBindingIdentifier {
 				name: "Foo"
 				loc: SourceLocation experimental/class-properties/no-ctor/input.js 1:6-1:9 (Foo)
 			}
-			loc: SourceLocation experimental/class-properties/no-ctor/input.js 1:0-3:1
 			meta: JSClassHead {
-				implements: undefined
-				superClass: undefined
-				superTypeParameters: undefined
-				typeParameters: undefined
-				loc: SourceLocation experimental/class-properties/no-ctor/input.js 1:0-3:1
-				body: Array [
+				body: [
 					JSClassProperty {
 						key: JSStaticPropertyKey {
 							value: JSIdentifier {
@@ -59,25 +24,47 @@ JSRoot {
 							}
 							loc: SourceLocation experimental/class-properties/no-ctor/input.js 2:2-2:13
 						}
-						value: undefined
-						definite: undefined
-						typeAnnotation: undefined
-						loc: SourceLocation experimental/class-properties/no-ctor/input.js 2:2-2:13
 						meta: JSClassPropertyMeta {
 							abstract: false
-							accessibility: undefined
 							optional: false
 							readonly: false
 							static: false
-							typeAnnotation: undefined
 							loc: SourceLocation experimental/class-properties/no-ctor/input.js 2:2-2:13
 							start: Position 2:2
 						}
+						loc: SourceLocation experimental/class-properties/no-ctor/input.js 2:2-2:13
 					}
 				]
+				loc: SourceLocation experimental/class-properties/no-ctor/input.js 1:0-3:1
+			}
+			loc: SourceLocation experimental/class-properties/no-ctor/input.js 1:0-3:1
+		}
+	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "Classes may not have a non-static field named 'constructor'"}
+			}
+			location: {
+				language: "js"
+				path: UIDPath<experimental/class-properties/no-ctor/input.js>
+				end: Position 2:13
+				start: Position 2:2
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<experimental/class-properties/no-ctor/input.js>
+	loc: SourceLocation experimental/class-properties/no-ctor/input.js 1:0-4:0
 }
 ```
 
@@ -91,7 +78,12 @@ JSRoot {
 
     1 │ class Foo {
   > 2 │   constructor
-      │   ^^^^^^^^^^^
+    → │   <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
+    → │ <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
+    → │ <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
+    → │ <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
+    → │ <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
+      │ <error><emphasis>^</emphasis></error>
     3 │ }
 
 

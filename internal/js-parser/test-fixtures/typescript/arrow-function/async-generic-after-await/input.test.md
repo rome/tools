@@ -8,100 +8,96 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: true
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	loc: SourceLocation typescript/arrow-function/async-generic-after-await/input.ts 1:0-5:0
-	path: UIDPath<typescript/arrow-function/async-generic-after-await/input.ts>
-	syntax: Array ["ts"]
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Expected a semicolon or a line terminator"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 3:13
-				path: UIDPath<typescript/arrow-function/async-generic-after-await/input.ts>
-				start: Position 3:14
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation typescript/arrow-function/async-generic-after-await/input.ts 1:0-4:2
 			expression: JSArrowFunctionExpression {
-				loc: SourceLocation typescript/arrow-function/async-generic-after-await/input.ts 1:0-4:1
-				head: JSFunctionHead {
-					async: true
-					hasHoistedVars: false
-					params: Array []
-					rest: undefined
-					returnType: undefined
-					thisType: undefined
-					loc: SourceLocation typescript/arrow-function/async-generic-after-await/input.ts 1:0-1:11
-				}
 				body: JSBlockStatement {
-					directives: Array []
-					loc: SourceLocation typescript/arrow-function/async-generic-after-await/input.ts 1:12-4:1
-					body: Array [
+					body: [
 						JSExpressionStatement {
-							loc: SourceLocation typescript/arrow-function/async-generic-after-await/input.ts 2:2-2:13
 							expression: JSAwaitExpression {
-								argument: JSNullLiteral {loc: SourceLocation typescript/arrow-function/async-generic-after-await/input.ts 2:8-2:12}
+								argument: JSNullLiteral {
+									loc: SourceLocation typescript/arrow-function/async-generic-after-await/input.ts 2:8-2:12
+								}
 								loc: SourceLocation typescript/arrow-function/async-generic-after-await/input.ts 2:2-2:12
 							}
+							loc: SourceLocation typescript/arrow-function/async-generic-after-await/input.ts 2:2-2:13
 						}
 						JSExpressionStatement {
-							loc: SourceLocation typescript/arrow-function/async-generic-after-await/input.ts 3:2-3:13
 							expression: JSCallExpression {
-								arguments: Array []
-								loc: SourceLocation typescript/arrow-function/async-generic-after-await/input.ts 3:2-3:13
+								arguments: []
 								callee: JSReferenceIdentifier {
 									name: "async"
 									loc: SourceLocation typescript/arrow-function/async-generic-after-await/input.ts 3:2-3:7 (async)
 								}
 								typeArguments: TSTypeParameterInstantiation {
-									loc: SourceLocation typescript/arrow-function/async-generic-after-await/input.ts 3:8-3:11
-									params: Array [
+									params: [
 										TSTypeReference {
-											typeParameters: undefined
-											loc: SourceLocation typescript/arrow-function/async-generic-after-await/input.ts 3:9-3:10
 											typeName: JSReferenceIdentifier {
 												name: "T"
 												loc: SourceLocation typescript/arrow-function/async-generic-after-await/input.ts 3:9-3:10 (T)
 											}
+											loc: SourceLocation typescript/arrow-function/async-generic-after-await/input.ts 3:9-3:10
 										}
 									]
+									loc: SourceLocation typescript/arrow-function/async-generic-after-await/input.ts 3:8-3:11
 								}
+								loc: SourceLocation typescript/arrow-function/async-generic-after-await/input.ts 3:2-3:13
 							}
+							loc: SourceLocation typescript/arrow-function/async-generic-after-await/input.ts 3:2-3:13
 						}
 						JSExpressionStatement {
-							loc: SourceLocation typescript/arrow-function/async-generic-after-await/input.ts 3:14-3:16
 							expression: JSReferenceIdentifier {
 								name: "INVALID_PLACEHOLDER"
 								loc: SourceLocation typescript/arrow-function/async-generic-after-await/input.ts 3:14-3:16
 							}
+							loc: SourceLocation typescript/arrow-function/async-generic-after-await/input.ts 3:14-3:16
 						}
 						JSExpressionStatement {
-							expression: JSNullLiteral {loc: SourceLocation typescript/arrow-function/async-generic-after-await/input.ts 3:17-3:21}
+							expression: JSNullLiteral {
+								loc: SourceLocation typescript/arrow-function/async-generic-after-await/input.ts 3:17-3:21
+							}
 							loc: SourceLocation typescript/arrow-function/async-generic-after-await/input.ts 3:17-3:22
 						}
 					]
+					directives: []
+					loc: SourceLocation typescript/arrow-function/async-generic-after-await/input.ts 1:12-4:1
 				}
+				head: JSFunctionHead {
+					async: true
+					hasHoistedVars: false
+					params: []
+					loc: SourceLocation typescript/arrow-function/async-generic-after-await/input.ts 1:0-1:11
+				}
+				loc: SourceLocation typescript/arrow-function/async-generic-after-await/input.ts 1:0-4:1
+			}
+			loc: SourceLocation typescript/arrow-function/async-generic-after-await/input.ts 1:0-4:2
+		}
+	]
+	comments: []
+	corrupt: true
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "Expected a semicolon or a line terminator"}
+			}
+			location: {
+				language: "js"
+				path: UIDPath<typescript/arrow-function/async-generic-after-await/input.ts>
+				end: Position 3:13
+				start: Position 3:14
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: ["ts"]
+	path: UIDPath<typescript/arrow-function/async-generic-after-await/input.ts>
+	loc: SourceLocation typescript/arrow-function/async-generic-after-await/input.ts 1:0-5:0
 }
 ```
 
@@ -116,7 +112,7 @@ JSRoot {
     1 │ async () => {
     2 │   await null;
   > 3 │   async <T>() => null;
-      │               ^
+      │               <error><emphasis>^</emphasis></error>
     4 │ };
 
 

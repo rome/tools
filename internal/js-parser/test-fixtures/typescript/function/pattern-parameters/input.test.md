@@ -8,81 +8,68 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	loc: SourceLocation typescript/function/pattern-parameters/input.ts 1:0-2:0
-	path: UIDPath<typescript/function/pattern-parameters/input.ts>
-	syntax: Array ["ts"]
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "A binding pattern parameter cannot be optional in an implementation signature."}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:13
-				path: UIDPath<typescript/function/pattern-parameters/input.ts>
-				start: Position 1:11
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "f"
 				loc: SourceLocation typescript/function/pattern-parameters/input.ts 1:9-1:10 (f)
 			}
-			loc: SourceLocation typescript/function/pattern-parameters/input.ts 1:0-1:22
 			body: JSBlockStatement {
-				body: Array []
-				directives: Array []
+				body: []
+				directives: []
 				loc: SourceLocation typescript/function/pattern-parameters/input.ts 1:20-1:22
 			}
 			head: JSFunctionHead {
 				async: false
 				generator: false
 				hasHoistedVars: false
-				rest: undefined
-				returnType: undefined
-				thisType: undefined
-				typeParameters: undefined
-				loc: SourceLocation typescript/function/pattern-parameters/input.ts 1:10-1:19
-				params: Array [
+				params: [
 					JSBindingArrayPattern {
-						elements: Array []
-						rest: undefined
-						loc: SourceLocation typescript/function/pattern-parameters/input.ts 1:11-1:13
+						elements: []
 						meta: JSPatternMeta {
 							optional: true
-							typeAnnotation: undefined
 							loc: SourceLocation typescript/function/pattern-parameters/input.ts 1:11-1:14
 						}
+						loc: SourceLocation typescript/function/pattern-parameters/input.ts 1:11-1:13
 					}
 					JSBindingObjectPattern {
-						properties: Array []
-						rest: undefined
-						loc: SourceLocation typescript/function/pattern-parameters/input.ts 1:16-1:18
+						properties: []
 						meta: JSPatternMeta {
-							optional: undefined
-							typeAnnotation: undefined
 							loc: SourceLocation typescript/function/pattern-parameters/input.ts 1:16-1:18
 						}
+						loc: SourceLocation typescript/function/pattern-parameters/input.ts 1:16-1:18
 					}
 				]
+				loc: SourceLocation typescript/function/pattern-parameters/input.ts 1:10-1:19
+			}
+			loc: SourceLocation typescript/function/pattern-parameters/input.ts 1:0-1:22
+		}
+	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "A binding pattern parameter cannot be optional in an implementation signature."}
+			}
+			location: {
+				language: "js"
+				path: UIDPath<typescript/function/pattern-parameters/input.ts>
+				end: Position 1:13
+				start: Position 1:11
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: ["ts"]
+	path: UIDPath<typescript/function/pattern-parameters/input.ts>
+	loc: SourceLocation typescript/function/pattern-parameters/input.ts 1:0-2:0
 }
 ```
 
@@ -95,7 +82,7 @@ JSRoot {
   ✖ A binding pattern parameter cannot be optional in an implementation signature.
 
     function f([]?, {}) {}
-               ^^
+               <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
 
 
 ```

@@ -8,49 +8,14 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2015/uncategorised/125/input.js 1:0-1:47
-	path: UIDPath<es2015/uncategorised/125/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Duplicate constructor in the same class"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:40
-				path: UIDPath<es2015/uncategorised/125/input.js>
-				start: Position 1:27
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSClassDeclaration {
 			id: JSBindingIdentifier {
 				name: "A"
 				loc: SourceLocation es2015/uncategorised/125/input.js 1:6-1:7 (A)
 			}
-			loc: SourceLocation es2015/uncategorised/125/input.js 1:0-1:47
 			meta: JSClassHead {
-				implements: undefined
-				superClass: undefined
-				superTypeParameters: undefined
-				typeParameters: undefined
-				loc: SourceLocation es2015/uncategorised/125/input.js 1:0-1:47
-				body: Array [
+				body: [
 					JSClassMethod {
 						kind: "constructor"
 						key: JSStaticPropertyKey {
@@ -60,33 +25,27 @@ JSRoot {
 							}
 							loc: SourceLocation es2015/uncategorised/125/input.js 1:10-1:21
 						}
-						loc: SourceLocation es2015/uncategorised/125/input.js 1:10-1:26
 						body: JSBlockStatement {
-							body: Array []
-							directives: Array []
+							body: []
+							directives: []
 							loc: SourceLocation es2015/uncategorised/125/input.js 1:24-1:26
-						}
-						meta: JSClassPropertyMeta {
-							abstract: false
-							accessibility: undefined
-							optional: false
-							readonly: false
-							static: false
-							typeAnnotation: undefined
-							loc: SourceLocation es2015/uncategorised/125/input.js 1:10-1:21
-							start: Position 1:10
 						}
 						head: JSFunctionHead {
 							async: false
 							generator: false
 							hasHoistedVars: false
-							params: Array []
-							rest: undefined
-							returnType: undefined
-							thisType: undefined
-							typeParameters: undefined
+							params: []
 							loc: SourceLocation es2015/uncategorised/125/input.js 1:21-1:23
 						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							optional: false
+							readonly: false
+							static: false
+							loc: SourceLocation es2015/uncategorised/125/input.js 1:10-1:21
+							start: Position 1:10
+						}
+						loc: SourceLocation es2015/uncategorised/125/input.js 1:10-1:26
 					}
 					JSClassMethod {
 						kind: "constructor"
@@ -97,38 +56,59 @@ JSRoot {
 							}
 							loc: SourceLocation es2015/uncategorised/125/input.js 1:27-1:40
 						}
-						loc: SourceLocation es2015/uncategorised/125/input.js 1:27-1:45
 						body: JSBlockStatement {
-							body: Array []
-							directives: Array []
+							body: []
+							directives: []
 							loc: SourceLocation es2015/uncategorised/125/input.js 1:43-1:45
-						}
-						meta: JSClassPropertyMeta {
-							abstract: false
-							accessibility: undefined
-							optional: false
-							readonly: false
-							static: false
-							typeAnnotation: undefined
-							loc: SourceLocation es2015/uncategorised/125/input.js 1:27-1:40
-							start: Position 1:27
 						}
 						head: JSFunctionHead {
 							async: false
 							generator: false
 							hasHoistedVars: false
-							params: Array []
-							rest: undefined
-							returnType: undefined
-							thisType: undefined
-							typeParameters: undefined
+							params: []
 							loc: SourceLocation es2015/uncategorised/125/input.js 1:40-1:42
 						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							optional: false
+							readonly: false
+							static: false
+							loc: SourceLocation es2015/uncategorised/125/input.js 1:27-1:40
+							start: Position 1:27
+						}
+						loc: SourceLocation es2015/uncategorised/125/input.js 1:27-1:45
 					}
 				]
+				loc: SourceLocation es2015/uncategorised/125/input.js 1:0-1:47
+			}
+			loc: SourceLocation es2015/uncategorised/125/input.js 1:0-1:47
+		}
+	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "Duplicate constructor in the same class"}
+			}
+			location: {
+				language: "js"
+				path: UIDPath<es2015/uncategorised/125/input.js>
+				end: Position 1:40
+				start: Position 1:27
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2015/uncategorised/125/input.js>
+	loc: SourceLocation es2015/uncategorised/125/input.js 1:0-1:47
 }
 ```
 
@@ -141,7 +121,13 @@ JSRoot {
   ✖ Duplicate constructor in the same class
 
     class A { constructor() {} 'constructor'() {} }
-                               ^^^^^^^^^^^^^
+                               <error><emphasis>^</emphasis></error>
+    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
+    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
+    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
+    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
+    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
+    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
 
 
 ```

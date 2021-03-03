@@ -8,73 +8,69 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation esprima/statement-iteration/migrated_0016/input.js 1:0-2:0
-	path: UIDPath<esprima/statement-iteration/migrated_0016/input.js>
-	body: Array [
+	body: [
 		JSForStatement {
-			loc: SourceLocation esprima/statement-iteration/migrated_0016/input.js 1:0-1:35
-			update: JSUpdateExpression {
-				operator: "++"
-				prefix: false
-				loc: SourceLocation esprima/statement-iteration/migrated_0016/input.js 1:19-1:22
-				argument: JSReferenceIdentifier {
-					name: "x"
-					loc: SourceLocation esprima/statement-iteration/migrated_0016/input.js 1:19-1:20 (x)
+			body: JSExpressionStatement {
+				expression: JSCallExpression {
+					arguments: [
+						JSReferenceIdentifier {
+							name: "x"
+							loc: SourceLocation esprima/statement-iteration/migrated_0016/input.js 1:32-1:33 (x)
+						}
+					]
+					callee: JSReferenceIdentifier {
+						name: "process"
+						loc: SourceLocation esprima/statement-iteration/migrated_0016/input.js 1:24-1:31 (process)
+					}
+					loc: SourceLocation esprima/statement-iteration/migrated_0016/input.js 1:24-1:34
 				}
+				loc: SourceLocation esprima/statement-iteration/migrated_0016/input.js 1:24-1:35
 			}
 			init: JSAssignmentExpression {
 				operator: "="
-				loc: SourceLocation esprima/statement-iteration/migrated_0016/input.js 1:4-1:9
 				left: JSAssignmentIdentifier {
 					name: "x"
 					loc: SourceLocation esprima/statement-iteration/migrated_0016/input.js 1:4-1:5 (x)
 				}
 				right: JSNumericLiteral {
 					value: 0
-					format: undefined
 					loc: SourceLocation esprima/statement-iteration/migrated_0016/input.js 1:8-1:9
 				}
+				loc: SourceLocation esprima/statement-iteration/migrated_0016/input.js 1:4-1:9
 			}
 			test: JSBinaryExpression {
 				operator: "<"
-				loc: SourceLocation esprima/statement-iteration/migrated_0016/input.js 1:11-1:17
 				left: JSReferenceIdentifier {
 					name: "x"
 					loc: SourceLocation esprima/statement-iteration/migrated_0016/input.js 1:11-1:12 (x)
 				}
 				right: JSNumericLiteral {
 					value: 42
-					format: undefined
 					loc: SourceLocation esprima/statement-iteration/migrated_0016/input.js 1:15-1:17
 				}
+				loc: SourceLocation esprima/statement-iteration/migrated_0016/input.js 1:11-1:17
 			}
-			body: JSExpressionStatement {
-				loc: SourceLocation esprima/statement-iteration/migrated_0016/input.js 1:24-1:35
-				expression: JSCallExpression {
-					loc: SourceLocation esprima/statement-iteration/migrated_0016/input.js 1:24-1:34
-					callee: JSReferenceIdentifier {
-						name: "process"
-						loc: SourceLocation esprima/statement-iteration/migrated_0016/input.js 1:24-1:31 (process)
-					}
-					arguments: Array [
-						JSReferenceIdentifier {
-							name: "x"
-							loc: SourceLocation esprima/statement-iteration/migrated_0016/input.js 1:32-1:33 (x)
-						}
-					]
+			update: JSUpdateExpression {
+				operator: "++"
+				prefix: false
+				argument: JSReferenceIdentifier {
+					name: "x"
+					loc: SourceLocation esprima/statement-iteration/migrated_0016/input.js 1:19-1:20 (x)
 				}
+				loc: SourceLocation esprima/statement-iteration/migrated_0016/input.js 1:19-1:22
 			}
+			loc: SourceLocation esprima/statement-iteration/migrated_0016/input.js 1:0-1:35
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<esprima/statement-iteration/migrated_0016/input.js>
+	loc: SourceLocation esprima/statement-iteration/migrated_0016/input.js 1:0-2:0
 }
 ```
 

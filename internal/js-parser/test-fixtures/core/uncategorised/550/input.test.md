@@ -8,63 +8,59 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation core/uncategorised/550/input.js 1:0-3:0
-	path: UIDPath<core/uncategorised/550/input.js>
-	directives: Array [
-		JSDirective {
-			value: "use strict"
-			loc: SourceLocation core/uncategorised/550/input.js 1:0-1:13
-		}
-	]
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Legacy octal literals are not allowed in strict mode"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 2:12
-				path: UIDPath<core/uncategorised/550/input.js>
-				start: Position 2:12
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSVariableDeclarationStatement {
-			loc: SourceLocation core/uncategorised/550/input.js 2:0-2:13
 			declaration: JSVariableDeclaration {
 				kind: "const"
-				loc: SourceLocation core/uncategorised/550/input.js 2:0-2:13
-				declarations: Array [
+				declarations: [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "a"
 							loc: SourceLocation core/uncategorised/550/input.js 2:6-2:7 (a)
 						}
-						loc: SourceLocation core/uncategorised/550/input.js 2:6-2:12
 						init: JSNumericLiteral {
 							value: 7
 							format: "octal"
 							loc: SourceLocation core/uncategorised/550/input.js 2:10-2:12
 						}
+						loc: SourceLocation core/uncategorised/550/input.js 2:6-2:12
 					}
 				]
+				loc: SourceLocation core/uncategorised/550/input.js 2:0-2:13
+			}
+			loc: SourceLocation core/uncategorised/550/input.js 2:0-2:13
+		}
+	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "Legacy octal literals are not allowed in strict mode"}
+			}
+			location: {
+				language: "js"
+				path: UIDPath<core/uncategorised/550/input.js>
+				end: Position 2:12
+				start: Position 2:12
 			}
 		}
 	]
+	directives: [
+		JSDirective {
+			value: "use strict"
+			loc: SourceLocation core/uncategorised/550/input.js 1:0-1:13
+		}
+	]
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<core/uncategorised/550/input.js>
+	loc: SourceLocation core/uncategorised/550/input.js 1:0-3:0
 }
 ```
 
@@ -78,7 +74,7 @@ JSRoot {
 
     1 │ 'use strict';
   > 2 │ const a = 07;
-      │             ^
+      │             <error><emphasis>^</emphasis></error>
 
 
 ```

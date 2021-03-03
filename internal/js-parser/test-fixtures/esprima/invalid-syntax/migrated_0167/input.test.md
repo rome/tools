@@ -8,52 +8,48 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation esprima/invalid-syntax/migrated_0167/input.js 1:0-2:0
-	path: UIDPath<esprima/invalid-syntax/migrated_0167/input.js>
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation esprima/invalid-syntax/migrated_0167/input.js 1:0-1:11
 			expression: JSAssignmentExpression {
 				operator: "="
-				loc: SourceLocation esprima/invalid-syntax/migrated_0167/input.js 1:0-1:11
 				left: JSAssignmentIdentifier {
 					name: "\u200d"
 					loc: SourceLocation esprima/invalid-syntax/migrated_0167/input.js 1:0-1:6 (\u200d)
 				}
 				right: JSArrayExpression {
-					elements: Array []
+					elements: []
 					loc: SourceLocation esprima/invalid-syntax/migrated_0167/input.js 1:9-1:11
 				}
+				loc: SourceLocation esprima/invalid-syntax/migrated_0167/input.js 1:0-1:11
 			}
+			loc: SourceLocation esprima/invalid-syntax/migrated_0167/input.js 1:0-1:11
 		}
 	]
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {
+				advice: []
+				category: ["parse"]
 				categoryValue: "js"
-				category: Array ["parse"]
 				message: RAW_MARKUP {value: "Invalid Unicode escape"}
 			}
-			location: Object {
-				integrity: undefined
+			location: {
 				language: "js"
-				sourceText: undefined
-				end: Position 1:6
 				path: UIDPath<esprima/invalid-syntax/migrated_0167/input.js>
+				end: Position 1:6
 				start: Position 1:6
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<esprima/invalid-syntax/migrated_0167/input.js>
+	loc: SourceLocation esprima/invalid-syntax/migrated_0167/input.js 1:0-2:0
 }
 ```
 
@@ -66,7 +62,7 @@ JSRoot {
   ✖ Invalid Unicode escape
 
     \u200D = []
-          ^
+          <error><emphasis>^</emphasis></error>
 
 
 ```

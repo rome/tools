@@ -15,11 +15,17 @@ JSRoot {
 				callee: JSMemberExpression {
 					object: JSNewExpression {
 						arguments: []
-						callee: JSReferenceIdentifier {name: "foo", loc: SourceLocation core/uncategorised/116/input.js 1:6-1:9 (foo)}
+						callee: JSReferenceIdentifier {
+							name: "foo"
+							loc: SourceLocation core/uncategorised/116/input.js 1:6-1:9 (foo)
+						}
 						loc: SourceLocation core/uncategorised/116/input.js 1:2-1:9
 					}
 					property: JSStaticMemberProperty {
-						value: JSIdentifier {name: "bar", loc: SourceLocation core/uncategorised/116/input.js 1:11-1:14 (bar)}
+						value: JSIdentifier {
+							name: "bar"
+							loc: SourceLocation core/uncategorised/116/input.js 1:11-1:14 (bar)
+						}
 						loc: SourceLocation core/uncategorised/116/input.js 1:11-1:14 (bar)
 					}
 					loc: SourceLocation core/uncategorised/116/input.js 1:0-1:14
@@ -34,9 +40,9 @@ JSRoot {
 	diagnostics: []
 	directives: []
 	hasHoistedVars: false
-	path: UIDPath<core/uncategorised/116/input.js>
 	sourceType: "script"
 	syntax: []
+	path: UIDPath<core/uncategorised/116/input.js>
 	loc: SourceLocation core/uncategorised/116/input.js 1:0-1:16
 }
 ```

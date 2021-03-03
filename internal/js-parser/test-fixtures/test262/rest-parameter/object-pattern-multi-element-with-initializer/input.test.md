@@ -8,47 +8,24 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation test262/rest-parameter/object-pattern-multi-element-with-initializer/input.js 1:0-2:0
-	path: UIDPath<test262/rest-parameter/object-pattern-multi-element-with-initializer/input.js>
-	body: Array [
+	body: [
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "multiElementWithInitializer"
 				loc: SourceLocation test262/rest-parameter/object-pattern-multi-element-with-initializer/input.js 1:9-1:36 (multiElementWithInitializer)
 			}
-			loc: SourceLocation test262/rest-parameter/object-pattern-multi-element-with-initializer/input.js 1:0-1:70
 			body: JSBlockStatement {
-				body: Array []
-				directives: Array []
+				body: []
+				directives: []
 				loc: SourceLocation test262/rest-parameter/object-pattern-multi-element-with-initializer/input.js 1:68-1:70
 			}
 			head: JSFunctionHead {
 				async: false
 				generator: false
 				hasHoistedVars: false
-				params: Array []
-				returnType: undefined
-				thisType: undefined
-				typeParameters: undefined
-				loc: SourceLocation test262/rest-parameter/object-pattern-multi-element-with-initializer/input.js 1:36-1:67
+				params: []
 				rest: JSBindingObjectPattern {
-					rest: undefined
-					loc: SourceLocation test262/rest-parameter/object-pattern-multi-element-with-initializer/input.js 1:40-1:66
-					meta: JSPatternMeta {
-						optional: undefined
-						typeAnnotation: undefined
-						loc: SourceLocation test262/rest-parameter/object-pattern-multi-element-with-initializer/input.js 1:40-1:66
-					}
-					properties: Array [
+					properties: [
 						JSBindingObjectPatternProperty {
 							key: JSStaticPropertyKey {
 								value: JSIdentifier {
@@ -58,16 +35,15 @@ JSRoot {
 								loc: SourceLocation test262/rest-parameter/object-pattern-multi-element-with-initializer/input.js 1:41-1:42
 							}
 							value: JSBindingAssignmentPattern {
-								loc: SourceLocation test262/rest-parameter/object-pattern-multi-element-with-initializer/input.js 1:44-1:49
 								left: JSBindingIdentifier {
 									name: "r"
 									loc: SourceLocation test262/rest-parameter/object-pattern-multi-element-with-initializer/input.js 1:44-1:45 (r)
 								}
 								right: JSNumericLiteral {
 									value: 0
-									format: undefined
 									loc: SourceLocation test262/rest-parameter/object-pattern-multi-element-with-initializer/input.js 1:48-1:49
 								}
+								loc: SourceLocation test262/rest-parameter/object-pattern-multi-element-with-initializer/input.js 1:44-1:49
 							}
 							loc: SourceLocation test262/rest-parameter/object-pattern-multi-element-with-initializer/input.js 1:41-1:49
 						}
@@ -94,24 +70,38 @@ JSRoot {
 								loc: SourceLocation test262/rest-parameter/object-pattern-multi-element-with-initializer/input.js 1:57-1:58
 							}
 							value: JSBindingAssignmentPattern {
-								loc: SourceLocation test262/rest-parameter/object-pattern-multi-element-with-initializer/input.js 1:60-1:65
 								left: JSBindingIdentifier {
 									name: "t"
 									loc: SourceLocation test262/rest-parameter/object-pattern-multi-element-with-initializer/input.js 1:60-1:61 (t)
 								}
 								right: JSNumericLiteral {
 									value: 1
-									format: undefined
 									loc: SourceLocation test262/rest-parameter/object-pattern-multi-element-with-initializer/input.js 1:64-1:65
 								}
+								loc: SourceLocation test262/rest-parameter/object-pattern-multi-element-with-initializer/input.js 1:60-1:65
 							}
 							loc: SourceLocation test262/rest-parameter/object-pattern-multi-element-with-initializer/input.js 1:57-1:65
 						}
 					]
+					meta: JSPatternMeta {
+						loc: SourceLocation test262/rest-parameter/object-pattern-multi-element-with-initializer/input.js 1:40-1:66
+					}
+					loc: SourceLocation test262/rest-parameter/object-pattern-multi-element-with-initializer/input.js 1:40-1:66
 				}
+				loc: SourceLocation test262/rest-parameter/object-pattern-multi-element-with-initializer/input.js 1:36-1:67
 			}
+			loc: SourceLocation test262/rest-parameter/object-pattern-multi-element-with-initializer/input.js 1:0-1:70
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<test262/rest-parameter/object-pattern-multi-element-with-initializer/input.js>
+	loc: SourceLocation test262/rest-parameter/object-pattern-multi-element-with-initializer/input.js 1:0-2:0
 }
 ```
 

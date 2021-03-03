@@ -8,54 +8,50 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation esprima/es2015-spread-element/new-multi-spread/input.js 1:0-2:0
-	path: UIDPath<esprima/es2015-spread-element/new-multi-spread/input.js>
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation esprima/es2015-spread-element/new-multi-spread/input.js 1:0-1:24
 			expression: JSNewExpression {
-				optional: undefined
-				typeArguments: undefined
-				loc: SourceLocation esprima/es2015-spread-element/new-multi-spread/input.js 1:0-1:23
-				callee: JSReferenceIdentifier {
-					name: "f"
-					loc: SourceLocation esprima/es2015-spread-element/new-multi-spread/input.js 1:4-1:5 (f)
-				}
-				arguments: Array [
+				arguments: [
 					JSSpreadElement {
-						loc: SourceLocation esprima/es2015-spread-element/new-multi-spread/input.js 1:6-1:10
 						argument: JSReferenceIdentifier {
 							name: "x"
 							loc: SourceLocation esprima/es2015-spread-element/new-multi-spread/input.js 1:9-1:10 (x)
 						}
+						loc: SourceLocation esprima/es2015-spread-element/new-multi-spread/input.js 1:6-1:10
 					}
 					JSSpreadElement {
-						loc: SourceLocation esprima/es2015-spread-element/new-multi-spread/input.js 1:12-1:16
 						argument: JSReferenceIdentifier {
 							name: "y"
 							loc: SourceLocation esprima/es2015-spread-element/new-multi-spread/input.js 1:15-1:16 (y)
 						}
+						loc: SourceLocation esprima/es2015-spread-element/new-multi-spread/input.js 1:12-1:16
 					}
 					JSSpreadElement {
-						loc: SourceLocation esprima/es2015-spread-element/new-multi-spread/input.js 1:18-1:22
 						argument: JSReferenceIdentifier {
 							name: "z"
 							loc: SourceLocation esprima/es2015-spread-element/new-multi-spread/input.js 1:21-1:22 (z)
 						}
+						loc: SourceLocation esprima/es2015-spread-element/new-multi-spread/input.js 1:18-1:22
 					}
 				]
+				callee: JSReferenceIdentifier {
+					name: "f"
+					loc: SourceLocation esprima/es2015-spread-element/new-multi-spread/input.js 1:4-1:5 (f)
+				}
+				loc: SourceLocation esprima/es2015-spread-element/new-multi-spread/input.js 1:0-1:23
 			}
+			loc: SourceLocation esprima/es2015-spread-element/new-multi-spread/input.js 1:0-1:24
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<esprima/es2015-spread-element/new-multi-spread/input.js>
+	loc: SourceLocation esprima/es2015-spread-element/new-multi-spread/input.js 1:0-2:0
 }
 ```
 

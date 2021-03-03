@@ -8,41 +8,37 @@
 
 ```javascript
 JSRoot {
-	body: Array []
-	comments: Array []
+	body: []
+	comments: []
 	corrupt: false
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation core/uncategorised/452/input.js 1:0-1:4
-	path: UIDPath<core/uncategorised/452/input.js>
-	directives: Array [
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "Unterminated string constant"}
+			}
+			location: {
+				language: "js"
+				path: UIDPath<core/uncategorised/452/input.js>
+				end: Position 1:3
+				start: Position 1:3
+			}
+		}
+	]
+	directives: [
 		JSDirective {
 			value: ""
 			loc: SourceLocation core/uncategorised/452/input.js 1:0-1:4
 		}
 	]
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Unterminated string constant"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:3
-				path: UIDPath<core/uncategorised/452/input.js>
-				start: Position 1:3
-			}
-		}
-	]
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<core/uncategorised/452/input.js>
+	loc: SourceLocation core/uncategorised/452/input.js 1:0-1:4
 }
 ```
 
@@ -55,7 +51,7 @@ JSRoot {
   ✖ Unterminated string constant
 
     "\
-       ^
+       <error><emphasis>^</emphasis></error>
 
 
 ```

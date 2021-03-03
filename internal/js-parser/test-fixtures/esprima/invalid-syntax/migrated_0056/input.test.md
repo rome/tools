@@ -8,38 +8,24 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: true
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation esprima/invalid-syntax/migrated_0056/input.js 1:0-2:0
-	path: UIDPath<esprima/invalid-syntax/migrated_0056/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Invalid left-hand side in for-in statement"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:10
-				path: UIDPath<esprima/invalid-syntax/migrated_0056/input.js>
-				start: Position 1:5
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSForInStatement {
-			loc: SourceLocation esprima/invalid-syntax/migrated_0056/input.js 1:0-1:32
+			body: JSExpressionStatement {
+				expression: JSCallExpression {
+					arguments: [
+						JSReferenceIdentifier {
+							name: "x"
+							loc: SourceLocation esprima/invalid-syntax/migrated_0056/input.js 1:29-1:30 (x)
+						}
+					]
+					callee: JSReferenceIdentifier {
+						name: "process"
+						loc: SourceLocation esprima/invalid-syntax/migrated_0056/input.js 1:21-1:28 (process)
+					}
+					loc: SourceLocation esprima/invalid-syntax/migrated_0056/input.js 1:21-1:31
+				}
+				loc: SourceLocation esprima/invalid-syntax/migrated_0056/input.js 1:21-1:32
+			}
 			left: JSAssignmentIdentifier {
 				name: "INVALID_PLACEHOLDER"
 				loc: SourceLocation esprima/invalid-syntax/migrated_0056/input.js 1:12-1:11
@@ -48,24 +34,29 @@ JSRoot {
 				name: "list"
 				loc: SourceLocation esprima/invalid-syntax/migrated_0056/input.js 1:15-1:19 (list)
 			}
-			body: JSExpressionStatement {
-				loc: SourceLocation esprima/invalid-syntax/migrated_0056/input.js 1:21-1:32
-				expression: JSCallExpression {
-					loc: SourceLocation esprima/invalid-syntax/migrated_0056/input.js 1:21-1:31
-					callee: JSReferenceIdentifier {
-						name: "process"
-						loc: SourceLocation esprima/invalid-syntax/migrated_0056/input.js 1:21-1:28 (process)
-					}
-					arguments: Array [
-						JSReferenceIdentifier {
-							name: "x"
-							loc: SourceLocation esprima/invalid-syntax/migrated_0056/input.js 1:29-1:30 (x)
-						}
-					]
-				}
+			loc: SourceLocation esprima/invalid-syntax/migrated_0056/input.js 1:0-1:32
+		}
+	]
+	comments: []
+	corrupt: true
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {advice: [], category: ["parse"], categoryValue: "js", message: [RAW_MARKUP {value: "Invalid left-hand side in "}, "for-in statement"]}
+			location: {
+				language: "js"
+				path: UIDPath<esprima/invalid-syntax/migrated_0056/input.js>
+				end: Position 1:10
+				start: Position 1:5
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<esprima/invalid-syntax/migrated_0056/input.js>
+	loc: SourceLocation esprima/invalid-syntax/migrated_0056/input.js 1:0-2:0
 }
 ```
 
@@ -78,7 +69,9 @@ JSRoot {
   ✖ Invalid left-hand side in for-in statement
 
     for((1 + 1) in list) process(x);
-         ^^^^^
+         <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
+    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
+    <error><emphasis>^</emphasis></error>
 
 
 ```

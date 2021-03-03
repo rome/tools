@@ -8,56 +8,51 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	syntax: Array []
-	loc: SourceLocation experimental/module-attributes/import-with-statement/input.js 1:0-3:0
-	path: UIDPath<experimental/module-attributes/import-with-statement/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "'with' in strict mode"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 2:10
-				path: UIDPath<experimental/module-attributes/import-with-statement/input.js>
-				start: Position 2:0
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSImportDeclaration {
-			defaultSpecifier: undefined
-			importKind: undefined
-			namedSpecifiers: Array []
-			namespaceSpecifier: undefined
-			loc: SourceLocation experimental/module-attributes/import-with-statement/input.js 1:0-1:10
+			namedSpecifiers: []
 			source: JSStringLiteral {
 				value: "x"
 				loc: SourceLocation experimental/module-attributes/import-with-statement/input.js 1:7-1:10
 			}
+			loc: SourceLocation experimental/module-attributes/import-with-statement/input.js 1:0-1:10
 		}
 		JSWithStatement {
-			body: JSEmptyStatement {loc: SourceLocation experimental/module-attributes/import-with-statement/input.js 2:9-2:10}
-			loc: SourceLocation experimental/module-attributes/import-with-statement/input.js 2:0-2:10
+			body: JSEmptyStatement {
+				loc: SourceLocation experimental/module-attributes/import-with-statement/input.js 2:9-2:10
+			}
 			object: JSObjectExpression {
-				properties: Array []
+				properties: []
 				loc: SourceLocation experimental/module-attributes/import-with-statement/input.js 2:6-2:8
+			}
+			loc: SourceLocation experimental/module-attributes/import-with-statement/input.js 2:0-2:10
+		}
+	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "'with' in strict mode"}
+			}
+			location: {
+				language: "js"
+				path: UIDPath<experimental/module-attributes/import-with-statement/input.js>
+				end: Position 2:10
+				start: Position 2:0
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: []
+	path: UIDPath<experimental/module-attributes/import-with-statement/input.js>
+	loc: SourceLocation experimental/module-attributes/import-with-statement/input.js 1:0-3:0
 }
 ```
 
@@ -71,7 +66,11 @@ JSRoot {
 
     1 │ import "x"
   > 2 │ with ({});
-      │ ^^^^^^^^^^
+    → │ <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
+    → │ <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
+    → │ <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
+    → │ <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
+      │ <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
 
 
 ```

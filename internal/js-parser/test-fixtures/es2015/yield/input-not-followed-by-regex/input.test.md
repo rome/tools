@@ -8,71 +8,61 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2015/yield/input-not-followed-by-regex/input.js 1:0-2:0
-	path: UIDPath<es2015/yield/input-not-followed-by-regex/input.js>
-	body: Array [
+	body: [
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "f2"
 				loc: SourceLocation es2015/yield/input-not-followed-by-regex/input.js 1:10-1:12 (f2)
 			}
-			loc: SourceLocation es2015/yield/input-not-followed-by-regex/input.js 1:0-1:34
-			head: JSFunctionHead {
-				async: false
-				generator: true
-				hasHoistedVars: false
-				params: Array []
-				rest: undefined
-				returnType: undefined
-				thisType: undefined
-				typeParameters: undefined
-				loc: SourceLocation es2015/yield/input-not-followed-by-regex/input.js 1:12-1:14
-			}
 			body: JSBlockStatement {
-				directives: Array []
-				loc: SourceLocation es2015/yield/input-not-followed-by-regex/input.js 1:15-1:34
-				body: Array [
+				body: [
 					JSExpressionStatement {
-						loc: SourceLocation es2015/yield/input-not-followed-by-regex/input.js 1:17-1:32
 						expression: JSArrowFunctionExpression {
-							loc: SourceLocation es2015/yield/input-not-followed-by-regex/input.js 1:17-1:32
-							head: JSFunctionHead {
-								async: false
-								hasHoistedVars: false
-								params: Array []
-								rest: undefined
-								returnType: undefined
-								thisType: undefined
-								loc: SourceLocation es2015/yield/input-not-followed-by-regex/input.js 1:17-1:22
-							}
 							body: JSBinaryExpression {
 								operator: "/"
-								loc: SourceLocation es2015/yield/input-not-followed-by-regex/input.js 1:23-1:32
 								left: JSReferenceIdentifier {
 									name: "yield"
 									loc: SourceLocation es2015/yield/input-not-followed-by-regex/input.js 1:23-1:28 (yield)
 								}
 								right: JSNumericLiteral {
 									value: 1
-									format: undefined
 									loc: SourceLocation es2015/yield/input-not-followed-by-regex/input.js 1:31-1:32
 								}
+								loc: SourceLocation es2015/yield/input-not-followed-by-regex/input.js 1:23-1:32
 							}
+							head: JSFunctionHead {
+								async: false
+								hasHoistedVars: false
+								params: []
+								loc: SourceLocation es2015/yield/input-not-followed-by-regex/input.js 1:17-1:22
+							}
+							loc: SourceLocation es2015/yield/input-not-followed-by-regex/input.js 1:17-1:32
 						}
+						loc: SourceLocation es2015/yield/input-not-followed-by-regex/input.js 1:17-1:32
 					}
 				]
+				directives: []
+				loc: SourceLocation es2015/yield/input-not-followed-by-regex/input.js 1:15-1:34
 			}
+			head: JSFunctionHead {
+				async: false
+				generator: true
+				hasHoistedVars: false
+				params: []
+				loc: SourceLocation es2015/yield/input-not-followed-by-regex/input.js 1:12-1:14
+			}
+			loc: SourceLocation es2015/yield/input-not-followed-by-regex/input.js 1:0-1:34
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2015/yield/input-not-followed-by-regex/input.js>
+	loc: SourceLocation es2015/yield/input-not-followed-by-regex/input.js 1:0-2:0
 }
 ```
 

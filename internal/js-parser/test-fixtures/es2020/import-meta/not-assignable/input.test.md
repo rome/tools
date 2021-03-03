@@ -8,22 +8,10 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: true
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	syntax: Array []
-	loc: SourceLocation es2020/import-meta/not-assignable/input.js 1:0-2:0
-	path: UIDPath<es2020/import-meta/not-assignable/input.js>
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation es2020/import-meta/not-assignable/input.js 1:0-1:19
 			expression: JSAssignmentExpression {
 				operator: "="
-				loc: SourceLocation es2020/import-meta/not-assignable/input.js 1:0-1:18
 				left: JSAssignmentIdentifier {
 					name: "INVALID_PLACEHOLDER"
 					loc: SourceLocation es2020/import-meta/not-assignable/input.js 1:12-1:11
@@ -32,28 +20,36 @@ JSRoot {
 					value: true
 					loc: SourceLocation es2020/import-meta/not-assignable/input.js 1:14-1:18
 				}
+				loc: SourceLocation es2020/import-meta/not-assignable/input.js 1:0-1:18
 			}
+			loc: SourceLocation es2020/import-meta/not-assignable/input.js 1:0-1:19
 		}
 	]
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
+	comments: []
+	corrupt: true
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {
+				advice: []
+				category: ["parse"]
 				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Invalid left-hand side in assignment expression"}
+				message: [RAW_MARKUP {value: "Invalid left-hand side in "}, "assignment expression"]
 			}
-			location: Object {
-				integrity: undefined
+			location: {
 				language: "js"
-				sourceText: undefined
-				end: Position 1:11
 				path: UIDPath<es2020/import-meta/not-assignable/input.js>
+				end: Position 1:11
 				start: Position 1:0
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: []
+	path: UIDPath<es2020/import-meta/not-assignable/input.js>
+	loc: SourceLocation es2020/import-meta/not-assignable/input.js 1:0-2:0
 }
 ```
 
@@ -66,7 +62,12 @@ JSRoot {
   ✖ Invalid left-hand side in assignment expression
 
     import.meta = true;
-    ^^^^^^^^^^^
+    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
+    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
+    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
+    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
+    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
+    <error><emphasis>^</emphasis></error>
 
 
 ```

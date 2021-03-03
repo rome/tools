@@ -8,65 +8,58 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: true
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation esprima/es2015-arrow-function/arrow-with-multiple-rest/input.js 1:0-2:0
-	path: UIDPath<esprima/es2015-arrow-function/arrow-with-multiple-rest/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "The rest element has to be the last element when destructuring"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:5
-				path: UIDPath<esprima/es2015-arrow-function/arrow-with-multiple-rest/input.js>
-				start: Position 1:1
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation esprima/es2015-arrow-function/arrow-with-multiple-rest/input.js 1:0-1:17
 			expression: JSArrowFunctionExpression {
-				loc: SourceLocation esprima/es2015-arrow-function/arrow-with-multiple-rest/input.js 1:0-1:17
 				body: JSNumericLiteral {
 					value: 0
-					format: undefined
 					loc: SourceLocation esprima/es2015-arrow-function/arrow-with-multiple-rest/input.js 1:16-1:17
 				}
 				head: JSFunctionHead {
 					async: false
 					hasHoistedVars: false
-					returnType: undefined
-					thisType: undefined
-					loc: SourceLocation esprima/es2015-arrow-function/arrow-with-multiple-rest/input.js 1:0-1:15
-					rest: JSBindingIdentifier {
-						name: "b"
-						loc: SourceLocation esprima/es2015-arrow-function/arrow-with-multiple-rest/input.js 1:10-1:11 (b)
-					}
-					params: Array [
+					params: [
 						JSBindingIdentifier {
 							name: "INVALID_PLACEHOLDER"
 							loc: SourceLocation esprima/es2015-arrow-function/arrow-with-multiple-rest/input.js 1:16-1:15
 						}
 					]
+					rest: JSBindingIdentifier {
+						name: "b"
+						loc: SourceLocation esprima/es2015-arrow-function/arrow-with-multiple-rest/input.js 1:10-1:11 (b)
+					}
+					loc: SourceLocation esprima/es2015-arrow-function/arrow-with-multiple-rest/input.js 1:0-1:15
 				}
+				loc: SourceLocation esprima/es2015-arrow-function/arrow-with-multiple-rest/input.js 1:0-1:17
+			}
+			loc: SourceLocation esprima/es2015-arrow-function/arrow-with-multiple-rest/input.js 1:0-1:17
+		}
+	]
+	comments: []
+	corrupt: true
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "The rest element has to be the last element when destructuring"}
+			}
+			location: {
+				language: "js"
+				path: UIDPath<esprima/es2015-arrow-function/arrow-with-multiple-rest/input.js>
+				end: Position 1:5
+				start: Position 1:1
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<esprima/es2015-arrow-function/arrow-with-multiple-rest/input.js>
+	loc: SourceLocation esprima/es2015-arrow-function/arrow-with-multiple-rest/input.js 1:0-2:0
 }
 ```
 
@@ -79,7 +72,8 @@ JSRoot {
   ✖ The rest element has to be the last element when destructuring
 
     (...a, ...b) => 0
-     ^^^^
+     <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
+    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
 
 
 ```

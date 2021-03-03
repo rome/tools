@@ -8,58 +8,54 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2017/async-functions/19/input.js 1:0-1:20
-	path: UIDPath<es2017/async-functions/19/input.js>
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation es2017/async-functions/19/input.js 1:0-1:20
 			expression: JSCallExpression {
-				loc: SourceLocation es2017/async-functions/19/input.js 1:0-1:20
-				callee: JSReferenceIdentifier {
-					name: "f"
-					loc: SourceLocation es2017/async-functions/19/input.js 1:0-1:1 (f)
-				}
-				arguments: Array [
+				arguments: [
 					JSReferenceIdentifier {
 						name: "a"
 						loc: SourceLocation es2017/async-functions/19/input.js 1:2-1:3 (a)
 					}
 					JSCallExpression {
-						loc: SourceLocation es2017/async-functions/19/input.js 1:5-1:16
-						callee: JSReferenceIdentifier {
-							name: "async"
-							loc: SourceLocation es2017/async-functions/19/input.js 1:5-1:10 (async)
-						}
-						arguments: Array [
+						arguments: [
 							JSNumericLiteral {
 								value: 1
-								format: undefined
 								loc: SourceLocation es2017/async-functions/19/input.js 1:11-1:12
 							}
 							JSNumericLiteral {
 								value: 2
-								format: undefined
 								loc: SourceLocation es2017/async-functions/19/input.js 1:14-1:15
 							}
 						]
+						callee: JSReferenceIdentifier {
+							name: "async"
+							loc: SourceLocation es2017/async-functions/19/input.js 1:5-1:10 (async)
+						}
+						loc: SourceLocation es2017/async-functions/19/input.js 1:5-1:16
 					}
 					JSReferenceIdentifier {
 						name: "b"
 						loc: SourceLocation es2017/async-functions/19/input.js 1:18-1:19 (b)
 					}
 				]
+				callee: JSReferenceIdentifier {
+					name: "f"
+					loc: SourceLocation es2017/async-functions/19/input.js 1:0-1:1 (f)
+				}
+				loc: SourceLocation es2017/async-functions/19/input.js 1:0-1:20
 			}
+			loc: SourceLocation es2017/async-functions/19/input.js 1:0-1:20
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2017/async-functions/19/input.js>
+	loc: SourceLocation es2017/async-functions/19/input.js 1:0-1:20
 }
 ```
 

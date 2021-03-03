@@ -8,30 +8,16 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: true
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation esprima/expression-primary-literal-regular-expression/migrated_0010/input.js 1:0-1:15
-	path: UIDPath<esprima/expression-primary-literal-regular-expression/migrated_0010/input.js>
-	body: Array [
+	body: [
 		JSVariableDeclarationStatement {
-			loc: SourceLocation esprima/expression-primary-literal-regular-expression/migrated_0010/input.js 1:0-1:15
 			declaration: JSVariableDeclaration {
 				kind: "var"
-				loc: SourceLocation esprima/expression-primary-literal-regular-expression/migrated_0010/input.js 1:0-1:15
-				declarations: Array [
+				declarations: [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "x"
 							loc: SourceLocation esprima/expression-primary-literal-regular-expression/migrated_0010/input.js 1:4-1:5 (x)
 						}
-						loc: SourceLocation esprima/expression-primary-literal-regular-expression/migrated_0010/input.js 1:4-1:15
 						init: JSRegExpLiteral {
 							global: false
 							insensitive: false
@@ -39,14 +25,10 @@ JSRoot {
 							noDotNewline: false
 							sticky: false
 							unicode: false
-							loc: SourceLocation esprima/expression-primary-literal-regular-expression/migrated_0010/input.js 1:8-1:15
 							expression: JSRegExpSubExpression {
-								loc: SourceLocation esprima/expression-primary-literal-regular-expression/migrated_0010/input.js 1:9-1:13
-								body: Array [
+								body: [
 									JSRegExpCharSet {
-										invert: false
-										loc: SourceLocation esprima/expression-primary-literal-regular-expression/migrated_0010/input.js 1:9-1:13
-										body: Array [
+										body: [
 											JSRegExpCharacter {
 												value: "]"
 												loc: SourceLocation esprima/expression-primary-literal-regular-expression/migrated_0010/input.js 1:10-1:12
@@ -56,15 +38,31 @@ JSRoot {
 												loc: SourceLocation esprima/expression-primary-literal-regular-expression/migrated_0010/input.js 1:12-1:13
 											}
 										]
+										invert: false
+										loc: SourceLocation esprima/expression-primary-literal-regular-expression/migrated_0010/input.js 1:9-1:13
 									}
 								]
+								loc: SourceLocation esprima/expression-primary-literal-regular-expression/migrated_0010/input.js 1:9-1:13
 							}
+							loc: SourceLocation esprima/expression-primary-literal-regular-expression/migrated_0010/input.js 1:8-1:15
 						}
+						loc: SourceLocation esprima/expression-primary-literal-regular-expression/migrated_0010/input.js 1:4-1:15
 					}
 				]
+				loc: SourceLocation esprima/expression-primary-literal-regular-expression/migrated_0010/input.js 1:0-1:15
 			}
+			loc: SourceLocation esprima/expression-primary-literal-regular-expression/migrated_0010/input.js 1:0-1:15
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: true
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<esprima/expression-primary-literal-regular-expression/migrated_0010/input.js>
+	loc: SourceLocation esprima/expression-primary-literal-regular-expression/migrated_0010/input.js 1:0-1:15
 }
 ```
 

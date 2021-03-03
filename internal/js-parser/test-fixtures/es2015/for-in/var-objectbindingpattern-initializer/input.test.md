@@ -8,52 +8,17 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: true
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2015/for-in/var-objectbindingpattern-initializer/input.js 1:0-1:24
-	path: UIDPath<es2015/for-in/var-objectbindingpattern-initializer/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Loop variable declaration may not have an initializer"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:16
-				path: UIDPath<es2015/for-in/var-objectbindingpattern-initializer/input.js>
-				start: Position 1:5
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSForInStatement {
-			body: JSEmptyStatement {loc: SourceLocation es2015/for-in/var-objectbindingpattern-initializer/input.js 1:23-1:24}
-			loc: SourceLocation es2015/for-in/var-objectbindingpattern-initializer/input.js 1:0-1:24
-			right: JSObjectExpression {
-				properties: Array []
-				loc: SourceLocation es2015/for-in/var-objectbindingpattern-initializer/input.js 1:20-1:22
+			body: JSEmptyStatement {
+				loc: SourceLocation es2015/for-in/var-objectbindingpattern-initializer/input.js 1:23-1:24
 			}
 			left: JSVariableDeclaration {
 				kind: "var"
-				loc: SourceLocation es2015/for-in/var-objectbindingpattern-initializer/input.js 1:5-1:16
-				declarations: Array [
+				declarations: [
 					JSVariableDeclarator {
 						id: JSBindingObjectPattern {
-							rest: undefined
-							loc: SourceLocation es2015/for-in/var-objectbindingpattern-initializer/input.js 1:9-1:12
-							properties: Array [
+							properties: [
 								JSBindingObjectPatternProperty {
 									key: JSStaticPropertyKey {
 										value: JSIdentifier {
@@ -69,18 +34,49 @@ JSRoot {
 									loc: SourceLocation es2015/for-in/var-objectbindingpattern-initializer/input.js 1:10-1:11
 								}
 							]
+							loc: SourceLocation es2015/for-in/var-objectbindingpattern-initializer/input.js 1:9-1:12
 						}
-						loc: SourceLocation es2015/for-in/var-objectbindingpattern-initializer/input.js 1:9-1:16
 						init: JSNumericLiteral {
 							value: 0
-							format: undefined
 							loc: SourceLocation es2015/for-in/var-objectbindingpattern-initializer/input.js 1:15-1:16
 						}
+						loc: SourceLocation es2015/for-in/var-objectbindingpattern-initializer/input.js 1:9-1:16
 					}
 				]
+				loc: SourceLocation es2015/for-in/var-objectbindingpattern-initializer/input.js 1:5-1:16
+			}
+			right: JSObjectExpression {
+				properties: []
+				loc: SourceLocation es2015/for-in/var-objectbindingpattern-initializer/input.js 1:20-1:22
+			}
+			loc: SourceLocation es2015/for-in/var-objectbindingpattern-initializer/input.js 1:0-1:24
+		}
+	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "Loop variable declaration may not have an initializer"}
+			}
+			location: {
+				language: "js"
+				path: UIDPath<es2015/for-in/var-objectbindingpattern-initializer/input.js>
+				end: Position 1:16
+				start: Position 1:5
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: true
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2015/for-in/var-objectbindingpattern-initializer/input.js>
+	loc: SourceLocation es2015/for-in/var-objectbindingpattern-initializer/input.js 1:0-1:24
 }
 ```
 
@@ -93,7 +89,12 @@ JSRoot {
   ✖ Loop variable declaration may not have an initializer
 
     for (var {a} = 0 in {});
-         ^^^^^^^^^^^
+         <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
+    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
+    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
+    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
+    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
+    <error><emphasis>^</emphasis></error>
 
 
 ```

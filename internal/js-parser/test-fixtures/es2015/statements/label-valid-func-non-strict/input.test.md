@@ -8,49 +8,43 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2015/statements/label-valid-func-non-strict/input.js 1:0-2:0
-	path: UIDPath<es2015/statements/label-valid-func-non-strict/input.js>
-	body: Array [
+	body: [
 		JSLabeledStatement {
-			loc: SourceLocation es2015/statements/label-valid-func-non-strict/input.js 1:0-1:22
-			label: JSIdentifier {
-				name: "foo"
-				loc: SourceLocation es2015/statements/label-valid-func-non-strict/input.js 1:0-1:3 (foo)
-			}
 			body: JSFunctionDeclaration {
 				id: JSBindingIdentifier {
 					name: "bar"
 					loc: SourceLocation es2015/statements/label-valid-func-non-strict/input.js 1:14-1:17 (bar)
 				}
-				loc: SourceLocation es2015/statements/label-valid-func-non-strict/input.js 1:5-1:22
 				body: JSBlockStatement {
-					body: Array []
-					directives: Array []
+					body: []
+					directives: []
 					loc: SourceLocation es2015/statements/label-valid-func-non-strict/input.js 1:20-1:22
 				}
 				head: JSFunctionHead {
 					async: false
 					generator: false
 					hasHoistedVars: false
-					params: Array []
-					rest: undefined
-					returnType: undefined
-					thisType: undefined
-					typeParameters: undefined
+					params: []
 					loc: SourceLocation es2015/statements/label-valid-func-non-strict/input.js 1:17-1:19
 				}
+				loc: SourceLocation es2015/statements/label-valid-func-non-strict/input.js 1:5-1:22
 			}
+			label: JSIdentifier {
+				name: "foo"
+				loc: SourceLocation es2015/statements/label-valid-func-non-strict/input.js 1:0-1:3 (foo)
+			}
+			loc: SourceLocation es2015/statements/label-valid-func-non-strict/input.js 1:0-1:22
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2015/statements/label-valid-func-non-strict/input.js>
+	loc: SourceLocation es2015/statements/label-valid-func-non-strict/input.js 1:0-2:0
 }
 ```
 

@@ -10,18 +10,24 @@
 JSRoot {
 	body: [
 		JSVariableDeclarationStatement {
+			leadingComments: ["0"]
 			declaration: JSVariableDeclaration {
 				kind: "var"
 				declarations: [
 					JSVariableDeclarator {
-						id: JSBindingIdentifier {name: "node", loc: SourceLocation core/categorized/filename-specified/input.js 2:4-2:8 (node)}
-						init: JSStringLiteral {value: "shouldHaveFilenameLocProp", loc: SourceLocation core/categorized/filename-specified/input.js 2:11-2:38}
+						id: JSBindingIdentifier {
+							name: "node"
+							loc: SourceLocation core/categorized/filename-specified/input.js 2:4-2:8 (node)
+						}
+						init: JSStringLiteral {
+							value: "shouldHaveFilenameLocProp"
+							loc: SourceLocation core/categorized/filename-specified/input.js 2:11-2:38
+						}
 						loc: SourceLocation core/categorized/filename-specified/input.js 2:4-2:38
 					}
 				]
 				loc: SourceLocation core/categorized/filename-specified/input.js 2:0-2:39
 			}
-			leadingComments: ["0"]
 			loc: SourceLocation core/categorized/filename-specified/input.js 2:0-2:39
 		}
 	]
@@ -36,9 +42,9 @@ JSRoot {
 	diagnostics: []
 	directives: []
 	hasHoistedVars: true
-	path: UIDPath<core/categorized/filename-specified/input.js>
 	sourceType: "script"
 	syntax: []
+	path: UIDPath<core/categorized/filename-specified/input.js>
 	loc: SourceLocation core/categorized/filename-specified/input.js 1:0-3:0
 }
 ```

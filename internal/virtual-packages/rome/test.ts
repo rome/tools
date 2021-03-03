@@ -40,7 +40,7 @@ export type TestDiagnosticAdviceLog = {
 	text: string;
 };
 
-export type TestDiagnosticAdviceItem =
+export type TestDiagnosticAdvice =
 	| TestDiagnosticAdviceInspect
 	| TestDiagnosticAdviceCode
 	| TestDiagnosticAdviceLog
@@ -48,7 +48,7 @@ export type TestDiagnosticAdviceItem =
 
 export interface TestHelper {
 	addToAdvice(
-		item: TestDiagnosticAdviceItem | (() => TestDiagnosticAdviceItem),
+		item: TestDiagnosticAdvice | (() => TestDiagnosticAdvice),
 	): void;
 	clearAdvice(): void;
 	onTeardown(callback: AsyncVoidCallback): void;

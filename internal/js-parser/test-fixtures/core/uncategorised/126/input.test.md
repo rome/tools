@@ -13,18 +13,38 @@ JSRoot {
 			expression: JSMemberExpression {
 				object: JSCallExpression {
 					arguments: [
-						JSNumericLiteral {value: 14, loc: SourceLocation core/uncategorised/126/input.js 1:22-1:24}
-						JSNumericLiteral {value: 3, loc: SourceLocation core/uncategorised/126/input.js 1:26-1:27}
-						JSNumericLiteral {value: 77, loc: SourceLocation core/uncategorised/126/input.js 1:29-1:31}
+						JSNumericLiteral {
+							value: 14
+							loc: SourceLocation core/uncategorised/126/input.js 1:22-1:24
+						}
+						JSNumericLiteral {
+							value: 3
+							loc: SourceLocation core/uncategorised/126/input.js 1:26-1:27
+						}
+						JSNumericLiteral {
+							value: 77
+							loc: SourceLocation core/uncategorised/126/input.js 1:29-1:31
+						}
 					]
 					callee: JSMemberExpression {
 						object: JSCallExpression {
-							arguments: [JSNumericLiteral {value: 42, loc: SourceLocation core/uncategorised/126/input.js 1:9-1:11}]
-							callee: JSReferenceIdentifier {name: "universe", loc: SourceLocation core/uncategorised/126/input.js 1:0-1:8 (universe)}
+							arguments: [
+								JSNumericLiteral {
+									value: 42
+									loc: SourceLocation core/uncategorised/126/input.js 1:9-1:11
+								}
+							]
+							callee: JSReferenceIdentifier {
+								name: "universe"
+								loc: SourceLocation core/uncategorised/126/input.js 1:0-1:8 (universe)
+							}
 							loc: SourceLocation core/uncategorised/126/input.js 1:0-1:12
 						}
 						property: JSStaticMemberProperty {
-							value: JSIdentifier {name: "galaxies", loc: SourceLocation core/uncategorised/126/input.js 1:13-1:21 (galaxies)}
+							value: JSIdentifier {
+								name: "galaxies"
+								loc: SourceLocation core/uncategorised/126/input.js 1:13-1:21 (galaxies)
+							}
 							loc: SourceLocation core/uncategorised/126/input.js 1:13-1:21 (galaxies)
 						}
 						loc: SourceLocation core/uncategorised/126/input.js 1:0-1:21
@@ -32,7 +52,10 @@ JSRoot {
 					loc: SourceLocation core/uncategorised/126/input.js 1:0-1:32
 				}
 				property: JSStaticMemberProperty {
-					value: JSIdentifier {name: "milkyway", loc: SourceLocation core/uncategorised/126/input.js 1:33-1:41 (milkyway)}
+					value: JSIdentifier {
+						name: "milkyway"
+						loc: SourceLocation core/uncategorised/126/input.js 1:33-1:41 (milkyway)
+					}
 					loc: SourceLocation core/uncategorised/126/input.js 1:33-1:41 (milkyway)
 				}
 				loc: SourceLocation core/uncategorised/126/input.js 1:0-1:41
@@ -45,9 +68,9 @@ JSRoot {
 	diagnostics: []
 	directives: []
 	hasHoistedVars: false
-	path: UIDPath<core/uncategorised/126/input.js>
 	sourceType: "script"
 	syntax: []
+	path: UIDPath<core/uncategorised/126/input.js>
 	loc: SourceLocation core/uncategorised/126/input.js 1:0-1:41
 }
 ```

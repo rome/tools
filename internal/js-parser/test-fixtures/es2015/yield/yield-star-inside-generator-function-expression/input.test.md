@@ -8,54 +8,47 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2015/yield/yield-star-inside-generator-function-expression/input.js 1:0-1:27
-	path: UIDPath<es2015/yield/yield-star-inside-generator-function-expression/input.js>
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation es2015/yield/yield-star-inside-generator-function-expression/input.js 1:0-1:27
 			expression: JSFunctionExpression {
-				id: undefined
-				loc: SourceLocation es2015/yield/yield-star-inside-generator-function-expression/input.js 1:1-1:26
-				head: JSFunctionHead {
-					async: false
-					generator: true
-					hasHoistedVars: false
-					params: Array []
-					rest: undefined
-					returnType: undefined
-					thisType: undefined
-					typeParameters: undefined
-					loc: SourceLocation es2015/yield/yield-star-inside-generator-function-expression/input.js 1:11-1:13
-				}
 				body: JSBlockStatement {
-					directives: Array []
-					loc: SourceLocation es2015/yield/yield-star-inside-generator-function-expression/input.js 1:14-1:26
-					body: Array [
+					body: [
 						JSExpressionStatement {
-							loc: SourceLocation es2015/yield/yield-star-inside-generator-function-expression/input.js 1:16-1:24
 							expression: JSYieldExpression {
 								delegate: true
-								loc: SourceLocation es2015/yield/yield-star-inside-generator-function-expression/input.js 1:16-1:24
 								argument: JSReferenceIdentifier {
 									name: "v"
 									loc: SourceLocation es2015/yield/yield-star-inside-generator-function-expression/input.js 1:23-1:24 (v)
 								}
+								loc: SourceLocation es2015/yield/yield-star-inside-generator-function-expression/input.js 1:16-1:24
 							}
+							loc: SourceLocation es2015/yield/yield-star-inside-generator-function-expression/input.js 1:16-1:24
 						}
 					]
+					directives: []
+					loc: SourceLocation es2015/yield/yield-star-inside-generator-function-expression/input.js 1:14-1:26
 				}
+				head: JSFunctionHead {
+					async: false
+					generator: true
+					hasHoistedVars: false
+					params: []
+					loc: SourceLocation es2015/yield/yield-star-inside-generator-function-expression/input.js 1:11-1:13
+				}
+				loc: SourceLocation es2015/yield/yield-star-inside-generator-function-expression/input.js 1:1-1:26
 			}
+			loc: SourceLocation es2015/yield/yield-star-inside-generator-function-expression/input.js 1:0-1:27
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2015/yield/yield-star-inside-generator-function-expression/input.js>
+	loc: SourceLocation es2015/yield/yield-star-inside-generator-function-expression/input.js 1:0-1:27
 }
 ```
 

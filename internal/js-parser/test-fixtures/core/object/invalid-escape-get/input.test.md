@@ -13,12 +13,19 @@ JSRoot {
 			expression: JSObjectExpression {
 				properties: [
 					JSObjectMethod {
+						kind: "get"
 						key: JSStaticPropertyKey {
-							value: JSIdentifier {name: "x", loc: SourceLocation core/object/invalid-escape-get/input.js 1:12-1:13 (x)}
+							value: JSIdentifier {
+								name: "x"
+								loc: SourceLocation core/object/invalid-escape-get/input.js 1:12-1:13 (x)
+							}
 							loc: SourceLocation core/object/invalid-escape-get/input.js 1:12-1:13
 						}
-						kind: "get"
-						body: JSBlockStatement {body: [], directives: [], loc: SourceLocation core/object/invalid-escape-get/input.js 1:16-1:18}
+						body: JSBlockStatement {
+							body: []
+							directives: []
+							loc: SourceLocation core/object/invalid-escape-get/input.js 1:16-1:18
+						}
 						head: JSFunctionHead {
 							async: false
 							generator: false
@@ -38,21 +45,26 @@ JSRoot {
 	corrupt: false
 	diagnostics: [
 		{
+			origins: [{category: "parse"}]
 			description: {
 				advice: []
 				category: ["parse"]
 				categoryValue: "js"
-				message: RAW_MARKUP {value: "<emphasis>get</emphasis> can't contain a unicode escape"}
+				message: [RAW_MARKUP {value: "<emphasis>"}, "get", RAW_MARKUP {value: "</emphasis> can't contain a unicode escape"}]
 			}
-			location: {language: "js", path: UIDPath<core/object/invalid-escape-get/input.js>, end: Position 1:5, start: Position 1:5}
-			origins: [{category: "parse"}]
+			location: {
+				language: "js"
+				path: UIDPath<core/object/invalid-escape-get/input.js>
+				end: Position 1:5
+				start: Position 1:5
+			}
 		}
 	]
 	directives: []
 	hasHoistedVars: false
-	path: UIDPath<core/object/invalid-escape-get/input.js>
 	sourceType: "script"
 	syntax: []
+	path: UIDPath<core/object/invalid-escape-get/input.js>
 	loc: SourceLocation core/object/invalid-escape-get/input.js 1:0-2:0
 }
 ```
@@ -66,7 +78,7 @@ JSRoot {
   ✖ get can't contain a unicode escape
 
     ({ ge\u0074 x() {} })
-         ^
+         <error><emphasis>^</emphasis></error>
 
 
 ```

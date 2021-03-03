@@ -8,70 +8,28 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2015/yield/parameter-default-inside-arrow-inside-arrow-inside-generator/input.js 1:0-3:1
-	path: UIDPath<es2015/yield/parameter-default-inside-arrow-inside-arrow-inside-generator/input.js>
-	body: Array [
+	body: [
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "fn"
 				loc: SourceLocation es2015/yield/parameter-default-inside-arrow-inside-arrow-inside-generator/input.js 1:10-1:12 (fn)
 			}
-			loc: SourceLocation es2015/yield/parameter-default-inside-arrow-inside-arrow-inside-generator/input.js 1:0-3:1
-			head: JSFunctionHead {
-				async: false
-				generator: true
-				hasHoistedVars: false
-				params: Array []
-				rest: undefined
-				returnType: undefined
-				thisType: undefined
-				typeParameters: undefined
-				loc: SourceLocation es2015/yield/parameter-default-inside-arrow-inside-arrow-inside-generator/input.js 1:12-1:14
-			}
 			body: JSBlockStatement {
-				directives: Array []
-				loc: SourceLocation es2015/yield/parameter-default-inside-arrow-inside-arrow-inside-generator/input.js 1:15-3:1
-				body: Array [
+				body: [
 					JSExpressionStatement {
-						loc: SourceLocation es2015/yield/parameter-default-inside-arrow-inside-arrow-inside-generator/input.js 2:2-2:26
 						expression: JSArrowFunctionExpression {
-							loc: SourceLocation es2015/yield/parameter-default-inside-arrow-inside-arrow-inside-generator/input.js 2:2-2:25
-							head: JSFunctionHead {
-								async: false
-								hasHoistedVars: false
-								params: Array []
-								rest: undefined
-								returnType: undefined
-								thisType: undefined
-								loc: SourceLocation es2015/yield/parameter-default-inside-arrow-inside-arrow-inside-generator/input.js 2:2-2:7
-							}
 							body: JSArrowFunctionExpression {
-								loc: SourceLocation es2015/yield/parameter-default-inside-arrow-inside-arrow-inside-generator/input.js 2:8-2:25
 								body: JSBlockStatement {
-									body: Array []
-									directives: Array []
+									body: []
+									directives: []
 									loc: SourceLocation es2015/yield/parameter-default-inside-arrow-inside-arrow-inside-generator/input.js 2:23-2:25
 								}
 								head: JSFunctionHead {
 									async: false
 									hasHoistedVars: false
-									rest: undefined
-									returnType: undefined
-									thisType: undefined
-									loc: SourceLocation es2015/yield/parameter-default-inside-arrow-inside-arrow-inside-generator/input.js 2:8-2:22
-									params: Array [
+									params: [
 										JSBindingAssignmentPattern {
 											operator: "="
-											loc: SourceLocation es2015/yield/parameter-default-inside-arrow-inside-arrow-inside-generator/input.js 2:9-2:18
 											left: JSBindingIdentifier {
 												name: "x"
 												loc: SourceLocation es2015/yield/parameter-default-inside-arrow-inside-arrow-inside-generator/input.js 2:9-2:10 (x)
@@ -80,16 +38,46 @@ JSRoot {
 												name: "yield"
 												loc: SourceLocation es2015/yield/parameter-default-inside-arrow-inside-arrow-inside-generator/input.js 2:13-2:18 (yield)
 											}
+											loc: SourceLocation es2015/yield/parameter-default-inside-arrow-inside-arrow-inside-generator/input.js 2:9-2:18
 										}
 									]
+									loc: SourceLocation es2015/yield/parameter-default-inside-arrow-inside-arrow-inside-generator/input.js 2:8-2:22
 								}
+								loc: SourceLocation es2015/yield/parameter-default-inside-arrow-inside-arrow-inside-generator/input.js 2:8-2:25
 							}
+							head: JSFunctionHead {
+								async: false
+								hasHoistedVars: false
+								params: []
+								loc: SourceLocation es2015/yield/parameter-default-inside-arrow-inside-arrow-inside-generator/input.js 2:2-2:7
+							}
+							loc: SourceLocation es2015/yield/parameter-default-inside-arrow-inside-arrow-inside-generator/input.js 2:2-2:25
 						}
+						loc: SourceLocation es2015/yield/parameter-default-inside-arrow-inside-arrow-inside-generator/input.js 2:2-2:26
 					}
 				]
+				directives: []
+				loc: SourceLocation es2015/yield/parameter-default-inside-arrow-inside-arrow-inside-generator/input.js 1:15-3:1
 			}
+			head: JSFunctionHead {
+				async: false
+				generator: true
+				hasHoistedVars: false
+				params: []
+				loc: SourceLocation es2015/yield/parameter-default-inside-arrow-inside-arrow-inside-generator/input.js 1:12-1:14
+			}
+			loc: SourceLocation es2015/yield/parameter-default-inside-arrow-inside-arrow-inside-generator/input.js 1:0-3:1
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2015/yield/parameter-default-inside-arrow-inside-arrow-inside-generator/input.js>
+	loc: SourceLocation es2015/yield/parameter-default-inside-arrow-inside-arrow-inside-generator/input.js 1:0-3:1
 }
 ```
 

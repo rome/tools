@@ -8,42 +8,43 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation esprima/expression-primary-array/migrated_0004/input.js 1:0-1:13
-	path: UIDPath<esprima/expression-primary-array/migrated_0004/input.js>
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation esprima/expression-primary-array/migrated_0004/input.js 1:0-1:13
 			expression: JSAssignmentExpression {
 				operator: "="
-				loc: SourceLocation esprima/expression-primary-array/migrated_0004/input.js 1:0-1:13
 				left: JSAssignmentIdentifier {
 					name: "x"
 					loc: SourceLocation esprima/expression-primary-array/migrated_0004/input.js 1:0-1:1 (x)
 				}
 				right: JSArrayExpression {
-					loc: SourceLocation esprima/expression-primary-array/migrated_0004/input.js 1:4-1:13
-					elements: Array [
-						JSArrayHole {loc: SourceLocation esprima/expression-primary-array/migrated_0004/input.js 1:6-1:5}
-						JSArrayHole {loc: SourceLocation esprima/expression-primary-array/migrated_0004/input.js 1:7-1:7}
+					elements: [
+						JSArrayHole {
+							loc: SourceLocation esprima/expression-primary-array/migrated_0004/input.js 1:6-1:5
+						}
+						JSArrayHole {
+							loc: SourceLocation esprima/expression-primary-array/migrated_0004/input.js 1:7-1:7
+						}
 						JSNumericLiteral {
 							value: 42
-							format: undefined
 							loc: SourceLocation esprima/expression-primary-array/migrated_0004/input.js 1:9-1:11
 						}
 					]
+					loc: SourceLocation esprima/expression-primary-array/migrated_0004/input.js 1:4-1:13
 				}
+				loc: SourceLocation esprima/expression-primary-array/migrated_0004/input.js 1:0-1:13
 			}
+			loc: SourceLocation esprima/expression-primary-array/migrated_0004/input.js 1:0-1:13
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<esprima/expression-primary-array/migrated_0004/input.js>
+	loc: SourceLocation esprima/expression-primary-array/migrated_0004/input.js 1:0-1:13
 }
 ```
 

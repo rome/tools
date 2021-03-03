@@ -64,17 +64,6 @@ const DEFAULT_FILE_HANDLER: Required<DiagnosticsFileHandler> = {
 
 type FooterPrintCallback = (reporter: Reporter, error: boolean) => Promise<void>;
 
-export const DEFAULT_PRINTER_FLAGS: DiagnosticsPrinterFlags = {
-	auxiliaryDiagnosticFormat: undefined,
-	grep: "",
-	inverseGrep: false,
-	showAllDiagnostics: true,
-	fieri: false,
-	truncateDiagnostics: true,
-	verboseDiagnostics: false,
-	maxDiagnostics: 20,
-};
-
 // Dependency that may not be included in the output diagnostic but whose changes may effect the validity of this one
 type ChangeFileDependency = {
 	type: "change";
@@ -105,6 +94,13 @@ export type DiagnosticsPrinterFileSources = MixedPathMap<{
 
 export type DiagnosticsPrinterFileHashes = MixedPathMap<string>;
 
+export const DEFAULT_PRINTER_FLAGS: DiagnosticsPrinterFlags = {
+	auxiliaryDiagnosticFormat: undefined,
+	fieri: false,
+	truncateDiagnostics: true,
+	verboseDiagnostics: false,
+};
+
 export default class DiagnosticsPrinter extends Error {
 	constructor(opts: DiagnosticsPrinterOptions) {
 		super(
@@ -122,11 +118,6 @@ export default class DiagnosticsPrinter extends Error {
 				: concatFileHandlers([...opts.fileHandlers, DEFAULT_FILE_HANDLER]);
 		this.cwd = cwd ?? CWD_PATH;
 		this.processor = opts.processor;
-
-		this.displayedCount = 0;
-		this.problemCount = 0;
-		this.filteredCount = 0;
-		this.truncatedCount = 0;
 
 		// Ensure we print sequentially
 		this.printLock = new GlobalLock();
@@ -173,49 +164,14 @@ export default class DiagnosticsPrinter extends Error {
 	private fileHashes: DiagnosticsPrinterFileHashes;
 	private dependenciesByDiagnostic: Map<Diagnostic, FileDependency[]>;
 
-	private displayedCount: number;
-	private problemCount: number;
-	private filteredCount: number;
-	private truncatedCount: number;
-
 	public normalizePath(path: Path): Path {
-		const {normalizePosition} = this.reporter.markupOptions;
+		const normalizePosition = this.reporter.markupOptions?.normalizePosition;
 
 		if (normalizePosition === undefined) {
 			return path;
 		} else {
 			return normalizePosition(path, undefined, undefined).path;
 		}
-	}
-
-	private getDisplayedProblemsCount() {
-		return this.problemCount - this.filteredCount;
-	}
-
-	private shouldTruncate(): boolean {
-		return (
-			!this.flags.showAllDiagnostics &&
-			this.displayedCount > this.flags.maxDiagnostics
-		);
-	}
-
-	private shouldIgnore(diag: Diagnostic): boolean {
-		const {grep, inverseGrep} = this.flags;
-
-		// An empty grep pattern means show everything
-		if (grep === undefined || grep === "") {
-			return false;
-		}
-
-		// Match against the supplied grep pattern
-		let ignored =
-			markupToJoinedPlainText(diag.description.message).toLowerCase().includes(
-				grep,
-			) === false;
-		if (inverseGrep) {
-			ignored = !ignored;
-		}
-		return ignored;
 	}
 
 	// Only highlight if we have a reporter stream enabled that isn't format: "none"
@@ -489,7 +445,7 @@ export default class DiagnosticsPrinter extends Error {
 
 	public async fetchFileSources(diagnostics: Diagnostic[]) {
 		for (const dep of this.getDependenciesFromDiagnostics(diagnostics)) {
-			await this.wrapError(
+			await this.wrapErrorAsync(
 				`addFileSource(${dep.path.join()})`,
 				() => this.addFileSource(dep),
 			);
@@ -497,7 +453,7 @@ export default class DiagnosticsPrinter extends Error {
 	}
 
 	public async printBody(diagnostics: Diagnostic[]) {
-		await this.wrapError(
+		await this.wrapErrorAsync(
 			"root",
 			async () => {
 				await this.printLock.series(async () => {
@@ -509,43 +465,54 @@ export default class DiagnosticsPrinter extends Error {
 		);
 	}
 
-	private async wrapError(reason: string, callback: () => Promise<void>) {
-		const {reporter} = this;
+	private async wrapErrorAsync(reason: string, callback: () => Promise<void>) {
 		try {
 			await callback();
 		} catch (err) {
-			if (!this.options.wrapErrors) {
-				throw err;
-			}
-
-			// Sometimes we'll run into issues displaying diagnostics
-			// We can safely catch them here since the presence of diagnostics is considered a critical failure anyway
-			// Display diagnostics is idempotent meaning we can bail at any point
-			// We don't use reporter.error here since the error could have been thrown by cli-layout
-			reporter.logRaw(
-				`Encountered an error during diagnostics printing in ${reason}`,
-			);
-			reporter.logRaw(err.stack);
+			this.handleErrorInWrap(reason, err);
 		}
 	}
 
-	private async printDiagnostics(diagnostics: Diagnostic[]) {
-		const reporter = this.reporter.fork({
-			shouldRedirectOutToErr: true,
-		});
+	private wrapErrorSync(reason: string, callback: () => void) {
+		try {
+			callback();
+		} catch (err) {
+			this.handleErrorInWrap(reason, err);
+		}
+	}
+
+	private handleErrorInWrap(reason: string, err: Error): void {
+		if (!this.options.wrapErrors) {
+			throw err;
+		}
+
+		// Sometimes we'll run into issues displaying diagnostics
+		// We can safely catch them here since the presence of diagnostics is considered a critical failure anyway
+		// Display diagnostics is idempotent meaning we can bail at any point
+		// We don't use reporter.error here since the error could have been thrown by cli-layout
+		const {reporter} = this;
+		reporter.logRaw(
+			`Encountered an error during diagnostics printing in ${reason}`,
+		);
+		reporter.logRaw(err.stack || err.message);
+	}
+
+	private printDiagnostics(diagnostics: Diagnostic[]): void {
+		const reporter = new Reporter("DiagnosticsPrinter");
+		const stream = reporter.attachCaptureStream("markup");
 
 		for (const diag of diagnostics) {
 			this.printAuxiliaryDiagnostic(diag);
 		}
 
 		for (const diag of diagnostics) {
-			await this.wrapError(
+			this.wrapErrorSync(
 				"printDiagnostic",
-				async () => this.printDiagnostic(diag, reporter),
+				() => this.printDiagnostic(diag, reporter),
 			);
 		}
 
-		await reporter.resources.release();
+		this.reporter.log(stream.readAsMarkup(), {stderr: true, noNewline: true});
 	}
 
 	public getDiagnosticDependencyMeta(
@@ -655,16 +622,6 @@ export default class DiagnosticsPrinter extends Error {
 				continue;
 			} else {
 				this.seenDiagnostics.add(diag);
-			}
-
-			this.problemCount++;
-
-			if (this.shouldIgnore(diag)) {
-				this.filteredCount++;
-			} else if (this.shouldTruncate()) {
-				this.truncatedCount++;
-			} else {
-				this.displayedCount++;
 				filteredDiagnostics.push(diag);
 			}
 		}
@@ -709,7 +666,7 @@ export default class DiagnosticsPrinter extends Error {
 	}
 
 	public hasProblems(): boolean {
-		return this.problemCount > 0;
+		return this.seenDiagnostics.size > 0;
 	}
 
 	public disableDefaultFooter() {
@@ -723,15 +680,16 @@ export default class DiagnosticsPrinter extends Error {
 		}
 
 		if (this.hasProblems()) {
-			const {reporter, filteredCount} = this;
+			const {reporter} = this;
+			const calculated = this.processor.calculate();
 
-			const displayableProblems = this.getDisplayedProblemsCount();
+			const displayableProblems = calculated.total - calculated.filtered;
 			let str = markup`Found <emphasis>${displayableProblems}</emphasis> <grammarNumber plural="problems" singular="problem">${String(
 				displayableProblems,
 			)}</grammarNumber>`;
 
-			if (filteredCount > 0) {
-				str = markup`${str} <dim>(${filteredCount} filtered)</dim>`;
+			if (calculated.filtered > 0) {
+				str = markup`${str} <dim>(${calculated.filtered} filtered)</dim>`;
 			}
 
 			reporter.error(str);
@@ -743,7 +701,7 @@ export default class DiagnosticsPrinter extends Error {
 	private async printFooter() {
 		await this.printLock.wait();
 
-		await this.wrapError(
+		await this.wrapErrorAsync(
 			"footer",
 			async () => {
 				const {reporter} = this;
@@ -755,12 +713,10 @@ export default class DiagnosticsPrinter extends Error {
 					reporter.redirectOutToErr(restoreRedirect);
 				}
 
-				const displayableProblems = this.getDisplayedProblemsCount();
-				if (this.truncatedCount > 0) {
-					const {maxDiagnostics} = this.flags;
+				const calculated = this.processor.calculate();
+				if (calculated.truncated > 0) {
 					reporter.warn(
-						markup`Only <emphasis>${maxDiagnostics}</emphasis> errors shown. Add the <code>--show-all-diagnostics</code> flag or specify <code>--max-diagnostics ${"<num>"}</code> to view the remaining ${displayableProblems -
-						maxDiagnostics} errors`,
+						markup`Only <emphasis>${calculated.diagnostics.length}</emphasis> diagnostics shown. Add <code>--show-all-diagnostics</code> or <code>--max-diagnostics ${"<num>"}</code> flag to view remaining`,
 					);
 				}
 
@@ -800,21 +756,7 @@ export default class DiagnosticsPrinter extends Error {
 	// Do NOT use this method. It is for usage in FatalErrorHandler only as it needs to terminate immediately.
 	// We lose out on essential file data by performing this synchronously, do not have a footer, and perform no filtering.
 	public printBodySync(): void {
-		const diagnostics = this.processor.getDiagnostics();
-
-		const reporter = this.reporter.fork({
-			shouldRedirectOutToErr: true,
-		});
-
-		for (const diag of diagnostics) {
-			this.printAuxiliaryDiagnostic(diag);
-		}
-
-		for (const diag of diagnostics) {
-			this.printDiagnostic(diag, reporter);
-		}
-
-		reporter.resources.release();
+		this.printDiagnostics(this.processor.getDiagnostics());
 	}
 
 	public async print(

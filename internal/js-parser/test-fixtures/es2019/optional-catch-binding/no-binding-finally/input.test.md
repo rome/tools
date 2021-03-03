@@ -8,41 +8,38 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2019/optional-catch-binding/no-binding-finally/input.js 1:0-10:0
-	path: UIDPath<es2019/optional-catch-binding/no-binding-finally/input.js>
-	body: Array [
+	body: [
 		JSTryStatement {
-			loc: SourceLocation es2019/optional-catch-binding/no-binding-finally/input.js 1:0-9:1
 			block: JSBlockStatement {
-				body: Array []
-				directives: Array []
+				body: []
+				directives: []
 				loc: SourceLocation es2019/optional-catch-binding/no-binding-finally/input.js 1:4-3:1
 			}
 			finalizer: JSBlockStatement {
-				body: Array []
-				directives: Array []
+				body: []
+				directives: []
 				loc: SourceLocation es2019/optional-catch-binding/no-binding-finally/input.js 7:8-9:1
 			}
 			handler: JSCatchClause {
-				param: undefined
-				loc: SourceLocation es2019/optional-catch-binding/no-binding-finally/input.js 4:0-6:1
 				body: JSBlockStatement {
-					body: Array []
-					directives: Array []
+					body: []
+					directives: []
 					loc: SourceLocation es2019/optional-catch-binding/no-binding-finally/input.js 4:6-6:1
 				}
+				loc: SourceLocation es2019/optional-catch-binding/no-binding-finally/input.js 4:0-6:1
 			}
+			loc: SourceLocation es2019/optional-catch-binding/no-binding-finally/input.js 1:0-9:1
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2019/optional-catch-binding/no-binding-finally/input.js>
+	loc: SourceLocation es2019/optional-catch-binding/no-binding-finally/input.js 1:0-10:0
 }
 ```
 

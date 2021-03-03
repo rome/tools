@@ -14,10 +14,16 @@ JSRoot {
 				properties: [
 					JSObjectProperty {
 						key: JSStaticPropertyKey {
-							value: JSIdentifier {name: "message", loc: SourceLocation core/uncategorised/275/input.js 1:8-1:15 (message)}
+							value: JSIdentifier {
+								name: "message"
+								loc: SourceLocation core/uncategorised/275/input.js 1:8-1:15 (message)
+							}
 							loc: SourceLocation core/uncategorised/275/input.js 1:8-1:15
 						}
-						value: JSStringLiteral {value: "Error", loc: SourceLocation core/uncategorised/275/input.js 1:17-1:24}
+						value: JSStringLiteral {
+							value: "Error"
+							loc: SourceLocation core/uncategorised/275/input.js 1:17-1:24
+						}
 						loc: SourceLocation core/uncategorised/275/input.js 1:8-1:24
 					}
 				]
@@ -31,9 +37,9 @@ JSRoot {
 	diagnostics: []
 	directives: []
 	hasHoistedVars: false
-	path: UIDPath<core/uncategorised/275/input.js>
 	sourceType: "script"
 	syntax: []
+	path: UIDPath<core/uncategorised/275/input.js>
 	loc: SourceLocation core/uncategorised/275/input.js 1:0-1:26
 }
 ```

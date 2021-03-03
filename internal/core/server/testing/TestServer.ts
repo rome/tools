@@ -98,6 +98,7 @@ export default class TestServer {
 
 		this.progress = {
 			totalTests: 0,
+			passedTests: 0,
 			startedTests: 0,
 			finishedTests: 0,
 			updatedSnapshots: 0,
@@ -123,6 +124,12 @@ export default class TestServer {
 				sourceMaps: this.sourceMaps,
 			}),
 		);
+
+		this.printer.processor.guaranteedTruncationEvent.subscribe(() => {
+			// TODO: Notify all test workers that they should no longer send us diagnostics
+			// We will however still need to receive an event that a diagnostic was created so we can increment
+			// our own truncated count. We should also send over the filter to mark those correctly too. 
+		});
 	}
 
 	public sourceMaps: SourceMapConsumerCollection;
@@ -150,6 +157,7 @@ export default class TestServer {
 	>;
 
 	public progress: {
+		passedTests: number;
 		totalTests: number;
 		startedTests: number;
 		finishedTests: number;
@@ -166,7 +174,7 @@ export default class TestServer {
 		}
 
 		if (
-			isBridgeDisconnectedDiagnosticsError(err) ||
+			isBridgeDisconnectedDiagnosticsError(err) &&
 			this.ignoreBridgeEndError.has(bridge)
 		) {
 			return;
@@ -188,8 +196,7 @@ export default class TestServer {
 
 			const worker = new TestServerWorker({
 				runner: this,
-				bridge: container.bridge,
-				thread: container.thread,
+				container,
 				server: this.server,
 				request: this.request,
 			});
@@ -267,6 +274,11 @@ export default class TestServer {
 				callback: async () => {
 					const runProgress = this.setupRunProgress(workers);
 					await Promise.all(workers.map((worker) => worker.run()));
+
+					for (const worker of workers) {
+						await worker.thread.terminate();
+					}
+					
 					runProgress.teardown();
 				},
 			},
@@ -324,7 +336,7 @@ export default class TestServer {
 		this.progress.totalTests++;
 	}
 
-	private onTestFinished(ref: TestRef) {
+	private onTestFinished(ref: TestRef, success: boolean) {
 		const key = refToKey(ref);
 		const running = this.runningTests.assert(key);
 
@@ -334,6 +346,9 @@ export default class TestServer {
 		}
 		this.runningTests.delete(key);
 		this.progress.finishedTests++;
+		if (success) {
+			this.progress.passedTests++;
+		}
 	}
 
 	private setupRunProgress(workers: TestServerWorker[]): TestProgress {
@@ -359,7 +374,7 @@ export default class TestServer {
 				}
 
 				for (const ref of cancelTests) {
-					this.onTestFinished(ref);
+					this.onTestFinished(ref, false);
 
 					if (cancelTests.length === 1) {
 						// If we only have one test to cancel then let's only point the bridge error to this test
@@ -411,7 +426,7 @@ export default class TestServer {
 			});
 
 			bridge.events.testFinish.subscribe((data) => {
-				this.onTestFinished(data.ref);
+				this.onTestFinished(data.ref, data.success);
 				progress.popText(refToKey(data.ref));
 				progress.tick();
 			});
@@ -672,11 +687,11 @@ export default class TestServer {
 			this.printSnapshotCounts(reporter);
 			this.printFocusedTestWarning(reporter);
 
-			const totalCount = this.getTotalTests();
-			if (totalCount > 0 || !isError) {
+			const passedCount = this.progress.passedTests;
+			if (passedCount > 0 || !isError) {
 				reporter.success(
-					markup`<emphasis>${humanizeNumber(totalCount)}</emphasis> ${grammarNumberTests(
-						totalCount,
+					markup`<emphasis>${humanizeNumber(passedCount)}</emphasis> ${grammarNumberTests(
+						passedCount,
 					)} passed${isError ? "" : "!"}`,
 				);
 				if (!isError) {

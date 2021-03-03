@@ -10,7 +10,10 @@
 JSRoot {
 	body: [
 		JSThrowStatement {
-			argument: JSReferenceIdentifier {name: "x", loc: SourceLocation core/uncategorised/273/input.js 1:6-1:7 (x)}
+			argument: JSReferenceIdentifier {
+				name: "x"
+				loc: SourceLocation core/uncategorised/273/input.js 1:6-1:7 (x)
+			}
 			loc: SourceLocation core/uncategorised/273/input.js 1:0-1:8
 		}
 	]
@@ -19,9 +22,9 @@ JSRoot {
 	diagnostics: []
 	directives: []
 	hasHoistedVars: false
-	path: UIDPath<core/uncategorised/273/input.js>
 	sourceType: "script"
 	syntax: []
+	path: UIDPath<core/uncategorised/273/input.js>
 	loc: SourceLocation core/uncategorised/273/input.js 1:0-1:8
 }
 ```

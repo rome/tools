@@ -51,7 +51,7 @@ export default function resolverSuggest(
 		throw new Error(errMsg);
 	}
 
-	let advice: DiagnosticAdvice = [];
+	let advice: DiagnosticAdvice[] = [];
 
 	if (query.origin.isAbsolute()) {
 		const localQuery: ResolverLocalQuery = {

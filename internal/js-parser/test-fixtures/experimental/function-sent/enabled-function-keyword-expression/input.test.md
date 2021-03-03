@@ -8,69 +8,18 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: true
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation experimental/function-sent/enabled-function-keyword-expression/input.js 1:0-4:0
-	path: UIDPath<experimental/function-sent/enabled-function-keyword-expression/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 2:20
-				path: UIDPath<experimental/function-sent/enabled-function-keyword-expression/input.js>
-				start: Position 2:19
-			}
-			description: Object {
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Unexpected character <emphasis>{</emphasis>"}
-				advice: Array [
-					log {
-						category: "info"
-						text: RAW_MARKUP {value: "Expected character <emphasis>,</emphasis>"}
-					}
-				]
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "foo"
 				loc: SourceLocation experimental/function-sent/enabled-function-keyword-expression/input.js 1:10-1:13 (foo)
 			}
-			loc: SourceLocation experimental/function-sent/enabled-function-keyword-expression/input.js 1:0-3:1
-			head: JSFunctionHead {
-				async: false
-				generator: true
-				hasHoistedVars: false
-				params: Array []
-				rest: undefined
-				returnType: undefined
-				thisType: undefined
-				typeParameters: undefined
-				loc: SourceLocation experimental/function-sent/enabled-function-keyword-expression/input.js 1:13-1:15
-			}
 			body: JSBlockStatement {
-				directives: Array []
-				loc: SourceLocation experimental/function-sent/enabled-function-keyword-expression/input.js 1:16-3:1
-				body: Array [
+				body: [
 					JSExpressionStatement {
-						loc: SourceLocation experimental/function-sent/enabled-function-keyword-expression/input.js 2:2-2:18
 						expression: JSCallExpression {
-							arguments: Array []
-							loc: SourceLocation experimental/function-sent/enabled-function-keyword-expression/input.js 2:3-2:18
+							arguments: []
 							callee: JSMetaProperty {
-								loc: SourceLocation experimental/function-sent/enabled-function-keyword-expression/input.js 2:3-2:16
 								meta: JSIdentifier {
 									name: "function"
 									loc: SourceLocation experimental/function-sent/enabled-function-keyword-expression/input.js 2:3-2:11 (function)
@@ -79,25 +28,63 @@ JSRoot {
 									name: "sent"
 									loc: SourceLocation experimental/function-sent/enabled-function-keyword-expression/input.js 2:12-2:16 (sent)
 								}
+								loc: SourceLocation experimental/function-sent/enabled-function-keyword-expression/input.js 2:3-2:16
 							}
+							loc: SourceLocation experimental/function-sent/enabled-function-keyword-expression/input.js 2:3-2:18
 						}
+						loc: SourceLocation experimental/function-sent/enabled-function-keyword-expression/input.js 2:2-2:18
 					}
 					JSBlockStatement {
-						body: Array []
-						directives: Array []
+						body: []
+						directives: []
 						loc: SourceLocation experimental/function-sent/enabled-function-keyword-expression/input.js 2:19-2:21
 					}
 					JSExpressionStatement {
-						loc: SourceLocation experimental/function-sent/enabled-function-keyword-expression/input.js 2:21-2:23
 						expression: JSReferenceIdentifier {
 							name: "INVALID_PLACEHOLDER"
 							loc: SourceLocation experimental/function-sent/enabled-function-keyword-expression/input.js 2:21-2:22
 						}
+						loc: SourceLocation experimental/function-sent/enabled-function-keyword-expression/input.js 2:21-2:23
 					}
 				]
+				directives: []
+				loc: SourceLocation experimental/function-sent/enabled-function-keyword-expression/input.js 1:16-3:1
+			}
+			head: JSFunctionHead {
+				async: false
+				generator: true
+				hasHoistedVars: false
+				params: []
+				loc: SourceLocation experimental/function-sent/enabled-function-keyword-expression/input.js 1:13-1:15
+			}
+			loc: SourceLocation experimental/function-sent/enabled-function-keyword-expression/input.js 1:0-3:1
+		}
+	]
+	comments: []
+	corrupt: true
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {
+				advice: [log {category: "info", text: [RAW_MARKUP {value: "Expected character <emphasis>"}, ",", RAW_MARKUP {value: "</emphasis>"}]}]
+				category: ["parse"]
+				categoryValue: "js"
+				message: [RAW_MARKUP {value: "Unexpected character <emphasis>"}, "{", RAW_MARKUP {value: "</emphasis>"}]
+			}
+			location: {
+				language: "js"
+				path: UIDPath<experimental/function-sent/enabled-function-keyword-expression/input.js>
+				end: Position 2:20
+				start: Position 2:19
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<experimental/function-sent/enabled-function-keyword-expression/input.js>
+	loc: SourceLocation experimental/function-sent/enabled-function-keyword-expression/input.js 1:0-4:0
 }
 ```
 
@@ -111,7 +98,7 @@ JSRoot {
 
     1 │ function* foo() {
   > 2 │   (function.sent() {});
-      │                    ^
+      │                    <error><emphasis>^</emphasis></error>
     3 │ }
 
   ℹ Expected character ,

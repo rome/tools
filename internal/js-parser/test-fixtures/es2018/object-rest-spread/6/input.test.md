@@ -8,23 +8,10 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2018/object-rest-spread/6/input.js 1:0-2:0
-	path: UIDPath<es2018/object-rest-spread/6/input.js>
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation es2018/object-rest-spread/6/input.js 1:0-1:25
 			expression: JSObjectExpression {
-				loc: SourceLocation es2018/object-rest-spread/6/input.js 1:1-1:24
-				properties: Array [
+				properties: [
 					JSObjectProperty {
 						key: JSStaticPropertyKey {
 							value: JSIdentifier {
@@ -40,11 +27,11 @@ JSRoot {
 						loc: SourceLocation es2018/object-rest-spread/6/input.js 1:2-1:3
 					}
 					JSSpreadProperty {
-						loc: SourceLocation es2018/object-rest-spread/6/input.js 1:5-1:9
 						argument: JSReferenceIdentifier {
 							name: "y"
 							loc: SourceLocation es2018/object-rest-spread/6/input.js 1:8-1:9 (y)
 						}
+						loc: SourceLocation es2018/object-rest-spread/6/input.js 1:5-1:9
 					}
 					JSObjectProperty {
 						key: JSStaticPropertyKey {
@@ -61,11 +48,11 @@ JSRoot {
 						loc: SourceLocation es2018/object-rest-spread/6/input.js 1:11-1:12
 					}
 					JSSpreadProperty {
-						loc: SourceLocation es2018/object-rest-spread/6/input.js 1:14-1:18
 						argument: JSReferenceIdentifier {
 							name: "b"
 							loc: SourceLocation es2018/object-rest-spread/6/input.js 1:17-1:18 (b)
 						}
+						loc: SourceLocation es2018/object-rest-spread/6/input.js 1:14-1:18
 					}
 					JSObjectProperty {
 						key: JSStaticPropertyKey {
@@ -82,9 +69,20 @@ JSRoot {
 						loc: SourceLocation es2018/object-rest-spread/6/input.js 1:20-1:21
 					}
 				]
+				loc: SourceLocation es2018/object-rest-spread/6/input.js 1:1-1:24
 			}
+			loc: SourceLocation es2018/object-rest-spread/6/input.js 1:0-1:25
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2018/object-rest-spread/6/input.js>
+	loc: SourceLocation es2018/object-rest-spread/6/input.js 1:0-2:0
 }
 ```
 

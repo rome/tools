@@ -8,23 +8,10 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation esprima/expression-bitwise-shift/migrated_0002/input.js 1:0-2:0
-	path: UIDPath<esprima/expression-bitwise-shift/migrated_0002/input.js>
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation esprima/expression-bitwise-shift/migrated_0002/input.js 1:0-1:7
 			expression: JSBinaryExpression {
 				operator: ">>>"
-				loc: SourceLocation esprima/expression-bitwise-shift/migrated_0002/input.js 1:0-1:7
 				left: JSReferenceIdentifier {
 					name: "x"
 					loc: SourceLocation esprima/expression-bitwise-shift/migrated_0002/input.js 1:0-1:1 (x)
@@ -33,9 +20,20 @@ JSRoot {
 					name: "y"
 					loc: SourceLocation esprima/expression-bitwise-shift/migrated_0002/input.js 1:6-1:7 (y)
 				}
+				loc: SourceLocation esprima/expression-bitwise-shift/migrated_0002/input.js 1:0-1:7
 			}
+			loc: SourceLocation esprima/expression-bitwise-shift/migrated_0002/input.js 1:0-1:7
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<esprima/expression-bitwise-shift/migrated_0002/input.js>
+	loc: SourceLocation esprima/expression-bitwise-shift/migrated_0002/input.js 1:0-2:0
 }
 ```
 

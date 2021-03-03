@@ -14,26 +14,50 @@ JSRoot {
 				kind: "var"
 				declarations: [
 					JSVariableDeclarator {
-						id: JSBindingIdentifier {name: "x", loc: SourceLocation core/uncategorised/106/input.js 1:4-1:5 (x)}
+						id: JSBindingIdentifier {
+							name: "x"
+							loc: SourceLocation core/uncategorised/106/input.js 1:4-1:5 (x)
+						}
 						init: JSRegExpLiteral {
-							expression: JSRegExpSubExpression {
-								body: [
-									JSRegExpCharacter {value: "f", loc: SourceLocation core/uncategorised/106/input.js 1:9-1:10}
-									JSRegExpCharacter {value: "o", loc: SourceLocation core/uncategorised/106/input.js 1:10-1:11}
-									JSRegExpCharacter {value: "o", loc: SourceLocation core/uncategorised/106/input.js 1:11-1:12}
-									JSRegExpCharacter {value: "/", loc: SourceLocation core/uncategorised/106/input.js 1:12-1:14}
-									JSRegExpCharacter {value: "b", loc: SourceLocation core/uncategorised/106/input.js 1:14-1:15}
-									JSRegExpCharacter {value: "a", loc: SourceLocation core/uncategorised/106/input.js 1:15-1:16}
-									JSRegExpCharacter {value: "r", loc: SourceLocation core/uncategorised/106/input.js 1:16-1:17}
-								]
-								loc: SourceLocation core/uncategorised/106/input.js 1:9-1:17
-							}
 							global: false
 							insensitive: false
 							multiline: false
 							noDotNewline: false
 							sticky: false
 							unicode: false
+							expression: JSRegExpSubExpression {
+								body: [
+									JSRegExpCharacter {
+										value: "f"
+										loc: SourceLocation core/uncategorised/106/input.js 1:9-1:10
+									}
+									JSRegExpCharacter {
+										value: "o"
+										loc: SourceLocation core/uncategorised/106/input.js 1:10-1:11
+									}
+									JSRegExpCharacter {
+										value: "o"
+										loc: SourceLocation core/uncategorised/106/input.js 1:11-1:12
+									}
+									JSRegExpCharacter {
+										value: "/"
+										loc: SourceLocation core/uncategorised/106/input.js 1:12-1:14
+									}
+									JSRegExpCharacter {
+										value: "b"
+										loc: SourceLocation core/uncategorised/106/input.js 1:14-1:15
+									}
+									JSRegExpCharacter {
+										value: "a"
+										loc: SourceLocation core/uncategorised/106/input.js 1:15-1:16
+									}
+									JSRegExpCharacter {
+										value: "r"
+										loc: SourceLocation core/uncategorised/106/input.js 1:16-1:17
+									}
+								]
+								loc: SourceLocation core/uncategorised/106/input.js 1:9-1:17
+							}
 							loc: SourceLocation core/uncategorised/106/input.js 1:8-1:18
 						}
 						loc: SourceLocation core/uncategorised/106/input.js 1:4-1:18
@@ -49,9 +73,9 @@ JSRoot {
 	diagnostics: []
 	directives: []
 	hasHoistedVars: true
-	path: UIDPath<core/uncategorised/106/input.js>
 	sourceType: "script"
 	syntax: []
+	path: UIDPath<core/uncategorised/106/input.js>
 	loc: SourceLocation core/uncategorised/106/input.js 1:0-1:18
 }
 ```

@@ -12,24 +12,40 @@ JSRoot {
 		JSSwitchStatement {
 			cases: [
 				JSSwitchCase {
-					consequent: [JSBreakStatement {loc: SourceLocation comments/basic/switch-no-default-comment/input.js 3:8-3:14}]
-					test: JSNumericLiteral {value: 1, loc: SourceLocation comments/basic/switch-no-default-comment/input.js 2:9-2:10}
+					consequent: [
+						JSBreakStatement {
+							loc: SourceLocation comments/basic/switch-no-default-comment/input.js 3:8-3:14
+						}
+					]
 					trailingComments: ["0"]
+					test: JSNumericLiteral {
+						value: 1
+						loc: SourceLocation comments/basic/switch-no-default-comment/input.js 2:9-2:10
+					}
 					loc: SourceLocation comments/basic/switch-no-default-comment/input.js 2:4-3:14
 				}
 			]
-			discriminant: JSReferenceIdentifier {name: "a", loc: SourceLocation comments/basic/switch-no-default-comment/input.js 1:8-1:9 (a)}
+			discriminant: JSReferenceIdentifier {
+				name: "a"
+				loc: SourceLocation comments/basic/switch-no-default-comment/input.js 1:8-1:9 (a)
+			}
 			loc: SourceLocation comments/basic/switch-no-default-comment/input.js 1:0-5:1
 		}
 	]
-	comments: [CommentLine {id: "0", value: "no default", loc: SourceLocation comments/basic/switch-no-default-comment/input.js 4:4-4:16}]
+	comments: [
+		CommentLine {
+			id: "0"
+			value: "no default"
+			loc: SourceLocation comments/basic/switch-no-default-comment/input.js 4:4-4:16
+		}
+	]
 	corrupt: false
 	diagnostics: []
 	directives: []
 	hasHoistedVars: false
-	path: UIDPath<comments/basic/switch-no-default-comment/input.js>
 	sourceType: "script"
 	syntax: []
+	path: UIDPath<comments/basic/switch-no-default-comment/input.js>
 	loc: SourceLocation comments/basic/switch-no-default-comment/input.js 1:0-6:0
 }
 ```

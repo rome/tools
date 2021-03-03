@@ -8,82 +8,73 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation core/uncategorised/466/input.js 1:0-1:43
-	path: UIDPath<core/uncategorised/466/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Deleting local variable in strict mode"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:37
-				path: UIDPath<core/uncategorised/466/input.js>
-				start: Position 1:36
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation core/uncategorised/466/input.js 1:0-1:43
 			expression: JSCallExpression {
-				arguments: Array []
-				loc: SourceLocation core/uncategorised/466/input.js 1:1-1:42
+				arguments: []
 				callee: JSFunctionExpression {
-					id: undefined
-					loc: SourceLocation core/uncategorised/466/input.js 1:1-1:40
-					head: JSFunctionHead {
-						async: false
-						generator: false
-						hasHoistedVars: false
-						params: Array []
-						rest: undefined
-						returnType: undefined
-						thisType: undefined
-						typeParameters: undefined
-						loc: SourceLocation core/uncategorised/466/input.js 1:10-1:12
-					}
 					body: JSBlockStatement {
-						loc: SourceLocation core/uncategorised/466/input.js 1:13-1:40
-						directives: Array [
+						body: [
+							JSExpressionStatement {
+								expression: JSUnaryExpression {
+									operator: "delete"
+									prefix: true
+									argument: JSReferenceIdentifier {
+										name: "i"
+										loc: SourceLocation core/uncategorised/466/input.js 1:36-1:37 (i)
+									}
+									loc: SourceLocation core/uncategorised/466/input.js 1:29-1:37
+								}
+								loc: SourceLocation core/uncategorised/466/input.js 1:29-1:38
+							}
+						]
+						directives: [
 							JSDirective {
 								value: "use strict"
 								loc: SourceLocation core/uncategorised/466/input.js 1:15-1:28
 							}
 						]
-						body: Array [
-							JSExpressionStatement {
-								loc: SourceLocation core/uncategorised/466/input.js 1:29-1:38
-								expression: JSUnaryExpression {
-									operator: "delete"
-									prefix: true
-									loc: SourceLocation core/uncategorised/466/input.js 1:29-1:37
-									argument: JSReferenceIdentifier {
-										name: "i"
-										loc: SourceLocation core/uncategorised/466/input.js 1:36-1:37 (i)
-									}
-								}
-							}
-						]
+						loc: SourceLocation core/uncategorised/466/input.js 1:13-1:40
 					}
+					head: JSFunctionHead {
+						async: false
+						generator: false
+						hasHoistedVars: false
+						params: []
+						loc: SourceLocation core/uncategorised/466/input.js 1:10-1:12
+					}
+					loc: SourceLocation core/uncategorised/466/input.js 1:1-1:40
 				}
+				loc: SourceLocation core/uncategorised/466/input.js 1:1-1:42
+			}
+			loc: SourceLocation core/uncategorised/466/input.js 1:0-1:43
+		}
+	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "Deleting local variable in strict mode"}
+			}
+			location: {
+				language: "js"
+				path: UIDPath<core/uncategorised/466/input.js>
+				end: Position 1:37
+				start: Position 1:36
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<core/uncategorised/466/input.js>
+	loc: SourceLocation core/uncategorised/466/input.js 1:0-1:43
 }
 ```
 
@@ -96,7 +87,7 @@ JSRoot {
   ✖ Deleting local variable in strict mode
 
     (function () { 'use strict'; delete i; }())
-                                        ^
+                                        <error><emphasis>^</emphasis></error>
 
 
 ```

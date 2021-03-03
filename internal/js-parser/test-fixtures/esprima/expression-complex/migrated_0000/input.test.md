@@ -8,86 +8,64 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation esprima/expression-complex/migrated_0000/input.js 1:0-2:0
-	path: UIDPath<esprima/expression-complex/migrated_0000/input.js>
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation esprima/expression-complex/migrated_0000/input.js 1:0-1:46
 			expression: JSLogicalExpression {
 				operator: "||"
-				loc: SourceLocation esprima/expression-complex/migrated_0000/input.js 1:0-1:46
 				left: JSReferenceIdentifier {
 					name: "a"
 					loc: SourceLocation esprima/expression-complex/migrated_0000/input.js 1:0-1:1 (a)
 				}
 				right: JSLogicalExpression {
 					operator: "&&"
-					loc: SourceLocation esprima/expression-complex/migrated_0000/input.js 1:5-1:46
 					left: JSReferenceIdentifier {
 						name: "b"
 						loc: SourceLocation esprima/expression-complex/migrated_0000/input.js 1:5-1:6 (b)
 					}
 					right: JSBinaryExpression {
 						operator: "|"
-						loc: SourceLocation esprima/expression-complex/migrated_0000/input.js 1:10-1:46
 						left: JSReferenceIdentifier {
 							name: "c"
 							loc: SourceLocation esprima/expression-complex/migrated_0000/input.js 1:10-1:11 (c)
 						}
 						right: JSBinaryExpression {
 							operator: "^"
-							loc: SourceLocation esprima/expression-complex/migrated_0000/input.js 1:14-1:46
 							left: JSReferenceIdentifier {
 								name: "d"
 								loc: SourceLocation esprima/expression-complex/migrated_0000/input.js 1:14-1:15 (d)
 							}
 							right: JSBinaryExpression {
 								operator: "&"
-								loc: SourceLocation esprima/expression-complex/migrated_0000/input.js 1:18-1:46
 								left: JSReferenceIdentifier {
 									name: "e"
 									loc: SourceLocation esprima/expression-complex/migrated_0000/input.js 1:18-1:19 (e)
 								}
 								right: JSBinaryExpression {
 									operator: "=="
-									loc: SourceLocation esprima/expression-complex/migrated_0000/input.js 1:22-1:46
 									left: JSReferenceIdentifier {
 										name: "f"
 										loc: SourceLocation esprima/expression-complex/migrated_0000/input.js 1:22-1:23 (f)
 									}
 									right: JSBinaryExpression {
 										operator: "<"
-										loc: SourceLocation esprima/expression-complex/migrated_0000/input.js 1:27-1:46
 										left: JSReferenceIdentifier {
 											name: "g"
 											loc: SourceLocation esprima/expression-complex/migrated_0000/input.js 1:27-1:28 (g)
 										}
 										right: JSBinaryExpression {
 											operator: ">>>"
-											loc: SourceLocation esprima/expression-complex/migrated_0000/input.js 1:31-1:46
 											left: JSReferenceIdentifier {
 												name: "h"
 												loc: SourceLocation esprima/expression-complex/migrated_0000/input.js 1:31-1:32 (h)
 											}
 											right: JSBinaryExpression {
 												operator: "+"
-												loc: SourceLocation esprima/expression-complex/migrated_0000/input.js 1:37-1:46
 												left: JSReferenceIdentifier {
 													name: "i"
 													loc: SourceLocation esprima/expression-complex/migrated_0000/input.js 1:37-1:38 (i)
 												}
 												right: JSBinaryExpression {
 													operator: "*"
-													loc: SourceLocation esprima/expression-complex/migrated_0000/input.js 1:41-1:46
 													left: JSReferenceIdentifier {
 														name: "j"
 														loc: SourceLocation esprima/expression-complex/migrated_0000/input.js 1:41-1:42 (j)
@@ -96,18 +74,38 @@ JSRoot {
 														name: "k"
 														loc: SourceLocation esprima/expression-complex/migrated_0000/input.js 1:45-1:46 (k)
 													}
+													loc: SourceLocation esprima/expression-complex/migrated_0000/input.js 1:41-1:46
 												}
+												loc: SourceLocation esprima/expression-complex/migrated_0000/input.js 1:37-1:46
 											}
+											loc: SourceLocation esprima/expression-complex/migrated_0000/input.js 1:31-1:46
 										}
+										loc: SourceLocation esprima/expression-complex/migrated_0000/input.js 1:27-1:46
 									}
+									loc: SourceLocation esprima/expression-complex/migrated_0000/input.js 1:22-1:46
 								}
+								loc: SourceLocation esprima/expression-complex/migrated_0000/input.js 1:18-1:46
 							}
+							loc: SourceLocation esprima/expression-complex/migrated_0000/input.js 1:14-1:46
 						}
+						loc: SourceLocation esprima/expression-complex/migrated_0000/input.js 1:10-1:46
 					}
+					loc: SourceLocation esprima/expression-complex/migrated_0000/input.js 1:5-1:46
 				}
+				loc: SourceLocation esprima/expression-complex/migrated_0000/input.js 1:0-1:46
 			}
+			loc: SourceLocation esprima/expression-complex/migrated_0000/input.js 1:0-1:46
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<esprima/expression-complex/migrated_0000/input.js>
+	loc: SourceLocation esprima/expression-complex/migrated_0000/input.js 1:0-2:0
 }
 ```
 

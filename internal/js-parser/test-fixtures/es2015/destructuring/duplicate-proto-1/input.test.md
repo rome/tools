@@ -8,49 +8,12 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2015/destructuring/duplicate-proto-1/input.js 1:0-2:0
-	path: UIDPath<es2015/destructuring/duplicate-proto-1/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Redefinition of __proto__ property"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:26
-				path: UIDPath<es2015/destructuring/duplicate-proto-1/input.js>
-				start: Position 1:17
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation es2015/destructuring/duplicate-proto-1/input.js 1:0-1:38
 			expression: JSAssignmentExpression {
 				operator: "="
-				loc: SourceLocation es2015/destructuring/duplicate-proto-1/input.js 1:1-1:36
-				right: JSObjectExpression {
-					properties: Array []
-					loc: SourceLocation es2015/destructuring/duplicate-proto-1/input.js 1:34-1:36
-				}
 				left: JSAssignmentObjectPattern {
-					rest: undefined
-					loc: SourceLocation es2015/destructuring/duplicate-proto-1/input.js 1:1-1:31
-					properties: Array [
+					properties: [
 						JSAssignmentObjectPatternProperty {
 							key: JSStaticPropertyKey {
 								value: JSIdentifier {
@@ -80,10 +43,42 @@ JSRoot {
 							loc: SourceLocation es2015/destructuring/duplicate-proto-1/input.js 1:17-1:29
 						}
 					]
+					loc: SourceLocation es2015/destructuring/duplicate-proto-1/input.js 1:1-1:31
 				}
+				right: JSObjectExpression {
+					properties: []
+					loc: SourceLocation es2015/destructuring/duplicate-proto-1/input.js 1:34-1:36
+				}
+				loc: SourceLocation es2015/destructuring/duplicate-proto-1/input.js 1:1-1:36
+			}
+			loc: SourceLocation es2015/destructuring/duplicate-proto-1/input.js 1:0-1:38
+		}
+	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "Redefinition of __proto__ property"}
+			}
+			location: {
+				language: "js"
+				path: UIDPath<es2015/destructuring/duplicate-proto-1/input.js>
+				end: Position 1:26
+				start: Position 1:17
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2015/destructuring/duplicate-proto-1/input.js>
+	loc: SourceLocation es2015/destructuring/duplicate-proto-1/input.js 1:0-2:0
 }
 ```
 
@@ -96,7 +91,11 @@ JSRoot {
   ✖ Redefinition of __proto__ property
 
     ({ __proto__: x, __proto__: y } = {});
-                     ^^^^^^^^^
+                     <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
+    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
+    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
+    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
+    <error><emphasis>^</emphasis></error>
 
 
 ```

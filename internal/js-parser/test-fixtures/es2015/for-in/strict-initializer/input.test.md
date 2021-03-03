@@ -8,68 +8,65 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	hasHoistedVars: true
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2015/for-in/strict-initializer/input.js 1:0-2:22
-	path: UIDPath<es2015/for-in/strict-initializer/input.js>
-	directives: Array [
-		JSDirective {
-			value: "use strict"
-			loc: SourceLocation es2015/for-in/strict-initializer/input.js 1:0-1:13
-		}
-	]
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Loop variable declaration may not have an initializer"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 2:14
-				path: UIDPath<es2015/for-in/strict-initializer/input.js>
-				start: Position 2:5
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSForInStatement {
-			body: JSEmptyStatement {loc: SourceLocation es2015/for-in/strict-initializer/input.js 2:21-2:22}
-			loc: SourceLocation es2015/for-in/strict-initializer/input.js 2:0-2:22
-			right: JSObjectExpression {
-				properties: Array []
-				loc: SourceLocation es2015/for-in/strict-initializer/input.js 2:18-2:20
+			body: JSEmptyStatement {
+				loc: SourceLocation es2015/for-in/strict-initializer/input.js 2:21-2:22
 			}
 			left: JSVariableDeclaration {
 				kind: "var"
-				loc: SourceLocation es2015/for-in/strict-initializer/input.js 2:5-2:14
-				declarations: Array [
+				declarations: [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "a"
 							loc: SourceLocation es2015/for-in/strict-initializer/input.js 2:9-2:10 (a)
 						}
-						loc: SourceLocation es2015/for-in/strict-initializer/input.js 2:9-2:14
 						init: JSNumericLiteral {
 							value: 0
-							format: undefined
 							loc: SourceLocation es2015/for-in/strict-initializer/input.js 2:13-2:14
 						}
+						loc: SourceLocation es2015/for-in/strict-initializer/input.js 2:9-2:14
 					}
 				]
+				loc: SourceLocation es2015/for-in/strict-initializer/input.js 2:5-2:14
+			}
+			right: JSObjectExpression {
+				properties: []
+				loc: SourceLocation es2015/for-in/strict-initializer/input.js 2:18-2:20
+			}
+			loc: SourceLocation es2015/for-in/strict-initializer/input.js 2:0-2:22
+		}
+	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "Loop variable declaration may not have an initializer"}
+			}
+			location: {
+				language: "js"
+				path: UIDPath<es2015/for-in/strict-initializer/input.js>
+				end: Position 2:14
+				start: Position 2:5
 			}
 		}
 	]
+	directives: [
+		JSDirective {
+			value: "use strict"
+			loc: SourceLocation es2015/for-in/strict-initializer/input.js 1:0-1:13
+		}
+	]
+	hasHoistedVars: true
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2015/for-in/strict-initializer/input.js>
+	loc: SourceLocation es2015/for-in/strict-initializer/input.js 1:0-2:22
 }
 ```
 
@@ -83,7 +80,11 @@ JSRoot {
 
     1 │ 'use strict';
   > 2 │ for (var a = 0 in {});
-      │      ^^^^^^^^^
+    → │      <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
+    → │ <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
+    → │ <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
+    → │ <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
+      │ <error><emphasis>^</emphasis></error>
 
 
 ```

@@ -8,86 +8,75 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: true
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2015/yield/parameter-name-arrow-inside-generator-1/input.js 1:0-3:1
-	path: UIDPath<es2015/yield/parameter-name-arrow-inside-generator-1/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "yield is not allowed in generator parameters"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 2:8
-				path: UIDPath<es2015/yield/parameter-name-arrow-inside-generator-1/input.js>
-				start: Position 2:8
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "fn"
 				loc: SourceLocation es2015/yield/parameter-name-arrow-inside-generator-1/input.js 1:10-1:12 (fn)
 			}
-			loc: SourceLocation es2015/yield/parameter-name-arrow-inside-generator-1/input.js 1:0-3:1
-			head: JSFunctionHead {
-				async: false
-				generator: true
-				hasHoistedVars: false
-				params: Array []
-				rest: undefined
-				returnType: undefined
-				thisType: undefined
-				typeParameters: undefined
-				loc: SourceLocation es2015/yield/parameter-name-arrow-inside-generator-1/input.js 1:12-1:14
-			}
 			body: JSBlockStatement {
-				directives: Array []
-				loc: SourceLocation es2015/yield/parameter-name-arrow-inside-generator-1/input.js 1:15-3:1
-				body: Array [
+				body: [
 					JSExpressionStatement {
-						loc: SourceLocation es2015/yield/parameter-name-arrow-inside-generator-1/input.js 2:2-2:16
 						expression: JSArrowFunctionExpression {
-							loc: SourceLocation es2015/yield/parameter-name-arrow-inside-generator-1/input.js 2:2-2:15
 							body: JSBlockStatement {
-								body: Array []
-								directives: Array []
+								body: []
+								directives: []
 								loc: SourceLocation es2015/yield/parameter-name-arrow-inside-generator-1/input.js 2:13-2:15
 							}
 							head: JSFunctionHead {
 								async: false
 								hasHoistedVars: false
-								rest: undefined
-								returnType: undefined
-								thisType: undefined
-								loc: SourceLocation es2015/yield/parameter-name-arrow-inside-generator-1/input.js 2:2-2:12
-								params: Array [
+								params: [
 									JSBindingIdentifier {
 										name: "INVALID_PLACEHOLDER"
 										loc: SourceLocation es2015/yield/parameter-name-arrow-inside-generator-1/input.js 2:13-2:12
 									}
 								]
+								loc: SourceLocation es2015/yield/parameter-name-arrow-inside-generator-1/input.js 2:2-2:12
 							}
+							loc: SourceLocation es2015/yield/parameter-name-arrow-inside-generator-1/input.js 2:2-2:15
 						}
+						loc: SourceLocation es2015/yield/parameter-name-arrow-inside-generator-1/input.js 2:2-2:16
 					}
 				]
+				directives: []
+				loc: SourceLocation es2015/yield/parameter-name-arrow-inside-generator-1/input.js 1:15-3:1
+			}
+			head: JSFunctionHead {
+				async: false
+				generator: true
+				hasHoistedVars: false
+				params: []
+				loc: SourceLocation es2015/yield/parameter-name-arrow-inside-generator-1/input.js 1:12-1:14
+			}
+			loc: SourceLocation es2015/yield/parameter-name-arrow-inside-generator-1/input.js 1:0-3:1
+		}
+	]
+	comments: []
+	corrupt: true
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "yield is not allowed in generator parameters"}
+			}
+			location: {
+				language: "js"
+				path: UIDPath<es2015/yield/parameter-name-arrow-inside-generator-1/input.js>
+				end: Position 2:8
+				start: Position 2:8
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2015/yield/parameter-name-arrow-inside-generator-1/input.js>
+	loc: SourceLocation es2015/yield/parameter-name-arrow-inside-generator-1/input.js 1:0-3:1
 }
 ```
 
@@ -101,7 +90,7 @@ JSRoot {
 
     1 │ function* fn() {
   > 2 │   (yield) => {};
-      │         ^
+      │         <error><emphasis>^</emphasis></error>
     3 │ }
 
 

@@ -14,13 +14,25 @@ JSRoot {
 				kind: "var"
 				declarations: [
 					JSVariableDeclarator {
-						id: JSBindingIdentifier {name: "eval", loc: SourceLocation core/uncategorised/219/input.js 1:4-1:8 (eval)}
-						init: JSNumericLiteral {value: 42, loc: SourceLocation core/uncategorised/219/input.js 1:11-1:13}
+						id: JSBindingIdentifier {
+							name: "eval"
+							loc: SourceLocation core/uncategorised/219/input.js 1:4-1:8 (eval)
+						}
+						init: JSNumericLiteral {
+							value: 42
+							loc: SourceLocation core/uncategorised/219/input.js 1:11-1:13
+						}
 						loc: SourceLocation core/uncategorised/219/input.js 1:4-1:13
 					}
 					JSVariableDeclarator {
-						id: JSBindingIdentifier {name: "arguments", loc: SourceLocation core/uncategorised/219/input.js 1:15-1:24 (arguments)}
-						init: JSNumericLiteral {value: 42, loc: SourceLocation core/uncategorised/219/input.js 1:27-1:29}
+						id: JSBindingIdentifier {
+							name: "arguments"
+							loc: SourceLocation core/uncategorised/219/input.js 1:15-1:24 (arguments)
+						}
+						init: JSNumericLiteral {
+							value: 42
+							loc: SourceLocation core/uncategorised/219/input.js 1:27-1:29
+						}
 						loc: SourceLocation core/uncategorised/219/input.js 1:15-1:29
 					}
 				]
@@ -34,9 +46,9 @@ JSRoot {
 	diagnostics: []
 	directives: []
 	hasHoistedVars: true
-	path: UIDPath<core/uncategorised/219/input.js>
 	sourceType: "script"
 	syntax: []
+	path: UIDPath<core/uncategorised/219/input.js>
 	loc: SourceLocation core/uncategorised/219/input.js 1:0-1:29
 }
 ```

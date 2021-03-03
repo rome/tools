@@ -8,32 +8,10 @@
 
 ```javascript
 JSRoot {
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	loc: SourceLocation typescript/arrow-function/generic-tsx/input.tsx 1:0-3:0
-	path: UIDPath<typescript/arrow-function/generic-tsx/input.tsx>
-	syntax: Array [
-		"ts"
-		"jsx"
-	]
-	comments: Array [
-		CommentLine {
-			id: "0"
-			value: " Same as `generic`. Verify that JSX doesn't change things."
-			loc: SourceLocation typescript/arrow-function/generic-tsx/input.tsx 1:0-1:60
-		}
-	]
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			leadingComments: Array ["0"]
-			loc: SourceLocation typescript/arrow-function/generic-tsx/input.tsx 2:0-2:18
+			leadingComments: ["0"]
 			expression: JSArrowFunctionExpression {
-				loc: SourceLocation typescript/arrow-function/generic-tsx/input.tsx 2:0-2:17
 				body: JSReferenceIdentifier {
 					name: "a"
 					loc: SourceLocation typescript/arrow-function/generic-tsx/input.tsx 2:16-2:17 (a)
@@ -41,52 +19,60 @@ JSRoot {
 				head: JSFunctionHead {
 					async: false
 					hasHoistedVars: false
-					rest: undefined
-					thisType: undefined
-					loc: SourceLocation typescript/arrow-function/generic-tsx/input.tsx 2:3-2:15
-					returnType: TSTypeReference {
-						typeParameters: undefined
-						loc: SourceLocation typescript/arrow-function/generic-tsx/input.tsx 2:11-2:12
-						typeName: JSReferenceIdentifier {
-							name: "T"
-							loc: SourceLocation typescript/arrow-function/generic-tsx/input.tsx 2:11-2:12 (T)
-						}
-					}
-					typeParameters: TSTypeParameterDeclaration {
-						leadingComments: undefined
-						loc: SourceLocation typescript/arrow-function/generic-tsx/input.tsx 2:0-2:3
-						params: Array [
-							TSTypeParameter {
-								name: "T"
-								constraint: undefined
-								default: undefined
-								leadingComments: undefined
-								loc: SourceLocation typescript/arrow-function/generic-tsx/input.tsx 2:1-2:2
-							}
-						]
-					}
-					params: Array [
+					params: [
 						JSBindingIdentifier {
 							name: "a"
-							loc: SourceLocation typescript/arrow-function/generic-tsx/input.tsx 2:16-2:15
 							meta: JSPatternMeta {
-								optional: undefined
-								loc: SourceLocation typescript/arrow-function/generic-tsx/input.tsx 2:16-2:15
 								typeAnnotation: TSTypeReference {
-									typeParameters: undefined
-									loc: SourceLocation typescript/arrow-function/generic-tsx/input.tsx 2:7-2:8
 									typeName: JSReferenceIdentifier {
 										name: "T"
 										loc: SourceLocation typescript/arrow-function/generic-tsx/input.tsx 2:7-2:8 (T)
 									}
+									loc: SourceLocation typescript/arrow-function/generic-tsx/input.tsx 2:7-2:8
 								}
+								loc: SourceLocation typescript/arrow-function/generic-tsx/input.tsx 2:16-2:15
 							}
+							loc: SourceLocation typescript/arrow-function/generic-tsx/input.tsx 2:16-2:15
 						}
 					]
+					returnType: TSTypeReference {
+						typeName: JSReferenceIdentifier {
+							name: "T"
+							loc: SourceLocation typescript/arrow-function/generic-tsx/input.tsx 2:11-2:12 (T)
+						}
+						loc: SourceLocation typescript/arrow-function/generic-tsx/input.tsx 2:11-2:12
+					}
+					typeParameters: TSTypeParameterDeclaration {
+						params: [
+							TSTypeParameter {
+								name: "T"
+								loc: SourceLocation typescript/arrow-function/generic-tsx/input.tsx 2:1-2:2
+							}
+						]
+						loc: SourceLocation typescript/arrow-function/generic-tsx/input.tsx 2:0-2:3
+					}
+					loc: SourceLocation typescript/arrow-function/generic-tsx/input.tsx 2:3-2:15
 				}
+				loc: SourceLocation typescript/arrow-function/generic-tsx/input.tsx 2:0-2:17
 			}
+			loc: SourceLocation typescript/arrow-function/generic-tsx/input.tsx 2:0-2:18
 		}
 	]
+	comments: [
+		CommentLine {
+			id: "0"
+			value: " Same as `generic`. Verify that JSX doesn't change things."
+			loc: SourceLocation typescript/arrow-function/generic-tsx/input.tsx 1:0-1:60
+		}
+	]
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: ["ts", "jsx"]
+	path: UIDPath<typescript/arrow-function/generic-tsx/input.tsx>
+	loc: SourceLocation typescript/arrow-function/generic-tsx/input.tsx 1:0-3:0
 }
 ```
 

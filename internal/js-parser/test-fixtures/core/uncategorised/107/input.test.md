@@ -14,11 +14,23 @@ JSRoot {
 				kind: "var"
 				declarations: [
 					JSVariableDeclarator {
-						id: JSBindingIdentifier {name: "x", loc: SourceLocation core/uncategorised/107/input.js 1:4-1:5 (x)}
+						id: JSBindingIdentifier {
+							name: "x"
+							loc: SourceLocation core/uncategorised/107/input.js 1:4-1:5 (x)
+						}
 						init: JSRegExpLiteral {
+							global: true
+							insensitive: false
+							multiline: false
+							noDotNewline: false
+							sticky: false
+							unicode: false
 							expression: JSRegExpSubExpression {
 								body: [
-									JSRegExpCharacter {value: "=", loc: SourceLocation core/uncategorised/107/input.js 1:9-1:10}
+									JSRegExpCharacter {
+										value: "="
+										loc: SourceLocation core/uncategorised/107/input.js 1:9-1:10
+									}
 									JSRegExpQuantified {
 										lazy: false
 										min: 1
@@ -27,8 +39,13 @@ JSRoot {
 												body: [
 													JSRegExpCharSet {
 														body: [
-															JSRegExpCharacter {value: "=", loc: SourceLocation core/uncategorised/107/input.js 1:13-1:14}
-															JSRegExpWhiteSpaceCharacter {loc: SourceLocation core/uncategorised/107/input.js 1:14-1:16}
+															JSRegExpCharacter {
+																value: "="
+																loc: SourceLocation core/uncategorised/107/input.js 1:13-1:14
+															}
+															JSRegExpWhiteSpaceCharacter {
+																loc: SourceLocation core/uncategorised/107/input.js 1:14-1:16
+															}
 														]
 														invert: true
 														loc: SourceLocation core/uncategorised/107/input.js 1:11-1:17
@@ -43,12 +60,6 @@ JSRoot {
 								]
 								loc: SourceLocation core/uncategorised/107/input.js 1:9-1:18
 							}
-							global: true
-							insensitive: false
-							multiline: false
-							noDotNewline: false
-							sticky: false
-							unicode: false
 							loc: SourceLocation core/uncategorised/107/input.js 1:8-1:21
 						}
 						loc: SourceLocation core/uncategorised/107/input.js 1:4-1:21
@@ -64,9 +75,9 @@ JSRoot {
 	diagnostics: []
 	directives: []
 	hasHoistedVars: true
-	path: UIDPath<core/uncategorised/107/input.js>
 	sourceType: "script"
 	syntax: []
+	path: UIDPath<core/uncategorised/107/input.js>
 	loc: SourceLocation core/uncategorised/107/input.js 1:0-1:21
 }
 ```

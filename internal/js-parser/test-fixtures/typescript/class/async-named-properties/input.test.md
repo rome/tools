@@ -8,31 +8,14 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	loc: SourceLocation typescript/class/async-named-properties/input.ts 1:0-4:1
-	path: UIDPath<typescript/class/async-named-properties/input.ts>
-	syntax: Array ["ts"]
-	body: Array [
+	body: [
 		JSClassDeclaration {
 			id: JSBindingIdentifier {
 				name: "A"
 				loc: SourceLocation typescript/class/async-named-properties/input.ts 1:6-1:7 (A)
 			}
-			loc: SourceLocation typescript/class/async-named-properties/input.ts 1:0-4:1
 			meta: JSClassHead {
-				implements: undefined
-				superClass: undefined
-				superTypeParameters: undefined
-				typeParameters: undefined
-				loc: SourceLocation typescript/class/async-named-properties/input.ts 1:0-4:1
-				body: Array [
+				body: [
 					TSDeclareMethod {
 						kind: "method"
 						key: JSStaticPropertyKey {
@@ -42,29 +25,25 @@ JSRoot {
 							}
 							loc: SourceLocation typescript/class/async-named-properties/input.ts 2:2-2:7
 						}
-						body: undefined
-						loc: SourceLocation typescript/class/async-named-properties/input.ts 2:2-2:16
-						meta: JSClassPropertyMeta {
-							abstract: false
-							accessibility: undefined
-							optional: true
-							readonly: false
-							static: false
-							typeAnnotation: undefined
-							loc: SourceLocation typescript/class/async-named-properties/input.ts 2:2-2:8
-							start: Position 2:2
-						}
 						head: JSFunctionHead {
 							async: false
 							generator: false
 							hasHoistedVars: false
-							params: Array []
-							rest: undefined
-							thisType: undefined
-							typeParameters: undefined
+							params: []
+							returnType: TSVoidKeywordTypeAnnotation {
+								loc: SourceLocation typescript/class/async-named-properties/input.ts 2:12-2:16
+							}
 							loc: SourceLocation typescript/class/async-named-properties/input.ts 2:8-2:16
-							returnType: TSVoidKeywordTypeAnnotation {loc: SourceLocation typescript/class/async-named-properties/input.ts 2:12-2:16}
 						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							optional: true
+							readonly: false
+							static: false
+							loc: SourceLocation typescript/class/async-named-properties/input.ts 2:2-2:8
+							start: Position 2:2
+						}
+						loc: SourceLocation typescript/class/async-named-properties/input.ts 2:2-2:16
 					}
 					JSClassProperty {
 						key: JSStaticPropertyKey {
@@ -74,25 +53,34 @@ JSRoot {
 							}
 							loc: SourceLocation typescript/class/async-named-properties/input.ts 3:2-3:7
 						}
-						value: undefined
-						definite: undefined
-						loc: SourceLocation typescript/class/async-named-properties/input.ts 3:2-3:17
-						typeAnnotation: TSBooleanKeywordTypeAnnotation {loc: SourceLocation typescript/class/async-named-properties/input.ts 3:10-3:17}
 						meta: JSClassPropertyMeta {
 							abstract: false
-							accessibility: undefined
 							optional: true
 							readonly: false
 							static: false
-							typeAnnotation: undefined
 							loc: SourceLocation typescript/class/async-named-properties/input.ts 3:2-3:8
 							start: Position 3:2
 						}
+						typeAnnotation: TSBooleanKeywordTypeAnnotation {
+							loc: SourceLocation typescript/class/async-named-properties/input.ts 3:10-3:17
+						}
+						loc: SourceLocation typescript/class/async-named-properties/input.ts 3:2-3:17
 					}
 				]
+				loc: SourceLocation typescript/class/async-named-properties/input.ts 1:0-4:1
 			}
+			loc: SourceLocation typescript/class/async-named-properties/input.ts 1:0-4:1
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: ["ts"]
+	path: UIDPath<typescript/class/async-named-properties/input.ts>
+	loc: SourceLocation typescript/class/async-named-properties/input.ts 1:0-4:1
 }
 ```
 

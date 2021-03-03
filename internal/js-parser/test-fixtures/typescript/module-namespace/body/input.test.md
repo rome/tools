@@ -8,52 +8,49 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	loc: SourceLocation typescript/module-namespace/body/input.ts 1:0-4:0
-	path: UIDPath<typescript/module-namespace/body/input.ts>
-	syntax: Array ["ts"]
-	body: Array [
+	body: [
 		TSModuleDeclaration {
 			id: JSBindingIdentifier {
 				name: "N"
 				loc: SourceLocation typescript/module-namespace/body/input.ts 1:10-1:11 (N)
 			}
-			loc: SourceLocation typescript/module-namespace/body/input.ts 1:0-3:1
 			body: TSModuleBlock {
-				loc: SourceLocation typescript/module-namespace/body/input.ts 1:12-3:1
-				body: Array [
+				body: [
 					JSVariableDeclarationStatement {
-						loc: SourceLocation typescript/module-namespace/body/input.ts 2:4-2:16
 						declaration: JSVariableDeclaration {
 							kind: "const"
-							loc: SourceLocation typescript/module-namespace/body/input.ts 2:4-2:16
-							declarations: Array [
+							declarations: [
 								JSVariableDeclarator {
 									id: JSBindingIdentifier {
 										name: "x"
 										loc: SourceLocation typescript/module-namespace/body/input.ts 2:10-2:11 (x)
 									}
-									loc: SourceLocation typescript/module-namespace/body/input.ts 2:10-2:15
 									init: JSNumericLiteral {
 										value: 0
-										format: undefined
 										loc: SourceLocation typescript/module-namespace/body/input.ts 2:14-2:15
 									}
+									loc: SourceLocation typescript/module-namespace/body/input.ts 2:10-2:15
 								}
 							]
+							loc: SourceLocation typescript/module-namespace/body/input.ts 2:4-2:16
 						}
+						loc: SourceLocation typescript/module-namespace/body/input.ts 2:4-2:16
 					}
 				]
+				loc: SourceLocation typescript/module-namespace/body/input.ts 1:12-3:1
 			}
+			loc: SourceLocation typescript/module-namespace/body/input.ts 1:0-3:1
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: ["ts"]
+	path: UIDPath<typescript/module-namespace/body/input.ts>
+	loc: SourceLocation typescript/module-namespace/body/input.ts 1:0-4:0
 }
 ```
 

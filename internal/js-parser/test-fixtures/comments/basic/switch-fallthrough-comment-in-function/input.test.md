@@ -10,7 +10,10 @@
 JSRoot {
 	body: [
 		JSFunctionDeclaration {
-			id: JSBindingIdentifier {name: "bar", loc: SourceLocation comments/basic/switch-fallthrough-comment-in-function/input.js 1:9-1:12 (bar)}
+			id: JSBindingIdentifier {
+				name: "bar"
+				loc: SourceLocation comments/basic/switch-fallthrough-comment-in-function/input.js 1:9-1:12 (bar)
+			}
 			body: JSBlockStatement {
 				body: [
 					JSSwitchStatement {
@@ -18,8 +21,11 @@ JSRoot {
 							JSSwitchCase {
 								consequent: []
 								leadingComments: ["0"]
-								test: JSNumericLiteral {value: 1, loc: SourceLocation comments/basic/switch-fallthrough-comment-in-function/input.js 4:13-4:14}
 								trailingComments: ["1"]
+								test: JSNumericLiteral {
+									value: 1
+									loc: SourceLocation comments/basic/switch-fallthrough-comment-in-function/input.js 4:13-4:14
+								}
 								loc: SourceLocation comments/basic/switch-fallthrough-comment-in-function/input.js 4:8-4:15
 							}
 							JSSwitchCase {
@@ -27,18 +33,27 @@ JSRoot {
 									JSExpressionStatement {
 										expression: JSCallExpression {
 											arguments: []
-											callee: JSReferenceIdentifier {name: "doIt", loc: SourceLocation comments/basic/switch-fallthrough-comment-in-function/input.js 7:12-7:16 (doIt)}
+											callee: JSReferenceIdentifier {
+												name: "doIt"
+												loc: SourceLocation comments/basic/switch-fallthrough-comment-in-function/input.js 7:12-7:16 (doIt)
+											}
 											loc: SourceLocation comments/basic/switch-fallthrough-comment-in-function/input.js 7:12-7:18
 										}
 										loc: SourceLocation comments/basic/switch-fallthrough-comment-in-function/input.js 7:12-7:19
 									}
 								]
 								leadingComments: ["1"]
-								test: JSNumericLiteral {value: 2, loc: SourceLocation comments/basic/switch-fallthrough-comment-in-function/input.js 6:13-6:14}
+								test: JSNumericLiteral {
+									value: 2
+									loc: SourceLocation comments/basic/switch-fallthrough-comment-in-function/input.js 6:13-6:14
+								}
 								loc: SourceLocation comments/basic/switch-fallthrough-comment-in-function/input.js 6:8-7:19
 							}
 						]
-						discriminant: JSReferenceIdentifier {name: "foo", loc: SourceLocation comments/basic/switch-fallthrough-comment-in-function/input.js 2:11-2:14 (foo)}
+						discriminant: JSReferenceIdentifier {
+							name: "foo"
+							loc: SourceLocation comments/basic/switch-fallthrough-comment-in-function/input.js 2:11-2:14 (foo)
+						}
 						loc: SourceLocation comments/basic/switch-fallthrough-comment-in-function/input.js 2:4-8:5
 					}
 				]
@@ -52,7 +67,9 @@ JSRoot {
 				params: [
 					JSBindingIdentifier {
 						name: "foo"
-						meta: JSPatternMeta {loc: SourceLocation comments/basic/switch-fallthrough-comment-in-function/input.js 1:13-1:16}
+						meta: JSPatternMeta {
+							loc: SourceLocation comments/basic/switch-fallthrough-comment-in-function/input.js 1:13-1:16
+						}
 						loc: SourceLocation comments/basic/switch-fallthrough-comment-in-function/input.js 1:13-1:16 (foo)
 					}
 				]
@@ -62,16 +79,24 @@ JSRoot {
 		}
 	]
 	comments: [
-		CommentLine {id: "0", value: " foo", loc: SourceLocation comments/basic/switch-fallthrough-comment-in-function/input.js 3:8-3:14}
-		CommentLine {id: "1", value: " falls through", loc: SourceLocation comments/basic/switch-fallthrough-comment-in-function/input.js 5:12-5:28}
+		CommentLine {
+			id: "0"
+			value: " foo"
+			loc: SourceLocation comments/basic/switch-fallthrough-comment-in-function/input.js 3:8-3:14
+		}
+		CommentLine {
+			id: "1"
+			value: " falls through"
+			loc: SourceLocation comments/basic/switch-fallthrough-comment-in-function/input.js 5:12-5:28
+		}
 	]
 	corrupt: false
 	diagnostics: []
 	directives: []
 	hasHoistedVars: false
-	path: UIDPath<comments/basic/switch-fallthrough-comment-in-function/input.js>
 	sourceType: "script"
 	syntax: []
+	path: UIDPath<comments/basic/switch-fallthrough-comment-in-function/input.js>
 	loc: SourceLocation comments/basic/switch-fallthrough-comment-in-function/input.js 1:0-10:0
 }
 ```

@@ -8,47 +8,24 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation test262/rest-parameter/object-pattern-single-element-with-object/input.js 1:0-2:0
-	path: UIDPath<test262/rest-parameter/object-pattern-single-element-with-object/input.js>
-	body: Array [
+	body: [
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "singleElementWithObject"
 				loc: SourceLocation test262/rest-parameter/object-pattern-single-element-with-object/input.js 1:9-1:32 (singleElementWithObject)
 			}
-			loc: SourceLocation test262/rest-parameter/object-pattern-single-element-with-object/input.js 1:0-1:51
 			body: JSBlockStatement {
-				body: Array []
-				directives: Array []
+				body: []
+				directives: []
 				loc: SourceLocation test262/rest-parameter/object-pattern-single-element-with-object/input.js 1:49-1:51
 			}
 			head: JSFunctionHead {
 				async: false
 				generator: false
 				hasHoistedVars: false
-				params: Array []
-				returnType: undefined
-				thisType: undefined
-				typeParameters: undefined
-				loc: SourceLocation test262/rest-parameter/object-pattern-single-element-with-object/input.js 1:32-1:48
+				params: []
 				rest: JSBindingObjectPattern {
-					rest: undefined
-					loc: SourceLocation test262/rest-parameter/object-pattern-single-element-with-object/input.js 1:36-1:47
-					meta: JSPatternMeta {
-						optional: undefined
-						typeAnnotation: undefined
-						loc: SourceLocation test262/rest-parameter/object-pattern-single-element-with-object/input.js 1:36-1:47
-					}
-					properties: Array [
+					properties: [
 						JSBindingObjectPatternProperty {
 							key: JSStaticPropertyKey {
 								value: JSIdentifier {
@@ -58,9 +35,7 @@ JSRoot {
 								loc: SourceLocation test262/rest-parameter/object-pattern-single-element-with-object/input.js 1:37-1:38
 							}
 							value: JSBindingObjectPattern {
-								rest: undefined
-								loc: SourceLocation test262/rest-parameter/object-pattern-single-element-with-object/input.js 1:40-1:46
-								properties: Array [
+								properties: [
 									JSBindingObjectPatternProperty {
 										key: JSStaticPropertyKey {
 											value: JSIdentifier {
@@ -76,14 +51,30 @@ JSRoot {
 										loc: SourceLocation test262/rest-parameter/object-pattern-single-element-with-object/input.js 1:41-1:45
 									}
 								]
+								loc: SourceLocation test262/rest-parameter/object-pattern-single-element-with-object/input.js 1:40-1:46
 							}
 							loc: SourceLocation test262/rest-parameter/object-pattern-single-element-with-object/input.js 1:37-1:46
 						}
 					]
+					meta: JSPatternMeta {
+						loc: SourceLocation test262/rest-parameter/object-pattern-single-element-with-object/input.js 1:36-1:47
+					}
+					loc: SourceLocation test262/rest-parameter/object-pattern-single-element-with-object/input.js 1:36-1:47
 				}
+				loc: SourceLocation test262/rest-parameter/object-pattern-single-element-with-object/input.js 1:32-1:48
 			}
+			loc: SourceLocation test262/rest-parameter/object-pattern-single-element-with-object/input.js 1:0-1:51
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<test262/rest-parameter/object-pattern-single-element-with-object/input.js>
+	loc: SourceLocation test262/rest-parameter/object-pattern-single-element-with-object/input.js 1:0-2:0
 }
 ```
 

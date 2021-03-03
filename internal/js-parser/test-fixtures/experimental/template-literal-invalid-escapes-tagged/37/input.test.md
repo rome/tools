@@ -8,31 +8,12 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation experimental/template-literal-invalid-escapes-tagged/37/input.js 1:0-1:17
-	path: UIDPath<experimental/template-literal-invalid-escapes-tagged/37/input.js>
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation experimental/template-literal-invalid-escapes-tagged/37/input.js 1:0-1:17
 			expression: JSTaggedTemplateExpression {
-				typeArguments: undefined
-				loc: SourceLocation experimental/template-literal-invalid-escapes-tagged/37/input.js 1:0-1:17
-				tag: JSReferenceIdentifier {
-					name: "sampleTag"
-					loc: SourceLocation experimental/template-literal-invalid-escapes-tagged/37/input.js 1:0-1:9 (sampleTag)
-				}
 				quasi: JSTemplateLiteral {
-					expressions: Array []
-					loc: SourceLocation experimental/template-literal-invalid-escapes-tagged/37/input.js 1:9-1:17
-					quasis: Array [
+					expressions: []
+					quasis: [
 						JSTemplateElement {
 							cooked: "\\u{-0}"
 							raw: "\\u{-0}"
@@ -40,10 +21,26 @@ JSRoot {
 							loc: SourceLocation experimental/template-literal-invalid-escapes-tagged/37/input.js 1:10-1:16
 						}
 					]
+					loc: SourceLocation experimental/template-literal-invalid-escapes-tagged/37/input.js 1:9-1:17
 				}
+				tag: JSReferenceIdentifier {
+					name: "sampleTag"
+					loc: SourceLocation experimental/template-literal-invalid-escapes-tagged/37/input.js 1:0-1:9 (sampleTag)
+				}
+				loc: SourceLocation experimental/template-literal-invalid-escapes-tagged/37/input.js 1:0-1:17
 			}
+			loc: SourceLocation experimental/template-literal-invalid-escapes-tagged/37/input.js 1:0-1:17
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<experimental/template-literal-invalid-escapes-tagged/37/input.js>
+	loc: SourceLocation experimental/template-literal-invalid-escapes-tagged/37/input.js 1:0-1:17
 }
 ```
 

@@ -8,38 +8,8 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation esprima/invalid-syntax/migrated_0039/input.js 1:0-1:6
-	path: UIDPath<esprima/invalid-syntax/migrated_0039/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Unterminated regular expression"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:5
-				path: UIDPath<esprima/invalid-syntax/migrated_0039/input.js>
-				start: Position 1:5
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation esprima/invalid-syntax/migrated_0039/input.js 1:0-1:6
 			expression: JSRegExpLiteral {
 				global: false
 				insensitive: false
@@ -47,10 +17,8 @@ JSRoot {
 				noDotNewline: false
 				sticky: false
 				unicode: false
-				loc: SourceLocation esprima/invalid-syntax/migrated_0039/input.js 1:0-1:6
 				expression: JSRegExpSubExpression {
-					loc: SourceLocation esprima/invalid-syntax/migrated_0039/input.js 1:1-1:5
-					body: Array [
+					body: [
 						JSRegExpCharacter {
 							value: "t"
 							loc: SourceLocation esprima/invalid-syntax/migrated_0039/input.js 1:1-1:2
@@ -68,10 +36,38 @@ JSRoot {
 							loc: SourceLocation esprima/invalid-syntax/migrated_0039/input.js 1:4-1:5
 						}
 					]
+					loc: SourceLocation esprima/invalid-syntax/migrated_0039/input.js 1:1-1:5
 				}
+				loc: SourceLocation esprima/invalid-syntax/migrated_0039/input.js 1:0-1:6
+			}
+			loc: SourceLocation esprima/invalid-syntax/migrated_0039/input.js 1:0-1:6
+		}
+	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "Unterminated regular expression"}
+			}
+			location: {
+				language: "js"
+				path: UIDPath<esprima/invalid-syntax/migrated_0039/input.js>
+				end: Position 1:5
+				start: Position 1:5
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<esprima/invalid-syntax/migrated_0039/input.js>
+	loc: SourceLocation esprima/invalid-syntax/migrated_0039/input.js 1:0-1:6
 }
 ```
 
@@ -84,7 +80,7 @@ JSRoot {
   ✖ Unterminated regular expression
 
     /test
-         ^
+         <error><emphasis>^</emphasis></error>
 
 
 ```

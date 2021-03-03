@@ -8,63 +8,41 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	syntax: Array []
-	loc: SourceLocation es2015/uncategorised/87/input.js 1:0-4:0
-	path: UIDPath<es2015/uncategorised/87/input.js>
-	body: Array [
+	body: [
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "encrypt"
 				loc: SourceLocation es2015/uncategorised/87/input.js 1:9-1:16 (encrypt)
 			}
-			loc: SourceLocation es2015/uncategorised/87/input.js 1:0-1:22
 			body: JSBlockStatement {
-				body: Array []
-				directives: Array []
+				body: []
+				directives: []
 				loc: SourceLocation es2015/uncategorised/87/input.js 1:20-1:22
 			}
 			head: JSFunctionHead {
 				async: false
 				generator: false
 				hasHoistedVars: false
-				params: Array []
-				rest: undefined
-				returnType: undefined
-				thisType: undefined
-				typeParameters: undefined
+				params: []
 				loc: SourceLocation es2015/uncategorised/87/input.js 1:17-1:19
 			}
+			loc: SourceLocation es2015/uncategorised/87/input.js 1:0-1:22
 		}
 		JSClassDeclaration {
 			id: JSBindingIdentifier {
 				name: "decrypt"
 				loc: SourceLocation es2015/uncategorised/87/input.js 2:6-2:13 (decrypt)
 			}
-			loc: SourceLocation es2015/uncategorised/87/input.js 2:0-2:15
 			meta: JSClassHead {
-				body: Array []
-				implements: undefined
-				superClass: undefined
-				superTypeParameters: undefined
-				typeParameters: undefined
+				body: []
 				loc: SourceLocation es2015/uncategorised/87/input.js 2:0-2:15
 			}
+			loc: SourceLocation es2015/uncategorised/87/input.js 2:0-2:15
 		}
 		JSExportLocalDeclaration {
-			declaration: undefined
 			exportKind: "value"
-			loc: SourceLocation es2015/uncategorised/87/input.js 3:0-3:27
-			specifiers: Array [
+			specifiers: [
 				JSExportLocalSpecifier {
-					loc: SourceLocation es2015/uncategorised/87/input.js 3:9-3:16
 					exported: JSIdentifier {
 						name: "encrypt"
 						loc: SourceLocation es2015/uncategorised/87/input.js 3:9-3:16 (encrypt)
@@ -73,9 +51,9 @@ JSRoot {
 						name: "encrypt"
 						loc: SourceLocation es2015/uncategorised/87/input.js 3:9-3:16 (encrypt)
 					}
+					loc: SourceLocation es2015/uncategorised/87/input.js 3:9-3:16
 				}
 				JSExportLocalSpecifier {
-					loc: SourceLocation es2015/uncategorised/87/input.js 3:18-3:25
 					exported: JSIdentifier {
 						name: "decrypt"
 						loc: SourceLocation es2015/uncategorised/87/input.js 3:18-3:25 (decrypt)
@@ -84,10 +62,21 @@ JSRoot {
 						name: "decrypt"
 						loc: SourceLocation es2015/uncategorised/87/input.js 3:18-3:25 (decrypt)
 					}
+					loc: SourceLocation es2015/uncategorised/87/input.js 3:18-3:25
 				}
 			]
+			loc: SourceLocation es2015/uncategorised/87/input.js 3:0-3:27
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: []
+	path: UIDPath<es2015/uncategorised/87/input.js>
+	loc: SourceLocation es2015/uncategorised/87/input.js 1:0-4:0
 }
 ```
 

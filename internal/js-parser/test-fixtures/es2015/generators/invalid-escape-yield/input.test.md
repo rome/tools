@@ -8,68 +8,59 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2015/generators/invalid-escape-yield/input.js 1:0-2:0
-	path: UIDPath<es2015/generators/invalid-escape-yield/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Can not use 'yield' as identifier inside a generator"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:26
-				path: UIDPath<es2015/generators/invalid-escape-yield/input.js>
-				start: Position 1:16
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation es2015/generators/invalid-escape-yield/input.js 1:0-1:30
 			expression: JSFunctionExpression {
-				id: undefined
-				loc: SourceLocation es2015/generators/invalid-escape-yield/input.js 1:1-1:29
-				head: JSFunctionHead {
-					async: false
-					generator: true
-					hasHoistedVars: false
-					params: Array []
-					rest: undefined
-					returnType: undefined
-					thisType: undefined
-					typeParameters: undefined
-					loc: SourceLocation es2015/generators/invalid-escape-yield/input.js 1:11-1:13
-				}
 				body: JSBlockStatement {
-					directives: Array []
-					loc: SourceLocation es2015/generators/invalid-escape-yield/input.js 1:14-1:29
-					body: Array [
+					body: [
 						JSExpressionStatement {
-							loc: SourceLocation es2015/generators/invalid-escape-yield/input.js 1:16-1:27
 							expression: JSReferenceIdentifier {
 								name: "yield"
 								loc: SourceLocation es2015/generators/invalid-escape-yield/input.js 1:16-1:26 (yield)
 							}
+							loc: SourceLocation es2015/generators/invalid-escape-yield/input.js 1:16-1:27
 						}
 					]
+					directives: []
+					loc: SourceLocation es2015/generators/invalid-escape-yield/input.js 1:14-1:29
 				}
+				head: JSFunctionHead {
+					async: false
+					generator: true
+					hasHoistedVars: false
+					params: []
+					loc: SourceLocation es2015/generators/invalid-escape-yield/input.js 1:11-1:13
+				}
+				loc: SourceLocation es2015/generators/invalid-escape-yield/input.js 1:1-1:29
+			}
+			loc: SourceLocation es2015/generators/invalid-escape-yield/input.js 1:0-1:30
+		}
+	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "Can not use 'yield' as identifier inside a generator"}
+			}
+			location: {
+				language: "js"
+				path: UIDPath<es2015/generators/invalid-escape-yield/input.js>
+				end: Position 1:26
+				start: Position 1:16
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2015/generators/invalid-escape-yield/input.js>
+	loc: SourceLocation es2015/generators/invalid-escape-yield/input.js 1:0-2:0
 }
 ```
 
@@ -82,7 +73,11 @@ JSRoot {
   ✖ Can not use 'yield' as identifier inside a generator
 
     (function* () { y\u0069eld; })
-                    ^^^^^^^^^^
+                    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
+    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
+    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
+    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
+    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
 
 
 ```

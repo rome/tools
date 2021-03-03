@@ -8,29 +8,14 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	loc: SourceLocation jsx/basic/15/input.jsx 1:0-1:15
-	path: UIDPath<jsx/basic/15/input.jsx>
-	syntax: Array ["jsx"]
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation jsx/basic/15/input.jsx 1:0-1:15
 			expression: JSXElement {
+				attributes: []
+				children: []
+				selfClosing: false
 				name: JSXMemberExpression {
-					loc: SourceLocation jsx/basic/15/input.jsx 1:1-1:6
-					property: JSXIdentifier {
-						name: "c"
-						loc: SourceLocation jsx/basic/15/input.jsx 1:5-1:6
-					}
 					object: JSXMemberExpression {
-						loc: SourceLocation jsx/basic/15/input.jsx 1:1-1:4
 						object: JSXIdentifier {
 							name: "a"
 							loc: SourceLocation jsx/basic/15/input.jsx 1:1-1:2
@@ -39,16 +24,28 @@ JSRoot {
 							name: "b"
 							loc: SourceLocation jsx/basic/15/input.jsx 1:3-1:4
 						}
+						loc: SourceLocation jsx/basic/15/input.jsx 1:1-1:4
 					}
+					property: JSXIdentifier {
+						name: "c"
+						loc: SourceLocation jsx/basic/15/input.jsx 1:5-1:6
+					}
+					loc: SourceLocation jsx/basic/15/input.jsx 1:1-1:6
 				}
-				attributes: Array []
-				children: Array []
-				selfClosing: false
-				typeArguments: undefined
 				loc: SourceLocation jsx/basic/15/input.jsx 1:0-1:15
 			}
+			loc: SourceLocation jsx/basic/15/input.jsx 1:0-1:15
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: ["jsx"]
+	path: UIDPath<jsx/basic/15/input.jsx>
+	loc: SourceLocation jsx/basic/15/input.jsx 1:0-1:15
 }
 ```
 

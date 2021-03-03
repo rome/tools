@@ -8,59 +8,51 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2015/statements/label-invalid-class/input.js 1:0-2:0
-	path: UIDPath<es2015/statements/label-invalid-class/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Unexpected character <emphasis>c</emphasis>"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:10
-				path: UIDPath<es2015/statements/label-invalid-class/input.js>
-				start: Position 1:5
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSLabeledStatement {
-			loc: SourceLocation es2015/statements/label-invalid-class/input.js 1:0-1:15
-			label: JSIdentifier {
-				name: "foo"
-				loc: SourceLocation es2015/statements/label-invalid-class/input.js 1:0-1:3 (foo)
-			}
 			body: JSClassDeclaration {
 				id: JSBindingIdentifier {
 					name: "X"
 					loc: SourceLocation es2015/statements/label-invalid-class/input.js 1:11-1:12 (X)
 				}
-				loc: SourceLocation es2015/statements/label-invalid-class/input.js 1:5-1:15
 				meta: JSClassHead {
-					body: Array []
-					implements: undefined
-					superClass: undefined
-					superTypeParameters: undefined
-					typeParameters: undefined
+					body: []
 					loc: SourceLocation es2015/statements/label-invalid-class/input.js 1:5-1:15
 				}
+				loc: SourceLocation es2015/statements/label-invalid-class/input.js 1:5-1:15
+			}
+			label: JSIdentifier {
+				name: "foo"
+				loc: SourceLocation es2015/statements/label-invalid-class/input.js 1:0-1:3 (foo)
+			}
+			loc: SourceLocation es2015/statements/label-invalid-class/input.js 1:0-1:15
+		}
+	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "js"
+				message: [RAW_MARKUP {value: "Unexpected character <emphasis>"}, "c", RAW_MARKUP {value: "</emphasis>"}]
+			}
+			location: {
+				language: "js"
+				path: UIDPath<es2015/statements/label-invalid-class/input.js>
+				end: Position 1:10
+				start: Position 1:5
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2015/statements/label-invalid-class/input.js>
+	loc: SourceLocation es2015/statements/label-invalid-class/input.js 1:0-2:0
 }
 ```
 
@@ -73,7 +65,9 @@ JSRoot {
   ✖ Unexpected character c
 
     foo: class X {}
-         ^^^^^
+         <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
+    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
+    <error><emphasis>^</emphasis></error>
 
 
 ```

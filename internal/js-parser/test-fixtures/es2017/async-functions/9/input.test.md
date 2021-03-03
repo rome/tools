@@ -8,85 +8,75 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2017/async-functions/9/input.js 1:0-1:40
-	path: UIDPath<es2017/async-functions/9/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Expected a semicolon or a line terminator"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:29
-				path: UIDPath<es2017/async-functions/9/input.js>
-				start: Position 1:30
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "foo"
 				loc: SourceLocation es2017/async-functions/9/input.js 1:9-1:12 (foo)
 			}
-			loc: SourceLocation es2017/async-functions/9/input.js 1:0-1:40
 			body: JSBlockStatement {
-				directives: Array []
-				loc: SourceLocation es2017/async-functions/9/input.js 1:22-1:40
-				body: Array [
+				body: [
 					JSExpressionStatement {
-						loc: SourceLocation es2017/async-functions/9/input.js 1:24-1:29
 						expression: JSReferenceIdentifier {
 							name: "await"
 							loc: SourceLocation es2017/async-functions/9/input.js 1:24-1:29 (await)
 						}
+						loc: SourceLocation es2017/async-functions/9/input.js 1:24-1:29
 					}
 					JSExpressionStatement {
-						loc: SourceLocation es2017/async-functions/9/input.js 1:30-1:38
 						expression: JSReferenceIdentifier {
 							name: "promise"
 							loc: SourceLocation es2017/async-functions/9/input.js 1:30-1:37 (promise)
 						}
+						loc: SourceLocation es2017/async-functions/9/input.js 1:30-1:38
 					}
 				]
+				directives: []
+				loc: SourceLocation es2017/async-functions/9/input.js 1:22-1:40
 			}
 			head: JSFunctionHead {
 				async: false
 				generator: false
 				hasHoistedVars: false
-				rest: undefined
-				returnType: undefined
-				thisType: undefined
-				typeParameters: undefined
-				loc: SourceLocation es2017/async-functions/9/input.js 1:12-1:21
-				params: Array [
+				params: [
 					JSBindingIdentifier {
 						name: "promise"
-						loc: SourceLocation es2017/async-functions/9/input.js 1:13-1:20 (promise)
 						meta: JSPatternMeta {
-							optional: undefined
-							typeAnnotation: undefined
 							loc: SourceLocation es2017/async-functions/9/input.js 1:13-1:20
 						}
+						loc: SourceLocation es2017/async-functions/9/input.js 1:13-1:20 (promise)
 					}
 				]
+				loc: SourceLocation es2017/async-functions/9/input.js 1:12-1:21
+			}
+			loc: SourceLocation es2017/async-functions/9/input.js 1:0-1:40
+		}
+	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "Expected a semicolon or a line terminator"}
+			}
+			location: {
+				language: "js"
+				path: UIDPath<es2017/async-functions/9/input.js>
+				end: Position 1:29
+				start: Position 1:30
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2017/async-functions/9/input.js>
+	loc: SourceLocation es2017/async-functions/9/input.js 1:0-1:40
 }
 ```
 
@@ -99,7 +89,7 @@ JSRoot {
   ✖ Expected a semicolon or a line terminator
 
     function foo(promise) { await promise; }
-                                  ^
+                                  <error><emphasis>^</emphasis></error>
 
 
 ```

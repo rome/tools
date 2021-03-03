@@ -8,54 +8,49 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: true
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2015/uncategorised/229/input.js 1:0-1:9
-	path: UIDPath<es2015/uncategorised/229/input.js>
-	body: Array [
+	body: [
 		JSVariableDeclarationStatement {
-			loc: SourceLocation es2015/uncategorised/229/input.js 1:0-1:9
 			declaration: JSVariableDeclaration {
 				kind: "var"
-				loc: SourceLocation es2015/uncategorised/229/input.js 1:0-1:9
-				declarations: Array [
+				declarations: [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "super"
 							loc: SourceLocation es2015/uncategorised/229/input.js 1:4-1:9 (super)
 						}
-						init: undefined
 						loc: SourceLocation es2015/uncategorised/229/input.js 1:4-1:9
 					}
 				]
+				loc: SourceLocation es2015/uncategorised/229/input.js 1:0-1:9
 			}
+			loc: SourceLocation es2015/uncategorised/229/input.js 1:0-1:9
 		}
 	]
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {
+				advice: []
+				category: ["parse"]
 				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Unexpected keyword <emphasis>super</emphasis>"}
+				message: [RAW_MARKUP {value: "Unexpected keyword <emphasis>"}, "super", RAW_MARKUP {value: "</emphasis>"}]
 			}
-			location: Object {
-				integrity: undefined
+			location: {
 				language: "js"
-				sourceText: undefined
-				end: Position 1:9
 				path: UIDPath<es2015/uncategorised/229/input.js>
+				end: Position 1:9
 				start: Position 1:4
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: true
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2015/uncategorised/229/input.js>
+	loc: SourceLocation es2015/uncategorised/229/input.js 1:0-1:9
 }
 ```
 
@@ -68,7 +63,9 @@ JSRoot {
   ✖ Unexpected keyword super
 
     var super
-        ^^^^^
+        <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
+    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
+    <error><emphasis>^</emphasis></error>
 
 
 ```

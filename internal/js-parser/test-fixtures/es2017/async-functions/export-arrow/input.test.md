@@ -8,45 +8,40 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	syntax: Array []
-	loc: SourceLocation es2017/async-functions/export-arrow/input.js 1:0-2:0
-	path: UIDPath<es2017/async-functions/export-arrow/input.js>
-	body: Array [
+	body: [
 		JSExportDefaultDeclaration {
-			loc: SourceLocation es2017/async-functions/export-arrow/input.js 1:0-1:38
 			declaration: JSArrowFunctionExpression {
-				loc: SourceLocation es2017/async-functions/export-arrow/input.js 1:15-1:38
-				head: JSFunctionHead {
-					async: true
-					hasHoistedVars: false
-					params: Array []
-					rest: undefined
-					returnType: undefined
-					thisType: undefined
-					loc: SourceLocation es2017/async-functions/export-arrow/input.js 1:15-1:26
-				}
 				body: JSAwaitExpression {
-					loc: SourceLocation es2017/async-functions/export-arrow/input.js 1:27-1:38
 					argument: JSCallExpression {
-						arguments: Array []
-						loc: SourceLocation es2017/async-functions/export-arrow/input.js 1:33-1:38
+						arguments: []
 						callee: JSReferenceIdentifier {
 							name: "foo"
 							loc: SourceLocation es2017/async-functions/export-arrow/input.js 1:33-1:36 (foo)
 						}
+						loc: SourceLocation es2017/async-functions/export-arrow/input.js 1:33-1:38
 					}
+					loc: SourceLocation es2017/async-functions/export-arrow/input.js 1:27-1:38
 				}
+				head: JSFunctionHead {
+					async: true
+					hasHoistedVars: false
+					params: []
+					loc: SourceLocation es2017/async-functions/export-arrow/input.js 1:15-1:26
+				}
+				loc: SourceLocation es2017/async-functions/export-arrow/input.js 1:15-1:38
 			}
+			loc: SourceLocation es2017/async-functions/export-arrow/input.js 1:0-1:38
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: []
+	path: UIDPath<es2017/async-functions/export-arrow/input.js>
+	loc: SourceLocation es2017/async-functions/export-arrow/input.js 1:0-2:0
 }
 ```
 

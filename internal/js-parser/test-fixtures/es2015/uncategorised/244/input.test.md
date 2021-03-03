@@ -8,66 +8,54 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2015/uncategorised/244/input.js 1:0-1:29
-	path: UIDPath<es2015/uncategorised/244/input.js>
-	directives: Array [
-		JSDirective {
-			value: "use strict"
-			loc: SourceLocation es2015/uncategorised/244/input.js 1:0-1:13
-		}
-	]
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "arguments is a reserved word"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:23
-				path: UIDPath<es2015/uncategorised/244/input.js>
-				start: Position 1:14
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation es2015/uncategorised/244/input.js 1:14-1:29
 			expression: JSArrowFunctionExpression {
-				loc: SourceLocation es2015/uncategorised/244/input.js 1:14-1:29
 				body: JSNumericLiteral {
 					value: 42
-					format: undefined
 					loc: SourceLocation es2015/uncategorised/244/input.js 1:27-1:29
 				}
 				head: JSFunctionHead {
 					async: false
 					hasHoistedVars: false
-					rest: undefined
-					thisType: undefined
-					loc: SourceLocation es2015/uncategorised/244/input.js 1:14-1:26
-					params: Array [
+					params: [
 						JSBindingIdentifier {
 							name: "arguments"
 							loc: SourceLocation es2015/uncategorised/244/input.js 1:14-1:23 (arguments)
 						}
 					]
+					loc: SourceLocation es2015/uncategorised/244/input.js 1:14-1:26
 				}
+				loc: SourceLocation es2015/uncategorised/244/input.js 1:14-1:29
+			}
+			loc: SourceLocation es2015/uncategorised/244/input.js 1:14-1:29
+		}
+	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {advice: [], category: ["parse"], categoryValue: "js", message: ["arguments", RAW_MARKUP {value: " is a reserved word"}]}
+			location: {
+				language: "js"
+				path: UIDPath<es2015/uncategorised/244/input.js>
+				end: Position 1:23
+				start: Position 1:14
 			}
 		}
 	]
+	directives: [
+		JSDirective {
+			value: "use strict"
+			loc: SourceLocation es2015/uncategorised/244/input.js 1:0-1:13
+		}
+	]
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2015/uncategorised/244/input.js>
+	loc: SourceLocation es2015/uncategorised/244/input.js 1:0-1:29
 }
 ```
 
@@ -80,7 +68,11 @@ JSRoot {
   ✖ arguments is a reserved word
 
     "use strict"; arguments => 42
-                  ^^^^^^^^^
+                  <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
+    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
+    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
+    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
+    <error><emphasis>^</emphasis></error>
 
 
 ```

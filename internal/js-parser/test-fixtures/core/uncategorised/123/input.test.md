@@ -11,9 +11,15 @@ JSRoot {
 	body: [
 		JSExpressionStatement {
 			expression: JSMemberExpression {
-				object: JSReferenceIdentifier {name: "universe", loc: SourceLocation core/uncategorised/123/input.js 1:0-1:8 (universe)}
+				object: JSReferenceIdentifier {
+					name: "universe"
+					loc: SourceLocation core/uncategorised/123/input.js 1:0-1:8 (universe)
+				}
 				property: JSComputedMemberProperty {
-					value: JSReferenceIdentifier {name: "galaxyName", loc: SourceLocation core/uncategorised/123/input.js 1:9-1:19 (galaxyName)}
+					value: JSReferenceIdentifier {
+						name: "galaxyName"
+						loc: SourceLocation core/uncategorised/123/input.js 1:9-1:19 (galaxyName)
+					}
 					loc: SourceLocation core/uncategorised/123/input.js 1:8-1:20
 				}
 				loc: SourceLocation core/uncategorised/123/input.js 1:0-1:20
@@ -26,9 +32,9 @@ JSRoot {
 	diagnostics: []
 	directives: []
 	hasHoistedVars: false
-	path: UIDPath<core/uncategorised/123/input.js>
 	sourceType: "script"
 	syntax: []
+	path: UIDPath<core/uncategorised/123/input.js>
 	loc: SourceLocation core/uncategorised/123/input.js 1:0-1:20
 }
 ```

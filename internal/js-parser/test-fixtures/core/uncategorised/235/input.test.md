@@ -12,12 +12,22 @@ JSRoot {
 		JSBlockStatement {
 			body: [
 				JSDoWhileStatement {
-					body: JSBlockStatement {body: [], directives: [], loc: SourceLocation core/uncategorised/235/input.js 1:5-1:8}
-					test: JSBooleanLiteral {value: false, loc: SourceLocation core/uncategorised/235/input.js 1:16-1:21}
+					body: JSBlockStatement {
+						body: []
+						directives: []
+						loc: SourceLocation core/uncategorised/235/input.js 1:5-1:8
+					}
+					test: JSBooleanLiteral {
+						value: false
+						loc: SourceLocation core/uncategorised/235/input.js 1:16-1:21
+					}
 					loc: SourceLocation core/uncategorised/235/input.js 1:2-1:23
 				}
 				JSExpressionStatement {
-					expression: JSBooleanLiteral {value: false, loc: SourceLocation core/uncategorised/235/input.js 1:23-1:28}
+					expression: JSBooleanLiteral {
+						value: false
+						loc: SourceLocation core/uncategorised/235/input.js 1:23-1:28
+					}
 					loc: SourceLocation core/uncategorised/235/input.js 1:23-1:28
 				}
 			]
@@ -30,9 +40,9 @@ JSRoot {
 	diagnostics: []
 	directives: []
 	hasHoistedVars: false
-	path: UIDPath<core/uncategorised/235/input.js>
 	sourceType: "script"
 	syntax: []
+	path: UIDPath<core/uncategorised/235/input.js>
 	loc: SourceLocation core/uncategorised/235/input.js 1:0-1:30
 }
 ```

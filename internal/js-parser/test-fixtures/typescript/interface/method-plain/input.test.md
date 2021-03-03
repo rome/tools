@@ -8,30 +8,16 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	loc: SourceLocation typescript/interface/method-plain/input.ts 1:0-5:0
-	path: UIDPath<typescript/interface/method-plain/input.ts>
-	syntax: Array ["ts"]
-	body: Array [
+	body: [
 		TSInterfaceDeclaration {
 			id: JSBindingIdentifier {
 				name: "I"
 				loc: SourceLocation typescript/interface/method-plain/input.ts 1:10-1:11 (I)
 			}
-			extends: undefined
-			typeParameters: undefined
-			loc: SourceLocation typescript/interface/method-plain/input.ts 1:0-4:1
 			body: TSInterfaceBody {
-				loc: SourceLocation typescript/interface/method-plain/input.ts 1:12-4:1
-				body: Array [
+				body: [
 					TSMethodSignature {
+						optional: false
 						key: JSStaticPropertyKey {
 							value: JSIdentifier {
 								name: "m"
@@ -39,17 +25,14 @@ JSRoot {
 							}
 							loc: SourceLocation typescript/interface/method-plain/input.ts 2:4-2:5
 						}
-						optional: false
-						returnType: undefined
-						loc: SourceLocation typescript/interface/method-plain/input.ts 2:4-2:8
 						meta: TSSignatureDeclarationMeta {
-							parameters: Array []
-							rest: undefined
-							typeParameters: undefined
+							parameters: []
 							loc: SourceLocation typescript/interface/method-plain/input.ts 2:5-2:7
 						}
+						loc: SourceLocation typescript/interface/method-plain/input.ts 2:4-2:8
 					}
 					TSMethodSignature {
+						optional: false
 						key: JSStaticPropertyKey {
 							value: JSIdentifier {
 								name: "m"
@@ -57,41 +40,55 @@ JSRoot {
 							}
 							loc: SourceLocation typescript/interface/method-plain/input.ts 3:4-3:5
 						}
-						optional: false
-						loc: SourceLocation typescript/interface/method-plain/input.ts 3:4-3:40
-						returnType: TSVoidKeywordTypeAnnotation {loc: SourceLocation typescript/interface/method-plain/input.ts 3:35-3:39}
 						meta: TSSignatureDeclarationMeta {
-							typeParameters: undefined
-							loc: SourceLocation typescript/interface/method-plain/input.ts 3:5-3:39
-							parameters: Array [
+							parameters: [
 								JSBindingIdentifier {
 									name: "x"
-									loc: SourceLocation typescript/interface/method-plain/input.ts 3:6-3:7 (x)
 									meta: JSPatternMeta {
 										optional: true
+										typeAnnotation: TSNumberKeywordTypeAnnotation {
+											loc: SourceLocation typescript/interface/method-plain/input.ts 3:10-3:16
+										}
 										loc: SourceLocation typescript/interface/method-plain/input.ts 3:6-3:16
-										typeAnnotation: TSNumberKeywordTypeAnnotation {loc: SourceLocation typescript/interface/method-plain/input.ts 3:10-3:16}
 									}
+									loc: SourceLocation typescript/interface/method-plain/input.ts 3:6-3:7 (x)
 								}
 							]
 							rest: JSBindingIdentifier {
 								name: "y"
-								loc: SourceLocation typescript/interface/method-plain/input.ts 3:21-3:22 (y)
 								meta: JSPatternMeta {
-									optional: undefined
-									loc: SourceLocation typescript/interface/method-plain/input.ts 3:21-3:32
 									typeAnnotation: TSArrayType {
-										elementType: TSNumberKeywordTypeAnnotation {loc: SourceLocation typescript/interface/method-plain/input.ts 3:24-3:30}
+										elementType: TSNumberKeywordTypeAnnotation {
+											loc: SourceLocation typescript/interface/method-plain/input.ts 3:24-3:30
+										}
 										loc: SourceLocation typescript/interface/method-plain/input.ts 3:24-3:32
 									}
+									loc: SourceLocation typescript/interface/method-plain/input.ts 3:21-3:32
 								}
+								loc: SourceLocation typescript/interface/method-plain/input.ts 3:21-3:22 (y)
 							}
+							loc: SourceLocation typescript/interface/method-plain/input.ts 3:5-3:39
 						}
+						returnType: TSVoidKeywordTypeAnnotation {
+							loc: SourceLocation typescript/interface/method-plain/input.ts 3:35-3:39
+						}
+						loc: SourceLocation typescript/interface/method-plain/input.ts 3:4-3:40
 					}
 				]
+				loc: SourceLocation typescript/interface/method-plain/input.ts 1:12-4:1
 			}
+			loc: SourceLocation typescript/interface/method-plain/input.ts 1:0-4:1
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: ["ts"]
+	path: UIDPath<typescript/interface/method-plain/input.ts>
+	loc: SourceLocation typescript/interface/method-plain/input.ts 1:0-5:0
 }
 ```
 

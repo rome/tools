@@ -8,31 +8,14 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2017/trailing-function-commas/3/input.js 1:0-1:25
-	path: UIDPath<es2017/trailing-function-commas/3/input.js>
-	body: Array [
+	body: [
 		JSClassDeclaration {
 			id: JSBindingIdentifier {
 				name: "Foo"
 				loc: SourceLocation es2017/trailing-function-commas/3/input.js 1:6-1:9 (Foo)
 			}
-			loc: SourceLocation es2017/trailing-function-commas/3/input.js 1:0-1:25
 			meta: JSClassHead {
-				implements: undefined
-				superClass: undefined
-				superTypeParameters: undefined
-				typeParameters: undefined
-				loc: SourceLocation es2017/trailing-function-commas/3/input.js 1:0-1:25
-				body: Array [
+				body: [
 					JSClassMethod {
 						kind: "method"
 						key: JSStaticPropertyKey {
@@ -42,48 +25,51 @@ JSRoot {
 							}
 							loc: SourceLocation es2017/trailing-function-commas/3/input.js 1:12-1:15
 						}
-						loc: SourceLocation es2017/trailing-function-commas/3/input.js 1:12-1:23
 						body: JSBlockStatement {
-							body: Array []
-							directives: Array []
+							body: []
+							directives: []
 							loc: SourceLocation es2017/trailing-function-commas/3/input.js 1:20-1:23
-						}
-						meta: JSClassPropertyMeta {
-							abstract: false
-							accessibility: undefined
-							optional: false
-							readonly: false
-							static: false
-							typeAnnotation: undefined
-							loc: SourceLocation es2017/trailing-function-commas/3/input.js 1:12-1:15
-							start: Position 1:12
 						}
 						head: JSFunctionHead {
 							async: false
 							generator: false
 							hasHoistedVars: false
-							rest: undefined
-							returnType: undefined
-							thisType: undefined
-							typeParameters: undefined
-							loc: SourceLocation es2017/trailing-function-commas/3/input.js 1:15-1:19
-							params: Array [
+							params: [
 								JSBindingIdentifier {
 									name: "a"
-									loc: SourceLocation es2017/trailing-function-commas/3/input.js 1:16-1:17 (a)
 									meta: JSPatternMeta {
-										optional: undefined
-										typeAnnotation: undefined
 										loc: SourceLocation es2017/trailing-function-commas/3/input.js 1:16-1:17
 									}
+									loc: SourceLocation es2017/trailing-function-commas/3/input.js 1:16-1:17 (a)
 								}
 							]
+							loc: SourceLocation es2017/trailing-function-commas/3/input.js 1:15-1:19
 						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							optional: false
+							readonly: false
+							static: false
+							loc: SourceLocation es2017/trailing-function-commas/3/input.js 1:12-1:15
+							start: Position 1:12
+						}
+						loc: SourceLocation es2017/trailing-function-commas/3/input.js 1:12-1:23
 					}
 				]
+				loc: SourceLocation es2017/trailing-function-commas/3/input.js 1:0-1:25
 			}
+			loc: SourceLocation es2017/trailing-function-commas/3/input.js 1:0-1:25
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2017/trailing-function-commas/3/input.js>
+	loc: SourceLocation es2017/trailing-function-commas/3/input.js 1:0-1:25
 }
 ```
 

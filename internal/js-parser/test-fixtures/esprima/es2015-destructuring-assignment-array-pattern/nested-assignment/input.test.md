@@ -8,66 +8,38 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation esprima/es2015-destructuring-assignment-array-pattern/nested-assignment/input.js 1:0-2:0
-	path: UIDPath<esprima/es2015-destructuring-assignment-array-pattern/nested-assignment/input.js>
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation esprima/es2015-destructuring-assignment-array-pattern/nested-assignment/input.js 1:0-1:25
 			expression: JSAssignmentExpression {
 				operator: "="
-				loc: SourceLocation esprima/es2015-destructuring-assignment-array-pattern/nested-assignment/input.js 1:0-1:24
-				right: JSNumericLiteral {
-					value: 0
-					format: undefined
-					loc: SourceLocation esprima/es2015-destructuring-assignment-array-pattern/nested-assignment/input.js 1:23-1:24
-				}
 				left: JSAssignmentArrayPattern {
-					rest: undefined
-					loc: SourceLocation esprima/es2015-destructuring-assignment-array-pattern/nested-assignment/input.js 1:0-1:22
-					elements: Array [
+					elements: [
 						JSAssignmentIdentifier {
 							name: "a"
 							loc: SourceLocation esprima/es2015-destructuring-assignment-array-pattern/nested-assignment/input.js 1:1-1:2 (a)
 						}
 						JSAssignmentAssignmentPattern {
 							operator: "="
-							loc: SourceLocation esprima/es2015-destructuring-assignment-array-pattern/nested-assignment/input.js 1:3-1:6
 							left: JSAssignmentIdentifier {
 								name: "b"
 								loc: SourceLocation esprima/es2015-destructuring-assignment-array-pattern/nested-assignment/input.js 1:3-1:4 (b)
 							}
 							right: JSNumericLiteral {
 								value: 0
-								format: undefined
 								loc: SourceLocation esprima/es2015-destructuring-assignment-array-pattern/nested-assignment/input.js 1:5-1:6
 							}
+							loc: SourceLocation esprima/es2015-destructuring-assignment-array-pattern/nested-assignment/input.js 1:3-1:6
 						}
 						JSAssignmentAssignmentPattern {
 							operator: "="
-							loc: SourceLocation esprima/es2015-destructuring-assignment-array-pattern/nested-assignment/input.js 1:7-1:21
-							right: JSObjectExpression {
-								properties: Array []
-								loc: SourceLocation esprima/es2015-destructuring-assignment-array-pattern/nested-assignment/input.js 1:19-1:21
-							}
 							left: JSAssignmentArrayPattern {
-								loc: SourceLocation esprima/es2015-destructuring-assignment-array-pattern/nested-assignment/input.js 1:7-1:18
-								elements: Array [
+								elements: [
 									JSAssignmentIdentifier {
 										name: "c"
 										loc: SourceLocation esprima/es2015-destructuring-assignment-array-pattern/nested-assignment/input.js 1:8-1:9 (c)
 									}
 								]
 								rest: JSMemberExpression {
-									loc: SourceLocation esprima/es2015-destructuring-assignment-array-pattern/nested-assignment/input.js 1:13-1:17
 									object: JSReferenceIdentifier {
 										name: "a"
 										loc: SourceLocation esprima/es2015-destructuring-assignment-array-pattern/nested-assignment/input.js 1:13-1:14 (a)
@@ -75,19 +47,41 @@ JSRoot {
 									property: JSComputedMemberProperty {
 										value: JSNumericLiteral {
 											value: 0
-											format: undefined
 											loc: SourceLocation esprima/es2015-destructuring-assignment-array-pattern/nested-assignment/input.js 1:15-1:16
 										}
 										loc: SourceLocation esprima/es2015-destructuring-assignment-array-pattern/nested-assignment/input.js 1:14-1:17
 									}
+									loc: SourceLocation esprima/es2015-destructuring-assignment-array-pattern/nested-assignment/input.js 1:13-1:17
 								}
+								loc: SourceLocation esprima/es2015-destructuring-assignment-array-pattern/nested-assignment/input.js 1:7-1:18
 							}
+							right: JSObjectExpression {
+								properties: []
+								loc: SourceLocation esprima/es2015-destructuring-assignment-array-pattern/nested-assignment/input.js 1:19-1:21
+							}
+							loc: SourceLocation esprima/es2015-destructuring-assignment-array-pattern/nested-assignment/input.js 1:7-1:21
 						}
 					]
+					loc: SourceLocation esprima/es2015-destructuring-assignment-array-pattern/nested-assignment/input.js 1:0-1:22
 				}
+				right: JSNumericLiteral {
+					value: 0
+					loc: SourceLocation esprima/es2015-destructuring-assignment-array-pattern/nested-assignment/input.js 1:23-1:24
+				}
+				loc: SourceLocation esprima/es2015-destructuring-assignment-array-pattern/nested-assignment/input.js 1:0-1:24
 			}
+			loc: SourceLocation esprima/es2015-destructuring-assignment-array-pattern/nested-assignment/input.js 1:0-1:25
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<esprima/es2015-destructuring-assignment-array-pattern/nested-assignment/input.js>
+	loc: SourceLocation esprima/es2015-destructuring-assignment-array-pattern/nested-assignment/input.js 1:0-2:0
 }
 ```
 

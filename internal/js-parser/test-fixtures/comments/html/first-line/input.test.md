@@ -10,18 +10,26 @@
 JSRoot {
 	body: []
 	comments: [
-		CommentBlock {id: "0", value: "", loc: SourceLocation comments/html/first-line/input.js 1:0-1:4}
-		CommentLine {id: "1", value: " comment", loc: SourceLocation comments/html/first-line/input.js 1:5-1:16}
+		CommentBlock {
+			id: "0"
+			value: ""
+			loc: SourceLocation comments/html/first-line/input.js 1:0-1:4
+		}
+		CommentLine {
+			id: "1"
+			value: " comment"
+			loc: SourceLocation comments/html/first-line/input.js 1:5-1:16
+		}
 	]
 	corrupt: false
 	diagnostics: []
 	directives: []
 	hasHoistedVars: false
 	innerComments: ["0", "1"]
-	path: UIDPath<comments/html/first-line/input.js>
 	sourceType: "script"
 	syntax: []
 	trailingComments: []
+	path: UIDPath<comments/html/first-line/input.js>
 	loc: SourceLocation comments/html/first-line/input.js 1:0-2:0
 }
 ```

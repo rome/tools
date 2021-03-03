@@ -8,49 +8,14 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: true
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation experimental/private-in/private-binary-expression-right/input.js 1:0-7:0
-	path: UIDPath<experimental/private-in/private-binary-expression-right/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Unknown start to an statement expression"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 4:7
-				path: UIDPath<experimental/private-in/private-binary-expression-right/input.js>
-				start: Position 4:8
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSClassDeclaration {
 			id: JSBindingIdentifier {
 				name: "Foo"
 				loc: SourceLocation experimental/private-in/private-binary-expression-right/input.js 1:6-1:9 (Foo)
 			}
-			loc: SourceLocation experimental/private-in/private-binary-expression-right/input.js 1:0-6:1
 			meta: JSClassHead {
-				implements: undefined
-				superClass: undefined
-				superTypeParameters: undefined
-				typeParameters: undefined
-				loc: SourceLocation experimental/private-in/private-binary-expression-right/input.js 1:0-6:1
-				body: Array [
+				body: [
 					JSClassPrivateProperty {
 						key: JSPrivateName {
 							id: JSIdentifier {
@@ -61,21 +26,17 @@ JSRoot {
 						}
 						value: JSNumericLiteral {
 							value: 1
-							format: undefined
 							loc: SourceLocation experimental/private-in/private-binary-expression-right/input.js 2:7-2:8
 						}
-						typeAnnotation: undefined
-						loc: SourceLocation experimental/private-in/private-binary-expression-right/input.js 2:2-2:9
 						meta: JSClassPropertyMeta {
 							abstract: false
-							accessibility: undefined
 							optional: false
 							readonly: false
 							static: false
-							typeAnnotation: undefined
 							loc: SourceLocation experimental/private-in/private-binary-expression-right/input.js 2:2-2:4
 							start: Position 2:2
 						}
+						loc: SourceLocation experimental/private-in/private-binary-expression-right/input.js 2:2-2:9
 					}
 					JSClassMethod {
 						kind: "method"
@@ -86,62 +47,77 @@ JSRoot {
 							}
 							loc: SourceLocation experimental/private-in/private-binary-expression-right/input.js 3:2-3:6
 						}
-						loc: SourceLocation experimental/private-in/private-binary-expression-right/input.js 3:2-5:3
-						meta: JSClassPropertyMeta {
-							abstract: false
-							accessibility: undefined
-							optional: false
-							readonly: false
-							static: false
-							typeAnnotation: undefined
-							loc: SourceLocation experimental/private-in/private-binary-expression-right/input.js 3:2-3:6
-							start: Position 3:2
+						body: JSBlockStatement {
+							body: [
+								JSExpressionStatement {
+									expression: JSBinaryExpression {
+										operator: "+"
+										left: JSNumericLiteral {
+											value: 1
+											loc: SourceLocation experimental/private-in/private-binary-expression-right/input.js 4:4-4:5
+										}
+										right: JSReferenceIdentifier {
+											name: "INVALID_PLACEHOLDER"
+											loc: SourceLocation experimental/private-in/private-binary-expression-right/input.js 4:8-4:9
+										}
+										loc: SourceLocation experimental/private-in/private-binary-expression-right/input.js 4:4-4:9
+									}
+									loc: SourceLocation experimental/private-in/private-binary-expression-right/input.js 4:4-4:9
+								}
+								JSExpressionStatement {
+									expression: JSReferenceIdentifier {
+										name: "x"
+										loc: SourceLocation experimental/private-in/private-binary-expression-right/input.js 4:9-4:10 (x)
+									}
+									loc: SourceLocation experimental/private-in/private-binary-expression-right/input.js 4:9-4:11
+								}
+							]
+							directives: []
+							loc: SourceLocation experimental/private-in/private-binary-expression-right/input.js 3:9-5:3
 						}
 						head: JSFunctionHead {
 							async: false
 							generator: false
 							hasHoistedVars: false
-							params: Array []
-							rest: undefined
-							returnType: undefined
-							thisType: undefined
-							typeParameters: undefined
+							params: []
 							loc: SourceLocation experimental/private-in/private-binary-expression-right/input.js 3:6-3:8
 						}
-						body: JSBlockStatement {
-							directives: Array []
-							loc: SourceLocation experimental/private-in/private-binary-expression-right/input.js 3:9-5:3
-							body: Array [
-								JSExpressionStatement {
-									loc: SourceLocation experimental/private-in/private-binary-expression-right/input.js 4:4-4:9
-									expression: JSBinaryExpression {
-										operator: "+"
-										loc: SourceLocation experimental/private-in/private-binary-expression-right/input.js 4:4-4:9
-										right: JSReferenceIdentifier {
-											name: "INVALID_PLACEHOLDER"
-											loc: SourceLocation experimental/private-in/private-binary-expression-right/input.js 4:8-4:9
-										}
-										left: JSNumericLiteral {
-											value: 1
-											format: undefined
-											loc: SourceLocation experimental/private-in/private-binary-expression-right/input.js 4:4-4:5
-										}
-									}
-								}
-								JSExpressionStatement {
-									loc: SourceLocation experimental/private-in/private-binary-expression-right/input.js 4:9-4:11
-									expression: JSReferenceIdentifier {
-										name: "x"
-										loc: SourceLocation experimental/private-in/private-binary-expression-right/input.js 4:9-4:10 (x)
-									}
-								}
-							]
+						meta: JSClassPropertyMeta {
+							abstract: false
+							optional: false
+							readonly: false
+							static: false
+							loc: SourceLocation experimental/private-in/private-binary-expression-right/input.js 3:2-3:6
+							start: Position 3:2
 						}
+						loc: SourceLocation experimental/private-in/private-binary-expression-right/input.js 3:2-5:3
 					}
 				]
+				loc: SourceLocation experimental/private-in/private-binary-expression-right/input.js 1:0-6:1
+			}
+			loc: SourceLocation experimental/private-in/private-binary-expression-right/input.js 1:0-6:1
+		}
+	]
+	comments: []
+	corrupt: true
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {advice: [], category: ["parse"], categoryValue: "js", message: [RAW_MARKUP {value: "Unknown start to an "}, "statement expression"]}
+			location: {
+				language: "js"
+				path: UIDPath<experimental/private-in/private-binary-expression-right/input.js>
+				end: Position 4:7
+				start: Position 4:8
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<experimental/private-in/private-binary-expression-right/input.js>
+	loc: SourceLocation experimental/private-in/private-binary-expression-right/input.js 1:0-7:0
 }
 ```
 
@@ -156,7 +132,7 @@ JSRoot {
     2 │   #x = 1;
     3 │   test() {
   > 4 │     1 + #x;
-      │         ^
+      │         <error><emphasis>^</emphasis></error>
     5 │   }
     6 │ }
 

@@ -41,13 +41,12 @@ export default createServerCommand({
 			res = await req.requestWorkerCompile(resolved, "compile", {}, {});
 		}
 
-		const {compiledCode, diagnostics, suppressions} = res.value;
+		const {compiledCode, diagnostics} = res.value;
 
 		if (diagnostics.length > 0) {
 			throw new DiagnosticsError(
 				"Compile diagnostics",
 				diagnostics,
-				suppressions,
 			);
 		}
 

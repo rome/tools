@@ -8,54 +8,50 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	loc: SourceLocation typescript/types/tuple-labeled/input.ts 1:0-2:0
-	path: UIDPath<typescript/types/tuple-labeled/input.ts>
-	syntax: Array ["ts"]
-	body: Array [
+	body: [
 		TSTypeAlias {
 			id: JSBindingIdentifier {
 				name: "StrStrNumNumBool"
 				loc: SourceLocation typescript/types/tuple-labeled/input.ts 1:5-1:21 (StrStrNumNumBool)
 			}
-			typeParameters: undefined
-			loc: SourceLocation typescript/types/tuple-labeled/input.ts 1:0-1:46
 			right: TSTupleType {
-				loc: SourceLocation typescript/types/tuple-labeled/input.ts 1:24-1:45
-				elementTypes: Array [
+				elementTypes: [
 					TSTupleElement {
-						name: undefined
 						optional: false
+						typeAnnotation: TSBooleanKeywordTypeAnnotation {
+							loc: SourceLocation typescript/types/tuple-labeled/input.ts 1:25-1:32
+						}
 						loc: SourceLocation typescript/types/tuple-labeled/input.ts 1:25-1:32
-						typeAnnotation: TSBooleanKeywordTypeAnnotation {loc: SourceLocation typescript/types/tuple-labeled/input.ts 1:25-1:32}
 					}
 					TSTupleElement {
-						name: undefined
 						optional: false
-						loc: SourceLocation typescript/types/tuple-labeled/input.ts 1:34-1:44
 						typeAnnotation: TSRestType {
-							loc: SourceLocation typescript/types/tuple-labeled/input.ts 1:34-1:44
 							argument: TSTypeReference {
-								typeParameters: undefined
-								loc: SourceLocation typescript/types/tuple-labeled/input.ts 1:37-1:44
 								typeName: JSReferenceIdentifier {
 									name: "Strings"
 									loc: SourceLocation typescript/types/tuple-labeled/input.ts 1:37-1:44 (Strings)
 								}
+								loc: SourceLocation typescript/types/tuple-labeled/input.ts 1:37-1:44
 							}
+							loc: SourceLocation typescript/types/tuple-labeled/input.ts 1:34-1:44
 						}
+						loc: SourceLocation typescript/types/tuple-labeled/input.ts 1:34-1:44
 					}
 				]
+				loc: SourceLocation typescript/types/tuple-labeled/input.ts 1:24-1:45
 			}
+			loc: SourceLocation typescript/types/tuple-labeled/input.ts 1:0-1:46
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: ["ts"]
+	path: UIDPath<typescript/types/tuple-labeled/input.ts>
+	loc: SourceLocation typescript/types/tuple-labeled/input.ts 1:0-2:0
 }
 ```
 

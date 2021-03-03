@@ -17,7 +17,7 @@ export * from "./derive";
 
 export * from "./helpers";
 
-export {default as DiagnosticsProcessor} from "./DiagnosticsProcessor";
+export {default as DiagnosticsProcessor, DEFAULT_PROCESSOR_FILTER_OPTIONS as DEFAULT_PROCESSOR_FILTER_FLAGS, DiagnosticsProcessorFilterOptions, DiagnosticsProcessorOptions} from "./DiagnosticsProcessor";
 
 export * from "./categories";
 

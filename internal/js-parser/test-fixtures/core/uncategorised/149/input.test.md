@@ -11,9 +11,12 @@ JSRoot {
 	body: [
 		JSExpressionStatement {
 			expression: JSUnaryExpression {
-				argument: JSReferenceIdentifier {name: "x", loc: SourceLocation core/uncategorised/149/input.js 1:7-1:8 (x)}
 				operator: "delete"
 				prefix: true
+				argument: JSReferenceIdentifier {
+					name: "x"
+					loc: SourceLocation core/uncategorised/149/input.js 1:7-1:8 (x)
+				}
 				loc: SourceLocation core/uncategorised/149/input.js 1:0-1:8
 			}
 			loc: SourceLocation core/uncategorised/149/input.js 1:0-1:8
@@ -24,9 +27,9 @@ JSRoot {
 	diagnostics: []
 	directives: []
 	hasHoistedVars: false
-	path: UIDPath<core/uncategorised/149/input.js>
 	sourceType: "script"
 	syntax: []
+	path: UIDPath<core/uncategorised/149/input.js>
 	loc: SourceLocation core/uncategorised/149/input.js 1:0-1:8
 }
 ```

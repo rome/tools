@@ -8,36 +8,33 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: true
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation esprima/es2015-identifier/escaped_math_zain_start/input.js 1:0-2:0
-	path: UIDPath<esprima/es2015-identifier/escaped_math_zain_start/input.js>
-	body: Array [
+	body: [
 		JSVariableDeclarationStatement {
-			loc: SourceLocation esprima/es2015-identifier/escaped_math_zain_start/input.js 1:0-1:15
 			declaration: JSVariableDeclaration {
 				kind: "var"
-				loc: SourceLocation esprima/es2015-identifier/escaped_math_zain_start/input.js 1:0-1:15
-				declarations: Array [
+				declarations: [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "\u{1ee06}_$"
 							loc: SourceLocation esprima/es2015-identifier/escaped_math_zain_start/input.js 1:4-1:15 (\u{1ee06}_$)
 						}
-						init: undefined
 						loc: SourceLocation esprima/es2015-identifier/escaped_math_zain_start/input.js 1:4-1:15
 					}
 				]
+				loc: SourceLocation esprima/es2015-identifier/escaped_math_zain_start/input.js 1:0-1:15
 			}
+			loc: SourceLocation esprima/es2015-identifier/escaped_math_zain_start/input.js 1:0-1:15
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: true
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<esprima/es2015-identifier/escaped_math_zain_start/input.js>
+	loc: SourceLocation esprima/es2015-identifier/escaped_math_zain_start/input.js 1:0-2:0
 }
 ```
 

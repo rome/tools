@@ -11,10 +11,18 @@ JSRoot {
 	body: [
 		JSExpressionStatement {
 			expression: JSAssignmentExpression {
-				left: JSAssignmentIdentifier {name: "x", loc: SourceLocation core/uncategorised/10/input.js 1:0-1:1 (x)}
 				operator: "="
+				left: JSAssignmentIdentifier {
+					name: "x"
+					loc: SourceLocation core/uncategorised/10/input.js 1:0-1:1 (x)
+				}
 				right: JSArrayExpression {
-					elements: [JSNumericLiteral {value: 42, loc: SourceLocation core/uncategorised/10/input.js 1:6-1:8}]
+					elements: [
+						JSNumericLiteral {
+							value: 42
+							loc: SourceLocation core/uncategorised/10/input.js 1:6-1:8
+						}
+					]
 					loc: SourceLocation core/uncategorised/10/input.js 1:4-1:11
 				}
 				loc: SourceLocation core/uncategorised/10/input.js 1:0-1:11
@@ -27,9 +35,9 @@ JSRoot {
 	diagnostics: []
 	directives: []
 	hasHoistedVars: false
-	path: UIDPath<core/uncategorised/10/input.js>
 	sourceType: "script"
 	syntax: []
+	path: UIDPath<core/uncategorised/10/input.js>
 	loc: SourceLocation core/uncategorised/10/input.js 1:0-1:11
 }
 ```

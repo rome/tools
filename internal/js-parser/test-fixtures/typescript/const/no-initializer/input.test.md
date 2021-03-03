@@ -8,41 +8,39 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	loc: SourceLocation typescript/const/no-initializer/input.ts 1:0-2:0
-	path: UIDPath<typescript/const/no-initializer/input.ts>
-	syntax: Array ["ts"]
-	body: Array [
+	body: [
 		JSVariableDeclarationStatement {
-			loc: SourceLocation typescript/const/no-initializer/input.ts 1:0-1:16
 			declaration: JSVariableDeclaration {
 				kind: "const"
-				loc: SourceLocation typescript/const/no-initializer/input.ts 1:0-1:16
-				declarations: Array [
+				declarations: [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "x"
-							loc: SourceLocation typescript/const/no-initializer/input.ts 1:6-1:15
 							meta: JSPatternMeta {
-								definite: undefined
+								typeAnnotation: TSNumberKeywordTypeAnnotation {
+									loc: SourceLocation typescript/const/no-initializer/input.ts 1:9-1:15
+								}
 								loc: SourceLocation typescript/const/no-initializer/input.ts 1:6-1:15
-								typeAnnotation: TSNumberKeywordTypeAnnotation {loc: SourceLocation typescript/const/no-initializer/input.ts 1:9-1:15}
 							}
+							loc: SourceLocation typescript/const/no-initializer/input.ts 1:6-1:15
 						}
-						init: undefined
 						loc: SourceLocation typescript/const/no-initializer/input.ts 1:6-1:15
 					}
 				]
+				loc: SourceLocation typescript/const/no-initializer/input.ts 1:0-1:16
 			}
+			loc: SourceLocation typescript/const/no-initializer/input.ts 1:0-1:16
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: ["ts"]
+	path: UIDPath<typescript/const/no-initializer/input.ts>
+	loc: SourceLocation typescript/const/no-initializer/input.ts 1:0-2:0
 }
 ```
 

@@ -8,63 +8,57 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation esprima/statement-switch/migrated_0002/input.js 1:0-2:0
-	path: UIDPath<esprima/statement-switch/migrated_0002/input.js>
-	body: Array [
+	body: [
 		JSSwitchStatement {
-			loc: SourceLocation esprima/statement-switch/migrated_0002/input.js 1:0-1:56
-			discriminant: JSReferenceIdentifier {
-				name: "answer"
-				loc: SourceLocation esprima/statement-switch/migrated_0002/input.js 1:8-1:14 (answer)
-			}
-			cases: Array [
+			cases: [
 				JSSwitchCase {
-					loc: SourceLocation esprima/statement-switch/migrated_0002/input.js 1:18-1:39
-					test: JSNumericLiteral {
-						value: 42
-						format: undefined
-						loc: SourceLocation esprima/statement-switch/migrated_0002/input.js 1:23-1:25
-					}
-					consequent: Array [
+					consequent: [
 						JSExpressionStatement {
-							loc: SourceLocation esprima/statement-switch/migrated_0002/input.js 1:27-1:32
 							expression: JSCallExpression {
-								arguments: Array []
-								loc: SourceLocation esprima/statement-switch/migrated_0002/input.js 1:27-1:31
+								arguments: []
 								callee: JSReferenceIdentifier {
 									name: "hi"
 									loc: SourceLocation esprima/statement-switch/migrated_0002/input.js 1:27-1:29 (hi)
 								}
+								loc: SourceLocation esprima/statement-switch/migrated_0002/input.js 1:27-1:31
 							}
+							loc: SourceLocation esprima/statement-switch/migrated_0002/input.js 1:27-1:32
 						}
 						JSBreakStatement {
-							label: undefined
 							loc: SourceLocation esprima/statement-switch/migrated_0002/input.js 1:33-1:39
 						}
 					]
+					test: JSNumericLiteral {
+						value: 42
+						loc: SourceLocation esprima/statement-switch/migrated_0002/input.js 1:23-1:25
+					}
+					loc: SourceLocation esprima/statement-switch/migrated_0002/input.js 1:18-1:39
 				}
 				JSSwitchCase {
-					test: undefined
-					loc: SourceLocation esprima/statement-switch/migrated_0002/input.js 1:40-1:54
-					consequent: Array [
+					consequent: [
 						JSBreakStatement {
-							label: undefined
 							loc: SourceLocation esprima/statement-switch/migrated_0002/input.js 1:49-1:54
 						}
 					]
+					loc: SourceLocation esprima/statement-switch/migrated_0002/input.js 1:40-1:54
 				}
 			]
+			discriminant: JSReferenceIdentifier {
+				name: "answer"
+				loc: SourceLocation esprima/statement-switch/migrated_0002/input.js 1:8-1:14 (answer)
+			}
+			loc: SourceLocation esprima/statement-switch/migrated_0002/input.js 1:0-1:56
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<esprima/statement-switch/migrated_0002/input.js>
+	loc: SourceLocation esprima/statement-switch/migrated_0002/input.js 1:0-2:0
 }
 ```
 

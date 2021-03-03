@@ -8,82 +8,73 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation esprima/es2015-yield/invalid-yield-generator-catch/input.js 1:0-2:0
-	path: UIDPath<esprima/es2015-yield/invalid-yield-generator-catch/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Can not use 'yield' as identifier inside a generator"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:35
-				path: UIDPath<esprima/es2015-yield/invalid-yield-generator-catch/input.js>
-				start: Position 1:30
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "g"
 				loc: SourceLocation esprima/es2015-yield/invalid-yield-generator-catch/input.js 1:10-1:11 (g)
 			}
-			loc: SourceLocation esprima/es2015-yield/invalid-yield-generator-catch/input.js 1:0-1:41
-			head: JSFunctionHead {
-				async: false
-				generator: true
-				hasHoistedVars: false
-				params: Array []
-				rest: undefined
-				returnType: undefined
-				thisType: undefined
-				typeParameters: undefined
-				loc: SourceLocation esprima/es2015-yield/invalid-yield-generator-catch/input.js 1:11-1:13
-			}
 			body: JSBlockStatement {
-				directives: Array []
-				loc: SourceLocation esprima/es2015-yield/invalid-yield-generator-catch/input.js 1:14-1:41
-				body: Array [
+				body: [
 					JSTryStatement {
-						finalizer: undefined
-						loc: SourceLocation esprima/es2015-yield/invalid-yield-generator-catch/input.js 1:16-1:39
 						block: JSBlockStatement {
-							body: Array []
-							directives: Array []
+							body: []
+							directives: []
 							loc: SourceLocation esprima/es2015-yield/invalid-yield-generator-catch/input.js 1:20-1:22
 						}
 						handler: JSCatchClause {
-							loc: SourceLocation esprima/es2015-yield/invalid-yield-generator-catch/input.js 1:23-1:39
+							body: JSBlockStatement {
+								body: []
+								directives: []
+								loc: SourceLocation esprima/es2015-yield/invalid-yield-generator-catch/input.js 1:37-1:39
+							}
 							param: JSBindingIdentifier {
 								name: "yield"
 								loc: SourceLocation esprima/es2015-yield/invalid-yield-generator-catch/input.js 1:30-1:35 (yield)
 							}
-							body: JSBlockStatement {
-								body: Array []
-								directives: Array []
-								loc: SourceLocation esprima/es2015-yield/invalid-yield-generator-catch/input.js 1:37-1:39
-							}
+							loc: SourceLocation esprima/es2015-yield/invalid-yield-generator-catch/input.js 1:23-1:39
 						}
+						loc: SourceLocation esprima/es2015-yield/invalid-yield-generator-catch/input.js 1:16-1:39
 					}
 				]
+				directives: []
+				loc: SourceLocation esprima/es2015-yield/invalid-yield-generator-catch/input.js 1:14-1:41
+			}
+			head: JSFunctionHead {
+				async: false
+				generator: true
+				hasHoistedVars: false
+				params: []
+				loc: SourceLocation esprima/es2015-yield/invalid-yield-generator-catch/input.js 1:11-1:13
+			}
+			loc: SourceLocation esprima/es2015-yield/invalid-yield-generator-catch/input.js 1:0-1:41
+		}
+	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "Can not use 'yield' as identifier inside a generator"}
+			}
+			location: {
+				language: "js"
+				path: UIDPath<esprima/es2015-yield/invalid-yield-generator-catch/input.js>
+				end: Position 1:35
+				start: Position 1:30
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<esprima/es2015-yield/invalid-yield-generator-catch/input.js>
+	loc: SourceLocation esprima/es2015-yield/invalid-yield-generator-catch/input.js 1:0-2:0
 }
 ```
 
@@ -96,7 +87,9 @@ JSRoot {
   ✖ Can not use 'yield' as identifier inside a generator
 
     function *g() { try {} catch (yield) {} }
-                                  ^^^^^
+                                  <error><emphasis>^</emphasis></error>
+    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
+    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
 
 
 ```

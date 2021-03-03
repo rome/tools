@@ -14,8 +14,11 @@ JSRoot {
 				kind: "var"
 				declarations: [
 					JSVariableDeclarator {
-						id: JSBindingIdentifier {name: "x", loc: SourceLocation core/uncategorised/302/input.js 1:4-1:5 (x)}
 						trailingComments: ["0"]
+						id: JSBindingIdentifier {
+							name: "x"
+							loc: SourceLocation core/uncategorised/302/input.js 1:4-1:5 (x)
+						}
 						loc: SourceLocation core/uncategorised/302/input.js 1:4-1:5
 					}
 				]
@@ -24,14 +27,20 @@ JSRoot {
 			loc: SourceLocation core/uncategorised/302/input.js 1:0-1:20
 		}
 	]
-	comments: [CommentBlock {id: "0", value: " comment ", loc: SourceLocation core/uncategorised/302/input.js 1:6-1:19}]
+	comments: [
+		CommentBlock {
+			id: "0"
+			value: " comment "
+			loc: SourceLocation core/uncategorised/302/input.js 1:6-1:19
+		}
+	]
 	corrupt: false
 	diagnostics: []
 	directives: []
 	hasHoistedVars: true
-	path: UIDPath<core/uncategorised/302/input.js>
 	sourceType: "script"
 	syntax: []
+	path: UIDPath<core/uncategorised/302/input.js>
 	loc: SourceLocation core/uncategorised/302/input.js 1:0-1:20
 }
 ```

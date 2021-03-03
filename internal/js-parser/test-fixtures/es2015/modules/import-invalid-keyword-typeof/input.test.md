@@ -8,48 +8,10 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	syntax: Array []
-	loc: SourceLocation es2015/modules/import-invalid-keyword-typeof/input.js 1:0-2:0
-	path: UIDPath<es2015/modules/import-invalid-keyword-typeof/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Unexpected keyword <emphasis>typeof</emphasis>"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:15
-				path: UIDPath<es2015/modules/import-invalid-keyword-typeof/input.js>
-				start: Position 1:9
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSImportDeclaration {
-			defaultSpecifier: undefined
-			importKind: undefined
-			namespaceSpecifier: undefined
-			loc: SourceLocation es2015/modules/import-invalid-keyword-typeof/input.js 1:0-1:29
-			source: JSStringLiteral {
-				value: "foo"
-				loc: SourceLocation es2015/modules/import-invalid-keyword-typeof/input.js 1:23-1:28
-			}
-			namedSpecifiers: Array [
+			namedSpecifiers: [
 				JSImportSpecifier {
-					loc: SourceLocation es2015/modules/import-invalid-keyword-typeof/input.js 1:9-1:15
 					imported: JSIdentifier {
 						name: "typeof"
 						loc: SourceLocation es2015/modules/import-invalid-keyword-typeof/input.js 1:9-1:15 (typeof)
@@ -59,13 +21,43 @@ JSRoot {
 							name: "typeof"
 							loc: SourceLocation es2015/modules/import-invalid-keyword-typeof/input.js 1:9-1:15 (typeof)
 						}
-						importKind: undefined
 						loc: SourceLocation es2015/modules/import-invalid-keyword-typeof/input.js 1:9-1:15
 					}
+					loc: SourceLocation es2015/modules/import-invalid-keyword-typeof/input.js 1:9-1:15
 				}
 			]
+			source: JSStringLiteral {
+				value: "foo"
+				loc: SourceLocation es2015/modules/import-invalid-keyword-typeof/input.js 1:23-1:28
+			}
+			loc: SourceLocation es2015/modules/import-invalid-keyword-typeof/input.js 1:0-1:29
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "js"
+				message: [RAW_MARKUP {value: "Unexpected keyword <emphasis>"}, "typeof", RAW_MARKUP {value: "</emphasis>"}]
+			}
+			location: {
+				language: "js"
+				path: UIDPath<es2015/modules/import-invalid-keyword-typeof/input.js>
+				end: Position 1:15
+				start: Position 1:9
+			}
+		}
+	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: []
+	path: UIDPath<es2015/modules/import-invalid-keyword-typeof/input.js>
+	loc: SourceLocation es2015/modules/import-invalid-keyword-typeof/input.js 1:0-2:0
 }
 ```
 
@@ -78,7 +70,9 @@ JSRoot {
   ✖ Unexpected keyword typeof
 
     import { typeof } from "foo";
-             ^^^^^^
+             <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
+    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
+    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
 
 
 ```

@@ -8,61 +8,15 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2015/uncategorised/123/input.js 1:0-1:51
-	path: UIDPath<es2015/uncategorised/123/input.js>
-	directives: Array [
-		JSDirective {
-			value: "use strict"
-			loc: SourceLocation es2015/uncategorised/123/input.js 1:0-1:13
-		}
-	]
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:45
-				path: UIDPath<es2015/uncategorised/123/input.js>
-				start: Position 1:40
-			}
-			description: Object {
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "super() is only valid inside a class constructor of a subclass"}
-				advice: Array [
-					log {
-						category: "info"
-						text: RAW_MARKUP {value: "Maybe a typo in the method name ('constructor') or not extending another class?"}
-					}
-				]
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation es2015/uncategorised/123/input.js 1:14-1:51
 			expression: JSClassExpression {
 				id: JSBindingIdentifier {
 					name: "A"
 					loc: SourceLocation es2015/uncategorised/123/input.js 1:21-1:22 (A)
 				}
-				loc: SourceLocation es2015/uncategorised/123/input.js 1:15-1:50
 				meta: JSClassHead {
-					implements: undefined
-					superClass: undefined
-					superTypeParameters: undefined
-					typeParameters: undefined
-					loc: SourceLocation es2015/uncategorised/123/input.js 1:15-1:50
-					body: Array [
+					body: [
 						JSClassMethod {
 							kind: "constructor"
 							key: JSStaticPropertyKey {
@@ -72,48 +26,82 @@ JSRoot {
 								}
 								loc: SourceLocation es2015/uncategorised/123/input.js 1:24-1:35
 							}
-							loc: SourceLocation es2015/uncategorised/123/input.js 1:24-1:49
-							meta: JSClassPropertyMeta {
-								abstract: false
-								accessibility: undefined
-								optional: false
-								readonly: false
-								static: false
-								typeAnnotation: undefined
-								loc: SourceLocation es2015/uncategorised/123/input.js 1:24-1:35
-								start: Position 1:24
+							body: JSBlockStatement {
+								body: [
+									JSExpressionStatement {
+										expression: JSCallExpression {
+											arguments: []
+											callee: JSSuper {
+												loc: SourceLocation es2015/uncategorised/123/input.js 1:40-1:45
+											}
+											loc: SourceLocation es2015/uncategorised/123/input.js 1:40-1:47
+										}
+										loc: SourceLocation es2015/uncategorised/123/input.js 1:40-1:47
+									}
+								]
+								directives: []
+								loc: SourceLocation es2015/uncategorised/123/input.js 1:38-1:49
 							}
 							head: JSFunctionHead {
 								async: false
 								generator: false
 								hasHoistedVars: false
-								params: Array []
-								rest: undefined
-								returnType: undefined
-								thisType: undefined
-								typeParameters: undefined
+								params: []
 								loc: SourceLocation es2015/uncategorised/123/input.js 1:35-1:37
 							}
-							body: JSBlockStatement {
-								directives: Array []
-								loc: SourceLocation es2015/uncategorised/123/input.js 1:38-1:49
-								body: Array [
-									JSExpressionStatement {
-										loc: SourceLocation es2015/uncategorised/123/input.js 1:40-1:47
-										expression: JSCallExpression {
-											arguments: Array []
-											callee: JSSuper {loc: SourceLocation es2015/uncategorised/123/input.js 1:40-1:45}
-											loc: SourceLocation es2015/uncategorised/123/input.js 1:40-1:47
-										}
-									}
-								]
+							meta: JSClassPropertyMeta {
+								abstract: false
+								optional: false
+								readonly: false
+								static: false
+								loc: SourceLocation es2015/uncategorised/123/input.js 1:24-1:35
+								start: Position 1:24
 							}
+							loc: SourceLocation es2015/uncategorised/123/input.js 1:24-1:49
 						}
 					]
+					loc: SourceLocation es2015/uncategorised/123/input.js 1:15-1:50
 				}
+				loc: SourceLocation es2015/uncategorised/123/input.js 1:15-1:50
+			}
+			loc: SourceLocation es2015/uncategorised/123/input.js 1:14-1:51
+		}
+	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {
+				advice: [
+					log {
+						category: "info"
+						text: RAW_MARKUP {value: "Maybe a typo in the method name ('constructor') or not extending another class?"}
+					}
+				]
+				category: ["parse"]
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "super() is only valid inside a class constructor of a subclass"}
+			}
+			location: {
+				language: "js"
+				path: UIDPath<es2015/uncategorised/123/input.js>
+				end: Position 1:45
+				start: Position 1:40
 			}
 		}
 	]
+	directives: [
+		JSDirective {
+			value: "use strict"
+			loc: SourceLocation es2015/uncategorised/123/input.js 1:0-1:13
+		}
+	]
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2015/uncategorised/123/input.js>
+	loc: SourceLocation es2015/uncategorised/123/input.js 1:0-1:51
 }
 ```
 
@@ -126,7 +114,9 @@ JSRoot {
   ✖ super() is only valid inside a class constructor of a subclass
 
     "use strict"; (class A {constructor() { super() }})
-                                            ^^^^^
+                                            <error><emphasis>^</emphasis></error>
+    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
+    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
 
   ℹ Maybe a typo in the method name ('constructor') or not extending another class?
 

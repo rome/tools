@@ -8,56 +8,50 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation esprima/invalid-syntax/migrated_0174/input.js 1:0-2:0
-	path: UIDPath<esprima/invalid-syntax/migrated_0174/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "No loop label found"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:22
-				path: UIDPath<esprima/invalid-syntax/migrated_0174/input.js>
-				start: Position 1:22
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSSwitchStatement {
-			loc: SourceLocation esprima/invalid-syntax/migrated_0174/input.js 1:0-1:33
+			cases: [
+				JSSwitchCase {
+					consequent: [
+						JSContinueStatement {
+							loc: SourceLocation esprima/invalid-syntax/migrated_0174/input.js 1:22-1:31
+						}
+					]
+					loc: SourceLocation esprima/invalid-syntax/migrated_0174/input.js 1:13-1:31
+				}
+			]
 			discriminant: JSReferenceIdentifier {
 				name: "x"
 				loc: SourceLocation esprima/invalid-syntax/migrated_0174/input.js 1:8-1:9 (x)
 			}
-			cases: Array [
-				JSSwitchCase {
-					test: undefined
-					loc: SourceLocation esprima/invalid-syntax/migrated_0174/input.js 1:13-1:31
-					consequent: Array [
-						JSContinueStatement {
-							label: undefined
-							loc: SourceLocation esprima/invalid-syntax/migrated_0174/input.js 1:22-1:31
-						}
-					]
-				}
-			]
+			loc: SourceLocation esprima/invalid-syntax/migrated_0174/input.js 1:0-1:33
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "No loop label found"}
+			}
+			location: {
+				language: "js"
+				path: UIDPath<esprima/invalid-syntax/migrated_0174/input.js>
+				end: Position 1:22
+				start: Position 1:22
+			}
+		}
+	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<esprima/invalid-syntax/migrated_0174/input.js>
+	loc: SourceLocation esprima/invalid-syntax/migrated_0174/input.js 1:0-2:0
 }
 ```
 
@@ -70,7 +64,7 @@ JSRoot {
   ✖ No loop label found
 
     switch (x) { default: continue; }
-                          ^
+                          <error><emphasis>^</emphasis></error>
 
 
 ```

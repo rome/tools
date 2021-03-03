@@ -14,8 +14,14 @@ JSRoot {
 				kind: "var"
 				declarations: [
 					JSVariableDeclarator {
-						id: JSBindingIdentifier {name: "a", loc: SourceLocation core/opts/ranges-true/input.js 1:4-1:5 (a)}
-						init: JSNumericLiteral {value: 1, loc: SourceLocation core/opts/ranges-true/input.js 1:8-1:9}
+						id: JSBindingIdentifier {
+							name: "a"
+							loc: SourceLocation core/opts/ranges-true/input.js 1:4-1:5 (a)
+						}
+						init: JSNumericLiteral {
+							value: 1
+							loc: SourceLocation core/opts/ranges-true/input.js 1:8-1:9
+						}
 						loc: SourceLocation core/opts/ranges-true/input.js 1:4-1:9
 					}
 				]
@@ -28,11 +34,20 @@ JSRoot {
 				kind: "var"
 				declarations: [
 					JSVariableDeclarator {
-						id: JSBindingIdentifier {name: "b", loc: SourceLocation core/opts/ranges-true/input.js 3:4-3:5 (b)}
+						id: JSBindingIdentifier {
+							name: "b"
+							loc: SourceLocation core/opts/ranges-true/input.js 3:4-3:5 (b)
+						}
 						init: JSBinaryExpression {
-							left: JSReferenceIdentifier {name: "a", loc: SourceLocation core/opts/ranges-true/input.js 3:8-3:9 (a)}
 							operator: "+"
-							right: JSNumericLiteral {value: 1, loc: SourceLocation core/opts/ranges-true/input.js 3:12-3:13}
+							left: JSReferenceIdentifier {
+								name: "a"
+								loc: SourceLocation core/opts/ranges-true/input.js 3:8-3:9 (a)
+							}
+							right: JSNumericLiteral {
+								value: 1
+								loc: SourceLocation core/opts/ranges-true/input.js 3:12-3:13
+							}
 							loc: SourceLocation core/opts/ranges-true/input.js 3:8-3:13
 						}
 						loc: SourceLocation core/opts/ranges-true/input.js 3:4-3:13
@@ -48,9 +63,9 @@ JSRoot {
 	diagnostics: []
 	directives: []
 	hasHoistedVars: true
-	path: UIDPath<core/opts/ranges-true/input.js>
 	sourceType: "script"
 	syntax: []
+	path: UIDPath<core/opts/ranges-true/input.js>
 	loc: SourceLocation core/opts/ranges-true/input.js 1:0-4:0
 }
 ```

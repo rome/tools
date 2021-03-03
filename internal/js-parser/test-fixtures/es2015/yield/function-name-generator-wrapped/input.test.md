@@ -8,44 +8,17 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2015/yield/function-name-generator-wrapped/input.js 1:0-4:0
-	path: UIDPath<es2015/yield/function-name-generator-wrapped/input.js>
-	body: Array [
+	body: [
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "wrap"
 				loc: SourceLocation es2015/yield/function-name-generator-wrapped/input.js 1:10-1:14 (wrap)
 			}
-			loc: SourceLocation es2015/yield/function-name-generator-wrapped/input.js 1:0-3:1
-			head: JSFunctionHead {
-				async: false
-				generator: true
-				hasHoistedVars: false
-				params: Array []
-				rest: undefined
-				returnType: undefined
-				thisType: undefined
-				typeParameters: undefined
-				loc: SourceLocation es2015/yield/function-name-generator-wrapped/input.js 1:14-1:16
-			}
 			body: JSBlockStatement {
-				directives: Array []
-				loc: SourceLocation es2015/yield/function-name-generator-wrapped/input.js 1:17-3:1
-				body: Array [
+				body: [
 					JSExpressionStatement {
-						loc: SourceLocation es2015/yield/function-name-generator-wrapped/input.js 2:4-2:19
 						expression: JSObjectExpression {
-							loc: SourceLocation es2015/yield/function-name-generator-wrapped/input.js 2:5-2:18
-							properties: Array [
+							properties: [
 								JSObjectMethod {
 									kind: "method"
 									key: JSStaticPropertyKey {
@@ -55,31 +28,48 @@ JSRoot {
 										}
 										loc: SourceLocation es2015/yield/function-name-generator-wrapped/input.js 2:7-2:12
 									}
-									loc: SourceLocation es2015/yield/function-name-generator-wrapped/input.js 2:6-2:17
 									body: JSBlockStatement {
-										body: Array []
-										directives: Array []
+										body: []
+										directives: []
 										loc: SourceLocation es2015/yield/function-name-generator-wrapped/input.js 2:15-2:17
 									}
 									head: JSFunctionHead {
 										async: false
 										generator: true
 										hasHoistedVars: false
-										params: Array []
-										rest: undefined
-										returnType: undefined
-										thisType: undefined
-										typeParameters: undefined
+										params: []
 										loc: SourceLocation es2015/yield/function-name-generator-wrapped/input.js 2:12-2:14
 									}
+									loc: SourceLocation es2015/yield/function-name-generator-wrapped/input.js 2:6-2:17
 								}
 							]
+							loc: SourceLocation es2015/yield/function-name-generator-wrapped/input.js 2:5-2:18
 						}
+						loc: SourceLocation es2015/yield/function-name-generator-wrapped/input.js 2:4-2:19
 					}
 				]
+				directives: []
+				loc: SourceLocation es2015/yield/function-name-generator-wrapped/input.js 1:17-3:1
 			}
+			head: JSFunctionHead {
+				async: false
+				generator: true
+				hasHoistedVars: false
+				params: []
+				loc: SourceLocation es2015/yield/function-name-generator-wrapped/input.js 1:14-1:16
+			}
+			loc: SourceLocation es2015/yield/function-name-generator-wrapped/input.js 1:0-3:1
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2015/yield/function-name-generator-wrapped/input.js>
+	loc: SourceLocation es2015/yield/function-name-generator-wrapped/input.js 1:0-4:0
 }
 ```
 

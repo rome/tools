@@ -35,6 +35,7 @@ import {
 	Diagnostic,
 	DiagnosticsError,
 	DiagnosticsProcessor,
+	DiagnosticsProcessorFilterOptions,
 	createSingleDiagnosticsError,
 	decorateErrorWithDiagnostics,
 	descriptions,
@@ -130,7 +131,7 @@ type ServerRequestGlobOptions = Omit<
 	tryAlternateArg?: (path: Path) => undefined | Path;
 	ignoreArgumentMisses?: boolean;
 	ignoreProjectIgnore?: boolean;
-	advice?: DiagnosticAdvice;
+	advice?: DiagnosticAdvice[];
 	verb?: string;
 	noun?: string;
 };
@@ -146,7 +147,7 @@ async function globUnmatched(
 
 	let category: DiagnosticCategory = DIAGNOSTIC_CATEGORIES["args/fileNotFound"];
 
-	let advice: DiagnosticAdvice = [...(opts.advice || [])];
+	let advice: DiagnosticAdvice[] = [...(opts.advice || [])];
 
 	// Hint if all files were ignored
 	if (configCategory !== undefined && !ignoreProjectIgnore) {
@@ -340,7 +341,7 @@ export default class ServerRequest {
 		this.files = new AbsoluteFilePathMap();
 
 		this.logger.info(markup`Flushing files`);
-		logger.list(Array.from(files.keys()));
+		logger.list(files.keys());
 
 		// Need to capture this before as it will be modified by server.writeFiles
 		const totalFiles = files.size;
@@ -591,11 +592,15 @@ export default class ServerRequest {
 	}
 
 	public createDiagnosticsProcessor(
-		opts: DiagnosticsProcessorOptions = {},
+		opts: Omit<DiagnosticsProcessorOptions, "filter"> & {filter?: Partial<DiagnosticsProcessorFilterOptions>} = {},
 	): DiagnosticsProcessor {
 		return new DiagnosticsProcessor({
 			markupOptions: this.reporter.markupOptions,
 			...opts,
+			filter: mergeObjects(
+				this.getDiagnosticsProcessorFilterOptions(),
+				opts.filter,
+			),
 		});
 	}
 
@@ -650,16 +655,21 @@ export default class ServerRequest {
 		});
 	}
 
+	private getDiagnosticsProcessorFilterOptions(): DiagnosticsProcessorFilterOptions {
+		const {requestFlags} = this.query;
+		return {
+			grep: requestFlags.grep,
+			inverseGrep: requestFlags.inverseGrep,
+			maxDiagnostics: requestFlags.maxDiagnostics,
+		};
+	}
+
 	private getDiagnosticsPrinterFlags(): DiagnosticsPrinterFlags {
 		const {requestFlags} = this.query;
 		return {
 			auxiliaryDiagnosticFormat: requestFlags.auxiliaryDiagnosticFormat,
-			grep: requestFlags.grep,
-			inverseGrep: requestFlags.inverseGrep,
-			showAllDiagnostics: requestFlags.showAllDiagnostics,
 			truncateDiagnostics: requestFlags.truncateDiagnostics,
 			verboseDiagnostics: requestFlags.verboseDiagnostics,
-			maxDiagnostics: requestFlags.maxDiagnostics,
 			fieri: requestFlags.fieri,
 		};
 	}
@@ -667,7 +677,7 @@ export default class ServerRequest {
 	public expectArgumentLength(
 		min: number,
 		max: number = min,
-		advice: DiagnosticAdvice = [],
+		advice: DiagnosticAdvice[] = [],
 	) {
 		const {args} = this.query;
 		let message;

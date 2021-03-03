@@ -8,77 +8,27 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: true
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation esprima/es2015-meta-property/invalid-dots/input.js 1:0-2:0
-	path: UIDPath<esprima/es2015-meta-property/invalid-dots/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Expected an identifier"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:29
-				path: UIDPath<esprima/es2015-meta-property/invalid-dots/input.js>
-				start: Position 1:29
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSVariableDeclarationStatement {
-			loc: SourceLocation esprima/es2015-meta-property/invalid-dots/input.js 1:0-1:39
 			declaration: JSVariableDeclaration {
 				kind: "var"
-				loc: SourceLocation esprima/es2015-meta-property/invalid-dots/input.js 1:0-1:39
-				declarations: Array [
+				declarations: [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "x"
 							loc: SourceLocation esprima/es2015-meta-property/invalid-dots/input.js 1:4-1:5 (x)
 						}
-						loc: SourceLocation esprima/es2015-meta-property/invalid-dots/input.js 1:4-1:39
 						init: JSFunctionExpression {
-							id: undefined
-							loc: SourceLocation esprima/es2015-meta-property/invalid-dots/input.js 1:8-1:39
-							head: JSFunctionHead {
-								async: false
-								generator: false
-								hasHoistedVars: false
-								params: Array []
-								rest: undefined
-								returnType: undefined
-								thisType: undefined
-								typeParameters: undefined
-								loc: SourceLocation esprima/es2015-meta-property/invalid-dots/input.js 1:16-1:18
-							}
 							body: JSBlockStatement {
-								directives: Array []
-								loc: SourceLocation esprima/es2015-meta-property/invalid-dots/input.js 1:19-1:39
-								body: Array [
+								body: [
 									JSExpressionStatement {
-										loc: SourceLocation esprima/es2015-meta-property/invalid-dots/input.js 1:21-1:30
 										expression: JSAssignmentExpression {
 											operator: "="
-											loc: SourceLocation esprima/es2015-meta-property/invalid-dots/input.js 1:21-1:30
 											left: JSAssignmentIdentifier {
 												name: "y"
 												loc: SourceLocation esprima/es2015-meta-property/invalid-dots/input.js 1:21-1:22 (y)
 											}
 											right: JSMetaProperty {
-												loc: SourceLocation esprima/es2015-meta-property/invalid-dots/input.js 1:25-1:30
 												meta: JSIdentifier {
 													name: "new"
 													loc: SourceLocation esprima/es2015-meta-property/invalid-dots/input.js 1:25-1:28 (new)
@@ -87,24 +37,65 @@ JSRoot {
 													name: ""
 													loc: SourceLocation esprima/es2015-meta-property/invalid-dots/input.js 1:29-1:30 ()
 												}
+												loc: SourceLocation esprima/es2015-meta-property/invalid-dots/input.js 1:25-1:30
 											}
+											loc: SourceLocation esprima/es2015-meta-property/invalid-dots/input.js 1:21-1:30
 										}
+										loc: SourceLocation esprima/es2015-meta-property/invalid-dots/input.js 1:21-1:30
 									}
 									JSExpressionStatement {
-										loc: SourceLocation esprima/es2015-meta-property/invalid-dots/input.js 1:30-1:37
 										expression: JSReferenceIdentifier {
 											name: "target"
 											loc: SourceLocation esprima/es2015-meta-property/invalid-dots/input.js 1:30-1:36 (target)
 										}
+										loc: SourceLocation esprima/es2015-meta-property/invalid-dots/input.js 1:30-1:37
 									}
 								]
+								directives: []
+								loc: SourceLocation esprima/es2015-meta-property/invalid-dots/input.js 1:19-1:39
 							}
+							head: JSFunctionHead {
+								async: false
+								generator: false
+								hasHoistedVars: false
+								params: []
+								loc: SourceLocation esprima/es2015-meta-property/invalid-dots/input.js 1:16-1:18
+							}
+							loc: SourceLocation esprima/es2015-meta-property/invalid-dots/input.js 1:8-1:39
 						}
+						loc: SourceLocation esprima/es2015-meta-property/invalid-dots/input.js 1:4-1:39
 					}
 				]
+				loc: SourceLocation esprima/es2015-meta-property/invalid-dots/input.js 1:0-1:39
+			}
+			loc: SourceLocation esprima/es2015-meta-property/invalid-dots/input.js 1:0-1:39
+		}
+	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "Expected an identifier"}
+			}
+			location: {
+				language: "js"
+				path: UIDPath<esprima/es2015-meta-property/invalid-dots/input.js>
+				end: Position 1:29
+				start: Position 1:29
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: true
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<esprima/es2015-meta-property/invalid-dots/input.js>
+	loc: SourceLocation esprima/es2015-meta-property/invalid-dots/input.js 1:0-2:0
 }
 ```
 
@@ -117,7 +108,7 @@ JSRoot {
   ✖ Expected an identifier
 
     var x = function() { y = new..target; }
-                                 ^
+                                 <error><emphasis>^</emphasis></error>
 
 
 ```

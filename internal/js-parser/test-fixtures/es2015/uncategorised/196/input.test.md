@@ -8,41 +8,8 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2015/uncategorised/196/input.js 1:0-1:33
-	path: UIDPath<es2015/uncategorised/196/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [
-				Object {category: "parse"}
-				Object {category: "parse"}
-			]
-			description: Object {
-				advice: Array []
-				categoryValue: "regex"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Range values reversed. Start char code is greater than end char code"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "regex"
-				sourceText: undefined
-				end: Position 1:21
-				path: UIDPath<es2015/uncategorised/196/input.js>
-				start: Position 1:8
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation es2015/uncategorised/196/input.js 1:0-1:33
 			expression: JSRegExpLiteral {
 				global: false
 				insensitive: false
@@ -50,24 +17,20 @@ JSRoot {
 				noDotNewline: false
 				sticky: false
 				unicode: true
-				loc: SourceLocation es2015/uncategorised/196/input.js 1:0-1:33
 				expression: JSRegExpSubExpression {
-					loc: SourceLocation es2015/uncategorised/196/input.js 1:1-1:30
-					body: Array [
+					body: [
 						JSRegExpCharSet {
-							invert: false
-							loc: SourceLocation es2015/uncategorised/196/input.js 1:1-1:30
-							body: Array [
+							body: [
 								JSRegExpCharacter {
 									value: "\ud834"
 									loc: SourceLocation es2015/uncategorised/196/input.js 1:2-1:8
 								}
 								JSRegExpCharSetRange {
-									loc: SourceLocation es2015/uncategorised/196/input.js 1:8-1:21
 									end: JSRegExpCharacter {
 										value: "\udf06"
 										loc: SourceLocation es2015/uncategorised/196/input.js 1:8-1:14
 									}
+									loc: SourceLocation es2015/uncategorised/196/input.js 1:8-1:21
 									start: JSRegExpCharacter {
 										value: "\ud834"
 										loc: SourceLocation es2015/uncategorised/196/input.js 1:15-1:21
@@ -78,23 +41,53 @@ JSRoot {
 									loc: SourceLocation es2015/uncategorised/196/input.js 1:21-1:27
 								}
 								JSRegExpCharSetRange {
-									loc: SourceLocation es2015/uncategorised/196/input.js 1:27-1:30
 									end: JSRegExpCharacter {
 										value: "z"
 										loc: SourceLocation es2015/uncategorised/196/input.js 1:29-1:30
 									}
+									loc: SourceLocation es2015/uncategorised/196/input.js 1:27-1:30
 									start: JSRegExpCharacter {
 										value: "a"
 										loc: SourceLocation es2015/uncategorised/196/input.js 1:27-1:28
 									}
 								}
 							]
+							invert: false
+							loc: SourceLocation es2015/uncategorised/196/input.js 1:1-1:30
 						}
 					]
+					loc: SourceLocation es2015/uncategorised/196/input.js 1:1-1:30
 				}
+				loc: SourceLocation es2015/uncategorised/196/input.js 1:0-1:33
+			}
+			loc: SourceLocation es2015/uncategorised/196/input.js 1:0-1:33
+		}
+	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{category: "parse"}, {category: "parse"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "regex"
+				message: RAW_MARKUP {value: "Range values reversed. Start char code is greater than end char code"}
+			}
+			location: {
+				language: "regex"
+				path: UIDPath<es2015/uncategorised/196/input.js>
+				end: Position 1:21
+				start: Position 1:8
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2015/uncategorised/196/input.js>
+	loc: SourceLocation es2015/uncategorised/196/input.js 1:0-1:33
 }
 ```
 
@@ -107,7 +100,13 @@ JSRoot {
   ✖ Range values reversed. Start char code is greater than end char code
 
     /[\uD834\uDF06-\uD834\uDF08a-z]/u
-            ^^^^^^^^^^^^^
+            <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
+    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
+    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
+    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
+    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
+    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
+    <error><emphasis>^</emphasis></error>
 
 
 ```

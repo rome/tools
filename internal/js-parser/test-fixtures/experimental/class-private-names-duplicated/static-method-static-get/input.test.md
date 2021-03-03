@@ -8,31 +8,14 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation experimental/class-private-names-duplicated/static-method-static-get/input.js 1:0-4:1
-	path: UIDPath<experimental/class-private-names-duplicated/static-method-static-get/input.js>
-	body: Array [
+	body: [
 		JSClassDeclaration {
 			id: JSBindingIdentifier {
 				name: "A"
 				loc: SourceLocation experimental/class-private-names-duplicated/static-method-static-get/input.js 1:6-1:7 (A)
 			}
-			loc: SourceLocation experimental/class-private-names-duplicated/static-method-static-get/input.js 1:0-4:1
 			meta: JSClassHead {
-				implements: undefined
-				superClass: undefined
-				superTypeParameters: undefined
-				typeParameters: undefined
-				loc: SourceLocation experimental/class-private-names-duplicated/static-method-static-get/input.js 1:0-4:1
-				body: Array [
+				body: [
 					JSClassPrivateMethod {
 						kind: "method"
 						key: JSPrivateName {
@@ -42,33 +25,27 @@ JSRoot {
 							}
 							loc: SourceLocation experimental/class-private-names-duplicated/static-method-static-get/input.js 2:9-2:11
 						}
-						loc: SourceLocation experimental/class-private-names-duplicated/static-method-static-get/input.js 2:2-2:16
 						body: JSBlockStatement {
-							body: Array []
-							directives: Array []
+							body: []
+							directives: []
 							loc: SourceLocation experimental/class-private-names-duplicated/static-method-static-get/input.js 2:14-2:16
-						}
-						meta: JSClassPropertyMeta {
-							abstract: false
-							accessibility: undefined
-							optional: false
-							readonly: false
-							static: true
-							typeAnnotation: undefined
-							loc: SourceLocation experimental/class-private-names-duplicated/static-method-static-get/input.js 2:2-2:11
-							start: Position 2:2
 						}
 						head: JSFunctionHead {
 							async: false
 							generator: false
 							hasHoistedVars: false
-							params: Array []
-							rest: undefined
-							returnType: undefined
-							thisType: undefined
-							typeParameters: undefined
+							params: []
 							loc: SourceLocation experimental/class-private-names-duplicated/static-method-static-get/input.js 2:11-2:13
 						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							optional: false
+							readonly: false
+							static: true
+							loc: SourceLocation experimental/class-private-names-duplicated/static-method-static-get/input.js 2:2-2:11
+							start: Position 2:2
+						}
+						loc: SourceLocation experimental/class-private-names-duplicated/static-method-static-get/input.js 2:2-2:16
 					}
 					JSClassPrivateMethod {
 						kind: "get"
@@ -79,38 +56,43 @@ JSRoot {
 							}
 							loc: SourceLocation experimental/class-private-names-duplicated/static-method-static-get/input.js 3:13-3:15
 						}
-						loc: SourceLocation experimental/class-private-names-duplicated/static-method-static-get/input.js 3:2-3:20
 						body: JSBlockStatement {
-							body: Array []
-							directives: Array []
+							body: []
+							directives: []
 							loc: SourceLocation experimental/class-private-names-duplicated/static-method-static-get/input.js 3:18-3:20
-						}
-						meta: JSClassPropertyMeta {
-							abstract: false
-							accessibility: undefined
-							optional: false
-							readonly: false
-							static: true
-							typeAnnotation: undefined
-							loc: SourceLocation experimental/class-private-names-duplicated/static-method-static-get/input.js 3:2-3:15
-							start: Position 3:2
 						}
 						head: JSFunctionHead {
 							async: false
 							generator: false
 							hasHoistedVars: false
-							params: Array []
-							rest: undefined
-							returnType: undefined
-							thisType: undefined
-							typeParameters: undefined
+							params: []
 							loc: SourceLocation experimental/class-private-names-duplicated/static-method-static-get/input.js 3:15-3:17
 						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							optional: false
+							readonly: false
+							static: true
+							loc: SourceLocation experimental/class-private-names-duplicated/static-method-static-get/input.js 3:2-3:15
+							start: Position 3:2
+						}
+						loc: SourceLocation experimental/class-private-names-duplicated/static-method-static-get/input.js 3:2-3:20
 					}
 				]
+				loc: SourceLocation experimental/class-private-names-duplicated/static-method-static-get/input.js 1:0-4:1
 			}
+			loc: SourceLocation experimental/class-private-names-duplicated/static-method-static-get/input.js 1:0-4:1
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<experimental/class-private-names-duplicated/static-method-static-get/input.js>
+	loc: SourceLocation experimental/class-private-names-duplicated/static-method-static-get/input.js 1:0-4:1
 }
 ```
 

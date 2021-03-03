@@ -8,63 +8,62 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	loc: SourceLocation typescript/types/tuple/input.ts 1:0-2:0
-	path: UIDPath<typescript/types/tuple/input.ts>
-	syntax: Array ["ts"]
-	body: Array [
+	body: [
 		JSVariableDeclarationStatement {
-			loc: SourceLocation typescript/types/tuple/input.ts 1:0-1:32
 			declaration: JSVariableDeclaration {
 				kind: "let"
-				loc: SourceLocation typescript/types/tuple/input.ts 1:0-1:32
-				declarations: Array [
+				declarations: [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "x"
-							loc: SourceLocation typescript/types/tuple/input.ts 1:4-1:31
 							meta: JSPatternMeta {
-								definite: undefined
-								loc: SourceLocation typescript/types/tuple/input.ts 1:4-1:31
 								typeAnnotation: TSTupleType {
-									loc: SourceLocation typescript/types/tuple/input.ts 1:7-1:31
-									elementTypes: Array [
+									elementTypes: [
 										TSTupleElement {
-											name: undefined
 											optional: false
+											typeAnnotation: TSNumberKeywordTypeAnnotation {
+												loc: SourceLocation typescript/types/tuple/input.ts 1:8-1:14
+											}
 											loc: SourceLocation typescript/types/tuple/input.ts 1:8-1:14
-											typeAnnotation: TSNumberKeywordTypeAnnotation {loc: SourceLocation typescript/types/tuple/input.ts 1:8-1:14}
 										}
 										TSTupleElement {
-											name: undefined
 											optional: false
+											typeAnnotation: TSNumberKeywordTypeAnnotation {
+												loc: SourceLocation typescript/types/tuple/input.ts 1:16-1:22
+											}
 											loc: SourceLocation typescript/types/tuple/input.ts 1:16-1:22
-											typeAnnotation: TSNumberKeywordTypeAnnotation {loc: SourceLocation typescript/types/tuple/input.ts 1:16-1:22}
 										}
 										TSTupleElement {
-											name: undefined
 											optional: false
+											typeAnnotation: TSNumberKeywordTypeAnnotation {
+												loc: SourceLocation typescript/types/tuple/input.ts 1:24-1:30
+											}
 											loc: SourceLocation typescript/types/tuple/input.ts 1:24-1:30
-											typeAnnotation: TSNumberKeywordTypeAnnotation {loc: SourceLocation typescript/types/tuple/input.ts 1:24-1:30}
 										}
 									]
+									loc: SourceLocation typescript/types/tuple/input.ts 1:7-1:31
 								}
+								loc: SourceLocation typescript/types/tuple/input.ts 1:4-1:31
 							}
+							loc: SourceLocation typescript/types/tuple/input.ts 1:4-1:31
 						}
-						init: undefined
 						loc: SourceLocation typescript/types/tuple/input.ts 1:4-1:31
 					}
 				]
+				loc: SourceLocation typescript/types/tuple/input.ts 1:0-1:32
 			}
+			loc: SourceLocation typescript/types/tuple/input.ts 1:0-1:32
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: ["ts"]
+	path: UIDPath<typescript/types/tuple/input.ts>
+	loc: SourceLocation typescript/types/tuple/input.ts 1:0-2:0
 }
 ```
 

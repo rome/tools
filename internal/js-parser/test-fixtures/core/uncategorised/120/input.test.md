@@ -12,15 +12,24 @@ JSRoot {
 		JSExpressionStatement {
 			expression: JSMemberExpression {
 				object: JSMemberExpression {
-					object: JSReferenceIdentifier {name: "universe", loc: SourceLocation core/uncategorised/120/input.js 1:0-1:8 (universe)}
+					object: JSReferenceIdentifier {
+						name: "universe"
+						loc: SourceLocation core/uncategorised/120/input.js 1:0-1:8 (universe)
+					}
 					property: JSStaticMemberProperty {
-						value: JSIdentifier {name: "milkyway", loc: SourceLocation core/uncategorised/120/input.js 1:9-1:17 (milkyway)}
+						value: JSIdentifier {
+							name: "milkyway"
+							loc: SourceLocation core/uncategorised/120/input.js 1:9-1:17 (milkyway)
+						}
 						loc: SourceLocation core/uncategorised/120/input.js 1:9-1:17 (milkyway)
 					}
 					loc: SourceLocation core/uncategorised/120/input.js 1:0-1:17
 				}
 				property: JSStaticMemberProperty {
-					value: JSIdentifier {name: "solarsystem", loc: SourceLocation core/uncategorised/120/input.js 1:18-1:29 (solarsystem)}
+					value: JSIdentifier {
+						name: "solarsystem"
+						loc: SourceLocation core/uncategorised/120/input.js 1:18-1:29 (solarsystem)
+					}
 					loc: SourceLocation core/uncategorised/120/input.js 1:18-1:29 (solarsystem)
 				}
 				loc: SourceLocation core/uncategorised/120/input.js 1:0-1:29
@@ -33,9 +42,9 @@ JSRoot {
 	diagnostics: []
 	directives: []
 	hasHoistedVars: false
-	path: UIDPath<core/uncategorised/120/input.js>
 	sourceType: "script"
 	syntax: []
+	path: UIDPath<core/uncategorised/120/input.js>
 	loc: SourceLocation core/uncategorised/120/input.js 1:0-1:29
 }
 ```

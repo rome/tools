@@ -8,30 +8,16 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2020/nullish-coalescing-operator/nullish-or/input.js 1:0-2:0
-	path: UIDPath<es2020/nullish-coalescing-operator/nullish-or/input.js>
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation es2020/nullish-coalescing-operator/nullish-or/input.js 1:0-1:14
 			expression: JSLogicalExpression {
 				operator: "??"
-				loc: SourceLocation es2020/nullish-coalescing-operator/nullish-or/input.js 1:0-1:13
 				left: JSReferenceIdentifier {
 					name: "a"
 					loc: SourceLocation es2020/nullish-coalescing-operator/nullish-or/input.js 1:0-1:1 (a)
 				}
 				right: JSLogicalExpression {
 					operator: "||"
-					loc: SourceLocation es2020/nullish-coalescing-operator/nullish-or/input.js 1:6-1:12
 					left: JSReferenceIdentifier {
 						name: "b"
 						loc: SourceLocation es2020/nullish-coalescing-operator/nullish-or/input.js 1:6-1:7 (b)
@@ -40,10 +26,22 @@ JSRoot {
 						name: "c"
 						loc: SourceLocation es2020/nullish-coalescing-operator/nullish-or/input.js 1:11-1:12 (c)
 					}
+					loc: SourceLocation es2020/nullish-coalescing-operator/nullish-or/input.js 1:6-1:12
 				}
+				loc: SourceLocation es2020/nullish-coalescing-operator/nullish-or/input.js 1:0-1:13
 			}
+			loc: SourceLocation es2020/nullish-coalescing-operator/nullish-or/input.js 1:0-1:14
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2020/nullish-coalescing-operator/nullish-or/input.js>
+	loc: SourceLocation es2020/nullish-coalescing-operator/nullish-or/input.js 1:0-2:0
 }
 ```
 

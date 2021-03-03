@@ -459,7 +459,7 @@ function formatObject(
 		close = "]";
 	}
 
-	const parts: Markup = [];
+	const parts: Markup[] = [];
 
 	// Hide labels for arrays and objects in compact mode
 	let includeLabel = true;

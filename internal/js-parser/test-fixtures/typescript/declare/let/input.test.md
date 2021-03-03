@@ -8,37 +8,34 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	loc: SourceLocation typescript/declare/let/input.ts 1:0-2:0
-	path: UIDPath<typescript/declare/let/input.ts>
-	syntax: Array ["ts"]
-	body: Array [
+	body: [
 		JSVariableDeclarationStatement {
 			declare: true
-			loc: SourceLocation typescript/declare/let/input.ts 1:0-1:14
 			declaration: JSVariableDeclaration {
 				kind: "let"
-				loc: SourceLocation typescript/declare/let/input.ts 1:0-1:14
-				declarations: Array [
+				declarations: [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "x"
 							loc: SourceLocation typescript/declare/let/input.ts 1:12-1:13 (x)
 						}
-						init: undefined
 						loc: SourceLocation typescript/declare/let/input.ts 1:12-1:13
 					}
 				]
+				loc: SourceLocation typescript/declare/let/input.ts 1:0-1:14
 			}
+			loc: SourceLocation typescript/declare/let/input.ts 1:0-1:14
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: ["ts"]
+	path: UIDPath<typescript/declare/let/input.ts>
+	loc: SourceLocation typescript/declare/let/input.ts 1:0-2:0
 }
 ```
 

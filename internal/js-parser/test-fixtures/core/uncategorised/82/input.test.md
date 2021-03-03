@@ -8,27 +8,25 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation core/uncategorised/82/input.js 1:0-1:2
-	path: UIDPath<core/uncategorised/82/input.js>
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation core/uncategorised/82/input.js 1:0-1:2
 			expression: JSNumericLiteral {
 				value: 2
 				format: "octal"
 				loc: SourceLocation core/uncategorised/82/input.js 1:0-1:2
 			}
+			loc: SourceLocation core/uncategorised/82/input.js 1:0-1:2
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<core/uncategorised/82/input.js>
+	loc: SourceLocation core/uncategorised/82/input.js 1:0-1:2
 }
 ```
 

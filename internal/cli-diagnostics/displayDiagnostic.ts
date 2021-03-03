@@ -26,7 +26,7 @@ export function buildDisplayDiagnostic(
 	opts: BuildOptions,
 ): {
 	header: StaticMarkup;
-	advice: DiagnosticAdvice;
+	advice: DiagnosticAdvice[];
 } {
 	return {
 		header: buildDisplayHeader(opts),
@@ -71,7 +71,7 @@ function buildDisplayHeader(
 
 function buildCompleteDisplayAdvice(
 	{diagnostic, missingPaths, outdatedPaths, flags}: BuildOptions,
-): DiagnosticAdvice {
+): DiagnosticAdvice[] {
 	const {location} = diagnostic;
 	const {start, end, path} = location;
 
@@ -119,8 +119,8 @@ function buildCompleteDisplayAdvice(
 function buildMessageAdvice(
 	diagnostic: Diagnostic,
 	skipFrame: boolean,
-): DiagnosticAdvice {
-	const advice: DiagnosticAdvice = [];
+): DiagnosticAdvice[] {
+	const advice: DiagnosticAdvice[] = [];
 
 	const {description, location} = diagnostic;
 	const {message} = description;
@@ -158,8 +158,8 @@ function buildMessageAdvice(
 	return advice;
 }
 
-function filterMainAdvice(diagnostic: Diagnostic): DiagnosticAdvice {
-	let advice: DiagnosticAdvice = [...diagnostic.description.advice];
+function filterMainAdvice(diagnostic: Diagnostic): DiagnosticAdvice[] {
+	let advice: DiagnosticAdvice[] = [...diagnostic.description.advice];
 	const {path, start} = diagnostic.location;
 
 	// Remove stacktrace from beginning if it contains only one frame that matches the root diagnostic location
@@ -174,8 +174,8 @@ function filterMainAdvice(diagnostic: Diagnostic): DiagnosticAdvice {
 	return advice;
 }
 
-function buildTagsAdvice(diagnostic: Diagnostic): DiagnosticAdvice {
-	const advice: DiagnosticAdvice = [];
+function buildTagsAdvice(diagnostic: Diagnostic): DiagnosticAdvice[] {
+	const advice: DiagnosticAdvice[] = [];
 	const {tags} = diagnostic;
 	if (tags === undefined) {
 		return advice;
@@ -202,9 +202,9 @@ function buildOutdatedAdvice(
 	diagnostic: Diagnostic,
 	missingPaths: MixedPathSet,
 	outdatedPaths: MixedPathSet,
-): DiagnosticAdvice {
+): DiagnosticAdvice[] {
 	const {path} = diagnostic.location;
-	const advice: DiagnosticAdvice = [];
+	const advice: DiagnosticAdvice[] = [];
 
 	if (missingPaths.size === 1 && missingPaths.has(path)) {
 		advice.push({
@@ -247,8 +247,8 @@ function buildOutdatedAdvice(
 	return advice;
 }
 
-function buildVerboseAdvice(diagnostic: Diagnostic): DiagnosticAdvice {
-	let verboseAdvice: DiagnosticAdvice = [
+function buildVerboseAdvice(diagnostic: Diagnostic): DiagnosticAdvice[] {
+	let verboseAdvice: DiagnosticAdvice[] = [
 		...(diagnostic.description.verboseAdvice ?? []),
 	];
 

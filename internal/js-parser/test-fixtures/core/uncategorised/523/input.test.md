@@ -8,58 +8,53 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: true
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation core/uncategorised/523/input.js 1:0-1:14
-	path: UIDPath<core/uncategorised/523/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Unexpected keyword <emphasis>this</emphasis>"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:8
-				path: UIDPath<core/uncategorised/523/input.js>
-				start: Position 1:4
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSVariableDeclarationStatement {
-			loc: SourceLocation core/uncategorised/523/input.js 1:0-1:14
 			declaration: JSVariableDeclaration {
 				kind: "var"
-				loc: SourceLocation core/uncategorised/523/input.js 1:0-1:14
-				declarations: Array [
+				declarations: [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "this"
 							loc: SourceLocation core/uncategorised/523/input.js 1:4-1:8 (this)
 						}
-						loc: SourceLocation core/uncategorised/523/input.js 1:4-1:13
 						init: JSNumericLiteral {
 							value: 10
-							format: undefined
 							loc: SourceLocation core/uncategorised/523/input.js 1:11-1:13
 						}
+						loc: SourceLocation core/uncategorised/523/input.js 1:4-1:13
 					}
 				]
+				loc: SourceLocation core/uncategorised/523/input.js 1:0-1:14
+			}
+			loc: SourceLocation core/uncategorised/523/input.js 1:0-1:14
+		}
+	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "js"
+				message: [RAW_MARKUP {value: "Unexpected keyword <emphasis>"}, "this", RAW_MARKUP {value: "</emphasis>"}]
+			}
+			location: {
+				language: "js"
+				path: UIDPath<core/uncategorised/523/input.js>
+				end: Position 1:8
+				start: Position 1:4
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: true
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<core/uncategorised/523/input.js>
+	loc: SourceLocation core/uncategorised/523/input.js 1:0-1:14
 }
 ```
 
@@ -72,7 +67,8 @@ JSRoot {
   ✖ Unexpected keyword this
 
     var this = 10;
-        ^^^^
+        <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
+    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
 
 
 ```

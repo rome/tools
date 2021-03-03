@@ -8,59 +8,52 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2015/uncategorised/47/input.js 1:0-1:12
-	path: UIDPath<es2015/uncategorised/47/input.js>
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation es2015/uncategorised/47/input.js 1:0-1:12
 			expression: JSArrowFunctionExpression {
-				loc: SourceLocation es2015/uncategorised/47/input.js 1:0-1:12
-				head: JSFunctionHead {
-					async: false
-					hasHoistedVars: false
-					rest: undefined
-					thisType: undefined
-					loc: SourceLocation es2015/uncategorised/47/input.js 1:0-1:4
-					params: Array [
-						JSBindingIdentifier {
-							name: "x"
-							loc: SourceLocation es2015/uncategorised/47/input.js 1:0-1:1 (x)
-						}
-					]
-				}
 				body: JSArrowFunctionExpression {
-					loc: SourceLocation es2015/uncategorised/47/input.js 1:5-1:12
 					body: JSNumericLiteral {
 						value: 42
-						format: undefined
 						loc: SourceLocation es2015/uncategorised/47/input.js 1:10-1:12
 					}
 					head: JSFunctionHead {
 						async: false
 						hasHoistedVars: false
-						rest: undefined
-						thisType: undefined
-						loc: SourceLocation es2015/uncategorised/47/input.js 1:5-1:9
-						params: Array [
+						params: [
 							JSBindingIdentifier {
 								name: "y"
 								loc: SourceLocation es2015/uncategorised/47/input.js 1:5-1:6 (y)
 							}
 						]
+						loc: SourceLocation es2015/uncategorised/47/input.js 1:5-1:9
 					}
+					loc: SourceLocation es2015/uncategorised/47/input.js 1:5-1:12
 				}
+				head: JSFunctionHead {
+					async: false
+					hasHoistedVars: false
+					params: [
+						JSBindingIdentifier {
+							name: "x"
+							loc: SourceLocation es2015/uncategorised/47/input.js 1:0-1:1 (x)
+						}
+					]
+					loc: SourceLocation es2015/uncategorised/47/input.js 1:0-1:4
+				}
+				loc: SourceLocation es2015/uncategorised/47/input.js 1:0-1:12
 			}
+			loc: SourceLocation es2015/uncategorised/47/input.js 1:0-1:12
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2015/uncategorised/47/input.js>
+	loc: SourceLocation es2015/uncategorised/47/input.js 1:0-1:12
 }
 ```
 

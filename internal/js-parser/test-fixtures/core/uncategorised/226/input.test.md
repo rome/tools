@@ -10,7 +10,10 @@
 JSRoot {
 	body: [
 		JSExpressionStatement {
-			expression: JSReferenceIdentifier {name: "a", loc: SourceLocation core/uncategorised/226/input.js 1:0-1:6 (a)}
+			expression: JSReferenceIdentifier {
+				name: "a"
+				loc: SourceLocation core/uncategorised/226/input.js 1:0-1:6 (a)
+			}
 			loc: SourceLocation core/uncategorised/226/input.js 1:0-1:6
 		}
 	]
@@ -19,9 +22,9 @@ JSRoot {
 	diagnostics: []
 	directives: []
 	hasHoistedVars: false
-	path: UIDPath<core/uncategorised/226/input.js>
 	sourceType: "script"
 	syntax: []
+	path: UIDPath<core/uncategorised/226/input.js>
 	loc: SourceLocation core/uncategorised/226/input.js 1:0-1:6
 }
 ```

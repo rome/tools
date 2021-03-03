@@ -8,49 +8,14 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	loc: SourceLocation typescript/class/property-optional-definite-assignment-not-allowed/input.ts 1:0-4:0
-	path: UIDPath<typescript/class/property-optional-definite-assignment-not-allowed/input.ts>
-	syntax: Array ["ts"]
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Expected a semicolon or a line terminator"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 2:4
-				path: UIDPath<typescript/class/property-optional-definite-assignment-not-allowed/input.ts>
-				start: Position 2:4
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSClassDeclaration {
 			id: JSBindingIdentifier {
 				name: "C"
 				loc: SourceLocation typescript/class/property-optional-definite-assignment-not-allowed/input.ts 1:6-1:7 (C)
 			}
-			loc: SourceLocation typescript/class/property-optional-definite-assignment-not-allowed/input.ts 1:0-3:1
 			meta: JSClassHead {
-				implements: undefined
-				superClass: undefined
-				superTypeParameters: undefined
-				typeParameters: undefined
-				loc: SourceLocation typescript/class/property-optional-definite-assignment-not-allowed/input.ts 1:0-3:1
-				body: Array [
+				body: [
 					JSClassProperty {
 						key: JSStaticPropertyKey {
 							value: JSIdentifier {
@@ -59,20 +24,15 @@ JSRoot {
 							}
 							loc: SourceLocation typescript/class/property-optional-definite-assignment-not-allowed/input.ts 2:2-2:3
 						}
-						value: undefined
-						definite: undefined
-						typeAnnotation: undefined
-						loc: SourceLocation typescript/class/property-optional-definite-assignment-not-allowed/input.ts 2:2-2:4
 						meta: JSClassPropertyMeta {
 							abstract: false
-							accessibility: undefined
 							optional: true
 							readonly: false
 							static: false
-							typeAnnotation: undefined
 							loc: SourceLocation typescript/class/property-optional-definite-assignment-not-allowed/input.ts 2:2-2:4
 							start: Position 2:2
 						}
+						loc: SourceLocation typescript/class/property-optional-definite-assignment-not-allowed/input.ts 2:2-2:4
 					}
 					JSClassProperty {
 						key: JSStaticPropertyKey {
@@ -82,25 +42,50 @@ JSRoot {
 							}
 							loc: SourceLocation typescript/class/property-optional-definite-assignment-not-allowed/input.ts 2:4-2:5
 						}
-						value: undefined
-						definite: undefined
-						loc: SourceLocation typescript/class/property-optional-definite-assignment-not-allowed/input.ts 2:4-2:14
-						typeAnnotation: TSNumberKeywordTypeAnnotation {loc: SourceLocation typescript/class/property-optional-definite-assignment-not-allowed/input.ts 2:7-2:13}
 						meta: JSClassPropertyMeta {
 							abstract: false
-							accessibility: undefined
 							optional: false
 							readonly: false
 							static: false
-							typeAnnotation: undefined
 							loc: SourceLocation typescript/class/property-optional-definite-assignment-not-allowed/input.ts 2:4-2:5
 							start: Position 2:4
 						}
+						typeAnnotation: TSNumberKeywordTypeAnnotation {
+							loc: SourceLocation typescript/class/property-optional-definite-assignment-not-allowed/input.ts 2:7-2:13
+						}
+						loc: SourceLocation typescript/class/property-optional-definite-assignment-not-allowed/input.ts 2:4-2:14
 					}
 				]
+				loc: SourceLocation typescript/class/property-optional-definite-assignment-not-allowed/input.ts 1:0-3:1
+			}
+			loc: SourceLocation typescript/class/property-optional-definite-assignment-not-allowed/input.ts 1:0-3:1
+		}
+	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "Expected a semicolon or a line terminator"}
+			}
+			location: {
+				language: "js"
+				path: UIDPath<typescript/class/property-optional-definite-assignment-not-allowed/input.ts>
+				end: Position 2:4
+				start: Position 2:4
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: ["ts"]
+	path: UIDPath<typescript/class/property-optional-definite-assignment-not-allowed/input.ts>
+	loc: SourceLocation typescript/class/property-optional-definite-assignment-not-allowed/input.ts 1:0-4:0
 }
 ```
 
@@ -114,7 +99,7 @@ JSRoot {
 
     1 │ class C {
   > 2 │   x?!: number;
-      │     ^
+      │     <error><emphasis>^</emphasis></error>
     3 │ }
 
 

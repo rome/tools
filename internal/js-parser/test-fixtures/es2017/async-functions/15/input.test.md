@@ -8,33 +8,18 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: true
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2017/async-functions/15/input.js 1:0-1:54
-	path: UIDPath<es2017/async-functions/15/input.js>
-	body: Array [
+	body: [
 		JSVariableDeclarationStatement {
-			loc: SourceLocation es2017/async-functions/15/input.js 1:0-1:54
 			declaration: JSVariableDeclaration {
 				kind: "var"
-				loc: SourceLocation es2017/async-functions/15/input.js 1:0-1:54
-				declarations: Array [
+				declarations: [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "o"
 							loc: SourceLocation es2017/async-functions/15/input.js 1:4-1:5 (o)
 						}
-						loc: SourceLocation es2017/async-functions/15/input.js 1:4-1:54
 						init: JSObjectExpression {
-							loc: SourceLocation es2017/async-functions/15/input.js 1:8-1:54
-							properties: Array [
+							properties: [
 								JSObjectProperty {
 									key: JSStaticPropertyKey {
 										value: JSIdentifier {
@@ -45,7 +30,6 @@ JSRoot {
 									}
 									value: JSNumericLiteral {
 										value: 1
-										format: undefined
 										loc: SourceLocation es2017/async-functions/15/input.js 1:13-1:14
 									}
 									loc: SourceLocation es2017/async-functions/15/input.js 1:10-1:14
@@ -59,52 +43,59 @@ JSRoot {
 										}
 										loc: SourceLocation es2017/async-functions/15/input.js 1:22-1:25
 									}
-									loc: SourceLocation es2017/async-functions/15/input.js 1:16-1:52
 									body: JSBlockStatement {
-										directives: Array []
-										loc: SourceLocation es2017/async-functions/15/input.js 1:35-1:52
-										body: Array [
+										body: [
 											JSExpressionStatement {
-												loc: SourceLocation es2017/async-functions/15/input.js 1:37-1:50
 												expression: JSAwaitExpression {
-													loc: SourceLocation es2017/async-functions/15/input.js 1:37-1:50
 													argument: JSReferenceIdentifier {
 														name: "promise"
 														loc: SourceLocation es2017/async-functions/15/input.js 1:43-1:50 (promise)
 													}
+													loc: SourceLocation es2017/async-functions/15/input.js 1:37-1:50
 												}
+												loc: SourceLocation es2017/async-functions/15/input.js 1:37-1:50
 											}
 										]
+										directives: []
+										loc: SourceLocation es2017/async-functions/15/input.js 1:35-1:52
 									}
 									head: JSFunctionHead {
 										async: true
 										generator: false
 										hasHoistedVars: false
-										rest: undefined
-										returnType: undefined
-										thisType: undefined
-										typeParameters: undefined
-										loc: SourceLocation es2017/async-functions/15/input.js 1:25-1:34
-										params: Array [
+										params: [
 											JSBindingIdentifier {
 												name: "promise"
-												loc: SourceLocation es2017/async-functions/15/input.js 1:26-1:33 (promise)
 												meta: JSPatternMeta {
-													optional: undefined
-													typeAnnotation: undefined
 													loc: SourceLocation es2017/async-functions/15/input.js 1:26-1:33
 												}
+												loc: SourceLocation es2017/async-functions/15/input.js 1:26-1:33 (promise)
 											}
 										]
+										loc: SourceLocation es2017/async-functions/15/input.js 1:25-1:34
 									}
+									loc: SourceLocation es2017/async-functions/15/input.js 1:16-1:52
 								}
 							]
+							loc: SourceLocation es2017/async-functions/15/input.js 1:8-1:54
 						}
+						loc: SourceLocation es2017/async-functions/15/input.js 1:4-1:54
 					}
 				]
+				loc: SourceLocation es2017/async-functions/15/input.js 1:0-1:54
 			}
+			loc: SourceLocation es2017/async-functions/15/input.js 1:0-1:54
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: true
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2017/async-functions/15/input.js>
+	loc: SourceLocation es2017/async-functions/15/input.js 1:0-1:54
 }
 ```
 

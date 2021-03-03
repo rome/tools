@@ -8,54 +8,17 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2015/meta-properties/nested-arrow-function/input.js 1:0-2:0
-	path: UIDPath<es2015/meta-properties/nested-arrow-function/input.js>
-	body: Array [
+	body: [
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "A"
 				loc: SourceLocation es2015/meta-properties/nested-arrow-function/input.js 1:9-1:10 (A)
 			}
-			loc: SourceLocation es2015/meta-properties/nested-arrow-function/input.js 1:0-1:40
-			head: JSFunctionHead {
-				async: false
-				generator: false
-				hasHoistedVars: false
-				params: Array []
-				rest: undefined
-				returnType: undefined
-				thisType: undefined
-				typeParameters: undefined
-				loc: SourceLocation es2015/meta-properties/nested-arrow-function/input.js 1:10-1:12
-			}
 			body: JSBlockStatement {
-				directives: Array []
-				loc: SourceLocation es2015/meta-properties/nested-arrow-function/input.js 1:13-1:40
-				body: Array [
+				body: [
 					JSReturnStatement {
-						loc: SourceLocation es2015/meta-properties/nested-arrow-function/input.js 1:15-1:38
 						argument: JSArrowFunctionExpression {
-							loc: SourceLocation es2015/meta-properties/nested-arrow-function/input.js 1:22-1:38
-							head: JSFunctionHead {
-								async: false
-								hasHoistedVars: false
-								params: Array []
-								rest: undefined
-								returnType: undefined
-								thisType: undefined
-								loc: SourceLocation es2015/meta-properties/nested-arrow-function/input.js 1:22-1:27
-							}
 							body: JSMetaProperty {
-								loc: SourceLocation es2015/meta-properties/nested-arrow-function/input.js 1:28-1:38
 								meta: JSIdentifier {
 									name: "new"
 									loc: SourceLocation es2015/meta-properties/nested-arrow-function/input.js 1:28-1:31 (new)
@@ -64,13 +27,41 @@ JSRoot {
 									name: "target"
 									loc: SourceLocation es2015/meta-properties/nested-arrow-function/input.js 1:32-1:38 (target)
 								}
+								loc: SourceLocation es2015/meta-properties/nested-arrow-function/input.js 1:28-1:38
 							}
+							head: JSFunctionHead {
+								async: false
+								hasHoistedVars: false
+								params: []
+								loc: SourceLocation es2015/meta-properties/nested-arrow-function/input.js 1:22-1:27
+							}
+							loc: SourceLocation es2015/meta-properties/nested-arrow-function/input.js 1:22-1:38
 						}
+						loc: SourceLocation es2015/meta-properties/nested-arrow-function/input.js 1:15-1:38
 					}
 				]
+				directives: []
+				loc: SourceLocation es2015/meta-properties/nested-arrow-function/input.js 1:13-1:40
 			}
+			head: JSFunctionHead {
+				async: false
+				generator: false
+				hasHoistedVars: false
+				params: []
+				loc: SourceLocation es2015/meta-properties/nested-arrow-function/input.js 1:10-1:12
+			}
+			loc: SourceLocation es2015/meta-properties/nested-arrow-function/input.js 1:0-1:40
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2015/meta-properties/nested-arrow-function/input.js>
+	loc: SourceLocation es2015/meta-properties/nested-arrow-function/input.js 1:0-2:0
 }
 ```
 

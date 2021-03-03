@@ -10,28 +10,41 @@
 JSRoot {
 	body: [
 		JSFunctionDeclaration {
-			id: JSBindingIdentifier {name: "f", loc: SourceLocation comments/basic/surrounding-while-loop-comments/input.js 1:9-1:10 (f)}
+			id: JSBindingIdentifier {
+				name: "f"
+				loc: SourceLocation comments/basic/surrounding-while-loop-comments/input.js 1:9-1:10 (f)
+			}
 			body: JSBlockStatement {
 				body: [
 					JSWhileStatement {
-						body: JSBlockStatement {body: [], directives: [], loc: SourceLocation comments/basic/surrounding-while-loop-comments/input.js 1:43-1:46}
 						leadingComments: ["0"]
-						test: JSBooleanLiteral {value: true, loc: SourceLocation comments/basic/surrounding-while-loop-comments/input.js 1:37-1:41}
 						trailingComments: ["1"]
+						body: JSBlockStatement {
+							body: []
+							directives: []
+							loc: SourceLocation comments/basic/surrounding-while-loop-comments/input.js 1:43-1:46
+						}
+						test: JSBooleanLiteral {
+							value: true
+							loc: SourceLocation comments/basic/surrounding-while-loop-comments/input.js 1:37-1:41
+						}
 						loc: SourceLocation comments/basic/surrounding-while-loop-comments/input.js 1:30-1:46
 					}
 					JSVariableDeclarationStatement {
+						leadingComments: ["1"]
 						declaration: JSVariableDeclaration {
 							kind: "var"
 							declarations: [
 								JSVariableDeclarator {
-									id: JSBindingIdentifier {name: "each", loc: SourceLocation comments/basic/surrounding-while-loop-comments/input.js 1:61-1:65 (each)}
+									id: JSBindingIdentifier {
+										name: "each"
+										loc: SourceLocation comments/basic/surrounding-while-loop-comments/input.js 1:61-1:65 (each)
+									}
 									loc: SourceLocation comments/basic/surrounding-while-loop-comments/input.js 1:61-1:65
 								}
 							]
 							loc: SourceLocation comments/basic/surrounding-while-loop-comments/input.js 1:57-1:66
 						}
-						leadingComments: ["1"]
 						loc: SourceLocation comments/basic/surrounding-while-loop-comments/input.js 1:57-1:66
 					}
 				]
@@ -49,16 +62,24 @@ JSRoot {
 		}
 	]
 	comments: [
-		CommentBlock {id: "0", value: " infinite ", loc: SourceLocation comments/basic/surrounding-while-loop-comments/input.js 1:15-1:29}
-		CommentBlock {id: "1", value: " bar ", loc: SourceLocation comments/basic/surrounding-while-loop-comments/input.js 1:47-1:56}
+		CommentBlock {
+			id: "0"
+			value: " infinite "
+			loc: SourceLocation comments/basic/surrounding-while-loop-comments/input.js 1:15-1:29
+		}
+		CommentBlock {
+			id: "1"
+			value: " bar "
+			loc: SourceLocation comments/basic/surrounding-while-loop-comments/input.js 1:47-1:56
+		}
 	]
 	corrupt: false
 	diagnostics: []
 	directives: []
 	hasHoistedVars: false
-	path: UIDPath<comments/basic/surrounding-while-loop-comments/input.js>
 	sourceType: "script"
 	syntax: []
+	path: UIDPath<comments/basic/surrounding-while-loop-comments/input.js>
 	loc: SourceLocation comments/basic/surrounding-while-loop-comments/input.js 1:0-2:0
 }
 ```

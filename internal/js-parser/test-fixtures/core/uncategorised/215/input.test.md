@@ -8,15 +8,21 @@
 
 ```javascript
 JSRoot {
-	body: [JSBlockStatement {body: [], directives: [], loc: SourceLocation core/uncategorised/215/input.js 1:0-1:2}]
+	body: [
+		JSBlockStatement {
+			body: []
+			directives: []
+			loc: SourceLocation core/uncategorised/215/input.js 1:0-1:2
+		}
+	]
 	comments: []
 	corrupt: false
 	diagnostics: []
 	directives: []
 	hasHoistedVars: false
-	path: UIDPath<core/uncategorised/215/input.js>
 	sourceType: "script"
 	syntax: []
+	path: UIDPath<core/uncategorised/215/input.js>
 	loc: SourceLocation core/uncategorised/215/input.js 1:0-1:2
 }
 ```

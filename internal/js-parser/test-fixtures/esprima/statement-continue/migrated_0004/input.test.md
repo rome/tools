@@ -8,46 +8,44 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation esprima/statement-continue/migrated_0004/input.js 1:0-2:0
-	path: UIDPath<esprima/statement-continue/migrated_0004/input.js>
-	body: Array [
+	body: [
 		JSLabeledStatement {
-			loc: SourceLocation esprima/statement-continue/migrated_0004/input.js 1:0-1:47
-			label: JSIdentifier {
-				name: "__proto__"
-				loc: SourceLocation esprima/statement-continue/migrated_0004/input.js 1:0-1:9 (__proto__)
-			}
 			body: JSWhileStatement {
-				loc: SourceLocation esprima/statement-continue/migrated_0004/input.js 1:11-1:47
-				test: JSBooleanLiteral {
-					value: true
-					loc: SourceLocation esprima/statement-continue/migrated_0004/input.js 1:18-1:22
-				}
 				body: JSBlockStatement {
-					directives: Array []
-					loc: SourceLocation esprima/statement-continue/migrated_0004/input.js 1:24-1:47
-					body: Array [
+					body: [
 						JSContinueStatement {
-							loc: SourceLocation esprima/statement-continue/migrated_0004/input.js 1:26-1:45
 							label: JSIdentifier {
 								name: "__proto__"
 								loc: SourceLocation esprima/statement-continue/migrated_0004/input.js 1:35-1:44 (__proto__)
 							}
+							loc: SourceLocation esprima/statement-continue/migrated_0004/input.js 1:26-1:45
 						}
 					]
+					directives: []
+					loc: SourceLocation esprima/statement-continue/migrated_0004/input.js 1:24-1:47
 				}
+				test: JSBooleanLiteral {
+					value: true
+					loc: SourceLocation esprima/statement-continue/migrated_0004/input.js 1:18-1:22
+				}
+				loc: SourceLocation esprima/statement-continue/migrated_0004/input.js 1:11-1:47
 			}
+			label: JSIdentifier {
+				name: "__proto__"
+				loc: SourceLocation esprima/statement-continue/migrated_0004/input.js 1:0-1:9 (__proto__)
+			}
+			loc: SourceLocation esprima/statement-continue/migrated_0004/input.js 1:0-1:47
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<esprima/statement-continue/migrated_0004/input.js>
+	loc: SourceLocation esprima/statement-continue/migrated_0004/input.js 1:0-2:0
 }
 ```
 

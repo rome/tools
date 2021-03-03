@@ -8,31 +8,14 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2017/async-functions/16/input.js 1:0-1:50
-	path: UIDPath<es2017/async-functions/16/input.js>
-	body: Array [
+	body: [
 		JSClassDeclaration {
 			id: JSBindingIdentifier {
 				name: "Foo"
 				loc: SourceLocation es2017/async-functions/16/input.js 1:6-1:9 (Foo)
 			}
-			loc: SourceLocation es2017/async-functions/16/input.js 1:0-1:50
 			meta: JSClassHead {
-				implements: undefined
-				superClass: undefined
-				superTypeParameters: undefined
-				typeParameters: undefined
-				loc: SourceLocation es2017/async-functions/16/input.js 1:0-1:50
-				body: Array [
+				body: [
 					JSClassMethod {
 						kind: "method"
 						key: JSStaticPropertyKey {
@@ -42,59 +25,62 @@ JSRoot {
 							}
 							loc: SourceLocation es2017/async-functions/16/input.js 1:18-1:21
 						}
-						loc: SourceLocation es2017/async-functions/16/input.js 1:12-1:48
-						meta: JSClassPropertyMeta {
-							abstract: false
-							accessibility: undefined
-							optional: false
-							readonly: false
-							static: false
-							typeAnnotation: undefined
-							loc: SourceLocation es2017/async-functions/16/input.js 1:12-1:21
-							start: Position 1:12
-						}
 						body: JSBlockStatement {
-							directives: Array []
-							loc: SourceLocation es2017/async-functions/16/input.js 1:31-1:48
-							body: Array [
+							body: [
 								JSExpressionStatement {
-									loc: SourceLocation es2017/async-functions/16/input.js 1:33-1:46
 									expression: JSAwaitExpression {
-										loc: SourceLocation es2017/async-functions/16/input.js 1:33-1:46
 										argument: JSReferenceIdentifier {
 											name: "promise"
 											loc: SourceLocation es2017/async-functions/16/input.js 1:39-1:46 (promise)
 										}
+										loc: SourceLocation es2017/async-functions/16/input.js 1:33-1:46
 									}
+									loc: SourceLocation es2017/async-functions/16/input.js 1:33-1:46
 								}
 							]
+							directives: []
+							loc: SourceLocation es2017/async-functions/16/input.js 1:31-1:48
 						}
 						head: JSFunctionHead {
 							async: true
 							generator: false
 							hasHoistedVars: false
-							rest: undefined
-							returnType: undefined
-							thisType: undefined
-							typeParameters: undefined
-							loc: SourceLocation es2017/async-functions/16/input.js 1:21-1:30
-							params: Array [
+							params: [
 								JSBindingIdentifier {
 									name: "promise"
-									loc: SourceLocation es2017/async-functions/16/input.js 1:22-1:29 (promise)
 									meta: JSPatternMeta {
-										optional: undefined
-										typeAnnotation: undefined
 										loc: SourceLocation es2017/async-functions/16/input.js 1:22-1:29
 									}
+									loc: SourceLocation es2017/async-functions/16/input.js 1:22-1:29 (promise)
 								}
 							]
+							loc: SourceLocation es2017/async-functions/16/input.js 1:21-1:30
 						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							optional: false
+							readonly: false
+							static: false
+							loc: SourceLocation es2017/async-functions/16/input.js 1:12-1:21
+							start: Position 1:12
+						}
+						loc: SourceLocation es2017/async-functions/16/input.js 1:12-1:48
 					}
 				]
+				loc: SourceLocation es2017/async-functions/16/input.js 1:0-1:50
 			}
+			loc: SourceLocation es2017/async-functions/16/input.js 1:0-1:50
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2017/async-functions/16/input.js>
+	loc: SourceLocation es2017/async-functions/16/input.js 1:0-1:50
 }
 ```
 

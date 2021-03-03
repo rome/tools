@@ -8,49 +8,14 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation esprima/invalid-syntax/migrated_0270/input.js 1:0-2:0
-	path: UIDPath<esprima/invalid-syntax/migrated_0270/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Classes may not have static property named prototype"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:25
-				path: UIDPath<esprima/invalid-syntax/migrated_0270/input.js>
-				start: Position 1:16
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSClassDeclaration {
 			id: JSBindingIdentifier {
 				name: "A"
 				loc: SourceLocation esprima/invalid-syntax/migrated_0270/input.js 1:6-1:7 (A)
 			}
-			loc: SourceLocation esprima/invalid-syntax/migrated_0270/input.js 1:0-1:30
 			meta: JSClassHead {
-				implements: undefined
-				superClass: undefined
-				superTypeParameters: undefined
-				typeParameters: undefined
-				loc: SourceLocation esprima/invalid-syntax/migrated_0270/input.js 1:0-1:30
-				body: Array [
+				body: [
 					JSClassMethod {
 						kind: "method"
 						key: JSStaticPropertyKey {
@@ -60,38 +25,59 @@ JSRoot {
 							}
 							loc: SourceLocation esprima/invalid-syntax/migrated_0270/input.js 1:16-1:25
 						}
-						loc: SourceLocation esprima/invalid-syntax/migrated_0270/input.js 1:9-1:29
 						body: JSBlockStatement {
-							body: Array []
-							directives: Array []
+							body: []
+							directives: []
 							loc: SourceLocation esprima/invalid-syntax/migrated_0270/input.js 1:27-1:29
-						}
-						meta: JSClassPropertyMeta {
-							abstract: false
-							accessibility: undefined
-							optional: false
-							readonly: false
-							static: true
-							typeAnnotation: undefined
-							loc: SourceLocation esprima/invalid-syntax/migrated_0270/input.js 1:9-1:25
-							start: Position 1:9
 						}
 						head: JSFunctionHead {
 							async: false
 							generator: false
 							hasHoistedVars: false
-							params: Array []
-							rest: undefined
-							returnType: undefined
-							thisType: undefined
-							typeParameters: undefined
+							params: []
 							loc: SourceLocation esprima/invalid-syntax/migrated_0270/input.js 1:25-1:27
 						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							optional: false
+							readonly: false
+							static: true
+							loc: SourceLocation esprima/invalid-syntax/migrated_0270/input.js 1:9-1:25
+							start: Position 1:9
+						}
+						loc: SourceLocation esprima/invalid-syntax/migrated_0270/input.js 1:9-1:29
 					}
 				]
+				loc: SourceLocation esprima/invalid-syntax/migrated_0270/input.js 1:0-1:30
+			}
+			loc: SourceLocation esprima/invalid-syntax/migrated_0270/input.js 1:0-1:30
+		}
+	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "Classes may not have static property named prototype"}
+			}
+			location: {
+				language: "js"
+				path: UIDPath<esprima/invalid-syntax/migrated_0270/input.js>
+				end: Position 1:25
+				start: Position 1:16
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<esprima/invalid-syntax/migrated_0270/input.js>
+	loc: SourceLocation esprima/invalid-syntax/migrated_0270/input.js 1:0-2:0
 }
 ```
 
@@ -104,7 +90,11 @@ JSRoot {
   ✖ Classes may not have static property named prototype
 
     class A {static prototype(){}}
-                    ^^^^^^^^^
+                    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
+    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
+    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
+    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
+    <error><emphasis>^</emphasis></error>
 
 
 ```

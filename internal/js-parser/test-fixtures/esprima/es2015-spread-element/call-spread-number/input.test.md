@@ -8,39 +8,36 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation esprima/es2015-spread-element/call-spread-number/input.js 1:0-2:0
-	path: UIDPath<esprima/es2015-spread-element/call-spread-number/input.js>
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation esprima/es2015-spread-element/call-spread-number/input.js 1:0-1:9
 			expression: JSCallExpression {
-				loc: SourceLocation esprima/es2015-spread-element/call-spread-number/input.js 1:0-1:8
+				arguments: [
+					JSSpreadElement {
+						argument: JSNumericLiteral {
+							value: 0.5
+							loc: SourceLocation esprima/es2015-spread-element/call-spread-number/input.js 1:5-1:7
+						}
+						loc: SourceLocation esprima/es2015-spread-element/call-spread-number/input.js 1:2-1:7
+					}
+				]
 				callee: JSReferenceIdentifier {
 					name: "f"
 					loc: SourceLocation esprima/es2015-spread-element/call-spread-number/input.js 1:0-1:1 (f)
 				}
-				arguments: Array [
-					JSSpreadElement {
-						loc: SourceLocation esprima/es2015-spread-element/call-spread-number/input.js 1:2-1:7
-						argument: JSNumericLiteral {
-							value: 0.5
-							format: undefined
-							loc: SourceLocation esprima/es2015-spread-element/call-spread-number/input.js 1:5-1:7
-						}
-					}
-				]
+				loc: SourceLocation esprima/es2015-spread-element/call-spread-number/input.js 1:0-1:8
 			}
+			loc: SourceLocation esprima/es2015-spread-element/call-spread-number/input.js 1:0-1:9
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<esprima/es2015-spread-element/call-spread-number/input.js>
+	loc: SourceLocation esprima/es2015-spread-element/call-spread-number/input.js 1:0-2:0
 }
 ```
 

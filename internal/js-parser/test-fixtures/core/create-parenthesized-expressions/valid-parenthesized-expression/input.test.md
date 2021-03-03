@@ -22,9 +22,9 @@ JSRoot {
 	diagnostics: []
 	directives: []
 	hasHoistedVars: false
-	path: UIDPath<core/create-parenthesized-expressions/valid-parenthesized-expression/input.js>
 	sourceType: "script"
 	syntax: []
+	path: UIDPath<core/create-parenthesized-expressions/valid-parenthesized-expression/input.js>
 	loc: SourceLocation core/create-parenthesized-expressions/valid-parenthesized-expression/input.js 1:0-2:0
 }
 ```

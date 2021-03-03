@@ -12,7 +12,11 @@ JSRoot {
 		JSExpressionStatement {
 			expression: JSFunctionExpression {
 				body: JSBlockStatement {
-					body: [JSReturnStatement {loc: SourceLocation core/uncategorised/260/input.js 1:13-1:20}]
+					body: [
+						JSReturnStatement {
+							loc: SourceLocation core/uncategorised/260/input.js 1:13-1:20
+						}
+					]
 					directives: []
 					loc: SourceLocation core/uncategorised/260/input.js 1:11-1:22
 				}
@@ -33,9 +37,9 @@ JSRoot {
 	diagnostics: []
 	directives: []
 	hasHoistedVars: false
-	path: UIDPath<core/uncategorised/260/input.js>
 	sourceType: "script"
 	syntax: []
+	path: UIDPath<core/uncategorised/260/input.js>
 	loc: SourceLocation core/uncategorised/260/input.js 1:0-1:23
 }
 ```

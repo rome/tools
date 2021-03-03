@@ -8,48 +8,16 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: true
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation esprima/invalid-syntax/migrated_0044/input.js 1:0-2:0
-	path: UIDPath<esprima/invalid-syntax/migrated_0044/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Expecting Unicode escape sequence \\uXXXX"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:17
-				path: UIDPath<esprima/invalid-syntax/migrated_0044/input.js>
-				start: Position 1:17
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSVariableDeclarationStatement {
-			loc: SourceLocation esprima/invalid-syntax/migrated_0044/input.js 1:0-1:23
 			declaration: JSVariableDeclaration {
 				kind: "var"
-				loc: SourceLocation esprima/invalid-syntax/migrated_0044/input.js 1:0-1:23
-				declarations: Array [
+				declarations: [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "x"
 							loc: SourceLocation esprima/invalid-syntax/migrated_0044/input.js 1:4-1:5 (x)
 						}
-						loc: SourceLocation esprima/invalid-syntax/migrated_0044/input.js 1:4-1:23
 						init: JSRegExpLiteral {
 							global: false
 							insensitive: false
@@ -57,14 +25,10 @@ JSRoot {
 							noDotNewline: false
 							sticky: false
 							unicode: true
-							loc: SourceLocation esprima/invalid-syntax/migrated_0044/input.js 1:8-1:23
 							expression: JSRegExpSubExpression {
-								loc: SourceLocation esprima/invalid-syntax/migrated_0044/input.js 1:9-1:14
-								body: Array [
+								body: [
 									JSRegExpCharSet {
-										invert: false
-										loc: SourceLocation esprima/invalid-syntax/migrated_0044/input.js 1:9-1:14
-										body: Array [
+										body: [
 											JSRegExpCharacter {
 												value: "P"
 												loc: SourceLocation esprima/invalid-syntax/migrated_0044/input.js 1:10-1:11
@@ -82,15 +46,47 @@ JSRoot {
 												loc: SourceLocation esprima/invalid-syntax/migrated_0044/input.js 1:13-1:14
 											}
 										]
+										invert: false
+										loc: SourceLocation esprima/invalid-syntax/migrated_0044/input.js 1:9-1:14
 									}
 								]
+								loc: SourceLocation esprima/invalid-syntax/migrated_0044/input.js 1:9-1:14
 							}
+							loc: SourceLocation esprima/invalid-syntax/migrated_0044/input.js 1:8-1:23
 						}
+						loc: SourceLocation esprima/invalid-syntax/migrated_0044/input.js 1:4-1:23
 					}
 				]
+				loc: SourceLocation esprima/invalid-syntax/migrated_0044/input.js 1:0-1:23
+			}
+			loc: SourceLocation esprima/invalid-syntax/migrated_0044/input.js 1:0-1:23
+		}
+	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "Expecting Unicode escape sequence \\uXXXX"}
+			}
+			location: {
+				language: "js"
+				path: UIDPath<esprima/invalid-syntax/migrated_0044/input.js>
+				end: Position 1:17
+				start: Position 1:17
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: true
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<esprima/invalid-syntax/migrated_0044/input.js>
+	loc: SourceLocation esprima/invalid-syntax/migrated_0044/input.js 1:0-2:0
 }
 ```
 
@@ -103,7 +99,7 @@ JSRoot {
   ✖ Expecting Unicode escape sequence \uXXXX
 
     var x = /[P QR]/\\u0067
-                     ^
+                     <error><emphasis>^</emphasis></error>
 
 
 ```

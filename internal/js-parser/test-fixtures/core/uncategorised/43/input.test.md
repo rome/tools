@@ -8,50 +8,30 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation core/uncategorised/43/input.js 1:0-1:32
-	path: UIDPath<core/uncategorised/43/input.js>
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation core/uncategorised/43/input.js 1:0-1:32
 			expression: JSAssignmentExpression {
 				operator: "="
-				loc: SourceLocation core/uncategorised/43/input.js 1:0-1:32
 				left: JSAssignmentIdentifier {
 					name: "x"
 					loc: SourceLocation core/uncategorised/43/input.js 1:0-1:1 (x)
 				}
 				right: JSObjectExpression {
-					loc: SourceLocation core/uncategorised/43/input.js 1:4-1:32
-					properties: Array [
+					properties: [
 						JSObjectMethod {
 							kind: "set"
 							key: JSStaticPropertyKey {
 								value: JSNumericLiteral {
 									value: 10
-									format: undefined
 									loc: SourceLocation core/uncategorised/43/input.js 1:10-1:12
 								}
 								loc: SourceLocation core/uncategorised/43/input.js 1:10-1:12
 							}
-							loc: SourceLocation core/uncategorised/43/input.js 1:6-1:30
 							body: JSBlockStatement {
-								directives: Array []
-								loc: SourceLocation core/uncategorised/43/input.js 1:16-1:30
-								body: Array [
+								body: [
 									JSExpressionStatement {
-										loc: SourceLocation core/uncategorised/43/input.js 1:18-1:28
 										expression: JSAssignmentExpression {
 											operator: "="
-											loc: SourceLocation core/uncategorised/43/input.js 1:18-1:28
 											left: JSAssignmentIdentifier {
 												name: "m_null"
 												loc: SourceLocation core/uncategorised/43/input.js 1:18-1:24 (m_null)
@@ -60,37 +40,48 @@ JSRoot {
 												name: "w"
 												loc: SourceLocation core/uncategorised/43/input.js 1:27-1:28 (w)
 											}
+											loc: SourceLocation core/uncategorised/43/input.js 1:18-1:28
 										}
+										loc: SourceLocation core/uncategorised/43/input.js 1:18-1:28
 									}
 								]
+								directives: []
+								loc: SourceLocation core/uncategorised/43/input.js 1:16-1:30
 							}
 							head: JSFunctionHead {
 								async: false
 								generator: false
 								hasHoistedVars: false
-								rest: undefined
-								returnType: undefined
-								thisType: undefined
-								typeParameters: undefined
-								loc: SourceLocation core/uncategorised/43/input.js 1:12-1:15
-								params: Array [
+								params: [
 									JSBindingIdentifier {
 										name: "w"
-										loc: SourceLocation core/uncategorised/43/input.js 1:13-1:14 (w)
 										meta: JSPatternMeta {
-											optional: undefined
-											typeAnnotation: undefined
 											loc: SourceLocation core/uncategorised/43/input.js 1:13-1:14
 										}
+										loc: SourceLocation core/uncategorised/43/input.js 1:13-1:14 (w)
 									}
 								]
+								loc: SourceLocation core/uncategorised/43/input.js 1:12-1:15
 							}
+							loc: SourceLocation core/uncategorised/43/input.js 1:6-1:30
 						}
 					]
+					loc: SourceLocation core/uncategorised/43/input.js 1:4-1:32
 				}
+				loc: SourceLocation core/uncategorised/43/input.js 1:0-1:32
 			}
+			loc: SourceLocation core/uncategorised/43/input.js 1:0-1:32
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<core/uncategorised/43/input.js>
+	loc: SourceLocation core/uncategorised/43/input.js 1:0-1:32
 }
 ```
 

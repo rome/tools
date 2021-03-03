@@ -14,8 +14,11 @@ JSRoot {
 				JSSwitchCase {
 					consequent: []
 					leadingComments: ["0"]
-					test: JSNumericLiteral {value: 1, loc: SourceLocation comments/basic/switch-fallthrough-comment/input.js 3:9-3:10}
 					trailingComments: ["1"]
+					test: JSNumericLiteral {
+						value: 1
+						loc: SourceLocation comments/basic/switch-fallthrough-comment/input.js 3:9-3:10
+					}
 					loc: SourceLocation comments/basic/switch-fallthrough-comment/input.js 3:4-3:11
 				}
 				JSSwitchCase {
@@ -23,32 +26,49 @@ JSRoot {
 						JSExpressionStatement {
 							expression: JSCallExpression {
 								arguments: []
-								callee: JSReferenceIdentifier {name: "doIt", loc: SourceLocation comments/basic/switch-fallthrough-comment/input.js 6:8-6:12 (doIt)}
+								callee: JSReferenceIdentifier {
+									name: "doIt"
+									loc: SourceLocation comments/basic/switch-fallthrough-comment/input.js 6:8-6:12 (doIt)
+								}
 								loc: SourceLocation comments/basic/switch-fallthrough-comment/input.js 6:8-6:14
 							}
 							loc: SourceLocation comments/basic/switch-fallthrough-comment/input.js 6:8-6:15
 						}
 					]
 					leadingComments: ["1"]
-					test: JSNumericLiteral {value: 2, loc: SourceLocation comments/basic/switch-fallthrough-comment/input.js 5:9-5:10}
+					test: JSNumericLiteral {
+						value: 2
+						loc: SourceLocation comments/basic/switch-fallthrough-comment/input.js 5:9-5:10
+					}
 					loc: SourceLocation comments/basic/switch-fallthrough-comment/input.js 5:4-6:15
 				}
 			]
-			discriminant: JSReferenceIdentifier {name: "foo", loc: SourceLocation comments/basic/switch-fallthrough-comment/input.js 1:7-1:10 (foo)}
+			discriminant: JSReferenceIdentifier {
+				name: "foo"
+				loc: SourceLocation comments/basic/switch-fallthrough-comment/input.js 1:7-1:10 (foo)
+			}
 			loc: SourceLocation comments/basic/switch-fallthrough-comment/input.js 1:0-7:1
 		}
 	]
 	comments: [
-		CommentLine {id: "0", value: " foo", loc: SourceLocation comments/basic/switch-fallthrough-comment/input.js 2:4-2:10}
-		CommentLine {id: "1", value: " falls through", loc: SourceLocation comments/basic/switch-fallthrough-comment/input.js 4:8-4:24}
+		CommentLine {
+			id: "0"
+			value: " foo"
+			loc: SourceLocation comments/basic/switch-fallthrough-comment/input.js 2:4-2:10
+		}
+		CommentLine {
+			id: "1"
+			value: " falls through"
+			loc: SourceLocation comments/basic/switch-fallthrough-comment/input.js 4:8-4:24
+		}
 	]
 	corrupt: false
 	diagnostics: []
 	directives: []
 	hasHoistedVars: false
-	path: UIDPath<comments/basic/switch-fallthrough-comment/input.js>
 	sourceType: "script"
 	syntax: []
+	path: UIDPath<comments/basic/switch-fallthrough-comment/input.js>
 	loc: SourceLocation comments/basic/switch-fallthrough-comment/input.js 1:0-8:0
 }
 ```

@@ -8,54 +8,15 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	loc: SourceLocation jsx/errors/attributes-in-fragment/input.jsx 1:0-2:0
-	path: UIDPath<jsx/errors/attributes-in-fragment/input.jsx>
-	syntax: Array ["jsx"]
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Unknown JSX identifier token"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:5
-				path: UIDPath<jsx/errors/attributes-in-fragment/input.jsx>
-				start: Position 1:5
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation jsx/errors/attributes-in-fragment/input.jsx 1:0-1:16
 			expression: JSXElement {
-				name: JSXIdentifier {
-					name: "key"
-					loc: SourceLocation jsx/errors/attributes-in-fragment/input.jsx 1:2-1:5
-				}
-				children: Array []
-				selfClosing: false
-				typeArguments: undefined
-				loc: SourceLocation jsx/errors/attributes-in-fragment/input.jsx 1:0-1:16
-				attributes: Array [
+				attributes: [
 					JSXAttribute {
 						name: JSXIdentifier {
 							name: ""
 							loc: SourceLocation jsx/errors/attributes-in-fragment/input.jsx 1:5-1:6
 						}
-						value: undefined
 						loc: SourceLocation jsx/errors/attributes-in-fragment/input.jsx 1:5-1:6
 					}
 					JSXAttribute {
@@ -63,13 +24,45 @@ JSRoot {
 							name: ""
 							loc: SourceLocation jsx/errors/attributes-in-fragment/input.jsx 1:6-1:12
 						}
-						value: undefined
 						loc: SourceLocation jsx/errors/attributes-in-fragment/input.jsx 1:6-1:12
 					}
 				]
+				children: []
+				selfClosing: false
+				name: JSXIdentifier {
+					name: "key"
+					loc: SourceLocation jsx/errors/attributes-in-fragment/input.jsx 1:2-1:5
+				}
+				loc: SourceLocation jsx/errors/attributes-in-fragment/input.jsx 1:0-1:16
+			}
+			loc: SourceLocation jsx/errors/attributes-in-fragment/input.jsx 1:0-1:16
+		}
+	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "Unknown JSX identifier token"}
+			}
+			location: {
+				language: "js"
+				path: UIDPath<jsx/errors/attributes-in-fragment/input.jsx>
+				end: Position 1:5
+				start: Position 1:5
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: ["jsx"]
+	path: UIDPath<jsx/errors/attributes-in-fragment/input.jsx>
+	loc: SourceLocation jsx/errors/attributes-in-fragment/input.jsx 1:0-2:0
 }
 ```
 
@@ -82,7 +75,7 @@ JSRoot {
   ✖ Unknown JSX identifier token
 
     < key="nope"></>
-         ^
+         <error><emphasis>^</emphasis></error>
 
 
 ```

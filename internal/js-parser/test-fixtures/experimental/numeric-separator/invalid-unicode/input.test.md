@@ -8,23 +8,21 @@
 
 ```javascript
 JSRoot {
-	body: Array []
-	comments: Array []
+	body: []
+	comments: []
 	corrupt: false
-	diagnostics: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation experimental/numeric-separator/invalid-unicode/input.js 1:0-2:0
-	path: UIDPath<experimental/numeric-separator/invalid-unicode/input.js>
-	directives: Array [
+	diagnostics: []
+	directives: [
 		JSDirective {
 			value: "\\u{1F_639}"
 			loc: SourceLocation experimental/numeric-separator/invalid-unicode/input.js 1:0-1:12
 		}
 	]
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<experimental/numeric-separator/invalid-unicode/input.js>
+	loc: SourceLocation experimental/numeric-separator/invalid-unicode/input.js 1:0-2:0
 }
 ```
 

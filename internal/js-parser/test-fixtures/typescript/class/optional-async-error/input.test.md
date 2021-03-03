@@ -8,67 +8,25 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	syntax: Array []
-	loc: SourceLocation typescript/class/optional-async-error/input.js 1:0-4:1
-	path: UIDPath<typescript/class/optional-async-error/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Expected <emphasis>ts</emphasis> syntax to be enabled"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 3:9
-				path: UIDPath<typescript/class/optional-async-error/input.js>
-				start: Position 3:9
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSClassDeclaration {
 			id: JSBindingIdentifier {
 				name: "B"
 				loc: SourceLocation typescript/class/optional-async-error/input.js 1:6-1:7 (B)
 			}
-			loc: SourceLocation typescript/class/optional-async-error/input.js 1:0-1:11
 			meta: JSClassHead {
-				body: Array []
-				implements: undefined
-				superClass: undefined
-				superTypeParameters: undefined
-				typeParameters: undefined
+				body: []
 				loc: SourceLocation typescript/class/optional-async-error/input.js 1:0-1:11
 			}
+			loc: SourceLocation typescript/class/optional-async-error/input.js 1:0-1:11
 		}
 		JSClassDeclaration {
 			id: JSBindingIdentifier {
 				name: "A"
 				loc: SourceLocation typescript/class/optional-async-error/input.js 2:6-2:7 (A)
 			}
-			loc: SourceLocation typescript/class/optional-async-error/input.js 2:0-4:1
 			meta: JSClassHead {
-				implements: undefined
-				superTypeParameters: undefined
-				typeParameters: undefined
-				loc: SourceLocation typescript/class/optional-async-error/input.js 2:0-4:1
-				superClass: JSReferenceIdentifier {
-					name: "B"
-					loc: SourceLocation typescript/class/optional-async-error/input.js 2:16-2:17 (B)
-				}
-				body: Array [
+				body: [
 					TSDeclareMethod {
 						kind: "method"
 						key: JSStaticPropertyKey {
@@ -78,54 +36,84 @@ JSRoot {
 							}
 							loc: SourceLocation typescript/class/optional-async-error/input.js 3:11-3:17
 						}
-						body: undefined
-						loc: SourceLocation typescript/class/optional-async-error/input.js 3:4-3:46
-						meta: JSClassPropertyMeta {
-							abstract: false
-							accessibility: undefined
-							optional: false
-							readonly: false
-							static: false
-							typeAnnotation: undefined
-							loc: SourceLocation typescript/class/optional-async-error/input.js 3:4-3:17
-							start: Position 3:4
-						}
 						head: JSFunctionHead {
 							async: true
 							generator: false
 							hasHoistedVars: false
-							rest: undefined
-							thisType: undefined
-							typeParameters: undefined
-							loc: SourceLocation typescript/class/optional-async-error/input.js 3:17-3:45
-							params: Array [
+							params: [
 								JSBindingIdentifier {
 									name: "val"
-									loc: SourceLocation typescript/class/optional-async-error/input.js 3:18-3:21 (val)
 									meta: JSPatternMeta {
-										optional: undefined
+										typeAnnotation: TSStringKeywordTypeAnnotation {
+											loc: SourceLocation typescript/class/optional-async-error/input.js 3:23-3:29
+										}
 										loc: SourceLocation typescript/class/optional-async-error/input.js 3:18-3:29
-										typeAnnotation: TSStringKeywordTypeAnnotation {loc: SourceLocation typescript/class/optional-async-error/input.js 3:23-3:29}
 									}
+									loc: SourceLocation typescript/class/optional-async-error/input.js 3:18-3:21 (val)
 								}
 							]
 							returnType: TSTypeReference {
-								loc: SourceLocation typescript/class/optional-async-error/input.js 3:32-3:45
 								typeName: JSReferenceIdentifier {
 									name: "Promise"
 									loc: SourceLocation typescript/class/optional-async-error/input.js 3:32-3:39 (Promise)
 								}
 								typeParameters: TSTypeParameterInstantiation {
+									params: [
+										TSVoidKeywordTypeAnnotation {
+											loc: SourceLocation typescript/class/optional-async-error/input.js 3:40-3:44
+										}
+									]
 									loc: SourceLocation typescript/class/optional-async-error/input.js 3:39-3:45
-									params: Array [TSVoidKeywordTypeAnnotation {loc: SourceLocation typescript/class/optional-async-error/input.js 3:40-3:44}]
 								}
+								loc: SourceLocation typescript/class/optional-async-error/input.js 3:32-3:45
 							}
+							loc: SourceLocation typescript/class/optional-async-error/input.js 3:17-3:45
 						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							optional: false
+							readonly: false
+							static: false
+							loc: SourceLocation typescript/class/optional-async-error/input.js 3:4-3:17
+							start: Position 3:4
+						}
+						loc: SourceLocation typescript/class/optional-async-error/input.js 3:4-3:46
 					}
 				]
+				superClass: JSReferenceIdentifier {
+					name: "B"
+					loc: SourceLocation typescript/class/optional-async-error/input.js 2:16-2:17 (B)
+				}
+				loc: SourceLocation typescript/class/optional-async-error/input.js 2:0-4:1
+			}
+			loc: SourceLocation typescript/class/optional-async-error/input.js 2:0-4:1
+		}
+	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "js"
+				message: [RAW_MARKUP {value: "Expected <emphasis>"}, "ts", RAW_MARKUP {value: "</emphasis> syntax to be enabled"}]
+			}
+			location: {
+				language: "js"
+				path: UIDPath<typescript/class/optional-async-error/input.js>
+				end: Position 3:9
+				start: Position 3:9
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: []
+	path: UIDPath<typescript/class/optional-async-error/input.js>
+	loc: SourceLocation typescript/class/optional-async-error/input.js 1:0-4:1
 }
 ```
 
@@ -140,7 +128,7 @@ JSRoot {
     1 │ class B { }
     2 │ class A extends B {
   > 3 │     async? method(val: string): Promise<void>;
-      │          ^
+      │          <error><emphasis>^</emphasis></error>
     4 │ }
 
 

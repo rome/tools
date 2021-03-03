@@ -8,41 +8,38 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2015/let/let-as-identifier-6/input.js 1:0-3:0
-	path: UIDPath<es2015/let/let-as-identifier-6/input.js>
-	body: Array [
+	body: [
 		JSWhileStatement {
-			loc: SourceLocation es2015/let/let-as-identifier-6/input.js 1:0-1:13
-			test: JSNumericLiteral {
-				value: 0
-				format: undefined
-				loc: SourceLocation es2015/let/let-as-identifier-6/input.js 1:7-1:8
-			}
 			body: JSExpressionStatement {
-				loc: SourceLocation es2015/let/let-as-identifier-6/input.js 1:10-1:13
 				expression: JSReferenceIdentifier {
 					name: "let"
 					loc: SourceLocation es2015/let/let-as-identifier-6/input.js 1:10-1:13 (let)
 				}
+				loc: SourceLocation es2015/let/let-as-identifier-6/input.js 1:10-1:13
 			}
+			test: JSNumericLiteral {
+				value: 0
+				loc: SourceLocation es2015/let/let-as-identifier-6/input.js 1:7-1:8
+			}
+			loc: SourceLocation es2015/let/let-as-identifier-6/input.js 1:0-1:13
 		}
 		JSExpressionStatement {
-			loc: SourceLocation es2015/let/let-as-identifier-6/input.js 2:0-2:3
 			expression: JSReferenceIdentifier {
 				name: "foo"
 				loc: SourceLocation es2015/let/let-as-identifier-6/input.js 2:0-2:3 (foo)
 			}
+			loc: SourceLocation es2015/let/let-as-identifier-6/input.js 2:0-2:3
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2015/let/let-as-identifier-6/input.js>
+	loc: SourceLocation es2015/let/let-as-identifier-6/input.js 1:0-3:0
 }
 ```
 

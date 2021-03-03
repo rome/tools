@@ -8,66 +8,56 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2015/yield/function-name-inside-function/input.js 1:0-3:1
-	path: UIDPath<es2015/yield/function-name-inside-function/input.js>
-	body: Array [
+	body: [
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "fn"
 				loc: SourceLocation es2015/yield/function-name-inside-function/input.js 1:9-1:11 (fn)
 			}
-			loc: SourceLocation es2015/yield/function-name-inside-function/input.js 1:0-3:1
-			head: JSFunctionHead {
-				async: false
-				generator: false
-				hasHoistedVars: false
-				params: Array []
-				rest: undefined
-				returnType: undefined
-				thisType: undefined
-				typeParameters: undefined
-				loc: SourceLocation es2015/yield/function-name-inside-function/input.js 1:11-1:13
-			}
 			body: JSBlockStatement {
-				directives: Array []
-				loc: SourceLocation es2015/yield/function-name-inside-function/input.js 1:14-3:1
-				body: Array [
+				body: [
 					JSFunctionDeclaration {
 						id: JSBindingIdentifier {
 							name: "yield"
 							loc: SourceLocation es2015/yield/function-name-inside-function/input.js 2:11-2:16 (yield)
 						}
-						loc: SourceLocation es2015/yield/function-name-inside-function/input.js 2:2-2:21
 						body: JSBlockStatement {
-							body: Array []
-							directives: Array []
+							body: []
+							directives: []
 							loc: SourceLocation es2015/yield/function-name-inside-function/input.js 2:19-2:21
 						}
 						head: JSFunctionHead {
 							async: false
 							generator: false
 							hasHoistedVars: false
-							params: Array []
-							rest: undefined
-							returnType: undefined
-							thisType: undefined
-							typeParameters: undefined
+							params: []
 							loc: SourceLocation es2015/yield/function-name-inside-function/input.js 2:16-2:18
 						}
+						loc: SourceLocation es2015/yield/function-name-inside-function/input.js 2:2-2:21
 					}
 				]
+				directives: []
+				loc: SourceLocation es2015/yield/function-name-inside-function/input.js 1:14-3:1
 			}
+			head: JSFunctionHead {
+				async: false
+				generator: false
+				hasHoistedVars: false
+				params: []
+				loc: SourceLocation es2015/yield/function-name-inside-function/input.js 1:11-1:13
+			}
+			loc: SourceLocation es2015/yield/function-name-inside-function/input.js 1:0-3:1
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2015/yield/function-name-inside-function/input.js>
+	loc: SourceLocation es2015/yield/function-name-inside-function/input.js 1:0-3:1
 }
 ```
 

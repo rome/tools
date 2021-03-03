@@ -8,47 +8,10 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2015/object/disallow-duplicate-method-params/input.js 1:0-4:0
-	path: UIDPath<es2015/object/disallow-duplicate-method-params/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 2:12
-				path: UIDPath<es2015/object/disallow-duplicate-method-params/input.js>
-				start: Position 2:11
-			}
-			description: Object {
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Argument <emphasis>a</emphasis> name clash in strict mode"}
-				advice: Array [
-					log {
-						category: "info"
-						text: RAW_MARKUP {value: "Defined already here"}
-					}
-					frame {location: SourceLocation es2015/object/disallow-duplicate-method-params/input.js 2:11-2:12 (a)}
-				]
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation es2015/object/disallow-duplicate-method-params/input.js 1:0-3:2
 			expression: JSObjectExpression {
-				loc: SourceLocation es2015/object/disallow-duplicate-method-params/input.js 1:1-3:1
-				properties: Array [
+				properties: [
 					JSObjectMethod {
 						kind: "method"
 						key: JSStaticPropertyKey {
@@ -58,47 +21,74 @@ JSRoot {
 							}
 							loc: SourceLocation es2015/object/disallow-duplicate-method-params/input.js 2:4-2:7
 						}
-						loc: SourceLocation es2015/object/disallow-duplicate-method-params/input.js 2:4-2:16
 						body: JSBlockStatement {
-							body: Array []
-							directives: Array []
+							body: []
+							directives: []
 							loc: SourceLocation es2015/object/disallow-duplicate-method-params/input.js 2:14-2:16
 						}
 						head: JSFunctionHead {
 							async: false
 							generator: false
 							hasHoistedVars: false
-							rest: undefined
-							returnType: undefined
-							thisType: undefined
-							typeParameters: undefined
-							loc: SourceLocation es2015/object/disallow-duplicate-method-params/input.js 2:7-2:13
-							params: Array [
+							params: [
 								JSBindingIdentifier {
 									name: "a"
-									loc: SourceLocation es2015/object/disallow-duplicate-method-params/input.js 2:8-2:9 (a)
 									meta: JSPatternMeta {
-										optional: undefined
-										typeAnnotation: undefined
 										loc: SourceLocation es2015/object/disallow-duplicate-method-params/input.js 2:8-2:9
 									}
+									loc: SourceLocation es2015/object/disallow-duplicate-method-params/input.js 2:8-2:9 (a)
 								}
 								JSBindingIdentifier {
 									name: "a"
-									loc: SourceLocation es2015/object/disallow-duplicate-method-params/input.js 2:11-2:12 (a)
 									meta: JSPatternMeta {
-										optional: undefined
-										typeAnnotation: undefined
 										loc: SourceLocation es2015/object/disallow-duplicate-method-params/input.js 2:11-2:12
 									}
+									loc: SourceLocation es2015/object/disallow-duplicate-method-params/input.js 2:11-2:12 (a)
 								}
 							]
+							loc: SourceLocation es2015/object/disallow-duplicate-method-params/input.js 2:7-2:13
 						}
+						loc: SourceLocation es2015/object/disallow-duplicate-method-params/input.js 2:4-2:16
 					}
 				]
+				loc: SourceLocation es2015/object/disallow-duplicate-method-params/input.js 1:1-3:1
+			}
+			loc: SourceLocation es2015/object/disallow-duplicate-method-params/input.js 1:0-3:2
+		}
+	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {
+				advice: [
+					log {
+						category: "info"
+						text: RAW_MARKUP {value: "Defined already here"}
+					}
+					frame {
+						location: SourceLocation es2015/object/disallow-duplicate-method-params/input.js 2:11-2:12 (a)
+					}
+				]
+				category: ["parse"]
+				categoryValue: "js"
+				message: [RAW_MARKUP {value: "Argument <emphasis>"}, "a", RAW_MARKUP {value: "</emphasis> name clash in strict mode"}]
+			}
+			location: {
+				language: "js"
+				path: UIDPath<es2015/object/disallow-duplicate-method-params/input.js>
+				end: Position 2:12
+				start: Position 2:11
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2015/object/disallow-duplicate-method-params/input.js>
+	loc: SourceLocation es2015/object/disallow-duplicate-method-params/input.js 1:0-4:0
 }
 ```
 
@@ -114,7 +104,7 @@ JSRoot {
 
     1 │ ({
   > 2 │     bar(a, a) {}
-      │            ^
+      │            <error><emphasis>^</emphasis></error>
     3 │ })
 
 

@@ -8,95 +8,83 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation esprima/es2015-yield/yield-generator-arrow-default/input.js 1:0-2:0
-	path: UIDPath<esprima/es2015-yield/yield-generator-arrow-default/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "yield is not allowed in generator parameters"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:26
-				path: UIDPath<esprima/es2015-yield/yield-generator-arrow-default/input.js>
-				start: Position 1:26
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "g"
 				loc: SourceLocation esprima/es2015-yield/yield-generator-arrow-default/input.js 1:10-1:11 (g)
 			}
-			loc: SourceLocation esprima/es2015-yield/yield-generator-arrow-default/input.js 1:0-1:35
-			head: JSFunctionHead {
-				async: false
-				generator: true
-				hasHoistedVars: false
-				params: Array []
-				rest: undefined
-				returnType: undefined
-				thisType: undefined
-				typeParameters: undefined
-				loc: SourceLocation esprima/es2015-yield/yield-generator-arrow-default/input.js 1:11-1:13
-			}
 			body: JSBlockStatement {
-				directives: Array []
-				loc: SourceLocation esprima/es2015-yield/yield-generator-arrow-default/input.js 1:14-1:35
-				body: Array [
+				body: [
 					JSExpressionStatement {
-						loc: SourceLocation esprima/es2015-yield/yield-generator-arrow-default/input.js 1:16-1:33
 						expression: JSArrowFunctionExpression {
-							loc: SourceLocation esprima/es2015-yield/yield-generator-arrow-default/input.js 1:16-1:33
 							body: JSBlockStatement {
-								body: Array []
-								directives: Array []
+								body: []
+								directives: []
 								loc: SourceLocation esprima/es2015-yield/yield-generator-arrow-default/input.js 1:31-1:33
 							}
 							head: JSFunctionHead {
 								async: false
 								hasHoistedVars: false
-								rest: undefined
-								returnType: undefined
-								thisType: undefined
-								loc: SourceLocation esprima/es2015-yield/yield-generator-arrow-default/input.js 1:16-1:30
-								params: Array [
+								params: [
 									JSBindingAssignmentPattern {
 										operator: "="
-										loc: SourceLocation esprima/es2015-yield/yield-generator-arrow-default/input.js 1:17-1:26
 										left: JSBindingIdentifier {
 											name: "x"
 											loc: SourceLocation esprima/es2015-yield/yield-generator-arrow-default/input.js 1:17-1:18 (x)
 										}
 										right: JSYieldExpression {
-											argument: undefined
 											delegate: false
 											loc: SourceLocation esprima/es2015-yield/yield-generator-arrow-default/input.js 1:21-1:26
 										}
+										loc: SourceLocation esprima/es2015-yield/yield-generator-arrow-default/input.js 1:17-1:26
 									}
 								]
+								loc: SourceLocation esprima/es2015-yield/yield-generator-arrow-default/input.js 1:16-1:30
 							}
+							loc: SourceLocation esprima/es2015-yield/yield-generator-arrow-default/input.js 1:16-1:33
 						}
+						loc: SourceLocation esprima/es2015-yield/yield-generator-arrow-default/input.js 1:16-1:33
 					}
 				]
+				directives: []
+				loc: SourceLocation esprima/es2015-yield/yield-generator-arrow-default/input.js 1:14-1:35
+			}
+			head: JSFunctionHead {
+				async: false
+				generator: true
+				hasHoistedVars: false
+				params: []
+				loc: SourceLocation esprima/es2015-yield/yield-generator-arrow-default/input.js 1:11-1:13
+			}
+			loc: SourceLocation esprima/es2015-yield/yield-generator-arrow-default/input.js 1:0-1:35
+		}
+	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "yield is not allowed in generator parameters"}
+			}
+			location: {
+				language: "js"
+				path: UIDPath<esprima/es2015-yield/yield-generator-arrow-default/input.js>
+				end: Position 1:26
+				start: Position 1:26
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<esprima/es2015-yield/yield-generator-arrow-default/input.js>
+	loc: SourceLocation esprima/es2015-yield/yield-generator-arrow-default/input.js 1:0-2:0
 }
 ```
 
@@ -109,7 +97,7 @@ JSRoot {
   ✖ yield is not allowed in generator parameters
 
     function *g() { (x = yield) => {} }
-                              ^
+                              <error><emphasis>^</emphasis></error>
 
 
 ```

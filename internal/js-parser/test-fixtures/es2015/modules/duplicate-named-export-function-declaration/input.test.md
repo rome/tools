@@ -8,49 +8,11 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	syntax: Array []
-	loc: SourceLocation es2015/modules/duplicate-named-export-function-declaration/input.js 1:0-3:0
-	path: UIDPath<es2015/modules/duplicate-named-export-function-declaration/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 2:24
-				path: UIDPath<es2015/modules/duplicate-named-export-function-declaration/input.js>
-				start: Position 2:7
-			}
-			description: Object {
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "`foo` has already been exported. Exported identifiers must be unique."}
-				advice: Array [
-					log {
-						category: "info"
-						text: RAW_MARKUP {value: "Defined already here"}
-					}
-					frame {location: SourceLocation es2015/modules/duplicate-named-export-function-declaration/input.js 1:9-1:12}
-				]
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSExportLocalDeclaration {
-			declaration: undefined
 			exportKind: "value"
-			loc: SourceLocation es2015/modules/duplicate-named-export-function-declaration/input.js 1:0-1:15
-			specifiers: Array [
+			specifiers: [
 				JSExportLocalSpecifier {
-					loc: SourceLocation es2015/modules/duplicate-named-export-function-declaration/input.js 1:9-1:12
 					exported: JSIdentifier {
 						name: "foo"
 						loc: SourceLocation es2015/modules/duplicate-named-export-function-declaration/input.js 1:9-1:12 (foo)
@@ -59,39 +21,71 @@ JSRoot {
 						name: "foo"
 						loc: SourceLocation es2015/modules/duplicate-named-export-function-declaration/input.js 1:9-1:12 (foo)
 					}
+					loc: SourceLocation es2015/modules/duplicate-named-export-function-declaration/input.js 1:9-1:12
 				}
 			]
+			loc: SourceLocation es2015/modules/duplicate-named-export-function-declaration/input.js 1:0-1:15
 		}
 		JSExportLocalDeclaration {
 			exportKind: "value"
-			specifiers: undefined
-			loc: SourceLocation es2015/modules/duplicate-named-export-function-declaration/input.js 2:0-2:24
 			declaration: JSFunctionDeclaration {
 				id: JSBindingIdentifier {
 					name: "foo"
 					loc: SourceLocation es2015/modules/duplicate-named-export-function-declaration/input.js 2:16-2:19 (foo)
 				}
-				loc: SourceLocation es2015/modules/duplicate-named-export-function-declaration/input.js 2:7-2:24
 				body: JSBlockStatement {
-					body: Array []
-					directives: Array []
+					body: []
+					directives: []
 					loc: SourceLocation es2015/modules/duplicate-named-export-function-declaration/input.js 2:22-2:24
 				}
 				head: JSFunctionHead {
 					async: false
 					generator: false
 					hasHoistedVars: false
-					params: Array []
-					rest: undefined
-					returnType: undefined
-					thisType: undefined
-					typeParameters: undefined
+					params: []
 					loc: SourceLocation es2015/modules/duplicate-named-export-function-declaration/input.js 2:19-2:21
 				}
+				loc: SourceLocation es2015/modules/duplicate-named-export-function-declaration/input.js 2:7-2:24
+			}
+			loc: SourceLocation es2015/modules/duplicate-named-export-function-declaration/input.js 2:0-2:24
+		}
+		JSEmptyStatement {
+			loc: SourceLocation es2015/modules/duplicate-named-export-function-declaration/input.js 2:24-2:25
+		}
+	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {
+				advice: [
+					log {
+						category: "info"
+						text: RAW_MARKUP {value: "Defined already here"}
+					}
+					frame {
+						location: SourceLocation es2015/modules/duplicate-named-export-function-declaration/input.js 1:9-1:12
+					}
+				]
+				category: ["parse"]
+				categoryValue: "js"
+				message: [RAW_MARKUP {value: "`"}, "foo", RAW_MARKUP {value: "` has already been exported. Exported identifiers must be unique."}]
+			}
+			location: {
+				language: "js"
+				path: UIDPath<es2015/modules/duplicate-named-export-function-declaration/input.js>
+				end: Position 2:24
+				start: Position 2:7
 			}
 		}
-		JSEmptyStatement {loc: SourceLocation es2015/modules/duplicate-named-export-function-declaration/input.js 2:24-2:25}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: []
+	path: UIDPath<es2015/modules/duplicate-named-export-function-declaration/input.js>
+	loc: SourceLocation es2015/modules/duplicate-named-export-function-declaration/input.js 1:0-3:0
 }
 ```
 
@@ -105,12 +99,21 @@ JSRoot {
 
     1 │ export { foo };
   > 2 │ export function foo() {};
-      │        ^^^^^^^^^^^^^^^^^
+    → │        <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
+    → │ <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
+    → │ <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
+    → │ <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
+    → │ <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
+    → │ <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
+    → │ <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
+    → │ <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
+      │ <error><emphasis>^</emphasis></error>
 
   ℹ Defined already here
 
   > 1 │ export { foo };
-      │          ^^^
+    → │          <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
+      │ <error><emphasis>^</emphasis></error>
     2 │ export function foo() {};
 
 

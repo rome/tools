@@ -10,7 +10,10 @@
 JSRoot {
 	body: [
 		JSExpressionStatement {
-			expression: JSNumericLiteral {value: 9.5, loc: SourceLocation core/regression/non-octal-float/input.js 1:0-1:4}
+			expression: JSNumericLiteral {
+				value: 9.5
+				loc: SourceLocation core/regression/non-octal-float/input.js 1:0-1:4
+			}
 			loc: SourceLocation core/regression/non-octal-float/input.js 1:0-1:4
 		}
 	]
@@ -19,9 +22,9 @@ JSRoot {
 	diagnostics: []
 	directives: []
 	hasHoistedVars: false
-	path: UIDPath<core/regression/non-octal-float/input.js>
 	sourceType: "script"
 	syntax: []
+	path: UIDPath<core/regression/non-octal-float/input.js>
 	loc: SourceLocation core/regression/non-octal-float/input.js 1:0-2:0
 }
 ```

@@ -8,62 +8,55 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2017/async-functions/await-inside-parenthesized-assign/input.js 1:0-3:1
-	path: UIDPath<es2017/async-functions/await-inside-parenthesized-assign/input.js>
-	body: Array [
+	body: [
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "fn"
 				loc: SourceLocation es2017/async-functions/await-inside-parenthesized-assign/input.js 1:15-1:17 (fn)
 			}
-			loc: SourceLocation es2017/async-functions/await-inside-parenthesized-assign/input.js 1:0-3:1
-			head: JSFunctionHead {
-				async: true
-				generator: false
-				hasHoistedVars: false
-				params: Array []
-				rest: undefined
-				returnType: undefined
-				thisType: undefined
-				typeParameters: undefined
-				loc: SourceLocation es2017/async-functions/await-inside-parenthesized-assign/input.js 1:17-1:19
-			}
 			body: JSBlockStatement {
-				directives: Array []
-				loc: SourceLocation es2017/async-functions/await-inside-parenthesized-assign/input.js 1:20-3:1
-				body: Array [
+				body: [
 					JSExpressionStatement {
-						loc: SourceLocation es2017/async-functions/await-inside-parenthesized-assign/input.js 2:2-2:16
 						expression: JSAssignmentExpression {
 							operator: "="
-							loc: SourceLocation es2017/async-functions/await-inside-parenthesized-assign/input.js 2:3-2:14
 							left: JSAssignmentIdentifier {
 								name: "x"
 								loc: SourceLocation es2017/async-functions/await-inside-parenthesized-assign/input.js 2:3-2:4 (x)
 							}
 							right: JSAwaitExpression {
-								loc: SourceLocation es2017/async-functions/await-inside-parenthesized-assign/input.js 2:7-2:14
 								argument: JSNumericLiteral {
 									value: 2
-									format: undefined
 									loc: SourceLocation es2017/async-functions/await-inside-parenthesized-assign/input.js 2:13-2:14
 								}
+								loc: SourceLocation es2017/async-functions/await-inside-parenthesized-assign/input.js 2:7-2:14
 							}
+							loc: SourceLocation es2017/async-functions/await-inside-parenthesized-assign/input.js 2:3-2:14
 						}
+						loc: SourceLocation es2017/async-functions/await-inside-parenthesized-assign/input.js 2:2-2:16
 					}
 				]
+				directives: []
+				loc: SourceLocation es2017/async-functions/await-inside-parenthesized-assign/input.js 1:20-3:1
 			}
+			head: JSFunctionHead {
+				async: true
+				generator: false
+				hasHoistedVars: false
+				params: []
+				loc: SourceLocation es2017/async-functions/await-inside-parenthesized-assign/input.js 1:17-1:19
+			}
+			loc: SourceLocation es2017/async-functions/await-inside-parenthesized-assign/input.js 1:0-3:1
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2017/async-functions/await-inside-parenthesized-assign/input.js>
+	loc: SourceLocation es2017/async-functions/await-inside-parenthesized-assign/input.js 1:0-3:1
 }
 ```
 

@@ -8,52 +8,14 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2015/yield/in-class-heritage/input.js 1:0-1:27
-	path: UIDPath<es2015/yield/in-class-heritage/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "yield is a reserved word"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:21
-				path: UIDPath<es2015/yield/in-class-heritage/input.js>
-				start: Position 1:16
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSClassDeclaration {
 			id: JSBindingIdentifier {
 				name: "A"
 				loc: SourceLocation es2015/yield/in-class-heritage/input.js 1:6-1:7 (A)
 			}
-			loc: SourceLocation es2015/yield/in-class-heritage/input.js 1:0-1:27
 			meta: JSClassHead {
-				implements: undefined
-				superTypeParameters: undefined
-				typeParameters: undefined
-				loc: SourceLocation es2015/yield/in-class-heritage/input.js 1:0-1:27
-				superClass: JSReferenceIdentifier {
-					name: "yield"
-					loc: SourceLocation es2015/yield/in-class-heritage/input.js 1:16-1:21 (yield)
-				}
-				body: Array [
+				body: [
 					JSClassProperty {
 						key: JSStaticPropertyKey {
 							value: JSIdentifier {
@@ -62,25 +24,46 @@ JSRoot {
 							}
 							loc: SourceLocation es2015/yield/in-class-heritage/input.js 1:24-1:25
 						}
-						value: undefined
-						definite: undefined
-						typeAnnotation: undefined
-						loc: SourceLocation es2015/yield/in-class-heritage/input.js 1:24-1:25
 						meta: JSClassPropertyMeta {
 							abstract: false
-							accessibility: undefined
 							optional: false
 							readonly: false
 							static: false
-							typeAnnotation: undefined
 							loc: SourceLocation es2015/yield/in-class-heritage/input.js 1:24-1:25
 							start: Position 1:24
 						}
+						loc: SourceLocation es2015/yield/in-class-heritage/input.js 1:24-1:25
 					}
 				]
+				superClass: JSReferenceIdentifier {
+					name: "yield"
+					loc: SourceLocation es2015/yield/in-class-heritage/input.js 1:16-1:21 (yield)
+				}
+				loc: SourceLocation es2015/yield/in-class-heritage/input.js 1:0-1:27
+			}
+			loc: SourceLocation es2015/yield/in-class-heritage/input.js 1:0-1:27
+		}
+	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {advice: [], category: ["parse"], categoryValue: "js", message: ["yield", RAW_MARKUP {value: " is a reserved word"}]}
+			location: {
+				language: "js"
+				path: UIDPath<es2015/yield/in-class-heritage/input.js>
+				end: Position 1:21
+				start: Position 1:16
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2015/yield/in-class-heritage/input.js>
+	loc: SourceLocation es2015/yield/in-class-heritage/input.js 1:0-1:27
 }
 ```
 
@@ -93,7 +76,9 @@ JSRoot {
   ✖ yield is a reserved word
 
     class A extends yield B { }
-                    ^^^^^
+                    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
+    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
+    <error><emphasis>^</emphasis></error>
 
 
 ```

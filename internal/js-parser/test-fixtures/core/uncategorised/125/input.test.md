@@ -12,12 +12,23 @@ JSRoot {
 		JSExpressionStatement {
 			expression: JSMemberExpression {
 				object: JSCallExpression {
-					arguments: [JSNumericLiteral {value: 42, loc: SourceLocation core/uncategorised/125/input.js 1:9-1:11}]
-					callee: JSReferenceIdentifier {name: "universe", loc: SourceLocation core/uncategorised/125/input.js 1:0-1:8 (universe)}
+					arguments: [
+						JSNumericLiteral {
+							value: 42
+							loc: SourceLocation core/uncategorised/125/input.js 1:9-1:11
+						}
+					]
+					callee: JSReferenceIdentifier {
+						name: "universe"
+						loc: SourceLocation core/uncategorised/125/input.js 1:0-1:8 (universe)
+					}
 					loc: SourceLocation core/uncategorised/125/input.js 1:0-1:12
 				}
 				property: JSStaticMemberProperty {
-					value: JSIdentifier {name: "galaxies", loc: SourceLocation core/uncategorised/125/input.js 1:13-1:21 (galaxies)}
+					value: JSIdentifier {
+						name: "galaxies"
+						loc: SourceLocation core/uncategorised/125/input.js 1:13-1:21 (galaxies)
+					}
 					loc: SourceLocation core/uncategorised/125/input.js 1:13-1:21 (galaxies)
 				}
 				loc: SourceLocation core/uncategorised/125/input.js 1:0-1:21
@@ -30,9 +41,9 @@ JSRoot {
 	diagnostics: []
 	directives: []
 	hasHoistedVars: false
-	path: UIDPath<core/uncategorised/125/input.js>
 	sourceType: "script"
 	syntax: []
+	path: UIDPath<core/uncategorised/125/input.js>
 	loc: SourceLocation core/uncategorised/125/input.js 1:0-1:21
 }
 ```

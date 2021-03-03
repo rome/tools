@@ -8,80 +8,81 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	loc: SourceLocation typescript/types/function/input.ts 1:0-2:0
-	path: UIDPath<typescript/types/function/input.ts>
-	syntax: Array ["ts"]
-	body: Array [
+	body: [
 		JSVariableDeclarationStatement {
-			loc: SourceLocation typescript/types/function/input.ts 1:0-1:55
 			declaration: JSVariableDeclaration {
 				kind: "let"
-				loc: SourceLocation typescript/types/function/input.ts 1:0-1:55
-				declarations: Array [
+				declarations: [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "f"
-							loc: SourceLocation typescript/types/function/input.ts 1:4-1:54
 							meta: JSPatternMeta {
-								definite: undefined
-								loc: SourceLocation typescript/types/function/input.ts 1:4-1:54
 								typeAnnotation: TSFunctionType {
-									loc: SourceLocation typescript/types/function/input.ts 1:7-1:54
-									typeAnnotation: TSVoidKeywordTypeAnnotation {loc: SourceLocation typescript/types/function/input.ts 1:50-1:54}
 									meta: TSSignatureDeclarationMeta {
-										typeParameters: undefined
-										loc: SourceLocation typescript/types/function/input.ts 1:7-1:54
-										rest: JSBindingIdentifier {
-											name: "c"
-											loc: SourceLocation typescript/types/function/input.ts 1:34-1:35 (c)
-											meta: JSPatternMeta {
-												optional: undefined
-												loc: SourceLocation typescript/types/function/input.ts 1:34-1:45
-												typeAnnotation: TSArrayType {
-													elementType: TSNumberKeywordTypeAnnotation {loc: SourceLocation typescript/types/function/input.ts 1:37-1:43}
-													loc: SourceLocation typescript/types/function/input.ts 1:37-1:45
-												}
-											}
-										}
-										parameters: Array [
+										parameters: [
 											JSBindingIdentifier {
 												name: "a"
-												loc: SourceLocation typescript/types/function/input.ts 1:8-1:9 (a)
 												meta: JSPatternMeta {
-													optional: undefined
+													typeAnnotation: TSNumberKeywordTypeAnnotation {
+														loc: SourceLocation typescript/types/function/input.ts 1:11-1:17
+													}
 													loc: SourceLocation typescript/types/function/input.ts 1:8-1:17
-													typeAnnotation: TSNumberKeywordTypeAnnotation {loc: SourceLocation typescript/types/function/input.ts 1:11-1:17}
 												}
+												loc: SourceLocation typescript/types/function/input.ts 1:8-1:9 (a)
 											}
 											JSBindingIdentifier {
 												name: "b"
-												loc: SourceLocation typescript/types/function/input.ts 1:19-1:20 (b)
 												meta: JSPatternMeta {
 													optional: true
+													typeAnnotation: TSNumberKeywordTypeAnnotation {
+														loc: SourceLocation typescript/types/function/input.ts 1:23-1:29
+													}
 													loc: SourceLocation typescript/types/function/input.ts 1:19-1:29
-													typeAnnotation: TSNumberKeywordTypeAnnotation {loc: SourceLocation typescript/types/function/input.ts 1:23-1:29}
 												}
+												loc: SourceLocation typescript/types/function/input.ts 1:19-1:20 (b)
 											}
 										]
+										rest: JSBindingIdentifier {
+											name: "c"
+											meta: JSPatternMeta {
+												typeAnnotation: TSArrayType {
+													elementType: TSNumberKeywordTypeAnnotation {
+														loc: SourceLocation typescript/types/function/input.ts 1:37-1:43
+													}
+													loc: SourceLocation typescript/types/function/input.ts 1:37-1:45
+												}
+												loc: SourceLocation typescript/types/function/input.ts 1:34-1:45
+											}
+											loc: SourceLocation typescript/types/function/input.ts 1:34-1:35 (c)
+										}
+										loc: SourceLocation typescript/types/function/input.ts 1:7-1:54
 									}
+									typeAnnotation: TSVoidKeywordTypeAnnotation {
+										loc: SourceLocation typescript/types/function/input.ts 1:50-1:54
+									}
+									loc: SourceLocation typescript/types/function/input.ts 1:7-1:54
 								}
+								loc: SourceLocation typescript/types/function/input.ts 1:4-1:54
 							}
+							loc: SourceLocation typescript/types/function/input.ts 1:4-1:54
 						}
-						init: undefined
 						loc: SourceLocation typescript/types/function/input.ts 1:4-1:54
 					}
 				]
+				loc: SourceLocation typescript/types/function/input.ts 1:0-1:55
 			}
+			loc: SourceLocation typescript/types/function/input.ts 1:0-1:55
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: ["ts"]
+	path: UIDPath<typescript/types/function/input.ts>
+	loc: SourceLocation typescript/types/function/input.ts 1:0-2:0
 }
 ```
 

@@ -12,16 +12,24 @@ JSRoot {
 		JSWhileStatement {
 			body: JSBlockStatement {
 				body: [
-					JSBreakStatement {loc: SourceLocation core/uncategorised/307/input.js 1:15-1:20}
+					JSBreakStatement {
+						loc: SourceLocation core/uncategorised/307/input.js 1:15-1:20
+					}
 					JSExpressionStatement {
-						expression: JSReferenceIdentifier {name: "there", loc: SourceLocation core/uncategorised/307/input.js 2:0-2:5 (there)}
+						expression: JSReferenceIdentifier {
+							name: "there"
+							loc: SourceLocation core/uncategorised/307/input.js 2:0-2:5 (there)
+						}
 						loc: SourceLocation core/uncategorised/307/input.js 2:0-2:6
 					}
 				]
 				directives: []
 				loc: SourceLocation core/uncategorised/307/input.js 1:13-2:8
 			}
-			test: JSBooleanLiteral {value: true, loc: SourceLocation core/uncategorised/307/input.js 1:7-1:11}
+			test: JSBooleanLiteral {
+				value: true
+				loc: SourceLocation core/uncategorised/307/input.js 1:7-1:11
+			}
 			loc: SourceLocation core/uncategorised/307/input.js 1:0-2:8
 		}
 	]
@@ -30,9 +38,9 @@ JSRoot {
 	diagnostics: []
 	directives: []
 	hasHoistedVars: false
-	path: UIDPath<core/uncategorised/307/input.js>
 	sourceType: "script"
 	syntax: []
+	path: UIDPath<core/uncategorised/307/input.js>
 	loc: SourceLocation core/uncategorised/307/input.js 1:0-2:8
 }
 ```

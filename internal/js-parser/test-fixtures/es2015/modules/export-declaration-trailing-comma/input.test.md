@@ -8,17 +8,31 @@
 
 ```javascript
 JSRoot {
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	syntax: Array []
-	loc: SourceLocation es2015/modules/export-declaration-trailing-comma/input.js 1:0-6:0
-	path: UIDPath<es2015/modules/export-declaration-trailing-comma/input.js>
-	comments: Array [
+	body: [
+		JSExportExternalDeclaration {
+			namedSpecifiers: [
+				JSExportExternalSpecifier {
+					leadingComments: ["1"]
+					trailingComments: ["2", "3", "4"]
+					exported: JSIdentifier {
+						name: "Foo"
+						loc: SourceLocation es2015/modules/export-declaration-trailing-comma/input.js 2:12-2:15 (Foo)
+					}
+					local: JSIdentifier {
+						name: "Foo"
+						loc: SourceLocation es2015/modules/export-declaration-trailing-comma/input.js 2:12-2:15 (Foo)
+					}
+					loc: SourceLocation es2015/modules/export-declaration-trailing-comma/input.js 2:12-2:15
+				}
+			]
+			source: JSStringLiteral {
+				value: "foo"
+				loc: SourceLocation es2015/modules/export-declaration-trailing-comma/input.js 5:18-5:23
+			}
+			loc: SourceLocation es2015/modules/export-declaration-trailing-comma/input.js 1:0-5:24
+		}
+	]
+	comments: [
 		CommentBlock {
 			id: "1"
 			value: " One "
@@ -40,42 +54,14 @@ JSRoot {
 			loc: SourceLocation es2015/modules/export-declaration-trailing-comma/input.js 5:2-5:12
 		}
 	]
-	body: Array [
-		JSExportExternalDeclaration {
-			defaultSpecifier: undefined
-			exportKind: undefined
-			namespaceSpecifier: undefined
-			loc: SourceLocation es2015/modules/export-declaration-trailing-comma/input.js 1:0-5:24
-			source: JSStringLiteral {
-				value: "foo"
-				loc: SourceLocation es2015/modules/export-declaration-trailing-comma/input.js 5:18-5:23
-			}
-			namedSpecifiers: Array [
-				JSExportExternalSpecifier {
-					leadingComments: Array ["1"]
-					loc: SourceLocation es2015/modules/export-declaration-trailing-comma/input.js 2:12-2:15
-					trailingComments: Array [
-						"2"
-						"3"
-						"4"
-					]
-					local: JSIdentifier {
-						name: "Foo"
-						leadingComments: undefined
-						trailingComments: undefined
-						loc: SourceLocation es2015/modules/export-declaration-trailing-comma/input.js 2:12-2:15 (Foo)
-					}
-					exported: JSIdentifier {
-						name: "Foo"
-						innerComments: undefined
-						leadingComments: undefined
-						trailingComments: undefined
-						loc: SourceLocation es2015/modules/export-declaration-trailing-comma/input.js 2:12-2:15 (Foo)
-					}
-				}
-			]
-		}
-	]
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: []
+	path: UIDPath<es2015/modules/export-declaration-trailing-comma/input.js>
+	loc: SourceLocation es2015/modules/export-declaration-trailing-comma/input.js 1:0-6:0
 }
 ```
 

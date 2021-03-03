@@ -8,32 +8,17 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: true
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2016/simple-parameter-list/arrow-function-concise-body/input.js 1:0-2:0
-	path: UIDPath<es2016/simple-parameter-list/arrow-function-concise-body/input.js>
-	body: Array [
+	body: [
 		JSVariableDeclarationStatement {
-			loc: SourceLocation es2016/simple-parameter-list/arrow-function-concise-body/input.js 1:0-1:34
 			declaration: JSVariableDeclaration {
 				kind: "var"
-				loc: SourceLocation es2016/simple-parameter-list/arrow-function-concise-body/input.js 1:0-1:34
-				declarations: Array [
+				declarations: [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "a"
 							loc: SourceLocation es2016/simple-parameter-list/arrow-function-concise-body/input.js 1:4-1:5 (a)
 						}
-						loc: SourceLocation es2016/simple-parameter-list/arrow-function-concise-body/input.js 1:4-1:33
 						init: JSArrowFunctionExpression {
-							loc: SourceLocation es2016/simple-parameter-list/arrow-function-concise-body/input.js 1:8-1:33
 							body: JSReferenceIdentifier {
 								name: "options"
 								loc: SourceLocation es2016/simple-parameter-list/arrow-function-concise-body/input.js 1:26-1:33 (options)
@@ -41,31 +26,41 @@ JSRoot {
 							head: JSFunctionHead {
 								async: false
 								hasHoistedVars: false
-								rest: undefined
-								returnType: undefined
-								thisType: undefined
-								loc: SourceLocation es2016/simple-parameter-list/arrow-function-concise-body/input.js 1:8-1:25
-								params: Array [
+								params: [
 									JSBindingAssignmentPattern {
 										operator: "="
-										loc: SourceLocation es2016/simple-parameter-list/arrow-function-concise-body/input.js 1:9-1:21
 										left: JSBindingIdentifier {
 											name: "options"
 											loc: SourceLocation es2016/simple-parameter-list/arrow-function-concise-body/input.js 1:9-1:16 (options)
 										}
 										right: JSObjectExpression {
-											properties: Array []
+											properties: []
 											loc: SourceLocation es2016/simple-parameter-list/arrow-function-concise-body/input.js 1:19-1:21
 										}
+										loc: SourceLocation es2016/simple-parameter-list/arrow-function-concise-body/input.js 1:9-1:21
 									}
 								]
+								loc: SourceLocation es2016/simple-parameter-list/arrow-function-concise-body/input.js 1:8-1:25
 							}
+							loc: SourceLocation es2016/simple-parameter-list/arrow-function-concise-body/input.js 1:8-1:33
 						}
+						loc: SourceLocation es2016/simple-parameter-list/arrow-function-concise-body/input.js 1:4-1:33
 					}
 				]
+				loc: SourceLocation es2016/simple-parameter-list/arrow-function-concise-body/input.js 1:0-1:34
 			}
+			loc: SourceLocation es2016/simple-parameter-list/arrow-function-concise-body/input.js 1:0-1:34
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: true
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2016/simple-parameter-list/arrow-function-concise-body/input.js>
+	loc: SourceLocation es2016/simple-parameter-list/arrow-function-concise-body/input.js 1:0-2:0
 }
 ```
 

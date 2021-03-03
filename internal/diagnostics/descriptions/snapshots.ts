@@ -1,5 +1,4 @@
 import {createDiagnosticsCategory} from "./index";
-import stringDiff from "@internal/string-diff";
 import {markup} from "@internal/markup";
 import {DIAGNOSTIC_CATEGORIES} from "@internal/diagnostics";
 
@@ -27,9 +26,10 @@ export const snapshots = createDiagnosticsCategory({
 		message: markup`Snapshots do not match`,
 		advice: [
 			{
-				type: "diff",
+				type: "diff-strings",
 				language: "unknown",
-				diff: stringDiff(expected, got),
+				before: expected,
+				after: got,
 			},
 		],
 	}),

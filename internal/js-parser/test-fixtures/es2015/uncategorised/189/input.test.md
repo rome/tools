@@ -8,58 +8,52 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: true
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2015/uncategorised/189/input.js 1:0-1:17
-	path: UIDPath<es2015/uncategorised/189/input.js>
-	body: Array [
+	body: [
 		JSVariableDeclarationStatement {
-			loc: SourceLocation es2015/uncategorised/189/input.js 1:0-1:17
 			declaration: JSVariableDeclaration {
 				kind: "var"
-				loc: SourceLocation es2015/uncategorised/189/input.js 1:0-1:17
-				declarations: Array [
+				declarations: [
 					JSVariableDeclarator {
 						id: JSBindingArrayPattern {
-							loc: SourceLocation es2015/uncategorised/189/input.js 1:4-1:13
-							rest: JSBindingIdentifier {
-								name: "b"
-								loc: SourceLocation es2015/uncategorised/189/input.js 1:11-1:12 (b)
-								meta: JSPatternMeta {
-									optional: undefined
-									typeAnnotation: undefined
-									loc: SourceLocation es2015/uncategorised/189/input.js 1:11-1:12
-								}
-							}
-							elements: Array [
+							elements: [
 								JSBindingIdentifier {
 									name: "a"
-									loc: SourceLocation es2015/uncategorised/189/input.js 1:5-1:6 (a)
 									meta: JSPatternMeta {
-										optional: undefined
-										typeAnnotation: undefined
 										loc: SourceLocation es2015/uncategorised/189/input.js 1:5-1:6
 									}
+									loc: SourceLocation es2015/uncategorised/189/input.js 1:5-1:6 (a)
 								}
 							]
+							rest: JSBindingIdentifier {
+								name: "b"
+								meta: JSPatternMeta {
+									loc: SourceLocation es2015/uncategorised/189/input.js 1:11-1:12
+								}
+								loc: SourceLocation es2015/uncategorised/189/input.js 1:11-1:12 (b)
+							}
+							loc: SourceLocation es2015/uncategorised/189/input.js 1:4-1:13
 						}
-						loc: SourceLocation es2015/uncategorised/189/input.js 1:4-1:17
 						init: JSReferenceIdentifier {
 							name: "c"
 							loc: SourceLocation es2015/uncategorised/189/input.js 1:16-1:17 (c)
 						}
+						loc: SourceLocation es2015/uncategorised/189/input.js 1:4-1:17
 					}
 				]
+				loc: SourceLocation es2015/uncategorised/189/input.js 1:0-1:17
 			}
+			loc: SourceLocation es2015/uncategorised/189/input.js 1:0-1:17
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: true
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2015/uncategorised/189/input.js>
+	loc: SourceLocation es2015/uncategorised/189/input.js 1:0-1:17
 }
 ```
 

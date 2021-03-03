@@ -8,47 +8,45 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation esprima/statement-block/migrated_0001/input.js 1:0-2:0
-	path: UIDPath<esprima/statement-block/migrated_0001/input.js>
-	body: Array [
+	body: [
 		JSBlockStatement {
-			directives: Array []
-			loc: SourceLocation esprima/statement-block/migrated_0001/input.js 1:0-1:23
-			body: Array [
+			body: [
 				JSExpressionStatement {
-					loc: SourceLocation esprima/statement-block/migrated_0001/input.js 1:2-1:11
 					expression: JSCallExpression {
-						arguments: Array []
-						loc: SourceLocation esprima/statement-block/migrated_0001/input.js 1:2-1:10
+						arguments: []
 						callee: JSReferenceIdentifier {
 							name: "doThis"
 							loc: SourceLocation esprima/statement-block/migrated_0001/input.js 1:2-1:8 (doThis)
 						}
+						loc: SourceLocation esprima/statement-block/migrated_0001/input.js 1:2-1:10
 					}
+					loc: SourceLocation esprima/statement-block/migrated_0001/input.js 1:2-1:11
 				}
 				JSExpressionStatement {
-					loc: SourceLocation esprima/statement-block/migrated_0001/input.js 1:12-1:21
 					expression: JSCallExpression {
-						arguments: Array []
-						loc: SourceLocation esprima/statement-block/migrated_0001/input.js 1:12-1:20
+						arguments: []
 						callee: JSReferenceIdentifier {
 							name: "doThat"
 							loc: SourceLocation esprima/statement-block/migrated_0001/input.js 1:12-1:18 (doThat)
 						}
+						loc: SourceLocation esprima/statement-block/migrated_0001/input.js 1:12-1:20
 					}
+					loc: SourceLocation esprima/statement-block/migrated_0001/input.js 1:12-1:21
 				}
 			]
+			directives: []
+			loc: SourceLocation esprima/statement-block/migrated_0001/input.js 1:0-1:23
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<esprima/statement-block/migrated_0001/input.js>
+	loc: SourceLocation esprima/statement-block/migrated_0001/input.js 1:0-2:0
 }
 ```
 

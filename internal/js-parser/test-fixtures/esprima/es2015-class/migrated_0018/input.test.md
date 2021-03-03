@@ -8,31 +8,14 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation esprima/es2015-class/migrated_0018/input.js 1:0-2:0
-	path: UIDPath<esprima/es2015-class/migrated_0018/input.js>
-	body: Array [
+	body: [
 		JSClassDeclaration {
 			id: JSBindingIdentifier {
 				name: "A"
 				loc: SourceLocation esprima/es2015-class/migrated_0018/input.js 1:6-1:7 (A)
 			}
-			loc: SourceLocation esprima/es2015-class/migrated_0018/input.js 1:0-1:25
 			meta: JSClassHead {
-				implements: undefined
-				superClass: undefined
-				superTypeParameters: undefined
-				typeParameters: undefined
-				loc: SourceLocation esprima/es2015-class/migrated_0018/input.js 1:0-1:25
-				body: Array [
+				body: [
 					JSClassMethod {
 						kind: "constructor"
 						key: JSStaticPropertyKey {
@@ -42,38 +25,43 @@ JSRoot {
 							}
 							loc: SourceLocation esprima/es2015-class/migrated_0018/input.js 1:9-1:20
 						}
-						loc: SourceLocation esprima/es2015-class/migrated_0018/input.js 1:9-1:24
 						body: JSBlockStatement {
-							body: Array []
-							directives: Array []
+							body: []
+							directives: []
 							loc: SourceLocation esprima/es2015-class/migrated_0018/input.js 1:22-1:24
-						}
-						meta: JSClassPropertyMeta {
-							abstract: false
-							accessibility: undefined
-							optional: false
-							readonly: false
-							static: false
-							typeAnnotation: undefined
-							loc: SourceLocation esprima/es2015-class/migrated_0018/input.js 1:9-1:20
-							start: Position 1:9
 						}
 						head: JSFunctionHead {
 							async: false
 							generator: false
 							hasHoistedVars: false
-							params: Array []
-							rest: undefined
-							returnType: undefined
-							thisType: undefined
-							typeParameters: undefined
+							params: []
 							loc: SourceLocation esprima/es2015-class/migrated_0018/input.js 1:20-1:22
 						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							optional: false
+							readonly: false
+							static: false
+							loc: SourceLocation esprima/es2015-class/migrated_0018/input.js 1:9-1:20
+							start: Position 1:9
+						}
+						loc: SourceLocation esprima/es2015-class/migrated_0018/input.js 1:9-1:24
 					}
 				]
+				loc: SourceLocation esprima/es2015-class/migrated_0018/input.js 1:0-1:25
 			}
+			loc: SourceLocation esprima/es2015-class/migrated_0018/input.js 1:0-1:25
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<esprima/es2015-class/migrated_0018/input.js>
+	loc: SourceLocation esprima/es2015-class/migrated_0018/input.js 1:0-2:0
 }
 ```
 

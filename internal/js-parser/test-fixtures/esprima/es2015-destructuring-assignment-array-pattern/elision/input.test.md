@@ -8,39 +8,39 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation esprima/es2015-destructuring-assignment-array-pattern/elision/input.js 1:0-2:0
-	path: UIDPath<esprima/es2015-destructuring-assignment-array-pattern/elision/input.js>
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation esprima/es2015-destructuring-assignment-array-pattern/elision/input.js 1:0-1:6
 			expression: JSAssignmentExpression {
 				operator: "="
-				loc: SourceLocation esprima/es2015-destructuring-assignment-array-pattern/elision/input.js 1:0-1:6
+				left: JSAssignmentArrayPattern {
+					elements: [
+						JSArrayHole {
+							loc: SourceLocation esprima/es2015-destructuring-assignment-array-pattern/elision/input.js 1:1-1:1
+						}
+						JSArrayHole {
+							loc: SourceLocation esprima/es2015-destructuring-assignment-array-pattern/elision/input.js 1:2-1:2
+						}
+					]
+					loc: SourceLocation esprima/es2015-destructuring-assignment-array-pattern/elision/input.js 1:0-1:4
+				}
 				right: JSNumericLiteral {
 					value: 0
-					format: undefined
 					loc: SourceLocation esprima/es2015-destructuring-assignment-array-pattern/elision/input.js 1:5-1:6
 				}
-				left: JSAssignmentArrayPattern {
-					rest: undefined
-					loc: SourceLocation esprima/es2015-destructuring-assignment-array-pattern/elision/input.js 1:0-1:4
-					elements: Array [
-						JSArrayHole {loc: SourceLocation esprima/es2015-destructuring-assignment-array-pattern/elision/input.js 1:1-1:1}
-						JSArrayHole {loc: SourceLocation esprima/es2015-destructuring-assignment-array-pattern/elision/input.js 1:2-1:2}
-					]
-				}
+				loc: SourceLocation esprima/es2015-destructuring-assignment-array-pattern/elision/input.js 1:0-1:6
 			}
+			loc: SourceLocation esprima/es2015-destructuring-assignment-array-pattern/elision/input.js 1:0-1:6
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<esprima/es2015-destructuring-assignment-array-pattern/elision/input.js>
+	loc: SourceLocation esprima/es2015-destructuring-assignment-array-pattern/elision/input.js 1:0-2:0
 }
 ```
 

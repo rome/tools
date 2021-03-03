@@ -25,22 +25,23 @@ import {PathLocker} from "@internal/async/lockers";
 import TestServerFile from "@internal/core/server/testing/TestServerFile";
 import {BridgeServer} from "@internal/events";
 import {Duration} from "@internal/numbers";
+import { ThreadWorkerContainer } from "@internal/core/worker/types";
 
 export default class TestServerWorker {
 	constructor(
-		{server, request, runner, bridge, thread}: {
+		{server, request, runner, container}: {
 			server: Server;
+			container: ThreadWorkerContainer;
 			runner: TestServer;
 			request: ServerRequest;
-			bridge: BridgeServer<typeof WorkerBridge>;
-			thread: workerThreads.Worker;
 		},
 	) {
 		this.server = server;
 		this.runner = runner;
 		this.request = request;
-		this.thread = thread;
-		this.bridge = bridge;
+
+		this.thread = container.thread;
+		this.bridge = container.bridge;
 
 		this.inspector = undefined;
 
@@ -371,7 +372,7 @@ export default class TestServerWorker {
 	}
 
 	public async run() {
-		const {bridge, thread, inspector, runner} = this;
+		const {bridge, inspector, runner} = this;
 		const {options: opts} = runner;
 
 		try {
@@ -399,8 +400,6 @@ export default class TestServerWorker {
 
 				inspector.end();
 			}
-
-			await thread.terminate();
 		}
 	}
 }

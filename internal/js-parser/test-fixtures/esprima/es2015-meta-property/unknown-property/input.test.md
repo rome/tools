@@ -8,70 +8,21 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: true
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation esprima/es2015-meta-property/unknown-property/input.js 1:0-2:0
-	path: UIDPath<esprima/es2015-meta-property/unknown-property/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "The only valid meta property for new is new.target"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:41
-				path: UIDPath<esprima/es2015-meta-property/unknown-property/input.js>
-				start: Position 1:25
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSVariableDeclarationStatement {
-			loc: SourceLocation esprima/es2015-meta-property/unknown-property/input.js 1:0-1:44
 			declaration: JSVariableDeclaration {
 				kind: "var"
-				loc: SourceLocation esprima/es2015-meta-property/unknown-property/input.js 1:0-1:44
-				declarations: Array [
+				declarations: [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "f"
 							loc: SourceLocation esprima/es2015-meta-property/unknown-property/input.js 1:4-1:5 (f)
 						}
-						loc: SourceLocation esprima/es2015-meta-property/unknown-property/input.js 1:4-1:44
 						init: JSFunctionExpression {
-							id: undefined
-							loc: SourceLocation esprima/es2015-meta-property/unknown-property/input.js 1:8-1:44
-							head: JSFunctionHead {
-								async: false
-								generator: false
-								hasHoistedVars: false
-								params: Array []
-								rest: undefined
-								returnType: undefined
-								thisType: undefined
-								typeParameters: undefined
-								loc: SourceLocation esprima/es2015-meta-property/unknown-property/input.js 1:16-1:18
-							}
 							body: JSBlockStatement {
-								directives: Array []
-								loc: SourceLocation esprima/es2015-meta-property/unknown-property/input.js 1:19-1:44
-								body: Array [
+								body: [
 									JSExpressionStatement {
-										loc: SourceLocation esprima/es2015-meta-property/unknown-property/input.js 1:21-1:42
 										expression: JSMetaProperty {
-											loc: SourceLocation esprima/es2015-meta-property/unknown-property/input.js 1:21-1:41
 											meta: JSIdentifier {
 												name: "new"
 												loc: SourceLocation esprima/es2015-meta-property/unknown-property/input.js 1:21-1:24 (new)
@@ -80,16 +31,56 @@ JSRoot {
 												name: "unknown_property"
 												loc: SourceLocation esprima/es2015-meta-property/unknown-property/input.js 1:25-1:41 (unknown_property)
 											}
+											loc: SourceLocation esprima/es2015-meta-property/unknown-property/input.js 1:21-1:41
 										}
+										loc: SourceLocation esprima/es2015-meta-property/unknown-property/input.js 1:21-1:42
 									}
 								]
+								directives: []
+								loc: SourceLocation esprima/es2015-meta-property/unknown-property/input.js 1:19-1:44
 							}
+							head: JSFunctionHead {
+								async: false
+								generator: false
+								hasHoistedVars: false
+								params: []
+								loc: SourceLocation esprima/es2015-meta-property/unknown-property/input.js 1:16-1:18
+							}
+							loc: SourceLocation esprima/es2015-meta-property/unknown-property/input.js 1:8-1:44
 						}
+						loc: SourceLocation esprima/es2015-meta-property/unknown-property/input.js 1:4-1:44
 					}
 				]
+				loc: SourceLocation esprima/es2015-meta-property/unknown-property/input.js 1:0-1:44
+			}
+			loc: SourceLocation esprima/es2015-meta-property/unknown-property/input.js 1:0-1:44
+		}
+	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "js"
+				message: [RAW_MARKUP {value: "The only valid meta property for "}, "new", RAW_MARKUP {value: " is "}, "new", RAW_MARKUP {value: "."}, "target"]
+			}
+			location: {
+				language: "js"
+				path: UIDPath<esprima/es2015-meta-property/unknown-property/input.js>
+				end: Position 1:41
+				start: Position 1:25
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: true
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<esprima/es2015-meta-property/unknown-property/input.js>
+	loc: SourceLocation esprima/es2015-meta-property/unknown-property/input.js 1:0-2:0
 }
 ```
 
@@ -102,7 +93,15 @@ JSRoot {
   ✖ The only valid meta property for new is new.target
 
     var f = function() { new.unknown_property; }
-                             ^^^^^^^^^^^^^^^^
+                             <error><emphasis>^</emphasis></error>
+    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
+    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
+    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
+    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
+    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
+    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
+    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
+    <error><emphasis>^</emphasis></error>
 
 
 ```

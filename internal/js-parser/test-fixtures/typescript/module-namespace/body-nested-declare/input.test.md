@@ -8,66 +8,64 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	loc: SourceLocation typescript/module-namespace/body-nested-declare/input.ts 1:0-6:0
-	path: UIDPath<typescript/module-namespace/body-nested-declare/input.ts>
-	syntax: Array ["ts"]
-	body: Array [
+	body: [
 		TSModuleDeclaration {
+			declare: true
 			id: JSBindingIdentifier {
 				name: "A"
 				loc: SourceLocation typescript/module-namespace/body-nested-declare/input.ts 1:18-1:19 (A)
 			}
-			declare: true
-			loc: SourceLocation typescript/module-namespace/body-nested-declare/input.ts 1:0-5:1
 			body: TSModuleBlock {
-				loc: SourceLocation typescript/module-namespace/body-nested-declare/input.ts 1:20-5:1
-				body: Array [
+				body: [
 					TSModuleDeclaration {
 						id: JSBindingIdentifier {
 							name: "B"
 							loc: SourceLocation typescript/module-namespace/body-nested-declare/input.ts 2:14-2:15 (B)
 						}
-						loc: SourceLocation typescript/module-namespace/body-nested-declare/input.ts 2:4-4:5
 						body: TSModuleBlock {
-							loc: SourceLocation typescript/module-namespace/body-nested-declare/input.ts 2:16-4:5
-							body: Array [
+							body: [
 								JSVariableDeclarationStatement {
-									loc: SourceLocation typescript/module-namespace/body-nested-declare/input.ts 3:8-3:24
 									declaration: JSVariableDeclaration {
 										kind: "const"
-										loc: SourceLocation typescript/module-namespace/body-nested-declare/input.ts 3:8-3:24
-										declarations: Array [
+										declarations: [
 											JSVariableDeclarator {
 												id: JSBindingIdentifier {
 													name: "x"
-													loc: SourceLocation typescript/module-namespace/body-nested-declare/input.ts 3:14-3:23
 													meta: JSPatternMeta {
-														definite: undefined
+														typeAnnotation: TSNumberKeywordTypeAnnotation {
+															loc: SourceLocation typescript/module-namespace/body-nested-declare/input.ts 3:17-3:23
+														}
 														loc: SourceLocation typescript/module-namespace/body-nested-declare/input.ts 3:14-3:23
-														typeAnnotation: TSNumberKeywordTypeAnnotation {loc: SourceLocation typescript/module-namespace/body-nested-declare/input.ts 3:17-3:23}
 													}
+													loc: SourceLocation typescript/module-namespace/body-nested-declare/input.ts 3:14-3:23
 												}
-												init: undefined
 												loc: SourceLocation typescript/module-namespace/body-nested-declare/input.ts 3:14-3:23
 											}
 										]
+										loc: SourceLocation typescript/module-namespace/body-nested-declare/input.ts 3:8-3:24
 									}
+									loc: SourceLocation typescript/module-namespace/body-nested-declare/input.ts 3:8-3:24
 								}
 							]
+							loc: SourceLocation typescript/module-namespace/body-nested-declare/input.ts 2:16-4:5
 						}
+						loc: SourceLocation typescript/module-namespace/body-nested-declare/input.ts 2:4-4:5
 					}
 				]
+				loc: SourceLocation typescript/module-namespace/body-nested-declare/input.ts 1:20-5:1
 			}
+			loc: SourceLocation typescript/module-namespace/body-nested-declare/input.ts 1:0-5:1
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: ["ts"]
+	path: UIDPath<typescript/module-namespace/body-nested-declare/input.ts>
+	loc: SourceLocation typescript/module-namespace/body-nested-declare/input.ts 1:0-6:0
 }
 ```
 

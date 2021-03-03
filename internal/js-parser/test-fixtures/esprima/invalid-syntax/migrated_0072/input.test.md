@@ -8,58 +8,53 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation esprima/invalid-syntax/migrated_0072/input.js 1:0-2:0
-	path: UIDPath<esprima/invalid-syntax/migrated_0072/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Expected a semicolon or a line terminator"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:5
-				path: UIDPath<esprima/invalid-syntax/migrated_0072/input.js>
-				start: Position 1:6
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSBlockStatement {
-			directives: Array []
-			loc: SourceLocation esprima/invalid-syntax/migrated_0072/input.js 1:0-1:9
-			body: Array [
+			body: [
 				JSExpressionStatement {
-					loc: SourceLocation esprima/invalid-syntax/migrated_0072/input.js 1:2-1:5
 					expression: JSReferenceIdentifier {
 						name: "get"
 						loc: SourceLocation esprima/invalid-syntax/migrated_0072/input.js 1:2-1:5 (get)
 					}
+					loc: SourceLocation esprima/invalid-syntax/migrated_0072/input.js 1:2-1:5
 				}
 				JSExpressionStatement {
-					loc: SourceLocation esprima/invalid-syntax/migrated_0072/input.js 1:6-1:7
 					expression: JSNumericLiteral {
 						value: 2
-						format: undefined
 						loc: SourceLocation esprima/invalid-syntax/migrated_0072/input.js 1:6-1:7
 					}
+					loc: SourceLocation esprima/invalid-syntax/migrated_0072/input.js 1:6-1:7
 				}
 			]
+			directives: []
+			loc: SourceLocation esprima/invalid-syntax/migrated_0072/input.js 1:0-1:9
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "Expected a semicolon or a line terminator"}
+			}
+			location: {
+				language: "js"
+				path: UIDPath<esprima/invalid-syntax/migrated_0072/input.js>
+				end: Position 1:5
+				start: Position 1:6
+			}
+		}
+	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<esprima/invalid-syntax/migrated_0072/input.js>
+	loc: SourceLocation esprima/invalid-syntax/migrated_0072/input.js 1:0-2:0
 }
 ```
 
@@ -72,7 +67,7 @@ JSRoot {
   ✖ Expected a semicolon or a line terminator
 
     { get 2 }
-          ^
+          <error><emphasis>^</emphasis></error>
 
 
 ```

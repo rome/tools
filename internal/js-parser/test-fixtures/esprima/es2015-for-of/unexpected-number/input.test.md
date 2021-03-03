@@ -8,61 +8,56 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation esprima/es2015-for-of/unexpected-number/input.js 1:0-2:0
-	path: UIDPath<esprima/es2015-for-of/unexpected-number/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "A constant must have an initializer"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:13
-				path: UIDPath<esprima/es2015-for-of/unexpected-number/input.js>
-				start: Position 1:11
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSForStatement {
-			update: undefined
-			body: JSEmptyStatement {loc: SourceLocation esprima/es2015-for-of/unexpected-number/input.js 1:17-1:18}
-			loc: SourceLocation esprima/es2015-for-of/unexpected-number/input.js 1:0-1:18
-			test: JSNumericLiteral {
-				value: 42
-				format: undefined
-				loc: SourceLocation esprima/es2015-for-of/unexpected-number/input.js 1:14-1:16
+			body: JSEmptyStatement {
+				loc: SourceLocation esprima/es2015-for-of/unexpected-number/input.js 1:17-1:18
 			}
 			init: JSVariableDeclaration {
 				kind: "const"
-				loc: SourceLocation esprima/es2015-for-of/unexpected-number/input.js 1:5-1:13
-				declarations: Array [
+				declarations: [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "of"
 							loc: SourceLocation esprima/es2015-for-of/unexpected-number/input.js 1:11-1:13 (of)
 						}
-						init: undefined
 						loc: SourceLocation esprima/es2015-for-of/unexpected-number/input.js 1:11-1:13
 					}
 				]
+				loc: SourceLocation esprima/es2015-for-of/unexpected-number/input.js 1:5-1:13
+			}
+			test: JSNumericLiteral {
+				value: 42
+				loc: SourceLocation esprima/es2015-for-of/unexpected-number/input.js 1:14-1:16
+			}
+			loc: SourceLocation esprima/es2015-for-of/unexpected-number/input.js 1:0-1:18
+		}
+	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "A constant must have an initializer"}
+			}
+			location: {
+				language: "js"
+				path: UIDPath<esprima/es2015-for-of/unexpected-number/input.js>
+				end: Position 1:13
+				start: Position 1:11
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<esprima/es2015-for-of/unexpected-number/input.js>
+	loc: SourceLocation esprima/es2015-for-of/unexpected-number/input.js 1:0-2:0
 }
 ```
 
@@ -75,7 +70,7 @@ JSRoot {
   ✖ A constant must have an initializer
 
     for (const of 42);
-               ^^
+               <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
 
 
 ```

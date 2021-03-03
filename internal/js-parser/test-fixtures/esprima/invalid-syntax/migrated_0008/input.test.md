@@ -8,52 +8,47 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation esprima/invalid-syntax/migrated_0008/input.js 1:0-2:0
-	path: UIDPath<esprima/invalid-syntax/migrated_0008/input.js>
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation esprima/invalid-syntax/migrated_0008/input.js 1:0-1:1
 			expression: JSNumericLiteral {
 				value: 3
-				format: undefined
 				loc: SourceLocation esprima/invalid-syntax/migrated_0008/input.js 1:0-1:1
 			}
+			loc: SourceLocation esprima/invalid-syntax/migrated_0008/input.js 1:0-1:1
 		}
 		JSExpressionStatement {
-			loc: SourceLocation esprima/invalid-syntax/migrated_0008/input.js 1:1-1:3
 			expression: JSReferenceIdentifier {
 				name: "x0"
 				loc: SourceLocation esprima/invalid-syntax/migrated_0008/input.js 1:1-1:3 (x0)
 			}
+			loc: SourceLocation esprima/invalid-syntax/migrated_0008/input.js 1:1-1:3
 		}
 	]
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {
+				advice: []
+				category: ["parse"]
 				categoryValue: "js"
-				category: Array ["parse"]
 				message: RAW_MARKUP {value: "Identifier directly after number"}
 			}
-			location: Object {
-				integrity: undefined
+			location: {
 				language: "js"
-				sourceText: undefined
-				end: Position 1:1
 				path: UIDPath<esprima/invalid-syntax/migrated_0008/input.js>
+				end: Position 1:1
 				start: Position 1:1
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<esprima/invalid-syntax/migrated_0008/input.js>
+	loc: SourceLocation esprima/invalid-syntax/migrated_0008/input.js 1:0-2:0
 }
 ```
 
@@ -66,7 +61,7 @@ JSRoot {
   ✖ Identifier directly after number
 
     3x0
-     ^
+     <error><emphasis>^</emphasis></error>
 
 
 ```

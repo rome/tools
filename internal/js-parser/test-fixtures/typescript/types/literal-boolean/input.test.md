@@ -8,69 +8,63 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	loc: SourceLocation typescript/types/literal-boolean/input.ts 1:0-3:0
-	path: UIDPath<typescript/types/literal-boolean/input.ts>
-	syntax: Array ["ts"]
-	body: Array [
+	body: [
 		JSVariableDeclarationStatement {
-			loc: SourceLocation typescript/types/literal-boolean/input.ts 1:0-1:13
 			declaration: JSVariableDeclaration {
 				kind: "let"
-				loc: SourceLocation typescript/types/literal-boolean/input.ts 1:0-1:13
-				declarations: Array [
+				declarations: [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "x1"
-							loc: SourceLocation typescript/types/literal-boolean/input.ts 1:4-1:12
 							meta: JSPatternMeta {
-								definite: undefined
-								loc: SourceLocation typescript/types/literal-boolean/input.ts 1:4-1:12
 								typeAnnotation: TSBooleanLiteralTypeAnnotation {
 									value: true
 									loc: SourceLocation typescript/types/literal-boolean/input.ts 1:8-1:12
 								}
+								loc: SourceLocation typescript/types/literal-boolean/input.ts 1:4-1:12
 							}
+							loc: SourceLocation typescript/types/literal-boolean/input.ts 1:4-1:12
 						}
-						init: undefined
 						loc: SourceLocation typescript/types/literal-boolean/input.ts 1:4-1:12
 					}
 				]
+				loc: SourceLocation typescript/types/literal-boolean/input.ts 1:0-1:13
 			}
+			loc: SourceLocation typescript/types/literal-boolean/input.ts 1:0-1:13
 		}
 		JSVariableDeclarationStatement {
-			loc: SourceLocation typescript/types/literal-boolean/input.ts 2:0-2:14
 			declaration: JSVariableDeclaration {
 				kind: "let"
-				loc: SourceLocation typescript/types/literal-boolean/input.ts 2:0-2:14
-				declarations: Array [
+				declarations: [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "x2"
-							loc: SourceLocation typescript/types/literal-boolean/input.ts 2:4-2:13
 							meta: JSPatternMeta {
-								definite: undefined
-								loc: SourceLocation typescript/types/literal-boolean/input.ts 2:4-2:13
 								typeAnnotation: TSBooleanLiteralTypeAnnotation {
 									value: false
 									loc: SourceLocation typescript/types/literal-boolean/input.ts 2:8-2:13
 								}
+								loc: SourceLocation typescript/types/literal-boolean/input.ts 2:4-2:13
 							}
+							loc: SourceLocation typescript/types/literal-boolean/input.ts 2:4-2:13
 						}
-						init: undefined
 						loc: SourceLocation typescript/types/literal-boolean/input.ts 2:4-2:13
 					}
 				]
+				loc: SourceLocation typescript/types/literal-boolean/input.ts 2:0-2:14
 			}
+			loc: SourceLocation typescript/types/literal-boolean/input.ts 2:0-2:14
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: ["ts"]
+	path: UIDPath<typescript/types/literal-boolean/input.ts>
+	loc: SourceLocation typescript/types/literal-boolean/input.ts 1:0-3:0
 }
 ```
 

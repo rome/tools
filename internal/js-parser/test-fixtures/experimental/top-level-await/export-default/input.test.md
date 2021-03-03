@@ -8,30 +8,27 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	syntax: Array []
-	loc: SourceLocation experimental/top-level-await/export-default/input.js 1:0-1:23
-	path: UIDPath<experimental/top-level-await/export-default/input.js>
-	body: Array [
+	body: [
 		JSExportDefaultDeclaration {
-			loc: SourceLocation experimental/top-level-await/export-default/input.js 1:0-1:23
 			declaration: JSAwaitExpression {
-				loc: SourceLocation experimental/top-level-await/export-default/input.js 1:15-1:22
 				argument: JSNumericLiteral {
 					value: 0
-					format: undefined
 					loc: SourceLocation experimental/top-level-await/export-default/input.js 1:21-1:22
 				}
+				loc: SourceLocation experimental/top-level-await/export-default/input.js 1:15-1:22
 			}
+			loc: SourceLocation experimental/top-level-await/export-default/input.js 1:0-1:23
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: []
+	path: UIDPath<experimental/top-level-await/export-default/input.js>
+	loc: SourceLocation experimental/top-level-await/export-default/input.js 1:0-1:23
 }
 ```
 

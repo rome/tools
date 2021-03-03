@@ -8,55 +8,50 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2015/uncategorised/36/input.js 1:0-1:16
-	path: UIDPath<es2015/uncategorised/36/input.js>
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation es2015/uncategorised/36/input.js 1:0-1:16
 			expression: JSArrowFunctionExpression {
-				loc: SourceLocation es2015/uncategorised/36/input.js 1:0-1:16
 				body: JSNumericLiteral {
 					value: 42
-					format: undefined
 					loc: SourceLocation es2015/uncategorised/36/input.js 1:14-1:16
 				}
 				head: JSFunctionHead {
 					async: false
 					hasHoistedVars: false
-					rest: undefined
-					returnType: undefined
-					thisType: undefined
-					loc: SourceLocation es2015/uncategorised/36/input.js 1:0-1:13
-					params: Array [
+					params: [
 						JSBindingArrayPattern {
-							rest: undefined
-							loc: SourceLocation es2015/uncategorised/36/input.js 1:1-1:9
-							elements: Array [
+							elements: [
 								JSBindingIdentifier {
 									name: "a"
 									loc: SourceLocation es2015/uncategorised/36/input.js 1:2-1:3 (a)
 								}
-								JSArrayHole {loc: SourceLocation es2015/uncategorised/36/input.js 1:5-1:4}
+								JSArrayHole {
+									loc: SourceLocation es2015/uncategorised/36/input.js 1:5-1:4
+								}
 								JSBindingIdentifier {
 									name: "b"
 									loc: SourceLocation es2015/uncategorised/36/input.js 1:7-1:8 (b)
 								}
 							]
+							loc: SourceLocation es2015/uncategorised/36/input.js 1:1-1:9
 						}
 					]
+					loc: SourceLocation es2015/uncategorised/36/input.js 1:0-1:13
 				}
+				loc: SourceLocation es2015/uncategorised/36/input.js 1:0-1:16
 			}
+			loc: SourceLocation es2015/uncategorised/36/input.js 1:0-1:16
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2015/uncategorised/36/input.js>
+	loc: SourceLocation es2015/uncategorised/36/input.js 1:0-1:16
 }
 ```
 

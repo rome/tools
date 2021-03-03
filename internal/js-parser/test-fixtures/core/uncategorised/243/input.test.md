@@ -10,17 +10,31 @@
 JSRoot {
 	body: [
 		JSForStatement {
-			body: JSEmptyStatement {loc: SourceLocation core/uncategorised/243/input.js 1:19-1:20}
+			body: JSEmptyStatement {
+				loc: SourceLocation core/uncategorised/243/input.js 1:19-1:20
+			}
 			init: JSAssignmentExpression {
-				left: JSAssignmentIdentifier {name: "x", loc: SourceLocation core/uncategorised/243/input.js 1:4-1:5 (x)}
 				operator: "="
-				right: JSNumericLiteral {value: 0, loc: SourceLocation core/uncategorised/243/input.js 1:8-1:9}
+				left: JSAssignmentIdentifier {
+					name: "x"
+					loc: SourceLocation core/uncategorised/243/input.js 1:4-1:5 (x)
+				}
+				right: JSNumericLiteral {
+					value: 0
+					loc: SourceLocation core/uncategorised/243/input.js 1:8-1:9
+				}
 				loc: SourceLocation core/uncategorised/243/input.js 1:4-1:9
 			}
 			test: JSBinaryExpression {
-				left: JSReferenceIdentifier {name: "x", loc: SourceLocation core/uncategorised/243/input.js 1:11-1:12 (x)}
 				operator: "<"
-				right: JSNumericLiteral {value: 42, loc: SourceLocation core/uncategorised/243/input.js 1:15-1:17}
+				left: JSReferenceIdentifier {
+					name: "x"
+					loc: SourceLocation core/uncategorised/243/input.js 1:11-1:12 (x)
+				}
+				right: JSNumericLiteral {
+					value: 42
+					loc: SourceLocation core/uncategorised/243/input.js 1:15-1:17
+				}
 				loc: SourceLocation core/uncategorised/243/input.js 1:11-1:17
 			}
 			loc: SourceLocation core/uncategorised/243/input.js 1:0-1:20
@@ -31,9 +45,9 @@ JSRoot {
 	diagnostics: []
 	directives: []
 	hasHoistedVars: false
-	path: UIDPath<core/uncategorised/243/input.js>
 	sourceType: "script"
 	syntax: []
+	path: UIDPath<core/uncategorised/243/input.js>
 	loc: SourceLocation core/uncategorised/243/input.js 1:0-1:20
 }
 ```

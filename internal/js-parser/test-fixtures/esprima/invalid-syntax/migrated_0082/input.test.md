@@ -8,41 +8,10 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: true
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation esprima/invalid-syntax/migrated_0082/input.js 1:0-2:0
-	path: UIDPath<esprima/invalid-syntax/migrated_0082/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Expected an identifier"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:2
-				path: UIDPath<esprima/invalid-syntax/migrated_0082/input.js>
-				start: Position 1:2
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation esprima/invalid-syntax/migrated_0082/input.js 1:0-1:3
 			expression: JSObjectExpression {
-				loc: SourceLocation esprima/invalid-syntax/migrated_0082/input.js 1:1-1:3
-				properties: Array [
+				properties: [
 					JSObjectProperty {
 						key: JSStaticPropertyKey {
 							value: JSIdentifier {
@@ -58,52 +27,78 @@ JSRoot {
 						loc: SourceLocation esprima/invalid-syntax/migrated_0082/input.js 1:2-1:3
 					}
 				]
+				loc: SourceLocation esprima/invalid-syntax/migrated_0082/input.js 1:1-1:3
 			}
+			loc: SourceLocation esprima/invalid-syntax/migrated_0082/input.js 1:0-1:3
 		}
 		JSExpressionStatement {
-			loc: SourceLocation esprima/invalid-syntax/migrated_0082/input.js 1:3-1:4
 			expression: JSReferenceIdentifier {
 				name: "a"
 				loc: SourceLocation esprima/invalid-syntax/migrated_0082/input.js 1:3-1:4 (a)
 			}
+			loc: SourceLocation esprima/invalid-syntax/migrated_0082/input.js 1:3-1:4
 		}
 		JSExpressionStatement {
-			loc: SourceLocation esprima/invalid-syntax/migrated_0082/input.js 1:4-1:5
 			expression: JSReferenceIdentifier {
 				name: "INVALID_PLACEHOLDER"
 				loc: SourceLocation esprima/invalid-syntax/migrated_0082/input.js 1:4-1:5
 			}
+			loc: SourceLocation esprima/invalid-syntax/migrated_0082/input.js 1:4-1:5
 		}
 		JSExpressionStatement {
-			loc: SourceLocation esprima/invalid-syntax/migrated_0082/input.js 1:5-1:6
 			expression: JSReferenceIdentifier {
 				name: "INVALID_PLACEHOLDER"
 				loc: SourceLocation esprima/invalid-syntax/migrated_0082/input.js 1:5-1:6
 			}
+			loc: SourceLocation esprima/invalid-syntax/migrated_0082/input.js 1:5-1:6
 		}
 		JSExpressionStatement {
-			loc: SourceLocation esprima/invalid-syntax/migrated_0082/input.js 1:6-1:7
 			expression: JSNumericLiteral {
 				value: 0
-				format: undefined
 				loc: SourceLocation esprima/invalid-syntax/migrated_0082/input.js 1:6-1:7
 			}
+			loc: SourceLocation esprima/invalid-syntax/migrated_0082/input.js 1:6-1:7
 		}
 		JSExpressionStatement {
-			loc: SourceLocation esprima/invalid-syntax/migrated_0082/input.js 1:7-1:8
 			expression: JSReferenceIdentifier {
 				name: "INVALID_PLACEHOLDER"
 				loc: SourceLocation esprima/invalid-syntax/migrated_0082/input.js 1:7-1:8
 			}
+			loc: SourceLocation esprima/invalid-syntax/migrated_0082/input.js 1:7-1:8
 		}
 		JSExpressionStatement {
-			loc: SourceLocation esprima/invalid-syntax/migrated_0082/input.js 1:8-1:9
 			expression: JSReferenceIdentifier {
 				name: "INVALID_PLACEHOLDER"
 				loc: SourceLocation esprima/invalid-syntax/migrated_0082/input.js 1:8-1:9
 			}
+			loc: SourceLocation esprima/invalid-syntax/migrated_0082/input.js 1:8-1:9
 		}
 	]
+	comments: []
+	corrupt: true
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "Expected an identifier"}
+			}
+			location: {
+				language: "js"
+				path: UIDPath<esprima/invalid-syntax/migrated_0082/input.js>
+				end: Position 1:2
+				start: Position 1:2
+			}
+		}
+	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<esprima/invalid-syntax/migrated_0082/input.js>
+	loc: SourceLocation esprima/invalid-syntax/migrated_0082/input.js 1:0-2:0
 }
 ```
 
@@ -116,7 +111,7 @@ JSRoot {
   ✖ Expected an identifier
 
     ({(a):0})
-      ^
+      <error><emphasis>^</emphasis></error>
 
 
 ```

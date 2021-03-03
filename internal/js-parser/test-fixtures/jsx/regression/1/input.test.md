@@ -8,49 +8,17 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	loc: SourceLocation jsx/regression/1/input.jsx 1:0-1:40
-	path: UIDPath<jsx/regression/1/input.jsx>
-	syntax: Array ["jsx"]
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation jsx/regression/1/input.jsx 1:0-1:40
 			expression: JSXElement {
-				name: JSXIdentifier {
-					name: "p"
-					loc: SourceLocation jsx/regression/1/input.jsx 1:1-1:2
-				}
-				attributes: Array []
-				selfClosing: false
-				typeArguments: undefined
-				loc: SourceLocation jsx/regression/1/input.jsx 1:0-1:38
-				children: Array [
+				attributes: []
+				children: [
 					JSXText {
 						value: "foo "
 						loc: SourceLocation jsx/regression/1/input.jsx 1:3-1:7
 					}
 					JSXElement {
-						name: JSXIdentifier {
-							name: "a"
-							loc: SourceLocation jsx/regression/1/input.jsx 1:8-1:9
-						}
-						selfClosing: false
-						typeArguments: undefined
-						loc: SourceLocation jsx/regression/1/input.jsx 1:7-1:30
-						children: Array [
-							JSXText {
-								value: " bar"
-								loc: SourceLocation jsx/regression/1/input.jsx 1:22-1:26
-							}
-						]
-						attributes: Array [
+						attributes: [
 							JSXAttribute {
 								name: JSXIdentifier {
 									name: "href"
@@ -63,15 +31,43 @@ JSRoot {
 								loc: SourceLocation jsx/regression/1/input.jsx 1:10-1:21
 							}
 						]
+						children: [
+							JSXText {
+								value: " bar"
+								loc: SourceLocation jsx/regression/1/input.jsx 1:22-1:26
+							}
+						]
+						selfClosing: false
+						name: JSXIdentifier {
+							name: "a"
+							loc: SourceLocation jsx/regression/1/input.jsx 1:8-1:9
+						}
+						loc: SourceLocation jsx/regression/1/input.jsx 1:7-1:30
 					}
 					JSXText {
 						value: " baz"
 						loc: SourceLocation jsx/regression/1/input.jsx 1:30-1:34
 					}
 				]
+				selfClosing: false
+				name: JSXIdentifier {
+					name: "p"
+					loc: SourceLocation jsx/regression/1/input.jsx 1:1-1:2
+				}
+				loc: SourceLocation jsx/regression/1/input.jsx 1:0-1:38
 			}
+			loc: SourceLocation jsx/regression/1/input.jsx 1:0-1:40
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: ["jsx"]
+	path: UIDPath<jsx/regression/1/input.jsx>
+	loc: SourceLocation jsx/regression/1/input.jsx 1:0-1:40
 }
 ```
 

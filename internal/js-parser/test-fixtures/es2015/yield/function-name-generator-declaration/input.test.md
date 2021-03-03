@@ -8,42 +8,36 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2015/yield/function-name-generator-declaration/input.js 1:0-1:20
-	path: UIDPath<es2015/yield/function-name-generator-declaration/input.js>
-	body: Array [
+	body: [
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "yield"
 				loc: SourceLocation es2015/yield/function-name-generator-declaration/input.js 1:10-1:15 (yield)
 			}
-			loc: SourceLocation es2015/yield/function-name-generator-declaration/input.js 1:0-1:20
 			body: JSBlockStatement {
-				body: Array []
-				directives: Array []
+				body: []
+				directives: []
 				loc: SourceLocation es2015/yield/function-name-generator-declaration/input.js 1:18-1:20
 			}
 			head: JSFunctionHead {
 				async: false
 				generator: true
 				hasHoistedVars: false
-				params: Array []
-				rest: undefined
-				returnType: undefined
-				thisType: undefined
-				typeParameters: undefined
+				params: []
 				loc: SourceLocation es2015/yield/function-name-generator-declaration/input.js 1:15-1:17
 			}
+			loc: SourceLocation es2015/yield/function-name-generator-declaration/input.js 1:0-1:20
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2015/yield/function-name-generator-declaration/input.js>
+	loc: SourceLocation es2015/yield/function-name-generator-declaration/input.js 1:0-1:20
 }
 ```
 

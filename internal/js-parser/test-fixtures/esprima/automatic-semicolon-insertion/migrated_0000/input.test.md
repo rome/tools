@@ -8,44 +8,42 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation esprima/automatic-semicolon-insertion/migrated_0000/input.js 1:0-3:0
-	path: UIDPath<esprima/automatic-semicolon-insertion/migrated_0000/input.js>
-	body: Array [
+	body: [
 		JSBlockStatement {
-			directives: Array []
-			loc: SourceLocation esprima/automatic-semicolon-insertion/migrated_0000/input.js 1:0-2:5
-			body: Array [
+			body: [
 				JSExpressionStatement {
-					loc: SourceLocation esprima/automatic-semicolon-insertion/migrated_0000/input.js 1:2-1:3
 					expression: JSReferenceIdentifier {
 						name: "x"
 						loc: SourceLocation esprima/automatic-semicolon-insertion/migrated_0000/input.js 1:2-1:3 (x)
 					}
+					loc: SourceLocation esprima/automatic-semicolon-insertion/migrated_0000/input.js 1:2-1:3
 				}
 				JSExpressionStatement {
-					loc: SourceLocation esprima/automatic-semicolon-insertion/migrated_0000/input.js 2:0-2:3
 					expression: JSUpdateExpression {
 						operator: "++"
 						prefix: true
-						loc: SourceLocation esprima/automatic-semicolon-insertion/migrated_0000/input.js 2:0-2:3
 						argument: JSReferenceIdentifier {
 							name: "y"
 							loc: SourceLocation esprima/automatic-semicolon-insertion/migrated_0000/input.js 2:2-2:3 (y)
 						}
+						loc: SourceLocation esprima/automatic-semicolon-insertion/migrated_0000/input.js 2:0-2:3
 					}
+					loc: SourceLocation esprima/automatic-semicolon-insertion/migrated_0000/input.js 2:0-2:3
 				}
 			]
+			directives: []
+			loc: SourceLocation esprima/automatic-semicolon-insertion/migrated_0000/input.js 1:0-2:5
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<esprima/automatic-semicolon-insertion/migrated_0000/input.js>
+	loc: SourceLocation esprima/automatic-semicolon-insertion/migrated_0000/input.js 1:0-3:0
 }
 ```
 

@@ -8,55 +8,52 @@
 
 ```javascript
 JSRoot {
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation core/uncategorised/343/input.js 1:0-2:12
-	path: UIDPath<core/uncategorised/343/input.js>
-	comments: Array [
-		CommentLine {
-			id: "0"
-			value: " nothing"
-			loc: SourceLocation core/uncategorised/343/input.js 2:1-2:12
-		}
-	]
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation core/uncategorised/343/input.js 1:0-1:11
-			trailingComments: Array ["0"]
+			trailingComments: ["0"]
 			expression: JSAssignmentExpression {
 				operator: "="
-				loc: SourceLocation core/uncategorised/343/input.js 1:0-1:10
 				left: JSAssignmentIdentifier {
 					name: "x"
 					loc: SourceLocation core/uncategorised/343/input.js 1:0-1:1 (x)
 				}
 				right: JSBinaryExpression {
 					operator: ">"
-					loc: SourceLocation core/uncategorised/343/input.js 1:4-1:10
-					right: JSNumericLiteral {
-						value: 10
-						format: undefined
-						loc: SourceLocation core/uncategorised/343/input.js 1:8-1:10
-					}
 					left: JSUpdateExpression {
 						operator: "--"
 						prefix: false
-						loc: SourceLocation core/uncategorised/343/input.js 1:4-1:7
 						argument: JSReferenceIdentifier {
 							name: "y"
 							loc: SourceLocation core/uncategorised/343/input.js 1:4-1:5 (y)
 						}
+						loc: SourceLocation core/uncategorised/343/input.js 1:4-1:7
 					}
+					right: JSNumericLiteral {
+						value: 10
+						loc: SourceLocation core/uncategorised/343/input.js 1:8-1:10
+					}
+					loc: SourceLocation core/uncategorised/343/input.js 1:4-1:10
 				}
+				loc: SourceLocation core/uncategorised/343/input.js 1:0-1:10
 			}
+			loc: SourceLocation core/uncategorised/343/input.js 1:0-1:11
 		}
 	]
+	comments: [
+		CommentLine {
+			id: "0"
+			value: " nothing"
+			loc: SourceLocation core/uncategorised/343/input.js 2:1-2:12
+		}
+	]
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<core/uncategorised/343/input.js>
+	loc: SourceLocation core/uncategorised/343/input.js 1:0-2:12
 }
 ```
 

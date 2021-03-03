@@ -13,8 +13,15 @@ JSRoot {
 			body: JSLabeledStatement {
 				body: JSLabeledStatement {
 					body: JSFunctionDeclaration {
-						id: JSBindingIdentifier {name: "foo", loc: SourceLocation core/categorized/invalid-fn-decl-labeled-inside-loop/input.js 1:29-1:32 (foo)}
-						body: JSBlockStatement {body: [], directives: [], loc: SourceLocation core/categorized/invalid-fn-decl-labeled-inside-loop/input.js 1:34-1:36}
+						id: JSBindingIdentifier {
+							name: "foo"
+							loc: SourceLocation core/categorized/invalid-fn-decl-labeled-inside-loop/input.js 1:29-1:32 (foo)
+						}
+						body: JSBlockStatement {
+							body: []
+							directives: []
+							loc: SourceLocation core/categorized/invalid-fn-decl-labeled-inside-loop/input.js 1:34-1:36
+						}
 						head: JSFunctionHead {
 							async: false
 							generator: false
@@ -24,13 +31,22 @@ JSRoot {
 						}
 						loc: SourceLocation core/categorized/invalid-fn-decl-labeled-inside-loop/input.js 1:20-1:36
 					}
-					label: JSIdentifier {name: "bar", loc: SourceLocation core/categorized/invalid-fn-decl-labeled-inside-loop/input.js 1:15-1:18 (bar)}
+					label: JSIdentifier {
+						name: "bar"
+						loc: SourceLocation core/categorized/invalid-fn-decl-labeled-inside-loop/input.js 1:15-1:18 (bar)
+					}
 					loc: SourceLocation core/categorized/invalid-fn-decl-labeled-inside-loop/input.js 1:15-1:36
 				}
-				label: JSIdentifier {name: "foo", loc: SourceLocation core/categorized/invalid-fn-decl-labeled-inside-loop/input.js 1:10-1:13 (foo)}
+				label: JSIdentifier {
+					name: "foo"
+					loc: SourceLocation core/categorized/invalid-fn-decl-labeled-inside-loop/input.js 1:10-1:13 (foo)
+				}
 				loc: SourceLocation core/categorized/invalid-fn-decl-labeled-inside-loop/input.js 1:10-1:36
 			}
-			test: JSNumericLiteral {value: 1, loc: SourceLocation core/categorized/invalid-fn-decl-labeled-inside-loop/input.js 1:7-1:8}
+			test: JSNumericLiteral {
+				value: 1
+				loc: SourceLocation core/categorized/invalid-fn-decl-labeled-inside-loop/input.js 1:7-1:8
+			}
 			loc: SourceLocation core/categorized/invalid-fn-decl-labeled-inside-loop/input.js 1:0-1:36
 		}
 	]
@@ -38,6 +54,7 @@ JSRoot {
 	corrupt: false
 	diagnostics: [
 		{
+			origins: [{category: "parse"}]
 			description: {
 				advice: []
 				category: ["parse"]
@@ -46,15 +63,19 @@ JSRoot {
 					value: "In non-strict mode code, functions can only be declared at top level, inside a block, or as the body of an if statement"
 				}
 			}
-			location: {language: "js", path: UIDPath<core/categorized/invalid-fn-decl-labeled-inside-loop/input.js>, end: Position 1:19, start: Position 1:20}
-			origins: [{category: "parse"}]
+			location: {
+				language: "js"
+				path: UIDPath<core/categorized/invalid-fn-decl-labeled-inside-loop/input.js>
+				end: Position 1:19
+				start: Position 1:20
+			}
 		}
 	]
 	directives: []
 	hasHoistedVars: false
-	path: UIDPath<core/categorized/invalid-fn-decl-labeled-inside-loop/input.js>
 	sourceType: "script"
 	syntax: []
+	path: UIDPath<core/categorized/invalid-fn-decl-labeled-inside-loop/input.js>
 	loc: SourceLocation core/categorized/invalid-fn-decl-labeled-inside-loop/input.js 1:0-1:36
 }
 ```
@@ -69,7 +90,7 @@ JSRoot {
     the body of an if statement
 
     while (1) foo: bar: function foo(){}
-                        ^
+                        <error><emphasis>^</emphasis></error>
 
 
 ```

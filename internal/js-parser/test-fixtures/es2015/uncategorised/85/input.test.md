@@ -8,27 +8,24 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	syntax: Array []
-	loc: SourceLocation es2015/uncategorised/85/input.js 1:0-1:22
-	path: UIDPath<es2015/uncategorised/85/input.js>
-	body: Array [
+	body: [
 		JSExportAllDeclaration {
-			exportKind: undefined
-			loc: SourceLocation es2015/uncategorised/85/input.js 1:0-1:22
 			source: JSStringLiteral {
 				value: "crypto"
 				loc: SourceLocation es2015/uncategorised/85/input.js 1:14-1:22
 			}
+			loc: SourceLocation es2015/uncategorised/85/input.js 1:0-1:22
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: []
+	path: UIDPath<es2015/uncategorised/85/input.js>
+	loc: SourceLocation es2015/uncategorised/85/input.js 1:0-1:22
 }
 ```
 

@@ -8,27 +8,10 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2017/trailing-function-commas/1/input.js 1:0-1:16
-	path: UIDPath<es2017/trailing-function-commas/1/input.js>
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation es2017/trailing-function-commas/1/input.js 1:0-1:16
 			expression: JSCallExpression {
-				loc: SourceLocation es2017/trailing-function-commas/1/input.js 1:0-1:15
-				callee: JSReferenceIdentifier {
-					name: "log"
-					loc: SourceLocation es2017/trailing-function-commas/1/input.js 1:0-1:3 (log)
-				}
-				arguments: Array [
+				arguments: [
 					JSReferenceIdentifier {
 						name: "n"
 						loc: SourceLocation es2017/trailing-function-commas/1/input.js 1:4-1:5 (n)
@@ -39,13 +22,27 @@ JSRoot {
 					}
 					JSNumericLiteral {
 						value: 2
-						format: undefined
 						loc: SourceLocation es2017/trailing-function-commas/1/input.js 1:12-1:13
 					}
 				]
+				callee: JSReferenceIdentifier {
+					name: "log"
+					loc: SourceLocation es2017/trailing-function-commas/1/input.js 1:0-1:3 (log)
+				}
+				loc: SourceLocation es2017/trailing-function-commas/1/input.js 1:0-1:15
 			}
+			loc: SourceLocation es2017/trailing-function-commas/1/input.js 1:0-1:16
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2017/trailing-function-commas/1/input.js>
+	loc: SourceLocation es2017/trailing-function-commas/1/input.js 1:0-1:16
 }
 ```
 

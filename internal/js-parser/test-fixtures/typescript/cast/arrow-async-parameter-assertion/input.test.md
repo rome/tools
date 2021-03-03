@@ -8,62 +8,55 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: true
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	loc: SourceLocation typescript/cast/arrow-async-parameter-assertion/input.ts 1:0-1:20
-	path: UIDPath<typescript/cast/arrow-async-parameter-assertion/input.ts>
-	syntax: Array ["ts"]
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Unexpected type cast in parameter position"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:12
-				path: UIDPath<typescript/cast/arrow-async-parameter-assertion/input.ts>
-				start: Position 1:7
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation typescript/cast/arrow-async-parameter-assertion/input.ts 1:0-1:20
 			expression: JSArrowFunctionExpression {
-				loc: SourceLocation typescript/cast/arrow-async-parameter-assertion/input.ts 1:0-1:19
 				body: JSBlockStatement {
-					body: Array []
-					directives: Array []
+					body: []
+					directives: []
 					loc: SourceLocation typescript/cast/arrow-async-parameter-assertion/input.ts 1:17-1:19
 				}
 				head: JSFunctionHead {
 					async: true
 					hasHoistedVars: false
-					rest: undefined
-					returnType: undefined
-					thisType: undefined
-					loc: SourceLocation typescript/cast/arrow-async-parameter-assertion/input.ts 1:0-1:16
-					params: Array [
+					params: [
 						JSBindingIdentifier {
 							name: "INVALID_PLACEHOLDER"
 							loc: SourceLocation typescript/cast/arrow-async-parameter-assertion/input.ts 1:17-1:16
 						}
 					]
+					loc: SourceLocation typescript/cast/arrow-async-parameter-assertion/input.ts 1:0-1:16
 				}
+				loc: SourceLocation typescript/cast/arrow-async-parameter-assertion/input.ts 1:0-1:19
+			}
+			loc: SourceLocation typescript/cast/arrow-async-parameter-assertion/input.ts 1:0-1:20
+		}
+	]
+	comments: []
+	corrupt: true
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "Unexpected type cast in parameter position"}
+			}
+			location: {
+				language: "js"
+				path: UIDPath<typescript/cast/arrow-async-parameter-assertion/input.ts>
+				end: Position 1:12
+				start: Position 1:7
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: ["ts"]
+	path: UIDPath<typescript/cast/arrow-async-parameter-assertion/input.ts>
+	loc: SourceLocation typescript/cast/arrow-async-parameter-assertion/input.ts 1:0-1:20
 }
 ```
 
@@ -76,7 +69,9 @@ JSRoot {
   ✖ Unexpected type cast in parameter position
 
     async (<T> a) => {};
-           ^^^^^
+           <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
+    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
+    <error><emphasis>^</emphasis></error>
 
 
 ```

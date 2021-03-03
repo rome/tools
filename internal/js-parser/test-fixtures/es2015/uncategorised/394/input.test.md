@@ -8,79 +8,42 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: true
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2015/uncategorised/394/input.js 1:0-5:0
-	path: UIDPath<es2015/uncategorised/394/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Invalid parenthesized binding"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 2:2
-				path: UIDPath<es2015/uncategorised/394/input.js>
-				start: Position 2:1
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSVariableDeclarationStatement {
-			loc: SourceLocation es2015/uncategorised/394/input.js 1:0-1:6
 			declaration: JSVariableDeclaration {
 				kind: "var"
-				loc: SourceLocation es2015/uncategorised/394/input.js 1:0-1:6
-				declarations: Array [
+				declarations: [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "a"
 							loc: SourceLocation es2015/uncategorised/394/input.js 1:4-1:5 (a)
 						}
-						init: undefined
 						loc: SourceLocation es2015/uncategorised/394/input.js 1:4-1:5
 					}
 				]
+				loc: SourceLocation es2015/uncategorised/394/input.js 1:0-1:6
 			}
+			loc: SourceLocation es2015/uncategorised/394/input.js 1:0-1:6
 		}
 		JSExpressionStatement {
-			loc: SourceLocation es2015/uncategorised/394/input.js 2:0-2:9
 			expression: JSAssignmentExpression {
 				operator: "="
-				loc: SourceLocation es2015/uncategorised/394/input.js 2:0-2:8
 				left: JSAssignmentIdentifier {
 					name: "a"
 					loc: SourceLocation es2015/uncategorised/394/input.js 2:1-2:2 (a)
 				}
 				right: JSObjectExpression {
-					properties: Array []
+					properties: []
 					loc: SourceLocation es2015/uncategorised/394/input.js 2:6-2:8
 				}
+				loc: SourceLocation es2015/uncategorised/394/input.js 2:0-2:8
 			}
+			loc: SourceLocation es2015/uncategorised/394/input.js 2:0-2:9
 		}
 		JSExpressionStatement {
-			loc: SourceLocation es2015/uncategorised/394/input.js 3:0-3:11
 			expression: JSAssignmentExpression {
 				operator: "="
-				loc: SourceLocation es2015/uncategorised/394/input.js 3:0-3:10
-				right: JSObjectExpression {
-					properties: Array []
-					loc: SourceLocation es2015/uncategorised/394/input.js 3:8-3:10
-				}
 				left: JSMemberExpression {
-					loc: SourceLocation es2015/uncategorised/394/input.js 3:1-3:4
 					object: JSReferenceIdentifier {
 						name: "a"
 						loc: SourceLocation es2015/uncategorised/394/input.js 3:1-3:2 (a)
@@ -92,20 +55,20 @@ JSRoot {
 						}
 						loc: SourceLocation es2015/uncategorised/394/input.js 3:3-3:4 (b)
 					}
+					loc: SourceLocation es2015/uncategorised/394/input.js 3:1-3:4
 				}
+				right: JSObjectExpression {
+					properties: []
+					loc: SourceLocation es2015/uncategorised/394/input.js 3:8-3:10
+				}
+				loc: SourceLocation es2015/uncategorised/394/input.js 3:0-3:10
 			}
+			loc: SourceLocation es2015/uncategorised/394/input.js 3:0-3:11
 		}
 		JSExpressionStatement {
-			loc: SourceLocation es2015/uncategorised/394/input.js 4:0-4:14
 			expression: JSAssignmentExpression {
 				operator: "="
-				loc: SourceLocation es2015/uncategorised/394/input.js 4:0-4:13
-				right: JSObjectExpression {
-					properties: Array []
-					loc: SourceLocation es2015/uncategorised/394/input.js 4:11-4:13
-				}
 				left: JSMemberExpression {
-					loc: SourceLocation es2015/uncategorised/394/input.js 4:1-4:7
 					object: JSReferenceIdentifier {
 						name: "a"
 						loc: SourceLocation es2015/uncategorised/394/input.js 4:1-4:2 (a)
@@ -117,10 +80,42 @@ JSRoot {
 						}
 						loc: SourceLocation es2015/uncategorised/394/input.js 4:2-4:7
 					}
+					loc: SourceLocation es2015/uncategorised/394/input.js 4:1-4:7
 				}
+				right: JSObjectExpression {
+					properties: []
+					loc: SourceLocation es2015/uncategorised/394/input.js 4:11-4:13
+				}
+				loc: SourceLocation es2015/uncategorised/394/input.js 4:0-4:13
+			}
+			loc: SourceLocation es2015/uncategorised/394/input.js 4:0-4:14
+		}
+	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "Invalid parenthesized binding"}
+			}
+			location: {
+				language: "js"
+				path: UIDPath<es2015/uncategorised/394/input.js>
+				end: Position 2:2
+				start: Position 2:1
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: true
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2015/uncategorised/394/input.js>
+	loc: SourceLocation es2015/uncategorised/394/input.js 1:0-5:0
 }
 ```
 
@@ -134,7 +129,7 @@ JSRoot {
 
     1 │ var a;
   > 2 │ (a) = {};
-      │  ^
+      │  <error><emphasis>^</emphasis></error>
     3 │ (a.b) = {};
     4 │ (a['c']) = {};
 

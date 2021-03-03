@@ -6,7 +6,7 @@ import {DIAGNOSTIC_CATEGORIES} from "@internal/diagnostics";
 
 export const files = createDiagnosticsCategory({
 	NO_FILE_HANDLER: (path: Path) => {
-		let advice: DiagnosticAdvice = [];
+		let advice: DiagnosticAdvice[] = [];
 
 		if (path.hasAnyExtensions()) {
 			advice.push({

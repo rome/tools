@@ -8,72 +8,59 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	loc: SourceLocation typescript/class/expression-generic/input.ts 1:0-3:0
-	path: UIDPath<typescript/class/expression-generic/input.ts>
-	syntax: Array ["ts"]
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation typescript/class/expression-generic/input.ts 1:0-1:14
 			expression: JSClassExpression {
-				id: undefined
-				loc: SourceLocation typescript/class/expression-generic/input.ts 1:1-1:12
 				meta: JSClassHead {
-					body: Array []
-					implements: undefined
-					superClass: undefined
-					superTypeParameters: undefined
-					loc: SourceLocation typescript/class/expression-generic/input.ts 1:1-1:12
+					body: []
 					typeParameters: TSTypeParameterDeclaration {
-						loc: SourceLocation typescript/class/expression-generic/input.ts 1:6-1:9
-						params: Array [
+						params: [
 							TSTypeParameter {
 								name: "T"
-								constraint: undefined
-								default: undefined
 								loc: SourceLocation typescript/class/expression-generic/input.ts 1:7-1:8
 							}
 						]
+						loc: SourceLocation typescript/class/expression-generic/input.ts 1:6-1:9
 					}
+					loc: SourceLocation typescript/class/expression-generic/input.ts 1:1-1:12
 				}
+				loc: SourceLocation typescript/class/expression-generic/input.ts 1:1-1:12
 			}
+			loc: SourceLocation typescript/class/expression-generic/input.ts 1:0-1:14
 		}
 		JSExpressionStatement {
-			loc: SourceLocation typescript/class/expression-generic/input.ts 2:0-2:16
 			expression: JSClassExpression {
 				id: JSBindingIdentifier {
 					name: "C"
 					loc: SourceLocation typescript/class/expression-generic/input.ts 2:7-2:8 (C)
 				}
-				loc: SourceLocation typescript/class/expression-generic/input.ts 2:1-2:14
 				meta: JSClassHead {
-					body: Array []
-					implements: undefined
-					superClass: undefined
-					superTypeParameters: undefined
-					loc: SourceLocation typescript/class/expression-generic/input.ts 2:1-2:14
+					body: []
 					typeParameters: TSTypeParameterDeclaration {
-						loc: SourceLocation typescript/class/expression-generic/input.ts 2:8-2:11
-						params: Array [
+						params: [
 							TSTypeParameter {
 								name: "T"
-								constraint: undefined
-								default: undefined
 								loc: SourceLocation typescript/class/expression-generic/input.ts 2:9-2:10
 							}
 						]
+						loc: SourceLocation typescript/class/expression-generic/input.ts 2:8-2:11
 					}
+					loc: SourceLocation typescript/class/expression-generic/input.ts 2:1-2:14
 				}
+				loc: SourceLocation typescript/class/expression-generic/input.ts 2:1-2:14
 			}
+			loc: SourceLocation typescript/class/expression-generic/input.ts 2:0-2:16
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: ["ts"]
+	path: UIDPath<typescript/class/expression-generic/input.ts>
+	loc: SourceLocation typescript/class/expression-generic/input.ts 1:0-3:0
 }
 ```
 

@@ -8,75 +8,68 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: true
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2017/async-functions/3/input.js 1:0-2:0
-	path: UIDPath<es2017/async-functions/3/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Function parameters can't be parenthesized"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:17
-				path: UIDPath<es2017/async-functions/3/input.js>
-				start: Position 1:17
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSVariableDeclarationStatement {
-			loc: SourceLocation es2017/async-functions/3/input.js 1:0-1:30
 			declaration: JSVariableDeclaration {
 				kind: "var"
-				loc: SourceLocation es2017/async-functions/3/input.js 1:0-1:30
-				declarations: Array [
+				declarations: [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "foo"
 							loc: SourceLocation es2017/async-functions/3/input.js 1:4-1:7 (foo)
 						}
-						loc: SourceLocation es2017/async-functions/3/input.js 1:4-1:29
 						init: JSArrowFunctionExpression {
-							loc: SourceLocation es2017/async-functions/3/input.js 1:10-1:29
 							body: JSBlockStatement {
-								body: Array []
-								directives: Array []
+								body: []
+								directives: []
 								loc: SourceLocation es2017/async-functions/3/input.js 1:27-1:29
 							}
 							head: JSFunctionHead {
 								async: true
 								hasHoistedVars: false
-								rest: undefined
-								returnType: undefined
-								thisType: undefined
-								loc: SourceLocation es2017/async-functions/3/input.js 1:10-1:26
-								params: Array [
+								params: [
 									JSBindingIdentifier {
 										name: "foo"
 										loc: SourceLocation es2017/async-functions/3/input.js 1:18-1:21 (foo)
 									}
 								]
+								loc: SourceLocation es2017/async-functions/3/input.js 1:10-1:26
 							}
+							loc: SourceLocation es2017/async-functions/3/input.js 1:10-1:29
 						}
+						loc: SourceLocation es2017/async-functions/3/input.js 1:4-1:29
 					}
 				]
+				loc: SourceLocation es2017/async-functions/3/input.js 1:0-1:30
+			}
+			loc: SourceLocation es2017/async-functions/3/input.js 1:0-1:30
+		}
+	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "Function parameters can't be parenthesized"}
+			}
+			location: {
+				language: "js"
+				path: UIDPath<es2017/async-functions/3/input.js>
+				end: Position 1:17
+				start: Position 1:17
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: true
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2017/async-functions/3/input.js>
+	loc: SourceLocation es2017/async-functions/3/input.js 1:0-2:0
 }
 ```
 
@@ -89,7 +82,7 @@ JSRoot {
   ✖ Function parameters can't be parenthesized
 
     var foo = async ((foo)) => {};
-                     ^
+                     <error><emphasis>^</emphasis></error>
 
 
 ```

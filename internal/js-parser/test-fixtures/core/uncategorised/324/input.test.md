@@ -8,28 +8,9 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation core/uncategorised/324/input.js 1:0-1:12
-	path: UIDPath<core/uncategorised/324/input.js>
-	body: Array [
+	body: [
 		JSIfStatement {
-			alternate: undefined
-			loc: SourceLocation core/uncategorised/324/input.js 1:0-1:12
-			test: JSNumericLiteral {
-				value: 1
-				format: undefined
-				loc: SourceLocation core/uncategorised/324/input.js 1:3-1:4
-			}
 			consequent: JSExpressionStatement {
-				loc: SourceLocation core/uncategorised/324/input.js 1:5-1:12
 				expression: JSRegExpLiteral {
 					global: false
 					insensitive: false
@@ -37,10 +18,8 @@ JSRoot {
 					noDotNewline: false
 					sticky: false
 					unicode: false
-					loc: SourceLocation core/uncategorised/324/input.js 1:5-1:12
 					expression: JSRegExpSubExpression {
-						loc: SourceLocation core/uncategorised/324/input.js 1:6-1:11
-						body: Array [
+						body: [
 							JSRegExpCharacter {
 								value: " "
 								loc: SourceLocation core/uncategorised/324/input.js 1:6-1:7
@@ -62,11 +41,28 @@ JSRoot {
 								loc: SourceLocation core/uncategorised/324/input.js 1:10-1:11
 							}
 						]
+						loc: SourceLocation core/uncategorised/324/input.js 1:6-1:11
 					}
+					loc: SourceLocation core/uncategorised/324/input.js 1:5-1:12
 				}
+				loc: SourceLocation core/uncategorised/324/input.js 1:5-1:12
 			}
+			test: JSNumericLiteral {
+				value: 1
+				loc: SourceLocation core/uncategorised/324/input.js 1:3-1:4
+			}
+			loc: SourceLocation core/uncategorised/324/input.js 1:0-1:12
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<core/uncategorised/324/input.js>
+	loc: SourceLocation core/uncategorised/324/input.js 1:0-1:12
 }
 ```
 

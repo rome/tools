@@ -8,31 +8,14 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	loc: SourceLocation typescript/class/predicate-types/input.ts 1:0-7:0
-	path: UIDPath<typescript/class/predicate-types/input.ts>
-	syntax: Array ["ts"]
-	body: Array [
+	body: [
 		JSClassDeclaration {
 			id: JSBindingIdentifier {
 				name: "Foo"
 				loc: SourceLocation typescript/class/predicate-types/input.ts 1:6-1:9 (Foo)
 			}
-			loc: SourceLocation typescript/class/predicate-types/input.ts 1:0-6:1
 			meta: JSClassHead {
-				implements: undefined
-				superClass: undefined
-				superTypeParameters: undefined
-				typeParameters: undefined
-				loc: SourceLocation typescript/class/predicate-types/input.ts 1:0-6:1
-				body: Array [
+				body: [
 					JSClassMethod {
 						kind: "method"
 						key: JSStaticPropertyKey {
@@ -42,38 +25,37 @@ JSRoot {
 							}
 							loc: SourceLocation typescript/class/predicate-types/input.ts 2:2-2:7
 						}
-						loc: SourceLocation typescript/class/predicate-types/input.ts 2:2-3:3
 						body: JSBlockStatement {
-							body: Array []
-							directives: Array []
+							body: []
+							directives: []
 							loc: SourceLocation typescript/class/predicate-types/input.ts 2:26-3:3
-						}
-						meta: JSClassPropertyMeta {
-							abstract: false
-							accessibility: undefined
-							optional: false
-							readonly: false
-							static: false
-							typeAnnotation: undefined
-							loc: SourceLocation typescript/class/predicate-types/input.ts 2:2-2:7
-							start: Position 2:2
 						}
 						head: JSFunctionHead {
 							async: false
 							generator: false
 							hasHoistedVars: false
-							params: Array []
-							rest: undefined
-							thisType: undefined
-							typeParameters: undefined
-							loc: SourceLocation typescript/class/predicate-types/input.ts 2:7-2:25
+							params: []
 							returnType: TSTypePredicate {
 								asserts: false
+								parameterName: TSThisType {
+									loc: SourceLocation typescript/class/predicate-types/input.ts 2:11-2:15
+								}
+								typeAnnotation: TSStringKeywordTypeAnnotation {
+									loc: SourceLocation typescript/class/predicate-types/input.ts 2:19-2:25
+								}
 								loc: SourceLocation typescript/class/predicate-types/input.ts 2:11-2:25
-								parameterName: TSThisType {loc: SourceLocation typescript/class/predicate-types/input.ts 2:11-2:15}
-								typeAnnotation: TSStringKeywordTypeAnnotation {loc: SourceLocation typescript/class/predicate-types/input.ts 2:19-2:25}
 							}
+							loc: SourceLocation typescript/class/predicate-types/input.ts 2:7-2:25
 						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							optional: false
+							readonly: false
+							static: false
+							loc: SourceLocation typescript/class/predicate-types/input.ts 2:2-2:7
+							start: Position 2:2
+						}
+						loc: SourceLocation typescript/class/predicate-types/input.ts 2:2-3:3
 					}
 					JSClassProperty {
 						key: JSStaticPropertyKey {
@@ -84,45 +66,54 @@ JSRoot {
 							loc: SourceLocation typescript/class/predicate-types/input.ts 4:2-4:7
 						}
 						value: JSArrowFunctionExpression {
-							loc: SourceLocation typescript/class/predicate-types/input.ts 4:10-5:3
 							body: JSBlockStatement {
-								body: Array []
-								directives: Array []
+								body: []
+								directives: []
 								loc: SourceLocation typescript/class/predicate-types/input.ts 4:32-5:3
 							}
 							head: JSFunctionHead {
 								async: false
 								hasHoistedVars: false
-								params: Array []
-								rest: undefined
-								thisType: undefined
-								loc: SourceLocation typescript/class/predicate-types/input.ts 4:10-4:31
+								params: []
 								returnType: TSTypePredicate {
 									asserts: false
+									parameterName: TSThisType {
+										loc: SourceLocation typescript/class/predicate-types/input.ts 4:14-4:18
+									}
+									typeAnnotation: TSStringKeywordTypeAnnotation {
+										loc: SourceLocation typescript/class/predicate-types/input.ts 4:22-4:28
+									}
 									loc: SourceLocation typescript/class/predicate-types/input.ts 4:14-4:28
-									parameterName: TSThisType {loc: SourceLocation typescript/class/predicate-types/input.ts 4:14-4:18}
-									typeAnnotation: TSStringKeywordTypeAnnotation {loc: SourceLocation typescript/class/predicate-types/input.ts 4:22-4:28}
 								}
+								loc: SourceLocation typescript/class/predicate-types/input.ts 4:10-4:31
 							}
+							loc: SourceLocation typescript/class/predicate-types/input.ts 4:10-5:3
 						}
-						definite: undefined
-						typeAnnotation: undefined
-						loc: SourceLocation typescript/class/predicate-types/input.ts 4:2-5:3
 						meta: JSClassPropertyMeta {
 							abstract: false
-							accessibility: undefined
 							optional: false
 							readonly: false
 							static: false
-							typeAnnotation: undefined
 							loc: SourceLocation typescript/class/predicate-types/input.ts 4:2-4:7
 							start: Position 4:2
 						}
+						loc: SourceLocation typescript/class/predicate-types/input.ts 4:2-5:3
 					}
 				]
+				loc: SourceLocation typescript/class/predicate-types/input.ts 1:0-6:1
 			}
+			loc: SourceLocation typescript/class/predicate-types/input.ts 1:0-6:1
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: ["ts"]
+	path: UIDPath<typescript/class/predicate-types/input.ts>
+	loc: SourceLocation typescript/class/predicate-types/input.ts 1:0-7:0
 }
 ```
 

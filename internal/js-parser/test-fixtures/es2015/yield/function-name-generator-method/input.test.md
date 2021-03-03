@@ -8,31 +8,14 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2015/yield/function-name-generator-method/input.js 1:0-3:1
-	path: UIDPath<es2015/yield/function-name-generator-method/input.js>
-	body: Array [
+	body: [
 		JSClassDeclaration {
 			id: JSBindingIdentifier {
 				name: "A"
 				loc: SourceLocation es2015/yield/function-name-generator-method/input.js 1:6-1:7 (A)
 			}
-			loc: SourceLocation es2015/yield/function-name-generator-method/input.js 1:0-3:1
 			meta: JSClassHead {
-				implements: undefined
-				superClass: undefined
-				superTypeParameters: undefined
-				typeParameters: undefined
-				loc: SourceLocation es2015/yield/function-name-generator-method/input.js 1:0-3:1
-				body: Array [
+				body: [
 					JSClassMethod {
 						kind: "method"
 						key: JSStaticPropertyKey {
@@ -42,38 +25,43 @@ JSRoot {
 							}
 							loc: SourceLocation es2015/yield/function-name-generator-method/input.js 2:3-2:8
 						}
-						loc: SourceLocation es2015/yield/function-name-generator-method/input.js 2:2-2:13
 						body: JSBlockStatement {
-							body: Array []
-							directives: Array []
+							body: []
+							directives: []
 							loc: SourceLocation es2015/yield/function-name-generator-method/input.js 2:11-2:13
-						}
-						meta: JSClassPropertyMeta {
-							abstract: false
-							accessibility: undefined
-							optional: false
-							readonly: false
-							static: false
-							typeAnnotation: undefined
-							loc: SourceLocation es2015/yield/function-name-generator-method/input.js 2:2-2:8
-							start: Position 2:2
 						}
 						head: JSFunctionHead {
 							async: false
 							generator: true
 							hasHoistedVars: false
-							params: Array []
-							rest: undefined
-							returnType: undefined
-							thisType: undefined
-							typeParameters: undefined
+							params: []
 							loc: SourceLocation es2015/yield/function-name-generator-method/input.js 2:8-2:10
 						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							optional: false
+							readonly: false
+							static: false
+							loc: SourceLocation es2015/yield/function-name-generator-method/input.js 2:2-2:8
+							start: Position 2:2
+						}
+						loc: SourceLocation es2015/yield/function-name-generator-method/input.js 2:2-2:13
 					}
 				]
+				loc: SourceLocation es2015/yield/function-name-generator-method/input.js 1:0-3:1
 			}
+			loc: SourceLocation es2015/yield/function-name-generator-method/input.js 1:0-3:1
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2015/yield/function-name-generator-method/input.js>
+	loc: SourceLocation es2015/yield/function-name-generator-method/input.js 1:0-3:1
 }
 ```
 

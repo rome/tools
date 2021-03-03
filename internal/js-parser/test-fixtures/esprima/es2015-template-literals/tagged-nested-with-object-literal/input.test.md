@@ -8,47 +8,35 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation esprima/es2015-template-literals/tagged-nested-with-object-literal/input.js 1:0-2:0
-	path: UIDPath<esprima/es2015-template-literals/tagged-nested-with-object-literal/input.js>
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation esprima/es2015-template-literals/tagged-nested-with-object-literal/input.js 1:0-1:44
 			expression: JSTaggedTemplateExpression {
-				typeArguments: undefined
-				loc: SourceLocation esprima/es2015-template-literals/tagged-nested-with-object-literal/input.js 1:0-1:44
-				tag: JSReferenceIdentifier {
-					name: "raw"
-					loc: SourceLocation esprima/es2015-template-literals/tagged-nested-with-object-literal/input.js 1:0-1:3 (raw)
-				}
 				quasi: JSTemplateLiteral {
-					loc: SourceLocation esprima/es2015-template-literals/tagged-nested-with-object-literal/input.js 1:3-1:44
-					quasis: Array [
-						JSTemplateElement {
-							cooked: "token "
-							raw: "token "
-							tail: false
-							loc: SourceLocation esprima/es2015-template-literals/tagged-nested-with-object-literal/input.js 1:4-1:10
-						}
-						JSTemplateElement {
-							cooked: ""
-							raw: ""
-							tail: true
-							loc: SourceLocation esprima/es2015-template-literals/tagged-nested-with-object-literal/input.js 1:43-1:43
-						}
-					]
-					expressions: Array [
+					expressions: [
 						JSTemplateLiteral {
-							loc: SourceLocation esprima/es2015-template-literals/tagged-nested-with-object-literal/input.js 1:12-1:42
-							quasis: Array [
+							expressions: [
+								JSBinaryExpression {
+									operator: "+"
+									left: JSTemplateLiteral {
+										expressions: []
+										quasis: [
+											JSTemplateElement {
+												cooked: "deeply"
+												raw: "deeply"
+												tail: true
+												loc: SourceLocation esprima/es2015-template-literals/tagged-nested-with-object-literal/input.js 1:23-1:29
+											}
+										]
+										loc: SourceLocation esprima/es2015-template-literals/tagged-nested-with-object-literal/input.js 1:22-1:30
+									}
+									right: JSObjectExpression {
+										properties: []
+										loc: SourceLocation esprima/es2015-template-literals/tagged-nested-with-object-literal/input.js 1:33-1:35
+									}
+									loc: SourceLocation esprima/es2015-template-literals/tagged-nested-with-object-literal/input.js 1:22-1:35
+								}
+							]
+							quasis: [
 								JSTemplateElement {
 									cooked: "nested "
 									raw: "nested "
@@ -62,34 +50,43 @@ JSRoot {
 									loc: SourceLocation esprima/es2015-template-literals/tagged-nested-with-object-literal/input.js 1:36-1:41
 								}
 							]
-							expressions: Array [
-								JSBinaryExpression {
-									operator: "+"
-									loc: SourceLocation esprima/es2015-template-literals/tagged-nested-with-object-literal/input.js 1:22-1:35
-									right: JSObjectExpression {
-										properties: Array []
-										loc: SourceLocation esprima/es2015-template-literals/tagged-nested-with-object-literal/input.js 1:33-1:35
-									}
-									left: JSTemplateLiteral {
-										expressions: Array []
-										loc: SourceLocation esprima/es2015-template-literals/tagged-nested-with-object-literal/input.js 1:22-1:30
-										quasis: Array [
-											JSTemplateElement {
-												cooked: "deeply"
-												raw: "deeply"
-												tail: true
-												loc: SourceLocation esprima/es2015-template-literals/tagged-nested-with-object-literal/input.js 1:23-1:29
-											}
-										]
-									}
-								}
-							]
+							loc: SourceLocation esprima/es2015-template-literals/tagged-nested-with-object-literal/input.js 1:12-1:42
 						}
 					]
+					quasis: [
+						JSTemplateElement {
+							cooked: "token "
+							raw: "token "
+							tail: false
+							loc: SourceLocation esprima/es2015-template-literals/tagged-nested-with-object-literal/input.js 1:4-1:10
+						}
+						JSTemplateElement {
+							cooked: ""
+							raw: ""
+							tail: true
+							loc: SourceLocation esprima/es2015-template-literals/tagged-nested-with-object-literal/input.js 1:43-1:43
+						}
+					]
+					loc: SourceLocation esprima/es2015-template-literals/tagged-nested-with-object-literal/input.js 1:3-1:44
 				}
+				tag: JSReferenceIdentifier {
+					name: "raw"
+					loc: SourceLocation esprima/es2015-template-literals/tagged-nested-with-object-literal/input.js 1:0-1:3 (raw)
+				}
+				loc: SourceLocation esprima/es2015-template-literals/tagged-nested-with-object-literal/input.js 1:0-1:44
 			}
+			loc: SourceLocation esprima/es2015-template-literals/tagged-nested-with-object-literal/input.js 1:0-1:44
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<esprima/es2015-template-literals/tagged-nested-with-object-literal/input.js>
+	loc: SourceLocation esprima/es2015-template-literals/tagged-nested-with-object-literal/input.js 1:0-2:0
 }
 ```
 

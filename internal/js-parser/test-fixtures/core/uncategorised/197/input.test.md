@@ -11,9 +11,18 @@ JSRoot {
 	body: [
 		JSExpressionStatement {
 			expression: JSConditionalExpression {
-				alternate: JSNumericLiteral {value: 2, loc: SourceLocation core/uncategorised/197/input.js 1:8-1:9}
-				consequent: JSNumericLiteral {value: 1, loc: SourceLocation core/uncategorised/197/input.js 1:4-1:5}
-				test: JSReferenceIdentifier {name: "y", loc: SourceLocation core/uncategorised/197/input.js 1:0-1:1 (y)}
+				alternate: JSNumericLiteral {
+					value: 2
+					loc: SourceLocation core/uncategorised/197/input.js 1:8-1:9
+				}
+				consequent: JSNumericLiteral {
+					value: 1
+					loc: SourceLocation core/uncategorised/197/input.js 1:4-1:5
+				}
+				test: JSReferenceIdentifier {
+					name: "y"
+					loc: SourceLocation core/uncategorised/197/input.js 1:0-1:1 (y)
+				}
 				loc: SourceLocation core/uncategorised/197/input.js 1:0-1:9
 			}
 			loc: SourceLocation core/uncategorised/197/input.js 1:0-1:9
@@ -24,9 +33,9 @@ JSRoot {
 	diagnostics: []
 	directives: []
 	hasHoistedVars: false
-	path: UIDPath<core/uncategorised/197/input.js>
 	sourceType: "script"
 	syntax: []
+	path: UIDPath<core/uncategorised/197/input.js>
 	loc: SourceLocation core/uncategorised/197/input.js 1:0-1:9
 }
 ```

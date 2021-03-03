@@ -13,12 +13,18 @@ JSRoot {
 			body: JSExpressionStatement {
 				expression: JSCallExpression {
 					arguments: []
-					callee: JSReferenceIdentifier {name: "keep", loc: SourceLocation core/uncategorised/233/input.js 1:3-1:7 (keep)}
+					callee: JSReferenceIdentifier {
+						name: "keep"
+						loc: SourceLocation core/uncategorised/233/input.js 1:3-1:7 (keep)
+					}
 					loc: SourceLocation core/uncategorised/233/input.js 1:3-1:9
 				}
 				loc: SourceLocation core/uncategorised/233/input.js 1:3-1:10
 			}
-			test: JSBooleanLiteral {value: true, loc: SourceLocation core/uncategorised/233/input.js 1:18-1:22}
+			test: JSBooleanLiteral {
+				value: true
+				loc: SourceLocation core/uncategorised/233/input.js 1:18-1:22
+			}
 			loc: SourceLocation core/uncategorised/233/input.js 1:0-1:24
 		}
 	]
@@ -27,9 +33,9 @@ JSRoot {
 	diagnostics: []
 	directives: []
 	hasHoistedVars: false
-	path: UIDPath<core/uncategorised/233/input.js>
 	sourceType: "script"
 	syntax: []
+	path: UIDPath<core/uncategorised/233/input.js>
 	loc: SourceLocation core/uncategorised/233/input.js 1:0-1:24
 }
 ```

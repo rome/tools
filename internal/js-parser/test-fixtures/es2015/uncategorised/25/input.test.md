@@ -8,36 +8,14 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2015/uncategorised/25/input.js 1:0-1:11
-	path: UIDPath<es2015/uncategorised/25/input.js>
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation es2015/uncategorised/25/input.js 1:0-1:11
 			expression: JSNewExpression {
-				arguments: Array []
-				optional: undefined
-				typeArguments: undefined
-				loc: SourceLocation es2015/uncategorised/25/input.js 1:0-1:11
+				arguments: []
 				callee: JSTaggedTemplateExpression {
-					typeArguments: undefined
-					loc: SourceLocation es2015/uncategorised/25/input.js 1:4-1:11
-					tag: JSReferenceIdentifier {
-						name: "raw"
-						loc: SourceLocation es2015/uncategorised/25/input.js 1:4-1:7 (raw)
-					}
 					quasi: JSTemplateLiteral {
-						expressions: Array []
-						loc: SourceLocation es2015/uncategorised/25/input.js 1:7-1:11
-						quasis: Array [
+						expressions: []
+						quasis: [
 							JSTemplateElement {
 								cooked: "42"
 								raw: "42"
@@ -45,11 +23,28 @@ JSRoot {
 								loc: SourceLocation es2015/uncategorised/25/input.js 1:8-1:10
 							}
 						]
+						loc: SourceLocation es2015/uncategorised/25/input.js 1:7-1:11
 					}
+					tag: JSReferenceIdentifier {
+						name: "raw"
+						loc: SourceLocation es2015/uncategorised/25/input.js 1:4-1:7 (raw)
+					}
+					loc: SourceLocation es2015/uncategorised/25/input.js 1:4-1:11
 				}
+				loc: SourceLocation es2015/uncategorised/25/input.js 1:0-1:11
 			}
+			loc: SourceLocation es2015/uncategorised/25/input.js 1:0-1:11
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2015/uncategorised/25/input.js>
+	loc: SourceLocation es2015/uncategorised/25/input.js 1:0-1:11
 }
 ```
 

@@ -8,48 +8,44 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: true
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation esprima/statement-if/migrated_0002/input.js 1:0-2:0
-	path: UIDPath<esprima/statement-if/migrated_0002/input.js>
-	body: Array [
+	body: [
 		JSIfStatement {
-			alternate: undefined
-			loc: SourceLocation esprima/statement-if/migrated_0002/input.js 1:0-1:23
-			test: JSReferenceIdentifier {
-				name: "morning"
-				loc: SourceLocation esprima/statement-if/migrated_0002/input.js 1:4-1:11 (morning)
-			}
 			consequent: JSVariableDeclarationStatement {
-				loc: SourceLocation esprima/statement-if/migrated_0002/input.js 1:13-1:23
 				declaration: JSVariableDeclaration {
 					kind: "var"
-					loc: SourceLocation esprima/statement-if/migrated_0002/input.js 1:13-1:23
-					declarations: Array [
+					declarations: [
 						JSVariableDeclarator {
 							id: JSBindingIdentifier {
 								name: "x"
 								loc: SourceLocation esprima/statement-if/migrated_0002/input.js 1:17-1:18 (x)
 							}
-							loc: SourceLocation esprima/statement-if/migrated_0002/input.js 1:17-1:22
 							init: JSNumericLiteral {
 								value: 0
-								format: undefined
 								loc: SourceLocation esprima/statement-if/migrated_0002/input.js 1:21-1:22
 							}
+							loc: SourceLocation esprima/statement-if/migrated_0002/input.js 1:17-1:22
 						}
 					]
+					loc: SourceLocation esprima/statement-if/migrated_0002/input.js 1:13-1:23
 				}
+				loc: SourceLocation esprima/statement-if/migrated_0002/input.js 1:13-1:23
 			}
+			test: JSReferenceIdentifier {
+				name: "morning"
+				loc: SourceLocation esprima/statement-if/migrated_0002/input.js 1:4-1:11 (morning)
+			}
+			loc: SourceLocation esprima/statement-if/migrated_0002/input.js 1:0-1:23
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: true
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<esprima/statement-if/migrated_0002/input.js>
+	loc: SourceLocation esprima/statement-if/migrated_0002/input.js 1:0-2:0
 }
 ```
 

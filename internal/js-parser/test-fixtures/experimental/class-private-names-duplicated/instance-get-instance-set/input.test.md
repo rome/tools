@@ -8,31 +8,14 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation experimental/class-private-names-duplicated/instance-get-instance-set/input.js 1:0-4:1
-	path: UIDPath<experimental/class-private-names-duplicated/instance-get-instance-set/input.js>
-	body: Array [
+	body: [
 		JSClassDeclaration {
 			id: JSBindingIdentifier {
 				name: "A"
 				loc: SourceLocation experimental/class-private-names-duplicated/instance-get-instance-set/input.js 1:6-1:7 (A)
 			}
-			loc: SourceLocation experimental/class-private-names-duplicated/instance-get-instance-set/input.js 1:0-4:1
 			meta: JSClassHead {
-				implements: undefined
-				superClass: undefined
-				superTypeParameters: undefined
-				typeParameters: undefined
-				loc: SourceLocation experimental/class-private-names-duplicated/instance-get-instance-set/input.js 1:0-4:1
-				body: Array [
+				body: [
 					JSClassPrivateMethod {
 						kind: "get"
 						key: JSPrivateName {
@@ -42,33 +25,27 @@ JSRoot {
 							}
 							loc: SourceLocation experimental/class-private-names-duplicated/instance-get-instance-set/input.js 2:6-2:8
 						}
-						loc: SourceLocation experimental/class-private-names-duplicated/instance-get-instance-set/input.js 2:2-2:13
 						body: JSBlockStatement {
-							body: Array []
-							directives: Array []
+							body: []
+							directives: []
 							loc: SourceLocation experimental/class-private-names-duplicated/instance-get-instance-set/input.js 2:11-2:13
-						}
-						meta: JSClassPropertyMeta {
-							abstract: false
-							accessibility: undefined
-							optional: false
-							readonly: false
-							static: false
-							typeAnnotation: undefined
-							loc: SourceLocation experimental/class-private-names-duplicated/instance-get-instance-set/input.js 2:2-2:8
-							start: Position 2:2
 						}
 						head: JSFunctionHead {
 							async: false
 							generator: false
 							hasHoistedVars: false
-							params: Array []
-							rest: undefined
-							returnType: undefined
-							thisType: undefined
-							typeParameters: undefined
+							params: []
 							loc: SourceLocation experimental/class-private-names-duplicated/instance-get-instance-set/input.js 2:8-2:10
 						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							optional: false
+							readonly: false
+							static: false
+							loc: SourceLocation experimental/class-private-names-duplicated/instance-get-instance-set/input.js 2:2-2:8
+							start: Position 2:2
+						}
+						loc: SourceLocation experimental/class-private-names-duplicated/instance-get-instance-set/input.js 2:2-2:13
 					}
 					JSClassPrivateMethod {
 						kind: "set"
@@ -79,48 +56,51 @@ JSRoot {
 							}
 							loc: SourceLocation experimental/class-private-names-duplicated/instance-get-instance-set/input.js 3:6-3:8
 						}
-						loc: SourceLocation experimental/class-private-names-duplicated/instance-get-instance-set/input.js 3:2-3:14
 						body: JSBlockStatement {
-							body: Array []
-							directives: Array []
+							body: []
+							directives: []
 							loc: SourceLocation experimental/class-private-names-duplicated/instance-get-instance-set/input.js 3:12-3:14
-						}
-						meta: JSClassPropertyMeta {
-							abstract: false
-							accessibility: undefined
-							optional: false
-							readonly: false
-							static: false
-							typeAnnotation: undefined
-							loc: SourceLocation experimental/class-private-names-duplicated/instance-get-instance-set/input.js 3:2-3:8
-							start: Position 3:2
 						}
 						head: JSFunctionHead {
 							async: false
 							generator: false
 							hasHoistedVars: false
-							rest: undefined
-							returnType: undefined
-							thisType: undefined
-							typeParameters: undefined
-							loc: SourceLocation experimental/class-private-names-duplicated/instance-get-instance-set/input.js 3:8-3:11
-							params: Array [
+							params: [
 								JSBindingIdentifier {
 									name: "_"
-									loc: SourceLocation experimental/class-private-names-duplicated/instance-get-instance-set/input.js 3:9-3:10 (_)
 									meta: JSPatternMeta {
-										optional: undefined
-										typeAnnotation: undefined
 										loc: SourceLocation experimental/class-private-names-duplicated/instance-get-instance-set/input.js 3:9-3:10
 									}
+									loc: SourceLocation experimental/class-private-names-duplicated/instance-get-instance-set/input.js 3:9-3:10 (_)
 								}
 							]
+							loc: SourceLocation experimental/class-private-names-duplicated/instance-get-instance-set/input.js 3:8-3:11
 						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							optional: false
+							readonly: false
+							static: false
+							loc: SourceLocation experimental/class-private-names-duplicated/instance-get-instance-set/input.js 3:2-3:8
+							start: Position 3:2
+						}
+						loc: SourceLocation experimental/class-private-names-duplicated/instance-get-instance-set/input.js 3:2-3:14
 					}
 				]
+				loc: SourceLocation experimental/class-private-names-duplicated/instance-get-instance-set/input.js 1:0-4:1
 			}
+			loc: SourceLocation experimental/class-private-names-duplicated/instance-get-instance-set/input.js 1:0-4:1
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<experimental/class-private-names-duplicated/instance-get-instance-set/input.js>
+	loc: SourceLocation experimental/class-private-names-duplicated/instance-get-instance-set/input.js 1:0-4:1
 }
 ```
 

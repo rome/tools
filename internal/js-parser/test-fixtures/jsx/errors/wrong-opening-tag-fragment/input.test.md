@@ -8,57 +8,51 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	loc: SourceLocation jsx/errors/wrong-opening-tag-fragment/input.jsx 1:0-2:0
-	path: UIDPath<jsx/errors/wrong-opening-tag-fragment/input.jsx>
-	syntax: Array ["jsx"]
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation jsx/errors/wrong-opening-tag-fragment/input.jsx 1:0-1:14
 			expression: JSXElement {
+				attributes: []
+				children: []
+				selfClosing: false
 				name: JSXIdentifier {
 					name: "something"
 					loc: SourceLocation jsx/errors/wrong-opening-tag-fragment/input.jsx 1:1-1:10
 				}
-				attributes: Array []
-				children: Array []
-				selfClosing: false
-				typeArguments: undefined
 				loc: SourceLocation jsx/errors/wrong-opening-tag-fragment/input.jsx 1:0-1:14
 			}
+			loc: SourceLocation jsx/errors/wrong-opening-tag-fragment/input.jsx 1:0-1:14
 		}
 	]
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			location: Object {
-				integrity: undefined
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {
+				advice: [
+					log {category: "info", text: [RAW_MARKUP {value: "Originated from opening tag of <emphasis>"}, "something", RAW_MARKUP {value: "</emphasis>"}]}
+					frame {
+						location: SourceLocation jsx/errors/wrong-opening-tag-fragment/input.jsx 1:1-1:10
+					}
+				]
+				category: ["parse"]
+				categoryValue: "js"
+				message: [RAW_MARKUP {value: "Expected a corresponding JSX closing tag for <emphasis>"}, "something", RAW_MARKUP {value: "</emphasis>"}]
+			}
+			location: {
 				language: "js"
-				sourceText: undefined
-				end: Position 1:10
 				path: UIDPath<jsx/errors/wrong-opening-tag-fragment/input.jsx>
+				end: Position 1:10
 				start: Position 1:1
 			}
-			description: Object {
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Expected a corresponding JSX closing tag for <emphasis>something</emphasis>"}
-				advice: Array [
-					log {
-						category: "info"
-						text: RAW_MARKUP {value: "Originated from opening tag of <emphasis>something</emphasis>"}
-					}
-					frame {location: SourceLocation jsx/errors/wrong-opening-tag-fragment/input.jsx 1:1-1:10}
-				]
-			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: ["jsx"]
+	path: UIDPath<jsx/errors/wrong-opening-tag-fragment/input.jsx>
+	loc: SourceLocation jsx/errors/wrong-opening-tag-fragment/input.jsx 1:0-2:0
 }
 ```
 
@@ -73,7 +67,11 @@ JSRoot {
   ℹ Originated from opening tag of something
 
     <something></>
-     ^^^^^^^^^
+     <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
+    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
+    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
+    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
+    <error><emphasis>^</emphasis></error>
 
 
 ```

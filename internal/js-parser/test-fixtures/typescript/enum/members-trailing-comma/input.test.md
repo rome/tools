@@ -8,37 +8,34 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	loc: SourceLocation typescript/enum/members-trailing-comma/input.ts 1:0-4:0
-	path: UIDPath<typescript/enum/members-trailing-comma/input.ts>
-	syntax: Array ["ts"]
-	body: Array [
+	body: [
 		TSEnumDeclaration {
-			id: JSBindingIdentifier {
-				name: "E"
-				loc: SourceLocation typescript/enum/members-trailing-comma/input.ts 1:5-1:6 (E)
-			}
 			const: false
-			loc: SourceLocation typescript/enum/members-trailing-comma/input.ts 1:0-3:1
-			members: Array [
+			members: [
 				TSEnumMember {
 					id: JSIdentifier {
 						name: "A"
 						loc: SourceLocation typescript/enum/members-trailing-comma/input.ts 2:4-2:5 (A)
 					}
-					initializer: undefined
 					loc: SourceLocation typescript/enum/members-trailing-comma/input.ts 2:4-2:5
 				}
 			]
+			id: JSBindingIdentifier {
+				name: "E"
+				loc: SourceLocation typescript/enum/members-trailing-comma/input.ts 1:5-1:6 (E)
+			}
+			loc: SourceLocation typescript/enum/members-trailing-comma/input.ts 1:0-3:1
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: ["ts"]
+	path: UIDPath<typescript/enum/members-trailing-comma/input.ts>
+	loc: SourceLocation typescript/enum/members-trailing-comma/input.ts 1:0-4:0
 }
 ```
 

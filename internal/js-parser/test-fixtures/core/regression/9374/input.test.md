@@ -10,17 +10,23 @@
 JSRoot {
 	body: [
 		JSFunctionDeclaration {
-			id: JSBindingIdentifier {name: "test", loc: SourceLocation core/regression/9374/input.js 1:10-1:14 (test)}
+			id: JSBindingIdentifier {
+				name: "test"
+				loc: SourceLocation core/regression/9374/input.js 1:10-1:14 (test)
+			}
 			body: JSBlockStatement {
 				body: [
 					JSExpressionStatement {
 						expression: JSYieldExpression {
+							delegate: false
 							argument: JSNewExpression {
 								arguments: []
-								callee: JSReferenceIdentifier {name: "Foo", loc: SourceLocation core/regression/9374/input.js 2:12-2:15 (Foo)}
+								callee: JSReferenceIdentifier {
+									name: "Foo"
+									loc: SourceLocation core/regression/9374/input.js 2:12-2:15 (Foo)
+								}
 								loc: SourceLocation core/regression/9374/input.js 2:8-2:17
 							}
-							delegate: false
 							loc: SourceLocation core/regression/9374/input.js 2:2-2:17
 						}
 						loc: SourceLocation core/regression/9374/input.js 2:2-2:18
@@ -29,7 +35,13 @@ JSRoot {
 				directives: []
 				loc: SourceLocation core/regression/9374/input.js 1:17-3:1
 			}
-			head: JSFunctionHead {async: false, generator: true, hasHoistedVars: false, params: [], loc: SourceLocation core/regression/9374/input.js 1:14-1:16}
+			head: JSFunctionHead {
+				async: false
+				generator: true
+				hasHoistedVars: false
+				params: []
+				loc: SourceLocation core/regression/9374/input.js 1:14-1:16
+			}
 			loc: SourceLocation core/regression/9374/input.js 1:0-3:1
 		}
 	]
@@ -38,9 +50,9 @@ JSRoot {
 	diagnostics: []
 	directives: []
 	hasHoistedVars: false
-	path: UIDPath<core/regression/9374/input.js>
 	sourceType: "script"
 	syntax: []
+	path: UIDPath<core/regression/9374/input.js>
 	loc: SourceLocation core/regression/9374/input.js 1:0-4:0
 }
 ```

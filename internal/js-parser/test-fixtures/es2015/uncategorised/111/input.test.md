@@ -8,50 +8,44 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: true
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2015/uncategorised/111/input.js 1:0-1:26
-	path: UIDPath<es2015/uncategorised/111/input.js>
-	body: Array [
+	body: [
 		JSVariableDeclarationStatement {
-			loc: SourceLocation es2015/uncategorised/111/input.js 1:0-1:26
 			declaration: JSVariableDeclaration {
 				kind: "var"
-				loc: SourceLocation es2015/uncategorised/111/input.js 1:0-1:26
-				declarations: Array [
+				declarations: [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "A"
 							loc: SourceLocation es2015/uncategorised/111/input.js 1:4-1:5 (A)
 						}
-						loc: SourceLocation es2015/uncategorised/111/input.js 1:4-1:26
 						init: JSClassExpression {
-							id: undefined
-							loc: SourceLocation es2015/uncategorised/111/input.js 1:8-1:26
 							meta: JSClassHead {
-								body: Array []
-								implements: undefined
-								superTypeParameters: undefined
-								typeParameters: undefined
-								loc: SourceLocation es2015/uncategorised/111/input.js 1:8-1:26
+								body: []
 								superClass: JSReferenceIdentifier {
 									name: "B"
 									loc: SourceLocation es2015/uncategorised/111/input.js 1:22-1:23 (B)
 								}
+								loc: SourceLocation es2015/uncategorised/111/input.js 1:8-1:26
 							}
+							loc: SourceLocation es2015/uncategorised/111/input.js 1:8-1:26
 						}
+						loc: SourceLocation es2015/uncategorised/111/input.js 1:4-1:26
 					}
 				]
+				loc: SourceLocation es2015/uncategorised/111/input.js 1:0-1:26
 			}
+			loc: SourceLocation es2015/uncategorised/111/input.js 1:0-1:26
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: true
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2015/uncategorised/111/input.js>
+	loc: SourceLocation es2015/uncategorised/111/input.js 1:0-1:26
 }
 ```
 

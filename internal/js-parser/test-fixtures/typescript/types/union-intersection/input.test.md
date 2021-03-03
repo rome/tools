@@ -8,144 +8,156 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	loc: SourceLocation typescript/types/union-intersection/input.ts 1:0-5:0
-	path: UIDPath<typescript/types/union-intersection/input.ts>
-	syntax: Array ["ts"]
-	body: Array [
+	body: [
 		JSVariableDeclarationStatement {
-			loc: SourceLocation typescript/types/union-intersection/input.ts 1:0-1:37
 			declaration: JSVariableDeclaration {
 				kind: "let"
-				loc: SourceLocation typescript/types/union-intersection/input.ts 1:0-1:37
-				declarations: Array [
+				declarations: [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "union"
-							loc: SourceLocation typescript/types/union-intersection/input.ts 1:4-1:36
 							meta: JSPatternMeta {
-								definite: undefined
-								loc: SourceLocation typescript/types/union-intersection/input.ts 1:4-1:36
 								typeAnnotation: TSUnionTypeAnnotation {
-									loc: SourceLocation typescript/types/union-intersection/input.ts 1:11-1:36
-									types: Array [
-										TSNumberKeywordTypeAnnotation {loc: SourceLocation typescript/types/union-intersection/input.ts 1:11-1:17}
-										TSNullKeywordTypeAnnotation {loc: SourceLocation typescript/types/union-intersection/input.ts 1:20-1:24}
-										TSUndefinedKeywordTypeAnnotation {loc: SourceLocation typescript/types/union-intersection/input.ts 1:27-1:36}
+									types: [
+										TSNumberKeywordTypeAnnotation {
+											loc: SourceLocation typescript/types/union-intersection/input.ts 1:11-1:17
+										}
+										TSNullKeywordTypeAnnotation {
+											loc: SourceLocation typescript/types/union-intersection/input.ts 1:20-1:24
+										}
+										TSUndefinedKeywordTypeAnnotation {
+											loc: SourceLocation typescript/types/union-intersection/input.ts 1:27-1:36
+										}
 									]
+									loc: SourceLocation typescript/types/union-intersection/input.ts 1:11-1:36
 								}
+								loc: SourceLocation typescript/types/union-intersection/input.ts 1:4-1:36
 							}
+							loc: SourceLocation typescript/types/union-intersection/input.ts 1:4-1:36
 						}
-						init: undefined
 						loc: SourceLocation typescript/types/union-intersection/input.ts 1:4-1:36
 					}
 				]
+				loc: SourceLocation typescript/types/union-intersection/input.ts 1:0-1:37
 			}
+			loc: SourceLocation typescript/types/union-intersection/input.ts 1:0-1:37
 		}
 		JSVariableDeclarationStatement {
-			loc: SourceLocation typescript/types/union-intersection/input.ts 2:0-2:34
 			declaration: JSVariableDeclaration {
 				kind: "let"
-				loc: SourceLocation typescript/types/union-intersection/input.ts 2:0-2:34
-				declarations: Array [
+				declarations: [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "intersection"
-							loc: SourceLocation typescript/types/union-intersection/input.ts 2:4-2:33
 							meta: JSPatternMeta {
-								definite: undefined
-								loc: SourceLocation typescript/types/union-intersection/input.ts 2:4-2:33
 								typeAnnotation: TSIntersectionTypeAnnotation {
-									loc: SourceLocation typescript/types/union-intersection/input.ts 2:18-2:33
-									types: Array [
-										TSNumberKeywordTypeAnnotation {loc: SourceLocation typescript/types/union-intersection/input.ts 2:18-2:24}
-										TSStringKeywordTypeAnnotation {loc: SourceLocation typescript/types/union-intersection/input.ts 2:27-2:33}
+									types: [
+										TSNumberKeywordTypeAnnotation {
+											loc: SourceLocation typescript/types/union-intersection/input.ts 2:18-2:24
+										}
+										TSStringKeywordTypeAnnotation {
+											loc: SourceLocation typescript/types/union-intersection/input.ts 2:27-2:33
+										}
 									]
+									loc: SourceLocation typescript/types/union-intersection/input.ts 2:18-2:33
 								}
+								loc: SourceLocation typescript/types/union-intersection/input.ts 2:4-2:33
 							}
+							loc: SourceLocation typescript/types/union-intersection/input.ts 2:4-2:33
 						}
-						init: undefined
 						loc: SourceLocation typescript/types/union-intersection/input.ts 2:4-2:33
 					}
 				]
+				loc: SourceLocation typescript/types/union-intersection/input.ts 2:0-2:34
 			}
+			loc: SourceLocation typescript/types/union-intersection/input.ts 2:0-2:34
 		}
 		JSVariableDeclarationStatement {
-			loc: SourceLocation typescript/types/union-intersection/input.ts 3:0-3:43
 			declaration: JSVariableDeclaration {
 				kind: "let"
-				loc: SourceLocation typescript/types/union-intersection/input.ts 3:0-3:43
-				declarations: Array [
+				declarations: [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "precedence1"
-							loc: SourceLocation typescript/types/union-intersection/input.ts 3:4-3:42
 							meta: JSPatternMeta {
-								definite: undefined
-								loc: SourceLocation typescript/types/union-intersection/input.ts 3:4-3:42
 								typeAnnotation: TSUnionTypeAnnotation {
-									loc: SourceLocation typescript/types/union-intersection/input.ts 3:17-3:42
-									types: Array [
-										TSNumberKeywordTypeAnnotation {loc: SourceLocation typescript/types/union-intersection/input.ts 3:17-3:23}
+									types: [
+										TSNumberKeywordTypeAnnotation {
+											loc: SourceLocation typescript/types/union-intersection/input.ts 3:17-3:23
+										}
 										TSIntersectionTypeAnnotation {
-											loc: SourceLocation typescript/types/union-intersection/input.ts 3:26-3:42
-											types: Array [
-												TSStringKeywordTypeAnnotation {loc: SourceLocation typescript/types/union-intersection/input.ts 3:26-3:32}
-												TSBooleanKeywordTypeAnnotation {loc: SourceLocation typescript/types/union-intersection/input.ts 3:35-3:42}
+											types: [
+												TSStringKeywordTypeAnnotation {
+													loc: SourceLocation typescript/types/union-intersection/input.ts 3:26-3:32
+												}
+												TSBooleanKeywordTypeAnnotation {
+													loc: SourceLocation typescript/types/union-intersection/input.ts 3:35-3:42
+												}
 											]
+											loc: SourceLocation typescript/types/union-intersection/input.ts 3:26-3:42
 										}
 									]
+									loc: SourceLocation typescript/types/union-intersection/input.ts 3:17-3:42
 								}
+								loc: SourceLocation typescript/types/union-intersection/input.ts 3:4-3:42
 							}
+							loc: SourceLocation typescript/types/union-intersection/input.ts 3:4-3:42
 						}
-						init: undefined
 						loc: SourceLocation typescript/types/union-intersection/input.ts 3:4-3:42
 					}
 				]
+				loc: SourceLocation typescript/types/union-intersection/input.ts 3:0-3:43
 			}
+			loc: SourceLocation typescript/types/union-intersection/input.ts 3:0-3:43
 		}
 		JSVariableDeclarationStatement {
-			loc: SourceLocation typescript/types/union-intersection/input.ts 4:0-4:43
 			declaration: JSVariableDeclaration {
 				kind: "let"
-				loc: SourceLocation typescript/types/union-intersection/input.ts 4:0-4:43
-				declarations: Array [
+				declarations: [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "precedence2"
-							loc: SourceLocation typescript/types/union-intersection/input.ts 4:4-4:42
 							meta: JSPatternMeta {
-								definite: undefined
-								loc: SourceLocation typescript/types/union-intersection/input.ts 4:4-4:42
 								typeAnnotation: TSUnionTypeAnnotation {
-									loc: SourceLocation typescript/types/union-intersection/input.ts 4:17-4:42
-									types: Array [
+									types: [
 										TSIntersectionTypeAnnotation {
-											loc: SourceLocation typescript/types/union-intersection/input.ts 4:17-4:32
-											types: Array [
-												TSNumberKeywordTypeAnnotation {loc: SourceLocation typescript/types/union-intersection/input.ts 4:17-4:23}
-												TSStringKeywordTypeAnnotation {loc: SourceLocation typescript/types/union-intersection/input.ts 4:26-4:32}
+											types: [
+												TSNumberKeywordTypeAnnotation {
+													loc: SourceLocation typescript/types/union-intersection/input.ts 4:17-4:23
+												}
+												TSStringKeywordTypeAnnotation {
+													loc: SourceLocation typescript/types/union-intersection/input.ts 4:26-4:32
+												}
 											]
+											loc: SourceLocation typescript/types/union-intersection/input.ts 4:17-4:32
 										}
-										TSBooleanKeywordTypeAnnotation {loc: SourceLocation typescript/types/union-intersection/input.ts 4:35-4:42}
+										TSBooleanKeywordTypeAnnotation {
+											loc: SourceLocation typescript/types/union-intersection/input.ts 4:35-4:42
+										}
 									]
+									loc: SourceLocation typescript/types/union-intersection/input.ts 4:17-4:42
 								}
+								loc: SourceLocation typescript/types/union-intersection/input.ts 4:4-4:42
 							}
+							loc: SourceLocation typescript/types/union-intersection/input.ts 4:4-4:42
 						}
-						init: undefined
 						loc: SourceLocation typescript/types/union-intersection/input.ts 4:4-4:42
 					}
 				]
+				loc: SourceLocation typescript/types/union-intersection/input.ts 4:0-4:43
 			}
+			loc: SourceLocation typescript/types/union-intersection/input.ts 4:0-4:43
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: ["ts"]
+	path: UIDPath<typescript/types/union-intersection/input.ts>
+	loc: SourceLocation typescript/types/union-intersection/input.ts 1:0-5:0
 }
 ```
 

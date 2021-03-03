@@ -11,24 +11,39 @@ JSRoot {
 	body: [
 		JSExpressionStatement {
 			expression: JSAssignmentExpression {
-				left: JSAssignmentIdentifier {name: "x", loc: SourceLocation core/uncategorised/28/input.js 1:0-1:1 (x)}
 				operator: "="
+				left: JSAssignmentIdentifier {
+					name: "x"
+					loc: SourceLocation core/uncategorised/28/input.js 1:0-1:1 (x)
+				}
 				right: JSObjectExpression {
 					properties: [
 						JSObjectProperty {
 							key: JSStaticPropertyKey {
-								value: JSIdentifier {name: "x", loc: SourceLocation core/uncategorised/28/input.js 1:6-1:7 (x)}
+								value: JSIdentifier {
+									name: "x"
+									loc: SourceLocation core/uncategorised/28/input.js 1:6-1:7 (x)
+								}
 								loc: SourceLocation core/uncategorised/28/input.js 1:6-1:7
 							}
-							value: JSNumericLiteral {value: 1, loc: SourceLocation core/uncategorised/28/input.js 1:9-1:10}
+							value: JSNumericLiteral {
+								value: 1
+								loc: SourceLocation core/uncategorised/28/input.js 1:9-1:10
+							}
 							loc: SourceLocation core/uncategorised/28/input.js 1:6-1:10
 						}
 						JSObjectProperty {
 							key: JSStaticPropertyKey {
-								value: JSIdentifier {name: "x", loc: SourceLocation core/uncategorised/28/input.js 1:12-1:13 (x)}
+								value: JSIdentifier {
+									name: "x"
+									loc: SourceLocation core/uncategorised/28/input.js 1:12-1:13 (x)
+								}
 								loc: SourceLocation core/uncategorised/28/input.js 1:12-1:13
 							}
-							value: JSNumericLiteral {value: 2, loc: SourceLocation core/uncategorised/28/input.js 1:15-1:16}
+							value: JSNumericLiteral {
+								value: 2
+								loc: SourceLocation core/uncategorised/28/input.js 1:15-1:16
+							}
 							loc: SourceLocation core/uncategorised/28/input.js 1:12-1:16
 						}
 					]
@@ -44,9 +59,9 @@ JSRoot {
 	diagnostics: []
 	directives: []
 	hasHoistedVars: false
-	path: UIDPath<core/uncategorised/28/input.js>
 	sourceType: "script"
 	syntax: []
+	path: UIDPath<core/uncategorised/28/input.js>
 	loc: SourceLocation core/uncategorised/28/input.js 1:0-1:18
 }
 ```

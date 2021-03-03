@@ -11,12 +11,24 @@ JSRoot {
 	body: [
 		JSExpressionStatement {
 			expression: JSConditionalExpression {
-				alternate: JSNumericLiteral {value: 2, loc: SourceLocation core/uncategorised/198/input.js 1:13-1:14}
-				consequent: JSNumericLiteral {value: 1, loc: SourceLocation core/uncategorised/198/input.js 1:9-1:10}
+				alternate: JSNumericLiteral {
+					value: 2
+					loc: SourceLocation core/uncategorised/198/input.js 1:13-1:14
+				}
+				consequent: JSNumericLiteral {
+					value: 1
+					loc: SourceLocation core/uncategorised/198/input.js 1:9-1:10
+				}
 				test: JSLogicalExpression {
-					left: JSReferenceIdentifier {name: "x", loc: SourceLocation core/uncategorised/198/input.js 1:0-1:1 (x)}
 					operator: "&&"
-					right: JSReferenceIdentifier {name: "y", loc: SourceLocation core/uncategorised/198/input.js 1:5-1:6 (y)}
+					left: JSReferenceIdentifier {
+						name: "x"
+						loc: SourceLocation core/uncategorised/198/input.js 1:0-1:1 (x)
+					}
+					right: JSReferenceIdentifier {
+						name: "y"
+						loc: SourceLocation core/uncategorised/198/input.js 1:5-1:6 (y)
+					}
 					loc: SourceLocation core/uncategorised/198/input.js 1:0-1:6
 				}
 				loc: SourceLocation core/uncategorised/198/input.js 1:0-1:14
@@ -29,9 +41,9 @@ JSRoot {
 	diagnostics: []
 	directives: []
 	hasHoistedVars: false
-	path: UIDPath<core/uncategorised/198/input.js>
 	sourceType: "script"
 	syntax: []
+	path: UIDPath<core/uncategorised/198/input.js>
 	loc: SourceLocation core/uncategorised/198/input.js 1:0-1:14
 }
 ```

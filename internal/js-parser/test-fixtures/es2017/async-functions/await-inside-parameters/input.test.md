@@ -8,81 +8,70 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2017/async-functions/await-inside-parameters/input.js 1:0-1:33
-	path: UIDPath<es2017/async-functions/await-inside-parameters/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "await is not allowed in async function parameters"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:27
-				path: UIDPath<es2017/async-functions/await-inside-parameters/input.js>
-				start: Position 1:28
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "fn"
 				loc: SourceLocation es2017/async-functions/await-inside-parameters/input.js 1:15-1:17 (fn)
 			}
-			loc: SourceLocation es2017/async-functions/await-inside-parameters/input.js 1:0-1:33
 			body: JSBlockStatement {
-				body: Array []
-				directives: Array []
+				body: []
+				directives: []
 				loc: SourceLocation es2017/async-functions/await-inside-parameters/input.js 1:31-1:33
 			}
 			head: JSFunctionHead {
 				async: true
 				generator: false
 				hasHoistedVars: false
-				rest: undefined
-				returnType: undefined
-				thisType: undefined
-				typeParameters: undefined
-				loc: SourceLocation es2017/async-functions/await-inside-parameters/input.js 1:17-1:30
-				params: Array [
+				params: [
 					JSBindingAssignmentPattern {
-						loc: SourceLocation es2017/async-functions/await-inside-parameters/input.js 1:18-1:29
-						right: JSAwaitExpression {
-							loc: SourceLocation es2017/async-functions/await-inside-parameters/input.js 1:22-1:29
-							argument: JSNumericLiteral {
-								value: 2
-								format: undefined
-								loc: SourceLocation es2017/async-functions/await-inside-parameters/input.js 1:28-1:29
-							}
-						}
 						left: JSBindingIdentifier {
 							name: "x"
-							loc: SourceLocation es2017/async-functions/await-inside-parameters/input.js 1:18-1:19 (x)
 							meta: JSPatternMeta {
-								optional: undefined
-								typeAnnotation: undefined
 								loc: SourceLocation es2017/async-functions/await-inside-parameters/input.js 1:18-1:19
 							}
+							loc: SourceLocation es2017/async-functions/await-inside-parameters/input.js 1:18-1:19 (x)
 						}
+						right: JSAwaitExpression {
+							argument: JSNumericLiteral {
+								value: 2
+								loc: SourceLocation es2017/async-functions/await-inside-parameters/input.js 1:28-1:29
+							}
+							loc: SourceLocation es2017/async-functions/await-inside-parameters/input.js 1:22-1:29
+						}
+						loc: SourceLocation es2017/async-functions/await-inside-parameters/input.js 1:18-1:29
 					}
 				]
+				loc: SourceLocation es2017/async-functions/await-inside-parameters/input.js 1:17-1:30
+			}
+			loc: SourceLocation es2017/async-functions/await-inside-parameters/input.js 1:0-1:33
+		}
+	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "await is not allowed in async function parameters"}
+			}
+			location: {
+				language: "js"
+				path: UIDPath<es2017/async-functions/await-inside-parameters/input.js>
+				end: Position 1:27
+				start: Position 1:28
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2017/async-functions/await-inside-parameters/input.js>
+	loc: SourceLocation es2017/async-functions/await-inside-parameters/input.js 1:0-1:33
 }
 ```
 
@@ -95,7 +84,7 @@ JSRoot {
   ✖ await is not allowed in async function parameters
 
     async function fn(x = await 2) {}
-                                ^
+                                <error><emphasis>^</emphasis></error>
 
 
 ```

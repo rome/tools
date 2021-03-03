@@ -8,50 +8,45 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2015/uncategorised/64/input.js 1:0-1:14
-	path: UIDPath<es2015/uncategorised/64/input.js>
-	body: Array [
+	body: [
 		JSVariableDeclarationStatement {
-			loc: SourceLocation es2015/uncategorised/64/input.js 1:0-1:14
 			declaration: JSVariableDeclaration {
 				kind: "const"
-				loc: SourceLocation es2015/uncategorised/64/input.js 1:0-1:14
-				declarations: Array [
+				declarations: [
 					JSVariableDeclarator {
 						id: JSBindingArrayPattern {
-							rest: undefined
-							loc: SourceLocation es2015/uncategorised/64/input.js 1:6-1:9
-							elements: Array [
+							elements: [
 								JSBindingIdentifier {
 									name: "a"
-									loc: SourceLocation es2015/uncategorised/64/input.js 1:7-1:8 (a)
 									meta: JSPatternMeta {
-										optional: undefined
-										typeAnnotation: undefined
 										loc: SourceLocation es2015/uncategorised/64/input.js 1:7-1:8
 									}
+									loc: SourceLocation es2015/uncategorised/64/input.js 1:7-1:8 (a)
 								}
 							]
+							loc: SourceLocation es2015/uncategorised/64/input.js 1:6-1:9
 						}
-						loc: SourceLocation es2015/uncategorised/64/input.js 1:6-1:14
 						init: JSArrayExpression {
-							elements: Array []
+							elements: []
 							loc: SourceLocation es2015/uncategorised/64/input.js 1:12-1:14
 						}
+						loc: SourceLocation es2015/uncategorised/64/input.js 1:6-1:14
 					}
 				]
+				loc: SourceLocation es2015/uncategorised/64/input.js 1:0-1:14
 			}
+			loc: SourceLocation es2015/uncategorised/64/input.js 1:0-1:14
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2015/uncategorised/64/input.js>
+	loc: SourceLocation es2015/uncategorised/64/input.js 1:0-1:14
 }
 ```
 

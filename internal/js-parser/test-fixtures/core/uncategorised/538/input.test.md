@@ -8,29 +8,27 @@
 
 ```javascript
 JSRoot {
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation core/uncategorised/538/input.js 1:0-2:1
-	path: UIDPath<core/uncategorised/538/input.js>
-	body: Array [
+	body: [
 		JSEmptyStatement {
-			leadingComments: Array ["0"]
+			leadingComments: ["0"]
 			loc: SourceLocation core/uncategorised/538/input.js 2:0-2:1
 		}
 	]
-	comments: Array [
+	comments: [
 		CommentLine {
 			id: "0"
 			value: ""
 			loc: SourceLocation core/uncategorised/538/input.js 1:0-1:4
 		}
 	]
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<core/uncategorised/538/input.js>
+	loc: SourceLocation core/uncategorised/538/input.js 1:0-2:1
 }
 ```
 

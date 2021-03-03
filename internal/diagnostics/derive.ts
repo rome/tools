@@ -54,7 +54,7 @@ export function getActionAdviceFromDiagnostic(
 }
 
 function filterActionAdvice(
-	advice: undefined | DiagnosticAdvice,
+	advice: undefined | DiagnosticAdvice[],
 ): DiagnosticAdviceAction[] {
 	if (advice === undefined) {
 		return [];
@@ -92,7 +92,7 @@ export function decorateErrorWithDiagnostics(
 	let diagnostics = getDiagnosticsFromError(error);
 	if (diagnostics !== undefined) {
 		// This is a diagnostics error so add on our intended advice (if any)
-		let addAdvice: DiagnosticAdvice = [...(opts.description.advice || [])];
+		let addAdvice: DiagnosticAdvice[] = [...(opts.description.advice || [])];
 		if (opts.description.message !== undefined) {
 			addAdvice.unshift({
 				type: "log",
@@ -236,8 +236,8 @@ export type DeriveErrorStackAdviceOptions = {
 export function getErrorStackAdvice(
 	error: Partial<StructuredError>,
 	{title, importantPaths}: DeriveErrorStackAdviceOptions = {},
-): DiagnosticAdvice {
-	const advice: DiagnosticAdvice = [];
+): DiagnosticAdvice[] {
+	const advice: DiagnosticAdvice[] = [];
 	const {frames = [], stack} = error;
 
 	if (frames.length === 0 && stack !== undefined) {

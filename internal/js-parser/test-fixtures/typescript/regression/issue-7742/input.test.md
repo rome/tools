@@ -8,90 +8,76 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	loc: SourceLocation typescript/regression/issue-7742/input.tsx 1:0-4:0
-	path: UIDPath<typescript/regression/issue-7742/input.tsx>
-	syntax: Array [
-		"ts"
-		"jsx"
-	]
-	body: Array [
+	body: [
 		TSInterfaceDeclaration {
 			id: JSBindingIdentifier {
 				name: "Foo"
 				loc: SourceLocation typescript/regression/issue-7742/input.tsx 1:10-1:13 (Foo)
 			}
-			extends: undefined
-			loc: SourceLocation typescript/regression/issue-7742/input.tsx 1:0-3:1
-			typeParameters: TSTypeParameterDeclaration {
-				loc: SourceLocation typescript/regression/issue-7742/input.tsx 1:13-1:16
-				params: Array [
-					TSTypeParameter {
-						name: "G"
-						constraint: undefined
-						default: undefined
-						loc: SourceLocation typescript/regression/issue-7742/input.tsx 1:14-1:15
-					}
-				]
-			}
 			body: TSInterfaceBody {
-				loc: SourceLocation typescript/regression/issue-7742/input.tsx 1:17-3:1
-				body: Array [
+				body: [
 					TSCallSignatureDeclaration {
-						loc: SourceLocation typescript/regression/issue-7742/input.tsx 2:4-2:19
-						typeAnnotation: TSTypeReference {
-							typeParameters: undefined
-							loc: SourceLocation typescript/regression/issue-7742/input.tsx 2:17-2:18
-							typeName: JSReferenceIdentifier {
-								name: "T"
-								loc: SourceLocation typescript/regression/issue-7742/input.tsx 2:17-2:18 (T)
-							}
-						}
 						meta: TSSignatureDeclarationMeta {
-							rest: undefined
-							loc: SourceLocation typescript/regression/issue-7742/input.tsx 2:4-2:18
-							typeParameters: TSTypeParameterDeclaration {
-								loc: SourceLocation typescript/regression/issue-7742/input.tsx 2:4-2:7
-								params: Array [
-									TSTypeParameter {
-										name: "T"
-										constraint: undefined
-										default: undefined
-										loc: SourceLocation typescript/regression/issue-7742/input.tsx 2:5-2:6
-									}
-								]
-							}
-							parameters: Array [
+							parameters: [
 								JSBindingIdentifier {
 									name: "bar"
-									loc: SourceLocation typescript/regression/issue-7742/input.tsx 2:8-2:11 (bar)
 									meta: JSPatternMeta {
-										optional: undefined
-										loc: SourceLocation typescript/regression/issue-7742/input.tsx 2:8-2:14
 										typeAnnotation: TSTypeReference {
-											typeParameters: undefined
-											loc: SourceLocation typescript/regression/issue-7742/input.tsx 2:13-2:14
 											typeName: JSReferenceIdentifier {
 												name: "G"
 												loc: SourceLocation typescript/regression/issue-7742/input.tsx 2:13-2:14 (G)
 											}
+											loc: SourceLocation typescript/regression/issue-7742/input.tsx 2:13-2:14
 										}
+										loc: SourceLocation typescript/regression/issue-7742/input.tsx 2:8-2:14
 									}
+									loc: SourceLocation typescript/regression/issue-7742/input.tsx 2:8-2:11 (bar)
 								}
 							]
+							typeParameters: TSTypeParameterDeclaration {
+								params: [
+									TSTypeParameter {
+										name: "T"
+										loc: SourceLocation typescript/regression/issue-7742/input.tsx 2:5-2:6
+									}
+								]
+								loc: SourceLocation typescript/regression/issue-7742/input.tsx 2:4-2:7
+							}
+							loc: SourceLocation typescript/regression/issue-7742/input.tsx 2:4-2:18
 						}
+						typeAnnotation: TSTypeReference {
+							typeName: JSReferenceIdentifier {
+								name: "T"
+								loc: SourceLocation typescript/regression/issue-7742/input.tsx 2:17-2:18 (T)
+							}
+							loc: SourceLocation typescript/regression/issue-7742/input.tsx 2:17-2:18
+						}
+						loc: SourceLocation typescript/regression/issue-7742/input.tsx 2:4-2:19
 					}
 				]
+				loc: SourceLocation typescript/regression/issue-7742/input.tsx 1:17-3:1
 			}
+			typeParameters: TSTypeParameterDeclaration {
+				params: [
+					TSTypeParameter {
+						name: "G"
+						loc: SourceLocation typescript/regression/issue-7742/input.tsx 1:14-1:15
+					}
+				]
+				loc: SourceLocation typescript/regression/issue-7742/input.tsx 1:13-1:16
+			}
+			loc: SourceLocation typescript/regression/issue-7742/input.tsx 1:0-3:1
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: ["ts", "jsx"]
+	path: UIDPath<typescript/regression/issue-7742/input.tsx>
+	loc: SourceLocation typescript/regression/issue-7742/input.tsx 1:0-4:0
 }
 ```
 

@@ -8,34 +8,28 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2015/uncategorised/140/input.js 1:0-1:21
-	path: UIDPath<es2015/uncategorised/140/input.js>
-	body: Array [
+	body: [
 		JSClassDeclaration {
 			id: JSBindingIdentifier {
 				name: "Semicolon"
 				loc: SourceLocation es2015/uncategorised/140/input.js 1:6-1:15 (Semicolon)
 			}
-			loc: SourceLocation es2015/uncategorised/140/input.js 1:0-1:21
 			meta: JSClassHead {
-				body: Array []
-				implements: undefined
-				superClass: undefined
-				superTypeParameters: undefined
-				typeParameters: undefined
+				body: []
 				loc: SourceLocation es2015/uncategorised/140/input.js 1:0-1:21
 			}
+			loc: SourceLocation es2015/uncategorised/140/input.js 1:0-1:21
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2015/uncategorised/140/input.js>
+	loc: SourceLocation es2015/uncategorised/140/input.js 1:0-1:21
 }
 ```
 

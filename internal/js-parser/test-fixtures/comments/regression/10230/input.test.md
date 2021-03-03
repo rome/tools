@@ -10,18 +10,28 @@
 JSRoot {
 	body: [
 		JSExpressionStatement {
+			trailingComments: ["1"]
 			expression: JSAssignmentExpression {
-				left: JSAssignmentIdentifier {name: "A", loc: SourceLocation comments/regression/10230/input.js 1:0-1:1 (A)}
 				operator: "="
+				left: JSAssignmentIdentifier {
+					name: "A"
+					loc: SourceLocation comments/regression/10230/input.js 1:0-1:1 (A)
+				}
 				right: JSObjectExpression {
 					properties: [
 						JSObjectProperty {
+							trailingComments: ["0"]
 							key: JSStaticPropertyKey {
-								value: JSIdentifier {name: "a", loc: SourceLocation comments/regression/10230/input.js 2:2-2:3 (a)}
+								value: JSIdentifier {
+									name: "a"
+									loc: SourceLocation comments/regression/10230/input.js 2:2-2:3 (a)
+								}
 								loc: SourceLocation comments/regression/10230/input.js 2:2-2:3
 							}
-							value: JSNumericLiteral {value: 42, loc: SourceLocation comments/regression/10230/input.js 2:5-2:7}
-							trailingComments: ["0"]
+							value: JSNumericLiteral {
+								value: 42
+								loc: SourceLocation comments/regression/10230/input.js 2:5-2:7
+							}
 							loc: SourceLocation comments/regression/10230/input.js 2:2-2:7
 						}
 					]
@@ -29,26 +39,36 @@ JSRoot {
 				}
 				loc: SourceLocation comments/regression/10230/input.js 1:0-4:1
 			}
-			trailingComments: ["1"]
 			loc: SourceLocation comments/regression/10230/input.js 1:0-4:1
 		}
 		JSExpressionStatement {
-			expression: JSReferenceIdentifier {name: "B", loc: SourceLocation comments/regression/10230/input.js 7:0-7:1 (B)}
 			leadingComments: ["1"]
+			expression: JSReferenceIdentifier {
+				name: "B"
+				loc: SourceLocation comments/regression/10230/input.js 7:0-7:1 (B)
+			}
 			loc: SourceLocation comments/regression/10230/input.js 7:0-7:1
 		}
 	]
 	comments: [
-		CommentLine {id: "0", value: " One", loc: SourceLocation comments/regression/10230/input.js 3:2-3:8}
-		CommentLine {id: "1", value: " Two", loc: SourceLocation comments/regression/10230/input.js 6:0-6:6}
+		CommentLine {
+			id: "0"
+			value: " One"
+			loc: SourceLocation comments/regression/10230/input.js 3:2-3:8
+		}
+		CommentLine {
+			id: "1"
+			value: " Two"
+			loc: SourceLocation comments/regression/10230/input.js 6:0-6:6
+		}
 	]
 	corrupt: false
 	diagnostics: []
 	directives: []
 	hasHoistedVars: false
-	path: UIDPath<comments/regression/10230/input.js>
 	sourceType: "script"
 	syntax: []
+	path: UIDPath<comments/regression/10230/input.js>
 	loc: SourceLocation comments/regression/10230/input.js 1:0-8:0
 }
 ```

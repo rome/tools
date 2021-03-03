@@ -17,6 +17,7 @@ import {
 	ServerQueryResponse,
 	ServerQueryResponseBase,
 } from "../bridges/ServerBridge";
+import { DiagnosticsProcessorFilterOptions, DEFAULT_PROCESSOR_FILTER_FLAGS } from "@internal/diagnostics";
 
 export const DEFAULT_CLIENT_FLAGS: ClientFlags = {
 	clientName: "unknown",
@@ -27,8 +28,8 @@ export const DEFAULT_CLIENT_FLAGS: ClientFlags = {
 
 export const DEFAULT_CLIENT_REQUEST_FLAGS: ClientRequestFlags = {
 	...DEFAULT_PRINTER_FLAGS,
+	...DEFAULT_PROCESSOR_FILTER_FLAGS,
 	unsafeWrites: false,
-	showAllDiagnostics: false,
 	collectMarkers: false,
 	timing: false,
 	benchmark: false,
@@ -40,7 +41,7 @@ export const DEFAULT_CLIENT_REQUEST_FLAGS: ClientRequestFlags = {
 	resolverMocks: false,
 };
 
-export type ClientRequestFlags = DiagnosticsPrinterFlags & {
+export type ClientRequestFlags = DiagnosticsPrinterFlags & DiagnosticsProcessorFilterOptions & {
 	watch: boolean;
 	review: boolean;
 	unsafeWrites: boolean;

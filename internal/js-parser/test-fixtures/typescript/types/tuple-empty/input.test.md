@@ -8,44 +8,40 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	loc: SourceLocation typescript/types/tuple-empty/input.ts 1:0-2:0
-	path: UIDPath<typescript/types/tuple-empty/input.ts>
-	syntax: Array ["ts"]
-	body: Array [
+	body: [
 		JSVariableDeclarationStatement {
-			loc: SourceLocation typescript/types/tuple-empty/input.ts 1:0-1:10
 			declaration: JSVariableDeclaration {
 				kind: "let"
-				loc: SourceLocation typescript/types/tuple-empty/input.ts 1:0-1:10
-				declarations: Array [
+				declarations: [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "x"
-							loc: SourceLocation typescript/types/tuple-empty/input.ts 1:4-1:9
 							meta: JSPatternMeta {
-								definite: undefined
-								loc: SourceLocation typescript/types/tuple-empty/input.ts 1:4-1:9
 								typeAnnotation: TSTupleType {
-									elementTypes: Array []
+									elementTypes: []
 									loc: SourceLocation typescript/types/tuple-empty/input.ts 1:7-1:9
 								}
+								loc: SourceLocation typescript/types/tuple-empty/input.ts 1:4-1:9
 							}
+							loc: SourceLocation typescript/types/tuple-empty/input.ts 1:4-1:9
 						}
-						init: undefined
 						loc: SourceLocation typescript/types/tuple-empty/input.ts 1:4-1:9
 					}
 				]
+				loc: SourceLocation typescript/types/tuple-empty/input.ts 1:0-1:10
 			}
+			loc: SourceLocation typescript/types/tuple-empty/input.ts 1:0-1:10
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: ["ts"]
+	path: UIDPath<typescript/types/tuple-empty/input.ts>
+	loc: SourceLocation typescript/types/tuple-empty/input.ts 1:0-2:0
 }
 ```
 

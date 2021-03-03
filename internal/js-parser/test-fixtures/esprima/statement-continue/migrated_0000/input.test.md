@@ -8,36 +8,33 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation esprima/statement-continue/migrated_0000/input.js 1:0-2:0
-	path: UIDPath<esprima/statement-continue/migrated_0000/input.js>
-	body: Array [
+	body: [
 		JSWhileStatement {
-			loc: SourceLocation esprima/statement-continue/migrated_0000/input.js 1:0-1:26
+			body: JSBlockStatement {
+				body: [
+					JSContinueStatement {
+						loc: SourceLocation esprima/statement-continue/migrated_0000/input.js 1:15-1:24
+					}
+				]
+				directives: []
+				loc: SourceLocation esprima/statement-continue/migrated_0000/input.js 1:13-1:26
+			}
 			test: JSBooleanLiteral {
 				value: true
 				loc: SourceLocation esprima/statement-continue/migrated_0000/input.js 1:7-1:11
 			}
-			body: JSBlockStatement {
-				directives: Array []
-				loc: SourceLocation esprima/statement-continue/migrated_0000/input.js 1:13-1:26
-				body: Array [
-					JSContinueStatement {
-						label: undefined
-						loc: SourceLocation esprima/statement-continue/migrated_0000/input.js 1:15-1:24
-					}
-				]
-			}
+			loc: SourceLocation esprima/statement-continue/migrated_0000/input.js 1:0-1:26
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<esprima/statement-continue/migrated_0000/input.js>
+	loc: SourceLocation esprima/statement-continue/migrated_0000/input.js 1:0-2:0
 }
 ```
 

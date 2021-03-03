@@ -8,56 +8,52 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	loc: SourceLocation typescript/interface/new-line-error/input.ts 1:0-3:0
-	path: UIDPath<typescript/interface/new-line-error/input.ts>
-	syntax: Array ["ts"]
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Expected a semicolon or a line terminator"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 2:1
-				path: UIDPath<typescript/interface/new-line-error/input.ts>
-				start: Position 2:2
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation typescript/interface/new-line-error/input.ts 1:0-1:9
 			expression: JSReferenceIdentifier {
 				name: "interface"
 				loc: SourceLocation typescript/interface/new-line-error/input.ts 1:0-1:9 (interface)
 			}
+			loc: SourceLocation typescript/interface/new-line-error/input.ts 1:0-1:9
 		}
 		JSExpressionStatement {
-			loc: SourceLocation typescript/interface/new-line-error/input.ts 2:0-2:1
 			expression: JSReferenceIdentifier {
 				name: "F"
 				loc: SourceLocation typescript/interface/new-line-error/input.ts 2:0-2:1 (F)
 			}
+			loc: SourceLocation typescript/interface/new-line-error/input.ts 2:0-2:1
 		}
 		JSBlockStatement {
-			body: Array []
-			directives: Array []
+			body: []
+			directives: []
 			loc: SourceLocation typescript/interface/new-line-error/input.ts 2:2-2:4
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "Expected a semicolon or a line terminator"}
+			}
+			location: {
+				language: "js"
+				path: UIDPath<typescript/interface/new-line-error/input.ts>
+				end: Position 2:1
+				start: Position 2:2
+			}
+		}
+	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: ["ts"]
+	path: UIDPath<typescript/interface/new-line-error/input.ts>
+	loc: SourceLocation typescript/interface/new-line-error/input.ts 1:0-3:0
 }
 ```
 
@@ -71,7 +67,7 @@ JSRoot {
 
     1 │ interface
   > 2 │ F {}
-      │   ^
+      │   <error><emphasis>^</emphasis></error>
 
 
 ```

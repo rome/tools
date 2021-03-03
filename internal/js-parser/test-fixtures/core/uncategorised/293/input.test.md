@@ -10,8 +10,15 @@
 JSRoot {
 	body: [
 		JSFunctionDeclaration {
-			id: JSBindingIdentifier {name: "hello", loc: SourceLocation core/uncategorised/293/input.js 1:9-1:14 (hello)}
-			body: JSBlockStatement {body: [], directives: [], loc: SourceLocation core/uncategorised/293/input.js 1:27-1:30}
+			id: JSBindingIdentifier {
+				name: "hello"
+				loc: SourceLocation core/uncategorised/293/input.js 1:9-1:14 (hello)
+			}
+			body: JSBlockStatement {
+				body: []
+				directives: []
+				loc: SourceLocation core/uncategorised/293/input.js 1:27-1:30
+			}
 			head: JSFunctionHead {
 				async: false
 				generator: false
@@ -19,13 +26,17 @@ JSRoot {
 				params: [
 					JSBindingIdentifier {
 						name: "a"
-						meta: JSPatternMeta {loc: SourceLocation core/uncategorised/293/input.js 1:15-1:16}
+						meta: JSPatternMeta {
+							loc: SourceLocation core/uncategorised/293/input.js 1:15-1:16
+						}
 						loc: SourceLocation core/uncategorised/293/input.js 1:15-1:16 (a)
 					}
 				]
 				rest: JSBindingIdentifier {
 					name: "rest"
-					meta: JSPatternMeta {loc: SourceLocation core/uncategorised/293/input.js 1:21-1:25}
+					meta: JSPatternMeta {
+						loc: SourceLocation core/uncategorised/293/input.js 1:21-1:25
+					}
 					loc: SourceLocation core/uncategorised/293/input.js 1:21-1:25 (rest)
 				}
 				loc: SourceLocation core/uncategorised/293/input.js 1:14-1:26
@@ -38,9 +49,9 @@ JSRoot {
 	diagnostics: []
 	directives: []
 	hasHoistedVars: false
-	path: UIDPath<core/uncategorised/293/input.js>
 	sourceType: "script"
 	syntax: []
+	path: UIDPath<core/uncategorised/293/input.js>
 	loc: SourceLocation core/uncategorised/293/input.js 1:0-1:30
 }
 ```

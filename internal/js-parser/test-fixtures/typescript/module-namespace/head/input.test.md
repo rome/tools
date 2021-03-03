@@ -8,78 +8,75 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	loc: SourceLocation typescript/module-namespace/head/input.ts 1:0-5:0
-	path: UIDPath<typescript/module-namespace/head/input.ts>
-	syntax: Array ["ts"]
-	body: Array [
+	body: [
 		TSModuleDeclaration {
 			id: JSBindingIdentifier {
 				name: "N"
 				loc: SourceLocation typescript/module-namespace/head/input.ts 1:10-1:11 (N)
 			}
-			loc: SourceLocation typescript/module-namespace/head/input.ts 1:0-1:14
 			body: TSModuleBlock {
-				body: Array []
+				body: []
 				loc: SourceLocation typescript/module-namespace/head/input.ts 1:12-1:14
 			}
+			loc: SourceLocation typescript/module-namespace/head/input.ts 1:0-1:14
 		}
 		TSModuleDeclaration {
 			id: JSBindingIdentifier {
 				name: "M"
 				loc: SourceLocation typescript/module-namespace/head/input.ts 2:10-2:11 (M)
 			}
-			loc: SourceLocation typescript/module-namespace/head/input.ts 2:0-2:18
 			body: TSModuleDeclaration {
 				id: JSBindingIdentifier {
 					name: "N"
 					loc: SourceLocation typescript/module-namespace/head/input.ts 2:12-2:13 (N)
 				}
-				loc: SourceLocation typescript/module-namespace/head/input.ts 2:12-2:18
 				body: TSModuleDeclaration {
 					id: JSBindingIdentifier {
 						name: "O"
 						loc: SourceLocation typescript/module-namespace/head/input.ts 2:14-2:15 (O)
 					}
-					loc: SourceLocation typescript/module-namespace/head/input.ts 2:14-2:18
 					body: TSModuleBlock {
-						body: Array []
+						body: []
 						loc: SourceLocation typescript/module-namespace/head/input.ts 2:16-2:18
 					}
+					loc: SourceLocation typescript/module-namespace/head/input.ts 2:14-2:18
 				}
+				loc: SourceLocation typescript/module-namespace/head/input.ts 2:12-2:18
 			}
+			loc: SourceLocation typescript/module-namespace/head/input.ts 2:0-2:18
 		}
 		TSModuleDeclaration {
 			id: JSBindingIdentifier {
 				name: "M"
 				loc: SourceLocation typescript/module-namespace/head/input.ts 3:7-3:8 (M)
 			}
-			loc: SourceLocation typescript/module-namespace/head/input.ts 3:0-3:11
 			body: TSModuleBlock {
-				body: Array []
+				body: []
 				loc: SourceLocation typescript/module-namespace/head/input.ts 3:9-3:11
 			}
+			loc: SourceLocation typescript/module-namespace/head/input.ts 3:0-3:11
 		}
 		TSModuleDeclaration {
 			id: JSStringLiteral {
 				value: "m"
 				loc: SourceLocation typescript/module-namespace/head/input.ts 4:7-4:10
 			}
-			global: undefined
-			loc: SourceLocation typescript/module-namespace/head/input.ts 4:0-4:13
 			body: TSModuleBlock {
-				body: Array []
+				body: []
 				loc: SourceLocation typescript/module-namespace/head/input.ts 4:11-4:13
 			}
+			loc: SourceLocation typescript/module-namespace/head/input.ts 4:0-4:13
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: ["ts"]
+	path: UIDPath<typescript/module-namespace/head/input.ts>
+	loc: SourceLocation typescript/module-namespace/head/input.ts 1:0-5:0
 }
 ```
 

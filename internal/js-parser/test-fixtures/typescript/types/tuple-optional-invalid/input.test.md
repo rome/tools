@@ -8,75 +8,71 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
+	body: [
+		JSVariableDeclarationStatement {
+			declaration: JSVariableDeclaration {
+				kind: "let"
+				declarations: [
+					JSVariableDeclarator {
+						id: JSBindingIdentifier {
+							name: "x"
+							meta: JSPatternMeta {
+								typeAnnotation: TSTupleType {
+									elementTypes: [
+										TSTupleElement {
+											optional: true
+											typeAnnotation: TSStringKeywordTypeAnnotation {
+												loc: SourceLocation typescript/types/tuple-optional-invalid/input.ts 1:8-1:14
+											}
+											loc: SourceLocation typescript/types/tuple-optional-invalid/input.ts 1:8-1:15
+										}
+										TSTupleElement {
+											optional: false
+											typeAnnotation: TSNumberKeywordTypeAnnotation {
+												loc: SourceLocation typescript/types/tuple-optional-invalid/input.ts 1:17-1:23
+											}
+											loc: SourceLocation typescript/types/tuple-optional-invalid/input.ts 1:17-1:23
+										}
+									]
+									loc: SourceLocation typescript/types/tuple-optional-invalid/input.ts 1:7-1:24
+								}
+								loc: SourceLocation typescript/types/tuple-optional-invalid/input.ts 1:4-1:24
+							}
+							loc: SourceLocation typescript/types/tuple-optional-invalid/input.ts 1:4-1:24
+						}
+						loc: SourceLocation typescript/types/tuple-optional-invalid/input.ts 1:4-1:24
+					}
+				]
+				loc: SourceLocation typescript/types/tuple-optional-invalid/input.ts 1:0-1:24
+			}
+			loc: SourceLocation typescript/types/tuple-optional-invalid/input.ts 1:0-1:24
+		}
+	]
+	comments: []
 	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	loc: SourceLocation typescript/types/tuple-optional-invalid/input.ts 1:0-2:0
-	path: UIDPath<typescript/types/tuple-optional-invalid/input.ts>
-	syntax: Array ["ts"]
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {
+				advice: []
+				category: ["parse"]
 				categoryValue: "js"
-				category: Array ["parse"]
 				message: RAW_MARKUP {value: "A required element cannot follow an optional element."}
 			}
-			location: Object {
-				integrity: undefined
+			location: {
 				language: "js"
-				sourceText: undefined
-				end: Position 1:23
 				path: UIDPath<typescript/types/tuple-optional-invalid/input.ts>
+				end: Position 1:23
 				start: Position 1:17
 			}
 		}
 	]
-	body: Array [
-		JSVariableDeclarationStatement {
-			loc: SourceLocation typescript/types/tuple-optional-invalid/input.ts 1:0-1:24
-			declaration: JSVariableDeclaration {
-				kind: "let"
-				loc: SourceLocation typescript/types/tuple-optional-invalid/input.ts 1:0-1:24
-				declarations: Array [
-					JSVariableDeclarator {
-						id: JSBindingIdentifier {
-							name: "x"
-							loc: SourceLocation typescript/types/tuple-optional-invalid/input.ts 1:4-1:24
-							meta: JSPatternMeta {
-								definite: undefined
-								loc: SourceLocation typescript/types/tuple-optional-invalid/input.ts 1:4-1:24
-								typeAnnotation: TSTupleType {
-									loc: SourceLocation typescript/types/tuple-optional-invalid/input.ts 1:7-1:24
-									elementTypes: Array [
-										TSTupleElement {
-											name: undefined
-											optional: true
-											loc: SourceLocation typescript/types/tuple-optional-invalid/input.ts 1:8-1:15
-											typeAnnotation: TSStringKeywordTypeAnnotation {loc: SourceLocation typescript/types/tuple-optional-invalid/input.ts 1:8-1:14}
-										}
-										TSTupleElement {
-											name: undefined
-											optional: false
-											loc: SourceLocation typescript/types/tuple-optional-invalid/input.ts 1:17-1:23
-											typeAnnotation: TSNumberKeywordTypeAnnotation {loc: SourceLocation typescript/types/tuple-optional-invalid/input.ts 1:17-1:23}
-										}
-									]
-								}
-							}
-						}
-						init: undefined
-						loc: SourceLocation typescript/types/tuple-optional-invalid/input.ts 1:4-1:24
-					}
-				]
-			}
-		}
-	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: ["ts"]
+	path: UIDPath<typescript/types/tuple-optional-invalid/input.ts>
+	loc: SourceLocation typescript/types/tuple-optional-invalid/input.ts 1:0-2:0
 }
 ```
 
@@ -89,7 +85,9 @@ JSRoot {
   ✖ A required element cannot follow an optional element.
 
     let x: [string?, number]
-                     ^^^^^^
+                     <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
+    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
+    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
 
 
 ```

@@ -11,18 +11,21 @@ JSRoot {
 	body: [
 		JSExpressionStatement {
 			expression: JSAssignmentExpression {
+				operator: "="
 				left: JSMemberExpression {
 					object: JSReferenceIdentifier {
 						name: "module"
 						loc: SourceLocation comments/basic/switch-no-default-comment-in-nested-functions/input.js 1:0-1:6 (module)
 					}
 					property: JSStaticMemberProperty {
-						value: JSIdentifier {name: "exports", loc: SourceLocation comments/basic/switch-no-default-comment-in-nested-functions/input.js 1:7-1:14 (exports)}
+						value: JSIdentifier {
+							name: "exports"
+							loc: SourceLocation comments/basic/switch-no-default-comment-in-nested-functions/input.js 1:7-1:14 (exports)
+						}
 						loc: SourceLocation comments/basic/switch-no-default-comment-in-nested-functions/input.js 1:7-1:14 (exports)
 					}
 					loc: SourceLocation comments/basic/switch-no-default-comment-in-nested-functions/input.js 1:0-1:14
 				}
-				operator: "="
 				right: JSFunctionExpression {
 					body: JSBlockStatement {
 						body: [
@@ -57,6 +60,7 @@ JSRoot {
 																		}
 																		property: JSComputedMemberProperty {
 																			value: JSBinaryExpression {
+																				operator: "-"
 																				left: JSMemberExpression {
 																					object: JSMemberExpression {
 																						object: JSReferenceIdentifier {
@@ -73,13 +77,18 @@ JSRoot {
 																						loc: SourceLocation comments/basic/switch-no-default-comment-in-nested-functions/input.js 6:51-6:67
 																					}
 																					property: JSStaticMemberProperty {
-																						value: JSIdentifier {name: "length", loc: SourceLocation comments/basic/switch-no-default-comment-in-nested-functions/input.js 6:68-6:74 (length)}
+																						value: JSIdentifier {
+																							name: "length"
+																							loc: SourceLocation comments/basic/switch-no-default-comment-in-nested-functions/input.js 6:68-6:74 (length)
+																						}
 																						loc: SourceLocation comments/basic/switch-no-default-comment-in-nested-functions/input.js 6:68-6:74 (length)
 																					}
 																					loc: SourceLocation comments/basic/switch-no-default-comment-in-nested-functions/input.js 6:51-6:74
 																				}
-																				operator: "-"
-																				right: JSNumericLiteral {value: 1, loc: SourceLocation comments/basic/switch-no-default-comment-in-nested-functions/input.js 6:77-6:78}
+																				right: JSNumericLiteral {
+																					value: 1
+																					loc: SourceLocation comments/basic/switch-no-default-comment-in-nested-functions/input.js 6:77-6:78
+																				}
 																				loc: SourceLocation comments/basic/switch-no-default-comment-in-nested-functions/input.js 6:51-6:78
 																			}
 																			loc: SourceLocation comments/basic/switch-no-default-comment-in-nested-functions/input.js 6:50-6:79
@@ -96,11 +105,11 @@ JSRoot {
 															loc: SourceLocation comments/basic/switch-no-default-comment-in-nested-functions/input.js 6:16-6:81
 														}
 													]
+													trailingComments: ["0"]
 													test: JSStringLiteral {
 														value: "SequenceExpression"
 														loc: SourceLocation comments/basic/switch-no-default-comment-in-nested-functions/input.js 5:17-5:37
 													}
-													trailingComments: ["0"]
 													loc: SourceLocation comments/basic/switch-no-default-comment-in-nested-functions/input.js 5:12-6:81
 												}
 											]
@@ -110,7 +119,10 @@ JSRoot {
 													loc: SourceLocation comments/basic/switch-no-default-comment-in-nested-functions/input.js 4:16-4:20 (node)
 												}
 												property: JSStaticMemberProperty {
-													value: JSIdentifier {name: "type", loc: SourceLocation comments/basic/switch-no-default-comment-in-nested-functions/input.js 4:21-4:25 (type)}
+													value: JSIdentifier {
+														name: "type"
+														loc: SourceLocation comments/basic/switch-no-default-comment-in-nested-functions/input.js 4:21-4:25 (type)
+													}
 													loc: SourceLocation comments/basic/switch-no-default-comment-in-nested-functions/input.js 4:21-4:25 (type)
 												}
 												loc: SourceLocation comments/basic/switch-no-default-comment-in-nested-functions/input.js 4:16-4:25
@@ -118,7 +130,10 @@ JSRoot {
 											loc: SourceLocation comments/basic/switch-no-default-comment-in-nested-functions/input.js 4:8-8:9
 										}
 										JSReturnStatement {
-											argument: JSBooleanLiteral {value: false, loc: SourceLocation comments/basic/switch-no-default-comment-in-nested-functions/input.js 10:15-10:20}
+											argument: JSBooleanLiteral {
+												value: false
+												loc: SourceLocation comments/basic/switch-no-default-comment-in-nested-functions/input.js 10:15-10:20
+											}
 											loc: SourceLocation comments/basic/switch-no-default-comment-in-nested-functions/input.js 10:8-10:21
 										}
 									]
@@ -132,7 +147,9 @@ JSRoot {
 									params: [
 										JSBindingIdentifier {
 											name: "node"
-											meta: JSPatternMeta {loc: SourceLocation comments/basic/switch-no-default-comment-in-nested-functions/input.js 3:24-3:28}
+											meta: JSPatternMeta {
+												loc: SourceLocation comments/basic/switch-no-default-comment-in-nested-functions/input.js 3:24-3:28
+											}
 											loc: SourceLocation comments/basic/switch-no-default-comment-in-nested-functions/input.js 3:24-3:28 (node)
 										}
 									]
@@ -151,7 +168,9 @@ JSRoot {
 						params: [
 							JSBindingIdentifier {
 								name: "context"
-								meta: JSPatternMeta {loc: SourceLocation comments/basic/switch-no-default-comment-in-nested-functions/input.js 1:26-1:33}
+								meta: JSPatternMeta {
+									loc: SourceLocation comments/basic/switch-no-default-comment-in-nested-functions/input.js 1:26-1:33
+								}
 								loc: SourceLocation comments/basic/switch-no-default-comment-in-nested-functions/input.js 1:26-1:33 (context)
 							}
 						]
@@ -165,15 +184,19 @@ JSRoot {
 		}
 	]
 	comments: [
-		CommentLine {id: "0", value: " no default", loc: SourceLocation comments/basic/switch-no-default-comment-in-nested-functions/input.js 7:12-7:25}
+		CommentLine {
+			id: "0"
+			value: " no default"
+			loc: SourceLocation comments/basic/switch-no-default-comment-in-nested-functions/input.js 7:12-7:25
+		}
 	]
 	corrupt: false
 	diagnostics: []
 	directives: []
 	hasHoistedVars: false
-	path: UIDPath<comments/basic/switch-no-default-comment-in-nested-functions/input.js>
 	sourceType: "script"
 	syntax: []
+	path: UIDPath<comments/basic/switch-no-default-comment-in-nested-functions/input.js>
 	loc: SourceLocation comments/basic/switch-no-default-comment-in-nested-functions/input.js 1:0-14:0
 }
 ```

@@ -8,59 +8,53 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
+	body: [
+		JSExpressionStatement {
+			expression: JSBinaryExpression {
+				operator: "**"
+				left: JSUnaryExpression {
+					operator: "-"
+					prefix: true
+					argument: JSNumericLiteral {
+						value: 5
+						loc: SourceLocation es2016/exponentiation-operator/10/input.js 1:1-1:2
+					}
+					loc: SourceLocation es2016/exponentiation-operator/10/input.js 1:0-1:2
+				}
+				right: JSNumericLiteral {
+					value: 6
+					loc: SourceLocation es2016/exponentiation-operator/10/input.js 1:6-1:7
+				}
+				loc: SourceLocation es2016/exponentiation-operator/10/input.js 1:0-1:7
+			}
+			loc: SourceLocation es2016/exponentiation-operator/10/input.js 1:0-1:8
+		}
+	]
+	comments: []
 	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2016/exponentiation-operator/10/input.js 1:0-2:0
-	path: UIDPath<es2016/exponentiation-operator/10/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {
+				advice: []
+				category: ["parse"]
 				categoryValue: "js"
-				category: Array ["parse"]
 				message: RAW_MARKUP {value: "Illegal expression. Wrap left hand side or entire exponentiation in parentheses."}
 			}
-			location: Object {
-				integrity: undefined
+			location: {
 				language: "js"
-				sourceText: undefined
-				end: Position 1:2
 				path: UIDPath<es2016/exponentiation-operator/10/input.js>
+				end: Position 1:2
 				start: Position 1:1
 			}
 		}
 	]
-	body: Array [
-		JSExpressionStatement {
-			loc: SourceLocation es2016/exponentiation-operator/10/input.js 1:0-1:8
-			expression: JSBinaryExpression {
-				operator: "**"
-				loc: SourceLocation es2016/exponentiation-operator/10/input.js 1:0-1:7
-				right: JSNumericLiteral {
-					value: 6
-					format: undefined
-					loc: SourceLocation es2016/exponentiation-operator/10/input.js 1:6-1:7
-				}
-				left: JSUnaryExpression {
-					operator: "-"
-					prefix: true
-					loc: SourceLocation es2016/exponentiation-operator/10/input.js 1:0-1:2
-					argument: JSNumericLiteral {
-						value: 5
-						format: undefined
-						loc: SourceLocation es2016/exponentiation-operator/10/input.js 1:1-1:2
-					}
-				}
-			}
-		}
-	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2016/exponentiation-operator/10/input.js>
+	loc: SourceLocation es2016/exponentiation-operator/10/input.js 1:0-2:0
 }
 ```
 
@@ -73,7 +67,7 @@ JSRoot {
   ✖ Illegal expression. Wrap left hand side or entire exponentiation in parentheses.
 
     -5 ** 6;
-     ^
+     <error><emphasis>^</emphasis></error>
 
 
 ```

@@ -8,140 +8,122 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: true
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2015/for-in/nonstrict-initializer/input.js 1:0-7:0
-	path: UIDPath<es2015/for-in/nonstrict-initializer/input.js>
-	body: Array [
+	body: [
 		JSVariableDeclarationStatement {
-			loc: SourceLocation es2015/for-in/nonstrict-initializer/input.js 1:2-1:18
 			declaration: JSVariableDeclaration {
 				kind: "var"
-				loc: SourceLocation es2015/for-in/nonstrict-initializer/input.js 1:2-1:18
-				declarations: Array [
+				declarations: [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "effects"
 							loc: SourceLocation es2015/for-in/nonstrict-initializer/input.js 1:6-1:13 (effects)
 						}
-						loc: SourceLocation es2015/for-in/nonstrict-initializer/input.js 1:6-1:17
 						init: JSNumericLiteral {
 							value: 0
-							format: undefined
 							loc: SourceLocation es2015/for-in/nonstrict-initializer/input.js 1:16-1:17
 						}
+						loc: SourceLocation es2015/for-in/nonstrict-initializer/input.js 1:6-1:17
 					}
 				]
+				loc: SourceLocation es2015/for-in/nonstrict-initializer/input.js 1:2-1:18
 			}
+			loc: SourceLocation es2015/for-in/nonstrict-initializer/input.js 1:2-1:18
 		}
 		JSVariableDeclarationStatement {
-			loc: SourceLocation es2015/for-in/nonstrict-initializer/input.js 2:2-2:21
 			declaration: JSVariableDeclaration {
 				kind: "var"
-				loc: SourceLocation es2015/for-in/nonstrict-initializer/input.js 2:2-2:21
-				declarations: Array [
+				declarations: [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "iterations"
 							loc: SourceLocation es2015/for-in/nonstrict-initializer/input.js 2:6-2:16 (iterations)
 						}
-						loc: SourceLocation es2015/for-in/nonstrict-initializer/input.js 2:6-2:20
 						init: JSNumericLiteral {
 							value: 0
-							format: undefined
 							loc: SourceLocation es2015/for-in/nonstrict-initializer/input.js 2:19-2:20
 						}
+						loc: SourceLocation es2015/for-in/nonstrict-initializer/input.js 2:6-2:20
 					}
 				]
+				loc: SourceLocation es2015/for-in/nonstrict-initializer/input.js 2:2-2:21
 			}
+			loc: SourceLocation es2015/for-in/nonstrict-initializer/input.js 2:2-2:21
 		}
 		JSVariableDeclarationStatement {
-			loc: SourceLocation es2015/for-in/nonstrict-initializer/input.js 3:2-3:13
 			declaration: JSVariableDeclaration {
 				kind: "var"
-				loc: SourceLocation es2015/for-in/nonstrict-initializer/input.js 3:2-3:13
-				declarations: Array [
+				declarations: [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "stored"
 							loc: SourceLocation es2015/for-in/nonstrict-initializer/input.js 3:6-3:12 (stored)
 						}
-						init: undefined
 						loc: SourceLocation es2015/for-in/nonstrict-initializer/input.js 3:6-3:12
 					}
 				]
+				loc: SourceLocation es2015/for-in/nonstrict-initializer/input.js 3:2-3:13
 			}
+			loc: SourceLocation es2015/for-in/nonstrict-initializer/input.js 3:2-3:13
 		}
 		JSForInStatement {
-			loc: SourceLocation es2015/for-in/nonstrict-initializer/input.js 4:2-6:3
 			body: JSBlockStatement {
-				directives: Array []
-				loc: SourceLocation es2015/for-in/nonstrict-initializer/input.js 4:66-6:3
-				body: Array [
+				body: [
 					JSExpressionStatement {
-						loc: SourceLocation es2015/for-in/nonstrict-initializer/input.js 5:4-5:17
 						expression: JSUpdateExpression {
 							operator: "++"
 							prefix: true
-							loc: SourceLocation es2015/for-in/nonstrict-initializer/input.js 5:4-5:16
 							argument: JSReferenceIdentifier {
 								name: "iterations"
 								loc: SourceLocation es2015/for-in/nonstrict-initializer/input.js 5:6-5:16 (iterations)
 							}
+							loc: SourceLocation es2015/for-in/nonstrict-initializer/input.js 5:4-5:16
 						}
+						loc: SourceLocation es2015/for-in/nonstrict-initializer/input.js 5:4-5:17
 					}
 				]
+				directives: []
+				loc: SourceLocation es2015/for-in/nonstrict-initializer/input.js 4:66-6:3
 			}
 			left: JSVariableDeclaration {
 				kind: "var"
-				loc: SourceLocation es2015/for-in/nonstrict-initializer/input.js 4:7-4:30
-				declarations: Array [
+				declarations: [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "a"
 							loc: SourceLocation es2015/for-in/nonstrict-initializer/input.js 4:11-4:12 (a)
 						}
-						loc: SourceLocation es2015/for-in/nonstrict-initializer/input.js 4:11-4:30
 						init: JSSequenceExpression {
-							loc: SourceLocation es2015/for-in/nonstrict-initializer/input.js 4:16-4:29
-							expressions: Array [
+							expressions: [
 								JSUpdateExpression {
 									operator: "++"
 									prefix: true
-									loc: SourceLocation es2015/for-in/nonstrict-initializer/input.js 4:16-4:25
 									argument: JSReferenceIdentifier {
 										name: "effects"
 										loc: SourceLocation es2015/for-in/nonstrict-initializer/input.js 4:18-4:25 (effects)
 									}
+									loc: SourceLocation es2015/for-in/nonstrict-initializer/input.js 4:16-4:25
 								}
 								JSUnaryExpression {
 									operator: "-"
 									prefix: true
-									loc: SourceLocation es2015/for-in/nonstrict-initializer/input.js 4:27-4:29
 									argument: JSNumericLiteral {
 										value: 1
-										format: undefined
 										loc: SourceLocation es2015/for-in/nonstrict-initializer/input.js 4:28-4:29
 									}
+									loc: SourceLocation es2015/for-in/nonstrict-initializer/input.js 4:27-4:29
 								}
 							]
+							loc: SourceLocation es2015/for-in/nonstrict-initializer/input.js 4:15-4:31
 						}
+						loc: SourceLocation es2015/for-in/nonstrict-initializer/input.js 4:11-4:30
 					}
 				]
+				loc: SourceLocation es2015/for-in/nonstrict-initializer/input.js 4:7-4:30
 			}
 			right: JSSequenceExpression {
-				loc: SourceLocation es2015/for-in/nonstrict-initializer/input.js 4:34-4:64
-				expressions: Array [
+				expressions: [
 					JSAssignmentExpression {
 						operator: "="
-						loc: SourceLocation es2015/for-in/nonstrict-initializer/input.js 4:34-4:44
 						left: JSAssignmentIdentifier {
 							name: "stored"
 							loc: SourceLocation es2015/for-in/nonstrict-initializer/input.js 4:34-4:40 (stored)
@@ -150,10 +132,10 @@ JSRoot {
 							name: "a"
 							loc: SourceLocation es2015/for-in/nonstrict-initializer/input.js 4:43-4:44 (a)
 						}
+						loc: SourceLocation es2015/for-in/nonstrict-initializer/input.js 4:34-4:44
 					}
 					JSObjectExpression {
-						loc: SourceLocation es2015/for-in/nonstrict-initializer/input.js 4:46-4:64
-						properties: Array [
+						properties: [
 							JSObjectProperty {
 								key: JSStaticPropertyKey {
 									value: JSIdentifier {
@@ -164,7 +146,6 @@ JSRoot {
 								}
 								value: JSNumericLiteral {
 									value: 0
-									format: undefined
 									loc: SourceLocation es2015/for-in/nonstrict-initializer/input.js 4:50-4:51
 								}
 								loc: SourceLocation es2015/for-in/nonstrict-initializer/input.js 4:47-4:51
@@ -179,7 +160,6 @@ JSRoot {
 								}
 								value: JSNumericLiteral {
 									value: 1
-									format: undefined
 									loc: SourceLocation es2015/for-in/nonstrict-initializer/input.js 4:56-4:57
 								}
 								loc: SourceLocation es2015/for-in/nonstrict-initializer/input.js 4:53-4:57
@@ -194,17 +174,28 @@ JSRoot {
 								}
 								value: JSNumericLiteral {
 									value: 2
-									format: undefined
 									loc: SourceLocation es2015/for-in/nonstrict-initializer/input.js 4:62-4:63
 								}
 								loc: SourceLocation es2015/for-in/nonstrict-initializer/input.js 4:59-4:63
 							}
 						]
+						loc: SourceLocation es2015/for-in/nonstrict-initializer/input.js 4:46-4:64
 					}
 				]
+				loc: SourceLocation es2015/for-in/nonstrict-initializer/input.js 4:34-4:64
 			}
+			loc: SourceLocation es2015/for-in/nonstrict-initializer/input.js 4:2-6:3
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: true
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2015/for-in/nonstrict-initializer/input.js>
+	loc: SourceLocation es2015/for-in/nonstrict-initializer/input.js 1:0-7:0
 }
 ```
 

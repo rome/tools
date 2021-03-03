@@ -8,32 +8,28 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation esprima/expression-left-hand-side/migrated_0000/input.js 1:0-2:0
-	path: UIDPath<esprima/expression-left-hand-side/migrated_0000/input.js>
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation esprima/expression-left-hand-side/migrated_0000/input.js 1:0-1:10
 			expression: JSNewExpression {
-				arguments: Array []
-				optional: undefined
-				typeArguments: undefined
-				loc: SourceLocation esprima/expression-left-hand-side/migrated_0000/input.js 1:0-1:10
+				arguments: []
 				callee: JSReferenceIdentifier {
 					name: "Button"
 					loc: SourceLocation esprima/expression-left-hand-side/migrated_0000/input.js 1:4-1:10 (Button)
 				}
+				loc: SourceLocation esprima/expression-left-hand-side/migrated_0000/input.js 1:0-1:10
 			}
+			loc: SourceLocation esprima/expression-left-hand-side/migrated_0000/input.js 1:0-1:10
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<esprima/expression-left-hand-side/migrated_0000/input.js>
+	loc: SourceLocation esprima/expression-left-hand-side/migrated_0000/input.js 1:0-2:0
 }
 ```
 

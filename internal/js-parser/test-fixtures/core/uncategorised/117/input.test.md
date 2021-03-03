@@ -12,10 +12,19 @@ JSRoot {
 		JSExpressionStatement {
 			expression: JSCallExpression {
 				arguments: [
-					JSReferenceIdentifier {name: "bar", loc: SourceLocation core/uncategorised/117/input.js 1:4-1:7 (bar)}
-					JSReferenceIdentifier {name: "baz", loc: SourceLocation core/uncategorised/117/input.js 1:9-1:12 (baz)}
+					JSReferenceIdentifier {
+						name: "bar"
+						loc: SourceLocation core/uncategorised/117/input.js 1:4-1:7 (bar)
+					}
+					JSReferenceIdentifier {
+						name: "baz"
+						loc: SourceLocation core/uncategorised/117/input.js 1:9-1:12 (baz)
+					}
 				]
-				callee: JSReferenceIdentifier {name: "foo", loc: SourceLocation core/uncategorised/117/input.js 1:0-1:3 (foo)}
+				callee: JSReferenceIdentifier {
+					name: "foo"
+					loc: SourceLocation core/uncategorised/117/input.js 1:0-1:3 (foo)
+				}
 				loc: SourceLocation core/uncategorised/117/input.js 1:0-1:13
 			}
 			loc: SourceLocation core/uncategorised/117/input.js 1:0-1:13
@@ -26,9 +35,9 @@ JSRoot {
 	diagnostics: []
 	directives: []
 	hasHoistedVars: false
-	path: UIDPath<core/uncategorised/117/input.js>
 	sourceType: "script"
 	syntax: []
+	path: UIDPath<core/uncategorised/117/input.js>
 	loc: SourceLocation core/uncategorised/117/input.js 1:0-1:13
 }
 ```

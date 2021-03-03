@@ -11,9 +11,15 @@ JSRoot {
 	body: [
 		JSExpressionStatement {
 			expression: JSMemberExpression {
-				object: JSReferenceIdentifier {name: "universe", loc: SourceLocation core/uncategorised/130/input.js 1:0-1:8 (universe)}
+				object: JSReferenceIdentifier {
+					name: "universe"
+					loc: SourceLocation core/uncategorised/130/input.js 1:0-1:8 (universe)
+				}
 				property: JSStaticMemberProperty {
-					value: JSIdentifier {name: "false", loc: SourceLocation core/uncategorised/130/input.js 1:9-1:14 (false)}
+					value: JSIdentifier {
+						name: "false"
+						loc: SourceLocation core/uncategorised/130/input.js 1:9-1:14 (false)
+					}
 					loc: SourceLocation core/uncategorised/130/input.js 1:9-1:14 (false)
 				}
 				loc: SourceLocation core/uncategorised/130/input.js 1:0-1:14
@@ -26,9 +32,9 @@ JSRoot {
 	diagnostics: []
 	directives: []
 	hasHoistedVars: false
-	path: UIDPath<core/uncategorised/130/input.js>
 	sourceType: "script"
 	syntax: []
+	path: UIDPath<core/uncategorised/130/input.js>
 	loc: SourceLocation core/uncategorised/130/input.js 1:0-1:14
 }
 ```

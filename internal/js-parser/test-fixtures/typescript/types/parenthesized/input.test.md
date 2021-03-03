@@ -8,34 +8,31 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	loc: SourceLocation typescript/types/parenthesized/input.ts 1:0-2:0
-	path: UIDPath<typescript/types/parenthesized/input.ts>
-	syntax: Array ["ts"]
-	body: Array [
+	body: [
 		TSTypeAlias {
 			id: JSBindingIdentifier {
 				name: "T"
 				loc: SourceLocation typescript/types/parenthesized/input.ts 1:5-1:6 (T)
 			}
-			typeParameters: undefined
-			loc: SourceLocation typescript/types/parenthesized/input.ts 1:0-1:14
 			right: TSParenthesizedType {
-				loc: SourceLocation typescript/types/parenthesized/input.ts 1:9-1:13
 				typeAnnotation: TSObjectTypeAnnotation {
-					members: Array []
+					members: []
 					loc: SourceLocation typescript/types/parenthesized/input.ts 1:10-1:12
 				}
+				loc: SourceLocation typescript/types/parenthesized/input.ts 1:9-1:13
 			}
+			loc: SourceLocation typescript/types/parenthesized/input.ts 1:0-1:14
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: ["ts"]
+	path: UIDPath<typescript/types/parenthesized/input.ts>
+	loc: SourceLocation typescript/types/parenthesized/input.ts 1:0-2:0
 }
 ```
 

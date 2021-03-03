@@ -8,53 +8,21 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: true
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2015/uncategorised/38/input.js 1:0-1:29
-	path: UIDPath<es2015/uncategorised/38/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Parenthesized expression didnt contain anything"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:20
-				path: UIDPath<es2015/uncategorised/38/input.js>
-				start: Position 1:20
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation es2015/uncategorised/38/input.js 1:0-1:21
 			expression: JSCallExpression {
-				loc: SourceLocation es2015/uncategorised/38/input.js 1:0-1:21
-				arguments: Array [
+				arguments: [
 					JSUnaryExpression {
 						operator: "typeof"
 						prefix: true
-						loc: SourceLocation es2015/uncategorised/38/input.js 1:12-1:21
 						argument: JSReferenceIdentifier {
 							name: "INVALID_PLACEHOLDER"
 							loc: SourceLocation es2015/uncategorised/38/input.js 1:20-1:20
 						}
+						loc: SourceLocation es2015/uncategorised/38/input.js 1:12-1:21
 					}
 				]
 				callee: JSMemberExpression {
-					loc: SourceLocation es2015/uncategorised/38/input.js 1:0-1:11
 					object: JSReferenceIdentifier {
 						name: "console"
 						loc: SourceLocation es2015/uncategorised/38/input.js 1:0-1:7 (console)
@@ -66,29 +34,57 @@ JSRoot {
 						}
 						loc: SourceLocation es2015/uncategorised/38/input.js 1:8-1:11 (log)
 					}
+					loc: SourceLocation es2015/uncategorised/38/input.js 1:0-1:11
 				}
+				loc: SourceLocation es2015/uncategorised/38/input.js 1:0-1:21
 			}
+			loc: SourceLocation es2015/uncategorised/38/input.js 1:0-1:21
 		}
 		JSExpressionStatement {
-			loc: SourceLocation es2015/uncategorised/38/input.js 1:22-1:24
 			expression: JSReferenceIdentifier {
 				name: "INVALID_PLACEHOLDER"
 				loc: SourceLocation es2015/uncategorised/38/input.js 1:22-1:24
 			}
+			loc: SourceLocation es2015/uncategorised/38/input.js 1:22-1:24
 		}
 		JSBlockStatement {
-			body: Array []
-			directives: Array []
+			body: []
+			directives: []
 			loc: SourceLocation es2015/uncategorised/38/input.js 1:25-1:27
 		}
 		JSExpressionStatement {
-			loc: SourceLocation es2015/uncategorised/38/input.js 1:27-1:29
 			expression: JSReferenceIdentifier {
 				name: "INVALID_PLACEHOLDER"
 				loc: SourceLocation es2015/uncategorised/38/input.js 1:27-1:28
 			}
+			loc: SourceLocation es2015/uncategorised/38/input.js 1:27-1:29
 		}
 	]
+	comments: []
+	corrupt: true
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "Parenthesized expression didnt contain anything"}
+			}
+			location: {
+				language: "js"
+				path: UIDPath<es2015/uncategorised/38/input.js>
+				end: Position 1:20
+				start: Position 1:20
+			}
+		}
+	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2015/uncategorised/38/input.js>
+	loc: SourceLocation es2015/uncategorised/38/input.js 1:0-1:29
 }
 ```
 
@@ -101,7 +97,7 @@ JSRoot {
   ✖ Parenthesized expression didnt contain anything
 
     console.log(typeof () => {});
-                        ^
+                        <error><emphasis>^</emphasis></error>
 
 
 ```

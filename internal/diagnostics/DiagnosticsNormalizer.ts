@@ -8,7 +8,6 @@
 import {
 	Diagnostic,
 	DiagnosticAdvice,
-	DiagnosticAdviceItem,
 	DiagnosticDescription,
 	DiagnosticLocation,
 	DiagnosticSuppression,
@@ -25,6 +24,8 @@ import {
 import {OneIndexed, ZeroIndexed} from "@internal/numbers";
 import {mergeObjects} from "@internal/typescript-helpers";
 import {MixedPathMap, MixedPathSet, Path} from "@internal/path";
+import stringDiff from "@internal/string-diff";
+import { DiagnosticsProcessor } from ".";
 
 export type DiagnosticsNormalizerOptions = {
 	tags?: DiagnosticTags;
@@ -61,20 +62,28 @@ function maybeMap<T>(arr: T[], callback: (item: T) => T): T[] {
 export default class DiagnosticsNormalizer {
 	constructor(
 		normalizeOptions: DiagnosticsNormalizerOptions = {},
-		markupOptions?: MarkupFormatNormalizeOptions,
+		markupOptions: MarkupFormatNormalizeOptions = {},
 		sourceMaps?: SourceMapConsumerCollection,
+		processor?: DiagnosticsProcessor,
 	) {
+		this.processor = processor;
 		this.sourceMaps = sourceMaps;
 		this.inlineSourceText = new MixedPathMap();
 		this.options = normalizeOptions;
 		this.inlinedSourceTextPaths = new MixedPathSet();
 		this.markupOptions = this.createMarkupOptions(markupOptions);
+
+		this.couldNormalizeMarkup = sourceMaps !== undefined || markupOptions.stripFilelinkText || markupOptions.stripPositions || 
+		markupOptions.humanizeFilename !== undefined ||
+		markupOptions.normalizePosition !== undefined;
 	}
 
 	private sourceMaps: undefined | SourceMapConsumerCollection;
-
+	private processor: undefined | DiagnosticsProcessor;
+	
 	private options: DiagnosticsNormalizerOptions;
 	private markupOptions: MarkupFormatNormalizeOptions;
+	private couldNormalizeMarkup: boolean;
 
 	private inlineSourceText: MixedPathMap<string>;
 	private inlinedSourceTextPaths: MixedPathSet;
@@ -85,7 +94,7 @@ export default class DiagnosticsNormalizer {
 	}
 
 	private createMarkupOptions(
-		markupOptions: MarkupFormatNormalizeOptions = {},
+		markupOptions: MarkupFormatNormalizeOptions,
 	): MarkupFormatNormalizeOptions {
 		const {sourceMaps} = this;
 
@@ -157,9 +166,6 @@ export default class DiagnosticsNormalizer {
 
 	public normalizeLocation(location: DiagnosticLocation): DiagnosticLocation {
 		const {sourceMaps} = this;
-		if (!this.hasNormalize()) {
-			return location;
-		}
 
 		let {marker, path, start, end, integrity} = location;
 		let origPath = path;
@@ -252,7 +258,11 @@ export default class DiagnosticsNormalizer {
 	}
 
 	private normalizeMarkup(markup: StaticMarkup): StaticMarkup {
-		return normalizeMarkup(markup, this.markupOptions).text;
+		if (this.couldNormalizeMarkup) {
+			return normalizeMarkup(markup, this.markupOptions).text;
+		} else {
+			return markup;
+		}
 	}
 
 	private maybeNormalizeMarkup(
@@ -277,16 +287,26 @@ export default class DiagnosticsNormalizer {
 		);
 	}
 
-	private normalizeAdvice(advice: DiagnosticAdvice): DiagnosticAdvice {
-		return maybeMap(
-			advice,
-			(item) => {
-				return this.normalizeAdviceItem(item);
-			},
-		);
+	private normalizeAdvice(advice: DiagnosticAdvice[]): DiagnosticAdvice[] {
+		const newAdvice: DiagnosticAdvice[] = [];
+		let normalized = false;
+
+		for (const item of advice) {
+			const newItem = this.normalizeAdviceItem(item);
+			if (newItem === undefined) {
+				normalized = true;
+				continue;
+			}
+			if (newItem !== item) {
+				normalized = true;
+			}
+			newAdvice.push(newItem);
+		}
+
+		return normalized ? newAdvice : advice;
 	}
 
-	private normalizeAdviceItem(item: DiagnosticAdviceItem): DiagnosticAdviceItem {
+	private normalizeAdviceItem(item: DiagnosticAdvice): undefined | DiagnosticAdvice {
 		const {sourceMaps} = this;
 
 		switch (item.type) {
@@ -337,6 +357,20 @@ export default class DiagnosticsNormalizer {
 				} else {
 					return item;
 				}
+
+			case "diff-strings": {
+				if (this.processor !== undefined && this.processor.guaranteedTruncation) {
+					return undefined;
+				} else {
+					return {
+						type: "diff",
+						diff: stringDiff(item.before, item.after),
+						language: item.language,
+						sourceTypeJS: item.sourceTypeJS,
+						legend: item.legend,
+					};
+				}
+			}
 
 			case "stacktrace": {
 				let importantPaths: undefined | MixedPathSet = item.importantPaths;
@@ -418,30 +452,6 @@ export default class DiagnosticsNormalizer {
 		);
 	}
 
-	private hasNormalize(): boolean {
-		const {sourceMaps, markupOptions} = this;
-		if (sourceMaps !== undefined && sourceMaps.hasAny()) {
-			return true;
-		}
-
-		if (this.inlineSourceText.size > 0) {
-			return true;
-		}
-
-		if (markupOptions.stripFilelinkText || markupOptions.stripPositions) {
-			return true;
-		}
-
-		if (
-			markupOptions.humanizeFilename !== undefined ||
-			markupOptions.normalizePosition !== undefined
-		) {
-			return true;
-		}
-
-		return false;
-	}
-
 	private normalizeDescription(
 		description: DiagnosticDescription,
 	): DiagnosticDescription {
@@ -461,11 +471,6 @@ export default class DiagnosticsNormalizer {
 	}
 
 	public normalizeDiagnostic(diag: Diagnostic): Diagnostic {
-		// Fast path for a common case
-		if (!this.hasNormalize()) {
-			return diag;
-		}
-
 		let merge: Partial<Diagnostic> = {
 			location: this.normalizeLocation(diag.location),
 			description: this.normalizeDescription(diag.description),

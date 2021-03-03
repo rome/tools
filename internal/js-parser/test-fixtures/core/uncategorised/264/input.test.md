@@ -12,25 +12,39 @@ JSRoot {
 		JSWithStatement {
 			body: JSExpressionStatement {
 				expression: JSAssignmentExpression {
-					left: JSAssignmentIdentifier {name: "foo", loc: SourceLocation core/uncategorised/264/input.js 1:26-1:29 (foo)}
 					operator: "="
-					right: JSReferenceIdentifier {name: "bar", loc: SourceLocation core/uncategorised/264/input.js 1:32-1:35 (bar)}
+					left: JSAssignmentIdentifier {
+						name: "foo"
+						loc: SourceLocation core/uncategorised/264/input.js 1:26-1:29 (foo)
+					}
+					right: JSReferenceIdentifier {
+						name: "bar"
+						loc: SourceLocation core/uncategorised/264/input.js 1:32-1:35 (bar)
+					}
 					loc: SourceLocation core/uncategorised/264/input.js 1:26-1:35
 				}
 				loc: SourceLocation core/uncategorised/264/input.js 1:26-1:36
 			}
-			object: JSReferenceIdentifier {name: "x", loc: SourceLocation core/uncategorised/264/input.js 1:23-1:24 (x)}
+			object: JSReferenceIdentifier {
+				name: "x"
+				loc: SourceLocation core/uncategorised/264/input.js 1:23-1:24 (x)
+			}
 			loc: SourceLocation core/uncategorised/264/input.js 1:17-1:36
 		}
 	]
 	comments: []
 	corrupt: false
 	diagnostics: []
-	directives: [JSDirective {value: "use\\x20strict", loc: SourceLocation core/uncategorised/264/input.js 1:0-1:16}]
+	directives: [
+		JSDirective {
+			value: "use\\x20strict"
+			loc: SourceLocation core/uncategorised/264/input.js 1:0-1:16
+		}
+	]
 	hasHoistedVars: false
-	path: UIDPath<core/uncategorised/264/input.js>
 	sourceType: "script"
 	syntax: []
+	path: UIDPath<core/uncategorised/264/input.js>
 	loc: SourceLocation core/uncategorised/264/input.js 1:0-1:36
 }
 ```

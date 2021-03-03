@@ -8,129 +8,113 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: true
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation esprima/es2015-generator/generator-parameter-binding-element/input.js 1:0-4:0
-	path: UIDPath<esprima/es2015-generator/generator-parameter-binding-element/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Expected an identifier"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 2:12
-				path: UIDPath<esprima/es2015-generator/generator-parameter-binding-element/input.js>
-				start: Position 2:12
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation esprima/es2015-generator/generator-parameter-binding-element/input.js 1:0-3:2
 			expression: JSFunctionExpression {
-				id: undefined
-				loc: SourceLocation esprima/es2015-generator/generator-parameter-binding-element/input.js 1:1-3:2
-				head: JSFunctionHead {
-					async: false
-					generator: true
-					hasHoistedVars: false
-					params: Array []
-					rest: undefined
-					returnType: undefined
-					thisType: undefined
-					typeParameters: undefined
-					loc: SourceLocation esprima/es2015-generator/generator-parameter-binding-element/input.js 1:10-1:12
-				}
 				body: JSBlockStatement {
-					directives: Array []
-					loc: SourceLocation esprima/es2015-generator/generator-parameter-binding-element/input.js 1:13-3:2
-					body: Array [
+					body: [
 						JSFunctionDeclaration {
 							id: JSBindingIdentifier {
 								name: ""
 								loc: SourceLocation esprima/es2015-generator/generator-parameter-binding-element/input.js 2:12-2:13 ()
 							}
-							loc: SourceLocation esprima/es2015-generator/generator-parameter-binding-element/input.js 2:4-3:1
 							body: JSBlockStatement {
-								directives: Array []
-								loc: SourceLocation esprima/es2015-generator/generator-parameter-binding-element/input.js 2:23-3:1
-								body: Array [
+								body: [
 									JSExpressionStatement {
-										loc: SourceLocation esprima/es2015-generator/generator-parameter-binding-element/input.js 2:23-2:24
 										expression: JSNumericLiteral {
 											value: 3
-											format: undefined
 											loc: SourceLocation esprima/es2015-generator/generator-parameter-binding-element/input.js 2:23-2:24
 										}
+										loc: SourceLocation esprima/es2015-generator/generator-parameter-binding-element/input.js 2:23-2:24
 									}
 									JSExpressionStatement {
-										loc: SourceLocation esprima/es2015-generator/generator-parameter-binding-element/input.js 2:24-2:25
 										expression: JSReferenceIdentifier {
 											name: "INVALID_PLACEHOLDER"
 											loc: SourceLocation esprima/es2015-generator/generator-parameter-binding-element/input.js 2:24-2:25
 										}
+										loc: SourceLocation esprima/es2015-generator/generator-parameter-binding-element/input.js 2:24-2:25
 									}
 									JSBlockStatement {
-										body: Array []
-										directives: Array []
+										body: []
+										directives: []
 										loc: SourceLocation esprima/es2015-generator/generator-parameter-binding-element/input.js 2:26-2:28
 									}
 								]
+								directives: []
+								loc: SourceLocation esprima/es2015-generator/generator-parameter-binding-element/input.js 2:23-3:1
 							}
 							head: JSFunctionHead {
 								async: false
 								generator: false
 								hasHoistedVars: false
-								rest: undefined
-								returnType: undefined
-								thisType: undefined
-								typeParameters: undefined
-								loc: SourceLocation esprima/es2015-generator/generator-parameter-binding-element/input.js 2:13-2:22
-								params: Array [
+								params: [
 									JSBindingAssignmentPattern {
-										loc: SourceLocation esprima/es2015-generator/generator-parameter-binding-element/input.js 2:13-2:22
+										left: JSBindingIdentifier {
+											name: "x"
+											meta: JSPatternMeta {
+												loc: SourceLocation esprima/es2015-generator/generator-parameter-binding-element/input.js 2:13-2:14
+											}
+											loc: SourceLocation esprima/es2015-generator/generator-parameter-binding-element/input.js 2:13-2:14 (x)
+										}
 										right: JSReferenceIdentifier {
 											name: "yield"
 											loc: SourceLocation esprima/es2015-generator/generator-parameter-binding-element/input.js 2:17-2:22 (yield)
 										}
-										left: JSBindingIdentifier {
-											name: "x"
-											loc: SourceLocation esprima/es2015-generator/generator-parameter-binding-element/input.js 2:13-2:14 (x)
-											meta: JSPatternMeta {
-												optional: undefined
-												typeAnnotation: undefined
-												loc: SourceLocation esprima/es2015-generator/generator-parameter-binding-element/input.js 2:13-2:14
-											}
-										}
+										loc: SourceLocation esprima/es2015-generator/generator-parameter-binding-element/input.js 2:13-2:22
 									}
 								]
+								loc: SourceLocation esprima/es2015-generator/generator-parameter-binding-element/input.js 2:13-2:22
 							}
+							loc: SourceLocation esprima/es2015-generator/generator-parameter-binding-element/input.js 2:4-3:1
 						}
 						JSExpressionStatement {
-							loc: SourceLocation esprima/es2015-generator/generator-parameter-binding-element/input.js 3:1-3:2
 							expression: JSReferenceIdentifier {
 								name: "INVALID_PLACEHOLDER"
 								loc: SourceLocation esprima/es2015-generator/generator-parameter-binding-element/input.js 3:1-3:2
 							}
+							loc: SourceLocation esprima/es2015-generator/generator-parameter-binding-element/input.js 3:1-3:2
 						}
 					]
+					directives: []
+					loc: SourceLocation esprima/es2015-generator/generator-parameter-binding-element/input.js 1:13-3:2
 				}
+				head: JSFunctionHead {
+					async: false
+					generator: true
+					hasHoistedVars: false
+					params: []
+					loc: SourceLocation esprima/es2015-generator/generator-parameter-binding-element/input.js 1:10-1:12
+				}
+				loc: SourceLocation esprima/es2015-generator/generator-parameter-binding-element/input.js 1:1-3:2
+			}
+			loc: SourceLocation esprima/es2015-generator/generator-parameter-binding-element/input.js 1:0-3:2
+		}
+	]
+	comments: []
+	corrupt: true
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "Expected an identifier"}
+			}
+			location: {
+				language: "js"
+				path: UIDPath<esprima/es2015-generator/generator-parameter-binding-element/input.js>
+				end: Position 2:12
+				start: Position 2:12
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<esprima/es2015-generator/generator-parameter-binding-element/input.js>
+	loc: SourceLocation esprima/es2015-generator/generator-parameter-binding-element/input.js 1:0-4:0
 }
 ```
 
@@ -144,7 +128,7 @@ JSRoot {
 
     1 │ (function*() {
   > 2 │     function(x = yield 3) {}
-      │             ^
+      │             <error><emphasis>^</emphasis></error>
     3 │ })
 
 

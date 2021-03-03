@@ -146,13 +146,13 @@ export type ResolverQueryResponseMissing = {
 export type ResolverQueryResponseUnsupported = {
 	type: "UNSUPPORTED";
 	query: ResolverRemoteQuery;
-	advice: DiagnosticAdvice;
+	advice: DiagnosticAdvice[];
 };
 
 export type ResolverQueryResponseFetchError = {
 	type: "FETCH_ERROR";
 	query: ResolverRemoteQuery;
-	advice: DiagnosticAdvice;
+	advice: DiagnosticAdvice[];
 };
 
 type FilenameVariant = {

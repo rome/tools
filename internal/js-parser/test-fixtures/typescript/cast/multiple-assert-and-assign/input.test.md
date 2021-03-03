@@ -8,43 +8,44 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	loc: SourceLocation typescript/cast/multiple-assert-and-assign/input.ts 1:0-1:26
-	path: UIDPath<typescript/cast/multiple-assert-and-assign/input.ts>
-	syntax: Array ["ts"]
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation typescript/cast/multiple-assert-and-assign/input.ts 1:0-1:26
 			expression: JSAssignmentExpression {
 				operator: "="
-				loc: SourceLocation typescript/cast/multiple-assert-and-assign/input.ts 1:0-1:25
-				right: JSNumericLiteral {
-					value: 42
-					format: undefined
-					loc: SourceLocation typescript/cast/multiple-assert-and-assign/input.ts 1:23-1:25
-				}
 				left: TSAssignmentAsExpression {
-					loc: SourceLocation typescript/cast/multiple-assert-and-assign/input.ts 1:1-1:19
-					typeAnnotation: TSAnyKeywordTypeAnnotation {loc: SourceLocation typescript/cast/multiple-assert-and-assign/input.ts 1:16-1:19}
 					expression: TSAssignmentAsExpression {
-						loc: SourceLocation typescript/cast/multiple-assert-and-assign/input.ts 1:1-1:12
-						typeAnnotation: TSNumberKeywordTypeAnnotation {loc: SourceLocation typescript/cast/multiple-assert-and-assign/input.ts 1:6-1:12}
 						expression: JSAssignmentIdentifier {
 							name: "a"
 							loc: SourceLocation typescript/cast/multiple-assert-and-assign/input.ts 1:1-1:2 (a)
 						}
+						typeAnnotation: TSNumberKeywordTypeAnnotation {
+							loc: SourceLocation typescript/cast/multiple-assert-and-assign/input.ts 1:6-1:12
+						}
+						loc: SourceLocation typescript/cast/multiple-assert-and-assign/input.ts 1:1-1:12
 					}
+					typeAnnotation: TSAnyKeywordTypeAnnotation {
+						loc: SourceLocation typescript/cast/multiple-assert-and-assign/input.ts 1:16-1:19
+					}
+					loc: SourceLocation typescript/cast/multiple-assert-and-assign/input.ts 1:1-1:19
 				}
+				right: JSNumericLiteral {
+					value: 42
+					loc: SourceLocation typescript/cast/multiple-assert-and-assign/input.ts 1:23-1:25
+				}
+				loc: SourceLocation typescript/cast/multiple-assert-and-assign/input.ts 1:0-1:25
 			}
+			loc: SourceLocation typescript/cast/multiple-assert-and-assign/input.ts 1:0-1:26
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: ["ts"]
+	path: UIDPath<typescript/cast/multiple-assert-and-assign/input.ts>
+	loc: SourceLocation typescript/cast/multiple-assert-and-assign/input.ts 1:0-1:26
 }
 ```
 

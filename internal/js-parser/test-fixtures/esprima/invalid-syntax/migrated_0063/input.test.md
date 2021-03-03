@@ -8,57 +8,53 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: true
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation esprima/invalid-syntax/migrated_0063/input.js 1:0-1:11
-	path: UIDPath<esprima/invalid-syntax/migrated_0063/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Unterminated string constant"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:9
-				path: UIDPath<esprima/invalid-syntax/migrated_0063/input.js>
-				start: Position 1:9
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSVariableDeclarationStatement {
-			loc: SourceLocation esprima/invalid-syntax/migrated_0063/input.js 1:0-1:11
 			declaration: JSVariableDeclaration {
 				kind: "var"
-				loc: SourceLocation esprima/invalid-syntax/migrated_0063/input.js 1:0-1:11
-				declarations: Array [
+				declarations: [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "x"
 							loc: SourceLocation esprima/invalid-syntax/migrated_0063/input.js 1:4-1:5 (x)
 						}
-						loc: SourceLocation esprima/invalid-syntax/migrated_0063/input.js 1:4-1:11
 						init: JSStringLiteral {
 							value: "\n"
 							loc: SourceLocation esprima/invalid-syntax/migrated_0063/input.js 1:8-1:11
 						}
+						loc: SourceLocation esprima/invalid-syntax/migrated_0063/input.js 1:4-1:11
 					}
 				]
+				loc: SourceLocation esprima/invalid-syntax/migrated_0063/input.js 1:0-1:11
+			}
+			loc: SourceLocation esprima/invalid-syntax/migrated_0063/input.js 1:0-1:11
+		}
+	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "Unterminated string constant"}
+			}
+			location: {
+				language: "js"
+				path: UIDPath<esprima/invalid-syntax/migrated_0063/input.js>
+				end: Position 1:9
+				start: Position 1:9
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: true
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<esprima/invalid-syntax/migrated_0063/input.js>
+	loc: SourceLocation esprima/invalid-syntax/migrated_0063/input.js 1:0-1:11
 }
 ```
 
@@ -71,7 +67,7 @@ JSRoot {
   ✖ Unterminated string constant
 
     var x = "
-             ^
+             <error><emphasis>^</emphasis></error>
 
 
 ```

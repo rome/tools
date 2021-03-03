@@ -8,68 +8,59 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation core/uncategorised/395/input.js 1:0-1:19
-	path: UIDPath<core/uncategorised/395/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Expected an identifier"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:14
-				path: UIDPath<core/uncategorised/395/input.js>
-				start: Position 1:14
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "t"
 				loc: SourceLocation core/uncategorised/395/input.js 1:9-1:10 (t)
 			}
-			loc: SourceLocation core/uncategorised/395/input.js 1:0-1:19
 			body: JSBlockStatement {
-				body: Array []
-				directives: Array []
+				body: []
+				directives: []
 				loc: SourceLocation core/uncategorised/395/input.js 1:16-1:19
 			}
 			head: JSFunctionHead {
 				async: false
 				generator: false
 				hasHoistedVars: false
-				params: Array []
-				returnType: undefined
-				thisType: undefined
-				typeParameters: undefined
-				loc: SourceLocation core/uncategorised/395/input.js 1:10-1:15
+				params: []
 				rest: JSBindingIdentifier {
 					name: ""
-					loc: SourceLocation core/uncategorised/395/input.js 1:14-1:15 ()
 					meta: JSPatternMeta {
-						optional: undefined
-						typeAnnotation: undefined
 						loc: SourceLocation core/uncategorised/395/input.js 1:14-1:15
 					}
+					loc: SourceLocation core/uncategorised/395/input.js 1:14-1:15 ()
 				}
+				loc: SourceLocation core/uncategorised/395/input.js 1:10-1:15
+			}
+			loc: SourceLocation core/uncategorised/395/input.js 1:0-1:19
+		}
+	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "Expected an identifier"}
+			}
+			location: {
+				language: "js"
+				path: UIDPath<core/uncategorised/395/input.js>
+				end: Position 1:14
+				start: Position 1:14
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<core/uncategorised/395/input.js>
+	loc: SourceLocation core/uncategorised/395/input.js 1:0-1:19
 }
 ```
 
@@ -82,7 +73,7 @@ JSRoot {
   ✖ Expected an identifier
 
     function t(...) { }
-                  ^
+                  <error><emphasis>^</emphasis></error>
 
 
 ```

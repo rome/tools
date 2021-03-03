@@ -8,68 +8,17 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation experimental/function-sent/invalid-syntax/input.js 1:0-4:0
-	path: UIDPath<experimental/function-sent/invalid-syntax/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Unexpected character <emphasis>;</emphasis>"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 2:22
-				path: UIDPath<experimental/function-sent/invalid-syntax/input.js>
-				start: Position 2:21
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "foo"
 				loc: SourceLocation experimental/function-sent/invalid-syntax/input.js 1:10-1:13 (foo)
 			}
-			loc: SourceLocation experimental/function-sent/invalid-syntax/input.js 1:0-3:1
-			head: JSFunctionHead {
-				async: false
-				generator: true
-				hasHoistedVars: false
-				params: Array []
-				rest: undefined
-				returnType: undefined
-				thisType: undefined
-				typeParameters: undefined
-				loc: SourceLocation experimental/function-sent/invalid-syntax/input.js 1:13-1:15
-			}
 			body: JSBlockStatement {
-				directives: Array []
-				loc: SourceLocation experimental/function-sent/invalid-syntax/input.js 1:16-3:1
-				body: Array [
+				body: [
 					JSIfStatement {
-						alternate: undefined
-						loc: SourceLocation experimental/function-sent/invalid-syntax/input.js 2:2-2:22
-						test: JSBooleanLiteral {
-							value: true
-							loc: SourceLocation experimental/function-sent/invalid-syntax/input.js 2:6-2:10
-						}
 						consequent: JSExpressionStatement {
-							loc: SourceLocation experimental/function-sent/invalid-syntax/input.js 2:12-2:22
 							expression: JSMetaProperty {
-								loc: SourceLocation experimental/function-sent/invalid-syntax/input.js 2:12-2:22
 								meta: JSIdentifier {
 									name: "function"
 									loc: SourceLocation experimental/function-sent/invalid-syntax/input.js 2:12-2:20 (function)
@@ -78,13 +27,55 @@ JSRoot {
 									name: ""
 									loc: SourceLocation experimental/function-sent/invalid-syntax/input.js 2:21-2:22 ()
 								}
+								loc: SourceLocation experimental/function-sent/invalid-syntax/input.js 2:12-2:22
 							}
+							loc: SourceLocation experimental/function-sent/invalid-syntax/input.js 2:12-2:22
 						}
+						test: JSBooleanLiteral {
+							value: true
+							loc: SourceLocation experimental/function-sent/invalid-syntax/input.js 2:6-2:10
+						}
+						loc: SourceLocation experimental/function-sent/invalid-syntax/input.js 2:2-2:22
 					}
 				]
+				directives: []
+				loc: SourceLocation experimental/function-sent/invalid-syntax/input.js 1:16-3:1
+			}
+			head: JSFunctionHead {
+				async: false
+				generator: true
+				hasHoistedVars: false
+				params: []
+				loc: SourceLocation experimental/function-sent/invalid-syntax/input.js 1:13-1:15
+			}
+			loc: SourceLocation experimental/function-sent/invalid-syntax/input.js 1:0-3:1
+		}
+	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "js"
+				message: [RAW_MARKUP {value: "Unexpected character <emphasis>"}, ";", RAW_MARKUP {value: "</emphasis>"}]
+			}
+			location: {
+				language: "js"
+				path: UIDPath<experimental/function-sent/invalid-syntax/input.js>
+				end: Position 2:22
+				start: Position 2:21
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<experimental/function-sent/invalid-syntax/input.js>
+	loc: SourceLocation experimental/function-sent/invalid-syntax/input.js 1:0-4:0
 }
 ```
 
@@ -98,7 +89,7 @@ JSRoot {
 
     1 │ function* foo() {
   > 2 │   if (true) function.;
-      │                      ^
+      │                      <error><emphasis>^</emphasis></error>
     3 │ }
 
 

@@ -14,7 +14,10 @@ JSRoot {
 				JSExpressionStatement {
 					expression: JSCallExpression {
 						arguments: []
-						callee: JSReferenceIdentifier {name: "doThis", loc: SourceLocation core/uncategorised/214/input.js 1:2-1:8 (doThis)}
+						callee: JSReferenceIdentifier {
+							name: "doThis"
+							loc: SourceLocation core/uncategorised/214/input.js 1:2-1:8 (doThis)
+						}
 						loc: SourceLocation core/uncategorised/214/input.js 1:2-1:10
 					}
 					loc: SourceLocation core/uncategorised/214/input.js 1:2-1:11
@@ -22,7 +25,10 @@ JSRoot {
 				JSExpressionStatement {
 					expression: JSCallExpression {
 						arguments: []
-						callee: JSReferenceIdentifier {name: "doThat", loc: SourceLocation core/uncategorised/214/input.js 1:12-1:18 (doThat)}
+						callee: JSReferenceIdentifier {
+							name: "doThat"
+							loc: SourceLocation core/uncategorised/214/input.js 1:12-1:18 (doThat)
+						}
 						loc: SourceLocation core/uncategorised/214/input.js 1:12-1:20
 					}
 					loc: SourceLocation core/uncategorised/214/input.js 1:12-1:21
@@ -37,9 +43,9 @@ JSRoot {
 	diagnostics: []
 	directives: []
 	hasHoistedVars: false
-	path: UIDPath<core/uncategorised/214/input.js>
 	sourceType: "script"
 	syntax: []
+	path: UIDPath<core/uncategorised/214/input.js>
 	loc: SourceLocation core/uncategorised/214/input.js 1:0-1:23
 }
 ```

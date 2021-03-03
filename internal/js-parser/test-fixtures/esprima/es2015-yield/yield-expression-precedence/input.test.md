@@ -8,50 +8,21 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation esprima/es2015-yield/yield-expression-precedence/input.js 1:0-2:0
-	path: UIDPath<esprima/es2015-yield/yield-expression-precedence/input.js>
-	body: Array [
+	body: [
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "g"
 				loc: SourceLocation esprima/es2015-yield/yield-expression-precedence/input.js 1:10-1:11 (g)
 			}
-			loc: SourceLocation esprima/es2015-yield/yield-expression-precedence/input.js 1:0-1:42
-			head: JSFunctionHead {
-				async: false
-				generator: true
-				hasHoistedVars: false
-				params: Array []
-				rest: undefined
-				returnType: undefined
-				thisType: undefined
-				typeParameters: undefined
-				loc: SourceLocation esprima/es2015-yield/yield-expression-precedence/input.js 1:11-1:13
-			}
 			body: JSBlockStatement {
-				directives: Array []
-				loc: SourceLocation esprima/es2015-yield/yield-expression-precedence/input.js 1:14-1:42
-				body: Array [
+				body: [
 					JSExpressionStatement {
-						loc: SourceLocation esprima/es2015-yield/yield-expression-precedence/input.js 1:16-1:40
 						expression: JSSequenceExpression {
-							loc: SourceLocation esprima/es2015-yield/yield-expression-precedence/input.js 1:16-1:40
-							expressions: Array [
+							expressions: [
 								JSYieldExpression {
 									delegate: false
-									loc: SourceLocation esprima/es2015-yield/yield-expression-precedence/input.js 1:16-1:25
 									argument: JSAssignmentExpression {
 										operator: "="
-										loc: SourceLocation esprima/es2015-yield/yield-expression-precedence/input.js 1:22-1:25
 										left: JSAssignmentIdentifier {
 											name: "a"
 											loc: SourceLocation esprima/es2015-yield/yield-expression-precedence/input.js 1:22-1:23 (a)
@@ -60,14 +31,14 @@ JSRoot {
 											name: "b"
 											loc: SourceLocation esprima/es2015-yield/yield-expression-precedence/input.js 1:24-1:25 (b)
 										}
+										loc: SourceLocation esprima/es2015-yield/yield-expression-precedence/input.js 1:22-1:25
 									}
+									loc: SourceLocation esprima/es2015-yield/yield-expression-precedence/input.js 1:16-1:25
 								}
 								JSYieldExpression {
 									delegate: true
-									loc: SourceLocation esprima/es2015-yield/yield-expression-precedence/input.js 1:27-1:37
 									argument: JSAssignmentExpression {
 										operator: "="
-										loc: SourceLocation esprima/es2015-yield/yield-expression-precedence/input.js 1:34-1:37
 										left: JSAssignmentIdentifier {
 											name: "c"
 											loc: SourceLocation esprima/es2015-yield/yield-expression-precedence/input.js 1:34-1:35 (c)
@@ -76,19 +47,42 @@ JSRoot {
 											name: "d"
 											loc: SourceLocation esprima/es2015-yield/yield-expression-precedence/input.js 1:36-1:37 (d)
 										}
+										loc: SourceLocation esprima/es2015-yield/yield-expression-precedence/input.js 1:34-1:37
 									}
+									loc: SourceLocation esprima/es2015-yield/yield-expression-precedence/input.js 1:27-1:37
 								}
 								JSReferenceIdentifier {
 									name: "e"
 									loc: SourceLocation esprima/es2015-yield/yield-expression-precedence/input.js 1:39-1:40 (e)
 								}
 							]
+							loc: SourceLocation esprima/es2015-yield/yield-expression-precedence/input.js 1:16-1:40
 						}
+						loc: SourceLocation esprima/es2015-yield/yield-expression-precedence/input.js 1:16-1:40
 					}
 				]
+				directives: []
+				loc: SourceLocation esprima/es2015-yield/yield-expression-precedence/input.js 1:14-1:42
 			}
+			head: JSFunctionHead {
+				async: false
+				generator: true
+				hasHoistedVars: false
+				params: []
+				loc: SourceLocation esprima/es2015-yield/yield-expression-precedence/input.js 1:11-1:13
+			}
+			loc: SourceLocation esprima/es2015-yield/yield-expression-precedence/input.js 1:0-1:42
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<esprima/es2015-yield/yield-expression-precedence/input.js>
+	loc: SourceLocation esprima/es2015-yield/yield-expression-precedence/input.js 1:0-2:0
 }
 ```
 
