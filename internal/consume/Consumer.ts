@@ -637,6 +637,18 @@ export default class Consumer {
 		return this.fork(key, value[valueKey], metadata);
 	}
 
+	public getPath(keys: (string | number)[]): Consumer {
+		let target: Consumer = this;
+		for (const key of keys) {
+			if (typeof key === "number") {
+				target = target.getIndex(key);
+			} else {
+				target = target.get(key);
+			}
+		}
+		return target;
+	}
+
 	public getIndex(index: number): Consumer {
 		const arr = this.asPlainArray();
 		return this.fork(index, arr[index]);
