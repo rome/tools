@@ -1,7 +1,7 @@
 # `codec-browsers`
 
 Used to parse browser target syntax.
-Thanks to [browserslist ](https://github.com/browserslist/browserslist) for the idea and syntax.
+Thanks to [browserslist](https://github.com/browserslist/browserslist) for the idea and syntax.
 
 ## Usage
 

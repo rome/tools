@@ -109,19 +109,17 @@ export function resolveTargets(
 		targets = [targets];
 	}
 
-	targets.forEach((target) => {
+	for (const target of targets) {
 		switch (target.type) {
 			case "TargetBrowser": {
 				if (target.version === "all") {
-					if (getBrowser({name: target.browser})) {
-						getBrowser({name: target.browser})!.getVersions().forEach((version) => {
-							browsers.add(
-								getBrowser({
-									name: target.browser,
-									version,
-								})!,
-							);
-						});
+					for (const version of getBrowser({name: target.browser}).getVersions()) {
+						browsers.add(
+							getBrowser({
+								name: target.browser,
+								version,
+							}),
+						);
 					}
 
 					break;
@@ -146,77 +144,71 @@ export function resolveTargets(
 					browserNames.push(...getAllBrowserNames());
 				}
 
-				browserNames.forEach((name) => {
-					if (getBrowser({name})) {
-						switch (target.state) {
-							case "current": {
-								if (getBrowser({name})) {
-									browsers.add(getBrowser({name})!);
-								}
-								break;
+				for (const name of browserNames) {
+					switch (target.state) {
+						case "current": {
+							if (getBrowser({name})) {
+								browsers.add(getBrowser({name}));
 							}
-							case "unreleased": {
-								getBrowser({name})!.getVersions().filter((version) =>
-									!getBrowser({name, version})?.isReleased()
-								).forEach((version) =>
-									browsers.add(getBrowser({name, version})!)
-								);
-								break;
-							}
-							case "maintained": {
-								// Not supported yet, will be once we add javascript feature support
-								break;
-							}
+							break;
+						}
+						case "unreleased": {
+							getBrowser({name}).getVersions().filter((version) =>
+								!getBrowser({name, version}).isReleased()
+							).forEach((version) => browsers.add(getBrowser({name, version})));
+							break;
+						}
+						case "maintained": {
+							// Not supported yet, will be once we add javascript feature support
+							break;
 						}
 					}
-				});
+				}
 
 				break;
 			}
 			case "TargetBrowserRange": {
 				const versions = getBrowser({name: target.browser})
-					? getBrowser({name: target.browser})!.getVersions()
+					? getBrowser({name: target.browser}).getVersions()
 					: [];
 
-				versions.forEach((v) => {
-					if (v >= target.version && v <= target.to) {
-						browsers.add(getBrowser({name: target.browser, version: v})!);
+				for (const version of versions) {
+					if (version >= target.version && version <= target.to) {
+						browsers.add(getBrowser({name: target.browser, version}));
 					}
-				});
+				}
 				break;
 			}
 			case "TargetBrowserRangeOperator": {
-				if (getBrowser({name: target.browser})) {
-					const versions = getBrowser({name: target.browser})!.getVersions();
+				const versions = getBrowser({name: target.browser}).getVersions();
 
-					versions.forEach((version) => {
-						switch (target.operator) {
-							case "GT": {
-								if (version > target.version) {
-									browsers.add(getBrowser({name: target.browser, version})!);
-								}
-								break;
+				for (const version of versions) {
+					switch (target.operator) {
+						case "GT": {
+							if (version > target.version) {
+								browsers.add(getBrowser({name: target.browser, version}));
 							}
-							case "LT": {
-								if (version < target.version) {
-									browsers.add(getBrowser({name: target.browser, version})!);
-								}
-								break;
-							}
-							case "GE": {
-								if (version >= target.version) {
-									browsers.add(getBrowser({name: target.browser, version})!);
-								}
-								break;
-							}
-							case "LE": {
-								if (version <= target.version) {
-									browsers.add(getBrowser({name: target.browser, version})!);
-								}
-								break;
-							}
+							break;
 						}
-					});
+						case "LT": {
+							if (version < target.version) {
+								browsers.add(getBrowser({name: target.browser, version}));
+							}
+							break;
+						}
+						case "GE": {
+							if (version >= target.version) {
+								browsers.add(getBrowser({name: target.browser, version}));
+							}
+							break;
+						}
+						case "LE": {
+							if (version <= target.version) {
+								browsers.add(getBrowser({name: target.browser, version}));
+							}
+							break;
+						}
+					}
 				}
 				break;
 			}
@@ -257,7 +249,7 @@ export function resolveTargets(
 						break;
 					}
 					browsers.add(
-						getBrowser({name: usages[i].id, version: usages[i].version})!,
+						getBrowser({name: usages[i].id, version: usages[i].version}),
 					);
 					coverage += usages[i].usage;
 					if (coverage >= target.coverage) {
@@ -267,48 +259,48 @@ export function resolveTargets(
 				break;
 			}
 			case "TargetBrowserUsage": {
-				getAllBrowserNames().forEach((name) => {
-					getBrowser({name})!.getVersions().forEach((version) => {
+				for (const name of getAllBrowserNames()) {
+					for (const version of getBrowser({name}).getVersions()) {
 						let usage = target.region
-							? getBrowser({name, version})?.getRegionUsage(target.region)
-							: getBrowser({name, version})?.getGlobalUsage();
+							? getBrowser({name, version}).getRegionUsage(target.region)
+							: getBrowser({name, version}).getGlobalUsage();
 
 						switch (target.operator) {
 							case "GT": {
 								if (usage && usage > target.usage) {
-									browsers.add(getBrowser({name, version})!);
+									browsers.add(getBrowser({name, version}));
 								}
 								break;
 							}
 							case "LT": {
 								if (usage && usage < target.usage) {
-									browsers.add(getBrowser({name, version})!);
+									browsers.add(getBrowser({name, version}));
 								}
 								break;
 							}
 							case "GE": {
 								if (usage && usage >= target.usage) {
-									browsers.add(getBrowser({name, version})!);
+									browsers.add(getBrowser({name, version}));
 								}
 								break;
 							}
 							case "LE": {
 								if (usage && usage <= target.usage) {
-									browsers.add(getBrowser({name, version})!);
+									browsers.add(getBrowser({name, version}));
 								}
 								break;
 							}
 						}
-					});
-				});
+					}
+				}
 				break;
 			}
 
 			case "TargetBrowserSince": {
 				getAllBrowserNames().forEach((name) => {
-					const releaseDate = getBrowser({name})?.getRawReleaseDate();
+					const releaseDate = getBrowser({name}).getRawReleaseDate();
 					if (releaseDate && releaseDate > target.since) {
-						browsers.add(getBrowser({name})!);
+						browsers.add(getBrowser({name}));
 					}
 				});
 				break;
@@ -316,12 +308,12 @@ export function resolveTargets(
 			case "TargetBrowserLast": {
 				let names = target.browser ? [target.browser] : getAllBrowserNames();
 
-				names.forEach((name) => {
+				for (const name of names) {
 					switch (target.unit) {
 						case "years":
 						case "months":
 						case "days": {
-							const releaseDate = getBrowser({name})?.getRawReleaseDate();
+							const releaseDate = getBrowser({name}).getRawReleaseDate();
 							const date = new Date();
 
 							switch (target.unit) {
@@ -339,19 +331,17 @@ export function resolveTargets(
 								}
 							}
 							if (releaseDate && releaseDate > date.getTime()) {
-								browsers.add(getBrowser({name})!);
+								browsers.add(getBrowser({name}));
 							}
 							break;
 						}
 						case "versions": {
 							// `b - a` reverses the list
 							if (getBrowser({name})) {
-								getBrowser({name})!.getVersions().sort((a, b) => b - a).slice(
+								getBrowser({name}).getVersions().sort((a, b) => b - a).slice(
 									0,
 									target.qty,
-								).forEach((version) =>
-									browsers.add(getBrowser({name, version})!)
-								);
+								).forEach((version) => browsers.add(getBrowser({name, version})));
 							}
 							break;
 						}
@@ -359,17 +349,17 @@ export function resolveTargets(
 							// `b - a` reverses the list
 							// v % 1 checks if the number is whole
 							if (getBrowser({name})) {
-								getBrowser({name})!.getVersions().filter((v) => v % 1 === 0).sort((
+								getBrowser({name}).getVersions().filter((v) => v % 1 === 0).sort((
 									a,
 									b,
 								) => b - a).slice(0, target.qty).forEach((version) =>
-									browsers.add(getBrowser({name, version})!)
+									browsers.add(getBrowser({name, version}))
 								);
 							}
 							break;
 						}
 					}
-				});
+				}
 				break;
 			}
 			case "TargetBrowserInversion": {
@@ -377,7 +367,7 @@ export function resolveTargets(
 				break;
 			}
 		}
-	});
+	}
 
 	return new Set(
 		Array.from(browsers).filter((browser) => !toRemove.has(browser)),

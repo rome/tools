@@ -32,12 +32,11 @@ browser = getBrowser({
 });
 // Same as new Firefox({version: "72"});
 
-// If either the browser or the version doesn't exist, getBrowser() returns undefined
+// If the browser name doesn't exist it throws
 browser = getBrowser({
 	name: "TotallyNotABrowser",
-	version: 567888678856
 });
-// => undefined
+// => Error: Unknown browser "TotallyNotABrowser"
 
 
 // Actually using it (browser = firefox 84)

@@ -12,35 +12,34 @@ test(
 		t.is(
 			getBrowser({
 				name: "firefox",
-			})!.getName(),
+			}).getName(),
 			"Firefox",
 		);
 
 		t.is(
 			getBrowser({
 				name: "firefox",
-			})?.getName(),
+			}).getName(),
 			"Firefox",
 		);
 
 		t.is(
 			getBrowser({
 				name: "Firefox",
-			})!.getName(),
+			}).getName(),
 			"Firefox",
 		);
 
-		t.is(
+		t.throws(() => {
 			getBrowser({
 				name: "dgsbhjsjkl",
-			}),
-			undefined,
-		);
+			});
+		});
 
 		t.is(
 			getBrowser({
 				name: "FF",
-			})!.getName(),
+			}).getName(),
 			"Firefox",
 		);
 
@@ -48,17 +47,16 @@ test(
 			getBrowser({
 				name: "firefox",
 				version: 84,
-			})!.getVersion(),
+			}).getVersion(),
 			84,
 		);
 
-		t.is(
+		t.throws(() => {
 			getBrowser({
 				name: "firefox",
 				version: 679_934,
-			}),
-			undefined,
-		);
+			});
+		});
 	},
 );
 
