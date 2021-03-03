@@ -900,7 +900,7 @@ export default class Reporter implements ReporterNamespace {
 			return {truncated: false};
 		}
 
-		let items: Array<T> = Array.from(iterable);
+		let items: T[] = Array.from(iterable);
 
 		if (items.length === 0) {
 			// We make some assumptions that there's at least one item

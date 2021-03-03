@@ -17,7 +17,7 @@ import {
 	URLPathMap,
 	URLPathSet,
 } from "@internal/path";
-import {RSERPathMap, RSERArrayBufferView} from "./types";
+import {RSERArrayBufferView, RSERPathMap} from "./types";
 import RSERParserError from "./RSERParserError";
 import {Class, isSafeInstanceof} from "@internal/typescript-helpers";
 

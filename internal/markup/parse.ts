@@ -417,7 +417,7 @@ export function parseMarkup(
 ): MarkupParsedChildren {
 	let children: undefined | MarkupParsedChildren;
 	let cacheKey: undefined | Extract<StaticMarkup, object>;
-	
+
 	if (cache) {
 		const possibleCacheKey = serializeLazyMarkup(raw);
 		if (isObject(possibleCacheKey) || Array.isArray(possibleCacheKey)) {

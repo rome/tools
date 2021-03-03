@@ -6,7 +6,7 @@
  */
 
 import {Mapping, SourceMapConsumer} from "@internal/codec-source-map";
-import {DiagnosticSuppressions, Diagnostic} from "@internal/diagnostics";
+import {Diagnostic, DiagnosticSuppressions} from "@internal/diagnostics";
 import {Cache} from "@internal/compiler";
 import {formatAST} from "@internal/formatter";
 import {CompileRequest} from "../types";

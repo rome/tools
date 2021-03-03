@@ -36,6 +36,7 @@ export default createServerCommand({
 	async callback(req: ServerRequest, flags: Flags): Promise<void> {
 		req.updateRequestFlags({
 			truncateDiagnostics: false,
+			maxDiagnostics: Infinity,
 		});
 
 		await chainCommands(

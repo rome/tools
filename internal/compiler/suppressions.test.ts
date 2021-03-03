@@ -12,8 +12,8 @@ import {dedent} from "@internal/string-utils";
 import * as signals from "./signals";
 import {
 	DIAGNOSTIC_CATEGORIES,
-	DiagnosticSuppressions,
 	Diagnostic,
+	DiagnosticSuppressions,
 	equalCategoryNames,
 } from "@internal/diagnostics";
 

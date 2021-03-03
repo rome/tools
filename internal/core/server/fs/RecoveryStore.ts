@@ -8,8 +8,8 @@ import {FSHandle, FSStats} from "@internal/fs";
 import {Dict} from "@internal/typescript-helpers";
 import {json} from "@internal/codec-config";
 import {
-	DiagnosticLocation,
 	Diagnostic,
+	DiagnosticLocation,
 	catchDiagnostics,
 	createSingleDiagnosticsError,
 	descriptions,

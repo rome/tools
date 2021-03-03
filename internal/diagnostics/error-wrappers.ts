@@ -23,10 +23,7 @@ import {DiagnosticCategory, equalCategoryNames} from "./categories";
 let insideDiagnosticsErrorSerial = false;
 
 export class DiagnosticsError extends Error implements NodeSystemError {
-	constructor(
-		message: undefined | string,
-		diagnostics: Diagnostic[],
-	) {
+	constructor(message: undefined | string, diagnostics: Diagnostic[]) {
 		if (diagnostics.length === 0) {
 			throw new Error("No diagnostics");
 		}
@@ -90,11 +87,8 @@ export function createRuntimeDiagnosticsError(
 	return createSingleDiagnosticsError(diag);
 }
 
-export function createSingleDiagnosticsError(diag: Diagnostic,): DiagnosticsError {
-	return new DiagnosticsError(
-		readMarkup(diag.description.message),
-		[diag],
-	);
+export function createSingleDiagnosticsError(diag: Diagnostic): DiagnosticsError {
+	return new DiagnosticsError(readMarkup(diag.description.message), [diag]);
 }
 
 export function getDiagnosticsFromError(err: Error): undefined | Diagnostic[] {

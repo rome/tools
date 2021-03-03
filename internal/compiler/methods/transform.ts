@@ -6,7 +6,7 @@
  */
 
 import {AnyRoot} from "@internal/ast";
-import {DiagnosticSuppressions, Diagnostic} from "@internal/diagnostics";
+import {Diagnostic, DiagnosticSuppressions} from "@internal/diagnostics";
 import {AnyVisitor, TransformRequest} from "../types";
 import {stageOrder, stageTransforms} from "../transforms/index";
 import {Cache} from "@internal/compiler";

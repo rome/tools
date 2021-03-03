@@ -99,7 +99,7 @@ async function run(
 				},
 			});
 			processor.normalizer.setInlineSourceText(ref.uid, code);
-			processor.addFilter({
+			processor.addEliminationFilter({
 				test(diag) {
 					return (
 						equalCategoryNames(diag.description.category, category) ||

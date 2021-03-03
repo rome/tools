@@ -7,9 +7,7 @@
 
 import {AnyNodes} from "@internal/ast";
 
-export function assertSingleOrMultipleNodes(
-	result: AnyNodes,
-): AnyNodes {
+export function assertSingleOrMultipleNodes(result: AnyNodes): AnyNodes {
 	if (result === undefined) {
 		throw new Error("Expected node or node list but got null");
 	} else if (typeof result === "symbol") {

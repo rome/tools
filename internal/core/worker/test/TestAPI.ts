@@ -90,9 +90,7 @@ function normalizeUserAdvice(advice: UserAdviceItem[]): DiagnosticAdvice[] {
 }
 
 // Once we have a public test framework we should perform normalization here
-function normalizeUserAdviceItem(
-	item: TestDiagnosticAdvice,
-): DiagnosticAdvice {
+function normalizeUserAdviceItem(item: TestDiagnosticAdvice): DiagnosticAdvice {
 	switch (item.type) {
 		case "code":
 			return {
@@ -124,9 +122,7 @@ function normalizeUserAdviceItem(
 	}
 }
 
-type UserAdviceItem =
-	| TestDiagnosticAdvice
-	| (() => TestDiagnosticAdvice);
+type UserAdviceItem = TestDiagnosticAdvice | (() => TestDiagnosticAdvice);
 
 export default class TestAPI implements TestHelper {
 	constructor(

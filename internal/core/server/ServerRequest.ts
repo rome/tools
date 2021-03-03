@@ -27,12 +27,12 @@ import {
 } from "@internal/core";
 import {
 	DIAGNOSTIC_CATEGORIES,
+	Diagnostic,
 	DiagnosticAdvice,
 	DiagnosticCategory,
 	DiagnosticDescription,
 	DiagnosticLocation,
 	DiagnosticSuppressions,
-	Diagnostic,
 	DiagnosticsError,
 	DiagnosticsProcessor,
 	DiagnosticsProcessorFilterOptions,
@@ -592,15 +592,12 @@ export default class ServerRequest {
 	}
 
 	public createDiagnosticsProcessor(
-		opts: Omit<DiagnosticsProcessorOptions, "filter"> & {filter?: Partial<DiagnosticsProcessorFilterOptions>} = {},
+		opts: DiagnosticsProcessorOptions = {},
 	): DiagnosticsProcessor {
 		return new DiagnosticsProcessor({
 			markupOptions: this.reporter.markupOptions,
+			filter: this.getDiagnosticsProcessorFilterOptions(),
 			...opts,
-			filter: mergeObjects(
-				this.getDiagnosticsProcessorFilterOptions(),
-				opts.filter,
-			),
 		});
 	}
 

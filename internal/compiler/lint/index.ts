@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {DiagnosticSuppressions, Diagnostic} from "@internal/diagnostics";
+import {Diagnostic, DiagnosticSuppressions} from "@internal/diagnostics";
 import {AnyVisitor, LintRequest} from "../types";
 import {Cache, CompilerContext} from "@internal/compiler";
 import {formatAST} from "@internal/formatter";

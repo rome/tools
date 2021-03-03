@@ -40,9 +40,7 @@ import {
 	AnalyzeDependencyResult,
 	UNKNOWN_ANALYZE_DEPENDENCIES_RESULT,
 } from "../common/types/analyzeDependencies";
-import {
-	InlineSnapshotUpdate,
-} from "./test/SnapshotManager";
+import {InlineSnapshotUpdate} from "./test/SnapshotManager";
 import {formatAST} from "@internal/formatter";
 import {getNodeReferenceParts, valueToNode} from "@internal/js-ast-utils";
 import {markup} from "@internal/markup";

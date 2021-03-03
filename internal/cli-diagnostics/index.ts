@@ -6,8 +6,8 @@
  */
 
 import {
-	DiagnosticSuppressions,
 	Diagnostic,
+	DiagnosticSuppressions,
 	DiagnosticsProcessor,
 } from "@internal/diagnostics";
 import {DiagnosticsPrinterOptions} from "./types";

@@ -1,4 +1,4 @@
-import {IndexedNumber, Duration} from "@internal/numbers";
+import {Duration, IndexedNumber} from "@internal/numbers";
 import {
 	AbsoluteFilePathMap,
 	DataURIPathMap,

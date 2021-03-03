@@ -21,7 +21,7 @@ export type DiagnosticCategoryDescription = {
 	categoryValue?: string;
 };
 
-export type DiagnosticFilter = {
+export type DiagnosticEliminationFilter = {
 	category?: DiagnosticCategory;
 	message?: StaticMarkup;
 	path?: Path;
@@ -29,7 +29,7 @@ export type DiagnosticFilter = {
 	line?: OneIndexed;
 };
 
-export type DiagnosticFilterWithTest = DiagnosticFilter & {
+export type DiagnosticEliminationFilterWithTest = DiagnosticEliminationFilter & {
 	test?: (diagnostic: Diagnostic) => boolean;
 };
 

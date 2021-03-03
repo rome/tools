@@ -8,10 +8,10 @@
 import {
 	Diagnostic,
 	DiagnosticAdvice,
+	DiagnosticDependency,
 	DiagnosticDescription,
 	DiagnosticLocation,
 	DiagnosticSuppression,
-	DiagnosticDependency,
 	DiagnosticTags,
 } from "./types";
 import {SourceMapConsumerCollection} from "@internal/codec-source-map";
@@ -25,7 +25,7 @@ import {OneIndexed, ZeroIndexed} from "@internal/numbers";
 import {mergeObjects} from "@internal/typescript-helpers";
 import {MixedPathMap, MixedPathSet, Path} from "@internal/path";
 import stringDiff from "@internal/string-diff";
-import { DiagnosticsProcessor } from ".";
+import {DiagnosticsProcessor} from ".";
 
 export type DiagnosticsNormalizerOptions = {
 	tags?: DiagnosticTags;
@@ -73,14 +73,17 @@ export default class DiagnosticsNormalizer {
 		this.inlinedSourceTextPaths = new MixedPathSet();
 		this.markupOptions = this.createMarkupOptions(markupOptions);
 
-		this.couldNormalizeMarkup = sourceMaps !== undefined || markupOptions.stripFilelinkText || markupOptions.stripPositions || 
-		markupOptions.humanizeFilename !== undefined ||
-		markupOptions.normalizePosition !== undefined;
+		this.couldNormalizeMarkup =
+			sourceMaps !== undefined ||
+			markupOptions.stripFilelinkText ||
+			markupOptions.stripPositions ||
+			markupOptions.humanizeFilename !== undefined ||
+			markupOptions.normalizePosition !== undefined;
 	}
 
 	private sourceMaps: undefined | SourceMapConsumerCollection;
 	private processor: undefined | DiagnosticsProcessor;
-	
+
 	private options: DiagnosticsNormalizerOptions;
 	private markupOptions: MarkupFormatNormalizeOptions;
 	private couldNormalizeMarkup: boolean;
@@ -306,7 +309,9 @@ export default class DiagnosticsNormalizer {
 		return normalized ? newAdvice : advice;
 	}
 
-	private normalizeAdviceItem(item: DiagnosticAdvice): undefined | DiagnosticAdvice {
+	private normalizeAdviceItem(
+		item: DiagnosticAdvice,
+	): undefined | DiagnosticAdvice {
 		const {sourceMaps} = this;
 
 		switch (item.type) {

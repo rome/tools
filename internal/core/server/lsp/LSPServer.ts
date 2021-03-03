@@ -106,8 +106,10 @@ export default class LSPServer {
 
 	private createDiagnosticsProcessor(): DiagnosticsProcessor {
 		// We want to filter pendingFixes because we'll autoformat the file on save if necessary and it's just noise
-		const processor = this.request.createDiagnosticsProcessor();
-		processor.addFilter({
+		const processor = this.request.createDiagnosticsProcessor({
+			filter: undefined,
+		});
+		processor.addEliminationFilter({
 			category: DIAGNOSTIC_CATEGORIES["lint/pendingFixes"],
 		});
 		return processor;

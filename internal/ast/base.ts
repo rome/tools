@@ -6,7 +6,7 @@
  */
 
 import {AnyComment} from "@internal/ast";
-import {DiagnosticIntegrity, Diagnostic} from "@internal/diagnostics";
+import {Diagnostic, DiagnosticIntegrity} from "@internal/diagnostics";
 import {NodeBase} from "@internal/parser-core";
 import {Path} from "@internal/path";
 

@@ -16,7 +16,10 @@ import {
 import {Server, ServerRequest, TestRef} from "@internal/core";
 import {DiagnosticsPrinter} from "@internal/cli-diagnostics";
 import {humanizeNumber} from "@internal/numbers";
-import {AnyBridge, isBridgeDisconnectedDiagnosticsError} from "@internal/events";
+import {
+	AnyBridge,
+	isBridgeDisconnectedDiagnosticsError,
+} from "@internal/events";
 import {CoverageCollector} from "@internal/v8";
 import {ManifestDefinition} from "@internal/codec-js-manifest";
 import {
@@ -128,7 +131,7 @@ export default class TestServer {
 		this.printer.processor.guaranteedTruncationEvent.subscribe(() => {
 			// TODO: Notify all test workers that they should no longer send us diagnostics
 			// We will however still need to receive an event that a diagnostic was created so we can increment
-			// our own truncated count. We should also send over the filter to mark those correctly too. 
+			// our own truncated count. We should also send over the filter to mark those correctly too.
 		});
 	}
 
@@ -278,7 +281,7 @@ export default class TestServer {
 					for (const worker of workers) {
 						await worker.thread.terminate();
 					}
-					
+
 					runProgress.teardown();
 				},
 			},

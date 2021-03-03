@@ -108,7 +108,7 @@ async function testLintExpect(
 
 	const processor = new DiagnosticsProcessor();
 	processor.normalizer.setInlineSourceText(uid, input);
-	processor.addFilter({
+	processor.addEliminationFilter({
 		test: (diag) =>
 			equalCategoryNames(diag.description.category, category) ||
 			equalCategoryNames(diag.description.category, DIAGNOSTIC_CATEGORIES.parse)

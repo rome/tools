@@ -184,7 +184,9 @@ export default class CompilerContext {
 		return state as VisitorState<State>;
 	}
 
-	public async normalizeTransforms(transforms: Transform[]): Promise<AnyVisitor[]> {
+	public async normalizeTransforms(
+		transforms: Transform[],
+	): Promise<AnyVisitor[]> {
 		return Promise.all(
 			transforms.map(async (visitor) => {
 				if (typeof visitor === "function") {

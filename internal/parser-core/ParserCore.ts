@@ -17,13 +17,13 @@ import {
 } from "./types";
 import {
 	DIAGNOSTIC_CATEGORIES,
+	Diagnostic,
 	DiagnosticCategory,
 	DiagnosticDescription,
-	DiagnosticFilter,
+	DiagnosticEliminationFilter,
 	DiagnosticIntegrity,
 	DiagnosticLanguage,
 	DiagnosticLocation,
-	Diagnostic,
 	DiagnosticsError,
 	DiagnosticsProcessor,
 	catchDiagnosticsSync,
@@ -48,7 +48,7 @@ export type ParserCoreState = {
 	commentStack: AnyNode[];
 	commentPreviousNode: undefined | AnyNode;
 	diagnostics: Diagnostic[];
-	diagnosticFilters: DiagnosticFilter[];
+	diagnosticFilters: DiagnosticEliminationFilter[];
 	corrupt: boolean;
 };
 
@@ -797,7 +797,7 @@ export default class ParserCore<Types extends ParserCoreTypes> {
 		});
 
 		for (const filter of this.state.diagnosticFilters) {
-			processor.addFilter(filter);
+			processor.addEliminationFilter(filter);
 		}
 
 		// TODO remove any trailing "eof" diagnostic
@@ -810,7 +810,7 @@ export default class ParserCore<Types extends ParserCoreTypes> {
 		this.state.diagnostics.push(diag);
 	}
 
-	public addDiagnosticFilter(diag: DiagnosticFilter) {
+	public addDiagnosticFilter(diag: DiagnosticEliminationFilter) {
 		this.state.diagnosticFilters.push(diag);
 	}
 

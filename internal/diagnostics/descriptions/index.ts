@@ -40,11 +40,7 @@ import {htmlParser} from "./parsers/htmlParser";
 import {recoveryStore} from "./commands/recoveryStore";
 import {markdownParser} from "./parsers/markdownParser";
 import {initCommand} from "./commands/initCommand";
-import {
-	StaticMarkup,
-	joinMarkup,
-	markup,
-} from "@internal/markup";
+import {StaticMarkup, joinMarkup, markup} from "@internal/markup";
 import {tomlParser} from "./parsers/tomlParser";
 
 export function join(conjunction: string, items: StaticMarkup[]): StaticMarkup {

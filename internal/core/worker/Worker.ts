@@ -120,7 +120,7 @@ export default class Worker {
 					});
 					return true;
 				}
-				
+
 				try {
 					// Dispatch error to the server and trigger a fatal
 					bridge.events.fatalError.send(bridge.serializeCustomError(err));

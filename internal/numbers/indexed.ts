@@ -106,9 +106,7 @@ function isIndexedNumberInstance(
 	);
 }
 
-export function isOneIndexedNumberish(
-	value: unknown,
-): value is IndexedNumberish {
+export function isOneIndexedNumberish(value: unknown): value is IndexedNumberish {
 	return isIndexedNumberInstance(value, "OneIndexedNumber");
 }
 

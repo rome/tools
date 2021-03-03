@@ -9,9 +9,9 @@ import {ProjectConfig} from "@internal/project";
 import {
 	AnyVisitor,
 	CompilerOptions,
+	Transform,
 	TransformStageFactories,
 	TransformStageName,
-	Transform,
 } from "../types";
 import classProperties from "./compile/transpile/classProperties";
 import paramlessCatch from "./compile/transpile/paramlessCatch";

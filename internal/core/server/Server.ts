@@ -14,8 +14,8 @@ import {
 } from "@internal/core";
 import {
 	DIAGNOSTIC_CATEGORIES,
-	DiagnosticOrigin,
 	Diagnostic,
+	DiagnosticOrigin,
 	DiagnosticsProcessor,
 	descriptions,
 } from "@internal/diagnostics";

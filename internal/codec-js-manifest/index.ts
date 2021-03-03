@@ -58,7 +58,10 @@ const TYPO_KEYS: Map<string, string> = new Map([
 	["script", "scripts"],
 ]);
 
-function normalizePathPatterns(consumer: Consumer, loose: boolean): PathPattern[] {
+function normalizePathPatterns(
+	consumer: Consumer,
+	loose: boolean,
+): PathPattern[] {
 	return normalizeStringArray(consumer, loose).map((str) =>
 		parsePathPattern({
 			input: str,

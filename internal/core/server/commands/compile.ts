@@ -44,10 +44,7 @@ export default createServerCommand({
 		const {compiledCode, diagnostics} = res.value;
 
 		if (diagnostics.length > 0) {
-			throw new DiagnosticsError(
-				"Compile diagnostics",
-				diagnostics,
-			);
+			throw new DiagnosticsError("Compile diagnostics", diagnostics);
 		}
 
 		reporter.write(compiledCode);

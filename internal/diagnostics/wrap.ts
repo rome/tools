@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {DiagnosticOrigin, Diagnostic} from "./types";
+import {Diagnostic, DiagnosticOrigin} from "./types";
 import {addOriginsToDiagnostics} from "./derive";
 import {DiagnosticsError, getDiagnosticsFromError} from "./error-wrappers";
 import DiagnosticsProcessor from "./DiagnosticsProcessor";

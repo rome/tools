@@ -619,7 +619,6 @@ export default class DiagnosticsPrinter extends Error {
 
 		for (const diag of diagnostics) {
 			if (this.seenDiagnostics.has(diag)) {
-				continue;
 			} else {
 				this.seenDiagnostics.add(diag);
 				filteredDiagnostics.push(diag);
@@ -683,6 +682,7 @@ export default class DiagnosticsPrinter extends Error {
 			const {reporter} = this;
 			const calculated = this.processor.calculate();
 
+			console.log(calculated)
 			const displayableProblems = calculated.total - calculated.filtered;
 			let str = markup`Found <emphasis>${displayableProblems}</emphasis> <grammarNumber plural="problems" singular="problem">${String(
 				displayableProblems,
@@ -716,7 +716,7 @@ export default class DiagnosticsPrinter extends Error {
 				const calculated = this.processor.calculate();
 				if (calculated.truncated > 0) {
 					reporter.warn(
-						markup`Only <emphasis>${calculated.diagnostics.length}</emphasis> diagnostics shown. Add <code>--show-all-diagnostics</code> or <code>--max-diagnostics ${"<num>"}</code> flag to view remaining`,
+						markup`Only <emphasis>${calculated.diagnostics.length}</emphasis> of <emphasis>${calculated.total}</emphasis> diagnostics shown. Add <code>--show-all-diagnostics</code> or <code>--max-diagnostics ${"<num>"}</code> flag to view remaining`,
 					);
 				}
 

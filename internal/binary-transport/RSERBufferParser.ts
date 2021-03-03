@@ -1,10 +1,10 @@
 import {
-	RSERPathMap,
 	RSERArray,
 	RSERArrayBufferView,
 	RSERMap,
 	RSERMixedPathMap,
 	RSERObject,
+	RSERPathMap,
 	RSERSet,
 	RSERValue,
 } from "./types";

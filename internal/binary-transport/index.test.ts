@@ -1,9 +1,9 @@
 import RSERBufferParser from "./RSERBufferParser";
 import {
-	RSERPathMap,
 	RSERArray,
 	RSERMap,
 	RSERObject,
+	RSERPathMap,
 	RSERSet,
 	RSERValue,
 } from "./types";

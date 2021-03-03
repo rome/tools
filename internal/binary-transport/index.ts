@@ -19,11 +19,11 @@ export {default as RSERWriterMaterial} from "./RSERWriterMaterial";
 export {default as RSERStream} from "./RSERStream";
 
 export {
-	RSERPathMap as AnyRSERPathMap,
 	RSERArray,
 	RSERArrayBufferView,
 	RSERMap,
 	RSERObject,
+	RSERPathMap as AnyRSERPathMap,
 	RSERSet,
 	RSERValue,
 } from "./types";

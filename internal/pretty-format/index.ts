@@ -8,21 +8,25 @@
 import {
 	UnknownObject,
 	isIterable,
-	isPlainObject,
 	isObject,
+	isPlainObject,
 } from "@internal/typescript-helpers";
 import {escapeJSString} from "@internal/string-escape";
 import {naturalCompare} from "@internal/string-utils";
 import {
-	Markup,
 	LazyMarkupFactory,
+	Markup,
 	StaticMarkup,
 	joinMarkup,
 	markup,
 	markupTag,
 } from "@internal/markup";
 import {markupToJoinedPlainText} from "@internal/cli-layout";
-import {isPositionish, isSourceLocationish, Positionish} from "@internal/parser-core";
+import {
+	Positionish,
+	isPositionish,
+	isSourceLocationish,
+} from "@internal/parser-core";
 import util = require("util");
 
 type RecursiveStack = unknown[];
@@ -427,7 +431,7 @@ function formatObject(
 		};
 
 		const prop = markup`${formatKey(key)}: ${prettyFormat(val, propOpts)}`;
-	
+
 		if (isObject(val)) {
 			hasObjectProp = true;
 			objProps.push(prop);
@@ -435,13 +439,13 @@ function formatObject(
 			props.push(prop);
 		}
 	}
-	
+
 	props = props.concat(objProps);
 
 	// Get symbol props. Should always be at the end
 	for (const sym of Object.getOwnPropertySymbols(obj)) {
 		const val: unknown = Reflect.get(obj, sym);
-	
+
 		if (isObject(val)) {
 			hasObjectProp = true;
 		}

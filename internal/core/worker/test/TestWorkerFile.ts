@@ -8,6 +8,7 @@
 import {UnknownObject} from "@internal/typescript-helpers";
 import {
 	DIAGNOSTIC_CATEGORIES,
+	DeriveErrorDiagnosticOptions,
 	Diagnostic,
 	DiagnosticAdvice,
 	DiagnosticLocation,
@@ -18,7 +19,6 @@ import {
 	descriptions,
 	diagnosticLocationToMarkupFilelink,
 	getErrorStackAdvice,
-	DeriveErrorDiagnosticOptions,
 } from "@internal/diagnostics";
 import {
 	GlobalTestOptions,
@@ -419,7 +419,7 @@ export default class TestWorkerFile {
 
 	public deriveDiagnosticFromErrorStructure(
 		struct: StructuredError,
-		opts?: DeriveErrorDiagnosticOptions
+		opts?: DeriveErrorDiagnosticOptions,
 	): Diagnostic {
 		return deriveDiagnosticFromErrorStructure(
 			struct,
@@ -583,7 +583,6 @@ export default class TestWorkerFile {
 				reject(new Error(`Test timeout - exceeded ${String(time)}ms`));
 			};
 		});
-
 
 		const api = new TestAPI(this, test, onTimeout);
 

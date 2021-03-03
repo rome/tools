@@ -109,7 +109,7 @@ function printAdviceItem(
 			return printDiff(item, opts);
 
 		case "diff-strings":
-			throw new Error(`Should have been filtered by DiagnosticsNormalizer`);
+			throw new Error("Should have been filtered by DiagnosticsNormalizer");
 
 		case "code":
 			return printCode(item, opts);

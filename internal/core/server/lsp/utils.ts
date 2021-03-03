@@ -12,9 +12,9 @@ import stringDiff, {Diff, diffConstants} from "@internal/string-diff";
 import {ZeroIndexed} from "@internal/numbers";
 import {Position} from "@internal/parser-core";
 import {
+	Diagnostic,
 	DiagnosticAdviceAction,
 	DiagnosticLocation,
-	Diagnostic,
 	formatCategoryDescription,
 } from "@internal/diagnostics";
 import {Server, WorkerBufferPatch} from "@internal/core";

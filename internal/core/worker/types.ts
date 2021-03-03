@@ -7,9 +7,9 @@ import {
 	LintCompilerOptions,
 } from "@internal/compiler";
 import {
+	Diagnostic,
 	DiagnosticIntegrity,
 	DiagnosticSuppressions,
-	Diagnostic,
 } from "@internal/diagnostics";
 import {BridgeClient, BridgeServer} from "@internal/events";
 import {FormatterOptions} from "@internal/formatter";

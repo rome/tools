@@ -14,15 +14,15 @@ import {
 } from "./codes";
 import {
 	Position,
+	SourceLocationish,
 	isPositionish,
 	isSourceLocationish,
-	SourceLocationish,
 } from "@internal/parser-core";
 import {
-	RSERPathMap,
 	RSERArray,
 	RSERMap,
 	RSERObject,
+	RSERPathMap,
 	RSERSet,
 	RSERValue,
 	RSERValueObjects,
@@ -42,8 +42,8 @@ import {getErrorStructure} from "@internal/errors";
 import {pretty} from "@internal/pretty-format";
 import {getUTF8ByteLength} from "@internal/binary";
 import {
-	IndexedNumber,
 	Duration,
+	IndexedNumber,
 	OneIndexed,
 	ZeroIndexed,
 } from "@internal/numbers";

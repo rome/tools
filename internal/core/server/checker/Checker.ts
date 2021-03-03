@@ -7,7 +7,7 @@
 
 import {Server, ServerRequest} from "@internal/core";
 import {LINTABLE_EXTENSIONS} from "@internal/core/common/file-handlers";
-import {Diagnostic, DiagnosticsProcessor} from "@internal/diagnostics";
+import {Diagnostic, DiagnosticsProcessor, DiagnosticsProcessorCalculatedPath} from "@internal/diagnostics";
 import {
 	AbsoluteFilePath,
 	AbsoluteFilePathSet,
@@ -331,17 +331,26 @@ class CheckRunner {
 		}
 	}
 
-	public getDiagnosticsForPath(path: Path, guaranteedOnly: boolean): Diagnostic[] {
+	public getDiagnosticsForPath(
+		path: Path,
+		guaranteedOnly: boolean,
+	): Diagnostic[] {
 		const processor = new DiagnosticsProcessor();
 
+		const allCalculated: DiagnosticsProcessorCalculatedPath[] = [];
+
 		for (const subprocessor of this.processors) {
-			const diagnostics = subprocessor.calculatePath(path, false);
-			if (diagnostics !== undefined) {
-				processor.addDiagnostics(
-					guaranteedOnly ? diagnostics.guaranteed : diagnostics.complete,
-				);
-				processor.addSuppressions(diagnostics.suppressions);
+			const calculated = subprocessor.calculatePath(path, {raw: true});
+			if (calculated !== undefined) {
+				processor.addSuppressions(calculated.suppressions);
+				allCalculated.push(calculated);
 			}
+		}
+
+		for (const calculated of allCalculated) {
+			processor.addDiagnostics(
+				guaranteedOnly ? calculated.guaranteed : calculated.complete,
+			);
 		}
 
 		return processor.getDiagnostics();
@@ -403,7 +412,9 @@ class CheckRunner {
 		// Queue complete diagnostics if they are different than guaranteed
 		for (const processor of this.processors) {
 			for (const path of processor.getPaths()) {
-				const diagnostics = processor.calculatePath(path);
+				const diagnostics = processor.calculatePath(path, {
+					raw: true,
+				});
 				if (diagnostics !== undefined) {
 					if (diagnostics.complete.length !== diagnostics.guaranteed.length) {
 						this.queueChanges(path, false);
@@ -488,7 +499,8 @@ export default class Checker {
 						markup`Fixes available. To apply safe fixes and formatting run`,
 					);
 					reporter.command("rome check --apply");
-					reporter.info(markup`To choose fix suggestions run`);
+					reporter.br();
+					reporter.info(markup`To interactively choose fix suggestions run`);
 					reporter.command("rome check --review");
 					reporter.br();
 				}

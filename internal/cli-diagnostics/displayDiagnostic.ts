@@ -212,7 +212,7 @@ function buildOutdatedAdvice(
 			category: "warn",
 			text: markup`This diagnostic refers to a file that no longer exists`,
 		});
-	} else if (outdatedPaths.size > 0) {
+	} else if (missingPaths.size > 0) {
 		advice.push({
 			type: "log",
 			category: "warn",

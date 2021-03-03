@@ -25,7 +25,7 @@ import {PathLocker} from "@internal/async/lockers";
 import TestServerFile from "@internal/core/server/testing/TestServerFile";
 import {BridgeServer} from "@internal/events";
 import {Duration} from "@internal/numbers";
-import { ThreadWorkerContainer } from "@internal/core/worker/types";
+import {ThreadWorkerContainer} from "@internal/core/worker/types";
 
 export default class TestServerWorker {
 	constructor(

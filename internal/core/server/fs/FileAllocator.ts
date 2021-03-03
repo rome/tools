@@ -11,7 +11,10 @@ import {PathLocker} from "../../../async/lockers";
 import {AbsoluteFilePath, AbsoluteFilePathMap} from "@internal/path";
 import {Markup, joinMarkup, markup} from "@internal/markup";
 import {ReporterNamespace} from "@internal/cli-reporter";
-import {createSingleDiagnosticsError, descriptions} from "@internal/diagnostics";
+import {
+	createSingleDiagnosticsError,
+	descriptions,
+} from "@internal/diagnostics";
 import {matchPathPatterns} from "@internal/path-match";
 import {ServerRefreshFile} from "../Server";
 

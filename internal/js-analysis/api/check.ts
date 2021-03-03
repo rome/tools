@@ -7,8 +7,8 @@
 
 import {CheckProvider} from "../types";
 import {
-	DiagnosticAdvice,
 	Diagnostic,
+	DiagnosticAdvice,
 	descriptions,
 } from "@internal/diagnostics";
 import {JSRoot} from "@internal/ast";

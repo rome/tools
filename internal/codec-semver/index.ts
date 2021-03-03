@@ -5,12 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {
-	AbsoluteVersionNode,
-	RangeNode,
-	UserRange,
-	UserVersion,
-} from "./types";
+import {AbsoluteVersionNode, RangeNode, UserRange, UserVersion} from "./types";
 import {satisfiesFromAst} from "./satisfies";
 import {compareFromAst} from "./compare";
 import {

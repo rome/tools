@@ -1,8 +1,8 @@
 import {AnyNode} from "@internal/ast";
 import {
+	Diagnostic,
 	DiagnosticCategory,
 	DiagnosticSuppressions,
-	Diagnostic,
 	descriptions,
 	formatCategoryDescription,
 	splitPossibleCategoryName,

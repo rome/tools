@@ -138,9 +138,7 @@ export function markup(
 	return obj;
 }
 
-function normalizeInterpolatedValue(
-	value: Markup | InterpolatedValue,
-): Markup {
+function normalizeInterpolatedValue(value: Markup | InterpolatedValue): Markup {
 	if (typeof value === "undefined") {
 		return toRawMarkup("<dim>undefined</dim>");
 	} else {
@@ -215,7 +213,7 @@ export function serializeLazyMarkup(markup: Markup): StaticMarkup {
 	} else if (isLazyMarkupFactory(markup)) {
 		let res = factoryCache.get(markup);
 		if (res === undefined) {
-		res = markup();
+			res = markup();
 			factoryCache.set(markup, res);
 		}
 		return serializeLazyMarkup(res);

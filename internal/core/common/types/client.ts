@@ -17,7 +17,10 @@ import {
 	ServerQueryResponse,
 	ServerQueryResponseBase,
 } from "../bridges/ServerBridge";
-import { DiagnosticsProcessorFilterOptions, DEFAULT_PROCESSOR_FILTER_FLAGS } from "@internal/diagnostics";
+import {
+	DEFAULT_PROCESSOR_FILTER_FLAGS,
+	DiagnosticsProcessorFilterOptions,
+} from "@internal/diagnostics";
 
 export const DEFAULT_CLIENT_FLAGS: ClientFlags = {
 	clientName: "unknown",
@@ -41,22 +44,23 @@ export const DEFAULT_CLIENT_REQUEST_FLAGS: ClientRequestFlags = {
 	resolverMocks: false,
 };
 
-export type ClientRequestFlags = DiagnosticsPrinterFlags & DiagnosticsProcessorFilterOptions & {
-	watch: boolean;
-	review: boolean;
-	unsafeWrites: boolean;
+export type ClientRequestFlags = DiagnosticsPrinterFlags &
+	DiagnosticsProcessorFilterOptions & {
+		watch: boolean;
+		review: boolean;
+		unsafeWrites: boolean;
 
-	// Debugging
-	timing: boolean;
-	collectMarkers: boolean;
-	benchmark: boolean;
-	benchmarkIterations: number;
+		// Debugging
+		timing: boolean;
+		collectMarkers: boolean;
+		benchmark: boolean;
+		benchmarkIterations: number;
 
-	// Bundler flags
-	resolverPlatform: undefined | Platform;
-	resolverScale: undefined | number;
-	resolverMocks: boolean;
-};
+		// Bundler flags
+		resolverPlatform: undefined | Platform;
+		resolverScale: undefined | number;
+		resolverMocks: boolean;
+	};
 
 export type ClientTerminalFeatures = Partial<TerminalFeatures> & {
 	redirectError?: boolean;

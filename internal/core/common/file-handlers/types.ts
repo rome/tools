@@ -8,10 +8,10 @@
 import {FileReference, WorkerParseOptions, WorkerProject} from "@internal/core";
 import Worker from "../../worker/Worker";
 import {
+	Diagnostic,
 	DiagnosticIntegrity,
 	DiagnosticLanguage,
 	DiagnosticSuppressions,
-	Diagnostic,
 } from "@internal/diagnostics";
 import {AnyRoot, ConstJSSourceType} from "@internal/ast";
 import {Path} from "@internal/path";

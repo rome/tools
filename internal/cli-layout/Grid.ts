@@ -6,6 +6,7 @@
  */
 
 import {
+	Markup,
 	MarkupLineWrapMode,
 	MarkupParsedChild,
 	MarkupParsedChildren,
@@ -13,13 +14,13 @@ import {
 	MarkupParsedText,
 	MarkupTagName,
 	buildFileLink,
+	convertToMarkupFromRandomString,
 	createEmptyAttributes,
 	formatApprox,
 	formatGrammarNumber,
 	formatNumber,
 	lineWrapValidator,
 	parseMarkup,
-	Markup,
 } from "@internal/markup";
 import {
 	GridLocators,
@@ -938,7 +939,11 @@ export default class Grid {
 		}
 
 		return this.normalizeChildren(
-			parseMarkup(sub, {offsetPosition, sourceText: this.options.sourceText}, cache),
+			parseMarkup(
+				sub,
+				{offsetPosition, sourceText: this.options.sourceText},
+				cache,
+			),
 		);
 	}
 
@@ -1048,7 +1053,7 @@ export default class Grid {
 	private getViewPointer({attributes, children}: MarkupParsedTag): GridPointer {
 		return {
 			char: this.parse(
-				attributes.get("char").asString(""),
+				convertToMarkupFromRandomString(attributes.get("char").asString("")),
 				attributes.get("char").getDiagnosticLocation("inner-value").start,
 				false,
 			),

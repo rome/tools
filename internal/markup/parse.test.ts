@@ -6,14 +6,14 @@
  */
 
 import {test} from "rome";
-import { markup } from "./escape";
+import {markup} from "./escape";
 import {parseMarkup} from "./parse";
 
 test(
 	"should not parse string escapes",
 	async (t) => {
 		t.snapshot(markup`<filelink target="C:\\Users\\sebmck\\file.ts" />`);
-		
+
 		t.snapshot(
 			parseMarkup(
 				markup`<info>[MemoryFileSystem] Adding new project directory C:\\Users\\sebmck\\rome</info>`,
