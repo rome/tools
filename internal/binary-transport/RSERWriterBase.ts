@@ -14,9 +14,9 @@ import {
 } from "./codes";
 import {
 	Position,
-	SourceLocation,
 	isPositionish,
-	isSourceLocation,
+	isSourceLocationish,
+	SourceLocationish,
 } from "@internal/parser-core";
 import {
 	RSERPathMap,
@@ -491,9 +491,9 @@ export default abstract class RSERWriterBase {
 		this.encodeInt(pos.column.valueOf());
 	}
 
-	private encodeSourceLocation(loc: SourceLocation) {
+	private encodeSourceLocation(loc: SourceLocationish, path: Path) {
 		this.writeByte(CODES.SOURCE_LOCATION);
-		this.encodePath(loc.path);
+		this.encodePath(path);
 
 		// We don't use encodeValue here as we want to allow identifierName to use our reference table
 		if (loc.identifierName === undefined) {
@@ -515,8 +515,8 @@ export default abstract class RSERWriterBase {
 		if (keys.length === 2 && isPositionish(val)) {
 			return this.encodePosition(val);
 		}
-		if (keys.length <= 4 && isSourceLocation(val)) {
-			return this.encodeSourceLocation(val);
+		if (keys.length <= 4 && isSourceLocationish(val) && isPath(val.path)) {
+			return this.encodeSourceLocation(val, val.path);
 		}
 
 		// First pass to compute number of defined keys

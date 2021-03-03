@@ -22,7 +22,7 @@ import {
 	markupTag,
 } from "@internal/markup";
 import {markupToJoinedPlainText} from "@internal/cli-layout";
-import {Position, isPositionish, isSourceLocation} from "@internal/parser-core";
+import {isPositionish, isSourceLocationish, Positionish} from "@internal/parser-core";
 import util = require("util");
 
 type RecursiveStack = unknown[];
@@ -337,7 +337,7 @@ function formatLabel(label: StaticMarkup): StaticMarkup {
 	return markupTag("color", label, {fg: "cyan"});
 }
 
-function formatPositionValue(val: Position): StaticMarkup {
+function formatPositionValue(val: Positionish): StaticMarkup {
 	return markup`<token type="number">${String(val.line.valueOf())}:${String(
 		val.column.valueOf(),
 	)}</token>`;
@@ -381,7 +381,7 @@ function formatObject(
 			return markup`${label} ${formatPositionValue(obj)}`;
 		}
 
-		if (isSourceLocation(obj)) {
+		if (isSourceLocationish(obj)) {
 			let inner = markup`<token type="string">${obj.path.format()}</token> ${formatPositionValue(
 				obj.start,
 			)}<dim>-</dim>${formatPositionValue(obj.end)}`;
@@ -399,7 +399,10 @@ function formatObject(
 		stack: [...stack, obj],
 		depth: opts.depth + 1,
 	};
-	const {ignoreKeys, props} = getExtraObjectProps(obj, nextOpts);
+	const {ignoreKeys, props: extraProps} = getExtraObjectProps(obj, nextOpts);
+
+	let props: Markup[] = [...extraProps];
+	let objProps: Markup[] = [];
 	let hasObjectProp = false;
 
 	// Get string props
@@ -422,16 +425,20 @@ function formatObject(
 			...nextOpts,
 			path: [...nextOpts.path, key],
 		};
+
+		const prop = markup`${formatKey(key)}: ${prettyFormat(val, propOpts)}`;
 	
 		if (isObject(val)) {
 			hasObjectProp = true;
+			objProps.push(prop);
+		} else {
+			props.push(prop);
 		}
-
-		const prop = markup`${formatKey(key)}: ${prettyFormat(val, propOpts)}`;
-		props.push(prop);
 	}
+	
+	props = props.concat(objProps);
 
-	// Get symbol props
+	// Get symbol props. Should always be at the end
 	for (const sym of Object.getOwnPropertySymbols(obj)) {
 		const val: unknown = Reflect.get(obj, sym);
 	
@@ -477,7 +484,7 @@ function formatObject(
 	if (props.length > 0) {
 		if (opts.accurate || hasObjectProp) {
 			const inner = joinMarkup(props, "\n");
-			parts.push(markup`\n${inner}\n`);
+			parts.push(markup`\n<indent>${inner}</indent>\n`);
 		} else {
 			const inner = joinMarkup(props.map((prop) => markup`<li>${prop}</li>`));
 			parts.push(markup`<ul joinSameLine=", ">${inner}</ul>`);

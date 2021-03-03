@@ -770,10 +770,6 @@ export default class DiagnosticsPrinter extends Error {
 					);
 				}
 
-				if (this.hasTruncatedDiagnostics || this.truncatedCount > 0) {
-					reporter.br();
-				}
-
 				if (isError) {
 					if (this.flags.fieri) {
 						this.showBanner(errorBanner as RawBanner);

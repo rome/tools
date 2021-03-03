@@ -10,7 +10,8 @@ import RelativePath from "./classes/RelativePath";
 import UIDPath from "./classes/UIDPath";
 import DataURIPath from "./classes/DataURIPath";
 import URLPath from "./classes/URLPath";
-import {Path} from "./types";
+import {Path, Pathish} from "./types";
+import { isObject } from "@internal/typescript-helpers";
 
 export {default as AbsoluteFilePath} from "./classes/AbsoluteFilePath";
 export {default as RelativePath} from "./classes/RelativePath";
@@ -44,4 +45,8 @@ export function isPath(val: unknown): val is Path {
 		val instanceof UIDPath ||
 		val instanceof DataURIPath
 	);
+}
+
+export function isPathish(val: unknown): val is Pathish {
+	return isObject(val) && typeof val.join === "function" && typeof val.join() === "string" && typeof val.format === "function" && typeof val.format() === "string";
 }

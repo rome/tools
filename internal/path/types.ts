@@ -17,6 +17,11 @@ export type Path =
 
 export type PathSegments = string[];
 
+export type Pathish = {
+	join: () => string;
+	format: () => string;
+};
+
 export type PathFormatOptions = {
 	home?: AbsoluteFilePath;
 	cwd?: AbsoluteFilePath;

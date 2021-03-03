@@ -8,6 +8,7 @@ import {
 	Position,
 	PositionLike,
 	SourceLocation,
+	SourceLocationish,
 } from "./types";
 import {catchDiagnosticsSync} from "@internal/diagnostics";
 import {
@@ -15,7 +16,7 @@ import {
 	isPlainObject,
 } from "@internal/typescript-helpers";
 import {pretty} from "@internal/pretty-format";
-import {Path, UNKNOWN_PATH, isPath} from "@internal/path";
+import {Path, UNKNOWN_PATH, isPathish} from "@internal/path";
 import {isIndexedNumberish} from "@internal/numbers";
 
 export function isDigit(char: undefined | string): boolean {
@@ -257,7 +258,7 @@ export function isPositionish(val: unknown): val is Position {
 	);
 }
 
-export function isSourceLocation(val: unknown): val is SourceLocation {
+export function isSourceLocationish(val: unknown): val is SourceLocationish {
 	if (!isPlainObject(val)) {
 		return false;
 	}
@@ -276,7 +277,7 @@ export function isSourceLocation(val: unknown): val is SourceLocation {
 
 	// Verify types
 	return (
-		(isPath(val) || typeof val.filename === "undefined") &&
+		isPathish(val.path) &&
 		(typeof val.identifierName === "string" ||
 		typeof val.identifierName === "undefined") &&
 		isPositionish(val.start) &&

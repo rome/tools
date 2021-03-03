@@ -5,8 +5,8 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {OneIndexed, ZeroIndexed} from "@internal/numbers";
-import {Path} from "@internal/path";
+import {IndexedNumberish, OneIndexed, ZeroIndexed} from "@internal/numbers";
+import {Path, Pathish} from "@internal/path";
 import {
 	DiagnosticCategory,
 	DiagnosticDescriptionOptional,
@@ -150,9 +150,21 @@ export type SourceLocation = {
 	end: Position;
 };
 
+export type SourceLocationish = {
+	path: Pathish;
+	identifierName?: string;
+	start: Positionish;
+	end: Positionish;
+};
+
 export type Position = {
 	line: OneIndexed;
 	column: ZeroIndexed;
+};
+
+export type Positionish = {
+	line: IndexedNumberish;
+	column: IndexedNumberish;
 };
 
 export type PositionLike = {
