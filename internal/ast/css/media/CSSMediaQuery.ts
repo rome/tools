@@ -1,11 +1,17 @@
-import {CSSMediaCondition, CSSMediaConditionWithoutOr, CSSMediaType, NodeBaseWithComments} from "@internal/ast";
+import {
+	CSSMediaCondition,
+	CSSMediaConditionWithoutOr,
+	CSSMediaType,
+	NodeBaseWithComments,
+} from "@internal/ast";
 import {createBuilder} from "../../utils";
 
+export type CSSMediaQueryCondition = "not" | "only" | undefined;
 export interface CSSMediaQuery extends NodeBaseWithComments {
 	readonly type: "CSSMediaQuery";
-	readonly condition?: "not" | "only";
+	readonly condition?: CSSMediaQueryCondition;
 	readonly conditionWithoutOr?: CSSMediaConditionWithoutOr;
-	readonly value: CSSMediaCondition | CSSMediaType
+	readonly value: CSSMediaCondition | CSSMediaType;
 }
 
 export const cssMediaQuery = createBuilder<CSSMediaQuery>(

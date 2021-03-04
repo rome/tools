@@ -1,9 +1,14 @@
-import {CSSMediaAnd, CSSMediaInParens, CSSMediaNot, NodeBaseWithComments} from "@internal/ast";
+import {
+	CSSMediaAnd,
+	CSSMediaInParens,
+	CSSMediaNot,
+	NodeBaseWithComments,
+} from "@internal/ast";
 import {createBuilder} from "../../utils";
 
 export interface CSSMediaConditionWithoutOr extends NodeBaseWithComments {
 	readonly type: "CSSMediaConditionWithoutOr";
-	readonly value: CSSMediaAnd | CSSMediaInParens | CSSMediaNot
+	readonly value: CSSMediaAnd | CSSMediaInParens | CSSMediaNot;
 }
 
 export const cssMediaConditionWithoutOr = createBuilder<CSSMediaConditionWithoutOr>(
@@ -11,7 +16,7 @@ export const cssMediaConditionWithoutOr = createBuilder<CSSMediaConditionWithout
 	{
 		bindingKeys: {},
 		visitorKeys: {
-			value: true
+			value: true,
 		},
 	},
 );

@@ -1,9 +1,11 @@
 import {CSSMediaQueryList} from "@internal/ast";
-import {Builder, Token} from "@internal/formatter";
+import {Builder, Token, concat} from "@internal/formatter";
 
 export default function CSSMediaQueryList(
 	builder: Builder,
 	node: CSSMediaQueryList,
 ): Token {
-	throw new Error("unimplemented");
+	return concat([
+		...node.value.map((child) => builder.tokenize(child, node)),
+	]);
 }

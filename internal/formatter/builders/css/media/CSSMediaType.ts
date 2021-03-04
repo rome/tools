@@ -5,5 +5,5 @@ export default function CSSMediaType(
 	builder: Builder,
 	node: CSSMediaType,
 ): Token {
-	throw new Error("unimplemented");
+	return node.value;
 }

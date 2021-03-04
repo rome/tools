@@ -121,17 +121,24 @@ export const cssParser = createDiagnosticsCategory({
 	},
 
 	CALC_INCORRECT_NUMBER_VALUE: {
-		message: markup`Incorrect character, expected a number or a parenthesis`,
+		message: markup`Incorrect character, expected a number or a parenthesis.`,
 	},
 	EXPECTED_ID_HASH: {
 		message: markup`Expected to use identifier after <emphasis>#</emphasis>.`,
 	},
 
-	MEDIA_QUERY_UNKNOWN_MEDIA_TYPES: {},
-	MEDIA_QUERY_UNKNOWN_MEDIA_FEATURES: {},
-	MEDIA_QUERY_UNKNOWN_MEDIA_FEATURE_VALUE: (wrongValue: string, supportedFeatures: string[]) => ({
-		message: markup`Unknown feature provided to the media query`,
-		advice: buildSuggestionAdvice(wrongValue, supportedFeatures, { minRating: 0 })
+	MEDIA_QUERY_UNKNOWN_MEDIA_TYPES: (
+		wrongValue: string,
+		supportedFeatures: string[],
+	) => ({
+		message: markup`Unknown media type provided to the media query.`,
+		advice: buildSuggestionAdvice(wrongValue, supportedFeatures, {minRating: 0}),
 	}),
+
+	MEDIA_QUERY_DEPRECATED_MEDIA_TYPE: (wrongValue: string) => ({
+		message: markup`The media type <emphasis>${wrongValue}</emphasis> is deprecated.`,
+	}),
+	MEDIA_QUERY_UNKNOWN_MEDIA_FEATURES: {},
+	MEDIA_QUERY_UNKNOWN_MEDIA_FEATURE_VALUE: {},
 	MALFORMED_MEDIA_QUERY: {},
 });

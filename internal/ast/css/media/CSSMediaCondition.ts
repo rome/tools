@@ -1,4 +1,10 @@
-import {CSSMediaAnd, CSSMediaInParens, CSSMediaNot, CSSMediaOr, NodeBaseWithComments} from "@internal/ast";
+import {
+	CSSMediaAnd,
+	CSSMediaInParens,
+	CSSMediaNot,
+	CSSMediaOr,
+	NodeBaseWithComments,
+} from "@internal/ast";
 import {createBuilder} from "../../utils";
 
 export interface CSSMediaCondition extends NodeBaseWithComments {
@@ -11,7 +17,7 @@ export const cssMediaCondition = createBuilder<CSSMediaCondition>(
 	{
 		bindingKeys: {},
 		visitorKeys: {
-			value: true
+			value: true,
 		},
 	},
 );

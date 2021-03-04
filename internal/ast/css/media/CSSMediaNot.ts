@@ -11,7 +11,7 @@ export const cssMediaNot = createBuilder<CSSMediaNot>(
 	{
 		bindingKeys: {},
 		visitorKeys: {
-			value: true
+			value: true,
 		},
 	},
 );

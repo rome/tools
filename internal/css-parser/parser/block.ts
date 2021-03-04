@@ -1,4 +1,4 @@
-import {AnyCSSValue, CSSParser} from "@internal/css-parser/types";
+import {CSSParser} from "@internal/css-parser/types";
 import {CSSAtRule, CSSBlock, CSSDeclaration, CSSRule} from "@internal/ast";
 import {
 	getBlockEndTokenType,
@@ -8,6 +8,7 @@ import {matchToken, nextToken} from "@internal/css-parser/tokenizer";
 import {parseRules} from "@internal/css-parser/parser/rules";
 import {descriptions} from "@internal/diagnostics";
 import {parseComponentValue} from "@internal/css-parser/parser/value";
+import {AnyCSSValue} from "@internal/ast/css/unions";
 
 export function parseComplexBlock(parser: CSSParser): CSSBlock | undefined {
 	const start = parser.getPosition();

@@ -3,7 +3,7 @@ import {createBuilder} from "../../utils";
 
 export interface CSSMediaQueryList extends NodeBaseWithComments {
 	readonly type: "CSSMediaQueryList";
-	readonly value: [CSSMediaQuery]
+	readonly value: CSSMediaQuery[];
 }
 
 export const cssMediaQueryList = createBuilder<CSSMediaQueryList>(
@@ -11,7 +11,7 @@ export const cssMediaQueryList = createBuilder<CSSMediaQueryList>(
 	{
 		bindingKeys: {},
 		visitorKeys: {
-			value: true
+			value: true,
 		},
 	},
 );
