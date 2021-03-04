@@ -1,0 +1,32 @@
+# The entire project is managed by the team
+
+* @rome/core-contributors
+
+# The next sections address specific people that help to maintain particular packages inside the project
+
+* @sebmck
+
+/internal/css-parser/* @ematipico @yeonjuan @bitpshr
+
+/internal/markdown-parser/* @ematipico
+
+/internal/html-parser/* @ematipico
+
+/internal/commit-parser/* @ematipico
+
+/internal/code-js-manifest/* @ematipico
+
+/internal/browser-features/* @jer3m01
+
+/internal/browser-db/* @jer3m01
+
+/internal/compiler/lint/* @ematipico @bitpshr
+
+/website/* @EduardoLopes
+
+/internal/core/* @yassere
+
+/internal/core/client/commands/* @ematipico
+
+/internal/core/server/commands/* @ematipico
+
