@@ -10,7 +10,7 @@
 ___R$project$rome$$internal$diagnostics$error$wrappers_ts$DiagnosticsError {
 	name: "DiagnosticsError"
 	_memoMessage: undefined
-	_message: "Expected a percentage."
+	_message: "Expected a percentage"
 	suppressions: Array []
 	diagnostics: Array [
 		Object {
@@ -18,7 +18,7 @@ ___R$project$rome$$internal$diagnostics$error$wrappers_ts$DiagnosticsError {
 				advice: Array []
 				categoryValue: "browserquery"
 				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Expected a percentage."}
+				message: RAW_MARKUP {value: "Expected a percentage"}
 			}
 			location: Object {
 				integrity: undefined

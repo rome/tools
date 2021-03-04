@@ -10,7 +10,7 @@
 ___R$project$rome$$internal$diagnostics$error$wrappers_ts$DiagnosticsError {
 	name: "DiagnosticsError"
 	_memoMessage: undefined
-	_message: "Expected a number."
+	_message: "Expected a number"
 	suppressions: Array []
 	diagnostics: Array [
 		Object {
@@ -18,7 +18,7 @@ ___R$project$rome$$internal$diagnostics$error$wrappers_ts$DiagnosticsError {
 				advice: Array []
 				categoryValue: "browserquery"
 				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Expected a number."}
+				message: RAW_MARKUP {value: "Expected a number"}
 			}
 			location: Object {
 				integrity: undefined

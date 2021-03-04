@@ -10,7 +10,7 @@
 ___R$project$rome$$internal$diagnostics$error$wrappers_ts$DiagnosticsError {
 	name: "DiagnosticsError"
 	_memoMessage: undefined
-	_message: "Expected a date such as \"<emphasis>2021-02-21</emphasis>\"."
+	_message: "Expected a date such as \"<emphasis>2021-02-21</emphasis>\""
 	suppressions: Array []
 	diagnostics: Array [
 		Object {
@@ -18,7 +18,7 @@ ___R$project$rome$$internal$diagnostics$error$wrappers_ts$DiagnosticsError {
 				advice: Array []
 				categoryValue: "browserquery"
 				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Expected a date such as \"<emphasis>2021-02-21</emphasis>\"."}
+				message: RAW_MARKUP {value: "Expected a date such as \"<emphasis>2021-02-21</emphasis>\""}
 			}
 			location: Object {
 				integrity: undefined

@@ -10,7 +10,7 @@
 ___R$project$rome$$internal$diagnostics$error$wrappers_ts$DiagnosticsError {
 	name: "DiagnosticsError"
 	_memoMessage: undefined
-	_message: "Expected a new browser query."
+	_message: "Expected a new browser query"
 	suppressions: Array []
 	diagnostics: Array [
 		Object {
@@ -25,11 +25,11 @@ ___R$project$rome$$internal$diagnostics$error$wrappers_ts$DiagnosticsError {
 			description: Object {
 				categoryValue: "browserquery"
 				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Expected a new browser query."}
+				message: RAW_MARKUP {value: "Expected a new browser query"}
 				advice: Array [
 					log {
 						category: "info"
-						text: RAW_MARKUP {value: "Available browser queries can be found at <hyperlink target=\"https://github.com/rome/tools/blob/main/internal/codec-browsers/README.md#queries\"/>."}
+						text: RAW_MARKUP {value: "Available browser queries can be found at <hyperlink target=\"https://github.com/rome/tools/blob/main/internal/codec-browsers/README.md#queries\"/>"}
 					}
 				]
 			}

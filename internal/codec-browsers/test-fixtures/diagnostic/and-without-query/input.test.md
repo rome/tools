@@ -10,7 +10,7 @@
 ___R$project$rome$$internal$diagnostics$error$wrappers_ts$DiagnosticsError {
 	name: "DiagnosticsError"
 	_memoMessage: undefined
-	_message: "Expected a query before \"<emphasis>and</emphasis>\"."
+	_message: "Expected a query before \"<emphasis>and</emphasis>\""
 	suppressions: Array []
 	diagnostics: Array [
 		Object {
@@ -25,11 +25,11 @@ ___R$project$rome$$internal$diagnostics$error$wrappers_ts$DiagnosticsError {
 			description: Object {
 				categoryValue: "browserquery"
 				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Expected a query before \"<emphasis>and</emphasis>\"."}
+				message: RAW_MARKUP {value: "Expected a query before \"<emphasis>and</emphasis>\""}
 				advice: Array [
 					log {
 						category: "info"
-						text: RAW_MARKUP {value: "Available browser queries can be found at <hyperlink target=\"https://github.com/rome/tools/blob/main/internal/codec-browsers/README.md#queries\"/>."}
+						text: RAW_MARKUP {value: "Available browser queries can be found at <hyperlink target=\"https://github.com/rome/tools/blob/main/internal/codec-browsers/README.md#queries\"/>"}
 					}
 				]
 			}
