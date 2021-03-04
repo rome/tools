@@ -35,7 +35,7 @@ export function parseCommitLog(
 		from: string;
 		to: string;
 	},
-): Array<Commit> {
+): Commit[] {
 	const keys = Object.keys(config);
 
 	const cmd = keys.reduce(
@@ -82,12 +82,12 @@ export function parseCommitLog(
 
 						return newCommit;
 					},
-					({} as Commit),
+					{} as Commit,
 				),
 			);
 
 			return totalCommits;
 		},
-		([] as Array<Commit>),
+		[] as Commit[],
 	);
 }
