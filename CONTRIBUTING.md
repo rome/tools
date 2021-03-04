@@ -107,13 +107,44 @@ If you are adding a new lint rule, or modifying some core code, you might need t
 ./rome run scripts/generate-all-files
 ```
 
+## Commit messages
+
+Internally, the Rome team adheres as closely as possible to the [conventional commit specification](https://www.conventionalcommits.org/en/v1.0.0-beta.2/).
+Following this convention encourages commit best-practices and facilitates commit-powered features like change log generation.
+
+
+The following commit prefixes are supported:
+- `feat:`, a new feature
+- `fix:`, a bugfix
+- `docs:`, a documentation update
+- `test`, a test update
+- `chore:`, project housekeeping
+- `perf:`, project performance
+- `refactor:`, refactor of the code without change in functionality
+
+ Below are examples of well-formatted commits:
+
+```
+feat(compiler): implement parsing for new type of files
+fix: fix nasty unhandled error
+docs: fix link to website page
+test(lint): add more cases to handle invalid rules
+```
+
+### Commit verification
+
+Commits will be verified as part of CI **only on the main branch**. This means that CI will **not** verify commits in pull requests, since these often contain many work-in-progress commits that may not be well-formed, and because the `main` branch uses squash-based merging.
+
+### Creating pull requests
+
+When creating a new pull request, it's preferable to use a conventional commit-formatted title, as this title will be used as the default commit message on the squashed commit after merging.
 ## Scripts
 
 Here are some other scripts that you might find useful.
 
 ### `lint-create-rule`
 
-This is used to generate new lint rules and boilperlate.
+This is used to generate new lint rules and boilerplate.
 
 ```bash
 ./rome run scripts/lint-create-rule [category]/[ruleName]
