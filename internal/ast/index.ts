@@ -11,7 +11,7 @@ export * from "./unions";
 export {bindingKeys, nodeNames, visitorKeys} from "./utils";
 export type AnyNodes = AnyNode | (AnyNode[]);
 
-/* GENERATED:START(hash:c3a6f18fb4259866c5e3f3ed49918d1e87f972f5,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/ast` to update. */
+/* GENERATED:START(hash:fa0ef13f2a8e116fb88f5b4cc1c4c892512a3e4a,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/ast` to update. */
 export * from "./common/comments/CommentBlock";
 export * from "./common/comments/CommentLine";
 export * from "./common/commit/CommitRoot";
@@ -44,6 +44,14 @@ export * from "./css/media/CSSMediaAnd";
 export * from "./css/media/CSSMediaCondition";
 export * from "./css/media/CSSMediaConditionWithoutOr";
 export * from "./css/media/CSSMediaFeature";
+export * from "./css/media/CSSMediaFeatureComparison";
+export * from "./css/media/CSSMediaFeatureEQ";
+export * from "./css/media/CSSMediaFeatureGT";
+export * from "./css/media/CSSMediaFeatureLT";
+export * from "./css/media/CSSMediaFeatureName";
+export * from "./css/media/CSSMediaFeaturePlain";
+export * from "./css/media/CSSMediaFeatureRange";
+export * from "./css/media/CSSMediaFeatureValue";
 export * from "./css/media/CSSMediaInParens";
 export * from "./css/media/CSSMediaNot";
 export * from "./css/media/CSSMediaOr";
@@ -332,6 +340,14 @@ export type AnyNode =
 	| n.CSSMediaCondition
 	| n.CSSMediaConditionWithoutOr
 	| n.CSSMediaFeature
+	| n.CSSMediaFeatureComparison
+	| n.CSSMediaFeatureEQ
+	| n.CSSMediaFeatureGT
+	| n.CSSMediaFeatureLT
+	| n.CSSMediaFeatureName
+	| n.CSSMediaFeaturePlain
+	| n.CSSMediaFeatureRange
+	| n.CSSMediaFeatureValue
 	| n.CSSMediaInParens
 	| n.CSSMediaNot
 	| n.CSSMediaOr

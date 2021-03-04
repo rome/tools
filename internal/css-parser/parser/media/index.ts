@@ -1,4 +1,5 @@
 import {
+	CSSMediaConditionWithoutOr,
 	CSSMediaQuery,
 	CSSMediaQueryCondition,
 	CSSMediaQueryList,
@@ -7,13 +8,21 @@ import {CSSParser} from "@internal/css-parser/types";
 import {matchToken, readToken} from "@internal/css-parser/tokenizer";
 import {parseMediaType} from "@internal/css-parser/parser/media/type";
 
+function tryParseConditionWithoutOr(
+	parser: CSSParser,
+): CSSMediaConditionWithoutOr | undefined {
+	return undefined;
+}
+
 function parseMedia(parser: CSSParser): CSSMediaQuery | undefined {
 	const start = parser.getPosition();
 	let condition: CSSMediaQueryCondition = undefined;
+	let conditionWithoutOr: CSSMediaConditionWithoutOr | undefined = undefined;
 	while (matchToken(parser, "Whitespace")) {
 		readToken(parser, "Whitespace");
 	}
 	const token = parser.getToken();
+	console.log(token)
 	if (token.type === "Ident") {
 		if (token.value === "not") {
 			condition = "not";
@@ -25,11 +34,17 @@ function parseMedia(parser: CSSParser): CSSMediaQuery | undefined {
 
 		const mediaType = parseMediaType(parser);
 		if (mediaType) {
+			const token = parser.nextToken();
+			if (token.type === "Ident" && token.value === "and") {
+				conditionWithoutOr = tryParseConditionWithoutOr(parser);
+			}
+
 			return parser.finishNode(
 				start,
 				{
 					type: "CSSMediaQuery",
 					condition,
+					conditionWithoutOr,
 					value: mediaType,
 				},
 			);
@@ -44,18 +59,16 @@ export function parseMediaList(parser: CSSParser): CSSMediaQueryList | undefined
 	const list: CSSMediaQuery[] = [];
 	// TODO: implement loop
 	while (!(parser.matchToken("EOF") && parser.matchToken("LeftCurlyBracket"))) {
-		while (matchToken(parser, "Whitespace")) {
-			readToken(parser, "Whitespace");
-		}
+
 
 		if (parser.matchToken("LeftCurlyBracket")) {
 			break;
 		}
+
 		const media = parseMedia(parser);
 		if (media) {
 			list.push(media);
 		}
-		parser.nextToken();
 	}
 
 	return parser.finishNode(

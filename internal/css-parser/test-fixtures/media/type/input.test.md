@@ -30,7 +30,8 @@ CSSRoot {
 								loc: SourceLocation media/type/input.css 1:7-1:13
 							}
 							condition: undefined
-							loc: SourceLocation media/type/input.css 1:7-1:13
+							conditionWithoutOr: undefined
+							loc: SourceLocation media/type/input.css 1:6-1:14
 						}
 					]
 					loc: SourceLocation media/type/input.css 1:6-1:14
@@ -53,8 +54,9 @@ CSSRoot {
 								value: "screen"
 								loc: SourceLocation media/type/input.css 2:11-2:17
 							}
-							condition: undefined
-							loc: SourceLocation media/type/input.css 2:11-2:17
+							condition: "not"
+							conditionWithoutOr: undefined
+							loc: SourceLocation media/type/input.css 2:6-2:18
 						}
 					]
 					loc: SourceLocation media/type/input.css 2:6-2:18
@@ -77,8 +79,9 @@ CSSRoot {
 								value: "screen"
 								loc: SourceLocation media/type/input.css 3:12-3:18
 							}
-							condition: undefined
-							loc: SourceLocation media/type/input.css 3:12-3:18
+							condition: "only"
+							conditionWithoutOr: undefined
+							loc: SourceLocation media/type/input.css 3:6-3:19
 						}
 					]
 					loc: SourceLocation media/type/input.css 3:6-3:19

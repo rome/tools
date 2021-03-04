@@ -1,6 +1,7 @@
 import {CSSParser} from "@internal/css-parser/types";
 import {CSSMediaType, CSSMediaValidType} from "@internal/ast";
 import {descriptions} from "@internal/diagnostics";
+import {matchToken, readToken} from "@internal/css-parser/tokenizer";
 
 const VALID_MEDIA_TYPES = ["all", "print", "screen"];
 
@@ -24,6 +25,10 @@ function isDeprecatedType(value: string): boolean {
 }
 
 export function parseMediaType(parser: CSSParser): CSSMediaType | undefined {
+	// read white spaces and comments
+	while (matchToken(parser, "Whitespace")) {
+		readToken(parser, "Whitespace");
+	}
 	const start = parser.getPosition();
 	const token = parser.getToken();
 

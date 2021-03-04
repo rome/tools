@@ -141,4 +141,10 @@ export const cssParser = createDiagnosticsCategory({
 	MEDIA_QUERY_UNKNOWN_MEDIA_FEATURES: {},
 	MEDIA_QUERY_UNKNOWN_MEDIA_FEATURE_VALUE: {},
 	MALFORMED_MEDIA_QUERY: {},
+	MEDIA_QUERY_EXPECTED_PARENTHESIS: {
+		message: markup`A left parenthesis is expected in this position`
+	},
+	MEDIA_QUERY_EXPECTED_COMPARISON: {
+		message: markup`The comparison is not correct, only <emphasis> \<, \> and = </emphasis> are valid`
+	}
 });
