@@ -4,3 +4,14 @@ screen {
 
 
 }
+
+@media
+
+	not
+
+screen {
+
+
+}
+
+@media screen   , not all    ,only print {}

@@ -20,12 +20,29 @@ screen {
 
 }
 
+@media
+
+	not
+
+screen {
+
+
+}
+
+@media screen   , not all    ,only print {}
+
 ```
 
 ### `Output`
 
 ```css
 @media screen {
+}
+
+@media not screen {
+}
+
+@media screen, not all, only print {
 }
 
 ```

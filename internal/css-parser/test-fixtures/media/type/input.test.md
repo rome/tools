@@ -10,7 +10,7 @@ CSSRoot {
 	corrupt: false
 	diagnostics: Array []
 	integrity: undefined
-	loc: SourceLocation media/type/input.css 1:0-3:21
+	loc: SourceLocation media/type/input.css 1:0-6:42
 	path: RelativePath<media/type/input.css>
 	body: Array [
 		CSSAtRule {
@@ -31,7 +31,7 @@ CSSRoot {
 							}
 							condition: undefined
 							conditionWithoutOr: undefined
-							loc: SourceLocation media/type/input.css 1:6-1:14
+							loc: SourceLocation media/type/input.css 1:6-1:13
 						}
 					]
 					loc: SourceLocation media/type/input.css 1:6-1:14
@@ -56,7 +56,7 @@ CSSRoot {
 							}
 							condition: "not"
 							conditionWithoutOr: undefined
-							loc: SourceLocation media/type/input.css 2:6-2:18
+							loc: SourceLocation media/type/input.css 2:6-2:17
 						}
 					]
 					loc: SourceLocation media/type/input.css 2:6-2:18
@@ -81,10 +81,130 @@ CSSRoot {
 							}
 							condition: "only"
 							conditionWithoutOr: undefined
-							loc: SourceLocation media/type/input.css 3:6-3:19
+							loc: SourceLocation media/type/input.css 3:6-3:18
 						}
 					]
 					loc: SourceLocation media/type/input.css 3:6-3:19
+				}
+			]
+		}
+		CSSAtRule {
+			name: "media"
+			loc: SourceLocation media/type/input.css 4:0-4:23
+			block: CSSBlock {
+				value: Array []
+				startingTokenValue: "{"
+				loc: SourceLocation media/type/input.css 4:21-4:23
+			}
+			prelude: Array [
+				CSSMediaQueryList {
+					value: Array [
+						CSSMediaQuery {
+							value: CSSMediaType {
+								value: "print"
+								loc: SourceLocation media/type/input.css 4:7-4:12
+							}
+							condition: undefined
+							conditionWithoutOr: undefined
+							loc: SourceLocation media/type/input.css 4:6-4:12
+						}
+						CSSMediaQuery {
+							value: CSSMediaType {
+								value: "screen"
+								loc: SourceLocation media/type/input.css 4:14-4:20
+							}
+							condition: undefined
+							conditionWithoutOr: undefined
+							loc: SourceLocation media/type/input.css 4:14-4:20
+						}
+					]
+					loc: SourceLocation media/type/input.css 4:6-4:21
+				}
+			]
+		}
+		CSSAtRule {
+			name: "media"
+			loc: SourceLocation media/type/input.css 5:0-5:28
+			block: CSSBlock {
+				value: Array []
+				startingTokenValue: "{"
+				loc: SourceLocation media/type/input.css 5:26-5:28
+			}
+			prelude: Array [
+				CSSMediaQueryList {
+					value: Array [
+						CSSMediaQuery {
+							value: CSSMediaType {
+								value: "screen"
+								loc: SourceLocation media/type/input.css 5:7-5:13
+							}
+							condition: undefined
+							conditionWithoutOr: undefined
+							loc: SourceLocation media/type/input.css 5:6-5:13
+						}
+						CSSMediaQuery {
+							value: CSSMediaType {
+								value: "all"
+								loc: SourceLocation media/type/input.css 5:15-5:18
+							}
+							condition: undefined
+							conditionWithoutOr: undefined
+							loc: SourceLocation media/type/input.css 5:15-5:18
+						}
+						CSSMediaQuery {
+							value: CSSMediaType {
+								value: "print"
+								loc: SourceLocation media/type/input.css 5:20-5:25
+							}
+							condition: undefined
+							conditionWithoutOr: undefined
+							loc: SourceLocation media/type/input.css 5:20-5:25
+						}
+					]
+					loc: SourceLocation media/type/input.css 5:6-5:26
+				}
+			]
+		}
+		CSSAtRule {
+			name: "media"
+			loc: SourceLocation media/type/input.css 6:0-6:42
+			block: CSSBlock {
+				value: Array []
+				startingTokenValue: "{"
+				loc: SourceLocation media/type/input.css 6:40-6:42
+			}
+			prelude: Array [
+				CSSMediaQueryList {
+					value: Array [
+						CSSMediaQuery {
+							value: CSSMediaType {
+								value: "screen"
+								loc: SourceLocation media/type/input.css 6:12-6:18
+							}
+							condition: "only"
+							conditionWithoutOr: undefined
+							loc: SourceLocation media/type/input.css 6:6-6:18
+						}
+						CSSMediaQuery {
+							value: CSSMediaType {
+								value: "all"
+								loc: SourceLocation media/type/input.css 6:24-6:27
+							}
+							condition: "not"
+							conditionWithoutOr: undefined
+							loc: SourceLocation media/type/input.css 6:20-6:27
+						}
+						CSSMediaQuery {
+							value: CSSMediaType {
+								value: "print"
+								loc: SourceLocation media/type/input.css 6:34-6:39
+							}
+							condition: "only"
+							conditionWithoutOr: undefined
+							loc: SourceLocation media/type/input.css 6:29-6:39
+						}
+					]
+					loc: SourceLocation media/type/input.css 6:6-6:40
 				}
 			]
 		}

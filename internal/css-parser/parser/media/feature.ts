@@ -87,7 +87,9 @@ export function parseMediaFeaturePlain(parser: CSSParser): CSSMediaFeaturePlain 
 
 export function parseMediaFeature(parser: CSSParser): CSSMediaFeature | undefined {
 	// TODO: implement me
+	const start = parser.getPosition();
 	const previousToken = readToken(parser, "LeftParen");
+	// a feature must be wrapped in parenthesis
 	if (!previousToken) {
 		parser.unexpectedDiagnostic({
 				description: descriptions.CSS_PARSER.MEDIA_QUERY_EXPECTED_PARENTHESIS,
@@ -98,14 +100,26 @@ export function parseMediaFeature(parser: CSSParser): CSSMediaFeature | undefine
 		return undefined
 	}
 
-	const token = readToken(parser, "Ident") as Tokens["Ident"];
-	if (isCondition(token.value)) {
 
-	} else {
-		// const value =
+	console.log()
+	// const token = readToken(parser, "Ident") as Tokens["Ident"];
+	// the value of the feature can be a:
+	// - plain: "(max-width: 600px)", "(hover: hover)"
+	// - boolean: "(color)"
+	//
+	const value = parseMediaFeaturePlain(parser);
+	// if (isCondition(token.value)) {
+	//
+	// } else {
+	// 	// const value =
+	// }
+
+	if (value) {
+		return parser.finishNode(start, {
+			type: "CSSMediaFeature",
+			value
+		})
 	}
-
-
 
 	return undefined;
 }
