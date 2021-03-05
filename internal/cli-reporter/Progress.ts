@@ -483,7 +483,7 @@ export default class Progress extends ProgressBase {
 			) {
 				streamUtils.log(
 					stream,
-					this.buildBar(stream, suffix, stream.features.columns),
+					[this.buildBar(stream, suffix, stream.features.columns)],
 					{
 						stderr: true,
 						noNewline: true,

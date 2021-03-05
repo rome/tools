@@ -37,11 +37,12 @@ import {
 	markup,
 } from "@internal/markup";
 import {json} from "@internal/codec-config";
-import {getEnvVar} from "@internal/cli-environment";
+import {isEnvVarSet, IS_ROME_DEV_ENV} from "@internal/cli-environment";
 import {satisfiesSemver} from "@internal/codec-semver";
 import {Reporter} from "@internal/cli-reporter";
 import {loadUserConfig} from "@internal/core/common/userConfig";
 import {RSERObject} from "@internal/binary-transport";
+import { safeProcessExit } from "@internal/resources";
 
 type CLIFlags = {
 	logs: undefined | ClientLogsLevel;
@@ -74,11 +75,11 @@ export default async function cli() {
 		reporter.error(
 			markup`Node <emphasis>${REQUIRED_NODE_VERSION_RANGE}</emphasis> is required, but you are on <emphasis>${process.version}</emphasis>`,
 		);
-		process.exit(1);
+		await safeProcessExit(1);
 	}
 
 	const p = parseCLIFlagsFromProcess({
-		programName: getEnvVar("ROME_DEV").type === "ENABLED" ? "dev-rome" : "rome",
+		programName: IS_ROME_DEV_ENV ? "dev-rome" : "rome",
 		usage: "[command] [flags]",
 		version: VERSION,
 		commandRequired: true,
@@ -355,8 +356,6 @@ export default async function cli() {
 	let commandFlags: RSERObject = {};
 	let args: string[] = [];
 
-	const isRelease = getEnvVar("ROME_DEV").type !== "ENABLED";
-
 	// Create command handlers. We use a set here since we may have some conflicting server and local command names. We always want the local command to take precedence.
 	const commandNames = new Set([
 		...localCommands.keys(),
@@ -373,7 +372,7 @@ export default async function cli() {
 				ignoreFlags: local.ignoreFlags,
 				examples: local.examples,
 				usage: local.usage,
-				hidden: isRelease && local.hidden,
+				hidden: !IS_ROME_DEV_ENV && local.hidden,
 				callback(_commandFlags) {
 					commandFlags = _commandFlags;
 					args = p.getArgs();
@@ -393,7 +392,7 @@ export default async function cli() {
 				ignoreFlags: server.ignoreFlags,
 				usage: server.usage,
 				examples: server.examples,
-				hidden: isRelease && server.hidden,
+				hidden: !IS_ROME_DEV_ENV && server.hidden,
 				callback(_commandFlags) {
 					commandFlags = _commandFlags;
 					args = p.getArgs();
@@ -458,7 +457,7 @@ export default async function cli() {
 
 	// Default according to env vars
 	if (requestFlags.auxiliaryDiagnosticFormat === undefined) {
-		if (getEnvVar("GITHUB_ACTIONS").type === "ENABLED") {
+		if (isEnvVarSet("GITHUB_ACTIONS")) {
 			requestFlags.auxiliaryDiagnosticFormat = "github-actions";
 		}
 	}
@@ -605,14 +604,15 @@ export default async function cli() {
 		);
 	}
 
+	let exitCode;
 	switch (res.type) {
 		case "EXIT": {
-			process.exit(res.code);
+			exitCode = res.code;
 			break;
 		}
 
 		case "CLIENT_ERROR": {
-			process.exit(1);
+			exitCode = 1;
 			break;
 		}
 
@@ -620,24 +620,25 @@ export default async function cli() {
 			if (res.showHelp) {
 				await p.showHelp();
 			}
-			process.exit(1);
+			exitCode = 1;
 			break;
 		}
 
 		case "DIAGNOSTICS": {
-			process.exit(res.hasDiagnostics ? 1 : 0);
+			exitCode = res.hasDiagnostics ? 1 : 0;
 			break;
 		}
 
 		case "CANCELLED": {
 			client.reporter.error(markup`Command cancelled: ${res.reason}`);
-			process.exit(0);
+			exitCode = 0;
 			break;
 		}
 
 		case "SUCCESS": {
-			process.exit(0);
+			exitCode = 0;
 			break;
 		}
 	}
+	await safeProcessExit(exitCode);
 }

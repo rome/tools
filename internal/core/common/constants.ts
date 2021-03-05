@@ -12,7 +12,7 @@ import {
 	TEMP_PATH,
 	createAbsoluteFilePath,
 } from "@internal/path";
-import {getEnvVar} from "@internal/cli-environment";
+import {IS_ROME_DEV_ENV} from "@internal/cli-environment";
 import os = require("os");
 import {CONFIG_EXTENSIONS} from "@internal/codec-config";
 import {Duration} from "@internal/numbers";
@@ -42,7 +42,7 @@ export const MAX_WORKER_COUNT = Math.min(CPU_COUNT, 4);
 
 // Vendor Rome and Trunk Rome could have the same version number if there was no release in between
 // Ensure they are properly namespaced to avoid having daemon socket conflicts
-if (getEnvVar("ROME_DEV").type === "ENABLED") {
+if (IS_ROME_DEV_ENV) {
 	VERSION += "-dev";
 }
 

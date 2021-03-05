@@ -1,4 +1,4 @@
-import {getEnvVar} from "@internal/cli-environment";
+import {getEnvVar, IS_ROME_DEV_ENV} from "@internal/cli-environment";
 import {VERSION} from "@internal/core";
 import {AbsoluteFilePath} from "@internal/path";
 
@@ -15,7 +15,7 @@ const EXPECTED_BREAKER_VALUE = VERSION;
 export default class ServerCache extends Cache {
 	constructor(server: Server) {
 		let disabled = false;
-		if (getEnvVar("ROME_DEV").type === "ENABLED") {
+		if (IS_ROME_DEV_ENV) {
 			disabled = true;
 		}
 		if (getEnvVar("ROME_CACHE").type === "DISABLED") {

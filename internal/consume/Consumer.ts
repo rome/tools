@@ -67,6 +67,8 @@ import {
 } from "@internal/path";
 import {StaticMarkup, markup, readMarkup} from "@internal/markup";
 import {consumeUnknown} from ".";
+import { prettyFormatToString } from "@internal/pretty-format";
+import { enhanceNodeInspectClass } from "@internal/node";
 
 type UnexpectedConsumerOptions = {
 	loc?: SourceLocation;
@@ -1449,3 +1451,7 @@ export default class Consumer {
 		return this.value;
 	}
 }
+
+enhanceNodeInspectClass(Consumer, (consumer) => {
+	return `Consumer<${prettyFormatToString(consumer.getValue())}>`;
+});

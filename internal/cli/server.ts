@@ -29,10 +29,10 @@ export default async function server() {
 	await server.init();
 
 	const socketServer = net.createServer(function(socket) {
-		const bridge = ServerBridge.Server.createFromSocket(socket);
+		const {bridge} = ServerBridge.Server.createFromSocket(socket);
 
 		server.fatalErrorHandler.wrapPromise(
-			server.attachToBridge(bridge).catch((err) => {
+			server.createClient(bridge).catch((err) => {
 				// Ignore bridge disconnect errors
 				if (!isBridgeDisconnectedDiagnosticsError(err)) {
 					throw err;

@@ -13,7 +13,8 @@ import {
 	DEFAULT_CLIENT_FLAGS,
 } from "../common/types/client";
 import ClientRequest, {ClientRequestType} from "./ClientRequest";
-import Server, {ServerClient, ServerOptions} from "../server/Server";
+import ServerClient from "../server/ServerClient"
+import Server, {ServerOptions} from "../server/Server";
 import {
 	CLI_SOCKET_PATH,
 	SERVER_SOCKET_PATH,
@@ -58,7 +59,7 @@ import {
 import {AbsoluteFilePath} from "@internal/path";
 import {NodeSystemError} from "@internal/errors";
 import SilentClientError from "./SilentClientError";
-import {Resource, createResourceRoot} from "@internal/resources";
+import {Resource, createResourceRoot, createResourceFromCallback} from "@internal/resources";
 import FatalErrorHandler from "../common/FatalErrorHandler";
 
 export function getFilenameTimestamp(): string {
@@ -177,7 +178,7 @@ export default class Client {
 		callback: (bridgeStatus: BridgeStatus) => Promise<Resource | undefined>,
 	): Promise<Resource> {
 		if (this.bridgeStatus === undefined) {
-			const resc = this.resources.create("Client.onBridge");
+			const resc = this.resources.createContainer("Client.onBridge");
 
 			resc.add(
 				this.bridgeAttachedEvent.subscribe(async (bridgeStatus) => {
@@ -191,7 +192,7 @@ export default class Client {
 			return resc;
 		} else {
 			const resc = await callback(this.bridgeStatus);
-			return resc ?? this.resources.create("Client.onBridge");
+			return resc ?? this.resources.createContainer("Client.onBridge");
 		}
 	}
 
@@ -583,12 +584,12 @@ export default class Client {
 
 		const {bridge} = status;
 		this.resources.add(bridge);
-		bridge.resources.addCallback(
+		bridge.resources.add(createResourceFromCallback(
 			"ClientBridgeStatus",
 			() => {
 				this.bridgeStatus = undefined;
 			},
-		);
+		));
 
 		bridge.events.write.subscribe(([chunk, error]) => {
 			const isError = error && !terminalFeatures.redirectError;
@@ -659,7 +660,7 @@ export default class Client {
 		};
 
 		const [serverClient] = await Promise.all([
-			server.attachToBridge(bridges.server),
+			server.createClient(bridges.server),
 			this.attachBridge(status),
 		]);
 
@@ -799,7 +800,7 @@ export default class Client {
 			return undefined;
 		}
 
-		const bridge = ServerBridge.Client.createFromSocket(socket);
+		const {bridge} = ServerBridge.Client.createFromSocket(socket);
 		await this.attachBridge({socket, bridge, dedicated: true});
 		this.reporter.success(markup`Connected to daemon`);
 		return bridge;

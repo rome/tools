@@ -10,6 +10,16 @@ import {WebSocketInterface} from "@internal/codec-websocket";
 import {Socket} from "net";
 import workerThreads = require("worker_threads");
 import {RSERValue} from "@internal/binary-transport";
+import {processResourceRoot, Resource, createResourceFromSocket, createResourceFromWebSocket, createResourceFromWorkerThread} from "@internal/resources";
+
+type BridgeWithResource<
+	ListenEvents extends BridgeEventsDeclaration,
+	CallEvents extends BridgeEventsDeclaration,
+	SharedEvents extends BridgeEventsDeclaration
+> = {
+	bridge: Bridge<ListenEvents, CallEvents, SharedEvents>,
+	resource: Resource,
+};
 
 export function createBridgeEventDeclaration<
 	Param extends RSERValue,
@@ -60,7 +70,7 @@ export class BridgeFactory<
 	public createFromWebSocketInterface(
 		inf: WebSocketInterface,
 		opts?: BridgeOptions,
-	): Bridge<ListenEvents, CallEvents, SharedEvents> {
+	): BridgeWithResource<ListenEvents, CallEvents, SharedEvents> {
 		const bridge = this.create(opts);
 		const {socket} = inf;
 		const rser = bridge.attachRSER();
@@ -69,7 +79,8 @@ export class BridgeFactory<
 			inf.send(Buffer.from(buf));
 		});
 
-		bridge.resources.addSocket(socket);
+		const resource = createResourceFromSocket(socket);
+		resource.bind(bridge);
 
 		inf.completeFrameEvent.subscribe((frame) => {
 			rser.append(frame.payload.buffer);
@@ -91,13 +102,13 @@ export class BridgeFactory<
 
 		rser.init();
 
-		return bridge;
+		return {resource, bridge};
 	}
 
 	public createFromBrowserWebSocket(
 		socket: WebSocket,
 		opts?: BridgeOptions,
-	): Bridge<ListenEvents, CallEvents, SharedEvents> {
+	): BridgeWithResource<ListenEvents, CallEvents, SharedEvents> {
 		const bridge = this.create(opts);
 		const rser = bridge.attachRSER();
 
@@ -105,7 +116,8 @@ export class BridgeFactory<
 			socket.send(buf);
 		});
 
-		bridge.resources.addWebSocket(socket);
+		const resource = createResourceFromWebSocket(socket);
+		resource.bind(bridge);
 
 		socket.binaryType = "arraybuffer";
 
@@ -125,13 +137,13 @@ export class BridgeFactory<
 			bridge.disconnected("RPC WebSocket disconnected");
 		};
 
-		return bridge;
+		return {resource, bridge};
 	}
 
 	public createFromSocket(
 		socket: Socket,
 		opts?: BridgeOptions,
-	): Bridge<ListenEvents, CallEvents, SharedEvents> {
+	): BridgeWithResource<ListenEvents, CallEvents, SharedEvents> {
 		const bridge = this.create(opts);
 		const rser = bridge.attachRSER();
 
@@ -139,7 +151,8 @@ export class BridgeFactory<
 			socket.write(new Uint8Array(buf));
 		});
 
-		bridge.resources.addSocket(socket);
+		const resource = createResourceFromSocket(socket);
+		resource.bind(bridge);
 
 		socket.on(
 			"data",
@@ -175,13 +188,13 @@ export class BridgeFactory<
 			rser.init();
 		}
 
-		return bridge;
+		return {resource, bridge};
 	}
 
 	public createFromWorkerThread(
 		worker: workerThreads.Worker,
 		opts?: BridgeOptions,
-	): Bridge<ListenEvents, CallEvents, SharedEvents> {
+	): BridgeWithResource<ListenEvents, CallEvents, SharedEvents> {
 		const bridge = this.create(opts);
 		const rser = bridge.attachRSER();
 
@@ -189,7 +202,8 @@ export class BridgeFactory<
 			worker.postMessage(msg, [msg]);
 		});
 
-		bridge.resources.addWorkerThread(worker);
+		const resource = createResourceFromWorkerThread(worker);
+		resource.bind(bridge);
 
 		worker.on(
 			"message",
@@ -221,12 +235,12 @@ export class BridgeFactory<
 
 		rser.init();
 
-		return bridge;
+		return {resource, bridge};
 	}
 
 	public createFromWorkerThreadParentPort(
 		opts?: Omit<BridgeOptions, "optionalResource">,
-	): Bridge<ListenEvents, CallEvents, SharedEvents> {
+	): BridgeWithResource<ListenEvents, CallEvents, SharedEvents> {
 		const {parentPort} = workerThreads;
 		if (parentPort == null) {
 			throw new Error("No worker_threads parentPort found");
@@ -236,6 +250,7 @@ export class BridgeFactory<
 			...opts,
 			optionalResource: true,
 		});
+		processResourceRoot.bind(bridge);
 
 		const rser = bridge.attachRSER();
 
@@ -259,7 +274,10 @@ export class BridgeFactory<
 
 		rser.init();
 
-		return bridge;
+		return {
+			resource: processResourceRoot,
+			bridge,
+		};
 	}
 }
 

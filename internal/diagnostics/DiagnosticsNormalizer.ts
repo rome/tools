@@ -24,8 +24,6 @@ import {
 import {OneIndexed, ZeroIndexed} from "@internal/numbers";
 import {mergeObjects} from "@internal/typescript-helpers";
 import {MixedPathMap, MixedPathSet, Path} from "@internal/path";
-import stringDiff from "@internal/string-diff";
-import {DiagnosticsProcessor} from ".";
 
 export type DiagnosticsNormalizerOptions = {
 	tags?: DiagnosticTags;
@@ -64,9 +62,7 @@ export default class DiagnosticsNormalizer {
 		normalizeOptions: DiagnosticsNormalizerOptions = {},
 		markupOptions: MarkupFormatNormalizeOptions = {},
 		sourceMaps?: SourceMapConsumerCollection,
-		processor?: DiagnosticsProcessor,
 	) {
-		this.processor = processor;
 		this.sourceMaps = sourceMaps;
 		this.inlineSourceText = new MixedPathMap();
 		this.options = normalizeOptions;
@@ -82,7 +78,6 @@ export default class DiagnosticsNormalizer {
 	}
 
 	private sourceMaps: undefined | SourceMapConsumerCollection;
-	private processor: undefined | DiagnosticsProcessor;
 
 	private options: DiagnosticsNormalizerOptions;
 	private markupOptions: MarkupFormatNormalizeOptions;
@@ -362,20 +357,6 @@ export default class DiagnosticsNormalizer {
 				} else {
 					return item;
 				}
-
-			case "diff-strings": {
-				if (this.processor !== undefined && this.processor.guaranteedTruncation) {
-					return undefined;
-				} else {
-					return {
-						type: "diff",
-						diff: stringDiff(item.before, item.after),
-						language: item.language,
-						sourceTypeJS: item.sourceTypeJS,
-						legend: item.legend,
-					};
-				}
-			}
 
 			case "stacktrace": {
 				let importantPaths: undefined | MixedPathSet = item.importantPaths;

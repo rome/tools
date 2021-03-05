@@ -8,7 +8,7 @@ import {
 	LSPRange,
 	LSPTextEdit,
 } from "./types";
-import stringDiff, {Diff, diffConstants} from "@internal/string-diff";
+import stringDiff, {Diff, DiffTypes} from "@internal/string-diff";
 import {ZeroIndexed} from "@internal/numbers";
 import {Position} from "@internal/parser-core";
 import {
@@ -120,7 +120,7 @@ export function diffTextEdits(original: string, desired: string): LSPTextEdit[] 
 
 	for (const [type, text] of diffs) {
 		switch (type) {
-			case diffConstants.ADD: {
+			case DiffTypes.INSERT: {
 				const pos = getPosition();
 				edits.push({
 					range: {
@@ -132,7 +132,7 @@ export function diffTextEdits(original: string, desired: string): LSPTextEdit[] 
 				break;
 			}
 
-			case diffConstants.DELETE: {
+			case DiffTypes.DELETE: {
 				const start: LSPPosition = getPosition();
 				advance(text);
 				const end: LSPPosition = getPosition();
@@ -146,7 +146,7 @@ export function diffTextEdits(original: string, desired: string): LSPTextEdit[] 
 				break;
 			}
 
-			case diffConstants.EQUAL: {
+			case DiffTypes.EQUAL: {
 				advance(text);
 				break;
 			}

@@ -35,7 +35,6 @@ import {
 	DiagnosticSuppressions,
 	DiagnosticsError,
 	DiagnosticsProcessor,
-	DiagnosticsProcessorFilterOptions,
 	createSingleDiagnosticsError,
 	decorateErrorWithDiagnostics,
 	descriptions,
@@ -46,7 +45,6 @@ import {
 import {
 	DiagnosticsFileHandler,
 	DiagnosticsPrinter,
-	DiagnosticsPrinterFlags,
 	DiagnosticsPrinterOptions,
 	printDiagnostics,
 } from "@internal/cli-diagnostics";
@@ -58,10 +56,10 @@ import ServerBridge, {
 	ServerQueryResponseSuccess,
 } from "../common/bridges/ServerBridge";
 import Server, {
-	ServerClient,
 	ServerMarker,
 	ServerUnfinishedMarker,
 } from "./Server";
+import ServerClient from "./ServerClient";
 import {Reporter, ReporterNamespace} from "@internal/cli-reporter";
 import {BridgeServer, Event} from "@internal/events";
 import {
@@ -94,7 +92,8 @@ import {GlobOptions, Globber} from "./fs/glob";
 import WorkerBridge from "../common/bridges/WorkerBridge";
 import {DurationMeasurer, OneIndexed, ZeroIndexed} from "@internal/numbers";
 import {Consumer, consume} from "@internal/consume";
-import {Resource} from "@internal/resources";
+import {createResourceFromCallback, Resource} from "@internal/resources";
+import prettyFormat from "@internal/pretty-format";
 
 type ServerRequestOptions = {
 	server: Server;
@@ -235,9 +234,6 @@ export default class ServerRequest {
 		this.query = query;
 		this.server = server;
 		this.bridge = client.bridge;
-		this.reporter = query.silent
-			? new Reporter("ServerRequestSilent")
-			: client.reporter.fork();
 		this.client = client;
 
 		this.start = new DurationMeasurer();
@@ -265,18 +261,22 @@ export default class ServerRequest {
 			},
 		);
 
-		this.resources = client.resources.create(`ServerRequest<${this.id}>`);
+		this.resources = client.resources.createContainer(`ServerRequest<${this.id}>`);
+
+		this.reporter = query.silent
+			? new Reporter("ServerRequestSilent")
+			: client.reporter.fork();
 		this.resources.add(this.reporter);
 
 		this.args = this.createArgsConsumer();
-
-		this.client.requestsInFlight.add(this);
-		this.resources.addCallback(
+		
+		client.requestsInFlight.add(this);
+		this.resources.add(createResourceFromCallback(
 			"ClientRequestsTracker",
 			() => {
-				this.client.requestsInFlight.delete(this);
+				client.requestsInFlight.delete(this);
 			},
-		);
+		));
 	}
 
 	public id: number;
@@ -409,7 +409,8 @@ export default class ServerRequest {
 			});
 		}
 
-		await this.server.handleRequestStart(this);
+		this.logger.info(markup`Start ${prettyFormat(this.query)}`);
+		await this.server.requestStartEvent.callOptional(this);
 	}
 
 	public checkCancelled() {
@@ -514,7 +515,7 @@ export default class ServerRequest {
 
 		await this.endEvent.callOptional(res);
 		await this.resources.release();
-		await this.server.handleRequestEnd(this);
+		this.logger.info(markup`Request end`);
 		return res;
 	}
 
@@ -594,45 +595,43 @@ export default class ServerRequest {
 	public createDiagnosticsProcessor(
 		opts: DiagnosticsProcessorOptions = {},
 	): DiagnosticsProcessor {
+		const {requestFlags} = this.query;
 		return new DiagnosticsProcessor({
 			markupOptions: this.reporter.markupOptions,
-			filter: this.getDiagnosticsProcessorFilterOptions(),
+			filter: {
+				grep: requestFlags.grep,
+				inverseGrep: requestFlags.inverseGrep,
+				maxDiagnostics: requestFlags.maxDiagnostics,
+			},
 			...opts,
 		});
 	}
 
-	private maybeReadMemoryFile(path: Path): undefined | string {
-		if (path.isUID()) {
-			switch (path.getBasename()) {
-				case "argv":
-					return this.getDiagnosticLocationFromFlags("none").sourceText;
-
-				case "cwd":
-					return this.client.flags.cwd.join();
-			}
-		}
-		return undefined;
-	}
-
-	private createDiagnosticsPrinterFileHandlers(): DiagnosticsFileHandler[] {
-		return [
-			this.server.createDiagnosticsPrinterFileHandler(),
-			{
-				read: async (path) => {
-					return this.maybeReadMemoryFile(path);
-				},
-			},
-		];
-	}
-
 	public createDiagnosticsPrinter(
-		processor: DiagnosticsProcessor = this.createDiagnosticsProcessor(),
-		opts: Partial<Omit<DiagnosticsPrinterOptions, "processor">> = {},
+		opts: Partial<DiagnosticsPrinterOptions> = {},
 	): DiagnosticsPrinter {
+		const {requestFlags} = this.query;
+		const processor = opts.processor ?? this.createDiagnosticsProcessor();
+
 		processor.unshiftOrigin({
 			category: "server",
 			message: `${this.query.commandName} command was dispatched`,
 		});
+
+		const uidRequestFileHandler: DiagnosticsFileHandler = {
+			read: async (path) => {
+				if (path.isUID()) {
+					switch (path.getBasename()) {
+						case "argv":
+							return this.getDiagnosticLocationFromFlags("none").sourceText;
+
+						case "cwd":
+							return this.client.flags.cwd.join();
+					}
+				}
+				return undefined;
+			},
+		};
 
 		return new DiagnosticsPrinter({
 			streaming: true,
@@ -641,34 +640,19 @@ export default class ServerRequest {
 			wrapErrors: true,
 			...opts,
 			flags: {
-				...this.getDiagnosticsPrinterFlags(),
+				auxiliaryDiagnosticFormat: requestFlags.auxiliaryDiagnosticFormat,
+				truncateDiagnostics: requestFlags.truncateDiagnostics,
+				verboseDiagnostics: requestFlags.verboseDiagnostics,
+				fieri: requestFlags.fieri,
 				...opts.flags,
 			},
 			fileHandlers: [
-				...this.createDiagnosticsPrinterFileHandlers(),
+				this.server.createDiagnosticsPrinterFileHandler(),
+				uidRequestFileHandler,
 				...(opts.fileHandlers || []),
 			],
 			processor,
 		});
-	}
-
-	private getDiagnosticsProcessorFilterOptions(): DiagnosticsProcessorFilterOptions {
-		const {requestFlags} = this.query;
-		return {
-			grep: requestFlags.grep,
-			inverseGrep: requestFlags.inverseGrep,
-			maxDiagnostics: requestFlags.maxDiagnostics,
-		};
-	}
-
-	private getDiagnosticsPrinterFlags(): DiagnosticsPrinterFlags {
-		const {requestFlags} = this.query;
-		return {
-			auxiliaryDiagnosticFormat: requestFlags.auxiliaryDiagnosticFormat,
-			truncateDiagnostics: requestFlags.truncateDiagnostics,
-			verboseDiagnostics: requestFlags.verboseDiagnostics,
-			fieri: requestFlags.fieri,
-		};
 	}
 
 	public expectArgumentLength(
@@ -1346,8 +1330,8 @@ export default class ServerRequest {
 				},
 			);
 
-			printer = this.createDiagnosticsPrinter(
-				this.createDiagnosticsProcessor({
+			printer = this.createDiagnosticsPrinter({
+				processor: this.createDiagnosticsProcessor({
 					origins: [
 						{
 							category: "internal",
@@ -1355,7 +1339,7 @@ export default class ServerRequest {
 						},
 					],
 				}),
-			);
+			});
 
 			printer.processor.addDiagnostics(diagnostics);
 		}

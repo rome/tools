@@ -36,7 +36,7 @@ export default class DevelopServer {
 		this.resolution = opts.resolution;
 		this.staticPath = opts.resolution.project.directory.append("static");
 
-		this.resources = this.request.resources.create("DevelopServer");
+		this.resources = this.request.resources.createContainer("DevelopServer");
 		this.ready = false;
 		this.knownBundleFiles = new RelativePathMap();
 		this.staticETags = new AbsoluteFilePathMap();

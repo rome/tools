@@ -15,6 +15,7 @@ import {orderBySimilarity, splitLines} from "@internal/string-utils";
 import {Position} from "@internal/parser-core";
 import {StaticMarkup, markup} from "@internal/markup";
 import {joinCategoryName} from "./categories";
+import { stringDiffCompressed } from "@internal/string-diff";
 
 type BuildSuggestionAdviceOptions = {
 	minRating?: number;
@@ -74,10 +75,9 @@ export function buildSuggestionAdvice(
 		});
 
 		advice.push({
-			type: "diff-strings",
+			type: "diff",
 			language: "unknown",
-			before: value,
-			after: topRatingRaw,
+			diff: stringDiffCompressed(value, topRatingRaw),
 		});
 
 		if (strings.length > 0) {

@@ -5,7 +5,7 @@ import {mergeObjects} from "@internal/typescript-helpers";
 import {OneIndexed} from "@internal/numbers";
 import {
 	Resource,
-	createResource,
+	createResourceContainer,
 	createResourceFromCallback,
 } from "@internal/resources";
 
@@ -46,7 +46,11 @@ type EnvVarStatus =
 		}
 	| {
 			type: "ENABLED";
-			value: true | string;
+			value: true;
+		}
+	| {
+			type: "SET";
+			value: string;
 		}
 	| {
 			type: "UNDEFINED";
@@ -64,7 +68,12 @@ export function getEnvVar(key: string): EnvVarStatus {
 	if (value === "1" || value === "true" || value === "") {
 		return {type: "ENABLED", value: true};
 	}
-	return {type: "ENABLED", value};
+	return {type: "SET", value};
+}
+
+export function isEnvVarSet(key: string): boolean {
+	const envVar = getEnvVar(key);
+	return envVar.type === "ENABLED" || envVar.type === "SET";
 }
 
 export function inferTerminalFeatures(
@@ -75,11 +84,10 @@ export function inferTerminalFeatures(
 	let colorDepth: TerminalFeatures["colorDepth"] = 1;
 	let isTTY = force.isTTY === true;
 	let unicode = false;
-	let isCI = isCIEnv();
 	let background: TerminalFeatures["background"] = "unknown";
 
 	// Increase column size for CI
-	if (isCI) {
+	if (IS_CI_ENV) {
 		columns = new OneIndexed(200);
 		colorDepth = 4;
 	}
@@ -108,7 +116,7 @@ export function inferTerminalFeatures(
 		}
 	}
 
-	const fancyAnsi = isTTY && !isCI;
+	const fancyAnsi = isTTY && !IS_CI_ENV;
 
 	const progress = fancyAnsi && getEnvVar("ROME_PROGRESS").type !== "DISABLED";
 
@@ -131,7 +139,7 @@ export function inferTerminalFeatures(
 	);
 
 	let setupUpdateEvent: InferredTerminalFeatures["setupUpdateEvent"] = () => {
-		return createResource("TerminalFeatures.update");
+		return createResourceContainer("TerminalFeatures.update");
 	};
 
 	// Watch for resizing, unless force.columns has been set and we'll consider it to be fixed
@@ -174,11 +182,12 @@ const CI_ENV_NAMES = [
 	"GITHUB_ACTIONS",
 ];
 
-export function isCIEnv(): boolean {
-	for (const key of CI_ENV_NAMES) {
-		if (getEnvVar(key).type === "ENABLED") {
-			return true;
-		}
+export let IS_CI_ENV = false;
+for (const key of CI_ENV_NAMES) {
+	if (getEnvVar(key).type === "ENABLED") {
+		IS_CI_ENV = true;
+		break;
 	}
-	return false;
 }
+
+export const IS_ROME_DEV_ENV = getEnvVar("ROME_DEV").type === "ENABLED";

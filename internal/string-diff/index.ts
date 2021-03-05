@@ -30,22 +30,23 @@
  * limitations under the License.
  */
 
-export type Diff = [-1 | 0 | 1, string];
+/**
+ * The data structure representing a diff is an array of tuples:
+ * [[DiffTypes.DELETE, 'Hello'], [DiffTypes.INSERT, 'Goodbye'], [DiffTypes.EQUAL, ' world.']]
+ * which means: delete 'Hello', add 'Goodbye' and keep ' world.'
+ */
+
+export type Diff = [DiffTypes.DELETE | DiffTypes.EQUAL | DiffTypes.INSERT, string];
+
+export type CompressedDiff = Diff | [DiffTypes.EQUAL_COMPRESSED_LINES, number];
 
 type HalfMatch = undefined | [string, string, string, string, string];
 
-/**
- * The data structure representing a diff is an array of tuples:
- * [[DIFF_DELETE, 'Hello'], [DIFF_INSERT, 'Goodbye'], [DIFF_EQUAL, ' world.']]
- * which means: delete 'Hello', add 'Goodbye' and keep ' world.'
- */
-export const DIFF_DELETE: -1 = -1;
-export const DIFF_INSERT: 1 = 1;
-export const DIFF_EQUAL: 0 = 0;
-export const diffConstants = {
-	DELETE: DIFF_DELETE,
-	EQUAL: DIFF_EQUAL,
-	ADD: DIFF_INSERT,
+export enum DiffTypes {
+	DELETE,
+	EQUAL,
+	INSERT,
+	EQUAL_COMPRESSED_LINES,
 };
 
 export type UnifiedDiff = {
@@ -60,11 +61,13 @@ export type GroupDiffsLine = {
 	diffs: Diff[];
 };
 
+export const COMPRESSED_DIFFS_CONTEXT_LINES = 2;
+
 export function generateLineKey(beforeLine?: number, afterLine?: number) {
 	return `${beforeLine || ""}:${afterLine || ""}`;
 }
 
-export function stringDiffUnified(rawDiffs: Diff[]): UnifiedDiff {
+export function stringDiffUnified(rawDiffs: CompressedDiff[]): UnifiedDiff {
 	const modifiedLines: Set<string> = new Set();
 	const insertedLines: Map<string, GroupDiffsLine> = new Map();
 	const beforeLineToAfter: Map<number, number> = new Map();
@@ -102,19 +105,19 @@ export function stringDiffUnified(rawDiffs: Diff[]): UnifiedDiff {
 
 	function pushToLine(diff: Diff) {
 		switch (diff[0]) {
-			case diffConstants.ADD: {
+			case DiffTypes.INSERT: {
 				getLine(undefined, afterLine).diffs.push(diff);
 				modifiedLines.add(generateLineKey(undefined, afterLine));
 				break;
 			}
 
-			case diffConstants.DELETE: {
+			case DiffTypes.DELETE: {
 				getLine(beforeLine, undefined).diffs.push(diff);
 				modifiedLines.add(generateLineKey(beforeLine));
 				break;
 			}
 
-			case diffConstants.EQUAL: {
+			case DiffTypes.EQUAL: {
 				// We are still on the first line
 				if (beforeLine === 1 && afterLine === 1) {
 					beforeLineToAfter.set(1, 1);
@@ -127,7 +130,23 @@ export function stringDiffUnified(rawDiffs: Diff[]): UnifiedDiff {
 		}
 	}
 
-	for (const tuple of rawDiffs) {
+	for (let i = 0; i < rawDiffs.length; i++) {
+		const tuple = rawDiffs[i];
+		
+		if (tuple[0] === DiffTypes.EQUAL_COMPRESSED_LINES) {
+			const isFirstTuple = i === 0;
+			for (let i = 0; i < tuple[1]; i++) {
+				// Don't increment the first line if we are the first tuple marking the beginning of the file
+				if (!(i === 0 && isFirstTuple)) {
+					afterLine++;
+					beforeLine++;
+				}
+				beforeLineToAfter.set(beforeLine, afterLine);
+				pushToLine([DiffTypes.EQUAL, ""]);
+			}
+			continue;
+		}
+
 		const [type, text] = tuple;
 
 		// Get all the lines
@@ -150,21 +169,21 @@ export function stringDiffUnified(rawDiffs: Diff[]): UnifiedDiff {
 		// Create unique lines for each other chunk
 		for (const newLine of futureLines) {
 			switch (type) {
-				case diffConstants.EQUAL: {
+				case DiffTypes.EQUAL: {
 					afterLine++;
 					beforeLine++;
 					break;
 				}
 
-				case diffConstants.DELETE: {
+				case DiffTypes.DELETE: {
 					beforeLine++;
 					break;
 				}
 
-				case diffConstants.ADD: {
+				case DiffTypes.INSERT: {
 					afterLine++;
 					break;
-				}
+				}	
 			}
 
 			beforeLineToAfter.set(beforeLine, afterLine);
@@ -244,54 +263,91 @@ export function stringDiffUnified(rawDiffs: Diff[]): UnifiedDiff {
 	};
 }
 
-export default function stringDiff(text1: string, text2: string): Diff[] {
+export default function stringDiff(a: string, b: string): Diff[] {
 	// only pass fix_unicode=true at the top level, not when main is
 	// recursively invoked
-	return main(text1, text2, true);
+	return main(a, b, true);
+}
+
+export function stringDiffCompressed(a: string, b: string): CompressedDiff[] {
+	const diffs = stringDiff(a, b);
+	const compressed: CompressedDiff[] = [];
+
+	for (let i = 0; i < diffs.length; i++) {
+		const diff = diffs[i];
+
+		if (diff[0] !== DiffTypes.EQUAL) {
+			compressed.push(diff);
+			continue;
+		}
+
+		const lines = diff[1].split("\n");
+
+		const startLines = lines.slice(0, 1 + COMPRESSED_DIFFS_CONTEXT_LINES);
+		const endLines = lines.slice(-(1 + COMPRESSED_DIFFS_CONTEXT_LINES));
+	
+		const compressedCount = lines.length - startLines.length - endLines.length;
+		if (compressedCount <= 0) {
+			compressed.push(diff);
+			continue;
+		}
+	
+		if (startLines.length > 0) {
+			compressed.push([DiffTypes.EQUAL, startLines.join("\n")]);
+		}
+	
+		compressed.push([DiffTypes.EQUAL_COMPRESSED_LINES, compressedCount]);
+	
+		if (endLines.length > 0) {
+			compressed.push([DiffTypes.EQUAL, endLines.join("\n")]);
+		}
+	}
+
+	return compressed;
 }
 
 /**
  * Find the differences between two texts.  Simplifies the problem by stripping
  * any common prefix or suffix off the texts before diffing.
- * @param {string} text1 Old string to be diffed.
- * @param {string} text2 New string to be diffed.
- * @param {Int|Object} [cursor_pos] Edit position in text1 or object with more info
+ * @param {string} a Old string to be diffed.
+ * @param {string} b New string to be diffed.
+ * @param {Int|Object} [cursor_pos] Edit position in a or object with more info
  * @return {Array} Array of diff tuples.
  */
 export function main(
-	text1: string,
-	text2: string,
+	a: string,
+	b: string,
 	fixUnicode: boolean = false,
 ): Diff[] {
 	// Check for equality
-	if (text1 === text2) {
-		if (text1) {
-			return [[DIFF_EQUAL, text1]];
+	if (a === b) {
+		if (a) {
+			return [[DiffTypes.EQUAL, a]];
 		}
 		return [];
 	}
 
-	// Trim off common prefix (speedup).
-	let commonlength = commonPrefix(text1, text2);
-	let commonprefix = text1.substring(0, commonlength);
-	text1 = text1.substring(commonlength);
-	text2 = text2.substring(commonlength);
+	// Extract common prefix
+	const prefixLength = getCommonPrefix(a, b);
+	const prefix = a.substring(0, prefixLength);
+	a = a.substring(prefixLength);
+	b = b.substring(prefixLength);
 
-	// Trim off common suffix (speedup).
-	commonlength = commonSuffix(text1, text2);
-	let commonsuffix = text1.substring(text1.length - commonlength);
-	text1 = text1.substring(0, text1.length - commonlength);
-	text2 = text2.substring(0, text2.length - commonlength);
+	// Extract common suffix
+	const suffixLength = getCommonSuffix(a, b);
+	const suffix = a.substring(a.length - suffixLength);
+	a = a.substring(0, a.length - suffixLength);
+	b = b.substring(0, b.length - suffixLength);
 
 	// Compute the diff on the middle block.
-	let diffs = compute(text1, text2);
+	const diffs = compute(a, b);
 
 	// Restore the prefix and suffix.
-	if (commonprefix) {
-		diffs.unshift([DIFF_EQUAL, commonprefix]);
+	if (prefix) {
+		diffs.unshift([DiffTypes.EQUAL, prefix]);
 	}
-	if (commonsuffix) {
-		diffs.push([DIFF_EQUAL, commonsuffix]);
+	if (suffix) {
+		diffs.push([DiffTypes.EQUAL, suffix]);
 	}
 	cleanupMerge(diffs, fixUnicode);
 	return diffs;
@@ -300,36 +356,36 @@ export function main(
 /**
  * Find the differences between two texts.  Assumes that the texts do not
  * have any common prefix or suffix.
- * @param {string} text1 Old string to be diffed.
- * @param {string} text2 New string to be diffed.
+ * @param {string} a Old string to be diffed.
+ * @param {string} b New string to be diffed.
  * @return {Array} Array of diff tuples.
  */
-function compute(text1: string, text2: string): Diff[] {
+function compute(a: string, b: string): Diff[] {
 	let diffs: Diff[] = [];
 
-	if (!text1) {
+	if (!a) {
 		// Just add some text (speedup).
-		return [[DIFF_INSERT, text2]];
+		return [[DiffTypes.INSERT, b]];
 	}
 
-	if (!text2) {
+	if (!b) {
 		// Just delete some text (speedup).
-		return [[DIFF_DELETE, text1]];
+		return [[DiffTypes.DELETE, a]];
 	}
 
-	let longtext = text1.length > text2.length ? text1 : text2;
-	let shorttext = text1.length > text2.length ? text2 : text1;
+	let longtext = a.length > b.length ? a : b;
+	let shorttext = a.length > b.length ? b : a;
 	let i = longtext.indexOf(shorttext);
 	if (i !== -1) {
 		// Shorter text is inside the longer text (speedup).
 		diffs = [
-			[DIFF_INSERT, longtext.substring(0, i)],
-			[DIFF_EQUAL, shorttext],
-			[DIFF_INSERT, longtext.substring(i + shorttext.length)],
+			[DiffTypes.INSERT, longtext.substring(0, i)],
+			[DiffTypes.EQUAL, shorttext],
+			[DiffTypes.INSERT, longtext.substring(i + shorttext.length)],
 		];
 		// Swap insertions for deletions if diff is reversed.
-		if (text1.length > text2.length) {
-			diffs[0][0] = diffs[2][0] = DIFF_DELETE;
+		if (a.length > b.length) {
+			diffs[0][0] = diffs[2][0] = DiffTypes.DELETE;
 		}
 		return diffs;
 	}
@@ -337,42 +393,42 @@ function compute(text1: string, text2: string): Diff[] {
 	if (shorttext.length === 1) {
 		// Single character string.
 		// After the previous speedup, the character can't be an equality.
-		return [[DIFF_DELETE, text1], [DIFF_INSERT, text2]];
+		return [[DiffTypes.DELETE, a], [DiffTypes.INSERT, b]];
 	}
 
 	// Check to see if the problem can be split in two.
-	let hm = halfMatch(text1, text2);
+	let hm = halfMatch(a, b);
 	if (hm) {
 		// A half-match was found, sort out the return data.
-		let text1A = hm[0];
-		let text1B = hm[1];
-		let text2A = hm[2];
-		let text2B = hm[3];
+		let aA = hm[0];
+		let aB = hm[1];
+		let bA = hm[2];
+		let bB = hm[3];
 		let midCommon = hm[4];
 		// Send both pairs off for separate processing.
-		let diffsA: Diff[] = main(text1A, text2A);
-		let diffsB: Diff[] = main(text1B, text2B);
+		let diffsA: Diff[] = main(aA, bA);
+		let diffsB: Diff[] = main(aB, bB);
 		// Merge the results.
-		return diffsA.concat([[DIFF_EQUAL, midCommon]], diffsB);
+		return diffsA.concat([[DiffTypes.EQUAL, midCommon]], diffsB);
 	}
 
-	return bisect(text1, text2);
+	return bisect(a, b);
 }
 
 /**
  * Find the 'middle snake' of a diff, split the problem in two
  * and return the recursively constructed diff.
  * See Myers 1986 paper: An O(ND) Difference Algorithm and Its Variations.
- * @param {string} text1 Old string to be diffed.
- * @param {string} text2 New string to be diffed.
+ * @param {string} a Old string to be diffed.
+ * @param {string} b New string to be diffed.
  * @return {Array} Array of diff tuples.
  * @private
  */
-export function bisect(text1: string, text2: string): Diff[] {
+export function bisect(a: string, b: string): Diff[] {
 	// Cache the text lengths to prevent multiple calls.
-	let text1Length = text1.length;
-	let text2Length = text2.length;
-	let maxD = Math.ceil((text1Length + text2Length) / 2);
+	let aLength = a.length;
+	let bLength = b.length;
+	let maxD = Math.ceil((aLength + bLength) / 2);
 	let vOffset = maxD;
 	let vLength = 2 * maxD;
 	let v1 = new Array(vLength);
@@ -386,7 +442,7 @@ export function bisect(text1: string, text2: string): Diff[] {
 	}
 	v1[vOffset + 1] = 0;
 	v2[vOffset + 1] = 0;
-	let delta = text1Length - text2Length;
+	let delta = aLength - bLength;
 
 	// If the total number of characters is odd, then the front path will collide
 	// with the reverse path.
@@ -410,28 +466,28 @@ export function bisect(text1: string, text2: string): Diff[] {
 			}
 			let y1 = x1 - k1;
 			while (
-				x1 < text1Length &&
-				y1 < text2Length &&
-				text1.charAt(x1) === text2.charAt(y1)
+				x1 < aLength &&
+				y1 < bLength &&
+				a.charAt(x1) === b.charAt(y1)
 			) {
 				x1++;
 				y1++;
 			}
 			v1[k1Offset] = x1;
-			if (x1 > text1Length) {
+			if (x1 > aLength) {
 				// Ran off the right of the graph.
 				k1End += 2;
-			} else if (y1 > text2Length) {
+			} else if (y1 > bLength) {
 				// Ran off the bottom of the graph.
 				k1Start += 2;
 			} else if (front) {
 				let k2Offset = vOffset + delta - k1;
 				if (k2Offset >= 0 && k2Offset < vLength && v2[k2Offset] !== -1) {
 					// Mirror x2 onto top-left coordinate system.
-					let x2 = text1Length - v2[k2Offset];
+					let x2 = aLength - v2[k2Offset];
 					if (x1 >= x2) {
 						// Overlap detected.
-						return bisectSplit(text1, text2, x1, y1);
+						return bisectSplit(a, b, x1, y1);
 					}
 				}
 			}
@@ -448,19 +504,19 @@ export function bisect(text1: string, text2: string): Diff[] {
 			}
 			let y2 = x2 - k2;
 			while (
-				x2 < text1Length &&
-				y2 < text2Length &&
-				text1.charAt(text1Length - x2 - 1) ===
-				text2.charAt(text2Length - y2 - 1)
+				x2 < aLength &&
+				y2 < bLength &&
+				a.charAt(aLength - x2 - 1) ===
+				b.charAt(bLength - y2 - 1)
 			) {
 				x2++;
 				y2++;
 			}
 			v2[k2Offset] = x2;
-			if (x2 > text1Length) {
+			if (x2 > aLength) {
 				// Ran off the left of the graph.
 				k2End += 2;
-			} else if (y2 > text2Length) {
+			} else if (y2 > bLength) {
 				// Ran off the top of the graph.
 				k2Start += 2;
 			} else if (!front) {
@@ -469,10 +525,10 @@ export function bisect(text1: string, text2: string): Diff[] {
 					let x1 = v1[k1Offset];
 					let y1 = vOffset + x1 - k1Offset;
 					// Mirror x2 onto top-left coordinate system.
-					x2 = text1Length - x2;
+					x2 = aLength - x2;
 					if (x1 >= x2) {
 						// Overlap detected.
-						return bisectSplit(text1, text2, x1, y1);
+						return bisectSplit(a, b, x1, y1);
 					}
 				}
 			}
@@ -481,54 +537,53 @@ export function bisect(text1: string, text2: string): Diff[] {
 
 	// Diff took too long and hit the deadline or
 	// number of diffs equals number of characters, no commonality at all.
-	return [[DIFF_DELETE, text1], [DIFF_INSERT, text2]];
+	return [[DiffTypes.DELETE, a], [DiffTypes.INSERT, b]];
 }
 
 /**
  * Given the location of the 'middle snake', split the diff in two parts
  * and recurse.
- * @param {string} text1 Old string to be diffed.
- * @param {string} text2 New string to be diffed.
- * @param {number} x Index of split point in text1.
- * @param {number} y Index of split point in text2.
+ * @param {string} a Old string to be diffed.
+ * @param {string} b New string to be diffed.
+ * @param {number} x Index of split point in a.
+ * @param {number} y Index of split point in b.
  * @return {Array} Array of diff tuples.
  */
-function bisectSplit(text1: string, text2: string, x: number, y: number): Diff[] {
-	let text1A = text1.substring(0, x);
-	let text2A = text2.substring(0, y);
-	let text1B = text1.substring(x);
-	let text2B = text2.substring(y);
+function bisectSplit(a: string, b: string, x: number, y: number): Diff[] {
+	let aA = a.substring(0, x);
+	let bA = b.substring(0, y);
+	let aB = a.substring(x);
+	let bB = b.substring(y);
 
 	// Compute both diffs serially.
-	let diffs = main(text1A, text2A);
-	let diffsb = main(text1B, text2B);
+	let diffs = main(aA, bA);
+	let diffsb = main(aB, bB);
 
 	return diffs.concat(diffsb);
 }
 
 /**
  * Determine the common prefix of two strings.
- * @param {string} text1 First string.
- * @param {string} text2 Second string.
- * @return {number} The number of characters common to the start of each
- *     string.
+ * @param {string} a First string.
+ * @param {string} b Second string.
+ * @return {number} The number of characters common to the start of each string.
  */
-export function commonPrefix(text1: string, text2: string): number {
+export function getCommonPrefix(a: string, b: string): number {
 	// Quick check for common null cases.
-	if (!(text1 && text2) || text1.charAt(0) !== text2.charAt(0)) {
+	if (!(a && b) || a.charAt(0) !== b.charAt(0)) {
 		return 0;
 	}
 
 	// Binary search.
 	// Performance analysis: http://neil.fraser.name/news/2007/10/09/
 	let pointermin = 0;
-	let pointermax = Math.min(text1.length, text2.length);
+	let pointermax = Math.min(a.length, b.length);
 	let pointermid = pointermax;
 	let pointerstart = 0;
 	while (pointermin < pointermid) {
 		if (
-			text1.substring(pointerstart, pointermid) ===
-			text2.substring(pointerstart, pointermid)
+			a.substring(pointerstart, pointermid) ===
+			b.substring(pointerstart, pointermid)
 		) {
 			pointermin = pointermid;
 			pointerstart = pointermin;
@@ -538,7 +593,7 @@ export function commonPrefix(text1: string, text2: string): number {
 		pointermid = Math.floor((pointermax - pointermin) / 2 + pointermin);
 	}
 
-	if (isSurrogatePairStart(text1.charCodeAt(pointermid - 1))) {
+	if (isSurrogatePairStart(a.charCodeAt(pointermid - 1))) {
 		pointermid--;
 	}
 
@@ -547,13 +602,13 @@ export function commonPrefix(text1: string, text2: string): number {
 
 /**
  * Determine the common suffix of two strings.
- * @param {string} text1 First string.
- * @param {string} text2 Second string.
+ * @param {string} a First string.
+ * @param {string} b Second string.
  * @return {number} The number of characters common to the end of each string.
  */
-export function commonSuffix(text1: string, text2: string): number {
+export function getCommonSuffix(a: string, b: string): number {
 	// Quick check for common null cases.
-	if (!(text1 && text2) || text1.slice(-1) !== text2.slice(-1)) {
+	if (!(a && b) || a.slice(-1) !== b.slice(-1)) {
 		return 0;
 	}
 
@@ -561,13 +616,13 @@ export function commonSuffix(text1: string, text2: string): number {
 
 	// Performance analysis: http://neil.fraser.name/news/2007/10/09/
 	let pointermin = 0;
-	let pointermax = Math.min(text1.length, text2.length);
+	let pointermax = Math.min(a.length, b.length);
 	let pointermid = pointermax;
 	let pointerend = 0;
 	while (pointermin < pointermid) {
 		if (
-			text1.substring(text1.length - pointermid, text1.length - pointerend) ===
-			text2.substring(text2.length - pointermid, text2.length - pointerend)
+			a.substring(a.length - pointermid, a.length - pointerend) ===
+			b.substring(b.length - pointermid, b.length - pointerend)
 		) {
 			pointermin = pointermid;
 			pointerend = pointermin;
@@ -577,7 +632,7 @@ export function commonSuffix(text1: string, text2: string): number {
 		pointermid = Math.floor((pointermax - pointermin) / 2 + pointermin);
 	}
 
-	if (isSurrogatePairEnd(text1.charCodeAt(text1.length - pointermid))) {
+	if (isSurrogatePairEnd(a.charCodeAt(a.length - pointermid))) {
 		pointermid--;
 	}
 
@@ -588,15 +643,15 @@ export function commonSuffix(text1: string, text2: string): number {
  * Do the two texts share a substring which is at least half the length of the
  * longer text?
  * This speedup can produce non-minimal diffs.
- * @param {string} text1 First string.
- * @param {string} text2 Second string.
+ * @param {string} a First string.
+ * @param {string} b Second string.
  * @return {Array.<string>} Five element Array, containing the prefix of
- *     text1, the suffix of text1, the prefix of text2, the suffix of
- *     text2 and the common middle.  Or null if there was no match.
+ *     a, the suffix of a, the prefix of b, the suffix of
+ *     b and the common middle.  Or null if there was no match.
  */
-export function halfMatch(text1: string, text2: string): undefined | HalfMatch {
-	let longtext = text1.length > text2.length ? text1 : text2;
-	let shorttext = text1.length > text2.length ? text2 : text1;
+export function halfMatch(a: string, b: string): undefined | HalfMatch {
+	let longtext = a.length > b.length ? a : b;
+	let shorttext = a.length > b.length ? b : a;
 	if (longtext.length < 4 || shorttext.length * 2 < longtext.length) {
 		return undefined; // Pointless.
 	}
@@ -628,23 +683,23 @@ export function halfMatch(text1: string, text2: string): undefined | HalfMatch {
 	}
 
 	// A half-match was found, sort out the return data.
-	let text1A;
-	let text1B;
-	let text2A;
-	let text2B;
-	if (text1.length > text2.length) {
-		text1A = hm[0];
-		text1B = hm[1];
-		text2A = hm[2];
-		text2B = hm[3];
+	let aA;
+	let aB;
+	let bA;
+	let bB;
+	if (a.length > b.length) {
+		aA = hm[0];
+		aB = hm[1];
+		bA = hm[2];
+		bB = hm[3];
 	} else {
-		text2A = hm[0];
-		text2B = hm[1];
-		text1A = hm[2];
-		text1B = hm[3];
+		bA = hm[0];
+		bB = hm[1];
+		aA = hm[2];
+		aB = hm[3];
 	}
 	let midCommon = hm[4];
-	return [text1A, text1B, text2A, text2B, midCommon];
+	return [aA, aB, bA, bB, midCommon];
 }
 
 /**
@@ -673,11 +728,11 @@ function halfMatchI(
 	let bestShorttextA = "";
 	let bestShorttextB = "";
 	while ((j = shorttext.indexOf(seed, j + 1)) !== -1) {
-		let prefixLength = commonPrefix(
+		let prefixLength = getCommonPrefix(
 			longtext.substring(i),
 			shorttext.substring(j),
 		);
-		let suffixLength = commonSuffix(
+		let suffixLength = getCommonSuffix(
 			longtext.substring(0, i),
 			shorttext.substring(0, j),
 		);
@@ -712,7 +767,7 @@ function halfMatchI(
  * @param {boolean} fix_unicode Whether to normalize to a unicode-correct diff
  */
 export function cleanupMerge(diffs: Diff[], fixUnicode: boolean) {
-	diffs.push([DIFF_EQUAL, ""]); // Add a dummy entry at the end.
+	diffs.push([DiffTypes.EQUAL, ""]); // Add a dummy entry at the end.
 	let pointer = 0;
 	let countDelete = 0;
 	let countInsert = 0;
@@ -725,19 +780,19 @@ export function cleanupMerge(diffs: Diff[], fixUnicode: boolean) {
 			continue;
 		}
 		switch (diffs[pointer][0]) {
-			case DIFF_INSERT: {
+			case DiffTypes.INSERT: {
 				countInsert++;
 				textInsert += diffs[pointer][1];
 				pointer++;
 				break;
 			}
-			case DIFF_DELETE: {
+			case DiffTypes.DELETE: {
 				countDelete++;
 				textDelete += diffs[pointer][1];
 				pointer++;
 				break;
 			}
-			case DIFF_EQUAL: {
+			case DiffTypes.EQUAL: {
 				let previousEquality = pointer - countInsert - countDelete - 1;
 				if (fixUnicode) {
 					// prevent splitting of unicode surrogate pairs.  when fix_unicode is true,
@@ -763,12 +818,12 @@ export function cleanupMerge(diffs: Diff[], fixUnicode: boolean) {
 							diffs.splice(previousEquality, 1);
 							pointer--;
 							let k = previousEquality - 1;
-							if (diffs[k] && diffs[k][0] === DIFF_INSERT) {
+							if (diffs[k] && diffs[k][0] === DiffTypes.INSERT) {
 								countInsert++;
 								textInsert = diffs[k][1] + textInsert;
 								k--;
 							}
-							if (diffs[k] && diffs[k][0] === DIFF_DELETE) {
+							if (diffs[k] && diffs[k][0] === DiffTypes.DELETE) {
 								countDelete++;
 								textDelete = diffs[k][1] + textDelete;
 								k--;
@@ -792,7 +847,7 @@ export function cleanupMerge(diffs: Diff[], fixUnicode: boolean) {
 					// note that commonPrefix and commonSuffix are unicode-aware
 					if (textDelete.length > 0 && textInsert.length > 0) {
 						// Factor out any common prefixes.
-						commonlength = commonPrefix(textInsert, textDelete);
+						commonlength = getCommonPrefix(textInsert, textDelete);
 						if (commonlength !== 0) {
 							if (previousEquality >= 0) {
 								diffs[previousEquality][1] += textInsert.substring(
@@ -803,7 +858,7 @@ export function cleanupMerge(diffs: Diff[], fixUnicode: boolean) {
 								diffs.splice(
 									0,
 									0,
-									[DIFF_EQUAL, textInsert.substring(0, commonlength)],
+									[DiffTypes.EQUAL, textInsert.substring(0, commonlength)],
 								);
 								pointer++;
 							}
@@ -812,7 +867,7 @@ export function cleanupMerge(diffs: Diff[], fixUnicode: boolean) {
 						}
 
 						// Factor out any common suffixes.
-						commonlength = commonSuffix(textInsert, textDelete);
+						commonlength = getCommonSuffix(textInsert, textDelete);
 						if (commonlength !== 0) {
 							diffs[pointer][1] =
 								textInsert.substring(textInsert.length - commonlength) +
@@ -834,22 +889,22 @@ export function cleanupMerge(diffs: Diff[], fixUnicode: boolean) {
 						diffs.splice(pointer - n, n);
 						pointer = pointer - n;
 					} else if (textDelete.length === 0) {
-						diffs.splice(pointer - n, n, [DIFF_INSERT, textInsert]);
+						diffs.splice(pointer - n, n, [DiffTypes.INSERT, textInsert]);
 						pointer = pointer - n + 1;
 					} else if (textInsert.length === 0) {
-						diffs.splice(pointer - n, n, [DIFF_DELETE, textDelete]);
+						diffs.splice(pointer - n, n, [DiffTypes.DELETE, textDelete]);
 						pointer = pointer - n + 1;
 					} else {
 						diffs.splice(
 							pointer - n,
 							n,
-							[DIFF_DELETE, textDelete],
-							[DIFF_INSERT, textInsert],
+							[DiffTypes.DELETE, textDelete],
+							[DiffTypes.INSERT, textInsert],
 						);
 						pointer = pointer - n + 2;
 					}
 				}
-				if (pointer !== 0 && diffs[pointer - 1][0] === DIFF_EQUAL) {
+				if (pointer !== 0 && diffs[pointer - 1][0] === DiffTypes.EQUAL) {
 					// Merge this equality with the previous one.
 					diffs[pointer - 1][1] += diffs[pointer][1];
 					diffs.splice(pointer, 1);
@@ -878,8 +933,8 @@ export function cleanupMerge(diffs: Diff[], fixUnicode: boolean) {
 	// Intentionally ignore the first and last element (don't need checking).
 	while (pointer < diffs.length - 1) {
 		if (
-			diffs[pointer - 1][0] === DIFF_EQUAL &&
-			diffs[pointer + 1][0] === DIFF_EQUAL
+			diffs[pointer - 1][0] === DiffTypes.EQUAL &&
+			diffs[pointer + 1][0] === DiffTypes.EQUAL
 		) {
 			// This is a single edit surrounded by equalities.
 			if (

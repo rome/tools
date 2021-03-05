@@ -11,7 +11,7 @@ import {
 } from "@internal/path-match";
 import MemoryFileSystem from "@internal/core/server/fs/MemoryFileSystem";
 import {GlobalLock} from "@internal/async";
-import {Resource} from "@internal/resources";
+import {Resource, createResourceFromCallback} from "@internal/resources";
 
 const GLOB_IGNORE: PathPattern[] = [parsePathPattern({input: "node_modules"})];
 
@@ -252,12 +252,12 @@ class GlobberWatcher {
 			this.flushPaths(Array.from(events, ({path}) => path));
 		});
 
-		refreshSub.addCallback(
+		refreshSub.add(createResourceFromCallback(
 			"GlobberWatcher.flushLock",
 			async () => {
 				await this.flushLock.wait();
 			},
-		);
+		));
 
 		const {request} = this.globber;
 		if (request !== undefined) {

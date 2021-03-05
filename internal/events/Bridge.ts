@@ -43,7 +43,7 @@ import {
 	DIAGNOSTIC_CATEGORIES,
 	createRuntimeDiagnosticsError,
 } from "@internal/diagnostics";
-import {Resource, createResourceFromCallback} from "@internal/resources";
+import {Resource, createResourceContainer} from "@internal/resources";
 import {
 	isBridgeDisconnectedDiagnosticsError,
 	isBridgeResponseMessage,
@@ -100,13 +100,13 @@ export default class Bridge<
 		this.endEvent = new Event(`${debugPrefix}.endEvent`);
 		this.disconnectEvent = new Event(`${debugPrefix}.disconnectEvent`);
 
-		this.resources = createResourceFromCallback(
+		this.resources = createResourceContainer(
 			debugPrefix,
-			async () => {
-				await this.end("Resource released");
-			},
 			{
 				optional: opts.optionalResource,
+				finalize: async () => {
+					await this.end("Resource released");
+				},
 			},
 		);
 
@@ -247,7 +247,7 @@ export default class Bridge<
 			let attempts = 0;
 			let startTime = new DurationMeasurer();
 
-			const timer = timeout.setInterval(() => {
+			const timer = this.resources.add(timeout.setInterval(() => {
 				attempts++;
 
 				callback({
@@ -255,7 +255,7 @@ export default class Bridge<
 					attempts,
 					totalTime: startTime.since(),
 				});
-			});
+			}));
 
 			await this.heartbeatEvent.wait(undefined);
 			timer.release();
@@ -451,7 +451,7 @@ export default class Bridge<
 		}
 
 		// Wait on a disconnect when requesting a graceful teardown
-		if (gracefulTeardown) {
+		if (gracefulTeardown && this.connected) {
 			try {
 				// NB: Might be good to have a timer here
 				await this.disconnectEvent.wait();

@@ -145,7 +145,6 @@ export default class DiagnosticsProcessor {
 			options.normalizeOptions,
 			options.markupOptions,
 			options.sourceMaps,
-			this,
 		);
 
 		this.options = options;
@@ -258,6 +257,7 @@ export default class DiagnosticsProcessor {
 
 	public maybeThrowDiagnosticsError() {
 		if (this.hasDiagnostics()) {
+			console.trace();
 			throw new DiagnosticsError(
 				"Thrown by DiagnosticsProcessor",
 				this.getDiagnostics(),
@@ -400,11 +400,11 @@ export default class DiagnosticsProcessor {
 				}
 			}
 		}
-		
+
 		if (!ignoreSuppressionsAndFilter && this.shouldFilter(diag)) {
 			visibility.filtered = true;
 		}
-			
+
 		if (isDeduped(diag, dedupeKeys)) {
 			visibility.hidden = true;
 		}
@@ -435,7 +435,12 @@ export default class DiagnosticsProcessor {
 		}
 
 		// Whether we have been rendered invisible
-		const invisible = visibility.eliminated || visibility.truncated || visibility.suppressed || visibility.filtered || visibility.hidden;
+		const invisible =
+			visibility.eliminated ||
+			visibility.truncated ||
+			visibility.suppressed ||
+			visibility.filtered ||
+			visibility.hidden;
 
 		// If we have another flag then there's no way we're possibly being displayed
 		if (invisible) {
@@ -443,7 +448,7 @@ export default class DiagnosticsProcessor {
 		}
 
 		// If we have no other flag, and have not hit a condition that explicitly makes us possibly invisible later, we will always be displayed
-		if (!invisible && !visibility.maybe) {
+		if (!(invisible || visibility.maybe)) {
 			visibility.guaranteed = true;
 			visibility.maybe = true;
 		}
@@ -498,7 +503,7 @@ export default class DiagnosticsProcessor {
 					this.getMapEntry(dep.path).dependents.add(path);
 				}
 			}
-			
+
 			const visibility = this.getDiagnosticVisibility(
 				diag,
 				{
@@ -575,7 +580,9 @@ export default class DiagnosticsProcessor {
 
 	public calculatePath(
 		path: Path,
-		{raw}: {raw: boolean},
+		{raw}: {
+			raw: boolean;
+		},
 	): undefined | DiagnosticsProcessorCalculatedPath {
 		const entry = this.map.get(path);
 		if (entry === undefined) {
@@ -594,10 +601,7 @@ export default class DiagnosticsProcessor {
 
 		let recheckDiagnostics = entry.maybeDiagnostics;
 		if (raw) {
-			recheckDiagnostics = [
-				...recheckDiagnostics,
-				...entry.hiddenDiagnostics,
-			];
+			recheckDiagnostics = [...recheckDiagnostics, ...entry.hiddenDiagnostics];
 		}
 
 		for (const diag of recheckDiagnostics) {
@@ -614,7 +618,7 @@ export default class DiagnosticsProcessor {
 			// A maybe at this point is guaranteed
 			if (visibility.maybe) {
 				complete.push(diag);
-			}	
+			}
 		}
 
 		// Add errors for unused suppressions
@@ -641,7 +645,7 @@ export default class DiagnosticsProcessor {
 		};
 		entry.cachedCalculated = {
 			value: calculated,
-			raw: raw,
+			raw,
 		};
 		return calculated;
 	}
@@ -720,9 +724,12 @@ export default class DiagnosticsProcessor {
 		let truncated = false;
 
 		for (const [path, entry] of this.map) {
-			const pathCalculated = this.calculatePath(path, {
-				raw: false,
-			});
+			const pathCalculated = this.calculatePath(
+				path,
+				{
+					raw: false,
+				},
+			);
 			if (pathCalculated === undefined) {
 				continue;
 			}
@@ -737,10 +744,7 @@ export default class DiagnosticsProcessor {
 			if (truncated) {
 				calculated.truncated += diagnostics.length;
 			} else {
-				calculated.diagnostics = [
-					...calculated.diagnostics,
-					...diagnostics,
-				];
+				calculated.diagnostics = [...calculated.diagnostics, ...diagnostics];
 
 				const newLength = calculated.diagnostics.length;
 				if (newLength > maxDiagnostics) {

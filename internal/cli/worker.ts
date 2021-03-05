@@ -37,7 +37,7 @@ async function deriveWorkerOptions(
 
 export default async function worker() {
 	setProcessTitle("worker");
-	const bridge = WorkerBridge.Client.createFromWorkerThreadParentPort();
+	const {bridge} = WorkerBridge.Client.createFromWorkerThreadParentPort();
 	const opts = await deriveWorkerOptions(bridge);
 
 	const worker = new Worker(opts);

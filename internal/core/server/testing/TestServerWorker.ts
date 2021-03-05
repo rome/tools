@@ -5,7 +5,6 @@ import {
 	InspectorClientCloseError,
 	urlToFilename,
 } from "@internal/v8";
-import workerThreads = require("worker_threads");
 import {createClient} from "@internal/codec-websocket";
 import TestServer from "@internal/core/server/testing/TestServer";
 import {
@@ -26,6 +25,7 @@ import TestServerFile from "@internal/core/server/testing/TestServerFile";
 import {BridgeServer} from "@internal/events";
 import {Duration} from "@internal/numbers";
 import {ThreadWorkerContainer} from "@internal/core/worker/types";
+import { createResourceFromTimeout } from "@internal/resources";
 
 export default class TestServerWorker {
 	constructor(
@@ -58,7 +58,7 @@ export default class TestServerWorker {
 	private prepareLock: PathLocker;
 
 	public bridge: BridgeServer<typeof WorkerBridge>;
-	public thread: workerThreads.Worker;
+	public thread: ThreadWorkerContainer["thread"];
 	public inspector: undefined | InspectorClient;
 
 	public async init() {
@@ -78,6 +78,7 @@ export default class TestServerWorker {
 		if (inspectorUrl !== undefined) {
 			const client = new InspectorClient(await createClient(inspectorUrl));
 			this.inspector = client;
+			this.thread.resources.add(client);
 
 			await client.call("Debugger.enable");
 
@@ -87,10 +88,6 @@ export default class TestServerWorker {
 			// Until we have a way to disable it we need to resort to grossness like this...
 			process.stderr.write(ansiEscapes.cursorUp());
 			process.stderr.write(ansiEscapes.eraseLine);
-
-			bridge.endEvent.subscribe(() => {
-				client.end();
-			});
 		}
 
 		bridge.events.testDiskSnapshotDiscovered.subscribe((
@@ -121,7 +118,7 @@ export default class TestServerWorker {
 
 	public async handleTimeout(duration: string): Promise<void> {
 		return new Promise((resolve, reject) => {
-			const timeout = setTimeout(
+			const timeout = createResourceFromTimeout("TimeoutResolver", setTimeout(
 				() => {
 					resolve(
 						this.bridge.end(
@@ -131,13 +128,19 @@ export default class TestServerWorker {
 					);
 				},
 				3_000,
-			);
+			));
+
+			if (this.inspector === undefined) {
+				timeout.release();
+			} else {
+				this.inspector.resources.add(timeout);
+			}
 
 			this._handleTimeout(duration).then(() => {
-				clearTimeout(timeout);
+				timeout.release();
 				resolve();
 			}).catch((err) => {
-				clearTimeout(timeout);
+				timeout.release();
 				if (err instanceof InspectorClientCloseError) {
 					this.bridge.end(
 						`Test worker was unresponsive for ${duration}. We tried to collect some additional metadata but the inspector connection closed abruptly`,
@@ -398,7 +401,7 @@ export default class TestServerWorker {
 					}
 				}
 
-				inspector.end();
+				await inspector.resources.release();
 			}
 		}
 	}

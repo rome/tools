@@ -12,7 +12,7 @@ import {
 	MAX_PATCH_LINES,
 } from "./constants";
 import {showInvisibles} from "./utils";
-import {Diff, diffConstants, stringDiffUnified} from "@internal/string-diff";
+import {Diff, DiffTypes, stringDiffUnified} from "@internal/string-diff";
 import {
 	Markup,
 	StaticMarkup,
@@ -43,7 +43,7 @@ function formatDiffLine(diffs: Diff[]) {
 				atLineStart = false;
 			}
 
-			if (type === diffConstants.EQUAL) {
+			if (type === DiffTypes.EQUAL) {
 				return value;
 			} else {
 				return markupTag("emphasis", value);
@@ -78,7 +78,7 @@ export default function buildPatchCodeFrame(
 		if (beforeLine === undefined || afterLine === undefined) {
 			for (
 				let visible = i - CODE_FRAME_CONTEXT_LINES;
-				visible < i + CODE_FRAME_CONTEXT_LINES;
+				visible <= i + CODE_FRAME_CONTEXT_LINES;
 				visible++
 			) {
 				shownLineIndexes.add(visible);

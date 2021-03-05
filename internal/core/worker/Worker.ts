@@ -44,6 +44,7 @@ import VirtualModules from "../common/VirtualModules";
 import {markup} from "@internal/markup";
 import {
 	BridgeClient,
+	isBridgeClosedDiagnosticsError,
 	isBridgeDisconnectedDiagnosticsError,
 } from "@internal/events";
 import {ExtendedMap} from "@internal/collections";
@@ -52,7 +53,7 @@ import FatalErrorHandler from "../common/FatalErrorHandler";
 import {RSERObject} from "@internal/binary-transport";
 import {ReporterConditionalStream} from "@internal/cli-reporter";
 import {DEFAULT_TERMINAL_FEATURES} from "@internal/cli-environment";
-import {Resource, createResourceRoot} from "@internal/resources";
+import {Resource, createResourceRoot, safeProcessExit, createResourceFromCallback} from "@internal/resources";
 
 import TestWorker from "./test/TestWorker";
 import inspector = require("inspector");
@@ -63,6 +64,10 @@ export default class Worker {
 
 		this.resources = createResourceRoot(`${workerTypeLabel}<${opts.id}>`);
 		this.resources.add(opts.bridge);
+
+		opts.bridge.endEvent.subscribe(() => {
+			this.resources.release();
+		});
 
 		this.bridge = opts.bridge;
 		this.options = opts;
@@ -94,14 +99,21 @@ export default class Worker {
 
 		this.fatalErrorHandler = new FatalErrorHandler({
 			overrideHandle: (err) => {
-				console.error(err);
+				if (isBridgeClosedDiagnosticsError(err)) {
+					// Swallow bridge closure as it would have been explicit
+					safeProcessExit(0);
+					return true;
+				}
+				
 				const {bridge} = this;
 
 				if (!bridge.open) {
 					console.error(
 						"Worker encountered fatal error but no server bridge available to emit",
 					);
-					return false;
+					console.error(err.stack);
+					safeProcessExit(1);
+					return true;
 				}
 
 				if (opts.type === "test") {
@@ -131,7 +143,7 @@ export default class Worker {
 						);
 						console.error(err.stack);
 					}
-					process.exit(1);
+					safeProcessExit(1);
 				}
 
 				return true;
@@ -216,11 +228,13 @@ export default class Worker {
 
 		const {bridge} = this;
 
-		bridge.resources.addCallback(
+		bridge.resources.add(
+			createResourceFromCallback(
 			"WorkerEnd",
 			async () => {
 				await this.end();
 			},
+			)
 		);
 
 		let profiler: undefined | Profiler;

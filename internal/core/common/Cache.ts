@@ -5,7 +5,7 @@ import {
 } from "@internal/binary-transport";
 import {Markup, markup} from "@internal/markup";
 import {AbsoluteFilePath, AbsoluteFilePathMap, UIDPath} from "@internal/path";
-import {Resource} from "@internal/resources";
+import {createResourceFromCallback, Resource} from "@internal/resources";
 import FatalErrorHandler from "./FatalErrorHandler";
 import {UserConfig} from "./userConfig";
 
@@ -44,12 +44,12 @@ export default class Cache {
 		this.pendingWriteTimer = undefined;
 		this.pendingWrites = new AbsoluteFilePathMap();
 
-		resources.addCallback(
+		resources.add(createResourceFromCallback(
 			"Cache",
 			async () => {
 				await this.teardown();
 			},
-		);
+		));
 	}
 
 	public writeDisabled: boolean;
@@ -157,7 +157,7 @@ export default class Cache {
 		this.pendingWriteTimer = setTimeout(
 			() => {
 				this.runningWritePromise = this.writePending("queue").catch((err) => {
-					this.fatalErrorHandler.handle(err);
+					return this.fatalErrorHandler.handle(err);
 				}).finally(() => {
 					// Finished running
 					this.runningWritePromise = undefined;

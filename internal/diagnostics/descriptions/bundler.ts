@@ -36,7 +36,7 @@ export const bundler = createDiagnosticsCategory({
 					category: "info",
 					text: markup`The likely cause is the file ${formatPart(culprit)} that was required by ${formatPart(
 						target,
-					)} which created a circular dependency:`,
+					)}:`,
 				},
 				{
 					type: "list",

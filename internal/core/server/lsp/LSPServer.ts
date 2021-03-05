@@ -6,7 +6,8 @@
  */
 
 import {Consumer} from "@internal/consume";
-import Server, {ServerClient} from "../Server";
+import Server from "../Server";
+import ServerClient from "../ServerClient";
 import {
 	AbsoluteFilePath,
 	AbsoluteFilePathMap,
@@ -272,13 +273,10 @@ export default class LSPServer {
 	public async sendClientRequest(
 		req: PartialServerQueryRequest,
 	): Promise<ServerQueryResponse> {
-		return this.server.handleRequest(
-			this.client,
-			{
-				silent: true,
-				...req,
-			},
-		);
+		return this.client.handleRequest({
+			silent: true,
+			...req,
+		});
 	}
 
 	private async handleRequest(

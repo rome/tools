@@ -29,6 +29,7 @@ import TestWorkerFile, {TestDetails} from "./TestWorkerFile";
 import {AsyncVoidCallback, VoidCallback} from "@internal/typescript-helpers";
 import {AbsoluteFilePath} from "@internal/path";
 import {DurationMeasurer} from "@internal/numbers";
+import { stringDiffCompressed } from "@internal/string-diff";
 
 function formatExpectedError(expected: ExpectedError): string {
 	if (typeof expected === "string") {
@@ -248,10 +249,9 @@ export default class TestAPI implements TestHelper {
 			});
 
 			advice.push({
-				type: "diff-strings",
+				type: "diff",
 				language: "unknown",
-				before: expectedFormat,
-				after: receivedFormat,
+				diff: stringDiffCompressed(expectedFormat, receivedFormat),
 				legend: {
 					add: receivedAlias ? receivedAlias : "Received",
 					delete: expectedAlias ? expectedAlias : "Expected",

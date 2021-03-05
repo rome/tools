@@ -116,8 +116,8 @@ export default class TestServer {
 		this.runningTests = new ExtendedMap("runningTests");
 
 		this.sourceMaps = new SourceMapConsumerCollection();
-		this.printer = opts.request.createDiagnosticsPrinter(
-			this.request.createDiagnosticsProcessor({
+		this.printer = opts.request.createDiagnosticsPrinter({
+			processor: this.request.createDiagnosticsProcessor({
 				origins: [
 					{
 						category: "test",
@@ -126,7 +126,7 @@ export default class TestServer {
 				],
 				sourceMaps: this.sourceMaps,
 			}),
-		);
+		});
 
 		this.printer.processor.guaranteedTruncationEvent.subscribe(() => {
 			// TODO: Notify all test workers that they should no longer send us diagnostics
@@ -277,11 +277,7 @@ export default class TestServer {
 				callback: async () => {
 					const runProgress = this.setupRunProgress(workers);
 					await Promise.all(workers.map((worker) => worker.run()));
-
-					for (const worker of workers) {
-						await worker.thread.terminate();
-					}
-
+					await Promise.all(workers.map((worker) => worker.bridge.end()));
 					runProgress.teardown();
 				},
 			},

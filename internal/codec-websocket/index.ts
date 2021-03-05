@@ -16,6 +16,7 @@ import crypto = require("crypto");
 import url = require("url");
 import http = require("http");
 import net = require("net");
+import { createResourceFromSocket, Resource } from "@internal/resources";
 
 export function createKey(key: string): string {
 	return crypto.createHash("sha1").update(`${key}${GUID}`).digest("base64");
@@ -39,12 +40,11 @@ export class WebSocketInterface {
 
 		this.reporter = reporter;
 		this.socket = socket;
-		this.alive = true;
 		this.type = type;
 
+		this.resources = createResourceFromSocket(socket);
 		this.completeFrameEvent = new Event("WebSocketInterface.message");
 		this.errorEvent = new Event("WebSocketInterface.error");
-		this.endEvent = new Event("WebSocketInterface.end", {serial: true});
 
 		socket.on(
 			"data",
@@ -57,7 +57,7 @@ export class WebSocketInterface {
 			"error",
 			(err: NodeSystemError) => {
 				if (err.code === "ECONNRESET") {
-					this.endEvent.send();
+					this.resources.release();
 				} else {
 					this.errorEvent.send(err);
 				}
@@ -67,31 +67,20 @@ export class WebSocketInterface {
 		socket.on(
 			"close",
 			() => {
-				this.end();
+				this.resources.release();
 			},
 		);
 	}
 
-	private alive: boolean;
 	private type: WebSocketType;
 	private incompleteFrame: undefined | Frame;
 	private unfinishedFrame: undefined | Frame;
 	public socket: net.Socket;
+	public resources: Resource;
 	private reporter: undefined | Reporter;
 
 	public completeFrameEvent: Event<Frame, void>;
 	public errorEvent: Event<Error, void>;
-	public endEvent: Event<void, void>;
-
-	public end() {
-		if (!this.alive) {
-			return;
-		}
-
-		this.alive = false;
-		this.endEvent.send();
-		this.socket.end();
-	}
 
 	public send(buff: string | Buffer) {
 		if (typeof buff === "string") {

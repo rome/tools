@@ -139,7 +139,12 @@ async function buildTrunk() {
 			];
 		}
 
-		const proc = child.spawn(process.execPath, args);
+		const proc = child.spawn(process.execPath, args, {
+			env: {
+				...process.env,
+				NODE_DEBUG: "",
+			}
+		});
 
 		proc.stdout.pipe(process.stdout);
 		proc.stderr.pipe(process.stderr);

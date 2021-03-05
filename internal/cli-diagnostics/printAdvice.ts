@@ -38,7 +38,7 @@ import {DiagnosticsPrinterFlags} from "./types";
 import DiagnosticsPrinter, {DiagnosticsPrinterFileSources} from "./DiagnosticsPrinter";
 import {MixedPathSet, createUIDPath} from "@internal/path";
 import {MAX_CODE_LENGTH, MAX_CODE_LINES, MAX_LOG_LENGTH} from "./constants";
-import {Diff, diffConstants} from "@internal/string-diff";
+import {CompressedDiff, DiffTypes} from "@internal/string-diff";
 import {removeCarriageReturn} from "@internal/string-utils";
 import {serializeCLIFlags} from "@internal/cli-flags";
 import {inferDiagnosticLanguageFromPath} from "@internal/core/common/file-handlers";
@@ -107,9 +107,6 @@ function printAdviceItem(
 
 		case "diff":
 			return printDiff(item, opts);
-
-		case "diff-strings":
-			throw new Error("Should have been filtered by DiagnosticsNormalizer");
 
 		case "code":
 			return printCode(item, opts);
@@ -193,23 +190,23 @@ function printInspect(
 	return DID_PRINT;
 }
 
-function generateDiffHint(diffs: Diff[]): undefined | DiagnosticAdvice {
+function generateDiffHint(diffs: CompressedDiff[]): undefined | DiagnosticAdvice {
 	let expected = "";
 	let received = "";
 
 	for (const [type, text] of diffs) {
 		switch (type) {
-			case diffConstants.ADD: {
+			case DiffTypes.INSERT: {
 				received += text;
 				break;
 			}
 
-			case diffConstants.DELETE: {
+			case DiffTypes.DELETE: {
 				expected += text;
 				break;
 			}
 
-			case diffConstants.EQUAL: {
+			case DiffTypes.EQUAL: {
 				expected += text;
 				received += text;
 				break;
@@ -367,7 +364,7 @@ function printFrame(
 					{
 						type: "log",
 						category: "warn",
-						text: markup`Cannot render frame as ${path} does not exist`,
+						text: markup`Cannot render frame as ${diagnosticLocationToMarkupFilelink(item.location)} does not exist`,
 					},
 					opts,
 				);

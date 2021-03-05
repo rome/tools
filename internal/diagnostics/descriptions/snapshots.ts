@@ -1,6 +1,7 @@
 import {createDiagnosticsCategory} from "./index";
 import {markup} from "@internal/markup";
 import {DIAGNOSTIC_CATEGORIES} from "@internal/diagnostics";
+import { stringDiffCompressed } from "@internal/string-diff";
 
 export const snapshots = createDiagnosticsCategory({
 	MISSING_NEWLINE_AFTER_CODE_BLOCK: {
@@ -26,10 +27,9 @@ export const snapshots = createDiagnosticsCategory({
 		message: markup`Snapshots do not match`,
 		advice: [
 			{
-				type: "diff-strings",
+				type: "diff",
 				language: "unknown",
-				before: expected,
-				after: got,
+				diff: stringDiffCompressed(expected, got),
 			},
 		],
 	}),

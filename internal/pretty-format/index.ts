@@ -312,10 +312,10 @@ function formatKey(rawKey: string, forceString: boolean = false): StaticMarkup {
 
 // These are object keys that should always go at the top and ignore any alphabetization
 // This is fairly arbitrary but should include generic identifier keys
-const PRIORITIZE_KEYS = new Set(["id", "type", "kind", "key", "name", "value"]);
+const PRIORITIZE_KEYS = new Set(["id", "type", "kind", "key", "name", "details", "metadata", "meta", "value"]);
 
 // Same, but we put them at the bottom
-const DEPRIORITIZE_KEYS = new Set(["loc", "pos", "start", "end"]);
+const DEPRIORITIZE_KEYS = new Set(["loc", "pos", "start", "end", "location", "position"]);
 
 export function sortKeys(keys: string[]): string[] {
 	const sortedKeys: Set<string> = new Set(keys.sort(naturalCompare));

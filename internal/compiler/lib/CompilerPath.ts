@@ -26,6 +26,7 @@ import {
 	deriveDecisionPositionKey,
 } from "../lint/decisions";
 import {inheritLoc} from "@internal/js-ast-utils";
+import { stringDiffCompressed } from "@internal/string-diff";
 
 // Can be used with referential equality to determine if paths are derivatives of each other
 // Import for state retention which requires tracking ownership
@@ -313,10 +314,12 @@ export default class CompilerPath {
 			});
 
 			advice.push({
-				type: "diff-strings",
+				type: "diff",
 				language: context.language,
-				before: getFormattedCodeFromSignal(signals.replace(old), this),
-				after: getFormattedCodeFromSignal(defaultFixed, this),
+				diff: stringDiffCompressed(
+					getFormattedCodeFromSignal(signals.replace(old), this),
+					getFormattedCodeFromSignal(defaultFixed, this),
+				),
 			});
 
 			if (canFormat) {
@@ -393,10 +396,12 @@ export default class CompilerPath {
 				});
 
 				advice.push({
-					type: "diff-strings",
+					type: "diff",
 					language: context.language,
-					before: getFormattedCodeFromSignal(signals.replace(old), this),
-					after: getFormattedCodeFromSignal(suggestion.fixed, this),
+					diff: stringDiffCompressed(
+						getFormattedCodeFromSignal(signals.replace(old), this),
+						getFormattedCodeFromSignal(suggestion.fixed, this),
+					),
 				});
 
 				advice.push({

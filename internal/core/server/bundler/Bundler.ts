@@ -279,30 +279,28 @@ export default class Bundler {
 			streams: [],
 		});
 
-		const promises: Set<Promise<void>> = new Set();
-
-		// Could maybe do some of this in parallel?
-		while (entries.length > 0) {
-			const entry = entries.shift()!;
-
-			const promise = (async () => {
-				const progressId = progress.pushText(entry);
-
-				map.set(entry, await this.bundle(entry, options, silentReporter));
-				progress.popText(progressId);
-				progress.tick();
-			})();
-			promise.then(() => {
-				promises.delete(promise);
-			});
-			promises.add(promise);
-
-			if (promises.size > 5) {
-				await Promise.race(Array.from(promises));
+		const bundle = async () => {
+			if (entries.length === 0) {
+				return;
 			}
-		}
 
-		await Promise.all(Array.from(promises));
+			const entry = entries.shift()!;
+			const progressId = progress.pushText(entry);
+
+			map.set(entry, await this.bundle(entry, options, silentReporter));
+			progress.popText(progressId);
+			progress.tick();
+			await bundle();
+		};
+
+		// TODO better parallelization model
+		await Promise.all([
+			bundle(),
+			bundle(),
+			bundle(),
+			bundle(),
+			bundle(),
+		]);
 
 		progress.end();
 

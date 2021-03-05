@@ -106,12 +106,12 @@ export default class DiagnosticsPrinter extends Error {
 		super(
 			"Diagnostics printer. If you're seeing this then it wasn't caught and printed correctly.",
 		);
-		const {cwd, reporter, flags = DEFAULT_PRINTER_FLAGS} = opts;
+		const {cwd, reporter, flags} = opts;
 
 		this.options = opts;
 
 		this.reporter = reporter;
-		this.flags = flags;
+		this.flags = {...DEFAULT_PRINTER_FLAGS, ...flags};
 		this.fileHandler =
 			opts.fileHandlers === undefined
 				? DEFAULT_FILE_HANDLER
@@ -127,6 +127,7 @@ export default class DiagnosticsPrinter extends Error {
 		this.defaultFooterEnabled = true;
 		this.hasTruncatedDiagnostics = false;
 		this.missingFileSources = new MixedPathSet();
+		this.fileDependencies = new MixedPathMap();
 		this.fileSources = new MixedPathMap();
 		this.fileHashes = new MixedPathMap();
 		this.dependenciesByDiagnostic = new Map();
@@ -160,6 +161,7 @@ export default class DiagnosticsPrinter extends Error {
 	private fileHandler: Required<DiagnosticsFileHandler>;
 	private hasTruncatedDiagnostics: boolean;
 	private missingFileSources: MixedPathSet;
+	private fileDependencies: MixedPathMap<FileDependency>;
 	private fileSources: DiagnosticsPrinterFileSources;
 	private fileHashes: DiagnosticsPrinterFileHashes;
 	private dependenciesByDiagnostic: Map<Diagnostic, FileDependency[]>;
@@ -197,12 +199,18 @@ export default class DiagnosticsPrinter extends Error {
 	private async addFileSource(dep: FileDependency) {
 		const {path} = dep;
 
-		let needsHash = dep.integrity !== undefined;
-		let needsSource = dep.type === "reference";
+		const hasExisting = this.fileDependencies.get(path);
+		this.fileDependencies.set(path, dep);
+
+		let needsHash = dep.integrity !== undefined && !this.fileHashes.get(path);
+		let needsSource = dep.type === "reference" && !this.fileSources.has(path);
 
 		// If we don't need the source then just do an existence check
 		if (!(needsSource || needsHash)) {
-			await this.checkMissing(path);
+			// If we've already seen this file source then we've already checked if it exists
+			if (!hasExisting) {
+				await this.checkMissing(path);
+			}
 			return;
 		}
 
@@ -259,26 +267,32 @@ export default class DiagnosticsPrinter extends Error {
 			}
 			if (sourceText === undefined) {
 				// Perform an explicit exists test
-				await this.checkMissing(path);
+				if (!hasExisting) {
+					await this.checkMissing(path);
+				}
 				return;
 			}
 
 			if (dep.type === "reference") {
-				this.fileSources.set(
-					dep.path,
-					{
-						sourceText,
-						lines: toLines({
-							highlight: this.shouldHighlight(),
-							path: dep.path,
-							input: sourceText,
-							sourceTypeJS: dep.sourceTypeJS,
-							language: inferDiagnosticLanguageFromPath(dep.path, dep.language),
-						}),
-					},
-				);
+				this.setFileSource(dep, sourceText);
 			}
 		}
+	}
+
+	private setFileSource(dep: ReferenceFileDependency, sourceText: string): void {
+		this.fileSources.set(
+			dep.path,
+			{
+				sourceText,
+				lines: toLines({
+					highlight: this.shouldHighlight(),
+					path: dep.path,
+					input: sourceText,
+					sourceTypeJS: dep.sourceTypeJS,
+					language: inferDiagnosticLanguageFromPath(dep.path, dep.language),
+				}),
+			},
+		);
 	}
 
 	private getDependenciesFromDiagnostic(diag: Diagnostic): FileDependency[] {
@@ -391,7 +405,7 @@ export default class DiagnosticsPrinter extends Error {
 		// Remove non-absolute filenames and normalize sourceType and language for conflicts
 		for (const dep of deps) {
 			const path = dep.path;
-			const existing = depsMap.get(path);
+			const existing = depsMap.get(path) ?? this.fileDependencies.get(path);
 
 			// "reference" dependency can override "change" since it has more metadata that needs conflict resolution
 			if (existing === undefined || existing.type === "change") {
@@ -458,8 +472,12 @@ export default class DiagnosticsPrinter extends Error {
 			async () => {
 				await this.printLock.series(async () => {
 					const filteredDiagnostics = this.filterDiagnostics(diagnostics);
+					if (filteredDiagnostics.length === 0) {
+						return;
+					}
+
 					await this.fetchFileSources(filteredDiagnostics);
-					await this.printDiagnostics(filteredDiagnostics);
+					await this.printDiagnostics(filteredDiagnostics, true);
 				});
 			},
 		);
@@ -497,7 +515,7 @@ export default class DiagnosticsPrinter extends Error {
 		reporter.logRaw(err.stack || err.message);
 	}
 
-	private printDiagnostics(diagnostics: Diagnostic[]): void {
+	private printDiagnostics(diagnostics: Diagnostic[], validateDependencies: boolean): void {
 		const reporter = new Reporter("DiagnosticsPrinter");
 		const stream = reporter.attachCaptureStream("markup");
 
@@ -508,11 +526,12 @@ export default class DiagnosticsPrinter extends Error {
 		for (const diag of diagnostics) {
 			this.wrapErrorSync(
 				"printDiagnostic",
-				() => this.printDiagnostic(diag, reporter),
+				() => this.printDiagnostic(diag, reporter, validateDependencies),
 			);
 		}
 
 		this.reporter.log(stream.readAsMarkup(), {stderr: true, noNewline: true});
+		reporter.resources.release();
 	}
 
 	public getDiagnosticDependencyMeta(
@@ -584,8 +603,15 @@ export default class DiagnosticsPrinter extends Error {
 		}
 	}
 
-	public printDiagnostic(diag: Diagnostic, reporter: Reporter) {
-		const {outdatedPaths, missingPaths} = this.getDiagnosticDependencyMeta(diag);
+	printDiagnostic(diag: Diagnostic, reporter: Reporter, validateDependencies: boolean): void {
+		let outdatedPaths: MixedPathSet;
+		let missingPaths: MixedPathSet;
+		if (validateDependencies) {
+			({outdatedPaths, missingPaths} = this.getDiagnosticDependencyMeta(diag));
+		} else {
+			outdatedPaths = new MixedPathSet();
+			missingPaths = new MixedPathSet();
+		}
 		const {advice, header} = buildDisplayDiagnostic({
 			diagnostic: diag,
 			flags: this.flags,
@@ -618,8 +644,7 @@ export default class DiagnosticsPrinter extends Error {
 		const filteredDiagnostics: Diagnostic[] = [];
 
 		for (const diag of diagnostics) {
-			if (this.seenDiagnostics.has(diag)) {
-			} else {
+			if (!this.seenDiagnostics.has(diag)) {
 				this.seenDiagnostics.add(diag);
 				filteredDiagnostics.push(diag);
 			}
@@ -682,7 +707,6 @@ export default class DiagnosticsPrinter extends Error {
 			const {reporter} = this;
 			const calculated = this.processor.calculate();
 
-			console.log(calculated)
 			const displayableProblems = calculated.total - calculated.filtered;
 			let str = markup`Found <emphasis>${displayableProblems}</emphasis> <grammarNumber plural="problems" singular="problem">${String(
 				displayableProblems,
@@ -722,8 +746,12 @@ export default class DiagnosticsPrinter extends Error {
 
 				if (this.hasTruncatedDiagnostics) {
 					reporter.warn(
-						markup`Some diagnostics have been truncated. Use the --no-truncate-diagnostics flag to disable truncation.`,
+						markup`Some diagnostics have been truncated. Use the <code>--no-truncate-diagnostics</code> flag to disable truncation.`,
 					);
+				}
+
+				if (this.hasTruncatedDiagnostics || calculated.truncated > 0) {
+					reporter.br();
 				}
 
 				if (isError) {
@@ -751,12 +779,6 @@ export default class DiagnosticsPrinter extends Error {
 				}
 			},
 		);
-	}
-
-	// Do NOT use this method. It is for usage in FatalErrorHandler only as it needs to terminate immediately.
-	// We lose out on essential file data by performing this synchronously, do not have a footer, and perform no filtering.
-	public printBodySync(): void {
-		this.printDiagnostics(this.processor.getDiagnostics());
 	}
 
 	public async print(

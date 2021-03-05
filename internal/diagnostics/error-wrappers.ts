@@ -35,6 +35,7 @@ export class DiagnosticsError extends Error implements NodeSystemError {
 		this.name = "DiagnosticsError";
 	}
 
+	public diagnostics: Diagnostic[];
 	private _memoMessage: string | undefined;
 	private _message: undefined | string;
 
@@ -66,7 +67,7 @@ export class DiagnosticsError extends Error implements NodeSystemError {
 			wrapErrors: true,
 		});
 		for (const diag of this.diagnostics) {
-			printer.printDiagnostic(diag, reporter);
+			printer.printDiagnostic(diag, reporter, false);
 		}
 		reporter.resources.release();
 		message += stream.read();
@@ -75,8 +76,6 @@ export class DiagnosticsError extends Error implements NodeSystemError {
 		this._memoMessage = message;
 		return message;
 	}
-
-	public diagnostics: Diagnostic[];
 }
 
 export function createRuntimeDiagnosticsError(

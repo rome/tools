@@ -52,7 +52,6 @@ import {CWD_PATH} from "@internal/path";
 import readline = require("readline");
 import select from "./select";
 import {onKeypress} from "./util";
-
 import {
 	DEFAULT_TERMINAL_FEATURES,
 	Stdout,
@@ -68,7 +67,8 @@ import {
 import highlightShell from "@internal/markup-syntax-highlight/highlightShell";
 import {
 	Resource,
-	createResource,
+	createResourceContainer,
+	createResourceFromCallback,
 	createResourceRoot,
 } from "@internal/resources";
 
@@ -311,12 +311,12 @@ export default class Reporter implements ReporterNamespace {
 	}
 
 	public addAttachedStream(stream: ReporterStreamAttached): void {
-		stream.resources.addCallback(
+		stream.resources.add(createResourceFromCallback(
 			"ReporterStreamHandle",
 			() => {
 				this.streams.delete(stream);
 			},
-		);
+		));
 		stream.featuresUpdated.subscribe(() => {
 			this.refreshActiveElements();
 		});
@@ -336,7 +336,7 @@ export default class Reporter implements ReporterNamespace {
 				await stream.featuresUpdated.callOptional(newFeatures);
 			},
 			featuresUpdated: new Event("ReporterStream.featuresUpdated"),
-			resources: createResource("ReporterStream"),
+			resources: createResourceContainer("ReporterStream"),
 		};
 		this.resources.add(stream);
 		this.addAttachedStream(stream);
@@ -522,6 +522,13 @@ export default class Reporter implements ReporterNamespace {
 		}
 
 		return this.streams;
+	}
+
+	public updateMarkupOptions(opts: MarkupFormatOptions) {
+		this.markupOptions = {
+			...this.markupOptions,
+			...opts,
+		};
 	}
 
 	public fork(opts: Partial<ReporterOptions> = {}) {
@@ -741,7 +748,7 @@ export default class Reporter implements ReporterNamespace {
 		};
 
 		for (const stream of this.getStreams(opts)) {
-			streamUtils.log(stream, msg, opts);
+			streamUtils.log(stream, msg.split("\n"), opts);
 		}
 	}
 
@@ -751,17 +758,15 @@ export default class Reporter implements ReporterNamespace {
 		opts: LogOptions = {},
 	) {
 		const lines = this.format(stream, msg);
-		for (let i = 0; i < lines.length; i++) {
-			streamUtils.log(
-				stream,
-				lines[i],
-				{
-					...opts,
-					stderr: opts.stderr || this.shouldRedirectOutToErr,
-					noNewline: i === lines.length - 1 ? opts.noNewline : false,
-				},
-			);
-		}
+		streamUtils.log(
+			stream,
+			lines,
+			{
+				...opts,
+				stderr: opts.stderr || this.shouldRedirectOutToErr,
+				noNewline: opts.noNewline,
+			},
+		);
 	}
 
 	private logCategory(rawInner: Markup, opts: LogCategoryOptions) {

@@ -1,6 +1,7 @@
 import {createDiagnosticsCategory} from "../index";
 import {markup} from "@internal/markup";
 import {DIAGNOSTIC_CATEGORIES} from "@internal/diagnostics";
+import { stringDiffCompressed } from "@internal/string-diff";
 
 export const recoveryStore = createDiagnosticsCategory({
 	NOT_FOUND: (storeId: string) => ({
@@ -12,10 +13,9 @@ export const recoveryStore = createDiagnosticsCategory({
 		category: DIAGNOSTIC_CATEGORIES["recoveryStore/diff"],
 		advice: [
 			{
-				type: "diff-strings",
+				type: "diff",
 				language: "unknown",
-				before: original,
-				after: artifact,
+				diff: stringDiffCompressed(original, artifact),
 				legend: {
 					add: "Saved file",
 					delete: "Current file",

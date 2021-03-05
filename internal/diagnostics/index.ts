@@ -19,9 +19,9 @@ export * from "./helpers";
 
 export {
 	DEFAULT_PROCESSOR_FILTER_OPTIONS as DEFAULT_PROCESSOR_FILTER_FLAGS,
+	DiagnosticsProcessorCalculatedPath,
 	DiagnosticsProcessorFilterOptions,
 	DiagnosticsProcessorOptions,
-	DiagnosticsProcessorCalculatedPath,
 	default as DiagnosticsProcessor,
 } from "./DiagnosticsProcessor";
 

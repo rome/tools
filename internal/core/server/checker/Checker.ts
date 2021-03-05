@@ -7,7 +7,11 @@
 
 import {Server, ServerRequest} from "@internal/core";
 import {LINTABLE_EXTENSIONS} from "@internal/core/common/file-handlers";
-import {Diagnostic, DiagnosticsProcessor, DiagnosticsProcessorCalculatedPath} from "@internal/diagnostics";
+import {
+	Diagnostic,
+	DiagnosticsProcessor,
+	DiagnosticsProcessorCalculatedPath,
+} from "@internal/diagnostics";
 import {
 	AbsoluteFilePath,
 	AbsoluteFilePathSet,
@@ -412,9 +416,12 @@ class CheckRunner {
 		// Queue complete diagnostics if they are different than guaranteed
 		for (const processor of this.processors) {
 			for (const path of processor.getPaths()) {
-				const diagnostics = processor.calculatePath(path, {
-					raw: true,
-				});
+				const diagnostics = processor.calculatePath(
+					path,
+					{
+						raw: true,
+					},
+				);
 				if (diagnostics !== undefined) {
 					if (diagnostics.complete.length !== diagnostics.guaranteed.length) {
 						this.queueChanges(path, false);
@@ -482,7 +489,7 @@ export default class Checker {
 	): DiagnosticsPrinter {
 		const {request} = this;
 		const processor = this.createDiagnosticsProcessor();
-		const printer = request.createDiagnosticsPrinter(processor, {streaming});
+		const printer = request.createDiagnosticsPrinter({processor, streaming});
 
 		printer.onFooterPrint(async (reporter, isError) => {
 			if (isError) {

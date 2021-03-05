@@ -21,7 +21,7 @@ import {
 	decorateErrorWithDiagnostics,
 } from "@internal/diagnostics";
 import {markup} from "@internal/markup";
-import {Resource, createResource} from "@internal/resources";
+import {Resource, createResourceContainer} from "@internal/resources";
 import {Duration} from "@internal/numbers";
 
 type CallOptions = {
@@ -41,7 +41,7 @@ export class BridgeEvent<
 		this.requestCallbacks = new Map();
 		this[Symbol.toStringTag] = `BridgeEvent<${name}>`;
 
-		this.resources = createResource(this[Symbol.toStringTag]);
+		this.resources = createResourceContainer(this[Symbol.toStringTag]);
 		bridge.resources.add(this);
 
 		this.backingEvent = new Event(
@@ -199,7 +199,7 @@ export class BridgeEvent<
 				};
 			}
 
-			const resource = createResource(
+			const resource = createResourceContainer(
 				`${this[Symbol.toStringTag]}.Request<${id}>`,
 				{optional: true},
 			);

@@ -31,6 +31,7 @@ import {ReporterNamespace} from "@internal/cli-reporter";
 import {ExtendedMap} from "@internal/collections";
 import {Duration, DurationMeasurer} from "@internal/numbers";
 import {PartialWorkerOptions} from "../worker/types";
+import { createResourceFromCallback } from "@internal/resources";
 
 type SpawnWorkerOptions = {
 	type: WorkerType;
@@ -188,12 +189,13 @@ export default class WorkerManager {
 
 		try {
 			const serverWorker = this.getWorkerAssert(0);
+			this.selfWorker = false;
+			
 			this.logger.info(
 				markup`Spawning first worker outside of server after exceeding ${String(
 					MAX_MASTER_BYTES_BEFORE_WORKERS,
 				)} bytes`,
 			);
-			this.selfWorker = false;
 
 			// Spawn a new worker
 			const newWorker = await this.spawnProcessorWorker({
@@ -287,6 +289,8 @@ export default class WorkerManager {
 							container.displayName,
 						);
 					}
+
+					reporter.resources.release();
 				},
 			);
 
@@ -329,7 +333,6 @@ export default class WorkerManager {
 				workerData: this.buildPartialWorkerOptions({type, id, inspectorPort}),
 			},
 		);
-		this.server.resources.addWorkerThread(thread);
 
 		const logger = this.logger.namespace(markup`${displayName}`);
 
@@ -347,7 +350,7 @@ export default class WorkerManager {
 			},
 		);
 
-		const bridge = WorkerBridge.Server.createFromWorkerThread(thread);
+		const {bridge, resource: threadResource} = WorkerBridge.Server.createFromWorkerThread(thread);
 		this.server.resources.add(bridge);
 
 		bridge.events.fatalError.subscribe(async (details) => {
@@ -366,7 +369,10 @@ export default class WorkerManager {
 			id,
 			fileCount: 0,
 			byteCount: 0n,
-			thread,
+			thread: {
+				worker: thread,
+				resources: threadResource,
+			},
 			bridge,
 			ghost,
 			ready: false,
@@ -374,11 +380,13 @@ export default class WorkerManager {
 			logger,
 		};
 		this.setWorker(container);
-		bridge.resources.addCallback(
+		bridge.resources.add(
+			createResourceFromCallback(
 			"WorkerManagerRegistration",
 			() => {
 				this.workers.delete(id);
 			},
+			)
 		);
 
 		thread.once(

@@ -11,7 +11,7 @@ import {
 	DiagnosticLocation,
 } from "../types";
 import {StaticMarkup, markup} from "@internal/markup";
-import stringDiff from "@internal/string-diff";
+import { stringDiffCompressed } from "@internal/string-diff";
 import {buildSuggestionAdvice} from "../helpers";
 import {addEmphasis, createDiagnosticsCategory, orJoin} from "./index";
 import {DIAGNOSTIC_CATEGORIES} from "../categories";
@@ -1130,13 +1130,13 @@ export const lint = createDiagnosticsCategory({
 			{
 				type: "diff",
 				language,
-				diff: stringDiff(original, formatted),
+				diff: stringDiffCompressed(original, formatted),
 			},
 		];
 		const verboseAdvice: DiagnosticAdvice[] = [];
 
 		if (relativeFilename !== undefined) {
-			advice.push({
+			verboseAdvice.push({
 				type: "action",
 				command: "check",
 				suggestedKeyboardShortcut: "f",

@@ -1,26 +1,31 @@
-import { AsyncVoidCallback } from "@internal/typescript-helpers";
 import {enhanceNodeInspectClass} from "@internal/node";
-import {ResourceOptions, ResourceTree, ResourcesContainer} from "./types";
-import {createResourceFromCallback, extractResource} from "./index";
-import workerThreads = require("worker_threads");
-import childProcess = require("child_process");
-import net = require("net");
-import { getEnvVar } from "@internal/cli-environment";
+import {ResourceOptions, ResourceTree, ResourcesContainer, ResourceTreeEntry, ResourceGetDetails} from "./types";
+import {extractResource} from "./index";
+import {isEnvVarSet} from "@internal/cli-environment";
+import { createResourceContainer } from "./factories";
+import { AsyncVoidCallback } from "@internal/typescript-helpers";
 
-const isDebugStack = getEnvVar("ROME_RESOURCE_STACKS").type === "ENABLED";
+const isDebugStack = isEnvVarSet("ROME_RESOURCE_STACKS");
 
 export default class Resource {
-  constructor(name: string, opts: ResourceOptions = {}) {
+  constructor(opts: ResourceOptions) {
     this.options = opts;
+    this.getDetails = opts.getDetails;
     this.closed = false;
     this.resources = new Set();
     this.owners = new Set();
-    this[Symbol.toStringTag] = `Resource<${name}>`;
+    this[Symbol.toStringTag] = `Resource<${opts.name}>`;
+
+    if (opts.initialResources !== undefined) {
+      for (const resc of opts.initialResources) {
+        this.add(resc);
+      }
+    }
 
     // If this resource isn't optional then it must be attached to something
-    if (!opts.optional) {
+    if (!opts.optional && this.resources.size === 0) {
       let timeoutError: undefined | Error;
-      let timeoutMessage = `The resource ${name} is not correctly managed as it has not been attached to a parent resource`;
+      let timeoutMessage = `The resource ${opts.name} is not correctly managed as it has not been attached to a parent resource`;
       if (isDebugStack) {
         timeoutError = new Error(timeoutMessage);
       }
@@ -36,10 +41,12 @@ export default class Resource {
   }
 
   public [Symbol.toStringTag]: string;
+  public getDetails: ResourceGetDetails;
 
   protected timeout: undefined | NodeJS.Timeout;
   private options: ResourceOptions;
   private closed: boolean;
+  private _releasing: undefined | Promise<void>;
   private owners: Set<Resource>;
   private resources: Set<Resource>;
 
@@ -56,50 +63,69 @@ export default class Resource {
     return tree;
   }
 
-  public buildSubTree(seen: Set<Resource> = new Set()): ResourceTree {
-    const tree: ResourceTree = new Map();
-    for (const resource of this.resources) {
-      if (seen.has(resource)) {
-        // Ideally we should actually error? Resources are a tree, not a graph
-        continue;
-      }
+  public buildSubTree(seen: Map<Resource, ResourceTreeEntry> = new Map()): ResourceTreeEntry {
+    const children: ResourceTree = new Map();
+    const entry: ResourceTreeEntry = {
+      details: this.options.getDetails(),
+      children,
+    };
 
-      tree.set(resource, resource.buildSubTree(seen));
+    seen.set(this, entry);
+    
+    for (const resource of this.resources) {
+      const cached = seen.get(resource);
+      if (cached === undefined) {
+        children.set(resource, resource.buildSubTree(seen));
+      } else {
+        children.set(resource, cached);
+      }
     }
-    return tree;
+
+    return entry;
   }
 
   public release(): Promise<void> {
-    return this._release(this);
+    if (this.closed) {
+      return Promise.resolve();
+    } else {
+      return this._releaseCache(this, new Set());
+    }
   }
 
-  private async _release(root: Resource): Promise<void> {
-    if (this.closed) {
-      return;
+  private _releaseCache(root: Resource, seen: Set<Resource>): Promise<void> {
+    if (this._releasing) {
+      return this._releasing;
     }
 
+    if (this.closed) {
+      return Promise.resolve();
+    }
+
+    const promise = this._release(root, seen);
+    this._releasing = promise;
+    return promise;
+  }
+
+  private async _release(root: Resource, seen: Set<Resource>): Promise<void> {
     this.closed = true;
     this.markAttached();
+    seen.add(this);
 
+    const promises = [];
+    
     // Release all sub resources
-    const promises = Array.from(this.resources, (resource) => {
-      return resource._release(root);
-    });
+    for (const resource of this.resources) {
+      if (seen.has(resource)) {
+        continue;
+      }
+
+      promises.push(resource._releaseCache(root, seen));
+    }
 
     // Release ourselves
     const {release} = this.options;
     if (release !== undefined) {
-      const selfPromise: Promise<void> = new Promise((resolve) => {
-        resolve(release());
-      });
-
-      const timeout = setTimeout(() => {
-        // TODO reject?
-      }, 3000);
-
-      promises.push(selfPromise.finally(() => {
-        clearTimeout(timeout);
-      }));
+      promises.push(callRelease(this, release))
     }
     
     await Promise.all(promises);
@@ -109,15 +135,30 @@ export default class Resource {
       owner.remove(this);
     }
     this.owners.clear();
+
+    // Run finalizer
+    const {finalize} = this.options;
+    if (finalize !== undefined) {
+      await callRelease(this, finalize);
+    }
+
+    this._releasing = undefined;
   }
 
-  public create(name: string, opts?: ResourceOptions): Resource {
-    const resource = new Resource(name, opts);
+  public bind(rawResource: ResourcesContainer): Resource {
+    const resource = extractResource(rawResource);
+    this.add(resource);
+    resource.add(this);
+    return resource;
+  }
+
+  public createContainer(name: string, initialResources?: ResourcesContainer[]): Resource {
+    const resource = createResourceContainer(name, {initialResources});
     this.add(resource);
     return resource;
   }
 
-  public add(rawResource: ResourcesContainer | Resource, markAttachment: boolean = true): Resource {
+  public add(rawResource: ResourcesContainer, markAttachment: boolean = true): Resource {
     const resource = extractResource(rawResource);
 
     if (resource.closed || this.closed || this.resources.has(resource)) {
@@ -134,80 +175,25 @@ export default class Resource {
     return resource;
   }
 
-  public remove(rawResource: ResourcesContainer | Resource): void {
+  public remove(rawResource: ResourcesContainer): void {
     this.resources.delete(extractResource(rawResource));
   }
+}
 
-  public addCallback(name: string, callback: AsyncVoidCallback): Resource {
-    return this.add(createResourceFromCallback(name, callback));
-  }
+function callRelease(resource: Resource, callback: AsyncVoidCallback): Promise<void> {
+  const selfPromise: Promise<void> = new Promise((resolve) => {
+    resolve(callback());
+  });
 
-  public addTimeout(name: string, timeout: NodeJS.Timeout): Resource {
-    return this.addCallback(`setTimeout<${name}>`, () => {
-      clearTimeout(timeout);
-    });
-  }
+  const timeout = setTimeout(() => {
+    console.log(resource[Symbol.toStringTag], "sup?", selfPromise, resource.getDetails());
+  }, 3000);
 
-  public addChildProcess(proc: childProcess.ChildProcess): Resource {
-    const resource = this.create("child_process.ChildProcess", {
-      release: () => {
-        proc.kill();
-      },
-    });
-    proc.on("close", () => {
-      resource.release();
-    });
-    return resource;
-  }
+  selfPromise.finally(() => {
+    clearTimeout(timeout);
+  });
 
-  public addWorkerThread(worker: workerThreads.Worker): Resource {
-    const resource = this.create("worker_threads.Worker", {
-      release: async () => {
-        await worker.terminate();
-      },
-    });
-    worker.on("exit", () => {
-      resource.release();
-    });
-    return resource;
-  }
-
-  public addSocket(socket: net.Socket): Resource {
-    const resource = this.create("net.Socket", {
-      release: () => {
-        socket.end();
-      },
-    });
-    socket.on("close", () => {
-      resource.release();
-    });
-    return resource;
-  }
-
-  public addServer(server: net.Server): Resource {
-    const resource = this.create("net.Server", {
-      release: () => {
-        // NB: Should we use the callback arg?
-        server.close();
-      },
-    });
-    server.on("close", () => {
-      resource.release();
-    });
-    return resource;
-  }
-
-  public addWebSocket(socket: WebSocket): Resource {
-    const resource = this.create("WebSocket", {
-      release: () => {
-        socket.close();
-      },
-    });
-    socket.addEventListener("open", () => {
-      resource.release();
-    });
-    return resource;
-  }
+  return selfPromise;
 }
 
 // @ts-ignore: Yes I really want to do this on an abstract class... bite me

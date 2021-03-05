@@ -28,6 +28,7 @@ import {TestServerRunnerOptions} from "../server/testing/types";
 import {FocusedTest} from "./test/TestWorkerFile";
 import workerThreads = require("worker_threads");
 import {ReporterNamespace} from "@internal/cli-reporter";
+import { Resource } from "@internal/resources";
 
 export type WorkerParseResult = {
 	ast: AnyRoot;
@@ -55,7 +56,10 @@ export type ThreadWorkerContainer = {
 	bridge: BridgeServer<typeof WorkerBridge>;
 	displayName: string;
 	logger: ReporterNamespace;
-	thread: workerThreads.Worker;
+	thread: {
+		worker: workerThreads.Worker;
+		resources: Resource;
+	};
 	// Whether we've completed a handshake with the worker and it's ready to receive requests
 	ready: boolean;
 	// Whether we should assign files to this worker

@@ -30,6 +30,6 @@ export type DiagnosticsPrinterOptions = {
 	streaming?: boolean;
 	wrapErrors?: boolean;
 	cwd?: AbsoluteFilePath;
-	flags?: DiagnosticsPrinterFlags;
+	flags?: Partial<DiagnosticsPrinterFlags>;
 	fileHandlers?: DiagnosticsFileHandler[];
 };

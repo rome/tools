@@ -17,6 +17,7 @@ import {
 import {markup} from "@internal/markup";
 import prettyFormat from "@internal/pretty-format";
 import {ReporterNamespace} from "@internal/cli-reporter";
+import {createResourceFromTimeout} from "@internal/resources";
 
 export type RecoverySaveFile =
 	| {
@@ -498,10 +499,7 @@ export default class RecoveryStore {
 
 		const paths: AbsoluteFilePathSet = new AbsoluteFilePathSet(files.keys());
 		const {server} = this;
-		const resources = server.resources.addCallback(
-			"RecoveryStore.writeFiles",
-			() => {},
-		);
+		const resources = server.resources.createContainer("RecoveryStore.writeFiles");
 
 		// Files successfully written
 		let fileCount = 0;
@@ -553,7 +551,7 @@ export default class RecoveryStore {
 
 			// Protects against file events not being emitted and causing hanging
 			const timeoutPromise = new Promise((resolve, reject) => {
-				resources.addTimeout(
+				resources.add(createResourceFromTimeout(
 					"FileHangDetector",
 					setTimeout(
 						() => {
@@ -567,7 +565,7 @@ export default class RecoveryStore {
 						},
 						1_000,
 					),
-				);
+				));
 			});
 
 			await Promise.race([waitRefresh, timeoutPromise]);

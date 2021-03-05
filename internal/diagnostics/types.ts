@@ -6,7 +6,7 @@
  */
 
 import {Position, SourceLocation} from "@internal/parser-core";
-import {Diff} from "@internal/string-diff";
+import {CompressedDiff} from "@internal/string-diff";
 import {ConstJSSourceType} from "@internal/ast";
 import {OneIndexed, ZeroIndexed} from "@internal/numbers";
 import {DiagnosticCategory} from "./categories";
@@ -128,7 +128,6 @@ export type DiagnosticAdvice =
 	| DiagnosticAdviceCode
 	| DiagnosticAdviceFrame
 	| DiagnosticAdviceDiff
-	| DiagnosticAdviceDiffStrings
 	| DiagnosticAdviceStacktrace
 	| DiagnosticAdviceCommand
 	| DiagnosticAdviceAction
@@ -203,16 +202,9 @@ type DiagnosticAdviceDiffBase = {
 	};
 };
 
-// This will be normalized away in DiagnosticsNormalizer and never end up at the diagnostics printer
-export type DiagnosticAdviceDiffStrings = DiagnosticAdviceDiffBase & {
-	type: "diff-strings";
-	before: string;
-	after: string;
-};
-
 export type DiagnosticAdviceDiff = DiagnosticAdviceDiffBase & {
 	type: "diff";
-	diff: Diff[];
+	diff: CompressedDiff[];
 };
 
 export type DiagnosticAdviceStacktrace = {
