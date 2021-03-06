@@ -257,7 +257,6 @@ export default class DiagnosticsProcessor {
 
 	public maybeThrowDiagnosticsError() {
 		if (this.hasDiagnostics()) {
-			console.trace();
 			throw new DiagnosticsError(
 				"Thrown by DiagnosticsProcessor",
 				this.getDiagnostics(),

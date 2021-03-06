@@ -1,42 +1,18 @@
 import {markup} from "@internal/markup";
-import {parseCommit} from "@internal/commit-parser";
-import {AbsoluteFilePath, createUIDPath} from "@internal/path";
-import {PUBLIC_PACKAGES, ROOT, reporter, writeFile} from "./_utils";
+import {AbsoluteFilePath} from "@internal/path";
+import {
+	GIT_PLACEHOLDERS,
+	PUBLIC_PACKAGES,
+	ROOT,
+	reporter,
+	writeFile,
+} from "./_utils";
 import {dedent} from "@internal/string-utils";
 import {json} from "@internal/codec-config";
 import child = require("child_process");
 import https = require("https");
 import http = require("http");
-
-const PROPERTY_DELIM = "<--ROME-PROPERTY-->";
-const LINE_DELIM = "<--ROME-LINE-->";
-const GIT_PLACEHOLDERS = {
-	authorEmail: "%aE",
-	authorName: "%aN",
-	body: "%b",
-	commit: "%H",
-	date: "%ad",
-	rawBody: "%B",
-	refNames: "%d",
-	subject: "%s",
-};
-
-interface Commit {
-	authorEmail: string;
-	authorName: string;
-	body: string;
-	commit: string;
-	date: string;
-	rawBody: string;
-	refNames?: string;
-	subject: string;
-	meta?: {
-		breaking: boolean;
-		commitType: string;
-		custom: boolean;
-		scope: string;
-	};
-}
+import {Commit, parseCommitLog} from "./vcs/utils";
 
 const ReleaseType = {
 	major: "major",
@@ -212,67 +188,6 @@ async function isNewVersion(version: string): Promise<boolean> {
 		);
 	});
 	return res.statusCode === 404;
-}
-
-/**
- * Parse a raw git log into an array of commit objects
- *
- * @param config - Map of result key names to git pretty placeholders
- * @param opts - Specify a starting and an ending commit
- * @returns - List of commit objects
- */
-function parseCommitLog(
-	config: Record<string, string>,
-	opts?: {
-		from: string;
-		to: string;
-	},
-): Commit[] {
-	const keys = Object.keys(config);
-
-	const cmd = keys.reduce(
-		(full, key) => `${full}${full ? `${PROPERTY_DELIM}` : ""}${config[key]}`,
-		"",
-	);
-
-	const log = child.spawnSync(
-		"git",
-		[
-			"log",
-			`--pretty='format:${cmd}${LINE_DELIM}'`,
-			opts ? `${opts.from}..${opts.to}` : ".",
-		],
-	).stdout.toString();
-
-	const commits = log.split(LINE_DELIM).map((rawCommit) => {
-		const values = rawCommit.trim().split(PROPERTY_DELIM);
-		return keys.reduce<Commit>(
-			(commit, key, index) => {
-				const newCommit = {
-					...commit,
-					[key]: values[index],
-				};
-
-				if (config[key] === "%B") {
-					const ast = parseCommit({
-						input: values[index],
-						path: createUIDPath(`commit/${index}`),
-					});
-					newCommit.meta = {
-						breaking: ast.breaking,
-						commitType: ast.commitType,
-						custom: ast.custom,
-						scope: ast.scope,
-					};
-				}
-
-				return newCommit;
-			},
-			{} as Commit,
-		);
-	});
-
-	return commits;
 }
 
 /**

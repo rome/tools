@@ -310,12 +310,42 @@ MarkdownRoot {
 			]
 			loc: SourceLocation smoke/input.md 30:0-30:64
 		}
+		MarkdownParagraph {
+			children: [
+				MarkdownText {
+					value: "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+					loc: SourceLocation smoke/input.md 32:0-32:0
+				}
+				MarkdownText {
+					value: "\n"
+					loc: SourceLocation smoke/input.md 32:56-33:0
+				}
+				MarkdownText {
+					value: "Lorem "
+					loc: SourceLocation smoke/input.md 33:0-33:0
+				}
+				MarkdownEmphasisInline {
+					value: [
+						MarkdownText {
+							value: "ipsum"
+							loc: SourceLocation smoke/input.md 33:8-33:8
+						}
+					]
+					loc: SourceLocation smoke/input.md 33:6-33:13
+				}
+				MarkdownText {
+					value: " dolor sit amet, consectetur adipiscing elit."
+					loc: SourceLocation smoke/input.md 33:15-33:15
+				}
+			]
+			loc: SourceLocation smoke/input.md 32:0-33:60
+		}
 	]
 	comments: []
 	corrupt: false
 	diagnostics: []
 	path: UIDPath<smoke/input.md>
-	loc: SourceLocation smoke/input.md 1:0-30:64
+	loc: SourceLocation smoke/input.md 1:0-33:60
 }
 ```
 

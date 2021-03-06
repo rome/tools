@@ -28,3 +28,6 @@ Lorem *ipsum dolor sit* amet, _consectetur adipiscing elit_.
 Lorem __ipsum dolor__ sit amet, **consectetur adipiscing** elit.
 
 Lorem ipsum __**dolor sit amet, consectetur**__ adipiscing elit.
+
+Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+Lorem **ipsum** dolor sit amet, consectetur adipiscing elit.

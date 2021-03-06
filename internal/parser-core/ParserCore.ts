@@ -20,6 +20,7 @@ import {
 	Diagnostic,
 	DiagnosticCategory,
 	DiagnosticDescription,
+	DiagnosticDescriptionOptional,
 	DiagnosticEliminationFilter,
 	DiagnosticIntegrity,
 	DiagnosticLanguage,
@@ -563,7 +564,7 @@ export default class ParserCore<Types extends ParserCoreTypes> {
 	// Get the current token and assert that it's of the specified type, the token stream will also be advanced
 	public expectToken<Type extends keyof Types["tokens"]>(
 		type: Type,
-		_metadata?: DiagnosticDescription,
+		_metadata?: DiagnosticDescriptionOptional,
 	): Types["tokens"][Type] {
 		const token = this.getToken();
 		if (token.type === type) {

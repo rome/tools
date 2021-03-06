@@ -2,6 +2,7 @@ import {INTERNAL, modifyGeneratedFile, reporter, writeFile} from "../_utils";
 import https = require("https");
 import {version as currentVersion} from "@internal/browsers-db";
 import {Consumer, consumeUnknown} from "@internal/consume";
+import {markup} from "@internal/markup";
 import {DIAGNOSTIC_CATEGORIES} from "@internal/diagnostics";
 
 const browsersDbFolder = INTERNAL.append("browsers-db");
@@ -303,6 +304,10 @@ export async function main() {
 		await updateData();
 		await updateRegions();
 		await updateVersion(version);
+
+		reporter.warn(
+			markup`Don't forget to update the snapshots with <code>./rome test internal/codec-browsers/index.test.ts --update-snapshots</code>`,
+		);
 	} else {
 		reporter.success(`[browsers-db] Already using latest version! ${version}`);
 	}
@@ -327,16 +332,16 @@ interface Agent {
 	p: string;
 	t: string;
 	vs: {
-		v: string;
+		v: number;
 		g: number;
 		r?: number;
 		p?: string;
 	}[];
-	cv: string;
+	cv: number;
 }
 
 interface Feature {
-	s: Map<string, Map<string, boolean>>;
+	s: Map<string, Map<number, boolean>>;
 	c: string[];
 }
 
@@ -351,7 +356,7 @@ interface RegionFormat {
 	data: Usage;
 }
 
-type Usage = Map<string, Map<string, number>>;
+type Usage = Map<string, Map<number, number>>;
 
 type RegionsFormat = Map<string, RegionFormat>;
 
@@ -388,6 +393,13 @@ function generateDataAgents(rawData: Consumer) {
 			continue;
 		}
 
+		const vs = generateDataAgentsVersions(
+			rawData.get("agents").get(agent).get("version_list").asImplicitArray(),
+		);
+		const currentVersion = rawData.get("agents").get(agent).get(
+			"current_version",
+		).asString();
+
 		agents.set(
 			agent,
 			{
@@ -395,21 +407,56 @@ function generateDataAgents(rawData: Consumer) {
 				a: rawData.get("agents").get(agent).get("abbr").asString(),
 				p: rawData.get("agents").get(agent).get("prefix").asString(),
 				t: rawData.get("agents").get(agent).get("type").asString(),
-				vs: rawData.get("agents").get(agent).get("version_list").asImplicitArray().filter((
-					v,
-				) => v.get("prefix").asString() !== "ms").map((v) => ({
-					v: v.get("version").asString(),
-					g: v.get("global_usage").asNumber(),
-					r: v.get("release_date").asNumberOrVoid(),
-					p: v.get("prefix").asString().length === 0
-						? undefined
-						: v.get("prefix").asString(),
-				})),
-				cv: rawData.get("agents").get(agent).get("current_version").asString(),
+				vs,
+				cv: isNaN(parseFloat(currentVersion))
+					? vs[vs.length - 1].v
+					: parseFloat(currentVersion), // Defaults to last version
 			},
 		);
 	}
 	return agents;
+}
+
+function generateDataAgentsVersions(rawVersions: Consumer[]): Agent["vs"] {
+	const versions: Agent["vs"] = [];
+
+	rawVersions.forEach((v) => {
+		if (v.get("version").asString().includes("-")) {
+			// Could be optimized but copying 3 times works
+			// Converts versions like `12-20` into 2 versions 12 and 20
+			versions.push({
+				v: parseFloat(v.get("version").asString().split("-")[0]),
+				g: v.get("global_usage").asNumber(),
+				r: v.get("release_date").asNumberOrVoid(),
+				p: v.get("prefix").asString().length === 0
+					? undefined
+					: v.get("prefix").asString(),
+			});
+
+			versions.push({
+				v: parseFloat(v.get("version").asString().split("-")[1]),
+				g: v.get("global_usage").asNumber(),
+				r: v.get("release_date").asNumberOrVoid(),
+				p: v.get("prefix").asString().length === 0
+					? undefined
+					: v.get("prefix").asString(),
+			});
+		} else {
+			versions.push({
+				v: isNaN(parseFloat(v.get("version").asString()))
+					? 1
+					: parseFloat(v.get("version").asString()),
+				// String may be "all", replaced with 1
+				g: v.get("global_usage").asNumber(),
+				r: v.get("release_date").asNumberOrVoid(),
+				p: v.get("prefix").asString().length === 0
+					? undefined
+					: v.get("prefix").asString(),
+			});
+		}
+	});
+
+	return versions;
 }
 
 function generateDataData(rawData: Consumer) {
@@ -429,14 +476,14 @@ function generateDataData(rawData: Consumer) {
 			continue;
 		}
 
-		const stats = new Map<string, Map<string, boolean>>();
+		const stats = new Map<string, Map<number, boolean>>();
 
 		for (const agent in rawData.get("data").get(feature).get("stats").asUnknownObject()) {
 			if (agent === "ie" || agent === "ie_mob") {
 				continue;
 			}
 
-			const featureAgents = new Map<string, boolean>();
+			const featureAgents = new Map<number, boolean>();
 
 			for (const v in rawData.get("data").get(feature).get("stats").get(agent).asUnknownObject()) {
 				if (
@@ -444,7 +491,14 @@ function generateDataData(rawData: Consumer) {
 						"x",
 					)
 				) {
-					featureAgents.set(v, true);
+					// Could be optimized but copying 3 times works
+					// Converts versions like `12-20` into 2 versions 12 and 20
+					if (v.includes("-")) {
+						featureAgents.set(parseFloat(v.split("-")[0]), true);
+						featureAgents.set(parseFloat(v.split("-")[1]), true);
+					} else {
+						featureAgents.set(parseFloat(v), true);
+					}
 				}
 			}
 
@@ -501,24 +555,37 @@ async function updateRegions() {
 }
 
 function generateRegionsData(rawRegionUsage: Consumer) {
-	const usage: Usage = new Map<string, Map<string, number>>();
+	const usage: Usage = new Map<string, Map<number, number>>();
 
 	for (const agent in rawRegionUsage.get("data").asUnknownObject()) {
 		if (agent === "ie" || agent === "ie_mob") {
 			continue;
 		}
 
-		const usageAgent = new Map<string, number>();
+		const usageAgent = new Map<number, number>();
 
 		for (const v in rawRegionUsage.get("data").get(agent).asUnknownObject()) {
 			if (
 				rawRegionUsage.get("data").get(agent).get(v).asNumberOrVoid() != null &&
 				rawRegionUsage.get("data").get(agent).get(v).asNumber() > 0
 			) {
-				usageAgent.set(
-					v,
-					rawRegionUsage.get("data").get(agent).get(v).asNumber(),
-				);
+				// Could be optimized but copying 3 times works
+				// Converts versions like `12-20` into 2 versions 12 and 20
+				if (v.includes("-")) {
+					usageAgent.set(
+						parseFloat(v.split("-")[0]),
+						rawRegionUsage.get("data").get(agent).get(v).asNumber(),
+					);
+					usageAgent.set(
+						parseFloat(v.split("-")[1]),
+						rawRegionUsage.get("data").get(agent).get(v).asNumber(),
+					);
+				} else {
+					usageAgent.set(
+						parseFloat(v),
+						rawRegionUsage.get("data").get(agent).get(v).asNumber(),
+					);
+				}
 			}
 		}
 

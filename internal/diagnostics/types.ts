@@ -82,6 +82,7 @@ export type DiagnosticLanguage =
 	| "text"
 	| "yaml"
 	| "toml"
+	| "browserquery"
 	| "unknown";
 
 export type DiagnosticSourceType = "unknown" | ConstJSSourceType;

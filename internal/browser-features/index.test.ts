@@ -1,5 +1,9 @@
 import {test} from "rome";
-import {getBrowser} from "@internal/browser-features/index";
+import {
+	getAllBrowserNames,
+	getAllBrowserUsages,
+	getBrowser,
+} from "@internal/browser-features/index";
 import {Chrome} from "@internal/browser-features/Browser";
 
 test(
@@ -8,53 +12,51 @@ test(
 		t.is(
 			getBrowser({
 				name: "firefox",
-			})!.getName(),
+			}).getName(),
 			"Firefox",
 		);
 
 		t.is(
 			getBrowser({
 				name: "firefox",
-			})?.getName(),
+			}).getName(),
 			"Firefox",
 		);
 
 		t.is(
 			getBrowser({
 				name: "Firefox",
-			})!.getName(),
+			}).getName(),
 			"Firefox",
 		);
 
-		t.is(
+		t.throws(() => {
 			getBrowser({
 				name: "dgsbhjsjkl",
-			}),
-			undefined,
-		);
+			});
+		});
 
 		t.is(
 			getBrowser({
 				name: "FF",
-			})!.getName(),
+			}).getName(),
 			"Firefox",
 		);
 
 		t.is(
 			getBrowser({
 				name: "firefox",
-				version: "84",
-			})!.getVersion(),
-			"84",
+				version: 84,
+			}).getVersion(),
+			84,
 		);
 
-		t.is(
+		t.throws(() => {
 			getBrowser({
 				name: "firefox",
-				version: "dgfa",
-			}),
-			undefined,
-		);
+				version: 679_934,
+			});
+		});
 	},
 );
 
@@ -64,18 +66,31 @@ test(
 		t.is(getBrowser({name: "chrome"}), getBrowser({name: "Chr."}));
 
 		t.not(
-			getBrowser({name: "chrome", version: "4"}),
+			getBrowser({name: "chrome", version: 4}),
 			getBrowser({name: "chrome"}),
 		);
 
 		t.is(
-			getBrowser({name: "chrome", version: "4"}),
-			getBrowser({name: "Chr.", version: "4"}),
+			getBrowser({name: "chrome", version: 4}),
+			getBrowser({name: "Chr.", version: 4}),
 		);
 
 		t.is(
 			getBrowser({name: "chrome", version: new Chrome().getCurrentVersion()}),
 			getBrowser({name: "chrome"}),
 		);
+	},
+);
+
+test(
+	"misc browser feature tests",
+	(t) => {
+		t.notThrows(() => {
+			getAllBrowserNames();
+		});
+
+		t.notThrows(() => {
+			getAllBrowserUsages();
+		});
 	},
 );
