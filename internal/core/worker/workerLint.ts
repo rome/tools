@@ -317,7 +317,7 @@ export async function uncachedFormat(
 			mtimeNs: res.mtimeNs,
 			result: {
 				original: res.sourceText,
-				formatted: res.formatted,
+				formatted: normalizeFormattedLineEndings(res.sourceText, res.formatted),
 				diagnostics: res.diagnostics,
 				suppressions: res.suppressions,
 			},
