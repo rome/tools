@@ -27,7 +27,6 @@ import {
 } from "@internal/virtual-rome/test";
 import TestWorkerFile, {TestDetails} from "./TestWorkerFile";
 import {AsyncVoidCallback, VoidCallback} from "@internal/typescript-helpers";
-import {AbsoluteFilePath} from "@internal/path";
 import {DurationMeasurer} from "@internal/numbers";
 import {stringDiffCompressed} from "@internal/string-diff";
 
@@ -136,7 +135,6 @@ export default class TestAPI implements TestHelper {
 		this.snapshotManager = file.snapshotManager;
 		this.snapshotCounter = 0;
 		this.file = file;
-		this.path = file.path;
 		this.teardownEvent = new Event("TestAPI.teardown");
 		this.startTime = new DurationMeasurer();
 		this.onTimeout = onTimeout;
@@ -151,7 +149,6 @@ export default class TestAPI implements TestHelper {
 	private file: TestWorkerFile;
 	private startTime: DurationMeasurer;
 	private options: TestServerRunnerOptions;
-	private path: AbsoluteFilePath;
 
 	private onTimeout: OnTimeout;
 	private timeoutId: undefined | NodeJS.Timeout;
