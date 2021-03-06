@@ -105,12 +105,6 @@ export function convertPossibleNodeErrorToDiagnostic(
 			category: "warn",
 			text: markup`No stacktrace available for this error. This is a Node.js limitation: <hyperlink target="https://github.com/nodejs/node/issues/30944" />`,
 		});
-
-		advice.push({
-			type: "log",
-			category: "info",
-			text: markup`Try setting the <code>ROME_FS_ERRORS=1</code> envvar to capture stacktraces for fs calls.`,
-		});
 	} else {
 		advice = getErrorStackAdvice(struct);
 		location = getDiagnosticLocationFromErrorFrame(struct.frames[0]);
