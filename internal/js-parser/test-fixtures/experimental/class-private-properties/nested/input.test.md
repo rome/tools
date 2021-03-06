@@ -24,10 +24,6 @@ JSRoot {
 							}
 							loc: SourceLocation experimental/class-private-properties/nested/input.js 2:2-2:4
 						}
-						value: JSNumericLiteral {
-							value: 1
-							loc: SourceLocation experimental/class-private-properties/nested/input.js 2:7-2:8
-						}
 						meta: JSClassPropertyMeta {
 							abstract: false
 							optional: false
@@ -35,6 +31,10 @@ JSRoot {
 							static: false
 							loc: SourceLocation experimental/class-private-properties/nested/input.js 2:2-2:4
 							start: Position 2:2
+						}
+						value: JSNumericLiteral {
+							value: 1
+							loc: SourceLocation experimental/class-private-properties/nested/input.js 2:7-2:8
 						}
 						loc: SourceLocation experimental/class-private-properties/nested/input.js 2:2-2:9
 					}
@@ -46,10 +46,6 @@ JSRoot {
 							}
 							loc: SourceLocation experimental/class-private-properties/nested/input.js 3:2-3:4
 						}
-						value: JSNumericLiteral {
-							value: 2
-							loc: SourceLocation experimental/class-private-properties/nested/input.js 3:7-3:8
-						}
 						meta: JSClassPropertyMeta {
 							abstract: false
 							optional: false
@@ -57,6 +53,10 @@ JSRoot {
 							static: false
 							loc: SourceLocation experimental/class-private-properties/nested/input.js 3:2-3:4
 							start: Position 3:2
+						}
+						value: JSNumericLiteral {
+							value: 2
+							loc: SourceLocation experimental/class-private-properties/nested/input.js 3:7-3:8
 						}
 						loc: SourceLocation experimental/class-private-properties/nested/input.js 3:2-3:9
 					}
@@ -68,6 +68,14 @@ JSRoot {
 								loc: SourceLocation experimental/class-private-properties/nested/input.js 5:2-5:13 (constructor)
 							}
 							loc: SourceLocation experimental/class-private-properties/nested/input.js 5:2-5:13
+						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							optional: false
+							readonly: false
+							static: false
+							loc: SourceLocation experimental/class-private-properties/nested/input.js 5:2-5:13
+							start: Position 5:2
 						}
 						body: JSBlockStatement {
 							body: [
@@ -162,10 +170,6 @@ JSRoot {
 															}
 															loc: SourceLocation experimental/class-private-properties/nested/input.js 10:6-10:8
 														}
-														value: JSNumericLiteral {
-															value: 1
-															loc: SourceLocation experimental/class-private-properties/nested/input.js 10:11-10:12
-														}
 														meta: JSClassPropertyMeta {
 															abstract: false
 															optional: false
@@ -173,6 +177,10 @@ JSRoot {
 															static: false
 															loc: SourceLocation experimental/class-private-properties/nested/input.js 10:6-10:8
 															start: Position 10:6
+														}
+														value: JSNumericLiteral {
+															value: 1
+															loc: SourceLocation experimental/class-private-properties/nested/input.js 10:11-10:12
 														}
 														loc: SourceLocation experimental/class-private-properties/nested/input.js 10:6-10:13
 													}
@@ -184,10 +192,6 @@ JSRoot {
 															}
 															loc: SourceLocation experimental/class-private-properties/nested/input.js 11:6-11:8
 														}
-														value: JSNumericLiteral {
-															value: 2
-															loc: SourceLocation experimental/class-private-properties/nested/input.js 11:11-11:12
-														}
 														meta: JSClassPropertyMeta {
 															abstract: false
 															optional: false
@@ -195,6 +199,10 @@ JSRoot {
 															static: false
 															loc: SourceLocation experimental/class-private-properties/nested/input.js 11:6-11:8
 															start: Position 11:6
+														}
+														value: JSNumericLiteral {
+															value: 2
+															loc: SourceLocation experimental/class-private-properties/nested/input.js 11:11-11:12
 														}
 														loc: SourceLocation experimental/class-private-properties/nested/input.js 11:6-11:13
 													}
@@ -206,6 +214,14 @@ JSRoot {
 																loc: SourceLocation experimental/class-private-properties/nested/input.js 13:6-13:17 (constructor)
 															}
 															loc: SourceLocation experimental/class-private-properties/nested/input.js 13:6-13:17
+														}
+														meta: JSClassPropertyMeta {
+															abstract: false
+															optional: false
+															readonly: false
+															static: false
+															loc: SourceLocation experimental/class-private-properties/nested/input.js 13:6-13:17
+															start: Position 13:6
 														}
 														body: JSBlockStatement {
 															body: [
@@ -313,14 +329,6 @@ JSRoot {
 															]
 															loc: SourceLocation experimental/class-private-properties/nested/input.js 13:17-13:31
 														}
-														meta: JSClassPropertyMeta {
-															abstract: false
-															optional: false
-															readonly: false
-															static: false
-															loc: SourceLocation experimental/class-private-properties/nested/input.js 13:6-13:17
-															start: Position 13:6
-														}
 														loc: SourceLocation experimental/class-private-properties/nested/input.js 13:6-16:7
 													}
 													JSClassMethod {
@@ -331,6 +339,14 @@ JSRoot {
 																loc: SourceLocation experimental/class-private-properties/nested/input.js 18:10-18:11 (x)
 															}
 															loc: SourceLocation experimental/class-private-properties/nested/input.js 18:10-18:11
+														}
+														meta: JSClassPropertyMeta {
+															abstract: false
+															optional: false
+															readonly: false
+															static: false
+															loc: SourceLocation experimental/class-private-properties/nested/input.js 18:6-18:11
+															start: Position 18:6
 														}
 														body: JSBlockStatement {
 															body: [
@@ -364,14 +380,6 @@ JSRoot {
 															params: []
 															loc: SourceLocation experimental/class-private-properties/nested/input.js 18:11-18:13
 														}
-														meta: JSClassPropertyMeta {
-															abstract: false
-															optional: false
-															readonly: false
-															static: false
-															loc: SourceLocation experimental/class-private-properties/nested/input.js 18:6-18:11
-															start: Position 18:6
-														}
 														loc: SourceLocation experimental/class-private-properties/nested/input.js 18:6-18:32
 													}
 													JSClassMethod {
@@ -382,6 +390,14 @@ JSRoot {
 																loc: SourceLocation experimental/class-private-properties/nested/input.js 19:10-19:11 (x)
 															}
 															loc: SourceLocation experimental/class-private-properties/nested/input.js 19:10-19:11
+														}
+														meta: JSClassPropertyMeta {
+															abstract: false
+															optional: false
+															readonly: false
+															static: false
+															loc: SourceLocation experimental/class-private-properties/nested/input.js 19:6-19:11
+															start: Position 19:6
 														}
 														body: JSBlockStatement {
 															body: [
@@ -436,14 +452,6 @@ JSRoot {
 															]
 															loc: SourceLocation experimental/class-private-properties/nested/input.js 19:11-19:18
 														}
-														meta: JSClassPropertyMeta {
-															abstract: false
-															optional: false
-															readonly: false
-															static: false
-															loc: SourceLocation experimental/class-private-properties/nested/input.js 19:6-19:11
-															start: Position 19:6
-														}
 														loc: SourceLocation experimental/class-private-properties/nested/input.js 19:6-19:39
 													}
 													JSClassMethod {
@@ -454,6 +462,14 @@ JSRoot {
 																loc: SourceLocation experimental/class-private-properties/nested/input.js 21:10-21:11 (y)
 															}
 															loc: SourceLocation experimental/class-private-properties/nested/input.js 21:10-21:11
+														}
+														meta: JSClassPropertyMeta {
+															abstract: false
+															optional: false
+															readonly: false
+															static: false
+															loc: SourceLocation experimental/class-private-properties/nested/input.js 21:6-21:11
+															start: Position 21:6
 														}
 														body: JSBlockStatement {
 															body: [
@@ -487,14 +503,6 @@ JSRoot {
 															params: []
 															loc: SourceLocation experimental/class-private-properties/nested/input.js 21:11-21:13
 														}
-														meta: JSClassPropertyMeta {
-															abstract: false
-															optional: false
-															readonly: false
-															static: false
-															loc: SourceLocation experimental/class-private-properties/nested/input.js 21:6-21:11
-															start: Position 21:6
-														}
 														loc: SourceLocation experimental/class-private-properties/nested/input.js 21:6-21:32
 													}
 													JSClassMethod {
@@ -505,6 +513,14 @@ JSRoot {
 																loc: SourceLocation experimental/class-private-properties/nested/input.js 22:10-22:11 (y)
 															}
 															loc: SourceLocation experimental/class-private-properties/nested/input.js 22:10-22:11
+														}
+														meta: JSClassPropertyMeta {
+															abstract: false
+															optional: false
+															readonly: false
+															static: false
+															loc: SourceLocation experimental/class-private-properties/nested/input.js 22:6-22:11
+															start: Position 22:6
 														}
 														body: JSBlockStatement {
 															body: [
@@ -559,14 +575,6 @@ JSRoot {
 															]
 															loc: SourceLocation experimental/class-private-properties/nested/input.js 22:11-22:18
 														}
-														meta: JSClassPropertyMeta {
-															abstract: false
-															optional: false
-															readonly: false
-															static: false
-															loc: SourceLocation experimental/class-private-properties/nested/input.js 22:6-22:11
-															start: Position 22:6
-														}
 														loc: SourceLocation experimental/class-private-properties/nested/input.js 22:6-22:39
 													}
 													JSClassMethod {
@@ -577,6 +585,14 @@ JSRoot {
 																loc: SourceLocation experimental/class-private-properties/nested/input.js 24:6-24:12 (equals)
 															}
 															loc: SourceLocation experimental/class-private-properties/nested/input.js 24:6-24:12
+														}
+														meta: JSClassPropertyMeta {
+															abstract: false
+															optional: false
+															readonly: false
+															static: false
+															loc: SourceLocation experimental/class-private-properties/nested/input.js 24:6-24:12
+															start: Position 24:6
 														}
 														body: JSBlockStatement {
 															body: [
@@ -680,14 +696,6 @@ JSRoot {
 															]
 															loc: SourceLocation experimental/class-private-properties/nested/input.js 24:12-24:15
 														}
-														meta: JSClassPropertyMeta {
-															abstract: false
-															optional: false
-															readonly: false
-															static: false
-															loc: SourceLocation experimental/class-private-properties/nested/input.js 24:6-24:12
-															start: Position 24:6
-														}
 														loc: SourceLocation experimental/class-private-properties/nested/input.js 24:6-24:63
 													}
 													JSClassMethod {
@@ -698,6 +706,14 @@ JSRoot {
 																loc: SourceLocation experimental/class-private-properties/nested/input.js 26:6-26:14 (toString)
 															}
 															loc: SourceLocation experimental/class-private-properties/nested/input.js 26:6-26:14
+														}
+														meta: JSClassPropertyMeta {
+															abstract: false
+															optional: false
+															readonly: false
+															static: false
+															loc: SourceLocation experimental/class-private-properties/nested/input.js 26:6-26:14
+															start: Position 26:6
 														}
 														body: JSBlockStatement {
 															body: [
@@ -772,14 +788,6 @@ JSRoot {
 															params: []
 															loc: SourceLocation experimental/class-private-properties/nested/input.js 26:14-26:16
 														}
-														meta: JSClassPropertyMeta {
-															abstract: false
-															optional: false
-															readonly: false
-															static: false
-															loc: SourceLocation experimental/class-private-properties/nested/input.js 26:6-26:14
-															start: Position 26:6
-														}
 														loc: SourceLocation experimental/class-private-properties/nested/input.js 26:6-26:62
 													}
 												]
@@ -831,14 +839,6 @@ JSRoot {
 							]
 							loc: SourceLocation experimental/class-private-properties/nested/input.js 5:13-5:27
 						}
-						meta: JSClassPropertyMeta {
-							abstract: false
-							optional: false
-							readonly: false
-							static: false
-							loc: SourceLocation experimental/class-private-properties/nested/input.js 5:2-5:13
-							start: Position 5:2
-						}
 						loc: SourceLocation experimental/class-private-properties/nested/input.js 5:2-28:3
 					}
 					JSClassMethod {
@@ -849,6 +849,14 @@ JSRoot {
 								loc: SourceLocation experimental/class-private-properties/nested/input.js 30:6-30:7 (x)
 							}
 							loc: SourceLocation experimental/class-private-properties/nested/input.js 30:6-30:7
+						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							optional: false
+							readonly: false
+							static: false
+							loc: SourceLocation experimental/class-private-properties/nested/input.js 30:2-30:7
+							start: Position 30:2
 						}
 						body: JSBlockStatement {
 							body: [
@@ -882,14 +890,6 @@ JSRoot {
 							params: []
 							loc: SourceLocation experimental/class-private-properties/nested/input.js 30:7-30:9
 						}
-						meta: JSClassPropertyMeta {
-							abstract: false
-							optional: false
-							readonly: false
-							static: false
-							loc: SourceLocation experimental/class-private-properties/nested/input.js 30:2-30:7
-							start: Position 30:2
-						}
 						loc: SourceLocation experimental/class-private-properties/nested/input.js 30:2-30:28
 					}
 					JSClassMethod {
@@ -900,6 +900,14 @@ JSRoot {
 								loc: SourceLocation experimental/class-private-properties/nested/input.js 31:6-31:7 (x)
 							}
 							loc: SourceLocation experimental/class-private-properties/nested/input.js 31:6-31:7
+						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							optional: false
+							readonly: false
+							static: false
+							loc: SourceLocation experimental/class-private-properties/nested/input.js 31:2-31:7
+							start: Position 31:2
 						}
 						body: JSBlockStatement {
 							body: [
@@ -954,14 +962,6 @@ JSRoot {
 							]
 							loc: SourceLocation experimental/class-private-properties/nested/input.js 31:7-31:14
 						}
-						meta: JSClassPropertyMeta {
-							abstract: false
-							optional: false
-							readonly: false
-							static: false
-							loc: SourceLocation experimental/class-private-properties/nested/input.js 31:2-31:7
-							start: Position 31:2
-						}
 						loc: SourceLocation experimental/class-private-properties/nested/input.js 31:2-31:35
 					}
 					JSClassMethod {
@@ -972,6 +972,14 @@ JSRoot {
 								loc: SourceLocation experimental/class-private-properties/nested/input.js 33:6-33:7 (y)
 							}
 							loc: SourceLocation experimental/class-private-properties/nested/input.js 33:6-33:7
+						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							optional: false
+							readonly: false
+							static: false
+							loc: SourceLocation experimental/class-private-properties/nested/input.js 33:2-33:7
+							start: Position 33:2
 						}
 						body: JSBlockStatement {
 							body: [
@@ -1005,14 +1013,6 @@ JSRoot {
 							params: []
 							loc: SourceLocation experimental/class-private-properties/nested/input.js 33:7-33:9
 						}
-						meta: JSClassPropertyMeta {
-							abstract: false
-							optional: false
-							readonly: false
-							static: false
-							loc: SourceLocation experimental/class-private-properties/nested/input.js 33:2-33:7
-							start: Position 33:2
-						}
 						loc: SourceLocation experimental/class-private-properties/nested/input.js 33:2-33:28
 					}
 					JSClassMethod {
@@ -1023,6 +1023,14 @@ JSRoot {
 								loc: SourceLocation experimental/class-private-properties/nested/input.js 34:6-34:7 (y)
 							}
 							loc: SourceLocation experimental/class-private-properties/nested/input.js 34:6-34:7
+						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							optional: false
+							readonly: false
+							static: false
+							loc: SourceLocation experimental/class-private-properties/nested/input.js 34:2-34:7
+							start: Position 34:2
 						}
 						body: JSBlockStatement {
 							body: [
@@ -1077,14 +1085,6 @@ JSRoot {
 							]
 							loc: SourceLocation experimental/class-private-properties/nested/input.js 34:7-34:14
 						}
-						meta: JSClassPropertyMeta {
-							abstract: false
-							optional: false
-							readonly: false
-							static: false
-							loc: SourceLocation experimental/class-private-properties/nested/input.js 34:2-34:7
-							start: Position 34:2
-						}
 						loc: SourceLocation experimental/class-private-properties/nested/input.js 34:2-34:35
 					}
 					JSClassMethod {
@@ -1095,6 +1095,14 @@ JSRoot {
 								loc: SourceLocation experimental/class-private-properties/nested/input.js 36:2-36:8 (equals)
 							}
 							loc: SourceLocation experimental/class-private-properties/nested/input.js 36:2-36:8
+						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							optional: false
+							readonly: false
+							static: false
+							loc: SourceLocation experimental/class-private-properties/nested/input.js 36:2-36:8
+							start: Position 36:2
 						}
 						body: JSBlockStatement {
 							body: [
@@ -1198,14 +1206,6 @@ JSRoot {
 							]
 							loc: SourceLocation experimental/class-private-properties/nested/input.js 36:8-36:11
 						}
-						meta: JSClassPropertyMeta {
-							abstract: false
-							optional: false
-							readonly: false
-							static: false
-							loc: SourceLocation experimental/class-private-properties/nested/input.js 36:2-36:8
-							start: Position 36:2
-						}
 						loc: SourceLocation experimental/class-private-properties/nested/input.js 36:2-36:59
 					}
 					JSClassMethod {
@@ -1216,6 +1216,14 @@ JSRoot {
 								loc: SourceLocation experimental/class-private-properties/nested/input.js 38:2-38:10 (toString)
 							}
 							loc: SourceLocation experimental/class-private-properties/nested/input.js 38:2-38:10
+						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							optional: false
+							readonly: false
+							static: false
+							loc: SourceLocation experimental/class-private-properties/nested/input.js 38:2-38:10
+							start: Position 38:2
 						}
 						body: JSBlockStatement {
 							body: [
@@ -1289,14 +1297,6 @@ JSRoot {
 							hasHoistedVars: false
 							params: []
 							loc: SourceLocation experimental/class-private-properties/nested/input.js 38:10-38:12
-						}
-						meta: JSClassPropertyMeta {
-							abstract: false
-							optional: false
-							readonly: false
-							static: false
-							loc: SourceLocation experimental/class-private-properties/nested/input.js 38:2-38:10
-							start: Position 38:2
 						}
 						loc: SourceLocation experimental/class-private-properties/nested/input.js 38:2-38:58
 					}

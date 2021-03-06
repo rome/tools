@@ -109,7 +109,7 @@ JSRoot {
   ✖ Expected a semicolon or a line terminator
 
     import foo from "foo.json" with type: "json", hasOwnProperty: "true";
-                               <error><emphasis>^</emphasis></error>
+                               ^
 
 
 ```

@@ -100,7 +100,7 @@ JSRoot {
   ✖ Unexpected character 2
 
     async (x = await 2) => {};
-                     <error><emphasis>^</emphasis></error>
+                     ^
 
   ℹ Expected character ,
 

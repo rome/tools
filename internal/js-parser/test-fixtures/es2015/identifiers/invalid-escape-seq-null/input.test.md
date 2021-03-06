@@ -53,7 +53,7 @@ JSRoot {
   ✖ Escape sequence in keyword null
 
     nul\u{6c}
-       <error><emphasis>^</emphasis></error>
+       ^
 
 
 ```

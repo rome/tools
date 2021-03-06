@@ -95,12 +95,12 @@ JSRoot {
   ✖ Unclosed property name
 
     void { [1, 2]: 3 };
-           <error><emphasis>^</emphasis></error>
+           ^
 
   ℹ We expected to find the closing character ] here
 
     void { [1, 2]: 3 };
-             <error><emphasis>^</emphasis></error>
+             ^
 
 
 ```

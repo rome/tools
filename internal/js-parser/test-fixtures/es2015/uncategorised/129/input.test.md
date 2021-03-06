@@ -25,6 +25,14 @@ JSRoot {
 							}
 							loc: SourceLocation es2015/uncategorised/129/input.js 1:9-1:12
 						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							optional: false
+							readonly: false
+							static: false
+							loc: SourceLocation es2015/uncategorised/129/input.js 1:9-1:12
+							start: Position 1:9
+						}
 						body: JSBlockStatement {
 							body: []
 							directives: []
@@ -37,14 +45,6 @@ JSRoot {
 							params: []
 							loc: SourceLocation es2015/uncategorised/129/input.js 1:12-1:14
 						}
-						meta: JSClassPropertyMeta {
-							abstract: false
-							optional: false
-							readonly: false
-							static: false
-							loc: SourceLocation es2015/uncategorised/129/input.js 1:9-1:12
-							start: Position 1:9
-						}
 						loc: SourceLocation es2015/uncategorised/129/input.js 1:9-1:17
 					}
 					JSClassMethod {
@@ -55,6 +55,14 @@ JSRoot {
 								loc: SourceLocation es2015/uncategorised/129/input.js 1:25-1:28 (bar)
 							}
 							loc: SourceLocation es2015/uncategorised/129/input.js 1:25-1:28
+						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							optional: false
+							readonly: false
+							static: true
+							loc: SourceLocation es2015/uncategorised/129/input.js 1:18-1:28
+							start: Position 1:18
 						}
 						body: JSBlockStatement {
 							body: []
@@ -67,14 +75,6 @@ JSRoot {
 							hasHoistedVars: false
 							params: []
 							loc: SourceLocation es2015/uncategorised/129/input.js 1:28-1:30
-						}
-						meta: JSClassPropertyMeta {
-							abstract: false
-							optional: false
-							readonly: false
-							static: true
-							loc: SourceLocation es2015/uncategorised/129/input.js 1:18-1:28
-							start: Position 1:18
 						}
 						loc: SourceLocation es2015/uncategorised/129/input.js 1:18-1:33
 					}

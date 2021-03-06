@@ -66,7 +66,7 @@ JSRoot {
   ✖ Unexpected keyword if
 
     function if() { }
-             <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
+             ^^
 
 
 ```

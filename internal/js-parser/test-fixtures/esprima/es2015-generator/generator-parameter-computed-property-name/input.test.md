@@ -109,7 +109,7 @@ JSRoot {
 
     1 │ (function*() {
   > 2 │     function({[yield 3]: y}) {}
-      │             <error><emphasis>^</emphasis></error>
+      │             ^
     3 │ })
 
 

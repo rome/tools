@@ -24,6 +24,14 @@ JSRoot {
 							}
 							loc: SourceLocation experimental/class-properties/yield-in-generator-in-class-property/input.js 2:2-2:3
 						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							optional: false
+							readonly: false
+							static: false
+							loc: SourceLocation experimental/class-properties/yield-in-generator-in-class-property/input.js 2:2-2:3
+							start: Position 2:2
+						}
 						value: JSFunctionExpression {
 							body: JSBlockStatement {
 								body: [
@@ -55,14 +63,6 @@ JSRoot {
 								loc: SourceLocation experimental/class-properties/yield-in-generator-in-class-property/input.js 2:16-2:18
 							}
 							loc: SourceLocation experimental/class-properties/yield-in-generator-in-class-property/input.js 2:6-2:33
-						}
-						meta: JSClassPropertyMeta {
-							abstract: false
-							optional: false
-							readonly: false
-							static: false
-							loc: SourceLocation experimental/class-properties/yield-in-generator-in-class-property/input.js 2:2-2:3
-							start: Position 2:2
 						}
 						loc: SourceLocation experimental/class-properties/yield-in-generator-in-class-property/input.js 2:2-2:34
 					}

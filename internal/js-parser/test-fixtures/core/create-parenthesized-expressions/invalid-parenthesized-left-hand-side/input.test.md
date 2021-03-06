@@ -62,7 +62,7 @@ JSRoot {
   ✖ Invalid left-hand side in assignment expression
 
     (!a) += 1
-     <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
+     ^^
 
 
 ```

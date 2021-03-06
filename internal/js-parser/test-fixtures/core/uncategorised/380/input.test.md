@@ -84,7 +84,7 @@ JSRoot {
   ✖ Unterminated regular expression
 
   > 1 │ var x = /
-      │          <error><emphasis>^</emphasis></error>
+      │          ^
     2 │ /
 
 

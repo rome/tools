@@ -87,11 +87,7 @@ JSRoot {
 
     1 │ "use strict";
   > 2 │ const { arguments } = foo();
-    → │         <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-    → │ <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-    → │ <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-    → │ <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-      │ <error><emphasis>^</emphasis></error>
+      │         ^^^^^^^^^
 
 
 ```

@@ -78,12 +78,7 @@ JSRoot {
   ✖ setter should have exactly one param
 
     ({ set s() { } })
-       <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-    <error><emphasis>^</emphasis></error>
+       ^^^^^^^^^^^
 
 
 ```

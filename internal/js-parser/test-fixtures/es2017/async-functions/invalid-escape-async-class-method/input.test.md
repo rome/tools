@@ -25,6 +25,14 @@ JSRoot {
 							}
 							loc: SourceLocation es2017/async-functions/invalid-escape-async-class-method/input.js 1:21-1:22
 						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							optional: false
+							readonly: false
+							static: false
+							loc: SourceLocation es2017/async-functions/invalid-escape-async-class-method/input.js 1:10-1:22
+							start: Position 1:10
+						}
 						body: JSBlockStatement {
 							body: [
 								JSExpressionStatement {
@@ -47,14 +55,6 @@ JSRoot {
 							hasHoistedVars: false
 							params: []
 							loc: SourceLocation es2017/async-functions/invalid-escape-async-class-method/input.js 1:22-1:24
-						}
-						meta: JSClassPropertyMeta {
-							abstract: false
-							optional: false
-							readonly: false
-							static: false
-							loc: SourceLocation es2017/async-functions/invalid-escape-async-class-method/input.js 1:10-1:22
-							start: Position 1:10
 						}
 						loc: SourceLocation es2017/async-functions/invalid-escape-async-class-method/input.js 1:10-1:36
 					}
@@ -101,7 +101,7 @@ JSRoot {
   ✖ async can't contain a unicode escape
 
     class X { \u0061sync x() { await x } }
-              <error><emphasis>^</emphasis></error>
+              ^
 
 
 ```

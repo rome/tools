@@ -25,6 +25,14 @@ JSRoot {
 							}
 							loc: SourceLocation experimental/class-private-methods/async-generator/input.js 2:9-2:19
 						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							optional: false
+							readonly: false
+							static: false
+							loc: SourceLocation experimental/class-private-methods/async-generator/input.js 2:2-2:19
+							start: Position 2:2
+						}
 						body: JSBlockStatement {
 							body: [
 								JSVariableDeclarationStatement {
@@ -172,14 +180,6 @@ JSRoot {
 								}
 							]
 							loc: SourceLocation experimental/class-private-methods/async-generator/input.js 2:19-2:25
-						}
-						meta: JSClassPropertyMeta {
-							abstract: false
-							optional: false
-							readonly: false
-							static: false
-							loc: SourceLocation experimental/class-private-methods/async-generator/input.js 2:2-2:19
-							start: Position 2:2
 						}
 						loc: SourceLocation experimental/class-private-methods/async-generator/input.js 2:2-12:3
 					}

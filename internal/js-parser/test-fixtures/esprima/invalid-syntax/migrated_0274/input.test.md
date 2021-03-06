@@ -25,6 +25,14 @@ JSRoot {
 							}
 							loc: SourceLocation esprima/invalid-syntax/migrated_0274/input.js 1:9-1:20
 						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							optional: false
+							readonly: false
+							static: false
+							loc: SourceLocation esprima/invalid-syntax/migrated_0274/input.js 1:9-1:20
+							start: Position 1:9
+						}
 						body: JSBlockStatement {
 							body: []
 							directives: []
@@ -37,14 +45,6 @@ JSRoot {
 							params: []
 							loc: SourceLocation esprima/invalid-syntax/migrated_0274/input.js 1:20-1:22
 						}
-						meta: JSClassPropertyMeta {
-							abstract: false
-							optional: false
-							readonly: false
-							static: false
-							loc: SourceLocation esprima/invalid-syntax/migrated_0274/input.js 1:9-1:20
-							start: Position 1:9
-						}
 						loc: SourceLocation esprima/invalid-syntax/migrated_0274/input.js 1:9-1:24
 					}
 					JSClassMethod {
@@ -55,6 +55,14 @@ JSRoot {
 								loc: SourceLocation esprima/invalid-syntax/migrated_0274/input.js 1:25-1:38
 							}
 							loc: SourceLocation esprima/invalid-syntax/migrated_0274/input.js 1:25-1:38
+						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							optional: false
+							readonly: false
+							static: false
+							loc: SourceLocation esprima/invalid-syntax/migrated_0274/input.js 1:25-1:38
+							start: Position 1:25
 						}
 						body: JSBlockStatement {
 							body: []
@@ -67,14 +75,6 @@ JSRoot {
 							hasHoistedVars: false
 							params: []
 							loc: SourceLocation esprima/invalid-syntax/migrated_0274/input.js 1:38-1:40
-						}
-						meta: JSClassPropertyMeta {
-							abstract: false
-							optional: false
-							readonly: false
-							static: false
-							loc: SourceLocation esprima/invalid-syntax/migrated_0274/input.js 1:25-1:38
-							start: Position 1:25
 						}
 						loc: SourceLocation esprima/invalid-syntax/migrated_0274/input.js 1:25-1:42
 					}
@@ -121,13 +121,7 @@ JSRoot {
   ✖ Duplicate constructor in the same class
 
     class A {constructor(){} "constructor"(){}}
-                             <error><emphasis>^</emphasis></error>
-    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
+                             ^^^^^^^^^^^^^
 
 
 ```

@@ -24,10 +24,6 @@ JSRoot {
 							}
 							loc: SourceLocation experimental/private-in/private-in-parenthesized/input.js 2:2-2:4
 						}
-						value: JSNumericLiteral {
-							value: 1
-							loc: SourceLocation experimental/private-in/private-in-parenthesized/input.js 2:7-2:8
-						}
 						meta: JSClassPropertyMeta {
 							abstract: false
 							optional: false
@@ -35,6 +31,10 @@ JSRoot {
 							static: false
 							loc: SourceLocation experimental/private-in/private-in-parenthesized/input.js 2:2-2:4
 							start: Position 2:2
+						}
+						value: JSNumericLiteral {
+							value: 1
+							loc: SourceLocation experimental/private-in/private-in-parenthesized/input.js 2:7-2:8
 						}
 						loc: SourceLocation experimental/private-in/private-in-parenthesized/input.js 2:2-2:9
 					}
@@ -46,6 +46,14 @@ JSRoot {
 								loc: SourceLocation experimental/private-in/private-in-parenthesized/input.js 3:2-3:6 (test)
 							}
 							loc: SourceLocation experimental/private-in/private-in-parenthesized/input.js 3:2-3:6
+						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							optional: false
+							readonly: false
+							static: false
+							loc: SourceLocation experimental/private-in/private-in-parenthesized/input.js 3:2-3:6
+							start: Position 3:2
 						}
 						body: JSBlockStatement {
 							body: [
@@ -89,14 +97,6 @@ JSRoot {
 							params: []
 							loc: SourceLocation experimental/private-in/private-in-parenthesized/input.js 3:6-3:8
 						}
-						meta: JSClassPropertyMeta {
-							abstract: false
-							optional: false
-							readonly: false
-							static: false
-							loc: SourceLocation experimental/private-in/private-in-parenthesized/input.js 3:2-3:6
-							start: Position 3:2
-						}
 						loc: SourceLocation experimental/private-in/private-in-parenthesized/input.js 3:2-5:3
 					}
 				]
@@ -139,7 +139,7 @@ JSRoot {
     2 │   #x = 1;
     3 │   test() {
   > 4 │     (#x) in {};
-      │      <error><emphasis>^</emphasis></error>
+      │      ^
     5 │   }
     6 │ }
 

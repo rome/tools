@@ -96,7 +96,7 @@ JSRoot {
   ℹ Defined already here
 
     ([a,[b],...b])=>0;
-         <error><emphasis>^</emphasis></error>
+         ^
 
 
 ```

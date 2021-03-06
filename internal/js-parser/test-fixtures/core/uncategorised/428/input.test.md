@@ -68,7 +68,7 @@ JSRoot {
   ✖ Expected an identifier
 
     new X()."s"
-            <error><emphasis>^</emphasis></error>
+            ^
 
 
 ```

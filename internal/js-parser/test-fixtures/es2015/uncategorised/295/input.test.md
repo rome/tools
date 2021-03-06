@@ -93,7 +93,7 @@ JSRoot {
   ✖ Unclosed switch body
 
     switch (cond) { case 10: let a = 20;
-                  <error><emphasis>^</emphasis></error>
+                  ^
 
   ℹ We expected to find the closing character } here
 

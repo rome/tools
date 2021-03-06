@@ -32,6 +32,14 @@ JSRoot {
 										}
 										loc: SourceLocation es2015/yield/function-name-class-wrapped/input.js 2:14-2:19
 									}
+									meta: JSClassPropertyMeta {
+										abstract: false
+										optional: false
+										readonly: false
+										static: false
+										loc: SourceLocation es2015/yield/function-name-class-wrapped/input.js 2:13-2:19
+										start: Position 2:13
+									}
 									body: JSBlockStatement {
 										body: []
 										directives: []
@@ -43,14 +51,6 @@ JSRoot {
 										hasHoistedVars: false
 										params: []
 										loc: SourceLocation es2015/yield/function-name-class-wrapped/input.js 2:19-2:21
-									}
-									meta: JSClassPropertyMeta {
-										abstract: false
-										optional: false
-										readonly: false
-										static: false
-										loc: SourceLocation es2015/yield/function-name-class-wrapped/input.js 2:13-2:19
-										start: Position 2:13
 									}
 									loc: SourceLocation es2015/yield/function-name-class-wrapped/input.js 2:13-2:24
 								}

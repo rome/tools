@@ -91,6 +91,14 @@ JSRoot {
 							}
 							loc: SourceLocation experimental/class-properties/computed/input.js 8:2-8:5
 						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							optional: false
+							readonly: false
+							static: false
+							loc: SourceLocation experimental/class-properties/computed/input.js 8:2-8:5
+							start: Position 8:2
+						}
 						body: JSBlockStatement {
 							body: []
 							directives: []
@@ -102,14 +110,6 @@ JSRoot {
 							hasHoistedVars: false
 							params: []
 							loc: SourceLocation experimental/class-properties/computed/input.js 8:6-8:8
-						}
-						meta: JSClassPropertyMeta {
-							abstract: false
-							optional: false
-							readonly: false
-							static: false
-							loc: SourceLocation experimental/class-properties/computed/input.js 8:2-8:5
-							start: Position 8:2
 						}
 						loc: SourceLocation experimental/class-properties/computed/input.js 8:2-8:11
 					}

@@ -8,6 +8,17 @@
 CSSRoot {
 	body: [
 		CSSRule {
+			prelude: [
+				CSSSelector {
+					patterns: [
+						CSSClassSelector {
+							value: "style"
+							loc: SourceLocation invalid/url-multiple-params/input.css 1:0-1:6
+						}
+					]
+					loc: SourceLocation invalid/url-multiple-params/input.css 1:0-1:7
+				}
+			]
 			block: CSSBlock {
 				value: [
 					CSSDeclaration {
@@ -15,7 +26,12 @@ CSSRoot {
 						value: [
 							CSSUrlFunction {
 								name: "url"
-								params: [CSSString {value: "foo", loc: SourceLocation invalid/url-multiple-params/input.css 2:17-2:22}]
+								params: [
+									CSSString {
+										value: "foo"
+										loc: SourceLocation invalid/url-multiple-params/input.css 2:17-2:22
+									}
+								]
 								loc: SourceLocation invalid/url-multiple-params/input.css 2:13-2:30
 							}
 						]
@@ -26,12 +42,6 @@ CSSRoot {
 				startingTokenValue: "{"
 				loc: SourceLocation invalid/url-multiple-params/input.css 1:7-3:1
 			}
-			prelude: [
-				CSSSelector {
-					patterns: [CSSClassSelector {value: "style", loc: SourceLocation invalid/url-multiple-params/input.css 1:0-1:6}]
-					loc: SourceLocation invalid/url-multiple-params/input.css 1:0-1:7
-				}
-			]
 			loc: SourceLocation invalid/url-multiple-params/input.css 1:0-3:1
 		}
 	]
@@ -39,14 +49,19 @@ CSSRoot {
 	corrupt: false
 	diagnostics: [
 		{
+			origins: [{category: "parse"}]
 			description: {
 				advice: []
 				category: ["parse"]
 				categoryValue: "css"
 				message: RAW_MARKUP {value: "The function <emphasis>url()</emphasis> can only accept one parameter."}
 			}
-			location: {language: "css", path: RelativePath<invalid/url-multiple-params/input.css>, end: Position 2:17, start: Position 2:13}
-			origins: [{category: "parse"}]
+			location: {
+				language: "css"
+				path: RelativePath<invalid/url-multiple-params/input.css>
+				end: Position 2:17
+				start: Position 2:13
+			}
 		}
 	]
 	path: RelativePath<invalid/url-multiple-params/input.css>

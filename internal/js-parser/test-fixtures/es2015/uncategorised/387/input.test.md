@@ -119,7 +119,7 @@ JSRoot {
   ✖ Unexpected character n
 
     export new Foo();
-           <error><emphasis>^</emphasis></error>
+           ^
 
   ℹ Expected the opening export specifiers character {
 

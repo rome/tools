@@ -24,10 +24,6 @@ JSRoot {
 							}
 							loc: SourceLocation experimental/class-private-methods/combined/input.js 2:2-2:3
 						}
-						value: JSNumericLiteral {
-							value: 1
-							loc: SourceLocation experimental/class-private-methods/combined/input.js 2:6-2:7
-						}
 						meta: JSClassPropertyMeta {
 							abstract: false
 							optional: false
@@ -35,6 +31,10 @@ JSRoot {
 							static: false
 							loc: SourceLocation experimental/class-private-methods/combined/input.js 2:2-2:3
 							start: Position 2:2
+						}
+						value: JSNumericLiteral {
+							value: 1
+							loc: SourceLocation experimental/class-private-methods/combined/input.js 2:6-2:7
 						}
 						loc: SourceLocation experimental/class-private-methods/combined/input.js 2:2-2:8
 					}
@@ -46,6 +46,14 @@ JSRoot {
 								loc: SourceLocation experimental/class-private-methods/combined/input.js 4:4-4:5 (a)
 							}
 							loc: SourceLocation experimental/class-private-methods/combined/input.js 4:3-4:5
+						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							optional: false
+							readonly: false
+							static: false
+							loc: SourceLocation experimental/class-private-methods/combined/input.js 4:2-4:5
+							start: Position 4:2
 						}
 						body: JSBlockStatement {
 							body: [
@@ -75,14 +83,6 @@ JSRoot {
 							params: []
 							loc: SourceLocation experimental/class-private-methods/combined/input.js 4:5-4:7
 						}
-						meta: JSClassPropertyMeta {
-							abstract: false
-							optional: false
-							readonly: false
-							static: false
-							loc: SourceLocation experimental/class-private-methods/combined/input.js 4:2-4:5
-							start: Position 4:2
-						}
 						loc: SourceLocation experimental/class-private-methods/combined/input.js 4:2-6:3
 					}
 					JSClassPrivateProperty {
@@ -93,10 +93,6 @@ JSRoot {
 							}
 							loc: SourceLocation experimental/class-private-methods/combined/input.js 8:2-8:4
 						}
-						value: JSNumericLiteral {
-							value: 2
-							loc: SourceLocation experimental/class-private-methods/combined/input.js 8:7-8:8
-						}
 						meta: JSClassPropertyMeta {
 							abstract: false
 							optional: false
@@ -104,6 +100,10 @@ JSRoot {
 							static: false
 							loc: SourceLocation experimental/class-private-methods/combined/input.js 8:2-8:4
 							start: Position 8:2
+						}
+						value: JSNumericLiteral {
+							value: 2
+							loc: SourceLocation experimental/class-private-methods/combined/input.js 8:7-8:8
 						}
 						loc: SourceLocation experimental/class-private-methods/combined/input.js 8:2-8:9
 					}
@@ -115,6 +115,14 @@ JSRoot {
 								loc: SourceLocation experimental/class-private-methods/combined/input.js 10:6-10:7 (b)
 							}
 							loc: SourceLocation experimental/class-private-methods/combined/input.js 10:6-10:7
+						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							optional: false
+							readonly: false
+							static: false
+							loc: SourceLocation experimental/class-private-methods/combined/input.js 10:2-10:7
+							start: Position 10:2
 						}
 						body: JSBlockStatement {
 							body: [
@@ -136,14 +144,6 @@ JSRoot {
 							params: []
 							loc: SourceLocation experimental/class-private-methods/combined/input.js 10:7-10:9
 						}
-						meta: JSClassPropertyMeta {
-							abstract: false
-							optional: false
-							readonly: false
-							static: false
-							loc: SourceLocation experimental/class-private-methods/combined/input.js 10:2-10:7
-							start: Position 10:2
-						}
 						loc: SourceLocation experimental/class-private-methods/combined/input.js 10:2-10:26
 					}
 					JSClassPrivateMethod {
@@ -154,6 +154,14 @@ JSRoot {
 								loc: SourceLocation experimental/class-private-methods/combined/input.js 11:7-11:8 (c)
 							}
 							loc: SourceLocation experimental/class-private-methods/combined/input.js 11:6-11:8
+						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							optional: false
+							readonly: false
+							static: false
+							loc: SourceLocation experimental/class-private-methods/combined/input.js 11:2-11:8
+							start: Position 11:2
 						}
 						body: JSBlockStatement {
 							body: [
@@ -183,14 +191,6 @@ JSRoot {
 							]
 							loc: SourceLocation experimental/class-private-methods/combined/input.js 11:8-11:11
 						}
-						meta: JSClassPropertyMeta {
-							abstract: false
-							optional: false
-							readonly: false
-							static: false
-							loc: SourceLocation experimental/class-private-methods/combined/input.js 11:2-11:8
-							start: Position 11:2
-						}
 						loc: SourceLocation experimental/class-private-methods/combined/input.js 11:2-11:25
 					}
 					JSClassPrivateMethod {
@@ -201,6 +201,14 @@ JSRoot {
 								loc: SourceLocation experimental/class-private-methods/combined/input.js 13:3-13:4 (d)
 							}
 							loc: SourceLocation experimental/class-private-methods/combined/input.js 13:2-13:4
+						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							optional: false
+							readonly: false
+							static: false
+							loc: SourceLocation experimental/class-private-methods/combined/input.js 13:2-13:4
+							start: Position 13:2
 						}
 						body: JSBlockStatement {
 							body: [
@@ -235,14 +243,6 @@ JSRoot {
 							hasHoistedVars: false
 							params: []
 							loc: SourceLocation experimental/class-private-methods/combined/input.js 13:4-13:6
-						}
-						meta: JSClassPropertyMeta {
-							abstract: false
-							optional: false
-							readonly: false
-							static: false
-							loc: SourceLocation experimental/class-private-methods/combined/input.js 13:2-13:4
-							start: Position 13:2
 						}
 						loc: SourceLocation experimental/class-private-methods/combined/input.js 13:2-15:3
 					}

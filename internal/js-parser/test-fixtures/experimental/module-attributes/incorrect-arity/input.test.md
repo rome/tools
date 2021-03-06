@@ -121,7 +121,7 @@ JSRoot {
   ✖ import() requires exactly one argument
 
   > 1 │ import();
-      │        <error><emphasis>^</emphasis></error>
+      │        ^
     2 │ import("./foo.json", { with: { type: "json"} }, "unsupported");
 
 

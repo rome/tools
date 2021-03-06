@@ -73,7 +73,7 @@ JSRoot {
   ✖ Expected an identifier
 
     export function() {};
-                   <error><emphasis>^</emphasis></error>
+                   ^
 
 
 ```

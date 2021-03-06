@@ -98,7 +98,7 @@ JSRoot {
   ✖ In strict mode code, functions can only be declared at top level or inside a block
 
     function foo() {"use strict"; bar: function baz() {}}
-                                       <error><emphasis>^</emphasis></error>
+                                       ^
 
 
 ```

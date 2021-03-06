@@ -62,7 +62,7 @@ JSRoot {
   ✖ Unclosed array
 
     [
-    <error><emphasis>^</emphasis></error>
+    ^
 
   ℹ We expected to find the closing character ] here
 

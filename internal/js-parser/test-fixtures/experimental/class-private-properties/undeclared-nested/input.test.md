@@ -43,6 +43,14 @@ JSRoot {
 							}
 							loc: SourceLocation experimental/class-private-properties/undeclared-nested/input.js 3:2-3:6
 						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							optional: false
+							readonly: false
+							static: false
+							loc: SourceLocation experimental/class-private-properties/undeclared-nested/input.js 3:2-3:6
+							start: Position 3:2
+						}
 						body: JSBlockStatement {
 							body: [
 								JSVariableDeclarationStatement {
@@ -88,14 +96,6 @@ JSRoot {
 							hasHoistedVars: true
 							params: []
 							loc: SourceLocation experimental/class-private-properties/undeclared-nested/input.js 3:6-3:8
-						}
-						meta: JSClassPropertyMeta {
-							abstract: false
-							optional: false
-							readonly: false
-							static: false
-							loc: SourceLocation experimental/class-private-properties/undeclared-nested/input.js 3:2-3:6
-							start: Position 3:2
 						}
 						loc: SourceLocation experimental/class-private-properties/undeclared-nested/input.js 3:2-5:3
 					}

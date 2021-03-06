@@ -99,7 +99,7 @@ JSRoot {
   ✖ Unexpected character =
 
     ({x = 0} = obj)
-        <error><emphasis>^</emphasis></error>
+        ^
 
   ℹ Expected character ,
 

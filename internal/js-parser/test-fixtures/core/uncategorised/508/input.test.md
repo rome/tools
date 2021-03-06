@@ -83,11 +83,7 @@ JSRoot {
   ✖ protected is a reserved word
 
     function hello() { "use strict"; var protected; }
-                                         <error><emphasis>^</emphasis></error>
-    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
+                                         ^^^^^^^^^
 
 
 ```

@@ -24,6 +24,14 @@ JSRoot {
 							}
 							loc: SourceLocation experimental/class-private-properties/asi-failure-generator/input.js 2:2-2:4
 						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							optional: false
+							readonly: false
+							static: false
+							loc: SourceLocation experimental/class-private-properties/asi-failure-generator/input.js 2:2-2:4
+							start: Position 2:2
+						}
 						value: JSBinaryExpression {
 							operator: "*"
 							left: JSReferenceIdentifier {
@@ -39,14 +47,6 @@ JSRoot {
 								loc: SourceLocation experimental/class-private-properties/asi-failure-generator/input.js 3:3-3:7
 							}
 							loc: SourceLocation experimental/class-private-properties/asi-failure-generator/input.js 2:7-3:7
-						}
-						meta: JSClassPropertyMeta {
-							abstract: false
-							optional: false
-							readonly: false
-							static: false
-							loc: SourceLocation experimental/class-private-properties/asi-failure-generator/input.js 2:2-2:4
-							start: Position 2:2
 						}
 						loc: SourceLocation experimental/class-private-properties/asi-failure-generator/input.js 2:2-3:7
 					}
@@ -120,7 +120,7 @@ JSRoot {
     1 │ class Foo {
     2 │   #p = x
   > 3 │   *m () {}
-      │         <error><emphasis>^</emphasis></error>
+      │         ^
     4 │ }
 
 

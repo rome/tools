@@ -62,7 +62,7 @@ JSRoot {
   ✖ Unexpected character )
 
     (import)
-           <error><emphasis>^</emphasis></error>
+           ^
 
   ℹ Expected the opening array character (
 

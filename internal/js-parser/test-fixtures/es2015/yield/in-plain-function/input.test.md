@@ -80,7 +80,7 @@ JSRoot {
   ✖ Expected a semicolon or a line terminator
 
     (function () { yield 10 })
-                         <error><emphasis>^</emphasis></error>
+                         ^
 
 
 ```

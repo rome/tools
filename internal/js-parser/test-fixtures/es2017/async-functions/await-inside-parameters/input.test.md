@@ -84,7 +84,7 @@ JSRoot {
   ✖ await is not allowed in async function parameters
 
     async function fn(x = await 2) {}
-                                <error><emphasis>^</emphasis></error>
+                                ^
 
 
 ```

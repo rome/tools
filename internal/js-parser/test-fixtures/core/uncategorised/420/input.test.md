@@ -67,7 +67,7 @@ JSRoot {
   ✖ Unknown start to an statement expression
 
     if(false) doThis(); else
-                            <error><emphasis>^</emphasis></error>
+                            ^
 
 
 ```

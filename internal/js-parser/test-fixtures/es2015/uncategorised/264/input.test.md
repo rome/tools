@@ -62,7 +62,7 @@ JSRoot {
   ✖ Unterminated template
 
     `test
-         <error><emphasis>^</emphasis></error>
+         ^
 
 
 ```

@@ -66,7 +66,7 @@ JSRoot {
   ✖ Unexpected character .
 
     if.a;
-      <error><emphasis>^</emphasis></error>
+      ^
 
   ℹ Expected the opening if test character (
 

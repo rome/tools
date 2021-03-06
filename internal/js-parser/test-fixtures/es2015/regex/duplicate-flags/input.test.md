@@ -67,7 +67,7 @@ JSRoot {
   ✖ Duplicate regular expression flag
 
     /./gii;
-         <error><emphasis>^</emphasis></error>
+         ^
 
 
 ```

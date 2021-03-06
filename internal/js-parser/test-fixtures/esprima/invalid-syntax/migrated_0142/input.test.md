@@ -74,7 +74,7 @@ JSRoot {
   ✖ Lexical declaration cannot appear in a single-statement context
 
     if(true) const a = 1;
-             <error><emphasis>^</emphasis></error>
+             ^
 
 
 ```

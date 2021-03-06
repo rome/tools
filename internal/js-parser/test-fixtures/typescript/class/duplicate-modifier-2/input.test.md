@@ -78,7 +78,7 @@ JSRoot {
 
     1 │ class A {
   > 2 │   declare public static declare foo;
-      │           <error><emphasis>^</emphasis></error>
+      │           ^
     3 │ }
 
 

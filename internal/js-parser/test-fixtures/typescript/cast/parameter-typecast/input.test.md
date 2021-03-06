@@ -59,8 +59,7 @@ JSRoot {
     async keyword.
 
     func(a: T);
-         <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
+         ^^^^
 
 
 ```

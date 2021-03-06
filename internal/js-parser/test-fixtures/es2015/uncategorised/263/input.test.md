@@ -77,7 +77,7 @@ JSRoot {
   ✖ Class name is required
 
     class default
-          <error><emphasis>^</emphasis></error>
+          ^
 
 
 ```

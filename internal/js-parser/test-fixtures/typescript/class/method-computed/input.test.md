@@ -35,6 +35,14 @@ JSRoot {
 							}
 							loc: SourceLocation typescript/class/method-computed/input.ts 2:4-2:21
 						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							optional: false
+							readonly: false
+							static: false
+							loc: SourceLocation typescript/class/method-computed/input.ts 2:4-2:21
+							start: Position 2:4
+						}
 						head: JSFunctionHead {
 							async: false
 							generator: false
@@ -44,14 +52,6 @@ JSRoot {
 								loc: SourceLocation typescript/class/method-computed/input.ts 2:25-2:29
 							}
 							loc: SourceLocation typescript/class/method-computed/input.ts 2:21-2:29
-						}
-						meta: JSClassPropertyMeta {
-							abstract: false
-							optional: false
-							readonly: false
-							static: false
-							loc: SourceLocation typescript/class/method-computed/input.ts 2:4-2:21
-							start: Position 2:4
 						}
 						loc: SourceLocation typescript/class/method-computed/input.ts 2:4-2:30
 					}
@@ -74,6 +74,14 @@ JSRoot {
 							}
 							loc: SourceLocation typescript/class/method-computed/input.ts 3:4-3:21
 						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							optional: true
+							readonly: false
+							static: false
+							loc: SourceLocation typescript/class/method-computed/input.ts 3:4-3:22
+							start: Position 3:4
+						}
 						head: JSFunctionHead {
 							async: false
 							generator: false
@@ -83,14 +91,6 @@ JSRoot {
 								loc: SourceLocation typescript/class/method-computed/input.ts 3:26-3:30
 							}
 							loc: SourceLocation typescript/class/method-computed/input.ts 3:22-3:30
-						}
-						meta: JSClassPropertyMeta {
-							abstract: false
-							optional: true
-							readonly: false
-							static: false
-							loc: SourceLocation typescript/class/method-computed/input.ts 3:4-3:22
-							start: Position 3:4
 						}
 						loc: SourceLocation typescript/class/method-computed/input.ts 3:4-3:31
 					}

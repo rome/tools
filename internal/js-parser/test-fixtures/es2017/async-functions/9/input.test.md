@@ -89,7 +89,7 @@ JSRoot {
   ✖ Expected a semicolon or a line terminator
 
     function foo(promise) { await promise; }
-                                  <error><emphasis>^</emphasis></error>
+                                  ^
 
 
 ```

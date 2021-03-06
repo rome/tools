@@ -8,7 +8,12 @@
 
 ```javascript
 HTMLRoot {
-	body: [HTMLDoctypeTag {value: "html", loc: SourceLocation doctype/input.html 1:1-5:2}]
+	body: [
+		HTMLDoctypeTag {
+			value: "html"
+			loc: SourceLocation doctype/input.html 1:1-5:2
+		}
+	]
 	comments: []
 	corrupt: false
 	diagnostics: []

@@ -25,6 +25,14 @@ JSRoot {
 							}
 							loc: SourceLocation es2018/async-generators/class-method/input.js 2:11-2:19
 						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							optional: false
+							readonly: false
+							static: false
+							loc: SourceLocation es2018/async-generators/class-method/input.js 2:4-2:19
+							start: Position 2:4
+						}
 						body: JSBlockStatement {
 							body: [
 								JSForOfStatement {
@@ -104,14 +112,6 @@ JSRoot {
 								}
 							]
 							loc: SourceLocation es2018/async-generators/class-method/input.js 2:19-2:24
-						}
-						meta: JSClassPropertyMeta {
-							abstract: false
-							optional: false
-							readonly: false
-							static: false
-							loc: SourceLocation es2018/async-generators/class-method/input.js 2:4-2:19
-							start: Position 2:4
 						}
 						loc: SourceLocation es2018/async-generators/class-method/input.js 2:4-6:5
 					}

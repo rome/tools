@@ -110,7 +110,7 @@ JSRoot {
   ✖ Unexpected character *
 
     var obj = { *test** }
-                     <error><emphasis>^</emphasis></error>
+                     ^
 
   ℹ Expected the opening function params character (
 

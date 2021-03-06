@@ -73,7 +73,7 @@ JSRoot {
   ✖ Unknown start to an call expression argument
 
     f(..g);
-      <error><emphasis>^</emphasis></error>
+      ^
 
 
 ```

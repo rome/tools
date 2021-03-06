@@ -67,8 +67,7 @@ JSRoot {
   ✖ Export from only allows strings
 
     export {foo} from bar
-                      <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-    <error><emphasis>^</emphasis></error>
+                      ^^^
 
 
 ```

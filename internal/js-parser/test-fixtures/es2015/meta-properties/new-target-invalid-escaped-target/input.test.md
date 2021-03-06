@@ -81,7 +81,7 @@ JSRoot {
   ✖ target can't contain a unicode escape
 
     function f() { new.ta\u0072get; }
-                         <error><emphasis>^</emphasis></error>
+                         ^
 
 
 ```

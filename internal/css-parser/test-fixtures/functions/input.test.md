@@ -8,12 +8,32 @@
 CSSRoot {
 	body: [
 		CSSRule {
+			prelude: [
+				CSSSelector {
+					patterns: [
+						CSSClassSelector {
+							value: "style"
+							loc: SourceLocation functions/input.css 1:0-1:6
+						}
+					]
+					loc: SourceLocation functions/input.css 1:0-1:7
+				}
+			]
 			block: CSSBlock {
 				value: [
 					CSSDeclaration {
-						name: CSSCustomProperty {value: "--fancy", loc: SourceLocation functions/input.css 2:1-2:1}
-						value: [CSSDimension {value: 2, unit: "px", loc: SourceLocation functions/input.css 2:10-2:13}]
+						value: [
+							CSSDimension {
+								value: 2
+								unit: "px"
+								loc: SourceLocation functions/input.css 2:10-2:13
+							}
+						]
 						important: false
+						name: CSSCustomProperty {
+							value: "--fancy"
+							loc: SourceLocation functions/input.css 2:1-2:1
+						}
 						loc: SourceLocation functions/input.css 2:1-2:13
 					}
 					CSSDeclaration {
@@ -21,7 +41,12 @@ CSSRoot {
 						value: [
 							CSSVarFunction {
 								name: "var"
-								params: [CSSCustomProperty {value: "--fancy", loc: SourceLocation functions/input.css 3:20-3:20}]
+								params: [
+									CSSCustomProperty {
+										value: "--fancy"
+										loc: SourceLocation functions/input.css 3:20-3:20
+									}
+								]
 								loc: SourceLocation functions/input.css 3:9-3:21
 							}
 						]
@@ -39,17 +64,28 @@ CSSRoot {
 											CSSCalcProduct {
 												value: [
 													CSSCalcValue {
-														value: CSSDimension {value: 10, unit: "px", loc: SourceLocation functions/input.css 4:17-4:17}
+														value: CSSDimension {
+															value: 10
+															unit: "px"
+															loc: SourceLocation functions/input.css 4:17-4:17
+														}
 														loc: SourceLocation functions/input.css 4:17-4:21
 													}
 												]
 												loc: SourceLocation functions/input.css 4:21-4:22
 											}
-											CSSCalcOperation {value: "+", loc: SourceLocation functions/input.css 4:23-4:24}
+											CSSCalcOperation {
+												value: "+"
+												loc: SourceLocation functions/input.css 4:23-4:24
+											}
 											CSSCalcProduct {
 												value: [
 													CSSCalcValue {
-														value: CSSDimension {value: 5, unit: "rem", loc: SourceLocation functions/input.css 4:24-4:24}
+														value: CSSDimension {
+															value: 5
+															unit: "rem"
+															loc: SourceLocation functions/input.css 4:24-4:24
+														}
 														loc: SourceLocation functions/input.css 4:24-4:28
 													}
 												]
@@ -70,7 +106,12 @@ CSSRoot {
 						value: [
 							CSSUrlFunction {
 								name: "url"
-								params: [CSSString {value: "", loc: SourceLocation functions/input.css 5:17-5:19}]
+								params: [
+									CSSString {
+										value: ""
+										loc: SourceLocation functions/input.css 5:17-5:19
+									}
+								]
 								loc: SourceLocation functions/input.css 5:13-5:20
 							}
 						]
@@ -82,7 +123,12 @@ CSSRoot {
 						value: [
 							CSSUrlFunction {
 								name: "url"
-								params: [CSSString {value: "something", loc: SourceLocation functions/input.css 6:17-6:28}]
+								params: [
+									CSSString {
+										value: "something"
+										loc: SourceLocation functions/input.css 6:17-6:28
+									}
+								]
 								loc: SourceLocation functions/input.css 6:13-6:29
 							}
 						]
@@ -94,7 +140,12 @@ CSSRoot {
 						value: [
 							CSSUrlFunction {
 								name: "url"
-								params: [CSSString {value: "./something", loc: SourceLocation functions/input.css 7:17-7:30}]
+								params: [
+									CSSString {
+										value: "./something"
+										loc: SourceLocation functions/input.css 7:17-7:30
+									}
+								]
 								loc: SourceLocation functions/input.css 7:13-7:31
 							}
 						]
@@ -105,12 +156,6 @@ CSSRoot {
 				startingTokenValue: "{"
 				loc: SourceLocation functions/input.css 1:7-8:1
 			}
-			prelude: [
-				CSSSelector {
-					patterns: [CSSClassSelector {value: "style", loc: SourceLocation functions/input.css 1:0-1:6}]
-					loc: SourceLocation functions/input.css 1:0-1:7
-				}
-			]
 			loc: SourceLocation functions/input.css 1:0-8:1
 		}
 	]

@@ -87,13 +87,12 @@ JSRoot {
   ✖ constructors in/after an Optional Chain are not allowed
 
     new C?.b.d()
-              <error><emphasis>^</emphasis></error>
+              ^
 
   ℹ Optional chain member responsible
 
     new C?.b.d()
-        <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
+        ^^^^
 
 
 ```

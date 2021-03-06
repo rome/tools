@@ -109,7 +109,7 @@ parse(js) ━━━━━━━━━━━━━━━━━━━━━━━�
   ✖ Expected keyword from
 
     import foo, {bar}, foo from "foo";
-                     <error><emphasis>^</emphasis></error>
+                     ^
 
 
 ```

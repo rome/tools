@@ -111,7 +111,7 @@ JSRoot {
     1 │ const a = {
     2 │     b(){
   > 3 │         return super?.c;
-      │                     <error><emphasis>^</emphasis></error>
+      │                     ^
     4 │     }
     5 │ }
 

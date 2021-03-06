@@ -67,8 +67,7 @@ JSRoot {
   ✖ Unexpected keyword this
 
     var this = 10;
-        <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
+        ^^^^
 
 
 ```

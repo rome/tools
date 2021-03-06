@@ -86,10 +86,7 @@ JSRoot {
   ✖ Unexpected character \
 
     export { X \u0061s Y }
-               <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-    <error><emphasis>^</emphasis></error>
+               ^^^^^^^
 
   ℹ Expected character ,
 

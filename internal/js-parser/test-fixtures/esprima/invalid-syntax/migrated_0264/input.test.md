@@ -92,7 +92,7 @@ JSRoot {
   ✖ Unexpected character +
 
     class A extends a + b {}
-                      <error><emphasis>^</emphasis></error>
+                      ^
 
   ℹ Expected the opening class body character {
 

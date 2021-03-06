@@ -31,6 +31,14 @@ JSRoot {
 										}
 										loc: SourceLocation experimental/class-properties/arguments-in-arrow-function/input.js 3:4-3:7
 									}
+									meta: JSClassPropertyMeta {
+										abstract: false
+										optional: false
+										readonly: false
+										static: false
+										loc: SourceLocation experimental/class-properties/arguments-in-arrow-function/input.js 3:4-3:7
+										start: Position 3:4
+									}
 									value: JSArrowFunctionExpression {
 										body: JSReferenceIdentifier {
 											name: "arguments"
@@ -43,14 +51,6 @@ JSRoot {
 											loc: SourceLocation experimental/class-properties/arguments-in-arrow-function/input.js 3:10-3:15
 										}
 										loc: SourceLocation experimental/class-properties/arguments-in-arrow-function/input.js 3:10-3:25
-									}
-									meta: JSClassPropertyMeta {
-										abstract: false
-										optional: false
-										readonly: false
-										static: false
-										loc: SourceLocation experimental/class-properties/arguments-in-arrow-function/input.js 3:4-3:7
-										start: Position 3:4
 									}
 									loc: SourceLocation experimental/class-properties/arguments-in-arrow-function/input.js 3:4-3:26
 								}
@@ -112,11 +112,7 @@ JSRoot {
     1 │ function fn() {
     2 │   class A {
   > 3 │     foo = () => arguments;
-    → │                 <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-    → │                   <error><emphasis>^</emphasis></error>
-    → │ <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-    → │ <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-      │ <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
+      │                 ^^^^^^^^^
     4 │   }
     5 │ }
 

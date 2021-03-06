@@ -25,6 +25,14 @@ JSRoot {
 							}
 							loc: SourceLocation typescript/class/method-with-newline-with-body/input.ts 3:4-3:5
 						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							optional: false
+							readonly: false
+							static: false
+							loc: SourceLocation typescript/class/method-with-newline-with-body/input.ts 3:4-3:5
+							start: Position 3:4
+						}
 						body: JSBlockStatement {
 							body: []
 							directives: []
@@ -36,14 +44,6 @@ JSRoot {
 							hasHoistedVars: false
 							params: []
 							loc: SourceLocation typescript/class/method-with-newline-with-body/input.ts 3:5-3:7
-						}
-						meta: JSClassPropertyMeta {
-							abstract: false
-							optional: false
-							readonly: false
-							static: false
-							loc: SourceLocation typescript/class/method-with-newline-with-body/input.ts 3:4-3:5
-							start: Position 3:4
 						}
 						loc: SourceLocation typescript/class/method-with-newline-with-body/input.ts 3:4-5:5
 					}

@@ -25,6 +25,14 @@ JSRoot {
 							}
 							loc: SourceLocation typescript/class/parameter-properties/input.ts 2:4-2:15
 						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							optional: false
+							readonly: false
+							static: false
+							loc: SourceLocation typescript/class/parameter-properties/input.ts 2:4-2:15
+							start: Position 2:4
+						}
 						body: JSBlockStatement {
 							body: []
 							directives: []
@@ -87,16 +95,16 @@ JSRoot {
 								}
 								JSBindingAssignmentPattern {
 									leadingComments: ["0"]
+									meta: JSPatternMeta {
+										readonly: true
+										loc: SourceLocation typescript/class/parameter-properties/input.ts 9:8-9:22
+									}
 									left: JSBindingIdentifier {
 										name: "x"
 										meta: JSPatternMeta {
 											loc: SourceLocation typescript/class/parameter-properties/input.ts 9:8-9:18
 										}
 										loc: SourceLocation typescript/class/parameter-properties/input.ts 9:17-9:18 (x)
-									}
-									meta: JSPatternMeta {
-										readonly: true
-										loc: SourceLocation typescript/class/parameter-properties/input.ts 9:8-9:22
 									}
 									right: JSNumericLiteral {
 										value: 0
@@ -105,6 +113,14 @@ JSRoot {
 									loc: SourceLocation typescript/class/parameter-properties/input.ts 9:8-9:22
 								}
 								JSBindingAssignmentPattern {
+									meta: JSPatternMeta {
+										accessibility: "public"
+										readonly: false
+										typeAnnotation: TSNumberKeywordTypeAnnotation {
+											loc: SourceLocation typescript/class/parameter-properties/input.ts 10:19-10:25
+										}
+										loc: SourceLocation typescript/class/parameter-properties/input.ts 10:8-10:29
+									}
 									left: JSBindingIdentifier {
 										name: "y"
 										meta: JSPatternMeta {
@@ -116,14 +132,6 @@ JSRoot {
 										}
 										loc: SourceLocation typescript/class/parameter-properties/input.ts 10:15-10:16 (y)
 									}
-									meta: JSPatternMeta {
-										accessibility: "public"
-										readonly: false
-										typeAnnotation: TSNumberKeywordTypeAnnotation {
-											loc: SourceLocation typescript/class/parameter-properties/input.ts 10:19-10:25
-										}
-										loc: SourceLocation typescript/class/parameter-properties/input.ts 10:8-10:29
-									}
 									right: JSNumericLiteral {
 										value: 0
 										loc: SourceLocation typescript/class/parameter-properties/input.ts 10:28-10:29
@@ -132,14 +140,6 @@ JSRoot {
 								}
 							]
 							loc: SourceLocation typescript/class/parameter-properties/input.ts 2:15-10:30
-						}
-						meta: JSClassPropertyMeta {
-							abstract: false
-							optional: false
-							readonly: false
-							static: false
-							loc: SourceLocation typescript/class/parameter-properties/input.ts 2:4-2:15
-							start: Position 2:4
 						}
 						loc: SourceLocation typescript/class/parameter-properties/input.ts 2:4-10:33
 					}

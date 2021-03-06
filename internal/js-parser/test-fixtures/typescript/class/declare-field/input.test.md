@@ -99,7 +99,7 @@ JSRoot {
 
     1 │ class A {
   > 2 │   declare foo;
-      │           <error><emphasis>^</emphasis></error>
+      │           ^
     3 │   declare bar: string;
     4 │ }
 

@@ -77,8 +77,7 @@ JSRoot {
   ✖ Invalid left-hand side in assignment object property value
 
     ({a:this}=0)
-        <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
+        ^^^^
 
 
 ```

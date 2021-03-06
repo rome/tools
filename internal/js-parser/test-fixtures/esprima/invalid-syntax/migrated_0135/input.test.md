@@ -95,12 +95,12 @@ JSRoot {
   ✖ Unclosed catch clause param
 
     try {} catch (answer()) {}
-                 <error><emphasis>^</emphasis></error>
+                 ^
 
   ℹ We expected to find the closing character ) here
 
     try {} catch (answer()) {}
-                        <error><emphasis>^</emphasis></error>
+                        ^
 
 
 ```

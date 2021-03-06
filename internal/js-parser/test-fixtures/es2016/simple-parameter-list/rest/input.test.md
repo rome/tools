@@ -79,13 +79,7 @@ JSRoot {
 
     1 │ function a(...options) {
   > 2 │   "use strict";
-    → │   <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-    → │ <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-    → │ <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-    → │ <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-    → │ <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-    → │ <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-      │ <error><emphasis>^</emphasis></error>
+      │   ^^^^^^^^^^^^^
     3 │ }
 
 

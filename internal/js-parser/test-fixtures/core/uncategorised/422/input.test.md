@@ -56,7 +56,7 @@ JSRoot {
   ✖ Unknown start to an statement expression
 
     while(false)
-                <error><emphasis>^</emphasis></error>
+                ^
 
 
 ```

@@ -25,6 +25,14 @@ JSRoot {
 							}
 							loc: SourceLocation es2015/class-methods/disallow-computed-async/input.js 2:12-2:13
 						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							optional: false
+							readonly: false
+							static: false
+							loc: SourceLocation es2015/class-methods/disallow-computed-async/input.js 2:12-2:13
+							start: Position 2:12
+						}
 						body: JSBlockStatement {
 							body: []
 							directives: []
@@ -36,14 +44,6 @@ JSRoot {
 							hasHoistedVars: false
 							params: []
 							loc: SourceLocation es2015/class-methods/disallow-computed-async/input.js 2:13-2:15
-						}
-						meta: JSClassPropertyMeta {
-							abstract: false
-							optional: false
-							readonly: false
-							static: false
-							loc: SourceLocation es2015/class-methods/disallow-computed-async/input.js 2:12-2:13
-							start: Position 2:12
 						}
 						loc: SourceLocation es2015/class-methods/disallow-computed-async/input.js 2:12-2:18
 					}
@@ -91,7 +91,7 @@ JSRoot {
 
     1 │ class A {
   > 2 │   ["async"] a() {}
-      │             <error><emphasis>^</emphasis></error>
+      │             ^
     3 │ }
 
 

@@ -25,6 +25,14 @@ JSRoot {
 							}
 							loc: SourceLocation experimental/class-private-properties/super-call/input.js 2:2-2:13
 						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							optional: false
+							readonly: false
+							static: false
+							loc: SourceLocation experimental/class-private-properties/super-call/input.js 2:2-2:13
+							start: Position 2:2
+						}
 						body: JSBlockStatement {
 							body: [
 								JSClassDeclaration {
@@ -42,13 +50,6 @@ JSRoot {
 													}
 													loc: SourceLocation experimental/class-private-properties/super-call/input.js 4:6-4:10
 												}
-												value: JSCallExpression {
-													arguments: []
-													callee: JSSuper {
-														loc: SourceLocation experimental/class-private-properties/super-call/input.js 4:13-4:18
-													}
-													loc: SourceLocation experimental/class-private-properties/super-call/input.js 4:13-4:20
-												}
 												meta: JSClassPropertyMeta {
 													abstract: false
 													optional: false
@@ -56,6 +57,13 @@ JSRoot {
 													static: false
 													loc: SourceLocation experimental/class-private-properties/super-call/input.js 4:6-4:10
 													start: Position 4:6
+												}
+												value: JSCallExpression {
+													arguments: []
+													callee: JSSuper {
+														loc: SourceLocation experimental/class-private-properties/super-call/input.js 4:13-4:18
+													}
+													loc: SourceLocation experimental/class-private-properties/super-call/input.js 4:13-4:20
 												}
 												loc: SourceLocation experimental/class-private-properties/super-call/input.js 4:6-4:21
 											}
@@ -78,14 +86,6 @@ JSRoot {
 							hasHoistedVars: false
 							params: []
 							loc: SourceLocation experimental/class-private-properties/super-call/input.js 2:13-2:15
-						}
-						meta: JSClassPropertyMeta {
-							abstract: false
-							optional: false
-							readonly: false
-							static: false
-							loc: SourceLocation experimental/class-private-properties/super-call/input.js 2:2-2:13
-							start: Position 2:2
 						}
 						loc: SourceLocation experimental/class-private-properties/super-call/input.js 2:2-6:3
 					}
@@ -143,9 +143,7 @@ JSRoot {
     2 │   constructor() {
     3 │     class C extends D {
   > 4 │       #foo = super();
-    → │              <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-    → │ <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-      │ <error><emphasis>^</emphasis></error>
+      │              ^^^^^
     5 │     }
     6 │   }
 

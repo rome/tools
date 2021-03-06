@@ -129,7 +129,7 @@ JSRoot {
 
     1 │ var a;
   > 2 │ (a) = {};
-      │  <error><emphasis>^</emphasis></error>
+      │  ^
     3 │ (a.b) = {};
     4 │ (a['c']) = {};
 

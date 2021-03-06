@@ -113,7 +113,7 @@ JSRoot {
 
     1 │ function foo() {
   > 2 │   return function.sent;
-      │                  <error><emphasis>^</emphasis></error>
+      │                  ^
     3 │ }
 
   ℹ Expected the opening function params character (

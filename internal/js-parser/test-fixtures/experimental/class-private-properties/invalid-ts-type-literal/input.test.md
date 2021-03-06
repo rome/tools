@@ -81,7 +81,7 @@ JSRoot {
   ✖ A interface declaration is only valid inside of a TypeScript file
 
   > 1 │ interface I {
-      │ <error><emphasis>^</emphasis></error>
+      │ ^
     2 │   #p: string
     3 │ }
 

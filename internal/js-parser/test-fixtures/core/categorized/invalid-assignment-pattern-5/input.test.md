@@ -72,8 +72,7 @@ JSRoot {
   ✖ Invalid parenthesized binding
 
     [([x])] = t;
-      <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-    <error><emphasis>^</emphasis></error>
+      ^^^
 
 
 ```

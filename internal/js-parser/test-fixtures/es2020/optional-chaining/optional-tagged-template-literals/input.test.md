@@ -80,7 +80,7 @@ JSRoot {
   ✖ Tagged Template Literals are not allowed in optionalChain
 
     a?.b`foo`
-        <error><emphasis>^</emphasis></error>
+        ^
 
 
 ```

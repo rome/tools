@@ -25,6 +25,14 @@ JSRoot {
 							}
 							loc: SourceLocation es2015/class-methods/disallow-static-prototype/input.js 2:9-2:18
 						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							optional: false
+							readonly: false
+							static: true
+							loc: SourceLocation es2015/class-methods/disallow-static-prototype/input.js 2:2-2:18
+							start: Position 2:2
+						}
 						body: JSBlockStatement {
 							body: []
 							directives: []
@@ -36,14 +44,6 @@ JSRoot {
 							hasHoistedVars: false
 							params: []
 							loc: SourceLocation es2015/class-methods/disallow-static-prototype/input.js 2:18-2:20
-						}
-						meta: JSClassPropertyMeta {
-							abstract: false
-							optional: false
-							readonly: false
-							static: true
-							loc: SourceLocation es2015/class-methods/disallow-static-prototype/input.js 2:2-2:18
-							start: Position 2:2
 						}
 						loc: SourceLocation es2015/class-methods/disallow-static-prototype/input.js 2:2-2:23
 					}
@@ -91,11 +91,7 @@ JSRoot {
 
     1 │ class A {
   > 2 │   static prototype() {}
-    → │          <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-    → │ <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-    → │ <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-    → │ <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-      │ <error><emphasis>^</emphasis></error>
+      │          ^^^^^^^^^
     3 │ }
 
 

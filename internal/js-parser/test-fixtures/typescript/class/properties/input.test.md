@@ -81,10 +81,6 @@ JSRoot {
 							}
 							loc: SourceLocation typescript/class/properties/input.ts 5:4-5:5
 						}
-						value: JSNumericLiteral {
-							value: 1
-							loc: SourceLocation typescript/class/properties/input.ts 5:16-5:17
-						}
 						meta: JSClassPropertyMeta {
 							abstract: false
 							optional: false
@@ -92,6 +88,10 @@ JSRoot {
 							static: false
 							loc: SourceLocation typescript/class/properties/input.ts 5:4-5:5
 							start: Position 5:4
+						}
+						value: JSNumericLiteral {
+							value: 1
+							loc: SourceLocation typescript/class/properties/input.ts 5:16-5:17
 						}
 						typeAnnotation: TSNumberKeywordTypeAnnotation {
 							loc: SourceLocation typescript/class/properties/input.ts 5:7-5:13

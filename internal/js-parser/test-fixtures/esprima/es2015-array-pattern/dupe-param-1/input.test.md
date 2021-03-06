@@ -105,7 +105,7 @@ JSRoot {
 
     1 │ "use strict";
   > 2 │ function a([a,a]){ }
-      │               <error><emphasis>^</emphasis></error>
+      │               ^
 
 
 ```

@@ -82,9 +82,7 @@ JSRoot {
 
     1 │ function fn() {
   > 2 │   await 0;
-    → │   <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-    → │ <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-      │ <error><emphasis>^</emphasis></error>
+      │   ^^^^^
     3 │ }
 
 

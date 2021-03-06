@@ -79,7 +79,7 @@ JSRoot {
   ✖ Expected keyword from
 
     import X fro\u006d 'x'
-             <error><emphasis>^</emphasis></error>
+             ^
 
 
 ```

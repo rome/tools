@@ -99,7 +99,7 @@ JSRoot {
   ✖ Regular expression flags can't contain unicode escapes
 
     var x = /[P QR]/\u0067
-                    <error><emphasis>^</emphasis></error>
+                    ^
 
 
 ```

@@ -78,7 +78,7 @@ JSRoot {
   ✖ Invalid escape sequence in template
 
     "use strict"; `${test}\02`;
-                           <error><emphasis>^</emphasis></error>
+                           ^
 
 
 ```

@@ -119,7 +119,7 @@ JSRoot {
 
     1 │ async function fn() {
   > 2 │   async (x = async(y = await 2)) => {};
-      │                             <error><emphasis>^</emphasis></error>
+      │                             ^
     3 │ }
 
 

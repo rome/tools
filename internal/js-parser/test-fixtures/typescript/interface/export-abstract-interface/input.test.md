@@ -65,7 +65,7 @@ JSRoot {
   ✖ Expected a semicolon or a line terminator
 
   > 1 │ export abstract interface I {
-      │                 <error><emphasis>^</emphasis></error>
+      │                 ^
     2 │
     3 │ }
 

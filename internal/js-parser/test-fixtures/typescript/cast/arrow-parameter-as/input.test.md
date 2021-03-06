@@ -69,9 +69,7 @@ JSRoot {
   ✖ Unexpected type cast in parameter position
 
     (a as T) => {};
-     <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
+     ^^^^^^
 
 
 ```

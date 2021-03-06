@@ -78,11 +78,7 @@ JSRoot {
 
     1 │ class Foo {
   > 2 │   static prototype
-    → │          <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-    → │ <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-    → │ <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-    → │ <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-      │ <error><emphasis>^</emphasis></error>
+      │          ^^^^^^^^^
     3 │ }
 
 

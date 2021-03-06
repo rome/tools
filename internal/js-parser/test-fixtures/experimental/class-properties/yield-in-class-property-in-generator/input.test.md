@@ -32,6 +32,14 @@ JSRoot {
 										}
 										loc: SourceLocation experimental/class-properties/yield-in-class-property-in-generator/input.js 4:4-4:5
 									}
+									meta: JSClassPropertyMeta {
+										abstract: false
+										optional: false
+										readonly: false
+										static: false
+										loc: SourceLocation experimental/class-properties/yield-in-class-property-in-generator/input.js 4:4-4:5
+										start: Position 4:4
+									}
 									value: JSYieldExpression {
 										delegate: false
 										argument: JSUnaryExpression {
@@ -44,14 +52,6 @@ JSRoot {
 											loc: SourceLocation experimental/class-properties/yield-in-class-property-in-generator/input.js 4:14-4:18
 										}
 										loc: SourceLocation experimental/class-properties/yield-in-class-property-in-generator/input.js 4:8-4:18
-									}
-									meta: JSClassPropertyMeta {
-										abstract: false
-										optional: false
-										readonly: false
-										static: false
-										loc: SourceLocation experimental/class-properties/yield-in-class-property-in-generator/input.js 4:4-4:5
-										start: Position 4:4
 									}
 									loc: SourceLocation experimental/class-properties/yield-in-class-property-in-generator/input.js 4:4-4:19
 								}

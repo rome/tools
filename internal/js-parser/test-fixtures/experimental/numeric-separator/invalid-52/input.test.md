@@ -63,7 +63,7 @@ JSRoot {
   ✖ Invalid or unexpected int token
 
     1_, 0
-    <error><emphasis>^</emphasis></error>
+    ^
 
 
 ```

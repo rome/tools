@@ -25,6 +25,14 @@ JSRoot {
 							}
 							loc: SourceLocation typescript/class/members-with-modifier-names/input.ts 2:4-2:10
 						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							optional: false
+							readonly: false
+							static: false
+							loc: SourceLocation typescript/class/members-with-modifier-names/input.ts 2:4-2:10
+							start: Position 2:4
+						}
 						head: JSFunctionHead {
 							async: false
 							generator: false
@@ -34,14 +42,6 @@ JSRoot {
 								loc: SourceLocation typescript/class/members-with-modifier-names/input.ts 2:14-2:18
 							}
 							loc: SourceLocation typescript/class/members-with-modifier-names/input.ts 2:10-2:18
-						}
-						meta: JSClassPropertyMeta {
-							abstract: false
-							optional: false
-							readonly: false
-							static: false
-							loc: SourceLocation typescript/class/members-with-modifier-names/input.ts 2:4-2:10
-							start: Position 2:4
 						}
 						loc: SourceLocation typescript/class/members-with-modifier-names/input.ts 2:4-2:19
 					}
@@ -54,6 +54,14 @@ JSRoot {
 							}
 							loc: SourceLocation typescript/class/members-with-modifier-names/input.ts 3:11-3:17 (static)
 						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							accessibility: "public"
+							optional: false
+							readonly: false
+							static: false
+							loc: SourceLocation typescript/class/members-with-modifier-names/input.ts 3:4-3:17
+						}
 						head: JSFunctionHead {
 							async: false
 							generator: false
@@ -63,14 +71,6 @@ JSRoot {
 								loc: SourceLocation typescript/class/members-with-modifier-names/input.ts 3:21-3:25
 							}
 							loc: SourceLocation typescript/class/members-with-modifier-names/input.ts 3:17-3:25
-						}
-						meta: JSClassPropertyMeta {
-							abstract: false
-							accessibility: "public"
-							optional: false
-							readonly: false
-							static: false
-							loc: SourceLocation typescript/class/members-with-modifier-names/input.ts 3:4-3:17
 						}
 						loc: SourceLocation typescript/class/members-with-modifier-names/input.ts 3:4-3:26
 					}
@@ -82,10 +82,6 @@ JSRoot {
 							}
 							loc: SourceLocation typescript/class/members-with-modifier-names/input.ts 4:4-4:12
 						}
-						value: JSNumericLiteral {
-							value: 0
-							loc: SourceLocation typescript/class/members-with-modifier-names/input.ts 4:15-4:16
-						}
 						meta: JSClassPropertyMeta {
 							abstract: false
 							optional: false
@@ -93,6 +89,10 @@ JSRoot {
 							static: false
 							loc: SourceLocation typescript/class/members-with-modifier-names/input.ts 4:4-4:12
 							start: Position 4:4
+						}
+						value: JSNumericLiteral {
+							value: 0
+							loc: SourceLocation typescript/class/members-with-modifier-names/input.ts 4:15-4:16
 						}
 						loc: SourceLocation typescript/class/members-with-modifier-names/input.ts 4:4-4:17
 					}
@@ -104,6 +104,14 @@ JSRoot {
 								loc: SourceLocation typescript/class/members-with-modifier-names/input.ts 5:4-5:9 (async)
 							}
 							loc: SourceLocation typescript/class/members-with-modifier-names/input.ts 5:4-5:9
+						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							optional: false
+							readonly: false
+							static: false
+							loc: SourceLocation typescript/class/members-with-modifier-names/input.ts 5:4-5:9
+							start: Position 5:4
 						}
 						head: JSFunctionHead {
 							async: false
@@ -123,14 +131,6 @@ JSRoot {
 								loc: SourceLocation typescript/class/members-with-modifier-names/input.ts 5:9-5:12
 							}
 							loc: SourceLocation typescript/class/members-with-modifier-names/input.ts 5:12-5:20
-						}
-						meta: JSClassPropertyMeta {
-							abstract: false
-							optional: false
-							readonly: false
-							static: false
-							loc: SourceLocation typescript/class/members-with-modifier-names/input.ts 5:4-5:9
-							start: Position 5:4
 						}
 						loc: SourceLocation typescript/class/members-with-modifier-names/input.ts 5:4-5:21
 					}

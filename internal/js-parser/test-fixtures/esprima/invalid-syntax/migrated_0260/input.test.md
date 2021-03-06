@@ -108,12 +108,12 @@ JSRoot {
   ✖ Unclosed function params
 
     function x(...a = 1){}
-              <error><emphasis>^</emphasis></error>
+              ^
 
   ℹ We expected to find the closing character ) here
 
     function x(...a = 1){}
-                    <error><emphasis>^</emphasis></error>
+                    ^
 
 
 ```

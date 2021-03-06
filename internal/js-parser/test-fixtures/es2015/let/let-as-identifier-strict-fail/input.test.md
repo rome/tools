@@ -63,8 +63,7 @@ JSRoot {
 
     1 │ "use strict";
   > 2 │ let + 1
-    → │ <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-      │ <error><emphasis>^</emphasis></error>
+      │ ^^^
 
 
 ```

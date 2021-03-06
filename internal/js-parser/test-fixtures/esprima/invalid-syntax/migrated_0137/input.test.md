@@ -62,7 +62,7 @@ JSRoot {
   ✖ Invalid Unicode escape
 
     \u203F = 10
-          <error><emphasis>^</emphasis></error>
+          ^
 
 
 ```

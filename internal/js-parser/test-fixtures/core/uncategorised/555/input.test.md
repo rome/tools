@@ -93,7 +93,7 @@ JSRoot {
     1 │ function foo (·
     2 │     first,
   > 3 │     ...second,
-      │              <error><emphasis>^</emphasis></error>
+      │              ^
     4 │     third,
     5 │ ) {
 

@@ -74,7 +74,7 @@ JSRoot {
   ✖ Invalid left-hand side in arrow function parameters
 
     ([ 5 ]) => {}
-       <error><emphasis>^</emphasis></error>
+       ^
 
 
 ```

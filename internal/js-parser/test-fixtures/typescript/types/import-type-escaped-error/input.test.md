@@ -86,7 +86,7 @@ JSRoot {
   ✖ Expected keyword from
 
     import typ\u{65} typescript from "typescript";
-                     <error><emphasis>^</emphasis></error>
+                     ^
 
 
 ```

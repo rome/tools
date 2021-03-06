@@ -99,8 +99,7 @@ JSRoot {
   ✖ eval is a reserved word
 
     'use strict'; ({eval = defValue} = obj)
-                    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
+                    ^^^^
 
 
 ```

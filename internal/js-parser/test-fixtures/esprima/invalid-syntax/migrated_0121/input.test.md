@@ -49,7 +49,7 @@ JSRoot {
   ✖ Unknown start to an throw argument
 
     throw;
-         <error><emphasis>^</emphasis></error>
+         ^
 
 
 ```

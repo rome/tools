@@ -8,8 +8,17 @@
 CSSRoot {
 	body: [
 		CSSRule {
-			block: CSSBlock {value: [], startingTokenValue: "{", loc: SourceLocation invalid/selector8/input.css 1:6-3:1}
-			prelude: [CSSSelector {patterns: [], loc: SourceLocation invalid/selector8/input.css 1:0-1:6}]
+			prelude: [
+				CSSSelector {
+					patterns: []
+					loc: SourceLocation invalid/selector8/input.css 1:0-1:6
+				}
+			]
+			block: CSSBlock {
+				value: []
+				startingTokenValue: "{"
+				loc: SourceLocation invalid/selector8/input.css 1:6-3:1
+			}
 			loc: SourceLocation invalid/selector8/input.css 1:0-3:1
 		}
 	]
@@ -17,14 +26,19 @@ CSSRoot {
 	corrupt: false
 	diagnostics: [
 		{
+			origins: [{category: "parse"}]
 			description: {
 				advice: []
 				category: ["parse"]
 				categoryValue: "css"
 				message: RAW_MARKUP {value: "Expected to use identifier after <emphasis>#</emphasis>."}
 			}
-			location: {language: "css", path: RelativePath<invalid/selector8/input.css>, end: Position 1:5, start: Position 1:0}
-			origins: [{category: "parse"}]
+			location: {
+				language: "css"
+				path: RelativePath<invalid/selector8/input.css>
+				end: Position 1:5
+				start: Position 1:0
+			}
 		}
 	]
 	path: RelativePath<invalid/selector8/input.css>

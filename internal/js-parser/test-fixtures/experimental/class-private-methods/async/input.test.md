@@ -25,6 +25,14 @@ JSRoot {
 							}
 							loc: SourceLocation experimental/class-private-methods/async/input.js 2:8-2:13
 						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							optional: false
+							readonly: false
+							static: false
+							loc: SourceLocation experimental/class-private-methods/async/input.js 2:2-2:13
+							start: Position 2:2
+						}
 						body: JSBlockStatement {
 							body: [
 								JSExpressionStatement {
@@ -51,14 +59,6 @@ JSRoot {
 							hasHoistedVars: false
 							params: []
 							loc: SourceLocation experimental/class-private-methods/async/input.js 2:13-2:15
-						}
-						meta: JSClassPropertyMeta {
-							abstract: false
-							optional: false
-							readonly: false
-							static: false
-							loc: SourceLocation experimental/class-private-methods/async/input.js 2:2-2:13
-							start: Position 2:2
 						}
 						loc: SourceLocation experimental/class-private-methods/async/input.js 2:2-4:3
 					}

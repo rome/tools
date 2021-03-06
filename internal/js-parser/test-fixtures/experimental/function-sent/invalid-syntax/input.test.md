@@ -89,7 +89,7 @@ JSRoot {
 
     1 │ function* foo() {
   > 2 │   if (true) function.;
-      │                      <error><emphasis>^</emphasis></error>
+      │                      ^
     3 │ }
 
 

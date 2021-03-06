@@ -71,9 +71,7 @@ JSRoot {
   ✖ Invalid left-hand side in assignment expression
 
     (a,b)=(c,d);
-    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-    <error><emphasis>^</emphasis></error>
+    ^^^^^
 
 
 ```

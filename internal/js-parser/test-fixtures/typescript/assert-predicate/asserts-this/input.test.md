@@ -25,6 +25,14 @@ JSRoot {
 							}
 							loc: SourceLocation typescript/assert-predicate/asserts-this/input.ts 2:2-2:3
 						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							optional: false
+							readonly: false
+							static: false
+							loc: SourceLocation typescript/assert-predicate/asserts-this/input.ts 2:2-2:3
+							start: Position 2:2
+						}
 						body: JSBlockStatement {
 							body: []
 							directives: []
@@ -44,14 +52,6 @@ JSRoot {
 								loc: SourceLocation typescript/assert-predicate/asserts-this/input.ts 2:5-2:19
 							}
 							loc: SourceLocation typescript/assert-predicate/asserts-this/input.ts 2:3-2:19
-						}
-						meta: JSClassPropertyMeta {
-							abstract: false
-							optional: false
-							readonly: false
-							static: false
-							loc: SourceLocation typescript/assert-predicate/asserts-this/input.ts 2:2-2:3
-							start: Position 2:2
 						}
 						loc: SourceLocation typescript/assert-predicate/asserts-this/input.ts 2:2-2:22
 					}

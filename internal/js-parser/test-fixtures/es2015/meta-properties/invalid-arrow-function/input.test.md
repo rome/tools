@@ -93,11 +93,7 @@ JSRoot {
 
     1 │ const A = () => {
   > 2 │   new.target;
-    → │   <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-    → │ <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-    → │ <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-    → │ <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-      │ <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
+      │   ^^^^^^^^^^
     3 │ }
 
 

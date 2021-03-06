@@ -74,7 +74,7 @@ JSRoot {
   ✖ Expected an identifier
 
     function log(,) { }
-                 <error><emphasis>^</emphasis></error>
+                 ^
 
 
 ```

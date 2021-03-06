@@ -24,10 +24,6 @@ JSRoot {
 							}
 							loc: SourceLocation experimental/class-private-methods/failure-no-plugin/input.js 2:2-2:4
 						}
-						value: JSReferenceIdentifier {
-							name: "x"
-							loc: SourceLocation experimental/class-private-methods/failure-no-plugin/input.js 2:7-2:8 (x)
-						}
 						meta: JSClassPropertyMeta {
 							abstract: false
 							optional: false
@@ -35,6 +31,10 @@ JSRoot {
 							static: false
 							loc: SourceLocation experimental/class-private-methods/failure-no-plugin/input.js 2:2-2:4
 							start: Position 2:2
+						}
+						value: JSReferenceIdentifier {
+							name: "x"
+							loc: SourceLocation experimental/class-private-methods/failure-no-plugin/input.js 2:7-2:8 (x)
 						}
 						loc: SourceLocation experimental/class-private-methods/failure-no-plugin/input.js 2:2-2:8
 					}
@@ -47,6 +47,14 @@ JSRoot {
 							}
 							loc: SourceLocation experimental/class-private-methods/failure-no-plugin/input.js 3:2-3:4
 						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							optional: false
+							readonly: false
+							static: false
+							loc: SourceLocation experimental/class-private-methods/failure-no-plugin/input.js 3:2-3:4
+							start: Position 3:2
+						}
 						body: JSBlockStatement {
 							body: []
 							directives: []
@@ -58,14 +66,6 @@ JSRoot {
 							hasHoistedVars: false
 							params: []
 							loc: SourceLocation experimental/class-private-methods/failure-no-plugin/input.js 3:5-3:7
-						}
-						meta: JSClassPropertyMeta {
-							abstract: false
-							optional: false
-							readonly: false
-							static: false
-							loc: SourceLocation experimental/class-private-methods/failure-no-plugin/input.js 3:2-3:4
-							start: Position 3:2
 						}
 						loc: SourceLocation experimental/class-private-methods/failure-no-plugin/input.js 3:2-3:10
 					}

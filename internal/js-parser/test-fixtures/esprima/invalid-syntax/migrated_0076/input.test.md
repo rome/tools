@@ -92,7 +92,7 @@ JSRoot {
   ✖ Unexpected character {
 
     ({ set: s() { } })
-                <error><emphasis>^</emphasis></error>
+                ^
 
   ℹ Expected character ,
 

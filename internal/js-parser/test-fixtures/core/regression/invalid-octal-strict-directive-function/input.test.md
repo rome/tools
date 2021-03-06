@@ -242,7 +242,7 @@ JSRoot {
 
     1 │ function a() {
   > 2 │   "\5";
-      │     <error><emphasis>^</emphasis></error>
+      │     ^
     3 │   "use strict";
     4 │ }
 

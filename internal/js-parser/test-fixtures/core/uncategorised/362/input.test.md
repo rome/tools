@@ -54,7 +54,7 @@ JSRoot {
   ✖ Invalid Unicode escape
 
     x\u005c
-           <error><emphasis>^</emphasis></error>
+           ^
 
 
 ```

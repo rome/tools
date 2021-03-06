@@ -88,7 +88,7 @@ JSRoot {
   ✖ Expected a semicolon or a line terminator
 
     \u0061sync function() { await x }
-               <error><emphasis>^</emphasis></error>
+               ^
 
 
 ```

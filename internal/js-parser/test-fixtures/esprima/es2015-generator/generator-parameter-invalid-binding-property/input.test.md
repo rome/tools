@@ -120,7 +120,7 @@ JSRoot {
 
     1 │ (function*() {
   > 2 │     function*({x: y = yield 3}) {}
-      │              <error><emphasis>^</emphasis></error>
+      │              ^
     3 │ })
 
 

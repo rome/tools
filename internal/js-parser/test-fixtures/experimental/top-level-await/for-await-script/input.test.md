@@ -90,7 +90,7 @@ JSRoot {
   ✖ Unexpected character a
 
     for await (const a of b);
-        <error><emphasis>^</emphasis></error>
+        ^
 
   ℹ Expected the opening for head character (
 

@@ -24,10 +24,6 @@ JSRoot {
 							}
 							loc: SourceLocation experimental/uncategorised/46/input.js 1:19-1:22
 						}
-						value: JSStringLiteral {
-							value: "bar"
-							loc: SourceLocation experimental/uncategorised/46/input.js 1:25-1:30
-						}
 						meta: JSClassPropertyMeta {
 							abstract: false
 							optional: false
@@ -35,6 +31,10 @@ JSRoot {
 							static: true
 							loc: SourceLocation experimental/uncategorised/46/input.js 1:12-1:22
 							start: Position 1:12
+						}
+						value: JSStringLiteral {
+							value: "bar"
+							loc: SourceLocation experimental/uncategorised/46/input.js 1:25-1:30
 						}
 						loc: SourceLocation experimental/uncategorised/46/input.js 1:12-1:31
 					}

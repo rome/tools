@@ -25,6 +25,14 @@ JSRoot {
 							}
 							loc: SourceLocation typescript/class/predicate-types/input.ts 2:2-2:7
 						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							optional: false
+							readonly: false
+							static: false
+							loc: SourceLocation typescript/class/predicate-types/input.ts 2:2-2:7
+							start: Position 2:2
+						}
 						body: JSBlockStatement {
 							body: []
 							directives: []
@@ -47,14 +55,6 @@ JSRoot {
 							}
 							loc: SourceLocation typescript/class/predicate-types/input.ts 2:7-2:25
 						}
-						meta: JSClassPropertyMeta {
-							abstract: false
-							optional: false
-							readonly: false
-							static: false
-							loc: SourceLocation typescript/class/predicate-types/input.ts 2:2-2:7
-							start: Position 2:2
-						}
 						loc: SourceLocation typescript/class/predicate-types/input.ts 2:2-3:3
 					}
 					JSClassProperty {
@@ -64,6 +64,14 @@ JSRoot {
 								loc: SourceLocation typescript/class/predicate-types/input.ts 4:2-4:7 (isBaz)
 							}
 							loc: SourceLocation typescript/class/predicate-types/input.ts 4:2-4:7
+						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							optional: false
+							readonly: false
+							static: false
+							loc: SourceLocation typescript/class/predicate-types/input.ts 4:2-4:7
+							start: Position 4:2
 						}
 						value: JSArrowFunctionExpression {
 							body: JSBlockStatement {
@@ -88,14 +96,6 @@ JSRoot {
 								loc: SourceLocation typescript/class/predicate-types/input.ts 4:10-4:31
 							}
 							loc: SourceLocation typescript/class/predicate-types/input.ts 4:10-5:3
-						}
-						meta: JSClassPropertyMeta {
-							abstract: false
-							optional: false
-							readonly: false
-							static: false
-							loc: SourceLocation typescript/class/predicate-types/input.ts 4:2-4:7
-							start: Position 4:2
 						}
 						loc: SourceLocation typescript/class/predicate-types/input.ts 4:2-5:3
 					}

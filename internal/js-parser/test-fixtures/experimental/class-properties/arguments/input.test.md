@@ -31,10 +31,6 @@ JSRoot {
 										}
 										loc: SourceLocation experimental/class-properties/arguments/input.js 3:4-3:7
 									}
-									value: JSReferenceIdentifier {
-										name: "arguments"
-										loc: SourceLocation experimental/class-properties/arguments/input.js 3:10-3:19 (arguments)
-									}
 									meta: JSClassPropertyMeta {
 										abstract: false
 										optional: false
@@ -42,6 +38,10 @@ JSRoot {
 										static: false
 										loc: SourceLocation experimental/class-properties/arguments/input.js 3:4-3:7
 										start: Position 3:4
+									}
+									value: JSReferenceIdentifier {
+										name: "arguments"
+										loc: SourceLocation experimental/class-properties/arguments/input.js 3:10-3:19 (arguments)
 									}
 									loc: SourceLocation experimental/class-properties/arguments/input.js 3:4-3:20
 								}
@@ -103,11 +103,7 @@ JSRoot {
     1 │ function fn() {
     2 │   class A {
   > 3 │     foo = arguments;
-    → │           <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-    → │ <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-    → │ <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-    → │ <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-      │ <error><emphasis>^</emphasis></error>
+      │           ^^^^^^^^^
     4 │   }
     5 │ }
 

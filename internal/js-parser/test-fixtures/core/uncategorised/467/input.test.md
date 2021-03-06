@@ -85,11 +85,7 @@ JSRoot {
   ✖ 'with' in strict mode
 
     (function () { 'use strict'; with (i); }())
-                                 <error><emphasis>^</emphasis></error>
-    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
+                                 ^^^^^^^^^
 
 
 ```

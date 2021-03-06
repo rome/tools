@@ -31,6 +31,14 @@ JSRoot {
 										}
 										loc: SourceLocation experimental/class-properties/arguments-in-function/input.js 3:4-3:7
 									}
+									meta: JSClassPropertyMeta {
+										abstract: false
+										optional: false
+										readonly: false
+										static: false
+										loc: SourceLocation experimental/class-properties/arguments-in-function/input.js 3:4-3:7
+										start: Position 3:4
+									}
 									value: JSFunctionExpression {
 										id: JSBindingIdentifier {
 											name: "f"
@@ -57,14 +65,6 @@ JSRoot {
 											loc: SourceLocation experimental/class-properties/arguments-in-function/input.js 3:20-3:22
 										}
 										loc: SourceLocation experimental/class-properties/arguments-in-function/input.js 3:10-3:36
-									}
-									meta: JSClassPropertyMeta {
-										abstract: false
-										optional: false
-										readonly: false
-										static: false
-										loc: SourceLocation experimental/class-properties/arguments-in-function/input.js 3:4-3:7
-										start: Position 3:4
 									}
 									loc: SourceLocation experimental/class-properties/arguments-in-function/input.js 3:4-3:37
 								}

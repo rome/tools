@@ -51,7 +51,7 @@ JSRoot {
   ✖ Bad character escape sequence
 
     "\ux";
-       <error><emphasis>^</emphasis></error>
+       ^
 
 
 ```

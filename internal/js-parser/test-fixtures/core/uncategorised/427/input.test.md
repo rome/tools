@@ -64,7 +64,7 @@ JSRoot {
   ✖ Multiple default clauses
 
     switch (c) { default: default: }
-                          <error><emphasis>^</emphasis></error>
+                          ^
 
 
 ```

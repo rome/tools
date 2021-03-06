@@ -24,6 +24,14 @@ JSRoot {
 							}
 							loc: SourceLocation experimental/class-properties/new-target/input.js 2:9-2:10
 						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							optional: false
+							readonly: false
+							static: true
+							loc: SourceLocation experimental/class-properties/new-target/input.js 2:2-2:10
+							start: Position 2:2
+						}
 						value: JSMetaProperty {
 							meta: JSIdentifier {
 								name: "new"
@@ -35,14 +43,6 @@ JSRoot {
 							}
 							loc: SourceLocation experimental/class-properties/new-target/input.js 2:13-2:23
 						}
-						meta: JSClassPropertyMeta {
-							abstract: false
-							optional: false
-							readonly: false
-							static: true
-							loc: SourceLocation experimental/class-properties/new-target/input.js 2:2-2:10
-							start: Position 2:2
-						}
 						loc: SourceLocation experimental/class-properties/new-target/input.js 2:2-2:24
 					}
 					JSClassProperty {
@@ -52,6 +52,14 @@ JSRoot {
 								loc: SourceLocation experimental/class-properties/new-target/input.js 3:9-3:10 (b)
 							}
 							loc: SourceLocation experimental/class-properties/new-target/input.js 3:9-3:10
+						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							optional: false
+							readonly: false
+							static: true
+							loc: SourceLocation experimental/class-properties/new-target/input.js 3:2-3:10
+							start: Position 3:2
 						}
 						value: JSAssignmentExpression {
 							operator: "="
@@ -89,14 +97,6 @@ JSRoot {
 							}
 							loc: SourceLocation experimental/class-properties/new-target/input.js 3:14-3:39
 						}
-						meta: JSClassPropertyMeta {
-							abstract: false
-							optional: false
-							readonly: false
-							static: true
-							loc: SourceLocation experimental/class-properties/new-target/input.js 3:2-3:10
-							start: Position 3:2
-						}
 						loc: SourceLocation experimental/class-properties/new-target/input.js 3:2-3:41
 					}
 					JSClassProperty {
@@ -106,6 +106,14 @@ JSRoot {
 								loc: SourceLocation experimental/class-properties/new-target/input.js 4:9-4:10 (c)
 							}
 							loc: SourceLocation experimental/class-properties/new-target/input.js 4:9-4:10
+						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							optional: false
+							readonly: false
+							static: true
+							loc: SourceLocation experimental/class-properties/new-target/input.js 4:2-4:10
+							start: Position 4:2
 						}
 						value: JSArrowFunctionExpression {
 							body: JSMetaProperty {
@@ -127,14 +135,6 @@ JSRoot {
 							}
 							loc: SourceLocation experimental/class-properties/new-target/input.js 4:13-4:29
 						}
-						meta: JSClassPropertyMeta {
-							abstract: false
-							optional: false
-							readonly: false
-							static: true
-							loc: SourceLocation experimental/class-properties/new-target/input.js 4:2-4:10
-							start: Position 4:2
-						}
 						loc: SourceLocation experimental/class-properties/new-target/input.js 4:2-4:30
 					}
 					JSClassProperty {
@@ -144,6 +144,14 @@ JSRoot {
 								loc: SourceLocation experimental/class-properties/new-target/input.js 5:9-5:10 (d)
 							}
 							loc: SourceLocation experimental/class-properties/new-target/input.js 5:9-5:10
+						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							optional: false
+							readonly: false
+							static: true
+							loc: SourceLocation experimental/class-properties/new-target/input.js 5:2-5:10
+							start: Position 5:2
 						}
 						value: JSArrowFunctionExpression {
 							body: JSBlockStatement {
@@ -179,14 +187,6 @@ JSRoot {
 							}
 							loc: SourceLocation experimental/class-properties/new-target/input.js 5:13-5:37
 						}
-						meta: JSClassPropertyMeta {
-							abstract: false
-							optional: false
-							readonly: false
-							static: true
-							loc: SourceLocation experimental/class-properties/new-target/input.js 5:2-5:10
-							start: Position 5:2
-						}
 						loc: SourceLocation experimental/class-properties/new-target/input.js 5:2-5:38
 					}
 					JSClassProperty {
@@ -196,6 +196,14 @@ JSRoot {
 								loc: SourceLocation experimental/class-properties/new-target/input.js 6:2-6:3 (e)
 							}
 							loc: SourceLocation experimental/class-properties/new-target/input.js 6:2-6:3
+						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							optional: false
+							readonly: false
+							static: false
+							loc: SourceLocation experimental/class-properties/new-target/input.js 6:2-6:3
+							start: Position 6:2
 						}
 						value: JSMetaProperty {
 							meta: JSIdentifier {
@@ -208,14 +216,6 @@ JSRoot {
 							}
 							loc: SourceLocation experimental/class-properties/new-target/input.js 6:6-6:16
 						}
-						meta: JSClassPropertyMeta {
-							abstract: false
-							optional: false
-							readonly: false
-							static: false
-							loc: SourceLocation experimental/class-properties/new-target/input.js 6:2-6:3
-							start: Position 6:2
-						}
 						loc: SourceLocation experimental/class-properties/new-target/input.js 6:2-6:17
 					}
 					JSClassProperty {
@@ -225,6 +225,14 @@ JSRoot {
 								loc: SourceLocation experimental/class-properties/new-target/input.js 7:2-7:3 (f)
 							}
 							loc: SourceLocation experimental/class-properties/new-target/input.js 7:2-7:3
+						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							optional: false
+							readonly: false
+							static: false
+							loc: SourceLocation experimental/class-properties/new-target/input.js 7:2-7:3
+							start: Position 7:2
 						}
 						value: JSAssignmentExpression {
 							operator: "="
@@ -262,14 +270,6 @@ JSRoot {
 							}
 							loc: SourceLocation experimental/class-properties/new-target/input.js 7:7-7:32
 						}
-						meta: JSClassPropertyMeta {
-							abstract: false
-							optional: false
-							readonly: false
-							static: false
-							loc: SourceLocation experimental/class-properties/new-target/input.js 7:2-7:3
-							start: Position 7:2
-						}
 						loc: SourceLocation experimental/class-properties/new-target/input.js 7:2-7:34
 					}
 					JSClassProperty {
@@ -279,6 +279,14 @@ JSRoot {
 								loc: SourceLocation experimental/class-properties/new-target/input.js 8:2-8:3 (g)
 							}
 							loc: SourceLocation experimental/class-properties/new-target/input.js 8:2-8:3
+						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							optional: false
+							readonly: false
+							static: false
+							loc: SourceLocation experimental/class-properties/new-target/input.js 8:2-8:3
+							start: Position 8:2
 						}
 						value: JSArrowFunctionExpression {
 							body: JSMetaProperty {
@@ -300,14 +308,6 @@ JSRoot {
 							}
 							loc: SourceLocation experimental/class-properties/new-target/input.js 8:6-8:22
 						}
-						meta: JSClassPropertyMeta {
-							abstract: false
-							optional: false
-							readonly: false
-							static: false
-							loc: SourceLocation experimental/class-properties/new-target/input.js 8:2-8:3
-							start: Position 8:2
-						}
 						loc: SourceLocation experimental/class-properties/new-target/input.js 8:2-8:23
 					}
 					JSClassProperty {
@@ -317,6 +317,14 @@ JSRoot {
 								loc: SourceLocation experimental/class-properties/new-target/input.js 9:2-9:3 (h)
 							}
 							loc: SourceLocation experimental/class-properties/new-target/input.js 9:2-9:3
+						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							optional: false
+							readonly: false
+							static: false
+							loc: SourceLocation experimental/class-properties/new-target/input.js 9:2-9:3
+							start: Position 9:2
 						}
 						value: JSArrowFunctionExpression {
 							body: JSBlockStatement {
@@ -351,14 +359,6 @@ JSRoot {
 								loc: SourceLocation experimental/class-properties/new-target/input.js 9:6-9:27
 							}
 							loc: SourceLocation experimental/class-properties/new-target/input.js 9:6-9:30
-						}
-						meta: JSClassPropertyMeta {
-							abstract: false
-							optional: false
-							readonly: false
-							static: false
-							loc: SourceLocation experimental/class-properties/new-target/input.js 9:2-9:3
-							start: Position 9:2
 						}
 						loc: SourceLocation experimental/class-properties/new-target/input.js 9:2-9:31
 					}

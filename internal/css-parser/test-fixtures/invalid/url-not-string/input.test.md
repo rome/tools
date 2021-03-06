@@ -8,17 +8,29 @@
 CSSRoot {
 	body: [
 		CSSRule {
-			block: CSSBlock {
-				value: [CSSDeclaration {name: "background", value: [], important: false, loc: SourceLocation invalid/url-not-string/input.css 2:1-2:20}]
-				startingTokenValue: "{"
-				loc: SourceLocation invalid/url-not-string/input.css 1:5-3:1
-			}
 			prelude: [
 				CSSSelector {
-					patterns: [CSSClassSelector {value: "foo", loc: SourceLocation invalid/url-not-string/input.css 1:0-1:4}]
+					patterns: [
+						CSSClassSelector {
+							value: "foo"
+							loc: SourceLocation invalid/url-not-string/input.css 1:0-1:4
+						}
+					]
 					loc: SourceLocation invalid/url-not-string/input.css 1:0-1:5
 				}
 			]
+			block: CSSBlock {
+				value: [
+					CSSDeclaration {
+						name: "background"
+						value: []
+						important: false
+						loc: SourceLocation invalid/url-not-string/input.css 2:1-2:20
+					}
+				]
+				startingTokenValue: "{"
+				loc: SourceLocation invalid/url-not-string/input.css 1:5-3:1
+			}
 			loc: SourceLocation invalid/url-not-string/input.css 1:0-3:1
 		}
 	]
@@ -26,14 +38,19 @@ CSSRoot {
 	corrupt: false
 	diagnostics: [
 		{
+			origins: [{category: "parse"}]
 			description: {
 				advice: []
 				category: ["parse"]
 				categoryValue: "css"
 				message: RAW_MARKUP {value: "The function <emphasis>url()</emphasis> can only accept strings."}
 			}
-			location: {language: "css", path: RelativePath<invalid/url-not-string/input.css>, end: Position 2:20, start: Position 2:13}
-			origins: [{category: "parse"}]
+			location: {
+				language: "css"
+				path: RelativePath<invalid/url-not-string/input.css>
+				end: Position 2:20
+				start: Position 2:13
+			}
 		}
 	]
 	path: RelativePath<invalid/url-not-string/input.css>

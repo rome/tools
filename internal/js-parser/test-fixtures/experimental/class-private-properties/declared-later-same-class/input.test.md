@@ -24,6 +24,14 @@ JSRoot {
 							}
 							loc: SourceLocation experimental/class-private-properties/declared-later-same-class/input.js 2:2-2:4
 						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							optional: false
+							readonly: false
+							static: false
+							loc: SourceLocation experimental/class-private-properties/declared-later-same-class/input.js 2:2-2:4
+							start: Position 2:2
+						}
 						value: JSMemberExpression {
 							object: JSThisExpression {
 								loc: SourceLocation experimental/class-private-properties/declared-later-same-class/input.js 2:7-2:11
@@ -39,14 +47,6 @@ JSRoot {
 								loc: SourceLocation experimental/class-private-properties/declared-later-same-class/input.js 2:12-2:14
 							}
 							loc: SourceLocation experimental/class-private-properties/declared-later-same-class/input.js 2:7-2:14
-						}
-						meta: JSClassPropertyMeta {
-							abstract: false
-							optional: false
-							readonly: false
-							static: false
-							loc: SourceLocation experimental/class-private-properties/declared-later-same-class/input.js 2:2-2:4
-							start: Position 2:2
 						}
 						loc: SourceLocation experimental/class-private-properties/declared-later-same-class/input.js 2:2-2:15
 					}

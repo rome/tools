@@ -65,7 +65,7 @@ JSRoot {
   ✖ Parenthesized expression didnt contain anything
 
     () ? 42
-     <error><emphasis>^</emphasis></error>
+     ^
 
 
 ```

@@ -88,7 +88,7 @@ JSRoot {
   ✖ Expected a semicolon or a line terminator
 
     function *g() { return yield.x; }
-                                <error><emphasis>^</emphasis></error>
+                                ^
 
 
 ```

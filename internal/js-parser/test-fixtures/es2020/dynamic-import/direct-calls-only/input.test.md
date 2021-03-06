@@ -86,9 +86,7 @@ JSRoot {
 
     1 │ function failsParse() {
   > 2 │   return import.then();
-    → │                 <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-    → │                   <error><emphasis>^</emphasis></error>
-      │ <error><emphasis>^</emphasis></error>
+      │                 ^^^^
     3 │ }
 
 

@@ -81,7 +81,7 @@ JSRoot {
   ✖ Trailing comma is disallowed inside import(...) arguments
 
     import("./foo.json", ...[]);
-                       <error><emphasis>^</emphasis></error>
+                       ^
 
 
 ```

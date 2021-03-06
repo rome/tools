@@ -25,6 +25,14 @@ JSRoot {
 							}
 							loc: SourceLocation es2017/async-functions/16/input.js 1:18-1:21
 						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							optional: false
+							readonly: false
+							static: false
+							loc: SourceLocation es2017/async-functions/16/input.js 1:12-1:21
+							start: Position 1:12
+						}
 						body: JSBlockStatement {
 							body: [
 								JSExpressionStatement {
@@ -55,14 +63,6 @@ JSRoot {
 								}
 							]
 							loc: SourceLocation es2017/async-functions/16/input.js 1:21-1:30
-						}
-						meta: JSClassPropertyMeta {
-							abstract: false
-							optional: false
-							readonly: false
-							static: false
-							loc: SourceLocation es2017/async-functions/16/input.js 1:12-1:21
-							start: Position 1:12
 						}
 						loc: SourceLocation es2017/async-functions/16/input.js 1:12-1:48
 					}

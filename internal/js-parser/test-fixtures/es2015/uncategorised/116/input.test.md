@@ -25,6 +25,14 @@ JSRoot {
 							}
 							loc: SourceLocation es2015/uncategorised/116/input.js 1:31-1:34
 						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							optional: false
+							readonly: false
+							static: true
+							loc: SourceLocation es2015/uncategorised/116/input.js 1:20-1:34
+							start: Position 1:20
+						}
 						body: JSBlockStatement {
 							body: []
 							directives: []
@@ -36,14 +44,6 @@ JSRoot {
 							hasHoistedVars: false
 							params: []
 							loc: SourceLocation es2015/uncategorised/116/input.js 1:34-1:36
-						}
-						meta: JSClassPropertyMeta {
-							abstract: false
-							optional: false
-							readonly: false
-							static: true
-							loc: SourceLocation es2015/uncategorised/116/input.js 1:20-1:34
-							start: Position 1:20
 						}
 						loc: SourceLocation es2015/uncategorised/116/input.js 1:20-1:39
 					}

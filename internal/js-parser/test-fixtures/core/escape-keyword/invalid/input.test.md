@@ -83,7 +83,7 @@ JSRoot {
 
     1 │ var a = {
   > 2 │   br\u{65}ak
-      │     <error><emphasis>^</emphasis></error>
+      │     ^
     3 │ };
 
 

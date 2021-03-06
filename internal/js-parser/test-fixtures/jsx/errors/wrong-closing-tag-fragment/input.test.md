@@ -64,7 +64,7 @@ JSRoot {
   ℹ Originated from this opening tag
 
     <></something>
-    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
+    ^^
 
 
 ```

@@ -79,11 +79,7 @@ JSRoot {
     1 │ (
     2 │     first,
   > 3 │     ...second,
-    → │     <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-    → │ <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-    → │ <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-    → │ <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-      │ <error><emphasis>^</emphasis></error>
+      │     ^^^^^^^^^
     4 │     third
     5 │ ) => {};
 

@@ -91,7 +91,7 @@ JSRoot {
   ✖ The rest element has to be the last element when destructuring
 
     let x: [string, ...string[],]
-                               <error><emphasis>^</emphasis></error>
+                               ^
 
 
 ```

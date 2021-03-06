@@ -78,7 +78,7 @@ JSRoot {
   ✖ Expected an identifier
 
     ({ * })
-         <error><emphasis>^</emphasis></error>
+         ^
 
 
 ```

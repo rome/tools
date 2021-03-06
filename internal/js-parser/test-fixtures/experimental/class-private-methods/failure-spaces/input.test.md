@@ -25,6 +25,14 @@ JSRoot {
 							}
 							loc: SourceLocation experimental/class-private-methods/failure-spaces/input.js 2:2-2:16
 						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							optional: false
+							readonly: false
+							static: false
+							loc: SourceLocation experimental/class-private-methods/failure-spaces/input.js 2:2-2:16
+							start: Position 2:2
+						}
 						body: JSBlockStatement {
 							body: [
 								JSReturnStatement {
@@ -48,14 +56,6 @@ JSRoot {
 							hasHoistedVars: false
 							params: []
 							loc: SourceLocation experimental/class-private-methods/failure-spaces/input.js 2:16-2:18
-						}
-						meta: JSClassPropertyMeta {
-							abstract: false
-							optional: false
-							readonly: false
-							static: false
-							loc: SourceLocation experimental/class-private-methods/failure-spaces/input.js 2:2-2:16
-							start: Position 2:2
 						}
 						loc: SourceLocation experimental/class-private-methods/failure-spaces/input.js 2:2-4:3
 					}
@@ -103,7 +103,7 @@ JSRoot {
 
     1 │ class Spaces {
   > 2 │   #  wrongSpaces() {
-      │    <error><emphasis>^</emphasis></error>
+      │    ^
     3 │     return fail();
     4 │   }
 

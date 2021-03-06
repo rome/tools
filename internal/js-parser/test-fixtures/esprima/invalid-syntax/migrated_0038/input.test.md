@@ -63,7 +63,7 @@ JSRoot {
   ✖ Unterminated regular expression
 
     /
-     <error><emphasis>^</emphasis></error>
+     ^
 
 
 ```

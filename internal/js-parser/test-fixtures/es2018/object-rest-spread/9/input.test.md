@@ -86,7 +86,7 @@ JSRoot {
   ✖ Cannot have multiple rest elements when destructuring
 
     let { x, ...y, ...z } = obj;
-                      <error><emphasis>^</emphasis></error>
+                      ^
 
 
 ```

@@ -25,13 +25,6 @@ JSRoot {
 							}
 							loc: SourceLocation typescript/class/static/input.ts 2:11-2:12
 						}
-						head: JSFunctionHead {
-							async: false
-							generator: false
-							hasHoistedVars: false
-							params: []
-							loc: SourceLocation typescript/class/static/input.ts 2:12-2:14
-						}
 						meta: JSClassPropertyMeta {
 							abstract: false
 							optional: false
@@ -39,6 +32,13 @@ JSRoot {
 							static: true
 							loc: SourceLocation typescript/class/static/input.ts 2:4-2:12
 							start: Position 2:4
+						}
+						head: JSFunctionHead {
+							async: false
+							generator: false
+							hasHoistedVars: false
+							params: []
+							loc: SourceLocation typescript/class/static/input.ts 2:12-2:14
 						}
 						loc: SourceLocation typescript/class/static/input.ts 2:4-2:15
 					}
@@ -51,13 +51,6 @@ JSRoot {
 							}
 							loc: SourceLocation typescript/class/static/input.ts 3:18-3:19
 						}
-						head: JSFunctionHead {
-							async: false
-							generator: false
-							hasHoistedVars: false
-							params: []
-							loc: SourceLocation typescript/class/static/input.ts 3:19-3:21
-						}
 						meta: JSClassPropertyMeta {
 							abstract: false
 							accessibility: "public"
@@ -66,6 +59,13 @@ JSRoot {
 							static: true
 							loc: SourceLocation typescript/class/static/input.ts 3:4-3:19
 							start: Position 3:4
+						}
+						head: JSFunctionHead {
+							async: false
+							generator: false
+							hasHoistedVars: false
+							params: []
+							loc: SourceLocation typescript/class/static/input.ts 3:19-3:21
 						}
 						loc: SourceLocation typescript/class/static/input.ts 3:4-3:22
 					}
@@ -78,13 +78,6 @@ JSRoot {
 							}
 							loc: SourceLocation typescript/class/static/input.ts 4:21-4:22
 						}
-						head: JSFunctionHead {
-							async: false
-							generator: false
-							hasHoistedVars: false
-							params: []
-							loc: SourceLocation typescript/class/static/input.ts 4:22-4:24
-						}
 						meta: JSClassPropertyMeta {
 							abstract: false
 							accessibility: "protected"
@@ -93,6 +86,13 @@ JSRoot {
 							static: true
 							loc: SourceLocation typescript/class/static/input.ts 4:4-4:22
 							start: Position 4:4
+						}
+						head: JSFunctionHead {
+							async: false
+							generator: false
+							hasHoistedVars: false
+							params: []
+							loc: SourceLocation typescript/class/static/input.ts 4:22-4:24
 						}
 						loc: SourceLocation typescript/class/static/input.ts 4:4-4:25
 					}
@@ -105,13 +105,6 @@ JSRoot {
 							}
 							loc: SourceLocation typescript/class/static/input.ts 5:19-5:20
 						}
-						head: JSFunctionHead {
-							async: false
-							generator: false
-							hasHoistedVars: false
-							params: []
-							loc: SourceLocation typescript/class/static/input.ts 5:20-5:22
-						}
 						meta: JSClassPropertyMeta {
 							abstract: false
 							accessibility: "private"
@@ -120,6 +113,13 @@ JSRoot {
 							static: true
 							loc: SourceLocation typescript/class/static/input.ts 5:4-5:20
 							start: Position 5:4
+						}
+						head: JSFunctionHead {
+							async: false
+							generator: false
+							hasHoistedVars: false
+							params: []
+							loc: SourceLocation typescript/class/static/input.ts 5:20-5:22
 						}
 						loc: SourceLocation typescript/class/static/input.ts 5:4-5:23
 					}

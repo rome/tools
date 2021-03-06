@@ -115,7 +115,7 @@ JSRoot {
   ✖ Unexpected character a
 
     declare function assertIsString(value: unknown): \u{61}sserts value;
-                     <error><emphasis>^</emphasis></error>
+                     ^
 
   ℹ Expected the opening function params character (
 

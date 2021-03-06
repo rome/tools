@@ -58,7 +58,7 @@ JSRoot {
   ✖ constructors in/after an Optional Chain are not allowed
 
     new a?.();
-           <error><emphasis>^</emphasis></error>
+           ^
 
 
 ```

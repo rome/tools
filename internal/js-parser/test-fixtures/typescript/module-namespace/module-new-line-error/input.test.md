@@ -67,7 +67,7 @@ JSRoot {
 
     1 │ module
   > 2 │ Foo {}
-      │     <error><emphasis>^</emphasis></error>
+      │     ^
 
 
 ```

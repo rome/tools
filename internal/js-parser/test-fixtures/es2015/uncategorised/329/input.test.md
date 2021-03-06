@@ -70,7 +70,7 @@ JSRoot {
   ✖ Lexical declaration cannot appear in a single-statement context
 
     for (;;) const x = 10;
-             <error><emphasis>^</emphasis></error>
+             ^
 
 
 ```

@@ -55,7 +55,7 @@ JSRoot {
   ✖ Expected number in radix 16
 
     0x
-      <error><emphasis>^</emphasis></error>
+      ^
 
 
 ```

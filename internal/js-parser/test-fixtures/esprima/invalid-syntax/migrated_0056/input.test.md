@@ -69,9 +69,7 @@ JSRoot {
   ✖ Invalid left-hand side in for-in statement
 
     for((1 + 1) in list) process(x);
-         <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-    <error><emphasis>^</emphasis></error>
+         ^^^^^
 
 
 ```

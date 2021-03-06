@@ -55,7 +55,7 @@ JSRoot {
   ✖ Invalid number
 
     3e+
-       <error><emphasis>^</emphasis></error>
+       ^
 
 
 ```

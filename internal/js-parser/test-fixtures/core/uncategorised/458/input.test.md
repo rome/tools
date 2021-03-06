@@ -67,7 +67,7 @@ JSRoot {
   ✖ Unexpected character *
 
     do { x } *
-             <error><emphasis>^</emphasis></error>
+             ^
 
   ℹ Expected character while
 

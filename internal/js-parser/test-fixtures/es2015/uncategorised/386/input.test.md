@@ -97,7 +97,7 @@ JSRoot {
   ✖ Unexpected character t
 
     export typeof foo;
-           <error><emphasis>^</emphasis></error>
+           ^
 
   ℹ Expected the opening export specifiers character {
 

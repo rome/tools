@@ -61,7 +61,7 @@ JSRoot {
   ✖ Unknown start to an export default declaration
 
     export default = 42
-                   <error><emphasis>^</emphasis></error>
+                   ^
 
 
 ```

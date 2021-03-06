@@ -62,7 +62,7 @@ JSRoot {
   ✖ Unexpected character }
 
     ({ 42 }) = obj
-          <error><emphasis>^</emphasis></error>
+          ^
 
 
 ```

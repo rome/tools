@@ -143,7 +143,7 @@ JSRoot {
   ✖ Unexpected character =
 
   > 1 │ const foo = async ({ async = bar }) => {
-      │                            <error><emphasis>^</emphasis></error>
+      │                            ^
     2 │   await baz;
     3 │ };
 

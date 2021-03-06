@@ -43,6 +43,14 @@ JSRoot {
 							}
 							loc: SourceLocation es2018/async-generators/class-method-no-asi/input.js 3:4-3:5
 						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							optional: false
+							readonly: false
+							static: false
+							loc: SourceLocation es2018/async-generators/class-method-no-asi/input.js 3:2-3:5
+							start: Position 3:2
+						}
 						body: JSBlockStatement {
 							body: []
 							directives: []
@@ -54,14 +62,6 @@ JSRoot {
 							hasHoistedVars: false
 							params: []
 							loc: SourceLocation es2018/async-generators/class-method-no-asi/input.js 3:5-3:7
-						}
-						meta: JSClassPropertyMeta {
-							abstract: false
-							optional: false
-							readonly: false
-							static: false
-							loc: SourceLocation es2018/async-generators/class-method-no-asi/input.js 3:2-3:5
-							start: Position 3:2
 						}
 						loc: SourceLocation es2018/async-generators/class-method-no-asi/input.js 3:2-3:9
 					}

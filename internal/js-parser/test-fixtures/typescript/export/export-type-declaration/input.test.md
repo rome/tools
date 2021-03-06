@@ -171,7 +171,7 @@ JSRoot {
     1 │ export type A = 2;
     2 │ export interface B {}
   > 3 │ export declare function a(): string;
-      │                         <error><emphasis>^</emphasis></error>
+      │                         ^
     4 │ export declare var b: string;
 
   ℹ Expected the opening function params character (

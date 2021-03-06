@@ -137,7 +137,7 @@ JSRoot {
   ✖ Unexpected character =
 
     ({a,b=b,a:c,[a]:[d]})=>0;
-         <error><emphasis>^</emphasis></error>
+         ^
 
   ℹ Expected character ,
 

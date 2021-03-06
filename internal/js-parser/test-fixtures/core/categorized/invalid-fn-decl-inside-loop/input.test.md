@@ -76,7 +76,7 @@ JSRoot {
     the body of an if statement
 
     while (1) function foo(){}
-              <error><emphasis>^</emphasis></error>
+              ^
 
 
 ```

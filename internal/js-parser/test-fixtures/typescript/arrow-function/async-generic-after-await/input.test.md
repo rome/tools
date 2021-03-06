@@ -112,7 +112,7 @@ JSRoot {
     1 │ async () => {
     2 │   await null;
   > 3 │   async <T>() => null;
-      │               <error><emphasis>^</emphasis></error>
+      │               ^
     4 │ };
 
 

@@ -91,7 +91,7 @@ JSRoot {
 
     1 │ function* foo() {
   > 2 │   function.sent() {}
-      │                   <error><emphasis>^</emphasis></error>
+      │                   ^
     3 │ }
 
 

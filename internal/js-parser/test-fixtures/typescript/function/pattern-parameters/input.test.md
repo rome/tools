@@ -82,7 +82,7 @@ JSRoot {
   ✖ A binding pattern parameter cannot be optional in an implementation signature.
 
     function f([]?, {}) {}
-               <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
+               ^^
 
 
 ```

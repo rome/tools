@@ -82,13 +82,6 @@ JSRoot {
 							}
 							loc: SourceLocation typescript/class/declare/input.ts 5:4-5:5
 						}
-						head: JSFunctionHead {
-							async: false
-							generator: false
-							hasHoistedVars: false
-							params: []
-							loc: SourceLocation typescript/class/declare/input.ts 5:5-5:7
-						}
 						meta: JSClassPropertyMeta {
 							abstract: false
 							optional: false
@@ -96,6 +89,13 @@ JSRoot {
 							static: false
 							loc: SourceLocation typescript/class/declare/input.ts 5:4-5:5
 							start: Position 5:4
+						}
+						head: JSFunctionHead {
+							async: false
+							generator: false
+							hasHoistedVars: false
+							params: []
+							loc: SourceLocation typescript/class/declare/input.ts 5:5-5:7
 						}
 						loc: SourceLocation typescript/class/declare/input.ts 5:4-5:8
 					}
@@ -108,6 +108,14 @@ JSRoot {
 							}
 							loc: SourceLocation typescript/class/declare/input.ts 6:4-6:5
 						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							optional: false
+							readonly: false
+							static: false
+							loc: SourceLocation typescript/class/declare/input.ts 6:4-6:5
+							start: Position 6:4
+						}
 						head: JSFunctionHead {
 							async: false
 							generator: false
@@ -117,14 +125,6 @@ JSRoot {
 								loc: SourceLocation typescript/class/declare/input.ts 6:9-6:13
 							}
 							loc: SourceLocation typescript/class/declare/input.ts 6:5-6:13
-						}
-						meta: JSClassPropertyMeta {
-							abstract: false
-							optional: false
-							readonly: false
-							static: false
-							loc: SourceLocation typescript/class/declare/input.ts 6:4-6:5
-							start: Position 6:4
 						}
 						loc: SourceLocation typescript/class/declare/input.ts 6:4-6:14
 					}

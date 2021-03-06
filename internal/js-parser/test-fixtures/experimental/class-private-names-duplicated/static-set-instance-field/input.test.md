@@ -25,6 +25,14 @@ JSRoot {
 							}
 							loc: SourceLocation experimental/class-private-names-duplicated/static-set-instance-field/input.js 2:13-2:15
 						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							optional: false
+							readonly: false
+							static: true
+							loc: SourceLocation experimental/class-private-names-duplicated/static-set-instance-field/input.js 2:2-2:15
+							start: Position 2:2
+						}
 						body: JSBlockStatement {
 							body: []
 							directives: []
@@ -45,14 +53,6 @@ JSRoot {
 							]
 							loc: SourceLocation experimental/class-private-names-duplicated/static-set-instance-field/input.js 2:15-2:18
 						}
-						meta: JSClassPropertyMeta {
-							abstract: false
-							optional: false
-							readonly: false
-							static: true
-							loc: SourceLocation experimental/class-private-names-duplicated/static-set-instance-field/input.js 2:2-2:15
-							start: Position 2:2
-						}
 						loc: SourceLocation experimental/class-private-names-duplicated/static-set-instance-field/input.js 2:2-2:21
 					}
 					JSClassPrivateProperty {
@@ -63,10 +63,6 @@ JSRoot {
 							}
 							loc: SourceLocation experimental/class-private-names-duplicated/static-set-instance-field/input.js 3:2-3:4
 						}
-						value: JSNumericLiteral {
-							value: 0
-							loc: SourceLocation experimental/class-private-names-duplicated/static-set-instance-field/input.js 3:7-3:8
-						}
 						meta: JSClassPropertyMeta {
 							abstract: false
 							optional: false
@@ -74,6 +70,10 @@ JSRoot {
 							static: false
 							loc: SourceLocation experimental/class-private-names-duplicated/static-set-instance-field/input.js 3:2-3:4
 							start: Position 3:2
+						}
+						value: JSNumericLiteral {
+							value: 0
+							loc: SourceLocation experimental/class-private-names-duplicated/static-set-instance-field/input.js 3:7-3:8
 						}
 						loc: SourceLocation experimental/class-private-names-duplicated/static-set-instance-field/input.js 3:2-3:9
 					}

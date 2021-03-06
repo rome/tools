@@ -82,7 +82,7 @@ JSRoot {
   ✖ Function parameters can't be parenthesized
 
     var foo = async ((foo)) => {};
-                     <error><emphasis>^</emphasis></error>
+                     ^
 
 
 ```

@@ -60,7 +60,7 @@ JSRoot {
   ✖ Unknown JSX identifier token
 
     <\u{2F804}></\u{2F804}>
-     <error><emphasis>^</emphasis></error>
+     ^
 
 
 ```

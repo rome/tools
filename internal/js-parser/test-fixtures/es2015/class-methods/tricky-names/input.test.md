@@ -25,6 +25,14 @@ JSRoot {
 							}
 							loc: SourceLocation es2015/class-methods/tricky-names/input.js 2:2-2:5
 						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							optional: false
+							readonly: false
+							static: false
+							loc: SourceLocation es2015/class-methods/tricky-names/input.js 2:2-2:5
+							start: Position 2:2
+						}
 						body: JSBlockStatement {
 							body: []
 							directives: []
@@ -37,14 +45,6 @@ JSRoot {
 							params: []
 							loc: SourceLocation es2015/class-methods/tricky-names/input.js 3:2-3:4
 						}
-						meta: JSClassPropertyMeta {
-							abstract: false
-							optional: false
-							readonly: false
-							static: false
-							loc: SourceLocation es2015/class-methods/tricky-names/input.js 2:2-2:5
-							start: Position 2:2
-						}
 						loc: SourceLocation es2015/class-methods/tricky-names/input.js 2:2-3:7
 					}
 					JSClassMethod {
@@ -55,6 +55,14 @@ JSRoot {
 								loc: SourceLocation es2015/class-methods/tricky-names/input.js 5:2-5:5 (set)
 							}
 							loc: SourceLocation es2015/class-methods/tricky-names/input.js 5:2-5:5
+						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							optional: false
+							readonly: false
+							static: false
+							loc: SourceLocation es2015/class-methods/tricky-names/input.js 5:2-5:5
+							start: Position 5:2
 						}
 						body: JSBlockStatement {
 							body: []
@@ -68,14 +76,6 @@ JSRoot {
 							params: []
 							loc: SourceLocation es2015/class-methods/tricky-names/input.js 6:2-6:4
 						}
-						meta: JSClassPropertyMeta {
-							abstract: false
-							optional: false
-							readonly: false
-							static: false
-							loc: SourceLocation es2015/class-methods/tricky-names/input.js 5:2-5:5
-							start: Position 5:2
-						}
 						loc: SourceLocation es2015/class-methods/tricky-names/input.js 5:2-6:7
 					}
 					JSClassMethod {
@@ -86,6 +86,13 @@ JSRoot {
 								loc: SourceLocation es2015/class-methods/tricky-names/input.js 8:2-8:8 (static)
 							}
 							loc: SourceLocation es2015/class-methods/tricky-names/input.js 8:2-8:8 (static)
+						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							optional: false
+							readonly: false
+							static: false
+							loc: SourceLocation es2015/class-methods/tricky-names/input.js 8:2-8:8
 						}
 						body: JSBlockStatement {
 							body: []
@@ -99,13 +106,6 @@ JSRoot {
 							params: []
 							loc: SourceLocation es2015/class-methods/tricky-names/input.js 9:2-9:4
 						}
-						meta: JSClassPropertyMeta {
-							abstract: false
-							optional: false
-							readonly: false
-							static: false
-							loc: SourceLocation es2015/class-methods/tricky-names/input.js 8:2-8:8
-						}
 						loc: SourceLocation es2015/class-methods/tricky-names/input.js 8:2-9:7
 					}
 					JSClassMethod {
@@ -116,6 +116,14 @@ JSRoot {
 								loc: SourceLocation es2015/class-methods/tricky-names/input.js 11:2-11:7 (async)
 							}
 							loc: SourceLocation es2015/class-methods/tricky-names/input.js 11:2-11:7
+						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							optional: false
+							readonly: false
+							static: false
+							loc: SourceLocation es2015/class-methods/tricky-names/input.js 11:2-11:7
+							start: Position 11:2
 						}
 						body: JSBlockStatement {
 							body: []
@@ -129,14 +137,6 @@ JSRoot {
 							params: []
 							loc: SourceLocation es2015/class-methods/tricky-names/input.js 12:2-12:4
 						}
-						meta: JSClassPropertyMeta {
-							abstract: false
-							optional: false
-							readonly: false
-							static: false
-							loc: SourceLocation es2015/class-methods/tricky-names/input.js 11:2-11:7
-							start: Position 11:2
-						}
 						loc: SourceLocation es2015/class-methods/tricky-names/input.js 11:2-12:7
 					}
 					JSClassMethod {
@@ -147,6 +147,14 @@ JSRoot {
 								loc: SourceLocation es2015/class-methods/tricky-names/input.js 15:2-15:7
 							}
 							loc: SourceLocation es2015/class-methods/tricky-names/input.js 15:2-15:7
+						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							optional: false
+							readonly: false
+							static: false
+							loc: SourceLocation es2015/class-methods/tricky-names/input.js 15:2-15:7
+							start: Position 15:2
 						}
 						body: JSBlockStatement {
 							body: []
@@ -160,14 +168,6 @@ JSRoot {
 							params: []
 							loc: SourceLocation es2015/class-methods/tricky-names/input.js 16:2-16:4
 						}
-						meta: JSClassPropertyMeta {
-							abstract: false
-							optional: false
-							readonly: false
-							static: false
-							loc: SourceLocation es2015/class-methods/tricky-names/input.js 15:2-15:7
-							start: Position 15:2
-						}
 						loc: SourceLocation es2015/class-methods/tricky-names/input.js 15:2-16:7
 					}
 					JSClassMethod {
@@ -178,6 +178,14 @@ JSRoot {
 								loc: SourceLocation es2015/class-methods/tricky-names/input.js 18:2-18:7
 							}
 							loc: SourceLocation es2015/class-methods/tricky-names/input.js 18:2-18:7
+						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							optional: false
+							readonly: false
+							static: false
+							loc: SourceLocation es2015/class-methods/tricky-names/input.js 18:2-18:7
+							start: Position 18:2
 						}
 						body: JSBlockStatement {
 							body: []
@@ -191,14 +199,6 @@ JSRoot {
 							params: []
 							loc: SourceLocation es2015/class-methods/tricky-names/input.js 19:2-19:4
 						}
-						meta: JSClassPropertyMeta {
-							abstract: false
-							optional: false
-							readonly: false
-							static: false
-							loc: SourceLocation es2015/class-methods/tricky-names/input.js 18:2-18:7
-							start: Position 18:2
-						}
 						loc: SourceLocation es2015/class-methods/tricky-names/input.js 18:2-19:7
 					}
 					JSClassMethod {
@@ -209,6 +209,14 @@ JSRoot {
 								loc: SourceLocation es2015/class-methods/tricky-names/input.js 21:2-21:9
 							}
 							loc: SourceLocation es2015/class-methods/tricky-names/input.js 21:2-21:9
+						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							optional: false
+							readonly: false
+							static: false
+							loc: SourceLocation es2015/class-methods/tricky-names/input.js 21:2-21:9
+							start: Position 21:2
 						}
 						body: JSBlockStatement {
 							body: []
@@ -222,14 +230,6 @@ JSRoot {
 							params: []
 							loc: SourceLocation es2015/class-methods/tricky-names/input.js 22:2-22:4
 						}
-						meta: JSClassPropertyMeta {
-							abstract: false
-							optional: false
-							readonly: false
-							static: false
-							loc: SourceLocation es2015/class-methods/tricky-names/input.js 21:2-21:9
-							start: Position 21:2
-						}
 						loc: SourceLocation es2015/class-methods/tricky-names/input.js 21:2-22:7
 					}
 					JSClassMethod {
@@ -240,6 +240,14 @@ JSRoot {
 								loc: SourceLocation es2015/class-methods/tricky-names/input.js 26:2-26:5 (get)
 							}
 							loc: SourceLocation es2015/class-methods/tricky-names/input.js 26:2-26:5
+						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							optional: false
+							readonly: false
+							static: true
+							loc: SourceLocation es2015/class-methods/tricky-names/input.js 25:2-26:5
+							start: Position 25:2
 						}
 						body: JSBlockStatement {
 							body: []
@@ -253,14 +261,6 @@ JSRoot {
 							params: []
 							loc: SourceLocation es2015/class-methods/tricky-names/input.js 27:2-27:4
 						}
-						meta: JSClassPropertyMeta {
-							abstract: false
-							optional: false
-							readonly: false
-							static: true
-							loc: SourceLocation es2015/class-methods/tricky-names/input.js 25:2-26:5
-							start: Position 25:2
-						}
 						loc: SourceLocation es2015/class-methods/tricky-names/input.js 25:2-27:7
 					}
 					JSClassMethod {
@@ -271,6 +271,14 @@ JSRoot {
 								loc: SourceLocation es2015/class-methods/tricky-names/input.js 30:2-30:5 (set)
 							}
 							loc: SourceLocation es2015/class-methods/tricky-names/input.js 30:2-30:5
+						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							optional: false
+							readonly: false
+							static: true
+							loc: SourceLocation es2015/class-methods/tricky-names/input.js 29:2-30:5
+							start: Position 29:2
 						}
 						body: JSBlockStatement {
 							body: []
@@ -284,14 +292,6 @@ JSRoot {
 							params: []
 							loc: SourceLocation es2015/class-methods/tricky-names/input.js 31:2-31:4
 						}
-						meta: JSClassPropertyMeta {
-							abstract: false
-							optional: false
-							readonly: false
-							static: true
-							loc: SourceLocation es2015/class-methods/tricky-names/input.js 29:2-30:5
-							start: Position 29:2
-						}
 						loc: SourceLocation es2015/class-methods/tricky-names/input.js 29:2-31:7
 					}
 					JSClassMethod {
@@ -302,6 +302,14 @@ JSRoot {
 								loc: SourceLocation es2015/class-methods/tricky-names/input.js 34:2-34:8 (static)
 							}
 							loc: SourceLocation es2015/class-methods/tricky-names/input.js 34:2-34:8
+						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							optional: false
+							readonly: false
+							static: true
+							loc: SourceLocation es2015/class-methods/tricky-names/input.js 33:2-34:8
+							start: Position 33:2
 						}
 						body: JSBlockStatement {
 							body: []
@@ -315,14 +323,6 @@ JSRoot {
 							params: []
 							loc: SourceLocation es2015/class-methods/tricky-names/input.js 35:2-35:4
 						}
-						meta: JSClassPropertyMeta {
-							abstract: false
-							optional: false
-							readonly: false
-							static: true
-							loc: SourceLocation es2015/class-methods/tricky-names/input.js 33:2-34:8
-							start: Position 33:2
-						}
 						loc: SourceLocation es2015/class-methods/tricky-names/input.js 33:2-35:7
 					}
 					JSClassMethod {
@@ -333,6 +333,14 @@ JSRoot {
 								loc: SourceLocation es2015/class-methods/tricky-names/input.js 38:2-38:7 (async)
 							}
 							loc: SourceLocation es2015/class-methods/tricky-names/input.js 38:2-38:7
+						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							optional: false
+							readonly: false
+							static: true
+							loc: SourceLocation es2015/class-methods/tricky-names/input.js 37:2-38:7
+							start: Position 37:2
 						}
 						body: JSBlockStatement {
 							body: []
@@ -346,14 +354,6 @@ JSRoot {
 							params: []
 							loc: SourceLocation es2015/class-methods/tricky-names/input.js 39:2-39:4
 						}
-						meta: JSClassPropertyMeta {
-							abstract: false
-							optional: false
-							readonly: false
-							static: true
-							loc: SourceLocation es2015/class-methods/tricky-names/input.js 37:2-38:7
-							start: Position 37:2
-						}
 						loc: SourceLocation es2015/class-methods/tricky-names/input.js 37:2-39:7
 					}
 					JSClassMethod {
@@ -364,6 +364,14 @@ JSRoot {
 								loc: SourceLocation es2015/class-methods/tricky-names/input.js 42:2-42:3 (a)
 							}
 							loc: SourceLocation es2015/class-methods/tricky-names/input.js 42:2-42:3
+						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							optional: false
+							readonly: false
+							static: true
+							loc: SourceLocation es2015/class-methods/tricky-names/input.js 41:2-42:3
+							start: Position 41:2
 						}
 						body: JSBlockStatement {
 							body: []
@@ -377,14 +385,6 @@ JSRoot {
 							params: []
 							loc: SourceLocation es2015/class-methods/tricky-names/input.js 43:2-43:4
 						}
-						meta: JSClassPropertyMeta {
-							abstract: false
-							optional: false
-							readonly: false
-							static: true
-							loc: SourceLocation es2015/class-methods/tricky-names/input.js 41:2-42:3
-							start: Position 41:2
-						}
 						loc: SourceLocation es2015/class-methods/tricky-names/input.js 41:2-43:7
 					}
 					JSClassMethod {
@@ -395,6 +395,14 @@ JSRoot {
 								loc: SourceLocation es2015/class-methods/tricky-names/input.js 47:2-47:7 (async)
 							}
 							loc: SourceLocation es2015/class-methods/tricky-names/input.js 47:2-47:7
+						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							optional: false
+							readonly: false
+							static: false
+							loc: SourceLocation es2015/class-methods/tricky-names/input.js 46:2-47:7
+							start: Position 46:2
 						}
 						body: JSBlockStatement {
 							body: []
@@ -408,14 +416,6 @@ JSRoot {
 							params: []
 							loc: SourceLocation es2015/class-methods/tricky-names/input.js 48:2-48:4
 						}
-						meta: JSClassPropertyMeta {
-							abstract: false
-							optional: false
-							readonly: false
-							static: false
-							loc: SourceLocation es2015/class-methods/tricky-names/input.js 46:2-47:7
-							start: Position 46:2
-						}
 						loc: SourceLocation es2015/class-methods/tricky-names/input.js 46:2-48:7
 					}
 					JSClassMethod {
@@ -426,6 +426,14 @@ JSRoot {
 								loc: SourceLocation es2015/class-methods/tricky-names/input.js 53:2-53:8 (static)
 							}
 							loc: SourceLocation es2015/class-methods/tricky-names/input.js 53:2-53:8
+						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							optional: false
+							readonly: false
+							static: true
+							loc: SourceLocation es2015/class-methods/tricky-names/input.js 51:2-53:8
+							start: Position 51:2
 						}
 						body: JSBlockStatement {
 							body: []
@@ -438,14 +446,6 @@ JSRoot {
 							hasHoistedVars: false
 							params: []
 							loc: SourceLocation es2015/class-methods/tricky-names/input.js 54:2-54:4
-						}
-						meta: JSClassPropertyMeta {
-							abstract: false
-							optional: false
-							readonly: false
-							static: true
-							loc: SourceLocation es2015/class-methods/tricky-names/input.js 51:2-53:8
-							start: Position 51:2
 						}
 						loc: SourceLocation es2015/class-methods/tricky-names/input.js 51:2-54:7
 					}

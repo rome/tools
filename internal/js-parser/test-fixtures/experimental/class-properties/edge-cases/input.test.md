@@ -239,6 +239,14 @@ JSRoot {
 							}
 							loc: SourceLocation experimental/class-properties/edge-cases/input.js 15:3-15:4
 						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							optional: false
+							readonly: false
+							static: false
+							loc: SourceLocation experimental/class-properties/edge-cases/input.js 15:2-15:4
+							start: Position 15:2
+						}
 						body: JSBlockStatement {
 							body: []
 							directives: []
@@ -250,14 +258,6 @@ JSRoot {
 							hasHoistedVars: false
 							params: []
 							loc: SourceLocation experimental/class-properties/edge-cases/input.js 15:4-15:6
-						}
-						meta: JSClassPropertyMeta {
-							abstract: false
-							optional: false
-							readonly: false
-							static: false
-							loc: SourceLocation experimental/class-properties/edge-cases/input.js 15:2-15:4
-							start: Position 15:2
 						}
 						loc: SourceLocation experimental/class-properties/edge-cases/input.js 15:2-15:8
 					}
@@ -282,6 +282,14 @@ JSRoot {
 							}
 							loc: SourceLocation experimental/class-properties/edge-cases/input.js 20:3-20:4
 						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							optional: false
+							readonly: false
+							static: true
+							loc: SourceLocation experimental/class-properties/edge-cases/input.js 19:2-20:4
+							start: Position 19:2
+						}
 						body: JSBlockStatement {
 							body: []
 							directives: []
@@ -293,14 +301,6 @@ JSRoot {
 							hasHoistedVars: false
 							params: []
 							loc: SourceLocation experimental/class-properties/edge-cases/input.js 20:4-20:6
-						}
-						meta: JSClassPropertyMeta {
-							abstract: false
-							optional: false
-							readonly: false
-							static: true
-							loc: SourceLocation experimental/class-properties/edge-cases/input.js 19:2-20:4
-							start: Position 19:2
 						}
 						loc: SourceLocation experimental/class-properties/edge-cases/input.js 19:2-20:8
 					}
@@ -343,6 +343,14 @@ JSRoot {
 							}
 							loc: SourceLocation experimental/class-properties/edge-cases/input.js 25:2-25:3
 						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							optional: false
+							readonly: false
+							static: false
+							loc: SourceLocation experimental/class-properties/edge-cases/input.js 25:2-25:3
+							start: Position 25:2
+						}
 						body: JSBlockStatement {
 							body: []
 							directives: []
@@ -354,14 +362,6 @@ JSRoot {
 							hasHoistedVars: false
 							params: []
 							loc: SourceLocation experimental/class-properties/edge-cases/input.js 25:3-25:5
-						}
-						meta: JSClassPropertyMeta {
-							abstract: false
-							optional: false
-							readonly: false
-							static: false
-							loc: SourceLocation experimental/class-properties/edge-cases/input.js 25:2-25:3
-							start: Position 25:2
 						}
 						loc: SourceLocation experimental/class-properties/edge-cases/input.js 25:2-25:7
 					}
@@ -462,16 +462,16 @@ JSRoot {
 							}
 							loc: SourceLocation experimental/class-properties/edge-cases/input.js 37:2-37:8 (static)
 						}
-						value: JSNumericLiteral {
-							value: 0
-							loc: SourceLocation experimental/class-properties/edge-cases/input.js 37:11-37:12
-						}
 						meta: JSClassPropertyMeta {
 							abstract: false
 							optional: false
 							readonly: false
 							static: false
 							loc: SourceLocation experimental/class-properties/edge-cases/input.js 37:2-37:8
+						}
+						value: JSNumericLiteral {
+							value: 0
+							loc: SourceLocation experimental/class-properties/edge-cases/input.js 37:11-37:12
 						}
 						loc: SourceLocation experimental/class-properties/edge-cases/input.js 37:2-37:13
 					}
@@ -496,6 +496,14 @@ JSRoot {
 							}
 							loc: SourceLocation experimental/class-properties/edge-cases/input.js 42:2-42:7
 						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							optional: false
+							readonly: false
+							static: false
+							loc: SourceLocation experimental/class-properties/edge-cases/input.js 41:2-42:7
+							start: Position 41:2
+						}
 						body: JSBlockStatement {
 							body: []
 							directives: []
@@ -507,14 +515,6 @@ JSRoot {
 							hasHoistedVars: false
 							params: []
 							loc: SourceLocation experimental/class-properties/edge-cases/input.js 42:7-42:9
-						}
-						meta: JSClassPropertyMeta {
-							abstract: false
-							optional: false
-							readonly: false
-							static: false
-							loc: SourceLocation experimental/class-properties/edge-cases/input.js 41:2-42:7
-							start: Position 41:2
 						}
 						loc: SourceLocation experimental/class-properties/edge-cases/input.js 41:2-42:11
 					}
@@ -539,6 +539,14 @@ JSRoot {
 							}
 							loc: SourceLocation experimental/class-properties/edge-cases/input.js 48:2-48:8
 						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							optional: false
+							readonly: false
+							static: true
+							loc: SourceLocation experimental/class-properties/edge-cases/input.js 46:2-48:8
+							start: Position 46:2
+						}
 						body: JSBlockStatement {
 							body: []
 							directives: []
@@ -550,14 +558,6 @@ JSRoot {
 							hasHoistedVars: false
 							params: []
 							loc: SourceLocation experimental/class-properties/edge-cases/input.js 49:2-49:4
-						}
-						meta: JSClassPropertyMeta {
-							abstract: false
-							optional: false
-							readonly: false
-							static: true
-							loc: SourceLocation experimental/class-properties/edge-cases/input.js 46:2-48:8
-							start: Position 46:2
 						}
 						loc: SourceLocation experimental/class-properties/edge-cases/input.js 46:2-49:6
 					}

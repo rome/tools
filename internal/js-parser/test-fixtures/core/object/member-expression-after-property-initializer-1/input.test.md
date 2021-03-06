@@ -108,7 +108,7 @@ JSRoot {
   ✖ Unexpected character =
 
     ({a = 42, b: test.d} = {})
-        <error><emphasis>^</emphasis></error>
+        ^
 
   ℹ Expected character ,
 

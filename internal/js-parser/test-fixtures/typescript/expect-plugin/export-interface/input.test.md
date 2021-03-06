@@ -69,7 +69,7 @@ JSRoot {
   ✖ A interface declaration is only valid inside of a TypeScript file
 
     export interface Foo {}
-           <error><emphasis>^</emphasis></error>
+           ^
 
   ℹ To enable TypeScript support, the file extension should end in .ts or .tsx
 

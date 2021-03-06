@@ -81,7 +81,7 @@ JSRoot {
   ✖ Escape sequence in keyword new
 
     function f() { n\u0065w.target; }
-                    <error><emphasis>^</emphasis></error>
+                    ^
 
 
 ```

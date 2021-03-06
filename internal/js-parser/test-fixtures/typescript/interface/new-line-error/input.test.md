@@ -67,7 +67,7 @@ JSRoot {
 
     1 │ interface
   > 2 │ F {}
-      │   <error><emphasis>^</emphasis></error>
+      │   ^
 
 
 ```

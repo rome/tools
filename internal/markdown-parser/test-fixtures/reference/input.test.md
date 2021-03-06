@@ -11,14 +11,24 @@ MarkdownRoot {
 	body: [
 		MarkdownReferenceInline {
 			value: ""
-			reference: [MarkdownText {value: "lorem", loc: SourceLocation reference/input.md 1:1-1:1}]
+			reference: [
+				MarkdownText {
+					value: "lorem"
+					loc: SourceLocation reference/input.md 1:1-1:1
+				}
+			]
 			loc: SourceLocation reference/input.md 1:0-1:7
 		}
 		MarkdownReferenceInline {
 			value: ""
 			reference: [
 				MarkdownEmphasisInline {
-					value: [MarkdownText {value: "lorem", loc: SourceLocation reference/input.md 3:2-3:2}]
+					value: [
+						MarkdownText {
+							value: "lorem"
+							loc: SourceLocation reference/input.md 3:2-3:2
+						}
+					]
 					loc: SourceLocation reference/input.md 3:1-3:7
 				}
 			]
@@ -28,7 +38,12 @@ MarkdownRoot {
 			value: ""
 			reference: [
 				MarkdownEmphasisInline {
-					value: [MarkdownText {value: "ipsum", loc: SourceLocation reference/input.md 5:3-5:3}]
+					value: [
+						MarkdownText {
+							value: "ipsum"
+							loc: SourceLocation reference/input.md 5:3-5:3
+						}
+					]
 					loc: SourceLocation reference/input.md 5:1-5:8
 				}
 			]
@@ -38,7 +53,12 @@ MarkdownRoot {
 			value: ""
 			reference: [
 				MarkdownEmphasisInline {
-					value: [MarkdownText {value: "lorem", loc: SourceLocation reference/input.md 7:3-7:3}]
+					value: [
+						MarkdownText {
+							value: "lorem"
+							loc: SourceLocation reference/input.md 7:3-7:3
+						}
+					]
 					loc: SourceLocation reference/input.md 7:1-7:8
 				}
 			]
@@ -48,7 +68,12 @@ MarkdownRoot {
 			value: ""
 			reference: [
 				MarkdownEmphasisInline {
-					value: [MarkdownText {value: "lorem", loc: SourceLocation reference/input.md 9:2-9:2}]
+					value: [
+						MarkdownText {
+							value: "lorem"
+							loc: SourceLocation reference/input.md 9:2-9:2
+						}
+					]
 					loc: SourceLocation reference/input.md 9:1-9:7
 				}
 			]
@@ -57,20 +82,44 @@ MarkdownRoot {
 		MarkdownReferenceInline {
 			value: ""
 			reference: [
-				MarkdownText {value: "lorem", loc: SourceLocation reference/input.md 11:1-11:1}
-				MarkdownText {value: "*", loc: SourceLocation reference/input.md 11:6-11:6}
-				MarkdownText {value: " ipsum", loc: SourceLocation reference/input.md 11:7-11:7}
-				MarkdownText {value: "**", loc: SourceLocation reference/input.md 11:13-11:13}
+				MarkdownText {
+					value: "lorem"
+					loc: SourceLocation reference/input.md 11:1-11:1
+				}
+				MarkdownText {
+					value: "*"
+					loc: SourceLocation reference/input.md 11:6-11:6
+				}
+				MarkdownText {
+					value: " ipsum"
+					loc: SourceLocation reference/input.md 11:7-11:7
+				}
+				MarkdownText {
+					value: "**"
+					loc: SourceLocation reference/input.md 11:13-11:13
+				}
 			]
 			loc: SourceLocation reference/input.md 11:0-11:16
 		}
 		MarkdownReferenceInline {
 			value: ""
 			reference: [
-				MarkdownText {value: "*", loc: SourceLocation reference/input.md 13:1-13:1}
-				MarkdownText {value: "lorem ", loc: SourceLocation reference/input.md 13:2-13:2}
-				MarkdownText {value: "**", loc: SourceLocation reference/input.md 13:8-13:8}
-				MarkdownText {value: "ipsum", loc: SourceLocation reference/input.md 13:10-13:10}
+				MarkdownText {
+					value: "*"
+					loc: SourceLocation reference/input.md 13:1-13:1
+				}
+				MarkdownText {
+					value: "lorem "
+					loc: SourceLocation reference/input.md 13:2-13:2
+				}
+				MarkdownText {
+					value: "**"
+					loc: SourceLocation reference/input.md 13:8-13:8
+				}
+				MarkdownText {
+					value: "ipsum"
+					loc: SourceLocation reference/input.md 13:10-13:10
+				}
 			]
 			loc: SourceLocation reference/input.md 13:0-13:16
 		}

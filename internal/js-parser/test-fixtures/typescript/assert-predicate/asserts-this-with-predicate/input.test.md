@@ -25,6 +25,14 @@ JSRoot {
 							}
 							loc: SourceLocation typescript/assert-predicate/asserts-this-with-predicate/input.ts 2:2-2:7
 						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							optional: false
+							readonly: false
+							static: false
+							loc: SourceLocation typescript/assert-predicate/asserts-this-with-predicate/input.ts 2:2-2:7
+							start: Position 2:2
+						}
 						body: JSBlockStatement {
 							body: [
 								JSExpressionStatement {
@@ -129,14 +137,6 @@ JSRoot {
 							}
 							loc: SourceLocation typescript/assert-predicate/asserts-this-with-predicate/input.ts 2:7-2:23
 						}
-						meta: JSClassPropertyMeta {
-							abstract: false
-							optional: false
-							readonly: false
-							static: false
-							loc: SourceLocation typescript/assert-predicate/asserts-this-with-predicate/input.ts 2:2-2:7
-							start: Position 2:2
-						}
 						loc: SourceLocation typescript/assert-predicate/asserts-this-with-predicate/input.ts 2:2-4:1
 					}
 				]
@@ -188,7 +188,7 @@ JSRoot {
 
     1 │ class Foo {
   > 2 │   isBar(): asserts this is Foo {}
-      │                         <error><emphasis>^</emphasis></error>
+      │                         ^
     3 │   isBaz = (): asserts this is Foo => {}
     4 │ }
 

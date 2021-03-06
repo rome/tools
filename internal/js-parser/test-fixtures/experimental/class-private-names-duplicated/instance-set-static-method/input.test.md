@@ -25,6 +25,14 @@ JSRoot {
 							}
 							loc: SourceLocation experimental/class-private-names-duplicated/instance-set-static-method/input.js 2:6-2:8
 						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							optional: false
+							readonly: false
+							static: false
+							loc: SourceLocation experimental/class-private-names-duplicated/instance-set-static-method/input.js 2:2-2:8
+							start: Position 2:2
+						}
 						body: JSBlockStatement {
 							body: []
 							directives: []
@@ -45,14 +53,6 @@ JSRoot {
 							]
 							loc: SourceLocation experimental/class-private-names-duplicated/instance-set-static-method/input.js 2:8-2:11
 						}
-						meta: JSClassPropertyMeta {
-							abstract: false
-							optional: false
-							readonly: false
-							static: false
-							loc: SourceLocation experimental/class-private-names-duplicated/instance-set-static-method/input.js 2:2-2:8
-							start: Position 2:2
-						}
 						loc: SourceLocation experimental/class-private-names-duplicated/instance-set-static-method/input.js 2:2-2:14
 					}
 					JSClassPrivateMethod {
@@ -63,6 +63,14 @@ JSRoot {
 								loc: SourceLocation experimental/class-private-names-duplicated/instance-set-static-method/input.js 3:10-3:11 (x)
 							}
 							loc: SourceLocation experimental/class-private-names-duplicated/instance-set-static-method/input.js 3:9-3:11
+						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							optional: false
+							readonly: false
+							static: true
+							loc: SourceLocation experimental/class-private-names-duplicated/instance-set-static-method/input.js 3:2-3:11
+							start: Position 3:2
 						}
 						body: JSBlockStatement {
 							body: []
@@ -75,14 +83,6 @@ JSRoot {
 							hasHoistedVars: false
 							params: []
 							loc: SourceLocation experimental/class-private-names-duplicated/instance-set-static-method/input.js 3:11-3:13
-						}
-						meta: JSClassPropertyMeta {
-							abstract: false
-							optional: false
-							readonly: false
-							static: true
-							loc: SourceLocation experimental/class-private-names-duplicated/instance-set-static-method/input.js 3:2-3:11
-							start: Position 3:2
 						}
 						loc: SourceLocation experimental/class-private-names-duplicated/instance-set-static-method/input.js 3:2-3:16
 					}

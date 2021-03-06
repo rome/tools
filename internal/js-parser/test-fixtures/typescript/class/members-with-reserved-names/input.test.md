@@ -25,6 +25,15 @@ JSRoot {
 							}
 							loc: SourceLocation typescript/class/members-with-reserved-names/input.ts 2:11-2:17
 						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							accessibility: "public"
+							optional: false
+							readonly: false
+							static: false
+							loc: SourceLocation typescript/class/members-with-reserved-names/input.ts 2:4-2:17
+							start: Position 2:4
+						}
 						head: JSFunctionHead {
 							async: false
 							generator: false
@@ -34,15 +43,6 @@ JSRoot {
 								loc: SourceLocation typescript/class/members-with-reserved-names/input.ts 2:21-2:25
 							}
 							loc: SourceLocation typescript/class/members-with-reserved-names/input.ts 2:17-2:25
-						}
-						meta: JSClassPropertyMeta {
-							abstract: false
-							accessibility: "public"
-							optional: false
-							readonly: false
-							static: false
-							loc: SourceLocation typescript/class/members-with-reserved-names/input.ts 2:4-2:17
-							start: Position 2:4
 						}
 						loc: SourceLocation typescript/class/members-with-reserved-names/input.ts 2:4-2:26
 					}

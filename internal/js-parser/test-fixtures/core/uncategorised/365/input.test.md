@@ -80,7 +80,7 @@ JSRoot {
   ✖ Unterminated regular expression
 
     /test
-         <error><emphasis>^</emphasis></error>
+         ^
 
 
 ```

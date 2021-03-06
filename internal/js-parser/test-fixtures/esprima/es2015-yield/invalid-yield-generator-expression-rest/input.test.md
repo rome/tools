@@ -80,9 +80,7 @@ JSRoot {
   ✖ Can not use 'yield' as identifier inside a generator
 
     (function *(x, ...yield){})
-                      <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-    <error><emphasis>^</emphasis></error>
+                      ^^^^^
 
 
 ```

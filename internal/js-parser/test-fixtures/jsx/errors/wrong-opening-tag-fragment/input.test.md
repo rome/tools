@@ -67,11 +67,7 @@ JSRoot {
   ℹ Originated from opening tag of something
 
     <something></>
-     <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-    <error><emphasis>^</emphasis></error>
+     ^^^^^^^^^
 
 
 ```

@@ -114,7 +114,7 @@ JSRoot {
   ✖ Unexpected character x
 
     ({ \u0061sync x() { await x } })
-                  <error><emphasis>^</emphasis></error>
+                  ^
 
   ℹ Expected character ,
 

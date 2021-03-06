@@ -181,7 +181,7 @@ JSRoot {
   ✖ Unexpected character =
 
     [[[[[[[[[[[[[[[[[[[[{a=b}]]]]]]]]]]]]]]]]]]]]
-                          <error><emphasis>^</emphasis></error>
+                          ^
 
   ℹ Expected character ,
 

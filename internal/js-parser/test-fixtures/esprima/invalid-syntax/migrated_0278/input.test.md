@@ -25,6 +25,14 @@ JSRoot {
 							}
 							loc: SourceLocation esprima/invalid-syntax/migrated_0278/input.js 1:16-1:24
 						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							optional: false
+							readonly: false
+							static: true
+							loc: SourceLocation esprima/invalid-syntax/migrated_0278/input.js 1:9-1:24
+							start: Position 1:9
+						}
 						body: JSBlockStatement {
 							body: []
 							directives: []
@@ -36,14 +44,6 @@ JSRoot {
 							hasHoistedVars: false
 							params: []
 							loc: SourceLocation esprima/invalid-syntax/migrated_0278/input.js 1:24-1:26
-						}
-						meta: JSClassPropertyMeta {
-							abstract: false
-							optional: false
-							readonly: false
-							static: true
-							loc: SourceLocation esprima/invalid-syntax/migrated_0278/input.js 1:9-1:24
-							start: Position 1:9
 						}
 						loc: SourceLocation esprima/invalid-syntax/migrated_0278/input.js 1:9-1:28
 					}
@@ -85,9 +85,7 @@ JSRoot {
   ✖ static is a reserved word
 
     class A {static [static](){};}
-                     <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
+                     ^^^^^^
 
 
 ```

@@ -109,7 +109,7 @@ JSRoot {
   ✖ Unexpected character d
 
     import default from "foo"
-           <error><emphasis>^</emphasis></error>
+           ^
 
   ℹ Expected the opening import specifiers character {
 

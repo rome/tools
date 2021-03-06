@@ -92,7 +92,7 @@ JSRoot {
   ✖ Expected a semicolon or a line terminator
 
     () => {} ? 1 : 2;
-             <error><emphasis>^</emphasis></error>
+             ^
 
 
 ```

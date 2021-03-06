@@ -95,9 +95,7 @@ JSRoot {
   ✖ Can not use 'yield' as identifier inside a generator
 
     function *g(a, b, c, ...yield){}
-                            <error><emphasis>^</emphasis></error>
-    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
+                            ^^^^^
 
 
 ```

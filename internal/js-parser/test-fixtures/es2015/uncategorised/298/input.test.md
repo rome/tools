@@ -83,8 +83,7 @@ JSRoot {
   ✖ Object pattern cannot contains methods
 
     ({ get test() { } }) => 42
-           <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
+           ^^^^
 
 
 ```

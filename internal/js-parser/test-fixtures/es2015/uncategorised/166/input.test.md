@@ -106,7 +106,7 @@ JSRoot {
   ℹ Defined already here
 
     function x(a, { a }){}
-                    <error><emphasis>^</emphasis></error>
+                    ^
 
 
 ```

@@ -89,7 +89,7 @@ JSRoot {
   ✖ Unexpected character 3
 
     var {x: y = yield 3} = z;
-                      <error><emphasis>^</emphasis></error>
+                      ^
 
   ℹ Expected character ,
 

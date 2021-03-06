@@ -27,13 +27,6 @@ JSRoot {
 							}
 							loc: SourceLocation typescript/class/modifiers-accessors/input.ts 3:17-3:18
 						}
-						head: JSFunctionHead {
-							async: false
-							generator: false
-							hasHoistedVars: false
-							params: []
-							loc: SourceLocation typescript/class/modifiers-accessors/input.ts 3:18-3:20
-						}
 						meta: JSClassPropertyMeta {
 							abstract: true
 							optional: false
@@ -41,6 +34,13 @@ JSRoot {
 							static: false
 							loc: SourceLocation typescript/class/modifiers-accessors/input.ts 3:4-3:18
 							start: Position 3:4
+						}
+						head: JSFunctionHead {
+							async: false
+							generator: false
+							hasHoistedVars: false
+							params: []
+							loc: SourceLocation typescript/class/modifiers-accessors/input.ts 3:18-3:20
 						}
 						loc: SourceLocation typescript/class/modifiers-accessors/input.ts 3:4-3:21
 					}
@@ -52,6 +52,14 @@ JSRoot {
 								loc: SourceLocation typescript/class/modifiers-accessors/input.ts 4:15-4:16 (s)
 							}
 							loc: SourceLocation typescript/class/modifiers-accessors/input.ts 4:15-4:16
+						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							optional: false
+							readonly: false
+							static: true
+							loc: SourceLocation typescript/class/modifiers-accessors/input.ts 4:4-4:16
+							start: Position 4:4
 						}
 						body: JSBlockStatement {
 							body: [
@@ -73,14 +81,6 @@ JSRoot {
 							params: []
 							loc: SourceLocation typescript/class/modifiers-accessors/input.ts 4:16-4:18
 						}
-						meta: JSClassPropertyMeta {
-							abstract: false
-							optional: false
-							readonly: false
-							static: true
-							loc: SourceLocation typescript/class/modifiers-accessors/input.ts 4:4-4:16
-							start: Position 4:4
-						}
 						loc: SourceLocation typescript/class/modifiers-accessors/input.ts 4:4-4:32
 					}
 					TSDeclareMethod {
@@ -92,13 +92,6 @@ JSRoot {
 							}
 							loc: SourceLocation typescript/class/modifiers-accessors/input.ts 5:24-5:27
 						}
-						head: JSFunctionHead {
-							async: false
-							generator: false
-							hasHoistedVars: false
-							params: []
-							loc: SourceLocation typescript/class/modifiers-accessors/input.ts 5:27-5:29
-						}
 						meta: JSClassPropertyMeta {
 							abstract: true
 							accessibility: "public"
@@ -107,6 +100,13 @@ JSRoot {
 							static: false
 							loc: SourceLocation typescript/class/modifiers-accessors/input.ts 5:4-5:27
 							start: Position 5:4
+						}
+						head: JSFunctionHead {
+							async: false
+							generator: false
+							hasHoistedVars: false
+							params: []
+							loc: SourceLocation typescript/class/modifiers-accessors/input.ts 5:27-5:29
 						}
 						loc: SourceLocation typescript/class/modifiers-accessors/input.ts 5:4-5:30
 					}
@@ -118,6 +118,15 @@ JSRoot {
 								loc: SourceLocation typescript/class/modifiers-accessors/input.ts 6:22-6:25 (pus)
 							}
 							loc: SourceLocation typescript/class/modifiers-accessors/input.ts 6:22-6:25
+						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							accessibility: "public"
+							optional: false
+							readonly: false
+							static: true
+							loc: SourceLocation typescript/class/modifiers-accessors/input.ts 6:4-6:25
+							start: Position 6:4
 						}
 						body: JSBlockStatement {
 							body: [
@@ -139,15 +148,6 @@ JSRoot {
 							params: []
 							loc: SourceLocation typescript/class/modifiers-accessors/input.ts 6:25-6:27
 						}
-						meta: JSClassPropertyMeta {
-							abstract: false
-							accessibility: "public"
-							optional: false
-							readonly: false
-							static: true
-							loc: SourceLocation typescript/class/modifiers-accessors/input.ts 6:4-6:25
-							start: Position 6:4
-						}
 						loc: SourceLocation typescript/class/modifiers-accessors/input.ts 6:4-6:41
 					}
 					JSClassMethod {
@@ -158,6 +158,15 @@ JSRoot {
 								loc: SourceLocation typescript/class/modifiers-accessors/input.ts 8:15-8:17 (pu)
 							}
 							loc: SourceLocation typescript/class/modifiers-accessors/input.ts 8:15-8:17
+						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							accessibility: "public"
+							optional: false
+							readonly: false
+							static: false
+							loc: SourceLocation typescript/class/modifiers-accessors/input.ts 8:4-8:17
+							start: Position 8:4
 						}
 						body: JSBlockStatement {
 							body: [
@@ -179,15 +188,6 @@ JSRoot {
 							params: []
 							loc: SourceLocation typescript/class/modifiers-accessors/input.ts 8:17-8:19
 						}
-						meta: JSClassPropertyMeta {
-							abstract: false
-							accessibility: "public"
-							optional: false
-							readonly: false
-							static: false
-							loc: SourceLocation typescript/class/modifiers-accessors/input.ts 8:4-8:17
-							start: Position 8:4
-						}
 						loc: SourceLocation typescript/class/modifiers-accessors/input.ts 8:4-8:33
 					}
 					JSClassMethod {
@@ -198,6 +198,15 @@ JSRoot {
 								loc: SourceLocation typescript/class/modifiers-accessors/input.ts 9:18-9:20 (po)
 							}
 							loc: SourceLocation typescript/class/modifiers-accessors/input.ts 9:18-9:20
+						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							accessibility: "protected"
+							optional: false
+							readonly: false
+							static: false
+							loc: SourceLocation typescript/class/modifiers-accessors/input.ts 9:4-9:20
+							start: Position 9:4
 						}
 						body: JSBlockStatement {
 							body: [
@@ -219,15 +228,6 @@ JSRoot {
 							params: []
 							loc: SourceLocation typescript/class/modifiers-accessors/input.ts 9:20-9:22
 						}
-						meta: JSClassPropertyMeta {
-							abstract: false
-							accessibility: "protected"
-							optional: false
-							readonly: false
-							static: false
-							loc: SourceLocation typescript/class/modifiers-accessors/input.ts 9:4-9:20
-							start: Position 9:4
-						}
 						loc: SourceLocation typescript/class/modifiers-accessors/input.ts 9:4-9:36
 					}
 					JSClassMethod {
@@ -238,6 +238,15 @@ JSRoot {
 								loc: SourceLocation typescript/class/modifiers-accessors/input.ts 10:16-10:18 (pi)
 							}
 							loc: SourceLocation typescript/class/modifiers-accessors/input.ts 10:16-10:18
+						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							accessibility: "private"
+							optional: false
+							readonly: false
+							static: false
+							loc: SourceLocation typescript/class/modifiers-accessors/input.ts 10:4-10:18
+							start: Position 10:4
 						}
 						body: JSBlockStatement {
 							body: [
@@ -258,15 +267,6 @@ JSRoot {
 							hasHoistedVars: false
 							params: []
 							loc: SourceLocation typescript/class/modifiers-accessors/input.ts 10:18-10:20
-						}
-						meta: JSClassPropertyMeta {
-							abstract: false
-							accessibility: "private"
-							optional: false
-							readonly: false
-							static: false
-							loc: SourceLocation typescript/class/modifiers-accessors/input.ts 10:4-10:18
-							start: Position 10:4
 						}
 						loc: SourceLocation typescript/class/modifiers-accessors/input.ts 10:4-10:34
 					}

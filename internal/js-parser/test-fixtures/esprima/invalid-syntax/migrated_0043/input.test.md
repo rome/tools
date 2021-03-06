@@ -94,7 +94,7 @@ JSRoot {
   ✖ Expecting Unicode escape sequence \uXXXX
 
     var x = /[a-z]/\\ux
-                    <error><emphasis>^</emphasis></error>
+                    ^
 
 
 ```

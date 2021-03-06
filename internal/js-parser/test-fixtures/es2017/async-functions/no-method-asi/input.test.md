@@ -43,6 +43,14 @@ JSRoot {
 							}
 							loc: SourceLocation es2017/async-functions/no-method-asi/input.js 3:2-3:3
 						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							optional: false
+							readonly: false
+							static: false
+							loc: SourceLocation es2017/async-functions/no-method-asi/input.js 3:2-3:3
+							start: Position 3:2
+						}
 						body: JSBlockStatement {
 							body: []
 							directives: []
@@ -54,14 +62,6 @@ JSRoot {
 							hasHoistedVars: false
 							params: []
 							loc: SourceLocation es2017/async-functions/no-method-asi/input.js 3:3-3:5
-						}
-						meta: JSClassPropertyMeta {
-							abstract: false
-							optional: false
-							readonly: false
-							static: false
-							loc: SourceLocation es2017/async-functions/no-method-asi/input.js 3:2-3:3
-							start: Position 3:2
 						}
 						loc: SourceLocation es2017/async-functions/no-method-asi/input.js 3:2-3:7
 					}

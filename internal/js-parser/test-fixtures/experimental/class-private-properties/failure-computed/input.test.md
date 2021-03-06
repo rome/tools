@@ -24,10 +24,6 @@ JSRoot {
 							}
 							loc: SourceLocation experimental/class-private-properties/failure-computed/input.js 2:2-2:4
 						}
-						value: JSReferenceIdentifier {
-							name: "x"
-							loc: SourceLocation experimental/class-private-properties/failure-computed/input.js 2:7-2:8 (x)
-						}
 						meta: JSClassPropertyMeta {
 							abstract: false
 							optional: false
@@ -35,6 +31,10 @@ JSRoot {
 							static: false
 							loc: SourceLocation experimental/class-private-properties/failure-computed/input.js 2:2-2:4
 							start: Position 2:2
+						}
+						value: JSReferenceIdentifier {
+							name: "x"
+							loc: SourceLocation experimental/class-private-properties/failure-computed/input.js 2:7-2:8 (x)
 						}
 						loc: SourceLocation experimental/class-private-properties/failure-computed/input.js 2:2-2:8
 					}
@@ -46,10 +46,6 @@ JSRoot {
 							}
 							loc: SourceLocation experimental/class-private-properties/failure-computed/input.js 3:5-3:6
 						}
-						value: JSNumericLiteral {
-							value: 1
-							loc: SourceLocation experimental/class-private-properties/failure-computed/input.js 3:9-3:10
-						}
 						meta: JSClassPropertyMeta {
 							abstract: false
 							optional: false
@@ -57,6 +53,10 @@ JSRoot {
 							static: false
 							loc: SourceLocation experimental/class-private-properties/failure-computed/input.js 3:5-3:6
 							start: Position 3:5
+						}
+						value: JSNumericLiteral {
+							value: 1
+							loc: SourceLocation experimental/class-private-properties/failure-computed/input.js 3:9-3:10
 						}
 						loc: SourceLocation experimental/class-private-properties/failure-computed/input.js 3:5-3:10
 					}
@@ -105,7 +105,7 @@ JSRoot {
     1 │ class Foo {
     2 │   #p = x
   > 3 │   #[m] = 1
-      │    <error><emphasis>^</emphasis></error>
+      │    ^
     4 │ }
 
 

@@ -130,7 +130,7 @@ JSRoot {
     import.
 
     import foo, { bar: { a } } from 'my-module';
-                       <error><emphasis>^</emphasis></error>
+                       ^
 
 
 ```

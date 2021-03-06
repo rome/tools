@@ -87,9 +87,7 @@ JSRoot {
   ✖ eval is a reserved word
 
     function hello() {'use strict'; try { } catch (eval) { } }
-                                                   <error><emphasis>^</emphasis></error>
-    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-    <error><emphasis>^</emphasis></error>
+                                                   ^^^^
 
 
 ```

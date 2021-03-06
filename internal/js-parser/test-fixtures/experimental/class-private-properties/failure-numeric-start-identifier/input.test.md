@@ -24,10 +24,6 @@ JSRoot {
 							}
 							loc: SourceLocation experimental/class-private-properties/failure-numeric-start-identifier/input.js 2:4-2:5
 						}
-						value: JSReferenceIdentifier {
-							name: "y"
-							loc: SourceLocation experimental/class-private-properties/failure-numeric-start-identifier/input.js 2:8-2:9 (y)
-						}
 						meta: JSClassPropertyMeta {
 							abstract: false
 							optional: false
@@ -35,6 +31,10 @@ JSRoot {
 							static: false
 							loc: SourceLocation experimental/class-private-properties/failure-numeric-start-identifier/input.js 2:4-2:5
 							start: Position 2:4
+						}
+						value: JSReferenceIdentifier {
+							name: "y"
+							loc: SourceLocation experimental/class-private-properties/failure-numeric-start-identifier/input.js 2:8-2:9 (y)
 						}
 						loc: SourceLocation experimental/class-private-properties/failure-numeric-start-identifier/input.js 2:4-2:9
 					}
@@ -82,7 +82,7 @@ JSRoot {
 
     1 │ class Foo {
   > 2 │   #2x = y
-      │     <error><emphasis>^</emphasis></error>
+      │     ^
     3 │ }
 
 

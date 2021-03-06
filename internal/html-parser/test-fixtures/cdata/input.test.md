@@ -10,10 +10,18 @@
 HTMLRoot {
 	body: [
 		HTMLElement {
-			name: HTMLIdentifier {name: "math", loc: SourceLocation cdata/input.html 1:1-1:5}
 			attributes: []
-			children: [HTMLCdataTag {value: "x>y", loc: SourceLocation cdata/input.html 3:1-5:4}]
+			children: [
+				HTMLCdataTag {
+					value: "x>y"
+					loc: SourceLocation cdata/input.html 3:1-5:4
+				}
+			]
 			selfClosing: false
+			name: HTMLIdentifier {
+				name: "math"
+				loc: SourceLocation cdata/input.html 1:1-1:5
+			}
 			loc: SourceLocation cdata/input.html 1:0-6:7
 		}
 	]

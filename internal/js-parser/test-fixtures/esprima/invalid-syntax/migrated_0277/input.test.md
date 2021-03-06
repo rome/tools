@@ -25,6 +25,14 @@ JSRoot {
 							}
 							loc: SourceLocation esprima/invalid-syntax/migrated_0277/input.js 1:9-1:10
 						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							optional: false
+							readonly: false
+							static: false
+							loc: SourceLocation esprima/invalid-syntax/migrated_0277/input.js 1:9-1:10
+							start: Position 1:9
+						}
 						body: JSBlockStatement {
 							body: []
 							directives: []
@@ -44,14 +52,6 @@ JSRoot {
 								}
 							]
 							loc: SourceLocation esprima/invalid-syntax/migrated_0277/input.js 1:10-1:16
-						}
-						meta: JSClassPropertyMeta {
-							abstract: false
-							optional: false
-							readonly: false
-							static: false
-							loc: SourceLocation esprima/invalid-syntax/migrated_0277/input.js 1:9-1:10
-							start: Position 1:9
 						}
 						loc: SourceLocation esprima/invalid-syntax/migrated_0277/input.js 1:9-1:18
 					}
@@ -93,8 +93,7 @@ JSRoot {
   ✖ enum is a reserved word
 
     class A {a(enum){}}
-               <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
+               ^^^^
 
 
 ```

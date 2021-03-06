@@ -90,7 +90,7 @@ JSRoot {
 
     1 │ function* fn() {
   > 2 │   (yield fn) => {};
-      │         <error><emphasis>^</emphasis></error>
+      │         ^
     3 │ }
 
 

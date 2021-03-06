@@ -26,6 +26,14 @@ JSRoot {
 							}
 							loc: SourceLocation comments/regression/11469/input.js 2:2-2:6
 						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							optional: false
+							readonly: false
+							static: false
+							loc: SourceLocation comments/regression/11469/input.js 2:2-2:6
+							start: Position 2:2
+						}
 						body: JSBlockStatement {
 							body: []
 							directives: []
@@ -38,14 +46,6 @@ JSRoot {
 							hasHoistedVars: false
 							params: []
 							loc: SourceLocation comments/regression/11469/input.js 2:6-2:8
-						}
-						meta: JSClassPropertyMeta {
-							abstract: false
-							optional: false
-							readonly: false
-							static: false
-							loc: SourceLocation comments/regression/11469/input.js 2:2-2:6
-							start: Position 2:2
 						}
 						loc: SourceLocation comments/regression/11469/input.js 2:2-4:3
 					}
@@ -70,6 +70,14 @@ JSRoot {
 							}
 							loc: SourceLocation comments/regression/11469/input.js 10:2-10:6
 						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							optional: false
+							readonly: false
+							static: false
+							loc: SourceLocation comments/regression/11469/input.js 10:2-10:6
+							start: Position 10:2
+						}
 						body: JSBlockStatement {
 							body: []
 							directives: []
@@ -83,14 +91,6 @@ JSRoot {
 							hasHoistedVars: false
 							params: []
 							loc: SourceLocation comments/regression/11469/input.js 10:6-10:8
-						}
-						meta: JSClassPropertyMeta {
-							abstract: false
-							optional: false
-							readonly: false
-							static: false
-							loc: SourceLocation comments/regression/11469/input.js 10:2-10:6
-							start: Position 10:2
 						}
 						loc: SourceLocation comments/regression/11469/input.js 10:2-12:3
 					}
@@ -116,6 +116,14 @@ JSRoot {
 							}
 							loc: SourceLocation comments/regression/11469/input.js 16:2-16:6
 						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							optional: false
+							readonly: false
+							static: false
+							loc: SourceLocation comments/regression/11469/input.js 16:2-16:6
+							start: Position 16:2
+						}
 						body: JSBlockStatement {
 							body: []
 							directives: []
@@ -127,14 +135,6 @@ JSRoot {
 							hasHoistedVars: false
 							params: []
 							loc: SourceLocation comments/regression/11469/input.js 16:6-16:8
-						}
-						meta: JSClassPropertyMeta {
-							abstract: false
-							optional: false
-							readonly: false
-							static: false
-							loc: SourceLocation comments/regression/11469/input.js 16:2-16:6
-							start: Position 16:2
 						}
 						loc: SourceLocation comments/regression/11469/input.js 16:2-16:11
 					}

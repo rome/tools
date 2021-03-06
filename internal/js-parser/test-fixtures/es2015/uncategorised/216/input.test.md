@@ -51,7 +51,7 @@ JSRoot {
   ✖ Code point out of bounds
 
     "\u{110000}"
-       <error><emphasis>^</emphasis></error>
+       ^
 
 
 ```

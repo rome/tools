@@ -25,13 +25,6 @@ JSRoot {
 							}
 							loc: SourceLocation esprima/es2015-generator/malformed-generator-method-2/input.js 1:14-1:15
 						}
-						head: JSFunctionHead {
-							async: false
-							generator: true
-							hasHoistedVars: false
-							params: []
-							loc: SourceLocation esprima/es2015-generator/malformed-generator-method-2/input.js 2:0-1:15
-						}
 						meta: JSClassPropertyMeta {
 							abstract: false
 							optional: false
@@ -39,6 +32,13 @@ JSRoot {
 							static: false
 							loc: SourceLocation esprima/es2015-generator/malformed-generator-method-2/input.js 1:12-1:15
 							start: Position 1:12
+						}
+						head: JSFunctionHead {
+							async: false
+							generator: true
+							hasHoistedVars: false
+							params: []
+							loc: SourceLocation esprima/es2015-generator/malformed-generator-method-2/input.js 2:0-1:15
 						}
 						loc: SourceLocation esprima/es2015-generator/malformed-generator-method-2/input.js 1:12-1:15
 					}
@@ -85,7 +85,7 @@ JSRoot {
   ✖ Expected an identifier
 
     class Foo { * }
-                  <error><emphasis>^</emphasis></error>
+                  ^
 
 
 ```

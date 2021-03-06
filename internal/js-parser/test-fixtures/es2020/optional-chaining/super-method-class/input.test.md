@@ -25,6 +25,14 @@ JSRoot {
 							}
 							loc: SourceLocation es2020/optional-chaining/super-method-class/input.js 2:4-2:15
 						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							optional: false
+							readonly: false
+							static: false
+							loc: SourceLocation es2020/optional-chaining/super-method-class/input.js 2:4-2:15
+							start: Position 2:4
+						}
 						body: JSBlockStatement {
 							body: [
 								JSExpressionStatement {
@@ -58,14 +66,6 @@ JSRoot {
 							hasHoistedVars: false
 							params: []
 							loc: SourceLocation es2020/optional-chaining/super-method-class/input.js 2:15-2:17
-						}
-						meta: JSClassPropertyMeta {
-							abstract: false
-							optional: false
-							readonly: false
-							static: false
-							loc: SourceLocation es2020/optional-chaining/super-method-class/input.js 2:4-2:15
-							start: Position 2:4
 						}
 						loc: SourceLocation es2020/optional-chaining/super-method-class/input.js 2:4-4:5
 					}

@@ -65,13 +65,12 @@ JSRoot {
   ✖ Unclosed JSX element
 
     <foo>yes
-         <error><emphasis>^</emphasis></error>
+         ^
 
   ℹ Originated from opening tag of foo
 
     <foo>yes
-     <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-    <error><emphasis>^</emphasis></error>
+     ^^^
 
 
 ```

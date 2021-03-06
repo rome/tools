@@ -69,7 +69,7 @@ JSRoot {
   ✖ Expected an identifier
 
     ({ 0xbeefban: 0 });
-       <error><emphasis>^</emphasis></error>
+       ^
 
 
 ```

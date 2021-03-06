@@ -58,9 +58,7 @@ JSRoot {
   ✖ Can not use 'await' as identifier inside an async function
 
     class await {}
-          <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-    <error><emphasis>^</emphasis></error>
+          ^^^^^
 
 
 ```

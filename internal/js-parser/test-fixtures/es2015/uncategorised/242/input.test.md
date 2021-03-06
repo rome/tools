@@ -76,8 +76,7 @@ JSRoot {
   ✖ eval is a reserved word
 
     "use strict"; (eval = 10) => 42
-                   <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
+                   ^^^^
 
 
 ```

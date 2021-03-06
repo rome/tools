@@ -61,8 +61,7 @@ JSRoot {
   ✖ eval is a reserved word
 
     [...eval] = arr
-        <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
+        ^^^^
 
 
 ```

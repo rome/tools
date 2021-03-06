@@ -111,7 +111,7 @@ JSRoot {
   ✖ Expected an identifier
 
     ({(a):0})
-      <error><emphasis>^</emphasis></error>
+      ^
 
 
 ```

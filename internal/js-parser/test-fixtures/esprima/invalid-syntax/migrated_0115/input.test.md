@@ -61,7 +61,7 @@ JSRoot {
   ✖ Expected a semicolon or a line terminator
 
     a enum;
-      <error><emphasis>^</emphasis></error>
+      ^
 
 
 ```

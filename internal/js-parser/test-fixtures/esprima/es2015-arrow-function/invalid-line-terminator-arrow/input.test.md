@@ -68,7 +68,7 @@ JSRoot {
   ✖ Parenthesized expression didnt contain anything
 
   > 1 │ ()
-      │  <error><emphasis>^</emphasis></error>
+      │  ^
     2 │ => 42
 
 

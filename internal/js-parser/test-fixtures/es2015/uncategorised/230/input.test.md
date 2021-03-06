@@ -63,10 +63,7 @@ JSRoot {
   ✖ Unexpected keyword default
 
     var default
-        <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-    <error><emphasis>^</emphasis></error>
+        ^^^^^^^
 
 
 ```

@@ -25,6 +25,14 @@ JSRoot {
 							}
 							loc: SourceLocation experimental/class-private-properties/declared-later-outer-class/input.js 2:2-2:6
 						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							optional: false
+							readonly: false
+							static: false
+							loc: SourceLocation experimental/class-private-properties/declared-later-outer-class/input.js 2:2-2:6
+							start: Position 2:2
+						}
 						body: JSBlockStatement {
 							body: [
 								JSClassDeclaration {
@@ -42,6 +50,14 @@ JSRoot {
 													}
 													loc: SourceLocation experimental/class-private-properties/declared-later-outer-class/input.js 4:6-4:8
 												}
+												meta: JSClassPropertyMeta {
+													abstract: false
+													optional: false
+													readonly: false
+													static: false
+													loc: SourceLocation experimental/class-private-properties/declared-later-outer-class/input.js 4:6-4:8
+													start: Position 4:6
+												}
 												value: JSMemberExpression {
 													object: JSThisExpression {
 														loc: SourceLocation experimental/class-private-properties/declared-later-outer-class/input.js 4:11-4:15
@@ -57,14 +73,6 @@ JSRoot {
 														loc: SourceLocation experimental/class-private-properties/declared-later-outer-class/input.js 4:16-4:18
 													}
 													loc: SourceLocation experimental/class-private-properties/declared-later-outer-class/input.js 4:11-4:18
-												}
-												meta: JSClassPropertyMeta {
-													abstract: false
-													optional: false
-													readonly: false
-													static: false
-													loc: SourceLocation experimental/class-private-properties/declared-later-outer-class/input.js 4:6-4:8
-													start: Position 4:6
 												}
 												loc: SourceLocation experimental/class-private-properties/declared-later-outer-class/input.js 4:6-4:19
 											}
@@ -83,14 +91,6 @@ JSRoot {
 							hasHoistedVars: false
 							params: []
 							loc: SourceLocation experimental/class-private-properties/declared-later-outer-class/input.js 2:6-2:8
-						}
-						meta: JSClassPropertyMeta {
-							abstract: false
-							optional: false
-							readonly: false
-							static: false
-							loc: SourceLocation experimental/class-private-properties/declared-later-outer-class/input.js 2:2-2:6
-							start: Position 2:2
 						}
 						loc: SourceLocation experimental/class-private-properties/declared-later-outer-class/input.js 2:2-6:3
 					}

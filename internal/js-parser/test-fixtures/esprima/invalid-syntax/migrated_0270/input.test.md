@@ -25,6 +25,14 @@ JSRoot {
 							}
 							loc: SourceLocation esprima/invalid-syntax/migrated_0270/input.js 1:16-1:25
 						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							optional: false
+							readonly: false
+							static: true
+							loc: SourceLocation esprima/invalid-syntax/migrated_0270/input.js 1:9-1:25
+							start: Position 1:9
+						}
 						body: JSBlockStatement {
 							body: []
 							directives: []
@@ -36,14 +44,6 @@ JSRoot {
 							hasHoistedVars: false
 							params: []
 							loc: SourceLocation esprima/invalid-syntax/migrated_0270/input.js 1:25-1:27
-						}
-						meta: JSClassPropertyMeta {
-							abstract: false
-							optional: false
-							readonly: false
-							static: true
-							loc: SourceLocation esprima/invalid-syntax/migrated_0270/input.js 1:9-1:25
-							start: Position 1:9
 						}
 						loc: SourceLocation esprima/invalid-syntax/migrated_0270/input.js 1:9-1:29
 					}
@@ -90,11 +90,7 @@ JSRoot {
   ✖ Classes may not have static property named prototype
 
     class A {static prototype(){}}
-                    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-    <error><emphasis>^</emphasis></error>
+                    ^^^^^^^^^
 
 
 ```

@@ -25,6 +25,14 @@ JSRoot {
 							}
 							loc: SourceLocation experimental/class-private-names-duplicated/instance-get-instance-field/input.js 2:6-2:8
 						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							optional: false
+							readonly: false
+							static: false
+							loc: SourceLocation experimental/class-private-names-duplicated/instance-get-instance-field/input.js 2:2-2:8
+							start: Position 2:2
+						}
 						body: JSBlockStatement {
 							body: []
 							directives: []
@@ -37,14 +45,6 @@ JSRoot {
 							params: []
 							loc: SourceLocation experimental/class-private-names-duplicated/instance-get-instance-field/input.js 2:8-2:10
 						}
-						meta: JSClassPropertyMeta {
-							abstract: false
-							optional: false
-							readonly: false
-							static: false
-							loc: SourceLocation experimental/class-private-names-duplicated/instance-get-instance-field/input.js 2:2-2:8
-							start: Position 2:2
-						}
 						loc: SourceLocation experimental/class-private-names-duplicated/instance-get-instance-field/input.js 2:2-2:13
 					}
 					JSClassPrivateProperty {
@@ -55,10 +55,6 @@ JSRoot {
 							}
 							loc: SourceLocation experimental/class-private-names-duplicated/instance-get-instance-field/input.js 3:2-3:4
 						}
-						value: JSNumericLiteral {
-							value: 0
-							loc: SourceLocation experimental/class-private-names-duplicated/instance-get-instance-field/input.js 3:7-3:8
-						}
 						meta: JSClassPropertyMeta {
 							abstract: false
 							optional: false
@@ -66,6 +62,10 @@ JSRoot {
 							static: false
 							loc: SourceLocation experimental/class-private-names-duplicated/instance-get-instance-field/input.js 3:2-3:4
 							start: Position 3:2
+						}
+						value: JSNumericLiteral {
+							value: 0
+							loc: SourceLocation experimental/class-private-names-duplicated/instance-get-instance-field/input.js 3:7-3:8
 						}
 						loc: SourceLocation experimental/class-private-names-duplicated/instance-get-instance-field/input.js 3:2-3:9
 					}

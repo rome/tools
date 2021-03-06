@@ -66,9 +66,7 @@ JSRoot {
   ✖ Not a valid assignment target
 
     ({...x = 1} = {})
-         <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-    <error><emphasis>^</emphasis></error>
+         ^^^^^
 
 
 ```

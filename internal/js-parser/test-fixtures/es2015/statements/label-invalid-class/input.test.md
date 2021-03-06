@@ -65,9 +65,7 @@ JSRoot {
   ✖ Unexpected character c
 
     foo: class X {}
-         <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-    <error><emphasis>^</emphasis></error>
+         ^^^^^
 
 
 ```

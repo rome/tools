@@ -8,15 +8,20 @@
 
 ```javascript
 JSRoot {
-	body: [JSIfStatement {consequent: JSBlockStatement {body: [], directives: []}, test: JSReferenceIdentifier {name: "foo"}}]
+	body: [
+		JSIfStatement {
+			consequent: JSBlockStatement {body: [], directives: []}
+			test: JSReferenceIdentifier {name: "foo"}
+		}
+	]
 	comments: []
 	corrupt: false
 	diagnostics: []
 	directives: []
 	hasHoistedVars: false
-	path: UIDPath<unknown>
 	sourceType: "script"
 	syntax: []
+	path: UIDPath<unknown>
 }
 ```
 
@@ -34,7 +39,14 @@ JSRoot {
 JSRoot {
 	body: [
 		JSForStatement {
-			body: JSBlockStatement {body: [JSExpressionStatement {expression: JSReferenceIdentifier {name: "no"}}], directives: []}
+			body: JSBlockStatement {
+				body: [
+					JSExpressionStatement {
+						expression: JSReferenceIdentifier {name: "no"}
+					}
+				]
+				directives: []
+			}
 			init: JSReferenceIdentifier {name: "condition"}
 		}
 	]
@@ -43,9 +55,9 @@ JSRoot {
 	diagnostics: []
 	directives: []
 	hasHoistedVars: false
-	path: UIDPath<unknown>
 	sourceType: "script"
 	syntax: []
+	path: UIDPath<unknown>
 }
 ```
 
@@ -61,15 +73,20 @@ JSRoot {
 
 ```javascript
 JSRoot {
-	body: [JSIfStatement {consequent: JSBlockStatement {body: [], directives: []}, test: JSReferenceIdentifier {name: "foo"}}]
+	body: [
+		JSIfStatement {
+			consequent: JSBlockStatement {body: [], directives: []}
+			test: JSReferenceIdentifier {name: "foo"}
+		}
+	]
 	comments: []
 	corrupt: false
 	diagnostics: []
 	directives: []
 	hasHoistedVars: false
-	path: UIDPath<unknown>
 	sourceType: "script"
 	syntax: []
+	path: UIDPath<unknown>
 }
 ```
 
@@ -85,15 +102,19 @@ JSRoot {
 
 ```javascript
 JSRoot {
-	body: [JSForStatement {body: JSBlockStatement {body: [], directives: []}}]
+	body: [
+		JSForStatement {
+			body: JSBlockStatement {body: [], directives: []}
+		}
+	]
 	comments: []
 	corrupt: false
 	diagnostics: []
 	directives: []
 	hasHoistedVars: false
-	path: UIDPath<unknown>
 	sourceType: "script"
 	syntax: []
+	path: UIDPath<unknown>
 }
 ```
 

@@ -96,8 +96,7 @@ JSRoot {
   ✖ Octal literal in strict mode
 
     function hello() { "use strict"; function inner() { "octal directive\1"; } }
-
-    <error><emphasis>^</emphasis></error>
+                                                                         ^
 
 
 ```

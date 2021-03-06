@@ -72,7 +72,7 @@ JSRoot {
   ✖ import missing a source
 
     import foo from bar;
-                    <error><emphasis>^</emphasis></error>
+                    ^
 
 
 ```

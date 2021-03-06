@@ -97,7 +97,7 @@ JSRoot {
      6 │ "use strict";
      7 │
    > 8 │ "\4";
-       │   <error><emphasis>^</emphasis></error>
+       │   ^
      9 │ "\5";
 
 

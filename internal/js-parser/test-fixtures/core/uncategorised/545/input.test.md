@@ -81,9 +81,7 @@ JSRoot {
   ✖ public is a reserved word
 
     const { public } = foo();
-            <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
+            ^^^^^^
 
 
 ```

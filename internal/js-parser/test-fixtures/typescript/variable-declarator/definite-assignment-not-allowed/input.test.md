@@ -83,7 +83,7 @@ JSRoot {
   ✖ Complex binding patterns require an initialization value
 
     let {}! = {};
-          <error><emphasis>^</emphasis></error>
+          ^
 
 
 ```

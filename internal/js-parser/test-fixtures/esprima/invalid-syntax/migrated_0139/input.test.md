@@ -74,7 +74,7 @@ JSRoot {
   ✖ A constant must have an initializer
 
     const x, y = 12;
-          <error><emphasis>^</emphasis></error>
+          ^
 
 
 ```

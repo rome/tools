@@ -87,7 +87,7 @@ JSRoot {
   ✖ Escape sequence in keyword const
 
   > 1 │ var co\u{6e}st = 123;
-      │       <error><emphasis>^</emphasis></error>
+      │       ^
     2 │
     3 │ co\u{6e}st x = 2;
 

@@ -68,7 +68,7 @@ JSRoot {
   ✖ The rest element has to be the last element when destructuring
 
     async (...a,) => {};
-                <error><emphasis>^</emphasis></error>
+                ^
 
 
 ```

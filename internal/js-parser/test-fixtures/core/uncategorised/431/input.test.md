@@ -54,7 +54,7 @@ JSRoot {
   ✖ Unterminated comment
 
     /**
-    <error><emphasis>^</emphasis></error>
+    ^
 
 
 ```

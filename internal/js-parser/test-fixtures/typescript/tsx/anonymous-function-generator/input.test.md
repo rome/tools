@@ -148,7 +148,7 @@ JSRoot {
   ✖ Unexpected character <
 
   > 1 │ const fn = function* <T>(input: T): Generator<number> {
-      │                      <error><emphasis>^</emphasis></error>
+      │                      ^
     2 │   yield 2;
     3 │ }
 

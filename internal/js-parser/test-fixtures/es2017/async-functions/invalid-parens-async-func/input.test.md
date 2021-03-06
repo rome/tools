@@ -81,7 +81,7 @@ JSRoot {
   ✖ Expected a semicolon or a line terminator
 
     (async) function x (a) {}
-            <error><emphasis>^</emphasis></error>
+            ^
 
 
 ```

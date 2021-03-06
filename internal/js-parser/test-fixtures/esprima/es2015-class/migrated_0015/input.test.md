@@ -25,6 +25,14 @@ JSRoot {
 							}
 							loc: SourceLocation esprima/es2015-class/migrated_0015/input.js 1:16-1:22
 						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							optional: false
+							readonly: false
+							static: true
+							loc: SourceLocation esprima/es2015-class/migrated_0015/input.js 1:9-1:22
+							start: Position 1:9
+						}
 						body: JSBlockStatement {
 							body: []
 							directives: []
@@ -36,14 +44,6 @@ JSRoot {
 							hasHoistedVars: false
 							params: []
 							loc: SourceLocation esprima/es2015-class/migrated_0015/input.js 1:22-1:24
-						}
-						meta: JSClassPropertyMeta {
-							abstract: false
-							optional: false
-							readonly: false
-							static: true
-							loc: SourceLocation esprima/es2015-class/migrated_0015/input.js 1:9-1:22
-							start: Position 1:9
 						}
 						loc: SourceLocation esprima/es2015-class/migrated_0015/input.js 1:9-1:26
 					}

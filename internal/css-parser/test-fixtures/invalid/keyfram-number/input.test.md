@@ -9,15 +9,18 @@ CSSRoot {
 	body: [
 		CSSAtRule {
 			name: "keyframes"
+			prelude: []
 			block: CSSKeyframe {
+				value: []
 				name: CSSKeyframeName {
-					value: CSSRaw {value: "foo", loc: SourceLocation invalid/keyfram-number/input.css 1:11-1:11}
+					value: CSSRaw {
+						value: "foo"
+						loc: SourceLocation invalid/keyfram-number/input.css 1:11-1:11
+					}
 					loc: SourceLocation invalid/keyfram-number/input.css 1:11-1:14
 				}
-				value: []
 				loc: SourceLocation invalid/keyfram-number/input.css 1:10-5:1
 			}
-			prelude: []
 			loc: SourceLocation invalid/keyfram-number/input.css 1:0-5:1
 		}
 	]
@@ -25,6 +28,7 @@ CSSRoot {
 	corrupt: false
 	diagnostics: [
 		{
+			origins: [{category: "parse"}]
 			description: {
 				advice: [
 					log {
@@ -36,8 +40,12 @@ CSSRoot {
 				categoryValue: "css"
 				message: RAW_MARKUP {value: "The selector name of the keyframe is not correct."}
 			}
-			location: {language: "css", path: RelativePath<invalid/keyfram-number/input.css>, end: Position 2:3, start: Position 2:1}
-			origins: [{category: "parse"}]
+			location: {
+				language: "css"
+				path: RelativePath<invalid/keyfram-number/input.css>
+				end: Position 2:3
+				start: Position 2:1
+			}
 		}
 	]
 	path: RelativePath<invalid/keyfram-number/input.css>

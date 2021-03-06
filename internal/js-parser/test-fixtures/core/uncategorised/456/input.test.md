@@ -50,7 +50,7 @@ JSRoot {
   ✖ No loop label found
 
     continue
-    <error><emphasis>^</emphasis></error>
+    ^
 
 
 ```

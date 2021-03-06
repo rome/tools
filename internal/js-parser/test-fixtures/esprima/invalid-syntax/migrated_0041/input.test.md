@@ -94,7 +94,7 @@ JSRoot {
   ✖ Bad character escape sequence
 
     var x = /[a-z]/\ux
-                     <error><emphasis>^</emphasis></error>
+                     ^
 
 
 ```

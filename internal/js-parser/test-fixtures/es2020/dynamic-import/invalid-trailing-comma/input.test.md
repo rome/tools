@@ -57,7 +57,7 @@ JSRoot {
   ✖ Trailing comma is disallowed inside import(...) arguments
 
     import("foo",);
-                <error><emphasis>^</emphasis></error>
+                ^
 
 
 ```

@@ -97,7 +97,7 @@ JSRoot {
   ✖ Parenthesized expression didnt contain anything
 
     console.log(typeof () => {});
-                        <error><emphasis>^</emphasis></error>
+                        ^
 
 
 ```

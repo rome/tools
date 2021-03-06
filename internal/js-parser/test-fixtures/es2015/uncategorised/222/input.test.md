@@ -77,7 +77,7 @@ JSRoot {
   ✖ Invalid left-hand side in assignment object property value
 
     ({ obj:20 } = 42)
-           <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
+           ^^
 
 
 ```

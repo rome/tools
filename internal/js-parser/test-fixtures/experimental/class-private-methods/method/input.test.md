@@ -25,6 +25,14 @@ JSRoot {
 							}
 							loc: SourceLocation experimental/class-private-methods/method/input.js 2:2-2:12
 						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							optional: false
+							readonly: false
+							static: false
+							loc: SourceLocation experimental/class-private-methods/method/input.js 2:2-2:12
+							start: Position 2:2
+						}
 						body: JSBlockStatement {
 							body: [
 								JSReturnStatement {
@@ -48,14 +56,6 @@ JSRoot {
 							hasHoistedVars: false
 							params: []
 							loc: SourceLocation experimental/class-private-methods/method/input.js 2:12-2:14
-						}
-						meta: JSClassPropertyMeta {
-							abstract: false
-							optional: false
-							readonly: false
-							static: false
-							loc: SourceLocation experimental/class-private-methods/method/input.js 2:2-2:12
-							start: Position 2:2
 						}
 						loc: SourceLocation experimental/class-private-methods/method/input.js 2:2-4:3
 					}

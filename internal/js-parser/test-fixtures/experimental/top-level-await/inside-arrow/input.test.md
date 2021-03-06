@@ -70,9 +70,7 @@ JSRoot {
   ✖ Can't use await outside of an async function
 
     () => await 0;
-          <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-    <error><emphasis>^</emphasis></error>
+          ^^^^^
 
 
 ```

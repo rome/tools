@@ -85,9 +85,7 @@ JSRoot {
   ✖ A required element cannot follow an optional element.
 
     let x: [string?, number]
-                     <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
+                     ^^^^^^
 
 
 ```

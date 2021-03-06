@@ -103,7 +103,7 @@ JSRoot {
 
     1 │ class C {
   > 2 │     readonly m() {}
-      │               <error><emphasis>^</emphasis></error>
+      │               ^
     3 │ }
 
 

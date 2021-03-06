@@ -119,7 +119,7 @@ JSRoot {
   ℹ Defined already here
 
     function a() { "use strict"; (function b(t, t) { }); }
-                                                <error><emphasis>^</emphasis></error>
+                                                ^
 
 
 ```

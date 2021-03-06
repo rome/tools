@@ -108,7 +108,7 @@ JSRoot {
   ✖ Expected an identifier
 
     var x = function() { y = new..target; }
-                                 <error><emphasis>^</emphasis></error>
+                                 ^
 
 
 ```

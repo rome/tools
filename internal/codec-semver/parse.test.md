@@ -7,49 +7,105 @@
 ### `0`
 
 ```javascript
-AbsoluteVersion {build: [], major: 1, minor: 2, patch: 3, prerelease: [], loc: SourceLocation unknown 1:0-1:4}
+AbsoluteVersion {
+	build: []
+	major: 1
+	minor: 2
+	patch: 3
+	prerelease: []
+	loc: SourceLocation unknown 1:0-1:4
+}
 ```
 
 ### `1`
 
 ```javascript
-AbsoluteVersion {build: [], major: 1, minor: 2, patch: 3, prerelease: ["prerelease"], loc: SourceLocation unknown 1:0-1:6}
+AbsoluteVersion {
+	build: []
+	major: 1
+	minor: 2
+	patch: 3
+	prerelease: ["prerelease"]
+	loc: SourceLocation unknown 1:0-1:6
+}
 ```
 
 ### `2`
 
 ```javascript
-AbsoluteVersion {build: [], major: 1, minor: 2, patch: 3, prerelease: ["pre", 2], loc: SourceLocation unknown 1:0-1:10}
+AbsoluteVersion {
+	build: []
+	major: 1
+	minor: 2
+	patch: 3
+	prerelease: ["pre", 2]
+	loc: SourceLocation unknown 1:0-1:10
+}
 ```
 
 ### `3`
 
 ```javascript
-AbsoluteVersion {build: [], major: 1, minor: 2, patch: 3, prerelease: ["pre", 2, 3, 4, 5, "foo"], loc: SourceLocation unknown 1:0-1:18}
+AbsoluteVersion {
+	build: []
+	major: 1
+	minor: 2
+	patch: 3
+	prerelease: ["pre", 2, 3, 4, 5, "foo"]
+	loc: SourceLocation unknown 1:0-1:18
+}
 ```
 
 ### `4`
 
 ```javascript
-AbsoluteVersion {build: ["build"], major: 1, minor: 2, patch: 3, prerelease: [], loc: SourceLocation unknown 1:0-1:6}
+AbsoluteVersion {
+	build: ["build"]
+	major: 1
+	minor: 2
+	patch: 3
+	prerelease: []
+	loc: SourceLocation unknown 1:0-1:6
+}
 ```
 
 ### `5`
 
 ```javascript
-AbsoluteVersion {build: ["build"], major: 1, minor: 2, patch: 3, prerelease: ["prerelease"], loc: SourceLocation unknown 1:0-1:17}
+AbsoluteVersion {
+	build: ["build"]
+	major: 1
+	minor: 2
+	patch: 3
+	prerelease: ["prerelease"]
+	loc: SourceLocation unknown 1:0-1:17
+}
 ```
 
 ### `6`
 
 ```javascript
-AbsoluteVersion {build: ["build"], major: 1, minor: 2, patch: 3, prerelease: ["pre", 2], loc: SourceLocation unknown 1:0-1:12}
+AbsoluteVersion {
+	build: ["build"]
+	major: 1
+	minor: 2
+	patch: 3
+	prerelease: ["pre", 2]
+	loc: SourceLocation unknown 1:0-1:12
+}
 ```
 
 ### `7`
 
 ```javascript
-AbsoluteVersion {build: ["build"], major: 1, minor: 2, patch: 3, prerelease: ["pre", 2, 3, 4, 5, "foo"], loc: SourceLocation unknown 1:0-1:22}
+AbsoluteVersion {
+	build: ["build"]
+	major: 1
+	minor: 2
+	patch: 3
+	prerelease: ["pre", 2, 3, 4, 5, "foo"]
+	loc: SourceLocation unknown 1:0-1:22
+}
 ```
 
 ### `8`
@@ -68,15 +124,31 @@ AbsoluteVersion {
 ### `9`
 
 ```javascript
-AbsoluteVersion {build: ["45build"], major: 1, minor: 2, patch: 3, prerelease: ["45pre", "42yes"], loc: SourceLocation unknown 1:0-1:20}
+AbsoluteVersion {
+	build: ["45build"]
+	major: 1
+	minor: 2
+	patch: 3
+	prerelease: ["45pre", "42yes"]
+	loc: SourceLocation unknown 1:0-1:20
+}
 ```
 
 ### `10`
 
 ```javascript
 VersionRange {
-	left: Wildcard {loc: SourceLocation unknown 1:0-1:1}
-	right: AbsoluteVersion {build: [], major: 1, minor: 2, patch: 3, prerelease: [], loc: SourceLocation unknown 1:4-1:8}
+	left: Wildcard {
+		loc: SourceLocation unknown 1:0-1:1
+	}
+	right: AbsoluteVersion {
+		build: []
+		major: 1
+		minor: 2
+		patch: 3
+		prerelease: []
+		loc: SourceLocation unknown 1:4-1:8
+	}
 	loc: SourceLocation unknown 1:0-1:8
 }
 ```
@@ -84,25 +156,43 @@ VersionRange {
 ### `11`
 
 ```javascript
-AbsoluteVersion {build: [], major: 1, minor: 2, patch: 3, prerelease: [], loc: SourceLocation unknown 1:0-1:5}
+AbsoluteVersion {
+	build: []
+	major: 1
+	minor: 2
+	patch: 3
+	prerelease: []
+	loc: SourceLocation unknown 1:0-1:5
+}
 ```
 
 ### `12`
 
 ```javascript
-Wildcard {loc: SourceLocation unknown 1:0-1:0}
+Wildcard {
+	loc: SourceLocation unknown 1:0-1:0
+}
 ```
 
 ### `13`
 
 ```javascript
-Wildcard {loc: SourceLocation unknown 1:0-1:0}
+Wildcard {
+	loc: SourceLocation unknown 1:0-1:0
+}
 ```
 
 ### `14`
 
 ```javascript
-AbsoluteVersion {build: [], major: 1, minor: 2, patch: 3, prerelease: ["prerelease"], loc: SourceLocation unknown 1:0-1:5}
+AbsoluteVersion {
+	build: []
+	major: 1
+	minor: 2
+	patch: 3
+	prerelease: ["prerelease"]
+	loc: SourceLocation unknown 1:0-1:5
+}
 ```
 
 ### `15`
@@ -111,42 +201,91 @@ AbsoluteVersion {build: [], major: 1, minor: 2, patch: 3, prerelease: ["prerelea
 LogicalOr {
 	left: Comparator {
 		operator: "^"
-		version: AbsoluteVersion {build: [], major: 4, minor: 0, patch: 0, prerelease: [], loc: SourceLocation unknown 1:1-1:6}
+		version: AbsoluteVersion {
+			build: []
+			major: 4
+			minor: 0
+			patch: 0
+			prerelease: []
+			loc: SourceLocation unknown 1:1-1:6
+		}
 		loc: SourceLocation unknown 1:0-1:6
 	}
 	right: LogicalOr {
 		left: Comparator {
 			operator: "^"
-			version: AbsoluteVersion {build: [], major: 4, minor: 0, patch: 0, prerelease: ["beta", "*"], loc: SourceLocation unknown 1:11-1:23}
+			version: AbsoluteVersion {
+				build: []
+				major: 4
+				minor: 0
+				patch: 0
+				prerelease: ["beta", "*"]
+				loc: SourceLocation unknown 1:11-1:23
+			}
 			loc: SourceLocation unknown 1:10-1:23
 		}
 		right: LogicalOr {
 			left: Comparator {
 				operator: "^"
-				version: AbsoluteVersion {build: [], major: 3, minor: 8, patch: 1, prerelease: [], loc: SourceLocation unknown 1:28-1:33}
+				version: AbsoluteVersion {
+					build: []
+					major: 3
+					minor: 8
+					patch: 1
+					prerelease: []
+					loc: SourceLocation unknown 1:28-1:33
+				}
 				loc: SourceLocation unknown 1:27-1:33
 			}
 			right: LogicalOr {
 				left: Comparator {
 					operator: "^"
-					version: AbsoluteVersion {build: [], major: 3, minor: 0, patch: 0, prerelease: [], loc: SourceLocation unknown 1:38-1:43}
+					version: AbsoluteVersion {
+						build: []
+						major: 3
+						minor: 0
+						patch: 0
+						prerelease: []
+						loc: SourceLocation unknown 1:38-1:43
+					}
 					loc: SourceLocation unknown 1:37-1:43
 				}
 				right: LogicalOr {
 					left: Comparator {
 						operator: "^"
-						version: AbsoluteVersion {build: [], major: 3, minor: 0, patch: 0, prerelease: ["rc", 0], loc: SourceLocation unknown 1:48-1:58}
+						version: AbsoluteVersion {
+							build: []
+							major: 3
+							minor: 0
+							patch: 0
+							prerelease: ["rc", 0]
+							loc: SourceLocation unknown 1:48-1:58
+						}
 						loc: SourceLocation unknown 1:47-1:58
 					}
 					right: LogicalOr {
 						left: Comparator {
 							operator: "^"
-							version: AbsoluteVersion {build: [], major: 2, minor: 1, patch: 0, prerelease: [], loc: SourceLocation unknown 1:63-1:68}
+							version: AbsoluteVersion {
+								build: []
+								major: 2
+								minor: 1
+								patch: 0
+								prerelease: []
+								loc: SourceLocation unknown 1:63-1:68
+							}
 							loc: SourceLocation unknown 1:62-1:68
 						}
 						right: Comparator {
 							operator: "^"
-							version: AbsoluteVersion {build: [], major: 1, minor: 13, patch: 1, prerelease: [], loc: SourceLocation unknown 1:73-1:78}
+							version: AbsoluteVersion {
+								build: []
+								major: 1
+								minor: 13
+								patch: 1
+								prerelease: []
+								loc: SourceLocation unknown 1:73-1:78
+							}
 							loc: SourceLocation unknown 1:72-1:78
 						}
 						loc: SourceLocation unknown 1:62-1:78
@@ -166,75 +305,151 @@ LogicalOr {
 ### `16`
 
 ```javascript
-WildcardVersion {build: [], major: 1, prerelease: [], loc: SourceLocation unknown 1:0-1:0}
+WildcardVersion {
+	build: []
+	major: 1
+	prerelease: []
+	loc: SourceLocation unknown 1:0-1:0
+}
 ```
 
 ### `17`
 
 ```javascript
-WildcardVersion {build: [], major: 1, minor: 2, prerelease: [], loc: SourceLocation unknown 1:0-1:2}
+WildcardVersion {
+	build: []
+	major: 1
+	minor: 2
+	prerelease: []
+	loc: SourceLocation unknown 1:0-1:2
+}
 ```
 
 ### `18`
 
 ```javascript
-WildcardVersion {build: [], major: 1, prerelease: [], loc: SourceLocation unknown 1:0-1:2}
+WildcardVersion {
+	build: []
+	major: 1
+	prerelease: []
+	loc: SourceLocation unknown 1:0-1:2
+}
 ```
 
 ### `19`
 
 ```javascript
-WildcardVersion {build: [], major: 1, patch: 3, prerelease: [], loc: SourceLocation unknown 1:0-1:4}
+WildcardVersion {
+	build: []
+	major: 1
+	patch: 3
+	prerelease: []
+	loc: SourceLocation unknown 1:0-1:4
+}
 ```
 
 ### `20`
 
 ```javascript
-WildcardVersion {build: [], major: 1, minor: 2, prerelease: [], loc: SourceLocation unknown 1:0-1:4}
+WildcardVersion {
+	build: []
+	major: 1
+	minor: 2
+	prerelease: []
+	loc: SourceLocation unknown 1:0-1:4
+}
 ```
 
 ### `21`
 
 ```javascript
-WildcardVersion {build: [], major: 1, prerelease: [], loc: SourceLocation unknown 1:0-1:2}
+WildcardVersion {
+	build: []
+	major: 1
+	prerelease: []
+	loc: SourceLocation unknown 1:0-1:2
+}
 ```
 
 ### `22`
 
 ```javascript
-WildcardVersion {build: [], major: 1, patch: 3, prerelease: [], loc: SourceLocation unknown 1:0-1:4}
+WildcardVersion {
+	build: []
+	major: 1
+	patch: 3
+	prerelease: []
+	loc: SourceLocation unknown 1:0-1:4
+}
 ```
 
 ### `23`
 
 ```javascript
-WildcardVersion {build: [], major: 1, minor: 2, prerelease: [], loc: SourceLocation unknown 1:0-1:4}
+WildcardVersion {
+	build: []
+	major: 1
+	minor: 2
+	prerelease: []
+	loc: SourceLocation unknown 1:0-1:4
+}
 ```
 
 ### `24`
 
 ```javascript
-WildcardVersion {build: [], major: 1, prerelease: [], loc: SourceLocation unknown 1:0-1:2}
+WildcardVersion {
+	build: []
+	major: 1
+	prerelease: []
+	loc: SourceLocation unknown 1:0-1:2
+}
 ```
 
 ### `25`
 
 ```javascript
-WildcardVersion {build: [], major: 1, patch: 3, prerelease: [], loc: SourceLocation unknown 1:0-1:4}
+WildcardVersion {
+	build: []
+	major: 1
+	patch: 3
+	prerelease: []
+	loc: SourceLocation unknown 1:0-1:4
+}
 ```
 
 ### `26`
 
 ```javascript
-WildcardVersion {build: [], major: 1, minor: 2, prerelease: [], loc: SourceLocation unknown 1:0-1:4}
+WildcardVersion {
+	build: []
+	major: 1
+	minor: 2
+	prerelease: []
+	loc: SourceLocation unknown 1:0-1:4
+}
 ```
 
 ### `27`
 
 ```javascript
 VersionRange {
-	left: AbsoluteVersion {build: [], major: 1, minor: 2, patch: 3, prerelease: [], loc: SourceLocation unknown 1:0-1:5}
-	right: AbsoluteVersion {build: [], major: 1, minor: 2, patch: 4, prerelease: [], loc: SourceLocation unknown 1:8-1:12}
+	left: AbsoluteVersion {
+		build: []
+		major: 1
+		minor: 2
+		patch: 3
+		prerelease: []
+		loc: SourceLocation unknown 1:0-1:5
+	}
+	right: AbsoluteVersion {
+		build: []
+		major: 1
+		minor: 2
+		patch: 4
+		prerelease: []
+		loc: SourceLocation unknown 1:8-1:12
+	}
 	loc: SourceLocation unknown 1:0-1:12
 }
 ```
@@ -243,8 +458,19 @@ VersionRange {
 
 ```javascript
 LogicalOr {
-	left: WildcardVersion {build: [], major: 1, minor: 2, prerelease: [], loc: SourceLocation unknown 1:0-1:3}
-	right: WildcardVersion {build: [], major: 3, prerelease: [], loc: SourceLocation unknown 1:7-1:7}
+	left: WildcardVersion {
+		build: []
+		major: 1
+		minor: 2
+		prerelease: []
+		loc: SourceLocation unknown 1:0-1:3
+	}
+	right: WildcardVersion {
+		build: []
+		major: 3
+		prerelease: []
+		loc: SourceLocation unknown 1:7-1:7
+	}
 	loc: SourceLocation unknown 1:0-1:7
 }
 ```
@@ -253,10 +479,25 @@ LogicalOr {
 
 ```javascript
 LogicalOr {
-	left: WildcardVersion {build: [], major: 1, prerelease: [], loc: SourceLocation unknown 1:0-1:1}
+	left: WildcardVersion {
+		build: []
+		major: 1
+		prerelease: []
+		loc: SourceLocation unknown 1:0-1:1
+	}
 	right: LogicalOr {
-		left: WildcardVersion {build: [], major: 2, prerelease: [], loc: SourceLocation unknown 1:5-1:6}
-		right: WildcardVersion {build: [], major: 3, prerelease: [], loc: SourceLocation unknown 1:10-1:10}
+		left: WildcardVersion {
+			build: []
+			major: 2
+			prerelease: []
+			loc: SourceLocation unknown 1:5-1:6
+		}
+		right: WildcardVersion {
+			build: []
+			major: 3
+			prerelease: []
+			loc: SourceLocation unknown 1:10-1:10
+		}
 		loc: SourceLocation unknown 1:5-1:10
 	}
 	loc: SourceLocation unknown 1:0-1:10
@@ -268,7 +509,14 @@ LogicalOr {
 ```javascript
 Comparator {
 	operator: ">="
-	version: AbsoluteVersion {build: [], major: 1, minor: 4, patch: 5, prerelease: [], loc: SourceLocation unknown 1:2-1:6}
+	version: AbsoluteVersion {
+		build: []
+		major: 1
+		minor: 4
+		patch: 5
+		prerelease: []
+		loc: SourceLocation unknown 1:2-1:6
+	}
 	loc: SourceLocation unknown 1:0-1:6
 }
 ```
@@ -279,12 +527,26 @@ Comparator {
 LogicalAnd {
 	left: Comparator {
 		operator: ">="
-		version: AbsoluteVersion {build: [], major: 1, minor: 4, patch: 5, prerelease: [], loc: SourceLocation unknown 1:2-1:7}
+		version: AbsoluteVersion {
+			build: []
+			major: 1
+			minor: 4
+			patch: 5
+			prerelease: []
+			loc: SourceLocation unknown 1:2-1:7
+		}
 		loc: SourceLocation unknown 1:0-1:7
 	}
 	right: Comparator {
 		operator: ">="
-		version: AbsoluteVersion {build: [], major: 1, minor: 4, patch: 5, prerelease: [], loc: SourceLocation unknown 1:10-1:14}
+		version: AbsoluteVersion {
+			build: []
+			major: 1
+			minor: 4
+			patch: 5
+			prerelease: []
+			loc: SourceLocation unknown 1:10-1:14
+		}
 		loc: SourceLocation unknown 1:8-1:14
 	}
 	loc: SourceLocation unknown 1:0-1:14
@@ -296,7 +558,14 @@ LogicalAnd {
 ```javascript
 Comparator {
 	operator: "<="
-	version: AbsoluteVersion {build: [], major: 1, minor: 4, patch: 5, prerelease: [], loc: SourceLocation unknown 1:2-1:6}
+	version: AbsoluteVersion {
+		build: []
+		major: 1
+		minor: 4
+		patch: 5
+		prerelease: []
+		loc: SourceLocation unknown 1:2-1:6
+	}
 	loc: SourceLocation unknown 1:0-1:6
 }
 ```
@@ -307,12 +576,26 @@ Comparator {
 LogicalAnd {
 	left: Comparator {
 		operator: "<="
-		version: AbsoluteVersion {build: [], major: 1, minor: 4, patch: 5, prerelease: [], loc: SourceLocation unknown 1:2-1:7}
+		version: AbsoluteVersion {
+			build: []
+			major: 1
+			minor: 4
+			patch: 5
+			prerelease: []
+			loc: SourceLocation unknown 1:2-1:7
+		}
 		loc: SourceLocation unknown 1:0-1:7
 	}
 	right: Comparator {
 		operator: "<="
-		version: AbsoluteVersion {build: [], major: 1, minor: 4, patch: 5, prerelease: [], loc: SourceLocation unknown 1:10-1:14}
+		version: AbsoluteVersion {
+			build: []
+			major: 1
+			minor: 4
+			patch: 5
+			prerelease: []
+			loc: SourceLocation unknown 1:10-1:14
+		}
 		loc: SourceLocation unknown 1:8-1:14
 	}
 	loc: SourceLocation unknown 1:0-1:14
@@ -324,7 +607,14 @@ LogicalAnd {
 ```javascript
 Comparator {
 	operator: ">"
-	version: AbsoluteVersion {build: [], major: 1, minor: 4, patch: 5, prerelease: [], loc: SourceLocation unknown 1:1-1:5}
+	version: AbsoluteVersion {
+		build: []
+		major: 1
+		minor: 4
+		patch: 5
+		prerelease: []
+		loc: SourceLocation unknown 1:1-1:5
+	}
 	loc: SourceLocation unknown 1:0-1:5
 }
 ```
@@ -335,12 +625,26 @@ Comparator {
 LogicalAnd {
 	left: Comparator {
 		operator: ">"
-		version: AbsoluteVersion {build: [], major: 1, minor: 4, patch: 5, prerelease: [], loc: SourceLocation unknown 1:1-1:6}
+		version: AbsoluteVersion {
+			build: []
+			major: 1
+			minor: 4
+			patch: 5
+			prerelease: []
+			loc: SourceLocation unknown 1:1-1:6
+		}
 		loc: SourceLocation unknown 1:0-1:6
 	}
 	right: Comparator {
 		operator: ">"
-		version: AbsoluteVersion {build: [], major: 1, minor: 4, patch: 5, prerelease: [], loc: SourceLocation unknown 1:8-1:12}
+		version: AbsoluteVersion {
+			build: []
+			major: 1
+			minor: 4
+			patch: 5
+			prerelease: []
+			loc: SourceLocation unknown 1:8-1:12
+		}
 		loc: SourceLocation unknown 1:7-1:12
 	}
 	loc: SourceLocation unknown 1:0-1:12
@@ -352,7 +656,14 @@ LogicalAnd {
 ```javascript
 Comparator {
 	operator: "<"
-	version: AbsoluteVersion {build: [], major: 1, minor: 4, patch: 5, prerelease: [], loc: SourceLocation unknown 1:1-1:5}
+	version: AbsoluteVersion {
+		build: []
+		major: 1
+		minor: 4
+		patch: 5
+		prerelease: []
+		loc: SourceLocation unknown 1:1-1:5
+	}
 	loc: SourceLocation unknown 1:0-1:5
 }
 ```
@@ -363,12 +674,26 @@ Comparator {
 LogicalAnd {
 	left: Comparator {
 		operator: "<"
-		version: AbsoluteVersion {build: [], major: 1, minor: 4, patch: 5, prerelease: [], loc: SourceLocation unknown 1:1-1:6}
+		version: AbsoluteVersion {
+			build: []
+			major: 1
+			minor: 4
+			patch: 5
+			prerelease: []
+			loc: SourceLocation unknown 1:1-1:6
+		}
 		loc: SourceLocation unknown 1:0-1:6
 	}
 	right: Comparator {
 		operator: "<"
-		version: AbsoluteVersion {build: [], major: 1, minor: 4, patch: 5, prerelease: [], loc: SourceLocation unknown 1:8-1:12}
+		version: AbsoluteVersion {
+			build: []
+			major: 1
+			minor: 4
+			patch: 5
+			prerelease: []
+			loc: SourceLocation unknown 1:8-1:12
+		}
 		loc: SourceLocation unknown 1:7-1:12
 	}
 	loc: SourceLocation unknown 1:0-1:12
@@ -380,7 +705,14 @@ LogicalAnd {
 ```javascript
 Comparator {
 	operator: "^"
-	version: AbsoluteVersion {build: [], major: 1, minor: 4, patch: 5, prerelease: [], loc: SourceLocation unknown 1:1-1:5}
+	version: AbsoluteVersion {
+		build: []
+		major: 1
+		minor: 4
+		patch: 5
+		prerelease: []
+		loc: SourceLocation unknown 1:1-1:5
+	}
 	loc: SourceLocation unknown 1:0-1:5
 }
 ```
@@ -391,12 +723,26 @@ Comparator {
 LogicalAnd {
 	left: Comparator {
 		operator: "^"
-		version: AbsoluteVersion {build: [], major: 1, minor: 4, patch: 5, prerelease: [], loc: SourceLocation unknown 1:1-1:6}
+		version: AbsoluteVersion {
+			build: []
+			major: 1
+			minor: 4
+			patch: 5
+			prerelease: []
+			loc: SourceLocation unknown 1:1-1:6
+		}
 		loc: SourceLocation unknown 1:0-1:6
 	}
 	right: Comparator {
 		operator: "^"
-		version: AbsoluteVersion {build: [], major: 1, minor: 4, patch: 5, prerelease: [], loc: SourceLocation unknown 1:8-1:12}
+		version: AbsoluteVersion {
+			build: []
+			major: 1
+			minor: 4
+			patch: 5
+			prerelease: []
+			loc: SourceLocation unknown 1:8-1:12
+		}
 		loc: SourceLocation unknown 1:7-1:12
 	}
 	loc: SourceLocation unknown 1:0-1:12
@@ -408,7 +754,14 @@ LogicalAnd {
 ```javascript
 Comparator {
 	operator: "~"
-	version: AbsoluteVersion {build: [], major: 1, minor: 4, patch: 5, prerelease: [], loc: SourceLocation unknown 1:1-1:5}
+	version: AbsoluteVersion {
+		build: []
+		major: 1
+		minor: 4
+		patch: 5
+		prerelease: []
+		loc: SourceLocation unknown 1:1-1:5
+	}
 	loc: SourceLocation unknown 1:0-1:5
 }
 ```
@@ -419,12 +772,26 @@ Comparator {
 LogicalAnd {
 	left: Comparator {
 		operator: "~"
-		version: AbsoluteVersion {build: [], major: 1, minor: 4, patch: 5, prerelease: [], loc: SourceLocation unknown 1:1-1:6}
+		version: AbsoluteVersion {
+			build: []
+			major: 1
+			minor: 4
+			patch: 5
+			prerelease: []
+			loc: SourceLocation unknown 1:1-1:6
+		}
 		loc: SourceLocation unknown 1:0-1:6
 	}
 	right: Comparator {
 		operator: "~"
-		version: AbsoluteVersion {build: [], major: 1, minor: 4, patch: 5, prerelease: [], loc: SourceLocation unknown 1:8-1:12}
+		version: AbsoluteVersion {
+			build: []
+			major: 1
+			minor: 4
+			patch: 5
+			prerelease: []
+			loc: SourceLocation unknown 1:8-1:12
+		}
 		loc: SourceLocation unknown 1:7-1:12
 	}
 	loc: SourceLocation unknown 1:0-1:12
@@ -436,7 +803,13 @@ LogicalAnd {
 ```javascript
 Comparator {
 	operator: ">="
-	version: WildcardVersion {build: [], major: 1, minor: 4, prerelease: [], loc: SourceLocation unknown 1:2-1:4}
+	version: WildcardVersion {
+		build: []
+		major: 1
+		minor: 4
+		prerelease: []
+		loc: SourceLocation unknown 1:2-1:4
+	}
 	loc: SourceLocation unknown 1:0-1:4
 }
 ```
@@ -447,12 +820,24 @@ Comparator {
 LogicalAnd {
 	left: Comparator {
 		operator: ">="
-		version: WildcardVersion {build: [], major: 1, minor: 4, prerelease: [], loc: SourceLocation unknown 1:2-1:5}
+		version: WildcardVersion {
+			build: []
+			major: 1
+			minor: 4
+			prerelease: []
+			loc: SourceLocation unknown 1:2-1:5
+		}
 		loc: SourceLocation unknown 1:0-1:5
 	}
 	right: Comparator {
 		operator: ">="
-		version: WildcardVersion {build: [], major: 1, minor: 4, prerelease: [], loc: SourceLocation unknown 1:8-1:10}
+		version: WildcardVersion {
+			build: []
+			major: 1
+			minor: 4
+			prerelease: []
+			loc: SourceLocation unknown 1:8-1:10
+		}
 		loc: SourceLocation unknown 1:6-1:10
 	}
 	loc: SourceLocation unknown 1:0-1:10
@@ -464,7 +849,13 @@ LogicalAnd {
 ```javascript
 Comparator {
 	operator: "<="
-	version: WildcardVersion {build: [], major: 1, minor: 4, prerelease: [], loc: SourceLocation unknown 1:2-1:4}
+	version: WildcardVersion {
+		build: []
+		major: 1
+		minor: 4
+		prerelease: []
+		loc: SourceLocation unknown 1:2-1:4
+	}
 	loc: SourceLocation unknown 1:0-1:4
 }
 ```
@@ -475,12 +866,24 @@ Comparator {
 LogicalAnd {
 	left: Comparator {
 		operator: "<="
-		version: WildcardVersion {build: [], major: 1, minor: 4, prerelease: [], loc: SourceLocation unknown 1:2-1:5}
+		version: WildcardVersion {
+			build: []
+			major: 1
+			minor: 4
+			prerelease: []
+			loc: SourceLocation unknown 1:2-1:5
+		}
 		loc: SourceLocation unknown 1:0-1:5
 	}
 	right: Comparator {
 		operator: "<="
-		version: WildcardVersion {build: [], major: 1, minor: 4, prerelease: [], loc: SourceLocation unknown 1:8-1:10}
+		version: WildcardVersion {
+			build: []
+			major: 1
+			minor: 4
+			prerelease: []
+			loc: SourceLocation unknown 1:8-1:10
+		}
 		loc: SourceLocation unknown 1:6-1:10
 	}
 	loc: SourceLocation unknown 1:0-1:10
@@ -492,7 +895,13 @@ LogicalAnd {
 ```javascript
 Comparator {
 	operator: ">"
-	version: WildcardVersion {build: [], major: 1, minor: 4, prerelease: [], loc: SourceLocation unknown 1:1-1:3}
+	version: WildcardVersion {
+		build: []
+		major: 1
+		minor: 4
+		prerelease: []
+		loc: SourceLocation unknown 1:1-1:3
+	}
 	loc: SourceLocation unknown 1:0-1:3
 }
 ```
@@ -503,12 +912,24 @@ Comparator {
 LogicalAnd {
 	left: Comparator {
 		operator: ">"
-		version: WildcardVersion {build: [], major: 1, minor: 4, prerelease: [], loc: SourceLocation unknown 1:1-1:4}
+		version: WildcardVersion {
+			build: []
+			major: 1
+			minor: 4
+			prerelease: []
+			loc: SourceLocation unknown 1:1-1:4
+		}
 		loc: SourceLocation unknown 1:0-1:4
 	}
 	right: Comparator {
 		operator: ">"
-		version: WildcardVersion {build: [], major: 1, minor: 4, prerelease: [], loc: SourceLocation unknown 1:6-1:8}
+		version: WildcardVersion {
+			build: []
+			major: 1
+			minor: 4
+			prerelease: []
+			loc: SourceLocation unknown 1:6-1:8
+		}
 		loc: SourceLocation unknown 1:5-1:8
 	}
 	loc: SourceLocation unknown 1:0-1:8
@@ -520,7 +941,13 @@ LogicalAnd {
 ```javascript
 Comparator {
 	operator: "<"
-	version: WildcardVersion {build: [], major: 1, minor: 4, prerelease: [], loc: SourceLocation unknown 1:1-1:3}
+	version: WildcardVersion {
+		build: []
+		major: 1
+		minor: 4
+		prerelease: []
+		loc: SourceLocation unknown 1:1-1:3
+	}
 	loc: SourceLocation unknown 1:0-1:3
 }
 ```
@@ -531,12 +958,24 @@ Comparator {
 LogicalAnd {
 	left: Comparator {
 		operator: "<"
-		version: WildcardVersion {build: [], major: 1, minor: 4, prerelease: [], loc: SourceLocation unknown 1:1-1:4}
+		version: WildcardVersion {
+			build: []
+			major: 1
+			minor: 4
+			prerelease: []
+			loc: SourceLocation unknown 1:1-1:4
+		}
 		loc: SourceLocation unknown 1:0-1:4
 	}
 	right: Comparator {
 		operator: "<"
-		version: WildcardVersion {build: [], major: 1, minor: 4, prerelease: [], loc: SourceLocation unknown 1:6-1:8}
+		version: WildcardVersion {
+			build: []
+			major: 1
+			minor: 4
+			prerelease: []
+			loc: SourceLocation unknown 1:6-1:8
+		}
 		loc: SourceLocation unknown 1:5-1:8
 	}
 	loc: SourceLocation unknown 1:0-1:8
@@ -548,7 +987,13 @@ LogicalAnd {
 ```javascript
 Comparator {
 	operator: "^"
-	version: WildcardVersion {build: [], major: 1, minor: 4, prerelease: [], loc: SourceLocation unknown 1:1-1:3}
+	version: WildcardVersion {
+		build: []
+		major: 1
+		minor: 4
+		prerelease: []
+		loc: SourceLocation unknown 1:1-1:3
+	}
 	loc: SourceLocation unknown 1:0-1:3
 }
 ```
@@ -559,12 +1004,24 @@ Comparator {
 LogicalAnd {
 	left: Comparator {
 		operator: "^"
-		version: WildcardVersion {build: [], major: 1, minor: 4, prerelease: [], loc: SourceLocation unknown 1:1-1:4}
+		version: WildcardVersion {
+			build: []
+			major: 1
+			minor: 4
+			prerelease: []
+			loc: SourceLocation unknown 1:1-1:4
+		}
 		loc: SourceLocation unknown 1:0-1:4
 	}
 	right: Comparator {
 		operator: "^"
-		version: WildcardVersion {build: [], major: 1, minor: 4, prerelease: [], loc: SourceLocation unknown 1:6-1:8}
+		version: WildcardVersion {
+			build: []
+			major: 1
+			minor: 4
+			prerelease: []
+			loc: SourceLocation unknown 1:6-1:8
+		}
 		loc: SourceLocation unknown 1:5-1:8
 	}
 	loc: SourceLocation unknown 1:0-1:8
@@ -576,7 +1033,13 @@ LogicalAnd {
 ```javascript
 Comparator {
 	operator: "~"
-	version: WildcardVersion {build: [], major: 1, minor: 4, prerelease: [], loc: SourceLocation unknown 1:1-1:3}
+	version: WildcardVersion {
+		build: []
+		major: 1
+		minor: 4
+		prerelease: []
+		loc: SourceLocation unknown 1:1-1:3
+	}
 	loc: SourceLocation unknown 1:0-1:3
 }
 ```
@@ -587,12 +1050,24 @@ Comparator {
 LogicalAnd {
 	left: Comparator {
 		operator: "~"
-		version: WildcardVersion {build: [], major: 1, minor: 4, prerelease: [], loc: SourceLocation unknown 1:1-1:4}
+		version: WildcardVersion {
+			build: []
+			major: 1
+			minor: 4
+			prerelease: []
+			loc: SourceLocation unknown 1:1-1:4
+		}
 		loc: SourceLocation unknown 1:0-1:4
 	}
 	right: Comparator {
 		operator: "~"
-		version: WildcardVersion {build: [], major: 1, minor: 4, prerelease: [], loc: SourceLocation unknown 1:6-1:8}
+		version: WildcardVersion {
+			build: []
+			major: 1
+			minor: 4
+			prerelease: []
+			loc: SourceLocation unknown 1:6-1:8
+		}
 		loc: SourceLocation unknown 1:5-1:8
 	}
 	loc: SourceLocation unknown 1:0-1:8
@@ -604,7 +1079,12 @@ LogicalAnd {
 ```javascript
 Comparator {
 	operator: ">="
-	version: WildcardVersion {build: [], major: 1, prerelease: [], loc: SourceLocation unknown 1:2-1:2}
+	version: WildcardVersion {
+		build: []
+		major: 1
+		prerelease: []
+		loc: SourceLocation unknown 1:2-1:2
+	}
 	loc: SourceLocation unknown 1:0-1:2
 }
 ```
@@ -615,12 +1095,22 @@ Comparator {
 LogicalAnd {
 	left: Comparator {
 		operator: ">="
-		version: WildcardVersion {build: [], major: 1, prerelease: [], loc: SourceLocation unknown 1:2-1:3}
+		version: WildcardVersion {
+			build: []
+			major: 1
+			prerelease: []
+			loc: SourceLocation unknown 1:2-1:3
+		}
 		loc: SourceLocation unknown 1:0-1:3
 	}
 	right: Comparator {
 		operator: ">="
-		version: WildcardVersion {build: [], major: 1, prerelease: [], loc: SourceLocation unknown 1:6-1:6}
+		version: WildcardVersion {
+			build: []
+			major: 1
+			prerelease: []
+			loc: SourceLocation unknown 1:6-1:6
+		}
 		loc: SourceLocation unknown 1:4-1:6
 	}
 	loc: SourceLocation unknown 1:0-1:6
@@ -632,7 +1122,12 @@ LogicalAnd {
 ```javascript
 Comparator {
 	operator: "<="
-	version: WildcardVersion {build: [], major: 1, prerelease: [], loc: SourceLocation unknown 1:2-1:2}
+	version: WildcardVersion {
+		build: []
+		major: 1
+		prerelease: []
+		loc: SourceLocation unknown 1:2-1:2
+	}
 	loc: SourceLocation unknown 1:0-1:2
 }
 ```
@@ -643,12 +1138,22 @@ Comparator {
 LogicalAnd {
 	left: Comparator {
 		operator: "<="
-		version: WildcardVersion {build: [], major: 1, prerelease: [], loc: SourceLocation unknown 1:2-1:3}
+		version: WildcardVersion {
+			build: []
+			major: 1
+			prerelease: []
+			loc: SourceLocation unknown 1:2-1:3
+		}
 		loc: SourceLocation unknown 1:0-1:3
 	}
 	right: Comparator {
 		operator: "<="
-		version: WildcardVersion {build: [], major: 1, prerelease: [], loc: SourceLocation unknown 1:6-1:6}
+		version: WildcardVersion {
+			build: []
+			major: 1
+			prerelease: []
+			loc: SourceLocation unknown 1:6-1:6
+		}
 		loc: SourceLocation unknown 1:4-1:6
 	}
 	loc: SourceLocation unknown 1:0-1:6
@@ -660,7 +1165,12 @@ LogicalAnd {
 ```javascript
 Comparator {
 	operator: ">"
-	version: WildcardVersion {build: [], major: 1, prerelease: [], loc: SourceLocation unknown 1:1-1:1}
+	version: WildcardVersion {
+		build: []
+		major: 1
+		prerelease: []
+		loc: SourceLocation unknown 1:1-1:1
+	}
 	loc: SourceLocation unknown 1:0-1:1
 }
 ```
@@ -671,12 +1181,22 @@ Comparator {
 LogicalAnd {
 	left: Comparator {
 		operator: ">"
-		version: WildcardVersion {build: [], major: 1, prerelease: [], loc: SourceLocation unknown 1:1-1:2}
+		version: WildcardVersion {
+			build: []
+			major: 1
+			prerelease: []
+			loc: SourceLocation unknown 1:1-1:2
+		}
 		loc: SourceLocation unknown 1:0-1:2
 	}
 	right: Comparator {
 		operator: ">"
-		version: WildcardVersion {build: [], major: 1, prerelease: [], loc: SourceLocation unknown 1:4-1:4}
+		version: WildcardVersion {
+			build: []
+			major: 1
+			prerelease: []
+			loc: SourceLocation unknown 1:4-1:4
+		}
 		loc: SourceLocation unknown 1:3-1:4
 	}
 	loc: SourceLocation unknown 1:0-1:4
@@ -688,7 +1208,12 @@ LogicalAnd {
 ```javascript
 Comparator {
 	operator: "<"
-	version: WildcardVersion {build: [], major: 1, prerelease: [], loc: SourceLocation unknown 1:1-1:1}
+	version: WildcardVersion {
+		build: []
+		major: 1
+		prerelease: []
+		loc: SourceLocation unknown 1:1-1:1
+	}
 	loc: SourceLocation unknown 1:0-1:1
 }
 ```
@@ -699,12 +1224,22 @@ Comparator {
 LogicalAnd {
 	left: Comparator {
 		operator: "<"
-		version: WildcardVersion {build: [], major: 1, prerelease: [], loc: SourceLocation unknown 1:1-1:2}
+		version: WildcardVersion {
+			build: []
+			major: 1
+			prerelease: []
+			loc: SourceLocation unknown 1:1-1:2
+		}
 		loc: SourceLocation unknown 1:0-1:2
 	}
 	right: Comparator {
 		operator: "<"
-		version: WildcardVersion {build: [], major: 1, prerelease: [], loc: SourceLocation unknown 1:4-1:4}
+		version: WildcardVersion {
+			build: []
+			major: 1
+			prerelease: []
+			loc: SourceLocation unknown 1:4-1:4
+		}
 		loc: SourceLocation unknown 1:3-1:4
 	}
 	loc: SourceLocation unknown 1:0-1:4
@@ -716,7 +1251,12 @@ LogicalAnd {
 ```javascript
 Comparator {
 	operator: "^"
-	version: WildcardVersion {build: [], major: 1, prerelease: [], loc: SourceLocation unknown 1:1-1:1}
+	version: WildcardVersion {
+		build: []
+		major: 1
+		prerelease: []
+		loc: SourceLocation unknown 1:1-1:1
+	}
 	loc: SourceLocation unknown 1:0-1:1
 }
 ```
@@ -727,12 +1267,22 @@ Comparator {
 LogicalAnd {
 	left: Comparator {
 		operator: "^"
-		version: WildcardVersion {build: [], major: 1, prerelease: [], loc: SourceLocation unknown 1:1-1:2}
+		version: WildcardVersion {
+			build: []
+			major: 1
+			prerelease: []
+			loc: SourceLocation unknown 1:1-1:2
+		}
 		loc: SourceLocation unknown 1:0-1:2
 	}
 	right: Comparator {
 		operator: "^"
-		version: WildcardVersion {build: [], major: 1, prerelease: [], loc: SourceLocation unknown 1:4-1:4}
+		version: WildcardVersion {
+			build: []
+			major: 1
+			prerelease: []
+			loc: SourceLocation unknown 1:4-1:4
+		}
 		loc: SourceLocation unknown 1:3-1:4
 	}
 	loc: SourceLocation unknown 1:0-1:4
@@ -744,7 +1294,12 @@ LogicalAnd {
 ```javascript
 Comparator {
 	operator: "~"
-	version: WildcardVersion {build: [], major: 1, prerelease: [], loc: SourceLocation unknown 1:1-1:1}
+	version: WildcardVersion {
+		build: []
+		major: 1
+		prerelease: []
+		loc: SourceLocation unknown 1:1-1:1
+	}
 	loc: SourceLocation unknown 1:0-1:1
 }
 ```
@@ -755,12 +1310,22 @@ Comparator {
 LogicalAnd {
 	left: Comparator {
 		operator: "~"
-		version: WildcardVersion {build: [], major: 1, prerelease: [], loc: SourceLocation unknown 1:1-1:2}
+		version: WildcardVersion {
+			build: []
+			major: 1
+			prerelease: []
+			loc: SourceLocation unknown 1:1-1:2
+		}
 		loc: SourceLocation unknown 1:0-1:2
 	}
 	right: Comparator {
 		operator: "~"
-		version: WildcardVersion {build: [], major: 1, prerelease: [], loc: SourceLocation unknown 1:4-1:4}
+		version: WildcardVersion {
+			build: []
+			major: 1
+			prerelease: []
+			loc: SourceLocation unknown 1:4-1:4
+		}
 		loc: SourceLocation unknown 1:3-1:4
 	}
 	loc: SourceLocation unknown 1:0-1:4

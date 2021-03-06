@@ -8,8 +8,17 @@
 CSSRoot {
 	body: [
 		CSSRule {
-			block: CSSBlock {value: [], startingTokenValue: "{", loc: SourceLocation invalid/selector3/input.css 1:2-2:1}
-			prelude: [CSSSelector {patterns: [], loc: SourceLocation invalid/selector3/input.css 1:0-1:2}]
+			prelude: [
+				CSSSelector {
+					patterns: []
+					loc: SourceLocation invalid/selector3/input.css 1:0-1:2
+				}
+			]
+			block: CSSBlock {
+				value: []
+				startingTokenValue: "{"
+				loc: SourceLocation invalid/selector3/input.css 1:2-2:1
+			}
 			loc: SourceLocation invalid/selector3/input.css 1:0-2:1
 		}
 	]
@@ -17,9 +26,19 @@ CSSRoot {
 	corrupt: false
 	diagnostics: [
 		{
-			description: {advice: [], category: ["parse"], categoryValue: "css", message: RAW_MARKUP {value: "Unexpected empty selectors."}}
-			location: {language: "css", path: RelativePath<invalid/selector3/input.css>, end: Position 1:3, start: Position 1:2}
 			origins: [{category: "parse"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "css"
+				message: RAW_MARKUP {value: "Unexpected empty selectors."}
+			}
+			location: {
+				language: "css"
+				path: RelativePath<invalid/selector3/input.css>
+				end: Position 1:3
+				start: Position 1:2
+			}
 		}
 	]
 	path: RelativePath<invalid/selector3/input.css>

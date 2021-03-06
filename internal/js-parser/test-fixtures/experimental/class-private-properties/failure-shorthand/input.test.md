@@ -43,6 +43,14 @@ JSRoot {
 							}
 							loc: SourceLocation experimental/class-private-properties/failure-shorthand/input.js 3:2-3:13
 						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							optional: false
+							readonly: false
+							static: false
+							loc: SourceLocation experimental/class-private-properties/failure-shorthand/input.js 3:2-3:13
+							start: Position 3:2
+						}
 						body: JSBlockStatement {
 							body: [
 								JSExpressionStatement {
@@ -74,14 +82,6 @@ JSRoot {
 							hasHoistedVars: false
 							params: []
 							loc: SourceLocation experimental/class-private-properties/failure-shorthand/input.js 3:13-3:15
-						}
-						meta: JSClassPropertyMeta {
-							abstract: false
-							optional: false
-							readonly: false
-							static: false
-							loc: SourceLocation experimental/class-private-properties/failure-shorthand/input.js 3:2-3:13
-							start: Position 3:2
 						}
 						loc: SourceLocation experimental/class-private-properties/failure-shorthand/input.js 3:2-5:3
 					}
@@ -125,7 +125,7 @@ JSRoot {
     2 │   #x;
     3 │   constructor() {
   > 4 │     delete #x;
-      │            <error><emphasis>^</emphasis></error>
+      │            ^
     5 │   }
     6 │ }
 

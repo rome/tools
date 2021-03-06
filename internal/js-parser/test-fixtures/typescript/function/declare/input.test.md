@@ -173,7 +173,7 @@ JSRoot {
   ✖ Unexpected character f
 
   > 1 │ declare function f(): void;
-      │                  <error><emphasis>^</emphasis></error>
+      │                  ^
     2 │ declare function f<T>(): T;
 
   ℹ Expected the opening function params character (

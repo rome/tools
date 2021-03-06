@@ -113,7 +113,7 @@ JSRoot {
   ✖ Unexpected character =
 
     [a, {b: {c = 1}}] = arr
-               <error><emphasis>^</emphasis></error>
+               ^
 
   ℹ Expected character ,
 

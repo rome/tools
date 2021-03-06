@@ -53,8 +53,7 @@ JSRoot {
   ✖ enum is a reserved word
 
     class enum {}
-          <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
+          ^^^^
 
 
 ```

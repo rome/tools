@@ -81,11 +81,7 @@ JSRoot {
   ✖ arguments is a reserved word
 
     const { arguments } = foo();
-            <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-    <error><emphasis>^</emphasis></error>
+            ^^^^^^^^^
 
 
 ```

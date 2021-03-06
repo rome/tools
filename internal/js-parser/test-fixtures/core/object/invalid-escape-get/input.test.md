@@ -78,7 +78,7 @@ JSRoot {
   ✖ get can't contain a unicode escape
 
     ({ ge\u0074 x() {} })
-         <error><emphasis>^</emphasis></error>
+         ^
 
 
 ```

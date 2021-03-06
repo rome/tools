@@ -92,7 +92,7 @@ JSRoot {
   ✖ Unexpected character =
 
     for ({x = 0} in arr);
-            <error><emphasis>^</emphasis></error>
+            ^
 
   ℹ Expected character ,
 

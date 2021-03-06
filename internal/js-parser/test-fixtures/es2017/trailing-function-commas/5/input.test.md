@@ -63,7 +63,7 @@ JSRoot {
   ✖ Unknown start to an call expression argument
 
     log(,);
-        <error><emphasis>^</emphasis></error>
+        ^
 
 
 ```

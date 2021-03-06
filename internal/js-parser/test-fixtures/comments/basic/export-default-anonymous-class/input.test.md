@@ -28,6 +28,14 @@ JSRoot {
 								}
 								loc: SourceLocation comments/basic/export-default-anonymous-class/input.js 8:4-8:11
 							}
+							meta: JSClassPropertyMeta {
+								abstract: false
+								optional: false
+								readonly: false
+								static: false
+								loc: SourceLocation comments/basic/export-default-anonymous-class/input.js 8:4-8:11
+								start: Position 8:4
+							}
 							body: JSBlockStatement {
 								body: []
 								directives: []
@@ -39,14 +47,6 @@ JSRoot {
 								hasHoistedVars: false
 								params: []
 								loc: SourceLocation comments/basic/export-default-anonymous-class/input.js 8:11-8:13
-							}
-							meta: JSClassPropertyMeta {
-								abstract: false
-								optional: false
-								readonly: false
-								static: false
-								loc: SourceLocation comments/basic/export-default-anonymous-class/input.js 8:4-8:11
-								start: Position 8:4
 							}
 							loc: SourceLocation comments/basic/export-default-anonymous-class/input.js 8:4-9:5
 						}

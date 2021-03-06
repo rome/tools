@@ -95,10 +95,7 @@ JSRoot {
   ✖ Unexpected character f
 
     (\u0061sync function() { await x })
-                <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
+                ^^^^^^^^
 
   ℹ Expected character ,
 

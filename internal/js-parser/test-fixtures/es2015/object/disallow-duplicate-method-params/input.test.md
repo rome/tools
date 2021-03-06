@@ -104,7 +104,7 @@ JSRoot {
 
     1 │ ({
   > 2 │     bar(a, a) {}
-      │            <error><emphasis>^</emphasis></error>
+      │            ^
     3 │ })
 
 

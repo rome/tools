@@ -66,7 +66,7 @@ JSRoot {
   ✖ Expected a semicolon or a line terminator
 
     'use strict'; a package
-                    <error><emphasis>^</emphasis></error>
+                    ^
 
 
 ```

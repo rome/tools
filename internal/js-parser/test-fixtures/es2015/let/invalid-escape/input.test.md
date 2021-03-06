@@ -69,7 +69,7 @@ JSRoot {
   ✖ Expected a semicolon or a line terminator
 
     le\u0074 x = 5
-             <error><emphasis>^</emphasis></error>
+             ^
 
 
 ```

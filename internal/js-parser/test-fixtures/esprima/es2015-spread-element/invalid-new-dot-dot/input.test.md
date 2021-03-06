@@ -68,7 +68,7 @@ JSRoot {
   ✖ Unknown start to an new expression argument
 
     new f(..g);
-          <error><emphasis>^</emphasis></error>
+          ^
 
 
 ```

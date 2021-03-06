@@ -152,7 +152,7 @@ JSRoot {
   ✖ Unexpected character \
 
     export \u0061sync function y() { await x }
-           <error><emphasis>^</emphasis></error>
+           ^
 
   ℹ Expected the opening export specifiers character {
 

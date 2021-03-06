@@ -66,11 +66,7 @@ JSRoot {
 
     1 │ import "x"
   > 2 │ with ({});
-    → │ <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-    → │ <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-    → │ <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-    → │ <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-      │ <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
+      │ ^^^^^^^^^^
 
 
 ```

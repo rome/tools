@@ -73,7 +73,7 @@ JSRoot {
   ✖ Unknown TS non array type start
 
     let x: 0n;
-           <error><emphasis>^</emphasis></error>
+           ^
 
 
 ```

@@ -74,7 +74,7 @@ JSRoot {
   ✖ Unknown start to an if test
 
     if (b,...a, );
-          <error><emphasis>^</emphasis></error>
+          ^
 
 
 ```

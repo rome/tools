@@ -31,10 +31,6 @@ JSRoot {
 										}
 										loc: SourceLocation experimental/class-properties/arguments-in-key/input.js 3:4-3:15
 									}
-									value: JSNumericLiteral {
-										value: 2
-										loc: SourceLocation experimental/class-properties/arguments-in-key/input.js 3:18-3:19
-									}
 									meta: JSClassPropertyMeta {
 										abstract: false
 										optional: false
@@ -42,6 +38,10 @@ JSRoot {
 										static: false
 										loc: SourceLocation experimental/class-properties/arguments-in-key/input.js 3:4-3:15
 										start: Position 3:4
+									}
+									value: JSNumericLiteral {
+										value: 2
+										loc: SourceLocation experimental/class-properties/arguments-in-key/input.js 3:18-3:19
 									}
 									loc: SourceLocation experimental/class-properties/arguments-in-key/input.js 3:4-3:20
 								}

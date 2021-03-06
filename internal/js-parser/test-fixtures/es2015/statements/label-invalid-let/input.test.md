@@ -68,7 +68,7 @@ JSRoot {
   ✖ Expected a semicolon or a line terminator
 
     foo: let bar;
-             <error><emphasis>^</emphasis></error>
+             ^
 
 
 ```

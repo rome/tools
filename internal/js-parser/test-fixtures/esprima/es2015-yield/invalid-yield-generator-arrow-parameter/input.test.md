@@ -88,7 +88,7 @@ JSRoot {
   ✖ yield is not allowed in generator parameters
 
     function *g(){ (yield) => 42 }
-                         <error><emphasis>^</emphasis></error>
+                         ^
 
 
 ```

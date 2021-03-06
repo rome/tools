@@ -89,7 +89,7 @@ JSRoot {
   ✖ No loop label found
 
     x: while (true) { (function () { continue; }); }
-                                     <error><emphasis>^</emphasis></error>
+                                     ^
 
 
 ```

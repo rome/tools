@@ -117,8 +117,7 @@ JSRoot {
   ✖ Legacy octal literals are not allowed in strict mode
 
     "use strict";function foo(){"use strict";}function bar(){var v = 015}
-
-    <error><emphasis>^</emphasis></error>
+                                                                        ^
 
 
 ```

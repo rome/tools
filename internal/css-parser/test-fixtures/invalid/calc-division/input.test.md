@@ -8,6 +8,17 @@
 CSSRoot {
 	body: [
 		CSSRule {
+			prelude: [
+				CSSSelector {
+					patterns: [
+						CSSClassSelector {
+							value: "style"
+							loc: SourceLocation invalid/calc-division/input.css 1:0-1:6
+						}
+					]
+					loc: SourceLocation invalid/calc-division/input.css 1:0-1:7
+				}
+			]
 			block: CSSBlock {
 				value: [
 					CSSDeclaration {
@@ -21,7 +32,11 @@ CSSRoot {
 											CSSCalcProduct {
 												value: [
 													CSSCalcValue {
-														value: CSSDimension {value: 2, unit: "px", loc: SourceLocation invalid/calc-division/input.css 2:13-2:13}
+														value: CSSDimension {
+															value: 2
+															unit: "px"
+															loc: SourceLocation invalid/calc-division/input.css 2:13-2:13
+														}
 														loc: SourceLocation invalid/calc-division/input.css 2:13-2:16
 													}
 												]
@@ -33,7 +48,9 @@ CSSRoot {
 								]
 								loc: SourceLocation invalid/calc-division/input.css 2:13-2:20
 							}
-							CSSRaw {loc: SourceLocation invalid/calc-division/input.css 2:20-2:21}
+							CSSRaw {
+								loc: SourceLocation invalid/calc-division/input.css 2:20-2:21
+							}
 						]
 						important: false
 						loc: SourceLocation invalid/calc-division/input.css 2:1-2:21
@@ -42,12 +59,6 @@ CSSRoot {
 				startingTokenValue: "{"
 				loc: SourceLocation invalid/calc-division/input.css 1:7-3:1
 			}
-			prelude: [
-				CSSSelector {
-					patterns: [CSSClassSelector {value: "style", loc: SourceLocation invalid/calc-division/input.css 1:0-1:6}]
-					loc: SourceLocation invalid/calc-division/input.css 1:0-1:7
-				}
-			]
 			loc: SourceLocation invalid/calc-division/input.css 1:0-3:1
 		}
 	]
@@ -55,14 +66,19 @@ CSSRoot {
 	corrupt: false
 	diagnostics: [
 		{
+			origins: [{category: "parse"}]
 			description: {
 				advice: []
 				category: ["parse"]
 				categoryValue: "css"
 				message: RAW_MARKUP {value: "Incorrect character, expected a number or a parenthesis"}
 			}
-			location: {language: "css", path: RelativePath<invalid/calc-division/input.css>, end: Position 2:20, start: Position 2:17}
-			origins: [{category: "parse"}]
+			location: {
+				language: "css"
+				path: RelativePath<invalid/calc-division/input.css>
+				end: Position 2:20
+				start: Position 2:17
+			}
 		}
 	]
 	path: RelativePath<invalid/calc-division/input.css>

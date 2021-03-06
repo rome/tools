@@ -70,10 +70,7 @@ JSRoot {
   ✖ Unexpected keyword default
 
     import { default } from "foo";
-             <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-    <error><emphasis>^</emphasis></error>
+             ^^^^^^^
 
 
 ```

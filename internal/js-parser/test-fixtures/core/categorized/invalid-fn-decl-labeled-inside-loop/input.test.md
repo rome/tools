@@ -90,7 +90,7 @@ JSRoot {
     the body of an if statement
 
     while (1) foo: bar: function foo(){}
-                        <error><emphasis>^</emphasis></error>
+                        ^
 
 
 ```

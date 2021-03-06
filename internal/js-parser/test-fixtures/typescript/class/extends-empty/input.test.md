@@ -54,7 +54,7 @@ JSRoot {
   ✖ extends list cannot be empty
 
   > 1 │ interface foo extends {
-      │                       <error><emphasis>^</emphasis></error>
+      │                       ^
     2 │ }
 
 

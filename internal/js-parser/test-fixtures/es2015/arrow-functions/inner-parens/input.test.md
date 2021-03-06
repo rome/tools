@@ -82,8 +82,7 @@ JSRoot {
   ✖ Function parameters can't be parenthesized
 
     var foo = ((foo)) => {};
-                <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-    <error><emphasis>^</emphasis></error>
+                ^^^
 
 
 ```

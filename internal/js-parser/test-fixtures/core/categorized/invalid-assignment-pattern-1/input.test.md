@@ -70,9 +70,7 @@ JSRoot {
   ✖ Invalid parenthesized binding
 
     (a = 1) = t
-     <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-    <error><emphasis>^</emphasis></error>
+     ^^^^^
 
 
 ```

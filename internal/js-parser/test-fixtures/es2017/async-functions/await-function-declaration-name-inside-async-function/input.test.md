@@ -88,9 +88,7 @@ parse(js) ━━━━━━━━━━━━━━━━━━━━━━━�
 
     1 │ async function foo() {
   > 2 │   function await() {}
-    → │            <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-    → │ <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-      │ <error><emphasis>^</emphasis></error>
+      │            ^^^^^
     3 │ }
 
 

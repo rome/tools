@@ -87,11 +87,7 @@ JSRoot {
   ✖ Loop variable declaration may not have an initializer
 
     for (let x = 42 in list) process(x);
-         <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
+         ^^^^^^^^^^
 
 
 ```

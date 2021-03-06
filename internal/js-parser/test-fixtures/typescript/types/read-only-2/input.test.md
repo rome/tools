@@ -72,7 +72,7 @@ JSRoot {
   ✖ 'readonly' type modifier is only permitted on array and tuple literal types.
 
     type T31 = readonly T;  // Error
-                        <error><emphasis>^</emphasis></error>
+                        ^
 
 
 ```

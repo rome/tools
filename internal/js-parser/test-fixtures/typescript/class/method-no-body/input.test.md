@@ -25,13 +25,6 @@ JSRoot {
 							}
 							loc: SourceLocation typescript/class/method-no-body/input.ts 2:4-2:5
 						}
-						head: JSFunctionHead {
-							async: false
-							generator: false
-							hasHoistedVars: false
-							params: []
-							loc: SourceLocation typescript/class/method-no-body/input.ts 2:5-2:7
-						}
 						meta: JSClassPropertyMeta {
 							abstract: false
 							optional: false
@@ -39,6 +32,13 @@ JSRoot {
 							static: false
 							loc: SourceLocation typescript/class/method-no-body/input.ts 2:4-2:5
 							start: Position 2:4
+						}
+						head: JSFunctionHead {
+							async: false
+							generator: false
+							hasHoistedVars: false
+							params: []
+							loc: SourceLocation typescript/class/method-no-body/input.ts 2:5-2:7
 						}
 						loc: SourceLocation typescript/class/method-no-body/input.ts 2:4-2:8
 					}
@@ -51,6 +51,14 @@ JSRoot {
 							}
 							loc: SourceLocation typescript/class/method-no-body/input.ts 3:4-3:5
 						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							optional: false
+							readonly: false
+							static: false
+							loc: SourceLocation typescript/class/method-no-body/input.ts 3:4-3:5
+							start: Position 3:4
+						}
 						head: JSFunctionHead {
 							async: false
 							generator: false
@@ -60,14 +68,6 @@ JSRoot {
 								loc: SourceLocation typescript/class/method-no-body/input.ts 3:9-3:13
 							}
 							loc: SourceLocation typescript/class/method-no-body/input.ts 3:5-3:13
-						}
-						meta: JSClassPropertyMeta {
-							abstract: false
-							optional: false
-							readonly: false
-							static: false
-							loc: SourceLocation typescript/class/method-no-body/input.ts 3:4-3:5
-							start: Position 3:4
 						}
 						loc: SourceLocation typescript/class/method-no-body/input.ts 3:4-3:14
 					}

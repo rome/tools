@@ -78,7 +78,7 @@ JSRoot {
 
     1 │ class Spaces {
   > 2 │   #  wrongSpaces;
-      │    <error><emphasis>^</emphasis></error>
+      │    ^
     3 │ }
 
 

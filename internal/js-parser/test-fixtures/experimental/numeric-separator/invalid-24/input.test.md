@@ -56,7 +56,7 @@ JSRoot {
   ✖ Unknown start to an statement expression
 
     ._1_1
-    <error><emphasis>^</emphasis></error>
+    ^
 
 
 ```

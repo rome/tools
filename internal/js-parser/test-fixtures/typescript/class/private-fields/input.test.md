@@ -196,7 +196,7 @@ JSRoot {
     3 │   #b?;
     4 │   #c?: number;
   > 5 │   #d!;
-      │     <error><emphasis>^</emphasis></error>
+      │     ^
     6 │   #e!: boolean;
     7 │ }
 

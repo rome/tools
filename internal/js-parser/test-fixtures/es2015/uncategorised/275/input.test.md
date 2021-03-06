@@ -62,7 +62,7 @@ JSRoot {
   ✖ Unexpected character }
 
     ({ "chance" }) = obj
-                <error><emphasis>^</emphasis></error>
+                ^
 
 
 ```

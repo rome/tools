@@ -87,9 +87,7 @@ JSRoot {
 
     1 │ "use strict";
   > 2 │ const { public } = foo();
-    → │         <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-    → │ <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-      │ <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
+      │         ^^^^^^
 
 
 ```

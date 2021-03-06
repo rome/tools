@@ -64,10 +64,7 @@ JSRoot {
   ✖ Unexpected keyword default
 
     export {default}
-            <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-    <error><emphasis>^</emphasis></error>
+            ^^^^^^^
 
 
 ```

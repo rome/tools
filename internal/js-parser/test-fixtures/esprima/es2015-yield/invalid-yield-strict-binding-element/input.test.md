@@ -82,9 +82,7 @@ JSRoot {
   ✖ yield is a reserved word
 
     "use strict"; var { x: yield } = foo;
-                           <error><emphasis>^</emphasis></error>
-    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
+                           ^^^^^
 
 
 ```

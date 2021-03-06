@@ -122,7 +122,7 @@ JSRoot {
 
     1 │ async function foo() {
   > 2 │   function bar(x = await 2) {}
-      │                          <error><emphasis>^</emphasis></error>
+      │                          ^
     3 │ }
 
 

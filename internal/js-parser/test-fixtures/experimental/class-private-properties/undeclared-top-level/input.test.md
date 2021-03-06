@@ -77,7 +77,7 @@ JSRoot {
   ✖ Unexpected character #
 
     var prop = foo.#priv;
-                   <error><emphasis>^</emphasis></error>
+                   ^
 
 
 ```

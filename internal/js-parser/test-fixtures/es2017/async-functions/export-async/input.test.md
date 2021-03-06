@@ -60,7 +60,7 @@ JSRoot {
     keyword was found
 
     export async;
-                <error><emphasis>^</emphasis></error>
+                ^
 
 
 ```

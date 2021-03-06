@@ -73,7 +73,7 @@ JSRoot {
   ✖ Lexical declaration cannot appear in a single-statement context
 
     foo: const bar = null;
-         <error><emphasis>^</emphasis></error>
+         ^
 
 
 ```

@@ -24,10 +24,6 @@ JSRoot {
 							}
 							loc: SourceLocation experimental/class-private-names-duplicated/instance-field-static-set/input.js 2:2-2:4
 						}
-						value: JSNumericLiteral {
-							value: 0
-							loc: SourceLocation experimental/class-private-names-duplicated/instance-field-static-set/input.js 2:7-2:8
-						}
 						meta: JSClassPropertyMeta {
 							abstract: false
 							optional: false
@@ -35,6 +31,10 @@ JSRoot {
 							static: false
 							loc: SourceLocation experimental/class-private-names-duplicated/instance-field-static-set/input.js 2:2-2:4
 							start: Position 2:2
+						}
+						value: JSNumericLiteral {
+							value: 0
+							loc: SourceLocation experimental/class-private-names-duplicated/instance-field-static-set/input.js 2:7-2:8
 						}
 						loc: SourceLocation experimental/class-private-names-duplicated/instance-field-static-set/input.js 2:2-2:9
 					}
@@ -46,6 +46,14 @@ JSRoot {
 								loc: SourceLocation experimental/class-private-names-duplicated/instance-field-static-set/input.js 3:14-3:15 (x)
 							}
 							loc: SourceLocation experimental/class-private-names-duplicated/instance-field-static-set/input.js 3:13-3:15
+						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							optional: false
+							readonly: false
+							static: true
+							loc: SourceLocation experimental/class-private-names-duplicated/instance-field-static-set/input.js 3:2-3:15
+							start: Position 3:2
 						}
 						body: JSBlockStatement {
 							body: []
@@ -66,14 +74,6 @@ JSRoot {
 								}
 							]
 							loc: SourceLocation experimental/class-private-names-duplicated/instance-field-static-set/input.js 3:15-3:18
-						}
-						meta: JSClassPropertyMeta {
-							abstract: false
-							optional: false
-							readonly: false
-							static: true
-							loc: SourceLocation experimental/class-private-names-duplicated/instance-field-static-set/input.js 3:2-3:15
-							start: Position 3:2
 						}
 						loc: SourceLocation experimental/class-private-names-duplicated/instance-field-static-set/input.js 3:2-3:21
 					}

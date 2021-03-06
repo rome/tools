@@ -62,7 +62,7 @@ JSRoot {
   ✖ Expected number in radix 8
 
     0o9
-      <error><emphasis>^</emphasis></error>
+      ^
 
 
 ```

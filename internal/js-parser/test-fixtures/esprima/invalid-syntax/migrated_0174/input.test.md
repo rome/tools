@@ -64,7 +64,7 @@ JSRoot {
   ✖ No loop label found
 
     switch (x) { default: continue; }
-                          <error><emphasis>^</emphasis></error>
+                          ^
 
 
 ```

@@ -67,7 +67,7 @@ JSRoot {
   ✖ Unknown label x
 
     while (true) { break x; }
-                   <error><emphasis>^</emphasis></error>
+                   ^
 
 
 ```

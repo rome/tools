@@ -25,6 +25,14 @@ JSRoot {
 							}
 							loc: SourceLocation typescript/class/parameter-properties-binding-patterns/input.ts 2:4-2:15
 						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							optional: false
+							readonly: false
+							static: false
+							loc: SourceLocation typescript/class/parameter-properties-binding-patterns/input.ts 2:4-2:15
+							start: Position 2:4
+						}
 						body: JSBlockStatement {
 							body: []
 							directives: []
@@ -46,14 +54,6 @@ JSRoot {
 								}
 							]
 							loc: SourceLocation typescript/class/parameter-properties-binding-patterns/input.ts 2:15-2:26
-						}
-						meta: JSClassPropertyMeta {
-							abstract: false
-							optional: false
-							readonly: false
-							static: false
-							loc: SourceLocation typescript/class/parameter-properties-binding-patterns/input.ts 2:4-2:15
-							start: Position 2:4
 						}
 						loc: SourceLocation typescript/class/parameter-properties-binding-patterns/input.ts 2:4-2:29
 					}
@@ -101,7 +101,7 @@ JSRoot {
 
     1 │ class C {
   > 2 │     constructor(public []) {}
-      │                 <error><emphasis>^</emphasis></error>
+      │                 ^
     3 │ }
 
 

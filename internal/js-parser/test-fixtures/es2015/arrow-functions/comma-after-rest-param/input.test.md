@@ -68,7 +68,7 @@ JSRoot {
   ✖ The rest element has to be the last element when destructuring
 
     (...rest,) => {}
-            <error><emphasis>^</emphasis></error>
+            ^
 
 
 ```

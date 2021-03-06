@@ -81,7 +81,7 @@ JSRoot {
   ✖ The rest element has to be the last element when destructuring
 
     function t(...rest, b) { }
-                      <error><emphasis>^</emphasis></error>
+                      ^
 
 
 ```

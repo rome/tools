@@ -93,7 +93,7 @@ JSRoot {
   ✖ yield is not allowed in generator parameters
 
     ({ *method(x = yield) {} })
-                   <error><emphasis>^</emphasis></error>
+                   ^
 
 
 ```

@@ -25,6 +25,14 @@ JSRoot {
 							}
 							loc: SourceLocation typescript/class/method-optional/input.ts 2:4-2:5
 						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							optional: true
+							readonly: false
+							static: false
+							loc: SourceLocation typescript/class/method-optional/input.ts 2:4-2:6
+							start: Position 2:4
+						}
 						body: JSBlockStatement {
 							body: []
 							directives: []
@@ -39,14 +47,6 @@ JSRoot {
 								loc: SourceLocation typescript/class/method-optional/input.ts 2:10-2:14
 							}
 							loc: SourceLocation typescript/class/method-optional/input.ts 2:6-2:14
-						}
-						meta: JSClassPropertyMeta {
-							abstract: false
-							optional: true
-							readonly: false
-							static: false
-							loc: SourceLocation typescript/class/method-optional/input.ts 2:4-2:6
-							start: Position 2:4
 						}
 						loc: SourceLocation typescript/class/method-optional/input.ts 2:4-2:17
 					}

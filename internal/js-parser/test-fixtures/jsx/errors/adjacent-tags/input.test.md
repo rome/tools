@@ -133,7 +133,7 @@ JSRoot {
     <>...</>?
 
     var x = <div>one</div><div>two</div>;
-                          <error><emphasis>^</emphasis></error>
+                          ^
 
 
 ```

@@ -99,7 +99,7 @@ JSRoot {
 
     1 │ class X {}
   > 2 │ 05
-      │   <error><emphasis>^</emphasis></error>
+      │   ^
     3 │
     4 │ function x() { 'use strict' }
 

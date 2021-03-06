@@ -111,7 +111,7 @@ JSRoot {
 
     1 │ function f() {
   > 2 │   for await (let x of y);
-      │       <error><emphasis>^</emphasis></error>
+      │       ^
     3 │ }
 
   ℹ Expected the opening for head character (

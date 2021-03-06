@@ -24,6 +24,14 @@ JSRoot {
 							}
 							loc: SourceLocation experimental/class-properties/super/input.js 2:2-2:3
 						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							optional: false
+							readonly: false
+							static: false
+							loc: SourceLocation experimental/class-properties/super/input.js 2:2-2:3
+							start: Position 2:2
+						}
 						value: JSCallExpression {
 							arguments: []
 							callee: JSMemberExpression {
@@ -41,14 +49,6 @@ JSRoot {
 							}
 							loc: SourceLocation experimental/class-properties/super/input.js 2:6-2:15
 						}
-						meta: JSClassPropertyMeta {
-							abstract: false
-							optional: false
-							readonly: false
-							static: false
-							loc: SourceLocation experimental/class-properties/super/input.js 2:2-2:3
-							start: Position 2:2
-						}
 						loc: SourceLocation experimental/class-properties/super/input.js 2:2-2:16
 					}
 				]
@@ -64,6 +64,14 @@ JSRoot {
 									}
 									loc: SourceLocation experimental/class-properties/super/input.js 1:28-1:29
 								}
+								meta: JSClassPropertyMeta {
+									abstract: false
+									optional: false
+									readonly: false
+									static: false
+									loc: SourceLocation experimental/class-properties/super/input.js 1:28-1:29
+									start: Position 1:28
+								}
 								body: JSBlockStatement {
 									body: []
 									directives: []
@@ -75,14 +83,6 @@ JSRoot {
 									hasHoistedVars: false
 									params: []
 									loc: SourceLocation experimental/class-properties/super/input.js 1:29-1:31
-								}
-								meta: JSClassPropertyMeta {
-									abstract: false
-									optional: false
-									readonly: false
-									static: false
-									loc: SourceLocation experimental/class-properties/super/input.js 1:28-1:29
-									start: Position 1:28
 								}
 								loc: SourceLocation experimental/class-properties/super/input.js 1:28-1:33
 							}

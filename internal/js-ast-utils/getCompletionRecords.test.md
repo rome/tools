@@ -9,7 +9,13 @@
 ```javascript
 [
 	COMPLETION {
-		node: JSReturnStatement {argument: JSBooleanLiteral {value: false, loc: SourceLocation unknown 1:22-1:27}, loc: SourceLocation unknown 1:15-1:28}
+		node: JSReturnStatement {
+			argument: JSBooleanLiteral {
+				value: false
+				loc: SourceLocation unknown 1:22-1:27
+			}
+			loc: SourceLocation unknown 1:15-1:28
+		}
 	}
 ]
 ```
@@ -17,7 +23,13 @@
 ### `1`
 
 ```javascript
-[COMPLETION {node: JSReturnStatement {loc: SourceLocation unknown 1:15-1:22}}]
+[
+	COMPLETION {
+		node: JSReturnStatement {
+			loc: SourceLocation unknown 1:15-1:22
+		}
+	}
+]
 ```
 
 ### `2`
@@ -25,17 +37,34 @@
 ```javascript
 [
 	COMPLETION {
-		node: JSReturnStatement {argument: JSBooleanLiteral {value: false, loc: SourceLocation unknown 1:32-1:37}, loc: SourceLocation unknown 1:25-1:38}
+		node: JSReturnStatement {
+			argument: JSBooleanLiteral {
+				value: false
+				loc: SourceLocation unknown 1:32-1:37
+			}
+			loc: SourceLocation unknown 1:25-1:38
+		}
 	}
 	INVALID {
 		description: "empty alternate"
 		node: JSIfStatement {
 			consequent: JSBlockStatement {
-				body: [JSReturnStatement {argument: JSBooleanLiteral {value: false, loc: SourceLocation unknown 1:32-1:37}, loc: SourceLocation unknown 1:25-1:38}]
+				body: [
+					JSReturnStatement {
+						argument: JSBooleanLiteral {
+							value: false
+							loc: SourceLocation unknown 1:32-1:37
+						}
+						loc: SourceLocation unknown 1:25-1:38
+					}
+				]
 				directives: []
 				loc: SourceLocation unknown 1:24-1:39
 			}
-			test: JSReferenceIdentifier {name: "bar", loc: SourceLocation unknown 1:19-1:22 (bar)}
+			test: JSReferenceIdentifier {
+				name: "bar"
+				loc: SourceLocation unknown 1:19-1:22 (bar)
+			}
 			loc: SourceLocation unknown 1:15-1:39
 		}
 	}
@@ -47,10 +76,22 @@
 ```javascript
 [
 	COMPLETION {
-		node: JSReturnStatement {argument: JSBooleanLiteral {value: false, loc: SourceLocation unknown 1:32-1:37}, loc: SourceLocation unknown 1:25-1:38}
+		node: JSReturnStatement {
+			argument: JSBooleanLiteral {
+				value: false
+				loc: SourceLocation unknown 1:32-1:37
+			}
+			loc: SourceLocation unknown 1:25-1:38
+		}
 	}
 	COMPLETION {
-		node: JSReturnStatement {argument: JSBooleanLiteral {value: true, loc: SourceLocation unknown 1:53-1:57}, loc: SourceLocation unknown 1:46-1:58}
+		node: JSReturnStatement {
+			argument: JSBooleanLiteral {
+				value: true
+				loc: SourceLocation unknown 1:53-1:57
+			}
+			loc: SourceLocation unknown 1:46-1:58
+		}
 	}
 ]
 ```
@@ -60,7 +101,13 @@
 ```javascript
 [
 	COMPLETION {
-		node: JSReturnStatement {argument: JSBooleanLiteral {value: false, loc: SourceLocation unknown 1:46-1:51}, loc: SourceLocation unknown 1:39-1:52}
+		node: JSReturnStatement {
+			argument: JSBooleanLiteral {
+				value: false
+				loc: SourceLocation unknown 1:46-1:51
+			}
+			loc: SourceLocation unknown 1:39-1:52
+		}
 	}
 ]
 ```
@@ -70,7 +117,13 @@
 ```javascript
 [
 	COMPLETION {
-		node: JSReturnStatement {argument: JSBooleanLiteral {value: false, loc: SourceLocation unknown 1:46-1:51}, loc: SourceLocation unknown 1:39-1:52}
+		node: JSReturnStatement {
+			argument: JSBooleanLiteral {
+				value: false
+				loc: SourceLocation unknown 1:46-1:51
+			}
+			loc: SourceLocation unknown 1:39-1:52
+		}
 	}
 ]
 ```
@@ -80,7 +133,16 @@
 ### `0`
 
 ```javascript
-[INVALID {description: "empty block", node: JSBlockStatement {body: [], directives: [], loc: SourceLocation unknown 1:15-1:17}}]
+[
+	INVALID {
+		description: "empty block"
+		node: JSBlockStatement {
+			body: []
+			directives: []
+			loc: SourceLocation unknown 1:15-1:17
+		}
+	}
+]
 ```
 
 ### `1`
@@ -91,7 +153,12 @@
 		description: "empty block"
 		node: JSBlockStatement {
 			body: []
-			directives: [JSDirective {value: "foobar", loc: SourceLocation unknown 1:15-1:24}]
+			directives: [
+				JSDirective {
+					value: "foobar"
+					loc: SourceLocation unknown 1:15-1:24
+				}
+			]
 			loc: SourceLocation unknown 1:14-1:25
 		}
 	}
@@ -106,7 +173,13 @@
 		description: "empty block"
 		node: JSBlockStatement {
 			body: [
-				JSExpressionStatement {expression: JSStringLiteral {value: "foobar", loc: SourceLocation unknown 1:25-1:33}, loc: SourceLocation unknown 1:25-1:34}
+				JSExpressionStatement {
+					expression: JSStringLiteral {
+						value: "foobar"
+						loc: SourceLocation unknown 1:25-1:33
+					}
+					loc: SourceLocation unknown 1:25-1:34
+				}
 			]
 			directives: []
 			loc: SourceLocation unknown 1:24-1:35
@@ -117,12 +190,21 @@
 		node: JSIfStatement {
 			consequent: JSBlockStatement {
 				body: [
-					JSExpressionStatement {expression: JSStringLiteral {value: "foobar", loc: SourceLocation unknown 1:25-1:33}, loc: SourceLocation unknown 1:25-1:34}
+					JSExpressionStatement {
+						expression: JSStringLiteral {
+							value: "foobar"
+							loc: SourceLocation unknown 1:25-1:33
+						}
+						loc: SourceLocation unknown 1:25-1:34
+					}
 				]
 				directives: []
 				loc: SourceLocation unknown 1:24-1:35
 			}
-			test: JSReferenceIdentifier {name: "bar", loc: SourceLocation unknown 1:19-1:22 (bar)}
+			test: JSReferenceIdentifier {
+				name: "bar"
+				loc: SourceLocation unknown 1:19-1:22 (bar)
+			}
 			loc: SourceLocation unknown 1:15-1:35
 		}
 	}
@@ -137,13 +219,26 @@
 		description: "empty block"
 		node: JSBlockStatement {
 			body: [
-				JSExpressionStatement {expression: JSStringLiteral {value: "foobar", loc: SourceLocation unknown 1:25-1:33}, loc: SourceLocation unknown 1:25-1:34}
+				JSExpressionStatement {
+					expression: JSStringLiteral {
+						value: "foobar"
+						loc: SourceLocation unknown 1:25-1:33
+					}
+					loc: SourceLocation unknown 1:25-1:34
+				}
 			]
 			directives: []
 			loc: SourceLocation unknown 1:24-1:35
 		}
 	}
-	INVALID {description: "empty block", node: JSBlockStatement {body: [], directives: [], loc: SourceLocation unknown 1:41-1:43}}
+	INVALID {
+		description: "empty block"
+		node: JSBlockStatement {
+			body: []
+			directives: []
+			loc: SourceLocation unknown 1:41-1:43
+		}
+	}
 ]
 ```
 
@@ -155,7 +250,10 @@
 		description: "switch with no default clause"
 		node: JSSwitchStatement {
 			cases: []
-			discriminant: JSReferenceIdentifier {name: "foo", loc: SourceLocation unknown 1:23-1:26 (foo)}
+			discriminant: JSReferenceIdentifier {
+				name: "foo"
+				loc: SourceLocation unknown 1:23-1:26 (foo)
+			}
 			loc: SourceLocation unknown 1:15-1:30
 		}
 	}
@@ -171,12 +269,24 @@
 		node: JSSwitchStatement {
 			cases: [
 				JSSwitchCase {
-					consequent: [JSBlockStatement {body: [], directives: [], loc: SourceLocation unknown 1:41-1:43}]
-					test: JSStringLiteral {value: "bar", loc: SourceLocation unknown 1:34-1:39}
+					consequent: [
+						JSBlockStatement {
+							body: []
+							directives: []
+							loc: SourceLocation unknown 1:41-1:43
+						}
+					]
+					test: JSStringLiteral {
+						value: "bar"
+						loc: SourceLocation unknown 1:34-1:39
+					}
 					loc: SourceLocation unknown 1:29-1:43
 				}
 			]
-			discriminant: JSReferenceIdentifier {name: "foo", loc: SourceLocation unknown 1:23-1:26 (foo)}
+			discriminant: JSReferenceIdentifier {
+				name: "foo"
+				loc: SourceLocation unknown 1:23-1:26 (foo)
+			}
 			loc: SourceLocation unknown 1:15-1:44
 		}
 	}
@@ -186,7 +296,16 @@
 ### `6`
 
 ```javascript
-[INVALID {description: "empty block", node: JSBlockStatement {body: [], directives: [], loc: SourceLocation unknown 1:38-1:40}}]
+[
+	INVALID {
+		description: "empty block"
+		node: JSBlockStatement {
+			body: []
+			directives: []
+			loc: SourceLocation unknown 1:38-1:40
+		}
+	}
+]
 ```
 
 ## `mix`
@@ -194,17 +313,34 @@
 ```javascript
 [
 	COMPLETION {
-		node: JSReturnStatement {argument: JSBooleanLiteral {value: false, loc: SourceLocation unknown 1:57-1:62}, loc: SourceLocation unknown 1:50-1:63}
+		node: JSReturnStatement {
+			argument: JSBooleanLiteral {
+				value: false
+				loc: SourceLocation unknown 1:57-1:62
+			}
+			loc: SourceLocation unknown 1:50-1:63
+		}
 	}
 	INVALID {
 		description: "empty alternate"
 		node: JSIfStatement {
 			consequent: JSBlockStatement {
-				body: [JSReturnStatement {argument: JSBooleanLiteral {value: false, loc: SourceLocation unknown 1:57-1:62}, loc: SourceLocation unknown 1:50-1:63}]
+				body: [
+					JSReturnStatement {
+						argument: JSBooleanLiteral {
+							value: false
+							loc: SourceLocation unknown 1:57-1:62
+						}
+						loc: SourceLocation unknown 1:50-1:63
+					}
+				]
 				directives: []
 				loc: SourceLocation unknown 1:49-1:64
 			}
-			test: JSBooleanLiteral {value: true, loc: SourceLocation unknown 1:43-1:47}
+			test: JSBooleanLiteral {
+				value: true
+				loc: SourceLocation unknown 1:43-1:47
+			}
 			loc: SourceLocation unknown 1:39-1:64
 		}
 	}

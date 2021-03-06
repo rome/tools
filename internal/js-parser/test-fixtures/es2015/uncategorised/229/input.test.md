@@ -63,9 +63,7 @@ JSRoot {
   ✖ Unexpected keyword super
 
     var super
-        <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-    <error><emphasis>^</emphasis></error>
+        ^^^^^
 
 
 ```

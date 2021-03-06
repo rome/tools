@@ -77,7 +77,7 @@ parse(js) ━━━━━━━━━━━━━━━━━━━━━━━�
   ✖ Expected a semicolon or a line terminator
 
   > 1 │ import "x" with
-      │            <error><emphasis>^</emphasis></error>
+      │            ^
     2 │ type: "json"
 
 

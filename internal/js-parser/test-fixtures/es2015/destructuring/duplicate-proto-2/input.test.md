@@ -101,11 +101,7 @@ JSRoot {
   ✖ Redefinition of __proto__ property
 
     ([{ __proto__: x, __proto__: y }] = [{}]);
-                      <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-    <error><emphasis>^</emphasis></error>
+                      ^^^^^^^^^
 
 
 ```

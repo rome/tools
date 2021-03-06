@@ -123,12 +123,12 @@ JSRoot {
   ✖ Unclosed property name
 
     ({get[a,b]:0})
-         <error><emphasis>^</emphasis></error>
+         ^
 
   ℹ We expected to find the closing character ] here
 
     ({get[a,b]:0})
-           <error><emphasis>^</emphasis></error>
+           ^
 
 
 ```

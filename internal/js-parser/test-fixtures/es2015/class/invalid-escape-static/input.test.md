@@ -25,6 +25,14 @@ JSRoot {
 							}
 							loc: SourceLocation es2015/class/invalid-escape-static/input.js 1:22-1:23
 						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							optional: false
+							readonly: false
+							static: true
+							loc: SourceLocation es2015/class/invalid-escape-static/input.js 1:10-1:23
+							start: Position 1:10
+						}
 						body: JSBlockStatement {
 							body: []
 							directives: []
@@ -36,14 +44,6 @@ JSRoot {
 							hasHoistedVars: false
 							params: []
 							loc: SourceLocation es2015/class/invalid-escape-static/input.js 1:23-1:25
-						}
-						meta: JSClassPropertyMeta {
-							abstract: false
-							optional: false
-							readonly: false
-							static: true
-							loc: SourceLocation es2015/class/invalid-escape-static/input.js 1:10-1:23
-							start: Position 1:10
 						}
 						loc: SourceLocation es2015/class/invalid-escape-static/input.js 1:10-1:28
 					}
@@ -90,7 +90,7 @@ JSRoot {
   ✖ static can't contain a unicode escape
 
     class X { st\u0061tic y() {} }
-                <error><emphasis>^</emphasis></error>
+                ^
 
 
 ```

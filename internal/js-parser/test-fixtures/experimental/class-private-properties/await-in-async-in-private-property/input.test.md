@@ -24,6 +24,14 @@ JSRoot {
 							}
 							loc: SourceLocation experimental/class-private-properties/await-in-async-in-private-property/input.js 2:2-2:4
 						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							optional: false
+							readonly: false
+							static: false
+							loc: SourceLocation experimental/class-private-properties/await-in-async-in-private-property/input.js 2:2-2:4
+							start: Position 2:2
+						}
 						value: JSArrowFunctionExpression {
 							body: JSAwaitExpression {
 								argument: JSNumericLiteral {
@@ -39,14 +47,6 @@ JSRoot {
 								loc: SourceLocation experimental/class-private-properties/await-in-async-in-private-property/input.js 2:7-2:18
 							}
 							loc: SourceLocation experimental/class-private-properties/await-in-async-in-private-property/input.js 2:7-2:27
-						}
-						meta: JSClassPropertyMeta {
-							abstract: false
-							optional: false
-							readonly: false
-							static: false
-							loc: SourceLocation experimental/class-private-properties/await-in-async-in-private-property/input.js 2:2-2:4
-							start: Position 2:2
 						}
 						loc: SourceLocation experimental/class-private-properties/await-in-async-in-private-property/input.js 2:2-2:28
 					}

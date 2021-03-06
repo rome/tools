@@ -85,7 +85,7 @@ JSRoot {
   ✖ Unexpected character /
 
     p = { q/ }
-           <error><emphasis>^</emphasis></error>
+           ^
 
   ℹ Expected character ,
 

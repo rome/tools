@@ -24,6 +24,14 @@ JSRoot {
 							}
 							loc: SourceLocation experimental/class-properties/super-inside-function/input.js 2:2-2:5
 						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							optional: false
+							readonly: false
+							static: false
+							loc: SourceLocation experimental/class-properties/super-inside-function/input.js 2:2-2:5
+							start: Position 2:2
+						}
 						value: JSFunctionExpression {
 							id: JSBindingIdentifier {
 								name: "fn"
@@ -63,14 +71,6 @@ JSRoot {
 								loc: SourceLocation experimental/class-properties/super-inside-function/input.js 2:19-2:21
 							}
 							loc: SourceLocation experimental/class-properties/super-inside-function/input.js 2:8-4:3
-						}
-						meta: JSClassPropertyMeta {
-							abstract: false
-							optional: false
-							readonly: false
-							static: false
-							loc: SourceLocation experimental/class-properties/super-inside-function/input.js 2:2-2:5
-							start: Position 2:2
 						}
 						loc: SourceLocation experimental/class-properties/super-inside-function/input.js 2:2-4:3
 					}

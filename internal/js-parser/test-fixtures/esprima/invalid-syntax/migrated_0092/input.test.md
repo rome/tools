@@ -82,7 +82,7 @@ JSRoot {
   ℹ Defined already here
 
     (a, a) => 42
-        <error><emphasis>^</emphasis></error>
+        ^
 
 
 ```

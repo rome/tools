@@ -66,9 +66,7 @@ JSRoot {
   ✖ Unexpected keyword false
 
     function false() { }
-             <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-    <error><emphasis>^</emphasis></error>
+             ^^^^^
 
 
 ```

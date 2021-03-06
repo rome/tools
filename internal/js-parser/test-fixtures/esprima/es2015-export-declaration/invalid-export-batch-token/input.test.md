@@ -66,7 +66,7 @@ JSRoot {
   ✖ Expected `from` for an export node
 
     export * +
-             <error><emphasis>^</emphasis></error>
+             ^
 
 
 ```

@@ -43,6 +43,14 @@ JSRoot {
 							}
 							loc: SourceLocation experimental/class-properties/no-ctor-2/input.js 3:3-3:4
 						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							optional: false
+							readonly: false
+							static: false
+							loc: SourceLocation experimental/class-properties/no-ctor-2/input.js 3:2-3:4
+							start: Position 3:2
+						}
 						body: JSBlockStatement {
 							body: []
 							directives: []
@@ -54,14 +62,6 @@ JSRoot {
 							hasHoistedVars: false
 							params: []
 							loc: SourceLocation experimental/class-properties/no-ctor-2/input.js 3:4-3:6
-						}
-						meta: JSClassPropertyMeta {
-							abstract: false
-							optional: false
-							readonly: false
-							static: false
-							loc: SourceLocation experimental/class-properties/no-ctor-2/input.js 3:2-3:4
-							start: Position 3:2
 						}
 						loc: SourceLocation experimental/class-properties/no-ctor-2/input.js 3:2-3:8
 					}
@@ -109,12 +109,7 @@ JSRoot {
 
     1 │ class Foo {
   > 2 │   constructor
-    → │   <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-    → │ <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-    → │ <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-    → │ <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-    → │ <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-      │ <error><emphasis>^</emphasis></error>
+      │   ^^^^^^^^^^^
     3 │   *x(){}
     4 │ }
 

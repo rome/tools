@@ -81,7 +81,7 @@ JSRoot {
   ✖ Unexpected character i
 
     for (var i, i2 in {});
-                   <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
+                   ^^
 
   ℹ Expected character ;
 

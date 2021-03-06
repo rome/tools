@@ -74,8 +74,7 @@ JSRoot {
   ✖ Unexpected keyword null
 
     function t(null) { }
-               <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
+               ^^^^
 
 
 ```

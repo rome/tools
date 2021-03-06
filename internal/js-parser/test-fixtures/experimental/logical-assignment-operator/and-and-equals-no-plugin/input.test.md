@@ -96,7 +96,7 @@ JSRoot {
   ✖ Unknown start to an statement expression
 
   > 1 │ a &&= b;
-      │     <error><emphasis>^</emphasis></error>
+      │     ^
     2 │ obj.a &&= b;
 
 

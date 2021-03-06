@@ -25,6 +25,14 @@ JSRoot {
 							}
 							loc: SourceLocation es2015/class-methods/disallow-duplicate-method-params/input.js 2:4-2:7
 						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							optional: false
+							readonly: false
+							static: false
+							loc: SourceLocation es2015/class-methods/disallow-duplicate-method-params/input.js 2:4-2:7
+							start: Position 2:4
+						}
 						body: JSBlockStatement {
 							body: []
 							directives: []
@@ -51,14 +59,6 @@ JSRoot {
 								}
 							]
 							loc: SourceLocation es2015/class-methods/disallow-duplicate-method-params/input.js 2:7-2:13
-						}
-						meta: JSClassPropertyMeta {
-							abstract: false
-							optional: false
-							readonly: false
-							static: false
-							loc: SourceLocation es2015/class-methods/disallow-duplicate-method-params/input.js 2:4-2:7
-							start: Position 2:4
 						}
 						loc: SourceLocation es2015/class-methods/disallow-duplicate-method-params/input.js 2:4-2:16
 					}
@@ -116,7 +116,7 @@ JSRoot {
 
     1 │ class Foo {
   > 2 │     bar(a, a) {}
-      │            <error><emphasis>^</emphasis></error>
+      │            ^
     3 │ }
 
 

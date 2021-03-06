@@ -100,7 +100,7 @@ JSRoot {
   ✖ A trailing comma is not permitted after the rest element
 
     let { x, y, ...z, } = obj;
-                    <error><emphasis>^</emphasis></error>
+                    ^
 
 
 ```

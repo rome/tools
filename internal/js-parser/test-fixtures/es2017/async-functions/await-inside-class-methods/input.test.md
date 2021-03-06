@@ -23,6 +23,14 @@ JSRoot {
 									}
 									loc: SourceLocation es2017/async-functions/await-inside-class-methods/input.js 2:8-2:9
 								}
+								meta: JSClassPropertyMeta {
+									abstract: false
+									optional: false
+									readonly: false
+									static: false
+									loc: SourceLocation es2017/async-functions/await-inside-class-methods/input.js 2:2-2:9
+									start: Position 2:2
+								}
 								body: JSBlockStatement {
 									body: [
 										JSExpressionStatement {
@@ -45,14 +53,6 @@ JSRoot {
 									hasHoistedVars: false
 									params: []
 									loc: SourceLocation es2017/async-functions/await-inside-class-methods/input.js 2:9-2:11
-								}
-								meta: JSClassPropertyMeta {
-									abstract: false
-									optional: false
-									readonly: false
-									static: false
-									loc: SourceLocation es2017/async-functions/await-inside-class-methods/input.js 2:2-2:9
-									start: Position 2:2
 								}
 								loc: SourceLocation es2017/async-functions/await-inside-class-methods/input.js 2:2-2:24
 							}

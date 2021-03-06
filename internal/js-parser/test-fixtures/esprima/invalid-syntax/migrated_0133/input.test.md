@@ -55,7 +55,7 @@ JSRoot {
   ✖ Missing catch or finally clause
 
     try { }
-    <error><emphasis>^</emphasis></error>
+    ^
 
 
 ```

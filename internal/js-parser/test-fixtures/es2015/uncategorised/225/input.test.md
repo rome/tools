@@ -69,7 +69,7 @@ JSRoot {
 
     1 │ x·
   > 2 │  isnt y
-      │       <error><emphasis>^</emphasis></error>
+      │       ^
 
 
 ```

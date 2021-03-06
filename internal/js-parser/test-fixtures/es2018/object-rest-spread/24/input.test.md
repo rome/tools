@@ -62,7 +62,7 @@ JSRoot {
   ✖ Invalid rest operator's argument
 
     ({...[]} = {})
-         <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
+         ^^
 
 
 ```

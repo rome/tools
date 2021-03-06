@@ -25,6 +25,14 @@ JSRoot {
 							}
 							loc: SourceLocation typescript/class/method-generic/input.ts 2:4-2:5
 						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							optional: false
+							readonly: false
+							static: false
+							loc: SourceLocation typescript/class/method-generic/input.ts 2:4-2:5
+							start: Position 2:4
+						}
 						body: JSBlockStatement {
 							body: []
 							directives: []
@@ -100,14 +108,6 @@ JSRoot {
 							}
 							loc: SourceLocation typescript/class/method-generic/input.ts 2:8-2:35
 						}
-						meta: JSClassPropertyMeta {
-							abstract: false
-							optional: false
-							readonly: false
-							static: false
-							loc: SourceLocation typescript/class/method-generic/input.ts 2:4-2:5
-							start: Position 2:4
-						}
 						loc: SourceLocation typescript/class/method-generic/input.ts 2:4-2:38
 					}
 					JSClassMethod {
@@ -128,6 +128,14 @@ JSRoot {
 								loc: SourceLocation typescript/class/method-generic/input.ts 3:5-3:20
 							}
 							loc: SourceLocation typescript/class/method-generic/input.ts 3:4-3:21
+						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							optional: false
+							readonly: false
+							static: false
+							loc: SourceLocation typescript/class/method-generic/input.ts 3:4-3:21
+							start: Position 3:4
 						}
 						body: JSBlockStatement {
 							body: []
@@ -156,14 +164,6 @@ JSRoot {
 								loc: SourceLocation typescript/class/method-generic/input.ts 3:21-3:24
 							}
 							loc: SourceLocation typescript/class/method-generic/input.ts 3:24-3:29
-						}
-						meta: JSClassPropertyMeta {
-							abstract: false
-							optional: false
-							readonly: false
-							static: false
-							loc: SourceLocation typescript/class/method-generic/input.ts 3:4-3:21
-							start: Position 3:4
 						}
 						loc: SourceLocation typescript/class/method-generic/input.ts 3:4-3:32
 					}

@@ -83,10 +83,7 @@ JSRoot {
   ✖ private is a reserved word
 
     function hello() { "use strict"; var private; }
-                                         <error><emphasis>^</emphasis></error>
-    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
+                                         ^^^^^^^
 
 
 ```

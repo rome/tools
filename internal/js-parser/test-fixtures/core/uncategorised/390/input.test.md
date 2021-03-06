@@ -97,7 +97,7 @@ JSRoot {
   ✖ Unknown start to an call expression argument
 
     ({ set: s(if) { } })
-              <error><emphasis>^</emphasis></error>
+              ^
 
 
 ```

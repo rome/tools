@@ -67,10 +67,7 @@ JSRoot {
   ✖ Unexpected character \
 
     for (x \u006ff y) {}
-           <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-    <error><emphasis>^</emphasis></error>
+           ^^^^^^^
 
   ℹ Expected character ;
 

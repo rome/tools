@@ -87,10 +87,7 @@ JSRoot {
 
     1 │ function* g() {
   > 2 │   for (yield '' in {}; ; ) ;
-    → │        <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-    → │ <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-    → │ <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-      │ <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
+      │        ^^^^^^^^
     3 │ }
 
 

@@ -24,6 +24,14 @@ JSRoot {
 							}
 							loc: SourceLocation experimental/class-private-properties/optional-chain-start-call/input.js 2:9-2:11
 						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							optional: false
+							readonly: false
+							static: true
+							loc: SourceLocation experimental/class-private-properties/optional-chain-start-call/input.js 2:2-2:11
+							start: Position 2:2
+						}
 						value: JSFunctionExpression {
 							body: JSBlockStatement {
 								body: []
@@ -39,14 +47,6 @@ JSRoot {
 							}
 							loc: SourceLocation experimental/class-private-properties/optional-chain-start-call/input.js 2:14-2:27
 						}
-						meta: JSClassPropertyMeta {
-							abstract: false
-							optional: false
-							readonly: false
-							static: true
-							loc: SourceLocation experimental/class-private-properties/optional-chain-start-call/input.js 2:2-2:11
-							start: Position 2:2
-						}
 						loc: SourceLocation experimental/class-private-properties/optional-chain-start-call/input.js 2:2-2:28
 					}
 					JSClassMethod {
@@ -57,6 +57,14 @@ JSRoot {
 								loc: SourceLocation experimental/class-private-properties/optional-chain-start-call/input.js 4:9-4:13 (test)
 							}
 							loc: SourceLocation experimental/class-private-properties/optional-chain-start-call/input.js 4:9-4:13
+						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							optional: false
+							readonly: false
+							static: true
+							loc: SourceLocation experimental/class-private-properties/optional-chain-start-call/input.js 4:2-4:13
+							start: Position 4:2
 						}
 						body: JSBlockStatement {
 							body: [
@@ -99,14 +107,6 @@ JSRoot {
 							hasHoistedVars: false
 							params: []
 							loc: SourceLocation experimental/class-private-properties/optional-chain-start-call/input.js 4:13-4:15
-						}
-						meta: JSClassPropertyMeta {
-							abstract: false
-							optional: false
-							readonly: false
-							static: true
-							loc: SourceLocation experimental/class-private-properties/optional-chain-start-call/input.js 4:2-4:13
-							start: Position 4:2
 						}
 						loc: SourceLocation experimental/class-private-properties/optional-chain-start-call/input.js 4:2-6:3
 					}
@@ -154,7 +154,7 @@ JSRoot {
 
     4 │   static test() {
   > 5 │     return Foo?.#m();
-      │                 <error><emphasis>^</emphasis></error>
+      │                 ^
     6 │   }
     7 │ }
 

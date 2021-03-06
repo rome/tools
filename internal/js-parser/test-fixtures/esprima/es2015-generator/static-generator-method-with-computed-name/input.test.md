@@ -25,6 +25,14 @@ JSRoot {
 							}
 							loc: SourceLocation esprima/es2015-generator/static-generator-method-with-computed-name/input.js 1:20-1:25
 						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							optional: false
+							readonly: false
+							static: true
+							loc: SourceLocation esprima/es2015-generator/static-generator-method-with-computed-name/input.js 1:12-1:25
+							start: Position 1:12
+						}
 						body: JSBlockStatement {
 							body: []
 							directives: []
@@ -36,14 +44,6 @@ JSRoot {
 							hasHoistedVars: false
 							params: []
 							loc: SourceLocation esprima/es2015-generator/static-generator-method-with-computed-name/input.js 1:25-1:27
-						}
-						meta: JSClassPropertyMeta {
-							abstract: false
-							optional: false
-							readonly: false
-							static: true
-							loc: SourceLocation esprima/es2015-generator/static-generator-method-with-computed-name/input.js 1:12-1:25
-							start: Position 1:12
 						}
 						loc: SourceLocation esprima/es2015-generator/static-generator-method-with-computed-name/input.js 1:12-1:30
 					}

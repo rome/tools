@@ -25,6 +25,14 @@ JSRoot {
 							}
 							loc: SourceLocation typescript/class/async-optional-method/input.js 2:8-2:14
 						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							optional: true
+							readonly: false
+							static: false
+							loc: SourceLocation typescript/class/async-optional-method/input.js 2:2-2:15
+							start: Position 2:2
+						}
 						head: JSFunctionHead {
 							async: true
 							generator: false
@@ -57,14 +65,6 @@ JSRoot {
 								loc: SourceLocation typescript/class/async-optional-method/input.js 2:30-2:43
 							}
 							loc: SourceLocation typescript/class/async-optional-method/input.js 2:15-2:43
-						}
-						meta: JSClassPropertyMeta {
-							abstract: false
-							optional: true
-							readonly: false
-							static: false
-							loc: SourceLocation typescript/class/async-optional-method/input.js 2:2-2:15
-							start: Position 2:2
 						}
 						loc: SourceLocation typescript/class/async-optional-method/input.js 2:2-2:44
 					}
@@ -116,7 +116,7 @@ JSRoot {
 
     1 │ class A extends B {
   > 2 │   async method?(val: string): Promise<void>;
-      │               <error><emphasis>^</emphasis></error>
+      │               ^
     3 │ }
 
 

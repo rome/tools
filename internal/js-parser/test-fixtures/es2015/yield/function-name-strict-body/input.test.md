@@ -66,9 +66,7 @@ JSRoot {
   ✖ yield is a reserved word
 
     function yield() { "use strict"; }
-             <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-    <error><emphasis>^</emphasis></error>
+             ^^^^^
 
 
 ```

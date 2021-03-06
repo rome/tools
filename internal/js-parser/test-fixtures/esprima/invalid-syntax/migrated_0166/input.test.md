@@ -62,7 +62,7 @@ JSRoot {
   ✖ Invalid Unicode escape
 
     \u200C = []
-          <error><emphasis>^</emphasis></error>
+          ^
 
 
 ```

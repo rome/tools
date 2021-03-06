@@ -95,7 +95,7 @@ JSRoot {
   ✖ Only expressions, functions or classes are allowed as the `default` export.
 
   > 1 │ export default var Foo = () => {
-      │                <error><emphasis>^</emphasis></error>
+      │                ^
     2 │     return `<div class="bar">Hola</div>`;
     3 │ }
 

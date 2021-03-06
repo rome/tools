@@ -51,7 +51,7 @@ JSRoot {
   ✖ Unterminated string constant
 
     "\
-       <error><emphasis>^</emphasis></error>
+       ^
 
 
 ```

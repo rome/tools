@@ -25,6 +25,14 @@ JSRoot {
 							}
 							loc: SourceLocation es2017/trailing-function-commas/3/input.js 1:12-1:15
 						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							optional: false
+							readonly: false
+							static: false
+							loc: SourceLocation es2017/trailing-function-commas/3/input.js 1:12-1:15
+							start: Position 1:12
+						}
 						body: JSBlockStatement {
 							body: []
 							directives: []
@@ -44,14 +52,6 @@ JSRoot {
 								}
 							]
 							loc: SourceLocation es2017/trailing-function-commas/3/input.js 1:15-1:19
-						}
-						meta: JSClassPropertyMeta {
-							abstract: false
-							optional: false
-							readonly: false
-							static: false
-							loc: SourceLocation es2017/trailing-function-commas/3/input.js 1:12-1:15
-							start: Position 1:12
 						}
 						loc: SourceLocation es2017/trailing-function-commas/3/input.js 1:12-1:23
 					}

@@ -24,6 +24,14 @@ JSRoot {
 							}
 							loc: SourceLocation typescript/regression/async-arrow-generic-9560/input.ts 2:2-2:3
 						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							optional: false
+							readonly: false
+							static: false
+							loc: SourceLocation typescript/regression/async-arrow-generic-9560/input.ts 2:2-2:3
+							start: Position 2:2
+						}
 						value: JSArrowFunctionExpression {
 							body: JSBlockStatement {
 								body: [
@@ -58,14 +66,6 @@ JSRoot {
 							}
 							loc: SourceLocation typescript/regression/async-arrow-generic-9560/input.ts 2:6-4:3
 						}
-						meta: JSClassPropertyMeta {
-							abstract: false
-							optional: false
-							readonly: false
-							static: false
-							loc: SourceLocation typescript/regression/async-arrow-generic-9560/input.ts 2:2-2:3
-							start: Position 2:2
-						}
 						loc: SourceLocation typescript/regression/async-arrow-generic-9560/input.ts 2:2-4:4
 					}
 					JSClassProperty {
@@ -75,6 +75,14 @@ JSRoot {
 								loc: SourceLocation typescript/regression/async-arrow-generic-9560/input.ts 6:2-6:3 (b)
 							}
 							loc: SourceLocation typescript/regression/async-arrow-generic-9560/input.ts 6:2-6:3
+						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							optional: false
+							readonly: false
+							static: false
+							loc: SourceLocation typescript/regression/async-arrow-generic-9560/input.ts 6:2-6:3
+							start: Position 6:2
 						}
 						value: JSArrowFunctionExpression {
 							body: JSBlockStatement {
@@ -98,14 +106,6 @@ JSRoot {
 								loc: SourceLocation typescript/regression/async-arrow-generic-9560/input.ts 6:6-6:19
 							}
 							loc: SourceLocation typescript/regression/async-arrow-generic-9560/input.ts 6:6-7:3
-						}
-						meta: JSClassPropertyMeta {
-							abstract: false
-							optional: false
-							readonly: false
-							static: false
-							loc: SourceLocation typescript/regression/async-arrow-generic-9560/input.ts 6:2-6:3
-							start: Position 6:2
 						}
 						loc: SourceLocation typescript/regression/async-arrow-generic-9560/input.ts 6:2-7:4
 					}

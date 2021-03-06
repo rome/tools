@@ -75,7 +75,7 @@ JSRoot {
   ✖ Octal literal in strict mode
 
     function hello() { 'use strict'; "\1"; }
-                                       <error><emphasis>^</emphasis></error>
+                                       ^
 
 
 ```

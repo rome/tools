@@ -26,6 +26,14 @@ JSRoot {
 							}
 							loc: SourceLocation typescript/class/get-generic/input.ts 2:4-2:7
 						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							optional: false
+							readonly: false
+							static: false
+							loc: SourceLocation typescript/class/get-generic/input.ts 2:4-2:7
+							start: Position 2:4
+						}
 						head: JSFunctionHead {
 							async: false
 							generator: false
@@ -44,14 +52,6 @@ JSRoot {
 								loc: SourceLocation typescript/class/get-generic/input.ts 2:7-2:10
 							}
 							loc: SourceLocation typescript/class/get-generic/input.ts 2:10-2:18
-						}
-						meta: JSClassPropertyMeta {
-							abstract: false
-							optional: false
-							readonly: false
-							static: false
-							loc: SourceLocation typescript/class/get-generic/input.ts 2:4-2:7
-							start: Position 2:4
 						}
 						loc: SourceLocation typescript/class/get-generic/input.ts 2:4-2:19
 					}

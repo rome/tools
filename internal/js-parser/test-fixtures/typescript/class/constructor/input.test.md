@@ -25,6 +25,14 @@ JSRoot {
 							}
 							loc: SourceLocation typescript/class/constructor/input.ts 2:4-2:15
 						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							optional: false
+							readonly: false
+							static: false
+							loc: SourceLocation typescript/class/constructor/input.ts 2:4-2:15
+							start: Position 2:4
+						}
 						head: JSFunctionHead {
 							async: false
 							generator: false
@@ -53,14 +61,6 @@ JSRoot {
 							]
 							loc: SourceLocation typescript/class/constructor/input.ts 2:15-2:37
 						}
-						meta: JSClassPropertyMeta {
-							abstract: false
-							optional: false
-							readonly: false
-							static: false
-							loc: SourceLocation typescript/class/constructor/input.ts 2:4-2:15
-							start: Position 2:4
-						}
 						loc: SourceLocation typescript/class/constructor/input.ts 2:4-2:38
 					}
 					TSDeclareMethod {
@@ -71,6 +71,14 @@ JSRoot {
 								loc: SourceLocation typescript/class/constructor/input.ts 3:4-3:15 (constructor)
 							}
 							loc: SourceLocation typescript/class/constructor/input.ts 3:4-3:15
+						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							optional: false
+							readonly: false
+							static: false
+							loc: SourceLocation typescript/class/constructor/input.ts 3:4-3:15
+							start: Position 3:4
 						}
 						head: JSFunctionHead {
 							async: false
@@ -100,14 +108,6 @@ JSRoot {
 							]
 							loc: SourceLocation typescript/class/constructor/input.ts 3:15-3:37
 						}
-						meta: JSClassPropertyMeta {
-							abstract: false
-							optional: false
-							readonly: false
-							static: false
-							loc: SourceLocation typescript/class/constructor/input.ts 3:4-3:15
-							start: Position 3:4
-						}
 						loc: SourceLocation typescript/class/constructor/input.ts 3:4-3:38
 					}
 					JSClassMethod {
@@ -118,6 +118,14 @@ JSRoot {
 								loc: SourceLocation typescript/class/constructor/input.ts 4:4-4:15 (constructor)
 							}
 							loc: SourceLocation typescript/class/constructor/input.ts 4:4-4:15
+						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							optional: false
+							readonly: false
+							static: false
+							loc: SourceLocation typescript/class/constructor/input.ts 4:4-4:15
+							start: Position 4:4
 						}
 						body: JSBlockStatement {
 							body: []
@@ -151,14 +159,6 @@ JSRoot {
 								}
 							]
 							loc: SourceLocation typescript/class/constructor/input.ts 4:15-4:31
-						}
-						meta: JSClassPropertyMeta {
-							abstract: false
-							optional: false
-							readonly: false
-							static: false
-							loc: SourceLocation typescript/class/constructor/input.ts 4:4-4:15
-							start: Position 4:4
 						}
 						loc: SourceLocation typescript/class/constructor/input.ts 4:4-4:34
 					}

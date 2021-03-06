@@ -25,6 +25,14 @@ JSRoot {
 							}
 							loc: SourceLocation esprima/es2015-generator/static-generator-method/input.js 1:20-1:23
 						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							optional: false
+							readonly: false
+							static: true
+							loc: SourceLocation esprima/es2015-generator/static-generator-method/input.js 1:12-1:23
+							start: Position 1:12
+						}
 						body: JSBlockStatement {
 							body: []
 							directives: []
@@ -36,14 +44,6 @@ JSRoot {
 							hasHoistedVars: false
 							params: []
 							loc: SourceLocation esprima/es2015-generator/static-generator-method/input.js 1:23-1:25
-						}
-						meta: JSClassPropertyMeta {
-							abstract: false
-							optional: false
-							readonly: false
-							static: true
-							loc: SourceLocation esprima/es2015-generator/static-generator-method/input.js 1:12-1:23
-							start: Position 1:12
 						}
 						loc: SourceLocation esprima/es2015-generator/static-generator-method/input.js 1:12-1:28
 					}

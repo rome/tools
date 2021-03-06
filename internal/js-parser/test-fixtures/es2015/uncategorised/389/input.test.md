@@ -130,7 +130,7 @@ JSRoot {
   ✖ Unexpected character f
 
     export for (;;);
-           <error><emphasis>^</emphasis></error>
+           ^
 
   ℹ Expected the opening export specifiers character {
 

@@ -96,11 +96,7 @@ JSRoot {
   ℹ Defined already here
 
     "use strict"; function t(__proto__, __proto__) { }
-                                        <error><emphasis>^</emphasis></error>
-    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
+                                        ^^^^^^^^^
 
 
 ```

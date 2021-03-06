@@ -56,7 +56,7 @@ JSRoot {
   ✖ Invalid left-hand side in for-in statement
 
     for (+i in {});
-         <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
+         ^^
 
 
 ```

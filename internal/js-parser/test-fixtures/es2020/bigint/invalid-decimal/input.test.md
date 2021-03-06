@@ -54,7 +54,7 @@ JSRoot {
   ✖ A bigint can't have a decimal
 
     1.0n
-       <error><emphasis>^</emphasis></error>
+       ^
 
 
 ```

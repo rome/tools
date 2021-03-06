@@ -66,7 +66,7 @@ JSRoot {
   ✖ Unclosed class body
 
     class A {
-            <error><emphasis>^</emphasis></error>
+            ^
 
   ℹ We expected to find the closing character } here
 

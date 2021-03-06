@@ -25,13 +25,6 @@ JSRoot {
 							}
 							loc: SourceLocation typescript/class/method-with-newline-without-body/input.ts 3:4-3:5
 						}
-						head: JSFunctionHead {
-							async: false
-							generator: false
-							hasHoistedVars: false
-							params: []
-							loc: SourceLocation typescript/class/method-with-newline-without-body/input.ts 3:5-3:7
-						}
 						meta: JSClassPropertyMeta {
 							abstract: false
 							optional: false
@@ -39,6 +32,13 @@ JSRoot {
 							static: false
 							loc: SourceLocation typescript/class/method-with-newline-without-body/input.ts 3:4-3:5
 							start: Position 3:4
+						}
+						head: JSFunctionHead {
+							async: false
+							generator: false
+							hasHoistedVars: false
+							params: []
+							loc: SourceLocation typescript/class/method-with-newline-without-body/input.ts 3:5-3:7
 						}
 						loc: SourceLocation typescript/class/method-with-newline-without-body/input.ts 3:4-3:7
 					}
@@ -51,13 +51,6 @@ JSRoot {
 							}
 							loc: SourceLocation typescript/class/method-with-newline-without-body/input.ts 4:4-4:5
 						}
-						head: JSFunctionHead {
-							async: false
-							generator: false
-							hasHoistedVars: false
-							params: []
-							loc: SourceLocation typescript/class/method-with-newline-without-body/input.ts 4:5-4:7
-						}
 						meta: JSClassPropertyMeta {
 							abstract: false
 							optional: false
@@ -65,6 +58,13 @@ JSRoot {
 							static: false
 							loc: SourceLocation typescript/class/method-with-newline-without-body/input.ts 4:4-4:5
 							start: Position 4:4
+						}
+						head: JSFunctionHead {
+							async: false
+							generator: false
+							hasHoistedVars: false
+							params: []
+							loc: SourceLocation typescript/class/method-with-newline-without-body/input.ts 4:5-4:7
 						}
 						loc: SourceLocation typescript/class/method-with-newline-without-body/input.ts 4:4-4:7
 					}

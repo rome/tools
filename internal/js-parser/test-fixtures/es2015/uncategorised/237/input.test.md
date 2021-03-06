@@ -65,7 +65,7 @@ JSRoot {
   ✖ Expected keyword from
 
     import foo
-              <error><emphasis>^</emphasis></error>
+              ^
 
 
 ```

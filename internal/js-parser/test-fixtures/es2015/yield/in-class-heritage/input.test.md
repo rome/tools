@@ -76,9 +76,7 @@ JSRoot {
   ✖ yield is a reserved word
 
     class A extends yield B { }
-                    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-    <error><emphasis>^</emphasis></error>
+                    ^^^^^
 
 
 ```

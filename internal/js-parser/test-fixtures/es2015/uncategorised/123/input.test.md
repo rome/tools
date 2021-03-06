@@ -26,6 +26,14 @@ JSRoot {
 								}
 								loc: SourceLocation es2015/uncategorised/123/input.js 1:24-1:35
 							}
+							meta: JSClassPropertyMeta {
+								abstract: false
+								optional: false
+								readonly: false
+								static: false
+								loc: SourceLocation es2015/uncategorised/123/input.js 1:24-1:35
+								start: Position 1:24
+							}
 							body: JSBlockStatement {
 								body: [
 									JSExpressionStatement {
@@ -48,14 +56,6 @@ JSRoot {
 								hasHoistedVars: false
 								params: []
 								loc: SourceLocation es2015/uncategorised/123/input.js 1:35-1:37
-							}
-							meta: JSClassPropertyMeta {
-								abstract: false
-								optional: false
-								readonly: false
-								static: false
-								loc: SourceLocation es2015/uncategorised/123/input.js 1:24-1:35
-								start: Position 1:24
 							}
 							loc: SourceLocation es2015/uncategorised/123/input.js 1:24-1:49
 						}
@@ -114,9 +114,7 @@ JSRoot {
   ✖ super() is only valid inside a class constructor of a subclass
 
     "use strict"; (class A {constructor() { super() }})
-                                            <error><emphasis>^</emphasis></error>
-    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
+                                            ^^^^^
 
   ℹ Maybe a typo in the method name ('constructor') or not extending another class?
 

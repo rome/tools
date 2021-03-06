@@ -26,13 +26,6 @@ JSRoot {
 								}
 								loc: SourceLocation experimental/top-level-await/inside-class-property/input.js 2:2-2:3
 							}
-							value: JSAwaitExpression {
-								argument: JSNumericLiteral {
-									value: 0
-									loc: SourceLocation experimental/top-level-await/inside-class-property/input.js 2:12-2:13
-								}
-								loc: SourceLocation experimental/top-level-await/inside-class-property/input.js 2:6-2:13
-							}
 							meta: JSClassPropertyMeta {
 								abstract: false
 								optional: false
@@ -40,6 +33,13 @@ JSRoot {
 								static: false
 								loc: SourceLocation experimental/top-level-await/inside-class-property/input.js 2:2-2:3
 								start: Position 2:2
+							}
+							value: JSAwaitExpression {
+								argument: JSNumericLiteral {
+									value: 0
+									loc: SourceLocation experimental/top-level-await/inside-class-property/input.js 2:12-2:13
+								}
+								loc: SourceLocation experimental/top-level-await/inside-class-property/input.js 2:6-2:13
 							}
 							loc: SourceLocation experimental/top-level-await/inside-class-property/input.js 2:2-2:14
 						}

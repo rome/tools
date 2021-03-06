@@ -78,7 +78,7 @@ JSRoot {
 
     1 │ class Foo {
   > 2 │   x y
-      │     <error><emphasis>^</emphasis></error>
+      │     ^
     3 │ }
 
 

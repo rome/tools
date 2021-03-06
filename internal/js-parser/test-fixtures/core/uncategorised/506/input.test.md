@@ -83,10 +83,7 @@ JSRoot {
   ✖ package is a reserved word
 
     function hello() { "use strict"; var package; }
-                                         <error><emphasis>^</emphasis></error>
-    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
+                                         ^^^^^^^
 
 
 ```

@@ -75,7 +75,7 @@ JSRoot {
   ✖ Unknown JSX identifier token
 
     < key="nope"></>
-         <error><emphasis>^</emphasis></error>
+         ^
 
 
 ```

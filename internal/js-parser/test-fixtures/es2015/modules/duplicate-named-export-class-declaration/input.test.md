@@ -91,18 +91,12 @@ JSRoot {
 
     1 │ export { Foo };
   > 2 │ export class Foo {};
-    → │        <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-    → │ <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-    → │ <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-    → │ <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-    → │ <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-      │ <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
+      │        ^^^^^^^^^^^^
 
   ℹ Defined already here
 
   > 1 │ export { Foo };
-    → │          <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-      │ <error><emphasis>^</emphasis></error>
+      │          ^^^
     2 │ export class Foo {};
 
 

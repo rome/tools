@@ -95,7 +95,7 @@ JSRoot {
   ✖ Unexpected character a
 
     for await (const i of imports) {}
-        <error><emphasis>^</emphasis></error>
+        ^
 
   ℹ Expected the opening for head character (
 

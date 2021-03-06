@@ -73,7 +73,7 @@ JSRoot {
   ✖ Unexpected character (
 
     export default async functionX () {}
-                                   <error><emphasis>^</emphasis></error>
+                                   ^
 
   ℹ Expected character =>
 

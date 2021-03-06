@@ -238,7 +238,7 @@ JSRoot {
 
     1 │ export declare const x: number;
   > 2 │ export declare function f(): void;
-      │                         <error><emphasis>^</emphasis></error>
+      │                         ^
     3 │ export declare class C {}
     4 │ export declare interface I {}
 

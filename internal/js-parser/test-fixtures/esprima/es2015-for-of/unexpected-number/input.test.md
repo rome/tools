@@ -70,7 +70,7 @@ JSRoot {
   ✖ A constant must have an initializer
 
     for (const of 42);
-               <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
+               ^^
 
 
 ```

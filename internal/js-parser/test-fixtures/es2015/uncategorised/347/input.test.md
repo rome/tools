@@ -25,6 +25,14 @@ JSRoot {
 							}
 							loc: SourceLocation es2015/uncategorised/347/input.js 1:14-1:18
 						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							optional: false
+							readonly: false
+							static: false
+							loc: SourceLocation es2015/uncategorised/347/input.js 1:10-1:18
+							start: Position 1:10
+						}
 						body: JSBlockStatement {
 							body: []
 							directives: []
@@ -51,14 +59,6 @@ JSRoot {
 								}
 							]
 							loc: SourceLocation es2015/uncategorised/347/input.js 1:18-1:24
-						}
-						meta: JSClassPropertyMeta {
-							abstract: false
-							optional: false
-							readonly: false
-							static: false
-							loc: SourceLocation es2015/uncategorised/347/input.js 1:10-1:18
-							start: Position 1:10
 						}
 						loc: SourceLocation es2015/uncategorised/347/input.js 1:10-1:27
 					}
@@ -105,15 +105,7 @@ JSRoot {
   ✖ setter should have exactly one param
 
     class A { set prop(x, y) {} }
-              <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-    <error><emphasis>^</emphasis></error>
+              ^^^^^^^^^^^^^^^^^
 
 
 ```

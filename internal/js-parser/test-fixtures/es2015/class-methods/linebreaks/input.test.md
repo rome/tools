@@ -25,6 +25,14 @@ JSRoot {
 							}
 							loc: SourceLocation es2015/class-methods/linebreaks/input.js 3:2-3:3
 						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							optional: false
+							readonly: false
+							static: false
+							loc: SourceLocation es2015/class-methods/linebreaks/input.js 2:2-3:3
+							start: Position 2:2
+						}
 						body: JSBlockStatement {
 							body: []
 							directives: []
@@ -37,14 +45,6 @@ JSRoot {
 							params: []
 							loc: SourceLocation es2015/class-methods/linebreaks/input.js 4:2-4:4
 						}
-						meta: JSClassPropertyMeta {
-							abstract: false
-							optional: false
-							readonly: false
-							static: false
-							loc: SourceLocation es2015/class-methods/linebreaks/input.js 2:2-3:3
-							start: Position 2:2
-						}
 						loc: SourceLocation es2015/class-methods/linebreaks/input.js 2:2-4:7
 					}
 					JSClassMethod {
@@ -55,6 +55,14 @@ JSRoot {
 								loc: SourceLocation es2015/class-methods/linebreaks/input.js 7:2-7:3 (a)
 							}
 							loc: SourceLocation es2015/class-methods/linebreaks/input.js 7:2-7:3
+						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							optional: false
+							readonly: false
+							static: false
+							loc: SourceLocation es2015/class-methods/linebreaks/input.js 6:2-7:3
+							start: Position 6:2
 						}
 						body: JSBlockStatement {
 							body: []
@@ -76,14 +84,6 @@ JSRoot {
 							]
 							loc: SourceLocation es2015/class-methods/linebreaks/input.js 8:2-8:5
 						}
-						meta: JSClassPropertyMeta {
-							abstract: false
-							optional: false
-							readonly: false
-							static: false
-							loc: SourceLocation es2015/class-methods/linebreaks/input.js 6:2-7:3
-							start: Position 6:2
-						}
 						loc: SourceLocation es2015/class-methods/linebreaks/input.js 6:2-8:8
 					}
 					JSClassMethod {
@@ -94,6 +94,14 @@ JSRoot {
 								loc: SourceLocation es2015/class-methods/linebreaks/input.js 10:2-10:13 (constructor)
 							}
 							loc: SourceLocation es2015/class-methods/linebreaks/input.js 10:2-10:13
+						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							optional: false
+							readonly: false
+							static: false
+							loc: SourceLocation es2015/class-methods/linebreaks/input.js 10:2-10:13
+							start: Position 10:2
 						}
 						body: JSBlockStatement {
 							body: []
@@ -107,14 +115,6 @@ JSRoot {
 							params: []
 							loc: SourceLocation es2015/class-methods/linebreaks/input.js 11:2-11:4
 						}
-						meta: JSClassPropertyMeta {
-							abstract: false
-							optional: false
-							readonly: false
-							static: false
-							loc: SourceLocation es2015/class-methods/linebreaks/input.js 10:2-10:13
-							start: Position 10:2
-						}
 						loc: SourceLocation es2015/class-methods/linebreaks/input.js 10:2-11:7
 					}
 					JSClassMethod {
@@ -125,6 +125,14 @@ JSRoot {
 								loc: SourceLocation es2015/class-methods/linebreaks/input.js 13:2-13:3 (a)
 							}
 							loc: SourceLocation es2015/class-methods/linebreaks/input.js 13:2-13:3
+						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							optional: false
+							readonly: false
+							static: false
+							loc: SourceLocation es2015/class-methods/linebreaks/input.js 13:2-13:3
+							start: Position 13:2
 						}
 						body: JSBlockStatement {
 							body: []
@@ -138,14 +146,6 @@ JSRoot {
 							params: []
 							loc: SourceLocation es2015/class-methods/linebreaks/input.js 14:2-14:4
 						}
-						meta: JSClassPropertyMeta {
-							abstract: false
-							optional: false
-							readonly: false
-							static: false
-							loc: SourceLocation es2015/class-methods/linebreaks/input.js 13:2-13:3
-							start: Position 13:2
-						}
 						loc: SourceLocation es2015/class-methods/linebreaks/input.js 13:2-14:7
 					}
 					JSClassMethod {
@@ -156,6 +156,14 @@ JSRoot {
 								loc: SourceLocation es2015/class-methods/linebreaks/input.js 17:2-17:3 (a)
 							}
 							loc: SourceLocation es2015/class-methods/linebreaks/input.js 17:2-17:3
+						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							optional: false
+							readonly: false
+							static: false
+							loc: SourceLocation es2015/class-methods/linebreaks/input.js 16:2-17:3
+							start: Position 16:2
 						}
 						body: JSBlockStatement {
 							body: []
@@ -169,14 +177,6 @@ JSRoot {
 							params: []
 							loc: SourceLocation es2015/class-methods/linebreaks/input.js 18:2-18:4
 						}
-						meta: JSClassPropertyMeta {
-							abstract: false
-							optional: false
-							readonly: false
-							static: false
-							loc: SourceLocation es2015/class-methods/linebreaks/input.js 16:2-17:3
-							start: Position 16:2
-						}
 						loc: SourceLocation es2015/class-methods/linebreaks/input.js 16:2-18:7
 					}
 					JSClassMethod {
@@ -187,6 +187,14 @@ JSRoot {
 								loc: SourceLocation es2015/class-methods/linebreaks/input.js 22:2-22:3 (a)
 							}
 							loc: SourceLocation es2015/class-methods/linebreaks/input.js 22:2-22:3
+						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							optional: false
+							readonly: false
+							static: true
+							loc: SourceLocation es2015/class-methods/linebreaks/input.js 20:2-22:3
+							start: Position 20:2
 						}
 						body: JSBlockStatement {
 							body: []
@@ -200,14 +208,6 @@ JSRoot {
 							params: []
 							loc: SourceLocation es2015/class-methods/linebreaks/input.js 23:2-23:4
 						}
-						meta: JSClassPropertyMeta {
-							abstract: false
-							optional: false
-							readonly: false
-							static: true
-							loc: SourceLocation es2015/class-methods/linebreaks/input.js 20:2-22:3
-							start: Position 20:2
-						}
 						loc: SourceLocation es2015/class-methods/linebreaks/input.js 20:2-23:7
 					}
 					JSClassMethod {
@@ -218,6 +218,14 @@ JSRoot {
 								loc: SourceLocation es2015/class-methods/linebreaks/input.js 27:2-27:3 (a)
 							}
 							loc: SourceLocation es2015/class-methods/linebreaks/input.js 27:2-27:3
+						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							optional: false
+							readonly: false
+							static: true
+							loc: SourceLocation es2015/class-methods/linebreaks/input.js 25:2-27:3
+							start: Position 25:2
 						}
 						body: JSBlockStatement {
 							body: []
@@ -239,14 +247,6 @@ JSRoot {
 							]
 							loc: SourceLocation es2015/class-methods/linebreaks/input.js 28:2-28:5
 						}
-						meta: JSClassPropertyMeta {
-							abstract: false
-							optional: false
-							readonly: false
-							static: true
-							loc: SourceLocation es2015/class-methods/linebreaks/input.js 25:2-27:3
-							start: Position 25:2
-						}
 						loc: SourceLocation es2015/class-methods/linebreaks/input.js 25:2-28:8
 					}
 					JSClassMethod {
@@ -257,6 +257,14 @@ JSRoot {
 								loc: SourceLocation es2015/class-methods/linebreaks/input.js 31:2-31:13 (constructor)
 							}
 							loc: SourceLocation es2015/class-methods/linebreaks/input.js 31:2-31:13
+						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							optional: false
+							readonly: false
+							static: true
+							loc: SourceLocation es2015/class-methods/linebreaks/input.js 30:2-31:13
+							start: Position 30:2
 						}
 						body: JSBlockStatement {
 							body: []
@@ -270,14 +278,6 @@ JSRoot {
 							params: []
 							loc: SourceLocation es2015/class-methods/linebreaks/input.js 32:2-32:4
 						}
-						meta: JSClassPropertyMeta {
-							abstract: false
-							optional: false
-							readonly: false
-							static: true
-							loc: SourceLocation es2015/class-methods/linebreaks/input.js 30:2-31:13
-							start: Position 30:2
-						}
 						loc: SourceLocation es2015/class-methods/linebreaks/input.js 30:2-32:7
 					}
 					JSClassMethod {
@@ -288,6 +288,14 @@ JSRoot {
 								loc: SourceLocation es2015/class-methods/linebreaks/input.js 35:2-35:3 (a)
 							}
 							loc: SourceLocation es2015/class-methods/linebreaks/input.js 35:2-35:3
+						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							optional: false
+							readonly: false
+							static: true
+							loc: SourceLocation es2015/class-methods/linebreaks/input.js 34:2-35:3
+							start: Position 34:2
 						}
 						body: JSBlockStatement {
 							body: []
@@ -301,14 +309,6 @@ JSRoot {
 							params: []
 							loc: SourceLocation es2015/class-methods/linebreaks/input.js 36:2-36:4
 						}
-						meta: JSClassPropertyMeta {
-							abstract: false
-							optional: false
-							readonly: false
-							static: true
-							loc: SourceLocation es2015/class-methods/linebreaks/input.js 34:2-35:3
-							start: Position 34:2
-						}
 						loc: SourceLocation es2015/class-methods/linebreaks/input.js 34:2-36:7
 					}
 					JSClassMethod {
@@ -319,6 +319,14 @@ JSRoot {
 								loc: SourceLocation es2015/class-methods/linebreaks/input.js 40:2-40:3 (a)
 							}
 							loc: SourceLocation es2015/class-methods/linebreaks/input.js 40:2-40:3
+						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							optional: false
+							readonly: false
+							static: true
+							loc: SourceLocation es2015/class-methods/linebreaks/input.js 38:2-40:3
+							start: Position 38:2
 						}
 						body: JSBlockStatement {
 							body: []
@@ -331,14 +339,6 @@ JSRoot {
 							hasHoistedVars: false
 							params: []
 							loc: SourceLocation es2015/class-methods/linebreaks/input.js 41:2-41:4
-						}
-						meta: JSClassPropertyMeta {
-							abstract: false
-							optional: false
-							readonly: false
-							static: true
-							loc: SourceLocation es2015/class-methods/linebreaks/input.js 38:2-40:3
-							start: Position 38:2
 						}
 						loc: SourceLocation es2015/class-methods/linebreaks/input.js 38:2-41:7
 					}

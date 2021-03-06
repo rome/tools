@@ -82,8 +82,7 @@ JSRoot {
 
     1 │ function f() {
   > 2 │   new.prop
-    → │       <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-      │ <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
+      │       ^^^^
     3 │ }
 
 

@@ -87,9 +87,7 @@ JSRoot {
 
     1 │ function* fn() {
   > 2 │   function yield() {}
-    → │            <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-    → │ <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-      │ <error><emphasis>^</emphasis></error>
+      │            ^^^^^
     3 │ }
 
 

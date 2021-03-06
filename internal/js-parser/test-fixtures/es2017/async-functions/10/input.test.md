@@ -99,7 +99,7 @@ JSRoot {
 
     1 │ var x = async
   > 2 │ (x) => x + 1;
-      │     <error><emphasis>^</emphasis></error>
+      │     ^
 
 
 ```

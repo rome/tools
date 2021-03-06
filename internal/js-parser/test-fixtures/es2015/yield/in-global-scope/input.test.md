@@ -61,7 +61,7 @@ JSRoot {
   ✖ Expected a semicolon or a line terminator
 
     yield 10
-          <error><emphasis>^</emphasis></error>
+          ^
 
 
 ```

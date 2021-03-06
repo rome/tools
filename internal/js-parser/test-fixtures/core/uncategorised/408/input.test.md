@@ -65,7 +65,7 @@ JSRoot {
   ✖ Expected a semicolon or a line terminator
 
     a class;
-      <error><emphasis>^</emphasis></error>
+      ^
 
 
 ```

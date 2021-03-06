@@ -96,7 +96,7 @@ JSRoot {
   ℹ Defined already here
 
     function a(x, x) {'use strict';}
-                  <error><emphasis>^</emphasis></error>
+                  ^
 
 
 ```

@@ -43,6 +43,14 @@ JSRoot {
 							}
 							loc: SourceLocation experimental/class-private-properties/super-private-member-access/input.js 4:2-4:8
 						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							optional: false
+							readonly: false
+							static: false
+							loc: SourceLocation experimental/class-private-properties/super-private-member-access/input.js 4:2-4:8
+							start: Position 4:2
+						}
 						body: JSBlockStatement {
 							body: [
 								JSExpressionStatement {
@@ -74,14 +82,6 @@ JSRoot {
 							hasHoistedVars: false
 							params: []
 							loc: SourceLocation experimental/class-private-properties/super-private-member-access/input.js 4:8-4:10
-						}
-						meta: JSClassPropertyMeta {
-							abstract: false
-							optional: false
-							readonly: false
-							static: false
-							loc: SourceLocation experimental/class-private-properties/super-private-member-access/input.js 4:2-4:8
-							start: Position 4:2
 						}
 						loc: SourceLocation experimental/class-private-properties/super-private-member-access/input.js 4:2-6:3
 					}

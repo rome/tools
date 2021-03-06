@@ -42,10 +42,6 @@ JSRoot {
 							}
 							loc: SourceLocation experimental/class-private-properties/static/input.js 3:9-3:11
 						}
-						value: JSNumericLiteral {
-							value: 1
-							loc: SourceLocation experimental/class-private-properties/static/input.js 3:14-3:15
-						}
 						meta: JSClassPropertyMeta {
 							abstract: false
 							optional: false
@@ -53,6 +49,10 @@ JSRoot {
 							static: true
 							loc: SourceLocation experimental/class-private-properties/static/input.js 3:2-3:11
 							start: Position 3:2
+						}
+						value: JSNumericLiteral {
+							value: 1
+							loc: SourceLocation experimental/class-private-properties/static/input.js 3:14-3:15
 						}
 						loc: SourceLocation experimental/class-private-properties/static/input.js 3:2-3:16
 					}

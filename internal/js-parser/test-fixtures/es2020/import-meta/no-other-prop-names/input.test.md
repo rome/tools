@@ -61,10 +61,7 @@ JSRoot {
   ✖ The only valid meta property for import is import.meta
 
     import.notMeta;
-           <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-    <error><emphasis>^</emphasis></error>
+           ^^^^^^^
 
 
 ```

@@ -102,12 +102,12 @@ JSRoot {
   ✖ Unclosed for head
 
     for (let x of y, z) {}
-        <error><emphasis>^</emphasis></error>
+        ^
 
   ℹ We expected to find the closing character ) here
 
     for (let x of y, z) {}
-                   <error><emphasis>^</emphasis></error>
+                   ^
 
 
 ```

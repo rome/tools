@@ -100,7 +100,7 @@ JSRoot {
   ✖ Escape sequence in keyword export
 
   > 1 │ var expor\u{74} = 123;
-      │          <error><emphasis>^</emphasis></error>
+      │          ^
     2 │
     3 │ var x;
 

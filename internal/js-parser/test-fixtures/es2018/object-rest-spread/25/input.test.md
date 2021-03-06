@@ -86,7 +86,7 @@ JSRoot {
   ✖ Expected an identifier
 
     var {...[]} = {}
-            <error><emphasis>^</emphasis></error>
+            ^
 
 
 ```

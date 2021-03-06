@@ -71,7 +71,7 @@ JSRoot {
   ✖ Complex binding patterns require an initialization value
 
     var [x]
-           <error><emphasis>^</emphasis></error>
+           ^
 
 
 ```

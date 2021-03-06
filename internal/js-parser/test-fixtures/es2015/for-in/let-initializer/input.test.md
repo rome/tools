@@ -74,11 +74,7 @@ JSRoot {
   ✖ Loop variable declaration may not have an initializer
 
     for (let a = 0 in {});
-         <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-    <error><emphasis>^</emphasis></error>
+         ^^^^^^^^^
 
 
 ```

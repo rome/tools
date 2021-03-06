@@ -97,8 +97,7 @@ JSRoot {
   ✖ Unexpected keyword this
 
     ({ get, this, if });
-            <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
+            ^^^^
 
 
 ```

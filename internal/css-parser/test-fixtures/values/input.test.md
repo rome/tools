@@ -8,11 +8,31 @@
 CSSRoot {
 	body: [
 		CSSRule {
+			prelude: [
+				CSSSelector {
+					patterns: [
+						CSSTypeSelector {
+							value: "p"
+							loc: SourceLocation values/input.css 1:0-1:1
+						}
+						CSSPseudoElementSelector {
+							value: "before"
+							loc: SourceLocation values/input.css 1:1-1:9
+						}
+					]
+					loc: SourceLocation values/input.css 1:0-1:10
+				}
+			]
 			block: CSSBlock {
 				value: [
 					CSSDeclaration {
 						name: "content"
-						value: [CSSString {value: " content ", loc: SourceLocation values/input.css 2:10-2:21}]
+						value: [
+							CSSString {
+								value: " content "
+								loc: SourceLocation values/input.css 2:10-2:21
+							}
+						]
 						important: false
 						loc: SourceLocation values/input.css 2:1-2:21
 					}
@@ -20,41 +40,65 @@ CSSRoot {
 				startingTokenValue: "{"
 				loc: SourceLocation values/input.css 1:10-3:1
 			}
-			prelude: [
-				CSSSelector {
-					patterns: [
-						CSSTypeSelector {value: "p", loc: SourceLocation values/input.css 1:0-1:1}
-						CSSPseudoElementSelector {value: "before", loc: SourceLocation values/input.css 1:1-1:9}
-					]
-					loc: SourceLocation values/input.css 1:0-1:10
-				}
-			]
 			loc: SourceLocation values/input.css 1:0-3:1
 		}
 		CSSRule {
+			prelude: [
+				CSSSelector {
+					patterns: [
+						CSSClassSelector {
+							value: "number"
+							loc: SourceLocation values/input.css 5:0-5:7
+						}
+					]
+					loc: SourceLocation values/input.css 5:0-5:8
+				}
+			]
 			block: CSSBlock {
 				value: [
 					CSSDeclaration {
 						name: "opacity"
-						value: [CSSNumber {value: 0.001, raw: "1e-3", loc: SourceLocation values/input.css 6:10-6:14}]
+						value: [
+							CSSNumber {
+								value: 0.001
+								raw: "1e-3"
+								loc: SourceLocation values/input.css 6:10-6:14
+							}
+						]
 						important: false
 						loc: SourceLocation values/input.css 6:1-6:14
 					}
 					CSSDeclaration {
 						name: "line-height"
-						value: [CSSNumber {value: 0.2, raw: "0.2", loc: SourceLocation values/input.css 7:14-7:17}]
+						value: [
+							CSSNumber {
+								value: 0.2
+								raw: "0.2"
+								loc: SourceLocation values/input.css 7:14-7:17
+							}
+						]
 						important: false
 						loc: SourceLocation values/input.css 7:1-7:17
 					}
 					CSSDeclaration {
 						name: "width"
-						value: [CSSPercentage {value: 20, loc: SourceLocation values/input.css 8:8-8:11}]
+						value: [
+							CSSPercentage {
+								value: 20
+								loc: SourceLocation values/input.css 8:8-8:11
+							}
+						]
 						important: false
 						loc: SourceLocation values/input.css 8:1-8:11
 					}
 					CSSDeclaration {
 						name: "margin-top"
-						value: [CSSPercentage {value: -5, loc: SourceLocation values/input.css 9:13-9:16}]
+						value: [
+							CSSPercentage {
+								value: -5
+								loc: SourceLocation values/input.css 9:13-9:16
+							}
+						]
 						important: false
 						loc: SourceLocation values/input.css 9:1-9:16
 					}
@@ -62,20 +106,30 @@ CSSRoot {
 				startingTokenValue: "{"
 				loc: SourceLocation values/input.css 5:8-10:1
 			}
-			prelude: [
-				CSSSelector {
-					patterns: [CSSClassSelector {value: "number", loc: SourceLocation values/input.css 5:0-5:7}]
-					loc: SourceLocation values/input.css 5:0-5:8
-				}
-			]
 			loc: SourceLocation values/input.css 5:0-10:1
 		}
 		CSSRule {
+			prelude: [
+				CSSSelector {
+					patterns: [
+						CSSTypeSelector {
+							value: "foo"
+							loc: SourceLocation values/input.css 12:0-12:3
+						}
+					]
+					loc: SourceLocation values/input.css 12:0-12:4
+				}
+			]
 			block: CSSBlock {
 				value: [
 					CSSDeclaration {
 						name: "color"
-						value: [CSSIdentifier {value: "yellow", loc: SourceLocation values/input.css 13:8-13:14}]
+						value: [
+							CSSIdentifier {
+								value: "yellow"
+								loc: SourceLocation values/input.css 13:8-13:14
+							}
+						]
 						important: false
 						loc: SourceLocation values/input.css 13:1-14:0
 					}
@@ -83,26 +137,41 @@ CSSRoot {
 				startingTokenValue: "{"
 				loc: SourceLocation values/input.css 12:4-14:1
 			}
-			prelude: [
-				CSSSelector {
-					patterns: [CSSTypeSelector {value: "foo", loc: SourceLocation values/input.css 12:0-12:3}]
-					loc: SourceLocation values/input.css 12:0-12:4
-				}
-			]
 			loc: SourceLocation values/input.css 12:0-14:1
 		}
 		CSSRule {
+			prelude: [
+				CSSSelector {
+					patterns: [
+						CSSTypeSelector {
+							value: "bar"
+							loc: SourceLocation values/input.css 16:0-16:3
+						}
+					]
+					loc: SourceLocation values/input.css 16:0-16:4
+				}
+			]
 			block: CSSBlock {
 				value: [
 					CSSDeclaration {
 						name: "color"
-						value: [CSSIdentifier {value: "yellow", loc: SourceLocation values/input.css 17:8-17:14}]
+						value: [
+							CSSIdentifier {
+								value: "yellow"
+								loc: SourceLocation values/input.css 17:8-17:14
+							}
+						]
 						important: false
 						loc: SourceLocation values/input.css 17:1-17:14
 					}
 					CSSDeclaration {
 						name: "background"
-						value: [CSSIdentifier {value: "none", loc: SourceLocation values/input.css 18:13-18:17}]
+						value: [
+							CSSIdentifier {
+								value: "none"
+								loc: SourceLocation values/input.css 18:13-18:17
+							}
+						]
 						important: false
 						loc: SourceLocation values/input.css 18:1-19:0
 					}
@@ -110,12 +179,6 @@ CSSRoot {
 				startingTokenValue: "{"
 				loc: SourceLocation values/input.css 16:4-19:1
 			}
-			prelude: [
-				CSSSelector {
-					patterns: [CSSTypeSelector {value: "bar", loc: SourceLocation values/input.css 16:0-16:3}]
-					loc: SourceLocation values/input.css 16:0-16:4
-				}
-			]
 			loc: SourceLocation values/input.css 16:0-19:1
 		}
 	]

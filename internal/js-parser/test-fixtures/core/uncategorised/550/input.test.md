@@ -74,7 +74,7 @@ JSRoot {
 
     1 │ 'use strict';
   > 2 │ const a = 07;
-      │             <error><emphasis>^</emphasis></error>
+      │             ^
 
 
 ```

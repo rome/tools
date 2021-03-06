@@ -73,7 +73,7 @@ JSRoot {
   ✖ Invalid escape sequence in template
 
     `left${0}\u0`
-               <error><emphasis>^</emphasis></error>
+               ^
 
 
 ```

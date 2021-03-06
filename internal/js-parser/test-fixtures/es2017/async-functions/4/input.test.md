@@ -101,7 +101,7 @@ JSRoot {
   ✖ Unexpected character }
 
     ({ async a });
-               <error><emphasis>^</emphasis></error>
+               ^
 
   ℹ Expected the opening function params character (
 

@@ -54,7 +54,7 @@ JSRoot {
   ✖ Escape sequence in keyword true
 
     \u0074rue
-    <error><emphasis>^</emphasis></error>
+    ^
 
 
 ```

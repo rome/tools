@@ -25,6 +25,14 @@ JSRoot {
 							}
 							loc: SourceLocation es2015/class-methods/malformed-super-expression/input.js 2:2-2:3
 						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							optional: false
+							readonly: false
+							static: false
+							loc: SourceLocation es2015/class-methods/malformed-super-expression/input.js 2:2-2:3
+							start: Position 2:2
+						}
 						body: JSBlockStatement {
 							body: [
 								JSExpressionStatement {
@@ -51,14 +59,6 @@ JSRoot {
 							hasHoistedVars: false
 							params: []
 							loc: SourceLocation es2015/class-methods/malformed-super-expression/input.js 2:4-2:6
-						}
-						meta: JSClassPropertyMeta {
-							abstract: false
-							optional: false
-							readonly: false
-							static: false
-							loc: SourceLocation es2015/class-methods/malformed-super-expression/input.js 2:2-2:3
-							start: Position 2:2
 						}
 						loc: SourceLocation es2015/class-methods/malformed-super-expression/input.js 2:2-4:3
 					}
@@ -107,7 +107,7 @@ JSRoot {
     1 │ class A {
     2 │   x () {
   > 3 │     super - 1;
-      │           <error><emphasis>^</emphasis></error>
+      │           ^
     4 │   }
     5 │ }
 

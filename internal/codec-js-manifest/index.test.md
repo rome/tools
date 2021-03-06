@@ -6,22 +6,27 @@
 
 ```javascript
 {
-	name: {packageName: "test-name"}
-	bin: Map []
 	bundledDependencies: []
 	cpu: []
+	exports: true
+	files: []
+	keywords: []
+	os: []
+	private: false
+	name: {packageName: "test-name"}
+	bin: Map []
 	dependencies: Map []
 	devDependencies: Map []
 	diagnostics: {}
 	engines: Map []
-	exports: true
-	files: []
-	keywords: []
 	optionalDependencies: Map []
-	os: []
 	peerDependencies: Map []
-	private: false
-	raw: {name: "test-name", exports: {node: {"./foo": "./bar"}}}
+	raw: {
+		name: "test-name"
+		exports: {
+			node: {"./foo": "./bar"}
+		}
+	}
 	scripts: Map []
 }
 ```
@@ -30,22 +35,25 @@
 
 ```javascript
 {
-	name: {packageName: "test-name"}
-	bin: Map []
 	bundledDependencies: []
 	cpu: []
+	exports: true
+	files: []
+	keywords: []
+	os: []
+	private: false
+	name: {packageName: "test-name"}
+	bin: Map []
 	dependencies: Map []
 	devDependencies: Map []
 	diagnostics: {}
 	engines: Map []
-	exports: true
-	files: []
-	keywords: []
 	optionalDependencies: Map []
-	os: []
 	peerDependencies: Map []
-	private: false
-	raw: {name: "test-name", exports: {"./foo": "./bar"}}
+	raw: {
+		name: "test-name"
+		exports: {"./foo": "./bar"}
+	}
 	scripts: Map []
 }
 ```
@@ -54,22 +62,27 @@
 
 ```javascript
 {
-	name: {packageName: "test-name"}
-	bin: Map []
 	bundledDependencies: []
 	cpu: []
+	exports: true
+	files: []
+	keywords: []
+	os: []
+	private: false
+	name: {packageName: "test-name"}
+	bin: Map []
 	dependencies: Map []
 	devDependencies: Map []
 	diagnostics: {}
 	engines: Map []
-	exports: true
-	files: []
-	keywords: []
 	optionalDependencies: Map []
-	os: []
 	peerDependencies: Map []
-	private: false
-	raw: {name: "test-name", exports: {"./foo": {node: "./bar"}}}
+	raw: {
+		name: "test-name"
+		exports: {
+			"./foo": {node: "./bar"}
+		}
+	}
 	scripts: Map []
 }
 ```

@@ -70,7 +70,7 @@ JSRoot {
   ✖ super is only allowed in object methods and classes
 
     var x = super();
-            <error><emphasis>^</emphasis></error>
+            ^
 
 
 ```

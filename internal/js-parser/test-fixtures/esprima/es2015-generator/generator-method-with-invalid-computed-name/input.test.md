@@ -111,12 +111,12 @@ JSRoot {
   ✖ Unclosed property name
 
     ({ *[yield iter]() {} })
-        <error><emphasis>^</emphasis></error>
+        ^
 
   ℹ We expected to find the closing character ] here
 
     ({ *[yield iter]() {} })
-               <error><emphasis>^</emphasis></error>
+               ^
 
 
 ```

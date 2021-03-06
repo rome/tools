@@ -115,7 +115,7 @@ JSRoot {
   ✖ Unexpected character v
 
     x = { set method(val) v = val }
-                          <error><emphasis>^</emphasis></error>
+                          ^
 
   ℹ Expected the opening block character {
 

@@ -61,7 +61,7 @@ JSRoot {
   ✖ Identifier directly after number
 
     3x
-     <error><emphasis>^</emphasis></error>
+     ^
 
 
 ```

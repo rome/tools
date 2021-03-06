@@ -9,32 +9,45 @@
 	dependencies: []
 	diagnostics: [
 		{
+			origins: [{category: "analyzeDependencies"}]
 			description: {
 				advice: []
 				category: ["analyzeDependencies", "cjsExportInES"]
-				message: RAW_MARKUP {value: "You cannot use CommonJS exports in an ES module"}
 				verboseAdvice: [
 					action {
 						args: ["uid://unknown"]
 						command: "check"
+						suggestedKeyboardShortcut: "s"
 						commandFlags: {decisions: ["suppress-analyzeDependencies/cjsExportInES-uid://unknown-1"]}
 						description: RAW_MARKUP {value: "Add suppression comment"}
-						suggestedKeyboardShortcut: "s"
 					}
 					action {
 						args: []
 						command: "check"
+						secondary: true
 						commandFlags: {decisions: ["global-suppress-analyzeDependencies/cjsExportInES"]}
 						description: RAW_MARKUP {value: "Add suppression comments for ALL files with this category"}
-						secondary: true
 					}
 				]
+				message: RAW_MARKUP {value: "You cannot use CommonJS exports in an ES module"}
 			}
-			location: {language: "js", path: UIDPath<unknown>, sourceTypeJS: "module", end: Position 1:19, start: Position 1:0}
-			origins: [{category: "analyzeDependencies"}]
+			location: {
+				language: "js"
+				sourceTypeJS: "module"
+				path: UIDPath<unknown>
+				end: Position 1:19
+				start: Position 1:0
+			}
 		}
 	]
-	exports: [local {kind: "value", name: "foo", valueType: "other", loc: SourceLocation unknown 1:14-1:19}]
+	exports: [
+		local {
+			kind: "value"
+			name: "foo"
+			valueType: "other"
+			loc: SourceLocation unknown 1:14-1:19
+		}
+	]
 	importFirstUsage: []
 	moduleType: "es"
 	topLevelLocalBindings: {}
@@ -47,10 +60,19 @@
 {
 	dependencies: []
 	diagnostics: []
-	exports: [local {kind: "value", name: "foo", valueType: "other", loc: SourceLocation unknown 1:13-1:16 (foo)}]
+	exports: [
+		local {
+			kind: "value"
+			name: "foo"
+			valueType: "other"
+			loc: SourceLocation unknown 1:13-1:16 (foo)
+		}
+	]
 	importFirstUsage: []
 	moduleType: "es"
-	topLevelLocalBindings: {foo: SourceLocation unknown 1:13-1:16 (foo)}
+	topLevelLocalBindings: {
+		foo: SourceLocation unknown 1:13-1:16 (foo)
+	}
 }
 ```
 
@@ -82,7 +104,14 @@
 ## `correctly identifies a file with no imports or exports as unknown`
 
 ```javascript
-{dependencies: [], diagnostics: [], exports: [], importFirstUsage: [], moduleType: "es", topLevelLocalBindings: {}}
+{
+	dependencies: []
+	diagnostics: []
+	exports: []
+	importFirstUsage: []
+	moduleType: "es"
+	topLevelLocalBindings: {}
+}
 ```
 
 ## `defines topLevelLocalBindings`
@@ -96,7 +125,12 @@
 			async: false
 			exported: false
 			imported: true
-			names: [value {name: "bar", loc: SourceLocation unknown 1:8-1:11}]
+			names: [
+				value {
+					name: "bar"
+					loc: SourceLocation unknown 1:8-1:11
+				}
+			]
 			optional: false
 			source: "foo"
 			loc: SourceLocation unknown 1:18-1:23
@@ -106,7 +140,10 @@
 	exports: []
 	importFirstUsage: []
 	moduleType: "es"
-	topLevelLocalBindings: {bar: SourceLocation unknown 1:8-1:11 (bar), foo: SourceLocation unknown 2:6-2:9 (foo)}
+	topLevelLocalBindings: {
+		bar: SourceLocation unknown 1:8-1:11 (bar)
+		foo: SourceLocation unknown 2:6-2:9 (foo)
+	}
 }
 ```
 
@@ -117,14 +154,20 @@
 	dependencies: []
 	diagnostics: [
 		{
+			origins: [{category: "parse"}]
 			description: {
 				advice: [
-					log {category: "info", text: RAW_MARKUP {value: "Change the extension to <emphasis>.mjs</emphasis> to turn this file into a module"}}
 					log {
 						category: "info"
-						text: RAW_MARKUP {
-							value: "Add <emphasis>\\\"type\\\": \\\"module\\\"</emphasis> to your <filelink emphasis target=\"package.json\">package.json</filelink>"
-						}
+						text: RAW_MARKUP {value: "Change the extension to <emphasis>.mjs</emphasis> to turn this file into a module"}
+					}
+					log {
+						category: "info"
+						text: [
+							RAW_MARKUP {value: "Add <emphasis>\"type\": \"module\"</emphasis> to your <filelink emphasis target=\""}
+							"package.json"
+							RAW_MARKUP {value: "\" />"}
+						]
 					}
 				]
 				category: ["parse"]
@@ -133,22 +176,33 @@
 			}
 			location: {
 				language: "js"
-				path: UIDPath<unknown>
 				sourceText: "export const foo = 'bar';\nexports.bar = 'foo';"
+				path: UIDPath<unknown>
 				end: Position 1:25
 				start: Position 1:0
 			}
-			origins: [{category: "parse"}]
 		}
 	]
 	exports: [
-		local {kind: "value", name: "foo", valueType: "other", loc: SourceLocation unknown 1:13-1:16 (foo)}
-		local {kind: "value", name: "bar", valueType: "other", loc: SourceLocation unknown 2:14-2:19}
+		local {
+			kind: "value"
+			name: "foo"
+			valueType: "other"
+			loc: SourceLocation unknown 1:13-1:16 (foo)
+		}
+		local {
+			kind: "value"
+			name: "bar"
+			valueType: "other"
+			loc: SourceLocation unknown 2:14-2:19
+		}
 		local {kind: "value", name: "default", valueType: "other"}
 	]
 	importFirstUsage: []
 	moduleType: "cjs"
-	topLevelLocalBindings: {foo: SourceLocation unknown 1:13-1:16 (foo)}
+	topLevelLocalBindings: {
+		foo: SourceLocation unknown 1:13-1:16 (foo)
+	}
 }
 ```
 
@@ -184,7 +238,9 @@
 	exports: []
 	importFirstUsage: []
 	moduleType: "es"
-	topLevelLocalBindings: {yes: SourceLocation unknown 3:9-3:12 (yes)}
+	topLevelLocalBindings: {
+		yes: SourceLocation unknown 3:9-3:12 (yes)
+	}
 }
 ```
 
@@ -195,7 +251,12 @@
 	dependencies: []
 	diagnostics: []
 	exports: [
-		local {kind: "value", name: "yes", valueType: "other", loc: SourceLocation unknown 1:14-1:27}
+		local {
+			kind: "value"
+			name: "yes"
+			valueType: "other"
+			loc: SourceLocation unknown 1:14-1:27
+		}
 		local {kind: "value", name: "default", valueType: "other"}
 	]
 	importFirstUsage: []
@@ -211,7 +272,12 @@
 	dependencies: []
 	diagnostics: []
 	exports: [
-		local {kind: "value", name: "default", valueType: "other", loc: SourceLocation unknown 1:17-1:30}
+		local {
+			kind: "value"
+			name: "default"
+			valueType: "other"
+			loc: SourceLocation unknown 1:17-1:30
+		}
 		local {kind: "value", name: "default", valueType: "other"}
 	]
 	importFirstUsage: []
@@ -227,9 +293,24 @@
 	dependencies: []
 	diagnostics: []
 	exports: [
-		local {kind: "value", name: "yes", valueType: "other", loc: SourceLocation unknown 1:13-1:16 (yes)}
-		local {kind: "value", name: "foo", valueType: "function", loc: SourceLocation unknown 2:16-2:19 (foo)}
-		local {kind: "value", name: "Bar", valueType: "class", loc: SourceLocation unknown 3:13-3:16 (Bar)}
+		local {
+			kind: "value"
+			name: "yes"
+			valueType: "other"
+			loc: SourceLocation unknown 1:13-1:16 (yes)
+		}
+		local {
+			kind: "value"
+			name: "foo"
+			valueType: "function"
+			loc: SourceLocation unknown 2:16-2:19 (foo)
+		}
+		local {
+			kind: "value"
+			name: "Bar"
+			valueType: "class"
+			loc: SourceLocation unknown 3:13-3:16 (Bar)
+		}
 	]
 	importFirstUsage: []
 	moduleType: "es"
@@ -247,7 +328,14 @@
 {
 	dependencies: []
 	diagnostics: []
-	exports: [local {kind: "value", name: "default", valueType: "other", loc: SourceLocation unknown 1:15-1:20}]
+	exports: [
+		local {
+			kind: "value"
+			name: "default"
+			valueType: "other"
+			loc: SourceLocation unknown 1:15-1:20
+		}
+	]
 	importFirstUsage: []
 	moduleType: "es"
 	topLevelLocalBindings: {}
@@ -266,10 +354,22 @@
 			exported: true
 			imported: false
 			names: [
-				value {name: "foo", loc: SourceLocation unknown 1:8-1:11}
-				value {name: "bar", loc: SourceLocation unknown 1:13-1:16}
-				value {name: "default", loc: SourceLocation unknown 1:18-1:31}
-				value {name: "boo", loc: SourceLocation unknown 1:33-1:43}
+				value {
+					name: "foo"
+					loc: SourceLocation unknown 1:8-1:11
+				}
+				value {
+					name: "bar"
+					loc: SourceLocation unknown 1:13-1:16
+				}
+				value {
+					name: "default"
+					loc: SourceLocation unknown 1:18-1:31
+				}
+				value {
+					name: "boo"
+					loc: SourceLocation unknown 1:33-1:43
+				}
 			]
 			optional: false
 			source: "foobar"
@@ -278,10 +378,34 @@
 	]
 	diagnostics: []
 	exports: [
-		external {kind: "value", exported: "foo", imported: "foo", source: "foobar", loc: SourceLocation unknown 1:8-1:11}
-		external {kind: "value", exported: "bar", imported: "bar", source: "foobar", loc: SourceLocation unknown 1:13-1:16}
-		external {kind: "value", exported: "no", imported: "default", source: "foobar", loc: SourceLocation unknown 1:18-1:31}
-		external {kind: "value", exported: "noo", imported: "boo", source: "foobar", loc: SourceLocation unknown 1:33-1:43}
+		external {
+			kind: "value"
+			exported: "foo"
+			imported: "foo"
+			source: "foobar"
+			loc: SourceLocation unknown 1:8-1:11
+		}
+		external {
+			kind: "value"
+			exported: "bar"
+			imported: "bar"
+			source: "foobar"
+			loc: SourceLocation unknown 1:13-1:16
+		}
+		external {
+			kind: "value"
+			exported: "no"
+			imported: "default"
+			source: "foobar"
+			loc: SourceLocation unknown 1:18-1:31
+		}
+		external {
+			kind: "value"
+			exported: "noo"
+			imported: "boo"
+			source: "foobar"
+			loc: SourceLocation unknown 1:33-1:43
+		}
 	]
 	importFirstUsage: []
 	moduleType: "es"
@@ -307,7 +431,13 @@
 		}
 	]
 	diagnostics: []
-	exports: [externalAll {kind: "value", source: "foobar", loc: SourceLocation unknown 1:0-1:23}]
+	exports: [
+		externalAll {
+			kind: "value"
+			source: "foobar"
+			loc: SourceLocation unknown 1:0-1:23
+		}
+	]
 	importFirstUsage: []
 	moduleType: "es"
 	topLevelLocalBindings: {}
@@ -325,7 +455,12 @@
 			async: false
 			exported: false
 			imported: true
-			names: [value {name: "default", loc: SourceLocation unknown 1:0-1:10}]
+			names: [
+				value {
+					name: "default"
+					loc: SourceLocation unknown 1:0-1:10
+				}
+			]
 			optional: false
 			source: "foobar"
 			loc: SourceLocation unknown 1:16-1:24
@@ -335,7 +470,9 @@
 	exports: []
 	importFirstUsage: []
 	moduleType: "es"
-	topLevelLocalBindings: {bar: SourceLocation unknown 1:7-1:10 (bar)}
+	topLevelLocalBindings: {
+		bar: SourceLocation unknown 1:7-1:10 (bar)
+	}
 }
 ```
 
@@ -351,10 +488,22 @@
 			exported: false
 			imported: true
 			names: [
-				value {name: "bar", loc: SourceLocation unknown 1:8-1:11}
-				value {name: "foo", loc: SourceLocation unknown 1:13-1:16}
-				value {name: "default", loc: SourceLocation unknown 1:18-1:32}
-				value {name: "ya", loc: SourceLocation unknown 1:34-1:42}
+				value {
+					name: "bar"
+					loc: SourceLocation unknown 1:8-1:11
+				}
+				value {
+					name: "foo"
+					loc: SourceLocation unknown 1:13-1:16
+				}
+				value {
+					name: "default"
+					loc: SourceLocation unknown 1:18-1:32
+				}
+				value {
+					name: "ya"
+					loc: SourceLocation unknown 1:34-1:42
+				}
 			]
 			optional: false
 			source: "foobar"
@@ -406,9 +555,24 @@
 	dependencies: []
 	diagnostics: []
 	exports: [
-		local {kind: "value", name: "foo", valueType: "other", loc: SourceLocation unknown 1:8-1:11 (foo)}
-		local {kind: "value", name: "bar", valueType: "other", loc: SourceLocation unknown 1:13-1:16 (bar)}
-		local {kind: "value", name: "no", valueType: "other", loc: SourceLocation unknown 1:18-1:21 (yes)}
+		local {
+			kind: "value"
+			name: "foo"
+			valueType: "other"
+			loc: SourceLocation unknown 1:8-1:11 (foo)
+		}
+		local {
+			kind: "value"
+			name: "bar"
+			valueType: "other"
+			loc: SourceLocation unknown 1:13-1:16 (bar)
+		}
+		local {
+			kind: "value"
+			name: "no"
+			valueType: "other"
+			loc: SourceLocation unknown 1:18-1:21 (yes)
+		}
 	]
 	importFirstUsage: []
 	moduleType: "es"
@@ -448,7 +612,9 @@
 	exports: []
 	importFirstUsage: []
 	moduleType: "es"
-	topLevelLocalBindings: {yeah: SourceLocation unknown 3:9-3:13 (yeah)}
+	topLevelLocalBindings: {
+		yeah: SourceLocation unknown 3:9-3:13 (yeah)
+	}
 }
 ```
 
@@ -459,9 +625,9 @@
 	dependencies: []
 	diagnostics: []
 	exports: []
-	firstTopAwaitLocation: SourceLocation unknown 1:0-1:14
 	importFirstUsage: []
 	moduleType: "es"
+	firstTopAwaitLocation: SourceLocation unknown 1:0-1:14
 	topLevelLocalBindings: {}
 }
 ```
@@ -475,12 +641,21 @@
 	exports: [local {kind: "value", name: "default", valueType: "other"}]
 	importFirstUsage: []
 	moduleType: "cjs"
-	topLevelLocalBindings: {yes: SourceLocation unknown 6:9-6:12 (yes)}
+	topLevelLocalBindings: {
+		yes: SourceLocation unknown 6:9-6:12 (yes)
+	}
 }
 ```
 
 ## `ignores require(dynamic) call`
 
 ```javascript
-{dependencies: [], diagnostics: [], exports: [], importFirstUsage: [], moduleType: "es", topLevelLocalBindings: {}}
+{
+	dependencies: []
+	diagnostics: []
+	exports: []
+	importFirstUsage: []
+	moduleType: "es"
+	topLevelLocalBindings: {}
+}
 ```

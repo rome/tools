@@ -59,7 +59,7 @@ JSRoot {
   ✖ Escape sequence in keyword if
 
     \u0069\u{66} (true) {}
-          <error><emphasis>^</emphasis></error>
+          ^
 
 
 ```

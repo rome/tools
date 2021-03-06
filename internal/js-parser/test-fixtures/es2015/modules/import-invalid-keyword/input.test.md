@@ -70,10 +70,7 @@ JSRoot {
   ✖ Unexpected keyword debugger
 
     import { debugger } from "foo";
-             <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
+             ^^^^^^^^
 
 
 ```

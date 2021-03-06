@@ -93,7 +93,7 @@ JSRoot {
   ✖ Unknown label x
 
     x: while (true) { (function () { continue x; }); }
-                                     <error><emphasis>^</emphasis></error>
+                                     ^
 
 
 ```

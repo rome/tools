@@ -80,12 +80,7 @@ JSRoot {
   ✖ Can not use 'await' as identifier inside an async function
 
     (async function() { aw\u0061it x })
-                        <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-                          <error><emphasis>^</emphasis></error>
-    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-    <error><emphasis>^</emphasis></error>
+                        ^^^^^^^^^^
 
 
 ```

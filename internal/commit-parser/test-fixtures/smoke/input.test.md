@@ -12,9 +12,9 @@ CommitRoot {
 	corrupt: false
 	custom: true
 	diagnostics: []
-	path: RelativePath<smoke/input.txt>
 	rawBody: "everything included!"
 	scope: "some scope"
+	path: RelativePath<smoke/input.txt>
 	loc: SourceLocation smoke/input.txt 1:0-1:40
 }
 ```

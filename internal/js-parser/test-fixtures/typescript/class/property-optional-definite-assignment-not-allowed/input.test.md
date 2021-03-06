@@ -99,7 +99,7 @@ JSRoot {
 
     1 │ class C {
   > 2 │   x?!: number;
-      │     <error><emphasis>^</emphasis></error>
+      │     ^
     3 │ }
 
 

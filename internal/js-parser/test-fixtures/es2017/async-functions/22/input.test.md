@@ -25,6 +25,14 @@ JSRoot {
 							}
 							loc: SourceLocation es2017/async-functions/22/input.js 1:13-1:18
 						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							optional: false
+							readonly: false
+							static: false
+							loc: SourceLocation es2017/async-functions/22/input.js 1:13-1:18
+							start: Position 1:13
+						}
 						body: JSBlockStatement {
 							body: []
 							directives: []
@@ -36,14 +44,6 @@ JSRoot {
 							hasHoistedVars: false
 							params: []
 							loc: SourceLocation es2017/async-functions/22/input.js 1:18-1:20
-						}
-						meta: JSClassPropertyMeta {
-							abstract: false
-							optional: false
-							readonly: false
-							static: false
-							loc: SourceLocation es2017/async-functions/22/input.js 1:13-1:18
-							start: Position 1:13
 						}
 						loc: SourceLocation es2017/async-functions/22/input.js 1:13-1:23
 					}

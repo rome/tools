@@ -51,7 +51,7 @@ JSRoot {
   ✖ Unterminated string constant
 
   > 1 │ "Hello
-      │       <error><emphasis>^</emphasis></error>
+      │       ^
     2 │ World"
 
 

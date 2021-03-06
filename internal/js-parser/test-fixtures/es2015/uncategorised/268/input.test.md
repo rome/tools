@@ -86,7 +86,7 @@ JSRoot {
   ✖ Unexpected character 1
 
     function a() 1 // expression closure is not supported
-                 <error><emphasis>^</emphasis></error>
+                 ^
 
   ℹ Expected the opening block character {
 

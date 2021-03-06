@@ -83,11 +83,7 @@ JSRoot {
   ✖ interface is a reserved word
 
     function hello() { "use strict"; var interface; }
-                                         <error><emphasis>^</emphasis></error>
-    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
+                                         ^^^^^^^^^
 
 
 ```

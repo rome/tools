@@ -8,31 +8,46 @@
 {
 	diagnostics: [
 		{
+			origins: [{category: "parse"}]
 			description: {
 				advice: []
 				category: ["suppressions", "duplicate"]
-				message: RAW_MARKUP {value: "Duplicate suppression category <emphasis>parse(dog)</emphasis>"}
+				message: [RAW_MARKUP {value: "Duplicate suppression category <emphasis>"}, "parse(dog)", RAW_MARKUP {value: "</emphasis>"}]
 			}
-			location: {language: "text", path: UIDPath<unknown>, end: Position 1:31, start: Position 1:26}
-			origins: [{category: "parse"}]
+			location: {
+				language: "text"
+				path: UIDPath<unknown>
+				end: Position 1:31
+				start: Position 1:26
+			}
 		}
 		{
+			origins: [{category: "parse"}]
 			description: {
 				advice: []
 				category: ["suppressions", "duplicate"]
-				message: RAW_MARKUP {value: "Duplicate suppression category <emphasis>parse(dog)</emphasis>"}
+				message: [RAW_MARKUP {value: "Duplicate suppression category <emphasis>"}, "parse(dog)", RAW_MARKUP {value: "</emphasis>"}]
 			}
-			location: {language: "text", path: UIDPath<unknown>, end: Position 4:42, start: Position 4:37}
-			origins: [{category: "parse"}]
+			location: {
+				language: "text"
+				path: UIDPath<unknown>
+				end: Position 4:42
+				start: Position 4:37
+			}
 		}
 		{
+			origins: [{category: "parse"}]
 			description: {
 				advice: []
 				category: ["suppressions", "duplicate"]
-				message: RAW_MARKUP {value: "Duplicate suppression category <emphasis>parse</emphasis>"}
+				message: [RAW_MARKUP {value: "Duplicate suppression category <emphasis>"}, "parse", RAW_MARKUP {value: "</emphasis>"}]
 			}
-			location: {language: "text", path: UIDPath<unknown>, end: Position 7:26, start: Position 7:21}
-			origins: [{category: "parse"}]
+			location: {
+				language: "text"
+				path: UIDPath<unknown>
+				end: Position 7:26
+				start: Position 7:21
+			}
 		}
 	]
 	suppressions: [
@@ -60,7 +75,13 @@
 			startLine: OneIndexedNumber<5>
 			loc: SourceLocation unknown 4:26-1:34
 		}
-		{category: ["parse"], endLine: OneIndexedNumber<8>, path: UIDPath<unknown>, startLine: OneIndexedNumber<8>, loc: SourceLocation unknown 7:15-1:18}
+		{
+			category: ["parse"]
+			endLine: OneIndexedNumber<8>
+			path: UIDPath<unknown>
+			startLine: OneIndexedNumber<8>
+			loc: SourceLocation unknown 7:15-1:18
+		}
 	]
 }
 ```
@@ -71,67 +92,102 @@
 {
 	diagnostics: [
 		{
+			origins: [{category: "parse"}]
 			description: {
 				advice: []
 				category: ["suppressions", "incorrectSuppressionStart"]
 				message: RAW_MARKUP {value: "This looks like a suppression comment typo. Did you mean <emphasis>rome-ignore</emphasis> instead?"}
 			}
-			location: {language: "text", path: UIDPath<unknown>, end: Position 1:15, start: Position 1:3}
-			origins: [{category: "parse"}]
+			location: {
+				language: "text"
+				path: UIDPath<unknown>
+				end: Position 1:15
+				start: Position 1:3
+			}
 		}
 		{
+			origins: [{category: "parse"}]
 			description: {
 				advice: []
 				category: ["suppressions", "incorrectSuppressionStart"]
 				message: RAW_MARKUP {value: "This looks like a suppression comment typo. Did you mean <emphasis>rome-ignore</emphasis> instead?"}
 			}
-			location: {language: "text", path: UIDPath<unknown>, end: Position 4:15, start: Position 4:3}
-			origins: [{category: "parse"}]
+			location: {
+				language: "text"
+				path: UIDPath<unknown>
+				end: Position 4:15
+				start: Position 4:3
+			}
 		}
 		{
+			origins: [{category: "parse"}]
 			description: {
 				advice: []
 				category: ["suppressions", "incorrectSuppressionStart"]
 				message: RAW_MARKUP {value: "This looks like a suppression comment typo. Did you mean <emphasis>rome-ignore</emphasis> instead?"}
 			}
-			location: {language: "text", path: UIDPath<unknown>, end: Position 7:16, start: Position 7:3}
-			origins: [{category: "parse"}]
+			location: {
+				language: "text"
+				path: UIDPath<unknown>
+				end: Position 7:16
+				start: Position 7:3
+			}
 		}
 		{
+			origins: [{category: "parse"}]
 			description: {
 				advice: []
 				category: ["suppressions", "incorrectSuppressionStart"]
 				message: RAW_MARKUP {value: "This looks like a suppression comment typo. Did you mean <emphasis>rome-ignore</emphasis> instead?"}
 			}
-			location: {language: "text", path: UIDPath<unknown>, end: Position 10:20, start: Position 10:3}
-			origins: [{category: "parse"}]
+			location: {
+				language: "text"
+				path: UIDPath<unknown>
+				end: Position 10:20
+				start: Position 10:3
+			}
 		}
 		{
+			origins: [{category: "parse"}]
 			description: {
 				advice: []
 				category: ["suppressions", "incorrectSuppressionStart"]
 				message: RAW_MARKUP {value: "This looks like a suppression comment typo. Did you mean <emphasis>rome-ignore</emphasis> instead?"}
 			}
-			location: {language: "text", path: UIDPath<unknown>, end: Position 13:22, start: Position 13:3}
-			origins: [{category: "parse"}]
+			location: {
+				language: "text"
+				path: UIDPath<unknown>
+				end: Position 13:22
+				start: Position 13:3
+			}
 		}
 		{
+			origins: [{category: "parse"}]
 			description: {
 				advice: []
 				category: ["suppressions", "incorrectSuppressionStart"]
 				message: RAW_MARKUP {value: "This looks like a suppression comment typo. Did you mean <emphasis>rome-ignore</emphasis> instead?"}
 			}
-			location: {language: "text", path: UIDPath<unknown>, end: Position 16:21, start: Position 16:3}
-			origins: [{category: "parse"}]
+			location: {
+				language: "text"
+				path: UIDPath<unknown>
+				end: Position 16:21
+				start: Position 16:3
+			}
 		}
 		{
+			origins: [{category: "parse"}]
 			description: {
 				advice: []
 				category: ["suppressions", "incorrectSuppressionStart"]
 				message: RAW_MARKUP {value: "This looks like a suppression comment typo. Did you mean <emphasis>rome-ignore</emphasis> instead?"}
 			}
-			location: {language: "text", path: UIDPath<unknown>, end: Position 19:23, start: Position 19:3}
-			origins: [{category: "parse"}]
+			location: {
+				language: "text"
+				path: UIDPath<unknown>
+				end: Position 19:23
+				start: Position 19:3
+			}
 		}
 	]
 	suppressions: []
@@ -144,27 +200,49 @@
 {
 	diagnostics: [
 		{
+			origins: [{category: "parse"}]
 			description: {
 				advice: []
 				category: ["suppressions", "missingExplanation"]
 				message: RAW_MARKUP {value: "Suppression comments must have an explanation"}
 			}
-			location: {language: "text", path: UIDPath<unknown>, end: Position 1:12, start: Position 1:20}
-			origins: [{category: "parse"}]
+			location: {
+				language: "text"
+				path: UIDPath<unknown>
+				end: Position 1:12
+				start: Position 1:20
+			}
 		}
 		{
+			origins: [{category: "parse"}]
 			description: {
 				advice: []
 				category: ["suppressions", "missingExplanation"]
 				message: RAW_MARKUP {value: "Suppression comments must have an explanation"}
 			}
-			location: {language: "text", path: UIDPath<unknown>, end: Position 1:18, start: Position 4:21}
-			origins: [{category: "parse"}]
+			location: {
+				language: "text"
+				path: UIDPath<unknown>
+				end: Position 1:18
+				start: Position 4:21
+			}
 		}
 	]
 	suppressions: [
-		{category: ["parse"], endLine: OneIndexedNumber<2>, path: UIDPath<unknown>, startLine: OneIndexedNumber<2>, loc: SourceLocation unknown 1:15-1:20}
-		{category: ["parse"], endLine: OneIndexedNumber<5>, path: UIDPath<unknown>, startLine: OneIndexedNumber<5>, loc: SourceLocation unknown 4:15-1:18}
+		{
+			category: ["parse"]
+			endLine: OneIndexedNumber<2>
+			path: UIDPath<unknown>
+			startLine: OneIndexedNumber<2>
+			loc: SourceLocation unknown 1:15-1:20
+		}
+		{
+			category: ["parse"]
+			endLine: OneIndexedNumber<5>
+			path: UIDPath<unknown>
+			startLine: OneIndexedNumber<5>
+			loc: SourceLocation unknown 4:15-1:18
+		}
 	]
 }
 ```
@@ -252,7 +330,7 @@
 			description: {
 				advice: []
 				category: ["suppressions", "overlap"]
-				message: RAW_MARKUP {value: "overlap suppression category <emphasis>parse</emphasis>"}
+				message: [RAW_MARKUP {value: "overlap suppression category <emphasis>"}, "parse", RAW_MARKUP {value: "</emphasis>"}]
 			}
 			location: SourceLocation unknown 3:17-3:22
 		}
@@ -260,16 +338,40 @@
 			description: {
 				advice: []
 				category: ["suppressions", "overlap"]
-				message: RAW_MARKUP {value: "overlap suppression category <emphasis>parse</emphasis>"}
+				message: [RAW_MARKUP {value: "overlap suppression category <emphasis>"}, "parse", RAW_MARKUP {value: "</emphasis>"}]
 			}
 			location: SourceLocation unknown 4:17-4:22
 		}
 	]
 	suppressions: [
-		{category: ["parse"], endLine: OneIndexedNumber<6>, path: UIDPath<unknown>, startLine: OneIndexedNumber<2>, loc: SourceLocation unknown 1:15-1:20}
-		{category: ["parse"], endLine: OneIndexedNumber<5>, path: UIDPath<unknown>, startLine: OneIndexedNumber<5>, loc: SourceLocation unknown 3:17-3:22}
-		{category: ["parse"], endLine: OneIndexedNumber<5>, path: UIDPath<unknown>, startLine: OneIndexedNumber<5>, loc: SourceLocation unknown 4:17-4:22}
-		{category: ["parse"], endLine: OneIndexedNumber<9>, path: UIDPath<unknown>, startLine: OneIndexedNumber<9>, loc: SourceLocation unknown 8:15-8:20}
+		{
+			category: ["parse"]
+			endLine: OneIndexedNumber<6>
+			path: UIDPath<unknown>
+			startLine: OneIndexedNumber<2>
+			loc: SourceLocation unknown 1:15-1:20
+		}
+		{
+			category: ["parse"]
+			endLine: OneIndexedNumber<5>
+			path: UIDPath<unknown>
+			startLine: OneIndexedNumber<5>
+			loc: SourceLocation unknown 3:17-3:22
+		}
+		{
+			category: ["parse"]
+			endLine: OneIndexedNumber<5>
+			path: UIDPath<unknown>
+			startLine: OneIndexedNumber<5>
+			loc: SourceLocation unknown 4:17-4:22
+		}
+		{
+			category: ["parse"]
+			endLine: OneIndexedNumber<9>
+			path: UIDPath<unknown>
+			startLine: OneIndexedNumber<9>
+			loc: SourceLocation unknown 8:15-8:20
+		}
 	]
 }
 ```
@@ -283,15 +385,33 @@
 			description: {
 				advice: []
 				category: ["suppressions", "overlap"]
-				message: RAW_MARKUP {value: "overlap suppression category <emphasis>parse</emphasis>"}
+				message: [RAW_MARKUP {value: "overlap suppression category <emphasis>"}, "parse", RAW_MARKUP {value: "</emphasis>"}]
 			}
 			location: SourceLocation unknown 3:17-3:22
 		}
 	]
 	suppressions: [
-		{category: ["parse"], endLine: OneIndexedNumber<5>, path: UIDPath<unknown>, startLine: OneIndexedNumber<2>, loc: SourceLocation unknown 1:15-1:20}
-		{category: ["parse"], endLine: OneIndexedNumber<4>, path: UIDPath<unknown>, startLine: OneIndexedNumber<4>, loc: SourceLocation unknown 3:17-3:22}
-		{category: ["parse"], endLine: OneIndexedNumber<8>, path: UIDPath<unknown>, startLine: OneIndexedNumber<8>, loc: SourceLocation unknown 7:15-7:20}
+		{
+			category: ["parse"]
+			endLine: OneIndexedNumber<5>
+			path: UIDPath<unknown>
+			startLine: OneIndexedNumber<2>
+			loc: SourceLocation unknown 1:15-1:20
+		}
+		{
+			category: ["parse"]
+			endLine: OneIndexedNumber<4>
+			path: UIDPath<unknown>
+			startLine: OneIndexedNumber<4>
+			loc: SourceLocation unknown 3:17-3:22
+		}
+		{
+			category: ["parse"]
+			endLine: OneIndexedNumber<8>
+			path: UIDPath<unknown>
+			startLine: OneIndexedNumber<8>
+			loc: SourceLocation unknown 7:15-7:20
+		}
 	]
 }
 ```
@@ -305,14 +425,26 @@
 			description: {
 				advice: []
 				category: ["suppressions", "overlap"]
-				message: RAW_MARKUP {value: "overlap suppression category <emphasis>parse</emphasis>"}
+				message: [RAW_MARKUP {value: "overlap suppression category <emphasis>"}, "parse", RAW_MARKUP {value: "</emphasis>"}]
 			}
 			location: SourceLocation unknown 3:17-3:22
 		}
 	]
 	suppressions: [
-		{category: ["parse"], endLine: OneIndexedNumber<5>, path: UIDPath<unknown>, startLine: OneIndexedNumber<2>, loc: SourceLocation unknown 1:15-1:20}
-		{category: ["parse"], endLine: OneIndexedNumber<4>, path: UIDPath<unknown>, startLine: OneIndexedNumber<4>, loc: SourceLocation unknown 3:17-3:22}
+		{
+			category: ["parse"]
+			endLine: OneIndexedNumber<5>
+			path: UIDPath<unknown>
+			startLine: OneIndexedNumber<2>
+			loc: SourceLocation unknown 1:15-1:20
+		}
+		{
+			category: ["parse"]
+			endLine: OneIndexedNumber<4>
+			path: UIDPath<unknown>
+			startLine: OneIndexedNumber<4>
+			loc: SourceLocation unknown 3:17-3:22
+		}
 	]
 }
 ```
@@ -326,7 +458,7 @@
 			description: {
 				advice: []
 				category: ["suppressions", "overlap"]
-				message: RAW_MARKUP {value: "overlap suppression category <emphasis>parse(foo)</emphasis>"}
+				message: [RAW_MARKUP {value: "overlap suppression category <emphasis>"}, "parse(foo)", RAW_MARKUP {value: "</emphasis>"}]
 			}
 			location: SourceLocation unknown 5:17-5:27
 		}
@@ -374,9 +506,27 @@
 {
 	diagnostics: []
 	suppressions: [
-		{category: ["parse"], endLine: OneIndexedNumber<2>, path: UIDPath<unknown>, startLine: OneIndexedNumber<2>, loc: SourceLocation unknown 1:15-1:20}
-		{category: ["parse"], endLine: OneIndexedNumber<5>, path: UIDPath<unknown>, startLine: OneIndexedNumber<5>, loc: SourceLocation unknown 4:16-4:21}
-		{category: ["parse"], endLine: OneIndexedNumber<10>, path: UIDPath<unknown>, startLine: OneIndexedNumber<10>, loc: SourceLocation unknown 8:15-8:20}
+		{
+			category: ["parse"]
+			endLine: OneIndexedNumber<2>
+			path: UIDPath<unknown>
+			startLine: OneIndexedNumber<2>
+			loc: SourceLocation unknown 1:15-1:20
+		}
+		{
+			category: ["parse"]
+			endLine: OneIndexedNumber<5>
+			path: UIDPath<unknown>
+			startLine: OneIndexedNumber<5>
+			loc: SourceLocation unknown 4:16-4:21
+		}
+		{
+			category: ["parse"]
+			endLine: OneIndexedNumber<10>
+			path: UIDPath<unknown>
+			startLine: OneIndexedNumber<10>
+			loc: SourceLocation unknown 8:15-8:20
+		}
 		{
 			category: ["parse"]
 			endLine: OneIndexedNumber<16>

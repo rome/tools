@@ -114,13 +114,7 @@ parse(regex) ━━━━━━━━━━━━━━━━━━━━━━�
   ✖ Range values reversed. Start char code is greater than end char code
 
     var x = /[\uD834\uDF06-\uD834\uDF08a-z]/u
-                    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-    <error><emphasis>^</emphasis></error>
+                    ^^^^^^^^^^^^^
 
 
 ```

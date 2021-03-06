@@ -74,7 +74,7 @@ JSRoot {
   ✖ JSX attribute cannot be an empty expression
 
     <foo bar={} />
-             <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
+             ^^
 
 
 ```

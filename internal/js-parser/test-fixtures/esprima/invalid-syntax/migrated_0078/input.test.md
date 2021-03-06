@@ -97,7 +97,7 @@ JSRoot {
   ✖ Unexpected character {
 
     ({ get: g(d) { } })
-                 <error><emphasis>^</emphasis></error>
+                 ^
 
   ℹ Expected character ,
 

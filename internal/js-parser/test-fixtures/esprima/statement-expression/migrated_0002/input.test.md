@@ -54,7 +54,7 @@ JSRoot {
   ✖ Expecting Unicode escape sequence \uXXXX
 
     \\u0061
-     <error><emphasis>^</emphasis></error>
+     ^
 
 
 ```

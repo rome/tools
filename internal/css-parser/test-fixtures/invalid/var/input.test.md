@@ -8,6 +8,17 @@
 CSSRoot {
 	body: [
 		CSSRule {
+			prelude: [
+				CSSSelector {
+					patterns: [
+						CSSClassSelector {
+							value: "style"
+							loc: SourceLocation invalid/var/input.css 1:0-1:6
+						}
+					]
+					loc: SourceLocation invalid/var/input.css 1:0-1:7
+				}
+			]
 			block: CSSBlock {
 				value: [
 					CSSDeclaration {
@@ -15,7 +26,12 @@ CSSRoot {
 						value: [
 							CSSVarFunction {
 								name: "var"
-								params: [CSSHash {value: "fff", loc: SourceLocation invalid/var/input.css 2:13-2:17}]
+								params: [
+									CSSHash {
+										value: "fff"
+										loc: SourceLocation invalid/var/input.css 2:13-2:17
+									}
+								]
 								loc: SourceLocation invalid/var/input.css 2:9-2:18
 							}
 						]
@@ -36,17 +52,28 @@ CSSRoot {
 													CSSCalcProduct {
 														value: [
 															CSSCalcValue {
-																value: CSSDimension {value: 10, unit: "px", loc: SourceLocation invalid/var/input.css 3:18-3:18}
+																value: CSSDimension {
+																	value: 10
+																	unit: "px"
+																	loc: SourceLocation invalid/var/input.css 3:18-3:18
+																}
 																loc: SourceLocation invalid/var/input.css 3:18-3:22
 															}
 														]
 														loc: SourceLocation invalid/var/input.css 3:22-3:23
 													}
-													CSSCalcOperation {value: "+", loc: SourceLocation invalid/var/input.css 3:24-3:25}
+													CSSCalcOperation {
+														value: "+"
+														loc: SourceLocation invalid/var/input.css 3:24-3:25
+													}
 													CSSCalcProduct {
 														value: [
 															CSSCalcValue {
-																value: CSSDimension {value: 10, unit: "px", loc: SourceLocation invalid/var/input.css 3:25-3:25}
+																value: CSSDimension {
+																	value: 10
+																	unit: "px"
+																	loc: SourceLocation invalid/var/input.css 3:25-3:25
+																}
 																loc: SourceLocation invalid/var/input.css 3:25-3:29
 															}
 														]
@@ -70,7 +97,13 @@ CSSRoot {
 						value: [
 							CSSVarFunction {
 								name: "var"
-								params: [CSSDimension {value: 90, unit: "rem", loc: SourceLocation invalid/var/input.css 4:13-4:18}]
+								params: [
+									CSSDimension {
+										value: 90
+										unit: "rem"
+										loc: SourceLocation invalid/var/input.css 4:13-4:18
+									}
+								]
 								loc: SourceLocation invalid/var/input.css 4:9-4:19
 							}
 						]
@@ -81,12 +114,6 @@ CSSRoot {
 				startingTokenValue: "{"
 				loc: SourceLocation invalid/var/input.css 1:7-5:1
 			}
-			prelude: [
-				CSSSelector {
-					patterns: [CSSClassSelector {value: "style", loc: SourceLocation invalid/var/input.css 1:0-1:6}]
-					loc: SourceLocation invalid/var/input.css 1:0-1:7
-				}
-			]
 			loc: SourceLocation invalid/var/input.css 1:0-5:1
 		}
 	]
@@ -94,14 +121,19 @@ CSSRoot {
 	corrupt: false
 	diagnostics: [
 		{
+			origins: [{category: "parse"}]
 			description: {
 				advice: []
 				category: ["parse"]
 				categoryValue: "css"
 				message: RAW_MARKUP {value: "Invalid custom property found inside the \"var\" function."}
 			}
-			location: {language: "css", path: RelativePath<invalid/var/input.css>, end: Position 2:18, start: Position 2:17}
-			origins: [{category: "parse"}]
+			location: {
+				language: "css"
+				path: RelativePath<invalid/var/input.css>
+				end: Position 2:18
+				start: Position 2:17
+			}
 		}
 	]
 	path: RelativePath<invalid/var/input.css>

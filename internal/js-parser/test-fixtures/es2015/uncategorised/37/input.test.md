@@ -73,8 +73,7 @@ JSRoot {
   ✖ Binding member expression
 
     ([a.a]) => 42
-      <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-    <error><emphasis>^</emphasis></error>
+      ^^^
 
 
 ```

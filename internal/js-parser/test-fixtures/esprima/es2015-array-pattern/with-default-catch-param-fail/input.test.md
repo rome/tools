@@ -113,12 +113,12 @@ JSRoot {
   ✖ Unclosed catch clause param
 
     try { } catch ([a] = []) { }
-                  <error><emphasis>^</emphasis></error>
+                  ^
 
   ℹ We expected to find the closing character ) here
 
     try { } catch ([a] = []) { }
-                       <error><emphasis>^</emphasis></error>
+                       ^
 
 
 ```

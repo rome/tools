@@ -54,7 +54,7 @@ JSRoot {
   ✖ Legacy octal literals are not allowed in strict mode
 
     09.5
-      <error><emphasis>^</emphasis></error>
+      ^
 
 
 ```

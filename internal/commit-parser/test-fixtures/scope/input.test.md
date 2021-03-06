@@ -12,9 +12,9 @@ CommitRoot {
 	corrupt: false
 	custom: false
 	diagnostics: []
-	path: RelativePath<scope/input.txt>
 	rawBody: "commit with an included scope"
 	scope: "test scope"
+	path: RelativePath<scope/input.txt>
 	loc: SourceLocation scope/input.txt 1:0-1:45
 }
 ```

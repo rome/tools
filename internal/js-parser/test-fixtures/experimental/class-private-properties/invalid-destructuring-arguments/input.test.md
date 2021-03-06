@@ -24,10 +24,6 @@ JSRoot {
 							}
 							loc: SourceLocation experimental/class-private-properties/invalid-destructuring-arguments/input.js 2:2-2:4
 						}
-						value: JSNumericLiteral {
-							value: 1
-							loc: SourceLocation experimental/class-private-properties/invalid-destructuring-arguments/input.js 2:7-2:8
-						}
 						meta: JSClassPropertyMeta {
 							abstract: false
 							optional: false
@@ -35,6 +31,10 @@ JSRoot {
 							static: false
 							loc: SourceLocation experimental/class-private-properties/invalid-destructuring-arguments/input.js 2:2-2:4
 							start: Position 2:2
+						}
+						value: JSNumericLiteral {
+							value: 1
+							loc: SourceLocation experimental/class-private-properties/invalid-destructuring-arguments/input.js 2:7-2:8
 						}
 						loc: SourceLocation experimental/class-private-properties/invalid-destructuring-arguments/input.js 2:2-2:9
 					}
@@ -45,6 +45,14 @@ JSRoot {
 								loc: SourceLocation experimental/class-private-properties/invalid-destructuring-arguments/input.js 3:3-3:4 (p)
 							}
 							loc: SourceLocation experimental/class-private-properties/invalid-destructuring-arguments/input.js 3:2-3:4
+						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							optional: false
+							readonly: false
+							static: false
+							loc: SourceLocation experimental/class-private-properties/invalid-destructuring-arguments/input.js 3:2-3:4
+							start: Position 3:2
 						}
 						value: JSArrowFunctionExpression {
 							body: JSBlockStatement {
@@ -82,14 +90,6 @@ JSRoot {
 								loc: SourceLocation experimental/class-private-properties/invalid-destructuring-arguments/input.js 3:7-3:21
 							}
 							loc: SourceLocation experimental/class-private-properties/invalid-destructuring-arguments/input.js 3:7-3:24
-						}
-						meta: JSClassPropertyMeta {
-							abstract: false
-							optional: false
-							readonly: false
-							static: false
-							loc: SourceLocation experimental/class-private-properties/invalid-destructuring-arguments/input.js 3:2-3:4
-							start: Position 3:2
 						}
 						loc: SourceLocation experimental/class-private-properties/invalid-destructuring-arguments/input.js 3:2-3:24
 					}

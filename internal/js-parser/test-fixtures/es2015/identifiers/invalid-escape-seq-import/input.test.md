@@ -75,7 +75,7 @@ JSRoot {
   ✖ Escape sequence in keyword import
 
   > 1 │ var \u{69}\u{6d}\u{70}\u{6f}\u{72}\u{74} = 123;
-      │                                   <error><emphasis>^</emphasis></error>
+      │                                   ^
     2 │
     3 │ \u{69}\u{6d}\u{70}\u{6f}\u{72}\u{74} "x";
 

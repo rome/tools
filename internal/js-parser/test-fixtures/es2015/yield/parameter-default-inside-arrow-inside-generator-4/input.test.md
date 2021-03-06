@@ -114,7 +114,7 @@ JSRoot {
 
     1 │ function* fn() {
   > 2 │   (a, b = 3, x = yield) => {};
-      │                       <error><emphasis>^</emphasis></error>
+      │                       ^
     3 │ }
 
 

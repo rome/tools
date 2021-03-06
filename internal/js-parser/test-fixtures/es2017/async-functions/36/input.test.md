@@ -104,7 +104,7 @@ JSRoot {
   ✖ Unexpected character =
 
     const foo = ({ async = true });
-                         <error><emphasis>^</emphasis></error>
+                         ^
 
   ℹ Expected character ,
 

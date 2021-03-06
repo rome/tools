@@ -25,6 +25,14 @@ JSRoot {
 							}
 							loc: SourceLocation es2015/uncategorised/125/input.js 1:10-1:21
 						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							optional: false
+							readonly: false
+							static: false
+							loc: SourceLocation es2015/uncategorised/125/input.js 1:10-1:21
+							start: Position 1:10
+						}
 						body: JSBlockStatement {
 							body: []
 							directives: []
@@ -37,14 +45,6 @@ JSRoot {
 							params: []
 							loc: SourceLocation es2015/uncategorised/125/input.js 1:21-1:23
 						}
-						meta: JSClassPropertyMeta {
-							abstract: false
-							optional: false
-							readonly: false
-							static: false
-							loc: SourceLocation es2015/uncategorised/125/input.js 1:10-1:21
-							start: Position 1:10
-						}
 						loc: SourceLocation es2015/uncategorised/125/input.js 1:10-1:26
 					}
 					JSClassMethod {
@@ -55,6 +55,14 @@ JSRoot {
 								loc: SourceLocation es2015/uncategorised/125/input.js 1:27-1:40
 							}
 							loc: SourceLocation es2015/uncategorised/125/input.js 1:27-1:40
+						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							optional: false
+							readonly: false
+							static: false
+							loc: SourceLocation es2015/uncategorised/125/input.js 1:27-1:40
+							start: Position 1:27
 						}
 						body: JSBlockStatement {
 							body: []
@@ -67,14 +75,6 @@ JSRoot {
 							hasHoistedVars: false
 							params: []
 							loc: SourceLocation es2015/uncategorised/125/input.js 1:40-1:42
-						}
-						meta: JSClassPropertyMeta {
-							abstract: false
-							optional: false
-							readonly: false
-							static: false
-							loc: SourceLocation es2015/uncategorised/125/input.js 1:27-1:40
-							start: Position 1:27
 						}
 						loc: SourceLocation es2015/uncategorised/125/input.js 1:27-1:45
 					}
@@ -121,13 +121,7 @@ JSRoot {
   ✖ Duplicate constructor in the same class
 
     class A { constructor() {} 'constructor'() {} }
-                               <error><emphasis>^</emphasis></error>
-    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
+                               ^^^^^^^^^^^^^
 
 
 ```

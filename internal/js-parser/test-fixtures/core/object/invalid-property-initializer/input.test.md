@@ -119,7 +119,7 @@ JSRoot {
 
     1 │ const obj = {
   > 2 │   foo = 123,
-      │       <error><emphasis>^</emphasis></error>
+      │       ^
     3 │   bar: x = 123
     4 │ };
 

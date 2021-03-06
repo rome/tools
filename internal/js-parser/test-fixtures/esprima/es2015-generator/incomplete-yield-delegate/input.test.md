@@ -79,7 +79,7 @@ JSRoot {
   ✖ Unknown start to an yield argument
 
     (function*() { yield* })
-                          <error><emphasis>^</emphasis></error>
+                          ^
 
 
 ```

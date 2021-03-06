@@ -133,7 +133,7 @@ JSRoot {
 
     1 │ function* fn() {
   > 2 │   (x = 3 + a.b(yield) ** 2) => {};
-      │                     <error><emphasis>^</emphasis></error>
+      │                     ^
     3 │ }
 
 

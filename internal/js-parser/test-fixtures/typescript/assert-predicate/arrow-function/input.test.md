@@ -199,14 +199,7 @@ JSRoot {
     1 │ const assert1 = (value: unknown): asserts value is string => {}
     2 │ const assert2 = (value: unknown): asserts value => {}
   > 3 │ const assert3 = (value: unknown): asserts => {}
-    → │                  <error><emphasis>^</emphasis></error>
-    → │ <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-    → │ <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-    → │ <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-    → │ <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-    → │ <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-    → │ <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-      │ <error><emphasis>^</emphasis></error>
+      │                  ^^^^^^^^^^^^^^
 
 
 ```

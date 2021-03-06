@@ -8,14 +8,26 @@
 CSSRoot {
 	body: [
 		CSSRule {
-			block: CSSBlock {value: [], startingTokenValue: "{", loc: SourceLocation invalid/selector2/input.css 1:9-1:11}
 			prelude: [
 				CSSSelector {
-					patterns: [CSSTypeSelector {value: "span", loc: SourceLocation invalid/selector2/input.css 1:0-1:4}]
+					patterns: [
+						CSSTypeSelector {
+							value: "span"
+							loc: SourceLocation invalid/selector2/input.css 1:0-1:4
+						}
+					]
 					loc: SourceLocation invalid/selector2/input.css 1:0-1:7
 				}
-				CSSSelector {patterns: [], loc: SourceLocation invalid/selector2/input.css 1:7-1:9}
+				CSSSelector {
+					patterns: []
+					loc: SourceLocation invalid/selector2/input.css 1:7-1:9
+				}
 			]
+			block: CSSBlock {
+				value: []
+				startingTokenValue: "{"
+				loc: SourceLocation invalid/selector2/input.css 1:9-1:11
+			}
 			loc: SourceLocation invalid/selector2/input.css 1:0-1:11
 		}
 	]
@@ -23,9 +35,19 @@ CSSRoot {
 	corrupt: false
 	diagnostics: [
 		{
-			description: {advice: [], category: ["parse"], categoryValue: "css", message: RAW_MARKUP {value: "Expected a selector."}}
-			location: {language: "css", path: RelativePath<invalid/selector2/input.css>, end: Position 1:8, start: Position 1:7}
 			origins: [{category: "parse"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "css"
+				message: RAW_MARKUP {value: "Expected a selector."}
+			}
+			location: {
+				language: "css"
+				path: RelativePath<invalid/selector2/input.css>
+				end: Position 1:8
+				start: Position 1:7
+			}
 		}
 	]
 	path: RelativePath<invalid/selector2/input.css>

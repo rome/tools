@@ -25,6 +25,14 @@ JSRoot {
 							}
 							loc: SourceLocation es2020/optional-chaining/optional-super-property-class/input.js 2:4-2:5
 						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							optional: false
+							readonly: false
+							static: false
+							loc: SourceLocation es2020/optional-chaining/optional-super-property-class/input.js 2:4-2:5
+							start: Position 2:4
+						}
 						body: JSBlockStatement {
 							body: [
 								JSReturnStatement {
@@ -54,14 +62,6 @@ JSRoot {
 							hasHoistedVars: false
 							params: []
 							loc: SourceLocation es2020/optional-chaining/optional-super-property-class/input.js 2:5-2:7
-						}
-						meta: JSClassPropertyMeta {
-							abstract: false
-							optional: false
-							readonly: false
-							static: false
-							loc: SourceLocation es2020/optional-chaining/optional-super-property-class/input.js 2:4-2:5
-							start: Position 2:4
 						}
 						loc: SourceLocation es2020/optional-chaining/optional-super-property-class/input.js 2:4-4:5
 					}
@@ -110,7 +110,7 @@ JSRoot {
     1 │ class A{
     2 │     b(){
   > 3 │         return super?.b;
-      │                     <error><emphasis>^</emphasis></error>
+      │                     ^
     4 │     }
     5 │ }
 

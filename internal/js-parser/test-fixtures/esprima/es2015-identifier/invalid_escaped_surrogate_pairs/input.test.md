@@ -63,7 +63,7 @@ JSRoot {
   ✖ Invalid Unicode escape
 
     var \uD83B\uDE00
-              <error><emphasis>^</emphasis></error>
+              ^
 
 
 ```

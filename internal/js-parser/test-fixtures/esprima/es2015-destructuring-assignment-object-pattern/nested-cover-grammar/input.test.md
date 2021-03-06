@@ -200,7 +200,7 @@ JSRoot {
   ✖ Unexpected character =
 
     [[[[[[[[[[[[[[[[[[[[{a=b[0]}]]]]]]]]]]]]]]]]]]]]=0;
-                          <error><emphasis>^</emphasis></error>
+                          ^
 
   ℹ Expected character ,
 

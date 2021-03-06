@@ -82,9 +82,7 @@ JSRoot {
   ✖ Unexpected keyword const
 
     var x = ({ const });
-               <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-    <error><emphasis>^</emphasis></error>
+               ^^^^^
 
 
 ```

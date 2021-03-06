@@ -64,7 +64,7 @@ JSRoot {
   ✖ Unknown start to an statement expression
 
     a <== b;
-        <error><emphasis>^</emphasis></error>
+        ^
 
 
 ```

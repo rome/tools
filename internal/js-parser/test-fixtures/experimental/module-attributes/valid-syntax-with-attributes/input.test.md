@@ -86,7 +86,7 @@ JSRoot {
   ✖ Expected a semicolon or a line terminator
 
     import foo from "foo.json" with type: "json";
-                               <error><emphasis>^</emphasis></error>
+                               ^
 
 
 ```

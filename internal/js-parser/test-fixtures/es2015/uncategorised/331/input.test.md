@@ -68,9 +68,7 @@ JSRoot {
   ✖ Unexpected character c
 
     if (1) ; else class Cls {}
-                  <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-    <error><emphasis>^</emphasis></error>
+                  ^^^^^
 
 
 ```

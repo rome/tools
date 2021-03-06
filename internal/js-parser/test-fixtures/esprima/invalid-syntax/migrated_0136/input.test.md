@@ -87,7 +87,7 @@ JSRoot {
   ✖ Expected an identifier
 
     try {} catch (-x) {}
-                  <error><emphasis>^</emphasis></error>
+                  ^
 
 
 ```

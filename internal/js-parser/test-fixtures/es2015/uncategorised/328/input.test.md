@@ -76,7 +76,7 @@ JSRoot {
   ✖ Expected a semicolon or a line terminator
 
     if (1) let x = 10;
-               <error><emphasis>^</emphasis></error>
+               ^
 
 
 ```

@@ -25,6 +25,14 @@ JSRoot {
 							}
 							loc: SourceLocation es2015/uncategorised/121/input.js 1:10-1:13
 						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							optional: false
+							readonly: false
+							static: false
+							loc: SourceLocation es2015/uncategorised/121/input.js 1:9-1:13
+							start: Position 1:9
+						}
 						body: JSBlockStatement {
 							body: [
 								JSExpressionStatement {
@@ -56,14 +64,6 @@ JSRoot {
 								}
 							]
 							loc: SourceLocation es2015/uncategorised/121/input.js 1:13-1:16
-						}
-						meta: JSClassPropertyMeta {
-							abstract: false
-							optional: false
-							readonly: false
-							static: false
-							loc: SourceLocation es2015/uncategorised/121/input.js 1:9-1:13
-							start: Position 1:9
 						}
 						loc: SourceLocation es2015/uncategorised/121/input.js 1:9-1:29
 					}

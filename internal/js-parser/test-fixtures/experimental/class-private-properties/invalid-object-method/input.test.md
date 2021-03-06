@@ -24,6 +24,14 @@ JSRoot {
 							}
 							loc: SourceLocation experimental/class-private-properties/invalid-object-method/input.js 2:2-2:4
 						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							optional: false
+							readonly: false
+							static: false
+							loc: SourceLocation experimental/class-private-properties/invalid-object-method/input.js 2:2-2:4
+							start: Position 2:2
+						}
 						value: JSObjectExpression {
 							properties: [
 								JSObjectProperty {
@@ -45,14 +53,6 @@ JSRoot {
 								}
 							]
 							loc: SourceLocation experimental/class-private-properties/invalid-object-method/input.js 2:8-2:18
-						}
-						meta: JSClassPropertyMeta {
-							abstract: false
-							optional: false
-							readonly: false
-							static: false
-							loc: SourceLocation experimental/class-private-properties/invalid-object-method/input.js 2:2-2:4
-							start: Position 2:2
 						}
 						loc: SourceLocation experimental/class-private-properties/invalid-object-method/input.js 2:2-2:20
 					}

@@ -62,7 +62,7 @@ JSRoot {
   ✖ Invalid number
 
     3ea
-      <error><emphasis>^</emphasis></error>
+      ^
 
 
 ```

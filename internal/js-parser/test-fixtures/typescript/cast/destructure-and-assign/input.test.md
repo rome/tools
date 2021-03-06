@@ -109,12 +109,7 @@ JSRoot {
   ✖ Unexpected type cast in parameter position
 
   > 1 │ [a as number] = [42];
-    → │  <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-    → │ <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-    → │ <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-    → │ <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-    → │ <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-      │ <error><emphasis>^</emphasis></error>
+      │  ^^^^^^^^^^^
     2 │ [<number>a] = [42];
 
 

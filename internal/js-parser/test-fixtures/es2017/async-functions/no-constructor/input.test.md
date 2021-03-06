@@ -25,6 +25,14 @@ JSRoot {
 							}
 							loc: SourceLocation es2017/async-functions/no-constructor/input.js 2:8-2:19
 						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							optional: false
+							readonly: false
+							static: false
+							loc: SourceLocation es2017/async-functions/no-constructor/input.js 2:2-2:19
+							start: Position 2:2
+						}
 						body: JSBlockStatement {
 							body: []
 							directives: []
@@ -36,14 +44,6 @@ JSRoot {
 							hasHoistedVars: false
 							params: []
 							loc: SourceLocation es2017/async-functions/no-constructor/input.js 2:19-2:21
-						}
-						meta: JSClassPropertyMeta {
-							abstract: false
-							optional: false
-							readonly: false
-							static: false
-							loc: SourceLocation es2017/async-functions/no-constructor/input.js 2:2-2:19
-							start: Position 2:2
 						}
 						loc: SourceLocation es2017/async-functions/no-constructor/input.js 2:2-2:24
 					}
@@ -91,12 +91,7 @@ JSRoot {
 
     1 │ class A {
   > 2 │   async constructor() {}
-    → │         <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-    → │ <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-    → │ <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-    → │ <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-    → │ <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-      │ <error><emphasis>^</emphasis></error>
+      │         ^^^^^^^^^^^
     3 │ }
 
 

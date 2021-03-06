@@ -814,12 +814,6 @@ export default class TestAPI implements TestHelper {
 					});
 				}
 
-				advice.push({
-					type: "log",
-					category: "info",
-					text: markup`Run <code>rome test ${this.path} --update-snapshots</code> to update this snapshot`,
-				});
-
 				await this.emitDiagnostic(
 					this.file.deriveDiagnosticFromErrorStructure(
 						callError,

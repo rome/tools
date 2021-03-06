@@ -57,7 +57,7 @@ JSRoot {
   ✖ import() requires exactly one argument
 
     import();
-           <error><emphasis>^</emphasis></error>
+           ^
 
 
 ```

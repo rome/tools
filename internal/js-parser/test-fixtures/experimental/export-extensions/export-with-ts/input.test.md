@@ -213,7 +213,7 @@ JSRoot {
   ✖ Expected `from` for an export node
 
   > 1 │ export abstract class A {}
-      │                 <error><emphasis>^</emphasis></error>
+      │                 ^
     2 │ export declare interface B {}
     3 │ export enum C {}
 

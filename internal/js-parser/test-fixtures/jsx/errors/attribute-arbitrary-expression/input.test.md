@@ -93,7 +93,7 @@ JSRoot {
   ✖ JSX attribute value should be either an expression or a quoted JSX text
 
     <Foo bar=bar() />
-             <error><emphasis>^</emphasis></error>
+             ^
 
 
 ```

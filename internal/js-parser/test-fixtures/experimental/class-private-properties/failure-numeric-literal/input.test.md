@@ -24,10 +24,6 @@ JSRoot {
 							}
 							loc: SourceLocation experimental/class-private-properties/failure-numeric-literal/input.js 2:2-2:4
 						}
-						value: JSReferenceIdentifier {
-							name: "y"
-							loc: SourceLocation experimental/class-private-properties/failure-numeric-literal/input.js 2:7-2:8 (y)
-						}
 						meta: JSClassPropertyMeta {
 							abstract: false
 							optional: false
@@ -35,6 +31,10 @@ JSRoot {
 							static: false
 							loc: SourceLocation experimental/class-private-properties/failure-numeric-literal/input.js 2:2-2:4
 							start: Position 2:2
+						}
+						value: JSReferenceIdentifier {
+							name: "y"
+							loc: SourceLocation experimental/class-private-properties/failure-numeric-literal/input.js 2:7-2:8 (y)
 						}
 						loc: SourceLocation experimental/class-private-properties/failure-numeric-literal/input.js 2:2-2:8
 					}
@@ -82,7 +82,7 @@ JSRoot {
 
     1 │ class Foo {
   > 2 │   #2 = y
-      │    <error><emphasis>^</emphasis></error>
+      │    ^
     3 │ }
 
 

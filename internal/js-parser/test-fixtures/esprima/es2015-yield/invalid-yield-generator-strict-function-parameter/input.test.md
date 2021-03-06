@@ -106,9 +106,7 @@ JSRoot {
   ✖ yield is a reserved word
 
     "use strict"; function *g() { var z = function(yield) {} }
-                                                   <error><emphasis>^</emphasis></error>
-    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
+                                                   ^^^^^
 
 
 ```

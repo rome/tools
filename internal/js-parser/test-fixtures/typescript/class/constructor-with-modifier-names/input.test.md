@@ -25,6 +25,14 @@ JSRoot {
 							}
 							loc: SourceLocation typescript/class/constructor-with-modifier-names/input.ts 2:2-2:13
 						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							optional: false
+							readonly: false
+							static: false
+							loc: SourceLocation typescript/class/constructor-with-modifier-names/input.ts 2:2-2:13
+							start: Position 2:2
+						}
 						body: JSBlockStatement {
 							body: []
 							directives: []
@@ -52,14 +60,6 @@ JSRoot {
 							]
 							loc: SourceLocation typescript/class/constructor-with-modifier-names/input.ts 2:13-2:28
 						}
-						meta: JSClassPropertyMeta {
-							abstract: false
-							optional: false
-							readonly: false
-							static: false
-							loc: SourceLocation typescript/class/constructor-with-modifier-names/input.ts 2:2-2:13
-							start: Position 2:2
-						}
 						loc: SourceLocation typescript/class/constructor-with-modifier-names/input.ts 2:2-2:31
 					}
 					JSClassMethod {
@@ -70,6 +70,14 @@ JSRoot {
 								loc: SourceLocation typescript/class/constructor-with-modifier-names/input.ts 3:2-3:13 (constructor)
 							}
 							loc: SourceLocation typescript/class/constructor-with-modifier-names/input.ts 3:2-3:13
+						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							optional: false
+							readonly: false
+							static: false
+							loc: SourceLocation typescript/class/constructor-with-modifier-names/input.ts 3:2-3:13
+							start: Position 3:2
 						}
 						body: JSBlockStatement {
 							body: []
@@ -103,14 +111,6 @@ JSRoot {
 								}
 							]
 							loc: SourceLocation typescript/class/constructor-with-modifier-names/input.ts 3:13-3:42
-						}
-						meta: JSClassPropertyMeta {
-							abstract: false
-							optional: false
-							readonly: false
-							static: false
-							loc: SourceLocation typescript/class/constructor-with-modifier-names/input.ts 3:2-3:13
-							start: Position 3:2
 						}
 						loc: SourceLocation typescript/class/constructor-with-modifier-names/input.ts 3:2-3:45
 					}

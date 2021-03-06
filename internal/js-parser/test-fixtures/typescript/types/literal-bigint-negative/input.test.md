@@ -70,7 +70,7 @@ JSRoot {
   ✖ Unexpected token, expected "number"
 
     let x: -1n;
-            <error><emphasis>^</emphasis></error>
+            ^
 
 
 ```

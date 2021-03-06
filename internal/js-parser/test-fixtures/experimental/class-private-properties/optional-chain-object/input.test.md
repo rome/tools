@@ -24,10 +24,6 @@ JSRoot {
 							}
 							loc: SourceLocation experimental/class-private-properties/optional-chain-object/input.js 2:9-2:11
 						}
-						value: JSNumericLiteral {
-							value: 1
-							loc: SourceLocation experimental/class-private-properties/optional-chain-object/input.js 2:14-2:15
-						}
 						meta: JSClassPropertyMeta {
 							abstract: false
 							optional: false
@@ -35,6 +31,10 @@ JSRoot {
 							static: true
 							loc: SourceLocation experimental/class-private-properties/optional-chain-object/input.js 2:2-2:11
 							start: Position 2:2
+						}
+						value: JSNumericLiteral {
+							value: 1
+							loc: SourceLocation experimental/class-private-properties/optional-chain-object/input.js 2:14-2:15
 						}
 						loc: SourceLocation experimental/class-private-properties/optional-chain-object/input.js 2:2-2:16
 					}
@@ -45,6 +45,14 @@ JSRoot {
 								loc: SourceLocation experimental/class-private-properties/optional-chain-object/input.js 3:10-3:11 (m)
 							}
 							loc: SourceLocation experimental/class-private-properties/optional-chain-object/input.js 3:9-3:11
+						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							optional: false
+							readonly: false
+							static: true
+							loc: SourceLocation experimental/class-private-properties/optional-chain-object/input.js 3:2-3:11
+							start: Position 3:2
 						}
 						value: JSFunctionExpression {
 							body: JSBlockStatement {
@@ -61,14 +69,6 @@ JSRoot {
 							}
 							loc: SourceLocation experimental/class-private-properties/optional-chain-object/input.js 3:14-3:27
 						}
-						meta: JSClassPropertyMeta {
-							abstract: false
-							optional: false
-							readonly: false
-							static: true
-							loc: SourceLocation experimental/class-private-properties/optional-chain-object/input.js 3:2-3:11
-							start: Position 3:2
-						}
 						loc: SourceLocation experimental/class-private-properties/optional-chain-object/input.js 3:2-3:28
 					}
 					JSClassMethod {
@@ -79,6 +79,14 @@ JSRoot {
 								loc: SourceLocation experimental/class-private-properties/optional-chain-object/input.js 5:9-5:13 (test)
 							}
 							loc: SourceLocation experimental/class-private-properties/optional-chain-object/input.js 5:9-5:13
+						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							optional: false
+							readonly: false
+							static: true
+							loc: SourceLocation experimental/class-private-properties/optional-chain-object/input.js 5:2-5:13
+							start: Position 5:2
 						}
 						body: JSBlockStatement {
 							body: [
@@ -280,14 +288,6 @@ JSRoot {
 							hasHoistedVars: false
 							params: []
 							loc: SourceLocation experimental/class-private-properties/optional-chain-object/input.js 5:13-5:15
-						}
-						meta: JSClassPropertyMeta {
-							abstract: false
-							optional: false
-							readonly: false
-							static: true
-							loc: SourceLocation experimental/class-private-properties/optional-chain-object/input.js 5:2-5:13
-							start: Position 5:2
 						}
 						loc: SourceLocation experimental/class-private-properties/optional-chain-object/input.js 5:2-13:3
 					}

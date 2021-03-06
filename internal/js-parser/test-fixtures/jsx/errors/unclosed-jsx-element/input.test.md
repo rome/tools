@@ -76,13 +76,12 @@ JSRoot {
   ✖ Unclosed JSX element
 
     <div>() => {}
-                 <error><emphasis>^</emphasis></error>
+                 ^
 
   ℹ Originated from opening tag of div
 
     <div>() => {}
-     <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-    <error><emphasis>^</emphasis></error>
+     ^^^
 
 
 ```

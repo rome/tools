@@ -8,13 +8,22 @@
 CSSRoot {
 	body: [
 		CSSRule {
-			block: CSSBlock {value: [], startingTokenValue: "{", loc: SourceLocation invalid/selector4/input.css 1:13-3:1}
 			prelude: [
 				CSSSelector {
-					patterns: [CSSClassSelector {value: "class", loc: SourceLocation invalid/selector4/input.css 1:0-1:6}]
+					patterns: [
+						CSSClassSelector {
+							value: "class"
+							loc: SourceLocation invalid/selector4/input.css 1:0-1:6
+						}
+					]
 					loc: SourceLocation invalid/selector4/input.css 1:0-1:13
 				}
 			]
+			block: CSSBlock {
+				value: []
+				startingTokenValue: "{"
+				loc: SourceLocation invalid/selector4/input.css 1:13-3:1
+			}
 			loc: SourceLocation invalid/selector4/input.css 1:0-3:1
 		}
 	]
@@ -22,14 +31,19 @@ CSSRoot {
 	corrupt: false
 	diagnostics: [
 		{
+			origins: [{category: "parse"}]
 			description: {
 				advice: []
 				category: ["parse"]
 				categoryValue: "css"
 				message: RAW_MARKUP {value: "Expected to close attribute selector with a right square bracket <emphasis>]</emphasis>."}
 			}
-			location: {language: "css", path: RelativePath<invalid/selector4/input.css>, end: Position 1:14, start: Position 1:13}
-			origins: [{category: "parse"}]
+			location: {
+				language: "css"
+				path: RelativePath<invalid/selector4/input.css>
+				end: Position 1:14
+				start: Position 1:13
+			}
 		}
 	]
 	path: RelativePath<invalid/selector4/input.css>

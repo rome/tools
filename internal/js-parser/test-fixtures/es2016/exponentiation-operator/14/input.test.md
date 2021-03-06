@@ -57,7 +57,7 @@ JSRoot {
   ✖ Unknown start to an statement expression
 
     a %*= 1;
-       <error><emphasis>^</emphasis></error>
+       ^
 
 
 ```

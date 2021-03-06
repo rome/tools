@@ -191,7 +191,7 @@ JSRoot {
 
     1 │ class A {
   > 2 │   declare static foo;
-      │           <error><emphasis>^</emphasis></error>
+      │           ^
     3 │   static declare foo0: string;
 
 

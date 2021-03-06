@@ -74,7 +74,7 @@ JSRoot {
   ✖ Unexpected character `
 
     switch `test`
-           <error><emphasis>^</emphasis></error>
+           ^
 
   ℹ Expected the opening switch discriminant character (
 

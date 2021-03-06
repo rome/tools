@@ -67,7 +67,7 @@ JSRoot {
   ✖ Illegal expression. Wrap left hand side or entire exponentiation in parentheses.
 
     -5 ** 6;
-     <error><emphasis>^</emphasis></error>
+     ^
 
 
 ```

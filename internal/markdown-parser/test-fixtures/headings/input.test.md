@@ -9,14 +9,43 @@
 ```javascript
 MarkdownRoot {
 	body: [
-		MarkdownHeadingBlock {value: "Title", level: 1, loc: SourceLocation headings/input.md 1:0-1:7}
-		MarkdownHeadingBlock {value: "Title", level: 2, loc: SourceLocation headings/input.md 2:0-2:8}
-		MarkdownHeadingBlock {value: "Title", level: 3, loc: SourceLocation headings/input.md 3:0-3:9}
-		MarkdownHeadingBlock {value: "Title", level: 4, loc: SourceLocation headings/input.md 4:0-4:10}
-		MarkdownHeadingBlock {value: "Title", level: 5, loc: SourceLocation headings/input.md 5:0-5:11}
-		MarkdownHeadingBlock {value: "Title", level: 6, loc: SourceLocation headings/input.md 6:0-6:12}
+		MarkdownHeadingBlock {
+			value: "Title"
+			level: 1
+			loc: SourceLocation headings/input.md 1:0-1:7
+		}
+		MarkdownHeadingBlock {
+			value: "Title"
+			level: 2
+			loc: SourceLocation headings/input.md 2:0-2:8
+		}
+		MarkdownHeadingBlock {
+			value: "Title"
+			level: 3
+			loc: SourceLocation headings/input.md 3:0-3:9
+		}
+		MarkdownHeadingBlock {
+			value: "Title"
+			level: 4
+			loc: SourceLocation headings/input.md 4:0-4:10
+		}
+		MarkdownHeadingBlock {
+			value: "Title"
+			level: 5
+			loc: SourceLocation headings/input.md 5:0-5:11
+		}
+		MarkdownHeadingBlock {
+			value: "Title"
+			level: 6
+			loc: SourceLocation headings/input.md 6:0-6:12
+		}
 		MarkdownParagraph {
-			children: [MarkdownText {value: "####### this will be a paragraph", loc: SourceLocation headings/input.md 7:0-7:0}]
+			children: [
+				MarkdownText {
+					value: "####### this will be a paragraph"
+					loc: SourceLocation headings/input.md 7:0-7:0
+				}
+			]
 			loc: SourceLocation headings/input.md 7:0-7:32
 		}
 	]

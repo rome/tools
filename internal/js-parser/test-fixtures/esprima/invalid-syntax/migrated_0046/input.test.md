@@ -62,9 +62,7 @@ JSRoot {
   ✖ Invalid left-hand side in assignment expression
 
     func() = 4
-    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
+    ^^^^^^
 
 
 ```

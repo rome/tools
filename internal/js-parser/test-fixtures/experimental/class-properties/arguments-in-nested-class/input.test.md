@@ -31,6 +31,14 @@ JSRoot {
 										}
 										loc: SourceLocation experimental/class-properties/arguments-in-nested-class/input.js 3:4-3:7
 									}
+									meta: JSClassPropertyMeta {
+										abstract: false
+										optional: false
+										readonly: false
+										static: false
+										loc: SourceLocation experimental/class-properties/arguments-in-nested-class/input.js 3:4-3:7
+										start: Position 3:4
+									}
 									value: JSClassExpression {
 										id: JSBindingIdentifier {
 											name: "B"
@@ -46,6 +54,14 @@ JSRoot {
 															loc: SourceLocation experimental/class-properties/arguments-in-nested-class/input.js 3:20-3:23 (bar)
 														}
 														loc: SourceLocation experimental/class-properties/arguments-in-nested-class/input.js 3:20-3:23
+													}
+													meta: JSClassPropertyMeta {
+														abstract: false
+														optional: false
+														readonly: false
+														static: false
+														loc: SourceLocation experimental/class-properties/arguments-in-nested-class/input.js 3:20-3:23
+														start: Position 3:20
 													}
 													body: JSBlockStatement {
 														body: [
@@ -67,28 +83,12 @@ JSRoot {
 														params: []
 														loc: SourceLocation experimental/class-properties/arguments-in-nested-class/input.js 3:23-3:25
 													}
-													meta: JSClassPropertyMeta {
-														abstract: false
-														optional: false
-														readonly: false
-														static: false
-														loc: SourceLocation experimental/class-properties/arguments-in-nested-class/input.js 3:20-3:23
-														start: Position 3:20
-													}
 													loc: SourceLocation experimental/class-properties/arguments-in-nested-class/input.js 3:20-3:39
 												}
 											]
 											loc: SourceLocation experimental/class-properties/arguments-in-nested-class/input.js 3:10-3:41
 										}
 										loc: SourceLocation experimental/class-properties/arguments-in-nested-class/input.js 3:10-3:41
-									}
-									meta: JSClassPropertyMeta {
-										abstract: false
-										optional: false
-										readonly: false
-										static: false
-										loc: SourceLocation experimental/class-properties/arguments-in-nested-class/input.js 3:4-3:7
-										start: Position 3:4
 									}
 									loc: SourceLocation experimental/class-properties/arguments-in-nested-class/input.js 3:4-3:42
 								}
@@ -150,11 +150,7 @@ JSRoot {
     1 │ function fn() {
     2 │   class A {
   > 3 │     foo = class B { bar() { arguments } };
-    → │                             <error><emphasis>^</emphasis></error>
-    → │ <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-    → │ <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-    → │ <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-      │ <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
+      │                             ^^^^^^^^^
     4 │   }
     5 │ }
 

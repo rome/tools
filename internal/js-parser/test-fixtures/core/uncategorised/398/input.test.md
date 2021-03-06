@@ -74,8 +74,7 @@ JSRoot {
   ✖ Unexpected keyword true
 
     function t(true) { }
-               <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
+               ^^^^
 
 
 ```

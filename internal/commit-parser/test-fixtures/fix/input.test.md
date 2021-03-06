@@ -12,9 +12,9 @@ CommitRoot {
 	corrupt: false
 	custom: false
 	diagnostics: []
-	path: RelativePath<fix/input.txt>
 	rawBody: "commit with a fix commit type"
 	scope: ""
+	path: RelativePath<fix/input.txt>
 	loc: SourceLocation fix/input.txt 1:0-1:33
 }
 ```

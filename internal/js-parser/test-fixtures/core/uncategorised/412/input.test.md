@@ -57,7 +57,7 @@ JSRoot {
   ✖ Unexpected character 2
 
     continue 2;
-             <error><emphasis>^</emphasis></error>
+             ^
 
 
 ```

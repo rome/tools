@@ -62,7 +62,7 @@ JSRoot {
   ✖ Identifier directly after number
 
     0b1a
-       <error><emphasis>^</emphasis></error>
+       ^
 
 
 ```

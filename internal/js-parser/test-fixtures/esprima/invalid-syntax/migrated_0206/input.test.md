@@ -73,11 +73,7 @@ JSRoot {
   ✖ arguments is a reserved word
 
     (function arguments() {'use strict'; })()
-              <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-    <error><emphasis>^</emphasis></error>
+              ^^^^^^^^^
 
 
 ```

@@ -80,7 +80,7 @@ JSRoot {
   ✖ Unknown start to an array element
 
     var a = [if (x) x]
-             <error><emphasis>^</emphasis></error>
+             ^
 
 
 ```

@@ -82,7 +82,7 @@ JSRoot {
   ✖ Unknown JSX identifier token
 
     <a.b:c />
-        <error><emphasis>^</emphasis></error>
+        ^
 
 
 ```

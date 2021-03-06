@@ -13,13 +13,17 @@ gist {id: "123456"}
 ### `0`
 
 ```javascript
-npm {name: {packageName: "foo"}}
+npm {
+	name: {packageName: "foo"}
+}
 ```
 
 ### `1`
 
 ```javascript
-npm {name: {packageName: "@foo/bar"}}
+npm {
+	name: {packageName: "@foo/bar"}
+}
 ```
 
 ### `2`
@@ -27,7 +31,14 @@ npm {name: {packageName: "@foo/bar"}}
 ```javascript
 npm {
 	name: {packageName: "foo"}
-	range: AbsoluteVersion {build: [], major: 1, minor: 0, patch: 0, prerelease: [], loc: SourceLocation unknown 1:0-1:4}
+	range: AbsoluteVersion {
+		build: []
+		major: 1
+		minor: 0
+		patch: 0
+		prerelease: []
+		loc: SourceLocation unknown 1:0-1:4
+	}
 }
 ```
 
@@ -36,7 +47,14 @@ npm {
 ```javascript
 npm {
 	name: {packageName: "@foo/bar"}
-	range: AbsoluteVersion {build: [], major: 1, minor: 0, patch: 0, prerelease: [], loc: SourceLocation unknown 1:0-1:4}
+	range: AbsoluteVersion {
+		build: []
+		major: 1
+		minor: 0
+		patch: 0
+		prerelease: []
+		loc: SourceLocation unknown 1:0-1:4
+	}
 }
 ```
 

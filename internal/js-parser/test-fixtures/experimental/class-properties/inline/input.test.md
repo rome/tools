@@ -72,10 +72,6 @@ JSRoot {
 							}
 							loc: SourceLocation experimental/class-properties/inline/input.js 3:10-3:11
 						}
-						value: JSNumericLiteral {
-							value: 0
-							loc: SourceLocation experimental/class-properties/inline/input.js 3:14-3:15
-						}
 						meta: JSClassPropertyMeta {
 							abstract: false
 							optional: false
@@ -83,6 +79,10 @@ JSRoot {
 							static: false
 							loc: SourceLocation experimental/class-properties/inline/input.js 3:10-3:11
 							start: Position 3:10
+						}
+						value: JSNumericLiteral {
+							value: 0
+							loc: SourceLocation experimental/class-properties/inline/input.js 3:14-3:15
 						}
 						loc: SourceLocation experimental/class-properties/inline/input.js 3:10-3:16
 					}
@@ -94,10 +94,6 @@ JSRoot {
 							}
 							loc: SourceLocation experimental/class-properties/inline/input.js 3:17-3:18
 						}
-						value: JSNumericLiteral {
-							value: 1
-							loc: SourceLocation experimental/class-properties/inline/input.js 3:21-3:22
-						}
 						meta: JSClassPropertyMeta {
 							abstract: false
 							optional: false
@@ -105,6 +101,10 @@ JSRoot {
 							static: false
 							loc: SourceLocation experimental/class-properties/inline/input.js 3:17-3:18
 							start: Position 3:17
+						}
+						value: JSNumericLiteral {
+							value: 1
+							loc: SourceLocation experimental/class-properties/inline/input.js 3:21-3:22
 						}
 						loc: SourceLocation experimental/class-properties/inline/input.js 3:17-3:23
 					}

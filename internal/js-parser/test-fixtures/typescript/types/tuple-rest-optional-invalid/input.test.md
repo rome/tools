@@ -87,9 +87,7 @@ JSRoot {
   ✖ A tuple member cannot be both optional and rest.
 
     type A = [...N, ...N?];
-                    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-    <error><emphasis>^</emphasis></error>
+                    ^^^^^
 
 
 ```

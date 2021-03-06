@@ -8,11 +8,43 @@
 CSSRoot {
 	body: [
 		CSSRule {
+			prelude: [
+				CSSSelector {
+					patterns: [
+						CSSTypeSelector {
+							value: "a"
+							loc: SourceLocation invalid/selector6/input.css 1:0-1:1
+						}
+					]
+					loc: SourceLocation invalid/selector6/input.css 1:0-1:8
+				}
+				CSSSelector {
+					patterns: []
+					loc: SourceLocation invalid/selector6/input.css 1:8-1:9
+				}
+				CSSSelector {
+					patterns: []
+					loc: SourceLocation invalid/selector6/input.css 1:9-1:16
+				}
+				CSSSelector {
+					patterns: []
+					loc: SourceLocation invalid/selector6/input.css 1:16-1:17
+				}
+				CSSSelector {
+					patterns: []
+					loc: SourceLocation invalid/selector6/input.css 1:17-1:18
+				}
+			]
 			block: CSSBlock {
 				value: [
 					CSSDeclaration {
 						name: "color"
-						value: [CSSIdentifier {value: "purple", loc: SourceLocation invalid/selector6/input.css 2:9-2:15}]
+						value: [
+							CSSIdentifier {
+								value: "purple"
+								loc: SourceLocation invalid/selector6/input.css 2:9-2:15
+							}
+						]
 						important: false
 						loc: SourceLocation invalid/selector6/input.css 2:2-2:15
 					}
@@ -20,16 +52,6 @@ CSSRoot {
 				startingTokenValue: "{"
 				loc: SourceLocation invalid/selector6/input.css 1:18-3:1
 			}
-			prelude: [
-				CSSSelector {
-					patterns: [CSSTypeSelector {value: "a", loc: SourceLocation invalid/selector6/input.css 1:0-1:1}]
-					loc: SourceLocation invalid/selector6/input.css 1:0-1:8
-				}
-				CSSSelector {patterns: [], loc: SourceLocation invalid/selector6/input.css 1:8-1:9}
-				CSSSelector {patterns: [], loc: SourceLocation invalid/selector6/input.css 1:9-1:16}
-				CSSSelector {patterns: [], loc: SourceLocation invalid/selector6/input.css 1:16-1:17}
-				CSSSelector {patterns: [], loc: SourceLocation invalid/selector6/input.css 1:17-1:18}
-			]
 			loc: SourceLocation invalid/selector6/input.css 1:0-3:1
 		}
 	]
@@ -37,14 +59,19 @@ CSSRoot {
 	corrupt: false
 	diagnostics: [
 		{
+			origins: [{category: "parse"}]
 			description: {
 				advice: []
 				category: ["parse"]
 				categoryValue: "css"
 				message: RAW_MARKUP {value: "Expected to close attribute selector with a right square bracket <emphasis>]</emphasis>."}
 			}
-			location: {language: "css", path: RelativePath<invalid/selector6/input.css>, end: Position 1:8, start: Position 1:7}
-			origins: [{category: "parse"}]
+			location: {
+				language: "css"
+				path: RelativePath<invalid/selector6/input.css>
+				end: Position 1:8
+				start: Position 1:7
+			}
 		}
 	]
 	path: RelativePath<invalid/selector6/input.css>

@@ -75,7 +75,7 @@ JSRoot {
   ✖ Only '=' operator can be used for specifying default value.
 
     ([a += a] = a)
-      <error><emphasis>^</emphasis></error>
+      ^
 
 
 ```

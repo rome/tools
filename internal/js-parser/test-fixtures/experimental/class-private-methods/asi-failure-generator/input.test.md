@@ -24,6 +24,14 @@ JSRoot {
 							}
 							loc: SourceLocation experimental/class-private-methods/asi-failure-generator/input.js 2:2-2:3
 						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							optional: false
+							readonly: false
+							static: false
+							loc: SourceLocation experimental/class-private-methods/asi-failure-generator/input.js 2:2-2:3
+							start: Position 2:2
+						}
 						value: JSBinaryExpression {
 							operator: "*"
 							left: JSReferenceIdentifier {
@@ -36,14 +44,6 @@ JSRoot {
 							}
 							loc: SourceLocation experimental/class-private-methods/asi-failure-generator/input.js 2:6-3:4
 						}
-						meta: JSClassPropertyMeta {
-							abstract: false
-							optional: false
-							readonly: false
-							static: false
-							loc: SourceLocation experimental/class-private-methods/asi-failure-generator/input.js 2:2-2:3
-							start: Position 2:2
-						}
 						loc: SourceLocation experimental/class-private-methods/asi-failure-generator/input.js 2:2-3:4
 					}
 					JSClassMethod {
@@ -54,6 +54,14 @@ JSRoot {
 								loc: SourceLocation experimental/class-private-methods/asi-failure-generator/input.js 3:4-3:5 (m)
 							}
 							loc: SourceLocation experimental/class-private-methods/asi-failure-generator/input.js 3:4-3:5
+						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							optional: false
+							readonly: false
+							static: false
+							loc: SourceLocation experimental/class-private-methods/asi-failure-generator/input.js 3:4-3:5
+							start: Position 3:4
 						}
 						body: JSBlockStatement {
 							body: []
@@ -66,14 +74,6 @@ JSRoot {
 							hasHoistedVars: false
 							params: []
 							loc: SourceLocation experimental/class-private-methods/asi-failure-generator/input.js 3:6-3:8
-						}
-						meta: JSClassPropertyMeta {
-							abstract: false
-							optional: false
-							readonly: false
-							static: false
-							loc: SourceLocation experimental/class-private-methods/asi-failure-generator/input.js 3:4-3:5
-							start: Position 3:4
 						}
 						loc: SourceLocation experimental/class-private-methods/asi-failure-generator/input.js 3:4-3:11
 					}
@@ -117,7 +117,7 @@ JSRoot {
     1 │ class Foo {
     2 │   p = x
   > 3 │   *#m () {}
-      │    <error><emphasis>^</emphasis></error>
+      │    ^
     4 │ }
 
 

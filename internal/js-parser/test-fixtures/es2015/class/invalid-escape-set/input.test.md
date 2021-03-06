@@ -25,6 +25,14 @@ JSRoot {
 							}
 							loc: SourceLocation es2015/class/invalid-escape-set/input.js 1:19-1:20
 						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							optional: false
+							readonly: false
+							static: false
+							loc: SourceLocation es2015/class/invalid-escape-set/input.js 1:10-1:20
+							start: Position 1:10
+						}
 						body: JSBlockStatement {
 							body: []
 							directives: []
@@ -44,14 +52,6 @@ JSRoot {
 								}
 							]
 							loc: SourceLocation es2015/class/invalid-escape-set/input.js 1:20-1:27
-						}
-						meta: JSClassPropertyMeta {
-							abstract: false
-							optional: false
-							readonly: false
-							static: false
-							loc: SourceLocation es2015/class/invalid-escape-set/input.js 1:10-1:20
-							start: Position 1:10
 						}
 						loc: SourceLocation es2015/class/invalid-escape-set/input.js 1:10-1:30
 					}
@@ -98,7 +98,7 @@ JSRoot {
   ✖ set can't contain a unicode escape
 
     class X { se\u0074 x(value) {} }
-                <error><emphasis>^</emphasis></error>
+                ^
 
 
 ```

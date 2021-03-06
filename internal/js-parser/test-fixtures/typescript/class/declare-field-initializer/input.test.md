@@ -24,10 +24,6 @@ JSRoot {
 							}
 							loc: SourceLocation typescript/class/declare-field-initializer/input.ts 2:10-2:13
 						}
-						value: JSStringLiteral {
-							value: "test"
-							loc: SourceLocation typescript/class/declare-field-initializer/input.ts 2:24-2:30
-						}
 						meta: JSClassPropertyMeta {
 							abstract: false
 							optional: false
@@ -35,6 +31,10 @@ JSRoot {
 							static: false
 							loc: SourceLocation typescript/class/declare-field-initializer/input.ts 2:10-2:13
 							start: Position 2:10
+						}
+						value: JSStringLiteral {
+							value: "test"
+							loc: SourceLocation typescript/class/declare-field-initializer/input.ts 2:24-2:30
 						}
 						typeAnnotation: TSStringKeywordTypeAnnotation {
 							loc: SourceLocation typescript/class/declare-field-initializer/input.ts 2:15-2:21
@@ -85,7 +85,7 @@ JSRoot {
 
     1 │ class A {
   > 2 │   declare bar: string = "test";
-      │           <error><emphasis>^</emphasis></error>
+      │           ^
     3 │ }
 
 

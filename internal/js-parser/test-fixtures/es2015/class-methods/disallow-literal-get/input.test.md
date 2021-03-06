@@ -25,6 +25,14 @@ JSRoot {
 							}
 							loc: SourceLocation es2015/class-methods/disallow-literal-get/input.js 2:8-2:9
 						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							optional: false
+							readonly: false
+							static: false
+							loc: SourceLocation es2015/class-methods/disallow-literal-get/input.js 2:8-2:9
+							start: Position 2:8
+						}
 						body: JSBlockStatement {
 							body: []
 							directives: []
@@ -36,14 +44,6 @@ JSRoot {
 							hasHoistedVars: false
 							params: []
 							loc: SourceLocation es2015/class-methods/disallow-literal-get/input.js 2:9-2:11
-						}
-						meta: JSClassPropertyMeta {
-							abstract: false
-							optional: false
-							readonly: false
-							static: false
-							loc: SourceLocation es2015/class-methods/disallow-literal-get/input.js 2:8-2:9
-							start: Position 2:8
 						}
 						loc: SourceLocation es2015/class-methods/disallow-literal-get/input.js 2:8-2:14
 					}
@@ -91,7 +91,7 @@ JSRoot {
 
     1 │ class A {
   > 2 │   "get" a() {}
-      │         <error><emphasis>^</emphasis></error>
+      │         ^
     3 │ }
 
 

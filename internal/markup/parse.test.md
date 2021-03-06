@@ -7,35 +7,7 @@
 ### `0`
 
 ```javascript
-[
-	Tag {
-		name: "filelink"
-		attributes: ___R$project$rome$$internal$consume$Consumer_ts$default {
-			value: {target: "C:\\Users\\sebmck\\file.ts"}
-			context: {category: ["parse"], categoryValue: "romemarkup", getDiagnosticLocation: Function getDiagnosticLocation}
-			declared: false
-			forkCache: Map [
-				"target" => ___R$project$rome$$internal$consume$Consumer_ts$default {
-					value: "C:\\Users\\sebmck\\file.ts"
-					context: {category: ["parse"], categoryValue: "romemarkup", getDiagnosticLocation: Function getDiagnosticLocation}
-					declared: false
-					forkCache: Map []
-					hasHandledUnexpected: false
-					keyPath: ["target"]
-					parent: Circular 2
-					path: UIDPath<unknown>
-					propertyMetadata: {getDiagnosticLocation: Function getDiagnosticLocation}
-					usedNames: Set ["target"]
-				}
-			]
-			hasHandledUnexpected: false
-			keyPath: []
-			path: UIDPath<unknown>
-			usedNames: Set ["target"]
-		}
-		children: []
-	}
-]
+RAW_MARKUP {value: "<filelink target=\"C:\\Users\\sebmck\\file.ts\" />"}
 ```
 
 ### `1`
@@ -44,17 +16,8 @@
 [
 	Tag {
 		name: "info"
-		attributes: ___R$project$rome$$internal$consume$Consumer_ts$default {
-			value: {}
-			context: {category: ["parse"], categoryValue: "romemarkup", getDiagnosticLocation: Function getDiagnosticLocation}
-			declared: false
-			forkCache: Map []
-			hasHandledUnexpected: false
-			keyPath: []
-			path: UIDPath<unknown>
-			usedNames: Set []
-		}
 		children: [Text {value: "[MemoryFileSystem] Adding new project directory C:\\Users\\sebmck\\rome", source: true}]
+		attributes: Consumer<{}>
 	}
 ]
 ```
@@ -66,32 +29,14 @@
 	Text {value: "  <info>[MemoryFileSystem] Adding new project directory C:\\Users\\Sebastian\\rome\\</info>\n        ", source: true}
 	Tag {
 		name: "error"
-		attributes: ___R$project$rome$$internal$consume$Consumer_ts$default {
-			value: {}
-			context: {category: ["parse"], categoryValue: "romemarkup", getDiagnosticLocation: Function getDiagnosticLocation}
-			declared: false
-			forkCache: Map []
-			hasHandledUnexpected: false
-			keyPath: []
-			path: UIDPath<unknown>
-			usedNames: Set []
-		}
 		children: [
 			Tag {
 				name: "emphasis"
-				attributes: ___R$project$rome$$internal$consume$Consumer_ts$default {
-					value: {}
-					context: {category: ["parse"], categoryValue: "romemarkup", getDiagnosticLocation: Function getDiagnosticLocation}
-					declared: false
-					forkCache: Map []
-					hasHandledUnexpected: false
-					keyPath: []
-					path: UIDPath<unknown>
-					usedNames: Set []
-				}
 				children: [Text {value: "^", source: true}]
+				attributes: Consumer<{}>
 			}
 		]
+		attributes: Consumer<{}>
 	}
 	Text {value: " ", source: true}
 ]

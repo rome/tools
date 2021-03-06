@@ -24,10 +24,6 @@ JSRoot {
 							}
 							loc: SourceLocation experimental/class-private-properties/pbn-success/input.js 2:2-2:4
 						}
-						value: JSNumericLiteral {
-							value: 1
-							loc: SourceLocation experimental/class-private-properties/pbn-success/input.js 2:7-2:8
-						}
 						meta: JSClassPropertyMeta {
 							abstract: false
 							optional: false
@@ -35,6 +31,10 @@ JSRoot {
 							static: false
 							loc: SourceLocation experimental/class-private-properties/pbn-success/input.js 2:2-2:4
 							start: Position 2:2
+						}
+						value: JSNumericLiteral {
+							value: 1
+							loc: SourceLocation experimental/class-private-properties/pbn-success/input.js 2:7-2:8
 						}
 						loc: SourceLocation experimental/class-private-properties/pbn-success/input.js 2:2-2:9
 					}
@@ -46,10 +46,6 @@ JSRoot {
 							}
 							loc: SourceLocation experimental/class-private-properties/pbn-success/input.js 3:2-3:4
 						}
-						value: JSNumericLiteral {
-							value: 2
-							loc: SourceLocation experimental/class-private-properties/pbn-success/input.js 3:7-3:8
-						}
 						meta: JSClassPropertyMeta {
 							abstract: false
 							optional: false
@@ -57,6 +53,10 @@ JSRoot {
 							static: false
 							loc: SourceLocation experimental/class-private-properties/pbn-success/input.js 3:2-3:4
 							start: Position 3:2
+						}
+						value: JSNumericLiteral {
+							value: 2
+							loc: SourceLocation experimental/class-private-properties/pbn-success/input.js 3:7-3:8
 						}
 						loc: SourceLocation experimental/class-private-properties/pbn-success/input.js 3:2-3:9
 					}
@@ -68,6 +68,14 @@ JSRoot {
 								loc: SourceLocation experimental/class-private-properties/pbn-success/input.js 5:2-5:13 (constructor)
 							}
 							loc: SourceLocation experimental/class-private-properties/pbn-success/input.js 5:2-5:13
+						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							optional: false
+							readonly: false
+							static: false
+							loc: SourceLocation experimental/class-private-properties/pbn-success/input.js 5:2-5:13
+							start: Position 5:2
 						}
 						body: JSBlockStatement {
 							body: [
@@ -175,14 +183,6 @@ JSRoot {
 							]
 							loc: SourceLocation experimental/class-private-properties/pbn-success/input.js 5:13-5:27
 						}
-						meta: JSClassPropertyMeta {
-							abstract: false
-							optional: false
-							readonly: false
-							static: false
-							loc: SourceLocation experimental/class-private-properties/pbn-success/input.js 5:2-5:13
-							start: Position 5:2
-						}
 						loc: SourceLocation experimental/class-private-properties/pbn-success/input.js 5:2-8:3
 					}
 					JSClassMethod {
@@ -193,6 +193,14 @@ JSRoot {
 								loc: SourceLocation experimental/class-private-properties/pbn-success/input.js 10:6-10:7 (x)
 							}
 							loc: SourceLocation experimental/class-private-properties/pbn-success/input.js 10:6-10:7
+						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							optional: false
+							readonly: false
+							static: false
+							loc: SourceLocation experimental/class-private-properties/pbn-success/input.js 10:2-10:7
+							start: Position 10:2
 						}
 						body: JSBlockStatement {
 							body: [
@@ -226,14 +234,6 @@ JSRoot {
 							params: []
 							loc: SourceLocation experimental/class-private-properties/pbn-success/input.js 10:7-10:9
 						}
-						meta: JSClassPropertyMeta {
-							abstract: false
-							optional: false
-							readonly: false
-							static: false
-							loc: SourceLocation experimental/class-private-properties/pbn-success/input.js 10:2-10:7
-							start: Position 10:2
-						}
 						loc: SourceLocation experimental/class-private-properties/pbn-success/input.js 10:2-10:28
 					}
 					JSClassMethod {
@@ -244,6 +244,14 @@ JSRoot {
 								loc: SourceLocation experimental/class-private-properties/pbn-success/input.js 11:6-11:7 (x)
 							}
 							loc: SourceLocation experimental/class-private-properties/pbn-success/input.js 11:6-11:7
+						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							optional: false
+							readonly: false
+							static: false
+							loc: SourceLocation experimental/class-private-properties/pbn-success/input.js 11:2-11:7
+							start: Position 11:2
 						}
 						body: JSBlockStatement {
 							body: [
@@ -298,14 +306,6 @@ JSRoot {
 							]
 							loc: SourceLocation experimental/class-private-properties/pbn-success/input.js 11:7-11:14
 						}
-						meta: JSClassPropertyMeta {
-							abstract: false
-							optional: false
-							readonly: false
-							static: false
-							loc: SourceLocation experimental/class-private-properties/pbn-success/input.js 11:2-11:7
-							start: Position 11:2
-						}
 						loc: SourceLocation experimental/class-private-properties/pbn-success/input.js 11:2-11:35
 					}
 					JSClassMethod {
@@ -316,6 +316,14 @@ JSRoot {
 								loc: SourceLocation experimental/class-private-properties/pbn-success/input.js 13:6-13:7 (y)
 							}
 							loc: SourceLocation experimental/class-private-properties/pbn-success/input.js 13:6-13:7
+						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							optional: false
+							readonly: false
+							static: false
+							loc: SourceLocation experimental/class-private-properties/pbn-success/input.js 13:2-13:7
+							start: Position 13:2
 						}
 						body: JSBlockStatement {
 							body: [
@@ -349,14 +357,6 @@ JSRoot {
 							params: []
 							loc: SourceLocation experimental/class-private-properties/pbn-success/input.js 13:7-13:9
 						}
-						meta: JSClassPropertyMeta {
-							abstract: false
-							optional: false
-							readonly: false
-							static: false
-							loc: SourceLocation experimental/class-private-properties/pbn-success/input.js 13:2-13:7
-							start: Position 13:2
-						}
 						loc: SourceLocation experimental/class-private-properties/pbn-success/input.js 13:2-13:28
 					}
 					JSClassMethod {
@@ -367,6 +367,14 @@ JSRoot {
 								loc: SourceLocation experimental/class-private-properties/pbn-success/input.js 14:6-14:7 (y)
 							}
 							loc: SourceLocation experimental/class-private-properties/pbn-success/input.js 14:6-14:7
+						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							optional: false
+							readonly: false
+							static: false
+							loc: SourceLocation experimental/class-private-properties/pbn-success/input.js 14:2-14:7
+							start: Position 14:2
 						}
 						body: JSBlockStatement {
 							body: [
@@ -421,14 +429,6 @@ JSRoot {
 							]
 							loc: SourceLocation experimental/class-private-properties/pbn-success/input.js 14:7-14:14
 						}
-						meta: JSClassPropertyMeta {
-							abstract: false
-							optional: false
-							readonly: false
-							static: false
-							loc: SourceLocation experimental/class-private-properties/pbn-success/input.js 14:2-14:7
-							start: Position 14:2
-						}
 						loc: SourceLocation experimental/class-private-properties/pbn-success/input.js 14:2-14:35
 					}
 					JSClassMethod {
@@ -439,6 +439,14 @@ JSRoot {
 								loc: SourceLocation experimental/class-private-properties/pbn-success/input.js 16:2-16:8 (equals)
 							}
 							loc: SourceLocation experimental/class-private-properties/pbn-success/input.js 16:2-16:8
+						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							optional: false
+							readonly: false
+							static: false
+							loc: SourceLocation experimental/class-private-properties/pbn-success/input.js 16:2-16:8
+							start: Position 16:2
 						}
 						body: JSBlockStatement {
 							body: [
@@ -542,14 +550,6 @@ JSRoot {
 							]
 							loc: SourceLocation experimental/class-private-properties/pbn-success/input.js 16:8-16:11
 						}
-						meta: JSClassPropertyMeta {
-							abstract: false
-							optional: false
-							readonly: false
-							static: false
-							loc: SourceLocation experimental/class-private-properties/pbn-success/input.js 16:2-16:8
-							start: Position 16:2
-						}
 						loc: SourceLocation experimental/class-private-properties/pbn-success/input.js 16:2-16:59
 					}
 					JSClassMethod {
@@ -560,6 +560,14 @@ JSRoot {
 								loc: SourceLocation experimental/class-private-properties/pbn-success/input.js 18:2-18:10 (toString)
 							}
 							loc: SourceLocation experimental/class-private-properties/pbn-success/input.js 18:2-18:10
+						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							optional: false
+							readonly: false
+							static: false
+							loc: SourceLocation experimental/class-private-properties/pbn-success/input.js 18:2-18:10
+							start: Position 18:2
 						}
 						body: JSBlockStatement {
 							body: [
@@ -633,14 +641,6 @@ JSRoot {
 							hasHoistedVars: false
 							params: []
 							loc: SourceLocation experimental/class-private-properties/pbn-success/input.js 18:10-18:12
-						}
-						meta: JSClassPropertyMeta {
-							abstract: false
-							optional: false
-							readonly: false
-							static: false
-							loc: SourceLocation experimental/class-private-properties/pbn-success/input.js 18:2-18:10
-							start: Position 18:2
 						}
 						loc: SourceLocation experimental/class-private-properties/pbn-success/input.js 18:2-18:58
 					}

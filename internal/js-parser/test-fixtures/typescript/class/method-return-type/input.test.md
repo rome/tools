@@ -25,6 +25,14 @@ JSRoot {
 							}
 							loc: SourceLocation typescript/class/method-return-type/input.ts 2:4-2:5
 						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							optional: false
+							readonly: false
+							static: false
+							loc: SourceLocation typescript/class/method-return-type/input.ts 2:4-2:5
+							start: Position 2:4
+						}
 						body: JSBlockStatement {
 							body: []
 							directives: []
@@ -39,14 +47,6 @@ JSRoot {
 								loc: SourceLocation typescript/class/method-return-type/input.ts 2:9-2:13
 							}
 							loc: SourceLocation typescript/class/method-return-type/input.ts 2:5-2:13
-						}
-						meta: JSClassPropertyMeta {
-							abstract: false
-							optional: false
-							readonly: false
-							static: false
-							loc: SourceLocation typescript/class/method-return-type/input.ts 2:4-2:5
-							start: Position 2:4
 						}
 						loc: SourceLocation typescript/class/method-return-type/input.ts 2:4-2:16
 					}

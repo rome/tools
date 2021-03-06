@@ -91,7 +91,7 @@ JSRoot {
   ✖ Expected an identifier
 
     1 + { t:t,
-              <error><emphasis>^</emphasis></error>
+              ^
 
 
 ```

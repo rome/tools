@@ -73,7 +73,7 @@ JSRoot {
   ✖ Async functions can only be declared at the top level or inside a block
 
     foo: async function bar() {}
-         <error><emphasis>^</emphasis></error>
+         ^
 
 
 ```

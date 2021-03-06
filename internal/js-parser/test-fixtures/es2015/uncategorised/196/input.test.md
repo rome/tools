@@ -100,13 +100,7 @@ JSRoot {
   ✖ Range values reversed. Start char code is greater than end char code
 
     /[\uD834\uDF06-\uD834\uDF08a-z]/u
-            <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-    <error><emphasis>^</emphasis></error>
+            ^^^^^^^^^^^^^
 
 
 ```

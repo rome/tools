@@ -77,7 +77,7 @@ JSRoot {
   ✖ Object pattern cannot contains methods
 
     ({ get x() {} } = 0)
-           <error><emphasis>^</emphasis></error>
+           ^
 
 
 ```

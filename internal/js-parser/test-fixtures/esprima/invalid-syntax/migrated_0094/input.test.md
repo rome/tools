@@ -74,7 +74,7 @@ JSRoot {
   ✖ Legacy octal literals are not allowed in strict mode
 
     "use strict"; (a) => 00
-                           <error><emphasis>^</emphasis></error>
+                           ^
 
 
 ```

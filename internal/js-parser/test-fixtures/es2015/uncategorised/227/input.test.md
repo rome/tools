@@ -120,9 +120,7 @@ JSRoot {
   ✖ eval is a reserved word
 
     function hello() {'use strict'; ({ i: 10, s(eval) { } }); }
-                                                <error><emphasis>^</emphasis></error>
-    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-    <error><emphasis>^</emphasis></error>
+                                                ^^^^
 
 
 ```

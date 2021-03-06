@@ -25,6 +25,14 @@ JSRoot {
 							}
 							loc: SourceLocation esprima/es2015-yield/yield-super-property/input.js 1:20-1:21
 						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							optional: false
+							readonly: false
+							static: false
+							loc: SourceLocation esprima/es2015-yield/yield-super-property/input.js 1:20-1:21
+							start: Position 1:20
+						}
 						body: JSBlockStatement {
 							body: [
 								JSExpressionStatement {
@@ -53,14 +61,6 @@ JSRoot {
 							hasHoistedVars: false
 							params: []
 							loc: SourceLocation esprima/es2015-yield/yield-super-property/input.js 1:21-1:23
-						}
-						meta: JSClassPropertyMeta {
-							abstract: false
-							optional: false
-							readonly: false
-							static: false
-							loc: SourceLocation esprima/es2015-yield/yield-super-property/input.js 1:20-1:21
-							start: Position 1:20
 						}
 						loc: SourceLocation esprima/es2015-yield/yield-super-property/input.js 1:20-1:39
 					}

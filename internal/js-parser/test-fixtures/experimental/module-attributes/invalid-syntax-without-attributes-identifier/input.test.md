@@ -70,7 +70,7 @@ JSRoot {
   ✖ Expected a semicolon or a line terminator
 
     import "x" with;
-               <error><emphasis>^</emphasis></error>
+               ^
 
 
 ```

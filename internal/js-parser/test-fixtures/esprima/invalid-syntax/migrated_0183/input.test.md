@@ -87,7 +87,7 @@ JSRoot {
   ✖ Deleting local variable in strict mode
 
     (function () { 'use strict'; delete i; }())
-                                        <error><emphasis>^</emphasis></error>
+                                        ^
 
 
 ```

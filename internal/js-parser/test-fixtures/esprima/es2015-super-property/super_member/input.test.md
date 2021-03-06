@@ -25,6 +25,14 @@ JSRoot {
 							}
 							loc: SourceLocation esprima/es2015-super-property/super_member/input.js 2:4-2:5
 						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							optional: false
+							readonly: false
+							static: false
+							loc: SourceLocation esprima/es2015-super-property/super_member/input.js 2:4-2:5
+							start: Position 2:4
+						}
 						body: JSBlockStatement {
 							body: [
 								JSReturnStatement {
@@ -53,14 +61,6 @@ JSRoot {
 							hasHoistedVars: false
 							params: []
 							loc: SourceLocation esprima/es2015-super-property/super_member/input.js 2:5-2:7
-						}
-						meta: JSClassPropertyMeta {
-							abstract: false
-							optional: false
-							readonly: false
-							static: false
-							loc: SourceLocation esprima/es2015-super-property/super_member/input.js 2:4-2:5
-							start: Position 2:4
 						}
 						loc: SourceLocation esprima/es2015-super-property/super_member/input.js 2:4-4:5
 					}

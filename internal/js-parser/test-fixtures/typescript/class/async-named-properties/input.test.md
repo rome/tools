@@ -25,6 +25,14 @@ JSRoot {
 							}
 							loc: SourceLocation typescript/class/async-named-properties/input.ts 2:2-2:7
 						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							optional: true
+							readonly: false
+							static: false
+							loc: SourceLocation typescript/class/async-named-properties/input.ts 2:2-2:8
+							start: Position 2:2
+						}
 						head: JSFunctionHead {
 							async: false
 							generator: false
@@ -34,14 +42,6 @@ JSRoot {
 								loc: SourceLocation typescript/class/async-named-properties/input.ts 2:12-2:16
 							}
 							loc: SourceLocation typescript/class/async-named-properties/input.ts 2:8-2:16
-						}
-						meta: JSClassPropertyMeta {
-							abstract: false
-							optional: true
-							readonly: false
-							static: false
-							loc: SourceLocation typescript/class/async-named-properties/input.ts 2:2-2:8
-							start: Position 2:2
 						}
 						loc: SourceLocation typescript/class/async-named-properties/input.ts 2:2-2:16
 					}

@@ -82,7 +82,7 @@ JSRoot {
 
     1 │ function a() {
   > 2 │   return await 1
-      │                <error><emphasis>^</emphasis></error>
+      │                ^
     3 │ }
 
 

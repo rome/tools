@@ -25,6 +25,14 @@ JSRoot {
 							}
 							loc: SourceLocation experimental/class-private-methods/get-set/input.js 2:6-2:11
 						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							optional: false
+							readonly: false
+							static: false
+							loc: SourceLocation experimental/class-private-methods/get-set/input.js 2:2-2:11
+							start: Position 2:2
+						}
 						body: JSBlockStatement {
 							body: [
 								JSReturnStatement {
@@ -49,14 +57,6 @@ JSRoot {
 							params: []
 							loc: SourceLocation experimental/class-private-methods/get-set/input.js 2:11-2:13
 						}
-						meta: JSClassPropertyMeta {
-							abstract: false
-							optional: false
-							readonly: false
-							static: false
-							loc: SourceLocation experimental/class-private-methods/get-set/input.js 2:2-2:11
-							start: Position 2:2
-						}
 						loc: SourceLocation experimental/class-private-methods/get-set/input.js 2:2-4:3
 					}
 					JSClassPrivateMethod {
@@ -67,6 +67,14 @@ JSRoot {
 								loc: SourceLocation experimental/class-private-methods/get-set/input.js 5:7-5:11 (evil)
 							}
 							loc: SourceLocation experimental/class-private-methods/get-set/input.js 5:6-5:11
+						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							optional: false
+							readonly: false
+							static: false
+							loc: SourceLocation experimental/class-private-methods/get-set/input.js 5:2-5:11
+							start: Position 5:2
 						}
 						body: JSBlockStatement {
 							body: [
@@ -104,14 +112,6 @@ JSRoot {
 								}
 							]
 							loc: SourceLocation experimental/class-private-methods/get-set/input.js 5:11-5:14
-						}
-						meta: JSClassPropertyMeta {
-							abstract: false
-							optional: false
-							readonly: false
-							static: false
-							loc: SourceLocation experimental/class-private-methods/get-set/input.js 5:2-5:11
-							start: Position 5:2
 						}
 						loc: SourceLocation experimental/class-private-methods/get-set/input.js 5:2-7:3
 					}

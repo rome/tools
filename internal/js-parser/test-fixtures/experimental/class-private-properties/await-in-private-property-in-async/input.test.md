@@ -29,6 +29,14 @@ JSRoot {
 											}
 											loc: SourceLocation experimental/class-private-properties/await-in-private-property-in-async/input.js 4:4-4:6
 										}
+										meta: JSClassPropertyMeta {
+											abstract: false
+											optional: false
+											readonly: false
+											static: false
+											loc: SourceLocation experimental/class-private-properties/await-in-private-property-in-async/input.js 4:4-4:6
+											start: Position 4:4
+										}
 										value: JSAwaitExpression {
 											argument: JSUnaryExpression {
 												operator: "+"
@@ -40,14 +48,6 @@ JSRoot {
 												loc: SourceLocation experimental/class-private-properties/await-in-private-property-in-async/input.js 4:15-4:19
 											}
 											loc: SourceLocation experimental/class-private-properties/await-in-private-property-in-async/input.js 4:9-4:19
-										}
-										meta: JSClassPropertyMeta {
-											abstract: false
-											optional: false
-											readonly: false
-											static: false
-											loc: SourceLocation experimental/class-private-properties/await-in-private-property-in-async/input.js 4:4-4:6
-											start: Position 4:4
 										}
 										loc: SourceLocation experimental/class-private-properties/await-in-private-property-in-async/input.js 4:4-4:20
 									}

@@ -78,7 +78,7 @@ JSRoot {
   ✖ Expected an identifier
 
     var a = 0123.;
-                 <error><emphasis>^</emphasis></error>
+                 ^
 
 
 ```

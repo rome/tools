@@ -75,9 +75,7 @@ JSRoot {
 
     1 │ "use strict";
   > 2 │ function fn(yield) {}
-    → │             <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-    → │ <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-      │ <error><emphasis>^</emphasis></error>
+      │             ^^^^^
 
 
 ```

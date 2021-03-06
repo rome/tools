@@ -25,6 +25,14 @@ JSRoot {
 							}
 							loc: SourceLocation experimental/class-private-names-duplicated/instance-get-instance-get/input.js 2:6-2:8
 						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							optional: false
+							readonly: false
+							static: false
+							loc: SourceLocation experimental/class-private-names-duplicated/instance-get-instance-get/input.js 2:2-2:8
+							start: Position 2:2
+						}
 						body: JSBlockStatement {
 							body: []
 							directives: []
@@ -37,14 +45,6 @@ JSRoot {
 							params: []
 							loc: SourceLocation experimental/class-private-names-duplicated/instance-get-instance-get/input.js 2:8-2:10
 						}
-						meta: JSClassPropertyMeta {
-							abstract: false
-							optional: false
-							readonly: false
-							static: false
-							loc: SourceLocation experimental/class-private-names-duplicated/instance-get-instance-get/input.js 2:2-2:8
-							start: Position 2:2
-						}
 						loc: SourceLocation experimental/class-private-names-duplicated/instance-get-instance-get/input.js 2:2-2:13
 					}
 					JSClassPrivateMethod {
@@ -55,6 +55,14 @@ JSRoot {
 								loc: SourceLocation experimental/class-private-names-duplicated/instance-get-instance-get/input.js 3:7-3:8 (x)
 							}
 							loc: SourceLocation experimental/class-private-names-duplicated/instance-get-instance-get/input.js 3:6-3:8
+						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							optional: false
+							readonly: false
+							static: false
+							loc: SourceLocation experimental/class-private-names-duplicated/instance-get-instance-get/input.js 3:2-3:8
+							start: Position 3:2
 						}
 						body: JSBlockStatement {
 							body: []
@@ -67,14 +75,6 @@ JSRoot {
 							hasHoistedVars: false
 							params: []
 							loc: SourceLocation experimental/class-private-names-duplicated/instance-get-instance-get/input.js 3:8-3:10
-						}
-						meta: JSClassPropertyMeta {
-							abstract: false
-							optional: false
-							readonly: false
-							static: false
-							loc: SourceLocation experimental/class-private-names-duplicated/instance-get-instance-get/input.js 3:2-3:8
-							start: Position 3:2
 						}
 						loc: SourceLocation experimental/class-private-names-duplicated/instance-get-instance-get/input.js 3:2-3:13
 					}

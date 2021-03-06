@@ -121,7 +121,7 @@ JSRoot {
     1 │ const obj = {
     2 │   bar: x = 123,
   > 3 │   foo = 123
-      │       <error><emphasis>^</emphasis></error>
+      │       ^
     4 │ };
 
   ℹ Expected character ,

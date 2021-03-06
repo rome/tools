@@ -100,11 +100,7 @@ JSRoot {
 
     1 │ class C extends (function B() {
   > 2 │   with ({});
-    → │   <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-    → │ <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-    → │ <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-    → │ <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-      │ <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
+      │   ^^^^^^^^^^
     3 │   return B;
     4 │ }()) {}
 

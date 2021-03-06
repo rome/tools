@@ -77,9 +77,7 @@ JSRoot {
   ✖ yield is a reserved word
 
     "use strict"; (x = yield) => {}
-                       <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-    <error><emphasis>^</emphasis></error>
+                       ^^^^^
 
 
 ```

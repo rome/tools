@@ -62,7 +62,7 @@ JSRoot {
   ✖ 'import' and 'export' may only appear at the top level
 
     if (1) import "acorn";
-                          <error><emphasis>^</emphasis></error>
+                          ^
 
 
 ```

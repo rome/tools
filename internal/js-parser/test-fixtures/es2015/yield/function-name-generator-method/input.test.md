@@ -25,6 +25,14 @@ JSRoot {
 							}
 							loc: SourceLocation es2015/yield/function-name-generator-method/input.js 2:3-2:8
 						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							optional: false
+							readonly: false
+							static: false
+							loc: SourceLocation es2015/yield/function-name-generator-method/input.js 2:2-2:8
+							start: Position 2:2
+						}
 						body: JSBlockStatement {
 							body: []
 							directives: []
@@ -36,14 +44,6 @@ JSRoot {
 							hasHoistedVars: false
 							params: []
 							loc: SourceLocation es2015/yield/function-name-generator-method/input.js 2:8-2:10
-						}
-						meta: JSClassPropertyMeta {
-							abstract: false
-							optional: false
-							readonly: false
-							static: false
-							loc: SourceLocation es2015/yield/function-name-generator-method/input.js 2:2-2:8
-							start: Position 2:2
 						}
 						loc: SourceLocation es2015/yield/function-name-generator-method/input.js 2:2-2:13
 					}

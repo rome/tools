@@ -54,7 +54,7 @@ JSRoot {
   ✖ A bigint can't be an octal
 
     016432n
-          <error><emphasis>^</emphasis></error>
+          ^
 
 
 ```

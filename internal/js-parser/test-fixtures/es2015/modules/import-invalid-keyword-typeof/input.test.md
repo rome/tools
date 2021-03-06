@@ -70,9 +70,7 @@ JSRoot {
   ✖ Unexpected keyword typeof
 
     import { typeof } from "foo";
-             <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
+             ^^^^^^
 
 
 ```

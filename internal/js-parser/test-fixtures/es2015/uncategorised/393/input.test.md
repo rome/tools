@@ -105,7 +105,7 @@ JSRoot {
   ✖ Unexpected character =
 
     ({set = {}}) => set;
-          <error><emphasis>^</emphasis></error>
+          ^
 
   ℹ Expected character ,
 

@@ -61,10 +61,7 @@ JSRoot {
   ✖ super is only allowed in object methods and classes
 
     new import("foo");
-              <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-    <error><emphasis>^</emphasis></error>
+              ^^^^^^^
 
 
 ```

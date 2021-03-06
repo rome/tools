@@ -62,6 +62,14 @@ JSRoot {
 										}
 										loc: SourceLocation es2015/yield/accessor-name-inst-computed-yield-expr/input.js 4:8-4:15
 									}
+									meta: JSClassPropertyMeta {
+										abstract: false
+										optional: false
+										readonly: false
+										static: false
+										loc: SourceLocation es2015/yield/accessor-name-inst-computed-yield-expr/input.js 4:4-4:15
+										start: Position 4:4
+									}
 									body: JSBlockStatement {
 										body: [
 											JSReturnStatement {
@@ -82,14 +90,6 @@ JSRoot {
 										params: []
 										loc: SourceLocation es2015/yield/accessor-name-inst-computed-yield-expr/input.js 4:15-4:17
 									}
-									meta: JSClassPropertyMeta {
-										abstract: false
-										optional: false
-										readonly: false
-										static: false
-										loc: SourceLocation es2015/yield/accessor-name-inst-computed-yield-expr/input.js 4:4-4:15
-										start: Position 4:4
-									}
 									loc: SourceLocation es2015/yield/accessor-name-inst-computed-yield-expr/input.js 4:4-4:41
 								}
 								JSClassMethod {
@@ -100,6 +100,14 @@ JSRoot {
 											loc: SourceLocation es2015/yield/accessor-name-inst-computed-yield-expr/input.js 5:9-5:14
 										}
 										loc: SourceLocation es2015/yield/accessor-name-inst-computed-yield-expr/input.js 5:8-5:15
+									}
+									meta: JSClassPropertyMeta {
+										abstract: false
+										optional: false
+										readonly: false
+										static: false
+										loc: SourceLocation es2015/yield/accessor-name-inst-computed-yield-expr/input.js 5:4-5:15
+										start: Position 5:4
 									}
 									body: JSBlockStatement {
 										body: [
@@ -136,14 +144,6 @@ JSRoot {
 											}
 										]
 										loc: SourceLocation es2015/yield/accessor-name-inst-computed-yield-expr/input.js 5:15-5:22
-									}
-									meta: JSClassPropertyMeta {
-										abstract: false
-										optional: false
-										readonly: false
-										static: false
-										loc: SourceLocation es2015/yield/accessor-name-inst-computed-yield-expr/input.js 5:4-5:15
-										start: Position 5:4
 									}
 									loc: SourceLocation es2015/yield/accessor-name-inst-computed-yield-expr/input.js 5:4-5:44
 								}

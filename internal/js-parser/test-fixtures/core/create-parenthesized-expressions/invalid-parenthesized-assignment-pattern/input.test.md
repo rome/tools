@@ -93,8 +93,7 @@ parse(js) ━━━━━━━━━━━━━━━━━━━━━━━�
   ✖ Invalid parenthesized binding
 
     ({x}) = {x: 1};
-     <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-    <error><emphasis>^</emphasis></error>
+     ^^^
 
 
 ```

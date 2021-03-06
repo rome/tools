@@ -8,31 +8,60 @@
 
 ```javascript
 {
-	comments: [CommentLine {id: "0", value: " Comment", loc: SourceLocation 0.test 5:0-5:10}]
+	comments: [
+		CommentLine {
+			id: "0"
+			value: " Comment"
+			loc: SourceLocation 0.test 5:0-5:10
+		}
+	]
 	corrupt: false
 	diagnostics: []
 	parsed: [
 		{
 			snapshot: {
-				currentToken: String {value: "im a string", end: ZeroIndexedNumber<13>, start: ZeroIndexedNumber<0>}
+				currentToken: String {
+					value: "im a string"
+					end: ZeroIndexedNumber<13>
+					start: ZeroIndexedNumber<0>
+				}
 				nextTokenIndex: ZeroIndexedNumber<13>
-				prevToken: SOF {end: ZeroIndexedNumber<0>, start: ZeroIndexedNumber<0>}
+				prevToken: SOF {
+					end: ZeroIndexedNumber<0>
+					start: ZeroIndexedNumber<0>
+				}
 			}
 			loc: SourceLocation 0.test 1:0-1:13
 		}
 		{
 			snapshot: {
-				currentToken: Number {value: 4, end: ZeroIndexedNumber<16>, start: ZeroIndexedNumber<15>}
+				currentToken: Number {
+					value: 4
+					end: ZeroIndexedNumber<16>
+					start: ZeroIndexedNumber<15>
+				}
 				nextTokenIndex: ZeroIndexedNumber<16>
-				prevToken: String {value: "im a string", end: ZeroIndexedNumber<13>, start: ZeroIndexedNumber<0>}
+				prevToken: String {
+					value: "im a string"
+					end: ZeroIndexedNumber<13>
+					start: ZeroIndexedNumber<0>
+				}
 			}
 			loc: SourceLocation 0.test 3:0-3:1
 		}
 		{
 			snapshot: {
-				currentToken: Comment {value: " Comment", end: ZeroIndexedNumber<28>, start: ZeroIndexedNumber<18>}
+				currentToken: Comment {
+					value: " Comment"
+					end: ZeroIndexedNumber<28>
+					start: ZeroIndexedNumber<18>
+				}
 				nextTokenIndex: ZeroIndexedNumber<28>
-				prevToken: Number {value: 4, end: ZeroIndexedNumber<16>, start: ZeroIndexedNumber<15>}
+				prevToken: Number {
+					value: 4
+					end: ZeroIndexedNumber<16>
+					start: ZeroIndexedNumber<15>
+				}
 			}
 			loc: SourceLocation 0.test 5:0-5:10
 		}
@@ -49,17 +78,34 @@
 	corrupt: false
 	diagnostics: [
 		{
-			description: {advice: [], category: ["parse"], categoryValue: "unknown", message: RAW_MARKUP {value: "Invalid token"}}
-			location: {language: "unknown", path: RelativePath<1.test>, end: Position 1:0, start: Position 1:0}
 			origins: [{category: "parse"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "unknown"
+				message: RAW_MARKUP {value: "Invalid token"}
+			}
+			location: {
+				language: "unknown"
+				path: RelativePath<1.test>
+				end: Position 1:0
+				start: Position 1:0
+			}
 		}
 	]
 	parsed: [
 		{
 			snapshot: {
-				currentToken: Invalid {value: "a", end: ZeroIndexedNumber<1>, start: ZeroIndexedNumber<0>}
+				currentToken: Invalid {
+					value: "a"
+					end: ZeroIndexedNumber<1>
+					start: ZeroIndexedNumber<0>
+				}
 				nextTokenIndex: ZeroIndexedNumber<1>
-				prevToken: SOF {end: ZeroIndexedNumber<0>, start: ZeroIndexedNumber<0>}
+				prevToken: SOF {
+					end: ZeroIndexedNumber<0>
+					start: ZeroIndexedNumber<0>
+				}
 			}
 			loc: SourceLocation 1.test 1:0-1:1
 		}
@@ -76,17 +122,34 @@
 	corrupt: false
 	diagnostics: [
 		{
-			description: {advice: [], category: ["parse"], categoryValue: "unknown", message: RAW_MARKUP {value: "Unterminated string"}}
-			location: {language: "unknown", path: RelativePath<2.test>, end: Position 1:0, start: Position 1:0}
 			origins: [{category: "parse"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "unknown"
+				message: RAW_MARKUP {value: "Unterminated string"}
+			}
+			location: {
+				language: "unknown"
+				path: RelativePath<2.test>
+				end: Position 1:0
+				start: Position 1:0
+			}
 		}
 	]
 	parsed: [
 		{
 			snapshot: {
-				currentToken: String {value: "i'm an unterminated string", end: ZeroIndexedNumber<28>, start: ZeroIndexedNumber<0>}
+				currentToken: String {
+					value: "i'm an unterminated string"
+					end: ZeroIndexedNumber<28>
+					start: ZeroIndexedNumber<0>
+				}
 				nextTokenIndex: ZeroIndexedNumber<28>
-				prevToken: SOF {end: ZeroIndexedNumber<0>, start: ZeroIndexedNumber<0>}
+				prevToken: SOF {
+					end: ZeroIndexedNumber<0>
+					start: ZeroIndexedNumber<0>
+				}
 			}
 			loc: SourceLocation 2.test 1:0-1:28
 		}

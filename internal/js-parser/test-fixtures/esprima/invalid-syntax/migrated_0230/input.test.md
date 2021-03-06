@@ -83,10 +83,7 @@ JSRoot {
   ✖ static is a reserved word
 
     function hello() { "use strict"; var static; }
-                                         <error><emphasis>^</emphasis></error>
-    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-    <error><emphasis>^</emphasis></error>
+                                         ^^^^^^
 
 
 ```

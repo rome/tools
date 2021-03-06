@@ -57,7 +57,7 @@ JSRoot {
   ✖ Unknown start to an array element
 
     [,
-      <error><emphasis>^</emphasis></error>
+      ^
 
 
 ```

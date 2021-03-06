@@ -112,7 +112,7 @@ JSRoot {
   ✖ Expected an identifier
 
     var {...{z}} = { z: 1};
-            <error><emphasis>^</emphasis></error>
+            ^
 
 
 ```

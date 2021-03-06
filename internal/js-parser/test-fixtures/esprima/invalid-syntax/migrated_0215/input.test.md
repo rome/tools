@@ -94,11 +94,7 @@ JSRoot {
   ✖ arguments is a reserved word
 
     function hello() { 'use strict'; function inner(arguments) {} }
-                                                    <error><emphasis>^</emphasis></error>
-    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
+                                                    ^^^^^^^^^
 
 
 ```

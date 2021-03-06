@@ -99,7 +99,7 @@ JSRoot {
   ✖ Unexpected character 4
 
     x = { method() 42 }
-                   <error><emphasis>^</emphasis></error>
+                   ^
 
   ℹ Expected the opening block character {
 

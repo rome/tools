@@ -52,7 +52,7 @@ JSRoot {
   ✖ Unknown start to an statement expression
 
     for(;;)
-           <error><emphasis>^</emphasis></error>
+           ^
 
 
 ```

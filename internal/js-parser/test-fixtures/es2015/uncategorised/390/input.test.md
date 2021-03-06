@@ -119,7 +119,7 @@ JSRoot {
   ✖ Unexpected character w
 
     export while(foo);
-           <error><emphasis>^</emphasis></error>
+           ^
 
   ℹ Expected the opening export specifiers character {
 

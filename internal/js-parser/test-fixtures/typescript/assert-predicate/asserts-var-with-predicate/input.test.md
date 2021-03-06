@@ -25,6 +25,14 @@ JSRoot {
 							}
 							loc: SourceLocation typescript/assert-predicate/asserts-var-with-predicate/input.ts 2:2-2:16
 						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							optional: false
+							readonly: false
+							static: false
+							loc: SourceLocation typescript/assert-predicate/asserts-var-with-predicate/input.ts 2:2-2:16
+							start: Position 2:2
+						}
 						body: JSBlockStatement {
 							body: []
 							directives: []
@@ -58,14 +66,6 @@ JSRoot {
 								loc: SourceLocation typescript/assert-predicate/asserts-var-with-predicate/input.ts 2:42-2:57
 							}
 							loc: SourceLocation typescript/assert-predicate/asserts-var-with-predicate/input.ts 2:16-2:57
-						}
-						meta: JSClassPropertyMeta {
-							abstract: false
-							optional: false
-							readonly: false
-							static: false
-							loc: SourceLocation typescript/assert-predicate/asserts-var-with-predicate/input.ts 2:2-2:16
-							start: Position 2:2
 						}
 						loc: SourceLocation typescript/assert-predicate/asserts-var-with-predicate/input.ts 2:2-2:60
 					}

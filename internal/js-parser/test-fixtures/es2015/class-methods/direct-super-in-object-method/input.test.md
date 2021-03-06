@@ -137,7 +137,7 @@ JSRoot {
     2 │   foo: {
     3 │     get: function(){
   > 4 │       return super.foo;
-      │              <error><emphasis>^</emphasis></error>
+      │              ^
     5 │     }
     6 │   }
 

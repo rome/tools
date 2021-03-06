@@ -58,7 +58,7 @@ JSRoot {
   ✖ implements list cannot be empty
 
   > 1 │ class Foo extends Bar implements {
-      │                                  <error><emphasis>^</emphasis></error>
+      │                                  ^
     2 │ }
 
 

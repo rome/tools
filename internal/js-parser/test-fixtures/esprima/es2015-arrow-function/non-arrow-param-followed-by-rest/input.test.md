@@ -72,7 +72,7 @@ JSRoot {
   ✖ Function parameters can't be parenthesized
 
     ((a),...b) => 0;
-      <error><emphasis>^</emphasis></error>
+      ^
 
 
 ```

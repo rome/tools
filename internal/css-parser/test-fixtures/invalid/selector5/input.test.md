@@ -8,11 +8,48 @@
 CSSRoot {
 	body: [
 		CSSRule {
+			prelude: [
+				CSSSelector {
+					patterns: [
+						CSSTypeSelector {
+							value: "a"
+							loc: SourceLocation invalid/selector5/input.css 1:0-1:1
+						}
+					]
+					loc: SourceLocation invalid/selector5/input.css 1:0-1:11
+				}
+				CSSSelector {
+					patterns: []
+					loc: SourceLocation invalid/selector5/input.css 1:11-1:19
+				}
+				CSSSelector {
+					patterns: [
+						CSSTypeSelector {
+							value: "i"
+							loc: SourceLocation invalid/selector5/input.css 1:20-1:21
+						}
+					]
+					loc: SourceLocation invalid/selector5/input.css 1:19-1:22
+				}
+				CSSSelector {
+					patterns: []
+					loc: SourceLocation invalid/selector5/input.css 1:22-1:23
+				}
+				CSSSelector {
+					patterns: []
+					loc: SourceLocation invalid/selector5/input.css 1:23-1:24
+				}
+			]
 			block: CSSBlock {
 				value: [
 					CSSDeclaration {
 						name: "color"
-						value: [CSSIdentifier {value: "purple", loc: SourceLocation invalid/selector5/input.css 2:9-2:15}]
+						value: [
+							CSSIdentifier {
+								value: "purple"
+								loc: SourceLocation invalid/selector5/input.css 2:9-2:15
+							}
+						]
 						important: false
 						loc: SourceLocation invalid/selector5/input.css 2:2-2:15
 					}
@@ -20,19 +57,6 @@ CSSRoot {
 				startingTokenValue: "{"
 				loc: SourceLocation invalid/selector5/input.css 1:24-3:1
 			}
-			prelude: [
-				CSSSelector {
-					patterns: [CSSTypeSelector {value: "a", loc: SourceLocation invalid/selector5/input.css 1:0-1:1}]
-					loc: SourceLocation invalid/selector5/input.css 1:0-1:11
-				}
-				CSSSelector {patterns: [], loc: SourceLocation invalid/selector5/input.css 1:11-1:19}
-				CSSSelector {
-					patterns: [CSSTypeSelector {value: "i", loc: SourceLocation invalid/selector5/input.css 1:20-1:21}]
-					loc: SourceLocation invalid/selector5/input.css 1:19-1:22
-				}
-				CSSSelector {patterns: [], loc: SourceLocation invalid/selector5/input.css 1:22-1:23}
-				CSSSelector {patterns: [], loc: SourceLocation invalid/selector5/input.css 1:23-1:24}
-			]
 			loc: SourceLocation invalid/selector5/input.css 1:0-3:1
 		}
 	]
@@ -40,22 +64,27 @@ CSSRoot {
 	corrupt: false
 	diagnostics: [
 		{
+			origins: [{category: "parse"}]
 			description: {
 				advice: [
-					log {category: "info", text: RAW_MARKUP {value: "Did you mean <emphasis>~=</emphasis>?"}}
-					diff {diff: [[-1, "*"], [1, "~="]], language: "unknown"}
-					log {category: "info", text: RAW_MARKUP {value: "Or one of these?"}}
-					list {
-						list: [RAW_MARKUP {value: "|="}, RAW_MARKUP {value: "^="}, RAW_MARKUP {value: "$="}, RAW_MARKUP {value: "*="}, RAW_MARKUP {value: "="}]
-						truncate: true
+					log {category: "info", text: [RAW_MARKUP {value: "Did you mean <emphasis>"}, "~=", RAW_MARKUP {value: "</emphasis>?"}]}
+					diff {diff: [[0, "*"], [2, "~="]], language: "unknown"}
+					log {
+						category: "info"
+						text: RAW_MARKUP {value: "Or one of these?"}
 					}
+					list {list: ["|=", "^=", "$=", "*=", "="], truncate: true}
 				]
 				category: ["parse"]
 				categoryValue: "css"
 				message: RAW_MARKUP {value: "Unknown attribute matcher."}
 			}
-			location: {language: "css", path: RelativePath<invalid/selector5/input.css>, end: Position 1:10, start: Position 1:9}
-			origins: [{category: "parse"}]
+			location: {
+				language: "css"
+				path: RelativePath<invalid/selector5/input.css>
+				end: Position 1:10
+				start: Position 1:9
+			}
 		}
 	]
 	path: RelativePath<invalid/selector5/input.css>

@@ -80,11 +80,7 @@ JSRoot {
 
     1 │ 'use strict';
   > 2 │ for (var a = 0 in {});
-    → │      <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-    → │ <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-    → │ <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-    → │ <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-      │ <error><emphasis>^</emphasis></error>
+      │      ^^^^^^^^^
 
 
 ```

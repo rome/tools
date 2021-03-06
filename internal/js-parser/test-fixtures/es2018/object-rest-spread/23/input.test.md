@@ -93,7 +93,7 @@ JSRoot {
   ✖ Unexpected character =
 
     function test({...x = 1}) {}
-                        <error><emphasis>^</emphasis></error>
+                        ^
 
   ℹ Expected character ,
 

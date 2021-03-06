@@ -24,10 +24,6 @@ JSRoot {
 							}
 							loc: SourceLocation experimental/class-private-properties/failure-string-literal/input.js 2:2-2:6
 						}
-						value: JSReferenceIdentifier {
-							name: "x"
-							loc: SourceLocation experimental/class-private-properties/failure-string-literal/input.js 2:9-2:10 (x)
-						}
 						meta: JSClassPropertyMeta {
 							abstract: false
 							optional: false
@@ -35,6 +31,10 @@ JSRoot {
 							static: false
 							loc: SourceLocation experimental/class-private-properties/failure-string-literal/input.js 2:2-2:6
 							start: Position 2:2
+						}
+						value: JSReferenceIdentifier {
+							name: "x"
+							loc: SourceLocation experimental/class-private-properties/failure-string-literal/input.js 2:9-2:10 (x)
 						}
 						loc: SourceLocation experimental/class-private-properties/failure-string-literal/input.js 2:2-2:10
 					}
@@ -82,7 +82,7 @@ JSRoot {
 
     1 │ class Foo {
   > 2 │   #"p" = x
-      │    <error><emphasis>^</emphasis></error>
+      │    ^
     3 │ }
 
 

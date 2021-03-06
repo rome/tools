@@ -65,7 +65,7 @@ JSRoot {
   ✖ Unknown start to an spread argument
 
     new f(... ... g);
-              <error><emphasis>^</emphasis></error>
+              ^
 
 
 ```

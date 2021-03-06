@@ -78,7 +78,7 @@ parse(js) ━━━━━━━━━━━━━━━━━━━━━━━�
   ✖ Object pattern cannot contains methods
 
     ({a(){}}=0)
-      <error><emphasis>^</emphasis></error>
+      ^
 
 
 ```

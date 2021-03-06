@@ -25,6 +25,14 @@ JSRoot {
 							}
 							loc: SourceLocation typescript/class/declare-method/input.ts 2:10-2:13
 						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							optional: false
+							readonly: false
+							static: false
+							loc: SourceLocation typescript/class/declare-method/input.ts 2:10-2:13
+							start: Position 2:10
+						}
 						body: JSBlockStatement {
 							body: []
 							directives: []
@@ -36,14 +44,6 @@ JSRoot {
 							hasHoistedVars: false
 							params: []
 							loc: SourceLocation typescript/class/declare-method/input.ts 2:13-2:15
-						}
-						meta: JSClassPropertyMeta {
-							abstract: false
-							optional: false
-							readonly: false
-							static: false
-							loc: SourceLocation typescript/class/declare-method/input.ts 2:10-2:13
-							start: Position 2:10
 						}
 						loc: SourceLocation typescript/class/declare-method/input.ts 2:10-2:18
 					}
@@ -91,7 +91,7 @@ JSRoot {
 
     1 │ class A {
   > 2 │   declare foo() {}
-      │           <error><emphasis>^</emphasis></error>
+      │           ^
     3 │ }
 
 

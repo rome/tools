@@ -95,7 +95,7 @@ JSRoot {
 
     1 │ async function f() {
   > 2 │   for await (let i = 0;false;);
-      │            <error><emphasis>^</emphasis></error>
+      │            ^
     3 │ }
 
 

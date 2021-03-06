@@ -78,9 +78,7 @@ JSRoot {
 
     1 │ var a;
   > 2 │ for (a = 0 in {});
-    → │      <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-    → │ <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-      │ <error><emphasis>^</emphasis></error>
+      │      ^^^^^
 
 
 ```

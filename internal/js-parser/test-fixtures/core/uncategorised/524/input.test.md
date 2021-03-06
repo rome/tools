@@ -54,7 +54,7 @@ JSRoot {
   ✖ Illegal newline after throw
 
   > 1 │ throw
-      │      <error><emphasis>^</emphasis></error>
+      │      ^
     2 │ 10;
 
 

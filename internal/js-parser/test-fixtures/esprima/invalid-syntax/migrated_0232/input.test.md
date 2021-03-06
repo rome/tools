@@ -83,8 +83,7 @@ JSRoot {
   ✖ let is a reserved word
 
     function hello() { "use strict"; var let; }
-                                         <error><emphasis>^</emphasis></error>
-    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
+                                         ^^^
 
 
 ```

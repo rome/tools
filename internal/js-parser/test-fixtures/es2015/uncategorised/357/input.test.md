@@ -63,7 +63,7 @@ JSRoot {
   ✖ Unknown start to an await argument
 
     await = foo();
-          <error><emphasis>^</emphasis></error>
+          ^
 
 
 ```

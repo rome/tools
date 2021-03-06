@@ -57,8 +57,7 @@ JSRoot {
   ✖ Invalid left-hand side in for-of statement
 
     for (this of that);
-         <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
-    <error><emphasis>^</emphasis></error><error><emphasis>^</emphasis></error>
+         ^^^^
 
 
 ```

@@ -63,7 +63,7 @@ JSRoot {
   ✖ Unexpected character 🀒
 
     var 🀒
-        <error><emphasis>^</emphasis></error>
+        ^
 
 
 ```
