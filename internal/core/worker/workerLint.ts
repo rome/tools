@@ -1,8 +1,9 @@
-import {LintResult, lint} from "@internal/compiler";
+import {lint} from "@internal/compiler";
 import {
 	Diagnostic,
 	catchDiagnostics,
 	descriptions,
+	DiagnosticSuppression,
 } from "@internal/diagnostics";
 import {markup} from "@internal/markup";
 import {
@@ -124,12 +125,8 @@ export async function uncachedLint(
 		suppressions,
 		mtimeNs,
 		timings,
+		formatted,
 	}: ExtensionLintResult = res.value;
-
-	const formatted = normalizeFormattedLineEndings(
-		sourceText,
-		res.value.formatted,
-	);
 
 	// If the file has pending fixes
 	const needsSave = project.config.format.enabled && formatted !== sourceText;
@@ -188,17 +185,18 @@ export async function compilerLint(
 	let sourceText: string;
 	let mtimeNs: bigint;
 	let astModifiedFromSource: boolean = false;
-	let res: LintResult;
+	let formatted: string;
+	let suppressions: DiagnosticSuppression[] = [];
 	let diagnostics: Diagnostic[] = [];
 
 	// If lint and format are disabled then we could just be a glorified ESLint runner and there's no point running the compiler
 	if (project.config.lint.enabled || project.config.format.enabled) {
 		const parsed = await worker.parse(ref, parseOptions);
-
 		const {ast} = parsed;
+		
 		({mtimeNs, sourceText, astModifiedFromSource} = parsed);
 
-		res = await lint({
+		({diagnostics, suppressions, formatted} = await lint({
 			applySafeFixes: options.applySafeFixes,
 			suppressionExplanation: options.suppressionExplanation,
 			ref,
@@ -208,9 +206,9 @@ export async function compilerLint(
 			ast,
 			project,
 			sourceText,
-		});
+		}));
 
-		diagnostics = res.diagnostics;
+		formatted = normalizeFormattedLineEndings(sourceText, formatted);
 
 		// Only enable typechecking if enabled in .romeconfig
 		let typeCheckingEnabled = project.config.typeCheck.enabled;
@@ -235,15 +233,10 @@ export async function compilerLint(
 		}
 	} else {
 		sourceText = await worker.readFileText(ref);
+		formatted = sourceText;
 
 		const cacheFile = await worker.cache.getFile(ref);
 		({mtimeNs} = await cacheFile.getStats());
-
-		res = {
-			diagnostics: [],
-			suppressions: [],
-			formatted: sourceText,
-		};
 	}
 
 	let timings: WorkerIntegrationTimings = new Map();
@@ -265,10 +258,10 @@ export async function compilerLint(
 	return worker.api.interceptDiagnostics(
 		{
 			timings,
-			suppressions: res.suppressions,
+			suppressions,
 			diagnostics,
 			sourceText,
-			formatted: res.formatted,
+			formatted,
 			mtimeNs,
 		},
 		{astModifiedFromSource},
