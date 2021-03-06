@@ -145,6 +145,7 @@ async function buildTrunk() {
 			{
 				env: {
 					...process.env,
+					ROME_DEV_VENDOR_BUNDLING: "1",
 					NODE_DEBUG: "",
 				},
 			},
@@ -157,11 +158,12 @@ async function buildTrunk() {
 			"close",
 			(code) => {
 				if (code === 0) {
-					// Restore cursor
-					process.stdout.write(isTerminalApp ? "\x1b8" : `${ANSI_ESCAPE}u`);
+					// We should not have written anything so just need to go up a line and clear the "Building trunk" message
+					// Go up a line
+					process.stdout.write(`${ANSI_ESCAPE}1A`);
 
-					// Clear down
-					process.stdout.write(`${ANSI_ESCAPE}J`);
+					// Clear line
+					process.stdout.write(`${ANSI_ESCAPE}2K`);
 
 					resolve();
 				} else {

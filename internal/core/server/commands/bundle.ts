@@ -94,9 +94,7 @@ export default createServerCommand<Flags>({
 
 			await req.flushFiles();
 
-			if (commandFlags.quiet) {
-				reporter.success(markup`Saved to <emphasis>${dir}</emphasis>`);
-			} else {
+			if (!commandFlags.quiet) {
 				reporter.success(
 					markup`Saved the following files to <emphasis>${dir}</emphasis>`,
 				);

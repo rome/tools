@@ -209,81 +209,82 @@ export default class TestServer {
 	}
 
 	public async init() {
-		const fileQueue: TestServerFile[] = [];
 		const workers = await this.setupWorkers();
 
-		await this.reporter.steps([
-			{
-				message: markup`Bundling test files`,
-				callback: async () => {
-					const bundler = new Bundler(
-						this.request,
-						this.request.getBundlerConfigFromFlags({
-							mocks: true,
-						}),
-					);
-					for (const [path, bundle] of await bundler.bundleMultiple(
-						Array.from(this.paths),
-						{
-							deferredSourceMaps: true,
-						},
-					)) {
-						if (this.options.sourceMaps) {
-							const sourceMap = bundle.entry.sourceMap.map;
-							const consumer = sourceMap.toConsumer();
-							//this.coverageCollector.addSourceMap(path.join(), code, consumer);
-							this.sourceMaps.add(path, consumer);
-						}
-
-						const ref = this.server.projectManager.getFileReference(path);
-						const file = new TestServerFile({
-							ref,
-							bundle,
-							runner: this,
-							request: this.request,
-						});
-						this.files.set(path, file);
-						fileQueue.push(file);
-						this.testFilesStack.push(path);
-					}
-				},
-			},
-			{
-				message: markup`Loading test files`,
-				callback: async () => {
-					const progress = this.reporter.progress({
-						title: markup`Preparing`,
-					});
-					progress.setTotal(this.paths.size);
-					await Promise.all(
-						workers.map((worker) => worker.prepareAll(progress, fileQueue)),
-					);
-					progress.end();
-
-					// If we have focused tests, clear the pending queues and populate it with only ours
-					if (this.hasFocusedTests()) {
-						for (const file of this.files.values()) {
-							file.clearPendingTests();
-						}
-
-						for (const {ref} of this.focusedTests) {
-							this.files.assert(ref.path).addPendingTest(ref.testName);
-						}
-					}
-				},
-			},
-			{
-				message: markup`Running tests`,
-				callback: async () => {
-					const runProgress = this.setupRunProgress(workers);
-					await Promise.all(workers.map((worker) => worker.run()));
-					await Promise.all(workers.map((worker) => worker.bridge.end()));
-					runProgress.teardown();
-				},
-			},
-		]);
+		const fileQueue = await this.bundleTests();
+		await this.prepareTests(workers, fileQueue);
+		await this.runTests(workers);
 
 		this.throwPrinter();
+	}
+
+	private async bundleTests(): Promise<TestServerFile[]> {
+		const fileQueue: TestServerFile[] = [];
+
+		const bundler = new Bundler(
+			this.request,
+			this.request.getBundlerConfigFromFlags({
+				mocks: true,
+			}),
+		);
+		for (const [path, bundle] of await bundler.bundleMultiple(
+			Array.from(this.paths),
+			{
+				deferredSourceMaps: true,
+			},
+		)) {
+			if (this.options.sourceMaps) {
+				const sourceMap = bundle.entry.sourceMap.map;
+				const consumer = sourceMap.toConsumer();
+				//this.coverageCollector.addSourceMap(path.join(), code, consumer);
+				this.sourceMaps.add(path, consumer);
+			}
+
+			const ref = this.server.projectManager.getFileReference(path);
+			const file = new TestServerFile({
+				ref,
+				bundle,
+				runner: this,
+				request: this.request,
+			});
+			this.files.set(path, file);
+			fileQueue.push(file);
+			this.testFilesStack.push(path);
+		}
+
+		return fileQueue;
+	}
+
+	private async prepareTests(
+		workers: TestServerWorker[],
+		fileQueue: TestServerFile[],
+	) {
+		const progress = this.reporter.progress({
+			title: markup`Preparing test files`,
+		});
+		progress.setTotal(this.paths.size);
+		await Promise.all(
+			workers.map((worker) => worker.prepareAll(progress, fileQueue)),
+		);
+		progress.end();
+
+		// If we have focused tests, clear the pending queues and populate it with only ours
+		if (this.hasFocusedTests()) {
+			for (const file of this.files.values()) {
+				file.clearPendingTests();
+			}
+
+			for (const {ref} of this.focusedTests) {
+				this.files.assert(ref.path).addPendingTest(ref.testName);
+			}
+		}
+	}
+
+	private async runTests(workers: TestServerWorker[]) {
+		const runProgress = this.setupRunProgress(workers);
+		await Promise.all(workers.map((worker) => worker.run()));
+		await Promise.all(workers.map((worker) => worker.bridge.end()));
+		runProgress.teardown();
 	}
 
 	public hasFocusedTests(): boolean {
@@ -353,7 +354,7 @@ export default class TestServer {
 	private setupRunProgress(workers: TestServerWorker[]): TestProgress {
 		const progress = this.request.reporter.progress({
 			persistent: true,
-			title: markup`Running`,
+			title: markup`Running tests`,
 		});
 		progress.setTotal(this.getTotalTests());
 

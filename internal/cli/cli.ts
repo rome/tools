@@ -91,6 +91,10 @@ export default async function cli() {
 			},
 		},
 		onRunHiddenCommand(reporter) {
+			if (IS_ROME_DEV_ENV || isEnvVarSet("ROME_DEV_VENDOR_BUNDLING")) {
+				return;
+			}
+
 			reporter.warn(
 				markup`This command has been hidden. Consider its usage to be experimental and do not expect support or backwards compatibility.`,
 			);
@@ -372,7 +376,7 @@ export default async function cli() {
 				ignoreFlags: local.ignoreFlags,
 				examples: local.examples,
 				usage: local.usage,
-				hidden: !IS_ROME_DEV_ENV && local.hidden,
+				hidden: local.hidden,
 				callback(_commandFlags) {
 					commandFlags = _commandFlags;
 					args = p.getArgs();
@@ -392,7 +396,7 @@ export default async function cli() {
 				ignoreFlags: server.ignoreFlags,
 				usage: server.usage,
 				examples: server.examples,
-				hidden: !IS_ROME_DEV_ENV && server.hidden,
+				hidden: server.hidden,
 				callback(_commandFlags) {
 					commandFlags = _commandFlags;
 					args = p.getArgs();

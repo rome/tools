@@ -442,7 +442,7 @@ export default class Progress extends ProgressBase {
 		this._render(false);
 	}
 
-	private _render(force: boolean = false) {
+	private _render(forceEnd: boolean = false) {
 		if (this.closed) {
 			return;
 		}
@@ -455,7 +455,7 @@ export default class Progress extends ProgressBase {
 		// If the stream isn't an ansi cursor stream, then every 5 seconds we'll output a regular log with some progress
 		// information
 		const isNoCursorDue =
-			force ||
+			forceEnd ||
 			lastNoCursorRenderTime === undefined ||
 			lastNoCursorRenderTime.since().toSeconds() > 5;
 		if (isNoCursorDue) {
@@ -481,15 +481,26 @@ export default class Progress extends ProgressBase {
 				streamUtils.isANSICursorStream(stream) &&
 				stream.features.columns !== undefined
 			) {
-				streamUtils.log(
-					stream,
-					[this.buildBar(stream, suffix, stream.features.columns)],
-					{
-						stderr: true,
-						noNewline: true,
-					},
-					this.activeElement,
-				);
+				if (forceEnd) {
+					streamUtils.log(
+						stream,
+						[""],
+						{
+							stderr: true,
+							noNewline: true,
+						},
+					);
+				} else {
+					streamUtils.log(
+						stream,
+						[this.buildBar(stream, suffix, stream.features.columns)],
+						{
+							stderr: true,
+							noNewline: true,
+						},
+						this.activeElement,
+					);
+				}
 			} else {
 				if (isNoCursorDue) {
 					this.logNoCursor(stream, suffix);

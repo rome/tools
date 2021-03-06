@@ -26,7 +26,11 @@ import {
 	TestOptions,
 } from "@internal/virtual-rome/test";
 import {TestServerRunnerOptions} from "../../server/testing/types";
-import SnapshotManager, {InlineSnapshotUpdate, Snapshot, SnapshotEntry} from "./SnapshotManager";
+import SnapshotManager, {
+	InlineSnapshotUpdate,
+	Snapshot,
+	SnapshotEntry,
+} from "./SnapshotManager";
 import TestAPI, {OnTimeout} from "./TestAPI";
 import executeMain from "../../common/utils/executeMain";
 import {

@@ -14,7 +14,6 @@ import {
 	createSingleDiagnosticsError,
 } from "@internal/diagnostics";
 import {SourceMapConsumer} from "@internal/codec-source-map";
-import {IS_ROME_DEV_ENV} from "@internal/cli-environment";
 import {markup} from "@internal/markup";
 import executeMain from "@internal/core/common/utils/executeMain";
 
@@ -23,7 +22,7 @@ export default createLocalCommand({
 	description: markup`TODO`,
 	usage: "",
 	examples: [],
-	hidden: !IS_ROME_DEV_ENV,
+	hidden: true,
 	defineFlags() {
 		return {};
 	},
