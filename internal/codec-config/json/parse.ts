@@ -34,7 +34,7 @@ import {
 	isDigit,
 } from "@internal/parser-core";
 import {ZeroIndexed} from "@internal/numbers";
-import {isEscaped} from "@internal/string-utils";
+import {isEscaped, removeCarriageReturn} from "@internal/string-utils";
 import {isWordChar, isWordStartChar} from "@internal/codec-config/util";
 
 // Check if a character is a part of a string, returning false for a newline or unescaped quote char
@@ -131,7 +131,7 @@ export const jsonParser = createParser<JSONParserTypes>({
 			// (comment content start + comment content length)
 			return parser.finishValueToken(
 				"LineComment",
-				value,
+				removeCarriageReturn(value),
 				commentValueIndex.add(value.length),
 			);
 		}
@@ -158,7 +158,7 @@ export const jsonParser = createParser<JSONParserTypes>({
 				});
 			}
 
-			return parser.finishValueToken("BlockComment", value, endIndex);
+			return parser.finishValueToken("BlockComment", removeCarriageReturn(value), endIndex);
 		}
 
 		// Single character token starters

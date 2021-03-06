@@ -98,8 +98,6 @@ export function convertPossibleNodeErrorToDiagnostic(
 	};
 
 	if (err.path !== undefined && struct.frames.length === 0) {
-		// If we are an fs error with no frames then recommend adding the envvar so the @internal/fs module will
-		// manually capture and set stacktraces
 		advice.push({
 			type: "log",
 			category: "warn",
