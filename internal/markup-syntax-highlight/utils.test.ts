@@ -21,7 +21,7 @@ test(
 
 		t.inlineSnapshot(
 			markupToken(validTokenType, tokenInput),
-			'Array [\n\tRAW_MARKUP {value: "<token type=\\"keyword\\">"}\n\tArray [\n\t\t"lorem"\n\t\tRAW_MARKUP {value: "lorem"}\n\t\tArray [\n\t\t\t"lorem"\n\t\t\tRAW_MARKUP {value: "lorem"}\n\t\t]\n\t]\n\tRAW_MARKUP {value: "</token>"}\n]',
+			'[\n\tRAW_MARKUP {value: "<token type=\\"keyword\\">"}\n\t["lorem", RAW_MARKUP {value: "lorem"}, ["lorem", RAW_MARKUP {value: "lorem"}]]\n\tRAW_MARKUP {value: "</token>"}\n]',
 		);
 	},
 );
@@ -83,7 +83,7 @@ test(
 
 		t.inlineSnapshot(
 			result,
-			'Array [RAW_MARKUP {value: "<token type=\\"keyword\\">token0</token> <token type=\\"keyword\\">token1</token> <token type=\\"keyword\\">token2</token> <token type=\\"keyword\\">token3</token> <token type=\\"keyword\\">token4</token> <token type=\\"keyword\\">token5</token> <token type=\\"keyword\\">token6</token> <token type=\\"keyword\\">token7</token> <token type=\\"keyword\\">token8</token> <token type=\\"keyword\\">token9</token> <emphasis><color bg=\\"red\\">invalid</color></emphasis>"}]',
+			'[\n\tRAW_MARKUP {\n\t\tvalue: "<token type=\\"keyword\\">token0</token> <token type=\\"keyword\\">token1</token> <token type=\\"keyword\\">token2</token> <token type=\\"keyword\\">token3</token> <token type=\\"keyword\\">token4</token> <token type=\\"keyword\\">token5</token> <token type=\\"keyword\\">token6</token> <token type=\\"keyword\\">token7</token> <token type=\\"keyword\\">token8</token> <token type=\\"keyword\\">token9</token> <emphasis><color bg=\\"red\\">invalid</color></emphasis>"\n\t}\n]',
 		);
 	},
 );

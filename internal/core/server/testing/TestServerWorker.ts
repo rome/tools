@@ -103,8 +103,8 @@ export default class TestServerWorker {
 			this.runner.files.assert(testPath).addSnapshotEntry(snapshotPath, entry);
 		});
 
-		bridge.events.testInlineSnapshots.subscribe(({testPath, updates}) => {
-			this.runner.files.assert(testPath).addInlineSnapshotUpdates(updates);
+		bridge.events.testInlineSnapshotUpdate.subscribe(({testPath, update}) => {
+			this.runner.files.assert(testPath).addInlineSnapshotUpdate(update);
 		});
 
 		bridge.events.testDiagnostic.subscribe(({testPath, diagnostic, origin}) => {

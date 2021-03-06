@@ -109,13 +109,10 @@ test(
 	"tilde doesn't expand with relative hint",
 	(t) => {
 		t.true(createAbsoluteFilePath("~/foo").getSegments()[0] !== "~");
-		t.inlineSnapshot(
-			createRelativePath("~/foo").getSegments(),
-			'Array [\n\t"~"\n\t"foo"\n]',
-		);
+		t.inlineSnapshot(createRelativePath("~/foo").getSegments(), '["~", "foo"]');
 		t.inlineSnapshot(
 			createAbsoluteFilePath("/bar").append("~/foo").getSegments(),
-			'Array [\n\t"bar"\n\t"~"\n\t"foo"\n]',
+			'["bar", "~", "foo"]',
 		);
 	},
 );

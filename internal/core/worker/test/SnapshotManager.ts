@@ -68,10 +68,8 @@ export default class SnapshotManager {
 		this.options = runner.globalOptions;
 		this.snapshots = new AbsoluteFilePathMap();
 		this.fileLocker = new PathLocker();
-		this.inlineSnapshotsUpdates = [];
 	}
 
-	public inlineSnapshotsUpdates: InlineSnapshotUpdate[];
 	public snapshots: AbsoluteFilePathMap<Snapshot>;
 	private defaultSnapshotPath: AbsoluteFilePath;
 	private fileLocker: PathLocker;
@@ -311,7 +309,7 @@ export default class SnapshotManager {
 					snapshot = received;
 				}
 
-				this.inlineSnapshotsUpdates.push({
+				this.runner.emitInlineSnapshotUpdate({
 					line: lineNumber,
 					column: columnNumber,
 					snapshot,

@@ -61,10 +61,10 @@ export default createBridge({
 
 		fatalError: createBridgeEventDeclaration<BridgeErrorDetails, void>(),
 
-		testInlineSnapshots: createBridgeEventDeclaration<
+		testInlineSnapshotUpdate: createBridgeEventDeclaration<
 			{
 				testPath: AbsoluteFilePath;
-				updates: InlineSnapshotUpdate[];
+				update: InlineSnapshotUpdate;
 			},
 			void
 		>(),

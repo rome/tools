@@ -11,8 +11,8 @@ import {test} from "rome";
 test(
 	"Duration.format",
 	(t) => {
-		t.inlineSnapshot(Duration.fromMilliseconds(1).format(), "0s");
-		t.inlineSnapshot(Duration.fromMilliseconds(10).format(), "0.01s");
+		t.inlineSnapshot(Duration.fromMilliseconds(1).format(), "1ms");
+		t.inlineSnapshot(Duration.fromMilliseconds(10).format(), "10ms");
 		t.inlineSnapshot(Duration.fromMilliseconds(100).format(), "0.10s");
 		t.inlineSnapshot(Duration.fromMilliseconds(1_000).format(), "1s");
 		t.inlineSnapshot(Duration.fromMilliseconds(10_000).format(), "10s");
@@ -21,14 +21,17 @@ test(
 		t.inlineSnapshot(Duration.fromMilliseconds(10_000_000).format(), "2h46m40s");
 		t.inlineSnapshot(
 			Duration.fromMilliseconds(100_000_000).format(),
-			"27h46m40s",
+			"1d3h46m40s",
 		);
 
 		const longOpts = {longform: true};
-		t.inlineSnapshot(Duration.fromMilliseconds(1).format(longOpts), "0 seconds");
+		t.inlineSnapshot(
+			Duration.fromMilliseconds(1).format(longOpts),
+			"1 millisecond",
+		);
 		t.inlineSnapshot(
 			Duration.fromMilliseconds(10).format(longOpts),
-			"0.01 seconds",
+			"10 milliseconds",
 		);
 		t.inlineSnapshot(
 			Duration.fromMilliseconds(100).format(longOpts),
@@ -56,7 +59,7 @@ test(
 		);
 		t.inlineSnapshot(
 			Duration.fromMilliseconds(100_000_000).format(longOpts),
-			"27 hours 46 minutes 40 seconds",
+			"1 day 3 hours 46 minutes 40 seconds",
 		);
 	},
 );

@@ -26,7 +26,7 @@ import {
 	TestOptions,
 } from "@internal/virtual-rome/test";
 import {TestServerRunnerOptions} from "../../server/testing/types";
-import SnapshotManager, {Snapshot, SnapshotEntry} from "./SnapshotManager";
+import SnapshotManager, {InlineSnapshotUpdate, Snapshot, SnapshotEntry} from "./SnapshotManager";
 import TestAPI, {OnTimeout} from "./TestAPI";
 import executeMain from "../../common/utils/executeMain";
 import {
@@ -453,6 +453,13 @@ export default class TestWorkerFile {
 			testPath: this.path,
 			snapshotPath,
 			entry,
+		});
+	}
+
+	public emitInlineSnapshotUpdate(update: InlineSnapshotUpdate) {
+		this.bridge.events.testInlineSnapshotUpdate.send({
+			testPath: this.path,
+			update,
 		});
 	}
 

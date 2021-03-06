@@ -119,8 +119,8 @@ export default class TestServerFile {
 		entries.push(entry);
 	}
 
-	public addInlineSnapshotUpdates(updates: InlineSnapshotUpdate[]) {
-		this.inlineSnapshotUpdates = [...this.inlineSnapshotUpdates, ...updates];
+	public addInlineSnapshotUpdate(update: InlineSnapshotUpdate) {
+		this.inlineSnapshotUpdates.push(update);
 	}
 
 	private async getRawSnapshot(snapshotPath: AbsoluteFilePath): Promise<string> {

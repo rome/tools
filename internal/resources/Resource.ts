@@ -186,7 +186,7 @@ function callRelease(resource: Resource, callback: AsyncVoidCallback): Promise<v
   });
 
   const timeout = setTimeout(() => {
-    console.log(resource[Symbol.toStringTag], "sup?", selfPromise, resource.getDetails());
+    // TODO: Add timeout informative log
   }, 3000);
 
   selfPromise.finally(() => {
