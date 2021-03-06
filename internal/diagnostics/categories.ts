@@ -100,8 +100,9 @@ type DiagnosticCategoryString = StringConverter<DiagnosticCategory>;
 
 type DiagnosticLintCategoryString = StringConverter<DiagnosticLintCategory>;
 
-/* GENERATED:START(hash:3b94ccb81510bc041899cfb140e04143c7fafe99,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. */
+/* GENERATED:START(hash:d3d5cb50513be571457cd3b9d71e2793ce54d57b,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. */
 export type DiagnosticLintCategory =
+	| ["lint", "a11y", "noAccessKey"]
 	| ["lint", "a11y", "noAriaUnsupportedElements"]
 	| ["lint", "a11y", "noDistractingElements"]
 	| ["lint", "a11y", "noNoninteractiveElementToInteractiveRole"]
@@ -162,7 +163,6 @@ export type DiagnosticLintCategory =
 	| ["lint", "js", "useSortedSpecifiers"]
 	| ["lint", "js", "useTemplate"]
 	| ["lint", "js", "useWhile"]
-	| ["lint", "jsx-a11y", "noAccessKey"]
 	| ["lint", "jsx-a11y", "noAutofocus"]
 	| ["lint", "jsx-a11y", "noHeaderScope"]
 	| ["lint", "jsx-a11y", "noOnChange"]
@@ -220,6 +220,7 @@ export type DiagnosticLintCategory =
 const lintCategoryNameMap: {
 	[name in DiagnosticLintCategoryString]: DiagnosticLintCategory
 } = {
+	"lint/a11y/noAccessKey": ["lint", "a11y", "noAccessKey"],
 	"lint/a11y/noAriaUnsupportedElements": [
 		"lint",
 		"a11y",
@@ -300,7 +301,6 @@ const lintCategoryNameMap: {
 	"lint/js/useSortedSpecifiers": ["lint", "js", "useSortedSpecifiers"],
 	"lint/js/useTemplate": ["lint", "js", "useTemplate"],
 	"lint/js/useWhile": ["lint", "js", "useWhile"],
-	"lint/jsx-a11y/noAccessKey": ["lint", "jsx-a11y", "noAccessKey"],
 	"lint/jsx-a11y/noAutofocus": ["lint", "jsx-a11y", "noAutofocus"],
 	"lint/jsx-a11y/noHeaderScope": ["lint", "jsx-a11y", "noHeaderScope"],
 	"lint/jsx-a11y/noOnChange": ["lint", "jsx-a11y", "noOnChange"],

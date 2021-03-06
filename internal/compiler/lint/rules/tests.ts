@@ -9,10 +9,12 @@ type Test = {
 
 type Tests = Dict<{
 	category: DiagnosticCategory;
-	cases: Test | (Test[]) | (Test[][]);
+	cases: Test | Test[] | Test[][];
 }>;
 
-/* GENERATED:START(hash:7c338129a77fa5641ec09fc8d7de4672265d412c,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. */
+/* GENERATED:START(hash:888a94ee1bc716c7ce3b57e14db955315016c2d8,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. */
+// @ts-ignore
+import noAccessKey from "./a11y/noAccessKey.test.rjson";
 // @ts-ignore
 import noAriaUnsupportedElements from "./a11y/noAriaUnsupportedElements.test.rjson";
 // @ts-ignore
@@ -132,8 +134,6 @@ import useTemplate from "./js/useTemplate.test.rjson";
 // @ts-ignore
 import useWhile from "./js/useWhile.test.rjson";
 // @ts-ignore
-import noAccessKey from "./jsx-a11y/noAccessKey.test.rjson";
-// @ts-ignore
 import noAutofocus from "./jsx-a11y/noAutofocus.test.rjson";
 // @ts-ignore
 import noHeaderScope from "./jsx-a11y/noHeaderScope.test.rjson";
@@ -235,6 +235,10 @@ import noPosixInRegularExpression from "./regex/noPosixInRegularExpression.test.
 import preferShorthandArrayType from "./ts/preferShorthandArrayType.test.rjson";
 
 export const tests: Tests = {
+	"a11y/noAccessKey": {
+		category: ["lint", "a11y", "noAccessKey"],
+		cases: noAccessKey,
+	},
 	"a11y/noAriaUnsupportedElements": {
 		category: ["lint", "a11y", "noAriaUnsupportedElements"],
 		cases: noAriaUnsupportedElements,
@@ -470,10 +474,6 @@ export const tests: Tests = {
 	"js/useWhile": {
 		category: ["lint", "js", "useWhile"],
 		cases: useWhile,
-	},
-	"jsx-a11y/noAccessKey": {
-		category: ["lint", "jsx-a11y", "noAccessKey"],
-		cases: noAccessKey,
 	},
 	"jsx-a11y/noAutofocus": {
 		category: ["lint", "jsx-a11y", "noAutofocus"],

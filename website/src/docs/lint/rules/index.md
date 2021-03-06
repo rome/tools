@@ -4,14 +4,14 @@ layout: layouts/page.liquid
 layout-type: split
 main-class: rules
 eleventyNavigation:
-    key: lint-rules
-    parent: linting
-    title: Rules
+  key: lint-rules
+  parent: linting
+  title: Rules
 ---
 
 # Rules
 
-<!-- GENERATED:START(hash:8afb883d7e5f4ac1d4377e4b2d08f0475a1bf947,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. -->
+<!-- GENERATED:START(hash:6190dce9eda0f63c1dec0aaa3f5612b364033700,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. -->
 <section>
 <h2>JavaScript</h2>
 <p>Rule semantics and descriptions taken from <a href="https://eslint.org/">ESLint</a>. See individual rule docs for direct references.</p>
@@ -388,6 +388,13 @@ discard redundant terms or operators in boolean expressions
 <p>Rule semantics and descriptions taken from <a href="https://github.com/jsx-eslint/eslint-plugin-jsx-a11y">eslint-plugin-jsx-a11y</a>
 and <a href="https://axe-linter.deque.com/">axe Linter</a>. See individual rule docs for direct references.</p>
 <div class="rule">
+<h3 data-toc-exclude id="noAccessKey">
+	<a href="/docs/lint/rules/a11y/noAccessKey">noAccessKey</a>
+	<a class="header-anchor" href="#noAccessKey"></a>
+</h3>
+enforce that the `accessKey` prop is not used on any element to avoid complications with keyboard commands used by a screenreader
+</div>
+<div class="rule">
 <h3 data-toc-exclude id="noAriaUnsupportedElements">
 	<a href="/docs/lint/rules/a11y/noAriaUnsupportedElements">noAriaUnsupportedElements</a>
 	<a class="header-anchor" href="#noAriaUnsupportedElements"></a>
@@ -468,13 +475,6 @@ check if `lang` attribute is valid
 <section>
 <h2>JSX Accessibility</h2>
 <p>Rule semantics and descriptions taken from <a href="https://github.com/jsx-eslint/eslint-plugin-jsx-a11y">eslint-plugin-jsx-a11y</a>. See individual rule docs for direct references.</p>
-<div class="rule">
-<h3 data-toc-exclude id="noAccessKey">
-	<a href="/docs/lint/rules/jsx-a11y/noAccessKey">noAccessKey</a>
-	<a class="header-anchor" href="#noAccessKey"></a>
-</h3>
-enforce that the `accessKey` prop is not used on any element to avoid complications with keyboard commands used by a screenreader
-</div>
 <div class="rule">
 <h3 data-toc-exclude id="noAutofocus">
 	<a href="/docs/lint/rules/jsx-a11y/noAutofocus">noAutofocus</a>

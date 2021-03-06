@@ -457,8 +457,8 @@ export const lint = createDiagnosticsCategory({
 			},
 		],
 	},
-	JSX_A11Y_NO_ACCESS_KEY: {
-		category: DIAGNOSTIC_CATEGORIES["lint/jsx-a11y/noAccessKey"],
+	A11Y_NO_ACCESS_KEY: {
+		category: DIAGNOSTIC_CATEGORIES["lint/a11y/noAccessKey"],
 		message: markup`Avoid the <emphasis>accessKey</emphasis> attribute to reduce inconsistencies between keyboard shortcuts and screen reader keyboard comments.`,
 		advice: [
 			{
