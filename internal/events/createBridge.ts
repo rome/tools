@@ -10,15 +10,21 @@ import {WebSocketInterface} from "@internal/codec-websocket";
 import {Socket} from "net";
 import workerThreads = require("worker_threads");
 import {RSERValue} from "@internal/binary-transport";
-import {processResourceRoot, Resource, createResourceFromSocket, createResourceFromWebSocket, createResourceFromWorkerThread} from "@internal/resources";
+import {
+	Resource,
+	createResourceFromSocket,
+	createResourceFromWebSocket,
+	createResourceFromWorkerThread,
+	processResourceRoot,
+} from "@internal/resources";
 
 type BridgeWithResource<
 	ListenEvents extends BridgeEventsDeclaration,
 	CallEvents extends BridgeEventsDeclaration,
 	SharedEvents extends BridgeEventsDeclaration
 > = {
-	bridge: Bridge<ListenEvents, CallEvents, SharedEvents>,
-	resource: Resource,
+	bridge: Bridge<ListenEvents, CallEvents, SharedEvents>;
+	resource: Resource;
 };
 
 export function createBridgeEventDeclaration<

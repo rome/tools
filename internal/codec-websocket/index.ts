@@ -16,7 +16,7 @@ import crypto = require("crypto");
 import url = require("url");
 import http = require("http");
 import net = require("net");
-import { createResourceFromSocket, Resource } from "@internal/resources";
+import {Resource, createResourceFromSocket} from "@internal/resources";
 
 export function createKey(key: string): string {
 	return crypto.createHash("sha1").update(`${key}${GUID}`).digest("base64");

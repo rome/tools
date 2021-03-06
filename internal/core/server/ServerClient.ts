@@ -1,56 +1,69 @@
-import { IS_ROME_DEV_ENV } from "@internal/cli-environment";
-import { Reporter } from "@internal/cli-reporter";
-import { BridgeServer } from "@internal/events";
-import { markup } from "@internal/markup";
-import { createResourceFromCallback, Resource } from "@internal/resources";
-import ServerRequest, { EMPTY_SUCCESS_RESPONSE } from "./ServerRequest";
-import ServerBridge, { PartialServerQueryRequest, ServerProfileWorker, ServerQueryRequest, ServerQueryResponse } from "../common/bridges/ServerBridge";
-import Server, { partialServerQueryRequestToFull } from "./Server";
-import { ClientFlags, ClientRequestFlags, DEFAULT_CLIENT_FLAGS } from "../common/types/client";
-import { VERSION } from "../common/constants";
-import { DurationMeasurer } from "@internal/numbers";
-import { descriptions, DIAGNOSTIC_CATEGORIES } from "@internal/diagnostics";
-import { consume, ConsumePath } from "@internal/consume";
-import { createUIDPath } from "@internal/path";
-import { Dict } from "@internal/typescript-helpers";
-import { ServerCommand, serverCommands } from "./commands";
-import { toKebabCase } from "@internal/string-utils";
+import {IS_ROME_DEV_ENV} from "@internal/cli-environment";
+import {Reporter} from "@internal/cli-reporter";
+import {BridgeServer} from "@internal/events";
+import {markup} from "@internal/markup";
+import {Resource, createResourceFromCallback} from "@internal/resources";
+import ServerRequest, {EMPTY_SUCCESS_RESPONSE} from "./ServerRequest";
+import ServerBridge, {
+	PartialServerQueryRequest,
+	ServerProfileWorker,
+	ServerQueryRequest,
+	ServerQueryResponse,
+} from "../common/bridges/ServerBridge";
+import Server, {partialServerQueryRequestToFull} from "./Server";
+import {
+	ClientFlags,
+	ClientRequestFlags,
+	DEFAULT_CLIENT_FLAGS,
+} from "../common/types/client";
+import {VERSION} from "../common/constants";
+import {DurationMeasurer} from "@internal/numbers";
+import {DIAGNOSTIC_CATEGORIES, descriptions} from "@internal/diagnostics";
+import {ConsumePath, consume} from "@internal/consume";
+import {createUIDPath} from "@internal/path";
+import {Dict} from "@internal/typescript-helpers";
+import {ServerCommand, serverCommands} from "./commands";
+import {toKebabCase} from "@internal/string-utils";
 
 export default class ServerClient {
-  constructor(server: Server, id: number, bridge: BridgeServer<typeof ServerBridge>) {
-    this.server = server;
-    this.id = id;
-    this.bridge = bridge;
+	constructor(
+		server: Server,
+		id: number,
+		bridge: BridgeServer<typeof ServerBridge>,
+	) {
+		this.server = server;
+		this.id = id;
+		this.bridge = bridge;
 
-    this.requestsInFlight = new Set();
+		this.requestsInFlight = new Set();
 
-    this.reporter = new Reporter(
+		this.reporter = new Reporter(
 			"ServerClient",
 			{
 				wrapperFactory: server.fatalErrorHandler.wrapBound,
 				markupOptions: server.logger.markupOptions,
 			},
-    );
+		);
 
-    this.resources = server.resources.createContainer(`ServerClient<${id}>`, [
-      bridge,
-      this.reporter,
-    ]);
+		this.resources = server.resources.createContainer(
+			`ServerClient<${id}>`,
+			[bridge, this.reporter],
+		);
 
-    this.flags = DEFAULT_CLIENT_FLAGS;
-  }
+		this.flags = DEFAULT_CLIENT_FLAGS;
+	}
 
-  private server: Server;
-  
-  public id: number;
-  public bridge: BridgeServer<typeof ServerBridge>;
-  public resources: Resource;
-  public requestsInFlight: Set<ServerRequest>;
-  public flags: ClientFlags;
-  public reporter: Reporter;
+	private server: Server;
 
-  public async init(): Promise<void> {
-    const {bridge, server} = this;
+	public id: number;
+	public bridge: BridgeServer<typeof ServerBridge>;
+	public resources: Resource;
+	public requestsInFlight: Set<ServerRequest>;
+	public flags: ClientFlags;
+	public reporter: Reporter;
+
+	public async init(): Promise<void> {
+		const {bridge, server} = this;
 
 		bridge.events.profilingGetWorkers.subscribe(async () => {
 			const workers: ServerProfileWorker[] = [];
@@ -65,14 +78,16 @@ export default class ServerClient {
 			return await worker.bridge.events.profilingStop.call();
 		});
 
-		bridge.resources.add(createResourceFromCallback(
-			"BridgeEndServerRequestCancellationHandler",
-			async () => {
-				for (const req of this.requestsInFlight) {
-					await req.cancel("client disconnected");
-				}
-			},
-		));
+		bridge.resources.add(
+			createResourceFromCallback(
+				"BridgeEndServerRequestCancellationHandler",
+				async () => {
+					for (const req of this.requestsInFlight) {
+						await req.cancel("client disconnected");
+					}
+				},
+			),
+		);
 
 		await bridge.handshake();
 
@@ -93,10 +108,10 @@ export default class ServerClient {
 		bridge.events.endServer.subscribe(() => server.end());
 
 		return client;
-  }
+	}
 
-  private async setup(): Promise<void> {
-    const {bridge, server, reporter} = this;
+	private async setup(): Promise<void> {
+		const {bridge, server, reporter} = this;
 
 		const {
 			flags,
@@ -104,7 +119,7 @@ export default class ServerClient {
 			outputFormat,
 			outputSupport,
 			version,
-    } = await bridge.events.getClientInfo.call();
+		} = await bridge.events.getClientInfo.call();
 
 		const stream = reporter.addStream(
 			{
@@ -120,7 +135,7 @@ export default class ServerClient {
 			},
 			streamState,
 		);
-    
+
 		if (version !== VERSION) {
 			reporter.error(
 				markup`Client version ${version} does not match server version ${VERSION}. Goodbye lol.`,
@@ -133,11 +148,11 @@ export default class ServerClient {
 			return stream.updateFeatures(features);
 		});
 
-    // Update ServerClient props
-    this.flags = flags;
-    reporter.updateMarkupOptions({
-      cwd: flags.cwd,
-    });
+		// Update ServerClient props
+		this.flags = flags;
+		reporter.updateMarkupOptions({
+			cwd: flags.cwd,
+		});
 
 		// Add reporter to connected set, important logs may be output to these
 		server.connectedReporters.addAttachedStream(stream);
@@ -155,12 +170,12 @@ export default class ServerClient {
 				req.cancel("bridge died");
 			}
 		});
-  }
+	}
 
 	public async handleRequest(
 		partialQuery: PartialServerQueryRequest,
 	): Promise<ServerQueryResponse> {
-    const {server} = this;
+		const {server} = this;
 
 		const query: ServerQueryRequest = partialServerQueryRequestToFull(
 			partialQuery,

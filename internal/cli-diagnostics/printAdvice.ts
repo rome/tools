@@ -364,7 +364,9 @@ function printFrame(
 					{
 						type: "log",
 						category: "warn",
-						text: markup`Cannot render frame as ${diagnosticLocationToMarkupFilelink(item.location)} does not exist`,
+						text: markup`Cannot render frame as ${diagnosticLocationToMarkupFilelink(
+							item.location,
+						)} does not exist`,
 					},
 					opts,
 				);

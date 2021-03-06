@@ -25,7 +25,7 @@ import TestServerFile from "@internal/core/server/testing/TestServerFile";
 import {BridgeServer} from "@internal/events";
 import {Duration} from "@internal/numbers";
 import {ThreadWorkerContainer} from "@internal/core/worker/types";
-import { createResourceFromTimeout } from "@internal/resources";
+import {createResourceFromTimeout} from "@internal/resources";
 
 export default class TestServerWorker {
 	constructor(
@@ -118,17 +118,20 @@ export default class TestServerWorker {
 
 	public async handleTimeout(duration: string): Promise<void> {
 		return new Promise((resolve, reject) => {
-			const timeout = createResourceFromTimeout("TimeoutResolver", setTimeout(
-				() => {
-					resolve(
-						this.bridge.end(
-							`Test worker was unresponsive for ${duration}. We tried to collect some additional metadata but we timed out again trying to fetch it...`,
-							false,
-						),
-					);
-				},
-				3_000,
-			));
+			const timeout = createResourceFromTimeout(
+				"TimeoutResolver",
+				setTimeout(
+					() => {
+						resolve(
+							this.bridge.end(
+								`Test worker was unresponsive for ${duration}. We tried to collect some additional metadata but we timed out again trying to fetch it...`,
+								false,
+							),
+						);
+					},
+					3_000,
+				),
+			);
 
 			if (this.inspector === undefined) {
 				timeout.release();

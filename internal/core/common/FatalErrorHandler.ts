@@ -7,9 +7,13 @@ import {
 	getOrDeriveDiagnosticsFromError,
 } from "@internal/diagnostics";
 import {ErrorCallback} from "@internal/typescript-helpers";
-import {Resource, createResourceFromCallback, safeProcessExit} from "@internal/resources";
+import {
+	Resource,
+	createResourceFromCallback,
+	safeProcessExit,
+} from "@internal/resources";
 import util = require("util");
-import { GlobalLock } from "@internal/async";
+import {GlobalLock} from "@internal/async";
 
 type FatalErrorHandlerOptions = {
 	exit?: boolean;
@@ -89,7 +93,7 @@ export default class FatalErrorHandler {
 				} else {
 					reporter = getReporter();
 				}
-	
+
 				const diagnostics = getOrDeriveDiagnosticsFromError(
 					error,
 					{
@@ -102,7 +106,7 @@ export default class FatalErrorHandler {
 						},
 					},
 				);
-	
+
 				const processor = new DiagnosticsProcessor({
 					normalizeOptions: {
 						tags: {
@@ -123,9 +127,7 @@ export default class FatalErrorHandler {
 					showFooter: false,
 				});
 			} catch (logErr) {
-				console.error(
-					"Failed to handle fatal error. Original error:",
-				);
+				console.error("Failed to handle fatal error. Original error:");
 				console.error(error.stack);
 				console.error("Log error:");
 				console.error(logErr.stack);

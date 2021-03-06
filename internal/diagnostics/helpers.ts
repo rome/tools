@@ -15,7 +15,7 @@ import {orderBySimilarity, splitLines} from "@internal/string-utils";
 import {Position} from "@internal/parser-core";
 import {StaticMarkup, markup} from "@internal/markup";
 import {joinCategoryName} from "./categories";
-import { stringDiffCompressed } from "@internal/string-diff";
+import {stringDiffCompressed} from "@internal/string-diff";
 
 type BuildSuggestionAdviceOptions = {
 	minRating?: number;

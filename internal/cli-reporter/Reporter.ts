@@ -311,12 +311,14 @@ export default class Reporter implements ReporterNamespace {
 	}
 
 	public addAttachedStream(stream: ReporterStreamAttached): void {
-		stream.resources.add(createResourceFromCallback(
-			"ReporterStreamHandle",
-			() => {
-				this.streams.delete(stream);
-			},
-		));
+		stream.resources.add(
+			createResourceFromCallback(
+				"ReporterStreamHandle",
+				() => {
+					this.streams.delete(stream);
+				},
+			),
+		);
 		stream.featuresUpdated.subscribe(() => {
 			this.refreshActiveElements();
 		});

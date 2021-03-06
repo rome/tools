@@ -26,7 +26,7 @@ import {
 	deriveDecisionPositionKey,
 } from "../lint/decisions";
 import {inheritLoc} from "@internal/js-ast-utils";
-import { stringDiffCompressed } from "@internal/string-diff";
+import {stringDiffCompressed} from "@internal/string-diff";
 
 // Can be used with referential equality to determine if paths are derivatives of each other
 // Import for state retention which requires tracking ownership

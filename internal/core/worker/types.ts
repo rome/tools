@@ -28,7 +28,7 @@ import {TestServerRunnerOptions} from "../server/testing/types";
 import {FocusedTest} from "./test/TestWorkerFile";
 import workerThreads = require("worker_threads");
 import {ReporterNamespace} from "@internal/cli-reporter";
-import { Resource } from "@internal/resources";
+import {Resource} from "@internal/resources";
 
 export type WorkerParseResult = {
 	ast: AnyRoot;

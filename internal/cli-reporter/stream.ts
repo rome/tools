@@ -79,7 +79,7 @@ export function log(
 		}
 
 		buff += line;
-		
+
 		let noNewline = i === lines.length - 1 && opts.noNewline;
 		if (!noNewline) {
 			if (pushBuffer) {

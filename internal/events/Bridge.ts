@@ -247,15 +247,17 @@ export default class Bridge<
 			let attempts = 0;
 			let startTime = new DurationMeasurer();
 
-			const timer = this.resources.add(timeout.setInterval(() => {
-				attempts++;
+			const timer = this.resources.add(
+				timeout.setInterval(() => {
+					attempts++;
 
-				callback({
-					summary: this.getPendingRequestsSummary(),
-					attempts,
-					totalTime: startTime.since(),
-				});
-			}));
+					callback({
+						summary: this.getPendingRequestsSummary(),
+						attempts,
+						totalTime: startTime.since(),
+					});
+				}),
+			);
 
 			await this.heartbeatEvent.wait(undefined);
 			timer.release();

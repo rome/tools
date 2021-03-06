@@ -31,7 +31,7 @@ import {ReporterNamespace} from "@internal/cli-reporter";
 import {ExtendedMap} from "@internal/collections";
 import {Duration, DurationMeasurer} from "@internal/numbers";
 import {PartialWorkerOptions} from "../worker/types";
-import { createResourceFromCallback } from "@internal/resources";
+import {createResourceFromCallback} from "@internal/resources";
 
 type SpawnWorkerOptions = {
 	type: WorkerType;
@@ -190,7 +190,7 @@ export default class WorkerManager {
 		try {
 			const serverWorker = this.getWorkerAssert(0);
 			this.selfWorker = false;
-			
+
 			this.logger.info(
 				markup`Spawning first worker outside of server after exceeding ${String(
 					MAX_MASTER_BYTES_BEFORE_WORKERS,
@@ -350,7 +350,9 @@ export default class WorkerManager {
 			},
 		);
 
-		const {bridge, resource: threadResource} = WorkerBridge.Server.createFromWorkerThread(thread);
+		const {bridge, resource: threadResource} = WorkerBridge.Server.createFromWorkerThread(
+			thread,
+		);
 		this.server.resources.add(bridge);
 
 		bridge.events.fatalError.subscribe(async (details) => {
@@ -382,11 +384,11 @@ export default class WorkerManager {
 		this.setWorker(container);
 		bridge.resources.add(
 			createResourceFromCallback(
-			"WorkerManagerRegistration",
-			() => {
-				this.workers.delete(id);
-			},
-			)
+				"WorkerManagerRegistration",
+				() => {
+					this.workers.delete(id);
+				},
+			),
 		);
 
 		thread.once(

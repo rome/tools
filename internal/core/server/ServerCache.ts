@@ -1,4 +1,4 @@
-import {getEnvVar, IS_ROME_DEV_ENV} from "@internal/cli-environment";
+import {IS_ROME_DEV_ENV, getEnvVar} from "@internal/cli-environment";
 import {VERSION} from "@internal/core";
 import {AbsoluteFilePath} from "@internal/path";
 

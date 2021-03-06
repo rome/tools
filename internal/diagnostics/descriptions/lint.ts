@@ -11,7 +11,7 @@ import {
 	DiagnosticLocation,
 } from "../types";
 import {StaticMarkup, markup} from "@internal/markup";
-import { stringDiffCompressed } from "@internal/string-diff";
+import {stringDiffCompressed} from "@internal/string-diff";
 import {buildSuggestionAdvice} from "../helpers";
 import {addEmphasis, createDiagnosticsCategory, orJoin} from "./index";
 import {DIAGNOSTIC_CATEGORIES} from "../categories";

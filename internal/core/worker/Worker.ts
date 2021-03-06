@@ -53,7 +53,12 @@ import FatalErrorHandler from "../common/FatalErrorHandler";
 import {RSERObject} from "@internal/binary-transport";
 import {ReporterConditionalStream} from "@internal/cli-reporter";
 import {DEFAULT_TERMINAL_FEATURES} from "@internal/cli-environment";
-import {Resource, createResourceRoot, safeProcessExit, createResourceFromCallback} from "@internal/resources";
+import {
+	Resource,
+	createResourceFromCallback,
+	createResourceRoot,
+	safeProcessExit,
+} from "@internal/resources";
 
 import TestWorker from "./test/TestWorker";
 import inspector = require("inspector");
@@ -104,7 +109,7 @@ export default class Worker {
 					safeProcessExit(0);
 					return true;
 				}
-				
+
 				const {bridge} = this;
 
 				if (!bridge.open) {
@@ -230,11 +235,11 @@ export default class Worker {
 
 		bridge.resources.add(
 			createResourceFromCallback(
-			"WorkerEnd",
-			async () => {
-				await this.end();
-			},
-			)
+				"WorkerEnd",
+				async () => {
+					await this.end();
+				},
+			),
 		);
 
 		let profiler: undefined | Profiler;

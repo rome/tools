@@ -5,11 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {
-	ServerBridge,
-	ServerQueryRequest,
-	UserConfig,
-} from "@internal/core";
+import {ServerBridge, ServerQueryRequest, UserConfig} from "@internal/core";
 import {
 	Diagnostic,
 	DiagnosticOrigin,
@@ -60,11 +56,11 @@ import WorkerQueue, {WorkerQueueOptions} from "./WorkerQueue";
 import FatalErrorHandler from "../common/FatalErrorHandler";
 import {
 	Resource,
-	createResourceRoot,
 	createResourceFromCallback,
+	createResourceRoot,
 } from "@internal/resources";
 import ServerClient from "./ServerClient";
-import { Profiler } from "@internal/v8";
+import {Profiler} from "@internal/v8";
 
 export type ServerOptions = {
 	inbandOnly?: boolean;
@@ -570,12 +566,17 @@ export default class Server {
 
 		this.connectedClients.add(client);
 
-		client.resources.add(createResourceFromCallback("ServerRegistration", () => {
-			this.connectedClients.delete(client);
-			this.connectedClientsListeningForLogs.delete(client);
-			this.connectedClientsListeningForWorkerLogs.delete(client);
-			this.loggerStream.update();
-		}));
+		client.resources.add(
+			createResourceFromCallback(
+				"ServerRegistration",
+				() => {
+					this.connectedClients.delete(client);
+					this.connectedClientsListeningForLogs.delete(client);
+					this.connectedClientsListeningForWorkerLogs.delete(client);
+					this.loggerStream.update();
+				},
+			),
+		);
 
 		await this.clientStartEvent.callOptional(client);
 		await bridge.events.serverReady.call();

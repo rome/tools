@@ -36,7 +36,10 @@
  * which means: delete 'Hello', add 'Goodbye' and keep ' world.'
  */
 
-export type Diff = [DiffTypes.DELETE | DiffTypes.EQUAL | DiffTypes.INSERT, string];
+export type Diff = [
+	DiffTypes.DELETE | DiffTypes.EQUAL | DiffTypes.INSERT,
+	string
+];
 
 export type CompressedDiff = Diff | [DiffTypes.EQUAL_COMPRESSED_LINES, number];
 
@@ -47,8 +50,7 @@ export enum DiffTypes {
 	EQUAL,
 	INSERT,
 	EQUAL_COMPRESSED_LINES,
-};
-
+}
 export type UnifiedDiff = {
 	diffsByLine: GroupDiffsLine[];
 	beforeLineCount: number;
@@ -132,7 +134,7 @@ export function stringDiffUnified(rawDiffs: CompressedDiff[]): UnifiedDiff {
 
 	for (let i = 0; i < rawDiffs.length; i++) {
 		const tuple = rawDiffs[i];
-		
+
 		if (tuple[0] === DiffTypes.EQUAL_COMPRESSED_LINES) {
 			const isFirstTuple = i === 0;
 			for (let i = 0; i < tuple[1]; i++) {
@@ -183,7 +185,7 @@ export function stringDiffUnified(rawDiffs: CompressedDiff[]): UnifiedDiff {
 				case DiffTypes.INSERT: {
 					afterLine++;
 					break;
-				}	
+				}
 			}
 
 			beforeLineToAfter.set(beforeLine, afterLine);
@@ -285,19 +287,19 @@ export function stringDiffCompressed(a: string, b: string): CompressedDiff[] {
 
 		const startLines = lines.slice(0, 1 + COMPRESSED_DIFFS_CONTEXT_LINES);
 		const endLines = lines.slice(-(1 + COMPRESSED_DIFFS_CONTEXT_LINES));
-	
+
 		const compressedCount = lines.length - startLines.length - endLines.length;
 		if (compressedCount <= 0) {
 			compressed.push(diff);
 			continue;
 		}
-	
+
 		if (startLines.length > 0) {
 			compressed.push([DiffTypes.EQUAL, startLines.join("\n")]);
 		}
-	
+
 		compressed.push([DiffTypes.EQUAL_COMPRESSED_LINES, compressedCount]);
-	
+
 		if (endLines.length > 0) {
 			compressed.push([DiffTypes.EQUAL, endLines.join("\n")]);
 		}
@@ -314,11 +316,7 @@ export function stringDiffCompressed(a: string, b: string): CompressedDiff[] {
  * @param {Int|Object} [cursor_pos] Edit position in a or object with more info
  * @return {Array} Array of diff tuples.
  */
-export function main(
-	a: string,
-	b: string,
-	fixUnicode: boolean = false,
-): Diff[] {
+export function main(a: string, b: string, fixUnicode: boolean = false): Diff[] {
 	// Check for equality
 	if (a === b) {
 		if (a) {
@@ -465,11 +463,7 @@ export function bisect(a: string, b: string): Diff[] {
 				x1 = v1[k1Offset - 1] + 1;
 			}
 			let y1 = x1 - k1;
-			while (
-				x1 < aLength &&
-				y1 < bLength &&
-				a.charAt(x1) === b.charAt(y1)
-			) {
+			while (x1 < aLength && y1 < bLength && a.charAt(x1) === b.charAt(y1)) {
 				x1++;
 				y1++;
 			}
@@ -506,8 +500,7 @@ export function bisect(a: string, b: string): Diff[] {
 			while (
 				x2 < aLength &&
 				y2 < bLength &&
-				a.charAt(aLength - x2 - 1) ===
-				b.charAt(bLength - y2 - 1)
+				a.charAt(aLength - x2 - 1) === b.charAt(bLength - y2 - 1)
 			) {
 				x2++;
 				y2++;

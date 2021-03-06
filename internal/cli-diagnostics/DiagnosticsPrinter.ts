@@ -515,7 +515,10 @@ export default class DiagnosticsPrinter extends Error {
 		reporter.logRaw(err.stack || err.message);
 	}
 
-	private printDiagnostics(diagnostics: Diagnostic[], validateDependencies: boolean): void {
+	private printDiagnostics(
+		diagnostics: Diagnostic[],
+		validateDependencies: boolean,
+	): void {
 		const reporter = new Reporter("DiagnosticsPrinter");
 		const stream = reporter.attachCaptureStream("markup");
 
@@ -603,7 +606,11 @@ export default class DiagnosticsPrinter extends Error {
 		}
 	}
 
-	printDiagnostic(diag: Diagnostic, reporter: Reporter, validateDependencies: boolean): void {
+	printDiagnostic(
+		diag: Diagnostic,
+		reporter: Reporter,
+		validateDependencies: boolean,
+	): void {
 		let outdatedPaths: MixedPathSet;
 		let missingPaths: MixedPathSet;
 		if (validateDependencies) {

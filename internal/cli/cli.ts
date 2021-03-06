@@ -37,12 +37,12 @@ import {
 	markup,
 } from "@internal/markup";
 import {json} from "@internal/codec-config";
-import {isEnvVarSet, IS_ROME_DEV_ENV} from "@internal/cli-environment";
+import {IS_ROME_DEV_ENV, isEnvVarSet} from "@internal/cli-environment";
 import {satisfiesSemver} from "@internal/codec-semver";
 import {Reporter} from "@internal/cli-reporter";
 import {loadUserConfig} from "@internal/core/common/userConfig";
 import {RSERObject} from "@internal/binary-transport";
-import { safeProcessExit } from "@internal/resources";
+import {safeProcessExit} from "@internal/resources";
 
 type CLIFlags = {
 	logs: undefined | ClientLogsLevel;

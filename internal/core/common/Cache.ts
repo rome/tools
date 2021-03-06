@@ -5,7 +5,7 @@ import {
 } from "@internal/binary-transport";
 import {Markup, markup} from "@internal/markup";
 import {AbsoluteFilePath, AbsoluteFilePathMap, UIDPath} from "@internal/path";
-import {createResourceFromCallback, Resource} from "@internal/resources";
+import {Resource, createResourceFromCallback} from "@internal/resources";
 import FatalErrorHandler from "./FatalErrorHandler";
 import {UserConfig} from "./userConfig";
 
@@ -44,12 +44,14 @@ export default class Cache {
 		this.pendingWriteTimer = undefined;
 		this.pendingWrites = new AbsoluteFilePathMap();
 
-		resources.add(createResourceFromCallback(
-			"Cache",
-			async () => {
-				await this.teardown();
-			},
-		));
+		resources.add(
+			createResourceFromCallback(
+				"Cache",
+				async () => {
+					await this.teardown();
+				},
+			),
+		);
 	}
 
 	public writeDisabled: boolean;

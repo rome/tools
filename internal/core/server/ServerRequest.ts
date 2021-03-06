@@ -55,10 +55,7 @@ import ServerBridge, {
 	ServerQueryResponse,
 	ServerQueryResponseSuccess,
 } from "../common/bridges/ServerBridge";
-import Server, {
-	ServerMarker,
-	ServerUnfinishedMarker,
-} from "./Server";
+import Server, {ServerMarker, ServerUnfinishedMarker} from "./Server";
 import ServerClient from "./ServerClient";
 import {Reporter, ReporterNamespace} from "@internal/cli-reporter";
 import {BridgeServer, Event} from "@internal/events";
@@ -92,7 +89,7 @@ import {GlobOptions, Globber} from "./fs/glob";
 import WorkerBridge from "../common/bridges/WorkerBridge";
 import {DurationMeasurer, OneIndexed, ZeroIndexed} from "@internal/numbers";
 import {Consumer, consume} from "@internal/consume";
-import {createResourceFromCallback, Resource} from "@internal/resources";
+import {Resource, createResourceFromCallback} from "@internal/resources";
 import prettyFormat from "@internal/pretty-format";
 
 type ServerRequestOptions = {
@@ -261,7 +258,9 @@ export default class ServerRequest {
 			},
 		);
 
-		this.resources = client.resources.createContainer(`ServerRequest<${this.id}>`);
+		this.resources = client.resources.createContainer(
+			`ServerRequest<${this.id}>`,
+		);
 
 		this.reporter = query.silent
 			? new Reporter("ServerRequestSilent")
@@ -269,14 +268,16 @@ export default class ServerRequest {
 		this.resources.add(this.reporter);
 
 		this.args = this.createArgsConsumer();
-		
+
 		client.requestsInFlight.add(this);
-		this.resources.add(createResourceFromCallback(
-			"ClientRequestsTracker",
-			() => {
-				client.requestsInFlight.delete(this);
-			},
-		));
+		this.resources.add(
+			createResourceFromCallback(
+				"ClientRequestsTracker",
+				() => {
+					client.requestsInFlight.delete(this);
+				},
+			),
+		);
 	}
 
 	public id: number;

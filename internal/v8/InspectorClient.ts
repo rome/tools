@@ -10,7 +10,7 @@ import {JSONValue} from "@internal/codec-config";
 import {Consumer, consumeUnknown} from "@internal/consume";
 import {ErrorCallback} from "@internal/typescript-helpers";
 import {DIAGNOSTIC_CATEGORIES} from "@internal/diagnostics";
-import { createResourceFromCallback, Resource } from "@internal/resources";
+import {Resource, createResourceFromCallback} from "@internal/resources";
 
 type InspectorSubscription = {
 	once: boolean;
@@ -28,13 +28,16 @@ export default class InspectorClient {
 		this.socket = socket;
 		this.id = 0;
 
-		this.resources = createResourceFromCallback("InspectorClient", () => {
-			this.alive = false;
-			for (const {reject} of this.callbacks.values()) {
-				reject(new InspectorClientCloseError());
-			}
-			this.callbacks.clear();
-		});
+		this.resources = createResourceFromCallback(
+			"InspectorClient",
+			() => {
+				this.alive = false;
+				for (const {reject} of this.callbacks.values()) {
+					reject(new InspectorClientCloseError());
+				}
+				this.callbacks.clear();
+			},
+		);
 		this.resources.bind(socket);
 
 		this.subscriptions = new Map();

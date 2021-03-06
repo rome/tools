@@ -294,13 +294,7 @@ export default class Bundler {
 		};
 
 		// TODO better parallelization model
-		await Promise.all([
-			bundle(),
-			bundle(),
-			bundle(),
-			bundle(),
-			bundle(),
-		]);
+		await Promise.all([bundle(), bundle(), bundle(), bundle(), bundle()]);
 
 		progress.end();
 

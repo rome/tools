@@ -42,7 +42,7 @@ import highlightShell from "@internal/markup-syntax-highlight/highlightShell";
 import {RSERObject} from "@internal/binary-transport";
 import {ExtendedMap} from "@internal/collections";
 import {markupToPlainText} from "@internal/cli-layout";
-import { safeProcessExit } from "@internal/resources";
+import {safeProcessExit} from "@internal/resources";
 
 export type Examples = {
 	description: StaticMarkup;

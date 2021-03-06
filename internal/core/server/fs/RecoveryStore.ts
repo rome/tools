@@ -499,7 +499,9 @@ export default class RecoveryStore {
 
 		const paths: AbsoluteFilePathSet = new AbsoluteFilePathSet(files.keys());
 		const {server} = this;
-		const resources = server.resources.createContainer("RecoveryStore.writeFiles");
+		const resources = server.resources.createContainer(
+			"RecoveryStore.writeFiles",
+		);
 
 		// Files successfully written
 		let fileCount = 0;
@@ -551,21 +553,23 @@ export default class RecoveryStore {
 
 			// Protects against file events not being emitted and causing hanging
 			const timeoutPromise = new Promise((resolve, reject) => {
-				resources.add(createResourceFromTimeout(
-					"FileHangDetector",
-					setTimeout(
-						() => {
-							const lines = [
-								"File events should have been emitted within a second. Did not receive an event for:",
-							];
-							for (const path of paths) {
-								lines.push(` - ${path.join()}`);
-							}
-							reject(new Error(lines.join("\n")));
-						},
-						1_000,
+				resources.add(
+					createResourceFromTimeout(
+						"FileHangDetector",
+						setTimeout(
+							() => {
+								const lines = [
+									"File events should have been emitted within a second. Did not receive an event for:",
+								];
+								for (const path of paths) {
+									lines.push(` - ${path.join()}`);
+								}
+								reject(new Error(lines.join("\n")));
+							},
+							1_000,
+						),
 					),
-				));
+				);
 			});
 
 			await Promise.race([waitRefresh, timeoutPromise]);

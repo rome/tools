@@ -13,7 +13,7 @@ import {
 	DEFAULT_CLIENT_FLAGS,
 } from "../common/types/client";
 import ClientRequest, {ClientRequestType} from "./ClientRequest";
-import ServerClient from "../server/ServerClient"
+import ServerClient from "../server/ServerClient";
 import Server, {ServerOptions} from "../server/Server";
 import {
 	CLI_SOCKET_PATH,
@@ -59,7 +59,11 @@ import {
 import {AbsoluteFilePath} from "@internal/path";
 import {NodeSystemError} from "@internal/errors";
 import SilentClientError from "./SilentClientError";
-import {Resource, createResourceRoot, createResourceFromCallback} from "@internal/resources";
+import {
+	Resource,
+	createResourceFromCallback,
+	createResourceRoot,
+} from "@internal/resources";
 import FatalErrorHandler from "../common/FatalErrorHandler";
 
 export function getFilenameTimestamp(): string {
@@ -584,12 +588,14 @@ export default class Client {
 
 		const {bridge} = status;
 		this.resources.add(bridge);
-		bridge.resources.add(createResourceFromCallback(
-			"ClientBridgeStatus",
-			() => {
-				this.bridgeStatus = undefined;
-			},
-		));
+		bridge.resources.add(
+			createResourceFromCallback(
+				"ClientBridgeStatus",
+				() => {
+					this.bridgeStatus = undefined;
+				},
+			),
+		);
 
 		bridge.events.write.subscribe(([chunk, error]) => {
 			const isError = error && !terminalFeatures.redirectError;
