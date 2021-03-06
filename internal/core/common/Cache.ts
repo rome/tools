@@ -81,7 +81,7 @@ export default class Cache {
 	}
 
 	protected getCacheDirectory(uid: UIDPath): AbsoluteFilePath {
-		return this.directoryPath.append(uid.join());
+		return this.directoryPath.append(...uid.getSegments());
 	}
 
 	public getCacheFilename(uid: UIDPath, name: string): AbsoluteFilePath {
