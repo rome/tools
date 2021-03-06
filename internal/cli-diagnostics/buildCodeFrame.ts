@@ -223,10 +223,12 @@ export default function buildCodeFrame(
 		highlightLine = showInvisibles(
 			readMarkup(highlightLine),
 			{
+				ignoreTrailingCarriageReturn: true,
 				ignoreLeadingTabs: true,
 				ignoreLoneSpaces: true,
 				atLineStart: true,
 				atLineEnd: true,
+				nextText: undefined,
 			},
 		).value;
 

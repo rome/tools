@@ -35,8 +35,10 @@ function formatDiffLine(diffs: Diff[]) {
 				{
 					ignoreLeadingTabs: false,
 					ignoreLoneSpaces: false,
+					ignoreTrailingCarriageReturn: type !== DiffTypes.EQUAL,
 					atLineStart,
 					atLineEnd: i === diffs.length - 1,
+					nextText: diffs[i + 1]?.[1],
 				},
 			);
 			if (hadNonWhitespace) {

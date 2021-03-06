@@ -30,11 +30,13 @@ function isWhitespace(char: undefined | string): boolean {
 
 export function showInvisibles(
 	str: string,
-	{atLineStart, atLineEnd, ignoreLoneSpaces, ignoreLeadingTabs}: {
+	{atLineStart, atLineEnd, ignoreLoneSpaces, ignoreTrailingCarriageReturn, ignoreLeadingTabs, nextText}: {
 		ignoreLeadingTabs: boolean;
 		ignoreLoneSpaces: boolean;
+		ignoreTrailingCarriageReturn: boolean;
 		atLineStart: boolean;
 		atLineEnd: boolean;
+		nextText: undefined | string;
 	},
 ): {
 	value: StaticMarkup;
@@ -70,6 +72,20 @@ export function showInvisibles(
 		// Always show if at the end of line
 		if (atLineEnd && i >= trailingWhitespaceIndex) {
 			showInvisible = true;
+		}
+
+		// If we are a carriage return next to a \n then don't show the character as visible
+		if (ignoreTrailingCarriageReturn && char === "\r") {
+			let nextChar = str[i + 1];
+
+			// Might need to use the next text chunk if we overflow
+			if (nextChar === undefined && nextText !== undefined) {
+				nextChar = nextText[0];
+			}
+
+			if (nextChar === "\n") {
+				continue;
+			}
 		}
 
 		if (!showInvisible) {
