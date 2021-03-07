@@ -14,12 +14,6 @@ import {FSWatcher} from "@internal/fs";
 import {AbsoluteFilePathSet, MixedPathMap} from "../collections";
 import fs = require("fs");
 
-// This file contains some wrappers around Node's fs module
-// NOTE We don't bother using Node's built-in fs promise functions at all. They already contain a level of indirection to callbacks.
-
-type DataCallback<Data> = (err: null | Error, data: Data) => void;
-type VoidCallback = (err: null | Error) => void;
-
 export default class AbsoluteFilePath
 	extends ReadableBasePath<ParsedPathAbsolute, AbsoluteFilePath> {
 	constructor(
@@ -261,20 +255,16 @@ export default class AbsoluteFilePath
 	}
 
 	public async readFile(): Promise<ArrayBuffer> {
-		const data = await this.promisifyData<Buffer>((filename, callback) =>
-			fs.readFile(filename, callback)
-		);
+		const data = await fs.promises.readFile(this.join());
 		return data.buffer;
 	}
 
 	public async readFileText(): Promise<string> {
-		return this.promisifyData((filename, callback) =>
-			fs.readFile(filename, "utf8", callback)
-		);
+		return fs.promises.readFile(this.join(), "utf8");
 	}
 
-	public writeFile(
-		content: string | ArrayBuffer | NodeJS.ArrayBufferView | fs.ReadStream,
+	public async writeFile(
+		content: string | ArrayBuffer | fs.ReadStream,
 	): Promise<void> {
 		if (content instanceof fs.ReadStream) {
 			return new Promise((resolve, reject) => {
@@ -296,52 +286,32 @@ export default class AbsoluteFilePath
 				);
 			});
 		} else {
-			return this.promisifyVoid((filename, callback) => {
-				let buff;
-				if (content instanceof ArrayBuffer) {
-					buff = new DataView(content);
-				} else {
-					buff = content;
-				}
-				fs.writeFile(filename, buff, callback);
-			});
+			let buff;
+			if (content instanceof ArrayBuffer) {
+				buff = new Uint8Array(content);
+			} else {
+				buff = content;
+			}
+			await fs.promises.writeFile(this.join(), buff);
 		}
 	}
 
 	public copyFileTo(dest: AbsoluteFilePath): Promise<void> {
-		return this.promisifyVoid((src, callback) =>
-			fs.copyFile(src, dest.join(), callback)
-		);
+		return fs.promises.copyFile(this.join(), dest.join());
 	}
 
-	public readDirectory(): Promise<AbsoluteFilePathSet> {
-		return this.wrapReject(
-			new Promise((resolve, reject) => {
-				fs.readdir(
-					this.join(),
-					(err, files) => {
-						if (err === null) {
-							resolve(
-								new AbsoluteFilePathSet(
-									files.sort().map((basename) => {
-										return this.append(basename);
-									}),
-								),
-							);
-						} else {
-							reject(err);
-						}
-					},
-				);
+	public async readDirectory(): Promise<AbsoluteFilePathSet> {
+		const files = await fs.promises.readdir(this.join());
+		return new AbsoluteFilePathSet(
+			files.sort().map((basename) => {
+				return this.append(basename);
 			}),
-			1,
 		);
 	}
 
 	public lstat(): Promise<fs.BigIntStats> {
-		return this.promisifyData((filename, callback) =>
-			(fs.lstat as typeof fs.stat)(filename, {bigint: true}, callback)
-		);
+		// @ts-ignore: Incomplete stdlib type definition
+		return fs.promises.lstat(this.join(), {bigint: true});
 	}
 
 	// Wrapping await in parens is gross so offer this to make other code nicer
@@ -349,30 +319,23 @@ export default class AbsoluteFilePath
 		return !(await this.exists());
 	}
 
-	public exists(): Promise<boolean> {
-		return new Promise((resolve) => {
-			fs.exists(
-				this.join(),
-				(exists) => {
-					resolve(exists);
-				},
-			);
-		});
+	public async exists(): Promise<boolean> {
+		try {
+			await fs.promises.access(this.join());
+			return true;
+		} catch (err) {
+			return false;
+		}
 	}
 
-	public removeFile(): Promise<void> {
-		return this.promisifyVoid((filename, callback) =>
-			fs.unlink(
-				filename,
-				(err) => {
-					if (err != null && err.code !== "ENOENT") {
-						callback(err);
-					} else {
-						callback(null);
-					}
-				},
-			)
-		);
+	public async removeFile(): Promise<void> {
+		try {
+			await fs.promises.unlink(this.join());
+		} catch (err) {
+			if (err.code !== "ENOENT") {
+				throw err;
+			}
+		}
 	}
 
 	// We previously just use fs.rmdir with the `recursive: true` flag but it was added in Node 12.10 and we need to support 12.8.1
@@ -394,20 +357,15 @@ export default class AbsoluteFilePath
 		}
 
 		// Remove directory with all files deleted
-		return this.promisifyVoid((filename, callback) =>
-			fs.rmdir(filename, callback)
-		);
+		await fs.promises.rmdir(this.join());
 	}
 
-	public createDirectory(): Promise<void> {
-		return this.promisifyVoid((filename, callback) =>
-			fs.mkdir(
-				filename,
-				{
-					recursive: true,
-				},
-				callback,
-			)
+	public async createDirectory(): Promise<void> {
+		await fs.promises.mkdir(
+			this.join(),
+			{
+				recursive: true,
+			},
 		);
 	}
 
@@ -419,9 +377,7 @@ export default class AbsoluteFilePath
 	}
 
 	public openDirectory(opts: fs.OpenDirOptions = {}): Promise<fs.Dir> {
-		return this.promisifyData((filename, callback) =>
-			fs.opendir(filename, opts, callback)
-		);
+		return fs.promises.opendir(this.join(), opts);
 	}
 
 	public createWriteStream(): fs.WriteStream {
@@ -440,52 +396,6 @@ export default class AbsoluteFilePath
 
 	public lstatSync(): fs.Stats {
 		return fs.lstatSync(this.join());
-	}
-
-	// Internal helpers
-	private promisifyData<Data>(
-		factory: (path: string, callback: DataCallback<Data>) => void,
-	): Promise<Data> {
-		return this.wrapReject(
-			new Promise((resolve, reject) => {
-				factory(
-					this.join(),
-					(err, data) => {
-						if (err === null) {
-							resolve(data);
-						} else {
-							reject(err);
-						}
-					},
-				);
-			}),
-			2,
-		);
-	}
-
-	private promisifyVoid(
-		factory: (path: string, callback: VoidCallback) => void,
-	): Promise<void> {
-		return this.wrapReject(
-			new Promise((resolve, reject) => {
-				factory(
-					this.join(),
-					(err) => {
-						if (err === null) {
-							resolve();
-						} else {
-							reject(err);
-						}
-					},
-				);
-			}),
-			2,
-		);
-	}
-
-	private wrapReject<T>(promise: Promise<T>, addFrames: number): Promise<T> {
-		addFrames;
-		return promise;
 	}
 }
 
