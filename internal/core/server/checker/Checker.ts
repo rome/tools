@@ -531,10 +531,10 @@ export default class Checker {
 				if (totalCount === 0) {
 					reporter.warn(markup`No files linted`);
 				} else {
-					reporter.info(
+					reporter.success(
 						markup`<number emphasis>${String(totalCount)}</number> <grammarNumber plural="files" singular="file">${String(
 							totalCount,
-						)}</grammarNumber> linted`,
+						)}</grammarNumber> linted!`,
 					);
 				}
 			}
