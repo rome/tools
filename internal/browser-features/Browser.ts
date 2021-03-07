@@ -28,7 +28,7 @@ export abstract class Browser {
 	}
 
 	protected getAgentConsumer(): Consumer {
-		return this.getDataConsumer().get("agents").get(this.getId());
+		return this.getDataConsumer().getPath(["agents", this.getId()]);
 	}
 
 	protected getVersionConsumer(): Consumer {
@@ -111,9 +111,13 @@ export abstract class Browser {
 			return this.cssFeatureCache.get(feature)!;
 		}
 
-		const value = this.getDataConsumer().get("data").get(feature).get("s").get(
+		const value = this.getDataConsumer().getPath([
+			"data",
+			feature,
+			"s",
 			this.getId(),
-		).get(this.getVersion().toString()).asBoolean(false);
+			this.getVersion().toString(),
+		]).asBoolean(false);
 		this.cssFeatureCache.set(feature, value);
 		return value;
 	}
@@ -124,9 +128,12 @@ export abstract class Browser {
 	 * @param region check internal/browsers-db/README.md for more info
 	 */
 	public getRegionUsage(region: string): number | undefined {
-		return consumeUnknown(regions, DIAGNOSTIC_CATEGORIES.parse).get(region).get(
+		return consumeUnknown(regions, DIAGNOSTIC_CATEGORIES.parse).getPath([
+			region,
 			"data",
-		).get(this.getId()).get(this.getVersion().toString()).asNumberOrVoid();
+			this.getId(),
+			this.getVersion().toString(),
+		]).asNumberOrVoid();
 	}
 }
 

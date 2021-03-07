@@ -57,11 +57,11 @@ function loadAliases(): Map<string, BrowserIds> {
 	const abbr = new Map<string, BrowserIds>();
 	for (const key in agents.asUnknownObject()) {
 		abbr.set(
-			agents.get(key).get("a").asString().toLowerCase(),
+			agents.getPath([key, "a"]).asString().toLowerCase(),
 			key as BrowserIds,
 		);
 		abbr.set(
-			agents.get(key).get("b").asString().toLowerCase(),
+			agents.getPath([key, "b"]).asString().toLowerCase(),
 			key as BrowserIds,
 		);
 	}

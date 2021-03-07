@@ -163,7 +163,7 @@ test(
 				},
 				(msg, resolve) => {
 					if (msg.get("method").asStringOrVoid() === "workspace/applyEdit") {
-						const edits = msg.get("params").get("edit").get("documentChanges").getIndex(
+						const edits = msg.getPath(["params", "edit", "documentChanges"]).getIndex(
 							0,
 						).get("edits").asJSONArray();
 						t.namedSnapshot("edits", edits);
