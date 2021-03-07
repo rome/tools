@@ -6,27 +6,18 @@
 
 * @sebmck
 
-/internal/css-parser/* @ematipico @yeonjuan @bitpshr
-
-/internal/markdown-parser/* @ematipico
-
-/internal/html-parser/* @ematipico
-
-/internal/commit-parser/* @ematipico
-
-/internal/code-js-manifest/* @ematipico
-
 /internal/browser-features/* @jer3m01
-
 /internal/browser-db/* @jer3m01
-
+/internal/commit-parser/* @ematipico
 /internal/compiler/lint/* @ematipico @bitpshr
-
+/internal/code-browsers/* @jer3m01
+/internal/code-js-manifest/* @ematipico
+/internal/core/client/commands/* @ematipico
+/internal/core/* @yassere
+/internal/core/server/commands/* @ematipico
+/internal/css-parser/* @ematipico @yeonjuan @bitpshr
+/internal/html-parser/* @ematipico
+/internal/markdown-parser/* @ematipico
 /website/* @EduardoLopes
 
-/internal/core/* @yassere
-
-/internal/core/client/commands/* @ematipico
-
-/internal/core/server/commands/* @ematipico
 
