@@ -468,7 +468,7 @@ export default class ProjectManager {
 				consumer,
 			} = this.findProjectConfigConsumer(
 				project,
-				(consumer) => consumer.has("vsc") && consumer.get("vsc").get("root"),
+				(consumer) => consumer.has("vsc") && consumer.getPath(["vsc", "root"]),
 			);
 
 			const rootConfigLocation: undefined | DiagnosticLocation =

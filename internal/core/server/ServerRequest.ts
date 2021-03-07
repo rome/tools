@@ -171,7 +171,7 @@ async function globUnmatched(
 				await req.server.projectManager.assertProject(path, location),
 				(consumer) =>
 					consumer.has(configCategory) &&
-					consumer.get(configCategory).get("ignore")
+					consumer.getPath([configCategory, "ignore"])
 				,
 			);
 
