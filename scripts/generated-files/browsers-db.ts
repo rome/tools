@@ -394,19 +394,17 @@ function generateDataAgents(rawData: Consumer) {
 		}
 
 		const vs = generateDataAgentsVersions(
-			rawData.get("agents").get(agent).get("version_list").asImplicitArray(),
+			rawData.getPath(["agents", agent, "version_list"]).asImplicitArray(),
 		);
-		const currentVersion = rawData.get("agents").get(agent).get(
-			"current_version",
-		).asString();
+		const currentVersion = rawData.getPath(["agents", agent, "current_version"]).asString();
 
 		agents.set(
 			agent,
 			{
-				b: rawData.get("agents").get(agent).get("browser").asString(),
-				a: rawData.get("agents").get(agent).get("abbr").asString(),
-				p: rawData.get("agents").get(agent).get("prefix").asString(),
-				t: rawData.get("agents").get(agent).get("type").asString(),
+				b: rawData.getPath(["agents", agent, "browser"]).asString(),
+				a: rawData.getPath(["agents", agent, "abbr"]).asString(),
+				p: rawData.getPath(["agents", agent, "prefix"]).asString(),
+				t: rawData.getPath(["agents", agent, "type"]).asString(),
 				vs,
 				cv: isNaN(parseFloat(currentVersion))
 					? vs[vs.length - 1].v
@@ -465,10 +463,10 @@ function generateDataData(rawData: Consumer) {
 	for (const feature in rawData.get("data").asUnknownObject()) {
 		// Skip non CSS features for the time being
 		if (
-			!rawData.get("cats").get("CSS").asMappedArray((c) => c.asString()).some((
+			!rawData.getPath(["cats", "CSS"]).asMappedArray((c) => c.asString()).some((
 				c,
 			) =>
-				rawData.get("data").get(feature).get("categories").asMappedArray((c) =>
+				rawData.getPath(["data", feature, "categories"]).asMappedArray((c) =>
 					c.asString()
 				).includes(c)
 			)
@@ -478,16 +476,16 @@ function generateDataData(rawData: Consumer) {
 
 		const stats = new Map<string, Map<number, boolean>>();
 
-		for (const agent in rawData.get("data").get(feature).get("stats").asUnknownObject()) {
+		for (const agent in rawData.getPath(["data", feature, "stats"]).asUnknownObject()) {
 			if (agent === "ie" || agent === "ie_mob") {
 				continue;
 			}
 
 			const featureAgents = new Map<number, boolean>();
 
-			for (const v in rawData.get("data").get(feature).get("stats").get(agent).asUnknownObject()) {
+			for (const v in rawData.getPath(["data", feature, "stats", agent]).asUnknownObject()) {
 				if (
-					rawData.get("data").get(feature).get("stats").get(agent).get(v).asString().includes(
+					rawData.getPath(["data", feature, "stats", agent, v]).asString().includes(
 						"x",
 					)
 				) {
@@ -511,7 +509,7 @@ function generateDataData(rawData: Consumer) {
 			feature,
 			{
 				s: stats,
-				c: rawData.get("data").get(feature).get("categories").asMappedArray((c) =>
+				c: rawData.getPath(["data", feature, "categories"]).asMappedArray((c) =>
 					c.asString()
 				),
 			},
@@ -564,26 +562,26 @@ function generateRegionsData(rawRegionUsage: Consumer) {
 
 		const usageAgent = new Map<number, number>();
 
-		for (const v in rawRegionUsage.get("data").get(agent).asUnknownObject()) {
+		for (const v in rawRegionUsage.getPath(["data", agent]).asUnknownObject()) {
 			if (
-				rawRegionUsage.get("data").get(agent).get(v).asNumberOrVoid() != null &&
-				rawRegionUsage.get("data").get(agent).get(v).asNumber() > 0
+				rawRegionUsage.getPath(["data", agent, v]).asNumberOrVoid() != null &&
+				rawRegionUsage.getPath(["data", agent, v]).asNumber() > 0
 			) {
 				// Could be optimized but copying 3 times works
 				// Converts versions like `12-20` into 2 versions 12 and 20
 				if (v.includes("-")) {
 					usageAgent.set(
 						parseFloat(v.split("-")[0]),
-						rawRegionUsage.get("data").get(agent).get(v).asNumber(),
+						rawRegionUsage.getPath(["data", agent, v]).asNumber(),
 					);
 					usageAgent.set(
 						parseFloat(v.split("-")[1]),
-						rawRegionUsage.get("data").get(agent).get(v).asNumber(),
+						rawRegionUsage.getPath(["data", agent, v]).asNumber(),
 					);
 				} else {
 					usageAgent.set(
 						parseFloat(v),
-						rawRegionUsage.get("data").get(agent).get(v).asNumber(),
+						rawRegionUsage.getPath(["data", agent, v]).asNumber(),
 					);
 				}
 			}

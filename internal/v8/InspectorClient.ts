@@ -86,7 +86,7 @@ export default class InspectorClient {
 				const handler = this.callbacks.get(id);
 				if (handler !== undefined) {
 					if (data.has("error")) {
-						const errorMessage = data.get("error").get("message").asString();
+						const errorMessage = data.getPath(["error", "message"]).asString();
 						handler.reject(new Error(errorMessage));
 					} else {
 						handler.resolve(data.get("result"));
