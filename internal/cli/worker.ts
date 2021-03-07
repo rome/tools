@@ -23,11 +23,17 @@ async function deriveWorkerOptions(
 
 	const userConfig = await loadUserConfig();
 
+	let env: WorkerOptions["env"] = {};
+	for (const [key, value] of workerData.get("env").asMap()) {
+		env[key] = value.asStringOrVoid();
+	}
+
 	return {
 		userConfig,
 		bridge,
+		env,
 		dedicated: true,
-		type: workerData.get("type").asStringSet(["processor", "test"]),
+		type: workerData.get("type").asStringSet(["file-processor", "test-runner", "script-runner"]),
 		id: workerData.get("id").asNumber(),
 		cacheWriteDisabled: workerData.get("cacheWriteDisabled").asBoolean(),
 		cacheReadDisabled: workerData.get("cacheReadDisabled").asBoolean(),

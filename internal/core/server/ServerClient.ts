@@ -34,6 +34,7 @@ export default class ServerClient {
 		this.server = server;
 		this.id = id;
 		this.bridge = bridge;
+		this.env = {};
 
 		this.requestsInFlight = new Set();
 
@@ -56,6 +57,7 @@ export default class ServerClient {
 	private server: Server;
 
 	public id: number;
+	public env: Dict<undefined | string>;
 	public bridge: BridgeServer<typeof ServerBridge>;
 	public resources: Resource;
 	public requestsInFlight: Set<ServerRequest>;
@@ -119,6 +121,7 @@ export default class ServerClient {
 			outputFormat,
 			outputSupport,
 			version,
+			env,
 		} = await bridge.events.getClientInfo.call();
 
 		const stream = reporter.addStream(
@@ -150,6 +153,7 @@ export default class ServerClient {
 
 		// Update ServerClient props
 		this.flags = flags;
+		this.env = env;
 		reporter.updateMarkupOptions({
 			cwd: flags.cwd,
 		});

@@ -144,8 +144,9 @@ export function createMockWorker(force: boolean = false): IntegrationWorker {
 	const bridges = WorkerBridge.createFromLocal({optionalResource: true});
 
 	const worker = new Worker({
-		type: "processor",
+		type: "file-processor",
 		id: 0,
+		env: {},
 		dedicated: false,
 		userConfig: DEFAULT_USER_CONFIG,
 		cacheWriteDisabled: true,

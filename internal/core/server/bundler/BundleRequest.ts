@@ -106,11 +106,11 @@ export default class BundleRequest {
 		this.diagnostics.setThrowAfter(100);
 		try {
 			await graph.seed({
+				allowFileNotFound: false,
 				paths: [this.resolvedEntry],
-				diagnosticsProcessor: this.diagnostics,
 				analyzeProgress,
-				validate: true,
 			});
+			graph.validateTransitive(graph.getNode(this.resolvedEntry), this.diagnostics);
 		} finally {
 			analyzeProgress.end();
 		}

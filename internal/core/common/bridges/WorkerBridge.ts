@@ -244,6 +244,19 @@ export default createBridge({
 			}
 		>(),
 
+		executeScript: createBridgeEventDeclaration<
+			{
+				contextDirectory: AbsoluteFilePath;
+				cwd: AbsoluteFilePath;
+				args: string[];
+				path: AbsoluteFilePath;
+				code: string;
+			},
+			{
+				exitCode: undefined | number;
+			}
+		>(),
+
 		testReceiveCompiledDependency: createBridgeEventDeclaration<
 			AbsoluteFilePathMap<string>,
 			void

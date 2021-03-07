@@ -27,6 +27,7 @@ import {
 	DIAGNOSTIC_CATEGORIES,
 	DiagnosticsError,
 	deriveDiagnosticFromError,
+	createSingleDiagnosticsError,
 } from "@internal/diagnostics";
 import {
 	AbsoluteFilePath,
@@ -44,8 +45,7 @@ import VirtualModules from "../common/VirtualModules";
 import {markup} from "@internal/markup";
 import {
 	BridgeClient,
-	isBridgeClosedDiagnosticsError,
-	isBridgeDisconnectedDiagnosticsError,
+	isBridgeEndDiagnosticsError,
 } from "@internal/events";
 import {ExtendedMap} from "@internal/collections";
 import WorkerCache from "./WorkerCache";
@@ -62,16 +62,18 @@ import {
 
 import TestWorker from "./test/TestWorker";
 import inspector = require("inspector");
+import executeMain from "./utils/executeMain";
 
 export default class Worker {
 	constructor(opts: WorkerOptions) {
-		const workerTypeLabel = opts.type === "test" ? "TestWorker" : "Worker";
+		const workerTypeLabel = opts.type === "test-runner" ? "TestWorker" : "Worker";
 
 		this.resources = createResourceRoot(`${workerTypeLabel}<${opts.id}>`);
 		this.resources.add(opts.bridge);
 
 		this.bridge = opts.bridge;
 		this.options = opts;
+		this.env = opts.env;
 
 		this.userConfig = opts.userConfig;
 		this.partialManifests = new ExtendedMap("partialManifests");
@@ -100,7 +102,7 @@ export default class Worker {
 
 		this.fatalErrorHandler = new FatalErrorHandler({
 			overrideHandle: (err) => {
-				if (isBridgeClosedDiagnosticsError(err)) {
+				if (isBridgeEndDiagnosticsError(err)) {
 					// Swallow bridge closure as it would have been explicit
 					safeProcessExit(0);
 					return true;
@@ -117,7 +119,7 @@ export default class Worker {
 					return true;
 				}
 
-				if (opts.type === "test") {
+				if (opts.type === "test-runner") {
 					bridge.events.testDiagnostic.send({
 						testPath: undefined,
 						origin: undefined,
@@ -138,7 +140,7 @@ export default class Worker {
 					// Dispatch error to the server and trigger a fatal
 					bridge.events.fatalError.send(bridge.serializeCustomError(err));
 				} catch (err) {
-					if (!isBridgeDisconnectedDiagnosticsError(err)) {
+					if (!isBridgeEndDiagnosticsError(err)) {
 						console.error(
 							"Worker encountered error while attempting to send a fatal to the server",
 						);
@@ -169,6 +171,7 @@ export default class Worker {
 	public virtualModules: VirtualModules;
 	public resources: Resource;
 	public bridge: BridgeClient<typeof WorkerBridge>;
+	public env: WorkerOptions["env"];
 
 	private tests: TestWorker;
 	private loggerStream: ReporterConditionalStream;
@@ -333,6 +336,21 @@ export default class Worker {
 				memoryUsage: process.memoryUsage(),
 				uptime: process.uptime(),
 			};
+		});
+
+		bridge.events.executeScript.subscribe(async (payload) => {
+			const {syntaxError, exitCode} = await executeMain(this, {
+				cwd: payload.cwd,
+				commandName: "run",
+				contextDirectory: payload.contextDirectory,
+				args: payload.args,
+				path: payload.path,
+				code: payload.code,
+			});
+			if (syntaxError !== undefined) {
+				throw createSingleDiagnosticsError(syntaxError);
+			}
+			return {exitCode};
 		});
 
 		bridge.events.getBuffer.subscribe((payload) => {

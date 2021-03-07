@@ -46,7 +46,7 @@ export type WorkerBuffer = {
 	mtimeNs: bigint;
 };
 
-export type WorkerType = "test" | "processor";
+export type WorkerType = "test-runner" | "file-processor" | "script-runner";
 
 export type ThreadWorkerContainer = {
 	type: WorkerType;
@@ -73,6 +73,7 @@ export type PartialWorkerOptions = {
 	id: number;
 	cacheWriteDisabled: boolean;
 	cacheReadDisabled: boolean;
+	env: Dict<undefined | string>;
 	inspectorPort: undefined | number;
 };
 
@@ -217,6 +218,7 @@ export type TestRef = {
 export type TestWorkerPrepareTestOptions = {
 	partial: boolean;
 	path: AbsoluteFilePath;
+	contextDirectory: AbsoluteFilePath;
 	projectDirectory: string;
 	assembled: AssembledBundle;
 	cwd: string;

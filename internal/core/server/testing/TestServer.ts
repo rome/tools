@@ -18,7 +18,7 @@ import {DiagnosticsPrinter} from "@internal/cli-diagnostics";
 import {humanizeNumber} from "@internal/numbers";
 import {
 	AnyBridge,
-	isBridgeDisconnectedDiagnosticsError,
+	isBridgeEndDiagnosticsError,
 } from "@internal/events";
 import {CoverageCollector} from "@internal/v8";
 import {ManifestDefinition} from "@internal/codec-js-manifest";
@@ -178,7 +178,7 @@ export default class TestServer {
 		}
 
 		if (
-			isBridgeDisconnectedDiagnosticsError(err) &&
+			isBridgeEndDiagnosticsError(err) &&
 			this.ignoreBridgeEndError.has(bridge)
 		) {
 			return;
@@ -193,9 +193,10 @@ export default class TestServer {
 			const inspectorPort = await findAvailablePort();
 
 			const container = await this.server.workerManager.spawnWorkerUnsafe({
-				type: "test",
+				type: "test-runner",
 				ghost: true,
 				inspectorPort,
+				env: this.request.client.env,
 			});
 
 			const worker = new TestServerWorker({

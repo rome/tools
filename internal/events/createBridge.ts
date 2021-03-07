@@ -272,6 +272,13 @@ export class BridgeFactory<
 		);
 
 		parentPort.on(
+			"messageerror",
+			(err) => {
+				bridge.endWithError(err, false);
+			},
+		);
+
+		parentPort.on(
 			"close",
 			() => {
 				bridge.disconnected("Worker thread parent port closed");

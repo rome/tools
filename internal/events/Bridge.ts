@@ -45,7 +45,7 @@ import {
 } from "@internal/diagnostics";
 import {Resource, createResourceContainer} from "@internal/resources";
 import {
-	isBridgeDisconnectedDiagnosticsError,
+	isBridgeEndDiagnosticsError,
 	isBridgeResponseMessage,
 } from "./utils";
 import {Duration, DurationMeasurer} from "@internal/numbers";
@@ -459,7 +459,7 @@ export default class Bridge<
 				await this.disconnectEvent.wait();
 			} catch (err) {
 				// We expect the bridge to disconnect as the indicator that it has finished
-				if (!isBridgeDisconnectedDiagnosticsError(err)) {
+				if (!isBridgeEndDiagnosticsError(err)) {
 					throw err;
 				}
 			}

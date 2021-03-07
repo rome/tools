@@ -7,7 +7,6 @@
 
 import start from "./commands/start";
 import stop from "./commands/stop";
-import run from "./commands/run";
 import restart from "./commands/restart";
 import status from "./commands/status";
 import lsp from "./commands/lsp";
@@ -36,7 +35,6 @@ export function createLocalCommand<Flags extends UnknownObject>(
 export const localCommands: Map<CommandName, LocalCommand<any>> = new Map();
 localCommands.set("start", start);
 localCommands.set("stop", stop);
-localCommands.set("run", run);
 localCommands.set("restart", restart);
 localCommands.set("status", status);
 localCommands.set("lsp", lsp);

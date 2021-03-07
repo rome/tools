@@ -196,6 +196,7 @@ export default class Bundler {
 		}
 
 		const opts: WorkerBundleCompileOptions = {
+			__filename: this.server.projectManager.getRootProjectForPath(path).directory.relativeForce(path),
 			moduleAll: mod.all,
 			moduleId: mod.uid,
 			relativeSourcesToModuleId,
@@ -256,9 +257,8 @@ export default class Bundler {
 		processor.setThrowAfter(100);
 		await this.graph.seed({
 			paths: entries,
-			diagnosticsProcessor: processor,
 			analyzeProgress,
-			validate: false,
+			allowFileNotFound: false,
 		});
 		analyzeProgress.end();
 		processor.maybeThrowDiagnosticsError();
@@ -313,7 +313,12 @@ export default class Bundler {
 			if (graphPaths.size > 0) {
 				watcher.changeEvent.send(graphPaths);
 				await runLock.wrap(async () => {
-					await this.graph.evictNodes(graphPaths, async () => {});
+					await this.graph.evictNodes(graphPaths, async (paths) => {
+						await this.graph.seed({
+							allowFileNotFound: true,
+							paths,
+						});
+					});
 					run();
 				});
 			}

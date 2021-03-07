@@ -32,7 +32,7 @@ import SnapshotManager, {
 	SnapshotEntry,
 } from "./SnapshotManager";
 import TestAPI, {OnTimeout} from "./TestAPI";
-import executeMain from "../../common/utils/executeMain";
+import executeMain from "../utils/executeMain";
 import {
 	AbsoluteFilePath,
 	AbsoluteFilePathMap,
@@ -132,6 +132,7 @@ export default class TestWorkerFile {
 		opts: TestWorkerPrepareTestOptions,
 	) {
 		this.opts = opts;
+		this.worker = worker;
 		this.locked = false;
 		this.contextDirectory = opts.contextDirectory;
 		this.path = opts.path;
@@ -160,6 +161,7 @@ export default class TestWorkerFile {
 	public options: TestWorkerPrepareTestOptions;
 	public snapshotManager: SnapshotManager;
 
+	private worker: Worker;
 	private tests: TestWorker;
 	private failedTests: Set<string>;
 	private foundTests: ExtendedMap<string, TestDetails>;
@@ -284,9 +286,12 @@ export default class TestWorkerFile {
 		const code = this.tests.serializeAssembled(this.opts.assembled);
 
 		try {
-			const res = await executeMain({
+			const res = await executeMain(this.worker, {
 				contextDirectory: this.contextDirectory,
+				commandName: "test",
 				path: this.path,
+				args: [],
+				cwd: this.path.getParent(),
 				code,
 				globals: this.getEnvironment(),
 			});

@@ -87,9 +87,8 @@ export type ProfilingStartData = {
 
 export type ServerBridgeInfo = {
 	version: string;
-	streamState: Omit<ReporterStreamState, "lineSnapshots"> & {
-		lineSnapshots: undefined;
-	};
+	env: Dict<undefined | string>;
+	streamState: ReporterStreamState;
 	outputSupport: TerminalFeatures;
 	outputFormat: ReporterStream["format"];
 	flags: ClientFlags;

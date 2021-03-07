@@ -6,7 +6,6 @@
  */
 
 import {UnknownObject} from "@internal/typescript-helpers";
-import {SourceMapConsumer} from "@internal/codec-source-map";
 import vm = require("vm");
 import {OneIndexed, ZeroIndexed} from "@internal/numbers";
 import {
@@ -16,25 +15,27 @@ import {
 } from "@internal/diagnostics";
 import {AbsoluteFilePath} from "@internal/path";
 import {Position} from "@internal/parser-core";
-import {getRequire} from "../IntegrationLoader";
-import {errorSourceMaps} from "@internal/v8/error-frames";
+import Worker from "../Worker";
+import {getRequire} from "../../common/IntegrationLoader";
 
 type ExecuteMainOptions = {
+	commandName: string;
 	path: AbsoluteFilePath;
 	code: string;
 	contextDirectory: AbsoluteFilePath;
-	args?: string[];
-	sourceMap?: SourceMapConsumer;
+	cwd: AbsoluteFilePath;
+	args: string[];
 	globals?: UnknownObject;
 };
 
 export default async function executeMain(
+	worker: Worker,
 	opts: ExecuteMainOptions,
 ): Promise<{
 	syntaxError: undefined | Diagnostic;
 	exitCode: undefined | number;
 }> {
-	const {path, code, sourceMap, contextDirectory, globals = {}, args = []} = opts;
+	const {commandName, path, code, contextDirectory, globals = {}, args} = opts;
 
 	const filename = path.join();
 
@@ -58,7 +59,12 @@ export default async function executeMain(
 		...globals,
 		process: Object.setPrototypeOf(
 			{
-				argv: ["rome", "run", filename, "--", ...args],
+				argv: [`rome ${commandName}`, filename, "--", ...args],
+				env: {
+					...worker.env,
+					ROME_PROCESS_TYPE: undefined,
+					ROME_PROCESS_VERSION: undefined,
+				},
 				// @ts-ignore
 				...globals.process,
 			},
@@ -111,9 +117,6 @@ export default async function executeMain(
 	}
 
 	// Execute the script if there was no syntax error
-	if (sourceMap !== undefined) {
-		errorSourceMaps.add(path, sourceMap);
-	}
 	const res = await script.runInContext(context);
 
 	let exitCode: undefined | number;

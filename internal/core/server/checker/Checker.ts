@@ -301,8 +301,6 @@ class CheckRunner {
 		await this.graph.seed({
 			allowFileNotFound: true,
 			paths: filteredPaths,
-			diagnosticsProcessor: this.dependencyProcessor,
-			validate: false,
 			analyzeProgress: progress,
 		});
 		progress.end();

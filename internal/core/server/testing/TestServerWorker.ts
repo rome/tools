@@ -303,6 +303,7 @@ export default class TestServerWorker {
 			const {focusedTests, foundTests} = await bridge.events.testPrepare.call({
 				globalOptions,
 				partial,
+				contextDirectory: req.server.projectManager.getRootProjectForPath(ref.real).directory,
 				projectDirectory: req.server.projectManager.assertProjectExisting(
 					ref.real,
 				).directory.join(),

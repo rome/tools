@@ -682,6 +682,11 @@ export default class ProjectManager {
 		const promises = [];
 
 		for (const worker of workers) {
+			// Script runners do not care
+			if (worker.type === "script-runner") {
+				continue;
+			}
+
 			promises.push(worker.bridge.events.updateProjects.call(workerProjects));
 			promises.push(
 				worker.bridge.events.updateManifests.call({
