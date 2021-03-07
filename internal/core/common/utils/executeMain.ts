@@ -22,6 +22,7 @@ import {errorSourceMaps} from "@internal/v8/error-frames";
 type ExecuteMainOptions = {
 	path: AbsoluteFilePath;
 	code: string;
+	contextDirectory: AbsoluteFilePath;
 	args?: string[];
 	sourceMap?: SourceMapConsumer;
 	globals?: UnknownObject;
@@ -33,10 +34,11 @@ export default async function executeMain(
 	syntaxError: undefined | Diagnostic;
 	exitCode: undefined | number;
 }> {
-	const {path, code, sourceMap, globals = {}, args = []} = opts;
+	const {path, code, sourceMap, contextDirectory, globals = {}, args = []} = opts;
 
 	const filename = path.join();
 
+	// TODO get cwd passed in
 	// Create global context
 	const sandbox: UnknownObject = {
 		// TODO Find a more reliable way to do this
@@ -51,8 +53,8 @@ export default async function executeMain(
 		setTimeout,
 		require: getRequire(path),
 		console,
-		__dirname: path.getParent().join(),
-		__filename: filename,
+		__dirname: contextDirectory.getUnique().join(),
+		__filename: contextDirectory.append("file").join(),
 		...globals,
 		process: Object.setPrototypeOf(
 			{

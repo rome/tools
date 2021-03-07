@@ -751,6 +751,11 @@ export default class ProjectManager {
 		return projects;
 	}
 
+	public getRootProjectForPath(path: AbsoluteFilePath): ProjectDefinition {
+		const project = this.assertProjectExisting(path);
+		return project.root ?? project;
+	}
+
 	public assertProjectExisting(path: AbsoluteFilePath): ProjectDefinition {
 		const project = this.findLoadedProject(path);
 		if (project === undefined) {

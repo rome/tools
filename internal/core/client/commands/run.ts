@@ -52,6 +52,7 @@ export default createLocalCommand({
 			switch (type) {
 				case "executeCode": {
 					const {syntaxError, exitCode} = await executeMain({
+						contextDirectory: data.get("contextDirectory").asAbsoluteFilePath(),
 						// Remove the first argument which will be the file path
 						args: data.get("args").asMappedArray((item) => item.asString()),
 						path: data.get("path").asAbsoluteFilePath(),

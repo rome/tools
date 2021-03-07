@@ -133,6 +133,7 @@ export default class TestWorkerFile {
 	) {
 		this.opts = opts;
 		this.locked = false;
+		this.contextDirectory = opts.contextDirectory;
 		this.path = opts.path;
 		this.options = opts;
 		this.globalOptions = opts.globalOptions;
@@ -153,6 +154,7 @@ export default class TestWorkerFile {
 	public hasFailedTests: boolean;
 	public onlyFocusedTests: boolean;
 	public path: AbsoluteFilePath;
+	public contextDirectory: AbsoluteFilePath;
 	public projectDirectory: AbsoluteFilePath;
 	public globalOptions: TestServerRunnerOptions;
 	public options: TestWorkerPrepareTestOptions;
@@ -283,6 +285,7 @@ export default class TestWorkerFile {
 
 		try {
 			const res = await executeMain({
+				contextDirectory: this.contextDirectory,
 				path: this.path,
 				code,
 				globals: this.getEnvironment(),
