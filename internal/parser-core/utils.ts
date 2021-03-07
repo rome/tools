@@ -191,6 +191,10 @@ export function derivePositionKey(pos: Position): string {
 	return `${String(pos.line.valueOf())}:${String(pos.column.valueOf())}`;
 }
 
+export function deriveLocationKey({start, end}: SourceLocation): string {
+	return `${derivePositionKey(start)}-${derivePositionKey(end)}`;
+}
+
 export function addPositions(a: Position, b: Position): Position {
 	return {
 		line: a.line.add(b.line).decrement(),

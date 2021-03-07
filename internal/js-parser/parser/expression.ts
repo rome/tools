@@ -2083,7 +2083,7 @@ export function parseParenAndDistinguishExpression(
 		);
 	}
 
-	addParenthesized(parser, parser.getLoc(val).start);
+	addParenthesized(parser, parser.getLoc(val));
 
 	return val;
 }
