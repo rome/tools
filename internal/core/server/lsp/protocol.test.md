@@ -6,7 +6,7 @@
 
 ```
 ℹ  Status: WAITING_FOR_HEADERS_END
-ℹ  Headers for next message: Object {
+ℹ  Headers for next message: {
     expectedLength: 321
     extra: Map []
   }

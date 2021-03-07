@@ -8,40 +8,36 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2015/let/let-as-identifier-5/input.js 1:0-3:0
-	path: UIDPath<es2015/let/let-as-identifier-5/input.js>
-	body: Array [
+	body: [
 		JSIfStatement {
-			alternate: undefined
-			loc: SourceLocation es2015/let/let-as-identifier-5/input.js 1:0-1:10
-			test: JSNumericLiteral {
-				value: 1
-				format: undefined
-				loc: SourceLocation es2015/let/let-as-identifier-5/input.js 1:4-1:5
-			}
 			consequent: JSExpressionStatement {
-				loc: SourceLocation es2015/let/let-as-identifier-5/input.js 1:7-1:10
 				expression: JSReferenceIdentifier {
 					name: "let"
 					loc: SourceLocation es2015/let/let-as-identifier-5/input.js 1:7-1:10 (let)
 				}
+				loc: SourceLocation es2015/let/let-as-identifier-5/input.js 1:7-1:10
 			}
+			test: JSNumericLiteral {
+				value: 1
+				loc: SourceLocation es2015/let/let-as-identifier-5/input.js 1:4-1:5
+			}
+			loc: SourceLocation es2015/let/let-as-identifier-5/input.js 1:0-1:10
 		}
 		JSBlockStatement {
-			body: Array []
-			directives: Array []
+			body: []
+			directives: []
 			loc: SourceLocation es2015/let/let-as-identifier-5/input.js 2:0-2:2
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2015/let/let-as-identifier-5/input.js>
+	loc: SourceLocation es2015/let/let-as-identifier-5/input.js 1:0-3:0
 }
 ```
 

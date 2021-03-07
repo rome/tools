@@ -8,7 +8,8 @@
 import Reporter from "./Reporter";
 import {ReporterProgress, ReporterProgressOptions} from "./types";
 import {mergeObjects} from "@internal/typescript-helpers";
-import {AnyMarkup, AnyMarkups, isEmptyMarkup, markup} from "@internal/markup";
+import {Markup, isEmptyMarkup, markup} from "@internal/markup";
+import {Duration, DurationMeasurer} from "@internal/numbers";
 
 const DEFAULT_PROGRESS_OPTIONS: ReporterProgressOptions = {
 	name: undefined,
@@ -39,7 +40,7 @@ export default class ProgressBase implements ReporterProgress {
 
 		this.paused = false;
 		this.pausedStart = undefined;
-		this.pausedElapsed = 0;
+		this.pausedElapsed = Duration.fromNanoseconds(0);
 
 		this.opts = mergeObjects(DEFAULT_PROGRESS_OPTIONS, opts);
 	}
@@ -50,10 +51,10 @@ export default class ProgressBase implements ReporterProgress {
 	protected current: number;
 	protected total: undefined | number;
 
-	protected text: undefined | AnyMarkup;
+	protected text: undefined | Markup;
 	protected textIdCounter: number;
 	protected textIdStack: string[];
-	protected textStack: AnyMarkups;
+	protected textStack: Markup[];
 	protected textIds: Set<string>;
 
 	protected title: undefined | string;
@@ -61,8 +62,8 @@ export default class ProgressBase implements ReporterProgress {
 	protected approximateETA: undefined | number;
 	protected approximateTotal: boolean;
 
-	protected pausedStart: undefined | number;
-	protected pausedElapsed: number;
+	protected pausedStart: undefined | DurationMeasurer;
+	protected pausedElapsed: Duration;
 	protected paused: boolean;
 
 	public setCurrent(current: number) {
@@ -88,7 +89,7 @@ export default class ProgressBase implements ReporterProgress {
 		}
 	}
 
-	public setText(text: AnyMarkup) {
+	public setText(text: Markup) {
 		this.text = text;
 		this.queueRender();
 	}
@@ -103,7 +104,7 @@ export default class ProgressBase implements ReporterProgress {
 		this.queueRender();
 	}
 
-	public pushText(text: AnyMarkup, id?: string): string {
+	public pushText(text: Markup, id?: string): string {
 		if (id === undefined) {
 			id = String(this.textIdCounter++);
 		}
@@ -131,7 +132,7 @@ export default class ProgressBase implements ReporterProgress {
 		textIds.delete(id);
 
 		// Set last
-		const last: undefined | AnyMarkup = textStack[textStack.length - 1];
+		const last: undefined | Markup = textStack[textStack.length - 1];
 		this.setText(last ?? markup``);
 	}
 
@@ -140,11 +141,12 @@ export default class ProgressBase implements ReporterProgress {
 	}
 
 	public resume() {
-		if (!this.paused || this.pausedStart === undefined) {
+		const {pausedStart} = this;
+		if (!this.paused || pausedStart === undefined) {
 			return;
 		}
 
-		this.pausedElapsed += Date.now() - this.pausedStart;
+		this.pausedElapsed = this.pausedElapsed.add(pausedStart.since());
 		this.pausedStart = undefined;
 		this.paused = false;
 		this.render();
@@ -155,7 +157,7 @@ export default class ProgressBase implements ReporterProgress {
 			return;
 		}
 
-		this.pausedStart = Date.now();
+		this.pausedStart = new DurationMeasurer();
 		this.paused = true;
 		this.render();
 	}

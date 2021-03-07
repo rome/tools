@@ -8,47 +8,51 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	loc: SourceLocation typescript/types/conditional/input.ts 1:0-2:0
-	path: UIDPath<typescript/types/conditional/input.ts>
-	syntax: Array ["ts"]
-	body: Array [
+	body: [
 		JSVariableDeclarationStatement {
-			loc: SourceLocation typescript/types/conditional/input.ts 1:0-1:46
 			declaration: JSVariableDeclaration {
 				kind: "let"
-				loc: SourceLocation typescript/types/conditional/input.ts 1:0-1:46
-				declarations: Array [
+				declarations: [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "x"
-							loc: SourceLocation typescript/types/conditional/input.ts 1:4-1:45
 							meta: JSPatternMeta {
-								definite: undefined
-								loc: SourceLocation typescript/types/conditional/input.ts 1:4-1:45
 								typeAnnotation: TSConditionalType {
-									checkType: TSNumberKeywordTypeAnnotation {loc: SourceLocation typescript/types/conditional/input.ts 1:7-1:13}
-									extendsType: TSStringKeywordTypeAnnotation {loc: SourceLocation typescript/types/conditional/input.ts 1:22-1:28}
-									falseType: TSNullKeywordTypeAnnotation {loc: SourceLocation typescript/types/conditional/input.ts 1:41-1:45}
+									checkType: TSNumberKeywordTypeAnnotation {
+										loc: SourceLocation typescript/types/conditional/input.ts 1:7-1:13
+									}
+									extendsType: TSStringKeywordTypeAnnotation {
+										loc: SourceLocation typescript/types/conditional/input.ts 1:22-1:28
+									}
+									falseType: TSNullKeywordTypeAnnotation {
+										loc: SourceLocation typescript/types/conditional/input.ts 1:41-1:45
+									}
+									trueType: TSBooleanKeywordTypeAnnotation {
+										loc: SourceLocation typescript/types/conditional/input.ts 1:31-1:38
+									}
 									loc: SourceLocation typescript/types/conditional/input.ts 1:5-1:45
-									trueType: TSBooleanKeywordTypeAnnotation {loc: SourceLocation typescript/types/conditional/input.ts 1:31-1:38}
 								}
+								loc: SourceLocation typescript/types/conditional/input.ts 1:4-1:45
 							}
+							loc: SourceLocation typescript/types/conditional/input.ts 1:4-1:45
 						}
-						init: undefined
 						loc: SourceLocation typescript/types/conditional/input.ts 1:4-1:45
 					}
 				]
+				loc: SourceLocation typescript/types/conditional/input.ts 1:0-1:46
 			}
+			loc: SourceLocation typescript/types/conditional/input.ts 1:0-1:46
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: ["ts"]
+	path: UIDPath<typescript/types/conditional/input.ts>
+	loc: SourceLocation typescript/types/conditional/input.ts 1:0-2:0
 }
 ```
 

@@ -8,35 +8,10 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	syntax: Array []
-	loc: SourceLocation es2020/export-ns-from/ns-and-named/input.js 1:0-1:36
-	path: UIDPath<es2020/export-ns-from/ns-and-named/input.js>
-	body: Array [
+	body: [
 		JSExportExternalDeclaration {
-			exportKind: undefined
-			loc: SourceLocation es2020/export-ns-from/ns-and-named/input.js 1:0-1:36
-			source: JSStringLiteral {
-				value: "bar"
-				loc: SourceLocation es2020/export-ns-from/ns-and-named/input.js 1:30-1:35
-			}
-			namespaceSpecifier: JSExportNamespaceSpecifier {
-				loc: SourceLocation es2020/export-ns-from/ns-and-named/input.js 1:7-1:15
-				exported: JSIdentifier {
-					name: "foo"
-					loc: SourceLocation es2020/export-ns-from/ns-and-named/input.js 1:12-1:15 (foo)
-				}
-			}
-			namedSpecifiers: Array [
+			namedSpecifiers: [
 				JSExportExternalSpecifier {
-					loc: SourceLocation es2020/export-ns-from/ns-and-named/input.js 1:19-1:22
 					exported: JSIdentifier {
 						name: "bar"
 						loc: SourceLocation es2020/export-ns-from/ns-and-named/input.js 1:19-1:22 (bar)
@@ -45,10 +20,32 @@ JSRoot {
 						name: "bar"
 						loc: SourceLocation es2020/export-ns-from/ns-and-named/input.js 1:19-1:22 (bar)
 					}
+					loc: SourceLocation es2020/export-ns-from/ns-and-named/input.js 1:19-1:22
 				}
 			]
+			namespaceSpecifier: JSExportNamespaceSpecifier {
+				exported: JSIdentifier {
+					name: "foo"
+					loc: SourceLocation es2020/export-ns-from/ns-and-named/input.js 1:12-1:15 (foo)
+				}
+				loc: SourceLocation es2020/export-ns-from/ns-and-named/input.js 1:7-1:15
+			}
+			source: JSStringLiteral {
+				value: "bar"
+				loc: SourceLocation es2020/export-ns-from/ns-and-named/input.js 1:30-1:35
+			}
+			loc: SourceLocation es2020/export-ns-from/ns-and-named/input.js 1:0-1:36
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: []
+	path: UIDPath<es2020/export-ns-from/ns-and-named/input.js>
+	loc: SourceLocation es2020/export-ns-from/ns-and-named/input.js 1:0-1:36
 }
 ```
 

@@ -38,13 +38,8 @@ export default createVisitor({
 
 			const source = arg.value;
 
-			if (
-				Object.prototype.hasOwnProperty.call(
-					options.relativeSourcesToModuleId,
-					source,
-				)
-			) {
-				const resolved = options.relativeSourcesToModuleId[source];
+			const resolved = options.relativeSourcesToModuleId.get(source);
+			if (resolved !== undefined) {
 				const sourceNode = jsStringLiteral.create({
 					value: resolved.join(),
 				});

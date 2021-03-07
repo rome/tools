@@ -4,7 +4,7 @@ import {
 	MarkdownParser,
 	Tokens,
 } from "@internal/markdown-parser";
-import {ZeroIndexed} from "@internal/math";
+import {ZeroIndexed} from "@internal/numbers";
 import {MarkdownListChildren, MarkdownListItem} from "@internal/ast";
 import {parseParagraph} from "./paragraph";
 

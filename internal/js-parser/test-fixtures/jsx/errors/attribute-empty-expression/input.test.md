@@ -8,63 +8,60 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	loc: SourceLocation jsx/errors/attribute-empty-expression/input.jsx 1:0-2:0
-	path: UIDPath<jsx/errors/attribute-empty-expression/input.jsx>
-	syntax: Array ["jsx"]
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "JSX attribute cannot be an empty expression"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:11
-				path: UIDPath<jsx/errors/attribute-empty-expression/input.jsx>
-				start: Position 1:9
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation jsx/errors/attribute-empty-expression/input.jsx 1:0-1:14
 			expression: JSXElement {
-				name: JSXIdentifier {
-					name: "foo"
-					loc: SourceLocation jsx/errors/attribute-empty-expression/input.jsx 1:1-1:4
-				}
-				children: Array []
-				selfClosing: true
-				typeArguments: undefined
-				loc: SourceLocation jsx/errors/attribute-empty-expression/input.jsx 1:0-1:14
-				attributes: Array [
+				attributes: [
 					JSXAttribute {
 						name: JSXIdentifier {
 							name: "bar"
 							loc: SourceLocation jsx/errors/attribute-empty-expression/input.jsx 1:5-1:8
 						}
 						value: JSXExpressionContainer {
-							expression: JSXEmptyExpression {loc: SourceLocation jsx/errors/attribute-empty-expression/input.jsx 1:10-1:10}
+							expression: JSXEmptyExpression {
+								loc: SourceLocation jsx/errors/attribute-empty-expression/input.jsx 1:10-1:10
+							}
 							loc: SourceLocation jsx/errors/attribute-empty-expression/input.jsx 1:9-1:11
 						}
 						loc: SourceLocation jsx/errors/attribute-empty-expression/input.jsx 1:5-1:11
 					}
 				]
+				children: []
+				selfClosing: true
+				name: JSXIdentifier {
+					name: "foo"
+					loc: SourceLocation jsx/errors/attribute-empty-expression/input.jsx 1:1-1:4
+				}
+				loc: SourceLocation jsx/errors/attribute-empty-expression/input.jsx 1:0-1:14
+			}
+			loc: SourceLocation jsx/errors/attribute-empty-expression/input.jsx 1:0-1:14
+		}
+	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "JSX attribute cannot be an empty expression"}
+			}
+			location: {
+				language: "js"
+				path: UIDPath<jsx/errors/attribute-empty-expression/input.jsx>
+				end: Position 1:11
+				start: Position 1:9
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: ["jsx"]
+	path: UIDPath<jsx/errors/attribute-empty-expression/input.jsx>
+	loc: SourceLocation jsx/errors/attribute-empty-expression/input.jsx 1:0-2:0
 }
 ```
 

@@ -8,59 +8,51 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2015/yield/yield-star-inside-plain-function/input.js 1:0-1:27
-	path: UIDPath<es2015/yield/yield-star-inside-plain-function/input.js>
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation es2015/yield/yield-star-inside-plain-function/input.js 1:0-1:27
 			expression: JSFunctionExpression {
-				id: undefined
-				loc: SourceLocation es2015/yield/yield-star-inside-plain-function/input.js 1:1-1:26
-				head: JSFunctionHead {
-					async: false
-					generator: false
-					hasHoistedVars: false
-					params: Array []
-					rest: undefined
-					returnType: undefined
-					thisType: undefined
-					typeParameters: undefined
-					loc: SourceLocation es2015/yield/yield-star-inside-plain-function/input.js 1:10-1:12
-				}
 				body: JSBlockStatement {
-					directives: Array []
-					loc: SourceLocation es2015/yield/yield-star-inside-plain-function/input.js 1:13-1:26
-					body: Array [
+					body: [
 						JSExpressionStatement {
-							loc: SourceLocation es2015/yield/yield-star-inside-plain-function/input.js 1:15-1:24
 							expression: JSBinaryExpression {
 								operator: "*"
-								loc: SourceLocation es2015/yield/yield-star-inside-plain-function/input.js 1:15-1:24
 								left: JSReferenceIdentifier {
 									name: "yield"
 									loc: SourceLocation es2015/yield/yield-star-inside-plain-function/input.js 1:15-1:20 (yield)
 								}
 								right: JSNumericLiteral {
 									value: 10
-									format: undefined
 									loc: SourceLocation es2015/yield/yield-star-inside-plain-function/input.js 1:22-1:24
 								}
+								loc: SourceLocation es2015/yield/yield-star-inside-plain-function/input.js 1:15-1:24
 							}
+							loc: SourceLocation es2015/yield/yield-star-inside-plain-function/input.js 1:15-1:24
 						}
 					]
+					directives: []
+					loc: SourceLocation es2015/yield/yield-star-inside-plain-function/input.js 1:13-1:26
 				}
+				head: JSFunctionHead {
+					async: false
+					generator: false
+					hasHoistedVars: false
+					params: []
+					loc: SourceLocation es2015/yield/yield-star-inside-plain-function/input.js 1:10-1:12
+				}
+				loc: SourceLocation es2015/yield/yield-star-inside-plain-function/input.js 1:1-1:26
 			}
+			loc: SourceLocation es2015/yield/yield-star-inside-plain-function/input.js 1:0-1:27
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2015/yield/yield-star-inside-plain-function/input.js>
+	loc: SourceLocation es2015/yield/yield-star-inside-plain-function/input.js 1:0-1:27
 }
 ```
 

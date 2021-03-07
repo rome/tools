@@ -8,102 +8,87 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2016/simple-parameter-list/array-pattern-default/input.js 1:0-4:0
-	path: UIDPath<es2016/simple-parameter-list/array-pattern-default/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Illegal 'use strict' directive in function with non-simple parameter list"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 2:15
-				path: UIDPath<es2016/simple-parameter-list/array-pattern-default/input.js>
-				start: Position 2:2
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "a"
 				loc: SourceLocation es2016/simple-parameter-list/array-pattern-default/input.js 1:9-1:10 (a)
 			}
-			loc: SourceLocation es2016/simple-parameter-list/array-pattern-default/input.js 1:0-3:1
 			body: JSBlockStatement {
-				body: Array []
-				loc: SourceLocation es2016/simple-parameter-list/array-pattern-default/input.js 1:38-3:1
-				directives: Array [
+				body: []
+				directives: [
 					JSDirective {
 						value: "use strict"
 						loc: SourceLocation es2016/simple-parameter-list/array-pattern-default/input.js 2:2-2:15
 					}
 				]
+				loc: SourceLocation es2016/simple-parameter-list/array-pattern-default/input.js 1:38-3:1
 			}
 			head: JSFunctionHead {
 				async: false
 				generator: false
 				hasHoistedVars: false
-				rest: undefined
-				returnType: undefined
-				thisType: undefined
-				typeParameters: undefined
-				loc: SourceLocation es2016/simple-parameter-list/array-pattern-default/input.js 1:10-1:37
-				params: Array [
+				params: [
 					JSBindingAssignmentPattern {
-						loc: SourceLocation es2016/simple-parameter-list/array-pattern-default/input.js 1:11-1:36
-						right: JSArrayExpression {
-							elements: Array []
-							loc: SourceLocation es2016/simple-parameter-list/array-pattern-default/input.js 1:34-1:36
-						}
 						left: JSBindingArrayPattern {
-							rest: undefined
-							loc: SourceLocation es2016/simple-parameter-list/array-pattern-default/input.js 1:11-1:31
-							meta: JSPatternMeta {
-								optional: undefined
-								typeAnnotation: undefined
-								loc: SourceLocation es2016/simple-parameter-list/array-pattern-default/input.js 1:11-1:31
-							}
-							elements: Array [
+							elements: [
 								JSBindingIdentifier {
 									name: "option1"
-									loc: SourceLocation es2016/simple-parameter-list/array-pattern-default/input.js 1:13-1:20 (option1)
 									meta: JSPatternMeta {
-										optional: undefined
-										typeAnnotation: undefined
 										loc: SourceLocation es2016/simple-parameter-list/array-pattern-default/input.js 1:13-1:20
 									}
+									loc: SourceLocation es2016/simple-parameter-list/array-pattern-default/input.js 1:13-1:20 (option1)
 								}
 								JSBindingIdentifier {
 									name: "option2"
-									loc: SourceLocation es2016/simple-parameter-list/array-pattern-default/input.js 1:22-1:29 (option2)
 									meta: JSPatternMeta {
-										optional: undefined
-										typeAnnotation: undefined
 										loc: SourceLocation es2016/simple-parameter-list/array-pattern-default/input.js 1:22-1:29
 									}
+									loc: SourceLocation es2016/simple-parameter-list/array-pattern-default/input.js 1:22-1:29 (option2)
 								}
 							]
+							meta: JSPatternMeta {
+								loc: SourceLocation es2016/simple-parameter-list/array-pattern-default/input.js 1:11-1:31
+							}
+							loc: SourceLocation es2016/simple-parameter-list/array-pattern-default/input.js 1:11-1:31
 						}
+						right: JSArrayExpression {
+							elements: []
+							loc: SourceLocation es2016/simple-parameter-list/array-pattern-default/input.js 1:34-1:36
+						}
+						loc: SourceLocation es2016/simple-parameter-list/array-pattern-default/input.js 1:11-1:36
 					}
 				]
+				loc: SourceLocation es2016/simple-parameter-list/array-pattern-default/input.js 1:10-1:37
+			}
+			loc: SourceLocation es2016/simple-parameter-list/array-pattern-default/input.js 1:0-3:1
+		}
+	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "Illegal 'use strict' directive in function with non-simple parameter list"}
+			}
+			location: {
+				language: "js"
+				path: UIDPath<es2016/simple-parameter-list/array-pattern-default/input.js>
+				end: Position 2:15
+				start: Position 2:2
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2016/simple-parameter-list/array-pattern-default/input.js>
+	loc: SourceLocation es2016/simple-parameter-list/array-pattern-default/input.js 1:0-4:0
 }
 ```
 

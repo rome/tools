@@ -8,79 +8,65 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation test262/rest-parameter/array-pattern-multi-element/input.js 1:0-2:0
-	path: UIDPath<test262/rest-parameter/array-pattern-multi-element/input.js>
-	body: Array [
+	body: [
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "multiElement"
 				loc: SourceLocation test262/rest-parameter/array-pattern-multi-element/input.js 1:9-1:21 (multiElement)
 			}
-			loc: SourceLocation test262/rest-parameter/array-pattern-multi-element/input.js 1:0-1:38
 			body: JSBlockStatement {
-				body: Array []
-				directives: Array []
+				body: []
+				directives: []
 				loc: SourceLocation test262/rest-parameter/array-pattern-multi-element/input.js 1:36-1:38
 			}
 			head: JSFunctionHead {
 				async: false
 				generator: false
 				hasHoistedVars: false
-				params: Array []
-				returnType: undefined
-				thisType: undefined
-				typeParameters: undefined
-				loc: SourceLocation test262/rest-parameter/array-pattern-multi-element/input.js 1:21-1:35
+				params: []
 				rest: JSBindingArrayPattern {
-					rest: undefined
-					loc: SourceLocation test262/rest-parameter/array-pattern-multi-element/input.js 1:25-1:34
-					meta: JSPatternMeta {
-						optional: undefined
-						typeAnnotation: undefined
-						loc: SourceLocation test262/rest-parameter/array-pattern-multi-element/input.js 1:25-1:34
-					}
-					elements: Array [
+					elements: [
 						JSBindingIdentifier {
 							name: "a"
-							loc: SourceLocation test262/rest-parameter/array-pattern-multi-element/input.js 1:26-1:27 (a)
 							meta: JSPatternMeta {
-								optional: undefined
-								typeAnnotation: undefined
 								loc: SourceLocation test262/rest-parameter/array-pattern-multi-element/input.js 1:26-1:27
 							}
+							loc: SourceLocation test262/rest-parameter/array-pattern-multi-element/input.js 1:26-1:27 (a)
 						}
 						JSBindingIdentifier {
 							name: "b"
-							loc: SourceLocation test262/rest-parameter/array-pattern-multi-element/input.js 1:29-1:30 (b)
 							meta: JSPatternMeta {
-								optional: undefined
-								typeAnnotation: undefined
 								loc: SourceLocation test262/rest-parameter/array-pattern-multi-element/input.js 1:29-1:30
 							}
+							loc: SourceLocation test262/rest-parameter/array-pattern-multi-element/input.js 1:29-1:30 (b)
 						}
 						JSBindingIdentifier {
 							name: "c"
-							loc: SourceLocation test262/rest-parameter/array-pattern-multi-element/input.js 1:32-1:33 (c)
 							meta: JSPatternMeta {
-								optional: undefined
-								typeAnnotation: undefined
 								loc: SourceLocation test262/rest-parameter/array-pattern-multi-element/input.js 1:32-1:33
 							}
+							loc: SourceLocation test262/rest-parameter/array-pattern-multi-element/input.js 1:32-1:33 (c)
 						}
 					]
+					meta: JSPatternMeta {
+						loc: SourceLocation test262/rest-parameter/array-pattern-multi-element/input.js 1:25-1:34
+					}
+					loc: SourceLocation test262/rest-parameter/array-pattern-multi-element/input.js 1:25-1:34
 				}
+				loc: SourceLocation test262/rest-parameter/array-pattern-multi-element/input.js 1:21-1:35
 			}
+			loc: SourceLocation test262/rest-parameter/array-pattern-multi-element/input.js 1:0-1:38
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<test262/rest-parameter/array-pattern-multi-element/input.js>
+	loc: SourceLocation test262/rest-parameter/array-pattern-multi-element/input.js 1:0-2:0
 }
 ```
 

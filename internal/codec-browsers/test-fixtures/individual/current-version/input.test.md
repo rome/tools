@@ -7,7 +7,7 @@
 ### `result`
 
 ```javascript
-Array [
+[
 	"edge:88"
 	"firefox:85"
 	"chrome:88"
@@ -31,13 +31,13 @@ Array [
 ### `targets`
 
 ```javascript
-Array [TargetBrowserState {state: "current"}]
+[TargetBrowserState {state: "current"}]
 ```
 
 ### `tokens`
 
 ```javascript
-Array [
+[
 	Current {
 		end: ZeroIndexedNumber<7>
 		start: ZeroIndexedNumber<0>

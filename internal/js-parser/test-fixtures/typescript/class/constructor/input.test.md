@@ -8,31 +8,14 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	loc: SourceLocation typescript/class/constructor/input.ts 1:0-6:0
-	path: UIDPath<typescript/class/constructor/input.ts>
-	syntax: Array ["ts"]
-	body: Array [
+	body: [
 		JSClassDeclaration {
 			id: JSBindingIdentifier {
 				name: "C"
 				loc: SourceLocation typescript/class/constructor/input.ts 1:6-1:7 (C)
 			}
-			loc: SourceLocation typescript/class/constructor/input.ts 1:0-5:1
 			meta: JSClassHead {
-				implements: undefined
-				superClass: undefined
-				superTypeParameters: undefined
-				typeParameters: undefined
-				loc: SourceLocation typescript/class/constructor/input.ts 1:0-5:1
-				body: Array [
+				body: [
 					TSDeclareMethod {
 						kind: "constructor"
 						key: JSStaticPropertyKey {
@@ -42,15 +25,11 @@ JSRoot {
 							}
 							loc: SourceLocation typescript/class/constructor/input.ts 2:4-2:15
 						}
-						body: undefined
-						loc: SourceLocation typescript/class/constructor/input.ts 2:4-2:38
 						meta: JSClassPropertyMeta {
 							abstract: false
-							accessibility: undefined
 							optional: false
 							readonly: false
 							static: false
-							typeAnnotation: undefined
 							loc: SourceLocation typescript/class/constructor/input.ts 2:4-2:15
 							start: Position 2:4
 						}
@@ -58,32 +37,31 @@ JSRoot {
 							async: false
 							generator: false
 							hasHoistedVars: false
-							rest: undefined
-							returnType: undefined
-							thisType: undefined
-							typeParameters: undefined
-							loc: SourceLocation typescript/class/constructor/input.ts 2:15-2:37
-							params: Array [
+							params: [
 								JSBindingIdentifier {
 									name: "x"
-									loc: SourceLocation typescript/class/constructor/input.ts 2:16-2:17 (x)
 									meta: JSPatternMeta {
-										optional: undefined
+										typeAnnotation: TSNumberKeywordTypeAnnotation {
+											loc: SourceLocation typescript/class/constructor/input.ts 2:19-2:25
+										}
 										loc: SourceLocation typescript/class/constructor/input.ts 2:16-2:25
-										typeAnnotation: TSNumberKeywordTypeAnnotation {loc: SourceLocation typescript/class/constructor/input.ts 2:19-2:25}
 									}
+									loc: SourceLocation typescript/class/constructor/input.ts 2:16-2:17 (x)
 								}
 								JSBindingIdentifier {
 									name: "y"
-									loc: SourceLocation typescript/class/constructor/input.ts 2:27-2:28 (y)
 									meta: JSPatternMeta {
-										optional: undefined
+										typeAnnotation: TSNumberKeywordTypeAnnotation {
+											loc: SourceLocation typescript/class/constructor/input.ts 2:30-2:36
+										}
 										loc: SourceLocation typescript/class/constructor/input.ts 2:27-2:36
-										typeAnnotation: TSNumberKeywordTypeAnnotation {loc: SourceLocation typescript/class/constructor/input.ts 2:30-2:36}
 									}
+									loc: SourceLocation typescript/class/constructor/input.ts 2:27-2:28 (y)
 								}
 							]
+							loc: SourceLocation typescript/class/constructor/input.ts 2:15-2:37
 						}
+						loc: SourceLocation typescript/class/constructor/input.ts 2:4-2:38
 					}
 					TSDeclareMethod {
 						kind: "constructor"
@@ -94,15 +72,11 @@ JSRoot {
 							}
 							loc: SourceLocation typescript/class/constructor/input.ts 3:4-3:15
 						}
-						body: undefined
-						loc: SourceLocation typescript/class/constructor/input.ts 3:4-3:38
 						meta: JSClassPropertyMeta {
 							abstract: false
-							accessibility: undefined
 							optional: false
 							readonly: false
 							static: false
-							typeAnnotation: undefined
 							loc: SourceLocation typescript/class/constructor/input.ts 3:4-3:15
 							start: Position 3:4
 						}
@@ -110,32 +84,31 @@ JSRoot {
 							async: false
 							generator: false
 							hasHoistedVars: false
-							rest: undefined
-							returnType: undefined
-							thisType: undefined
-							typeParameters: undefined
-							loc: SourceLocation typescript/class/constructor/input.ts 3:15-3:37
-							params: Array [
+							params: [
 								JSBindingIdentifier {
 									name: "x"
-									loc: SourceLocation typescript/class/constructor/input.ts 3:16-3:17 (x)
 									meta: JSPatternMeta {
-										optional: undefined
+										typeAnnotation: TSStringKeywordTypeAnnotation {
+											loc: SourceLocation typescript/class/constructor/input.ts 3:19-3:25
+										}
 										loc: SourceLocation typescript/class/constructor/input.ts 3:16-3:25
-										typeAnnotation: TSStringKeywordTypeAnnotation {loc: SourceLocation typescript/class/constructor/input.ts 3:19-3:25}
 									}
+									loc: SourceLocation typescript/class/constructor/input.ts 3:16-3:17 (x)
 								}
 								JSBindingIdentifier {
 									name: "y"
-									loc: SourceLocation typescript/class/constructor/input.ts 3:27-3:28 (y)
 									meta: JSPatternMeta {
-										optional: undefined
+										typeAnnotation: TSStringKeywordTypeAnnotation {
+											loc: SourceLocation typescript/class/constructor/input.ts 3:30-3:36
+										}
 										loc: SourceLocation typescript/class/constructor/input.ts 3:27-3:36
-										typeAnnotation: TSStringKeywordTypeAnnotation {loc: SourceLocation typescript/class/constructor/input.ts 3:30-3:36}
 									}
+									loc: SourceLocation typescript/class/constructor/input.ts 3:27-3:28 (y)
 								}
 							]
+							loc: SourceLocation typescript/class/constructor/input.ts 3:15-3:37
 						}
+						loc: SourceLocation typescript/class/constructor/input.ts 3:4-3:38
 					}
 					JSClassMethod {
 						kind: "constructor"
@@ -146,57 +119,64 @@ JSRoot {
 							}
 							loc: SourceLocation typescript/class/constructor/input.ts 4:4-4:15
 						}
-						loc: SourceLocation typescript/class/constructor/input.ts 4:4-4:34
-						body: JSBlockStatement {
-							body: Array []
-							directives: Array []
-							loc: SourceLocation typescript/class/constructor/input.ts 4:32-4:34
-						}
 						meta: JSClassPropertyMeta {
 							abstract: false
-							accessibility: undefined
 							optional: false
 							readonly: false
 							static: false
-							typeAnnotation: undefined
 							loc: SourceLocation typescript/class/constructor/input.ts 4:4-4:15
 							start: Position 4:4
+						}
+						body: JSBlockStatement {
+							body: []
+							directives: []
+							loc: SourceLocation typescript/class/constructor/input.ts 4:32-4:34
 						}
 						head: JSFunctionHead {
 							async: false
 							generator: false
 							hasHoistedVars: false
-							rest: undefined
-							returnType: undefined
-							thisType: undefined
-							typeParameters: undefined
-							loc: SourceLocation typescript/class/constructor/input.ts 4:15-4:31
-							params: Array [
+							params: [
 								JSBindingIdentifier {
 									name: "x"
-									loc: SourceLocation typescript/class/constructor/input.ts 4:16-4:17 (x)
 									meta: JSPatternMeta {
-										optional: undefined
+										typeAnnotation: TSAnyKeywordTypeAnnotation {
+											loc: SourceLocation typescript/class/constructor/input.ts 4:19-4:22
+										}
 										loc: SourceLocation typescript/class/constructor/input.ts 4:16-4:22
-										typeAnnotation: TSAnyKeywordTypeAnnotation {loc: SourceLocation typescript/class/constructor/input.ts 4:19-4:22}
 									}
+									loc: SourceLocation typescript/class/constructor/input.ts 4:16-4:17 (x)
 								}
 								JSBindingIdentifier {
 									name: "y"
-									loc: SourceLocation typescript/class/constructor/input.ts 4:24-4:25 (y)
 									meta: JSPatternMeta {
-										optional: undefined
+										typeAnnotation: TSAnyKeywordTypeAnnotation {
+											loc: SourceLocation typescript/class/constructor/input.ts 4:27-4:30
+										}
 										loc: SourceLocation typescript/class/constructor/input.ts 4:24-4:30
-										typeAnnotation: TSAnyKeywordTypeAnnotation {loc: SourceLocation typescript/class/constructor/input.ts 4:27-4:30}
 									}
+									loc: SourceLocation typescript/class/constructor/input.ts 4:24-4:25 (y)
 								}
 							]
+							loc: SourceLocation typescript/class/constructor/input.ts 4:15-4:31
 						}
+						loc: SourceLocation typescript/class/constructor/input.ts 4:4-4:34
 					}
 				]
+				loc: SourceLocation typescript/class/constructor/input.ts 1:0-5:1
 			}
+			loc: SourceLocation typescript/class/constructor/input.ts 1:0-5:1
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: ["ts"]
+	path: UIDPath<typescript/class/constructor/input.ts>
+	loc: SourceLocation typescript/class/constructor/input.ts 1:0-6:0
 }
 ```
 

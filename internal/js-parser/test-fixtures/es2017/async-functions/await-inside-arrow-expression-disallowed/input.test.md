@@ -8,72 +8,65 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2017/async-functions/await-inside-arrow-expression-disallowed/input.js 1:0-1:17
-	path: UIDPath<es2017/async-functions/await-inside-arrow-expression-disallowed/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Expected a semicolon or a line terminator"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:13
-				path: UIDPath<es2017/async-functions/await-inside-arrow-expression-disallowed/input.js>
-				start: Position 1:14
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation es2017/async-functions/await-inside-arrow-expression-disallowed/input.js 1:0-1:17
 			expression: JSArrowFunctionExpression {
-				loc: SourceLocation es2017/async-functions/await-inside-arrow-expression-disallowed/input.js 1:0-1:17
-				head: JSFunctionHead {
-					async: false
-					hasHoistedVars: false
-					params: Array []
-					rest: undefined
-					returnType: undefined
-					thisType: undefined
-					loc: SourceLocation es2017/async-functions/await-inside-arrow-expression-disallowed/input.js 1:0-1:5
-				}
 				body: JSBlockStatement {
-					directives: Array []
-					loc: SourceLocation es2017/async-functions/await-inside-arrow-expression-disallowed/input.js 1:6-1:17
-					body: Array [
+					body: [
 						JSExpressionStatement {
-							loc: SourceLocation es2017/async-functions/await-inside-arrow-expression-disallowed/input.js 1:8-1:13
 							expression: JSReferenceIdentifier {
 								name: "await"
 								loc: SourceLocation es2017/async-functions/await-inside-arrow-expression-disallowed/input.js 1:8-1:13 (await)
 							}
+							loc: SourceLocation es2017/async-functions/await-inside-arrow-expression-disallowed/input.js 1:8-1:13
 						}
 						JSExpressionStatement {
-							loc: SourceLocation es2017/async-functions/await-inside-arrow-expression-disallowed/input.js 1:14-1:15
 							expression: JSReferenceIdentifier {
 								name: "x"
 								loc: SourceLocation es2017/async-functions/await-inside-arrow-expression-disallowed/input.js 1:14-1:15 (x)
 							}
+							loc: SourceLocation es2017/async-functions/await-inside-arrow-expression-disallowed/input.js 1:14-1:15
 						}
 					]
+					directives: []
+					loc: SourceLocation es2017/async-functions/await-inside-arrow-expression-disallowed/input.js 1:6-1:17
 				}
+				head: JSFunctionHead {
+					async: false
+					hasHoistedVars: false
+					params: []
+					loc: SourceLocation es2017/async-functions/await-inside-arrow-expression-disallowed/input.js 1:0-1:5
+				}
+				loc: SourceLocation es2017/async-functions/await-inside-arrow-expression-disallowed/input.js 1:0-1:17
+			}
+			loc: SourceLocation es2017/async-functions/await-inside-arrow-expression-disallowed/input.js 1:0-1:17
+		}
+	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "Expected a semicolon or a line terminator"}
+			}
+			location: {
+				language: "js"
+				path: UIDPath<es2017/async-functions/await-inside-arrow-expression-disallowed/input.js>
+				end: Position 1:13
+				start: Position 1:14
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2017/async-functions/await-inside-arrow-expression-disallowed/input.js>
+	loc: SourceLocation es2017/async-functions/await-inside-arrow-expression-disallowed/input.js 1:0-1:17
 }
 ```
 

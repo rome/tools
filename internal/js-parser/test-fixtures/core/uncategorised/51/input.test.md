@@ -8,35 +8,31 @@
 
 ```javascript
 JSRoot {
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation core/uncategorised/51/input.js 1:0-1:9
-	path: UIDPath<core/uncategorised/51/input.js>
-	comments: Array [
+	body: [
+		JSExpressionStatement {
+			leadingComments: ["0"]
+			expression: JSNumericLiteral {
+				value: 42
+				loc: SourceLocation core/uncategorised/51/input.js 1:7-1:9
+			}
+			loc: SourceLocation core/uncategorised/51/input.js 1:7-1:9
+		}
+	]
+	comments: [
 		CommentBlock {
 			id: "0"
 			value: "ab"
 			loc: SourceLocation core/uncategorised/51/input.js 1:0-1:6
 		}
 	]
-	body: Array [
-		JSExpressionStatement {
-			leadingComments: Array ["0"]
-			loc: SourceLocation core/uncategorised/51/input.js 1:7-1:9
-			expression: JSNumericLiteral {
-				value: 42
-				format: undefined
-				leadingComments: undefined
-				loc: SourceLocation core/uncategorised/51/input.js 1:7-1:9
-			}
-		}
-	]
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<core/uncategorised/51/input.js>
+	loc: SourceLocation core/uncategorised/51/input.js 1:0-1:9
 }
 ```
 

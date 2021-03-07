@@ -6,7 +6,8 @@
  */
 
 import {Consumer} from "@internal/consume";
-import Server, {ServerClient} from "../Server";
+import Server from "../Server";
+import ServerClient from "../ServerClient";
 import {
 	AbsoluteFilePath,
 	AbsoluteFilePathMap,
@@ -15,10 +16,11 @@ import {
 } from "@internal/path";
 import {
 	DIAGNOSTIC_CATEGORIES,
-	Diagnostics,
+	Diagnostic,
 	DiagnosticsProcessor,
 	catchDiagnostics,
 	formatCategoryDescription,
+	getActionAdviceFromDiagnostic,
 } from "@internal/diagnostics";
 import {
 	PartialServerQueryRequest,
@@ -48,6 +50,7 @@ import {markup, readMarkup} from "@internal/markup";
 import {LSPCodeAction} from "./types";
 import {Event} from "@internal/events";
 import {CommandName} from "@internal/core/common/commands";
+import {markupToPlainText} from "@internal/cli-layout";
 
 type LSPProjectSession = {
 	request: ServerRequest;
@@ -64,7 +67,7 @@ export default class LSPServer {
 		this.fileBuffers = new AbsoluteFilePathSet();
 		this.fileVersions = new AbsoluteFilePathMap();
 
-		this.watchProjectEvent = new Event({name: "watchProject"});
+		this.watchProjectEvent = new Event("LSPServer.watchProject");
 
 		request.endEvent.subscribe(async () => {
 			await this.shutdown();
@@ -104,8 +107,10 @@ export default class LSPServer {
 
 	private createDiagnosticsProcessor(): DiagnosticsProcessor {
 		// We want to filter pendingFixes because we'll autoformat the file on save if necessary and it's just noise
-		const processor = this.request.createDiagnosticsProcessor();
-		processor.addFilter({
+		const processor = this.request.createDiagnosticsProcessor({
+			filter: undefined,
+		});
+		processor.addEliminationFilter({
 			category: DIAGNOSTIC_CATEGORIES["lint/pendingFixes"],
 		});
 		return processor;
@@ -122,7 +127,7 @@ export default class LSPServer {
 		});
 	}
 
-	private logDiagnostics(path: AbsoluteFilePath, diagnostics: Diagnostics = []) {
+	private logDiagnostics(path: AbsoluteFilePath, diagnostics: Diagnostic[] = []) {
 		if (diagnostics.length === 0) {
 			return;
 		}
@@ -156,7 +161,6 @@ export default class LSPServer {
 				silent: true,
 				noData: false,
 				noFileWrites: false,
-				terminateWhenIdle: false,
 			},
 		});
 	}
@@ -228,7 +232,7 @@ export default class LSPServer {
 					params: {
 						uri: `file://${path.join()}`,
 						diagnostics: convertDiagnosticsToLSP(
-							this.diagnosticsProcessor.getAllDiagnosticsForPath(path),
+							this.diagnosticsProcessor.getDiagnosticsForPath(path),
 							this.server,
 						),
 					},
@@ -237,11 +241,7 @@ export default class LSPServer {
 			onRunEnd: ({}) => {},
 		});
 
-		const subscription = await checker.watch(runner);
-
-		req.endEvent.subscribe(() => {
-			subscription.unsubscribe();
-		});
+		req.resources.add(await checker.watch(runner));
 
 		this.projectSessions.set(
 			path,
@@ -273,13 +273,10 @@ export default class LSPServer {
 	public async sendClientRequest(
 		req: PartialServerQueryRequest,
 	): Promise<ServerQueryResponse> {
-		return this.server.handleRequest(
-			this.client,
-			{
-				silent: true,
-				...req,
-			},
-		);
+		return this.client.handleRequest({
+			silent: true,
+			...req,
+		});
 	}
 
 	private async handleRequest(
@@ -330,7 +327,7 @@ export default class LSPServer {
 				const codeActions: LSPCodeAction[] = [];
 				const seenDecisions = new Set<string>();
 
-				const diagnostics = this.diagnosticsProcessor.getAllDiagnosticsForPath(
+				const diagnostics = this.diagnosticsProcessor.getDiagnosticsForPath(
 					path,
 				);
 				if (diagnostics.length === 0) {
@@ -343,19 +340,19 @@ export default class LSPServer {
 					if (!doRangesOverlap(diagRange, codeActionRange)) {
 						continue;
 					}
-					for (const advice of diag.description.advice) {
-						if (advice.type !== "action" || advice.extra === true) {
+					for (const item of getActionAdviceFromDiagnostic(diag)) {
+						if (item.secondary) {
 							continue;
 						}
 
-						const decision = getDecisionFromAdviceAction(advice);
+						const decision = getDecisionFromAdviceAction(item);
 						if (decision === undefined || seenDecisions.has(decision)) {
 							continue;
 						}
 						seenDecisions.add(decision);
 
 						codeActions.push({
-							title: `${readMarkup(advice.noun)}: ${formatCategoryDescription(
+							title: `${markupToPlainText(item.description)}: ${formatCategoryDescription(
 								diag.description,
 							)}`,
 							command: {

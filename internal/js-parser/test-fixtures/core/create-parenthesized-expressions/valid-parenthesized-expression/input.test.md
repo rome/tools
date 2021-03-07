@@ -8,26 +8,24 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation core/create-parenthesized-expressions/valid-parenthesized-expression/input.js 1:0-2:0
-	path: UIDPath<core/create-parenthesized-expressions/valid-parenthesized-expression/input.js>
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation core/create-parenthesized-expressions/valid-parenthesized-expression/input.js 1:0-1:10
 			expression: JSStringLiteral {
 				value: "hello"
 				loc: SourceLocation core/create-parenthesized-expressions/valid-parenthesized-expression/input.js 1:1-1:8
 			}
+			loc: SourceLocation core/create-parenthesized-expressions/valid-parenthesized-expression/input.js 1:0-1:10
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<core/create-parenthesized-expressions/valid-parenthesized-expression/input.js>
+	loc: SourceLocation core/create-parenthesized-expressions/valid-parenthesized-expression/input.js 1:0-2:0
 }
 ```
 

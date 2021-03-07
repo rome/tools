@@ -8,54 +8,52 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	loc: SourceLocation typescript/module-namespace/body-declare/input.ts 1:0-4:0
-	path: UIDPath<typescript/module-namespace/body-declare/input.ts>
-	syntax: Array ["ts"]
-	body: Array [
+	body: [
 		TSModuleDeclaration {
+			declare: true
 			id: JSBindingIdentifier {
 				name: "N"
 				loc: SourceLocation typescript/module-namespace/body-declare/input.ts 1:18-1:19 (N)
 			}
-			declare: true
-			loc: SourceLocation typescript/module-namespace/body-declare/input.ts 1:0-3:1
 			body: TSModuleBlock {
-				loc: SourceLocation typescript/module-namespace/body-declare/input.ts 1:20-3:1
-				body: Array [
+				body: [
 					JSVariableDeclarationStatement {
-						loc: SourceLocation typescript/module-namespace/body-declare/input.ts 2:4-2:20
 						declaration: JSVariableDeclaration {
 							kind: "const"
-							loc: SourceLocation typescript/module-namespace/body-declare/input.ts 2:4-2:20
-							declarations: Array [
+							declarations: [
 								JSVariableDeclarator {
 									id: JSBindingIdentifier {
 										name: "x"
-										loc: SourceLocation typescript/module-namespace/body-declare/input.ts 2:10-2:19
 										meta: JSPatternMeta {
-											definite: undefined
+											typeAnnotation: TSNumberKeywordTypeAnnotation {
+												loc: SourceLocation typescript/module-namespace/body-declare/input.ts 2:13-2:19
+											}
 											loc: SourceLocation typescript/module-namespace/body-declare/input.ts 2:10-2:19
-											typeAnnotation: TSNumberKeywordTypeAnnotation {loc: SourceLocation typescript/module-namespace/body-declare/input.ts 2:13-2:19}
 										}
+										loc: SourceLocation typescript/module-namespace/body-declare/input.ts 2:10-2:19
 									}
-									init: undefined
 									loc: SourceLocation typescript/module-namespace/body-declare/input.ts 2:10-2:19
 								}
 							]
+							loc: SourceLocation typescript/module-namespace/body-declare/input.ts 2:4-2:20
 						}
+						loc: SourceLocation typescript/module-namespace/body-declare/input.ts 2:4-2:20
 					}
 				]
+				loc: SourceLocation typescript/module-namespace/body-declare/input.ts 1:20-3:1
 			}
+			loc: SourceLocation typescript/module-namespace/body-declare/input.ts 1:0-3:1
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: ["ts"]
+	path: UIDPath<typescript/module-namespace/body-declare/input.ts>
+	loc: SourceLocation typescript/module-namespace/body-declare/input.ts 1:0-4:0
 }
 ```
 

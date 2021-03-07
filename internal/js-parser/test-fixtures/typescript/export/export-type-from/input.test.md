@@ -8,30 +8,11 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	loc: SourceLocation typescript/export/export-type-from/input.ts 1:0-2:0
-	path: UIDPath<typescript/export/export-type-from/input.ts>
-	syntax: Array ["ts"]
-	body: Array [
+	body: [
 		JSExportExternalDeclaration {
-			defaultSpecifier: undefined
 			exportKind: "type"
-			namespaceSpecifier: undefined
-			loc: SourceLocation typescript/export/export-type-from/input.ts 1:0-1:31
-			source: JSStringLiteral {
-				value: "./mod"
-				loc: SourceLocation typescript/export/export-type-from/input.ts 1:23-1:30
-			}
-			namedSpecifiers: Array [
+			namedSpecifiers: [
 				JSExportExternalSpecifier {
-					loc: SourceLocation typescript/export/export-type-from/input.ts 1:14-1:15
 					exported: JSIdentifier {
 						name: "T"
 						loc: SourceLocation typescript/export/export-type-from/input.ts 1:14-1:15 (T)
@@ -40,10 +21,25 @@ JSRoot {
 						name: "T"
 						loc: SourceLocation typescript/export/export-type-from/input.ts 1:14-1:15 (T)
 					}
+					loc: SourceLocation typescript/export/export-type-from/input.ts 1:14-1:15
 				}
 			]
+			source: JSStringLiteral {
+				value: "./mod"
+				loc: SourceLocation typescript/export/export-type-from/input.ts 1:23-1:30
+			}
+			loc: SourceLocation typescript/export/export-type-from/input.ts 1:0-1:31
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: ["ts"]
+	path: UIDPath<typescript/export/export-type-from/input.ts>
+	loc: SourceLocation typescript/export/export-type-from/input.ts 1:0-2:0
 }
 ```
 

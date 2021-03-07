@@ -7,7 +7,7 @@ import {markup} from "@internal/markup";
 function buildJSXOpeningAdvice(
 	name: string,
 	openingLoc: SourceLocation,
-): DiagnosticAdvice {
+): DiagnosticAdvice[] {
 	return [
 		{
 			type: "log",
@@ -539,7 +539,7 @@ export const jsParser = createDiagnosticsCategory({
 			expectedOpeningName?: string;
 		},
 	) => {
-		const advice: DiagnosticAdvice = [];
+		const advice: DiagnosticAdvice[] = [];
 
 		if (expectedChar !== undefined) {
 			let text;

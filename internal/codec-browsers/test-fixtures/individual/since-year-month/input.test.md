@@ -7,19 +7,19 @@
 ### `result`
 
 ```javascript
-Array ["opera:73"]
+["opera:73"]
 ```
 
 ### `targets`
 
 ```javascript
-Array [TargetBrowserSince {since: 1_612_137_600_000}]
+[TargetBrowserSince {since: 1_612_137_600_000}]
 ```
 
 ### `tokens`
 
 ```javascript
-Array [
+[
 	Since {
 		end: ZeroIndexedNumber<5>
 		start: ZeroIndexedNumber<0>

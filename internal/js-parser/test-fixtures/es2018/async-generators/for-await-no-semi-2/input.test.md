@@ -8,88 +8,80 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2018/async-generators/for-await-no-semi-2/input.js 1:0-4:0
-	path: UIDPath<es2018/async-generators/for-await-no-semi-2/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Can't have an await on a regular for loop"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 2:11
-				path: UIDPath<es2018/async-generators/for-await-no-semi-2/input.js>
-				start: Position 2:11
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "f"
 				loc: SourceLocation es2018/async-generators/for-await-no-semi-2/input.js 1:15-1:16 (f)
 			}
-			loc: SourceLocation es2018/async-generators/for-await-no-semi-2/input.js 1:0-3:1
-			head: JSFunctionHead {
-				async: true
-				generator: false
-				hasHoistedVars: false
-				params: Array []
-				rest: undefined
-				returnType: undefined
-				thisType: undefined
-				typeParameters: undefined
-				loc: SourceLocation es2018/async-generators/for-await-no-semi-2/input.js 1:16-1:18
-			}
 			body: JSBlockStatement {
-				directives: Array []
-				loc: SourceLocation es2018/async-generators/for-await-no-semi-2/input.js 1:19-3:1
-				body: Array [
+				body: [
 					JSForStatement {
-						update: undefined
-						body: JSEmptyStatement {loc: SourceLocation es2018/async-generators/for-await-no-semi-2/input.js 2:30-2:31}
-						loc: SourceLocation es2018/async-generators/for-await-no-semi-2/input.js 2:2-2:31
-						test: JSBooleanLiteral {
-							value: false
-							loc: SourceLocation es2018/async-generators/for-await-no-semi-2/input.js 2:23-2:28
+						body: JSEmptyStatement {
+							loc: SourceLocation es2018/async-generators/for-await-no-semi-2/input.js 2:30-2:31
 						}
 						init: JSVariableDeclaration {
 							kind: "let"
-							loc: SourceLocation es2018/async-generators/for-await-no-semi-2/input.js 2:13-2:22
-							declarations: Array [
+							declarations: [
 								JSVariableDeclarator {
 									id: JSBindingIdentifier {
 										name: "i"
 										loc: SourceLocation es2018/async-generators/for-await-no-semi-2/input.js 2:17-2:18 (i)
 									}
-									loc: SourceLocation es2018/async-generators/for-await-no-semi-2/input.js 2:17-2:22
 									init: JSNumericLiteral {
 										value: 0
-										format: undefined
 										loc: SourceLocation es2018/async-generators/for-await-no-semi-2/input.js 2:21-2:22
 									}
+									loc: SourceLocation es2018/async-generators/for-await-no-semi-2/input.js 2:17-2:22
 								}
 							]
+							loc: SourceLocation es2018/async-generators/for-await-no-semi-2/input.js 2:13-2:22
 						}
+						test: JSBooleanLiteral {
+							value: false
+							loc: SourceLocation es2018/async-generators/for-await-no-semi-2/input.js 2:23-2:28
+						}
+						loc: SourceLocation es2018/async-generators/for-await-no-semi-2/input.js 2:2-2:31
 					}
 				]
+				directives: []
+				loc: SourceLocation es2018/async-generators/for-await-no-semi-2/input.js 1:19-3:1
+			}
+			head: JSFunctionHead {
+				async: true
+				generator: false
+				hasHoistedVars: false
+				params: []
+				loc: SourceLocation es2018/async-generators/for-await-no-semi-2/input.js 1:16-1:18
+			}
+			loc: SourceLocation es2018/async-generators/for-await-no-semi-2/input.js 1:0-3:1
+		}
+	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "Can't have an await on a regular for loop"}
+			}
+			location: {
+				language: "js"
+				path: UIDPath<es2018/async-generators/for-await-no-semi-2/input.js>
+				end: Position 2:11
+				start: Position 2:11
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2018/async-generators/for-await-no-semi-2/input.js>
+	loc: SourceLocation es2018/async-generators/for-await-no-semi-2/input.js 1:0-4:0
 }
 ```
 

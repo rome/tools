@@ -8,17 +8,60 @@
 
 ```javascript
 JSRoot {
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation comments/basic/surrounding-while-loop-comments/input.js 1:0-2:0
-	path: UIDPath<comments/basic/surrounding-while-loop-comments/input.js>
-	comments: Array [
+	body: [
+		JSFunctionDeclaration {
+			id: JSBindingIdentifier {
+				name: "f"
+				loc: SourceLocation comments/basic/surrounding-while-loop-comments/input.js 1:9-1:10 (f)
+			}
+			body: JSBlockStatement {
+				body: [
+					JSWhileStatement {
+						leadingComments: ["0"]
+						trailingComments: ["1"]
+						body: JSBlockStatement {
+							body: []
+							directives: []
+							loc: SourceLocation comments/basic/surrounding-while-loop-comments/input.js 1:43-1:46
+						}
+						test: JSBooleanLiteral {
+							value: true
+							loc: SourceLocation comments/basic/surrounding-while-loop-comments/input.js 1:37-1:41
+						}
+						loc: SourceLocation comments/basic/surrounding-while-loop-comments/input.js 1:30-1:46
+					}
+					JSVariableDeclarationStatement {
+						leadingComments: ["1"]
+						declaration: JSVariableDeclaration {
+							kind: "var"
+							declarations: [
+								JSVariableDeclarator {
+									id: JSBindingIdentifier {
+										name: "each"
+										loc: SourceLocation comments/basic/surrounding-while-loop-comments/input.js 1:61-1:65 (each)
+									}
+									loc: SourceLocation comments/basic/surrounding-while-loop-comments/input.js 1:61-1:65
+								}
+							]
+							loc: SourceLocation comments/basic/surrounding-while-loop-comments/input.js 1:57-1:66
+						}
+						loc: SourceLocation comments/basic/surrounding-while-loop-comments/input.js 1:57-1:66
+					}
+				]
+				directives: []
+				loc: SourceLocation comments/basic/surrounding-while-loop-comments/input.js 1:13-1:68
+			}
+			head: JSFunctionHead {
+				async: false
+				generator: false
+				hasHoistedVars: true
+				params: []
+				loc: SourceLocation comments/basic/surrounding-while-loop-comments/input.js 1:10-1:12
+			}
+			loc: SourceLocation comments/basic/surrounding-while-loop-comments/input.js 1:0-1:68
+		}
+	]
+	comments: [
 		CommentBlock {
 			id: "0"
 			value: " infinite "
@@ -30,69 +73,14 @@ JSRoot {
 			loc: SourceLocation comments/basic/surrounding-while-loop-comments/input.js 1:47-1:56
 		}
 	]
-	body: Array [
-		JSFunctionDeclaration {
-			id: JSBindingIdentifier {
-				name: "f"
-				loc: SourceLocation comments/basic/surrounding-while-loop-comments/input.js 1:9-1:10 (f)
-			}
-			loc: SourceLocation comments/basic/surrounding-while-loop-comments/input.js 1:0-1:68
-			head: JSFunctionHead {
-				async: false
-				generator: false
-				hasHoistedVars: true
-				params: Array []
-				rest: undefined
-				returnType: undefined
-				thisType: undefined
-				typeParameters: undefined
-				loc: SourceLocation comments/basic/surrounding-while-loop-comments/input.js 1:10-1:12
-			}
-			body: JSBlockStatement {
-				directives: Array []
-				loc: SourceLocation comments/basic/surrounding-while-loop-comments/input.js 1:13-1:68
-				body: Array [
-					JSWhileStatement {
-						leadingComments: Array ["0"]
-						loc: SourceLocation comments/basic/surrounding-while-loop-comments/input.js 1:30-1:46
-						trailingComments: Array ["1"]
-						test: JSBooleanLiteral {
-							value: true
-							leadingComments: undefined
-							loc: SourceLocation comments/basic/surrounding-while-loop-comments/input.js 1:37-1:41
-						}
-						body: JSBlockStatement {
-							body: Array []
-							directives: Array []
-							trailingComments: undefined
-							loc: SourceLocation comments/basic/surrounding-while-loop-comments/input.js 1:43-1:46
-						}
-					}
-					JSVariableDeclarationStatement {
-						leadingComments: Array ["1"]
-						loc: SourceLocation comments/basic/surrounding-while-loop-comments/input.js 1:57-1:66
-						declaration: JSVariableDeclaration {
-							kind: "var"
-							leadingComments: undefined
-							loc: SourceLocation comments/basic/surrounding-while-loop-comments/input.js 1:57-1:66
-							declarations: Array [
-								JSVariableDeclarator {
-									id: JSBindingIdentifier {
-										name: "each"
-										leadingComments: undefined
-										loc: SourceLocation comments/basic/surrounding-while-loop-comments/input.js 1:61-1:65 (each)
-									}
-									init: undefined
-									leadingComments: undefined
-									loc: SourceLocation comments/basic/surrounding-while-loop-comments/input.js 1:61-1:65
-								}
-							]
-						}
-					}
-				]
-			}
-		}
-	]
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<comments/basic/surrounding-while-loop-comments/input.js>
+	loc: SourceLocation comments/basic/surrounding-while-loop-comments/input.js 1:0-2:0
 }
 ```
 

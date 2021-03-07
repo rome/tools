@@ -6,34 +6,23 @@
 
 ```javascript
 CSSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	integrity: undefined
-	loc: SourceLocation functions/input.css 1:0-8:1
-	path: RelativePath<functions/input.css>
-	body: Array [
+	body: [
 		CSSRule {
-			loc: SourceLocation functions/input.css 1:0-8:1
-			prelude: Array [
+			prelude: [
 				CSSSelector {
-					loc: SourceLocation functions/input.css 1:0-1:7
-					patterns: Array [
+					patterns: [
 						CSSClassSelector {
 							value: "style"
 							loc: SourceLocation functions/input.css 1:0-1:6
 						}
 					]
+					loc: SourceLocation functions/input.css 1:0-1:7
 				}
 			]
 			block: CSSBlock {
-				value: Array [
+				value: [
 					CSSDeclaration {
-						name: CSSCustomProperty {
-							value: "--fancy"
-							loc: SourceLocation functions/input.css 2:1-2:1
-						}
-						value: Array [
+						value: [
 							CSSDimension {
 								value: 2
 								unit: "px"
@@ -41,20 +30,24 @@ CSSRoot {
 							}
 						]
 						important: false
+						name: CSSCustomProperty {
+							value: "--fancy"
+							loc: SourceLocation functions/input.css 2:1-2:1
+						}
 						loc: SourceLocation functions/input.css 2:1-2:13
 					}
 					CSSDeclaration {
 						name: "border"
-						value: Array [
+						value: [
 							CSSVarFunction {
 								name: "var"
-								loc: SourceLocation functions/input.css 3:9-3:21
-								params: Array [
+								params: [
 									CSSCustomProperty {
 										value: "--fancy"
 										loc: SourceLocation functions/input.css 3:20-3:20
 									}
 								]
+								loc: SourceLocation functions/input.css 3:9-3:21
 							}
 						]
 						important: false
@@ -62,15 +55,14 @@ CSSRoot {
 					}
 					CSSDeclaration {
 						name: "font-size"
-						value: Array [
+						value: [
 							CSSCalcFunction {
 								name: "calc"
-								loc: SourceLocation functions/input.css 4:17-4:29
-								params: Array [
+								params: [
 									CSSCalcSum {
-										value: Array [
+										value: [
 											CSSCalcProduct {
-												value: Array [
+												value: [
 													CSSCalcValue {
 														value: CSSDimension {
 															value: 10
@@ -87,7 +79,7 @@ CSSRoot {
 												loc: SourceLocation functions/input.css 4:23-4:24
 											}
 											CSSCalcProduct {
-												value: Array [
+												value: [
 													CSSCalcValue {
 														value: CSSDimension {
 															value: 5
@@ -103,6 +95,7 @@ CSSRoot {
 										loc: SourceLocation functions/input.css 4:17-4:28
 									}
 								]
+								loc: SourceLocation functions/input.css 4:17-4:29
 							}
 						]
 						important: false
@@ -110,16 +103,16 @@ CSSRoot {
 					}
 					CSSDeclaration {
 						name: "background"
-						value: Array [
+						value: [
 							CSSUrlFunction {
 								name: "url"
-								loc: SourceLocation functions/input.css 5:13-5:20
-								params: Array [
+								params: [
 									CSSString {
 										value: ""
 										loc: SourceLocation functions/input.css 5:17-5:19
 									}
 								]
+								loc: SourceLocation functions/input.css 5:13-5:20
 							}
 						]
 						important: false
@@ -127,16 +120,16 @@ CSSRoot {
 					}
 					CSSDeclaration {
 						name: "background"
-						value: Array [
+						value: [
 							CSSUrlFunction {
 								name: "url"
-								loc: SourceLocation functions/input.css 6:13-6:29
-								params: Array [
+								params: [
 									CSSString {
 										value: "something"
 										loc: SourceLocation functions/input.css 6:17-6:28
 									}
 								]
+								loc: SourceLocation functions/input.css 6:13-6:29
 							}
 						]
 						important: false
@@ -144,16 +137,16 @@ CSSRoot {
 					}
 					CSSDeclaration {
 						name: "background"
-						value: Array [
+						value: [
 							CSSUrlFunction {
 								name: "url"
-								loc: SourceLocation functions/input.css 7:13-7:31
-								params: Array [
+								params: [
 									CSSString {
 										value: "./something"
 										loc: SourceLocation functions/input.css 7:17-7:30
 									}
 								]
+								loc: SourceLocation functions/input.css 7:13-7:31
 							}
 						]
 						important: false
@@ -163,7 +156,13 @@ CSSRoot {
 				startingTokenValue: "{"
 				loc: SourceLocation functions/input.css 1:7-8:1
 			}
+			loc: SourceLocation functions/input.css 1:0-8:1
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	path: RelativePath<functions/input.css>
+	loc: SourceLocation functions/input.css 1:0-8:1
 }
 ```

@@ -8,50 +8,17 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2020/import-meta/error-in-script/input.js 1:0-2:0
-	path: UIDPath<es2020/import-meta/error-in-script/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "import.meta may only appear in a module"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:21
-				path: UIDPath<es2020/import-meta/error-in-script/input.js>
-				start: Position 1:10
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSVariableDeclarationStatement {
-			loc: SourceLocation es2020/import-meta/error-in-script/input.js 1:0-1:22
 			declaration: JSVariableDeclaration {
 				kind: "const"
-				loc: SourceLocation es2020/import-meta/error-in-script/input.js 1:0-1:22
-				declarations: Array [
+				declarations: [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "x"
 							loc: SourceLocation es2020/import-meta/error-in-script/input.js 1:6-1:7 (x)
 						}
-						loc: SourceLocation es2020/import-meta/error-in-script/input.js 1:6-1:21
 						init: JSMetaProperty {
-							loc: SourceLocation es2020/import-meta/error-in-script/input.js 1:10-1:21
 							meta: JSIdentifier {
 								name: "import"
 								loc: SourceLocation es2020/import-meta/error-in-script/input.js 1:10-1:16 (import)
@@ -60,12 +27,41 @@ JSRoot {
 								name: "meta"
 								loc: SourceLocation es2020/import-meta/error-in-script/input.js 1:17-1:21 (meta)
 							}
+							loc: SourceLocation es2020/import-meta/error-in-script/input.js 1:10-1:21
 						}
+						loc: SourceLocation es2020/import-meta/error-in-script/input.js 1:6-1:21
 					}
 				]
+				loc: SourceLocation es2020/import-meta/error-in-script/input.js 1:0-1:22
+			}
+			loc: SourceLocation es2020/import-meta/error-in-script/input.js 1:0-1:22
+		}
+	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "import.meta may only appear in a module"}
+			}
+			location: {
+				language: "js"
+				path: UIDPath<es2020/import-meta/error-in-script/input.js>
+				end: Position 1:21
+				start: Position 1:10
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2020/import-meta/error-in-script/input.js>
+	loc: SourceLocation es2020/import-meta/error-in-script/input.js 1:0-2:0
 }
 ```
 

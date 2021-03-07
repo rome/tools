@@ -8,50 +8,38 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation esprima/expression-left-hand-side/migrated_0017/input.js 1:0-2:0
-	path: UIDPath<esprima/expression-left-hand-side/migrated_0017/input.js>
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation esprima/expression-left-hand-side/migrated_0017/input.js 1:0-1:41
 			expression: JSMemberExpression {
-				loc: SourceLocation esprima/expression-left-hand-side/migrated_0017/input.js 1:0-1:41
-				property: JSStaticMemberProperty {
-					value: JSIdentifier {
-						name: "milkyway"
-						loc: SourceLocation esprima/expression-left-hand-side/migrated_0017/input.js 1:33-1:41 (milkyway)
-					}
-					loc: SourceLocation esprima/expression-left-hand-side/migrated_0017/input.js 1:33-1:41 (milkyway)
-				}
 				object: JSCallExpression {
-					loc: SourceLocation esprima/expression-left-hand-side/migrated_0017/input.js 1:0-1:32
-					arguments: Array [
+					arguments: [
 						JSNumericLiteral {
 							value: 14
-							format: undefined
 							loc: SourceLocation esprima/expression-left-hand-side/migrated_0017/input.js 1:22-1:24
 						}
 						JSNumericLiteral {
 							value: 3
-							format: undefined
 							loc: SourceLocation esprima/expression-left-hand-side/migrated_0017/input.js 1:26-1:27
 						}
 						JSNumericLiteral {
 							value: 77
-							format: undefined
 							loc: SourceLocation esprima/expression-left-hand-side/migrated_0017/input.js 1:29-1:31
 						}
 					]
 					callee: JSMemberExpression {
-						loc: SourceLocation esprima/expression-left-hand-side/migrated_0017/input.js 1:0-1:21
+						object: JSCallExpression {
+							arguments: [
+								JSNumericLiteral {
+									value: 42
+									loc: SourceLocation esprima/expression-left-hand-side/migrated_0017/input.js 1:9-1:11
+								}
+							]
+							callee: JSReferenceIdentifier {
+								name: "universe"
+								loc: SourceLocation esprima/expression-left-hand-side/migrated_0017/input.js 1:0-1:8 (universe)
+							}
+							loc: SourceLocation esprima/expression-left-hand-side/migrated_0017/input.js 1:0-1:12
+						}
 						property: JSStaticMemberProperty {
 							value: JSIdentifier {
 								name: "galaxies"
@@ -59,25 +47,31 @@ JSRoot {
 							}
 							loc: SourceLocation esprima/expression-left-hand-side/migrated_0017/input.js 1:13-1:21 (galaxies)
 						}
-						object: JSCallExpression {
-							loc: SourceLocation esprima/expression-left-hand-side/migrated_0017/input.js 1:0-1:12
-							callee: JSReferenceIdentifier {
-								name: "universe"
-								loc: SourceLocation esprima/expression-left-hand-side/migrated_0017/input.js 1:0-1:8 (universe)
-							}
-							arguments: Array [
-								JSNumericLiteral {
-									value: 42
-									format: undefined
-									loc: SourceLocation esprima/expression-left-hand-side/migrated_0017/input.js 1:9-1:11
-								}
-							]
-						}
+						loc: SourceLocation esprima/expression-left-hand-side/migrated_0017/input.js 1:0-1:21
 					}
+					loc: SourceLocation esprima/expression-left-hand-side/migrated_0017/input.js 1:0-1:32
 				}
+				property: JSStaticMemberProperty {
+					value: JSIdentifier {
+						name: "milkyway"
+						loc: SourceLocation esprima/expression-left-hand-side/migrated_0017/input.js 1:33-1:41 (milkyway)
+					}
+					loc: SourceLocation esprima/expression-left-hand-side/migrated_0017/input.js 1:33-1:41 (milkyway)
+				}
+				loc: SourceLocation esprima/expression-left-hand-side/migrated_0017/input.js 1:0-1:41
 			}
+			loc: SourceLocation esprima/expression-left-hand-side/migrated_0017/input.js 1:0-1:41
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<esprima/expression-left-hand-side/migrated_0017/input.js>
+	loc: SourceLocation esprima/expression-left-hand-side/migrated_0017/input.js 1:0-2:0
 }
 ```
 

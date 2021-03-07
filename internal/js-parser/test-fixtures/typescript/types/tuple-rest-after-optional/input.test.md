@@ -8,78 +8,75 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	loc: SourceLocation typescript/types/tuple-rest-after-optional/input.ts 1:0-2:0
-	path: UIDPath<typescript/types/tuple-rest-after-optional/input.ts>
-	syntax: Array ["ts"]
-	body: Array [
+	body: [
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "foo"
 				loc: SourceLocation typescript/types/tuple-rest-after-optional/input.ts 1:9-1:12 (foo)
 			}
-			loc: SourceLocation typescript/types/tuple-rest-after-optional/input.ts 1:0-1:56
 			body: JSBlockStatement {
-				body: Array []
-				directives: Array []
+				body: []
+				directives: []
 				loc: SourceLocation typescript/types/tuple-rest-after-optional/input.ts 1:54-1:56
 			}
 			head: JSFunctionHead {
 				async: false
 				generator: false
 				hasHoistedVars: false
-				params: Array []
-				returnType: undefined
-				thisType: undefined
-				typeParameters: undefined
-				loc: SourceLocation typescript/types/tuple-rest-after-optional/input.ts 1:12-1:53
+				params: []
 				rest: JSBindingIdentifier {
 					name: "args"
-					loc: SourceLocation typescript/types/tuple-rest-after-optional/input.ts 1:16-1:20 (args)
 					meta: JSPatternMeta {
-						optional: undefined
-						loc: SourceLocation typescript/types/tuple-rest-after-optional/input.ts 1:16-1:52
 						typeAnnotation: TSTupleType {
-							loc: SourceLocation typescript/types/tuple-rest-after-optional/input.ts 1:22-1:52
-							elementTypes: Array [
+							elementTypes: [
 								TSTupleElement {
-									name: undefined
 									optional: false
+									typeAnnotation: TSNumberKeywordTypeAnnotation {
+										loc: SourceLocation typescript/types/tuple-rest-after-optional/input.ts 1:23-1:29
+									}
 									loc: SourceLocation typescript/types/tuple-rest-after-optional/input.ts 1:23-1:29
-									typeAnnotation: TSNumberKeywordTypeAnnotation {loc: SourceLocation typescript/types/tuple-rest-after-optional/input.ts 1:23-1:29}
 								}
 								TSTupleElement {
-									name: undefined
 									optional: true
+									typeAnnotation: TSStringKeywordTypeAnnotation {
+										loc: SourceLocation typescript/types/tuple-rest-after-optional/input.ts 1:31-1:37
+									}
 									loc: SourceLocation typescript/types/tuple-rest-after-optional/input.ts 1:31-1:38
-									typeAnnotation: TSStringKeywordTypeAnnotation {loc: SourceLocation typescript/types/tuple-rest-after-optional/input.ts 1:31-1:37}
 								}
 								TSTupleElement {
-									name: undefined
 									optional: false
-									loc: SourceLocation typescript/types/tuple-rest-after-optional/input.ts 1:40-1:51
 									typeAnnotation: TSRestType {
-										loc: SourceLocation typescript/types/tuple-rest-after-optional/input.ts 1:40-1:51
 										argument: TSArrayType {
-											elementType: TSNumberKeywordTypeAnnotation {loc: SourceLocation typescript/types/tuple-rest-after-optional/input.ts 1:43-1:49}
+											elementType: TSNumberKeywordTypeAnnotation {
+												loc: SourceLocation typescript/types/tuple-rest-after-optional/input.ts 1:43-1:49
+											}
 											loc: SourceLocation typescript/types/tuple-rest-after-optional/input.ts 1:43-1:51
 										}
+										loc: SourceLocation typescript/types/tuple-rest-after-optional/input.ts 1:40-1:51
 									}
+									loc: SourceLocation typescript/types/tuple-rest-after-optional/input.ts 1:40-1:51
 								}
 							]
+							loc: SourceLocation typescript/types/tuple-rest-after-optional/input.ts 1:22-1:52
 						}
+						loc: SourceLocation typescript/types/tuple-rest-after-optional/input.ts 1:16-1:52
 					}
+					loc: SourceLocation typescript/types/tuple-rest-after-optional/input.ts 1:16-1:20 (args)
 				}
+				loc: SourceLocation typescript/types/tuple-rest-after-optional/input.ts 1:12-1:53
 			}
+			loc: SourceLocation typescript/types/tuple-rest-after-optional/input.ts 1:0-1:56
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: ["ts"]
+	path: UIDPath<typescript/types/tuple-rest-after-optional/input.ts>
+	loc: SourceLocation typescript/types/tuple-rest-after-optional/input.ts 1:0-2:0
 }
 ```
 

@@ -8,53 +8,49 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation core/categorized/startline-specified/input.js 1:0-3:0
-	path: UIDPath<core/categorized/startline-specified/input.js>
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation core/categorized/startline-specified/input.js 1:0-1:8
 			expression: JSCallExpression {
-				loc: SourceLocation core/categorized/startline-specified/input.js 1:0-1:7
+				arguments: [
+					JSNumericLiteral {
+						value: 1
+						loc: SourceLocation core/categorized/startline-specified/input.js 1:5-1:6
+					}
+				]
 				callee: JSReferenceIdentifier {
 					name: "call"
 					loc: SourceLocation core/categorized/startline-specified/input.js 1:0-1:4 (call)
 				}
-				arguments: Array [
-					JSNumericLiteral {
-						value: 1
-						format: undefined
-						loc: SourceLocation core/categorized/startline-specified/input.js 1:5-1:6
-					}
-				]
+				loc: SourceLocation core/categorized/startline-specified/input.js 1:0-1:7
 			}
+			loc: SourceLocation core/categorized/startline-specified/input.js 1:0-1:8
 		}
 		JSExpressionStatement {
-			loc: SourceLocation core/categorized/startline-specified/input.js 2:0-2:7
 			expression: JSCallExpression {
-				loc: SourceLocation core/categorized/startline-specified/input.js 2:0-2:6
+				arguments: [
+					JSNumericLiteral {
+						value: 2
+						loc: SourceLocation core/categorized/startline-specified/input.js 2:4-2:5
+					}
+				]
 				callee: JSReferenceIdentifier {
 					name: "run"
 					loc: SourceLocation core/categorized/startline-specified/input.js 2:0-2:3 (run)
 				}
-				arguments: Array [
-					JSNumericLiteral {
-						value: 2
-						format: undefined
-						loc: SourceLocation core/categorized/startline-specified/input.js 2:4-2:5
-					}
-				]
+				loc: SourceLocation core/categorized/startline-specified/input.js 2:0-2:6
 			}
+			loc: SourceLocation core/categorized/startline-specified/input.js 2:0-2:7
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<core/categorized/startline-specified/input.js>
+	loc: SourceLocation core/categorized/startline-specified/input.js 1:0-3:0
 }
 ```
 

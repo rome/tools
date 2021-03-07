@@ -8,29 +8,14 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2018/object-rest-spread/10/input.js 1:0-2:0
-	path: UIDPath<es2018/object-rest-spread/10/input.js>
-	body: Array [
+	body: [
 		JSVariableDeclarationStatement {
-			loc: SourceLocation es2018/object-rest-spread/10/input.js 1:0-1:20
 			declaration: JSVariableDeclaration {
 				kind: "let"
-				loc: SourceLocation es2018/object-rest-spread/10/input.js 1:0-1:20
-				declarations: Array [
+				declarations: [
 					JSVariableDeclarator {
 						id: JSBindingObjectPattern {
-							rest: undefined
-							loc: SourceLocation es2018/object-rest-spread/10/input.js 1:4-1:13
-							properties: Array [
+							properties: [
 								JSBindingObjectPatternProperty {
 									key: JSStaticPropertyKey {
 										value: JSIdentifier {
@@ -60,17 +45,29 @@ JSRoot {
 									loc: SourceLocation es2018/object-rest-spread/10/input.js 1:9-1:10
 								}
 							]
+							loc: SourceLocation es2018/object-rest-spread/10/input.js 1:4-1:13
 						}
-						loc: SourceLocation es2018/object-rest-spread/10/input.js 1:4-1:19
 						init: JSReferenceIdentifier {
 							name: "obj"
 							loc: SourceLocation es2018/object-rest-spread/10/input.js 1:16-1:19 (obj)
 						}
+						loc: SourceLocation es2018/object-rest-spread/10/input.js 1:4-1:19
 					}
 				]
+				loc: SourceLocation es2018/object-rest-spread/10/input.js 1:0-1:20
 			}
+			loc: SourceLocation es2018/object-rest-spread/10/input.js 1:0-1:20
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2018/object-rest-spread/10/input.js>
+	loc: SourceLocation es2018/object-rest-spread/10/input.js 1:0-2:0
 }
 ```
 

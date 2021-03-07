@@ -7,27 +7,16 @@
 ### `result`
 
 ```javascript
-Array [
-	"chrome:87"
-	"ios_saf:14"
-	"ios_saf:14.4"
-	"and_chr:88"
-]
+["chrome:87", "ios_saf:14", "ios_saf:14.4", "and_chr:88"]
 ```
 
 ### `targets`
 
 ```javascript
-Array [
-	TargetBrowserUsage {
-		operator: "GT"
-		usage: 5
-	}
+[
+	TargetBrowserUsage {operator: "GT", usage: 5}
 	TargetBrowserInversion {
-		target: TargetBrowser {
-			browser: "Chrome"
-			version: 80
-		}
+		target: TargetBrowser {browser: "Chrome", version: 80}
 	}
 ]
 ```
@@ -35,7 +24,7 @@ Array [
 ### `tokens`
 
 ```javascript
-Array [
+[
 	GT {
 		end: ZeroIndexedNumber<1>
 		start: ZeroIndexedNumber<0>

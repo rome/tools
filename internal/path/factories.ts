@@ -1,126 +1,72 @@
-import {isPath} from ".";
 import AbsoluteFilePath from "./classes/AbsoluteFilePath";
 import RelativePath from "./classes/RelativePath";
 import UIDPath from "./classes/UIDPath";
 import URLPath from "./classes/URLPath";
+import DataURIPath from "./classes/DataURIPath";
 import {
-	ParsedPath,
 	PathTypeHint,
-	parsePathSegments,
-	splitPathSegments,
+	normalizeRelativeSegments,
+	parsePath,
+	parseRelativePathSegments,
 } from "./parse";
-import {AnyFilePath, AnyPath} from "./types";
+import {FilePath, ParsedPath, Path} from "./types";
 
-function createPathFromParsed(parsed: ParsedPath): AnyPath {
-	switch (parsed.absoluteType) {
-		case "windows-drive":
-		case "windows-unc":
-		case "posix": {
-			if (parsed.absoluteTarget !== undefined) {
-				return new AbsoluteFilePath(parsed);
-			}
-			break;
-		}
+export function createPathFromParsed(parsed: ParsedPath): Path {
+	switch (parsed.type) {
+		case "absolute-windows-drive":
+		case "absolute-windows-unc":
+		case "absolute-unix":
+			return new AbsoluteFilePath(parsed);
+
+		case "data":
+			return new DataURIPath(parsed);
 
 		case "url":
 			return new URLPath(parsed);
 
 		case "uid":
 			return new UIDPath(parsed);
-	}
 
-	return new RelativePath(parsed);
-}
-
-export function createPathFromSegments(
-	segments: string[],
-	hint: PathTypeHint,
-): AnyPath {
-	const parsed = parsePathSegments(segments, hint);
-	return createPathFromParsed(parsed);
-}
-
-export function createRelativePath(filename: string): RelativePath {
-	return createAnyPath(filename, "relative").assertRelative();
-}
-
-export function createURLPath(filename: string): URLPath {
-	return createAnyPath(filename, "any").assertURL();
-}
-
-export function createAbsoluteFilePath(filename: string): AbsoluteFilePath {
-	return createAnyPath(filename, "absolute").assertAbsolute();
-}
-
-export function createUIDPath(filename: string): UIDPath {
-	return createAnyPath(filename, "uid").assertUID();
-}
-
-export function createFilePath(filename: string): AnyFilePath {
-	return createAnyPath(filename, "absolute").assertFilePath();
-}
-
-export function createAnyPath(
-	param: string,
-	hint: PathTypeHint = "any",
-): AnyPath {
-	// Allows using the create methods above to be used in places where strings are more ergonomic (eg. in third-party code)
-	if (isPath(param)) {
-		return param;
-	}
-
-	const segments = splitPathSegments(param);
-	const parsed = parsePathSegments(segments, hint);
-	return createPathFromParsed(parsed);
-}
-
-// These are some utility methods so you can pass in `undefined | string`
-export function maybeCreateURLPath(
-	filename: undefined | string,
-): undefined | URLPath {
-	if (filename !== undefined) {
-		return createURLPath(filename);
-	} else {
-		return undefined;
+		case "relative":
+			return new RelativePath(parsed);
 	}
 }
 
-export function maybeCreateRelativePath(
-	filename: undefined | string,
-): undefined | RelativePath {
-	if (filename !== undefined) {
-		return createRelativePath(filename);
-	} else {
-		return undefined;
-	}
+export function createRelativePathFromSegments(segments: string[]): RelativePath {
+	return new RelativePath(parseRelativePathSegments(segments));
 }
 
-export function maybeCreateAbsoluteFilePath(
-	filename: undefined | string,
-): undefined | AbsoluteFilePath {
-	if (filename !== undefined) {
-		return createAbsoluteFilePath(filename);
-	} else {
-		return undefined;
-	}
+export function createRelativePath(str: string): RelativePath {
+	return createPath(str, "relative").assertRelative();
 }
 
-export function maybeCreateAnyPath(
-	filename: undefined | string,
-): undefined | AnyPath {
-	if (filename !== undefined) {
-		return createAnyPath(filename, "any");
-	} else {
-		return undefined;
-	}
+export function createURLPath(str: string): URLPath {
+	return createPath(str, "url").assertURL();
 }
 
-export function maybeCreateUIDPath(
-	filename: undefined | string,
-): undefined | UIDPath {
-	if (filename !== undefined) {
-		return createUIDPath(filename);
-	} else {
-		return undefined;
-	}
+export function createDataURIPath(str: string): DataURIPath {
+	return createPath(str, "url").assertDataURI();
+}
+
+export function createAbsoluteFilePath(str: string): AbsoluteFilePath {
+	return createPath(str, "absolute").assertAbsolute();
+}
+
+export function createUIDPath(str: string): UIDPath {
+	return createPath(str, "uid").assertUID();
+}
+
+export function createUIDPathFromSegments(relativeSegments: string[]): UIDPath {
+	return new UIDPath({
+		type: "uid",
+		...normalizeRelativeSegments(relativeSegments),
+	});
+}
+
+export function createFilePath(str: string): FilePath {
+	return createPath(str, "absolute").assertFilePath();
+}
+
+export function createPath(param: string, hint: PathTypeHint = "any"): Path {
+	return createPathFromParsed(parsePath(param, hint));
 }

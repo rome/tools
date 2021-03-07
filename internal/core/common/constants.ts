@@ -12,12 +12,17 @@ import {
 	TEMP_PATH,
 	createAbsoluteFilePath,
 } from "@internal/path";
-import {getEnvVar} from "@internal/cli-environment";
+import {IS_ROME_DEV_ENV} from "@internal/cli-environment";
 import os = require("os");
 import {CONFIG_EXTENSIONS} from "@internal/codec-config";
+import {Duration} from "@internal/numbers";
 
 // Node flags to pass to all forked processes
-export const CHILD_ARGS = ["--trace-warnings", "--inspect-publish-uid=http"];
+export const CHILD_ARGS = [
+	"--trace-warnings",
+	"--inspect-publish-uid=http",
+	"--unhandled-rejections=strict",
+];
 
 export function getBinPath(): AbsoluteFilePath {
 	return createAbsoluteFilePath(__filename);
@@ -37,7 +42,7 @@ export const MAX_WORKER_COUNT = Math.min(CPU_COUNT, 4);
 
 // Vendor Rome and Trunk Rome could have the same version number if there was no release in between
 // Ensure they are properly namespaced to avoid having daemon socket conflicts
-if (getEnvVar("ROME_DEV").type === "ENABLED") {
+if (IS_ROME_DEV_ENV) {
 	VERSION += "-dev";
 }
 
@@ -45,7 +50,7 @@ if (getEnvVar("ROME_DEV").type === "ENABLED") {
 export const MOCKS_DIRECTORY_NAME = "__rmocks__";
 
 // Used as a heartbeat timeout to indicate if a process is unresponsive
-export const LAG_INTERVAL = 10_000; //3_000;
+export const LAG_INTERVAL = Duration.fromSeconds(3); //3_000;
 
 // # Folders
 // XDG environment variables information:
@@ -182,7 +187,7 @@ function createPipePath(name: string): AbsoluteFilePath {
 	if (process.platform === "win32") {
 		return createAbsoluteFilePath(String.raw`\\.\pipe\rome-${VERSION}-${name}`);
 	} else {
-		return RUNTIME_DIRECTORY.append(`${VERSION}-wait.sock`);
+		return RUNTIME_DIRECTORY.append(`${VERSION}.sock`);
 	}
 }
 

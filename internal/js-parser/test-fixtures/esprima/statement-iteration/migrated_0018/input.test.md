@@ -8,56 +8,53 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: true
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation esprima/statement-iteration/migrated_0018/input.js 1:0-2:0
-	path: UIDPath<esprima/statement-iteration/migrated_0018/input.js>
-	body: Array [
+	body: [
 		JSForInStatement {
-			loc: SourceLocation esprima/statement-iteration/migrated_0018/input.js 1:0-1:31
-			right: JSReferenceIdentifier {
-				name: "list"
-				loc: SourceLocation esprima/statement-iteration/migrated_0018/input.js 1:14-1:18 (list)
-			}
-			left: JSVariableDeclaration {
-				kind: "var"
-				loc: SourceLocation esprima/statement-iteration/migrated_0018/input.js 1:5-1:10
-				declarations: Array [
-					JSVariableDeclarator {
-						id: JSBindingIdentifier {
-							name: "x"
-							loc: SourceLocation esprima/statement-iteration/migrated_0018/input.js 1:9-1:10 (x)
-						}
-						init: undefined
-						loc: SourceLocation esprima/statement-iteration/migrated_0018/input.js 1:9-1:10
-					}
-				]
-			}
 			body: JSExpressionStatement {
-				loc: SourceLocation esprima/statement-iteration/migrated_0018/input.js 1:20-1:31
 				expression: JSCallExpression {
-					loc: SourceLocation esprima/statement-iteration/migrated_0018/input.js 1:20-1:30
-					callee: JSReferenceIdentifier {
-						name: "process"
-						loc: SourceLocation esprima/statement-iteration/migrated_0018/input.js 1:20-1:27 (process)
-					}
-					arguments: Array [
+					arguments: [
 						JSReferenceIdentifier {
 							name: "x"
 							loc: SourceLocation esprima/statement-iteration/migrated_0018/input.js 1:28-1:29 (x)
 						}
 					]
+					callee: JSReferenceIdentifier {
+						name: "process"
+						loc: SourceLocation esprima/statement-iteration/migrated_0018/input.js 1:20-1:27 (process)
+					}
+					loc: SourceLocation esprima/statement-iteration/migrated_0018/input.js 1:20-1:30
 				}
+				loc: SourceLocation esprima/statement-iteration/migrated_0018/input.js 1:20-1:31
 			}
+			left: JSVariableDeclaration {
+				kind: "var"
+				declarations: [
+					JSVariableDeclarator {
+						id: JSBindingIdentifier {
+							name: "x"
+							loc: SourceLocation esprima/statement-iteration/migrated_0018/input.js 1:9-1:10 (x)
+						}
+						loc: SourceLocation esprima/statement-iteration/migrated_0018/input.js 1:9-1:10
+					}
+				]
+				loc: SourceLocation esprima/statement-iteration/migrated_0018/input.js 1:5-1:10
+			}
+			right: JSReferenceIdentifier {
+				name: "list"
+				loc: SourceLocation esprima/statement-iteration/migrated_0018/input.js 1:14-1:18 (list)
+			}
+			loc: SourceLocation esprima/statement-iteration/migrated_0018/input.js 1:0-1:31
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: true
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<esprima/statement-iteration/migrated_0018/input.js>
+	loc: SourceLocation esprima/statement-iteration/migrated_0018/input.js 1:0-2:0
 }
 ```
 

@@ -46,7 +46,7 @@ import {TokContext, types as ct} from "./context";
 import {ASCII_NAMES, UNICODE_MISTAKES} from "./unicodeMistakes";
 import * as charCodes from "@internal/string-charcodes";
 import {descriptions} from "@internal/diagnostics";
-import {ZeroIndexed} from "@internal/math";
+import {ZeroIndexed} from "@internal/numbers";
 import {removeCarriageReturn} from "@internal/string-utils";
 
 const HEX_NUMBER = /^[\da-fA-F]+$/;

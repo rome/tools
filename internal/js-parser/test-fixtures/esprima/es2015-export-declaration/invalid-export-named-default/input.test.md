@@ -8,43 +8,11 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	syntax: Array []
-	loc: SourceLocation esprima/es2015-export-declaration/invalid-export-named-default/input.js 1:0-2:0
-	path: UIDPath<esprima/es2015-export-declaration/invalid-export-named-default/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Unexpected keyword <emphasis>default</emphasis>"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:15
-				path: UIDPath<esprima/es2015-export-declaration/invalid-export-named-default/input.js>
-				start: Position 1:8
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSExportLocalDeclaration {
-			declaration: undefined
 			exportKind: "value"
-			loc: SourceLocation esprima/es2015-export-declaration/invalid-export-named-default/input.js 1:0-1:16
-			specifiers: Array [
+			specifiers: [
 				JSExportLocalSpecifier {
-					loc: SourceLocation esprima/es2015-export-declaration/invalid-export-named-default/input.js 1:8-1:15
 					exported: JSIdentifier {
 						name: "default"
 						loc: SourceLocation esprima/es2015-export-declaration/invalid-export-named-default/input.js 1:8-1:15 (default)
@@ -53,10 +21,37 @@ JSRoot {
 						name: "default"
 						loc: SourceLocation esprima/es2015-export-declaration/invalid-export-named-default/input.js 1:8-1:15 (default)
 					}
+					loc: SourceLocation esprima/es2015-export-declaration/invalid-export-named-default/input.js 1:8-1:15
 				}
 			]
+			loc: SourceLocation esprima/es2015-export-declaration/invalid-export-named-default/input.js 1:0-1:16
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "js"
+				message: [RAW_MARKUP {value: "Unexpected keyword <emphasis>"}, "default", RAW_MARKUP {value: "</emphasis>"}]
+			}
+			location: {
+				language: "js"
+				path: UIDPath<esprima/es2015-export-declaration/invalid-export-named-default/input.js>
+				end: Position 1:15
+				start: Position 1:8
+			}
+		}
+	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: []
+	path: UIDPath<esprima/es2015-export-declaration/invalid-export-named-default/input.js>
+	loc: SourceLocation esprima/es2015-export-declaration/invalid-export-named-default/input.js 1:0-2:0
 }
 ```
 

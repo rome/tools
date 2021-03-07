@@ -8,24 +8,11 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2015/uncategorised/21/input.js 1:0-1:3
-	path: UIDPath<es2015/uncategorised/21/input.js>
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation es2015/uncategorised/21/input.js 1:0-1:3
 			expression: JSTemplateLiteral {
-				expressions: Array []
-				loc: SourceLocation es2015/uncategorised/21/input.js 1:0-1:3
-				quasis: Array [
+				expressions: []
+				quasis: [
 					JSTemplateElement {
 						cooked: "$"
 						raw: "$"
@@ -33,9 +20,20 @@ JSRoot {
 						loc: SourceLocation es2015/uncategorised/21/input.js 1:1-1:2
 					}
 				]
+				loc: SourceLocation es2015/uncategorised/21/input.js 1:0-1:3
 			}
+			loc: SourceLocation es2015/uncategorised/21/input.js 1:0-1:3
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2015/uncategorised/21/input.js>
+	loc: SourceLocation es2015/uncategorised/21/input.js 1:0-1:3
 }
 ```
 

@@ -8,47 +8,41 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation core/uncategorised/425/input.js 1:0-1:7
-	path: UIDPath<core/uncategorised/425/input.js>
-	body: Array [
+	body: [
 		JSTryStatement {
-			finalizer: undefined
-			handler: undefined
-			loc: SourceLocation core/uncategorised/425/input.js 1:0-1:7
 			block: JSBlockStatement {
-				body: Array []
-				directives: Array []
+				body: []
+				directives: []
 				loc: SourceLocation core/uncategorised/425/input.js 1:4-1:7
 			}
+			loc: SourceLocation core/uncategorised/425/input.js 1:0-1:7
 		}
 	]
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {
+				advice: []
+				category: ["parse"]
 				categoryValue: "js"
-				category: Array ["parse"]
 				message: RAW_MARKUP {value: "Missing catch or finally clause"}
 			}
-			location: Object {
-				integrity: undefined
+			location: {
 				language: "js"
-				sourceText: undefined
-				end: Position 1:0
 				path: UIDPath<core/uncategorised/425/input.js>
+				end: Position 1:0
 				start: Position 1:0
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<core/uncategorised/425/input.js>
+	loc: SourceLocation core/uncategorised/425/input.js 1:0-1:7
 }
 ```
 

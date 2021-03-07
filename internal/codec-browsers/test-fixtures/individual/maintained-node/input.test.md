@@ -7,24 +7,19 @@
 ### `result`
 
 ```javascript
-Array []
+[]
 ```
 
 ### `targets`
 
 ```javascript
-Array [
-	TargetBrowserState {
-		browser: "node"
-		state: "maintained"
-	}
-]
+[TargetBrowserState {browser: "node", state: "maintained"}]
 ```
 
 ### `tokens`
 
 ```javascript
-Array [
+[
 	Maintained {
 		end: ZeroIndexedNumber<10>
 		start: ZeroIndexedNumber<0>

@@ -1,4 +1,3 @@
-import {readFileText} from "@internal/fs";
 import {ROOT, modifyGeneratedFile} from "../_utils";
 import {escapeRegex} from "@internal/string-escape";
 
@@ -9,7 +8,7 @@ export async function main() {
 			scriptName: "generated-files/website-intro",
 		},
 		async () => {
-			const readme = await readFileText(ROOT.append("README.md"));
+			const readme = await ROOT.append("README.md").readFileText();
 			const introMatch = readme.match(
 				/<!-- INTRO START -->\n([\s\S]*?)\n<!-- INTRO END -->/,
 			);

@@ -8,31 +8,14 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	loc: SourceLocation typescript/regression/async-arrow-generic-9560/input.ts 1:0-8:1
-	path: UIDPath<typescript/regression/async-arrow-generic-9560/input.ts>
-	syntax: Array ["ts"]
-	body: Array [
+	body: [
 		JSClassDeclaration {
 			id: JSBindingIdentifier {
 				name: "Cl"
 				loc: SourceLocation typescript/regression/async-arrow-generic-9560/input.ts 1:6-1:8 (Cl)
 			}
-			loc: SourceLocation typescript/regression/async-arrow-generic-9560/input.ts 1:0-8:1
 			meta: JSClassHead {
-				implements: undefined
-				superClass: undefined
-				superTypeParameters: undefined
-				typeParameters: undefined
-				loc: SourceLocation typescript/regression/async-arrow-generic-9560/input.ts 1:0-8:1
-				body: Array [
+				body: [
 					JSClassProperty {
 						key: JSStaticPropertyKey {
 							value: JSIdentifier {
@@ -41,59 +24,49 @@ JSRoot {
 							}
 							loc: SourceLocation typescript/regression/async-arrow-generic-9560/input.ts 2:2-2:3
 						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							optional: false
+							readonly: false
+							static: false
+							loc: SourceLocation typescript/regression/async-arrow-generic-9560/input.ts 2:2-2:3
+							start: Position 2:2
+						}
 						value: JSArrowFunctionExpression {
-							loc: SourceLocation typescript/regression/async-arrow-generic-9560/input.ts 2:6-4:3
 							body: JSBlockStatement {
-								directives: Array []
-								loc: SourceLocation typescript/regression/async-arrow-generic-9560/input.ts 2:20-4:3
-								body: Array [
+								body: [
 									JSExpressionStatement {
-										loc: SourceLocation typescript/regression/async-arrow-generic-9560/input.ts 3:4-3:12
 										expression: JSAwaitExpression {
-											loc: SourceLocation typescript/regression/async-arrow-generic-9560/input.ts 3:4-3:11
 											argument: JSNumericLiteral {
 												value: 0
-												format: undefined
 												loc: SourceLocation typescript/regression/async-arrow-generic-9560/input.ts 3:10-3:11
 											}
+											loc: SourceLocation typescript/regression/async-arrow-generic-9560/input.ts 3:4-3:11
 										}
+										loc: SourceLocation typescript/regression/async-arrow-generic-9560/input.ts 3:4-3:12
 									}
 								]
+								directives: []
+								loc: SourceLocation typescript/regression/async-arrow-generic-9560/input.ts 2:20-4:3
 							}
 							head: JSFunctionHead {
 								async: true
 								hasHoistedVars: false
-								params: Array []
-								rest: undefined
-								returnType: undefined
-								thisType: undefined
-								loc: SourceLocation typescript/regression/async-arrow-generic-9560/input.ts 2:6-2:19
+								params: []
 								typeParameters: TSTypeParameterDeclaration {
-									loc: SourceLocation typescript/regression/async-arrow-generic-9560/input.ts 2:11-2:14
-									params: Array [
+									params: [
 										TSTypeParameter {
 											name: "T"
-											constraint: undefined
-											default: undefined
 											loc: SourceLocation typescript/regression/async-arrow-generic-9560/input.ts 2:12-2:13
 										}
 									]
+									loc: SourceLocation typescript/regression/async-arrow-generic-9560/input.ts 2:11-2:14
 								}
+								loc: SourceLocation typescript/regression/async-arrow-generic-9560/input.ts 2:6-2:19
 							}
+							loc: SourceLocation typescript/regression/async-arrow-generic-9560/input.ts 2:6-4:3
 						}
-						definite: undefined
-						typeAnnotation: undefined
 						loc: SourceLocation typescript/regression/async-arrow-generic-9560/input.ts 2:2-4:4
-						meta: JSClassPropertyMeta {
-							abstract: false
-							accessibility: undefined
-							optional: false
-							readonly: false
-							static: false
-							typeAnnotation: undefined
-							loc: SourceLocation typescript/regression/async-arrow-generic-9560/input.ts 2:2-2:3
-							start: Position 2:2
-						}
 					}
 					JSClassProperty {
 						key: JSStaticPropertyKey {
@@ -103,52 +76,54 @@ JSRoot {
 							}
 							loc: SourceLocation typescript/regression/async-arrow-generic-9560/input.ts 6:2-6:3
 						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							optional: false
+							readonly: false
+							static: false
+							loc: SourceLocation typescript/regression/async-arrow-generic-9560/input.ts 6:2-6:3
+							start: Position 6:2
+						}
 						value: JSArrowFunctionExpression {
-							loc: SourceLocation typescript/regression/async-arrow-generic-9560/input.ts 6:6-7:3
 							body: JSBlockStatement {
-								body: Array []
-								directives: Array []
+								body: []
+								directives: []
 								loc: SourceLocation typescript/regression/async-arrow-generic-9560/input.ts 6:20-7:3
 							}
 							head: JSFunctionHead {
 								async: true
 								hasHoistedVars: false
-								params: Array []
-								rest: undefined
-								returnType: undefined
-								thisType: undefined
-								loc: SourceLocation typescript/regression/async-arrow-generic-9560/input.ts 6:6-6:19
+								params: []
 								typeParameters: TSTypeParameterDeclaration {
-									loc: SourceLocation typescript/regression/async-arrow-generic-9560/input.ts 6:11-6:14
-									params: Array [
+									params: [
 										TSTypeParameter {
 											name: "T"
-											constraint: undefined
-											default: undefined
 											loc: SourceLocation typescript/regression/async-arrow-generic-9560/input.ts 6:12-6:13
 										}
 									]
+									loc: SourceLocation typescript/regression/async-arrow-generic-9560/input.ts 6:11-6:14
 								}
+								loc: SourceLocation typescript/regression/async-arrow-generic-9560/input.ts 6:6-6:19
 							}
+							loc: SourceLocation typescript/regression/async-arrow-generic-9560/input.ts 6:6-7:3
 						}
-						definite: undefined
-						typeAnnotation: undefined
 						loc: SourceLocation typescript/regression/async-arrow-generic-9560/input.ts 6:2-7:4
-						meta: JSClassPropertyMeta {
-							abstract: false
-							accessibility: undefined
-							optional: false
-							readonly: false
-							static: false
-							typeAnnotation: undefined
-							loc: SourceLocation typescript/regression/async-arrow-generic-9560/input.ts 6:2-6:3
-							start: Position 6:2
-						}
 					}
 				]
+				loc: SourceLocation typescript/regression/async-arrow-generic-9560/input.ts 1:0-8:1
 			}
+			loc: SourceLocation typescript/regression/async-arrow-generic-9560/input.ts 1:0-8:1
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: ["ts"]
+	path: UIDPath<typescript/regression/async-arrow-generic-9560/input.ts>
+	loc: SourceLocation typescript/regression/async-arrow-generic-9560/input.ts 1:0-8:1
 }
 ```
 

@@ -8,17 +8,17 @@
 
 ```javascript
 JSRoot {
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation core/uncategorised/48/input.js 1:0-1:21
-	path: UIDPath<core/uncategorised/48/input.js>
-	comments: Array [
+	body: [
+		JSExpressionStatement {
+			trailingComments: ["0", "1"]
+			expression: JSNumericLiteral {
+				value: 42
+				loc: SourceLocation core/uncategorised/48/input.js 1:0-1:2
+			}
+			loc: SourceLocation core/uncategorised/48/input.js 1:0-1:2
+		}
+	]
+	comments: [
 		CommentBlock {
 			id: "0"
 			value: "the"
@@ -30,21 +30,14 @@ JSRoot {
 			loc: SourceLocation core/uncategorised/48/input.js 1:11-1:21
 		}
 	]
-	body: Array [
-		JSExpressionStatement {
-			loc: SourceLocation core/uncategorised/48/input.js 1:0-1:2
-			trailingComments: Array [
-				"0"
-				"1"
-			]
-			expression: JSNumericLiteral {
-				value: 42
-				format: undefined
-				trailingComments: undefined
-				loc: SourceLocation core/uncategorised/48/input.js 1:0-1:2
-			}
-		}
-	]
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<core/uncategorised/48/input.js>
+	loc: SourceLocation core/uncategorised/48/input.js 1:0-1:21
 }
 ```
 

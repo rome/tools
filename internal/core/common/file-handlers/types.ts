@@ -8,25 +8,25 @@
 import {FileReference, WorkerParseOptions, WorkerProject} from "@internal/core";
 import Worker from "../../worker/Worker";
 import {
+	Diagnostic,
 	DiagnosticIntegrity,
 	DiagnosticLanguage,
 	DiagnosticSuppressions,
-	Diagnostics,
 } from "@internal/diagnostics";
 import {AnyRoot, ConstJSSourceType} from "@internal/ast";
-import {AnyPath} from "@internal/path";
+import {Path} from "@internal/path";
 import {WorkerIntegrationTimings} from "@internal/core/worker/types";
 
 export interface ExtensionCustomLintResult {
 	mtimeNs: bigint;
 	sourceText: string;
-	diagnostics: Diagnostics;
+	diagnostics: Diagnostic[];
 	formatted: string;
 	suppressions: DiagnosticSuppressions;
 }
 
 export interface ExtensionLintResult extends ExtensionCustomLintResult {
-	timingsNs: WorkerIntegrationTimings;
+	timings: WorkerIntegrationTimings;
 }
 
 export type ExtensionHandlerMethodInfo = {
@@ -41,20 +41,21 @@ export type ExtensionHandlerMethodInfo = {
 export type ExtensionParseInfo = ExtensionHandlerMethodInfo & {
 	sourceTypeJS: ConstJSSourceType;
 	manifestPath: undefined | string;
-	path: AnyPath;
+	path: Path;
 };
 
-export type ExtensionHandlerParseResult = {
+export type ExtensionHandlerParseResult<ParseRoot extends AnyRoot = AnyRoot> = {
 	sourceText: string;
 	astModifiedFromSource: boolean;
-	ast: AnyRoot;
+	ast: ParseRoot;
 };
 
-export type PartialExtensionHandler = {
+export type PartialExtensionHandler<ParseRoot extends AnyRoot = AnyRoot> = {
 	sourceTypeJS?: ConstJSSourceType;
 	isAsset?: boolean;
 	canHaveScale?: boolean;
 	language: DiagnosticLanguage;
+	mime: string;
 	hasTabs: boolean;
 
 	capabilities: {
@@ -66,9 +67,11 @@ export type PartialExtensionHandler = {
 		info: ExtensionHandlerMethodInfo,
 	) => Promise<ExtensionCustomLintResult>;
 
-	parse: (opts: ExtensionParseInfo) => Promise<ExtensionHandlerParseResult>;
+	parse: (
+		opts: ExtensionParseInfo,
+	) => Promise<ExtensionHandlerParseResult<ParseRoot>>;
 };
 
-export type ExtensionHandler = PartialExtensionHandler & {
+export type ExtensionHandler<ParseRoot extends AnyRoot = AnyRoot> = PartialExtensionHandler<ParseRoot> & {
 	ext: string;
 };

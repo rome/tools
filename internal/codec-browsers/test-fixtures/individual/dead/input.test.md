@@ -7,29 +7,19 @@
 ### `result`
 
 ```javascript
-Array [
-	"bb:7"
-	"bb:10"
-	"op_mob:10"
-	"op_mob:11"
-	"op_mob:11.1"
-	"op_mob:11.5"
-	"op_mob:12"
-	"op_mob:12.1"
-	"samsung:4"
-]
+["bb:7", "bb:10", "op_mob:10", "op_mob:11", "op_mob:11.1", "op_mob:11.5", "op_mob:12", "op_mob:12.1", "samsung:4"]
 ```
 
 ### `targets`
 
 ```javascript
-Array [TargetBrowserPreset {preset: "dead"}]
+[TargetBrowserPreset {preset: "dead"}]
 ```
 
 ### `tokens`
 
 ```javascript
-Array [
+[
 	Dead {
 		end: ZeroIndexedNumber<4>
 		start: ZeroIndexedNumber<0>

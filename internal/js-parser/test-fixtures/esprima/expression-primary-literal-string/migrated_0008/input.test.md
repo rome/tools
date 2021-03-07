@@ -8,23 +8,21 @@
 
 ```javascript
 JSRoot {
-	body: Array []
-	comments: Array []
+	body: []
+	comments: []
 	corrupt: false
-	diagnostics: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation esprima/expression-primary-literal-string/migrated_0008/input.js 1:0-1:15
-	path: UIDPath<esprima/expression-primary-literal-string/migrated_0008/input.js>
-	directives: Array [
+	diagnostics: []
+	directives: [
 		JSDirective {
 			value: "Hello\\02World"
 			loc: SourceLocation esprima/expression-primary-literal-string/migrated_0008/input.js 1:0-1:15
 		}
 	]
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<esprima/expression-primary-literal-string/migrated_0008/input.js>
+	loc: SourceLocation esprima/expression-primary-literal-string/migrated_0008/input.js 1:0-1:15
 }
 ```
 

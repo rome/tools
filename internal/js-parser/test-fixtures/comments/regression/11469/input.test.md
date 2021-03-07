@@ -8,17 +8,143 @@
 
 ```javascript
 JSRoot {
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation comments/regression/11469/input.js 1:0-19:0
-	path: UIDPath<comments/regression/11469/input.js>
-	comments: Array [
+	body: [
+		JSClassDeclaration {
+			id: JSBindingIdentifier {
+				name: "A"
+				loc: SourceLocation comments/regression/11469/input.js 1:6-1:7 (A)
+			}
+			meta: JSClassHead {
+				body: [
+					JSClassMethod {
+						kind: "method"
+						trailingComments: ["1"]
+						key: JSStaticPropertyKey {
+							value: JSIdentifier {
+								name: "test"
+								loc: SourceLocation comments/regression/11469/input.js 2:2-2:6 (test)
+							}
+							loc: SourceLocation comments/regression/11469/input.js 2:2-2:6
+						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							optional: false
+							readonly: false
+							static: false
+							loc: SourceLocation comments/regression/11469/input.js 2:2-2:6
+							start: Position 2:2
+						}
+						body: JSBlockStatement {
+							body: []
+							directives: []
+							innerComments: ["0"]
+							loc: SourceLocation comments/regression/11469/input.js 2:9-4:3
+						}
+						head: JSFunctionHead {
+							async: false
+							generator: false
+							hasHoistedVars: false
+							params: []
+							loc: SourceLocation comments/regression/11469/input.js 2:6-2:8
+						}
+						loc: SourceLocation comments/regression/11469/input.js 2:2-4:3
+					}
+				]
+				loc: SourceLocation comments/regression/11469/input.js 1:0-7:1
+			}
+			loc: SourceLocation comments/regression/11469/input.js 1:0-7:1
+		}
+		JSClassDeclaration {
+			id: JSBindingIdentifier {
+				name: "B"
+				loc: SourceLocation comments/regression/11469/input.js 9:6-9:7 (B)
+			}
+			meta: JSClassHead {
+				body: [
+					JSClassMethod {
+						kind: "method"
+						key: JSStaticPropertyKey {
+							value: JSIdentifier {
+								name: "test"
+								loc: SourceLocation comments/regression/11469/input.js 10:2-10:6 (test)
+							}
+							loc: SourceLocation comments/regression/11469/input.js 10:2-10:6
+						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							optional: false
+							readonly: false
+							static: false
+							loc: SourceLocation comments/regression/11469/input.js 10:2-10:6
+							start: Position 10:2
+						}
+						body: JSBlockStatement {
+							body: []
+							directives: []
+							innerComments: ["2"]
+							trailingComments: []
+							loc: SourceLocation comments/regression/11469/input.js 10:9-12:3
+						}
+						head: JSFunctionHead {
+							async: false
+							generator: false
+							hasHoistedVars: false
+							params: []
+							loc: SourceLocation comments/regression/11469/input.js 10:6-10:8
+						}
+						loc: SourceLocation comments/regression/11469/input.js 10:2-12:3
+					}
+				]
+				loc: SourceLocation comments/regression/11469/input.js 9:0-13:1
+			}
+			loc: SourceLocation comments/regression/11469/input.js 9:0-13:1
+		}
+		JSClassDeclaration {
+			id: JSBindingIdentifier {
+				name: "C"
+				loc: SourceLocation comments/regression/11469/input.js 15:6-15:7 (C)
+			}
+			meta: JSClassHead {
+				body: [
+					JSClassMethod {
+						kind: "method"
+						trailingComments: ["3"]
+						key: JSStaticPropertyKey {
+							value: JSIdentifier {
+								name: "test"
+								loc: SourceLocation comments/regression/11469/input.js 16:2-16:6 (test)
+							}
+							loc: SourceLocation comments/regression/11469/input.js 16:2-16:6
+						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							optional: false
+							readonly: false
+							static: false
+							loc: SourceLocation comments/regression/11469/input.js 16:2-16:6
+							start: Position 16:2
+						}
+						body: JSBlockStatement {
+							body: []
+							directives: []
+							loc: SourceLocation comments/regression/11469/input.js 16:9-16:11
+						}
+						head: JSFunctionHead {
+							async: false
+							generator: false
+							hasHoistedVars: false
+							params: []
+							loc: SourceLocation comments/regression/11469/input.js 16:6-16:8
+						}
+						loc: SourceLocation comments/regression/11469/input.js 16:2-16:11
+					}
+				]
+				loc: SourceLocation comments/regression/11469/input.js 15:0-18:1
+			}
+			loc: SourceLocation comments/regression/11469/input.js 15:0-18:1
+		}
+	]
+	comments: [
 		CommentLine {
 			id: "0"
 			value: " this.member = 'value';"
@@ -40,174 +166,14 @@ JSRoot {
 			loc: SourceLocation comments/regression/11469/input.js 17:2-17:27
 		}
 	]
-	body: Array [
-		JSClassDeclaration {
-			id: JSBindingIdentifier {
-				name: "A"
-				loc: SourceLocation comments/regression/11469/input.js 1:6-1:7 (A)
-			}
-			loc: SourceLocation comments/regression/11469/input.js 1:0-7:1
-			meta: JSClassHead {
-				implements: undefined
-				superClass: undefined
-				superTypeParameters: undefined
-				typeParameters: undefined
-				loc: SourceLocation comments/regression/11469/input.js 1:0-7:1
-				body: Array [
-					JSClassMethod {
-						kind: "method"
-						key: JSStaticPropertyKey {
-							value: JSIdentifier {
-								name: "test"
-								loc: SourceLocation comments/regression/11469/input.js 2:2-2:6 (test)
-							}
-							loc: SourceLocation comments/regression/11469/input.js 2:2-2:6
-						}
-						loc: SourceLocation comments/regression/11469/input.js 2:2-4:3
-						trailingComments: Array ["1"]
-						body: JSBlockStatement {
-							body: Array []
-							directives: Array []
-							trailingComments: undefined
-							innerComments: Array ["0"]
-							loc: SourceLocation comments/regression/11469/input.js 2:9-4:3
-						}
-						meta: JSClassPropertyMeta {
-							abstract: false
-							accessibility: undefined
-							optional: false
-							readonly: false
-							static: false
-							typeAnnotation: undefined
-							loc: SourceLocation comments/regression/11469/input.js 2:2-2:6
-							start: Position 2:2
-						}
-						head: JSFunctionHead {
-							async: false
-							generator: false
-							hasHoistedVars: false
-							params: Array []
-							rest: undefined
-							returnType: undefined
-							thisType: undefined
-							typeParameters: undefined
-							loc: SourceLocation comments/regression/11469/input.js 2:6-2:8
-						}
-					}
-				]
-			}
-		}
-		JSClassDeclaration {
-			id: JSBindingIdentifier {
-				name: "B"
-				loc: SourceLocation comments/regression/11469/input.js 9:6-9:7 (B)
-			}
-			loc: SourceLocation comments/regression/11469/input.js 9:0-13:1
-			meta: JSClassHead {
-				implements: undefined
-				superClass: undefined
-				superTypeParameters: undefined
-				typeParameters: undefined
-				loc: SourceLocation comments/regression/11469/input.js 9:0-13:1
-				body: Array [
-					JSClassMethod {
-						kind: "method"
-						key: JSStaticPropertyKey {
-							value: JSIdentifier {
-								name: "test"
-								loc: SourceLocation comments/regression/11469/input.js 10:2-10:6 (test)
-							}
-							loc: SourceLocation comments/regression/11469/input.js 10:2-10:6
-						}
-						loc: SourceLocation comments/regression/11469/input.js 10:2-12:3
-						body: JSBlockStatement {
-							body: Array []
-							directives: Array []
-							trailingComments: Array []
-							innerComments: Array ["2"]
-							loc: SourceLocation comments/regression/11469/input.js 10:9-12:3
-						}
-						meta: JSClassPropertyMeta {
-							abstract: false
-							accessibility: undefined
-							optional: false
-							readonly: false
-							static: false
-							typeAnnotation: undefined
-							loc: SourceLocation comments/regression/11469/input.js 10:2-10:6
-							start: Position 10:2
-						}
-						head: JSFunctionHead {
-							async: false
-							generator: false
-							hasHoistedVars: false
-							params: Array []
-							rest: undefined
-							returnType: undefined
-							thisType: undefined
-							typeParameters: undefined
-							loc: SourceLocation comments/regression/11469/input.js 10:6-10:8
-						}
-					}
-				]
-			}
-		}
-		JSClassDeclaration {
-			id: JSBindingIdentifier {
-				name: "C"
-				loc: SourceLocation comments/regression/11469/input.js 15:6-15:7 (C)
-			}
-			loc: SourceLocation comments/regression/11469/input.js 15:0-18:1
-			meta: JSClassHead {
-				implements: undefined
-				superClass: undefined
-				superTypeParameters: undefined
-				typeParameters: undefined
-				loc: SourceLocation comments/regression/11469/input.js 15:0-18:1
-				body: Array [
-					JSClassMethod {
-						kind: "method"
-						key: JSStaticPropertyKey {
-							value: JSIdentifier {
-								name: "test"
-								loc: SourceLocation comments/regression/11469/input.js 16:2-16:6 (test)
-							}
-							loc: SourceLocation comments/regression/11469/input.js 16:2-16:6
-						}
-						loc: SourceLocation comments/regression/11469/input.js 16:2-16:11
-						trailingComments: Array ["3"]
-						body: JSBlockStatement {
-							body: Array []
-							directives: Array []
-							trailingComments: undefined
-							loc: SourceLocation comments/regression/11469/input.js 16:9-16:11
-						}
-						meta: JSClassPropertyMeta {
-							abstract: false
-							accessibility: undefined
-							optional: false
-							readonly: false
-							static: false
-							typeAnnotation: undefined
-							loc: SourceLocation comments/regression/11469/input.js 16:2-16:6
-							start: Position 16:2
-						}
-						head: JSFunctionHead {
-							async: false
-							generator: false
-							hasHoistedVars: false
-							params: Array []
-							rest: undefined
-							returnType: undefined
-							thisType: undefined
-							typeParameters: undefined
-							loc: SourceLocation comments/regression/11469/input.js 16:6-16:8
-						}
-					}
-				]
-			}
-		}
-	]
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<comments/regression/11469/input.js>
+	loc: SourceLocation comments/regression/11469/input.js 1:0-19:0
 }
 ```
 

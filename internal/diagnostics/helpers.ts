@@ -12,10 +12,10 @@ import {
 	DiagnosticLocation,
 } from "./types";
 import {orderBySimilarity, splitLines} from "@internal/string-utils";
-import stringDiff from "@internal/string-diff";
 import {Position} from "@internal/parser-core";
 import {StaticMarkup, markup} from "@internal/markup";
 import {joinCategoryName} from "./categories";
+import {stringDiffCompressed} from "@internal/string-diff";
 
 type BuildSuggestionAdviceOptions = {
 	minRating?: number;
@@ -27,8 +27,8 @@ export function buildSuggestionAdvice(
 	value: string,
 	items: string[],
 	{minRating = 0.5, ignoreCase, formatItem}: BuildSuggestionAdviceOptions = {},
-): DiagnosticAdvice {
-	const advice: DiagnosticAdvice = [];
+): DiagnosticAdvice[] {
+	const advice: DiagnosticAdvice[] = [];
 
 	const ratings = orderBySimilarity(
 		value,
@@ -77,7 +77,7 @@ export function buildSuggestionAdvice(
 		advice.push({
 			type: "diff",
 			language: "unknown",
-			diff: stringDiff(value, topRatingRaw),
+			diff: stringDiffCompressed(value, topRatingRaw),
 		});
 
 		if (strings.length > 0) {
@@ -129,8 +129,8 @@ export function truncateSourceText(
 
 export function buildDuplicateLocationAdvice(
 	locations: Array<undefined | DiagnosticLocation>,
-): DiagnosticAdvice {
-	const locationAdvice: DiagnosticAdvice = locations.map((location) => {
+): DiagnosticAdvice[] {
+	const locationAdvice: DiagnosticAdvice[] = locations.map((location) => {
 		if (location === undefined) {
 			return {
 				type: "log",
@@ -194,8 +194,12 @@ export function formatCategoryDescription(
 
 export function appendAdviceToDiagnostic(
 	diag: Diagnostic,
-	advice: DiagnosticAdvice,
+	advice: DiagnosticAdvice[],
 ): Diagnostic {
+	if (advice.length === 0) {
+		return diag;
+	}
+
 	return {
 		...diag,
 		description: {
@@ -207,8 +211,12 @@ export function appendAdviceToDiagnostic(
 
 export function prependAdviceToDiagnostic(
 	diag: Diagnostic,
-	advice: DiagnosticAdvice,
+	advice: DiagnosticAdvice[],
 ): Diagnostic {
+	if (advice.length === 0) {
+		return diag;
+	}
+
 	return {
 		...diag,
 		description: {

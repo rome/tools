@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Path, createVisitor, signals} from "@internal/compiler";
+import {CompilerPath, createVisitor, signals} from "@internal/compiler";
 import {
 	AnyComment,
 	AnyCommentOptionalId,
@@ -26,8 +26,8 @@ type VariableInjectorState = {
 };
 
 export function injectBinding(
-	path: Path,
-	name: string = path.scope.generateUid(),
+	path: CompilerPath,
+	name: string = path.scope.generateUID(),
 	init?: AnyJSExpression,
 ): [JSReferenceIdentifier, JSAssignmentIdentifier] {
 	const ref = jsReferenceIdentifier.quick(name);
@@ -97,7 +97,10 @@ type CommentState = {
 	comments: AnyComment[];
 };
 
-export function injectComment(path: Path, comment: AnyCommentOptionalId): string {
+export function injectComment(
+	path: CompilerPath,
+	comment: AnyCommentOptionalId,
+): string {
 	let commentWithId: AnyComment;
 	const {id} = comment;
 

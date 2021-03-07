@@ -8,21 +8,9 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	syntax: Array []
-	loc: SourceLocation es2020/import-meta/no-other-prop-names/input.js 1:0-2:0
-	path: UIDPath<es2020/import-meta/no-other-prop-names/input.js>
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation es2020/import-meta/no-other-prop-names/input.js 1:0-1:15
 			expression: JSMetaProperty {
-				loc: SourceLocation es2020/import-meta/no-other-prop-names/input.js 1:0-1:14
 				meta: JSIdentifier {
 					name: "import"
 					loc: SourceLocation es2020/import-meta/no-other-prop-names/input.js 1:0-1:6 (import)
@@ -31,28 +19,36 @@ JSRoot {
 					name: "notMeta"
 					loc: SourceLocation es2020/import-meta/no-other-prop-names/input.js 1:7-1:14 (notMeta)
 				}
+				loc: SourceLocation es2020/import-meta/no-other-prop-names/input.js 1:0-1:14
 			}
+			loc: SourceLocation es2020/import-meta/no-other-prop-names/input.js 1:0-1:15
 		}
 	]
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {
+				advice: []
+				category: ["parse"]
 				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "The only valid meta property for import is import.meta"}
+				message: [RAW_MARKUP {value: "The only valid meta property for "}, "import", RAW_MARKUP {value: " is "}, "import", RAW_MARKUP {value: "."}, "meta"]
 			}
-			location: Object {
-				integrity: undefined
+			location: {
 				language: "js"
-				sourceText: undefined
-				end: Position 1:14
 				path: UIDPath<es2020/import-meta/no-other-prop-names/input.js>
+				end: Position 1:14
 				start: Position 1:7
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: []
+	path: UIDPath<es2020/import-meta/no-other-prop-names/input.js>
+	loc: SourceLocation es2020/import-meta/no-other-prop-names/input.js 1:0-2:0
 }
 ```
 

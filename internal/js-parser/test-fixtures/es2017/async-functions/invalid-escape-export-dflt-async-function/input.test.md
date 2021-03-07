@@ -8,82 +8,74 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2017/async-functions/invalid-escape-export-dflt-async-function/input.js 1:0-2:0
-	path: UIDPath<es2017/async-functions/invalid-escape-export-dflt-async-function/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Expected a semicolon or a line terminator"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:25
-				path: UIDPath<es2017/async-functions/invalid-escape-export-dflt-async-function/input.js>
-				start: Position 1:26
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSExportDefaultDeclaration {
-			loc: SourceLocation es2017/async-functions/invalid-escape-export-dflt-async-function/input.js 1:0-1:25
 			declaration: JSReferenceIdentifier {
 				name: "async"
 				loc: SourceLocation es2017/async-functions/invalid-escape-export-dflt-async-function/input.js 1:15-1:25 (async)
 			}
+			loc: SourceLocation es2017/async-functions/invalid-escape-export-dflt-async-function/input.js 1:0-1:25
 		}
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "y"
 				loc: SourceLocation es2017/async-functions/invalid-escape-export-dflt-async-function/input.js 1:35-1:36 (y)
 			}
-			loc: SourceLocation es2017/async-functions/invalid-escape-export-dflt-async-function/input.js 1:26-1:50
-			head: JSFunctionHead {
-				async: false
-				generator: false
-				hasHoistedVars: false
-				params: Array []
-				rest: undefined
-				returnType: undefined
-				thisType: undefined
-				typeParameters: undefined
-				loc: SourceLocation es2017/async-functions/invalid-escape-export-dflt-async-function/input.js 1:36-1:38
-			}
 			body: JSBlockStatement {
-				directives: Array []
-				loc: SourceLocation es2017/async-functions/invalid-escape-export-dflt-async-function/input.js 1:39-1:50
-				body: Array [
+				body: [
 					JSExpressionStatement {
-						loc: SourceLocation es2017/async-functions/invalid-escape-export-dflt-async-function/input.js 1:41-1:46
 						expression: JSReferenceIdentifier {
 							name: "await"
 							loc: SourceLocation es2017/async-functions/invalid-escape-export-dflt-async-function/input.js 1:41-1:46 (await)
 						}
+						loc: SourceLocation es2017/async-functions/invalid-escape-export-dflt-async-function/input.js 1:41-1:46
 					}
 					JSExpressionStatement {
-						loc: SourceLocation es2017/async-functions/invalid-escape-export-dflt-async-function/input.js 1:47-1:48
 						expression: JSReferenceIdentifier {
 							name: "x"
 							loc: SourceLocation es2017/async-functions/invalid-escape-export-dflt-async-function/input.js 1:47-1:48 (x)
 						}
+						loc: SourceLocation es2017/async-functions/invalid-escape-export-dflt-async-function/input.js 1:47-1:48
 					}
 				]
+				directives: []
+				loc: SourceLocation es2017/async-functions/invalid-escape-export-dflt-async-function/input.js 1:39-1:50
+			}
+			head: JSFunctionHead {
+				async: false
+				generator: false
+				hasHoistedVars: false
+				params: []
+				loc: SourceLocation es2017/async-functions/invalid-escape-export-dflt-async-function/input.js 1:36-1:38
+			}
+			loc: SourceLocation es2017/async-functions/invalid-escape-export-dflt-async-function/input.js 1:26-1:50
+		}
+	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "Expected a semicolon or a line terminator"}
+			}
+			location: {
+				language: "js"
+				path: UIDPath<es2017/async-functions/invalid-escape-export-dflt-async-function/input.js>
+				end: Position 1:25
+				start: Position 1:26
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2017/async-functions/invalid-escape-export-dflt-async-function/input.js>
+	loc: SourceLocation es2017/async-functions/invalid-escape-export-dflt-async-function/input.js 1:0-2:0
 }
 ```
 

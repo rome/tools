@@ -5,7 +5,12 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {ImportBinding, Path, createVisitor, signals} from "@internal/compiler";
+import {
+	CompilerPath,
+	ImportBinding,
+	createVisitor,
+	signals,
+} from "@internal/compiler";
 import {
 	JSExportExternalDeclaration,
 	JSExportLocalDeclaration,
@@ -18,7 +23,7 @@ import {
 
 export default createVisitor({
 	name: "optimizeExports",
-	enter(path: Path) {
+	enter(path: CompilerPath) {
 		const {node} = path;
 
 		// turn `import {a} from 'b'; export {a}`; to `export {a} from 'b';`';

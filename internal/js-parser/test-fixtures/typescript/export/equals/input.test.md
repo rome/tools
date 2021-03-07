@@ -8,26 +8,24 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	loc: SourceLocation typescript/export/equals/input.ts 1:0-2:0
-	path: UIDPath<typescript/export/equals/input.ts>
-	syntax: Array ["ts"]
-	body: Array [
+	body: [
 		TSExportAssignment {
-			loc: SourceLocation typescript/export/equals/input.ts 1:0-1:11
 			expression: JSReferenceIdentifier {
 				name: "f"
 				loc: SourceLocation typescript/export/equals/input.ts 1:9-1:10 (f)
 			}
+			loc: SourceLocation typescript/export/equals/input.ts 1:0-1:11
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: ["ts"]
+	path: UIDPath<typescript/export/equals/input.ts>
+	loc: SourceLocation typescript/export/equals/input.ts 1:0-2:0
 }
 ```
 

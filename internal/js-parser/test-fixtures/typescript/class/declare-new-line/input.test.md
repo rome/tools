@@ -8,41 +8,35 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	loc: SourceLocation typescript/class/declare-new-line/input.ts 1:0-3:0
-	path: UIDPath<typescript/class/declare-new-line/input.ts>
-	syntax: Array ["ts"]
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation typescript/class/declare-new-line/input.ts 1:0-1:7
 			expression: JSReferenceIdentifier {
 				name: "declare"
 				loc: SourceLocation typescript/class/declare-new-line/input.ts 1:0-1:7 (declare)
 			}
+			loc: SourceLocation typescript/class/declare-new-line/input.ts 1:0-1:7
 		}
 		JSClassDeclaration {
 			id: JSBindingIdentifier {
 				name: "B"
 				loc: SourceLocation typescript/class/declare-new-line/input.ts 2:6-2:7 (B)
 			}
-			loc: SourceLocation typescript/class/declare-new-line/input.ts 2:0-2:10
 			meta: JSClassHead {
-				body: Array []
-				implements: undefined
-				superClass: undefined
-				superTypeParameters: undefined
-				typeParameters: undefined
+				body: []
 				loc: SourceLocation typescript/class/declare-new-line/input.ts 2:0-2:10
 			}
+			loc: SourceLocation typescript/class/declare-new-line/input.ts 2:0-2:10
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: ["ts"]
+	path: UIDPath<typescript/class/declare-new-line/input.ts>
+	loc: SourceLocation typescript/class/declare-new-line/input.ts 1:0-3:0
 }
 ```
 

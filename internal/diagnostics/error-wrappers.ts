@@ -5,28 +5,25 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Diagnostics, DiagnosticsProcessor} from "@internal/diagnostics";
+import {Diagnostic, DiagnosticsProcessor} from "@internal/diagnostics";
 import {DiagnosticsPrinter} from "@internal/cli-diagnostics";
-import {Diagnostic, DiagnosticSuppressions} from "./types";
 import {Reporter} from "@internal/cli-reporter";
 import {readMarkup} from "@internal/markup";
 import {
 	DeriveErrorDiagnosticOptions,
 	deriveDiagnosticFromError,
+	deriveDiagnosticFromErrorStructure,
 } from "./derive";
 import {convertPossibleNodeErrorToDiagnostic} from "./node-errors";
-import {NodeSystemError} from "@internal/node";
+import {NodeSystemError, getErrorStructure} from "@internal/errors";
+import {DiagnosticCategory, equalCategoryNames} from "./categories";
 
 // If printDiagnosticsToString throws a DiagnosticsError then we'll be trapped in a loop forever
 // since we'll continuously be trying to serialize diagnostics
 let insideDiagnosticsErrorSerial = false;
 
 export class DiagnosticsError extends Error implements NodeSystemError {
-	constructor(
-		message: undefined | string,
-		diagnostics: Diagnostics,
-		suppressions: DiagnosticSuppressions = [],
-	) {
+	constructor(message: undefined | string, diagnostics: Diagnostic[]) {
 		if (diagnostics.length === 0) {
 			throw new Error("No diagnostics");
 		}
@@ -35,10 +32,10 @@ export class DiagnosticsError extends Error implements NodeSystemError {
 		this._memoMessage = undefined;
 		this._message = message;
 		this.diagnostics = diagnostics;
-		this.suppressions = suppressions;
 		this.name = "DiagnosticsError";
 	}
 
+	public diagnostics: Diagnostic[];
 	private _memoMessage: string | undefined;
 	private _message: undefined | string;
 
@@ -62,7 +59,7 @@ export class DiagnosticsError extends Error implements NodeSystemError {
 		let message = this._message === undefined ? "" : this._message + "\n";
 		insideDiagnosticsErrorSerial = true;
 
-		const reporter = new Reporter();
+		const reporter = new Reporter("DiagnosticsErrorMessage");
 		const stream = reporter.attachCaptureStream("none", {columns: undefined});
 		const printer = new DiagnosticsPrinter({
 			reporter,
@@ -70,34 +67,32 @@ export class DiagnosticsError extends Error implements NodeSystemError {
 			wrapErrors: true,
 		});
 		for (const diag of this.diagnostics) {
-			printer.printDiagnostic(diag, reporter);
+			printer.printDiagnostic(diag, reporter, false);
 		}
+		reporter.resources.release();
 		message += stream.read();
 		insideDiagnosticsErrorSerial = false;
 
 		this._memoMessage = message;
 		return message;
 	}
-
-	public diagnostics: Diagnostics;
-	public suppressions: DiagnosticSuppressions;
 }
 
-export function createSingleDiagnosticError(
-	diag: Diagnostic,
-	suppressions?: DiagnosticSuppressions,
+export function createRuntimeDiagnosticsError(
+	opts: DeriveErrorDiagnosticOptions,
 ): DiagnosticsError {
-	return new DiagnosticsError(
-		readMarkup(diag.description.message),
-		[diag],
-		suppressions,
-	);
+	const struct = getErrorStructure(new Error(), 1);
+	const diag = deriveDiagnosticFromErrorStructure(struct, opts);
+	return createSingleDiagnosticsError(diag);
 }
 
-export function getDiagnosticsFromError(err: Error): undefined | Diagnostics {
+export function createSingleDiagnosticsError(diag: Diagnostic): DiagnosticsError {
+	return new DiagnosticsError(readMarkup(diag.description.message), [diag]);
+}
+
+export function getDiagnosticsFromError(err: Error): undefined | Diagnostic[] {
 	if (err instanceof DiagnosticsError) {
 		const processor = new DiagnosticsProcessor({});
-		processor.addSuppressions(err.suppressions);
 		processor.addDiagnostics(err.diagnostics);
 		return processor.getDiagnostics();
 	}
@@ -108,7 +103,7 @@ export function getDiagnosticsFromError(err: Error): undefined | Diagnostics {
 export function getOrDeriveDiagnosticsFromError(
 	err: Error,
 	opts: DeriveErrorDiagnosticOptions,
-): Diagnostics {
+): Diagnostic[] {
 	err = convertPossibleNodeErrorToDiagnostic(err);
 	const diagnostics = getDiagnosticsFromError(err);
 	if (diagnostics === undefined) {
@@ -118,17 +113,43 @@ export function getOrDeriveDiagnosticsFromError(
 	}
 }
 
-export function isUserDiagnosticError(err: Error): boolean {
+export function isUserDiagnostic(diag: Diagnostic): boolean {
+	if (diag.tags?.internal) {
+		return false;
+	}
+
+	return true;
+}
+
+export function isUserDiagnosticsError(err: Error): boolean {
 	const diagnostics = getDiagnosticsFromError(err);
 	if (diagnostics === undefined) {
 		return false;
 	} else {
 		for (const diag of diagnostics) {
-			if (diag.tags?.internal) {
+			if (!isUserDiagnostic(diag)) {
 				return false;
 			}
 		}
 
 		return true;
+	}
+}
+
+export function isDiagnosticsErrorOfCategory(
+	err: Error,
+	category: DiagnosticCategory,
+): boolean {
+	const diagnostics = getDiagnosticsFromError(err);
+	if (diagnostics === undefined) {
+		return false;
+	} else {
+		for (const diag of diagnostics) {
+			if (equalCategoryNames(diag.description.category, category)) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 }

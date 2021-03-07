@@ -8,50 +8,42 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation esprima/es2015-generator/generator-expression-rest-param/input.js 1:0-2:0
-	path: UIDPath<esprima/es2015-generator/generator-expression-rest-param/input.js>
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation esprima/es2015-generator/generator-expression-rest-param/input.js 1:0-1:20
 			expression: JSFunctionExpression {
-				id: undefined
-				loc: SourceLocation esprima/es2015-generator/generator-expression-rest-param/input.js 1:1-1:19
 				body: JSBlockStatement {
-					body: Array []
-					directives: Array []
+					body: []
+					directives: []
 					loc: SourceLocation esprima/es2015-generator/generator-expression-rest-param/input.js 1:17-1:19
 				}
 				head: JSFunctionHead {
 					async: false
 					generator: true
 					hasHoistedVars: false
-					params: Array []
-					returnType: undefined
-					thisType: undefined
-					typeParameters: undefined
-					loc: SourceLocation esprima/es2015-generator/generator-expression-rest-param/input.js 1:10-1:16
+					params: []
 					rest: JSBindingIdentifier {
 						name: "x"
-						loc: SourceLocation esprima/es2015-generator/generator-expression-rest-param/input.js 1:14-1:15 (x)
 						meta: JSPatternMeta {
-							optional: undefined
-							typeAnnotation: undefined
 							loc: SourceLocation esprima/es2015-generator/generator-expression-rest-param/input.js 1:14-1:15
 						}
+						loc: SourceLocation esprima/es2015-generator/generator-expression-rest-param/input.js 1:14-1:15 (x)
 					}
+					loc: SourceLocation esprima/es2015-generator/generator-expression-rest-param/input.js 1:10-1:16
 				}
+				loc: SourceLocation esprima/es2015-generator/generator-expression-rest-param/input.js 1:1-1:19
 			}
+			loc: SourceLocation esprima/es2015-generator/generator-expression-rest-param/input.js 1:0-1:20
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<esprima/es2015-generator/generator-expression-rest-param/input.js>
+	loc: SourceLocation esprima/es2015-generator/generator-expression-rest-param/input.js 1:0-2:0
 }
 ```
 

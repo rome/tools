@@ -8,30 +8,10 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	syntax: Array []
-	loc: SourceLocation esprima/es2015-export-declaration/export-from-specifier/input.js 1:0-2:0
-	path: UIDPath<esprima/es2015-export-declaration/export-from-specifier/input.js>
-	body: Array [
+	body: [
 		JSExportExternalDeclaration {
-			defaultSpecifier: undefined
-			exportKind: undefined
-			namespaceSpecifier: undefined
-			loc: SourceLocation esprima/es2015-export-declaration/export-from-specifier/input.js 1:0-1:24
-			source: JSStringLiteral {
-				value: "foo"
-				loc: SourceLocation esprima/es2015-export-declaration/export-from-specifier/input.js 1:18-1:23
-			}
-			namedSpecifiers: Array [
+			namedSpecifiers: [
 				JSExportExternalSpecifier {
-					loc: SourceLocation esprima/es2015-export-declaration/export-from-specifier/input.js 1:8-1:11
 					exported: JSIdentifier {
 						name: "foo"
 						loc: SourceLocation esprima/es2015-export-declaration/export-from-specifier/input.js 1:8-1:11 (foo)
@@ -40,10 +20,25 @@ JSRoot {
 						name: "foo"
 						loc: SourceLocation esprima/es2015-export-declaration/export-from-specifier/input.js 1:8-1:11 (foo)
 					}
+					loc: SourceLocation esprima/es2015-export-declaration/export-from-specifier/input.js 1:8-1:11
 				}
 			]
+			source: JSStringLiteral {
+				value: "foo"
+				loc: SourceLocation esprima/es2015-export-declaration/export-from-specifier/input.js 1:18-1:23
+			}
+			loc: SourceLocation esprima/es2015-export-declaration/export-from-specifier/input.js 1:0-1:24
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: []
+	path: UIDPath<esprima/es2015-export-declaration/export-from-specifier/input.js>
+	loc: SourceLocation esprima/es2015-export-declaration/export-from-specifier/input.js 1:0-2:0
 }
 ```
 

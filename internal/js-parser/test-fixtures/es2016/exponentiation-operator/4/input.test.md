@@ -8,49 +8,45 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: true
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2016/exponentiation-operator/4/input.js 1:0-1:21
-	path: UIDPath<es2016/exponentiation-operator/4/input.js>
-	body: Array [
+	body: [
 		JSVariableDeclarationStatement {
-			loc: SourceLocation es2016/exponentiation-operator/4/input.js 1:0-1:21
 			declaration: JSVariableDeclaration {
 				kind: "var"
-				loc: SourceLocation es2016/exponentiation-operator/4/input.js 1:0-1:21
-				declarations: Array [
+				declarations: [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "squared"
 							loc: SourceLocation es2016/exponentiation-operator/4/input.js 1:4-1:11 (squared)
 						}
-						loc: SourceLocation es2016/exponentiation-operator/4/input.js 1:4-1:20
 						init: JSBinaryExpression {
 							operator: "**"
-							loc: SourceLocation es2016/exponentiation-operator/4/input.js 1:14-1:20
 							left: JSNumericLiteral {
 								value: 2
-								format: undefined
 								loc: SourceLocation es2016/exponentiation-operator/4/input.js 1:14-1:15
 							}
 							right: JSNumericLiteral {
 								value: 2
-								format: undefined
 								loc: SourceLocation es2016/exponentiation-operator/4/input.js 1:19-1:20
 							}
+							loc: SourceLocation es2016/exponentiation-operator/4/input.js 1:14-1:20
 						}
+						loc: SourceLocation es2016/exponentiation-operator/4/input.js 1:4-1:20
 					}
 				]
+				loc: SourceLocation es2016/exponentiation-operator/4/input.js 1:0-1:21
 			}
+			loc: SourceLocation es2016/exponentiation-operator/4/input.js 1:0-1:21
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: true
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2016/exponentiation-operator/4/input.js>
+	loc: SourceLocation es2016/exponentiation-operator/4/input.js 1:0-1:21
 }
 ```
 

@@ -8,30 +8,12 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	loc: SourceLocation typescript/type-arguments/tagged-template/input.ts 1:0-2:0
-	path: UIDPath<typescript/type-arguments/tagged-template/input.ts>
-	syntax: Array ["ts"]
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation typescript/type-arguments/tagged-template/input.ts 1:0-1:7
 			expression: JSTaggedTemplateExpression {
-				loc: SourceLocation typescript/type-arguments/tagged-template/input.ts 1:0-1:6
-				tag: JSReferenceIdentifier {
-					name: "f"
-					loc: SourceLocation typescript/type-arguments/tagged-template/input.ts 1:0-1:1 (f)
-				}
 				quasi: JSTemplateLiteral {
-					expressions: Array []
-					loc: SourceLocation typescript/type-arguments/tagged-template/input.ts 1:4-1:6
-					quasis: Array [
+					expressions: []
+					quasis: [
 						JSTemplateElement {
 							cooked: ""
 							raw: ""
@@ -39,23 +21,38 @@ JSRoot {
 							loc: SourceLocation typescript/type-arguments/tagged-template/input.ts 1:5-1:5
 						}
 					]
+					loc: SourceLocation typescript/type-arguments/tagged-template/input.ts 1:4-1:6
+				}
+				tag: JSReferenceIdentifier {
+					name: "f"
+					loc: SourceLocation typescript/type-arguments/tagged-template/input.ts 1:0-1:1 (f)
 				}
 				typeArguments: TSTypeParameterInstantiation {
-					loc: SourceLocation typescript/type-arguments/tagged-template/input.ts 1:1-1:4
-					params: Array [
+					params: [
 						TSTypeReference {
-							typeParameters: undefined
-							loc: SourceLocation typescript/type-arguments/tagged-template/input.ts 1:2-1:3
 							typeName: JSReferenceIdentifier {
 								name: "T"
 								loc: SourceLocation typescript/type-arguments/tagged-template/input.ts 1:2-1:3 (T)
 							}
+							loc: SourceLocation typescript/type-arguments/tagged-template/input.ts 1:2-1:3
 						}
 					]
+					loc: SourceLocation typescript/type-arguments/tagged-template/input.ts 1:1-1:4
 				}
+				loc: SourceLocation typescript/type-arguments/tagged-template/input.ts 1:0-1:6
 			}
+			loc: SourceLocation typescript/type-arguments/tagged-template/input.ts 1:0-1:7
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: ["ts"]
+	path: UIDPath<typescript/type-arguments/tagged-template/input.ts>
+	loc: SourceLocation typescript/type-arguments/tagged-template/input.ts 1:0-2:0
 }
 ```
 

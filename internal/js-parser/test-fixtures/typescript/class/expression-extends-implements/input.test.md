@@ -8,53 +8,14 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	loc: SourceLocation typescript/class/expression-extends-implements/input.ts 1:0-3:0
-	path: UIDPath<typescript/class/expression-extends-implements/input.ts>
-	syntax: Array ["ts"]
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation typescript/class/expression-extends-implements/input.ts 1:0-1:44
 			expression: JSClassExpression {
-				id: undefined
-				loc: SourceLocation typescript/class/expression-extends-implements/input.ts 1:1-1:42
 				meta: JSClassHead {
-					body: Array []
-					typeParameters: undefined
-					loc: SourceLocation typescript/class/expression-extends-implements/input.ts 1:1-1:42
-					superClass: JSCallExpression {
-						arguments: Array []
-						loc: SourceLocation typescript/class/expression-extends-implements/input.ts 1:15-1:18
-						callee: JSReferenceIdentifier {
-							name: "f"
-							loc: SourceLocation typescript/class/expression-extends-implements/input.ts 1:15-1:16 (f)
-						}
-					}
-					superTypeParameters: TSTypeParameterInstantiation {
-						loc: SourceLocation typescript/class/expression-extends-implements/input.ts 1:18-1:21
-						params: Array [
-							TSTypeReference {
-								typeParameters: undefined
-								loc: SourceLocation typescript/class/expression-extends-implements/input.ts 1:19-1:20
-								typeName: JSReferenceIdentifier {
-									name: "T"
-									loc: SourceLocation typescript/class/expression-extends-implements/input.ts 1:19-1:20 (T)
-								}
-							}
-						]
-					}
-					implements: Array [
+					body: []
+					implements: [
 						TSExpressionWithTypeArguments {
-							loc: SourceLocation typescript/class/expression-extends-implements/input.ts 1:33-1:39
 							expression: TSQualifiedName {
-								loc: SourceLocation typescript/class/expression-extends-implements/input.ts 1:33-1:36
 								left: JSReferenceIdentifier {
 									name: "X"
 									loc: SourceLocation typescript/class/expression-extends-implements/input.ts 1:33-1:34 (X)
@@ -63,63 +24,60 @@ JSRoot {
 									name: "Y"
 									loc: SourceLocation typescript/class/expression-extends-implements/input.ts 1:35-1:36 (Y)
 								}
+								loc: SourceLocation typescript/class/expression-extends-implements/input.ts 1:33-1:36
 							}
 							typeParameters: TSTypeParameterInstantiation {
-								loc: SourceLocation typescript/class/expression-extends-implements/input.ts 1:36-1:39
-								params: Array [
+								params: [
 									TSTypeReference {
-										typeParameters: undefined
-										loc: SourceLocation typescript/class/expression-extends-implements/input.ts 1:37-1:38
 										typeName: JSReferenceIdentifier {
 											name: "T"
 											loc: SourceLocation typescript/class/expression-extends-implements/input.ts 1:37-1:38 (T)
 										}
+										loc: SourceLocation typescript/class/expression-extends-implements/input.ts 1:37-1:38
 									}
 								]
+								loc: SourceLocation typescript/class/expression-extends-implements/input.ts 1:36-1:39
 							}
+							loc: SourceLocation typescript/class/expression-extends-implements/input.ts 1:33-1:39
 						}
 					]
+					superClass: JSCallExpression {
+						arguments: []
+						callee: JSReferenceIdentifier {
+							name: "f"
+							loc: SourceLocation typescript/class/expression-extends-implements/input.ts 1:15-1:16 (f)
+						}
+						loc: SourceLocation typescript/class/expression-extends-implements/input.ts 1:15-1:18
+					}
+					superTypeParameters: TSTypeParameterInstantiation {
+						params: [
+							TSTypeReference {
+								typeName: JSReferenceIdentifier {
+									name: "T"
+									loc: SourceLocation typescript/class/expression-extends-implements/input.ts 1:19-1:20 (T)
+								}
+								loc: SourceLocation typescript/class/expression-extends-implements/input.ts 1:19-1:20
+							}
+						]
+						loc: SourceLocation typescript/class/expression-extends-implements/input.ts 1:18-1:21
+					}
+					loc: SourceLocation typescript/class/expression-extends-implements/input.ts 1:1-1:42
 				}
+				loc: SourceLocation typescript/class/expression-extends-implements/input.ts 1:1-1:42
 			}
+			loc: SourceLocation typescript/class/expression-extends-implements/input.ts 1:0-1:44
 		}
 		JSExpressionStatement {
-			loc: SourceLocation typescript/class/expression-extends-implements/input.ts 2:0-2:46
 			expression: JSClassExpression {
 				id: JSBindingIdentifier {
 					name: "C"
 					loc: SourceLocation typescript/class/expression-extends-implements/input.ts 2:7-2:8 (C)
 				}
-				loc: SourceLocation typescript/class/expression-extends-implements/input.ts 2:1-2:44
 				meta: JSClassHead {
-					body: Array []
-					typeParameters: undefined
-					loc: SourceLocation typescript/class/expression-extends-implements/input.ts 2:1-2:44
-					superClass: JSCallExpression {
-						arguments: Array []
-						loc: SourceLocation typescript/class/expression-extends-implements/input.ts 2:17-2:20
-						callee: JSReferenceIdentifier {
-							name: "f"
-							loc: SourceLocation typescript/class/expression-extends-implements/input.ts 2:17-2:18 (f)
-						}
-					}
-					superTypeParameters: TSTypeParameterInstantiation {
-						loc: SourceLocation typescript/class/expression-extends-implements/input.ts 2:20-2:23
-						params: Array [
-							TSTypeReference {
-								typeParameters: undefined
-								loc: SourceLocation typescript/class/expression-extends-implements/input.ts 2:21-2:22
-								typeName: JSReferenceIdentifier {
-									name: "T"
-									loc: SourceLocation typescript/class/expression-extends-implements/input.ts 2:21-2:22 (T)
-								}
-							}
-						]
-					}
-					implements: Array [
+					body: []
+					implements: [
 						TSExpressionWithTypeArguments {
-							loc: SourceLocation typescript/class/expression-extends-implements/input.ts 2:35-2:41
 							expression: TSQualifiedName {
-								loc: SourceLocation typescript/class/expression-extends-implements/input.ts 2:35-2:38
 								left: JSReferenceIdentifier {
 									name: "X"
 									loc: SourceLocation typescript/class/expression-extends-implements/input.ts 2:35-2:36 (X)
@@ -128,26 +86,59 @@ JSRoot {
 									name: "Y"
 									loc: SourceLocation typescript/class/expression-extends-implements/input.ts 2:37-2:38 (Y)
 								}
+								loc: SourceLocation typescript/class/expression-extends-implements/input.ts 2:35-2:38
 							}
 							typeParameters: TSTypeParameterInstantiation {
-								loc: SourceLocation typescript/class/expression-extends-implements/input.ts 2:38-2:41
-								params: Array [
+								params: [
 									TSTypeReference {
-										typeParameters: undefined
-										loc: SourceLocation typescript/class/expression-extends-implements/input.ts 2:39-2:40
 										typeName: JSReferenceIdentifier {
 											name: "T"
 											loc: SourceLocation typescript/class/expression-extends-implements/input.ts 2:39-2:40 (T)
 										}
+										loc: SourceLocation typescript/class/expression-extends-implements/input.ts 2:39-2:40
 									}
 								]
+								loc: SourceLocation typescript/class/expression-extends-implements/input.ts 2:38-2:41
 							}
+							loc: SourceLocation typescript/class/expression-extends-implements/input.ts 2:35-2:41
 						}
 					]
+					superClass: JSCallExpression {
+						arguments: []
+						callee: JSReferenceIdentifier {
+							name: "f"
+							loc: SourceLocation typescript/class/expression-extends-implements/input.ts 2:17-2:18 (f)
+						}
+						loc: SourceLocation typescript/class/expression-extends-implements/input.ts 2:17-2:20
+					}
+					superTypeParameters: TSTypeParameterInstantiation {
+						params: [
+							TSTypeReference {
+								typeName: JSReferenceIdentifier {
+									name: "T"
+									loc: SourceLocation typescript/class/expression-extends-implements/input.ts 2:21-2:22 (T)
+								}
+								loc: SourceLocation typescript/class/expression-extends-implements/input.ts 2:21-2:22
+							}
+						]
+						loc: SourceLocation typescript/class/expression-extends-implements/input.ts 2:20-2:23
+					}
+					loc: SourceLocation typescript/class/expression-extends-implements/input.ts 2:1-2:44
 				}
+				loc: SourceLocation typescript/class/expression-extends-implements/input.ts 2:1-2:44
 			}
+			loc: SourceLocation typescript/class/expression-extends-implements/input.ts 2:0-2:46
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: ["ts"]
+	path: UIDPath<typescript/class/expression-extends-implements/input.ts>
+	loc: SourceLocation typescript/class/expression-extends-implements/input.ts 1:0-3:0
 }
 ```
 

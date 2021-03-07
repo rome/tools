@@ -8,40 +8,17 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation core/uncategorised/337/input.js 1:0-2:7
-	path: UIDPath<core/uncategorised/337/input.js>
-	body: Array [
+	body: [
 		JSSwitchStatement {
-			loc: SourceLocation core/uncategorised/337/input.js 1:0-2:7
-			discriminant: JSReferenceIdentifier {
-				name: "a"
-				loc: SourceLocation core/uncategorised/337/input.js 1:7-1:8 (a)
-			}
-			cases: Array [
+			cases: [
 				JSSwitchCase {
-					loc: SourceLocation core/uncategorised/337/input.js 1:12-2:5
-					test: JSNumericLiteral {
-						value: 1
-						format: undefined
-						loc: SourceLocation core/uncategorised/337/input.js 1:17-1:18
-					}
-					consequent: Array [
+					consequent: [
 						JSBlockStatement {
-							body: Array []
-							directives: Array []
+							body: []
+							directives: []
 							loc: SourceLocation core/uncategorised/337/input.js 1:20-1:22
 						}
 						JSExpressionStatement {
-							loc: SourceLocation core/uncategorised/337/input.js 2:0-2:5
 							expression: JSRegExpLiteral {
 								global: false
 								insensitive: false
@@ -49,10 +26,8 @@ JSRoot {
 								noDotNewline: false
 								sticky: false
 								unicode: false
-								loc: SourceLocation core/uncategorised/337/input.js 2:0-2:5
 								expression: JSRegExpSubExpression {
-									loc: SourceLocation core/uncategorised/337/input.js 2:1-2:4
-									body: Array [
+									body: [
 										JSRegExpCharacter {
 											value: "f"
 											loc: SourceLocation core/uncategorised/337/input.js 2:1-2:2
@@ -66,14 +41,36 @@ JSRoot {
 											loc: SourceLocation core/uncategorised/337/input.js 2:3-2:4
 										}
 									]
+									loc: SourceLocation core/uncategorised/337/input.js 2:1-2:4
 								}
+								loc: SourceLocation core/uncategorised/337/input.js 2:0-2:5
 							}
+							loc: SourceLocation core/uncategorised/337/input.js 2:0-2:5
 						}
 					]
+					test: JSNumericLiteral {
+						value: 1
+						loc: SourceLocation core/uncategorised/337/input.js 1:17-1:18
+					}
+					loc: SourceLocation core/uncategorised/337/input.js 1:12-2:5
 				}
 			]
+			discriminant: JSReferenceIdentifier {
+				name: "a"
+				loc: SourceLocation core/uncategorised/337/input.js 1:7-1:8 (a)
+			}
+			loc: SourceLocation core/uncategorised/337/input.js 1:0-2:7
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<core/uncategorised/337/input.js>
+	loc: SourceLocation core/uncategorised/337/input.js 1:0-2:7
 }
 ```
 

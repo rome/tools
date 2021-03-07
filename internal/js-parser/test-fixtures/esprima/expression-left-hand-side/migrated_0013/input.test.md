@@ -8,30 +8,16 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation esprima/expression-left-hand-side/migrated_0013/input.js 1:0-2:0
-	path: UIDPath<esprima/expression-left-hand-side/migrated_0013/input.js>
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation esprima/expression-left-hand-side/migrated_0013/input.js 1:0-1:38
 			expression: JSMemberExpression {
-				loc: SourceLocation esprima/expression-left-hand-side/migrated_0013/input.js 1:0-1:38
 				object: JSReferenceIdentifier {
 					name: "universe"
 					loc: SourceLocation esprima/expression-left-hand-side/migrated_0013/input.js 1:0-1:8 (universe)
 				}
 				property: JSComputedMemberProperty {
 					value: JSSequenceExpression {
-						loc: SourceLocation esprima/expression-left-hand-side/migrated_0013/input.js 1:9-1:37
-						expressions: Array [
+						expressions: [
 							JSReferenceIdentifier {
 								name: "galaxyName"
 								loc: SourceLocation esprima/expression-left-hand-side/migrated_0013/input.js 1:9-1:19 (galaxyName)
@@ -41,12 +27,24 @@ JSRoot {
 								loc: SourceLocation esprima/expression-left-hand-side/migrated_0013/input.js 1:21-1:37 (otherUselessName)
 							}
 						]
+						loc: SourceLocation esprima/expression-left-hand-side/migrated_0013/input.js 1:9-1:37
 					}
 					loc: SourceLocation esprima/expression-left-hand-side/migrated_0013/input.js 1:8-1:38
 				}
+				loc: SourceLocation esprima/expression-left-hand-side/migrated_0013/input.js 1:0-1:38
 			}
+			loc: SourceLocation esprima/expression-left-hand-side/migrated_0013/input.js 1:0-1:38
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<esprima/expression-left-hand-side/migrated_0013/input.js>
+	loc: SourceLocation esprima/expression-left-hand-side/migrated_0013/input.js 1:0-2:0
 }
 ```
 

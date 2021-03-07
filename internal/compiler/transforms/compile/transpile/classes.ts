@@ -7,7 +7,7 @@
 
 import {
 	CompilerContext,
-	Path,
+	CompilerPath,
 	createVisitor,
 	signals,
 } from "@internal/compiler";
@@ -39,7 +39,7 @@ import {descriptions} from "@internal/diagnostics";
 
 function transformClass(
 	node: JSClassDeclaration | JSClassExpression,
-	path: Path,
+	path: CompilerPath,
 	context: CompilerContext,
 ): {
 	_constructor: JSFunctionDeclaration;
@@ -63,7 +63,7 @@ function transformClass(
 			superClassRef = superClass;
 		} else {
 			superClassRef = jsReferenceIdentifier.create({
-				name: scope.generateUid("superClass"),
+				name: scope.generateUID("superClass"),
 			});
 			prependDeclarations.push(
 				template.statement`const ${superClassRef} = ${superClass};`,
@@ -73,7 +73,7 @@ function transformClass(
 
 	// get the class name, if there's no class id then generate a new name
 	const className: string =
-		node.id === undefined ? scope.generateUid("class") : node.id.name;
+		node.id === undefined ? scope.generateUID("class") : node.id.name;
 
 	// push on the superClass setup
 	if (superClass !== undefined) {
@@ -344,7 +344,7 @@ export default createVisitor({
 		// turn a class expression into an IIFE that returns a class declaration
 		if (node.type === "JSClassExpression") {
 			const className =
-				node.id === undefined ? scope.generateUid("class") : node.id.name;
+				node.id === undefined ? scope.generateUID("class") : node.id.name;
 
 			return signals.replace(
 				jsCallExpression.create({

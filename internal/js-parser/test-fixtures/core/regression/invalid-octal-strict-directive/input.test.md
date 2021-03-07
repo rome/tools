@@ -8,60 +8,51 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation core/regression/invalid-octal-strict-directive/input.js 1:0-15:0
-	path: UIDPath<core/regression/invalid-octal-strict-directive/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Octal literal in strict mode"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 8:2
-				path: UIDPath<core/regression/invalid-octal-strict-directive/input.js>
-				start: Position 8:2
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation core/regression/invalid-octal-strict-directive/input.js 11:0-11:3
 			expression: JSNumericLiteral {
 				value: 4
 				format: "octal"
 				loc: SourceLocation core/regression/invalid-octal-strict-directive/input.js 11:0-11:2
 			}
+			loc: SourceLocation core/regression/invalid-octal-strict-directive/input.js 11:0-11:3
 		}
 		JSExpressionStatement {
-			loc: SourceLocation core/regression/invalid-octal-strict-directive/input.js 12:0-12:3
 			expression: JSNumericLiteral {
 				value: 5
 				format: "octal"
 				loc: SourceLocation core/regression/invalid-octal-strict-directive/input.js 12:0-12:2
 			}
+			loc: SourceLocation core/regression/invalid-octal-strict-directive/input.js 12:0-12:3
 		}
 		JSExpressionStatement {
-			loc: SourceLocation core/regression/invalid-octal-strict-directive/input.js 14:0-14:22
 			expression: JSStringLiteral {
 				value: "\x04 foo \x05 bar \x06"
 				loc: SourceLocation core/regression/invalid-octal-strict-directive/input.js 14:0-14:21
 			}
+			loc: SourceLocation core/regression/invalid-octal-strict-directive/input.js 14:0-14:22
 		}
 	]
-	directives: Array [
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "Octal literal in strict mode"}
+			}
+			location: {
+				language: "js"
+				path: UIDPath<core/regression/invalid-octal-strict-directive/input.js>
+				end: Position 8:2
+				start: Position 8:2
+			}
+		}
+	]
+	directives: [
 		JSDirective {
 			value: "\\01 foo \\02 bar \\03"
 			loc: SourceLocation core/regression/invalid-octal-strict-directive/input.js 1:0-1:22
@@ -87,6 +78,11 @@ JSRoot {
 			loc: SourceLocation core/regression/invalid-octal-strict-directive/input.js 9:0-9:5
 		}
 	]
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<core/regression/invalid-octal-strict-directive/input.js>
+	loc: SourceLocation core/regression/invalid-octal-strict-directive/input.js 1:0-15:0
 }
 ```
 

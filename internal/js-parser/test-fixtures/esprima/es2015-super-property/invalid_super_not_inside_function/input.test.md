@@ -8,58 +8,56 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: true
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation esprima/es2015-super-property/invalid_super_not_inside_function/input.js 1:0-2:0
-	path: UIDPath<esprima/es2015-super-property/invalid_super_not_inside_function/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "super is only allowed in object methods and classes"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:7
-				path: UIDPath<esprima/es2015-super-property/invalid_super_not_inside_function/input.js>
-				start: Position 1:8
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSVariableDeclarationStatement {
-			loc: SourceLocation esprima/es2015-super-property/invalid_super_not_inside_function/input.js 1:0-1:16
 			declaration: JSVariableDeclaration {
 				kind: "var"
-				loc: SourceLocation esprima/es2015-super-property/invalid_super_not_inside_function/input.js 1:0-1:16
-				declarations: Array [
+				declarations: [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "x"
 							loc: SourceLocation esprima/es2015-super-property/invalid_super_not_inside_function/input.js 1:4-1:5 (x)
 						}
-						loc: SourceLocation esprima/es2015-super-property/invalid_super_not_inside_function/input.js 1:4-1:15
 						init: JSCallExpression {
-							arguments: Array []
-							callee: JSSuper {loc: SourceLocation esprima/es2015-super-property/invalid_super_not_inside_function/input.js 1:8-1:13}
+							arguments: []
+							callee: JSSuper {
+								loc: SourceLocation esprima/es2015-super-property/invalid_super_not_inside_function/input.js 1:8-1:13
+							}
 							loc: SourceLocation esprima/es2015-super-property/invalid_super_not_inside_function/input.js 1:8-1:15
 						}
+						loc: SourceLocation esprima/es2015-super-property/invalid_super_not_inside_function/input.js 1:4-1:15
 					}
 				]
+				loc: SourceLocation esprima/es2015-super-property/invalid_super_not_inside_function/input.js 1:0-1:16
+			}
+			loc: SourceLocation esprima/es2015-super-property/invalid_super_not_inside_function/input.js 1:0-1:16
+		}
+	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "super is only allowed in object methods and classes"}
+			}
+			location: {
+				language: "js"
+				path: UIDPath<esprima/es2015-super-property/invalid_super_not_inside_function/input.js>
+				end: Position 1:7
+				start: Position 1:8
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: true
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<esprima/es2015-super-property/invalid_super_not_inside_function/input.js>
+	loc: SourceLocation esprima/es2015-super-property/invalid_super_not_inside_function/input.js 1:0-2:0
 }
 ```
 

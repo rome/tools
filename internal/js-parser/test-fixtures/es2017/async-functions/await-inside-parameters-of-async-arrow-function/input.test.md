@@ -8,53 +8,12 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: true
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2017/async-functions/await-inside-parameters-of-async-arrow-function/input.js 1:0-1:26
-	path: UIDPath<es2017/async-functions/await-inside-parameters-of-async-arrow-function/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:18
-				path: UIDPath<es2017/async-functions/await-inside-parameters-of-async-arrow-function/input.js>
-				start: Position 1:17
-			}
-			description: Object {
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Unexpected character <emphasis>2</emphasis>"}
-				advice: Array [
-					log {
-						category: "info"
-						text: RAW_MARKUP {value: "Expected character <emphasis>,</emphasis>"}
-					}
-				]
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation es2017/async-functions/await-inside-parameters-of-async-arrow-function/input.js 1:0-1:16
 			expression: JSCallExpression {
-				loc: SourceLocation es2017/async-functions/await-inside-parameters-of-async-arrow-function/input.js 1:0-1:16
-				callee: JSReferenceIdentifier {
-					name: "async"
-					loc: SourceLocation es2017/async-functions/await-inside-parameters-of-async-arrow-function/input.js 1:0-1:5 (async)
-				}
-				arguments: Array [
+				arguments: [
 					JSAssignmentExpression {
 						operator: "="
-						loc: SourceLocation es2017/async-functions/await-inside-parameters-of-async-arrow-function/input.js 1:7-1:16
 						left: JSAssignmentIdentifier {
 							name: "x"
 							loc: SourceLocation es2017/async-functions/await-inside-parameters-of-async-arrow-function/input.js 1:7-1:8 (x)
@@ -63,39 +22,72 @@ JSRoot {
 							name: "await"
 							loc: SourceLocation es2017/async-functions/await-inside-parameters-of-async-arrow-function/input.js 1:11-1:16 (await)
 						}
+						loc: SourceLocation es2017/async-functions/await-inside-parameters-of-async-arrow-function/input.js 1:7-1:16
 					}
 				]
+				callee: JSReferenceIdentifier {
+					name: "async"
+					loc: SourceLocation es2017/async-functions/await-inside-parameters-of-async-arrow-function/input.js 1:0-1:5 (async)
+				}
+				loc: SourceLocation es2017/async-functions/await-inside-parameters-of-async-arrow-function/input.js 1:0-1:16
 			}
+			loc: SourceLocation es2017/async-functions/await-inside-parameters-of-async-arrow-function/input.js 1:0-1:16
 		}
 		JSExpressionStatement {
-			loc: SourceLocation es2017/async-functions/await-inside-parameters-of-async-arrow-function/input.js 1:17-1:18
 			expression: JSNumericLiteral {
 				value: 2
-				format: undefined
 				loc: SourceLocation es2017/async-functions/await-inside-parameters-of-async-arrow-function/input.js 1:17-1:18
 			}
+			loc: SourceLocation es2017/async-functions/await-inside-parameters-of-async-arrow-function/input.js 1:17-1:18
 		}
 		JSExpressionStatement {
-			loc: SourceLocation es2017/async-functions/await-inside-parameters-of-async-arrow-function/input.js 1:18-1:19
 			expression: JSReferenceIdentifier {
 				name: "INVALID_PLACEHOLDER"
 				loc: SourceLocation es2017/async-functions/await-inside-parameters-of-async-arrow-function/input.js 1:18-1:19
 			}
+			loc: SourceLocation es2017/async-functions/await-inside-parameters-of-async-arrow-function/input.js 1:18-1:19
 		}
 		JSExpressionStatement {
-			loc: SourceLocation es2017/async-functions/await-inside-parameters-of-async-arrow-function/input.js 1:20-1:22
 			expression: JSReferenceIdentifier {
 				name: "INVALID_PLACEHOLDER"
 				loc: SourceLocation es2017/async-functions/await-inside-parameters-of-async-arrow-function/input.js 1:20-1:22
 			}
+			loc: SourceLocation es2017/async-functions/await-inside-parameters-of-async-arrow-function/input.js 1:20-1:22
 		}
 		JSBlockStatement {
-			body: Array []
-			directives: Array []
+			body: []
+			directives: []
 			loc: SourceLocation es2017/async-functions/await-inside-parameters-of-async-arrow-function/input.js 1:23-1:25
 		}
-		JSEmptyStatement {loc: SourceLocation es2017/async-functions/await-inside-parameters-of-async-arrow-function/input.js 1:25-1:26}
+		JSEmptyStatement {
+			loc: SourceLocation es2017/async-functions/await-inside-parameters-of-async-arrow-function/input.js 1:25-1:26
+		}
 	]
+	comments: []
+	corrupt: true
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {
+				advice: [log {category: "info", text: [RAW_MARKUP {value: "Expected character <emphasis>"}, ",", RAW_MARKUP {value: "</emphasis>"}]}]
+				category: ["parse"]
+				categoryValue: "js"
+				message: [RAW_MARKUP {value: "Unexpected character <emphasis>"}, "2", RAW_MARKUP {value: "</emphasis>"}]
+			}
+			location: {
+				language: "js"
+				path: UIDPath<es2017/async-functions/await-inside-parameters-of-async-arrow-function/input.js>
+				end: Position 1:18
+				start: Position 1:17
+			}
+		}
+	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2017/async-functions/await-inside-parameters-of-async-arrow-function/input.js>
+	loc: SourceLocation es2017/async-functions/await-inside-parameters-of-async-arrow-function/input.js 1:0-1:26
 }
 ```
 

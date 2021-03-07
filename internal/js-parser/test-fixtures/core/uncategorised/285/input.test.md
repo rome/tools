@@ -8,42 +8,36 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation core/uncategorised/285/input.js 1:0-1:19
-	path: UIDPath<core/uncategorised/285/input.js>
-	body: Array [
+	body: [
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "eval"
 				loc: SourceLocation core/uncategorised/285/input.js 1:9-1:13 (eval)
 			}
-			loc: SourceLocation core/uncategorised/285/input.js 1:0-1:19
 			body: JSBlockStatement {
-				body: Array []
-				directives: Array []
+				body: []
+				directives: []
 				loc: SourceLocation core/uncategorised/285/input.js 1:16-1:19
 			}
 			head: JSFunctionHead {
 				async: false
 				generator: false
 				hasHoistedVars: false
-				params: Array []
-				rest: undefined
-				returnType: undefined
-				thisType: undefined
-				typeParameters: undefined
+				params: []
 				loc: SourceLocation core/uncategorised/285/input.js 1:13-1:15
 			}
+			loc: SourceLocation core/uncategorised/285/input.js 1:0-1:19
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<core/uncategorised/285/input.js>
+	loc: SourceLocation core/uncategorised/285/input.js 1:0-1:19
 }
 ```
 

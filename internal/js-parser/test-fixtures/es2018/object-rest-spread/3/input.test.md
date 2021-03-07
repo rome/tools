@@ -8,50 +8,21 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2018/object-rest-spread/3/input.js 1:0-1:25
-	path: UIDPath<es2018/object-rest-spread/3/input.js>
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation es2018/object-rest-spread/3/input.js 1:0-1:25
 			expression: JSFunctionExpression {
-				id: undefined
-				loc: SourceLocation es2018/object-rest-spread/3/input.js 1:1-1:24
 				body: JSBlockStatement {
-					body: Array []
-					directives: Array []
+					body: []
+					directives: []
 					loc: SourceLocation es2018/object-rest-spread/3/input.js 1:21-1:24
 				}
 				head: JSFunctionHead {
 					async: false
 					generator: false
 					hasHoistedVars: false
-					rest: undefined
-					returnType: undefined
-					thisType: undefined
-					typeParameters: undefined
-					loc: SourceLocation es2018/object-rest-spread/3/input.js 1:9-1:20
-					params: Array [
+					params: [
 						JSBindingObjectPattern {
-							loc: SourceLocation es2018/object-rest-spread/3/input.js 1:10-1:19
-							rest: JSBindingIdentifier {
-								name: "y"
-								loc: SourceLocation es2018/object-rest-spread/3/input.js 1:17-1:18 (y)
-							}
-							meta: JSPatternMeta {
-								optional: undefined
-								typeAnnotation: undefined
-								loc: SourceLocation es2018/object-rest-spread/3/input.js 1:10-1:19
-							}
-							properties: Array [
+							properties: [
 								JSBindingObjectPatternProperty {
 									key: JSStaticPropertyKey {
 										value: JSIdentifier {
@@ -67,12 +38,32 @@ JSRoot {
 									loc: SourceLocation es2018/object-rest-spread/3/input.js 1:11-1:12
 								}
 							]
+							meta: JSPatternMeta {
+								loc: SourceLocation es2018/object-rest-spread/3/input.js 1:10-1:19
+							}
+							rest: JSBindingIdentifier {
+								name: "y"
+								loc: SourceLocation es2018/object-rest-spread/3/input.js 1:17-1:18 (y)
+							}
+							loc: SourceLocation es2018/object-rest-spread/3/input.js 1:10-1:19
 						}
 					]
+					loc: SourceLocation es2018/object-rest-spread/3/input.js 1:9-1:20
 				}
+				loc: SourceLocation es2018/object-rest-spread/3/input.js 1:1-1:24
 			}
+			loc: SourceLocation es2018/object-rest-spread/3/input.js 1:0-1:25
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2018/object-rest-spread/3/input.js>
+	loc: SourceLocation es2018/object-rest-spread/3/input.js 1:0-1:25
 }
 ```
 

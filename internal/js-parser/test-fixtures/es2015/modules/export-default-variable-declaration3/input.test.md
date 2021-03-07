@@ -8,73 +8,28 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: true
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	syntax: Array []
-	loc: SourceLocation es2015/modules/export-default-variable-declaration3/input.js 1:0-3:1
-	path: UIDPath<es2015/modules/export-default-variable-declaration3/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Only expressions, functions or classes are allowed as the `default` export."}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:14
-				path: UIDPath<es2015/modules/export-default-variable-declaration3/input.js>
-				start: Position 1:15
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSExportDefaultDeclaration {
-			loc: SourceLocation es2015/modules/export-default-variable-declaration3/input.js 1:0-1:18
 			declaration: JSReferenceIdentifier {
 				name: "INVALID_PLACEHOLDER"
 				loc: SourceLocation es2015/modules/export-default-variable-declaration3/input.js 1:15-1:18
 			}
+			loc: SourceLocation es2015/modules/export-default-variable-declaration3/input.js 1:0-1:18
 		}
 		JSExpressionStatement {
-			loc: SourceLocation es2015/modules/export-default-variable-declaration3/input.js 1:19-3:1
 			expression: JSAssignmentExpression {
 				operator: "="
-				loc: SourceLocation es2015/modules/export-default-variable-declaration3/input.js 1:19-3:1
 				left: JSAssignmentIdentifier {
 					name: "Foo"
 					loc: SourceLocation es2015/modules/export-default-variable-declaration3/input.js 1:19-1:22 (Foo)
 				}
 				right: JSArrowFunctionExpression {
-					loc: SourceLocation es2015/modules/export-default-variable-declaration3/input.js 1:25-3:1
-					head: JSFunctionHead {
-						async: false
-						hasHoistedVars: false
-						params: Array []
-						rest: undefined
-						returnType: undefined
-						thisType: undefined
-						loc: SourceLocation es2015/modules/export-default-variable-declaration3/input.js 1:25-1:30
-					}
 					body: JSBlockStatement {
-						directives: Array []
-						loc: SourceLocation es2015/modules/export-default-variable-declaration3/input.js 1:31-3:1
-						body: Array [
+						body: [
 							JSReturnStatement {
-								loc: SourceLocation es2015/modules/export-default-variable-declaration3/input.js 2:4-2:41
 								argument: JSTemplateLiteral {
-									expressions: Array []
-									loc: SourceLocation es2015/modules/export-default-variable-declaration3/input.js 2:11-2:40
-									quasis: Array [
+									expressions: []
+									quasis: [
 										JSTemplateElement {
 											cooked: "<div class=\"bar\">Hola</div>"
 											raw: "<div class=\"bar\">Hola</div>"
@@ -82,14 +37,52 @@ JSRoot {
 											loc: SourceLocation es2015/modules/export-default-variable-declaration3/input.js 2:12-2:39
 										}
 									]
+									loc: SourceLocation es2015/modules/export-default-variable-declaration3/input.js 2:11-2:40
 								}
+								loc: SourceLocation es2015/modules/export-default-variable-declaration3/input.js 2:4-2:41
 							}
 						]
+						directives: []
+						loc: SourceLocation es2015/modules/export-default-variable-declaration3/input.js 1:31-3:1
 					}
+					head: JSFunctionHead {
+						async: false
+						hasHoistedVars: false
+						params: []
+						loc: SourceLocation es2015/modules/export-default-variable-declaration3/input.js 1:25-1:30
+					}
+					loc: SourceLocation es2015/modules/export-default-variable-declaration3/input.js 1:25-3:1
 				}
+				loc: SourceLocation es2015/modules/export-default-variable-declaration3/input.js 1:19-3:1
+			}
+			loc: SourceLocation es2015/modules/export-default-variable-declaration3/input.js 1:19-3:1
+		}
+	]
+	comments: []
+	corrupt: true
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "Only expressions, functions or classes are allowed as the `default` export."}
+			}
+			location: {
+				language: "js"
+				path: UIDPath<es2015/modules/export-default-variable-declaration3/input.js>
+				end: Position 1:14
+				start: Position 1:15
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: []
+	path: UIDPath<es2015/modules/export-default-variable-declaration3/input.js>
+	loc: SourceLocation es2015/modules/export-default-variable-declaration3/input.js 1:0-3:1
 }
 ```
 

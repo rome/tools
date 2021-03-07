@@ -8,47 +8,44 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	loc: SourceLocation jsx/errors/member-in-namespace-2/input.jsx 1:0-2:0
-	path: UIDPath<jsx/errors/member-in-namespace-2/input.jsx>
-	syntax: Array ["jsx"]
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation jsx/errors/member-in-namespace-2/input.jsx 1:0-1:9
 			expression: JSXElement {
+				attributes: []
+				children: []
+				selfClosing: true
 				name: JSXMemberExpression {
-					loc: SourceLocation jsx/errors/member-in-namespace-2/input.jsx 1:1-1:6
-					property: JSXIdentifier {
-						name: "c"
-						loc: SourceLocation jsx/errors/member-in-namespace-2/input.jsx 1:5-1:6
-					}
 					object: JSXNamespacedName {
 						name: JSXIdentifier {
 							name: "b"
 							loc: SourceLocation jsx/errors/member-in-namespace-2/input.jsx 1:3-1:4
 						}
-						loc: SourceLocation jsx/errors/member-in-namespace-2/input.jsx 1:1-1:4
 						namespace: JSXIdentifier {
 							name: "a"
 							loc: SourceLocation jsx/errors/member-in-namespace-2/input.jsx 1:1-1:2
 						}
+						loc: SourceLocation jsx/errors/member-in-namespace-2/input.jsx 1:1-1:4
 					}
+					property: JSXIdentifier {
+						name: "c"
+						loc: SourceLocation jsx/errors/member-in-namespace-2/input.jsx 1:5-1:6
+					}
+					loc: SourceLocation jsx/errors/member-in-namespace-2/input.jsx 1:1-1:6
 				}
-				attributes: Array []
-				children: Array []
-				selfClosing: true
-				typeArguments: undefined
 				loc: SourceLocation jsx/errors/member-in-namespace-2/input.jsx 1:0-1:9
 			}
+			loc: SourceLocation jsx/errors/member-in-namespace-2/input.jsx 1:0-1:9
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: ["jsx"]
+	path: UIDPath<jsx/errors/member-in-namespace-2/input.jsx>
+	loc: SourceLocation jsx/errors/member-in-namespace-2/input.jsx 1:0-2:0
 }
 ```
 

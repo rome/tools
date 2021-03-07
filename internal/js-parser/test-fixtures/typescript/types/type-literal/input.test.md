@@ -8,43 +8,21 @@
 
 ```javascript
 JSRoot {
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	loc: SourceLocation typescript/types/type-literal/input.ts 1:0-3:0
-	path: UIDPath<typescript/types/type-literal/input.ts>
-	syntax: Array ["ts"]
-	comments: Array [
-		CommentLine {
-			id: "0"
-			value: " Type literals have the same body syntax as interfaces, so see `interface` directory for that."
-			loc: SourceLocation typescript/types/type-literal/input.ts 2:0-2:96
-		}
-	]
-	body: Array [
+	body: [
 		JSVariableDeclarationStatement {
-			loc: SourceLocation typescript/types/type-literal/input.ts 1:0-1:23
-			trailingComments: Array ["0"]
+			trailingComments: ["0"]
 			declaration: JSVariableDeclaration {
 				kind: "let"
-				trailingComments: undefined
-				loc: SourceLocation typescript/types/type-literal/input.ts 1:0-1:23
-				declarations: Array [
+				declarations: [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "obj"
-							loc: SourceLocation typescript/types/type-literal/input.ts 1:4-1:22
 							meta: JSPatternMeta {
-								definite: undefined
-								loc: SourceLocation typescript/types/type-literal/input.ts 1:4-1:22
 								typeAnnotation: TSObjectTypeAnnotation {
-									loc: SourceLocation typescript/types/type-literal/input.ts 1:9-1:22
-									members: Array [
+									members: [
 										TSPropertySignature {
+											optional: false
+											readonly: false
 											key: JSStaticPropertyKey {
 												value: JSIdentifier {
 													name: "x"
@@ -52,22 +30,41 @@ JSRoot {
 												}
 												loc: SourceLocation typescript/types/type-literal/input.ts 1:11-1:12
 											}
-											optional: false
-											readonly: false
+											typeAnnotation: TSNumberKeywordTypeAnnotation {
+												loc: SourceLocation typescript/types/type-literal/input.ts 1:14-1:20
+											}
 											loc: SourceLocation typescript/types/type-literal/input.ts 1:11-1:20
-											typeAnnotation: TSNumberKeywordTypeAnnotation {loc: SourceLocation typescript/types/type-literal/input.ts 1:14-1:20}
 										}
 									]
+									loc: SourceLocation typescript/types/type-literal/input.ts 1:9-1:22
 								}
+								loc: SourceLocation typescript/types/type-literal/input.ts 1:4-1:22
 							}
+							loc: SourceLocation typescript/types/type-literal/input.ts 1:4-1:22
 						}
-						init: undefined
 						loc: SourceLocation typescript/types/type-literal/input.ts 1:4-1:22
 					}
 				]
+				loc: SourceLocation typescript/types/type-literal/input.ts 1:0-1:23
 			}
+			loc: SourceLocation typescript/types/type-literal/input.ts 1:0-1:23
 		}
 	]
+	comments: [
+		CommentLine {
+			id: "0"
+			value: " Type literals have the same body syntax as interfaces, so see `interface` directory for that."
+			loc: SourceLocation typescript/types/type-literal/input.ts 2:0-2:96
+		}
+	]
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: ["ts"]
+	path: UIDPath<typescript/types/type-literal/input.ts>
+	loc: SourceLocation typescript/types/type-literal/input.ts 1:0-3:0
 }
 ```
 

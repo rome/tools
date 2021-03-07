@@ -2,16 +2,10 @@ import {ReporterNamespace} from "@internal/cli-reporter";
 import {
 	RSERValue,
 	encodeValueToRSERSingleMessageStream,
-} from "@internal/codec-binary-serial";
-import {
-	createDirectory,
-	exists,
-	removeDirectory,
-	removeFile,
-	writeFile,
-} from "@internal/fs";
-import {AnyMarkups, markup} from "@internal/markup";
+} from "@internal/binary-transport";
+import {Markup, markup} from "@internal/markup";
 import {AbsoluteFilePath, AbsoluteFilePathMap, UIDPath} from "@internal/path";
+import {Resource, createResourceFromCallback} from "@internal/resources";
 import FatalErrorHandler from "./FatalErrorHandler";
 import {UserConfig} from "./userConfig";
 
@@ -37,6 +31,7 @@ export default class Cache {
 			writeDisabled: boolean;
 			readDisabled: boolean;
 		},
+		resources: Resource,
 	) {
 		this.writeDisabled = writeDisabled;
 		this.readDisabled = readDisabled;
@@ -48,6 +43,15 @@ export default class Cache {
 		this.runningWritePromise = undefined;
 		this.pendingWriteTimer = undefined;
 		this.pendingWrites = new AbsoluteFilePathMap();
+
+		resources.add(
+			createResourceFromCallback(
+				"Cache",
+				async () => {
+					await this.teardown();
+				},
+			),
+		);
 	}
 
 	public writeDisabled: boolean;
@@ -71,20 +75,20 @@ export default class Cache {
 
 		this.pendingWrites.delete(directory);
 
-		if (await exists(directory)) {
-			await removeDirectory(directory);
+		if (await directory.exists()) {
+			await directory.removeDirectory();
 		}
 	}
 
 	protected getCacheDirectory(uid: UIDPath): AbsoluteFilePath {
-		return this.directoryPath.append(uid.join());
+		return this.directoryPath.append(...uid.getSegments());
 	}
 
 	public getCacheFilename(uid: UIDPath, name: string): AbsoluteFilePath {
 		return this.getCacheDirectory(uid).append(`${name}.bin`);
 	}
 
-	public async teardown() {
+	private async teardown() {
 		// Wait on possible running writePending
 		await this.runningWritePromise;
 
@@ -103,21 +107,20 @@ export default class Cache {
 		this.pendingWrites = new AbsoluteFilePathMap();
 
 		// Write pending files
-		const filelinks: AnyMarkups = [];
+		const filelinks: Markup[] = [];
 		for (const [directory, ops] of pendingWrites) {
-			await createDirectory(directory);
+			await directory.createDirectory();
 
 			for (const [path, op] of ops) {
-				filelinks.push(markup`${path}`);
+				filelinks.push(path);
 				switch (op.type) {
 					case "delete": {
-						await removeFile(path);
+						await path.removeFile();
 						break;
 					}
 
 					case "update": {
-						await writeFile(
-							path,
+						await path.writeFile(
 							new DataView(encodeValueToRSERSingleMessageStream(op.value)),
 						);
 						break;
@@ -156,7 +159,7 @@ export default class Cache {
 		this.pendingWriteTimer = setTimeout(
 			() => {
 				this.runningWritePromise = this.writePending("queue").catch((err) => {
-					this.fatalErrorHandler.handle(err);
+					return this.fatalErrorHandler.handle(err);
 				}).finally(() => {
 					// Finished running
 					this.runningWritePromise = undefined;

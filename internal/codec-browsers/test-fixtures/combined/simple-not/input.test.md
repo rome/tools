@@ -7,18 +7,15 @@
 ### `result`
 
 ```javascript
-Array []
+[]
 ```
 
 ### `targets`
 
 ```javascript
-Array [
+[
 	TargetBrowserInversion {
-		target: TargetBrowser {
-			browser: "Chrome"
-			version: 80
-		}
+		target: TargetBrowser {browser: "Chrome", version: 80}
 	}
 ]
 ```
@@ -26,7 +23,7 @@ Array [
 ### `tokens`
 
 ```javascript
-Array [
+[
 	Not {
 		end: ZeroIndexedNumber<3>
 		start: ZeroIndexedNumber<0>

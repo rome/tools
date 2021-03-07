@@ -8,22 +8,9 @@
 
 ```javascript
 HTMLRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	integrity: undefined
-	loc: SourceLocation attributes/input.html 1:0-4:15
-	path: UIDPath<attributes/input.html>
-	body: Array [
+	body: [
 		HTMLElement {
-			name: HTMLIdentifier {
-				name: "a"
-				loc: SourceLocation attributes/input.html 1:1-1:2
-			}
-			children: Array []
-			selfClosing: false
-			loc: SourceLocation attributes/input.html 1:0-2:6
-			attributes: Array [
+			attributes: [
 				HTMLAttribute {
 					name: HTMLIdentifier {
 						name: "href"
@@ -36,27 +23,38 @@ HTMLRoot {
 					loc: SourceLocation attributes/input.html 1:3-2:1
 				}
 			]
+			children: []
+			selfClosing: false
+			name: HTMLIdentifier {
+				name: "a"
+				loc: SourceLocation attributes/input.html 1:1-1:2
+			}
+			loc: SourceLocation attributes/input.html 1:0-2:6
 		}
 		HTMLElement {
-			name: HTMLIdentifier {
-				name: "input"
-				loc: SourceLocation attributes/input.html 4:1-4:6
-			}
-			children: Array []
-			selfClosing: true
-			loc: SourceLocation attributes/input.html 4:0-4:15
-			attributes: Array [
+			attributes: [
 				HTMLAttribute {
 					name: HTMLIdentifier {
 						name: "checked"
 						loc: SourceLocation attributes/input.html 4:7-4:14
 					}
-					value: undefined
 					loc: SourceLocation attributes/input.html 4:7-4:14
 				}
 			]
+			children: []
+			selfClosing: true
+			name: HTMLIdentifier {
+				name: "input"
+				loc: SourceLocation attributes/input.html 4:1-4:6
+			}
+			loc: SourceLocation attributes/input.html 4:0-4:15
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	path: UIDPath<attributes/input.html>
+	loc: SourceLocation attributes/input.html 1:0-4:15
 }
 ```
 

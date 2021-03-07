@@ -621,7 +621,7 @@ export function tsCheckLiteralForConstantContext(
 			unexpectedDiagnostic(
 				parser,
 				{
-					loc: node.loc,
+					node,
 					description: descriptions.JS_PARSER.TS_CONSTANT_NOT_LITERAL,
 				},
 			);
@@ -691,7 +691,7 @@ function parseTSBindingListForSignature(
 			unexpectedDiagnostic(
 				parser,
 				{
-					loc: pattern.loc,
+					node: pattern,
 					description: descriptions.JS_PARSER.TS_INVALID_SIGNATURE_BINDING_NODE,
 				},
 			);
@@ -1025,7 +1025,7 @@ function parseTSTupleType(parser: JSParser): TSTupleType {
 			unexpectedDiagnostic(
 				parser,
 				{
-					loc: elem.loc,
+					node: elem,
 					description: descriptions.JS_PARSER.TS_REQUIRED_FOLLOWS_OPTIONAL,
 				},
 			);
@@ -1082,7 +1082,7 @@ function parseTSTupleElementTypeInner(
 			unexpectedDiagnostic(
 				parser,
 				{
-					loc: typeAnnotation.loc,
+					node: typeAnnotation,
 					description: descriptions.JS_PARSER.TS_TUPLE_ELEMENT_LABEL_INCORRECT,
 				},
 			);
@@ -1130,7 +1130,7 @@ function parseTSTupleElementType(parser: JSParser): TSTupleElement {
 		unexpectedDiagnostic(
 			parser,
 			{
-				loc: elem.loc,
+				node: elem,
 				description: descriptions.JS_PARSER.TS_TUPLE_ELEMENT_OPTIONAL_REST,
 			},
 		);
@@ -1543,7 +1543,7 @@ function tsCheckTypeAnnotationForReadOnly(parser: JSParser, node: AnyTSPrimary) 
 			unexpectedDiagnostic(
 				parser,
 				{
-					loc: node.loc,
+					node,
 					description: descriptions.JS_PARSER.TS_INVALID_READONLY_MODIFIER,
 				},
 			);

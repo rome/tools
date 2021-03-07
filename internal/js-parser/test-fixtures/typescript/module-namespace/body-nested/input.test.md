@@ -8,42 +8,40 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	loc: SourceLocation typescript/module-namespace/body-nested/input.ts 1:0-5:0
-	path: UIDPath<typescript/module-namespace/body-nested/input.ts>
-	syntax: Array ["ts"]
-	body: Array [
+	body: [
 		TSModuleDeclaration {
 			id: JSBindingIdentifier {
 				name: "A"
 				loc: SourceLocation typescript/module-namespace/body-nested/input.ts 1:10-1:11 (A)
 			}
-			loc: SourceLocation typescript/module-namespace/body-nested/input.ts 1:0-4:1
 			body: TSModuleBlock {
-				loc: SourceLocation typescript/module-namespace/body-nested/input.ts 1:12-4:1
-				body: Array [
+				body: [
 					TSModuleDeclaration {
 						id: JSBindingIdentifier {
 							name: "B"
 							loc: SourceLocation typescript/module-namespace/body-nested/input.ts 2:14-2:15 (B)
 						}
-						loc: SourceLocation typescript/module-namespace/body-nested/input.ts 2:4-3:5
 						body: TSModuleBlock {
-							body: Array []
+							body: []
 							loc: SourceLocation typescript/module-namespace/body-nested/input.ts 2:16-3:5
 						}
+						loc: SourceLocation typescript/module-namespace/body-nested/input.ts 2:4-3:5
 					}
 				]
+				loc: SourceLocation typescript/module-namespace/body-nested/input.ts 1:12-4:1
 			}
+			loc: SourceLocation typescript/module-namespace/body-nested/input.ts 1:0-4:1
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: ["ts"]
+	path: UIDPath<typescript/module-namespace/body-nested/input.ts>
+	loc: SourceLocation typescript/module-namespace/body-nested/input.ts 1:0-5:0
 }
 ```
 

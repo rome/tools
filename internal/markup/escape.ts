@@ -5,24 +5,33 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Dict} from "@internal/typescript-helpers";
+import {Dict, isPlainObject} from "@internal/typescript-helpers";
 import {MarkupTagName} from "./types";
-import {AnyPath, URLPath, isPath} from "@internal/path";
-import {OneIndexed, UnknownNumber, ZeroIndexed} from "@internal/math";
+import {Path, URLPath, isPath} from "@internal/path";
+import {
+	Duration,
+	OneIndexed,
+	UnknownNumber,
+	ZeroIndexed,
+} from "@internal/numbers";
 
-type LazyMarkupPart = StaticMarkup | LazyMarkupFactory | LazyMarkup;
+type LazyMarkupPart = StaticMarkup | LazyMarkup;
 
-export type LazyMarkupFactory = () => AnyMarkup;
+export type LazyMarkupFactory = () => Markup;
 
-export type StaticMarkups = StaticMarkup[];
+type LazyMarkup = LazyMarkupContainer | LazyMarkupFactory;
 
-export type StaticMarkup = string | RawMarkup | StaticMarkup[];
+export type StaticMarkup =
+	| string
+	| Path
+	| Duration
+	| UnknownNumber
+	| RawMarkup
+	| StaticMarkup[];
 
-export type AnyMarkup = StaticMarkup | LazyMarkup | LazyMarkupFactory;
+export type Markup = StaticMarkup | LazyMarkup;
 
-export type AnyMarkups = AnyMarkup[];
-
-type LazyMarkup = {
+type LazyMarkupContainer = {
 	type: "LAZY_MARKUP";
 	parts: LazyMarkupPart[];
 };
@@ -33,27 +42,17 @@ type RawMarkup = {
 };
 
 function isRawMarkup(part: LazyMarkupPart): part is RawMarkup {
-	return (
-		typeof part === "object" &&
-		part != null &&
-		!Array.isArray(part) &&
-		part.type === "RAW_MARKUP"
-	);
+	return isPlainObject(part) && part.type === "RAW_MARKUP";
 }
 
 function isLazyMarkup(
 	part: LazyMarkupPart,
-): part is LazyMarkup | LazyMarkupFactory {
+): part is LazyMarkupContainer | LazyMarkupFactory {
 	return isLazyMarkupParts(part) || isLazyMarkupFactory(part);
 }
 
-function isLazyMarkupParts(part: LazyMarkupPart): part is LazyMarkup {
-	return (
-		typeof part === "object" &&
-		part != null &&
-		!Array.isArray(part) &&
-		part.type === "LAZY_MARKUP"
-	);
+function isLazyMarkupParts(part: LazyMarkupPart): part is LazyMarkupContainer {
+	return isPlainObject(part) && part.type === "LAZY_MARKUP";
 }
 
 function isLazyMarkupFactory(part: LazyMarkupPart): part is LazyMarkupFactory {
@@ -65,8 +64,8 @@ export function convertToMarkupFromRandomString(unsafe: string): StaticMarkup {
 	return toRawMarkup(unsafe);
 }
 
-export function filePathToMarkup(
-	path: AnyPath,
+export function pathToMarkup(
+	path: Path,
 	explicit: boolean = false,
 ): StaticMarkup {
 	let tagName: MarkupTagName = "filelink";
@@ -86,9 +85,9 @@ export function filePathToMarkup(
 	);
 }
 
-type InterpolatedValue = undefined | AnyPath | UnknownNumber;
+const markupTemplateCache: WeakMap<TemplateStringsArray, Markup> = new WeakMap();
 
-const markupTemplateCache: WeakMap<TemplateStringsArray, AnyMarkup> = new WeakMap();
+type InterpolatedValue = undefined;
 
 // A tagged template literal helper that will escape all interpolated strings, ensuring only markup works
 export function markup(
@@ -98,11 +97,11 @@ export function markup(
 export function markup(
 	strs: TemplateStringsArray,
 	...values: Array<LazyMarkupPart | InterpolatedValue>
-): AnyMarkup;
+): Markup;
 export function markup(
 	strs: TemplateStringsArray,
 	...values: Array<LazyMarkupPart | InterpolatedValue>
-): AnyMarkup {
+): Markup {
 	if (values.length === 0) {
 		const cached = markupTemplateCache.get(strs);
 		if (cached !== undefined) {
@@ -129,7 +128,7 @@ export function markup(
 		parts.push(normalizeInterpolatedValue(values[i]));
 	}
 
-	const obj = concatMarkup(parts);
+	const obj = joinMarkup(parts);
 
 	// No interpolated values so result is static
 	if (values.length === 0) {
@@ -139,26 +138,9 @@ export function markup(
 	return obj;
 }
 
-function normalizeInterpolatedValue(
-	value: StaticMarkup | InterpolatedValue,
-): StaticMarkup;
-function normalizeInterpolatedValue(
-	value: LazyMarkupPart | InterpolatedValue,
-): AnyMarkup;
-function normalizeInterpolatedValue(
-	value: LazyMarkupPart | InterpolatedValue,
-): AnyMarkup {
+function normalizeInterpolatedValue(value: Markup | InterpolatedValue): Markup {
 	if (typeof value === "undefined") {
 		return toRawMarkup("<dim>undefined</dim>");
-	} else if (
-		typeof value === "number" ||
-		typeof value === "bigint" ||
-		value instanceof ZeroIndexed ||
-		value instanceof OneIndexed
-	) {
-		return toRawMarkup(`<number>${String(value.valueOf())}</number>`);
-	} else if (isPath(value)) {
-		return filePathToMarkup(value);
 	} else {
 		return value;
 	}
@@ -166,9 +148,9 @@ function normalizeInterpolatedValue(
 
 // Here we have a cache making serializing markup so we can call it performantly with only the object
 // We can also benefit from a small speed up by common interpolated markup
-const readCache: WeakMap<Exclude<AnyMarkup, string>, string> = new WeakMap();
+const readCache: WeakMap<Extract<Markup, object>, string> = new WeakMap();
 
-export function readMarkup(item: AnyMarkup): string {
+export function readMarkup(item: Markup): string {
 	if (isLazyMarkupFactory(item)) {
 		return readMarkup(serializeLazyMarkup(item));
 	}
@@ -177,13 +159,30 @@ export function readMarkup(item: AnyMarkup): string {
 		return escapeMarkup(item);
 	}
 
-	const cached = readCache.get(item);
-	if (cached !== undefined) {
-		return cached;
+	if (
+		typeof item === "number" ||
+		typeof item === "bigint" ||
+		item instanceof ZeroIndexed ||
+		item instanceof OneIndexed
+	) {
+		return `<number>${String(item.valueOf())}</number>`;
+	}
+
+	if (item instanceof Duration) {
+		return `<duration>${String(item.toNanoseconds())}</duration>`;
+	}
+
+	if (isPath(item)) {
+		return readMarkup(pathToMarkup(item));
 	}
 
 	if (isRawMarkup(item)) {
 		return item.value;
+	}
+
+	const cached = readCache.get(item);
+	if (cached !== undefined) {
+		return cached;
 	}
 
 	let out = "";
@@ -202,9 +201,13 @@ export function readMarkup(item: AnyMarkup): string {
 	return out;
 }
 
-const factoryCache: WeakMap<LazyMarkupFactory, AnyMarkup> = new WeakMap();
+export function isStaticMarkup(markup: Markup): markup is StaticMarkup {
+	return !isLazyMarkup(markup);
+}
 
-export function serializeLazyMarkup(markup: AnyMarkup): StaticMarkup {
+const factoryCache: WeakMap<LazyMarkupFactory, Markup> = new WeakMap();
+
+export function serializeLazyMarkup(markup: Markup): StaticMarkup {
 	if (isLazyMarkupParts(markup)) {
 		return [toRawMarkup(readMarkup(markup))];
 	} else if (isLazyMarkupFactory(markup)) {
@@ -220,7 +223,7 @@ export function serializeLazyMarkup(markup: AnyMarkup): StaticMarkup {
 }
 
 export function isEmptyMarkup(
-	safe: AnyMarkup | StaticMarkup | LazyMarkupPart[],
+	safe: Markup | StaticMarkup | LazyMarkupPart[],
 	allowLazy: boolean = true,
 ): boolean {
 	if (Array.isArray(safe)) {
@@ -253,21 +256,15 @@ export function isEmptyMarkup(
 		return isEmptyMarkup(safe.parts, allowLazy);
 	}
 
-	throw new Error("safe should be never");
+	return false;
 }
 
-export function concatMarkup(
-	items: AnyMarkups,
+export function joinMarkup(
+	items: Markup[],
 	separator?: StaticMarkup,
 ): StaticMarkup;
-export function concatMarkup(
-	items: AnyMarkup[],
-	separator?: AnyMarkup,
-): AnyMarkup;
-export function concatMarkup(
-	items: AnyMarkup[],
-	separator?: AnyMarkup,
-): AnyMarkup {
+export function joinMarkup(items: Markup[], separator?: Markup): Markup;
+export function joinMarkup(items: Markup[], separator?: Markup): Markup {
 	let hasLazy = separator !== undefined && isLazyMarkup(separator);
 	let hasSeparator = separator !== undefined && !isEmptyMarkup(separator, false);
 	let canSimplify =
@@ -340,7 +337,7 @@ export function concatMarkup(
 			parts,
 		};
 	} else {
-		return parts as StaticMarkups;
+		return parts as StaticMarkup[];
 	}
 }
 
@@ -379,14 +376,14 @@ export function markupTag(
 ): StaticMarkup;
 export function markupTag(
 	tagName: MarkupTagName,
-	text: AnyMarkup,
+	text: Markup,
 	attrs?: MarkupTagAttributes,
-): AnyMarkup;
+): Markup;
 export function markupTag(
 	tagName: MarkupTagName,
-	text: AnyMarkup,
+	text: Markup,
 	attrs?: MarkupTagAttributes,
-): AnyMarkup {
+): Markup {
 	let ret = `<${tagName}`;
 
 	if (attrs !== undefined) {

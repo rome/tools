@@ -8,57 +8,55 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation esprima/invalid-syntax/migrated_0265/input.js 1:0-2:0
-	path: UIDPath<esprima/invalid-syntax/migrated_0265/input.js>
-	body: Array [
+	body: [
 		JSClassDeclaration {
 			id: JSBindingIdentifier {
 				name: "A"
 				loc: SourceLocation esprima/invalid-syntax/migrated_0265/input.js 1:6-1:7 (A)
 			}
-			loc: SourceLocation esprima/invalid-syntax/migrated_0265/input.js 1:0-1:7
 			meta: JSClassHead {
-				body: Array []
-				implements: undefined
-				superClass: undefined
-				superTypeParameters: undefined
-				typeParameters: undefined
+				body: []
 				loc: SourceLocation esprima/invalid-syntax/migrated_0265/input.js 1:0-1:7
 			}
+			loc: SourceLocation esprima/invalid-syntax/migrated_0265/input.js 1:0-1:7
 		}
 	]
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:7
-				path: UIDPath<esprima/invalid-syntax/migrated_0265/input.js>
-				start: Position 2:0
-			}
-			description: Object {
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Unexpected character <emphasis></emphasis>"}
-				advice: Array [
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {
+				advice: [
 					log {
 						category: "info"
-						text: RAW_MARKUP {value: "Expected the opening class body character <emphasis>{</emphasis>"}
+						text: [
+							RAW_MARKUP {value: "Expected the opening "}
+							"class body"
+							RAW_MARKUP {value: " character <emphasis>"}
+							"{"
+							RAW_MARKUP {value: "</emphasis>"}
+						]
 					}
 				]
+				category: ["parse"]
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "Unexpected character <emphasis></emphasis>"}
+			}
+			location: {
+				language: "js"
+				path: UIDPath<esprima/invalid-syntax/migrated_0265/input.js>
+				end: Position 1:7
+				start: Position 2:0
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<esprima/invalid-syntax/migrated_0265/input.js>
+	loc: SourceLocation esprima/invalid-syntax/migrated_0265/input.js 1:0-2:0
 }
 ```
 

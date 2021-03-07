@@ -8,45 +8,46 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	loc: SourceLocation typescript/type-alias/index-signature/input.ts 1:0-4:0
-	path: UIDPath<typescript/type-alias/index-signature/input.ts>
-	syntax: Array ["ts"]
-	body: Array [
+	body: [
 		TSTypeAlias {
 			id: JSBindingIdentifier {
 				name: "T"
 				loc: SourceLocation typescript/type-alias/index-signature/input.ts 1:5-1:6 (T)
 			}
-			typeParameters: undefined
-			loc: SourceLocation typescript/type-alias/index-signature/input.ts 1:0-3:1
 			right: TSObjectTypeAnnotation {
-				loc: SourceLocation typescript/type-alias/index-signature/input.ts 1:9-3:1
-				members: Array [
+				members: [
 					TSIndexSignature {
+						readonly: false
 						key: JSBindingIdentifier {
 							name: "index"
-							loc: SourceLocation typescript/type-alias/index-signature/input.ts 2:2-2:15
 							meta: JSPatternMeta {
+								typeAnnotation: TSStringKeywordTypeAnnotation {
+									loc: SourceLocation typescript/type-alias/index-signature/input.ts 2:9-2:15
+								}
 								loc: SourceLocation typescript/type-alias/index-signature/input.ts 2:2-2:15
-								typeAnnotation: TSStringKeywordTypeAnnotation {loc: SourceLocation typescript/type-alias/index-signature/input.ts 2:9-2:15}
 							}
+							loc: SourceLocation typescript/type-alias/index-signature/input.ts 2:2-2:15
 						}
-						readonly: false
+						typeAnnotation: TSNumberKeywordTypeAnnotation {
+							loc: SourceLocation typescript/type-alias/index-signature/input.ts 2:18-2:24
+						}
 						loc: SourceLocation typescript/type-alias/index-signature/input.ts 2:1-2:25
-						typeAnnotation: TSNumberKeywordTypeAnnotation {loc: SourceLocation typescript/type-alias/index-signature/input.ts 2:18-2:24}
 					}
 				]
+				loc: SourceLocation typescript/type-alias/index-signature/input.ts 1:9-3:1
 			}
+			loc: SourceLocation typescript/type-alias/index-signature/input.ts 1:0-3:1
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: ["ts"]
+	path: UIDPath<typescript/type-alias/index-signature/input.ts>
+	loc: SourceLocation typescript/type-alias/index-signature/input.ts 1:0-4:0
 }
 ```
 

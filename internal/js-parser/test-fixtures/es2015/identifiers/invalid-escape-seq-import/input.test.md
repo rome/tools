@@ -8,69 +8,61 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: true
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	syntax: Array []
-	loc: SourceLocation es2015/identifiers/invalid-escape-seq-import/input.js 1:0-4:0
-	path: UIDPath<es2015/identifiers/invalid-escape-seq-import/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Escape sequence in keyword <emphasis>import</emphasis>"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:34
-				path: UIDPath<es2015/identifiers/invalid-escape-seq-import/input.js>
-				start: Position 1:34
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSVariableDeclarationStatement {
-			loc: SourceLocation es2015/identifiers/invalid-escape-seq-import/input.js 1:0-1:47
 			declaration: JSVariableDeclaration {
 				kind: "var"
-				loc: SourceLocation es2015/identifiers/invalid-escape-seq-import/input.js 1:0-1:47
-				declarations: Array [
+				declarations: [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "import"
 							loc: SourceLocation es2015/identifiers/invalid-escape-seq-import/input.js 1:4-1:40 (import)
 						}
-						loc: SourceLocation es2015/identifiers/invalid-escape-seq-import/input.js 1:4-1:46
 						init: JSNumericLiteral {
 							value: 123
-							format: undefined
 							loc: SourceLocation es2015/identifiers/invalid-escape-seq-import/input.js 1:43-1:46
 						}
+						loc: SourceLocation es2015/identifiers/invalid-escape-seq-import/input.js 1:4-1:46
 					}
 				]
+				loc: SourceLocation es2015/identifiers/invalid-escape-seq-import/input.js 1:0-1:47
 			}
+			loc: SourceLocation es2015/identifiers/invalid-escape-seq-import/input.js 1:0-1:47
 		}
 		JSImportDeclaration {
-			defaultSpecifier: undefined
-			importKind: undefined
-			namedSpecifiers: Array []
-			namespaceSpecifier: undefined
-			loc: SourceLocation es2015/identifiers/invalid-escape-seq-import/input.js 3:0-3:41
+			namedSpecifiers: []
 			source: JSStringLiteral {
 				value: "x"
 				loc: SourceLocation es2015/identifiers/invalid-escape-seq-import/input.js 3:37-3:40
 			}
+			loc: SourceLocation es2015/identifiers/invalid-escape-seq-import/input.js 3:0-3:41
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "js"
+				message: [RAW_MARKUP {value: "Escape sequence in keyword <emphasis>"}, "import", RAW_MARKUP {value: "</emphasis>"}]
+			}
+			location: {
+				language: "js"
+				path: UIDPath<es2015/identifiers/invalid-escape-seq-import/input.js>
+				end: Position 1:34
+				start: Position 1:34
+			}
+		}
+	]
+	directives: []
+	hasHoistedVars: true
+	sourceType: "module"
+	syntax: []
+	path: UIDPath<es2015/identifiers/invalid-escape-seq-import/input.js>
+	loc: SourceLocation es2015/identifiers/invalid-escape-seq-import/input.js 1:0-4:0
 }
 ```
 

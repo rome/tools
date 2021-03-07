@@ -8,67 +8,64 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	loc: SourceLocation jsx/basic/21/input.jsx 1:0-2:0
-	path: UIDPath<jsx/basic/21/input.jsx>
-	syntax: Array ["jsx"]
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation jsx/basic/21/input.jsx 1:0-1:41
 			expression: JSXElement {
-				name: JSXIdentifier {
-					name: "div"
-					loc: SourceLocation jsx/basic/21/input.jsx 1:1-1:4
-				}
-				selfClosing: false
-				typeArguments: undefined
-				loc: SourceLocation jsx/basic/21/input.jsx 1:0-1:41
-				attributes: Array [
+				attributes: [
 					JSXSpreadAttribute {
-						loc: SourceLocation jsx/basic/21/input.jsx 1:5-1:11
 						argument: JSReferenceIdentifier {
 							name: "c"
 							loc: SourceLocation jsx/basic/21/input.jsx 1:9-1:10 (c)
 						}
+						loc: SourceLocation jsx/basic/21/input.jsx 1:5-1:11
 					}
 				]
-				children: Array [
+				children: [
 					JSXText {
 						value: " "
 						loc: SourceLocation jsx/basic/21/input.jsx 1:12-1:13
 					}
 					JSXSpreadChild {
-						loc: SourceLocation jsx/basic/21/input.jsx 1:13-1:26
 						expression: JSReferenceIdentifier {
 							name: "children"
 							loc: SourceLocation jsx/basic/21/input.jsx 1:17-1:25 (children)
 						}
+						loc: SourceLocation jsx/basic/21/input.jsx 1:13-1:26
 					}
 					JSXExpressionContainer {
-						loc: SourceLocation jsx/basic/21/input.jsx 1:26-1:29
 						expression: JSReferenceIdentifier {
 							name: "a"
 							loc: SourceLocation jsx/basic/21/input.jsx 1:27-1:28 (a)
 						}
+						loc: SourceLocation jsx/basic/21/input.jsx 1:26-1:29
 					}
 					JSXSpreadChild {
-						loc: SourceLocation jsx/basic/21/input.jsx 1:29-1:35
 						expression: JSReferenceIdentifier {
 							name: "b"
 							loc: SourceLocation jsx/basic/21/input.jsx 1:33-1:34 (b)
 						}
+						loc: SourceLocation jsx/basic/21/input.jsx 1:29-1:35
 					}
 				]
+				selfClosing: false
+				name: JSXIdentifier {
+					name: "div"
+					loc: SourceLocation jsx/basic/21/input.jsx 1:1-1:4
+				}
+				loc: SourceLocation jsx/basic/21/input.jsx 1:0-1:41
 			}
+			loc: SourceLocation jsx/basic/21/input.jsx 1:0-1:41
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: ["jsx"]
+	path: UIDPath<jsx/basic/21/input.jsx>
+	loc: SourceLocation jsx/basic/21/input.jsx 1:0-2:0
 }
 ```
 

@@ -8,88 +8,79 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation core/uncategorised/462/input.js 1:0-1:50
-	path: UIDPath<core/uncategorised/462/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Unknown label <emphasis>x</emphasis>"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:33
-				path: UIDPath<core/uncategorised/462/input.js>
-				start: Position 1:33
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSLabeledStatement {
-			loc: SourceLocation core/uncategorised/462/input.js 1:0-1:50
-			label: JSIdentifier {
-				name: "x"
-				loc: SourceLocation core/uncategorised/462/input.js 1:0-1:1 (x)
-			}
 			body: JSWhileStatement {
-				loc: SourceLocation core/uncategorised/462/input.js 1:3-1:50
-				test: JSBooleanLiteral {
-					value: true
-					loc: SourceLocation core/uncategorised/462/input.js 1:10-1:14
-				}
 				body: JSBlockStatement {
-					directives: Array []
-					loc: SourceLocation core/uncategorised/462/input.js 1:16-1:50
-					body: Array [
+					body: [
 						JSExpressionStatement {
-							loc: SourceLocation core/uncategorised/462/input.js 1:18-1:48
 							expression: JSFunctionExpression {
-								id: undefined
-								loc: SourceLocation core/uncategorised/462/input.js 1:19-1:46
-								head: JSFunctionHead {
-									async: false
-									generator: false
-									hasHoistedVars: false
-									params: Array []
-									rest: undefined
-									returnType: undefined
-									thisType: undefined
-									typeParameters: undefined
-									loc: SourceLocation core/uncategorised/462/input.js 1:28-1:30
-								}
 								body: JSBlockStatement {
-									directives: Array []
-									loc: SourceLocation core/uncategorised/462/input.js 1:31-1:46
-									body: Array [
+									body: [
 										JSContinueStatement {
-											loc: SourceLocation core/uncategorised/462/input.js 1:33-1:44
 											label: JSIdentifier {
 												name: "x"
 												loc: SourceLocation core/uncategorised/462/input.js 1:42-1:43 (x)
 											}
+											loc: SourceLocation core/uncategorised/462/input.js 1:33-1:44
 										}
 									]
+									directives: []
+									loc: SourceLocation core/uncategorised/462/input.js 1:31-1:46
 								}
+								head: JSFunctionHead {
+									async: false
+									generator: false
+									hasHoistedVars: false
+									params: []
+									loc: SourceLocation core/uncategorised/462/input.js 1:28-1:30
+								}
+								loc: SourceLocation core/uncategorised/462/input.js 1:19-1:46
 							}
+							loc: SourceLocation core/uncategorised/462/input.js 1:18-1:48
 						}
 					]
+					directives: []
+					loc: SourceLocation core/uncategorised/462/input.js 1:16-1:50
 				}
+				test: JSBooleanLiteral {
+					value: true
+					loc: SourceLocation core/uncategorised/462/input.js 1:10-1:14
+				}
+				loc: SourceLocation core/uncategorised/462/input.js 1:3-1:50
+			}
+			label: JSIdentifier {
+				name: "x"
+				loc: SourceLocation core/uncategorised/462/input.js 1:0-1:1 (x)
+			}
+			loc: SourceLocation core/uncategorised/462/input.js 1:0-1:50
+		}
+	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "js"
+				message: [RAW_MARKUP {value: "Unknown label <emphasis>"}, "x", RAW_MARKUP {value: "</emphasis>"}]
+			}
+			location: {
+				language: "js"
+				path: UIDPath<core/uncategorised/462/input.js>
+				end: Position 1:33
+				start: Position 1:33
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<core/uncategorised/462/input.js>
+	loc: SourceLocation core/uncategorised/462/input.js 1:0-1:50
 }
 ```
 

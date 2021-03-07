@@ -8,60 +8,50 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation test262/rest-parameter/array-pattern-empty-with-rest/input.js 1:0-2:0
-	path: UIDPath<test262/rest-parameter/array-pattern-empty-with-rest/input.js>
-	body: Array [
+	body: [
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "emptyWithRest"
 				loc: SourceLocation test262/rest-parameter/array-pattern-empty-with-rest/input.js 1:9-1:22 (emptyWithRest)
 			}
-			loc: SourceLocation test262/rest-parameter/array-pattern-empty-with-rest/input.js 1:0-1:37
 			body: JSBlockStatement {
-				body: Array []
-				directives: Array []
+				body: []
+				directives: []
 				loc: SourceLocation test262/rest-parameter/array-pattern-empty-with-rest/input.js 1:35-1:37
 			}
 			head: JSFunctionHead {
 				async: false
 				generator: false
 				hasHoistedVars: false
-				params: Array []
-				returnType: undefined
-				thisType: undefined
-				typeParameters: undefined
-				loc: SourceLocation test262/rest-parameter/array-pattern-empty-with-rest/input.js 1:22-1:34
+				params: []
 				rest: JSBindingArrayPattern {
-					elements: Array []
-					loc: SourceLocation test262/rest-parameter/array-pattern-empty-with-rest/input.js 1:26-1:33
+					elements: []
 					meta: JSPatternMeta {
-						optional: undefined
-						typeAnnotation: undefined
 						loc: SourceLocation test262/rest-parameter/array-pattern-empty-with-rest/input.js 1:26-1:33
 					}
 					rest: JSBindingArrayPattern {
-						elements: Array []
-						rest: undefined
-						loc: SourceLocation test262/rest-parameter/array-pattern-empty-with-rest/input.js 1:30-1:32
+						elements: []
 						meta: JSPatternMeta {
-							optional: undefined
-							typeAnnotation: undefined
 							loc: SourceLocation test262/rest-parameter/array-pattern-empty-with-rest/input.js 1:30-1:32
 						}
+						loc: SourceLocation test262/rest-parameter/array-pattern-empty-with-rest/input.js 1:30-1:32
 					}
+					loc: SourceLocation test262/rest-parameter/array-pattern-empty-with-rest/input.js 1:26-1:33
 				}
+				loc: SourceLocation test262/rest-parameter/array-pattern-empty-with-rest/input.js 1:22-1:34
 			}
+			loc: SourceLocation test262/rest-parameter/array-pattern-empty-with-rest/input.js 1:0-1:37
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<test262/rest-parameter/array-pattern-empty-with-rest/input.js>
+	loc: SourceLocation test262/rest-parameter/array-pattern-empty-with-rest/input.js 1:0-2:0
 }
 ```
 

@@ -8,55 +8,53 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	loc: SourceLocation typescript/declare/const/input.ts 1:0-2:0
-	path: UIDPath<typescript/declare/const/input.ts>
-	syntax: Array ["ts"]
-	body: Array [
+	body: [
 		JSVariableDeclarationStatement {
 			declare: true
-			loc: SourceLocation typescript/declare/const/input.ts 1:0-1:35
 			declaration: JSVariableDeclaration {
 				kind: "const"
-				loc: SourceLocation typescript/declare/const/input.ts 1:0-1:35
-				declarations: Array [
+				declarations: [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "x"
-							loc: SourceLocation typescript/declare/const/input.ts 1:14-1:23
 							meta: JSPatternMeta {
-								definite: undefined
+								typeAnnotation: TSNumberKeywordTypeAnnotation {
+									loc: SourceLocation typescript/declare/const/input.ts 1:17-1:23
+								}
 								loc: SourceLocation typescript/declare/const/input.ts 1:14-1:23
-								typeAnnotation: TSNumberKeywordTypeAnnotation {loc: SourceLocation typescript/declare/const/input.ts 1:17-1:23}
 							}
+							loc: SourceLocation typescript/declare/const/input.ts 1:14-1:23
 						}
-						init: undefined
 						loc: SourceLocation typescript/declare/const/input.ts 1:14-1:23
 					}
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "y"
-							loc: SourceLocation typescript/declare/const/input.ts 1:25-1:34
 							meta: JSPatternMeta {
-								definite: undefined
+								typeAnnotation: TSStringKeywordTypeAnnotation {
+									loc: SourceLocation typescript/declare/const/input.ts 1:28-1:34
+								}
 								loc: SourceLocation typescript/declare/const/input.ts 1:25-1:34
-								typeAnnotation: TSStringKeywordTypeAnnotation {loc: SourceLocation typescript/declare/const/input.ts 1:28-1:34}
 							}
+							loc: SourceLocation typescript/declare/const/input.ts 1:25-1:34
 						}
-						init: undefined
 						loc: SourceLocation typescript/declare/const/input.ts 1:25-1:34
 					}
 				]
+				loc: SourceLocation typescript/declare/const/input.ts 1:0-1:35
 			}
+			loc: SourceLocation typescript/declare/const/input.ts 1:0-1:35
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: ["ts"]
+	path: UIDPath<typescript/declare/const/input.ts>
+	loc: SourceLocation typescript/declare/const/input.ts 1:0-2:0
 }
 ```
 

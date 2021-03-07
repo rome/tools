@@ -1,12 +1,13 @@
 import Event from "./Event";
 import {test} from "rome";
+import {Duration} from "@internal/numbers";
 
 type Callback<Param, Ret> = (param: Param) => Ret | Promise<Ret>;
 
 test(
 	"Event basic",
 	async (t) => {
-		const event = new Event<string, void>({name: "testEvent"});
+		const event = new Event<string, void>("testEvent");
 		const fooCalls: string[] = [];
 		const foo: Callback<string, void> = (param) => {
 			fooCalls.push(param);
@@ -21,7 +22,7 @@ test(
 		event.send("hello");
 		event.send("rome");
 
-		event.clear();
+		await event.clear();
 		t.false(event.hasSubscriptions());
 
 		// send and callOptional don't throw if there are no subscriptions
@@ -45,7 +46,7 @@ test(
 test(
 	"Event send void",
 	async (t) => {
-		const event = new Event<string, string>({name: "testEvent"});
+		const event = new Event<string, string>("testEvent");
 		const fooCalls: string[] = [];
 		const foo: Callback<string, string> = (param) => {
 			fooCalls.push(param);
@@ -69,7 +70,7 @@ test(
 test(
 	"Event subscription order",
 	async (t) => {
-		const event = new Event<string, string>({name: "testEvent"});
+		const event = new Event<string, string>("testEvent");
 		const fooCalls: string[] = [];
 		const foo: Callback<string, string> = (param) => {
 			fooCalls.push(param);
@@ -90,28 +91,23 @@ test(
 		const second = await event.call("rome");
 
 		// bar becomes the rootSubscription
-		fooSub.unsubscribe();
+		await fooSub.release();
 		const third = await event.call("test");
-
-		// make foo the rootSubscription
-		event.subscribe(foo, true);
-		const fourth = await event.call("hi");
 
 		// return value from event.call is return value of rootSubscription
 		t.is(first, "foo returns");
 		t.is(second, "foo returns");
 		t.is(third, "bar returns");
-		t.is(fourth, "foo returns");
 
-		t.looksLike(fooCalls, ["hello", "rome", "hi"]);
-		t.looksLike(barCalls, ["rome", "test", "hi"]);
+		t.looksLike(fooCalls, ["hello", "rome"]);
+		t.looksLike(barCalls, ["rome", "test"]);
 	},
 );
 
 test(
 	"Event#wait",
 	async (t) => {
-		const event = new Event<string, string>({name: "testEvent"});
+		const event = new Event<string, string>("testEvent");
 
 		const waitPromise = event.wait("wait arg");
 
@@ -121,7 +117,7 @@ test(
 		t.is(await waitPromise, "wait for this");
 
 		t.throwsAsync(async () => {
-			await event.wait("will timeout", 0);
+			await event.wait("will timeout", Duration.fromMilliseconds(0));
 		});
 	},
 );

@@ -4,44 +4,26 @@
 
 ## `diagnostic > and-without-query`
 
-### `error`
+### `diagnostics`
 
-```javascript
-___R$project$rome$$internal$diagnostics$error$wrappers_ts$DiagnosticsError {
-	name: "DiagnosticsError"
-	_memoMessage: undefined
-	_message: "Expected a query before \"<emphasis>and</emphasis>\""
-	suppressions: Array []
-	diagnostics: Array [
-		Object {
-			location: Object {
-				integrity: undefined
-				language: "browserquery"
-				sourceText: undefined
-				end: Position 2:0
-				path: RelativePath<diagnostic/and-without-query/input.txt>
-				start: Position 2:0
-			}
-			description: Object {
-				categoryValue: "browserquery"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Expected a query before \"<emphasis>and</emphasis>\""}
-				advice: Array [
-					log {
-						category: "info"
-						text: RAW_MARKUP {value: "Available browser queries can be found at <hyperlink target=\"https://github.com/rome/tools/blob/main/internal/codec-browsers/README.md#queries\"/>"}
-					}
-				]
-			}
-		}
-	]
-}
+```
+
+ diagnostic/and-without-query/input.txt:2 parse(browserquery) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ✖ Expected a query before "and"
+
+    and > 5%
+
+  ℹ Available browser queries can be found at
+    https://github.com/rome/tools/blob/main/internal/codec-browsers/README.md#queries
+
+
 ```
 
 ### `tokens`
 
 ```javascript
-Array [
+[
 	And {
 		end: ZeroIndexedNumber<3>
 		start: ZeroIndexedNumber<0>

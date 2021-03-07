@@ -7,7 +7,7 @@
 
 import {createVisitor, signals} from "@internal/compiler";
 import {PositionTracker, SourceLocation} from "@internal/parser-core";
-import {ZeroIndexed} from "@internal/math";
+import {ZeroIndexed} from "@internal/numbers";
 import {isIdentifierish} from "@internal/js-ast-utils";
 import {DiagnosticAdvice, descriptions} from "@internal/diagnostics";
 import {preserveCasing} from "@internal/string-utils";

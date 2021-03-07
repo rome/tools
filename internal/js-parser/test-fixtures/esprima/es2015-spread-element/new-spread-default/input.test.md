@@ -8,38 +8,17 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation esprima/es2015-spread-element/new-spread-default/input.js 1:0-2:0
-	path: UIDPath<esprima/es2015-spread-element/new-spread-default/input.js>
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation esprima/es2015-spread-element/new-spread-default/input.js 1:0-1:19
 			expression: JSNewExpression {
-				optional: undefined
-				typeArguments: undefined
-				loc: SourceLocation esprima/es2015-spread-element/new-spread-default/input.js 1:0-1:18
-				callee: JSReferenceIdentifier {
-					name: "f"
-					loc: SourceLocation esprima/es2015-spread-element/new-spread-default/input.js 1:4-1:5 (f)
-				}
-				arguments: Array [
+				arguments: [
 					JSReferenceIdentifier {
 						name: "g"
 						loc: SourceLocation esprima/es2015-spread-element/new-spread-default/input.js 1:6-1:7 (g)
 					}
 					JSSpreadElement {
-						loc: SourceLocation esprima/es2015-spread-element/new-spread-default/input.js 1:9-1:17
 						argument: JSAssignmentExpression {
 							operator: "="
-							loc: SourceLocation esprima/es2015-spread-element/new-spread-default/input.js 1:12-1:17
 							left: JSAssignmentIdentifier {
 								name: "h"
 								loc: SourceLocation esprima/es2015-spread-element/new-spread-default/input.js 1:12-1:13 (h)
@@ -48,12 +27,29 @@ JSRoot {
 								name: "i"
 								loc: SourceLocation esprima/es2015-spread-element/new-spread-default/input.js 1:16-1:17 (i)
 							}
+							loc: SourceLocation esprima/es2015-spread-element/new-spread-default/input.js 1:12-1:17
 						}
+						loc: SourceLocation esprima/es2015-spread-element/new-spread-default/input.js 1:9-1:17
 					}
 				]
+				callee: JSReferenceIdentifier {
+					name: "f"
+					loc: SourceLocation esprima/es2015-spread-element/new-spread-default/input.js 1:4-1:5 (f)
+				}
+				loc: SourceLocation esprima/es2015-spread-element/new-spread-default/input.js 1:0-1:18
 			}
+			loc: SourceLocation esprima/es2015-spread-element/new-spread-default/input.js 1:0-1:19
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<esprima/es2015-spread-element/new-spread-default/input.js>
+	loc: SourceLocation esprima/es2015-spread-element/new-spread-default/input.js 1:0-2:0
 }
 ```
 

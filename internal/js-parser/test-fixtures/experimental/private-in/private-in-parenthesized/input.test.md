@@ -8,49 +8,14 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: true
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation experimental/private-in/private-in-parenthesized/input.js 1:0-7:0
-	path: UIDPath<experimental/private-in/private-in-parenthesized/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Unknown start to an statement expression"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 4:5
-				path: UIDPath<experimental/private-in/private-in-parenthesized/input.js>
-				start: Position 4:5
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSClassDeclaration {
 			id: JSBindingIdentifier {
 				name: "Foo"
 				loc: SourceLocation experimental/private-in/private-in-parenthesized/input.js 1:6-1:9 (Foo)
 			}
-			loc: SourceLocation experimental/private-in/private-in-parenthesized/input.js 1:0-6:1
 			meta: JSClassHead {
-				implements: undefined
-				superClass: undefined
-				superTypeParameters: undefined
-				typeParameters: undefined
-				loc: SourceLocation experimental/private-in/private-in-parenthesized/input.js 1:0-6:1
-				body: Array [
+				body: [
 					JSClassPrivateProperty {
 						key: JSPrivateName {
 							id: JSIdentifier {
@@ -59,23 +24,19 @@ JSRoot {
 							}
 							loc: SourceLocation experimental/private-in/private-in-parenthesized/input.js 2:2-2:4
 						}
-						value: JSNumericLiteral {
-							value: 1
-							format: undefined
-							loc: SourceLocation experimental/private-in/private-in-parenthesized/input.js 2:7-2:8
-						}
-						typeAnnotation: undefined
-						loc: SourceLocation experimental/private-in/private-in-parenthesized/input.js 2:2-2:9
 						meta: JSClassPropertyMeta {
 							abstract: false
-							accessibility: undefined
 							optional: false
 							readonly: false
 							static: false
-							typeAnnotation: undefined
 							loc: SourceLocation experimental/private-in/private-in-parenthesized/input.js 2:2-2:4
 							start: Position 2:2
 						}
+						value: JSNumericLiteral {
+							value: 1
+							loc: SourceLocation experimental/private-in/private-in-parenthesized/input.js 2:7-2:8
+						}
+						loc: SourceLocation experimental/private-in/private-in-parenthesized/input.js 2:2-2:9
 					}
 					JSClassMethod {
 						kind: "method"
@@ -86,68 +47,84 @@ JSRoot {
 							}
 							loc: SourceLocation experimental/private-in/private-in-parenthesized/input.js 3:2-3:6
 						}
-						loc: SourceLocation experimental/private-in/private-in-parenthesized/input.js 3:2-5:3
 						meta: JSClassPropertyMeta {
 							abstract: false
-							accessibility: undefined
 							optional: false
 							readonly: false
 							static: false
-							typeAnnotation: undefined
 							loc: SourceLocation experimental/private-in/private-in-parenthesized/input.js 3:2-3:6
 							start: Position 3:2
 						}
-						head: JSFunctionHead {
-							async: false
-							generator: false
-							hasHoistedVars: false
-							params: Array []
-							rest: undefined
-							returnType: undefined
-							thisType: undefined
-							typeParameters: undefined
-							loc: SourceLocation experimental/private-in/private-in-parenthesized/input.js 3:6-3:8
-						}
 						body: JSBlockStatement {
-							directives: Array []
-							loc: SourceLocation experimental/private-in/private-in-parenthesized/input.js 3:9-5:3
-							body: Array [
+							body: [
 								JSExpressionStatement {
-									loc: SourceLocation experimental/private-in/private-in-parenthesized/input.js 4:4-4:6
 									expression: JSReferenceIdentifier {
 										name: "INVALID_PLACEHOLDER"
 										loc: SourceLocation experimental/private-in/private-in-parenthesized/input.js 4:5-4:6
 									}
+									loc: SourceLocation experimental/private-in/private-in-parenthesized/input.js 4:4-4:6
 								}
 								JSExpressionStatement {
-									loc: SourceLocation experimental/private-in/private-in-parenthesized/input.js 4:6-4:7
 									expression: JSReferenceIdentifier {
 										name: "x"
 										loc: SourceLocation experimental/private-in/private-in-parenthesized/input.js 4:6-4:7 (x)
 									}
+									loc: SourceLocation experimental/private-in/private-in-parenthesized/input.js 4:6-4:7
 								}
 								JSExpressionStatement {
-									loc: SourceLocation experimental/private-in/private-in-parenthesized/input.js 4:7-4:15
 									expression: JSBinaryExpression {
 										operator: "in"
-										loc: SourceLocation experimental/private-in/private-in-parenthesized/input.js 4:7-4:14
 										left: JSReferenceIdentifier {
 											name: "INVALID_PLACEHOLDER"
 											loc: SourceLocation experimental/private-in/private-in-parenthesized/input.js 4:7-4:8
 										}
 										right: JSObjectExpression {
-											properties: Array []
+											properties: []
 											loc: SourceLocation experimental/private-in/private-in-parenthesized/input.js 4:12-4:14
 										}
+										loc: SourceLocation experimental/private-in/private-in-parenthesized/input.js 4:7-4:14
 									}
+									loc: SourceLocation experimental/private-in/private-in-parenthesized/input.js 4:7-4:15
 								}
 							]
+							directives: []
+							loc: SourceLocation experimental/private-in/private-in-parenthesized/input.js 3:9-5:3
 						}
+						head: JSFunctionHead {
+							async: false
+							generator: false
+							hasHoistedVars: false
+							params: []
+							loc: SourceLocation experimental/private-in/private-in-parenthesized/input.js 3:6-3:8
+						}
+						loc: SourceLocation experimental/private-in/private-in-parenthesized/input.js 3:2-5:3
 					}
 				]
+				loc: SourceLocation experimental/private-in/private-in-parenthesized/input.js 1:0-6:1
+			}
+			loc: SourceLocation experimental/private-in/private-in-parenthesized/input.js 1:0-6:1
+		}
+	]
+	comments: []
+	corrupt: true
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {advice: [], category: ["parse"], categoryValue: "js", message: [RAW_MARKUP {value: "Unknown start to an "}, "statement expression"]}
+			location: {
+				language: "js"
+				path: UIDPath<experimental/private-in/private-in-parenthesized/input.js>
+				end: Position 4:5
+				start: Position 4:5
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<experimental/private-in/private-in-parenthesized/input.js>
+	loc: SourceLocation experimental/private-in/private-in-parenthesized/input.js 1:0-7:0
 }
 ```
 

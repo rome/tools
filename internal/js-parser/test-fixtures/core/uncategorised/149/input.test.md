@@ -8,31 +8,29 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation core/uncategorised/149/input.js 1:0-1:8
-	path: UIDPath<core/uncategorised/149/input.js>
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation core/uncategorised/149/input.js 1:0-1:8
 			expression: JSUnaryExpression {
 				operator: "delete"
 				prefix: true
-				loc: SourceLocation core/uncategorised/149/input.js 1:0-1:8
 				argument: JSReferenceIdentifier {
 					name: "x"
 					loc: SourceLocation core/uncategorised/149/input.js 1:7-1:8 (x)
 				}
+				loc: SourceLocation core/uncategorised/149/input.js 1:0-1:8
 			}
+			loc: SourceLocation core/uncategorised/149/input.js 1:0-1:8
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<core/uncategorised/149/input.js>
+	loc: SourceLocation core/uncategorised/149/input.js 1:0-1:8
 }
 ```
 

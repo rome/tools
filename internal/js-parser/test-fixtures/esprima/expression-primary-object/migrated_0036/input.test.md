@@ -8,23 +8,10 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation esprima/expression-primary-object/migrated_0036/input.js 1:0-1:36
-	path: UIDPath<esprima/expression-primary-object/migrated_0036/input.js>
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation esprima/expression-primary-object/migrated_0036/input.js 1:0-1:36
 			expression: JSObjectExpression {
-				loc: SourceLocation esprima/expression-primary-object/migrated_0036/input.js 1:1-1:35
-				properties: Array [
+				properties: [
 					JSObjectProperty {
 						key: JSComputedPropertyKey {
 							value: JSStringLiteral {
@@ -35,7 +22,6 @@ JSRoot {
 						}
 						value: JSNumericLiteral {
 							value: 0
-							format: undefined
 							loc: SourceLocation esprima/expression-primary-object/migrated_0036/input.js 1:16-1:17
 						}
 						loc: SourceLocation esprima/expression-primary-object/migrated_0036/input.js 1:2-1:17
@@ -50,15 +36,25 @@ JSRoot {
 						}
 						value: JSNumericLiteral {
 							value: 0
-							format: undefined
 							loc: SourceLocation esprima/expression-primary-object/migrated_0036/input.js 1:33-1:34
 						}
 						loc: SourceLocation esprima/expression-primary-object/migrated_0036/input.js 1:19-1:34
 					}
 				]
+				loc: SourceLocation esprima/expression-primary-object/migrated_0036/input.js 1:1-1:35
 			}
+			loc: SourceLocation esprima/expression-primary-object/migrated_0036/input.js 1:0-1:36
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<esprima/expression-primary-object/migrated_0036/input.js>
+	loc: SourceLocation esprima/expression-primary-object/migrated_0036/input.js 1:0-1:36
 }
 ```
 

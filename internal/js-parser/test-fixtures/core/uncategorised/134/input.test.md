@@ -8,31 +8,29 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation core/uncategorised/134/input.js 1:0-1:6
-	path: UIDPath<core/uncategorised/134/input.js>
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation core/uncategorised/134/input.js 1:0-1:6
 			expression: JSUpdateExpression {
 				operator: "++"
 				prefix: false
-				loc: SourceLocation core/uncategorised/134/input.js 1:0-1:6
 				argument: JSReferenceIdentifier {
 					name: "eval"
 					loc: SourceLocation core/uncategorised/134/input.js 1:0-1:4 (eval)
 				}
+				loc: SourceLocation core/uncategorised/134/input.js 1:0-1:6
 			}
+			loc: SourceLocation core/uncategorised/134/input.js 1:0-1:6
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<core/uncategorised/134/input.js>
+	loc: SourceLocation core/uncategorised/134/input.js 1:0-1:6
 }
 ```
 

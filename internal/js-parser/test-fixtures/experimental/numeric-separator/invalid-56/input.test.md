@@ -8,55 +8,49 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation experimental/numeric-separator/invalid-56/input.js 1:0-2:0
-	path: UIDPath<experimental/numeric-separator/invalid-56/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Invalid or unexpected int token"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:0
-				path: UIDPath<experimental/numeric-separator/invalid-56/input.js>
-				start: Position 1:0
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation experimental/numeric-separator/invalid-56/input.js 1:0-1:11
 			expression: JSSequenceExpression {
-				loc: SourceLocation experimental/numeric-separator/invalid-56/input.js 1:0-1:11
-				expressions: Array [
+				expressions: [
 					JSNumericLiteral {
 						value: 11.11
-						format: undefined
 						loc: SourceLocation experimental/numeric-separator/invalid-56/input.js 1:0-1:8
 					}
 					JSNumericLiteral {
 						value: 0
-						format: undefined
 						loc: SourceLocation experimental/numeric-separator/invalid-56/input.js 1:10-1:11
 					}
 				]
+				loc: SourceLocation experimental/numeric-separator/invalid-56/input.js 1:0-1:11
+			}
+			loc: SourceLocation experimental/numeric-separator/invalid-56/input.js 1:0-1:11
+		}
+	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "Invalid or unexpected int token"}
+			}
+			location: {
+				language: "js"
+				path: UIDPath<experimental/numeric-separator/invalid-56/input.js>
+				end: Position 1:0
+				start: Position 1:0
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<experimental/numeric-separator/invalid-56/input.js>
+	loc: SourceLocation experimental/numeric-separator/invalid-56/input.js 1:0-2:0
 }
 ```
 

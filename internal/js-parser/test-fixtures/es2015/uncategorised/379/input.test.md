@@ -8,52 +8,39 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	syntax: Array []
-	loc: SourceLocation es2015/uncategorised/379/input.js 1:0-2:0
-	path: UIDPath<es2015/uncategorised/379/input.js>
-	body: Array [
+	body: [
 		JSClassDeclaration {
 			id: JSBindingIdentifier {
 				name: "enum"
 				loc: SourceLocation es2015/uncategorised/379/input.js 1:6-1:10 (enum)
 			}
-			loc: SourceLocation es2015/uncategorised/379/input.js 1:0-1:13
 			meta: JSClassHead {
-				body: Array []
-				implements: undefined
-				superClass: undefined
-				superTypeParameters: undefined
-				typeParameters: undefined
+				body: []
 				loc: SourceLocation es2015/uncategorised/379/input.js 1:0-1:13
 			}
+			loc: SourceLocation es2015/uncategorised/379/input.js 1:0-1:13
 		}
 	]
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "enum is a reserved word"}
-			}
-			location: Object {
-				integrity: undefined
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {advice: [], category: ["parse"], categoryValue: "js", message: ["enum", RAW_MARKUP {value: " is a reserved word"}]}
+			location: {
 				language: "js"
-				sourceText: undefined
-				end: Position 1:10
 				path: UIDPath<es2015/uncategorised/379/input.js>
+				end: Position 1:10
 				start: Position 1:6
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: []
+	path: UIDPath<es2015/uncategorised/379/input.js>
+	loc: SourceLocation es2015/uncategorised/379/input.js 1:0-2:0
 }
 ```
 

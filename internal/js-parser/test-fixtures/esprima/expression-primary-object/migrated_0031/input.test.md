@@ -8,38 +8,18 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	hasHoistedVars: true
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation esprima/expression-primary-object/migrated_0031/input.js 1:0-1:48
-	path: UIDPath<esprima/expression-primary-object/migrated_0031/input.js>
-	directives: Array [
-		JSDirective {
-			value: "use strict"
-			loc: SourceLocation esprima/expression-primary-object/migrated_0031/input.js 1:0-1:13
-		}
-	]
-	body: Array [
+	body: [
 		JSVariableDeclarationStatement {
-			loc: SourceLocation esprima/expression-primary-object/migrated_0031/input.js 1:14-1:48
 			declaration: JSVariableDeclaration {
 				kind: "var"
-				loc: SourceLocation esprima/expression-primary-object/migrated_0031/input.js 1:14-1:48
-				declarations: Array [
+				declarations: [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "x"
 							loc: SourceLocation esprima/expression-primary-object/migrated_0031/input.js 1:18-1:19 (x)
 						}
-						loc: SourceLocation esprima/expression-primary-object/migrated_0031/input.js 1:18-1:48
 						init: JSObjectExpression {
-							loc: SourceLocation esprima/expression-primary-object/migrated_0031/input.js 1:22-1:48
-							properties: Array [
+							properties: [
 								JSObjectMethod {
 									kind: "get"
 									key: JSStaticPropertyKey {
@@ -49,23 +29,19 @@ JSRoot {
 										}
 										loc: SourceLocation esprima/expression-primary-object/migrated_0031/input.js 1:28-1:29
 									}
-									loc: SourceLocation esprima/expression-primary-object/migrated_0031/input.js 1:24-1:34
 									body: JSBlockStatement {
-										body: Array []
-										directives: Array []
+										body: []
+										directives: []
 										loc: SourceLocation esprima/expression-primary-object/migrated_0031/input.js 1:32-1:34
 									}
 									head: JSFunctionHead {
 										async: false
 										generator: false
 										hasHoistedVars: false
-										params: Array []
-										rest: undefined
-										returnType: undefined
-										thisType: undefined
-										typeParameters: undefined
+										params: []
 										loc: SourceLocation esprima/expression-primary-object/migrated_0031/input.js 1:29-1:31
 									}
+									loc: SourceLocation esprima/expression-primary-object/migrated_0031/input.js 1:24-1:34
 								}
 								JSObjectMethod {
 									kind: "get"
@@ -76,31 +52,45 @@ JSRoot {
 										}
 										loc: SourceLocation esprima/expression-primary-object/migrated_0031/input.js 1:40-1:41
 									}
-									loc: SourceLocation esprima/expression-primary-object/migrated_0031/input.js 1:36-1:46
 									body: JSBlockStatement {
-										body: Array []
-										directives: Array []
+										body: []
+										directives: []
 										loc: SourceLocation esprima/expression-primary-object/migrated_0031/input.js 1:44-1:46
 									}
 									head: JSFunctionHead {
 										async: false
 										generator: false
 										hasHoistedVars: false
-										params: Array []
-										rest: undefined
-										returnType: undefined
-										thisType: undefined
-										typeParameters: undefined
+										params: []
 										loc: SourceLocation esprima/expression-primary-object/migrated_0031/input.js 1:41-1:43
 									}
+									loc: SourceLocation esprima/expression-primary-object/migrated_0031/input.js 1:36-1:46
 								}
 							]
+							loc: SourceLocation esprima/expression-primary-object/migrated_0031/input.js 1:22-1:48
 						}
+						loc: SourceLocation esprima/expression-primary-object/migrated_0031/input.js 1:18-1:48
 					}
 				]
+				loc: SourceLocation esprima/expression-primary-object/migrated_0031/input.js 1:14-1:48
 			}
+			loc: SourceLocation esprima/expression-primary-object/migrated_0031/input.js 1:14-1:48
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: [
+		JSDirective {
+			value: "use strict"
+			loc: SourceLocation esprima/expression-primary-object/migrated_0031/input.js 1:0-1:13
+		}
+	]
+	hasHoistedVars: true
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<esprima/expression-primary-object/migrated_0031/input.js>
+	loc: SourceLocation esprima/expression-primary-object/migrated_0031/input.js 1:0-1:48
 }
 ```
 

@@ -1,9 +1,9 @@
-import {Path, createVisitor, signals} from "@internal/compiler";
+import {CompilerPath, createVisitor, signals} from "@internal/compiler";
 import {descriptions} from "@internal/diagnostics";
 import {doesNodeMatchPattern, isConditional} from "@internal/js-ast-utils";
 import {insideClassComponent} from "../../utils/react";
 
-function inComponentWillUpdate(path: Path): boolean {
+function inComponentWillUpdate(path: CompilerPath): boolean {
 	const func = path.findAncestry(({node}) => isConditional(node)) !== undefined;
 	return (
 		!func &&

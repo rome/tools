@@ -9,10 +9,10 @@ import {ServerRequest} from "@internal/core";
 import {commandCategories} from "../../common/commands";
 import {createServerCommand} from "../commands";
 import {markup} from "@internal/markup";
-import {Diagnostics, descriptions} from "@internal/diagnostics";
-import {exists, readFileText} from "@internal/fs";
+import {Diagnostic, descriptions} from "@internal/diagnostics";
 import {RecoveryDiskStore} from "../fs/RecoveryStore";
 import {Consumer} from "@internal/consume";
+import {Duration} from "@internal/numbers";
 
 async function applyStore(req: ServerRequest, storeId: string) {
 	const {server, reporter} = req;
@@ -91,10 +91,11 @@ export const list = createServerCommand({
 				await reporter.section(
 					markup`${storeId}`,
 					() => {
+						const since = Duration.fromMilliseconds(
+							Date.now() - new Date(timestamp).valueOf(),
+						);
 						reporter.log(
-							markup`<emphasis>Ran <duration>${String(
-								Date.now() - new Date(timestamp).valueOf(),
-							)}</duration> ago</emphasis> <dim>(${timestamp})</dim>`,
+							markup`<emphasis>Ran ${since} ago</emphasis> <dim>(${timestamp})</dim>`,
 						);
 						reporter.command(command);
 						reporter.br();
@@ -140,7 +141,7 @@ export const diff = createServerCommand({
 		const {server} = req;
 		req.expectArgumentLength(1);
 		const storeId = req.query.args[0];
-		const diagnostics: Diagnostics = [];
+		const diagnostics: Diagnostic[] = [];
 
 		const store = await server.recoveryStore.getStore(
 			storeId,
@@ -153,11 +154,11 @@ export const diff = createServerCommand({
 		for (const {originalPath, artifactPath} of store.entries) {
 			// Original may have been deleted
 			let original = "";
-			if (await exists(originalPath)) {
-				original = await readFileText(originalPath);
+			if (await originalPath.exists()) {
+				original = await originalPath.readFileText();
 			}
 
-			const artifact = await readFileText(artifactPath);
+			const artifact = await artifactPath.readFileText();
 
 			diagnostics.push({
 				location: {
@@ -246,6 +247,6 @@ export const dir = createServerCommand({
 	},
 	async callback(req: ServerRequest) {
 		req.expectArgumentLength(0);
-		req.reporter.log(markup`${req.server.recoveryStore.getDirectory()}`);
+		req.reporter.log(req.server.recoveryStore.getDirectory());
 	},
 });

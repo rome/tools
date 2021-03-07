@@ -8,73 +8,59 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation esprima/es2015-yield/invalid-yield-strict-rest-parameter/input.js 1:0-2:0
-	path: UIDPath<esprima/es2015-yield/invalid-yield-strict-rest-parameter/input.js>
-	directives: Array [
-		JSDirective {
-			value: "use strict"
-			loc: SourceLocation esprima/es2015-yield/invalid-yield-strict-rest-parameter/input.js 1:0-1:13
-		}
-	]
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "yield is a reserved word"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:33
-				path: UIDPath<esprima/es2015-yield/invalid-yield-strict-rest-parameter/input.js>
-				start: Position 1:28
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "f"
 				loc: SourceLocation esprima/es2015-yield/invalid-yield-strict-rest-parameter/input.js 1:23-1:24 (f)
 			}
-			loc: SourceLocation esprima/es2015-yield/invalid-yield-strict-rest-parameter/input.js 1:14-1:37
 			body: JSBlockStatement {
-				body: Array []
-				directives: Array []
+				body: []
+				directives: []
 				loc: SourceLocation esprima/es2015-yield/invalid-yield-strict-rest-parameter/input.js 1:35-1:37
 			}
 			head: JSFunctionHead {
 				async: false
 				generator: false
 				hasHoistedVars: false
-				params: Array []
-				returnType: undefined
-				thisType: undefined
-				typeParameters: undefined
-				loc: SourceLocation esprima/es2015-yield/invalid-yield-strict-rest-parameter/input.js 1:24-1:34
+				params: []
 				rest: JSBindingIdentifier {
 					name: "yield"
-					loc: SourceLocation esprima/es2015-yield/invalid-yield-strict-rest-parameter/input.js 1:28-1:33 (yield)
 					meta: JSPatternMeta {
-						optional: undefined
-						typeAnnotation: undefined
 						loc: SourceLocation esprima/es2015-yield/invalid-yield-strict-rest-parameter/input.js 1:28-1:33
 					}
+					loc: SourceLocation esprima/es2015-yield/invalid-yield-strict-rest-parameter/input.js 1:28-1:33 (yield)
 				}
+				loc: SourceLocation esprima/es2015-yield/invalid-yield-strict-rest-parameter/input.js 1:24-1:34
+			}
+			loc: SourceLocation esprima/es2015-yield/invalid-yield-strict-rest-parameter/input.js 1:14-1:37
+		}
+	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {advice: [], category: ["parse"], categoryValue: "js", message: ["yield", RAW_MARKUP {value: " is a reserved word"}]}
+			location: {
+				language: "js"
+				path: UIDPath<esprima/es2015-yield/invalid-yield-strict-rest-parameter/input.js>
+				end: Position 1:33
+				start: Position 1:28
 			}
 		}
 	]
+	directives: [
+		JSDirective {
+			value: "use strict"
+			loc: SourceLocation esprima/es2015-yield/invalid-yield-strict-rest-parameter/input.js 1:0-1:13
+		}
+	]
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<esprima/es2015-yield/invalid-yield-strict-rest-parameter/input.js>
+	loc: SourceLocation esprima/es2015-yield/invalid-yield-strict-rest-parameter/input.js 1:0-2:0
 }
 ```
 

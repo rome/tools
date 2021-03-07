@@ -8,32 +8,28 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation core/uncategorised/109/input.js 1:0-1:10
-	path: UIDPath<core/uncategorised/109/input.js>
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation core/uncategorised/109/input.js 1:0-1:10
 			expression: JSNewExpression {
-				arguments: Array []
-				optional: undefined
-				typeArguments: undefined
-				loc: SourceLocation core/uncategorised/109/input.js 1:0-1:10
+				arguments: []
 				callee: JSReferenceIdentifier {
 					name: "Button"
 					loc: SourceLocation core/uncategorised/109/input.js 1:4-1:10 (Button)
 				}
+				loc: SourceLocation core/uncategorised/109/input.js 1:0-1:10
 			}
+			loc: SourceLocation core/uncategorised/109/input.js 1:0-1:10
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<core/uncategorised/109/input.js>
+	loc: SourceLocation core/uncategorised/109/input.js 1:0-1:10
 }
 ```
 

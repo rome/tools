@@ -8,54 +8,49 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: true
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation esprima/es2015-identifier/invalid_id_smp/input.js 1:0-2:0
-	path: UIDPath<esprima/es2015-identifier/invalid_id_smp/input.js>
-	body: Array [
+	body: [
 		JSVariableDeclarationStatement {
-			loc: SourceLocation esprima/es2015-identifier/invalid_id_smp/input.js 1:0-2:0
 			declaration: JSVariableDeclaration {
 				kind: "var"
-				loc: SourceLocation esprima/es2015-identifier/invalid_id_smp/input.js 1:0-2:0
-				declarations: Array [
+				declarations: [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: ""
 							loc: SourceLocation esprima/es2015-identifier/invalid_id_smp/input.js 2:0-2:0 ()
 						}
-						init: undefined
 						loc: SourceLocation esprima/es2015-identifier/invalid_id_smp/input.js 2:0-2:0
 					}
 				]
+				loc: SourceLocation esprima/es2015-identifier/invalid_id_smp/input.js 1:0-2:0
 			}
+			loc: SourceLocation esprima/es2015-identifier/invalid_id_smp/input.js 1:0-2:0
 		}
 	]
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {
+				advice: []
+				category: ["parse"]
 				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Unexpected character <emphasis>\u{1f012}</emphasis>"}
+				message: [RAW_MARKUP {value: "Unexpected character <emphasis>"}, "\u{1f012}", RAW_MARKUP {value: "</emphasis>"}]
 			}
-			location: Object {
-				integrity: undefined
+			location: {
 				language: "js"
-				sourceText: undefined
-				end: Position 1:3
 				path: UIDPath<esprima/es2015-identifier/invalid_id_smp/input.js>
+				end: Position 1:3
 				start: Position 1:4
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: true
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<esprima/es2015-identifier/invalid_id_smp/input.js>
+	loc: SourceLocation esprima/es2015-identifier/invalid_id_smp/input.js 1:0-2:0
 }
 ```
 

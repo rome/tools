@@ -8,33 +8,31 @@
 
 ```javascript
 JSRoot {
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2019/json-strings/string-paragraph-separator/input.js 1:0-4:0
-	path: UIDPath<es2019/json-strings/string-paragraph-separator/input.js>
-	comments: Array [
+	body: [
+		JSExpressionStatement {
+			trailingComments: ["0"]
+			expression: JSStringLiteral {
+				value: "before\u2029after"
+				loc: SourceLocation es2019/json-strings/string-paragraph-separator/input.js 1:1-2:15
+			}
+			loc: SourceLocation es2019/json-strings/string-paragraph-separator/input.js 1:0-2:17
+		}
+	]
+	comments: [
 		CommentLine {
 			id: "0"
 			value: "      ^ That's a U+2029 PARAGRAPH SEPARATOR UTF-16 char (between 'before' and 'after')"
 			loc: SourceLocation es2019/json-strings/string-paragraph-separator/input.js 3:0-3:88
 		}
 	]
-	body: Array [
-		JSExpressionStatement {
-			loc: SourceLocation es2019/json-strings/string-paragraph-separator/input.js 1:0-2:17
-			trailingComments: Array ["0"]
-			expression: JSStringLiteral {
-				value: "before\u2029after"
-				loc: SourceLocation es2019/json-strings/string-paragraph-separator/input.js 1:1-2:15
-			}
-		}
-	]
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2019/json-strings/string-paragraph-separator/input.js>
+	loc: SourceLocation es2019/json-strings/string-paragraph-separator/input.js 1:0-4:0
 }
 ```
 

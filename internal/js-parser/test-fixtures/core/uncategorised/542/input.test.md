@@ -8,30 +8,16 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation core/uncategorised/542/input.js 1:0-3:0
-	path: UIDPath<core/uncategorised/542/input.js>
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation core/uncategorised/542/input.js 1:0-2:11
 			expression: JSCallExpression {
-				loc: SourceLocation core/uncategorised/542/input.js 1:0-2:11
-				arguments: Array [
+				arguments: [
 					JSStringLiteral {
 						value: " "
 						loc: SourceLocation core/uncategorised/542/input.js 2:7-2:10
 					}
 				]
 				callee: JSMemberExpression {
-					loc: SourceLocation core/uncategorised/542/input.js 1:0-2:6
 					object: JSStringLiteral {
 						value: "foo"
 						loc: SourceLocation core/uncategorised/542/input.js 1:0-1:5
@@ -43,10 +29,22 @@ JSRoot {
 						}
 						loc: SourceLocation core/uncategorised/542/input.js 2:1-2:6 (split)
 					}
+					loc: SourceLocation core/uncategorised/542/input.js 1:0-2:6
 				}
+				loc: SourceLocation core/uncategorised/542/input.js 1:0-2:11
 			}
+			loc: SourceLocation core/uncategorised/542/input.js 1:0-2:11
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<core/uncategorised/542/input.js>
+	loc: SourceLocation core/uncategorised/542/input.js 1:0-3:0
 }
 ```
 

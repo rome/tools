@@ -8,75 +8,61 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: true
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation esprima/es2015-arrow-function/object-binding-pattern-invalid-pattern-without-parenthesis/input.js 1:0-2:0
-	path: UIDPath<esprima/es2015-arrow-function/object-binding-pattern-invalid-pattern-without-parenthesis/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:5
-				path: UIDPath<esprima/es2015-arrow-function/object-binding-pattern-invalid-pattern-without-parenthesis/input.js>
-				start: Position 1:3
-			}
-			description: Object {
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Unexpected character <emphasis>=</emphasis>"}
-				advice: Array [
-					log {
-						category: "info"
-						text: RAW_MARKUP {value: "Expected character <emphasis>,</emphasis>"}
-					}
-				]
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation esprima/es2015-arrow-function/object-binding-pattern-invalid-pattern-without-parenthesis/input.js 1:0-1:6
 			expression: JSArrowFunctionExpression {
-				loc: SourceLocation esprima/es2015-arrow-function/object-binding-pattern-invalid-pattern-without-parenthesis/input.js 1:0-1:6
 				body: JSNumericLiteral {
 					value: 0
-					format: undefined
 					loc: SourceLocation esprima/es2015-arrow-function/object-binding-pattern-invalid-pattern-without-parenthesis/input.js 1:5-1:6
 				}
 				head: JSFunctionHead {
 					async: false
 					hasHoistedVars: false
-					rest: undefined
-					returnType: undefined
-					thisType: undefined
-					loc: SourceLocation esprima/es2015-arrow-function/object-binding-pattern-invalid-pattern-without-parenthesis/input.js 1:0-1:5
-					params: Array [
+					params: [
 						JSBindingObjectPattern {
-							properties: Array []
-							rest: undefined
+							properties: []
 							loc: SourceLocation esprima/es2015-arrow-function/object-binding-pattern-invalid-pattern-without-parenthesis/input.js 1:1-1:3
 						}
 					]
+					loc: SourceLocation esprima/es2015-arrow-function/object-binding-pattern-invalid-pattern-without-parenthesis/input.js 1:0-1:5
 				}
+				loc: SourceLocation esprima/es2015-arrow-function/object-binding-pattern-invalid-pattern-without-parenthesis/input.js 1:0-1:6
 			}
+			loc: SourceLocation esprima/es2015-arrow-function/object-binding-pattern-invalid-pattern-without-parenthesis/input.js 1:0-1:6
 		}
 		JSExpressionStatement {
-			loc: SourceLocation esprima/es2015-arrow-function/object-binding-pattern-invalid-pattern-without-parenthesis/input.js 1:6-1:7
 			expression: JSReferenceIdentifier {
 				name: "INVALID_PLACEHOLDER"
 				loc: SourceLocation esprima/es2015-arrow-function/object-binding-pattern-invalid-pattern-without-parenthesis/input.js 1:6-1:7
 			}
+			loc: SourceLocation esprima/es2015-arrow-function/object-binding-pattern-invalid-pattern-without-parenthesis/input.js 1:6-1:7
 		}
 	]
+	comments: []
+	corrupt: true
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {
+				advice: [log {category: "info", text: [RAW_MARKUP {value: "Expected character <emphasis>"}, ",", RAW_MARKUP {value: "</emphasis>"}]}]
+				category: ["parse"]
+				categoryValue: "js"
+				message: [RAW_MARKUP {value: "Unexpected character <emphasis>"}, "=", RAW_MARKUP {value: "</emphasis>"}]
+			}
+			location: {
+				language: "js"
+				path: UIDPath<esprima/es2015-arrow-function/object-binding-pattern-invalid-pattern-without-parenthesis/input.js>
+				end: Position 1:5
+				start: Position 1:3
+			}
+		}
+	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<esprima/es2015-arrow-function/object-binding-pattern-invalid-pattern-without-parenthesis/input.js>
+	loc: SourceLocation esprima/es2015-arrow-function/object-binding-pattern-invalid-pattern-without-parenthesis/input.js 1:0-2:0
 }
 ```
 

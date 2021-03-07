@@ -8,20 +8,8 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	syntax: Array []
-	loc: SourceLocation es2015/uncategorised/354/input.js 1:0-1:20
-	path: UIDPath<es2015/uncategorised/354/input.js>
-	body: Array [
+	body: [
 		JSExportDefaultDeclaration {
-			loc: SourceLocation es2015/uncategorised/354/input.js 1:0-1:20
 			declaration: JSRegExpLiteral {
 				global: false
 				insensitive: false
@@ -29,10 +17,8 @@ JSRoot {
 				noDotNewline: false
 				sticky: false
 				unicode: false
-				loc: SourceLocation es2015/uncategorised/354/input.js 1:15-1:20
 				expression: JSRegExpSubExpression {
-					loc: SourceLocation es2015/uncategorised/354/input.js 1:16-1:19
-					body: Array [
+					body: [
 						JSRegExpCharacter {
 							value: "f"
 							loc: SourceLocation es2015/uncategorised/354/input.js 1:16-1:17
@@ -46,10 +32,22 @@ JSRoot {
 							loc: SourceLocation es2015/uncategorised/354/input.js 1:18-1:19
 						}
 					]
+					loc: SourceLocation es2015/uncategorised/354/input.js 1:16-1:19
 				}
+				loc: SourceLocation es2015/uncategorised/354/input.js 1:15-1:20
 			}
+			loc: SourceLocation es2015/uncategorised/354/input.js 1:0-1:20
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: []
+	path: UIDPath<es2015/uncategorised/354/input.js>
+	loc: SourceLocation es2015/uncategorised/354/input.js 1:0-1:20
 }
 ```
 

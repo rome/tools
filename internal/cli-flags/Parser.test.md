@@ -7,7 +7,7 @@
 ### `flags`
 
 ```javascript
-Object {}
+{}
 ```
 
 ### `help`
@@ -107,7 +107,7 @@ Object {}
 ### `flags`
 
 ```javascript
-Object {}
+{}
 ```
 
 ### `help`
@@ -389,7 +389,7 @@ Object {}
 ### `flags`
 
 ```javascript
-Object {name: "sebastian"}
+{name: "sebastian"}
 ```
 
 ### `help`
@@ -428,7 +428,7 @@ Object {name: "sebastian"}
 ### `flags`
 
 ```javascript
-Object {name: "sebastian"}
+{name: "sebastian"}
 ```
 
 ### `help`
@@ -467,7 +467,7 @@ Object {name: "sebastian"}
 ### `flags`
 
 ```javascript
-Object {run: false}
+{run: false}
 ```
 
 ### `help`
@@ -506,7 +506,7 @@ Object {run: false}
 ### `flags`
 
 ```javascript
-Object {run: true}
+{run: true}
 ```
 
 ### `help`
@@ -545,7 +545,7 @@ Object {run: true}
 ### `flags`
 
 ```javascript
-Object {run: true}
+{run: true}
 ```
 
 ### `help`
@@ -584,7 +584,7 @@ Object {run: true}
 ### `flags`
 
 ```javascript
-Object {name: "sebastian"}
+{name: "sebastian"}
 ```
 
 ### `help`
@@ -623,7 +623,7 @@ Object {name: "sebastian"}
 ### `flags`
 
 ```javascript
-Object {name: undefined}
+{}
 ```
 
 ### `help`
@@ -662,7 +662,7 @@ Object {name: undefined}
 ### `flags`
 
 ```javascript
-Object {run: true}
+{run: true}
 ```
 
 ### `help`
@@ -701,7 +701,7 @@ Object {run: true}
 ### `flags`
 
 ```javascript
-Object {run: true}
+{run: true}
 ```
 
 ### `help`
@@ -740,7 +740,7 @@ Object {run: true}
 ### `flags`
 
 ```javascript
-Object {name: "sebastian"}
+{name: "sebastian"}
 ```
 
 ### `help`

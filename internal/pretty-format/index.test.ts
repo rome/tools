@@ -62,10 +62,10 @@ test(
 test(
 	"arrays",
 	(t) => {
-		t.inlineSnapshot(prettyFormatToString([1, 2]), "Array [\n\t1\n\t2\n]");
+		t.inlineSnapshot(prettyFormatToString([1, 2]), "[1, 2]");
 		t.inlineSnapshot(
 			prettyFormatToString([1, [2, 3, [4, 5]]]),
-			"Array [\n\t1\n\tArray [\n\t\t2\n\t\t3\n\t\tArray [\n\t\t\t4\n\t\t\t5\n\t\t]\n\t]\n]",
+			"[1, [2, 3, [4, 5]]]",
 		);
 	},
 );
@@ -88,18 +88,18 @@ test(
 test(
 	"objects",
 	(t) => {
-		t.inlineSnapshot(prettyFormatToString({}), "Object {}");
-		t.inlineSnapshot(prettyFormatToString({foo: "bar"}), 'Object {foo: "bar"}');
+		t.inlineSnapshot(prettyFormatToString({}), "{}");
+		t.inlineSnapshot(prettyFormatToString({foo: "bar"}), '{foo: "bar"}');
 		t.inlineSnapshot(
 			prettyFormatToString({"foo||{}": "bar"}),
-			'Object {"foo||{}": "bar"}',
+			'{"foo||{}": "bar"}',
 		);
 		t.inlineSnapshot(
 			prettyFormatToString({
 				[Symbol("foo")]: "bar",
 				[Symbol.iterator]: "foo",
 			}),
-			'Object {\n\tSymbol(foo): "bar"\n\tSymbol(Symbol.iterator): "foo"\n}',
+			'{Symbol(foo): "bar", Symbol(Symbol.iterator): "foo"}',
 		);
 	},
 );
@@ -107,13 +107,10 @@ test(
 test(
 	"iterables",
 	(t) => {
-		t.inlineSnapshot(
-			prettyFormatToString(new Set([1, 2, 3])),
-			"Set [\n\t1\n\t2\n\t3\n]",
-		);
+		t.inlineSnapshot(prettyFormatToString(new Set([1, 2, 3])), "Set [1, 2, 3]");
 		t.inlineSnapshot(
 			prettyFormatToString(new Map([["a", 1], ["b", 2], ["c", 3]])),
-			"Map [\n\ta => 1\n\tb => 2\n\tc => 3\n]",
+			'Map ["a" => 1, "b" => 2, "c" => 3]',
 		);
 	},
 );
@@ -133,7 +130,7 @@ test(
 		withProps.bar = "yes";
 		t.inlineSnapshot(
 			prettyFormatToString(withProps),
-			'Function withProps {\n\tbar: "yes"\n\tfoo: Function withPropsFoo\n}',
+			'Function withProps {bar: "yes", foo: Function withPropsFoo}',
 		);
 
 		t.inlineSnapshot(
@@ -150,16 +147,13 @@ test(
 		const parallel = {};
 		t.inlineSnapshot(
 			prettyFormatToString({foo: parallel, bar: parallel}),
-			"Object {\n\tbar: Object {}\n\tfoo: Object {}\n}",
+			"{\n\tbar: {}\n\tfoo: {}\n}",
 		);
 
 		// Circular ref
 		const circular: Dict<unknown> = {};
 		circular.obj = circular;
-		t.inlineSnapshot(
-			prettyFormatToString(circular),
-			"Object {obj: Circular Object 0}",
-		);
+		t.inlineSnapshot(prettyFormatToString(circular), "{\n\tobj: Circular 0\n}");
 
 		// Circular deep top ref
 		const circularDeepTop: Dict<unknown> = {};
@@ -168,7 +162,7 @@ test(
 		};
 		t.inlineSnapshot(
 			prettyFormatToString(circularDeepTop),
-			"Object {foo: Object {bar: Circular Object 0}}",
+			"{\n\tfoo: {\n\t\tbar: Circular 0\n\t}\n}",
 		);
 
 		// circular deep ref
@@ -176,7 +170,7 @@ test(
 		circularDeep.foo.bar = circularDeep.foo;
 		t.inlineSnapshot(
 			prettyFormatToString(circularDeep),
-			"Object {foo: Object {bar: Circular Object 1}}",
+			"{\n\tfoo: {\n\t\tbar: Circular 1\n\t}\n}",
 		);
 	},
 );

@@ -8,34 +8,31 @@
 
 ```javascript
 JSRoot {
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2015/modules/xml-comment-in-script/input.js 1:0-2:0
-	path: UIDPath<es2015/modules/xml-comment-in-script/input.js>
-	comments: Array [
+	body: [
+		JSExpressionStatement {
+			trailingComments: ["0"]
+			expression: JSReferenceIdentifier {
+				name: "foo"
+				loc: SourceLocation es2015/modules/xml-comment-in-script/input.js 1:0-1:3 (foo)
+			}
+			loc: SourceLocation es2015/modules/xml-comment-in-script/input.js 1:0-1:3
+		}
+	]
+	comments: [
 		CommentLine {
 			id: "0"
 			value: "bar"
 			loc: SourceLocation es2015/modules/xml-comment-in-script/input.js 1:4-1:11
 		}
 	]
-	body: Array [
-		JSExpressionStatement {
-			loc: SourceLocation es2015/modules/xml-comment-in-script/input.js 1:0-1:3
-			trailingComments: Array ["0"]
-			expression: JSReferenceIdentifier {
-				name: "foo"
-				trailingComments: undefined
-				loc: SourceLocation es2015/modules/xml-comment-in-script/input.js 1:0-1:3 (foo)
-			}
-		}
-	]
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2015/modules/xml-comment-in-script/input.js>
+	loc: SourceLocation es2015/modules/xml-comment-in-script/input.js 1:0-2:0
 }
 ```
 

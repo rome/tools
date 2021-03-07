@@ -8,50 +8,47 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation core/uncategorised/280/input.js 1:0-1:34
-	path: UIDPath<core/uncategorised/280/input.js>
-	body: Array [
+	body: [
 		JSTryStatement {
-			handler: undefined
-			loc: SourceLocation core/uncategorised/280/input.js 1:0-1:34
 			block: JSBlockStatement {
-				body: Array []
-				directives: Array []
+				body: []
+				directives: []
 				loc: SourceLocation core/uncategorised/280/input.js 1:4-1:7
 			}
 			finalizer: JSBlockStatement {
-				directives: Array []
-				loc: SourceLocation core/uncategorised/280/input.js 1:16-1:34
-				body: Array [
+				body: [
 					JSExpressionStatement {
-						loc: SourceLocation core/uncategorised/280/input.js 1:18-1:32
 						expression: JSCallExpression {
-							loc: SourceLocation core/uncategorised/280/input.js 1:18-1:32
-							callee: JSReferenceIdentifier {
-								name: "cleanup"
-								loc: SourceLocation core/uncategorised/280/input.js 1:18-1:25 (cleanup)
-							}
-							arguments: Array [
+							arguments: [
 								JSReferenceIdentifier {
 									name: "stuff"
 									loc: SourceLocation core/uncategorised/280/input.js 1:26-1:31 (stuff)
 								}
 							]
+							callee: JSReferenceIdentifier {
+								name: "cleanup"
+								loc: SourceLocation core/uncategorised/280/input.js 1:18-1:25 (cleanup)
+							}
+							loc: SourceLocation core/uncategorised/280/input.js 1:18-1:32
 						}
+						loc: SourceLocation core/uncategorised/280/input.js 1:18-1:32
 					}
 				]
+				directives: []
+				loc: SourceLocation core/uncategorised/280/input.js 1:16-1:34
 			}
+			loc: SourceLocation core/uncategorised/280/input.js 1:0-1:34
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<core/uncategorised/280/input.js>
+	loc: SourceLocation core/uncategorised/280/input.js 1:0-1:34
 }
 ```
 

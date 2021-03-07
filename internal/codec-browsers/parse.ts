@@ -24,7 +24,7 @@ import {
 	TargetUnit,
 } from "@internal/codec-browsers/resolve";
 import {descriptions} from "@internal/diagnostics";
-import {ZeroIndexed} from "@internal/math";
+import {ZeroIndexed} from "@internal/numbers";
 
 type BrowserQueryTokens = BaseTokens & {
 	String: ValueToken<"String", string>;

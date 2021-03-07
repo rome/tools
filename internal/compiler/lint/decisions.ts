@@ -18,8 +18,8 @@ import {
 	LintCompilerOptionsDecision,
 	LintCompilerOptionsDecisionAction,
 } from "../types";
-import {OneIndexed, ZeroIndexed} from "@internal/math";
-import {AbsoluteFilePath, AnyPath} from "@internal/path";
+import {OneIndexed, ZeroIndexed} from "@internal/numbers";
+import {AbsoluteFilePath, Path} from "@internal/path";
 import {LinterCompilerOptionsPerFile} from "@internal/core/server/checker/Checker";
 import {escapeSplit} from "@internal/string-utils";
 import {StaticMarkup} from "@internal/markup";
@@ -68,7 +68,7 @@ function addPartPositionOffset(pos: Position, part: string): Position {
 
 export function parseDecisionStrings(
 	{decisions, cwd, path, unexpected}: {
-		path: AnyPath;
+		path: Path;
 		decisions: {
 			start: Position;
 			value: string;
@@ -178,14 +178,14 @@ export function buildLintDecisionGlobalString(
 
 export function buildLintDecisionString(
 	{
-		filename,
+		path,
 		action,
 		category,
 		categoryValue,
 		start,
 		id,
 	}: {
-		filename: string;
+		path: Path;
 		action: LintCompilerOptionsDecisionAction;
 		category: DiagnosticCategory;
 		categoryValue: undefined | string;
@@ -203,7 +203,7 @@ export function buildLintDecisionString(
 	const parts = [
 		action,
 		formatCategoryDescription({category, categoryValue}),
-		filename,
+		path.join(),
 		pos,
 	];
 
@@ -220,30 +220,26 @@ export function buildLintDecisionString(
 
 export function buildLintDecisionAdviceAction(
 	{
-		noun,
-		instruction,
-		filename,
+		description,
+		path,
 		shortcut,
 		decision,
-		extra,
+		secondary,
 	}: {
-		extra?: boolean;
+		description: StaticMarkup;
+		secondary?: boolean;
 		shortcut?: string;
-		noun: StaticMarkup;
-		instruction: StaticMarkup;
-		filename?: string;
+		path?: Path;
 		decision: string;
 	},
 ): DiagnosticAdviceAction {
 	return {
 		type: "action",
-		extra,
-		hidden: true,
+		secondary,
 		command: "check",
-		shortcut,
-		args: filename === undefined ? [] : [escapePart(filename)],
-		noun,
-		instruction,
+		suggestedKeyboardShortcut: shortcut,
+		args: path === undefined ? [] : [escapePart(path.join())],
+		description,
 		commandFlags: {
 			decisions: [decision],
 		},

@@ -12,9 +12,9 @@ import {
 	SourceMap,
 } from "./types";
 import {decodeVLQ} from "./base64";
-import {OneIndexed, ZeroIndexed} from "@internal/math";
+import {OneIndexed, ZeroIndexed} from "@internal/numbers";
 import {Dict} from "@internal/typescript-helpers";
-import {AnyPath, createAnyPath} from "@internal/path";
+import {Path, createPath} from "@internal/path";
 
 export function getParsedMappingKey(
 	line: OneIndexed,
@@ -26,13 +26,13 @@ export function getParsedMappingKey(
 type GetMappings = () => ParsedMappings;
 
 export default class SourceMapConsumer {
-	constructor(path: AnyPath, getMappings: GetMappings) {
+	constructor(path: Path, getMappings: GetMappings) {
 		this.path = path;
 		this._getMappings = getMappings;
 		this.mappings = undefined;
 	}
 
-	private path: AnyPath;
+	private path: Path;
 	private _getMappings: GetMappings;
 	private mappings: undefined | ParsedMappings;
 
@@ -43,13 +43,13 @@ export default class SourceMapConsumer {
 
 	public static fromJSON(sourceMap: SourceMap): SourceMapConsumer {
 		return new SourceMapConsumer(
-			createAnyPath(sourceMap.file),
+			createPath(sourceMap.file),
 			() => SourceMapConsumer.parseMappings(sourceMap),
 		);
 	}
 
 	public static fromJSONLazy(
-		path: AnyPath,
+		path: Path,
 		getSourceMap: () => SourceMap,
 	): SourceMapConsumer {
 		return new SourceMapConsumer(
@@ -73,8 +73,8 @@ export default class SourceMapConsumer {
 		let cachedSegments: Dict<number[]> = {};
 		let value;
 
-		const sources: AnyPath[] = sourceMap.sources.map((source) => {
-			return createAnyPath(source);
+		const sources: Path[] = sourceMap.sources.map((source) => {
+			return createPath(source);
 		});
 
 		while (index < length) {

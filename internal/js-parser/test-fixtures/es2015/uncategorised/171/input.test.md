@@ -8,73 +8,61 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2015/uncategorised/171/input.js 1:0-1:27
-	path: UIDPath<es2015/uncategorised/171/input.js>
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation es2015/uncategorised/171/input.js 1:0-1:27
 			expression: JSFunctionExpression {
 				id: JSBindingIdentifier {
 					name: "x"
 					loc: SourceLocation es2015/uncategorised/171/input.js 1:10-1:11 (x)
 				}
-				loc: SourceLocation es2015/uncategorised/171/input.js 1:1-1:26
 				body: JSBlockStatement {
-					body: Array []
-					directives: Array []
+					body: []
+					directives: []
 					loc: SourceLocation es2015/uncategorised/171/input.js 1:24-1:26
 				}
 				head: JSFunctionHead {
 					async: false
 					generator: false
 					hasHoistedVars: false
-					params: Array []
-					returnType: undefined
-					thisType: undefined
-					typeParameters: undefined
-					loc: SourceLocation es2015/uncategorised/171/input.js 1:11-1:24
+					params: []
 					rest: JSBindingArrayPattern {
-						rest: undefined
-						loc: SourceLocation es2015/uncategorised/171/input.js 1:15-1:23
-						meta: JSPatternMeta {
-							optional: undefined
-							typeAnnotation: undefined
-							loc: SourceLocation es2015/uncategorised/171/input.js 1:15-1:23
-						}
-						elements: Array [
+						elements: [
 							JSBindingIdentifier {
 								name: "a"
-								loc: SourceLocation es2015/uncategorised/171/input.js 1:17-1:18 (a)
 								meta: JSPatternMeta {
-									optional: undefined
-									typeAnnotation: undefined
 									loc: SourceLocation es2015/uncategorised/171/input.js 1:17-1:18
 								}
+								loc: SourceLocation es2015/uncategorised/171/input.js 1:17-1:18 (a)
 							}
 							JSBindingIdentifier {
 								name: "b"
-								loc: SourceLocation es2015/uncategorised/171/input.js 1:20-1:21 (b)
 								meta: JSPatternMeta {
-									optional: undefined
-									typeAnnotation: undefined
 									loc: SourceLocation es2015/uncategorised/171/input.js 1:20-1:21
 								}
+								loc: SourceLocation es2015/uncategorised/171/input.js 1:20-1:21 (b)
 							}
 						]
+						meta: JSPatternMeta {
+							loc: SourceLocation es2015/uncategorised/171/input.js 1:15-1:23
+						}
+						loc: SourceLocation es2015/uncategorised/171/input.js 1:15-1:23
 					}
+					loc: SourceLocation es2015/uncategorised/171/input.js 1:11-1:24
 				}
+				loc: SourceLocation es2015/uncategorised/171/input.js 1:1-1:26
 			}
+			loc: SourceLocation es2015/uncategorised/171/input.js 1:0-1:27
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2015/uncategorised/171/input.js>
+	loc: SourceLocation es2015/uncategorised/171/input.js 1:0-1:27
 }
 ```
 

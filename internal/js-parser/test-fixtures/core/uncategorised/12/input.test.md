@@ -8,50 +8,45 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation core/uncategorised/12/input.js 1:0-1:16
-	path: UIDPath<core/uncategorised/12/input.js>
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation core/uncategorised/12/input.js 1:0-1:16
 			expression: JSAssignmentExpression {
 				operator: "="
-				loc: SourceLocation core/uncategorised/12/input.js 1:0-1:16
 				left: JSAssignmentIdentifier {
 					name: "x"
 					loc: SourceLocation core/uncategorised/12/input.js 1:0-1:1 (x)
 				}
 				right: JSArrayExpression {
-					loc: SourceLocation core/uncategorised/12/input.js 1:4-1:16
-					elements: Array [
+					elements: [
 						JSNumericLiteral {
 							value: 1
-							format: undefined
 							loc: SourceLocation core/uncategorised/12/input.js 1:6-1:7
 						}
 						JSNumericLiteral {
 							value: 2
-							format: undefined
 							loc: SourceLocation core/uncategorised/12/input.js 1:9-1:10
 						}
 						JSNumericLiteral {
 							value: 3
-							format: undefined
 							loc: SourceLocation core/uncategorised/12/input.js 1:12-1:13
 						}
 					]
+					loc: SourceLocation core/uncategorised/12/input.js 1:4-1:16
 				}
+				loc: SourceLocation core/uncategorised/12/input.js 1:0-1:16
 			}
+			loc: SourceLocation core/uncategorised/12/input.js 1:0-1:16
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<core/uncategorised/12/input.js>
+	loc: SourceLocation core/uncategorised/12/input.js 1:0-1:16
 }
 ```
 

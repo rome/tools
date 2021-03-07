@@ -8,32 +8,17 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: true
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2016/simple-parameter-list/async-arrow-function-concise-body/input.js 1:0-2:0
-	path: UIDPath<es2016/simple-parameter-list/async-arrow-function-concise-body/input.js>
-	body: Array [
+	body: [
 		JSVariableDeclarationStatement {
-			loc: SourceLocation es2016/simple-parameter-list/async-arrow-function-concise-body/input.js 1:0-1:40
 			declaration: JSVariableDeclaration {
 				kind: "var"
-				loc: SourceLocation es2016/simple-parameter-list/async-arrow-function-concise-body/input.js 1:0-1:40
-				declarations: Array [
+				declarations: [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "a"
 							loc: SourceLocation es2016/simple-parameter-list/async-arrow-function-concise-body/input.js 1:4-1:5 (a)
 						}
-						loc: SourceLocation es2016/simple-parameter-list/async-arrow-function-concise-body/input.js 1:4-1:39
 						init: JSArrowFunctionExpression {
-							loc: SourceLocation es2016/simple-parameter-list/async-arrow-function-concise-body/input.js 1:8-1:39
 							body: JSReferenceIdentifier {
 								name: "options"
 								loc: SourceLocation es2016/simple-parameter-list/async-arrow-function-concise-body/input.js 1:32-1:39 (options)
@@ -41,31 +26,41 @@ JSRoot {
 							head: JSFunctionHead {
 								async: true
 								hasHoistedVars: false
-								rest: undefined
-								returnType: undefined
-								thisType: undefined
-								loc: SourceLocation es2016/simple-parameter-list/async-arrow-function-concise-body/input.js 1:8-1:31
-								params: Array [
+								params: [
 									JSBindingAssignmentPattern {
 										operator: "="
-										loc: SourceLocation es2016/simple-parameter-list/async-arrow-function-concise-body/input.js 1:15-1:27
 										left: JSBindingIdentifier {
 											name: "options"
 											loc: SourceLocation es2016/simple-parameter-list/async-arrow-function-concise-body/input.js 1:15-1:22 (options)
 										}
 										right: JSObjectExpression {
-											properties: Array []
+											properties: []
 											loc: SourceLocation es2016/simple-parameter-list/async-arrow-function-concise-body/input.js 1:25-1:27
 										}
+										loc: SourceLocation es2016/simple-parameter-list/async-arrow-function-concise-body/input.js 1:15-1:27
 									}
 								]
+								loc: SourceLocation es2016/simple-parameter-list/async-arrow-function-concise-body/input.js 1:8-1:31
 							}
+							loc: SourceLocation es2016/simple-parameter-list/async-arrow-function-concise-body/input.js 1:8-1:39
 						}
+						loc: SourceLocation es2016/simple-parameter-list/async-arrow-function-concise-body/input.js 1:4-1:39
 					}
 				]
+				loc: SourceLocation es2016/simple-parameter-list/async-arrow-function-concise-body/input.js 1:0-1:40
 			}
+			loc: SourceLocation es2016/simple-parameter-list/async-arrow-function-concise-body/input.js 1:0-1:40
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: true
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2016/simple-parameter-list/async-arrow-function-concise-body/input.js>
+	loc: SourceLocation es2016/simple-parameter-list/async-arrow-function-concise-body/input.js 1:0-2:0
 }
 ```
 

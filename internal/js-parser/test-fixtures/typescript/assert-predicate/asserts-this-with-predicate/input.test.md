@@ -8,54 +8,14 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: true
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	loc: SourceLocation typescript/assert-predicate/asserts-this-with-predicate/input.ts 1:0-5:0
-	path: UIDPath<typescript/assert-predicate/asserts-this-with-predicate/input.ts>
-	syntax: Array ["ts"]
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 2:23
-				path: UIDPath<typescript/assert-predicate/asserts-this-with-predicate/input.ts>
-				start: Position 2:24
-			}
-			description: Object {
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Unexpected character <emphasis>i</emphasis>"}
-				advice: Array [
-					log {
-						category: "info"
-						text: RAW_MARKUP {value: "Expected the opening block character <emphasis>{</emphasis>"}
-					}
-				]
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSClassDeclaration {
 			id: JSBindingIdentifier {
 				name: "Foo"
 				loc: SourceLocation typescript/assert-predicate/asserts-this-with-predicate/input.ts 1:6-1:9 (Foo)
 			}
-			loc: SourceLocation typescript/assert-predicate/asserts-this-with-predicate/input.ts 1:0-4:1
 			meta: JSClassHead {
-				implements: undefined
-				superClass: undefined
-				superTypeParameters: undefined
-				typeParameters: undefined
-				loc: SourceLocation typescript/assert-predicate/asserts-this-with-predicate/input.ts 1:0-4:1
-				body: Array [
+				body: [
 					JSClassMethod {
 						kind: "method"
 						key: JSStaticPropertyKey {
@@ -65,64 +25,38 @@ JSRoot {
 							}
 							loc: SourceLocation typescript/assert-predicate/asserts-this-with-predicate/input.ts 2:2-2:7
 						}
-						loc: SourceLocation typescript/assert-predicate/asserts-this-with-predicate/input.ts 2:2-4:1
 						meta: JSClassPropertyMeta {
 							abstract: false
-							accessibility: undefined
 							optional: false
 							readonly: false
 							static: false
-							typeAnnotation: undefined
 							loc: SourceLocation typescript/assert-predicate/asserts-this-with-predicate/input.ts 2:2-2:7
 							start: Position 2:2
 						}
-						head: JSFunctionHead {
-							async: false
-							generator: false
-							hasHoistedVars: false
-							params: Array []
-							rest: undefined
-							thisType: undefined
-							typeParameters: undefined
-							loc: SourceLocation typescript/assert-predicate/asserts-this-with-predicate/input.ts 2:7-2:23
-							returnType: TSTypePredicate {
-								asserts: true
-								typeAnnotation: undefined
-								loc: SourceLocation typescript/assert-predicate/asserts-this-with-predicate/input.ts 2:9-2:23
-								parameterName: JSIdentifier {
-									name: "this"
-									loc: SourceLocation typescript/assert-predicate/asserts-this-with-predicate/input.ts 2:19-2:23 (this)
-								}
-							}
-						}
 						body: JSBlockStatement {
-							directives: Array []
-							loc: SourceLocation typescript/assert-predicate/asserts-this-with-predicate/input.ts 2:24-4:1
-							body: Array [
+							body: [
 								JSExpressionStatement {
-									loc: SourceLocation typescript/assert-predicate/asserts-this-with-predicate/input.ts 2:24-2:26
 									expression: JSReferenceIdentifier {
 										name: "is"
 										loc: SourceLocation typescript/assert-predicate/asserts-this-with-predicate/input.ts 2:24-2:26 (is)
 									}
+									loc: SourceLocation typescript/assert-predicate/asserts-this-with-predicate/input.ts 2:24-2:26
 								}
 								JSExpressionStatement {
-									loc: SourceLocation typescript/assert-predicate/asserts-this-with-predicate/input.ts 2:27-2:30
 									expression: JSReferenceIdentifier {
 										name: "Foo"
 										loc: SourceLocation typescript/assert-predicate/asserts-this-with-predicate/input.ts 2:27-2:30 (Foo)
 									}
+									loc: SourceLocation typescript/assert-predicate/asserts-this-with-predicate/input.ts 2:27-2:30
 								}
 								JSBlockStatement {
-									body: Array []
-									directives: Array []
+									body: []
+									directives: []
 									loc: SourceLocation typescript/assert-predicate/asserts-this-with-predicate/input.ts 2:31-2:33
 								}
 								JSExpressionStatement {
-									loc: SourceLocation typescript/assert-predicate/asserts-this-with-predicate/input.ts 3:2-3:12
 									expression: JSAssignmentExpression {
 										operator: "="
-										loc: SourceLocation typescript/assert-predicate/asserts-this-with-predicate/input.ts 3:2-3:12
 										left: JSAssignmentIdentifier {
 											name: "isBaz"
 											loc: SourceLocation typescript/assert-predicate/asserts-this-with-predicate/input.ts 3:2-3:7 (isBaz)
@@ -131,64 +65,116 @@ JSRoot {
 											name: "INVALID_PLACEHOLDER"
 											loc: SourceLocation typescript/assert-predicate/asserts-this-with-predicate/input.ts 3:11-3:11
 										}
+										loc: SourceLocation typescript/assert-predicate/asserts-this-with-predicate/input.ts 3:2-3:12
 									}
+									loc: SourceLocation typescript/assert-predicate/asserts-this-with-predicate/input.ts 3:2-3:12
 								}
 								JSExpressionStatement {
-									loc: SourceLocation typescript/assert-predicate/asserts-this-with-predicate/input.ts 3:12-3:13
 									expression: JSReferenceIdentifier {
 										name: "INVALID_PLACEHOLDER"
 										loc: SourceLocation typescript/assert-predicate/asserts-this-with-predicate/input.ts 3:12-3:13
 									}
+									loc: SourceLocation typescript/assert-predicate/asserts-this-with-predicate/input.ts 3:12-3:13
 								}
 								JSExpressionStatement {
-									loc: SourceLocation typescript/assert-predicate/asserts-this-with-predicate/input.ts 3:14-3:21
 									expression: JSReferenceIdentifier {
 										name: "asserts"
 										loc: SourceLocation typescript/assert-predicate/asserts-this-with-predicate/input.ts 3:14-3:21 (asserts)
 									}
+									loc: SourceLocation typescript/assert-predicate/asserts-this-with-predicate/input.ts 3:14-3:21
 								}
 								JSExpressionStatement {
-									expression: JSThisExpression {loc: SourceLocation typescript/assert-predicate/asserts-this-with-predicate/input.ts 3:22-3:26}
+									expression: JSThisExpression {
+										loc: SourceLocation typescript/assert-predicate/asserts-this-with-predicate/input.ts 3:22-3:26
+									}
 									loc: SourceLocation typescript/assert-predicate/asserts-this-with-predicate/input.ts 3:22-3:26
 								}
 								JSExpressionStatement {
-									loc: SourceLocation typescript/assert-predicate/asserts-this-with-predicate/input.ts 3:27-3:29
 									expression: JSReferenceIdentifier {
 										name: "is"
 										loc: SourceLocation typescript/assert-predicate/asserts-this-with-predicate/input.ts 3:27-3:29 (is)
 									}
+									loc: SourceLocation typescript/assert-predicate/asserts-this-with-predicate/input.ts 3:27-3:29
 								}
 								JSExpressionStatement {
-									loc: SourceLocation typescript/assert-predicate/asserts-this-with-predicate/input.ts 3:30-3:39
 									expression: JSArrowFunctionExpression {
-										loc: SourceLocation typescript/assert-predicate/asserts-this-with-predicate/input.ts 3:30-3:39
 										body: JSBlockStatement {
-											body: Array []
-											directives: Array []
+											body: []
+											directives: []
 											loc: SourceLocation typescript/assert-predicate/asserts-this-with-predicate/input.ts 3:37-3:39
 										}
 										head: JSFunctionHead {
 											async: false
 											hasHoistedVars: false
-											rest: undefined
-											thisType: undefined
-											loc: SourceLocation typescript/assert-predicate/asserts-this-with-predicate/input.ts 3:30-3:36
-											params: Array [
+											params: [
 												JSBindingIdentifier {
 													name: "Foo"
 													loc: SourceLocation typescript/assert-predicate/asserts-this-with-predicate/input.ts 3:30-3:33 (Foo)
 												}
 											]
+											loc: SourceLocation typescript/assert-predicate/asserts-this-with-predicate/input.ts 3:30-3:36
 										}
+										loc: SourceLocation typescript/assert-predicate/asserts-this-with-predicate/input.ts 3:30-3:39
 									}
+									loc: SourceLocation typescript/assert-predicate/asserts-this-with-predicate/input.ts 3:30-3:39
 								}
 							]
+							directives: []
+							loc: SourceLocation typescript/assert-predicate/asserts-this-with-predicate/input.ts 2:24-4:1
 						}
+						head: JSFunctionHead {
+							async: false
+							generator: false
+							hasHoistedVars: false
+							params: []
+							returnType: TSTypePredicate {
+								asserts: true
+								parameterName: JSIdentifier {
+									name: "this"
+									loc: SourceLocation typescript/assert-predicate/asserts-this-with-predicate/input.ts 2:19-2:23 (this)
+								}
+								loc: SourceLocation typescript/assert-predicate/asserts-this-with-predicate/input.ts 2:9-2:23
+							}
+							loc: SourceLocation typescript/assert-predicate/asserts-this-with-predicate/input.ts 2:7-2:23
+						}
+						loc: SourceLocation typescript/assert-predicate/asserts-this-with-predicate/input.ts 2:2-4:1
 					}
 				]
+				loc: SourceLocation typescript/assert-predicate/asserts-this-with-predicate/input.ts 1:0-4:1
+			}
+			loc: SourceLocation typescript/assert-predicate/asserts-this-with-predicate/input.ts 1:0-4:1
+		}
+	]
+	comments: []
+	corrupt: true
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {
+				advice: [
+					log {
+						category: "info"
+						text: [RAW_MARKUP {value: "Expected the opening "}, "block", RAW_MARKUP {value: " character <emphasis>"}, "{", RAW_MARKUP {value: "</emphasis>"}]
+					}
+				]
+				category: ["parse"]
+				categoryValue: "js"
+				message: [RAW_MARKUP {value: "Unexpected character <emphasis>"}, "i", RAW_MARKUP {value: "</emphasis>"}]
+			}
+			location: {
+				language: "js"
+				path: UIDPath<typescript/assert-predicate/asserts-this-with-predicate/input.ts>
+				end: Position 2:23
+				start: Position 2:24
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: ["ts"]
+	path: UIDPath<typescript/assert-predicate/asserts-this-with-predicate/input.ts>
+	loc: SourceLocation typescript/assert-predicate/asserts-this-with-predicate/input.ts 1:0-5:0
 }
 ```
 

@@ -4,39 +4,23 @@
 
 ## `diagnostic > number`
 
-### `error`
+### `diagnostics`
 
-```javascript
-___R$project$rome$$internal$diagnostics$error$wrappers_ts$DiagnosticsError {
-	name: "DiagnosticsError"
-	_memoMessage: undefined
-	_message: "Expected a number"
-	suppressions: Array []
-	diagnostics: Array [
-		Object {
-			description: Object {
-				advice: Array []
-				categoryValue: "browserquery"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Expected a number"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "browserquery"
-				sourceText: undefined
-				end: Position 1:4
-				path: RelativePath<diagnostic/number/input.txt>
-				start: Position 2:0
-			}
-		}
-	]
-}
+```
+
+ diagnostic/number/input.txt:2 parse(browserquery) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ✖ Expected a number
+
+    last
+
+
 ```
 
 ### `tokens`
 
 ```javascript
-Array [
+[
 	Last {
 		end: ZeroIndexedNumber<4>
 		start: ZeroIndexedNumber<0>

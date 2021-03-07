@@ -8,43 +8,27 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2017/async-functions/context-regex-after-statement/input.js 1:0-2:6
-	path: UIDPath<es2017/async-functions/context-regex-after-statement/input.js>
-	body: Array [
+	body: [
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "fn"
 				loc: SourceLocation es2017/async-functions/context-regex-after-statement/input.js 1:15-1:17 (fn)
 			}
-			loc: SourceLocation es2017/async-functions/context-regex-after-statement/input.js 1:0-1:22
 			body: JSBlockStatement {
-				body: Array []
-				directives: Array []
+				body: []
+				directives: []
 				loc: SourceLocation es2017/async-functions/context-regex-after-statement/input.js 1:20-1:22
 			}
 			head: JSFunctionHead {
 				async: true
 				generator: false
 				hasHoistedVars: false
-				params: Array []
-				rest: undefined
-				returnType: undefined
-				thisType: undefined
-				typeParameters: undefined
+				params: []
 				loc: SourceLocation es2017/async-functions/context-regex-after-statement/input.js 1:17-1:19
 			}
+			loc: SourceLocation es2017/async-functions/context-regex-after-statement/input.js 1:0-1:22
 		}
 		JSExpressionStatement {
-			loc: SourceLocation es2017/async-functions/context-regex-after-statement/input.js 2:0-2:6
 			expression: JSRegExpLiteral {
 				global: true
 				insensitive: false
@@ -52,10 +36,8 @@ JSRoot {
 				noDotNewline: false
 				sticky: false
 				unicode: false
-				loc: SourceLocation es2017/async-functions/context-regex-after-statement/input.js 2:0-2:6
 				expression: JSRegExpSubExpression {
-					loc: SourceLocation es2017/async-functions/context-regex-after-statement/input.js 2:1-2:4
-					body: Array [
+					body: [
 						JSRegExpCharacter {
 							value: "f"
 							loc: SourceLocation es2017/async-functions/context-regex-after-statement/input.js 2:1-2:2
@@ -69,10 +51,22 @@ JSRoot {
 							loc: SourceLocation es2017/async-functions/context-regex-after-statement/input.js 2:3-2:4
 						}
 					]
+					loc: SourceLocation es2017/async-functions/context-regex-after-statement/input.js 2:1-2:4
 				}
+				loc: SourceLocation es2017/async-functions/context-regex-after-statement/input.js 2:0-2:6
 			}
+			loc: SourceLocation es2017/async-functions/context-regex-after-statement/input.js 2:0-2:6
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2017/async-functions/context-regex-after-statement/input.js>
+	loc: SourceLocation es2017/async-functions/context-regex-after-statement/input.js 1:0-2:6
 }
 ```
 

@@ -8,33 +8,31 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	syntax: Array []
-	loc: SourceLocation experimental/export-extensions/default-default-asi/input.js 1:0-3:0
-	path: UIDPath<experimental/export-extensions/default-default-asi/input.js>
-	body: Array [
+	body: [
 		JSExportDefaultDeclaration {
-			loc: SourceLocation experimental/export-extensions/default-default-asi/input.js 1:0-1:19
 			declaration: JSReferenceIdentifier {
 				name: "from"
 				loc: SourceLocation experimental/export-extensions/default-default-asi/input.js 1:15-1:19 (from)
 			}
+			loc: SourceLocation experimental/export-extensions/default-default-asi/input.js 1:0-1:19
 		}
 		JSExpressionStatement {
-			loc: SourceLocation experimental/export-extensions/default-default-asi/input.js 2:0-2:6
 			expression: JSStringLiteral {
 				value: "bar"
 				loc: SourceLocation experimental/export-extensions/default-default-asi/input.js 2:0-2:5
 			}
+			loc: SourceLocation experimental/export-extensions/default-default-asi/input.js 2:0-2:6
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: []
+	path: UIDPath<experimental/export-extensions/default-default-asi/input.js>
+	loc: SourceLocation experimental/export-extensions/default-default-asi/input.js 1:0-3:0
 }
 ```
 

@@ -8,29 +8,14 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2017/async-functions/8/input.js 1:0-2:0
-	path: UIDPath<es2017/async-functions/8/input.js>
-	body: Array [
+	body: [
 		JSVariableDeclarationStatement {
-			loc: SourceLocation es2017/async-functions/8/input.js 1:0-1:39
 			declaration: JSVariableDeclaration {
 				kind: "const"
-				loc: SourceLocation es2017/async-functions/8/input.js 1:0-1:39
-				declarations: Array [
+				declarations: [
 					JSVariableDeclarator {
 						id: JSBindingObjectPattern {
-							rest: undefined
-							loc: SourceLocation es2017/async-functions/8/input.js 1:6-1:13
-							properties: Array [
+							properties: [
 								JSBindingObjectPatternProperty {
 									key: JSStaticPropertyKey {
 										value: JSIdentifier {
@@ -46,26 +31,38 @@ JSRoot {
 									loc: SourceLocation es2017/async-functions/8/input.js 1:7-1:12
 								}
 							]
+							loc: SourceLocation es2017/async-functions/8/input.js 1:6-1:13
 						}
-						loc: SourceLocation es2017/async-functions/8/input.js 1:6-1:39
 						init: JSCallExpression {
-							loc: SourceLocation es2017/async-functions/8/input.js 1:16-1:39
-							callee: JSReferenceIdentifier {
-								name: "require"
-								loc: SourceLocation es2017/async-functions/8/input.js 1:16-1:23 (require)
-							}
-							arguments: Array [
+							arguments: [
 								JSStringLiteral {
 									value: "../lang/task"
 									loc: SourceLocation es2017/async-functions/8/input.js 1:24-1:38
 								}
 							]
+							callee: JSReferenceIdentifier {
+								name: "require"
+								loc: SourceLocation es2017/async-functions/8/input.js 1:16-1:23 (require)
+							}
+							loc: SourceLocation es2017/async-functions/8/input.js 1:16-1:39
 						}
+						loc: SourceLocation es2017/async-functions/8/input.js 1:6-1:39
 					}
 				]
+				loc: SourceLocation es2017/async-functions/8/input.js 1:0-1:39
 			}
+			loc: SourceLocation es2017/async-functions/8/input.js 1:0-1:39
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2017/async-functions/8/input.js>
+	loc: SourceLocation es2017/async-functions/8/input.js 1:0-2:0
 }
 ```
 

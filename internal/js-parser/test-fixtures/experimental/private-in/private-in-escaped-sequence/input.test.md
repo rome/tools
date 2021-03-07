@@ -8,49 +8,14 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: true
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation experimental/private-in/private-in-escaped-sequence/input.js 1:0-7:0
-	path: UIDPath<experimental/private-in/private-in-escaped-sequence/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Unknown start to an statement expression"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 3:10
-				path: UIDPath<experimental/private-in/private-in-escaped-sequence/input.js>
-				start: Position 4:4
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSClassDeclaration {
 			id: JSBindingIdentifier {
 				name: "Foo"
 				loc: SourceLocation experimental/private-in/private-in-escaped-sequence/input.js 1:6-1:9 (Foo)
 			}
-			loc: SourceLocation experimental/private-in/private-in-escaped-sequence/input.js 1:0-6:1
 			meta: JSClassHead {
-				implements: undefined
-				superClass: undefined
-				superTypeParameters: undefined
-				typeParameters: undefined
-				loc: SourceLocation experimental/private-in/private-in-escaped-sequence/input.js 1:0-6:1
-				body: Array [
+				body: [
 					JSClassPrivateProperty {
 						key: JSPrivateName {
 							id: JSIdentifier {
@@ -59,23 +24,19 @@ JSRoot {
 							}
 							loc: SourceLocation experimental/private-in/private-in-escaped-sequence/input.js 2:2-2:9
 						}
-						value: JSNumericLiteral {
-							value: 1
-							format: undefined
-							loc: SourceLocation experimental/private-in/private-in-escaped-sequence/input.js 2:12-2:13
-						}
-						typeAnnotation: undefined
-						loc: SourceLocation experimental/private-in/private-in-escaped-sequence/input.js 2:2-2:14
 						meta: JSClassPropertyMeta {
 							abstract: false
-							accessibility: undefined
 							optional: false
 							readonly: false
 							static: false
-							typeAnnotation: undefined
 							loc: SourceLocation experimental/private-in/private-in-escaped-sequence/input.js 2:2-2:9
 							start: Position 2:2
 						}
+						value: JSNumericLiteral {
+							value: 1
+							loc: SourceLocation experimental/private-in/private-in-escaped-sequence/input.js 2:12-2:13
+						}
+						loc: SourceLocation experimental/private-in/private-in-escaped-sequence/input.js 2:2-2:14
 					}
 					JSClassMethod {
 						kind: "method"
@@ -86,61 +47,77 @@ JSRoot {
 							}
 							loc: SourceLocation experimental/private-in/private-in-escaped-sequence/input.js 3:2-3:6
 						}
-						loc: SourceLocation experimental/private-in/private-in-escaped-sequence/input.js 3:2-5:3
 						meta: JSClassPropertyMeta {
 							abstract: false
-							accessibility: undefined
 							optional: false
 							readonly: false
 							static: false
-							typeAnnotation: undefined
 							loc: SourceLocation experimental/private-in/private-in-escaped-sequence/input.js 3:2-3:6
 							start: Position 3:2
 						}
-						head: JSFunctionHead {
-							async: false
-							generator: false
-							hasHoistedVars: false
-							params: Array []
-							rest: undefined
-							returnType: undefined
-							thisType: undefined
-							typeParameters: undefined
-							loc: SourceLocation experimental/private-in/private-in-escaped-sequence/input.js 3:6-3:8
-						}
 						body: JSBlockStatement {
-							directives: Array []
-							loc: SourceLocation experimental/private-in/private-in-escaped-sequence/input.js 3:9-5:3
-							body: Array [
+							body: [
 								JSExpressionStatement {
-									loc: SourceLocation experimental/private-in/private-in-escaped-sequence/input.js 4:4-4:5
 									expression: JSReferenceIdentifier {
 										name: "INVALID_PLACEHOLDER"
 										loc: SourceLocation experimental/private-in/private-in-escaped-sequence/input.js 4:4-4:5
 									}
+									loc: SourceLocation experimental/private-in/private-in-escaped-sequence/input.js 4:4-4:5
 								}
 								JSExpressionStatement {
-									loc: SourceLocation experimental/private-in/private-in-escaped-sequence/input.js 4:5-4:18
 									expression: JSBinaryExpression {
 										operator: "in"
-										loc: SourceLocation experimental/private-in/private-in-escaped-sequence/input.js 4:5-4:17
 										left: JSReferenceIdentifier {
 											name: "a"
 											loc: SourceLocation experimental/private-in/private-in-escaped-sequence/input.js 4:5-4:11 (a)
 										}
 										right: JSObjectExpression {
-											properties: Array []
+											properties: []
 											loc: SourceLocation experimental/private-in/private-in-escaped-sequence/input.js 4:15-4:17
 										}
+										loc: SourceLocation experimental/private-in/private-in-escaped-sequence/input.js 4:5-4:17
 									}
+									loc: SourceLocation experimental/private-in/private-in-escaped-sequence/input.js 4:5-4:18
 								}
 							]
+							directives: []
+							loc: SourceLocation experimental/private-in/private-in-escaped-sequence/input.js 3:9-5:3
 						}
+						head: JSFunctionHead {
+							async: false
+							generator: false
+							hasHoistedVars: false
+							params: []
+							loc: SourceLocation experimental/private-in/private-in-escaped-sequence/input.js 3:6-3:8
+						}
+						loc: SourceLocation experimental/private-in/private-in-escaped-sequence/input.js 3:2-5:3
 					}
 				]
+				loc: SourceLocation experimental/private-in/private-in-escaped-sequence/input.js 1:0-6:1
+			}
+			loc: SourceLocation experimental/private-in/private-in-escaped-sequence/input.js 1:0-6:1
+		}
+	]
+	comments: []
+	corrupt: true
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {advice: [], category: ["parse"], categoryValue: "js", message: [RAW_MARKUP {value: "Unknown start to an "}, "statement expression"]}
+			location: {
+				language: "js"
+				path: UIDPath<experimental/private-in/private-in-escaped-sequence/input.js>
+				end: Position 3:10
+				start: Position 4:4
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<experimental/private-in/private-in-escaped-sequence/input.js>
+	loc: SourceLocation experimental/private-in/private-in-escaped-sequence/input.js 1:0-7:0
 }
 ```
 

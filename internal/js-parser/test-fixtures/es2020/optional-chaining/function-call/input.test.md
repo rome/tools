@@ -8,40 +8,22 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2020/optional-chaining/function-call/input.js 1:0-9:10
-	path: UIDPath<es2020/optional-chaining/function-call/input.js>
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation es2020/optional-chaining/function-call/input.js 1:0-1:8
 			expression: JSOptionalCallExpression {
-				arguments: Array []
+				arguments: []
 				optional: true
-				loc: SourceLocation es2020/optional-chaining/function-call/input.js 1:0-1:8
 				callee: JSReferenceIdentifier {
 					name: "func"
 					loc: SourceLocation es2020/optional-chaining/function-call/input.js 1:0-1:4 (func)
 				}
+				loc: SourceLocation es2020/optional-chaining/function-call/input.js 1:0-1:8
 			}
+			loc: SourceLocation es2020/optional-chaining/function-call/input.js 1:0-1:8
 		}
 		JSExpressionStatement {
-			loc: SourceLocation es2020/optional-chaining/function-call/input.js 3:0-3:12
 			expression: JSOptionalCallExpression {
-				optional: true
-				loc: SourceLocation es2020/optional-chaining/function-call/input.js 3:0-3:12
-				callee: JSReferenceIdentifier {
-					name: "func"
-					loc: SourceLocation es2020/optional-chaining/function-call/input.js 3:0-3:4 (func)
-				}
-				arguments: Array [
+				arguments: [
 					JSReferenceIdentifier {
 						name: "a"
 						loc: SourceLocation es2020/optional-chaining/function-call/input.js 3:7-3:8 (a)
@@ -51,37 +33,41 @@ JSRoot {
 						loc: SourceLocation es2020/optional-chaining/function-call/input.js 3:10-3:11 (b)
 					}
 				]
+				optional: true
+				callee: JSReferenceIdentifier {
+					name: "func"
+					loc: SourceLocation es2020/optional-chaining/function-call/input.js 3:0-3:4 (func)
+				}
+				loc: SourceLocation es2020/optional-chaining/function-call/input.js 3:0-3:12
 			}
+			loc: SourceLocation es2020/optional-chaining/function-call/input.js 3:0-3:12
 		}
 		JSExpressionStatement {
-			loc: SourceLocation es2020/optional-chaining/function-call/input.js 5:0-5:11
 			expression: JSOptionalCallExpression {
-				arguments: Array []
+				arguments: []
 				optional: true
-				loc: SourceLocation es2020/optional-chaining/function-call/input.js 5:0-5:11
 				callee: JSMemberExpression {
-					loc: SourceLocation es2020/optional-chaining/function-call/input.js 5:0-5:7
 					object: JSReferenceIdentifier {
 						name: "a"
 						loc: SourceLocation es2020/optional-chaining/function-call/input.js 5:0-5:1 (a)
 					}
 					property: JSStaticMemberProperty {
+						optional: true
 						value: JSIdentifier {
 							name: "func"
 							loc: SourceLocation es2020/optional-chaining/function-call/input.js 5:3-5:7 (func)
 						}
-						optional: true
 						loc: SourceLocation es2020/optional-chaining/function-call/input.js 5:3-5:7 (func)
 					}
+					loc: SourceLocation es2020/optional-chaining/function-call/input.js 5:0-5:7
 				}
+				loc: SourceLocation es2020/optional-chaining/function-call/input.js 5:0-5:11
 			}
+			loc: SourceLocation es2020/optional-chaining/function-call/input.js 5:0-5:11
 		}
 		JSExpressionStatement {
-			loc: SourceLocation es2020/optional-chaining/function-call/input.js 7:0-7:15
 			expression: JSOptionalCallExpression {
-				optional: true
-				loc: SourceLocation es2020/optional-chaining/function-call/input.js 7:0-7:15
-				arguments: Array [
+				arguments: [
 					JSReferenceIdentifier {
 						name: "a"
 						loc: SourceLocation es2020/optional-chaining/function-call/input.js 7:10-7:11 (a)
@@ -91,31 +77,31 @@ JSRoot {
 						loc: SourceLocation es2020/optional-chaining/function-call/input.js 7:13-7:14 (b)
 					}
 				]
+				optional: true
 				callee: JSMemberExpression {
-					loc: SourceLocation es2020/optional-chaining/function-call/input.js 7:0-7:7
 					object: JSReferenceIdentifier {
 						name: "a"
 						loc: SourceLocation es2020/optional-chaining/function-call/input.js 7:0-7:1 (a)
 					}
 					property: JSStaticMemberProperty {
+						optional: true
 						value: JSIdentifier {
 							name: "func"
 							loc: SourceLocation es2020/optional-chaining/function-call/input.js 7:3-7:7 (func)
 						}
-						optional: true
 						loc: SourceLocation es2020/optional-chaining/function-call/input.js 7:3-7:7 (func)
 					}
+					loc: SourceLocation es2020/optional-chaining/function-call/input.js 7:0-7:7
 				}
+				loc: SourceLocation es2020/optional-chaining/function-call/input.js 7:0-7:15
 			}
+			loc: SourceLocation es2020/optional-chaining/function-call/input.js 7:0-7:15
 		}
 		JSExpressionStatement {
-			loc: SourceLocation es2020/optional-chaining/function-call/input.js 9:0-9:10
 			expression: JSOptionalCallExpression {
-				arguments: Array []
+				arguments: []
 				optional: true
-				loc: SourceLocation es2020/optional-chaining/function-call/input.js 9:0-9:10
 				callee: JSMemberExpression {
-					loc: SourceLocation es2020/optional-chaining/function-call/input.js 9:0-9:6
 					object: JSReferenceIdentifier {
 						name: "a"
 						loc: SourceLocation es2020/optional-chaining/function-call/input.js 9:0-9:1 (a)
@@ -127,10 +113,22 @@ JSRoot {
 						}
 						loc: SourceLocation es2020/optional-chaining/function-call/input.js 9:2-9:6 (func)
 					}
+					loc: SourceLocation es2020/optional-chaining/function-call/input.js 9:0-9:6
 				}
+				loc: SourceLocation es2020/optional-chaining/function-call/input.js 9:0-9:10
 			}
+			loc: SourceLocation es2020/optional-chaining/function-call/input.js 9:0-9:10
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2020/optional-chaining/function-call/input.js>
+	loc: SourceLocation es2020/optional-chaining/function-call/input.js 1:0-9:10
 }
 ```
 

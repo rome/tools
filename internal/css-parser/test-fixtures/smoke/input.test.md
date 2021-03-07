@@ -6,40 +6,25 @@
 
 ```javascript
 CSSRoot {
-	corrupt: false
-	diagnostics: Array []
-	integrity: undefined
-	loc: SourceLocation smoke/input.css 1:0-12:1
-	path: RelativePath<smoke/input.css>
-	comments: Array [
-		CommentBlock {
-			id: "0"
-			value: "This is a comment"
-			loc: SourceLocation smoke/input.css 1:0-1:21
-		}
-	]
-	body: Array [
+	body: [
 		CSSRule {
-			leadingComments: Array ["0"]
-			loc: SourceLocation smoke/input.css 2:0-5:1
-			prelude: Array [
+			leadingComments: ["0"]
+			prelude: [
 				CSSSelector {
-					leadingComments: undefined
-					loc: SourceLocation smoke/input.css 2:0-2:5
-					patterns: Array [
+					patterns: [
 						CSSTypeSelector {
 							value: "body"
-							leadingComments: undefined
 							loc: SourceLocation smoke/input.css 2:0-2:4
 						}
 					]
+					loc: SourceLocation smoke/input.css 2:0-2:5
 				}
 			]
 			block: CSSBlock {
-				value: Array [
+				value: [
 					CSSDeclaration {
 						name: "background"
-						value: Array [
+						value: [
 							CSSIdentifier {
 								value: "red"
 								loc: SourceLocation smoke/input.css 3:16-3:19
@@ -50,15 +35,14 @@ CSSRoot {
 					}
 					CSSDeclaration {
 						name: "width"
-						value: Array [
+						value: [
 							CSSCalcFunction {
 								name: "calc"
-								loc: SourceLocation smoke/input.css 4:16-4:25
-								params: Array [
+								params: [
 									CSSCalcSum {
-										value: Array [
+										value: [
 											CSSCalcProduct {
-												value: Array [
+												value: [
 													CSSCalcValue {
 														value: CSSDimension {
 															value: 1
@@ -75,7 +59,7 @@ CSSRoot {
 												loc: SourceLocation smoke/input.css 4:21-4:22
 											}
 											CSSCalcProduct {
-												value: Array [
+												value: [
 													CSSCalcValue {
 														value: CSSPercentage {
 															value: 2
@@ -90,6 +74,7 @@ CSSRoot {
 										loc: SourceLocation smoke/input.css 4:16-4:24
 									}
 								]
+								loc: SourceLocation smoke/input.css 4:16-4:25
 							}
 						]
 						important: false
@@ -99,11 +84,11 @@ CSSRoot {
 				startingTokenValue: "{"
 				loc: SourceLocation smoke/input.css 2:5-5:1
 			}
+			loc: SourceLocation smoke/input.css 2:0-5:1
 		}
 		CSSAtRule {
 			name: "media"
-			loc: SourceLocation smoke/input.css 7:0-12:1
-			prelude: Array [
+			prelude: [
 				CSSIdentifier {
 					value: "screen"
 					loc: SourceLocation smoke/input.css 7:7-7:13
@@ -113,7 +98,7 @@ CSSRoot {
 					loc: SourceLocation smoke/input.css 7:14-7:17
 				}
 				CSSBlock {
-					value: Array [
+					value: [
 						CSSIdentifier {
 							value: "min-width"
 							loc: SourceLocation smoke/input.css 7:19-7:28
@@ -133,25 +118,24 @@ CSSRoot {
 				}
 			]
 			block: CSSBlock {
-				value: Array [
+				value: [
 					CSSRule {
-						loc: SourceLocation smoke/input.css 8:4-11:5
-						prelude: Array [
+						prelude: [
 							CSSSelector {
-								loc: SourceLocation smoke/input.css 8:4-8:9
-								patterns: Array [
+								patterns: [
 									CSSTypeSelector {
 										value: "body"
 										loc: SourceLocation smoke/input.css 8:4-8:8
 									}
 								]
+								loc: SourceLocation smoke/input.css 8:4-8:9
 							}
 						]
 						block: CSSBlock {
-							value: Array [
+							value: [
 								CSSDeclaration {
 									name: "background"
-									value: Array [
+									value: [
 										CSSIdentifier {
 											value: "blue"
 											loc: SourceLocation smoke/input.css 9:20-9:24
@@ -162,15 +146,14 @@ CSSRoot {
 								}
 								CSSDeclaration {
 									name: "width"
-									value: Array [
+									value: [
 										CSSCalcFunction {
 											name: "calc"
-											loc: SourceLocation smoke/input.css 10:20-10:29
-											params: Array [
+											params: [
 												CSSCalcSum {
-													value: Array [
+													value: [
 														CSSCalcProduct {
-															value: Array [
+															value: [
 																CSSCalcValue {
 																	value: CSSDimension {
 																		value: 2
@@ -187,7 +170,7 @@ CSSRoot {
 															loc: SourceLocation smoke/input.css 10:25-10:26
 														}
 														CSSCalcProduct {
-															value: Array [
+															value: [
 																CSSCalcValue {
 																	value: CSSPercentage {
 																		value: 3
@@ -202,6 +185,7 @@ CSSRoot {
 													loc: SourceLocation smoke/input.css 10:20-10:28
 												}
 											]
+											loc: SourceLocation smoke/input.css 10:20-10:29
 										}
 									]
 									important: false
@@ -211,12 +195,25 @@ CSSRoot {
 							startingTokenValue: "{"
 							loc: SourceLocation smoke/input.css 8:9-11:5
 						}
+						loc: SourceLocation smoke/input.css 8:4-11:5
 					}
 				]
 				startingTokenValue: "{"
 				loc: SourceLocation smoke/input.css 7:38-12:1
 			}
+			loc: SourceLocation smoke/input.css 7:0-12:1
 		}
 	]
+	comments: [
+		CommentBlock {
+			id: "0"
+			value: "This is a comment"
+			loc: SourceLocation smoke/input.css 1:0-1:21
+		}
+	]
+	corrupt: false
+	diagnostics: []
+	path: RelativePath<smoke/input.css>
+	loc: SourceLocation smoke/input.css 1:0-12:1
 }
 ```

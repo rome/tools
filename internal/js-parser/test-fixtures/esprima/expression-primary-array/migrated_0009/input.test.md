@@ -8,34 +8,32 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation esprima/expression-primary-array/migrated_0009/input.js 1:0-2:0
-	path: UIDPath<esprima/expression-primary-array/migrated_0009/input.js>
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation esprima/expression-primary-array/migrated_0009/input.js 1:0-1:12
 			expression: JSAssignmentExpression {
 				operator: "="
-				loc: SourceLocation esprima/expression-primary-array/migrated_0009/input.js 1:0-1:12
 				left: JSAssignmentIdentifier {
 					name: "T\u200c"
 					loc: SourceLocation esprima/expression-primary-array/migrated_0009/input.js 1:0-1:7 (T\u200c)
 				}
 				right: JSArrayExpression {
-					elements: Array []
+					elements: []
 					loc: SourceLocation esprima/expression-primary-array/migrated_0009/input.js 1:10-1:12
 				}
+				loc: SourceLocation esprima/expression-primary-array/migrated_0009/input.js 1:0-1:12
 			}
+			loc: SourceLocation esprima/expression-primary-array/migrated_0009/input.js 1:0-1:12
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<esprima/expression-primary-array/migrated_0009/input.js>
+	loc: SourceLocation esprima/expression-primary-array/migrated_0009/input.js 1:0-2:0
 }
 ```
 

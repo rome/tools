@@ -8,53 +8,20 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2015/for-of/brackets-let/input.js 1:0-2:0
-	path: UIDPath<es2015/for-of/brackets-let/input.js>
-	body: Array [
+	body: [
 		JSForOfStatement {
 			await: false
-			loc: SourceLocation es2015/for-of/brackets-let/input.js 1:0-1:23
 			body: JSBlockStatement {
-				body: Array []
-				directives: Array []
+				body: []
+				directives: []
 				loc: SourceLocation es2015/for-of/brackets-let/input.js 1:21-1:23
-			}
-			right: JSRegExpLiteral {
-				global: false
-				insensitive: false
-				multiline: false
-				noDotNewline: false
-				sticky: false
-				unicode: false
-				loc: SourceLocation es2015/for-of/brackets-let/input.js 1:16-1:19
-				expression: JSRegExpSubExpression {
-					loc: SourceLocation es2015/for-of/brackets-let/input.js 1:17-1:18
-					body: Array [
-						JSRegExpCharacter {
-							value: "b"
-							loc: SourceLocation es2015/for-of/brackets-let/input.js 1:17-1:18
-						}
-					]
-				}
 			}
 			left: JSVariableDeclaration {
 				kind: "let"
-				loc: SourceLocation es2015/for-of/brackets-let/input.js 1:5-1:12
-				declarations: Array [
+				declarations: [
 					JSVariableDeclarator {
 						id: JSBindingObjectPattern {
-							rest: undefined
-							loc: SourceLocation es2015/for-of/brackets-let/input.js 1:9-1:12
-							properties: Array [
+							properties: [
 								JSBindingObjectPatternProperty {
 									key: JSStaticPropertyKey {
 										value: JSIdentifier {
@@ -70,14 +37,43 @@ JSRoot {
 									loc: SourceLocation es2015/for-of/brackets-let/input.js 1:10-1:11
 								}
 							]
+							loc: SourceLocation es2015/for-of/brackets-let/input.js 1:9-1:12
 						}
-						init: undefined
 						loc: SourceLocation es2015/for-of/brackets-let/input.js 1:9-1:12
 					}
 				]
+				loc: SourceLocation es2015/for-of/brackets-let/input.js 1:5-1:12
 			}
+			right: JSRegExpLiteral {
+				global: false
+				insensitive: false
+				multiline: false
+				noDotNewline: false
+				sticky: false
+				unicode: false
+				expression: JSRegExpSubExpression {
+					body: [
+						JSRegExpCharacter {
+							value: "b"
+							loc: SourceLocation es2015/for-of/brackets-let/input.js 1:17-1:18
+						}
+					]
+					loc: SourceLocation es2015/for-of/brackets-let/input.js 1:17-1:18
+				}
+				loc: SourceLocation es2015/for-of/brackets-let/input.js 1:16-1:19
+			}
+			loc: SourceLocation es2015/for-of/brackets-let/input.js 1:0-1:23
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2015/for-of/brackets-let/input.js>
+	loc: SourceLocation es2015/for-of/brackets-let/input.js 1:0-2:0
 }
 ```
 

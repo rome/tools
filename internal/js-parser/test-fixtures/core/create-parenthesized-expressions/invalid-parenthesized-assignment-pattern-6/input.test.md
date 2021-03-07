@@ -8,58 +8,53 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation core/create-parenthesized-expressions/invalid-parenthesized-assignment-pattern-6/input.js 1:0-2:0
-	path: UIDPath<core/create-parenthesized-expressions/invalid-parenthesized-assignment-pattern-6/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Invalid parenthesized binding"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:4
-				path: UIDPath<core/create-parenthesized-expressions/invalid-parenthesized-assignment-pattern-6/input.js>
-				start: Position 1:1
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation core/create-parenthesized-expressions/invalid-parenthesized-assignment-pattern-6/input.js 1:0-1:10
 			expression: JSAssignmentExpression {
 				operator: "="
-				loc: SourceLocation core/create-parenthesized-expressions/invalid-parenthesized-assignment-pattern-6/input.js 1:0-1:10
-				right: JSArrayExpression {
-					elements: Array []
-					loc: SourceLocation core/create-parenthesized-expressions/invalid-parenthesized-assignment-pattern-6/input.js 1:8-1:10
-				}
 				left: JSAssignmentArrayPattern {
-					rest: undefined
-					loc: SourceLocation core/create-parenthesized-expressions/invalid-parenthesized-assignment-pattern-6/input.js 1:1-1:4
-					elements: Array [
+					elements: [
 						JSAssignmentIdentifier {
 							name: "a"
 							loc: SourceLocation core/create-parenthesized-expressions/invalid-parenthesized-assignment-pattern-6/input.js 1:2-1:3 (a)
 						}
 					]
+					loc: SourceLocation core/create-parenthesized-expressions/invalid-parenthesized-assignment-pattern-6/input.js 1:1-1:4
 				}
+				right: JSArrayExpression {
+					elements: []
+					loc: SourceLocation core/create-parenthesized-expressions/invalid-parenthesized-assignment-pattern-6/input.js 1:8-1:10
+				}
+				loc: SourceLocation core/create-parenthesized-expressions/invalid-parenthesized-assignment-pattern-6/input.js 1:0-1:10
+			}
+			loc: SourceLocation core/create-parenthesized-expressions/invalid-parenthesized-assignment-pattern-6/input.js 1:0-1:10
+		}
+	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "Invalid parenthesized binding"}
+			}
+			location: {
+				language: "js"
+				path: UIDPath<core/create-parenthesized-expressions/invalid-parenthesized-assignment-pattern-6/input.js>
+				end: Position 1:4
+				start: Position 1:1
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<core/create-parenthesized-expressions/invalid-parenthesized-assignment-pattern-6/input.js>
+	loc: SourceLocation core/create-parenthesized-expressions/invalid-parenthesized-assignment-pattern-6/input.js 1:0-2:0
 }
 ```
 

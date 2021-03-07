@@ -8,30 +8,10 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	loc: SourceLocation typescript/import/import-named/input.ts 1:0-2:0
-	path: UIDPath<typescript/import/import-named/input.ts>
-	syntax: Array ["ts"]
-	body: Array [
+	body: [
 		JSImportDeclaration {
-			defaultSpecifier: undefined
-			importKind: undefined
-			namespaceSpecifier: undefined
-			loc: SourceLocation typescript/import/import-named/input.ts 1:0-1:26
-			source: JSStringLiteral {
-				value: "bar"
-				loc: SourceLocation typescript/import/import-named/input.ts 1:20-1:25
-			}
-			namedSpecifiers: Array [
+			namedSpecifiers: [
 				JSImportSpecifier {
-					loc: SourceLocation typescript/import/import-named/input.ts 1:9-1:12
 					imported: JSIdentifier {
 						name: "foo"
 						loc: SourceLocation typescript/import/import-named/input.ts 1:9-1:12 (foo)
@@ -41,13 +21,27 @@ JSRoot {
 							name: "foo"
 							loc: SourceLocation typescript/import/import-named/input.ts 1:9-1:12 (foo)
 						}
-						importKind: undefined
 						loc: SourceLocation typescript/import/import-named/input.ts 1:9-1:12
 					}
+					loc: SourceLocation typescript/import/import-named/input.ts 1:9-1:12
 				}
 			]
+			source: JSStringLiteral {
+				value: "bar"
+				loc: SourceLocation typescript/import/import-named/input.ts 1:20-1:25
+			}
+			loc: SourceLocation typescript/import/import-named/input.ts 1:0-1:26
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: ["ts"]
+	path: UIDPath<typescript/import/import-named/input.ts>
+	loc: SourceLocation typescript/import/import-named/input.ts 1:0-2:0
 }
 ```
 

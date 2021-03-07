@@ -8,49 +8,14 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation experimental/class-properties/no-static-prototype-2/input.js 1:0-5:0
-	path: UIDPath<experimental/class-properties/no-static-prototype-2/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Classes may not have static property named prototype"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 2:18
-				path: UIDPath<experimental/class-properties/no-static-prototype-2/input.js>
-				start: Position 2:9
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSClassDeclaration {
 			id: JSBindingIdentifier {
 				name: "Foo"
 				loc: SourceLocation experimental/class-properties/no-static-prototype-2/input.js 1:6-1:9 (Foo)
 			}
-			loc: SourceLocation experimental/class-properties/no-static-prototype-2/input.js 1:0-4:1
 			meta: JSClassHead {
-				implements: undefined
-				superClass: undefined
-				superTypeParameters: undefined
-				typeParameters: undefined
-				loc: SourceLocation experimental/class-properties/no-static-prototype-2/input.js 1:0-4:1
-				body: Array [
+				body: [
 					JSClassProperty {
 						key: JSStaticPropertyKey {
 							value: JSIdentifier {
@@ -59,20 +24,15 @@ JSRoot {
 							}
 							loc: SourceLocation experimental/class-properties/no-static-prototype-2/input.js 2:9-2:18
 						}
-						value: undefined
-						definite: undefined
-						typeAnnotation: undefined
-						loc: SourceLocation experimental/class-properties/no-static-prototype-2/input.js 2:2-2:18
 						meta: JSClassPropertyMeta {
 							abstract: false
-							accessibility: undefined
 							optional: false
 							readonly: false
 							static: true
-							typeAnnotation: undefined
 							loc: SourceLocation experimental/class-properties/no-static-prototype-2/input.js 2:2-2:18
 							start: Position 2:2
 						}
+						loc: SourceLocation experimental/class-properties/no-static-prototype-2/input.js 2:2-2:18
 					}
 					JSClassMethod {
 						kind: "method"
@@ -83,38 +43,59 @@ JSRoot {
 							}
 							loc: SourceLocation experimental/class-properties/no-static-prototype-2/input.js 3:3-3:4
 						}
-						loc: SourceLocation experimental/class-properties/no-static-prototype-2/input.js 3:2-3:8
-						body: JSBlockStatement {
-							body: Array []
-							directives: Array []
-							loc: SourceLocation experimental/class-properties/no-static-prototype-2/input.js 3:6-3:8
-						}
 						meta: JSClassPropertyMeta {
 							abstract: false
-							accessibility: undefined
 							optional: false
 							readonly: false
 							static: false
-							typeAnnotation: undefined
 							loc: SourceLocation experimental/class-properties/no-static-prototype-2/input.js 3:2-3:4
 							start: Position 3:2
+						}
+						body: JSBlockStatement {
+							body: []
+							directives: []
+							loc: SourceLocation experimental/class-properties/no-static-prototype-2/input.js 3:6-3:8
 						}
 						head: JSFunctionHead {
 							async: false
 							generator: true
 							hasHoistedVars: false
-							params: Array []
-							rest: undefined
-							returnType: undefined
-							thisType: undefined
-							typeParameters: undefined
+							params: []
 							loc: SourceLocation experimental/class-properties/no-static-prototype-2/input.js 3:4-3:6
 						}
+						loc: SourceLocation experimental/class-properties/no-static-prototype-2/input.js 3:2-3:8
 					}
 				]
+				loc: SourceLocation experimental/class-properties/no-static-prototype-2/input.js 1:0-4:1
+			}
+			loc: SourceLocation experimental/class-properties/no-static-prototype-2/input.js 1:0-4:1
+		}
+	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "Classes may not have static property named prototype"}
+			}
+			location: {
+				language: "js"
+				path: UIDPath<experimental/class-properties/no-static-prototype-2/input.js>
+				end: Position 2:18
+				start: Position 2:9
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<experimental/class-properties/no-static-prototype-2/input.js>
+	loc: SourceLocation experimental/class-properties/no-static-prototype-2/input.js 1:0-5:0
 }
 ```
 

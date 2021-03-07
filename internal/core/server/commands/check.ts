@@ -135,7 +135,7 @@ export default createServerCommand<Flags>({
 				);
 			} else {
 				reporter.info(markup`Files changed from <emphasis>${target}</emphasis>`);
-				reporter.list(args.map(([path]) => markup`${path}`));
+				reporter.list(args.map(([path]) => path));
 				reporter.hr();
 			}
 		}

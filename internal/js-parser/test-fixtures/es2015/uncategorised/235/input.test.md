@@ -8,78 +8,73 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2015/uncategorised/235/input.js 1:0-1:36
-	path: UIDPath<es2015/uncategorised/235/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Loop variable declaration may not have an initializer"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:15
-				path: UIDPath<es2015/uncategorised/235/input.js>
-				start: Position 1:5
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSForInStatement {
-			loc: SourceLocation es2015/uncategorised/235/input.js 1:0-1:36
-			right: JSReferenceIdentifier {
-				name: "list"
-				loc: SourceLocation es2015/uncategorised/235/input.js 1:19-1:23 (list)
-			}
 			body: JSExpressionStatement {
-				loc: SourceLocation es2015/uncategorised/235/input.js 1:25-1:36
 				expression: JSCallExpression {
-					loc: SourceLocation es2015/uncategorised/235/input.js 1:25-1:35
-					callee: JSReferenceIdentifier {
-						name: "process"
-						loc: SourceLocation es2015/uncategorised/235/input.js 1:25-1:32 (process)
-					}
-					arguments: Array [
+					arguments: [
 						JSReferenceIdentifier {
 							name: "x"
 							loc: SourceLocation es2015/uncategorised/235/input.js 1:33-1:34 (x)
 						}
 					]
+					callee: JSReferenceIdentifier {
+						name: "process"
+						loc: SourceLocation es2015/uncategorised/235/input.js 1:25-1:32 (process)
+					}
+					loc: SourceLocation es2015/uncategorised/235/input.js 1:25-1:35
 				}
+				loc: SourceLocation es2015/uncategorised/235/input.js 1:25-1:36
 			}
 			left: JSVariableDeclaration {
 				kind: "let"
-				loc: SourceLocation es2015/uncategorised/235/input.js 1:5-1:15
-				declarations: Array [
+				declarations: [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "x"
 							loc: SourceLocation es2015/uncategorised/235/input.js 1:9-1:10 (x)
 						}
-						loc: SourceLocation es2015/uncategorised/235/input.js 1:9-1:15
 						init: JSNumericLiteral {
 							value: 42
-							format: undefined
 							loc: SourceLocation es2015/uncategorised/235/input.js 1:13-1:15
 						}
+						loc: SourceLocation es2015/uncategorised/235/input.js 1:9-1:15
 					}
 				]
+				loc: SourceLocation es2015/uncategorised/235/input.js 1:5-1:15
+			}
+			right: JSReferenceIdentifier {
+				name: "list"
+				loc: SourceLocation es2015/uncategorised/235/input.js 1:19-1:23 (list)
+			}
+			loc: SourceLocation es2015/uncategorised/235/input.js 1:0-1:36
+		}
+	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "Loop variable declaration may not have an initializer"}
+			}
+			location: {
+				language: "js"
+				path: UIDPath<es2015/uncategorised/235/input.js>
+				end: Position 1:15
+				start: Position 1:5
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2015/uncategorised/235/input.js>
+	loc: SourceLocation es2015/uncategorised/235/input.js 1:0-1:36
 }
 ```
 

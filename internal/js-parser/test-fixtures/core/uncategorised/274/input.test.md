@@ -8,23 +8,10 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation core/uncategorised/274/input.js 1:0-1:11
-	path: UIDPath<core/uncategorised/274/input.js>
-	body: Array [
+	body: [
 		JSThrowStatement {
-			loc: SourceLocation core/uncategorised/274/input.js 1:0-1:11
 			argument: JSBinaryExpression {
 				operator: "*"
-				loc: SourceLocation core/uncategorised/274/input.js 1:6-1:11
 				left: JSReferenceIdentifier {
 					name: "x"
 					loc: SourceLocation core/uncategorised/274/input.js 1:6-1:7 (x)
@@ -33,9 +20,20 @@ JSRoot {
 					name: "y"
 					loc: SourceLocation core/uncategorised/274/input.js 1:10-1:11 (y)
 				}
+				loc: SourceLocation core/uncategorised/274/input.js 1:6-1:11
 			}
+			loc: SourceLocation core/uncategorised/274/input.js 1:0-1:11
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<core/uncategorised/274/input.js>
+	loc: SourceLocation core/uncategorised/274/input.js 1:0-1:11
 }
 ```
 

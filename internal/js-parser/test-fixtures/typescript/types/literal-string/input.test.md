@@ -8,44 +8,40 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	loc: SourceLocation typescript/types/literal-string/input.ts 1:0-2:0
-	path: UIDPath<typescript/types/literal-string/input.ts>
-	syntax: Array ["ts"]
-	body: Array [
+	body: [
 		JSVariableDeclarationStatement {
-			loc: SourceLocation typescript/types/literal-string/input.ts 1:0-1:13
 			declaration: JSVariableDeclaration {
 				kind: "let"
-				loc: SourceLocation typescript/types/literal-string/input.ts 1:0-1:13
-				declarations: Array [
+				declarations: [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "x"
-							loc: SourceLocation typescript/types/literal-string/input.ts 1:4-1:12
 							meta: JSPatternMeta {
-								definite: undefined
-								loc: SourceLocation typescript/types/literal-string/input.ts 1:4-1:12
 								typeAnnotation: TSStringLiteralTypeAnnotation {
 									value: "foo"
 									loc: SourceLocation typescript/types/literal-string/input.ts 1:7-1:12
 								}
+								loc: SourceLocation typescript/types/literal-string/input.ts 1:4-1:12
 							}
+							loc: SourceLocation typescript/types/literal-string/input.ts 1:4-1:12
 						}
-						init: undefined
 						loc: SourceLocation typescript/types/literal-string/input.ts 1:4-1:12
 					}
 				]
+				loc: SourceLocation typescript/types/literal-string/input.ts 1:0-1:13
 			}
+			loc: SourceLocation typescript/types/literal-string/input.ts 1:0-1:13
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: ["ts"]
+	path: UIDPath<typescript/types/literal-string/input.ts>
+	loc: SourceLocation typescript/types/literal-string/input.ts 1:0-2:0
 }
 ```
 

@@ -15,20 +15,11 @@ import {
 	TEMP_PATH,
 	UIDPath,
 	createAbsoluteFilePath,
-	createAnyPath,
+	createPath,
 	createRelativePath,
 	createUIDPath,
 } from "@internal/path";
 import {JSONObject, json} from "@internal/codec-config";
-import {
-	createDirectory,
-	exists,
-	lstat,
-	readDirectory,
-	readFileText,
-	removeDirectory,
-	writeFile,
-} from "@internal/fs";
 import {DEFAULT_TERMINAL_FEATURES, Stdout} from "@internal/cli-environment";
 import {Dict} from "@internal/typescript-helpers";
 import {DEFAULT_USER_CONFIG, UserConfig} from "../core/common/userConfig";
@@ -60,6 +51,7 @@ import child = require("child_process");
 import util = require("util");
 import {Reporter} from "@internal/cli-reporter";
 import {BridgeClient} from "@internal/events";
+import {decodeUTF8} from "@internal/binary";
 
 const exec = util.promisify(child.exec);
 
@@ -87,11 +79,11 @@ export async function generateTempDirectory(
 ): Promise<AbsoluteFilePath> {
 	const key = crypto.randomBytes(16).toString("base64");
 	const path = TEMP_PATH.append(`${prefix}-${key}`);
-	if (await exists(path)) {
+	if (await path.exists()) {
 		// Extremely rare collision which is only possible if we haven't cleaned up
 		return generateTempDirectory(prefix);
 	} else {
-		await createDirectory(path);
+		await path.createDirectory();
 		return path;
 	}
 }
@@ -127,7 +119,7 @@ export function findFixtureInput(
 			return {
 				input,
 				handler: getFileHandlerFromPathAssert(
-					createAnyPath(`input.${ext}`),
+					createPath(`input.${ext}`),
 					projectConfig,
 				).handler,
 			};
@@ -148,15 +140,18 @@ export function createMockWorker(force: boolean = false): IntegrationWorker {
 		return cachedIntegrationWorker;
 	}
 
+	// This wont actually be used, it's just for setting up subscriptions
+	const bridges = WorkerBridge.createFromLocal({optionalResource: true});
+
 	const worker = new Worker({
+		type: "processor",
 		id: 0,
 		dedicated: false,
 		userConfig: DEFAULT_USER_CONFIG,
 		cacheWriteDisabled: true,
 		cacheReadDisabled: true,
-
-		// This wont actually be used, it's just for setting up subscriptions
-		bridge: WorkerBridge.createFromLocal().client,
+		inspectorPort: undefined,
+		bridge: bridges.client,
 	});
 
 	let projectIdCounter = 0;
@@ -192,10 +187,7 @@ export function createMockWorker(force: boolean = false): IntegrationWorker {
 
 		const ref: FileReference = {
 			project,
-			manifest: undefined,
-			remote: false,
 			uid,
-			relative,
 			real,
 		};
 
@@ -267,7 +259,7 @@ export async function declareParserTests() {
 			"script",
 			"module",
 		]);
-		const inputContent = removeCarriageReturn(input.content.toString());
+		const inputContent = removeCarriageReturn(decodeUTF8(input.content));
 
 		const {ast} = await performFileOperation(
 			{
@@ -329,23 +321,23 @@ export function createIntegrationTest(
 		const temp = await generateTempDirectory("rome-integration");
 
 		const projectPath = temp.append("project");
-		await createDirectory(projectPath);
+		await projectPath.createDirectory();
 
 		if (opts.gitInitialize) {
 			await exec("git init", {cwd: projectPath.join()});
 		}
 
 		const virtualModulesPath = temp.append("virtual");
-		await createDirectory(virtualModulesPath);
+		await virtualModulesPath.createDirectory();
 
 		const cachePath = temp.append("cache");
-		await createDirectory(cachePath);
+		await cachePath.createDirectory();
 
 		const remotePath = temp.append("remote");
-		await createDirectory(remotePath);
+		await remotePath.createDirectory();
 
 		const recoveryPath = temp.append("recovery");
-		await createDirectory(recoveryPath);
+		await recoveryPath.createDirectory();
 
 		const userConfig: UserConfig = {
 			configPath: undefined,
@@ -379,14 +371,14 @@ export function createIntegrationTest(
 			// Materialize files
 			for (let basename in files) {
 				const path = projectPath.append(basename);
-				await createDirectory(path.getParent());
+				await path.getParent().createDirectory();
 
 				const content = files[basename];
-				await writeFile(path, content);
+				await path.writeFile(content);
 			}
 
 			// Use this reporter for markup rendering
-			const reporter = new Reporter();
+			const reporter = new Reporter("IntegrationTest");
 			const clientStream = reporter.attachCaptureStream();
 
 			// Mock and capture stdout
@@ -411,12 +403,12 @@ export function createIntegrationTest(
 
 			// Create a Client. The abstraction used by the CLI.
 			const client = new Client({
+				dedicated: false,
 				userConfig,
 				terminalFeatures: {
 					...DEFAULT_TERMINAL_FEATURES,
 					format: "markup",
 				},
-				globalErrorHandlers: false,
 				flags: {
 					realCwd: projectPath,
 					cwd: projectPath,
@@ -469,7 +461,7 @@ export function createIntegrationTest(
 					server,
 					async readFile(relative: RelativePath | string): Promise<string> {
 						const absolute = projectPath.append(relative);
-						return readFileText(absolute);
+						return absolute.readFileText();
 					},
 					async writeFile(
 						relative: RelativePath | string,
@@ -512,14 +504,14 @@ export function createIntegrationTest(
 				let queue: AbsoluteFilePath[] = [projectPath];
 				while (queue.length > 0) {
 					const path = queue.pop()!;
-					const stat = await lstat(path);
+					const stat = await path.lstat();
 
 					if (stat.isDirectory()) {
 						if (path.getBasename() === ".git") {
 							// Don't output the entire .git directory
 							queue = [...queue, path.append("HEAD")];
 						} else {
-							queue = [...queue, ...(await readDirectory(path))];
+							queue = [...queue, ...(await path.readDirectory())];
 						}
 					} else {
 						files.push(projectPath.relative(path).join());
@@ -533,7 +525,7 @@ export function createIntegrationTest(
 					}
 
 					filesSnapshot += `# ${basename}\n`;
-					filesSnapshot += await readFileText(projectPath.append(basename));
+					filesSnapshot += await projectPath.append(basename).readFileText();
 					filesSnapshot += "\n";
 				}
 
@@ -541,7 +533,7 @@ export function createIntegrationTest(
 			}
 		} finally {
 			// Clean up after ourselves. Will be called whether the tests fails or is successful
-			await removeDirectory(temp);
+			await temp.removeDirectory();
 		}
 	};
 }

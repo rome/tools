@@ -6,8 +6,8 @@
  */
 
 import {
+	Diagnostic,
 	DiagnosticSuppressions,
-	Diagnostics,
 	DiagnosticsProcessor,
 } from "@internal/diagnostics";
 import {DiagnosticsPrinterOptions} from "./types";
@@ -32,7 +32,7 @@ export async function printDiagnostics(
 		printerOptions,
 		excludeFooter,
 	}: {
-		diagnostics: Diagnostics;
+		diagnostics: Diagnostic[];
 		suppressions: DiagnosticSuppressions;
 		printerOptions: DiagnosticsPrinterOptions;
 		excludeFooter?: boolean;
@@ -49,7 +49,7 @@ export async function printDiagnostics(
 
 export async function printDiagnosticsToString(
 	opts: {
-		diagnostics: Diagnostics;
+		diagnostics: Diagnostic[];
 		suppressions: DiagnosticSuppressions;
 		printerOptions?: Partial<DiagnosticsPrinterOptions>;
 		format?: ReporterStream["format"];
@@ -57,7 +57,7 @@ export async function printDiagnosticsToString(
 		features?: Partial<TerminalFeatures>;
 	},
 ): Promise<string> {
-	const reporter = new Reporter();
+	const reporter = new Reporter("DiagnosticsPrinter");
 	const stream = reporter.attachCaptureStream(opts.format, opts.features);
 	await printDiagnostics({
 		...opts,
@@ -67,5 +67,6 @@ export async function printDiagnosticsToString(
 			...opts.printerOptions,
 		},
 	});
+	await reporter.resources.release();
 	return stream.read();
 }

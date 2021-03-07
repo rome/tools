@@ -8,42 +8,40 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2015/uncategorised/197/input.js 1:0-1:26
-	path: UIDPath<es2015/uncategorised/197/input.js>
-	body: Array [
+	body: [
 		JSDoWhileStatement {
-			loc: SourceLocation es2015/uncategorised/197/input.js 1:0-1:19
+			body: JSBlockStatement {
+				body: []
+				directives: []
+				loc: SourceLocation es2015/uncategorised/197/input.js 1:3-1:5
+			}
 			test: JSBooleanLiteral {
 				value: false
 				loc: SourceLocation es2015/uncategorised/197/input.js 1:13-1:18
 			}
-			body: JSBlockStatement {
-				body: Array []
-				directives: Array []
-				loc: SourceLocation es2015/uncategorised/197/input.js 1:3-1:5
-			}
+			loc: SourceLocation es2015/uncategorised/197/input.js 1:0-1:19
 		}
 		JSExpressionStatement {
-			loc: SourceLocation es2015/uncategorised/197/input.js 1:20-1:26
 			expression: JSCallExpression {
-				arguments: Array []
-				loc: SourceLocation es2015/uncategorised/197/input.js 1:20-1:25
+				arguments: []
 				callee: JSReferenceIdentifier {
 					name: "foo"
 					loc: SourceLocation es2015/uncategorised/197/input.js 1:20-1:23 (foo)
 				}
+				loc: SourceLocation es2015/uncategorised/197/input.js 1:20-1:25
 			}
+			loc: SourceLocation es2015/uncategorised/197/input.js 1:20-1:26
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2015/uncategorised/197/input.js>
+	loc: SourceLocation es2015/uncategorised/197/input.js 1:0-1:26
 }
 ```
 

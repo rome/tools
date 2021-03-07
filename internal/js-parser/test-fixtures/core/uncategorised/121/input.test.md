@@ -8,40 +8,11 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation core/uncategorised/121/input.js 1:0-1:35
-	path: UIDPath<core/uncategorised/121/input.js>
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation core/uncategorised/121/input.js 1:0-1:35
 			expression: JSMemberExpression {
-				loc: SourceLocation core/uncategorised/121/input.js 1:0-1:35
-				property: JSStaticMemberProperty {
-					value: JSIdentifier {
-						name: "Earth"
-						loc: SourceLocation core/uncategorised/121/input.js 1:30-1:35 (Earth)
-					}
-					loc: SourceLocation core/uncategorised/121/input.js 1:30-1:35 (Earth)
-				}
 				object: JSMemberExpression {
-					loc: SourceLocation core/uncategorised/121/input.js 1:0-1:29
-					property: JSStaticMemberProperty {
-						value: JSIdentifier {
-							name: "solarsystem"
-							loc: SourceLocation core/uncategorised/121/input.js 1:18-1:29 (solarsystem)
-						}
-						loc: SourceLocation core/uncategorised/121/input.js 1:18-1:29 (solarsystem)
-					}
 					object: JSMemberExpression {
-						loc: SourceLocation core/uncategorised/121/input.js 1:0-1:17
 						object: JSReferenceIdentifier {
 							name: "universe"
 							loc: SourceLocation core/uncategorised/121/input.js 1:0-1:8 (universe)
@@ -53,11 +24,38 @@ JSRoot {
 							}
 							loc: SourceLocation core/uncategorised/121/input.js 1:9-1:17 (milkyway)
 						}
+						loc: SourceLocation core/uncategorised/121/input.js 1:0-1:17
 					}
+					property: JSStaticMemberProperty {
+						value: JSIdentifier {
+							name: "solarsystem"
+							loc: SourceLocation core/uncategorised/121/input.js 1:18-1:29 (solarsystem)
+						}
+						loc: SourceLocation core/uncategorised/121/input.js 1:18-1:29 (solarsystem)
+					}
+					loc: SourceLocation core/uncategorised/121/input.js 1:0-1:29
 				}
+				property: JSStaticMemberProperty {
+					value: JSIdentifier {
+						name: "Earth"
+						loc: SourceLocation core/uncategorised/121/input.js 1:30-1:35 (Earth)
+					}
+					loc: SourceLocation core/uncategorised/121/input.js 1:30-1:35 (Earth)
+				}
+				loc: SourceLocation core/uncategorised/121/input.js 1:0-1:35
 			}
+			loc: SourceLocation core/uncategorised/121/input.js 1:0-1:35
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<core/uncategorised/121/input.js>
+	loc: SourceLocation core/uncategorised/121/input.js 1:0-1:35
 }
 ```
 

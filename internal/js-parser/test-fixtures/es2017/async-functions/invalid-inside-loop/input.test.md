@@ -8,68 +8,59 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2017/async-functions/invalid-inside-loop/input.js 1:0-1:32
-	path: UIDPath<es2017/async-functions/invalid-inside-loop/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Async functions can only be declared at the top level or inside a block"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:9
-				path: UIDPath<es2017/async-functions/invalid-inside-loop/input.js>
-				start: Position 1:10
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSWhileStatement {
-			loc: SourceLocation es2017/async-functions/invalid-inside-loop/input.js 1:0-1:32
-			test: JSNumericLiteral {
-				value: 1
-				format: undefined
-				loc: SourceLocation es2017/async-functions/invalid-inside-loop/input.js 1:7-1:8
-			}
 			body: JSFunctionDeclaration {
 				id: JSBindingIdentifier {
 					name: "foo"
 					loc: SourceLocation es2017/async-functions/invalid-inside-loop/input.js 1:25-1:28 (foo)
 				}
-				loc: SourceLocation es2017/async-functions/invalid-inside-loop/input.js 1:10-1:32
 				body: JSBlockStatement {
-					body: Array []
-					directives: Array []
+					body: []
+					directives: []
 					loc: SourceLocation es2017/async-functions/invalid-inside-loop/input.js 1:30-1:32
 				}
 				head: JSFunctionHead {
 					async: true
 					generator: false
 					hasHoistedVars: false
-					params: Array []
-					rest: undefined
-					returnType: undefined
-					thisType: undefined
-					typeParameters: undefined
+					params: []
 					loc: SourceLocation es2017/async-functions/invalid-inside-loop/input.js 1:28-1:30
 				}
+				loc: SourceLocation es2017/async-functions/invalid-inside-loop/input.js 1:10-1:32
+			}
+			test: JSNumericLiteral {
+				value: 1
+				loc: SourceLocation es2017/async-functions/invalid-inside-loop/input.js 1:7-1:8
+			}
+			loc: SourceLocation es2017/async-functions/invalid-inside-loop/input.js 1:0-1:32
+		}
+	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "Async functions can only be declared at the top level or inside a block"}
+			}
+			location: {
+				language: "js"
+				path: UIDPath<es2017/async-functions/invalid-inside-loop/input.js>
+				end: Position 1:9
+				start: Position 1:10
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2017/async-functions/invalid-inside-loop/input.js>
+	loc: SourceLocation es2017/async-functions/invalid-inside-loop/input.js 1:0-1:32
 }
 ```
 

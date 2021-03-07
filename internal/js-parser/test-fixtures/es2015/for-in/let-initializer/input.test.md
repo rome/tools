@@ -8,63 +8,60 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2015/for-in/let-initializer/input.js 1:0-1:22
-	path: UIDPath<es2015/for-in/let-initializer/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Loop variable declaration may not have an initializer"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:14
-				path: UIDPath<es2015/for-in/let-initializer/input.js>
-				start: Position 1:5
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSForInStatement {
-			body: JSEmptyStatement {loc: SourceLocation es2015/for-in/let-initializer/input.js 1:21-1:22}
-			loc: SourceLocation es2015/for-in/let-initializer/input.js 1:0-1:22
-			right: JSObjectExpression {
-				properties: Array []
-				loc: SourceLocation es2015/for-in/let-initializer/input.js 1:18-1:20
+			body: JSEmptyStatement {
+				loc: SourceLocation es2015/for-in/let-initializer/input.js 1:21-1:22
 			}
 			left: JSVariableDeclaration {
 				kind: "let"
-				loc: SourceLocation es2015/for-in/let-initializer/input.js 1:5-1:14
-				declarations: Array [
+				declarations: [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "a"
 							loc: SourceLocation es2015/for-in/let-initializer/input.js 1:9-1:10 (a)
 						}
-						loc: SourceLocation es2015/for-in/let-initializer/input.js 1:9-1:14
 						init: JSNumericLiteral {
 							value: 0
-							format: undefined
 							loc: SourceLocation es2015/for-in/let-initializer/input.js 1:13-1:14
 						}
+						loc: SourceLocation es2015/for-in/let-initializer/input.js 1:9-1:14
 					}
 				]
+				loc: SourceLocation es2015/for-in/let-initializer/input.js 1:5-1:14
+			}
+			right: JSObjectExpression {
+				properties: []
+				loc: SourceLocation es2015/for-in/let-initializer/input.js 1:18-1:20
+			}
+			loc: SourceLocation es2015/for-in/let-initializer/input.js 1:0-1:22
+		}
+	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "Loop variable declaration may not have an initializer"}
+			}
+			location: {
+				language: "js"
+				path: UIDPath<es2015/for-in/let-initializer/input.js>
+				end: Position 1:14
+				start: Position 1:5
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2015/for-in/let-initializer/input.js>
+	loc: SourceLocation es2015/for-in/let-initializer/input.js 1:0-1:22
 }
 ```
 

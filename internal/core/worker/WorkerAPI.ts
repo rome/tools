@@ -8,7 +8,7 @@
 import {FileReference, Worker} from "@internal/core";
 import {AnyNode, AnyRoot} from "@internal/ast";
 import {
-	Diagnostics,
+	Diagnostic,
 	catchDiagnostics,
 	descriptions,
 } from "@internal/diagnostics";
@@ -16,7 +16,7 @@ import {
 	CompileResult,
 	CompilerContext,
 	CompilerOptions,
-	Path,
+	CompilerPath,
 	TransformStageName,
 	analyzeDependencies,
 	compile,
@@ -40,16 +40,17 @@ import {
 	AnalyzeDependencyResult,
 	UNKNOWN_ANALYZE_DEPENDENCIES_RESULT,
 } from "../common/types/analyzeDependencies";
-import {
-	InlineSnapshotUpdate,
-	InlineSnapshotUpdates,
-} from "../test-worker/SnapshotManager";
+import {InlineSnapshotUpdate} from "./test/SnapshotManager";
 import {formatAST} from "@internal/formatter";
 import {getNodeReferenceParts, valueToNode} from "@internal/js-ast-utils";
 import {markup} from "@internal/markup";
 import {RecoverySaveFile} from "../server/fs/RecoveryStore";
 import WorkerCache, {createCacheEntryLoader} from "./WorkerCache";
-import {uncachedFormat, uncachedLint} from "./workerLint";
+import {
+	normalizeFormattedLineEndings,
+	uncachedFormat,
+	uncachedLint,
+} from "./workerLint";
 
 const analyzeDependenciesCacheLoader = createCacheEntryLoader<AnalyzeDependencyResult>(
 	"analyzeDependencies",
@@ -83,7 +84,7 @@ export default class WorkerAPI {
 	private cache: WorkerCache;
 
 	public interceptDiagnostics<T extends {
-		diagnostics: Diagnostics;
+		diagnostics: Diagnostic[];
 	}>(
 		val: T,
 		{astModifiedFromSource}: {
@@ -141,11 +142,7 @@ export default class WorkerAPI {
 		const res = await jsAnalysis.getModuleSignature({
 			ast,
 			project,
-			provider: await this.worker.getTypeCheckProvider(
-				ref.project,
-				{},
-				parseOptions,
-			),
+			provider: await this.worker.getTypeCheckProvider(ref, {}, parseOptions),
 		});
 
 		cacheEntry.update(res);
@@ -155,10 +152,13 @@ export default class WorkerAPI {
 
 	public async updateInlineSnapshots(
 		ref: FileReference,
-		updates: InlineSnapshotUpdates,
+		updates: InlineSnapshotUpdate[],
 		parseOptions: WorkerParseOptions,
 	): Promise<WorkerUpdateInlineSnapshotResult> {
-		let {ast, mtimeNs, project} = await this.worker.parse(ref, parseOptions);
+		let {ast, mtimeNs, project, sourceText} = await this.worker.parse(
+			ref,
+			parseOptions,
+		);
 
 		if (!project.config.format.enabled) {
 			return {
@@ -177,7 +177,7 @@ export default class WorkerAPI {
 		});
 		ast = context.reduceRoot({
 			name: "updateInlineSnapshots",
-			enter(path: Path) {
+			enter(path: CompilerPath) {
 				const {node} = path;
 				if (node.type !== "JSCallExpression" || pendingUpdates.size === 0) {
 					return signals.retain;
@@ -251,12 +251,13 @@ export default class WorkerAPI {
 		let file: undefined | RecoverySaveFile;
 
 		if (diags.length === 0) {
-			const formatted = formatAST(
+			let formatted = formatAST(
 				ast,
 				{
 					projectConfig: project.config,
 				},
 			).code;
+			formatted = normalizeFormattedLineEndings(sourceText, formatted);
 			file = {
 				type: "WRITE",
 				content: formatted,
@@ -299,7 +300,7 @@ export default class WorkerAPI {
 		ref: FileReference,
 		parseOptions: WorkerParseOptions,
 	): Promise<AnalyzeDependencyResult> {
-		const project = this.worker.getProject(ref.project);
+		const project = this.worker.getProject(ref);
 		this.logger.info(markup`Analyze dependencies: ${ref.real}`);
 
 		const parseResult = await catchDiagnostics(async () =>

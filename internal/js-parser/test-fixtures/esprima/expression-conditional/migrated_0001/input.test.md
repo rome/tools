@@ -8,35 +8,19 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation esprima/expression-conditional/migrated_0001/input.js 1:0-2:0
-	path: UIDPath<esprima/expression-conditional/migrated_0001/input.js>
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation esprima/expression-conditional/migrated_0001/input.js 1:0-1:14
 			expression: JSConditionalExpression {
-				loc: SourceLocation esprima/expression-conditional/migrated_0001/input.js 1:0-1:14
 				alternate: JSNumericLiteral {
 					value: 2
-					format: undefined
 					loc: SourceLocation esprima/expression-conditional/migrated_0001/input.js 1:13-1:14
 				}
 				consequent: JSNumericLiteral {
 					value: 1
-					format: undefined
 					loc: SourceLocation esprima/expression-conditional/migrated_0001/input.js 1:9-1:10
 				}
 				test: JSLogicalExpression {
 					operator: "&&"
-					loc: SourceLocation esprima/expression-conditional/migrated_0001/input.js 1:0-1:6
 					left: JSReferenceIdentifier {
 						name: "x"
 						loc: SourceLocation esprima/expression-conditional/migrated_0001/input.js 1:0-1:1 (x)
@@ -45,10 +29,22 @@ JSRoot {
 						name: "y"
 						loc: SourceLocation esprima/expression-conditional/migrated_0001/input.js 1:5-1:6 (y)
 					}
+					loc: SourceLocation esprima/expression-conditional/migrated_0001/input.js 1:0-1:6
 				}
+				loc: SourceLocation esprima/expression-conditional/migrated_0001/input.js 1:0-1:14
 			}
+			loc: SourceLocation esprima/expression-conditional/migrated_0001/input.js 1:0-1:14
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<esprima/expression-conditional/migrated_0001/input.js>
+	loc: SourceLocation esprima/expression-conditional/migrated_0001/input.js 1:0-2:0
 }
 ```
 

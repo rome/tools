@@ -1,6 +1,6 @@
 import {test} from "rome";
 import {renameBindings} from "@internal/js-ast-utils/renameBindings";
-import {CompilerContext, Path} from "@internal/compiler";
+import {CompilerContext, CompilerPath} from "@internal/compiler";
 import {
 	MOCK_JS_ROOT,
 	jsAssignmentExpression,
@@ -42,7 +42,7 @@ test(
 			ast: MOCK_JS_ROOT,
 		});
 
-		const path = new Path(js, context, {});
+		const path = new CompilerPath(js, context, {});
 
 		t.is(
 			jsReferenceIdentifier.assert(

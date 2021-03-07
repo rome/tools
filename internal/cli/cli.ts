@@ -29,7 +29,7 @@ import {
 	getFilenameTimestamp,
 } from "@internal/core/client/Client";
 import {CommandName, commandCategories} from "@internal/core/common/commands";
-import {FSWriteStream, createWriteStream, writeFile} from "@internal/fs";
+import {FSWriteStream} from "@internal/fs";
 import {markupToPlainText} from "@internal/cli-layout";
 import {
 	convertToMarkupFromRandomString,
@@ -37,11 +37,12 @@ import {
 	markup,
 } from "@internal/markup";
 import {json} from "@internal/codec-config";
-import {getEnvVar} from "@internal/cli-environment";
+import {IS_ROME_DEV_ENV, isEnvVarSet} from "@internal/cli-environment";
 import {satisfiesSemver} from "@internal/codec-semver";
 import {Reporter} from "@internal/cli-reporter";
 import {loadUserConfig} from "@internal/core/common/userConfig";
-import {RSERObject} from "@internal/codec-binary-serial";
+import {RSERObject} from "@internal/binary-transport";
+import {safeProcessExit} from "@internal/resources";
 
 type CLIFlags = {
 	logs: undefined | ClientLogsLevel;
@@ -56,6 +57,7 @@ type CLIFlags = {
 	profileSampling: number;
 	profileWorkers: boolean;
 	temporaryDaemon: boolean;
+	showAllDiagnostics: boolean;
 };
 
 export default async function cli() {
@@ -73,11 +75,11 @@ export default async function cli() {
 		reporter.error(
 			markup`Node <emphasis>${REQUIRED_NODE_VERSION_RANGE}</emphasis> is required, but you are on <emphasis>${process.version}</emphasis>`,
 		);
-		process.exit(1);
+		await safeProcessExit(1);
 	}
 
 	const p = parseCLIFlagsFromProcess({
-		programName: getEnvVar("ROME_DEV").type === "ENABLED" ? "dev-rome" : "rome",
+		programName: IS_ROME_DEV_ENV ? "dev-rome" : "rome",
 		usage: "[command] [flags]",
 		version: VERSION,
 		commandRequired: true,
@@ -87,6 +89,15 @@ export default async function cli() {
 				commandName: "check",
 				description: markup`The <emphasis>check</emphasis> command covers linting, formatting, and more`,
 			},
+		},
+		onRunHiddenCommand(reporter) {
+			if (IS_ROME_DEV_ENV || isEnvVarSet("ROME_DEV_VENDOR_BUNDLING")) {
+				return;
+			}
+
+			reporter.warn(
+				markup`This command has been hidden. Consider its usage to be experimental and do not expect support or backwards compatibility.`,
+			);
 		},
 		defineFlags(
 			c: Consumer,
@@ -152,6 +163,12 @@ export default async function cli() {
 			};
 
 			const cliFlags: CLIFlags = {
+				showAllDiagnostics: c.get(
+					"showAllDiagnostics",
+					{
+						description: markup`Display all diagnostics ignoring caps`,
+					},
+				).asBoolean(false),
 				markersPath: c.get(
 					"markersPath",
 					{
@@ -301,20 +318,18 @@ export default async function cli() {
 						description: markup`Cap the amount of diagnostics displayed`,
 					},
 				).asNumber(DEFAULT_CLIENT_REQUEST_FLAGS.maxDiagnostics),
-				// DiagnosticsPrinterFlags["verboseDiagnostics"] can be a boolean or some string constants
-				// But we only want to allow booleans in the CLI
 				verboseDiagnostics: c.get(
 					"verboseDiagnostics",
 					{
-						description: markup`Display hidden and truncated diagnostic information`,
+						description: markup`Display additional hidden diagnostic information`,
 					},
 				).asBoolean(false),
-				showAllDiagnostics: c.get(
-					"showAllDiagnostics",
+				truncateDiagnostics: c.get(
+					"truncateDiagnostics",
 					{
-						description: markup`Display all diagnostics ignoring caps`,
+						description: markup`Display truncated diagnostic information`,
 					},
-				).asBoolean(DEFAULT_CLIENT_REQUEST_FLAGS.showAllDiagnostics),
+				).asBoolean(true),
 				resolverPlatform: c.get(
 					"resolverPlatform",
 					{
@@ -345,8 +360,6 @@ export default async function cli() {
 	let commandFlags: RSERObject = {};
 	let args: string[] = [];
 
-	const isRelease = getEnvVar("ROME_DEV").type !== "ENABLED";
-
 	// Create command handlers. We use a set here since we may have some conflicting server and local command names. We always want the local command to take precedence.
 	const commandNames = new Set([
 		...localCommands.keys(),
@@ -363,7 +376,7 @@ export default async function cli() {
 				ignoreFlags: local.ignoreFlags,
 				examples: local.examples,
 				usage: local.usage,
-				hidden: isRelease && local.hidden,
+				hidden: local.hidden,
 				callback(_commandFlags) {
 					commandFlags = _commandFlags;
 					args = p.getArgs();
@@ -383,7 +396,7 @@ export default async function cli() {
 				ignoreFlags: server.ignoreFlags,
 				usage: server.usage,
 				examples: server.examples,
-				hidden: isRelease && server.hidden,
+				hidden: server.hidden,
 				callback(_commandFlags) {
 					commandFlags = _commandFlags;
 					args = p.getArgs();
@@ -441,9 +454,14 @@ export default async function cli() {
 		...overrideCLIFlags,
 	};
 
+	// --show-all-diagnostics is just a shorthand for setting this to Infinity as there's no way to specify that via CLI args
+	if (cliFlags.showAllDiagnostics) {
+		requestFlags.maxDiagnostics = Infinity;
+	}
+
 	// Default according to env vars
 	if (requestFlags.auxiliaryDiagnosticFormat === undefined) {
-		if (getEnvVar("GITHUB_ACTIONS").type === "ENABLED") {
+		if (isEnvVarSet("GITHUB_ACTIONS")) {
 			requestFlags.auxiliaryDiagnosticFormat = "github-actions";
 		}
 	}
@@ -468,7 +486,7 @@ export default async function cli() {
 	const client = new Client({
 		userConfig,
 		terminalFeatures,
-		globalErrorHandlers: true,
+		dedicated: true,
 		flags: clientFlags,
 		stdin: process.stdin,
 		stdout: process.stdout,
@@ -513,7 +531,7 @@ export default async function cli() {
 					);
 
 					const str = json.stringify(events);
-					await writeFile(resolvedProfilePath, str);
+					await resolvedProfilePath.writeFile(str);
 
 					client.reporter.success(
 						markup`Wrote CPU profile to <emphasis>${resolvedProfilePath}</emphasis>`,
@@ -525,7 +543,7 @@ export default async function cli() {
 		if (cliFlags.logs) {
 			let fileout: undefined | FSWriteStream;
 			if (cliFlags.logPath !== undefined) {
-				fileout = createWriteStream(clientFlags.cwd.resolve(cliFlags.logPath));
+				fileout = clientFlags.cwd.resolve(cliFlags.logPath).createWriteStream();
 
 				client.endEvent.subscribe(() => {
 					if (fileout !== undefined) {
@@ -564,13 +582,16 @@ export default async function cli() {
 		commandFlags,
 		args,
 		requestFlags,
-		// Daemon would have been started before, so terminate when we complete
-		terminateWhenIdle: cliFlags.temporaryDaemon,
 		// We don't use the data result, so no point transporting it over the bridge
 		// We want it in rage mode though for debugging
 		noData: !cliFlags.rage,
 	});
-	await client.end();
+
+	if (cliFlags.temporaryDaemon) {
+		await client.shutdownServer();
+	} else {
+		await client.end();
+	}
 
 	// Write markers if we were collecting them
 	if (shouldCollectMarkers && res.markers.length > 0) {
@@ -580,16 +601,22 @@ export default async function cli() {
 				: cliFlags.markersPath,
 		);
 
-		await writeFile(markersPath, json.stringify(res.markers));
+		await markersPath.writeFile(json.stringify(res.markers));
 
 		client.reporter.success(
 			markup`Wrote markers to <emphasis>${markersPath}</emphasis>`,
 		);
 	}
 
+	let exitCode;
 	switch (res.type) {
 		case "EXIT": {
-			process.exit(res.code);
+			exitCode = res.code;
+			break;
+		}
+
+		case "CLIENT_ERROR": {
+			exitCode = 1;
 			break;
 		}
 
@@ -597,24 +624,25 @@ export default async function cli() {
 			if (res.showHelp) {
 				await p.showHelp();
 			}
-			process.exit(1);
+			exitCode = 1;
 			break;
 		}
 
 		case "DIAGNOSTICS": {
-			process.exit(res.hasDiagnostics ? 1 : 0);
+			exitCode = res.hasDiagnostics ? 1 : 0;
 			break;
 		}
 
 		case "CANCELLED": {
 			client.reporter.error(markup`Command cancelled: ${res.reason}`);
-			process.exit(0);
+			exitCode = 0;
 			break;
 		}
 
 		case "SUCCESS": {
-			process.exit(0);
+			exitCode = 0;
 			break;
 		}
 	}
+	await safeProcessExit(exitCode);
 }

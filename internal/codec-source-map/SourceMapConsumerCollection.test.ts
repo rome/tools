@@ -1,11 +1,11 @@
 import {TestHelper, test} from "rome";
-import {OneIndexed, ZeroIndexed} from "@internal/math";
+import {OneIndexed, ZeroIndexed} from "@internal/numbers";
 import {
 	SourceMapConsumer,
 	SourceMapConsumerCollection,
 } from "@internal/codec-source-map/index";
 import {ResolvedLocation} from "@internal/codec-source-map/types";
-import {AnyPath, createRelativePath} from "@internal/path";
+import {Path, createRelativePath} from "@internal/path";
 import {SourceMap} from "@internal/codec-source-map";
 
 /* Source test1
@@ -121,7 +121,7 @@ test(
 
 		function approxAndExact(
 			t: TestHelper,
-			path: AnyPath,
+			path: Path,
 			line: number,
 			column: number,
 			expected: ResolvedLocation,

@@ -8,29 +8,25 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	loc: SourceLocation typescript/estree-compat/shorthand-ambient-module/input.ts 1:0-1:32
-	path: UIDPath<typescript/estree-compat/shorthand-ambient-module/input.ts>
-	syntax: Array ["ts"]
-	body: Array [
+	body: [
 		TSModuleDeclaration {
+			declare: true
 			id: JSStringLiteral {
 				value: "hot-new-module"
 				loc: SourceLocation typescript/estree-compat/shorthand-ambient-module/input.ts 1:15-1:31
 			}
-			body: undefined
-			declare: true
-			global: undefined
 			loc: SourceLocation typescript/estree-compat/shorthand-ambient-module/input.ts 1:0-1:32
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: ["ts"]
+	path: UIDPath<typescript/estree-compat/shorthand-ambient-module/input.ts>
+	loc: SourceLocation typescript/estree-compat/shorthand-ambient-module/input.ts 1:0-1:32
 }
 ```
 

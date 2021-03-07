@@ -52,12 +52,12 @@ export const flags = createDiagnosticsCategory({
 		}: {
 			programName: string;
 			commandName: string;
-			suggestedName: undefined | string;
-			suggestedDescription: undefined | StaticMarkup;
-			suggestedCommand: undefined | string;
+			suggestedName?: string;
+			suggestedDescription?: StaticMarkup;
+			suggestedCommand?: string;
 		},
 	) => {
-		const advice: DiagnosticAdvice = [];
+		const advice: DiagnosticAdvice[] = [];
 
 		if (suggestedName !== undefined) {
 			const description =

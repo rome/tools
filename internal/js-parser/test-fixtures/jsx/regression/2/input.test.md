@@ -8,56 +8,52 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	loc: SourceLocation jsx/regression/2/input.jsx 1:0-1:30
-	path: UIDPath<jsx/regression/2/input.jsx>
-	syntax: Array ["jsx"]
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation jsx/regression/2/input.jsx 1:0-1:30
 			expression: JSXElement {
-				name: JSXIdentifier {
-					name: "div"
-					loc: SourceLocation jsx/regression/2/input.jsx 1:1-1:4
-				}
-				attributes: Array []
-				selfClosing: false
-				typeArguments: undefined
-				loc: SourceLocation jsx/regression/2/input.jsx 1:0-1:30
-				children: Array [
+				attributes: []
+				children: [
 					JSXExpressionContainer {
-						loc: SourceLocation jsx/regression/2/input.jsx 1:5-1:24
 						expression: JSXElement {
-							name: JSXIdentifier {
-								name: "div"
-								loc: SourceLocation jsx/regression/2/input.jsx 1:7-1:10
-							}
-							children: Array []
-							selfClosing: true
-							typeArguments: undefined
-							loc: SourceLocation jsx/regression/2/input.jsx 1:6-1:23
-							attributes: Array [
+							attributes: [
 								JSXSpreadAttribute {
-									loc: SourceLocation jsx/regression/2/input.jsx 1:11-1:20
 									argument: JSReferenceIdentifier {
 										name: "test"
 										loc: SourceLocation jsx/regression/2/input.jsx 1:15-1:19 (test)
 									}
+									loc: SourceLocation jsx/regression/2/input.jsx 1:11-1:20
 								}
 							]
+							children: []
+							selfClosing: true
+							name: JSXIdentifier {
+								name: "div"
+								loc: SourceLocation jsx/regression/2/input.jsx 1:7-1:10
+							}
+							loc: SourceLocation jsx/regression/2/input.jsx 1:6-1:23
 						}
+						loc: SourceLocation jsx/regression/2/input.jsx 1:5-1:24
 					}
 				]
+				selfClosing: false
+				name: JSXIdentifier {
+					name: "div"
+					loc: SourceLocation jsx/regression/2/input.jsx 1:1-1:4
+				}
+				loc: SourceLocation jsx/regression/2/input.jsx 1:0-1:30
 			}
+			loc: SourceLocation jsx/regression/2/input.jsx 1:0-1:30
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: ["jsx"]
+	path: UIDPath<jsx/regression/2/input.jsx>
+	loc: SourceLocation jsx/regression/2/input.jsx 1:0-1:30
 }
 ```
 

@@ -8,51 +8,18 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: true
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2016/simple-parameter-list/method/input.js 1:0-6:0
-	path: UIDPath<es2016/simple-parameter-list/method/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Illegal 'use strict' directive in function with non-simple parameter list"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 3:17
-				path: UIDPath<es2016/simple-parameter-list/method/input.js>
-				start: Position 3:4
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSVariableDeclarationStatement {
-			loc: SourceLocation es2016/simple-parameter-list/method/input.js 1:0-5:2
 			declaration: JSVariableDeclaration {
 				kind: "var"
-				loc: SourceLocation es2016/simple-parameter-list/method/input.js 1:0-5:2
-				declarations: Array [
+				declarations: [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "obj"
 							loc: SourceLocation es2016/simple-parameter-list/method/input.js 1:4-1:7 (obj)
 						}
-						loc: SourceLocation es2016/simple-parameter-list/method/input.js 1:4-5:1
 						init: JSObjectExpression {
-							loc: SourceLocation es2016/simple-parameter-list/method/input.js 1:10-5:1
-							properties: Array [
+							properties: [
 								JSObjectMethod {
 									kind: "method"
 									key: JSStaticPropertyKey {
@@ -62,53 +29,76 @@ JSRoot {
 										}
 										loc: SourceLocation es2016/simple-parameter-list/method/input.js 2:2-2:3
 									}
-									loc: SourceLocation es2016/simple-parameter-list/method/input.js 2:2-4:3
 									body: JSBlockStatement {
-										body: Array []
-										loc: SourceLocation es2016/simple-parameter-list/method/input.js 2:18-4:3
-										directives: Array [
+										body: []
+										directives: [
 											JSDirective {
 												value: "use strict"
 												loc: SourceLocation es2016/simple-parameter-list/method/input.js 3:4-3:17
 											}
 										]
+										loc: SourceLocation es2016/simple-parameter-list/method/input.js 2:18-4:3
 									}
 									head: JSFunctionHead {
 										async: false
 										generator: false
 										hasHoistedVars: false
-										rest: undefined
-										returnType: undefined
-										thisType: undefined
-										typeParameters: undefined
-										loc: SourceLocation es2016/simple-parameter-list/method/input.js 2:3-2:17
-										params: Array [
+										params: [
 											JSBindingAssignmentPattern {
-												loc: SourceLocation es2016/simple-parameter-list/method/input.js 2:4-2:16
-												right: JSObjectExpression {
-													properties: Array []
-													loc: SourceLocation es2016/simple-parameter-list/method/input.js 2:14-2:16
-												}
 												left: JSBindingIdentifier {
 													name: "options"
-													loc: SourceLocation es2016/simple-parameter-list/method/input.js 2:4-2:11 (options)
 													meta: JSPatternMeta {
-														optional: undefined
-														typeAnnotation: undefined
 														loc: SourceLocation es2016/simple-parameter-list/method/input.js 2:4-2:11
 													}
+													loc: SourceLocation es2016/simple-parameter-list/method/input.js 2:4-2:11 (options)
 												}
+												right: JSObjectExpression {
+													properties: []
+													loc: SourceLocation es2016/simple-parameter-list/method/input.js 2:14-2:16
+												}
+												loc: SourceLocation es2016/simple-parameter-list/method/input.js 2:4-2:16
 											}
 										]
+										loc: SourceLocation es2016/simple-parameter-list/method/input.js 2:3-2:17
 									}
+									loc: SourceLocation es2016/simple-parameter-list/method/input.js 2:2-4:3
 								}
 							]
+							loc: SourceLocation es2016/simple-parameter-list/method/input.js 1:10-5:1
 						}
+						loc: SourceLocation es2016/simple-parameter-list/method/input.js 1:4-5:1
 					}
 				]
+				loc: SourceLocation es2016/simple-parameter-list/method/input.js 1:0-5:2
+			}
+			loc: SourceLocation es2016/simple-parameter-list/method/input.js 1:0-5:2
+		}
+	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "Illegal 'use strict' directive in function with non-simple parameter list"}
+			}
+			location: {
+				language: "js"
+				path: UIDPath<es2016/simple-parameter-list/method/input.js>
+				end: Position 3:17
+				start: Position 3:4
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: true
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2016/simple-parameter-list/method/input.js>
+	loc: SourceLocation es2016/simple-parameter-list/method/input.js 1:0-6:0
 }
 ```
 

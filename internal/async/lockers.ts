@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyPath} from "@internal/path";
+import {Path} from "@internal/path";
 import {VoidCallback} from "@internal/typescript-helpers";
 import {createDeferredPromise} from "@internal/async/index";
 import {Event} from "@internal/events";
@@ -94,8 +94,8 @@ abstract class LockerNormalized<RawKey, MapKey> {
 	}
 
 	public async wrapLock<T>(
-		key: RawKey,
 		callback: () => T | Promise<T>,
+		key: RawKey,
 	): Promise<T> {
 		const lock = await this.getLock(key);
 		try {
@@ -114,8 +114,8 @@ export class Locker<Key> extends LockerNormalized<Key, Key> {
 	}
 }
 
-export class FilePathLocker extends LockerNormalized<AnyPath, string> {
-	protected normalizeKey(path: AnyPath): string {
+export class PathLocker extends LockerNormalized<Path, string> {
+	protected normalizeKey(path: Path): string {
 		return path.join();
 	}
 }
@@ -124,14 +124,8 @@ export class GlobalLock {
 	constructor() {
 		this.resolves = [];
 		this.dependencies = 0;
-
-		this.incrementEvent = new Event({
-			name: "incrementEvent",
-		});
-
-		this.decrementEvent = new Event({
-			name: "decrementEvent",
-		});
+		this.incrementEvent = new Event("incrementEvent");
+		this.decrementEvent = new Event("decrementEvent");
 	}
 
 	private incrementEvent: Event<void, void>;
@@ -139,7 +133,7 @@ export class GlobalLock {
 	private resolves: VoidCallback[];
 	private dependencies: number;
 
-	attachLock(lock: GlobalLock) {
+	public addDependency(lock: GlobalLock) {
 		lock.incrementEvent.subscribe(() => {
 			this.dependencies++;
 		});
@@ -158,6 +152,15 @@ export class GlobalLock {
 			resolve();
 		}
 		this.resolves = [];
+	}
+
+	public async series<T>(fn: () => Promise<T>): Promise<T> {
+		if (this.dependencies > 0) {
+			await this.wait();
+			return this.series(fn);
+		} else {
+			return this.wrap(fn);
+		}
 	}
 
 	public async wrap<T>(fn: () => Promise<T>): Promise<T> {

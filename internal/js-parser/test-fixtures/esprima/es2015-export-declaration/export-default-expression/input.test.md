@@ -8,36 +8,32 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	syntax: Array []
-	loc: SourceLocation esprima/es2015-export-declaration/export-default-expression/input.js 1:0-2:0
-	path: UIDPath<esprima/es2015-export-declaration/export-default-expression/input.js>
-	body: Array [
+	body: [
 		JSExportDefaultDeclaration {
-			loc: SourceLocation esprima/es2015-export-declaration/export-default-expression/input.js 1:0-1:23
 			declaration: JSBinaryExpression {
 				operator: "+"
-				loc: SourceLocation esprima/es2015-export-declaration/export-default-expression/input.js 1:16-1:21
 				left: JSNumericLiteral {
 					value: 1
-					format: undefined
 					loc: SourceLocation esprima/es2015-export-declaration/export-default-expression/input.js 1:16-1:17
 				}
 				right: JSNumericLiteral {
 					value: 2
-					format: undefined
 					loc: SourceLocation esprima/es2015-export-declaration/export-default-expression/input.js 1:20-1:21
 				}
+				loc: SourceLocation esprima/es2015-export-declaration/export-default-expression/input.js 1:16-1:21
 			}
+			loc: SourceLocation esprima/es2015-export-declaration/export-default-expression/input.js 1:0-1:23
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: []
+	path: UIDPath<esprima/es2015-export-declaration/export-default-expression/input.js>
+	loc: SourceLocation esprima/es2015-export-declaration/export-default-expression/input.js 1:0-2:0
 }
 ```
 

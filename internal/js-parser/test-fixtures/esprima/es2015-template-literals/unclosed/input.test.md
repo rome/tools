@@ -8,23 +8,11 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation esprima/es2015-template-literals/unclosed/input.js 1:0-2:0
-	path: UIDPath<esprima/es2015-template-literals/unclosed/input.js>
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation esprima/es2015-template-literals/unclosed/input.js 1:0-1:1
 			expression: JSTemplateLiteral {
-				expressions: Array []
-				loc: SourceLocation esprima/es2015-template-literals/unclosed/input.js 1:0-1:1
-				quasis: Array [
+				expressions: []
+				quasis: [
 					JSTemplateElement {
 						cooked: ""
 						raw: ""
@@ -32,28 +20,36 @@ JSRoot {
 						loc: SourceLocation esprima/es2015-template-literals/unclosed/input.js 1:1-1:1
 					}
 				]
+				loc: SourceLocation esprima/es2015-template-literals/unclosed/input.js 1:0-1:1
 			}
+			loc: SourceLocation esprima/es2015-template-literals/unclosed/input.js 1:0-1:1
 		}
 	]
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {
+				advice: []
+				category: ["parse"]
 				categoryValue: "js"
-				category: Array ["parse"]
 				message: RAW_MARKUP {value: "Unterminated template"}
 			}
-			location: Object {
-				integrity: undefined
+			location: {
 				language: "js"
-				sourceText: undefined
-				end: Position 2:0
 				path: UIDPath<esprima/es2015-template-literals/unclosed/input.js>
+				end: Position 2:0
 				start: Position 2:0
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<esprima/es2015-template-literals/unclosed/input.js>
+	loc: SourceLocation esprima/es2015-template-literals/unclosed/input.js 1:0-2:0
 }
 ```
 

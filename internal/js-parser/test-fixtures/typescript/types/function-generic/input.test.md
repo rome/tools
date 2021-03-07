@@ -8,84 +8,74 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	loc: SourceLocation typescript/types/function-generic/input.ts 1:0-2:0
-	path: UIDPath<typescript/types/function-generic/input.ts>
-	syntax: Array ["ts"]
-	body: Array [
+	body: [
 		JSVariableDeclarationStatement {
-			loc: SourceLocation typescript/types/function-generic/input.ts 1:0-1:22
 			declaration: JSVariableDeclaration {
 				kind: "let"
-				loc: SourceLocation typescript/types/function-generic/input.ts 1:0-1:22
-				declarations: Array [
+				declarations: [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "f"
-							loc: SourceLocation typescript/types/function-generic/input.ts 1:4-1:21
 							meta: JSPatternMeta {
-								definite: undefined
-								loc: SourceLocation typescript/types/function-generic/input.ts 1:4-1:21
 								typeAnnotation: TSFunctionType {
-									loc: SourceLocation typescript/types/function-generic/input.ts 1:7-1:21
-									typeAnnotation: TSTypeReference {
-										typeParameters: undefined
-										loc: SourceLocation typescript/types/function-generic/input.ts 1:20-1:21
-										typeName: JSReferenceIdentifier {
-											name: "T"
-											loc: SourceLocation typescript/types/function-generic/input.ts 1:20-1:21 (T)
-										}
-									}
 									meta: TSSignatureDeclarationMeta {
-										rest: undefined
-										loc: SourceLocation typescript/types/function-generic/input.ts 1:7-1:21
-										typeParameters: TSTypeParameterDeclaration {
-											loc: SourceLocation typescript/types/function-generic/input.ts 1:7-1:10
-											params: Array [
-												TSTypeParameter {
-													name: "T"
-													constraint: undefined
-													default: undefined
-													loc: SourceLocation typescript/types/function-generic/input.ts 1:8-1:9
-												}
-											]
-										}
-										parameters: Array [
+										parameters: [
 											JSBindingIdentifier {
 												name: "a"
-												loc: SourceLocation typescript/types/function-generic/input.ts 1:11-1:12 (a)
 												meta: JSPatternMeta {
-													optional: undefined
-													loc: SourceLocation typescript/types/function-generic/input.ts 1:11-1:15
 													typeAnnotation: TSTypeReference {
-														typeParameters: undefined
-														loc: SourceLocation typescript/types/function-generic/input.ts 1:14-1:15
 														typeName: JSReferenceIdentifier {
 															name: "T"
 															loc: SourceLocation typescript/types/function-generic/input.ts 1:14-1:15 (T)
 														}
+														loc: SourceLocation typescript/types/function-generic/input.ts 1:14-1:15
 													}
+													loc: SourceLocation typescript/types/function-generic/input.ts 1:11-1:15
 												}
+												loc: SourceLocation typescript/types/function-generic/input.ts 1:11-1:12 (a)
 											}
 										]
+										typeParameters: TSTypeParameterDeclaration {
+											params: [
+												TSTypeParameter {
+													name: "T"
+													loc: SourceLocation typescript/types/function-generic/input.ts 1:8-1:9
+												}
+											]
+											loc: SourceLocation typescript/types/function-generic/input.ts 1:7-1:10
+										}
+										loc: SourceLocation typescript/types/function-generic/input.ts 1:7-1:21
 									}
+									typeAnnotation: TSTypeReference {
+										typeName: JSReferenceIdentifier {
+											name: "T"
+											loc: SourceLocation typescript/types/function-generic/input.ts 1:20-1:21 (T)
+										}
+										loc: SourceLocation typescript/types/function-generic/input.ts 1:20-1:21
+									}
+									loc: SourceLocation typescript/types/function-generic/input.ts 1:7-1:21
 								}
+								loc: SourceLocation typescript/types/function-generic/input.ts 1:4-1:21
 							}
+							loc: SourceLocation typescript/types/function-generic/input.ts 1:4-1:21
 						}
-						init: undefined
 						loc: SourceLocation typescript/types/function-generic/input.ts 1:4-1:21
 					}
 				]
+				loc: SourceLocation typescript/types/function-generic/input.ts 1:0-1:22
 			}
+			loc: SourceLocation typescript/types/function-generic/input.ts 1:0-1:22
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: ["ts"]
+	path: UIDPath<typescript/types/function-generic/input.ts>
+	loc: SourceLocation typescript/types/function-generic/input.ts 1:0-2:0
 }
 ```
 

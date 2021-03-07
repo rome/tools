@@ -12,8 +12,8 @@ import {dedent} from "@internal/string-utils";
 import * as signals from "./signals";
 import {
 	DIAGNOSTIC_CATEGORIES,
+	Diagnostic,
 	DiagnosticSuppressions,
-	Diagnostics,
 	equalCategoryNames,
 } from "@internal/diagnostics";
 
@@ -21,7 +21,7 @@ function extractSuppressionsFromSource(
 	sourceText: string,
 ): {
 	suppressions: DiagnosticSuppressions;
-	diagnostics: Diagnostics;
+	diagnostics: Diagnostic[];
 } {
 	const ast = parseJS({
 		sourceType: "script",

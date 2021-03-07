@@ -141,7 +141,7 @@ export default createVisitor({
 		// Populate the `mappings` field with a uid
 		for (const info of wildcardImports.values()) {
 			for (const name of info.names) {
-				info.mappings.set(name, path.scope.generateUid(name));
+				info.mappings.set(name, path.scope.generateUID(name));
 			}
 		}
 

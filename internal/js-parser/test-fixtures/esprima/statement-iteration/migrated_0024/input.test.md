@@ -8,27 +8,12 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation esprima/statement-iteration/migrated_0024/input.js 1:0-2:0
-	path: UIDPath<esprima/statement-iteration/migrated_0024/input.js>
-	body: Array [
+	body: [
 		JSForInStatement {
-			body: JSEmptyStatement {loc: SourceLocation esprima/statement-iteration/migrated_0024/input.js 1:20-1:21}
-			loc: SourceLocation esprima/statement-iteration/migrated_0024/input.js 1:0-1:21
-			right: JSReferenceIdentifier {
-				name: "d"
-				loc: SourceLocation esprima/statement-iteration/migrated_0024/input.js 1:18-1:19 (d)
+			body: JSEmptyStatement {
+				loc: SourceLocation esprima/statement-iteration/migrated_0024/input.js 1:20-1:21
 			}
 			left: JSMemberExpression {
-				loc: SourceLocation esprima/statement-iteration/migrated_0024/input.js 1:5-1:14
 				object: JSReferenceIdentifier {
 					name: "a"
 					loc: SourceLocation esprima/statement-iteration/migrated_0024/input.js 1:5-1:6 (a)
@@ -36,7 +21,6 @@ JSRoot {
 				property: JSComputedMemberProperty {
 					value: JSBinaryExpression {
 						operator: "in"
-						loc: SourceLocation esprima/statement-iteration/migrated_0024/input.js 1:7-1:13
 						left: JSReferenceIdentifier {
 							name: "b"
 							loc: SourceLocation esprima/statement-iteration/migrated_0024/input.js 1:7-1:8 (b)
@@ -45,12 +29,28 @@ JSRoot {
 							name: "c"
 							loc: SourceLocation esprima/statement-iteration/migrated_0024/input.js 1:12-1:13 (c)
 						}
+						loc: SourceLocation esprima/statement-iteration/migrated_0024/input.js 1:7-1:13
 					}
 					loc: SourceLocation esprima/statement-iteration/migrated_0024/input.js 1:6-1:14
 				}
+				loc: SourceLocation esprima/statement-iteration/migrated_0024/input.js 1:5-1:14
 			}
+			right: JSReferenceIdentifier {
+				name: "d"
+				loc: SourceLocation esprima/statement-iteration/migrated_0024/input.js 1:18-1:19 (d)
+			}
+			loc: SourceLocation esprima/statement-iteration/migrated_0024/input.js 1:0-1:21
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<esprima/statement-iteration/migrated_0024/input.js>
+	loc: SourceLocation esprima/statement-iteration/migrated_0024/input.js 1:0-2:0
 }
 ```
 

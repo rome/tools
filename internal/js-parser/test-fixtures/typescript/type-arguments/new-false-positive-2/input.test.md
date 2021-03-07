@@ -8,62 +8,56 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	loc: SourceLocation typescript/type-arguments/new-false-positive-2/input.ts 1:0-2:0
-	path: UIDPath<typescript/type-arguments/new-false-positive-2/input.ts>
-	syntax: Array ["ts"]
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "In TypeScript, a new expression with type arguments must have parens"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:8
-				path: UIDPath<typescript/type-arguments/new-false-positive-2/input.ts>
-				start: Position 1:8
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation typescript/type-arguments/new-false-positive-2/input.ts 1:0-1:9
 			expression: JSNewExpression {
-				arguments: Array []
-				optional: undefined
-				loc: SourceLocation typescript/type-arguments/new-false-positive-2/input.ts 1:0-1:8
+				arguments: []
 				callee: JSReferenceIdentifier {
 					name: "A"
 					loc: SourceLocation typescript/type-arguments/new-false-positive-2/input.ts 1:4-1:5 (A)
 				}
 				typeArguments: TSTypeParameterInstantiation {
-					loc: SourceLocation typescript/type-arguments/new-false-positive-2/input.ts 1:5-1:8
-					params: Array [
+					params: [
 						TSTypeReference {
-							typeParameters: undefined
-							loc: SourceLocation typescript/type-arguments/new-false-positive-2/input.ts 1:6-1:7
 							typeName: JSReferenceIdentifier {
 								name: "T"
 								loc: SourceLocation typescript/type-arguments/new-false-positive-2/input.ts 1:6-1:7 (T)
 							}
+							loc: SourceLocation typescript/type-arguments/new-false-positive-2/input.ts 1:6-1:7
 						}
 					]
+					loc: SourceLocation typescript/type-arguments/new-false-positive-2/input.ts 1:5-1:8
 				}
+				loc: SourceLocation typescript/type-arguments/new-false-positive-2/input.ts 1:0-1:8
+			}
+			loc: SourceLocation typescript/type-arguments/new-false-positive-2/input.ts 1:0-1:9
+		}
+	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "In TypeScript, a new expression with type arguments must have parens"}
+			}
+			location: {
+				language: "js"
+				path: UIDPath<typescript/type-arguments/new-false-positive-2/input.ts>
+				end: Position 1:8
+				start: Position 1:8
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: ["ts"]
+	path: UIDPath<typescript/type-arguments/new-false-positive-2/input.ts>
+	loc: SourceLocation typescript/type-arguments/new-false-positive-2/input.ts 1:0-2:0
 }
 ```
 

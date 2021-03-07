@@ -8,51 +8,43 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2015/uncategorised/112/input.js 1:0-1:39
-	path: UIDPath<es2015/uncategorised/112/input.js>
-	body: Array [
+	body: [
 		JSClassDeclaration {
 			id: JSBindingIdentifier {
 				name: "A"
 				loc: SourceLocation es2015/uncategorised/112/input.js 1:6-1:7 (A)
 			}
-			loc: SourceLocation es2015/uncategorised/112/input.js 1:0-1:39
 			meta: JSClassHead {
-				body: Array []
-				implements: undefined
-				superTypeParameters: undefined
-				typeParameters: undefined
-				loc: SourceLocation es2015/uncategorised/112/input.js 1:0-1:39
+				body: []
 				superClass: JSClassExpression {
 					id: JSBindingIdentifier {
 						name: "B"
 						loc: SourceLocation es2015/uncategorised/112/input.js 1:22-1:23 (B)
 					}
-					loc: SourceLocation es2015/uncategorised/112/input.js 1:16-1:36
 					meta: JSClassHead {
-						body: Array []
-						implements: undefined
-						superTypeParameters: undefined
-						typeParameters: undefined
-						loc: SourceLocation es2015/uncategorised/112/input.js 1:16-1:36
+						body: []
 						superClass: JSReferenceIdentifier {
 							name: "C"
 							loc: SourceLocation es2015/uncategorised/112/input.js 1:32-1:33 (C)
 						}
+						loc: SourceLocation es2015/uncategorised/112/input.js 1:16-1:36
 					}
+					loc: SourceLocation es2015/uncategorised/112/input.js 1:16-1:36
 				}
+				loc: SourceLocation es2015/uncategorised/112/input.js 1:0-1:39
 			}
+			loc: SourceLocation es2015/uncategorised/112/input.js 1:0-1:39
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2015/uncategorised/112/input.js>
+	loc: SourceLocation es2015/uncategorised/112/input.js 1:0-1:39
 }
 ```
 

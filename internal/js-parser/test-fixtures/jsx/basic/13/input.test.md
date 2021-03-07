@@ -8,44 +8,23 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	loc: SourceLocation jsx/basic/13/input.jsx 1:0-1:57
-	path: UIDPath<jsx/basic/13/input.jsx>
-	syntax: Array ["jsx"]
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation jsx/basic/13/input.jsx 1:0-1:57
 			expression: JSXElement {
-				name: JSXReferenceIdentifier {
-					name: "LeftRight"
-					loc: SourceLocation jsx/basic/13/input.jsx 1:1-1:10
-				}
-				children: Array []
-				selfClosing: true
-				typeArguments: undefined
-				loc: SourceLocation jsx/basic/13/input.jsx 1:0-1:57
-				attributes: Array [
+				attributes: [
 					JSXAttribute {
 						name: JSXIdentifier {
 							name: "left"
 							loc: SourceLocation jsx/basic/13/input.jsx 1:11-1:15
 						}
 						value: JSXElement {
+							attributes: []
+							children: []
+							selfClosing: true
 							name: JSXIdentifier {
 								name: "a"
 								loc: SourceLocation jsx/basic/13/input.jsx 1:17-1:18
 							}
-							attributes: Array []
-							children: Array []
-							selfClosing: true
-							typeArguments: undefined
 							loc: SourceLocation jsx/basic/13/input.jsx 1:16-1:21
 						}
 						loc: SourceLocation jsx/basic/13/input.jsx 1:11-1:21
@@ -56,27 +35,43 @@ JSRoot {
 							loc: SourceLocation jsx/basic/13/input.jsx 1:22-1:27
 						}
 						value: JSXElement {
-							name: JSXIdentifier {
-								name: "b"
-								loc: SourceLocation jsx/basic/13/input.jsx 1:29-1:30
-							}
-							attributes: Array []
-							selfClosing: false
-							typeArguments: undefined
-							loc: SourceLocation jsx/basic/13/input.jsx 1:28-1:54
-							children: Array [
+							attributes: []
+							children: [
 								JSXText {
 									value: "monkeys /> gorillas"
 									loc: SourceLocation jsx/basic/13/input.jsx 1:31-1:50
 								}
 							]
+							selfClosing: false
+							name: JSXIdentifier {
+								name: "b"
+								loc: SourceLocation jsx/basic/13/input.jsx 1:29-1:30
+							}
+							loc: SourceLocation jsx/basic/13/input.jsx 1:28-1:54
 						}
 						loc: SourceLocation jsx/basic/13/input.jsx 1:22-1:54
 					}
 				]
+				children: []
+				selfClosing: true
+				name: JSXReferenceIdentifier {
+					name: "LeftRight"
+					loc: SourceLocation jsx/basic/13/input.jsx 1:1-1:10
+				}
+				loc: SourceLocation jsx/basic/13/input.jsx 1:0-1:57
 			}
+			loc: SourceLocation jsx/basic/13/input.jsx 1:0-1:57
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: ["jsx"]
+	path: UIDPath<jsx/basic/13/input.jsx>
+	loc: SourceLocation jsx/basic/13/input.jsx 1:0-1:57
 }
 ```
 

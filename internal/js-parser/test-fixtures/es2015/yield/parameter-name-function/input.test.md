@@ -8,52 +8,44 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2015/yield/parameter-name-function/input.js 1:0-1:21
-	path: UIDPath<es2015/yield/parameter-name-function/input.js>
-	body: Array [
+	body: [
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "fn"
 				loc: SourceLocation es2015/yield/parameter-name-function/input.js 1:9-1:11 (fn)
 			}
-			loc: SourceLocation es2015/yield/parameter-name-function/input.js 1:0-1:21
 			body: JSBlockStatement {
-				body: Array []
-				directives: Array []
+				body: []
+				directives: []
 				loc: SourceLocation es2015/yield/parameter-name-function/input.js 1:19-1:21
 			}
 			head: JSFunctionHead {
 				async: false
 				generator: false
 				hasHoistedVars: false
-				rest: undefined
-				returnType: undefined
-				thisType: undefined
-				typeParameters: undefined
-				loc: SourceLocation es2015/yield/parameter-name-function/input.js 1:11-1:18
-				params: Array [
+				params: [
 					JSBindingIdentifier {
 						name: "yield"
-						loc: SourceLocation es2015/yield/parameter-name-function/input.js 1:12-1:17 (yield)
 						meta: JSPatternMeta {
-							optional: undefined
-							typeAnnotation: undefined
 							loc: SourceLocation es2015/yield/parameter-name-function/input.js 1:12-1:17
 						}
+						loc: SourceLocation es2015/yield/parameter-name-function/input.js 1:12-1:17 (yield)
 					}
 				]
+				loc: SourceLocation es2015/yield/parameter-name-function/input.js 1:11-1:18
 			}
+			loc: SourceLocation es2015/yield/parameter-name-function/input.js 1:0-1:21
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2015/yield/parameter-name-function/input.js>
+	loc: SourceLocation es2015/yield/parameter-name-function/input.js 1:0-1:21
 }
 ```
 

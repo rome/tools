@@ -8,53 +8,43 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: true
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2016/exponentiation-operator/14/input.js 1:0-2:0
-	path: UIDPath<es2016/exponentiation-operator/14/input.js>
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation es2016/exponentiation-operator/14/input.js 1:0-1:8
 			expression: JSAssignmentExpression {
 				operator: "="
-				loc: SourceLocation es2016/exponentiation-operator/14/input.js 1:0-1:7
 				left: JSAssignmentIdentifier {
 					name: "INVALID_PLACEHOLDER"
 					loc: SourceLocation es2016/exponentiation-operator/14/input.js 1:4-1:4
 				}
 				right: JSNumericLiteral {
 					value: 1
-					format: undefined
 					loc: SourceLocation es2016/exponentiation-operator/14/input.js 1:6-1:7
 				}
+				loc: SourceLocation es2016/exponentiation-operator/14/input.js 1:0-1:7
 			}
+			loc: SourceLocation es2016/exponentiation-operator/14/input.js 1:0-1:8
 		}
 	]
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Unknown start to an statement expression"}
-			}
-			location: Object {
-				integrity: undefined
+	comments: []
+	corrupt: true
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {advice: [], category: ["parse"], categoryValue: "js", message: [RAW_MARKUP {value: "Unknown start to an "}, "statement expression"]}
+			location: {
 				language: "js"
-				sourceText: undefined
-				end: Position 1:3
 				path: UIDPath<es2016/exponentiation-operator/14/input.js>
+				end: Position 1:3
 				start: Position 1:3
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2016/exponentiation-operator/14/input.js>
+	loc: SourceLocation es2016/exponentiation-operator/14/input.js 1:0-2:0
 }
 ```
 

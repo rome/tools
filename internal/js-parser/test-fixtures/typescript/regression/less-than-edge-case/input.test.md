@@ -8,81 +8,67 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	loc: SourceLocation typescript/regression/less-than-edge-case/input.tsx 1:0-3:1
-	path: UIDPath<typescript/regression/less-than-edge-case/input.tsx>
-	syntax: Array [
-		"ts"
-		"jsx"
-	]
-	body: Array [
+	body: [
 		JSForStatement {
-			loc: SourceLocation typescript/regression/less-than-edge-case/input.tsx 1:0-3:1
-			update: JSUpdateExpression {
-				operator: "++"
-				prefix: false
-				loc: SourceLocation typescript/regression/less-than-edge-case/input.tsx 1:40-1:43
-				argument: JSReferenceIdentifier {
-					name: "i"
-					loc: SourceLocation typescript/regression/less-than-edge-case/input.tsx 1:40-1:41 (i)
-				}
-			}
-			init: JSVariableDeclaration {
-				kind: "let"
-				loc: SourceLocation typescript/regression/less-than-edge-case/input.tsx 1:5-1:14
-				declarations: Array [
-					JSVariableDeclarator {
-						id: JSBindingIdentifier {
-							name: "i"
-							loc: SourceLocation typescript/regression/less-than-edge-case/input.tsx 1:9-1:10 (i)
-						}
-						loc: SourceLocation typescript/regression/less-than-edge-case/input.tsx 1:9-1:14
-						init: JSNumericLiteral {
-							value: 0
-							format: undefined
-							loc: SourceLocation typescript/regression/less-than-edge-case/input.tsx 1:13-1:14
-						}
-					}
-				]
-			}
 			body: JSBlockStatement {
-				directives: Array []
-				loc: SourceLocation typescript/regression/less-than-edge-case/input.tsx 1:45-3:1
-				body: Array [
+				body: [
 					JSExpressionStatement {
-						loc: SourceLocation typescript/regression/less-than-edge-case/input.tsx 2:4-2:9
 						expression: JSCallExpression {
-							loc: SourceLocation typescript/regression/less-than-edge-case/input.tsx 2:4-2:8
-							callee: JSReferenceIdentifier {
-								name: "x"
-								loc: SourceLocation typescript/regression/less-than-edge-case/input.tsx 2:4-2:5 (x)
-							}
-							arguments: Array [
+							arguments: [
 								JSReferenceIdentifier {
 									name: "i"
 									loc: SourceLocation typescript/regression/less-than-edge-case/input.tsx 2:6-2:7 (i)
 								}
 							]
+							callee: JSReferenceIdentifier {
+								name: "x"
+								loc: SourceLocation typescript/regression/less-than-edge-case/input.tsx 2:4-2:5 (x)
+							}
+							loc: SourceLocation typescript/regression/less-than-edge-case/input.tsx 2:4-2:8
 						}
+						loc: SourceLocation typescript/regression/less-than-edge-case/input.tsx 2:4-2:9
 					}
 				]
+				directives: []
+				loc: SourceLocation typescript/regression/less-than-edge-case/input.tsx 1:45-3:1
+			}
+			init: JSVariableDeclaration {
+				kind: "let"
+				declarations: [
+					JSVariableDeclarator {
+						id: JSBindingIdentifier {
+							name: "i"
+							loc: SourceLocation typescript/regression/less-than-edge-case/input.tsx 1:9-1:10 (i)
+						}
+						init: JSNumericLiteral {
+							value: 0
+							loc: SourceLocation typescript/regression/less-than-edge-case/input.tsx 1:13-1:14
+						}
+						loc: SourceLocation typescript/regression/less-than-edge-case/input.tsx 1:9-1:14
+					}
+				]
+				loc: SourceLocation typescript/regression/less-than-edge-case/input.tsx 1:5-1:14
 			}
 			test: JSBinaryExpression {
 				operator: "<"
-				loc: SourceLocation typescript/regression/less-than-edge-case/input.tsx 1:16-1:38
 				left: JSReferenceIdentifier {
 					name: "i"
 					loc: SourceLocation typescript/regression/less-than-edge-case/input.tsx 1:16-1:17 (i)
 				}
 				right: JSMemberExpression {
-					loc: SourceLocation typescript/regression/less-than-edge-case/input.tsx 1:20-1:38
+					object: JSCallExpression {
+						arguments: [
+							JSStringLiteral {
+								value: "foo"
+								loc: SourceLocation typescript/regression/less-than-edge-case/input.tsx 1:28-1:33
+							}
+						]
+						callee: JSReferenceIdentifier {
+							name: "require"
+							loc: SourceLocation typescript/regression/less-than-edge-case/input.tsx 1:20-1:27 (require)
+						}
+						loc: SourceLocation typescript/regression/less-than-edge-case/input.tsx 1:20-1:34
+					}
 					property: JSStaticMemberProperty {
 						value: JSIdentifier {
 							name: "bar"
@@ -90,23 +76,31 @@ JSRoot {
 						}
 						loc: SourceLocation typescript/regression/less-than-edge-case/input.tsx 1:35-1:38 (bar)
 					}
-					object: JSCallExpression {
-						loc: SourceLocation typescript/regression/less-than-edge-case/input.tsx 1:20-1:34
-						callee: JSReferenceIdentifier {
-							name: "require"
-							loc: SourceLocation typescript/regression/less-than-edge-case/input.tsx 1:20-1:27 (require)
-						}
-						arguments: Array [
-							JSStringLiteral {
-								value: "foo"
-								loc: SourceLocation typescript/regression/less-than-edge-case/input.tsx 1:28-1:33
-							}
-						]
-					}
+					loc: SourceLocation typescript/regression/less-than-edge-case/input.tsx 1:20-1:38
 				}
+				loc: SourceLocation typescript/regression/less-than-edge-case/input.tsx 1:16-1:38
 			}
+			update: JSUpdateExpression {
+				operator: "++"
+				prefix: false
+				argument: JSReferenceIdentifier {
+					name: "i"
+					loc: SourceLocation typescript/regression/less-than-edge-case/input.tsx 1:40-1:41 (i)
+				}
+				loc: SourceLocation typescript/regression/less-than-edge-case/input.tsx 1:40-1:43
+			}
+			loc: SourceLocation typescript/regression/less-than-edge-case/input.tsx 1:0-3:1
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: ["ts", "jsx"]
+	path: UIDPath<typescript/regression/less-than-edge-case/input.tsx>
+	loc: SourceLocation typescript/regression/less-than-edge-case/input.tsx 1:0-3:1
 }
 ```
 

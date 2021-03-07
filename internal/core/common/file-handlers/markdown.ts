@@ -4,6 +4,7 @@ import {parseMarkdown} from "@internal/markdown-parser";
 export const markdownHandler: PartialExtensionHandler = {
 	language: "markdown",
 	hasTabs: true,
+	mime: "text/markdown",
 	capabilities: {
 		lint: false,
 		format: false,

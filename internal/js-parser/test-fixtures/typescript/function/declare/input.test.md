@@ -8,170 +8,159 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: true
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	loc: SourceLocation typescript/function/declare/input.ts 1:0-3:0
-	path: UIDPath<typescript/function/declare/input.ts>
-	syntax: Array ["ts"]
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:16
-				path: UIDPath<typescript/function/declare/input.ts>
-				start: Position 1:17
-			}
-			description: Object {
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Unexpected character <emphasis>f</emphasis>"}
-				advice: Array [
-					log {
-						category: "info"
-						text: RAW_MARKUP {value: "Expected the opening function params character <emphasis>(</emphasis>"}
-					}
-				]
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSFunctionDeclaration {
+			declare: true
 			id: JSBindingIdentifier {
 				name: "function"
 				loc: SourceLocation typescript/function/declare/input.ts 1:8-1:16 (function)
 			}
-			declare: true
-			loc: SourceLocation typescript/function/declare/input.ts 1:0-2:27
-			head: JSFunctionHead {
-				async: false
-				generator: false
-				hasHoistedVars: false
-				rest: undefined
-				returnType: undefined
-				thisType: undefined
-				typeParameters: undefined
-				loc: SourceLocation typescript/function/declare/input.ts 1:17-1:18
-				params: Array [
-					JSBindingIdentifier {
-						name: "f"
-						loc: SourceLocation typescript/function/declare/input.ts 1:17-1:18 (f)
-						meta: JSPatternMeta {
-							optional: undefined
-							typeAnnotation: undefined
-							loc: SourceLocation typescript/function/declare/input.ts 1:17-1:18
-						}
-					}
-				]
-			}
 			body: JSBlockStatement {
-				directives: Array []
-				loc: SourceLocation typescript/function/declare/input.ts 1:18-2:27
-				body: Array [
+				body: [
 					JSExpressionStatement {
-						loc: SourceLocation typescript/function/declare/input.ts 1:18-1:20
 						expression: JSReferenceIdentifier {
 							name: "INVALID_PLACEHOLDER"
 							loc: SourceLocation typescript/function/declare/input.ts 1:19-1:19
 						}
+						loc: SourceLocation typescript/function/declare/input.ts 1:18-1:20
 					}
 					JSExpressionStatement {
-						loc: SourceLocation typescript/function/declare/input.ts 1:20-1:21
 						expression: JSReferenceIdentifier {
 							name: "INVALID_PLACEHOLDER"
 							loc: SourceLocation typescript/function/declare/input.ts 1:20-1:21
 						}
+						loc: SourceLocation typescript/function/declare/input.ts 1:20-1:21
 					}
 					JSExpressionStatement {
-						loc: SourceLocation typescript/function/declare/input.ts 1:22-1:27
 						expression: JSUnaryExpression {
 							operator: "void"
 							prefix: true
-							loc: SourceLocation typescript/function/declare/input.ts 1:22-1:27
 							argument: JSReferenceIdentifier {
 								name: "INVALID_PLACEHOLDER"
 								loc: SourceLocation typescript/function/declare/input.ts 1:26-1:27
 							}
+							loc: SourceLocation typescript/function/declare/input.ts 1:22-1:27
 						}
+						loc: SourceLocation typescript/function/declare/input.ts 1:22-1:27
 					}
 					JSFunctionDeclaration {
+						declare: true
 						id: JSBindingIdentifier {
 							name: "function"
 							loc: SourceLocation typescript/function/declare/input.ts 2:8-2:16 (function)
 						}
-						declare: true
-						loc: SourceLocation typescript/function/declare/input.ts 2:0-2:27
-						head: JSFunctionHead {
-							async: false
-							generator: false
-							hasHoistedVars: false
-							rest: undefined
-							returnType: undefined
-							thisType: undefined
-							typeParameters: undefined
-							loc: SourceLocation typescript/function/declare/input.ts 2:17-2:18
-							params: Array [
-								JSBindingIdentifier {
-									name: "f"
-									loc: SourceLocation typescript/function/declare/input.ts 2:17-2:18 (f)
-									meta: JSPatternMeta {
-										optional: undefined
-										typeAnnotation: undefined
-										loc: SourceLocation typescript/function/declare/input.ts 2:17-2:18
-									}
-								}
-							]
-						}
 						body: JSBlockStatement {
-							directives: Array []
-							loc: SourceLocation typescript/function/declare/input.ts 2:18-2:27
-							body: Array [
+							body: [
 								JSExpressionStatement {
-									loc: SourceLocation typescript/function/declare/input.ts 2:18-2:23
 									expression: TSTypeAssertion {
-										loc: SourceLocation typescript/function/declare/input.ts 2:18-2:23
 										expression: JSReferenceIdentifier {
 											name: "INVALID_PLACEHOLDER"
 											loc: SourceLocation typescript/function/declare/input.ts 2:22-2:22
 										}
 										typeAnnotation: TSTypeReference {
-											typeParameters: undefined
-											loc: SourceLocation typescript/function/declare/input.ts 2:19-2:20
 											typeName: JSReferenceIdentifier {
 												name: "T"
 												loc: SourceLocation typescript/function/declare/input.ts 2:19-2:20 (T)
 											}
+											loc: SourceLocation typescript/function/declare/input.ts 2:19-2:20
 										}
+										loc: SourceLocation typescript/function/declare/input.ts 2:18-2:23
 									}
+									loc: SourceLocation typescript/function/declare/input.ts 2:18-2:23
 								}
 								JSExpressionStatement {
-									loc: SourceLocation typescript/function/declare/input.ts 2:23-2:24
 									expression: JSReferenceIdentifier {
 										name: "INVALID_PLACEHOLDER"
 										loc: SourceLocation typescript/function/declare/input.ts 2:23-2:24
 									}
+									loc: SourceLocation typescript/function/declare/input.ts 2:23-2:24
 								}
 								JSExpressionStatement {
-									loc: SourceLocation typescript/function/declare/input.ts 2:25-2:27
 									expression: JSReferenceIdentifier {
 										name: "T"
 										loc: SourceLocation typescript/function/declare/input.ts 2:25-2:26 (T)
 									}
+									loc: SourceLocation typescript/function/declare/input.ts 2:25-2:27
 								}
 							]
+							directives: []
+							loc: SourceLocation typescript/function/declare/input.ts 2:18-2:27
 						}
+						head: JSFunctionHead {
+							async: false
+							generator: false
+							hasHoistedVars: false
+							params: [
+								JSBindingIdentifier {
+									name: "f"
+									meta: JSPatternMeta {
+										loc: SourceLocation typescript/function/declare/input.ts 2:17-2:18
+									}
+									loc: SourceLocation typescript/function/declare/input.ts 2:17-2:18 (f)
+								}
+							]
+							loc: SourceLocation typescript/function/declare/input.ts 2:17-2:18
+						}
+						loc: SourceLocation typescript/function/declare/input.ts 2:0-2:27
 					}
 				]
+				directives: []
+				loc: SourceLocation typescript/function/declare/input.ts 1:18-2:27
+			}
+			head: JSFunctionHead {
+				async: false
+				generator: false
+				hasHoistedVars: false
+				params: [
+					JSBindingIdentifier {
+						name: "f"
+						meta: JSPatternMeta {
+							loc: SourceLocation typescript/function/declare/input.ts 1:17-1:18
+						}
+						loc: SourceLocation typescript/function/declare/input.ts 1:17-1:18 (f)
+					}
+				]
+				loc: SourceLocation typescript/function/declare/input.ts 1:17-1:18
+			}
+			loc: SourceLocation typescript/function/declare/input.ts 1:0-2:27
+		}
+	]
+	comments: []
+	corrupt: true
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {
+				advice: [
+					log {
+						category: "info"
+						text: [
+							RAW_MARKUP {value: "Expected the opening "}
+							"function params"
+							RAW_MARKUP {value: " character <emphasis>"}
+							"("
+							RAW_MARKUP {value: "</emphasis>"}
+						]
+					}
+				]
+				category: ["parse"]
+				categoryValue: "js"
+				message: [RAW_MARKUP {value: "Unexpected character <emphasis>"}, "f", RAW_MARKUP {value: "</emphasis>"}]
+			}
+			location: {
+				language: "js"
+				path: UIDPath<typescript/function/declare/input.ts>
+				end: Position 1:16
+				start: Position 1:17
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: ["ts"]
+	path: UIDPath<typescript/function/declare/input.ts>
+	loc: SourceLocation typescript/function/declare/input.ts 1:0-3:0
 }
 ```
 

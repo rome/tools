@@ -8,42 +8,41 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation esprima/es2015-for-of/for-of-with-let/input.js 1:0-2:0
-	path: UIDPath<esprima/es2015-for-of/for-of-with-let/input.js>
-	body: Array [
+	body: [
 		JSForOfStatement {
 			await: false
-			body: JSEmptyStatement {loc: SourceLocation esprima/es2015-for-of/for-of-with-let/input.js 1:19-1:20}
-			loc: SourceLocation esprima/es2015-for-of/for-of-with-let/input.js 1:0-1:20
-			right: JSReferenceIdentifier {
-				name: "list"
-				loc: SourceLocation esprima/es2015-for-of/for-of-with-let/input.js 1:14-1:18 (list)
+			body: JSEmptyStatement {
+				loc: SourceLocation esprima/es2015-for-of/for-of-with-let/input.js 1:19-1:20
 			}
 			left: JSVariableDeclaration {
 				kind: "let"
-				loc: SourceLocation esprima/es2015-for-of/for-of-with-let/input.js 1:5-1:10
-				declarations: Array [
+				declarations: [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "z"
 							loc: SourceLocation esprima/es2015-for-of/for-of-with-let/input.js 1:9-1:10 (z)
 						}
-						init: undefined
 						loc: SourceLocation esprima/es2015-for-of/for-of-with-let/input.js 1:9-1:10
 					}
 				]
+				loc: SourceLocation esprima/es2015-for-of/for-of-with-let/input.js 1:5-1:10
 			}
+			right: JSReferenceIdentifier {
+				name: "list"
+				loc: SourceLocation esprima/es2015-for-of/for-of-with-let/input.js 1:14-1:18 (list)
+			}
+			loc: SourceLocation esprima/es2015-for-of/for-of-with-let/input.js 1:0-1:20
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<esprima/es2015-for-of/for-of-with-let/input.js>
+	loc: SourceLocation esprima/es2015-for-of/for-of-with-let/input.js 1:0-2:0
 }
 ```
 

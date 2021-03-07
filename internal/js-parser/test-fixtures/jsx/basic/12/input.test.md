@@ -8,39 +8,19 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	loc: SourceLocation jsx/basic/12/input.jsx 1:0-1:41
-	path: UIDPath<jsx/basic/12/input.jsx>
-	syntax: Array ["jsx"]
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation jsx/basic/12/input.jsx 1:0-1:41
 			expression: JSXElement {
-				name: JSXIdentifier {
-					name: "div"
-					loc: SourceLocation jsx/basic/12/input.jsx 1:1-1:4
-				}
-				attributes: Array []
-				selfClosing: false
-				typeArguments: undefined
-				loc: SourceLocation jsx/basic/12/input.jsx 1:0-1:41
-				children: Array [
+				attributes: []
+				children: [
 					JSXElement {
+						attributes: []
+						children: []
+						selfClosing: true
 						name: JSXIdentifier {
 							name: "br"
 							loc: SourceLocation jsx/basic/12/input.jsx 1:6-1:8
 						}
-						attributes: Array []
-						children: Array []
-						selfClosing: true
-						typeArguments: undefined
 						loc: SourceLocation jsx/basic/12/input.jsx 1:5-1:11
 					}
 					JSXText {
@@ -48,9 +28,25 @@ JSRoot {
 						loc: SourceLocation jsx/basic/12/input.jsx 1:11-1:35
 					}
 				]
+				selfClosing: false
+				name: JSXIdentifier {
+					name: "div"
+					loc: SourceLocation jsx/basic/12/input.jsx 1:1-1:4
+				}
+				loc: SourceLocation jsx/basic/12/input.jsx 1:0-1:41
 			}
+			loc: SourceLocation jsx/basic/12/input.jsx 1:0-1:41
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: ["jsx"]
+	path: UIDPath<jsx/basic/12/input.jsx>
+	loc: SourceLocation jsx/basic/12/input.jsx 1:0-1:41
 }
 ```
 

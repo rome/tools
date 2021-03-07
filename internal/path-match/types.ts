@@ -60,6 +60,4 @@ export type PathPatternNode = ComplexNode<
 
 export type CommentNode = ValueNode<"Comment", string>;
 
-export type PathPatterns = PathPattern[];
-
 export type PathPattern = PathPatternNode | CommentNode;

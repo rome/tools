@@ -65,6 +65,9 @@ const TS_VARIABLES_SET = new Set([
 	"BufferEncoding",
 	"Console",
 	"Thenable",
+	"ArrayBufferLike",
+	"BufferSource",
+	"RequestInit",
 ]);
 
 export default createVisitor({

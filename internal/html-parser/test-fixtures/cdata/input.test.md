@@ -8,29 +8,28 @@
 
 ```javascript
 HTMLRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	integrity: undefined
-	loc: SourceLocation cdata/input.html 1:0-6:7
-	path: UIDPath<cdata/input.html>
-	body: Array [
+	body: [
 		HTMLElement {
-			name: HTMLIdentifier {
-				name: "math"
-				loc: SourceLocation cdata/input.html 1:1-1:5
-			}
-			attributes: Array []
-			selfClosing: false
-			loc: SourceLocation cdata/input.html 1:0-6:7
-			children: Array [
+			attributes: []
+			children: [
 				HTMLCdataTag {
 					value: "x>y"
 					loc: SourceLocation cdata/input.html 3:1-5:4
 				}
 			]
+			selfClosing: false
+			name: HTMLIdentifier {
+				name: "math"
+				loc: SourceLocation cdata/input.html 1:1-1:5
+			}
+			loc: SourceLocation cdata/input.html 1:0-6:7
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	path: UIDPath<cdata/input.html>
+	loc: SourceLocation cdata/input.html 1:0-6:7
 }
 ```
 

@@ -8,50 +8,45 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	syntax: Array []
-	loc: SourceLocation es2015/uncategorised/301/input.js 1:0-1:32
-	path: UIDPath<es2015/uncategorised/301/input.js>
-	body: Array [
+	body: [
 		JSImportDeclaration {
-			importKind: undefined
-			namedSpecifiers: Array []
-			loc: SourceLocation es2015/uncategorised/301/input.js 1:0-1:32
-			source: JSStringLiteral {
-				value: "baz"
-				loc: SourceLocation es2015/uncategorised/301/input.js 1:26-1:31
-			}
+			namedSpecifiers: []
 			defaultSpecifier: JSImportDefaultSpecifier {
-				loc: SourceLocation es2015/uncategorised/301/input.js 1:0-1:10
 				local: JSImportSpecifierLocal {
 					name: JSBindingIdentifier {
 						name: "foo"
 						loc: SourceLocation es2015/uncategorised/301/input.js 1:7-1:10 (foo)
 					}
-					importKind: undefined
 					loc: SourceLocation es2015/uncategorised/301/input.js 1:7-1:10
 				}
+				loc: SourceLocation es2015/uncategorised/301/input.js 1:0-1:10
 			}
 			namespaceSpecifier: JSImportNamespaceSpecifier {
-				loc: SourceLocation es2015/uncategorised/301/input.js 1:0-1:20
 				local: JSImportSpecifierLocal {
 					name: JSBindingIdentifier {
 						name: "bar"
 						loc: SourceLocation es2015/uncategorised/301/input.js 1:17-1:20 (bar)
 					}
-					importKind: undefined
 					loc: SourceLocation es2015/uncategorised/301/input.js 1:17-1:20
 				}
+				loc: SourceLocation es2015/uncategorised/301/input.js 1:0-1:20
 			}
+			source: JSStringLiteral {
+				value: "baz"
+				loc: SourceLocation es2015/uncategorised/301/input.js 1:26-1:31
+			}
+			loc: SourceLocation es2015/uncategorised/301/input.js 1:0-1:32
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: []
+	path: UIDPath<es2015/uncategorised/301/input.js>
+	loc: SourceLocation es2015/uncategorised/301/input.js 1:0-1:32
 }
 ```
 

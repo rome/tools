@@ -8,50 +8,27 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2020/optional-chaining/separated-chaining/input.js 1:0-4:0
-	path: UIDPath<es2020/optional-chaining/separated-chaining/input.js>
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation es2020/optional-chaining/separated-chaining/input.js 1:0-1:13
 			expression: JSMemberExpression {
-				loc: SourceLocation es2020/optional-chaining/separated-chaining/input.js 1:0-1:13
-				property: JSStaticMemberProperty {
-					value: JSIdentifier {
-						name: "f"
-						loc: SourceLocation es2020/optional-chaining/separated-chaining/input.js 1:12-1:13 (f)
-					}
-					optional: true
-					loc: SourceLocation es2020/optional-chaining/separated-chaining/input.js 1:12-1:13 (f)
-				}
 				object: JSMemberExpression {
-					loc: SourceLocation es2020/optional-chaining/separated-chaining/input.js 1:0-1:10
-					property: JSStaticMemberProperty {
-						value: JSIdentifier {
-							name: "e"
-							loc: SourceLocation es2020/optional-chaining/separated-chaining/input.js 1:9-1:10 (e)
-						}
-						loc: SourceLocation es2020/optional-chaining/separated-chaining/input.js 1:9-1:10 (e)
-					}
 					object: JSMemberExpression {
-						loc: SourceLocation es2020/optional-chaining/separated-chaining/input.js 1:0-1:8
-						property: JSStaticMemberProperty {
-							value: JSIdentifier {
-								name: "d"
-								loc: SourceLocation es2020/optional-chaining/separated-chaining/input.js 1:7-1:8 (d)
-							}
-							loc: SourceLocation es2020/optional-chaining/separated-chaining/input.js 1:7-1:8 (d)
-						}
 						object: JSMemberExpression {
-							loc: SourceLocation es2020/optional-chaining/separated-chaining/input.js 1:0-1:6
+							object: JSMemberExpression {
+								object: JSReferenceIdentifier {
+									name: "a"
+									loc: SourceLocation es2020/optional-chaining/separated-chaining/input.js 1:0-1:1 (a)
+								}
+								property: JSStaticMemberProperty {
+									optional: true
+									value: JSIdentifier {
+										name: "b"
+										loc: SourceLocation es2020/optional-chaining/separated-chaining/input.js 1:3-1:4 (b)
+									}
+									loc: SourceLocation es2020/optional-chaining/separated-chaining/input.js 1:3-1:4 (b)
+								}
+								loc: SourceLocation es2020/optional-chaining/separated-chaining/input.js 1:0-1:4
+							}
 							property: JSStaticMemberProperty {
 								value: JSIdentifier {
 									name: "c"
@@ -59,67 +36,44 @@ JSRoot {
 								}
 								loc: SourceLocation es2020/optional-chaining/separated-chaining/input.js 1:5-1:6 (c)
 							}
-							object: JSMemberExpression {
-								loc: SourceLocation es2020/optional-chaining/separated-chaining/input.js 1:0-1:4
-								object: JSReferenceIdentifier {
-									name: "a"
-									loc: SourceLocation es2020/optional-chaining/separated-chaining/input.js 1:0-1:1 (a)
-								}
-								property: JSStaticMemberProperty {
-									value: JSIdentifier {
-										name: "b"
-										loc: SourceLocation es2020/optional-chaining/separated-chaining/input.js 1:3-1:4 (b)
-									}
-									optional: true
-									loc: SourceLocation es2020/optional-chaining/separated-chaining/input.js 1:3-1:4 (b)
-								}
-							}
+							loc: SourceLocation es2020/optional-chaining/separated-chaining/input.js 1:0-1:6
 						}
-					}
-				}
-			}
-		}
-		JSExpressionStatement {
-			loc: SourceLocation es2020/optional-chaining/separated-chaining/input.js 3:0-3:12
-			expression: JSMemberExpression {
-				loc: SourceLocation es2020/optional-chaining/separated-chaining/input.js 3:0-3:12
-				property: JSStaticMemberProperty {
-					value: JSIdentifier {
-						name: "f"
-						loc: SourceLocation es2020/optional-chaining/separated-chaining/input.js 3:11-3:12 (f)
-					}
-					loc: SourceLocation es2020/optional-chaining/separated-chaining/input.js 3:11-3:12 (f)
-				}
-				object: JSMemberExpression {
-					loc: SourceLocation es2020/optional-chaining/separated-chaining/input.js 3:0-3:10
-					property: JSStaticMemberProperty {
-						value: JSIdentifier {
-							name: "e"
-							loc: SourceLocation es2020/optional-chaining/separated-chaining/input.js 3:9-3:10 (e)
-						}
-						loc: SourceLocation es2020/optional-chaining/separated-chaining/input.js 3:9-3:10 (e)
-					}
-					object: JSMemberExpression {
-						loc: SourceLocation es2020/optional-chaining/separated-chaining/input.js 3:0-3:8
 						property: JSStaticMemberProperty {
 							value: JSIdentifier {
 								name: "d"
-								loc: SourceLocation es2020/optional-chaining/separated-chaining/input.js 3:7-3:8 (d)
+								loc: SourceLocation es2020/optional-chaining/separated-chaining/input.js 1:7-1:8 (d)
 							}
-							optional: true
-							loc: SourceLocation es2020/optional-chaining/separated-chaining/input.js 3:7-3:8 (d)
+							loc: SourceLocation es2020/optional-chaining/separated-chaining/input.js 1:7-1:8 (d)
 						}
+						loc: SourceLocation es2020/optional-chaining/separated-chaining/input.js 1:0-1:8
+					}
+					property: JSStaticMemberProperty {
+						value: JSIdentifier {
+							name: "e"
+							loc: SourceLocation es2020/optional-chaining/separated-chaining/input.js 1:9-1:10 (e)
+						}
+						loc: SourceLocation es2020/optional-chaining/separated-chaining/input.js 1:9-1:10 (e)
+					}
+					loc: SourceLocation es2020/optional-chaining/separated-chaining/input.js 1:0-1:10
+				}
+				property: JSStaticMemberProperty {
+					optional: true
+					value: JSIdentifier {
+						name: "f"
+						loc: SourceLocation es2020/optional-chaining/separated-chaining/input.js 1:12-1:13 (f)
+					}
+					loc: SourceLocation es2020/optional-chaining/separated-chaining/input.js 1:12-1:13 (f)
+				}
+				loc: SourceLocation es2020/optional-chaining/separated-chaining/input.js 1:0-1:13
+			}
+			loc: SourceLocation es2020/optional-chaining/separated-chaining/input.js 1:0-1:13
+		}
+		JSExpressionStatement {
+			expression: JSMemberExpression {
+				object: JSMemberExpression {
+					object: JSMemberExpression {
 						object: JSMemberExpression {
-							loc: SourceLocation es2020/optional-chaining/separated-chaining/input.js 3:0-3:5
-							property: JSStaticMemberProperty {
-								value: JSIdentifier {
-									name: "c"
-									loc: SourceLocation es2020/optional-chaining/separated-chaining/input.js 3:4-3:5 (c)
-								}
-								loc: SourceLocation es2020/optional-chaining/separated-chaining/input.js 3:4-3:5 (c)
-							}
 							object: JSMemberExpression {
-								loc: SourceLocation es2020/optional-chaining/separated-chaining/input.js 3:0-3:3
 								object: JSReferenceIdentifier {
 									name: "a"
 									loc: SourceLocation es2020/optional-chaining/separated-chaining/input.js 3:0-3:1 (a)
@@ -131,13 +85,57 @@ JSRoot {
 									}
 									loc: SourceLocation es2020/optional-chaining/separated-chaining/input.js 3:2-3:3 (b)
 								}
+								loc: SourceLocation es2020/optional-chaining/separated-chaining/input.js 3:0-3:3
 							}
+							property: JSStaticMemberProperty {
+								value: JSIdentifier {
+									name: "c"
+									loc: SourceLocation es2020/optional-chaining/separated-chaining/input.js 3:4-3:5 (c)
+								}
+								loc: SourceLocation es2020/optional-chaining/separated-chaining/input.js 3:4-3:5 (c)
+							}
+							loc: SourceLocation es2020/optional-chaining/separated-chaining/input.js 3:0-3:5
 						}
+						property: JSStaticMemberProperty {
+							optional: true
+							value: JSIdentifier {
+								name: "d"
+								loc: SourceLocation es2020/optional-chaining/separated-chaining/input.js 3:7-3:8 (d)
+							}
+							loc: SourceLocation es2020/optional-chaining/separated-chaining/input.js 3:7-3:8 (d)
+						}
+						loc: SourceLocation es2020/optional-chaining/separated-chaining/input.js 3:0-3:8
 					}
+					property: JSStaticMemberProperty {
+						value: JSIdentifier {
+							name: "e"
+							loc: SourceLocation es2020/optional-chaining/separated-chaining/input.js 3:9-3:10 (e)
+						}
+						loc: SourceLocation es2020/optional-chaining/separated-chaining/input.js 3:9-3:10 (e)
+					}
+					loc: SourceLocation es2020/optional-chaining/separated-chaining/input.js 3:0-3:10
 				}
+				property: JSStaticMemberProperty {
+					value: JSIdentifier {
+						name: "f"
+						loc: SourceLocation es2020/optional-chaining/separated-chaining/input.js 3:11-3:12 (f)
+					}
+					loc: SourceLocation es2020/optional-chaining/separated-chaining/input.js 3:11-3:12 (f)
+				}
+				loc: SourceLocation es2020/optional-chaining/separated-chaining/input.js 3:0-3:12
 			}
+			loc: SourceLocation es2020/optional-chaining/separated-chaining/input.js 3:0-3:12
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2020/optional-chaining/separated-chaining/input.js>
+	loc: SourceLocation es2020/optional-chaining/separated-chaining/input.js 1:0-4:0
 }
 ```
 

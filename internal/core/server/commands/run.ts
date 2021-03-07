@@ -45,7 +45,7 @@ export default createServerCommand({
 				type: "executeCode",
 				args,
 				path,
-				code: entry.js.content(),
+				code: await entry.js.content(),
 				map: entry.sourceMap.map.serialize(),
 			};
 		}

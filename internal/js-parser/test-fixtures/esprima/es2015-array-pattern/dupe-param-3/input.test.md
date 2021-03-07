@@ -8,94 +8,26 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation esprima/es2015-array-pattern/dupe-param-3/input.js 1:0-3:0
-	path: UIDPath<esprima/es2015-array-pattern/dupe-param-3/input.js>
-	directives: Array [
-		JSDirective {
-			value: "use strict"
-			loc: SourceLocation esprima/es2015-array-pattern/dupe-param-3/input.js 1:0-1:13
-		}
-	]
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 2:14
-				path: UIDPath<esprima/es2015-array-pattern/dupe-param-3/input.js>
-				start: Position 2:13
-			}
-			description: Object {
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Argument <emphasis>a</emphasis> name clash in strict mode"}
-				advice: Array [
-					log {
-						category: "info"
-						text: RAW_MARKUP {value: "Defined already here"}
-					}
-					frame {location: SourceLocation esprima/es2015-array-pattern/dupe-param-3/input.js 2:13-2:14 (a)}
-				]
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "a"
 				loc: SourceLocation esprima/es2015-array-pattern/dupe-param-3/input.js 2:9-2:10 (a)
 			}
-			loc: SourceLocation esprima/es2015-array-pattern/dupe-param-3/input.js 2:0-2:25
 			body: JSBlockStatement {
-				body: Array []
-				directives: Array []
+				body: []
+				directives: []
 				loc: SourceLocation esprima/es2015-array-pattern/dupe-param-3/input.js 2:22-2:25
 			}
 			head: JSFunctionHead {
 				async: false
 				generator: false
 				hasHoistedVars: false
-				rest: undefined
-				returnType: undefined
-				thisType: undefined
-				typeParameters: undefined
-				loc: SourceLocation esprima/es2015-array-pattern/dupe-param-3/input.js 2:10-2:22
-				params: Array [
+				params: [
 					JSBindingArrayPattern {
-						loc: SourceLocation esprima/es2015-array-pattern/dupe-param-3/input.js 2:11-2:21
-						meta: JSPatternMeta {
-							optional: undefined
-							typeAnnotation: undefined
-							loc: SourceLocation esprima/es2015-array-pattern/dupe-param-3/input.js 2:11-2:21
-						}
-						rest: JSBindingIdentifier {
-							name: "a"
-							loc: SourceLocation esprima/es2015-array-pattern/dupe-param-3/input.js 2:19-2:20 (a)
-							meta: JSPatternMeta {
-								optional: undefined
-								typeAnnotation: undefined
-								loc: SourceLocation esprima/es2015-array-pattern/dupe-param-3/input.js 2:19-2:20
-							}
-						}
-						elements: Array [
+						elements: [
 							JSBindingObjectPattern {
-								rest: undefined
-								loc: SourceLocation esprima/es2015-array-pattern/dupe-param-3/input.js 2:12-2:15
-								meta: JSPatternMeta {
-									optional: undefined
-									typeAnnotation: undefined
-									loc: SourceLocation esprima/es2015-array-pattern/dupe-param-3/input.js 2:12-2:15
-								}
-								properties: Array [
+								properties: [
 									JSBindingObjectPatternProperty {
 										key: JSStaticPropertyKey {
 											value: JSIdentifier {
@@ -111,13 +43,68 @@ JSRoot {
 										loc: SourceLocation esprima/es2015-array-pattern/dupe-param-3/input.js 2:13-2:14
 									}
 								]
+								meta: JSPatternMeta {
+									loc: SourceLocation esprima/es2015-array-pattern/dupe-param-3/input.js 2:12-2:15
+								}
+								loc: SourceLocation esprima/es2015-array-pattern/dupe-param-3/input.js 2:12-2:15
 							}
 						]
+						meta: JSPatternMeta {
+							loc: SourceLocation esprima/es2015-array-pattern/dupe-param-3/input.js 2:11-2:21
+						}
+						rest: JSBindingIdentifier {
+							name: "a"
+							meta: JSPatternMeta {
+								loc: SourceLocation esprima/es2015-array-pattern/dupe-param-3/input.js 2:19-2:20
+							}
+							loc: SourceLocation esprima/es2015-array-pattern/dupe-param-3/input.js 2:19-2:20 (a)
+						}
+						loc: SourceLocation esprima/es2015-array-pattern/dupe-param-3/input.js 2:11-2:21
 					}
 				]
+				loc: SourceLocation esprima/es2015-array-pattern/dupe-param-3/input.js 2:10-2:22
+			}
+			loc: SourceLocation esprima/es2015-array-pattern/dupe-param-3/input.js 2:0-2:25
+		}
+	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {
+				advice: [
+					log {
+						category: "info"
+						text: RAW_MARKUP {value: "Defined already here"}
+					}
+					frame {
+						location: SourceLocation esprima/es2015-array-pattern/dupe-param-3/input.js 2:13-2:14 (a)
+					}
+				]
+				category: ["parse"]
+				categoryValue: "js"
+				message: [RAW_MARKUP {value: "Argument <emphasis>"}, "a", RAW_MARKUP {value: "</emphasis> name clash in strict mode"}]
+			}
+			location: {
+				language: "js"
+				path: UIDPath<esprima/es2015-array-pattern/dupe-param-3/input.js>
+				end: Position 2:14
+				start: Position 2:13
 			}
 		}
 	]
+	directives: [
+		JSDirective {
+			value: "use strict"
+			loc: SourceLocation esprima/es2015-array-pattern/dupe-param-3/input.js 1:0-1:13
+		}
+	]
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<esprima/es2015-array-pattern/dupe-param-3/input.js>
+	loc: SourceLocation esprima/es2015-array-pattern/dupe-param-3/input.js 1:0-3:0
 }
 ```
 

@@ -8,43 +8,16 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2015/meta-properties/statement/input.js 1:0-4:0
-	path: UIDPath<es2015/meta-properties/statement/input.js>
-	body: Array [
+	body: [
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "A"
 				loc: SourceLocation es2015/meta-properties/statement/input.js 1:9-1:10 (A)
 			}
-			loc: SourceLocation es2015/meta-properties/statement/input.js 1:0-3:1
-			head: JSFunctionHead {
-				async: false
-				generator: false
-				hasHoistedVars: false
-				params: Array []
-				rest: undefined
-				returnType: undefined
-				thisType: undefined
-				typeParameters: undefined
-				loc: SourceLocation es2015/meta-properties/statement/input.js 1:10-1:12
-			}
 			body: JSBlockStatement {
-				directives: Array []
-				loc: SourceLocation es2015/meta-properties/statement/input.js 1:13-3:1
-				body: Array [
+				body: [
 					JSExpressionStatement {
-						loc: SourceLocation es2015/meta-properties/statement/input.js 2:2-2:13
 						expression: JSMetaProperty {
-							loc: SourceLocation es2015/meta-properties/statement/input.js 2:2-2:12
 							meta: JSIdentifier {
 								name: "new"
 								loc: SourceLocation es2015/meta-properties/statement/input.js 2:2-2:5 (new)
@@ -53,12 +26,33 @@ JSRoot {
 								name: "target"
 								loc: SourceLocation es2015/meta-properties/statement/input.js 2:6-2:12 (target)
 							}
+							loc: SourceLocation es2015/meta-properties/statement/input.js 2:2-2:12
 						}
+						loc: SourceLocation es2015/meta-properties/statement/input.js 2:2-2:13
 					}
 				]
+				directives: []
+				loc: SourceLocation es2015/meta-properties/statement/input.js 1:13-3:1
 			}
+			head: JSFunctionHead {
+				async: false
+				generator: false
+				hasHoistedVars: false
+				params: []
+				loc: SourceLocation es2015/meta-properties/statement/input.js 1:10-1:12
+			}
+			loc: SourceLocation es2015/meta-properties/statement/input.js 1:0-3:1
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2015/meta-properties/statement/input.js>
+	loc: SourceLocation es2015/meta-properties/statement/input.js 1:0-4:0
 }
 ```
 

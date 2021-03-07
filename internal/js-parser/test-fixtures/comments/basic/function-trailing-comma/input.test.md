@@ -8,17 +8,31 @@
 
 ```javascript
 JSRoot {
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation comments/basic/function-trailing-comma/input.js 1:0-2:0
-	path: UIDPath<comments/basic/function-trailing-comma/input.js>
-	comments: Array [
+	body: [
+		JSExpressionStatement {
+			expression: JSCallExpression {
+				arguments: [
+					JSReferenceIdentifier {
+						name: "a"
+						loc: SourceLocation comments/basic/function-trailing-comma/input.js 1:3-1:4 (a)
+					}
+					JSReferenceIdentifier {
+						name: "b"
+						trailingComments: []
+						loc: SourceLocation comments/basic/function-trailing-comma/input.js 1:6-1:7 (b)
+					}
+				]
+				trailingComments: ["1"]
+				callee: JSReferenceIdentifier {
+					name: "fn"
+					loc: SourceLocation comments/basic/function-trailing-comma/input.js 1:0-1:2 (fn)
+				}
+				loc: SourceLocation comments/basic/function-trailing-comma/input.js 1:0-1:25
+			}
+			loc: SourceLocation comments/basic/function-trailing-comma/input.js 1:0-1:41
+		}
+	]
+	comments: [
 		CommentBlock {
 			id: "0"
 			value: " comment 1 "
@@ -30,30 +44,14 @@ JSRoot {
 			loc: SourceLocation comments/basic/function-trailing-comma/input.js 1:26-1:40
 		}
 	]
-	body: Array [
-		JSExpressionStatement {
-			loc: SourceLocation comments/basic/function-trailing-comma/input.js 1:0-1:41
-			expression: JSCallExpression {
-				loc: SourceLocation comments/basic/function-trailing-comma/input.js 1:0-1:25
-				trailingComments: Array ["1"]
-				callee: JSReferenceIdentifier {
-					name: "fn"
-					loc: SourceLocation comments/basic/function-trailing-comma/input.js 1:0-1:2 (fn)
-				}
-				arguments: Array [
-					JSReferenceIdentifier {
-						name: "a"
-						loc: SourceLocation comments/basic/function-trailing-comma/input.js 1:3-1:4 (a)
-					}
-					JSReferenceIdentifier {
-						name: "b"
-						trailingComments: Array []
-						loc: SourceLocation comments/basic/function-trailing-comma/input.js 1:6-1:7 (b)
-					}
-				]
-			}
-		}
-	]
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<comments/basic/function-trailing-comma/input.js>
+	loc: SourceLocation comments/basic/function-trailing-comma/input.js 1:0-2:0
 }
 ```
 

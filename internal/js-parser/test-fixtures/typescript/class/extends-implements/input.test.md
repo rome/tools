@@ -8,54 +8,17 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	loc: SourceLocation typescript/class/extends-implements/input.ts 1:0-2:0
-	path: UIDPath<typescript/class/extends-implements/input.ts>
-	syntax: Array ["ts"]
-	body: Array [
+	body: [
 		JSClassDeclaration {
 			id: JSBindingIdentifier {
 				name: "C"
 				loc: SourceLocation typescript/class/extends-implements/input.ts 1:6-1:7 (C)
 			}
-			loc: SourceLocation typescript/class/extends-implements/input.ts 1:0-1:43
 			meta: JSClassHead {
-				body: Array []
-				typeParameters: undefined
-				loc: SourceLocation typescript/class/extends-implements/input.ts 1:0-1:43
-				superClass: JSCallExpression {
-					arguments: Array []
-					loc: SourceLocation typescript/class/extends-implements/input.ts 1:16-1:19
-					callee: JSReferenceIdentifier {
-						name: "f"
-						loc: SourceLocation typescript/class/extends-implements/input.ts 1:16-1:17 (f)
-					}
-				}
-				superTypeParameters: TSTypeParameterInstantiation {
-					loc: SourceLocation typescript/class/extends-implements/input.ts 1:19-1:22
-					params: Array [
-						TSTypeReference {
-							typeParameters: undefined
-							loc: SourceLocation typescript/class/extends-implements/input.ts 1:20-1:21
-							typeName: JSReferenceIdentifier {
-								name: "T"
-								loc: SourceLocation typescript/class/extends-implements/input.ts 1:20-1:21 (T)
-							}
-						}
-					]
-				}
-				implements: Array [
+				body: []
+				implements: [
 					TSExpressionWithTypeArguments {
-						loc: SourceLocation typescript/class/extends-implements/input.ts 1:34-1:40
 						expression: TSQualifiedName {
-							loc: SourceLocation typescript/class/extends-implements/input.ts 1:34-1:37
 							left: JSReferenceIdentifier {
 								name: "X"
 								loc: SourceLocation typescript/class/extends-implements/input.ts 1:34-1:35 (X)
@@ -64,25 +27,57 @@ JSRoot {
 								name: "Y"
 								loc: SourceLocation typescript/class/extends-implements/input.ts 1:36-1:37 (Y)
 							}
+							loc: SourceLocation typescript/class/extends-implements/input.ts 1:34-1:37
 						}
 						typeParameters: TSTypeParameterInstantiation {
-							loc: SourceLocation typescript/class/extends-implements/input.ts 1:37-1:40
-							params: Array [
+							params: [
 								TSTypeReference {
-									typeParameters: undefined
-									loc: SourceLocation typescript/class/extends-implements/input.ts 1:38-1:39
 									typeName: JSReferenceIdentifier {
 										name: "T"
 										loc: SourceLocation typescript/class/extends-implements/input.ts 1:38-1:39 (T)
 									}
+									loc: SourceLocation typescript/class/extends-implements/input.ts 1:38-1:39
 								}
 							]
+							loc: SourceLocation typescript/class/extends-implements/input.ts 1:37-1:40
 						}
+						loc: SourceLocation typescript/class/extends-implements/input.ts 1:34-1:40
 					}
 				]
+				superClass: JSCallExpression {
+					arguments: []
+					callee: JSReferenceIdentifier {
+						name: "f"
+						loc: SourceLocation typescript/class/extends-implements/input.ts 1:16-1:17 (f)
+					}
+					loc: SourceLocation typescript/class/extends-implements/input.ts 1:16-1:19
+				}
+				superTypeParameters: TSTypeParameterInstantiation {
+					params: [
+						TSTypeReference {
+							typeName: JSReferenceIdentifier {
+								name: "T"
+								loc: SourceLocation typescript/class/extends-implements/input.ts 1:20-1:21 (T)
+							}
+							loc: SourceLocation typescript/class/extends-implements/input.ts 1:20-1:21
+						}
+					]
+					loc: SourceLocation typescript/class/extends-implements/input.ts 1:19-1:22
+				}
+				loc: SourceLocation typescript/class/extends-implements/input.ts 1:0-1:43
 			}
+			loc: SourceLocation typescript/class/extends-implements/input.ts 1:0-1:43
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: ["ts"]
+	path: UIDPath<typescript/class/extends-implements/input.ts>
+	loc: SourceLocation typescript/class/extends-implements/input.ts 1:0-2:0
 }
 ```
 

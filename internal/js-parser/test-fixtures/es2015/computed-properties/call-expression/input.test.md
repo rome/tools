@@ -8,42 +8,27 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: true
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2015/computed-properties/call-expression/input.js 1:0-4:0
-	path: UIDPath<es2015/computed-properties/call-expression/input.js>
-	body: Array [
+	body: [
 		JSVariableDeclarationStatement {
-			loc: SourceLocation es2015/computed-properties/call-expression/input.js 1:0-3:2
 			declaration: JSVariableDeclaration {
 				kind: "var"
-				loc: SourceLocation es2015/computed-properties/call-expression/input.js 1:0-3:2
-				declarations: Array [
+				declarations: [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "foo"
 							loc: SourceLocation es2015/computed-properties/call-expression/input.js 1:4-1:7 (foo)
 						}
-						loc: SourceLocation es2015/computed-properties/call-expression/input.js 1:4-3:1
 						init: JSObjectExpression {
-							loc: SourceLocation es2015/computed-properties/call-expression/input.js 1:10-3:1
-							properties: Array [
+							properties: [
 								JSObjectProperty {
 									key: JSComputedPropertyKey {
 										value: JSCallExpression {
-											arguments: Array []
-											loc: SourceLocation es2015/computed-properties/call-expression/input.js 2:3-2:8
+											arguments: []
 											callee: JSReferenceIdentifier {
 												name: "bar"
 												loc: SourceLocation es2015/computed-properties/call-expression/input.js 2:3-2:6 (bar)
 											}
+											loc: SourceLocation es2015/computed-properties/call-expression/input.js 2:3-2:8
 										}
 										loc: SourceLocation es2015/computed-properties/call-expression/input.js 2:2-2:9
 									}
@@ -54,12 +39,25 @@ JSRoot {
 									loc: SourceLocation es2015/computed-properties/call-expression/input.js 2:2-2:13
 								}
 							]
+							loc: SourceLocation es2015/computed-properties/call-expression/input.js 1:10-3:1
 						}
+						loc: SourceLocation es2015/computed-properties/call-expression/input.js 1:4-3:1
 					}
 				]
+				loc: SourceLocation es2015/computed-properties/call-expression/input.js 1:0-3:2
 			}
+			loc: SourceLocation es2015/computed-properties/call-expression/input.js 1:0-3:2
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: true
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2015/computed-properties/call-expression/input.js>
+	loc: SourceLocation es2015/computed-properties/call-expression/input.js 1:0-4:0
 }
 ```
 

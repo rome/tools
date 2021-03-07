@@ -8,85 +8,81 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	loc: SourceLocation typescript/function/overloads/input.ts 1:0-3:0
-	path: UIDPath<typescript/function/overloads/input.ts>
-	syntax: Array ["ts"]
-	body: Array [
+	body: [
 		JSExportLocalDeclaration {
 			exportKind: "value"
-			specifiers: undefined
-			loc: SourceLocation typescript/function/overloads/input.ts 1:0-1:37
 			declaration: TSDeclareFunction {
 				id: JSBindingIdentifier {
 					name: "f"
 					loc: SourceLocation typescript/function/overloads/input.ts 1:16-1:17 (f)
 				}
-				loc: SourceLocation typescript/function/overloads/input.ts 1:7-1:37
 				head: JSFunctionHead {
 					async: false
 					generator: false
 					hasHoistedVars: false
-					rest: undefined
-					thisType: undefined
-					typeParameters: undefined
-					loc: SourceLocation typescript/function/overloads/input.ts 1:17-1:36
-					returnType: TSNumberKeywordTypeAnnotation {loc: SourceLocation typescript/function/overloads/input.ts 1:30-1:36}
-					params: Array [
+					params: [
 						JSBindingIdentifier {
 							name: "x"
-							loc: SourceLocation typescript/function/overloads/input.ts 1:18-1:19 (x)
 							meta: JSPatternMeta {
-								optional: undefined
+								typeAnnotation: TSNumberKeywordTypeAnnotation {
+									loc: SourceLocation typescript/function/overloads/input.ts 1:21-1:27
+								}
 								loc: SourceLocation typescript/function/overloads/input.ts 1:18-1:27
-								typeAnnotation: TSNumberKeywordTypeAnnotation {loc: SourceLocation typescript/function/overloads/input.ts 1:21-1:27}
 							}
+							loc: SourceLocation typescript/function/overloads/input.ts 1:18-1:19 (x)
 						}
 					]
+					returnType: TSNumberKeywordTypeAnnotation {
+						loc: SourceLocation typescript/function/overloads/input.ts 1:30-1:36
+					}
+					loc: SourceLocation typescript/function/overloads/input.ts 1:17-1:36
 				}
+				loc: SourceLocation typescript/function/overloads/input.ts 1:7-1:37
 			}
+			loc: SourceLocation typescript/function/overloads/input.ts 1:0-1:37
 		}
 		JSExportLocalDeclaration {
 			exportKind: "value"
-			specifiers: undefined
-			loc: SourceLocation typescript/function/overloads/input.ts 2:0-2:37
 			declaration: TSDeclareFunction {
 				id: JSBindingIdentifier {
 					name: "f"
 					loc: SourceLocation typescript/function/overloads/input.ts 2:16-2:17 (f)
 				}
-				loc: SourceLocation typescript/function/overloads/input.ts 2:7-2:37
 				head: JSFunctionHead {
 					async: false
 					generator: false
 					hasHoistedVars: false
-					rest: undefined
-					thisType: undefined
-					typeParameters: undefined
-					loc: SourceLocation typescript/function/overloads/input.ts 2:17-2:36
-					returnType: TSStringKeywordTypeAnnotation {loc: SourceLocation typescript/function/overloads/input.ts 2:30-2:36}
-					params: Array [
+					params: [
 						JSBindingIdentifier {
 							name: "x"
-							loc: SourceLocation typescript/function/overloads/input.ts 2:18-2:19 (x)
 							meta: JSPatternMeta {
-								optional: undefined
+								typeAnnotation: TSStringKeywordTypeAnnotation {
+									loc: SourceLocation typescript/function/overloads/input.ts 2:21-2:27
+								}
 								loc: SourceLocation typescript/function/overloads/input.ts 2:18-2:27
-								typeAnnotation: TSStringKeywordTypeAnnotation {loc: SourceLocation typescript/function/overloads/input.ts 2:21-2:27}
 							}
+							loc: SourceLocation typescript/function/overloads/input.ts 2:18-2:19 (x)
 						}
 					]
+					returnType: TSStringKeywordTypeAnnotation {
+						loc: SourceLocation typescript/function/overloads/input.ts 2:30-2:36
+					}
+					loc: SourceLocation typescript/function/overloads/input.ts 2:17-2:36
 				}
+				loc: SourceLocation typescript/function/overloads/input.ts 2:7-2:37
 			}
+			loc: SourceLocation typescript/function/overloads/input.ts 2:0-2:37
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: ["ts"]
+	path: UIDPath<typescript/function/overloads/input.ts>
+	loc: SourceLocation typescript/function/overloads/input.ts 1:0-3:0
 }
 ```
 

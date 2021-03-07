@@ -8,49 +8,11 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: true
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation esprima/es2015-spread-element/invalid-new-dot-dot/input.js 1:0-2:0
-	path: UIDPath<esprima/es2015-spread-element/invalid-new-dot-dot/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Unknown start to an new expression argument"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:6
-				path: UIDPath<esprima/es2015-spread-element/invalid-new-dot-dot/input.js>
-				start: Position 1:6
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation esprima/es2015-spread-element/invalid-new-dot-dot/input.js 1:0-1:11
 			expression: JSNewExpression {
-				optional: undefined
-				typeArguments: undefined
-				loc: SourceLocation esprima/es2015-spread-element/invalid-new-dot-dot/input.js 1:0-1:10
-				callee: JSReferenceIdentifier {
-					name: "f"
-					loc: SourceLocation esprima/es2015-spread-element/invalid-new-dot-dot/input.js 1:4-1:5 (f)
-				}
-				arguments: Array [
+				arguments: [
 					JSMemberExpression {
-						loc: SourceLocation esprima/es2015-spread-element/invalid-new-dot-dot/input.js 1:6-1:9
 						object: JSReferenceIdentifier {
 							name: "INVALID_PLACEHOLDER"
 							loc: SourceLocation esprima/es2015-spread-element/invalid-new-dot-dot/input.js 1:6-1:7
@@ -62,11 +24,38 @@ JSRoot {
 							}
 							loc: SourceLocation esprima/es2015-spread-element/invalid-new-dot-dot/input.js 1:8-1:9 (g)
 						}
+						loc: SourceLocation esprima/es2015-spread-element/invalid-new-dot-dot/input.js 1:6-1:9
 					}
 				]
+				callee: JSReferenceIdentifier {
+					name: "f"
+					loc: SourceLocation esprima/es2015-spread-element/invalid-new-dot-dot/input.js 1:4-1:5 (f)
+				}
+				loc: SourceLocation esprima/es2015-spread-element/invalid-new-dot-dot/input.js 1:0-1:10
+			}
+			loc: SourceLocation esprima/es2015-spread-element/invalid-new-dot-dot/input.js 1:0-1:11
+		}
+	]
+	comments: []
+	corrupt: true
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {advice: [], category: ["parse"], categoryValue: "js", message: [RAW_MARKUP {value: "Unknown start to an "}, "new expression argument"]}
+			location: {
+				language: "js"
+				path: UIDPath<esprima/es2015-spread-element/invalid-new-dot-dot/input.js>
+				end: Position 1:6
+				start: Position 1:6
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<esprima/es2015-spread-element/invalid-new-dot-dot/input.js>
+	loc: SourceLocation esprima/es2015-spread-element/invalid-new-dot-dot/input.js 1:0-2:0
 }
 ```
 

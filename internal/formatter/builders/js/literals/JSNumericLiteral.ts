@@ -6,9 +6,8 @@
  */
 
 import {Builder, Token} from "@internal/formatter";
-
 import {JSNumericLiteral} from "@internal/ast";
-import {humanizeNumber} from "@internal/string-utils";
+import {humanizeNumber} from "@internal/numbers";
 
 export default function JSNumericLiteral(
 	builder: Builder,

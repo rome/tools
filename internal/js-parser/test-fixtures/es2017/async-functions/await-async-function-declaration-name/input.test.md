@@ -8,42 +8,36 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2017/async-functions/await-async-function-declaration-name/input.js 1:0-1:25
-	path: UIDPath<es2017/async-functions/await-async-function-declaration-name/input.js>
-	body: Array [
+	body: [
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "await"
 				loc: SourceLocation es2017/async-functions/await-async-function-declaration-name/input.js 1:15-1:20 (await)
 			}
-			loc: SourceLocation es2017/async-functions/await-async-function-declaration-name/input.js 1:0-1:25
 			body: JSBlockStatement {
-				body: Array []
-				directives: Array []
+				body: []
+				directives: []
 				loc: SourceLocation es2017/async-functions/await-async-function-declaration-name/input.js 1:23-1:25
 			}
 			head: JSFunctionHead {
 				async: true
 				generator: false
 				hasHoistedVars: false
-				params: Array []
-				rest: undefined
-				returnType: undefined
-				thisType: undefined
-				typeParameters: undefined
+				params: []
 				loc: SourceLocation es2017/async-functions/await-async-function-declaration-name/input.js 1:20-1:22
 			}
+			loc: SourceLocation es2017/async-functions/await-async-function-declaration-name/input.js 1:0-1:25
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2017/async-functions/await-async-function-declaration-name/input.js>
+	loc: SourceLocation es2017/async-functions/await-async-function-declaration-name/input.js 1:0-1:25
 }
 ```
 

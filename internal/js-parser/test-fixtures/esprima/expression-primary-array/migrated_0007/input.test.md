@@ -8,34 +8,32 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation esprima/expression-primary-array/migrated_0007/input.js 1:0-1:8
-	path: UIDPath<esprima/expression-primary-array/migrated_0007/input.js>
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation esprima/expression-primary-array/migrated_0007/input.js 1:0-1:8
 			expression: JSAssignmentExpression {
 				operator: "="
-				loc: SourceLocation esprima/expression-primary-array/migrated_0007/input.js 1:0-1:8
 				left: JSAssignmentIdentifier {
 					name: "\u65e5\u672c\u8a9e"
 					loc: SourceLocation esprima/expression-primary-array/migrated_0007/input.js 1:0-1:3 (\u65e5\u672c\u8a9e)
 				}
 				right: JSArrayExpression {
-					elements: Array []
+					elements: []
 					loc: SourceLocation esprima/expression-primary-array/migrated_0007/input.js 1:6-1:8
 				}
+				loc: SourceLocation esprima/expression-primary-array/migrated_0007/input.js 1:0-1:8
 			}
+			loc: SourceLocation esprima/expression-primary-array/migrated_0007/input.js 1:0-1:8
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<esprima/expression-primary-array/migrated_0007/input.js>
+	loc: SourceLocation esprima/expression-primary-array/migrated_0007/input.js 1:0-1:8
 }
 ```
 

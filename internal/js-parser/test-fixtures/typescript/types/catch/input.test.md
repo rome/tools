@@ -8,44 +8,43 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	loc: SourceLocation typescript/types/catch/input.ts 1:0-3:0
-	path: UIDPath<typescript/types/catch/input.ts>
-	syntax: Array ["ts"]
-	body: Array [
+	body: [
 		JSTryStatement {
-			finalizer: undefined
-			loc: SourceLocation typescript/types/catch/input.ts 1:0-2:21
 			block: JSBlockStatement {
-				body: Array []
-				directives: Array []
+				body: []
+				directives: []
 				loc: SourceLocation typescript/types/catch/input.ts 1:4-1:6
 			}
 			handler: JSCatchClause {
-				loc: SourceLocation typescript/types/catch/input.ts 2:0-2:21
 				body: JSBlockStatement {
-					body: Array []
-					directives: Array []
+					body: []
+					directives: []
 					loc: SourceLocation typescript/types/catch/input.ts 2:19-2:21
 				}
 				param: JSBindingIdentifier {
 					name: "e"
-					loc: SourceLocation typescript/types/catch/input.ts 2:7-2:17
 					meta: JSPatternMeta {
+						typeAnnotation: TSUnknownKeywordTypeAnnotation {
+							loc: SourceLocation typescript/types/catch/input.ts 2:10-2:17
+						}
 						loc: SourceLocation typescript/types/catch/input.ts 2:7-2:17
-						typeAnnotation: TSUnknownKeywordTypeAnnotation {loc: SourceLocation typescript/types/catch/input.ts 2:10-2:17}
 					}
+					loc: SourceLocation typescript/types/catch/input.ts 2:7-2:17
 				}
+				loc: SourceLocation typescript/types/catch/input.ts 2:0-2:21
 			}
+			loc: SourceLocation typescript/types/catch/input.ts 1:0-2:21
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: ["ts"]
+	path: UIDPath<typescript/types/catch/input.ts>
+	loc: SourceLocation typescript/types/catch/input.ts 1:0-3:0
 }
 ```
 

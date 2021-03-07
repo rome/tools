@@ -7,10 +7,9 @@ import {
 	reporter,
 	writeFile,
 } from "./_utils";
-import {exists} from "@internal/fs";
 import {dedent, toCamelCase} from "@internal/string-utils";
 import {markup} from "@internal/markup";
-import {createAnyPath} from "@internal/path";
+import {createRelativePath} from "@internal/path";
 import {main as generateAST} from "./generated-files/ast";
 
 export async function main([filename]: string[]): Promise<number> {
@@ -23,7 +22,7 @@ export async function main([filename]: string[]): Promise<number> {
 		return 1;
 	}
 
-	const segments = createAnyPath(filename).getSegments();
+	const segments = createRelativePath(filename).getSegments();
 	if (segments.length !== 3) {
 		reporter.error(markup`Expected three segments in filename argument`);
 		return 1;
@@ -72,7 +71,7 @@ export async function main([filename]: string[]): Promise<number> {
 
 	// Write AST def
 	const astDefPath = INTERNAL.append("ast", `${filename}.ts`);
-	if (await exists(astDefPath)) {
+	if (await astDefPath.exists()) {
 		reporter.error(markup`AST node ${filename} already exists`);
 		return 1;
 	}

@@ -7,7 +7,7 @@
 ### `result`
 
 ```javascript
-Array [
+[
 	"edge:88"
 	"firefox:85"
 	"chrome:88"
@@ -26,13 +26,13 @@ Array [
 ### `targets`
 
 ```javascript
-Array [TargetBrowserSince {since: 1_585_699_200_000}]
+[TargetBrowserSince {since: 1_585_699_200_000}]
 ```
 
 ### `tokens`
 
 ```javascript
-Array [
+[
 	Since {
 		end: ZeroIndexedNumber<5>
 		start: ZeroIndexedNumber<0>

@@ -8,52 +8,40 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	loc: SourceLocation typescript/class/implements-empty/input.ts 1:0-3:0
-	path: UIDPath<typescript/class/implements-empty/input.ts>
-	syntax: Array ["ts"]
-	body: Array [
+	body: [
 		JSClassDeclaration {
 			id: JSBindingIdentifier {
 				name: "Foo"
 				loc: SourceLocation typescript/class/implements-empty/input.ts 1:6-1:9 (Foo)
 			}
-			loc: SourceLocation typescript/class/implements-empty/input.ts 1:0-2:1
 			meta: JSClassHead {
-				body: Array []
-				implements: Array []
-				superClass: undefined
-				superTypeParameters: undefined
-				typeParameters: undefined
+				body: []
+				implements: []
 				loc: SourceLocation typescript/class/implements-empty/input.ts 1:0-2:1
 			}
+			loc: SourceLocation typescript/class/implements-empty/input.ts 1:0-2:1
 		}
 	]
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "implements list cannot be empty"}
-			}
-			location: Object {
-				integrity: undefined
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {advice: [], category: ["parse"], categoryValue: "js", message: ["implements", RAW_MARKUP {value: " list cannot be empty"}]}
+			location: {
 				language: "js"
-				sourceText: undefined
-				end: Position 1:21
 				path: UIDPath<typescript/class/implements-empty/input.ts>
+				end: Position 1:21
 				start: Position 1:21
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: ["ts"]
+	path: UIDPath<typescript/class/implements-empty/input.ts>
+	loc: SourceLocation typescript/class/implements-empty/input.ts 1:0-3:0
 }
 ```
 

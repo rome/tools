@@ -8,41 +8,37 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2016/exponentiation-operator/9/input.js 1:0-2:0
-	path: UIDPath<es2016/exponentiation-operator/9/input.js>
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation es2016/exponentiation-operator/9/input.js 1:0-1:10
 			expression: JSBinaryExpression {
 				operator: "**"
-				loc: SourceLocation es2016/exponentiation-operator/9/input.js 1:0-1:9
-				right: JSNumericLiteral {
-					value: 6
-					format: undefined
-					loc: SourceLocation es2016/exponentiation-operator/9/input.js 1:8-1:9
-				}
 				left: JSUnaryExpression {
 					operator: "-"
 					prefix: true
-					loc: SourceLocation es2016/exponentiation-operator/9/input.js 1:1-1:3
 					argument: JSNumericLiteral {
 						value: 5
-						format: undefined
 						loc: SourceLocation es2016/exponentiation-operator/9/input.js 1:2-1:3
 					}
+					loc: SourceLocation es2016/exponentiation-operator/9/input.js 1:1-1:3
 				}
+				right: JSNumericLiteral {
+					value: 6
+					loc: SourceLocation es2016/exponentiation-operator/9/input.js 1:8-1:9
+				}
+				loc: SourceLocation es2016/exponentiation-operator/9/input.js 1:0-1:9
 			}
+			loc: SourceLocation es2016/exponentiation-operator/9/input.js 1:0-1:10
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2016/exponentiation-operator/9/input.js>
+	loc: SourceLocation es2016/exponentiation-operator/9/input.js 1:0-2:0
 }
 ```
 

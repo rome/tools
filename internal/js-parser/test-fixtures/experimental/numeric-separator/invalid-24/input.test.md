@@ -8,51 +8,42 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: true
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation experimental/numeric-separator/invalid-24/input.js 1:0-2:0
-	path: UIDPath<experimental/numeric-separator/invalid-24/input.js>
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation experimental/numeric-separator/invalid-24/input.js 1:0-1:1
 			expression: JSReferenceIdentifier {
 				name: "INVALID_PLACEHOLDER"
 				loc: SourceLocation experimental/numeric-separator/invalid-24/input.js 1:0-1:1
 			}
+			loc: SourceLocation experimental/numeric-separator/invalid-24/input.js 1:0-1:1
 		}
 		JSExpressionStatement {
-			loc: SourceLocation experimental/numeric-separator/invalid-24/input.js 1:1-1:5
 			expression: JSReferenceIdentifier {
 				name: "_1_1"
 				loc: SourceLocation experimental/numeric-separator/invalid-24/input.js 1:1-1:5 (_1_1)
 			}
+			loc: SourceLocation experimental/numeric-separator/invalid-24/input.js 1:1-1:5
 		}
 	]
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Unknown start to an statement expression"}
-			}
-			location: Object {
-				integrity: undefined
+	comments: []
+	corrupt: true
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {advice: [], category: ["parse"], categoryValue: "js", message: [RAW_MARKUP {value: "Unknown start to an "}, "statement expression"]}
+			location: {
 				language: "js"
-				sourceText: undefined
-				end: Position 1:0
 				path: UIDPath<experimental/numeric-separator/invalid-24/input.js>
+				end: Position 1:0
 				start: Position 1:0
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<experimental/numeric-separator/invalid-24/input.js>
+	loc: SourceLocation experimental/numeric-separator/invalid-24/input.js 1:0-2:0
 }
 ```
 

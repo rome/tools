@@ -110,7 +110,7 @@ tags.set(
 	new Map([["width", numberValidator], ["align", alignValidator]]),
 );
 tags.set("li", new Map());
-tags.set("ul", new Map());
+tags.set("ul", new Map([["joinSameLine", stringValidator]]));
 tags.set(
 	"ol",
 	new Map([["reversed", booleanValidator], ["start", numberValidator]]),

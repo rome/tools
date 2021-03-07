@@ -8,52 +8,45 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	loc: SourceLocation typescript/type-arguments/whitespace/input.ts 1:0-1:24
-	path: UIDPath<typescript/type-arguments/whitespace/input.ts>
-	syntax: Array ["ts"]
-	body: Array [
+	body: [
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "f"
 				loc: SourceLocation typescript/type-arguments/whitespace/input.ts 1:9-1:10 (f)
 			}
-			loc: SourceLocation typescript/type-arguments/whitespace/input.ts 1:0-1:24
 			body: JSBlockStatement {
-				body: Array []
-				directives: Array []
+				body: []
+				directives: []
 				loc: SourceLocation typescript/type-arguments/whitespace/input.ts 1:22-1:24
 			}
 			head: JSFunctionHead {
 				async: false
 				generator: false
 				hasHoistedVars: false
-				params: Array []
-				rest: undefined
-				returnType: undefined
-				thisType: undefined
-				loc: SourceLocation typescript/type-arguments/whitespace/input.ts 1:10-1:21
+				params: []
 				typeParameters: TSTypeParameterDeclaration {
-					loc: SourceLocation typescript/type-arguments/whitespace/input.ts 1:10-1:19
-					params: Array [
+					params: [
 						TSTypeParameter {
 							name: "T"
-							constraint: undefined
-							default: undefined
 							loc: SourceLocation typescript/type-arguments/whitespace/input.ts 1:13-1:14
 						}
 					]
+					loc: SourceLocation typescript/type-arguments/whitespace/input.ts 1:10-1:19
 				}
+				loc: SourceLocation typescript/type-arguments/whitespace/input.ts 1:10-1:21
 			}
+			loc: SourceLocation typescript/type-arguments/whitespace/input.ts 1:0-1:24
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: ["ts"]
+	path: UIDPath<typescript/type-arguments/whitespace/input.ts>
+	loc: SourceLocation typescript/type-arguments/whitespace/input.ts 1:0-1:24
 }
 ```
 

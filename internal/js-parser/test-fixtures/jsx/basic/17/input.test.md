@@ -8,41 +8,38 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	loc: SourceLocation jsx/basic/17/input.jsx 1:0-1:18
-	path: UIDPath<jsx/basic/17/input.jsx>
-	syntax: Array ["jsx"]
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation jsx/basic/17/input.jsx 1:0-1:18
 			expression: JSXElement {
-				name: JSXIdentifier {
-					name: "div"
-					loc: SourceLocation jsx/basic/17/input.jsx 1:1-1:4
-				}
-				children: Array []
-				selfClosing: true
-				typeArguments: undefined
-				loc: SourceLocation jsx/basic/17/input.jsx 1:0-1:18
-				attributes: Array [
+				attributes: [
 					JSXSpreadAttribute {
-						loc: SourceLocation jsx/basic/17/input.jsx 1:5-1:15
 						argument: JSReferenceIdentifier {
 							name: "props"
 							loc: SourceLocation jsx/basic/17/input.jsx 1:9-1:14 (props)
 						}
+						loc: SourceLocation jsx/basic/17/input.jsx 1:5-1:15
 					}
 				]
+				children: []
+				selfClosing: true
+				name: JSXIdentifier {
+					name: "div"
+					loc: SourceLocation jsx/basic/17/input.jsx 1:1-1:4
+				}
+				loc: SourceLocation jsx/basic/17/input.jsx 1:0-1:18
 			}
+			loc: SourceLocation jsx/basic/17/input.jsx 1:0-1:18
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: ["jsx"]
+	path: UIDPath<jsx/basic/17/input.jsx>
+	loc: SourceLocation jsx/basic/17/input.jsx 1:0-1:18
 }
 ```
 

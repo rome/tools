@@ -21,21 +21,20 @@ import {
 	DiagnosticCategory,
 	DiagnosticDescription,
 	DiagnosticDescriptionOptional,
-	DiagnosticFilter,
+	DiagnosticEliminationFilter,
 	DiagnosticIntegrity,
 	DiagnosticLanguage,
 	DiagnosticLocation,
-	Diagnostics,
 	DiagnosticsError,
 	DiagnosticsProcessor,
 	catchDiagnosticsSync,
-	createSingleDiagnosticError,
+	createSingleDiagnosticsError,
 	descriptions,
 	joinCategoryName,
 } from "@internal/diagnostics";
 import {AnyComment, AnyNode, RootBase} from "@internal/ast";
-import {AnyPath, UNKNOWN_PATH, equalPaths} from "@internal/path";
-import {OneIndexed, ZeroIndexed} from "@internal/math";
+import {Path, UNKNOWN_PATH, equalPaths} from "@internal/path";
+import {OneIndexed, ZeroIndexed} from "@internal/numbers";
 import {CommentsConsumer} from "@internal/js-parser";
 import PositionTracker from "./PositionTracker";
 import {RequiredProps} from "@internal/typescript-helpers";
@@ -49,8 +48,8 @@ export type ParserCoreState = {
 	leadingComments: AnyComment[];
 	commentStack: AnyNode[];
 	commentPreviousNode: undefined | AnyNode;
-	diagnostics: Diagnostics;
-	diagnosticFilters: DiagnosticFilter[];
+	diagnostics: Diagnostic[];
+	diagnosticFilters: DiagnosticEliminationFilter[];
 	corrupt: boolean;
 };
 
@@ -123,7 +122,7 @@ export default class ParserCore<Types extends ParserCoreTypes> {
 	private impl: ParserCoreImplementation<Types>;
 	private tokenizing: boolean;
 	private eofToken: EOFToken;
-	public path: AnyPath;
+	public path: Path;
 	public input: string;
 	public language: DiagnosticLanguage;
 	public integrity: undefined | DiagnosticIntegrity;
@@ -151,9 +150,16 @@ export default class ParserCore<Types extends ParserCoreTypes> {
 		this.currColumn =
 			offsetPosition === undefined ? new ZeroIndexed() : offsetPosition.column;
 		this.nextTokenIndex = new ZeroIndexed();
-		this.currentToken = SOF_TOKEN;
-		this.prevToken = SOF_TOKEN;
+
 		this.comments = new CommentsConsumer();
+
+		const sofToken: SOFToken = {
+			type: "SOF",
+			start: new ZeroIndexed(),
+			end: new ZeroIndexed(),
+		};
+		this.currentToken = sofToken;
+		this.prevToken = sofToken;
 
 		let initialState: undefined | Types["state"];
 		if (initialState === undefined && impl.getInitialState !== undefined) {
@@ -253,7 +259,7 @@ export default class ParserCore<Types extends ParserCoreTypes> {
 
 	public getToken(): TokenValues<Types["tokens"]> {
 		const {currentToken} = this;
-		if (currentToken === SOF_TOKEN) {
+		if (currentToken.type === "SOF") {
 			return this.nextToken();
 		} else {
 			return currentToken;
@@ -442,6 +448,7 @@ export default class ParserCore<Types extends ParserCoreTypes> {
 		};
 
 		return {
+			tags: this.impl.diagnosticTags,
 			description: descriptionWithCategory,
 			location,
 		};
@@ -449,7 +456,7 @@ export default class ParserCore<Types extends ParserCoreTypes> {
 
 	// Return an error to indicate a parser error, this must be thrown at the callsite for refinement
 	public unexpected(opts: ParserUnexpectedOptions = {}): DiagnosticsError {
-		return createSingleDiagnosticError(this.createDiagnostic(opts));
+		return createSingleDiagnosticsError(this.createDiagnostic(opts));
 	}
 
 	public unexpectedDiagnostic(opts: ParserUnexpectedOptions = {}) {
@@ -474,19 +481,15 @@ export default class ParserCore<Types extends ParserCoreTypes> {
 			end = this.getPositionFromIndex(opts.endIndex);
 		}
 
-		if (opts.location !== undefined) {
-			start = opts.location.start;
-			end = opts.location.end;
-		}
-
 		if (token !== undefined) {
 			start = this.getPositionFromIndex(token.start);
 			end = this.getPositionFromIndex(token.end);
 		}
 
-		if (start === undefined && end === undefined && opts.loc !== undefined) {
-			start = opts.loc.start;
-			end = opts.loc.end;
+		const loc = opts.loc ?? opts.node?.loc;
+		if (start === undefined && end === undefined && loc !== undefined) {
+			start = loc.start;
+			end = loc.end;
 		}
 
 		// If we weren't given a start then default to the provided end, or the current token start
@@ -785,7 +788,7 @@ export default class ParserCore<Types extends ParserCoreTypes> {
 
 	//# Diagnostics
 
-	public getDiagnostics(): Diagnostics {
+	public getDiagnostics(): Diagnostic[] {
 		const processor = new DiagnosticsProcessor({
 			origins: [
 				{
@@ -795,15 +798,11 @@ export default class ParserCore<Types extends ParserCoreTypes> {
 		});
 
 		for (const filter of this.state.diagnosticFilters) {
-			processor.addFilter(filter);
+			processor.addEliminationFilter(filter);
 		}
 
 		// TODO remove any trailing "eof" diagnostic
 		processor.addDiagnostics(this.state.diagnostics);
-
-		if (processor.hasDiagnostics()) {
-			//process.exit();
-		}
 
 		return processor.getDiagnostics().slice(0, 1);
 	}
@@ -812,11 +811,11 @@ export default class ParserCore<Types extends ParserCoreTypes> {
 		this.state.diagnostics.push(diag);
 	}
 
-	public addDiagnosticFilter(diag: DiagnosticFilter) {
+	public addDiagnosticFilter(diag: DiagnosticEliminationFilter) {
 		this.state.diagnosticFilters.push(diag);
 	}
 
-	public addCompleteDiagnostic(diags: Diagnostics) {
+	public addCompleteDiagnostic(diags: Diagnostic[]) {
 		this.state.diagnostics = [...this.state.diagnostics, ...diags];
 	}
 
@@ -828,12 +827,6 @@ export default class ParserCore<Types extends ParserCoreTypes> {
 		this.state.leadingComments.push(comment);
 	}
 }
-
-const SOF_TOKEN: SOFToken = {
-	type: "SOF",
-	start: new ZeroIndexed(),
-	end: new ZeroIndexed(),
-};
 
 type ParserSnapshot<Types extends ParserCoreTypes> = {
 	nextTokenIndex: ZeroIndexed;

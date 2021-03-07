@@ -8,45 +8,39 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	syntax: Array []
-	loc: SourceLocation es2015/modules/export-default-function-expression/input.js 1:0-2:0
-	path: UIDPath<es2015/modules/export-default-function-expression/input.js>
-	body: Array [
+	body: [
 		JSExportDefaultDeclaration {
-			loc: SourceLocation es2015/modules/export-default-function-expression/input.js 1:0-1:33
 			declaration: JSFunctionExpression {
 				id: JSBindingIdentifier {
 					name: "a"
 					loc: SourceLocation es2015/modules/export-default-function-expression/input.js 1:25-1:26 (a)
 				}
-				loc: SourceLocation es2015/modules/export-default-function-expression/input.js 1:16-1:31
 				body: JSBlockStatement {
-					body: Array []
-					directives: Array []
+					body: []
+					directives: []
 					loc: SourceLocation es2015/modules/export-default-function-expression/input.js 1:29-1:31
 				}
 				head: JSFunctionHead {
 					async: false
 					generator: false
 					hasHoistedVars: false
-					params: Array []
-					rest: undefined
-					returnType: undefined
-					thisType: undefined
-					typeParameters: undefined
+					params: []
 					loc: SourceLocation es2015/modules/export-default-function-expression/input.js 1:26-1:28
 				}
+				loc: SourceLocation es2015/modules/export-default-function-expression/input.js 1:16-1:31
 			}
+			loc: SourceLocation es2015/modules/export-default-function-expression/input.js 1:0-1:33
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: []
+	path: UIDPath<es2015/modules/export-default-function-expression/input.js>
+	loc: SourceLocation es2015/modules/export-default-function-expression/input.js 1:0-2:0
 }
 ```
 

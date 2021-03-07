@@ -8,43 +8,16 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2015/yield/inside-arrow-inside-generator/input.js 1:0-4:1
-	path: UIDPath<es2015/yield/inside-arrow-inside-generator/input.js>
-	body: Array [
+	body: [
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "fn"
 				loc: SourceLocation es2015/yield/inside-arrow-inside-generator/input.js 1:10-1:12 (fn)
 			}
-			loc: SourceLocation es2015/yield/inside-arrow-inside-generator/input.js 1:0-4:1
-			head: JSFunctionHead {
-				async: false
-				generator: true
-				hasHoistedVars: false
-				params: Array []
-				rest: undefined
-				returnType: undefined
-				thisType: undefined
-				typeParameters: undefined
-				loc: SourceLocation es2015/yield/inside-arrow-inside-generator/input.js 1:12-1:14
-			}
 			body: JSBlockStatement {
-				directives: Array []
-				loc: SourceLocation es2015/yield/inside-arrow-inside-generator/input.js 1:15-4:1
-				body: Array [
+				body: [
 					JSExpressionStatement {
-						loc: SourceLocation es2015/yield/inside-arrow-inside-generator/input.js 2:2-2:14
 						expression: JSArrowFunctionExpression {
-							loc: SourceLocation es2015/yield/inside-arrow-inside-generator/input.js 2:2-2:13
 							body: JSReferenceIdentifier {
 								name: "yield"
 								loc: SourceLocation es2015/yield/inside-arrow-inside-generator/input.js 2:8-2:13 (yield)
@@ -52,46 +25,61 @@ JSRoot {
 							head: JSFunctionHead {
 								async: false
 								hasHoistedVars: false
-								params: Array []
-								rest: undefined
-								returnType: undefined
-								thisType: undefined
+								params: []
 								loc: SourceLocation es2015/yield/inside-arrow-inside-generator/input.js 2:2-2:7
 							}
+							loc: SourceLocation es2015/yield/inside-arrow-inside-generator/input.js 2:2-2:13
 						}
+						loc: SourceLocation es2015/yield/inside-arrow-inside-generator/input.js 2:2-2:14
 					}
 					JSExpressionStatement {
-						loc: SourceLocation es2015/yield/inside-arrow-inside-generator/input.js 3:2-3:18
 						expression: JSArrowFunctionExpression {
-							loc: SourceLocation es2015/yield/inside-arrow-inside-generator/input.js 3:2-3:17
-							head: JSFunctionHead {
-								async: false
-								hasHoistedVars: false
-								params: Array []
-								rest: undefined
-								returnType: undefined
-								thisType: undefined
-								loc: SourceLocation es2015/yield/inside-arrow-inside-generator/input.js 3:2-3:7
-							}
 							body: JSBlockStatement {
-								directives: Array []
-								loc: SourceLocation es2015/yield/inside-arrow-inside-generator/input.js 3:8-3:17
-								body: Array [
+								body: [
 									JSExpressionStatement {
-										loc: SourceLocation es2015/yield/inside-arrow-inside-generator/input.js 3:10-3:15
 										expression: JSReferenceIdentifier {
 											name: "yield"
 											loc: SourceLocation es2015/yield/inside-arrow-inside-generator/input.js 3:10-3:15 (yield)
 										}
+										loc: SourceLocation es2015/yield/inside-arrow-inside-generator/input.js 3:10-3:15
 									}
 								]
+								directives: []
+								loc: SourceLocation es2015/yield/inside-arrow-inside-generator/input.js 3:8-3:17
 							}
+							head: JSFunctionHead {
+								async: false
+								hasHoistedVars: false
+								params: []
+								loc: SourceLocation es2015/yield/inside-arrow-inside-generator/input.js 3:2-3:7
+							}
+							loc: SourceLocation es2015/yield/inside-arrow-inside-generator/input.js 3:2-3:17
 						}
+						loc: SourceLocation es2015/yield/inside-arrow-inside-generator/input.js 3:2-3:18
 					}
 				]
+				directives: []
+				loc: SourceLocation es2015/yield/inside-arrow-inside-generator/input.js 1:15-4:1
 			}
+			head: JSFunctionHead {
+				async: false
+				generator: true
+				hasHoistedVars: false
+				params: []
+				loc: SourceLocation es2015/yield/inside-arrow-inside-generator/input.js 1:12-1:14
+			}
+			loc: SourceLocation es2015/yield/inside-arrow-inside-generator/input.js 1:0-4:1
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2015/yield/inside-arrow-inside-generator/input.js>
+	loc: SourceLocation es2015/yield/inside-arrow-inside-generator/input.js 1:0-4:1
 }
 ```
 

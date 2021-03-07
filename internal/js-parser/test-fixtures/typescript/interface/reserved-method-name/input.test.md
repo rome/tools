@@ -8,30 +8,16 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	loc: SourceLocation typescript/interface/reserved-method-name/input.ts 1:0-4:0
-	path: UIDPath<typescript/interface/reserved-method-name/input.ts>
-	syntax: Array ["ts"]
-	body: Array [
+	body: [
 		TSInterfaceDeclaration {
 			id: JSBindingIdentifier {
 				name: "I"
 				loc: SourceLocation typescript/interface/reserved-method-name/input.ts 1:10-1:11 (I)
 			}
-			extends: undefined
-			typeParameters: undefined
-			loc: SourceLocation typescript/interface/reserved-method-name/input.ts 1:0-3:1
 			body: TSInterfaceBody {
-				loc: SourceLocation typescript/interface/reserved-method-name/input.ts 1:12-3:1
-				body: Array [
+				body: [
 					TSMethodSignature {
+						optional: false
 						key: JSStaticPropertyKey {
 							value: JSIdentifier {
 								name: "catch"
@@ -39,20 +25,30 @@ JSRoot {
 							}
 							loc: SourceLocation typescript/interface/reserved-method-name/input.ts 2:4-2:9
 						}
-						optional: false
-						loc: SourceLocation typescript/interface/reserved-method-name/input.ts 2:4-2:18
-						returnType: TSVoidKeywordTypeAnnotation {loc: SourceLocation typescript/interface/reserved-method-name/input.ts 2:13-2:17}
 						meta: TSSignatureDeclarationMeta {
-							parameters: Array []
-							rest: undefined
-							typeParameters: undefined
+							parameters: []
 							loc: SourceLocation typescript/interface/reserved-method-name/input.ts 2:9-2:17
 						}
+						returnType: TSVoidKeywordTypeAnnotation {
+							loc: SourceLocation typescript/interface/reserved-method-name/input.ts 2:13-2:17
+						}
+						loc: SourceLocation typescript/interface/reserved-method-name/input.ts 2:4-2:18
 					}
 				]
+				loc: SourceLocation typescript/interface/reserved-method-name/input.ts 1:12-3:1
 			}
+			loc: SourceLocation typescript/interface/reserved-method-name/input.ts 1:0-3:1
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: ["ts"]
+	path: UIDPath<typescript/interface/reserved-method-name/input.ts>
+	loc: SourceLocation typescript/interface/reserved-method-name/input.ts 1:0-4:0
 }
 ```
 

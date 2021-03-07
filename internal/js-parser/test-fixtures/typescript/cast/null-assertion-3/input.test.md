@@ -8,46 +8,44 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	loc: SourceLocation typescript/cast/null-assertion-3/input.ts 1:0-2:0
-	path: UIDPath<typescript/cast/null-assertion-3/input.ts>
-	syntax: Array ["ts"]
-	body: Array [
+	body: [
 		JSVariableDeclarationStatement {
-			loc: SourceLocation typescript/cast/null-assertion-3/input.ts 1:0-1:17
 			declaration: JSVariableDeclaration {
 				kind: "const"
-				loc: SourceLocation typescript/cast/null-assertion-3/input.ts 1:0-1:17
-				declarations: Array [
+				declarations: [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "x"
 							loc: SourceLocation typescript/cast/null-assertion-3/input.ts 1:6-1:7 (x)
 						}
-						loc: SourceLocation typescript/cast/null-assertion-3/input.ts 1:6-1:16
 						init: TSNonNullExpression {
-							loc: SourceLocation typescript/cast/null-assertion-3/input.ts 1:10-1:16
 							expression: JSCallExpression {
-								arguments: Array []
-								loc: SourceLocation typescript/cast/null-assertion-3/input.ts 1:10-1:15
+								arguments: []
 								callee: JSReferenceIdentifier {
 									name: "foo"
 									loc: SourceLocation typescript/cast/null-assertion-3/input.ts 1:10-1:13 (foo)
 								}
+								loc: SourceLocation typescript/cast/null-assertion-3/input.ts 1:10-1:15
 							}
+							loc: SourceLocation typescript/cast/null-assertion-3/input.ts 1:10-1:16
 						}
+						loc: SourceLocation typescript/cast/null-assertion-3/input.ts 1:6-1:16
 					}
 				]
+				loc: SourceLocation typescript/cast/null-assertion-3/input.ts 1:0-1:17
 			}
+			loc: SourceLocation typescript/cast/null-assertion-3/input.ts 1:0-1:17
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: ["ts"]
+	path: UIDPath<typescript/cast/null-assertion-3/input.ts>
+	loc: SourceLocation typescript/cast/null-assertion-3/input.ts 1:0-2:0
 }
 ```
 

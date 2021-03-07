@@ -7,26 +7,19 @@
 ### `result`
 
 ```javascript
-Array [
-	"firefox:86"
-	"firefox:87"
-	"chrome:89"
-	"chrome:90"
-	"chrome:91"
-	"safari:1"
-]
+["firefox:86", "firefox:87", "chrome:89", "chrome:90", "chrome:91", "safari:1"]
 ```
 
 ### `targets`
 
 ```javascript
-Array [TargetBrowserState {state: "unreleased"}]
+[TargetBrowserState {state: "unreleased"}]
 ```
 
 ### `tokens`
 
 ```javascript
-Array [
+[
 	Unreleased {
 		end: ZeroIndexedNumber<10>
 		start: ZeroIndexedNumber<0>

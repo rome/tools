@@ -8,83 +8,74 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: true
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation esprima/es2015-yield/invalid-yield-generator-member-expression/input.js 1:0-2:0
-	path: UIDPath<esprima/es2015-yield/invalid-yield-generator-member-expression/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Expected a semicolon or a line terminator"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:28
-				path: UIDPath<esprima/es2015-yield/invalid-yield-generator-member-expression/input.js>
-				start: Position 1:28
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "g"
 				loc: SourceLocation esprima/es2015-yield/invalid-yield-generator-member-expression/input.js 1:10-1:11 (g)
 			}
-			loc: SourceLocation esprima/es2015-yield/invalid-yield-generator-member-expression/input.js 1:0-1:33
-			head: JSFunctionHead {
-				async: false
-				generator: true
-				hasHoistedVars: false
-				params: Array []
-				rest: undefined
-				returnType: undefined
-				thisType: undefined
-				typeParameters: undefined
-				loc: SourceLocation esprima/es2015-yield/invalid-yield-generator-member-expression/input.js 1:11-1:13
-			}
 			body: JSBlockStatement {
-				directives: Array []
-				loc: SourceLocation esprima/es2015-yield/invalid-yield-generator-member-expression/input.js 1:14-1:33
-				body: Array [
+				body: [
 					JSReturnStatement {
-						loc: SourceLocation esprima/es2015-yield/invalid-yield-generator-member-expression/input.js 1:16-1:28
 						argument: JSYieldExpression {
-							argument: undefined
 							delegate: false
 							loc: SourceLocation esprima/es2015-yield/invalid-yield-generator-member-expression/input.js 1:23-1:28
 						}
+						loc: SourceLocation esprima/es2015-yield/invalid-yield-generator-member-expression/input.js 1:16-1:28
 					}
 					JSExpressionStatement {
-						loc: SourceLocation esprima/es2015-yield/invalid-yield-generator-member-expression/input.js 1:28-1:29
 						expression: JSReferenceIdentifier {
 							name: "INVALID_PLACEHOLDER"
 							loc: SourceLocation esprima/es2015-yield/invalid-yield-generator-member-expression/input.js 1:28-1:29
 						}
+						loc: SourceLocation esprima/es2015-yield/invalid-yield-generator-member-expression/input.js 1:28-1:29
 					}
 					JSExpressionStatement {
-						loc: SourceLocation esprima/es2015-yield/invalid-yield-generator-member-expression/input.js 1:29-1:31
 						expression: JSReferenceIdentifier {
 							name: "x"
 							loc: SourceLocation esprima/es2015-yield/invalid-yield-generator-member-expression/input.js 1:29-1:30 (x)
 						}
+						loc: SourceLocation esprima/es2015-yield/invalid-yield-generator-member-expression/input.js 1:29-1:31
 					}
 				]
+				directives: []
+				loc: SourceLocation esprima/es2015-yield/invalid-yield-generator-member-expression/input.js 1:14-1:33
+			}
+			head: JSFunctionHead {
+				async: false
+				generator: true
+				hasHoistedVars: false
+				params: []
+				loc: SourceLocation esprima/es2015-yield/invalid-yield-generator-member-expression/input.js 1:11-1:13
+			}
+			loc: SourceLocation esprima/es2015-yield/invalid-yield-generator-member-expression/input.js 1:0-1:33
+		}
+	]
+	comments: []
+	corrupt: true
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "Expected a semicolon or a line terminator"}
+			}
+			location: {
+				language: "js"
+				path: UIDPath<esprima/es2015-yield/invalid-yield-generator-member-expression/input.js>
+				end: Position 1:28
+				start: Position 1:28
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<esprima/es2015-yield/invalid-yield-generator-member-expression/input.js>
+	loc: SourceLocation esprima/es2015-yield/invalid-yield-generator-member-expression/input.js 1:0-2:0
 }
 ```
 

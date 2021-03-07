@@ -8,224 +8,199 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	syntax: Array []
-	loc: SourceLocation experimental/export-extensions/export-with-ts/input.js 1:0-8:0
-	path: UIDPath<experimental/export-extensions/export-with-ts/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Expected `from` for an export node"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:15
-				path: UIDPath<experimental/export-extensions/export-with-ts/input.js>
-				start: Position 1:16
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSExportExternalDeclaration {
-			exportKind: undefined
-			namedSpecifiers: Array []
-			namespaceSpecifier: undefined
-			loc: SourceLocation experimental/export-extensions/export-with-ts/input.js 1:0-1:15
-			source: JSStringLiteral {
-				value: ""
-				loc: SourceLocation experimental/export-extensions/export-with-ts/input.js 1:16-1:15
-			}
+			namedSpecifiers: []
 			defaultSpecifier: JSExportDefaultSpecifier {
-				loc: SourceLocation experimental/export-extensions/export-with-ts/input.js 1:7-1:15
 				exported: JSIdentifier {
 					name: "abstract"
 					loc: SourceLocation experimental/export-extensions/export-with-ts/input.js 1:7-1:15 (abstract)
 				}
+				loc: SourceLocation experimental/export-extensions/export-with-ts/input.js 1:7-1:15
 			}
+			source: JSStringLiteral {
+				value: ""
+				loc: SourceLocation experimental/export-extensions/export-with-ts/input.js 1:16-1:15
+			}
+			loc: SourceLocation experimental/export-extensions/export-with-ts/input.js 1:0-1:15
 		}
 		JSClassDeclaration {
 			id: JSBindingIdentifier {
 				name: "A"
 				loc: SourceLocation experimental/export-extensions/export-with-ts/input.js 1:22-1:23 (A)
 			}
-			loc: SourceLocation experimental/export-extensions/export-with-ts/input.js 1:16-1:26
 			meta: JSClassHead {
-				body: Array []
-				implements: undefined
-				superClass: undefined
-				superTypeParameters: undefined
-				typeParameters: undefined
+				body: []
 				loc: SourceLocation experimental/export-extensions/export-with-ts/input.js 1:16-1:26
 			}
+			loc: SourceLocation experimental/export-extensions/export-with-ts/input.js 1:16-1:26
 		}
 		JSExportExternalDeclaration {
-			exportKind: undefined
-			namedSpecifiers: Array []
-			namespaceSpecifier: undefined
-			loc: SourceLocation experimental/export-extensions/export-with-ts/input.js 2:0-2:14
-			source: JSStringLiteral {
-				value: ""
-				loc: SourceLocation experimental/export-extensions/export-with-ts/input.js 2:15-2:14
-			}
+			namedSpecifiers: []
 			defaultSpecifier: JSExportDefaultSpecifier {
-				loc: SourceLocation experimental/export-extensions/export-with-ts/input.js 2:7-2:14
 				exported: JSIdentifier {
 					name: "declare"
 					loc: SourceLocation experimental/export-extensions/export-with-ts/input.js 2:7-2:14 (declare)
 				}
+				loc: SourceLocation experimental/export-extensions/export-with-ts/input.js 2:7-2:14
 			}
+			source: JSStringLiteral {
+				value: ""
+				loc: SourceLocation experimental/export-extensions/export-with-ts/input.js 2:15-2:14
+			}
+			loc: SourceLocation experimental/export-extensions/export-with-ts/input.js 2:0-2:14
 		}
 		TSInterfaceDeclaration {
 			id: JSBindingIdentifier {
 				name: "B"
 				loc: SourceLocation experimental/export-extensions/export-with-ts/input.js 2:25-2:26 (B)
 			}
-			extends: undefined
-			typeParameters: undefined
-			loc: SourceLocation experimental/export-extensions/export-with-ts/input.js 2:15-2:29
 			body: TSInterfaceBody {
-				body: Array []
+				body: []
 				loc: SourceLocation experimental/export-extensions/export-with-ts/input.js 2:27-2:29
 			}
+			loc: SourceLocation experimental/export-extensions/export-with-ts/input.js 2:15-2:29
 		}
 		JSExportExternalDeclaration {
-			exportKind: undefined
-			namedSpecifiers: Array []
-			namespaceSpecifier: undefined
-			loc: SourceLocation experimental/export-extensions/export-with-ts/input.js 3:0-3:11
-			source: JSStringLiteral {
-				value: ""
-				loc: SourceLocation experimental/export-extensions/export-with-ts/input.js 3:12-3:11
-			}
+			namedSpecifiers: []
 			defaultSpecifier: JSExportDefaultSpecifier {
-				loc: SourceLocation experimental/export-extensions/export-with-ts/input.js 3:7-3:11
 				exported: JSIdentifier {
 					name: "enum"
 					loc: SourceLocation experimental/export-extensions/export-with-ts/input.js 3:7-3:11 (enum)
 				}
+				loc: SourceLocation experimental/export-extensions/export-with-ts/input.js 3:7-3:11
 			}
+			source: JSStringLiteral {
+				value: ""
+				loc: SourceLocation experimental/export-extensions/export-with-ts/input.js 3:12-3:11
+			}
+			loc: SourceLocation experimental/export-extensions/export-with-ts/input.js 3:0-3:11
 		}
 		JSExpressionStatement {
-			loc: SourceLocation experimental/export-extensions/export-with-ts/input.js 3:12-3:13
 			expression: JSReferenceIdentifier {
 				name: "C"
 				loc: SourceLocation experimental/export-extensions/export-with-ts/input.js 3:12-3:13 (C)
 			}
+			loc: SourceLocation experimental/export-extensions/export-with-ts/input.js 3:12-3:13
 		}
 		JSBlockStatement {
-			body: Array []
-			directives: Array []
+			body: []
+			directives: []
 			loc: SourceLocation experimental/export-extensions/export-with-ts/input.js 3:14-3:16
 		}
 		JSExportLocalDeclaration {
 			exportKind: "type"
-			specifiers: undefined
-			loc: SourceLocation experimental/export-extensions/export-with-ts/input.js 4:0-4:21
 			declaration: TSInterfaceDeclaration {
 				id: JSBindingIdentifier {
 					name: "D"
 					loc: SourceLocation experimental/export-extensions/export-with-ts/input.js 4:17-4:18 (D)
 				}
-				extends: undefined
-				typeParameters: undefined
-				loc: SourceLocation experimental/export-extensions/export-with-ts/input.js 4:7-4:21
 				body: TSInterfaceBody {
-					body: Array []
+					body: []
 					loc: SourceLocation experimental/export-extensions/export-with-ts/input.js 4:19-4:21
 				}
+				loc: SourceLocation experimental/export-extensions/export-with-ts/input.js 4:7-4:21
 			}
+			loc: SourceLocation experimental/export-extensions/export-with-ts/input.js 4:0-4:21
 		}
 		JSExportExternalDeclaration {
-			exportKind: undefined
-			namedSpecifiers: Array []
-			namespaceSpecifier: undefined
-			loc: SourceLocation experimental/export-extensions/export-with-ts/input.js 5:0-5:13
-			source: JSStringLiteral {
-				value: ""
-				loc: SourceLocation experimental/export-extensions/export-with-ts/input.js 5:14-5:13
-			}
+			namedSpecifiers: []
 			defaultSpecifier: JSExportDefaultSpecifier {
-				loc: SourceLocation experimental/export-extensions/export-with-ts/input.js 5:7-5:13
 				exported: JSIdentifier {
 					name: "module"
 					loc: SourceLocation experimental/export-extensions/export-with-ts/input.js 5:7-5:13 (module)
 				}
+				loc: SourceLocation experimental/export-extensions/export-with-ts/input.js 5:7-5:13
 			}
+			source: JSStringLiteral {
+				value: ""
+				loc: SourceLocation experimental/export-extensions/export-with-ts/input.js 5:14-5:13
+			}
+			loc: SourceLocation experimental/export-extensions/export-with-ts/input.js 5:0-5:13
 		}
 		JSExpressionStatement {
-			loc: SourceLocation experimental/export-extensions/export-with-ts/input.js 5:14-5:15
 			expression: JSReferenceIdentifier {
 				name: "E"
 				loc: SourceLocation experimental/export-extensions/export-with-ts/input.js 5:14-5:15 (E)
 			}
+			loc: SourceLocation experimental/export-extensions/export-with-ts/input.js 5:14-5:15
 		}
 		JSBlockStatement {
-			body: Array []
-			directives: Array []
+			body: []
+			directives: []
 			loc: SourceLocation experimental/export-extensions/export-with-ts/input.js 5:16-5:18
 		}
 		JSExportExternalDeclaration {
-			exportKind: undefined
-			namedSpecifiers: Array []
-			namespaceSpecifier: undefined
-			loc: SourceLocation experimental/export-extensions/export-with-ts/input.js 6:0-6:16
-			source: JSStringLiteral {
-				value: ""
-				loc: SourceLocation experimental/export-extensions/export-with-ts/input.js 6:17-6:16
-			}
+			namedSpecifiers: []
 			defaultSpecifier: JSExportDefaultSpecifier {
-				loc: SourceLocation experimental/export-extensions/export-with-ts/input.js 6:7-6:16
 				exported: JSIdentifier {
 					name: "namespace"
 					loc: SourceLocation experimental/export-extensions/export-with-ts/input.js 6:7-6:16 (namespace)
 				}
+				loc: SourceLocation experimental/export-extensions/export-with-ts/input.js 6:7-6:16
 			}
+			source: JSStringLiteral {
+				value: ""
+				loc: SourceLocation experimental/export-extensions/export-with-ts/input.js 6:17-6:16
+			}
+			loc: SourceLocation experimental/export-extensions/export-with-ts/input.js 6:0-6:16
 		}
 		JSExpressionStatement {
-			loc: SourceLocation experimental/export-extensions/export-with-ts/input.js 6:17-6:18
 			expression: JSReferenceIdentifier {
 				name: "F"
 				loc: SourceLocation experimental/export-extensions/export-with-ts/input.js 6:17-6:18 (F)
 			}
+			loc: SourceLocation experimental/export-extensions/export-with-ts/input.js 6:17-6:18
 		}
 		JSBlockStatement {
-			body: Array []
-			directives: Array []
+			body: []
+			directives: []
 			loc: SourceLocation experimental/export-extensions/export-with-ts/input.js 6:19-6:21
 		}
 		JSExportLocalDeclaration {
 			exportKind: "type"
-			specifiers: undefined
-			loc: SourceLocation experimental/export-extensions/export-with-ts/input.js 7:0-7:27
 			declaration: TSTypeAlias {
 				id: JSBindingIdentifier {
 					name: "G"
 					loc: SourceLocation experimental/export-extensions/export-with-ts/input.js 7:12-7:13 (G)
 				}
-				typeParameters: undefined
-				loc: SourceLocation experimental/export-extensions/export-with-ts/input.js 7:7-7:27
 				right: TSTypeQuery {
-					loc: SourceLocation experimental/export-extensions/export-with-ts/input.js 7:16-7:26
 					exprName: JSReferenceIdentifier {
 						name: "foo"
 						loc: SourceLocation experimental/export-extensions/export-with-ts/input.js 7:23-7:26 (foo)
 					}
+					loc: SourceLocation experimental/export-extensions/export-with-ts/input.js 7:16-7:26
 				}
+				loc: SourceLocation experimental/export-extensions/export-with-ts/input.js 7:7-7:27
+			}
+			loc: SourceLocation experimental/export-extensions/export-with-ts/input.js 7:0-7:27
+		}
+	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "Expected `from` for an export node"}
+			}
+			location: {
+				language: "js"
+				path: UIDPath<experimental/export-extensions/export-with-ts/input.js>
+				end: Position 1:15
+				start: Position 1:16
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: []
+	path: UIDPath<experimental/export-extensions/export-with-ts/input.js>
+	loc: SourceLocation experimental/export-extensions/export-with-ts/input.js 1:0-8:0
 }
 ```
 

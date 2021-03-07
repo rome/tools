@@ -8,30 +8,16 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: true
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation esprima/expression-primary-literal-regular-expression/migrated_0012/input.js 1:0-1:21
-	path: UIDPath<esprima/expression-primary-literal-regular-expression/migrated_0012/input.js>
-	body: Array [
+	body: [
 		JSVariableDeclarationStatement {
-			loc: SourceLocation esprima/expression-primary-literal-regular-expression/migrated_0012/input.js 1:0-1:21
 			declaration: JSVariableDeclaration {
 				kind: "var"
-				loc: SourceLocation esprima/expression-primary-literal-regular-expression/migrated_0012/input.js 1:0-1:21
-				declarations: Array [
+				declarations: [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "x"
 							loc: SourceLocation esprima/expression-primary-literal-regular-expression/migrated_0012/input.js 1:4-1:5 (x)
 						}
-						loc: SourceLocation esprima/expression-primary-literal-regular-expression/migrated_0012/input.js 1:4-1:21
 						init: JSRegExpLiteral {
 							global: true
 							insensitive: false
@@ -39,48 +25,60 @@ JSRoot {
 							noDotNewline: false
 							sticky: false
 							unicode: false
-							loc: SourceLocation esprima/expression-primary-literal-regular-expression/migrated_0012/input.js 1:8-1:21
 							expression: JSRegExpSubExpression {
-								loc: SourceLocation esprima/expression-primary-literal-regular-expression/migrated_0012/input.js 1:9-1:18
-								body: Array [
+								body: [
 									JSRegExpCharacter {
 										value: "="
 										loc: SourceLocation esprima/expression-primary-literal-regular-expression/migrated_0012/input.js 1:9-1:10
 									}
 									JSRegExpQuantified {
 										lazy: false
-										max: undefined
 										min: 1
-										loc: SourceLocation esprima/expression-primary-literal-regular-expression/migrated_0012/input.js 1:10-1:18
 										target: JSRegExpGroupCapture {
-											name: undefined
-											loc: SourceLocation esprima/expression-primary-literal-regular-expression/migrated_0012/input.js 1:10-1:18
 											expression: JSRegExpSubExpression {
-												loc: SourceLocation esprima/expression-primary-literal-regular-expression/migrated_0012/input.js 1:11-1:17
-												body: Array [
+												body: [
 													JSRegExpCharSet {
-														invert: true
-														loc: SourceLocation esprima/expression-primary-literal-regular-expression/migrated_0012/input.js 1:11-1:17
-														body: Array [
+														body: [
 															JSRegExpCharacter {
 																value: "="
 																loc: SourceLocation esprima/expression-primary-literal-regular-expression/migrated_0012/input.js 1:13-1:14
 															}
-															JSRegExpWhiteSpaceCharacter {loc: SourceLocation esprima/expression-primary-literal-regular-expression/migrated_0012/input.js 1:14-1:16}
+															JSRegExpWhiteSpaceCharacter {
+																loc: SourceLocation esprima/expression-primary-literal-regular-expression/migrated_0012/input.js 1:14-1:16
+															}
 														]
+														invert: true
+														loc: SourceLocation esprima/expression-primary-literal-regular-expression/migrated_0012/input.js 1:11-1:17
 													}
 												]
+												loc: SourceLocation esprima/expression-primary-literal-regular-expression/migrated_0012/input.js 1:11-1:17
 											}
+											loc: SourceLocation esprima/expression-primary-literal-regular-expression/migrated_0012/input.js 1:10-1:18
 										}
+										loc: SourceLocation esprima/expression-primary-literal-regular-expression/migrated_0012/input.js 1:10-1:18
 									}
 								]
+								loc: SourceLocation esprima/expression-primary-literal-regular-expression/migrated_0012/input.js 1:9-1:18
 							}
+							loc: SourceLocation esprima/expression-primary-literal-regular-expression/migrated_0012/input.js 1:8-1:21
 						}
+						loc: SourceLocation esprima/expression-primary-literal-regular-expression/migrated_0012/input.js 1:4-1:21
 					}
 				]
+				loc: SourceLocation esprima/expression-primary-literal-regular-expression/migrated_0012/input.js 1:0-1:21
 			}
+			loc: SourceLocation esprima/expression-primary-literal-regular-expression/migrated_0012/input.js 1:0-1:21
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: true
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<esprima/expression-primary-literal-regular-expression/migrated_0012/input.js>
+	loc: SourceLocation esprima/expression-primary-literal-regular-expression/migrated_0012/input.js 1:0-1:21
 }
 ```
 

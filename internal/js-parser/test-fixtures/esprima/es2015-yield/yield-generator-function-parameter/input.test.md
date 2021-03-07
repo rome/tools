@@ -8,89 +8,76 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation esprima/es2015-yield/yield-generator-function-parameter/input.js 1:0-2:0
-	path: UIDPath<esprima/es2015-yield/yield-generator-function-parameter/input.js>
-	body: Array [
+	body: [
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "g"
 				loc: SourceLocation esprima/es2015-yield/yield-generator-function-parameter/input.js 1:10-1:11 (g)
 			}
-			loc: SourceLocation esprima/es2015-yield/yield-generator-function-parameter/input.js 1:0-1:44
-			head: JSFunctionHead {
-				async: false
-				generator: true
-				hasHoistedVars: true
-				params: Array []
-				rest: undefined
-				returnType: undefined
-				thisType: undefined
-				typeParameters: undefined
-				loc: SourceLocation esprima/es2015-yield/yield-generator-function-parameter/input.js 1:11-1:13
-			}
 			body: JSBlockStatement {
-				directives: Array []
-				loc: SourceLocation esprima/es2015-yield/yield-generator-function-parameter/input.js 1:14-1:44
-				body: Array [
+				body: [
 					JSVariableDeclarationStatement {
-						loc: SourceLocation esprima/es2015-yield/yield-generator-function-parameter/input.js 1:16-1:42
 						declaration: JSVariableDeclaration {
 							kind: "var"
-							loc: SourceLocation esprima/es2015-yield/yield-generator-function-parameter/input.js 1:16-1:42
-							declarations: Array [
+							declarations: [
 								JSVariableDeclarator {
 									id: JSBindingIdentifier {
 										name: "z"
 										loc: SourceLocation esprima/es2015-yield/yield-generator-function-parameter/input.js 1:20-1:21 (z)
 									}
-									loc: SourceLocation esprima/es2015-yield/yield-generator-function-parameter/input.js 1:20-1:42
 									init: JSFunctionExpression {
-										id: undefined
-										loc: SourceLocation esprima/es2015-yield/yield-generator-function-parameter/input.js 1:24-1:42
 										body: JSBlockStatement {
-											body: Array []
-											directives: Array []
+											body: []
+											directives: []
 											loc: SourceLocation esprima/es2015-yield/yield-generator-function-parameter/input.js 1:40-1:42
 										}
 										head: JSFunctionHead {
 											async: false
 											generator: false
 											hasHoistedVars: false
-											rest: undefined
-											returnType: undefined
-											thisType: undefined
-											typeParameters: undefined
-											loc: SourceLocation esprima/es2015-yield/yield-generator-function-parameter/input.js 1:32-1:39
-											params: Array [
+											params: [
 												JSBindingIdentifier {
 													name: "yield"
-													loc: SourceLocation esprima/es2015-yield/yield-generator-function-parameter/input.js 1:33-1:38 (yield)
 													meta: JSPatternMeta {
-														optional: undefined
-														typeAnnotation: undefined
 														loc: SourceLocation esprima/es2015-yield/yield-generator-function-parameter/input.js 1:33-1:38
 													}
+													loc: SourceLocation esprima/es2015-yield/yield-generator-function-parameter/input.js 1:33-1:38 (yield)
 												}
 											]
+											loc: SourceLocation esprima/es2015-yield/yield-generator-function-parameter/input.js 1:32-1:39
 										}
+										loc: SourceLocation esprima/es2015-yield/yield-generator-function-parameter/input.js 1:24-1:42
 									}
+									loc: SourceLocation esprima/es2015-yield/yield-generator-function-parameter/input.js 1:20-1:42
 								}
 							]
+							loc: SourceLocation esprima/es2015-yield/yield-generator-function-parameter/input.js 1:16-1:42
 						}
+						loc: SourceLocation esprima/es2015-yield/yield-generator-function-parameter/input.js 1:16-1:42
 					}
 				]
+				directives: []
+				loc: SourceLocation esprima/es2015-yield/yield-generator-function-parameter/input.js 1:14-1:44
 			}
+			head: JSFunctionHead {
+				async: false
+				generator: true
+				hasHoistedVars: true
+				params: []
+				loc: SourceLocation esprima/es2015-yield/yield-generator-function-parameter/input.js 1:11-1:13
+			}
+			loc: SourceLocation esprima/es2015-yield/yield-generator-function-parameter/input.js 1:0-1:44
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<esprima/es2015-yield/yield-generator-function-parameter/input.js>
+	loc: SourceLocation esprima/es2015-yield/yield-generator-function-parameter/input.js 1:0-2:0
 }
 ```
 

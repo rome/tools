@@ -8,45 +8,9 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation esprima/invalid-syntax/migrated_0094/input.js 1:0-2:0
-	path: UIDPath<esprima/invalid-syntax/migrated_0094/input.js>
-	directives: Array [
-		JSDirective {
-			value: "use strict"
-			loc: SourceLocation esprima/invalid-syntax/migrated_0094/input.js 1:0-1:13
-		}
-	]
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Legacy octal literals are not allowed in strict mode"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:23
-				path: UIDPath<esprima/invalid-syntax/migrated_0094/input.js>
-				start: Position 1:23
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation esprima/invalid-syntax/migrated_0094/input.js 1:14-1:23
 			expression: JSArrowFunctionExpression {
-				loc: SourceLocation esprima/invalid-syntax/migrated_0094/input.js 1:14-1:23
 				body: JSNumericLiteral {
 					value: 0
 					format: "octal"
@@ -55,20 +19,49 @@ JSRoot {
 				head: JSFunctionHead {
 					async: false
 					hasHoistedVars: false
-					rest: undefined
-					returnType: undefined
-					thisType: undefined
-					loc: SourceLocation esprima/invalid-syntax/migrated_0094/input.js 1:14-1:20
-					params: Array [
+					params: [
 						JSBindingIdentifier {
 							name: "a"
 							loc: SourceLocation esprima/invalid-syntax/migrated_0094/input.js 1:15-1:16 (a)
 						}
 					]
+					loc: SourceLocation esprima/invalid-syntax/migrated_0094/input.js 1:14-1:20
 				}
+				loc: SourceLocation esprima/invalid-syntax/migrated_0094/input.js 1:14-1:23
+			}
+			loc: SourceLocation esprima/invalid-syntax/migrated_0094/input.js 1:14-1:23
+		}
+	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "Legacy octal literals are not allowed in strict mode"}
+			}
+			location: {
+				language: "js"
+				path: UIDPath<esprima/invalid-syntax/migrated_0094/input.js>
+				end: Position 1:23
+				start: Position 1:23
 			}
 		}
 	]
+	directives: [
+		JSDirective {
+			value: "use strict"
+			loc: SourceLocation esprima/invalid-syntax/migrated_0094/input.js 1:0-1:13
+		}
+	]
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<esprima/invalid-syntax/migrated_0094/input.js>
+	loc: SourceLocation esprima/invalid-syntax/migrated_0094/input.js 1:0-2:0
 }
 ```
 

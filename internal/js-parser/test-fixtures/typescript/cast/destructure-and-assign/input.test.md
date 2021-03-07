@@ -8,99 +8,95 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	loc: SourceLocation typescript/cast/destructure-and-assign/input.ts 1:0-3:0
-	path: UIDPath<typescript/cast/destructure-and-assign/input.ts>
-	syntax: Array ["ts"]
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Unexpected type cast in parameter position"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:12
-				path: UIDPath<typescript/cast/destructure-and-assign/input.ts>
-				start: Position 1:1
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation typescript/cast/destructure-and-assign/input.ts 1:0-1:21
 			expression: JSAssignmentExpression {
 				operator: "="
-				loc: SourceLocation typescript/cast/destructure-and-assign/input.ts 1:0-1:20
-				right: JSArrayExpression {
-					loc: SourceLocation typescript/cast/destructure-and-assign/input.ts 1:16-1:20
-					elements: Array [
-						JSNumericLiteral {
-							value: 42
-							format: undefined
-							loc: SourceLocation typescript/cast/destructure-and-assign/input.ts 1:17-1:19
-						}
-					]
-				}
 				left: JSAssignmentArrayPattern {
-					rest: undefined
-					loc: SourceLocation typescript/cast/destructure-and-assign/input.ts 1:0-1:13
-					elements: Array [
+					elements: [
 						TSAssignmentAsExpression {
-							loc: SourceLocation typescript/cast/destructure-and-assign/input.ts 1:1-1:12
-							typeAnnotation: TSNumberKeywordTypeAnnotation {loc: SourceLocation typescript/cast/destructure-and-assign/input.ts 1:6-1:12}
 							expression: JSAssignmentIdentifier {
 								name: "a"
 								loc: SourceLocation typescript/cast/destructure-and-assign/input.ts 1:1-1:2 (a)
 							}
+							typeAnnotation: TSNumberKeywordTypeAnnotation {
+								loc: SourceLocation typescript/cast/destructure-and-assign/input.ts 1:6-1:12
+							}
+							loc: SourceLocation typescript/cast/destructure-and-assign/input.ts 1:1-1:12
 						}
 					]
+					loc: SourceLocation typescript/cast/destructure-and-assign/input.ts 1:0-1:13
 				}
-			}
-		}
-		JSExpressionStatement {
-			loc: SourceLocation typescript/cast/destructure-and-assign/input.ts 2:0-2:19
-			expression: JSAssignmentExpression {
-				operator: "="
-				loc: SourceLocation typescript/cast/destructure-and-assign/input.ts 2:0-2:18
 				right: JSArrayExpression {
-					loc: SourceLocation typescript/cast/destructure-and-assign/input.ts 2:14-2:18
-					elements: Array [
+					elements: [
 						JSNumericLiteral {
 							value: 42
-							format: undefined
-							loc: SourceLocation typescript/cast/destructure-and-assign/input.ts 2:15-2:17
+							loc: SourceLocation typescript/cast/destructure-and-assign/input.ts 1:17-1:19
 						}
 					]
+					loc: SourceLocation typescript/cast/destructure-and-assign/input.ts 1:16-1:20
 				}
+				loc: SourceLocation typescript/cast/destructure-and-assign/input.ts 1:0-1:20
+			}
+			loc: SourceLocation typescript/cast/destructure-and-assign/input.ts 1:0-1:21
+		}
+		JSExpressionStatement {
+			expression: JSAssignmentExpression {
+				operator: "="
 				left: JSAssignmentArrayPattern {
-					rest: undefined
-					loc: SourceLocation typescript/cast/destructure-and-assign/input.ts 2:0-2:11
-					elements: Array [
+					elements: [
 						TSAssignmentTypeAssertion {
-							loc: SourceLocation typescript/cast/destructure-and-assign/input.ts 2:1-2:10
-							typeAnnotation: TSNumberKeywordTypeAnnotation {loc: SourceLocation typescript/cast/destructure-and-assign/input.ts 2:2-2:8}
 							expression: JSAssignmentIdentifier {
 								name: "a"
 								loc: SourceLocation typescript/cast/destructure-and-assign/input.ts 2:9-2:10 (a)
 							}
+							typeAnnotation: TSNumberKeywordTypeAnnotation {
+								loc: SourceLocation typescript/cast/destructure-and-assign/input.ts 2:2-2:8
+							}
+							loc: SourceLocation typescript/cast/destructure-and-assign/input.ts 2:1-2:10
 						}
 					]
+					loc: SourceLocation typescript/cast/destructure-and-assign/input.ts 2:0-2:11
 				}
+				right: JSArrayExpression {
+					elements: [
+						JSNumericLiteral {
+							value: 42
+							loc: SourceLocation typescript/cast/destructure-and-assign/input.ts 2:15-2:17
+						}
+					]
+					loc: SourceLocation typescript/cast/destructure-and-assign/input.ts 2:14-2:18
+				}
+				loc: SourceLocation typescript/cast/destructure-and-assign/input.ts 2:0-2:18
+			}
+			loc: SourceLocation typescript/cast/destructure-and-assign/input.ts 2:0-2:19
+		}
+	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "Unexpected type cast in parameter position"}
+			}
+			location: {
+				language: "js"
+				path: UIDPath<typescript/cast/destructure-and-assign/input.ts>
+				end: Position 1:12
+				start: Position 1:1
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: ["ts"]
+	path: UIDPath<typescript/cast/destructure-and-assign/input.ts>
+	loc: SourceLocation typescript/cast/destructure-and-assign/input.ts 1:0-3:0
 }
 ```
 

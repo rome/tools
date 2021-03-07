@@ -7,28 +7,19 @@
 ### `result`
 
 ```javascript
-Array [
-	"firefox:87"
-	"firefox:86"
-]
+["firefox:87", "firefox:86"]
 ```
 
 ### `targets`
 
 ```javascript
-Array [
-	TargetBrowserLast {
-		browser: "Firefox"
-		qty: 2
-		unit: "versions"
-	}
-]
+[TargetBrowserLast {browser: "Firefox", qty: 2, unit: "versions"}]
 ```
 
 ### `tokens`
 
 ```javascript
-Array [
+[
 	Last {
 		end: ZeroIndexedNumber<4>
 		start: ZeroIndexedNumber<0>

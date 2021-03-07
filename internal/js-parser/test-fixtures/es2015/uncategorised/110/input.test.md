@@ -8,57 +8,54 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2015/uncategorised/110/input.js 1:0-1:31
-	path: UIDPath<es2015/uncategorised/110/input.js>
-	body: Array [
+	body: [
 		JSForOfStatement {
 			await: false
-			loc: SourceLocation es2015/uncategorised/110/input.js 1:0-1:31
-			right: JSReferenceIdentifier {
-				name: "list"
-				loc: SourceLocation es2015/uncategorised/110/input.js 1:14-1:18 (list)
-			}
-			left: JSVariableDeclaration {
-				kind: "let"
-				loc: SourceLocation es2015/uncategorised/110/input.js 1:5-1:10
-				declarations: Array [
-					JSVariableDeclarator {
-						id: JSBindingIdentifier {
-							name: "x"
-							loc: SourceLocation es2015/uncategorised/110/input.js 1:9-1:10 (x)
-						}
-						init: undefined
-						loc: SourceLocation es2015/uncategorised/110/input.js 1:9-1:10
-					}
-				]
-			}
 			body: JSExpressionStatement {
-				loc: SourceLocation es2015/uncategorised/110/input.js 1:20-1:31
 				expression: JSCallExpression {
-					loc: SourceLocation es2015/uncategorised/110/input.js 1:20-1:30
-					callee: JSReferenceIdentifier {
-						name: "process"
-						loc: SourceLocation es2015/uncategorised/110/input.js 1:20-1:27 (process)
-					}
-					arguments: Array [
+					arguments: [
 						JSReferenceIdentifier {
 							name: "x"
 							loc: SourceLocation es2015/uncategorised/110/input.js 1:28-1:29 (x)
 						}
 					]
+					callee: JSReferenceIdentifier {
+						name: "process"
+						loc: SourceLocation es2015/uncategorised/110/input.js 1:20-1:27 (process)
+					}
+					loc: SourceLocation es2015/uncategorised/110/input.js 1:20-1:30
 				}
+				loc: SourceLocation es2015/uncategorised/110/input.js 1:20-1:31
 			}
+			left: JSVariableDeclaration {
+				kind: "let"
+				declarations: [
+					JSVariableDeclarator {
+						id: JSBindingIdentifier {
+							name: "x"
+							loc: SourceLocation es2015/uncategorised/110/input.js 1:9-1:10 (x)
+						}
+						loc: SourceLocation es2015/uncategorised/110/input.js 1:9-1:10
+					}
+				]
+				loc: SourceLocation es2015/uncategorised/110/input.js 1:5-1:10
+			}
+			right: JSReferenceIdentifier {
+				name: "list"
+				loc: SourceLocation es2015/uncategorised/110/input.js 1:14-1:18 (list)
+			}
+			loc: SourceLocation es2015/uncategorised/110/input.js 1:0-1:31
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2015/uncategorised/110/input.js>
+	loc: SourceLocation es2015/uncategorised/110/input.js 1:0-1:31
 }
 ```
 

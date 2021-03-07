@@ -8,55 +8,51 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: true
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation esprima/statement-iteration/migrated_0013/input.js 1:0-2:0
-	path: UIDPath<esprima/statement-iteration/migrated_0013/input.js>
-	body: Array [
+	body: [
 		JSForStatement {
-			test: undefined
-			update: undefined
-			body: JSEmptyStatement {loc: SourceLocation esprima/statement-iteration/migrated_0013/input.js 1:23-1:24}
-			loc: SourceLocation esprima/statement-iteration/migrated_0013/input.js 1:0-1:24
+			body: JSEmptyStatement {
+				loc: SourceLocation esprima/statement-iteration/migrated_0013/input.js 1:23-1:24
+			}
 			init: JSVariableDeclaration {
 				kind: "var"
-				loc: SourceLocation esprima/statement-iteration/migrated_0013/input.js 1:4-1:20
-				declarations: Array [
+				declarations: [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "x"
 							loc: SourceLocation esprima/statement-iteration/migrated_0013/input.js 1:8-1:9 (x)
 						}
-						loc: SourceLocation esprima/statement-iteration/migrated_0013/input.js 1:8-1:13
 						init: JSNumericLiteral {
 							value: 0
-							format: undefined
 							loc: SourceLocation esprima/statement-iteration/migrated_0013/input.js 1:12-1:13
 						}
+						loc: SourceLocation esprima/statement-iteration/migrated_0013/input.js 1:8-1:13
 					}
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "y"
 							loc: SourceLocation esprima/statement-iteration/migrated_0013/input.js 1:15-1:16 (y)
 						}
-						loc: SourceLocation esprima/statement-iteration/migrated_0013/input.js 1:15-1:20
 						init: JSNumericLiteral {
 							value: 1
-							format: undefined
 							loc: SourceLocation esprima/statement-iteration/migrated_0013/input.js 1:19-1:20
 						}
+						loc: SourceLocation esprima/statement-iteration/migrated_0013/input.js 1:15-1:20
 					}
 				]
+				loc: SourceLocation esprima/statement-iteration/migrated_0013/input.js 1:4-1:20
 			}
+			loc: SourceLocation esprima/statement-iteration/migrated_0013/input.js 1:0-1:24
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: true
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<esprima/statement-iteration/migrated_0013/input.js>
+	loc: SourceLocation esprima/statement-iteration/migrated_0013/input.js 1:0-2:0
 }
 ```
 

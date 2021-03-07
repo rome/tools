@@ -8,109 +8,95 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	syntax: Array []
-	loc: SourceLocation es2015/modules/duplicate-named-export-destructuring18/input.js 1:0-4:0
-	path: UIDPath<es2015/modules/duplicate-named-export-destructuring18/input.js>
-	body: Array [
+	body: [
 		JSExportLocalDeclaration {
 			exportKind: "value"
-			specifiers: undefined
-			loc: SourceLocation es2015/modules/duplicate-named-export-destructuring18/input.js 1:0-1:21
 			declaration: JSVariableDeclarationStatement {
-				loc: SourceLocation es2015/modules/duplicate-named-export-destructuring18/input.js 1:7-1:21
 				declaration: JSVariableDeclaration {
 					kind: "const"
-					loc: SourceLocation es2015/modules/duplicate-named-export-destructuring18/input.js 1:7-1:21
-					declarations: Array [
+					declarations: [
 						JSVariableDeclarator {
 							id: JSBindingIdentifier {
 								name: "foo"
 								loc: SourceLocation es2015/modules/duplicate-named-export-destructuring18/input.js 1:13-1:16 (foo)
 							}
-							loc: SourceLocation es2015/modules/duplicate-named-export-destructuring18/input.js 1:13-1:20
 							init: JSNumericLiteral {
 								value: 1
-								format: undefined
 								loc: SourceLocation es2015/modules/duplicate-named-export-destructuring18/input.js 1:19-1:20
 							}
+							loc: SourceLocation es2015/modules/duplicate-named-export-destructuring18/input.js 1:13-1:20
 						}
 					]
+					loc: SourceLocation es2015/modules/duplicate-named-export-destructuring18/input.js 1:7-1:21
 				}
+				loc: SourceLocation es2015/modules/duplicate-named-export-destructuring18/input.js 1:7-1:21
 			}
+			loc: SourceLocation es2015/modules/duplicate-named-export-destructuring18/input.js 1:0-1:21
 		}
 		JSExportLocalDeclaration {
 			exportKind: "value"
-			specifiers: undefined
-			loc: SourceLocation es2015/modules/duplicate-named-export-destructuring18/input.js 2:0-2:40
 			declaration: JSVariableDeclarationStatement {
-				loc: SourceLocation es2015/modules/duplicate-named-export-destructuring18/input.js 2:7-2:40
 				declaration: JSVariableDeclaration {
 					kind: "const"
-					loc: SourceLocation es2015/modules/duplicate-named-export-destructuring18/input.js 2:7-2:40
-					declarations: Array [
+					declarations: [
 						JSVariableDeclarator {
 							id: JSBindingArrayPattern {
-								rest: undefined
-								loc: SourceLocation es2015/modules/duplicate-named-export-destructuring18/input.js 2:13-2:33
-								elements: Array [
+								elements: [
 									JSBindingIdentifier {
 										name: "bar"
-										loc: SourceLocation es2015/modules/duplicate-named-export-destructuring18/input.js 2:14-2:17 (bar)
 										meta: JSPatternMeta {
-											optional: undefined
-											typeAnnotation: undefined
 											loc: SourceLocation es2015/modules/duplicate-named-export-destructuring18/input.js 2:14-2:17
 										}
+										loc: SourceLocation es2015/modules/duplicate-named-export-destructuring18/input.js 2:14-2:17 (bar)
 									}
 									JSBindingArrayPattern {
-										loc: SourceLocation es2015/modules/duplicate-named-export-destructuring18/input.js 2:19-2:32
+										elements: [
+											JSBindingIdentifier {
+												name: "baz"
+												meta: JSPatternMeta {
+													loc: SourceLocation es2015/modules/duplicate-named-export-destructuring18/input.js 2:20-2:23
+												}
+												loc: SourceLocation es2015/modules/duplicate-named-export-destructuring18/input.js 2:20-2:23 (baz)
+											}
+										]
 										meta: JSPatternMeta {
-											optional: undefined
-											typeAnnotation: undefined
 											loc: SourceLocation es2015/modules/duplicate-named-export-destructuring18/input.js 2:19-2:32
 										}
 										rest: JSBindingIdentifier {
 											name: "foo"
-											loc: SourceLocation es2015/modules/duplicate-named-export-destructuring18/input.js 2:28-2:31 (foo)
 											meta: JSPatternMeta {
-												optional: undefined
-												typeAnnotation: undefined
 												loc: SourceLocation es2015/modules/duplicate-named-export-destructuring18/input.js 2:28-2:31
 											}
+											loc: SourceLocation es2015/modules/duplicate-named-export-destructuring18/input.js 2:28-2:31 (foo)
 										}
-										elements: Array [
-											JSBindingIdentifier {
-												name: "baz"
-												loc: SourceLocation es2015/modules/duplicate-named-export-destructuring18/input.js 2:20-2:23 (baz)
-												meta: JSPatternMeta {
-													optional: undefined
-													typeAnnotation: undefined
-													loc: SourceLocation es2015/modules/duplicate-named-export-destructuring18/input.js 2:20-2:23
-												}
-											}
-										]
+										loc: SourceLocation es2015/modules/duplicate-named-export-destructuring18/input.js 2:19-2:32
 									}
 								]
+								loc: SourceLocation es2015/modules/duplicate-named-export-destructuring18/input.js 2:13-2:33
 							}
-							loc: SourceLocation es2015/modules/duplicate-named-export-destructuring18/input.js 2:13-2:39
 							init: JSReferenceIdentifier {
 								name: "qux"
 								loc: SourceLocation es2015/modules/duplicate-named-export-destructuring18/input.js 2:36-2:39 (qux)
 							}
+							loc: SourceLocation es2015/modules/duplicate-named-export-destructuring18/input.js 2:13-2:39
 						}
 					]
+					loc: SourceLocation es2015/modules/duplicate-named-export-destructuring18/input.js 2:7-2:40
 				}
+				loc: SourceLocation es2015/modules/duplicate-named-export-destructuring18/input.js 2:7-2:40
 			}
+			loc: SourceLocation es2015/modules/duplicate-named-export-destructuring18/input.js 2:0-2:40
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: []
+	path: UIDPath<es2015/modules/duplicate-named-export-destructuring18/input.js>
+	loc: SourceLocation es2015/modules/duplicate-named-export-destructuring18/input.js 1:0-4:0
 }
 ```
 

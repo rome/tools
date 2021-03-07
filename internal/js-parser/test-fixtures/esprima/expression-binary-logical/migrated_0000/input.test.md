@@ -8,23 +8,10 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation esprima/expression-binary-logical/migrated_0000/input.js 1:0-2:0
-	path: UIDPath<esprima/expression-binary-logical/migrated_0000/input.js>
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation esprima/expression-binary-logical/migrated_0000/input.js 1:0-1:6
 			expression: JSLogicalExpression {
 				operator: "||"
-				loc: SourceLocation esprima/expression-binary-logical/migrated_0000/input.js 1:0-1:6
 				left: JSReferenceIdentifier {
 					name: "x"
 					loc: SourceLocation esprima/expression-binary-logical/migrated_0000/input.js 1:0-1:1 (x)
@@ -33,9 +20,20 @@ JSRoot {
 					name: "y"
 					loc: SourceLocation esprima/expression-binary-logical/migrated_0000/input.js 1:5-1:6 (y)
 				}
+				loc: SourceLocation esprima/expression-binary-logical/migrated_0000/input.js 1:0-1:6
 			}
+			loc: SourceLocation esprima/expression-binary-logical/migrated_0000/input.js 1:0-1:6
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<esprima/expression-binary-logical/migrated_0000/input.js>
+	loc: SourceLocation esprima/expression-binary-logical/migrated_0000/input.js 1:0-2:0
 }
 ```
 

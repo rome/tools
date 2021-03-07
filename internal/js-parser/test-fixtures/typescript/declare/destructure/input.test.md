@@ -8,30 +8,15 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	loc: SourceLocation typescript/declare/destructure/input.ts 1:0-2:0
-	path: UIDPath<typescript/declare/destructure/input.ts>
-	syntax: Array ["ts"]
-	body: Array [
+	body: [
 		JSVariableDeclarationStatement {
 			declare: true
-			loc: SourceLocation typescript/declare/destructure/input.ts 1:0-1:49
 			declaration: JSVariableDeclaration {
 				kind: "const"
-				loc: SourceLocation typescript/declare/destructure/input.ts 1:0-1:49
-				declarations: Array [
+				declarations: [
 					JSVariableDeclarator {
 						id: JSBindingObjectPattern {
-							rest: undefined
-							loc: SourceLocation typescript/declare/destructure/input.ts 1:14-1:48
-							properties: Array [
+							properties: [
 								JSBindingObjectPatternProperty {
 									key: JSStaticPropertyKey {
 										value: JSIdentifier {
@@ -62,12 +47,11 @@ JSRoot {
 								}
 							]
 							meta: JSPatternMeta {
-								definite: undefined
-								loc: SourceLocation typescript/declare/destructure/input.ts 1:14-1:48
 								typeAnnotation: TSObjectTypeAnnotation {
-									loc: SourceLocation typescript/declare/destructure/input.ts 1:24-1:48
-									members: Array [
+									members: [
 										TSPropertySignature {
+											optional: false
+											readonly: false
 											key: JSStaticPropertyKey {
 												value: JSIdentifier {
 													name: "x"
@@ -75,12 +59,14 @@ JSRoot {
 												}
 												loc: SourceLocation typescript/declare/destructure/input.ts 1:26-1:27
 											}
-											optional: false
-											readonly: false
+											typeAnnotation: TSNumberKeywordTypeAnnotation {
+												loc: SourceLocation typescript/declare/destructure/input.ts 1:29-1:35
+											}
 											loc: SourceLocation typescript/declare/destructure/input.ts 1:26-1:36
-											typeAnnotation: TSNumberKeywordTypeAnnotation {loc: SourceLocation typescript/declare/destructure/input.ts 1:29-1:35}
 										}
 										TSPropertySignature {
+											optional: false
+											readonly: false
 											key: JSStaticPropertyKey {
 												value: JSIdentifier {
 													name: "y"
@@ -88,22 +74,35 @@ JSRoot {
 												}
 												loc: SourceLocation typescript/declare/destructure/input.ts 1:37-1:38
 											}
-											optional: false
-											readonly: false
+											typeAnnotation: TSNumberKeywordTypeAnnotation {
+												loc: SourceLocation typescript/declare/destructure/input.ts 1:40-1:46
+											}
 											loc: SourceLocation typescript/declare/destructure/input.ts 1:37-1:46
-											typeAnnotation: TSNumberKeywordTypeAnnotation {loc: SourceLocation typescript/declare/destructure/input.ts 1:40-1:46}
 										}
 									]
+									loc: SourceLocation typescript/declare/destructure/input.ts 1:24-1:48
 								}
+								loc: SourceLocation typescript/declare/destructure/input.ts 1:14-1:48
 							}
+							loc: SourceLocation typescript/declare/destructure/input.ts 1:14-1:48
 						}
-						init: undefined
 						loc: SourceLocation typescript/declare/destructure/input.ts 1:14-1:48
 					}
 				]
+				loc: SourceLocation typescript/declare/destructure/input.ts 1:0-1:49
 			}
+			loc: SourceLocation typescript/declare/destructure/input.ts 1:0-1:49
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: ["ts"]
+	path: UIDPath<typescript/declare/destructure/input.ts>
+	loc: SourceLocation typescript/declare/destructure/input.ts 1:0-2:0
 }
 ```
 

@@ -8,17 +8,77 @@
 
 ```javascript
 JSRoot {
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation comments/basic/switch-fallthrough-comment-in-function/input.js 1:0-10:0
-	path: UIDPath<comments/basic/switch-fallthrough-comment-in-function/input.js>
-	comments: Array [
+	body: [
+		JSFunctionDeclaration {
+			id: JSBindingIdentifier {
+				name: "bar"
+				loc: SourceLocation comments/basic/switch-fallthrough-comment-in-function/input.js 1:9-1:12 (bar)
+			}
+			body: JSBlockStatement {
+				body: [
+					JSSwitchStatement {
+						cases: [
+							JSSwitchCase {
+								consequent: []
+								leadingComments: ["0"]
+								trailingComments: ["1"]
+								test: JSNumericLiteral {
+									value: 1
+									loc: SourceLocation comments/basic/switch-fallthrough-comment-in-function/input.js 4:13-4:14
+								}
+								loc: SourceLocation comments/basic/switch-fallthrough-comment-in-function/input.js 4:8-4:15
+							}
+							JSSwitchCase {
+								consequent: [
+									JSExpressionStatement {
+										expression: JSCallExpression {
+											arguments: []
+											callee: JSReferenceIdentifier {
+												name: "doIt"
+												loc: SourceLocation comments/basic/switch-fallthrough-comment-in-function/input.js 7:12-7:16 (doIt)
+											}
+											loc: SourceLocation comments/basic/switch-fallthrough-comment-in-function/input.js 7:12-7:18
+										}
+										loc: SourceLocation comments/basic/switch-fallthrough-comment-in-function/input.js 7:12-7:19
+									}
+								]
+								leadingComments: ["1"]
+								test: JSNumericLiteral {
+									value: 2
+									loc: SourceLocation comments/basic/switch-fallthrough-comment-in-function/input.js 6:13-6:14
+								}
+								loc: SourceLocation comments/basic/switch-fallthrough-comment-in-function/input.js 6:8-7:19
+							}
+						]
+						discriminant: JSReferenceIdentifier {
+							name: "foo"
+							loc: SourceLocation comments/basic/switch-fallthrough-comment-in-function/input.js 2:11-2:14 (foo)
+						}
+						loc: SourceLocation comments/basic/switch-fallthrough-comment-in-function/input.js 2:4-8:5
+					}
+				]
+				directives: []
+				loc: SourceLocation comments/basic/switch-fallthrough-comment-in-function/input.js 1:18-9:1
+			}
+			head: JSFunctionHead {
+				async: false
+				generator: false
+				hasHoistedVars: false
+				params: [
+					JSBindingIdentifier {
+						name: "foo"
+						meta: JSPatternMeta {
+							loc: SourceLocation comments/basic/switch-fallthrough-comment-in-function/input.js 1:13-1:16
+						}
+						loc: SourceLocation comments/basic/switch-fallthrough-comment-in-function/input.js 1:13-1:16 (foo)
+					}
+				]
+				loc: SourceLocation comments/basic/switch-fallthrough-comment-in-function/input.js 1:12-1:17
+			}
+			loc: SourceLocation comments/basic/switch-fallthrough-comment-in-function/input.js 1:0-9:1
+		}
+	]
+	comments: [
 		CommentLine {
 			id: "0"
 			value: " foo"
@@ -30,86 +90,14 @@ JSRoot {
 			loc: SourceLocation comments/basic/switch-fallthrough-comment-in-function/input.js 5:12-5:28
 		}
 	]
-	body: Array [
-		JSFunctionDeclaration {
-			id: JSBindingIdentifier {
-				name: "bar"
-				loc: SourceLocation comments/basic/switch-fallthrough-comment-in-function/input.js 1:9-1:12 (bar)
-			}
-			loc: SourceLocation comments/basic/switch-fallthrough-comment-in-function/input.js 1:0-9:1
-			head: JSFunctionHead {
-				async: false
-				generator: false
-				hasHoistedVars: false
-				rest: undefined
-				returnType: undefined
-				thisType: undefined
-				typeParameters: undefined
-				loc: SourceLocation comments/basic/switch-fallthrough-comment-in-function/input.js 1:12-1:17
-				params: Array [
-					JSBindingIdentifier {
-						name: "foo"
-						loc: SourceLocation comments/basic/switch-fallthrough-comment-in-function/input.js 1:13-1:16 (foo)
-						meta: JSPatternMeta {
-							optional: undefined
-							typeAnnotation: undefined
-							loc: SourceLocation comments/basic/switch-fallthrough-comment-in-function/input.js 1:13-1:16
-						}
-					}
-				]
-			}
-			body: JSBlockStatement {
-				directives: Array []
-				loc: SourceLocation comments/basic/switch-fallthrough-comment-in-function/input.js 1:18-9:1
-				body: Array [
-					JSSwitchStatement {
-						loc: SourceLocation comments/basic/switch-fallthrough-comment-in-function/input.js 2:4-8:5
-						discriminant: JSReferenceIdentifier {
-							name: "foo"
-							loc: SourceLocation comments/basic/switch-fallthrough-comment-in-function/input.js 2:11-2:14 (foo)
-						}
-						cases: Array [
-							JSSwitchCase {
-								consequent: Array []
-								leadingComments: Array ["0"]
-								loc: SourceLocation comments/basic/switch-fallthrough-comment-in-function/input.js 4:8-4:15
-								trailingComments: Array ["1"]
-								test: JSNumericLiteral {
-									value: 1
-									format: undefined
-									leadingComments: undefined
-									loc: SourceLocation comments/basic/switch-fallthrough-comment-in-function/input.js 4:13-4:14
-								}
-							}
-							JSSwitchCase {
-								leadingComments: Array ["1"]
-								loc: SourceLocation comments/basic/switch-fallthrough-comment-in-function/input.js 6:8-7:19
-								test: JSNumericLiteral {
-									value: 2
-									format: undefined
-									leadingComments: undefined
-									loc: SourceLocation comments/basic/switch-fallthrough-comment-in-function/input.js 6:13-6:14
-								}
-								consequent: Array [
-									JSExpressionStatement {
-										loc: SourceLocation comments/basic/switch-fallthrough-comment-in-function/input.js 7:12-7:19
-										expression: JSCallExpression {
-											arguments: Array []
-											loc: SourceLocation comments/basic/switch-fallthrough-comment-in-function/input.js 7:12-7:18
-											callee: JSReferenceIdentifier {
-												name: "doIt"
-												loc: SourceLocation comments/basic/switch-fallthrough-comment-in-function/input.js 7:12-7:16 (doIt)
-											}
-										}
-									}
-								]
-							}
-						]
-					}
-				]
-			}
-		}
-	]
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<comments/basic/switch-fallthrough-comment-in-function/input.js>
+	loc: SourceLocation comments/basic/switch-fallthrough-comment-in-function/input.js 1:0-10:0
 }
 ```
 

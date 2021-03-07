@@ -8,51 +8,47 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	syntax: Array []
-	loc: SourceLocation experimental/export-extensions/default-default/input.js 1:0-1:26
-	path: UIDPath<experimental/export-extensions/default-default/input.js>
-	body: Array [
+	body: [
 		JSExportDefaultDeclaration {
-			loc: SourceLocation experimental/export-extensions/default-default/input.js 1:0-1:19
 			declaration: JSReferenceIdentifier {
 				name: "from"
 				loc: SourceLocation experimental/export-extensions/default-default/input.js 1:15-1:19 (from)
 			}
+			loc: SourceLocation experimental/export-extensions/default-default/input.js 1:0-1:19
 		}
 		JSExpressionStatement {
-			loc: SourceLocation experimental/export-extensions/default-default/input.js 1:20-1:26
 			expression: JSStringLiteral {
 				value: "bar"
 				loc: SourceLocation experimental/export-extensions/default-default/input.js 1:20-1:25
 			}
+			loc: SourceLocation experimental/export-extensions/default-default/input.js 1:20-1:26
 		}
 	]
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {
+				advice: []
+				category: ["parse"]
 				categoryValue: "js"
-				category: Array ["parse"]
 				message: RAW_MARKUP {value: "Expected a semicolon or a line terminator"}
 			}
-			location: Object {
-				integrity: undefined
+			location: {
 				language: "js"
-				sourceText: undefined
-				end: Position 1:19
 				path: UIDPath<experimental/export-extensions/default-default/input.js>
+				end: Position 1:19
 				start: Position 1:20
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: []
+	path: UIDPath<experimental/export-extensions/default-default/input.js>
+	loc: SourceLocation experimental/export-extensions/default-default/input.js 1:0-1:26
 }
 ```
 

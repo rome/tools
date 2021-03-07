@@ -8,6 +8,7 @@
 import {CompilerProject, TransformRequest} from "../types";
 import {AnyRoot} from "@internal/ast";
 import {JSONObject} from "@internal/codec-config";
+import {hashRSERValue} from "@internal/binary-transport";
 
 type CacheQuery = {
 	key: string;
@@ -48,7 +49,7 @@ export default class Cache<Result> {
 			...additionalOptions,
 		};
 		if (Object.keys(extra).length > 0) {
-			keyParts.push(JSON.stringify(extra));
+			keyParts.push(hashRSERValue(extra));
 		}
 
 		return {

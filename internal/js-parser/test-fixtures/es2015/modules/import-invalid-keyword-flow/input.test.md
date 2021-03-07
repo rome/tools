@@ -8,48 +8,10 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	syntax: Array []
-	loc: SourceLocation es2015/modules/import-invalid-keyword-flow/input.js 1:0-2:0
-	path: UIDPath<es2015/modules/import-invalid-keyword-flow/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Unexpected keyword <emphasis>default</emphasis>"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:16
-				path: UIDPath<es2015/modules/import-invalid-keyword-flow/input.js>
-				start: Position 1:9
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSImportDeclaration {
-			defaultSpecifier: undefined
-			importKind: undefined
-			namespaceSpecifier: undefined
-			loc: SourceLocation es2015/modules/import-invalid-keyword-flow/input.js 1:0-1:30
-			source: JSStringLiteral {
-				value: "foo"
-				loc: SourceLocation es2015/modules/import-invalid-keyword-flow/input.js 1:24-1:29
-			}
-			namedSpecifiers: Array [
+			namedSpecifiers: [
 				JSImportSpecifier {
-					loc: SourceLocation es2015/modules/import-invalid-keyword-flow/input.js 1:9-1:16
 					imported: JSIdentifier {
 						name: "default"
 						loc: SourceLocation es2015/modules/import-invalid-keyword-flow/input.js 1:9-1:16 (default)
@@ -59,13 +21,43 @@ JSRoot {
 							name: "default"
 							loc: SourceLocation es2015/modules/import-invalid-keyword-flow/input.js 1:9-1:16 (default)
 						}
-						importKind: undefined
 						loc: SourceLocation es2015/modules/import-invalid-keyword-flow/input.js 1:9-1:16
 					}
+					loc: SourceLocation es2015/modules/import-invalid-keyword-flow/input.js 1:9-1:16
 				}
 			]
+			source: JSStringLiteral {
+				value: "foo"
+				loc: SourceLocation es2015/modules/import-invalid-keyword-flow/input.js 1:24-1:29
+			}
+			loc: SourceLocation es2015/modules/import-invalid-keyword-flow/input.js 1:0-1:30
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "js"
+				message: [RAW_MARKUP {value: "Unexpected keyword <emphasis>"}, "default", RAW_MARKUP {value: "</emphasis>"}]
+			}
+			location: {
+				language: "js"
+				path: UIDPath<es2015/modules/import-invalid-keyword-flow/input.js>
+				end: Position 1:16
+				start: Position 1:9
+			}
+		}
+	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: []
+	path: UIDPath<es2015/modules/import-invalid-keyword-flow/input.js>
+	loc: SourceLocation es2015/modules/import-invalid-keyword-flow/input.js 1:0-2:0
 }
 ```
 

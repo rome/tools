@@ -5,13 +5,14 @@ import {
 } from "@internal/test-helpers";
 import {removeCarriageReturn} from "@internal/string-utils";
 import {printDiagnosticsToString} from "@internal/cli-diagnostics";
+import {decodeUTF8} from "@internal/binary";
 
 const promise = createFixtureTests(async (fixture, t) => {
 	const {worker, performFileOperation} = createMockWorker();
 	const {input, handler} = findFixtureInput(fixture, undefined);
 
 	const filename = input.relative;
-	const content = removeCarriageReturn(input.content.toString());
+	const content = removeCarriageReturn(decodeUTF8(input.content));
 
 	const res = await performFileOperation(
 		{

@@ -6,7 +6,7 @@
  */
 
 import {ManifestDefinition} from "@internal/codec-js-manifest";
-import {PathPatterns} from "@internal/path-match";
+import {PathPattern} from "@internal/path-match";
 import {
 	AbsoluteFilePath,
 	AbsoluteFilePathSet,
@@ -74,7 +74,7 @@ export type ProjectConfigObjects = {
 	};
 	lint: Enableable & {
 		globals: string[];
-		ignore: PathPatterns;
+		ignore: PathPattern[];
 		requireSuppressionExplanations: boolean;
 		disabledRules: LintRuleName[];
 	};
@@ -82,7 +82,7 @@ export type ProjectConfigObjects = {
 		libs: AbsoluteFilePathSet;
 	};
 	tests: {
-		ignore: PathPatterns;
+		ignore: PathPattern[];
 	};
 	develop: {
 		serveStatic: boolean;
@@ -92,7 +92,7 @@ export type ProjectConfigObjects = {
 	};
 	files: {
 		assetExtensions: string[];
-		maxSizeIgnore: PathPatterns;
+		maxSizeIgnore: PathPattern[];
 		maxSize: number;
 		vendorPath: AbsoluteFilePath;
 	};

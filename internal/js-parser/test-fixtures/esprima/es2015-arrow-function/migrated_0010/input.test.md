@@ -8,43 +8,38 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation esprima/es2015-arrow-function/migrated_0010/input.js 1:0-2:0
-	path: UIDPath<esprima/es2015-arrow-function/migrated_0010/input.js>
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation esprima/es2015-arrow-function/migrated_0010/input.js 1:0-1:15
 			expression: JSArrowFunctionExpression {
-				loc: SourceLocation esprima/es2015-arrow-function/migrated_0010/input.js 1:0-1:15
 				body: JSNumericLiteral {
 					value: 42
-					format: undefined
 					loc: SourceLocation esprima/es2015-arrow-function/migrated_0010/input.js 1:13-1:15
 				}
 				head: JSFunctionHead {
 					async: false
 					hasHoistedVars: false
-					rest: undefined
-					thisType: undefined
-					loc: SourceLocation esprima/es2015-arrow-function/migrated_0010/input.js 1:0-1:12
-					params: Array [
+					params: [
 						JSBindingIdentifier {
 							name: "arguments"
 							loc: SourceLocation esprima/es2015-arrow-function/migrated_0010/input.js 1:0-1:9 (arguments)
 						}
 					]
+					loc: SourceLocation esprima/es2015-arrow-function/migrated_0010/input.js 1:0-1:12
 				}
+				loc: SourceLocation esprima/es2015-arrow-function/migrated_0010/input.js 1:0-1:15
 			}
+			loc: SourceLocation esprima/es2015-arrow-function/migrated_0010/input.js 1:0-1:15
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<esprima/es2015-arrow-function/migrated_0010/input.js>
+	loc: SourceLocation esprima/es2015-arrow-function/migrated_0010/input.js 1:0-2:0
 }
 ```
 

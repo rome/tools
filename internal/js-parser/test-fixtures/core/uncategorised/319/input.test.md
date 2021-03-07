@@ -8,34 +8,18 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation core/uncategorised/319/input.js 1:0-1:17
-	path: UIDPath<core/uncategorised/319/input.js>
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation core/uncategorised/319/input.js 1:0-1:17
 			expression: JSCallExpression {
-				loc: SourceLocation core/uncategorised/319/input.js 1:0-1:17
-				arguments: Array [
+				arguments: [
 					JSNumericLiteral {
 						value: 10
-						format: undefined
 						loc: SourceLocation core/uncategorised/319/input.js 1:14-1:16
 					}
 				]
 				callee: JSMemberExpression {
-					loc: SourceLocation core/uncategorised/319/input.js 1:0-1:13
 					object: JSNumericLiteral {
 						value: 123
-						format: undefined
 						loc: SourceLocation core/uncategorised/319/input.js 1:0-1:4
 					}
 					property: JSStaticMemberProperty {
@@ -45,10 +29,22 @@ JSRoot {
 						}
 						loc: SourceLocation core/uncategorised/319/input.js 1:5-1:13 (toString)
 					}
+					loc: SourceLocation core/uncategorised/319/input.js 1:0-1:13
 				}
+				loc: SourceLocation core/uncategorised/319/input.js 1:0-1:17
 			}
+			loc: SourceLocation core/uncategorised/319/input.js 1:0-1:17
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<core/uncategorised/319/input.js>
+	loc: SourceLocation core/uncategorised/319/input.js 1:0-1:17
 }
 ```
 

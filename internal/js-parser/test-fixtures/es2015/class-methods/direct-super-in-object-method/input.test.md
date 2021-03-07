@@ -8,42 +8,78 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2015/class-methods/direct-super-in-object-method/input.js 1:0-8:0
-	path: UIDPath<es2015/class-methods/direct-super-in-object-method/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "super is only allowed in object methods and classes"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 4:12
-				path: UIDPath<es2015/class-methods/direct-super-in-object-method/input.js>
-				start: Position 4:13
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation es2015/class-methods/direct-super-in-object-method/input.js 1:0-7:3
 			expression: JSCallExpression {
-				loc: SourceLocation es2015/class-methods/direct-super-in-object-method/input.js 1:0-7:2
+				arguments: [
+					JSObjectExpression {
+						properties: []
+						loc: SourceLocation es2015/class-methods/direct-super-in-object-method/input.js 1:14-1:16
+					}
+					JSObjectExpression {
+						properties: [
+							JSObjectProperty {
+								key: JSStaticPropertyKey {
+									value: JSIdentifier {
+										name: "foo"
+										loc: SourceLocation es2015/class-methods/direct-super-in-object-method/input.js 2:2-2:5 (foo)
+									}
+									loc: SourceLocation es2015/class-methods/direct-super-in-object-method/input.js 2:2-2:5
+								}
+								value: JSObjectExpression {
+									properties: [
+										JSObjectProperty {
+											key: JSStaticPropertyKey {
+												value: JSIdentifier {
+													name: "get"
+													loc: SourceLocation es2015/class-methods/direct-super-in-object-method/input.js 3:4-3:7 (get)
+												}
+												loc: SourceLocation es2015/class-methods/direct-super-in-object-method/input.js 3:4-3:7
+											}
+											value: JSFunctionExpression {
+												body: JSBlockStatement {
+													body: [
+														JSReturnStatement {
+															argument: JSMemberExpression {
+																object: JSSuper {
+																	loc: SourceLocation es2015/class-methods/direct-super-in-object-method/input.js 4:13-4:18
+																}
+																property: JSStaticMemberProperty {
+																	value: JSIdentifier {
+																		name: "foo"
+																		loc: SourceLocation es2015/class-methods/direct-super-in-object-method/input.js 4:19-4:22 (foo)
+																	}
+																	loc: SourceLocation es2015/class-methods/direct-super-in-object-method/input.js 4:19-4:22 (foo)
+																}
+																loc: SourceLocation es2015/class-methods/direct-super-in-object-method/input.js 4:13-4:22
+															}
+															loc: SourceLocation es2015/class-methods/direct-super-in-object-method/input.js 4:6-4:23
+														}
+													]
+													directives: []
+													loc: SourceLocation es2015/class-methods/direct-super-in-object-method/input.js 3:19-5:5
+												}
+												head: JSFunctionHead {
+													async: false
+													generator: false
+													hasHoistedVars: false
+													params: []
+													loc: SourceLocation es2015/class-methods/direct-super-in-object-method/input.js 3:17-3:19
+												}
+												loc: SourceLocation es2015/class-methods/direct-super-in-object-method/input.js 3:9-5:5
+											}
+											loc: SourceLocation es2015/class-methods/direct-super-in-object-method/input.js 3:4-5:5
+										}
+									]
+									loc: SourceLocation es2015/class-methods/direct-super-in-object-method/input.js 2:7-6:3
+								}
+								loc: SourceLocation es2015/class-methods/direct-super-in-object-method/input.js 2:2-6:3
+							}
+						]
+						loc: SourceLocation es2015/class-methods/direct-super-in-object-method/input.js 1:18-7:1
+					}
+				]
 				callee: JSMemberExpression {
-					loc: SourceLocation es2015/class-methods/direct-super-in-object-method/input.js 1:0-1:13
 					object: JSReferenceIdentifier {
 						name: "Object"
 						loc: SourceLocation es2015/class-methods/direct-super-in-object-method/input.js 1:0-1:6 (Object)
@@ -55,81 +91,38 @@ JSRoot {
 						}
 						loc: SourceLocation es2015/class-methods/direct-super-in-object-method/input.js 1:7-1:13 (create)
 					}
+					loc: SourceLocation es2015/class-methods/direct-super-in-object-method/input.js 1:0-1:13
 				}
-				arguments: Array [
-					JSObjectExpression {
-						properties: Array []
-						loc: SourceLocation es2015/class-methods/direct-super-in-object-method/input.js 1:14-1:16
-					}
-					JSObjectExpression {
-						loc: SourceLocation es2015/class-methods/direct-super-in-object-method/input.js 1:18-7:1
-						properties: Array [
-							JSObjectProperty {
-								key: JSStaticPropertyKey {
-									value: JSIdentifier {
-										name: "foo"
-										loc: SourceLocation es2015/class-methods/direct-super-in-object-method/input.js 2:2-2:5 (foo)
-									}
-									loc: SourceLocation es2015/class-methods/direct-super-in-object-method/input.js 2:2-2:5
-								}
-								value: JSObjectExpression {
-									loc: SourceLocation es2015/class-methods/direct-super-in-object-method/input.js 2:7-6:3
-									properties: Array [
-										JSObjectProperty {
-											key: JSStaticPropertyKey {
-												value: JSIdentifier {
-													name: "get"
-													loc: SourceLocation es2015/class-methods/direct-super-in-object-method/input.js 3:4-3:7 (get)
-												}
-												loc: SourceLocation es2015/class-methods/direct-super-in-object-method/input.js 3:4-3:7
-											}
-											value: JSFunctionExpression {
-												id: undefined
-												loc: SourceLocation es2015/class-methods/direct-super-in-object-method/input.js 3:9-5:5
-												head: JSFunctionHead {
-													async: false
-													generator: false
-													hasHoistedVars: false
-													params: Array []
-													rest: undefined
-													returnType: undefined
-													thisType: undefined
-													typeParameters: undefined
-													loc: SourceLocation es2015/class-methods/direct-super-in-object-method/input.js 3:17-3:19
-												}
-												body: JSBlockStatement {
-													directives: Array []
-													loc: SourceLocation es2015/class-methods/direct-super-in-object-method/input.js 3:19-5:5
-													body: Array [
-														JSReturnStatement {
-															loc: SourceLocation es2015/class-methods/direct-super-in-object-method/input.js 4:6-4:23
-															argument: JSMemberExpression {
-																loc: SourceLocation es2015/class-methods/direct-super-in-object-method/input.js 4:13-4:22
-																object: JSSuper {loc: SourceLocation es2015/class-methods/direct-super-in-object-method/input.js 4:13-4:18}
-																property: JSStaticMemberProperty {
-																	value: JSIdentifier {
-																		name: "foo"
-																		loc: SourceLocation es2015/class-methods/direct-super-in-object-method/input.js 4:19-4:22 (foo)
-																	}
-																	loc: SourceLocation es2015/class-methods/direct-super-in-object-method/input.js 4:19-4:22 (foo)
-																}
-															}
-														}
-													]
-												}
-											}
-											loc: SourceLocation es2015/class-methods/direct-super-in-object-method/input.js 3:4-5:5
-										}
-									]
-								}
-								loc: SourceLocation es2015/class-methods/direct-super-in-object-method/input.js 2:2-6:3
-							}
-						]
-					}
-				]
+				loc: SourceLocation es2015/class-methods/direct-super-in-object-method/input.js 1:0-7:2
+			}
+			loc: SourceLocation es2015/class-methods/direct-super-in-object-method/input.js 1:0-7:3
+		}
+	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "super is only allowed in object methods and classes"}
+			}
+			location: {
+				language: "js"
+				path: UIDPath<es2015/class-methods/direct-super-in-object-method/input.js>
+				end: Position 4:12
+				start: Position 4:13
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2015/class-methods/direct-super-in-object-method/input.js>
+	loc: SourceLocation es2015/class-methods/direct-super-in-object-method/input.js 1:0-8:0
 }
 ```
 

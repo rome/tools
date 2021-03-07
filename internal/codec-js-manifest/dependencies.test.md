@@ -14,11 +14,7 @@ gist {id: "123456"}
 
 ```javascript
 npm {
-	name: Object {
-		org: undefined
-		packageName: "foo"
-	}
-	range: undefined
+	name: {packageName: "foo"}
 }
 ```
 
@@ -26,11 +22,7 @@ npm {
 
 ```javascript
 npm {
-	name: Object {
-		org: undefined
-		packageName: "@foo/bar"
-	}
-	range: undefined
+	name: {packageName: "@foo/bar"}
 }
 ```
 
@@ -38,16 +30,13 @@ npm {
 
 ```javascript
 npm {
-	name: Object {
-		org: undefined
-		packageName: "foo"
-	}
+	name: {packageName: "foo"}
 	range: AbsoluteVersion {
-		build: Array []
+		build: []
 		major: 1
 		minor: 0
 		patch: 0
-		prerelease: Array []
+		prerelease: []
 		loc: SourceLocation unknown 1:0-1:4
 	}
 }
@@ -57,16 +46,13 @@ npm {
 
 ```javascript
 npm {
-	name: Object {
-		org: undefined
-		packageName: "@foo/bar"
-	}
+	name: {packageName: "@foo/bar"}
 	range: AbsoluteVersion {
-		build: Array []
+		build: []
 		major: 1
 		minor: 0
 		patch: 0
-		prerelease: Array []
+		prerelease: []
 		loc: SourceLocation unknown 1:0-1:4
 	}
 }

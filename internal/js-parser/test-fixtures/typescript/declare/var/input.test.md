@@ -8,60 +8,57 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: true
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	loc: SourceLocation typescript/declare/var/input.ts 1:0-3:0
-	path: UIDPath<typescript/declare/var/input.ts>
-	syntax: Array ["ts"]
-	body: Array [
+	body: [
 		JSVariableDeclarationStatement {
 			declare: true
-			loc: SourceLocation typescript/declare/var/input.ts 1:0-1:14
 			declaration: JSVariableDeclaration {
 				kind: "var"
-				loc: SourceLocation typescript/declare/var/input.ts 1:0-1:14
-				declarations: Array [
+				declarations: [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "x"
 							loc: SourceLocation typescript/declare/var/input.ts 1:12-1:13 (x)
 						}
-						init: undefined
 						loc: SourceLocation typescript/declare/var/input.ts 1:12-1:13
 					}
 				]
+				loc: SourceLocation typescript/declare/var/input.ts 1:0-1:14
 			}
+			loc: SourceLocation typescript/declare/var/input.ts 1:0-1:14
 		}
 		JSVariableDeclarationStatement {
 			declare: true
-			loc: SourceLocation typescript/declare/var/input.ts 2:0-2:19
 			declaration: JSVariableDeclaration {
 				kind: "var"
-				loc: SourceLocation typescript/declare/var/input.ts 2:0-2:19
-				declarations: Array [
+				declarations: [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "x"
-							loc: SourceLocation typescript/declare/var/input.ts 2:12-2:18
 							meta: JSPatternMeta {
-								definite: undefined
+								typeAnnotation: TSAnyKeywordTypeAnnotation {
+									loc: SourceLocation typescript/declare/var/input.ts 2:15-2:18
+								}
 								loc: SourceLocation typescript/declare/var/input.ts 2:12-2:18
-								typeAnnotation: TSAnyKeywordTypeAnnotation {loc: SourceLocation typescript/declare/var/input.ts 2:15-2:18}
 							}
+							loc: SourceLocation typescript/declare/var/input.ts 2:12-2:18
 						}
-						init: undefined
 						loc: SourceLocation typescript/declare/var/input.ts 2:12-2:18
 					}
 				]
+				loc: SourceLocation typescript/declare/var/input.ts 2:0-2:19
 			}
+			loc: SourceLocation typescript/declare/var/input.ts 2:0-2:19
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: true
+	sourceType: "module"
+	syntax: ["ts"]
+	path: UIDPath<typescript/declare/var/input.ts>
+	loc: SourceLocation typescript/declare/var/input.ts 1:0-3:0
 }
 ```
 

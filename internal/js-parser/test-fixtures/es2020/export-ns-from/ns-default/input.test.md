@@ -8,35 +8,32 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	syntax: Array []
-	loc: SourceLocation es2020/export-ns-from/ns-default/input.js 1:0-2:0
-	path: UIDPath<es2020/export-ns-from/ns-default/input.js>
-	body: Array [
+	body: [
 		JSExportExternalDeclaration {
-			exportKind: undefined
-			namedSpecifiers: Array []
-			loc: SourceLocation es2020/export-ns-from/ns-default/input.js 1:0-1:31
-			source: JSStringLiteral {
-				value: "foo"
-				loc: SourceLocation es2020/export-ns-from/ns-default/input.js 1:25-1:30
-			}
+			namedSpecifiers: []
 			namespaceSpecifier: JSExportNamespaceSpecifier {
-				loc: SourceLocation es2020/export-ns-from/ns-default/input.js 1:7-1:19
 				exported: JSIdentifier {
 					name: "default"
 					loc: SourceLocation es2020/export-ns-from/ns-default/input.js 1:12-1:19 (default)
 				}
+				loc: SourceLocation es2020/export-ns-from/ns-default/input.js 1:7-1:19
 			}
+			source: JSStringLiteral {
+				value: "foo"
+				loc: SourceLocation es2020/export-ns-from/ns-default/input.js 1:25-1:30
+			}
+			loc: SourceLocation es2020/export-ns-from/ns-default/input.js 1:0-1:31
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: []
+	path: UIDPath<es2020/export-ns-from/ns-default/input.js>
+	loc: SourceLocation es2020/export-ns-from/ns-default/input.js 1:0-2:0
 }
 ```
 

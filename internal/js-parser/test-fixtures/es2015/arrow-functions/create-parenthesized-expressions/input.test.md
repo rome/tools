@@ -8,44 +8,39 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2015/arrow-functions/create-parenthesized-expressions/input.js 1:0-2:0
-	path: UIDPath<es2015/arrow-functions/create-parenthesized-expressions/input.js>
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation es2015/arrow-functions/create-parenthesized-expressions/input.js 1:0-1:11
 			expression: JSArrowFunctionExpression {
-				loc: SourceLocation es2015/arrow-functions/create-parenthesized-expressions/input.js 1:0-1:11
 				body: JSBlockStatement {
-					body: Array []
-					directives: Array []
+					body: []
+					directives: []
 					loc: SourceLocation es2015/arrow-functions/create-parenthesized-expressions/input.js 1:9-1:11
 				}
 				head: JSFunctionHead {
 					async: false
 					hasHoistedVars: false
-					rest: undefined
-					returnType: undefined
-					thisType: undefined
-					loc: SourceLocation es2015/arrow-functions/create-parenthesized-expressions/input.js 1:0-1:8
-					params: Array [
+					params: [
 						JSBindingIdentifier {
 							name: "foo"
 							loc: SourceLocation es2015/arrow-functions/create-parenthesized-expressions/input.js 1:1-1:4 (foo)
 						}
 					]
+					loc: SourceLocation es2015/arrow-functions/create-parenthesized-expressions/input.js 1:0-1:8
 				}
+				loc: SourceLocation es2015/arrow-functions/create-parenthesized-expressions/input.js 1:0-1:11
 			}
+			loc: SourceLocation es2015/arrow-functions/create-parenthesized-expressions/input.js 1:0-1:11
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2015/arrow-functions/create-parenthesized-expressions/input.js>
+	loc: SourceLocation es2015/arrow-functions/create-parenthesized-expressions/input.js 1:0-2:0
 }
 ```
 

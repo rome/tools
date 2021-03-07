@@ -8,35 +8,32 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2016/exponentiation-operator/3/input.js 1:0-1:8
-	path: UIDPath<es2016/exponentiation-operator/3/input.js>
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation es2016/exponentiation-operator/3/input.js 1:0-1:8
 			expression: JSAssignmentExpression {
 				operator: "**="
-				loc: SourceLocation es2016/exponentiation-operator/3/input.js 1:0-1:7
 				left: JSAssignmentIdentifier {
 					name: "a"
 					loc: SourceLocation es2016/exponentiation-operator/3/input.js 1:0-1:1 (a)
 				}
 				right: JSNumericLiteral {
 					value: 2
-					format: undefined
 					loc: SourceLocation es2016/exponentiation-operator/3/input.js 1:6-1:7
 				}
+				loc: SourceLocation es2016/exponentiation-operator/3/input.js 1:0-1:7
 			}
+			loc: SourceLocation es2016/exponentiation-operator/3/input.js 1:0-1:8
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2016/exponentiation-operator/3/input.js>
+	loc: SourceLocation es2016/exponentiation-operator/3/input.js 1:0-1:8
 }
 ```
 

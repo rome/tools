@@ -8,44 +8,17 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2015/generators/yield-regex/input.js 1:0-2:0
-	path: UIDPath<es2015/generators/yield-regex/input.js>
-	body: Array [
+	body: [
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "x"
 				loc: SourceLocation es2015/generators/yield-regex/input.js 1:10-1:11 (x)
 			}
-			loc: SourceLocation es2015/generators/yield-regex/input.js 1:0-1:28
-			head: JSFunctionHead {
-				async: false
-				generator: true
-				hasHoistedVars: false
-				params: Array []
-				rest: undefined
-				returnType: undefined
-				thisType: undefined
-				typeParameters: undefined
-				loc: SourceLocation es2015/generators/yield-regex/input.js 1:11-1:13
-			}
 			body: JSBlockStatement {
-				directives: Array []
-				loc: SourceLocation es2015/generators/yield-regex/input.js 1:14-1:28
-				body: Array [
+				body: [
 					JSExpressionStatement {
-						loc: SourceLocation es2015/generators/yield-regex/input.js 1:16-1:26
 						expression: JSYieldExpression {
 							delegate: true
-							loc: SourceLocation es2015/generators/yield-regex/input.js 1:16-1:26
 							argument: JSRegExpLiteral {
 								global: false
 								insensitive: false
@@ -53,23 +26,44 @@ JSRoot {
 								noDotNewline: false
 								sticky: false
 								unicode: false
-								loc: SourceLocation es2015/generators/yield-regex/input.js 1:23-1:26
 								expression: JSRegExpSubExpression {
-									loc: SourceLocation es2015/generators/yield-regex/input.js 1:24-1:25
-									body: Array [
+									body: [
 										JSRegExpCharacter {
 											value: "z"
 											loc: SourceLocation es2015/generators/yield-regex/input.js 1:24-1:25
 										}
 									]
+									loc: SourceLocation es2015/generators/yield-regex/input.js 1:24-1:25
 								}
+								loc: SourceLocation es2015/generators/yield-regex/input.js 1:23-1:26
 							}
+							loc: SourceLocation es2015/generators/yield-regex/input.js 1:16-1:26
 						}
+						loc: SourceLocation es2015/generators/yield-regex/input.js 1:16-1:26
 					}
 				]
+				directives: []
+				loc: SourceLocation es2015/generators/yield-regex/input.js 1:14-1:28
 			}
+			head: JSFunctionHead {
+				async: false
+				generator: true
+				hasHoistedVars: false
+				params: []
+				loc: SourceLocation es2015/generators/yield-regex/input.js 1:11-1:13
+			}
+			loc: SourceLocation es2015/generators/yield-regex/input.js 1:0-1:28
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2015/generators/yield-regex/input.js>
+	loc: SourceLocation es2015/generators/yield-regex/input.js 1:0-2:0
 }
 ```
 

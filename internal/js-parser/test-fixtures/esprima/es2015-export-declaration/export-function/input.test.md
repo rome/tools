@@ -8,47 +8,40 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	syntax: Array []
-	loc: SourceLocation esprima/es2015-export-declaration/export-function/input.js 1:0-2:0
-	path: UIDPath<esprima/es2015-export-declaration/export-function/input.js>
-	body: Array [
+	body: [
 		JSExportLocalDeclaration {
 			exportKind: "value"
-			specifiers: undefined
-			loc: SourceLocation esprima/es2015-export-declaration/export-function/input.js 1:0-1:25
 			declaration: JSFunctionDeclaration {
 				id: JSBindingIdentifier {
 					name: "foo"
 					loc: SourceLocation esprima/es2015-export-declaration/export-function/input.js 1:16-1:19 (foo)
 				}
-				loc: SourceLocation esprima/es2015-export-declaration/export-function/input.js 1:7-1:25
 				body: JSBlockStatement {
-					body: Array []
-					directives: Array []
+					body: []
+					directives: []
 					loc: SourceLocation esprima/es2015-export-declaration/export-function/input.js 1:23-1:25
 				}
 				head: JSFunctionHead {
 					async: false
 					generator: false
 					hasHoistedVars: false
-					params: Array []
-					rest: undefined
-					returnType: undefined
-					thisType: undefined
-					typeParameters: undefined
+					params: []
 					loc: SourceLocation esprima/es2015-export-declaration/export-function/input.js 1:20-1:22
 				}
+				loc: SourceLocation esprima/es2015-export-declaration/export-function/input.js 1:7-1:25
 			}
+			loc: SourceLocation esprima/es2015-export-declaration/export-function/input.js 1:0-1:25
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: []
+	path: UIDPath<esprima/es2015-export-declaration/export-function/input.js>
+	loc: SourceLocation esprima/es2015-export-declaration/export-function/input.js 1:0-2:0
 }
 ```
 

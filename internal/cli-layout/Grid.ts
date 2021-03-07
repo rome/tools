@@ -6,7 +6,7 @@
  */
 
 import {
-	AnyMarkup,
+	Markup,
 	MarkupLineWrapMode,
 	MarkupParsedChild,
 	MarkupParsedChildren,
@@ -14,6 +14,7 @@ import {
 	MarkupParsedText,
 	MarkupTagName,
 	buildFileLink,
+	convertToMarkupFromRandomString,
 	createEmptyAttributes,
 	formatApprox,
 	formatGrammarNumber,
@@ -27,13 +28,14 @@ import {
 	GridOutputFormat,
 	GridPointer,
 } from "./types";
-import {OneIndexed} from "@internal/math";
 import {
-	humanizeDuration,
+	Duration,
+	OneIndexed,
 	humanizeFileSize,
 	humanizeNumber,
-	splitChars,
-} from "@internal/string-utils";
+} from "@internal/numbers";
+import {splitChars} from "@internal/string-utils";
+
 import {escapeXHTMLEntities} from "@internal/html-parser";
 import {ansiFormatText} from "./formatANSI";
 import {htmlFormatText} from "./formatHTML";
@@ -55,7 +57,6 @@ type Rows = (MarkupParsedTag[])[];
 type Ancestry = MarkupParsedTag[];
 
 type Column = string | symbol;
-type Columns = Column[];
 
 function createTag(
 	name: MarkupParsedTag["name"],
@@ -70,12 +71,12 @@ function createTag(
 	};
 }
 
-function joinColumns(columns: Columns): string {
+function joinColumns(columns: Column[]): string {
 	return columns.filter((column) => typeof column === "string").join("");
 }
 
 function sliceColumns(
-	columns: Columns,
+	columns: Column[],
 	start: OneIndexed,
 	end: OneIndexed,
 ): string {
@@ -116,7 +117,7 @@ type GridLine = {
 		end: OneIndexed;
 		ancestry: Ancestry;
 	}[];
-	columns: Columns;
+	columns: Column[];
 };
 
 const TAB_PLACEHOLDER_COLUMN = Symbol("TAB_LAYOUT_PLACEHOLDER");
@@ -124,6 +125,8 @@ const TAB_PLACEHOLDER_COLUMN = Symbol("TAB_LAYOUT_PLACEHOLDER");
 function isWhitespace(char: Column): boolean {
 	return char === " " || char === "\t" || char === TAB_PLACEHOLDER_COLUMN;
 }
+
+class GridAddedNewline {}
 
 export default class Grid {
 	constructor(opts: GridOptions) {
@@ -168,7 +171,7 @@ export default class Grid {
 		// TODO make the tab width customizable in userConfig
 		this.tabSize = 2;
 
-		const indentColumns: Columns = [];
+		const indentColumns: Column[] = [];
 		for (let i = 0; i < this.tabSize; i++) {
 			let char: Column = " ";
 			if (!this.options.convertTabs) {
@@ -179,7 +182,7 @@ export default class Grid {
 		this.indentColumns = indentColumns;
 	}
 
-	private indentColumns: Columns;
+	private indentColumns: Column[];
 	private tabSize: number;
 
 	public locators: GridLocators;
@@ -442,6 +445,10 @@ export default class Grid {
 
 	private moveCursor(cursor: Cursor) {
 		if (cursor.line !== this.cursor.line) {
+			if (this.options.throwOnNewline) {
+				throw new GridAddedNewline();
+			}
+
 			this.lineStartMeta.softWrapped = false;
 			this.lineStartMeta.indentationCount = 0;
 			this.lineStartMeta.sourceColumn = this.sourceCursor.currentColumn;
@@ -521,8 +528,8 @@ export default class Grid {
 	}
 
 	// Build up columns with as many tabs as we can and then spaces
-	private getSpaces(count: number): Columns {
-		let columns: Columns = [];
+	private getSpaces(count: number): Column[] {
+		let columns: Column[] = [];
 		if (count === 0) {
 			return columns;
 		}
@@ -785,10 +792,73 @@ export default class Grid {
 				this.newline();
 			}
 		} else {
-			for (const item of items) {
-				this.writeText("- ", [createTag("dim", createEmptyAttributes())], false);
-				this.drawViewTag(item, ancestry);
+			const joinSameLine = tag.attributes.get("joinSameLine").asStringOrVoid();
+			if (joinSameLine === undefined) {
+				for (const item of items) {
+					this.writeText(
+						"- ",
+						[createTag("dim", createEmptyAttributes())],
+						false,
+					);
+					this.drawViewTag(item, ancestry);
+					this.newline();
+				}
+			} else {
+				this.drawULJoinSameLine(joinSameLine, items, ancestry);
+			}
+		}
+	}
+
+	private drawULJoinSameLine(
+		joinSameLine: string,
+		items: MarkupParsedTag[],
+		ancestry: Ancestry,
+	) {
+		// If we have no grid size then we default to 500. We do this to prevent drawing super long lines when the intent
+		// of this attribute is to reduce excessive newlines.
+		const viewportWidth = this.viewportWidth ?? new OneIndexed(150);
+		const subViewport = viewportWidth.subtract(this.cursor.column);
+
+		const grid = new Grid({
+			...this.options,
+			columns: subViewport,
+			throwOnNewline: true,
+		});
+
+		try {
+			// Draw items separated by the provided attribute
+			for (let i = 0; i < items.length; i++) {
+				const item = items[i];
+				grid.drawTag(item, ancestry);
+				if (i !== items.length - 1) {
+					grid.drawText(
+						{
+							type: "Text",
+							source: false,
+							value: joinSameLine,
+						},
+						ancestry,
+					);
+				}
+			}
+
+			// Didn't error so we must be able to fit on the same line!
+			this.drawGrid(grid);
+			this.moveCursor({
+				line: this.cursor.line,
+				column: this.cursor.column.add(grid.width),
+			});
+		} catch (err) {
+			if (err instanceof GridAddedNewline) {
+				// Cannot fit on a newline so indent and draw the rest of the items
+				for (const item of items) {
+					this.newline();
+					this.drawIndent();
+					this.drawViewTag(item, ancestry);
+				}
 				this.newline();
+			} else {
+				throw err;
 			}
 		}
 	}
@@ -860,15 +930,20 @@ export default class Grid {
 	}
 
 	public parse(
-		sub: undefined | string | AnyMarkup,
+		sub: undefined | Markup,
 		offsetPosition: undefined | Position,
+		cache: boolean,
 	): MarkupParsedChildren {
 		if (sub === undefined) {
 			return [];
 		}
 
 		return this.normalizeChildren(
-			parseMarkup(sub, {offsetPosition, sourceText: this.options.sourceText}),
+			parseMarkup(
+				sub,
+				{offsetPosition, sourceText: this.options.sourceText},
+				cache,
+			),
 		);
 	}
 
@@ -978,8 +1053,9 @@ export default class Grid {
 	private getViewPointer({attributes, children}: MarkupParsedTag): GridPointer {
 		return {
 			char: this.parse(
-				attributes.get("char").asString(""),
+				convertToMarkupFromRandomString(attributes.get("char").asString("")),
 				attributes.get("char").getDiagnosticLocation("inner-value").start,
+				false,
 			),
 			message: children,
 			line: attributes.get("line").asOneIndexedNumber(0),
@@ -1208,6 +1284,7 @@ export default class Grid {
 		this.drawViewTag(
 			createTag("view", createEmptyAttributes(), children),
 			ancestry,
+			// We also indent the right side
 			new OneIndexed(levels * 2),
 		);
 	}
@@ -1556,10 +1633,7 @@ export default class Grid {
 									sourceValue: singleInnerText,
 									value: formatApprox(
 										attributes,
-										humanizeDuration(
-											Number(singleInnerText),
-											{allowMilliseconds: true},
-										),
+										Duration.fromNanoseconds(BigInt(singleInnerText)).format(),
 									),
 								},
 							],

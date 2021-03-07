@@ -23,6 +23,7 @@
     1   │ - <span·tabIndex="5">
       1 │ + <span>
     2 2 │   → foo
+    3 3 │   </span>
 
 
 ```
@@ -55,6 +56,7 @@
     1   │ - <span·tabIndex={5}>
       1 │ + <span>
     2 2 │   → foo
+    3 3 │   </span>
 
 
 ```
@@ -87,6 +89,7 @@
     1   │ - <span·tabIndex={"5"}>
       1 │ + <span>
     2 2 │   → foo
+    3 3 │   </span>
 
 
 ```

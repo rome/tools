@@ -8,40 +8,9 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: true
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2015/uncategorised/252/input.js 1:0-1:14
-	path: UIDPath<es2015/uncategorised/252/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Invalid left-hand side in arrow function parameters"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:3
-				path: UIDPath<es2015/uncategorised/252/input.js>
-				start: Position 1:1
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation es2015/uncategorised/252/input.js 1:0-1:14
 			expression: JSArrowFunctionExpression {
-				loc: SourceLocation es2015/uncategorised/252/input.js 1:0-1:14
 				body: JSNumericLiteral {
 					value: 0
 					format: "octal"
@@ -50,11 +19,7 @@ JSRoot {
 				head: JSFunctionHead {
 					async: false
 					hasHoistedVars: false
-					rest: undefined
-					returnType: undefined
-					thisType: undefined
-					loc: SourceLocation es2015/uncategorised/252/input.js 1:0-1:11
-					params: Array [
+					params: [
 						JSBindingIdentifier {
 							name: "INVALID_PLACEHOLDER"
 							loc: SourceLocation es2015/uncategorised/252/input.js 1:12-1:11
@@ -64,10 +29,38 @@ JSRoot {
 							loc: SourceLocation es2015/uncategorised/252/input.js 1:12-1:11
 						}
 					]
+					loc: SourceLocation es2015/uncategorised/252/input.js 1:0-1:11
 				}
+				loc: SourceLocation es2015/uncategorised/252/input.js 1:0-1:14
+			}
+			loc: SourceLocation es2015/uncategorised/252/input.js 1:0-1:14
+		}
+	]
+	comments: []
+	corrupt: true
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "js"
+				message: [RAW_MARKUP {value: "Invalid left-hand side in "}, "arrow function parameters"]
+			}
+			location: {
+				language: "js"
+				path: UIDPath<es2015/uncategorised/252/input.js>
+				end: Position 1:3
+				start: Position 1:1
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2015/uncategorised/252/input.js>
+	loc: SourceLocation es2015/uncategorised/252/input.js 1:0-1:14
 }
 ```
 

@@ -8,96 +8,84 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2015/regression/11183/input.js 1:0-6:0
-	path: UIDPath<es2015/regression/11183/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Legacy octal literals are not allowed in strict mode"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 2:2
-				path: UIDPath<es2015/regression/11183/input.js>
-				start: Position 2:2
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSClassDeclaration {
 			id: JSBindingIdentifier {
 				name: "X"
 				loc: SourceLocation es2015/regression/11183/input.js 1:6-1:7 (X)
 			}
-			loc: SourceLocation es2015/regression/11183/input.js 1:0-1:10
 			meta: JSClassHead {
-				body: Array []
-				implements: undefined
-				superClass: undefined
-				superTypeParameters: undefined
-				typeParameters: undefined
+				body: []
 				loc: SourceLocation es2015/regression/11183/input.js 1:0-1:10
 			}
+			loc: SourceLocation es2015/regression/11183/input.js 1:0-1:10
 		}
 		JSExpressionStatement {
-			loc: SourceLocation es2015/regression/11183/input.js 2:0-2:2
 			expression: JSNumericLiteral {
 				value: 5
 				format: "octal"
 				loc: SourceLocation es2015/regression/11183/input.js 2:0-2:2
 			}
+			loc: SourceLocation es2015/regression/11183/input.js 2:0-2:2
 		}
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "x"
 				loc: SourceLocation es2015/regression/11183/input.js 4:9-4:10 (x)
 			}
-			loc: SourceLocation es2015/regression/11183/input.js 4:0-4:29
 			body: JSBlockStatement {
-				body: Array []
-				loc: SourceLocation es2015/regression/11183/input.js 4:13-4:29
-				directives: Array [
+				body: []
+				directives: [
 					JSDirective {
 						value: "use strict"
 						loc: SourceLocation es2015/regression/11183/input.js 4:15-4:27
 					}
 				]
+				loc: SourceLocation es2015/regression/11183/input.js 4:13-4:29
 			}
 			head: JSFunctionHead {
 				async: false
 				generator: false
 				hasHoistedVars: false
-				params: Array []
-				rest: undefined
-				returnType: undefined
-				thisType: undefined
-				typeParameters: undefined
+				params: []
 				loc: SourceLocation es2015/regression/11183/input.js 4:10-4:12
 			}
+			loc: SourceLocation es2015/regression/11183/input.js 4:0-4:29
 		}
 		JSExpressionStatement {
-			loc: SourceLocation es2015/regression/11183/input.js 5:0-5:2
 			expression: JSNumericLiteral {
 				value: 5
 				format: "octal"
 				loc: SourceLocation es2015/regression/11183/input.js 5:0-5:2
 			}
+			loc: SourceLocation es2015/regression/11183/input.js 5:0-5:2
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "Legacy octal literals are not allowed in strict mode"}
+			}
+			location: {
+				language: "js"
+				path: UIDPath<es2015/regression/11183/input.js>
+				end: Position 2:2
+				start: Position 2:2
+			}
+		}
+	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2015/regression/11183/input.js>
+	loc: SourceLocation es2015/regression/11183/input.js 1:0-6:0
 }
 ```
 

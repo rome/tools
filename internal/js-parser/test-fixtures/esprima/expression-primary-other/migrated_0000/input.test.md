@@ -8,23 +8,23 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation esprima/expression-primary-other/migrated_0000/input.js 1:0-2:0
-	path: UIDPath<esprima/expression-primary-other/migrated_0000/input.js>
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			expression: JSThisExpression {loc: SourceLocation esprima/expression-primary-other/migrated_0000/input.js 1:0-1:4}
+			expression: JSThisExpression {
+				loc: SourceLocation esprima/expression-primary-other/migrated_0000/input.js 1:0-1:4
+			}
 			loc: SourceLocation esprima/expression-primary-other/migrated_0000/input.js 1:0-1:4
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<esprima/expression-primary-other/migrated_0000/input.js>
+	loc: SourceLocation esprima/expression-primary-other/migrated_0000/input.js 1:0-2:0
 }
 ```
 

@@ -1,5 +1,4 @@
 import {INTERNAL, modifyGeneratedFile} from "../_utils";
-import {lstat, readDirectory} from "@internal/fs";
 import {AbsoluteFilePath} from "@internal/path";
 
 const astFolder = INTERNAL.append("ast");
@@ -13,19 +12,19 @@ type ASTDefinition = {
 export async function main() {
 	let defs: ASTDefinition[] = [];
 
-	for (const languageFolder of await readDirectory(astFolder)) {
+	for (const languageFolder of await astFolder.readDirectory()) {
 		const language = languageFolder.getBasename();
-		if ((await lstat(languageFolder)).isFile()) {
+		if ((await languageFolder.lstat()).isFile()) {
 			continue;
 		}
 
-		for (const categoryFolder of await readDirectory(languageFolder)) {
+		for (const categoryFolder of await languageFolder.readDirectory()) {
 			const category = categoryFolder.getBasename();
-			if ((await lstat(categoryFolder)).isFile()) {
+			if ((await categoryFolder.lstat()).isFile()) {
 				continue;
 			}
 
-			for (const path of await readDirectory(categoryFolder)) {
+			for (const path of await categoryFolder.readDirectory()) {
 				defs.push({
 					category,
 					language,

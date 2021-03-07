@@ -8,53 +8,17 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation esprima/invalid-syntax/migrated_0086/input.js 1:0-2:0
-	path: UIDPath<esprima/invalid-syntax/migrated_0086/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Function parameters can't be parenthesized"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:6
-				path: UIDPath<esprima/invalid-syntax/migrated_0086/input.js>
-				start: Position 1:5
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation esprima/invalid-syntax/migrated_0086/input.js 1:0-1:14
 			expression: JSArrowFunctionExpression {
-				loc: SourceLocation esprima/invalid-syntax/migrated_0086/input.js 1:0-1:14
 				body: JSNumericLiteral {
 					value: 42
-					format: undefined
 					loc: SourceLocation esprima/invalid-syntax/migrated_0086/input.js 1:12-1:14
 				}
 				head: JSFunctionHead {
 					async: false
 					hasHoistedVars: false
-					rest: undefined
-					returnType: undefined
-					thisType: undefined
-					loc: SourceLocation esprima/invalid-syntax/migrated_0086/input.js 1:0-1:11
-					params: Array [
+					params: [
 						JSBindingIdentifier {
 							name: "a"
 							loc: SourceLocation esprima/invalid-syntax/migrated_0086/input.js 1:1-1:2 (a)
@@ -64,10 +28,38 @@ JSRoot {
 							loc: SourceLocation esprima/invalid-syntax/migrated_0086/input.js 1:5-1:6 (b)
 						}
 					]
+					loc: SourceLocation esprima/invalid-syntax/migrated_0086/input.js 1:0-1:11
 				}
+				loc: SourceLocation esprima/invalid-syntax/migrated_0086/input.js 1:0-1:14
+			}
+			loc: SourceLocation esprima/invalid-syntax/migrated_0086/input.js 1:0-1:14
+		}
+	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "Function parameters can't be parenthesized"}
+			}
+			location: {
+				language: "js"
+				path: UIDPath<esprima/invalid-syntax/migrated_0086/input.js>
+				end: Position 1:6
+				start: Position 1:5
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<esprima/invalid-syntax/migrated_0086/input.js>
+	loc: SourceLocation esprima/invalid-syntax/migrated_0086/input.js 1:0-2:0
 }
 ```
 

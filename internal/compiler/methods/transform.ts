@@ -6,8 +6,8 @@
  */
 
 import {AnyRoot} from "@internal/ast";
-import {DiagnosticSuppressions, Diagnostics} from "@internal/diagnostics";
-import {AnyVisitors, TransformRequest} from "../types";
+import {Diagnostic, DiagnosticSuppressions} from "@internal/diagnostics";
+import {AnyVisitor, TransformRequest} from "../types";
 import {stageOrder, stageTransforms} from "../transforms/index";
 import {Cache} from "@internal/compiler";
 import CompilerContext from "../lib/CompilerContext";
@@ -16,7 +16,7 @@ import {AbsoluteFilePath} from "@internal/path";
 export type TransformResult = {
 	ast: AnyRoot;
 	suppressions: DiagnosticSuppressions;
-	diagnostics: Diagnostics;
+	diagnostics: Diagnostic[];
 	cacheDependencies: AbsoluteFilePath[];
 };
 
@@ -43,7 +43,7 @@ export default async function transform(
 		return cached;
 	}
 
-	let prevStageDiagnostics: Diagnostics = [];
+	let prevStageDiagnostics: Diagnostic[] = [];
 	let prevStageCacheDeps: AbsoluteFilePath[] = [];
 	let suppressions: undefined | DiagnosticSuppressions;
 
@@ -70,7 +70,7 @@ export default async function transform(
 	const transformFactory = stageTransforms[stage];
 	const transforms = transformFactory(context.project.config, options);
 
-	let visitors: AnyVisitors = await context.normalizeTransforms(transforms);
+	let visitors: AnyVisitor[] = await context.normalizeTransforms(transforms);
 
 	const compiledAst = context.reduceRoot(visitors);
 

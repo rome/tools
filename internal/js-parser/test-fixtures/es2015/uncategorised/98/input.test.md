@@ -8,40 +8,35 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	syntax: Array []
-	loc: SourceLocation es2015/uncategorised/98/input.js 1:0-1:32
-	path: UIDPath<es2015/uncategorised/98/input.js>
-	body: Array [
+	body: [
 		JSImportDeclaration {
-			defaultSpecifier: undefined
-			importKind: undefined
-			namedSpecifiers: Array []
-			loc: SourceLocation es2015/uncategorised/98/input.js 1:0-1:32
-			source: JSStringLiteral {
-				value: "crypto"
-				loc: SourceLocation es2015/uncategorised/98/input.js 1:24-1:32
-			}
+			namedSpecifiers: []
 			namespaceSpecifier: JSImportNamespaceSpecifier {
-				loc: SourceLocation es2015/uncategorised/98/input.js 1:0-1:18
 				local: JSImportSpecifierLocal {
 					name: JSBindingIdentifier {
 						name: "crypto"
 						loc: SourceLocation es2015/uncategorised/98/input.js 1:12-1:18 (crypto)
 					}
-					importKind: undefined
 					loc: SourceLocation es2015/uncategorised/98/input.js 1:12-1:18
 				}
+				loc: SourceLocation es2015/uncategorised/98/input.js 1:0-1:18
 			}
+			source: JSStringLiteral {
+				value: "crypto"
+				loc: SourceLocation es2015/uncategorised/98/input.js 1:24-1:32
+			}
+			loc: SourceLocation es2015/uncategorised/98/input.js 1:0-1:32
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: []
+	path: UIDPath<es2015/uncategorised/98/input.js>
+	loc: SourceLocation es2015/uncategorised/98/input.js 1:0-1:32
 }
 ```
 

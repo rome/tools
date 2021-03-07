@@ -1,4 +1,4 @@
-import {Path, Scope, createVisitor, signals} from "@internal/compiler";
+import {CompilerPath, Scope, createVisitor, signals} from "@internal/compiler";
 import {getBindingIdentifiers} from "@internal/js-ast-utils";
 import {Dict} from "@internal/typescript-helpers";
 import {
@@ -17,7 +17,7 @@ type State = {
 const ignoreVariables = ["React"];
 
 function getEnclosingFunctionBodyScope(
-	refPath: Path,
+	refPath: CompilerPath,
 	binding: Binding,
 ): Scope | undefined {
 	const block = refPath.findAncestry((path) => {
@@ -35,7 +35,7 @@ function getEnclosingFunctionBodyScope(
 	return block?.scope;
 }
 
-function isSelfReference(refPath: Path, binding: Binding) {
+function isSelfReference(refPath: CompilerPath, binding: Binding) {
 	let scope: Scope | undefined = refPath.scope;
 	const blockScope = getEnclosingFunctionBodyScope(refPath, binding);
 	if (blockScope) {

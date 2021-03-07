@@ -8,23 +8,10 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2015/uncategorised/175/input.js 1:0-1:51
-	path: UIDPath<es2015/uncategorised/175/input.js>
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation es2015/uncategorised/175/input.js 1:0-1:51
 			expression: JSObjectExpression {
-				loc: SourceLocation es2015/uncategorised/175/input.js 1:1-1:50
-				properties: Array [
+				properties: [
 					JSObjectMethod {
 						kind: "method"
 						key: JSStaticPropertyKey {
@@ -34,68 +21,18 @@ JSRoot {
 							}
 							loc: SourceLocation es2015/uncategorised/175/input.js 1:3-1:4
 						}
-						loc: SourceLocation es2015/uncategorised/175/input.js 1:3-1:48
 						body: JSBlockStatement {
-							body: Array []
-							directives: Array []
+							body: []
+							directives: []
 							loc: SourceLocation es2015/uncategorised/175/input.js 1:46-1:48
 						}
 						head: JSFunctionHead {
 							async: false
 							generator: false
 							hasHoistedVars: false
-							returnType: undefined
-							thisType: undefined
-							typeParameters: undefined
-							loc: SourceLocation es2015/uncategorised/175/input.js 1:4-1:46
-							rest: JSBindingArrayPattern {
-								rest: undefined
-								loc: SourceLocation es2015/uncategorised/175/input.js 1:36-1:45
-								meta: JSPatternMeta {
-									optional: undefined
-									typeAnnotation: undefined
-									loc: SourceLocation es2015/uncategorised/175/input.js 1:36-1:45
-								}
-								elements: Array [
-									JSBindingIdentifier {
-										name: "a"
-										loc: SourceLocation es2015/uncategorised/175/input.js 1:37-1:38 (a)
-										meta: JSPatternMeta {
-											optional: undefined
-											typeAnnotation: undefined
-											loc: SourceLocation es2015/uncategorised/175/input.js 1:37-1:38
-										}
-									}
-									JSBindingIdentifier {
-										name: "b"
-										loc: SourceLocation es2015/uncategorised/175/input.js 1:40-1:41 (b)
-										meta: JSPatternMeta {
-											optional: undefined
-											typeAnnotation: undefined
-											loc: SourceLocation es2015/uncategorised/175/input.js 1:40-1:41
-										}
-									}
-									JSBindingIdentifier {
-										name: "c"
-										loc: SourceLocation es2015/uncategorised/175/input.js 1:43-1:44 (c)
-										meta: JSPatternMeta {
-											optional: undefined
-											typeAnnotation: undefined
-											loc: SourceLocation es2015/uncategorised/175/input.js 1:43-1:44
-										}
-									}
-								]
-							}
-							params: Array [
+							params: [
 								JSBindingObjectPattern {
-									rest: undefined
-									loc: SourceLocation es2015/uncategorised/175/input.js 1:5-1:31
-									meta: JSPatternMeta {
-										optional: undefined
-										typeAnnotation: undefined
-										loc: SourceLocation es2015/uncategorised/175/input.js 1:5-1:31
-									}
-									properties: Array [
+									properties: [
 										JSBindingObjectPatternProperty {
 											key: JSStaticPropertyKey {
 												value: JSIdentifier {
@@ -105,9 +42,7 @@ JSRoot {
 												loc: SourceLocation es2015/uncategorised/175/input.js 1:7-1:8
 											}
 											value: JSBindingObjectPattern {
-												rest: undefined
-												loc: SourceLocation es2015/uncategorised/175/input.js 1:10-1:18
-												properties: Array [
+												properties: [
 													JSBindingObjectPatternProperty {
 														key: JSStaticPropertyKey {
 															value: JSIdentifier {
@@ -137,6 +72,7 @@ JSRoot {
 														loc: SourceLocation es2015/uncategorised/175/input.js 1:15-1:16
 													}
 												]
+												loc: SourceLocation es2015/uncategorised/175/input.js 1:10-1:18
 											}
 											loc: SourceLocation es2015/uncategorised/175/input.js 1:7-1:18
 										}
@@ -149,40 +85,81 @@ JSRoot {
 												loc: SourceLocation es2015/uncategorised/175/input.js 1:20-1:21
 											}
 											value: JSBindingArrayPattern {
-												rest: undefined
-												loc: SourceLocation es2015/uncategorised/175/input.js 1:23-1:29
-												elements: Array [
+												elements: [
 													JSBindingIdentifier {
 														name: "y"
-														loc: SourceLocation es2015/uncategorised/175/input.js 1:24-1:25 (y)
 														meta: JSPatternMeta {
-															optional: undefined
-															typeAnnotation: undefined
 															loc: SourceLocation es2015/uncategorised/175/input.js 1:24-1:25
 														}
+														loc: SourceLocation es2015/uncategorised/175/input.js 1:24-1:25 (y)
 													}
 													JSBindingIdentifier {
 														name: "z"
-														loc: SourceLocation es2015/uncategorised/175/input.js 1:27-1:28 (z)
 														meta: JSPatternMeta {
-															optional: undefined
-															typeAnnotation: undefined
 															loc: SourceLocation es2015/uncategorised/175/input.js 1:27-1:28
 														}
+														loc: SourceLocation es2015/uncategorised/175/input.js 1:27-1:28 (z)
 													}
 												]
+												loc: SourceLocation es2015/uncategorised/175/input.js 1:23-1:29
 											}
 											loc: SourceLocation es2015/uncategorised/175/input.js 1:20-1:29
 										}
 									]
+									meta: JSPatternMeta {
+										loc: SourceLocation es2015/uncategorised/175/input.js 1:5-1:31
+									}
+									loc: SourceLocation es2015/uncategorised/175/input.js 1:5-1:31
 								}
 							]
+							rest: JSBindingArrayPattern {
+								elements: [
+									JSBindingIdentifier {
+										name: "a"
+										meta: JSPatternMeta {
+											loc: SourceLocation es2015/uncategorised/175/input.js 1:37-1:38
+										}
+										loc: SourceLocation es2015/uncategorised/175/input.js 1:37-1:38 (a)
+									}
+									JSBindingIdentifier {
+										name: "b"
+										meta: JSPatternMeta {
+											loc: SourceLocation es2015/uncategorised/175/input.js 1:40-1:41
+										}
+										loc: SourceLocation es2015/uncategorised/175/input.js 1:40-1:41 (b)
+									}
+									JSBindingIdentifier {
+										name: "c"
+										meta: JSPatternMeta {
+											loc: SourceLocation es2015/uncategorised/175/input.js 1:43-1:44
+										}
+										loc: SourceLocation es2015/uncategorised/175/input.js 1:43-1:44 (c)
+									}
+								]
+								meta: JSPatternMeta {
+									loc: SourceLocation es2015/uncategorised/175/input.js 1:36-1:45
+								}
+								loc: SourceLocation es2015/uncategorised/175/input.js 1:36-1:45
+							}
+							loc: SourceLocation es2015/uncategorised/175/input.js 1:4-1:46
 						}
+						loc: SourceLocation es2015/uncategorised/175/input.js 1:3-1:48
 					}
 				]
+				loc: SourceLocation es2015/uncategorised/175/input.js 1:1-1:50
 			}
+			loc: SourceLocation es2015/uncategorised/175/input.js 1:0-1:51
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2015/uncategorised/175/input.js>
+	loc: SourceLocation es2015/uncategorised/175/input.js 1:0-1:51
 }
 ```
 

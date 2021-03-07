@@ -8,57 +8,51 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	loc: SourceLocation jsx/errors/unclosed-tag/input.jsx 1:0-2:0
-	path: UIDPath<jsx/errors/unclosed-tag/input.jsx>
-	syntax: Array ["jsx"]
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation jsx/errors/unclosed-tag/input.jsx 1:0-1:5
 			expression: JSXElement {
+				attributes: []
+				children: []
+				selfClosing: false
 				name: JSXIdentifier {
 					name: "foo"
 					loc: SourceLocation jsx/errors/unclosed-tag/input.jsx 1:1-1:4
 				}
-				attributes: Array []
-				children: Array []
-				selfClosing: false
-				typeArguments: undefined
 				loc: SourceLocation jsx/errors/unclosed-tag/input.jsx 1:0-1:5
 			}
+			loc: SourceLocation jsx/errors/unclosed-tag/input.jsx 1:0-1:5
 		}
 	]
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			location: Object {
-				integrity: undefined
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {
+				advice: [
+					log {category: "info", text: [RAW_MARKUP {value: "Originated from opening tag of <emphasis>"}, "foo", RAW_MARKUP {value: "</emphasis>"}]}
+					frame {
+						location: SourceLocation jsx/errors/unclosed-tag/input.jsx 1:1-1:4
+					}
+				]
+				category: ["parse"]
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "Unclosed JSX element"}
+			}
+			location: {
 				language: "js"
-				sourceText: undefined
-				end: Position 1:5
 				path: UIDPath<jsx/errors/unclosed-tag/input.jsx>
+				end: Position 1:5
 				start: Position 1:5
 			}
-			description: Object {
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Unclosed JSX element"}
-				advice: Array [
-					log {
-						category: "info"
-						text: RAW_MARKUP {value: "Originated from opening tag of <emphasis>foo</emphasis>"}
-					}
-					frame {location: SourceLocation jsx/errors/unclosed-tag/input.jsx 1:1-1:4}
-				]
-			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: ["jsx"]
+	path: UIDPath<jsx/errors/unclosed-tag/input.jsx>
+	loc: SourceLocation jsx/errors/unclosed-tag/input.jsx 1:0-2:0
 }
 ```
 

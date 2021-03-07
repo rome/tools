@@ -8,62 +8,56 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation esprima/es2015-for-of/for-of-array-pattern-let/input.js 1:0-2:0
-	path: UIDPath<esprima/es2015-for-of/for-of-array-pattern-let/input.js>
-	body: Array [
+	body: [
 		JSForOfStatement {
 			await: false
-			body: JSEmptyStatement {loc: SourceLocation esprima/es2015-for-of/for-of-array-pattern-let/input.js 1:21-1:22}
-			loc: SourceLocation esprima/es2015-for-of/for-of-array-pattern-let/input.js 1:0-1:22
+			body: JSEmptyStatement {
+				loc: SourceLocation esprima/es2015-for-of/for-of-array-pattern-let/input.js 1:21-1:22
+			}
+			left: JSVariableDeclaration {
+				kind: "let"
+				declarations: [
+					JSVariableDeclarator {
+						id: JSBindingArrayPattern {
+							elements: [
+								JSBindingIdentifier {
+									name: "p"
+									meta: JSPatternMeta {
+										loc: SourceLocation esprima/es2015-for-of/for-of-array-pattern-let/input.js 1:10-1:11
+									}
+									loc: SourceLocation esprima/es2015-for-of/for-of-array-pattern-let/input.js 1:10-1:11 (p)
+								}
+								JSBindingIdentifier {
+									name: "q"
+									meta: JSPatternMeta {
+										loc: SourceLocation esprima/es2015-for-of/for-of-array-pattern-let/input.js 1:13-1:14
+									}
+									loc: SourceLocation esprima/es2015-for-of/for-of-array-pattern-let/input.js 1:13-1:14 (q)
+								}
+							]
+							loc: SourceLocation esprima/es2015-for-of/for-of-array-pattern-let/input.js 1:9-1:15
+						}
+						loc: SourceLocation esprima/es2015-for-of/for-of-array-pattern-let/input.js 1:9-1:15
+					}
+				]
+				loc: SourceLocation esprima/es2015-for-of/for-of-array-pattern-let/input.js 1:5-1:15
+			}
 			right: JSReferenceIdentifier {
 				name: "r"
 				loc: SourceLocation esprima/es2015-for-of/for-of-array-pattern-let/input.js 1:19-1:20 (r)
 			}
-			left: JSVariableDeclaration {
-				kind: "let"
-				loc: SourceLocation esprima/es2015-for-of/for-of-array-pattern-let/input.js 1:5-1:15
-				declarations: Array [
-					JSVariableDeclarator {
-						id: JSBindingArrayPattern {
-							rest: undefined
-							loc: SourceLocation esprima/es2015-for-of/for-of-array-pattern-let/input.js 1:9-1:15
-							elements: Array [
-								JSBindingIdentifier {
-									name: "p"
-									loc: SourceLocation esprima/es2015-for-of/for-of-array-pattern-let/input.js 1:10-1:11 (p)
-									meta: JSPatternMeta {
-										optional: undefined
-										typeAnnotation: undefined
-										loc: SourceLocation esprima/es2015-for-of/for-of-array-pattern-let/input.js 1:10-1:11
-									}
-								}
-								JSBindingIdentifier {
-									name: "q"
-									loc: SourceLocation esprima/es2015-for-of/for-of-array-pattern-let/input.js 1:13-1:14 (q)
-									meta: JSPatternMeta {
-										optional: undefined
-										typeAnnotation: undefined
-										loc: SourceLocation esprima/es2015-for-of/for-of-array-pattern-let/input.js 1:13-1:14
-									}
-								}
-							]
-						}
-						init: undefined
-						loc: SourceLocation esprima/es2015-for-of/for-of-array-pattern-let/input.js 1:9-1:15
-					}
-				]
-			}
+			loc: SourceLocation esprima/es2015-for-of/for-of-array-pattern-let/input.js 1:0-1:22
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<esprima/es2015-for-of/for-of-array-pattern-let/input.js>
+	loc: SourceLocation esprima/es2015-for-of/for-of-array-pattern-let/input.js 1:0-2:0
 }
 ```
 

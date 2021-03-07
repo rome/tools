@@ -8,43 +8,16 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation esprima/es2015-meta-property/new-target-declaration/input.js 1:0-4:0
-	path: UIDPath<esprima/es2015-meta-property/new-target-declaration/input.js>
-	body: Array [
+	body: [
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "f"
 				loc: SourceLocation esprima/es2015-meta-property/new-target-declaration/input.js 1:9-1:10 (f)
 			}
-			loc: SourceLocation esprima/es2015-meta-property/new-target-declaration/input.js 1:0-3:1
-			head: JSFunctionHead {
-				async: false
-				generator: false
-				hasHoistedVars: false
-				params: Array []
-				rest: undefined
-				returnType: undefined
-				thisType: undefined
-				typeParameters: undefined
-				loc: SourceLocation esprima/es2015-meta-property/new-target-declaration/input.js 1:10-1:12
-			}
 			body: JSBlockStatement {
-				directives: Array []
-				loc: SourceLocation esprima/es2015-meta-property/new-target-declaration/input.js 1:13-3:1
-				body: Array [
+				body: [
 					JSExpressionStatement {
-						loc: SourceLocation esprima/es2015-meta-property/new-target-declaration/input.js 2:4-2:15
 						expression: JSMetaProperty {
-							loc: SourceLocation esprima/es2015-meta-property/new-target-declaration/input.js 2:4-2:14
 							meta: JSIdentifier {
 								name: "new"
 								loc: SourceLocation esprima/es2015-meta-property/new-target-declaration/input.js 2:4-2:7 (new)
@@ -53,12 +26,33 @@ JSRoot {
 								name: "target"
 								loc: SourceLocation esprima/es2015-meta-property/new-target-declaration/input.js 2:8-2:14 (target)
 							}
+							loc: SourceLocation esprima/es2015-meta-property/new-target-declaration/input.js 2:4-2:14
 						}
+						loc: SourceLocation esprima/es2015-meta-property/new-target-declaration/input.js 2:4-2:15
 					}
 				]
+				directives: []
+				loc: SourceLocation esprima/es2015-meta-property/new-target-declaration/input.js 1:13-3:1
 			}
+			head: JSFunctionHead {
+				async: false
+				generator: false
+				hasHoistedVars: false
+				params: []
+				loc: SourceLocation esprima/es2015-meta-property/new-target-declaration/input.js 1:10-1:12
+			}
+			loc: SourceLocation esprima/es2015-meta-property/new-target-declaration/input.js 1:0-3:1
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<esprima/es2015-meta-property/new-target-declaration/input.js>
+	loc: SourceLocation esprima/es2015-meta-property/new-target-declaration/input.js 1:0-4:0
 }
 ```
 

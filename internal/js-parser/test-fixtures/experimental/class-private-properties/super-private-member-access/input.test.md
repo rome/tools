@@ -8,34 +8,14 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation experimental/class-private-properties/super-private-member-access/input.js 1:0-8:0
-	path: UIDPath<experimental/class-private-properties/super-private-member-access/input.js>
-	body: Array [
+	body: [
 		JSClassDeclaration {
 			id: JSBindingIdentifier {
 				name: "A"
 				loc: SourceLocation experimental/class-private-properties/super-private-member-access/input.js 1:6-1:7 (A)
 			}
-			loc: SourceLocation experimental/class-private-properties/super-private-member-access/input.js 1:0-7:1
 			meta: JSClassHead {
-				implements: undefined
-				superTypeParameters: undefined
-				typeParameters: undefined
-				loc: SourceLocation experimental/class-private-properties/super-private-member-access/input.js 1:0-7:1
-				superClass: JSReferenceIdentifier {
-					name: "B"
-					loc: SourceLocation experimental/class-private-properties/super-private-member-access/input.js 1:16-1:17 (B)
-				}
-				body: Array [
+				body: [
 					JSClassPrivateProperty {
 						key: JSPrivateName {
 							id: JSIdentifier {
@@ -44,19 +24,15 @@ JSRoot {
 							}
 							loc: SourceLocation experimental/class-private-properties/super-private-member-access/input.js 2:2-2:4
 						}
-						value: undefined
-						typeAnnotation: undefined
-						loc: SourceLocation experimental/class-private-properties/super-private-member-access/input.js 2:2-2:5
 						meta: JSClassPropertyMeta {
 							abstract: false
-							accessibility: undefined
 							optional: false
 							readonly: false
 							static: false
-							typeAnnotation: undefined
 							loc: SourceLocation experimental/class-private-properties/super-private-member-access/input.js 2:2-2:4
 							start: Position 2:2
 						}
+						loc: SourceLocation experimental/class-private-properties/super-private-member-access/input.js 2:2-2:5
 					}
 					JSClassMethod {
 						kind: "method"
@@ -67,37 +43,21 @@ JSRoot {
 							}
 							loc: SourceLocation experimental/class-private-properties/super-private-member-access/input.js 4:2-4:8
 						}
-						loc: SourceLocation experimental/class-private-properties/super-private-member-access/input.js 4:2-6:3
 						meta: JSClassPropertyMeta {
 							abstract: false
-							accessibility: undefined
 							optional: false
 							readonly: false
 							static: false
-							typeAnnotation: undefined
 							loc: SourceLocation experimental/class-private-properties/super-private-member-access/input.js 4:2-4:8
 							start: Position 4:2
 						}
-						head: JSFunctionHead {
-							async: false
-							generator: false
-							hasHoistedVars: false
-							params: Array []
-							rest: undefined
-							returnType: undefined
-							thisType: undefined
-							typeParameters: undefined
-							loc: SourceLocation experimental/class-private-properties/super-private-member-access/input.js 4:8-4:10
-						}
 						body: JSBlockStatement {
-							directives: Array []
-							loc: SourceLocation experimental/class-private-properties/super-private-member-access/input.js 4:11-6:3
-							body: Array [
+							body: [
 								JSExpressionStatement {
-									loc: SourceLocation experimental/class-private-properties/super-private-member-access/input.js 5:4-5:13
 									expression: JSMemberExpression {
-										loc: SourceLocation experimental/class-private-properties/super-private-member-access/input.js 5:4-5:12
-										object: JSSuper {loc: SourceLocation experimental/class-private-properties/super-private-member-access/input.js 5:4-5:9}
+										object: JSSuper {
+											loc: SourceLocation experimental/class-private-properties/super-private-member-access/input.js 5:4-5:9
+										}
 										property: JSStaticMemberProperty {
 											value: JSPrivateName {
 												id: JSIdentifier {
@@ -108,15 +68,42 @@ JSRoot {
 											}
 											loc: SourceLocation experimental/class-private-properties/super-private-member-access/input.js 5:10-5:12
 										}
+										loc: SourceLocation experimental/class-private-properties/super-private-member-access/input.js 5:4-5:12
 									}
+									loc: SourceLocation experimental/class-private-properties/super-private-member-access/input.js 5:4-5:13
 								}
 							]
+							directives: []
+							loc: SourceLocation experimental/class-private-properties/super-private-member-access/input.js 4:11-6:3
 						}
+						head: JSFunctionHead {
+							async: false
+							generator: false
+							hasHoistedVars: false
+							params: []
+							loc: SourceLocation experimental/class-private-properties/super-private-member-access/input.js 4:8-4:10
+						}
+						loc: SourceLocation experimental/class-private-properties/super-private-member-access/input.js 4:2-6:3
 					}
 				]
+				superClass: JSReferenceIdentifier {
+					name: "B"
+					loc: SourceLocation experimental/class-private-properties/super-private-member-access/input.js 1:16-1:17 (B)
+				}
+				loc: SourceLocation experimental/class-private-properties/super-private-member-access/input.js 1:0-7:1
 			}
+			loc: SourceLocation experimental/class-private-properties/super-private-member-access/input.js 1:0-7:1
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<experimental/class-private-properties/super-private-member-access/input.js>
+	loc: SourceLocation experimental/class-private-properties/super-private-member-access/input.js 1:0-8:0
 }
 ```
 

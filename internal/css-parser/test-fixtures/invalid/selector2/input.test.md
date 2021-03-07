@@ -6,54 +6,51 @@
 
 ```javascript
 CSSRoot {
-	comments: Array []
-	corrupt: false
-	integrity: undefined
-	loc: SourceLocation invalid/selector2/input.css 1:0-1:11
-	path: RelativePath<invalid/selector2/input.css>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "css"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Expected a selector."}
-			}
-			location: Object {
-				integrity: undefined
-				language: "css"
-				sourceText: undefined
-				end: Position 1:8
-				path: RelativePath<invalid/selector2/input.css>
-				start: Position 1:7
-			}
-		}
-	]
-	body: Array [
+	body: [
 		CSSRule {
-			loc: SourceLocation invalid/selector2/input.css 1:0-1:11
-			block: CSSBlock {
-				value: Array []
-				startingTokenValue: "{"
-				loc: SourceLocation invalid/selector2/input.css 1:9-1:11
-			}
-			prelude: Array [
+			prelude: [
 				CSSSelector {
-					loc: SourceLocation invalid/selector2/input.css 1:0-1:7
-					patterns: Array [
+					patterns: [
 						CSSTypeSelector {
 							value: "span"
 							loc: SourceLocation invalid/selector2/input.css 1:0-1:4
 						}
 					]
+					loc: SourceLocation invalid/selector2/input.css 1:0-1:7
 				}
 				CSSSelector {
-					patterns: Array []
+					patterns: []
 					loc: SourceLocation invalid/selector2/input.css 1:7-1:9
 				}
 			]
+			block: CSSBlock {
+				value: []
+				startingTokenValue: "{"
+				loc: SourceLocation invalid/selector2/input.css 1:9-1:11
+			}
+			loc: SourceLocation invalid/selector2/input.css 1:0-1:11
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "css"
+				message: RAW_MARKUP {value: "Expected a selector."}
+			}
+			location: {
+				language: "css"
+				path: RelativePath<invalid/selector2/input.css>
+				end: Position 1:8
+				start: Position 1:7
+			}
+		}
+	]
+	path: RelativePath<invalid/selector2/input.css>
+	loc: SourceLocation invalid/selector2/input.css 1:0-1:11
 }
 ```

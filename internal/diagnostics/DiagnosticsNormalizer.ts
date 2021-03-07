@@ -8,8 +8,7 @@
 import {
 	Diagnostic,
 	DiagnosticAdvice,
-	DiagnosticAdviceItem,
-	DiagnosticDependencies,
+	DiagnosticDependency,
 	DiagnosticDescription,
 	DiagnosticLocation,
 	DiagnosticSuppression,
@@ -22,9 +21,9 @@ import {
 	markup,
 	normalizeMarkup,
 } from "@internal/markup";
-import {OneIndexed, ZeroIndexed} from "@internal/math";
+import {OneIndexed, ZeroIndexed} from "@internal/numbers";
 import {mergeObjects} from "@internal/typescript-helpers";
-import {AnyPath, MixedPathMap, MixedPathSet} from "@internal/path";
+import {MixedPathMap, MixedPathSet, Path} from "@internal/path";
 
 export type DiagnosticsNormalizerOptions = {
 	tags?: DiagnosticTags;
@@ -61,7 +60,7 @@ function maybeMap<T>(arr: T[], callback: (item: T) => T): T[] {
 export default class DiagnosticsNormalizer {
 	constructor(
 		normalizeOptions: DiagnosticsNormalizerOptions = {},
-		markupOptions?: MarkupFormatNormalizeOptions,
+		markupOptions: MarkupFormatNormalizeOptions = {},
 		sourceMaps?: SourceMapConsumerCollection,
 	) {
 		this.sourceMaps = sourceMaps;
@@ -69,23 +68,31 @@ export default class DiagnosticsNormalizer {
 		this.options = normalizeOptions;
 		this.inlinedSourceTextPaths = new MixedPathSet();
 		this.markupOptions = this.createMarkupOptions(markupOptions);
+
+		this.couldNormalizeMarkup =
+			sourceMaps !== undefined ||
+			markupOptions.stripFilelinkText ||
+			markupOptions.stripPositions ||
+			markupOptions.humanizeFilename !== undefined ||
+			markupOptions.normalizePosition !== undefined;
 	}
 
 	private sourceMaps: undefined | SourceMapConsumerCollection;
 
 	private options: DiagnosticsNormalizerOptions;
 	private markupOptions: MarkupFormatNormalizeOptions;
+	private couldNormalizeMarkup: boolean;
 
 	private inlineSourceText: MixedPathMap<string>;
 	private inlinedSourceTextPaths: MixedPathSet;
 
-	public removePath(path: AnyPath) {
+	public removePath(path: Path) {
 		this.inlineSourceText.delete(path);
 		this.inlinedSourceTextPaths.delete(path);
 	}
 
 	private createMarkupOptions(
-		markupOptions: MarkupFormatNormalizeOptions = {},
+		markupOptions: MarkupFormatNormalizeOptions,
 	): MarkupFormatNormalizeOptions {
 		const {sourceMaps} = this;
 
@@ -122,13 +129,13 @@ export default class DiagnosticsNormalizer {
 		};
 	}
 
-	public setInlineSourceText(path: AnyPath, sourceText: string) {
+	public setInlineSourceText(path: Path, sourceText: string) {
 		this.inlineSourceText.set(path, sourceText);
 	}
 
-	private normalizePath(path: AnyPath): AnyPath;
-	private normalizePath(path: undefined | AnyPath): undefined | AnyPath;
-	private normalizePath(path: undefined | AnyPath): undefined | AnyPath {
+	private normalizePath(path: Path): Path;
+	private normalizePath(path: undefined | Path): undefined | Path;
+	private normalizePath(path: undefined | Path): undefined | Path {
 		const {markupOptions} = this;
 		if (markupOptions === undefined || path === undefined) {
 			return path;
@@ -157,9 +164,6 @@ export default class DiagnosticsNormalizer {
 
 	public normalizeLocation(location: DiagnosticLocation): DiagnosticLocation {
 		const {sourceMaps} = this;
-		if (!this.hasNormalize()) {
-			return location;
-		}
 
 		let {marker, path, start, end, integrity} = location;
 		let origPath = path;
@@ -252,7 +256,11 @@ export default class DiagnosticsNormalizer {
 	}
 
 	private normalizeMarkup(markup: StaticMarkup): StaticMarkup {
-		return normalizeMarkup(markup, this.markupOptions).text;
+		if (this.couldNormalizeMarkup) {
+			return normalizeMarkup(markup, this.markupOptions).text;
+		} else {
+			return markup;
+		}
 	}
 
 	private maybeNormalizeMarkup(
@@ -262,8 +270,8 @@ export default class DiagnosticsNormalizer {
 	}
 
 	private normalizeDependencies(
-		deps: DiagnosticDependencies,
-	): DiagnosticDependencies {
+		deps: DiagnosticDependency[],
+	): DiagnosticDependency[] {
 		return maybeMap(
 			deps,
 			(dep) => {
@@ -277,19 +285,40 @@ export default class DiagnosticsNormalizer {
 		);
 	}
 
-	private normalizeAdvice(advice: DiagnosticAdvice): DiagnosticAdvice {
-		return maybeMap(
-			advice,
-			(item) => {
-				return this.normalizeAdviceItem(item);
-			},
-		);
+	private normalizeAdvice(advice: DiagnosticAdvice[]): DiagnosticAdvice[] {
+		const newAdvice: DiagnosticAdvice[] = [];
+		let normalized = false;
+
+		for (const item of advice) {
+			const newItem = this.normalizeAdviceItem(item);
+			if (newItem === undefined) {
+				normalized = true;
+				continue;
+			}
+			if (newItem !== item) {
+				normalized = true;
+			}
+			newAdvice.push(newItem);
+		}
+
+		return normalized ? newAdvice : advice;
 	}
 
-	private normalizeAdviceItem(item: DiagnosticAdviceItem): DiagnosticAdviceItem {
+	private normalizeAdviceItem(
+		item: DiagnosticAdvice,
+	): undefined | DiagnosticAdvice {
 		const {sourceMaps} = this;
 
 		switch (item.type) {
+			case "group":
+				return maybeMerge(
+					item,
+					{
+						title: this.normalizeMarkup(item.title),
+						advice: this.normalizeAdvice(item.advice),
+					},
+				);
+
 			case "frame":
 				return maybeMerge(
 					item,
@@ -409,49 +438,25 @@ export default class DiagnosticsNormalizer {
 		);
 	}
 
-	private hasNormalize(): boolean {
-		const {sourceMaps, markupOptions} = this;
-		if (sourceMaps !== undefined && sourceMaps.hasAny()) {
-			return true;
-		}
-
-		if (this.inlineSourceText.size > 0) {
-			return true;
-		}
-
-		if (markupOptions.stripFilelinkText || markupOptions.stripPositions) {
-			return true;
-		}
-
-		if (
-			markupOptions.humanizeFilename !== undefined ||
-			markupOptions.normalizePosition !== undefined
-		) {
-			return true;
-		}
-
-		return false;
-	}
-
 	private normalizeDescription(
 		description: DiagnosticDescription,
 	): DiagnosticDescription {
 		const advice = this.normalizeAdvice(description.advice);
+		const verboseAdvice =
+			description.verboseAdvice === undefined
+				? undefined
+				: this.normalizeAdvice(description.verboseAdvice);
 		return maybeMerge(
 			description,
 			{
 				message: this.normalizeMarkup(description.message),
 				advice,
+				verboseAdvice,
 			},
 		);
 	}
 
 	public normalizeDiagnostic(diag: Diagnostic): Diagnostic {
-		// Fast path for a common case
-		if (!this.hasNormalize()) {
-			return diag;
-		}
-
 		let merge: Partial<Diagnostic> = {
 			location: this.normalizeLocation(diag.location),
 			description: this.normalizeDescription(diag.description),

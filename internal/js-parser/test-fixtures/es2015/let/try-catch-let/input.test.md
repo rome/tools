@@ -8,40 +8,37 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2015/let/try-catch-let/input.js 1:0-1:21
-	path: UIDPath<es2015/let/try-catch-let/input.js>
-	body: Array [
+	body: [
 		JSTryStatement {
-			finalizer: undefined
-			loc: SourceLocation es2015/let/try-catch-let/input.js 1:0-1:21
 			block: JSBlockStatement {
-				body: Array []
-				directives: Array []
+				body: []
+				directives: []
 				loc: SourceLocation es2015/let/try-catch-let/input.js 1:4-1:6
 			}
 			handler: JSCatchClause {
-				loc: SourceLocation es2015/let/try-catch-let/input.js 1:7-1:21
+				body: JSBlockStatement {
+					body: []
+					directives: []
+					loc: SourceLocation es2015/let/try-catch-let/input.js 1:19-1:21
+				}
 				param: JSBindingIdentifier {
 					name: "let"
 					loc: SourceLocation es2015/let/try-catch-let/input.js 1:14-1:17 (let)
 				}
-				body: JSBlockStatement {
-					body: Array []
-					directives: Array []
-					loc: SourceLocation es2015/let/try-catch-let/input.js 1:19-1:21
-				}
+				loc: SourceLocation es2015/let/try-catch-let/input.js 1:7-1:21
 			}
+			loc: SourceLocation es2015/let/try-catch-let/input.js 1:0-1:21
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2015/let/try-catch-let/input.js>
+	loc: SourceLocation es2015/let/try-catch-let/input.js 1:0-1:21
 }
 ```
 

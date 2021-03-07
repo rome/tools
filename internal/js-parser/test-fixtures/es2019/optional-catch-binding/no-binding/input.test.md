@@ -8,37 +8,33 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2019/optional-catch-binding/no-binding/input.js 1:0-7:0
-	path: UIDPath<es2019/optional-catch-binding/no-binding/input.js>
-	body: Array [
+	body: [
 		JSTryStatement {
-			finalizer: undefined
-			loc: SourceLocation es2019/optional-catch-binding/no-binding/input.js 1:0-6:1
 			block: JSBlockStatement {
-				body: Array []
-				directives: Array []
+				body: []
+				directives: []
 				loc: SourceLocation es2019/optional-catch-binding/no-binding/input.js 1:4-3:1
 			}
 			handler: JSCatchClause {
-				param: undefined
-				loc: SourceLocation es2019/optional-catch-binding/no-binding/input.js 4:0-6:1
 				body: JSBlockStatement {
-					body: Array []
-					directives: Array []
+					body: []
+					directives: []
 					loc: SourceLocation es2019/optional-catch-binding/no-binding/input.js 4:6-6:1
 				}
+				loc: SourceLocation es2019/optional-catch-binding/no-binding/input.js 4:0-6:1
 			}
+			loc: SourceLocation es2019/optional-catch-binding/no-binding/input.js 1:0-6:1
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2019/optional-catch-binding/no-binding/input.js>
+	loc: SourceLocation es2019/optional-catch-binding/no-binding/input.js 1:0-7:0
 }
 ```
 

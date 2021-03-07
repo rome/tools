@@ -8,47 +8,45 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	loc: SourceLocation typescript/types/array/input.ts 1:0-2:0
-	path: UIDPath<typescript/types/array/input.ts>
-	syntax: Array ["ts"]
-	body: Array [
+	body: [
 		JSVariableDeclarationStatement {
-			loc: SourceLocation typescript/types/array/input.ts 1:0-1:20
 			declaration: JSVariableDeclaration {
 				kind: "let"
-				loc: SourceLocation typescript/types/array/input.ts 1:0-1:20
-				declarations: Array [
+				declarations: [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "arr"
-							loc: SourceLocation typescript/types/array/input.ts 1:4-1:19
 							meta: JSPatternMeta {
-								definite: undefined
-								loc: SourceLocation typescript/types/array/input.ts 1:4-1:19
 								typeAnnotation: TSArrayType {
-									loc: SourceLocation typescript/types/array/input.ts 1:9-1:19
 									elementType: TSArrayType {
-										elementType: TSNumberKeywordTypeAnnotation {loc: SourceLocation typescript/types/array/input.ts 1:9-1:15}
+										elementType: TSNumberKeywordTypeAnnotation {
+											loc: SourceLocation typescript/types/array/input.ts 1:9-1:15
+										}
 										loc: SourceLocation typescript/types/array/input.ts 1:9-1:17
 									}
+									loc: SourceLocation typescript/types/array/input.ts 1:9-1:19
 								}
+								loc: SourceLocation typescript/types/array/input.ts 1:4-1:19
 							}
+							loc: SourceLocation typescript/types/array/input.ts 1:4-1:19
 						}
-						init: undefined
 						loc: SourceLocation typescript/types/array/input.ts 1:4-1:19
 					}
 				]
+				loc: SourceLocation typescript/types/array/input.ts 1:0-1:20
 			}
+			loc: SourceLocation typescript/types/array/input.ts 1:0-1:20
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: ["ts"]
+	path: UIDPath<typescript/types/array/input.ts>
+	loc: SourceLocation typescript/types/array/input.ts 1:0-2:0
 }
 ```
 

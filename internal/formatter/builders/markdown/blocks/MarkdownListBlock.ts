@@ -1,11 +1,11 @@
 import {MarkdownListBlock} from "@internal/ast";
-import {Builder, Token, Tokens, concat, space} from "@internal/formatter";
+import {Builder, Token, concat, space} from "@internal/formatter";
 
 export default function MarkdownListBlock(
 	builder: Builder,
 	node: MarkdownListBlock,
 ): Token {
-	const tokens: Tokens = node.children.reduce(
+	const tokens: Token[] = node.children.reduce(
 		(tokens, child, index) => {
 			if (node.ordered) {
 				tokens.push(`${index + 1}.`);
@@ -20,7 +20,7 @@ export default function MarkdownListBlock(
 
 			return tokens;
 		},
-		[] as Tokens,
+		[] as Token[],
 	);
 	return concat(tokens);
 }

@@ -8,39 +8,34 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2017/async-functions/1/input.js 1:0-2:0
-	path: UIDPath<es2017/async-functions/1/input.js>
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation es2017/async-functions/1/input.js 1:0-1:14
 			expression: JSArrowFunctionExpression {
-				loc: SourceLocation es2017/async-functions/1/input.js 1:0-1:14
 				body: JSBlockStatement {
-					body: Array []
-					directives: Array []
+					body: []
+					directives: []
 					loc: SourceLocation es2017/async-functions/1/input.js 1:12-1:14
 				}
 				head: JSFunctionHead {
 					async: true
 					hasHoistedVars: false
-					params: Array []
-					rest: undefined
-					returnType: undefined
-					thisType: undefined
+					params: []
 					loc: SourceLocation es2017/async-functions/1/input.js 1:0-1:11
 				}
+				loc: SourceLocation es2017/async-functions/1/input.js 1:0-1:14
 			}
+			loc: SourceLocation es2017/async-functions/1/input.js 1:0-1:14
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2017/async-functions/1/input.js>
+	loc: SourceLocation es2017/async-functions/1/input.js 1:0-2:0
 }
 ```
 

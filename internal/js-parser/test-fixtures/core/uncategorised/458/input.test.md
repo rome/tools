@@ -8,62 +8,53 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: true
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation core/uncategorised/458/input.js 1:0-1:10
-	path: UIDPath<core/uncategorised/458/input.js>
-	body: Array [
+	body: [
 		JSDoWhileStatement {
-			loc: SourceLocation core/uncategorised/458/input.js 1:0-1:10
-			test: JSReferenceIdentifier {
-				name: "INVALID_PLACEHOLDER"
-				loc: SourceLocation core/uncategorised/458/input.js 1:9-1:10
-			}
 			body: JSBlockStatement {
-				directives: Array []
-				loc: SourceLocation core/uncategorised/458/input.js 1:3-1:8
-				body: Array [
+				body: [
 					JSExpressionStatement {
-						loc: SourceLocation core/uncategorised/458/input.js 1:5-1:6
 						expression: JSReferenceIdentifier {
 							name: "x"
 							loc: SourceLocation core/uncategorised/458/input.js 1:5-1:6 (x)
 						}
+						loc: SourceLocation core/uncategorised/458/input.js 1:5-1:6
 					}
 				]
+				directives: []
+				loc: SourceLocation core/uncategorised/458/input.js 1:3-1:8
 			}
+			test: JSReferenceIdentifier {
+				name: "INVALID_PLACEHOLDER"
+				loc: SourceLocation core/uncategorised/458/input.js 1:9-1:10
+			}
+			loc: SourceLocation core/uncategorised/458/input.js 1:0-1:10
 		}
 	]
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			location: Object {
-				integrity: undefined
+	comments: []
+	corrupt: true
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {
+				advice: [log {category: "info", text: [RAW_MARKUP {value: "Expected character <emphasis>"}, "while", RAW_MARKUP {value: "</emphasis>"}]}]
+				category: ["parse"]
+				categoryValue: "js"
+				message: [RAW_MARKUP {value: "Unexpected character <emphasis>"}, "*", RAW_MARKUP {value: "</emphasis>"}]
+			}
+			location: {
 				language: "js"
-				sourceText: undefined
-				end: Position 1:10
 				path: UIDPath<core/uncategorised/458/input.js>
+				end: Position 1:10
 				start: Position 1:9
 			}
-			description: Object {
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Unexpected character <emphasis>*</emphasis>"}
-				advice: Array [
-					log {
-						category: "info"
-						text: RAW_MARKUP {value: "Expected character <emphasis>while</emphasis>"}
-					}
-				]
-			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<core/uncategorised/458/input.js>
+	loc: SourceLocation core/uncategorised/458/input.js 1:0-1:10
 }
 ```
 

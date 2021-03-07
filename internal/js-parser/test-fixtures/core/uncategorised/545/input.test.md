@@ -8,47 +8,14 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	syntax: Array []
-	loc: SourceLocation core/uncategorised/545/input.js 1:0-2:0
-	path: UIDPath<core/uncategorised/545/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "public is a reserved word"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:14
-				path: UIDPath<core/uncategorised/545/input.js>
-				start: Position 1:8
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSVariableDeclarationStatement {
-			loc: SourceLocation core/uncategorised/545/input.js 1:0-1:25
 			declaration: JSVariableDeclaration {
 				kind: "const"
-				loc: SourceLocation core/uncategorised/545/input.js 1:0-1:25
-				declarations: Array [
+				declarations: [
 					JSVariableDeclarator {
 						id: JSBindingObjectPattern {
-							rest: undefined
-							loc: SourceLocation core/uncategorised/545/input.js 1:6-1:16
-							properties: Array [
+							properties: [
 								JSBindingObjectPatternProperty {
 									key: JSStaticPropertyKey {
 										value: JSIdentifier {
@@ -64,21 +31,44 @@ JSRoot {
 									loc: SourceLocation core/uncategorised/545/input.js 1:8-1:14
 								}
 							]
+							loc: SourceLocation core/uncategorised/545/input.js 1:6-1:16
 						}
-						loc: SourceLocation core/uncategorised/545/input.js 1:6-1:24
 						init: JSCallExpression {
-							arguments: Array []
-							loc: SourceLocation core/uncategorised/545/input.js 1:19-1:24
+							arguments: []
 							callee: JSReferenceIdentifier {
 								name: "foo"
 								loc: SourceLocation core/uncategorised/545/input.js 1:19-1:22 (foo)
 							}
+							loc: SourceLocation core/uncategorised/545/input.js 1:19-1:24
 						}
+						loc: SourceLocation core/uncategorised/545/input.js 1:6-1:24
 					}
 				]
+				loc: SourceLocation core/uncategorised/545/input.js 1:0-1:25
+			}
+			loc: SourceLocation core/uncategorised/545/input.js 1:0-1:25
+		}
+	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {advice: [], category: ["parse"], categoryValue: "js", message: ["public", RAW_MARKUP {value: " is a reserved word"}]}
+			location: {
+				language: "js"
+				path: UIDPath<core/uncategorised/545/input.js>
+				end: Position 1:14
+				start: Position 1:8
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: []
+	path: UIDPath<core/uncategorised/545/input.js>
+	loc: SourceLocation core/uncategorised/545/input.js 1:0-2:0
 }
 ```
 

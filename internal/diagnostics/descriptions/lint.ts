@@ -7,12 +7,11 @@
 
 import {
 	DiagnosticAdvice,
-	DiagnosticAdviceAction,
 	DiagnosticLanguage,
 	DiagnosticLocation,
 } from "../types";
 import {StaticMarkup, markup} from "@internal/markup";
-import stringDiff from "@internal/string-diff";
+import {stringDiffCompressed} from "@internal/string-diff";
 import {buildSuggestionAdvice} from "../helpers";
 import {addEmphasis, createDiagnosticsCategory, orJoin} from "./index";
 import {DIAGNOSTIC_CATEGORIES} from "../categories";
@@ -44,7 +43,7 @@ export const lint = createDiagnosticsCategory({
 		attributeName: string,
 		values?: Array<string | boolean>,
 	) => {
-		let advice: DiagnosticAdvice = [];
+		let advice: DiagnosticAdvice[] = [];
 		if (values) {
 			advice.push({
 				type: "log",
@@ -129,7 +128,7 @@ export const lint = createDiagnosticsCategory({
 		message: markup`JSX elements without children should be marked as self-closing. In JSX, it is valid for any element to be self-closing.`,
 	},
 	JS_NO_SHOUTY_CONSTANTS: (constantLocation: undefined | DiagnosticLocation) => {
-		const advice: DiagnosticAdvice = [
+		const advice: DiagnosticAdvice[] = [
 			{
 				type: "log",
 				category: "info",
@@ -1122,44 +1121,51 @@ export const lint = createDiagnosticsCategory({
 		message: markup`The specifiers of the import declaration should be sorted alphabetically.`,
 	},
 	PENDING_FIXES: (
-		relativeFilename: string,
+		relativeFilename: undefined | string,
 		language: DiagnosticLanguage,
 		original: string,
 		formatted: string,
-	) => ({
-		category: DIAGNOSTIC_CATEGORIES["lint/pendingFixes"],
-		message: markup`Pending formatting and safe fixes`,
-		advice: [
+	) => {
+		const advice: DiagnosticAdvice[] = [
 			{
 				type: "diff",
 				language,
-				diff: stringDiff(original, formatted),
+				diff: stringDiffCompressed(original, formatted),
 			},
-			{
+		];
+		const verboseAdvice: DiagnosticAdvice[] = [];
+
+		if (relativeFilename !== undefined) {
+			verboseAdvice.push({
 				type: "action",
 				command: "check",
-				shortcut: "f",
-				instruction: markup`To apply fixes and formatting run`,
-				noun: markup`Apply fixes and format`,
+				suggestedKeyboardShortcut: "f",
+				description: markup`Apply fixes and format`,
 				args: [relativeFilename],
 				commandFlags: {
 					apply: true,
 				},
-			},
-			{
+			});
+
+			verboseAdvice.push({
 				type: "action",
-				hidden: true,
 				command: "check",
-				shortcut: "o",
-				instruction: markup`To format this file without any fixes run`,
-				noun: markup`Only format`,
+				suggestedKeyboardShortcut: "o",
+				description: markup`Only format without any fixes`,
 				args: [relativeFilename],
 				commandFlags: {
 					format: true,
 				},
-			} as DiagnosticAdviceAction,
-		],
-	}),
+			});
+		}
+
+		return {
+			category: DIAGNOSTIC_CATEGORIES["lint/pendingFixes"],
+			message: markup`Pending formatting and safe fixes`,
+			advice,
+			verboseAdvice,
+		};
+	},
 	TS_NO_EXPLICIT_ANY: {
 		category: DIAGNOSTIC_CATEGORIES["lint/ts/noExplicitAny"],
 		message: markup`Avoid using the <emphasis>any</emphasis> type.`,

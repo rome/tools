@@ -8,48 +8,10 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	syntax: Array []
-	loc: SourceLocation es2015/modules/import-invalid-keyword/input.js 1:0-2:0
-	path: UIDPath<es2015/modules/import-invalid-keyword/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Unexpected keyword <emphasis>debugger</emphasis>"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:17
-				path: UIDPath<es2015/modules/import-invalid-keyword/input.js>
-				start: Position 1:9
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSImportDeclaration {
-			defaultSpecifier: undefined
-			importKind: undefined
-			namespaceSpecifier: undefined
-			loc: SourceLocation es2015/modules/import-invalid-keyword/input.js 1:0-1:31
-			source: JSStringLiteral {
-				value: "foo"
-				loc: SourceLocation es2015/modules/import-invalid-keyword/input.js 1:25-1:30
-			}
-			namedSpecifiers: Array [
+			namedSpecifiers: [
 				JSImportSpecifier {
-					loc: SourceLocation es2015/modules/import-invalid-keyword/input.js 1:9-1:17
 					imported: JSIdentifier {
 						name: "debugger"
 						loc: SourceLocation es2015/modules/import-invalid-keyword/input.js 1:9-1:17 (debugger)
@@ -59,13 +21,43 @@ JSRoot {
 							name: "debugger"
 							loc: SourceLocation es2015/modules/import-invalid-keyword/input.js 1:9-1:17 (debugger)
 						}
-						importKind: undefined
 						loc: SourceLocation es2015/modules/import-invalid-keyword/input.js 1:9-1:17
 					}
+					loc: SourceLocation es2015/modules/import-invalid-keyword/input.js 1:9-1:17
 				}
 			]
+			source: JSStringLiteral {
+				value: "foo"
+				loc: SourceLocation es2015/modules/import-invalid-keyword/input.js 1:25-1:30
+			}
+			loc: SourceLocation es2015/modules/import-invalid-keyword/input.js 1:0-1:31
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "js"
+				message: [RAW_MARKUP {value: "Unexpected keyword <emphasis>"}, "debugger", RAW_MARKUP {value: "</emphasis>"}]
+			}
+			location: {
+				language: "js"
+				path: UIDPath<es2015/modules/import-invalid-keyword/input.js>
+				end: Position 1:17
+				start: Position 1:9
+			}
+		}
+	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: []
+	path: UIDPath<es2015/modules/import-invalid-keyword/input.js>
+	loc: SourceLocation es2015/modules/import-invalid-keyword/input.js 1:0-2:0
 }
 ```
 

@@ -8,94 +8,82 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation esprima/invalid-syntax/migrated_0223/input.js 1:0-2:0
-	path: UIDPath<esprima/invalid-syntax/migrated_0223/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Octal literal in strict mode"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:69
-				path: UIDPath<esprima/invalid-syntax/migrated_0223/input.js>
-				start: Position 1:69
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "hello"
 				loc: SourceLocation esprima/invalid-syntax/migrated_0223/input.js 1:9-1:14 (hello)
 			}
-			loc: SourceLocation esprima/invalid-syntax/migrated_0223/input.js 1:0-1:76
-			head: JSFunctionHead {
-				async: false
-				generator: false
-				hasHoistedVars: false
-				params: Array []
-				rest: undefined
-				returnType: undefined
-				thisType: undefined
-				typeParameters: undefined
-				loc: SourceLocation esprima/invalid-syntax/migrated_0223/input.js 1:14-1:16
-			}
 			body: JSBlockStatement {
-				loc: SourceLocation esprima/invalid-syntax/migrated_0223/input.js 1:17-1:76
-				directives: Array [
-					JSDirective {
-						value: "use strict"
-						loc: SourceLocation esprima/invalid-syntax/migrated_0223/input.js 1:19-1:32
-					}
-				]
-				body: Array [
+				body: [
 					JSFunctionDeclaration {
 						id: JSBindingIdentifier {
 							name: "inner"
 							loc: SourceLocation esprima/invalid-syntax/migrated_0223/input.js 1:42-1:47 (inner)
 						}
-						loc: SourceLocation esprima/invalid-syntax/migrated_0223/input.js 1:33-1:74
 						body: JSBlockStatement {
-							body: Array []
-							loc: SourceLocation esprima/invalid-syntax/migrated_0223/input.js 1:50-1:74
-							directives: Array [
+							body: []
+							directives: [
 								JSDirective {
 									value: "octal directive\\1"
 									loc: SourceLocation esprima/invalid-syntax/migrated_0223/input.js 1:52-1:72
 								}
 							]
+							loc: SourceLocation esprima/invalid-syntax/migrated_0223/input.js 1:50-1:74
 						}
 						head: JSFunctionHead {
 							async: false
 							generator: false
 							hasHoistedVars: false
-							params: Array []
-							rest: undefined
-							returnType: undefined
-							thisType: undefined
-							typeParameters: undefined
+							params: []
 							loc: SourceLocation esprima/invalid-syntax/migrated_0223/input.js 1:47-1:49
 						}
+						loc: SourceLocation esprima/invalid-syntax/migrated_0223/input.js 1:33-1:74
 					}
 				]
+				directives: [
+					JSDirective {
+						value: "use strict"
+						loc: SourceLocation esprima/invalid-syntax/migrated_0223/input.js 1:19-1:32
+					}
+				]
+				loc: SourceLocation esprima/invalid-syntax/migrated_0223/input.js 1:17-1:76
+			}
+			head: JSFunctionHead {
+				async: false
+				generator: false
+				hasHoistedVars: false
+				params: []
+				loc: SourceLocation esprima/invalid-syntax/migrated_0223/input.js 1:14-1:16
+			}
+			loc: SourceLocation esprima/invalid-syntax/migrated_0223/input.js 1:0-1:76
+		}
+	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "Octal literal in strict mode"}
+			}
+			location: {
+				language: "js"
+				path: UIDPath<esprima/invalid-syntax/migrated_0223/input.js>
+				end: Position 1:69
+				start: Position 1:69
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<esprima/invalid-syntax/migrated_0223/input.js>
+	loc: SourceLocation esprima/invalid-syntax/migrated_0223/input.js 1:0-2:0
 }
 ```
 

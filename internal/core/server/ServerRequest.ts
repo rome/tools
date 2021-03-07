@@ -33,20 +33,18 @@ import {
 	DiagnosticDescription,
 	DiagnosticLocation,
 	DiagnosticSuppressions,
-	Diagnostics,
 	DiagnosticsError,
 	DiagnosticsProcessor,
-	createSingleDiagnosticError,
+	createSingleDiagnosticsError,
+	decorateErrorWithDiagnostics,
 	descriptions,
 	diagnosticLocationToMarkupFilelink,
 	getOrDeriveDiagnosticsFromError,
 	joinCategoryName,
-	provideDiagnosticAdviceForError,
 } from "@internal/diagnostics";
 import {
 	DiagnosticsFileHandler,
 	DiagnosticsPrinter,
-	DiagnosticsPrinterFlags,
 	DiagnosticsPrinterOptions,
 	printDiagnostics,
 } from "@internal/cli-diagnostics";
@@ -57,11 +55,8 @@ import ServerBridge, {
 	ServerQueryResponse,
 	ServerQueryResponseSuccess,
 } from "../common/bridges/ServerBridge";
-import Server, {
-	ServerClient,
-	ServerMarker,
-	ServerUnfinishedMarker,
-} from "./Server";
+import Server, {ServerMarker, ServerUnfinishedMarker} from "./Server";
+import ServerClient from "./ServerClient";
 import {Reporter, ReporterNamespace} from "@internal/cli-reporter";
 import {BridgeServer, Event} from "@internal/events";
 import {
@@ -78,21 +73,24 @@ import {
 	AbsoluteFilePath,
 	AbsoluteFilePathMap,
 	AbsoluteFilePathSet,
-	AnyFilePath,
-	AnyPath,
+	FilePath,
+	Path,
+	createAbsoluteFilePath,
 	createUIDPath,
 } from "@internal/path";
 import {Dict, RequiredProps, mergeObjects} from "@internal/typescript-helpers";
 import {markup, readMarkup} from "@internal/markup";
 import {DiagnosticsProcessorOptions} from "@internal/diagnostics/DiagnosticsProcessor";
 import {VCSClient} from "@internal/vcs";
-import {InlineSnapshotUpdates} from "../test-worker/SnapshotManager";
+import {InlineSnapshotUpdate} from "../worker/test/SnapshotManager";
 import {FormatterOptions} from "@internal/formatter";
 import {RecoverySaveFile} from "./fs/RecoveryStore";
 import {GlobOptions, Globber} from "./fs/glob";
 import WorkerBridge from "../common/bridges/WorkerBridge";
-import {OneIndexed, ZeroIndexed} from "@internal/math";
+import {DurationMeasurer, OneIndexed, ZeroIndexed} from "@internal/numbers";
 import {Consumer, consume} from "@internal/consume";
+import {Resource, createResourceFromCallback} from "@internal/resources";
+import prettyFormat from "@internal/pretty-format";
 
 type ServerRequestOptions = {
 	server: Server;
@@ -119,14 +117,17 @@ type WrapRequestDiagnosticOpts = {
 	noRetry?: boolean;
 };
 
-export type ServerRequestGlobArgs = [AnyFilePath, DiagnosticLocation][];
+export type ServerRequestGlobArgs = [FilePath, DiagnosticLocation][];
 
-type ServerRequestGlobOptions = Omit<GlobOptions, "args" | "relativeDirectory"> & {
+type ServerRequestGlobOptions = Omit<
+	GlobOptions,
+	"args" | "relativeDirectory" | "request"
+> & {
 	args?: ServerRequestGlobArgs;
-	tryAlternateArg?: (path: AnyPath) => undefined | AnyPath;
+	tryAlternateArg?: (path: Path) => undefined | Path;
 	ignoreArgumentMisses?: boolean;
 	ignoreProjectIgnore?: boolean;
-	advice?: DiagnosticAdvice;
+	advice?: DiagnosticAdvice[];
 	verb?: string;
 	noun?: string;
 };
@@ -142,7 +143,7 @@ async function globUnmatched(
 
 	let category: DiagnosticCategory = DIAGNOSTIC_CATEGORIES["args/fileNotFound"];
 
-	let advice: DiagnosticAdvice = [...(opts.advice || [])];
+	let advice: DiagnosticAdvice[] = [...(opts.advice || [])];
 
 	// Hint if all files were ignored
 	if (configCategory !== undefined && !ignoreProjectIgnore) {
@@ -162,7 +163,7 @@ async function globUnmatched(
 
 			advice.push({
 				type: "list",
-				list: Array.from(withoutIgnore, (path) => markup`${path}`),
+				list: Array.from(withoutIgnore),
 				truncate: true,
 			});
 
@@ -191,10 +192,10 @@ async function globUnmatched(
 		}
 	}
 
-	throw createSingleDiagnosticError({
+	throw createSingleDiagnosticsError({
 		location: {
 			...location,
-			marker: markup`${path}`,
+			marker: path,
 		},
 		description: {
 			...descriptions.FLAGS.NO_FILES_FOUND(opts.noun),
@@ -205,7 +206,7 @@ async function globUnmatched(
 }
 
 export class ServerRequestInvalid extends DiagnosticsError {
-	constructor(message: string, diagnostics: Diagnostics, showHelp: boolean) {
+	constructor(message: string, diagnostics: Diagnostic[], showHelp: boolean) {
 		super(message, diagnostics);
 		this.showHelp = showHelp;
 	}
@@ -230,13 +231,12 @@ export default class ServerRequest {
 		this.query = query;
 		this.server = server;
 		this.bridge = client.bridge;
-		this.reporter = query.silent ? new Reporter() : client.reporter.fork();
 		this.client = client;
 
-		this.start = Date.now();
+		this.start = new DurationMeasurer();
 		this.id = requestIdCounter++;
 		this.cancelledReason = undefined;
-		this.toredown = false;
+		this.response = undefined;
 		this.markers = [];
 		this.normalizedCommandFlags = {
 			flags: {},
@@ -249,20 +249,35 @@ export default class ServerRequest {
 			markup`Request #${this.id}`,
 		);
 
-		this.markerEvent = new Event({
-			name: "ServerRequest.marker",
-		});
-		this.cancelEvent = new Event({
-			name: "ServerRequest.cancel",
-		});
-		this.endEvent = new Event({
-			name: "ServerRequest.end",
-			serial: true,
-		});
+		this.markerEvent = new Event("ServerRequest.marker");
+		this.cancelEvent = new Event("ServerRequest.cancel");
+		this.endEvent = new Event(
+			"ServerRequest.end",
+			{
+				serial: true,
+			},
+		);
+
+		this.resources = client.resources.createContainer(
+			`ServerRequest<${this.id}>`,
+		);
+
+		this.reporter = query.silent
+			? new Reporter("ServerRequestSilent")
+			: client.reporter.fork();
+		this.resources.add(this.reporter);
 
 		this.args = this.createArgsConsumer();
 
-		this.client.requestsInFlight.add(this);
+		client.requestsInFlight.add(this);
+		this.resources.add(
+			createResourceFromCallback(
+				"ClientRequestsTracker",
+				() => {
+					client.requestsInFlight.delete(this);
+				},
+			),
+		);
 	}
 
 	public id: number;
@@ -273,15 +288,17 @@ export default class ServerRequest {
 	public logger: ReporterNamespace;
 	public server: Server;
 	public reporter: Reporter;
-	public endEvent: Event<ServerQueryResponse, void>;
 	public cancelEvent: Event<void, void>;
 	public markerEvent: Event<ServerMarker, void>;
 
-	private start: number;
+	public endEvent: Event<ServerQueryResponse, void>;
+	public resources: Resource;
+
+	private start: DurationMeasurer;
 	private normalizedCommandFlags: NormalizedCommandFlags;
 	private markers: ServerMarker[];
 	private cancelledReason: undefined | string;
-	private toredown: boolean;
+	private response: undefined | ServerQueryResponse;
 	private files: AbsoluteFilePathMap<RecoverySaveFile>;
 
 	private createArgsConsumer(): Consumer {
@@ -290,7 +307,7 @@ export default class ServerRequest {
 			context: {
 				category: DIAGNOSTIC_CATEGORIES["args/invalid"],
 				getDiagnosticLocation: (keys) => {
-					if (keys.length === 0 && typeof keys[0] === "number") {
+					if (keys.length === 1 && typeof keys[0] === "number") {
 						return this.getDiagnosticLocationFromFlags({
 							type: "arg",
 							key: keys[0],
@@ -325,7 +342,7 @@ export default class ServerRequest {
 		this.files = new AbsoluteFilePathMap();
 
 		this.logger.info(markup`Flushing files`);
-		logger.list(Array.from(files.keys(), (path) => markup`${path}`));
+		logger.list(files.keys());
 
 		// Need to capture this before as it will be modified by server.writeFiles
 		const totalFiles = files.size;
@@ -340,8 +357,8 @@ export default class ServerRequest {
 					// Maybe a progress bar later?
 				},
 				beforeFileWrite: async (path, fd) => {
-					const content = await fd.readFile();
-					await this.server.recoveryStore.save(this, path, content);
+					const data = await fd.readFile();
+					await this.server.recoveryStore.save(this, path, data.buffer);
 				},
 				unexpectedModified: (path, expectedMtime, actualMtime) => {
 					this.logger.info(
@@ -373,7 +390,7 @@ export default class ServerRequest {
 		await this.server.recoveryStore.commit(this);
 		this.logger.info(markup`Flushed ${totalFiles} files`);
 
-		return files.keysToSet();
+		return new AbsoluteFilePathSet(files.keys());
 	}
 
 	public updateRequestFlags(flags: Partial<ClientRequestFlags>) {
@@ -393,13 +410,20 @@ export default class ServerRequest {
 			});
 		}
 
-		await this.server.handleRequestStart(this);
+		this.logger.info(markup`Start ${prettyFormat(this.query)}`);
+		await this.server.requestStartEvent.callOptional(this);
 	}
 
 	public checkCancelled() {
 		if (this.cancelledReason !== undefined) {
 			throw new ServerRequestCancelled(this.cancelledReason);
 		}
+	}
+
+	// Handle an error that occurs outside of the main execution of a request
+	public async handleOutboundError(err: Error): Promise<void> {
+		await this.teardown(await this.buildResponseFromError(err));
+		await this.cancel("Outbound error received");
 	}
 
 	public async cancel(reason: string): Promise<void> {
@@ -412,15 +436,12 @@ export default class ServerRequest {
 		});
 	}
 
-	public async teardown(
-		res: ServerQueryResponse,
-	): Promise<undefined | ServerQueryResponse> {
-		if (this.toredown) {
-			return;
+	public async teardown(res: ServerQueryResponse): Promise<ServerQueryResponse> {
+		if (this.response) {
+			return this.response;
 		}
 
-		this.toredown = true;
-		this.client.requestsInFlight.delete(this);
+		this.response = res;
 
 		this.logger.info(markup`Response type: ${String(res?.type)}`);
 		if (res.type === "DIAGNOSTICS") {
@@ -429,9 +450,8 @@ export default class ServerRequest {
 
 		// Output timing information
 		if (this.query.requestFlags.timing) {
-			const end = Date.now();
 			this.reporter.info(
-				markup`Request took <duration emphasis>${String(end - this.start)}</duration>`,
+				markup`Request took <emphasis>${this.start.since()}</emphasis>`,
 			);
 		}
 
@@ -495,7 +515,8 @@ export default class ServerRequest {
 		};
 
 		await this.endEvent.callOptional(res);
-		await this.server.handleRequestEnd(this);
+		await this.resources.release();
+		this.logger.info(markup`Request end`);
 		return res;
 	}
 
@@ -512,13 +533,11 @@ export default class ServerRequest {
 		const arg = this.args.getIndex(index);
 		const source = arg.asFilePath();
 
-		return await this.server.resolver.resolveEntryAssertPath(
-			{
-				...this.getResolverOptionsFromFlags(),
-				source,
-			},
-			{location: arg.getDiagnosticLocation()},
-		);
+		return await this.server.resolver.resolveEntryAssertPath({
+			...this.getResolverOptionsFromFlags(),
+			location: arg.getDiagnosticLocation(),
+			source,
+		});
 	}
 
 	public async assertClientCwdProject(): Promise<ProjectDefinition> {
@@ -541,7 +560,7 @@ export default class ServerRequest {
 		);
 	}
 
-	private logDiagnostics(diagnostics: Diagnostics) {
+	private logDiagnostics(diagnostics: Diagnostic[]) {
 		for (const diag of diagnostics) {
 			this.logger.error(
 				markup`Encountered diagnostic: ${diag.description.message}. Category: ${joinCategoryName(
@@ -553,7 +572,7 @@ export default class ServerRequest {
 
 	public async printDiagnostics(
 		{diagnostics, suppressions = [], printerOptions, excludeFooter}: {
-			diagnostics: Diagnostics;
+			diagnostics: Diagnostic[];
 			suppressions?: DiagnosticSuppressions;
 			printerOptions?: DiagnosticsPrinterOptions;
 			excludeFooter?: boolean;
@@ -577,44 +596,43 @@ export default class ServerRequest {
 	public createDiagnosticsProcessor(
 		opts: DiagnosticsProcessorOptions = {},
 	): DiagnosticsProcessor {
+		const {requestFlags} = this.query;
 		return new DiagnosticsProcessor({
 			markupOptions: this.reporter.markupOptions,
+			filter: {
+				grep: requestFlags.grep,
+				inverseGrep: requestFlags.inverseGrep,
+				maxDiagnostics: requestFlags.maxDiagnostics,
+			},
 			...opts,
 		});
 	}
 
-	private maybeReadMemoryFile(path: AnyPath): undefined | string {
-		if (path.isUID()) {
-			switch (path.getBasename()) {
-				case "argv":
-					return this.getDiagnosticLocationFromFlags("none").sourceText;
-
-				case "cwd":
-					return this.client.flags.cwd.join();
-			}
-		}
-		return undefined;
-	}
-
-	private createDiagnosticsPrinterFileHandlers(): DiagnosticsFileHandler[] {
-		return [
-			this.server.createDiagnosticsPrinterFileHandler(),
-			{
-				read: async (path) => {
-					return this.maybeReadMemoryFile(path);
-				},
-			},
-		];
-	}
-
 	public createDiagnosticsPrinter(
-		processor: DiagnosticsProcessor = this.createDiagnosticsProcessor(),
-		opts: Partial<Omit<DiagnosticsPrinterOptions, "processor">> = {},
+		opts: Partial<DiagnosticsPrinterOptions> = {},
 	): DiagnosticsPrinter {
+		const {requestFlags} = this.query;
+		const processor = opts.processor ?? this.createDiagnosticsProcessor();
+
 		processor.unshiftOrigin({
 			category: "server",
 			message: `${this.query.commandName} command was dispatched`,
 		});
+
+		const uidRequestFileHandler: DiagnosticsFileHandler = {
+			read: async (path) => {
+				if (path.isUID()) {
+					switch (path.getBasename()) {
+						case "argv":
+							return this.getDiagnosticLocationFromFlags("none").sourceText;
+
+						case "cwd":
+							return this.client.flags.cwd.join();
+					}
+				}
+				return undefined;
+			},
+		};
 
 		return new DiagnosticsPrinter({
 			streaming: true,
@@ -623,34 +641,25 @@ export default class ServerRequest {
 			wrapErrors: true,
 			...opts,
 			flags: {
-				...this.getDiagnosticsPrinterFlags(),
+				auxiliaryDiagnosticFormat: requestFlags.auxiliaryDiagnosticFormat,
+				truncateDiagnostics: requestFlags.truncateDiagnostics,
+				verboseDiagnostics: requestFlags.verboseDiagnostics,
+				fieri: requestFlags.fieri,
 				...opts.flags,
 			},
 			fileHandlers: [
-				...this.createDiagnosticsPrinterFileHandlers(),
+				this.server.createDiagnosticsPrinterFileHandler(),
+				uidRequestFileHandler,
 				...(opts.fileHandlers || []),
 			],
 			processor,
 		});
 	}
 
-	private getDiagnosticsPrinterFlags(): DiagnosticsPrinterFlags {
-		const {requestFlags} = this.query;
-		return {
-			auxiliaryDiagnosticFormat: requestFlags.auxiliaryDiagnosticFormat,
-			grep: requestFlags.grep,
-			inverseGrep: requestFlags.inverseGrep,
-			showAllDiagnostics: requestFlags.showAllDiagnostics,
-			verboseDiagnostics: requestFlags.verboseDiagnostics,
-			maxDiagnostics: requestFlags.maxDiagnostics,
-			fieri: requestFlags.fieri,
-		};
-	}
-
 	public expectArgumentLength(
 		min: number,
 		max: number = min,
-		advice: DiagnosticAdvice = [],
+		advice: DiagnosticAdvice[] = [],
 	) {
 		const {args} = this.query;
 		let message;
@@ -662,6 +671,7 @@ export default class ServerRequest {
 				if (min === 0) {
 					message = markup`Expected no arguments`;
 				} else {
+					excessive = args.length > min;
 					message = markup`Expected exactly <number emphasis>${String(min)}</number> arguments`;
 				}
 			}
@@ -705,7 +715,7 @@ export default class ServerRequest {
 			target?: SerializeCLITarget;
 			showHelp?: boolean;
 		},
-	) {
+	): never {
 		const location = this.getDiagnosticLocationFromFlags(target);
 
 		let {category} = description;
@@ -811,6 +821,8 @@ export default class ServerRequest {
 		resolverOpts: Partial<ResolverOptions> = {},
 	): BundlerConfig {
 		return {
+			// TODO allow this to be customized?
+			basePath: createAbsoluteFilePath("/"),
 			inlineSourceMap: false,
 			cwd: this.client.flags.cwd,
 			resolver: mergeObjects(this.getResolverOptionsFromFlags(), resolverOpts),
@@ -851,24 +863,17 @@ export default class ServerRequest {
 		const {server} = this;
 		const owner = await server.fileAllocator.getOrAssignOwner(path);
 		const startMtime = server.memoryFs.maybeGetMtimeNs(path);
-		const start = Date.now();
+		const start = new DurationMeasurer();
 		const lock = await server.requestFileLocker.getLock(path);
 		const ref = server.projectManager.getFileReference(path);
-
-		const interval = setInterval(
-			() => {
-				const took = Date.now() - start;
-				this.reporter.warn(
-					markup`Running <emphasis>${method}</emphasis> on <emphasis>${path}</emphasis> seems to be taking longer than expected. Have been waiting for <emphasis><duration>${String(
-						took,
-					)}</duration></emphasis>.`,
-				);
-			},
-			LAG_INTERVAL,
-		);
+		const interval = LAG_INTERVAL.setInterval(() => {
+			this.reporter.warn(
+				markup`Running <emphasis>${method}</emphasis> on <emphasis>${path}</emphasis> seems to be taking longer than expected. Have been waiting for <emphasis>${start.since()}</emphasis>.`,
+			);
+		});
 
 		const marker = this.startMarker({
-			label: `${method}: ${ref.relative}`,
+			label: `${method}: ${ref.uid.format()}`,
 			facet: method,
 			rowId: `worker ${owner.id}`,
 		});
@@ -878,9 +883,10 @@ export default class ServerRequest {
 			this.endMarker(marker);
 			return res;
 		} catch (err) {
-			throw provideDiagnosticAdviceForError(
+			throw decorateErrorWithDiagnostics(
 				err,
 				{
+					label: markup`worker ${owner.id}`,
 					description: {
 						category: DIAGNOSTIC_CATEGORIES["internalError/request"],
 						advice: [
@@ -895,8 +901,10 @@ export default class ServerRequest {
 			);
 		} finally {
 			lock.release();
-			clearInterval(interval);
+			await interval.release();
 
+			// If this file changed while we were waiting on the request, resend it
+			// NB: We could actually resend this instantly by watching for file changes
 			const endMtime = this.server.memoryFs.maybeGetMtimeNs(path);
 			if (endMtime !== startMtime && !opts.noRetry) {
 				return this.wrapRequestDiagnostic(method, path, factory);
@@ -936,7 +944,10 @@ export default class ServerRequest {
 						mtimeNs,
 					},
 				});
-				await this.server.refreshFileEvent.push(path);
+				await this.server.refreshFileEvent.push({
+					type: "BUFFER_UPDATE",
+					path,
+				});
 			},
 			{noRetry: true},
 		);
@@ -954,7 +965,10 @@ export default class ServerRequest {
 			async (bridge, ref) => {
 				const buffer = await bridge.events.patchBuffer.call({ref, patches});
 				this.server.memoryFs.addBuffer(path, buffer);
-				this.server.refreshFileEvent.push(path);
+				this.server.refreshFileEvent.push({
+					type: "BUFFER_UPDATE",
+					path,
+				});
 				return buffer;
 			},
 			{noRetry: true},
@@ -970,7 +984,10 @@ export default class ServerRequest {
 			async (bridge, ref) => {
 				await bridge.events.clearBuffer.call({ref});
 				this.server.memoryFs.clearBuffer(path);
-				this.server.refreshFileEvent.push(path);
+				this.server.refreshFileEvent.push({
+					type: "BUFFER_UPDATE",
+					path,
+				});
 			},
 			{noRetry: true},
 		);
@@ -992,7 +1009,7 @@ export default class ServerRequest {
 
 	public async requestWorkerUpdateInlineSnapshots(
 		path: AbsoluteFilePath,
-		updates: InlineSnapshotUpdates,
+		updates: InlineSnapshotUpdate[],
 		parseOptions: WorkerParseOptions,
 	): Promise<WorkerUpdateInlineSnapshotResult> {
 		this.checkCancelled();
@@ -1216,15 +1233,13 @@ export default class ServerRequest {
 					abs = resolved;
 				} else {
 					// Will need to be resolved...
-					abs = await this.server.resolver.resolveEntryAssertPath(
-						{
-							...this.getResolverOptionsFromFlags(),
-							source: path,
-							// Allow requests to stop at directories
-							requestedType: "directory",
-						},
-						{location: loc},
-					);
+					abs = await this.server.resolver.resolveEntryAssertPath({
+						...this.getResolverOptionsFromFlags(),
+						source: path,
+						location: loc,
+						// Allow requests to stop at directories
+						requestedType: "directory",
+					});
 				}
 			}
 
@@ -1255,13 +1270,11 @@ export default class ServerRequest {
 				}
 			} else {
 				// This should fail. Resolver produces much nicer error messages.
-				await this.server.resolver.resolveEntryAssertPath(
-					{
-						...this.getResolverOptionsFromFlags(),
-						source: path,
-					},
-					{location: loc},
-				);
+				await this.server.resolver.resolveEntryAssertPath({
+					...this.getResolverOptionsFromFlags(),
+					source: path,
+					location: loc,
+				});
 			}
 		}
 
@@ -1270,11 +1283,10 @@ export default class ServerRequest {
 			{
 				...opts,
 				args,
+				request: this,
 
-				onWatch: (sub) => {
-					this.endEvent.subscribe(async () => {
-						await sub.unsubscribe();
-					});
+				onWatch: (resc) => {
+					this.resources.add(resc);
 				},
 
 				onSearchNoMatch: async (path) => {
@@ -1293,7 +1305,7 @@ export default class ServerRequest {
 	public async buildResponseFromError(
 		rawErr: Error,
 	): Promise<ServerQueryResponse> {
-		if (!this.bridge.alive) {
+		if (!this.bridge.open) {
 			// Doesn't matter
 			return {
 				type: "CANCELLED",
@@ -1312,14 +1324,15 @@ export default class ServerRequest {
 			const diagnostics = getOrDeriveDiagnosticsFromError(
 				err,
 				{
+					label: markup`server`,
 					description: {
 						category: DIAGNOSTIC_CATEGORIES["internalError/request"],
 					},
 				},
 			);
 
-			printer = this.createDiagnosticsPrinter(
-				this.createDiagnosticsProcessor({
+			printer = this.createDiagnosticsPrinter({
+				processor: this.createDiagnosticsProcessor({
 					origins: [
 						{
 							category: "internal",
@@ -1327,7 +1340,7 @@ export default class ServerRequest {
 						},
 					],
 				}),
-			);
+			});
 
 			printer.processor.addDiagnostics(diagnostics);
 		}
@@ -1342,7 +1355,7 @@ export default class ServerRequest {
 		if (rawErr instanceof ServerRequestInvalid) {
 			shouldPrint = true;
 		}
-		if (!this.bridge.alive) {
+		if (!this.bridge.open) {
 			shouldPrint = false;
 		}
 

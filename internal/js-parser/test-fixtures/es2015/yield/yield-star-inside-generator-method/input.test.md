@@ -8,33 +8,18 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: true
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2015/yield/yield-star-inside-generator-method/input.js 1:0-1:34
-	path: UIDPath<es2015/yield/yield-star-inside-generator-method/input.js>
-	body: Array [
+	body: [
 		JSVariableDeclarationStatement {
-			loc: SourceLocation es2015/yield/yield-star-inside-generator-method/input.js 1:0-1:34
 			declaration: JSVariableDeclaration {
 				kind: "var"
-				loc: SourceLocation es2015/yield/yield-star-inside-generator-method/input.js 1:0-1:34
-				declarations: Array [
+				declarations: [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "x"
 							loc: SourceLocation es2015/yield/yield-star-inside-generator-method/input.js 1:4-1:5 (x)
 						}
-						loc: SourceLocation es2015/yield/yield-star-inside-generator-method/input.js 1:4-1:33
 						init: JSObjectExpression {
-							loc: SourceLocation es2015/yield/yield-star-inside-generator-method/input.js 1:8-1:33
-							properties: Array [
+							properties: [
 								JSObjectMethod {
 									kind: "method"
 									key: JSStaticPropertyKey {
@@ -44,43 +29,52 @@ JSRoot {
 										}
 										loc: SourceLocation es2015/yield/yield-star-inside-generator-method/input.js 1:11-1:15
 									}
-									loc: SourceLocation es2015/yield/yield-star-inside-generator-method/input.js 1:10-1:31
-									head: JSFunctionHead {
-										async: false
-										generator: true
-										hasHoistedVars: false
-										params: Array []
-										rest: undefined
-										returnType: undefined
-										thisType: undefined
-										typeParameters: undefined
-										loc: SourceLocation es2015/yield/yield-star-inside-generator-method/input.js 1:16-1:18
-									}
 									body: JSBlockStatement {
-										directives: Array []
-										loc: SourceLocation es2015/yield/yield-star-inside-generator-method/input.js 1:19-1:31
-										body: Array [
+										body: [
 											JSExpressionStatement {
-												loc: SourceLocation es2015/yield/yield-star-inside-generator-method/input.js 1:21-1:29
 												expression: JSYieldExpression {
 													delegate: true
-													loc: SourceLocation es2015/yield/yield-star-inside-generator-method/input.js 1:21-1:29
 													argument: JSReferenceIdentifier {
 														name: "v"
 														loc: SourceLocation es2015/yield/yield-star-inside-generator-method/input.js 1:28-1:29 (v)
 													}
+													loc: SourceLocation es2015/yield/yield-star-inside-generator-method/input.js 1:21-1:29
 												}
+												loc: SourceLocation es2015/yield/yield-star-inside-generator-method/input.js 1:21-1:29
 											}
 										]
+										directives: []
+										loc: SourceLocation es2015/yield/yield-star-inside-generator-method/input.js 1:19-1:31
 									}
+									head: JSFunctionHead {
+										async: false
+										generator: true
+										hasHoistedVars: false
+										params: []
+										loc: SourceLocation es2015/yield/yield-star-inside-generator-method/input.js 1:16-1:18
+									}
+									loc: SourceLocation es2015/yield/yield-star-inside-generator-method/input.js 1:10-1:31
 								}
 							]
+							loc: SourceLocation es2015/yield/yield-star-inside-generator-method/input.js 1:8-1:33
 						}
+						loc: SourceLocation es2015/yield/yield-star-inside-generator-method/input.js 1:4-1:33
 					}
 				]
+				loc: SourceLocation es2015/yield/yield-star-inside-generator-method/input.js 1:0-1:34
 			}
+			loc: SourceLocation es2015/yield/yield-star-inside-generator-method/input.js 1:0-1:34
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: true
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2015/yield/yield-star-inside-generator-method/input.js>
+	loc: SourceLocation es2015/yield/yield-star-inside-generator-method/input.js 1:0-1:34
 }
 ```
 

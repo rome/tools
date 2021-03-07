@@ -5,10 +5,8 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {OneIndexed, ZeroIndexed} from "@internal/math";
-import {AnyPath} from "@internal/path";
-
-export type Mappings = Mapping[];
+import {OneIndexed, ZeroIndexed} from "@internal/numbers";
+import {Path} from "@internal/path";
 
 export type ParsedMapping = {
 	generated: {
@@ -19,7 +17,7 @@ export type ParsedMapping = {
 		line: OneIndexed;
 		column: ZeroIndexed;
 	};
-	source: undefined | AnyPath;
+	source: undefined | Path;
 	name: undefined | string;
 };
 
@@ -33,7 +31,7 @@ export type ParsedMappings = Map<string, Mapping | ParsedMapping>;
 
 export type ResolvedLocation = {
 	found: boolean;
-	source: AnyPath;
+	source: Path;
 	line: OneIndexed;
 	column: ZeroIndexed;
 	name: undefined | string;

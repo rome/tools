@@ -7,7 +7,7 @@
 ### `result`
 
 ```javascript
-Array [
+[
 	"edge:87"
 	"edge:88"
 	"firefox:84"
@@ -35,19 +35,13 @@ Array [
 ### `targets`
 
 ```javascript
-Array [
-	TargetBrowserUsage {
-		operator: "GT"
-		region: "BE"
-		usage: 0.2
-	}
-]
+[TargetBrowserUsage {operator: "GT", region: "BE", usage: 0.2}]
 ```
 
 ### `tokens`
 
 ```javascript
-Array [
+[
 	GT {
 		end: ZeroIndexedNumber<1>
 		start: ZeroIndexedNumber<0>

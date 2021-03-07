@@ -8,82 +8,48 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: true
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	loc: SourceLocation jsx/errors/adjacent-tags/input.jsx 1:0-1:38
-	path: UIDPath<jsx/errors/adjacent-tags/input.jsx>
-	syntax: Array ["jsx"]
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Adjacent JSX elements must be wrapped in an enclosing tag. Did you want a JSX fragment \\<>...\\</>?"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:22
-				path: UIDPath<jsx/errors/adjacent-tags/input.jsx>
-				start: Position 1:22
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSVariableDeclarationStatement {
-			loc: SourceLocation jsx/errors/adjacent-tags/input.jsx 1:0-1:38
 			declaration: JSVariableDeclaration {
 				kind: "var"
-				loc: SourceLocation jsx/errors/adjacent-tags/input.jsx 1:0-1:38
-				declarations: Array [
+				declarations: [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "x"
 							loc: SourceLocation jsx/errors/adjacent-tags/input.jsx 1:4-1:5 (x)
 						}
-						loc: SourceLocation jsx/errors/adjacent-tags/input.jsx 1:4-1:38
 						init: JSBinaryExpression {
 							operator: "<"
-							loc: SourceLocation jsx/errors/adjacent-tags/input.jsx 1:8-1:38
 							left: JSBinaryExpression {
 								operator: ">"
-								loc: SourceLocation jsx/errors/adjacent-tags/input.jsx 1:8-1:30
-								right: JSReferenceIdentifier {
-									name: "two"
-									loc: SourceLocation jsx/errors/adjacent-tags/input.jsx 1:27-1:30 (two)
-								}
 								left: JSBinaryExpression {
 									operator: "<"
-									loc: SourceLocation jsx/errors/adjacent-tags/input.jsx 1:8-1:26
-									right: JSReferenceIdentifier {
-										name: "div"
-										loc: SourceLocation jsx/errors/adjacent-tags/input.jsx 1:23-1:26 (div)
-									}
 									left: JSXElement {
-										name: JSXIdentifier {
-											name: "div"
-											loc: SourceLocation jsx/errors/adjacent-tags/input.jsx 1:9-1:12
-										}
-										attributes: Array []
-										selfClosing: false
-										typeArguments: undefined
-										loc: SourceLocation jsx/errors/adjacent-tags/input.jsx 1:8-1:22
-										children: Array [
+										attributes: []
+										children: [
 											JSXText {
 												value: "one"
 												loc: SourceLocation jsx/errors/adjacent-tags/input.jsx 1:13-1:16
 											}
 										]
+										selfClosing: false
+										name: JSXIdentifier {
+											name: "div"
+											loc: SourceLocation jsx/errors/adjacent-tags/input.jsx 1:9-1:12
+										}
+										loc: SourceLocation jsx/errors/adjacent-tags/input.jsx 1:8-1:22
 									}
+									right: JSReferenceIdentifier {
+										name: "div"
+										loc: SourceLocation jsx/errors/adjacent-tags/input.jsx 1:23-1:26 (div)
+									}
+									loc: SourceLocation jsx/errors/adjacent-tags/input.jsx 1:8-1:26
 								}
+								right: JSReferenceIdentifier {
+									name: "two"
+									loc: SourceLocation jsx/errors/adjacent-tags/input.jsx 1:27-1:30 (two)
+								}
+								loc: SourceLocation jsx/errors/adjacent-tags/input.jsx 1:8-1:30
 							}
 							right: JSRegExpLiteral {
 								global: false
@@ -92,10 +58,8 @@ JSRoot {
 								noDotNewline: false
 								sticky: false
 								unicode: false
-								loc: SourceLocation jsx/errors/adjacent-tags/input.jsx 1:31-1:38
 								expression: JSRegExpSubExpression {
-									loc: SourceLocation jsx/errors/adjacent-tags/input.jsx 1:32-1:37
-									body: Array [
+									body: [
 										JSRegExpCharacter {
 											value: "d"
 											loc: SourceLocation jsx/errors/adjacent-tags/input.jsx 1:32-1:33
@@ -117,14 +81,45 @@ JSRoot {
 											loc: SourceLocation jsx/errors/adjacent-tags/input.jsx 1:36-1:37
 										}
 									]
+									loc: SourceLocation jsx/errors/adjacent-tags/input.jsx 1:32-1:37
 								}
+								loc: SourceLocation jsx/errors/adjacent-tags/input.jsx 1:31-1:38
 							}
+							loc: SourceLocation jsx/errors/adjacent-tags/input.jsx 1:8-1:38
 						}
+						loc: SourceLocation jsx/errors/adjacent-tags/input.jsx 1:4-1:38
 					}
 				]
+				loc: SourceLocation jsx/errors/adjacent-tags/input.jsx 1:0-1:38
+			}
+			loc: SourceLocation jsx/errors/adjacent-tags/input.jsx 1:0-1:38
+		}
+	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "Adjacent JSX elements must be wrapped in an enclosing tag. Did you want a JSX fragment \\<>...\\</>?"}
+			}
+			location: {
+				language: "js"
+				path: UIDPath<jsx/errors/adjacent-tags/input.jsx>
+				end: Position 1:22
+				start: Position 1:22
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: true
+	sourceType: "script"
+	syntax: ["jsx"]
+	path: UIDPath<jsx/errors/adjacent-tags/input.jsx>
+	loc: SourceLocation jsx/errors/adjacent-tags/input.jsx 1:0-1:38
 }
 ```
 

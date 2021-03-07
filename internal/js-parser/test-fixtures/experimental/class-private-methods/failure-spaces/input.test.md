@@ -8,49 +8,14 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation experimental/class-private-methods/failure-spaces/input.js 1:0-6:0
-	path: UIDPath<experimental/class-private-methods/failure-spaces/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Unexpected space between # and identifier"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 2:3
-				path: UIDPath<experimental/class-private-methods/failure-spaces/input.js>
-				start: Position 2:3
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSClassDeclaration {
 			id: JSBindingIdentifier {
 				name: "Spaces"
 				loc: SourceLocation experimental/class-private-methods/failure-spaces/input.js 1:6-1:12 (Spaces)
 			}
-			loc: SourceLocation experimental/class-private-methods/failure-spaces/input.js 1:0-5:1
 			meta: JSClassHead {
-				implements: undefined
-				superClass: undefined
-				superTypeParameters: undefined
-				typeParameters: undefined
-				loc: SourceLocation experimental/class-private-methods/failure-spaces/input.js 1:0-5:1
-				body: Array [
+				body: [
 					JSClassPrivateMethod {
 						kind: "method"
 						key: JSPrivateName {
@@ -60,50 +25,71 @@ JSRoot {
 							}
 							loc: SourceLocation experimental/class-private-methods/failure-spaces/input.js 2:2-2:16
 						}
-						loc: SourceLocation experimental/class-private-methods/failure-spaces/input.js 2:2-4:3
 						meta: JSClassPropertyMeta {
 							abstract: false
-							accessibility: undefined
 							optional: false
 							readonly: false
 							static: false
-							typeAnnotation: undefined
 							loc: SourceLocation experimental/class-private-methods/failure-spaces/input.js 2:2-2:16
 							start: Position 2:2
+						}
+						body: JSBlockStatement {
+							body: [
+								JSReturnStatement {
+									argument: JSCallExpression {
+										arguments: []
+										callee: JSReferenceIdentifier {
+											name: "fail"
+											loc: SourceLocation experimental/class-private-methods/failure-spaces/input.js 3:11-3:15 (fail)
+										}
+										loc: SourceLocation experimental/class-private-methods/failure-spaces/input.js 3:11-3:17
+									}
+									loc: SourceLocation experimental/class-private-methods/failure-spaces/input.js 3:4-3:18
+								}
+							]
+							directives: []
+							loc: SourceLocation experimental/class-private-methods/failure-spaces/input.js 2:19-4:3
 						}
 						head: JSFunctionHead {
 							async: false
 							generator: false
 							hasHoistedVars: false
-							params: Array []
-							rest: undefined
-							returnType: undefined
-							thisType: undefined
-							typeParameters: undefined
+							params: []
 							loc: SourceLocation experimental/class-private-methods/failure-spaces/input.js 2:16-2:18
 						}
-						body: JSBlockStatement {
-							directives: Array []
-							loc: SourceLocation experimental/class-private-methods/failure-spaces/input.js 2:19-4:3
-							body: Array [
-								JSReturnStatement {
-									loc: SourceLocation experimental/class-private-methods/failure-spaces/input.js 3:4-3:18
-									argument: JSCallExpression {
-										arguments: Array []
-										loc: SourceLocation experimental/class-private-methods/failure-spaces/input.js 3:11-3:17
-										callee: JSReferenceIdentifier {
-											name: "fail"
-											loc: SourceLocation experimental/class-private-methods/failure-spaces/input.js 3:11-3:15 (fail)
-										}
-									}
-								}
-							]
-						}
+						loc: SourceLocation experimental/class-private-methods/failure-spaces/input.js 2:2-4:3
 					}
 				]
+				loc: SourceLocation experimental/class-private-methods/failure-spaces/input.js 1:0-5:1
+			}
+			loc: SourceLocation experimental/class-private-methods/failure-spaces/input.js 1:0-5:1
+		}
+	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "Unexpected space between # and identifier"}
+			}
+			location: {
+				language: "js"
+				path: UIDPath<experimental/class-private-methods/failure-spaces/input.js>
+				end: Position 2:3
+				start: Position 2:3
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<experimental/class-private-methods/failure-spaces/input.js>
+	loc: SourceLocation experimental/class-private-methods/failure-spaces/input.js 1:0-6:0
 }
 ```
 

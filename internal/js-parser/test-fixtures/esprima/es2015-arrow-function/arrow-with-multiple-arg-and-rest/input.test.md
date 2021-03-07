@@ -8,38 +8,17 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation esprima/es2015-arrow-function/arrow-with-multiple-arg-and-rest/input.js 1:0-2:0
-	path: UIDPath<esprima/es2015-arrow-function/arrow-with-multiple-arg-and-rest/input.js>
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation esprima/es2015-arrow-function/arrow-with-multiple-arg-and-rest/input.js 1:0-1:16
 			expression: JSArrowFunctionExpression {
-				loc: SourceLocation esprima/es2015-arrow-function/arrow-with-multiple-arg-and-rest/input.js 1:0-1:15
 				body: JSNumericLiteral {
 					value: 0
-					format: undefined
 					loc: SourceLocation esprima/es2015-arrow-function/arrow-with-multiple-arg-and-rest/input.js 1:14-1:15
 				}
 				head: JSFunctionHead {
 					async: false
 					hasHoistedVars: false
-					returnType: undefined
-					thisType: undefined
-					loc: SourceLocation esprima/es2015-arrow-function/arrow-with-multiple-arg-and-rest/input.js 1:0-1:13
-					rest: JSBindingIdentifier {
-						name: "c"
-						loc: SourceLocation esprima/es2015-arrow-function/arrow-with-multiple-arg-and-rest/input.js 1:8-1:9 (c)
-					}
-					params: Array [
+					params: [
 						JSBindingIdentifier {
 							name: "a"
 							loc: SourceLocation esprima/es2015-arrow-function/arrow-with-multiple-arg-and-rest/input.js 1:1-1:2 (a)
@@ -49,10 +28,26 @@ JSRoot {
 							loc: SourceLocation esprima/es2015-arrow-function/arrow-with-multiple-arg-and-rest/input.js 1:3-1:4 (b)
 						}
 					]
+					rest: JSBindingIdentifier {
+						name: "c"
+						loc: SourceLocation esprima/es2015-arrow-function/arrow-with-multiple-arg-and-rest/input.js 1:8-1:9 (c)
+					}
+					loc: SourceLocation esprima/es2015-arrow-function/arrow-with-multiple-arg-and-rest/input.js 1:0-1:13
 				}
+				loc: SourceLocation esprima/es2015-arrow-function/arrow-with-multiple-arg-and-rest/input.js 1:0-1:15
 			}
+			loc: SourceLocation esprima/es2015-arrow-function/arrow-with-multiple-arg-and-rest/input.js 1:0-1:16
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<esprima/es2015-arrow-function/arrow-with-multiple-arg-and-rest/input.js>
+	loc: SourceLocation esprima/es2015-arrow-function/arrow-with-multiple-arg-and-rest/input.js 1:0-2:0
 }
 ```
 

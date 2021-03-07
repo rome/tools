@@ -8,68 +8,58 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation esprima/rest-parameter/function-expression/input.js 1:0-2:0
-	path: UIDPath<esprima/rest-parameter/function-expression/input.js>
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation esprima/rest-parameter/function-expression/input.js 1:0-1:24
 			expression: JSAssignmentExpression {
 				operator: "="
-				loc: SourceLocation esprima/rest-parameter/function-expression/input.js 1:0-1:24
 				left: JSAssignmentIdentifier {
 					name: "f"
 					loc: SourceLocation esprima/rest-parameter/function-expression/input.js 1:0-1:1 (f)
 				}
 				right: JSFunctionExpression {
-					id: undefined
-					loc: SourceLocation esprima/rest-parameter/function-expression/input.js 1:4-1:24
 					body: JSBlockStatement {
-						body: Array []
-						directives: Array []
+						body: []
+						directives: []
 						loc: SourceLocation esprima/rest-parameter/function-expression/input.js 1:22-1:24
 					}
 					head: JSFunctionHead {
 						async: false
 						generator: false
 						hasHoistedVars: false
-						returnType: undefined
-						thisType: undefined
-						typeParameters: undefined
-						loc: SourceLocation esprima/rest-parameter/function-expression/input.js 1:12-1:21
-						rest: JSBindingIdentifier {
-							name: "b"
-							loc: SourceLocation esprima/rest-parameter/function-expression/input.js 1:19-1:20 (b)
-							meta: JSPatternMeta {
-								optional: undefined
-								typeAnnotation: undefined
-								loc: SourceLocation esprima/rest-parameter/function-expression/input.js 1:19-1:20
-							}
-						}
-						params: Array [
+						params: [
 							JSBindingIdentifier {
 								name: "a"
-								loc: SourceLocation esprima/rest-parameter/function-expression/input.js 1:13-1:14 (a)
 								meta: JSPatternMeta {
-									optional: undefined
-									typeAnnotation: undefined
 									loc: SourceLocation esprima/rest-parameter/function-expression/input.js 1:13-1:14
 								}
+								loc: SourceLocation esprima/rest-parameter/function-expression/input.js 1:13-1:14 (a)
 							}
 						]
+						rest: JSBindingIdentifier {
+							name: "b"
+							meta: JSPatternMeta {
+								loc: SourceLocation esprima/rest-parameter/function-expression/input.js 1:19-1:20
+							}
+							loc: SourceLocation esprima/rest-parameter/function-expression/input.js 1:19-1:20 (b)
+						}
+						loc: SourceLocation esprima/rest-parameter/function-expression/input.js 1:12-1:21
 					}
+					loc: SourceLocation esprima/rest-parameter/function-expression/input.js 1:4-1:24
 				}
+				loc: SourceLocation esprima/rest-parameter/function-expression/input.js 1:0-1:24
 			}
+			loc: SourceLocation esprima/rest-parameter/function-expression/input.js 1:0-1:24
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<esprima/rest-parameter/function-expression/input.js>
+	loc: SourceLocation esprima/rest-parameter/function-expression/input.js 1:0-2:0
 }
 ```
 

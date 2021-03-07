@@ -6,12 +6,11 @@ import {
 } from "./types";
 import {parseMarkup} from "./parse";
 import {
-	AnyMarkup,
-	AnyMarkups,
+	Markup,
 	StaticMarkup,
-	concatMarkup,
 	convertToMarkupFromRandomString,
 	isEmptyMarkup,
+	joinMarkup,
 	markup,
 	readMarkup,
 } from "./escape";
@@ -21,7 +20,7 @@ import {Dict} from "@internal/typescript-helpers";
 
 function buildTag(
 	tag: MarkupParsedTag,
-	inner: AnyMarkup,
+	inner: Markup,
 	opts: MarkupFormatNormalizeOptions,
 ): {
 	modified: boolean;
@@ -132,7 +131,7 @@ function normalizeMarkupChildren(
 	let textLength = 0;
 	let modified = false;
 
-	let parts: AnyMarkups = [];
+	let parts: Markup[] = [];
 
 	for (const child of children) {
 		if (child.type === "Text") {
@@ -176,7 +175,7 @@ function normalizeMarkupChildren(
 	}
 
 	return {
-		text: concatMarkup(parts),
+		text: joinMarkup(parts),
 		textLength,
 		modified,
 	};
@@ -187,7 +186,7 @@ export function joinMarkupLines({lines}: MarkupLinesAndWidth): string {
 }
 
 export function normalizeMarkup(
-	input: AnyMarkup,
+	input: StaticMarkup,
 	opts: MarkupFormatNormalizeOptions = {},
 	maxLength: number = Infinity,
 ): {
@@ -197,10 +196,8 @@ export function normalizeMarkup(
 	text: StaticMarkup;
 	truncated: boolean;
 } {
-	const inputRead = readMarkup(input);
-
 	const {textLength, text, modified} = normalizeMarkupChildren(
-		parseMarkup(inputRead),
+		parseMarkup(input),
 		opts,
 		maxLength,
 	);
@@ -209,7 +206,8 @@ export function normalizeMarkup(
 
 	return {
 		textLength,
-		text: modified ? text : convertToMarkupFromRandomString(inputRead),
+		// Return original markup unless modified
+		text: modified ? text : input,
 		truncated: isTruncated,
 		visibleTextLength: isTruncated ? maxLength : textLength,
 		truncatedLength: isTruncated ? textLength - maxLength : 0,

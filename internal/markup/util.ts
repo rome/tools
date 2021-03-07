@@ -1,10 +1,9 @@
 import {Consumer, consumeUnknown} from "@internal/consume";
 import {MarkupFormatOptions, MarkupParsedAttributes} from "./types";
-import {humanizeNumber} from "@internal/string-utils";
-import {AnyPath, createAnyPath} from "@internal/path";
+import {OneIndexed, ZeroIndexed, humanizeNumber} from "@internal/numbers";
+import {HOME_PATH, Path, createPath} from "@internal/path";
 import {StaticMarkup} from "./escape";
 import {DIAGNOSTIC_CATEGORIES} from "@internal/diagnostics";
-import {OneIndexed, ZeroIndexed} from "@internal/math";
 
 export function createEmptyAttributes(): Consumer {
 	return consumeUnknown({}, DIAGNOSTIC_CATEGORIES.parse, "romemarkup");
@@ -19,7 +18,7 @@ export function isSingleEscaped(markup: StaticMarkup): markup is [string] {
 }
 
 export function humanizeMarkupFilename(
-	path: AnyPath,
+	path: Path,
 	opts: MarkupFormatOptions = {},
 ): string {
 	if (opts.humanizeFilename !== undefined) {
@@ -29,7 +28,10 @@ export function humanizeMarkupFilename(
 		}
 	}
 
-	return path.format(opts.cwd);
+	return path.format({
+		cwd: opts.cwd,
+		home: HOME_PATH,
+	});
 }
 
 export function buildFileLink(
@@ -37,11 +39,11 @@ export function buildFileLink(
 	opts: MarkupFormatOptions,
 ): {
 	text: string;
-	path: AnyPath;
+	path: Path;
 	line: undefined | string;
 	column: undefined | string;
 } {
-	let path: AnyPath = createAnyPath(attributes.get("target").asString(""));
+	let path: Path = createPath(attributes.get("target").asString(""));
 	let line = attributes.get("line").asNumberOrVoid();
 	let column = attributes.get("column").asNumberOrVoid();
 

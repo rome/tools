@@ -8,42 +8,27 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: true
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	syntax: Array []
-	loc: SourceLocation typescript/expect-plugin/export-type-named/input.js 1:0-3:0
-	path: UIDPath<typescript/expect-plugin/export-type-named/input.js>
-	body: Array [
+	body: [
 		JSVariableDeclarationStatement {
-			loc: SourceLocation typescript/expect-plugin/export-type-named/input.js 1:0-1:8
 			declaration: JSVariableDeclaration {
 				kind: "var"
-				loc: SourceLocation typescript/expect-plugin/export-type-named/input.js 1:0-1:8
-				declarations: Array [
+				declarations: [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "Foo"
 							loc: SourceLocation typescript/expect-plugin/export-type-named/input.js 1:4-1:7 (Foo)
 						}
-						init: undefined
 						loc: SourceLocation typescript/expect-plugin/export-type-named/input.js 1:4-1:7
 					}
 				]
+				loc: SourceLocation typescript/expect-plugin/export-type-named/input.js 1:0-1:8
 			}
+			loc: SourceLocation typescript/expect-plugin/export-type-named/input.js 1:0-1:8
 		}
 		JSExportLocalDeclaration {
-			declaration: undefined
 			exportKind: "type"
-			loc: SourceLocation typescript/expect-plugin/export-type-named/input.js 2:0-2:20
-			specifiers: Array [
+			specifiers: [
 				JSExportLocalSpecifier {
-					loc: SourceLocation typescript/expect-plugin/export-type-named/input.js 2:14-2:17
 					exported: JSIdentifier {
 						name: "Foo"
 						loc: SourceLocation typescript/expect-plugin/export-type-named/input.js 2:14-2:17 (Foo)
@@ -52,10 +37,21 @@ JSRoot {
 						name: "Foo"
 						loc: SourceLocation typescript/expect-plugin/export-type-named/input.js 2:14-2:17 (Foo)
 					}
+					loc: SourceLocation typescript/expect-plugin/export-type-named/input.js 2:14-2:17
 				}
 			]
+			loc: SourceLocation typescript/expect-plugin/export-type-named/input.js 2:0-2:20
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: true
+	sourceType: "module"
+	syntax: []
+	path: UIDPath<typescript/expect-plugin/export-type-named/input.js>
+	loc: SourceLocation typescript/expect-plugin/export-type-named/input.js 1:0-3:0
 }
 ```
 

@@ -1,5 +1,4 @@
 import {TEMP_PATH} from "@internal/path";
-import {readFileText, removeDirectory, writeFile} from "@internal/fs";
 import {exec, reporter} from "./_utils";
 import {main as buildRelease} from "./build-release";
 import {markup} from "@internal/markup";
@@ -9,11 +8,11 @@ const releaseManifest = releaseFolder.append("package.json");
 
 async function setName(name: string) {
 	const manifest = {
-		...JSON.parse(await readFileText(releaseManifest)),
+		...JSON.parse(await releaseManifest.readFileText()),
 		name,
 	};
 
-	await writeFile(releaseManifest, JSON.stringify(manifest, null, "\t") + "\n");
+	await releaseManifest.writeFile(JSON.stringify(manifest, null, "\t") + "\n");
 }
 
 async function publishRegistry(registry: string) {
@@ -37,6 +36,6 @@ export async function main() {
 		await setName("@rome/tools");
 		await publishRegistry("https://npm.pkg.github.com/");
 	} finally {
-		await removeDirectory(releaseFolder);
+		await releaseFolder.removeDirectory();
 	}
 }

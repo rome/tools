@@ -8,30 +8,10 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	loc: SourceLocation jsx/regression/6/input.jsx 1:0-1:32
-	path: UIDPath<jsx/regression/6/input.jsx>
-	syntax: Array ["jsx"]
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation jsx/regression/6/input.jsx 1:0-1:32
 			expression: JSXElement {
-				name: JSXIdentifier {
-					name: "div"
-					loc: SourceLocation jsx/regression/6/input.jsx 1:1-1:4
-				}
-				children: Array []
-				selfClosing: true
-				typeArguments: undefined
-				loc: SourceLocation jsx/regression/6/input.jsx 1:0-1:32
-				attributes: Array [
+				attributes: [
 					JSXAttribute {
 						name: JSXIdentifier {
 							name: "pre"
@@ -44,16 +24,33 @@ JSRoot {
 						loc: SourceLocation jsx/regression/6/input.jsx 1:5-1:18
 					}
 					JSXSpreadAttribute {
-						loc: SourceLocation jsx/regression/6/input.jsx 1:19-1:29
 						argument: JSReferenceIdentifier {
 							name: "props"
 							loc: SourceLocation jsx/regression/6/input.jsx 1:23-1:28 (props)
 						}
+						loc: SourceLocation jsx/regression/6/input.jsx 1:19-1:29
 					}
 				]
+				children: []
+				selfClosing: true
+				name: JSXIdentifier {
+					name: "div"
+					loc: SourceLocation jsx/regression/6/input.jsx 1:1-1:4
+				}
+				loc: SourceLocation jsx/regression/6/input.jsx 1:0-1:32
 			}
+			loc: SourceLocation jsx/regression/6/input.jsx 1:0-1:32
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: ["jsx"]
+	path: UIDPath<jsx/regression/6/input.jsx>
+	loc: SourceLocation jsx/regression/6/input.jsx 1:0-1:32
 }
 ```
 

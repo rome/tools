@@ -8,23 +8,10 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation esprima/es2015-generator/generator-method-with-yield-line-terminator/input.js 1:0-5:0
-	path: UIDPath<esprima/es2015-generator/generator-method-with-yield-line-terminator/input.js>
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation esprima/es2015-generator/generator-method-with-yield-line-terminator/input.js 1:0-4:4
 			expression: JSObjectExpression {
-				loc: SourceLocation esprima/es2015-generator/generator-method-with-yield-line-terminator/input.js 1:1-4:3
-				properties: Array [
+				properties: [
 					JSObjectMethod {
 						kind: "method"
 						key: JSStaticPropertyKey {
@@ -34,45 +21,50 @@ JSRoot {
 							}
 							loc: SourceLocation esprima/es2015-generator/generator-method-with-yield-line-terminator/input.js 1:4-1:7
 						}
-						loc: SourceLocation esprima/es2015-generator/generator-method-with-yield-line-terminator/input.js 1:3-4:1
+						body: JSBlockStatement {
+							body: [
+								JSExpressionStatement {
+									expression: JSYieldExpression {
+										delegate: false
+										loc: SourceLocation esprima/es2015-generator/generator-method-with-yield-line-terminator/input.js 2:2-2:7
+									}
+									loc: SourceLocation esprima/es2015-generator/generator-method-with-yield-line-terminator/input.js 2:2-2:7
+								}
+								JSExpressionStatement {
+									expression: JSNumericLiteral {
+										value: 3
+										loc: SourceLocation esprima/es2015-generator/generator-method-with-yield-line-terminator/input.js 3:2-3:3
+									}
+									loc: SourceLocation esprima/es2015-generator/generator-method-with-yield-line-terminator/input.js 3:2-3:3
+								}
+							]
+							directives: []
+							loc: SourceLocation esprima/es2015-generator/generator-method-with-yield-line-terminator/input.js 1:10-4:1
+						}
 						head: JSFunctionHead {
 							async: false
 							generator: true
 							hasHoistedVars: false
-							params: Array []
-							rest: undefined
-							returnType: undefined
-							thisType: undefined
-							typeParameters: undefined
+							params: []
 							loc: SourceLocation esprima/es2015-generator/generator-method-with-yield-line-terminator/input.js 1:7-1:9
 						}
-						body: JSBlockStatement {
-							directives: Array []
-							loc: SourceLocation esprima/es2015-generator/generator-method-with-yield-line-terminator/input.js 1:10-4:1
-							body: Array [
-								JSExpressionStatement {
-									loc: SourceLocation esprima/es2015-generator/generator-method-with-yield-line-terminator/input.js 2:2-2:7
-									expression: JSYieldExpression {
-										argument: undefined
-										delegate: false
-										loc: SourceLocation esprima/es2015-generator/generator-method-with-yield-line-terminator/input.js 2:2-2:7
-									}
-								}
-								JSExpressionStatement {
-									loc: SourceLocation esprima/es2015-generator/generator-method-with-yield-line-terminator/input.js 3:2-3:3
-									expression: JSNumericLiteral {
-										value: 3
-										format: undefined
-										loc: SourceLocation esprima/es2015-generator/generator-method-with-yield-line-terminator/input.js 3:2-3:3
-									}
-								}
-							]
-						}
+						loc: SourceLocation esprima/es2015-generator/generator-method-with-yield-line-terminator/input.js 1:3-4:1
 					}
 				]
+				loc: SourceLocation esprima/es2015-generator/generator-method-with-yield-line-terminator/input.js 1:1-4:3
 			}
+			loc: SourceLocation esprima/es2015-generator/generator-method-with-yield-line-terminator/input.js 1:0-4:4
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<esprima/es2015-generator/generator-method-with-yield-line-terminator/input.js>
+	loc: SourceLocation esprima/es2015-generator/generator-method-with-yield-line-terminator/input.js 1:0-5:0
 }
 ```
 

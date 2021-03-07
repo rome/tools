@@ -8,43 +8,28 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: true
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation core/opts/allowAwaitOutsideFunction-true/input.js 1:0-2:0
-	path: UIDPath<core/opts/allowAwaitOutsideFunction-true/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:3
-				path: UIDPath<core/opts/allowAwaitOutsideFunction-true/input.js>
-				start: Position 1:4
+	body: [
+		JSForStatement {
+			body: JSExpressionStatement {
+				expression: JSReferenceIdentifier {
+					name: "imports"
+					loc: SourceLocation core/opts/allowAwaitOutsideFunction-true/input.js 1:22-1:29 (imports)
+				}
+				loc: SourceLocation core/opts/allowAwaitOutsideFunction-true/input.js 1:22-1:29
 			}
-			description: Object {
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Unexpected character <emphasis>a</emphasis>"}
-				advice: Array [
-					log {
-						category: "info"
-						text: RAW_MARKUP {value: "Expected the opening for head character <emphasis>(</emphasis>"}
+			init: JSCallExpression {
+				arguments: [
+					JSReferenceIdentifier {
+						name: "INVALID_PLACEHOLDER"
+						loc: SourceLocation core/opts/allowAwaitOutsideFunction-true/input.js 1:11-1:16
 					}
 				]
+				callee: JSReferenceIdentifier {
+					name: "await"
+					loc: SourceLocation core/opts/allowAwaitOutsideFunction-true/input.js 1:4-1:9 (await)
+				}
+				loc: SourceLocation core/opts/allowAwaitOutsideFunction-true/input.js 1:4-1:16
 			}
-		}
-	]
-	body: Array [
-		JSForStatement {
-			loc: SourceLocation core/opts/allowAwaitOutsideFunction-true/input.js 1:0-1:29
 			test: JSReferenceIdentifier {
 				name: "i"
 				loc: SourceLocation core/opts/allowAwaitOutsideFunction-true/input.js 1:17-1:18 (i)
@@ -53,40 +38,51 @@ JSRoot {
 				name: "of"
 				loc: SourceLocation core/opts/allowAwaitOutsideFunction-true/input.js 1:19-1:21 (of)
 			}
-			body: JSExpressionStatement {
-				loc: SourceLocation core/opts/allowAwaitOutsideFunction-true/input.js 1:22-1:29
-				expression: JSReferenceIdentifier {
-					name: "imports"
-					loc: SourceLocation core/opts/allowAwaitOutsideFunction-true/input.js 1:22-1:29 (imports)
-				}
-			}
-			init: JSCallExpression {
-				loc: SourceLocation core/opts/allowAwaitOutsideFunction-true/input.js 1:4-1:16
-				callee: JSReferenceIdentifier {
-					name: "await"
-					loc: SourceLocation core/opts/allowAwaitOutsideFunction-true/input.js 1:4-1:9 (await)
-				}
-				arguments: Array [
-					JSReferenceIdentifier {
-						name: "INVALID_PLACEHOLDER"
-						loc: SourceLocation core/opts/allowAwaitOutsideFunction-true/input.js 1:11-1:16
-					}
-				]
-			}
+			loc: SourceLocation core/opts/allowAwaitOutsideFunction-true/input.js 1:0-1:29
 		}
 		JSExpressionStatement {
-			loc: SourceLocation core/opts/allowAwaitOutsideFunction-true/input.js 1:29-1:30
 			expression: JSReferenceIdentifier {
 				name: "INVALID_PLACEHOLDER"
 				loc: SourceLocation core/opts/allowAwaitOutsideFunction-true/input.js 1:29-1:30
 			}
+			loc: SourceLocation core/opts/allowAwaitOutsideFunction-true/input.js 1:29-1:30
 		}
 		JSBlockStatement {
-			body: Array []
-			directives: Array []
+			body: []
+			directives: []
 			loc: SourceLocation core/opts/allowAwaitOutsideFunction-true/input.js 1:31-1:33
 		}
 	]
+	comments: []
+	corrupt: true
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {
+				advice: [
+					log {
+						category: "info"
+						text: [RAW_MARKUP {value: "Expected the opening "}, "for head", RAW_MARKUP {value: " character <emphasis>"}, "(", RAW_MARKUP {value: "</emphasis>"}]
+					}
+				]
+				category: ["parse"]
+				categoryValue: "js"
+				message: [RAW_MARKUP {value: "Unexpected character <emphasis>"}, "a", RAW_MARKUP {value: "</emphasis>"}]
+			}
+			location: {
+				language: "js"
+				path: UIDPath<core/opts/allowAwaitOutsideFunction-true/input.js>
+				end: Position 1:3
+				start: Position 1:4
+			}
+		}
+	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<core/opts/allowAwaitOutsideFunction-true/input.js>
+	loc: SourceLocation core/opts/allowAwaitOutsideFunction-true/input.js 1:0-2:0
 }
 ```
 

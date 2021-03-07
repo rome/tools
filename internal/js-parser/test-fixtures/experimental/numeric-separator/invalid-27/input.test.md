@@ -8,52 +8,48 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation experimental/numeric-separator/invalid-27/input.js 1:0-2:0
-	path: UIDPath<experimental/numeric-separator/invalid-27/input.js>
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation experimental/numeric-separator/invalid-27/input.js 1:0-1:2
 			expression: JSNumericLiteral {
 				value: 0
 				format: "hex"
 				loc: SourceLocation experimental/numeric-separator/invalid-27/input.js 1:0-1:2
 			}
+			loc: SourceLocation experimental/numeric-separator/invalid-27/input.js 1:0-1:2
 		}
 		JSExpressionStatement {
-			loc: SourceLocation experimental/numeric-separator/invalid-27/input.js 1:2-1:5
 			expression: JSReferenceIdentifier {
 				name: "Z_1"
 				loc: SourceLocation experimental/numeric-separator/invalid-27/input.js 1:2-1:5 (Z_1)
 			}
+			loc: SourceLocation experimental/numeric-separator/invalid-27/input.js 1:2-1:5
 		}
 	]
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {
+				advice: []
+				category: ["parse"]
 				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Expected number in radix <emphasis>16</emphasis>"}
+				message: [RAW_MARKUP {value: "Expected number in radix <emphasis>"}, "16", RAW_MARKUP {value: "</emphasis>"}]
 			}
-			location: Object {
-				integrity: undefined
+			location: {
 				language: "js"
-				sourceText: undefined
-				end: Position 1:2
 				path: UIDPath<experimental/numeric-separator/invalid-27/input.js>
+				end: Position 1:2
 				start: Position 1:2
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<experimental/numeric-separator/invalid-27/input.js>
+	loc: SourceLocation experimental/numeric-separator/invalid-27/input.js 1:0-2:0
 }
 ```
 

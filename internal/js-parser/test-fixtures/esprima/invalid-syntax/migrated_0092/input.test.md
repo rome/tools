@@ -8,59 +8,17 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation esprima/invalid-syntax/migrated_0092/input.js 1:0-2:0
-	path: UIDPath<esprima/invalid-syntax/migrated_0092/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:5
-				path: UIDPath<esprima/invalid-syntax/migrated_0092/input.js>
-				start: Position 1:4
-			}
-			description: Object {
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Argument <emphasis>a</emphasis> name clash in strict mode"}
-				advice: Array [
-					log {
-						category: "info"
-						text: RAW_MARKUP {value: "Defined already here"}
-					}
-					frame {location: SourceLocation esprima/invalid-syntax/migrated_0092/input.js 1:4-1:5 (a)}
-				]
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation esprima/invalid-syntax/migrated_0092/input.js 1:0-1:12
 			expression: JSArrowFunctionExpression {
-				loc: SourceLocation esprima/invalid-syntax/migrated_0092/input.js 1:0-1:12
 				body: JSNumericLiteral {
 					value: 42
-					format: undefined
 					loc: SourceLocation esprima/invalid-syntax/migrated_0092/input.js 1:10-1:12
 				}
 				head: JSFunctionHead {
 					async: false
 					hasHoistedVars: false
-					rest: undefined
-					returnType: undefined
-					thisType: undefined
-					loc: SourceLocation esprima/invalid-syntax/migrated_0092/input.js 1:0-1:9
-					params: Array [
+					params: [
 						JSBindingIdentifier {
 							name: "a"
 							loc: SourceLocation esprima/invalid-syntax/migrated_0092/input.js 1:1-1:2 (a)
@@ -70,10 +28,46 @@ JSRoot {
 							loc: SourceLocation esprima/invalid-syntax/migrated_0092/input.js 1:4-1:5 (a)
 						}
 					]
+					loc: SourceLocation esprima/invalid-syntax/migrated_0092/input.js 1:0-1:9
 				}
+				loc: SourceLocation esprima/invalid-syntax/migrated_0092/input.js 1:0-1:12
+			}
+			loc: SourceLocation esprima/invalid-syntax/migrated_0092/input.js 1:0-1:12
+		}
+	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {
+				advice: [
+					log {
+						category: "info"
+						text: RAW_MARKUP {value: "Defined already here"}
+					}
+					frame {
+						location: SourceLocation esprima/invalid-syntax/migrated_0092/input.js 1:4-1:5 (a)
+					}
+				]
+				category: ["parse"]
+				categoryValue: "js"
+				message: [RAW_MARKUP {value: "Argument <emphasis>"}, "a", RAW_MARKUP {value: "</emphasis> name clash in strict mode"}]
+			}
+			location: {
+				language: "js"
+				path: UIDPath<esprima/invalid-syntax/migrated_0092/input.js>
+				end: Position 1:5
+				start: Position 1:4
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<esprima/invalid-syntax/migrated_0092/input.js>
+	loc: SourceLocation esprima/invalid-syntax/migrated_0092/input.js 1:0-2:0
 }
 ```
 

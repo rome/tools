@@ -8,46 +8,10 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: true
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2017/async-functions/invalid-escape-async-obj-method/input.js 1:0-2:0
-	path: UIDPath<es2017/async-functions/invalid-escape-async-obj-method/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:15
-				path: UIDPath<es2017/async-functions/invalid-escape-async-obj-method/input.js>
-				start: Position 1:14
-			}
-			description: Object {
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Unexpected character <emphasis>x</emphasis>"}
-				advice: Array [
-					log {
-						category: "info"
-						text: RAW_MARKUP {value: "Expected character <emphasis>,</emphasis>"}
-					}
-				]
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation es2017/async-functions/invalid-escape-async-obj-method/input.js 1:0-1:13
 			expression: JSObjectExpression {
-				loc: SourceLocation es2017/async-functions/invalid-escape-async-obj-method/input.js 1:1-1:13
-				properties: Array [
+				properties: [
 					JSObjectProperty {
 						key: JSStaticPropertyKey {
 							value: JSIdentifier {
@@ -63,54 +27,81 @@ JSRoot {
 						loc: SourceLocation es2017/async-functions/invalid-escape-async-obj-method/input.js 1:3-1:13
 					}
 				]
+				loc: SourceLocation es2017/async-functions/invalid-escape-async-obj-method/input.js 1:1-1:13
 			}
+			loc: SourceLocation es2017/async-functions/invalid-escape-async-obj-method/input.js 1:0-1:13
 		}
 		JSExpressionStatement {
-			loc: SourceLocation es2017/async-functions/invalid-escape-async-obj-method/input.js 1:14-1:17
 			expression: JSCallExpression {
-				arguments: Array []
-				loc: SourceLocation es2017/async-functions/invalid-escape-async-obj-method/input.js 1:14-1:17
+				arguments: []
 				callee: JSReferenceIdentifier {
 					name: "x"
 					loc: SourceLocation es2017/async-functions/invalid-escape-async-obj-method/input.js 1:14-1:15 (x)
 				}
+				loc: SourceLocation es2017/async-functions/invalid-escape-async-obj-method/input.js 1:14-1:17
 			}
+			loc: SourceLocation es2017/async-functions/invalid-escape-async-obj-method/input.js 1:14-1:17
 		}
 		JSBlockStatement {
-			directives: Array []
-			loc: SourceLocation es2017/async-functions/invalid-escape-async-obj-method/input.js 1:18-1:29
-			body: Array [
+			body: [
 				JSExpressionStatement {
-					loc: SourceLocation es2017/async-functions/invalid-escape-async-obj-method/input.js 1:20-1:25
 					expression: JSReferenceIdentifier {
 						name: "await"
 						loc: SourceLocation es2017/async-functions/invalid-escape-async-obj-method/input.js 1:20-1:25 (await)
 					}
+					loc: SourceLocation es2017/async-functions/invalid-escape-async-obj-method/input.js 1:20-1:25
 				}
 				JSExpressionStatement {
-					loc: SourceLocation es2017/async-functions/invalid-escape-async-obj-method/input.js 1:26-1:27
 					expression: JSReferenceIdentifier {
 						name: "x"
 						loc: SourceLocation es2017/async-functions/invalid-escape-async-obj-method/input.js 1:26-1:27 (x)
 					}
+					loc: SourceLocation es2017/async-functions/invalid-escape-async-obj-method/input.js 1:26-1:27
 				}
 			]
+			directives: []
+			loc: SourceLocation es2017/async-functions/invalid-escape-async-obj-method/input.js 1:18-1:29
 		}
 		JSExpressionStatement {
-			loc: SourceLocation es2017/async-functions/invalid-escape-async-obj-method/input.js 1:30-1:31
 			expression: JSReferenceIdentifier {
 				name: "INVALID_PLACEHOLDER"
 				loc: SourceLocation es2017/async-functions/invalid-escape-async-obj-method/input.js 1:30-1:31
 			}
+			loc: SourceLocation es2017/async-functions/invalid-escape-async-obj-method/input.js 1:30-1:31
 		}
 		JSExpressionStatement {
-			loc: SourceLocation es2017/async-functions/invalid-escape-async-obj-method/input.js 1:31-1:32
 			expression: JSReferenceIdentifier {
 				name: "INVALID_PLACEHOLDER"
 				loc: SourceLocation es2017/async-functions/invalid-escape-async-obj-method/input.js 1:31-1:32
 			}
+			loc: SourceLocation es2017/async-functions/invalid-escape-async-obj-method/input.js 1:31-1:32
 		}
 	]
+	comments: []
+	corrupt: true
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {
+				advice: [log {category: "info", text: [RAW_MARKUP {value: "Expected character <emphasis>"}, ",", RAW_MARKUP {value: "</emphasis>"}]}]
+				category: ["parse"]
+				categoryValue: "js"
+				message: [RAW_MARKUP {value: "Unexpected character <emphasis>"}, "x", RAW_MARKUP {value: "</emphasis>"}]
+			}
+			location: {
+				language: "js"
+				path: UIDPath<es2017/async-functions/invalid-escape-async-obj-method/input.js>
+				end: Position 1:15
+				start: Position 1:14
+			}
+		}
+	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2017/async-functions/invalid-escape-async-obj-method/input.js>
+	loc: SourceLocation es2017/async-functions/invalid-escape-async-obj-method/input.js 1:0-2:0
 }
 ```
 

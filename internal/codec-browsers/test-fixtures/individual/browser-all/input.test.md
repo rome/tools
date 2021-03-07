@@ -7,7 +7,7 @@
 ### `result`
 
 ```javascript
-Array [
+[
 	"firefox:2"
 	"firefox:3"
 	"firefox:3.5"
@@ -102,18 +102,13 @@ Array [
 ### `targets`
 
 ```javascript
-Array [
-	TargetBrowser {
-		browser: "Firefox"
-		version: "all"
-	}
-]
+[TargetBrowser {browser: "Firefox", version: "all"}]
 ```
 
 ### `tokens`
 
 ```javascript
-Array [
+[
 	String {
 		value: "Firefox"
 		end: ZeroIndexedNumber<7>

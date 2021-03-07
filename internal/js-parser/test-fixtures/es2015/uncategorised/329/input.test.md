@@ -8,64 +8,56 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2015/uncategorised/329/input.js 1:0-1:22
-	path: UIDPath<es2015/uncategorised/329/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Lexical declaration cannot appear in a single-statement context"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:8
-				path: UIDPath<es2015/uncategorised/329/input.js>
-				start: Position 1:9
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSForStatement {
-			init: undefined
-			test: undefined
-			update: undefined
-			loc: SourceLocation es2015/uncategorised/329/input.js 1:0-1:22
 			body: JSVariableDeclarationStatement {
-				loc: SourceLocation es2015/uncategorised/329/input.js 1:9-1:22
 				declaration: JSVariableDeclaration {
 					kind: "const"
-					loc: SourceLocation es2015/uncategorised/329/input.js 1:9-1:22
-					declarations: Array [
+					declarations: [
 						JSVariableDeclarator {
 							id: JSBindingIdentifier {
 								name: "x"
 								loc: SourceLocation es2015/uncategorised/329/input.js 1:15-1:16 (x)
 							}
-							loc: SourceLocation es2015/uncategorised/329/input.js 1:15-1:21
 							init: JSNumericLiteral {
 								value: 10
-								format: undefined
 								loc: SourceLocation es2015/uncategorised/329/input.js 1:19-1:21
 							}
+							loc: SourceLocation es2015/uncategorised/329/input.js 1:15-1:21
 						}
 					]
+					loc: SourceLocation es2015/uncategorised/329/input.js 1:9-1:22
 				}
+				loc: SourceLocation es2015/uncategorised/329/input.js 1:9-1:22
+			}
+			loc: SourceLocation es2015/uncategorised/329/input.js 1:0-1:22
+		}
+	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "Lexical declaration cannot appear in a single-statement context"}
+			}
+			location: {
+				language: "js"
+				path: UIDPath<es2015/uncategorised/329/input.js>
+				end: Position 1:8
+				start: Position 1:9
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2015/uncategorised/329/input.js>
+	loc: SourceLocation es2015/uncategorised/329/input.js 1:0-1:22
 }
 ```
 

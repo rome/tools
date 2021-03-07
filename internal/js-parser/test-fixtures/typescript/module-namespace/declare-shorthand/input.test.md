@@ -8,29 +8,25 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	loc: SourceLocation typescript/module-namespace/declare-shorthand/input.ts 1:0-2:0
-	path: UIDPath<typescript/module-namespace/declare-shorthand/input.ts>
-	syntax: Array ["ts"]
-	body: Array [
+	body: [
 		TSModuleDeclaration {
+			declare: true
 			id: JSStringLiteral {
 				value: "m"
 				loc: SourceLocation typescript/module-namespace/declare-shorthand/input.ts 1:15-1:18
 			}
-			body: undefined
-			declare: true
-			global: undefined
 			loc: SourceLocation typescript/module-namespace/declare-shorthand/input.ts 1:0-1:19
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: ["ts"]
+	path: UIDPath<typescript/module-namespace/declare-shorthand/input.ts>
+	loc: SourceLocation typescript/module-namespace/declare-shorthand/input.ts 1:0-2:0
 }
 ```
 

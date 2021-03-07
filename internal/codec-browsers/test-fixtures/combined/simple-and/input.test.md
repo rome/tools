@@ -7,22 +7,16 @@
 ### `result`
 
 ```javascript
-Array []
+[]
 ```
 
 ### `targets`
 
 ```javascript
-Array [
+[
 	TargetBrowserCombination {
-		and: TargetBrowserUsage {
-			operator: "GT"
-			usage: 5
-		}
-		target: TargetBrowser {
-			browser: "Firefox"
-			version: 84
-		}
+		and: TargetBrowserUsage {operator: "GT", usage: 5}
+		target: TargetBrowser {browser: "Firefox", version: 84}
 	}
 ]
 ```
@@ -30,7 +24,7 @@ Array [
 ### `tokens`
 
 ```javascript
-Array [
+[
 	String {
 		value: "Firefox"
 		end: ZeroIndexedNumber<7>

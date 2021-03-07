@@ -8,26 +8,24 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	syntax: Array []
-	loc: SourceLocation experimental/export-extensions/default-from-identifier-escaped/input.js 1:0-2:0
-	path: UIDPath<experimental/export-extensions/default-from-identifier-escaped/input.js>
-	body: Array [
+	body: [
 		JSExportDefaultDeclaration {
-			loc: SourceLocation experimental/export-extensions/default-from-identifier-escaped/input.js 1:0-1:25
 			declaration: JSReferenceIdentifier {
 				name: "from"
 				loc: SourceLocation experimental/export-extensions/default-from-identifier-escaped/input.js 1:15-1:24 (from)
 			}
+			loc: SourceLocation experimental/export-extensions/default-from-identifier-escaped/input.js 1:0-1:25
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: []
+	path: UIDPath<experimental/export-extensions/default-from-identifier-escaped/input.js>
+	loc: SourceLocation experimental/export-extensions/default-from-identifier-escaped/input.js 1:0-2:0
 }
 ```
 

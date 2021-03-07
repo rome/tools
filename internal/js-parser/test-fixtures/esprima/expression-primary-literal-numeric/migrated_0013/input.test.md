@@ -8,27 +8,25 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation esprima/expression-primary-literal-numeric/migrated_0013/input.js 1:0-1:5
-	path: UIDPath<esprima/expression-primary-literal-numeric/migrated_0013/input.js>
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation esprima/expression-primary-literal-numeric/migrated_0013/input.js 1:0-1:5
 			expression: JSNumericLiteral {
 				value: 3_567
 				format: "hex"
 				loc: SourceLocation esprima/expression-primary-literal-numeric/migrated_0013/input.js 1:0-1:5
 			}
+			loc: SourceLocation esprima/expression-primary-literal-numeric/migrated_0013/input.js 1:0-1:5
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<esprima/expression-primary-literal-numeric/migrated_0013/input.js>
+	loc: SourceLocation esprima/expression-primary-literal-numeric/migrated_0013/input.js 1:0-1:5
 }
 ```
 

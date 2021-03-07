@@ -8,32 +8,18 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2015/uncategorised/302/input.js 1:0-1:13
-	path: UIDPath<es2015/uncategorised/302/input.js>
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation es2015/uncategorised/302/input.js 1:0-1:13
 			expression: JSSequenceExpression {
-				loc: SourceLocation es2015/uncategorised/302/input.js 1:0-1:13
-				expressions: Array [
+				expressions: [
 					JSTemplateLiteral {
-						loc: SourceLocation es2015/uncategorised/302/input.js 1:0-1:8
-						expressions: Array [
+						expressions: [
 							JSReferenceIdentifier {
 								name: "x"
 								loc: SourceLocation es2015/uncategorised/302/input.js 1:4-1:5 (x)
 							}
 						]
-						quasis: Array [
+						quasis: [
 							JSTemplateElement {
 								cooked: "{"
 								raw: "{"
@@ -47,11 +33,11 @@ JSRoot {
 								loc: SourceLocation es2015/uncategorised/302/input.js 1:6-1:7
 							}
 						]
+						loc: SourceLocation es2015/uncategorised/302/input.js 1:0-1:8
 					}
 					JSTemplateLiteral {
-						expressions: Array []
-						loc: SourceLocation es2015/uncategorised/302/input.js 1:10-1:13
-						quasis: Array [
+						expressions: []
+						quasis: [
 							JSTemplateElement {
 								cooked: "}"
 								raw: "}"
@@ -59,11 +45,23 @@ JSRoot {
 								loc: SourceLocation es2015/uncategorised/302/input.js 1:11-1:12
 							}
 						]
+						loc: SourceLocation es2015/uncategorised/302/input.js 1:10-1:13
 					}
 				]
+				loc: SourceLocation es2015/uncategorised/302/input.js 1:0-1:13
 			}
+			loc: SourceLocation es2015/uncategorised/302/input.js 1:0-1:13
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2015/uncategorised/302/input.js>
+	loc: SourceLocation es2015/uncategorised/302/input.js 1:0-1:13
 }
 ```
 

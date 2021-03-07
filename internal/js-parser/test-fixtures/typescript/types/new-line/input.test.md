@@ -8,30 +8,17 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	loc: SourceLocation typescript/types/new-line/input.ts 1:0-3:0
-	path: UIDPath<typescript/types/new-line/input.ts>
-	syntax: Array ["ts"]
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation typescript/types/new-line/input.ts 1:0-1:4
 			expression: JSReferenceIdentifier {
 				name: "type"
 				loc: SourceLocation typescript/types/new-line/input.ts 1:0-1:4 (type)
 			}
+			loc: SourceLocation typescript/types/new-line/input.ts 1:0-1:4
 		}
 		JSExpressionStatement {
-			loc: SourceLocation typescript/types/new-line/input.ts 2:0-2:13
 			expression: JSAssignmentExpression {
 				operator: "="
-				loc: SourceLocation typescript/types/new-line/input.ts 2:0-2:12
 				left: JSAssignmentIdentifier {
 					name: "Foo"
 					loc: SourceLocation typescript/types/new-line/input.ts 2:0-2:3 (Foo)
@@ -40,9 +27,20 @@ JSRoot {
 					name: "string"
 					loc: SourceLocation typescript/types/new-line/input.ts 2:6-2:12 (string)
 				}
+				loc: SourceLocation typescript/types/new-line/input.ts 2:0-2:12
 			}
+			loc: SourceLocation typescript/types/new-line/input.ts 2:0-2:13
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: ["ts"]
+	path: UIDPath<typescript/types/new-line/input.ts>
+	loc: SourceLocation typescript/types/new-line/input.ts 1:0-3:0
 }
 ```
 

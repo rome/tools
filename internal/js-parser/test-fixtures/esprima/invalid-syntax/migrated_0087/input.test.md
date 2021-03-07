@@ -8,76 +8,62 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation esprima/invalid-syntax/migrated_0087/input.js 1:0-2:0
-	path: UIDPath<esprima/invalid-syntax/migrated_0087/input.js>
-	directives: Array [
-		JSDirective {
-			value: "use strict"
-			loc: SourceLocation esprima/invalid-syntax/migrated_0087/input.js 1:0-1:13
-		}
-	]
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "eval is a reserved word"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:19
-				path: UIDPath<esprima/invalid-syntax/migrated_0087/input.js>
-				start: Position 1:15
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation esprima/invalid-syntax/migrated_0087/input.js 1:14-1:31
 			expression: JSArrowFunctionExpression {
-				loc: SourceLocation esprima/invalid-syntax/migrated_0087/input.js 1:14-1:31
 				body: JSNumericLiteral {
 					value: 42
-					format: undefined
 					loc: SourceLocation esprima/invalid-syntax/migrated_0087/input.js 1:29-1:31
 				}
 				head: JSFunctionHead {
 					async: false
 					hasHoistedVars: false
-					rest: undefined
-					returnType: undefined
-					thisType: undefined
-					loc: SourceLocation esprima/invalid-syntax/migrated_0087/input.js 1:14-1:28
-					params: Array [
+					params: [
 						JSBindingAssignmentPattern {
 							operator: "="
-							loc: SourceLocation esprima/invalid-syntax/migrated_0087/input.js 1:15-1:24
 							left: JSBindingIdentifier {
 								name: "eval"
 								loc: SourceLocation esprima/invalid-syntax/migrated_0087/input.js 1:15-1:19 (eval)
 							}
 							right: JSNumericLiteral {
 								value: 10
-								format: undefined
 								loc: SourceLocation esprima/invalid-syntax/migrated_0087/input.js 1:22-1:24
 							}
+							loc: SourceLocation esprima/invalid-syntax/migrated_0087/input.js 1:15-1:24
 						}
 					]
+					loc: SourceLocation esprima/invalid-syntax/migrated_0087/input.js 1:14-1:28
 				}
+				loc: SourceLocation esprima/invalid-syntax/migrated_0087/input.js 1:14-1:31
+			}
+			loc: SourceLocation esprima/invalid-syntax/migrated_0087/input.js 1:14-1:31
+		}
+	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {advice: [], category: ["parse"], categoryValue: "js", message: ["eval", RAW_MARKUP {value: " is a reserved word"}]}
+			location: {
+				language: "js"
+				path: UIDPath<esprima/invalid-syntax/migrated_0087/input.js>
+				end: Position 1:19
+				start: Position 1:15
 			}
 		}
 	]
+	directives: [
+		JSDirective {
+			value: "use strict"
+			loc: SourceLocation esprima/invalid-syntax/migrated_0087/input.js 1:0-1:13
+		}
+	]
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<esprima/invalid-syntax/migrated_0087/input.js>
+	loc: SourceLocation esprima/invalid-syntax/migrated_0087/input.js 1:0-2:0
 }
 ```
 

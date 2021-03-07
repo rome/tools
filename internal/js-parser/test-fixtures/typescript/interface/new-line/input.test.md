@@ -8,38 +8,36 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	loc: SourceLocation typescript/interface/new-line/input.ts 1:0-4:0
-	path: UIDPath<typescript/interface/new-line/input.ts>
-	syntax: Array ["ts"]
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation typescript/interface/new-line/input.ts 1:0-1:9
 			expression: JSReferenceIdentifier {
 				name: "interface"
 				loc: SourceLocation typescript/interface/new-line/input.ts 1:0-1:9 (interface)
 			}
+			loc: SourceLocation typescript/interface/new-line/input.ts 1:0-1:9
 		}
 		JSExpressionStatement {
-			loc: SourceLocation typescript/interface/new-line/input.ts 2:0-2:1
 			expression: JSReferenceIdentifier {
 				name: "F"
 				loc: SourceLocation typescript/interface/new-line/input.ts 2:0-2:1 (F)
 			}
+			loc: SourceLocation typescript/interface/new-line/input.ts 2:0-2:1
 		}
 		JSBlockStatement {
-			body: Array []
-			directives: Array []
+			body: []
+			directives: []
 			loc: SourceLocation typescript/interface/new-line/input.ts 3:0-3:2
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: ["ts"]
+	path: UIDPath<typescript/interface/new-line/input.ts>
+	loc: SourceLocation typescript/interface/new-line/input.ts 1:0-4:0
 }
 ```
 

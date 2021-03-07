@@ -8,98 +8,94 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: true
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	loc: SourceLocation typescript/assert-predicate/asserts-as-identifier/input.ts 1:0-2:0
-	path: UIDPath<typescript/assert-predicate/asserts-as-identifier/input.ts>
-	syntax: Array ["ts"]
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:16
-				path: UIDPath<typescript/assert-predicate/asserts-as-identifier/input.ts>
-				start: Position 1:17
-			}
-			description: Object {
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Unexpected character <emphasis>a</emphasis>"}
-				advice: Array [
-					log {
-						category: "info"
-						text: RAW_MARKUP {value: "Expected the opening function params character <emphasis>(</emphasis>"}
-					}
-				]
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSFunctionDeclaration {
+			declare: true
 			id: JSBindingIdentifier {
 				name: "function"
 				loc: SourceLocation typescript/assert-predicate/asserts-as-identifier/input.ts 1:8-1:16 (function)
 			}
-			declare: true
-			loc: SourceLocation typescript/assert-predicate/asserts-as-identifier/input.ts 1:0-1:57
-			head: JSFunctionHead {
-				async: false
-				generator: false
-				hasHoistedVars: false
-				rest: undefined
-				returnType: undefined
-				thisType: undefined
-				typeParameters: undefined
-				loc: SourceLocation typescript/assert-predicate/asserts-as-identifier/input.ts 1:17-1:31
-				params: Array [
-					JSBindingIdentifier {
-						name: "assertIsString"
-						loc: SourceLocation typescript/assert-predicate/asserts-as-identifier/input.ts 1:17-1:31 (assertIsString)
-						meta: JSPatternMeta {
-							optional: undefined
-							typeAnnotation: undefined
-							loc: SourceLocation typescript/assert-predicate/asserts-as-identifier/input.ts 1:17-1:31
-						}
-					}
-				]
-			}
 			body: JSBlockStatement {
-				directives: Array []
-				loc: SourceLocation typescript/assert-predicate/asserts-as-identifier/input.ts 1:31-1:57
-				body: Array [
+				body: [
 					JSExpressionStatement {
-						loc: SourceLocation typescript/assert-predicate/asserts-as-identifier/input.ts 1:31-1:47
 						expression: JSReferenceIdentifier {
 							name: "value"
 							loc: SourceLocation typescript/assert-predicate/asserts-as-identifier/input.ts 1:32-1:37 (value)
 						}
+						loc: SourceLocation typescript/assert-predicate/asserts-as-identifier/input.ts 1:31-1:47
 					}
 					JSExpressionStatement {
-						loc: SourceLocation typescript/assert-predicate/asserts-as-identifier/input.ts 1:47-1:48
 						expression: JSReferenceIdentifier {
 							name: "INVALID_PLACEHOLDER"
 							loc: SourceLocation typescript/assert-predicate/asserts-as-identifier/input.ts 1:47-1:48
 						}
+						loc: SourceLocation typescript/assert-predicate/asserts-as-identifier/input.ts 1:47-1:48
 					}
 					JSExpressionStatement {
-						loc: SourceLocation typescript/assert-predicate/asserts-as-identifier/input.ts 1:49-1:57
 						expression: JSReferenceIdentifier {
 							name: "asserts"
 							loc: SourceLocation typescript/assert-predicate/asserts-as-identifier/input.ts 1:49-1:56 (asserts)
 						}
+						loc: SourceLocation typescript/assert-predicate/asserts-as-identifier/input.ts 1:49-1:57
 					}
 				]
+				directives: []
+				loc: SourceLocation typescript/assert-predicate/asserts-as-identifier/input.ts 1:31-1:57
+			}
+			head: JSFunctionHead {
+				async: false
+				generator: false
+				hasHoistedVars: false
+				params: [
+					JSBindingIdentifier {
+						name: "assertIsString"
+						meta: JSPatternMeta {
+							loc: SourceLocation typescript/assert-predicate/asserts-as-identifier/input.ts 1:17-1:31
+						}
+						loc: SourceLocation typescript/assert-predicate/asserts-as-identifier/input.ts 1:17-1:31 (assertIsString)
+					}
+				]
+				loc: SourceLocation typescript/assert-predicate/asserts-as-identifier/input.ts 1:17-1:31
+			}
+			loc: SourceLocation typescript/assert-predicate/asserts-as-identifier/input.ts 1:0-1:57
+		}
+	]
+	comments: []
+	corrupt: true
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {
+				advice: [
+					log {
+						category: "info"
+						text: [
+							RAW_MARKUP {value: "Expected the opening "}
+							"function params"
+							RAW_MARKUP {value: " character <emphasis>"}
+							"("
+							RAW_MARKUP {value: "</emphasis>"}
+						]
+					}
+				]
+				category: ["parse"]
+				categoryValue: "js"
+				message: [RAW_MARKUP {value: "Unexpected character <emphasis>"}, "a", RAW_MARKUP {value: "</emphasis>"}]
+			}
+			location: {
+				language: "js"
+				path: UIDPath<typescript/assert-predicate/asserts-as-identifier/input.ts>
+				end: Position 1:16
+				start: Position 1:17
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: ["ts"]
+	path: UIDPath<typescript/assert-predicate/asserts-as-identifier/input.ts>
+	loc: SourceLocation typescript/assert-predicate/asserts-as-identifier/input.ts 1:0-2:0
 }
 ```
 

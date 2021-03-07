@@ -8,17 +8,17 @@
 
 ```javascript
 JSRoot {
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation core/uncategorised/63/input.js 1:0-4:2
-	path: UIDPath<core/uncategorised/63/input.js>
-	comments: Array [
+	body: [
+		JSExpressionStatement {
+			leadingComments: ["0", "1"]
+			expression: JSNumericLiteral {
+				value: 42
+				loc: SourceLocation core/uncategorised/63/input.js 4:0-4:2
+			}
+			loc: SourceLocation core/uncategorised/63/input.js 4:0-4:2
+		}
+	]
+	comments: [
 		CommentLine {
 			id: "0"
 			value: " Hello, world!"
@@ -30,21 +30,14 @@ JSRoot {
 			loc: SourceLocation core/uncategorised/63/input.js 3:0-3:18
 		}
 	]
-	body: Array [
-		JSExpressionStatement {
-			loc: SourceLocation core/uncategorised/63/input.js 4:0-4:2
-			leadingComments: Array [
-				"0"
-				"1"
-			]
-			expression: JSNumericLiteral {
-				value: 42
-				format: undefined
-				leadingComments: undefined
-				loc: SourceLocation core/uncategorised/63/input.js 4:0-4:2
-			}
-		}
-	]
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<core/uncategorised/63/input.js>
+	loc: SourceLocation core/uncategorised/63/input.js 1:0-4:2
 }
 ```
 

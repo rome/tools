@@ -8,17 +8,48 @@
 
 ```javascript
 JSRoot {
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	loc: SourceLocation typescript/regression/comments-disappearing/input.ts 1:0-7:0
-	path: UIDPath<typescript/regression/comments-disappearing/input.ts>
-	syntax: Array ["ts"]
-	comments: Array [
+	body: [
+		JSVariableDeclarationStatement {
+			declaration: JSVariableDeclaration {
+				kind: "let"
+				declarations: [
+					JSVariableDeclarator {
+						id: JSBindingIdentifier {
+							name: "fun"
+							loc: SourceLocation typescript/regression/comments-disappearing/input.ts 1:4-1:7 (fun)
+						}
+						init: JSArrowFunctionExpression {
+							body: JSBlockStatement {
+								body: [
+									JSReturnStatement {
+										leadingComments: ["0", "1", "2"]
+										argument: JSNumericLiteral {
+											value: 1
+											loc: SourceLocation typescript/regression/comments-disappearing/input.ts 5:12-5:13
+										}
+										loc: SourceLocation typescript/regression/comments-disappearing/input.ts 5:4-5:15
+									}
+								]
+								directives: []
+								loc: SourceLocation typescript/regression/comments-disappearing/input.ts 1:16-6:1
+							}
+							head: JSFunctionHead {
+								async: false
+								hasHoistedVars: false
+								params: []
+								loc: SourceLocation typescript/regression/comments-disappearing/input.ts 1:10-1:15
+							}
+							loc: SourceLocation typescript/regression/comments-disappearing/input.ts 1:10-6:1
+						}
+						loc: SourceLocation typescript/regression/comments-disappearing/input.ts 1:4-6:1
+					}
+				]
+				loc: SourceLocation typescript/regression/comments-disappearing/input.ts 1:0-6:1
+			}
+			loc: SourceLocation typescript/regression/comments-disappearing/input.ts 1:0-6:1
+		}
+	]
+	comments: [
 		CommentLine {
 			id: "0"
 			value: " one"
@@ -35,56 +66,14 @@ JSRoot {
 			loc: SourceLocation typescript/regression/comments-disappearing/input.ts 4:4-4:12
 		}
 	]
-	body: Array [
-		JSVariableDeclarationStatement {
-			loc: SourceLocation typescript/regression/comments-disappearing/input.ts 1:0-6:1
-			declaration: JSVariableDeclaration {
-				kind: "let"
-				loc: SourceLocation typescript/regression/comments-disappearing/input.ts 1:0-6:1
-				declarations: Array [
-					JSVariableDeclarator {
-						id: JSBindingIdentifier {
-							name: "fun"
-							loc: SourceLocation typescript/regression/comments-disappearing/input.ts 1:4-1:7 (fun)
-						}
-						loc: SourceLocation typescript/regression/comments-disappearing/input.ts 1:4-6:1
-						init: JSArrowFunctionExpression {
-							loc: SourceLocation typescript/regression/comments-disappearing/input.ts 1:10-6:1
-							head: JSFunctionHead {
-								async: false
-								hasHoistedVars: false
-								params: Array []
-								rest: undefined
-								returnType: undefined
-								thisType: undefined
-								loc: SourceLocation typescript/regression/comments-disappearing/input.ts 1:10-1:15
-							}
-							body: JSBlockStatement {
-								directives: Array []
-								loc: SourceLocation typescript/regression/comments-disappearing/input.ts 1:16-6:1
-								body: Array [
-									JSReturnStatement {
-										loc: SourceLocation typescript/regression/comments-disappearing/input.ts 5:4-5:15
-										leadingComments: Array [
-											"0"
-											"1"
-											"2"
-										]
-										argument: JSNumericLiteral {
-											value: 1
-											format: undefined
-											leadingComments: undefined
-											loc: SourceLocation typescript/regression/comments-disappearing/input.ts 5:12-5:13
-										}
-									}
-								]
-							}
-						}
-					}
-				]
-			}
-		}
-	]
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: ["ts"]
+	path: UIDPath<typescript/regression/comments-disappearing/input.ts>
+	loc: SourceLocation typescript/regression/comments-disappearing/input.ts 1:0-7:0
 }
 ```
 

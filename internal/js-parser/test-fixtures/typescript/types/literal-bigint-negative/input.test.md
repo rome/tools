@@ -8,62 +8,56 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	loc: SourceLocation typescript/types/literal-bigint-negative/input.ts 1:0-2:0
-	path: UIDPath<typescript/types/literal-bigint-negative/input.ts>
-	syntax: Array ["ts"]
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Unexpected token, expected \"number\""}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:8
-				path: UIDPath<typescript/types/literal-bigint-negative/input.ts>
-				start: Position 1:8
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSVariableDeclarationStatement {
-			loc: SourceLocation typescript/types/literal-bigint-negative/input.ts 1:0-1:11
 			declaration: JSVariableDeclaration {
 				kind: "let"
-				loc: SourceLocation typescript/types/literal-bigint-negative/input.ts 1:0-1:11
-				declarations: Array [
+				declarations: [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "x"
-							loc: SourceLocation typescript/types/literal-bigint-negative/input.ts 1:4-1:10
 							meta: JSPatternMeta {
-								definite: undefined
-								loc: SourceLocation typescript/types/literal-bigint-negative/input.ts 1:4-1:10
 								typeAnnotation: TSNumericLiteralTypeAnnotation {
 									value: 0
 									loc: SourceLocation typescript/types/literal-bigint-negative/input.ts 1:7-1:10
 								}
+								loc: SourceLocation typescript/types/literal-bigint-negative/input.ts 1:4-1:10
 							}
+							loc: SourceLocation typescript/types/literal-bigint-negative/input.ts 1:4-1:10
 						}
-						init: undefined
 						loc: SourceLocation typescript/types/literal-bigint-negative/input.ts 1:4-1:10
 					}
 				]
+				loc: SourceLocation typescript/types/literal-bigint-negative/input.ts 1:0-1:11
+			}
+			loc: SourceLocation typescript/types/literal-bigint-negative/input.ts 1:0-1:11
+		}
+	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "Unexpected token, expected \"number\""}
+			}
+			location: {
+				language: "js"
+				path: UIDPath<typescript/types/literal-bigint-negative/input.ts>
+				end: Position 1:8
+				start: Position 1:8
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: ["ts"]
+	path: UIDPath<typescript/types/literal-bigint-negative/input.ts>
+	loc: SourceLocation typescript/types/literal-bigint-negative/input.ts 1:0-2:0
 }
 ```
 

@@ -125,6 +125,7 @@ async function buildTrunk() {
 			path.join(projectRoot, "internal/cli/bin/rome.ts"),
 			tempDevBuildFolder,
 			"--quiet",
+			"--verbose-diagnostics",
 		];
 
 		if (process.stdout instanceof tty.WriteStream) {
@@ -138,7 +139,17 @@ async function buildTrunk() {
 			];
 		}
 
-		const proc = child.spawn(process.execPath, args);
+		const proc = child.spawn(
+			process.execPath,
+			args,
+			{
+				env: {
+					...process.env,
+					ROME_DEV_VENDOR_BUNDLING: "1",
+					NODE_DEBUG: "",
+				},
+			},
+		);
 
 		proc.stdout.pipe(process.stdout);
 		proc.stderr.pipe(process.stderr);
@@ -147,11 +158,12 @@ async function buildTrunk() {
 			"close",
 			(code) => {
 				if (code === 0) {
-					// Restore cursor
-					process.stdout.write(isTerminalApp ? "\x1b8" : `${ANSI_ESCAPE}u`);
+					// We should not have written anything so just need to go up a line and clear the "Building trunk" message
+					// Go up a line
+					process.stdout.write(`${ANSI_ESCAPE}1A`);
 
-					// Clear down
-					process.stdout.write(`${ANSI_ESCAPE}J`);
+					// Clear line
+					process.stdout.write(`${ANSI_ESCAPE}2K`);
 
 					resolve();
 				} else {
@@ -166,6 +178,7 @@ async function buildTrunk() {
 async function execDev() {
 	const args = [
 		"--trace-warnings",
+		"--unhandled-rejections=strict",
 		"--inspect-publish-uid=http",
 		path.join(tempDevBuildFolder, "index.js"),
 		...process.argv.slice(2),
@@ -175,7 +188,7 @@ async function execDev() {
 	}
 
 	const res = child.spawnSync(
-		process.execPath,
+		process.env.ROME_DEV_NODE || process.execPath,
 		[...process.execArgv, ...args],
 		{
 			stdio: "inherit",

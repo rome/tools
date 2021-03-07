@@ -8,82 +8,74 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2017/async-functions/invalid-escape-sequence-function/input.js 1:0-2:0
-	path: UIDPath<es2017/async-functions/invalid-escape-sequence-function/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Expected a semicolon or a line terminator"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:10
-				path: UIDPath<es2017/async-functions/invalid-escape-sequence-function/input.js>
-				start: Position 1:11
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation es2017/async-functions/invalid-escape-sequence-function/input.js 1:0-1:10
 			expression: JSReferenceIdentifier {
 				name: "async"
 				loc: SourceLocation es2017/async-functions/invalid-escape-sequence-function/input.js 1:0-1:10 (async)
 			}
+			loc: SourceLocation es2017/async-functions/invalid-escape-sequence-function/input.js 1:0-1:10
 		}
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: ""
 				loc: SourceLocation es2017/async-functions/invalid-escape-sequence-function/input.js 1:19-1:20 ()
 			}
-			loc: SourceLocation es2017/async-functions/invalid-escape-sequence-function/input.js 1:11-1:33
-			head: JSFunctionHead {
-				async: false
-				generator: false
-				hasHoistedVars: false
-				params: Array []
-				rest: undefined
-				returnType: undefined
-				thisType: undefined
-				typeParameters: undefined
-				loc: SourceLocation es2017/async-functions/invalid-escape-sequence-function/input.js 1:20-1:21
-			}
 			body: JSBlockStatement {
-				directives: Array []
-				loc: SourceLocation es2017/async-functions/invalid-escape-sequence-function/input.js 1:22-1:33
-				body: Array [
+				body: [
 					JSExpressionStatement {
-						loc: SourceLocation es2017/async-functions/invalid-escape-sequence-function/input.js 1:24-1:29
 						expression: JSReferenceIdentifier {
 							name: "await"
 							loc: SourceLocation es2017/async-functions/invalid-escape-sequence-function/input.js 1:24-1:29 (await)
 						}
+						loc: SourceLocation es2017/async-functions/invalid-escape-sequence-function/input.js 1:24-1:29
 					}
 					JSExpressionStatement {
-						loc: SourceLocation es2017/async-functions/invalid-escape-sequence-function/input.js 1:30-1:31
 						expression: JSReferenceIdentifier {
 							name: "x"
 							loc: SourceLocation es2017/async-functions/invalid-escape-sequence-function/input.js 1:30-1:31 (x)
 						}
+						loc: SourceLocation es2017/async-functions/invalid-escape-sequence-function/input.js 1:30-1:31
 					}
 				]
+				directives: []
+				loc: SourceLocation es2017/async-functions/invalid-escape-sequence-function/input.js 1:22-1:33
+			}
+			head: JSFunctionHead {
+				async: false
+				generator: false
+				hasHoistedVars: false
+				params: []
+				loc: SourceLocation es2017/async-functions/invalid-escape-sequence-function/input.js 1:20-1:21
+			}
+			loc: SourceLocation es2017/async-functions/invalid-escape-sequence-function/input.js 1:11-1:33
+		}
+	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "Expected a semicolon or a line terminator"}
+			}
+			location: {
+				language: "js"
+				path: UIDPath<es2017/async-functions/invalid-escape-sequence-function/input.js>
+				end: Position 1:10
+				start: Position 1:11
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2017/async-functions/invalid-escape-sequence-function/input.js>
+	loc: SourceLocation es2017/async-functions/invalid-escape-sequence-function/input.js 1:0-2:0
 }
 ```
 

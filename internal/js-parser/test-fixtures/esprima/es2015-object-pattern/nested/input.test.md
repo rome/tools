@@ -8,29 +8,14 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation esprima/es2015-object-pattern/nested/input.js 1:0-2:0
-	path: UIDPath<esprima/es2015-object-pattern/nested/input.js>
-	body: Array [
+	body: [
 		JSVariableDeclarationStatement {
-			loc: SourceLocation esprima/es2015-object-pattern/nested/input.js 1:0-1:14
 			declaration: JSVariableDeclaration {
 				kind: "let"
-				loc: SourceLocation esprima/es2015-object-pattern/nested/input.js 1:0-1:14
-				declarations: Array [
+				declarations: [
 					JSVariableDeclarator {
 						id: JSBindingObjectPattern {
-							rest: undefined
-							loc: SourceLocation esprima/es2015-object-pattern/nested/input.js 1:4-1:10
-							properties: Array [
+							properties: [
 								JSBindingObjectPatternProperty {
 									key: JSStaticPropertyKey {
 										value: JSIdentifier {
@@ -40,25 +25,35 @@ JSRoot {
 										loc: SourceLocation esprima/es2015-object-pattern/nested/input.js 1:5-1:6
 									}
 									value: JSBindingObjectPattern {
-										properties: Array []
-										rest: undefined
+										properties: []
 										loc: SourceLocation esprima/es2015-object-pattern/nested/input.js 1:7-1:9
 									}
 									loc: SourceLocation esprima/es2015-object-pattern/nested/input.js 1:5-1:9
 								}
 							]
+							loc: SourceLocation esprima/es2015-object-pattern/nested/input.js 1:4-1:10
 						}
-						loc: SourceLocation esprima/es2015-object-pattern/nested/input.js 1:4-1:14
 						init: JSNumericLiteral {
 							value: 0
-							format: undefined
 							loc: SourceLocation esprima/es2015-object-pattern/nested/input.js 1:13-1:14
 						}
+						loc: SourceLocation esprima/es2015-object-pattern/nested/input.js 1:4-1:14
 					}
 				]
+				loc: SourceLocation esprima/es2015-object-pattern/nested/input.js 1:0-1:14
 			}
+			loc: SourceLocation esprima/es2015-object-pattern/nested/input.js 1:0-1:14
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<esprima/es2015-object-pattern/nested/input.js>
+	loc: SourceLocation esprima/es2015-object-pattern/nested/input.js 1:0-2:0
 }
 ```
 

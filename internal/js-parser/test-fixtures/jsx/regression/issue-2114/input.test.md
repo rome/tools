@@ -8,30 +8,10 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	loc: SourceLocation jsx/regression/issue-2114/input.jsx 1:0-2:0
-	path: UIDPath<jsx/regression/issue-2114/input.jsx>
-	syntax: Array ["jsx"]
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation jsx/regression/issue-2114/input.jsx 1:0-1:51
 			expression: JSXElement {
-				name: JSXIdentifier {
-					name: "div"
-					loc: SourceLocation jsx/regression/issue-2114/input.jsx 1:1-1:4
-				}
-				children: Array []
-				selfClosing: false
-				typeArguments: undefined
-				loc: SourceLocation jsx/regression/issue-2114/input.jsx 1:0-1:50
-				attributes: Array [
+				attributes: [
 					JSXAttribute {
 						name: JSXIdentifier {
 							name: "pattern"
@@ -44,9 +24,26 @@ JSRoot {
 						loc: SourceLocation jsx/regression/issue-2114/input.jsx 1:5-1:43
 					}
 				]
+				children: []
+				selfClosing: false
+				name: JSXIdentifier {
+					name: "div"
+					loc: SourceLocation jsx/regression/issue-2114/input.jsx 1:1-1:4
+				}
+				loc: SourceLocation jsx/regression/issue-2114/input.jsx 1:0-1:50
 			}
+			loc: SourceLocation jsx/regression/issue-2114/input.jsx 1:0-1:51
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: ["jsx"]
+	path: UIDPath<jsx/regression/issue-2114/input.jsx>
+	loc: SourceLocation jsx/regression/issue-2114/input.jsx 1:0-2:0
 }
 ```
 

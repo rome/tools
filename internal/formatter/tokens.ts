@@ -45,7 +45,7 @@ export type PositionMarkerToken = {
 
 export type ConcatToken = {
 	type: "Concat";
-	parts: Tokens;
+	parts: Token[];
 };
 
 export type IfBreakToken = {
@@ -53,8 +53,6 @@ export type IfBreakToken = {
 	breakContents: Token;
 	flatContents: Token | undefined;
 };
-
-export type Tokens = Token[];
 
 export type Token =
 	| string
@@ -126,7 +124,7 @@ export function mark(
 	};
 }
 
-export function concat(parts: Tokens): Token {
+export function concat(parts: Token[]): Token {
 	if (parts.length === 0) {
 		return "";
 	}
@@ -152,7 +150,7 @@ export function ifBreak(
 	};
 }
 
-export function join(separator: Token, tokens: Tokens): Token {
+export function join(separator: Token, tokens: Token[]): Token {
 	if (tokens.length === 0) {
 		return "";
 	}

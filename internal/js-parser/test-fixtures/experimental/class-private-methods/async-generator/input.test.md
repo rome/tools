@@ -8,31 +8,14 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation experimental/class-private-methods/async-generator/input.js 1:0-14:0
-	path: UIDPath<experimental/class-private-methods/async-generator/input.js>
-	body: Array [
+	body: [
 		JSClassDeclaration {
 			id: JSBindingIdentifier {
 				name: "Foo"
 				loc: SourceLocation experimental/class-private-methods/async-generator/input.js 1:6-1:9 (Foo)
 			}
-			loc: SourceLocation experimental/class-private-methods/async-generator/input.js 1:0-13:1
 			meta: JSClassHead {
-				implements: undefined
-				superClass: undefined
-				superTypeParameters: undefined
-				typeParameters: undefined
-				loc: SourceLocation experimental/class-private-methods/async-generator/input.js 1:0-13:1
-				body: Array [
+				body: [
 					JSClassPrivateMethod {
 						kind: "method"
 						key: JSPrivateName {
@@ -42,148 +25,61 @@ JSRoot {
 							}
 							loc: SourceLocation experimental/class-private-methods/async-generator/input.js 2:9-2:19
 						}
-						loc: SourceLocation experimental/class-private-methods/async-generator/input.js 2:2-12:3
 						meta: JSClassPropertyMeta {
 							abstract: false
-							accessibility: undefined
 							optional: false
 							readonly: false
 							static: false
-							typeAnnotation: undefined
 							loc: SourceLocation experimental/class-private-methods/async-generator/input.js 2:2-2:19
 							start: Position 2:2
 						}
-						head: JSFunctionHead {
-							async: true
-							generator: true
-							hasHoistedVars: false
-							rest: undefined
-							returnType: undefined
-							thisType: undefined
-							typeParameters: undefined
-							loc: SourceLocation experimental/class-private-methods/async-generator/input.js 2:19-2:25
-							params: Array [
-								JSBindingIdentifier {
-									name: "path"
-									loc: SourceLocation experimental/class-private-methods/async-generator/input.js 2:20-2:24 (path)
-									meta: JSPatternMeta {
-										optional: undefined
-										typeAnnotation: undefined
-										loc: SourceLocation experimental/class-private-methods/async-generator/input.js 2:20-2:24
-									}
-								}
-							]
-						}
 						body: JSBlockStatement {
-							directives: Array []
-							loc: SourceLocation experimental/class-private-methods/async-generator/input.js 2:26-12:3
-							body: Array [
+							body: [
 								JSVariableDeclarationStatement {
-									loc: SourceLocation experimental/class-private-methods/async-generator/input.js 3:4-3:36
 									declaration: JSVariableDeclaration {
 										kind: "let"
-										loc: SourceLocation experimental/class-private-methods/async-generator/input.js 3:4-3:36
-										declarations: Array [
+										declarations: [
 											JSVariableDeclarator {
 												id: JSBindingIdentifier {
 													name: "file"
 													loc: SourceLocation experimental/class-private-methods/async-generator/input.js 3:8-3:12 (file)
 												}
-												loc: SourceLocation experimental/class-private-methods/async-generator/input.js 3:8-3:35
 												init: JSAwaitExpression {
-													loc: SourceLocation experimental/class-private-methods/async-generator/input.js 3:15-3:35
 													argument: JSCallExpression {
-														loc: SourceLocation experimental/class-private-methods/async-generator/input.js 3:21-3:35
-														callee: JSReferenceIdentifier {
-															name: "fileOpen"
-															loc: SourceLocation experimental/class-private-methods/async-generator/input.js 3:21-3:29 (fileOpen)
-														}
-														arguments: Array [
+														arguments: [
 															JSReferenceIdentifier {
 																name: "path"
 																loc: SourceLocation experimental/class-private-methods/async-generator/input.js 3:30-3:34 (path)
 															}
 														]
+														callee: JSReferenceIdentifier {
+															name: "fileOpen"
+															loc: SourceLocation experimental/class-private-methods/async-generator/input.js 3:21-3:29 (fileOpen)
+														}
+														loc: SourceLocation experimental/class-private-methods/async-generator/input.js 3:21-3:35
 													}
+													loc: SourceLocation experimental/class-private-methods/async-generator/input.js 3:15-3:35
 												}
+												loc: SourceLocation experimental/class-private-methods/async-generator/input.js 3:8-3:35
 											}
 										]
+										loc: SourceLocation experimental/class-private-methods/async-generator/input.js 3:4-3:36
 									}
+									loc: SourceLocation experimental/class-private-methods/async-generator/input.js 3:4-3:36
 								}
 								JSTryStatement {
-									handler: undefined
-									loc: SourceLocation experimental/class-private-methods/async-generator/input.js 5:4-11:5
-									finalizer: JSBlockStatement {
-										directives: Array []
-										loc: SourceLocation experimental/class-private-methods/async-generator/input.js 9:14-11:5
-										body: Array [
-											JSExpressionStatement {
-												loc: SourceLocation experimental/class-private-methods/async-generator/input.js 10:6-10:25
-												expression: JSAwaitExpression {
-													loc: SourceLocation experimental/class-private-methods/async-generator/input.js 10:6-10:24
-													argument: JSCallExpression {
-														arguments: Array []
-														loc: SourceLocation experimental/class-private-methods/async-generator/input.js 10:12-10:24
-														callee: JSMemberExpression {
-															loc: SourceLocation experimental/class-private-methods/async-generator/input.js 10:12-10:22
-															object: JSReferenceIdentifier {
-																name: "file"
-																loc: SourceLocation experimental/class-private-methods/async-generator/input.js 10:12-10:16 (file)
-															}
-															property: JSStaticMemberProperty {
-																value: JSIdentifier {
-																	name: "close"
-																	loc: SourceLocation experimental/class-private-methods/async-generator/input.js 10:17-10:22 (close)
-																}
-																loc: SourceLocation experimental/class-private-methods/async-generator/input.js 10:17-10:22 (close)
-															}
-														}
-													}
-												}
-											}
-										]
-									}
 									block: JSBlockStatement {
-										directives: Array []
-										loc: SourceLocation experimental/class-private-methods/async-generator/input.js 5:8-9:5
-										body: Array [
+										body: [
 											JSWhileStatement {
-												loc: SourceLocation experimental/class-private-methods/async-generator/input.js 6:6-8:7
-												test: JSUnaryExpression {
-													operator: "!"
-													prefix: true
-													loc: SourceLocation experimental/class-private-methods/async-generator/input.js 6:13-6:22
-													argument: JSMemberExpression {
-														loc: SourceLocation experimental/class-private-methods/async-generator/input.js 6:14-6:22
-														object: JSReferenceIdentifier {
-															name: "file"
-															loc: SourceLocation experimental/class-private-methods/async-generator/input.js 6:14-6:18 (file)
-														}
-														property: JSStaticMemberProperty {
-															value: JSIdentifier {
-																name: "EOF"
-																loc: SourceLocation experimental/class-private-methods/async-generator/input.js 6:19-6:22 (EOF)
-															}
-															loc: SourceLocation experimental/class-private-methods/async-generator/input.js 6:19-6:22 (EOF)
-														}
-													}
-												}
 												body: JSBlockStatement {
-													directives: Array []
-													loc: SourceLocation experimental/class-private-methods/async-generator/input.js 6:24-8:7
-													body: Array [
+													body: [
 														JSExpressionStatement {
-															loc: SourceLocation experimental/class-private-methods/async-generator/input.js 7:8-7:36
 															expression: JSYieldExpression {
 																delegate: false
-																loc: SourceLocation experimental/class-private-methods/async-generator/input.js 7:8-7:35
 																argument: JSAwaitExpression {
-																	loc: SourceLocation experimental/class-private-methods/async-generator/input.js 7:14-7:35
 																	argument: JSCallExpression {
-																		arguments: Array []
-																		loc: SourceLocation experimental/class-private-methods/async-generator/input.js 7:20-7:35
+																		arguments: []
 																		callee: JSMemberExpression {
-																			loc: SourceLocation experimental/class-private-methods/async-generator/input.js 7:20-7:33
 																			object: JSReferenceIdentifier {
 																				name: "file"
 																				loc: SourceLocation experimental/class-private-methods/async-generator/input.js 7:20-7:24 (file)
@@ -195,24 +91,113 @@ JSRoot {
 																				}
 																				loc: SourceLocation experimental/class-private-methods/async-generator/input.js 7:25-7:33 (readLine)
 																			}
+																			loc: SourceLocation experimental/class-private-methods/async-generator/input.js 7:20-7:33
 																		}
+																		loc: SourceLocation experimental/class-private-methods/async-generator/input.js 7:20-7:35
 																	}
+																	loc: SourceLocation experimental/class-private-methods/async-generator/input.js 7:14-7:35
 																}
+																loc: SourceLocation experimental/class-private-methods/async-generator/input.js 7:8-7:35
 															}
+															loc: SourceLocation experimental/class-private-methods/async-generator/input.js 7:8-7:36
 														}
 													]
+													directives: []
+													loc: SourceLocation experimental/class-private-methods/async-generator/input.js 6:24-8:7
 												}
+												test: JSUnaryExpression {
+													operator: "!"
+													prefix: true
+													argument: JSMemberExpression {
+														object: JSReferenceIdentifier {
+															name: "file"
+															loc: SourceLocation experimental/class-private-methods/async-generator/input.js 6:14-6:18 (file)
+														}
+														property: JSStaticMemberProperty {
+															value: JSIdentifier {
+																name: "EOF"
+																loc: SourceLocation experimental/class-private-methods/async-generator/input.js 6:19-6:22 (EOF)
+															}
+															loc: SourceLocation experimental/class-private-methods/async-generator/input.js 6:19-6:22 (EOF)
+														}
+														loc: SourceLocation experimental/class-private-methods/async-generator/input.js 6:14-6:22
+													}
+													loc: SourceLocation experimental/class-private-methods/async-generator/input.js 6:13-6:22
+												}
+												loc: SourceLocation experimental/class-private-methods/async-generator/input.js 6:6-8:7
 											}
 										]
+										directives: []
+										loc: SourceLocation experimental/class-private-methods/async-generator/input.js 5:8-9:5
 									}
+									finalizer: JSBlockStatement {
+										body: [
+											JSExpressionStatement {
+												expression: JSAwaitExpression {
+													argument: JSCallExpression {
+														arguments: []
+														callee: JSMemberExpression {
+															object: JSReferenceIdentifier {
+																name: "file"
+																loc: SourceLocation experimental/class-private-methods/async-generator/input.js 10:12-10:16 (file)
+															}
+															property: JSStaticMemberProperty {
+																value: JSIdentifier {
+																	name: "close"
+																	loc: SourceLocation experimental/class-private-methods/async-generator/input.js 10:17-10:22 (close)
+																}
+																loc: SourceLocation experimental/class-private-methods/async-generator/input.js 10:17-10:22 (close)
+															}
+															loc: SourceLocation experimental/class-private-methods/async-generator/input.js 10:12-10:22
+														}
+														loc: SourceLocation experimental/class-private-methods/async-generator/input.js 10:12-10:24
+													}
+													loc: SourceLocation experimental/class-private-methods/async-generator/input.js 10:6-10:24
+												}
+												loc: SourceLocation experimental/class-private-methods/async-generator/input.js 10:6-10:25
+											}
+										]
+										directives: []
+										loc: SourceLocation experimental/class-private-methods/async-generator/input.js 9:14-11:5
+									}
+									loc: SourceLocation experimental/class-private-methods/async-generator/input.js 5:4-11:5
 								}
 							]
+							directives: []
+							loc: SourceLocation experimental/class-private-methods/async-generator/input.js 2:26-12:3
 						}
+						head: JSFunctionHead {
+							async: true
+							generator: true
+							hasHoistedVars: false
+							params: [
+								JSBindingIdentifier {
+									name: "path"
+									meta: JSPatternMeta {
+										loc: SourceLocation experimental/class-private-methods/async-generator/input.js 2:20-2:24
+									}
+									loc: SourceLocation experimental/class-private-methods/async-generator/input.js 2:20-2:24 (path)
+								}
+							]
+							loc: SourceLocation experimental/class-private-methods/async-generator/input.js 2:19-2:25
+						}
+						loc: SourceLocation experimental/class-private-methods/async-generator/input.js 2:2-12:3
 					}
 				]
+				loc: SourceLocation experimental/class-private-methods/async-generator/input.js 1:0-13:1
 			}
+			loc: SourceLocation experimental/class-private-methods/async-generator/input.js 1:0-13:1
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<experimental/class-private-methods/async-generator/input.js>
+	loc: SourceLocation experimental/class-private-methods/async-generator/input.js 1:0-14:0
 }
 ```
 

@@ -5,7 +5,7 @@ import {
 	JSUnaryExpression,
 	jsUnaryExpression,
 } from "@internal/ast";
-import {Path, signals} from "@internal/compiler";
+import {CompilerPath, signals} from "@internal/compiler";
 import {createVisitor} from "@internal/compiler/utils";
 import {descriptions} from "@internal/diagnostics";
 
@@ -60,7 +60,7 @@ export default createVisitor({
 });
 
 function simplifyAndExpression(
-	path: Path,
+	path: CompilerPath,
 	literal: JSBooleanLiteral,
 	expression: AnyJSExpression,
 ) {
@@ -68,7 +68,7 @@ function simplifyAndExpression(
 }
 
 function simplifyOrExpression(
-	path: Path,
+	path: CompilerPath,
 	literal: JSBooleanLiteral,
 	expression: AnyJSExpression,
 ) {
@@ -76,7 +76,7 @@ function simplifyOrExpression(
 }
 
 function keepExpressionIfLiteral(
-	path: Path,
+	path: CompilerPath,
 	expression: AnyJSExpression,
 	literal: JSBooleanLiteral,
 	expectedValue: boolean,
@@ -107,7 +107,7 @@ function couldApplyDeMorgan(
 	);
 }
 
-function simplifyDeMorgan(path: Path, node: DeMorganExpression) {
+function simplifyDeMorgan(path: CompilerPath, node: DeMorganExpression) {
 	return path.addFixableDiagnostic(
 		{
 			fixed: signals.replace(

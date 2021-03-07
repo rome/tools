@@ -8,204 +8,185 @@
 
 ```javascript
 MarkdownRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	integrity: undefined
-	loc: SourceLocation lists/input.md 1:0-11:14
-	path: UIDPath<lists/input.md>
-	body: Array [
+	body: [
 		MarkdownListBlock {
-			ordered: false
-			loc: SourceLocation lists/input.md 1:0-1:5
-			children: Array [
+			children: [
 				MarkdownListItem {
 					value: "-"
-					checked: undefined
-					loc: SourceLocation lists/input.md 1:2-1:5
-					children: Array [
+					children: [
 						MarkdownParagraph {
-							loc: SourceLocation lists/input.md 1:2-1:5
-							children: Array [
+							children: [
 								MarkdownText {
 									value: "foo"
 									loc: SourceLocation lists/input.md 1:2-1:2
 								}
 							]
+							loc: SourceLocation lists/input.md 1:2-1:5
 						}
 					]
+					loc: SourceLocation lists/input.md 1:2-1:5
 				}
 			]
+			ordered: false
+			loc: SourceLocation lists/input.md 1:0-1:5
 		}
 		MarkdownListBlock {
-			ordered: false
-			loc: SourceLocation lists/input.md 2:0-2:5
-			children: Array [
+			children: [
 				MarkdownListItem {
 					value: "-"
-					checked: undefined
-					loc: SourceLocation lists/input.md 2:2-2:5
-					children: Array [
+					children: [
 						MarkdownParagraph {
-							loc: SourceLocation lists/input.md 2:2-2:5
-							children: Array [
+							children: [
 								MarkdownText {
 									value: "bar"
 									loc: SourceLocation lists/input.md 2:2-2:2
 								}
 							]
+							loc: SourceLocation lists/input.md 2:2-2:5
 						}
 					]
+					loc: SourceLocation lists/input.md 2:2-2:5
 				}
 			]
+			ordered: false
+			loc: SourceLocation lists/input.md 2:0-2:5
 		}
 		MarkdownListBlock {
-			ordered: true
-			loc: SourceLocation lists/input.md 4:0-4:6
-			children: Array [
+			children: [
 				MarkdownListItem {
-					value: undefined
-					checked: undefined
-					loc: SourceLocation lists/input.md 4:3-4:6
-					children: Array [
+					children: [
 						MarkdownParagraph {
-							loc: SourceLocation lists/input.md 4:3-4:6
-							children: Array [
+							children: [
 								MarkdownText {
 									value: "foo"
 									loc: SourceLocation lists/input.md 4:3-4:3
 								}
 							]
+							loc: SourceLocation lists/input.md 4:3-4:6
 						}
 					]
+					loc: SourceLocation lists/input.md 4:3-4:6
 				}
 			]
+			ordered: true
+			loc: SourceLocation lists/input.md 4:0-4:6
 		}
 		MarkdownListBlock {
-			ordered: true
-			loc: SourceLocation lists/input.md 5:0-5:6
-			children: Array [
+			children: [
 				MarkdownListItem {
-					value: undefined
-					checked: undefined
-					loc: SourceLocation lists/input.md 5:3-5:6
-					children: Array [
+					children: [
 						MarkdownParagraph {
-							loc: SourceLocation lists/input.md 5:3-5:6
-							children: Array [
+							children: [
 								MarkdownText {
 									value: "bar"
 									loc: SourceLocation lists/input.md 5:3-5:3
 								}
 							]
+							loc: SourceLocation lists/input.md 5:3-5:6
 						}
 					]
+					loc: SourceLocation lists/input.md 5:3-5:6
 				}
 			]
+			ordered: true
+			loc: SourceLocation lists/input.md 5:0-5:6
 		}
 		MarkdownListBlock {
-			ordered: true
-			loc: SourceLocation lists/input.md 6:0-6:10
-			children: Array [
+			children: [
 				MarkdownListItem {
-					value: undefined
-					checked: undefined
-					loc: SourceLocation lists/input.md 6:3-6:10
-					children: Array [
+					children: [
 						MarkdownParagraph {
-							loc: SourceLocation lists/input.md 6:3-6:10
-							children: Array [
+							children: [
 								MarkdownText {
 									value: "example"
 									loc: SourceLocation lists/input.md 6:3-6:3
 								}
 							]
+							loc: SourceLocation lists/input.md 6:3-6:10
 						}
 					]
+					loc: SourceLocation lists/input.md 6:3-6:10
 				}
 			]
+			ordered: true
+			loc: SourceLocation lists/input.md 6:0-6:10
 		}
 		MarkdownListBlock {
-			ordered: false
-			loc: SourceLocation lists/input.md 8:0-8:9
-			children: Array [
+			children: [
 				MarkdownListItem {
 					value: "-"
 					checked: false
-					loc: SourceLocation lists/input.md 8:6-8:9
-					children: Array [
+					children: [
 						MarkdownParagraph {
-							loc: SourceLocation lists/input.md 8:6-8:9
-							children: Array [
+							children: [
 								MarkdownText {
 									value: "foo"
 									loc: SourceLocation lists/input.md 8:6-8:6
 								}
 							]
+							loc: SourceLocation lists/input.md 8:6-8:9
 						}
 					]
+					loc: SourceLocation lists/input.md 8:6-8:9
 				}
 			]
+			ordered: false
+			loc: SourceLocation lists/input.md 8:0-8:9
 		}
 		MarkdownListBlock {
-			ordered: false
-			loc: SourceLocation lists/input.md 9:0-9:9
-			children: Array [
+			children: [
 				MarkdownListItem {
 					value: "-"
 					checked: true
-					loc: SourceLocation lists/input.md 9:6-9:9
-					children: Array [
+					children: [
 						MarkdownParagraph {
-							loc: SourceLocation lists/input.md 9:6-9:9
-							children: Array [
+							children: [
 								MarkdownText {
 									value: "bar"
 									loc: SourceLocation lists/input.md 9:6-9:6
 								}
 							]
+							loc: SourceLocation lists/input.md 9:6-9:9
 						}
 					]
+					loc: SourceLocation lists/input.md 9:6-9:9
 				}
 			]
+			ordered: false
+			loc: SourceLocation lists/input.md 9:0-9:9
 		}
 		MarkdownListBlock {
-			ordered: false
-			loc: SourceLocation lists/input.md 10:0-10:11
-			children: Array [
+			children: [
 				MarkdownListItem {
 					value: "-"
 					checked: true
-					loc: SourceLocation lists/input.md 10:6-10:11
-					children: Array [
+					children: [
 						MarkdownParagraph {
-							loc: SourceLocation lists/input.md 10:6-10:11
-							children: Array [
+							children: [
 								MarkdownText {
 									value: "lorem"
 									loc: SourceLocation lists/input.md 10:6-10:6
 								}
 							]
+							loc: SourceLocation lists/input.md 10:6-10:11
 						}
 					]
+					loc: SourceLocation lists/input.md 10:6-10:11
 				}
 			]
+			ordered: false
+			loc: SourceLocation lists/input.md 10:0-10:11
 		}
 		MarkdownListBlock {
-			ordered: false
-			loc: SourceLocation lists/input.md 11:0-11:14
-			children: Array [
+			children: [
 				MarkdownListItem {
 					value: "-"
-					checked: undefined
-					loc: SourceLocation lists/input.md 11:2-11:14
-					children: Array [
+					children: [
 						MarkdownParagraph {
-							loc: SourceLocation lists/input.md 11:2-11:14
-							children: Array [
+							children: [
 								MarkdownReferenceInline {
 									value: ""
-									reference: Array []
+									reference: []
 									loc: SourceLocation lists/input.md 11:2-11:4
 								}
 								MarkdownText {
@@ -213,12 +194,21 @@ MarkdownRoot {
 									loc: SourceLocation lists/input.md 11:4-11:4
 								}
 							]
+							loc: SourceLocation lists/input.md 11:2-11:14
 						}
 					]
+					loc: SourceLocation lists/input.md 11:2-11:14
 				}
 			]
+			ordered: false
+			loc: SourceLocation lists/input.md 11:0-11:14
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	path: UIDPath<lists/input.md>
+	loc: SourceLocation lists/input.md 1:0-11:14
 }
 ```
 

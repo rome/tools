@@ -8,36 +8,33 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: true
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation esprima/es2015-yield/yield-variable-declaration/input.js 1:0-2:0
-	path: UIDPath<esprima/es2015-yield/yield-variable-declaration/input.js>
-	body: Array [
+	body: [
 		JSVariableDeclarationStatement {
-			loc: SourceLocation esprima/es2015-yield/yield-variable-declaration/input.js 1:0-1:10
 			declaration: JSVariableDeclaration {
 				kind: "var"
-				loc: SourceLocation esprima/es2015-yield/yield-variable-declaration/input.js 1:0-1:10
-				declarations: Array [
+				declarations: [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "yield"
 							loc: SourceLocation esprima/es2015-yield/yield-variable-declaration/input.js 1:4-1:9 (yield)
 						}
-						init: undefined
 						loc: SourceLocation esprima/es2015-yield/yield-variable-declaration/input.js 1:4-1:9
 					}
 				]
+				loc: SourceLocation esprima/es2015-yield/yield-variable-declaration/input.js 1:0-1:10
 			}
+			loc: SourceLocation esprima/es2015-yield/yield-variable-declaration/input.js 1:0-1:10
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: true
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<esprima/es2015-yield/yield-variable-declaration/input.js>
+	loc: SourceLocation esprima/es2015-yield/yield-variable-declaration/input.js 1:0-2:0
 }
 ```
 

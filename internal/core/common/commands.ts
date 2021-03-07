@@ -33,7 +33,6 @@ export type CommandName =
 	| "format"
 	| "init"
 	| "lsp"
-	| "json"
 	| "noop"
 	| "parse"
 	| "publish"

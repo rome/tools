@@ -8,90 +8,88 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation esprima/statement-try/migrated_0006/input.js 1:0-2:0
-	path: UIDPath<esprima/statement-try/migrated_0006/input.js>
-	body: Array [
+	body: [
 		JSTryStatement {
-			loc: SourceLocation esprima/statement-try/migrated_0006/input.js 1:0-1:65
 			block: JSBlockStatement {
-				directives: Array []
-				loc: SourceLocation esprima/statement-try/migrated_0006/input.js 1:4-1:17
-				body: Array [
+				body: [
 					JSExpressionStatement {
-						loc: SourceLocation esprima/statement-try/migrated_0006/input.js 1:6-1:15
 						expression: JSCallExpression {
-							arguments: Array []
-							loc: SourceLocation esprima/statement-try/migrated_0006/input.js 1:6-1:14
+							arguments: []
 							callee: JSReferenceIdentifier {
 								name: "doThat"
 								loc: SourceLocation esprima/statement-try/migrated_0006/input.js 1:6-1:12 (doThat)
 							}
+							loc: SourceLocation esprima/statement-try/migrated_0006/input.js 1:6-1:14
 						}
+						loc: SourceLocation esprima/statement-try/migrated_0006/input.js 1:6-1:15
 					}
 				]
+				directives: []
+				loc: SourceLocation esprima/statement-try/migrated_0006/input.js 1:4-1:17
 			}
 			finalizer: JSBlockStatement {
-				directives: Array []
-				loc: SourceLocation esprima/statement-try/migrated_0006/input.js 1:47-1:65
-				body: Array [
+				body: [
 					JSExpressionStatement {
-						loc: SourceLocation esprima/statement-try/migrated_0006/input.js 1:49-1:63
 						expression: JSCallExpression {
-							loc: SourceLocation esprima/statement-try/migrated_0006/input.js 1:49-1:63
-							callee: JSReferenceIdentifier {
-								name: "cleanup"
-								loc: SourceLocation esprima/statement-try/migrated_0006/input.js 1:49-1:56 (cleanup)
-							}
-							arguments: Array [
+							arguments: [
 								JSReferenceIdentifier {
 									name: "stuff"
 									loc: SourceLocation esprima/statement-try/migrated_0006/input.js 1:57-1:62 (stuff)
 								}
 							]
+							callee: JSReferenceIdentifier {
+								name: "cleanup"
+								loc: SourceLocation esprima/statement-try/migrated_0006/input.js 1:49-1:56 (cleanup)
+							}
+							loc: SourceLocation esprima/statement-try/migrated_0006/input.js 1:49-1:63
 						}
+						loc: SourceLocation esprima/statement-try/migrated_0006/input.js 1:49-1:63
 					}
 				]
+				directives: []
+				loc: SourceLocation esprima/statement-try/migrated_0006/input.js 1:47-1:65
 			}
 			handler: JSCatchClause {
-				loc: SourceLocation esprima/statement-try/migrated_0006/input.js 1:18-1:38
-				param: JSBindingIdentifier {
-					name: "e"
-					loc: SourceLocation esprima/statement-try/migrated_0006/input.js 1:25-1:26 (e)
-				}
 				body: JSBlockStatement {
-					directives: Array []
-					loc: SourceLocation esprima/statement-try/migrated_0006/input.js 1:28-1:38
-					body: Array [
+					body: [
 						JSExpressionStatement {
-							loc: SourceLocation esprima/statement-try/migrated_0006/input.js 1:30-1:36
 							expression: JSCallExpression {
-								loc: SourceLocation esprima/statement-try/migrated_0006/input.js 1:30-1:36
-								callee: JSReferenceIdentifier {
-									name: "say"
-									loc: SourceLocation esprima/statement-try/migrated_0006/input.js 1:30-1:33 (say)
-								}
-								arguments: Array [
+								arguments: [
 									JSReferenceIdentifier {
 										name: "e"
 										loc: SourceLocation esprima/statement-try/migrated_0006/input.js 1:34-1:35 (e)
 									}
 								]
+								callee: JSReferenceIdentifier {
+									name: "say"
+									loc: SourceLocation esprima/statement-try/migrated_0006/input.js 1:30-1:33 (say)
+								}
+								loc: SourceLocation esprima/statement-try/migrated_0006/input.js 1:30-1:36
 							}
+							loc: SourceLocation esprima/statement-try/migrated_0006/input.js 1:30-1:36
 						}
 					]
+					directives: []
+					loc: SourceLocation esprima/statement-try/migrated_0006/input.js 1:28-1:38
 				}
+				param: JSBindingIdentifier {
+					name: "e"
+					loc: SourceLocation esprima/statement-try/migrated_0006/input.js 1:25-1:26 (e)
+				}
+				loc: SourceLocation esprima/statement-try/migrated_0006/input.js 1:18-1:38
 			}
+			loc: SourceLocation esprima/statement-try/migrated_0006/input.js 1:0-1:65
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<esprima/statement-try/migrated_0006/input.js>
+	loc: SourceLocation esprima/statement-try/migrated_0006/input.js 1:0-2:0
 }
 ```
 

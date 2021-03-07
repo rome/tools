@@ -8,56 +8,52 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2018/object-rest-spread/21/input.js 1:0-2:0
-	path: UIDPath<es2018/object-rest-spread/21/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Not a valid assignment target"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:10
-				path: UIDPath<es2018/object-rest-spread/21/input.js>
-				start: Position 1:5
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation es2018/object-rest-spread/21/input.js 1:0-1:17
 			expression: JSAssignmentExpression {
 				operator: "="
-				loc: SourceLocation es2018/object-rest-spread/21/input.js 1:1-1:16
-				right: JSObjectExpression {
-					properties: Array []
-					loc: SourceLocation es2018/object-rest-spread/21/input.js 1:14-1:16
-				}
 				left: JSAssignmentObjectPattern {
-					properties: Array []
-					loc: SourceLocation es2018/object-rest-spread/21/input.js 1:1-1:11
+					properties: []
 					rest: JSAssignmentIdentifier {
 						name: "X"
 						loc: SourceLocation es2018/object-rest-spread/21/input.js 1:5-1:10
 					}
+					loc: SourceLocation es2018/object-rest-spread/21/input.js 1:1-1:11
 				}
+				right: JSObjectExpression {
+					properties: []
+					loc: SourceLocation es2018/object-rest-spread/21/input.js 1:14-1:16
+				}
+				loc: SourceLocation es2018/object-rest-spread/21/input.js 1:1-1:16
+			}
+			loc: SourceLocation es2018/object-rest-spread/21/input.js 1:0-1:17
+		}
+	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "Not a valid assignment target"}
+			}
+			location: {
+				language: "js"
+				path: UIDPath<es2018/object-rest-spread/21/input.js>
+				end: Position 1:10
+				start: Position 1:5
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2018/object-rest-spread/21/input.js>
+	loc: SourceLocation es2018/object-rest-spread/21/input.js 1:0-2:0
 }
 ```
 

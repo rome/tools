@@ -1,11 +1,5 @@
-import {getEnvVar} from "@internal/cli-environment";
+import {IS_ROME_DEV_ENV, getEnvVar} from "@internal/cli-environment";
 import {VERSION} from "@internal/core";
-import {
-	createDirectory,
-	exists,
-	readFileText,
-	removeDirectory,
-} from "@internal/fs";
 import {AbsoluteFilePath} from "@internal/path";
 
 import {Server} from "..";
@@ -21,7 +15,7 @@ const EXPECTED_BREAKER_VALUE = VERSION;
 export default class ServerCache extends Cache {
 	constructor(server: Server) {
 		let disabled = false;
-		if (getEnvVar("ROME_DEV").type === "ENABLED") {
+		if (IS_ROME_DEV_ENV) {
 			disabled = true;
 		}
 		if (getEnvVar("ROME_CACHE").type === "DISABLED") {
@@ -40,6 +34,7 @@ export default class ServerCache extends Cache {
 				writeDisabled: disabled,
 				fatalErrorHandler: server.fatalErrorHandler,
 			},
+			server.resources,
 		);
 		this.server = server;
 		this.breakerPath = this.directoryPath.append(BREAKER_BASENAME);
@@ -54,14 +49,10 @@ export default class ServerCache extends Cache {
 
 	public async init() {
 		const {memoryFs} = this.server;
-		await createDirectory(this.directoryPath);
+		await this.directoryPath.createDirectory();
 		await memoryFs.watch(this.directoryPath);
 
 		await this.initBreaker();
-
-		this.server.endEvent.subscribe(async () => {
-			await this.teardown();
-		});
 	}
 
 	public async initBreaker(): Promise<void> {
@@ -72,8 +63,8 @@ export default class ServerCache extends Cache {
 			return;
 		}
 
-		if (await exists(breakerPath)) {
-			const content = await readFileText(breakerPath);
+		if (await breakerPath.exists()) {
+			const content = await breakerPath.readFileText();
 			if (content === EXPECTED_BREAKER_VALUE) {
 				logger.success(markup`Breaker is correct`);
 				return;
@@ -99,6 +90,6 @@ export default class ServerCache extends Cache {
 	public async clear() {
 		this.pendingWrites.clear();
 		await this.server.fileAllocator.evictAll();
-		await removeDirectory(this.getRootDirectory());
+		await this.getRootDirectory().removeDirectory();
 	}
 }

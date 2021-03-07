@@ -8,70 +8,60 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation core/uncategorised/398/input.js 1:0-1:20
-	path: UIDPath<core/uncategorised/398/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Unexpected keyword <emphasis>true</emphasis>"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:15
-				path: UIDPath<core/uncategorised/398/input.js>
-				start: Position 1:11
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "t"
 				loc: SourceLocation core/uncategorised/398/input.js 1:9-1:10 (t)
 			}
-			loc: SourceLocation core/uncategorised/398/input.js 1:0-1:20
 			body: JSBlockStatement {
-				body: Array []
-				directives: Array []
+				body: []
+				directives: []
 				loc: SourceLocation core/uncategorised/398/input.js 1:17-1:20
 			}
 			head: JSFunctionHead {
 				async: false
 				generator: false
 				hasHoistedVars: false
-				rest: undefined
-				returnType: undefined
-				thisType: undefined
-				typeParameters: undefined
-				loc: SourceLocation core/uncategorised/398/input.js 1:10-1:16
-				params: Array [
+				params: [
 					JSBindingIdentifier {
 						name: "true"
-						loc: SourceLocation core/uncategorised/398/input.js 1:11-1:15 (true)
 						meta: JSPatternMeta {
-							optional: undefined
-							typeAnnotation: undefined
 							loc: SourceLocation core/uncategorised/398/input.js 1:11-1:15
 						}
+						loc: SourceLocation core/uncategorised/398/input.js 1:11-1:15 (true)
 					}
 				]
+				loc: SourceLocation core/uncategorised/398/input.js 1:10-1:16
+			}
+			loc: SourceLocation core/uncategorised/398/input.js 1:0-1:20
+		}
+	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "js"
+				message: [RAW_MARKUP {value: "Unexpected keyword <emphasis>"}, "true", RAW_MARKUP {value: "</emphasis>"}]
+			}
+			location: {
+				language: "js"
+				path: UIDPath<core/uncategorised/398/input.js>
+				end: Position 1:15
+				start: Position 1:11
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<core/uncategorised/398/input.js>
+	loc: SourceLocation core/uncategorised/398/input.js 1:0-1:20
 }
 ```
 

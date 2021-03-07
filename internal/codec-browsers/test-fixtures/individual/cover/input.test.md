@@ -7,7 +7,7 @@
 ### `result`
 
 ```javascript
-Array [
+[
 	"and_chr:88"
 	"chrome:87"
 	"ios_saf:14"
@@ -28,13 +28,13 @@ Array [
 ### `targets`
 
 ```javascript
-Array [TargetBrowserCoverage {coverage: 99.5}]
+[TargetBrowserCoverage {coverage: 99.5}]
 ```
 
 ### `tokens`
 
 ```javascript
-Array [
+[
 	Cover {
 		end: ZeroIndexedNumber<5>
 		start: ZeroIndexedNumber<0>

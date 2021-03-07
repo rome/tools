@@ -8,79 +8,73 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: true
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2015/identifiers/invalid-escape-seq-const/input.js 1:0-4:0
-	path: UIDPath<es2015/identifiers/invalid-escape-seq-const/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Escape sequence in keyword <emphasis>const</emphasis>"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:6
-				path: UIDPath<es2015/identifiers/invalid-escape-seq-const/input.js>
-				start: Position 1:6
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSVariableDeclarationStatement {
-			loc: SourceLocation es2015/identifiers/invalid-escape-seq-const/input.js 1:0-1:21
 			declaration: JSVariableDeclaration {
 				kind: "var"
-				loc: SourceLocation es2015/identifiers/invalid-escape-seq-const/input.js 1:0-1:21
-				declarations: Array [
+				declarations: [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "const"
 							loc: SourceLocation es2015/identifiers/invalid-escape-seq-const/input.js 1:4-1:14 (const)
 						}
-						loc: SourceLocation es2015/identifiers/invalid-escape-seq-const/input.js 1:4-1:20
 						init: JSNumericLiteral {
 							value: 123
-							format: undefined
 							loc: SourceLocation es2015/identifiers/invalid-escape-seq-const/input.js 1:17-1:20
 						}
+						loc: SourceLocation es2015/identifiers/invalid-escape-seq-const/input.js 1:4-1:20
 					}
 				]
+				loc: SourceLocation es2015/identifiers/invalid-escape-seq-const/input.js 1:0-1:21
 			}
+			loc: SourceLocation es2015/identifiers/invalid-escape-seq-const/input.js 1:0-1:21
 		}
 		JSVariableDeclarationStatement {
-			loc: SourceLocation es2015/identifiers/invalid-escape-seq-const/input.js 3:0-3:17
 			declaration: JSVariableDeclaration {
 				kind: "const"
-				loc: SourceLocation es2015/identifiers/invalid-escape-seq-const/input.js 3:0-3:17
-				declarations: Array [
+				declarations: [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "x"
 							loc: SourceLocation es2015/identifiers/invalid-escape-seq-const/input.js 3:11-3:12 (x)
 						}
-						loc: SourceLocation es2015/identifiers/invalid-escape-seq-const/input.js 3:11-3:16
 						init: JSNumericLiteral {
 							value: 2
-							format: undefined
 							loc: SourceLocation es2015/identifiers/invalid-escape-seq-const/input.js 3:15-3:16
 						}
+						loc: SourceLocation es2015/identifiers/invalid-escape-seq-const/input.js 3:11-3:16
 					}
 				]
+				loc: SourceLocation es2015/identifiers/invalid-escape-seq-const/input.js 3:0-3:17
+			}
+			loc: SourceLocation es2015/identifiers/invalid-escape-seq-const/input.js 3:0-3:17
+		}
+	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "js"
+				message: [RAW_MARKUP {value: "Escape sequence in keyword <emphasis>"}, "const", RAW_MARKUP {value: "</emphasis>"}]
+			}
+			location: {
+				language: "js"
+				path: UIDPath<es2015/identifiers/invalid-escape-seq-const/input.js>
+				end: Position 1:6
+				start: Position 1:6
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: true
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2015/identifiers/invalid-escape-seq-const/input.js>
+	loc: SourceLocation es2015/identifiers/invalid-escape-seq-const/input.js 1:0-4:0
 }
 ```
 

@@ -8,59 +8,54 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation esprima/es2015-arrow-function/migrated_0006/input.js 1:0-2:0
-	path: UIDPath<esprima/es2015-arrow-function/migrated_0006/input.js>
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation esprima/es2015-arrow-function/migrated_0006/input.js 1:0-1:18
 			expression: JSArrowFunctionExpression {
-				loc: SourceLocation esprima/es2015-arrow-function/migrated_0006/input.js 1:0-1:18
+				body: JSBlockStatement {
+					body: [
+						JSLabeledStatement {
+							body: JSExpressionStatement {
+								expression: JSNumericLiteral {
+									value: 42
+									loc: SourceLocation esprima/es2015-arrow-function/migrated_0006/input.js 1:14-1:16
+								}
+								loc: SourceLocation esprima/es2015-arrow-function/migrated_0006/input.js 1:14-1:16
+							}
+							label: JSIdentifier {
+								name: "label"
+								loc: SourceLocation esprima/es2015-arrow-function/migrated_0006/input.js 1:7-1:12 (label)
+							}
+							loc: SourceLocation esprima/es2015-arrow-function/migrated_0006/input.js 1:7-1:16
+						}
+					]
+					directives: []
+					loc: SourceLocation esprima/es2015-arrow-function/migrated_0006/input.js 1:5-1:18
+				}
 				head: JSFunctionHead {
 					async: false
 					hasHoistedVars: false
-					rest: undefined
-					thisType: undefined
-					loc: SourceLocation esprima/es2015-arrow-function/migrated_0006/input.js 1:0-1:4
-					params: Array [
+					params: [
 						JSBindingIdentifier {
 							name: "e"
 							loc: SourceLocation esprima/es2015-arrow-function/migrated_0006/input.js 1:0-1:1 (e)
 						}
 					]
+					loc: SourceLocation esprima/es2015-arrow-function/migrated_0006/input.js 1:0-1:4
 				}
-				body: JSBlockStatement {
-					directives: Array []
-					loc: SourceLocation esprima/es2015-arrow-function/migrated_0006/input.js 1:5-1:18
-					body: Array [
-						JSLabeledStatement {
-							loc: SourceLocation esprima/es2015-arrow-function/migrated_0006/input.js 1:7-1:16
-							label: JSIdentifier {
-								name: "label"
-								loc: SourceLocation esprima/es2015-arrow-function/migrated_0006/input.js 1:7-1:12 (label)
-							}
-							body: JSExpressionStatement {
-								loc: SourceLocation esprima/es2015-arrow-function/migrated_0006/input.js 1:14-1:16
-								expression: JSNumericLiteral {
-									value: 42
-									format: undefined
-									loc: SourceLocation esprima/es2015-arrow-function/migrated_0006/input.js 1:14-1:16
-								}
-							}
-						}
-					]
-				}
+				loc: SourceLocation esprima/es2015-arrow-function/migrated_0006/input.js 1:0-1:18
 			}
+			loc: SourceLocation esprima/es2015-arrow-function/migrated_0006/input.js 1:0-1:18
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<esprima/es2015-arrow-function/migrated_0006/input.js>
+	loc: SourceLocation esprima/es2015-arrow-function/migrated_0006/input.js 1:0-2:0
 }
 ```
 

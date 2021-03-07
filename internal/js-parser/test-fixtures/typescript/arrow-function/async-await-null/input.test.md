@@ -8,49 +8,44 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	loc: SourceLocation typescript/arrow-function/async-await-null/input.ts 1:0-2:0
-	path: UIDPath<typescript/arrow-function/async-await-null/input.ts>
-	syntax: Array ["ts"]
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation typescript/arrow-function/async-await-null/input.ts 1:0-1:26
 			expression: JSArrowFunctionExpression {
-				loc: SourceLocation typescript/arrow-function/async-await-null/input.ts 1:0-1:25
 				body: JSAwaitExpression {
-					argument: JSNullLiteral {loc: SourceLocation typescript/arrow-function/async-await-null/input.ts 1:21-1:25}
+					argument: JSNullLiteral {
+						loc: SourceLocation typescript/arrow-function/async-await-null/input.ts 1:21-1:25
+					}
 					loc: SourceLocation typescript/arrow-function/async-await-null/input.ts 1:15-1:25
 				}
 				head: JSFunctionHead {
 					async: true
 					hasHoistedVars: false
-					params: Array []
-					rest: undefined
-					returnType: undefined
-					thisType: undefined
-					loc: SourceLocation typescript/arrow-function/async-await-null/input.ts 1:0-1:14
+					params: []
 					typeParameters: TSTypeParameterDeclaration {
-						loc: SourceLocation typescript/arrow-function/async-await-null/input.ts 1:6-1:9
-						params: Array [
+						params: [
 							TSTypeParameter {
 								name: "T"
-								constraint: undefined
-								default: undefined
 								loc: SourceLocation typescript/arrow-function/async-await-null/input.ts 1:7-1:8
 							}
 						]
+						loc: SourceLocation typescript/arrow-function/async-await-null/input.ts 1:6-1:9
 					}
+					loc: SourceLocation typescript/arrow-function/async-await-null/input.ts 1:0-1:14
 				}
+				loc: SourceLocation typescript/arrow-function/async-await-null/input.ts 1:0-1:25
 			}
+			loc: SourceLocation typescript/arrow-function/async-await-null/input.ts 1:0-1:26
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: ["ts"]
+	path: UIDPath<typescript/arrow-function/async-await-null/input.ts>
+	loc: SourceLocation typescript/arrow-function/async-await-null/input.ts 1:0-2:0
 }
 ```
 

@@ -15,7 +15,7 @@ import {
 } from "./builders/comments";
 import builders from "./builders/index";
 import * as n from "./node/index";
-import {Token, Tokens, concat, hardline, indent, join, mark} from "./tokens";
+import {Token, concat, hardline, indent, join, mark} from "./tokens";
 import {isRoot} from "@internal/ast-utils";
 import {DiagnosticLanguage} from "@internal/diagnostics";
 import {inferDiagnosticLanguageFromRootAST} from "@internal/cli-diagnostics";
@@ -88,7 +88,7 @@ export default class Builder {
 		}
 		this.printStack.push(node);
 
-		let tokens: Tokens = [];
+		let tokens: Token[] = [];
 
 		// Print leading comments
 		const leadingComments = this.getComments("leadingComments", node);

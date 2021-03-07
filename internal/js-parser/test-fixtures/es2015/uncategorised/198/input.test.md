@@ -8,45 +8,41 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2015/uncategorised/198/input.js 1:0-1:2
-	path: UIDPath<es2015/uncategorised/198/input.js>
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation es2015/uncategorised/198/input.js 1:0-1:2
 			expression: JSNumericLiteral {
 				value: 0
 				format: "octal"
 				loc: SourceLocation es2015/uncategorised/198/input.js 1:0-1:2
 			}
+			loc: SourceLocation es2015/uncategorised/198/input.js 1:0-1:2
 		}
 	]
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {
+				advice: []
+				category: ["parse"]
 				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Expected number in radix <emphasis>8</emphasis>"}
+				message: [RAW_MARKUP {value: "Expected number in radix <emphasis>"}, "8", RAW_MARKUP {value: "</emphasis>"}]
 			}
-			location: Object {
-				integrity: undefined
+			location: {
 				language: "js"
-				sourceText: undefined
-				end: Position 1:2
 				path: UIDPath<es2015/uncategorised/198/input.js>
+				end: Position 1:2
 				start: Position 1:2
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2015/uncategorised/198/input.js>
+	loc: SourceLocation es2015/uncategorised/198/input.js 1:0-1:2
 }
 ```
 

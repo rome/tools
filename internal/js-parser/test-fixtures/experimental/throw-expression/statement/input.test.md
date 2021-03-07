@@ -8,51 +8,44 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation experimental/throw-expression/statement/input.js 1:0-4:0
-	path: UIDPath<experimental/throw-expression/statement/input.js>
-	body: Array [
+	body: [
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "test"
 				loc: SourceLocation experimental/throw-expression/statement/input.js 1:9-1:13 (test)
 			}
-			loc: SourceLocation experimental/throw-expression/statement/input.js 1:0-3:1
+			body: JSBlockStatement {
+				body: [
+					JSThrowStatement {
+						argument: JSNumericLiteral {
+							value: 1
+							loc: SourceLocation experimental/throw-expression/statement/input.js 2:8-2:9
+						}
+						loc: SourceLocation experimental/throw-expression/statement/input.js 2:2-2:10
+					}
+				]
+				directives: []
+				loc: SourceLocation experimental/throw-expression/statement/input.js 1:16-3:1
+			}
 			head: JSFunctionHead {
 				async: false
 				generator: false
 				hasHoistedVars: false
-				params: Array []
-				rest: undefined
-				returnType: undefined
-				thisType: undefined
-				typeParameters: undefined
+				params: []
 				loc: SourceLocation experimental/throw-expression/statement/input.js 1:13-1:15
 			}
-			body: JSBlockStatement {
-				directives: Array []
-				loc: SourceLocation experimental/throw-expression/statement/input.js 1:16-3:1
-				body: Array [
-					JSThrowStatement {
-						loc: SourceLocation experimental/throw-expression/statement/input.js 2:2-2:10
-						argument: JSNumericLiteral {
-							value: 1
-							format: undefined
-							loc: SourceLocation experimental/throw-expression/statement/input.js 2:8-2:9
-						}
-					}
-				]
-			}
+			loc: SourceLocation experimental/throw-expression/statement/input.js 1:0-3:1
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<experimental/throw-expression/statement/input.js>
+	loc: SourceLocation experimental/throw-expression/statement/input.js 1:0-4:0
 }
 ```
 

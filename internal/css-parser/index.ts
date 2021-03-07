@@ -12,7 +12,7 @@ import {
 	isHexDigit,
 } from "@internal/parser-core";
 import {descriptions} from "@internal/diagnostics";
-import {ZeroIndexed} from "@internal/math";
+import {ZeroIndexed} from "@internal/numbers";
 import {
 	Symbols,
 	hexToUtf8,

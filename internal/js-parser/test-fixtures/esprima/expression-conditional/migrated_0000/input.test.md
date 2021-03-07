@@ -8,39 +8,35 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation esprima/expression-conditional/migrated_0000/input.js 1:0-2:0
-	path: UIDPath<esprima/expression-conditional/migrated_0000/input.js>
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation esprima/expression-conditional/migrated_0000/input.js 1:0-1:9
 			expression: JSConditionalExpression {
-				loc: SourceLocation esprima/expression-conditional/migrated_0000/input.js 1:0-1:9
-				test: JSReferenceIdentifier {
-					name: "y"
-					loc: SourceLocation esprima/expression-conditional/migrated_0000/input.js 1:0-1:1 (y)
-				}
 				alternate: JSNumericLiteral {
 					value: 2
-					format: undefined
 					loc: SourceLocation esprima/expression-conditional/migrated_0000/input.js 1:8-1:9
 				}
 				consequent: JSNumericLiteral {
 					value: 1
-					format: undefined
 					loc: SourceLocation esprima/expression-conditional/migrated_0000/input.js 1:4-1:5
 				}
+				test: JSReferenceIdentifier {
+					name: "y"
+					loc: SourceLocation esprima/expression-conditional/migrated_0000/input.js 1:0-1:1 (y)
+				}
+				loc: SourceLocation esprima/expression-conditional/migrated_0000/input.js 1:0-1:9
 			}
+			loc: SourceLocation esprima/expression-conditional/migrated_0000/input.js 1:0-1:9
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<esprima/expression-conditional/migrated_0000/input.js>
+	loc: SourceLocation esprima/expression-conditional/migrated_0000/input.js 1:0-2:0
 }
 ```
 

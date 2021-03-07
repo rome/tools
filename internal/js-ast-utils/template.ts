@@ -13,7 +13,7 @@ import {
 	JSRoot,
 	jsRoot,
 } from "@internal/ast";
-import {CompilerContext, Path, signals} from "@internal/compiler";
+import {CompilerContext, CompilerPath, signals} from "@internal/compiler";
 import {removeLoc} from "@internal/ast-utils";
 import {parseJS} from "@internal/js-parser";
 import {createUIDPath} from "@internal/path";
@@ -76,7 +76,7 @@ function getTemplate(strs: TemplateStringsArray): BuiltTemplate {
 	ast = jsRoot.assert(removeLoc(ast));
 
 	// traverse and find placeholders paths
-	function collectPlaceholderPaths(path: Path) {
+	function collectPlaceholderPaths(path: CompilerPath) {
 		const {node} = path;
 		if (isIdentifierish(node) && node.name in placeholders) {
 			placeholders[node.name] = {

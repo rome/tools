@@ -5,19 +5,19 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Mappings, SourceMapConsumer} from "@internal/codec-source-map";
-import {DiagnosticSuppressions, Diagnostics} from "@internal/diagnostics";
+import {Mapping, SourceMapConsumer} from "@internal/codec-source-map";
+import {Diagnostic, DiagnosticSuppressions} from "@internal/diagnostics";
 import {Cache} from "@internal/compiler";
 import {formatAST} from "@internal/formatter";
 import {CompileRequest} from "../types";
 import transform from "../methods/transform";
-import {AnyPath} from "@internal/path";
+import {Path} from "@internal/path";
 
 export type CompileResult = {
-	mappings: Mappings;
-	diagnostics: Diagnostics;
+	mappings: Mapping[];
+	diagnostics: Diagnostic[];
 	suppressions: DiagnosticSuppressions;
-	cacheDependencies: AnyPath[];
+	cacheDependencies: Path[];
 	compiledCode: string;
 	sourceText: string;
 };
@@ -55,7 +55,7 @@ export default async function compile(
 
 	if (req.inputSourceMap !== undefined) {
 		const inputSourceMap = SourceMapConsumer.fromJSON(req.inputSourceMap);
-		const mappings: Mappings = [];
+		const mappings: Mapping[] = [];
 
 		for (const mapping of formatted.mappings) {
 			const actual = inputSourceMap.exactOriginalPositionFor(

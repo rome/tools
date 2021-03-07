@@ -8,35 +8,24 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: true
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2015/for-of/right-regex/input.js 1:0-3:26
-	path: UIDPath<es2015/for-of/right-regex/input.js>
-	body: Array [
+	body: [
 		JSForOfStatement {
 			await: false
-			body: JSEmptyStatement {loc: SourceLocation es2015/for-of/right-regex/input.js 1:21-1:22}
-			loc: SourceLocation es2015/for-of/right-regex/input.js 1:0-1:22
+			body: JSEmptyStatement {
+				loc: SourceLocation es2015/for-of/right-regex/input.js 1:21-1:22
+			}
 			left: JSVariableDeclaration {
 				kind: "var"
-				loc: SourceLocation es2015/for-of/right-regex/input.js 1:5-1:10
-				declarations: Array [
+				declarations: [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "x"
 							loc: SourceLocation es2015/for-of/right-regex/input.js 1:9-1:10 (x)
 						}
-						init: undefined
 						loc: SourceLocation es2015/for-of/right-regex/input.js 1:9-1:10
 					}
 				]
+				loc: SourceLocation es2015/for-of/right-regex/input.js 1:5-1:10
 			}
 			right: JSRegExpLiteral {
 				global: true
@@ -45,10 +34,8 @@ JSRoot {
 				noDotNewline: false
 				sticky: false
 				unicode: false
-				loc: SourceLocation es2015/for-of/right-regex/input.js 1:14-1:20
 				expression: JSRegExpSubExpression {
-					loc: SourceLocation es2015/for-of/right-regex/input.js 1:15-1:18
-					body: Array [
+					body: [
 						JSRegExpCharacter {
 							value: "f"
 							loc: SourceLocation es2015/for-of/right-regex/input.js 1:15-1:16
@@ -62,34 +49,28 @@ JSRoot {
 							loc: SourceLocation es2015/for-of/right-regex/input.js 1:17-1:18
 						}
 					]
+					loc: SourceLocation es2015/for-of/right-regex/input.js 1:15-1:18
 				}
+				loc: SourceLocation es2015/for-of/right-regex/input.js 1:14-1:20
 			}
+			loc: SourceLocation es2015/for-of/right-regex/input.js 1:0-1:22
 		}
 		JSForStatement {
-			test: undefined
-			update: undefined
-			body: JSEmptyStatement {loc: SourceLocation es2015/for-of/right-regex/input.js 3:25-3:26}
-			loc: SourceLocation es2015/for-of/right-regex/input.js 3:0-3:26
+			body: JSEmptyStatement {
+				loc: SourceLocation es2015/for-of/right-regex/input.js 3:25-3:26
+			}
 			init: JSVariableDeclaration {
 				kind: "var"
-				loc: SourceLocation es2015/for-of/right-regex/input.js 3:5-3:22
-				declarations: Array [
+				declarations: [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "x"
 							loc: SourceLocation es2015/for-of/right-regex/input.js 3:9-3:10 (x)
 						}
-						loc: SourceLocation es2015/for-of/right-regex/input.js 3:9-3:22
 						init: JSBinaryExpression {
 							operator: "/"
-							loc: SourceLocation es2015/for-of/right-regex/input.js 3:13-3:22
-							right: JSReferenceIdentifier {
-								name: "g"
-								loc: SourceLocation es2015/for-of/right-regex/input.js 3:21-3:22 (g)
-							}
 							left: JSBinaryExpression {
 								operator: "/"
-								loc: SourceLocation es2015/for-of/right-regex/input.js 3:13-3:20
 								left: JSReferenceIdentifier {
 									name: "of"
 									loc: SourceLocation es2015/for-of/right-regex/input.js 3:13-3:15 (of)
@@ -98,13 +79,31 @@ JSRoot {
 									name: "foo"
 									loc: SourceLocation es2015/for-of/right-regex/input.js 3:17-3:20 (foo)
 								}
+								loc: SourceLocation es2015/for-of/right-regex/input.js 3:13-3:20
 							}
+							right: JSReferenceIdentifier {
+								name: "g"
+								loc: SourceLocation es2015/for-of/right-regex/input.js 3:21-3:22 (g)
+							}
+							loc: SourceLocation es2015/for-of/right-regex/input.js 3:13-3:22
 						}
+						loc: SourceLocation es2015/for-of/right-regex/input.js 3:9-3:22
 					}
 				]
+				loc: SourceLocation es2015/for-of/right-regex/input.js 3:5-3:22
 			}
+			loc: SourceLocation es2015/for-of/right-regex/input.js 3:0-3:26
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: true
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2015/for-of/right-regex/input.js>
+	loc: SourceLocation es2015/for-of/right-regex/input.js 1:0-3:26
 }
 ```
 

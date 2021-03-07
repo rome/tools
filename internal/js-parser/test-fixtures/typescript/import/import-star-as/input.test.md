@@ -8,40 +8,35 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	loc: SourceLocation typescript/import/import-star-as/input.ts 1:0-2:0
-	path: UIDPath<typescript/import/import-star-as/input.ts>
-	syntax: Array ["ts"]
-	body: Array [
+	body: [
 		JSImportDeclaration {
-			defaultSpecifier: undefined
-			importKind: undefined
-			namedSpecifiers: Array []
-			loc: SourceLocation typescript/import/import-star-as/input.ts 1:0-1:23
-			source: JSStringLiteral {
-				value: "a"
-				loc: SourceLocation typescript/import/import-star-as/input.ts 1:19-1:22
-			}
+			namedSpecifiers: []
 			namespaceSpecifier: JSImportNamespaceSpecifier {
-				loc: SourceLocation typescript/import/import-star-as/input.ts 1:0-1:13
 				local: JSImportSpecifierLocal {
 					name: JSBindingIdentifier {
 						name: "a"
 						loc: SourceLocation typescript/import/import-star-as/input.ts 1:12-1:13 (a)
 					}
-					importKind: undefined
 					loc: SourceLocation typescript/import/import-star-as/input.ts 1:12-1:13
 				}
+				loc: SourceLocation typescript/import/import-star-as/input.ts 1:0-1:13
 			}
+			source: JSStringLiteral {
+				value: "a"
+				loc: SourceLocation typescript/import/import-star-as/input.ts 1:19-1:22
+			}
+			loc: SourceLocation typescript/import/import-star-as/input.ts 1:0-1:23
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: ["ts"]
+	path: UIDPath<typescript/import/import-star-as/input.ts>
+	loc: SourceLocation typescript/import/import-star-as/input.ts 1:0-2:0
 }
 ```
 

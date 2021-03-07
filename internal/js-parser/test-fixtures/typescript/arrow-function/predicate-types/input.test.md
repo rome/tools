@@ -8,22 +8,9 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	loc: SourceLocation typescript/arrow-function/predicate-types/input.ts 1:0-2:0
-	path: UIDPath<typescript/arrow-function/predicate-types/input.ts>
-	syntax: Array ["ts"]
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation typescript/arrow-function/predicate-types/input.ts 1:0-1:30
 			expression: JSArrowFunctionExpression {
-				loc: SourceLocation typescript/arrow-function/predicate-types/input.ts 1:0-1:29
 				body: JSBooleanLiteral {
 					value: true
 					loc: SourceLocation typescript/arrow-function/predicate-types/input.ts 1:25-1:29
@@ -31,33 +18,45 @@ JSRoot {
 				head: JSFunctionHead {
 					async: false
 					hasHoistedVars: false
-					rest: undefined
-					thisType: undefined
-					loc: SourceLocation typescript/arrow-function/predicate-types/input.ts 1:0-1:24
+					params: [
+						JSBindingIdentifier {
+							name: "x"
+							meta: JSPatternMeta {
+								typeAnnotation: TSAnyKeywordTypeAnnotation {
+									loc: SourceLocation typescript/arrow-function/predicate-types/input.ts 1:4-1:7
+								}
+								loc: SourceLocation typescript/arrow-function/predicate-types/input.ts 1:25-1:24
+							}
+							loc: SourceLocation typescript/arrow-function/predicate-types/input.ts 1:25-1:24
+						}
+					]
 					returnType: TSTypePredicate {
 						asserts: false
-						loc: SourceLocation typescript/arrow-function/predicate-types/input.ts 1:10-1:21
-						typeAnnotation: TSStringKeywordTypeAnnotation {loc: SourceLocation typescript/arrow-function/predicate-types/input.ts 1:15-1:21}
 						parameterName: JSIdentifier {
 							name: "x"
 							loc: SourceLocation typescript/arrow-function/predicate-types/input.ts 1:10-1:11 (x)
 						}
-					}
-					params: Array [
-						JSBindingIdentifier {
-							name: "x"
-							loc: SourceLocation typescript/arrow-function/predicate-types/input.ts 1:25-1:24
-							meta: JSPatternMeta {
-								optional: undefined
-								loc: SourceLocation typescript/arrow-function/predicate-types/input.ts 1:25-1:24
-								typeAnnotation: TSAnyKeywordTypeAnnotation {loc: SourceLocation typescript/arrow-function/predicate-types/input.ts 1:4-1:7}
-							}
+						typeAnnotation: TSStringKeywordTypeAnnotation {
+							loc: SourceLocation typescript/arrow-function/predicate-types/input.ts 1:15-1:21
 						}
-					]
+						loc: SourceLocation typescript/arrow-function/predicate-types/input.ts 1:10-1:21
+					}
+					loc: SourceLocation typescript/arrow-function/predicate-types/input.ts 1:0-1:24
 				}
+				loc: SourceLocation typescript/arrow-function/predicate-types/input.ts 1:0-1:29
 			}
+			loc: SourceLocation typescript/arrow-function/predicate-types/input.ts 1:0-1:30
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: ["ts"]
+	path: UIDPath<typescript/arrow-function/predicate-types/input.ts>
+	loc: SourceLocation typescript/arrow-function/predicate-types/input.ts 1:0-2:0
 }
 ```
 

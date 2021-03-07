@@ -8,30 +8,16 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation esprima/expression-primary-object/migrated_0027/input.js 1:0-1:21
-	path: UIDPath<esprima/expression-primary-object/migrated_0027/input.js>
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation esprima/expression-primary-object/migrated_0027/input.js 1:0-1:21
 			expression: JSAssignmentExpression {
 				operator: "="
-				loc: SourceLocation esprima/expression-primary-object/migrated_0027/input.js 1:0-1:21
 				left: JSAssignmentIdentifier {
 					name: "x"
 					loc: SourceLocation esprima/expression-primary-object/migrated_0027/input.js 1:0-1:1 (x)
 				}
 				right: JSObjectExpression {
-					loc: SourceLocation esprima/expression-primary-object/migrated_0027/input.js 1:4-1:21
-					properties: Array [
+					properties: [
 						JSObjectProperty {
 							key: JSStaticPropertyKey {
 								value: JSStringLiteral {
@@ -42,16 +28,27 @@ JSRoot {
 							}
 							value: JSNumericLiteral {
 								value: 2
-								format: undefined
 								loc: SourceLocation esprima/expression-primary-object/migrated_0027/input.js 1:18-1:19
 							}
 							loc: SourceLocation esprima/expression-primary-object/migrated_0027/input.js 1:5-1:19
 						}
 					]
+					loc: SourceLocation esprima/expression-primary-object/migrated_0027/input.js 1:4-1:21
 				}
+				loc: SourceLocation esprima/expression-primary-object/migrated_0027/input.js 1:0-1:21
 			}
+			loc: SourceLocation esprima/expression-primary-object/migrated_0027/input.js 1:0-1:21
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<esprima/expression-primary-object/migrated_0027/input.js>
+	loc: SourceLocation esprima/expression-primary-object/migrated_0027/input.js 1:0-1:21
 }
 ```
 

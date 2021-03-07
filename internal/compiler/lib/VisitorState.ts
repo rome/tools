@@ -1,5 +1,5 @@
 import {UnknownObject} from "@internal/typescript-helpers";
-import Path, {PathToken} from "./Path";
+import CompilerPath, {CompilerPathToken} from "./CompilerPath";
 
 type SetStateCallback<State> =
 	| Partial<State>
@@ -25,7 +25,7 @@ export interface VisitorStateEnter<State extends UnknownObject> extends VisitorS
 
 export type AnyVisitorState = VisitorState<UnknownObject>;
 
-type StackItem<State> = [State, PathToken];
+type StackItem<State> = [State, CompilerPathToken];
 
 export default class VisitorState<State extends UnknownObject>
 	implements VisitorStateEnter<State> {
@@ -39,9 +39,9 @@ export default class VisitorState<State extends UnknownObject>
 	private stack: StackItem<State>[];
 	private currentIndex: number;
 	private pushQueue: undefined | State;
-	private currentPathToken: undefined | PathToken;
+	private currentPathToken: undefined | CompilerPathToken;
 
-	public setCurrentPath(path: Path) {
+	public setCurrentPath(path: CompilerPath) {
 		this.currentPathToken = path.token;
 	}
 

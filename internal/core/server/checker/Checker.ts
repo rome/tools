@@ -7,14 +7,16 @@
 
 import {Server, ServerRequest} from "@internal/core";
 import {LINTABLE_EXTENSIONS} from "@internal/core/common/file-handlers";
-import {Diagnostics, DiagnosticsProcessor} from "@internal/diagnostics";
-import {EventSubscription} from "@internal/events";
+import {
+	Diagnostic,
+	DiagnosticsProcessor,
+	DiagnosticsProcessorCalculatedPath,
+} from "@internal/diagnostics";
 import {
 	AbsoluteFilePath,
-	AbsoluteFilePathMap,
 	AbsoluteFilePathSet,
-	AnyPath,
 	MixedPathMap,
+	Path,
 } from "@internal/path";
 import {DiagnosticsPrinter} from "@internal/cli-diagnostics";
 import DependencyGraph from "../dependencies/DependencyGraph";
@@ -22,11 +24,9 @@ import {
 	ReporterProgress,
 	ReporterProgressOptions,
 } from "@internal/cli-reporter";
-import DependencyNode from "../dependencies/DependencyNode";
 import {
 	LintCompilerOptions,
 	LintCompilerOptionsDecisions,
-	areAnalyzeDependencyResultsEqual,
 } from "@internal/compiler";
 import {StaticMarkup, markup} from "@internal/markup";
 import {Dict, VoidCallback} from "@internal/typescript-helpers";
@@ -34,12 +34,12 @@ import {FileNotFound} from "@internal/fs";
 import {WatchFilesEvent} from "../fs/glob";
 import {WorkerIntegrationTimings} from "@internal/core/worker/types";
 import {ExtendedMap} from "@internal/collections";
-import {humanizeDuration} from "@internal/string-utils";
 import {ServerRequestGlobArgs} from "../ServerRequest";
+import {Resource} from "@internal/resources";
 
 type CheckWatchChange = {
-	path: AnyPath;
-	diagnostics: Diagnostics;
+	path: Path;
+	diagnostics: Diagnostic[];
 };
 
 export type LinterCompilerOptionsPerFile = Dict<Required<LintCompilerOptions>>;
@@ -89,7 +89,6 @@ class CheckRunner {
 		this.request = checker.request;
 		this.options = checker.options;
 		this.events = events;
-		this.hadDependencyValidationErrors = new AbsoluteFilePathMap();
 		this.timingsByWorker = new ExtendedMap("timingsByWorker", () => new Map());
 
 		this.pendingChanges = new MixedPathMap();
@@ -102,7 +101,6 @@ class CheckRunner {
 
 	public events: WatchEvents;
 
-	private hadDependencyValidationErrors: AbsoluteFilePathMap<boolean>;
 	private checker: Checker;
 	private server: Server;
 	private request: ServerRequest;
@@ -152,7 +150,7 @@ class CheckRunner {
 						key,
 						{
 							...existingTotal,
-							took: existingTotal.took + timing.took,
+							took: existingTotal.took.add(timing.took),
 						},
 					);
 				}
@@ -180,7 +178,7 @@ class CheckRunner {
 		const queue = server.createWorkerQueue({
 			callback: async ({path}) => {
 				const filename = path.join();
-				const progressId = progress.pushText(markup`${path}`);
+				const progressId = progress.pushText(path);
 
 				let compilerOptions = lintCompilerOptionsPerFile[filename];
 
@@ -229,7 +227,7 @@ class CheckRunner {
 					diagnostics,
 					suppressions,
 					save,
-					timingsNs,
+					timings,
 				} = res.value;
 				this.compilerProcessor.addSuppressions(suppressions);
 				this.compilerProcessor.addDiagnostics(diagnostics);
@@ -240,7 +238,7 @@ class CheckRunner {
 				// Update timings
 				const workerId = server.fileAllocator.getOwnerAssert(path).id;
 				const workerTimings = this.timingsByWorker.assert(workerId);
-				for (let [key, timing] of timingsNs) {
+				for (let [key, timing] of timings) {
 					const existing = workerTimings.get(key);
 					if (existing === undefined) {
 						workerTimings.set(key, timing);
@@ -249,7 +247,7 @@ class CheckRunner {
 							key,
 							{
 								...existing,
-								took: existing.took + timing.took,
+								took: existing.took.add(timing.took),
 							},
 						);
 					}
@@ -312,96 +310,51 @@ class CheckRunner {
 
 	private async runGraph(event: WatchFilesEvent): Promise<void> {
 		const {graph} = this;
-		const evictedPaths = event.paths;
 
-		// Get all the current dependency nodes for the evicted files, and invalidate their nodes
-		const oldEvictedNodes: AbsoluteFilePathMap<DependencyNode> = new AbsoluteFilePathMap();
-		for (const path of evictedPaths) {
-			const node = graph.maybeGetNode(path);
-			if (node !== undefined) {
-				oldEvictedNodes.set(path, node);
-				graph.deleteNode(path);
-			}
-		}
-
-		// Refresh only the evicted paths
-		await this.seedGraph({
-			paths: evictedPaths,
-			progressText: event.initial
-				? markup`Analyzing files`
-				: markup`Analyzing changed files`,
-		});
-
-		// Maintain a list of all the dependencies we revalidated
-		const validatedDependencyPaths: AbsoluteFilePathSet = new AbsoluteFilePathSet();
-
-		// Maintain a list of all the dependents that need to be revalidated
-		const validatedDependencyPathDependents: AbsoluteFilePathSet = new AbsoluteFilePathSet();
-
-		// Build a list of dependents to recheck
-		for (const path of evictedPaths) {
-			const newNode = graph.maybeGetNode(path);
-			if (newNode === undefined) {
-				continue;
-			}
-
-			validatedDependencyPaths.add(path);
-
-			// Get the previous node and see if the exports have actually changed
-			const oldNode = oldEvictedNodes.get(path);
-			const sameShape =
-				oldNode !== undefined &&
-				areAnalyzeDependencyResultsEqual(
-					oldNode.analyze.value,
-					newNode.analyze.value,
-				);
-
-			for (const depNode of newNode.getDependents()) {
-				// If the old node has the same shape as the new one, only revalidate the dependent if it had dependency errors
-				if (
-					sameShape &&
-					this.hadDependencyValidationErrors.get(depNode.path) === false
-				) {
-					continue;
+		const dependencyPaths = await graph.evictNodes(
+			event.paths,
+			async (paths, dependents) => {
+				let progressText;
+				if (dependents) {
+					progressText = markup`Analyzing dependents`;
+				} else if (event.initial) {
+					progressText = markup`Analyzing files`;
+				} else {
+					progressText = markup`Analyzing changed files`;
 				}
+				await this.seedGraph({
+					paths,
+					progressText,
+				});
+			},
+		);
 
-				validatedDependencyPaths.add(depNode.path);
-				validatedDependencyPathDependents.add(depNode.path);
-			}
-		}
-
-		// Revalidate dependents
-		if (validatedDependencyPathDependents.size > 0) {
-			await this.seedGraph({
-				progressText: markup`Analyzing dependents`,
-				paths: validatedDependencyPaths,
-			});
-		}
-
-		// Validate connections
-		for (const path of validatedDependencyPaths) {
+		// Revalidate connections
+		for (const path of dependencyPaths) {
 			graph.validate(graph.getNode(path), this.dependencyProcessor);
-			this.hadDependencyValidationErrors.set(
-				path,
-				this.dependencyProcessor.hasDiagnosticsForPath(path),
-			);
 		}
 	}
 
 	public getDiagnosticsForPath(
-		path: AnyPath,
+		path: Path,
 		guaranteedOnly: boolean,
-	): Diagnostics {
+	): Diagnostic[] {
 		const processor = new DiagnosticsProcessor();
 
+		const allCalculated: DiagnosticsProcessorCalculatedPath[] = [];
+
 		for (const subprocessor of this.processors) {
-			const diagnostics = subprocessor.getDiagnosticsForPath(path, false);
-			if (diagnostics !== undefined) {
-				processor.addDiagnostics(
-					guaranteedOnly ? diagnostics.guaranteed : diagnostics.complete,
-				);
-				processor.addSuppressions(diagnostics.suppressions);
+			const calculated = subprocessor.calculatePath(path, {raw: true});
+			if (calculated !== undefined) {
+				processor.addSuppressions(calculated.suppressions);
+				allCalculated.push(calculated);
 			}
+		}
+
+		for (const calculated of allCalculated) {
+			processor.addDiagnostics(
+				guaranteedOnly ? calculated.guaranteed : calculated.complete,
+			);
 		}
 
 		return processor.getDiagnostics();
@@ -424,7 +377,7 @@ class CheckRunner {
 		}
 	}
 
-	private queueChanges(path: AnyPath, guaranteed: boolean) {
+	private queueChanges(path: Path, guaranteed: boolean) {
 		const existing = this.pendingChanges.get(path);
 		if (existing !== undefined && !existing.guaranteed) {
 			return;
@@ -463,7 +416,12 @@ class CheckRunner {
 		// Queue complete diagnostics if they are different than guaranteed
 		for (const processor of this.processors) {
 			for (const path of processor.getPaths()) {
-				const diagnostics = processor.getDiagnosticsForPath(path);
+				const diagnostics = processor.calculatePath(
+					path,
+					{
+						raw: true,
+					},
+				);
 				if (diagnostics !== undefined) {
 					if (diagnostics.complete.length !== diagnostics.guaranteed.length) {
 						this.queueChanges(path, false);
@@ -505,6 +463,7 @@ export default class Checker {
 
 	public createDiagnosticsProcessor(): DiagnosticsProcessor {
 		const processor = this.request.createDiagnosticsProcessor({
+			mutable: true,
 			origins: [
 				{
 					category: "lint",
@@ -530,7 +489,7 @@ export default class Checker {
 	): DiagnosticsPrinter {
 		const {request} = this;
 		const processor = this.createDiagnosticsProcessor();
-		const printer = request.createDiagnosticsPrinter(processor, {streaming});
+		const printer = request.createDiagnosticsPrinter({processor, streaming});
 
 		printer.onFooterPrint(async (reporter, isError) => {
 			if (isError) {
@@ -547,7 +506,8 @@ export default class Checker {
 						markup`Fixes available. To apply safe fixes and formatting run`,
 					);
 					reporter.command("rome check --apply");
-					reporter.info(markup`To choose fix suggestions run`);
+					reporter.br();
+					reporter.info(markup`To interactively choose fix suggestions run`);
 					reporter.command("rome check --review");
 					reporter.br();
 				}
@@ -571,23 +531,21 @@ export default class Checker {
 				if (totalCount === 0) {
 					reporter.warn(markup`No files linted`);
 				} else {
-					reporter.info(
+					reporter.success(
 						markup`<number emphasis>${String(totalCount)}</number> <grammarNumber plural="files" singular="file">${String(
 							totalCount,
-						)}</grammarNumber> linted`,
+						)}</grammarNumber> linted!`,
 					);
 				}
 			}
 
 			const timings = runner.processIntegrationTimings();
 			for (const timing of timings.total.values()) {
-				if (timing.took > 0n) {
-					const ms = Number(timing.took / 1000000n);
+				if (timing.took.valueOf() > 0n) {
 					reporter.warn(
-						markup`Spent <emphasis>${humanizeDuration(
-							ms,
-							{longform: true, allowMilliseconds: true},
-						)}</emphasis> running ${timing.displayName}`,
+						markup`Spent <emphasis>${timing.took.format({
+							longform: true,
+						})}</emphasis> running ${timing.displayName}`,
 					);
 				}
 			}
@@ -606,7 +564,7 @@ export default class Checker {
 		return new CheckRunner(this, {events, graph});
 	}
 
-	public async watch(runner: CheckRunner): Promise<EventSubscription> {
+	public async watch(runner: CheckRunner): Promise<Resource> {
 		const globber = await this.request.glob({
 			args: this.options.args,
 			noun: "lint",
@@ -624,7 +582,7 @@ export default class Checker {
 		const {request} = this;
 		const {reporter} = request;
 
-		const diagnosticsByPath: MixedPathMap<Diagnostics> = new MixedPathMap();
+		const diagnosticsByPath: MixedPathMap<Diagnostic[]> = new MixedPathMap();
 
 		const runner = this.createRunner({
 			onRunStart: () => {
@@ -670,7 +628,7 @@ export default class Checker {
 		const {request} = this;
 		const {reporter} = request;
 
-		const diagnosticsByPath: MixedPathMap<Diagnostics> = new MixedPathMap();
+		const diagnosticsByPath: MixedPathMap<Diagnostic[]> = new MixedPathMap();
 
 		let savedPaths: AbsoluteFilePathSet = new AbsoluteFilePathSet();
 		let paths: AbsoluteFilePathSet = new AbsoluteFilePathSet();
@@ -697,7 +655,9 @@ export default class Checker {
 			},
 			onRunEnd: (res) => {
 				// Update counts
-				savedPaths.addSet(res.savedPaths);
+				for (const path of res.savedPaths) {
+					savedPaths.add(path);
+				}
 				paths = new AbsoluteFilePathSet([...paths, ...res.evictedPaths]);
 			},
 		});
@@ -712,7 +672,7 @@ export default class Checker {
 		});
 
 		const watchEvent = await this.watch(runner);
-		await watchEvent.unsubscribe();
+		await watchEvent.release();
 
 		if (!streaming) {
 			for (const diagnostics of diagnosticsByPath.values()) {

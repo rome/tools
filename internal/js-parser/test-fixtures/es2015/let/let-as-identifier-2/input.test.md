@@ -8,40 +8,37 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: true
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2015/let/let-as-identifier-2/input.js 1:0-2:0
-	path: UIDPath<es2015/let/let-as-identifier-2/input.js>
-	body: Array [
+	body: [
 		JSVariableDeclarationStatement {
-			loc: SourceLocation es2015/let/let-as-identifier-2/input.js 1:0-1:11
 			declaration: JSVariableDeclaration {
 				kind: "var"
-				loc: SourceLocation es2015/let/let-as-identifier-2/input.js 1:0-1:11
-				declarations: Array [
+				declarations: [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "let"
 							loc: SourceLocation es2015/let/let-as-identifier-2/input.js 1:4-1:7 (let)
 						}
-						loc: SourceLocation es2015/let/let-as-identifier-2/input.js 1:4-1:11
 						init: JSNumericLiteral {
 							value: 1
-							format: undefined
 							loc: SourceLocation es2015/let/let-as-identifier-2/input.js 1:10-1:11
 						}
+						loc: SourceLocation es2015/let/let-as-identifier-2/input.js 1:4-1:11
 					}
 				]
+				loc: SourceLocation es2015/let/let-as-identifier-2/input.js 1:0-1:11
 			}
+			loc: SourceLocation es2015/let/let-as-identifier-2/input.js 1:0-1:11
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: true
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2015/let/let-as-identifier-2/input.js>
+	loc: SourceLocation es2015/let/let-as-identifier-2/input.js 1:0-2:0
 }
 ```
 

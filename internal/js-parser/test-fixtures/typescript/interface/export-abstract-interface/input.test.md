@@ -8,57 +8,51 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	loc: SourceLocation typescript/interface/export-abstract-interface/input.ts 1:0-4:0
-	path: UIDPath<typescript/interface/export-abstract-interface/input.ts>
-	syntax: Array ["ts"]
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Expected a semicolon or a line terminator"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:15
-				path: UIDPath<typescript/interface/export-abstract-interface/input.ts>
-				start: Position 1:16
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation typescript/interface/export-abstract-interface/input.ts 1:7-1:15
 			expression: JSReferenceIdentifier {
 				name: "abstract"
 				loc: SourceLocation typescript/interface/export-abstract-interface/input.ts 1:7-1:15 (abstract)
 			}
+			loc: SourceLocation typescript/interface/export-abstract-interface/input.ts 1:7-1:15
 		}
 		TSInterfaceDeclaration {
 			id: JSBindingIdentifier {
 				name: "I"
 				loc: SourceLocation typescript/interface/export-abstract-interface/input.ts 1:26-1:27 (I)
 			}
-			extends: undefined
-			typeParameters: undefined
-			loc: SourceLocation typescript/interface/export-abstract-interface/input.ts 1:16-3:1
 			body: TSInterfaceBody {
-				body: Array []
+				body: []
 				loc: SourceLocation typescript/interface/export-abstract-interface/input.ts 1:28-3:1
+			}
+			loc: SourceLocation typescript/interface/export-abstract-interface/input.ts 1:16-3:1
+		}
+	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "Expected a semicolon or a line terminator"}
+			}
+			location: {
+				language: "js"
+				path: UIDPath<typescript/interface/export-abstract-interface/input.ts>
+				end: Position 1:15
+				start: Position 1:16
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: ["ts"]
+	path: UIDPath<typescript/interface/export-abstract-interface/input.ts>
+	loc: SourceLocation typescript/interface/export-abstract-interface/input.ts 1:0-4:0
 }
 ```
 

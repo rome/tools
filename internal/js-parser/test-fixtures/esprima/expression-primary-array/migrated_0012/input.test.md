@@ -8,44 +8,40 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation esprima/expression-primary-array/migrated_0012/input.js 1:0-2:0
-	path: UIDPath<esprima/expression-primary-array/migrated_0012/input.js>
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation esprima/expression-primary-array/migrated_0012/input.js 1:0-1:18
 			expression: JSReferenceIdentifier {
 				name: "\u2163\u2161\u200a"
 				loc: SourceLocation esprima/expression-primary-array/migrated_0012/input.js 1:0-1:18 (\u2163\u2161\u200a)
 			}
+			loc: SourceLocation esprima/expression-primary-array/migrated_0012/input.js 1:0-1:18
 		}
 	]
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {
+				advice: []
+				category: ["parse"]
 				categoryValue: "js"
-				category: Array ["parse"]
 				message: RAW_MARKUP {value: "Invalid Unicode escape"}
 			}
-			location: Object {
-				integrity: undefined
+			location: {
 				language: "js"
-				sourceText: undefined
-				end: Position 1:18
 				path: UIDPath<esprima/expression-primary-array/migrated_0012/input.js>
+				end: Position 1:18
 				start: Position 1:18
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<esprima/expression-primary-array/migrated_0012/input.js>
+	loc: SourceLocation esprima/expression-primary-array/migrated_0012/input.js 1:0-2:0
 }
 ```
 

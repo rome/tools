@@ -1,7 +1,7 @@
 import {createDiagnosticsCategory} from "./index";
 import {markup} from "@internal/markup";
 import {buildSuggestionAdvice} from "../helpers";
-import {UnknownNumber} from "@internal/math";
+import {UnknownNumber} from "@internal/numbers";
 
 // @internal/consume
 export const consume = createDiagnosticsCategory({

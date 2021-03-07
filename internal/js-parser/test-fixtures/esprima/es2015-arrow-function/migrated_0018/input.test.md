@@ -8,48 +8,43 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation esprima/es2015-arrow-function/migrated_0018/input.js 1:0-2:0
-	path: UIDPath<esprima/es2015-arrow-function/migrated_0018/input.js>
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation esprima/es2015-arrow-function/migrated_0018/input.js 1:0-1:13
 			expression: JSCallExpression {
-				loc: SourceLocation esprima/es2015-arrow-function/migrated_0018/input.js 1:0-1:13
-				callee: JSReferenceIdentifier {
-					name: "foo"
-					loc: SourceLocation esprima/es2015-arrow-function/migrated_0018/input.js 1:0-1:3 (foo)
-				}
-				arguments: Array [
+				arguments: [
 					JSArrowFunctionExpression {
-						loc: SourceLocation esprima/es2015-arrow-function/migrated_0018/input.js 1:4-1:12
 						body: JSBlockStatement {
-							body: Array []
-							directives: Array []
+							body: []
+							directives: []
 							loc: SourceLocation esprima/es2015-arrow-function/migrated_0018/input.js 1:10-1:12
 						}
 						head: JSFunctionHead {
 							async: false
 							hasHoistedVars: false
-							params: Array []
-							rest: undefined
-							returnType: undefined
-							thisType: undefined
+							params: []
 							loc: SourceLocation esprima/es2015-arrow-function/migrated_0018/input.js 1:4-1:9
 						}
+						loc: SourceLocation esprima/es2015-arrow-function/migrated_0018/input.js 1:4-1:12
 					}
 				]
+				callee: JSReferenceIdentifier {
+					name: "foo"
+					loc: SourceLocation esprima/es2015-arrow-function/migrated_0018/input.js 1:0-1:3 (foo)
+				}
+				loc: SourceLocation esprima/es2015-arrow-function/migrated_0018/input.js 1:0-1:13
 			}
+			loc: SourceLocation esprima/es2015-arrow-function/migrated_0018/input.js 1:0-1:13
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<esprima/es2015-arrow-function/migrated_0018/input.js>
+	loc: SourceLocation esprima/es2015-arrow-function/migrated_0018/input.js 1:0-2:0
 }
 ```
 

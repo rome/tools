@@ -8,30 +8,16 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation core/uncategorised/122/input.js 1:0-1:38
-	path: UIDPath<core/uncategorised/122/input.js>
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation core/uncategorised/122/input.js 1:0-1:38
 			expression: JSMemberExpression {
-				loc: SourceLocation core/uncategorised/122/input.js 1:0-1:38
 				object: JSReferenceIdentifier {
 					name: "universe"
 					loc: SourceLocation core/uncategorised/122/input.js 1:0-1:8 (universe)
 				}
 				property: JSComputedMemberProperty {
 					value: JSSequenceExpression {
-						loc: SourceLocation core/uncategorised/122/input.js 1:9-1:37
-						expressions: Array [
+						expressions: [
 							JSReferenceIdentifier {
 								name: "galaxyName"
 								loc: SourceLocation core/uncategorised/122/input.js 1:9-1:19 (galaxyName)
@@ -41,12 +27,24 @@ JSRoot {
 								loc: SourceLocation core/uncategorised/122/input.js 1:21-1:37 (otherUselessName)
 							}
 						]
+						loc: SourceLocation core/uncategorised/122/input.js 1:9-1:37
 					}
 					loc: SourceLocation core/uncategorised/122/input.js 1:8-1:38
 				}
+				loc: SourceLocation core/uncategorised/122/input.js 1:0-1:38
 			}
+			loc: SourceLocation core/uncategorised/122/input.js 1:0-1:38
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<core/uncategorised/122/input.js>
+	loc: SourceLocation core/uncategorised/122/input.js 1:0-1:38
 }
 ```
 

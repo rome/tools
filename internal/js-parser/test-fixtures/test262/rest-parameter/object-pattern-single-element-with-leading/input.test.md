@@ -8,57 +8,32 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation test262/rest-parameter/object-pattern-single-element-with-leading/input.js 1:0-2:0
-	path: UIDPath<test262/rest-parameter/object-pattern-single-element-with-leading/input.js>
-	body: Array [
+	body: [
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "singleElementWithLeading"
 				loc: SourceLocation test262/rest-parameter/object-pattern-single-element-with-leading/input.js 1:9-1:33 (singleElementWithLeading)
 			}
-			loc: SourceLocation test262/rest-parameter/object-pattern-single-element-with-leading/input.js 1:0-1:50
 			body: JSBlockStatement {
-				body: Array []
-				directives: Array []
+				body: []
+				directives: []
 				loc: SourceLocation test262/rest-parameter/object-pattern-single-element-with-leading/input.js 1:48-1:50
 			}
 			head: JSFunctionHead {
 				async: false
 				generator: false
 				hasHoistedVars: false
-				returnType: undefined
-				thisType: undefined
-				typeParameters: undefined
-				loc: SourceLocation test262/rest-parameter/object-pattern-single-element-with-leading/input.js 1:33-1:47
-				params: Array [
+				params: [
 					JSBindingIdentifier {
 						name: "x"
-						loc: SourceLocation test262/rest-parameter/object-pattern-single-element-with-leading/input.js 1:34-1:35 (x)
 						meta: JSPatternMeta {
-							optional: undefined
-							typeAnnotation: undefined
 							loc: SourceLocation test262/rest-parameter/object-pattern-single-element-with-leading/input.js 1:34-1:35
 						}
+						loc: SourceLocation test262/rest-parameter/object-pattern-single-element-with-leading/input.js 1:34-1:35 (x)
 					}
 				]
 				rest: JSBindingObjectPattern {
-					rest: undefined
-					loc: SourceLocation test262/rest-parameter/object-pattern-single-element-with-leading/input.js 1:40-1:46
-					meta: JSPatternMeta {
-						optional: undefined
-						typeAnnotation: undefined
-						loc: SourceLocation test262/rest-parameter/object-pattern-single-element-with-leading/input.js 1:40-1:46
-					}
-					properties: Array [
+					properties: [
 						JSBindingObjectPatternProperty {
 							key: JSStaticPropertyKey {
 								value: JSIdentifier {
@@ -74,10 +49,25 @@ JSRoot {
 							loc: SourceLocation test262/rest-parameter/object-pattern-single-element-with-leading/input.js 1:41-1:45
 						}
 					]
+					meta: JSPatternMeta {
+						loc: SourceLocation test262/rest-parameter/object-pattern-single-element-with-leading/input.js 1:40-1:46
+					}
+					loc: SourceLocation test262/rest-parameter/object-pattern-single-element-with-leading/input.js 1:40-1:46
 				}
+				loc: SourceLocation test262/rest-parameter/object-pattern-single-element-with-leading/input.js 1:33-1:47
 			}
+			loc: SourceLocation test262/rest-parameter/object-pattern-single-element-with-leading/input.js 1:0-1:50
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<test262/rest-parameter/object-pattern-single-element-with-leading/input.js>
+	loc: SourceLocation test262/rest-parameter/object-pattern-single-element-with-leading/input.js 1:0-2:0
 }
 ```
 

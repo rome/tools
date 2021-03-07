@@ -8,50 +8,12 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2015/destructuring/parenthesized-lhs-object/input.js 1:0-1:10
-	path: UIDPath<es2015/destructuring/parenthesized-lhs-object/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Invalid parenthesized binding"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:4
-				path: UIDPath<es2015/destructuring/parenthesized-lhs-object/input.js>
-				start: Position 1:1
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation es2015/destructuring/parenthesized-lhs-object/input.js 1:0-1:10
 			expression: JSAssignmentExpression {
 				operator: "="
-				loc: SourceLocation es2015/destructuring/parenthesized-lhs-object/input.js 1:0-1:9
-				right: JSNumericLiteral {
-					value: 2
-					format: undefined
-					loc: SourceLocation es2015/destructuring/parenthesized-lhs-object/input.js 1:8-1:9
-				}
 				left: JSAssignmentObjectPattern {
-					rest: undefined
-					loc: SourceLocation es2015/destructuring/parenthesized-lhs-object/input.js 1:1-1:4
-					properties: Array [
+					properties: [
 						JSAssignmentObjectPatternProperty {
 							key: JSStaticPropertyKey {
 								value: JSIdentifier {
@@ -67,10 +29,42 @@ JSRoot {
 							loc: SourceLocation es2015/destructuring/parenthesized-lhs-object/input.js 1:2-1:3
 						}
 					]
+					loc: SourceLocation es2015/destructuring/parenthesized-lhs-object/input.js 1:1-1:4
 				}
+				right: JSNumericLiteral {
+					value: 2
+					loc: SourceLocation es2015/destructuring/parenthesized-lhs-object/input.js 1:8-1:9
+				}
+				loc: SourceLocation es2015/destructuring/parenthesized-lhs-object/input.js 1:0-1:9
+			}
+			loc: SourceLocation es2015/destructuring/parenthesized-lhs-object/input.js 1:0-1:10
+		}
+	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "Invalid parenthesized binding"}
+			}
+			location: {
+				language: "js"
+				path: UIDPath<es2015/destructuring/parenthesized-lhs-object/input.js>
+				end: Position 1:4
+				start: Position 1:1
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2015/destructuring/parenthesized-lhs-object/input.js>
+	loc: SourceLocation es2015/destructuring/parenthesized-lhs-object/input.js 1:0-1:10
 }
 ```
 

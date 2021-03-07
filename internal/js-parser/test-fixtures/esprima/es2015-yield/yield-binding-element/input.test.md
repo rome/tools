@@ -8,29 +8,14 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: true
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation esprima/es2015-yield/yield-binding-element/input.js 1:0-2:0
-	path: UIDPath<esprima/es2015-yield/yield-binding-element/input.js>
-	body: Array [
+	body: [
 		JSVariableDeclarationStatement {
-			loc: SourceLocation esprima/es2015-yield/yield-binding-element/input.js 1:0-1:23
 			declaration: JSVariableDeclaration {
 				kind: "var"
-				loc: SourceLocation esprima/es2015-yield/yield-binding-element/input.js 1:0-1:23
-				declarations: Array [
+				declarations: [
 					JSVariableDeclarator {
 						id: JSBindingObjectPattern {
-							rest: undefined
-							loc: SourceLocation esprima/es2015-yield/yield-binding-element/input.js 1:4-1:16
-							properties: Array [
+							properties: [
 								JSBindingObjectPatternProperty {
 									key: JSStaticPropertyKey {
 										value: JSIdentifier {
@@ -46,17 +31,29 @@ JSRoot {
 									loc: SourceLocation esprima/es2015-yield/yield-binding-element/input.js 1:6-1:14
 								}
 							]
+							loc: SourceLocation esprima/es2015-yield/yield-binding-element/input.js 1:4-1:16
 						}
-						loc: SourceLocation esprima/es2015-yield/yield-binding-element/input.js 1:4-1:22
 						init: JSReferenceIdentifier {
 							name: "foo"
 							loc: SourceLocation esprima/es2015-yield/yield-binding-element/input.js 1:19-1:22 (foo)
 						}
+						loc: SourceLocation esprima/es2015-yield/yield-binding-element/input.js 1:4-1:22
 					}
 				]
+				loc: SourceLocation esprima/es2015-yield/yield-binding-element/input.js 1:0-1:23
 			}
+			loc: SourceLocation esprima/es2015-yield/yield-binding-element/input.js 1:0-1:23
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: true
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<esprima/es2015-yield/yield-binding-element/input.js>
+	loc: SourceLocation esprima/es2015-yield/yield-binding-element/input.js 1:0-2:0
 }
 ```
 

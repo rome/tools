@@ -8,47 +8,43 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2020/dynamic-import/invalid-trailing-comma/input.js 1:0-1:15
-	path: UIDPath<es2020/dynamic-import/invalid-trailing-comma/input.js>
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation es2020/dynamic-import/invalid-trailing-comma/input.js 1:0-1:15
 			expression: JSImportCall {
-				loc: SourceLocation es2020/dynamic-import/invalid-trailing-comma/input.js 1:6-1:14
 				argument: JSStringLiteral {
 					value: "foo"
 					loc: SourceLocation es2020/dynamic-import/invalid-trailing-comma/input.js 1:7-1:12
 				}
+				loc: SourceLocation es2020/dynamic-import/invalid-trailing-comma/input.js 1:6-1:14
 			}
+			loc: SourceLocation es2020/dynamic-import/invalid-trailing-comma/input.js 1:0-1:15
 		}
 	]
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {
+				advice: []
+				category: ["parse"]
 				categoryValue: "js"
-				category: Array ["parse"]
 				message: RAW_MARKUP {value: "Trailing comma is disallowed inside import(...) arguments"}
 			}
-			location: Object {
-				integrity: undefined
+			location: {
 				language: "js"
-				sourceText: undefined
-				end: Position 1:13
 				path: UIDPath<es2020/dynamic-import/invalid-trailing-comma/input.js>
+				end: Position 1:13
 				start: Position 1:12
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2020/dynamic-import/invalid-trailing-comma/input.js>
+	loc: SourceLocation es2020/dynamic-import/invalid-trailing-comma/input.js 1:0-1:15
 }
 ```
 

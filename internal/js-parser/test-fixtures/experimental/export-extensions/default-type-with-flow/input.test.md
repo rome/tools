@@ -8,36 +8,32 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	syntax: Array []
-	loc: SourceLocation experimental/export-extensions/default-type-with-flow/input.js 1:0-2:0
-	path: UIDPath<experimental/export-extensions/default-type-with-flow/input.js>
-	body: Array [
+	body: [
 		JSExportExternalDeclaration {
-			exportKind: undefined
-			namedSpecifiers: Array []
-			namespaceSpecifier: undefined
-			loc: SourceLocation experimental/export-extensions/default-type-with-flow/input.js 1:0-1:24
-			source: JSStringLiteral {
-				value: "test"
-				loc: SourceLocation experimental/export-extensions/default-type-with-flow/input.js 1:17-1:23
-			}
+			namedSpecifiers: []
 			defaultSpecifier: JSExportDefaultSpecifier {
-				loc: SourceLocation experimental/export-extensions/default-type-with-flow/input.js 1:7-1:11
 				exported: JSIdentifier {
 					name: "type"
 					loc: SourceLocation experimental/export-extensions/default-type-with-flow/input.js 1:7-1:11 (type)
 				}
+				loc: SourceLocation experimental/export-extensions/default-type-with-flow/input.js 1:7-1:11
 			}
+			source: JSStringLiteral {
+				value: "test"
+				loc: SourceLocation experimental/export-extensions/default-type-with-flow/input.js 1:17-1:23
+			}
+			loc: SourceLocation experimental/export-extensions/default-type-with-flow/input.js 1:0-1:24
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: []
+	path: UIDPath<experimental/export-extensions/default-type-with-flow/input.js>
+	loc: SourceLocation experimental/export-extensions/default-type-with-flow/input.js 1:0-2:0
 }
 ```
 

@@ -8,58 +8,10 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: true
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	syntax: Array []
-	loc: SourceLocation es2015/uncategorised/392/input.js 1:0-2:0
-	path: UIDPath<es2015/uncategorised/392/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "ES2015 named imports do not destructure. Use another statement for destructuring after the import."}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:18
-				path: UIDPath<es2015/uncategorised/392/input.js>
-				start: Position 1:19
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSImportDeclaration {
-			importKind: undefined
-			namespaceSpecifier: undefined
-			loc: SourceLocation es2015/uncategorised/392/input.js 1:0-1:24
-			source: JSStringLiteral {
-				value: ""
-				loc: SourceLocation es2015/uncategorised/392/input.js 1:0-1:24
-			}
-			defaultSpecifier: JSImportDefaultSpecifier {
-				loc: SourceLocation es2015/uncategorised/392/input.js 1:0-1:10
-				local: JSImportSpecifierLocal {
-					name: JSBindingIdentifier {
-						name: "foo"
-						loc: SourceLocation es2015/uncategorised/392/input.js 1:7-1:10 (foo)
-					}
-					importKind: undefined
-					loc: SourceLocation es2015/uncategorised/392/input.js 1:7-1:10
-				}
-			}
-			namedSpecifiers: Array [
+			namedSpecifiers: [
 				JSImportSpecifier {
-					loc: SourceLocation es2015/uncategorised/392/input.js 1:14-1:17
 					imported: JSIdentifier {
 						name: "bar"
 						loc: SourceLocation es2015/uncategorised/392/input.js 1:14-1:17 (bar)
@@ -69,12 +21,11 @@ JSRoot {
 							name: "bar"
 							loc: SourceLocation es2015/uncategorised/392/input.js 1:14-1:17 (bar)
 						}
-						importKind: undefined
 						loc: SourceLocation es2015/uncategorised/392/input.js 1:14-1:17
 					}
+					loc: SourceLocation es2015/uncategorised/392/input.js 1:14-1:17
 				}
 				JSImportSpecifier {
-					loc: SourceLocation es2015/uncategorised/392/input.js 1:19-1:20
 					imported: JSIdentifier {
 						name: ""
 						loc: SourceLocation es2015/uncategorised/392/input.js 1:19-1:20 ()
@@ -84,12 +35,11 @@ JSRoot {
 							name: ""
 							loc: SourceLocation es2015/uncategorised/392/input.js 1:19-1:20 ()
 						}
-						importKind: undefined
 						loc: SourceLocation es2015/uncategorised/392/input.js 1:19-1:20
 					}
+					loc: SourceLocation es2015/uncategorised/392/input.js 1:19-1:20
 				}
 				JSImportSpecifier {
-					loc: SourceLocation es2015/uncategorised/392/input.js 1:21-1:22
 					imported: JSIdentifier {
 						name: "a"
 						loc: SourceLocation es2015/uncategorised/392/input.js 1:21-1:22 (a)
@@ -99,34 +49,74 @@ JSRoot {
 							name: "a"
 							loc: SourceLocation es2015/uncategorised/392/input.js 1:21-1:22 (a)
 						}
-						importKind: undefined
 						loc: SourceLocation es2015/uncategorised/392/input.js 1:21-1:22
 					}
+					loc: SourceLocation es2015/uncategorised/392/input.js 1:21-1:22
 				}
 			]
+			defaultSpecifier: JSImportDefaultSpecifier {
+				local: JSImportSpecifierLocal {
+					name: JSBindingIdentifier {
+						name: "foo"
+						loc: SourceLocation es2015/uncategorised/392/input.js 1:7-1:10 (foo)
+					}
+					loc: SourceLocation es2015/uncategorised/392/input.js 1:7-1:10
+				}
+				loc: SourceLocation es2015/uncategorised/392/input.js 1:0-1:10
+			}
+			source: JSStringLiteral {
+				value: ""
+				loc: SourceLocation es2015/uncategorised/392/input.js 1:0-1:24
+			}
+			loc: SourceLocation es2015/uncategorised/392/input.js 1:0-1:24
 		}
 		JSExpressionStatement {
-			loc: SourceLocation es2015/uncategorised/392/input.js 1:25-1:26
 			expression: JSReferenceIdentifier {
 				name: "INVALID_PLACEHOLDER"
 				loc: SourceLocation es2015/uncategorised/392/input.js 1:25-1:26
 			}
+			loc: SourceLocation es2015/uncategorised/392/input.js 1:25-1:26
 		}
 		JSExpressionStatement {
-			loc: SourceLocation es2015/uncategorised/392/input.js 1:27-1:31
 			expression: JSReferenceIdentifier {
 				name: "from"
 				loc: SourceLocation es2015/uncategorised/392/input.js 1:27-1:31 (from)
 			}
+			loc: SourceLocation es2015/uncategorised/392/input.js 1:27-1:31
 		}
 		JSExpressionStatement {
-			loc: SourceLocation es2015/uncategorised/392/input.js 1:32-1:44
 			expression: JSStringLiteral {
 				value: "my-module"
 				loc: SourceLocation es2015/uncategorised/392/input.js 1:32-1:43
 			}
+			loc: SourceLocation es2015/uncategorised/392/input.js 1:32-1:44
 		}
 	]
+	comments: []
+	corrupt: true
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "ES2015 named imports do not destructure. Use another statement for destructuring after the import."}
+			}
+			location: {
+				language: "js"
+				path: UIDPath<es2015/uncategorised/392/input.js>
+				end: Position 1:18
+				start: Position 1:19
+			}
+		}
+	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: []
+	path: UIDPath<es2015/uncategorised/392/input.js>
+	loc: SourceLocation es2015/uncategorised/392/input.js 1:0-2:0
 }
 ```
 

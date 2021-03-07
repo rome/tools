@@ -8,93 +8,83 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation core/uncategorised/518/input.js 1:0-1:36
-	path: UIDPath<core/uncategorised/518/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:16
-				path: UIDPath<core/uncategorised/518/input.js>
-				start: Position 1:15
-			}
-			description: Object {
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Argument <emphasis>t</emphasis> name clash in strict mode"}
-				advice: Array [
-					log {
-						category: "info"
-						text: RAW_MARKUP {value: "Defined already here"}
-					}
-					frame {location: SourceLocation core/uncategorised/518/input.js 1:15-1:16 (t)}
-				]
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation core/uncategorised/518/input.js 1:0-1:36
 			expression: JSFunctionExpression {
 				id: JSBindingIdentifier {
 					name: "a"
 					loc: SourceLocation core/uncategorised/518/input.js 1:10-1:11 (a)
 				}
-				loc: SourceLocation core/uncategorised/518/input.js 1:1-1:35
 				body: JSBlockStatement {
-					body: Array []
-					loc: SourceLocation core/uncategorised/518/input.js 1:18-1:35
-					directives: Array [
+					body: []
+					directives: [
 						JSDirective {
 							value: "use strict"
 							loc: SourceLocation core/uncategorised/518/input.js 1:20-1:33
 						}
 					]
+					loc: SourceLocation core/uncategorised/518/input.js 1:18-1:35
 				}
 				head: JSFunctionHead {
 					async: false
 					generator: false
 					hasHoistedVars: false
-					rest: undefined
-					returnType: undefined
-					thisType: undefined
-					typeParameters: undefined
-					loc: SourceLocation core/uncategorised/518/input.js 1:11-1:17
-					params: Array [
+					params: [
 						JSBindingIdentifier {
 							name: "t"
-							loc: SourceLocation core/uncategorised/518/input.js 1:12-1:13 (t)
 							meta: JSPatternMeta {
-								optional: undefined
-								typeAnnotation: undefined
 								loc: SourceLocation core/uncategorised/518/input.js 1:12-1:13
 							}
+							loc: SourceLocation core/uncategorised/518/input.js 1:12-1:13 (t)
 						}
 						JSBindingIdentifier {
 							name: "t"
-							loc: SourceLocation core/uncategorised/518/input.js 1:15-1:16 (t)
 							meta: JSPatternMeta {
-								optional: undefined
-								typeAnnotation: undefined
 								loc: SourceLocation core/uncategorised/518/input.js 1:15-1:16
 							}
+							loc: SourceLocation core/uncategorised/518/input.js 1:15-1:16 (t)
 						}
 					]
+					loc: SourceLocation core/uncategorised/518/input.js 1:11-1:17
 				}
+				loc: SourceLocation core/uncategorised/518/input.js 1:1-1:35
+			}
+			loc: SourceLocation core/uncategorised/518/input.js 1:0-1:36
+		}
+	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {
+				advice: [
+					log {
+						category: "info"
+						text: RAW_MARKUP {value: "Defined already here"}
+					}
+					frame {
+						location: SourceLocation core/uncategorised/518/input.js 1:15-1:16 (t)
+					}
+				]
+				category: ["parse"]
+				categoryValue: "js"
+				message: [RAW_MARKUP {value: "Argument <emphasis>"}, "t", RAW_MARKUP {value: "</emphasis> name clash in strict mode"}]
+			}
+			location: {
+				language: "js"
+				path: UIDPath<core/uncategorised/518/input.js>
+				end: Position 1:16
+				start: Position 1:15
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<core/uncategorised/518/input.js>
+	loc: SourceLocation core/uncategorised/518/input.js 1:0-1:36
 }
 ```
 

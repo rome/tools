@@ -8,53 +8,49 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation esprima/invalid-syntax/migrated_0030/input.js 1:0-2:0
-	path: UIDPath<esprima/invalid-syntax/migrated_0030/input.js>
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation esprima/invalid-syntax/migrated_0030/input.js 1:0-1:7
 			expression: JSBinaryExpression {
 				operator: "in"
-				loc: SourceLocation esprima/invalid-syntax/migrated_0030/input.js 1:0-1:7
-				right: JSArrayExpression {
-					elements: Array []
-					loc: SourceLocation esprima/invalid-syntax/migrated_0030/input.js 1:5-1:7
-				}
 				left: JSNumericLiteral {
 					value: 3
 					format: "hex"
 					loc: SourceLocation esprima/invalid-syntax/migrated_0030/input.js 1:0-1:3
 				}
+				right: JSArrayExpression {
+					elements: []
+					loc: SourceLocation esprima/invalid-syntax/migrated_0030/input.js 1:5-1:7
+				}
+				loc: SourceLocation esprima/invalid-syntax/migrated_0030/input.js 1:0-1:7
 			}
+			loc: SourceLocation esprima/invalid-syntax/migrated_0030/input.js 1:0-1:7
 		}
 	]
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {
+				advice: []
+				category: ["parse"]
 				categoryValue: "js"
-				category: Array ["parse"]
 				message: RAW_MARKUP {value: "Identifier directly after number"}
 			}
-			location: Object {
-				integrity: undefined
+			location: {
 				language: "js"
-				sourceText: undefined
-				end: Position 1:3
 				path: UIDPath<esprima/invalid-syntax/migrated_0030/input.js>
+				end: Position 1:3
 				start: Position 1:3
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<esprima/invalid-syntax/migrated_0030/input.js>
+	loc: SourceLocation esprima/invalid-syntax/migrated_0030/input.js 1:0-2:0
 }
 ```
 

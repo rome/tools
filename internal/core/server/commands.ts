@@ -21,7 +21,7 @@ import check from "./commands/check";
 import ci from "./commands/ci";
 import test from "./commands/test";
 import noop from "./commands/noop";
-import json from "./commands/json";
+import develop from "./commands/develop";
 import autoConfig from "./commands/autoConfig";
 import * as recover from "./commands/recover";
 import * as cache from "./commands/cache";
@@ -38,7 +38,7 @@ import {CommandName, SharedCommand} from "../common/commands";
 import {DiagnosticsPrinter} from "@internal/cli-diagnostics";
 import {StaticMarkup} from "@internal/markup";
 import init from "@internal/core/server/commands/init";
-import {RSERValue} from "@internal/codec-binary-serial";
+import {RSERValue} from "@internal/binary-transport";
 
 export type ServerCommandReturn = undefined | Promise<RSERValue>;
 
@@ -113,7 +113,7 @@ serverCommands.set("config set-directory", config.setDirectory);
 serverCommands.set("format", format);
 serverCommands.set("init", init);
 serverCommands.set("lsp", lsp);
-serverCommands.set("json", json);
+serverCommands.set("develop", develop);
 serverCommands.set("noop", noop);
 serverCommands.set("parse", parse);
 serverCommands.set("publish", publish);

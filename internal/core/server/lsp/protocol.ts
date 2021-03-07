@@ -3,9 +3,10 @@ import {JSONObject, JSONPropertyValue} from "@internal/codec-config";
 import {Consumer, consumeUnknown} from "@internal/consume";
 import {LSPRequestMessage, LSPResponseMessage} from "./types";
 import {Reporter} from "@internal/cli-reporter";
-import {AnyMarkup, markup} from "@internal/markup";
+import {Markup, markup} from "@internal/markup";
 import prettyFormat from "@internal/pretty-format";
 import {DIAGNOSTIC_CATEGORIES} from "@internal/diagnostics";
+import {getByteLength} from "@internal/binary";
 
 type Status = "IDLE" | "WAITING_FOR_HEADERS_END" | "WAITING_FOR_RESPONSE_END";
 
@@ -57,10 +58,10 @@ export class LSPTransport {
 		this.requestIdCounter = 0;
 		this.requestCallbacks = new Map();
 
-		this.requestEvent = new Event({name: "request"});
-		this.notificationEvent = new Event({name: "notification"});
-		this.writeEvent = new Event({name: "write"});
-		this.errorEvent = new Event({name: "error"});
+		this.requestEvent = new Event("LSPTransport.request");
+		this.notificationEvent = new Event("LSPTransport.notification");
+		this.writeEvent = new Event("LSPTransport.write");
+		this.errorEvent = new Event("LSPTransport.error");
 	}
 
 	private nextHeaders: undefined | Headers;
@@ -84,7 +85,7 @@ export class LSPTransport {
 
 	public write(res: JSONObject) {
 		const json = JSON.stringify(res);
-		const out = `Content-Length: ${Buffer.byteLength(json)}${HEADERS_END}${json}`;
+		const out = `Content-Length: ${getByteLength(json)}${HEADERS_END}${json}`;
 		this.writeEvent.send(out);
 	}
 
@@ -166,7 +167,7 @@ export class LSPTransport {
 		}
 	}
 
-	private log(message: AnyMarkup) {
+	private log(message: Markup) {
 		this.reporter.info(markup` ${message}`);
 	}
 
@@ -218,7 +219,7 @@ export class LSPTransport {
 					// Reset headers and trim content
 					this.nextHeaders = undefined;
 					this.buffer = this.buffer.slice(headers.expectedLength);
-					this.bufferLength = Buffer.byteLength(this.buffer);
+					this.bufferLength = getByteLength(this.buffer);
 
 					// Process rest of the buffer
 					this.setStatus("IDLE");
@@ -231,7 +232,7 @@ export class LSPTransport {
 
 	public append(data: string) {
 		this.buffer += data;
-		this.bufferLength += Buffer.byteLength(data);
+		this.bufferLength += getByteLength(data);
 		this.process();
 	}
 }

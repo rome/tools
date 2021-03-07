@@ -8,39 +8,18 @@
 
 ```javascript
 JSRoot {
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	loc: SourceLocation typescript/types/object-shorthand/input.ts 1:0-6:0
-	path: UIDPath<typescript/types/object-shorthand/input.ts>
-	syntax: Array ["ts"]
-	comments: Array [
-		CommentLine {
-			id: "0"
-			value: " actually put."
-			loc: SourceLocation typescript/types/object-shorthand/input.ts 3:4-3:20
-		}
-	]
-	body: Array [
+	body: [
 		JSVariableDeclarationStatement {
-			loc: SourceLocation typescript/types/object-shorthand/input.ts 1:0-5:2
 			declaration: JSVariableDeclaration {
 				kind: "const"
-				loc: SourceLocation typescript/types/object-shorthand/input.ts 1:0-5:2
-				declarations: Array [
+				declarations: [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "table"
 							loc: SourceLocation typescript/types/object-shorthand/input.ts 1:6-1:11 (table)
 						}
-						loc: SourceLocation typescript/types/object-shorthand/input.ts 1:6-5:1
 						init: JSObjectExpression {
-							loc: SourceLocation typescript/types/object-shorthand/input.ts 1:14-5:1
-							properties: Array [
+							properties: [
 								JSObjectMethod {
 									kind: "method"
 									key: JSStaticPropertyKey {
@@ -50,51 +29,42 @@ JSRoot {
 										}
 										loc: SourceLocation typescript/types/object-shorthand/input.ts 2:2-2:5
 									}
-									loc: SourceLocation typescript/types/object-shorthand/input.ts 2:2-4:3
 									body: JSBlockStatement {
-										body: Array []
-										directives: Array []
-										trailingComments: Array []
-										innerComments: Array ["0"]
+										body: []
+										directives: []
+										innerComments: ["0"]
+										trailingComments: []
 										loc: SourceLocation typescript/types/object-shorthand/input.ts 2:42-4:3
 									}
 									head: JSFunctionHead {
 										async: false
 										generator: false
 										hasHoistedVars: false
-										rest: undefined
-										returnType: undefined
-										thisType: undefined
-										loc: SourceLocation typescript/types/object-shorthand/input.ts 2:31-2:41
-										params: Array [
+										params: [
 											JSBindingIdentifier {
 												name: "value"
-												loc: SourceLocation typescript/types/object-shorthand/input.ts 2:32-2:37 (value)
 												meta: JSPatternMeta {
-													optional: undefined
-													loc: SourceLocation typescript/types/object-shorthand/input.ts 2:32-2:40
 													typeAnnotation: TSTypeReference {
-														typeParameters: undefined
-														loc: SourceLocation typescript/types/object-shorthand/input.ts 2:39-2:40
 														typeName: JSReferenceIdentifier {
 															name: "T"
 															loc: SourceLocation typescript/types/object-shorthand/input.ts 2:39-2:40 (T)
 														}
+														loc: SourceLocation typescript/types/object-shorthand/input.ts 2:39-2:40
 													}
+													loc: SourceLocation typescript/types/object-shorthand/input.ts 2:32-2:40
 												}
+												loc: SourceLocation typescript/types/object-shorthand/input.ts 2:32-2:37 (value)
 											}
 										]
 										typeParameters: TSTypeParameterDeclaration {
-											loc: SourceLocation typescript/types/object-shorthand/input.ts 2:5-2:31
-											params: Array [
+											params: [
 												TSTypeParameter {
 													name: "T"
-													default: undefined
-													loc: SourceLocation typescript/types/object-shorthand/input.ts 2:6-2:30
 													constraint: TSObjectTypeAnnotation {
-														loc: SourceLocation typescript/types/object-shorthand/input.ts 2:16-2:30
-														members: Array [
+														members: [
 															TSPropertySignature {
+																optional: false
+																readonly: false
 																key: JSStaticPropertyKey {
 																	value: JSIdentifier {
 																		name: "id"
@@ -102,25 +72,49 @@ JSRoot {
 																	}
 																	loc: SourceLocation typescript/types/object-shorthand/input.ts 2:18-2:20
 																}
-																optional: false
-																readonly: false
+																typeAnnotation: TSStringKeywordTypeAnnotation {
+																	loc: SourceLocation typescript/types/object-shorthand/input.ts 2:22-2:28
+																}
 																loc: SourceLocation typescript/types/object-shorthand/input.ts 2:18-2:28
-																typeAnnotation: TSStringKeywordTypeAnnotation {loc: SourceLocation typescript/types/object-shorthand/input.ts 2:22-2:28}
 															}
 														]
+														loc: SourceLocation typescript/types/object-shorthand/input.ts 2:16-2:30
 													}
+													loc: SourceLocation typescript/types/object-shorthand/input.ts 2:6-2:30
 												}
 											]
+											loc: SourceLocation typescript/types/object-shorthand/input.ts 2:5-2:31
 										}
+										loc: SourceLocation typescript/types/object-shorthand/input.ts 2:31-2:41
 									}
+									loc: SourceLocation typescript/types/object-shorthand/input.ts 2:2-4:3
 								}
 							]
+							loc: SourceLocation typescript/types/object-shorthand/input.ts 1:14-5:1
 						}
+						loc: SourceLocation typescript/types/object-shorthand/input.ts 1:6-5:1
 					}
 				]
+				loc: SourceLocation typescript/types/object-shorthand/input.ts 1:0-5:2
 			}
+			loc: SourceLocation typescript/types/object-shorthand/input.ts 1:0-5:2
 		}
 	]
+	comments: [
+		CommentLine {
+			id: "0"
+			value: " actually put."
+			loc: SourceLocation typescript/types/object-shorthand/input.ts 3:4-3:20
+		}
+	]
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: ["ts"]
+	path: UIDPath<typescript/types/object-shorthand/input.ts>
+	loc: SourceLocation typescript/types/object-shorthand/input.ts 1:0-6:0
 }
 ```
 

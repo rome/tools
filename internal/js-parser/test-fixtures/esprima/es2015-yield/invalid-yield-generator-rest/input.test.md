@@ -8,96 +8,81 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation esprima/es2015-yield/invalid-yield-generator-rest/input.js 1:0-2:0
-	path: UIDPath<esprima/es2015-yield/invalid-yield-generator-rest/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Can not use 'yield' as identifier inside a generator"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:29
-				path: UIDPath<esprima/es2015-yield/invalid-yield-generator-rest/input.js>
-				start: Position 1:24
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "g"
 				loc: SourceLocation esprima/es2015-yield/invalid-yield-generator-rest/input.js 1:10-1:11 (g)
 			}
-			loc: SourceLocation esprima/es2015-yield/invalid-yield-generator-rest/input.js 1:0-1:32
 			body: JSBlockStatement {
-				body: Array []
-				directives: Array []
+				body: []
+				directives: []
 				loc: SourceLocation esprima/es2015-yield/invalid-yield-generator-rest/input.js 1:30-1:32
 			}
 			head: JSFunctionHead {
 				async: false
 				generator: true
 				hasHoistedVars: false
-				returnType: undefined
-				thisType: undefined
-				typeParameters: undefined
-				loc: SourceLocation esprima/es2015-yield/invalid-yield-generator-rest/input.js 1:11-1:30
-				rest: JSBindingIdentifier {
-					name: "yield"
-					loc: SourceLocation esprima/es2015-yield/invalid-yield-generator-rest/input.js 1:24-1:29 (yield)
-					meta: JSPatternMeta {
-						optional: undefined
-						typeAnnotation: undefined
-						loc: SourceLocation esprima/es2015-yield/invalid-yield-generator-rest/input.js 1:24-1:29
-					}
-				}
-				params: Array [
+				params: [
 					JSBindingIdentifier {
 						name: "a"
-						loc: SourceLocation esprima/es2015-yield/invalid-yield-generator-rest/input.js 1:12-1:13 (a)
 						meta: JSPatternMeta {
-							optional: undefined
-							typeAnnotation: undefined
 							loc: SourceLocation esprima/es2015-yield/invalid-yield-generator-rest/input.js 1:12-1:13
 						}
+						loc: SourceLocation esprima/es2015-yield/invalid-yield-generator-rest/input.js 1:12-1:13 (a)
 					}
 					JSBindingIdentifier {
 						name: "b"
-						loc: SourceLocation esprima/es2015-yield/invalid-yield-generator-rest/input.js 1:15-1:16 (b)
 						meta: JSPatternMeta {
-							optional: undefined
-							typeAnnotation: undefined
 							loc: SourceLocation esprima/es2015-yield/invalid-yield-generator-rest/input.js 1:15-1:16
 						}
+						loc: SourceLocation esprima/es2015-yield/invalid-yield-generator-rest/input.js 1:15-1:16 (b)
 					}
 					JSBindingIdentifier {
 						name: "c"
-						loc: SourceLocation esprima/es2015-yield/invalid-yield-generator-rest/input.js 1:18-1:19 (c)
 						meta: JSPatternMeta {
-							optional: undefined
-							typeAnnotation: undefined
 							loc: SourceLocation esprima/es2015-yield/invalid-yield-generator-rest/input.js 1:18-1:19
 						}
+						loc: SourceLocation esprima/es2015-yield/invalid-yield-generator-rest/input.js 1:18-1:19 (c)
 					}
 				]
+				rest: JSBindingIdentifier {
+					name: "yield"
+					meta: JSPatternMeta {
+						loc: SourceLocation esprima/es2015-yield/invalid-yield-generator-rest/input.js 1:24-1:29
+					}
+					loc: SourceLocation esprima/es2015-yield/invalid-yield-generator-rest/input.js 1:24-1:29 (yield)
+				}
+				loc: SourceLocation esprima/es2015-yield/invalid-yield-generator-rest/input.js 1:11-1:30
+			}
+			loc: SourceLocation esprima/es2015-yield/invalid-yield-generator-rest/input.js 1:0-1:32
+		}
+	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "Can not use 'yield' as identifier inside a generator"}
+			}
+			location: {
+				language: "js"
+				path: UIDPath<esprima/es2015-yield/invalid-yield-generator-rest/input.js>
+				end: Position 1:29
+				start: Position 1:24
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<esprima/es2015-yield/invalid-yield-generator-rest/input.js>
+	loc: SourceLocation esprima/es2015-yield/invalid-yield-generator-rest/input.js 1:0-2:0
 }
 ```
 

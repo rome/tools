@@ -8,23 +8,10 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation esprima/statement-throw/migrated_0002/input.js 1:0-2:0
-	path: UIDPath<esprima/statement-throw/migrated_0002/input.js>
-	body: Array [
+	body: [
 		JSThrowStatement {
-			loc: SourceLocation esprima/statement-throw/migrated_0002/input.js 1:0-1:26
 			argument: JSObjectExpression {
-				loc: SourceLocation esprima/statement-throw/migrated_0002/input.js 1:6-1:26
-				properties: Array [
+				properties: [
 					JSObjectProperty {
 						key: JSStaticPropertyKey {
 							value: JSIdentifier {
@@ -40,9 +27,20 @@ JSRoot {
 						loc: SourceLocation esprima/statement-throw/migrated_0002/input.js 1:8-1:24
 					}
 				]
+				loc: SourceLocation esprima/statement-throw/migrated_0002/input.js 1:6-1:26
 			}
+			loc: SourceLocation esprima/statement-throw/migrated_0002/input.js 1:0-1:26
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<esprima/statement-throw/migrated_0002/input.js>
+	loc: SourceLocation esprima/statement-throw/migrated_0002/input.js 1:0-2:0
 }
 ```
 

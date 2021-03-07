@@ -8,56 +8,26 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation test262/rest-parameter/array-pattern-multi-element-with-object/input.js 1:0-2:0
-	path: UIDPath<test262/rest-parameter/array-pattern-multi-element-with-object/input.js>
-	body: Array [
+	body: [
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "multiElementWithObject"
 				loc: SourceLocation test262/rest-parameter/array-pattern-multi-element-with-object/input.js 1:9-1:31 (multiElementWithObject)
 			}
-			loc: SourceLocation test262/rest-parameter/array-pattern-multi-element-with-object/input.js 1:0-1:61
 			body: JSBlockStatement {
-				body: Array []
-				directives: Array []
+				body: []
+				directives: []
 				loc: SourceLocation test262/rest-parameter/array-pattern-multi-element-with-object/input.js 1:59-1:61
 			}
 			head: JSFunctionHead {
 				async: false
 				generator: false
 				hasHoistedVars: false
-				params: Array []
-				returnType: undefined
-				thisType: undefined
-				typeParameters: undefined
-				loc: SourceLocation test262/rest-parameter/array-pattern-multi-element-with-object/input.js 1:31-1:58
+				params: []
 				rest: JSBindingArrayPattern {
-					rest: undefined
-					loc: SourceLocation test262/rest-parameter/array-pattern-multi-element-with-object/input.js 1:35-1:57
-					meta: JSPatternMeta {
-						optional: undefined
-						typeAnnotation: undefined
-						loc: SourceLocation test262/rest-parameter/array-pattern-multi-element-with-object/input.js 1:35-1:57
-					}
-					elements: Array [
+					elements: [
 						JSBindingObjectPattern {
-							rest: undefined
-							loc: SourceLocation test262/rest-parameter/array-pattern-multi-element-with-object/input.js 1:36-1:42
-							meta: JSPatternMeta {
-								optional: undefined
-								typeAnnotation: undefined
-								loc: SourceLocation test262/rest-parameter/array-pattern-multi-element-with-object/input.js 1:36-1:42
-							}
-							properties: Array [
+							properties: [
 								JSBindingObjectPatternProperty {
 									key: JSStaticPropertyKey {
 										value: JSIdentifier {
@@ -73,16 +43,13 @@ JSRoot {
 									loc: SourceLocation test262/rest-parameter/array-pattern-multi-element-with-object/input.js 1:37-1:41
 								}
 							]
+							meta: JSPatternMeta {
+								loc: SourceLocation test262/rest-parameter/array-pattern-multi-element-with-object/input.js 1:36-1:42
+							}
+							loc: SourceLocation test262/rest-parameter/array-pattern-multi-element-with-object/input.js 1:36-1:42
 						}
 						JSBindingObjectPattern {
-							rest: undefined
-							loc: SourceLocation test262/rest-parameter/array-pattern-multi-element-with-object/input.js 1:44-1:47
-							meta: JSPatternMeta {
-								optional: undefined
-								typeAnnotation: undefined
-								loc: SourceLocation test262/rest-parameter/array-pattern-multi-element-with-object/input.js 1:44-1:47
-							}
-							properties: Array [
+							properties: [
 								JSBindingObjectPatternProperty {
 									key: JSStaticPropertyKey {
 										value: JSIdentifier {
@@ -98,16 +65,13 @@ JSRoot {
 									loc: SourceLocation test262/rest-parameter/array-pattern-multi-element-with-object/input.js 1:45-1:46
 								}
 							]
+							meta: JSPatternMeta {
+								loc: SourceLocation test262/rest-parameter/array-pattern-multi-element-with-object/input.js 1:44-1:47
+							}
+							loc: SourceLocation test262/rest-parameter/array-pattern-multi-element-with-object/input.js 1:44-1:47
 						}
 						JSBindingObjectPattern {
-							rest: undefined
-							loc: SourceLocation test262/rest-parameter/array-pattern-multi-element-with-object/input.js 1:49-1:56
-							meta: JSPatternMeta {
-								optional: undefined
-								typeAnnotation: undefined
-								loc: SourceLocation test262/rest-parameter/array-pattern-multi-element-with-object/input.js 1:49-1:56
-							}
-							properties: Array [
+							properties: [
 								JSBindingObjectPatternProperty {
 									key: JSStaticPropertyKey {
 										value: JSIdentifier {
@@ -117,26 +81,44 @@ JSRoot {
 										loc: SourceLocation test262/rest-parameter/array-pattern-multi-element-with-object/input.js 1:50-1:51
 									}
 									value: JSBindingAssignmentPattern {
-										loc: SourceLocation test262/rest-parameter/array-pattern-multi-element-with-object/input.js 1:50-1:55
 										left: JSBindingIdentifier {
 											name: "s"
 											loc: SourceLocation test262/rest-parameter/array-pattern-multi-element-with-object/input.js 1:50-1:51 (s)
 										}
 										right: JSNumericLiteral {
 											value: 0
-											format: undefined
 											loc: SourceLocation test262/rest-parameter/array-pattern-multi-element-with-object/input.js 1:54-1:55
 										}
+										loc: SourceLocation test262/rest-parameter/array-pattern-multi-element-with-object/input.js 1:50-1:55
 									}
 									loc: SourceLocation test262/rest-parameter/array-pattern-multi-element-with-object/input.js 1:50-1:55
 								}
 							]
+							meta: JSPatternMeta {
+								loc: SourceLocation test262/rest-parameter/array-pattern-multi-element-with-object/input.js 1:49-1:56
+							}
+							loc: SourceLocation test262/rest-parameter/array-pattern-multi-element-with-object/input.js 1:49-1:56
 						}
 					]
+					meta: JSPatternMeta {
+						loc: SourceLocation test262/rest-parameter/array-pattern-multi-element-with-object/input.js 1:35-1:57
+					}
+					loc: SourceLocation test262/rest-parameter/array-pattern-multi-element-with-object/input.js 1:35-1:57
 				}
+				loc: SourceLocation test262/rest-parameter/array-pattern-multi-element-with-object/input.js 1:31-1:58
 			}
+			loc: SourceLocation test262/rest-parameter/array-pattern-multi-element-with-object/input.js 1:0-1:61
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<test262/rest-parameter/array-pattern-multi-element-with-object/input.js>
+	loc: SourceLocation test262/rest-parameter/array-pattern-multi-element-with-object/input.js 1:0-2:0
 }
 ```
 

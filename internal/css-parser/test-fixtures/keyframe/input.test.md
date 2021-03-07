@@ -6,26 +6,12 @@
 
 ```javascript
 CSSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	integrity: undefined
-	loc: SourceLocation keyframe/input.css 1:0-18:1
-	path: RelativePath<keyframe/input.css>
-	body: Array [
+	body: [
 		CSSAtRule {
 			name: "keyframes"
-			prelude: Array []
-			loc: SourceLocation keyframe/input.css 1:0-7:1
+			prelude: []
 			block: CSSKeyframe {
-				name: CSSKeyframeName {
-					value: CSSRaw {
-						value: "foo"
-						loc: SourceLocation keyframe/input.css 1:11-1:11
-					}
-					loc: SourceLocation keyframe/input.css 1:11-1:14
-				}
-				value: Array [
+				value: [
 					CSSKeyframeBlock {
 						name: CSSKeyframeSelector {
 							value: CSSRaw {
@@ -35,7 +21,7 @@ CSSRoot {
 							loc: SourceLocation keyframe/input.css 2:1-2:5
 						}
 						value: CSSBlock {
-							value: Array []
+							value: []
 							startingTokenValue: "{"
 							loc: SourceLocation keyframe/input.css 2:6-2:8
 						}
@@ -50,7 +36,7 @@ CSSRoot {
 							loc: SourceLocation keyframe/input.css 3:1-3:3
 						}
 						value: CSSBlock {
-							value: Array []
+							value: []
 							startingTokenValue: "{"
 							loc: SourceLocation keyframe/input.css 3:4-3:6
 						}
@@ -65,7 +51,7 @@ CSSRoot {
 							loc: SourceLocation keyframe/input.css 4:1-4:4
 						}
 						value: CSSBlock {
-							value: Array []
+							value: []
 							startingTokenValue: "{"
 							loc: SourceLocation keyframe/input.css 4:5-4:7
 						}
@@ -80,7 +66,7 @@ CSSRoot {
 							loc: SourceLocation keyframe/input.css 5:1-5:3
 						}
 						value: CSSBlock {
-							value: Array []
+							value: []
 							startingTokenValue: "{"
 							loc: SourceLocation keyframe/input.css 5:4-5:6
 						}
@@ -95,21 +81,29 @@ CSSRoot {
 							loc: SourceLocation keyframe/input.css 6:1-6:5
 						}
 						value: CSSBlock {
-							value: Array []
+							value: []
 							startingTokenValue: "{"
 							loc: SourceLocation keyframe/input.css 6:6-6:8
 						}
 						loc: SourceLocation keyframe/input.css 6:8-6:8
 					}
 				]
+				name: CSSKeyframeName {
+					value: CSSRaw {
+						value: "foo"
+						loc: SourceLocation keyframe/input.css 1:11-1:11
+					}
+					loc: SourceLocation keyframe/input.css 1:11-1:14
+				}
 				loc: SourceLocation keyframe/input.css 1:10-7:1
 			}
+			loc: SourceLocation keyframe/input.css 1:0-7:1
 		}
 		CSSAtRule {
 			name: "keyframes"
-			prelude: Array []
-			loc: SourceLocation keyframe/input.css 9:0-11:1
+			prelude: []
 			block: CSSKeyframe {
+				value: []
 				name: CSSKeyframeName {
 					value: CSSString {
 						value: "foo"
@@ -117,15 +111,15 @@ CSSRoot {
 					}
 					loc: SourceLocation keyframe/input.css 9:11-9:16
 				}
-				value: Array []
 				loc: SourceLocation keyframe/input.css 9:10-11:1
 			}
+			loc: SourceLocation keyframe/input.css 9:0-11:1
 		}
 		CSSAtRule {
 			name: "keyframes"
-			prelude: Array []
-			loc: SourceLocation keyframe/input.css 13:0-15:1
+			prelude: []
 			block: CSSKeyframe {
+				value: []
 				name: CSSKeyframeName {
 					value: CSSString {
 						value: "Initial"
@@ -133,15 +127,15 @@ CSSRoot {
 					}
 					loc: SourceLocation keyframe/input.css 13:11-13:20
 				}
-				value: Array []
 				loc: SourceLocation keyframe/input.css 13:10-15:1
 			}
+			loc: SourceLocation keyframe/input.css 13:0-15:1
 		}
 		CSSAtRule {
 			name: "keyframes"
-			prelude: Array []
-			loc: SourceLocation keyframe/input.css 17:0-18:1
+			prelude: []
 			block: CSSKeyframe {
+				value: []
 				name: CSSKeyframeName {
 					value: CSSRaw {
 						value: "FOO"
@@ -149,10 +143,15 @@ CSSRoot {
 					}
 					loc: SourceLocation keyframe/input.css 17:11-17:14
 				}
-				value: Array []
 				loc: SourceLocation keyframe/input.css 17:10-18:1
 			}
+			loc: SourceLocation keyframe/input.css 17:0-18:1
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	path: RelativePath<keyframe/input.css>
+	loc: SourceLocation keyframe/input.css 1:0-18:1
 }
 ```

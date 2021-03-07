@@ -8,64 +8,56 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation core/uncategorised/290/input.js 1:0-1:30
-	path: UIDPath<core/uncategorised/290/input.js>
-	body: Array [
+	body: [
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "hello"
 				loc: SourceLocation core/uncategorised/290/input.js 1:9-1:14 (hello)
 			}
-			loc: SourceLocation core/uncategorised/290/input.js 1:0-1:30
 			body: JSBlockStatement {
-				directives: Array []
-				loc: SourceLocation core/uncategorised/290/input.js 1:18-1:30
-				body: Array [
+				body: [
 					JSExpressionStatement {
-						loc: SourceLocation core/uncategorised/290/input.js 1:20-1:28
 						expression: JSCallExpression {
-							arguments: Array []
-							loc: SourceLocation core/uncategorised/290/input.js 1:20-1:27
+							arguments: []
 							callee: JSReferenceIdentifier {
 								name: "sayHi"
 								loc: SourceLocation core/uncategorised/290/input.js 1:20-1:25 (sayHi)
 							}
+							loc: SourceLocation core/uncategorised/290/input.js 1:20-1:27
 						}
+						loc: SourceLocation core/uncategorised/290/input.js 1:20-1:28
 					}
 				]
+				directives: []
+				loc: SourceLocation core/uncategorised/290/input.js 1:18-1:30
 			}
 			head: JSFunctionHead {
 				async: false
 				generator: false
 				hasHoistedVars: false
-				rest: undefined
-				returnType: undefined
-				thisType: undefined
-				typeParameters: undefined
-				loc: SourceLocation core/uncategorised/290/input.js 1:14-1:17
-				params: Array [
+				params: [
 					JSBindingIdentifier {
 						name: "a"
-						loc: SourceLocation core/uncategorised/290/input.js 1:15-1:16 (a)
 						meta: JSPatternMeta {
-							optional: undefined
-							typeAnnotation: undefined
 							loc: SourceLocation core/uncategorised/290/input.js 1:15-1:16
 						}
+						loc: SourceLocation core/uncategorised/290/input.js 1:15-1:16 (a)
 					}
 				]
+				loc: SourceLocation core/uncategorised/290/input.js 1:14-1:17
 			}
+			loc: SourceLocation core/uncategorised/290/input.js 1:0-1:30
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<core/uncategorised/290/input.js>
+	loc: SourceLocation core/uncategorised/290/input.js 1:0-1:30
 }
 ```
 

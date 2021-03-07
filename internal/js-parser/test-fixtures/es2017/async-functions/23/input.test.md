@@ -8,33 +8,18 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: true
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2017/async-functions/23/input.js 1:0-1:28
-	path: UIDPath<es2017/async-functions/23/input.js>
-	body: Array [
+	body: [
 		JSVariableDeclarationStatement {
-			loc: SourceLocation es2017/async-functions/23/input.js 1:0-1:28
 			declaration: JSVariableDeclaration {
 				kind: "var"
-				loc: SourceLocation es2017/async-functions/23/input.js 1:0-1:28
-				declarations: Array [
+				declarations: [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "obj"
 							loc: SourceLocation es2017/async-functions/23/input.js 1:4-1:7 (obj)
 						}
-						loc: SourceLocation es2017/async-functions/23/input.js 1:4-1:27
 						init: JSObjectExpression {
-							loc: SourceLocation es2017/async-functions/23/input.js 1:10-1:27
-							properties: Array [
+							properties: [
 								JSObjectProperty {
 									key: JSStaticPropertyKey {
 										value: JSIdentifier {
@@ -50,12 +35,25 @@ JSRoot {
 									loc: SourceLocation es2017/async-functions/23/input.js 1:12-1:25
 								}
 							]
+							loc: SourceLocation es2017/async-functions/23/input.js 1:10-1:27
 						}
+						loc: SourceLocation es2017/async-functions/23/input.js 1:4-1:27
 					}
 				]
+				loc: SourceLocation es2017/async-functions/23/input.js 1:0-1:28
 			}
+			loc: SourceLocation es2017/async-functions/23/input.js 1:0-1:28
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: true
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2017/async-functions/23/input.js>
+	loc: SourceLocation es2017/async-functions/23/input.js 1:0-1:28
 }
 ```
 

@@ -8,62 +8,19 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: true
-	directives: Array []
-	hasHoistedVars: true
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation esprima/invalid-syntax/migrated_0123/input.js 1:0-2:0
-	path: UIDPath<esprima/invalid-syntax/migrated_0123/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:17
-				path: UIDPath<esprima/invalid-syntax/migrated_0123/input.js>
-				start: Position 1:15
-			}
-			description: Object {
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Unexpected character <emphasis>i</emphasis>"}
-				advice: Array [
-					log {
-						category: "info"
-						text: RAW_MARKUP {value: "Expected character <emphasis>;</emphasis>"}
-					}
-				]
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSForStatement {
-			body: JSEmptyStatement {loc: SourceLocation esprima/invalid-syntax/migrated_0123/input.js 1:21-1:22}
-			loc: SourceLocation esprima/invalid-syntax/migrated_0123/input.js 1:0-1:22
-			test: JSReferenceIdentifier {
-				name: "INVALID_PLACEHOLDER"
-				loc: SourceLocation esprima/invalid-syntax/migrated_0123/input.js 1:15-1:17
-			}
-			update: JSObjectExpression {
-				properties: Array []
-				loc: SourceLocation esprima/invalid-syntax/migrated_0123/input.js 1:18-1:20
+			body: JSEmptyStatement {
+				loc: SourceLocation esprima/invalid-syntax/migrated_0123/input.js 1:21-1:22
 			}
 			init: JSVariableDeclaration {
 				kind: "var"
-				loc: SourceLocation esprima/invalid-syntax/migrated_0123/input.js 1:5-1:14
-				declarations: Array [
+				declarations: [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "i"
 							loc: SourceLocation esprima/invalid-syntax/migrated_0123/input.js 1:9-1:10 (i)
 						}
-						init: undefined
 						loc: SourceLocation esprima/invalid-syntax/migrated_0123/input.js 1:9-1:10
 					}
 					JSVariableDeclarator {
@@ -71,13 +28,47 @@ JSRoot {
 							name: "i2"
 							loc: SourceLocation esprima/invalid-syntax/migrated_0123/input.js 1:12-1:14 (i2)
 						}
-						init: undefined
 						loc: SourceLocation esprima/invalid-syntax/migrated_0123/input.js 1:12-1:14
 					}
 				]
+				loc: SourceLocation esprima/invalid-syntax/migrated_0123/input.js 1:5-1:14
+			}
+			test: JSReferenceIdentifier {
+				name: "INVALID_PLACEHOLDER"
+				loc: SourceLocation esprima/invalid-syntax/migrated_0123/input.js 1:15-1:17
+			}
+			update: JSObjectExpression {
+				properties: []
+				loc: SourceLocation esprima/invalid-syntax/migrated_0123/input.js 1:18-1:20
+			}
+			loc: SourceLocation esprima/invalid-syntax/migrated_0123/input.js 1:0-1:22
+		}
+	]
+	comments: []
+	corrupt: true
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {
+				advice: [log {category: "info", text: [RAW_MARKUP {value: "Expected character <emphasis>"}, ";", RAW_MARKUP {value: "</emphasis>"}]}]
+				category: ["parse"]
+				categoryValue: "js"
+				message: [RAW_MARKUP {value: "Unexpected character <emphasis>"}, "i", RAW_MARKUP {value: "</emphasis>"}]
+			}
+			location: {
+				language: "js"
+				path: UIDPath<esprima/invalid-syntax/migrated_0123/input.js>
+				end: Position 1:17
+				start: Position 1:15
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: true
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<esprima/invalid-syntax/migrated_0123/input.js>
+	loc: SourceLocation esprima/invalid-syntax/migrated_0123/input.js 1:0-2:0
 }
 ```
 

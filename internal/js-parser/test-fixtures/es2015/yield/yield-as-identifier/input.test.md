@@ -8,40 +8,37 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: true
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2015/yield/yield-as-identifier/input.js 1:0-2:0
-	path: UIDPath<es2015/yield/yield-as-identifier/input.js>
-	body: Array [
+	body: [
 		JSVariableDeclarationStatement {
-			loc: SourceLocation es2015/yield/yield-as-identifier/input.js 1:0-1:13
 			declaration: JSVariableDeclaration {
 				kind: "var"
-				loc: SourceLocation es2015/yield/yield-as-identifier/input.js 1:0-1:13
-				declarations: Array [
+				declarations: [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "yield"
 							loc: SourceLocation es2015/yield/yield-as-identifier/input.js 1:4-1:9 (yield)
 						}
-						loc: SourceLocation es2015/yield/yield-as-identifier/input.js 1:4-1:13
 						init: JSNumericLiteral {
 							value: 2
-							format: undefined
 							loc: SourceLocation es2015/yield/yield-as-identifier/input.js 1:12-1:13
 						}
+						loc: SourceLocation es2015/yield/yield-as-identifier/input.js 1:4-1:13
 					}
 				]
+				loc: SourceLocation es2015/yield/yield-as-identifier/input.js 1:0-1:13
 			}
+			loc: SourceLocation es2015/yield/yield-as-identifier/input.js 1:0-1:13
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: true
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2015/yield/yield-as-identifier/input.js>
+	loc: SourceLocation es2015/yield/yield-as-identifier/input.js 1:0-2:0
 }
 ```
 

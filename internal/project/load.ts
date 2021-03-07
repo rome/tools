@@ -28,7 +28,7 @@ import {
 } from "./utils";
 import {ConsumeConfigResult, consumeConfig} from "@internal/codec-config";
 import {AbsoluteFilePath, AbsoluteFilePathSet} from "@internal/path";
-import {CachedFileReader, exists, lstat, readDirectory} from "@internal/fs";
+import {CachedFileReader} from "@internal/fs";
 import {parseSemverRange} from "@internal/codec-semver";
 import {descriptions} from "@internal/diagnostics";
 import {
@@ -84,9 +84,7 @@ export async function loadCompleteProjectConfig(
 		},
 	};
 
-	const name = consumer.get("name").asString(
-		`project-${projectDirectory.getBasename()}`,
-	);
+	const name = consumer.get("name").asString(projectDirectory.getBasename());
 
 	const config: ProjectConfig = {
 		...defaultConfig,
@@ -100,7 +98,7 @@ export async function loadCompleteProjectConfig(
 		const possiblePath = config.vcs.root.append(filename);
 		meta.configDependencies.add(possiblePath);
 
-		if (await exists(possiblePath)) {
+		if (await possiblePath.exists()) {
 			const file = await reader.readFileText(possiblePath);
 
 			consumer.handleThrownDiagnostics(() => {
@@ -120,9 +118,9 @@ export async function loadCompleteProjectConfig(
 		Array.from(
 			meta.configDependencies,
 			async (path) => {
-				if (await exists(path)) {
+				if (await path.exists()) {
 					const content = await reader.readFile(path);
-					const hash = sha256.sync(content);
+					const hash = sha256.sync(new DataView(content));
 					const key = projectDirectory.relative(path).join();
 					meta.configCacheKeys[key] = hash;
 				}
@@ -265,10 +263,11 @@ export async function normalizeProjectConfig(
 				typeChecking.get("libs"),
 			);
 			config.typeCheck.libs = libs.files;
-			meta.configDependencies = meta.configDependencies.concat(
-				libs.directories,
-				libs.files,
-			);
+			meta.configDependencies = new AbsoluteFilePathSet([
+				...meta.configDependencies,
+				...libs.directories,
+				...libs.files,
+			]);
 		}
 
 		typeChecking.enforceUsedProperties("typeChecking config property");
@@ -461,13 +460,14 @@ export async function normalizeProjectConfig(
 		eslint.enforceUsedProperties("eslint config property");
 	}
 
-	meta.configDependencies = meta.configDependencies.concat(
-		getParentConfigDependencies({
+	meta.configDependencies = new AbsoluteFilePathSet([
+		...meta.configDependencies,
+		...getParentConfigDependencies({
 			projectDirectory,
 			rootProjectDirectory,
 			partialConfig: config,
 		}),
-	);
+	]);
 
 	// Need to get this before enforceUsedProperties so it will be flagged
 	const extendsProp = consumer.get("extends");
@@ -509,9 +509,9 @@ async function normalizeTypeCheckingLibs(
 
 	// Crawl library directories and add their files
 	for (const directory of directories) {
-		const files = await readDirectory(directory);
+		const files = await directory.readDirectory();
 		for (const file of files) {
-			const stats = await lstat(file);
+			const stats = await file.lstat();
 			if (stats.isFile()) {
 				libFiles.add(file);
 			} else if (stats.isDirectory()) {
@@ -613,10 +613,11 @@ async function extendProjectConfig(
 		meta: {
 			...meta,
 			consumersChain: [...meta.consumersChain, ...extendsMeta.consumersChain],
-			configDependencies: meta.configDependencies.concat(
-				extendsMeta.configDependencies,
-				[extendsPath],
-			),
+			configDependencies: new AbsoluteFilePathSet([
+				...meta.configDependencies,
+				...extendsMeta.configDependencies,
+				extendsPath,
+			]),
 			configCacheKeys: {
 				...meta.configCacheKeys,
 				...extendsMeta.configCacheKeys,

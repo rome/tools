@@ -3,12 +3,29 @@ import {
 	BridgeDefinition,
 	BridgeEventDeclaration,
 	BridgeEventsDeclaration,
+	BridgeOptions,
 	BridgeType,
 } from "./types";
 import {WebSocketInterface} from "@internal/codec-websocket";
 import {Socket} from "net";
 import workerThreads = require("worker_threads");
-import {RSERValue} from "@internal/codec-binary-serial";
+import {RSERValue} from "@internal/binary-transport";
+import {
+	Resource,
+	createResourceFromSocket,
+	createResourceFromWebSocket,
+	createResourceFromWorkerThread,
+	processResourceRoot,
+} from "@internal/resources";
+
+type BridgeWithResource<
+	ListenEvents extends BridgeEventsDeclaration,
+	CallEvents extends BridgeEventsDeclaration,
+	SharedEvents extends BridgeEventsDeclaration
+> = {
+	bridge: Bridge<ListenEvents, CallEvents, SharedEvents>;
+	resource: Resource;
+};
 
 export function createBridgeEventDeclaration<
 	Param extends RSERValue,
@@ -43,9 +60,12 @@ export class BridgeFactory<
 	private type: BridgeType;
 	private def: BridgeDefinition<{}, {}, SharedEvents>;
 
-	create(): Bridge<ListenEvents, CallEvents, SharedEvents> {
+	public create(
+		opts: BridgeOptions = {},
+	): Bridge<ListenEvents, CallEvents, SharedEvents> {
 		return new Bridge(
 			this.type,
+			opts,
 			this.def,
 			this.listenEvents,
 			this.callEvents,
@@ -53,10 +73,11 @@ export class BridgeFactory<
 		);
 	}
 
-	createFromWebSocketInterface(
+	public createFromWebSocketInterface(
 		inf: WebSocketInterface,
-	): Bridge<ListenEvents, CallEvents, SharedEvents> {
-		const bridge = this.create();
+		opts?: BridgeOptions,
+	): BridgeWithResource<ListenEvents, CallEvents, SharedEvents> {
+		const bridge = this.create(opts);
 		const {socket} = inf;
 		const rser = bridge.attachRSER();
 
@@ -64,9 +85,8 @@ export class BridgeFactory<
 			inf.send(Buffer.from(buf));
 		});
 
-		bridge.endEvent.subscribe(() => {
-			socket.end();
-		});
+		const resource = createResourceFromSocket(socket);
+		resource.bind(bridge);
 
 		inf.completeFrameEvent.subscribe((frame) => {
 			rser.append(frame.payload.buffer);
@@ -82,30 +102,34 @@ export class BridgeFactory<
 		socket.on(
 			"end",
 			() => {
-				bridge.end("RPC WebSocket died", false);
+				bridge.disconnected("RPC WebSocket died");
 			},
 		);
 
 		rser.init();
 
-		return bridge;
+		return {resource, bridge};
 	}
 
-	createFromBrowserWebSocket(
+	public createFromBrowserWebSocket(
 		socket: WebSocket,
-	): Bridge<ListenEvents, CallEvents, SharedEvents> {
-		const bridge = this.create();
+		opts?: BridgeOptions,
+	): BridgeWithResource<ListenEvents, CallEvents, SharedEvents> {
+		const bridge = this.create(opts);
 		const rser = bridge.attachRSER();
 
 		rser.sendEvent.subscribe((buf) => {
 			socket.send(buf);
 		});
 
-		bridge.endEvent.subscribe(() => {
-			socket.close();
-		});
+		const resource = createResourceFromWebSocket(socket);
+		resource.bind(bridge);
 
 		socket.binaryType = "arraybuffer";
+
+		socket.onopen = () => {
+			rser.init();
+		};
 
 		socket.onmessage = function(event) {
 			const {data} = event;
@@ -116,27 +140,25 @@ export class BridgeFactory<
 		};
 
 		socket.onclose = () => {
-			bridge.end("RPC WebSocket disconnected", false);
+			bridge.disconnected("RPC WebSocket disconnected");
 		};
 
-		rser.init();
-
-		return bridge;
+		return {resource, bridge};
 	}
 
-	createFromSocket(
+	public createFromSocket(
 		socket: Socket,
-	): Bridge<ListenEvents, CallEvents, SharedEvents> {
-		const bridge = this.create();
+		opts?: BridgeOptions,
+	): BridgeWithResource<ListenEvents, CallEvents, SharedEvents> {
+		const bridge = this.create(opts);
 		const rser = bridge.attachRSER();
 
 		rser.sendEvent.subscribe((buf) => {
 			socket.write(new Uint8Array(buf));
 		});
 
-		bridge.endEvent.subscribe(() => {
-			socket.end();
-		});
+		const resource = createResourceFromSocket(socket);
+		resource.bind(bridge);
 
 		socket.on(
 			"data",
@@ -153,30 +175,41 @@ export class BridgeFactory<
 		);
 
 		socket.on(
-			"end",
-			() => {
-				bridge.end("Socket disconnected", false);
+			"close",
+			(hadError) => {
+				bridge.disconnected(
+					hadError ? "Socket closed due to transmission error" : "Socket closed",
+				);
 			},
 		);
 
-		rser.init();
+		if (socket.connecting) {
+			socket.on(
+				"connect",
+				() => {
+					rser.init();
+				},
+			);
+		} else {
+			rser.init();
+		}
 
-		return bridge;
+		return {resource, bridge};
 	}
 
-	createFromWorkerThread(
+	public createFromWorkerThread(
 		worker: workerThreads.Worker,
-	): Bridge<ListenEvents, CallEvents, SharedEvents> {
-		const bridge = this.create();
+		opts?: BridgeOptions,
+	): BridgeWithResource<ListenEvents, CallEvents, SharedEvents> {
+		const bridge = this.create(opts);
 		const rser = bridge.attachRSER();
 
 		rser.sendEvent.subscribe((msg) => {
 			worker.postMessage(msg, [msg]);
 		});
 
-		bridge.endEvent.subscribe(() => {
-			worker.terminate();
-		});
+		const resource = createResourceFromWorkerThread(worker);
+		resource.bind(bridge);
 
 		worker.on(
 			"message",
@@ -202,35 +235,33 @@ export class BridgeFactory<
 		worker.on(
 			"exit",
 			(code) => {
-				bridge.end(`Worker thread died with exit code ${code}`, false);
+				bridge.disconnected(`Worker thread died with exit code ${code}`);
 			},
 		);
 
 		rser.init();
 
-		return bridge;
+		return {resource, bridge};
 	}
 
-	createFromWorkerThreadParentPort(): Bridge<
-		ListenEvents,
-		CallEvents,
-		SharedEvents
-	> {
+	public createFromWorkerThreadParentPort(
+		opts?: Omit<BridgeOptions, "optionalResource">,
+	): BridgeWithResource<ListenEvents, CallEvents, SharedEvents> {
 		const {parentPort} = workerThreads;
 		if (parentPort == null) {
 			throw new Error("No worker_threads parentPort found");
 		}
 
-		const bridge = this.create();
+		const bridge = this.create({
+			...opts,
+			optionalResource: true,
+		});
+		processResourceRoot.bind(bridge);
+
 		const rser = bridge.attachRSER();
 
 		rser.sendEvent.subscribe((msg) => {
 			parentPort.postMessage(msg, [msg]);
-		});
-
-		bridge.endEvent.subscribe(() => {
-			parentPort.close();
-			process.exit();
 		});
 
 		parentPort.on(
@@ -243,13 +274,16 @@ export class BridgeFactory<
 		parentPort.on(
 			"close",
 			() => {
-				bridge.end("Worker thread parent port closed", false);
+				bridge.disconnected("Worker thread parent port closed");
 			},
 		);
 
 		rser.init();
 
-		return bridge;
+		return {
+			resource: processResourceRoot,
+			bridge,
+		};
 	}
 }
 
@@ -278,18 +312,26 @@ export class BridgeFactories<
 	public Server: BridgeFactory<ServerEvents, ClientEvents, SharedEvents>;
 	public Client: BridgeFactory<ClientEvents, ServerEvents, SharedEvents>;
 
-	createFromLocal(): {
+	public createFromLocal(
+		opts?: BridgeOptions,
+	): {
 		server: Bridge<ServerEvents, ClientEvents, SharedEvents>;
 		client: Bridge<ClientEvents, ServerEvents, SharedEvents>;
 	} {
-		const server = this.Server.create();
+		const server = this.Server.create({...opts, ignoreHeartbeat: true});
 		server.sendMessageEvent.subscribe((data) => {
 			client.handleMessage(data);
 		});
+		server.endEvent.subscribe(() => {
+			client.disconnected("Server disconnected");
+		});
 
-		const client = this.Client.create();
+		const client = this.Client.create({...opts, ignoreHeartbeat: true});
 		client.sendMessageEvent.subscribe((data) => {
 			server.handleMessage(data);
+		});
+		client.endEvent.subscribe(() => {
+			server.disconnected("Client disconnected");
 		});
 
 		return {server, client};

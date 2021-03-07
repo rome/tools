@@ -4,6 +4,7 @@ import LSPServer from "@internal/core/server/lsp/LSPServer";
 import {JSONObject} from "@internal/codec-config";
 import {Consumer, consumeUnknown} from "@internal/consume";
 import {DIAGNOSTIC_CATEGORIES} from "@internal/diagnostics";
+import {getByteLength} from "@internal/binary";
 
 function makeRange(
 	startLine: number,
@@ -25,7 +26,7 @@ function makeRange(
 
 function createMessage(res: JSONObject) {
 	const json = JSON.stringify(res);
-	return `Content-Length: ${Buffer.byteLength(json)}\r\n\r\n${json}`;
+	return `Content-Length: ${getByteLength(json)}\r\n\r\n${json}`;
 }
 
 function consumeMessage(msg: string): Consumer {

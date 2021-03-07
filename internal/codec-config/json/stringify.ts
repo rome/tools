@@ -11,9 +11,8 @@ import {
 	JSONConfigType,
 	PathComments,
 } from "../types";
-import {naturalCompare} from "@internal/string-utils";
 import {Consumer} from "@internal/consume";
-import {PRIORITIZE_KEYS, formatNumber} from "@internal/pretty-format";
+import {formatNumber, sortKeys} from "@internal/pretty-format";
 import {escapeJSString} from "@internal/string-escape";
 import {markupToJoinedPlainText} from "@internal/cli-layout";
 import {isValidWord} from "@internal/codec-config/util";
@@ -98,27 +97,9 @@ function stringifyPrimitives(value: unknown): undefined | string {
 	return undefined;
 }
 
-function sortMapKeys(map: Map<string, unknown>): Set<string> {
-	return new Set(Array.from(map.keys()).sort(naturalCompare));
-}
-
 function sortMap(map: Map<string, Consumer>): Map<string, Consumer> {
 	const sortedMap: Map<string, Consumer> = new Map();
-	const sortedKeys: Set<string> = sortMapKeys(map);
-
-	// Add any prioritized keys so they're before anything alphabetized
-	for (const key of PRIORITIZE_KEYS) {
-		if (sortedKeys.has(key)) {
-			sortedKeys.delete(key);
-
-			const val = map.get(key);
-			if (val === undefined) {
-				throw new Error("Expected value");
-			}
-
-			sortedMap.set(key, val);
-		}
-	}
+	const sortedKeys = sortKeys(Array.from(map.keys()));
 
 	// Now add the rest
 	for (const key of sortedKeys) {

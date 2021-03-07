@@ -8,104 +8,100 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: true
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	syntax: Array []
-	loc: SourceLocation experimental/module-attributes/trailing-comma/input.js 1:0-3:0
-	path: UIDPath<experimental/module-attributes/trailing-comma/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Trailing comma is disallowed inside import(...) arguments"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:16
-				path: UIDPath<experimental/module-attributes/trailing-comma/input.js>
-				start: Position 1:15
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation experimental/module-attributes/trailing-comma/input.js 1:0-1:18
 			expression: JSImportCall {
-				loc: SourceLocation experimental/module-attributes/trailing-comma/input.js 1:6-1:17
 				argument: JSStringLiteral {
 					value: "foo.js"
 					loc: SourceLocation experimental/module-attributes/trailing-comma/input.js 1:7-1:15
 				}
+				loc: SourceLocation experimental/module-attributes/trailing-comma/input.js 1:6-1:17
 			}
+			loc: SourceLocation experimental/module-attributes/trailing-comma/input.js 1:0-1:18
 		}
 		JSExpressionStatement {
-			loc: SourceLocation experimental/module-attributes/trailing-comma/input.js 2:0-2:18
 			expression: JSImportCall {
-				loc: SourceLocation experimental/module-attributes/trailing-comma/input.js 2:6-2:18
 				argument: JSStringLiteral {
 					value: "foo.json"
 					loc: SourceLocation experimental/module-attributes/trailing-comma/input.js 2:7-2:17
 				}
+				loc: SourceLocation experimental/module-attributes/trailing-comma/input.js 2:6-2:18
 			}
+			loc: SourceLocation experimental/module-attributes/trailing-comma/input.js 2:0-2:18
 		}
 		JSBlockStatement {
-			directives: Array []
-			loc: SourceLocation experimental/module-attributes/trailing-comma/input.js 2:19-2:45
-			body: Array [
+			body: [
 				JSWithStatement {
-					loc: SourceLocation experimental/module-attributes/trailing-comma/input.js 2:21-2:43
-					object: JSReferenceIdentifier {
-						name: "INVALID_PLACEHOLDER"
-						loc: SourceLocation experimental/module-attributes/trailing-comma/input.js 2:25-2:26
-					}
 					body: JSBlockStatement {
-						directives: Array []
-						loc: SourceLocation experimental/module-attributes/trailing-comma/input.js 2:27-2:43
-						body: Array [
+						body: [
 							JSLabeledStatement {
-								loc: SourceLocation experimental/module-attributes/trailing-comma/input.js 2:29-2:41
-								label: JSIdentifier {
-									name: "type"
-									loc: SourceLocation experimental/module-attributes/trailing-comma/input.js 2:29-2:33 (type)
-								}
 								body: JSExpressionStatement {
-									loc: SourceLocation experimental/module-attributes/trailing-comma/input.js 2:35-2:41
 									expression: JSStringLiteral {
 										value: "json"
 										loc: SourceLocation experimental/module-attributes/trailing-comma/input.js 2:35-2:41
 									}
+									loc: SourceLocation experimental/module-attributes/trailing-comma/input.js 2:35-2:41
 								}
+								label: JSIdentifier {
+									name: "type"
+									loc: SourceLocation experimental/module-attributes/trailing-comma/input.js 2:29-2:33 (type)
+								}
+								loc: SourceLocation experimental/module-attributes/trailing-comma/input.js 2:29-2:41
 							}
 						]
+						directives: []
+						loc: SourceLocation experimental/module-attributes/trailing-comma/input.js 2:27-2:43
 					}
+					object: JSReferenceIdentifier {
+						name: "INVALID_PLACEHOLDER"
+						loc: SourceLocation experimental/module-attributes/trailing-comma/input.js 2:25-2:26
+					}
+					loc: SourceLocation experimental/module-attributes/trailing-comma/input.js 2:21-2:43
 				}
 			]
+			directives: []
+			loc: SourceLocation experimental/module-attributes/trailing-comma/input.js 2:19-2:45
 		}
 		JSExpressionStatement {
-			loc: SourceLocation experimental/module-attributes/trailing-comma/input.js 2:45-2:46
 			expression: JSReferenceIdentifier {
 				name: "INVALID_PLACEHOLDER"
 				loc: SourceLocation experimental/module-attributes/trailing-comma/input.js 2:45-2:46
 			}
+			loc: SourceLocation experimental/module-attributes/trailing-comma/input.js 2:45-2:46
 		}
 		JSExpressionStatement {
-			loc: SourceLocation experimental/module-attributes/trailing-comma/input.js 2:46-2:48
 			expression: JSReferenceIdentifier {
 				name: "INVALID_PLACEHOLDER"
 				loc: SourceLocation experimental/module-attributes/trailing-comma/input.js 2:46-2:47
 			}
+			loc: SourceLocation experimental/module-attributes/trailing-comma/input.js 2:46-2:48
 		}
 	]
+	comments: []
+	corrupt: true
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "Trailing comma is disallowed inside import(...) arguments"}
+			}
+			location: {
+				language: "js"
+				path: UIDPath<experimental/module-attributes/trailing-comma/input.js>
+				end: Position 1:16
+				start: Position 1:15
+			}
+		}
+	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: []
+	path: UIDPath<experimental/module-attributes/trailing-comma/input.js>
+	loc: SourceLocation experimental/module-attributes/trailing-comma/input.js 1:0-3:0
 }
 ```
 

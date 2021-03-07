@@ -8,31 +8,14 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	loc: SourceLocation typescript/class/method-no-body/input.ts 1:0-5:0
-	path: UIDPath<typescript/class/method-no-body/input.ts>
-	syntax: Array ["ts"]
-	body: Array [
+	body: [
 		JSClassDeclaration {
 			id: JSBindingIdentifier {
 				name: "C"
 				loc: SourceLocation typescript/class/method-no-body/input.ts 1:6-1:7 (C)
 			}
-			loc: SourceLocation typescript/class/method-no-body/input.ts 1:0-4:1
 			meta: JSClassHead {
-				implements: undefined
-				superClass: undefined
-				superTypeParameters: undefined
-				typeParameters: undefined
-				loc: SourceLocation typescript/class/method-no-body/input.ts 1:0-4:1
-				body: Array [
+				body: [
 					TSDeclareMethod {
 						kind: "method"
 						key: JSStaticPropertyKey {
@@ -42,15 +25,11 @@ JSRoot {
 							}
 							loc: SourceLocation typescript/class/method-no-body/input.ts 2:4-2:5
 						}
-						body: undefined
-						loc: SourceLocation typescript/class/method-no-body/input.ts 2:4-2:8
 						meta: JSClassPropertyMeta {
 							abstract: false
-							accessibility: undefined
 							optional: false
 							readonly: false
 							static: false
-							typeAnnotation: undefined
 							loc: SourceLocation typescript/class/method-no-body/input.ts 2:4-2:5
 							start: Position 2:4
 						}
@@ -58,13 +37,10 @@ JSRoot {
 							async: false
 							generator: false
 							hasHoistedVars: false
-							params: Array []
-							rest: undefined
-							returnType: undefined
-							thisType: undefined
-							typeParameters: undefined
+							params: []
 							loc: SourceLocation typescript/class/method-no-body/input.ts 2:5-2:7
 						}
+						loc: SourceLocation typescript/class/method-no-body/input.ts 2:4-2:8
 					}
 					TSDeclareMethod {
 						kind: "method"
@@ -75,15 +51,11 @@ JSRoot {
 							}
 							loc: SourceLocation typescript/class/method-no-body/input.ts 3:4-3:5
 						}
-						body: undefined
-						loc: SourceLocation typescript/class/method-no-body/input.ts 3:4-3:14
 						meta: JSClassPropertyMeta {
 							abstract: false
-							accessibility: undefined
 							optional: false
 							readonly: false
 							static: false
-							typeAnnotation: undefined
 							loc: SourceLocation typescript/class/method-no-body/input.ts 3:4-3:5
 							start: Position 3:4
 						}
@@ -91,18 +63,29 @@ JSRoot {
 							async: false
 							generator: false
 							hasHoistedVars: false
-							params: Array []
-							rest: undefined
-							thisType: undefined
-							typeParameters: undefined
+							params: []
+							returnType: TSVoidKeywordTypeAnnotation {
+								loc: SourceLocation typescript/class/method-no-body/input.ts 3:9-3:13
+							}
 							loc: SourceLocation typescript/class/method-no-body/input.ts 3:5-3:13
-							returnType: TSVoidKeywordTypeAnnotation {loc: SourceLocation typescript/class/method-no-body/input.ts 3:9-3:13}
 						}
+						loc: SourceLocation typescript/class/method-no-body/input.ts 3:4-3:14
 					}
 				]
+				loc: SourceLocation typescript/class/method-no-body/input.ts 1:0-4:1
 			}
+			loc: SourceLocation typescript/class/method-no-body/input.ts 1:0-4:1
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: ["ts"]
+	path: UIDPath<typescript/class/method-no-body/input.ts>
+	loc: SourceLocation typescript/class/method-no-body/input.ts 1:0-5:0
 }
 ```
 

@@ -8,50 +8,45 @@
 
 ```javascript
 JSRoot {
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation comments/basic/switch-no-default-comment/input.js 1:0-6:0
-	path: UIDPath<comments/basic/switch-no-default-comment/input.js>
-	comments: Array [
+	body: [
+		JSSwitchStatement {
+			cases: [
+				JSSwitchCase {
+					consequent: [
+						JSBreakStatement {
+							loc: SourceLocation comments/basic/switch-no-default-comment/input.js 3:8-3:14
+						}
+					]
+					trailingComments: ["0"]
+					test: JSNumericLiteral {
+						value: 1
+						loc: SourceLocation comments/basic/switch-no-default-comment/input.js 2:9-2:10
+					}
+					loc: SourceLocation comments/basic/switch-no-default-comment/input.js 2:4-3:14
+				}
+			]
+			discriminant: JSReferenceIdentifier {
+				name: "a"
+				loc: SourceLocation comments/basic/switch-no-default-comment/input.js 1:8-1:9 (a)
+			}
+			loc: SourceLocation comments/basic/switch-no-default-comment/input.js 1:0-5:1
+		}
+	]
+	comments: [
 		CommentLine {
 			id: "0"
 			value: "no default"
 			loc: SourceLocation comments/basic/switch-no-default-comment/input.js 4:4-4:16
 		}
 	]
-	body: Array [
-		JSSwitchStatement {
-			loc: SourceLocation comments/basic/switch-no-default-comment/input.js 1:0-5:1
-			discriminant: JSReferenceIdentifier {
-				name: "a"
-				loc: SourceLocation comments/basic/switch-no-default-comment/input.js 1:8-1:9 (a)
-			}
-			cases: Array [
-				JSSwitchCase {
-					loc: SourceLocation comments/basic/switch-no-default-comment/input.js 2:4-3:14
-					trailingComments: Array ["0"]
-					test: JSNumericLiteral {
-						value: 1
-						format: undefined
-						loc: SourceLocation comments/basic/switch-no-default-comment/input.js 2:9-2:10
-					}
-					consequent: Array [
-						JSBreakStatement {
-							label: undefined
-							trailingComments: undefined
-							loc: SourceLocation comments/basic/switch-no-default-comment/input.js 3:8-3:14
-						}
-					]
-				}
-			]
-		}
-	]
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<comments/basic/switch-no-default-comment/input.js>
+	loc: SourceLocation comments/basic/switch-no-default-comment/input.js 1:0-6:0
 }
 ```
 

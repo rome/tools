@@ -9,15 +9,14 @@ import {
 import {printDiagnosticsToString} from "@internal/cli-diagnostics";
 import {highlightCode} from "@internal/markup-syntax-highlight";
 import {inferDiagnosticLanguageFromPath} from "@internal/core/common/file-handlers";
-import {concatMarkup, joinMarkupLines, markup} from "@internal/markup";
+import {joinMarkup, joinMarkupLines, markup} from "@internal/markup";
 import {markupToHtml} from "@internal/cli-layout";
-import {createAnyPath} from "@internal/path";
+import {createPath} from "@internal/path";
 import {dedent} from "@internal/string-utils";
 import {tests} from "@internal/compiler/lint/rules/tests";
 import {ROOT, modifyGeneratedFile} from "../_utils";
 import {getDocRuleDescription, getLintDefs} from "./lint-rules";
-import {readFileText} from "@internal/fs";
-import {OneIndexed} from "@internal/math";
+import {OneIndexed} from "@internal/numbers";
 
 const {worker, performFileOperation} = createMockWorker();
 
@@ -26,11 +25,11 @@ function pre(inner: string): string {
 }
 
 function highlightPre(filename: string, code: string): string {
-	const path = createAnyPath(filename);
+	const path = createPath(filename);
 	return pre(
 		joinMarkupLines(
 			markupToHtml(
-				concatMarkup(
+				joinMarkup(
 					highlightCode({
 						path,
 						input: code,
@@ -94,13 +93,13 @@ async function run(
 				markupOptions: {
 					normalizePosition() {
 						return {
-							path: createAnyPath(filename),
+							path: createPath(filename),
 						};
 					},
 				},
 			});
 			processor.normalizer.setInlineSourceText(ref.uid, code);
-			processor.addFilter({
+			processor.addEliminationFilter({
 				test(diag) {
 					return (
 						equalCategoryNames(diag.description.category, category) ||
@@ -150,7 +149,7 @@ export async function main() {
 				id: "description",
 			},
 			async () => {
-				const content = await readFileText(docs);
+				const content = await docs.readFileText();
 				const eslintInfo = extractLintRuleInfo(content, "eslint");
 				const tslintInfo = extractLintRuleInfo(content, "tslint");
 

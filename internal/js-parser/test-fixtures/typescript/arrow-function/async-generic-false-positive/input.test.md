@@ -8,68 +8,63 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	loc: SourceLocation typescript/arrow-function/async-generic-false-positive/input.ts 1:0-3:0
-	path: UIDPath<typescript/arrow-function/async-generic-false-positive/input.ts>
-	syntax: Array ["ts"]
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation typescript/arrow-function/async-generic-false-positive/input.ts 1:0-1:10
 			expression: JSBinaryExpression {
 				operator: "<"
-				loc: SourceLocation typescript/arrow-function/async-generic-false-positive/input.ts 1:0-1:9
 				left: JSReferenceIdentifier {
 					name: "async"
 					loc: SourceLocation typescript/arrow-function/async-generic-false-positive/input.ts 1:0-1:5 (async)
 				}
 				right: JSNumericLiteral {
 					value: 1
-					format: undefined
 					loc: SourceLocation typescript/arrow-function/async-generic-false-positive/input.ts 1:8-1:9
 				}
+				loc: SourceLocation typescript/arrow-function/async-generic-false-positive/input.ts 1:0-1:9
 			}
+			loc: SourceLocation typescript/arrow-function/async-generic-false-positive/input.ts 1:0-1:10
 		}
 		JSExpressionStatement {
-			loc: SourceLocation typescript/arrow-function/async-generic-false-positive/input.ts 2:0-2:16
 			expression: JSBinaryExpression {
 				operator: "=="
-				loc: SourceLocation typescript/arrow-function/async-generic-false-positive/input.ts 2:0-2:15
-				right: JSNumericLiteral {
-					value: 0
-					format: undefined
-					loc: SourceLocation typescript/arrow-function/async-generic-false-positive/input.ts 2:14-2:15
-				}
 				left: JSCallExpression {
-					arguments: Array []
-					loc: SourceLocation typescript/arrow-function/async-generic-false-positive/input.ts 2:0-2:10
+					arguments: []
 					callee: JSReferenceIdentifier {
 						name: "async"
 						loc: SourceLocation typescript/arrow-function/async-generic-false-positive/input.ts 2:0-2:5 (async)
 					}
 					typeArguments: TSTypeParameterInstantiation {
-						loc: SourceLocation typescript/arrow-function/async-generic-false-positive/input.ts 2:5-2:8
-						params: Array [
+						params: [
 							TSTypeReference {
-								typeParameters: undefined
-								loc: SourceLocation typescript/arrow-function/async-generic-false-positive/input.ts 2:6-2:7
 								typeName: JSReferenceIdentifier {
 									name: "T"
 									loc: SourceLocation typescript/arrow-function/async-generic-false-positive/input.ts 2:6-2:7 (T)
 								}
+								loc: SourceLocation typescript/arrow-function/async-generic-false-positive/input.ts 2:6-2:7
 							}
 						]
+						loc: SourceLocation typescript/arrow-function/async-generic-false-positive/input.ts 2:5-2:8
 					}
+					loc: SourceLocation typescript/arrow-function/async-generic-false-positive/input.ts 2:0-2:10
 				}
+				right: JSNumericLiteral {
+					value: 0
+					loc: SourceLocation typescript/arrow-function/async-generic-false-positive/input.ts 2:14-2:15
+				}
+				loc: SourceLocation typescript/arrow-function/async-generic-false-positive/input.ts 2:0-2:15
 			}
+			loc: SourceLocation typescript/arrow-function/async-generic-false-positive/input.ts 2:0-2:16
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: ["ts"]
+	path: UIDPath<typescript/arrow-function/async-generic-false-positive/input.ts>
+	loc: SourceLocation typescript/arrow-function/async-generic-false-positive/input.ts 1:0-3:0
 }
 ```
 

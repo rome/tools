@@ -8,65 +8,59 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: true
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	loc: SourceLocation typescript/const/reserved-word/input.ts 1:0-1:15
-	path: UIDPath<typescript/const/reserved-word/input.ts>
-	syntax: Array ["ts"]
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Unknown TS non array type start"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:8
-				path: UIDPath<typescript/const/reserved-word/input.ts>
-				start: Position 1:9
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSVariableDeclarationStatement {
-			loc: SourceLocation typescript/const/reserved-word/input.ts 1:0-1:15
 			declaration: JSVariableDeclaration {
 				kind: "const"
-				loc: SourceLocation typescript/const/reserved-word/input.ts 1:0-1:15
-				declarations: Array [
+				declarations: [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "b"
-							loc: SourceLocation typescript/const/reserved-word/input.ts 1:6-1:14
 							meta: JSPatternMeta {
-								definite: undefined
-								loc: SourceLocation typescript/const/reserved-word/input.ts 1:6-1:14
 								typeAnnotation: TSTypeReference {
-									loc: SourceLocation typescript/const/reserved-word/input.ts 1:14-1:14
 									typeName: JSReferenceIdentifier {
 										name: "INVALID_PLACEHOLDER"
 										loc: SourceLocation typescript/const/reserved-word/input.ts 1:14-1:14
 									}
+									loc: SourceLocation typescript/const/reserved-word/input.ts 1:14-1:14
 								}
+								loc: SourceLocation typescript/const/reserved-word/input.ts 1:6-1:14
 							}
+							loc: SourceLocation typescript/const/reserved-word/input.ts 1:6-1:14
 						}
-						init: undefined
 						loc: SourceLocation typescript/const/reserved-word/input.ts 1:6-1:14
 					}
 				]
+				loc: SourceLocation typescript/const/reserved-word/input.ts 1:0-1:15
+			}
+			loc: SourceLocation typescript/const/reserved-word/input.ts 1:0-1:15
+		}
+	]
+	comments: []
+	corrupt: true
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "Unknown TS non array type start"}
+			}
+			location: {
+				language: "js"
+				path: UIDPath<typescript/const/reserved-word/input.ts>
+				end: Position 1:8
+				start: Position 1:9
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: ["ts"]
+	path: UIDPath<typescript/const/reserved-word/input.ts>
+	loc: SourceLocation typescript/const/reserved-word/input.ts 1:0-1:15
 }
 ```
 

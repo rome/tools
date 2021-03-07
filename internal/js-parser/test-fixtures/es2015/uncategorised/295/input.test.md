@@ -8,83 +8,79 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2015/uncategorised/295/input.js 1:0-2:0
-	path: UIDPath<es2015/uncategorised/295/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:14
-				path: UIDPath<es2015/uncategorised/295/input.js>
-				start: Position 1:14
-			}
-			description: Object {
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Unclosed <emphasis>switch body</emphasis>"}
-				advice: Array [
-					log {
-						category: "info"
-						text: RAW_MARKUP {value: "We expected to find the closing character <emphasis>}</emphasis> here"}
-					}
-					frame {location: SourceLocation es2015/uncategorised/295/input.js 2:0-2:0}
-				]
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSSwitchStatement {
-			loc: SourceLocation es2015/uncategorised/295/input.js 1:0-1:36
-			discriminant: JSReferenceIdentifier {
-				name: "cond"
-				loc: SourceLocation es2015/uncategorised/295/input.js 1:8-1:12 (cond)
-			}
-			cases: Array [
+			cases: [
 				JSSwitchCase {
-					loc: SourceLocation es2015/uncategorised/295/input.js 1:16-1:36
-					test: JSNumericLiteral {
-						value: 10
-						format: undefined
-						loc: SourceLocation es2015/uncategorised/295/input.js 1:21-1:23
-					}
-					consequent: Array [
+					consequent: [
 						JSVariableDeclarationStatement {
-							loc: SourceLocation es2015/uncategorised/295/input.js 1:25-1:36
 							declaration: JSVariableDeclaration {
 								kind: "let"
-								loc: SourceLocation es2015/uncategorised/295/input.js 1:25-1:36
-								declarations: Array [
+								declarations: [
 									JSVariableDeclarator {
 										id: JSBindingIdentifier {
 											name: "a"
 											loc: SourceLocation es2015/uncategorised/295/input.js 1:29-1:30 (a)
 										}
-										loc: SourceLocation es2015/uncategorised/295/input.js 1:29-1:35
 										init: JSNumericLiteral {
 											value: 20
-											format: undefined
 											loc: SourceLocation es2015/uncategorised/295/input.js 1:33-1:35
 										}
+										loc: SourceLocation es2015/uncategorised/295/input.js 1:29-1:35
 									}
 								]
+								loc: SourceLocation es2015/uncategorised/295/input.js 1:25-1:36
 							}
+							loc: SourceLocation es2015/uncategorised/295/input.js 1:25-1:36
 						}
 					]
+					test: JSNumericLiteral {
+						value: 10
+						loc: SourceLocation es2015/uncategorised/295/input.js 1:21-1:23
+					}
+					loc: SourceLocation es2015/uncategorised/295/input.js 1:16-1:36
 				}
 			]
+			discriminant: JSReferenceIdentifier {
+				name: "cond"
+				loc: SourceLocation es2015/uncategorised/295/input.js 1:8-1:12 (cond)
+			}
+			loc: SourceLocation es2015/uncategorised/295/input.js 1:0-1:36
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {
+				advice: [
+					log {
+						category: "info"
+						text: [RAW_MARKUP {value: "We expected to find the closing character <emphasis>"}, "}", RAW_MARKUP {value: "</emphasis> here"}]
+					}
+					frame {
+						location: SourceLocation es2015/uncategorised/295/input.js 2:0-2:0
+					}
+				]
+				category: ["parse"]
+				categoryValue: "js"
+				message: [RAW_MARKUP {value: "Unclosed <emphasis>"}, "switch body", RAW_MARKUP {value: "</emphasis>"}]
+			}
+			location: {
+				language: "js"
+				path: UIDPath<es2015/uncategorised/295/input.js>
+				end: Position 1:14
+				start: Position 1:14
+			}
+		}
+	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2015/uncategorised/295/input.js>
+	loc: SourceLocation es2015/uncategorised/295/input.js 1:0-2:0
 }
 ```
 

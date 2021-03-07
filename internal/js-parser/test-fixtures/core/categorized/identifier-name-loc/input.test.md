@@ -8,35 +8,33 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation core/categorized/identifier-name-loc/input.js 1:0-2:0
-	path: UIDPath<core/categorized/identifier-name-loc/input.js>
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation core/categorized/identifier-name-loc/input.js 1:0-1:9
 			expression: JSCallExpression {
-				loc: SourceLocation core/categorized/identifier-name-loc/input.js 1:0-1:8
-				callee: JSReferenceIdentifier {
-					name: "foo"
-					loc: SourceLocation core/categorized/identifier-name-loc/input.js 1:0-1:3 (foo)
-				}
-				arguments: Array [
+				arguments: [
 					JSReferenceIdentifier {
 						name: "bar"
 						loc: SourceLocation core/categorized/identifier-name-loc/input.js 1:4-1:7 (bar)
 					}
 				]
+				callee: JSReferenceIdentifier {
+					name: "foo"
+					loc: SourceLocation core/categorized/identifier-name-loc/input.js 1:0-1:3 (foo)
+				}
+				loc: SourceLocation core/categorized/identifier-name-loc/input.js 1:0-1:8
 			}
+			loc: SourceLocation core/categorized/identifier-name-loc/input.js 1:0-1:9
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<core/categorized/identifier-name-loc/input.js>
+	loc: SourceLocation core/categorized/identifier-name-loc/input.js 1:0-2:0
 }
 ```
 

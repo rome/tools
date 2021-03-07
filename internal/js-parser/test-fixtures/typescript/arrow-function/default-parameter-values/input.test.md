@@ -8,58 +8,52 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	loc: SourceLocation typescript/arrow-function/default-parameter-values/input.ts 1:0-2:0
-	path: UIDPath<typescript/arrow-function/default-parameter-values/input.ts>
-	syntax: Array ["ts"]
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation typescript/arrow-function/default-parameter-values/input.ts 1:0-1:21
 			expression: JSArrowFunctionExpression {
-				loc: SourceLocation typescript/arrow-function/default-parameter-values/input.ts 1:0-1:20
 				body: JSNumericLiteral {
 					value: 0
-					format: undefined
 					loc: SourceLocation typescript/arrow-function/default-parameter-values/input.ts 1:19-1:20
 				}
 				head: JSFunctionHead {
 					async: false
 					hasHoistedVars: false
-					rest: undefined
-					returnType: undefined
-					thisType: undefined
-					loc: SourceLocation typescript/arrow-function/default-parameter-values/input.ts 1:0-1:18
-					params: Array [
+					params: [
 						JSBindingAssignmentPattern {
 							operator: "="
-							loc: SourceLocation typescript/arrow-function/default-parameter-values/input.ts 1:1-1:14
-							right: JSNumericLiteral {
-								value: 0
-								format: undefined
-								loc: SourceLocation typescript/arrow-function/default-parameter-values/input.ts 1:13-1:14
-							}
 							left: JSBindingIdentifier {
 								name: "x"
-								loc: SourceLocation typescript/arrow-function/default-parameter-values/input.ts 1:11-1:10
 								meta: JSPatternMeta {
-									optional: undefined
+									typeAnnotation: TSNumberKeywordTypeAnnotation {
+										loc: SourceLocation typescript/arrow-function/default-parameter-values/input.ts 1:4-1:10
+									}
 									loc: SourceLocation typescript/arrow-function/default-parameter-values/input.ts 1:11-1:10
-									typeAnnotation: TSNumberKeywordTypeAnnotation {loc: SourceLocation typescript/arrow-function/default-parameter-values/input.ts 1:4-1:10}
 								}
+								loc: SourceLocation typescript/arrow-function/default-parameter-values/input.ts 1:11-1:10
 							}
+							right: JSNumericLiteral {
+								value: 0
+								loc: SourceLocation typescript/arrow-function/default-parameter-values/input.ts 1:13-1:14
+							}
+							loc: SourceLocation typescript/arrow-function/default-parameter-values/input.ts 1:1-1:14
 						}
 					]
+					loc: SourceLocation typescript/arrow-function/default-parameter-values/input.ts 1:0-1:18
 				}
+				loc: SourceLocation typescript/arrow-function/default-parameter-values/input.ts 1:0-1:20
 			}
+			loc: SourceLocation typescript/arrow-function/default-parameter-values/input.ts 1:0-1:21
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: ["ts"]
+	path: UIDPath<typescript/arrow-function/default-parameter-values/input.ts>
+	loc: SourceLocation typescript/arrow-function/default-parameter-values/input.ts 1:0-2:0
 }
 ```
 

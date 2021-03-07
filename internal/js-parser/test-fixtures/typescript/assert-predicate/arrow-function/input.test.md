@@ -8,190 +8,183 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: true
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	loc: SourceLocation typescript/assert-predicate/arrow-function/input.ts 1:0-4:0
-	path: UIDPath<typescript/assert-predicate/arrow-function/input.ts>
-	syntax: Array ["ts"]
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Flow type cast expressions aren't allowed in TypeScript"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 3:31
-				path: UIDPath<typescript/assert-predicate/arrow-function/input.ts>
-				start: Position 3:17
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSVariableDeclarationStatement {
-			loc: SourceLocation typescript/assert-predicate/arrow-function/input.ts 1:0-1:63
 			declaration: JSVariableDeclaration {
 				kind: "const"
-				loc: SourceLocation typescript/assert-predicate/arrow-function/input.ts 1:0-1:63
-				declarations: Array [
+				declarations: [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "assert1"
 							loc: SourceLocation typescript/assert-predicate/arrow-function/input.ts 1:6-1:13 (assert1)
 						}
-						loc: SourceLocation typescript/assert-predicate/arrow-function/input.ts 1:6-1:63
 						init: JSArrowFunctionExpression {
-							loc: SourceLocation typescript/assert-predicate/arrow-function/input.ts 1:16-1:63
 							body: JSBlockStatement {
-								body: Array []
-								directives: Array []
+								body: []
+								directives: []
 								loc: SourceLocation typescript/assert-predicate/arrow-function/input.ts 1:61-1:63
 							}
 							head: JSFunctionHead {
 								async: false
 								hasHoistedVars: false
-								rest: undefined
-								thisType: undefined
-								loc: SourceLocation typescript/assert-predicate/arrow-function/input.ts 1:16-1:60
+								params: [
+									JSBindingIdentifier {
+										name: "value"
+										meta: JSPatternMeta {
+											typeAnnotation: TSUnknownKeywordTypeAnnotation {
+												loc: SourceLocation typescript/assert-predicate/arrow-function/input.ts 1:24-1:31
+											}
+											loc: SourceLocation typescript/assert-predicate/arrow-function/input.ts 1:61-1:60
+										}
+										loc: SourceLocation typescript/assert-predicate/arrow-function/input.ts 1:61-1:60
+									}
+								]
 								returnType: TSTypePredicate {
 									asserts: true
-									loc: SourceLocation typescript/assert-predicate/arrow-function/input.ts 1:42-1:57
-									typeAnnotation: TSStringKeywordTypeAnnotation {loc: SourceLocation typescript/assert-predicate/arrow-function/input.ts 1:51-1:57}
 									parameterName: JSIdentifier {
 										name: "value"
 										loc: SourceLocation typescript/assert-predicate/arrow-function/input.ts 1:42-1:47 (value)
 									}
-								}
-								params: Array [
-									JSBindingIdentifier {
-										name: "value"
-										loc: SourceLocation typescript/assert-predicate/arrow-function/input.ts 1:61-1:60
-										meta: JSPatternMeta {
-											optional: undefined
-											loc: SourceLocation typescript/assert-predicate/arrow-function/input.ts 1:61-1:60
-											typeAnnotation: TSUnknownKeywordTypeAnnotation {loc: SourceLocation typescript/assert-predicate/arrow-function/input.ts 1:24-1:31}
-										}
+									typeAnnotation: TSStringKeywordTypeAnnotation {
+										loc: SourceLocation typescript/assert-predicate/arrow-function/input.ts 1:51-1:57
 									}
-								]
+									loc: SourceLocation typescript/assert-predicate/arrow-function/input.ts 1:42-1:57
+								}
+								loc: SourceLocation typescript/assert-predicate/arrow-function/input.ts 1:16-1:60
 							}
+							loc: SourceLocation typescript/assert-predicate/arrow-function/input.ts 1:16-1:63
 						}
+						loc: SourceLocation typescript/assert-predicate/arrow-function/input.ts 1:6-1:63
 					}
 				]
+				loc: SourceLocation typescript/assert-predicate/arrow-function/input.ts 1:0-1:63
 			}
+			loc: SourceLocation typescript/assert-predicate/arrow-function/input.ts 1:0-1:63
 		}
 		JSVariableDeclarationStatement {
-			loc: SourceLocation typescript/assert-predicate/arrow-function/input.ts 2:0-2:53
 			declaration: JSVariableDeclaration {
 				kind: "const"
-				loc: SourceLocation typescript/assert-predicate/arrow-function/input.ts 2:0-2:53
-				declarations: Array [
+				declarations: [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "assert2"
 							loc: SourceLocation typescript/assert-predicate/arrow-function/input.ts 2:6-2:13 (assert2)
 						}
-						loc: SourceLocation typescript/assert-predicate/arrow-function/input.ts 2:6-2:53
 						init: JSArrowFunctionExpression {
-							loc: SourceLocation typescript/assert-predicate/arrow-function/input.ts 2:16-2:53
 							body: JSBlockStatement {
-								body: Array []
-								directives: Array []
+								body: []
+								directives: []
 								loc: SourceLocation typescript/assert-predicate/arrow-function/input.ts 2:51-2:53
 							}
 							head: JSFunctionHead {
 								async: false
 								hasHoistedVars: false
-								rest: undefined
-								thisType: undefined
-								loc: SourceLocation typescript/assert-predicate/arrow-function/input.ts 2:16-2:50
+								params: [
+									JSBindingIdentifier {
+										name: "value"
+										meta: JSPatternMeta {
+											typeAnnotation: TSUnknownKeywordTypeAnnotation {
+												loc: SourceLocation typescript/assert-predicate/arrow-function/input.ts 2:24-2:31
+											}
+											loc: SourceLocation typescript/assert-predicate/arrow-function/input.ts 2:51-2:50
+										}
+										loc: SourceLocation typescript/assert-predicate/arrow-function/input.ts 2:51-2:50
+									}
+								]
 								returnType: TSTypePredicate {
 									asserts: true
-									typeAnnotation: undefined
-									loc: SourceLocation typescript/assert-predicate/arrow-function/input.ts 2:32-2:47
 									parameterName: JSIdentifier {
 										name: "value"
 										loc: SourceLocation typescript/assert-predicate/arrow-function/input.ts 2:42-2:47 (value)
 									}
+									loc: SourceLocation typescript/assert-predicate/arrow-function/input.ts 2:32-2:47
 								}
-								params: Array [
-									JSBindingIdentifier {
-										name: "value"
-										loc: SourceLocation typescript/assert-predicate/arrow-function/input.ts 2:51-2:50
-										meta: JSPatternMeta {
-											optional: undefined
-											loc: SourceLocation typescript/assert-predicate/arrow-function/input.ts 2:51-2:50
-											typeAnnotation: TSUnknownKeywordTypeAnnotation {loc: SourceLocation typescript/assert-predicate/arrow-function/input.ts 2:24-2:31}
-										}
-									}
-								]
+								loc: SourceLocation typescript/assert-predicate/arrow-function/input.ts 2:16-2:50
 							}
+							loc: SourceLocation typescript/assert-predicate/arrow-function/input.ts 2:16-2:53
 						}
+						loc: SourceLocation typescript/assert-predicate/arrow-function/input.ts 2:6-2:53
 					}
 				]
+				loc: SourceLocation typescript/assert-predicate/arrow-function/input.ts 2:0-2:53
 			}
+			loc: SourceLocation typescript/assert-predicate/arrow-function/input.ts 2:0-2:53
 		}
 		JSVariableDeclarationStatement {
-			loc: SourceLocation typescript/assert-predicate/arrow-function/input.ts 3:0-3:32
 			declaration: JSVariableDeclaration {
 				kind: "const"
-				loc: SourceLocation typescript/assert-predicate/arrow-function/input.ts 3:0-3:32
-				declarations: Array [
+				declarations: [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "assert3"
 							loc: SourceLocation typescript/assert-predicate/arrow-function/input.ts 3:6-3:13 (assert3)
 						}
-						loc: SourceLocation typescript/assert-predicate/arrow-function/input.ts 3:6-3:32
 						init: JSReferenceIdentifier {
 							name: "value"
 							loc: SourceLocation typescript/assert-predicate/arrow-function/input.ts 3:17-3:22 (value)
 						}
+						loc: SourceLocation typescript/assert-predicate/arrow-function/input.ts 3:6-3:32
 					}
 				]
+				loc: SourceLocation typescript/assert-predicate/arrow-function/input.ts 3:0-3:32
 			}
+			loc: SourceLocation typescript/assert-predicate/arrow-function/input.ts 3:0-3:32
 		}
 		JSExpressionStatement {
-			loc: SourceLocation typescript/assert-predicate/arrow-function/input.ts 3:32-3:33
 			expression: JSReferenceIdentifier {
 				name: "INVALID_PLACEHOLDER"
 				loc: SourceLocation typescript/assert-predicate/arrow-function/input.ts 3:32-3:33
 			}
+			loc: SourceLocation typescript/assert-predicate/arrow-function/input.ts 3:32-3:33
 		}
 		JSExpressionStatement {
-			loc: SourceLocation typescript/assert-predicate/arrow-function/input.ts 3:34-3:47
 			expression: JSArrowFunctionExpression {
-				loc: SourceLocation typescript/assert-predicate/arrow-function/input.ts 3:34-3:47
 				body: JSBlockStatement {
-					body: Array []
-					directives: Array []
+					body: []
+					directives: []
 					loc: SourceLocation typescript/assert-predicate/arrow-function/input.ts 3:45-3:47
 				}
 				head: JSFunctionHead {
 					async: false
 					hasHoistedVars: false
-					rest: undefined
-					thisType: undefined
-					loc: SourceLocation typescript/assert-predicate/arrow-function/input.ts 3:34-3:44
-					params: Array [
+					params: [
 						JSBindingIdentifier {
 							name: "asserts"
 							loc: SourceLocation typescript/assert-predicate/arrow-function/input.ts 3:34-3:41 (asserts)
 						}
 					]
+					loc: SourceLocation typescript/assert-predicate/arrow-function/input.ts 3:34-3:44
 				}
+				loc: SourceLocation typescript/assert-predicate/arrow-function/input.ts 3:34-3:47
+			}
+			loc: SourceLocation typescript/assert-predicate/arrow-function/input.ts 3:34-3:47
+		}
+	]
+	comments: []
+	corrupt: true
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "Flow type cast expressions aren't allowed in TypeScript"}
+			}
+			location: {
+				language: "js"
+				path: UIDPath<typescript/assert-predicate/arrow-function/input.ts>
+				end: Position 3:31
+				start: Position 3:17
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: ["ts"]
+	path: UIDPath<typescript/assert-predicate/arrow-function/input.ts>
+	loc: SourceLocation typescript/assert-predicate/arrow-function/input.ts 1:0-4:0
 }
 ```
 

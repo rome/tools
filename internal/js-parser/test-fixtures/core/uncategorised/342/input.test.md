@@ -8,42 +8,40 @@
 
 ```javascript
 JSRoot {
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation core/uncategorised/342/input.js 1:0-2:4
-	path: UIDPath<core/uncategorised/342/input.js>
-	comments: Array [
+	body: [
+		JSExpressionStatement {
+			expression: JSBinaryExpression {
+				operator: "+"
+				left: JSReferenceIdentifier {
+					name: "foo"
+					trailingComments: ["0"]
+					loc: SourceLocation core/uncategorised/342/input.js 1:0-1:3 (foo)
+				}
+				right: JSReferenceIdentifier {
+					name: "baz"
+					leadingComments: ["0"]
+					loc: SourceLocation core/uncategorised/342/input.js 2:1-2:4 (baz)
+				}
+				loc: SourceLocation core/uncategorised/342/input.js 1:0-2:4
+			}
+			loc: SourceLocation core/uncategorised/342/input.js 1:0-2:4
+		}
+	]
+	comments: [
 		CommentLine {
 			id: "0"
 			value: "bar"
 			loc: SourceLocation core/uncategorised/342/input.js 1:4-1:11
 		}
 	]
-	body: Array [
-		JSExpressionStatement {
-			loc: SourceLocation core/uncategorised/342/input.js 1:0-2:4
-			expression: JSBinaryExpression {
-				operator: "+"
-				loc: SourceLocation core/uncategorised/342/input.js 1:0-2:4
-				left: JSReferenceIdentifier {
-					name: "foo"
-					loc: SourceLocation core/uncategorised/342/input.js 1:0-1:3 (foo)
-					trailingComments: Array ["0"]
-				}
-				right: JSReferenceIdentifier {
-					name: "baz"
-					leadingComments: Array ["0"]
-					loc: SourceLocation core/uncategorised/342/input.js 2:1-2:4 (baz)
-				}
-			}
-		}
-	]
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<core/uncategorised/342/input.js>
+	loc: SourceLocation core/uncategorised/342/input.js 1:0-2:4
 }
 ```
 

@@ -8,85 +8,75 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	loc: SourceLocation typescript/types/mapped-type-key-remap/input.ts 1:0-4:0
-	path: UIDPath<typescript/types/mapped-type-key-remap/input.ts>
-	syntax: Array ["ts"]
-	body: Array [
+	body: [
 		TSTypeAlias {
 			id: JSBindingIdentifier {
 				name: "MappedType"
 				loc: SourceLocation typescript/types/mapped-type-key-remap/input.ts 1:5-1:15 (MappedType)
 			}
-			loc: SourceLocation typescript/types/mapped-type-key-remap/input.ts 1:0-3:1
-			typeParameters: TSTypeParameterDeclaration {
-				loc: SourceLocation typescript/types/mapped-type-key-remap/input.ts 1:15-1:18
-				params: Array [
-					TSTypeParameter {
-						name: "T"
-						constraint: undefined
-						default: undefined
-						loc: SourceLocation typescript/types/mapped-type-key-remap/input.ts 1:16-1:17
-					}
-				]
-			}
 			right: TSMappedType {
-				optional: undefined
-				readonly: undefined
-				loc: SourceLocation typescript/types/mapped-type-key-remap/input.ts 1:21-3:1
 				nameType: TSTypeReference {
-					typeParameters: undefined
-					loc: SourceLocation typescript/types/mapped-type-key-remap/input.ts 2:18-2:28
 					typeName: JSReferenceIdentifier {
 						name: "NewKeyType"
 						loc: SourceLocation typescript/types/mapped-type-key-remap/input.ts 2:18-2:28 (NewKeyType)
 					}
-				}
-				typeParameter: TSTypeParameter {
-					name: "K"
-					loc: SourceLocation typescript/types/mapped-type-key-remap/input.ts 2:2-2:14
-					constraint: TSTypeOperator {
-						operator: "keyof"
-						loc: SourceLocation typescript/types/mapped-type-key-remap/input.ts 2:7-2:14
-						typeAnnotation: TSTypeReference {
-							typeParameters: undefined
-							loc: SourceLocation typescript/types/mapped-type-key-remap/input.ts 2:13-2:14
-							typeName: JSReferenceIdentifier {
-								name: "T"
-								loc: SourceLocation typescript/types/mapped-type-key-remap/input.ts 2:13-2:14 (T)
-							}
-						}
-					}
+					loc: SourceLocation typescript/types/mapped-type-key-remap/input.ts 2:18-2:28
 				}
 				typeAnnotation: TSIndexedAccessType {
-					loc: SourceLocation typescript/types/mapped-type-key-remap/input.ts 2:31-2:35
 					indexType: TSTypeReference {
-						typeParameters: undefined
-						loc: SourceLocation typescript/types/mapped-type-key-remap/input.ts 2:33-2:34
 						typeName: JSReferenceIdentifier {
 							name: "K"
 							loc: SourceLocation typescript/types/mapped-type-key-remap/input.ts 2:33-2:34 (K)
 						}
+						loc: SourceLocation typescript/types/mapped-type-key-remap/input.ts 2:33-2:34
 					}
 					objectType: TSTypeReference {
-						typeParameters: undefined
-						loc: SourceLocation typescript/types/mapped-type-key-remap/input.ts 2:31-2:32
 						typeName: JSReferenceIdentifier {
 							name: "T"
 							loc: SourceLocation typescript/types/mapped-type-key-remap/input.ts 2:31-2:32 (T)
 						}
+						loc: SourceLocation typescript/types/mapped-type-key-remap/input.ts 2:31-2:32
 					}
+					loc: SourceLocation typescript/types/mapped-type-key-remap/input.ts 2:31-2:35
 				}
+				typeParameter: TSTypeParameter {
+					name: "K"
+					constraint: TSTypeOperator {
+						operator: "keyof"
+						typeAnnotation: TSTypeReference {
+							typeName: JSReferenceIdentifier {
+								name: "T"
+								loc: SourceLocation typescript/types/mapped-type-key-remap/input.ts 2:13-2:14 (T)
+							}
+							loc: SourceLocation typescript/types/mapped-type-key-remap/input.ts 2:13-2:14
+						}
+						loc: SourceLocation typescript/types/mapped-type-key-remap/input.ts 2:7-2:14
+					}
+					loc: SourceLocation typescript/types/mapped-type-key-remap/input.ts 2:2-2:14
+				}
+				loc: SourceLocation typescript/types/mapped-type-key-remap/input.ts 1:21-3:1
 			}
+			typeParameters: TSTypeParameterDeclaration {
+				params: [
+					TSTypeParameter {
+						name: "T"
+						loc: SourceLocation typescript/types/mapped-type-key-remap/input.ts 1:16-1:17
+					}
+				]
+				loc: SourceLocation typescript/types/mapped-type-key-remap/input.ts 1:15-1:18
+			}
+			loc: SourceLocation typescript/types/mapped-type-key-remap/input.ts 1:0-3:1
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: ["ts"]
+	path: UIDPath<typescript/types/mapped-type-key-remap/input.ts>
+	loc: SourceLocation typescript/types/mapped-type-key-remap/input.ts 1:0-4:0
 }
 ```
 

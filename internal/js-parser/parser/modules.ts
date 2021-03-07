@@ -247,7 +247,7 @@ export function parseExport(
 			unexpectedDiagnostic(
 				parser,
 				{
-					loc: declaration.loc,
+					node: declaration,
 					description: descriptions.JS_PARSER.INVALID_EXPORT_DECLARATION,
 				},
 			);
@@ -479,7 +479,7 @@ function parseExportFrom(
 			unexpectedDiagnostic(
 				parser,
 				{
-					loc: expr.loc,
+					node: expr,
 					description: descriptions.JS_PARSER.EXPORT_FROM_NOT_STRING,
 				},
 			);
@@ -708,7 +708,7 @@ function checkDuplicateExports(
 		unexpectedDiagnostic(
 			parser,
 			{
-				loc: node.loc,
+				node,
 				description: descriptions.JS_PARSER.DUPLICATE_EXPORT(name, existing),
 			},
 		);

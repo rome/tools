@@ -8,79 +8,72 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: true
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation experimental/module-attributes/without-plugin/input.js 1:0-2:0
-	path: UIDPath<experimental/module-attributes/without-plugin/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Expected a semicolon or a line terminator"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:26
-				path: UIDPath<experimental/module-attributes/without-plugin/input.js>
-				start: Position 1:27
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSImportDeclaration {
-			importKind: undefined
-			namedSpecifiers: Array []
-			namespaceSpecifier: undefined
-			loc: SourceLocation experimental/module-attributes/without-plugin/input.js 1:0-1:26
-			source: JSStringLiteral {
-				value: "foo.json"
-				loc: SourceLocation experimental/module-attributes/without-plugin/input.js 1:16-1:26
-			}
+			namedSpecifiers: []
 			defaultSpecifier: JSImportDefaultSpecifier {
-				loc: SourceLocation experimental/module-attributes/without-plugin/input.js 1:0-1:10
 				local: JSImportSpecifierLocal {
 					name: JSBindingIdentifier {
 						name: "foo"
 						loc: SourceLocation experimental/module-attributes/without-plugin/input.js 1:7-1:10 (foo)
 					}
-					importKind: undefined
 					loc: SourceLocation experimental/module-attributes/without-plugin/input.js 1:7-1:10
 				}
+				loc: SourceLocation experimental/module-attributes/without-plugin/input.js 1:0-1:10
 			}
+			source: JSStringLiteral {
+				value: "foo.json"
+				loc: SourceLocation experimental/module-attributes/without-plugin/input.js 1:16-1:26
+			}
+			loc: SourceLocation experimental/module-attributes/without-plugin/input.js 1:0-1:26
 		}
 		JSWithStatement {
-			loc: SourceLocation experimental/module-attributes/without-plugin/input.js 1:27-1:37
-			object: JSReferenceIdentifier {
-				name: "type"
-				loc: SourceLocation experimental/module-attributes/without-plugin/input.js 1:32-1:36 (type)
-			}
 			body: JSExpressionStatement {
-				loc: SourceLocation experimental/module-attributes/without-plugin/input.js 1:36-1:37
 				expression: JSReferenceIdentifier {
 					name: "INVALID_PLACEHOLDER"
 					loc: SourceLocation experimental/module-attributes/without-plugin/input.js 1:36-1:37
 				}
+				loc: SourceLocation experimental/module-attributes/without-plugin/input.js 1:36-1:37
 			}
+			object: JSReferenceIdentifier {
+				name: "type"
+				loc: SourceLocation experimental/module-attributes/without-plugin/input.js 1:32-1:36 (type)
+			}
+			loc: SourceLocation experimental/module-attributes/without-plugin/input.js 1:27-1:37
 		}
 		JSExpressionStatement {
-			loc: SourceLocation experimental/module-attributes/without-plugin/input.js 1:38-1:45
 			expression: JSStringLiteral {
 				value: "json"
 				loc: SourceLocation experimental/module-attributes/without-plugin/input.js 1:38-1:44
 			}
+			loc: SourceLocation experimental/module-attributes/without-plugin/input.js 1:38-1:45
 		}
 	]
+	comments: []
+	corrupt: true
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "Expected a semicolon or a line terminator"}
+			}
+			location: {
+				language: "js"
+				path: UIDPath<experimental/module-attributes/without-plugin/input.js>
+				end: Position 1:26
+				start: Position 1:27
+			}
+		}
+	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<experimental/module-attributes/without-plugin/input.js>
+	loc: SourceLocation experimental/module-attributes/without-plugin/input.js 1:0-2:0
 }
 ```
 

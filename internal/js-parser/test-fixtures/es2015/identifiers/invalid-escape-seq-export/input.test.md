@@ -8,81 +8,47 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: true
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	syntax: Array []
-	loc: SourceLocation es2015/identifiers/invalid-escape-seq-export/input.js 1:0-5:0
-	path: UIDPath<es2015/identifiers/invalid-escape-seq-export/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Escape sequence in keyword <emphasis>export</emphasis>"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:9
-				path: UIDPath<es2015/identifiers/invalid-escape-seq-export/input.js>
-				start: Position 1:9
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSVariableDeclarationStatement {
-			loc: SourceLocation es2015/identifiers/invalid-escape-seq-export/input.js 1:0-1:22
 			declaration: JSVariableDeclaration {
 				kind: "var"
-				loc: SourceLocation es2015/identifiers/invalid-escape-seq-export/input.js 1:0-1:22
-				declarations: Array [
+				declarations: [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "export"
 							loc: SourceLocation es2015/identifiers/invalid-escape-seq-export/input.js 1:4-1:15 (export)
 						}
-						loc: SourceLocation es2015/identifiers/invalid-escape-seq-export/input.js 1:4-1:21
 						init: JSNumericLiteral {
 							value: 123
-							format: undefined
 							loc: SourceLocation es2015/identifiers/invalid-escape-seq-export/input.js 1:18-1:21
 						}
+						loc: SourceLocation es2015/identifiers/invalid-escape-seq-export/input.js 1:4-1:21
 					}
 				]
+				loc: SourceLocation es2015/identifiers/invalid-escape-seq-export/input.js 1:0-1:22
 			}
+			loc: SourceLocation es2015/identifiers/invalid-escape-seq-export/input.js 1:0-1:22
 		}
 		JSVariableDeclarationStatement {
-			loc: SourceLocation es2015/identifiers/invalid-escape-seq-export/input.js 3:0-3:6
 			declaration: JSVariableDeclaration {
 				kind: "var"
-				loc: SourceLocation es2015/identifiers/invalid-escape-seq-export/input.js 3:0-3:6
-				declarations: Array [
+				declarations: [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "x"
 							loc: SourceLocation es2015/identifiers/invalid-escape-seq-export/input.js 3:4-3:5 (x)
 						}
-						init: undefined
 						loc: SourceLocation es2015/identifiers/invalid-escape-seq-export/input.js 3:4-3:5
 					}
 				]
+				loc: SourceLocation es2015/identifiers/invalid-escape-seq-export/input.js 3:0-3:6
 			}
+			loc: SourceLocation es2015/identifiers/invalid-escape-seq-export/input.js 3:0-3:6
 		}
 		JSExportLocalDeclaration {
-			declaration: undefined
 			exportKind: "value"
-			loc: SourceLocation es2015/identifiers/invalid-escape-seq-export/input.js 4:0-4:18
-			specifiers: Array [
+			specifiers: [
 				JSExportLocalSpecifier {
-					loc: SourceLocation es2015/identifiers/invalid-escape-seq-export/input.js 4:14-4:15
 					exported: JSIdentifier {
 						name: "x"
 						loc: SourceLocation es2015/identifiers/invalid-escape-seq-export/input.js 4:14-4:15 (x)
@@ -91,10 +57,37 @@ JSRoot {
 						name: "x"
 						loc: SourceLocation es2015/identifiers/invalid-escape-seq-export/input.js 4:14-4:15 (x)
 					}
+					loc: SourceLocation es2015/identifiers/invalid-escape-seq-export/input.js 4:14-4:15
 				}
 			]
+			loc: SourceLocation es2015/identifiers/invalid-escape-seq-export/input.js 4:0-4:18
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "js"
+				message: [RAW_MARKUP {value: "Escape sequence in keyword <emphasis>"}, "export", RAW_MARKUP {value: "</emphasis>"}]
+			}
+			location: {
+				language: "js"
+				path: UIDPath<es2015/identifiers/invalid-escape-seq-export/input.js>
+				end: Position 1:9
+				start: Position 1:9
+			}
+		}
+	]
+	directives: []
+	hasHoistedVars: true
+	sourceType: "module"
+	syntax: []
+	path: UIDPath<es2015/identifiers/invalid-escape-seq-export/input.js>
+	loc: SourceLocation es2015/identifiers/invalid-escape-seq-export/input.js 1:0-5:0
 }
 ```
 

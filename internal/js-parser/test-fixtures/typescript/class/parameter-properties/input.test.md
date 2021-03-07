@@ -8,37 +8,14 @@
 
 ```javascript
 JSRoot {
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	loc: SourceLocation typescript/class/parameter-properties/input.ts 1:0-12:0
-	path: UIDPath<typescript/class/parameter-properties/input.ts>
-	syntax: Array ["ts"]
-	comments: Array [
-		CommentLine {
-			id: "0"
-			value: " Also works on AssignmentPattern"
-			loc: SourceLocation typescript/class/parameter-properties/input.ts 8:8-8:42
-		}
-	]
-	body: Array [
+	body: [
 		JSClassDeclaration {
 			id: JSBindingIdentifier {
 				name: "C"
 				loc: SourceLocation typescript/class/parameter-properties/input.ts 1:6-1:7 (C)
 			}
-			loc: SourceLocation typescript/class/parameter-properties/input.ts 1:0-11:1
 			meta: JSClassHead {
-				implements: undefined
-				superClass: undefined
-				superTypeParameters: undefined
-				typeParameters: undefined
-				loc: SourceLocation typescript/class/parameter-properties/input.ts 1:0-11:1
-				body: Array [
+				body: [
 					JSClassMethod {
 						kind: "constructor"
 						key: JSStaticPropertyKey {
@@ -48,139 +25,145 @@ JSRoot {
 							}
 							loc: SourceLocation typescript/class/parameter-properties/input.ts 2:4-2:15
 						}
-						loc: SourceLocation typescript/class/parameter-properties/input.ts 2:4-10:33
-						body: JSBlockStatement {
-							body: Array []
-							directives: Array []
-							loc: SourceLocation typescript/class/parameter-properties/input.ts 10:31-10:33
-						}
 						meta: JSClassPropertyMeta {
 							abstract: false
-							accessibility: undefined
 							optional: false
 							readonly: false
 							static: false
-							typeAnnotation: undefined
 							loc: SourceLocation typescript/class/parameter-properties/input.ts 2:4-2:15
 							start: Position 2:4
+						}
+						body: JSBlockStatement {
+							body: []
+							directives: []
+							loc: SourceLocation typescript/class/parameter-properties/input.ts 10:31-10:33
 						}
 						head: JSFunctionHead {
 							async: false
 							generator: false
 							hasHoistedVars: false
-							rest: undefined
-							returnType: undefined
-							thisType: undefined
-							typeParameters: undefined
-							loc: SourceLocation typescript/class/parameter-properties/input.ts 2:15-10:30
-							params: Array [
+							params: [
 								JSBindingIdentifier {
 									name: "r"
-									loc: SourceLocation typescript/class/parameter-properties/input.ts 3:8-3:18
 									meta: JSPatternMeta {
-										accessibility: undefined
 										readonly: true
-										typeAnnotation: undefined
 										loc: SourceLocation typescript/class/parameter-properties/input.ts 3:8-3:18
 									}
+									loc: SourceLocation typescript/class/parameter-properties/input.ts 3:8-3:18
 								}
 								JSBindingIdentifier {
 									name: "pu"
-									loc: SourceLocation typescript/class/parameter-properties/input.ts 4:8-4:25
 									meta: JSPatternMeta {
 										accessibility: "public"
 										readonly: false
+										typeAnnotation: TSNumberKeywordTypeAnnotation {
+											loc: SourceLocation typescript/class/parameter-properties/input.ts 4:19-4:25
+										}
 										loc: SourceLocation typescript/class/parameter-properties/input.ts 4:8-4:25
-										typeAnnotation: TSNumberKeywordTypeAnnotation {loc: SourceLocation typescript/class/parameter-properties/input.ts 4:19-4:25}
 									}
+									loc: SourceLocation typescript/class/parameter-properties/input.ts 4:8-4:25
 								}
 								JSBindingIdentifier {
 									name: "po"
-									loc: SourceLocation typescript/class/parameter-properties/input.ts 5:8-5:21
 									meta: JSPatternMeta {
 										accessibility: "protected"
 										readonly: false
-										typeAnnotation: undefined
 										loc: SourceLocation typescript/class/parameter-properties/input.ts 5:8-5:21
 									}
+									loc: SourceLocation typescript/class/parameter-properties/input.ts 5:8-5:21
 								}
 								JSBindingIdentifier {
 									name: "pi"
-									loc: SourceLocation typescript/class/parameter-properties/input.ts 6:8-6:27
 									meta: JSPatternMeta {
 										accessibility: "private"
 										readonly: false
+										typeAnnotation: TSNumberKeywordTypeAnnotation {
+											loc: SourceLocation typescript/class/parameter-properties/input.ts 6:21-6:27
+										}
 										loc: SourceLocation typescript/class/parameter-properties/input.ts 6:8-6:27
-										typeAnnotation: TSNumberKeywordTypeAnnotation {loc: SourceLocation typescript/class/parameter-properties/input.ts 6:21-6:27}
 									}
+									loc: SourceLocation typescript/class/parameter-properties/input.ts 6:8-6:27
 								}
 								JSBindingIdentifier {
 									name: "pur"
-									loc: SourceLocation typescript/class/parameter-properties/input.ts 7:8-7:27
 									meta: JSPatternMeta {
 										accessibility: "public"
 										readonly: true
-										typeAnnotation: undefined
 										loc: SourceLocation typescript/class/parameter-properties/input.ts 7:8-7:27
 									}
+									loc: SourceLocation typescript/class/parameter-properties/input.ts 7:8-7:27
 								}
 								JSBindingAssignmentPattern {
-									leadingComments: Array ["0"]
-									loc: SourceLocation typescript/class/parameter-properties/input.ts 9:8-9:22
-									right: JSNumericLiteral {
-										value: 0
-										format: undefined
-										loc: SourceLocation typescript/class/parameter-properties/input.ts 9:21-9:22
-									}
+									leadingComments: ["0"]
 									meta: JSPatternMeta {
-										accessibility: undefined
-										leadingComments: undefined
 										readonly: true
-										typeAnnotation: undefined
 										loc: SourceLocation typescript/class/parameter-properties/input.ts 9:8-9:22
 									}
 									left: JSBindingIdentifier {
 										name: "x"
-										leadingComments: undefined
-										loc: SourceLocation typescript/class/parameter-properties/input.ts 9:17-9:18 (x)
 										meta: JSPatternMeta {
-											leadingComments: undefined
-											optional: undefined
-											typeAnnotation: undefined
 											loc: SourceLocation typescript/class/parameter-properties/input.ts 9:8-9:18
 										}
+										loc: SourceLocation typescript/class/parameter-properties/input.ts 9:17-9:18 (x)
 									}
-								}
-								JSBindingAssignmentPattern {
-									loc: SourceLocation typescript/class/parameter-properties/input.ts 10:8-10:29
 									right: JSNumericLiteral {
 										value: 0
-										format: undefined
-										loc: SourceLocation typescript/class/parameter-properties/input.ts 10:28-10:29
+										loc: SourceLocation typescript/class/parameter-properties/input.ts 9:21-9:22
 									}
+									loc: SourceLocation typescript/class/parameter-properties/input.ts 9:8-9:22
+								}
+								JSBindingAssignmentPattern {
 									meta: JSPatternMeta {
 										accessibility: "public"
 										readonly: false
+										typeAnnotation: TSNumberKeywordTypeAnnotation {
+											loc: SourceLocation typescript/class/parameter-properties/input.ts 10:19-10:25
+										}
 										loc: SourceLocation typescript/class/parameter-properties/input.ts 10:8-10:29
-										typeAnnotation: TSNumberKeywordTypeAnnotation {loc: SourceLocation typescript/class/parameter-properties/input.ts 10:19-10:25}
 									}
 									left: JSBindingIdentifier {
 										name: "y"
-										loc: SourceLocation typescript/class/parameter-properties/input.ts 10:15-10:16 (y)
 										meta: JSPatternMeta {
 											optional: true
+											typeAnnotation: TSNumberKeywordTypeAnnotation {
+												loc: SourceLocation typescript/class/parameter-properties/input.ts 10:19-10:25
+											}
 											loc: SourceLocation typescript/class/parameter-properties/input.ts 10:8-10:25
-											typeAnnotation: TSNumberKeywordTypeAnnotation {loc: SourceLocation typescript/class/parameter-properties/input.ts 10:19-10:25}
 										}
+										loc: SourceLocation typescript/class/parameter-properties/input.ts 10:15-10:16 (y)
 									}
+									right: JSNumericLiteral {
+										value: 0
+										loc: SourceLocation typescript/class/parameter-properties/input.ts 10:28-10:29
+									}
+									loc: SourceLocation typescript/class/parameter-properties/input.ts 10:8-10:29
 								}
 							]
+							loc: SourceLocation typescript/class/parameter-properties/input.ts 2:15-10:30
 						}
+						loc: SourceLocation typescript/class/parameter-properties/input.ts 2:4-10:33
 					}
 				]
+				loc: SourceLocation typescript/class/parameter-properties/input.ts 1:0-11:1
 			}
+			loc: SourceLocation typescript/class/parameter-properties/input.ts 1:0-11:1
 		}
 	]
+	comments: [
+		CommentLine {
+			id: "0"
+			value: " Also works on AssignmentPattern"
+			loc: SourceLocation typescript/class/parameter-properties/input.ts 8:8-8:42
+		}
+	]
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: ["ts"]
+	path: UIDPath<typescript/class/parameter-properties/input.ts>
+	loc: SourceLocation typescript/class/parameter-properties/input.ts 1:0-12:0
 }
 ```
 

@@ -8,26 +8,24 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2020/bigint/valid-binary/input.js 1:0-2:0
-	path: UIDPath<es2020/bigint/valid-binary/input.js>
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation es2020/bigint/valid-binary/input.js 1:0-1:12
 			expression: JSBigIntLiteral {
 				value: "0b101011101"
 				loc: SourceLocation es2020/bigint/valid-binary/input.js 1:0-1:12
 			}
+			loc: SourceLocation es2020/bigint/valid-binary/input.js 1:0-1:12
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2020/bigint/valid-binary/input.js>
+	loc: SourceLocation es2020/bigint/valid-binary/input.js 1:0-2:0
 }
 ```
 

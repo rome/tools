@@ -1,5 +1,4 @@
 import {INTERNAL, ROOT, modifyGeneratedFile} from "../_utils";
-import {lstat, readDirectory, readFileText} from "@internal/fs";
 import {AbsoluteFilePath} from "@internal/path";
 import {pretty} from "@internal/pretty-format";
 import {dedent} from "@internal/string-utils";
@@ -26,14 +25,14 @@ type LintDefinition = {
 export async function getLintDefs(): Promise<LintDefinition[]> {
 	let defs: LintDefinition[] = [];
 
-	for (const categoryPath of await readDirectory(lintRulesFolder)) {
+	for (const categoryPath of await lintRulesFolder.readDirectory()) {
 		const category = categoryPath.getBasename();
-		if ((await lstat(categoryPath)).isFile()) {
+		if ((await categoryPath.lstat()).isFile()) {
 			continue;
 		}
 
-		const categoryFiles = await readDirectory(categoryPath);
-		for (const path of categoryFiles) {
+		const categoryPaths = await categoryPath.readDirectory();
+		for (const path of categoryPaths) {
 			if (
 				path.getBasename()[0] !== "." &&
 				path.hasEndExtension("ts") &&
@@ -44,7 +43,7 @@ export async function getLintDefs(): Promise<LintDefinition[]> {
 
 				defs.push({
 					docs: lintRulesDocFolder.append(`${ruleName}.md`),
-					hasRJSON: categoryFiles.has(
+					hasRJSON: categoryPaths.has(
 						categoryPath.append(`${basename}.test.rjson`),
 					),
 					basename,
@@ -234,7 +233,7 @@ export async function main() {
 						continue;
 					}
 
-					const content = await readFileText(docs);
+					const content = await docs.readFileText();
 					const description = getDocRuleDescription(docs, content);
 					lines.push(`<div class="rule">`);
 					lines.push(

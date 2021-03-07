@@ -8,46 +8,44 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation esprima/statement-break/migrated_0002/input.js 1:0-2:0
-	path: UIDPath<esprima/statement-break/migrated_0002/input.js>
-	body: Array [
+	body: [
 		JSLabeledStatement {
-			loc: SourceLocation esprima/statement-break/migrated_0002/input.js 1:0-1:34
-			label: JSIdentifier {
-				name: "done"
-				loc: SourceLocation esprima/statement-break/migrated_0002/input.js 1:0-1:4 (done)
-			}
 			body: JSWhileStatement {
-				loc: SourceLocation esprima/statement-break/migrated_0002/input.js 1:6-1:34
-				test: JSBooleanLiteral {
-					value: true
-					loc: SourceLocation esprima/statement-break/migrated_0002/input.js 1:13-1:17
-				}
 				body: JSBlockStatement {
-					directives: Array []
-					loc: SourceLocation esprima/statement-break/migrated_0002/input.js 1:19-1:34
-					body: Array [
+					body: [
 						JSBreakStatement {
-							loc: SourceLocation esprima/statement-break/migrated_0002/input.js 1:21-1:32
 							label: JSIdentifier {
 								name: "done"
 								loc: SourceLocation esprima/statement-break/migrated_0002/input.js 1:27-1:31 (done)
 							}
+							loc: SourceLocation esprima/statement-break/migrated_0002/input.js 1:21-1:32
 						}
 					]
+					directives: []
+					loc: SourceLocation esprima/statement-break/migrated_0002/input.js 1:19-1:34
 				}
+				test: JSBooleanLiteral {
+					value: true
+					loc: SourceLocation esprima/statement-break/migrated_0002/input.js 1:13-1:17
+				}
+				loc: SourceLocation esprima/statement-break/migrated_0002/input.js 1:6-1:34
 			}
+			label: JSIdentifier {
+				name: "done"
+				loc: SourceLocation esprima/statement-break/migrated_0002/input.js 1:0-1:4 (done)
+			}
+			loc: SourceLocation esprima/statement-break/migrated_0002/input.js 1:0-1:34
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<esprima/statement-break/migrated_0002/input.js>
+	loc: SourceLocation esprima/statement-break/migrated_0002/input.js 1:0-2:0
 }
 ```
 

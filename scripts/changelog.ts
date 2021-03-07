@@ -1,5 +1,4 @@
 import {markup} from "@internal/markup";
-import {readFileTextMeta} from "@internal/fs";
 import {AbsoluteFilePath} from "@internal/path";
 import {
 	GIT_PLACEHOLDERS,
@@ -117,7 +116,7 @@ function generateMarkdown(tagMap: Record<string, Commit[]>): string {
  */
 async function getCurrentVersion(): Promise<string> {
 	const path = ROOT.append("package.json");
-	return json.consumeValue(await readFileTextMeta(path)).get("version").asString();
+	return json.consumeValue(await path.readFileTextMeta()).get("version").asString();
 }
 
 /**

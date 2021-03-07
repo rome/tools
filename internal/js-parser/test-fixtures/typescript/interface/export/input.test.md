@@ -8,53 +8,46 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	loc: SourceLocation typescript/interface/export/input.ts 1:0-3:0
-	path: UIDPath<typescript/interface/export/input.ts>
-	syntax: Array ["ts"]
-	body: Array [
+	body: [
 		JSExportLocalDeclaration {
 			exportKind: "type"
-			specifiers: undefined
-			loc: SourceLocation typescript/interface/export/input.ts 1:0-1:21
 			declaration: TSInterfaceDeclaration {
 				id: JSBindingIdentifier {
 					name: "I"
 					loc: SourceLocation typescript/interface/export/input.ts 1:17-1:18 (I)
 				}
-				extends: undefined
-				typeParameters: undefined
-				loc: SourceLocation typescript/interface/export/input.ts 1:7-1:21
 				body: TSInterfaceBody {
-					body: Array []
+					body: []
 					loc: SourceLocation typescript/interface/export/input.ts 1:19-1:21
 				}
+				loc: SourceLocation typescript/interface/export/input.ts 1:7-1:21
 			}
+			loc: SourceLocation typescript/interface/export/input.ts 1:0-1:21
 		}
 		JSExportDefaultDeclaration {
-			loc: SourceLocation typescript/interface/export/input.ts 2:0-2:29
 			declaration: TSInterfaceDeclaration {
 				id: JSBindingIdentifier {
 					name: "A"
 					loc: SourceLocation typescript/interface/export/input.ts 2:25-2:26 (A)
 				}
-				extends: undefined
-				typeParameters: undefined
-				loc: SourceLocation typescript/interface/export/input.ts 2:15-2:29
 				body: TSInterfaceBody {
-					body: Array []
+					body: []
 					loc: SourceLocation typescript/interface/export/input.ts 2:27-2:29
 				}
+				loc: SourceLocation typescript/interface/export/input.ts 2:15-2:29
 			}
+			loc: SourceLocation typescript/interface/export/input.ts 2:0-2:29
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: ["ts"]
+	path: UIDPath<typescript/interface/export/input.ts>
+	loc: SourceLocation typescript/interface/export/input.ts 1:0-3:0
 }
 ```
 

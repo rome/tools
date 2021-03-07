@@ -5,13 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {
-	AbsoluteVersionNode,
-	RangeNode,
-	UserRange,
-	UserVersion,
-	UserVersions,
-} from "./types";
+import {AbsoluteVersionNode, RangeNode, UserRange, UserVersion} from "./types";
 import {satisfiesFromAst} from "./satisfies";
 import {compareFromAst} from "./compare";
 import {
@@ -32,7 +26,7 @@ export {parseSemverRange, parseSemverVersion};
 export {default as stringifySemver} from "./stringify";
 
 export function sortSemverVersions(
-	rawVersions: UserVersions,
+	rawVersions: UserVersion[],
 	opts?: SemverParserOptions,
 ): AbsoluteVersionNode[] {
 	const versions = rawVersions.map((ver) => normalizeUserVersion(ver, opts));
@@ -40,7 +34,7 @@ export function sortSemverVersions(
 }
 
 export function maxSatisfyingSemver(
-	rawVersions: UserVersions,
+	rawVersions: UserVersion[],
 	rawRange: UserRange,
 	opts: SemverParserOptions,
 ): undefined | AbsoluteVersionNode {
@@ -57,7 +51,7 @@ export function maxSatisfyingSemver(
 }
 
 export function minSatisfyingSemver(
-	rawVersions: UserVersions,
+	rawVersions: UserVersion[],
 	rawRange: UserRange,
 	opts?: SemverParserOptions,
 ): undefined | AbsoluteVersionNode {

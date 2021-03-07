@@ -8,77 +8,70 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	loc: SourceLocation typescript/type-arguments/new/input.ts 1:0-3:0
-	path: UIDPath<typescript/type-arguments/new/input.ts>
-	syntax: Array ["ts"]
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation typescript/type-arguments/new/input.ts 1:0-1:11
 			expression: JSNewExpression {
-				arguments: Array []
-				optional: undefined
-				loc: SourceLocation typescript/type-arguments/new/input.ts 1:0-1:10
+				arguments: []
 				callee: JSReferenceIdentifier {
 					name: "C"
 					loc: SourceLocation typescript/type-arguments/new/input.ts 1:4-1:5 (C)
 				}
 				typeArguments: TSTypeParameterInstantiation {
-					loc: SourceLocation typescript/type-arguments/new/input.ts 1:5-1:8
-					params: Array [
+					params: [
 						TSTypeReference {
-							typeParameters: undefined
-							loc: SourceLocation typescript/type-arguments/new/input.ts 1:6-1:7
 							typeName: JSReferenceIdentifier {
 								name: "T"
 								loc: SourceLocation typescript/type-arguments/new/input.ts 1:6-1:7 (T)
 							}
+							loc: SourceLocation typescript/type-arguments/new/input.ts 1:6-1:7
 						}
 					]
+					loc: SourceLocation typescript/type-arguments/new/input.ts 1:5-1:8
 				}
+				loc: SourceLocation typescript/type-arguments/new/input.ts 1:0-1:10
 			}
+			loc: SourceLocation typescript/type-arguments/new/input.ts 1:0-1:11
 		}
 		JSExpressionStatement {
-			loc: SourceLocation typescript/type-arguments/new/input.ts 2:0-2:14
 			expression: JSNewExpression {
-				arguments: Array []
-				optional: undefined
-				loc: SourceLocation typescript/type-arguments/new/input.ts 2:0-2:13
+				arguments: []
 				callee: JSReferenceIdentifier {
 					name: "C"
 					loc: SourceLocation typescript/type-arguments/new/input.ts 2:4-2:5 (C)
 				}
 				typeArguments: TSTypeParameterInstantiation {
-					loc: SourceLocation typescript/type-arguments/new/input.ts 2:5-2:11
-					params: Array [
+					params: [
 						TSTypeReference {
-							typeParameters: undefined
-							loc: SourceLocation typescript/type-arguments/new/input.ts 2:6-2:7
 							typeName: JSReferenceIdentifier {
 								name: "T"
 								loc: SourceLocation typescript/type-arguments/new/input.ts 2:6-2:7 (T)
 							}
+							loc: SourceLocation typescript/type-arguments/new/input.ts 2:6-2:7
 						}
 						TSTypeReference {
-							typeParameters: undefined
-							loc: SourceLocation typescript/type-arguments/new/input.ts 2:9-2:10
 							typeName: JSReferenceIdentifier {
 								name: "U"
 								loc: SourceLocation typescript/type-arguments/new/input.ts 2:9-2:10 (U)
 							}
+							loc: SourceLocation typescript/type-arguments/new/input.ts 2:9-2:10
 						}
 					]
+					loc: SourceLocation typescript/type-arguments/new/input.ts 2:5-2:11
 				}
+				loc: SourceLocation typescript/type-arguments/new/input.ts 2:0-2:13
 			}
+			loc: SourceLocation typescript/type-arguments/new/input.ts 2:0-2:14
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: ["ts"]
+	path: UIDPath<typescript/type-arguments/new/input.ts>
+	loc: SourceLocation typescript/type-arguments/new/input.ts 1:0-3:0
 }
 ```
 

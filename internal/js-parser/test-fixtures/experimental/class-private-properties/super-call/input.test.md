@@ -8,57 +8,14 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation experimental/class-private-properties/super-call/input.js 1:0-7:1
-	path: UIDPath<experimental/class-private-properties/super-call/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 4:18
-				path: UIDPath<experimental/class-private-properties/super-call/input.js>
-				start: Position 4:13
-			}
-			description: Object {
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "super() is only valid inside a class constructor of a subclass"}
-				advice: Array [
-					log {
-						category: "info"
-						text: RAW_MARKUP {value: "Maybe a typo in the method name ('constructor') or not extending another class?"}
-					}
-				]
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSClassDeclaration {
 			id: JSBindingIdentifier {
 				name: "A"
 				loc: SourceLocation experimental/class-private-properties/super-call/input.js 1:6-1:7 (A)
 			}
-			loc: SourceLocation experimental/class-private-properties/super-call/input.js 1:0-7:1
 			meta: JSClassHead {
-				implements: undefined
-				superTypeParameters: undefined
-				typeParameters: undefined
-				loc: SourceLocation experimental/class-private-properties/super-call/input.js 1:0-7:1
-				superClass: JSReferenceIdentifier {
-					name: "B"
-					loc: SourceLocation experimental/class-private-properties/super-call/input.js 1:16-1:17 (B)
-				}
-				body: Array [
+				body: [
 					JSClassMethod {
 						kind: "constructor"
 						key: JSStaticPropertyKey {
@@ -68,48 +25,23 @@ JSRoot {
 							}
 							loc: SourceLocation experimental/class-private-properties/super-call/input.js 2:2-2:13
 						}
-						loc: SourceLocation experimental/class-private-properties/super-call/input.js 2:2-6:3
 						meta: JSClassPropertyMeta {
 							abstract: false
-							accessibility: undefined
 							optional: false
 							readonly: false
 							static: false
-							typeAnnotation: undefined
 							loc: SourceLocation experimental/class-private-properties/super-call/input.js 2:2-2:13
 							start: Position 2:2
 						}
-						head: JSFunctionHead {
-							async: false
-							generator: false
-							hasHoistedVars: false
-							params: Array []
-							rest: undefined
-							returnType: undefined
-							thisType: undefined
-							typeParameters: undefined
-							loc: SourceLocation experimental/class-private-properties/super-call/input.js 2:13-2:15
-						}
 						body: JSBlockStatement {
-							directives: Array []
-							loc: SourceLocation experimental/class-private-properties/super-call/input.js 2:16-6:3
-							body: Array [
+							body: [
 								JSClassDeclaration {
 									id: JSBindingIdentifier {
 										name: "C"
 										loc: SourceLocation experimental/class-private-properties/super-call/input.js 3:10-3:11 (C)
 									}
-									loc: SourceLocation experimental/class-private-properties/super-call/input.js 3:4-5:5
 									meta: JSClassHead {
-										implements: undefined
-										superTypeParameters: undefined
-										typeParameters: undefined
-										loc: SourceLocation experimental/class-private-properties/super-call/input.js 3:4-5:5
-										superClass: JSReferenceIdentifier {
-											name: "D"
-											loc: SourceLocation experimental/class-private-properties/super-call/input.js 3:20-3:21 (D)
-										}
-										body: Array [
+										body: [
 											JSClassPrivateProperty {
 												key: JSPrivateName {
 													id: JSIdentifier {
@@ -118,34 +50,85 @@ JSRoot {
 													}
 													loc: SourceLocation experimental/class-private-properties/super-call/input.js 4:6-4:10
 												}
-												value: JSCallExpression {
-													arguments: Array []
-													callee: JSSuper {loc: SourceLocation experimental/class-private-properties/super-call/input.js 4:13-4:18}
-													loc: SourceLocation experimental/class-private-properties/super-call/input.js 4:13-4:20
-												}
-												typeAnnotation: undefined
-												loc: SourceLocation experimental/class-private-properties/super-call/input.js 4:6-4:21
 												meta: JSClassPropertyMeta {
 													abstract: false
-													accessibility: undefined
 													optional: false
 													readonly: false
 													static: false
-													typeAnnotation: undefined
 													loc: SourceLocation experimental/class-private-properties/super-call/input.js 4:6-4:10
 													start: Position 4:6
 												}
+												value: JSCallExpression {
+													arguments: []
+													callee: JSSuper {
+														loc: SourceLocation experimental/class-private-properties/super-call/input.js 4:13-4:18
+													}
+													loc: SourceLocation experimental/class-private-properties/super-call/input.js 4:13-4:20
+												}
+												loc: SourceLocation experimental/class-private-properties/super-call/input.js 4:6-4:21
 											}
 										]
+										superClass: JSReferenceIdentifier {
+											name: "D"
+											loc: SourceLocation experimental/class-private-properties/super-call/input.js 3:20-3:21 (D)
+										}
+										loc: SourceLocation experimental/class-private-properties/super-call/input.js 3:4-5:5
 									}
+									loc: SourceLocation experimental/class-private-properties/super-call/input.js 3:4-5:5
 								}
 							]
+							directives: []
+							loc: SourceLocation experimental/class-private-properties/super-call/input.js 2:16-6:3
 						}
+						head: JSFunctionHead {
+							async: false
+							generator: false
+							hasHoistedVars: false
+							params: []
+							loc: SourceLocation experimental/class-private-properties/super-call/input.js 2:13-2:15
+						}
+						loc: SourceLocation experimental/class-private-properties/super-call/input.js 2:2-6:3
 					}
 				]
+				superClass: JSReferenceIdentifier {
+					name: "B"
+					loc: SourceLocation experimental/class-private-properties/super-call/input.js 1:16-1:17 (B)
+				}
+				loc: SourceLocation experimental/class-private-properties/super-call/input.js 1:0-7:1
+			}
+			loc: SourceLocation experimental/class-private-properties/super-call/input.js 1:0-7:1
+		}
+	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {
+				advice: [
+					log {
+						category: "info"
+						text: RAW_MARKUP {value: "Maybe a typo in the method name ('constructor') or not extending another class?"}
+					}
+				]
+				category: ["parse"]
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "super() is only valid inside a class constructor of a subclass"}
+			}
+			location: {
+				language: "js"
+				path: UIDPath<experimental/class-private-properties/super-call/input.js>
+				end: Position 4:18
+				start: Position 4:13
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<experimental/class-private-properties/super-call/input.js>
+	loc: SourceLocation experimental/class-private-properties/super-call/input.js 1:0-7:1
 }
 ```
 

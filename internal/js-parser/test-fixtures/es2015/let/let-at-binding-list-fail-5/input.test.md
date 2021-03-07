@@ -8,36 +8,33 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2015/let/let-at-binding-list-fail-5/input.js 1:0-2:0
-	path: UIDPath<es2015/let/let-at-binding-list-fail-5/input.js>
-	body: Array [
+	body: [
 		JSVariableDeclarationStatement {
-			loc: SourceLocation es2015/let/let-at-binding-list-fail-5/input.js 1:0-1:7
 			declaration: JSVariableDeclaration {
 				kind: "let"
-				loc: SourceLocation es2015/let/let-at-binding-list-fail-5/input.js 1:0-1:7
-				declarations: Array [
+				declarations: [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "let"
 							loc: SourceLocation es2015/let/let-at-binding-list-fail-5/input.js 1:4-1:7 (let)
 						}
-						init: undefined
 						loc: SourceLocation es2015/let/let-at-binding-list-fail-5/input.js 1:4-1:7
 					}
 				]
+				loc: SourceLocation es2015/let/let-at-binding-list-fail-5/input.js 1:0-1:7
 			}
+			loc: SourceLocation es2015/let/let-at-binding-list-fail-5/input.js 1:0-1:7
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2015/let/let-at-binding-list-fail-5/input.js>
+	loc: SourceLocation es2015/let/let-at-binding-list-fail-5/input.js 1:0-2:0
 }
 ```
 

@@ -8,65 +8,58 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	syntax: Array []
-	loc: SourceLocation esprima/es2015-import-declaration/invalid-import-default-module-specifier/input.js 1:0-2:0
-	path: UIDPath<esprima/es2015-import-declaration/invalid-import-default-module-specifier/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "import missing a source"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:15
-				path: UIDPath<esprima/es2015-import-declaration/invalid-import-default-module-specifier/input.js>
-				start: Position 1:16
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSImportDeclaration {
-			importKind: undefined
-			namedSpecifiers: Array []
-			namespaceSpecifier: undefined
-			loc: SourceLocation esprima/es2015-import-declaration/invalid-import-default-module-specifier/input.js 1:0-1:15
-			source: JSStringLiteral {
-				value: ""
-				loc: SourceLocation esprima/es2015-import-declaration/invalid-import-default-module-specifier/input.js 1:0-1:15
-			}
+			namedSpecifiers: []
 			defaultSpecifier: JSImportDefaultSpecifier {
-				loc: SourceLocation esprima/es2015-import-declaration/invalid-import-default-module-specifier/input.js 1:0-1:10
 				local: JSImportSpecifierLocal {
 					name: JSBindingIdentifier {
 						name: "foo"
 						loc: SourceLocation esprima/es2015-import-declaration/invalid-import-default-module-specifier/input.js 1:7-1:10 (foo)
 					}
-					importKind: undefined
 					loc: SourceLocation esprima/es2015-import-declaration/invalid-import-default-module-specifier/input.js 1:7-1:10
 				}
+				loc: SourceLocation esprima/es2015-import-declaration/invalid-import-default-module-specifier/input.js 1:0-1:10
 			}
+			source: JSStringLiteral {
+				value: ""
+				loc: SourceLocation esprima/es2015-import-declaration/invalid-import-default-module-specifier/input.js 1:0-1:15
+			}
+			loc: SourceLocation esprima/es2015-import-declaration/invalid-import-default-module-specifier/input.js 1:0-1:15
 		}
 		JSExpressionStatement {
-			loc: SourceLocation esprima/es2015-import-declaration/invalid-import-default-module-specifier/input.js 1:16-1:20
 			expression: JSReferenceIdentifier {
 				name: "bar"
 				loc: SourceLocation esprima/es2015-import-declaration/invalid-import-default-module-specifier/input.js 1:16-1:19 (bar)
 			}
+			loc: SourceLocation esprima/es2015-import-declaration/invalid-import-default-module-specifier/input.js 1:16-1:20
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "import missing a source"}
+			}
+			location: {
+				language: "js"
+				path: UIDPath<esprima/es2015-import-declaration/invalid-import-default-module-specifier/input.js>
+				end: Position 1:15
+				start: Position 1:16
+			}
+		}
+	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: []
+	path: UIDPath<esprima/es2015-import-declaration/invalid-import-default-module-specifier/input.js>
+	loc: SourceLocation esprima/es2015-import-declaration/invalid-import-default-module-specifier/input.js 1:0-2:0
 }
 ```
 

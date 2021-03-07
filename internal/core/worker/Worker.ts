@@ -13,7 +13,7 @@ import {
 	WorkerParseOptions,
 	WorkerParseResult,
 	WorkerPartialManifest,
-	WorkerPartialManifests,
+	WorkerPartialManifestsTransport,
 	WorkerPrefetchedModuleSignatures,
 	WorkerProject,
 	WorkerProjects,
@@ -23,36 +23,57 @@ import {ConstJSSourceType, JSRoot} from "@internal/ast";
 import Logger from "../common/utils/Logger";
 import {Profiler} from "@internal/v8";
 import {UserConfig} from "@internal/core";
-import {DiagnosticsError} from "@internal/diagnostics";
+import {
+	DIAGNOSTIC_CATEGORIES,
+	DiagnosticsError,
+	deriveDiagnosticFromError,
+} from "@internal/diagnostics";
 import {
 	AbsoluteFilePath,
 	AbsoluteFilePathMap,
-	AnyPath,
 	MixedPathMap,
+	Path,
 	UIDPath,
 } from "@internal/path";
-import {
-	FSReadStream,
-	FSStats,
-	createFakeStats,
-	createReadStream,
-} from "@internal/fs";
+import {FSReadStream, FSStats, createFakeStats} from "@internal/fs";
 import {FileReference} from "../common/types/files";
 import {getFileHandlerFromPathAssert} from "../common/file-handlers/index";
 import WorkerAPI from "./WorkerAPI";
 import {applyWorkerBufferPatch} from "./utils/applyWorkerBufferPatch";
 import VirtualModules from "../common/VirtualModules";
 import {markup} from "@internal/markup";
-import {BridgeClient, BridgeError} from "@internal/events";
+import {
+	BridgeClient,
+	isBridgeClosedDiagnosticsError,
+	isBridgeDisconnectedDiagnosticsError,
+} from "@internal/events";
 import {ExtendedMap} from "@internal/collections";
 import WorkerCache from "./WorkerCache";
 import FatalErrorHandler from "../common/FatalErrorHandler";
-import {RSERObject} from "@internal/codec-binary-serial";
+import {RSERObject} from "@internal/binary-transport";
 import {ReporterConditionalStream} from "@internal/cli-reporter";
 import {DEFAULT_TERMINAL_FEATURES} from "@internal/cli-environment";
+import {
+	Resource,
+	createResourceFromCallback,
+	createResourceRoot,
+	safeProcessExit,
+} from "@internal/resources";
+
+import TestWorker from "./test/TestWorker";
+import inspector = require("inspector");
 
 export default class Worker {
 	constructor(opts: WorkerOptions) {
+		const workerTypeLabel = opts.type === "test" ? "TestWorker" : "Worker";
+
+		this.resources = createResourceRoot(`${workerTypeLabel}<${opts.id}>`);
+		this.resources.add(opts.bridge);
+
+		opts.bridge.endEvent.subscribe(() => {
+			this.resources.release();
+		});
+
 		this.bridge = opts.bridge;
 		this.options = opts;
 
@@ -64,7 +85,7 @@ export default class Worker {
 		this.buffers = new AbsoluteFilePathMap();
 		this.virtualModules = new VirtualModules();
 
-		this.logger = new Logger({}, "worker");
+		this.logger = new Logger(this.resources, {}, workerTypeLabel);
 
 		this.loggerStream = this.logger.attachConditionalStream({
 			format: "markup",
@@ -79,40 +100,67 @@ export default class Worker {
 
 		this.cache = new WorkerCache(this);
 		this.api = new WorkerAPI(this, this.logger, this.cache);
+		this.tests = new TestWorker(this);
 
 		this.fatalErrorHandler = new FatalErrorHandler({
-			getOptions: (err) => {
-				try {
-					const {bridge} = this;
+			overrideHandle: (err) => {
+				if (isBridgeClosedDiagnosticsError(err)) {
+					// Swallow bridge closure as it would have been explicit
+					safeProcessExit(0);
+					return true;
+				}
 
+				const {bridge} = this;
+
+				if (!bridge.open) {
+					console.error(
+						"Worker encountered fatal error but no server bridge available to emit",
+					);
+					console.error(err.stack);
+					safeProcessExit(1);
+					return true;
+				}
+
+				if (opts.type === "test") {
+					bridge.events.testDiagnostic.send({
+						testPath: undefined,
+						origin: undefined,
+						diagnostic: deriveDiagnosticFromError(
+							err,
+							{
+								description: {
+									category: DIAGNOSTIC_CATEGORIES["tests/unhandledRejection"],
+								},
+								internal: false,
+							},
+						),
+					});
+					return true;
+				}
+
+				try {
 					// Dispatch error to the server and trigger a fatal
-					bridge.events.fatalError.send(bridge.serializeError(err));
+					bridge.events.fatalError.send(bridge.serializeCustomError(err));
 				} catch (err) {
-					if (!(err instanceof BridgeError)) {
+					if (!isBridgeDisconnectedDiagnosticsError(err)) {
 						console.error(
 							"Worker encountered error while attempting to send a fatal to the server",
 						);
 						console.error(err.stack);
 					}
-					process.exit(1);
+					safeProcessExit(1);
 				}
-				return false;
+
+				return true;
 			},
 		});
 
 		if (opts.dedicated) {
-			this.fatalErrorHandler.setupGlobalHandlers();
+			this.resources.add(this.fatalErrorHandler.setupGlobalHandlers());
 
-			// Pretty sure we'll hit another error condition before this but for completeness
-			/*opts.bridge.monitorHeartbeat(
-				LAG_INTERVAL,
-				({iterations, totalTime}) => {
-					if (iterations >= 5) {
-						console.error(`Server has not responded for ${totalTime}ms. Exiting.`)
-						process.exit(1);
-					}
-				},
-			);*/
+			this.bridge.endEvent.subscribe((err) => {
+				this.fatalErrorHandler.handle(err);
+			});
 		}
 	}
 
@@ -123,34 +171,76 @@ export default class Worker {
 	public cache: WorkerCache;
 	public fatalErrorHandler: FatalErrorHandler;
 	public virtualModules: VirtualModules;
+	public resources: Resource;
+	public bridge: BridgeClient<typeof WorkerBridge>;
 
+	private tests: TestWorker;
 	private loggerStream: ReporterConditionalStream;
-	private bridge: BridgeClient<typeof WorkerBridge>;
 	private partialManifests: ExtendedMap<number, WorkerPartialManifest>;
 	private projects: WorkerProjects;
 	private astCache: AbsoluteFilePathMap<WorkerParseResult>;
 	private moduleSignatureCache: MixedPathMap<ModuleSignature>;
 	private buffers: AbsoluteFilePathMap<WorkerBuffer>;
 
-	public getPartialManifest(id: number): WorkerPartialManifest {
-		return this.partialManifests.assert(id);
+	public getPartialManifest(
+		ref: FileReference,
+	): undefined | WorkerPartialManifest {
+		if ("manifest" in ref) {
+			return this.partialManifests.assert(ref.manifest);
+		} else {
+			return undefined;
+		}
+	}
+
+	public getProject(ref: FileReference): WorkerProject {
+		let id: number;
+		if ("project" in ref) {
+			id = ref.project;
+		} else {
+			const manifest = this.getPartialManifest(ref);
+			if (manifest === undefined) {
+				throw new Error(
+					"FileReference: Inferring project from manifest, but it does not exist",
+				);
+			}
+			id = manifest.project;
+		}
+
+		const config = this.projects.get(id);
+		if (config === undefined) {
+			throw new Error(
+				`Unknown project ${id}, known projects are ${this.projects.keys()}`,
+			);
+		}
+
+		return config;
 	}
 
 	private async end() {
 		this.astCache.clear();
 		this.projects.clear();
 		this.moduleSignatureCache.clear();
-		await this.cache.teardown();
 	}
 
 	public async init() {
+		const {inspectorPort} = this.options;
+		if (inspectorPort !== undefined && inspector.url() === undefined) {
+			inspector.open(inspectorPort);
+		}
+
 		this.virtualModules.init();
+		this.tests.init();
 
-		const bridge: BridgeClient<typeof WorkerBridge> = this.bridge;
+		const {bridge} = this;
 
-		bridge.endEvent.subscribe(async () => {
-			await this.end();
-		});
+		bridge.resources.add(
+			createResourceFromCallback(
+				"WorkerEnd",
+				async () => {
+					await this.end();
+				},
+			),
+		);
 
 		let profiler: undefined | Profiler;
 		bridge.events.profilingStart.subscribe(async (data) => {
@@ -168,6 +258,12 @@ export default class Worker {
 			const workerProfile = await profiler.stopProfiling();
 			profiler = undefined;
 			return workerProfile;
+		});
+
+		bridge.events.inspectorDetails.subscribe(() => {
+			return {
+				inspectorUrl: inspector.url(),
+			};
 		});
 
 		bridge.events.compile.subscribe((payload) => {
@@ -327,7 +423,7 @@ export default class Worker {
 	}
 
 	public async getTypeCheckProvider(
-		projectId: number,
+		ref: FileReference,
 		prefetchedModuleSignatures: WorkerPrefetchedModuleSignatures = {},
 		parseOptions: WorkerParseOptions,
 	): Promise<TypeCheckProvider> {
@@ -375,7 +471,7 @@ export default class Worker {
 
 		return {
 			getExportTypes: async (
-				origin: AnyPath,
+				origin: Path,
 				relative: string,
 			): Promise<undefined | ModuleSignature> => {
 				return resolveGraph(`${origin.join()}:${relative}`);
@@ -435,7 +531,7 @@ export default class Worker {
 			return cached;
 		}
 
-		return createReadStream(ref.real);
+		return ref.real.createReadStream();
 	}
 
 	public async parse(
@@ -443,8 +539,8 @@ export default class Worker {
 		options: WorkerParseOptions,
 	): Promise<WorkerParseResult> {
 		const path = ref.real;
-		const {project: projectId, uid} = ref;
-		const project = this.getProject(projectId);
+		const {uid} = ref;
+		const project = this.getProject(ref);
 
 		// Fetch and validate extension handler
 		const {handler} = getFileHandlerFromPathAssert(ref.real, project.config);
@@ -461,11 +557,9 @@ export default class Worker {
 		} else {
 			sourceTypeJS = "script";
 
-			if (ref.manifest !== undefined) {
-				const manifest = this.getPartialManifest(ref.manifest);
-				if (manifest.type === "module") {
-					sourceTypeJS = "module";
-				}
+			const manifest = this.getPartialManifest(ref);
+			if (manifest?.type === "module") {
+				sourceTypeJS = "module";
 			}
 		}
 
@@ -506,9 +600,10 @@ export default class Worker {
 		const integrity = await this.cache.getIntegrity(ref);
 		const {mtimeNs} = await cacheFile.getStats();
 
+		const manifest = this.getPartialManifest(ref);
 		let manifestPath: undefined | string;
-		if (ref.manifest !== undefined) {
-			manifestPath = this.getPartialManifest(ref.manifest).path.join();
+		if (manifest !== undefined) {
+			manifestPath = manifest.path.join();
 		}
 
 		const {sourceText, astModifiedFromSource, ast} = await handler.parse({
@@ -557,16 +652,6 @@ export default class Worker {
 		return res;
 	}
 
-	public getProject(id: number): WorkerProject {
-		const config = this.projects.get(id);
-		if (config === undefined) {
-			throw new Error(
-				`Unknown project ${id}, known projects are ${this.projects.keys()}`,
-			);
-		}
-		return config;
-	}
-
 	private async evict(
 		{real, uid}: {
 			real: AbsoluteFilePath;
@@ -579,8 +664,8 @@ export default class Worker {
 		await this.cache.remove(uid, real);
 	}
 
-	private updateManifests(manifests: WorkerPartialManifests) {
-		for (const {id, manifest} of manifests) {
+	private updateManifests(manifests: WorkerPartialManifestsTransport) {
+		for (const [id, manifest] of manifests) {
 			if (manifest === undefined) {
 				this.partialManifests.delete(id);
 			} else {

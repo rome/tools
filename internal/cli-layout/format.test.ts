@@ -4,7 +4,7 @@ import {markupToAnsi, markupToPlainText} from "./format";
 import {printDiagnosticsToString} from "@internal/cli-diagnostics";
 import {markup} from "../markup/escape";
 import {joinMarkupLines} from "@internal/markup";
-import {OneIndexed} from "@internal/math";
+import {OneIndexed} from "@internal/numbers";
 
 const SYNTAX_ERROR_TESTS = [
 	markup`<view pointerChar="<emphasis" pointerLine="1" pointerStart="1" pointerEnd="3">foobar</view>`,

@@ -8,46 +8,31 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	syntax: Array []
-	loc: SourceLocation es2015/modules/duplicate-named-export-builtin/input.js 1:0-4:0
-	path: UIDPath<es2015/modules/duplicate-named-export-builtin/input.js>
-	body: Array [
+	body: [
 		JSVariableDeclarationStatement {
-			loc: SourceLocation es2015/modules/duplicate-named-export-builtin/input.js 1:0-1:19
 			declaration: JSVariableDeclaration {
 				kind: "const"
-				loc: SourceLocation es2015/modules/duplicate-named-export-builtin/input.js 1:0-1:19
-				declarations: Array [
+				declarations: [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "toString"
 							loc: SourceLocation es2015/modules/duplicate-named-export-builtin/input.js 1:6-1:14 (toString)
 						}
-						loc: SourceLocation es2015/modules/duplicate-named-export-builtin/input.js 1:6-1:18
 						init: JSNumericLiteral {
 							value: 1
-							format: undefined
 							loc: SourceLocation es2015/modules/duplicate-named-export-builtin/input.js 1:17-1:18
 						}
+						loc: SourceLocation es2015/modules/duplicate-named-export-builtin/input.js 1:6-1:18
 					}
 				]
+				loc: SourceLocation es2015/modules/duplicate-named-export-builtin/input.js 1:0-1:19
 			}
+			loc: SourceLocation es2015/modules/duplicate-named-export-builtin/input.js 1:0-1:19
 		}
 		JSExportLocalDeclaration {
-			declaration: undefined
 			exportKind: "value"
-			loc: SourceLocation es2015/modules/duplicate-named-export-builtin/input.js 3:0-3:20
-			specifiers: Array [
+			specifiers: [
 				JSExportLocalSpecifier {
-					loc: SourceLocation es2015/modules/duplicate-named-export-builtin/input.js 3:9-3:17
 					exported: JSIdentifier {
 						name: "toString"
 						loc: SourceLocation es2015/modules/duplicate-named-export-builtin/input.js 3:9-3:17 (toString)
@@ -56,10 +41,21 @@ JSRoot {
 						name: "toString"
 						loc: SourceLocation es2015/modules/duplicate-named-export-builtin/input.js 3:9-3:17 (toString)
 					}
+					loc: SourceLocation es2015/modules/duplicate-named-export-builtin/input.js 3:9-3:17
 				}
 			]
+			loc: SourceLocation es2015/modules/duplicate-named-export-builtin/input.js 3:0-3:20
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: []
+	path: UIDPath<es2015/modules/duplicate-named-export-builtin/input.js>
+	loc: SourceLocation es2015/modules/duplicate-named-export-builtin/input.js 1:0-4:0
 }
 ```
 

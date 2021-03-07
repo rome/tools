@@ -8,32 +8,15 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	loc: SourceLocation typescript/class/get-generic/input.ts 1:0-4:0
-	path: UIDPath<typescript/class/get-generic/input.ts>
-	syntax: Array ["ts"]
-	body: Array [
+	body: [
 		JSClassDeclaration {
+			declare: true
 			id: JSBindingIdentifier {
 				name: "C"
 				loc: SourceLocation typescript/class/get-generic/input.ts 1:14-1:15 (C)
 			}
-			declare: true
-			loc: SourceLocation typescript/class/get-generic/input.ts 1:0-3:1
 			meta: JSClassHead {
-				implements: undefined
-				superClass: undefined
-				superTypeParameters: undefined
-				typeParameters: undefined
-				loc: SourceLocation typescript/class/get-generic/input.ts 1:0-3:1
-				body: Array [
+				body: [
 					TSDeclareMethod {
 						kind: "method"
 						key: JSStaticPropertyKey {
@@ -43,15 +26,11 @@ JSRoot {
 							}
 							loc: SourceLocation typescript/class/get-generic/input.ts 2:4-2:7
 						}
-						body: undefined
-						loc: SourceLocation typescript/class/get-generic/input.ts 2:4-2:19
 						meta: JSClassPropertyMeta {
 							abstract: false
-							accessibility: undefined
 							optional: false
 							readonly: false
 							static: false
-							typeAnnotation: undefined
 							loc: SourceLocation typescript/class/get-generic/input.ts 2:4-2:7
 							start: Position 2:4
 						}
@@ -59,28 +38,38 @@ JSRoot {
 							async: false
 							generator: false
 							hasHoistedVars: false
-							params: Array []
-							rest: undefined
-							thisType: undefined
-							loc: SourceLocation typescript/class/get-generic/input.ts 2:10-2:18
-							returnType: TSVoidKeywordTypeAnnotation {loc: SourceLocation typescript/class/get-generic/input.ts 2:14-2:18}
+							params: []
+							returnType: TSVoidKeywordTypeAnnotation {
+								loc: SourceLocation typescript/class/get-generic/input.ts 2:14-2:18
+							}
 							typeParameters: TSTypeParameterDeclaration {
-								loc: SourceLocation typescript/class/get-generic/input.ts 2:7-2:10
-								params: Array [
+								params: [
 									TSTypeParameter {
 										name: "T"
-										constraint: undefined
-										default: undefined
 										loc: SourceLocation typescript/class/get-generic/input.ts 2:8-2:9
 									}
 								]
+								loc: SourceLocation typescript/class/get-generic/input.ts 2:7-2:10
 							}
+							loc: SourceLocation typescript/class/get-generic/input.ts 2:10-2:18
 						}
+						loc: SourceLocation typescript/class/get-generic/input.ts 2:4-2:19
 					}
 				]
+				loc: SourceLocation typescript/class/get-generic/input.ts 1:0-3:1
 			}
+			loc: SourceLocation typescript/class/get-generic/input.ts 1:0-3:1
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: ["ts"]
+	path: UIDPath<typescript/class/get-generic/input.ts>
+	loc: SourceLocation typescript/class/get-generic/input.ts 1:0-4:0
 }
 ```
 

@@ -4,6 +4,7 @@ import {parseCSS} from "@internal/css-parser";
 export const cssHandler: PartialExtensionHandler = {
 	language: "css",
 	hasTabs: true,
+	mime: "text/css",
 	capabilities: {
 		lint: false,
 		format: true,

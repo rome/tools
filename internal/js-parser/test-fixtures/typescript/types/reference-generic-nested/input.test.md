@@ -8,63 +8,63 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	loc: SourceLocation typescript/types/reference-generic-nested/input.ts 1:0-2:0
-	path: UIDPath<typescript/types/reference-generic-nested/input.ts>
-	syntax: Array ["ts"]
-	body: Array [
+	body: [
 		JSVariableDeclarationStatement {
-			loc: SourceLocation typescript/types/reference-generic-nested/input.ts 1:0-1:28
 			declaration: JSVariableDeclaration {
 				kind: "let"
-				loc: SourceLocation typescript/types/reference-generic-nested/input.ts 1:0-1:28
-				declarations: Array [
+				declarations: [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "x"
-							loc: SourceLocation typescript/types/reference-generic-nested/input.ts 1:4-1:27
 							meta: JSPatternMeta {
-								definite: undefined
-								loc: SourceLocation typescript/types/reference-generic-nested/input.ts 1:4-1:27
 								typeAnnotation: TSTypeReference {
-									loc: SourceLocation typescript/types/reference-generic-nested/input.ts 1:7-1:27
 									typeName: JSReferenceIdentifier {
 										name: "Array"
 										loc: SourceLocation typescript/types/reference-generic-nested/input.ts 1:7-1:12 (Array)
 									}
 									typeParameters: TSTypeParameterInstantiation {
-										loc: SourceLocation typescript/types/reference-generic-nested/input.ts 1:12-1:27
-										params: Array [
+										params: [
 											TSTypeReference {
-												loc: SourceLocation typescript/types/reference-generic-nested/input.ts 1:13-1:26
 												typeName: JSReferenceIdentifier {
 													name: "Array"
 													loc: SourceLocation typescript/types/reference-generic-nested/input.ts 1:13-1:18 (Array)
 												}
 												typeParameters: TSTypeParameterInstantiation {
+													params: [
+														TSNumberKeywordTypeAnnotation {
+															loc: SourceLocation typescript/types/reference-generic-nested/input.ts 1:19-1:25
+														}
+													]
 													loc: SourceLocation typescript/types/reference-generic-nested/input.ts 1:18-1:26
-													params: Array [TSNumberKeywordTypeAnnotation {loc: SourceLocation typescript/types/reference-generic-nested/input.ts 1:19-1:25}]
 												}
+												loc: SourceLocation typescript/types/reference-generic-nested/input.ts 1:13-1:26
 											}
 										]
+										loc: SourceLocation typescript/types/reference-generic-nested/input.ts 1:12-1:27
 									}
+									loc: SourceLocation typescript/types/reference-generic-nested/input.ts 1:7-1:27
 								}
+								loc: SourceLocation typescript/types/reference-generic-nested/input.ts 1:4-1:27
 							}
+							loc: SourceLocation typescript/types/reference-generic-nested/input.ts 1:4-1:27
 						}
-						init: undefined
 						loc: SourceLocation typescript/types/reference-generic-nested/input.ts 1:4-1:27
 					}
 				]
+				loc: SourceLocation typescript/types/reference-generic-nested/input.ts 1:0-1:28
 			}
+			loc: SourceLocation typescript/types/reference-generic-nested/input.ts 1:0-1:28
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: ["ts"]
+	path: UIDPath<typescript/types/reference-generic-nested/input.ts>
+	loc: SourceLocation typescript/types/reference-generic-nested/input.ts 1:0-2:0
 }
 ```
 

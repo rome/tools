@@ -7,7 +7,7 @@
 ### `result`
 
 ```javascript
-Array [
+[
 	"edge:88"
 	"edge:87"
 	"firefox:87"
@@ -38,13 +38,13 @@ Array [
 ### `targets`
 
 ```javascript
-Array [TargetBrowserPreset {preset: "modern"}]
+[TargetBrowserPreset {preset: "modern"}]
 ```
 
 ### `tokens`
 
 ```javascript
-Array [
+[
 	Modern {
 		end: ZeroIndexedNumber<15>
 		start: ZeroIndexedNumber<0>

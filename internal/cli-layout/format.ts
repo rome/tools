@@ -6,7 +6,7 @@
  */
 
 import {
-	AnyMarkup,
+	Markup,
 	MarkupLinesAndWidth,
 	isSingleEscaped,
 	joinMarkupLines,
@@ -18,7 +18,7 @@ import Grid from "./Grid";
 import {splitChars, splitLines} from "@internal/string-utils";
 
 export function renderGrid(
-	safeMaybeLazy: AnyMarkup,
+	safeMaybeLazy: Markup,
 	opts: UserGridOptions = {},
 	format: GridOutputFormat,
 ): MarkupLinesAndWidth {
@@ -49,7 +49,7 @@ export function renderGrid(
 		sourceText: input,
 		view: {},
 	});
-	grid.drawChildren(grid.parse(safe, undefined), []);
+	grid.drawChildren(grid.parse(safe, undefined, true), []);
 	return {
 		locators: grid.locators,
 		width: grid.getWidth().valueOf(),
@@ -58,28 +58,28 @@ export function renderGrid(
 }
 
 export function markupToJoinedPlainText(
-	input: AnyMarkup,
+	input: Markup,
 	opts: UserGridOptions = {},
 ): string {
 	return joinMarkupLines(markupToPlainText(input, opts));
 }
 
 export function markupToPlainText(
-	input: AnyMarkup,
+	input: Markup,
 	opts: UserGridOptions = {},
 ): MarkupLinesAndWidth {
 	return renderGrid(input, opts, "none");
 }
 
 export function markupToAnsi(
-	input: AnyMarkup,
+	input: Markup,
 	opts: UserGridOptions = {},
 ): MarkupLinesAndWidth {
 	return renderGrid(input, opts, "ansi");
 }
 
 export function markupToHtml(
-	input: AnyMarkup,
+	input: Markup,
 	opts: UserGridOptions = {},
 ): MarkupLinesAndWidth {
 	return renderGrid(input, opts, "html");

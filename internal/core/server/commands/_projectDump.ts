@@ -29,7 +29,7 @@ export default createServerCommand({
 		);
 
 		while (project !== undefined) {
-			req.reporter.log(markup`${project.directory}`);
+			req.reporter.log(project.directory);
 			if (flags.complete) {
 				req.reporter.inspect(project.config);
 			} else {

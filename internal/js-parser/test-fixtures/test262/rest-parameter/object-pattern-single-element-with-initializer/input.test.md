@@ -8,47 +8,24 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation test262/rest-parameter/object-pattern-single-element-with-initializer/input.js 1:0-2:0
-	path: UIDPath<test262/rest-parameter/object-pattern-single-element-with-initializer/input.js>
-	body: Array [
+	body: [
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "singleElementWithInitializer"
 				loc: SourceLocation test262/rest-parameter/object-pattern-single-element-with-initializer/input.js 1:9-1:37 (singleElementWithInitializer)
 			}
-			loc: SourceLocation test262/rest-parameter/object-pattern-single-element-with-initializer/input.js 1:0-1:55
 			body: JSBlockStatement {
-				body: Array []
-				directives: Array []
+				body: []
+				directives: []
 				loc: SourceLocation test262/rest-parameter/object-pattern-single-element-with-initializer/input.js 1:53-1:55
 			}
 			head: JSFunctionHead {
 				async: false
 				generator: false
 				hasHoistedVars: false
-				params: Array []
-				returnType: undefined
-				thisType: undefined
-				typeParameters: undefined
-				loc: SourceLocation test262/rest-parameter/object-pattern-single-element-with-initializer/input.js 1:37-1:52
+				params: []
 				rest: JSBindingObjectPattern {
-					rest: undefined
-					loc: SourceLocation test262/rest-parameter/object-pattern-single-element-with-initializer/input.js 1:41-1:51
-					meta: JSPatternMeta {
-						optional: undefined
-						typeAnnotation: undefined
-						loc: SourceLocation test262/rest-parameter/object-pattern-single-element-with-initializer/input.js 1:41-1:51
-					}
-					properties: Array [
+					properties: [
 						JSBindingObjectPatternProperty {
 							key: JSStaticPropertyKey {
 								value: JSIdentifier {
@@ -58,24 +35,38 @@ JSRoot {
 								loc: SourceLocation test262/rest-parameter/object-pattern-single-element-with-initializer/input.js 1:42-1:43
 							}
 							value: JSBindingAssignmentPattern {
-								loc: SourceLocation test262/rest-parameter/object-pattern-single-element-with-initializer/input.js 1:45-1:50
 								left: JSBindingIdentifier {
 									name: "b"
 									loc: SourceLocation test262/rest-parameter/object-pattern-single-element-with-initializer/input.js 1:45-1:46 (b)
 								}
 								right: JSNumericLiteral {
 									value: 0
-									format: undefined
 									loc: SourceLocation test262/rest-parameter/object-pattern-single-element-with-initializer/input.js 1:49-1:50
 								}
+								loc: SourceLocation test262/rest-parameter/object-pattern-single-element-with-initializer/input.js 1:45-1:50
 							}
 							loc: SourceLocation test262/rest-parameter/object-pattern-single-element-with-initializer/input.js 1:42-1:50
 						}
 					]
+					meta: JSPatternMeta {
+						loc: SourceLocation test262/rest-parameter/object-pattern-single-element-with-initializer/input.js 1:41-1:51
+					}
+					loc: SourceLocation test262/rest-parameter/object-pattern-single-element-with-initializer/input.js 1:41-1:51
 				}
+				loc: SourceLocation test262/rest-parameter/object-pattern-single-element-with-initializer/input.js 1:37-1:52
 			}
+			loc: SourceLocation test262/rest-parameter/object-pattern-single-element-with-initializer/input.js 1:0-1:55
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<test262/rest-parameter/object-pattern-single-element-with-initializer/input.js>
+	loc: SourceLocation test262/rest-parameter/object-pattern-single-element-with-initializer/input.js 1:0-2:0
 }
 ```
 

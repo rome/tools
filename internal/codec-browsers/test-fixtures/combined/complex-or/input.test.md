@@ -7,7 +7,7 @@
 ### `result`
 
 ```javascript
-Array [
+[
 	"firefox:2"
 	"firefox:3"
 	"firefox:3.5"
@@ -175,28 +175,17 @@ Array [
 ### `targets`
 
 ```javascript
-Array [
-	TargetBrowserRangeOperator {
-		browser: "Firefox"
-		operator: "LE"
-		version: 84
-	}
-	TargetBrowserRangeOperator {
-		browser: "Chrome"
-		operator: "LT"
-		version: 76
-	}
-	TargetBrowserUsage {
-		operator: "GT"
-		usage: 5
-	}
+[
+	TargetBrowserRangeOperator {browser: "Firefox", operator: "LE", version: 84}
+	TargetBrowserRangeOperator {browser: "Chrome", operator: "LT", version: 76}
+	TargetBrowserUsage {operator: "GT", usage: 5}
 ]
 ```
 
 ### `tokens`
 
 ```javascript
-Array [
+[
 	String {
 		value: "Firefox"
 		end: ZeroIndexedNumber<7>

@@ -7,31 +7,19 @@
 ### `result`
 
 ```javascript
-Array [
-	"firefox:80"
-	"firefox:81"
-	"firefox:82"
-	"firefox:83"
-	"firefox:84"
-]
+["firefox:80", "firefox:81", "firefox:82", "firefox:83", "firefox:84"]
 ```
 
 ### `targets`
 
 ```javascript
-Array [
-	TargetBrowserRange {
-		browser: "Firefox"
-		to: 84
-		version: 80
-	}
-]
+[TargetBrowserRange {browser: "Firefox", to: 84, version: 80}]
 ```
 
 ### `tokens`
 
 ```javascript
-Array [
+[
 	String {
 		value: "Firefox"
 		end: ZeroIndexedNumber<7>

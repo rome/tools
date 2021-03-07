@@ -120,5 +120,3 @@ export type Tokens = BaseTokens & {
 export type UserVersion = AbsoluteVersionNode | string;
 
 export type UserRange = RangeNode | string;
-
-export type UserVersions = UserVersion[];

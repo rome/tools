@@ -8,56 +8,18 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: true
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2015/uncategorised/261/input.js 1:0-1:21
-	path: UIDPath<es2015/uncategorised/261/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:17
-				path: UIDPath<es2015/uncategorised/261/input.js>
-				start: Position 1:17
-			}
-			description: Object {
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Unexpected character <emphasis>*</emphasis>"}
-				advice: Array [
-					log {
-						category: "info"
-						text: RAW_MARKUP {value: "Expected the opening function params character <emphasis>(</emphasis>"}
-					}
-				]
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSVariableDeclarationStatement {
-			loc: SourceLocation es2015/uncategorised/261/input.js 1:0-1:21
 			declaration: JSVariableDeclaration {
 				kind: "var"
-				loc: SourceLocation es2015/uncategorised/261/input.js 1:0-1:21
-				declarations: Array [
+				declarations: [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "obj"
 							loc: SourceLocation es2015/uncategorised/261/input.js 1:4-1:7 (obj)
 						}
-						loc: SourceLocation es2015/uncategorised/261/input.js 1:4-1:21
 						init: JSObjectExpression {
-							loc: SourceLocation es2015/uncategorised/261/input.js 1:10-1:21
-							properties: Array [
+							properties: [
 								JSObjectMethod {
 									kind: "method"
 									key: JSStaticPropertyKey {
@@ -67,41 +29,75 @@ JSRoot {
 										}
 										loc: SourceLocation es2015/uncategorised/261/input.js 1:13-1:17
 									}
-									loc: SourceLocation es2015/uncategorised/261/input.js 1:12-1:21
 									body: JSBlockStatement {
-										body: Array []
-										directives: Array []
+										body: []
+										directives: []
 										loc: SourceLocation es2015/uncategorised/261/input.js 1:20-1:21
 									}
 									head: JSFunctionHead {
 										async: false
 										generator: true
 										hasHoistedVars: false
-										rest: undefined
-										returnType: undefined
-										thisType: undefined
-										typeParameters: undefined
-										loc: SourceLocation es2015/uncategorised/261/input.js 1:17-1:19
-										params: Array [
+										params: [
 											JSBindingIdentifier {
 												name: ""
-												loc: SourceLocation es2015/uncategorised/261/input.js 1:17-1:19 ()
 												meta: JSPatternMeta {
-													optional: undefined
-													typeAnnotation: undefined
 													loc: SourceLocation es2015/uncategorised/261/input.js 1:17-1:19
 												}
+												loc: SourceLocation es2015/uncategorised/261/input.js 1:17-1:19 ()
 											}
 										]
+										loc: SourceLocation es2015/uncategorised/261/input.js 1:17-1:19
 									}
+									loc: SourceLocation es2015/uncategorised/261/input.js 1:12-1:21
 								}
 							]
+							loc: SourceLocation es2015/uncategorised/261/input.js 1:10-1:21
 						}
+						loc: SourceLocation es2015/uncategorised/261/input.js 1:4-1:21
 					}
 				]
+				loc: SourceLocation es2015/uncategorised/261/input.js 1:0-1:21
+			}
+			loc: SourceLocation es2015/uncategorised/261/input.js 1:0-1:21
+		}
+	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {
+				advice: [
+					log {
+						category: "info"
+						text: [
+							RAW_MARKUP {value: "Expected the opening "}
+							"function params"
+							RAW_MARKUP {value: " character <emphasis>"}
+							"("
+							RAW_MARKUP {value: "</emphasis>"}
+						]
+					}
+				]
+				category: ["parse"]
+				categoryValue: "js"
+				message: [RAW_MARKUP {value: "Unexpected character <emphasis>"}, "*", RAW_MARKUP {value: "</emphasis>"}]
+			}
+			location: {
+				language: "js"
+				path: UIDPath<es2015/uncategorised/261/input.js>
+				end: Position 1:17
+				start: Position 1:17
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: true
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2015/uncategorised/261/input.js>
+	loc: SourceLocation es2015/uncategorised/261/input.js 1:0-1:21
 }
 ```
 

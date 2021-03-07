@@ -8,24 +8,11 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation esprima/es2015-template-literals/literal-escape-sequences/input.js 1:0-2:0
-	path: UIDPath<esprima/es2015-template-literals/literal-escape-sequences/input.js>
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation esprima/es2015-template-literals/literal-escape-sequences/input.js 1:0-1:35
 			expression: JSTemplateLiteral {
-				expressions: Array []
-				loc: SourceLocation esprima/es2015-template-literals/literal-escape-sequences/input.js 1:0-1:35
-				quasis: Array [
+				expressions: []
+				quasis: [
 					JSTemplateElement {
 						cooked: "\\u{000042}\\u0042\\x42\\u0\\A\\0"
 						raw: "\\\\u{000042}\\\\u0042\\\\x42\\\\u0\\\\A\\\\0"
@@ -33,9 +20,20 @@ JSRoot {
 						loc: SourceLocation esprima/es2015-template-literals/literal-escape-sequences/input.js 1:1-1:34
 					}
 				]
+				loc: SourceLocation esprima/es2015-template-literals/literal-escape-sequences/input.js 1:0-1:35
 			}
+			loc: SourceLocation esprima/es2015-template-literals/literal-escape-sequences/input.js 1:0-1:35
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<esprima/es2015-template-literals/literal-escape-sequences/input.js>
+	loc: SourceLocation esprima/es2015-template-literals/literal-escape-sequences/input.js 1:0-2:0
 }
 ```
 

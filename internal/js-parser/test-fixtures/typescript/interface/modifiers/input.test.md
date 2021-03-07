@@ -8,30 +8,17 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	loc: SourceLocation typescript/interface/modifiers/input.ts 1:0-4:0
-	path: UIDPath<typescript/interface/modifiers/input.ts>
-	syntax: Array ["ts"]
-	body: Array [
+	body: [
 		TSInterfaceDeclaration {
 			id: JSBindingIdentifier {
 				name: "I"
 				loc: SourceLocation typescript/interface/modifiers/input.ts 1:10-1:11 (I)
 			}
-			extends: undefined
-			typeParameters: undefined
-			loc: SourceLocation typescript/interface/modifiers/input.ts 1:0-3:1
 			body: TSInterfaceBody {
-				loc: SourceLocation typescript/interface/modifiers/input.ts 1:12-3:1
-				body: Array [
+				body: [
 					TSPropertySignature {
+						optional: false
+						readonly: true
 						key: JSStaticPropertyKey {
 							value: JSIdentifier {
 								name: "x"
@@ -39,15 +26,26 @@ JSRoot {
 							}
 							loc: SourceLocation typescript/interface/modifiers/input.ts 2:13-2:14
 						}
-						optional: false
-						readonly: true
+						typeAnnotation: TSNumberKeywordTypeAnnotation {
+							loc: SourceLocation typescript/interface/modifiers/input.ts 2:16-2:22
+						}
 						loc: SourceLocation typescript/interface/modifiers/input.ts 2:4-2:23
-						typeAnnotation: TSNumberKeywordTypeAnnotation {loc: SourceLocation typescript/interface/modifiers/input.ts 2:16-2:22}
 					}
 				]
+				loc: SourceLocation typescript/interface/modifiers/input.ts 1:12-3:1
 			}
+			loc: SourceLocation typescript/interface/modifiers/input.ts 1:0-3:1
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: ["ts"]
+	path: UIDPath<typescript/interface/modifiers/input.ts>
+	loc: SourceLocation typescript/interface/modifiers/input.ts 1:0-4:0
 }
 ```
 

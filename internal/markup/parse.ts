@@ -22,22 +22,23 @@ import {
 	Tokens,
 } from "./types";
 import {isEscaped} from "@internal/string-utils";
-import {ZeroIndexed} from "@internal/math";
+import {ZeroIndexed} from "@internal/numbers";
 import {descriptions} from "@internal/diagnostics";
 import {
-	AnyMarkup,
+	Markup,
 	StaticMarkup,
 	readMarkup,
 	serializeLazyMarkup,
 	unescapeTextValue,
 } from "./escape";
-import {createEmptyAttributes, isSingleEscaped} from "./util";
+import {createEmptyAttributes} from "./util";
 import {
 	globalAttributes,
 	tags,
 	tagsToOnlyChildren,
 	tagsToOnlyParent,
 } from "./tags";
+import {isObject} from "@internal/typescript-helpers";
 
 //
 function isStringValueChar(
@@ -76,6 +77,10 @@ type MarkupParser = ParserCore<MarkupParserTypes>;
 
 const stringMarkupParser = createParser<MarkupParserTypes>({
 	diagnosticLanguage: "romemarkup",
+	diagnosticTags: {
+		// markup is purely an internal abstraction
+		internal: true,
+	},
 	getInitialState: () => ({inTagHead: false}),
 	tokenizeWithState(parser, index, state) {
 		const escaped = isEscaped(index, parser.input);
@@ -404,41 +409,47 @@ function parseChild(
 	}
 }
 
-const parseCache: WeakMap<Exclude<StaticMarkup, string>, MarkupParsedChildren> = new WeakMap();
+const parseCache: WeakMap<Extract<StaticMarkup, object>, MarkupParsedChildren> = new WeakMap();
 export function parseMarkup(
-	input: string | AnyMarkup,
+	raw: Markup,
 	opts: ParserOptions = {},
+	cache: boolean = true,
 ): MarkupParsedChildren {
-	let cacheKey: undefined | StaticMarkup;
 	let children: undefined | MarkupParsedChildren;
+	let cacheKey: undefined | Extract<StaticMarkup, object>;
 
-	if (typeof input !== "string") {
-		cacheKey = serializeLazyMarkup(input);
-
-		if (typeof cacheKey !== "string") {
-			const cached = parseCache.get(cacheKey);
-			if (cached !== undefined) {
-				return cached;
-			}
+	if (cache) {
+		const possibleCacheKey = serializeLazyMarkup(raw);
+		if (isObject(possibleCacheKey) || Array.isArray(possibleCacheKey)) {
+			cacheKey = possibleCacheKey;
 		}
+	}
 
-		// Don't need to parse a single escaped
-		if (isSingleEscaped(cacheKey)) {
-			children = [
-				{
-					type: "Text",
-					value: cacheKey[0],
-					source: true,
-				},
-			];
+	if (cacheKey !== undefined) {
+		const cached = parseCache.get(cacheKey);
+		if (cached !== undefined) {
+			return cached;
 		}
+	}
 
-		input = readMarkup(input);
+	// Don't need to parse a single escaped
+	if (typeof cacheKey === "string") {
+		children = [
+			{
+				type: "Text",
+				value: cacheKey,
+				source: true,
+			},
+		];
 	}
 
 	if (children === undefined) {
 		children = [];
-		const parser = stringMarkupParser.create({...opts, input});
+
+		const parser = stringMarkupParser.create({
+			...opts,
+			input: readMarkup(raw),
+		});
 		while (!parser.matchToken("EOF")) {
 			const child = parseChild(parser, undefined);
 			if (child !== undefined) {
@@ -447,7 +458,7 @@ export function parseMarkup(
 		}
 	}
 
-	if (cacheKey !== undefined && typeof cacheKey !== "string") {
+	if (cacheKey !== undefined) {
 		parseCache.set(cacheKey, children);
 	}
 

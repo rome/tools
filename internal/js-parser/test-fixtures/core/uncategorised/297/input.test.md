@@ -8,58 +8,52 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: true
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation core/uncategorised/297/input.js 1:0-1:34
-	path: UIDPath<core/uncategorised/297/input.js>
-	body: Array [
+	body: [
 		JSVariableDeclarationStatement {
-			loc: SourceLocation core/uncategorised/297/input.js 1:0-1:34
 			declaration: JSVariableDeclaration {
 				kind: "var"
-				loc: SourceLocation core/uncategorised/297/input.js 1:0-1:34
-				declarations: Array [
+				declarations: [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "hi"
 							loc: SourceLocation core/uncategorised/297/input.js 1:4-1:6 (hi)
 						}
-						loc: SourceLocation core/uncategorised/297/input.js 1:4-1:33
 						init: JSFunctionExpression {
 							id: JSBindingIdentifier {
 								name: "arguments"
 								loc: SourceLocation core/uncategorised/297/input.js 1:18-1:27 (arguments)
 							}
-							loc: SourceLocation core/uncategorised/297/input.js 1:9-1:33
 							body: JSBlockStatement {
-								body: Array []
-								directives: Array []
+								body: []
+								directives: []
 								loc: SourceLocation core/uncategorised/297/input.js 1:30-1:33
 							}
 							head: JSFunctionHead {
 								async: false
 								generator: false
 								hasHoistedVars: false
-								params: Array []
-								rest: undefined
-								returnType: undefined
-								thisType: undefined
-								typeParameters: undefined
+								params: []
 								loc: SourceLocation core/uncategorised/297/input.js 1:27-1:29
 							}
+							loc: SourceLocation core/uncategorised/297/input.js 1:9-1:33
 						}
+						loc: SourceLocation core/uncategorised/297/input.js 1:4-1:33
 					}
 				]
+				loc: SourceLocation core/uncategorised/297/input.js 1:0-1:34
 			}
+			loc: SourceLocation core/uncategorised/297/input.js 1:0-1:34
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: true
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<core/uncategorised/297/input.js>
+	loc: SourceLocation core/uncategorised/297/input.js 1:0-1:34
 }
 ```
 

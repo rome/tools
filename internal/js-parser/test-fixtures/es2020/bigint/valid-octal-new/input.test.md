@@ -8,26 +8,24 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2020/bigint/valid-octal-new/input.js 1:0-2:0
-	path: UIDPath<es2020/bigint/valid-octal-new/input.js>
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation es2020/bigint/valid-octal-new/input.js 1:0-1:8
 			expression: JSBigIntLiteral {
 				value: "0o16432"
 				loc: SourceLocation es2020/bigint/valid-octal-new/input.js 1:0-1:8
 			}
+			loc: SourceLocation es2020/bigint/valid-octal-new/input.js 1:0-1:8
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2020/bigint/valid-octal-new/input.js>
+	loc: SourceLocation es2020/bigint/valid-octal-new/input.js 1:0-2:0
 }
 ```
 

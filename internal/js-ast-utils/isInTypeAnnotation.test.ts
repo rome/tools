@@ -13,10 +13,10 @@ import {
 	tsThisType,
 	tsTypeAssertion,
 } from "@internal/ast";
-import {CompilerContext, Path} from "@internal/compiler";
+import {CompilerContext, CompilerPath} from "@internal/compiler";
 
 function helper(node: AnyNode) {
-	let path = new Path(
+	let path = new CompilerPath(
 		MOCK_PARENT,
 		new CompilerContext({
 			ast: MOCK_JS_ROOT,

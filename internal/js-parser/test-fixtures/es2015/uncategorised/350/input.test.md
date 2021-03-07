@@ -8,23 +8,10 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2015/uncategorised/350/input.js 1:0-1:36
-	path: UIDPath<es2015/uncategorised/350/input.js>
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation es2015/uncategorised/350/input.js 1:0-1:36
 			expression: JSObjectExpression {
-				loc: SourceLocation es2015/uncategorised/350/input.js 1:1-1:35
-				properties: Array [
+				properties: [
 					JSObjectProperty {
 						key: JSComputedPropertyKey {
 							value: JSStringLiteral {
@@ -35,7 +22,6 @@ JSRoot {
 						}
 						value: JSNumericLiteral {
 							value: 1
-							format: undefined
 							loc: SourceLocation es2015/uncategorised/350/input.js 1:18-1:19
 						}
 						loc: SourceLocation es2015/uncategorised/350/input.js 1:3-1:19
@@ -50,15 +36,25 @@ JSRoot {
 						}
 						value: JSNumericLiteral {
 							value: 2
-							format: undefined
 							loc: SourceLocation es2015/uncategorised/350/input.js 1:32-1:33
 						}
 						loc: SourceLocation es2015/uncategorised/350/input.js 1:21-1:33
 					}
 				]
+				loc: SourceLocation es2015/uncategorised/350/input.js 1:1-1:35
 			}
+			loc: SourceLocation es2015/uncategorised/350/input.js 1:0-1:36
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2015/uncategorised/350/input.js>
+	loc: SourceLocation es2015/uncategorised/350/input.js 1:0-1:36
 }
 ```
 

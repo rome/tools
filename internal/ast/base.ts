@@ -6,9 +6,9 @@
  */
 
 import {AnyComment} from "@internal/ast";
-import {DiagnosticIntegrity, Diagnostics} from "@internal/diagnostics";
+import {Diagnostic, DiagnosticIntegrity} from "@internal/diagnostics";
 import {NodeBase} from "@internal/parser-core";
-import {AnyPath} from "@internal/path";
+import {Path} from "@internal/path";
 
 export interface NodeBaseWithComments extends NodeBase {
 	leadingComments?: string[];
@@ -18,8 +18,8 @@ export interface NodeBaseWithComments extends NodeBase {
 
 export interface RootBase {
 	comments: AnyComment[];
-	path: AnyPath;
-	diagnostics: Diagnostics;
+	path: Path;
+	diagnostics: Diagnostic[];
 	integrity: undefined | DiagnosticIntegrity;
 	corrupt: boolean;
 }

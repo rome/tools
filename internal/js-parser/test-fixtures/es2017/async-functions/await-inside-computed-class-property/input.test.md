@@ -8,88 +8,71 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2017/async-functions/await-inside-computed-class-property/input.js 1:0-4:0
-	path: UIDPath<es2017/async-functions/await-inside-computed-class-property/input.js>
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation es2017/async-functions/await-inside-computed-class-property/input.js 1:0-3:1
 			expression: JSArrowFunctionExpression {
-				loc: SourceLocation es2017/async-functions/await-inside-computed-class-property/input.js 1:0-3:1
-				head: JSFunctionHead {
-					async: true
-					hasHoistedVars: false
-					params: Array []
-					rest: undefined
-					returnType: undefined
-					thisType: undefined
-					loc: SourceLocation es2017/async-functions/await-inside-computed-class-property/input.js 1:0-1:11
-				}
 				body: JSClassExpression {
-					id: undefined
-					loc: SourceLocation es2017/async-functions/await-inside-computed-class-property/input.js 1:12-3:1
 					meta: JSClassHead {
-						implements: undefined
-						superClass: undefined
-						superTypeParameters: undefined
-						typeParameters: undefined
-						loc: SourceLocation es2017/async-functions/await-inside-computed-class-property/input.js 1:12-3:1
-						body: Array [
+						body: [
 							JSClassMethod {
 								kind: "method"
 								key: JSComputedPropertyKey {
 									value: JSAwaitExpression {
-										loc: SourceLocation es2017/async-functions/await-inside-computed-class-property/input.js 2:3-2:11
 										argument: JSNumericLiteral {
 											value: 42
-											format: undefined
 											loc: SourceLocation es2017/async-functions/await-inside-computed-class-property/input.js 2:9-2:11
 										}
+										loc: SourceLocation es2017/async-functions/await-inside-computed-class-property/input.js 2:3-2:11
 									}
 									loc: SourceLocation es2017/async-functions/await-inside-computed-class-property/input.js 2:2-2:12
 								}
-								loc: SourceLocation es2017/async-functions/await-inside-computed-class-property/input.js 2:2-2:18
-								body: JSBlockStatement {
-									body: Array []
-									directives: Array []
-									loc: SourceLocation es2017/async-functions/await-inside-computed-class-property/input.js 2:15-2:18
-								}
 								meta: JSClassPropertyMeta {
 									abstract: false
-									accessibility: undefined
 									optional: false
 									readonly: false
 									static: false
-									typeAnnotation: undefined
 									loc: SourceLocation es2017/async-functions/await-inside-computed-class-property/input.js 2:2-2:12
 									start: Position 2:2
+								}
+								body: JSBlockStatement {
+									body: []
+									directives: []
+									loc: SourceLocation es2017/async-functions/await-inside-computed-class-property/input.js 2:15-2:18
 								}
 								head: JSFunctionHead {
 									async: false
 									generator: false
 									hasHoistedVars: false
-									params: Array []
-									rest: undefined
-									returnType: undefined
-									thisType: undefined
-									typeParameters: undefined
+									params: []
 									loc: SourceLocation es2017/async-functions/await-inside-computed-class-property/input.js 2:12-2:14
 								}
+								loc: SourceLocation es2017/async-functions/await-inside-computed-class-property/input.js 2:2-2:18
 							}
 						]
+						loc: SourceLocation es2017/async-functions/await-inside-computed-class-property/input.js 1:12-3:1
 					}
+					loc: SourceLocation es2017/async-functions/await-inside-computed-class-property/input.js 1:12-3:1
 				}
+				head: JSFunctionHead {
+					async: true
+					hasHoistedVars: false
+					params: []
+					loc: SourceLocation es2017/async-functions/await-inside-computed-class-property/input.js 1:0-1:11
+				}
+				loc: SourceLocation es2017/async-functions/await-inside-computed-class-property/input.js 1:0-3:1
 			}
+			loc: SourceLocation es2017/async-functions/await-inside-computed-class-property/input.js 1:0-3:1
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2017/async-functions/await-inside-computed-class-property/input.js>
+	loc: SourceLocation es2017/async-functions/await-inside-computed-class-property/input.js 1:0-4:0
 }
 ```
 

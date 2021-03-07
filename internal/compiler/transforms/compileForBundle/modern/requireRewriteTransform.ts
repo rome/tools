@@ -84,8 +84,8 @@ export default createVisitor({
 			return signals.retain;
 		}
 
-		const replacement = relativeSourcesToModuleId[sourceArg.value];
-		if (typeof replacement === "string") {
+		const replacement = relativeSourcesToModuleId.get(sourceArg.value);
+		if (replacement !== undefined) {
 			return signals.replace(
 				jsIdentifier.create({
 					name: getPrefixedNamespace(replacement),

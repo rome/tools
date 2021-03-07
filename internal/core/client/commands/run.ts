@@ -11,10 +11,9 @@ import ClientRequest from "../ClientRequest";
 import {consumeUnknown} from "@internal/consume";
 import {
 	DIAGNOSTIC_CATEGORIES,
-	createSingleDiagnosticError,
+	createSingleDiagnosticsError,
 } from "@internal/diagnostics";
 import {SourceMapConsumer} from "@internal/codec-source-map";
-import {getEnvVar} from "@internal/cli-environment";
 import {markup} from "@internal/markup";
 import executeMain from "@internal/core/common/utils/executeMain";
 
@@ -23,7 +22,7 @@ export default createLocalCommand({
 	description: markup`TODO`,
 	usage: "",
 	examples: [],
-	hidden: getEnvVar("ROME_DEV").type !== "ENABLED",
+	hidden: true,
 	defineFlags() {
 		return {};
 	},
@@ -32,13 +31,6 @@ export default createLocalCommand({
 		if (bridge === undefined) {
 			return false;
 		}
-
-		process.on(
-			"unhandledRejection",
-			(error) => {
-				error;
-			},
-		);
 
 		const res = await req.client.query(
 			{
@@ -67,7 +59,7 @@ export default createLocalCommand({
 						sourceMap: SourceMapConsumer.fromJSON(data.get("map").asAny()),
 					});
 					if (syntaxError !== undefined) {
-						throw createSingleDiagnosticError(syntaxError);
+						throw createSingleDiagnosticsError(syntaxError);
 					}
 					if (exitCode !== undefined) {
 						return {

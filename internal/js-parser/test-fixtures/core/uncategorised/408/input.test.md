@@ -8,59 +8,51 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: true
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation core/uncategorised/408/input.js 1:0-1:8
-	path: UIDPath<core/uncategorised/408/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Expected a semicolon or a line terminator"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:1
-				path: UIDPath<core/uncategorised/408/input.js>
-				start: Position 1:2
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation core/uncategorised/408/input.js 1:0-1:1
 			expression: JSReferenceIdentifier {
 				name: "a"
 				loc: SourceLocation core/uncategorised/408/input.js 1:0-1:1 (a)
 			}
+			loc: SourceLocation core/uncategorised/408/input.js 1:0-1:1
 		}
 		JSClassDeclaration {
 			id: JSBindingIdentifier {
 				name: "INVALID_PLACEHOLDER"
 				loc: SourceLocation core/uncategorised/408/input.js 1:7-1:7
 			}
-			loc: SourceLocation core/uncategorised/408/input.js 1:2-1:8
 			meta: JSClassHead {
-				body: Array []
-				implements: undefined
-				superClass: undefined
-				superTypeParameters: undefined
-				typeParameters: undefined
+				body: []
 				loc: SourceLocation core/uncategorised/408/input.js 1:2-1:8
+			}
+			loc: SourceLocation core/uncategorised/408/input.js 1:2-1:8
+		}
+	]
+	comments: []
+	corrupt: true
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "Expected a semicolon or a line terminator"}
+			}
+			location: {
+				language: "js"
+				path: UIDPath<core/uncategorised/408/input.js>
+				end: Position 1:1
+				start: Position 1:2
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<core/uncategorised/408/input.js>
+	loc: SourceLocation core/uncategorised/408/input.js 1:0-1:8
 }
 ```
 

@@ -8,33 +8,18 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	loc: SourceLocation typescript/interface/method-computed/input.ts 1:0-5:0
-	path: UIDPath<typescript/interface/method-computed/input.ts>
-	syntax: Array ["ts"]
-	body: Array [
+	body: [
 		TSInterfaceDeclaration {
 			id: JSBindingIdentifier {
 				name: "I"
 				loc: SourceLocation typescript/interface/method-computed/input.ts 1:10-1:11 (I)
 			}
-			extends: undefined
-			typeParameters: undefined
-			loc: SourceLocation typescript/interface/method-computed/input.ts 1:0-4:1
 			body: TSInterfaceBody {
-				loc: SourceLocation typescript/interface/method-computed/input.ts 1:12-4:1
-				body: Array [
+				body: [
 					TSMethodSignature {
+						optional: false
 						key: JSComputedPropertyKey {
 							value: JSMemberExpression {
-								loc: SourceLocation typescript/interface/method-computed/input.ts 2:5-2:20
 								object: JSReferenceIdentifier {
 									name: "Symbol"
 									loc: SourceLocation typescript/interface/method-computed/input.ts 2:5-2:11 (Symbol)
@@ -46,23 +31,23 @@ JSRoot {
 									}
 									loc: SourceLocation typescript/interface/method-computed/input.ts 2:12-2:20 (iterator)
 								}
+								loc: SourceLocation typescript/interface/method-computed/input.ts 2:5-2:20
 							}
 							loc: SourceLocation typescript/interface/method-computed/input.ts 2:4-2:21
 						}
-						optional: false
-						loc: SourceLocation typescript/interface/method-computed/input.ts 2:4-2:30
-						returnType: TSVoidKeywordTypeAnnotation {loc: SourceLocation typescript/interface/method-computed/input.ts 2:25-2:29}
 						meta: TSSignatureDeclarationMeta {
-							parameters: Array []
-							rest: undefined
-							typeParameters: undefined
+							parameters: []
 							loc: SourceLocation typescript/interface/method-computed/input.ts 2:21-2:29
 						}
+						returnType: TSVoidKeywordTypeAnnotation {
+							loc: SourceLocation typescript/interface/method-computed/input.ts 2:25-2:29
+						}
+						loc: SourceLocation typescript/interface/method-computed/input.ts 2:4-2:30
 					}
 					TSMethodSignature {
+						optional: true
 						key: JSComputedPropertyKey {
 							value: JSMemberExpression {
-								loc: SourceLocation typescript/interface/method-computed/input.ts 3:5-3:20
 								object: JSReferenceIdentifier {
 									name: "Symbol"
 									loc: SourceLocation typescript/interface/method-computed/input.ts 3:5-3:11 (Symbol)
@@ -74,23 +59,34 @@ JSRoot {
 									}
 									loc: SourceLocation typescript/interface/method-computed/input.ts 3:12-3:20 (iterator)
 								}
+								loc: SourceLocation typescript/interface/method-computed/input.ts 3:5-3:20
 							}
 							loc: SourceLocation typescript/interface/method-computed/input.ts 3:4-3:21
 						}
-						optional: true
-						loc: SourceLocation typescript/interface/method-computed/input.ts 3:4-3:33
-						returnType: TSNumberKeywordTypeAnnotation {loc: SourceLocation typescript/interface/method-computed/input.ts 3:26-3:32}
 						meta: TSSignatureDeclarationMeta {
-							parameters: Array []
-							rest: undefined
-							typeParameters: undefined
+							parameters: []
 							loc: SourceLocation typescript/interface/method-computed/input.ts 3:22-3:32
 						}
+						returnType: TSNumberKeywordTypeAnnotation {
+							loc: SourceLocation typescript/interface/method-computed/input.ts 3:26-3:32
+						}
+						loc: SourceLocation typescript/interface/method-computed/input.ts 3:4-3:33
 					}
 				]
+				loc: SourceLocation typescript/interface/method-computed/input.ts 1:12-4:1
 			}
+			loc: SourceLocation typescript/interface/method-computed/input.ts 1:0-4:1
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: ["ts"]
+	path: UIDPath<typescript/interface/method-computed/input.ts>
+	loc: SourceLocation typescript/interface/method-computed/input.ts 1:0-5:0
 }
 ```
 

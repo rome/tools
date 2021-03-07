@@ -8,49 +8,14 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	loc: SourceLocation typescript/class/declare-field-modifiers/input.ts 1:0-12:0
-	path: UIDPath<typescript/class/declare-field-modifiers/input.ts>
-	syntax: Array ["ts"]
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Unknown class property start"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 2:9
-				path: UIDPath<typescript/class/declare-field-modifiers/input.ts>
-				start: Position 2:10
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSClassDeclaration {
 			id: JSBindingIdentifier {
 				name: "A"
 				loc: SourceLocation typescript/class/declare-field-modifiers/input.ts 1:6-1:7 (A)
 			}
-			loc: SourceLocation typescript/class/declare-field-modifiers/input.ts 1:0-11:1
 			meta: JSClassHead {
-				implements: undefined
-				superClass: undefined
-				superTypeParameters: undefined
-				typeParameters: undefined
-				loc: SourceLocation typescript/class/declare-field-modifiers/input.ts 1:0-11:1
-				body: Array [
+				body: [
 					JSClassProperty {
 						key: JSStaticPropertyKey {
 							value: JSIdentifier {
@@ -59,20 +24,15 @@ JSRoot {
 							}
 							loc: SourceLocation typescript/class/declare-field-modifiers/input.ts 2:17-2:20
 						}
-						value: undefined
-						definite: undefined
-						typeAnnotation: undefined
-						loc: SourceLocation typescript/class/declare-field-modifiers/input.ts 2:10-2:21
 						meta: JSClassPropertyMeta {
 							abstract: false
-							accessibility: undefined
 							optional: false
 							readonly: false
 							static: true
-							typeAnnotation: undefined
 							loc: SourceLocation typescript/class/declare-field-modifiers/input.ts 2:10-2:20
 							start: Position 2:10
 						}
+						loc: SourceLocation typescript/class/declare-field-modifiers/input.ts 2:10-2:21
 					}
 					JSClassProperty {
 						key: JSStaticPropertyKey {
@@ -82,20 +42,18 @@ JSRoot {
 							}
 							loc: SourceLocation typescript/class/declare-field-modifiers/input.ts 3:17-3:21
 						}
-						value: undefined
-						definite: undefined
-						loc: SourceLocation typescript/class/declare-field-modifiers/input.ts 3:17-3:30
-						typeAnnotation: TSStringKeywordTypeAnnotation {loc: SourceLocation typescript/class/declare-field-modifiers/input.ts 3:23-3:29}
 						meta: JSClassPropertyMeta {
 							abstract: false
-							accessibility: undefined
 							optional: false
 							readonly: false
 							static: false
-							typeAnnotation: undefined
 							loc: SourceLocation typescript/class/declare-field-modifiers/input.ts 3:17-3:21
 							start: Position 3:17
 						}
+						typeAnnotation: TSStringKeywordTypeAnnotation {
+							loc: SourceLocation typescript/class/declare-field-modifiers/input.ts 3:23-3:29
+						}
+						loc: SourceLocation typescript/class/declare-field-modifiers/input.ts 3:17-3:30
 					}
 					JSClassProperty {
 						key: JSStaticPropertyKey {
@@ -105,20 +63,16 @@ JSRoot {
 							}
 							loc: SourceLocation typescript/class/declare-field-modifiers/input.ts 5:17-5:21
 						}
-						value: undefined
-						definite: undefined
-						typeAnnotation: undefined
-						loc: SourceLocation typescript/class/declare-field-modifiers/input.ts 5:10-5:22
 						meta: JSClassPropertyMeta {
 							abstract: false
 							accessibility: "public"
 							optional: false
 							readonly: false
 							static: false
-							typeAnnotation: undefined
 							loc: SourceLocation typescript/class/declare-field-modifiers/input.ts 5:10-5:21
 							start: Position 5:10
 						}
+						loc: SourceLocation typescript/class/declare-field-modifiers/input.ts 5:10-5:22
 					}
 					JSClassProperty {
 						key: JSStaticPropertyKey {
@@ -128,20 +82,15 @@ JSRoot {
 							}
 							loc: SourceLocation typescript/class/declare-field-modifiers/input.ts 6:17-6:21
 						}
-						value: undefined
-						definite: undefined
-						typeAnnotation: undefined
-						loc: SourceLocation typescript/class/declare-field-modifiers/input.ts 6:17-6:22
 						meta: JSClassPropertyMeta {
 							abstract: false
-							accessibility: undefined
 							optional: false
 							readonly: false
 							static: false
-							typeAnnotation: undefined
 							loc: SourceLocation typescript/class/declare-field-modifiers/input.ts 6:17-6:21
 							start: Position 6:17
 						}
+						loc: SourceLocation typescript/class/declare-field-modifiers/input.ts 6:17-6:22
 					}
 					JSClassProperty {
 						key: JSStaticPropertyKey {
@@ -151,20 +100,16 @@ JSRoot {
 							}
 							loc: SourceLocation typescript/class/declare-field-modifiers/input.ts 8:24-8:28
 						}
-						value: undefined
-						definite: undefined
-						typeAnnotation: undefined
-						loc: SourceLocation typescript/class/declare-field-modifiers/input.ts 8:10-8:29
 						meta: JSClassPropertyMeta {
 							abstract: false
 							accessibility: "public"
 							optional: false
 							readonly: false
 							static: true
-							typeAnnotation: undefined
 							loc: SourceLocation typescript/class/declare-field-modifiers/input.ts 8:10-8:28
 							start: Position 8:10
 						}
+						loc: SourceLocation typescript/class/declare-field-modifiers/input.ts 8:10-8:29
 					}
 					JSClassProperty {
 						key: JSStaticPropertyKey {
@@ -174,20 +119,15 @@ JSRoot {
 							}
 							loc: SourceLocation typescript/class/declare-field-modifiers/input.ts 9:24-9:28
 						}
-						value: undefined
-						definite: undefined
-						typeAnnotation: undefined
-						loc: SourceLocation typescript/class/declare-field-modifiers/input.ts 9:17-9:29
 						meta: JSClassPropertyMeta {
 							abstract: false
-							accessibility: undefined
 							optional: false
 							readonly: false
 							static: true
-							typeAnnotation: undefined
 							loc: SourceLocation typescript/class/declare-field-modifiers/input.ts 9:17-9:28
 							start: Position 9:17
 						}
+						loc: SourceLocation typescript/class/declare-field-modifiers/input.ts 9:17-9:29
 					}
 					JSClassProperty {
 						key: JSStaticPropertyKey {
@@ -197,25 +137,47 @@ JSRoot {
 							}
 							loc: SourceLocation typescript/class/declare-field-modifiers/input.ts 10:24-10:28
 						}
-						value: undefined
-						definite: undefined
-						typeAnnotation: undefined
-						loc: SourceLocation typescript/class/declare-field-modifiers/input.ts 10:24-10:29
 						meta: JSClassPropertyMeta {
 							abstract: false
-							accessibility: undefined
 							optional: false
 							readonly: false
 							static: false
-							typeAnnotation: undefined
 							loc: SourceLocation typescript/class/declare-field-modifiers/input.ts 10:24-10:28
 							start: Position 10:24
 						}
+						loc: SourceLocation typescript/class/declare-field-modifiers/input.ts 10:24-10:29
 					}
 				]
+				loc: SourceLocation typescript/class/declare-field-modifiers/input.ts 1:0-11:1
+			}
+			loc: SourceLocation typescript/class/declare-field-modifiers/input.ts 1:0-11:1
+		}
+	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "Unknown class property start"}
+			}
+			location: {
+				language: "js"
+				path: UIDPath<typescript/class/declare-field-modifiers/input.ts>
+				end: Position 2:9
+				start: Position 2:10
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: ["ts"]
+	path: UIDPath<typescript/class/declare-field-modifiers/input.ts>
+	loc: SourceLocation typescript/class/declare-field-modifiers/input.ts 1:0-12:0
 }
 ```
 

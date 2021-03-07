@@ -1,6 +1,7 @@
 import {createFixtureTests} from "@internal/test-helpers";
 import {removeCarriageReturn} from "@internal/string-utils";
 import {parseCommit} from "./index";
+import {decodeUTF8} from "@internal/binary";
 
 const promise = createFixtureTests(async (fixture, t) => {
 	const {files} = fixture;
@@ -8,7 +9,7 @@ const promise = createFixtureTests(async (fixture, t) => {
 
 	const filename = inputFile.relative;
 
-	const inputContent = removeCarriageReturn(inputFile.content.toString());
+	const inputContent = removeCarriageReturn(decodeUTF8(inputFile.content));
 
 	const ast = parseCommit({
 		input: inputContent,

@@ -8,45 +8,40 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	loc: SourceLocation typescript/type-alias/generic/input.ts 1:0-2:0
-	path: UIDPath<typescript/type-alias/generic/input.ts>
-	syntax: Array ["ts"]
-	body: Array [
+	body: [
 		TSTypeAlias {
 			id: JSBindingIdentifier {
 				name: "T"
 				loc: SourceLocation typescript/type-alias/generic/input.ts 1:5-1:6 (T)
 			}
-			loc: SourceLocation typescript/type-alias/generic/input.ts 1:0-1:14
 			right: TSTypeReference {
-				typeParameters: undefined
-				loc: SourceLocation typescript/type-alias/generic/input.ts 1:12-1:13
 				typeName: JSReferenceIdentifier {
 					name: "U"
 					loc: SourceLocation typescript/type-alias/generic/input.ts 1:12-1:13 (U)
 				}
+				loc: SourceLocation typescript/type-alias/generic/input.ts 1:12-1:13
 			}
 			typeParameters: TSTypeParameterDeclaration {
-				loc: SourceLocation typescript/type-alias/generic/input.ts 1:6-1:9
-				params: Array [
+				params: [
 					TSTypeParameter {
 						name: "U"
-						constraint: undefined
-						default: undefined
 						loc: SourceLocation typescript/type-alias/generic/input.ts 1:7-1:8
 					}
 				]
+				loc: SourceLocation typescript/type-alias/generic/input.ts 1:6-1:9
 			}
+			loc: SourceLocation typescript/type-alias/generic/input.ts 1:0-1:14
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: ["ts"]
+	path: UIDPath<typescript/type-alias/generic/input.ts>
+	loc: SourceLocation typescript/type-alias/generic/input.ts 1:0-2:0
 }
 ```
 

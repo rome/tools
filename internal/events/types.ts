@@ -5,9 +5,9 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {StructuredError} from "@internal/v8";
-import {AnyMarkups} from "@internal/markup";
-import {RSERObject, RSERValue} from "@internal/codec-binary-serial";
+import {StructuredError} from "@internal/errors";
+import {Markup} from "@internal/markup";
+import {RSERObject, RSERValue} from "@internal/binary-transport";
 import {Dict, VoidCallback} from "@internal/typescript-helpers";
 import {
 	BridgeEventBidirectional,
@@ -16,10 +16,12 @@ import {
 } from "./BridgeEvent";
 import {BridgeFactories} from "./createBridge";
 import Bridge from "./Bridge";
+import {Resource} from "@internal/resources";
+import {Duration} from "@internal/numbers";
 
 export type EventCallback<Param, Ret> = (
 	param: Param,
-	subscription: EventSubscription,
+	resource: Resource,
 ) => Ret | Promise<Ret>;
 
 export type AnyBridge = Bridge<{}, {}, {}>;
@@ -47,20 +49,29 @@ export type BridgeEventsDeclarationToInstances<
 	CallEvents extends BridgeEventsDeclaration,
 	SharedEvents extends BridgeEventsDeclaration
 > = {
-	[Key in keyof ListenEvents]: BridgeEventListenOnly<
-		ExtractEventTypes<ListenEvents[Key]>[0],
-		ExtractEventTypes<ListenEvents[Key]>[1]
-	>
+	[Key in keyof ListenEvents]: Key extends string
+		? BridgeEventListenOnly<
+				Key,
+				ExtractEventTypes<ListenEvents[Key]>[0],
+				ExtractEventTypes<ListenEvents[Key]>[1]
+			>
+		: never
 } & {
-	[Key in keyof CallEvents]: BridgeEventCallOnly<
-		ExtractEventTypes<CallEvents[Key]>[0],
-		ExtractEventTypes<CallEvents[Key]>[1]
-	>
+	[Key in keyof CallEvents]: Key extends string
+		? BridgeEventCallOnly<
+				Key,
+				ExtractEventTypes<CallEvents[Key]>[0],
+				ExtractEventTypes<CallEvents[Key]>[1]
+			>
+		: never
 } & {
-	[Key in keyof SharedEvents]: BridgeEventBidirectional<
-		ExtractEventTypes<SharedEvents[Key]>[0],
-		ExtractEventTypes<SharedEvents[Key]>[1]
-	>
+	[Key in keyof SharedEvents]: Key extends string
+		? BridgeEventBidirectional<
+				Key,
+				ExtractEventTypes<SharedEvents[Key]>[0],
+				ExtractEventTypes<SharedEvents[Key]>[1]
+			>
+		: never
 };
 
 export type BridgeClient<Factories> = Factories extends BridgeFactories<
@@ -81,6 +92,11 @@ export type BridgeServer<Factories> = Factories extends BridgeFactories<
 
 export type BridgeType = "server" | "client";
 
+export type BridgeOptions = {
+	ignoreHeartbeat?: boolean;
+	optionalResource?: boolean;
+};
+
 export type BridgeDefinition<
 	ClientEvents extends BridgeEventsDeclaration,
 	ServerEvents extends BridgeEventsDeclaration,
@@ -98,69 +114,110 @@ export type BridgeInitCallback<SharedEvents extends BridgeEventsDeclaration> = (
 ) => void;
 
 export type EventOptions = {
-	name: string;
 	displayName?: string;
+	requiredSubscriptionResource?: boolean;
 	onSubscriptionChange?: VoidCallback;
 	unique?: boolean;
 	serial?: boolean;
 };
 
-export type EventSubscription = {
-	unsubscribe: () => Promise<void>;
-};
-
-export type EventSubscriptions = EventSubscription[];
+export type EventSubscriptionOptions = {};
 
 export type BridgeHeartbeatExceededOptions = {
-	summary: AnyMarkups;
-	iterations: number;
-	totalTime: number;
+	summary: Markup[];
+	attempts: number;
+	totalTime: Duration;
 };
 
-export type BridgeHandshakeMessage = {
-	type: "handshake";
-	subscriptions: Set<string>;
-};
+export enum BridgeMessageCodes {
+	CLIENT_HANDSHAKE,
+	SERVER_HANDSHAKE,
+	SUBSCRIBED,
+	UNSUBSCRIBED,
+	HEARTBEAT,
+	CALL,
+	PRIORITY_CALL,
+	SEND,
+	RESPONSE_SUCCESS,
+	RESPONSE_ERROR_CUSTOM,
+	RESPONSE_ERROR_NATIVE,
+	TEARDOWN,
+}
 
-export type BridgeSubscriptionsMessage = {
-	type: "subscriptions";
-	names: Set<string>;
-};
+export type BridgeHandshakeMessage =
+	| [BridgeMessageCodes.CLIENT_HANDSHAKE, Set<number>, Map<number, string>]
+	| [BridgeMessageCodes.SERVER_HANDSHAKE, Set<number>];
 
-export type BridgeRequestMessage = {
-	id?: number;
-	event: string;
-	param: RSERValue;
-	type: "request";
-	priority: boolean;
-};
+export type BridgeSubscriptionsMessage = [
+	BridgeMessageCodes.SUBSCRIBED | BridgeMessageCodes.UNSUBSCRIBED,
+	number
+];
 
-export type BridgeSuccessResponseMessage = {
-	id: number;
-	event: string;
-	value: RSERValue;
-	type: "response";
-	responseStatus: "success";
-};
+export type BridgeRequestCallMessage =
+	| [
+			BridgeMessageCodes.CALL | BridgeMessageCodes.PRIORITY_CALL,
+			number,
+			number,
+			RSERValue
+		]
+	| [BridgeMessageCodes.CALL | BridgeMessageCodes.PRIORITY_CALL, number, number];
 
-export type BridgeErrorResponseDetails = {
-	value: StructuredError;
-	metadata: RSERObject;
-};
+export type BridgeRequestSendMessage = [
+	BridgeMessageCodes.SEND,
+	number,
+	RSERValue
+];
 
-export type BridgeErrorResponseMessage = BridgeErrorResponseDetails & {
-	id: number;
-	event: string;
-	type: "response";
-	responseStatus: "error";
-};
+export type BridgeSuccessResponseMessage = [
+	BridgeMessageCodes.RESPONSE_SUCCESS,
+	number,
+	RSERValue
+];
+
+export type BridgeNativeErrorResponseMessage = [
+	BridgeMessageCodes.RESPONSE_ERROR_NATIVE,
+	number,
+	Error
+];
+
+export type BridgeCustomErrorResponseMessage = [
+	BridgeMessageCodes.RESPONSE_ERROR_CUSTOM,
+	number,
+	StructuredError,
+	RSERObject
+];
+
+export type BridgeTeardownMessage = [BridgeMessageCodes.TEARDOWN];
+
+export type BridgeHeartbeatMessage = [BridgeMessageCodes.HEARTBEAT];
+
+export type BridgeRequestMessage =
+	| BridgeRequestCallMessage
+	| BridgeRequestSendMessage;
+
+export type BridgeErrorResponseMessage =
+	| BridgeNativeErrorResponseMessage
+	| BridgeCustomErrorResponseMessage;
 
 export type BridgeResponseMessage =
 	| BridgeSuccessResponseMessage
 	| BridgeErrorResponseMessage;
 
 export type BridgeMessage =
+	| BridgeHeartbeatMessage
+	| BridgeTeardownMessage
 	| BridgeHandshakeMessage
 	| BridgeSubscriptionsMessage
 	| BridgeRequestMessage
 	| BridgeResponseMessage;
+
+export type BridgeErrorDetails =
+	| {
+			errorType: "custom";
+			value: StructuredError;
+			metadata: RSERObject;
+		}
+	| {
+			errorType: "native";
+			value: Error;
+		};

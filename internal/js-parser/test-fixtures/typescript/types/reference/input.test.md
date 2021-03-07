@@ -8,48 +8,43 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	loc: SourceLocation typescript/types/reference/input.ts 1:0-2:0
-	path: UIDPath<typescript/types/reference/input.ts>
-	syntax: Array ["ts"]
-	body: Array [
+	body: [
 		JSVariableDeclarationStatement {
-			loc: SourceLocation typescript/types/reference/input.ts 1:0-1:9
 			declaration: JSVariableDeclaration {
 				kind: "let"
-				loc: SourceLocation typescript/types/reference/input.ts 1:0-1:9
-				declarations: Array [
+				declarations: [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "x"
-							loc: SourceLocation typescript/types/reference/input.ts 1:4-1:8
 							meta: JSPatternMeta {
-								definite: undefined
-								loc: SourceLocation typescript/types/reference/input.ts 1:4-1:8
 								typeAnnotation: TSTypeReference {
-									typeParameters: undefined
-									loc: SourceLocation typescript/types/reference/input.ts 1:7-1:8
 									typeName: JSReferenceIdentifier {
 										name: "T"
 										loc: SourceLocation typescript/types/reference/input.ts 1:7-1:8 (T)
 									}
+									loc: SourceLocation typescript/types/reference/input.ts 1:7-1:8
 								}
+								loc: SourceLocation typescript/types/reference/input.ts 1:4-1:8
 							}
+							loc: SourceLocation typescript/types/reference/input.ts 1:4-1:8
 						}
-						init: undefined
 						loc: SourceLocation typescript/types/reference/input.ts 1:4-1:8
 					}
 				]
+				loc: SourceLocation typescript/types/reference/input.ts 1:0-1:9
 			}
+			loc: SourceLocation typescript/types/reference/input.ts 1:0-1:9
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: ["ts"]
+	path: UIDPath<typescript/types/reference/input.ts>
+	loc: SourceLocation typescript/types/reference/input.ts 1:0-2:0
 }
 ```
 

@@ -8,48 +8,43 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation esprima/expression-conditional/migrated_0002/input.js 1:0-2:0
-	path: UIDPath<esprima/expression-conditional/migrated_0002/input.js>
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation esprima/expression-conditional/migrated_0002/input.js 1:0-1:15
 			expression: JSAssignmentExpression {
 				operator: "="
-				loc: SourceLocation esprima/expression-conditional/migrated_0002/input.js 1:0-1:15
 				left: JSAssignmentIdentifier {
 					name: "x"
 					loc: SourceLocation esprima/expression-conditional/migrated_0002/input.js 1:0-1:1 (x)
 				}
 				right: JSConditionalExpression {
-					loc: SourceLocation esprima/expression-conditional/migrated_0002/input.js 1:4-1:15
 					alternate: JSNumericLiteral {
 						value: 2
-						format: undefined
 						loc: SourceLocation esprima/expression-conditional/migrated_0002/input.js 1:14-1:15
 					}
 					consequent: JSNumericLiteral {
 						value: 1
-						format: undefined
 						loc: SourceLocation esprima/expression-conditional/migrated_0002/input.js 1:10-1:11
 					}
 					test: JSNumericLiteral {
 						value: 0
-						format: undefined
 						loc: SourceLocation esprima/expression-conditional/migrated_0002/input.js 1:5-1:6
 					}
+					loc: SourceLocation esprima/expression-conditional/migrated_0002/input.js 1:4-1:15
 				}
+				loc: SourceLocation esprima/expression-conditional/migrated_0002/input.js 1:0-1:15
 			}
+			loc: SourceLocation esprima/expression-conditional/migrated_0002/input.js 1:0-1:15
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<esprima/expression-conditional/migrated_0002/input.js>
+	loc: SourceLocation esprima/expression-conditional/migrated_0002/input.js 1:0-2:0
 }
 ```
 

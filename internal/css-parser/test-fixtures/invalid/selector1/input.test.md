@@ -6,45 +6,42 @@
 
 ```javascript
 CSSRoot {
-	comments: Array []
-	corrupt: false
-	integrity: undefined
-	loc: SourceLocation invalid/selector1/input.css 1:0-3:1
-	path: RelativePath<invalid/selector1/input.css>
-	body: Array [
+	body: [
 		CSSRule {
-			loc: SourceLocation invalid/selector1/input.css 1:0-3:1
-			block: CSSBlock {
-				value: Array []
-				startingTokenValue: "{"
-				loc: SourceLocation invalid/selector1/input.css 1:2-3:1
-			}
-			prelude: Array [
+			prelude: [
 				CSSSelector {
-					patterns: Array []
+					patterns: []
 					loc: SourceLocation invalid/selector1/input.css 1:0-1:2
 				}
 			]
+			block: CSSBlock {
+				value: []
+				startingTokenValue: "{"
+				loc: SourceLocation invalid/selector1/input.css 1:2-3:1
+			}
+			loc: SourceLocation invalid/selector1/input.css 1:0-3:1
 		}
 	]
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {
+				advice: []
+				category: ["parse"]
 				categoryValue: "css"
-				category: Array ["parse"]
 				message: RAW_MARKUP {value: "Expected a selector."}
 			}
-			location: Object {
-				integrity: undefined
+			location: {
 				language: "css"
-				sourceText: undefined
-				end: Position 1:3
 				path: RelativePath<invalid/selector1/input.css>
+				end: Position 1:3
 				start: Position 1:2
 			}
 		}
 	]
+	path: RelativePath<invalid/selector1/input.css>
+	loc: SourceLocation invalid/selector1/input.css 1:0-3:1
 }
 ```

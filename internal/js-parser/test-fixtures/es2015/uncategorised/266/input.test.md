@@ -8,47 +8,31 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2015/uncategorised/266/input.js 1:0-1:18
-	path: UIDPath<es2015/uncategorised/266/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:7
-				path: UIDPath<es2015/uncategorised/266/input.js>
-				start: Position 1:7
-			}
-			description: Object {
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Unclosed <emphasis>template expression value</emphasis>"}
-				advice: Array [
-					log {
-						category: "info"
-						text: RAW_MARKUP {value: "We expected to find the closing character <emphasis>}</emphasis> here"}
-					}
-					frame {location: SourceLocation es2015/uncategorised/266/input.js 1:18-1:18}
-				]
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation es2015/uncategorised/266/input.js 1:0-1:18
 			expression: JSTemplateLiteral {
-				loc: SourceLocation es2015/uncategorised/266/input.js 1:0-1:18
-				quasis: Array [
+				expressions: [
+					JSTaggedTemplateExpression {
+						quasi: JSTemplateLiteral {
+							expressions: []
+							quasis: [
+								JSTemplateElement {
+									cooked: "test"
+									raw: "test"
+									tail: true
+									loc: SourceLocation es2015/uncategorised/266/input.js 1:13-1:17
+								}
+							]
+							loc: SourceLocation es2015/uncategorised/266/input.js 1:12-1:18
+						}
+						tag: JSNumericLiteral {
+							value: 10
+							loc: SourceLocation es2015/uncategorised/266/input.js 1:9-1:11
+						}
+						loc: SourceLocation es2015/uncategorised/266/input.js 1:9-1:18
+					}
+				]
+				quasis: [
 					JSTemplateElement {
 						cooked: "hello "
 						raw: "hello "
@@ -62,32 +46,44 @@ JSRoot {
 						loc: SourceLocation es2015/uncategorised/266/input.js 1:18-1:18
 					}
 				]
-				expressions: Array [
-					JSTaggedTemplateExpression {
-						typeArguments: undefined
-						loc: SourceLocation es2015/uncategorised/266/input.js 1:9-1:18
-						tag: JSNumericLiteral {
-							value: 10
-							format: undefined
-							loc: SourceLocation es2015/uncategorised/266/input.js 1:9-1:11
-						}
-						quasi: JSTemplateLiteral {
-							expressions: Array []
-							loc: SourceLocation es2015/uncategorised/266/input.js 1:12-1:18
-							quasis: Array [
-								JSTemplateElement {
-									cooked: "test"
-									raw: "test"
-									tail: true
-									loc: SourceLocation es2015/uncategorised/266/input.js 1:13-1:17
-								}
-							]
-						}
+				loc: SourceLocation es2015/uncategorised/266/input.js 1:0-1:18
+			}
+			loc: SourceLocation es2015/uncategorised/266/input.js 1:0-1:18
+		}
+	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {
+				advice: [
+					log {
+						category: "info"
+						text: [RAW_MARKUP {value: "We expected to find the closing character <emphasis>"}, "}", RAW_MARKUP {value: "</emphasis> here"}]
+					}
+					frame {
+						location: SourceLocation es2015/uncategorised/266/input.js 1:18-1:18
 					}
 				]
+				category: ["parse"]
+				categoryValue: "js"
+				message: [RAW_MARKUP {value: "Unclosed <emphasis>"}, "template expression value", RAW_MARKUP {value: "</emphasis>"}]
+			}
+			location: {
+				language: "js"
+				path: UIDPath<es2015/uncategorised/266/input.js>
+				end: Position 1:7
+				start: Position 1:7
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2015/uncategorised/266/input.js>
+	loc: SourceLocation es2015/uncategorised/266/input.js 1:0-1:18
 }
 ```
 

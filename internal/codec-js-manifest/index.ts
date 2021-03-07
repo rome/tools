@@ -14,7 +14,6 @@ import {
 } from "@internal/codec-spdx-license";
 import {normalizeDependencies, parseGitDependencyPattern} from "./dependencies";
 import {
-	MBoolean,
 	MString,
 	Manifest,
 	ManifestExportConditions,
@@ -35,9 +34,9 @@ import {
 	createRelativePath,
 } from "@internal/path";
 import {toCamelCase} from "@internal/string-utils";
-import {PathPatterns, parsePathPattern} from "@internal/path-match";
+import {PathPattern, parsePathPattern} from "@internal/path-match";
 import {normalizeCompatManifest} from "@internal/codec-js-manifest/compat";
-import {CompilerProjects} from "@internal/compiler";
+import {CompilerProject} from "@internal/compiler";
 
 export * from "./types";
 
@@ -59,23 +58,10 @@ const TYPO_KEYS: Map<string, string> = new Map([
 	["script", "scripts"],
 ]);
 
-function normalizeBoolean(consumer: Consumer, key: string): MBoolean {
-	if (consumer.has(key)) {
-		return consumer.get(key).asBoolean();
-	} else {
-		return undefined;
-	}
-}
-
-function normalizeString(consumer: Consumer, key: string): MString {
-	if (consumer.has(key)) {
-		return consumer.get(key).asString();
-	} else {
-		return undefined;
-	}
-}
-
-function normalizePathPatterns(consumer: Consumer, loose: boolean): PathPatterns {
+function normalizePathPatterns(
+	consumer: Consumer,
+	loose: boolean,
+): PathPattern[] {
 	return normalizeStringArray(consumer, loose).map((str) =>
 		parsePathPattern({
 			input: str,
@@ -174,7 +160,7 @@ function normalizeLicense(
 		name: undefined | string;
 		version: undefined | SemverVersionNode;
 		loose: boolean;
-		projects: CompilerProjects;
+		projects: CompilerProject[];
 	},
 ): undefined | SPDXLicenseParseResult {
 	if (!consumer.has("license")) {
@@ -613,7 +599,7 @@ function checkDependencyKeyTypo(key: string, prop: Consumer) {
 export async function normalizeManifest(
 	path: AbsoluteFilePath,
 	consumer: Consumer,
-	projects: CompilerProjects,
+	projects: CompilerProject[],
 ): Promise<Manifest> {
 	const loose = consumer.path.hasSegment("node_modules");
 
@@ -648,13 +634,13 @@ export async function normalizeManifest(
 	return {
 		name,
 		version,
-		private: normalizeBoolean(consumer, "private") === true,
-		description: normalizeString(consumer, "description"),
+		private: consumer.get("private").asBoolean(false),
+		description: consumer.get("description").asStringOrVoid(),
 		license: parsedLicense?.license,
 		type: consumer.get("type").asStringSetOrVoid(["module", "commonjs"]),
 		bin: normalizeBin(consumer, name.packageName, loose),
 		scripts: normalizeStringMap(consumer, "scripts", loose),
-		homepage: normalizeString(consumer, "homepage"),
+		homepage: consumer.get("homepage").asURLPathOrVoid(),
 		repository: normalizeRepo(consumer.get("repository"), loose),
 		bugs: normalizeBugs(consumer.get("bugs"), loose),
 		engines: normalizeStringMap(consumer, "engines", loose),
@@ -662,7 +648,7 @@ export async function normalizeManifest(
 		keywords: normalizeStringArray(consumer.get("keywords"), loose),
 		cpu: normalizeStringArray(consumer.get("cpu"), loose),
 		os: normalizeStringArray(consumer.get("os"), loose),
-		main: normalizeString(consumer, "main"),
+		main: consumer.get("main").asRelativePathOrVoid(),
 		exports: normalizeExports(consumer.get("exports")),
 		// Dependency fields
 		dependencies: normalizeDependencies(consumer, "dependencies", loose),

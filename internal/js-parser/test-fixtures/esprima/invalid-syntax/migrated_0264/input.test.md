@@ -8,57 +8,14 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation esprima/invalid-syntax/migrated_0264/input.js 1:0-2:0
-	path: UIDPath<esprima/invalid-syntax/migrated_0264/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:17
-				path: UIDPath<esprima/invalid-syntax/migrated_0264/input.js>
-				start: Position 1:18
-			}
-			description: Object {
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Unexpected character <emphasis>+</emphasis>"}
-				advice: Array [
-					log {
-						category: "info"
-						text: RAW_MARKUP {value: "Expected the opening class body character <emphasis>{</emphasis>"}
-					}
-				]
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSClassDeclaration {
 			id: JSBindingIdentifier {
 				name: "A"
 				loc: SourceLocation esprima/invalid-syntax/migrated_0264/input.js 1:6-1:7 (A)
 			}
-			loc: SourceLocation esprima/invalid-syntax/migrated_0264/input.js 1:0-1:24
 			meta: JSClassHead {
-				implements: undefined
-				superTypeParameters: undefined
-				typeParameters: undefined
-				loc: SourceLocation esprima/invalid-syntax/migrated_0264/input.js 1:0-1:24
-				superClass: JSReferenceIdentifier {
-					name: "a"
-					loc: SourceLocation esprima/invalid-syntax/migrated_0264/input.js 1:16-1:17 (a)
-				}
-				body: Array [
+				body: [
 					JSClassProperty {
 						key: JSStaticPropertyKey {
 							value: JSIdentifier {
@@ -67,25 +24,62 @@ JSRoot {
 							}
 							loc: SourceLocation esprima/invalid-syntax/migrated_0264/input.js 1:22-1:23
 						}
-						value: undefined
-						definite: undefined
-						typeAnnotation: undefined
-						loc: SourceLocation esprima/invalid-syntax/migrated_0264/input.js 1:22-1:23
 						meta: JSClassPropertyMeta {
 							abstract: false
-							accessibility: undefined
 							optional: false
 							readonly: false
 							static: false
-							typeAnnotation: undefined
 							loc: SourceLocation esprima/invalid-syntax/migrated_0264/input.js 1:22-1:23
 							start: Position 1:22
 						}
+						loc: SourceLocation esprima/invalid-syntax/migrated_0264/input.js 1:22-1:23
 					}
 				]
+				superClass: JSReferenceIdentifier {
+					name: "a"
+					loc: SourceLocation esprima/invalid-syntax/migrated_0264/input.js 1:16-1:17 (a)
+				}
+				loc: SourceLocation esprima/invalid-syntax/migrated_0264/input.js 1:0-1:24
+			}
+			loc: SourceLocation esprima/invalid-syntax/migrated_0264/input.js 1:0-1:24
+		}
+	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {
+				advice: [
+					log {
+						category: "info"
+						text: [
+							RAW_MARKUP {value: "Expected the opening "}
+							"class body"
+							RAW_MARKUP {value: " character <emphasis>"}
+							"{"
+							RAW_MARKUP {value: "</emphasis>"}
+						]
+					}
+				]
+				category: ["parse"]
+				categoryValue: "js"
+				message: [RAW_MARKUP {value: "Unexpected character <emphasis>"}, "+", RAW_MARKUP {value: "</emphasis>"}]
+			}
+			location: {
+				language: "js"
+				path: UIDPath<esprima/invalid-syntax/migrated_0264/input.js>
+				end: Position 1:17
+				start: Position 1:18
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<esprima/invalid-syntax/migrated_0264/input.js>
+	loc: SourceLocation esprima/invalid-syntax/migrated_0264/input.js 1:0-2:0
 }
 ```
 

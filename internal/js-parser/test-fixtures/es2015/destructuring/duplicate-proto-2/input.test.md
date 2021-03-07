@@ -8,58 +8,14 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2015/destructuring/duplicate-proto-2/input.js 1:0-2:0
-	path: UIDPath<es2015/destructuring/duplicate-proto-2/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Redefinition of __proto__ property"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:27
-				path: UIDPath<es2015/destructuring/duplicate-proto-2/input.js>
-				start: Position 1:18
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation es2015/destructuring/duplicate-proto-2/input.js 1:0-1:42
 			expression: JSAssignmentExpression {
 				operator: "="
-				loc: SourceLocation es2015/destructuring/duplicate-proto-2/input.js 1:1-1:40
-				right: JSArrayExpression {
-					loc: SourceLocation es2015/destructuring/duplicate-proto-2/input.js 1:36-1:40
-					elements: Array [
-						JSObjectExpression {
-							properties: Array []
-							loc: SourceLocation es2015/destructuring/duplicate-proto-2/input.js 1:37-1:39
-						}
-					]
-				}
 				left: JSAssignmentArrayPattern {
-					rest: undefined
-					loc: SourceLocation es2015/destructuring/duplicate-proto-2/input.js 1:1-1:33
-					elements: Array [
+					elements: [
 						JSAssignmentObjectPattern {
-							rest: undefined
-							loc: SourceLocation es2015/destructuring/duplicate-proto-2/input.js 1:2-1:32
-							properties: Array [
+							properties: [
 								JSAssignmentObjectPatternProperty {
 									key: JSStaticPropertyKey {
 										value: JSIdentifier {
@@ -89,12 +45,50 @@ JSRoot {
 									loc: SourceLocation es2015/destructuring/duplicate-proto-2/input.js 1:18-1:30
 								}
 							]
+							loc: SourceLocation es2015/destructuring/duplicate-proto-2/input.js 1:2-1:32
 						}
 					]
+					loc: SourceLocation es2015/destructuring/duplicate-proto-2/input.js 1:1-1:33
 				}
+				right: JSArrayExpression {
+					elements: [
+						JSObjectExpression {
+							properties: []
+							loc: SourceLocation es2015/destructuring/duplicate-proto-2/input.js 1:37-1:39
+						}
+					]
+					loc: SourceLocation es2015/destructuring/duplicate-proto-2/input.js 1:36-1:40
+				}
+				loc: SourceLocation es2015/destructuring/duplicate-proto-2/input.js 1:1-1:40
+			}
+			loc: SourceLocation es2015/destructuring/duplicate-proto-2/input.js 1:0-1:42
+		}
+	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "Redefinition of __proto__ property"}
+			}
+			location: {
+				language: "js"
+				path: UIDPath<es2015/destructuring/duplicate-proto-2/input.js>
+				end: Position 1:27
+				start: Position 1:18
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2015/destructuring/duplicate-proto-2/input.js>
+	loc: SourceLocation es2015/destructuring/duplicate-proto-2/input.js 1:0-2:0
 }
 ```
 

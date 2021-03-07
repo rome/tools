@@ -37,7 +37,7 @@ import {
 	jsxExpressionContainer,
 	jsxIdentifier,
 } from "@internal/ast";
-import {Path, createVisitor, signals} from "@internal/compiler";
+import {CompilerPath, createVisitor, signals} from "@internal/compiler";
 import {
 	cleanJSXText,
 	inheritLoc,
@@ -47,7 +47,7 @@ import {
 import {descriptions} from "@internal/diagnostics";
 
 function convertJSXIdentifier(
-	path: Path,
+	path: CompilerPath,
 ):
 	| JSMemberExpression
 	| JSThisExpression

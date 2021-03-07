@@ -8,40 +8,37 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation esprima/expression-primary-array/migrated_0002/input.js 1:0-1:10
-	path: UIDPath<esprima/expression-primary-array/migrated_0002/input.js>
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation esprima/expression-primary-array/migrated_0002/input.js 1:0-1:10
 			expression: JSAssignmentExpression {
 				operator: "="
-				loc: SourceLocation esprima/expression-primary-array/migrated_0002/input.js 1:0-1:10
 				left: JSAssignmentIdentifier {
 					name: "x"
 					loc: SourceLocation esprima/expression-primary-array/migrated_0002/input.js 1:0-1:1 (x)
 				}
 				right: JSArrayExpression {
-					loc: SourceLocation esprima/expression-primary-array/migrated_0002/input.js 1:4-1:10
-					elements: Array [
+					elements: [
 						JSNumericLiteral {
 							value: 42
-							format: undefined
 							loc: SourceLocation esprima/expression-primary-array/migrated_0002/input.js 1:6-1:8
 						}
 					]
+					loc: SourceLocation esprima/expression-primary-array/migrated_0002/input.js 1:4-1:10
 				}
+				loc: SourceLocation esprima/expression-primary-array/migrated_0002/input.js 1:0-1:10
 			}
+			loc: SourceLocation esprima/expression-primary-array/migrated_0002/input.js 1:0-1:10
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<esprima/expression-primary-array/migrated_0002/input.js>
+	loc: SourceLocation esprima/expression-primary-array/migrated_0002/input.js 1:0-1:10
 }
 ```
 

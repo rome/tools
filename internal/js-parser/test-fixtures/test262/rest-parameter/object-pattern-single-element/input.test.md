@@ -8,47 +8,24 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation test262/rest-parameter/object-pattern-single-element/input.js 1:0-2:0
-	path: UIDPath<test262/rest-parameter/object-pattern-single-element/input.js>
-	body: Array [
+	body: [
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "singleElement"
 				loc: SourceLocation test262/rest-parameter/object-pattern-single-element/input.js 1:9-1:22 (singleElement)
 			}
-			loc: SourceLocation test262/rest-parameter/object-pattern-single-element/input.js 1:0-1:36
 			body: JSBlockStatement {
-				body: Array []
-				directives: Array []
+				body: []
+				directives: []
 				loc: SourceLocation test262/rest-parameter/object-pattern-single-element/input.js 1:34-1:36
 			}
 			head: JSFunctionHead {
 				async: false
 				generator: false
 				hasHoistedVars: false
-				params: Array []
-				returnType: undefined
-				thisType: undefined
-				typeParameters: undefined
-				loc: SourceLocation test262/rest-parameter/object-pattern-single-element/input.js 1:22-1:33
+				params: []
 				rest: JSBindingObjectPattern {
-					rest: undefined
-					loc: SourceLocation test262/rest-parameter/object-pattern-single-element/input.js 1:26-1:32
-					meta: JSPatternMeta {
-						optional: undefined
-						typeAnnotation: undefined
-						loc: SourceLocation test262/rest-parameter/object-pattern-single-element/input.js 1:26-1:32
-					}
-					properties: Array [
+					properties: [
 						JSBindingObjectPatternProperty {
 							key: JSStaticPropertyKey {
 								value: JSIdentifier {
@@ -64,10 +41,25 @@ JSRoot {
 							loc: SourceLocation test262/rest-parameter/object-pattern-single-element/input.js 1:27-1:31
 						}
 					]
+					meta: JSPatternMeta {
+						loc: SourceLocation test262/rest-parameter/object-pattern-single-element/input.js 1:26-1:32
+					}
+					loc: SourceLocation test262/rest-parameter/object-pattern-single-element/input.js 1:26-1:32
 				}
+				loc: SourceLocation test262/rest-parameter/object-pattern-single-element/input.js 1:22-1:33
 			}
+			loc: SourceLocation test262/rest-parameter/object-pattern-single-element/input.js 1:0-1:36
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<test262/rest-parameter/object-pattern-single-element/input.js>
+	loc: SourceLocation test262/rest-parameter/object-pattern-single-element/input.js 1:0-2:0
 }
 ```
 

@@ -8,60 +8,55 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2015/let/invalid-escape/input.js 1:0-2:0
-	path: UIDPath<es2015/let/invalid-escape/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Expected a semicolon or a line terminator"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:8
-				path: UIDPath<es2015/let/invalid-escape/input.js>
-				start: Position 1:9
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation es2015/let/invalid-escape/input.js 1:0-1:8
 			expression: JSReferenceIdentifier {
 				name: "let"
 				loc: SourceLocation es2015/let/invalid-escape/input.js 1:0-1:8 (let)
 			}
+			loc: SourceLocation es2015/let/invalid-escape/input.js 1:0-1:8
 		}
 		JSExpressionStatement {
-			loc: SourceLocation es2015/let/invalid-escape/input.js 1:9-1:14
 			expression: JSAssignmentExpression {
 				operator: "="
-				loc: SourceLocation es2015/let/invalid-escape/input.js 1:9-1:14
 				left: JSAssignmentIdentifier {
 					name: "x"
 					loc: SourceLocation es2015/let/invalid-escape/input.js 1:9-1:10 (x)
 				}
 				right: JSNumericLiteral {
 					value: 5
-					format: undefined
 					loc: SourceLocation es2015/let/invalid-escape/input.js 1:13-1:14
 				}
+				loc: SourceLocation es2015/let/invalid-escape/input.js 1:9-1:14
+			}
+			loc: SourceLocation es2015/let/invalid-escape/input.js 1:9-1:14
+		}
+	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "Expected a semicolon or a line terminator"}
+			}
+			location: {
+				language: "js"
+				path: UIDPath<es2015/let/invalid-escape/input.js>
+				end: Position 1:8
+				start: Position 1:9
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2015/let/invalid-escape/input.js>
+	loc: SourceLocation es2015/let/invalid-escape/input.js 1:0-2:0
 }
 ```
 

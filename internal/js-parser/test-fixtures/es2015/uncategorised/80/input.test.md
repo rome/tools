@@ -8,45 +8,39 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	syntax: Array []
-	loc: SourceLocation es2015/uncategorised/80/input.js 1:0-1:29
-	path: UIDPath<es2015/uncategorised/80/input.js>
-	body: Array [
+	body: [
 		JSExportDefaultDeclaration {
-			loc: SourceLocation es2015/uncategorised/80/input.js 1:0-1:29
 			declaration: JSFunctionDeclaration {
 				id: JSBindingIdentifier {
 					name: "*default*"
 					loc: SourceLocation es2015/uncategorised/80/input.js 1:15-1:29
 				}
-				loc: SourceLocation es2015/uncategorised/80/input.js 1:15-1:29
 				body: JSBlockStatement {
-					body: Array []
-					directives: Array []
+					body: []
+					directives: []
 					loc: SourceLocation es2015/uncategorised/80/input.js 1:27-1:29
 				}
 				head: JSFunctionHead {
 					async: false
 					generator: false
 					hasHoistedVars: false
-					params: Array []
-					rest: undefined
-					returnType: undefined
-					thisType: undefined
-					typeParameters: undefined
+					params: []
 					loc: SourceLocation es2015/uncategorised/80/input.js 1:24-1:26
 				}
+				loc: SourceLocation es2015/uncategorised/80/input.js 1:15-1:29
 			}
+			loc: SourceLocation es2015/uncategorised/80/input.js 1:0-1:29
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: []
+	path: UIDPath<es2015/uncategorised/80/input.js>
+	loc: SourceLocation es2015/uncategorised/80/input.js 1:0-1:29
 }
 ```
 

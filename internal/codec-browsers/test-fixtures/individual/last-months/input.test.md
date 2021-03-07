@@ -7,33 +7,19 @@
 ### `result`
 
 ```javascript
-Array [
-	"edge:88"
-	"firefox:85"
-	"chrome:88"
-	"opera:73"
-	"and_chr:88"
-	"and_ff:85"
-	"samsung:13"
-]
+["edge:88", "firefox:85", "chrome:88", "opera:73", "and_chr:88", "and_ff:85", "samsung:13"]
 ```
 
 ### `targets`
 
 ```javascript
-Array [
-	TargetBrowserLast {
-		browser: undefined
-		qty: 4
-		unit: "months"
-	}
-]
+[TargetBrowserLast {qty: 4, unit: "months"}]
 ```
 
 ### `tokens`
 
 ```javascript
-Array [
+[
 	Last {
 		end: ZeroIndexedNumber<4>
 		start: ZeroIndexedNumber<0>

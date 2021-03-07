@@ -8,51 +8,53 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation esprima/invalid-syntax/migrated_0255/input.js 1:0-2:0
-	path: UIDPath<esprima/invalid-syntax/migrated_0255/input.js>
-	body: Array [
+	body: [
 		JSBlockStatement {
-			directives: Array []
-			loc: SourceLocation esprima/invalid-syntax/migrated_0255/input.js 1:0-1:6
-			body: Array [
-				JSEmptyStatement {loc: SourceLocation esprima/invalid-syntax/migrated_0255/input.js 1:2-1:3}
-				JSEmptyStatement {loc: SourceLocation esprima/invalid-syntax/migrated_0255/input.js 1:5-1:6}
+			body: [
+				JSEmptyStatement {
+					loc: SourceLocation esprima/invalid-syntax/migrated_0255/input.js 1:2-1:3
+				}
+				JSEmptyStatement {
+					loc: SourceLocation esprima/invalid-syntax/migrated_0255/input.js 1:5-1:6
+				}
 			]
+			directives: []
+			loc: SourceLocation esprima/invalid-syntax/migrated_0255/input.js 1:0-1:6
 		}
 	]
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:0
-				path: UIDPath<esprima/invalid-syntax/migrated_0255/input.js>
-				start: Position 1:0
-			}
-			description: Object {
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Unclosed <emphasis>block</emphasis>"}
-				advice: Array [
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {
+				advice: [
 					log {
 						category: "info"
-						text: RAW_MARKUP {value: "We expected to find the closing character <emphasis>}</emphasis> here"}
+						text: [RAW_MARKUP {value: "We expected to find the closing character <emphasis>"}, "}", RAW_MARKUP {value: "</emphasis> here"}]
 					}
-					frame {location: SourceLocation esprima/invalid-syntax/migrated_0255/input.js 2:0-2:0}
+					frame {
+						location: SourceLocation esprima/invalid-syntax/migrated_0255/input.js 2:0-2:0
+					}
 				]
+				category: ["parse"]
+				categoryValue: "js"
+				message: [RAW_MARKUP {value: "Unclosed <emphasis>"}, "block", RAW_MARKUP {value: "</emphasis>"}]
+			}
+			location: {
+				language: "js"
+				path: UIDPath<esprima/invalid-syntax/migrated_0255/input.js>
+				end: Position 1:0
+				start: Position 1:0
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<esprima/invalid-syntax/migrated_0255/input.js>
+	loc: SourceLocation esprima/invalid-syntax/migrated_0255/input.js 1:0-2:0
 }
 ```
 

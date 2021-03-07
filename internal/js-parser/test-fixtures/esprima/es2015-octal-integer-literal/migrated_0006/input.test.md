@@ -8,56 +8,50 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation esprima/es2015-octal-integer-literal/migrated_0006/input.js 1:0-2:0
-	path: UIDPath<esprima/es2015-octal-integer-literal/migrated_0006/input.js>
-	body: Array [
+	body: [
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "test"
 				loc: SourceLocation esprima/es2015-octal-integer-literal/migrated_0006/input.js 1:9-1:13 (test)
 			}
-			loc: SourceLocation esprima/es2015-octal-integer-literal/migrated_0006/input.js 1:0-1:37
-			head: JSFunctionHead {
-				async: false
-				generator: false
-				hasHoistedVars: false
-				params: Array []
-				rest: undefined
-				returnType: undefined
-				thisType: undefined
-				typeParameters: undefined
-				loc: SourceLocation esprima/es2015-octal-integer-literal/migrated_0006/input.js 1:13-1:15
-			}
 			body: JSBlockStatement {
-				loc: SourceLocation esprima/es2015-octal-integer-literal/migrated_0006/input.js 1:16-1:37
-				directives: Array [
-					JSDirective {
-						value: "use strict"
-						loc: SourceLocation esprima/es2015-octal-integer-literal/migrated_0006/input.js 1:17-1:30
-					}
-				]
-				body: Array [
+				body: [
 					JSExpressionStatement {
-						loc: SourceLocation esprima/es2015-octal-integer-literal/migrated_0006/input.js 1:31-1:35
 						expression: JSNumericLiteral {
 							value: 0
 							format: "octal"
 							loc: SourceLocation esprima/es2015-octal-integer-literal/migrated_0006/input.js 1:31-1:34
 						}
+						loc: SourceLocation esprima/es2015-octal-integer-literal/migrated_0006/input.js 1:31-1:35
 					}
 				]
+				directives: [
+					JSDirective {
+						value: "use strict"
+						loc: SourceLocation esprima/es2015-octal-integer-literal/migrated_0006/input.js 1:17-1:30
+					}
+				]
+				loc: SourceLocation esprima/es2015-octal-integer-literal/migrated_0006/input.js 1:16-1:37
 			}
+			head: JSFunctionHead {
+				async: false
+				generator: false
+				hasHoistedVars: false
+				params: []
+				loc: SourceLocation esprima/es2015-octal-integer-literal/migrated_0006/input.js 1:13-1:15
+			}
+			loc: SourceLocation esprima/es2015-octal-integer-literal/migrated_0006/input.js 1:0-1:37
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<esprima/es2015-octal-integer-literal/migrated_0006/input.js>
+	loc: SourceLocation esprima/es2015-octal-integer-literal/migrated_0006/input.js 1:0-2:0
 }
 ```
 

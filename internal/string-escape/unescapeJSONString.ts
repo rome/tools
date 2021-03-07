@@ -9,7 +9,7 @@ import {isHexDigit} from "@internal/parser-core";
 import {DiagnosticDescription, descriptions} from "@internal/diagnostics";
 import {isEscaped} from "@internal/string-utils";
 import {readMarkup} from "@internal/markup";
-import {ZeroIndexed} from "@internal/math";
+import {ZeroIndexed} from "@internal/numbers";
 
 function unescapeChar(modifier: string): string {
 	switch (modifier) {

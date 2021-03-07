@@ -8,52 +8,48 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2015/uncategorised/199/input.js 1:0-1:4
-	path: UIDPath<es2015/uncategorised/199/input.js>
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation es2015/uncategorised/199/input.js 1:0-1:3
 			expression: JSNumericLiteral {
 				value: 1
 				format: "octal"
 				loc: SourceLocation es2015/uncategorised/199/input.js 1:0-1:3
 			}
+			loc: SourceLocation es2015/uncategorised/199/input.js 1:0-1:3
 		}
 		JSExpressionStatement {
-			loc: SourceLocation es2015/uncategorised/199/input.js 1:3-1:4
 			expression: JSReferenceIdentifier {
 				name: "a"
 				loc: SourceLocation es2015/uncategorised/199/input.js 1:3-1:4 (a)
 			}
+			loc: SourceLocation es2015/uncategorised/199/input.js 1:3-1:4
 		}
 	]
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {
+				advice: []
+				category: ["parse"]
 				categoryValue: "js"
-				category: Array ["parse"]
 				message: RAW_MARKUP {value: "Identifier directly after number"}
 			}
-			location: Object {
-				integrity: undefined
+			location: {
 				language: "js"
-				sourceText: undefined
-				end: Position 1:3
 				path: UIDPath<es2015/uncategorised/199/input.js>
+				end: Position 1:3
 				start: Position 1:3
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2015/uncategorised/199/input.js>
+	loc: SourceLocation es2015/uncategorised/199/input.js 1:0-1:4
 }
 ```
 

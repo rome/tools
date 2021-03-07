@@ -8,55 +8,48 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation esprima/es2015-yield/yield-yield-expression/input.js 1:0-2:0
-	path: UIDPath<esprima/es2015-yield/yield-yield-expression/input.js>
-	body: Array [
+	body: [
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "g"
 				loc: SourceLocation esprima/es2015-yield/yield-yield-expression/input.js 1:10-1:11 (g)
 			}
-			loc: SourceLocation esprima/es2015-yield/yield-yield-expression/input.js 1:0-1:29
+			body: JSBlockStatement {
+				body: [
+					JSExpressionStatement {
+						expression: JSYieldExpression {
+							delegate: false
+							argument: JSYieldExpression {
+								delegate: false
+								loc: SourceLocation esprima/es2015-yield/yield-yield-expression/input.js 1:22-1:27
+							}
+							loc: SourceLocation esprima/es2015-yield/yield-yield-expression/input.js 1:16-1:27
+						}
+						loc: SourceLocation esprima/es2015-yield/yield-yield-expression/input.js 1:16-1:27
+					}
+				]
+				directives: []
+				loc: SourceLocation esprima/es2015-yield/yield-yield-expression/input.js 1:14-1:29
+			}
 			head: JSFunctionHead {
 				async: false
 				generator: true
 				hasHoistedVars: false
-				params: Array []
-				rest: undefined
-				returnType: undefined
-				thisType: undefined
-				typeParameters: undefined
+				params: []
 				loc: SourceLocation esprima/es2015-yield/yield-yield-expression/input.js 1:11-1:13
 			}
-			body: JSBlockStatement {
-				directives: Array []
-				loc: SourceLocation esprima/es2015-yield/yield-yield-expression/input.js 1:14-1:29
-				body: Array [
-					JSExpressionStatement {
-						loc: SourceLocation esprima/es2015-yield/yield-yield-expression/input.js 1:16-1:27
-						expression: JSYieldExpression {
-							delegate: false
-							loc: SourceLocation esprima/es2015-yield/yield-yield-expression/input.js 1:16-1:27
-							argument: JSYieldExpression {
-								argument: undefined
-								delegate: false
-								loc: SourceLocation esprima/es2015-yield/yield-yield-expression/input.js 1:22-1:27
-							}
-						}
-					}
-				]
-			}
+			loc: SourceLocation esprima/es2015-yield/yield-yield-expression/input.js 1:0-1:29
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<esprima/es2015-yield/yield-yield-expression/input.js>
+	loc: SourceLocation esprima/es2015-yield/yield-yield-expression/input.js 1:0-2:0
 }
 ```
 

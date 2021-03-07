@@ -8,51 +8,46 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	loc: SourceLocation typescript/arrow-function/arrow-function-with-newline/input.ts 1:0-3:0
-	path: UIDPath<typescript/arrow-function/arrow-function-with-newline/input.ts>
-	syntax: Array ["ts"]
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation typescript/arrow-function/arrow-function-with-newline/input.ts 1:0-2:10
 			expression: JSArrowFunctionExpression {
-				loc: SourceLocation typescript/arrow-function/arrow-function-with-newline/input.ts 1:0-2:10
 				body: JSBlockStatement {
-					body: Array []
-					directives: Array []
+					body: []
+					directives: []
 					loc: SourceLocation typescript/arrow-function/arrow-function-with-newline/input.ts 2:7-2:10
 				}
 				head: JSFunctionHead {
 					async: true
 					hasHoistedVars: false
-					rest: undefined
-					thisType: undefined
-					loc: SourceLocation typescript/arrow-function/arrow-function-with-newline/input.ts 1:0-2:6
-					params: Array [
+					params: [
 						JSBindingIdentifier {
 							name: "f"
 							loc: SourceLocation typescript/arrow-function/arrow-function-with-newline/input.ts 1:7-1:8 (f)
 						}
 					]
 					returnType: TSTypeReference {
-						typeParameters: undefined
-						loc: SourceLocation typescript/arrow-function/arrow-function-with-newline/input.ts 2:2-2:3
 						typeName: JSReferenceIdentifier {
 							name: "t"
 							loc: SourceLocation typescript/arrow-function/arrow-function-with-newline/input.ts 2:2-2:3 (t)
 						}
+						loc: SourceLocation typescript/arrow-function/arrow-function-with-newline/input.ts 2:2-2:3
 					}
+					loc: SourceLocation typescript/arrow-function/arrow-function-with-newline/input.ts 1:0-2:6
 				}
+				loc: SourceLocation typescript/arrow-function/arrow-function-with-newline/input.ts 1:0-2:10
 			}
+			loc: SourceLocation typescript/arrow-function/arrow-function-with-newline/input.ts 1:0-2:10
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: ["ts"]
+	path: UIDPath<typescript/arrow-function/arrow-function-with-newline/input.ts>
+	loc: SourceLocation typescript/arrow-function/arrow-function-with-newline/input.ts 1:0-3:0
 }
 ```
 

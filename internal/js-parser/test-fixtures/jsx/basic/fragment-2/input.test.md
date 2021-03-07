@@ -8,31 +8,29 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	loc: SourceLocation jsx/basic/fragment-2/input.jsx 1:0-2:0
-	path: UIDPath<jsx/basic/fragment-2/input.jsx>
-	syntax: Array ["jsx"]
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation jsx/basic/fragment-2/input.jsx 1:0-1:22
 			expression: JSXFragment {
-				loc: SourceLocation jsx/basic/fragment-2/input.jsx 1:0-1:22
-				children: Array [
+				children: [
 					JSXText {
 						value: "Hi, I'm a string!"
 						loc: SourceLocation jsx/basic/fragment-2/input.jsx 1:2-1:19
 					}
 				]
+				loc: SourceLocation jsx/basic/fragment-2/input.jsx 1:0-1:22
 			}
+			loc: SourceLocation jsx/basic/fragment-2/input.jsx 1:0-1:22
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: ["jsx"]
+	path: UIDPath<jsx/basic/fragment-2/input.jsx>
+	loc: SourceLocation jsx/basic/fragment-2/input.jsx 1:0-2:0
 }
 ```
 

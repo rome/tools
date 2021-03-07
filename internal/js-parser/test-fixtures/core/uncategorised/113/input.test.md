@@ -8,25 +8,19 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation core/uncategorised/113/input.js 1:0-1:15
-	path: UIDPath<core/uncategorised/113/input.js>
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation core/uncategorised/113/input.js 1:0-1:15
 			expression: JSCallExpression {
-				arguments: Array []
-				loc: SourceLocation core/uncategorised/113/input.js 1:0-1:15
+				arguments: []
 				callee: JSMemberExpression {
-					loc: SourceLocation core/uncategorised/113/input.js 1:0-1:13
+					object: JSNewExpression {
+						arguments: []
+						callee: JSReferenceIdentifier {
+							name: "foo"
+							loc: SourceLocation core/uncategorised/113/input.js 1:4-1:7 (foo)
+						}
+						loc: SourceLocation core/uncategorised/113/input.js 1:0-1:9
+					}
 					property: JSStaticMemberProperty {
 						value: JSIdentifier {
 							name: "bar"
@@ -34,20 +28,22 @@ JSRoot {
 						}
 						loc: SourceLocation core/uncategorised/113/input.js 1:10-1:13 (bar)
 					}
-					object: JSNewExpression {
-						arguments: Array []
-						optional: undefined
-						typeArguments: undefined
-						loc: SourceLocation core/uncategorised/113/input.js 1:0-1:9
-						callee: JSReferenceIdentifier {
-							name: "foo"
-							loc: SourceLocation core/uncategorised/113/input.js 1:4-1:7 (foo)
-						}
-					}
+					loc: SourceLocation core/uncategorised/113/input.js 1:0-1:13
 				}
+				loc: SourceLocation core/uncategorised/113/input.js 1:0-1:15
 			}
+			loc: SourceLocation core/uncategorised/113/input.js 1:0-1:15
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<core/uncategorised/113/input.js>
+	loc: SourceLocation core/uncategorised/113/input.js 1:0-1:15
 }
 ```
 

@@ -6,33 +6,20 @@
 
 ```javascript
 CSSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	integrity: undefined
-	loc: SourceLocation selectors/input.css 1:0-39:1
-	path: RelativePath<selectors/input.css>
-	body: Array [
+	body: [
 		CSSRule {
-			loc: SourceLocation selectors/input.css 1:0-3:1
-			block: CSSBlock {
-				value: Array []
-				startingTokenValue: "{"
-				loc: SourceLocation selectors/input.css 1:37-3:1
-			}
-			prelude: Array [
+			prelude: [
 				CSSSelector {
-					loc: SourceLocation selectors/input.css 1:0-1:3
-					patterns: Array [
+					patterns: [
 						CSSTypeSelector {
 							value: "div"
 							loc: SourceLocation selectors/input.css 1:0-1:3
 						}
 					]
+					loc: SourceLocation selectors/input.css 1:0-1:3
 				}
 				CSSSelector {
-					loc: SourceLocation selectors/input.css 1:3-1:14
-					patterns: Array [
+					patterns: [
 						CSSTypeSelector {
 							value: "div"
 							loc: SourceLocation selectors/input.css 1:5-1:8
@@ -46,10 +33,10 @@ CSSRoot {
 							loc: SourceLocation selectors/input.css 1:11-1:14
 						}
 					]
+					loc: SourceLocation selectors/input.css 1:3-1:14
 				}
 				CSSSelector {
-					loc: SourceLocation selectors/input.css 1:14-1:25
-					patterns: Array [
+					patterns: [
 						CSSTypeSelector {
 							value: "div"
 							loc: SourceLocation selectors/input.css 1:16-1:19
@@ -63,10 +50,10 @@ CSSRoot {
 							loc: SourceLocation selectors/input.css 1:22-1:25
 						}
 					]
+					loc: SourceLocation selectors/input.css 1:14-1:25
 				}
 				CSSSelector {
-					loc: SourceLocation selectors/input.css 1:25-1:37
-					patterns: Array [
+					patterns: [
 						CSSTypeSelector {
 							value: "div"
 							loc: SourceLocation selectors/input.css 1:27-1:30
@@ -80,39 +67,39 @@ CSSRoot {
 							loc: SourceLocation selectors/input.css 1:33-1:36
 						}
 					]
+					loc: SourceLocation selectors/input.css 1:25-1:37
 				}
 			]
+			block: CSSBlock {
+				value: []
+				startingTokenValue: "{"
+				loc: SourceLocation selectors/input.css 1:37-3:1
+			}
+			loc: SourceLocation selectors/input.css 1:0-3:1
 		}
 		CSSRule {
-			loc: SourceLocation selectors/input.css 5:0-7:1
-			block: CSSBlock {
-				value: Array []
-				startingTokenValue: "{"
-				loc: SourceLocation selectors/input.css 5:22-7:1
-			}
-			prelude: Array [
+			prelude: [
 				CSSSelector {
-					loc: SourceLocation selectors/input.css 5:0-5:22
-					patterns: Array [
+					patterns: [
 						CSSClassSelector {
 							value: "escapedclassname"
 							loc: SourceLocation selectors/input.css 5:0-5:21
 						}
 					]
+					loc: SourceLocation selectors/input.css 5:0-5:22
 				}
 			]
+			block: CSSBlock {
+				value: []
+				startingTokenValue: "{"
+				loc: SourceLocation selectors/input.css 5:22-7:1
+			}
+			loc: SourceLocation selectors/input.css 5:0-7:1
 		}
 		CSSRule {
-			loc: SourceLocation selectors/input.css 9:0-11:1
-			block: CSSBlock {
-				value: Array []
-				startingTokenValue: "{"
-				loc: SourceLocation selectors/input.css 9:11-11:1
-			}
-			prelude: Array [
+			prelude: [
 				CSSSelector {
-					loc: SourceLocation selectors/input.css 9:0-9:11
-					patterns: Array [
+					patterns: [
 						CSSClassSelector {
 							value: "class"
 							loc: SourceLocation selectors/input.css 9:0-9:6
@@ -121,18 +108,44 @@ CSSRoot {
 							combinator: "nextSibling"
 							loc: SourceLocation selectors/input.css 9:7-9:9
 						}
-						CSSUniversalSelector {loc: SourceLocation selectors/input.css 9:9-9:10}
+						CSSUniversalSelector {
+							loc: SourceLocation selectors/input.css 9:9-9:10
+						}
 					]
+					loc: SourceLocation selectors/input.css 9:0-9:11
 				}
 			]
+			block: CSSBlock {
+				value: []
+				startingTokenValue: "{"
+				loc: SourceLocation selectors/input.css 9:11-11:1
+			}
+			loc: SourceLocation selectors/input.css 9:0-11:1
 		}
 		CSSRule {
-			loc: SourceLocation selectors/input.css 13:0-15:1
+			prelude: [
+				CSSSelector {
+					patterns: [
+						CSSTypeSelector {
+							value: "a"
+							loc: SourceLocation selectors/input.css 13:0-13:1
+						}
+						CSSAttributeSelector {
+							attribute: CSSIdentifier {
+								value: "title"
+								loc: SourceLocation selectors/input.css 13:2-13:7
+							}
+							loc: SourceLocation selectors/input.css 13:1-13:8
+						}
+					]
+					loc: SourceLocation selectors/input.css 13:0-13:9
+				}
+			]
 			block: CSSBlock {
-				value: Array [
+				value: [
 					CSSDeclaration {
 						name: "color"
-						value: Array [
+						value: [
 							CSSIdentifier {
 								value: "purple"
 								loc: SourceLocation selectors/input.css 14:9-14:15
@@ -145,35 +158,37 @@ CSSRoot {
 				startingTokenValue: "{"
 				loc: SourceLocation selectors/input.css 13:9-15:1
 			}
-			prelude: Array [
-				CSSSelector {
-					loc: SourceLocation selectors/input.css 13:0-13:9
-					patterns: Array [
-						CSSTypeSelector {
-							value: "a"
-							loc: SourceLocation selectors/input.css 13:0-13:1
-						}
-						CSSAttributeSelector {
-							value: undefined
-							matcher: undefined
-							modifier: undefined
-							loc: SourceLocation selectors/input.css 13:1-13:8
-							attribute: CSSIdentifier {
-								value: "title"
-								loc: SourceLocation selectors/input.css 13:2-13:7
-							}
-						}
-					]
-				}
-			]
+			loc: SourceLocation selectors/input.css 13:0-15:1
 		}
 		CSSRule {
-			loc: SourceLocation selectors/input.css 17:0-19:1
+			prelude: [
+				CSSSelector {
+					patterns: [
+						CSSTypeSelector {
+							value: "a"
+							loc: SourceLocation selectors/input.css 17:0-17:1
+						}
+						CSSAttributeSelector {
+							matcher: "="
+							value: CSSString {
+								value: "title"
+								loc: SourceLocation selectors/input.css 17:10-17:17
+							}
+							attribute: CSSIdentifier {
+								value: "title"
+								loc: SourceLocation selectors/input.css 17:2-17:7
+							}
+							loc: SourceLocation selectors/input.css 17:1-17:18
+						}
+					]
+					loc: SourceLocation selectors/input.css 17:0-17:19
+				}
+			]
 			block: CSSBlock {
-				value: Array [
+				value: [
 					CSSDeclaration {
 						name: "color"
-						value: Array [
+						value: [
 							CSSIdentifier {
 								value: "purple"
 								loc: SourceLocation selectors/input.css 18:9-18:15
@@ -186,38 +201,38 @@ CSSRoot {
 				startingTokenValue: "{"
 				loc: SourceLocation selectors/input.css 17:19-19:1
 			}
-			prelude: Array [
-				CSSSelector {
-					loc: SourceLocation selectors/input.css 17:0-17:19
-					patterns: Array [
-						CSSTypeSelector {
-							value: "a"
-							loc: SourceLocation selectors/input.css 17:0-17:1
-						}
-						CSSAttributeSelector {
-							value: CSSString {
-								value: "title"
-								loc: SourceLocation selectors/input.css 17:10-17:17
-							}
-							matcher: "="
-							modifier: undefined
-							loc: SourceLocation selectors/input.css 17:1-17:18
-							attribute: CSSIdentifier {
-								value: "title"
-								loc: SourceLocation selectors/input.css 17:2-17:7
-							}
-						}
-					]
-				}
-			]
+			loc: SourceLocation selectors/input.css 17:0-19:1
 		}
 		CSSRule {
-			loc: SourceLocation selectors/input.css 21:0-23:1
+			prelude: [
+				CSSSelector {
+					patterns: [
+						CSSTypeSelector {
+							value: "a"
+							loc: SourceLocation selectors/input.css 21:0-21:1
+						}
+						CSSAttributeSelector {
+							matcher: "~="
+							modifier: "i"
+							value: CSSString {
+								value: "title"
+								loc: SourceLocation selectors/input.css 21:9-21:16
+							}
+							attribute: CSSIdentifier {
+								value: "title"
+								loc: SourceLocation selectors/input.css 21:2-21:7
+							}
+							loc: SourceLocation selectors/input.css 21:1-21:19
+						}
+					]
+					loc: SourceLocation selectors/input.css 21:0-21:20
+				}
+			]
 			block: CSSBlock {
-				value: Array [
+				value: [
 					CSSDeclaration {
 						name: "color"
-						value: Array [
+						value: [
 							CSSIdentifier {
 								value: "purple"
 								loc: SourceLocation selectors/input.css 22:9-22:15
@@ -230,38 +245,50 @@ CSSRoot {
 				startingTokenValue: "{"
 				loc: SourceLocation selectors/input.css 21:20-23:1
 			}
-			prelude: Array [
-				CSSSelector {
-					loc: SourceLocation selectors/input.css 21:0-21:20
-					patterns: Array [
-						CSSTypeSelector {
-							value: "a"
-							loc: SourceLocation selectors/input.css 21:0-21:1
-						}
-						CSSAttributeSelector {
-							value: CSSString {
-								value: "title"
-								loc: SourceLocation selectors/input.css 21:9-21:16
-							}
-							matcher: "~="
-							modifier: "i"
-							loc: SourceLocation selectors/input.css 21:1-21:19
-							attribute: CSSIdentifier {
-								value: "title"
-								loc: SourceLocation selectors/input.css 21:2-21:7
-							}
-						}
-					]
-				}
-			]
+			loc: SourceLocation selectors/input.css 21:0-23:1
 		}
 		CSSRule {
-			loc: SourceLocation selectors/input.css 25:0-27:1
+			prelude: [
+				CSSSelector {
+					patterns: [
+						CSSTypeSelector {
+							value: "a"
+							loc: SourceLocation selectors/input.css 25:0-25:1
+						}
+						CSSAttributeSelector {
+							matcher: "="
+							value: CSSString {
+								value: "title"
+								loc: SourceLocation selectors/input.css 25:10-25:17
+							}
+							attribute: CSSIdentifier {
+								value: "title"
+								loc: SourceLocation selectors/input.css 25:2-25:7
+							}
+							loc: SourceLocation selectors/input.css 25:1-25:18
+						}
+						CSSAttributeSelector {
+							matcher: "*="
+							modifier: "s"
+							value: CSSString {
+								value: "image/*"
+								loc: SourceLocation selectors/input.css 25:25-25:34
+							}
+							attribute: CSSIdentifier {
+								value: "href"
+								loc: SourceLocation selectors/input.css 25:19-25:23
+							}
+							loc: SourceLocation selectors/input.css 25:18-25:37
+						}
+					]
+					loc: SourceLocation selectors/input.css 25:0-25:38
+				}
+			]
 			block: CSSBlock {
-				value: Array [
+				value: [
 					CSSDeclaration {
 						name: "color"
-						value: Array [
+						value: [
 							CSSIdentifier {
 								value: "purple"
 								loc: SourceLocation selectors/input.css 26:8-26:14
@@ -274,154 +301,127 @@ CSSRoot {
 				startingTokenValue: "{"
 				loc: SourceLocation selectors/input.css 25:38-27:1
 			}
-			prelude: Array [
-				CSSSelector {
-					loc: SourceLocation selectors/input.css 25:0-25:38
-					patterns: Array [
-						CSSTypeSelector {
-							value: "a"
-							loc: SourceLocation selectors/input.css 25:0-25:1
-						}
-						CSSAttributeSelector {
-							value: CSSString {
-								value: "title"
-								loc: SourceLocation selectors/input.css 25:10-25:17
-							}
-							matcher: "="
-							modifier: undefined
-							loc: SourceLocation selectors/input.css 25:1-25:18
-							attribute: CSSIdentifier {
-								value: "title"
-								loc: SourceLocation selectors/input.css 25:2-25:7
-							}
-						}
-						CSSAttributeSelector {
-							value: CSSString {
-								value: "image/*"
-								loc: SourceLocation selectors/input.css 25:25-25:34
-							}
-							matcher: "*="
-							modifier: "s"
-							loc: SourceLocation selectors/input.css 25:18-25:37
-							attribute: CSSIdentifier {
-								value: "href"
-								loc: SourceLocation selectors/input.css 25:19-25:23
-							}
-						}
-					]
-				}
-			]
+			loc: SourceLocation selectors/input.css 25:0-27:1
 		}
 		CSSRule {
-			loc: SourceLocation selectors/input.css 29:0-30:1
-			block: CSSBlock {
-				value: Array []
-				startingTokenValue: "{"
-				loc: SourceLocation selectors/input.css 29:22-30:1
-			}
-			prelude: Array [
+			prelude: [
 				CSSSelector {
-					loc: SourceLocation selectors/input.css 29:0-29:22
-					patterns: Array [
+					patterns: [
 						CSSTypeSelector {
 							value: "p"
 							loc: SourceLocation selectors/input.css 29:0-29:1
 						}
 						CSSPseudoClassSelector {
 							value: "nth-last-of-type"
-							loc: SourceLocation selectors/input.css 29:1-29:21
-							params: Array [
+							params: [
 								CSSNumber {
 									value: 2
 									raw: "2"
 									loc: SourceLocation selectors/input.css 29:19-29:20
 								}
 							]
+							loc: SourceLocation selectors/input.css 29:1-29:21
 						}
 					]
+					loc: SourceLocation selectors/input.css 29:0-29:22
 				}
 			]
+			block: CSSBlock {
+				value: []
+				startingTokenValue: "{"
+				loc: SourceLocation selectors/input.css 29:22-30:1
+			}
+			loc: SourceLocation selectors/input.css 29:0-30:1
 		}
 		CSSRule {
-			loc: SourceLocation selectors/input.css 32:0-33:1
-			block: CSSBlock {
-				value: Array []
-				startingTokenValue: "{"
-				loc: SourceLocation selectors/input.css 32:14-33:1
-			}
-			prelude: Array [
+			prelude: [
 				CSSSelector {
-					loc: SourceLocation selectors/input.css 32:0-32:14
-					patterns: Array [
+					patterns: [
 						CSSPseudoClassSelector {
 							value: "lang"
-							loc: SourceLocation selectors/input.css 32:0-32:13
-							params: Array [
+							params: [
 								CSSIdentifier {
 									value: "en"
 									loc: SourceLocation selectors/input.css 32:6-32:8
 								}
-								CSSComma {loc: SourceLocation selectors/input.css 32:8-32:9}
+								CSSComma {
+									loc: SourceLocation selectors/input.css 32:8-32:9
+								}
 								CSSIdentifier {
 									value: "ko"
 									loc: SourceLocation selectors/input.css 32:10-32:12
 								}
 							]
+							loc: SourceLocation selectors/input.css 32:0-32:13
 						}
 					]
+					loc: SourceLocation selectors/input.css 32:0-32:14
 				}
 			]
+			block: CSSBlock {
+				value: []
+				startingTokenValue: "{"
+				loc: SourceLocation selectors/input.css 32:14-33:1
+			}
+			loc: SourceLocation selectors/input.css 32:0-33:1
 		}
 		CSSRule {
-			loc: SourceLocation selectors/input.css 35:0-36:1
-			block: CSSBlock {
-				value: Array []
-				startingTokenValue: "{"
-				loc: SourceLocation selectors/input.css 35:16-36:1
-			}
-			prelude: Array [
+			prelude: [
 				CSSSelector {
-					loc: SourceLocation selectors/input.css 35:0-35:16
-					patterns: Array [
+					patterns: [
 						CSSPseudoElementSelector {
 							value: "pseudo-elem"
-							params: Array []
+							params: []
 							loc: SourceLocation selectors/input.css 35:0-35:15
 						}
 					]
+					loc: SourceLocation selectors/input.css 35:0-35:16
 				}
 			]
+			block: CSSBlock {
+				value: []
+				startingTokenValue: "{"
+				loc: SourceLocation selectors/input.css 35:16-36:1
+			}
+			loc: SourceLocation selectors/input.css 35:0-36:1
 		}
 		CSSRule {
-			loc: SourceLocation selectors/input.css 38:0-39:1
-			block: CSSBlock {
-				value: Array []
-				startingTokenValue: "{"
-				loc: SourceLocation selectors/input.css 38:20-39:1
-			}
-			prelude: Array [
+			prelude: [
 				CSSSelector {
-					loc: SourceLocation selectors/input.css 38:0-38:20
-					patterns: Array [
+					patterns: [
 						CSSPseudoElementSelector {
 							value: "pseudo-elem"
-							loc: SourceLocation selectors/input.css 38:0-38:19
-							params: Array [
+							params: [
 								CSSIdentifier {
 									value: "a"
 									loc: SourceLocation selectors/input.css 38:14-38:15
 								}
-								CSSComma {loc: SourceLocation selectors/input.css 38:15-38:16}
+								CSSComma {
+									loc: SourceLocation selectors/input.css 38:15-38:16
+								}
 								CSSIdentifier {
 									value: "b"
 									loc: SourceLocation selectors/input.css 38:17-38:18
 								}
 							]
+							loc: SourceLocation selectors/input.css 38:0-38:19
 						}
 					]
+					loc: SourceLocation selectors/input.css 38:0-38:20
 				}
 			]
+			block: CSSBlock {
+				value: []
+				startingTokenValue: "{"
+				loc: SourceLocation selectors/input.css 38:20-39:1
+			}
+			loc: SourceLocation selectors/input.css 38:0-39:1
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	path: RelativePath<selectors/input.css>
+	loc: SourceLocation selectors/input.css 1:0-39:1
 }
 ```

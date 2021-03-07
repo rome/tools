@@ -8,61 +8,57 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	loc: SourceLocation jsx/basic/namespace-tag/input.jsx 1:0-3:0
-	path: UIDPath<jsx/basic/namespace-tag/input.jsx>
-	syntax: Array ["jsx"]
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation jsx/basic/namespace-tag/input.jsx 1:0-1:12
 			expression: JSXElement {
+				attributes: []
+				children: []
+				selfClosing: true
 				name: JSXNamespacedName {
 					name: JSXIdentifier {
 						name: "Bar"
 						loc: SourceLocation jsx/basic/namespace-tag/input.jsx 1:5-1:8
 					}
-					loc: SourceLocation jsx/basic/namespace-tag/input.jsx 1:1-1:8
 					namespace: JSXIdentifier {
 						name: "Foo"
 						loc: SourceLocation jsx/basic/namespace-tag/input.jsx 1:1-1:4
 					}
+					loc: SourceLocation jsx/basic/namespace-tag/input.jsx 1:1-1:8
 				}
-				attributes: Array []
-				children: Array []
-				selfClosing: true
-				typeArguments: undefined
 				loc: SourceLocation jsx/basic/namespace-tag/input.jsx 1:0-1:11
 			}
+			loc: SourceLocation jsx/basic/namespace-tag/input.jsx 1:0-1:12
 		}
 		JSExpressionStatement {
-			loc: SourceLocation jsx/basic/namespace-tag/input.jsx 2:0-2:19
 			expression: JSXElement {
+				attributes: []
+				children: []
+				selfClosing: false
 				name: JSXNamespacedName {
 					name: JSXIdentifier {
 						name: "Bar"
 						loc: SourceLocation jsx/basic/namespace-tag/input.jsx 2:5-2:8
 					}
-					loc: SourceLocation jsx/basic/namespace-tag/input.jsx 2:1-2:8
 					namespace: JSXIdentifier {
 						name: "Foo"
 						loc: SourceLocation jsx/basic/namespace-tag/input.jsx 2:1-2:4
 					}
+					loc: SourceLocation jsx/basic/namespace-tag/input.jsx 2:1-2:8
 				}
-				attributes: Array []
-				children: Array []
-				selfClosing: false
-				typeArguments: undefined
 				loc: SourceLocation jsx/basic/namespace-tag/input.jsx 2:0-2:19
 			}
+			loc: SourceLocation jsx/basic/namespace-tag/input.jsx 2:0-2:19
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: ["jsx"]
+	path: UIDPath<jsx/basic/namespace-tag/input.jsx>
+	loc: SourceLocation jsx/basic/namespace-tag/input.jsx 1:0-3:0
 }
 ```
 

@@ -8,26 +8,24 @@
 
 ```javascript
 JSRoot {
-	body: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	trailingComments: Array []
-	innerComments: Array ["0"]
-	loc: SourceLocation jsx/basic/html-comment/input.jsx 1:0-2:0
-	path: UIDPath<jsx/basic/html-comment/input.jsx>
-	syntax: Array ["jsx"]
-	comments: Array [
+	body: []
+	comments: [
 		CommentLine {
 			id: "0"
 			value: "a"
 			loc: SourceLocation jsx/basic/html-comment/input.jsx 1:0-1:5
 		}
 	]
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	innerComments: ["0"]
+	sourceType: "script"
+	syntax: ["jsx"]
+	trailingComments: []
+	path: UIDPath<jsx/basic/html-comment/input.jsx>
+	loc: SourceLocation jsx/basic/html-comment/input.jsx 1:0-2:0
 }
 ```
 

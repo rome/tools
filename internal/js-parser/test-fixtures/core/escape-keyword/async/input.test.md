@@ -8,30 +8,28 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation core/escape-keyword/async/input.js 1:0-2:0
-	path: UIDPath<core/escape-keyword/async/input.js>
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation core/escape-keyword/async/input.js 1:0-1:15
 			expression: JSCallExpression {
-				arguments: Array []
-				loc: SourceLocation core/escape-keyword/async/input.js 1:1-1:14
+				arguments: []
 				callee: JSReferenceIdentifier {
 					name: "async"
 					loc: SourceLocation core/escape-keyword/async/input.js 1:1-1:11 (async)
 				}
+				loc: SourceLocation core/escape-keyword/async/input.js 1:1-1:14
 			}
+			loc: SourceLocation core/escape-keyword/async/input.js 1:0-1:15
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<core/escape-keyword/async/input.js>
+	loc: SourceLocation core/escape-keyword/async/input.js 1:0-2:0
 }
 ```
 

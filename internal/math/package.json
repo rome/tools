@@ -1,6 +1,0 @@
-{
-	"name": "@internal/math",
-	"private": true,
-	"type": "module",
-	"main": "index.ts"
-}

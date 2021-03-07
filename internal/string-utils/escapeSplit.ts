@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {ZeroIndexed} from "@internal/math";
+import {ZeroIndexed} from "@internal/numbers";
 import {isEscaped} from "./isEscaped";
 
 export function escapeSplit(input: string, splitChar: string): string[] {

@@ -8,52 +8,16 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2015/uncategorised/290/input.js 1:0-1:27
-	path: UIDPath<es2015/uncategorised/290/input.js>
-	directives: Array [
-		JSDirective {
-			value: "use strict"
-			loc: SourceLocation es2015/uncategorised/290/input.js 1:0-1:13
-		}
-	]
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Invalid escape sequence in template"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:23
-				path: UIDPath<es2015/uncategorised/290/input.js>
-				start: Position 1:23
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation es2015/uncategorised/290/input.js 1:14-1:27
 			expression: JSTemplateLiteral {
-				loc: SourceLocation es2015/uncategorised/290/input.js 1:14-1:26
-				expressions: Array [
+				expressions: [
 					JSReferenceIdentifier {
 						name: "test"
 						loc: SourceLocation es2015/uncategorised/290/input.js 1:17-1:21 (test)
 					}
 				]
-				quasis: Array [
+				quasis: [
 					JSTemplateElement {
 						cooked: ""
 						raw: ""
@@ -67,9 +31,41 @@ JSRoot {
 						loc: SourceLocation es2015/uncategorised/290/input.js 1:22-1:25
 					}
 				]
+				loc: SourceLocation es2015/uncategorised/290/input.js 1:14-1:26
+			}
+			loc: SourceLocation es2015/uncategorised/290/input.js 1:14-1:27
+		}
+	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "Invalid escape sequence in template"}
+			}
+			location: {
+				language: "js"
+				path: UIDPath<es2015/uncategorised/290/input.js>
+				end: Position 1:23
+				start: Position 1:23
 			}
 		}
 	]
+	directives: [
+		JSDirective {
+			value: "use strict"
+			loc: SourceLocation es2015/uncategorised/290/input.js 1:0-1:13
+		}
+	]
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2015/uncategorised/290/input.js>
+	loc: SourceLocation es2015/uncategorised/290/input.js 1:0-1:27
 }
 ```
 

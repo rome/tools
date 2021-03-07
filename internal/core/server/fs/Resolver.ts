@@ -17,15 +17,14 @@ import {FileReference} from "@internal/core";
 import resolverSuggest from "./resolverSuggest";
 import {
 	AbsoluteFilePath,
-	AnyPath,
+	Path,
 	RelativePath,
 	URLPath,
-	createPathFromSegments,
 	createRelativePath,
+	createRelativePathFromSegments,
 } from "@internal/path";
 import {DiagnosticAdvice, DiagnosticLocation} from "@internal/diagnostics";
 import {IMPLICIT_JS_EXTENSIONS} from "../../common/file-handlers/javascript";
-import {exists, writeFile} from "@internal/fs";
 import {MOCKS_DIRECTORY_NAME} from "@internal/core/common/constants";
 import {Consumer} from "@internal/consume";
 import {markup} from "@internal/markup";
@@ -33,6 +32,7 @@ import https = require("https");
 
 function request(
 	url: string,
+	query: ResolverRemoteQuery,
 ): Promise<
 	| ResolverQueryResponseFetchError
 	| {
@@ -47,7 +47,7 @@ function request(
 				if (res.statusCode !== 200) {
 					resolve({
 						type: "FETCH_ERROR",
-						source: undefined,
+						query,
 						advice: [
 							{
 								type: "log",
@@ -84,7 +84,7 @@ function request(
 			(err) => {
 				resolve({
 					type: "FETCH_ERROR",
-					source: undefined,
+					query,
 					advice: [
 						{
 							type: "log",
@@ -102,7 +102,8 @@ const NODE_MODULES = "node_modules";
 
 export interface ResolverRemoteQuery extends Omit<ResolverOptions, "origin"> {
 	origin: URLPath | AbsoluteFilePath;
-	source: AnyPath;
+	source: Path;
+	location?: DiagnosticLocation;
 	// Allows a resolution to stop at a directory or package boundary
 	requestedType?: "package" | "directory";
 	// Treat the source as a path (without being explicitly relative), and then a module/package if it fails to resolve
@@ -117,13 +118,6 @@ export interface ResolverLocalQuery extends Omit<ResolverRemoteQuery, "origin"> 
 export interface ResolverEntryQuery extends ResolverRemoteQuery {
 	allowPartial?: boolean;
 }
-
-export type ResolverQuerySource =
-	| undefined
-	| {
-			source?: string;
-			location?: DiagnosticLocation;
-		};
 
 type ResolverQueryResponseFoundType =
 	| "package"
@@ -143,30 +137,27 @@ export type ResolverQueryResponseFound = {
 
 export type ResolverQueryResponseMissing = {
 	type: "MISSING";
-	source: undefined | ResolverQuerySource;
+	// If `query` is `undefined` then it indicates we can try alternative locations
+	// This is never a ResolverRemoteQuery as we never have misses
+	query: undefined | ResolverLocalQuery;
 	advice?: undefined;
 };
 
 export type ResolverQueryResponseUnsupported = {
 	type: "UNSUPPORTED";
-	source: undefined | ResolverQuerySource;
-	advice: DiagnosticAdvice;
+	query: ResolverRemoteQuery;
+	advice: DiagnosticAdvice[];
 };
 
 export type ResolverQueryResponseFetchError = {
 	type: "FETCH_ERROR";
-	source: undefined | ResolverQuerySource;
-	advice: DiagnosticAdvice;
+	query: ResolverRemoteQuery;
+	advice: DiagnosticAdvice[];
 };
 
 type FilenameVariant = {
-	path: AnyPath;
+	path: Path;
 	types: ResolverQueryResponseFoundType[];
-};
-
-const QUERY_RESPONSE_MISSING: ResolverQueryResponseMissing = {
-	type: "MISSING",
-	source: undefined,
 };
 
 export type ResolverQueryResponseNotFound =
@@ -178,12 +169,13 @@ export type ResolverQueryResponse =
 	| ResolverQueryResponseFound
 	| ResolverQueryResponseNotFound;
 
-function shouldReturnQueryResponse(res: ResolverQueryResponse): boolean {
-	return res.type === "FOUND" || res.source !== undefined;
-}
+const QUERY_RESPONSE_MISSING: ResolverQueryResponseMissing = {
+	type: "MISSING",
+	query: undefined,
+};
 
-export function isPathLike(source: AnyPath): boolean {
-	return source.isAbsolute() || source.isExplicitRelative();
+function shouldReturnQueryResponse(res: ResolverQueryResponse): boolean {
+	return res.type === "FOUND" || res.query !== undefined;
 }
 
 function appendTypeQueryResponse(
@@ -215,7 +207,8 @@ type ExportAlias = {
 function attachExportAliasIfUnresolved(
 	res: ResolverQueryResponse,
 	alias: ExportAlias,
-) {
+	query: ResolverLocalQuery,
+): ResolverQueryResponse {
 	if (res.type === "FOUND") {
 		return res;
 	}
@@ -224,12 +217,10 @@ function attachExportAliasIfUnresolved(
 
 	return {
 		...res,
-		source: location === undefined
-			? undefined
-			: {
-					location,
-					source: alias.value.join(),
-				},
+		query: {
+			...query,
+			location,
+		},
 	};
 }
 
@@ -307,7 +298,7 @@ function getPreferredMainKey(
 	if (manifest.main !== undefined) {
 		return {
 			key: consumer.get("main"),
-			value: createRelativePath(manifest.main),
+			value: manifest.main,
 		};
 	}
 
@@ -340,7 +331,6 @@ export default class Resolver {
 
 	public async resolveEntryAssert(
 		query: ResolverEntryQuery,
-		querySource?: ResolverQuerySource,
 	): Promise<ResolverQueryResponseFound> {
 		const attempt = await this.maybeResolveEntryWithoutFileSystem(query);
 		if (attempt !== undefined) {
@@ -348,15 +338,14 @@ export default class Resolver {
 		}
 
 		await this.findProjectFromQuery(query);
-		return this.resolveAssert({...query, entry: true}, querySource);
+		return this.resolveAssert({...query, entry: true});
 	}
 
 	// I found myself wanting only `ref.path` a lot so this is just a helper method
 	public async resolveEntryAssertPath(
 		query: ResolverEntryQuery,
-		querySource?: ResolverQuerySource,
 	): Promise<AbsoluteFilePath> {
-		const res = await this.resolveEntryAssert(query, querySource);
+		const res = await this.resolveEntryAssert(query);
 		return res.path;
 	}
 
@@ -399,7 +388,7 @@ export default class Resolver {
 		}
 
 		// Found an exact match
-		if (await exists(absolute)) {
+		if ((await absolute.exists()) && (await absolute.lstat()).isFile()) {
 			const project = await projectManager.findProject(absolute, true);
 			if (project === undefined) {
 				return undefined;
@@ -413,7 +402,6 @@ export default class Resolver {
 
 	public async resolveAssert(
 		query: ResolverRemoteQuery,
-		origQuerySource?: ResolverQuerySource,
 	): Promise<ResolverQueryResponseFound> {
 		const resolved = await this.resolveRemote(query);
 		if (resolved.type === "FOUND") {
@@ -422,9 +410,8 @@ export default class Resolver {
 			throw resolverSuggest({
 				resolver: this,
 				server: this.server,
-				query,
+				rootQuery: query,
 				resolved,
-				origQuerySource,
 			});
 		}
 	}
@@ -439,8 +426,8 @@ export default class Resolver {
 			const protocol = sourceURL.getProtocol();
 
 			switch (protocol) {
-				case "http":
-				case "https": {
+				case "http:":
+				case "https:": {
 					let projectConfig = createDefaultProjectConfig();
 
 					if (origin.isAbsolute()) {
@@ -457,9 +444,9 @@ export default class Resolver {
 					);
 
 					if (!this.server.memoryFs.exists(remotePath)) {
-						const result = await request(source.join());
+						const result = await request(source.join(), query);
 						if (result.type === "DOWNLOADED") {
-							await writeFile(remotePath, result.content);
+							await remotePath.writeFile(result.content);
 						} else {
 							return result;
 						}
@@ -479,7 +466,7 @@ export default class Resolver {
 				default:
 					return {
 						type: "UNSUPPORTED",
-						source: undefined,
+						query,
 						advice: [
 							{
 								type: "log",
@@ -502,9 +489,17 @@ export default class Resolver {
 				// TODO add support for import maps
 				return {
 					type: "MISSING",
-					source: undefined,
+					query: undefined,
 				};
 			}
+		}
+
+		if (source.isDataURI()) {
+			// TODO
+		}
+
+		if (origin.isDataURI()) {
+			return QUERY_RESPONSE_MISSING;
 		}
 
 		return this.resolveLocal({
@@ -514,8 +509,8 @@ export default class Resolver {
 	}
 
 	public resolveLocal(query: ResolverLocalQuery): ResolverQueryResponse {
-		// Do some basic checks to determine if this is an absolute or relative path
-		if (isPathLike(query.source)) {
+		// Unambiguously a file path
+		if (query.source.isAbsolute() || query.source.isExplicitRelative()) {
 			return this.resolvePath(query);
 		}
 
@@ -532,7 +527,7 @@ export default class Resolver {
 
 	private *getFilenameVariants(
 		query: ResolverLocalQuery,
-		path: AnyPath,
+		path: Path,
 	): Iterable<FilenameVariant> {
 		const seen: Set<string> = new Set();
 		for (const variant of this._getFilenameVariants(query, path, [])) {
@@ -548,7 +543,7 @@ export default class Resolver {
 
 	private *_getFilenameVariants(
 		query: ResolverLocalQuery,
-		path: AnyPath,
+		path: Path,
 		callees: ResolverQueryResponseFoundType[],
 	): Iterable<FilenameVariant> {
 		const {platform} = query;
@@ -575,7 +570,7 @@ export default class Resolver {
 				for (const platform of platformAliases) {
 					yield* this._getFilenameVariants(
 						query,
-						path.addExtension(`.${platform}`, true),
+						path.changeExtension(`.${platform}`),
 						[...callees, "implicitPlatform"],
 					);
 				}
@@ -616,7 +611,7 @@ export default class Resolver {
 			type: "FOUND",
 			types,
 			ref: this.server.projectManager.getFileReference(path),
-			path,
+			path: this.server.memoryFs.coalescePath(path),
 		};
 	}
 
@@ -694,17 +689,15 @@ export default class Resolver {
 					query.platform,
 				);
 				if (main !== undefined) {
-					const resolved = this.resolvePath(
-						{
-							...query,
-							origin: resolvedOrigin,
-							source: main.value,
-						},
-						true,
-						["package"],
-					);
+					const mainQuery: ResolverLocalQuery = {
+						...query,
+						origin: resolvedOrigin,
+						source: main.value,
+					};
 
-					return attachExportAliasIfUnresolved(resolved, main);
+					const resolved = this.resolvePath(mainQuery, true, ["package"]);
+
+					return attachExportAliasIfUnresolved(resolved, main, mainQuery);
 				}
 			}
 
@@ -781,7 +774,7 @@ export default class Resolver {
 			if (manifestDef.manifest.exports !== true) {
 				const alias = getExportsAlias({
 					manifest: manifestDef.manifest,
-					relative: createPathFromSegments(moduleNameParts, "relative").assertRelative(),
+					relative: createRelativePathFromSegments(moduleNameParts),
 					platform: query.platform,
 				});
 
@@ -791,15 +784,12 @@ export default class Resolver {
 				}
 
 				// Alias found!
-				const resolved = this.resolvePath(
-					{
-						...query,
-						source: manifestDef.directory.append(alias.value),
-					},
-					true,
-					["package"],
-				);
-				return attachExportAliasIfUnresolved(resolved, alias);
+				const mainQuery = {
+					...query,
+					source: manifestDef.directory.append(alias.value),
+				};
+				const resolved = this.resolvePath(mainQuery, true, ["package"]);
+				return attachExportAliasIfUnresolved(resolved, alias, mainQuery);
 			}
 		}
 
@@ -817,7 +807,7 @@ export default class Resolver {
 	private resolveMock(
 		query: ResolverLocalQuery,
 		project: ProjectDefinition | undefined,
-		parentDirectories: AbsoluteFilePath[],
+		parentDirectories: Iterable<AbsoluteFilePath>,
 	): ResolverQueryResponse {
 		if (project === undefined) {
 			return QUERY_RESPONSE_MISSING;
@@ -847,7 +837,7 @@ export default class Resolver {
 	}
 
 	// Given a reference to a module, extract the module name and any trailing relative paths
-	private splitModuleName(path: AnyPath): [string, string[]] {
+	private splitModuleName(path: Path): [string, string[]] {
 		// fetch the first part of the path as that's the module name
 		// possible values of `moduleNameFull` could be `react` or `react/lib/whatever`
 		const [moduleName, ...moduleNameParts] = path.getSegments();

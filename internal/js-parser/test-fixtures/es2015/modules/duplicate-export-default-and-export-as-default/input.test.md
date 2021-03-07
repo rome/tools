@@ -8,76 +8,36 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	syntax: Array []
-	loc: SourceLocation es2015/modules/duplicate-export-default-and-export-as-default/input.js 1:0-3:0
-	path: UIDPath<es2015/modules/duplicate-export-default-and-export-as-default/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 2:23
-				path: UIDPath<es2015/modules/duplicate-export-default-and-export-as-default/input.js>
-				start: Position 2:9
-			}
-			description: Object {
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Only one default export allowed per module."}
-				advice: Array [
-					log {
-						category: "info"
-						text: RAW_MARKUP {value: "Defined already here"}
-					}
-					frame {location: SourceLocation es2015/modules/duplicate-export-default-and-export-as-default/input.js 1:15-1:28}
-				]
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSExportDefaultDeclaration {
-			loc: SourceLocation es2015/modules/duplicate-export-default-and-export-as-default/input.js 1:0-1:28
 			declaration: JSFunctionDeclaration {
 				id: JSBindingIdentifier {
 					name: "*default*"
 					loc: SourceLocation es2015/modules/duplicate-export-default-and-export-as-default/input.js 1:15-1:28
 				}
-				loc: SourceLocation es2015/modules/duplicate-export-default-and-export-as-default/input.js 1:15-1:28
 				body: JSBlockStatement {
-					body: Array []
-					directives: Array []
+					body: []
+					directives: []
 					loc: SourceLocation es2015/modules/duplicate-export-default-and-export-as-default/input.js 1:26-1:28
 				}
 				head: JSFunctionHead {
 					async: false
 					generator: false
 					hasHoistedVars: false
-					params: Array []
-					rest: undefined
-					returnType: undefined
-					thisType: undefined
-					typeParameters: undefined
+					params: []
 					loc: SourceLocation es2015/modules/duplicate-export-default-and-export-as-default/input.js 1:23-1:25
 				}
+				loc: SourceLocation es2015/modules/duplicate-export-default-and-export-as-default/input.js 1:15-1:28
 			}
+			loc: SourceLocation es2015/modules/duplicate-export-default-and-export-as-default/input.js 1:0-1:28
 		}
-		JSEmptyStatement {loc: SourceLocation es2015/modules/duplicate-export-default-and-export-as-default/input.js 1:28-1:29}
+		JSEmptyStatement {
+			loc: SourceLocation es2015/modules/duplicate-export-default-and-export-as-default/input.js 1:28-1:29
+		}
 		JSExportLocalDeclaration {
-			declaration: undefined
 			exportKind: "value"
-			loc: SourceLocation es2015/modules/duplicate-export-default-and-export-as-default/input.js 2:0-2:26
-			specifiers: Array [
+			specifiers: [
 				JSExportLocalSpecifier {
-					loc: SourceLocation es2015/modules/duplicate-export-default-and-export-as-default/input.js 2:9-2:23
 					exported: JSIdentifier {
 						name: "default"
 						loc: SourceLocation es2015/modules/duplicate-export-default-and-export-as-default/input.js 2:16-2:23 (default)
@@ -86,10 +46,45 @@ JSRoot {
 						name: "foo"
 						loc: SourceLocation es2015/modules/duplicate-export-default-and-export-as-default/input.js 2:9-2:12 (foo)
 					}
+					loc: SourceLocation es2015/modules/duplicate-export-default-and-export-as-default/input.js 2:9-2:23
 				}
 			]
+			loc: SourceLocation es2015/modules/duplicate-export-default-and-export-as-default/input.js 2:0-2:26
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {
+				advice: [
+					log {
+						category: "info"
+						text: RAW_MARKUP {value: "Defined already here"}
+					}
+					frame {
+						location: SourceLocation es2015/modules/duplicate-export-default-and-export-as-default/input.js 1:15-1:28
+					}
+				]
+				category: ["parse"]
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "Only one default export allowed per module."}
+			}
+			location: {
+				language: "js"
+				path: UIDPath<es2015/modules/duplicate-export-default-and-export-as-default/input.js>
+				end: Position 2:23
+				start: Position 2:9
+			}
+		}
+	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: []
+	path: UIDPath<es2015/modules/duplicate-export-default-and-export-as-default/input.js>
+	loc: SourceLocation es2015/modules/duplicate-export-default-and-export-as-default/input.js 1:0-3:0
 }
 ```
 

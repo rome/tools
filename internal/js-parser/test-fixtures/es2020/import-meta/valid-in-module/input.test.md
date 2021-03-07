@@ -8,32 +8,17 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	syntax: Array []
-	loc: SourceLocation es2020/import-meta/valid-in-module/input.js 1:0-6:0
-	path: UIDPath<es2020/import-meta/valid-in-module/input.js>
-	body: Array [
+	body: [
 		JSVariableDeclarationStatement {
-			loc: SourceLocation es2020/import-meta/valid-in-module/input.js 1:0-1:22
 			declaration: JSVariableDeclaration {
 				kind: "const"
-				loc: SourceLocation es2020/import-meta/valid-in-module/input.js 1:0-1:22
-				declarations: Array [
+				declarations: [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "x"
 							loc: SourceLocation es2020/import-meta/valid-in-module/input.js 1:6-1:7 (x)
 						}
-						loc: SourceLocation es2020/import-meta/valid-in-module/input.js 1:6-1:21
 						init: JSMetaProperty {
-							loc: SourceLocation es2020/import-meta/valid-in-module/input.js 1:10-1:21
 							meta: JSIdentifier {
 								name: "import"
 								loc: SourceLocation es2020/import-meta/valid-in-module/input.js 1:10-1:16 (import)
@@ -42,34 +27,26 @@ JSRoot {
 								name: "meta"
 								loc: SourceLocation es2020/import-meta/valid-in-module/input.js 1:17-1:21 (meta)
 							}
+							loc: SourceLocation es2020/import-meta/valid-in-module/input.js 1:10-1:21
 						}
+						loc: SourceLocation es2020/import-meta/valid-in-module/input.js 1:6-1:21
 					}
 				]
+				loc: SourceLocation es2020/import-meta/valid-in-module/input.js 1:0-1:22
 			}
+			loc: SourceLocation es2020/import-meta/valid-in-module/input.js 1:0-1:22
 		}
 		JSVariableDeclarationStatement {
-			loc: SourceLocation es2020/import-meta/valid-in-module/input.js 2:0-2:28
 			declaration: JSVariableDeclaration {
 				kind: "const"
-				loc: SourceLocation es2020/import-meta/valid-in-module/input.js 2:0-2:28
-				declarations: Array [
+				declarations: [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "url"
 							loc: SourceLocation es2020/import-meta/valid-in-module/input.js 2:6-2:9 (url)
 						}
-						loc: SourceLocation es2020/import-meta/valid-in-module/input.js 2:6-2:27
 						init: JSMemberExpression {
-							loc: SourceLocation es2020/import-meta/valid-in-module/input.js 2:12-2:27
-							property: JSStaticMemberProperty {
-								value: JSIdentifier {
-									name: "url"
-									loc: SourceLocation es2020/import-meta/valid-in-module/input.js 2:24-2:27 (url)
-								}
-								loc: SourceLocation es2020/import-meta/valid-in-module/input.js 2:24-2:27 (url)
-							}
 							object: JSMetaProperty {
-								loc: SourceLocation es2020/import-meta/valid-in-module/input.js 2:12-2:23
 								meta: JSIdentifier {
 									name: "import"
 									loc: SourceLocation es2020/import-meta/valid-in-module/input.js 2:12-2:18 (import)
@@ -78,16 +55,26 @@ JSRoot {
 									name: "meta"
 									loc: SourceLocation es2020/import-meta/valid-in-module/input.js 2:19-2:23 (meta)
 								}
+								loc: SourceLocation es2020/import-meta/valid-in-module/input.js 2:12-2:23
 							}
+							property: JSStaticMemberProperty {
+								value: JSIdentifier {
+									name: "url"
+									loc: SourceLocation es2020/import-meta/valid-in-module/input.js 2:24-2:27 (url)
+								}
+								loc: SourceLocation es2020/import-meta/valid-in-module/input.js 2:24-2:27 (url)
+							}
+							loc: SourceLocation es2020/import-meta/valid-in-module/input.js 2:12-2:27
 						}
+						loc: SourceLocation es2020/import-meta/valid-in-module/input.js 2:6-2:27
 					}
 				]
+				loc: SourceLocation es2020/import-meta/valid-in-module/input.js 2:0-2:28
 			}
+			loc: SourceLocation es2020/import-meta/valid-in-module/input.js 2:0-2:28
 		}
 		JSExpressionStatement {
-			loc: SourceLocation es2020/import-meta/valid-in-module/input.js 3:0-3:12
 			expression: JSMetaProperty {
-				loc: SourceLocation es2020/import-meta/valid-in-module/input.js 3:0-3:11
 				meta: JSIdentifier {
 					name: "import"
 					loc: SourceLocation es2020/import-meta/valid-in-module/input.js 3:0-3:6 (import)
@@ -96,21 +83,13 @@ JSRoot {
 					name: "meta"
 					loc: SourceLocation es2020/import-meta/valid-in-module/input.js 3:7-3:11 (meta)
 				}
+				loc: SourceLocation es2020/import-meta/valid-in-module/input.js 3:0-3:11
 			}
+			loc: SourceLocation es2020/import-meta/valid-in-module/input.js 3:0-3:12
 		}
 		JSExpressionStatement {
-			loc: SourceLocation es2020/import-meta/valid-in-module/input.js 4:0-4:16
 			expression: JSMemberExpression {
-				loc: SourceLocation es2020/import-meta/valid-in-module/input.js 4:0-4:15
-				property: JSStaticMemberProperty {
-					value: JSIdentifier {
-						name: "url"
-						loc: SourceLocation es2020/import-meta/valid-in-module/input.js 4:12-4:15 (url)
-					}
-					loc: SourceLocation es2020/import-meta/valid-in-module/input.js 4:12-4:15 (url)
-				}
 				object: JSMetaProperty {
-					loc: SourceLocation es2020/import-meta/valid-in-module/input.js 4:0-4:11
 					meta: JSIdentifier {
 						name: "import"
 						loc: SourceLocation es2020/import-meta/valid-in-module/input.js 4:0-4:6 (import)
@@ -119,29 +98,24 @@ JSRoot {
 						name: "meta"
 						loc: SourceLocation es2020/import-meta/valid-in-module/input.js 4:7-4:11 (meta)
 					}
+					loc: SourceLocation es2020/import-meta/valid-in-module/input.js 4:0-4:11
 				}
+				property: JSStaticMemberProperty {
+					value: JSIdentifier {
+						name: "url"
+						loc: SourceLocation es2020/import-meta/valid-in-module/input.js 4:12-4:15 (url)
+					}
+					loc: SourceLocation es2020/import-meta/valid-in-module/input.js 4:12-4:15 (url)
+				}
+				loc: SourceLocation es2020/import-meta/valid-in-module/input.js 4:0-4:15
 			}
+			loc: SourceLocation es2020/import-meta/valid-in-module/input.js 4:0-4:16
 		}
 		JSExpressionStatement {
-			loc: SourceLocation es2020/import-meta/valid-in-module/input.js 5:0-5:34
 			expression: JSAssignmentExpression {
 				operator: "="
-				loc: SourceLocation es2020/import-meta/valid-in-module/input.js 5:0-5:33
-				right: JSBooleanLiteral {
-					value: true
-					loc: SourceLocation es2020/import-meta/valid-in-module/input.js 5:29-5:33
-				}
 				left: JSMemberExpression {
-					loc: SourceLocation es2020/import-meta/valid-in-module/input.js 5:0-5:26
-					property: JSStaticMemberProperty {
-						value: JSIdentifier {
-							name: "couldBeMutable"
-							loc: SourceLocation es2020/import-meta/valid-in-module/input.js 5:12-5:26 (couldBeMutable)
-						}
-						loc: SourceLocation es2020/import-meta/valid-in-module/input.js 5:12-5:26 (couldBeMutable)
-					}
 					object: JSMetaProperty {
-						loc: SourceLocation es2020/import-meta/valid-in-module/input.js 5:0-5:11
 						meta: JSIdentifier {
 							name: "import"
 							loc: SourceLocation es2020/import-meta/valid-in-module/input.js 5:0-5:6 (import)
@@ -150,11 +124,35 @@ JSRoot {
 							name: "meta"
 							loc: SourceLocation es2020/import-meta/valid-in-module/input.js 5:7-5:11 (meta)
 						}
+						loc: SourceLocation es2020/import-meta/valid-in-module/input.js 5:0-5:11
 					}
+					property: JSStaticMemberProperty {
+						value: JSIdentifier {
+							name: "couldBeMutable"
+							loc: SourceLocation es2020/import-meta/valid-in-module/input.js 5:12-5:26 (couldBeMutable)
+						}
+						loc: SourceLocation es2020/import-meta/valid-in-module/input.js 5:12-5:26 (couldBeMutable)
+					}
+					loc: SourceLocation es2020/import-meta/valid-in-module/input.js 5:0-5:26
 				}
+				right: JSBooleanLiteral {
+					value: true
+					loc: SourceLocation es2020/import-meta/valid-in-module/input.js 5:29-5:33
+				}
+				loc: SourceLocation es2020/import-meta/valid-in-module/input.js 5:0-5:33
 			}
+			loc: SourceLocation es2020/import-meta/valid-in-module/input.js 5:0-5:34
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: []
+	path: UIDPath<es2020/import-meta/valid-in-module/input.js>
+	loc: SourceLocation es2020/import-meta/valid-in-module/input.js 1:0-6:0
 }
 ```
 

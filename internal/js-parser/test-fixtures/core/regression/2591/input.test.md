@@ -8,58 +8,31 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation core/regression/2591/input.js 1:0-5:0
-	path: UIDPath<core/regression/2591/input.js>
-	body: Array [
+	body: [
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "x"
 				loc: SourceLocation core/regression/2591/input.js 1:9-1:10 (x)
 			}
-			loc: SourceLocation core/regression/2591/input.js 1:0-4:1
-			head: JSFunctionHead {
-				async: false
-				generator: false
-				hasHoistedVars: false
-				params: Array []
-				rest: undefined
-				returnType: undefined
-				thisType: undefined
-				typeParameters: undefined
-				loc: SourceLocation core/regression/2591/input.js 1:10-1:12
-			}
 			body: JSBlockStatement {
-				directives: Array []
-				loc: SourceLocation core/regression/2591/input.js 1:13-4:1
-				body: Array [
+				body: [
 					JSVariableDeclarationStatement {
-						loc: SourceLocation core/regression/2591/input.js 2:2-2:7
 						declaration: JSVariableDeclaration {
 							kind: "let"
-							loc: SourceLocation core/regression/2591/input.js 2:2-2:7
-							declarations: Array [
+							declarations: [
 								JSVariableDeclarator {
 									id: JSBindingIdentifier {
 										name: "x"
 										loc: SourceLocation core/regression/2591/input.js 2:6-2:7 (x)
 									}
-									init: undefined
 									loc: SourceLocation core/regression/2591/input.js 2:6-2:7
 								}
 							]
+							loc: SourceLocation core/regression/2591/input.js 2:2-2:7
 						}
+						loc: SourceLocation core/regression/2591/input.js 2:2-2:7
 					}
 					JSExpressionStatement {
-						loc: SourceLocation core/regression/2591/input.js 3:2-3:8
 						expression: JSRegExpLiteral {
 							global: false
 							insensitive: false
@@ -67,10 +40,8 @@ JSRoot {
 							noDotNewline: false
 							sticky: false
 							unicode: false
-							loc: SourceLocation core/regression/2591/input.js 3:2-3:7
 							expression: JSRegExpSubExpression {
-								loc: SourceLocation core/regression/2591/input.js 3:3-3:6
-								body: Array [
+								body: [
 									JSRegExpCharacter {
 										value: "w"
 										loc: SourceLocation core/regression/2591/input.js 3:3-3:4
@@ -84,13 +55,35 @@ JSRoot {
 										loc: SourceLocation core/regression/2591/input.js 3:5-3:6
 									}
 								]
+								loc: SourceLocation core/regression/2591/input.js 3:3-3:6
 							}
+							loc: SourceLocation core/regression/2591/input.js 3:2-3:7
 						}
+						loc: SourceLocation core/regression/2591/input.js 3:2-3:8
 					}
 				]
+				directives: []
+				loc: SourceLocation core/regression/2591/input.js 1:13-4:1
 			}
+			head: JSFunctionHead {
+				async: false
+				generator: false
+				hasHoistedVars: false
+				params: []
+				loc: SourceLocation core/regression/2591/input.js 1:10-1:12
+			}
+			loc: SourceLocation core/regression/2591/input.js 1:0-4:1
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<core/regression/2591/input.js>
+	loc: SourceLocation core/regression/2591/input.js 1:0-5:0
 }
 ```
 

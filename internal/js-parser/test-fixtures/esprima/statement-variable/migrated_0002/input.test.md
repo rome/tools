@@ -8,40 +8,37 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: true
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation esprima/statement-variable/migrated_0002/input.js 1:0-2:0
-	path: UIDPath<esprima/statement-variable/migrated_0002/input.js>
-	body: Array [
+	body: [
 		JSVariableDeclarationStatement {
-			loc: SourceLocation esprima/statement-variable/migrated_0002/input.js 1:0-1:10
 			declaration: JSVariableDeclaration {
 				kind: "var"
-				loc: SourceLocation esprima/statement-variable/migrated_0002/input.js 1:0-1:10
-				declarations: Array [
+				declarations: [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "x"
 							loc: SourceLocation esprima/statement-variable/migrated_0002/input.js 1:4-1:5 (x)
 						}
-						loc: SourceLocation esprima/statement-variable/migrated_0002/input.js 1:4-1:10
 						init: JSNumericLiteral {
 							value: 42
-							format: undefined
 							loc: SourceLocation esprima/statement-variable/migrated_0002/input.js 1:8-1:10
 						}
+						loc: SourceLocation esprima/statement-variable/migrated_0002/input.js 1:4-1:10
 					}
 				]
+				loc: SourceLocation esprima/statement-variable/migrated_0002/input.js 1:0-1:10
 			}
+			loc: SourceLocation esprima/statement-variable/migrated_0002/input.js 1:0-1:10
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: true
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<esprima/statement-variable/migrated_0002/input.js>
+	loc: SourceLocation esprima/statement-variable/migrated_0002/input.js 1:0-2:0
 }
 ```
 

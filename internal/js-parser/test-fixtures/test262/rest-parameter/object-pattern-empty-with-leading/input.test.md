@@ -8,61 +8,51 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation test262/rest-parameter/object-pattern-empty-with-leading/input.js 1:0-2:0
-	path: UIDPath<test262/rest-parameter/object-pattern-empty-with-leading/input.js>
-	body: Array [
+	body: [
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "emptyWithLeading"
 				loc: SourceLocation test262/rest-parameter/object-pattern-empty-with-leading/input.js 1:9-1:25 (emptyWithLeading)
 			}
-			loc: SourceLocation test262/rest-parameter/object-pattern-empty-with-leading/input.js 1:0-1:38
 			body: JSBlockStatement {
-				body: Array []
-				directives: Array []
+				body: []
+				directives: []
 				loc: SourceLocation test262/rest-parameter/object-pattern-empty-with-leading/input.js 1:36-1:38
 			}
 			head: JSFunctionHead {
 				async: false
 				generator: false
 				hasHoistedVars: false
-				returnType: undefined
-				thisType: undefined
-				typeParameters: undefined
-				loc: SourceLocation test262/rest-parameter/object-pattern-empty-with-leading/input.js 1:25-1:35
-				rest: JSBindingObjectPattern {
-					properties: Array []
-					rest: undefined
-					loc: SourceLocation test262/rest-parameter/object-pattern-empty-with-leading/input.js 1:32-1:34
-					meta: JSPatternMeta {
-						optional: undefined
-						typeAnnotation: undefined
-						loc: SourceLocation test262/rest-parameter/object-pattern-empty-with-leading/input.js 1:32-1:34
-					}
-				}
-				params: Array [
+				params: [
 					JSBindingIdentifier {
 						name: "x"
-						loc: SourceLocation test262/rest-parameter/object-pattern-empty-with-leading/input.js 1:26-1:27 (x)
 						meta: JSPatternMeta {
-							optional: undefined
-							typeAnnotation: undefined
 							loc: SourceLocation test262/rest-parameter/object-pattern-empty-with-leading/input.js 1:26-1:27
 						}
+						loc: SourceLocation test262/rest-parameter/object-pattern-empty-with-leading/input.js 1:26-1:27 (x)
 					}
 				]
+				rest: JSBindingObjectPattern {
+					properties: []
+					meta: JSPatternMeta {
+						loc: SourceLocation test262/rest-parameter/object-pattern-empty-with-leading/input.js 1:32-1:34
+					}
+					loc: SourceLocation test262/rest-parameter/object-pattern-empty-with-leading/input.js 1:32-1:34
+				}
+				loc: SourceLocation test262/rest-parameter/object-pattern-empty-with-leading/input.js 1:25-1:35
 			}
+			loc: SourceLocation test262/rest-parameter/object-pattern-empty-with-leading/input.js 1:0-1:38
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<test262/rest-parameter/object-pattern-empty-with-leading/input.js>
+	loc: SourceLocation test262/rest-parameter/object-pattern-empty-with-leading/input.js 1:0-2:0
 }
 ```
 

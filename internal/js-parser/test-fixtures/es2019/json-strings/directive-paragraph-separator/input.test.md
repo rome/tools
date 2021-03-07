@@ -8,30 +8,28 @@
 
 ```javascript
 JSRoot {
-	body: Array []
-	corrupt: false
-	diagnostics: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2019/json-strings/directive-paragraph-separator/input.js 1:0-4:0
-	path: UIDPath<es2019/json-strings/directive-paragraph-separator/input.js>
-	comments: Array [
+	body: []
+	comments: [
 		CommentLine {
 			id: "0"
 			value: "     ^ That's a U+2029 PARAGRAPH SEPARATOR UTF-16 char (between 'before' and 'after')"
 			loc: SourceLocation es2019/json-strings/directive-paragraph-separator/input.js 3:0-3:87
 		}
 	]
-	directives: Array [
+	corrupt: false
+	diagnostics: []
+	directives: [
 		JSDirective {
 			value: "before\u2029after"
+			trailingComments: ["0"]
 			loc: SourceLocation es2019/json-strings/directive-paragraph-separator/input.js 1:0-2:15
-			trailingComments: Array ["0"]
 		}
 	]
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2019/json-strings/directive-paragraph-separator/input.js>
+	loc: SourceLocation es2019/json-strings/directive-paragraph-separator/input.js 1:0-4:0
 }
 ```
 

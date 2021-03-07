@@ -8,49 +8,14 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation experimental/class-private-properties/asi-failure-inline/input.js 1:0-4:0
-	path: UIDPath<experimental/class-private-properties/asi-failure-inline/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Unknown class property start"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 2:4
-				path: UIDPath<experimental/class-private-properties/asi-failure-inline/input.js>
-				start: Position 2:5
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSClassDeclaration {
 			id: JSBindingIdentifier {
 				name: "Foo"
 				loc: SourceLocation experimental/class-private-properties/asi-failure-inline/input.js 1:6-1:9 (Foo)
 			}
-			loc: SourceLocation experimental/class-private-properties/asi-failure-inline/input.js 1:0-3:1
 			meta: JSClassHead {
-				implements: undefined
-				superClass: undefined
-				superTypeParameters: undefined
-				typeParameters: undefined
-				loc: SourceLocation experimental/class-private-properties/asi-failure-inline/input.js 1:0-3:1
-				body: Array [
+				body: [
 					JSClassPrivateProperty {
 						key: JSPrivateName {
 							id: JSIdentifier {
@@ -59,24 +24,47 @@ JSRoot {
 							}
 							loc: SourceLocation experimental/class-private-properties/asi-failure-inline/input.js 2:5-2:7
 						}
-						value: undefined
-						typeAnnotation: undefined
-						loc: SourceLocation experimental/class-private-properties/asi-failure-inline/input.js 2:5-2:7
 						meta: JSClassPropertyMeta {
 							abstract: false
-							accessibility: undefined
 							optional: false
 							readonly: false
 							static: false
-							typeAnnotation: undefined
 							loc: SourceLocation experimental/class-private-properties/asi-failure-inline/input.js 2:5-2:7
 							start: Position 2:5
 						}
+						loc: SourceLocation experimental/class-private-properties/asi-failure-inline/input.js 2:5-2:7
 					}
 				]
+				loc: SourceLocation experimental/class-private-properties/asi-failure-inline/input.js 1:0-3:1
+			}
+			loc: SourceLocation experimental/class-private-properties/asi-failure-inline/input.js 1:0-3:1
+		}
+	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "Unknown class property start"}
+			}
+			location: {
+				language: "js"
+				path: UIDPath<experimental/class-private-properties/asi-failure-inline/input.js>
+				end: Position 2:4
+				start: Position 2:5
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<experimental/class-private-properties/asi-failure-inline/input.js>
+	loc: SourceLocation experimental/class-private-properties/asi-failure-inline/input.js 1:0-4:0
 }
 ```
 

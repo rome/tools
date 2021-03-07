@@ -8,31 +8,14 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	loc: SourceLocation typescript/class/method-return-type/input.ts 1:0-4:0
-	path: UIDPath<typescript/class/method-return-type/input.ts>
-	syntax: Array ["ts"]
-	body: Array [
+	body: [
 		JSClassDeclaration {
 			id: JSBindingIdentifier {
 				name: "C"
 				loc: SourceLocation typescript/class/method-return-type/input.ts 1:6-1:7 (C)
 			}
-			loc: SourceLocation typescript/class/method-return-type/input.ts 1:0-3:1
 			meta: JSClassHead {
-				implements: undefined
-				superClass: undefined
-				superTypeParameters: undefined
-				typeParameters: undefined
-				loc: SourceLocation typescript/class/method-return-type/input.ts 1:0-3:1
-				body: Array [
+				body: [
 					JSClassMethod {
 						kind: "method"
 						key: JSStaticPropertyKey {
@@ -42,38 +25,46 @@ JSRoot {
 							}
 							loc: SourceLocation typescript/class/method-return-type/input.ts 2:4-2:5
 						}
-						loc: SourceLocation typescript/class/method-return-type/input.ts 2:4-2:16
-						body: JSBlockStatement {
-							body: Array []
-							directives: Array []
-							loc: SourceLocation typescript/class/method-return-type/input.ts 2:14-2:16
-						}
 						meta: JSClassPropertyMeta {
 							abstract: false
-							accessibility: undefined
 							optional: false
 							readonly: false
 							static: false
-							typeAnnotation: undefined
 							loc: SourceLocation typescript/class/method-return-type/input.ts 2:4-2:5
 							start: Position 2:4
+						}
+						body: JSBlockStatement {
+							body: []
+							directives: []
+							loc: SourceLocation typescript/class/method-return-type/input.ts 2:14-2:16
 						}
 						head: JSFunctionHead {
 							async: false
 							generator: false
 							hasHoistedVars: false
-							params: Array []
-							rest: undefined
-							thisType: undefined
-							typeParameters: undefined
+							params: []
+							returnType: TSVoidKeywordTypeAnnotation {
+								loc: SourceLocation typescript/class/method-return-type/input.ts 2:9-2:13
+							}
 							loc: SourceLocation typescript/class/method-return-type/input.ts 2:5-2:13
-							returnType: TSVoidKeywordTypeAnnotation {loc: SourceLocation typescript/class/method-return-type/input.ts 2:9-2:13}
 						}
+						loc: SourceLocation typescript/class/method-return-type/input.ts 2:4-2:16
 					}
 				]
+				loc: SourceLocation typescript/class/method-return-type/input.ts 1:0-3:1
 			}
+			loc: SourceLocation typescript/class/method-return-type/input.ts 1:0-3:1
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: ["ts"]
+	path: UIDPath<typescript/class/method-return-type/input.ts>
+	loc: SourceLocation typescript/class/method-return-type/input.ts 1:0-4:0
 }
 ```
 

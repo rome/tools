@@ -8,17 +8,23 @@
 
 ```javascript
 JSRoot {
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation comments/basic/comment-within-condition/input.js 1:0-3:0
-	path: UIDPath<comments/basic/comment-within-condition/input.js>
-	comments: Array [
+	body: [
+		JSIfStatement {
+			leadingComments: ["0"]
+			consequent: JSBlockStatement {
+				body: []
+				directives: []
+				loc: SourceLocation comments/basic/comment-within-condition/input.js 2:18-2:20
+			}
+			test: JSReferenceIdentifier {
+				name: "a"
+				leadingComments: ["1"]
+				loc: SourceLocation comments/basic/comment-within-condition/input.js 2:15-2:16 (a)
+			}
+			loc: SourceLocation comments/basic/comment-within-condition/input.js 2:0-2:20
+		}
+	]
+	comments: [
 		CommentBlock {
 			id: "0"
 			value: " foo "
@@ -30,23 +36,14 @@ JSRoot {
 			loc: SourceLocation comments/basic/comment-within-condition/input.js 2:4-2:13
 		}
 	]
-	body: Array [
-		JSIfStatement {
-			alternate: undefined
-			leadingComments: Array ["0"]
-			loc: SourceLocation comments/basic/comment-within-condition/input.js 2:0-2:20
-			consequent: JSBlockStatement {
-				body: Array []
-				directives: Array []
-				loc: SourceLocation comments/basic/comment-within-condition/input.js 2:18-2:20
-			}
-			test: JSReferenceIdentifier {
-				name: "a"
-				leadingComments: Array ["1"]
-				loc: SourceLocation comments/basic/comment-within-condition/input.js 2:15-2:16 (a)
-			}
-		}
-	]
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<comments/basic/comment-within-condition/input.js>
+	loc: SourceLocation comments/basic/comment-within-condition/input.js 1:0-3:0
 }
 ```
 

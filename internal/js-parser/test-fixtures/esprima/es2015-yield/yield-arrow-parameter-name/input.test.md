@@ -8,44 +8,38 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation esprima/es2015-yield/yield-arrow-parameter-name/input.js 1:0-2:0
-	path: UIDPath<esprima/es2015-yield/yield-arrow-parameter-name/input.js>
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation esprima/es2015-yield/yield-arrow-parameter-name/input.js 1:0-1:14
 			expression: JSArrowFunctionExpression {
-				loc: SourceLocation esprima/es2015-yield/yield-arrow-parameter-name/input.js 1:0-1:13
 				body: JSNumericLiteral {
 					value: 42
-					format: undefined
 					loc: SourceLocation esprima/es2015-yield/yield-arrow-parameter-name/input.js 1:11-1:13
 				}
 				head: JSFunctionHead {
 					async: false
 					hasHoistedVars: false
-					rest: undefined
-					returnType: undefined
-					thisType: undefined
-					loc: SourceLocation esprima/es2015-yield/yield-arrow-parameter-name/input.js 1:0-1:10
-					params: Array [
+					params: [
 						JSBindingIdentifier {
 							name: "yield"
 							loc: SourceLocation esprima/es2015-yield/yield-arrow-parameter-name/input.js 1:1-1:6 (yield)
 						}
 					]
+					loc: SourceLocation esprima/es2015-yield/yield-arrow-parameter-name/input.js 1:0-1:10
 				}
+				loc: SourceLocation esprima/es2015-yield/yield-arrow-parameter-name/input.js 1:0-1:13
 			}
+			loc: SourceLocation esprima/es2015-yield/yield-arrow-parameter-name/input.js 1:0-1:14
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<esprima/es2015-yield/yield-arrow-parameter-name/input.js>
+	loc: SourceLocation esprima/es2015-yield/yield-arrow-parameter-name/input.js 1:0-2:0
 }
 ```
 

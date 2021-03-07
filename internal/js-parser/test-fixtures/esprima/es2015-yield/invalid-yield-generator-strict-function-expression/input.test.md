@@ -8,105 +8,88 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation esprima/es2015-yield/invalid-yield-generator-strict-function-expression/input.js 1:0-2:0
-	path: UIDPath<esprima/es2015-yield/invalid-yield-generator-strict-function-expression/input.js>
-	directives: Array [
-		JSDirective {
-			value: "use strict"
-			loc: SourceLocation esprima/es2015-yield/invalid-yield-generator-strict-function-expression/input.js 1:0-1:13
-		}
-	]
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "yield is a reserved word"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:51
-				path: UIDPath<esprima/es2015-yield/invalid-yield-generator-strict-function-expression/input.js>
-				start: Position 1:46
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "g"
 				loc: SourceLocation esprima/es2015-yield/invalid-yield-generator-strict-function-expression/input.js 1:24-1:25 (g)
 			}
-			loc: SourceLocation esprima/es2015-yield/invalid-yield-generator-strict-function-expression/input.js 1:14-1:58
-			head: JSFunctionHead {
-				async: false
-				generator: true
-				hasHoistedVars: true
-				params: Array []
-				rest: undefined
-				returnType: undefined
-				thisType: undefined
-				typeParameters: undefined
-				loc: SourceLocation esprima/es2015-yield/invalid-yield-generator-strict-function-expression/input.js 1:25-1:27
-			}
 			body: JSBlockStatement {
-				directives: Array []
-				loc: SourceLocation esprima/es2015-yield/invalid-yield-generator-strict-function-expression/input.js 1:27-1:58
-				body: Array [
+				body: [
 					JSVariableDeclarationStatement {
-						loc: SourceLocation esprima/es2015-yield/invalid-yield-generator-strict-function-expression/input.js 1:29-1:56
 						declaration: JSVariableDeclaration {
 							kind: "var"
-							loc: SourceLocation esprima/es2015-yield/invalid-yield-generator-strict-function-expression/input.js 1:29-1:56
-							declarations: Array [
+							declarations: [
 								JSVariableDeclarator {
 									id: JSBindingIdentifier {
 										name: "y"
 										loc: SourceLocation esprima/es2015-yield/invalid-yield-generator-strict-function-expression/input.js 1:33-1:34 (y)
 									}
-									loc: SourceLocation esprima/es2015-yield/invalid-yield-generator-strict-function-expression/input.js 1:33-1:55
 									init: JSFunctionExpression {
 										id: JSBindingIdentifier {
 											name: "yield"
 											loc: SourceLocation esprima/es2015-yield/invalid-yield-generator-strict-function-expression/input.js 1:46-1:51 (yield)
 										}
-										loc: SourceLocation esprima/es2015-yield/invalid-yield-generator-strict-function-expression/input.js 1:37-1:55
 										body: JSBlockStatement {
-											body: Array []
-											directives: Array []
+											body: []
+											directives: []
 											loc: SourceLocation esprima/es2015-yield/invalid-yield-generator-strict-function-expression/input.js 1:53-1:55
 										}
 										head: JSFunctionHead {
 											async: false
 											generator: false
 											hasHoistedVars: false
-											params: Array []
-											rest: undefined
-											returnType: undefined
-											thisType: undefined
-											typeParameters: undefined
+											params: []
 											loc: SourceLocation esprima/es2015-yield/invalid-yield-generator-strict-function-expression/input.js 1:51-1:53
 										}
+										loc: SourceLocation esprima/es2015-yield/invalid-yield-generator-strict-function-expression/input.js 1:37-1:55
 									}
+									loc: SourceLocation esprima/es2015-yield/invalid-yield-generator-strict-function-expression/input.js 1:33-1:55
 								}
 							]
+							loc: SourceLocation esprima/es2015-yield/invalid-yield-generator-strict-function-expression/input.js 1:29-1:56
 						}
+						loc: SourceLocation esprima/es2015-yield/invalid-yield-generator-strict-function-expression/input.js 1:29-1:56
 					}
 				]
+				directives: []
+				loc: SourceLocation esprima/es2015-yield/invalid-yield-generator-strict-function-expression/input.js 1:27-1:58
+			}
+			head: JSFunctionHead {
+				async: false
+				generator: true
+				hasHoistedVars: true
+				params: []
+				loc: SourceLocation esprima/es2015-yield/invalid-yield-generator-strict-function-expression/input.js 1:25-1:27
+			}
+			loc: SourceLocation esprima/es2015-yield/invalid-yield-generator-strict-function-expression/input.js 1:14-1:58
+		}
+	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {advice: [], category: ["parse"], categoryValue: "js", message: ["yield", RAW_MARKUP {value: " is a reserved word"}]}
+			location: {
+				language: "js"
+				path: UIDPath<esprima/es2015-yield/invalid-yield-generator-strict-function-expression/input.js>
+				end: Position 1:51
+				start: Position 1:46
 			}
 		}
 	]
+	directives: [
+		JSDirective {
+			value: "use strict"
+			loc: SourceLocation esprima/es2015-yield/invalid-yield-generator-strict-function-expression/input.js 1:0-1:13
+		}
+	]
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<esprima/es2015-yield/invalid-yield-generator-strict-function-expression/input.js>
+	loc: SourceLocation esprima/es2015-yield/invalid-yield-generator-strict-function-expression/input.js 1:0-2:0
 }
 ```
 

@@ -8,45 +8,40 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation esprima/expression-primary-other/migrated_0003/input.js 1:0-1:12
-	path: UIDPath<esprima/expression-primary-other/migrated_0003/input.js>
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation esprima/expression-primary-other/migrated_0003/input.js 1:0-1:12
 			expression: JSBinaryExpression {
 				operator: "*"
-				loc: SourceLocation esprima/expression-primary-other/migrated_0003/input.js 1:0-1:12
-				right: JSNumericLiteral {
-					value: 3
-					format: undefined
-					loc: SourceLocation esprima/expression-primary-other/migrated_0003/input.js 1:11-1:12
-				}
 				left: JSBinaryExpression {
 					operator: "+"
-					loc: SourceLocation esprima/expression-primary-other/migrated_0003/input.js 1:1-1:6
 					left: JSNumericLiteral {
 						value: 1
-						format: undefined
 						loc: SourceLocation esprima/expression-primary-other/migrated_0003/input.js 1:1-1:2
 					}
 					right: JSNumericLiteral {
 						value: 2
-						format: undefined
 						loc: SourceLocation esprima/expression-primary-other/migrated_0003/input.js 1:5-1:6
 					}
+					loc: SourceLocation esprima/expression-primary-other/migrated_0003/input.js 1:1-1:6
 				}
+				right: JSNumericLiteral {
+					value: 3
+					loc: SourceLocation esprima/expression-primary-other/migrated_0003/input.js 1:11-1:12
+				}
+				loc: SourceLocation esprima/expression-primary-other/migrated_0003/input.js 1:0-1:12
 			}
+			loc: SourceLocation esprima/expression-primary-other/migrated_0003/input.js 1:0-1:12
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<esprima/expression-primary-other/migrated_0003/input.js>
+	loc: SourceLocation esprima/expression-primary-other/migrated_0003/input.js 1:0-1:12
 }
 ```
 

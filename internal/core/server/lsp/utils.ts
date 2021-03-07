@@ -8,13 +8,13 @@ import {
 	LSPRange,
 	LSPTextEdit,
 } from "./types";
-import stringDiff, {Diffs, diffConstants} from "@internal/string-diff";
-import {ZeroIndexed} from "@internal/math";
+import stringDiff, {Diff, DiffTypes} from "@internal/string-diff";
+import {ZeroIndexed} from "@internal/numbers";
 import {Position} from "@internal/parser-core";
 import {
+	Diagnostic,
 	DiagnosticAdviceAction,
 	DiagnosticLocation,
-	Diagnostics,
 	formatCategoryDescription,
 } from "@internal/diagnostics";
 import {Server, WorkerBufferPatch} from "@internal/core";
@@ -43,7 +43,7 @@ export function convertDiagnosticLocationToLSPRange(
 }
 
 export function convertDiagnosticsToLSP(
-	diagnostics: Diagnostics,
+	diagnostics: Diagnostic[],
 	server: Server,
 ): LSPDiagnostic[] {
 	const lspDiagnostics: LSPDiagnostic[] = [];
@@ -60,7 +60,7 @@ export function convertDiagnosticsToLSP(
 				nextItem !== undefined &&
 				nextItem.type === "frame"
 			) {
-				const abs = server.projectManager.getFilePathFromUidOrAbsolute(
+				const abs = server.projectManager.getFilePathFromUIDOrAbsolute(
 					nextItem.location.path,
 				);
 				if (abs !== undefined) {
@@ -95,7 +95,7 @@ export function getPathFromTextDocument(consumer: Consumer): AbsoluteFilePath {
 export function diffTextEdits(original: string, desired: string): LSPTextEdit[] {
 	const edits: LSPTextEdit[] = [];
 
-	const diffs: Diffs = stringDiff(original, desired);
+	const diffs: Diff[] = stringDiff(original, desired);
 
 	let currLine: ZeroIndexed = new ZeroIndexed();
 	let currChar: ZeroIndexed = new ZeroIndexed();
@@ -120,7 +120,7 @@ export function diffTextEdits(original: string, desired: string): LSPTextEdit[] 
 
 	for (const [type, text] of diffs) {
 		switch (type) {
-			case diffConstants.ADD: {
+			case DiffTypes.INSERT: {
 				const pos = getPosition();
 				edits.push({
 					range: {
@@ -132,7 +132,7 @@ export function diffTextEdits(original: string, desired: string): LSPTextEdit[] 
 				break;
 			}
 
-			case diffConstants.DELETE: {
+			case DiffTypes.DELETE: {
 				const start: LSPPosition = getPosition();
 				advance(text);
 				const end: LSPPosition = getPosition();
@@ -146,7 +146,7 @@ export function diffTextEdits(original: string, desired: string): LSPTextEdit[] 
 				break;
 			}
 
-			case diffConstants.EQUAL: {
+			case DiffTypes.EQUAL: {
 				advance(text);
 				break;
 			}

@@ -8,63 +8,53 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation esprima/es2015-yield/invalid-yield-strict-lexical-declaration/input.js 1:0-2:0
-	path: UIDPath<esprima/es2015-yield/invalid-yield-strict-lexical-declaration/input.js>
-	directives: Array [
-		JSDirective {
-			value: "use strict"
-			loc: SourceLocation esprima/es2015-yield/invalid-yield-strict-lexical-declaration/input.js 1:0-1:13
-		}
-	]
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "yield is a reserved word"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:23
-				path: UIDPath<esprima/es2015-yield/invalid-yield-strict-lexical-declaration/input.js>
-				start: Position 1:18
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSVariableDeclarationStatement {
-			loc: SourceLocation esprima/es2015-yield/invalid-yield-strict-lexical-declaration/input.js 1:14-1:29
 			declaration: JSVariableDeclaration {
 				kind: "let"
-				loc: SourceLocation esprima/es2015-yield/invalid-yield-strict-lexical-declaration/input.js 1:14-1:29
-				declarations: Array [
+				declarations: [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "yield"
 							loc: SourceLocation esprima/es2015-yield/invalid-yield-strict-lexical-declaration/input.js 1:18-1:23 (yield)
 						}
-						loc: SourceLocation esprima/es2015-yield/invalid-yield-strict-lexical-declaration/input.js 1:18-1:28
 						init: JSNumericLiteral {
 							value: 42
-							format: undefined
 							loc: SourceLocation esprima/es2015-yield/invalid-yield-strict-lexical-declaration/input.js 1:26-1:28
 						}
+						loc: SourceLocation esprima/es2015-yield/invalid-yield-strict-lexical-declaration/input.js 1:18-1:28
 					}
 				]
+				loc: SourceLocation esprima/es2015-yield/invalid-yield-strict-lexical-declaration/input.js 1:14-1:29
+			}
+			loc: SourceLocation esprima/es2015-yield/invalid-yield-strict-lexical-declaration/input.js 1:14-1:29
+		}
+	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {advice: [], category: ["parse"], categoryValue: "js", message: ["yield", RAW_MARKUP {value: " is a reserved word"}]}
+			location: {
+				language: "js"
+				path: UIDPath<esprima/es2015-yield/invalid-yield-strict-lexical-declaration/input.js>
+				end: Position 1:23
+				start: Position 1:18
 			}
 		}
 	]
+	directives: [
+		JSDirective {
+			value: "use strict"
+			loc: SourceLocation esprima/es2015-yield/invalid-yield-strict-lexical-declaration/input.js 1:0-1:13
+		}
+	]
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<esprima/es2015-yield/invalid-yield-strict-lexical-declaration/input.js>
+	loc: SourceLocation esprima/es2015-yield/invalid-yield-strict-lexical-declaration/input.js 1:0-2:0
 }
 ```
 

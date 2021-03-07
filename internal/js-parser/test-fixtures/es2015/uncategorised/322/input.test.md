@@ -8,42 +8,40 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2015/uncategorised/322/input.js 1:0-1:9
-	path: UIDPath<es2015/uncategorised/322/input.js>
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation es2015/uncategorised/322/input.js 1:0-1:9
 			expression: JSAssignmentExpression {
 				operator: "="
-				loc: SourceLocation es2015/uncategorised/322/input.js 1:0-1:9
-				right: JSNumericLiteral {
-					value: 1
-					format: undefined
-					loc: SourceLocation es2015/uncategorised/322/input.js 1:8-1:9
-				}
 				left: JSAssignmentArrayPattern {
-					rest: undefined
-					loc: SourceLocation es2015/uncategorised/322/input.js 1:0-1:5
-					elements: Array [
+					elements: [
 						JSAssignmentIdentifier {
 							name: "x"
 							loc: SourceLocation es2015/uncategorised/322/input.js 1:1-1:2 (x)
 						}
-						JSArrayHole {loc: SourceLocation es2015/uncategorised/322/input.js 1:3-1:3}
+						JSArrayHole {
+							loc: SourceLocation es2015/uncategorised/322/input.js 1:3-1:3
+						}
 					]
+					loc: SourceLocation es2015/uncategorised/322/input.js 1:0-1:5
 				}
+				right: JSNumericLiteral {
+					value: 1
+					loc: SourceLocation es2015/uncategorised/322/input.js 1:8-1:9
+				}
+				loc: SourceLocation es2015/uncategorised/322/input.js 1:0-1:9
 			}
+			loc: SourceLocation es2015/uncategorised/322/input.js 1:0-1:9
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2015/uncategorised/322/input.js>
+	loc: SourceLocation es2015/uncategorised/322/input.js 1:0-1:9
 }
 ```
 

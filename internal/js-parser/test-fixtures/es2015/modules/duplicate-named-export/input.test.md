@@ -8,49 +8,11 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	syntax: Array []
-	loc: SourceLocation es2015/modules/duplicate-named-export/input.js 1:0-3:0
-	path: UIDPath<es2015/modules/duplicate-named-export/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 2:19
-				path: UIDPath<es2015/modules/duplicate-named-export/input.js>
-				start: Position 2:9
-			}
-			description: Object {
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "`foo` has already been exported. Exported identifiers must be unique."}
-				advice: Array [
-					log {
-						category: "info"
-						text: RAW_MARKUP {value: "Defined already here"}
-					}
-					frame {location: SourceLocation es2015/modules/duplicate-named-export/input.js 1:9-1:12}
-				]
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSExportLocalDeclaration {
-			declaration: undefined
 			exportKind: "value"
-			loc: SourceLocation es2015/modules/duplicate-named-export/input.js 1:0-1:15
-			specifiers: Array [
+			specifiers: [
 				JSExportLocalSpecifier {
-					loc: SourceLocation es2015/modules/duplicate-named-export/input.js 1:9-1:12
 					exported: JSIdentifier {
 						name: "foo"
 						loc: SourceLocation es2015/modules/duplicate-named-export/input.js 1:9-1:12 (foo)
@@ -59,16 +21,15 @@ JSRoot {
 						name: "foo"
 						loc: SourceLocation es2015/modules/duplicate-named-export/input.js 1:9-1:12 (foo)
 					}
+					loc: SourceLocation es2015/modules/duplicate-named-export/input.js 1:9-1:12
 				}
 			]
+			loc: SourceLocation es2015/modules/duplicate-named-export/input.js 1:0-1:15
 		}
 		JSExportLocalDeclaration {
-			declaration: undefined
 			exportKind: "value"
-			loc: SourceLocation es2015/modules/duplicate-named-export/input.js 2:0-2:22
-			specifiers: Array [
+			specifiers: [
 				JSExportLocalSpecifier {
-					loc: SourceLocation es2015/modules/duplicate-named-export/input.js 2:9-2:19
 					exported: JSIdentifier {
 						name: "foo"
 						loc: SourceLocation es2015/modules/duplicate-named-export/input.js 2:16-2:19 (foo)
@@ -77,10 +38,45 @@ JSRoot {
 						name: "bar"
 						loc: SourceLocation es2015/modules/duplicate-named-export/input.js 2:9-2:12 (bar)
 					}
+					loc: SourceLocation es2015/modules/duplicate-named-export/input.js 2:9-2:19
 				}
 			]
+			loc: SourceLocation es2015/modules/duplicate-named-export/input.js 2:0-2:22
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {
+				advice: [
+					log {
+						category: "info"
+						text: RAW_MARKUP {value: "Defined already here"}
+					}
+					frame {
+						location: SourceLocation es2015/modules/duplicate-named-export/input.js 1:9-1:12
+					}
+				]
+				category: ["parse"]
+				categoryValue: "js"
+				message: [RAW_MARKUP {value: "`"}, "foo", RAW_MARKUP {value: "` has already been exported. Exported identifiers must be unique."}]
+			}
+			location: {
+				language: "js"
+				path: UIDPath<es2015/modules/duplicate-named-export/input.js>
+				end: Position 2:19
+				start: Position 2:9
+			}
+		}
+	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: []
+	path: UIDPath<es2015/modules/duplicate-named-export/input.js>
+	loc: SourceLocation es2015/modules/duplicate-named-export/input.js 1:0-3:0
 }
 ```
 

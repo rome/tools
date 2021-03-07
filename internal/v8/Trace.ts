@@ -6,10 +6,10 @@
  */
 
 import {Profile, TraceEvent} from "./types";
-import sourceMapManager from "./sourceMapManager";
 import {urlToFilename} from "./utils";
-import {createAnyPath} from "@internal/path";
-import {ZeroIndexed} from "@internal/math";
+import {createPath} from "@internal/path";
+import {ZeroIndexed} from "@internal/numbers";
+import {errorSourceMaps} from "./error-frames";
 
 export default class Trace {
 	constructor() {
@@ -33,8 +33,8 @@ export default class Trace {
 			const {callFrame} = node;
 
 			// Call frame line numbers are 0-index while Rome is 1-indexed
-			const resolved = sourceMapManager.approxOriginalPositionFor(
-				createAnyPath(urlToFilename(callFrame.url)),
+			const resolved = errorSourceMaps.approxOriginalPositionFor(
+				createPath(urlToFilename(callFrame.url)),
 				new ZeroIndexed(callFrame.lineNumber).toOneIndexed(),
 				new ZeroIndexed(callFrame.columnNumber),
 			);

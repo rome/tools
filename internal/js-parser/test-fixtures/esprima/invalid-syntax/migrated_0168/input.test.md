@@ -8,41 +8,37 @@
 
 ```javascript
 JSRoot {
-	body: Array []
-	comments: Array []
+	body: []
+	comments: []
 	corrupt: false
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation esprima/invalid-syntax/migrated_0168/input.js 1:0-2:1
-	path: UIDPath<esprima/invalid-syntax/migrated_0168/input.js>
-	directives: Array [
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "Unterminated string constant"}
+			}
+			location: {
+				language: "js"
+				path: UIDPath<esprima/invalid-syntax/migrated_0168/input.js>
+				end: Position 2:0
+				start: Position 2:0
+			}
+		}
+	]
+	directives: [
 		JSDirective {
 			value: "\\"
 			loc: SourceLocation esprima/invalid-syntax/migrated_0168/input.js 1:0-2:1
 		}
 	]
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Unterminated string constant"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 2:0
-				path: UIDPath<esprima/invalid-syntax/migrated_0168/input.js>
-				start: Position 2:0
-			}
-		}
-	]
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<esprima/invalid-syntax/migrated_0168/input.js>
+	loc: SourceLocation esprima/invalid-syntax/migrated_0168/input.js 1:0-2:1
 }
 ```
 

@@ -24,10 +24,12 @@ import {DependencyOrder} from "./DependencyOrderer";
 import {
 	AbsoluteFilePath,
 	AbsoluteFilePathMap,
-	createAnyPath,
+	AbsoluteFilePathSet,
+	createPath,
 } from "@internal/path";
 import {markup} from "@internal/markup";
 import FileNotFound, {MissingFileReturn} from "@internal/fs/FileNotFound";
+import {areAnalyzeDependencyResultsEqual} from "@internal/compiler";
 
 export type DependencyGraphSeedResult = {
 	node: DependencyNode;
@@ -110,6 +112,8 @@ export default class DependencyGraph {
 	private nodes: AbsoluteFilePathMap<DependencyNode>;
 	private locker: Locker<string>;
 
+	public close() {}
+
 	public getNodes(): Iterable<DependencyNode> {
 		return this.nodes.values();
 	}
@@ -161,6 +165,10 @@ export default class DependencyGraph {
 		);
 		this.nodes.set(path, module);
 		return module;
+	}
+
+	public hasNode(path: AbsoluteFilePath): boolean {
+		return this.nodes.has(path);
 	}
 
 	public maybeGetNode(path: AbsoluteFilePath): undefined | DependencyNode {
@@ -274,6 +282,68 @@ export default class DependencyGraph {
 	): void {
 		const resolvedImports = node.resolveImports();
 		diagnosticsProcessor.addDiagnostics(resolvedImports.diagnostics);
+	}
+
+	public async evictNodes(
+		paths: AbsoluteFilePathSet,
+		reseed: (paths: AbsoluteFilePathSet, dependents: boolean) => Promise<void>,
+	): Promise<AbsoluteFilePathSet> {
+		// Get all the current dependency nodes for the evicted files, and invalidate their nodes
+		const oldEvictedNodes: AbsoluteFilePathMap<DependencyNode> = new AbsoluteFilePathMap();
+		for (const path of paths) {
+			const node = this.maybeGetNode(path);
+			if (node !== undefined) {
+				oldEvictedNodes.set(path, node);
+				this.deleteNode(path);
+			}
+		}
+
+		// Refresh only the evicted paths
+		await reseed(paths, false);
+
+		// Maintain a list of all the dependencies we revalidated
+		const validatedDependencyPaths: AbsoluteFilePathSet = new AbsoluteFilePathSet();
+
+		// Maintain a list of all the dependents that need to be revalidated
+		const validatedDependencyPathDependents: AbsoluteFilePathSet = new AbsoluteFilePathSet();
+
+		// Build a list of dependents to recheck
+		for (const path of paths) {
+			const newNode = this.maybeGetNode(path);
+			if (newNode === undefined) {
+				continue;
+			}
+
+			validatedDependencyPaths.add(path);
+
+			// Get the previous node and see if the exports have actually changed
+			const oldNode = oldEvictedNodes.get(path);
+			const sameShape =
+				oldNode !== undefined &&
+				areAnalyzeDependencyResultsEqual(
+					oldNode.analyze.value,
+					newNode.analyze.value,
+				);
+
+			for (const depNode of newNode.getDependents()) {
+				// If the old node has the same shape as the new one, only revalidate the dependent if it had dependency errors
+				// NB: We might want to revalidate if it depended on an evictedPath that was deleted
+				if (sameShape && depNode.hadResolveImportsDiagnostics === false) {
+					continue;
+				}
+
+				validatedDependencyPaths.add(depNode.path);
+				validatedDependencyPathDependents.add(depNode.path);
+				this.deleteNode(depNode.path);
+			}
+		}
+
+		// Revalidate dependents
+		if (validatedDependencyPathDependents.size > 0) {
+			await reseed(validatedDependencyPathDependents, true);
+		}
+
+		return validatedDependencyPaths;
 	}
 
 	private validateTransitive(
@@ -408,22 +478,18 @@ export default class DependencyGraph {
 
 				const {diagnostics} = await catchDiagnostics(
 					async () => {
-						const resolved = await server.resolver.resolveAssert(
-							{
-								...this.resolverOpts,
-								origin,
-								source: createAnyPath(source),
-							},
-							dep.loc === undefined
+						const resolved = await server.resolver.resolveAssert({
+							...this.resolverOpts,
+							origin,
+							source: createPath(source),
+							location: dep.loc === undefined
 								? undefined
 								: {
-										location: {
-											...dep.loc,
-											sourceText: undefined,
-											integrity: undefined,
-										},
+										...dep.loc,
+										sourceText: undefined,
+										integrity: undefined,
 									},
-						);
+						});
 
 						node!.addDependency(source, resolved.path, dep);
 					},

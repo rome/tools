@@ -23,6 +23,7 @@
     1   │ - for·(;·x.running;·)·{
       1 │ + while·(x.running)·{
     2 2 │   → x.step();
+    3 3 │   }
 
 
 ```
@@ -55,6 +56,7 @@ while (x.running) {
     1   │ - for·(;;)·{
       1 │ + while·(true)·{
     2 2 │   → doSomething();
+    3 3 │   }
 
 
 ```

@@ -188,6 +188,7 @@ if (char === "<") {
   24 	 │ - → → new·ZeroIndexedNumber(namedBackReferenceIndex),
   	 20 │ + → → index,
   25 21 │   → );
+  26 22 │   }
 ```
 
 ### `7`

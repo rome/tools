@@ -1,11 +1,11 @@
 import {TSTupleElement} from "@internal/ast";
-import {Builder, Token, Tokens, concat, space} from "@internal/formatter";
+import {Builder, Token, concat, space} from "@internal/formatter";
 
 export default function TSTupleElement(
 	builder: Builder,
 	node: TSTupleElement,
 ): Token {
-	let tokens: Tokens = [];
+	let tokens: Token[] = [];
 
 	if (node.name) {
 		tokens.push(builder.tokenize(node.name, node));

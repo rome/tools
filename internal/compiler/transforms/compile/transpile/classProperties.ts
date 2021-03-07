@@ -83,7 +83,7 @@ function transformClass(
 	const bodyReplacements: AnyJSStatement[] = [];
 	const constructorAssignments: AnyJSExpression[] = [];
 	const className: string =
-		node.id === undefined ? scope.generateUid("class") : node.id.name;
+		node.id === undefined ? scope.generateUID("class") : node.id.name;
 
 	let _constructor: undefined | JSClassMethod = undefined;
 	const filteredClassBody = [];
@@ -260,7 +260,7 @@ export default createVisitor({
 		// turn a class expression into an IIFE that returns a class declaration
 		if (node.type === "JSClassExpression" && hasClassProps(node)) {
 			const className =
-				node.id === undefined ? scope.generateUid("class") : node.id.name;
+				node.id === undefined ? scope.generateUID("class") : node.id.name;
 
 			return signals.replace(
 				jsCallExpression.create({

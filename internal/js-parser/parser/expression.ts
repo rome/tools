@@ -187,7 +187,7 @@ export function checkPropClash(
 				parser,
 				{
 					description: descriptions.JS_PARSER.PROTO_PROP_REDEFINITION,
-					loc: key.loc,
+					node: key,
 				},
 			);
 		} else {
@@ -299,7 +299,7 @@ export function parseMaybeAssign<T extends AnyNode = AnyJSExpression>(
 				unexpectedDiagnostic(
 					parser,
 					{
-						loc: typeParameters.loc,
+						node: typeParameters,
 						description: descriptions.JS_PARSER.EXPECTED_ARROW_AFTER_TYPE_PARAMS,
 					},
 				);
@@ -394,7 +394,6 @@ function _parseMaybeAssign<T extends AnyNode>(
 
 		//if (left.type === 'BindingArrayPattern' || left.type === 'BindingObjectPattern') {
 		//  checkCommaAfterRestFromSpread(parser);
-
 		//}
 		parser.state.commaAfterSpreadAt = oldCommaAfterSpreadAt;
 
@@ -659,7 +658,7 @@ export function parseExpressionOp(
 				unexpectedDiagnostic(
 					parser,
 					{
-						loc: left.argument.loc,
+						node: left.argument,
 						description: descriptions.JS_PARSER.WRAP_EXPONENTIATION,
 					},
 				);
@@ -760,7 +759,7 @@ export function parseMaybeUnary(
 				unexpectedDiagnostic(
 					parser,
 					{
-						loc: argument.loc,
+						node: argument,
 						description: descriptions.JS_PARSER.DELETE_LOCAL_VARIABLE_IN_STRICT,
 					},
 				);
@@ -771,7 +770,7 @@ export function parseMaybeUnary(
 				unexpectedDiagnostic(
 					parser,
 					{
-						loc: argument.property.loc,
+						node: argument.property,
 						description: descriptions.JS_PARSER.DELETE_PRIVATE_FIELD,
 					},
 				);
@@ -1438,7 +1437,7 @@ export function parseCallExpressionArguments(
 					parser,
 					{
 						description: descriptions.JS_PARSER.CONFUSING_CALL_ARGUMENT,
-						loc: elt.loc,
+						node: elt,
 					},
 				);
 			}
@@ -1796,13 +1795,9 @@ export function parseFunctionExpressionOrMetaProperty(
 	next(parser);
 
 	// We do not do parseIdentifier here because when parseFunctionExpressionOrMetaProperty
-
 	// is called we already know that the current token is a "name" with the value "function"
-
 	// This will improve perf a tiny little bit as we do not do validation but more importantly
-
 	// here is that parseIdentifier will remove an item from the expression stack
-
 	// if "function" or "class" is parsed as identifier (in objects e.g.), which should not happen here.
 	const meta = createIdentifier(parser, start, "function");
 
@@ -1843,7 +1838,7 @@ export function parseMetaProperty(
 		unexpectedDiagnostic(
 			parser,
 			{
-				loc: property.loc,
+				node: property,
 				description: descriptions.JS_PARSER.INVALID_META_PROPERTY(
 					meta.name,
 					propertyName,
@@ -1872,7 +1867,7 @@ export function parseImportMetaProperty(parser: JSParser): JSMetaProperty {
 		unexpectedDiagnostic(
 			parser,
 			{
-				loc: node.loc,
+				node,
 				description: descriptions.JS_PARSER.IMPORT_META_OUTSIDE_MODULE,
 			},
 		);
@@ -1979,6 +1974,7 @@ export function parseParenAndDistinguishExpression(
 
 	const innerEnd = parser.getPosition();
 	expectClosing(parser, openContext);
+	const outerEnd = parser.getPosition();
 
 	parser.state.maybeInArrowParameters = oldMaybeInArrowParameters;
 
@@ -1995,7 +1991,7 @@ export function parseParenAndDistinguishExpression(
 					unexpectedDiagnostic(
 						parser,
 						{
-							loc: param.loc,
+							node: param,
 							description: descriptions.JS_PARSER.PARENTHESIZED_FUNCTION_PARAMS,
 						},
 					);
@@ -2078,8 +2074,8 @@ export function parseParenAndDistinguishExpression(
 	let val: AnyJSExpression = filterList[0];
 	if (filterList.length > 1) {
 		val = parser.finishNodeAt(
-			innerStart,
-			innerEnd,
+			startPos,
+			outerEnd,
 			{
 				type: "JSSequenceExpression",
 				expressions: filterList,
@@ -2087,7 +2083,7 @@ export function parseParenAndDistinguishExpression(
 		);
 	}
 
-	addParenthesized(parser, val);
+	addParenthesized(parser, parser.getLoc(val).start);
 
 	return val;
 }
@@ -2205,7 +2201,7 @@ export function parseNew(parser: JSParser): JSNewExpression | JSMetaProperty {
 			unexpectedDiagnostic(
 				parser,
 				{
-					loc: metaProp.loc,
+					node: metaProp,
 					description: descriptions.JS_PARSER.NEW_TARGET_OUTSIDE_CLASS,
 				},
 			);
@@ -2220,7 +2216,7 @@ export function parseNew(parser: JSParser): JSNewExpression | JSMetaProperty {
 		unexpectedDiagnostic(
 			parser,
 			{
-				loc: callee.loc,
+				node: callee,
 				description: descriptions.JS_PARSER.SUPER_OUTSIDE_METHOD,
 			},
 		);
@@ -2564,7 +2560,7 @@ export function parseObjectPattern(
 				unexpectedDiagnostic(
 					parser,
 					{
-						loc: argument.loc,
+						node: argument,
 						description: descriptions.JS_PARSER.MULTIPLE_DESTRUCTURING_RESTS,
 					},
 				);
@@ -2619,7 +2615,7 @@ export function parseObjectPattern(
 				parser,
 				{
 					description: descriptions.JS_PARSER.INVALID_OBJECT_PATTERN_PROP,
-					loc: prop.loc,
+					node: prop,
 				},
 			);
 			continue;
@@ -2687,7 +2683,7 @@ export function checkGetterSetterParamCount(
 			unexpectedDiagnostic(
 				parser,
 				{
-					loc: method.loc,
+					node: method,
 					description: descriptions.JS_PARSER.GETTER_WITH_PARAMS,
 				},
 			);
@@ -2697,7 +2693,7 @@ export function checkGetterSetterParamCount(
 			unexpectedDiagnostic(
 				parser,
 				{
-					loc: head.rest.loc,
+					node: head.rest,
 					description: descriptions.JS_PARSER.SETTER_WITH_REST,
 				},
 			);
@@ -2705,7 +2701,7 @@ export function checkGetterSetterParamCount(
 			unexpectedDiagnostic(
 				parser,
 				{
-					loc: method.loc,
+					node: method,
 					description: descriptions.JS_PARSER.SETTER_NOT_ONE_PARAM,
 				},
 			);
@@ -2980,7 +2976,7 @@ export function parseObjectPropertyValue(
 			unexpectedDiagnostic(
 				parser,
 				{
-					loc: typeParameters.loc,
+					node: typeParameters,
 					description: descriptions.JS_PARSER.OBJECT_PROPERTY_WITH_TYPE_PARAMETERS,
 				},
 			);
@@ -3435,7 +3431,7 @@ export function checkFunctionNameAndParams(
 			unexpectedDiagnostic(
 				parser,
 				{
-					loc: firstDirective.loc,
+					node: firstDirective,
 					description: descriptions.JS_PARSER.STRICT_DIRECTIVE_IN_NON_SIMPLE_PARAMS,
 				},
 			);
@@ -3475,7 +3471,7 @@ export function checkFunctionNameAndParams(
 				unexpectedDiagnostic(
 					parser,
 					{
-						loc: param.loc,
+						node: param,
 						description: descriptions.JS_PARSER.NON_SIMPLE_PARAM_IN_EXPLICIT_STRICT_FUNCTION,
 					},
 				);
@@ -4078,7 +4074,7 @@ function parseImportCall(parser: JSParser): JSImportCall {
 		unexpectedDiagnostic(
 			parser,
 			{
-				loc: argument.loc,
+				node: argument,
 				description: descriptions.JS_PARSER.IMPORT_SPREAD,
 			},
 		);

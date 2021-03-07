@@ -8,70 +8,64 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	loc: SourceLocation typescript/types/tuple-rest-valid/input.ts 1:0-2:0
-	path: UIDPath<typescript/types/tuple-rest-valid/input.ts>
-	syntax: Array ["ts"]
-	body: Array [
+	body: [
 		TSTypeAlias {
 			id: JSBindingIdentifier {
 				name: "Unbounded"
 				loc: SourceLocation typescript/types/tuple-rest-valid/input.ts 1:5-1:14 (Unbounded)
 			}
-			typeParameters: undefined
-			loc: SourceLocation typescript/types/tuple-rest-valid/input.ts 1:0-1:39
 			right: TSTupleType {
-				loc: SourceLocation typescript/types/tuple-rest-valid/input.ts 1:17-1:38
-				elementTypes: Array [
+				elementTypes: [
 					TSTupleElement {
-						name: undefined
 						optional: false
-						loc: SourceLocation typescript/types/tuple-rest-valid/input.ts 1:18-1:22
 						typeAnnotation: TSRestType {
-							loc: SourceLocation typescript/types/tuple-rest-valid/input.ts 1:18-1:22
 							argument: TSTypeReference {
-								typeParameters: undefined
-								loc: SourceLocation typescript/types/tuple-rest-valid/input.ts 1:21-1:22
 								typeName: JSReferenceIdentifier {
 									name: "A"
 									loc: SourceLocation typescript/types/tuple-rest-valid/input.ts 1:21-1:22 (A)
 								}
+								loc: SourceLocation typescript/types/tuple-rest-valid/input.ts 1:21-1:22
 							}
+							loc: SourceLocation typescript/types/tuple-rest-valid/input.ts 1:18-1:22
 						}
+						loc: SourceLocation typescript/types/tuple-rest-valid/input.ts 1:18-1:22
 					}
 					TSTupleElement {
-						name: undefined
 						optional: false
-						loc: SourceLocation typescript/types/tuple-rest-valid/input.ts 1:24-1:28
 						typeAnnotation: TSRestType {
-							loc: SourceLocation typescript/types/tuple-rest-valid/input.ts 1:24-1:28
 							argument: TSTypeReference {
-								typeParameters: undefined
-								loc: SourceLocation typescript/types/tuple-rest-valid/input.ts 1:27-1:28
 								typeName: JSReferenceIdentifier {
 									name: "B"
 									loc: SourceLocation typescript/types/tuple-rest-valid/input.ts 1:27-1:28 (B)
 								}
+								loc: SourceLocation typescript/types/tuple-rest-valid/input.ts 1:27-1:28
 							}
+							loc: SourceLocation typescript/types/tuple-rest-valid/input.ts 1:24-1:28
 						}
+						loc: SourceLocation typescript/types/tuple-rest-valid/input.ts 1:24-1:28
 					}
 					TSTupleElement {
-						name: undefined
 						optional: false
+						typeAnnotation: TSBooleanKeywordTypeAnnotation {
+							loc: SourceLocation typescript/types/tuple-rest-valid/input.ts 1:30-1:37
+						}
 						loc: SourceLocation typescript/types/tuple-rest-valid/input.ts 1:30-1:37
-						typeAnnotation: TSBooleanKeywordTypeAnnotation {loc: SourceLocation typescript/types/tuple-rest-valid/input.ts 1:30-1:37}
 					}
 				]
+				loc: SourceLocation typescript/types/tuple-rest-valid/input.ts 1:17-1:38
 			}
+			loc: SourceLocation typescript/types/tuple-rest-valid/input.ts 1:0-1:39
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: ["ts"]
+	path: UIDPath<typescript/types/tuple-rest-valid/input.ts>
+	loc: SourceLocation typescript/types/tuple-rest-valid/input.ts 1:0-2:0
 }
 ```
 

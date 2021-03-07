@@ -8,54 +8,12 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: true
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2015/uncategorised/393/input.js 1:0-2:0
-	path: UIDPath<es2015/uncategorised/393/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:7
-				path: UIDPath<es2015/uncategorised/393/input.js>
-				start: Position 1:6
-			}
-			description: Object {
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Unexpected character <emphasis>=</emphasis>"}
-				advice: Array [
-					log {
-						category: "info"
-						text: RAW_MARKUP {value: "Expected character <emphasis>,</emphasis>"}
-					}
-				]
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation es2015/uncategorised/393/input.js 1:0-1:10
 			expression: JSAssignmentExpression {
 				operator: "="
-				loc: SourceLocation es2015/uncategorised/393/input.js 1:1-1:10
-				right: JSObjectExpression {
-					properties: Array []
-					loc: SourceLocation es2015/uncategorised/393/input.js 1:8-1:10
-				}
 				left: JSAssignmentObjectPattern {
-					rest: undefined
-					loc: SourceLocation es2015/uncategorised/393/input.js 1:1-1:5
-					properties: Array [
+					properties: [
 						JSAssignmentObjectPatternProperty {
 							key: JSStaticPropertyKey {
 								value: JSIdentifier {
@@ -71,38 +29,70 @@ JSRoot {
 							loc: SourceLocation es2015/uncategorised/393/input.js 1:2-1:5
 						}
 					]
+					loc: SourceLocation es2015/uncategorised/393/input.js 1:1-1:5
 				}
+				right: JSObjectExpression {
+					properties: []
+					loc: SourceLocation es2015/uncategorised/393/input.js 1:8-1:10
+				}
+				loc: SourceLocation es2015/uncategorised/393/input.js 1:1-1:10
 			}
+			loc: SourceLocation es2015/uncategorised/393/input.js 1:0-1:10
 		}
 		JSExpressionStatement {
-			loc: SourceLocation es2015/uncategorised/393/input.js 1:10-1:11
 			expression: JSReferenceIdentifier {
 				name: "INVALID_PLACEHOLDER"
 				loc: SourceLocation es2015/uncategorised/393/input.js 1:10-1:11
 			}
+			loc: SourceLocation es2015/uncategorised/393/input.js 1:10-1:11
 		}
 		JSExpressionStatement {
-			loc: SourceLocation es2015/uncategorised/393/input.js 1:11-1:12
 			expression: JSReferenceIdentifier {
 				name: "INVALID_PLACEHOLDER"
 				loc: SourceLocation es2015/uncategorised/393/input.js 1:11-1:12
 			}
+			loc: SourceLocation es2015/uncategorised/393/input.js 1:11-1:12
 		}
 		JSExpressionStatement {
-			loc: SourceLocation es2015/uncategorised/393/input.js 1:13-1:15
 			expression: JSReferenceIdentifier {
 				name: "INVALID_PLACEHOLDER"
 				loc: SourceLocation es2015/uncategorised/393/input.js 1:13-1:15
 			}
+			loc: SourceLocation es2015/uncategorised/393/input.js 1:13-1:15
 		}
 		JSExpressionStatement {
-			loc: SourceLocation es2015/uncategorised/393/input.js 1:16-1:20
 			expression: JSReferenceIdentifier {
 				name: "set"
 				loc: SourceLocation es2015/uncategorised/393/input.js 1:16-1:19 (set)
 			}
+			loc: SourceLocation es2015/uncategorised/393/input.js 1:16-1:20
 		}
 	]
+	comments: []
+	corrupt: true
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {
+				advice: [log {category: "info", text: [RAW_MARKUP {value: "Expected character <emphasis>"}, ",", RAW_MARKUP {value: "</emphasis>"}]}]
+				category: ["parse"]
+				categoryValue: "js"
+				message: [RAW_MARKUP {value: "Unexpected character <emphasis>"}, "=", RAW_MARKUP {value: "</emphasis>"}]
+			}
+			location: {
+				language: "js"
+				path: UIDPath<es2015/uncategorised/393/input.js>
+				end: Position 1:7
+				start: Position 1:6
+			}
+		}
+	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2015/uncategorised/393/input.js>
+	loc: SourceLocation es2015/uncategorised/393/input.js 1:0-2:0
 }
 ```
 

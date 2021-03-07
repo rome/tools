@@ -8,30 +8,16 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation esprima/expression-primary-object/migrated_0028/input.js 1:0-1:77
-	path: UIDPath<esprima/expression-primary-object/migrated_0028/input.js>
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation esprima/expression-primary-object/migrated_0028/input.js 1:0-1:77
 			expression: JSAssignmentExpression {
 				operator: "="
-				loc: SourceLocation esprima/expression-primary-object/migrated_0028/input.js 1:0-1:77
 				left: JSAssignmentIdentifier {
 					name: "x"
 					loc: SourceLocation esprima/expression-primary-object/migrated_0028/input.js 1:0-1:1 (x)
 				}
 				right: JSObjectExpression {
-					loc: SourceLocation esprima/expression-primary-object/migrated_0028/input.js 1:4-1:77
-					properties: Array [
+					properties: [
 						JSObjectMethod {
 							kind: "get"
 							key: JSStaticPropertyKey {
@@ -41,31 +27,27 @@ JSRoot {
 								}
 								loc: SourceLocation esprima/expression-primary-object/migrated_0028/input.js 1:10-1:15
 							}
-							loc: SourceLocation esprima/expression-primary-object/migrated_0028/input.js 1:6-1:36
-							head: JSFunctionHead {
-								async: false
-								generator: false
-								hasHoistedVars: false
-								params: Array []
-								rest: undefined
-								returnType: undefined
-								thisType: undefined
-								typeParameters: undefined
-								loc: SourceLocation esprima/expression-primary-object/migrated_0028/input.js 1:15-1:17
-							}
 							body: JSBlockStatement {
-								directives: Array []
-								loc: SourceLocation esprima/expression-primary-object/migrated_0028/input.js 1:18-1:36
-								body: Array [
+								body: [
 									JSReturnStatement {
-										loc: SourceLocation esprima/expression-primary-object/migrated_0028/input.js 1:20-1:34
 										argument: JSReferenceIdentifier {
 											name: "m_width"
 											loc: SourceLocation esprima/expression-primary-object/migrated_0028/input.js 1:27-1:34 (m_width)
 										}
+										loc: SourceLocation esprima/expression-primary-object/migrated_0028/input.js 1:20-1:34
 									}
 								]
+								directives: []
+								loc: SourceLocation esprima/expression-primary-object/migrated_0028/input.js 1:18-1:36
 							}
+							head: JSFunctionHead {
+								async: false
+								generator: false
+								hasHoistedVars: false
+								params: []
+								loc: SourceLocation esprima/expression-primary-object/migrated_0028/input.js 1:15-1:17
+							}
+							loc: SourceLocation esprima/expression-primary-object/migrated_0028/input.js 1:6-1:36
 						}
 						JSObjectMethod {
 							kind: "set"
@@ -76,16 +58,11 @@ JSRoot {
 								}
 								loc: SourceLocation esprima/expression-primary-object/migrated_0028/input.js 1:42-1:47
 							}
-							loc: SourceLocation esprima/expression-primary-object/migrated_0028/input.js 1:38-1:75
 							body: JSBlockStatement {
-								directives: Array []
-								loc: SourceLocation esprima/expression-primary-object/migrated_0028/input.js 1:55-1:75
-								body: Array [
+								body: [
 									JSExpressionStatement {
-										loc: SourceLocation esprima/expression-primary-object/migrated_0028/input.js 1:57-1:73
 										expression: JSAssignmentExpression {
 											operator: "="
-											loc: SourceLocation esprima/expression-primary-object/migrated_0028/input.js 1:57-1:72
 											left: JSAssignmentIdentifier {
 												name: "m_width"
 												loc: SourceLocation esprima/expression-primary-object/migrated_0028/input.js 1:57-1:64 (m_width)
@@ -94,37 +71,48 @@ JSRoot {
 												name: "width"
 												loc: SourceLocation esprima/expression-primary-object/migrated_0028/input.js 1:67-1:72 (width)
 											}
+											loc: SourceLocation esprima/expression-primary-object/migrated_0028/input.js 1:57-1:72
 										}
+										loc: SourceLocation esprima/expression-primary-object/migrated_0028/input.js 1:57-1:73
 									}
 								]
+								directives: []
+								loc: SourceLocation esprima/expression-primary-object/migrated_0028/input.js 1:55-1:75
 							}
 							head: JSFunctionHead {
 								async: false
 								generator: false
 								hasHoistedVars: false
-								rest: undefined
-								returnType: undefined
-								thisType: undefined
-								typeParameters: undefined
-								loc: SourceLocation esprima/expression-primary-object/migrated_0028/input.js 1:47-1:54
-								params: Array [
+								params: [
 									JSBindingIdentifier {
 										name: "width"
-										loc: SourceLocation esprima/expression-primary-object/migrated_0028/input.js 1:48-1:53 (width)
 										meta: JSPatternMeta {
-											optional: undefined
-											typeAnnotation: undefined
 											loc: SourceLocation esprima/expression-primary-object/migrated_0028/input.js 1:48-1:53
 										}
+										loc: SourceLocation esprima/expression-primary-object/migrated_0028/input.js 1:48-1:53 (width)
 									}
 								]
+								loc: SourceLocation esprima/expression-primary-object/migrated_0028/input.js 1:47-1:54
 							}
+							loc: SourceLocation esprima/expression-primary-object/migrated_0028/input.js 1:38-1:75
 						}
 					]
+					loc: SourceLocation esprima/expression-primary-object/migrated_0028/input.js 1:4-1:77
 				}
+				loc: SourceLocation esprima/expression-primary-object/migrated_0028/input.js 1:0-1:77
 			}
+			loc: SourceLocation esprima/expression-primary-object/migrated_0028/input.js 1:0-1:77
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<esprima/expression-primary-object/migrated_0028/input.js>
+	loc: SourceLocation esprima/expression-primary-object/migrated_0028/input.js 1:0-1:77
 }
 ```
 

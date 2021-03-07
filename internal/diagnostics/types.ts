@@ -6,31 +6,35 @@
  */
 
 import {Position, SourceLocation} from "@internal/parser-core";
-import {Diffs} from "@internal/string-diff";
+import {CompressedDiff} from "@internal/string-diff";
 import {ConstJSSourceType} from "@internal/ast";
-import {OneIndexed, ZeroIndexed} from "@internal/math";
-import {JSONPropertyValue} from "@internal/codec-config";
+import {OneIndexed, ZeroIndexed} from "@internal/numbers";
 import {DiagnosticCategory} from "./categories";
 import {Dict} from "@internal/typescript-helpers";
 import {ClientRequestFlags, CommandName} from "@internal/core";
 import {StaticMarkup} from "@internal/markup";
-import {AnyPath, MixedPathSet} from "@internal/path";
+import {MixedPathSet, Path} from "@internal/path";
+import {RSERValue} from "@internal/binary-transport";
 
 export type DiagnosticCategoryDescription = {
 	category: DiagnosticCategory;
 	categoryValue?: string;
 };
 
-export type DiagnosticFilter = {
+export type DiagnosticEliminationFilter = {
 	category?: DiagnosticCategory;
 	message?: StaticMarkup;
-	path?: AnyPath;
+	path?: Path;
 	start?: Position;
 	line?: OneIndexed;
 };
 
+export type DiagnosticEliminationFilterWithTest = DiagnosticEliminationFilter & {
+	test?: (diagnostic: Diagnostic) => boolean;
+};
+
 export type DiagnosticSuppression = DiagnosticCategoryDescription & {
-	path: AnyPath;
+	path: Path;
 	startLine: OneIndexed;
 	endLine: OneIndexed;
 	loc: SourceLocation;
@@ -38,24 +42,20 @@ export type DiagnosticSuppression = DiagnosticCategoryDescription & {
 
 export type DiagnosticSuppressions = DiagnosticSuppression[];
 
-export type DiagnosticFilterWithTest = DiagnosticFilter & {
-	test?: (diagnostic: Diagnostic) => boolean;
-};
-
 export type DiagnosticLocation = {
 	sourceText?: string;
 	integrity?: DiagnosticIntegrity;
 	marker?: StaticMarkup;
 	language?: DiagnosticLanguage;
 	sourceTypeJS?: DiagnosticSourceType;
-	path: AnyPath;
+	path: Path;
 	start?: Position;
 	end?: Position;
 };
 
 export type DiagnosticOrigin = {
 	category: string;
-	message?: string;
+	message?: StaticMarkup;
 };
 
 export type DiagnosticLogCategory = "none" | "info" | "warn" | "error";
@@ -96,18 +96,14 @@ export type Diagnostic = {
 	location: DiagnosticLocation;
 	label?: StaticMarkup;
 	origins?: DiagnosticOrigin[];
-	dependencies?: DiagnosticDependencies;
+	dependencies?: DiagnosticDependency[];
 	tags?: DiagnosticTags;
 };
 
-export type Diagnostics = Diagnostic[];
-
 export type DiagnosticDependency = {
-	path: AnyPath;
+	path: Path;
 	integrity?: DiagnosticIntegrity;
 };
-
-export type DiagnosticDependencies = DiagnosticDependency[];
 
 export type DiagnosticIntegrity = {
 	hash: string;
@@ -115,17 +111,18 @@ export type DiagnosticIntegrity = {
 
 export type DiagnosticDescription = DiagnosticCategoryDescription & {
 	message: StaticMarkup;
-	advice: DiagnosticAdvice;
+	advice: DiagnosticAdvice[];
+	verboseAdvice?: DiagnosticAdvice[];
 };
 
 export type DiagnosticDescriptionOptional = {
 	category?: DiagnosticCategory;
 	categoryValue?: string;
 	message: StaticMarkup;
-	advice?: DiagnosticAdvice;
+	advice?: DiagnosticAdvice[];
 };
 
-export type DiagnosticAdviceItem =
+export type DiagnosticAdvice =
 	| DiagnosticAdviceLog
 	| DiagnosticAdviceList
 	| DiagnosticAdviceInspect
@@ -140,7 +137,7 @@ export type DiagnosticAdviceItem =
 export type DiagnosticAdviceGroup = {
 	type: "group";
 	title: StaticMarkup;
-	advice: DiagnosticAdvice;
+	advice: DiagnosticAdvice[];
 };
 
 export type DiagnosticAdviceCommand = {
@@ -152,7 +149,6 @@ export type DiagnosticAdviceLog = {
 	type: "log";
 	category: DiagnosticLogCategory;
 	text: StaticMarkup;
-	compact?: boolean;
 };
 
 export type DiagnosticAdviceList = {
@@ -165,25 +161,30 @@ export type DiagnosticAdviceList = {
 
 export type DiagnosticAdviceInspect = {
 	type: "inspect";
-	data: JSONPropertyValue;
+	data: RSERValue;
 };
 
 export type DiagnosticAdviceAction = {
 	type: "action";
-	hidden?: boolean;
-	extra?: boolean;
-	shortcut?: string;
-	instruction: StaticMarkup;
-	noun: StaticMarkup;
 	command: CommandName;
 	commandFlags?: Dict<boolean | string | (string[])>;
 	requestFlags?: ClientRequestFlags;
 	args?: string[];
+
+	// What will running this command do?
+	description: StaticMarkup;
+
+	// Marks actions that aren't important and could be hidden behind a submenu, or ranked at the bottom
+	secondary?: boolean;
+
+	// Suggestion for keyboard shortcut to use for interactive execution in an editor or CLI
+	suggestedKeyboardShortcut?: string;
 };
 
 export type DiagnosticAdviceCode = {
 	type: "code";
 	sourceText: string;
+	truncate?: boolean;
 	sourceTypeJS?: ConstJSSourceType;
 	language: DiagnosticLanguage;
 };
@@ -193,15 +194,18 @@ export type DiagnosticAdviceFrame = {
 	location: DiagnosticLocation;
 };
 
-export type DiagnosticAdviceDiff = {
-	type: "diff";
-	diff: Diffs;
+type DiagnosticAdviceDiffBase = {
 	language: DiagnosticLanguage;
 	sourceTypeJS?: ConstJSSourceType;
 	legend?: {
 		add: string;
 		delete: string;
 	};
+};
+
+export type DiagnosticAdviceDiff = DiagnosticAdviceDiffBase & {
+	type: "diff";
+	diff: CompressedDiff[];
 };
 
 export type DiagnosticAdviceStacktrace = {
@@ -212,14 +216,12 @@ export type DiagnosticAdviceStacktrace = {
 	frames: DiagnosticAdviceStackFrame[];
 };
 
-export type DiagnosticAdvice = DiagnosticAdviceItem[];
-
 export type DiagnosticAdviceStackFrame = {
 	prefix?: string;
 	suffix?: string;
 	object?: string;
 	property?: string;
-	path?: AnyPath;
+	path?: Path;
 	line?: OneIndexed;
 	column?: ZeroIndexed;
 	language: undefined | DiagnosticLanguage;

@@ -8,52 +8,42 @@
 
 ```javascript
 JSRoot {
-	corrupt: true
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation core/uncategorised/439/input.js 1:0-2:1
-	path: UIDPath<core/uncategorised/439/input.js>
-	comments: Array [
+	body: [
+		JSExpressionStatement {
+			leadingComments: ["0"]
+			expression: JSReferenceIdentifier {
+				name: "INVALID_PLACEHOLDER"
+				loc: SourceLocation core/uncategorised/439/input.js 2:0-2:1
+			}
+			loc: SourceLocation core/uncategorised/439/input.js 2:0-2:1
+		}
+	]
+	comments: [
 		CommentLine {
 			id: "0"
 			value: ""
 			loc: SourceLocation core/uncategorised/439/input.js 1:0-1:2
 		}
 	]
-	body: Array [
-		JSExpressionStatement {
-			leadingComments: Array ["0"]
-			loc: SourceLocation core/uncategorised/439/input.js 2:0-2:1
-			expression: JSReferenceIdentifier {
-				name: "INVALID_PLACEHOLDER"
-				leadingComments: undefined
-				loc: SourceLocation core/uncategorised/439/input.js 2:0-2:1
-			}
-		}
-	]
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Unknown start to an statement expression"}
-			}
-			location: Object {
-				integrity: undefined
+	corrupt: true
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {advice: [], category: ["parse"], categoryValue: "js", message: [RAW_MARKUP {value: "Unknown start to an "}, "statement expression"]}
+			location: {
 				language: "js"
-				sourceText: undefined
-				end: Position 1:0
 				path: UIDPath<core/uncategorised/439/input.js>
+				end: Position 1:0
 				start: Position 2:0
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<core/uncategorised/439/input.js>
+	loc: SourceLocation core/uncategorised/439/input.js 1:0-2:1
 }
 ```
 

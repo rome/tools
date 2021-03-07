@@ -8,59 +8,53 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	loc: SourceLocation typescript/types/indexed/input.ts 1:0-2:0
-	path: UIDPath<typescript/types/indexed/input.ts>
-	syntax: Array ["ts"]
-	body: Array [
+	body: [
 		JSVariableDeclarationStatement {
-			loc: SourceLocation typescript/types/indexed/input.ts 1:0-1:12
 			declaration: JSVariableDeclaration {
 				kind: "let"
-				loc: SourceLocation typescript/types/indexed/input.ts 1:0-1:12
-				declarations: Array [
+				declarations: [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "x"
-							loc: SourceLocation typescript/types/indexed/input.ts 1:4-1:11
 							meta: JSPatternMeta {
-								definite: undefined
-								loc: SourceLocation typescript/types/indexed/input.ts 1:4-1:11
 								typeAnnotation: TSIndexedAccessType {
-									loc: SourceLocation typescript/types/indexed/input.ts 1:7-1:11
 									indexType: TSTypeReference {
-										typeParameters: undefined
-										loc: SourceLocation typescript/types/indexed/input.ts 1:9-1:10
 										typeName: JSReferenceIdentifier {
 											name: "K"
 											loc: SourceLocation typescript/types/indexed/input.ts 1:9-1:10 (K)
 										}
+										loc: SourceLocation typescript/types/indexed/input.ts 1:9-1:10
 									}
 									objectType: TSTypeReference {
-										typeParameters: undefined
-										loc: SourceLocation typescript/types/indexed/input.ts 1:7-1:8
 										typeName: JSReferenceIdentifier {
 											name: "T"
 											loc: SourceLocation typescript/types/indexed/input.ts 1:7-1:8 (T)
 										}
+										loc: SourceLocation typescript/types/indexed/input.ts 1:7-1:8
 									}
+									loc: SourceLocation typescript/types/indexed/input.ts 1:7-1:11
 								}
+								loc: SourceLocation typescript/types/indexed/input.ts 1:4-1:11
 							}
+							loc: SourceLocation typescript/types/indexed/input.ts 1:4-1:11
 						}
-						init: undefined
 						loc: SourceLocation typescript/types/indexed/input.ts 1:4-1:11
 					}
 				]
+				loc: SourceLocation typescript/types/indexed/input.ts 1:0-1:12
 			}
+			loc: SourceLocation typescript/types/indexed/input.ts 1:0-1:12
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: ["ts"]
+	path: UIDPath<typescript/types/indexed/input.ts>
+	loc: SourceLocation typescript/types/indexed/input.ts 1:0-2:0
 }
 ```
 

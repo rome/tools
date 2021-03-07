@@ -8,50 +8,14 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2018/object-rest-spread/7/input.js 1:0-2:0
-	path: UIDPath<es2018/object-rest-spread/7/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "The rest element has to be the last element when destructuring"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:10
-				path: UIDPath<es2018/object-rest-spread/7/input.js>
-				start: Position 1:9
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSVariableDeclarationStatement {
-			loc: SourceLocation es2018/object-rest-spread/7/input.js 1:0-1:25
 			declaration: JSVariableDeclaration {
 				kind: "let"
-				loc: SourceLocation es2018/object-rest-spread/7/input.js 1:0-1:25
-				declarations: Array [
+				declarations: [
 					JSVariableDeclarator {
 						id: JSBindingObjectPattern {
-							loc: SourceLocation es2018/object-rest-spread/7/input.js 1:4-1:18
-							rest: JSBindingIdentifier {
-								name: "x"
-								loc: SourceLocation es2018/object-rest-spread/7/input.js 1:9-1:10 (x)
-							}
-							properties: Array [
+							properties: [
 								JSBindingObjectPatternProperty {
 									key: JSStaticPropertyKey {
 										value: JSIdentifier {
@@ -81,17 +45,49 @@ JSRoot {
 									loc: SourceLocation es2018/object-rest-spread/7/input.js 1:15-1:16
 								}
 							]
+							rest: JSBindingIdentifier {
+								name: "x"
+								loc: SourceLocation es2018/object-rest-spread/7/input.js 1:9-1:10 (x)
+							}
+							loc: SourceLocation es2018/object-rest-spread/7/input.js 1:4-1:18
 						}
-						loc: SourceLocation es2018/object-rest-spread/7/input.js 1:4-1:24
 						init: JSReferenceIdentifier {
 							name: "obj"
 							loc: SourceLocation es2018/object-rest-spread/7/input.js 1:21-1:24 (obj)
 						}
+						loc: SourceLocation es2018/object-rest-spread/7/input.js 1:4-1:24
 					}
 				]
+				loc: SourceLocation es2018/object-rest-spread/7/input.js 1:0-1:25
+			}
+			loc: SourceLocation es2018/object-rest-spread/7/input.js 1:0-1:25
+		}
+	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "The rest element has to be the last element when destructuring"}
+			}
+			location: {
+				language: "js"
+				path: UIDPath<es2018/object-rest-spread/7/input.js>
+				end: Position 1:10
+				start: Position 1:9
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2018/object-rest-spread/7/input.js>
+	loc: SourceLocation es2018/object-rest-spread/7/input.js 1:0-2:0
 }
 ```
 

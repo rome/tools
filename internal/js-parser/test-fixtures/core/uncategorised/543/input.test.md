@@ -8,48 +8,20 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: true
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation core/uncategorised/543/input.js 1:0-7:0
-	path: UIDPath<core/uncategorised/543/input.js>
-	body: Array [
+	body: [
 		JSVariableDeclarationStatement {
-			loc: SourceLocation core/uncategorised/543/input.js 1:0-4:2
 			declaration: JSVariableDeclaration {
 				kind: "var"
-				loc: SourceLocation core/uncategorised/543/input.js 1:0-4:2
-				declarations: Array [
+				declarations: [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "fn"
 							loc: SourceLocation core/uncategorised/543/input.js 1:4-1:6 (fn)
 						}
-						loc: SourceLocation core/uncategorised/543/input.js 1:4-4:1
 						init: JSFunctionExpression {
-							id: undefined
-							loc: SourceLocation core/uncategorised/543/input.js 1:9-4:1
-							head: JSFunctionHead {
-								async: false
-								generator: false
-								hasHoistedVars: false
-								params: Array []
-								rest: undefined
-								returnType: undefined
-								thisType: undefined
-								typeParameters: undefined
-								loc: SourceLocation core/uncategorised/543/input.js 1:18-1:20
-							}
 							body: JSBlockStatement {
-								body: Array []
-								loc: SourceLocation core/uncategorised/543/input.js 1:21-4:1
-								directives: Array [
+								body: []
+								directives: [
 									JSDirective {
 										value: "use strict"
 										loc: SourceLocation core/uncategorised/543/input.js 2:2-2:15
@@ -59,21 +31,42 @@ JSRoot {
 										loc: SourceLocation core/uncategorised/543/input.js 3:2-3:15
 									}
 								]
+								loc: SourceLocation core/uncategorised/543/input.js 1:21-4:1
 							}
+							head: JSFunctionHead {
+								async: false
+								generator: false
+								hasHoistedVars: false
+								params: []
+								loc: SourceLocation core/uncategorised/543/input.js 1:18-1:20
+							}
+							loc: SourceLocation core/uncategorised/543/input.js 1:9-4:1
 						}
+						loc: SourceLocation core/uncategorised/543/input.js 1:4-4:1
 					}
 				]
+				loc: SourceLocation core/uncategorised/543/input.js 1:0-4:2
 			}
+			loc: SourceLocation core/uncategorised/543/input.js 1:0-4:2
 		}
 		JSExpressionStatement {
-			loc: SourceLocation core/uncategorised/543/input.js 6:0-6:5
 			expression: JSNumericLiteral {
 				value: 64
 				format: "octal"
 				loc: SourceLocation core/uncategorised/543/input.js 6:0-6:4
 			}
+			loc: SourceLocation core/uncategorised/543/input.js 6:0-6:5
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: true
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<core/uncategorised/543/input.js>
+	loc: SourceLocation core/uncategorised/543/input.js 1:0-7:0
 }
 ```
 

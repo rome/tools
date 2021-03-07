@@ -8,75 +8,66 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: true
-	directives: Array []
-	hasHoistedVars: true
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2015/uncategorised/273/input.js 1:0-1:18
-	path: UIDPath<es2015/uncategorised/273/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Unknown start to an array element"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:9
-				path: UIDPath<es2015/uncategorised/273/input.js>
-				start: Position 1:9
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSVariableDeclarationStatement {
-			loc: SourceLocation es2015/uncategorised/273/input.js 1:0-1:18
 			declaration: JSVariableDeclaration {
 				kind: "var"
-				loc: SourceLocation es2015/uncategorised/273/input.js 1:0-1:18
-				declarations: Array [
+				declarations: [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "a"
 							loc: SourceLocation es2015/uncategorised/273/input.js 1:4-1:5 (a)
 						}
-						loc: SourceLocation es2015/uncategorised/273/input.js 1:4-1:18
 						init: JSArrayExpression {
-							loc: SourceLocation es2015/uncategorised/273/input.js 1:8-1:18
-							elements: Array [
+							elements: [
 								JSCallExpression {
-									loc: SourceLocation es2015/uncategorised/273/input.js 1:9-1:15
-									callee: JSReferenceIdentifier {
-										name: "INVALID_PLACEHOLDER"
-										loc: SourceLocation es2015/uncategorised/273/input.js 1:9-1:11
-									}
-									arguments: Array [
+									arguments: [
 										JSReferenceIdentifier {
 											name: "x"
 											loc: SourceLocation es2015/uncategorised/273/input.js 1:13-1:14 (x)
 										}
 									]
+									callee: JSReferenceIdentifier {
+										name: "INVALID_PLACEHOLDER"
+										loc: SourceLocation es2015/uncategorised/273/input.js 1:9-1:11
+									}
+									loc: SourceLocation es2015/uncategorised/273/input.js 1:9-1:15
 								}
 								JSReferenceIdentifier {
 									name: "x"
 									loc: SourceLocation es2015/uncategorised/273/input.js 1:16-1:17 (x)
 								}
 							]
+							loc: SourceLocation es2015/uncategorised/273/input.js 1:8-1:18
 						}
+						loc: SourceLocation es2015/uncategorised/273/input.js 1:4-1:18
 					}
 				]
+				loc: SourceLocation es2015/uncategorised/273/input.js 1:0-1:18
+			}
+			loc: SourceLocation es2015/uncategorised/273/input.js 1:0-1:18
+		}
+	]
+	comments: []
+	corrupt: true
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {advice: [], category: ["parse"], categoryValue: "js", message: [RAW_MARKUP {value: "Unknown start to an "}, "array element"]}
+			location: {
+				language: "js"
+				path: UIDPath<es2015/uncategorised/273/input.js>
+				end: Position 1:9
+				start: Position 1:9
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: true
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2015/uncategorised/273/input.js>
+	loc: SourceLocation es2015/uncategorised/273/input.js 1:0-1:18
 }
 ```
 

@@ -8,30 +8,25 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation core/uncategorised/239/input.js 1:0-1:9
-	path: UIDPath<core/uncategorised/239/input.js>
-	body: Array [
+	body: [
 		JSForStatement {
-			init: undefined
-			test: undefined
-			update: undefined
-			loc: SourceLocation core/uncategorised/239/input.js 1:0-1:9
 			body: JSBlockStatement {
-				body: Array []
-				directives: Array []
+				body: []
+				directives: []
 				loc: SourceLocation core/uncategorised/239/input.js 1:7-1:9
 			}
+			loc: SourceLocation core/uncategorised/239/input.js 1:0-1:9
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<core/uncategorised/239/input.js>
+	loc: SourceLocation core/uncategorised/239/input.js 1:0-1:9
 }
 ```
 

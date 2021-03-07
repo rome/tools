@@ -8,24 +8,11 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation core/escape-template/non-octal-eight/input.js 1:0-2:0
-	path: UIDPath<core/escape-template/non-octal-eight/input.js>
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation core/escape-template/non-octal-eight/input.js 1:0-1:5
 			expression: JSTemplateLiteral {
-				expressions: Array []
-				loc: SourceLocation core/escape-template/non-octal-eight/input.js 1:0-1:4
-				quasis: Array [
+				expressions: []
+				quasis: [
 					JSTemplateElement {
 						cooked: "8"
 						raw: "\\8"
@@ -33,9 +20,20 @@ JSRoot {
 						loc: SourceLocation core/escape-template/non-octal-eight/input.js 1:1-1:3
 					}
 				]
+				loc: SourceLocation core/escape-template/non-octal-eight/input.js 1:0-1:4
 			}
+			loc: SourceLocation core/escape-template/non-octal-eight/input.js 1:0-1:5
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<core/escape-template/non-octal-eight/input.js>
+	loc: SourceLocation core/escape-template/non-octal-eight/input.js 1:0-2:0
 }
 ```
 

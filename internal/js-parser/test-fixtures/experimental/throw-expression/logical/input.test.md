@@ -8,44 +8,17 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation experimental/throw-expression/logical/input.js 1:0-4:0
-	path: UIDPath<experimental/throw-expression/logical/input.js>
-	body: Array [
+	body: [
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "test"
 				loc: SourceLocation experimental/throw-expression/logical/input.js 1:9-1:13 (test)
 			}
-			loc: SourceLocation experimental/throw-expression/logical/input.js 1:0-3:1
-			head: JSFunctionHead {
-				async: false
-				generator: false
-				hasHoistedVars: false
-				params: Array []
-				rest: undefined
-				returnType: undefined
-				thisType: undefined
-				typeParameters: undefined
-				loc: SourceLocation experimental/throw-expression/logical/input.js 1:13-1:15
-			}
 			body: JSBlockStatement {
-				directives: Array []
-				loc: SourceLocation experimental/throw-expression/logical/input.js 1:16-3:1
-				body: Array [
+				body: [
 					JSExpressionStatement {
-						loc: SourceLocation experimental/throw-expression/logical/input.js 2:2-2:18
 						expression: JSLogicalExpression {
 							operator: "&&"
-							loc: SourceLocation experimental/throw-expression/logical/input.js 2:2-2:17
 							left: JSBooleanLiteral {
 								value: true
 								loc: SourceLocation experimental/throw-expression/logical/input.js 2:2-2:6
@@ -53,19 +26,39 @@ JSRoot {
 							right: JSUnaryExpression {
 								operator: "throw"
 								prefix: true
-								loc: SourceLocation experimental/throw-expression/logical/input.js 2:10-2:17
 								argument: JSNumericLiteral {
 									value: 1
-									format: undefined
 									loc: SourceLocation experimental/throw-expression/logical/input.js 2:16-2:17
 								}
+								loc: SourceLocation experimental/throw-expression/logical/input.js 2:10-2:17
 							}
+							loc: SourceLocation experimental/throw-expression/logical/input.js 2:2-2:17
 						}
+						loc: SourceLocation experimental/throw-expression/logical/input.js 2:2-2:18
 					}
 				]
+				directives: []
+				loc: SourceLocation experimental/throw-expression/logical/input.js 1:16-3:1
 			}
+			head: JSFunctionHead {
+				async: false
+				generator: false
+				hasHoistedVars: false
+				params: []
+				loc: SourceLocation experimental/throw-expression/logical/input.js 1:13-1:15
+			}
+			loc: SourceLocation experimental/throw-expression/logical/input.js 1:0-3:1
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<experimental/throw-expression/logical/input.js>
+	loc: SourceLocation experimental/throw-expression/logical/input.js 1:0-4:0
 }
 ```
 

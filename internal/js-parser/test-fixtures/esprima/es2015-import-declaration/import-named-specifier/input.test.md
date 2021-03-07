@@ -8,30 +8,10 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	syntax: Array []
-	loc: SourceLocation esprima/es2015-import-declaration/import-named-specifier/input.js 1:0-2:0
-	path: UIDPath<esprima/es2015-import-declaration/import-named-specifier/input.js>
-	body: Array [
+	body: [
 		JSImportDeclaration {
-			defaultSpecifier: undefined
-			importKind: undefined
-			namespaceSpecifier: undefined
-			loc: SourceLocation esprima/es2015-import-declaration/import-named-specifier/input.js 1:0-1:24
-			source: JSStringLiteral {
-				value: "foo"
-				loc: SourceLocation esprima/es2015-import-declaration/import-named-specifier/input.js 1:18-1:23
-			}
-			namedSpecifiers: Array [
+			namedSpecifiers: [
 				JSImportSpecifier {
-					loc: SourceLocation esprima/es2015-import-declaration/import-named-specifier/input.js 1:8-1:11
 					imported: JSIdentifier {
 						name: "bar"
 						loc: SourceLocation esprima/es2015-import-declaration/import-named-specifier/input.js 1:8-1:11 (bar)
@@ -41,13 +21,27 @@ JSRoot {
 							name: "bar"
 							loc: SourceLocation esprima/es2015-import-declaration/import-named-specifier/input.js 1:8-1:11 (bar)
 						}
-						importKind: undefined
 						loc: SourceLocation esprima/es2015-import-declaration/import-named-specifier/input.js 1:8-1:11
 					}
+					loc: SourceLocation esprima/es2015-import-declaration/import-named-specifier/input.js 1:8-1:11
 				}
 			]
+			source: JSStringLiteral {
+				value: "foo"
+				loc: SourceLocation esprima/es2015-import-declaration/import-named-specifier/input.js 1:18-1:23
+			}
+			loc: SourceLocation esprima/es2015-import-declaration/import-named-specifier/input.js 1:0-1:24
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: []
+	path: UIDPath<esprima/es2015-import-declaration/import-named-specifier/input.js>
+	loc: SourceLocation esprima/es2015-import-declaration/import-named-specifier/input.js 1:0-2:0
 }
 ```
 

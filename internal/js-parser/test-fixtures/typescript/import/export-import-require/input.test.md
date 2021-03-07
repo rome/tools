@@ -8,34 +8,32 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	loc: SourceLocation typescript/import/export-import-require/input.ts 1:0-2:0
-	path: UIDPath<typescript/import/export-import-require/input.ts>
-	syntax: Array ["ts"]
-	body: Array [
+	body: [
 		TSImportEqualsDeclaration {
+			isExport: true
 			id: JSBindingIdentifier {
 				name: "a"
 				loc: SourceLocation typescript/import/export-import-require/input.ts 1:14-1:15 (a)
 			}
-			isExport: true
-			loc: SourceLocation typescript/import/export-import-require/input.ts 1:0-1:31
 			moduleReference: TSExternalModuleReference {
-				loc: SourceLocation typescript/import/export-import-require/input.ts 1:18-1:30
 				expression: JSStringLiteral {
 					value: "a"
 					loc: SourceLocation typescript/import/export-import-require/input.ts 1:26-1:29
 				}
+				loc: SourceLocation typescript/import/export-import-require/input.ts 1:18-1:30
 			}
+			loc: SourceLocation typescript/import/export-import-require/input.ts 1:0-1:31
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: ["ts"]
+	path: UIDPath<typescript/import/export-import-require/input.ts>
+	loc: SourceLocation typescript/import/export-import-require/input.ts 1:0-2:0
 }
 ```
 

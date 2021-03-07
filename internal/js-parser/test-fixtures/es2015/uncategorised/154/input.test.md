@@ -8,76 +8,28 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2015/uncategorised/154/input.js 1:0-1:30
-	path: UIDPath<es2015/uncategorised/154/input.js>
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation es2015/uncategorised/154/input.js 1:0-1:30
 			expression: JSAssignmentExpression {
 				operator: "="
-				loc: SourceLocation es2015/uncategorised/154/input.js 1:0-1:30
 				left: JSAssignmentIdentifier {
 					name: "f"
 					loc: SourceLocation es2015/uncategorised/154/input.js 1:0-1:1 (f)
 				}
 				right: JSFunctionExpression {
-					id: undefined
-					loc: SourceLocation es2015/uncategorised/154/input.js 1:4-1:30
 					body: JSBlockStatement {
-						body: Array []
-						directives: Array []
+						body: []
+						directives: []
 						loc: SourceLocation es2015/uncategorised/154/input.js 1:28-1:30
 					}
 					head: JSFunctionHead {
 						async: false
 						generator: false
 						hasHoistedVars: false
-						rest: undefined
-						returnType: undefined
-						thisType: undefined
-						typeParameters: undefined
-						loc: SourceLocation es2015/uncategorised/154/input.js 1:12-1:27
-						params: Array [
+						params: [
 							JSBindingAssignmentPattern {
-								loc: SourceLocation es2015/uncategorised/154/input.js 1:13-1:26
-								right: JSObjectExpression {
-									loc: SourceLocation es2015/uncategorised/154/input.js 1:19-1:26
-									properties: Array [
-										JSObjectProperty {
-											key: JSStaticPropertyKey {
-												value: JSIdentifier {
-													name: "x"
-													loc: SourceLocation es2015/uncategorised/154/input.js 1:20-1:21 (x)
-												}
-												loc: SourceLocation es2015/uncategorised/154/input.js 1:20-1:21
-											}
-											value: JSNumericLiteral {
-												value: 10
-												format: undefined
-												loc: SourceLocation es2015/uncategorised/154/input.js 1:23-1:25
-											}
-											loc: SourceLocation es2015/uncategorised/154/input.js 1:20-1:25
-										}
-									]
-								}
 								left: JSBindingObjectPattern {
-									rest: undefined
-									loc: SourceLocation es2015/uncategorised/154/input.js 1:13-1:16
-									meta: JSPatternMeta {
-										optional: undefined
-										typeAnnotation: undefined
-										loc: SourceLocation es2015/uncategorised/154/input.js 1:13-1:16
-									}
-									properties: Array [
+									properties: [
 										JSBindingObjectPatternProperty {
 											key: JSStaticPropertyKey {
 												value: JSIdentifier {
@@ -93,14 +45,51 @@ JSRoot {
 											loc: SourceLocation es2015/uncategorised/154/input.js 1:14-1:15
 										}
 									]
+									meta: JSPatternMeta {
+										loc: SourceLocation es2015/uncategorised/154/input.js 1:13-1:16
+									}
+									loc: SourceLocation es2015/uncategorised/154/input.js 1:13-1:16
 								}
+								right: JSObjectExpression {
+									properties: [
+										JSObjectProperty {
+											key: JSStaticPropertyKey {
+												value: JSIdentifier {
+													name: "x"
+													loc: SourceLocation es2015/uncategorised/154/input.js 1:20-1:21 (x)
+												}
+												loc: SourceLocation es2015/uncategorised/154/input.js 1:20-1:21
+											}
+											value: JSNumericLiteral {
+												value: 10
+												loc: SourceLocation es2015/uncategorised/154/input.js 1:23-1:25
+											}
+											loc: SourceLocation es2015/uncategorised/154/input.js 1:20-1:25
+										}
+									]
+									loc: SourceLocation es2015/uncategorised/154/input.js 1:19-1:26
+								}
+								loc: SourceLocation es2015/uncategorised/154/input.js 1:13-1:26
 							}
 						]
+						loc: SourceLocation es2015/uncategorised/154/input.js 1:12-1:27
 					}
+					loc: SourceLocation es2015/uncategorised/154/input.js 1:4-1:30
 				}
+				loc: SourceLocation es2015/uncategorised/154/input.js 1:0-1:30
 			}
+			loc: SourceLocation es2015/uncategorised/154/input.js 1:0-1:30
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2015/uncategorised/154/input.js>
+	loc: SourceLocation es2015/uncategorised/154/input.js 1:0-1:30
 }
 ```
 

@@ -11,10 +11,9 @@ import {
 	extractSourceLocationRangeFromNodes,
 } from "@internal/parser-core";
 import {
-	AnyVisitors,
 	CompilerOptions,
-	PathOptions,
-	Transforms,
+	CompilerPathOptions,
+	Transform,
 } from "@internal/compiler";
 import {
 	Diagnostic,
@@ -36,7 +35,7 @@ import {reduceNode} from "../methods/reduce";
 import {
 	AbsoluteFilePath,
 	AbsoluteFilePathSet,
-	AnyPath,
+	Path,
 	equalPaths,
 } from "@internal/path";
 import {
@@ -106,15 +105,22 @@ export default class CompilerContext {
 			suppressions = [],
 		} = arg;
 
-		this.records = [];
+		const compilerProject = CompilerContext.normalizeProject(project);
 
 		this.ast = ast;
 		this.path = ast.path;
-		this.displayFilename =
-			ref === undefined ? ast.path.join() : ref.relative.join();
+
+		if (ref === undefined) {
+			this.displayPath = ast.path;
+		} else if (compilerProject.directory === undefined) {
+			this.displayPath = ref.uid;
+		} else {
+			this.displayPath = compilerProject.directory.relative(ref.real);
+		}
+
 		this.frozen = frozen;
 		this.integrity = ast.integrity;
-		this.project = CompilerContext.normalizeProject(project);
+		this.project = compilerProject;
 		this.options = options;
 		this.origin = origin;
 		this.cacheDependencies = new AbsoluteFilePathSet();
@@ -124,6 +130,7 @@ export default class CompilerContext {
 
 		this.comments = new CommentsConsumer(ast.comments);
 		this.diagnostics = new DiagnosticsProcessor();
+		this.records = [];
 
 		this.reducedRoot = false;
 		this.suppressions = suppressions;
@@ -137,8 +144,8 @@ export default class CompilerContext {
 
 	private visitorStates: ExtendedMap<AnyVisitor, AnyVisitorState>;
 	private integrity: undefined | DiagnosticIntegrity;
-	public displayFilename: string;
-	public path: AnyPath;
+	public displayPath: Path;
+	public path: Path;
 	public project: CompilerProject;
 	public language: DiagnosticLanguage;
 	private sourceTypeJS: undefined | ConstJSSourceType;
@@ -177,7 +184,9 @@ export default class CompilerContext {
 		return state as VisitorState<State>;
 	}
 
-	public async normalizeTransforms(transforms: Transforms): Promise<AnyVisitors> {
+	public async normalizeTransforms(
+		transforms: Transform[],
+	): Promise<AnyVisitor[]> {
 		return Promise.all(
 			transforms.map(async (visitor) => {
 				if (typeof visitor === "function") {
@@ -245,7 +254,7 @@ export default class CompilerContext {
 	}
 
 	public reduceRoot(
-		visitors: AnyVisitor | AnyVisitors,
+		visitors: AnyVisitor | AnyVisitor[],
 		ast: AnyRoot = this.ast,
 	): AnyRoot {
 		if (this.reducedRoot) {
@@ -277,8 +286,8 @@ export default class CompilerContext {
 
 	public reduce(
 		ast: AnyNode,
-		visitors: AnyVisitor | AnyVisitors,
-		pathOpts?: PathOptions,
+		visitors: AnyVisitor | AnyVisitor[],
+		pathOpts?: CompilerPathOptions,
 	): AnyNodes {
 		return reduceNode(ast, visitors, this, pathOpts);
 	}
@@ -334,16 +343,15 @@ export default class CompilerContext {
 		}
 
 		const {category, categoryValue} = description;
-		const advice = [...description.advice];
+		const verboseAdvice = [...(description.verboseAdvice ?? [])];
 		if (loc?.start !== undefined) {
-			advice.push(
+			verboseAdvice.push(
 				buildLintDecisionAdviceAction({
-					noun: markup`Add suppression comment`,
+					description: markup`Add suppression comment`,
 					shortcut: "s",
-					instruction: markup`To suppress this error run`,
-					filename: this.displayFilename,
+					path: this.displayPath,
 					decision: buildLintDecisionString({
-						filename: this.displayFilename,
+						path: this.displayPath,
 						action: "suppress",
 						category,
 						categoryValue,
@@ -352,11 +360,10 @@ export default class CompilerContext {
 				}),
 			);
 
-			advice.push(
+			verboseAdvice.push(
 				buildLintDecisionAdviceAction({
-					extra: true,
-					noun: markup`Add suppression comments for ALL files with this category`,
-					instruction: markup`To add suppression comments for ALL files with this category run`,
+					secondary: true,
+					description: markup`Add suppression comments for ALL files with this category`,
 					decision: buildLintDecisionGlobalString(
 						"suppress",
 						category,
@@ -381,7 +388,7 @@ export default class CompilerContext {
 			tags,
 			description: {
 				...description,
-				advice,
+				verboseAdvice,
 			},
 			location: {
 				marker,

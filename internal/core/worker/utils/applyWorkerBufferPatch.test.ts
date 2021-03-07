@@ -2,7 +2,7 @@ import {test} from "rome";
 import {applyWorkerBufferPatch} from "./applyWorkerBufferPatch";
 import {WorkerBufferPatch} from "@internal/core";
 import {dedent} from "@internal/string-utils";
-import {ZeroIndexed} from "@internal/math";
+import {ZeroIndexed} from "@internal/numbers";
 
 function makeRange(
 	startLine: number,
@@ -77,7 +77,7 @@ test(
 		const original = dedent`
 			let foo = "test";
 			foo = "wrong";
-			console.log(foo);
+			log(foo);
 		`;
 		const patch = {
 			range: makeRange(0, 11, 1, 12),
@@ -86,7 +86,7 @@ test(
 
 		t.inlineSnapshot(
 			applyWorkerBufferPatch(original, patch),
-			'let foo = "right";\nconsole.log(foo);',
+			'let foo = "right";\nlog(foo);',
 		);
 	},
 );
@@ -97,7 +97,7 @@ test(
 		const original = dedent`
 			let foo = "test";
 			foo = "wrong";
-			console.log(foo);
+			log(foo);
 		`;
 		const patch = {
 			range: makeRange(1, 0, 2, 0),
@@ -106,7 +106,7 @@ test(
 
 		t.inlineSnapshot(
 			applyWorkerBufferPatch(original, patch),
-			'let foo = "test";\nconsole.log(foo);',
+			'let foo = "test";\nlog(foo);',
 		);
 	},
 );

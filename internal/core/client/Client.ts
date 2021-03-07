@@ -8,26 +8,24 @@
 import {
 	ClientFlags,
 	ClientLogsLevel,
+	ClientQueryResponse,
 	ClientTerminalFeatures,
 	DEFAULT_CLIENT_FLAGS,
 } from "../common/types/client";
 import ClientRequest, {ClientRequestType} from "./ClientRequest";
-import Server, {ServerClient, ServerOptions} from "../server/Server";
+import ServerClient from "../server/ServerClient";
+import Server, {ServerOptions} from "../server/Server";
 import {
 	CLI_SOCKET_PATH,
 	SERVER_SOCKET_PATH,
 	ServerBridge,
-	ServerQueryResponse,
 	VERSION,
 } from "@internal/core";
 import {forkProcess} from "../common/utils/fork";
 import {
 	BridgeClient,
-	BridgeError,
 	Event,
-	EventSubscription,
-	createEmptySubscription,
-	createSubscriptionHelper,
+	isBridgeDisconnectedDiagnosticsError,
 } from "@internal/events";
 import {Reporter, ReporterDerivedStreams} from "@internal/cli-reporter";
 import prettyFormat from "@internal/pretty-format";
@@ -38,7 +36,6 @@ import {
 	ServerBridgeLog,
 } from "../common/bridges/ServerBridge";
 import {UserConfig, getUserConfigFile} from "../common/userConfig";
-import {createWriteStream, removeFile} from "@internal/fs";
 import {json} from "@internal/codec-config";
 import stream = require("stream");
 import net = require("net");
@@ -47,9 +44,9 @@ import os = require("os");
 import child = require("child_process");
 import {Dict, mergeObjects} from "@internal/typescript-helpers";
 import {
-	AnyMarkup,
-	concatMarkup,
+	Markup,
 	convertToMarkupFromRandomString,
+	joinMarkup,
 	joinMarkupLines,
 	markup,
 } from "@internal/markup";
@@ -60,7 +57,14 @@ import {
 	markupToPlainText,
 } from "@internal/cli-layout";
 import {AbsoluteFilePath} from "@internal/path";
-import {NodeSystemError} from "@internal/node";
+import {NodeSystemError} from "@internal/errors";
+import SilentClientError from "./SilentClientError";
+import {
+	Resource,
+	createResourceFromCallback,
+	createResourceRoot,
+} from "@internal/resources";
+import FatalErrorHandler from "../common/FatalErrorHandler";
 
 export function getFilenameTimestamp(): string {
 	return new Date().toISOString().replace(/[^0-9a-zA-Z]/g, "");
@@ -69,8 +73,8 @@ export function getFilenameTimestamp(): string {
 const NEW_SERVER_INIT_TIMEOUT = 10_000;
 
 type ClientOptions = {
+	dedicated: boolean;
 	terminalFeatures: ClientTerminalFeatures;
-	globalErrorHandlers: boolean;
 	stdout: stream.Writable;
 	stderr: stream.Writable;
 	stdin: NodeJS.ReadStream;
@@ -89,20 +93,20 @@ type ProfileCallback = (profile: TraceEvent[]) => Promise<void>;
 type BridgeStatus = BridgeStatusDedicated | BridgeStatusLocal;
 
 type BridgeStatusDedicated = {
-	bridge: BridgeClient<typeof ServerBridge>;
 	dedicated: true;
+	bridge: BridgeClient<typeof ServerBridge>;
 	socket: net.Socket;
 };
 
 type BridgeStatusLocal = {
+	dedicated: false;
 	bridge: BridgeClient<typeof ServerBridge>;
 	server: Server;
-	dedicated: false;
 };
 
 type ClientRequestResponseResult = {
 	request: PartialServerQueryRequest;
-	response: ServerQueryResponse;
+	response: ClientQueryResponse;
 };
 
 export default class Client {
@@ -112,24 +116,24 @@ export default class Client {
 		this.queryCounter = 0;
 		this.flags = mergeObjects<ClientFlags>(DEFAULT_CLIENT_FLAGS, opts.flags);
 
-		this.requestResponseEvent = new Event({
-			name: "Client.requestResponseEvent",
-		});
-		this.endEvent = new Event({name: "Client.endEvent", serial: true});
+		this.requestResponseEvent = new Event("Client.requestResponseEvent");
+		this.endEvent = new Event("Client.endEvent", {serial: true});
+		this.resources = createResourceRoot("Client");
 		this.bridgeStatus = undefined;
+		this.bridgeAttachedEvent = new Event("Client.bridgeAttached");
 
-		this.bridgeAttachedEvent = new Event({
-			name: "Client.bridgeAttached",
-		});
-
-		this.reporter = new Reporter({
-			stdin: opts.stdin,
-			markupOptions: {
-				userConfig: this.userConfig,
-				cwd: this.flags.cwd,
+		this.reporter = new Reporter(
+			"Client",
+			{
+				stdin: opts.stdin,
+				markupOptions: {
+					userConfig: this.userConfig,
+					cwd: this.flags.cwd,
+				},
 			},
-		});
+		);
 		this.reporter.redirectOutToErr(true);
+		this.resources.add(this.reporter);
 
 		this.derivedReporterStreams = this.reporter.attachStdoutStreams(
 			// Suppress stdout when silent is set
@@ -137,17 +141,31 @@ export default class Client {
 			opts.stderr,
 			this.options.terminalFeatures,
 		);
+
+		this.fatalErrorHandler = new FatalErrorHandler({
+			source: markup`cli`,
+			exit: this.options.dedicated,
+			getReporter: () => {
+				return this.reporter;
+			},
+		});
+
+		if (this.options.dedicated) {
+			this.resources.add(this.fatalErrorHandler.setupGlobalHandlers());
+		}
 	}
 
 	public reporter: Reporter;
 	public derivedReporterStreams: ReporterDerivedStreams;
 
+	private fatalErrorHandler: FatalErrorHandler;
 	private queryCounter: number;
 	private userConfig: UserConfig;
 	private options: ClientOptions;
 	private flags: ClientFlags;
 	private bridgeStatus: undefined | BridgeStatus;
 
+	public resources: Resource;
 	public bridgeAttachedEvent: Event<BridgeStatus, void>;
 	private requestResponseEvent: Event<ClientRequestResponseResult, void>;
 	public endEvent: Event<void, void>;
@@ -161,26 +179,24 @@ export default class Client {
 	}
 
 	private async onBridge(
-		callback: (
-			bridgeStatus: BridgeStatus,
-		) => Promise<EventSubscription | undefined>,
-	): Promise<EventSubscription> {
+		callback: (bridgeStatus: BridgeStatus) => Promise<Resource | undefined>,
+	): Promise<Resource> {
 		if (this.bridgeStatus === undefined) {
-			const helper = createSubscriptionHelper();
+			const resc = this.resources.createContainer("Client.onBridge");
 
-			helper.add(
+			resc.add(
 				this.bridgeAttachedEvent.subscribe(async (bridgeStatus) => {
-					const subscription = await callback(bridgeStatus);
-					if (subscription !== undefined) {
-						helper.add(subscription);
+					const addResc = await callback(bridgeStatus);
+					if (addResc !== undefined) {
+						resc.add(addResc);
 					}
 				}),
 			);
 
-			return helper;
+			return resc;
 		} else {
-			const subscription = await callback(this.bridgeStatus);
-			return subscription ?? createEmptySubscription();
+			const resc = await callback(this.bridgeStatus);
+			return resc ?? this.resources.createContainer("Client.onBridge");
 		}
 	}
 
@@ -278,9 +294,9 @@ export default class Client {
 			// Workers
 			if (includeWorkers) {
 				const workerIds = await bridge.events.profilingGetWorkers.call();
-				for (const id of workerIds) {
+				for (const {id, displayName} of workerIds) {
 					fetchers.push([
-						`Worker ${id}`,
+						displayName,
 						async () => {
 							return await bridge.events.profilingStopWorker.call(
 								id,
@@ -297,7 +313,7 @@ export default class Client {
 			const progress = this.reporter.progress({title: markup`Fetching profiles`});
 			progress.setTotal(fetchers.length);
 			for (const [text, callback] of fetchers) {
-				progress.setText(markup`${text}`);
+				progress.setText(text);
 				const profile = await callback();
 				trace.addProfile(text, profile);
 				progress.tick();
@@ -322,7 +338,7 @@ export default class Client {
 		level: ClientLogsLevel,
 		includeWorker: boolean,
 		callback: (chunk: string) => void,
-	): Promise<EventSubscription> {
+	): Promise<Resource> {
 		return this.onBridge(async ({bridge}) => {
 			await bridge.events.setLogLevel.call({
 				level,
@@ -350,19 +366,12 @@ export default class Client {
 		});
 	}
 
-	public async generateRageSummary(): Promise<AnyMarkup> {
-		let summary: AnyMarkup[] = [];
+	public async generateRageSummary(): Promise<Markup> {
+		let summary: Markup[] = [];
 
 		function push(name: string, value: unknown) {
 			const formatted =
-				typeof value === "string"
-					? markup`${value}`
-					: prettyFormat(
-							value,
-							{
-								compact: true,
-							},
-						);
+				typeof value === "string" ? markup`${value}` : prettyFormat(value);
 			summary.push(
 				markup`<emphasis>${name}</emphasis>\n<indent>${formatted}</indent>\n\n`,
 			);
@@ -422,7 +431,7 @@ export default class Client {
 			}
 		}
 
-		return concatMarkup(summary);
+		return joinMarkup(summary);
 	}
 
 	public async rage(
@@ -473,7 +482,7 @@ export default class Client {
 
 		this.endEvent.subscribe(async () => {
 			const stream = zlib.createGzip();
-			stream.pipe(createWriteStream(ragePath));
+			stream.pipe(ragePath.createWriteStream());
 
 			const writer = new TarWriter(stream);
 
@@ -482,7 +491,7 @@ export default class Client {
 			writer.append({name: "logs.html"}, `<pre><code>${logsHTML}</code></pre>`);
 			writer.append({name: "output.txt"}, output);
 
-			await writeEvent.unsubscribe();
+			await writeEvent.release();
 
 			// Add requests
 			for (let i = 0; i < responses.length; i++) {
@@ -512,7 +521,7 @@ export default class Client {
 	public async query(
 		query: PartialServerQueryRequest,
 		type?: ClientRequestType,
-	): Promise<ServerQueryResponse> {
+	): Promise<ClientQueryResponse> {
 		const request = new ClientRequest(this, type, query);
 		const res = await request.init();
 		this.requestResponseEvent.send({request: query, response: res});
@@ -523,7 +532,7 @@ export default class Client {
 		query: PartialServerQueryRequest,
 		type?: ClientRequestType,
 	): {
-		promise: Promise<ServerQueryResponse>;
+		promise: Promise<ClientQueryResponse>;
 		cancel: () => Promise<void>;
 	} {
 		const cancelToken = String(this.queryCounter++);
@@ -546,44 +555,29 @@ export default class Client {
 	}
 
 	public async shutdownServer() {
-		await this._shutdownServer();
-		await this.end();
-	}
-
-	private async _shutdownServer() {
 		const status = this.bridgeStatus;
-		if (status?.bridge.alive) {
+		if (status?.bridge.open) {
 			try {
 				await status.bridge.events.endServer.callOptional();
+				throw new Error("endServer should have never resolved");
 			} catch (err) {
 				// Swallow BridgeErrors since we expect one to be emitted as the endServer call will be an unanswered request
 				// when the server ends all client sockets
-				if (!(err instanceof BridgeError)) {
+				if (!isBridgeDisconnectedDiagnosticsError(err)) {
 					throw err;
 				}
 			}
 		}
+		await this.end();
 	}
 
 	public async end() {
 		await this.endEvent.callOptional();
-
-		const status = this.bridgeStatus;
-
-		if (status?.bridge.alive) {
-			if (status.dedicated) {
-				status.socket.end();
-			} else {
-				await this._shutdownServer();
-			}
-		}
-
-		this.reporter.teardown();
-		this.bridgeStatus = undefined;
+		await this.resources.release();
 	}
 
 	private async attachBridge(status: BridgeStatus) {
-		const {handle, featuresUpdated, features, format} = this.derivedReporterStreams;
+		const {stream, featuresUpdated, features, format} = this.derivedReporterStreams;
 		const {terminalFeatures = {}} = this.options;
 
 		if (this.bridgeStatus !== undefined) {
@@ -593,10 +587,19 @@ export default class Client {
 		this.bridgeStatus = status;
 
 		const {bridge} = status;
+		this.resources.add(bridge);
+		bridge.resources.add(
+			createResourceFromCallback(
+				"ClientBridgeStatus",
+				() => {
+					this.bridgeStatus = undefined;
+				},
+			),
+		);
 
 		bridge.events.write.subscribe(([chunk, error]) => {
 			const isError = error && !terminalFeatures.redirectError;
-			handle.stream.write(chunk, isError);
+			stream.write(chunk, isError);
 		});
 
 		// Listen for resize column events if stdout is a TTY
@@ -610,13 +613,13 @@ export default class Client {
 				outputFormat: format,
 				outputSupport: features,
 				streamState: {
-					...handle.stream.state,
+					...stream.state,
 					lineSnapshots: undefined,
 				},
 				flags: this.flags,
 			}),
-			bridge.handshake(),
 			bridge.events.serverReady.wait(),
+			bridge.handshake(),
 		]);
 
 		await this.bridgeAttachedEvent.callOptional(status);
@@ -649,8 +652,8 @@ export default class Client {
 		// Otherwise, start a server inside this process
 		const server = new Server({
 			userConfig: this.userConfig,
-			dedicated: false,
-			globalErrorHandlers: this.options.globalErrorHandlers === true,
+			dedicated: this.options.dedicated,
+			daemon: false,
 			...opts,
 		});
 		await server.init();
@@ -663,7 +666,7 @@ export default class Client {
 		};
 
 		const [serverClient] = await Promise.all([
-			server.attachToBridge(bridges.server),
+			server.createClient(bridges.server),
 			this.attachBridge(status),
 		]);
 
@@ -674,7 +677,7 @@ export default class Client {
 		const daemon = await this.startDaemon();
 		if (daemon === undefined) {
 			this.reporter.error(markup`Failed to start daemon`);
-			throw new Error("Failed to start daemon");
+			throw new SilentClientError("Failed to start daemon");
 		} else {
 			return daemon;
 		}
@@ -694,29 +697,21 @@ export default class Client {
 		let exited = false;
 		let proc: undefined | child.ChildProcess;
 
-		const newDaemon = await new Promise<
-			void | BridgeClient<typeof ServerBridge>
-		>((resolve, reject) => {
+		await CLI_SOCKET_PATH.getParent().createDirectory();
+
+		const attemptConnection = await new Promise<boolean>((resolve, reject) => {
 			const timeout = setTimeout(
 				() => {
 					reporter.error(markup`Daemon connection timed out`);
 					cleanup();
-					resolve();
+					resolve(false);
 				},
 				NEW_SERVER_INIT_TIMEOUT,
 			);
 
-			const socketServer = net.createServer(() => {
-				cleanup();
-
-				resolve(
-					this.tryConnectToExistingDaemon().then((bridge) => {
-						if (bridge !== undefined) {
-							this.reporter.success(markup`Started daemon!`);
-						}
-						return bridge;
-					}),
-				);
+			const socketServer = net.createServer((socket) => {
+				resolve(true);
+				socket.end();
 			});
 
 			socketServer.on("error", reject);
@@ -736,13 +731,12 @@ export default class Client {
 					"close",
 					() => {
 						exited = true;
-						cleanup();
-						resolve();
+						resolve(false);
 					},
 				);
 			}
 
-			removeFile(CLI_SOCKET_PATH).finally(() => {
+			CLI_SOCKET_PATH.removeFile().finally(() => {
 				listen();
 			});
 
@@ -751,8 +745,13 @@ export default class Client {
 				socketServer.close();
 			}
 		});
-		if (newDaemon) {
-			return newDaemon;
+
+		if (attemptConnection) {
+			const newDaemon = await this.tryConnectToExistingDaemon();
+			if (newDaemon !== undefined) {
+				this.reporter.success(markup`Started daemon!`);
+				return newDaemon;
+			}
 		}
 
 		// as a final precaution kill the server
@@ -807,7 +806,7 @@ export default class Client {
 			return undefined;
 		}
 
-		const bridge = ServerBridge.Client.createFromSocket(socket);
+		const {bridge} = ServerBridge.Client.createFromSocket(socket);
 		await this.attachBridge({socket, bridge, dedicated: true});
 		this.reporter.success(markup`Connected to daemon`);
 		return bridge;

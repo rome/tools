@@ -8,29 +8,22 @@
 
 ```javascript
 MarkdownRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	integrity: undefined
-	loc: SourceLocation reference/input.md 1:0-14:0
-	path: UIDPath<reference/input.md>
-	body: Array [
+	body: [
 		MarkdownReferenceInline {
 			value: ""
-			loc: SourceLocation reference/input.md 1:0-1:7
-			reference: Array [
+			reference: [
 				MarkdownText {
 					value: "lorem"
 					loc: SourceLocation reference/input.md 1:1-1:1
 				}
 			]
+			loc: SourceLocation reference/input.md 1:0-1:7
 		}
 		MarkdownReferenceInline {
 			value: ""
-			loc: SourceLocation reference/input.md 3:0-3:9
-			reference: Array [
+			reference: [
 				MarkdownEmphasisInline {
-					value: Array [
+					value: [
 						MarkdownText {
 							value: "lorem"
 							loc: SourceLocation reference/input.md 3:2-3:2
@@ -39,13 +32,13 @@ MarkdownRoot {
 					loc: SourceLocation reference/input.md 3:1-3:7
 				}
 			]
+			loc: SourceLocation reference/input.md 3:0-3:9
 		}
 		MarkdownReferenceInline {
 			value: ""
-			loc: SourceLocation reference/input.md 5:0-5:11
-			reference: Array [
+			reference: [
 				MarkdownEmphasisInline {
-					value: Array [
+					value: [
 						MarkdownText {
 							value: "ipsum"
 							loc: SourceLocation reference/input.md 5:3-5:3
@@ -54,13 +47,13 @@ MarkdownRoot {
 					loc: SourceLocation reference/input.md 5:1-5:8
 				}
 			]
+			loc: SourceLocation reference/input.md 5:0-5:11
 		}
 		MarkdownReferenceInline {
 			value: ""
-			loc: SourceLocation reference/input.md 7:0-7:11
-			reference: Array [
+			reference: [
 				MarkdownEmphasisInline {
-					value: Array [
+					value: [
 						MarkdownText {
 							value: "lorem"
 							loc: SourceLocation reference/input.md 7:3-7:3
@@ -69,13 +62,13 @@ MarkdownRoot {
 					loc: SourceLocation reference/input.md 7:1-7:8
 				}
 			]
+			loc: SourceLocation reference/input.md 7:0-7:11
 		}
 		MarkdownReferenceInline {
 			value: ""
-			loc: SourceLocation reference/input.md 9:0-9:9
-			reference: Array [
+			reference: [
 				MarkdownEmphasisInline {
-					value: Array [
+					value: [
 						MarkdownText {
 							value: "lorem"
 							loc: SourceLocation reference/input.md 9:2-9:2
@@ -84,11 +77,11 @@ MarkdownRoot {
 					loc: SourceLocation reference/input.md 9:1-9:7
 				}
 			]
+			loc: SourceLocation reference/input.md 9:0-9:9
 		}
 		MarkdownReferenceInline {
 			value: ""
-			loc: SourceLocation reference/input.md 11:0-11:16
-			reference: Array [
+			reference: [
 				MarkdownText {
 					value: "lorem"
 					loc: SourceLocation reference/input.md 11:1-11:1
@@ -106,11 +99,11 @@ MarkdownRoot {
 					loc: SourceLocation reference/input.md 11:13-11:13
 				}
 			]
+			loc: SourceLocation reference/input.md 11:0-11:16
 		}
 		MarkdownReferenceInline {
 			value: ""
-			loc: SourceLocation reference/input.md 13:0-13:16
-			reference: Array [
+			reference: [
 				MarkdownText {
 					value: "*"
 					loc: SourceLocation reference/input.md 13:1-13:1
@@ -128,8 +121,14 @@ MarkdownRoot {
 					loc: SourceLocation reference/input.md 13:10-13:10
 				}
 			]
+			loc: SourceLocation reference/input.md 13:0-13:16
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	path: UIDPath<reference/input.md>
+	loc: SourceLocation reference/input.md 1:0-14:0
 }
 ```
 

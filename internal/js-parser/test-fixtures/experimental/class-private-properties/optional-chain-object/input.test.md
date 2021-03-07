@@ -8,31 +8,14 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation experimental/class-private-properties/optional-chain-object/input.js 1:0-15:0
-	path: UIDPath<experimental/class-private-properties/optional-chain-object/input.js>
-	body: Array [
+	body: [
 		JSClassDeclaration {
 			id: JSBindingIdentifier {
 				name: "Foo"
 				loc: SourceLocation experimental/class-private-properties/optional-chain-object/input.js 1:6-1:9 (Foo)
 			}
-			loc: SourceLocation experimental/class-private-properties/optional-chain-object/input.js 1:0-14:1
 			meta: JSClassHead {
-				implements: undefined
-				superClass: undefined
-				superTypeParameters: undefined
-				typeParameters: undefined
-				loc: SourceLocation experimental/class-private-properties/optional-chain-object/input.js 1:0-14:1
-				body: Array [
+				body: [
 					JSClassPrivateProperty {
 						key: JSPrivateName {
 							id: JSIdentifier {
@@ -41,23 +24,19 @@ JSRoot {
 							}
 							loc: SourceLocation experimental/class-private-properties/optional-chain-object/input.js 2:9-2:11
 						}
-						value: JSNumericLiteral {
-							value: 1
-							format: undefined
-							loc: SourceLocation experimental/class-private-properties/optional-chain-object/input.js 2:14-2:15
-						}
-						typeAnnotation: undefined
-						loc: SourceLocation experimental/class-private-properties/optional-chain-object/input.js 2:2-2:16
 						meta: JSClassPropertyMeta {
 							abstract: false
-							accessibility: undefined
 							optional: false
 							readonly: false
 							static: true
-							typeAnnotation: undefined
 							loc: SourceLocation experimental/class-private-properties/optional-chain-object/input.js 2:2-2:11
 							start: Position 2:2
 						}
+						value: JSNumericLiteral {
+							value: 1
+							loc: SourceLocation experimental/class-private-properties/optional-chain-object/input.js 2:14-2:15
+						}
+						loc: SourceLocation experimental/class-private-properties/optional-chain-object/input.js 2:2-2:16
 					}
 					JSClassPrivateProperty {
 						key: JSPrivateName {
@@ -67,38 +46,30 @@ JSRoot {
 							}
 							loc: SourceLocation experimental/class-private-properties/optional-chain-object/input.js 3:9-3:11
 						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							optional: false
+							readonly: false
+							static: true
+							loc: SourceLocation experimental/class-private-properties/optional-chain-object/input.js 3:2-3:11
+							start: Position 3:2
+						}
 						value: JSFunctionExpression {
-							id: undefined
-							loc: SourceLocation experimental/class-private-properties/optional-chain-object/input.js 3:14-3:27
 							body: JSBlockStatement {
-								body: Array []
-								directives: Array []
+								body: []
+								directives: []
 								loc: SourceLocation experimental/class-private-properties/optional-chain-object/input.js 3:25-3:27
 							}
 							head: JSFunctionHead {
 								async: false
 								generator: false
 								hasHoistedVars: false
-								params: Array []
-								rest: undefined
-								returnType: undefined
-								thisType: undefined
-								typeParameters: undefined
+								params: []
 								loc: SourceLocation experimental/class-private-properties/optional-chain-object/input.js 3:22-3:24
 							}
+							loc: SourceLocation experimental/class-private-properties/optional-chain-object/input.js 3:14-3:27
 						}
-						typeAnnotation: undefined
 						loc: SourceLocation experimental/class-private-properties/optional-chain-object/input.js 3:2-3:28
-						meta: JSClassPropertyMeta {
-							abstract: false
-							accessibility: undefined
-							optional: false
-							readonly: false
-							static: true
-							typeAnnotation: undefined
-							loc: SourceLocation experimental/class-private-properties/optional-chain-object/input.js 3:2-3:11
-							start: Position 3:2
-						}
 					}
 					JSClassMethod {
 						kind: "method"
@@ -109,47 +80,27 @@ JSRoot {
 							}
 							loc: SourceLocation experimental/class-private-properties/optional-chain-object/input.js 5:9-5:13
 						}
-						loc: SourceLocation experimental/class-private-properties/optional-chain-object/input.js 5:2-13:3
 						meta: JSClassPropertyMeta {
 							abstract: false
-							accessibility: undefined
 							optional: false
 							readonly: false
 							static: true
-							typeAnnotation: undefined
 							loc: SourceLocation experimental/class-private-properties/optional-chain-object/input.js 5:2-5:13
 							start: Position 5:2
 						}
-						head: JSFunctionHead {
-							async: false
-							generator: false
-							hasHoistedVars: false
-							params: Array []
-							rest: undefined
-							returnType: undefined
-							thisType: undefined
-							typeParameters: undefined
-							loc: SourceLocation experimental/class-private-properties/optional-chain-object/input.js 5:13-5:15
-						}
 						body: JSBlockStatement {
-							directives: Array []
-							loc: SourceLocation experimental/class-private-properties/optional-chain-object/input.js 5:16-13:3
-							body: Array [
+							body: [
 								JSVariableDeclarationStatement {
-									loc: SourceLocation experimental/class-private-properties/optional-chain-object/input.js 6:4-6:27
 									declaration: JSVariableDeclaration {
 										kind: "const"
-										loc: SourceLocation experimental/class-private-properties/optional-chain-object/input.js 6:4-6:27
-										declarations: Array [
+										declarations: [
 											JSVariableDeclarator {
 												id: JSBindingIdentifier {
 													name: "o"
 													loc: SourceLocation experimental/class-private-properties/optional-chain-object/input.js 6:10-6:11 (o)
 												}
-												loc: SourceLocation experimental/class-private-properties/optional-chain-object/input.js 6:10-6:26
 												init: JSObjectExpression {
-													loc: SourceLocation experimental/class-private-properties/optional-chain-object/input.js 6:14-6:26
-													properties: Array [
+													properties: [
 														JSObjectProperty {
 															key: JSStaticPropertyKey {
 																value: JSIdentifier {
@@ -165,18 +116,34 @@ JSRoot {
 															loc: SourceLocation experimental/class-private-properties/optional-chain-object/input.js 6:16-6:24
 														}
 													]
+													loc: SourceLocation experimental/class-private-properties/optional-chain-object/input.js 6:14-6:26
 												}
+												loc: SourceLocation experimental/class-private-properties/optional-chain-object/input.js 6:10-6:26
 											}
 										]
+										loc: SourceLocation experimental/class-private-properties/optional-chain-object/input.js 6:4-6:27
 									}
+									loc: SourceLocation experimental/class-private-properties/optional-chain-object/input.js 6:4-6:27
 								}
 								JSReturnStatement {
-									loc: SourceLocation experimental/class-private-properties/optional-chain-object/input.js 7:4-12:6
 									argument: JSArrayExpression {
-										loc: SourceLocation experimental/class-private-properties/optional-chain-object/input.js 7:11-12:5
-										elements: Array [
+										elements: [
 											JSMemberExpression {
-												loc: SourceLocation experimental/class-private-properties/optional-chain-object/input.js 8:6-8:15
+												object: JSMemberExpression {
+													object: JSReferenceIdentifier {
+														name: "o"
+														loc: SourceLocation experimental/class-private-properties/optional-chain-object/input.js 8:6-8:7 (o)
+													}
+													property: JSStaticMemberProperty {
+														optional: true
+														value: JSIdentifier {
+															name: "Foo"
+															loc: SourceLocation experimental/class-private-properties/optional-chain-object/input.js 8:9-8:12 (Foo)
+														}
+														loc: SourceLocation experimental/class-private-properties/optional-chain-object/input.js 8:9-8:12 (Foo)
+													}
+													loc: SourceLocation experimental/class-private-properties/optional-chain-object/input.js 8:6-8:12
+												}
 												property: JSStaticMemberProperty {
 													value: JSPrivateName {
 														id: JSIdentifier {
@@ -187,33 +154,25 @@ JSRoot {
 													}
 													loc: SourceLocation experimental/class-private-properties/optional-chain-object/input.js 8:13-8:15
 												}
-												object: JSMemberExpression {
-													loc: SourceLocation experimental/class-private-properties/optional-chain-object/input.js 8:6-8:12
-													object: JSReferenceIdentifier {
-														name: "o"
-														loc: SourceLocation experimental/class-private-properties/optional-chain-object/input.js 8:6-8:7 (o)
-													}
-													property: JSStaticMemberProperty {
-														value: JSIdentifier {
-															name: "Foo"
-															loc: SourceLocation experimental/class-private-properties/optional-chain-object/input.js 8:9-8:12 (Foo)
-														}
-														optional: true
-														loc: SourceLocation experimental/class-private-properties/optional-chain-object/input.js 8:9-8:12 (Foo)
-													}
-												}
+												loc: SourceLocation experimental/class-private-properties/optional-chain-object/input.js 8:6-8:15
 											}
 											JSMemberExpression {
-												loc: SourceLocation experimental/class-private-properties/optional-chain-object/input.js 9:6-9:23
-												property: JSStaticMemberProperty {
-													value: JSIdentifier {
-														name: "toFixed"
-														loc: SourceLocation experimental/class-private-properties/optional-chain-object/input.js 9:16-9:23 (toFixed)
-													}
-													loc: SourceLocation experimental/class-private-properties/optional-chain-object/input.js 9:16-9:23 (toFixed)
-												}
 												object: JSMemberExpression {
-													loc: SourceLocation experimental/class-private-properties/optional-chain-object/input.js 9:6-9:15
+													object: JSMemberExpression {
+														object: JSReferenceIdentifier {
+															name: "o"
+															loc: SourceLocation experimental/class-private-properties/optional-chain-object/input.js 9:6-9:7 (o)
+														}
+														property: JSStaticMemberProperty {
+															optional: true
+															value: JSIdentifier {
+																name: "Foo"
+																loc: SourceLocation experimental/class-private-properties/optional-chain-object/input.js 9:9-9:12 (Foo)
+															}
+															loc: SourceLocation experimental/class-private-properties/optional-chain-object/input.js 9:9-9:12 (Foo)
+														}
+														loc: SourceLocation experimental/class-private-properties/optional-chain-object/input.js 9:6-9:12
+													}
 													property: JSStaticMemberProperty {
 														value: JSPrivateName {
 															id: JSIdentifier {
@@ -224,43 +183,41 @@ JSRoot {
 														}
 														loc: SourceLocation experimental/class-private-properties/optional-chain-object/input.js 9:13-9:15
 													}
-													object: JSMemberExpression {
-														loc: SourceLocation experimental/class-private-properties/optional-chain-object/input.js 9:6-9:12
-														object: JSReferenceIdentifier {
-															name: "o"
-															loc: SourceLocation experimental/class-private-properties/optional-chain-object/input.js 9:6-9:7 (o)
-														}
-														property: JSStaticMemberProperty {
-															value: JSIdentifier {
-																name: "Foo"
-																loc: SourceLocation experimental/class-private-properties/optional-chain-object/input.js 9:9-9:12 (Foo)
-															}
-															optional: true
-															loc: SourceLocation experimental/class-private-properties/optional-chain-object/input.js 9:9-9:12 (Foo)
-														}
-													}
+													loc: SourceLocation experimental/class-private-properties/optional-chain-object/input.js 9:6-9:15
 												}
+												property: JSStaticMemberProperty {
+													value: JSIdentifier {
+														name: "toFixed"
+														loc: SourceLocation experimental/class-private-properties/optional-chain-object/input.js 9:16-9:23 (toFixed)
+													}
+													loc: SourceLocation experimental/class-private-properties/optional-chain-object/input.js 9:16-9:23 (toFixed)
+												}
+												loc: SourceLocation experimental/class-private-properties/optional-chain-object/input.js 9:6-9:23
 											}
 											JSOptionalCallExpression {
-												loc: SourceLocation experimental/class-private-properties/optional-chain-object/input.js 10:6-10:26
-												arguments: Array [
+												arguments: [
 													JSNumericLiteral {
 														value: 2
-														format: undefined
 														loc: SourceLocation experimental/class-private-properties/optional-chain-object/input.js 10:24-10:25
 													}
 												]
 												callee: JSMemberExpression {
-													loc: SourceLocation experimental/class-private-properties/optional-chain-object/input.js 10:6-10:23
-													property: JSStaticMemberProperty {
-														value: JSIdentifier {
-															name: "toFixed"
-															loc: SourceLocation experimental/class-private-properties/optional-chain-object/input.js 10:16-10:23 (toFixed)
-														}
-														loc: SourceLocation experimental/class-private-properties/optional-chain-object/input.js 10:16-10:23 (toFixed)
-													}
 													object: JSMemberExpression {
-														loc: SourceLocation experimental/class-private-properties/optional-chain-object/input.js 10:6-10:15
+														object: JSMemberExpression {
+															object: JSReferenceIdentifier {
+																name: "o"
+																loc: SourceLocation experimental/class-private-properties/optional-chain-object/input.js 10:6-10:7 (o)
+															}
+															property: JSStaticMemberProperty {
+																optional: true
+																value: JSIdentifier {
+																	name: "Foo"
+																	loc: SourceLocation experimental/class-private-properties/optional-chain-object/input.js 10:9-10:12 (Foo)
+																}
+																loc: SourceLocation experimental/class-private-properties/optional-chain-object/input.js 10:9-10:12 (Foo)
+															}
+															loc: SourceLocation experimental/class-private-properties/optional-chain-object/input.js 10:6-10:12
+														}
 														property: JSStaticMemberProperty {
 															value: JSPrivateName {
 																id: JSIdentifier {
@@ -271,29 +228,37 @@ JSRoot {
 															}
 															loc: SourceLocation experimental/class-private-properties/optional-chain-object/input.js 10:13-10:15
 														}
-														object: JSMemberExpression {
-															loc: SourceLocation experimental/class-private-properties/optional-chain-object/input.js 10:6-10:12
-															object: JSReferenceIdentifier {
-																name: "o"
-																loc: SourceLocation experimental/class-private-properties/optional-chain-object/input.js 10:6-10:7 (o)
-															}
-															property: JSStaticMemberProperty {
-																value: JSIdentifier {
-																	name: "Foo"
-																	loc: SourceLocation experimental/class-private-properties/optional-chain-object/input.js 10:9-10:12 (Foo)
-																}
-																optional: true
-																loc: SourceLocation experimental/class-private-properties/optional-chain-object/input.js 10:9-10:12 (Foo)
-															}
-														}
+														loc: SourceLocation experimental/class-private-properties/optional-chain-object/input.js 10:6-10:15
 													}
+													property: JSStaticMemberProperty {
+														value: JSIdentifier {
+															name: "toFixed"
+															loc: SourceLocation experimental/class-private-properties/optional-chain-object/input.js 10:16-10:23 (toFixed)
+														}
+														loc: SourceLocation experimental/class-private-properties/optional-chain-object/input.js 10:16-10:23 (toFixed)
+													}
+													loc: SourceLocation experimental/class-private-properties/optional-chain-object/input.js 10:6-10:23
 												}
+												loc: SourceLocation experimental/class-private-properties/optional-chain-object/input.js 10:6-10:26
 											}
 											JSOptionalCallExpression {
-												arguments: Array []
-												loc: SourceLocation experimental/class-private-properties/optional-chain-object/input.js 11:6-11:17
+												arguments: []
 												callee: JSMemberExpression {
-													loc: SourceLocation experimental/class-private-properties/optional-chain-object/input.js 11:6-11:15
+													object: JSMemberExpression {
+														object: JSReferenceIdentifier {
+															name: "o"
+															loc: SourceLocation experimental/class-private-properties/optional-chain-object/input.js 11:6-11:7 (o)
+														}
+														property: JSStaticMemberProperty {
+															optional: true
+															value: JSIdentifier {
+																name: "Foo"
+																loc: SourceLocation experimental/class-private-properties/optional-chain-object/input.js 11:9-11:12 (Foo)
+															}
+															loc: SourceLocation experimental/class-private-properties/optional-chain-object/input.js 11:9-11:12 (Foo)
+														}
+														loc: SourceLocation experimental/class-private-properties/optional-chain-object/input.js 11:6-11:12
+													}
 													property: JSStaticMemberProperty {
 														value: JSPrivateName {
 															id: JSIdentifier {
@@ -304,33 +269,43 @@ JSRoot {
 														}
 														loc: SourceLocation experimental/class-private-properties/optional-chain-object/input.js 11:13-11:15
 													}
-													object: JSMemberExpression {
-														loc: SourceLocation experimental/class-private-properties/optional-chain-object/input.js 11:6-11:12
-														object: JSReferenceIdentifier {
-															name: "o"
-															loc: SourceLocation experimental/class-private-properties/optional-chain-object/input.js 11:6-11:7 (o)
-														}
-														property: JSStaticMemberProperty {
-															value: JSIdentifier {
-																name: "Foo"
-																loc: SourceLocation experimental/class-private-properties/optional-chain-object/input.js 11:9-11:12 (Foo)
-															}
-															optional: true
-															loc: SourceLocation experimental/class-private-properties/optional-chain-object/input.js 11:9-11:12 (Foo)
-														}
-													}
+													loc: SourceLocation experimental/class-private-properties/optional-chain-object/input.js 11:6-11:15
 												}
+												loc: SourceLocation experimental/class-private-properties/optional-chain-object/input.js 11:6-11:17
 											}
 										]
+										loc: SourceLocation experimental/class-private-properties/optional-chain-object/input.js 7:11-12:5
 									}
+									loc: SourceLocation experimental/class-private-properties/optional-chain-object/input.js 7:4-12:6
 								}
 							]
+							directives: []
+							loc: SourceLocation experimental/class-private-properties/optional-chain-object/input.js 5:16-13:3
 						}
+						head: JSFunctionHead {
+							async: false
+							generator: false
+							hasHoistedVars: false
+							params: []
+							loc: SourceLocation experimental/class-private-properties/optional-chain-object/input.js 5:13-5:15
+						}
+						loc: SourceLocation experimental/class-private-properties/optional-chain-object/input.js 5:2-13:3
 					}
 				]
+				loc: SourceLocation experimental/class-private-properties/optional-chain-object/input.js 1:0-14:1
 			}
+			loc: SourceLocation experimental/class-private-properties/optional-chain-object/input.js 1:0-14:1
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<experimental/class-private-properties/optional-chain-object/input.js>
+	loc: SourceLocation experimental/class-private-properties/optional-chain-object/input.js 1:0-15:0
 }
 ```
 

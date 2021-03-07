@@ -8,53 +8,14 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation core/categorized/invalid-assignment-pattern-3/input.js 1:0-1:21
-	path: UIDPath<core/categorized/invalid-assignment-pattern-3/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Invalid parenthesized binding"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:15
-				path: UIDPath<core/categorized/invalid-assignment-pattern-3/input.js>
-				start: Position 1:2
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation core/categorized/invalid-assignment-pattern-3/input.js 1:0-1:21
 			expression: JSAssignmentExpression {
 				operator: "="
-				loc: SourceLocation core/categorized/invalid-assignment-pattern-3/input.js 1:0-1:21
-				right: JSReferenceIdentifier {
-					name: "t"
-					loc: SourceLocation core/categorized/invalid-assignment-pattern-3/input.js 1:20-1:21 (t)
-				}
 				left: JSAssignmentArrayPattern {
-					rest: undefined
-					loc: SourceLocation core/categorized/invalid-assignment-pattern-3/input.js 1:0-1:17
-					elements: Array [
+					elements: [
 						JSAssignmentObjectPattern {
-							rest: undefined
-							loc: SourceLocation core/categorized/invalid-assignment-pattern-3/input.js 1:2-1:15
-							properties: Array [
+							properties: [
 								JSAssignmentObjectPatternProperty {
 									key: JSStaticPropertyKey {
 										value: JSIdentifier {
@@ -64,33 +25,64 @@ JSRoot {
 										loc: SourceLocation core/categorized/invalid-assignment-pattern-3/input.js 1:4-1:5
 									}
 									value: JSAssignmentArrayPattern {
-										rest: undefined
-										loc: SourceLocation core/categorized/invalid-assignment-pattern-3/input.js 1:7-1:14
-										elements: Array [
+										elements: [
 											JSAssignmentAssignmentPattern {
 												operator: "="
-												loc: SourceLocation core/categorized/invalid-assignment-pattern-3/input.js 1:8-1:13
 												left: JSAssignmentIdentifier {
 													name: "b"
 													loc: SourceLocation core/categorized/invalid-assignment-pattern-3/input.js 1:8-1:9 (b)
 												}
 												right: JSNumericLiteral {
 													value: 2
-													format: undefined
 													loc: SourceLocation core/categorized/invalid-assignment-pattern-3/input.js 1:12-1:13
 												}
+												loc: SourceLocation core/categorized/invalid-assignment-pattern-3/input.js 1:8-1:13
 											}
 										]
+										loc: SourceLocation core/categorized/invalid-assignment-pattern-3/input.js 1:7-1:14
 									}
 									loc: SourceLocation core/categorized/invalid-assignment-pattern-3/input.js 1:4-1:14
 								}
 							]
+							loc: SourceLocation core/categorized/invalid-assignment-pattern-3/input.js 1:2-1:15
 						}
 					]
+					loc: SourceLocation core/categorized/invalid-assignment-pattern-3/input.js 1:0-1:17
 				}
+				right: JSReferenceIdentifier {
+					name: "t"
+					loc: SourceLocation core/categorized/invalid-assignment-pattern-3/input.js 1:20-1:21 (t)
+				}
+				loc: SourceLocation core/categorized/invalid-assignment-pattern-3/input.js 1:0-1:21
+			}
+			loc: SourceLocation core/categorized/invalid-assignment-pattern-3/input.js 1:0-1:21
+		}
+	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "Invalid parenthesized binding"}
+			}
+			location: {
+				language: "js"
+				path: UIDPath<core/categorized/invalid-assignment-pattern-3/input.js>
+				end: Position 1:15
+				start: Position 1:2
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<core/categorized/invalid-assignment-pattern-3/input.js>
+	loc: SourceLocation core/categorized/invalid-assignment-pattern-3/input.js 1:0-1:21
 }
 ```
 

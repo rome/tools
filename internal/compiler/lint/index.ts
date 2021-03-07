@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {DiagnosticSuppressions, Diagnostics} from "@internal/diagnostics";
+import {Diagnostic, DiagnosticSuppressions} from "@internal/diagnostics";
 import {AnyVisitor, LintRequest} from "../types";
 import {Cache, CompilerContext} from "@internal/compiler";
 import {formatAST} from "@internal/formatter";
@@ -14,7 +14,7 @@ import {lintTransforms} from "./rules/index";
 import {ProjectConfig} from "@internal/project";
 
 export type LintResult = {
-	diagnostics: Diagnostics;
+	diagnostics: Diagnostic[];
 	suppressions: DiagnosticSuppressions;
 	formatted: string;
 };

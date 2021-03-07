@@ -8,81 +8,72 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: true
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2015/yield/in-iterator-stmt/input.js 1:0-4:0
-	path: UIDPath<es2015/yield/in-iterator-stmt/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Invalid left-hand side in for-in statement"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 2:15
-				path: UIDPath<es2015/yield/in-iterator-stmt/input.js>
-				start: Position 2:7
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "g"
 				loc: SourceLocation es2015/yield/in-iterator-stmt/input.js 1:10-1:11 (g)
 			}
-			loc: SourceLocation es2015/yield/in-iterator-stmt/input.js 1:0-3:1
-			head: JSFunctionHead {
-				async: false
-				generator: true
-				hasHoistedVars: false
-				params: Array []
-				rest: undefined
-				returnType: undefined
-				thisType: undefined
-				typeParameters: undefined
-				loc: SourceLocation es2015/yield/in-iterator-stmt/input.js 1:11-1:13
-			}
 			body: JSBlockStatement {
-				directives: Array []
-				loc: SourceLocation es2015/yield/in-iterator-stmt/input.js 1:14-3:1
-				body: Array [
+				body: [
 					JSForInStatement {
-						body: JSEmptyStatement {loc: SourceLocation es2015/yield/in-iterator-stmt/input.js 2:21-2:22}
-						loc: SourceLocation es2015/yield/in-iterator-stmt/input.js 2:2-2:22
+						body: JSEmptyStatement {
+							loc: SourceLocation es2015/yield/in-iterator-stmt/input.js 2:21-2:22
+						}
 						left: JSAssignmentIdentifier {
 							name: "INVALID_PLACEHOLDER"
 							loc: SourceLocation es2015/yield/in-iterator-stmt/input.js 2:16-2:15
 						}
 						right: JSObjectExpression {
-							properties: Array []
+							properties: []
 							loc: SourceLocation es2015/yield/in-iterator-stmt/input.js 2:19-2:21
 						}
+						loc: SourceLocation es2015/yield/in-iterator-stmt/input.js 2:2-2:22
 					}
-					JSEmptyStatement {loc: SourceLocation es2015/yield/in-iterator-stmt/input.js 2:23-2:24}
+					JSEmptyStatement {
+						loc: SourceLocation es2015/yield/in-iterator-stmt/input.js 2:23-2:24
+					}
 					JSExpressionStatement {
-						loc: SourceLocation es2015/yield/in-iterator-stmt/input.js 2:25-2:28
 						expression: JSReferenceIdentifier {
 							name: "INVALID_PLACEHOLDER"
 							loc: SourceLocation es2015/yield/in-iterator-stmt/input.js 2:25-2:26
 						}
+						loc: SourceLocation es2015/yield/in-iterator-stmt/input.js 2:25-2:28
 					}
 				]
+				directives: []
+				loc: SourceLocation es2015/yield/in-iterator-stmt/input.js 1:14-3:1
+			}
+			head: JSFunctionHead {
+				async: false
+				generator: true
+				hasHoistedVars: false
+				params: []
+				loc: SourceLocation es2015/yield/in-iterator-stmt/input.js 1:11-1:13
+			}
+			loc: SourceLocation es2015/yield/in-iterator-stmt/input.js 1:0-3:1
+		}
+	]
+	comments: []
+	corrupt: true
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {advice: [], category: ["parse"], categoryValue: "js", message: [RAW_MARKUP {value: "Invalid left-hand side in "}, "for-in statement"]}
+			location: {
+				language: "js"
+				path: UIDPath<es2015/yield/in-iterator-stmt/input.js>
+				end: Position 2:15
+				start: Position 2:7
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2015/yield/in-iterator-stmt/input.js>
+	loc: SourceLocation es2015/yield/in-iterator-stmt/input.js 1:0-4:0
 }
 ```
 

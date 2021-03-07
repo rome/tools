@@ -4,39 +4,23 @@
 
 ## `diagnostic > unit`
 
-### `error`
+### `diagnostics`
 
-```javascript
-___R$project$rome$$internal$diagnostics$error$wrappers_ts$DiagnosticsError {
-	name: "DiagnosticsError"
-	_memoMessage: undefined
-	_message: "Expected a unit such as \"<emphasis>years</emphasis>\", \"<emphasis>months</emphasis>\", \"<emphasis>days</emphasis>\", \"<emphasis>versions</emphasis>\" or \"<emphasis>major versions</emphasis>\""
-	suppressions: Array []
-	diagnostics: Array [
-		Object {
-			description: Object {
-				advice: Array []
-				categoryValue: "browserquery"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Expected a unit such as \"<emphasis>years</emphasis>\", \"<emphasis>months</emphasis>\", \"<emphasis>days</emphasis>\", \"<emphasis>versions</emphasis>\" or \"<emphasis>major versions</emphasis>\""}
-			}
-			location: Object {
-				integrity: undefined
-				language: "browserquery"
-				sourceText: undefined
-				end: Position 2:0
-				path: RelativePath<diagnostic/unit/input.txt>
-				start: Position 2:0
-			}
-		}
-	]
-}
+```
+
+ diagnostic/unit/input.txt:2 parse(browserquery) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ✖ Expected a unit such as "years", "months", "days", "versions" or "major versions"
+
+    last 4
+
+
 ```
 
 ### `tokens`
 
 ```javascript
-Array [
+[
 	Last {
 		end: ZeroIndexedNumber<4>
 		start: ZeroIndexedNumber<0>

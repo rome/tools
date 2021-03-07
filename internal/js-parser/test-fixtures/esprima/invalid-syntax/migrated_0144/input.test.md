@@ -8,40 +8,17 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation esprima/invalid-syntax/migrated_0144/input.js 1:0-2:0
-	path: UIDPath<esprima/invalid-syntax/migrated_0144/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Expected an identifier"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:8
-				path: UIDPath<esprima/invalid-syntax/migrated_0144/input.js>
-				start: Position 1:8
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation esprima/invalid-syntax/migrated_0144/input.js 1:0-1:11
 			expression: JSMemberExpression {
-				loc: SourceLocation esprima/invalid-syntax/migrated_0144/input.js 1:0-1:11
+				object: JSNewExpression {
+					arguments: []
+					callee: JSReferenceIdentifier {
+						name: "X"
+						loc: SourceLocation esprima/invalid-syntax/migrated_0144/input.js 1:4-1:5 (X)
+					}
+					loc: SourceLocation esprima/invalid-syntax/migrated_0144/input.js 1:0-1:7
+				}
 				property: JSStaticMemberProperty {
 					value: JSIdentifier {
 						name: ""
@@ -49,19 +26,36 @@ JSRoot {
 					}
 					loc: SourceLocation esprima/invalid-syntax/migrated_0144/input.js 1:8-1:11 ()
 				}
-				object: JSNewExpression {
-					arguments: Array []
-					optional: undefined
-					typeArguments: undefined
-					loc: SourceLocation esprima/invalid-syntax/migrated_0144/input.js 1:0-1:7
-					callee: JSReferenceIdentifier {
-						name: "X"
-						loc: SourceLocation esprima/invalid-syntax/migrated_0144/input.js 1:4-1:5 (X)
-					}
-				}
+				loc: SourceLocation esprima/invalid-syntax/migrated_0144/input.js 1:0-1:11
+			}
+			loc: SourceLocation esprima/invalid-syntax/migrated_0144/input.js 1:0-1:11
+		}
+	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "Expected an identifier"}
+			}
+			location: {
+				language: "js"
+				path: UIDPath<esprima/invalid-syntax/migrated_0144/input.js>
+				end: Position 1:8
+				start: Position 1:8
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<esprima/invalid-syntax/migrated_0144/input.js>
+	loc: SourceLocation esprima/invalid-syntax/migrated_0144/input.js 1:0-2:0
 }
 ```
 

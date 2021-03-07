@@ -8,45 +8,39 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	syntax: Array []
-	loc: SourceLocation esprima/es2015-export-declaration/export-default-named-function/input.js 1:0-2:0
-	path: UIDPath<esprima/es2015-export-declaration/export-default-named-function/input.js>
-	body: Array [
+	body: [
 		JSExportDefaultDeclaration {
-			loc: SourceLocation esprima/es2015-export-declaration/export-default-named-function/input.js 1:0-1:32
 			declaration: JSFunctionDeclaration {
 				id: JSBindingIdentifier {
 					name: "foo"
 					loc: SourceLocation esprima/es2015-export-declaration/export-default-named-function/input.js 1:24-1:27 (foo)
 				}
-				loc: SourceLocation esprima/es2015-export-declaration/export-default-named-function/input.js 1:15-1:32
 				body: JSBlockStatement {
-					body: Array []
-					directives: Array []
+					body: []
+					directives: []
 					loc: SourceLocation esprima/es2015-export-declaration/export-default-named-function/input.js 1:30-1:32
 				}
 				head: JSFunctionHead {
 					async: false
 					generator: false
 					hasHoistedVars: false
-					params: Array []
-					rest: undefined
-					returnType: undefined
-					thisType: undefined
-					typeParameters: undefined
+					params: []
 					loc: SourceLocation esprima/es2015-export-declaration/export-default-named-function/input.js 1:27-1:29
 				}
+				loc: SourceLocation esprima/es2015-export-declaration/export-default-named-function/input.js 1:15-1:32
 			}
+			loc: SourceLocation esprima/es2015-export-declaration/export-default-named-function/input.js 1:0-1:32
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: []
+	path: UIDPath<esprima/es2015-export-declaration/export-default-named-function/input.js>
+	loc: SourceLocation esprima/es2015-export-declaration/export-default-named-function/input.js 1:0-2:0
 }
 ```
 

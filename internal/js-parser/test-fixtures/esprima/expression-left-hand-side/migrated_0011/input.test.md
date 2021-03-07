@@ -8,31 +8,10 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation esprima/expression-left-hand-side/migrated_0011/input.js 1:0-2:0
-	path: UIDPath<esprima/expression-left-hand-side/migrated_0011/input.js>
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation esprima/expression-left-hand-side/migrated_0011/input.js 1:0-1:29
 			expression: JSMemberExpression {
-				loc: SourceLocation esprima/expression-left-hand-side/migrated_0011/input.js 1:0-1:29
-				property: JSStaticMemberProperty {
-					value: JSIdentifier {
-						name: "solarsystem"
-						loc: SourceLocation esprima/expression-left-hand-side/migrated_0011/input.js 1:18-1:29 (solarsystem)
-					}
-					loc: SourceLocation esprima/expression-left-hand-side/migrated_0011/input.js 1:18-1:29 (solarsystem)
-				}
 				object: JSMemberExpression {
-					loc: SourceLocation esprima/expression-left-hand-side/migrated_0011/input.js 1:0-1:17
 					object: JSReferenceIdentifier {
 						name: "universe"
 						loc: SourceLocation esprima/expression-left-hand-side/migrated_0011/input.js 1:0-1:8 (universe)
@@ -44,10 +23,29 @@ JSRoot {
 						}
 						loc: SourceLocation esprima/expression-left-hand-side/migrated_0011/input.js 1:9-1:17 (milkyway)
 					}
+					loc: SourceLocation esprima/expression-left-hand-side/migrated_0011/input.js 1:0-1:17
 				}
+				property: JSStaticMemberProperty {
+					value: JSIdentifier {
+						name: "solarsystem"
+						loc: SourceLocation esprima/expression-left-hand-side/migrated_0011/input.js 1:18-1:29 (solarsystem)
+					}
+					loc: SourceLocation esprima/expression-left-hand-side/migrated_0011/input.js 1:18-1:29 (solarsystem)
+				}
+				loc: SourceLocation esprima/expression-left-hand-side/migrated_0011/input.js 1:0-1:29
 			}
+			loc: SourceLocation esprima/expression-left-hand-side/migrated_0011/input.js 1:0-1:29
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<esprima/expression-left-hand-side/migrated_0011/input.js>
+	loc: SourceLocation esprima/expression-left-hand-side/migrated_0011/input.js 1:0-2:0
 }
 ```
 

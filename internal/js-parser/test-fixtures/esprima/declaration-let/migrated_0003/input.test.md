@@ -8,70 +8,65 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation esprima/declaration-let/migrated_0003/input.js 1:0-2:0
-	path: UIDPath<esprima/declaration-let/migrated_0003/input.js>
-	body: Array [
+	body: [
 		JSBlockStatement {
-			directives: Array []
-			loc: SourceLocation esprima/declaration-let/migrated_0003/input.js 1:0-1:31
-			body: Array [
+			body: [
 				JSVariableDeclarationStatement {
-					loc: SourceLocation esprima/declaration-let/migrated_0003/input.js 1:2-1:29
 					declaration: JSVariableDeclaration {
 						kind: "let"
-						loc: SourceLocation esprima/declaration-let/migrated_0003/input.js 1:2-1:29
-						declarations: Array [
+						declarations: [
 							JSVariableDeclarator {
 								id: JSBindingIdentifier {
 									name: "x"
 									loc: SourceLocation esprima/declaration-let/migrated_0003/input.js 1:6-1:7 (x)
 								}
-								loc: SourceLocation esprima/declaration-let/migrated_0003/input.js 1:6-1:12
 								init: JSNumericLiteral {
 									value: 14
-									format: undefined
 									loc: SourceLocation esprima/declaration-let/migrated_0003/input.js 1:10-1:12
 								}
+								loc: SourceLocation esprima/declaration-let/migrated_0003/input.js 1:6-1:12
 							}
 							JSVariableDeclarator {
 								id: JSBindingIdentifier {
 									name: "y"
 									loc: SourceLocation esprima/declaration-let/migrated_0003/input.js 1:14-1:15 (y)
 								}
-								loc: SourceLocation esprima/declaration-let/migrated_0003/input.js 1:14-1:19
 								init: JSNumericLiteral {
 									value: 3
-									format: undefined
 									loc: SourceLocation esprima/declaration-let/migrated_0003/input.js 1:18-1:19
 								}
+								loc: SourceLocation esprima/declaration-let/migrated_0003/input.js 1:14-1:19
 							}
 							JSVariableDeclarator {
 								id: JSBindingIdentifier {
 									name: "z"
 									loc: SourceLocation esprima/declaration-let/migrated_0003/input.js 1:21-1:22 (z)
 								}
-								loc: SourceLocation esprima/declaration-let/migrated_0003/input.js 1:21-1:29
 								init: JSNumericLiteral {
 									value: 1_977
-									format: undefined
 									loc: SourceLocation esprima/declaration-let/migrated_0003/input.js 1:25-1:29
 								}
+								loc: SourceLocation esprima/declaration-let/migrated_0003/input.js 1:21-1:29
 							}
 						]
+						loc: SourceLocation esprima/declaration-let/migrated_0003/input.js 1:2-1:29
 					}
+					loc: SourceLocation esprima/declaration-let/migrated_0003/input.js 1:2-1:29
 				}
 			]
+			directives: []
+			loc: SourceLocation esprima/declaration-let/migrated_0003/input.js 1:0-1:31
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<esprima/declaration-let/migrated_0003/input.js>
+	loc: SourceLocation esprima/declaration-let/migrated_0003/input.js 1:0-2:0
 }
 ```
 

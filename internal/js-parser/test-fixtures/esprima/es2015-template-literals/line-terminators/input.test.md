@@ -8,24 +8,11 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation esprima/es2015-template-literals/line-terminators/input.js 1:0-2:0
-	path: UIDPath<esprima/es2015-template-literals/line-terminators/input.js>
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation esprima/es2015-template-literals/line-terminators/input.js 1:0-1:8
 			expression: JSTemplateLiteral {
-				expressions: Array []
-				loc: SourceLocation esprima/es2015-template-literals/line-terminators/input.js 1:0-1:8
-				quasis: Array [
+				expressions: []
+				quasis: [
 					JSTemplateElement {
 						cooked: "\n\r\n"
 						raw: "\\n\\r\\n"
@@ -33,9 +20,20 @@ JSRoot {
 						loc: SourceLocation esprima/es2015-template-literals/line-terminators/input.js 1:1-1:7
 					}
 				]
+				loc: SourceLocation esprima/es2015-template-literals/line-terminators/input.js 1:0-1:8
 			}
+			loc: SourceLocation esprima/es2015-template-literals/line-terminators/input.js 1:0-1:8
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<esprima/es2015-template-literals/line-terminators/input.js>
+	loc: SourceLocation esprima/es2015-template-literals/line-terminators/input.js 1:0-2:0
 }
 ```
 

@@ -8,73 +8,60 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation esprima/es2015-yield/invalid-yield-strict-identifier/input.js 1:0-2:0
-	path: UIDPath<esprima/es2015-yield/invalid-yield-strict-identifier/input.js>
-	directives: Array [
-		JSDirective {
-			value: "use strict"
-			loc: SourceLocation esprima/es2015-yield/invalid-yield-strict-identifier/input.js 1:0-1:13
-		}
-	]
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "yield is a reserved word"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:34
-				path: UIDPath<esprima/es2015-yield/invalid-yield-strict-identifier/input.js>
-				start: Position 1:29
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "f"
 				loc: SourceLocation esprima/es2015-yield/invalid-yield-strict-identifier/input.js 1:23-1:24 (f)
 			}
-			loc: SourceLocation esprima/es2015-yield/invalid-yield-strict-identifier/input.js 1:14-1:36
-			head: JSFunctionHead {
-				async: false
-				generator: false
-				hasHoistedVars: false
-				params: Array []
-				rest: undefined
-				returnType: undefined
-				thisType: undefined
-				typeParameters: undefined
-				loc: SourceLocation esprima/es2015-yield/invalid-yield-strict-identifier/input.js 1:24-1:26
-			}
 			body: JSBlockStatement {
-				directives: Array []
-				loc: SourceLocation esprima/es2015-yield/invalid-yield-strict-identifier/input.js 1:27-1:36
-				body: Array [
+				body: [
 					JSExpressionStatement {
-						loc: SourceLocation esprima/es2015-yield/invalid-yield-strict-identifier/input.js 1:29-1:34
 						expression: JSReferenceIdentifier {
 							name: "yield"
 							loc: SourceLocation esprima/es2015-yield/invalid-yield-strict-identifier/input.js 1:29-1:34 (yield)
 						}
+						loc: SourceLocation esprima/es2015-yield/invalid-yield-strict-identifier/input.js 1:29-1:34
 					}
 				]
+				directives: []
+				loc: SourceLocation esprima/es2015-yield/invalid-yield-strict-identifier/input.js 1:27-1:36
+			}
+			head: JSFunctionHead {
+				async: false
+				generator: false
+				hasHoistedVars: false
+				params: []
+				loc: SourceLocation esprima/es2015-yield/invalid-yield-strict-identifier/input.js 1:24-1:26
+			}
+			loc: SourceLocation esprima/es2015-yield/invalid-yield-strict-identifier/input.js 1:14-1:36
+		}
+	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {advice: [], category: ["parse"], categoryValue: "js", message: ["yield", RAW_MARKUP {value: " is a reserved word"}]}
+			location: {
+				language: "js"
+				path: UIDPath<esprima/es2015-yield/invalid-yield-strict-identifier/input.js>
+				end: Position 1:34
+				start: Position 1:29
 			}
 		}
 	]
+	directives: [
+		JSDirective {
+			value: "use strict"
+			loc: SourceLocation esprima/es2015-yield/invalid-yield-strict-identifier/input.js 1:0-1:13
+		}
+	]
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<esprima/es2015-yield/invalid-yield-strict-identifier/input.js>
+	loc: SourceLocation esprima/es2015-yield/invalid-yield-strict-identifier/input.js 1:0-2:0
 }
 ```
 

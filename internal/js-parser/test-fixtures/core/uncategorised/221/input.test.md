@@ -8,30 +8,16 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: true
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation core/uncategorised/221/input.js 1:0-1:34
-	path: UIDPath<core/uncategorised/221/input.js>
-	body: Array [
+	body: [
 		JSVariableDeclarationStatement {
-			loc: SourceLocation core/uncategorised/221/input.js 1:0-1:34
 			declaration: JSVariableDeclaration {
 				kind: "var"
-				loc: SourceLocation core/uncategorised/221/input.js 1:0-1:34
-				declarations: Array [
+				declarations: [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "implements"
 							loc: SourceLocation core/uncategorised/221/input.js 1:4-1:14 (implements)
 						}
-						init: undefined
 						loc: SourceLocation core/uncategorised/221/input.js 1:4-1:14
 					}
 					JSVariableDeclarator {
@@ -39,7 +25,6 @@ JSRoot {
 							name: "interface"
 							loc: SourceLocation core/uncategorised/221/input.js 1:16-1:25 (interface)
 						}
-						init: undefined
 						loc: SourceLocation core/uncategorised/221/input.js 1:16-1:25
 					}
 					JSVariableDeclarator {
@@ -47,13 +32,23 @@ JSRoot {
 							name: "package"
 							loc: SourceLocation core/uncategorised/221/input.js 1:27-1:34 (package)
 						}
-						init: undefined
 						loc: SourceLocation core/uncategorised/221/input.js 1:27-1:34
 					}
 				]
+				loc: SourceLocation core/uncategorised/221/input.js 1:0-1:34
 			}
+			loc: SourceLocation core/uncategorised/221/input.js 1:0-1:34
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: true
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<core/uncategorised/221/input.js>
+	loc: SourceLocation core/uncategorised/221/input.js 1:0-1:34
 }
 ```
 

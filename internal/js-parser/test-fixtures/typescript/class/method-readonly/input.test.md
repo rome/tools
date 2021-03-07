@@ -8,49 +8,14 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: true
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	loc: SourceLocation typescript/class/method-readonly/input.ts 1:0-4:0
-	path: UIDPath<typescript/class/method-readonly/input.ts>
-	syntax: Array ["ts"]
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Expected a semicolon or a line terminator"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 2:14
-				path: UIDPath<typescript/class/method-readonly/input.ts>
-				start: Position 2:14
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSClassDeclaration {
 			id: JSBindingIdentifier {
 				name: "C"
 				loc: SourceLocation typescript/class/method-readonly/input.ts 1:6-1:7 (C)
 			}
-			loc: SourceLocation typescript/class/method-readonly/input.ts 1:0-2:19
 			meta: JSClassHead {
-				implements: undefined
-				superClass: undefined
-				superTypeParameters: undefined
-				typeParameters: undefined
-				loc: SourceLocation typescript/class/method-readonly/input.ts 1:0-2:19
-				body: Array [
+				body: [
 					JSClassProperty {
 						key: JSStaticPropertyKey {
 							value: JSIdentifier {
@@ -59,20 +24,15 @@ JSRoot {
 							}
 							loc: SourceLocation typescript/class/method-readonly/input.ts 2:13-2:14
 						}
-						value: undefined
-						definite: undefined
-						typeAnnotation: undefined
-						loc: SourceLocation typescript/class/method-readonly/input.ts 2:4-2:14
 						meta: JSClassPropertyMeta {
 							abstract: false
-							accessibility: undefined
 							optional: false
 							readonly: true
 							static: false
-							typeAnnotation: undefined
 							loc: SourceLocation typescript/class/method-readonly/input.ts 2:4-2:14
 							start: Position 2:4
 						}
+						loc: SourceLocation typescript/class/method-readonly/input.ts 2:4-2:14
 					}
 					JSClassProperty {
 						key: JSStaticPropertyKey {
@@ -82,32 +42,54 @@ JSRoot {
 							}
 							loc: SourceLocation typescript/class/method-readonly/input.ts 2:17-2:18
 						}
-						value: undefined
-						definite: undefined
-						typeAnnotation: undefined
-						loc: SourceLocation typescript/class/method-readonly/input.ts 2:17-2:18
 						meta: JSClassPropertyMeta {
 							abstract: false
-							accessibility: undefined
 							optional: false
 							readonly: false
 							static: false
-							typeAnnotation: undefined
 							loc: SourceLocation typescript/class/method-readonly/input.ts 2:17-2:18
 							start: Position 2:17
 						}
+						loc: SourceLocation typescript/class/method-readonly/input.ts 2:17-2:18
 					}
 				]
+				loc: SourceLocation typescript/class/method-readonly/input.ts 1:0-2:19
 			}
+			loc: SourceLocation typescript/class/method-readonly/input.ts 1:0-2:19
 		}
 		JSExpressionStatement {
-			loc: SourceLocation typescript/class/method-readonly/input.ts 3:0-3:1
 			expression: JSReferenceIdentifier {
 				name: "INVALID_PLACEHOLDER"
 				loc: SourceLocation typescript/class/method-readonly/input.ts 3:0-3:1
 			}
+			loc: SourceLocation typescript/class/method-readonly/input.ts 3:0-3:1
 		}
 	]
+	comments: []
+	corrupt: true
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "Expected a semicolon or a line terminator"}
+			}
+			location: {
+				language: "js"
+				path: UIDPath<typescript/class/method-readonly/input.ts>
+				end: Position 2:14
+				start: Position 2:14
+			}
+		}
+	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: ["ts"]
+	path: UIDPath<typescript/class/method-readonly/input.ts>
+	loc: SourceLocation typescript/class/method-readonly/input.ts 1:0-4:0
 }
 ```
 

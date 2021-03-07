@@ -8,42 +8,40 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2020/dynamic-import/return-value/input.js 1:0-2:0
-	path: UIDPath<es2020/dynamic-import/return-value/input.js>
-	body: Array [
+	body: [
 		JSVariableDeclarationStatement {
-			loc: SourceLocation es2020/dynamic-import/return-value/input.js 1:0-1:39
 			declaration: JSVariableDeclaration {
 				kind: "const"
-				loc: SourceLocation es2020/dynamic-import/return-value/input.js 1:0-1:39
-				declarations: Array [
+				declarations: [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "importResult"
 							loc: SourceLocation es2020/dynamic-import/return-value/input.js 1:6-1:18 (importResult)
 						}
-						loc: SourceLocation es2020/dynamic-import/return-value/input.js 1:6-1:38
 						init: JSImportCall {
-							loc: SourceLocation es2020/dynamic-import/return-value/input.js 1:27-1:38
 							argument: JSStringLiteral {
 								value: "test.js"
 								loc: SourceLocation es2020/dynamic-import/return-value/input.js 1:28-1:37
 							}
+							loc: SourceLocation es2020/dynamic-import/return-value/input.js 1:27-1:38
 						}
+						loc: SourceLocation es2020/dynamic-import/return-value/input.js 1:6-1:38
 					}
 				]
+				loc: SourceLocation es2020/dynamic-import/return-value/input.js 1:0-1:39
 			}
+			loc: SourceLocation es2020/dynamic-import/return-value/input.js 1:0-1:39
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2020/dynamic-import/return-value/input.js>
+	loc: SourceLocation es2020/dynamic-import/return-value/input.js 1:0-2:0
 }
 ```
 

@@ -8,30 +8,25 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation esprima/statement-iteration/migrated_0009/input.js 1:0-2:0
-	path: UIDPath<esprima/statement-iteration/migrated_0009/input.js>
-	body: Array [
+	body: [
 		JSForStatement {
-			init: undefined
-			test: undefined
-			update: undefined
-			loc: SourceLocation esprima/statement-iteration/migrated_0009/input.js 1:0-1:9
 			body: JSBlockStatement {
-				body: Array []
-				directives: Array []
+				body: []
+				directives: []
 				loc: SourceLocation esprima/statement-iteration/migrated_0009/input.js 1:7-1:9
 			}
+			loc: SourceLocation esprima/statement-iteration/migrated_0009/input.js 1:0-1:9
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<esprima/statement-iteration/migrated_0009/input.js>
+	loc: SourceLocation esprima/statement-iteration/migrated_0009/input.js 1:0-2:0
 }
 ```
 

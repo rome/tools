@@ -8,72 +8,69 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: true
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	loc: SourceLocation typescript/declare/var-new-line/input.ts 1:0-6:0
-	path: UIDPath<typescript/declare/var-new-line/input.ts>
-	syntax: Array ["ts"]
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation typescript/declare/var-new-line/input.ts 1:0-1:7
 			expression: JSReferenceIdentifier {
 				name: "declare"
 				loc: SourceLocation typescript/declare/var-new-line/input.ts 1:0-1:7 (declare)
 			}
+			loc: SourceLocation typescript/declare/var-new-line/input.ts 1:0-1:7
 		}
 		JSVariableDeclarationStatement {
-			loc: SourceLocation typescript/declare/var-new-line/input.ts 2:0-2:6
 			declaration: JSVariableDeclaration {
 				kind: "var"
-				loc: SourceLocation typescript/declare/var-new-line/input.ts 2:0-2:6
-				declarations: Array [
+				declarations: [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "x"
 							loc: SourceLocation typescript/declare/var-new-line/input.ts 2:4-2:5 (x)
 						}
-						init: undefined
 						loc: SourceLocation typescript/declare/var-new-line/input.ts 2:4-2:5
 					}
 				]
+				loc: SourceLocation typescript/declare/var-new-line/input.ts 2:0-2:6
 			}
+			loc: SourceLocation typescript/declare/var-new-line/input.ts 2:0-2:6
 		}
 		JSExpressionStatement {
-			loc: SourceLocation typescript/declare/var-new-line/input.ts 4:0-4:7
 			expression: JSReferenceIdentifier {
 				name: "declare"
 				loc: SourceLocation typescript/declare/var-new-line/input.ts 4:0-4:7 (declare)
 			}
+			loc: SourceLocation typescript/declare/var-new-line/input.ts 4:0-4:7
 		}
 		JSVariableDeclarationStatement {
-			loc: SourceLocation typescript/declare/var-new-line/input.ts 5:0-5:11
 			declaration: JSVariableDeclaration {
 				kind: "var"
-				loc: SourceLocation typescript/declare/var-new-line/input.ts 5:0-5:11
-				declarations: Array [
+				declarations: [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "x"
-							loc: SourceLocation typescript/declare/var-new-line/input.ts 5:4-5:10
 							meta: JSPatternMeta {
-								definite: undefined
+								typeAnnotation: TSAnyKeywordTypeAnnotation {
+									loc: SourceLocation typescript/declare/var-new-line/input.ts 5:7-5:10
+								}
 								loc: SourceLocation typescript/declare/var-new-line/input.ts 5:4-5:10
-								typeAnnotation: TSAnyKeywordTypeAnnotation {loc: SourceLocation typescript/declare/var-new-line/input.ts 5:7-5:10}
 							}
+							loc: SourceLocation typescript/declare/var-new-line/input.ts 5:4-5:10
 						}
-						init: undefined
 						loc: SourceLocation typescript/declare/var-new-line/input.ts 5:4-5:10
 					}
 				]
+				loc: SourceLocation typescript/declare/var-new-line/input.ts 5:0-5:11
 			}
+			loc: SourceLocation typescript/declare/var-new-line/input.ts 5:0-5:11
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: true
+	sourceType: "module"
+	syntax: ["ts"]
+	path: UIDPath<typescript/declare/var-new-line/input.ts>
+	loc: SourceLocation typescript/declare/var-new-line/input.ts 1:0-6:0
 }
 ```
 

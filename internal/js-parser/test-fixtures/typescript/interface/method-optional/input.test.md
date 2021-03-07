@@ -8,30 +8,16 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	loc: SourceLocation typescript/interface/method-optional/input.ts 1:0-4:0
-	path: UIDPath<typescript/interface/method-optional/input.ts>
-	syntax: Array ["ts"]
-	body: Array [
+	body: [
 		TSInterfaceDeclaration {
 			id: JSBindingIdentifier {
 				name: "I"
 				loc: SourceLocation typescript/interface/method-optional/input.ts 1:10-1:11 (I)
 			}
-			extends: undefined
-			typeParameters: undefined
-			loc: SourceLocation typescript/interface/method-optional/input.ts 1:0-3:1
 			body: TSInterfaceBody {
-				loc: SourceLocation typescript/interface/method-optional/input.ts 1:12-3:1
-				body: Array [
+				body: [
 					TSMethodSignature {
+						optional: true
 						key: JSStaticPropertyKey {
 							value: JSIdentifier {
 								name: "m"
@@ -39,20 +25,30 @@ JSRoot {
 							}
 							loc: SourceLocation typescript/interface/method-optional/input.ts 2:4-2:5
 						}
-						optional: true
-						loc: SourceLocation typescript/interface/method-optional/input.ts 2:4-2:15
-						returnType: TSVoidKeywordTypeAnnotation {loc: SourceLocation typescript/interface/method-optional/input.ts 2:10-2:14}
 						meta: TSSignatureDeclarationMeta {
-							parameters: Array []
-							rest: undefined
-							typeParameters: undefined
+							parameters: []
 							loc: SourceLocation typescript/interface/method-optional/input.ts 2:6-2:14
 						}
+						returnType: TSVoidKeywordTypeAnnotation {
+							loc: SourceLocation typescript/interface/method-optional/input.ts 2:10-2:14
+						}
+						loc: SourceLocation typescript/interface/method-optional/input.ts 2:4-2:15
 					}
 				]
+				loc: SourceLocation typescript/interface/method-optional/input.ts 1:12-3:1
 			}
+			loc: SourceLocation typescript/interface/method-optional/input.ts 1:0-3:1
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: ["ts"]
+	path: UIDPath<typescript/interface/method-optional/input.ts>
+	loc: SourceLocation typescript/interface/method-optional/input.ts 1:0-4:0
 }
 ```
 

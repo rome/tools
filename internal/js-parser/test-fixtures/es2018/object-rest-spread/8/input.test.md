@@ -8,50 +8,14 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2018/object-rest-spread/8/input.js 1:0-2:0
-	path: UIDPath<es2018/object-rest-spread/8/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "A trailing comma is not permitted after the rest element"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:16
-				path: UIDPath<es2018/object-rest-spread/8/input.js>
-				start: Position 1:16
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSVariableDeclarationStatement {
-			loc: SourceLocation es2018/object-rest-spread/8/input.js 1:0-1:26
 			declaration: JSVariableDeclaration {
 				kind: "let"
-				loc: SourceLocation es2018/object-rest-spread/8/input.js 1:0-1:26
-				declarations: Array [
+				declarations: [
 					JSVariableDeclarator {
 						id: JSBindingObjectPattern {
-							loc: SourceLocation es2018/object-rest-spread/8/input.js 1:4-1:19
-							rest: JSBindingIdentifier {
-								name: "z"
-								loc: SourceLocation es2018/object-rest-spread/8/input.js 1:15-1:16 (z)
-							}
-							properties: Array [
+							properties: [
 								JSBindingObjectPatternProperty {
 									key: JSStaticPropertyKey {
 										value: JSIdentifier {
@@ -81,17 +45,49 @@ JSRoot {
 									loc: SourceLocation es2018/object-rest-spread/8/input.js 1:9-1:10
 								}
 							]
+							rest: JSBindingIdentifier {
+								name: "z"
+								loc: SourceLocation es2018/object-rest-spread/8/input.js 1:15-1:16 (z)
+							}
+							loc: SourceLocation es2018/object-rest-spread/8/input.js 1:4-1:19
 						}
-						loc: SourceLocation es2018/object-rest-spread/8/input.js 1:4-1:25
 						init: JSReferenceIdentifier {
 							name: "obj"
 							loc: SourceLocation es2018/object-rest-spread/8/input.js 1:22-1:25 (obj)
 						}
+						loc: SourceLocation es2018/object-rest-spread/8/input.js 1:4-1:25
 					}
 				]
+				loc: SourceLocation es2018/object-rest-spread/8/input.js 1:0-1:26
+			}
+			loc: SourceLocation es2018/object-rest-spread/8/input.js 1:0-1:26
+		}
+	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "A trailing comma is not permitted after the rest element"}
+			}
+			location: {
+				language: "js"
+				path: UIDPath<es2018/object-rest-spread/8/input.js>
+				end: Position 1:16
+				start: Position 1:16
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2018/object-rest-spread/8/input.js>
+	loc: SourceLocation es2018/object-rest-spread/8/input.js 1:0-2:0
 }
 ```
 

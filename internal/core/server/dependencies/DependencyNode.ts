@@ -13,7 +13,6 @@ import {
 	Diagnostic,
 	DiagnosticIntegrity,
 	DiagnosticLocation,
-	Diagnostics,
 	descriptions,
 } from "@internal/diagnostics";
 import {ProjectDefinition} from "@internal/project";
@@ -82,7 +81,7 @@ function equalKind(
 }
 
 type ResolveImportsResult = {
-	diagnostics: Diagnostics;
+	diagnostics: Diagnostic[];
 	resolved: BundleCompileResolvedImports;
 };
 
@@ -112,6 +111,9 @@ export default class DependencyNode {
 		this.handler = handler;
 
 		this.shallow = false;
+
+		this.hadResolveImportsDiagnostics = undefined;
+		this.resolveImportsCache = undefined;
 	}
 
 	public uid: UIDPath;
@@ -128,7 +130,9 @@ export default class DependencyNode {
 	private graph: DependencyGraph;
 	private absoluteToAnalyzeDependency: AbsoluteFilePathMap<AnalyzeDependency>;
 	private project: ProjectDefinition;
+
 	private resolveImportsCache: undefined | ResolveImportsResult;
+	public hadResolveImportsDiagnostics: undefined | boolean;
 
 	public getIntegrity(): undefined | DiagnosticIntegrity {
 		return this.analyze.integrity;
@@ -354,7 +358,7 @@ export default class DependencyNode {
 		const resolvedImports: BundleCompileResolvedImports = new UIDPathMap();
 
 		// Diagnostics for unknown imports
-		const diagnostics: Diagnostics = [];
+		const diagnostics: Diagnostic[] = [];
 
 		// Go through all of our dependencies and check if they have any external exports to forward
 		for (const absolute of this.relativeToAbsolutePath.values()) {
@@ -405,6 +409,7 @@ export default class DependencyNode {
 			resolved: resolvedImports,
 			diagnostics,
 		};
+		this.hadResolveImportsDiagnostics = result.diagnostics.length > 0;
 		this.resolveImportsCache = result;
 		return result;
 	}

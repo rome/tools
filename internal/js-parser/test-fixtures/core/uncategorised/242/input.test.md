@@ -8,55 +8,51 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: true
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation core/uncategorised/242/input.js 1:0-1:24
-	path: UIDPath<core/uncategorised/242/input.js>
-	body: Array [
+	body: [
 		JSForStatement {
-			test: undefined
-			update: undefined
-			body: JSEmptyStatement {loc: SourceLocation core/uncategorised/242/input.js 1:23-1:24}
-			loc: SourceLocation core/uncategorised/242/input.js 1:0-1:24
+			body: JSEmptyStatement {
+				loc: SourceLocation core/uncategorised/242/input.js 1:23-1:24
+			}
 			init: JSVariableDeclaration {
 				kind: "var"
-				loc: SourceLocation core/uncategorised/242/input.js 1:4-1:20
-				declarations: Array [
+				declarations: [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "x"
 							loc: SourceLocation core/uncategorised/242/input.js 1:8-1:9 (x)
 						}
-						loc: SourceLocation core/uncategorised/242/input.js 1:8-1:13
 						init: JSNumericLiteral {
 							value: 0
-							format: undefined
 							loc: SourceLocation core/uncategorised/242/input.js 1:12-1:13
 						}
+						loc: SourceLocation core/uncategorised/242/input.js 1:8-1:13
 					}
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "y"
 							loc: SourceLocation core/uncategorised/242/input.js 1:15-1:16 (y)
 						}
-						loc: SourceLocation core/uncategorised/242/input.js 1:15-1:20
 						init: JSNumericLiteral {
 							value: 1
-							format: undefined
 							loc: SourceLocation core/uncategorised/242/input.js 1:19-1:20
 						}
+						loc: SourceLocation core/uncategorised/242/input.js 1:15-1:20
 					}
 				]
+				loc: SourceLocation core/uncategorised/242/input.js 1:4-1:20
 			}
+			loc: SourceLocation core/uncategorised/242/input.js 1:0-1:24
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: true
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<core/uncategorised/242/input.js>
+	loc: SourceLocation core/uncategorised/242/input.js 1:0-1:24
 }
 ```
 

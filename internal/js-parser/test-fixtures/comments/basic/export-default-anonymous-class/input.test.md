@@ -8,17 +8,57 @@
 
 ```javascript
 JSRoot {
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	syntax: Array []
-	loc: SourceLocation comments/basic/export-default-anonymous-class/input.js 1:0-11:0
-	path: UIDPath<comments/basic/export-default-anonymous-class/input.js>
-	comments: Array [
+	body: [
+		JSExportDefaultDeclaration {
+			leadingComments: ["0"]
+			declaration: JSClassDeclaration {
+				id: JSBindingIdentifier {
+					name: "*default*"
+					loc: SourceLocation comments/basic/export-default-anonymous-class/input.js 4:15-10:1
+				}
+				meta: JSClassHead {
+					body: [
+						JSClassMethod {
+							kind: "method"
+							leadingComments: ["1"]
+							key: JSStaticPropertyKey {
+								value: JSIdentifier {
+									name: "method1"
+									loc: SourceLocation comments/basic/export-default-anonymous-class/input.js 8:4-8:11 (method1)
+								}
+								loc: SourceLocation comments/basic/export-default-anonymous-class/input.js 8:4-8:11
+							}
+							meta: JSClassPropertyMeta {
+								abstract: false
+								optional: false
+								readonly: false
+								static: false
+								loc: SourceLocation comments/basic/export-default-anonymous-class/input.js 8:4-8:11
+								start: Position 8:4
+							}
+							body: JSBlockStatement {
+								body: []
+								directives: []
+								loc: SourceLocation comments/basic/export-default-anonymous-class/input.js 8:13-9:5
+							}
+							head: JSFunctionHead {
+								async: false
+								generator: false
+								hasHoistedVars: false
+								params: []
+								loc: SourceLocation comments/basic/export-default-anonymous-class/input.js 8:11-8:13
+							}
+							loc: SourceLocation comments/basic/export-default-anonymous-class/input.js 8:4-9:5
+						}
+					]
+					loc: SourceLocation comments/basic/export-default-anonymous-class/input.js 4:15-10:1
+				}
+				loc: SourceLocation comments/basic/export-default-anonymous-class/input.js 4:15-10:1
+			}
+			loc: SourceLocation comments/basic/export-default-anonymous-class/input.js 4:0-10:1
+		}
+	]
+	comments: [
 		CommentBlock {
 			id: "0"
 			value: "*\n * this is anonymous class.\n "
@@ -30,71 +70,14 @@ JSRoot {
 			loc: SourceLocation comments/basic/export-default-anonymous-class/input.js 5:4-7:7
 		}
 	]
-	body: Array [
-		JSExportDefaultDeclaration {
-			leadingComments: Array ["0"]
-			loc: SourceLocation comments/basic/export-default-anonymous-class/input.js 4:0-10:1
-			declaration: JSClassDeclaration {
-				id: JSBindingIdentifier {
-					name: "*default*"
-					loc: SourceLocation comments/basic/export-default-anonymous-class/input.js 4:15-10:1
-				}
-				leadingComments: undefined
-				loc: SourceLocation comments/basic/export-default-anonymous-class/input.js 4:15-10:1
-				meta: JSClassHead {
-					implements: undefined
-					leadingComments: undefined
-					superClass: undefined
-					superTypeParameters: undefined
-					typeParameters: undefined
-					loc: SourceLocation comments/basic/export-default-anonymous-class/input.js 4:15-10:1
-					body: Array [
-						JSClassMethod {
-							kind: "method"
-							key: JSStaticPropertyKey {
-								value: JSIdentifier {
-									name: "method1"
-									leadingComments: undefined
-									loc: SourceLocation comments/basic/export-default-anonymous-class/input.js 8:4-8:11 (method1)
-								}
-								leadingComments: undefined
-								loc: SourceLocation comments/basic/export-default-anonymous-class/input.js 8:4-8:11
-							}
-							leadingComments: Array ["1"]
-							loc: SourceLocation comments/basic/export-default-anonymous-class/input.js 8:4-9:5
-							body: JSBlockStatement {
-								body: Array []
-								directives: Array []
-								loc: SourceLocation comments/basic/export-default-anonymous-class/input.js 8:13-9:5
-							}
-							head: JSFunctionHead {
-								async: false
-								generator: false
-								hasHoistedVars: false
-								params: Array []
-								rest: undefined
-								returnType: undefined
-								thisType: undefined
-								typeParameters: undefined
-								loc: SourceLocation comments/basic/export-default-anonymous-class/input.js 8:11-8:13
-							}
-							meta: JSClassPropertyMeta {
-								abstract: false
-								accessibility: undefined
-								leadingComments: undefined
-								optional: false
-								readonly: false
-								static: false
-								typeAnnotation: undefined
-								loc: SourceLocation comments/basic/export-default-anonymous-class/input.js 8:4-8:11
-								start: Position 8:4
-							}
-						}
-					]
-				}
-			}
-		}
-	]
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: []
+	path: UIDPath<comments/basic/export-default-anonymous-class/input.js>
+	loc: SourceLocation comments/basic/export-default-anonymous-class/input.js 1:0-11:0
 }
 ```
 

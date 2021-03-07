@@ -8,53 +8,16 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2015/uncategorised/341/input.js 1:0-1:23
-	path: UIDPath<es2015/uncategorised/341/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:18
-				path: UIDPath<es2015/uncategorised/341/input.js>
-				start: Position 1:19
-			}
-			description: Object {
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Unexpected character <emphasis>4</emphasis>"}
-				advice: Array [
-					log {
-						category: "info"
-						text: RAW_MARKUP {value: "Expected the opening block character <emphasis>{</emphasis>"}
-					}
-				]
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation es2015/uncategorised/341/input.js 1:0-1:23
 			expression: JSAssignmentExpression {
 				operator: "="
-				loc: SourceLocation es2015/uncategorised/341/input.js 1:0-1:23
 				left: JSAssignmentIdentifier {
 					name: "x"
 					loc: SourceLocation es2015/uncategorised/341/input.js 1:0-1:1 (x)
 				}
 				right: JSObjectExpression {
-					loc: SourceLocation es2015/uncategorised/341/input.js 1:4-1:23
-					properties: Array [
+					properties: [
 						JSObjectMethod {
 							kind: "get"
 							key: JSStaticPropertyKey {
@@ -64,38 +27,66 @@ JSRoot {
 								}
 								loc: SourceLocation es2015/uncategorised/341/input.js 1:10-1:16
 							}
-							loc: SourceLocation es2015/uncategorised/341/input.js 1:6-1:23
+							body: JSBlockStatement {
+								body: [
+									JSExpressionStatement {
+										expression: JSNumericLiteral {
+											value: 42
+											loc: SourceLocation es2015/uncategorised/341/input.js 1:19-1:21
+										}
+										loc: SourceLocation es2015/uncategorised/341/input.js 1:19-1:21
+									}
+								]
+								directives: []
+								loc: SourceLocation es2015/uncategorised/341/input.js 1:19-1:23
+							}
 							head: JSFunctionHead {
 								async: false
 								generator: false
 								hasHoistedVars: false
-								params: Array []
-								rest: undefined
-								returnType: undefined
-								thisType: undefined
-								typeParameters: undefined
+								params: []
 								loc: SourceLocation es2015/uncategorised/341/input.js 1:16-1:18
 							}
-							body: JSBlockStatement {
-								directives: Array []
-								loc: SourceLocation es2015/uncategorised/341/input.js 1:19-1:23
-								body: Array [
-									JSExpressionStatement {
-										loc: SourceLocation es2015/uncategorised/341/input.js 1:19-1:21
-										expression: JSNumericLiteral {
-											value: 42
-											format: undefined
-											loc: SourceLocation es2015/uncategorised/341/input.js 1:19-1:21
-										}
-									}
-								]
-							}
+							loc: SourceLocation es2015/uncategorised/341/input.js 1:6-1:23
 						}
 					]
+					loc: SourceLocation es2015/uncategorised/341/input.js 1:4-1:23
 				}
+				loc: SourceLocation es2015/uncategorised/341/input.js 1:0-1:23
+			}
+			loc: SourceLocation es2015/uncategorised/341/input.js 1:0-1:23
+		}
+	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {
+				advice: [
+					log {
+						category: "info"
+						text: [RAW_MARKUP {value: "Expected the opening "}, "block", RAW_MARKUP {value: " character <emphasis>"}, "{", RAW_MARKUP {value: "</emphasis>"}]
+					}
+				]
+				category: ["parse"]
+				categoryValue: "js"
+				message: [RAW_MARKUP {value: "Unexpected character <emphasis>"}, "4", RAW_MARKUP {value: "</emphasis>"}]
+			}
+			location: {
+				language: "js"
+				path: UIDPath<es2015/uncategorised/341/input.js>
+				end: Position 1:18
+				start: Position 1:19
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2015/uncategorised/341/input.js>
+	loc: SourceLocation es2015/uncategorised/341/input.js 1:0-1:23
 }
 ```
 

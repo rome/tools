@@ -8,38 +8,24 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: true
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation core/uncategorised/374/input.js 1:0-1:32
-	path: UIDPath<core/uncategorised/374/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Invalid left-hand side in for-in statement"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:10
-				path: UIDPath<core/uncategorised/374/input.js>
-				start: Position 1:5
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSForInStatement {
-			loc: SourceLocation core/uncategorised/374/input.js 1:0-1:32
+			body: JSExpressionStatement {
+				expression: JSCallExpression {
+					arguments: [
+						JSReferenceIdentifier {
+							name: "x"
+							loc: SourceLocation core/uncategorised/374/input.js 1:29-1:30 (x)
+						}
+					]
+					callee: JSReferenceIdentifier {
+						name: "process"
+						loc: SourceLocation core/uncategorised/374/input.js 1:21-1:28 (process)
+					}
+					loc: SourceLocation core/uncategorised/374/input.js 1:21-1:31
+				}
+				loc: SourceLocation core/uncategorised/374/input.js 1:21-1:32
+			}
 			left: JSAssignmentIdentifier {
 				name: "INVALID_PLACEHOLDER"
 				loc: SourceLocation core/uncategorised/374/input.js 1:12-1:11
@@ -48,24 +34,29 @@ JSRoot {
 				name: "list"
 				loc: SourceLocation core/uncategorised/374/input.js 1:15-1:19 (list)
 			}
-			body: JSExpressionStatement {
-				loc: SourceLocation core/uncategorised/374/input.js 1:21-1:32
-				expression: JSCallExpression {
-					loc: SourceLocation core/uncategorised/374/input.js 1:21-1:31
-					callee: JSReferenceIdentifier {
-						name: "process"
-						loc: SourceLocation core/uncategorised/374/input.js 1:21-1:28 (process)
-					}
-					arguments: Array [
-						JSReferenceIdentifier {
-							name: "x"
-							loc: SourceLocation core/uncategorised/374/input.js 1:29-1:30 (x)
-						}
-					]
-				}
+			loc: SourceLocation core/uncategorised/374/input.js 1:0-1:32
+		}
+	]
+	comments: []
+	corrupt: true
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {advice: [], category: ["parse"], categoryValue: "js", message: [RAW_MARKUP {value: "Invalid left-hand side in "}, "for-in statement"]}
+			location: {
+				language: "js"
+				path: UIDPath<core/uncategorised/374/input.js>
+				end: Position 1:10
+				start: Position 1:5
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<core/uncategorised/374/input.js>
+	loc: SourceLocation core/uncategorised/374/input.js 1:0-1:32
 }
 ```
 

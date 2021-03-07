@@ -8,69 +8,58 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation test262/rest-parameter/array-pattern-single-element-with-initializer/input.js 1:0-2:0
-	path: UIDPath<test262/rest-parameter/array-pattern-single-element-with-initializer/input.js>
-	body: Array [
+	body: [
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "singleElementWithInitializer"
 				loc: SourceLocation test262/rest-parameter/array-pattern-single-element-with-initializer/input.js 1:9-1:37 (singleElementWithInitializer)
 			}
-			loc: SourceLocation test262/rest-parameter/array-pattern-single-element-with-initializer/input.js 1:0-1:52
 			body: JSBlockStatement {
-				body: Array []
-				directives: Array []
+				body: []
+				directives: []
 				loc: SourceLocation test262/rest-parameter/array-pattern-single-element-with-initializer/input.js 1:50-1:52
 			}
 			head: JSFunctionHead {
 				async: false
 				generator: false
 				hasHoistedVars: false
-				params: Array []
-				returnType: undefined
-				thisType: undefined
-				typeParameters: undefined
-				loc: SourceLocation test262/rest-parameter/array-pattern-single-element-with-initializer/input.js 1:37-1:49
+				params: []
 				rest: JSBindingArrayPattern {
-					rest: undefined
-					loc: SourceLocation test262/rest-parameter/array-pattern-single-element-with-initializer/input.js 1:41-1:48
-					meta: JSPatternMeta {
-						optional: undefined
-						typeAnnotation: undefined
-						loc: SourceLocation test262/rest-parameter/array-pattern-single-element-with-initializer/input.js 1:41-1:48
-					}
-					elements: Array [
+					elements: [
 						JSBindingAssignmentPattern {
-							loc: SourceLocation test262/rest-parameter/array-pattern-single-element-with-initializer/input.js 1:42-1:47
-							right: JSNumericLiteral {
-								value: 0
-								format: undefined
-								loc: SourceLocation test262/rest-parameter/array-pattern-single-element-with-initializer/input.js 1:46-1:47
-							}
 							left: JSBindingIdentifier {
 								name: "a"
-								loc: SourceLocation test262/rest-parameter/array-pattern-single-element-with-initializer/input.js 1:42-1:43 (a)
 								meta: JSPatternMeta {
-									optional: undefined
-									typeAnnotation: undefined
 									loc: SourceLocation test262/rest-parameter/array-pattern-single-element-with-initializer/input.js 1:42-1:43
 								}
+								loc: SourceLocation test262/rest-parameter/array-pattern-single-element-with-initializer/input.js 1:42-1:43 (a)
 							}
+							right: JSNumericLiteral {
+								value: 0
+								loc: SourceLocation test262/rest-parameter/array-pattern-single-element-with-initializer/input.js 1:46-1:47
+							}
+							loc: SourceLocation test262/rest-parameter/array-pattern-single-element-with-initializer/input.js 1:42-1:47
 						}
 					]
+					meta: JSPatternMeta {
+						loc: SourceLocation test262/rest-parameter/array-pattern-single-element-with-initializer/input.js 1:41-1:48
+					}
+					loc: SourceLocation test262/rest-parameter/array-pattern-single-element-with-initializer/input.js 1:41-1:48
 				}
+				loc: SourceLocation test262/rest-parameter/array-pattern-single-element-with-initializer/input.js 1:37-1:49
 			}
+			loc: SourceLocation test262/rest-parameter/array-pattern-single-element-with-initializer/input.js 1:0-1:52
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<test262/rest-parameter/array-pattern-single-element-with-initializer/input.js>
+	loc: SourceLocation test262/rest-parameter/array-pattern-single-element-with-initializer/input.js 1:0-2:0
 }
 ```
 

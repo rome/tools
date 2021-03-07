@@ -8,49 +8,14 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2015/class/invalid-escape-get/input.js 1:0-2:0
-	path: UIDPath<es2015/class/invalid-escape-get/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "<emphasis>get</emphasis> can't contain a unicode escape"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:12
-				path: UIDPath<es2015/class/invalid-escape-get/input.js>
-				start: Position 1:12
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSClassDeclaration {
 			id: JSBindingIdentifier {
 				name: "X"
 				loc: SourceLocation es2015/class/invalid-escape-get/input.js 1:6-1:7 (X)
 			}
-			loc: SourceLocation es2015/class/invalid-escape-get/input.js 1:0-1:27
 			meta: JSClassHead {
-				implements: undefined
-				superClass: undefined
-				superTypeParameters: undefined
-				typeParameters: undefined
-				loc: SourceLocation es2015/class/invalid-escape-get/input.js 1:0-1:27
-				body: Array [
+				body: [
 					JSClassMethod {
 						kind: "get"
 						key: JSStaticPropertyKey {
@@ -60,38 +25,59 @@ JSRoot {
 							}
 							loc: SourceLocation es2015/class/invalid-escape-get/input.js 1:19-1:20
 						}
-						loc: SourceLocation es2015/class/invalid-escape-get/input.js 1:10-1:25
-						body: JSBlockStatement {
-							body: Array []
-							directives: Array []
-							loc: SourceLocation es2015/class/invalid-escape-get/input.js 1:23-1:25
-						}
 						meta: JSClassPropertyMeta {
 							abstract: false
-							accessibility: undefined
 							optional: false
 							readonly: false
 							static: false
-							typeAnnotation: undefined
 							loc: SourceLocation es2015/class/invalid-escape-get/input.js 1:10-1:20
 							start: Position 1:10
+						}
+						body: JSBlockStatement {
+							body: []
+							directives: []
+							loc: SourceLocation es2015/class/invalid-escape-get/input.js 1:23-1:25
 						}
 						head: JSFunctionHead {
 							async: false
 							generator: false
 							hasHoistedVars: false
-							params: Array []
-							rest: undefined
-							returnType: undefined
-							thisType: undefined
-							typeParameters: undefined
+							params: []
 							loc: SourceLocation es2015/class/invalid-escape-get/input.js 1:20-1:22
 						}
+						loc: SourceLocation es2015/class/invalid-escape-get/input.js 1:10-1:25
 					}
 				]
+				loc: SourceLocation es2015/class/invalid-escape-get/input.js 1:0-1:27
+			}
+			loc: SourceLocation es2015/class/invalid-escape-get/input.js 1:0-1:27
+		}
+	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "js"
+				message: [RAW_MARKUP {value: "<emphasis>"}, "get", RAW_MARKUP {value: "</emphasis> can't contain a unicode escape"}]
+			}
+			location: {
+				language: "js"
+				path: UIDPath<es2015/class/invalid-escape-get/input.js>
+				end: Position 1:12
+				start: Position 1:12
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2015/class/invalid-escape-get/input.js>
+	loc: SourceLocation es2015/class/invalid-escape-get/input.js 1:0-2:0
 }
 ```
 

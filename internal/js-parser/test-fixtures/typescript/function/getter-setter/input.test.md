@@ -8,33 +8,18 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	loc: SourceLocation typescript/function/getter-setter/input.ts 1:0-6:2
-	path: UIDPath<typescript/function/getter-setter/input.ts>
-	syntax: Array ["ts"]
-	body: Array [
+	body: [
 		JSVariableDeclarationStatement {
-			loc: SourceLocation typescript/function/getter-setter/input.ts 1:0-3:2
 			declaration: JSVariableDeclaration {
 				kind: "const"
-				loc: SourceLocation typescript/function/getter-setter/input.ts 1:0-3:2
-				declarations: Array [
+				declarations: [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "g"
 							loc: SourceLocation typescript/function/getter-setter/input.ts 1:6-1:7 (g)
 						}
-						loc: SourceLocation typescript/function/getter-setter/input.ts 1:6-3:1
 						init: JSObjectExpression {
-							loc: SourceLocation typescript/function/getter-setter/input.ts 1:10-3:1
-							properties: Array [
+							properties: [
 								JSObjectMethod {
 									kind: "get"
 									key: JSStaticPropertyKey {
@@ -44,56 +29,52 @@ JSRoot {
 										}
 										loc: SourceLocation typescript/function/getter-setter/input.ts 2:6-2:7
 									}
-									loc: SourceLocation typescript/function/getter-setter/input.ts 2:2-2:20
 									body: JSBlockStatement {
-										body: Array []
-										directives: Array []
+										body: []
+										directives: []
 										loc: SourceLocation typescript/function/getter-setter/input.ts 2:18-2:20
 									}
 									head: JSFunctionHead {
 										async: false
 										generator: false
 										hasHoistedVars: false
-										params: Array []
-										rest: undefined
-										returnType: undefined
-										typeParameters: undefined
-										loc: SourceLocation typescript/function/getter-setter/input.ts 2:7-2:17
+										params: []
 										thisType: JSBindingIdentifier {
 											name: "this"
-											loc: SourceLocation typescript/function/getter-setter/input.ts 2:8-2:12 (this)
 											meta: JSPatternMeta {
-												optional: undefined
-												loc: SourceLocation typescript/function/getter-setter/input.ts 2:8-2:16
 												typeAnnotation: TSObjectTypeAnnotation {
-													members: Array []
+													members: []
 													loc: SourceLocation typescript/function/getter-setter/input.ts 2:14-2:16
 												}
+												loc: SourceLocation typescript/function/getter-setter/input.ts 2:8-2:16
 											}
+											loc: SourceLocation typescript/function/getter-setter/input.ts 2:8-2:12 (this)
 										}
+										loc: SourceLocation typescript/function/getter-setter/input.ts 2:7-2:17
 									}
+									loc: SourceLocation typescript/function/getter-setter/input.ts 2:2-2:20
 								}
 							]
+							loc: SourceLocation typescript/function/getter-setter/input.ts 1:10-3:1
 						}
+						loc: SourceLocation typescript/function/getter-setter/input.ts 1:6-3:1
 					}
 				]
+				loc: SourceLocation typescript/function/getter-setter/input.ts 1:0-3:2
 			}
+			loc: SourceLocation typescript/function/getter-setter/input.ts 1:0-3:2
 		}
 		JSVariableDeclarationStatement {
-			loc: SourceLocation typescript/function/getter-setter/input.ts 4:0-6:2
 			declaration: JSVariableDeclaration {
 				kind: "const"
-				loc: SourceLocation typescript/function/getter-setter/input.ts 4:0-6:2
-				declarations: Array [
+				declarations: [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "s"
 							loc: SourceLocation typescript/function/getter-setter/input.ts 4:6-4:7 (s)
 						}
-						loc: SourceLocation typescript/function/getter-setter/input.ts 4:6-6:1
 						init: JSObjectExpression {
-							loc: SourceLocation typescript/function/getter-setter/input.ts 4:10-6:1
-							properties: Array [
+							properties: [
 								JSObjectMethod {
 									kind: "set"
 									key: JSStaticPropertyKey {
@@ -103,52 +84,59 @@ JSRoot {
 										}
 										loc: SourceLocation typescript/function/getter-setter/input.ts 5:6-5:7
 									}
-									loc: SourceLocation typescript/function/getter-setter/input.ts 5:2-5:27
 									body: JSBlockStatement {
-										body: Array []
-										directives: Array []
+										body: []
+										directives: []
 										loc: SourceLocation typescript/function/getter-setter/input.ts 5:25-5:27
 									}
 									head: JSFunctionHead {
 										async: false
 										generator: false
 										hasHoistedVars: false
-										rest: undefined
-										returnType: undefined
-										typeParameters: undefined
-										loc: SourceLocation typescript/function/getter-setter/input.ts 5:7-5:24
-										params: Array [
+										params: [
 											JSBindingIdentifier {
 												name: "value"
-												loc: SourceLocation typescript/function/getter-setter/input.ts 5:18-5:23 (value)
 												meta: JSPatternMeta {
-													optional: undefined
-													typeAnnotation: undefined
 													loc: SourceLocation typescript/function/getter-setter/input.ts 5:18-5:23
 												}
+												loc: SourceLocation typescript/function/getter-setter/input.ts 5:18-5:23 (value)
 											}
 										]
 										thisType: JSBindingIdentifier {
 											name: "this"
-											loc: SourceLocation typescript/function/getter-setter/input.ts 5:8-5:12 (this)
 											meta: JSPatternMeta {
-												optional: undefined
-												loc: SourceLocation typescript/function/getter-setter/input.ts 5:8-5:16
 												typeAnnotation: TSObjectTypeAnnotation {
-													members: Array []
+													members: []
 													loc: SourceLocation typescript/function/getter-setter/input.ts 5:14-5:16
 												}
+												loc: SourceLocation typescript/function/getter-setter/input.ts 5:8-5:16
 											}
+											loc: SourceLocation typescript/function/getter-setter/input.ts 5:8-5:12 (this)
 										}
+										loc: SourceLocation typescript/function/getter-setter/input.ts 5:7-5:24
 									}
+									loc: SourceLocation typescript/function/getter-setter/input.ts 5:2-5:27
 								}
 							]
+							loc: SourceLocation typescript/function/getter-setter/input.ts 4:10-6:1
 						}
+						loc: SourceLocation typescript/function/getter-setter/input.ts 4:6-6:1
 					}
 				]
+				loc: SourceLocation typescript/function/getter-setter/input.ts 4:0-6:2
 			}
+			loc: SourceLocation typescript/function/getter-setter/input.ts 4:0-6:2
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: ["ts"]
+	path: UIDPath<typescript/function/getter-setter/input.ts>
+	loc: SourceLocation typescript/function/getter-setter/input.ts 1:0-6:2
 }
 ```
 

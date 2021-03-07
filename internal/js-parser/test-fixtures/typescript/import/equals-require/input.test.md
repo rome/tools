@@ -8,34 +8,32 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	loc: SourceLocation typescript/import/equals-require/input.ts 1:0-2:0
-	path: UIDPath<typescript/import/equals-require/input.ts>
-	syntax: Array ["ts"]
-	body: Array [
+	body: [
 		TSImportEqualsDeclaration {
+			isExport: false
 			id: JSBindingIdentifier {
 				name: "a"
 				loc: SourceLocation typescript/import/equals-require/input.ts 1:7-1:8 (a)
 			}
-			isExport: false
-			loc: SourceLocation typescript/import/equals-require/input.ts 1:0-1:24
 			moduleReference: TSExternalModuleReference {
-				loc: SourceLocation typescript/import/equals-require/input.ts 1:11-1:23
 				expression: JSStringLiteral {
 					value: "a"
 					loc: SourceLocation typescript/import/equals-require/input.ts 1:19-1:22
 				}
+				loc: SourceLocation typescript/import/equals-require/input.ts 1:11-1:23
 			}
+			loc: SourceLocation typescript/import/equals-require/input.ts 1:0-1:24
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: ["ts"]
+	path: UIDPath<typescript/import/equals-require/input.ts>
+	loc: SourceLocation typescript/import/equals-require/input.ts 1:0-2:0
 }
 ```
 

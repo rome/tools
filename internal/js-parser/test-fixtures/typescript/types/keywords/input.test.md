@@ -8,283 +8,281 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	loc: SourceLocation typescript/types/keywords/input.ts 1:0-13:0
-	path: UIDPath<typescript/types/keywords/input.ts>
-	syntax: Array ["ts"]
-	body: Array [
+	body: [
 		JSVariableDeclarationStatement {
-			loc: SourceLocation typescript/types/keywords/input.ts 1:0-1:11
 			declaration: JSVariableDeclaration {
 				kind: "let"
-				loc: SourceLocation typescript/types/keywords/input.ts 1:0-1:11
-				declarations: Array [
+				declarations: [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "a"
-							loc: SourceLocation typescript/types/keywords/input.ts 1:4-1:10
 							meta: JSPatternMeta {
-								definite: undefined
+								typeAnnotation: TSAnyKeywordTypeAnnotation {
+									loc: SourceLocation typescript/types/keywords/input.ts 1:7-1:10
+								}
 								loc: SourceLocation typescript/types/keywords/input.ts 1:4-1:10
-								typeAnnotation: TSAnyKeywordTypeAnnotation {loc: SourceLocation typescript/types/keywords/input.ts 1:7-1:10}
 							}
+							loc: SourceLocation typescript/types/keywords/input.ts 1:4-1:10
 						}
-						init: undefined
 						loc: SourceLocation typescript/types/keywords/input.ts 1:4-1:10
 					}
 				]
+				loc: SourceLocation typescript/types/keywords/input.ts 1:0-1:11
 			}
+			loc: SourceLocation typescript/types/keywords/input.ts 1:0-1:11
 		}
 		JSVariableDeclarationStatement {
-			loc: SourceLocation typescript/types/keywords/input.ts 2:0-2:16
 			declaration: JSVariableDeclaration {
 				kind: "let"
-				loc: SourceLocation typescript/types/keywords/input.ts 2:0-2:16
-				declarations: Array [
+				declarations: [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "un"
-							loc: SourceLocation typescript/types/keywords/input.ts 2:4-2:15
 							meta: JSPatternMeta {
-								definite: undefined
+								typeAnnotation: TSUnknownKeywordTypeAnnotation {
+									loc: SourceLocation typescript/types/keywords/input.ts 2:8-2:15
+								}
 								loc: SourceLocation typescript/types/keywords/input.ts 2:4-2:15
-								typeAnnotation: TSUnknownKeywordTypeAnnotation {loc: SourceLocation typescript/types/keywords/input.ts 2:8-2:15}
 							}
+							loc: SourceLocation typescript/types/keywords/input.ts 2:4-2:15
 						}
-						init: undefined
 						loc: SourceLocation typescript/types/keywords/input.ts 2:4-2:15
 					}
 				]
+				loc: SourceLocation typescript/types/keywords/input.ts 2:0-2:16
 			}
+			loc: SourceLocation typescript/types/keywords/input.ts 2:0-2:16
 		}
 		JSVariableDeclarationStatement {
-			loc: SourceLocation typescript/types/keywords/input.ts 3:0-3:15
 			declaration: JSVariableDeclaration {
 				kind: "let"
-				loc: SourceLocation typescript/types/keywords/input.ts 3:0-3:15
-				declarations: Array [
+				declarations: [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "b"
-							loc: SourceLocation typescript/types/keywords/input.ts 3:4-3:14
 							meta: JSPatternMeta {
-								definite: undefined
+								typeAnnotation: TSBooleanKeywordTypeAnnotation {
+									loc: SourceLocation typescript/types/keywords/input.ts 3:7-3:14
+								}
 								loc: SourceLocation typescript/types/keywords/input.ts 3:4-3:14
-								typeAnnotation: TSBooleanKeywordTypeAnnotation {loc: SourceLocation typescript/types/keywords/input.ts 3:7-3:14}
 							}
+							loc: SourceLocation typescript/types/keywords/input.ts 3:4-3:14
 						}
-						init: undefined
 						loc: SourceLocation typescript/types/keywords/input.ts 3:4-3:14
 					}
 				]
+				loc: SourceLocation typescript/types/keywords/input.ts 3:0-3:15
 			}
+			loc: SourceLocation typescript/types/keywords/input.ts 3:0-3:15
 		}
 		JSVariableDeclarationStatement {
-			loc: SourceLocation typescript/types/keywords/input.ts 4:0-4:14
 			declaration: JSVariableDeclaration {
 				kind: "let"
-				loc: SourceLocation typescript/types/keywords/input.ts 4:0-4:14
-				declarations: Array [
+				declarations: [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "ne"
-							loc: SourceLocation typescript/types/keywords/input.ts 4:4-4:13
 							meta: JSPatternMeta {
-								definite: undefined
+								typeAnnotation: TSNeverKeywordTypeAnnotation {
+									loc: SourceLocation typescript/types/keywords/input.ts 4:8-4:13
+								}
 								loc: SourceLocation typescript/types/keywords/input.ts 4:4-4:13
-								typeAnnotation: TSNeverKeywordTypeAnnotation {loc: SourceLocation typescript/types/keywords/input.ts 4:8-4:13}
 							}
+							loc: SourceLocation typescript/types/keywords/input.ts 4:4-4:13
 						}
-						init: undefined
 						loc: SourceLocation typescript/types/keywords/input.ts 4:4-4:13
 					}
 				]
+				loc: SourceLocation typescript/types/keywords/input.ts 4:0-4:14
 			}
+			loc: SourceLocation typescript/types/keywords/input.ts 4:0-4:14
 		}
 		JSVariableDeclarationStatement {
-			loc: SourceLocation typescript/types/keywords/input.ts 5:0-5:14
 			declaration: JSVariableDeclaration {
 				kind: "let"
-				loc: SourceLocation typescript/types/keywords/input.ts 5:0-5:14
-				declarations: Array [
+				declarations: [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "nul"
-							loc: SourceLocation typescript/types/keywords/input.ts 5:4-5:13
 							meta: JSPatternMeta {
-								definite: undefined
+								typeAnnotation: TSNullKeywordTypeAnnotation {
+									loc: SourceLocation typescript/types/keywords/input.ts 5:9-5:13
+								}
 								loc: SourceLocation typescript/types/keywords/input.ts 5:4-5:13
-								typeAnnotation: TSNullKeywordTypeAnnotation {loc: SourceLocation typescript/types/keywords/input.ts 5:9-5:13}
 							}
+							loc: SourceLocation typescript/types/keywords/input.ts 5:4-5:13
 						}
-						init: undefined
 						loc: SourceLocation typescript/types/keywords/input.ts 5:4-5:13
 					}
 				]
+				loc: SourceLocation typescript/types/keywords/input.ts 5:0-5:14
 			}
+			loc: SourceLocation typescript/types/keywords/input.ts 5:0-5:14
 		}
 		JSVariableDeclarationStatement {
-			loc: SourceLocation typescript/types/keywords/input.ts 6:0-6:16
 			declaration: JSVariableDeclaration {
 				kind: "let"
-				loc: SourceLocation typescript/types/keywords/input.ts 6:0-6:16
-				declarations: Array [
+				declarations: [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "num"
-							loc: SourceLocation typescript/types/keywords/input.ts 6:4-6:15
 							meta: JSPatternMeta {
-								definite: undefined
+								typeAnnotation: TSNumberKeywordTypeAnnotation {
+									loc: SourceLocation typescript/types/keywords/input.ts 6:9-6:15
+								}
 								loc: SourceLocation typescript/types/keywords/input.ts 6:4-6:15
-								typeAnnotation: TSNumberKeywordTypeAnnotation {loc: SourceLocation typescript/types/keywords/input.ts 6:9-6:15}
 							}
+							loc: SourceLocation typescript/types/keywords/input.ts 6:4-6:15
 						}
-						init: undefined
 						loc: SourceLocation typescript/types/keywords/input.ts 6:4-6:15
 					}
 				]
+				loc: SourceLocation typescript/types/keywords/input.ts 6:0-6:16
 			}
+			loc: SourceLocation typescript/types/keywords/input.ts 6:0-6:16
 		}
 		JSVariableDeclarationStatement {
-			loc: SourceLocation typescript/types/keywords/input.ts 7:0-7:14
 			declaration: JSVariableDeclaration {
 				kind: "let"
-				loc: SourceLocation typescript/types/keywords/input.ts 7:0-7:14
-				declarations: Array [
+				declarations: [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "o"
-							loc: SourceLocation typescript/types/keywords/input.ts 7:4-7:13
 							meta: JSPatternMeta {
-								definite: undefined
+								typeAnnotation: TSObjectKeywordTypeAnnotation {
+									loc: SourceLocation typescript/types/keywords/input.ts 7:7-7:13
+								}
 								loc: SourceLocation typescript/types/keywords/input.ts 7:4-7:13
-								typeAnnotation: TSObjectKeywordTypeAnnotation {loc: SourceLocation typescript/types/keywords/input.ts 7:7-7:13}
 							}
+							loc: SourceLocation typescript/types/keywords/input.ts 7:4-7:13
 						}
-						init: undefined
 						loc: SourceLocation typescript/types/keywords/input.ts 7:4-7:13
 					}
 				]
+				loc: SourceLocation typescript/types/keywords/input.ts 7:0-7:14
 			}
+			loc: SourceLocation typescript/types/keywords/input.ts 7:0-7:14
 		}
 		JSVariableDeclarationStatement {
-			loc: SourceLocation typescript/types/keywords/input.ts 8:0-8:15
 			declaration: JSVariableDeclaration {
 				kind: "let"
-				loc: SourceLocation typescript/types/keywords/input.ts 8:0-8:15
-				declarations: Array [
+				declarations: [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "st"
-							loc: SourceLocation typescript/types/keywords/input.ts 8:4-8:14
 							meta: JSPatternMeta {
-								definite: undefined
+								typeAnnotation: TSStringKeywordTypeAnnotation {
+									loc: SourceLocation typescript/types/keywords/input.ts 8:8-8:14
+								}
 								loc: SourceLocation typescript/types/keywords/input.ts 8:4-8:14
-								typeAnnotation: TSStringKeywordTypeAnnotation {loc: SourceLocation typescript/types/keywords/input.ts 8:8-8:14}
 							}
+							loc: SourceLocation typescript/types/keywords/input.ts 8:4-8:14
 						}
-						init: undefined
 						loc: SourceLocation typescript/types/keywords/input.ts 8:4-8:14
 					}
 				]
+				loc: SourceLocation typescript/types/keywords/input.ts 8:0-8:15
 			}
+			loc: SourceLocation typescript/types/keywords/input.ts 8:0-8:15
 		}
 		JSVariableDeclarationStatement {
-			loc: SourceLocation typescript/types/keywords/input.ts 9:0-9:15
 			declaration: JSVariableDeclaration {
 				kind: "let"
-				loc: SourceLocation typescript/types/keywords/input.ts 9:0-9:15
-				declarations: Array [
+				declarations: [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "sy"
-							loc: SourceLocation typescript/types/keywords/input.ts 9:4-9:14
 							meta: JSPatternMeta {
-								definite: undefined
+								typeAnnotation: TSSymbolKeywordTypeAnnotation {
+									loc: SourceLocation typescript/types/keywords/input.ts 9:8-9:14
+								}
 								loc: SourceLocation typescript/types/keywords/input.ts 9:4-9:14
-								typeAnnotation: TSSymbolKeywordTypeAnnotation {loc: SourceLocation typescript/types/keywords/input.ts 9:8-9:14}
 							}
+							loc: SourceLocation typescript/types/keywords/input.ts 9:4-9:14
 						}
-						init: undefined
 						loc: SourceLocation typescript/types/keywords/input.ts 9:4-9:14
 					}
 				]
+				loc: SourceLocation typescript/types/keywords/input.ts 9:0-9:15
 			}
+			loc: SourceLocation typescript/types/keywords/input.ts 9:0-9:15
 		}
 		JSVariableDeclarationStatement {
-			loc: SourceLocation typescript/types/keywords/input.ts 10:0-10:17
 			declaration: JSVariableDeclaration {
 				kind: "let"
-				loc: SourceLocation typescript/types/keywords/input.ts 10:0-10:17
-				declarations: Array [
+				declarations: [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "u"
-							loc: SourceLocation typescript/types/keywords/input.ts 10:4-10:16
 							meta: JSPatternMeta {
-								definite: undefined
+								typeAnnotation: TSUndefinedKeywordTypeAnnotation {
+									loc: SourceLocation typescript/types/keywords/input.ts 10:7-10:16
+								}
 								loc: SourceLocation typescript/types/keywords/input.ts 10:4-10:16
-								typeAnnotation: TSUndefinedKeywordTypeAnnotation {loc: SourceLocation typescript/types/keywords/input.ts 10:7-10:16}
 							}
+							loc: SourceLocation typescript/types/keywords/input.ts 10:4-10:16
 						}
-						init: undefined
 						loc: SourceLocation typescript/types/keywords/input.ts 10:4-10:16
 					}
 				]
+				loc: SourceLocation typescript/types/keywords/input.ts 10:0-10:17
 			}
+			loc: SourceLocation typescript/types/keywords/input.ts 10:0-10:17
 		}
 		JSVariableDeclarationStatement {
-			loc: SourceLocation typescript/types/keywords/input.ts 11:0-11:12
 			declaration: JSVariableDeclaration {
 				kind: "let"
-				loc: SourceLocation typescript/types/keywords/input.ts 11:0-11:12
-				declarations: Array [
+				declarations: [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "v"
-							loc: SourceLocation typescript/types/keywords/input.ts 11:4-11:11
 							meta: JSPatternMeta {
-								definite: undefined
+								typeAnnotation: TSVoidKeywordTypeAnnotation {
+									loc: SourceLocation typescript/types/keywords/input.ts 11:7-11:11
+								}
 								loc: SourceLocation typescript/types/keywords/input.ts 11:4-11:11
-								typeAnnotation: TSVoidKeywordTypeAnnotation {loc: SourceLocation typescript/types/keywords/input.ts 11:7-11:11}
 							}
+							loc: SourceLocation typescript/types/keywords/input.ts 11:4-11:11
 						}
-						init: undefined
 						loc: SourceLocation typescript/types/keywords/input.ts 11:4-11:11
 					}
 				]
+				loc: SourceLocation typescript/types/keywords/input.ts 11:0-11:12
 			}
+			loc: SourceLocation typescript/types/keywords/input.ts 11:0-11:12
 		}
 		JSVariableDeclarationStatement {
-			loc: SourceLocation typescript/types/keywords/input.ts 12:0-12:14
 			declaration: JSVariableDeclaration {
 				kind: "let"
-				loc: SourceLocation typescript/types/keywords/input.ts 12:0-12:14
-				declarations: Array [
+				declarations: [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "n"
-							loc: SourceLocation typescript/types/keywords/input.ts 12:4-12:13
 							meta: JSPatternMeta {
-								definite: undefined
+								typeAnnotation: TSBigIntKeywordTypeAnnotation {
+									loc: SourceLocation typescript/types/keywords/input.ts 12:7-12:13
+								}
 								loc: SourceLocation typescript/types/keywords/input.ts 12:4-12:13
-								typeAnnotation: TSBigIntKeywordTypeAnnotation {loc: SourceLocation typescript/types/keywords/input.ts 12:7-12:13}
 							}
+							loc: SourceLocation typescript/types/keywords/input.ts 12:4-12:13
 						}
-						init: undefined
 						loc: SourceLocation typescript/types/keywords/input.ts 12:4-12:13
 					}
 				]
+				loc: SourceLocation typescript/types/keywords/input.ts 12:0-12:14
 			}
+			loc: SourceLocation typescript/types/keywords/input.ts 12:0-12:14
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: ["ts"]
+	path: UIDPath<typescript/types/keywords/input.ts>
+	loc: SourceLocation typescript/types/keywords/input.ts 1:0-13:0
 }
 ```
 

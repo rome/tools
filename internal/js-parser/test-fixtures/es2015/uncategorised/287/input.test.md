@@ -8,34 +8,14 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2015/uncategorised/287/input.js 1:0-1:14
-	path: UIDPath<es2015/uncategorised/287/input.js>
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation es2015/uncategorised/287/input.js 1:0-1:14
 			expression: JSAssignmentExpression {
 				operator: "="
-				loc: SourceLocation es2015/uncategorised/287/input.js 1:0-1:14
-				right: JSReferenceIdentifier {
-					name: "b"
-					loc: SourceLocation es2015/uncategorised/287/input.js 1:13-1:14 (b)
-				}
 				left: JSAssignmentArrayPattern {
-					elements: Array []
-					loc: SourceLocation es2015/uncategorised/287/input.js 1:0-1:10
+					elements: []
 					rest: JSAssignmentObjectPattern {
-						rest: undefined
-						loc: SourceLocation es2015/uncategorised/287/input.js 1:4-1:9
-						properties: Array [
+						properties: [
 							JSAssignmentObjectPatternProperty {
 								key: JSStaticPropertyKey {
 									value: JSIdentifier {
@@ -51,11 +31,28 @@ JSRoot {
 								loc: SourceLocation es2015/uncategorised/287/input.js 1:6-1:7
 							}
 						]
+						loc: SourceLocation es2015/uncategorised/287/input.js 1:4-1:9
 					}
+					loc: SourceLocation es2015/uncategorised/287/input.js 1:0-1:10
 				}
+				right: JSReferenceIdentifier {
+					name: "b"
+					loc: SourceLocation es2015/uncategorised/287/input.js 1:13-1:14 (b)
+				}
+				loc: SourceLocation es2015/uncategorised/287/input.js 1:0-1:14
 			}
+			loc: SourceLocation es2015/uncategorised/287/input.js 1:0-1:14
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2015/uncategorised/287/input.js>
+	loc: SourceLocation es2015/uncategorised/287/input.js 1:0-1:14
 }
 ```
 

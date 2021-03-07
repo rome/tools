@@ -1,13 +1,13 @@
 import {AnyNode} from "@internal/ast";
 import {
+	Diagnostic,
 	DiagnosticCategory,
 	DiagnosticSuppressions,
-	Diagnostics,
 	descriptions,
 	formatCategoryDescription,
 	splitPossibleCategoryName,
 } from "@internal/diagnostics";
-import {ZeroIndexed} from "@internal/math";
+import {ZeroIndexed} from "@internal/numbers";
 import {
 	BaseTokens,
 	ParserCore,
@@ -36,7 +36,7 @@ export const INCORRECT_SUPPRESSION_START = [
 
 export type ExtractedSuppressions = {
 	suppressions: DiagnosticSuppressions;
-	diagnostics: Diagnostics;
+	diagnostics: Diagnostic[];
 };
 
 type Tokens = BaseTokens & {
@@ -354,7 +354,7 @@ export function parseCommentSuppressions(opts: Options): ExtractedSuppressions {
 							description: descriptions.SUPPRESSIONS.INVALID_CATEGORY_NAME(
 								categoryToken.value,
 							),
-							location: loc,
+							loc,
 						});
 					} else {
 						const category = categoryToken.value;

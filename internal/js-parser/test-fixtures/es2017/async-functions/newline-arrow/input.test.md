@@ -8,22 +8,9 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2017/async-functions/newline-arrow/input.js 1:0-3:0
-	path: UIDPath<es2017/async-functions/newline-arrow/input.js>
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation es2017/async-functions/newline-arrow/input.js 1:0-2:6
 			expression: JSArrowFunctionExpression {
-				loc: SourceLocation es2017/async-functions/newline-arrow/input.js 1:0-2:6
 				body: JSReferenceIdentifier {
 					name: "x"
 					loc: SourceLocation es2017/async-functions/newline-arrow/input.js 2:5-2:6 (x)
@@ -31,19 +18,28 @@ JSRoot {
 				head: JSFunctionHead {
 					async: true
 					hasHoistedVars: false
-					rest: undefined
-					thisType: undefined
-					loc: SourceLocation es2017/async-functions/newline-arrow/input.js 1:0-2:4
-					params: Array [
+					params: [
 						JSBindingIdentifier {
 							name: "x"
 							loc: SourceLocation es2017/async-functions/newline-arrow/input.js 2:0-2:1 (x)
 						}
 					]
+					loc: SourceLocation es2017/async-functions/newline-arrow/input.js 1:0-2:4
 				}
+				loc: SourceLocation es2017/async-functions/newline-arrow/input.js 1:0-2:6
 			}
+			loc: SourceLocation es2017/async-functions/newline-arrow/input.js 1:0-2:6
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2017/async-functions/newline-arrow/input.js>
+	loc: SourceLocation es2017/async-functions/newline-arrow/input.js 1:0-3:0
 }
 ```
 

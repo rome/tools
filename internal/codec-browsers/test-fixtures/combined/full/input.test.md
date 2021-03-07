@@ -7,7 +7,7 @@
 ### `result`
 
 ```javascript
-Array [
+[
 	"edge:88"
 	"edge:87"
 	"firefox:87"
@@ -38,31 +38,16 @@ Array [
 ### `targets`
 
 ```javascript
-Array [
+[
 	TargetBrowserPreset {preset: "modern"}
 	TargetBrowserCombination {
-		target: TargetBrowserUsage {
-			operator: "GT"
-			usage: 5
-		}
-		and: TargetBrowserRange {
-			browser: "Firefox"
-			to: 85
-			version: 80
-		}
+		and: TargetBrowserRange {browser: "Firefox", to: 85, version: 80}
+		target: TargetBrowserUsage {operator: "GT", usage: 5}
 	}
-	TargetBrowserLast {
-		browser: "Chrome"
-		qty: 2
-		unit: "versions"
-	}
+	TargetBrowserLast {browser: "Chrome", qty: 2, unit: "versions"}
 	TargetBrowserCombination {
+		and: TargetBrowserUsage {operator: "GT", region: "BE", usage: 20}
 		target: TargetBrowserSince {since: 1_525_132_800_000}
-		and: TargetBrowserUsage {
-			operator: "GT"
-			region: "BE"
-			usage: 20
-		}
 	}
 ]
 ```
@@ -70,7 +55,7 @@ Array [
 ### `tokens`
 
 ```javascript
-Array [
+[
 	Modern {
 		end: ZeroIndexedNumber<6>
 		start: ZeroIndexedNumber<0>

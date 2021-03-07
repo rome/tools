@@ -8,26 +8,24 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation core/uncategorised/273/input.js 1:0-1:8
-	path: UIDPath<core/uncategorised/273/input.js>
-	body: Array [
+	body: [
 		JSThrowStatement {
-			loc: SourceLocation core/uncategorised/273/input.js 1:0-1:8
 			argument: JSReferenceIdentifier {
 				name: "x"
 				loc: SourceLocation core/uncategorised/273/input.js 1:6-1:7 (x)
 			}
+			loc: SourceLocation core/uncategorised/273/input.js 1:0-1:8
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<core/uncategorised/273/input.js>
+	loc: SourceLocation core/uncategorised/273/input.js 1:0-1:8
 }
 ```
 

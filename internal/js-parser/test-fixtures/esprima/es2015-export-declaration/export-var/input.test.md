@@ -8,41 +8,37 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: true
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	syntax: Array []
-	loc: SourceLocation esprima/es2015-export-declaration/export-var/input.js 1:0-2:0
-	path: UIDPath<esprima/es2015-export-declaration/export-var/input.js>
-	body: Array [
+	body: [
 		JSExportLocalDeclaration {
 			exportKind: "value"
-			specifiers: undefined
-			loc: SourceLocation esprima/es2015-export-declaration/export-var/input.js 1:0-1:15
 			declaration: JSVariableDeclarationStatement {
-				loc: SourceLocation esprima/es2015-export-declaration/export-var/input.js 1:7-1:15
 				declaration: JSVariableDeclaration {
 					kind: "var"
-					loc: SourceLocation esprima/es2015-export-declaration/export-var/input.js 1:7-1:15
-					declarations: Array [
+					declarations: [
 						JSVariableDeclarator {
 							id: JSBindingIdentifier {
 								name: "bar"
 								loc: SourceLocation esprima/es2015-export-declaration/export-var/input.js 1:11-1:14 (bar)
 							}
-							init: undefined
 							loc: SourceLocation esprima/es2015-export-declaration/export-var/input.js 1:11-1:14
 						}
 					]
+					loc: SourceLocation esprima/es2015-export-declaration/export-var/input.js 1:7-1:15
 				}
+				loc: SourceLocation esprima/es2015-export-declaration/export-var/input.js 1:7-1:15
 			}
+			loc: SourceLocation esprima/es2015-export-declaration/export-var/input.js 1:0-1:15
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: true
+	sourceType: "module"
+	syntax: []
+	path: UIDPath<esprima/es2015-export-declaration/export-var/input.js>
+	loc: SourceLocation esprima/es2015-export-declaration/export-var/input.js 1:0-2:0
 }
 ```
 

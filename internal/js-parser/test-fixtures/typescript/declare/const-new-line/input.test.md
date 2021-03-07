@@ -8,61 +8,59 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	loc: SourceLocation typescript/declare/const-new-line/input.ts 1:0-3:0
-	path: UIDPath<typescript/declare/const-new-line/input.ts>
-	syntax: Array ["ts"]
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation typescript/declare/const-new-line/input.ts 1:0-1:7
 			expression: JSReferenceIdentifier {
 				name: "declare"
 				loc: SourceLocation typescript/declare/const-new-line/input.ts 1:0-1:7 (declare)
 			}
+			loc: SourceLocation typescript/declare/const-new-line/input.ts 1:0-1:7
 		}
 		JSVariableDeclarationStatement {
-			loc: SourceLocation typescript/declare/const-new-line/input.ts 2:0-2:27
 			declaration: JSVariableDeclaration {
 				kind: "const"
-				loc: SourceLocation typescript/declare/const-new-line/input.ts 2:0-2:27
-				declarations: Array [
+				declarations: [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "x"
-							loc: SourceLocation typescript/declare/const-new-line/input.ts 2:6-2:15
 							meta: JSPatternMeta {
-								definite: undefined
+								typeAnnotation: TSNumberKeywordTypeAnnotation {
+									loc: SourceLocation typescript/declare/const-new-line/input.ts 2:9-2:15
+								}
 								loc: SourceLocation typescript/declare/const-new-line/input.ts 2:6-2:15
-								typeAnnotation: TSNumberKeywordTypeAnnotation {loc: SourceLocation typescript/declare/const-new-line/input.ts 2:9-2:15}
 							}
+							loc: SourceLocation typescript/declare/const-new-line/input.ts 2:6-2:15
 						}
-						init: undefined
 						loc: SourceLocation typescript/declare/const-new-line/input.ts 2:6-2:15
 					}
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "y"
-							loc: SourceLocation typescript/declare/const-new-line/input.ts 2:17-2:26
 							meta: JSPatternMeta {
-								definite: undefined
+								typeAnnotation: TSStringKeywordTypeAnnotation {
+									loc: SourceLocation typescript/declare/const-new-line/input.ts 2:20-2:26
+								}
 								loc: SourceLocation typescript/declare/const-new-line/input.ts 2:17-2:26
-								typeAnnotation: TSStringKeywordTypeAnnotation {loc: SourceLocation typescript/declare/const-new-line/input.ts 2:20-2:26}
 							}
+							loc: SourceLocation typescript/declare/const-new-line/input.ts 2:17-2:26
 						}
-						init: undefined
 						loc: SourceLocation typescript/declare/const-new-line/input.ts 2:17-2:26
 					}
 				]
+				loc: SourceLocation typescript/declare/const-new-line/input.ts 2:0-2:27
 			}
+			loc: SourceLocation typescript/declare/const-new-line/input.ts 2:0-2:27
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: ["ts"]
+	path: UIDPath<typescript/declare/const-new-line/input.ts>
+	loc: SourceLocation typescript/declare/const-new-line/input.ts 1:0-3:0
 }
 ```
 

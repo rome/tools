@@ -8,40 +8,37 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation esprima/es2015-yield/yield-catch-parameter/input.js 1:0-2:0
-	path: UIDPath<esprima/es2015-yield/yield-catch-parameter/input.js>
-	body: Array [
+	body: [
 		JSTryStatement {
-			finalizer: undefined
-			loc: SourceLocation esprima/es2015-yield/yield-catch-parameter/input.js 1:0-1:23
 			block: JSBlockStatement {
-				body: Array []
-				directives: Array []
+				body: []
+				directives: []
 				loc: SourceLocation esprima/es2015-yield/yield-catch-parameter/input.js 1:4-1:6
 			}
 			handler: JSCatchClause {
-				loc: SourceLocation esprima/es2015-yield/yield-catch-parameter/input.js 1:7-1:23
+				body: JSBlockStatement {
+					body: []
+					directives: []
+					loc: SourceLocation esprima/es2015-yield/yield-catch-parameter/input.js 1:21-1:23
+				}
 				param: JSBindingIdentifier {
 					name: "yield"
 					loc: SourceLocation esprima/es2015-yield/yield-catch-parameter/input.js 1:14-1:19 (yield)
 				}
-				body: JSBlockStatement {
-					body: Array []
-					directives: Array []
-					loc: SourceLocation esprima/es2015-yield/yield-catch-parameter/input.js 1:21-1:23
-				}
+				loc: SourceLocation esprima/es2015-yield/yield-catch-parameter/input.js 1:7-1:23
 			}
+			loc: SourceLocation esprima/es2015-yield/yield-catch-parameter/input.js 1:0-1:23
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<esprima/es2015-yield/yield-catch-parameter/input.js>
+	loc: SourceLocation esprima/es2015-yield/yield-catch-parameter/input.js 1:0-2:0
 }
 ```
 

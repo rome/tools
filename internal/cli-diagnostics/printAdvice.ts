@@ -16,7 +16,6 @@ import {
 	DiagnosticAdviceFrame,
 	DiagnosticAdviceGroup,
 	DiagnosticAdviceInspect,
-	DiagnosticAdviceItem,
 	DiagnosticAdviceList,
 	DiagnosticAdviceLog,
 	DiagnosticAdviceStacktrace,
@@ -27,9 +26,9 @@ import {ToLines, toLines} from "./utils";
 import buildPatchCodeFrame from "./buildPatchCodeFrame";
 import buildCodeFrame from "./buildCodeFrame";
 import {
-	AnyMarkups,
-	concatMarkup,
+	Markup,
 	isEmptyMarkup,
+	joinMarkup,
 	markup,
 	markupTag,
 	normalizeMarkup,
@@ -39,7 +38,7 @@ import {DiagnosticsPrinterFlags} from "./types";
 import DiagnosticsPrinter, {DiagnosticsPrinterFileSources} from "./DiagnosticsPrinter";
 import {MixedPathSet, createUIDPath} from "@internal/path";
 import {MAX_CODE_LENGTH, MAX_CODE_LINES, MAX_LOG_LENGTH} from "./constants";
-import {Diffs, diffConstants} from "@internal/string-diff";
+import {CompressedDiff, DiffTypes} from "@internal/string-diff";
 import {removeCarriageReturn} from "@internal/string-utils";
 import {serializeCLIFlags} from "@internal/cli-flags";
 import {inferDiagnosticLanguageFromPath} from "@internal/core/common/file-handlers";
@@ -69,16 +68,16 @@ const DID_NOT_PRINT: PrintAdviceResult = {
 };
 
 export function printAdvice(
-	advice: DiagnosticAdvice,
+	advice: DiagnosticAdvice[],
 	opts: AdvicePrintOptions,
-): {
-	truncated: boolean;
-} {
+): PrintAdviceResult {
 	let truncated = false;
+	let printed = false;
 
 	for (const item of advice) {
 		const res = printAdviceItem(item, opts);
 		if (res.printed) {
+			printed = true;
 			opts.reporter.br();
 		}
 		if (res.truncated) {
@@ -86,11 +85,14 @@ export function printAdvice(
 		}
 	}
 
-	return {truncated};
+	return {
+		truncated,
+		printed,
+	};
 }
 
-export function printAdviceItem(
-	item: DiagnosticAdviceItem,
+function printAdviceItem(
+	item: DiagnosticAdvice,
 	opts: AdvicePrintOptions,
 ): PrintAdviceResult {
 	switch (item.type) {
@@ -130,10 +132,9 @@ function printGroup(
 	item: DiagnosticAdviceGroup,
 	opts: AdvicePrintOptions,
 ): PrintAdviceResult {
-	const {reporter} = opts;
-
 	let truncated = false;
 
+	const {reporter} = opts;
 	reporter.log(markup`<emphasis>${item.title}</emphasis>`);
 	reporter.br();
 	reporter.indentSync(() => {
@@ -150,11 +151,9 @@ function printAction(
 	item: DiagnosticAdviceAction,
 	opts: AdvicePrintOptions,
 ): PrintAdviceResult {
-	if (item.hidden && !opts.printer.flags.verboseDiagnostics) {
-		return DID_NOT_PRINT;
-	}
-
-	opts.reporter.info(item.instruction);
+	opts.reporter.info(
+		markup`<emphasis>Command Suggestion:</emphasis> ${item.description}`,
+	);
 
 	const command = serializeCLIFlags(
 		{
@@ -191,23 +190,23 @@ function printInspect(
 	return DID_PRINT;
 }
 
-function generateDiffHint(diffs: Diffs): undefined | DiagnosticAdviceItem {
+function generateDiffHint(diffs: CompressedDiff[]): undefined | DiagnosticAdvice {
 	let expected = "";
 	let received = "";
 
 	for (const [type, text] of diffs) {
 		switch (type) {
-			case diffConstants.ADD: {
+			case DiffTypes.INSERT: {
 				received += text;
 				break;
 			}
 
-			case diffConstants.DELETE: {
+			case DiffTypes.DELETE: {
 				expected += text;
 				break;
 			}
 
-			case diffConstants.EQUAL: {
+			case DiffTypes.EQUAL: {
 				expected += text;
 				received += text;
 				break;
@@ -250,7 +249,7 @@ function printDiff(
 ): PrintAdviceResult {
 	const {frame, truncated} = buildPatchCodeFrame(
 		item,
-		opts.flags.verboseDiagnostics !== false,
+		opts.flags.truncateDiagnostics,
 	);
 	if (isEmptyMarkup(frame)) {
 		return DID_NOT_PRINT;
@@ -281,7 +280,7 @@ function printList(
 		const {truncated} = opts.reporter.list(
 			item.list,
 			{
-				truncate: opts.flags.verboseDiagnostics ? undefined : 10,
+				truncate: opts.flags.truncateDiagnostics ? 10 : undefined,
 				reverse: item.reverse,
 				ordered: item.ordered,
 			},
@@ -293,7 +292,7 @@ function printList(
 	}
 }
 
-function printTruncated(reporter: Reporter, chars: number) {
+function printTruncatedCharacters(reporter: Reporter, chars: number) {
 	reporter.log(markup`<dim>${chars} more characters truncated</dim>`);
 }
 
@@ -303,15 +302,18 @@ function printCode(
 ): PrintAdviceResult {
 	const {reporter} = opts;
 
-	const truncatedLength =
-		!opts.flags.verboseDiagnostics && item.sourceText.length > MAX_CODE_LENGTH;
-	let code = truncatedLength
+	const shouldTruncate =
+		opts.flags.truncateDiagnostics && item.truncate !== false;
+
+	const didTruncateCharacters =
+		shouldTruncate && item.sourceText.length > MAX_CODE_LENGTH;
+	let code = didTruncateCharacters
 		? item.sourceText.slice(0, MAX_CODE_LENGTH)
 		: item.sourceText;
 
-	const {frame, truncated: truncatedLines} = buildCodeFrame({
+	const {frame, truncated: didTruncateLines} = buildCodeFrame({
 		type: "all",
-		truncateLines: MAX_CODE_LINES,
+		truncateLines: shouldTruncate ? MAX_CODE_LINES : undefined,
 		lines: toLines({
 			input: code,
 			path: createUIDPath("inline"),
@@ -326,13 +328,13 @@ function printCode(
 
 	reporter.log(frame);
 
-	if (truncatedLength) {
-		printTruncated(reporter, item.sourceText.length - MAX_CODE_LENGTH);
+	if (didTruncateCharacters) {
+		printTruncatedCharacters(reporter, item.sourceText.length - MAX_CODE_LENGTH);
 	}
 
 	return {
 		printed: true,
-		truncated: truncatedLines || truncatedLength,
+		truncated: didTruncateLines || didTruncateCharacters,
 	};
 }
 
@@ -362,7 +364,9 @@ function printFrame(
 					{
 						type: "log",
 						category: "warn",
-						text: markup`Cannot render frame as ${path} does not exist`,
+						text: markup`Cannot render frame as ${diagnosticLocationToMarkupFilelink(
+							item.location,
+						)} does not exist`,
 					},
 					opts,
 				);
@@ -410,7 +414,7 @@ function printStacktrace(
 	if (!isFirstPart) {
 		const {title} = item;
 		if (title !== undefined) {
-			opts.reporter.info(markup`${title}`);
+			opts.reporter.info(title);
 			opts.reporter.br({force: true});
 		}
 	}
@@ -430,7 +434,7 @@ function printStacktrace(
 				sourceText: code,
 			} = frame;
 
-			const logParts: AnyMarkups = [];
+			const logParts: Markup[] = [];
 
 			// Add prefix
 			if (prefix !== undefined) {
@@ -438,7 +442,7 @@ function printStacktrace(
 			}
 
 			// Build path
-			const objParts: AnyMarkups = [];
+			const objParts: Markup[] = [];
 			if (object !== undefined) {
 				objParts.push(markupTag("highlight", markup`${object}`, {i: 0}));
 			}
@@ -446,7 +450,7 @@ function printStacktrace(
 				objParts.push(markupTag("highlight", markup`${property}`, {i: 1}));
 			}
 			if (objParts.length > 0) {
-				logParts.push(concatMarkup(objParts, markup`.`));
+				logParts.push(joinMarkup(objParts, markup`.`));
 			}
 
 			// Add suffix
@@ -472,7 +476,7 @@ function printStacktrace(
 				}
 			}
 
-			reporter.log(concatMarkup(logParts, markup` `));
+			reporter.log(joinMarkup(logParts, markup` `));
 
 			// A code frame will always be displayed if it's been marked as important on the stackframe advice or if it
 			// refers to the diagnostic
@@ -517,7 +521,7 @@ function printStacktrace(
 		},
 		{
 			ordered: true,
-			truncate: opts.flags.verboseDiagnostics ? undefined : 20,
+			truncate: opts.flags.truncateDiagnostics ? 20 : undefined,
 		},
 	);
 
@@ -570,11 +574,11 @@ function printLog(
 	}
 
 	if (truncated) {
-		printTruncated(reporter, truncatedLength);
+		printTruncatedCharacters(reporter, truncatedLength);
 	}
 
 	return {
-		printed: !item.compact,
+		printed: true,
 		truncated,
 	};
 }

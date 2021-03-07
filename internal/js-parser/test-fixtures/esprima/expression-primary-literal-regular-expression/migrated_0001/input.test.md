@@ -8,23 +8,10 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation esprima/expression-primary-literal-regular-expression/migrated_0001/input.js 1:0-1:5
-	path: UIDPath<esprima/expression-primary-literal-regular-expression/migrated_0001/input.js>
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation esprima/expression-primary-literal-regular-expression/migrated_0001/input.js 1:0-1:5
 			expression: JSArrayExpression {
-				loc: SourceLocation esprima/expression-primary-literal-regular-expression/migrated_0001/input.js 1:0-1:5
-				elements: Array [
+				elements: [
 					JSRegExpLiteral {
 						global: false
 						insensitive: false
@@ -32,21 +19,32 @@ JSRoot {
 						noDotNewline: false
 						sticky: false
 						unicode: false
-						loc: SourceLocation esprima/expression-primary-literal-regular-expression/migrated_0001/input.js 1:1-1:4
 						expression: JSRegExpSubExpression {
-							loc: SourceLocation esprima/expression-primary-literal-regular-expression/migrated_0001/input.js 1:2-1:3
-							body: Array [
+							body: [
 								JSRegExpCharacter {
 									value: "q"
 									loc: SourceLocation esprima/expression-primary-literal-regular-expression/migrated_0001/input.js 1:2-1:3
 								}
 							]
+							loc: SourceLocation esprima/expression-primary-literal-regular-expression/migrated_0001/input.js 1:2-1:3
 						}
+						loc: SourceLocation esprima/expression-primary-literal-regular-expression/migrated_0001/input.js 1:1-1:4
 					}
 				]
+				loc: SourceLocation esprima/expression-primary-literal-regular-expression/migrated_0001/input.js 1:0-1:5
 			}
+			loc: SourceLocation esprima/expression-primary-literal-regular-expression/migrated_0001/input.js 1:0-1:5
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<esprima/expression-primary-literal-regular-expression/migrated_0001/input.js>
+	loc: SourceLocation esprima/expression-primary-literal-regular-expression/migrated_0001/input.js 1:0-1:5
 }
 ```
 

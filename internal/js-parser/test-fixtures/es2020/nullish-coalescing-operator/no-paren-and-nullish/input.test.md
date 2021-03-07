@@ -8,30 +8,12 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2020/nullish-coalescing-operator/no-paren-and-nullish/input.js 1:0-2:0
-	path: UIDPath<es2020/nullish-coalescing-operator/no-paren-and-nullish/input.js>
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation es2020/nullish-coalescing-operator/no-paren-and-nullish/input.js 1:0-1:12
 			expression: JSLogicalExpression {
 				operator: "??"
-				loc: SourceLocation es2020/nullish-coalescing-operator/no-paren-and-nullish/input.js 1:0-1:11
-				right: JSReferenceIdentifier {
-					name: "e"
-					loc: SourceLocation es2020/nullish-coalescing-operator/no-paren-and-nullish/input.js 1:10-1:11 (e)
-				}
 				left: JSLogicalExpression {
 					operator: "&&"
-					loc: SourceLocation es2020/nullish-coalescing-operator/no-paren-and-nullish/input.js 1:0-1:6
 					left: JSReferenceIdentifier {
 						name: "c"
 						loc: SourceLocation es2020/nullish-coalescing-operator/no-paren-and-nullish/input.js 1:0-1:1 (c)
@@ -40,10 +22,26 @@ JSRoot {
 						name: "d"
 						loc: SourceLocation es2020/nullish-coalescing-operator/no-paren-and-nullish/input.js 1:5-1:6 (d)
 					}
+					loc: SourceLocation es2020/nullish-coalescing-operator/no-paren-and-nullish/input.js 1:0-1:6
 				}
+				right: JSReferenceIdentifier {
+					name: "e"
+					loc: SourceLocation es2020/nullish-coalescing-operator/no-paren-and-nullish/input.js 1:10-1:11 (e)
+				}
+				loc: SourceLocation es2020/nullish-coalescing-operator/no-paren-and-nullish/input.js 1:0-1:11
 			}
+			loc: SourceLocation es2020/nullish-coalescing-operator/no-paren-and-nullish/input.js 1:0-1:12
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2020/nullish-coalescing-operator/no-paren-and-nullish/input.js>
+	loc: SourceLocation es2020/nullish-coalescing-operator/no-paren-and-nullish/input.js 1:0-2:0
 }
 ```
 

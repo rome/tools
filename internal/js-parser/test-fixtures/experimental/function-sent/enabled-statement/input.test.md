@@ -8,43 +8,16 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation experimental/function-sent/enabled-statement/input.js 1:0-4:0
-	path: UIDPath<experimental/function-sent/enabled-statement/input.js>
-	body: Array [
+	body: [
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "foo"
 				loc: SourceLocation experimental/function-sent/enabled-statement/input.js 1:10-1:13 (foo)
 			}
-			loc: SourceLocation experimental/function-sent/enabled-statement/input.js 1:0-3:1
-			head: JSFunctionHead {
-				async: false
-				generator: true
-				hasHoistedVars: false
-				params: Array []
-				rest: undefined
-				returnType: undefined
-				thisType: undefined
-				typeParameters: undefined
-				loc: SourceLocation experimental/function-sent/enabled-statement/input.js 1:13-1:15
-			}
 			body: JSBlockStatement {
-				directives: Array []
-				loc: SourceLocation experimental/function-sent/enabled-statement/input.js 1:16-3:1
-				body: Array [
+				body: [
 					JSExpressionStatement {
-						loc: SourceLocation experimental/function-sent/enabled-statement/input.js 2:2-2:16
 						expression: JSMetaProperty {
-							loc: SourceLocation experimental/function-sent/enabled-statement/input.js 2:2-2:15
 							meta: JSIdentifier {
 								name: "function"
 								loc: SourceLocation experimental/function-sent/enabled-statement/input.js 2:2-2:10 (function)
@@ -53,12 +26,33 @@ JSRoot {
 								name: "sent"
 								loc: SourceLocation experimental/function-sent/enabled-statement/input.js 2:11-2:15 (sent)
 							}
+							loc: SourceLocation experimental/function-sent/enabled-statement/input.js 2:2-2:15
 						}
+						loc: SourceLocation experimental/function-sent/enabled-statement/input.js 2:2-2:16
 					}
 				]
+				directives: []
+				loc: SourceLocation experimental/function-sent/enabled-statement/input.js 1:16-3:1
 			}
+			head: JSFunctionHead {
+				async: false
+				generator: true
+				hasHoistedVars: false
+				params: []
+				loc: SourceLocation experimental/function-sent/enabled-statement/input.js 1:13-1:15
+			}
+			loc: SourceLocation experimental/function-sent/enabled-statement/input.js 1:0-3:1
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<experimental/function-sent/enabled-statement/input.js>
+	loc: SourceLocation experimental/function-sent/enabled-statement/input.js 1:0-4:0
 }
 ```
 

@@ -8,22 +8,9 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	loc: SourceLocation typescript/arrow-function/async-generic-tokens-true/input.ts 1:0-2:0
-	path: UIDPath<typescript/arrow-function/async-generic-tokens-true/input.ts>
-	syntax: Array ["ts"]
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation typescript/arrow-function/async-generic-tokens-true/input.ts 1:0-1:24
 			expression: JSArrowFunctionExpression {
-				loc: SourceLocation typescript/arrow-function/async-generic-tokens-true/input.ts 1:0-1:23
 				body: JSReferenceIdentifier {
 					name: "a"
 					loc: SourceLocation typescript/arrow-function/async-generic-tokens-true/input.ts 1:22-1:23 (a)
@@ -31,50 +18,54 @@ JSRoot {
 				head: JSFunctionHead {
 					async: true
 					hasHoistedVars: false
-					rest: undefined
-					thisType: undefined
-					loc: SourceLocation typescript/arrow-function/async-generic-tokens-true/input.ts 1:0-1:21
-					returnType: TSTypeReference {
-						typeParameters: undefined
-						loc: SourceLocation typescript/arrow-function/async-generic-tokens-true/input.ts 1:17-1:18
-						typeName: JSReferenceIdentifier {
-							name: "T"
-							loc: SourceLocation typescript/arrow-function/async-generic-tokens-true/input.ts 1:17-1:18 (T)
-						}
-					}
-					typeParameters: TSTypeParameterDeclaration {
-						loc: SourceLocation typescript/arrow-function/async-generic-tokens-true/input.ts 1:6-1:9
-						params: Array [
-							TSTypeParameter {
-								name: "T"
-								constraint: undefined
-								default: undefined
-								loc: SourceLocation typescript/arrow-function/async-generic-tokens-true/input.ts 1:7-1:8
-							}
-						]
-					}
-					params: Array [
+					params: [
 						JSBindingIdentifier {
 							name: "a"
-							loc: SourceLocation typescript/arrow-function/async-generic-tokens-true/input.ts 1:10-1:11 (a)
 							meta: JSPatternMeta {
-								optional: undefined
-								loc: SourceLocation typescript/arrow-function/async-generic-tokens-true/input.ts 1:10-1:14
 								typeAnnotation: TSTypeReference {
-									typeParameters: undefined
-									loc: SourceLocation typescript/arrow-function/async-generic-tokens-true/input.ts 1:13-1:14
 									typeName: JSReferenceIdentifier {
 										name: "T"
 										loc: SourceLocation typescript/arrow-function/async-generic-tokens-true/input.ts 1:13-1:14 (T)
 									}
+									loc: SourceLocation typescript/arrow-function/async-generic-tokens-true/input.ts 1:13-1:14
 								}
+								loc: SourceLocation typescript/arrow-function/async-generic-tokens-true/input.ts 1:10-1:14
 							}
+							loc: SourceLocation typescript/arrow-function/async-generic-tokens-true/input.ts 1:10-1:11 (a)
 						}
 					]
+					returnType: TSTypeReference {
+						typeName: JSReferenceIdentifier {
+							name: "T"
+							loc: SourceLocation typescript/arrow-function/async-generic-tokens-true/input.ts 1:17-1:18 (T)
+						}
+						loc: SourceLocation typescript/arrow-function/async-generic-tokens-true/input.ts 1:17-1:18
+					}
+					typeParameters: TSTypeParameterDeclaration {
+						params: [
+							TSTypeParameter {
+								name: "T"
+								loc: SourceLocation typescript/arrow-function/async-generic-tokens-true/input.ts 1:7-1:8
+							}
+						]
+						loc: SourceLocation typescript/arrow-function/async-generic-tokens-true/input.ts 1:6-1:9
+					}
+					loc: SourceLocation typescript/arrow-function/async-generic-tokens-true/input.ts 1:0-1:21
 				}
+				loc: SourceLocation typescript/arrow-function/async-generic-tokens-true/input.ts 1:0-1:23
 			}
+			loc: SourceLocation typescript/arrow-function/async-generic-tokens-true/input.ts 1:0-1:24
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: ["ts"]
+	path: UIDPath<typescript/arrow-function/async-generic-tokens-true/input.ts>
+	loc: SourceLocation typescript/arrow-function/async-generic-tokens-true/input.ts 1:0-2:0
 }
 ```
 

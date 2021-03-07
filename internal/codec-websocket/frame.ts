@@ -6,11 +6,12 @@
  */
 
 import {BuildFrameOpts, Frame} from "./types";
+import {getByteLength} from "@internal/binary";
 
 import crypto = require("crypto");
 
 export function isCompleteFrame(frame: Frame): boolean {
-	return Buffer.byteLength(frame.payload) >= frame.payloadLength;
+	return getByteLength(frame.payload) >= frame.payloadLength;
 }
 
 export function unmaskPayload(

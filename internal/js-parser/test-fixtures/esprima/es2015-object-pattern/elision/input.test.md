@@ -8,29 +8,14 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation esprima/es2015-object-pattern/elision/input.js 1:0-2:0
-	path: UIDPath<esprima/es2015-object-pattern/elision/input.js>
-	body: Array [
+	body: [
 		JSVariableDeclarationStatement {
-			loc: SourceLocation esprima/es2015-object-pattern/elision/input.js 1:0-1:12
 			declaration: JSVariableDeclaration {
 				kind: "let"
-				loc: SourceLocation esprima/es2015-object-pattern/elision/input.js 1:0-1:12
-				declarations: Array [
+				declarations: [
 					JSVariableDeclarator {
 						id: JSBindingObjectPattern {
-							rest: undefined
-							loc: SourceLocation esprima/es2015-object-pattern/elision/input.js 1:4-1:8
-							properties: Array [
+							properties: [
 								JSBindingObjectPatternProperty {
 									key: JSStaticPropertyKey {
 										value: JSIdentifier {
@@ -46,18 +31,29 @@ JSRoot {
 									loc: SourceLocation esprima/es2015-object-pattern/elision/input.js 1:5-1:6
 								}
 							]
+							loc: SourceLocation esprima/es2015-object-pattern/elision/input.js 1:4-1:8
 						}
-						loc: SourceLocation esprima/es2015-object-pattern/elision/input.js 1:4-1:12
 						init: JSNumericLiteral {
 							value: 0
-							format: undefined
 							loc: SourceLocation esprima/es2015-object-pattern/elision/input.js 1:11-1:12
 						}
+						loc: SourceLocation esprima/es2015-object-pattern/elision/input.js 1:4-1:12
 					}
 				]
+				loc: SourceLocation esprima/es2015-object-pattern/elision/input.js 1:0-1:12
 			}
+			loc: SourceLocation esprima/es2015-object-pattern/elision/input.js 1:0-1:12
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<esprima/es2015-object-pattern/elision/input.js>
+	loc: SourceLocation esprima/es2015-object-pattern/elision/input.js 1:0-2:0
 }
 ```
 

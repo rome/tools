@@ -8,83 +8,69 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation core/uncategorised/504/input.js 1:0-1:50
-	path: UIDPath<core/uncategorised/504/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "implements is a reserved word"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:47
-				path: UIDPath<core/uncategorised/504/input.js>
-				start: Position 1:37
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "hello"
 				loc: SourceLocation core/uncategorised/504/input.js 1:9-1:14 (hello)
 			}
-			loc: SourceLocation core/uncategorised/504/input.js 1:0-1:50
-			head: JSFunctionHead {
-				async: false
-				generator: false
-				hasHoistedVars: true
-				params: Array []
-				rest: undefined
-				returnType: undefined
-				thisType: undefined
-				typeParameters: undefined
-				loc: SourceLocation core/uncategorised/504/input.js 1:14-1:16
-			}
 			body: JSBlockStatement {
-				loc: SourceLocation core/uncategorised/504/input.js 1:17-1:50
-				directives: Array [
-					JSDirective {
-						value: "use strict"
-						loc: SourceLocation core/uncategorised/504/input.js 1:19-1:32
-					}
-				]
-				body: Array [
+				body: [
 					JSVariableDeclarationStatement {
-						loc: SourceLocation core/uncategorised/504/input.js 1:33-1:48
 						declaration: JSVariableDeclaration {
 							kind: "var"
-							loc: SourceLocation core/uncategorised/504/input.js 1:33-1:48
-							declarations: Array [
+							declarations: [
 								JSVariableDeclarator {
 									id: JSBindingIdentifier {
 										name: "implements"
 										loc: SourceLocation core/uncategorised/504/input.js 1:37-1:47 (implements)
 									}
-									init: undefined
 									loc: SourceLocation core/uncategorised/504/input.js 1:37-1:47
 								}
 							]
+							loc: SourceLocation core/uncategorised/504/input.js 1:33-1:48
 						}
+						loc: SourceLocation core/uncategorised/504/input.js 1:33-1:48
 					}
 				]
+				directives: [
+					JSDirective {
+						value: "use strict"
+						loc: SourceLocation core/uncategorised/504/input.js 1:19-1:32
+					}
+				]
+				loc: SourceLocation core/uncategorised/504/input.js 1:17-1:50
+			}
+			head: JSFunctionHead {
+				async: false
+				generator: false
+				hasHoistedVars: true
+				params: []
+				loc: SourceLocation core/uncategorised/504/input.js 1:14-1:16
+			}
+			loc: SourceLocation core/uncategorised/504/input.js 1:0-1:50
+		}
+	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {advice: [], category: ["parse"], categoryValue: "js", message: ["implements", RAW_MARKUP {value: " is a reserved word"}]}
+			location: {
+				language: "js"
+				path: UIDPath<core/uncategorised/504/input.js>
+				end: Position 1:47
+				start: Position 1:37
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<core/uncategorised/504/input.js>
+	loc: SourceLocation core/uncategorised/504/input.js 1:0-1:50
 }
 ```
 

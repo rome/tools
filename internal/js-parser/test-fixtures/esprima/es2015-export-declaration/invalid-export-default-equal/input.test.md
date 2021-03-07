@@ -8,52 +8,47 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: true
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	syntax: Array []
-	loc: SourceLocation esprima/es2015-export-declaration/invalid-export-default-equal/input.js 1:0-2:0
-	path: UIDPath<esprima/es2015-export-declaration/invalid-export-default-equal/input.js>
-	body: Array [
+	body: [
 		JSExportDefaultDeclaration {
-			loc: SourceLocation esprima/es2015-export-declaration/invalid-export-default-equal/input.js 1:0-1:16
 			declaration: JSReferenceIdentifier {
 				name: "INVALID_PLACEHOLDER"
 				loc: SourceLocation esprima/es2015-export-declaration/invalid-export-default-equal/input.js 1:15-1:16
 			}
+			loc: SourceLocation esprima/es2015-export-declaration/invalid-export-default-equal/input.js 1:0-1:16
 		}
 		JSExpressionStatement {
-			loc: SourceLocation esprima/es2015-export-declaration/invalid-export-default-equal/input.js 1:17-1:19
 			expression: JSNumericLiteral {
 				value: 42
-				format: undefined
 				loc: SourceLocation esprima/es2015-export-declaration/invalid-export-default-equal/input.js 1:17-1:19
 			}
+			loc: SourceLocation esprima/es2015-export-declaration/invalid-export-default-equal/input.js 1:17-1:19
 		}
 	]
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
+	comments: []
+	corrupt: true
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {
+				advice: []
+				category: ["parse"]
 				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Unknown start to an export default declaration"}
+				message: [RAW_MARKUP {value: "Unknown start to an "}, "export default declaration"]
 			}
-			location: Object {
-				integrity: undefined
+			location: {
 				language: "js"
-				sourceText: undefined
-				end: Position 1:14
 				path: UIDPath<esprima/es2015-export-declaration/invalid-export-default-equal/input.js>
+				end: Position 1:14
 				start: Position 1:15
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: []
+	path: UIDPath<esprima/es2015-export-declaration/invalid-export-default-equal/input.js>
+	loc: SourceLocation esprima/es2015-export-declaration/invalid-export-default-equal/input.js 1:0-2:0
 }
 ```
 

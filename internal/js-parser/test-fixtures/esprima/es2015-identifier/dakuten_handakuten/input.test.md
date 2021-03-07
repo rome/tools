@@ -8,23 +8,10 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation esprima/es2015-identifier/dakuten_handakuten/input.js 1:0-2:0
-	path: UIDPath<esprima/es2015-identifier/dakuten_handakuten/input.js>
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation esprima/es2015-identifier/dakuten_handakuten/input.js 1:0-1:4
 			expression: JSBinaryExpression {
 				operator: "+"
-				loc: SourceLocation esprima/es2015-identifier/dakuten_handakuten/input.js 1:0-1:4
 				left: JSReferenceIdentifier {
 					name: "\u309b"
 					loc: SourceLocation esprima/es2015-identifier/dakuten_handakuten/input.js 1:0-1:1 (\u309b)
@@ -33,9 +20,20 @@ JSRoot {
 					name: "\u309c"
 					loc: SourceLocation esprima/es2015-identifier/dakuten_handakuten/input.js 1:3-1:4 (\u309c)
 				}
+				loc: SourceLocation esprima/es2015-identifier/dakuten_handakuten/input.js 1:0-1:4
 			}
+			loc: SourceLocation esprima/es2015-identifier/dakuten_handakuten/input.js 1:0-1:4
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<esprima/es2015-identifier/dakuten_handakuten/input.js>
+	loc: SourceLocation esprima/es2015-identifier/dakuten_handakuten/input.js 1:0-2:0
 }
 ```
 

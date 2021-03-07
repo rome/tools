@@ -8,41 +8,10 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation core/object/invalid-escape-get/input.js 1:0-2:0
-	path: UIDPath<core/object/invalid-escape-get/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "<emphasis>get</emphasis> can't contain a unicode escape"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:5
-				path: UIDPath<core/object/invalid-escape-get/input.js>
-				start: Position 1:5
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation core/object/invalid-escape-get/input.js 1:0-1:21
 			expression: JSObjectExpression {
-				loc: SourceLocation core/object/invalid-escape-get/input.js 1:1-1:20
-				properties: Array [
+				properties: [
 					JSObjectMethod {
 						kind: "get"
 						key: JSStaticPropertyKey {
@@ -52,28 +21,51 @@ JSRoot {
 							}
 							loc: SourceLocation core/object/invalid-escape-get/input.js 1:12-1:13
 						}
-						loc: SourceLocation core/object/invalid-escape-get/input.js 1:3-1:18
 						body: JSBlockStatement {
-							body: Array []
-							directives: Array []
+							body: []
+							directives: []
 							loc: SourceLocation core/object/invalid-escape-get/input.js 1:16-1:18
 						}
 						head: JSFunctionHead {
 							async: false
 							generator: false
 							hasHoistedVars: false
-							params: Array []
-							rest: undefined
-							returnType: undefined
-							thisType: undefined
-							typeParameters: undefined
+							params: []
 							loc: SourceLocation core/object/invalid-escape-get/input.js 1:13-1:15
 						}
+						loc: SourceLocation core/object/invalid-escape-get/input.js 1:3-1:18
 					}
 				]
+				loc: SourceLocation core/object/invalid-escape-get/input.js 1:1-1:20
+			}
+			loc: SourceLocation core/object/invalid-escape-get/input.js 1:0-1:21
+		}
+	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "js"
+				message: [RAW_MARKUP {value: "<emphasis>"}, "get", RAW_MARKUP {value: "</emphasis> can't contain a unicode escape"}]
+			}
+			location: {
+				language: "js"
+				path: UIDPath<core/object/invalid-escape-get/input.js>
+				end: Position 1:5
+				start: Position 1:5
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<core/object/invalid-escape-get/input.js>
+	loc: SourceLocation core/object/invalid-escape-get/input.js 1:0-2:0
 }
 ```
 

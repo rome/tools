@@ -8,30 +8,16 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation esprima/es2015-rest-parameter/object-method/input.js 1:0-2:0
-	path: UIDPath<esprima/es2015-rest-parameter/object-method/input.js>
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation esprima/es2015-rest-parameter/object-method/input.js 1:0-1:31
 			expression: JSAssignmentExpression {
 				operator: "="
-				loc: SourceLocation esprima/es2015-rest-parameter/object-method/input.js 1:0-1:31
 				left: JSAssignmentIdentifier {
 					name: "o"
 					loc: SourceLocation esprima/es2015-rest-parameter/object-method/input.js 1:0-1:1 (o)
 				}
 				right: JSObjectExpression {
-					loc: SourceLocation esprima/es2015-rest-parameter/object-method/input.js 1:4-1:31
-					properties: Array [
+					properties: [
 						JSObjectProperty {
 							key: JSStaticPropertyKey {
 								value: JSIdentifier {
@@ -41,50 +27,54 @@ JSRoot {
 								loc: SourceLocation esprima/es2015-rest-parameter/object-method/input.js 1:6-1:7
 							}
 							value: JSFunctionExpression {
-								id: undefined
-								loc: SourceLocation esprima/es2015-rest-parameter/object-method/input.js 1:9-1:29
 								body: JSBlockStatement {
-									body: Array []
-									directives: Array []
+									body: []
+									directives: []
 									loc: SourceLocation esprima/es2015-rest-parameter/object-method/input.js 1:27-1:29
 								}
 								head: JSFunctionHead {
 									async: false
 									generator: false
 									hasHoistedVars: false
-									returnType: undefined
-									thisType: undefined
-									typeParameters: undefined
-									loc: SourceLocation esprima/es2015-rest-parameter/object-method/input.js 1:17-1:26
-									rest: JSBindingIdentifier {
-										name: "b"
-										loc: SourceLocation esprima/es2015-rest-parameter/object-method/input.js 1:24-1:25 (b)
-										meta: JSPatternMeta {
-											optional: undefined
-											typeAnnotation: undefined
-											loc: SourceLocation esprima/es2015-rest-parameter/object-method/input.js 1:24-1:25
-										}
-									}
-									params: Array [
+									params: [
 										JSBindingIdentifier {
 											name: "a"
-											loc: SourceLocation esprima/es2015-rest-parameter/object-method/input.js 1:18-1:19 (a)
 											meta: JSPatternMeta {
-												optional: undefined
-												typeAnnotation: undefined
 												loc: SourceLocation esprima/es2015-rest-parameter/object-method/input.js 1:18-1:19
 											}
+											loc: SourceLocation esprima/es2015-rest-parameter/object-method/input.js 1:18-1:19 (a)
 										}
 									]
+									rest: JSBindingIdentifier {
+										name: "b"
+										meta: JSPatternMeta {
+											loc: SourceLocation esprima/es2015-rest-parameter/object-method/input.js 1:24-1:25
+										}
+										loc: SourceLocation esprima/es2015-rest-parameter/object-method/input.js 1:24-1:25 (b)
+									}
+									loc: SourceLocation esprima/es2015-rest-parameter/object-method/input.js 1:17-1:26
 								}
+								loc: SourceLocation esprima/es2015-rest-parameter/object-method/input.js 1:9-1:29
 							}
 							loc: SourceLocation esprima/es2015-rest-parameter/object-method/input.js 1:6-1:29
 						}
 					]
+					loc: SourceLocation esprima/es2015-rest-parameter/object-method/input.js 1:4-1:31
 				}
+				loc: SourceLocation esprima/es2015-rest-parameter/object-method/input.js 1:0-1:31
 			}
+			loc: SourceLocation esprima/es2015-rest-parameter/object-method/input.js 1:0-1:31
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<esprima/es2015-rest-parameter/object-method/input.js>
+	loc: SourceLocation esprima/es2015-rest-parameter/object-method/input.js 1:0-2:0
 }
 ```
 

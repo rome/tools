@@ -17,6 +17,9 @@ export type DiagnosticCategory =
 	| ["args", "invalid"]
 	| ["bundler", "moduleCycle"]
 	| ["bundler", "topLevelAwait"]
+	| ["bridge", "closed"]
+	| ["bridge", "disconnected"]
+	| ["bridge", "timeout"]
 	| ["childProcess", "failure"]
 	| ["commands", "auto-config", "uncommittedChanges"]
 	| ["commands", "auto-config", "expectedRepo"]
@@ -409,6 +412,9 @@ export const DIAGNOSTIC_CATEGORIES: {
 	"analyzeDependencies/cjsExportInES": ["analyzeDependencies", "cjsExportInES"],
 	"args/fileNotFound": ["args", "fileNotFound"],
 	"args/invalid": ["args", "invalid"],
+	"bridge/disconnected": ["bridge", "disconnected"],
+	"bridge/closed": ["bridge", "closed"],
+	"bridge/timeout": ["bridge", "timeout"],
 	"bundler/moduleCycle": ["bundler", "moduleCycle"],
 	"bundler/topLevelAwait": ["bundler", "topLevelAwait"],
 	"childProcess/failure": ["childProcess", "failure"],
@@ -504,6 +510,7 @@ export const DIAGNOSTIC_CATEGORIES: {
 export const categoryPrefixMap: {[name in DiagnosticCategoryPrefix]: true} = {
 	analyzeDependencies: true,
 	args: true,
+	bridge: true,
 	bundler: true,
 	childProcess: true,
 	commands: true,

@@ -1,7 +1,7 @@
 import {test} from "rome";
 import MappingList from "@internal/codec-source-map/MappingList";
 import {Mapping} from "@internal/codec-source-map/types";
-import {OneIndexed, ZeroIndexed} from "@internal/math";
+import {OneIndexed, ZeroIndexed} from "@internal/numbers";
 
 function generateMapping(
 	generatedLine: number,

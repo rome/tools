@@ -1,6 +1,6 @@
 import {
+	CompilerPath,
 	ExitSignal,
-	Path,
 	Scope,
 	createVisitor,
 	signals,
@@ -10,7 +10,7 @@ import {hasJSXAttribute, isFunctionNode} from "@internal/js-ast-utils";
 import {JSXElement, JSXFragment} from "@internal/ast";
 import {doesNodeMatchReactPattern} from "../../utils/react";
 
-function isChildOfHtmlElement(path: Path): boolean {
+function isChildOfHtmlElement(path: CompilerPath): boolean {
 	const parentNode = path.parent;
 	return (
 		parentNode.type === "JSXElement" &&

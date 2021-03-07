@@ -8,17 +8,40 @@
 
 ```javascript
 JSRoot {
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation comments/basic/array-pattern-trailing-comma/input.js 1:0-7:0
-	path: UIDPath<comments/basic/array-pattern-trailing-comma/input.js>
-	comments: Array [
+	body: [
+		JSVariableDeclarationStatement {
+			declaration: JSVariableDeclaration {
+				kind: "const"
+				declarations: [
+					JSVariableDeclarator {
+						id: JSBindingArrayPattern {
+							elements: [
+								JSBindingIdentifier {
+									name: "x"
+									leadingComments: ["0"]
+									trailingComments: ["1", "2"]
+									meta: JSPatternMeta {
+										loc: SourceLocation comments/basic/array-pattern-trailing-comma/input.js 3:2-3:3
+									}
+									loc: SourceLocation comments/basic/array-pattern-trailing-comma/input.js 3:2-3:3 (x)
+								}
+							]
+							trailingComments: ["3"]
+							loc: SourceLocation comments/basic/array-pattern-trailing-comma/input.js 1:6-6:1
+						}
+						init: JSArrayExpression {
+							elements: []
+							loc: SourceLocation comments/basic/array-pattern-trailing-comma/input.js 6:15-6:17
+						}
+						loc: SourceLocation comments/basic/array-pattern-trailing-comma/input.js 1:6-6:17
+					}
+				]
+				loc: SourceLocation comments/basic/array-pattern-trailing-comma/input.js 1:0-6:18
+			}
+			loc: SourceLocation comments/basic/array-pattern-trailing-comma/input.js 1:0-6:18
+		}
+	]
+	comments: [
 		CommentBlock {
 			id: "0"
 			value: " One "
@@ -40,47 +63,14 @@ JSRoot {
 			loc: SourceLocation comments/basic/array-pattern-trailing-comma/input.js 6:2-6:12
 		}
 	]
-	body: Array [
-		JSVariableDeclarationStatement {
-			loc: SourceLocation comments/basic/array-pattern-trailing-comma/input.js 1:0-6:18
-			declaration: JSVariableDeclaration {
-				kind: "const"
-				loc: SourceLocation comments/basic/array-pattern-trailing-comma/input.js 1:0-6:18
-				declarations: Array [
-					JSVariableDeclarator {
-						id: JSBindingArrayPattern {
-							rest: undefined
-							loc: SourceLocation comments/basic/array-pattern-trailing-comma/input.js 1:6-6:1
-							trailingComments: Array ["3"]
-							elements: Array [
-								JSBindingIdentifier {
-									name: "x"
-									leadingComments: Array ["0"]
-									loc: SourceLocation comments/basic/array-pattern-trailing-comma/input.js 3:2-3:3 (x)
-									trailingComments: Array [
-										"1"
-										"2"
-									]
-									meta: JSPatternMeta {
-										leadingComments: undefined
-										optional: undefined
-										trailingComments: undefined
-										typeAnnotation: undefined
-										loc: SourceLocation comments/basic/array-pattern-trailing-comma/input.js 3:2-3:3
-									}
-								}
-							]
-						}
-						loc: SourceLocation comments/basic/array-pattern-trailing-comma/input.js 1:6-6:17
-						init: JSArrayExpression {
-							elements: Array []
-							loc: SourceLocation comments/basic/array-pattern-trailing-comma/input.js 6:15-6:17
-						}
-					}
-				]
-			}
-		}
-	]
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<comments/basic/array-pattern-trailing-comma/input.js>
+	loc: SourceLocation comments/basic/array-pattern-trailing-comma/input.js 1:0-7:0
 }
 ```
 

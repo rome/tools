@@ -33,7 +33,7 @@ export default createLocalCommand({
 			return false;
 		}
 
-		const {stream} = req.client.derivedReporterStreams.handle;
+		const {stream} = req.client.derivedReporterStreams;
 
 		bridge.events.lspFromServerBuffer.subscribe((chunk) => {
 			stream.write(chunk, false);

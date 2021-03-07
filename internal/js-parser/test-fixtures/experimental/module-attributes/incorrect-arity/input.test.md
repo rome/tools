@@ -8,111 +8,107 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: true
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	syntax: Array []
-	loc: SourceLocation experimental/module-attributes/incorrect-arity/input.js 1:0-3:0
-	path: UIDPath<experimental/module-attributes/incorrect-arity/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "import() requires exactly one argument"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:7
-				path: UIDPath<experimental/module-attributes/incorrect-arity/input.js>
-				start: Position 1:7
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation experimental/module-attributes/incorrect-arity/input.js 1:0-1:9
 			expression: JSImportCall {
-				loc: SourceLocation experimental/module-attributes/incorrect-arity/input.js 1:6-1:8
 				argument: JSReferenceIdentifier {
 					name: "INVALID_PLACEHOLDER"
 					loc: SourceLocation experimental/module-attributes/incorrect-arity/input.js 1:7-1:7
 				}
+				loc: SourceLocation experimental/module-attributes/incorrect-arity/input.js 1:6-1:8
 			}
+			loc: SourceLocation experimental/module-attributes/incorrect-arity/input.js 1:0-1:9
 		}
 		JSExpressionStatement {
-			loc: SourceLocation experimental/module-attributes/incorrect-arity/input.js 2:0-2:20
 			expression: JSImportCall {
-				loc: SourceLocation experimental/module-attributes/incorrect-arity/input.js 2:6-2:20
 				argument: JSStringLiteral {
 					value: "./foo.json"
 					loc: SourceLocation experimental/module-attributes/incorrect-arity/input.js 2:7-2:19
 				}
+				loc: SourceLocation experimental/module-attributes/incorrect-arity/input.js 2:6-2:20
 			}
+			loc: SourceLocation experimental/module-attributes/incorrect-arity/input.js 2:0-2:20
 		}
 		JSBlockStatement {
-			directives: Array []
-			loc: SourceLocation experimental/module-attributes/incorrect-arity/input.js 2:21-2:46
-			body: Array [
+			body: [
 				JSWithStatement {
-					loc: SourceLocation experimental/module-attributes/incorrect-arity/input.js 2:23-2:44
-					object: JSReferenceIdentifier {
-						name: "INVALID_PLACEHOLDER"
-						loc: SourceLocation experimental/module-attributes/incorrect-arity/input.js 2:27-2:28
-					}
 					body: JSBlockStatement {
-						directives: Array []
-						loc: SourceLocation experimental/module-attributes/incorrect-arity/input.js 2:29-2:44
-						body: Array [
+						body: [
 							JSLabeledStatement {
-								loc: SourceLocation experimental/module-attributes/incorrect-arity/input.js 2:31-2:43
-								label: JSIdentifier {
-									name: "type"
-									loc: SourceLocation experimental/module-attributes/incorrect-arity/input.js 2:31-2:35 (type)
-								}
 								body: JSExpressionStatement {
-									loc: SourceLocation experimental/module-attributes/incorrect-arity/input.js 2:37-2:43
 									expression: JSStringLiteral {
 										value: "json"
 										loc: SourceLocation experimental/module-attributes/incorrect-arity/input.js 2:37-2:43
 									}
+									loc: SourceLocation experimental/module-attributes/incorrect-arity/input.js 2:37-2:43
 								}
+								label: JSIdentifier {
+									name: "type"
+									loc: SourceLocation experimental/module-attributes/incorrect-arity/input.js 2:31-2:35 (type)
+								}
+								loc: SourceLocation experimental/module-attributes/incorrect-arity/input.js 2:31-2:43
 							}
 						]
+						directives: []
+						loc: SourceLocation experimental/module-attributes/incorrect-arity/input.js 2:29-2:44
 					}
+					object: JSReferenceIdentifier {
+						name: "INVALID_PLACEHOLDER"
+						loc: SourceLocation experimental/module-attributes/incorrect-arity/input.js 2:27-2:28
+					}
+					loc: SourceLocation experimental/module-attributes/incorrect-arity/input.js 2:23-2:44
 				}
 			]
+			directives: []
+			loc: SourceLocation experimental/module-attributes/incorrect-arity/input.js 2:21-2:46
 		}
 		JSExpressionStatement {
-			loc: SourceLocation experimental/module-attributes/incorrect-arity/input.js 2:46-2:47
 			expression: JSReferenceIdentifier {
 				name: "INVALID_PLACEHOLDER"
 				loc: SourceLocation experimental/module-attributes/incorrect-arity/input.js 2:46-2:47
 			}
+			loc: SourceLocation experimental/module-attributes/incorrect-arity/input.js 2:46-2:47
 		}
 		JSExpressionStatement {
-			loc: SourceLocation experimental/module-attributes/incorrect-arity/input.js 2:48-2:61
 			expression: JSStringLiteral {
 				value: "unsupported"
 				loc: SourceLocation experimental/module-attributes/incorrect-arity/input.js 2:48-2:61
 			}
+			loc: SourceLocation experimental/module-attributes/incorrect-arity/input.js 2:48-2:61
 		}
 		JSExpressionStatement {
-			loc: SourceLocation experimental/module-attributes/incorrect-arity/input.js 2:61-2:63
 			expression: JSReferenceIdentifier {
 				name: "INVALID_PLACEHOLDER"
 				loc: SourceLocation experimental/module-attributes/incorrect-arity/input.js 2:61-2:62
 			}
+			loc: SourceLocation experimental/module-attributes/incorrect-arity/input.js 2:61-2:63
 		}
 	]
+	comments: []
+	corrupt: true
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "import() requires exactly one argument"}
+			}
+			location: {
+				language: "js"
+				path: UIDPath<experimental/module-attributes/incorrect-arity/input.js>
+				end: Position 1:7
+				start: Position 1:7
+			}
+		}
+	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: []
+	path: UIDPath<experimental/module-attributes/incorrect-arity/input.js>
+	loc: SourceLocation experimental/module-attributes/incorrect-arity/input.js 1:0-3:0
 }
 ```
 

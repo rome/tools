@@ -7,24 +7,19 @@
 ### `result`
 
 ```javascript
-Array ["firefox:85"]
+["firefox:85"]
 ```
 
 ### `targets`
 
 ```javascript
-Array [
-	TargetBrowserState {
-		browser: "Firefox"
-		state: "current"
-	}
-]
+[TargetBrowserState {browser: "Firefox", state: "current"}]
 ```
 
 ### `tokens`
 
 ```javascript
-Array [
+[
 	Current {
 		end: ZeroIndexedNumber<7>
 		start: ZeroIndexedNumber<0>

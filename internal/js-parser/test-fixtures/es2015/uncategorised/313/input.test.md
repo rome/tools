@@ -8,37 +8,21 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2015/uncategorised/313/input.js 1:0-1:27
-	path: UIDPath<es2015/uncategorised/313/input.js>
-	body: Array [
+	body: [
 		JSTryStatement {
-			finalizer: undefined
-			loc: SourceLocation es2015/uncategorised/313/input.js 1:0-1:27
 			block: JSBlockStatement {
-				body: Array []
-				directives: Array []
+				body: []
+				directives: []
 				loc: SourceLocation es2015/uncategorised/313/input.js 1:4-1:6
 			}
 			handler: JSCatchClause {
-				loc: SourceLocation es2015/uncategorised/313/input.js 1:7-1:27
 				body: JSBlockStatement {
-					body: Array []
-					directives: Array []
+					body: []
+					directives: []
 					loc: SourceLocation es2015/uncategorised/313/input.js 1:25-1:27
 				}
 				param: JSBindingObjectPattern {
-					rest: undefined
-					loc: SourceLocation es2015/uncategorised/313/input.js 1:14-1:23
-					properties: Array [
+					properties: [
 						JSBindingObjectPatternProperty {
 							key: JSStaticPropertyKey {
 								value: JSIdentifier {
@@ -54,10 +38,22 @@ JSRoot {
 							loc: SourceLocation es2015/uncategorised/313/input.js 1:15-1:22
 						}
 					]
+					loc: SourceLocation es2015/uncategorised/313/input.js 1:14-1:23
 				}
+				loc: SourceLocation es2015/uncategorised/313/input.js 1:7-1:27
 			}
+			loc: SourceLocation es2015/uncategorised/313/input.js 1:0-1:27
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2015/uncategorised/313/input.js>
+	loc: SourceLocation es2015/uncategorised/313/input.js 1:0-1:27
 }
 ```
 

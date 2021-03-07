@@ -8,21 +8,25 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2015/uncategorised/107/input.js 1:0-1:26
-	path: UIDPath<es2015/uncategorised/107/input.js>
-	body: Array [
+	body: [
 		JSForOfStatement {
 			await: false
-			loc: SourceLocation es2015/uncategorised/107/input.js 1:0-1:26
+			body: JSExpressionStatement {
+				expression: JSCallExpression {
+					arguments: [
+						JSReferenceIdentifier {
+							name: "x"
+							loc: SourceLocation es2015/uncategorised/107/input.js 1:23-1:24 (x)
+						}
+					]
+					callee: JSReferenceIdentifier {
+						name: "process"
+						loc: SourceLocation es2015/uncategorised/107/input.js 1:15-1:22 (process)
+					}
+					loc: SourceLocation es2015/uncategorised/107/input.js 1:15-1:25
+				}
+				loc: SourceLocation es2015/uncategorised/107/input.js 1:15-1:26
+			}
 			left: JSAssignmentIdentifier {
 				name: "x"
 				loc: SourceLocation es2015/uncategorised/107/input.js 1:4-1:5 (x)
@@ -31,24 +35,18 @@ JSRoot {
 				name: "list"
 				loc: SourceLocation es2015/uncategorised/107/input.js 1:9-1:13 (list)
 			}
-			body: JSExpressionStatement {
-				loc: SourceLocation es2015/uncategorised/107/input.js 1:15-1:26
-				expression: JSCallExpression {
-					loc: SourceLocation es2015/uncategorised/107/input.js 1:15-1:25
-					callee: JSReferenceIdentifier {
-						name: "process"
-						loc: SourceLocation es2015/uncategorised/107/input.js 1:15-1:22 (process)
-					}
-					arguments: Array [
-						JSReferenceIdentifier {
-							name: "x"
-							loc: SourceLocation es2015/uncategorised/107/input.js 1:23-1:24 (x)
-						}
-					]
-				}
-			}
+			loc: SourceLocation es2015/uncategorised/107/input.js 1:0-1:26
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2015/uncategorised/107/input.js>
+	loc: SourceLocation es2015/uncategorised/107/input.js 1:0-1:26
 }
 ```
 

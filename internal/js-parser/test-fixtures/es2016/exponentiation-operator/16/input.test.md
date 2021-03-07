@@ -8,59 +8,53 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
+	body: [
+		JSExpressionStatement {
+			expression: JSBinaryExpression {
+				operator: "**"
+				left: JSUnaryExpression {
+					operator: "-"
+					prefix: true
+					argument: JSNumericLiteral {
+						value: 5
+						loc: SourceLocation es2016/exponentiation-operator/16/input.js 1:2-1:3
+					}
+					loc: SourceLocation es2016/exponentiation-operator/16/input.js 1:1-1:3
+				}
+				right: JSNumericLiteral {
+					value: 6
+					loc: SourceLocation es2016/exponentiation-operator/16/input.js 1:7-1:8
+				}
+				loc: SourceLocation es2016/exponentiation-operator/16/input.js 1:1-1:8
+			}
+			loc: SourceLocation es2016/exponentiation-operator/16/input.js 1:0-1:10
+		}
+	]
+	comments: []
 	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2016/exponentiation-operator/16/input.js 1:0-2:0
-	path: UIDPath<es2016/exponentiation-operator/16/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {
+				advice: []
+				category: ["parse"]
 				categoryValue: "js"
-				category: Array ["parse"]
 				message: RAW_MARKUP {value: "Illegal expression. Wrap left hand side or entire exponentiation in parentheses."}
 			}
-			location: Object {
-				integrity: undefined
+			location: {
 				language: "js"
-				sourceText: undefined
-				end: Position 1:3
 				path: UIDPath<es2016/exponentiation-operator/16/input.js>
+				end: Position 1:3
 				start: Position 1:2
 			}
 		}
 	]
-	body: Array [
-		JSExpressionStatement {
-			loc: SourceLocation es2016/exponentiation-operator/16/input.js 1:0-1:10
-			expression: JSBinaryExpression {
-				operator: "**"
-				loc: SourceLocation es2016/exponentiation-operator/16/input.js 1:1-1:8
-				right: JSNumericLiteral {
-					value: 6
-					format: undefined
-					loc: SourceLocation es2016/exponentiation-operator/16/input.js 1:7-1:8
-				}
-				left: JSUnaryExpression {
-					operator: "-"
-					prefix: true
-					loc: SourceLocation es2016/exponentiation-operator/16/input.js 1:1-1:3
-					argument: JSNumericLiteral {
-						value: 5
-						format: undefined
-						loc: SourceLocation es2016/exponentiation-operator/16/input.js 1:2-1:3
-					}
-				}
-			}
-		}
-	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2016/exponentiation-operator/16/input.js>
+	loc: SourceLocation es2016/exponentiation-operator/16/input.js 1:0-2:0
 }
 ```
 

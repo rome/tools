@@ -8,48 +8,10 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	syntax: Array []
-	loc: SourceLocation esprima/es2015-import-declaration/invalid-import-module-specifier/input.js 1:0-2:0
-	path: UIDPath<esprima/es2015-import-declaration/invalid-import-module-specifier/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Export from only allows strings"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:21
-				path: UIDPath<esprima/es2015-import-declaration/invalid-import-module-specifier/input.js>
-				start: Position 1:18
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSExportExternalDeclaration {
-			defaultSpecifier: undefined
-			exportKind: undefined
-			namespaceSpecifier: undefined
-			loc: SourceLocation esprima/es2015-import-declaration/invalid-import-module-specifier/input.js 1:0-1:21
-			source: JSStringLiteral {
-				value: ""
-				loc: SourceLocation esprima/es2015-import-declaration/invalid-import-module-specifier/input.js 1:18-1:21 (bar)
-			}
-			namedSpecifiers: Array [
+			namedSpecifiers: [
 				JSExportExternalSpecifier {
-					loc: SourceLocation esprima/es2015-import-declaration/invalid-import-module-specifier/input.js 1:8-1:11
 					exported: JSIdentifier {
 						name: "foo"
 						loc: SourceLocation esprima/es2015-import-declaration/invalid-import-module-specifier/input.js 1:8-1:11 (foo)
@@ -58,10 +20,41 @@ JSRoot {
 						name: "foo"
 						loc: SourceLocation esprima/es2015-import-declaration/invalid-import-module-specifier/input.js 1:8-1:11 (foo)
 					}
+					loc: SourceLocation esprima/es2015-import-declaration/invalid-import-module-specifier/input.js 1:8-1:11
 				}
 			]
+			source: JSStringLiteral {
+				value: ""
+				loc: SourceLocation esprima/es2015-import-declaration/invalid-import-module-specifier/input.js 1:18-1:21 (bar)
+			}
+			loc: SourceLocation esprima/es2015-import-declaration/invalid-import-module-specifier/input.js 1:0-1:21
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "Export from only allows strings"}
+			}
+			location: {
+				language: "js"
+				path: UIDPath<esprima/es2015-import-declaration/invalid-import-module-specifier/input.js>
+				end: Position 1:21
+				start: Position 1:18
+			}
+		}
+	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: []
+	path: UIDPath<esprima/es2015-import-declaration/invalid-import-module-specifier/input.js>
+	loc: SourceLocation esprima/es2015-import-declaration/invalid-import-module-specifier/input.js 1:0-2:0
 }
 ```
 

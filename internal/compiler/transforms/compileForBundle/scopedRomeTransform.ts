@@ -15,7 +15,7 @@ export default createVisitor({
 
 		if (scope.node === node && scope.hasBinding("Rome")) {
 			return signals.replace(
-				renameBindings(path, new Map([["Rome", scope.generateUid("Rome")]])),
+				renameBindings(path, new Map([["Rome", scope.generateUID("Rome")]])),
 			);
 		}
 

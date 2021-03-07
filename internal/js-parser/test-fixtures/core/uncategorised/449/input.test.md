@@ -8,44 +8,40 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation core/uncategorised/449/input.js 1:0-1:6
-	path: UIDPath<core/uncategorised/449/input.js>
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation core/uncategorised/449/input.js 1:0-1:6
 			expression: JSReferenceIdentifier {
 				name: "\0"
 				loc: SourceLocation core/uncategorised/449/input.js 1:0-1:6 (\0)
 			}
+			loc: SourceLocation core/uncategorised/449/input.js 1:0-1:6
 		}
 	]
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {
+				advice: []
+				category: ["parse"]
 				categoryValue: "js"
-				category: Array ["parse"]
 				message: RAW_MARKUP {value: "Invalid Unicode escape"}
 			}
-			location: Object {
-				integrity: undefined
+			location: {
 				language: "js"
-				sourceText: undefined
-				end: Position 1:6
 				path: UIDPath<core/uncategorised/449/input.js>
+				end: Position 1:6
 				start: Position 1:6
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<core/uncategorised/449/input.js>
+	loc: SourceLocation core/uncategorised/449/input.js 1:0-1:6
 }
 ```
 

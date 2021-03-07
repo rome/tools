@@ -8,51 +8,42 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: true
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation core/uncategorised/424/input.js 1:0-1:7
-	path: UIDPath<core/uncategorised/424/input.js>
-	body: Array [
+	body: [
 		JSWithStatement {
-			loc: SourceLocation core/uncategorised/424/input.js 1:0-1:7
-			object: JSReferenceIdentifier {
-				name: "x"
-				loc: SourceLocation core/uncategorised/424/input.js 1:5-1:6 (x)
-			}
 			body: JSExpressionStatement {
-				loc: SourceLocation core/uncategorised/424/input.js 1:7-1:7
 				expression: JSReferenceIdentifier {
 					name: "INVALID_PLACEHOLDER"
 					loc: SourceLocation core/uncategorised/424/input.js 1:7-1:7
 				}
+				loc: SourceLocation core/uncategorised/424/input.js 1:7-1:7
 			}
+			object: JSReferenceIdentifier {
+				name: "x"
+				loc: SourceLocation core/uncategorised/424/input.js 1:5-1:6 (x)
+			}
+			loc: SourceLocation core/uncategorised/424/input.js 1:0-1:7
 		}
 	]
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Unknown start to an statement expression"}
-			}
-			location: Object {
-				integrity: undefined
+	comments: []
+	corrupt: true
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {advice: [], category: ["parse"], categoryValue: "js", message: [RAW_MARKUP {value: "Unknown start to an "}, "statement expression"]}
+			location: {
 				language: "js"
-				sourceText: undefined
-				end: Position 1:7
 				path: UIDPath<core/uncategorised/424/input.js>
+				end: Position 1:7
 				start: Position 1:7
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<core/uncategorised/424/input.js>
+	loc: SourceLocation core/uncategorised/424/input.js 1:0-1:7
 }
 ```
 

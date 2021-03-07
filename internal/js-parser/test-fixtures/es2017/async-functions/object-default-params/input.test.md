@@ -8,71 +8,22 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: true
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2017/async-functions/object-default-params/input.js 1:0-2:0
-	path: UIDPath<es2017/async-functions/object-default-params/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:23
-				path: UIDPath<es2017/async-functions/object-default-params/input.js>
-				start: Position 1:22
-			}
-			description: Object {
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Unexpected character <emphasis>=</emphasis>"}
-				advice: Array [
-					log {
-						category: "info"
-						text: RAW_MARKUP {value: "Expected character <emphasis>,</emphasis>"}
-					}
-				]
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSVariableDeclarationStatement {
-			loc: SourceLocation es2017/async-functions/object-default-params/input.js 1:0-1:29
 			declaration: JSVariableDeclaration {
 				kind: "const"
-				loc: SourceLocation es2017/async-functions/object-default-params/input.js 1:0-1:29
-				declarations: Array [
+				declarations: [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "b"
 							loc: SourceLocation es2017/async-functions/object-default-params/input.js 1:6-1:7 (b)
 						}
-						loc: SourceLocation es2017/async-functions/object-default-params/input.js 1:6-1:29
 						init: JSCallExpression {
-							loc: SourceLocation es2017/async-functions/object-default-params/input.js 1:10-1:29
-							callee: JSReferenceIdentifier {
-								name: "async"
-								loc: SourceLocation es2017/async-functions/object-default-params/input.js 1:10-1:15 (async)
-							}
-							arguments: Array [
+							arguments: [
 								JSAssignmentExpression {
 									operator: "="
-									loc: SourceLocation es2017/async-functions/object-default-params/input.js 1:17-1:29
-									right: JSStringLiteral {
-										value: "bar"
-										loc: SourceLocation es2017/async-functions/object-default-params/input.js 1:24-1:29
-									}
 									left: JSAssignmentObjectPattern {
-										rest: undefined
-										loc: SourceLocation es2017/async-functions/object-default-params/input.js 1:17-1:21
-										properties: Array [
+										properties: [
 											JSAssignmentObjectPatternProperty {
 												key: JSStaticPropertyKey {
 													value: JSIdentifier {
@@ -88,41 +39,80 @@ JSRoot {
 												loc: SourceLocation es2017/async-functions/object-default-params/input.js 1:18-1:21
 											}
 										]
+										loc: SourceLocation es2017/async-functions/object-default-params/input.js 1:17-1:21
 									}
+									right: JSStringLiteral {
+										value: "bar"
+										loc: SourceLocation es2017/async-functions/object-default-params/input.js 1:24-1:29
+									}
+									loc: SourceLocation es2017/async-functions/object-default-params/input.js 1:17-1:29
 								}
 							]
+							callee: JSReferenceIdentifier {
+								name: "async"
+								loc: SourceLocation es2017/async-functions/object-default-params/input.js 1:10-1:15 (async)
+							}
+							loc: SourceLocation es2017/async-functions/object-default-params/input.js 1:10-1:29
 						}
+						loc: SourceLocation es2017/async-functions/object-default-params/input.js 1:6-1:29
 					}
 				]
+				loc: SourceLocation es2017/async-functions/object-default-params/input.js 1:0-1:29
 			}
+			loc: SourceLocation es2017/async-functions/object-default-params/input.js 1:0-1:29
 		}
 		JSExpressionStatement {
-			loc: SourceLocation es2017/async-functions/object-default-params/input.js 1:29-1:30
 			expression: JSReferenceIdentifier {
 				name: "INVALID_PLACEHOLDER"
 				loc: SourceLocation es2017/async-functions/object-default-params/input.js 1:29-1:30
 			}
+			loc: SourceLocation es2017/async-functions/object-default-params/input.js 1:29-1:30
 		}
 		JSExpressionStatement {
-			loc: SourceLocation es2017/async-functions/object-default-params/input.js 1:30-1:31
 			expression: JSReferenceIdentifier {
 				name: "INVALID_PLACEHOLDER"
 				loc: SourceLocation es2017/async-functions/object-default-params/input.js 1:30-1:31
 			}
+			loc: SourceLocation es2017/async-functions/object-default-params/input.js 1:30-1:31
 		}
 		JSExpressionStatement {
-			loc: SourceLocation es2017/async-functions/object-default-params/input.js 1:32-1:34
 			expression: JSReferenceIdentifier {
 				name: "INVALID_PLACEHOLDER"
 				loc: SourceLocation es2017/async-functions/object-default-params/input.js 1:32-1:34
 			}
+			loc: SourceLocation es2017/async-functions/object-default-params/input.js 1:32-1:34
 		}
 		JSBlockStatement {
-			body: Array []
-			directives: Array []
+			body: []
+			directives: []
 			loc: SourceLocation es2017/async-functions/object-default-params/input.js 1:35-1:37
 		}
 	]
+	comments: []
+	corrupt: true
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {
+				advice: [log {category: "info", text: [RAW_MARKUP {value: "Expected character <emphasis>"}, ",", RAW_MARKUP {value: "</emphasis>"}]}]
+				category: ["parse"]
+				categoryValue: "js"
+				message: [RAW_MARKUP {value: "Unexpected character <emphasis>"}, "=", RAW_MARKUP {value: "</emphasis>"}]
+			}
+			location: {
+				language: "js"
+				path: UIDPath<es2017/async-functions/object-default-params/input.js>
+				end: Position 1:23
+				start: Position 1:22
+			}
+		}
+	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2017/async-functions/object-default-params/input.js>
+	loc: SourceLocation es2017/async-functions/object-default-params/input.js 1:0-2:0
 }
 ```
 

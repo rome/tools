@@ -8,23 +8,10 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2015/uncategorised/146/input.js 1:0-1:12
-	path: UIDPath<es2015/uncategorised/146/input.js>
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation es2015/uncategorised/146/input.js 1:0-1:12
 			expression: JSObjectExpression {
-				loc: SourceLocation es2015/uncategorised/146/input.js 1:1-1:11
-				properties: Array [
+				properties: [
 					JSObjectMethod {
 						kind: "method"
 						key: JSComputedPropertyKey {
@@ -34,28 +21,35 @@ JSRoot {
 							}
 							loc: SourceLocation es2015/uncategorised/146/input.js 1:2-1:5
 						}
-						loc: SourceLocation es2015/uncategorised/146/input.js 1:2-1:10
 						body: JSBlockStatement {
-							body: Array []
-							directives: Array []
+							body: []
+							directives: []
 							loc: SourceLocation es2015/uncategorised/146/input.js 1:8-1:10
 						}
 						head: JSFunctionHead {
 							async: false
 							generator: false
 							hasHoistedVars: false
-							params: Array []
-							rest: undefined
-							returnType: undefined
-							thisType: undefined
-							typeParameters: undefined
+							params: []
 							loc: SourceLocation es2015/uncategorised/146/input.js 1:5-1:7
 						}
+						loc: SourceLocation es2015/uncategorised/146/input.js 1:2-1:10
 					}
 				]
+				loc: SourceLocation es2015/uncategorised/146/input.js 1:1-1:11
 			}
+			loc: SourceLocation es2015/uncategorised/146/input.js 1:0-1:12
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2015/uncategorised/146/input.js>
+	loc: SourceLocation es2015/uncategorised/146/input.js 1:0-1:12
 }
 ```
 

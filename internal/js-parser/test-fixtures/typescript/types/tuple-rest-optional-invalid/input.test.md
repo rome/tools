@@ -8,82 +8,73 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	loc: SourceLocation typescript/types/tuple-rest-optional-invalid/input.ts 1:0-2:0
-	path: UIDPath<typescript/types/tuple-rest-optional-invalid/input.ts>
-	syntax: Array ["ts"]
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "A tuple member cannot be both optional and rest."}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:21
-				path: UIDPath<typescript/types/tuple-rest-optional-invalid/input.ts>
-				start: Position 1:16
-			}
-		}
-	]
-	body: Array [
+	body: [
 		TSTypeAlias {
 			id: JSBindingIdentifier {
 				name: "A"
 				loc: SourceLocation typescript/types/tuple-rest-optional-invalid/input.ts 1:5-1:6 (A)
 			}
-			typeParameters: undefined
-			loc: SourceLocation typescript/types/tuple-rest-optional-invalid/input.ts 1:0-1:23
 			right: TSTupleType {
-				loc: SourceLocation typescript/types/tuple-rest-optional-invalid/input.ts 1:9-1:22
-				elementTypes: Array [
+				elementTypes: [
 					TSTupleElement {
-						name: undefined
 						optional: false
-						loc: SourceLocation typescript/types/tuple-rest-optional-invalid/input.ts 1:10-1:14
 						typeAnnotation: TSRestType {
-							loc: SourceLocation typescript/types/tuple-rest-optional-invalid/input.ts 1:10-1:14
 							argument: TSTypeReference {
-								typeParameters: undefined
-								loc: SourceLocation typescript/types/tuple-rest-optional-invalid/input.ts 1:13-1:14
 								typeName: JSReferenceIdentifier {
 									name: "N"
 									loc: SourceLocation typescript/types/tuple-rest-optional-invalid/input.ts 1:13-1:14 (N)
 								}
+								loc: SourceLocation typescript/types/tuple-rest-optional-invalid/input.ts 1:13-1:14
 							}
+							loc: SourceLocation typescript/types/tuple-rest-optional-invalid/input.ts 1:10-1:14
 						}
+						loc: SourceLocation typescript/types/tuple-rest-optional-invalid/input.ts 1:10-1:14
 					}
 					TSTupleElement {
-						name: undefined
 						optional: true
-						loc: SourceLocation typescript/types/tuple-rest-optional-invalid/input.ts 1:16-1:21
 						typeAnnotation: TSRestType {
-							loc: SourceLocation typescript/types/tuple-rest-optional-invalid/input.ts 1:16-1:20
 							argument: TSTypeReference {
-								typeParameters: undefined
-								loc: SourceLocation typescript/types/tuple-rest-optional-invalid/input.ts 1:19-1:20
 								typeName: JSReferenceIdentifier {
 									name: "N"
 									loc: SourceLocation typescript/types/tuple-rest-optional-invalid/input.ts 1:19-1:20 (N)
 								}
+								loc: SourceLocation typescript/types/tuple-rest-optional-invalid/input.ts 1:19-1:20
 							}
+							loc: SourceLocation typescript/types/tuple-rest-optional-invalid/input.ts 1:16-1:20
 						}
+						loc: SourceLocation typescript/types/tuple-rest-optional-invalid/input.ts 1:16-1:21
 					}
 				]
+				loc: SourceLocation typescript/types/tuple-rest-optional-invalid/input.ts 1:9-1:22
+			}
+			loc: SourceLocation typescript/types/tuple-rest-optional-invalid/input.ts 1:0-1:23
+		}
+	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "A tuple member cannot be both optional and rest."}
+			}
+			location: {
+				language: "js"
+				path: UIDPath<typescript/types/tuple-rest-optional-invalid/input.ts>
+				end: Position 1:21
+				start: Position 1:16
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: ["ts"]
+	path: UIDPath<typescript/types/tuple-rest-optional-invalid/input.ts>
+	loc: SourceLocation typescript/types/tuple-rest-optional-invalid/input.ts 1:0-2:0
 }
 ```
 

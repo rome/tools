@@ -8,67 +8,21 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2015/meta-properties/invalid-arrow-function/input.js 1:0-4:0
-	path: UIDPath<es2015/meta-properties/invalid-arrow-function/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "new.target can only be used in functions or class properties"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 2:12
-				path: UIDPath<es2015/meta-properties/invalid-arrow-function/input.js>
-				start: Position 2:2
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSVariableDeclarationStatement {
-			loc: SourceLocation es2015/meta-properties/invalid-arrow-function/input.js 1:0-3:1
 			declaration: JSVariableDeclaration {
 				kind: "const"
-				loc: SourceLocation es2015/meta-properties/invalid-arrow-function/input.js 1:0-3:1
-				declarations: Array [
+				declarations: [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "A"
 							loc: SourceLocation es2015/meta-properties/invalid-arrow-function/input.js 1:6-1:7 (A)
 						}
-						loc: SourceLocation es2015/meta-properties/invalid-arrow-function/input.js 1:6-3:1
 						init: JSArrowFunctionExpression {
-							loc: SourceLocation es2015/meta-properties/invalid-arrow-function/input.js 1:10-3:1
-							head: JSFunctionHead {
-								async: false
-								hasHoistedVars: false
-								params: Array []
-								rest: undefined
-								returnType: undefined
-								thisType: undefined
-								loc: SourceLocation es2015/meta-properties/invalid-arrow-function/input.js 1:10-1:15
-							}
 							body: JSBlockStatement {
-								directives: Array []
-								loc: SourceLocation es2015/meta-properties/invalid-arrow-function/input.js 1:16-3:1
-								body: Array [
+								body: [
 									JSExpressionStatement {
-										loc: SourceLocation es2015/meta-properties/invalid-arrow-function/input.js 2:2-2:13
 										expression: JSMetaProperty {
-											loc: SourceLocation es2015/meta-properties/invalid-arrow-function/input.js 2:2-2:12
 											meta: JSIdentifier {
 												name: "new"
 												loc: SourceLocation es2015/meta-properties/invalid-arrow-function/input.js 2:2-2:5 (new)
@@ -77,16 +31,55 @@ JSRoot {
 												name: "target"
 												loc: SourceLocation es2015/meta-properties/invalid-arrow-function/input.js 2:6-2:12 (target)
 											}
+											loc: SourceLocation es2015/meta-properties/invalid-arrow-function/input.js 2:2-2:12
 										}
+										loc: SourceLocation es2015/meta-properties/invalid-arrow-function/input.js 2:2-2:13
 									}
 								]
+								directives: []
+								loc: SourceLocation es2015/meta-properties/invalid-arrow-function/input.js 1:16-3:1
 							}
+							head: JSFunctionHead {
+								async: false
+								hasHoistedVars: false
+								params: []
+								loc: SourceLocation es2015/meta-properties/invalid-arrow-function/input.js 1:10-1:15
+							}
+							loc: SourceLocation es2015/meta-properties/invalid-arrow-function/input.js 1:10-3:1
 						}
+						loc: SourceLocation es2015/meta-properties/invalid-arrow-function/input.js 1:6-3:1
 					}
 				]
+				loc: SourceLocation es2015/meta-properties/invalid-arrow-function/input.js 1:0-3:1
+			}
+			loc: SourceLocation es2015/meta-properties/invalid-arrow-function/input.js 1:0-3:1
+		}
+	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "new.target can only be used in functions or class properties"}
+			}
+			location: {
+				language: "js"
+				path: UIDPath<es2015/meta-properties/invalid-arrow-function/input.js>
+				end: Position 2:12
+				start: Position 2:2
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2015/meta-properties/invalid-arrow-function/input.js>
+	loc: SourceLocation es2015/meta-properties/invalid-arrow-function/input.js 1:0-4:0
 }
 ```
 

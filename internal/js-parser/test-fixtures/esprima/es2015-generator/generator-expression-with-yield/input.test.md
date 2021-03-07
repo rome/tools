@@ -8,55 +8,47 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation esprima/es2015-generator/generator-expression-with-yield/input.js 1:0-2:0
-	path: UIDPath<esprima/es2015-generator/generator-expression-with-yield/input.js>
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation esprima/es2015-generator/generator-expression-with-yield/input.js 1:0-1:26
 			expression: JSFunctionExpression {
-				id: undefined
-				loc: SourceLocation esprima/es2015-generator/generator-expression-with-yield/input.js 1:1-1:25
+				body: JSBlockStatement {
+					body: [
+						JSExpressionStatement {
+							expression: JSYieldExpression {
+								delegate: false
+								argument: JSNumericLiteral {
+									value: 3
+									loc: SourceLocation esprima/es2015-generator/generator-expression-with-yield/input.js 1:21-1:22
+								}
+								loc: SourceLocation esprima/es2015-generator/generator-expression-with-yield/input.js 1:15-1:22
+							}
+							loc: SourceLocation esprima/es2015-generator/generator-expression-with-yield/input.js 1:15-1:23
+						}
+					]
+					directives: []
+					loc: SourceLocation esprima/es2015-generator/generator-expression-with-yield/input.js 1:13-1:25
+				}
 				head: JSFunctionHead {
 					async: false
 					generator: true
 					hasHoistedVars: false
-					params: Array []
-					rest: undefined
-					returnType: undefined
-					thisType: undefined
-					typeParameters: undefined
+					params: []
 					loc: SourceLocation esprima/es2015-generator/generator-expression-with-yield/input.js 1:10-1:12
 				}
-				body: JSBlockStatement {
-					directives: Array []
-					loc: SourceLocation esprima/es2015-generator/generator-expression-with-yield/input.js 1:13-1:25
-					body: Array [
-						JSExpressionStatement {
-							loc: SourceLocation esprima/es2015-generator/generator-expression-with-yield/input.js 1:15-1:23
-							expression: JSYieldExpression {
-								delegate: false
-								loc: SourceLocation esprima/es2015-generator/generator-expression-with-yield/input.js 1:15-1:22
-								argument: JSNumericLiteral {
-									value: 3
-									format: undefined
-									loc: SourceLocation esprima/es2015-generator/generator-expression-with-yield/input.js 1:21-1:22
-								}
-							}
-						}
-					]
-				}
+				loc: SourceLocation esprima/es2015-generator/generator-expression-with-yield/input.js 1:1-1:25
 			}
+			loc: SourceLocation esprima/es2015-generator/generator-expression-with-yield/input.js 1:0-1:26
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<esprima/es2015-generator/generator-expression-with-yield/input.js>
+	loc: SourceLocation esprima/es2015-generator/generator-expression-with-yield/input.js 1:0-2:0
 }
 ```
 

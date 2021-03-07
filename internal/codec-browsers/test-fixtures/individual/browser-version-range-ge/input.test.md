@@ -7,34 +7,19 @@
 ### `result`
 
 ```javascript
-Array [
-	"firefox:80"
-	"firefox:81"
-	"firefox:82"
-	"firefox:83"
-	"firefox:84"
-	"firefox:85"
-	"firefox:86"
-	"firefox:87"
-]
+["firefox:80", "firefox:81", "firefox:82", "firefox:83", "firefox:84", "firefox:85", "firefox:86", "firefox:87"]
 ```
 
 ### `targets`
 
 ```javascript
-Array [
-	TargetBrowserRangeOperator {
-		browser: "Firefox"
-		operator: "GE"
-		version: 80
-	}
-]
+[TargetBrowserRangeOperator {browser: "Firefox", operator: "GE", version: 80}]
 ```
 
 ### `tokens`
 
 ```javascript
-Array [
+[
 	String {
 		value: "Firefox"
 		end: ZeroIndexedNumber<7>
