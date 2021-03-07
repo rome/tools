@@ -30,6 +30,7 @@ import {
 import {markup} from "@internal/markup";
 import FileNotFound, {MissingFileReturn} from "@internal/fs/FileNotFound";
 import {areAnalyzeDependencyResultsEqual} from "@internal/compiler";
+import {promiseAllFrom} from "@internal/async";
 
 export type DependencyGraphSeedResult = {
 	node: DependencyNode;
@@ -38,6 +39,7 @@ export type DependencyGraphSeedResult = {
 };
 
 const NODE_BUILTINS = [
+	"async_hooks",
 	"electron",
 	"buffer",
 	"child_process",
@@ -472,8 +474,9 @@ export default class DependencyGraph {
 		node.setShallow(isShallowNode);
 
 		// Resolve full locations
-		await Promise.all(
-			dependencies.map(async (dep) => {
+		await promiseAllFrom(
+			dependencies,
+			async (dep) => {
 				const {source, optional} = dep;
 
 				const {diagnostics} = await catchDiagnostics(
@@ -502,7 +505,7 @@ export default class DependencyGraph {
 				if (diagnostics !== undefined && !optional) {
 					diagnosticsProcessor.addDiagnostics(diagnostics);
 				}
-			}),
+			},
 		);
 
 		// Queue our dependencies...

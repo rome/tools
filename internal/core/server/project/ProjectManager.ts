@@ -59,6 +59,7 @@ import {PathLocker} from "@internal/async/lockers";
 import {markup} from "@internal/markup";
 import {ReporterNamespace} from "@internal/cli-reporter";
 import {ExtendedMap} from "@internal/collections";
+import {promiseAllFrom} from "@internal/async";
 
 export type ProjectConfigSource = {
 	consumer: Consumer;
@@ -398,13 +399,14 @@ export default class ProjectManager {
 			const ownedPaths: AbsoluteFilePath[] = Array.from(
 				this.server.memoryFs.glob(project.directory),
 			);
-			await Promise.all(
-				ownedPaths.map((path) =>
+			await promiseAllFrom(
+				ownedPaths,
+				(path) =>
 					this.server.fileAllocator.evict(
 						path,
 						markup`project dependency change`,
 					)
-				),
+				,
 			);
 			for (const path of ownedPaths) {
 				this.handleDeleted(path);

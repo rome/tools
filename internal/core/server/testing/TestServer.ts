@@ -47,6 +47,7 @@ import {
 import TestServerWorker from "@internal/core/server/testing/TestServerWorker";
 import TestServerFile from "@internal/core/server/testing/TestServerFile";
 import {ExtendedMap} from "@internal/collections";
+import {promiseAllFrom} from "@internal/async";
 
 function grammarNumberTests(num: number): StaticMarkup {
 	return markup`<grammarNumber plural="tests" singular="test">${String(num)}</grammarNumber>`;
@@ -263,8 +264,9 @@ export default class TestServer {
 			title: markup`Preparing test files`,
 		});
 		progress.setTotal(this.paths.size);
-		await Promise.all(
-			workers.map((worker) => worker.prepareAll(progress, fileQueue)),
+		await promiseAllFrom(
+			workers,
+			(worker) => worker.prepareAll(progress, fileQueue),
 		);
 		progress.end();
 
@@ -282,8 +284,8 @@ export default class TestServer {
 
 	private async runTests(workers: TestServerWorker[]) {
 		const runProgress = this.setupRunProgress(workers);
-		await Promise.all(workers.map((worker) => worker.run()));
-		await Promise.all(workers.map((worker) => worker.bridge.end()));
+		await promiseAllFrom(workers, (worker) => worker.run());
+		await promiseAllFrom(workers, (worker) => worker.bridge.end());
 		runProgress.teardown();
 	}
 

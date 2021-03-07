@@ -18,6 +18,7 @@ import {markup} from "@internal/markup";
 import prettyFormat from "@internal/pretty-format";
 import {ReporterNamespace} from "@internal/cli-reporter";
 import {createResourceFromTimeout} from "@internal/resources";
+import {promiseAllFrom} from "@internal/async";
 
 export type RecoverySaveFile =
 	| {
@@ -486,13 +487,11 @@ export default class RecoveryStore {
 
 		// For unsafe writes we don't bother checking for locks or mtime
 		if (opts.unsafeWrites) {
-			await Promise.all(
-				Array.from(
-					files,
-					async ([path, {content}]) => {
-						await path.writeFile(content);
-					},
-				),
+			await promiseAllFrom(
+				files,
+				async ([path, {content}]) => {
+					await path.writeFile(content);
+				},
 			);
 			return files.size;
 		}
@@ -539,16 +538,14 @@ export default class RecoveryStore {
 			// Write files
 			// We call fs.open to avoid race conditions since we want to check the mtime, and then update the
 			// file if it's the same
-			await Promise.all(
-				Array.from(
-					files,
-					async ([path, op]) => {
-						const success = await this.writeFile(path, op, events, registerFile);
-						if (success) {
-							fileCount++;
-						}
-					},
-				),
+			await promiseAllFrom(
+				files,
+				async ([path, op]) => {
+					const success = await this.writeFile(path, op, events, registerFile);
+					if (success) {
+						fileCount++;
+					}
+				},
 			);
 
 			// Protects against file events not being emitted and causing hanging

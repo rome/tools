@@ -573,6 +573,12 @@ export default class Client {
 
 	public async end() {
 		await this.endEvent.callOptional();
+
+		const {bridgeStatus} = this;
+		if (bridgeStatus !== undefined && !bridgeStatus.dedicated) {
+			await bridgeStatus.server.end();
+		}
+
 		await this.resources.release();
 	}
 

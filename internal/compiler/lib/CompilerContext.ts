@@ -63,6 +63,7 @@ import {assertSingleNode} from "@internal/js-ast-utils";
 import VisitorState, {AnyVisitorState} from "./VisitorState";
 import {UnknownObject} from "@internal/typescript-helpers";
 import {ExtendedMap} from "@internal/collections";
+import {promiseAllFrom} from "@internal/async";
 
 export type ContextArg = {
 	ast: AnyRoot;
@@ -187,14 +188,15 @@ export default class CompilerContext {
 	public async normalizeTransforms(
 		transforms: Transform[],
 	): Promise<AnyVisitor[]> {
-		return Promise.all(
-			transforms.map(async (visitor) => {
+		return promiseAllFrom(
+			transforms,
+			async (visitor) => {
 				if (typeof visitor === "function") {
 					return await visitor(this);
 				} else {
 					return visitor;
 				}
-			}),
+			},
 		);
 	}
 

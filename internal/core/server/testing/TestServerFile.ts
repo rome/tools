@@ -17,6 +17,7 @@ import {
 } from "@internal/diagnostics";
 import {pretty} from "@internal/pretty-format";
 import TestServerWorker from "./TestServerWorker";
+import {promiseAllFrom} from "@internal/async";
 
 type SnapshotWriteOptions = {
 	path: AbsoluteFilePath;
@@ -303,16 +304,14 @@ export default class TestServerFile {
 
 		// Fetch console advice from all workers who ran a test
 		let allConsoleAdvice: TestConsoleAdvice = [];
-		await Promise.all(
-			Array.from(
-				this.workers,
-				async (worker) => {
-					const consoleAdvice = await worker.bridge.events.testGetConsoleAdvice.call(
-						this.path,
-					);
-					allConsoleAdvice = allConsoleAdvice.concat(consoleAdvice);
-				},
-			),
+		await promiseAllFrom(
+			this.workers,
+			async (worker) => {
+				const consoleAdvice = await worker.bridge.events.testGetConsoleAdvice.call(
+					this.path,
+				);
+				allConsoleAdvice = allConsoleAdvice.concat(consoleAdvice);
+			},
 		);
 
 		// Regain chronological order

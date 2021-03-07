@@ -12,6 +12,7 @@ import Bundler from "../bundler/Bundler";
 import {Consumer} from "@internal/consume";
 import {Markup, markup} from "@internal/markup";
 import {getByteLength} from "@internal/binary";
+import {promiseAllFrom} from "@internal/async";
 
 type Flags = {
 	quiet: boolean;
@@ -73,23 +74,21 @@ export default createServerCommand<Flags>({
 			const savedList: Markup[] = [];
 			const dir = flags.cwd.resolve(outputDirectory);
 
-			await Promise.all(
-				Array.from(
-					outFiles,
-					async ([filename, {kind, content}]) => {
-						const buff = await content();
-						const path = dir.append(filename);
-						await path.getParent().createDirectory();
-						await path.writeFile(buff);
-						const size = getByteLength(buff);
+			await promiseAllFrom(
+				outFiles,
+				async ([filename, {kind, content}]) => {
+					const buff = await content();
+					const path = dir.append(filename);
+					await path.getParent().createDirectory();
+					await path.writeFile(buff);
+					const size = getByteLength(buff);
 
-						savedList.push(
-							markup`<filelink target="${path.join()}">${filename}</filelink> <filesize dim>${String(
-								size,
-							)}</filesize> <inverse> ${kind} </inverse>`,
-						);
-					},
-				),
+					savedList.push(
+						markup`<filelink target="${path.join()}">${filename}</filelink> <filesize dim>${String(
+							size,
+						)}</filesize> <inverse> ${kind} </inverse>`,
+					);
+				},
 			);
 
 			await req.flushFiles();
