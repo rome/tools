@@ -304,16 +304,18 @@ export default class Bundler {
 	public bundleManifestWatch(resolution: BundlerEntryResolution): BundleWatcher {
 		const refreshSub = this.server.refreshFileEvent.subscribe(async (paths) => {
 			const graphPaths = new AbsoluteFilePathSet();
-			for (const {path} of paths) {
-				if (this.graph.hasNode(path)) {
+			for (const {type, path} of paths) {
+				if (type !== "CREATED" && this.graph.hasNode(path)) {
 					this.compiles.delete(path);
 					graphPaths.add(path);
 				}
 			}
 			if (graphPaths.size > 0) {
 				watcher.changeEvent.send(graphPaths);
-				await this.graph.evictNodes(graphPaths, async () => {});
-				run();
+				await runLock.wrap(async () => {
+					await this.graph.evictNodes(graphPaths, async () => {});
+					run();
+				});
 			}
 		});
 		this.request.resources.add(refreshSub);
