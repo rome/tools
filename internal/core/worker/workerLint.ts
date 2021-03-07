@@ -1,9 +1,9 @@
 import {lint} from "@internal/compiler";
 import {
 	Diagnostic,
+	DiagnosticSuppression,
 	catchDiagnostics,
 	descriptions,
-	DiagnosticSuppression,
 } from "@internal/diagnostics";
 import {markup} from "@internal/markup";
 import {
@@ -193,7 +193,7 @@ export async function compilerLint(
 	if (project.config.lint.enabled || project.config.format.enabled) {
 		const parsed = await worker.parse(ref, parseOptions);
 		const {ast} = parsed;
-		
+
 		({mtimeNs, sourceText, astModifiedFromSource} = parsed);
 
 		({diagnostics, suppressions, formatted} = await lint({

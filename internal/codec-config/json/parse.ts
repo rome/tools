@@ -158,7 +158,11 @@ export const jsonParser = createParser<JSONParserTypes>({
 				});
 			}
 
-			return parser.finishValueToken("BlockComment", removeCarriageReturn(value), endIndex);
+			return parser.finishValueToken(
+				"BlockComment",
+				removeCarriageReturn(value),
+				endIndex,
+			);
 		}
 
 		// Single character token starters

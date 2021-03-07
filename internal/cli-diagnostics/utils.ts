@@ -30,7 +30,14 @@ function isWhitespace(char: undefined | string): boolean {
 
 export function showInvisibles(
 	str: string,
-	{atLineStart, atLineEnd, ignoreLoneSpaces, ignoreTrailingCarriageReturn, ignoreLeadingTabs, nextText}: {
+	{
+		atLineStart,
+		atLineEnd,
+		ignoreLoneSpaces,
+		ignoreTrailingCarriageReturn,
+		ignoreLeadingTabs,
+		nextText,
+	}: {
 		ignoreLeadingTabs: boolean;
 		ignoreLoneSpaces: boolean;
 		ignoreTrailingCarriageReturn: boolean;

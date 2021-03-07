@@ -46,7 +46,11 @@ import {getNodeReferenceParts, valueToNode} from "@internal/js-ast-utils";
 import {markup} from "@internal/markup";
 import {RecoverySaveFile} from "../server/fs/RecoveryStore";
 import WorkerCache, {createCacheEntryLoader} from "./WorkerCache";
-import {normalizeFormattedLineEndings, uncachedFormat, uncachedLint} from "./workerLint";
+import {
+	normalizeFormattedLineEndings,
+	uncachedFormat,
+	uncachedLint,
+} from "./workerLint";
 
 const analyzeDependenciesCacheLoader = createCacheEntryLoader<AnalyzeDependencyResult>(
 	"analyzeDependencies",
@@ -151,7 +155,10 @@ export default class WorkerAPI {
 		updates: InlineSnapshotUpdate[],
 		parseOptions: WorkerParseOptions,
 	): Promise<WorkerUpdateInlineSnapshotResult> {
-		let {ast, mtimeNs, project, sourceText} = await this.worker.parse(ref, parseOptions);
+		let {ast, mtimeNs, project, sourceText} = await this.worker.parse(
+			ref,
+			parseOptions,
+		);
 
 		if (!project.config.format.enabled) {
 			return {
