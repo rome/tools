@@ -70,10 +70,6 @@ export default class Worker {
 		this.resources = createResourceRoot(`${workerTypeLabel}<${opts.id}>`);
 		this.resources.add(opts.bridge);
 
-		opts.bridge.endEvent.subscribe(() => {
-			this.resources.release();
-		});
-
 		this.bridge = opts.bridge;
 		this.options = opts;
 
@@ -217,6 +213,7 @@ export default class Worker {
 	}
 
 	private async end() {
+		await this.resources.release();
 		this.astCache.clear();
 		this.projects.clear();
 		this.moduleSignatureCache.clear();

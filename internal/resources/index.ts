@@ -1,4 +1,3 @@
-import {IS_ROME_DEV_ENV} from "@internal/cli-environment";
 import { createResourceFromCallback } from "./factories";
 import Resource from "./Resource";
 import {ResourcesContainer} from "./types";
@@ -33,79 +32,9 @@ export const processResourceRoot = new Resource({
   }),
   optional: true,
   async finalize() {
-    // Suppress all uncaught exceptions. We'll begin tearing down and don't want Node's error handlers to be used
-    process.setUncaughtExceptionCaptureCallback(null);
-    process.setUncaughtExceptionCaptureCallback((err) => {
-      console.error(err);
-    });
-    process.on("unhandledRejection", () => {});
-
-    async function registerError() {
-      await drainProcessStreams();
-
-      if (process.exitCode === 0) {
-        // Not successful anymore
-        process.exitCode = 2;
-      }
-    }
-
-    try {
-      await drainProcessStreams();
-      
-      // If we are in development mode, then verify we cleaned up properly
-      if (IS_ROME_DEV_ENV) {
-        // @ts-ignore: Internal node methods that we are being naughty and touching
-        const handles = new Set(process._getActiveHandles());
-        
-        // @ts-ignore: Internal node methods that we are being naughty and touching
-        const requests = process._getActiveRequests();
-
-        // Remove io streams as they are the only valid handle that should exist
-        handles.delete(process.stdout);
-        handles.delete(process.stderr);
-        handles.delete(process.stdin);
-        handles.delete(workerThreads.parentPort);
-        if (handles.size > 0) {
-          console.error(`safeProcessExit: Handles found after teardown`)
-          console.error(handles);
-          await registerError();
-        }
-        
-        if (requests.length > 0) {
-          console.error(`safeProcessExit: Pending requests found`);
-          console.error(requests);
-          await registerError();
-        }
-      }
-    } catch (err) {
-      console.error("safeProcessExit: Error occurred during process teardown:");
-      console.error(err.stack);
-      await registerError();
-    } finally {
-      process.exit(process.exitCode);
-    }
+    process.exit(process.exitCode);
   },
 });
-
-function createFlushPromise(stream: NodeJS.WriteStream): Promise<void> {
-  return new Promise((resolve) => {
-    stream.write("", () => {
-      resolve();
-    });
-  });
-}
-
-async function drainProcessStreams(): Promise<void> {
-  await Promise.all([
-    createFlushPromise(process.stdout),
-    createFlushPromise(process.stderr),
-  ]);
-}
-
-async function drainExit(code: number): Promise<void> {
-  await drainProcessStreams();
-  process.exit(code);
-}
 
 const processResourceRelease = processResourceRoot.release.bind(processResourceRoot);
 
@@ -128,13 +57,18 @@ export const processResourceListeners = createResourceFromCallback("ProcessListe
 export async function safeProcessExit(code: number): Promise<void> {
   process.exitCode = code;
 
+  // Suppress all uncaught exceptions. We'll begin tearing down and don't want Node's error handlers to be used
+  process.setUncaughtExceptionCaptureCallback(null);
+  process.setUncaughtExceptionCaptureCallback(() => {});
+  process.on("unhandledRejection", () => {});
+
   try {
     await processResourceRoot.release();
   } catch (err) {
     console.error(`safeProcessExit: Release failure`);
     console.error(err.stack);
-    await drainExit(2);
   }
 
-  await drainExit(2);
+  console.error(`safeProcessExit: Process not exited by resource release`);
+  process.exit(2);
 }

@@ -36,9 +36,10 @@ import {markup} from "@internal/markup";
 import {ReporterNamespace} from "@internal/cli-reporter";
 import {GlobOptions, Globber} from "./glob";
 import {VoidCallback} from "@internal/typescript-helpers";
-import {GlobalLock} from "@internal/async";
+import {GlobalLock, promiseAllFrom} from "@internal/async";
 import {DurationMeasurer} from "@internal/numbers";
 import crypto = require("crypto");
+import {createResourceFromCallback} from "@internal/resources";
 
 // Paths that we will under no circumstance want to include
 const DEFAULT_DENYLIST = [
@@ -160,6 +161,15 @@ export default class MemoryFileSystem {
 		this.activeWatcherIds = new Set();
 
 		this.processingLock = new GlobalLock();
+
+		server.resources.add(
+			createResourceFromCallback(
+				"MemoryFileSystem",
+				() => {
+					return this.end();
+				},
+			),
+		);
 	}
 
 	public processingLock: GlobalLock;
@@ -185,6 +195,22 @@ export default class MemoryFileSystem {
 
 	private isActiveWatcherId(id: undefined | number): boolean {
 		return id === undefined || this.activeWatcherIds.has(id);
+	}
+
+	public async end() {
+		await promiseAllFrom(
+			this.watchers.values(),
+			(watcher) => {
+				return watcher.close();
+			},
+		);
+
+		this.watchers.clear();
+		this.files.clear();
+		this.directories.clear();
+		this.manifests.clear();
+		this.buffers.clear();
+		this.directoryListings.clear();
 	}
 
 	// Given a path that exists in our files map, return the instance we have stored that matches the input path
@@ -372,12 +398,6 @@ export default class MemoryFileSystem {
 				this.directoryListings.delete(path);
 				queue = queue.concat(Array.from(listing.values()));
 			}
-		}
-	}
-
-	public unwatchAll() {
-		for (const {close} of this.watchers.values()) {
-			close();
 		}
 	}
 
@@ -866,7 +886,7 @@ export default class MemoryFileSystem {
 		}
 
 		// Add the rest of the items
-		await Promise.all(Array.from(paths, declareItem));
+		await promiseAllFrom(paths, declareItem);
 
 		// If this directory is a project then mark it as initialized as we've crawled all their descendents
 		const project = this.server.projectManager.getProjectFromPath(directoryPath);

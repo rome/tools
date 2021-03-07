@@ -43,6 +43,7 @@ export default class Cache {
 		this.runningWritePromise = undefined;
 		this.pendingWriteTimer = undefined;
 		this.pendingWrites = new AbsoluteFilePathMap();
+		this.releasing = false;
 
 		resources.add(
 			createResourceFromCallback(
@@ -64,6 +65,8 @@ export default class Cache {
 	protected runningWritePromise: undefined | Promise<void>;
 	protected pendingWrites: AbsoluteFilePathMap<AbsoluteFilePathMap<WriteOperation>>;
 	protected pendingWriteTimer: undefined | NodeJS.Timeout;
+
+	private releasing: boolean;
 
 	public getDirectory(): AbsoluteFilePath {
 		return this.directoryPath;
@@ -89,6 +92,9 @@ export default class Cache {
 	}
 
 	private async teardown() {
+		this.releasing = true;
+		this.clearBatchWriteTimer();
+
 		// Wait on possible running writePending
 		await this.runningWritePromise;
 
@@ -96,12 +102,16 @@ export default class Cache {
 		await this.writePending("end");
 	}
 
-	protected async writePending(reason: "queue" | "end") {
-		// Clear timer since we're now running
+	private clearBatchWriteTimer() {
 		const {pendingWriteTimer} = this;
 		if (pendingWriteTimer !== undefined) {
 			clearTimeout(pendingWriteTimer);
 		}
+	}
+
+	protected async writePending(reason: "queue" | "end") {
+		// Clear timer since we're now running
+		this.clearBatchWriteTimer();
 
 		const {pendingWrites} = this;
 		this.pendingWrites = new AbsoluteFilePathMap();
@@ -120,9 +130,7 @@ export default class Cache {
 					}
 
 					case "update": {
-						await path.writeFile(
-							new DataView(encodeValueToRSERSingleMessageStream(op.value)),
-						);
+						await path.writeFile(encodeValueToRSERSingleMessageStream(op.value));
 						break;
 					}
 				}
@@ -153,6 +161,11 @@ export default class Cache {
 		// Set a write timer
 		const {pendingWriteTimer} = this;
 		if (pendingWriteTimer !== undefined) {
+			return;
+		}
+
+		// If we are releasing then don't queue any new timers as it will explicitly call writePending
+		if (this.releasing) {
 			return;
 		}
 
