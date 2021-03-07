@@ -6,46 +6,43 @@
 
 ```javascript
 CSSRoot {
-	comments: Array []
-	corrupt: false
-	integrity: undefined
-	loc: SourceLocation invalid/media/type/input.css 1:0-1:13
-	path: RelativePath<invalid/media/type/input.css>
-	body: Array [
+	body: [
 		CSSAtRule {
 			name: "media"
-			loc: SourceLocation invalid/media/type/input.css 1:0-1:13
-			block: CSSBlock {
-				value: Array []
-				startingTokenValue: "{"
-				loc: SourceLocation invalid/media/type/input.css 1:11-1:13
-			}
-			prelude: Array [
+			prelude: [
 				CSSMediaQueryList {
-					value: Array []
+					value: []
 					loc: SourceLocation invalid/media/type/input.css 1:6-1:11
 				}
 			]
+			block: CSSBlock {
+				value: []
+				startingTokenValue: "{"
+				loc: SourceLocation invalid/media/type/input.css 1:11-1:13
+			}
+			loc: SourceLocation invalid/media/type/input.css 1:0-1:13
 		}
 	]
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{category: "parse"}]
+			description: {
+				advice: []
+				category: ["parse"]
 				categoryValue: "css"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "The media type <emphasis>tty</emphasis> is deprecated."}
+				message: [RAW_MARKUP {value: "The media type <emphasis>"}, "tty", RAW_MARKUP {value: "</emphasis> is deprecated."}]
 			}
-			location: Object {
-				integrity: undefined
+			location: {
 				language: "css"
-				sourceText: undefined
-				end: Position 1:10
 				path: RelativePath<invalid/media/type/input.css>
+				end: Position 1:10
 				start: Position 1:7
 			}
 		}
 	]
+	path: RelativePath<invalid/media/type/input.css>
+	loc: SourceLocation invalid/media/type/input.css 1:0-1:13
 }
 ```
