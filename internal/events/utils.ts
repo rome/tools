@@ -16,12 +16,12 @@ import {
 } from "./types";
 
 export function isBridgeEndDiagnosticsError(err: Error): boolean {
-	return isDiagnosticsErrorOfCategory(
-		err,
-		DIAGNOSTIC_CATEGORIES["bridge/disconnected"],
-	) || isDiagnosticsErrorOfCategory(
-		err,
-		DIAGNOSTIC_CATEGORIES["bridge/closed"],
+	return (
+		isDiagnosticsErrorOfCategory(
+			err,
+			DIAGNOSTIC_CATEGORIES["bridge/disconnected"],
+		) ||
+		isDiagnosticsErrorOfCategory(err, DIAGNOSTIC_CATEGORIES["bridge/closed"])
 	);
 }
 

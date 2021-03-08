@@ -239,7 +239,7 @@ export default class MemoryFileSystem {
 				if (isValidManifest(path)) {
 					await this.declareManifest({
 						isPartialProject: false,
-						diagnostics: this.server.createDisconnectedDiagnosticsProcessor([]),
+						diagnostics: this.server.createDisconnectedDiagnosticsProcessor(),
 						dirname: path.getParent(),
 						path,
 						reader,
@@ -593,12 +593,10 @@ export default class MemoryFileSystem {
 		}
 
 		const diagnostics = this.server.createDiagnosticsProcessor({
-			origins: [
-				{
-					category: "memory-fs",
-					message: "Crawling project directory",
-				},
-			],
+			origin: {
+				entity: "MemoryFileSystem",
+				message: "Crawling project directory",
+			},
 		});
 
 		this.logger.info(markup`Watching ${directoryLink}`);
@@ -939,12 +937,10 @@ export default class MemoryFileSystem {
 			return;
 		}
 
-		const diagnostics = this.server.createDisconnectedDiagnosticsProcessor([
-			{
-				category: "memory-fs",
-				message: originMessage,
-			},
-		]);
+		const diagnostics = this.server.createDisconnectedDiagnosticsProcessor({
+			entity: "MemoryFileSystem",
+			message: originMessage,
+		});
 
 		let newStats;
 		try {

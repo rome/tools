@@ -16,10 +16,7 @@ import {
 import {Server, ServerRequest, TestRef} from "@internal/core";
 import {DiagnosticsPrinter} from "@internal/cli-diagnostics";
 import {humanizeNumber} from "@internal/numbers";
-import {
-	AnyBridge,
-	isBridgeEndDiagnosticsError,
-} from "@internal/events";
+import {AnyBridge, isBridgeEndDiagnosticsError} from "@internal/events";
 import {CoverageCollector} from "@internal/v8";
 import {ManifestDefinition} from "@internal/codec-js-manifest";
 import {
@@ -119,12 +116,9 @@ export default class TestServer {
 		this.sourceMaps = new SourceMapConsumerCollection();
 		this.printer = opts.request.createDiagnosticsPrinter({
 			processor: this.request.createDiagnosticsProcessor({
-				origins: [
-					{
-						category: "test",
-						message: "Run initiated",
-					},
-				],
+				origin: {
+					entity: "TestServer",
+				},
 				sourceMaps: this.sourceMaps,
 			}),
 		});
@@ -286,7 +280,7 @@ export default class TestServer {
 	private async runTests(workers: TestServerWorker[]) {
 		const runProgress = this.setupRunProgress(workers);
 		await promiseAllFrom(workers, (worker) => worker.run());
-		await promiseAllFrom(workers, (worker) => worker.bridge.end());
+		await promiseAllFrom(workers, (worker) => worker.thread.worker.terminate());
 		runProgress.teardown();
 	}
 

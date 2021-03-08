@@ -1,7 +1,7 @@
 import {Consumer, consumeUnknown} from "@internal/consume";
 import {MarkupFormatOptions, MarkupParsedAttributes} from "./types";
 import {OneIndexed, ZeroIndexed, humanizeNumber} from "@internal/numbers";
-import {HOME_PATH, Path, createPath} from "@internal/path";
+import {Path, createPath} from "@internal/path";
 import {StaticMarkup} from "./escape";
 import {DIAGNOSTIC_CATEGORIES} from "@internal/diagnostics";
 
@@ -30,7 +30,7 @@ export function humanizeMarkupFilename(
 
 	return path.format({
 		cwd: opts.cwd,
-		home: HOME_PATH,
+		home: opts.home,
 	});
 }
 

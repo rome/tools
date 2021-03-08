@@ -96,6 +96,7 @@ export type MarkupFormatOptions = {
 	normalizePosition?: MarkupFormatPositionNormalizer;
 	humanizeFilename?: MarkupFormatFilenameHumanizer;
 	cwd?: AbsoluteFilePath;
+	home?: AbsoluteFilePath;
 };
 
 export type MarkupFormatNormalizeOptions = MarkupFormatOptions & {

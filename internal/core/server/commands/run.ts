@@ -48,21 +48,30 @@ export default createServerCommand({
 
 			const {worker} = workerContainer.thread;
 
-			worker.on("exit", (exitCode) => {
-				req.teardown({
-					type: "EXIT",
-					code: Number(exitCode),
-					markers: [],
-				});
-			});
+			worker.on(
+				"exit",
+				(exitCode) => {
+					req.teardown({
+						type: "EXIT",
+						code: Number(exitCode),
+						markers: [],
+					});
+				},
+			);
 
-			worker.stderr.on("data", (data) => {
-				req.bridge.events.write.call([data, true]);
-			});
+			worker.stderr.on(
+				"data",
+				(data) => {
+					req.bridge.events.write.call([data, true]);
+				},
+			);
 
-			worker.stdout.on("data", (data) => {
-				req.bridge.events.write.call([data, false]);
-			});
+			worker.stdout.on(
+				"data",
+				(data) => {
+					req.bridge.events.write.call([data, false]);
+				},
+			);
 
 			const {exitCode} = await workerContainer.bridge.events.executeScript.call({
 				contextDirectory: server.projectManager.getRootProjectForPath(path).directory,

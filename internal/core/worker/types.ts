@@ -9,7 +9,7 @@ import {
 import {
 	Diagnostic,
 	DiagnosticIntegrity,
-	DiagnosticSuppressions,
+	DiagnosticSuppression,
 } from "@internal/diagnostics";
 import {BridgeClient, BridgeServer} from "@internal/events";
 import {FormatterOptions} from "@internal/formatter";
@@ -174,7 +174,7 @@ export type WorkerFormatResult = {
 	original: string;
 	formatted: string;
 	diagnostics: Diagnostic[];
-	suppressions: DiagnosticSuppressions;
+	suppressions: DiagnosticSuppression[];
 };
 
 export type WorkerIntegrationTiming = {
@@ -188,7 +188,7 @@ export type WorkerIntegrationTimings = Map<string, WorkerIntegrationTiming>;
 export type WorkerLintResult = {
 	save: undefined | RecoverySaveFile;
 	diagnostics: Diagnostic[];
-	suppressions: DiagnosticSuppressions;
+	suppressions: DiagnosticSuppression[];
 	timings: WorkerIntegrationTimings;
 };
 

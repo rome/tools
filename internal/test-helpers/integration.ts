@@ -293,6 +293,7 @@ export async function declareParserTests() {
 		const printedDiagnostics = await printDiagnosticsToString({
 			diagnostics,
 			suppressions: [],
+			excludeFooter: true,
 		});
 		t.namedSnapshot(
 			"diagnostics",

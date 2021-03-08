@@ -9,7 +9,7 @@ import {
 	AnyJSExpression,
 	AnyNode,
 	JSMetaProperty,
-	jsReferenceIdentifier,
+	JSReferenceIdentifier,
 } from "@internal/ast";
 import {template} from "@internal/js-ast-utils";
 import {createVisitor, signals} from "@internal/compiler";
@@ -27,9 +27,10 @@ function createURLString(): AnyJSExpression {
 	return template.expression`"file://" + __filename`;
 }
 
-const BLESSED_DIRNAME = jsReferenceIdentifier.create({
+const BLESSED_DIRNAME: JSReferenceIdentifier = {
+	type: "JSReferenceIdentifier",
 	name: "__dirname",
-});
+};
 
 export default createVisitor({
 	name: "jsMetaPropertyTransform",
@@ -38,13 +39,21 @@ export default createVisitor({
 		const options = getOptions(context);
 
 		// Inline __dirname
-		if (node.type === "JSReferenceIdentifier" && node.name === "__dirname" && node !== BLESSED_DIRNAME) {
-			return signals.replace(template.expression`${BLESSED_DIRNAME} + '/' + "${options.__filename.getParent().join()}"`);
+		if (
+			node.type === "JSReferenceIdentifier" &&
+			node.name === "__dirname" &&
+			node !== BLESSED_DIRNAME
+		) {
+			return signals.replace(
+				template.expression`${BLESSED_DIRNAME} + '/' + "${options.__filename.getParent().join()}"`,
+			);
 		}
 
 		// Inline __filename
 		if (node.type === "JSReferenceIdentifier" && node.name === "__filename") {
-			return signals.replace(template.expression`${BLESSED_DIRNAME} + '/' + "${options.__filename.join()}"`);
+			return signals.replace(
+				template.expression`${BLESSED_DIRNAME} + '/' + "${options.__filename.join()}"`,
+			);
 		}
 
 		// Direct reference to import.meta.url
@@ -60,9 +69,7 @@ export default createVisitor({
 
 		// This is an escaped import.meta or else our other transform would have changed it
 		if (isImportMeta(node)) {
-			return signals.replace(
-				template.expression`({url: ${createURLString()}})`,
-			);
+			return signals.replace(template.expression`({url: ${createURLString()}})`);
 		}
 
 		return signals.retain;

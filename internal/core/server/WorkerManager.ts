@@ -337,7 +337,12 @@ export default class WorkerManager {
 		const thread = forkThread(
 			"worker",
 			{
-				workerData: this.buildPartialWorkerOptions({type, id, inspectorPort, env}),
+				workerData: this.buildPartialWorkerOptions({
+					type,
+					id,
+					inspectorPort,
+					env,
+				}),
 				stderr: !pipeIO,
 				stdout: !pipeIO,
 			},

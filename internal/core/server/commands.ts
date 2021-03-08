@@ -58,37 +58,37 @@ export async function chainCommands(
 	req: ServerRequest,
 	fns: {
 		title: StaticMarkup;
-		progress: StaticMarkup;
 		callback: () => Promise<void>;
 	}[],
 ): Promise<void> {
-	let printer: undefined | DiagnosticsPrinter;
+	const printers: {
+		title: StaticMarkup;
+		printer: DiagnosticsPrinter;
+	}[] = [];
 
-	await req.reporter.steps(
-		fns.map(({callback, progress, title}) => {
-			return {
-				clear: true,
-				message: progress,
-				async callback() {
-					try {
-						await callback();
-					} catch (err) {
-						if (err instanceof DiagnosticsPrinter) {
-							if (printer === undefined) {
-								printer = req.createDiagnosticsPrinter();
-							}
-							printer.inject(title, err);
-						} else {
-							throw err;
-						}
-					}
-				},
-			};
-		}),
-	);
+	for (const {callback, title} of fns) {
+		try {
+			await callback();
+		} catch (err) {
+			if (err instanceof DiagnosticsPrinter) {
+				printers.push({
+					title,
+					printer: err,
+				});
+			} else {
+				throw err;
+			}
+		}
+	}
 
-	if (printer !== undefined) {
-		throw printer;
+	if (printers.length > 0) {
+		const globalPrinter = req.createDiagnosticsPrinter({
+			streaming: false,
+		});
+		for (const {title, printer} of printers) {
+			globalPrinter.inject(title, printer);
+		}
+		throw globalPrinter;
 	}
 }
 

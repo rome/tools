@@ -477,7 +477,7 @@ export default class DiagnosticsPrinter extends Error {
 					}
 
 					await this.fetchFileSources(filteredDiagnostics);
-					await this.printDiagnostics(filteredDiagnostics, true);
+					await this.printDiagnostics(filteredDiagnostics);
 				});
 			},
 		);
@@ -515,10 +515,7 @@ export default class DiagnosticsPrinter extends Error {
 		reporter.logRaw(err.stack || err.message);
 	}
 
-	private printDiagnostics(
-		diagnostics: Diagnostic[],
-		validateDependencies: boolean,
-	): void {
+	private async printDiagnostics(diagnostics: Diagnostic[]): Promise<void> {
 		const reporter = new Reporter("DiagnosticsPrinter");
 		const stream = reporter.attachCaptureStream("markup");
 
@@ -529,12 +526,12 @@ export default class DiagnosticsPrinter extends Error {
 		for (const diag of diagnostics) {
 			this.wrapErrorSync(
 				"printDiagnostic",
-				() => this.printDiagnostic(diag, reporter, validateDependencies),
+				() => this.printDiagnostic(diag, reporter, true),
 			);
 		}
 
 		this.reporter.log(stream.readAsMarkup(), {stderr: true, noNewline: true});
-		reporter.resources.release();
+		await reporter.resources.release();
 	}
 
 	public getDiagnosticDependencyMeta(
@@ -661,6 +658,9 @@ export default class DiagnosticsPrinter extends Error {
 	}
 
 	public inject(title: StaticMarkup, printer: DiagnosticsPrinter) {
+		for (const diag of printer.seenDiagnostics) {
+			this.seenDiagnostics.add(diag);
+		}
 		this.processor.addDiagnostics(printer.processor.getDiagnostics());
 
 		const {onFooterPrintCallbacks} = printer;
@@ -668,6 +668,7 @@ export default class DiagnosticsPrinter extends Error {
 			return;
 		}
 
+		this.disableDefaultFooter();
 		this.onFooterPrint(
 			async (reporter) => {
 				reporter.br();
@@ -697,7 +698,7 @@ export default class DiagnosticsPrinter extends Error {
 	}
 
 	public hasProblems(): boolean {
-		return this.seenDiagnostics.size > 0;
+		return this.seenDiagnostics.size > 0 || this.processor.hasDiagnostics();
 	}
 
 	public disableDefaultFooter() {
@@ -710,22 +711,24 @@ export default class DiagnosticsPrinter extends Error {
 			return;
 		}
 
-		if (this.hasProblems()) {
+		const calculated = this.processor.calculateVisibile();
+		const displayableProblems = calculated.total - calculated.filtered;
+
+		let suffix = markup``;
+		if (calculated.filtered > 0) {
+			suffix = markup` <dim>(${calculated.filtered} filtered)</dim>`;
+		}
+
+		if (displayableProblems > 0) {
 			const {reporter} = this;
-			const calculated = this.processor.calculate();
 
-			const displayableProblems = calculated.total - calculated.filtered;
-			let str = markup`Found <emphasis>${displayableProblems}</emphasis> <grammarNumber plural="problems" singular="problem">${String(
-				displayableProblems,
-			)}</grammarNumber>`;
-
-			if (calculated.filtered > 0) {
-				str = markup`${str} <dim>(${calculated.filtered} filtered)</dim>`;
-			}
-
-			reporter.error(str);
+			reporter.error(
+				markup`Found <emphasis>${displayableProblems}</emphasis> <grammarNumber plural="problems" singular="problem">${String(
+					displayableProblems,
+				)}</grammarNumber>${suffix}`,
+			);
 		} else {
-			reporter.success(markup`No known problems!`);
+			reporter.success(markup`No known problems!${suffix}`);
 		}
 	}
 
@@ -744,7 +747,7 @@ export default class DiagnosticsPrinter extends Error {
 					reporter.redirectOutToErr(restoreRedirect);
 				}
 
-				const calculated = this.processor.calculate();
+				const calculated = this.processor.calculateVisibile();
 				if (calculated.truncated > 0) {
 					reporter.warn(
 						markup`Only <emphasis>${calculated.diagnostics.length}</emphasis> of <emphasis>${calculated.total}</emphasis> diagnostics shown. Add <code>--show-all-diagnostics</code> or <code>--max-diagnostics ${"<num>"}</code> flag to view remaining`,

@@ -11,7 +11,7 @@ import {
 	Diagnostic,
 	DiagnosticIntegrity,
 	DiagnosticLanguage,
-	DiagnosticSuppressions,
+	DiagnosticSuppression,
 } from "@internal/diagnostics";
 import {AnyRoot, ConstJSSourceType} from "@internal/ast";
 import {Path} from "@internal/path";
@@ -22,7 +22,7 @@ export interface ExtensionCustomLintResult {
 	sourceText: string;
 	diagnostics: Diagnostic[];
 	formatted: string;
-	suppressions: DiagnosticSuppressions;
+	suppressions: DiagnosticSuppression[];
 }
 
 export interface ExtensionLintResult extends ExtensionCustomLintResult {

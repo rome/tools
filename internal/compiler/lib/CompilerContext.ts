@@ -23,7 +23,7 @@ import {
 	DiagnosticLanguage,
 	DiagnosticLocation,
 	DiagnosticOrigin,
-	DiagnosticSuppressions,
+	DiagnosticSuppression,
 	DiagnosticsProcessor,
 	descriptions,
 	equalCategoryNames,
@@ -67,7 +67,7 @@ import {promiseAllFrom} from "@internal/async";
 
 export type ContextArg = {
 	ast: AnyRoot;
-	suppressions?: DiagnosticSuppressions;
+	suppressions?: DiagnosticSuppression[];
 	ref?: FileReference;
 	project?: CompilerProject;
 	frozen?: boolean;
@@ -159,7 +159,7 @@ export default class CompilerContext {
 	public records: Record[];
 
 	public diagnostics: DiagnosticsProcessor;
-	public suppressions: DiagnosticSuppressions;
+	public suppressions: DiagnosticSuppression[];
 	private visitSuppressions: boolean;
 
 	public frozen: boolean;

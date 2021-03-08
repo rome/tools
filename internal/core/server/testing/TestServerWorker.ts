@@ -107,12 +107,12 @@ export default class TestServerWorker {
 			this.runner.files.assert(testPath).addInlineSnapshotUpdate(update);
 		});
 
-		bridge.events.testDiagnostic.subscribe(({testPath, diagnostic, origin}) => {
+		bridge.events.testDiagnostic.subscribe(({testPath, diagnostic}) => {
 			if (testPath !== undefined) {
 				this.runner.files.assert(testPath).onDiagnostics();
 			}
 
-			runner.printer.processor.addDiagnostic(diagnostic, origin);
+			runner.printer.processor.addDiagnostic(diagnostic);
 		});
 	}
 
@@ -303,7 +303,9 @@ export default class TestServerWorker {
 			const {focusedTests, foundTests} = await bridge.events.testPrepare.call({
 				globalOptions,
 				partial,
-				contextDirectory: req.server.projectManager.getRootProjectForPath(ref.real).directory,
+				contextDirectory: req.server.projectManager.getRootProjectForPath(
+					ref.real,
+				).directory,
 				projectDirectory: req.server.projectManager.assertProjectExisting(
 					ref.real,
 				).directory.join(),

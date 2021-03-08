@@ -2,7 +2,7 @@ import {AnyNode} from "@internal/ast";
 import {
 	Diagnostic,
 	DiagnosticCategory,
-	DiagnosticSuppressions,
+	DiagnosticSuppression,
 	descriptions,
 	formatCategoryDescription,
 	splitPossibleCategoryName,
@@ -35,7 +35,7 @@ export const INCORRECT_SUPPRESSION_START = [
 ];
 
 export type ExtractedSuppressions = {
-	suppressions: DiagnosticSuppressions;
+	suppressions: DiagnosticSuppression[];
 	diagnostics: Diagnostic[];
 };
 
@@ -276,7 +276,7 @@ export function parseCommentSuppressions(opts: Options): ExtractedSuppressions {
 	const {requireExplanations, targetNode} = opts;
 
 	const suppressedCategories: Set<string> = new Set();
-	const suppressions: DiagnosticSuppressions = [];
+	const suppressions: DiagnosticSuppression[] = [];
 
 	while (!parser.matchToken("EOF")) {
 		const token = parser.getToken();

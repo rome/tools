@@ -44,10 +44,7 @@ import {
 	createRuntimeDiagnosticsError,
 } from "@internal/diagnostics";
 import {Resource, createResourceContainer} from "@internal/resources";
-import {
-	isBridgeEndDiagnosticsError,
-	isBridgeResponseMessage,
-} from "./utils";
+import {isBridgeEndDiagnosticsError, isBridgeResponseMessage} from "./utils";
 import {Duration, DurationMeasurer} from "@internal/numbers";
 import util = require("util");
 

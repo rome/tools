@@ -196,7 +196,9 @@ export default class Bundler {
 		}
 
 		const opts: WorkerBundleCompileOptions = {
-			__filename: this.server.projectManager.getRootProjectForPath(path).directory.relativeForce(path),
+			__filename: this.server.projectManager.getRootProjectForPath(path).directory.relativeForce(
+				path,
+			),
 			moduleAll: mod.all,
 			moduleId: mod.uid,
 			relativeSourcesToModuleId,
@@ -240,12 +242,10 @@ export default class Bundler {
 
 		// Seed the dependency graph with all the entries at the same time
 		const processor = this.request.createDiagnosticsProcessor({
-			origins: [
-				{
-					category: "Bundler",
-					message: "Analyzing dependencies for bundleMultiple",
-				},
-			],
+			origin: {
+				entity: "Bundler.bundleMultiple",
+				message: "Analyzing dependencies for bundleMultiple",
+			},
 		});
 		const entryUIDs = entries.map((entry) =>
 			this.server.projectManager.getUID(entry)
@@ -313,12 +313,15 @@ export default class Bundler {
 			if (graphPaths.size > 0) {
 				watcher.changeEvent.send(graphPaths);
 				await runLock.wrap(async () => {
-					await this.graph.evictNodes(graphPaths, async (paths) => {
-						await this.graph.seed({
-							allowFileNotFound: true,
-							paths,
-						});
-					});
+					await this.graph.evictNodes(
+						graphPaths,
+						async (paths) => {
+							await this.graph.seed({
+								allowFileNotFound: true,
+								paths,
+							});
+						},
+					);
 					run();
 				});
 			}

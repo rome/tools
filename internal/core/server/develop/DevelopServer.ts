@@ -77,6 +77,7 @@ export default class DevelopServer {
 			stream.resources.release();
 			const html = stream.read();
 			// TODO send HTML
+			html;
 		});
 
 		filesEvent.subscribe((files) => {

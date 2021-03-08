@@ -41,7 +41,7 @@ import {
 	ClientRequestFlags,
 	DEFAULT_CLIENT_REQUEST_FLAGS,
 } from "../common/types/client";
-import {AbsoluteFilePath} from "@internal/path";
+import {AbsoluteFilePath, HOME_PATH} from "@internal/path";
 import {mergeObjects} from "@internal/typescript-helpers";
 import LSPServer from "./lsp/LSPServer";
 import ServerReporter from "./ServerReporter";
@@ -172,6 +172,7 @@ export default class Server {
 			{
 				markupOptions: {
 					userConfig: this.userConfig,
+					home: HOME_PATH,
 					humanizeFilename: (path) => {
 						if (path.isAbsolute()) {
 							const remote = this.projectManager.getRemoteFromLocalPath(
@@ -431,16 +432,15 @@ export default class Server {
 	}
 
 	public createDisconnectedDiagnosticsProcessor(
-		origins: DiagnosticOrigin[],
+		origin?: DiagnosticOrigin,
 	): DiagnosticsProcessor {
 		const processor = this.createDiagnosticsProcessor({
-			origins: [
-				...origins,
-				{
-					category: "server",
-					message: "Created disconnected diagnostics collector",
-				},
-			],
+			origin,
+		});
+
+		processor.normalizer.unshiftOrigin({
+			entity: "server",
+			message: "Created disconnected diagnostics collector",
 		});
 
 		processor.insertDiagnosticsEvent.subscribe(() => {

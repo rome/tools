@@ -30,7 +30,6 @@ import {
 	catchDiagnosticsSync,
 	createSingleDiagnosticsError,
 	descriptions,
-	joinCategoryName,
 } from "@internal/diagnostics";
 import {AnyComment, AnyNode, RootBase} from "@internal/ast";
 import {Path, UNKNOWN_PATH, equalPaths} from "@internal/path";
@@ -790,11 +789,9 @@ export default class ParserCore<Types extends ParserCoreTypes> {
 
 	public getDiagnostics(): Diagnostic[] {
 		const processor = new DiagnosticsProcessor({
-			origins: [
-				{
-					category: joinCategoryName(this.diagnosticCategory),
-				},
-			],
+			origin: {
+				entity: `ParserCore<${this.language}>`,
+			},
 		});
 
 		for (const filter of this.state.diagnosticFilters) {

@@ -834,12 +834,9 @@ export default class ProjectManager {
 			return syncProject;
 		}
 
-		const processor = DiagnosticsProcessor.createImmediateThrower([
-			{
-				category: "project-manager",
-				message: "Find project",
-			},
-		]);
+		const processor = DiagnosticsProcessor.createImmediateThrower({
+			entity: "ProjectManager.findProject",
+		});
 
 		// If not then let's access the file system and try to find one
 		for (const dir of cwd.getChain(true)) {

@@ -56,7 +56,7 @@ import {
 	markupToJoinedPlainText,
 	markupToPlainText,
 } from "@internal/cli-layout";
-import {AbsoluteFilePath} from "@internal/path";
+import {AbsoluteFilePath, HOME_PATH} from "@internal/path";
 import {NodeSystemError} from "@internal/errors";
 import SilentClientError from "./SilentClientError";
 import {
@@ -128,6 +128,7 @@ export default class Client {
 				stdin: opts.stdin,
 				markupOptions: {
 					userConfig: this.userConfig,
+					home: HOME_PATH,
 					cwd: this.flags.cwd,
 				},
 			},

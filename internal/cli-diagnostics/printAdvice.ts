@@ -460,7 +460,7 @@ function printStacktrace(
 
 			// Add source
 			if (path !== undefined && line !== undefined && column !== undefined) {
-				const header = diagnosticLocationToMarkupFilelink({
+				let header = diagnosticLocationToMarkupFilelink({
 					path,
 					language,
 					start: {
@@ -469,11 +469,11 @@ function printStacktrace(
 					},
 				});
 
-				if (logParts.length === 0) {
-					logParts.push(header);
-				} else {
-					logParts.push(markup`<dim>(${header})</dim>`);
+				if (logParts.length > 0) {
+					header = markup`(${header})`;
 				}
+
+				logParts.push(markup`<dim>${header}</dim>`);
 			}
 
 			reporter.log(joinMarkup(logParts, markup` `));

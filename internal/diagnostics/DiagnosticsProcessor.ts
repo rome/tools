@@ -10,9 +10,7 @@ import {
 	DiagnosticEliminationFilterWithTest,
 	DiagnosticOrigin,
 	DiagnosticSuppression,
-	DiagnosticSuppressions,
 } from "./types";
-import {addOriginsToDiagnostics} from "./derive";
 import {DiagnosticsError} from "./error-wrappers";
 import {
 	DIAGNOSTIC_CATEGORIES_SUPPRESS_DEPENDENCIES,
@@ -30,12 +28,12 @@ import {markupToJoinedPlainText} from "@internal/cli-layout";
 
 export type DiagnosticsProcessorOptions = {
 	mutable?: boolean;
-	filters?: DiagnosticEliminationFilterWithTest[];
-	origins?: DiagnosticOrigin[];
-	markupOptions?: MarkupFormatNormalizeOptions;
-	normalizeOptions?: DiagnosticsNormalizerOptions;
-	sourceMaps?: SourceMapConsumerCollection;
+	origin?: DiagnosticOrigin;
 	filter?: DiagnosticsProcessorFilterOptions;
+	filters?: DiagnosticEliminationFilterWithTest[];
+	markupOptions?: MarkupFormatNormalizeOptions;
+	sourceMaps?: SourceMapConsumerCollection;
+	normalizeOptions?: DiagnosticsNormalizerOptions;
 };
 
 export type DiagnosticsProcessorFilterOptions = {
@@ -52,17 +50,14 @@ export const DEFAULT_PROCESSOR_FILTER_OPTIONS: DiagnosticsProcessorFilterOptions
 };
 
 type DiagnosticsMapEntry = {
-	cachedCalculated:
-		| undefined
-		| {
-				raw: boolean;
-				value: DiagnosticsProcessorCalculatedPath;
-			};
+	cachedCalculatedRaw: undefined | DiagnosticsProcessorCalculatedPath;
+	cachedCalculated: undefined | DiagnosticsProcessorCalculatedPath;
 
 	dependencies: MixedPathSet;
 	dependents: MixedPathSet;
 	suppressDependents: boolean;
 
+	totalCount: number;
 	possibleCount: number;
 	filteredCount: number;
 	truncatedCount: number;
@@ -73,6 +68,7 @@ type DiagnosticsMapEntry = {
 	guaranteedDiagnostics: Diagnostic[];
 	maybeDiagnostics: Diagnostic[];
 	hiddenDiagnostics: Diagnostic[];
+	suppressedDiagnostics: Diagnostic[];
 
 	suppressions: DiagnosticSuppression[];
 	unusedSuppressions: Set<DiagnosticSuppression>;
@@ -81,7 +77,7 @@ type DiagnosticsMapEntry = {
 type DiagnosticsMap = MixedPathMap<DiagnosticsMapEntry>;
 
 export type DiagnosticsProcessorCalculatedPath = {
-	suppressions: DiagnosticSuppressions;
+	suppressions: DiagnosticSuppression[];
 	guaranteed: Diagnostic[];
 	complete: Diagnostic[];
 };
@@ -105,7 +101,7 @@ type DiagnosticVisibility = {
 
 type SeenKeys = Set<string>;
 
-function isDeduped(diag: Diagnostic, seenKeys: SeenKeys): boolean {
+function isDuplicate(diag: Diagnostic, seenKeys: SeenKeys): boolean {
 	const parts: string[] = [
 		`label:${diag.label === undefined ? "" : readMarkup(diag.label)}`,
 		`category:${formatCategoryDescription(diag.description)}`,
@@ -136,25 +132,21 @@ export type DiagnosticsProcessorCalculated = {
 };
 
 export default class DiagnosticsProcessor {
-	constructor(options: DiagnosticsProcessorOptions = {}) {
+	constructor(opts: DiagnosticsProcessorOptions = {}) {
 		this.eliminationFilters = [];
 		this.throwAfter = undefined;
-		this.origins = options.origins === undefined ? [] : [...options.origins];
 		this.allowedUnusedSuppressionPrefixes = new Set();
-		this.normalizer = new DiagnosticsNormalizer(
-			options.normalizeOptions,
-			options.markupOptions,
-			options.sourceMaps,
-		);
+		this.normalizer = new DiagnosticsNormalizer(opts);
 
-		this.options = options;
-		this.filter = options.filter;
-		this.maxDiagnostics = options.filter?.maxDiagnostics ?? Infinity;
+		this.options = opts;
+		this.filter = opts.filter;
+		this.maxDiagnostics = opts.filter?.maxDiagnostics ?? Infinity;
 
 		this.map = new MixedPathMap();
-		this.cachedDump = undefined;
+		this.cachedCalculate = undefined;
+		this.cachedDiagnostics = undefined;
 
-		this.possibleCount = 0;
+		this.totalCount = 0;
 		this.guaranteedCount = 0;
 		this.guaranteedTruncation = false;
 
@@ -185,12 +177,12 @@ export default class DiagnosticsProcessor {
 	private eliminationFilters: DiagnosticEliminationFilterWithTest[];
 	private allowedUnusedSuppressionPrefixes: Set<string>;
 	private throwAfter: undefined | number;
-	private origins: DiagnosticOrigin[];
 
 	private map: DiagnosticsMap;
-	private cachedDump: undefined | DiagnosticsProcessorCalculated;
-	private possibleCount: number;
+	private cachedCalculate: undefined | DiagnosticsProcessorCalculated;
+	private cachedDiagnostics: undefined | Diagnostic[];
 	private guaranteedCount: number;
+	private totalCount: number;
 
 	private setGuaranteedCount(count: number): void {
 		this.guaranteedCount = count;
@@ -208,17 +200,20 @@ export default class DiagnosticsProcessor {
 		if (entry === undefined) {
 			entry = {
 				cachedCalculated: undefined,
+				cachedCalculatedRaw: undefined,
 				dependencies: new MixedPathSet(),
 				dependents: new MixedPathSet(),
 				suppressDependents: false,
 				guaranteedCount: 0,
-				possibleCount: 0,
 				truncatedCount: 0,
+				possibleCount: 0,
 				filteredCount: 0,
+				totalCount: 0,
 				dedupeKeys: new Set(),
 				suppressions: [],
 				unusedSuppressions: new Set(),
 				maybeDiagnostics: [],
+				suppressedDiagnostics: [],
 				hiddenDiagnostics: [],
 				guaranteedDiagnostics: [],
 			};
@@ -234,10 +229,10 @@ export default class DiagnosticsProcessor {
 	}
 
 	public static createImmediateThrower(
-		origins: DiagnosticOrigin[],
+		origin: DiagnosticOrigin,
 	): DiagnosticsProcessor {
 		const processor = new DiagnosticsProcessor({
-			origins,
+			origin,
 		});
 
 		processor.insertDiagnosticsEvent.subscribe(() => {
@@ -245,10 +240,6 @@ export default class DiagnosticsProcessor {
 		});
 
 		return processor;
-	}
-
-	public unshiftOrigin(origin: DiagnosticOrigin) {
-		this.origins.unshift(origin);
 	}
 
 	public setThrowAfter(num: undefined | number) {
@@ -265,15 +256,7 @@ export default class DiagnosticsProcessor {
 	}
 
 	public hasDiagnostics(): boolean {
-		if (this.map.size === 0) {
-			return false;
-		}
-
-		if (this.possibleCount > 0) {
-			return true;
-		}
-
-		return this.getDiagnostics().length > 0;
+		return this.totalCount > 0;
 	}
 
 	public addAllowedUnusedSuppressionPrefix(prefix: DiagnosticCategoryPrefix) {
@@ -281,17 +264,20 @@ export default class DiagnosticsProcessor {
 		this.allowedUnusedSuppressionPrefixes.add(prefix);
 	}
 
-	public addSuppressions(suppressions: DiagnosticSuppressions) {
+	public addSuppressions(suppressions: DiagnosticSuppression[]) {
 		if (suppressions.length === 0) {
 			return;
 		}
 
-		this.cachedDump = undefined;
+		this.cachedCalculate = undefined;
+		this.cachedDiagnostics = undefined;
+
 		for (const rawSuppression of suppressions) {
 			const suppression = this.normalizer.normalizeSuppression(rawSuppression);
 			const entry = this.getMapEntry(suppression.path);
 			entry.suppressions.push(suppression);
 			entry.cachedCalculated = undefined;
+			entry.cachedCalculatedRaw = undefined;
 		}
 	}
 
@@ -364,7 +350,7 @@ export default class DiagnosticsProcessor {
 		}: {
 			dedupeKeys: SeenKeys;
 			allowTruncation: boolean;
-			unusedSuppressions: Set<DiagnosticSuppression>;
+			unusedSuppressions?: Set<DiagnosticSuppression>;
 			ignoreSuppressionsAndFilter: boolean;
 		},
 	): DiagnosticVisibility {
@@ -380,32 +366,32 @@ export default class DiagnosticsProcessor {
 			truncated: false,
 		};
 
-		if (this.doesMatchFilter(diag)) {
+		if (this.doesMatchFilter(diag) || isDuplicate(diag, dedupeKeys)) {
 			visibility.eliminated = true;
 		}
 
-		for (const suppression of entry.suppressions) {
-			if (
-				matchesSuppression(
-					diag.description.category,
-					diag.description.categoryValue,
-					diag.location,
-					suppression,
-				)
-			) {
-				unusedSuppressions.delete(suppression);
-				if (!ignoreSuppressionsAndFilter) {
-					visibility.suppressed = true;
+		if (unusedSuppressions !== undefined || !ignoreSuppressionsAndFilter) {
+			for (const suppression of entry.suppressions) {
+				if (
+					matchesSuppression(
+						diag.description.category,
+						diag.description.categoryValue,
+						diag.location,
+						suppression,
+					)
+				) {
+					if (unusedSuppressions !== undefined) {
+						unusedSuppressions.delete(suppression);
+					}
+					if (!ignoreSuppressionsAndFilter) {
+						visibility.suppressed = true;
+					}
 				}
 			}
 		}
 
 		if (!ignoreSuppressionsAndFilter && this.shouldFilter(diag)) {
 			visibility.filtered = true;
-		}
-
-		if (isDeduped(diag, dedupeKeys)) {
-			visibility.hidden = true;
 		}
 
 		if (diag.dependencies !== undefined) {
@@ -455,23 +441,17 @@ export default class DiagnosticsProcessor {
 		return visibility;
 	}
 
-	public addDiagnostic(diag: Diagnostic, origin?: DiagnosticOrigin): void {
-		this.addDiagnostics([diag], origin);
+	public addDiagnostic(diag: Diagnostic): void {
+		this.addDiagnostics([diag]);
 	}
 
-	public addDiagnostics(diags: Diagnostic[], origin?: DiagnosticOrigin): void {
+	public addDiagnostics(diags: Diagnostic[]): void {
 		if (diags.length === 0) {
 			return;
 		}
 
-		this.cachedDump = undefined;
-
-		// Add origins to diagnostics
-		const origins: DiagnosticOrigin[] = [...this.origins];
-		if (origin !== undefined) {
-			origins.push(origin);
-		}
-		diags = addOriginsToDiagnostics(origins, diags);
+		this.cachedCalculate = undefined;
+		this.cachedDiagnostics = undefined;
 
 		// Normalize
 		diags = diags.map((diag) => this.normalizer.normalizeDiagnostic(diag));
@@ -491,6 +471,7 @@ export default class DiagnosticsProcessor {
 			const entry = this.getMapEntry(path);
 
 			entry.cachedCalculated = undefined;
+			entry.cachedCalculatedRaw = undefined;
 
 			if (DIAGNOSTIC_CATEGORIES_SUPPRESS_DEPENDENCIES.has(category)) {
 				entry.suppressDependents = true;
@@ -516,15 +497,12 @@ export default class DiagnosticsProcessor {
 				continue;
 			}
 
+			entry.totalCount++;
+
 			if (visibility.filtered) {
 				entry.filteredCount++;
 			} else if (visibility.truncated) {
 				entry.truncatedCount++;
-			}
-
-			if (visibility.maybe) {
-				this.possibleCount++;
-				entry.possibleCount++;
 			}
 
 			if (visibility.guaranteed) {
@@ -536,6 +514,8 @@ export default class DiagnosticsProcessor {
 				}
 			} else if (visibility.maybe) {
 				entry.maybeDiagnostics.push(diag);
+			} else if (visibility.suppressed) {
+				entry.suppressedDiagnostics.push(diag);
 			} else {
 				entry.hiddenDiagnostics.push(diag);
 			}
@@ -560,7 +540,7 @@ export default class DiagnosticsProcessor {
 		return this.map.has(path);
 	}
 
-	public getSuppressionsForPath(path: Path): undefined | DiagnosticSuppressions {
+	public getSuppressionsForPath(path: Path): undefined | DiagnosticSuppression[] {
 		if (this.map.has(path)) {
 			return Array.from(this.getMapEntry(path).suppressions);
 		} else {
@@ -569,7 +549,7 @@ export default class DiagnosticsProcessor {
 	}
 
 	public getDiagnosticsForPath(path: Path): Diagnostic[] {
-		const calculated = this.calculatePath(path, {raw: false});
+		const calculated = this.calculatePath(path);
 		if (calculated === undefined) {
 			return [];
 		} else {
@@ -577,19 +557,63 @@ export default class DiagnosticsProcessor {
 		}
 	}
 
-	public calculatePath(
+	public calculatePathRaw(
 		path: Path,
-		{raw}: {
-			raw: boolean;
-		},
 	): undefined | DiagnosticsProcessorCalculatedPath {
 		const entry = this.map.get(path);
 		if (entry === undefined) {
 			return undefined;
 		}
 
-		if (entry.cachedCalculated?.raw === raw) {
-			return entry.cachedCalculated.value;
+		if (entry.cachedCalculatedRaw !== undefined) {
+			return entry.cachedCalculated;
+		}
+
+		const guaranteed: Diagnostic[] = [...entry.guaranteedDiagnostics];
+		let complete: Diagnostic[] = [...entry.guaranteedDiagnostics];
+
+		const dedupeKeys: SeenKeys = new Set();
+
+		const recheckDiagnostics = [
+			...entry.maybeDiagnostics,
+			...entry.hiddenDiagnostics,
+			...entry.suppressedDiagnostics,
+		];
+		for (const diag of recheckDiagnostics) {
+			const visibility = this.getDiagnosticVisibility(
+				diag,
+				{
+					dedupeKeys,
+					allowTruncation: false,
+					ignoreSuppressionsAndFilter: true,
+				},
+			);
+
+			// A maybe at this point is guaranteed
+			if (visibility.maybe) {
+				complete.push(diag);
+			}
+		}
+
+		const calculated: DiagnosticsProcessorCalculatedPath = {
+			complete,
+			guaranteed,
+			suppressions: Array.from(entry.suppressions),
+		};
+		entry.cachedCalculated = calculated;
+		return calculated;
+	}
+
+	public calculatePath(
+		path: Path,
+	): undefined | DiagnosticsProcessorCalculatedPath {
+		const entry = this.map.get(path);
+		if (entry === undefined) {
+			return undefined;
+		}
+
+		if (entry.cachedCalculated !== undefined) {
+			return entry.cachedCalculated;
 		}
 
 		const unusedSuppressions = new Set(entry.unusedSuppressions);
@@ -598,19 +622,14 @@ export default class DiagnosticsProcessor {
 
 		const dedupeKeys: SeenKeys = new Set();
 
-		let recheckDiagnostics = entry.maybeDiagnostics;
-		if (raw) {
-			recheckDiagnostics = [...recheckDiagnostics, ...entry.hiddenDiagnostics];
-		}
-
-		for (const diag of recheckDiagnostics) {
+		for (const diag of entry.maybeDiagnostics) {
 			const visibility = this.getDiagnosticVisibility(
 				diag,
 				{
 					dedupeKeys,
 					allowTruncation: false,
 					unusedSuppressions,
-					ignoreSuppressionsAndFilter: raw,
+					ignoreSuppressionsAndFilter: false,
 				},
 			);
 
@@ -621,20 +640,18 @@ export default class DiagnosticsProcessor {
 		}
 
 		// Add errors for unused suppressions
-		if (!raw) {
-			for (const suppression of unusedSuppressions) {
-				const categoryPrefix = suppression.category[0];
-				if (this.allowedUnusedSuppressionPrefixes.has(categoryPrefix)) {
-					continue;
-				}
-
-				complete.push(
-					this.normalizer.normalizeDiagnostic({
-						location: suppression.loc,
-						description: descriptions.SUPPRESSIONS.UNUSED(suppression),
-					}),
-				);
+		for (const suppression of unusedSuppressions) {
+			const categoryPrefix = suppression.category[0];
+			if (this.allowedUnusedSuppressionPrefixes.has(categoryPrefix)) {
+				continue;
 			}
+
+			complete.push(
+				this.normalizer.normalizeDiagnostic({
+					location: suppression.loc,
+					description: descriptions.SUPPRESSIONS.UNUSED(suppression),
+				}),
+			);
 		}
 
 		const calculated: DiagnosticsProcessorCalculatedPath = {
@@ -642,10 +659,7 @@ export default class DiagnosticsProcessor {
 			guaranteed,
 			suppressions: Array.from(entry.suppressions),
 		};
-		entry.cachedCalculated = {
-			value: calculated,
-			raw,
-		};
+		entry.cachedCalculated = calculated;
 		return calculated;
 	}
 
@@ -662,7 +676,7 @@ export default class DiagnosticsProcessor {
 
 		const entry = this.getMapEntry(path);
 
-		this.possibleCount -= entry.possibleCount;
+		this.totalCount -= entry.totalCount;
 		this.setGuaranteedCount(this.guaranteedCount - entry.guaranteedCount);
 		this.map.delete(path);
 		this.normalizer.removePath(path);
@@ -706,8 +720,8 @@ export default class DiagnosticsProcessor {
 		return ignored;
 	}
 
-	public calculate(): DiagnosticsProcessorCalculated {
-		const cached = this.cachedDump;
+	public calculateVisibile(): DiagnosticsProcessorCalculated {
+		const cached = this.cachedCalculate;
 		if (cached !== undefined) {
 			return cached;
 		}
@@ -723,12 +737,7 @@ export default class DiagnosticsProcessor {
 		let truncated = false;
 
 		for (const [path, entry] of this.map) {
-			const pathCalculated = this.calculatePath(
-				path,
-				{
-					raw: false,
-				},
-			);
+			const pathCalculated = this.calculatePath(path);
 			if (pathCalculated === undefined) {
 				continue;
 			}
@@ -757,12 +766,28 @@ export default class DiagnosticsProcessor {
 			}
 		}
 
-		this.cachedDump = calculated;
+		this.cachedCalculate = calculated;
 
 		return calculated;
 	}
 
 	public getDiagnostics(): Diagnostic[] {
-		return this.calculate().diagnostics;
+		if (this.cachedDiagnostics !== undefined) {
+			return this.cachedDiagnostics;
+		}
+
+		let allDiagnostics: Diagnostic[] = [];
+
+		for (const {guaranteedDiagnostics, maybeDiagnostics, hiddenDiagnostics} of this.map.values()) {
+			allDiagnostics = [
+				...allDiagnostics,
+				...guaranteedDiagnostics,
+				...maybeDiagnostics,
+				...hiddenDiagnostics,
+			];
+		}
+
+		this.cachedDiagnostics = allDiagnostics;
+		return allDiagnostics;
 	}
 }

@@ -100,8 +100,8 @@ export async function uncachedLint(
 	const res = await catchDiagnostics(
 		() => lintOrFormat(handler, param),
 		{
-			category: "lint",
-			message: "Caught by WorkerAPI.lint",
+			entity: "WorkerAPI.lint",
+			message: "Caught thrown error",
 		},
 	);
 

@@ -50,7 +50,7 @@ JSRoot {
 	corrupt: true
 	diagnostics: [
 		{
-			origins: [{category: "parse"}]
+			origins: [{entity: "ParserCore<js>"}]
 			description: {
 				advice: []
 				category: ["parse"]

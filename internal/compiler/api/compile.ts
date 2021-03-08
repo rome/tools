@@ -6,7 +6,7 @@
  */
 
 import {Mapping, SourceMapConsumer} from "@internal/codec-source-map";
-import {Diagnostic, DiagnosticSuppressions} from "@internal/diagnostics";
+import {Diagnostic, DiagnosticSuppression} from "@internal/diagnostics";
 import {Cache} from "@internal/compiler";
 import {formatAST} from "@internal/formatter";
 import {CompileRequest} from "../types";
@@ -16,7 +16,7 @@ import {Path} from "@internal/path";
 export type CompileResult = {
 	mappings: Mapping[];
 	diagnostics: Diagnostic[];
-	suppressions: DiagnosticSuppressions;
+	suppressions: DiagnosticSuppression[];
 	cacheDependencies: Path[];
 	compiledCode: string;
 	sourceText: string;

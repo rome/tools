@@ -64,7 +64,7 @@ CSSRoot {
 	corrupt: false
 	diagnostics: [
 		{
-			origins: [{category: "parse"}]
+			origins: [{entity: "ParserCore<css>"}]
 			description: {
 				advice: [
 					log {category: "info", text: [RAW_MARKUP {value: "Did you mean <emphasis>"}, "~=", RAW_MARKUP {value: "</emphasis>?"}]}

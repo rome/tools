@@ -67,12 +67,10 @@ export default class BundleRequest {
 		this.resolvedEntryUID = server.projectManager.getUID(resolvedEntry);
 
 		this.diagnostics = request.createDiagnosticsProcessor({
-			origins: [
-				{
-					category: "bundler",
-					message: markup`Requested bundle for ${this.resolvedEntryUID}`,
-				},
-			],
+			origin: {
+				entity: "Bundler",
+				message: markup`Bundling ${this.resolvedEntryUID}`,
+			},
 		});
 		this.diagnostics.addAllowedUnusedSuppressionPrefix("lint");
 
@@ -110,7 +108,10 @@ export default class BundleRequest {
 				paths: [this.resolvedEntry],
 				analyzeProgress,
 			});
-			graph.validateTransitive(graph.getNode(this.resolvedEntry), this.diagnostics);
+			graph.validateTransitive(
+				graph.getNode(this.resolvedEntry),
+				this.diagnostics,
+			);
 		} finally {
 			analyzeProgress.end();
 		}

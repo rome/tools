@@ -60,6 +60,7 @@ export async function safeProcessExit(code: number): Promise<void> {
   // Suppress all uncaught exceptions. We'll begin tearing down and don't want Node's error handlers to be used
   process.setUncaughtExceptionCaptureCallback(null);
   process.setUncaughtExceptionCaptureCallback(() => {});
+  process.removeAllListeners("unhandledRejection");
   process.on("unhandledRejection", () => {});
 
   try {

@@ -8,7 +8,7 @@
 {
 	diagnostics: [
 		{
-			origins: [{category: "parse"}]
+			origins: [{entity: "ParserCore<text>"}]
 			description: {
 				advice: []
 				category: ["suppressions", "duplicate"]
@@ -22,7 +22,7 @@
 			}
 		}
 		{
-			origins: [{category: "parse"}]
+			origins: [{entity: "ParserCore<text>"}]
 			description: {
 				advice: []
 				category: ["suppressions", "duplicate"]
@@ -36,7 +36,7 @@
 			}
 		}
 		{
-			origins: [{category: "parse"}]
+			origins: [{entity: "ParserCore<text>"}]
 			description: {
 				advice: []
 				category: ["suppressions", "duplicate"]
@@ -92,7 +92,7 @@
 {
 	diagnostics: [
 		{
-			origins: [{category: "parse"}]
+			origins: [{entity: "ParserCore<text>"}]
 			description: {
 				advice: []
 				category: ["suppressions", "incorrectSuppressionStart"]
@@ -106,7 +106,7 @@
 			}
 		}
 		{
-			origins: [{category: "parse"}]
+			origins: [{entity: "ParserCore<text>"}]
 			description: {
 				advice: []
 				category: ["suppressions", "incorrectSuppressionStart"]
@@ -120,7 +120,7 @@
 			}
 		}
 		{
-			origins: [{category: "parse"}]
+			origins: [{entity: "ParserCore<text>"}]
 			description: {
 				advice: []
 				category: ["suppressions", "incorrectSuppressionStart"]
@@ -134,7 +134,7 @@
 			}
 		}
 		{
-			origins: [{category: "parse"}]
+			origins: [{entity: "ParserCore<text>"}]
 			description: {
 				advice: []
 				category: ["suppressions", "incorrectSuppressionStart"]
@@ -148,7 +148,7 @@
 			}
 		}
 		{
-			origins: [{category: "parse"}]
+			origins: [{entity: "ParserCore<text>"}]
 			description: {
 				advice: []
 				category: ["suppressions", "incorrectSuppressionStart"]
@@ -162,7 +162,7 @@
 			}
 		}
 		{
-			origins: [{category: "parse"}]
+			origins: [{entity: "ParserCore<text>"}]
 			description: {
 				advice: []
 				category: ["suppressions", "incorrectSuppressionStart"]
@@ -176,7 +176,7 @@
 			}
 		}
 		{
-			origins: [{category: "parse"}]
+			origins: [{entity: "ParserCore<text>"}]
 			description: {
 				advice: []
 				category: ["suppressions", "incorrectSuppressionStart"]
@@ -200,7 +200,7 @@
 {
 	diagnostics: [
 		{
-			origins: [{category: "parse"}]
+			origins: [{entity: "ParserCore<text>"}]
 			description: {
 				advice: []
 				category: ["suppressions", "missingExplanation"]
@@ -214,7 +214,7 @@
 			}
 		}
 		{
-			origins: [{category: "parse"}]
+			origins: [{entity: "ParserCore<text>"}]
 			description: {
 				advice: []
 				category: ["suppressions", "missingExplanation"]

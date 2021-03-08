@@ -247,7 +247,10 @@ async function ask(
 			commandName: action.command,
 			args: action.args,
 			commandFlags: action.commandFlags,
-			requestFlags,
+			requestFlags: {
+				...requestFlags,
+				programmatic: true,
+			},
 		},
 		"server",
 	);

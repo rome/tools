@@ -32,6 +32,7 @@ export const DEFAULT_CLIENT_FLAGS: ClientFlags = {
 export const DEFAULT_CLIENT_REQUEST_FLAGS: ClientRequestFlags = {
 	...DEFAULT_PRINTER_FLAGS,
 	...DEFAULT_PROCESSOR_FILTER_FLAGS,
+	programmatic: true,
 	unsafeWrites: false,
 	collectMarkers: false,
 	timing: false,
@@ -48,6 +49,7 @@ export type ClientRequestFlags = DiagnosticsPrinterFlags &
 	DiagnosticsProcessorFilterOptions & {
 		watch: boolean;
 		review: boolean;
+		programmatic: boolean;
 		unsafeWrites: boolean;
 
 		// Debugging

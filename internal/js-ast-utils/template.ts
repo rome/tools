@@ -10,8 +10,8 @@ import {
 	AnyJSIdentifier,
 	AnyJSStatement,
 	AnyNode,
-	JSStringLiteral,
 	JSRoot,
+	JSStringLiteral,
 	jsRoot,
 } from "@internal/ast";
 import {CompilerContext, CompilerPath, signals} from "@internal/compiler";

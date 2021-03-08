@@ -109,7 +109,7 @@ export default class FatalErrorHandler {
 
 				const processor = new DiagnosticsProcessor({
 					normalizeOptions: {
-						tags: {
+						defaultTags: {
 							fatal: true,
 						},
 					},

@@ -48,7 +48,7 @@ type ResolveOptions = {
 };
 
 type ResolveState = {
-	analyzeProgress?: ReporterProgress,
+	analyzeProgress?: ReporterProgress;
 };
 
 const NODE_BUILTINS = [
@@ -277,7 +277,7 @@ export default class DependencyGraph {
 		diagnosticsProcessor: DiagnosticsProcessor,
 	): void {
 		diagnosticsProcessor.addDiagnostics(node.diagnostics);
-		
+
 		const resolvedImports = node.resolveImports();
 		diagnosticsProcessor.addDiagnostics(resolvedImports.diagnostics);
 	}
@@ -482,16 +482,13 @@ export default class DependencyGraph {
 						node!.addDependency(source, resolved.path, dep);
 					},
 					{
-						category: "DependencyGraph",
+						entity: "DependencyGraph",
 						message: "Caught by resolve",
 					},
 				);
 
 				if (diagnostics !== undefined && !optional) {
-					nodeDiagnostics = [
-						...nodeDiagnostics,
-						...diagnostics,
-					];
+					nodeDiagnostics = [...nodeDiagnostics, ...diagnostics];
 				}
 			},
 		);

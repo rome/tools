@@ -94,8 +94,8 @@ class CheckRunner {
 		this.pendingChanges = new MixedPathMap();
 		this.flushChangesTimer = undefined;
 
-		this.compilerProcessor = this.createDiagnosticsProcessor();
-		this.dependencyProcessor = this.createDiagnosticsProcessor();
+		this.compilerProcessor = this.createDiagnosticsProcessor("compiler");
+		this.dependencyProcessor = this.createDiagnosticsProcessor("dependencies");
 		this.processors = [this.compilerProcessor, this.dependencyProcessor];
 	}
 
@@ -116,8 +116,8 @@ class CheckRunner {
 	}>;
 	private flushChangesTimer: undefined | NodeJS.Timeout;
 
-	private createDiagnosticsProcessor(): DiagnosticsProcessor {
-		const processor = this.checker.createDiagnosticsProcessor();
+	private createDiagnosticsProcessor(name: string): DiagnosticsProcessor {
+		const processor = this.checker.createDiagnosticsProcessor(name);
 
 		processor.guaranteedDiagnosticsEvent.subscribe((diags) => {
 			for (const diag of diags) {
@@ -342,7 +342,7 @@ class CheckRunner {
 		const allCalculated: DiagnosticsProcessorCalculatedPath[] = [];
 
 		for (const subprocessor of this.processors) {
-			const calculated = subprocessor.calculatePath(path, {raw: true});
+			const calculated = subprocessor.calculatePathRaw(path);
 			if (calculated !== undefined) {
 				processor.addSuppressions(calculated.suppressions);
 				allCalculated.push(calculated);
@@ -414,16 +414,12 @@ class CheckRunner {
 		// Queue complete diagnostics if they are different than guaranteed
 		for (const processor of this.processors) {
 			for (const path of processor.getPaths()) {
-				const diagnostics = processor.calculatePath(
-					path,
-					{
-						raw: true,
-					},
-				);
-				if (diagnostics !== undefined) {
-					if (diagnostics.complete.length !== diagnostics.guaranteed.length) {
-						this.queueChanges(path, false);
-					}
+				const calculated = processor.calculatePathRaw(path);
+				if (
+					calculated !== undefined &&
+					calculated.complete.length !== calculated.guaranteed.length
+				) {
+					this.queueChanges(path, false);
 				}
 			}
 		}
@@ -459,15 +455,12 @@ export default class Checker {
 		return apply || hasDecisions || this.shouldOnlyFormat();
 	}
 
-	public createDiagnosticsProcessor(): DiagnosticsProcessor {
+	public createDiagnosticsProcessor(name: string): DiagnosticsProcessor {
 		const processor = this.request.createDiagnosticsProcessor({
 			mutable: true,
-			origins: [
-				{
-					category: "lint",
-					message: "Dispatched",
-				},
-			],
+			origin: {
+				entity: `Checker<${name}>`,
+			},
 		});
 
 		processor.addAllowedUnusedSuppressionPrefix("bundler");
@@ -486,7 +479,7 @@ export default class Checker {
 		},
 	): DiagnosticsPrinter {
 		const {request} = this;
-		const processor = this.createDiagnosticsProcessor();
+		const processor = this.createDiagnosticsProcessor("printer");
 		const printer = request.createDiagnosticsPrinter({processor, streaming});
 
 		printer.onFooterPrint(async (reporter, isError) => {

@@ -26,8 +26,8 @@ import {UserConfig} from "@internal/core";
 import {
 	DIAGNOSTIC_CATEGORIES,
 	DiagnosticsError,
-	deriveDiagnosticFromError,
 	createSingleDiagnosticsError,
+	deriveDiagnosticFromError,
 } from "@internal/diagnostics";
 import {
 	AbsoluteFilePath,
@@ -43,10 +43,7 @@ import WorkerAPI from "./WorkerAPI";
 import {applyWorkerBufferPatch} from "./utils/applyWorkerBufferPatch";
 import VirtualModules from "../common/VirtualModules";
 import {markup} from "@internal/markup";
-import {
-	BridgeClient,
-	isBridgeEndDiagnosticsError,
-} from "@internal/events";
+import {BridgeClient, isBridgeEndDiagnosticsError} from "@internal/events";
 import {ExtendedMap} from "@internal/collections";
 import WorkerCache from "./WorkerCache";
 import FatalErrorHandler from "../common/FatalErrorHandler";
@@ -66,7 +63,8 @@ import executeMain from "./utils/executeMain";
 
 export default class Worker {
 	constructor(opts: WorkerOptions) {
-		const workerTypeLabel = opts.type === "test-runner" ? "TestWorker" : "Worker";
+		const workerTypeLabel =
+			opts.type === "test-runner" ? "TestWorker" : "Worker";
 
 		this.resources = createResourceRoot(`${workerTypeLabel}<${opts.id}>`);
 		this.resources.add(opts.bridge);
@@ -122,7 +120,6 @@ export default class Worker {
 				if (opts.type === "test-runner") {
 					bridge.events.testDiagnostic.send({
 						testPath: undefined,
-						origin: undefined,
 						diagnostic: deriveDiagnosticFromError(
 							err,
 							{
@@ -339,14 +336,17 @@ export default class Worker {
 		});
 
 		bridge.events.executeScript.subscribe(async (payload) => {
-			const {syntaxError, exitCode} = await executeMain(this, {
-				cwd: payload.cwd,
-				commandName: "run",
-				contextDirectory: payload.contextDirectory,
-				args: payload.args,
-				path: payload.path,
-				code: payload.code,
-			});
+			const {syntaxError, exitCode} = await executeMain(
+				this,
+				{
+					cwd: payload.cwd,
+					commandName: "run",
+					contextDirectory: payload.contextDirectory,
+					args: payload.args,
+					path: payload.path,
+					code: payload.code,
+				},
+			);
 			if (syntaxError !== undefined) {
 				throw createSingleDiagnosticsError(syntaxError);
 			}

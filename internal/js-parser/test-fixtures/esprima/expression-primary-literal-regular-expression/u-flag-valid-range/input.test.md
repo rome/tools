@@ -176,7 +176,7 @@ JSRoot {
 	corrupt: false
 	diagnostics: [
 		{
-			origins: [{category: "parse"}, {category: "parse"}]
+			origins: [{entity: "ParserCore<regex>"}]
 			description: {
 				advice: []
 				category: ["parse"]

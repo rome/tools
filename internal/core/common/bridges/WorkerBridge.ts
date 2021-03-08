@@ -10,11 +10,7 @@ import {AnyRoot} from "@internal/ast";
 import {TransformStageName} from "@internal/compiler";
 import {Profile} from "@internal/v8";
 import {ProfilingStartData, ServerBridgeLog} from "./ServerBridge";
-import {
-	Diagnostic,
-	DiagnosticOrigin,
-	DiagnosticsError,
-} from "@internal/diagnostics";
+import {Diagnostic, DiagnosticsError} from "@internal/diagnostics";
 import {BridgeErrorDetails, createBridge} from "@internal/events";
 import {FileReference} from "../types/files";
 import {
@@ -98,7 +94,6 @@ export default createBridge({
 			{
 				testPath: undefined | AbsoluteFilePath;
 				diagnostic: Diagnostic;
-				origin: undefined | DiagnosticOrigin;
 			},
 			void
 		>(),

@@ -33,7 +33,11 @@ async function deriveWorkerOptions(
 		bridge,
 		env,
 		dedicated: true,
-		type: workerData.get("type").asStringSet(["file-processor", "test-runner", "script-runner"]),
+		type: workerData.get("type").asStringSet([
+			"file-processor",
+			"test-runner",
+			"script-runner",
+		]),
 		id: workerData.get("id").asNumber(),
 		cacheWriteDisabled: workerData.get("cacheWriteDisabled").asBoolean(),
 		cacheReadDisabled: workerData.get("cacheReadDisabled").asBoolean(),
