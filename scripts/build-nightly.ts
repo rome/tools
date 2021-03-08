@@ -1,6 +1,5 @@
-import {ROOT} from "./_utils";
+import {execDev, PUBLIC_PACKAGES, ROOT} from "./_utils";
 import {runNPMVersion} from "./update-version";
-import {main as buildRelease} from "./build-release";
 import {VERSION} from "@internal/core";
 
 export async function main() {
@@ -14,5 +13,10 @@ export async function main() {
 	await runNPMVersion([newVersion], ROOT);
 
 	// Build a release to the dist folder in the root
-	await buildRelease([ROOT.append("dist").join()]);
+	await execDev([
+		"bundle",
+		PUBLIC_PACKAGES.append("rome").join(),
+		ROOT.append("dist").join(),
+		"--set-version", newVersion,
+	]);
 }
