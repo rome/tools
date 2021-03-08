@@ -1,0 +1,67 @@
+name: Auto-publish
+on:
+  push:
+    branches:
+    - main
+    paths:
+    - 'package.json'
+
+jobs:
+  check:
+    name: Check version update
+    runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{ steps.check.outputs.changed }}
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Check version changes
+        uses: EndBug/version-check@v1
+        id: check
+
+      - name: Version update detected
+        if: steps.check.outputs.changed == 'true'
+        run: 'echo "Version change found! New version: ${{ needs.check.outputs.version }} (${{ needs.check.outputs.type }})"'
+
+  publish:
+    name: Publish
+    needs: check
+    if: needs.check.outputs.changed == 'true'
+    environment: nightly
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: actions/setup-node@v1
+        with:
+          node-version: '14.16.0'
+
+      - name: Build Release
+        run: ./rome run scripts/build-release dist
+
+      - name: Publish to npm
+        run: npm publish --tag latest
+        working-directory: dist
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Update latest branch
+        uses: Embraser01/update-git-branch-action@v1.0.0
+        with:
+          branch: latest
+          force: 1 # To push-force to the branch
+          githubToken: ${{ secrets.PAT_TOKEN }}
+
+      - name: Create Release and tag
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ needs.check.outputs.version }}
+          release_name: Release ${{ needs.check.outputs.version }}
+          body: |
+            Changes in this Release
+            - First Change
+            - Second Change
+          draft: false
+          prerelease: false
