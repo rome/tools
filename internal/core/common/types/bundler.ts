@@ -37,7 +37,7 @@ export type BundleAssets = RelativePathMap<BundleAsset>;
 
 export type BundleAsset = {
 	etag: string;
-	content: () => Promise<string | ArrayBuffer | FSReadStream>;
+	content: () => Promise<string | ArrayBufferView | FSReadStream>;
 };
 
 export type BundleRequestResult = {

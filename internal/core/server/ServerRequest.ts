@@ -358,7 +358,7 @@ export default class ServerRequest {
 				},
 				beforeFileWrite: async (path, fd) => {
 					const data = await fd.readFile();
-					await this.server.recoveryStore.save(this, path, data.buffer);
+					await this.server.recoveryStore.save(this, path, data);
 				},
 				unexpectedModified: (path, expectedMtime, actualMtime) => {
 					this.logger.info(

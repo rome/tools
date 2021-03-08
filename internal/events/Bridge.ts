@@ -206,6 +206,10 @@ export default class Bridge<
 
 	// Ensure we are sending a message at least once per second
 	private queueHeartbeat(): void {
+		if (this.options.ignoreHeartbeat) {
+			return;
+		}
+		
 		if (!(this.hasHandshook && this.open)) {
 			return;
 		}

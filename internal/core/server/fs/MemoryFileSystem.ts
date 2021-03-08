@@ -695,7 +695,6 @@ export default class MemoryFileSystem {
 		// Fetch the manifest
 		const manifestRaw = await reader.readFileText(path);
 		const hash = crypto.createHash("sha256").update(manifestRaw).digest("hex");
-
 		const consumer = json.consumeValue({
 			path,
 			input: manifestRaw,

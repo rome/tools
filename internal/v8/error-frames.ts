@@ -113,7 +113,13 @@ function cleanIdentifier(name: null | string): undefined | string {
 	} else if (name.startsWith("___R$")) {
 		// We produce these really long identifiers in the bundler, until we get better source map support
 		// for these, implicitly handle them
-		return name.split("$").pop()!;
+		const parts = name.split("$");
+		const part = parts.pop()!;
+		if (part === "default") {
+			return parts.pop()! ?? part;
+		} else {
+			return part;
+		}
 	} else {
 		return name;
 	}

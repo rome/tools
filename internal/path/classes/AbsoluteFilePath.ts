@@ -13,6 +13,7 @@ import {createFilePath} from "../factories";
 import {FSWatcher} from "@internal/fs";
 import {AbsoluteFilePathSet, MixedPathMap} from "../collections";
 import fs = require("fs");
+import { toDataView, toUintArray8 } from "@internal/binary";
 
 export default class AbsoluteFilePath
 	extends ReadableBasePath<ParsedPathAbsolute, AbsoluteFilePath> {
@@ -254,9 +255,9 @@ export default class AbsoluteFilePath
 		return fs.watch(this.join(), options, listener);
 	}
 
-	public async readFile(): Promise<ArrayBuffer> {
-		const data = await fs.promises.readFile(this.join());
-		return data.buffer;
+	public async readFile(): Promise<DataView> {
+		const buff = await fs.promises.readFile(this.join());
+		return toDataView(buff);
 	}
 
 	public async readFileText(): Promise<string> {
@@ -264,7 +265,7 @@ export default class AbsoluteFilePath
 	}
 
 	public async writeFile(
-		content: string | ArrayBuffer | fs.ReadStream,
+		content: string | ArrayBuffer | ArrayBufferView | fs.ReadStream,
 	): Promise<void> {
 		if (content instanceof fs.ReadStream) {
 			return new Promise((resolve, reject) => {
@@ -287,10 +288,10 @@ export default class AbsoluteFilePath
 			});
 		} else {
 			let buff;
-			if (content instanceof ArrayBuffer) {
-				buff = new Uint8Array(content);
-			} else {
+			if (typeof content === "string") {
 				buff = content;
+			} else {
+				buff = toUintArray8(content);
 			}
 			await fs.promises.writeFile(this.join(), buff);
 		}

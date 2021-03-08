@@ -497,6 +497,7 @@ export default class DiagnosticsProcessor {
 				continue;
 			}
 
+			this.totalCount++;
 			entry.totalCount++;
 
 			if (visibility.filtered) {

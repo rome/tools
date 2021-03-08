@@ -461,7 +461,7 @@ export default class Bundler {
 			resolvedSegment: AbsoluteFilePath,
 			options: BundleOptions,
 		) => Promise<BundleResultBundle>,
-		addFile: (relative: RelativePath, buff: ArrayBuffer | string) => void,
+		addFile: (relative: RelativePath, buff: DataView | string) => void,
 	): Promise<JSONManifest> {
 		// TODO figure out some way to use bundleMultiple here
 		const manifest = manifestDef.manifest;
