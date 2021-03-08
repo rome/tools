@@ -1,7 +1,5 @@
 name: Nightly Release
 on:
-  push:
-  pull_request:
   schedule:
     - cron: '0 0 * * *'
 
@@ -19,7 +17,7 @@ jobs:
         run: ./rome run scripts/build-nightly
       # Publish to npm
       - name: Publish to npm
-        run: npm publish --access public
+        run: npm publish --access public --tag nightly
         working-directory: dist
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

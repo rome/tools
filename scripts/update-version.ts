@@ -35,8 +35,8 @@ export async function main(args: string[]) {
 	);
 	const branch = branchRes.stdout.toString().trim();
 	if (branch !== "main") {
-		reporter.error(markup`On branch ${branch} instead of main`);
-		return 1;
+		//reporter.error(markup`On branch ${branch} instead of main`);
+		//return 1;
 	}
 
 	// Ensure git isn"t dirty

@@ -151,6 +151,10 @@ export default class Worker {
 		});
 
 		if (opts.dedicated) {
+			// We wont be reading from process.env anymore, so set it to the value passed so forked processes and other
+			// code that defaults to environment variables gets them
+			process.env = opts.env;
+
 			this.resources.add(this.fatalErrorHandler.setupGlobalHandlers());
 
 			this.bridge.endEvent.subscribe((err) => {
