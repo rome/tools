@@ -40,12 +40,6 @@ export const MAX_WORKER_BYTES_BEFORE_ADD = MEGABYTE;
 const CPU_COUNT: number = os.cpus().length;
 export const MAX_WORKER_COUNT = Math.min(CPU_COUNT, 4);
 
-// Vendor Rome and Trunk Rome could have the same version number if there was no release in between
-// Ensure they are properly namespaced to avoid having daemon socket conflicts
-if (IS_ROME_DEV_ENV) {
-	VERSION += "-dev";
-}
-
 // Misc
 export const MOCKS_DIRECTORY_NAME = "__rmocks__";
 
@@ -184,10 +178,20 @@ function getRuntimeDirectory(): AbsoluteFilePath {
 export const RUNTIME_DIRECTORY = getRuntimeDirectory();
 
 function createPipePath(name: string): AbsoluteFilePath {
+	let basename = VERSION;
+
+	// Vendor Rome and Trunk Rome could have the same version number if there was no release in between
+	// Ensure they are properly namespaced to avoid having daemon socket conflicts
+	if (IS_ROME_DEV_ENV) {
+		basename += "-dev";
+	}
+
+	basename += `-${name}`;
+
 	if (process.platform === "win32") {
-		return createAbsoluteFilePath(String.raw`\\.\pipe\rome-${VERSION}-${name}`);
+		return createAbsoluteFilePath(String.raw`\\.\pipe\rome-${basename}`);
 	} else {
-		return RUNTIME_DIRECTORY.append(`${VERSION}.sock`);
+		return RUNTIME_DIRECTORY.append(`${basename}.sock`);
 	}
 }
 
