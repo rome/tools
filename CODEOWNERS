@@ -10,7 +10,7 @@
 /internal/browser-db/* @jer3m01
 /internal/commit-parser/* @ematipico
 /internal/compiler/lint/* @ematipico @bitpshr
-/internal/code-browsers/* @jer3m01
+/internal/codec-browsers/* @jer3m01
 /internal/codec-js-manifest/* @ematipico
 /internal/core/client/commands/* @ematipico
 /internal/core/* @yassere
