@@ -54,7 +54,7 @@ jobs:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Publish to npm as prerelease
-        if: steps.check-prelease.outputs.prelease = 'true'
+        if: steps.check-prelease.outputs.prelease == 'true'
         run: npm publish dist --tag prerelease
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
