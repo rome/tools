@@ -41,9 +41,12 @@ export default createServerCommand<Flags>({
 		const [entryFilename, outputDirectory] = args;
 		const bundler = Bundler.createFromServerRequest(req);
 
-		const resolution = await bundler.getResolvedEntry(entryFilename, {
-			setVersion: commandFlags.setVersion,
-		});
+		const resolution = await bundler.getResolvedEntry(
+			entryFilename,
+			{
+				setVersion: commandFlags.setVersion,
+			},
+		);
 
 		if (req.query.requestFlags.watch) {
 			const {diagnosticsEvent, filesEvent, changeEvent} = bundler.bundleManifestWatch(

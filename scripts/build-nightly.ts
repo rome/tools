@@ -1,4 +1,4 @@
-import {execDev, PUBLIC_PACKAGES, ROOT} from "./_utils";
+import {PUBLIC_PACKAGES, ROOT, execDev} from "./_utils";
 import {runNPMVersion} from "./update-version";
 import {VERSION} from "@internal/core";
 
@@ -17,6 +17,7 @@ export async function main() {
 		"bundle",
 		PUBLIC_PACKAGES.append("rome").join(),
 		ROOT.append("dist").join(),
-		"--set-version", newVersion,
+		"--set-version",
+		newVersion,
 	]);
 }
