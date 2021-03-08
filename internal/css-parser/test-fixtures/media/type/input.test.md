@@ -17,7 +17,7 @@ CSSRoot {
 								value: "screen"
 								loc: SourceLocation media/type/input.css 1:7-1:13
 							}
-							loc: SourceLocation media/type/input.css 1:6-1:13
+							loc: SourceLocation media/type/input.css 1:6-1:14
 						}
 					]
 					loc: SourceLocation media/type/input.css 1:6-1:14
@@ -41,7 +41,7 @@ CSSRoot {
 								value: "screen"
 								loc: SourceLocation media/type/input.css 2:11-2:17
 							}
-							loc: SourceLocation media/type/input.css 2:6-2:17
+							loc: SourceLocation media/type/input.css 2:6-2:18
 						}
 					]
 					loc: SourceLocation media/type/input.css 2:6-2:18
@@ -65,7 +65,7 @@ CSSRoot {
 								value: "screen"
 								loc: SourceLocation media/type/input.css 3:12-3:18
 							}
-							loc: SourceLocation media/type/input.css 3:6-3:18
+							loc: SourceLocation media/type/input.css 3:6-3:19
 						}
 					]
 					loc: SourceLocation media/type/input.css 3:6-3:19
@@ -95,7 +95,7 @@ CSSRoot {
 								value: "screen"
 								loc: SourceLocation media/type/input.css 4:14-4:20
 							}
-							loc: SourceLocation media/type/input.css 4:14-4:20
+							loc: SourceLocation media/type/input.css 4:14-4:21
 						}
 					]
 					loc: SourceLocation media/type/input.css 4:6-4:21
@@ -132,7 +132,7 @@ CSSRoot {
 								value: "print"
 								loc: SourceLocation media/type/input.css 5:20-5:25
 							}
-							loc: SourceLocation media/type/input.css 5:20-5:25
+							loc: SourceLocation media/type/input.css 5:20-5:26
 						}
 					]
 					loc: SourceLocation media/type/input.css 5:6-5:26
@@ -172,7 +172,7 @@ CSSRoot {
 								value: "print"
 								loc: SourceLocation media/type/input.css 6:34-6:39
 							}
-							loc: SourceLocation media/type/input.css 6:29-6:39
+							loc: SourceLocation media/type/input.css 6:29-6:40
 						}
 					]
 					loc: SourceLocation media/type/input.css 6:6-6:40

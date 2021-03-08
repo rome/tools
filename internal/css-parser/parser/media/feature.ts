@@ -5,7 +5,8 @@ import {
 	CSSMediaFeaturePlain,
 	CSSMediaFeatureValue,
 	CSSNumber,
-	CSSString
+	CSSString,
+	CSSMediaFeatureBoolean
 } from "@internal/ast";
 import {matchToken, readToken} from "@internal/css-parser/tokenizer";
 import {descriptions} from "@internal/diagnostics";
@@ -88,33 +89,42 @@ export function parseMediaFeaturePlain(parser: CSSParser): CSSMediaFeaturePlain 
 export function parseMediaFeature(parser: CSSParser): CSSMediaFeature | undefined {
 	// TODO: implement me
 	const start = parser.getPosition();
-	const previousToken = readToken(parser, "LeftParen");
-	// a feature must be wrapped in parenthesis
-	if (!previousToken) {
-		parser.unexpectedDiagnostic({
-				description: descriptions.CSS_PARSER.MEDIA_QUERY_EXPECTED_PARENTHESIS,
-			token: previousToken
-		});
-		// TODO: check this one
-		parser.nextToken();
-		return undefined
-	}
-
+	let  value: CSSMediaFeatureBoolean | CSSMediaFeaturePlain | undefined = undefined;
 
 	console.log()
-	// const token = readToken(parser, "Ident") as Tokens["Ident"];
+	// in every case, the first token must but an Ident
+	const startToken = readToken(parser, "Ident") as Tokens["Ident"];
 	// the value of the feature can be a:
 	// - plain: "(max-width: 600px)", "(hover: hover)"
 	// - boolean: "(color)"
 	//
-	const value = parseMediaFeaturePlain(parser);
+	// we now remove possible white spaces
+	while (matchToken(parser, "Whitespace")) {
+		readToken(parser, "Whitespace");
+	}
+
+		const nextToken = parser.getToken();
+
+	// if we have a right parenthesis, it means we have a boolean
+	if (nextToken.type === "RightParen") {
+		value = parser.finishNode(start, {
+			type: "CSSMediaFeatureBoolean",
+			value: startToken.value,
+
+		})
+	} else {
+
+		value = parseMediaFeaturePlain(parser);
+	}
+
 	// if (isCondition(token.value)) {
 	//
 	// } else {
-	// 	// const value =
+	// 	const value =
 	// }
 
 	if (value) {
+		parser.nextToken();
 		return parser.finishNode(start, {
 			type: "CSSMediaFeature",
 			value

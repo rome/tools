@@ -8,10 +8,49 @@ import {CSSParser} from "@internal/css-parser/types";
 import {matchToken, readToken} from "@internal/css-parser/tokenizer";
 import {parseMediaType} from "@internal/css-parser/parser/media/type";
 import {parseMediaFeature} from "@internal/css-parser/parser/media/feature";
+import {parseMediaInParens} from "@internal/css-parser/parser/media/inParens";
+import {parseMediaNot} from "@internal/css-parser/parser/media/conditions";
+import {descriptions} from "@internal/diagnostics";
 
 function tryParseConditionWithoutOr(
 	parser: CSSParser,
 ): CSSMediaConditionWithoutOr | undefined {
+	// the start should be from "and" keyword
+	const start = parser.getPosition();
+
+	parser.nextToken();
+
+	while (matchToken(parser, "Whitespace")) {
+		readToken(parser, "Whitespace");
+	}
+
+	const token = parser.getToken();
+
+	if (token.type === 'Ident') {
+		if (token.value === "not") {
+			const mediaNot = parseMediaNot(parser);
+			if (mediaNot) {
+				return parser.finishNode(start, {
+					type: "CSSMediaConditionWithoutOr",
+					value: mediaNot
+				})
+			}
+		}
+	}else if (token.type === "LeftParen") {
+		const feature = parseMediaInParens(parser);
+		if (feature) {
+			return parser.finishNode(start, {
+				type: "CSSMediaConditionWithoutOr",
+				value: feature
+			})
+		}
+	} else {
+		parser.unexpectedDiagnostic({
+			description: descriptions.CSS_PARSER.MEDIA_QUERY_EXPECTED_NOT_OR_PARENTHESIS,
+			token
+		})
+	}
+
 	return undefined;
 }
 
@@ -36,8 +75,13 @@ function parseMedia(parser: CSSParser): CSSMediaQuery | undefined {
 		const mediaType = parseMediaType(parser);
 
 		if (mediaType) {
+			// moving forward and removing white spaces
+			while (matchToken(parser, "Whitespace")) {
+				readToken(parser, "Whitespace");
+			}
 			const token = parser.getToken();
 			if (token.type === "Ident" && token.value === "and") {
+				console.log('condition without or')
 				conditionWithoutOr = tryParseConditionWithoutOr(parser);
 			}
 

@@ -11,10 +11,9 @@ export * from "./unions";
 export {bindingKeys, nodeNames, visitorKeys} from "./utils";
 export type AnyNodes = AnyNode | (AnyNode[]);
 
-/* GENERATED:START(hash:fa0ef13f2a8e116fb88f5b4cc1c4c892512a3e4a,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/ast` to update. */
+/* GENERATED:START(hash:45978eebb8e1a29d666b3135b4e1bfb09ed70238,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/ast` to update. */
 export * from "./common/comments/CommentBlock";
 export * from "./common/comments/CommentLine";
-export * from "./common/commit/CommitRoot";
 export * from "./css/core/CSSAtRule";
 export * from "./css/selectors/CSSAttributeSelector";
 export * from "./css/core/CSSBlock";
@@ -44,6 +43,7 @@ export * from "./css/media/CSSMediaAnd";
 export * from "./css/media/CSSMediaCondition";
 export * from "./css/media/CSSMediaConditionWithoutOr";
 export * from "./css/media/CSSMediaFeature";
+export * from "./css/media/CSSMediaFeatureBoolean";
 export * from "./css/media/CSSMediaFeatureComparison";
 export * from "./css/media/CSSMediaFeatureEQ";
 export * from "./css/media/CSSMediaFeatureGT";
@@ -310,7 +310,6 @@ export * from "./js/typescript/TSVoidKeywordTypeAnnotation";
 export type AnyNode =
 	| n.CommentBlock
 	| n.CommentLine
-	| n.CommitRoot
 	| n.CSSAtRule
 	| n.CSSAttributeSelector
 	| n.CSSBlock
@@ -340,6 +339,7 @@ export type AnyNode =
 	| n.CSSMediaCondition
 	| n.CSSMediaConditionWithoutOr
 	| n.CSSMediaFeature
+	| n.CSSMediaFeatureBoolean
 	| n.CSSMediaFeatureComparison
 	| n.CSSMediaFeatureEQ
 	| n.CSSMediaFeatureGT

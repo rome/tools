@@ -14,13 +14,11 @@ const builders: ExtendedMap<string, BuilderMethod<any>> = new ExtendedMap(
 );
 export default builders;
 
-/* GENERATED:START(hash:2412c786d0e011248aff2fb8d31ef039e097322b,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/ast` to update. */
+/* GENERATED:START(hash:ebdbf693fd44714b2322bbbe9f70576cd38794e9,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/ast` to update. */
 import CommentBlock from "./common/comments/CommentBlock";
 builders.set("CommentBlock", CommentBlock);
 import CommentLine from "./common/comments/CommentLine";
 builders.set("CommentLine", CommentLine);
-import CommitRoot from "./common/commit/CommitRoot";
-builders.set("CommitRoot", CommitRoot);
 import CSSAtRule from "./css/core/CSSAtRule";
 builders.set("CSSAtRule", CSSAtRule);
 import CSSAttributeSelector from "./css/selectors/CSSAttributeSelector";
@@ -79,6 +77,8 @@ import CSSMediaConditionWithoutOr from "./css/media/CSSMediaConditionWithoutOr";
 builders.set("CSSMediaConditionWithoutOr", CSSMediaConditionWithoutOr);
 import CSSMediaFeature from "./css/media/CSSMediaFeature";
 builders.set("CSSMediaFeature", CSSMediaFeature);
+import CSSMediaFeatureBoolean from "./css/media/CSSMediaFeatureBoolean";
+builders.set("CSSMediaFeatureBoolean", CSSMediaFeatureBoolean);
 import CSSMediaFeatureComparison from "./css/media/CSSMediaFeatureComparison";
 builders.set("CSSMediaFeatureComparison", CSSMediaFeatureComparison);
 import CSSMediaFeatureEQ from "./css/media/CSSMediaFeatureEQ";
