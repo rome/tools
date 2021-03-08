@@ -1,7 +1,7 @@
 {
 	"name": "rome-root",
 	"license": "MIT",
-	"version": "10.0.7-beta.6",
+	"version": "10.0.7-beta.7",
 	"engines": {
 		"node": ">=14.16.0"
 	},
