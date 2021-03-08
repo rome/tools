@@ -1,3 +1,4 @@
+import {BaseTokens, TokenValues} from "@internal/parser-core";
 /**
  * Copyright (c) Facebook, Inc. and its affiliates.
  *
@@ -428,6 +429,22 @@ export default class WorkerAPI {
 		);
 
 		return this.interceptDiagnostics(ast, {astModifiedFromSource});
+	}
+
+	public async tokenize(
+		ref: FileReference,
+		opts: WorkerParseOptions,
+	): Promise<TokenValues<BaseTokens>[]> {
+		let {tokens} = await this.worker.tokenize(
+			ref,
+			{
+				...opts,
+				sourceTypeJS: opts.sourceTypeJS,
+				cache: false,
+			},
+		);
+
+		return tokens;
 	}
 
 	public async format(

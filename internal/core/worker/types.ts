@@ -1,3 +1,4 @@
+import {BaseTokens, TokenValues} from "@internal/parser-core";
 import {AnyRoot, ConstJSSourceType} from "@internal/ast";
 import {Manifest} from "@internal/codec-js-manifest";
 import {
@@ -39,6 +40,15 @@ export type WorkerParseResult = {
 	lastAccessed: number;
 	sourceText: string;
 	astModifiedFromSource: boolean;
+};
+
+export type WorkerTokenizeResult = {
+	tokens: TokenValues<BaseTokens>[];
+	integrity: undefined | DiagnosticIntegrity;
+	mtimeNs: bigint;
+	project: WorkerProject;
+	path: AbsoluteFilePath;
+	sourceText: string;
 };
 
 export type WorkerBuffer = {

@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {ModuleSignature, TypeCheckProvider} from "@internal/js-analysis";
+ import {ModuleSignature, TypeCheckProvider} from "@internal/js-analysis";
 import {
 	WorkerBuffer,
 	WorkerBufferPatch,
@@ -17,6 +17,7 @@ import {
 	WorkerPrefetchedModuleSignatures,
 	WorkerProject,
 	WorkerProjects,
+	WorkerTokenizeResult,
 } from "./types";
 import WorkerBridge from "../common/bridges/WorkerBridge";
 import {ConstJSSourceType, JSRoot} from "@internal/ast";
@@ -279,6 +280,10 @@ export default class Worker {
 		bridge.events.parse.subscribe((payload) => {
 			// @ts-ignore: AST is a bunch of interfaces which we cannot match with an object index
 			return this.api.parse(payload.ref, payload.options) as RSERObject;
+		});
+
+		bridge.events.tokenize.subscribe((payload) => {
+			return this.api.tokenize(payload.ref, payload.options);
 		});
 
 		bridge.events.lint.subscribe((payload) => {
@@ -667,6 +672,71 @@ export default class Worker {
 		if (cacheEnabled) {
 			this.astCache.set(path, res);
 		}
+
+		return res;
+	}
+
+	public async tokenize(
+		ref: FileReference,
+		options: WorkerParseOptions,
+	): Promise<WorkerTokenizeResult> {
+		const path = ref.real;
+		const {uid} = ref;
+		const project = this.getProject(ref);
+
+		// Fetch and validate extension handler
+		const {handler} = getFileHandlerFromPathAssert(ref.real, project.config);
+		if (handler.tokenize === undefined) {
+			throw new Error(`We don't know how to tokenize ${path}`);
+		}
+
+		// Get source type
+		let sourceTypeJS: undefined | ConstJSSourceType;
+		if (options.sourceTypeJS !== undefined) {
+			sourceTypeJS = options.sourceTypeJS;
+		} else if (handler.sourceTypeJS !== undefined) {
+			sourceTypeJS = handler.sourceTypeJS;
+		} else {
+			sourceTypeJS = "script";
+
+			const manifest = this.getPartialManifest(ref);
+			if (manifest?.type === "module") {
+				sourceTypeJS = "module";
+			}
+		}
+
+		this.logger.info(markup`Tokenizing: ${path}`);
+
+		const cacheFile = await this.cache.getFile(ref);
+		const integrity = await this.cache.getIntegrity(ref);
+		const {mtimeNs} = await cacheFile.getStats();
+
+		const manifest = this.getPartialManifest(ref);
+		let manifestPath: undefined | string;
+		if (manifest !== undefined) {
+			manifestPath = manifest.path.join();
+		}
+
+		const {sourceText, tokens} = await handler.tokenize({
+			sourceTypeJS,
+			path: uid,
+			manifestPath,
+			integrity,
+			mtimeNs,
+			file: ref,
+			worker: this,
+			project,
+			parseOptions: options,
+		});
+
+		const res: WorkerTokenizeResult = {
+			tokens,
+			sourceText,
+			project,
+			path,
+			integrity,
+			mtimeNs,
+		};
 
 		return res;
 	}
