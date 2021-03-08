@@ -18,10 +18,8 @@ jobs:
       - name: Check version changes
         uses: EndBug/version-check@v1
         id: check
-
-      - name: Version update detected
-        if: steps.check.outputs.changed == 'true'
-        run: 'echo "Version change found! New version: ${{ needs.check.outputs.version }} (${{ needs.check.outputs.type }})"'
+        with:
+          diff-search: true
 
   publish:
     name: Publish
@@ -30,6 +28,9 @@ jobs:
     environment: nightly
     runs-on: ubuntu-latest
     steps:
+      - name: Version update detected
+        run: 'echo "Version change found! New version: ${{ needs.check.outputs.version }} (${{ needs.check.outputs.type }})"'
+
       - uses: actions/checkout@v2
 
       - uses: actions/setup-node@v1
