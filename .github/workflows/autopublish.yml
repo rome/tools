@@ -27,7 +27,7 @@ jobs:
     name: Publish
     needs: check
     if: needs.check.outputs.changed == 'true'
-    environment: nightly
+    environment: npm-publish
     runs-on: ubuntu-latest
     steps:
       - name: Version update detected
@@ -59,13 +59,7 @@ jobs:
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
-      - name: Update latest branch
-        if: steps.check-prelease.outputs.prelease != 'true'
-        uses: Embraser01/update-git-branch-action@v1.0.0
-        with:
-          branch: latest
-          force: 1
-          githubToken: ${{ secrets.GITHUB_TOKEN }}
+      # TODO update branch
 
       - name: Create Release and tag
         uses: actions/create-release@v1
