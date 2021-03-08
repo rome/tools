@@ -55,11 +55,6 @@ export function parseReference(
 			);
 			if (inline) {
 				reference.push(inline);
-				// TODO: call nextToken in parseInline()
-				// console.log(inline.type)
-				// if (inline.type === "MarkdownText") {
-				// 	parser.nextToken();
-				// }
 			}
 		}
 	}
