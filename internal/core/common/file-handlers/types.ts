@@ -77,7 +77,7 @@ export type PartialExtensionHandler<ParseRoot extends AnyRoot = AnyRoot> = {
 		opts: ExtensionParseInfo,
 	) => Promise<ExtensionHandlerParseResult<ParseRoot>>;
 
-	tokenize: <Tokens extends BaseTokens>(
+	tokenize?: <Tokens extends BaseTokens>(
 		info: ExtensionParseInfo,
 	) => Promise<ExtensionHandlerTokenizeResult<Tokens>>;
 };

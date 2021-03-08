@@ -1,3 +1,4 @@
+import { tokenizeHTML } from '@internal/html-parser';
 /**
  * Copyright (c) Facebook, Inc. and its affiliates.
  *
@@ -36,6 +37,19 @@ export const htmlHandler: PartialExtensionHandler = {
 			sourceText,
 			ast,
 			astModifiedFromSource: false,
+		};
+	},
+
+	async tokenize({integrity, path, file, worker}) {
+		const sourceText = await worker.readFileText(file);
+		const tokens = tokenizeHTML({
+			input: sourceText,
+			integrity,
+			path,
+		});
+		return {
+			sourceText,
+			tokens,
 		};
 	},
 };
