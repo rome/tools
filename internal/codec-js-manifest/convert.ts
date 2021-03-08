@@ -6,18 +6,21 @@
  */
 
 import {stringifySPDXLicense} from "@internal/codec-spdx-license";
-import {ManifestDependencies, stringifyDependencyPattern} from "./dependencies";
+import {
+	ManifestDependenciesField,
+	stringifyDependencyPattern,
+} from "./normalize/dependencies";
 import {
 	JSONManifest,
 	JSONManifestExports,
 	Manifest,
 	ManifestExportCondition,
-	ManifestExports,
+	ManifestExportsField,
 } from "./types";
 import {stringifySemver} from "@internal/codec-semver";
 import {Dict} from "@internal/typescript-helpers";
 import {stringifyPathPattern} from "@internal/path-match";
-import {manifestNameToString} from "./name";
+import {manifestNameToString} from "./normalize/name";
 
 export function convertManifestToJSON(manifest: Manifest): JSONManifest {
 	return {
@@ -63,7 +66,7 @@ export function convertManifestToJSON(manifest: Manifest): JSONManifest {
 }
 
 function exportsToObject(
-	exports: boolean | ManifestExports,
+	exports: boolean | ManifestExportsField,
 ): undefined | false | JSONManifestExports {
 	if (exports === false) {
 		return false;
@@ -125,7 +128,7 @@ function mapToObject<T>(map: Map<string, T>): undefined | Dict<T> {
 }
 
 function dependencyMapToObject(
-	map: ManifestDependencies,
+	map: ManifestDependenciesField,
 ): undefined | Dict<string> {
 	if (map.size === 0) {
 		return;

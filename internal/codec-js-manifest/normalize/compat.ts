@@ -7,7 +7,7 @@
 import {Consumer} from "@internal/consume";
 import {SemverVersionNode, satisfiesSemver} from "@internal/codec-semver";
 import {ManifestName} from "@internal/codec-js-manifest/types";
-import {manifestNameToString} from "@internal/codec-js-manifest/name";
+import {manifestNameToString} from "@internal/codec-js-manifest/normalize/name";
 
 export const PACKAGE_LICENSE_ALIASES: Map<
 	string,

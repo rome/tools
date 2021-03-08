@@ -15,7 +15,7 @@ import {tryParseWithOptionalOffsetPosition} from "@internal/parser-core";
 import {Path, createPath} from "@internal/path";
 import {manifestNameToString, normalizeName} from "./name";
 import {descriptions} from "@internal/diagnostics";
-import {ManifestName} from "./types";
+import {ManifestName} from "../types";
 
 export type DependencyPattern =
 	| GistPattern
@@ -29,7 +29,7 @@ export type DependencyPattern =
 	| LinkPattern
 	| WorkspacePattern;
 
-export type ManifestDependencies = Map<string, DependencyPattern>;
+export type ManifestDependenciesField = Map<string, DependencyPattern>;
 
 type UrlWithHash = {
 	url: string;
@@ -512,8 +512,8 @@ export function normalizeDependencies(
 	root: Consumer,
 	key: string,
 	loose: boolean,
-): ManifestDependencies {
-	const map: ManifestDependencies = new Map();
+): ManifestDependenciesField {
+	const map: ManifestDependenciesField = new Map();
 
 	if (!root.has(key)) {
 		return map;

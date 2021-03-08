@@ -10,7 +10,7 @@ import {
 	DiagnosticDescriptionOptional,
 	descriptions,
 } from "@internal/diagnostics";
-import {ManifestName} from "./types";
+import {ManifestName} from "../types";
 
 type NormalizeNameUnexpected = (
 	opts: {
