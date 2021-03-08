@@ -86,9 +86,9 @@ export function inferTerminalFeatures(
 	let unicode = false;
 	let background: TerminalFeatures["background"] = "unknown";
 
-	// Increase column size for CI
+	// Increase column size slightly for CI
 	if (IS_CI_ENV) {
-		columns = new OneIndexed(200);
+		columns = new OneIndexed(120);
 		colorDepth = 4;
 	}
 

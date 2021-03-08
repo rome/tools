@@ -39,6 +39,7 @@ import {DiagnosticsPrinter} from "@internal/cli-diagnostics";
 import {StaticMarkup} from "@internal/markup";
 import init from "@internal/core/server/commands/init";
 import {RSERValue} from "@internal/binary-transport";
+import { markupToJoinedPlainText } from "@internal/cli-layout";
 
 export type ServerCommandReturn = undefined | Promise<RSERValue>;
 
@@ -61,13 +62,19 @@ export async function chainCommands(
 		callback: () => Promise<void>;
 	}[],
 ): Promise<void> {
+	const {reporter} = req;
 	const printers: {
 		title: StaticMarkup;
 		printer: DiagnosticsPrinter;
 	}[] = [];
 
+	const isGitHubActions = req.query.requestFlags.auxiliaryDiagnosticFormat === "github-actions";
+
 	for (const {callback, title} of fns) {
 		try {
+			if (isGitHubActions) {
+				reporter.logRaw(`::group::${markupToJoinedPlainText(title)}`);
+			}
 			await callback();
 		} catch (err) {
 			if (err instanceof DiagnosticsPrinter) {
@@ -77,6 +84,10 @@ export async function chainCommands(
 				});
 			} else {
 				throw err;
+			}
+		} finally {
+			if (isGitHubActions) {
+				reporter.logRaw("::endgroup::");
 			}
 		}
 	}
