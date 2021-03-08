@@ -88,11 +88,15 @@ export default class Resource {
     if (this.closed) {
       return Promise.resolve();
     } else {
-      return this._releaseCache(this, new Set());
+      return this.releaseBlock();
     }
   }
 
-  private _releaseCache(root: Resource, seen: Set<Resource>): Promise<void> {
+  public releaseBlock(): Promise<void> {
+    return this._releaseBlock(this, new Set());
+  }
+
+  private _releaseBlock(root: Resource = this, seen: Set<Resource> = new Set()): Promise<void> {
     if (this._releasing) {
       return this._releasing;
     }
@@ -119,7 +123,7 @@ export default class Resource {
         continue;
       }
 
-      promises.push(resource._releaseCache(root, seen));
+      promises.push(resource._releaseBlock(root, seen));
     }
 
     // Release ourselves
@@ -128,21 +132,24 @@ export default class Resource {
       promises.push(callRelease(this, release))
     }
     
-    await Promise.all(promises);
+    try {
+      await Promise.all(promises);
+    } finally {
+      // Remove ourselves from resources we've been added as a dependency to
+      for (const owner of this.owners) {
+        owner.remove(this);
+      }
+      this.owners.clear();
 
-    // Remove ourselves from resources we've been added as a dependency to
-    for (const owner of this.owners) {
-      owner.remove(this);
+      // Run finalizer
+      const {finalize} = this.options;
+      if (finalize !== undefined) {
+        await callRelease(this, finalize);
+      }
+      
+      this._releasing = undefined;
     }
-    this.owners.clear();
 
-    // Run finalizer
-    const {finalize} = this.options;
-    if (finalize !== undefined) {
-      await callRelease(this, finalize);
-    }
-
-    this._releasing = undefined;
   }
 
   public bind(rawResource: ResourcesContainer): Resource {

@@ -64,7 +64,7 @@ export async function safeProcessExit(code: number): Promise<void> {
   process.on("unhandledRejection", () => {});
 
   try {
-    await processResourceRoot.release();
+    await processResourceRoot.releaseBlock();
   } catch (err) {
     console.error(`safeProcessExit: Release failure`);
     console.error(err.stack);
