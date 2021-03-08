@@ -1,5 +1,5 @@
 import {ROOT} from "./_utils";
-import {main as updateVersion} from "./update-version";
+import {runNPMVersion} from "./update-version";
 import {main as buildRelease} from "./build-release";
 import {VERSION} from "@internal/core";
 
@@ -9,7 +9,9 @@ export async function main() {
 	const date = new Date();
 	const dateParts = [date.getFullYear(), date.getMonth(), date.getDate()];
 	const newVersion = `${version}-nightly.${dateParts.join(".")}`;
-	await updateVersion([newVersion]);
+
+	// And then update it
+	await runNPMVersion([newVersion], ROOT);
 
 	// Build a release to the dist folder in the root
 	await buildRelease([ROOT.append("dist").join()]);

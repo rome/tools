@@ -5,7 +5,7 @@ import http = require("http");
 import child = require("child_process");
 import {markup} from "@internal/markup";
 
-async function runNPMVersion(
+export async function runNPMVersion(
 	args: string[],
 	cwd: AbsoluteFilePath,
 ): Promise<string> {
@@ -72,9 +72,6 @@ export async function main(args: string[]) {
 		await runNPMVersion([currentVersion], ROOT);
 		return 1;
 	}
-
-	// Update rome package
-	await runNPMVersion([version], PUBLIC_PACKAGES.append("rome"));
 
 	// Create commit and tag
 	await exec("git", ["commit", "-am", `Release v${version}`]);
