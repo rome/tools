@@ -17,9 +17,7 @@ export function encodeTextToArrayBuffer(str: string): ArrayBuffer {
 }
 
 export function getByteLength(val: BufferSourceLike | FSReadStream): number {
-	if (ArrayBuffer.isView(val)) {
-		return val.byteLength - val.byteOffset;
-	} else if (val instanceof ArrayBuffer) {
+	if (ArrayBuffer.isView(val) || val instanceof ArrayBuffer) {
 		return val.byteLength;
 	} else if (typeof val === "string") {
 		return getUTF8ByteLength(val);

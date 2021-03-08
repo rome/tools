@@ -5,7 +5,7 @@ import {
 	InspectorClientCloseError,
 	urlToFilename,
 } from "@internal/v8";
-import {createClient} from "@internal/codec-websocket";
+import {createWebSocketClient} from "@internal/codec-websocket";
 import TestServer from "@internal/core/server/testing/TestServer";
 import {
 	DIAGNOSTIC_CATEGORIES,
@@ -13,7 +13,7 @@ import {
 	deriveDiagnosticFromErrorStructure,
 } from "@internal/diagnostics";
 import {markup} from "@internal/markup";
-import {ReporterProgress} from "@internal/cli-reporter";
+import {Reporter, ReporterProgress} from "@internal/cli-reporter";
 import {
 	AbsoluteFilePathMap,
 	AbsoluteFilePathSet,
@@ -76,7 +76,7 @@ export default class TestServerWorker {
 		// Start debugger
 		const {inspectorUrl} = await bridge.events.inspectorDetails.call();
 		if (inspectorUrl !== undefined) {
-			const client = new InspectorClient(await createClient(inspectorUrl));
+			const client = new InspectorClient(await createWebSocketClient(inspectorUrl));
 			this.inspector = client;
 			this.thread.resources.add(client);
 
@@ -86,8 +86,7 @@ export default class TestServerWorker {
 			// This is written to stderr from native and there's no way for us to intercept it, and no way to disable it
 			// https://github.com/nodejs/node/issues/34799
 			// Until we have a way to disable it we need to resort to grossness like this...
-			process.stderr.write(ansiEscapes.cursorUp());
-			process.stderr.write(ansiEscapes.eraseLine);
+			process.stderr.write(ansiEscapes.cursorUp() + ansiEscapes.eraseLine);
 		}
 
 		bridge.events.testDiskSnapshotDiscovered.subscribe((

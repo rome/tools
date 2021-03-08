@@ -73,10 +73,8 @@ export default class RSERStream {
 	}
 
 	public append(buf: ArrayBufferView) {
-		const size = getByteLength(buf);
-
 		// Fast path for empty buffer
-		if (size === 0) {
+		if (buf.byteLength === 0) {
 			return;
 		}
 
@@ -87,7 +85,7 @@ export default class RSERStream {
 			if (
 				type === "IDLE" &&
 				writer.writeOffset === 0 &&
-				size > MAX_MESSAGE_HEADER_SIZE
+				buf.byteLength > MAX_MESSAGE_HEADER_SIZE
 			) {
 				const reader = new RSERBufferParser(toDataView(buf));
 				const payloadLength = reader.maybeDecodeMessageHeader();

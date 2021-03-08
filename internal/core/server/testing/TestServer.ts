@@ -223,11 +223,9 @@ export default class TestServer {
 
 	public async init() {
 		const workers = await this.setupWorkers();
-
 		const fileQueue = await this.bundleTests();
 		await this.prepareTests(workers, fileQueue);
 		await this.runTests(workers);
-
 		this.throwPrinter();
 	}
 
