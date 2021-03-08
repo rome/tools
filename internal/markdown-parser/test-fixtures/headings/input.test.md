@@ -43,7 +43,7 @@ MarkdownRoot {
 			children: [
 				MarkdownText {
 					value: "####### this will be a paragraph"
-					loc: SourceLocation headings/input.md 7:0-7:0
+					loc: SourceLocation headings/input.md 7:0-7:32
 				}
 			]
 			loc: SourceLocation headings/input.md 7:0-7:32
