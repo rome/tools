@@ -11,7 +11,7 @@ jobs:
     name: Check version update
     runs-on: ubuntu-latest
     outputs:
-      matrix: ${{ steps.check.outputs.changed }}
+      changed: ${{ steps.check.outputs.changed }}
     steps:
       - uses: actions/checkout@v2
 
