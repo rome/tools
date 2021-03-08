@@ -4,3 +4,4 @@ Profile-*.json
 .idea
 # ignore test files that contributors could create locally
 /test.*
+/dist

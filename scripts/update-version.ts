@@ -1,11 +1,11 @@
-import {PUBLIC_PACKAGES, ROOT, exec, reporter} from "./_utils";
+import {ROOT, exec, reporter} from "./_utils";
 import {AbsoluteFilePath} from "@internal/path";
 import https = require("https");
 import http = require("http");
 import child = require("child_process");
 import {markup} from "@internal/markup";
 
-async function runNPMVersion(
+export async function runNPMVersion(
 	args: string[],
 	cwd: AbsoluteFilePath,
 ): Promise<string> {
@@ -35,15 +35,15 @@ export async function main(args: string[]) {
 	);
 	const branch = branchRes.stdout.toString().trim();
 	if (branch !== "main") {
-		reporter.error(markup`On branch ${branch} instead of main`);
-		return 1;
+		//reporter.error(markup`On branch ${branch} instead of main`);
+		//return 1;
 	}
 
 	// Ensure git isn"t dirty
 	const gitRes = child.spawnSync("git", ["diff", "--exit-code"]);
 	if (gitRes.status === 1) {
-		//reporter.error(markup`Uncommitted changes`);
-		//return 1;
+		reporter.error(markup`Uncommitted changes`);
+		return 1;
 	}
 
 	// Get current version so we can revert to it later if necessary
@@ -72,9 +72,6 @@ export async function main(args: string[]) {
 		await runNPMVersion([currentVersion], ROOT);
 		return 1;
 	}
-
-	// Update rome package
-	await runNPMVersion([version], PUBLIC_PACKAGES.append("rome"));
 
 	// Create commit and tag
 	await exec("git", ["commit", "-am", `Release v${version}`]);

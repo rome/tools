@@ -678,11 +678,7 @@ export default class Consumer {
 		for (const [key, value] of this.asMap(false, false)) {
 			if (!this.usedNames.has(key)) {
 				value.unexpected(
-					descriptions.CONSUME.UNUSED_PROPERTY(
-						this.getKeyPathString([key]),
-						type,
-						knownProperties,
-					),
+					descriptions.CONSUME.UNUSED_PROPERTY(key, type, knownProperties),
 					{
 						target: "key",
 						at: "suffix",

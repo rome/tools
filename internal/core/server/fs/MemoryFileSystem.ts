@@ -655,15 +655,15 @@ export default class MemoryFileSystem {
 	private isIgnored(path: AbsoluteFilePath, type: "directory" | "file"): boolean {
 		type;
 
-		const project = this.server.projectManager.findLoadedProject(path);
-		if (project === undefined) {
-			return false;
-		}
-
 		// Ensure we aren't in any of the default denylists
 		const basename = path.getBasename();
 		if (DEFAULT_DENYLIST.includes(basename)) {
 			return true;
+		}
+
+		const project = this.server.projectManager.findLoadedProject(path);
+		if (project === undefined) {
+			return false;
 		}
 
 		return false;

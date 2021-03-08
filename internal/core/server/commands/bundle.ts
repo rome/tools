@@ -16,6 +16,7 @@ import {promiseAllFrom} from "@internal/async";
 
 type Flags = {
 	quiet: boolean;
+	setVersion: undefined | string;
 };
 
 export default createServerCommand<Flags>({
@@ -28,6 +29,7 @@ export default createServerCommand<Flags>({
 	defineFlags(consumer: Consumer): Flags {
 		return {
 			quiet: consumer.get("quiet").asBoolean(false),
+			setVersion: consumer.get("setVersion").asStringOrVoid(),
 		};
 	},
 	async callback(req: ServerRequest, commandFlags: Flags): Promise<void> {
@@ -39,7 +41,12 @@ export default createServerCommand<Flags>({
 		const [entryFilename, outputDirectory] = args;
 		const bundler = Bundler.createFromServerRequest(req);
 
-		const resolution = await bundler.getResolvedEntry(entryFilename);
+		const resolution = await bundler.getResolvedEntry(
+			entryFilename,
+			{
+				setVersion: commandFlags.setVersion,
+			},
+		);
 
 		if (req.query.requestFlags.watch) {
 			const {diagnosticsEvent, filesEvent, changeEvent} = bundler.bundleManifestWatch(
