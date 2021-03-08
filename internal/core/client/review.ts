@@ -282,7 +282,6 @@ export default async function review(
 			await printDiagnostics({
 				diagnostics: res.diagnostics,
 				suppressions: [],
-				excludeFooter: true,
 				printerOptions: {
 					processor: new DiagnosticsProcessor(),
 					reporter,

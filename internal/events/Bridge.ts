@@ -209,7 +209,7 @@ export default class Bridge<
 		if (this.options.ignoreHeartbeat) {
 			return;
 		}
-		
+
 		if (!(this.hasHandshook && this.open)) {
 			return;
 		}

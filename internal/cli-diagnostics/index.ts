@@ -30,19 +30,17 @@ export async function printDiagnostics(
 		diagnostics,
 		suppressions,
 		printerOptions,
-		excludeFooter,
 	}: {
 		diagnostics: Diagnostic[];
 		suppressions: DiagnosticSuppression[];
 		printerOptions: DiagnosticsPrinterOptions;
-		excludeFooter?: boolean;
 	},
 ): Promise<DiagnosticsPrinter> {
 	const printer = new DiagnosticsPrinter(printerOptions);
 	printer.processor.addDiagnostics(diagnostics);
 	printer.processor.addSuppressions(suppressions);
 	await printer.print({
-		showFooter: !excludeFooter && printer.hasProblems(),
+		showFooter: false,
 	});
 	return printer;
 }
@@ -53,7 +51,6 @@ export async function printDiagnosticsToString(
 		suppressions: DiagnosticSuppression[];
 		printerOptions?: Partial<DiagnosticsPrinterOptions>;
 		format?: ReporterStream["format"];
-		excludeFooter?: boolean;
 		features?: Partial<TerminalFeatures>;
 	},
 ): Promise<string> {

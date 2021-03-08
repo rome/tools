@@ -110,7 +110,7 @@ export function decodeSingleMessageRSERStream(
 			"data",
 			(chunk) => {
 				if (!ArrayBuffer.isView(chunk)) {
-					throw new Error(`ReadStream did not emit an ArrayBufferView`);
+					throw new Error("ReadStream did not emit an ArrayBufferView");
 				}
 				decodeStream.append(chunk);
 			},

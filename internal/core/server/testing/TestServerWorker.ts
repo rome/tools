@@ -13,7 +13,7 @@ import {
 	deriveDiagnosticFromErrorStructure,
 } from "@internal/diagnostics";
 import {markup} from "@internal/markup";
-import {Reporter, ReporterProgress} from "@internal/cli-reporter";
+import {ReporterProgress} from "@internal/cli-reporter";
 import {
 	AbsoluteFilePathMap,
 	AbsoluteFilePathSet,
@@ -76,7 +76,9 @@ export default class TestServerWorker {
 		// Start debugger
 		const {inspectorUrl} = await bridge.events.inspectorDetails.call();
 		if (inspectorUrl !== undefined) {
-			const client = new InspectorClient(await createWebSocketClient(inspectorUrl));
+			const client = new InspectorClient(
+				await createWebSocketClient(inspectorUrl),
+			);
 			this.inspector = client;
 			this.thread.resources.add(client);
 

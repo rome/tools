@@ -13,7 +13,7 @@ import {createFilePath} from "../factories";
 import {FSWatcher} from "@internal/fs";
 import {AbsoluteFilePathSet, MixedPathMap} from "../collections";
 import fs = require("fs");
-import { toDataView, toUintArray8 } from "@internal/binary";
+import {toDataView, toUintArray8} from "@internal/binary";
 
 export default class AbsoluteFilePath
 	extends ReadableBasePath<ParsedPathAbsolute, AbsoluteFilePath> {

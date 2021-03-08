@@ -4,7 +4,7 @@ import {RSERValue} from "./types";
 import RSERBufferParser from "./RSERBufferParser";
 import {encodeValueToRSERMessage} from ".";
 import RSERWriterCounter from "./RSERWriterCounter";
-import { getByteLength, toDataView, toUintArray8 } from "@internal/binary";
+import {toDataView, toUintArray8} from "@internal/binary";
 
 type State = {
 	// INIT: Waiting on stream header

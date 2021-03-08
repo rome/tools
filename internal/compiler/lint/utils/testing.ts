@@ -128,7 +128,6 @@ async function testLintExpect(
 		await printDiagnosticsToString({
 			diagnostics,
 			suppressions: res.suppressions,
-			excludeFooter: true,
 			printerOptions: {
 				fileHandlers: [
 					{

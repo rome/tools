@@ -55,7 +55,6 @@ const promise = createFixtureTests(async (fixture, t) => {
 			const printed = await printDiagnosticsToString({
 				diagnostics,
 				suppressions: [],
-				excludeFooter: true,
 			});
 			t.namedSnapshot("diagnostics", printed, undefined, {filename: outputFile});
 		}
