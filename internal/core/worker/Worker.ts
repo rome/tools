@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
- import {ModuleSignature, TypeCheckProvider} from "@internal/js-analysis";
+import {ModuleSignature, TypeCheckProvider} from "@internal/js-analysis";
 import {
 	WorkerBuffer,
 	WorkerBufferPatch,

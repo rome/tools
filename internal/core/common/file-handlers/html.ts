@@ -1,4 +1,4 @@
-import { tokenizeHTML } from '@internal/html-parser';
+import {parseHTML, tokenizeHTML} from "@internal/html-parser";
 /**
  * Copyright (c) Facebook, Inc. and its affiliates.
  *
@@ -7,7 +7,6 @@ import { tokenizeHTML } from '@internal/html-parser';
  */
 
 import {PartialExtensionHandler} from "./types";
-import {parseHTML} from "@internal/html-parser";
 
 // These are extensions that be implicitly tried when a file is referenced
 // This is mostly for compatibility with Node.js projects. This list should not
