@@ -571,11 +571,10 @@ export default class ServerRequest {
 	}
 
 	public async printDiagnostics(
-		{diagnostics, suppressions = [], printerOptions, excludeFooter}: {
+		{diagnostics, suppressions = [], printerOptions}: {
 			diagnostics: Diagnostic[];
 			suppressions?: DiagnosticSuppression[];
 			printerOptions?: DiagnosticsPrinterOptions;
-			excludeFooter?: boolean;
 		},
 	) {
 		this.logDiagnostics(diagnostics);
@@ -583,7 +582,6 @@ export default class ServerRequest {
 		await printDiagnostics({
 			diagnostics,
 			suppressions,
-			excludeFooter: excludeFooter !== false,
 			printerOptions: {
 				reporter: this.reporter,
 				processor: this.createDiagnosticsProcessor(),
