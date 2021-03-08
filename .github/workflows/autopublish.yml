@@ -12,6 +12,8 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       changed: ${{ steps.check.outputs.changed }}
+      version: ${{ steps.check.outputs.version }}
+      type: ${{ steps.check.outputs.type }}
     steps:
       - uses: actions/checkout@v2
 
@@ -40,18 +42,25 @@ jobs:
       - name: Build Release
         run: ./rome run scripts/build-release dist
 
-      - name: Publish to npm
-        run: npm publish --tag latest
-        working-directory: dist
+      - name: Publish to npm as latest
+        if: needs.check.outputs.type != 'prerelease'
+        run: npm publish dist --tag latest
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Publish to npm as prerelease
+        if: needs.check.outputs.type == 'prerelease'
+        run: npm publish dist --tag prerelease
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Update latest branch
+        if: needs.check.outputs.type != 'prerelease'
         uses: Embraser01/update-git-branch-action@v1.0.0
         with:
           branch: latest
-          force: 1 # To push-force to the branch
-          githubToken: ${{ secrets.PAT_TOKEN }}
+          force: 1
+          githubToken: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Create Release and tag
         uses: actions/create-release@v1
@@ -60,9 +69,5 @@ jobs:
         with:
           tag_name: ${{ needs.check.outputs.version }}
           release_name: Release ${{ needs.check.outputs.version }}
-          body: |
-            Changes in this Release
-            - First Change
-            - Second Change
           draft: false
           prerelease: false

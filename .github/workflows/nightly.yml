@@ -18,8 +18,7 @@ jobs:
         run: ./rome run scripts/build-nightly
       # Publish to npm
       - name: Publish to npm
-        run: npm publish --access public --tag nightly
-        working-directory: dist
+        run: npm publish dist --tag nightly
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
       # TODO create a git tag
