@@ -112,7 +112,7 @@ export default class TestServerWorker {
 				this.runner.files.assert(testPath).onDiagnostics();
 			}
 
-			runner.printer.processor.addDiagnostic(diagnostic);
+			runner.addDiagnostic(diagnostic);
 		});
 	}
 

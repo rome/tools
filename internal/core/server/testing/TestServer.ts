@@ -12,6 +12,8 @@ import {
 	descriptions,
 	diagnosticLocationToMarkupFilelink,
 	getDiagnosticsFromError,
+	Diagnostic,
+	equalCategoryNames,
 } from "@internal/diagnostics";
 import {Server, ServerRequest, TestRef} from "@internal/core";
 import {DiagnosticsPrinter} from "@internal/cli-diagnostics";
@@ -112,6 +114,7 @@ export default class TestServer {
 		this.focusedTests = [];
 		this.testFilesStack = [];
 		this.runningTests = new ExtendedMap("runningTests");
+		this.needsSnapshotUpdate = false;
 
 		this.sourceMaps = new SourceMapConsumerCollection();
 		this.printer = opts.request.createDiagnosticsPrinter({
@@ -146,6 +149,7 @@ export default class TestServer {
 
 	public testFilesStack: AbsoluteFilePath[];
 
+	private needsSnapshotUpdate: boolean;
 	private runningTests: ExtendedMap<
 		string,
 		{
@@ -179,6 +183,14 @@ export default class TestServer {
 		}
 
 		this.printer.processor.addDiagnostics(diagnostics);
+	}
+
+	public addDiagnostic(diagnostic: Diagnostic) {
+		if (equalCategoryNames(diagnostic.description.category, DIAGNOSTIC_CATEGORIES["tests/snapshots/incorrect"])) {
+			this.needsSnapshotUpdate = true;
+		}
+
+		this.printer.processor.addDiagnostic(diagnostic);
 	}
 
 	private async setupWorkers(): Promise<TestServerWorker[]> {
@@ -676,11 +688,20 @@ export default class TestServer {
 		}
 	}
 
+	private printSnapshotSuggestion(reporter: Reporter) {
+		if (this.needsSnapshotUpdate) {
+			reporter.info(markup`To update outdated snapshots run`);
+			reporter.command("rome test --update-snapshots");
+			reporter.br();
+		}
+	}
+
 	private throwPrinter() {
 		const {printer} = this;
 
 		printer.onFooterPrint(async (reporter, isError) => {
 			this.printCoverageReport(isError);
+			this.printSnapshotSuggestion(reporter);
 			this.printSnapshotCounts(reporter);
 			this.printFocusedTestWarning(reporter);
 
