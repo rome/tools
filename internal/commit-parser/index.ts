@@ -1,8 +1,6 @@
-import {CommitRoot} from "@internal/ast";
 import {descriptions} from "@internal/diagnostics";
 import {ParserOptions, TokenValues, createParser} from "@internal/parser-core";
-
-import {Symbols, Tokens} from "./types";
+import {Commit, Symbols, Tokens} from "./types";
 
 type CommitParserTypes = {
 	tokens: Tokens;
@@ -10,6 +8,8 @@ type CommitParserTypes = {
 	options: ParserOptions;
 	meta: void;
 };
+
+export {Commit};
 
 const commitParser = createParser<CommitParserTypes>({
 	diagnosticLanguage: "text",
@@ -47,7 +47,7 @@ const commitParser = createParser<CommitParserTypes>({
 	},
 });
 
-export function parseCommit(opts: ParserOptions): CommitRoot {
+export function parseCommit(opts: ParserOptions): Commit {
 	const parser = commitParser.create(opts);
 	const start = parser.getPosition();
 
@@ -157,17 +157,15 @@ export function parseCommit(opts: ParserOptions): CommitRoot {
 		breaking = true;
 	}
 
-	return parser.finishNode(
-		start,
-		parser.finishRoot({
-			type: "CommitRoot",
-			breaking,
-			commitType: commitType.toLowerCase(),
-			custom,
-			rawBody: rawBody.trim(),
-			scope,
-		}),
-	);
+	return {
+		type: "Commit",
+		breaking,
+		commitType: commitType.toLowerCase(),
+		custom,
+		rawBody: rawBody.trim(),
+		scope,
+		loc: parser.finishLoc(start),
+	};
 }
 
 export function tokenizeCommit(opts: ParserOptions): TokenValues<Tokens>[] {

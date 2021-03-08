@@ -14,13 +14,11 @@ const builders: ExtendedMap<string, BuilderMethod<any>> = new ExtendedMap(
 );
 export default builders;
 
-/* GENERATED:START(hash:2412c786d0e011248aff2fb8d31ef039e097322b,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/ast` to update. */
+/* GENERATED:START(hash:78154f655a947be8404022130e668dc7c114b7b5,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/ast` to update. */
 import CommentBlock from "./common/comments/CommentBlock";
 builders.set("CommentBlock", CommentBlock);
 import CommentLine from "./common/comments/CommentLine";
 builders.set("CommentLine", CommentLine);
-import CommitRoot from "./common/commit/CommitRoot";
-builders.set("CommitRoot", CommitRoot);
 import CSSAtRule from "./css/core/CSSAtRule";
 builders.set("CSSAtRule", CSSAtRule);
 import CSSAttributeSelector from "./css/selectors/CSSAttributeSelector";
