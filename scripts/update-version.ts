@@ -42,8 +42,8 @@ export async function main(args: string[]) {
 	// Ensure git isn"t dirty
 	const gitRes = child.spawnSync("git", ["diff", "--exit-code"]);
 	if (gitRes.status === 1) {
-		//reporter.error(markup`Uncommitted changes`);
-		//return 1;
+		reporter.error(markup`Uncommitted changes`);
+		return 1;
 	}
 
 	// Get current version so we can revert to it later if necessary

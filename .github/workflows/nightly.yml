@@ -1,0 +1,25 @@
+name: Nightly Release
+on:
+  push:
+  pull_request:
+  schedule:
+    - cron: '0 0 * * *'
+
+jobs:
+  release:
+    environment: nightly
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: '14.16.0'
+          registry-url: 'https://registry.npmjs.org'
+      - name: Build Release
+        run: ./rome run scripts/build-nightly
+      # Publish to npm
+      - name: Publish to npm
+        run: npm publish --access public
+        working-directory: dist
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+      # TODO: Publish to GitHub?
