@@ -576,21 +576,17 @@ export default class DiagnosticsPrinter extends Error {
 			case "github-actions": {
 				const parts = [];
 
-				if (path !== undefined) {
-					if (path.isAbsolute() && path.isRelativeTo(this.cwd)) {
-						parts.push(`file=${this.cwd.relative(path).join()}`);
-					} else {
-						parts.push(`file=${path.join()}`);
-					}
-				}
+				if (path !== undefined && path.isAbsolute()) {
+					parts.push(`file=${this.cwd.relative(path).join()}`);
 
-				if (start !== undefined) {
-					if (start.line !== undefined) {
-						parts.push(`line=${start.line.valueOf()}`);
-					}
+					if (start !== undefined) {
+						if (start.line !== undefined) {
+							parts.push(`line=${start.line.valueOf()}`);
+						}
 
-					if (start.column !== undefined) {
-						parts.push(`col=${start.column.valueOf()}`);
+						if (start.column !== undefined) {
+							parts.push(`col=${start.column.valueOf()}`);
+						}
 					}
 				}
 
