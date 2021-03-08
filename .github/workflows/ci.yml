@@ -18,7 +18,7 @@ jobs:
         with:
           node-version: '12.8.1'
       - name: rome ci
-        run: ./rome ci --logs all
+        run: ./rome ci
 
   tests:
     name: rome test
