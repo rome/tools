@@ -42,20 +42,25 @@ jobs:
       - name: Build Release
         run: ./rome run scripts/build-release dist
 
+      - name: Check if prerelease
+        id: check-prelease
+        if: needs.check.outputs.type == 'prerelease' || needs.check.outputs.type == 'prepatch' || needs.check.outputs.type == 'premajor' || needs.check.outputs.type == 'preminor'
+        run: echo "::set-output name=prerelease::true"
+
       - name: Publish to npm as latest
-        if: needs.check.outputs.type != 'prerelease'
+        if: steps.check-prelease.outputs.prelease != 'true'
         run: npm publish dist --tag latest
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Publish to npm as prerelease
-        if: needs.check.outputs.type == 'prerelease'
+        if: steps.check-prelease.outputs.prelease = 'true'
         run: npm publish dist --tag prerelease
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Update latest branch
-        if: needs.check.outputs.type != 'prerelease'
+        if: steps.check-prelease.outputs.prelease != 'true'
         uses: Embraser01/update-git-branch-action@v1.0.0
         with:
           branch: latest
@@ -67,7 +72,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: ${{ needs.check.outputs.version }}
-          release_name: Release ${{ needs.check.outputs.version }}
+          tag_name: v${{ needs.check.outputs.version }}
+          release_name: v${{ needs.check.outputs.version }}
           draft: false
           prerelease: false
