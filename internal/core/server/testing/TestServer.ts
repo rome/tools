@@ -690,7 +690,7 @@ export default class TestServer {
 
 	private printSnapshotSuggestion(reporter: Reporter) {
 		if (this.needsSnapshotUpdate) {
-			reporter.info(markup`To update outdated snapshots run`);
+			reporter.info(markup`Outdated snapshots found. To update run`);
 			reporter.command("rome test --update-snapshots");
 			reporter.br();
 		}
