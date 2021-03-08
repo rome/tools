@@ -54,7 +54,7 @@ JSRoot {
 	corrupt: false
 	diagnostics: [
 		{
-			origins: [{category: "parse"}]
+			origins: [{entity: "ParserCore<js>"}]
 			description: {advice: [], category: ["parse"], categoryValue: "js", message: ["eval", RAW_MARKUP {value: " is a reserved word"}]}
 			location: {
 				language: "js"

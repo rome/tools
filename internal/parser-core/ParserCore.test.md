@@ -78,7 +78,7 @@
 	corrupt: false
 	diagnostics: [
 		{
-			origins: [{category: "parse"}]
+			origins: [{entity: "ParserCore<unknown>"}]
 			description: {
 				advice: []
 				category: ["parse"]
@@ -122,7 +122,7 @@
 	corrupt: false
 	diagnostics: [
 		{
-			origins: [{category: "parse"}]
+			origins: [{entity: "ParserCore<unknown>"}]
 			description: {
 				advice: []
 				category: ["parse"]

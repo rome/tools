@@ -7,7 +7,7 @@
 
 import {
 	Diagnostic,
-	DiagnosticSuppressions,
+	DiagnosticSuppression,
 	DiagnosticsProcessor,
 } from "@internal/diagnostics";
 import {DiagnosticsPrinterOptions} from "./types";
@@ -30,19 +30,17 @@ export async function printDiagnostics(
 		diagnostics,
 		suppressions,
 		printerOptions,
-		excludeFooter,
 	}: {
 		diagnostics: Diagnostic[];
-		suppressions: DiagnosticSuppressions;
+		suppressions: DiagnosticSuppression[];
 		printerOptions: DiagnosticsPrinterOptions;
-		excludeFooter?: boolean;
 	},
 ): Promise<DiagnosticsPrinter> {
 	const printer = new DiagnosticsPrinter(printerOptions);
 	printer.processor.addDiagnostics(diagnostics);
 	printer.processor.addSuppressions(suppressions);
 	await printer.print({
-		showFooter: !excludeFooter && printer.hasProblems(),
+		showFooter: false,
 	});
 	return printer;
 }
@@ -50,10 +48,9 @@ export async function printDiagnostics(
 export async function printDiagnosticsToString(
 	opts: {
 		diagnostics: Diagnostic[];
-		suppressions: DiagnosticSuppressions;
+		suppressions: DiagnosticSuppression[];
 		printerOptions?: Partial<DiagnosticsPrinterOptions>;
 		format?: ReporterStream["format"];
-		excludeFooter?: boolean;
 		features?: Partial<TerminalFeatures>;
 	},
 ): Promise<string> {

@@ -72,7 +72,7 @@ export type DiagnosticCategory =
 	| ["tests", "failure"]
 	| ["tests", "fixtureOptions"]
 	| ["tests", "logs"]
-	| ["tests", "noneDeclared"]
+	| ["tests", "empty"]
 	| ["tests", "snapshots", "frozen"]
 	| ["tests", "snapshots", "inlineMissingReceived"]
 	| ["tests", "snapshots", "inlineCollision"]
@@ -483,7 +483,7 @@ export const DIAGNOSTIC_CATEGORIES: {
 	"tests/failure": ["tests", "failure"],
 	"tests/fixtureOptions": ["tests", "fixtureOptions"],
 	"tests/logs": ["tests", "logs"],
-	"tests/noneDeclared": ["tests", "noneDeclared"],
+	"tests/empty": ["tests", "empty"],
 	"tests/snapshots/frozen": ["tests", "snapshots", "frozen"],
 	"tests/snapshots/inlineMissingReceived": [
 		"tests",

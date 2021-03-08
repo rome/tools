@@ -17,9 +17,10 @@ import {
 	ParserCoreState,
 	ParserUnexpectedOptions,
 	Position,
+	SourceLocation,
 	comparePositions,
 	createParser,
-	derivePositionKey,
+	deriveLocationKey,
 } from "@internal/parser-core";
 import {JSParserOptions} from "./options";
 import {DiagnosticDescription, descriptions} from "@internal/diagnostics";
@@ -205,14 +206,12 @@ export function hasScope(parser: JSParser, type: ScopeType): boolean {
 	return scope !== undefined && scope.length > 0;
 }
 
-export function addParenthesized(parser: JSParser, start: Position) {
-	parser.meta.parenthesized.add(derivePositionKey(start));
+export function addParenthesized(parser: JSParser, loc: SourceLocation) {
+	parser.meta.parenthesized.add(deriveLocationKey(loc));
 }
 
 export function isParenthesized(parser: JSParser, node: AnyNode): boolean {
-	return parser.meta.parenthesized.has(
-		derivePositionKey(parser.getLoc(node).start),
-	);
+	return parser.meta.parenthesized.has(deriveLocationKey(parser.getLoc(node)));
 }
 
 export function setState(parser: JSParser, newState: ParserCoreState & State) {

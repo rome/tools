@@ -1,9 +1,8 @@
 import {AnyNode, AnyRoot} from "@internal/ast";
 
-const roots = new Set([
+const roots: Set<string> = new Set([
 	"JSRoot",
 	"CSSRoot",
-	"CommitRoot",
 	"MarkdownRoot",
 	"HTMLRoot",
 ]);

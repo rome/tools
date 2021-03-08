@@ -59,6 +59,7 @@ import {PathLocker} from "@internal/async/lockers";
 import {markup} from "@internal/markup";
 import {ReporterNamespace} from "@internal/cli-reporter";
 import {ExtendedMap} from "@internal/collections";
+import {promiseAllFrom} from "@internal/async";
 
 export type ProjectConfigSource = {
 	consumer: Consumer;
@@ -398,13 +399,14 @@ export default class ProjectManager {
 			const ownedPaths: AbsoluteFilePath[] = Array.from(
 				this.server.memoryFs.glob(project.directory),
 			);
-			await Promise.all(
-				ownedPaths.map((path) =>
+			await promiseAllFrom(
+				ownedPaths,
+				(path) =>
 					this.server.fileAllocator.evict(
 						path,
 						markup`project dependency change`,
 					)
-				),
+				,
 			);
 			for (const path of ownedPaths) {
 				this.handleDeleted(path);
@@ -680,6 +682,11 @@ export default class ProjectManager {
 		const promises = [];
 
 		for (const worker of workers) {
+			// Script runners do not care
+			if (worker.type === "script-runner") {
+				continue;
+			}
+
 			promises.push(worker.bridge.events.updateProjects.call(workerProjects));
 			promises.push(
 				worker.bridge.events.updateManifests.call({
@@ -747,6 +754,11 @@ export default class ProjectManager {
 		}
 
 		return projects;
+	}
+
+	public getRootProjectForPath(path: AbsoluteFilePath): ProjectDefinition {
+		const project = this.assertProjectExisting(path);
+		return project.root ?? project;
 	}
 
 	public assertProjectExisting(path: AbsoluteFilePath): ProjectDefinition {
@@ -822,12 +834,9 @@ export default class ProjectManager {
 			return syncProject;
 		}
 
-		const processor = DiagnosticsProcessor.createImmediateThrower([
-			{
-				category: "project-manager",
-				message: "Find project",
-			},
-		]);
+		const processor = DiagnosticsProcessor.createImmediateThrower({
+			entity: "ProjectManager.findProject",
+		});
 
 		// If not then let's access the file system and try to find one
 		for (const dir of cwd.getChain(true)) {

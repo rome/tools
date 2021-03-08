@@ -9,7 +9,7 @@ import {
 import {
 	Diagnostic,
 	DiagnosticIntegrity,
-	DiagnosticSuppressions,
+	DiagnosticSuppression,
 } from "@internal/diagnostics";
 import {BridgeClient, BridgeServer} from "@internal/events";
 import {FormatterOptions} from "@internal/formatter";
@@ -46,7 +46,7 @@ export type WorkerBuffer = {
 	mtimeNs: bigint;
 };
 
-export type WorkerType = "test" | "processor";
+export type WorkerType = "test-runner" | "file-processor" | "script-runner";
 
 export type ThreadWorkerContainer = {
 	type: WorkerType;
@@ -73,6 +73,7 @@ export type PartialWorkerOptions = {
 	id: number;
 	cacheWriteDisabled: boolean;
 	cacheReadDisabled: boolean;
+	env: Dict<undefined | string>;
 	inspectorPort: undefined | number;
 };
 
@@ -173,7 +174,7 @@ export type WorkerFormatResult = {
 	original: string;
 	formatted: string;
 	diagnostics: Diagnostic[];
-	suppressions: DiagnosticSuppressions;
+	suppressions: DiagnosticSuppression[];
 };
 
 export type WorkerIntegrationTiming = {
@@ -187,7 +188,7 @@ export type WorkerIntegrationTimings = Map<string, WorkerIntegrationTiming>;
 export type WorkerLintResult = {
 	save: undefined | RecoverySaveFile;
 	diagnostics: Diagnostic[];
-	suppressions: DiagnosticSuppressions;
+	suppressions: DiagnosticSuppression[];
 	timings: WorkerIntegrationTimings;
 };
 
@@ -217,6 +218,7 @@ export type TestRef = {
 export type TestWorkerPrepareTestOptions = {
 	partial: boolean;
 	path: AbsoluteFilePath;
+	contextDirectory: AbsoluteFilePath;
 	projectDirectory: string;
 	assembled: AssembledBundle;
 	cwd: string;

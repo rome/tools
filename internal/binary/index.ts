@@ -17,7 +17,7 @@ export function encodeTextToArrayBuffer(str: string): ArrayBuffer {
 }
 
 export function getByteLength(val: BufferSourceLike | FSReadStream): number {
-	if (isBufferSource(val)) {
+	if (ArrayBuffer.isView(val) || val instanceof ArrayBuffer) {
 		return val.byteLength;
 	} else if (typeof val === "string") {
 		return getUTF8ByteLength(val);
@@ -26,23 +26,27 @@ export function getByteLength(val: BufferSourceLike | FSReadStream): number {
 	}
 }
 
-export function getArrayBuffer(val: BufferSourceLike): ArrayBuffer {
-	if (val instanceof ArrayBuffer) {
+export function toDataView(val: BufferSourceLike): DataView {
+	if (val instanceof DataView) {
 		return val;
 	} else if (ArrayBuffer.isView(val)) {
-		return val.buffer;
-	} else {
-		return encodeTextToArrayBuffer(val);
-	}
-}
-
-export function getArrayBufferView(val: BufferSourceLike): ArrayBufferView {
-	if (ArrayBuffer.isView(val)) {
-		return val;
+		return new DataView(val.buffer, val.byteOffset, val.byteLength);
 	} else if (val instanceof ArrayBuffer) {
 		return new DataView(val);
 	} else {
 		return new DataView(encodeTextToArrayBuffer(val));
+	}
+}
+
+export function toUintArray8(val: BufferSourceLike): Uint8Array {
+	if (val instanceof Uint8Array) {
+		return val;
+	} else if (ArrayBuffer.isView(val)) {
+		return new Uint8Array(val.buffer, val.byteOffset, val.byteLength);
+	} else if (val instanceof ArrayBuffer) {
+		return new Uint8Array(val);
+	} else {
+		return new Uint8Array(encodeTextToArrayBuffer(val));
 	}
 }
 
@@ -54,7 +58,7 @@ export function decodeUTF8(val: BufferSourceLike): string {
 	}
 }
 
-export function getNodeBuffer(
+export function toNodeBuffer(
 	val: BufferSourceLike,
 	encoding?: BufferEncoding,
 ): Buffer {
@@ -63,14 +67,14 @@ export function getNodeBuffer(
 	} else if (val instanceof ArrayBuffer) {
 		return Buffer.from(val);
 	} else {
-		return Buffer.from(val.buffer);
+		return Buffer.from(val.buffer, val.byteOffset, val.byteLength);
 	}
 }
 
 export function encodeBase64(val: BufferSourceLike): string {
-	return getNodeBuffer(val).toString("base64");
+	return toNodeBuffer(val).toString("base64");
 }
 
 export function decodeBase64(val: string): ArrayBuffer {
-	return getNodeBuffer(val, "base64").buffer;
+	return toNodeBuffer(val, "base64").buffer;
 }

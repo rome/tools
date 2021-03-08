@@ -32,7 +32,7 @@ import {
 	DiagnosticCategory,
 	DiagnosticDescription,
 	DiagnosticLocation,
-	DiagnosticSuppressions,
+	DiagnosticSuppression,
 	DiagnosticsError,
 	DiagnosticsProcessor,
 	createSingleDiagnosticsError,
@@ -358,7 +358,7 @@ export default class ServerRequest {
 				},
 				beforeFileWrite: async (path, fd) => {
 					const data = await fd.readFile();
-					await this.server.recoveryStore.save(this, path, data.buffer);
+					await this.server.recoveryStore.save(this, path, data);
 				},
 				unexpectedModified: (path, expectedMtime, actualMtime) => {
 					this.logger.info(
@@ -571,11 +571,10 @@ export default class ServerRequest {
 	}
 
 	public async printDiagnostics(
-		{diagnostics, suppressions = [], printerOptions, excludeFooter}: {
+		{diagnostics, suppressions = [], printerOptions}: {
 			diagnostics: Diagnostic[];
-			suppressions?: DiagnosticSuppressions;
+			suppressions?: DiagnosticSuppression[];
 			printerOptions?: DiagnosticsPrinterOptions;
-			excludeFooter?: boolean;
 		},
 	) {
 		this.logDiagnostics(diagnostics);
@@ -583,7 +582,6 @@ export default class ServerRequest {
 		await printDiagnostics({
 			diagnostics,
 			suppressions,
-			excludeFooter: excludeFooter !== false,
 			printerOptions: {
 				reporter: this.reporter,
 				processor: this.createDiagnosticsProcessor(),
@@ -614,9 +612,8 @@ export default class ServerRequest {
 		const {requestFlags} = this.query;
 		const processor = opts.processor ?? this.createDiagnosticsProcessor();
 
-		processor.unshiftOrigin({
-			category: "server",
-			message: `${this.query.commandName} command was dispatched`,
+		processor.normalizer.unshiftOrigin({
+			entity: `ServerRequest<${this.query.commandName}>`,
 		});
 
 		const uidRequestFileHandler: DiagnosticsFileHandler = {
@@ -635,7 +632,7 @@ export default class ServerRequest {
 		};
 
 		return new DiagnosticsPrinter({
-			streaming: true,
+			streaming: !this.query.requestFlags.programmatic,
 			reporter: this.reporter,
 			cwd: this.client.flags.cwd,
 			wrapErrors: true,
@@ -1333,12 +1330,10 @@ export default class ServerRequest {
 
 			printer = this.createDiagnosticsPrinter({
 				processor: this.createDiagnosticsProcessor({
-					origins: [
-						{
-							category: "internal",
-							message: "Derived diagnostics from thrown error",
-						},
-					],
+					origin: {
+						entity: "ServerRequest",
+						message: "Derived diagnostics from thrown error",
+					},
 				}),
 			});
 
@@ -1349,7 +1344,7 @@ export default class ServerRequest {
 		// When we're in review mode we don't expect to show any diagnostics because they'll be intercepted in the client command
 		// We will always print invalid request errors
 		let shouldPrint = true;
-		if (this.query.requestFlags.review) {
+		if (this.query.requestFlags.programmatic) {
 			shouldPrint = false;
 		}
 		if (rawErr instanceof ServerRequestInvalid) {

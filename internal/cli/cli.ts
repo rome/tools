@@ -246,6 +246,7 @@ export default async function cli() {
 			};
 
 			const requestFlags: ClientRequestFlags = {
+				programmatic: false,
 				unsafeWrites: c.get(
 					"unsafeWrites",
 					{

@@ -57,18 +57,14 @@ export default class DevelopRequest {
 	private url: URLPath;
 	private pathname: RelativePath;
 
-	private end(chunk?: string | ArrayBuffer): Promise<void> {
+	private end(chunk?: string | ArrayBufferView): Promise<void> {
 		return new Promise((resolve) => {
-			if (chunk instanceof ArrayBuffer) {
-				chunk = Buffer.from(chunk);
-			}
-
 			this.res.end(chunk, resolve);
 		});
 	}
 
-	private pipe(val: stream.Readable | string | ArrayBuffer): Promise<void> {
-		if (val instanceof ArrayBuffer || typeof val === "string") {
+	private pipe(val: stream.Readable | string | ArrayBufferView): Promise<void> {
+		if (ArrayBuffer.isView(val) || typeof val === "string") {
 			return this.end(val);
 		}
 

@@ -19,7 +19,7 @@ JSRoot {
 	corrupt: false
 	diagnostics: [
 		{
-			origins: [{category: "parse"}]
+			origins: [{entity: "ParserCore<js>"}]
 			description: {
 				advice: [
 					log {

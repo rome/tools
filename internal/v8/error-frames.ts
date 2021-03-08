@@ -107,6 +107,24 @@ function buildStackString(err: Error): string {
 	return lines.join("\n");
 }
 
+function cleanIdentifier(name: null | string): undefined | string {
+	if (name == null) {
+		return undefined;
+	} else if (name.startsWith("___R$")) {
+		// We produce these really long identifiers in the bundler, until we get better source map support
+		// for these, implicitly handle them
+		const parts = name.split("$");
+		const part = parts.pop()!;
+		if (part === "default") {
+			return parts.pop()! ?? part;
+		} else {
+			return part;
+		}
+	} else {
+		return name;
+	}
+}
+
 function noNull<T>(val: null | T): undefined | T {
 	if (val === null) {
 		return undefined;
@@ -135,9 +153,9 @@ function addErrorFrames(err: ErrorWithFrames, frames: NodeJS.CallSite[]): void {
 		}
 
 		let frame: ErrorFrame = {
-			typeName: noNull(frameApi.getTypeName()),
-			functionName: noNull(frameApi.getFunctionName()),
-			methodName: noNull(frameApi.getMethodName()),
+			typeName: cleanIdentifier(frameApi.getTypeName()),
+			functionName: cleanIdentifier(frameApi.getFunctionName()),
+			methodName: cleanIdentifier(frameApi.getMethodName()),
 			isTopLevel: frameApi.isToplevel(),
 			isEval: frameApi.isEval(),
 			isNative: frameApi.isNative(),

@@ -41,7 +41,7 @@ import {
 	ClientRequestFlags,
 	DEFAULT_CLIENT_REQUEST_FLAGS,
 } from "../common/types/client";
-import {AbsoluteFilePath} from "@internal/path";
+import {AbsoluteFilePath, HOME_PATH} from "@internal/path";
 import {mergeObjects} from "@internal/typescript-helpers";
 import LSPServer from "./lsp/LSPServer";
 import ServerReporter from "./ServerReporter";
@@ -61,6 +61,7 @@ import {
 } from "@internal/resources";
 import ServerClient from "./ServerClient";
 import {Profiler} from "@internal/v8";
+import {promiseAllFrom} from "@internal/async";
 
 export type ServerOptions = {
 	inbandOnly?: boolean;
@@ -171,6 +172,7 @@ export default class Server {
 			{
 				markupOptions: {
 					userConfig: this.userConfig,
+					home: HOME_PATH,
 					humanizeFilename: (path) => {
 						if (path.isAbsolute()) {
 							const remote = this.projectManager.getRemoteFromLocalPath(
@@ -293,10 +295,11 @@ export default class Server {
 	public async updateWorkerLogsSubscriptions() {
 		const enabled = this.hasWorkerLogsSubscriptions();
 
-		await Promise.all(
-			this.workerManager.getWorkers().map((worker) => {
+		await promiseAllFrom(
+			this.workerManager.getWorkers(),
+			(worker) => {
 				return worker.bridge.events.setLogs.call(enabled);
-			}),
+			},
 		);
 	}
 
@@ -429,16 +432,15 @@ export default class Server {
 	}
 
 	public createDisconnectedDiagnosticsProcessor(
-		origins: DiagnosticOrigin[],
+		origin?: DiagnosticOrigin,
 	): DiagnosticsProcessor {
 		const processor = this.createDiagnosticsProcessor({
-			origins: [
-				...origins,
-				{
-					category: "server",
-					message: "Created disconnected diagnostics collector",
-				},
-			],
+			origin,
+		});
+
+		processor.normalizer.unshiftOrigin({
+			entity: "server",
+			message: "Created disconnected diagnostics collector",
 		});
 
 		processor.insertDiagnosticsEvent.subscribe(() => {
@@ -466,10 +468,6 @@ export default class Server {
 	public async end() {
 		this.logger.info(markup`[Server] Teardown triggered`);
 
-		// Unwatch all project directories
-		// We do this before anything else as we don't want events firing while we're in a teardown state
-		this.memoryFs.unwatchAll();
-
 		// Cancel all queries in flight
 		for (const client of this.connectedClients) {
 			for (const req of client.requestsInFlight) {
@@ -479,6 +477,10 @@ export default class Server {
 			// Kill socket
 			await client.bridge.end();
 		}
+
+		// memoryFs will be ended as a result of the resources release but make sure it's done first anyway to avoid
+		// emitting events
+		await this.memoryFs.end();
 
 		await this.resources.release();
 	}

@@ -10,6 +10,7 @@ import {ServerRequest, WorkerStatus} from "@internal/core";
 import {commandCategories} from "../../common/commands";
 import {createServerCommand} from "../commands";
 import {markup} from "@internal/markup";
+import {promiseAllFrom} from "@internal/async";
 
 type StatusResult = {
 	server: {
@@ -41,10 +42,9 @@ export default createServerCommand({
 		return {};
 	},
 	async callback({server}: ServerRequest): Promise<StatusResult> {
-		const workers = await Promise.all(
-			server.workerManager.getWorkers().map(async (
-				worker,
-			): Promise<StatusWorkerResult> => {
+		const workers = await promiseAllFrom(
+			server.workerManager.getWorkers(),
+			async (worker): Promise<StatusWorkerResult> => {
 				const workerStatus: WorkerStatus = await worker.bridge.events.status.call();
 
 				return {
@@ -55,7 +55,7 @@ export default createServerCommand({
 					ownedBytes: worker.byteCount,
 					ownedFileCount: worker.fileCount,
 				};
-			}),
+			},
 		);
 
 		const {heapTotal} = process.memoryUsage();

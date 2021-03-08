@@ -13,14 +13,14 @@ import * as signals from "./signals";
 import {
 	DIAGNOSTIC_CATEGORIES,
 	Diagnostic,
-	DiagnosticSuppressions,
+	DiagnosticSuppression,
 	equalCategoryNames,
 } from "@internal/diagnostics";
 
 function extractSuppressionsFromSource(
 	sourceText: string,
 ): {
-	suppressions: DiagnosticSuppressions;
+	suppressions: DiagnosticSuppression[];
 	diagnostics: Diagnostic[];
 } {
 	const ast = parseJS({

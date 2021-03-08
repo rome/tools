@@ -5,16 +5,12 @@
 ## `custom`
 
 ```javascript
-CommitRoot {
+Commit {
 	breaking: false
-	comments: []
 	commitType: "custom"
-	corrupt: false
 	custom: true
-	diagnostics: []
 	rawBody: "commit with a custom commit type"
 	scope: ""
-	path: RelativePath<custom/input.txt>
 	loc: SourceLocation custom/input.txt 1:0-1:39
 }
 ```

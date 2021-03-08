@@ -1,6 +1,6 @@
 import {ParsedPath, ParsedPathDataURI} from "../types";
 import {FilePathMemo, ReadableBasePath} from "../bases";
-import {decodeUTF8, encodeBase64, getArrayBuffer} from "@internal/binary";
+import {decodeUTF8, encodeBase64, toDataView} from "@internal/binary";
 import stream = require("stream");
 
 export default class DataURIPath
@@ -103,8 +103,8 @@ export default class DataURIPath
 		return true;
 	}
 
-	public async readFile(): Promise<ArrayBuffer> {
-		return getArrayBuffer(this.parsed.data);
+	public async readFile(): Promise<DataView> {
+		return toDataView(this.parsed.data);
 	}
 
 	public async readFileText(): Promise<string> {

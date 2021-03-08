@@ -8,18 +8,17 @@
 import {Reporter, ReporterNamespace} from "@internal/cli-reporter";
 import {
 	DIAGNOSTIC_CATEGORIES,
+	Diagnostic,
 	deriveDiagnosticFromError,
 	descriptions,
 	diagnosticLocationToMarkupFilelink,
+	equalCategoryNames,
 	getDiagnosticsFromError,
 } from "@internal/diagnostics";
 import {Server, ServerRequest, TestRef} from "@internal/core";
 import {DiagnosticsPrinter} from "@internal/cli-diagnostics";
 import {humanizeNumber} from "@internal/numbers";
-import {
-	AnyBridge,
-	isBridgeDisconnectedDiagnosticsError,
-} from "@internal/events";
+import {AnyBridge, isBridgeEndDiagnosticsError} from "@internal/events";
 import {CoverageCollector} from "@internal/v8";
 import {ManifestDefinition} from "@internal/codec-js-manifest";
 import {
@@ -47,6 +46,7 @@ import {
 import TestServerWorker from "@internal/core/server/testing/TestServerWorker";
 import TestServerFile from "@internal/core/server/testing/TestServerFile";
 import {ExtendedMap} from "@internal/collections";
+import {promiseAllFrom} from "@internal/async";
 
 function grammarNumberTests(num: number): StaticMarkup {
 	return markup`<grammarNumber plural="tests" singular="test">${String(num)}</grammarNumber>`;
@@ -114,16 +114,14 @@ export default class TestServer {
 		this.focusedTests = [];
 		this.testFilesStack = [];
 		this.runningTests = new ExtendedMap("runningTests");
+		this.needsSnapshotUpdate = false;
 
 		this.sourceMaps = new SourceMapConsumerCollection();
 		this.printer = opts.request.createDiagnosticsPrinter({
 			processor: this.request.createDiagnosticsProcessor({
-				origins: [
-					{
-						category: "test",
-						message: "Run initiated",
-					},
-				],
+				origin: {
+					entity: "TestServer",
+				},
 				sourceMaps: this.sourceMaps,
 			}),
 		});
@@ -151,6 +149,7 @@ export default class TestServer {
 
 	public testFilesStack: AbsoluteFilePath[];
 
+	private needsSnapshotUpdate: boolean;
 	private runningTests: ExtendedMap<
 		string,
 		{
@@ -177,7 +176,7 @@ export default class TestServer {
 		}
 
 		if (
-			isBridgeDisconnectedDiagnosticsError(err) &&
+			isBridgeEndDiagnosticsError(err) &&
 			this.ignoreBridgeEndError.has(bridge)
 		) {
 			return;
@@ -186,15 +185,29 @@ export default class TestServer {
 		this.printer.processor.addDiagnostics(diagnostics);
 	}
 
+	public addDiagnostic(diagnostic: Diagnostic) {
+		if (
+			equalCategoryNames(
+				diagnostic.description.category,
+				DIAGNOSTIC_CATEGORIES["tests/snapshots/incorrect"],
+			)
+		) {
+			this.needsSnapshotUpdate = true;
+		}
+
+		this.printer.processor.addDiagnostic(diagnostic);
+	}
+
 	private async setupWorkers(): Promise<TestServerWorker[]> {
 		const workers: Promise<TestServerWorker>[] = [];
 		for (let i = 0; i < MAX_WORKER_COUNT; i++) {
 			const inspectorPort = await findAvailablePort();
 
 			const container = await this.server.workerManager.spawnWorkerUnsafe({
-				type: "test",
+				type: "test-runner",
 				ghost: true,
 				inspectorPort,
+				env: this.request.client.env,
 			});
 
 			const worker = new TestServerWorker({
@@ -210,11 +223,9 @@ export default class TestServer {
 
 	public async init() {
 		const workers = await this.setupWorkers();
-
 		const fileQueue = await this.bundleTests();
 		await this.prepareTests(workers, fileQueue);
 		await this.runTests(workers);
-
 		this.throwPrinter();
 	}
 
@@ -263,8 +274,9 @@ export default class TestServer {
 			title: markup`Preparing test files`,
 		});
 		progress.setTotal(this.paths.size);
-		await Promise.all(
-			workers.map((worker) => worker.prepareAll(progress, fileQueue)),
+		await promiseAllFrom(
+			workers,
+			(worker) => worker.prepareAll(progress, fileQueue),
 		);
 		progress.end();
 
@@ -282,8 +294,8 @@ export default class TestServer {
 
 	private async runTests(workers: TestServerWorker[]) {
 		const runProgress = this.setupRunProgress(workers);
-		await Promise.all(workers.map((worker) => worker.run()));
-		await Promise.all(workers.map((worker) => worker.bridge.end()));
+		await promiseAllFrom(workers, (worker) => worker.run());
+		await promiseAllFrom(workers, (worker) => worker.thread.worker.terminate());
 		runProgress.teardown();
 	}
 
@@ -679,11 +691,20 @@ export default class TestServer {
 		}
 	}
 
+	private printSnapshotSuggestion(reporter: Reporter) {
+		if (this.needsSnapshotUpdate) {
+			reporter.info(markup`Outdated snapshots found. To update run`);
+			reporter.command("rome test --update-snapshots");
+			reporter.br();
+		}
+	}
+
 	private throwPrinter() {
 		const {printer} = this;
 
 		printer.onFooterPrint(async (reporter, isError) => {
 			this.printCoverageReport(isError);
+			this.printSnapshotSuggestion(reporter);
 			this.printSnapshotCounts(reporter);
 			this.printFocusedTestWarning(reporter);
 

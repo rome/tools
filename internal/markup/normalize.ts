@@ -49,7 +49,18 @@ function buildTag(
 			const {path, line, column, text} = buildFileLink(attributes, opts);
 			setAttributes.target = path.join();
 
-			if (isEmptyMarkup(inner) || opts.stripFilelinkText) {
+			let shouldInsertInner = isEmptyMarkup(inner);
+
+			// Don't insert inner unless we derived a special value for it
+			if (opts.humanizeFilename === undefined || text === path.format()) {
+				shouldInsertInner = false;
+			}
+
+			if (opts.stripFilelinkText) {
+				shouldInsertInner = true;
+			}
+
+			if (shouldInsertInner) {
 				inner = markup`${text}`;
 				modified = true;
 			}

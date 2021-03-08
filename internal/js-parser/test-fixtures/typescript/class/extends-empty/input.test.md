@@ -26,7 +26,7 @@ JSRoot {
 	corrupt: false
 	diagnostics: [
 		{
-			origins: [{category: "parse"}]
+			origins: [{entity: "ParserCore<js>"}]
 			description: {advice: [], category: ["parse"], categoryValue: "js", message: ["extends", RAW_MARKUP {value: " list cannot be empty"}]}
 			location: {
 				language: "js"

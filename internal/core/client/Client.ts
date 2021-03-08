@@ -25,7 +25,7 @@ import {forkProcess} from "../common/utils/fork";
 import {
 	BridgeClient,
 	Event,
-	isBridgeDisconnectedDiagnosticsError,
+	isBridgeEndDiagnosticsError,
 } from "@internal/events";
 import {Reporter, ReporterDerivedStreams} from "@internal/cli-reporter";
 import prettyFormat from "@internal/pretty-format";
@@ -56,7 +56,7 @@ import {
 	markupToJoinedPlainText,
 	markupToPlainText,
 } from "@internal/cli-layout";
-import {AbsoluteFilePath} from "@internal/path";
+import {AbsoluteFilePath, HOME_PATH} from "@internal/path";
 import {NodeSystemError} from "@internal/errors";
 import SilentClientError from "./SilentClientError";
 import {
@@ -118,7 +118,7 @@ export default class Client {
 
 		this.requestResponseEvent = new Event("Client.requestResponseEvent");
 		this.endEvent = new Event("Client.endEvent", {serial: true});
-		this.resources = createResourceRoot("Client");
+		this.resources = createResourceRoot("Client", () => this._end());
 		this.bridgeStatus = undefined;
 		this.bridgeAttachedEvent = new Event("Client.bridgeAttached");
 
@@ -128,6 +128,7 @@ export default class Client {
 				stdin: opts.stdin,
 				markupOptions: {
 					userConfig: this.userConfig,
+					home: HOME_PATH,
 					cwd: this.flags.cwd,
 				},
 			},
@@ -563,17 +564,32 @@ export default class Client {
 			} catch (err) {
 				// Swallow BridgeErrors since we expect one to be emitted as the endServer call will be an unanswered request
 				// when the server ends all client sockets
-				if (!isBridgeDisconnectedDiagnosticsError(err)) {
+				if (!isBridgeEndDiagnosticsError(err)) {
 					throw err;
 				}
 			}
 		}
-		await this.end();
+		await this.resources.release();
 	}
 
 	public async end() {
-		await this.endEvent.callOptional();
 		await this.resources.release();
+	}
+
+	private async _end() {
+		await this.endEvent.callOptional();
+
+		const {bridgeStatus} = this;
+		if (bridgeStatus !== undefined && !bridgeStatus.dedicated) {
+			try {
+				await bridgeStatus.server.end();
+				this.bridgeStatus = undefined;
+			} catch (err) {
+				if (!isBridgeEndDiagnosticsError(err)) {
+					throw err;
+				}
+			}
+		}
 	}
 
 	private async attachBridge(status: BridgeStatus) {
@@ -610,12 +626,10 @@ export default class Client {
 		await Promise.all([
 			bridge.events.getClientInfo.wait({
 				version: VERSION,
+				env: {...process.env},
 				outputFormat: format,
 				outputSupport: features,
-				streamState: {
-					...stream.state,
-					lineSnapshots: undefined,
-				},
+				streamState: stream.state,
 				flags: this.flags,
 			}),
 			bridge.events.serverReady.wait(),

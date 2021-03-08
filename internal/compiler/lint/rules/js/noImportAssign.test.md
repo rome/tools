@@ -12,6 +12,10 @@
 
   ✖ The imported variable x is read-only.
 
+    1 │ import x from 'y';
+  > 2 │ x=1;
+      │ ^
+
   ℹ Use a local variable instead of reassigning an import.
 
 
@@ -32,6 +36,10 @@ x = 1;
  lint/js/noImportAssign/reject/2/file.ts:2:1 lint/js/noImportAssign ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ The imported variable x is read-only.
+
+    1 │ import x from 'y';
+  > 2 │ [x]=1;
+      │  ^
 
   ℹ Use a local variable instead of reassigning an import.
 
@@ -54,6 +62,10 @@ import x from "y";
 
   ✖ The imported variable x is read-only.
 
+    1 │ import x from 'y';
+  > 2 │ ({x}=1);
+      │   ^
+
   ℹ Use a local variable instead of reassigning an import.
 
 
@@ -74,6 +86,10 @@ import x from "y";
  lint/js/noImportAssign/reject/4/file.ts:2 lint/js/noImportAssign ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ The imported variable x is read-only.
+
+    1 │ import x from 'y';
+  > 2 │ x++
+      │ ^
 
   ℹ Use a local variable instead of reassigning an import.
 
@@ -96,6 +112,10 @@ x++;
 
   ✖ The imported variable x is read-only.
 
+    1 │ import x from 'y';
+  > 2 │ [...x]=1;
+      │     ^
+
   ℹ Use a local variable instead of reassigning an import.
 
 
@@ -116,6 +136,10 @@ import x from "y";
  lint/js/noImportAssign/reject/6/file.ts:2:5 lint/js/noImportAssign ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ The imported variable x is read-only.
+
+    1 │ import x from 'y';
+  > 2 │ ({...x}=1);
+      │      ^
 
   ℹ Use a local variable instead of reassigning an import.
 
@@ -160,6 +184,10 @@ for (x in y) {
  lint/js/noImportAssign/reject/8/file.ts:2 lint/js/noImportAssign ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ The imported variable x is read-only.
+
+    1 │ import x from 'y';
+  > 2 │ x+=1
+      │ ^
 
   ℹ Use a local variable instead of reassigning an import.
 

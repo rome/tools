@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {ManifestDependencies} from "./dependencies";
+import {ManifestDependenciesField} from "./normalize/dependencies";
 import {SPDXExpressionNode} from "@internal/codec-spdx-license";
 import {SemverVersionNode} from "@internal/codec-semver";
 import {Consumer} from "@internal/consume";
@@ -28,9 +28,9 @@ export type MStringArray = undefined | (string[]);
 
 export type MStringObject = undefined | StringObject;
 
-export type ManifestMap = Map<string, string>;
+export type ManifestStringMap = Map<string, string>;
 
-export type ManifestPerson = {
+export type ManifestPersonField = {
 	name: MString;
 	email: MString;
 	twitter: MString;
@@ -38,18 +38,7 @@ export type ManifestPerson = {
 	url: MString;
 };
 
-export type ManifestRepository = {
-	type: string;
-	url: string;
-	directory: MString;
-};
-
-export type ManifestBugs = {
-	url: MString;
-	email: MString;
-};
-
-export type ManifestExports = RelativePathMap<ManifestExportConditions>;
+export type ManifestExportsField = RelativePathMap<ManifestExportConditions>;
 
 export type ManifestExportRelativeCondition = {
 	type: "relative";
@@ -74,38 +63,72 @@ export type ManifestName = {
 	packageName?: string;
 };
 
-export type Manifest = {
+export type ManifestDependencies = {
+	dependencies: ManifestDependenciesField;
+	devDependencies: ManifestDependenciesField;
+	optionalDependencies: ManifestDependenciesField;
+	peerDependencies: ManifestDependenciesField;
+	bundledDependencies: string[];
+};
+
+export type ManifestPeople = {
+	author: undefined | ManifestPersonField;
+	contributors: undefined | (ManifestPersonField[]);
+	maintainers: undefined | (ManifestPersonField[]);
+};
+
+export type ManifestURLs = {
+	homepage: undefined | URLPath;
+	repository:
+		| undefined
+		| {
+				type: string;
+				url: string;
+				directory: MString;
+			};
+	bugs:
+		| undefined
+		| {
+				url: MString;
+				email: MString;
+			};
+};
+
+export type ManifestEnvironment = {
+	cpu: string[];
+	os: string[];
+	engines: ManifestStringMap;
+};
+
+export type ManifestMetadata = {
 	name: ManifestName;
 	description: MString;
 	version: undefined | SemverVersionNode;
 	license: undefined | SPDXExpressionNode;
 	private: boolean;
-	type: undefined | "module" | "commonjs";
-	homepage: undefined | URLPath;
-	repository: undefined | ManifestRepository;
-	bugs: undefined | ManifestBugs;
-	main: undefined | RelativePath;
-	exports: boolean | ManifestExports;
-	author: undefined | ManifestPerson;
-	contributors: undefined | (ManifestPerson[]);
-	maintainers: undefined | (ManifestPerson[]);
-	files: PathPattern[];
 	keywords: string[];
-	cpu: string[];
-	os: string[];
-	bin: ManifestMap;
-	scripts: ManifestMap;
-	engines: ManifestMap;
-	dependencies: ManifestDependencies;
-	devDependencies: ManifestDependencies;
-	optionalDependencies: ManifestDependencies;
-	peerDependencies: ManifestDependencies;
-	bundledDependencies: string[];
-	raw: JSONObject;
-	diagnostics: {
-		license: Diagnostic[] | undefined;
-	};
 };
+
+export type ManifestFiles = {
+	type: undefined | "module" | "commonjs";
+	bin: ManifestStringMap;
+	main: undefined | RelativePath;
+	exports: boolean | ManifestExportsField;
+	files: PathPattern[];
+	scripts: ManifestStringMap;
+};
+
+export type Manifest = ManifestMetadata &
+	ManifestDependencies &
+	ManifestFiles &
+	ManifestPeople &
+	ManifestURLs &
+	ManifestEnvironment & {
+		raw: JSONObject;
+		diagnostics: {
+			license: Diagnostic[] | undefined;
+		};
+	};
 
 // Serialized version of a Manifest
 export type JSONManifest = {

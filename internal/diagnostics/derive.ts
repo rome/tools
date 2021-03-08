@@ -32,16 +32,16 @@ import {
 } from "./error-wrappers";
 import {MixedPathSet, Path, UNKNOWN_PATH, equalPaths} from "@internal/path";
 import {RequiredProps} from "@internal/typescript-helpers";
+import {hashRSERValue} from "@internal/binary-transport";
 
 export function derivePositionlessKeyFromDiagnostic(diag: Diagnostic): string {
-	const normalizer = new DiagnosticsNormalizer(
-		{},
-		{
+	const normalizer = new DiagnosticsNormalizer({
+		markupOptions: {
 			stripPositions: true,
 		},
-	);
+	});
 
-	return JSON.stringify(normalizer.normalizeDiagnostic(diag));
+	return hashRSERValue(normalizer.normalizeDiagnostic(diag));
 }
 
 export function getActionAdviceFromDiagnostic(
@@ -310,7 +310,7 @@ export function getErrorStackAdvice(
 			const prefix = prefixes.length === 0 ? undefined : prefixes.join(" ");
 
 			let object = typeName;
-			let property = "<anonymous>";
+			let property: undefined | string;
 			if (functionName !== undefined) {
 				property = functionName;
 			}
@@ -355,22 +355,11 @@ export function addOriginsToDiagnostics(
 	}
 
 	return diagnostics.map((diag) => {
-		return addOriginsToDiagnostic(origins, diag);
+		const newOrigins =
+			diag.origins === undefined ? origins : [...origins, ...diag.origins];
+		return {
+			...diag,
+			origins: newOrigins,
+		};
 	});
-}
-
-export function addOriginsToDiagnostic(
-	origins: DiagnosticOrigin[],
-	diag: Diagnostic,
-): Diagnostic {
-	if (origins.length === 0) {
-		return diag;
-	}
-
-	const newOrigins =
-		diag.origins === undefined ? origins : [...origins, ...diag.origins];
-	return {
-		...diag,
-		origins: newOrigins,
-	};
 }

@@ -38,7 +38,7 @@ JSRoot {
 	corrupt: false
 	diagnostics: [
 		{
-			origins: [{category: "parse"}]
+			origins: [{entity: "ParserCore<js>"}]
 			description: {
 				advice: [
 					log {category: "info", text: [RAW_MARKUP {value: "Originated from opening tag of <emphasis>"}, "div", RAW_MARKUP {value: "</emphasis>"}]}

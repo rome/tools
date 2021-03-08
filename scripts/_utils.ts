@@ -11,7 +11,7 @@ import child = require("child_process");
 export const reporter = Reporter.fromProcess();
 export const integrationWorker = createMockWorker();
 
-export const ROOT = findRoot();
+export const ROOT = createAbsoluteFilePath(__dirname).getParent();
 export const INTERNAL = ROOT.append("internal");
 export const PUBLIC_PACKAGES = ROOT.append("public-packages");
 
@@ -25,23 +25,6 @@ export const GIT_PLACEHOLDERS = {
 	refNames: "%d",
 	subject: "%s",
 };
-
-// This is only necessary because we have poor support for __dirname in the bundler
-function findRoot(): AbsoluteFilePath {
-	let pickNext = false;
-
-	for (const path of createAbsoluteFilePath(__dirname).getChain()) {
-		if (pickNext) {
-			return path;
-		}
-
-		if (path.getBasename() === "scripts") {
-			pickNext = true;
-		}
-	}
-
-	throw new Error("Could not find the root");
-}
 
 let forceGenerated = false;
 

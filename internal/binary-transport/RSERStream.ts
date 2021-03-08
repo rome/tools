@@ -4,6 +4,7 @@ import {RSERValue} from "./types";
 import RSERBufferParser from "./RSERBufferParser";
 import {encodeValueToRSERMessage} from ".";
 import RSERWriterCounter from "./RSERWriterCounter";
+import {toDataView, toUintArray8} from "@internal/binary";
 
 type State = {
 	// INIT: Waiting on stream header
@@ -71,7 +72,7 @@ export default class RSERStream {
 		}
 	}
 
-	public append(buf: ArrayBuffer) {
+	public append(buf: ArrayBufferView) {
 		// Fast path for empty buffer
 		if (buf.byteLength === 0) {
 			return;
@@ -86,7 +87,7 @@ export default class RSERStream {
 				writer.writeOffset === 0 &&
 				buf.byteLength > MAX_MESSAGE_HEADER_SIZE
 			) {
-				const reader = new RSERBufferParser(new DataView(buf));
+				const reader = new RSERBufferParser(toDataView(buf));
 				const payloadLength = reader.maybeDecodeMessageHeader();
 				if (
 					payloadLength !== false &&
@@ -99,7 +100,7 @@ export default class RSERStream {
 			}
 
 			// Push to overflow queue if necessary
-			let arr = new Uint8Array(buf);
+			let arr = toUintArray8(buf);
 
 			// If the buffer is bigger than the current message we expect then cut it up
 			const remaining = writer.getWritableSize();

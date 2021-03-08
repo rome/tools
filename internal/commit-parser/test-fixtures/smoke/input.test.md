@@ -5,16 +5,12 @@
 ## `smoke`
 
 ```javascript
-CommitRoot {
+Commit {
 	breaking: true
-	comments: []
 	commitType: "custom"
-	corrupt: false
 	custom: true
-	diagnostics: []
 	rawBody: "everything included!"
 	scope: "some scope"
-	path: RelativePath<smoke/input.txt>
 	loc: SourceLocation smoke/input.txt 1:0-1:40
 }
 ```

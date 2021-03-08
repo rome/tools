@@ -1,4 +1,6 @@
 // @ts-check
+"use strict";
+
 //# Responsive width
 let isMobile = false;
 window.addEventListener(
@@ -500,7 +502,6 @@ function randomShuffle(array) {
 		array[count] = array[index];
 		array[index] = temp;
 	}
-
 	return array;
 }
 
@@ -621,5 +622,132 @@ for (const elem of topAnchors) {
 				);
 			}
 		},
+	);
+}
+
+// Hero scrollers
+const heroCallbacks = [];
+const heroScrollers = document.querySelectorAll(".new-hero .scroller");
+for (const scroller of heroScrollers) {
+	const list = scroller.querySelector("ul");
+
+	let items = [];
+	let activeIndex;
+	let activeStartIndex = 0;
+
+	// Shuffle initial list
+	const initialItems = Array.from(scroller.querySelectorAll("li"));
+	const listOffsetTop = scroller.classList.contains("mobile-scroller") ? 0 : 50;
+	const lastInitialIndex = initialItems.length - 1;
+	for (const item of randomShuffle(initialItems)) {
+		list.removeChild(item);
+		appendItem(item);
+	}
+
+	// Duplicate list
+	const middleItems = [];
+	for (const item of initialItems) {
+		const cloned = item.cloneNode(true);
+		if (item.classList.contains("active")) {
+			cloned.classList.remove("active");
+		}
+		appendItem(cloned);
+		middleItems.push(cloned);
+	}
+
+	// Duplicate list again - we will never scroll to these, just to be visible in the overflow
+	for (const item of middleItems) {
+		appendItem(item.cloneNode(true));
+	}
+
+	setActiveIndex(3, false);
+
+	function appendItem(item) {
+		list.appendChild(item);
+		items.push(item);
+	}
+
+	function scrollToItem(item, smooth) {
+		const top = item.offsetTop - listOffsetTop;
+		if (smooth) {
+			list.style.removeProperty("transition");
+		} else {
+			list.style.transition = "none";
+		}
+		list.style.transform = `translateY(-${top}px)`;
+	}
+
+	function addActiveClasses(activeIndex) {
+		const beforeItem = items[activeIndex - 1];
+		if (beforeItem !== undefined) {
+			beforeItem.classList.add("active-sibling");
+		}
+
+		items[activeIndex].classList.add("active");
+
+		const afterItem = items[activeIndex + 1];
+		if (afterItem !== undefined) {
+			afterItem.classList.add("active-sibling");
+		}
+	}
+
+	function removeActiveClasses(activeIndex) {
+		const beforeItem = items[activeIndex - 1];
+		if (beforeItem !== undefined) {
+			beforeItem.classList.remove("active-sibling");
+		}
+
+		items[activeIndex].classList.remove("active");
+
+		const afterItem = items[activeIndex + 1];
+		if (afterItem !== undefined) {
+			afterItem.classList.remove("active-sibling");
+		}
+	}
+
+	function isOverflow(index) {
+		return index - activeStartIndex >= initialItems.length;
+	}
+
+	function setActiveIndex(newActiveIndex, smooth) {
+		if (activeIndex !== undefined) {
+			removeActiveClasses(activeIndex);
+		}
+
+		if (isOverflow(newActiveIndex)) {
+			if (activeStartIndex === 0) {
+				// Once we've
+				activeStartIndex = initialItems.length;
+			} else {
+				// Otherwise we are at the end of the middle list, so simulate coming from the bottom of initialItems
+				scrollToItem(initialItems[lastInitialIndex], false);
+			}
+
+			setActiveIndex(activeStartIndex, smooth);
+			return;
+		}
+
+		// We're nearing the bottom of the list so set the fake initial as active to account for transition time
+		if (isOverflow(newActiveIndex + 1)) {
+			addActiveClasses(lastInitialIndex);
+		}
+
+		addActiveClasses(newActiveIndex);
+		activeIndex = newActiveIndex;
+		scrollToItem(items[newActiveIndex], smooth);
+	}
+
+	heroCallbacks.push(() => {
+		setActiveIndex(activeIndex + 1, true);
+	});
+}
+if (heroCallbacks.length > 0) {
+	setInterval(
+		() => {
+			for (const callback of heroCallbacks) {
+				callback();
+			}
+		},
+		2_000,
 	);
 }

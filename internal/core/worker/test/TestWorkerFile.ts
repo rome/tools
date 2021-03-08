@@ -32,7 +32,7 @@ import SnapshotManager, {
 	SnapshotEntry,
 } from "./SnapshotManager";
 import TestAPI, {OnTimeout} from "./TestAPI";
-import executeMain from "../../common/utils/executeMain";
+import executeMain from "../utils/executeMain";
 import {
 	AbsoluteFilePath,
 	AbsoluteFilePathMap,
@@ -132,7 +132,9 @@ export default class TestWorkerFile {
 		opts: TestWorkerPrepareTestOptions,
 	) {
 		this.opts = opts;
+		this.worker = worker;
 		this.locked = false;
+		this.contextDirectory = opts.contextDirectory;
 		this.path = opts.path;
 		this.options = opts;
 		this.globalOptions = opts.globalOptions;
@@ -153,11 +155,13 @@ export default class TestWorkerFile {
 	public hasFailedTests: boolean;
 	public onlyFocusedTests: boolean;
 	public path: AbsoluteFilePath;
+	public contextDirectory: AbsoluteFilePath;
 	public projectDirectory: AbsoluteFilePath;
 	public globalOptions: TestServerRunnerOptions;
 	public options: TestWorkerPrepareTestOptions;
 	public snapshotManager: SnapshotManager;
 
+	private worker: Worker;
 	private tests: TestWorker;
 	private failedTests: Set<string>;
 	private foundTests: ExtendedMap<string, TestDetails>;
@@ -282,11 +286,18 @@ export default class TestWorkerFile {
 		const code = this.tests.serializeAssembled(this.opts.assembled);
 
 		try {
-			const res = await executeMain({
-				path: this.path,
-				code,
-				globals: this.getEnvironment(),
-			});
+			const res = await executeMain(
+				this.worker,
+				{
+					contextDirectory: this.contextDirectory,
+					commandName: "test",
+					path: this.path,
+					args: [],
+					cwd: this.path.getParent(),
+					code,
+					globals: this.getEnvironment(),
+				},
+			);
 
 			if (res.syntaxError !== undefined) {
 				const message = markup`A bundle was generated that contained a syntax error: ${readMarkup(
@@ -416,7 +427,6 @@ export default class TestWorkerFile {
 
 		await this.bridge.events.testDiagnostic.call({
 			diagnostic: diag,
-			origin: undefined,
 			testPath: this.path,
 		});
 	}
@@ -502,7 +512,7 @@ export default class TestWorkerFile {
 				advice.push({
 					type: "log",
 					category: "info",
-					text: markup`Error occured while executing test file <emphasis>${this.path}</emphasis> />`,
+					text: markup`Error occured while executing test file <emphasis>${this.path}</emphasis>`,
 				});
 				break;
 			}

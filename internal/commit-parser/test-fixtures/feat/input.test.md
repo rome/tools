@@ -5,16 +5,12 @@
 ## `feat`
 
 ```javascript
-CommitRoot {
+Commit {
 	breaking: false
-	comments: []
 	commitType: "feat"
-	corrupt: false
 	custom: false
-	diagnostics: []
 	rawBody: "commit with a feat commit type"
 	scope: ""
-	path: RelativePath<feat/input.txt>
 	loc: SourceLocation feat/input.txt 1:0-1:35
 }
 ```

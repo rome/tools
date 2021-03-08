@@ -196,6 +196,9 @@ export default class Bundler {
 		}
 
 		const opts: WorkerBundleCompileOptions = {
+			__filename: this.server.projectManager.getRootProjectForPath(path).directory.relativeForce(
+				path,
+			),
 			moduleAll: mod.all,
 			moduleId: mod.uid,
 			relativeSourcesToModuleId,
@@ -239,12 +242,10 @@ export default class Bundler {
 
 		// Seed the dependency graph with all the entries at the same time
 		const processor = this.request.createDiagnosticsProcessor({
-			origins: [
-				{
-					category: "Bundler",
-					message: "Analyzing dependencies for bundleMultiple",
-				},
-			],
+			origin: {
+				entity: "Bundler.bundleMultiple",
+				message: "Analyzing dependencies for bundleMultiple",
+			},
 		});
 		const entryUIDs = entries.map((entry) =>
 			this.server.projectManager.getUID(entry)
@@ -256,9 +257,8 @@ export default class Bundler {
 		processor.setThrowAfter(100);
 		await this.graph.seed({
 			paths: entries,
-			diagnosticsProcessor: processor,
 			analyzeProgress,
-			validate: false,
+			allowFileNotFound: false,
 		});
 		analyzeProgress.end();
 		processor.maybeThrowDiagnosticsError();
@@ -304,16 +304,26 @@ export default class Bundler {
 	public bundleManifestWatch(resolution: BundlerEntryResolution): BundleWatcher {
 		const refreshSub = this.server.refreshFileEvent.subscribe(async (paths) => {
 			const graphPaths = new AbsoluteFilePathSet();
-			for (const {path} of paths) {
-				if (this.graph.hasNode(path)) {
+			for (const {type, path} of paths) {
+				if (type !== "CREATED" && this.graph.hasNode(path)) {
 					this.compiles.delete(path);
 					graphPaths.add(path);
 				}
 			}
 			if (graphPaths.size > 0) {
 				watcher.changeEvent.send(graphPaths);
-				await this.graph.evictNodes(graphPaths, async () => {});
-				run();
+				await runLock.wrap(async () => {
+					await this.graph.evictNodes(
+						graphPaths,
+						async (paths) => {
+							await this.graph.seed({
+								allowFileNotFound: true,
+								paths,
+							});
+						},
+					);
+					run();
+				});
 			}
 		});
 		this.request.resources.add(refreshSub);
@@ -451,7 +461,7 @@ export default class Bundler {
 			resolvedSegment: AbsoluteFilePath,
 			options: BundleOptions,
 		) => Promise<BundleResultBundle>,
-		addFile: (relative: RelativePath, buff: ArrayBuffer | string) => void,
+		addFile: (relative: RelativePath, buff: DataView | string) => void,
 	): Promise<JSONManifest> {
 		// TODO figure out some way to use bundleMultiple here
 		const manifest = manifestDef.manifest;

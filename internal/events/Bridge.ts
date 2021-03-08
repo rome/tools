@@ -44,10 +44,7 @@ import {
 	createRuntimeDiagnosticsError,
 } from "@internal/diagnostics";
 import {Resource, createResourceContainer} from "@internal/resources";
-import {
-	isBridgeDisconnectedDiagnosticsError,
-	isBridgeResponseMessage,
-} from "./utils";
+import {isBridgeEndDiagnosticsError, isBridgeResponseMessage} from "./utils";
 import {Duration, DurationMeasurer} from "@internal/numbers";
 import util = require("util");
 
@@ -209,6 +206,10 @@ export default class Bridge<
 
 	// Ensure we are sending a message at least once per second
 	private queueHeartbeat(): void {
+		if (this.options.ignoreHeartbeat) {
+			return;
+		}
+
 		if (!(this.hasHandshook && this.open)) {
 			return;
 		}
@@ -459,7 +460,7 @@ export default class Bridge<
 				await this.disconnectEvent.wait();
 			} catch (err) {
 				// We expect the bridge to disconnect as the indicator that it has finished
-				if (!isBridgeDisconnectedDiagnosticsError(err)) {
+				if (!isBridgeEndDiagnosticsError(err)) {
 					throw err;
 				}
 			}

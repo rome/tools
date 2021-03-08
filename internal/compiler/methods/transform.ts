@@ -6,7 +6,7 @@
  */
 
 import {AnyRoot} from "@internal/ast";
-import {Diagnostic, DiagnosticSuppressions} from "@internal/diagnostics";
+import {Diagnostic, DiagnosticSuppression} from "@internal/diagnostics";
 import {AnyVisitor, TransformRequest} from "../types";
 import {stageOrder, stageTransforms} from "../transforms/index";
 import {Cache} from "@internal/compiler";
@@ -15,7 +15,7 @@ import {AbsoluteFilePath} from "@internal/path";
 
 export type TransformResult = {
 	ast: AnyRoot;
-	suppressions: DiagnosticSuppressions;
+	suppressions: DiagnosticSuppression[];
 	diagnostics: Diagnostic[];
 	cacheDependencies: AbsoluteFilePath[];
 };
@@ -45,7 +45,7 @@ export default async function transform(
 
 	let prevStageDiagnostics: Diagnostic[] = [];
 	let prevStageCacheDeps: AbsoluteFilePath[] = [];
-	let suppressions: undefined | DiagnosticSuppressions;
+	let suppressions: undefined | DiagnosticSuppression[];
 
 	// Run the previous stage
 	if (stageNo > 0) {
@@ -63,7 +63,7 @@ export default async function transform(
 		project,
 		options,
 		origin: {
-			category: "transform",
+			entity: "compiler.transform",
 		},
 	});
 

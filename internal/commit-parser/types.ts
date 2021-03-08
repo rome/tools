@@ -1,4 +1,9 @@
-import {BaseTokens, SimpleToken, StringToken} from "@internal/parser-core";
+import {
+	BaseTokens,
+	NodeBase,
+	SimpleToken,
+	StringToken,
+} from "@internal/parser-core";
 
 export const Symbols = {
 	Space: " ",
@@ -13,3 +18,12 @@ export type Tokens = BaseTokens & {
 	Whitespace: SimpleToken<"Whitespace">;
 	Word: StringToken<"Word">;
 };
+
+export interface Commit extends NodeBase {
+	readonly type: "Commit";
+	readonly breaking: boolean;
+	readonly commitType: string;
+	readonly custom: boolean;
+	readonly rawBody: string;
+	readonly scope: string;
+}

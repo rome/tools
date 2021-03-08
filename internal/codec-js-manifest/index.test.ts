@@ -1,10 +1,10 @@
 import {test} from "rome";
 import {normalizeManifest} from ".";
 import {consumeUnknown} from "@internal/consume";
-import {AbsoluteFilePath} from "@internal/path";
+import {createAbsoluteFilePath} from "@internal/path";
 import {DIAGNOSTIC_CATEGORIES} from "@internal/diagnostics";
 
-const PATH = {} as AbsoluteFilePath;
+const PATH = createAbsoluteFilePath("/test");
 
 function getManifest() {
 	return {

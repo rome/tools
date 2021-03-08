@@ -39,6 +39,7 @@ import {DiagnosticsPrinter} from "@internal/cli-diagnostics";
 import {StaticMarkup} from "@internal/markup";
 import init from "@internal/core/server/commands/init";
 import {RSERValue} from "@internal/binary-transport";
+import {markupToJoinedPlainText} from "@internal/cli-layout";
 
 export type ServerCommandReturn = undefined | Promise<RSERValue>;
 
@@ -58,37 +59,48 @@ export async function chainCommands(
 	req: ServerRequest,
 	fns: {
 		title: StaticMarkup;
-		progress: StaticMarkup;
 		callback: () => Promise<void>;
 	}[],
 ): Promise<void> {
-	let printer: undefined | DiagnosticsPrinter;
+	const {reporter} = req;
+	const printers: {
+		title: StaticMarkup;
+		printer: DiagnosticsPrinter;
+	}[] = [];
 
-	await req.reporter.steps(
-		fns.map(({callback, progress, title}) => {
-			return {
-				clear: true,
-				message: progress,
-				async callback() {
-					try {
-						await callback();
-					} catch (err) {
-						if (err instanceof DiagnosticsPrinter) {
-							if (printer === undefined) {
-								printer = req.createDiagnosticsPrinter();
-							}
-							printer.inject(title, err);
-						} else {
-							throw err;
-						}
-					}
-				},
-			};
-		}),
-	);
+	const isGitHubActions =
+		req.query.requestFlags.auxiliaryDiagnosticFormat === "github-actions";
 
-	if (printer !== undefined) {
-		throw printer;
+	for (const {callback, title} of fns) {
+		try {
+			if (isGitHubActions) {
+				reporter.logRaw(`::group::${markupToJoinedPlainText(title)}`);
+			}
+			await callback();
+		} catch (err) {
+			if (err instanceof DiagnosticsPrinter) {
+				printers.push({
+					title,
+					printer: err,
+				});
+			} else {
+				throw err;
+			}
+		} finally {
+			if (isGitHubActions) {
+				reporter.logRaw("::endgroup::");
+			}
+		}
+	}
+
+	if (printers.length > 0) {
+		const globalPrinter = req.createDiagnosticsPrinter({
+			streaming: false,
+		});
+		for (const {title, printer} of printers) {
+			globalPrinter.inject(title, printer);
+		}
+		throw globalPrinter;
 	}
 }
 

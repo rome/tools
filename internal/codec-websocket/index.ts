@@ -220,7 +220,7 @@ export class WebSocketInterface {
 	}
 }
 
-export async function createClient(
+export async function createWebSocketClient(
 	rawUrl: string,
 	reporter?: Reporter,
 ): Promise<WebSocketInterface> {

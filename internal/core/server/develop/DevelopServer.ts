@@ -62,13 +62,22 @@ export default class DevelopServer {
 			resolution,
 		);
 
+		let hasDiagnostics = false;
+
 		diagnosticsEvent.subscribe(async (diagnostics) => {
+			hasDiagnostics = true;
 			reporter.clearScreen();
+
+			const stream = reporter.attachCaptureStream("html");
+
 			const printer = request.createDiagnosticsPrinter();
 			printer.processor.addDiagnostics(diagnostics);
 			await printer.print();
 
-			// TODO send diagnostics to client rendered as HTML
+			stream.resources.release();
+			const html = stream.read();
+			// TODO send HTML
+			html;
 		});
 
 		filesEvent.subscribe((files) => {
@@ -83,10 +92,16 @@ export default class DevelopServer {
 			// Consider ourselves initialized when we've received our first batch of files
 			this.ready = true;
 
+			if (hasDiagnostics) {
+				hasDiagnostics = false;
+				reporter.clearScreen();
+			}
+
 			this.refresh();
 		});
 
-		// TODO this does not respect `static`
+		// TODO also watch `static` and refresh on changes
+
 		changeEvent.subscribe((paths) => {
 			if (paths.size === 1) {
 				reporter.info(markup`File change ${Array.from(paths)[0]}`);

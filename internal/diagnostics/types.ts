@@ -40,8 +40,6 @@ export type DiagnosticSuppression = DiagnosticCategoryDescription & {
 	loc: SourceLocation;
 };
 
-export type DiagnosticSuppressions = DiagnosticSuppression[];
-
 export type DiagnosticLocation = {
 	sourceText?: string;
 	integrity?: DiagnosticIntegrity;
@@ -54,7 +52,7 @@ export type DiagnosticLocation = {
 };
 
 export type DiagnosticOrigin = {
-	category: string;
+	entity: string;
 	message?: StaticMarkup;
 };
 

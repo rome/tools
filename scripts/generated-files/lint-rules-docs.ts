@@ -118,7 +118,6 @@ async function run(
 				diagnostics,
 				suppressions: [],
 				format: "html",
-				excludeFooter: true,
 				features: {
 					columns: new OneIndexed(75),
 				},

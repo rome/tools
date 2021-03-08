@@ -30,7 +30,7 @@ import prettyFormat from "@internal/pretty-format";
 import {ReporterNamespace} from "@internal/cli-reporter";
 import {ExtendedMap} from "@internal/collections";
 import {Duration, DurationMeasurer} from "@internal/numbers";
-import {PartialWorkerOptions} from "../worker/types";
+import {PartialWorkerOptions, WorkerOptions} from "../worker/types";
 import {createResourceFromCallback} from "@internal/resources";
 
 type SpawnWorkerOptions = {
@@ -38,7 +38,9 @@ type SpawnWorkerOptions = {
 	ghost?: boolean;
 	inspectorPort?: number;
 	id?: number;
+	env?: WorkerOptions["env"];
 	displayID?: number;
+	pipeIO?: boolean;
 };
 
 export default class WorkerManager {
@@ -102,7 +104,7 @@ export default class WorkerManager {
 	private getProcessorWorkerCount(): number {
 		let count = 0;
 		for (const worker of this.workers.values()) {
-			if (worker.type === "processor" && !worker.ghost) {
+			if (worker.type === "file-processor" && !worker.ghost) {
 				count++;
 			}
 		}
@@ -121,7 +123,7 @@ export default class WorkerManager {
 		for (const worker of this.workers.values()) {
 			if (
 				!worker.ghost &&
-				worker.type === "processor" &&
+				worker.type === "file-processor" &&
 				(byteCount === undefined || byteCount > worker.byteCount)
 			) {
 				smallestWorker = worker;
@@ -147,9 +149,10 @@ export default class WorkerManager {
 			bridge: bridges.client,
 			dedicated: false,
 			...this.buildPartialWorkerOptions({
-				type: "processor",
+				type: "file-processor",
 				id: 0,
 				inspectorPort: undefined,
+				env: {},
 			}),
 		});
 		this.server.resources.add(worker);
@@ -162,7 +165,7 @@ export default class WorkerManager {
 		}
 
 		const container: WorkerContainer = {
-			type: "processor",
+			type: "file-processor",
 			displayName: "local worker",
 			id: 0,
 			fileCount: 0,
@@ -224,7 +227,7 @@ export default class WorkerManager {
 				0,
 				{
 					...newWorker,
-					type: "processor",
+					type: "file-processor",
 					id: 0,
 					fileCount: serverWorker.fileCount,
 					byteCount: serverWorker.byteCount,
@@ -266,7 +269,7 @@ export default class WorkerManager {
 		try {
 			const container = await this.spawnWorkerUnsafe({
 				...opts,
-				type: "processor",
+				type: "file-processor",
 				id,
 			});
 
@@ -301,7 +304,7 @@ export default class WorkerManager {
 	}
 
 	private buildPartialWorkerOptions(
-		opts: Pick<PartialWorkerOptions, "id" | "inspectorPort" | "type">,
+		opts: Omit<PartialWorkerOptions, "cacheReadDisabled" | "cacheWriteDisabled">,
 	): PartialWorkerOptions {
 		return {
 			cacheReadDisabled: this.server.cache.readDisabled,
@@ -317,12 +320,16 @@ export default class WorkerManager {
 			id = this.getNextWorkerId(),
 			displayID = id,
 			ghost = false,
+			pipeIO = true,
+			env = {},
 			inspectorPort,
 		}: SpawnWorkerOptions,
 	): Promise<ThreadWorkerContainer> {
 		let displayName = `worker ${displayID}`;
-		if (type === "test") {
+		if (type === "test-runner") {
 			displayName = `test ${displayName}`;
+		} else if (type === "script-runner") {
+			displayName = `script ${displayName}`;
 		}
 
 		const start = new DurationMeasurer();
@@ -330,7 +337,14 @@ export default class WorkerManager {
 		const thread = forkThread(
 			"worker",
 			{
-				workerData: this.buildPartialWorkerOptions({type, id, inspectorPort}),
+				workerData: this.buildPartialWorkerOptions({
+					type,
+					id,
+					inspectorPort,
+					env,
+				}),
+				stderr: !pipeIO,
+				stdout: !pipeIO,
 			},
 		);
 

@@ -48,7 +48,7 @@ import {Event} from "@internal/events";
 import Progress from "./Progress";
 import prettyFormat from "@internal/pretty-format";
 import stream = require("stream");
-import {CWD_PATH} from "@internal/path";
+import {CWD_PATH, HOME_PATH} from "@internal/path";
 import readline = require("readline");
 import select from "./select";
 import {onKeypress} from "./util";
@@ -152,6 +152,7 @@ export default class Reporter implements ReporterNamespace {
 			{
 				markupOptions: {
 					cwd: CWD_PATH,
+					home: HOME_PATH,
 				},
 			},
 		);

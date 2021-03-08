@@ -264,7 +264,7 @@ function buildVerboseAdvice(diagnostic: Diagnostic): DiagnosticAdvice[] {
 			type: "list",
 			ordered: true,
 			list: origins.map((origin) => {
-				let res = markup`<emphasis>${origin.category}</emphasis>`;
+				let res = markup`<emphasis>${origin.entity}</emphasis>`;
 				if (origin.message !== undefined) {
 					res = markup`${res}: ${origin.message}`;
 				}

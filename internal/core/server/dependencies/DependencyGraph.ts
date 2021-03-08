@@ -30,6 +30,7 @@ import {
 import {markup} from "@internal/markup";
 import FileNotFound, {MissingFileReturn} from "@internal/fs/FileNotFound";
 import {areAnalyzeDependencyResultsEqual} from "@internal/compiler";
+import {promiseAllFrom} from "@internal/async";
 
 export type DependencyGraphSeedResult = {
 	node: DependencyNode;
@@ -37,7 +38,21 @@ export type DependencyGraphSeedResult = {
 	cached: boolean;
 };
 
+type ResolveOptions = {
+	all: boolean;
+	async: boolean;
+	ancestry: string[];
+	workerQueue: DependencyGraphWorkerQueue;
+	isRoot: boolean;
+	shallowUsedExports?: Set<string>;
+};
+
+type ResolveState = {
+	analyzeProgress?: ReporterProgress;
+};
+
 const NODE_BUILTINS = [
+	"async_hooks",
 	"electron",
 	"buffer",
 	"child_process",
@@ -186,18 +201,18 @@ export default class DependencyGraph {
 	public async seed(
 		{
 			paths,
-			diagnosticsProcessor,
 			analyzeProgress,
-			allowFileNotFound = false,
-			validate = false,
+			allowFileNotFound,
 		}: {
-			paths: AbsoluteFilePath[];
-			diagnosticsProcessor: DiagnosticsProcessor;
+			paths: Iterable<AbsoluteFilePath>;
+			allowFileNotFound: boolean;
 			analyzeProgress?: ReporterProgress;
-			allowFileNotFound?: boolean;
-			validate?: boolean;
 		},
 	): Promise<void> {
+		const state: ResolveState = {
+			analyzeProgress,
+		};
+
 		// Initialize sub dependency queue
 		const workerQueue: DependencyGraphWorkerQueue = this.server.createWorkerQueue({
 			callback: async ({path, item}) => {
@@ -211,8 +226,7 @@ export default class DependencyGraph {
 						shallowUsedExports: item.shallowUsedExports,
 						isRoot: false,
 					},
-					diagnosticsProcessor,
-					analyzeProgress,
+					state,
 				);
 			},
 		});
@@ -234,8 +248,7 @@ export default class DependencyGraph {
 								ancestry: [],
 								isRoot: true,
 							},
-							diagnosticsProcessor,
-							analyzeProgress,
+							state,
 						);
 					},
 				);
@@ -257,29 +270,14 @@ export default class DependencyGraph {
 
 		// Spin worker queue
 		await workerQueue.spin();
-
-		if (diagnosticsProcessor.hasDiagnostics()) {
-			return;
-		}
-
-		if (validate) {
-			for (const ret of roots) {
-				if (!ret.missing) {
-					const root = ret.value;
-					await FileNotFound.maybeAllowMissing(
-						allowFileNotFound,
-						root.path,
-						() => this.validateTransitive(root, diagnosticsProcessor),
-					);
-				}
-			}
-		}
 	}
 
 	public validate(
 		node: DependencyNode,
 		diagnosticsProcessor: DiagnosticsProcessor,
 	): void {
+		diagnosticsProcessor.addDiagnostics(node.diagnostics);
+
 		const resolvedImports = node.resolveImports();
 		diagnosticsProcessor.addDiagnostics(resolvedImports.diagnostics);
 	}
@@ -346,7 +344,7 @@ export default class DependencyGraph {
 		return validatedDependencyPaths;
 	}
 
-	private validateTransitive(
+	public validateTransitive(
 		node: DependencyNode,
 		diagnosticsProcessor: DiagnosticsProcessor,
 	) {
@@ -360,16 +358,8 @@ export default class DependencyGraph {
 
 	private async resolve(
 		path: AbsoluteFilePath,
-		opts: {
-			all: boolean;
-			async: boolean;
-			ancestry: string[];
-			workerQueue: DependencyGraphWorkerQueue;
-			isRoot: boolean;
-			shallowUsedExports?: Set<string>;
-		},
-		diagnosticsProcessor: DiagnosticsProcessor,
-		analyzeProgress?: ReporterProgress,
+		opts: ResolveOptions,
+		state: ResolveState,
 	): Promise<DependencyNode> {
 		const filename = path.join();
 		const {async, all, ancestry} = opts;
@@ -398,8 +388,8 @@ export default class DependencyGraph {
 		const progressText = markup`<filelink target="${filename}" />`;
 		let progressId;
 
-		if (analyzeProgress !== undefined) {
-			progressId = analyzeProgress.pushText(progressText);
+		if (state.analyzeProgress !== undefined) {
+			progressId = state.analyzeProgress.pushText(progressText);
 		}
 
 		try {
@@ -418,10 +408,7 @@ export default class DependencyGraph {
 		}
 
 		let {dependencies, diagnostics, exports} = res.value;
-
-		if (diagnostics.length > 0) {
-			diagnosticsProcessor.addDiagnostics(diagnostics);
-		}
+		let nodeDiagnostics = diagnostics;
 
 		// If we're a remote path then the origin should be the URL and not our local path
 		const remote = this.server.projectManager.getRemoteFromLocalPath(path);
@@ -472,8 +459,9 @@ export default class DependencyGraph {
 		node.setShallow(isShallowNode);
 
 		// Resolve full locations
-		await Promise.all(
-			dependencies.map(async (dep) => {
+		await promiseAllFrom(
+			dependencies,
+			async (dep) => {
 				const {source, optional} = dep;
 
 				const {diagnostics} = await catchDiagnostics(
@@ -494,16 +482,18 @@ export default class DependencyGraph {
 						node!.addDependency(source, resolved.path, dep);
 					},
 					{
-						category: "DependencyGraph",
+						entity: "DependencyGraph",
 						message: "Caught by resolve",
 					},
 				);
 
 				if (diagnostics !== undefined && !optional) {
-					diagnosticsProcessor.addDiagnostics(diagnostics);
+					nodeDiagnostics = [...nodeDiagnostics, ...diagnostics];
 				}
-			}),
+			},
 		);
+
+		node.setDiagnostics(nodeDiagnostics);
 
 		// Queue our dependencies...
 		const subAncestry = [...ancestry, filename];
@@ -529,6 +519,7 @@ export default class DependencyGraph {
 			);
 		}
 
+		const {analyzeProgress} = state;
 		if (analyzeProgress !== undefined && progressId !== undefined) {
 			analyzeProgress.popText(progressId);
 			analyzeProgress.tick();

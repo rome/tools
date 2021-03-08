@@ -464,7 +464,7 @@ export abstract class ReadableBasePath<
 	Parsed extends ParsedPath,
 	Super extends Path = Path
 > extends BasePath<Parsed, Super> {
-	public abstract readFile(): Promise<ArrayBuffer>;
+	public abstract readFile(): Promise<ArrayBufferView>;
 	public abstract readFileText(): Promise<string>;
 	public abstract createReadStream(): stream.Readable;
 	public abstract exists(): Promise<boolean>;

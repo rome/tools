@@ -100,6 +100,7 @@ export default class DependencyNode {
 		this.ref = ref;
 		this.type = res.value.moduleType;
 
+		this.diagnostics = [];
 		this.usedAsync = false;
 		this.all = false;
 		this.relativeToAbsolutePath = new ExtendedMap("relativeToAbsolutePath");
@@ -126,6 +127,7 @@ export default class DependencyNode {
 	public usedAsync: boolean;
 	public relativeToAbsolutePath: ExtendedMap<string, AbsoluteFilePath>;
 	public shallow: boolean;
+	public diagnostics: Diagnostic[];
 
 	private graph: DependencyGraph;
 	private absoluteToAnalyzeDependency: AbsoluteFilePathMap<AnalyzeDependency>;
@@ -136,6 +138,10 @@ export default class DependencyNode {
 
 	public getIntegrity(): undefined | DiagnosticIntegrity {
 		return this.analyze.integrity;
+	}
+
+	public setDiagnostics(diagnostics: Diagnostic[]) {
+		this.diagnostics = diagnostics;
 	}
 
 	public setUsedAsync(usedAsync: boolean) {
@@ -156,6 +162,7 @@ export default class DependencyNode {
 	}
 
 	public getDependents(): DependencyNode[] {
+		// TODO This can be a lot of items... We should add a dedicated map on DependencyGraph
 		const dependents: DependencyNode[] = [];
 		for (const node of this.graph.getNodes()) {
 			if (node.absoluteToAnalyzeDependency.has(this.path)) {

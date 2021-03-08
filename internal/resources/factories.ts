@@ -175,7 +175,7 @@ export function createResourceFromWebSocket(socket: WebSocket, name: string = "W
   return resc;
 }
 
-export function createResourceRoot(name: string): Resource {
+export function createResourceRoot(name: string, callback?: AsyncVoidCallback): Resource {
   const resc = new Resource({
     name,
     getDetails: () => {
@@ -183,6 +183,7 @@ export function createResourceRoot(name: string): Resource {
         type: "root",
       };
     },
+    release: callback,
   });
   processResourceRoot.add(resc);
   return resc;

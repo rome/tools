@@ -22,6 +22,10 @@ export default createVisitor({
 			}
 
 			const filePath = createPath(node.source.value);
+			if (!filePath.isExplicitRelative()) {
+				return signals.retain;
+			}
+
 			const expectedName = filenameToId(filePath, false);
 			const expectedNameCapital = filenameToId(filePath, true);
 			if (expectedName === undefined || expectedNameCapital === undefined) {

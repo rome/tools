@@ -44,7 +44,7 @@ CSSRoot {
 	corrupt: false
 	diagnostics: [
 		{
-			origins: [{category: "parse"}]
+			origins: [{entity: "ParserCore<css>"}]
 			description: {
 				advice: [
 					log {

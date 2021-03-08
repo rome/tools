@@ -5,16 +5,12 @@
 ## `footer`
 
 ```javascript
-CommitRoot {
+Commit {
 	breaking: true
-	comments: []
 	commitType: "feat"
-	corrupt: false
 	custom: false
-	diagnostics: []
 	rawBody: "commit with a breaking change footer\n\nMore description\n\nBREAKING CHANGE: breaking change footer"
 	scope: ""
-	path: RelativePath<footer/input.txt>
 	loc: SourceLocation footer/input.txt 1:0-5:38
 }
 ```

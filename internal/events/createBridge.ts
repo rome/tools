@@ -89,7 +89,7 @@ export class BridgeFactory<
 		resource.bind(bridge);
 
 		inf.completeFrameEvent.subscribe((frame) => {
-			rser.append(frame.payload.buffer);
+			rser.append(frame.payload);
 		});
 
 		socket.on(
@@ -136,7 +136,7 @@ export class BridgeFactory<
 			if (!(data instanceof ArrayBuffer)) {
 				throw new Error("Expected ArrayBuffer");
 			}
-			rser.append(data);
+			rser.append(new DataView(data));
 		};
 
 		socket.onclose = () => {
@@ -163,7 +163,7 @@ export class BridgeFactory<
 		socket.on(
 			"data",
 			(chunk) => {
-				rser.append(chunk.buffer);
+				rser.append(chunk);
 			},
 		);
 
@@ -268,6 +268,13 @@ export class BridgeFactory<
 			"message",
 			(msg) => {
 				rser.append(msg);
+			},
+		);
+
+		parentPort.on(
+			"messageerror",
+			(err) => {
+				bridge.endWithError(err, false);
 			},
 		);
 

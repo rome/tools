@@ -11,6 +11,7 @@ import {
 	DiagnosticDependency,
 	DiagnosticDescription,
 	DiagnosticLocation,
+	DiagnosticOrigin,
 	DiagnosticSuppression,
 	DiagnosticTags,
 } from "./types";
@@ -24,10 +25,11 @@ import {
 import {OneIndexed, ZeroIndexed} from "@internal/numbers";
 import {mergeObjects} from "@internal/typescript-helpers";
 import {MixedPathMap, MixedPathSet, Path} from "@internal/path";
+import {DiagnosticsProcessorOptions} from "./DiagnosticsProcessor";
 
 export type DiagnosticsNormalizerOptions = {
-	tags?: DiagnosticTags;
-	label?: StaticMarkup;
+	defaultTags?: DiagnosticTags;
+	defaultLabel?: StaticMarkup;
 };
 
 function maybeMerge<T extends object>(a: T, b: Partial<T>): T {
@@ -59,32 +61,73 @@ function maybeMap<T>(arr: T[], callback: (item: T) => T): T[] {
 
 export default class DiagnosticsNormalizer {
 	constructor(
-		normalizeOptions: DiagnosticsNormalizerOptions = {},
-		markupOptions: MarkupFormatNormalizeOptions = {},
-		sourceMaps?: SourceMapConsumerCollection,
+		{
+			origin,
+			normalizeOptions = {},
+			sourceMaps,
+			markupOptions,
+		}: DiagnosticsProcessorOptions = {},
 	) {
 		this.sourceMaps = sourceMaps;
 		this.inlineSourceText = new MixedPathMap();
 		this.options = normalizeOptions;
+		this.origins = origin === undefined ? [] : [origin];
 		this.inlinedSourceTextPaths = new MixedPathSet();
 		this.markupOptions = this.createMarkupOptions(markupOptions);
-
-		this.couldNormalizeMarkup =
-			sourceMaps !== undefined ||
-			markupOptions.stripFilelinkText ||
-			markupOptions.stripPositions ||
-			markupOptions.humanizeFilename !== undefined ||
-			markupOptions.normalizePosition !== undefined;
 	}
 
 	private sourceMaps: undefined | SourceMapConsumerCollection;
 
 	private options: DiagnosticsNormalizerOptions;
 	private markupOptions: MarkupFormatNormalizeOptions;
-	private couldNormalizeMarkup: boolean;
 
+	private origins: DiagnosticOrigin[];
 	private inlineSourceText: MixedPathMap<string>;
 	private inlinedSourceTextPaths: MixedPathSet;
+
+	public unshiftOrigin(origin: DiagnosticOrigin) {
+		this.origins = [origin, ...this.origins];
+	}
+
+	private hasSourceMaps(): boolean {
+		const {sourceMaps} = this;
+		return sourceMaps !== undefined && sourceMaps.hasAny();
+	}
+
+	private couldNormalizeMarkup(): boolean {
+		const {markupOptions} = this;
+
+		return (
+			this.hasSourceMaps() ||
+			markupOptions.stripFilelinkText ||
+			markupOptions.stripPositions ||
+			markupOptions.humanizeFilename !== undefined ||
+			markupOptions.normalizePosition !== undefined
+		);
+	}
+
+	private couldNormalizeLocation(): boolean {
+		return (
+			this.inlinedSourceTextPaths.size > 0 ||
+			this.hasSourceMaps() ||
+			this.couldNormalizePath()
+		);
+	}
+
+	private couldNormalizePath(): boolean {
+		return this.markupOptions.normalizePosition !== undefined;
+	}
+
+	private couldNormalizeDiagnostic(): boolean {
+		const {options} = this;
+		return (
+			this.origins.length > 0 ||
+			this.couldNormalizeMarkup() ||
+			this.couldNormalizeLocation() ||
+			options.defaultLabel !== undefined ||
+			options.defaultTags !== undefined
+		);
+	}
 
 	public removePath(path: Path) {
 		this.inlineSourceText.delete(path);
@@ -92,7 +135,7 @@ export default class DiagnosticsNormalizer {
 	}
 
 	private createMarkupOptions(
-		markupOptions: MarkupFormatNormalizeOptions,
+		markupOptions: MarkupFormatNormalizeOptions = {},
 	): MarkupFormatNormalizeOptions {
 		const {sourceMaps} = this;
 
@@ -136,12 +179,11 @@ export default class DiagnosticsNormalizer {
 	private normalizePath(path: Path): Path;
 	private normalizePath(path: undefined | Path): undefined | Path;
 	private normalizePath(path: undefined | Path): undefined | Path {
-		const {markupOptions} = this;
-		if (markupOptions === undefined || path === undefined) {
+		if (path === undefined) {
 			return path;
 		}
 
-		const {normalizePosition} = markupOptions;
+		const {normalizePosition} = this.markupOptions;
 		if (normalizePosition === undefined) {
 			return path;
 		}
@@ -163,6 +205,10 @@ export default class DiagnosticsNormalizer {
 	}
 
 	public normalizeLocation(location: DiagnosticLocation): DiagnosticLocation {
+		if (!this.couldNormalizeLocation()) {
+			return location;
+		}
+
 		const {sourceMaps} = this;
 
 		let {marker, path, start, end, integrity} = location;
@@ -256,7 +302,7 @@ export default class DiagnosticsNormalizer {
 	}
 
 	private normalizeMarkup(markup: StaticMarkup): StaticMarkup {
-		if (this.couldNormalizeMarkup) {
+		if (this.couldNormalizeMarkup()) {
 			return normalizeMarkup(markup, this.markupOptions).text;
 		} else {
 			return markup;
@@ -352,7 +398,7 @@ export default class DiagnosticsNormalizer {
 					return {
 						...item,
 						// Command flags could have position information
-						commandFlags: {},
+						commandFlags: undefined,
 					};
 				} else {
 					return item;
@@ -430,12 +476,16 @@ export default class DiagnosticsNormalizer {
 	public normalizeSuppression(
 		suppression: DiagnosticSuppression,
 	): DiagnosticSuppression {
-		return maybeMerge(
-			suppression,
-			{
-				path: this.normalizePath(suppression.path),
-			},
-		);
+		if (this.couldNormalizePath()) {
+			return maybeMerge(
+				suppression,
+				{
+					path: this.normalizePath(suppression.path),
+				},
+			);
+		} else {
+			return suppression;
+		}
 	}
 
 	private normalizeDescription(
@@ -457,6 +507,10 @@ export default class DiagnosticsNormalizer {
 	}
 
 	public normalizeDiagnostic(diag: Diagnostic): Diagnostic {
+		if (!this.couldNormalizeDiagnostic()) {
+			return diag;
+		}
+
 		let merge: Partial<Diagnostic> = {
 			location: this.normalizeLocation(diag.location),
 			description: this.normalizeDescription(diag.description),
@@ -470,22 +524,43 @@ export default class DiagnosticsNormalizer {
 			merge.dependencies = this.normalizeDependencies(diag.dependencies);
 		}
 
-		// Add on any specified tags
-		if (this.options.tags) {
+		if (this.origins.length > 0) {
+			if (diag.origins === undefined) {
+				merge.origins = this.origins;
+			} else {
+				const origins = [...diag.origins];
+				const entities: Set<string> = new Set(
+					origins.map((origin) => origin.entity),
+				);
+				let modified = false;
+				for (const origin of this.origins) {
+					if (!entities.has(origin.entity)) {
+						entities.add(origin.entity);
+						origins.push(origin);
+					}
+				}
+				if (modified) {
+					merge.origins = origins;
+				}
+			}
+		}
+
+		const {defaultTags, defaultLabel} = this.options;
+		if (defaultTags !== undefined) {
 			if (diag.tags === undefined) {
-				merge.tags = this.options.tags;
+				merge.tags = defaultTags;
 			} else {
 				merge.tags = {
-					...this.options.tags,
+					...defaultTags,
 					...diag.tags,
 				};
 			}
 		}
 
-		// Add on any specified tags
-		const {label} = this.options;
-		if (label) {
-			merge.label = diag.label ? markup`${label} (${diag.label})` : label;
+		if (defaultLabel !== undefined) {
+			merge.label = diag.label
+				? markup`${defaultLabel} (${diag.label})`
+				: defaultLabel;
 		}
 
 		return maybeMerge(diag, merge);

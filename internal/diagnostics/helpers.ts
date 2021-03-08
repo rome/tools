@@ -13,7 +13,7 @@ import {
 } from "./types";
 import {orderBySimilarity, splitLines} from "@internal/string-utils";
 import {Position} from "@internal/parser-core";
-import {StaticMarkup, markup} from "@internal/markup";
+import {StaticMarkup, formatFileLinkInnerText, markup} from "@internal/markup";
 import {joinCategoryName} from "./categories";
 import {stringDiffCompressed} from "@internal/string-diff";
 
@@ -155,19 +155,51 @@ export function buildDuplicateLocationAdvice(
 	];
 }
 
-export function diagnosticLocationToMarkupFilelink(
+function nodeInternalDiagnosticLocationToMarkupFilelink(
 	loc: DiagnosticLocation,
-	innerText: string = "",
+	innerText?: string,
 ): StaticMarkup {
 	const {start, path} = loc;
 
+	// Properly escape segments and remove node: prefix
+	let filename = path.getSegments().map((seg) => encodeURIComponent(seg)).join(
+		"/",
+	).slice(5);
+	if (!filename.endsWith(".js")) {
+		filename += ".js";
+	}
+
+	let href = `https://github.com/nodejs/node/tree/${process.version}/lib/${filename}`;
+
+	if (innerText === undefined) {
+		innerText = formatFileLinkInnerText(path, {}, start);
+
+		if (start !== undefined) {
+			href += `#L${String(start.line.valueOf())}`;
+		}
+	}
+
+	return markup`<hyperlink target="${href}">${innerText}</hyperlink>`;
+}
+
+export function diagnosticLocationToMarkupFilelink(
+	loc: DiagnosticLocation,
+	innerText?: string,
+): StaticMarkup {
+	const {start, path} = loc;
+
+	// Link directly to GitHub for internal Node files
+	if (path.isUID() && path.format().startsWith("node:")) {
+		return nodeInternalDiagnosticLocationToMarkupFilelink(loc, innerText);
+	}
+
 	if (start === undefined) {
-		return markup`<filelink target="${path.join()}">${innerText}</filelink>`;
+		return markup`<filelink target="${path.join()}">${innerText ?? ""}</filelink>`;
 	}
 
 	return markup`<filelink target="${path.join()}" line="${String(
 		start.line.valueOf(),
-	)}" column="${String(start.column.valueOf())}">${innerText}</filelink>`;
+	)}" column="${String(start.column.valueOf())}">${innerText ?? ""}</filelink>`;
 }
 
 // Category value can allow arbitrary values so we need to escape bad characters

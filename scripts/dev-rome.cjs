@@ -125,7 +125,7 @@ async function buildTrunk() {
 			path.join(projectRoot, "internal/cli/bin/rome.ts"),
 			tempDevBuildFolder,
 			"--quiet",
-			"--verbose-diagnostics",
+			"--no-truncate-diagnostics",
 		];
 
 		if (process.stdout instanceof tty.WriteStream) {

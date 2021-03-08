@@ -9,7 +9,7 @@
 	dependencies: []
 	diagnostics: [
 		{
-			origins: [{category: "analyzeDependencies"}]
+			origins: [{entity: "compiler.analyzeDependencies"}]
 			description: {
 				advice: []
 				category: ["analyzeDependencies", "cjsExportInES"]
@@ -154,7 +154,7 @@
 	dependencies: []
 	diagnostics: [
 		{
-			origins: [{category: "parse"}]
+			origins: [{entity: "ParserCore<js>"}]
 			description: {
 				advice: [
 					log {

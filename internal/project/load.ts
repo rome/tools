@@ -120,7 +120,7 @@ export async function loadCompleteProjectConfig(
 			async (path) => {
 				if (await path.exists()) {
 					const content = await reader.readFile(path);
-					const hash = sha256.sync(new DataView(content));
+					const hash = sha256.sync(content);
 					const key = projectDirectory.relative(path).join();
 					meta.configCacheKeys[key] = hash;
 				}

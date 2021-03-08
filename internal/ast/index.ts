@@ -11,10 +11,9 @@ export * from "./unions";
 export {bindingKeys, nodeNames, visitorKeys} from "./utils";
 export type AnyNodes = AnyNode | (AnyNode[]);
 
-/* GENERATED:START(hash:20817ba46111fce33ac6c9664817c55a1b937fc7,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/ast` to update. */
+/* GENERATED:START(hash:15c5464073a967f4fb4a952323dc34b080a4be2a,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/ast` to update. */
 export * from "./common/comments/CommentBlock";
 export * from "./common/comments/CommentLine";
-export * from "./common/commit/CommitRoot";
 export * from "./css/core/CSSAtRule";
 export * from "./css/selectors/CSSAttributeSelector";
 export * from "./css/core/CSSBlock";
@@ -292,7 +291,6 @@ export * from "./js/typescript/TSVoidKeywordTypeAnnotation";
 export type AnyNode =
 	| n.CommentBlock
 	| n.CommentLine
-	| n.CommitRoot
 	| n.CSSAtRule
 	| n.CSSAttributeSelector
 	| n.CSSBlock

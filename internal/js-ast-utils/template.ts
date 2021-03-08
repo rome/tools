@@ -11,6 +11,7 @@ import {
 	AnyJSStatement,
 	AnyNode,
 	JSRoot,
+	JSStringLiteral,
 	jsRoot,
 } from "@internal/ast";
 import {CompilerContext, CompilerPath, signals} from "@internal/compiler";
@@ -21,7 +22,7 @@ import {isIdentifierish} from "./isIdentifierish";
 import {Dict} from "@internal/typescript-helpers";
 
 type Placeholder = {
-	type: AnyJSIdentifier["type"];
+	type: AnyJSIdentifier["type"] | JSStringLiteral["type"];
 	path: string[];
 };
 
@@ -40,10 +41,10 @@ function getTemplate(strs: TemplateStringsArray): BuiltTemplate {
 		return cached;
 	}
 
-	// calculate amount of placeholders to insert
+	// Calculate amount of placeholders to insert
 	const pathCount = strs.length - 1;
 
-	// create path ids
+	// Create path ids
 	let placeholders: TemplatePlaceholders = {};
 	const placeholderIds: string[] = [];
 	for (let i = 0; i < pathCount; i++) {
@@ -52,7 +53,7 @@ function getTemplate(strs: TemplateStringsArray): BuiltTemplate {
 		placeholders[id] = undefined;
 	}
 
-	// interpolate placeholders and original code
+	// Interpolate placeholders and original code
 	let code = "";
 	for (let i = 0; i < strs.length; i++) {
 		// add original part of code
@@ -65,25 +66,34 @@ function getTemplate(strs: TemplateStringsArray): BuiltTemplate {
 		}
 	}
 
-	// parse the interpolated code
+	// Parse the interpolated code
 	let ast = parseJS({
 		input: code,
 		sourceType: "template",
 		path: createUIDPath("template"),
 	});
 
-	// remove `loc` properties
+	// Remove `loc` properties
 	ast = jsRoot.assert(removeLoc(ast));
 
-	// traverse and find placeholders paths
+	// Traverse and find placeholders paths
 	function collectPlaceholderPaths(path: CompilerPath) {
 		const {node} = path;
+
 		if (isIdentifierish(node) && node.name in placeholders) {
 			placeholders[node.name] = {
 				type: node.type,
 				path: path.getPathKeys(),
 			};
 		}
+
+		if (node.type === "JSStringLiteral" && node.value in placeholders) {
+			placeholders[node.value] = {
+				type: node.type,
+				path: path.getPathKeys(),
+			};
+		}
+
 		return signals.retain;
 	}
 
@@ -115,11 +125,18 @@ function createIdentifier(
 	expectedIdType: Placeholder["type"],
 ): AnyNode {
 	if (typeof substitute === "string") {
-		// @ts-ignore: No idea why this error exists
-		return {
-			type: expectedIdType,
-			name: substitute,
-		};
+		if (expectedIdType === "JSStringLiteral") {
+			return {
+				type: "JSStringLiteral",
+				value: substitute,
+			};
+		} else {
+			// @ts-ignore: No idea why this error exists
+			return {
+				type: expectedIdType,
+				name: substitute,
+			};
+		}
 	} else {
 		return substitute;
 	}
@@ -131,12 +148,12 @@ export function template(
 ): AnyNode {
 	const {ast, placeholderPaths} = getTemplate(strs);
 
-	// no substitutions so we can just return the ast!
+	// No substitutions so we can just return the ast!
 	if (!substitutions.length) {
 		return ast;
 	}
 
-	// this case should never be hit
+	// This case should never be hit
 	if (placeholderPaths.length !== substitutions.length) {
 		throw new Error("Expected substitutions to be the same length as paths");
 	}

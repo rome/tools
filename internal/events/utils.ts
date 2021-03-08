@@ -15,17 +15,13 @@ import {
 	BridgeResponseMessage,
 } from "./types";
 
-export function isBridgeClosedDiagnosticsError(err: Error): boolean {
-	return isDiagnosticsErrorOfCategory(
-		err,
-		DIAGNOSTIC_CATEGORIES["bridge/closed"],
-	);
-}
-
-export function isBridgeDisconnectedDiagnosticsError(err: Error): boolean {
-	return isDiagnosticsErrorOfCategory(
-		err,
-		DIAGNOSTIC_CATEGORIES["bridge/disconnected"],
+export function isBridgeEndDiagnosticsError(err: Error): boolean {
+	return (
+		isDiagnosticsErrorOfCategory(
+			err,
+			DIAGNOSTIC_CATEGORIES["bridge/disconnected"],
+		) ||
+		isDiagnosticsErrorOfCategory(err, DIAGNOSTIC_CATEGORIES["bridge/closed"])
 	);
 }
 

@@ -11,7 +11,6 @@ import {createAbsoluteFilePath} from "@internal/path";
 import RSERWriterCounter from "./RSERWriterCounter";
 import RSERWriterHasher from "./RSERWriterHasher";
 import {sha256} from "@internal/string-utils";
-import {getArrayBuffer} from "@internal/binary";
 
 export {default as RSERBufferObserver} from "./RSERWriterBase";
 export {default as RSERBufferParser} from "./RSERBufferParser";
@@ -110,7 +109,10 @@ export function decodeSingleMessageRSERStream(
 		readStream.on(
 			"data",
 			(chunk) => {
-				decodeStream.append(getArrayBuffer(chunk));
+				if (!ArrayBuffer.isView(chunk)) {
+					throw new Error("ReadStream did not emit an ArrayBufferView");
+				}
+				decodeStream.append(chunk);
 			},
 		);
 
