@@ -1,3 +1,5 @@
+import { Path } from "@internal/path";
+
 // rome-ignore lint/ts/noExplicitAny: Wide extends is required here
 export function enhanceNodeInspectClass<T extends new (
 	...args: any
