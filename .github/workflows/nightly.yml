@@ -6,7 +6,8 @@ on:
     - cron: '0 0 * * *'
 
 jobs:
-  release:
+  nightly_release:
+    name: Nightly Release
     environment: nightly
     runs-on: ubuntu-latest
     steps:
@@ -23,4 +24,5 @@ jobs:
         working-directory: dist
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+      # TODO create a git tag
       # TODO: Publish to GitHub?

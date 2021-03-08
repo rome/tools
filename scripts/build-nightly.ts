@@ -8,15 +8,7 @@ export async function main() {
 	const [version] = VERSION.split("-");
 	const date = new Date();
 	const dateParts = [date.getFullYear(), date.getMonth(), date.getDate()];
-	const dateTag = dateParts.map((num) => {
-		const str = String(num);
-		if (str.length === 1) {
-			return `0${str}`;
-		} else {
-			return str;
-		}
-	}).join(".");
-	const newVersion = `${version}-nightly.${dateTag}`;
+	const newVersion = `${version}-nightly.${dateParts.join(".")}`;
 	await updateVersion([newVersion]);
 
 	// Build a release to the dist folder in the root
