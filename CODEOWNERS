@@ -11,7 +11,7 @@
 /internal/commit-parser/* @ematipico
 /internal/compiler/lint/* @ematipico @bitpshr
 /internal/code-browsers/* @jer3m01
-/internal/code-js-manifest/* @ematipico
+/internal/codec-js-manifest/* @ematipico
 /internal/core/client/commands/* @ematipico
 /internal/core/* @yassere
 /internal/core/server/commands/* @ematipico
@@ -19,5 +19,4 @@
 /internal/html-parser/* @ematipico
 /internal/markdown-parser/* @ematipico
 /website/* @EduardoLopes
-
 
