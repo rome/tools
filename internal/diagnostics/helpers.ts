@@ -13,7 +13,7 @@ import {
 } from "./types";
 import {orderBySimilarity, splitLines} from "@internal/string-utils";
 import {Position} from "@internal/parser-core";
-import {StaticMarkup, markup, formatFileLinkInnerText} from "@internal/markup";
+import {StaticMarkup, formatFileLinkInnerText, markup} from "@internal/markup";
 import {joinCategoryName} from "./categories";
 import {stringDiffCompressed} from "@internal/string-diff";
 
@@ -162,13 +162,15 @@ function nodeInternalDiagnosticLocationToMarkupFilelink(
 	const {start, path} = loc;
 
 	// Properly escape segments and remove node: prefix
-	let filename = path.getSegments().map(seg => encodeURIComponent(seg)).join("/").slice(5);
+	let filename = path.getSegments().map((seg) => encodeURIComponent(seg)).join(
+		"/",
+	).slice(5);
 	if (!filename.endsWith(".js")) {
 		filename += ".js";
 	}
 
 	let href = `https://github.com/nodejs/node/tree/${process.version}/lib/${filename}`;
-	
+
 	if (innerText === undefined) {
 		innerText = formatFileLinkInnerText(path, {}, start);
 

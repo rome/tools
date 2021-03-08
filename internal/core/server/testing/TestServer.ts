@@ -8,12 +8,12 @@
 import {Reporter, ReporterNamespace} from "@internal/cli-reporter";
 import {
 	DIAGNOSTIC_CATEGORIES,
+	Diagnostic,
 	deriveDiagnosticFromError,
 	descriptions,
 	diagnosticLocationToMarkupFilelink,
-	getDiagnosticsFromError,
-	Diagnostic,
 	equalCategoryNames,
+	getDiagnosticsFromError,
 } from "@internal/diagnostics";
 import {Server, ServerRequest, TestRef} from "@internal/core";
 import {DiagnosticsPrinter} from "@internal/cli-diagnostics";
@@ -186,7 +186,12 @@ export default class TestServer {
 	}
 
 	public addDiagnostic(diagnostic: Diagnostic) {
-		if (equalCategoryNames(diagnostic.description.category, DIAGNOSTIC_CATEGORIES["tests/snapshots/incorrect"])) {
+		if (
+			equalCategoryNames(
+				diagnostic.description.category,
+				DIAGNOSTIC_CATEGORIES["tests/snapshots/incorrect"],
+			)
+		) {
 			this.needsSnapshotUpdate = true;
 		}
 

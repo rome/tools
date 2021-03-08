@@ -49,11 +49,7 @@ export function buildFileLink(
 	let column = attributes.get("column").asZeroIndexedNumberOrVoid();
 
 	if (opts.normalizePosition !== undefined) {
-		const pos = opts.normalizePosition(
-			path,
-			line,
-			column,
-		);
+		const pos = opts.normalizePosition(path, line, column);
 		if (pos !== undefined) {
 			path = pos.path;
 			if (pos.line !== undefined) {
@@ -65,7 +61,6 @@ export function buildFileLink(
 		}
 	}
 
-
 	return {
 		path,
 		text: formatFileLinkInnerText(path, opts, {line, column}),
@@ -74,7 +69,11 @@ export function buildFileLink(
 	};
 }
 
-export function formatFileLinkInnerText(path: Path, opts: MarkupFormatOptions, pos?: Partial<Position>): string {
+export function formatFileLinkInnerText(
+	path: Path,
+	opts: MarkupFormatOptions,
+	pos?: Partial<Position>,
+): string {
 	let text = humanizeMarkupFilename(path, opts);
 	if (pos === undefined) {
 		return text;
