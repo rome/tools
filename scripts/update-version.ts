@@ -1,4 +1,4 @@
-import {PUBLIC_PACKAGES, ROOT, exec, reporter} from "./_utils";
+import {ROOT, exec, reporter} from "./_utils";
 import {AbsoluteFilePath} from "@internal/path";
 import https = require("https");
 import http = require("http");

@@ -679,7 +679,7 @@ export default class Consumer {
 			if (!this.usedNames.has(key)) {
 				value.unexpected(
 					descriptions.CONSUME.UNUSED_PROPERTY(
-						this.getKeyPathString([key]),
+						key,
 						type,
 						knownProperties,
 					),

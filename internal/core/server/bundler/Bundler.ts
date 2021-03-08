@@ -84,6 +84,9 @@ export default class Bundler {
 
 	public async getResolvedEntry(
 		unresolvedEntry: string,
+		{setVersion}: {
+			setVersion?: string;
+		} = {},
 	): Promise<BundlerEntryResolution> {
 		const {cwd} = this.config;
 
@@ -120,7 +123,7 @@ export default class Bundler {
 			resolvedEntry,
 		);
 
-		return {manifestDef, resolvedEntry, project};
+		return {manifestDef, resolvedEntry, project, setVersion};
 	}
 
 	private createBundleRequest(
@@ -376,7 +379,7 @@ export default class Bundler {
 	}
 
 	public async bundleManifest(
-		{resolvedEntry, manifestDef}: BundlerEntryResolution,
+		{resolvedEntry, manifestDef, setVersion}: BundlerEntryResolution,
 	): Promise<{
 		files: BundlerFiles;
 		bundles: BundleResultBundle[];
@@ -429,6 +432,10 @@ export default class Bundler {
 					}
 				},
 			);
+
+			if (setVersion !== undefined) {
+				newManifest.version = setVersion;
+			}
 
 			// If we have a `files` array then set it to all the newly added files
 			// This will have included files already there that we copied

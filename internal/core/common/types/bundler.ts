@@ -57,6 +57,7 @@ export type BundleBuddyGraphNode = {
 	target: string | undefined;
 };
 export type BundlerEntryResolution = {
+	setVersion: undefined | string;
 	project: ProjectDefinition;
 	manifestDef: undefined | ManifestDefinition;
 	resolvedEntry: AbsoluteFilePath;
