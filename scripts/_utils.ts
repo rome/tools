@@ -5,6 +5,7 @@ import {formatAST} from "@internal/formatter";
 import {valueToNode} from "@internal/js-ast-utils";
 import {markup} from "@internal/markup";
 import {regex} from "@internal/string-escape";
+import {json} from "@internal/codec-config";
 import crypto = require("crypto");
 import child = require("child_process");
 
@@ -15,17 +16,6 @@ export const ROOT = createAbsoluteFilePath(__dirname).getParent();
 export const INTERNAL = ROOT.append("internal");
 export const PUBLIC_PACKAGES = ROOT.append("public-packages");
 
-export const GIT_PLACEHOLDERS = {
-	authorEmail: "%aE",
-	authorName: "%aN",
-	body: "%b",
-	commit: "%H",
-	date: "%ad",
-	rawBody: "%B",
-	refNames: "%d",
-	subject: "%s",
-};
-
 let forceGenerated = false;
 
 const COMMENT_START = /(?:\/\*|<!--|#)/;
@@ -34,15 +24,16 @@ const COMMENT_END = /(?:\*\/|-->|#)/;
 export async function modifyGeneratedFile(
 	{path, scriptName, id = "main"}: {
 		path: AbsoluteFilePath;
-		scriptName: string;
+		scriptName?: string;
 		id?: string;
 	},
 	callback: () => Promise<{
 		lines: string[];
+		prepend?: boolean;
 		hash?: string;
 	}>,
 ): Promise<void> {
-	const {lines, hash: customHashContent} = await callback();
+	const {prepend, lines, hash: customHashContent} = await callback();
 
 	// Build expected inner generated
 	let generated = await formatFile(
@@ -66,14 +57,18 @@ export async function modifyGeneratedFile(
 	const endInnerIndex = endMatch?.index ?? file.length;
 	const endIndex = endInnerIndex + (endMatch ? endMatch[0].length : 0);
 
-	const generatedInner = file.slice(startInnerIndex, endInnerIndex);
+	const existingGeneratedInner = file.slice(startInnerIndex, endInnerIndex);
 	let contentStart = file.slice(0, startIndex);
 	let contentEnd = file.slice(endIndex, file.length);
+
+	if (prepend) {
+		generated += existingGeneratedInner;
+	}
 
 	// Check if the generated file has the same hash
 	const commentHash = startMatch ? startMatch[1] : "";
 	const expectedHash = hash(customHashContent || generated);
-	const generatedHash = hash(generatedInner);
+	const generatedHash = hash(existingGeneratedInner);
 	let isSame = false;
 	if (expectedHash === commentHash && generatedHash === commentHash) {
 		isSame = true;
@@ -119,7 +114,7 @@ export function setForceGenerated(force: boolean) {
 }
 
 type CommentOptions = {
-	scriptName: string;
+	scriptName: undefined | string;
 	id: string;
 	hash: string;
 	delimiter: CommentDelimiter;
@@ -146,8 +141,12 @@ function determineDelimiter(path: AbsoluteFilePath): CommentDelimiter {
 	return "ARROW";
 }
 
-function createGeneratedCommentInstructions(scriptName: string): string {
-	return `Everything below is automatically generated. DO NOT MODIFY. Run \`./rome run scripts/${scriptName}\` to update.`;
+function createGeneratedCommentInstructions(scriptName: undefined | string): string {
+	let instructions = `Everything below is automatically generated. DO NOT MODIFY.`;
+	if (scriptName !== undefined) {
+		instructions += `Run \`./rome run scripts/${scriptName}\` to update.`;
+	}
+	return instructions;
 }
 
 function createGeneratedStartComment(opts: CommentOptions): string {
@@ -291,6 +290,21 @@ export async function execDev(args: string[]): Promise<void> {
 				stdio: "inherit",
 			},
 		),
+	);
+}
+
+export async function updateVersion(newVersion: string): Promise<void> {
+	const path = ROOT.append("package.json");
+
+	const manifest = json.consumeValue(await path.readFileTextMeta());
+	manifest.set("version", newVersion);
+
+	const formatted = json.stringify(manifest.asUnknown()) + "\n";
+	await path.writeFile(formatted);
+
+
+	reporter.success(
+		markup`Updated <code>version</code> to <emphasis>${newVersion}</emphasis> in ${path}`,
 	);
 }
 

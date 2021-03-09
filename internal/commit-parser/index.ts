@@ -1,6 +1,6 @@
 import {descriptions} from "@internal/diagnostics";
 import {ParserOptions, TokenValues, createParser} from "@internal/parser-core";
-import {Commit, Symbols, Tokens} from "./types";
+import {ConventionalCommit, Symbols, Tokens} from "./types";
 
 type CommitParserTypes = {
 	tokens: Tokens;
@@ -9,7 +9,7 @@ type CommitParserTypes = {
 	meta: void;
 };
 
-export {Commit};
+export {ConventionalCommit as Commit};
 
 const commitParser = createParser<CommitParserTypes>({
 	diagnosticLanguage: "text",
@@ -47,9 +47,8 @@ const commitParser = createParser<CommitParserTypes>({
 	},
 });
 
-export function parseCommit(opts: ParserOptions): Commit {
+export function parseConventionalCommit(opts: ParserOptions): ConventionalCommit {
 	const parser = commitParser.create(opts);
-	const start = parser.getPosition();
 
 	let commitType = "";
 	if (parser.matchToken("Word")) {
@@ -93,7 +92,7 @@ export function parseCommit(opts: ParserOptions): Commit {
 		if (parser.matchToken("Word")) {
 			while (!parser.matchToken("RightParen")) {
 				if (parser.matchToken("Word")) {
-					scope += (parser.getToken() as Tokens["Word"]).value;
+					scope += parser.expectToken("Word").value;
 				} else if (parser.matchToken("Whitespace")) {
 					scope += " ";
 				} else {
@@ -112,41 +111,11 @@ export function parseCommit(opts: ParserOptions): Commit {
 		}
 	}
 
-	let breaking = !!parser.eatToken("Exclamation");
+	let breaking = parser.eatToken("Exclamation") !== undefined;
 
 	let rawBody = "";
 	if (parser.eatToken("Colon")) {
-		while (!parser.matchToken("EOF")) {
-			if (parser.eatToken("Whitespace")) {
-				rawBody += " ";
-				continue;
-			}
-
-			if (parser.eatToken("LeftParen")) {
-				rawBody += "(";
-				continue;
-			}
-
-			if (parser.eatToken("RightParen")) {
-				rawBody += ")";
-				continue;
-			}
-
-			if (parser.eatToken("Exclamation")) {
-				rawBody += "!";
-				continue;
-			}
-
-			if (parser.eatToken("Colon")) {
-				rawBody += ":";
-				continue;
-			}
-
-			if (parser.matchToken("Word")) {
-				rawBody += (parser.getToken() as Tokens["Word"]).value;
-				parser.nextToken();
-			}
-		}
+		rawBody = parser.input.slice(parser.getIndex().valueOf());
 	} else {
 		parser.unexpectedDiagnostic({
 			description: descriptions.COMMIT_PARSER.MISSING_DESCRIPTION,
@@ -158,13 +127,12 @@ export function parseCommit(opts: ParserOptions): Commit {
 	}
 
 	return {
-		type: "Commit",
+		diagnostics: parser.getDiagnostics(),
 		breaking,
 		commitType: commitType.toLowerCase(),
 		custom,
 		rawBody: rawBody.trim(),
 		scope,
-		loc: parser.finishLoc(start),
 	};
 }
 

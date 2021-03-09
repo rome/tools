@@ -1,11 +1,10 @@
-import {GIT_PLACEHOLDERS, reporter} from "../_utils";
+import {reporter} from "../_utils";
 import {markup} from "@internal/markup";
 import {PERMITTED_COMMIT_TYPES} from "./constants";
 import {parseCommitLog} from "./utils";
 
 export async function main(): Promise<number> {
 	const commits = parseCommitLog(
-		GIT_PLACEHOLDERS,
 		{
 			from: "main",
 			to: "HEAD",

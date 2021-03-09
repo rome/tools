@@ -1,9 +1,9 @@
 import {
 	BaseTokens,
-	NodeBase,
 	SimpleToken,
 	StringToken,
 } from "@internal/parser-core";
+import {Diagnostic} from "@internal/diagnostics";
 
 export const Symbols = {
 	Space: " ",
@@ -19,8 +19,8 @@ export type Tokens = BaseTokens & {
 	Word: StringToken<"Word">;
 };
 
-export interface Commit extends NodeBase {
-	readonly type: "Commit";
+export interface ConventionalCommit {
+	readonly diagnostics: Diagnostic[];
 	readonly breaking: boolean;
 	readonly commitType: string;
 	readonly custom: boolean;
