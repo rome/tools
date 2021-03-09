@@ -79,11 +79,11 @@ jobs:
       
       - name: Upload artifact
         uses: actions/upload-artifact@v2
-        if-no-files-found: error
         with:
           name: dist.tar.gz
           path: dist.tar.gz
           retention-days: 5
+          if-no-files-found: error
 
   publish:
     name: Publish Release
