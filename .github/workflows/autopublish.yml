@@ -22,8 +22,8 @@ jobs:
         id: nightly
         if: github.event_name == 'schedule'
         run:
-          - echo "tag=nightly" >> $GITHUB_ENV
-          - echo "nightly=true" >> $GITHUB_ENV
+        - echo "tag=nightly" >> $GITHUB_ENV
+        - echo "nightly=true" >> $GITHUB_ENV
 
       - name: Check version changes
         uses: EndBug/version-check@v1
@@ -41,8 +41,8 @@ jobs:
       - name: Check version status
         if: steps.version.outputs.changed == 'true'
         run:
-          - echo "version_changed=true" >> $GITHUB_ENV
-          - 'echo "Version change found! New version: ${{ steps.version.outputs.version }} (${{ steps.version.outputs.version_type }})"'
+        - echo "version_changed=true" >> $GITHUB_ENV
+        - 'echo "Version change found! New version: ${{ steps.version.outputs.version }} (${{ steps.version.outputs.version_type }})"'
 
   build:
     name: Build Release
@@ -62,10 +62,10 @@ jobs:
       - name: Update version if nightly
         if: needs.check.outputs.nightly == 'true'
         run:
-          - ./rome run scripts/update-nightly-version
-          - NEW_VERSION=$(./rome --version)
-          - echo "version=$NEW_VERSION" >> $GITHUB_ENV
-          - echo "tag=nightly" >> $GITHUB_ENV
+        - ./rome run scripts/update-nightly-version
+        - NEW_VERSION=$(./rome --version)
+        - echo "version=$NEW_VERSION" >> $GITHUB_ENV
+        - echo "tag=nightly" >> $GITHUB_ENV
 
       - name: Build package
         run: ./rome run scripts/build-release dist
@@ -95,3 +95,7 @@ jobs:
 
       - run:
         - echo "Publishing ${{ env.version }} ${{ env.tag }}"
+
+      - uses: actions/download-artifact@v2
+        with:
+          name: dist.tar.gz
