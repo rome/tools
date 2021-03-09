@@ -1,75 +1,91 @@
 name: Auto-publish
 on:
+  schedule:
+    - cron: '0 0 * * *'
   push:
     branches:
-    - main
+      - main
     paths:
-    - 'package.json'
+      - 'package.json'
 
 jobs:
   check:
-    name: Check version update
+    name: Check if there was a version update
     runs-on: ubuntu-latest
-    outputs:
-      changed: ${{ steps.check.outputs.changed }}
-      version: ${{ steps.check.outputs.version }}
-      type: ${{ steps.check.outputs.type }}
     steps:
       - uses: actions/checkout@v2
+
+      - name: Set default release tag
+        run: echo "tag=latest" >> $GITHUB_ENV
+
+      - name: Check nightly status
+        id: nightly
+        if: github.event_name == 'schedule'
+        run:
+          - echo "tag=nightly" >> $GITHUB_ENV
+          - echo "nightly=true" >> $GITHUB_ENV
 
       - name: Check version changes
         uses: EndBug/version-check@v1
-        id: check
+        id: version
         with:
           diff-search: true
 
-  publish:
-    name: Publish
+      - run: echo "version=${{ steps.version.outputs.version }}" >> $GITHUB_ENV
+
+      - name: Check prerelease status
+        id: prerelease
+        if: steps.version.outputs.type == 'prerelease' || steps.version.outputs.type == 'prepatch' || steps.version.outputs.type == 'premajor' || steps.version.outputs.type == 'preminor'
+        run: echo "prerelease=true" >> $GITHUB_ENV
+        
+      - name: Check version status
+        if: steps.version.outputs.changed == 'true'
+        run:
+          - echo "version_changed=true" >> $GITHUB_ENV
+          - 'echo "Version change found! New version: ${{ steps.version.outputs.version }} (${{ steps.version.outputs.version_type }})"'
+
+  build:
+    name: Build Release
     needs: check
-    if: needs.check.outputs.changed == 'true'
-    environment: npm-publish
+    if: env.version_changed == 'true' || env.nightly == 'true'
     runs-on: ubuntu-latest
     steps:
-      - name: Version update detected
-        run: 'echo "Version change found! New version: ${{ needs.check.outputs.version }} (${{ needs.check.outputs.type }})"'
-
       - uses: actions/checkout@v2
+      - uses: ./.github/actions/setup
 
-      - uses: actions/setup-node@v1
-        with:
-          node-version: '14.16.0'
-          registry-url: 'https://registry.npmjs.org'
+      - name: Set tag if prerelease
+        if: needs.check.outputs.prerelease == 'true'
+        run: echo "tag=prerelease" >> $GITHUB_ENV
 
-      - run: echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf && sudo sysctl -p
+      - name: Update version if nightly
+        if: needs.check.outputs.nightly == 'true'
+        run:
+          - ./rome run scripts/update-nightly-version
+          - NEW_VERSION=$(./rome --version)
+          - echo "version=$NEW_VERSION" >> $GITHUB_ENV
+          - echo "tag=nightly" >> $GITHUB_ENV
 
-      - name: Build Release
+      - name: Build package
         run: ./rome run scripts/build-release dist
-
-      - name: Check if prerelease
-        id: check-prelease
-        if: needs.check.outputs.type == 'prerelease' || needs.check.outputs.type == 'prepatch' || needs.check.outputs.type == 'premajor' || needs.check.outputs.type == 'preminor'
-        run: echo "::set-output name=prerelease::true"
-
-      - name: Publish to npm as latest
-        if: steps.check-prelease.outputs.prelease != 'true'
-        run: npm publish dist --tag latest
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-
-      - name: Publish to npm as prerelease
-        if: steps.check-prelease.outputs.prelease == 'true'
-        run: npm publish dist --tag prerelease
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-
-      # TODO update branch
-
-      - name: Create Release and tag
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      
+      - name: Build tarball
+        run: tar -C dist -cvzf dist.tar.gz .
+      
+      - name: Upload artifact
+        uses: actions/upload-artifact@v2
+        if-no-files-found: error
         with:
-          tag_name: v${{ needs.check.outputs.version }}
-          release_name: v${{ needs.check.outputs.version }}
-          draft: false
-          prerelease: false
+          name: dist.tar.gz
+          path: dist.tar.gz
+          retention-days: 5
+
+  publish:
+    name: Publish Release
+    needs: build
+    runs-on: ubuntu-latest
+    run:
+      - uses: actions/checkout@v2
+      - uses: ./.github/actions/setup
+
+      - run:
+        - echo "Publishing ${{ env.version }} ${{ env.tag }}"
