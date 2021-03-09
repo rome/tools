@@ -51,7 +51,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - uses: ./.github/actions/setup
+      - uses: actions/setup-node@v1
+        with:
+          node-version: '14.16.0'
 
       - name: Set tag if prerelease
         if: needs.check.outputs.prerelease == 'true'
@@ -83,9 +85,34 @@ jobs:
     name: Publish Release
     needs: build
     runs-on: ubuntu-latest
-    run:
+    steps:
       - uses: actions/checkout@v2
-      - uses: ./.github/actions/setup
+
+      - uses: actions/setup-node@v1
+        with:
+          node-version: '14.16.0'
+          registry-url: 'https://registry.npmjs.org'
 
       - run:
         - echo "Publishing ${{ env.version }} ${{ env.tag }}"
+
+      - uses: actions/download-artifact@v2
+        with:
+          name: dist.tar.gz
+
+      - name: npm publish
+        run: npm publish dist.tar.gz --tag ${{ env.tag }}
+
+      - name: Create GitHub release and tag
+        uses: softprops/action-gh-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          name: v${{ env.version }}
+          tag_name: v${{ env.version }}
+          draft: false
+          prerelease: ${{ env.tag !== 'latest' }}
+          files: dist.tar.gz
+          fail_on_unmatched_files: true
+
+      # TODO update latest branch if latest

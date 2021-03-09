@@ -1,8 +1,0 @@
-name: Setup
-runs:
-  using: "composite"
-  steps:
-    - uses: actions/setup-node@v1
-      with:
-        node-version: '14.16.0'
-        registry-url: 'https://registry.npmjs.org'
