@@ -1,7 +1,7 @@
 import {normalizeManifest} from "@internal/codec-js-manifest";
 import {
-	SemverRangeNode,
-	SemverVersionNode,
+	SemverRange,
+	SemverVersion,
 	parseSemverRange,
 	satisfiesSemver,
 	stringifySemver,
@@ -40,11 +40,11 @@ export function getRequire(path: AbsoluteFilePath): NodeRequire {
 type IntegrationLoaderNormalize<Value> = (
 	consumer: Consumer,
 	path: AbsoluteFilePath,
-	version: undefined | SemverVersionNode,
+	version: undefined | SemverVersion,
 ) => Value;
 
 type IntegrationLoaderEntry<Value> = {
-	version: undefined | SemverVersionNode;
+	version: undefined | SemverVersion;
 	module: Value;
 };
 
@@ -66,7 +66,7 @@ export default class IntegrationLoader<Value> {
 	private loaded: AbsoluteFilePathMap<IntegrationLoaderEntry<Value>>;
 	private normalize: IntegrationLoaderNormalize<Value>;
 	private name: string;
-	private range: undefined | SemverRangeNode;
+	private range: undefined | SemverRange;
 
 	private resolve(
 		id: string,
@@ -116,7 +116,7 @@ export default class IntegrationLoader<Value> {
 		// Try to resolve
 		const require = getRequire(path);
 
-		let version: undefined | SemverVersionNode = undefined;
+		let version: undefined | SemverVersion = undefined;
 
 		// Validate range against the package version field
 		const expectedRange = this.range;

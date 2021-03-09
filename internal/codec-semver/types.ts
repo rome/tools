@@ -15,41 +15,43 @@ import {
 	ValueToken,
 } from "@internal/parser-core";
 
-// PARSER
-export type VersionPrereleaseParts = Array<number | string>;
+export enum SemverModifier {
+	MAJOR,
+	MINOR,
+	PATCH,
+}
+
+export type SemverVersionPrereleaseParts = Array<number | string>;
 
 // 1.2, 1, 1.*.2
-export type WildcardVersionNode = ComplexNode<
-	"WildcardVersion",
+export type SemverWildcardVersion = ComplexNode<
+	"SemverWildcardVersion",
 	{
 		major: undefined | number;
 		minor: undefined | number;
 		patch: undefined | number;
-		prerelease: VersionPrereleaseParts;
-		build: VersionPrereleaseParts;
+		prerelease: SemverVersionPrereleaseParts;
+		build: SemverVersionPrereleaseParts;
 	}
 >;
 
 // 1.2.3
-export type AbsoluteVersionNode = ComplexNode<
-	"AbsoluteVersion",
+export type SemverVersion = ComplexNode<
+	"SemverAbsoluteVersion",
 	{
 		major: number;
 		minor: number;
 		patch: number;
-		prerelease: VersionPrereleaseParts;
-		build: VersionPrereleaseParts;
+		prerelease: SemverVersionPrereleaseParts;
+		build: SemverVersionPrereleaseParts;
 	}
 >;
 
-// union to treat these as the same
-export type VersionNode = WildcardVersionNode | AbsoluteVersionNode;
-
 // 1.2.x, 1.X, 1.2.*, *
-export type WildcardNode = SimpleNode<"Wildcard">;
+export type SemverWildcard = SimpleNode<"SemverWildcard">;
 
 // >=1.2.3
-export type ComparatorOperator =
+export type SemverComparatorOperator =
 	| "<"
 	| ">"
 	| ">="
@@ -59,50 +61,49 @@ export type ComparatorOperator =
 	| "~"
 	| "=";
 
-export type ComparatorNode = ComplexNode<
-	"Comparator",
+export type SemverComparator = ComplexNode<
+	"SemverComparator",
 	{
-		operator: ComparatorOperator;
-		version: WildcardNode | VersionNode;
+		operator: SemverComparatorOperator;
+		version: SemverWildcard | SemverWildcardVersion | SemverVersion;
 	}
 >;
 
 // 1.2.3 || 4.5.6
-export type LogicalOrNode = ComplexNode<
-	"LogicalOr",
+export type SemverLogicalOr = ComplexNode<
+	"SemverLogicalOr",
 	{
-		left: RangeNode;
-		right: RangeNode;
+		left: SemverRange;
+		right: SemverRange;
 	}
 >;
 
 // 1.2.3 4.5.6
-export type LogicalAndNode = ComplexNode<
-	"LogicalAnd",
+export type SemverLogicalAnd = ComplexNode<
+	"SemverLogicalAnd",
 	{
-		left: RangeNode;
-		right: RangeNode;
+		left: SemverRange;
+		right: SemverRange;
 	}
 >;
 
 // 1.2.3 - 2.3.4
-export type VersionRangeNode = ComplexNode<
-	"VersionRange",
+export type SemverVersionRange = ComplexNode<
+	"SemverVersionRange",
 	{
-		left: WildcardNode | VersionNode;
-		right: WildcardNode | VersionNode;
+		left: SemverWildcard | SemverWildcardVersion | SemverVersion;
+		right: SemverWildcard | SemverWildcardVersion | SemverVersion;
 	}
 >;
 
-export type RangeNode =
-	| LogicalAndNode
-	| VersionRangeNode
-	| LogicalOrNode
-	| ComparatorNode
-	| WildcardNode
-	| VersionNode;
+export type SemverRange =
+	| SemverLogicalAnd
+	| SemverVersionRange
+	| SemverLogicalOr
+	| SemverComparator
+	| SemverWildcard
+	| SemverWildcardVersion | SemverVersion;
 
-// TOKENS
 export type Tokens = BaseTokens & {
 	Space: SimpleToken<"Space">;
 	Number: NumberToken<"Number">;
@@ -111,12 +112,7 @@ export type Tokens = BaseTokens & {
 	RangeDash: SimpleToken<"RangeDash">;
 	Plus: SimpleToken<"Plus">;
 	Star: SimpleToken<"Star">;
-	Operator: ValueToken<"Operator", ComparatorOperator>;
+	Operator: ValueToken<"Operator", SemverComparatorOperator>;
 	Dot: SimpleToken<"Dot">;
 	Pipe: SimpleToken<"Pipe">;
 };
-
-// Types for public API
-export type UserVersion = AbsoluteVersionNode | string;
-
-export type UserRange = RangeNode | string;

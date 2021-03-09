@@ -15,7 +15,7 @@ import {
 } from "@internal/path";
 import {Consumer, consumeUnknown} from "@internal/consume";
 import {DeepPartial, Dict} from "@internal/typescript-helpers";
-import {SemverRangeNode} from "@internal/codec-semver";
+import {SemverRange} from "@internal/codec-semver";
 import {LintRuleName} from "@internal/compiler";
 import {DIAGNOSTIC_CATEGORIES} from "@internal/diagnostics";
 
@@ -38,7 +38,7 @@ export type InvalidLicenses = Map<
 	string,
 	{
 		name: string;
-		range: SemverRangeNode;
+		range: SemverRange;
 	}[]
 >;
 export type DependenciesExceptions = {
@@ -118,7 +118,7 @@ export type ProjectConfigTarget = {
 type ProjectConfigBase = {
 	name: string;
 	root: boolean;
-	version: undefined | SemverRangeNode;
+	version: undefined | SemverRange;
 };
 
 // Data structure we pass around when normalizing and merging project configs

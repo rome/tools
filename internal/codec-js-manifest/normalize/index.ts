@@ -1,5 +1,5 @@
 import {Consumer} from "@internal/consume";
-import {SemverVersionNode, parseSemverVersion} from "@internal/codec-semver";
+import {SemverVersion, parseSemverVersion} from "@internal/codec-semver";
 import {
 	SPDXLicenseParseResult,
 	SPDXLicenseParserOptions,
@@ -148,7 +148,7 @@ function normalizeLicense(
 	consumer: Consumer,
 	{name, version}: {
 		name: undefined | string;
-		version: undefined | SemverVersionNode;
+		version: undefined | SemverVersion;
 	},
 	{projects, path, loose}: NormalizeContext,
 ): undefined | SPDXLicenseParseResult {
@@ -202,7 +202,7 @@ function normalizeLicense(
 
 function normalizeVersion(
 	{consumer, path, loose}: NormalizeContext,
-): undefined | SemverVersionNode {
+): undefined | SemverVersion {
 	if (!consumer.has("version")) {
 		return undefined;
 	}

@@ -38,7 +38,7 @@ import {
 } from "@internal/markup";
 import {json} from "@internal/codec-config";
 import {IS_ROME_DEV_ENV, isEnvVarSet} from "@internal/cli-environment";
-import {satisfiesSemver} from "@internal/codec-semver";
+import {parseSemverRange, parseSemverVersion, satisfiesSemver} from "@internal/codec-semver";
 import {Reporter} from "@internal/cli-reporter";
 import {loadUserConfig} from "@internal/core/common/userConfig";
 import {RSERObject} from "@internal/binary-transport";
@@ -66,9 +66,8 @@ export default async function cli() {
 	// Verify correct Node version
 	if (
 		!satisfiesSemver(
-			process.version,
-			REQUIRED_NODE_VERSION_RANGE,
-			{loose: true},
+			parseSemverVersion({input: process.version, loose: true}),
+			parseSemverRange({input: REQUIRED_NODE_VERSION_RANGE}),
 		)
 	) {
 		const reporter = Reporter.fromProcess();

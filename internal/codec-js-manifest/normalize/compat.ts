@@ -5,7 +5,7 @@
 // - Maintainer has abandoned it
 // - Bumping the version and propagating it would be extremely difficult or take a long time
 import {Consumer} from "@internal/consume";
-import {SemverVersionNode, satisfiesSemver} from "@internal/codec-semver";
+import {SemverVersion, satisfiesSemver, parseSemverRange} from "@internal/codec-semver";
 import {ManifestName} from "@internal/codec-js-manifest/types";
 import {manifestNameToString} from "@internal/codec-js-manifest/normalize/name";
 
@@ -31,7 +31,7 @@ PACKAGE_LICENSE_ALIASES.set(
 export function normalizeCompatManifest(
 	consumer: Consumer,
 	nameObj: ManifestName,
-	version: undefined | SemverVersionNode,
+	version: undefined | SemverVersion,
 ) {
 	const name = manifestNameToString(nameObj);
 	if (name === undefined) {
@@ -42,9 +42,9 @@ export function normalizeCompatManifest(
 	if (version !== undefined && name === "didyoumean") {
 		const license = PACKAGE_LICENSE_ALIASES.get(name);
 		if (
-			!!license &&
+			license !== undefined &&
 			consumer.get("license").asUnknown() === license.badLicense &&
-			satisfiesSemver(version, license.range)
+			satisfiesSemver(version, parseSemverRange({input: license.range}))
 		) {
 			consumer.set("license", license.goodLicense);
 		}
