@@ -98,7 +98,7 @@ jobs:
           registry-url: 'https://registry.npmjs.org'
 
       - run: |
-        echo "Publishing ${{ env.version }} ${{ env.tag }}"
+          echo "Publishing ${{ env.version }} ${{ env.tag }}"
 
       - uses: actions/download-artifact@v2
         with:
