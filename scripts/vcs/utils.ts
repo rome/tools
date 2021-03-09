@@ -65,6 +65,7 @@ export function parseCommitLog(
 			"log",
 			`--pretty='format:${placeholders.join(PROPERTY_DELIM)}${LINE_DELIM}'`,
 			`${opts.from}..${opts.to}`,
+			"internal",
 		],
 	);
 

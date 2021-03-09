@@ -96,11 +96,20 @@ function inferSemverModifier(commits: Commit[]): SemverModifier {
 	return SemverModifier.PATCH;
 }
 
-function inferNewVersion(commits: Commit[]): string {
+async function inferNewVersion(commits: Commit[]): Promise<string> {
 	const modifier = inferSemverModifier(commits);
 	const currentVersion = parseSemverVersion({input: VERSION});
-	const newVersion = incrementSemver(currentVersion, modifier);
-	return stringifySemver(newVersion);
+
+	let newVersion = incrementSemver(currentVersion, modifier);
+	let stringified = stringifySemver(newVersion);
+
+	// Since the `rome` package was used before us, some versions may be taken
+	while (!(await isNewVersion(stringified))) {
+		newVersion = incrementSemver(newVersion, SemverModifier.PATCH);
+		stringified = stringifySemver(newVersion);
+	}
+
+	return stringified;
 }
 
 // Check if the current checkout has any uncommitted changes
@@ -144,18 +153,18 @@ export async function main([explicitNewVersion]: string[]): Promise<number> {
 	);
 
 	async function revert() {
-		git(["stash"]);
-		git(["checkout", previousBranch]);
+		//git(["stash"]);
+		//git(["checkout", previousBranch]);
 	}
 
 	try {
-		const newVersion = explicitNewVersion || inferNewVersion(commits);
+		const newVersion = explicitNewVersion || (await inferNewVersion(commits));
 		const releaseBranch = `release/${newVersion}`;
-		git(["checkout", "-b", releaseBranch]);
+		//git(["checkout", "-b", releaseBranch]);
 		await updateVersion(newVersion);
 
 		if (await isNewVersion(newVersion)) {
-			git(["add", "package.json"]);
+			//git(["add", "package.json"]);
 		} else {
 			await revert();
 			reporter.error(
@@ -168,23 +177,25 @@ export async function main([explicitNewVersion]: string[]): Promise<number> {
 			markup`Version <emphasis>${newVersion}</emphasis> is free.`,
 		);
 
+		const changelogPath = ROOT.append("CHANGELOG.md");
 		await modifyGeneratedFile({
-			path: ROOT.append("CHANGELOG.md"),
+			path: changelogPath,
 		}, async () => {
 			return {
 				prepend: true,
 				lines: generateChangelogMarkdown(newVersion, commits),
 			};
 		});
-		git(["add", "CHANGELOG.md"]);
+		//git(["add", "CHANGELOG.md"]);
 
-		git(["commit", "-m", `Release v${newVersion}`]);
-		git(["push", "--set-upstream", "origin", `${releaseBranch}`]);
+		//git(["commit", "-m", `Release v${newVersion}`]);
+		//git(["push", "--set-upstream", "origin", `${releaseBranch}`]);
 
-		git(["checkout", previousBranch]);
-		reporter.success(markup`Created release branch ${releaseBranch}`);
-		reporter.info(markup`You can now create a pull request at <hyperlink target="https://github.com/rome/tools/pull/new/${releaseBranch}" />.`);
-		reporter.info(markup`Once merged it will be automatically published`);
+		reporter.success(markup`Created release branch ${releaseBranch}.`);
+		reporter.info(markup`Please review <filelink target="${changelogPath.join()}>CHANGELOG.md</filelink> and remove unrelated entries.`);
+		reporter.br();
+		reporter.info(markup`Once verified, you can create a pull request at <hyperlink target="https://github.com/rome/tools/pull/new/${releaseBranch}" />.`);
+		reporter.info(markup`When merged and approved, the release will be automatically published`);
 
 		return 0;
 	} catch (err) {
