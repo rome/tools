@@ -65,7 +65,7 @@ jobs:
         with:
           node-version: '14.16.0'
 
-        run: |
+      - run: |
           echo "tag=${{ needs.check.outputs.tag }}" >> $GITHUB_ENV
           echo "version=${{ needs.check.outputs.version }}" >> $GITHUB_ENV
 
