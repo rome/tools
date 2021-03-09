@@ -12,6 +12,12 @@ jobs:
   check:
     name: Check if there was a version update
     runs-on: ubuntu-latest
+    outputs:
+      tag: ${{ env.tag }}
+      version: ${{ env.version }}
+      prerelease: ${{ env.prerelease }}
+      nightly: ${{ env.nightly }}
+      version_changed: ${{ steps.version.outputs.changed }}
     steps:
       - uses: actions/checkout@v2
 
@@ -43,20 +49,25 @@ jobs:
 
       - name: Check version status
         if: steps.version.outputs.changed == 'true'
-        run: |
-          echo "version_changed=true" >> $GITHUB_ENV
-          'echo "Version change found! New version: ${{ steps.version.outputs.version }} (${{ steps.version.outputs.version_type }})"'
+        run: 'echo "Version change found! New version: ${{ steps.version.outputs.version }} (${{ steps.version.outputs.version_type }})"'
 
   build:
     name: Build Release
     needs: check
-    if: env.version_changed == 'true' || env.nightly == 'true'
+    if: needs.check.outputs.version_changed == 'true' || needs.check.outputs.nightly == 'true'
+    outputs:
+      tag: ${{ env.tag }}
+      version: ${{ env.version }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
         with:
           node-version: '14.16.0'
+
+        run: |
+          echo "tag=${{ needs.check.outputs.tag }}" >> $GITHUB_ENV
+          echo "version=${{ needs.check.outputs.version }}" >> $GITHUB_ENV
 
       - name: Set tag if prerelease
         if: needs.check.outputs.prerelease == 'true'
@@ -98,7 +109,7 @@ jobs:
           registry-url: 'https://registry.npmjs.org'
 
       - run: |
-          echo "Publishing ${{ env.version }} ${{ env.tag }}"
+          echo "Publishing ${{ needs.build.outputs.version }} ${{ needs.build.outputs.tag }}"
 
       - uses: actions/download-artifact@v2
         with:
