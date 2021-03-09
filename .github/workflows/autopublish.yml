@@ -40,7 +40,7 @@ jobs:
         if: steps.version.outputs.type == 'prerelease' || steps.version.outputs.type == 'prepatch' || steps.version.outputs.type == 'premajor' || steps.version.outputs.type == 'preminor'
         run: |
           echo "prerelease=true" >> $GITHUB_ENV
-        
+
       - name: Check version status
         if: steps.version.outputs.changed == 'true'
         run: |
@@ -99,7 +99,7 @@ jobs:
 
       - run: |
         echo "Publishing ${{ env.version }} ${{ env.tag }}"
-        
+
       - uses: actions/download-artifact@v2
         with:
           name: dist.tar.gz
