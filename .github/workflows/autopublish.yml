@@ -82,12 +82,14 @@ jobs:
           echo "version=$NEW_VERSION" >> $GITHUB_ENV
           echo "tag=nightly" >> $GITHUB_ENV
 
+      - run: echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf && sudo sysctl -p
+
       - name: Build package
         run: ./rome run scripts/build-release dist
-      
+
       - name: Build tarball
         run: tar -C dist -cvzf dist.tar.gz .
-      
+
       - name: Upload artifact
         uses: actions/upload-artifact@v2
         with:
