@@ -10,7 +10,7 @@ on:
 
 jobs:
   check:
-    name: Check if there was a version update
+    name: Check version
     runs-on: ubuntu-latest
     outputs:
       tag: ${{ env.tag }}
@@ -52,7 +52,7 @@ jobs:
         run: 'echo "Version change found! New version: ${{ steps.version.outputs.version }} (${{ steps.version.outputs.version_type }})"'
 
   build:
-    name: Build Release
+    name: Build
     needs: check
     if: needs.check.outputs.version_changed == 'true' || needs.check.outputs.nightly == 'true'
     outputs:
@@ -99,7 +99,7 @@ jobs:
           if-no-files-found: error
 
   publish:
-    name: Publish Release
+    name: Publish
     needs: build
     runs-on: ubuntu-latest
     steps:
@@ -116,3 +116,20 @@ jobs:
       - uses: actions/download-artifact@v2
         with:
           name: dist.tar.gz
+
+      - name: npm publish
+        run: npm publish dist.tar.gz --tag ${{ needs.build.outputs.tag }}
+
+      - name: Create GitHub release and tag
+        uses: softprops/action-gh-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          name: v${{ needs.build.outputs.version }}
+          tag_name: v${{ needs.build.outputs.version }}
+          draft: false
+          prerelease: ${{ needs.build.outputs.tag !== 'latest' }}
+          files: dist.tar.gz
+          fail_on_unmatched_files: true
+
+      # TODO update latest branch if latest
