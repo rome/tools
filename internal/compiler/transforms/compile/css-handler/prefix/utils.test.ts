@@ -32,7 +32,7 @@ test(
 					],
 				}),
 				"transition",
-				"-webkit-",
+				"webkit",
 			),
 		);
 
@@ -53,7 +53,7 @@ test(
 					],
 				}),
 				"transition",
-				"-webkit-",
+				"webkit",
 			),
 		);
 
@@ -118,7 +118,7 @@ test(
 				}),
 				"display",
 				"flex",
-				"-webkit-",
+				"webkit",
 			),
 		);
 
@@ -148,7 +148,7 @@ test(
 				}),
 				"display",
 				"flex",
-				"-webkit-",
+				"webkit",
 			),
 		);
 

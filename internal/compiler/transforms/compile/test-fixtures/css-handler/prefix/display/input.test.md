@@ -7,7 +7,6 @@
 ### `Diagnostics`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -58,18 +57,21 @@
 .style {
 	text-align: center;
 	display: flex;
+	display: -moz-flex;
 	display: -webkit-flex;
 	align-content: center;
 }
 
 .style {
 	display: flex;
+	display: -moz-flex;
 	display: -webkit-flex;
 }
 
 .style {
 	text-align: center;
 	display: flex;
+	display: -moz-flex;
 	display: -webkit-flex;
 	align-content: center;
 }
@@ -83,6 +85,7 @@
 .style {
 	text-align: center;
 	display: inline-flex;
+	display: -moz-inline-flex;
 	display: -webkit-inline-flex;
 	align-content: center;
 }
@@ -90,6 +93,7 @@
 .style {
 	text-align: center;
 	display: inline-flex;
+	display: -moz-inline-flex;
 	display: -webkit-inline-flex;
 	align-content: center;
 }

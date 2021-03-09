@@ -111,13 +111,21 @@ export abstract class Browser {
 			return this.cssFeatureCache.get(feature)!;
 		}
 
-		const value = this.getDataConsumer().getPath([
+		const featureConsumer = this.getDataConsumer().getPath([
 			"data",
 			feature,
 			"s",
-			this.getId(),
-			this.getVersion().toString(),
-		]).asBoolean(false);
+		]);
+
+		let value = false;
+
+		if (featureConsumer.has(this.getId()) &&  featureConsumer.get(this.getId()).has(this.getVersion().toString())) {
+			value = featureConsumer.getPath([
+				this.getId(),
+				this.getVersion().toString(),
+			]).asBoolean(false);
+		}
+
 		this.cssFeatureCache.set(feature, value);
 		return value;
 	}

@@ -7,6 +7,7 @@ import transition from "@internal/compiler/transforms/compile/css-handler/prefix
 import transform from "@internal/compiler/transforms/compile/css-handler/prefix/prefixes/transform";
 import display from "@internal/compiler/transforms/compile/css-handler/prefix/prefixes/display";
 import {UnknownObject} from "@internal/typescript-helpers";
+import {resolveBrowsers} from "@internal/codec-browsers";
 
 const prefixVisitors: PrefixVisitor<UnknownObject>[] = [
 	transition,
@@ -18,10 +19,7 @@ export default (projectConfig: ProjectConfig) =>
 	prefixVisitors.map((prefixVisitor) =>
 		wrapPrefixVisitor(
 			prefixVisitor,
-			{
-				target: "modern", // TODO implement target browser
-				// mode: projectConfig.targetBrowser or something
-			},
+			resolveBrowsers(">0%") // TODO: load from ProjectConfig
 		)
 	)
 ;
