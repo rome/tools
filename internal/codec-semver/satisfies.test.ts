@@ -7,7 +7,7 @@
 
 import "@internal/cli-layout";
 import {satisfiesSemver} from "@internal/codec-semver";
-import { DiagnosticsError } from "@internal/diagnostics";
+import {DiagnosticsError} from "@internal/diagnostics";
 import {test} from "rome";
 import {parseSemverRange, parseSemverVersion} from "./parse";
 

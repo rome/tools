@@ -9,7 +9,6 @@ import {SemverModifier, SemverRange, SemverVersion} from "./types";
 import {satisfiesFromAst} from "./satisfies";
 import {compareFromAst} from "./compare";
 import {parseSemverRange, parseSemverVersion} from "./parse";
-import {DiagnosticsError} from "@internal/diagnostics";
 
 export {SemverModifier, SemverRange, SemverVersion} from "./types";
 

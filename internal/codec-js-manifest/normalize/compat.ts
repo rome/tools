@@ -46,7 +46,8 @@ export function normalizeCompatManifest(
 	if (version !== undefined && name === "didyoumean") {
 		const license = PACKAGE_LICENSE_ALIASES.get(name);
 		if (
-			consumer.get("license").asUnknown() === license?.badLicense &&
+			license !== undefined &&
+			consumer.get("license").asUnknown() === license.badLicense &&
 			satisfiesSemver(version, parseSemverRange({input: license.range}))
 		) {
 			consumer.set("license", license.goodLicense);
