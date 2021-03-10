@@ -81,14 +81,14 @@ jobs:
         run: |
           ./script update-nightly-version
 
-          NEW_VERSION=$(cat package.json | grep version | head -1 | awk -F: '{ print $2 }' | sed 's/[",]//g' | tr -d '[[:space:]]')
+          NEW_VERSION=$(node -p -e "require('./package.json').version")
           echo "version=$NEW_VERSION" >> $GITHUB_ENV
           echo "tag=nightly" >> $GITHUB_ENV
 
       - run: echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf && sudo sysctl -p
 
       - name: Build package
-        run: ./rome run scripts/build-release dist
+        run: ./script build-release dist
 
       - name: Build tarball
         run: tar -C dist -cvzf dist.tar.gz .
@@ -123,6 +123,8 @@ jobs:
 
       - name: npm publish
         run: npm publish dist.tar.gz --tag ${{ needs.build.outputs.tag }}
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Create GitHub release and tag
         uses: softprops/action-gh-release@v1
