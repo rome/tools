@@ -149,6 +149,7 @@ function generateChangelogMarkdown(version: string, commits: Commit[]): string[]
 			case "test":
 			case "refactor":
 			case "perf":
+			case "internal":
 			case "chore": {
 				internal.push(commit);
 				break;
