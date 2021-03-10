@@ -102,7 +102,8 @@ export type SemverRange =
 	| SemverLogicalOr
 	| SemverComparator
 	| SemverWildcard
-	| SemverWildcardVersion | SemverVersion;
+	| SemverWildcardVersion
+	| SemverVersion;
 
 export type Tokens = BaseTokens & {
 	Space: SimpleToken<"Space">;

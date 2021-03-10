@@ -7,7 +7,7 @@
 ### `0`
 
 ```javascript
-AbsoluteVersion {
+SemverAbsoluteVersion {
 	build: []
 	major: 1
 	minor: 2
@@ -20,7 +20,7 @@ AbsoluteVersion {
 ### `1`
 
 ```javascript
-AbsoluteVersion {
+SemverAbsoluteVersion {
 	build: []
 	major: 1
 	minor: 2
@@ -33,7 +33,7 @@ AbsoluteVersion {
 ### `2`
 
 ```javascript
-AbsoluteVersion {
+SemverAbsoluteVersion {
 	build: []
 	major: 1
 	minor: 2
@@ -46,7 +46,7 @@ AbsoluteVersion {
 ### `3`
 
 ```javascript
-AbsoluteVersion {
+SemverAbsoluteVersion {
 	build: []
 	major: 1
 	minor: 2
@@ -59,7 +59,7 @@ AbsoluteVersion {
 ### `4`
 
 ```javascript
-AbsoluteVersion {
+SemverAbsoluteVersion {
 	build: ["build"]
 	major: 1
 	minor: 2
@@ -72,7 +72,7 @@ AbsoluteVersion {
 ### `5`
 
 ```javascript
-AbsoluteVersion {
+SemverAbsoluteVersion {
 	build: ["build"]
 	major: 1
 	minor: 2
@@ -85,7 +85,7 @@ AbsoluteVersion {
 ### `6`
 
 ```javascript
-AbsoluteVersion {
+SemverAbsoluteVersion {
 	build: ["build"]
 	major: 1
 	minor: 2
@@ -98,7 +98,7 @@ AbsoluteVersion {
 ### `7`
 
 ```javascript
-AbsoluteVersion {
+SemverAbsoluteVersion {
 	build: ["build"]
 	major: 1
 	minor: 2
@@ -111,7 +111,7 @@ AbsoluteVersion {
 ### `8`
 
 ```javascript
-AbsoluteVersion {
+SemverAbsoluteVersion {
 	build: ["build", 2, 3, 4, "foo"]
 	major: 1
 	minor: 2
@@ -124,7 +124,7 @@ AbsoluteVersion {
 ### `9`
 
 ```javascript
-AbsoluteVersion {
+SemverAbsoluteVersion {
 	build: ["45build"]
 	major: 1
 	minor: 2
@@ -137,11 +137,11 @@ AbsoluteVersion {
 ### `10`
 
 ```javascript
-VersionRange {
-	left: Wildcard {
+SemverVersionRange {
+	left: SemverWildcard {
 		loc: SourceLocation unknown 1:0-1:1
 	}
-	right: AbsoluteVersion {
+	right: SemverAbsoluteVersion {
 		build: []
 		major: 1
 		minor: 2
@@ -156,7 +156,7 @@ VersionRange {
 ### `11`
 
 ```javascript
-AbsoluteVersion {
+SemverAbsoluteVersion {
 	build: []
 	major: 1
 	minor: 2
@@ -169,7 +169,7 @@ AbsoluteVersion {
 ### `12`
 
 ```javascript
-Wildcard {
+SemverWildcard {
 	loc: SourceLocation unknown 1:0-1:0
 }
 ```
@@ -177,7 +177,7 @@ Wildcard {
 ### `13`
 
 ```javascript
-Wildcard {
+SemverWildcard {
 	loc: SourceLocation unknown 1:0-1:0
 }
 ```
@@ -185,7 +185,7 @@ Wildcard {
 ### `14`
 
 ```javascript
-AbsoluteVersion {
+SemverAbsoluteVersion {
 	build: []
 	major: 1
 	minor: 2
@@ -198,10 +198,10 @@ AbsoluteVersion {
 ### `15`
 
 ```javascript
-LogicalOr {
-	left: Comparator {
+SemverLogicalOr {
+	left: SemverComparator {
 		operator: "^"
-		version: AbsoluteVersion {
+		version: SemverAbsoluteVersion {
 			build: []
 			major: 4
 			minor: 0
@@ -211,10 +211,10 @@ LogicalOr {
 		}
 		loc: SourceLocation unknown 1:0-1:6
 	}
-	right: LogicalOr {
-		left: Comparator {
+	right: SemverLogicalOr {
+		left: SemverComparator {
 			operator: "^"
-			version: AbsoluteVersion {
+			version: SemverAbsoluteVersion {
 				build: []
 				major: 4
 				minor: 0
@@ -224,10 +224,10 @@ LogicalOr {
 			}
 			loc: SourceLocation unknown 1:10-1:23
 		}
-		right: LogicalOr {
-			left: Comparator {
+		right: SemverLogicalOr {
+			left: SemverComparator {
 				operator: "^"
-				version: AbsoluteVersion {
+				version: SemverAbsoluteVersion {
 					build: []
 					major: 3
 					minor: 8
@@ -237,10 +237,10 @@ LogicalOr {
 				}
 				loc: SourceLocation unknown 1:27-1:33
 			}
-			right: LogicalOr {
-				left: Comparator {
+			right: SemverLogicalOr {
+				left: SemverComparator {
 					operator: "^"
-					version: AbsoluteVersion {
+					version: SemverAbsoluteVersion {
 						build: []
 						major: 3
 						minor: 0
@@ -250,10 +250,10 @@ LogicalOr {
 					}
 					loc: SourceLocation unknown 1:37-1:43
 				}
-				right: LogicalOr {
-					left: Comparator {
+				right: SemverLogicalOr {
+					left: SemverComparator {
 						operator: "^"
-						version: AbsoluteVersion {
+						version: SemverAbsoluteVersion {
 							build: []
 							major: 3
 							minor: 0
@@ -263,10 +263,10 @@ LogicalOr {
 						}
 						loc: SourceLocation unknown 1:47-1:58
 					}
-					right: LogicalOr {
-						left: Comparator {
+					right: SemverLogicalOr {
+						left: SemverComparator {
 							operator: "^"
-							version: AbsoluteVersion {
+							version: SemverAbsoluteVersion {
 								build: []
 								major: 2
 								minor: 1
@@ -276,9 +276,9 @@ LogicalOr {
 							}
 							loc: SourceLocation unknown 1:62-1:68
 						}
-						right: Comparator {
+						right: SemverComparator {
 							operator: "^"
-							version: AbsoluteVersion {
+							version: SemverAbsoluteVersion {
 								build: []
 								major: 1
 								minor: 13
@@ -305,7 +305,7 @@ LogicalOr {
 ### `16`
 
 ```javascript
-WildcardVersion {
+SemverWildcardVersion {
 	build: []
 	major: 1
 	prerelease: []
@@ -316,7 +316,7 @@ WildcardVersion {
 ### `17`
 
 ```javascript
-WildcardVersion {
+SemverWildcardVersion {
 	build: []
 	major: 1
 	minor: 2
@@ -328,7 +328,7 @@ WildcardVersion {
 ### `18`
 
 ```javascript
-WildcardVersion {
+SemverWildcardVersion {
 	build: []
 	major: 1
 	prerelease: []
@@ -339,7 +339,7 @@ WildcardVersion {
 ### `19`
 
 ```javascript
-WildcardVersion {
+SemverWildcardVersion {
 	build: []
 	major: 1
 	patch: 3
@@ -351,7 +351,7 @@ WildcardVersion {
 ### `20`
 
 ```javascript
-WildcardVersion {
+SemverWildcardVersion {
 	build: []
 	major: 1
 	minor: 2
@@ -363,7 +363,7 @@ WildcardVersion {
 ### `21`
 
 ```javascript
-WildcardVersion {
+SemverWildcardVersion {
 	build: []
 	major: 1
 	prerelease: []
@@ -374,7 +374,7 @@ WildcardVersion {
 ### `22`
 
 ```javascript
-WildcardVersion {
+SemverWildcardVersion {
 	build: []
 	major: 1
 	patch: 3
@@ -386,7 +386,7 @@ WildcardVersion {
 ### `23`
 
 ```javascript
-WildcardVersion {
+SemverWildcardVersion {
 	build: []
 	major: 1
 	minor: 2
@@ -398,7 +398,7 @@ WildcardVersion {
 ### `24`
 
 ```javascript
-WildcardVersion {
+SemverWildcardVersion {
 	build: []
 	major: 1
 	prerelease: []
@@ -409,7 +409,7 @@ WildcardVersion {
 ### `25`
 
 ```javascript
-WildcardVersion {
+SemverWildcardVersion {
 	build: []
 	major: 1
 	patch: 3
@@ -421,7 +421,7 @@ WildcardVersion {
 ### `26`
 
 ```javascript
-WildcardVersion {
+SemverWildcardVersion {
 	build: []
 	major: 1
 	minor: 2
@@ -433,8 +433,8 @@ WildcardVersion {
 ### `27`
 
 ```javascript
-VersionRange {
-	left: AbsoluteVersion {
+SemverVersionRange {
+	left: SemverAbsoluteVersion {
 		build: []
 		major: 1
 		minor: 2
@@ -442,7 +442,7 @@ VersionRange {
 		prerelease: []
 		loc: SourceLocation unknown 1:0-1:5
 	}
-	right: AbsoluteVersion {
+	right: SemverAbsoluteVersion {
 		build: []
 		major: 1
 		minor: 2
@@ -457,15 +457,15 @@ VersionRange {
 ### `28`
 
 ```javascript
-LogicalOr {
-	left: WildcardVersion {
+SemverLogicalOr {
+	left: SemverWildcardVersion {
 		build: []
 		major: 1
 		minor: 2
 		prerelease: []
 		loc: SourceLocation unknown 1:0-1:3
 	}
-	right: WildcardVersion {
+	right: SemverWildcardVersion {
 		build: []
 		major: 3
 		prerelease: []
@@ -478,21 +478,21 @@ LogicalOr {
 ### `29`
 
 ```javascript
-LogicalOr {
-	left: WildcardVersion {
+SemverLogicalOr {
+	left: SemverWildcardVersion {
 		build: []
 		major: 1
 		prerelease: []
 		loc: SourceLocation unknown 1:0-1:1
 	}
-	right: LogicalOr {
-		left: WildcardVersion {
+	right: SemverLogicalOr {
+		left: SemverWildcardVersion {
 			build: []
 			major: 2
 			prerelease: []
 			loc: SourceLocation unknown 1:5-1:6
 		}
-		right: WildcardVersion {
+		right: SemverWildcardVersion {
 			build: []
 			major: 3
 			prerelease: []
@@ -507,9 +507,9 @@ LogicalOr {
 ### `30`
 
 ```javascript
-Comparator {
+SemverComparator {
 	operator: ">="
-	version: AbsoluteVersion {
+	version: SemverAbsoluteVersion {
 		build: []
 		major: 1
 		minor: 4
@@ -524,10 +524,10 @@ Comparator {
 ### `31`
 
 ```javascript
-LogicalAnd {
-	left: Comparator {
+SemverLogicalAnd {
+	left: SemverComparator {
 		operator: ">="
-		version: AbsoluteVersion {
+		version: SemverAbsoluteVersion {
 			build: []
 			major: 1
 			minor: 4
@@ -537,9 +537,9 @@ LogicalAnd {
 		}
 		loc: SourceLocation unknown 1:0-1:7
 	}
-	right: Comparator {
+	right: SemverComparator {
 		operator: ">="
-		version: AbsoluteVersion {
+		version: SemverAbsoluteVersion {
 			build: []
 			major: 1
 			minor: 4
@@ -556,9 +556,9 @@ LogicalAnd {
 ### `32`
 
 ```javascript
-Comparator {
+SemverComparator {
 	operator: "<="
-	version: AbsoluteVersion {
+	version: SemverAbsoluteVersion {
 		build: []
 		major: 1
 		minor: 4
@@ -573,10 +573,10 @@ Comparator {
 ### `33`
 
 ```javascript
-LogicalAnd {
-	left: Comparator {
+SemverLogicalAnd {
+	left: SemverComparator {
 		operator: "<="
-		version: AbsoluteVersion {
+		version: SemverAbsoluteVersion {
 			build: []
 			major: 1
 			minor: 4
@@ -586,9 +586,9 @@ LogicalAnd {
 		}
 		loc: SourceLocation unknown 1:0-1:7
 	}
-	right: Comparator {
+	right: SemverComparator {
 		operator: "<="
-		version: AbsoluteVersion {
+		version: SemverAbsoluteVersion {
 			build: []
 			major: 1
 			minor: 4
@@ -605,9 +605,9 @@ LogicalAnd {
 ### `34`
 
 ```javascript
-Comparator {
+SemverComparator {
 	operator: ">"
-	version: AbsoluteVersion {
+	version: SemverAbsoluteVersion {
 		build: []
 		major: 1
 		minor: 4
@@ -622,10 +622,10 @@ Comparator {
 ### `35`
 
 ```javascript
-LogicalAnd {
-	left: Comparator {
+SemverLogicalAnd {
+	left: SemverComparator {
 		operator: ">"
-		version: AbsoluteVersion {
+		version: SemverAbsoluteVersion {
 			build: []
 			major: 1
 			minor: 4
@@ -635,9 +635,9 @@ LogicalAnd {
 		}
 		loc: SourceLocation unknown 1:0-1:6
 	}
-	right: Comparator {
+	right: SemverComparator {
 		operator: ">"
-		version: AbsoluteVersion {
+		version: SemverAbsoluteVersion {
 			build: []
 			major: 1
 			minor: 4
@@ -654,9 +654,9 @@ LogicalAnd {
 ### `36`
 
 ```javascript
-Comparator {
+SemverComparator {
 	operator: "<"
-	version: AbsoluteVersion {
+	version: SemverAbsoluteVersion {
 		build: []
 		major: 1
 		minor: 4
@@ -671,10 +671,10 @@ Comparator {
 ### `37`
 
 ```javascript
-LogicalAnd {
-	left: Comparator {
+SemverLogicalAnd {
+	left: SemverComparator {
 		operator: "<"
-		version: AbsoluteVersion {
+		version: SemverAbsoluteVersion {
 			build: []
 			major: 1
 			minor: 4
@@ -684,9 +684,9 @@ LogicalAnd {
 		}
 		loc: SourceLocation unknown 1:0-1:6
 	}
-	right: Comparator {
+	right: SemverComparator {
 		operator: "<"
-		version: AbsoluteVersion {
+		version: SemverAbsoluteVersion {
 			build: []
 			major: 1
 			minor: 4
@@ -703,9 +703,9 @@ LogicalAnd {
 ### `38`
 
 ```javascript
-Comparator {
+SemverComparator {
 	operator: "^"
-	version: AbsoluteVersion {
+	version: SemverAbsoluteVersion {
 		build: []
 		major: 1
 		minor: 4
@@ -720,10 +720,10 @@ Comparator {
 ### `39`
 
 ```javascript
-LogicalAnd {
-	left: Comparator {
+SemverLogicalAnd {
+	left: SemverComparator {
 		operator: "^"
-		version: AbsoluteVersion {
+		version: SemverAbsoluteVersion {
 			build: []
 			major: 1
 			minor: 4
@@ -733,9 +733,9 @@ LogicalAnd {
 		}
 		loc: SourceLocation unknown 1:0-1:6
 	}
-	right: Comparator {
+	right: SemverComparator {
 		operator: "^"
-		version: AbsoluteVersion {
+		version: SemverAbsoluteVersion {
 			build: []
 			major: 1
 			minor: 4
@@ -752,9 +752,9 @@ LogicalAnd {
 ### `40`
 
 ```javascript
-Comparator {
+SemverComparator {
 	operator: "~"
-	version: AbsoluteVersion {
+	version: SemverAbsoluteVersion {
 		build: []
 		major: 1
 		minor: 4
@@ -769,10 +769,10 @@ Comparator {
 ### `41`
 
 ```javascript
-LogicalAnd {
-	left: Comparator {
+SemverLogicalAnd {
+	left: SemverComparator {
 		operator: "~"
-		version: AbsoluteVersion {
+		version: SemverAbsoluteVersion {
 			build: []
 			major: 1
 			minor: 4
@@ -782,9 +782,9 @@ LogicalAnd {
 		}
 		loc: SourceLocation unknown 1:0-1:6
 	}
-	right: Comparator {
+	right: SemverComparator {
 		operator: "~"
-		version: AbsoluteVersion {
+		version: SemverAbsoluteVersion {
 			build: []
 			major: 1
 			minor: 4
@@ -801,9 +801,9 @@ LogicalAnd {
 ### `42`
 
 ```javascript
-Comparator {
+SemverComparator {
 	operator: ">="
-	version: WildcardVersion {
+	version: SemverWildcardVersion {
 		build: []
 		major: 1
 		minor: 4
@@ -817,10 +817,10 @@ Comparator {
 ### `43`
 
 ```javascript
-LogicalAnd {
-	left: Comparator {
+SemverLogicalAnd {
+	left: SemverComparator {
 		operator: ">="
-		version: WildcardVersion {
+		version: SemverWildcardVersion {
 			build: []
 			major: 1
 			minor: 4
@@ -829,9 +829,9 @@ LogicalAnd {
 		}
 		loc: SourceLocation unknown 1:0-1:5
 	}
-	right: Comparator {
+	right: SemverComparator {
 		operator: ">="
-		version: WildcardVersion {
+		version: SemverWildcardVersion {
 			build: []
 			major: 1
 			minor: 4
@@ -847,9 +847,9 @@ LogicalAnd {
 ### `44`
 
 ```javascript
-Comparator {
+SemverComparator {
 	operator: "<="
-	version: WildcardVersion {
+	version: SemverWildcardVersion {
 		build: []
 		major: 1
 		minor: 4
@@ -863,10 +863,10 @@ Comparator {
 ### `45`
 
 ```javascript
-LogicalAnd {
-	left: Comparator {
+SemverLogicalAnd {
+	left: SemverComparator {
 		operator: "<="
-		version: WildcardVersion {
+		version: SemverWildcardVersion {
 			build: []
 			major: 1
 			minor: 4
@@ -875,9 +875,9 @@ LogicalAnd {
 		}
 		loc: SourceLocation unknown 1:0-1:5
 	}
-	right: Comparator {
+	right: SemverComparator {
 		operator: "<="
-		version: WildcardVersion {
+		version: SemverWildcardVersion {
 			build: []
 			major: 1
 			minor: 4
@@ -893,9 +893,9 @@ LogicalAnd {
 ### `46`
 
 ```javascript
-Comparator {
+SemverComparator {
 	operator: ">"
-	version: WildcardVersion {
+	version: SemverWildcardVersion {
 		build: []
 		major: 1
 		minor: 4
@@ -909,10 +909,10 @@ Comparator {
 ### `47`
 
 ```javascript
-LogicalAnd {
-	left: Comparator {
+SemverLogicalAnd {
+	left: SemverComparator {
 		operator: ">"
-		version: WildcardVersion {
+		version: SemverWildcardVersion {
 			build: []
 			major: 1
 			minor: 4
@@ -921,9 +921,9 @@ LogicalAnd {
 		}
 		loc: SourceLocation unknown 1:0-1:4
 	}
-	right: Comparator {
+	right: SemverComparator {
 		operator: ">"
-		version: WildcardVersion {
+		version: SemverWildcardVersion {
 			build: []
 			major: 1
 			minor: 4
@@ -939,9 +939,9 @@ LogicalAnd {
 ### `48`
 
 ```javascript
-Comparator {
+SemverComparator {
 	operator: "<"
-	version: WildcardVersion {
+	version: SemverWildcardVersion {
 		build: []
 		major: 1
 		minor: 4
@@ -955,10 +955,10 @@ Comparator {
 ### `49`
 
 ```javascript
-LogicalAnd {
-	left: Comparator {
+SemverLogicalAnd {
+	left: SemverComparator {
 		operator: "<"
-		version: WildcardVersion {
+		version: SemverWildcardVersion {
 			build: []
 			major: 1
 			minor: 4
@@ -967,9 +967,9 @@ LogicalAnd {
 		}
 		loc: SourceLocation unknown 1:0-1:4
 	}
-	right: Comparator {
+	right: SemverComparator {
 		operator: "<"
-		version: WildcardVersion {
+		version: SemverWildcardVersion {
 			build: []
 			major: 1
 			minor: 4
@@ -985,9 +985,9 @@ LogicalAnd {
 ### `50`
 
 ```javascript
-Comparator {
+SemverComparator {
 	operator: "^"
-	version: WildcardVersion {
+	version: SemverWildcardVersion {
 		build: []
 		major: 1
 		minor: 4
@@ -1001,10 +1001,10 @@ Comparator {
 ### `51`
 
 ```javascript
-LogicalAnd {
-	left: Comparator {
+SemverLogicalAnd {
+	left: SemverComparator {
 		operator: "^"
-		version: WildcardVersion {
+		version: SemverWildcardVersion {
 			build: []
 			major: 1
 			minor: 4
@@ -1013,9 +1013,9 @@ LogicalAnd {
 		}
 		loc: SourceLocation unknown 1:0-1:4
 	}
-	right: Comparator {
+	right: SemverComparator {
 		operator: "^"
-		version: WildcardVersion {
+		version: SemverWildcardVersion {
 			build: []
 			major: 1
 			minor: 4
@@ -1031,9 +1031,9 @@ LogicalAnd {
 ### `52`
 
 ```javascript
-Comparator {
+SemverComparator {
 	operator: "~"
-	version: WildcardVersion {
+	version: SemverWildcardVersion {
 		build: []
 		major: 1
 		minor: 4
@@ -1047,10 +1047,10 @@ Comparator {
 ### `53`
 
 ```javascript
-LogicalAnd {
-	left: Comparator {
+SemverLogicalAnd {
+	left: SemverComparator {
 		operator: "~"
-		version: WildcardVersion {
+		version: SemverWildcardVersion {
 			build: []
 			major: 1
 			minor: 4
@@ -1059,9 +1059,9 @@ LogicalAnd {
 		}
 		loc: SourceLocation unknown 1:0-1:4
 	}
-	right: Comparator {
+	right: SemverComparator {
 		operator: "~"
-		version: WildcardVersion {
+		version: SemverWildcardVersion {
 			build: []
 			major: 1
 			minor: 4
@@ -1077,9 +1077,9 @@ LogicalAnd {
 ### `54`
 
 ```javascript
-Comparator {
+SemverComparator {
 	operator: ">="
-	version: WildcardVersion {
+	version: SemverWildcardVersion {
 		build: []
 		major: 1
 		prerelease: []
@@ -1092,10 +1092,10 @@ Comparator {
 ### `55`
 
 ```javascript
-LogicalAnd {
-	left: Comparator {
+SemverLogicalAnd {
+	left: SemverComparator {
 		operator: ">="
-		version: WildcardVersion {
+		version: SemverWildcardVersion {
 			build: []
 			major: 1
 			prerelease: []
@@ -1103,9 +1103,9 @@ LogicalAnd {
 		}
 		loc: SourceLocation unknown 1:0-1:3
 	}
-	right: Comparator {
+	right: SemverComparator {
 		operator: ">="
-		version: WildcardVersion {
+		version: SemverWildcardVersion {
 			build: []
 			major: 1
 			prerelease: []
@@ -1120,9 +1120,9 @@ LogicalAnd {
 ### `56`
 
 ```javascript
-Comparator {
+SemverComparator {
 	operator: "<="
-	version: WildcardVersion {
+	version: SemverWildcardVersion {
 		build: []
 		major: 1
 		prerelease: []
@@ -1135,10 +1135,10 @@ Comparator {
 ### `57`
 
 ```javascript
-LogicalAnd {
-	left: Comparator {
+SemverLogicalAnd {
+	left: SemverComparator {
 		operator: "<="
-		version: WildcardVersion {
+		version: SemverWildcardVersion {
 			build: []
 			major: 1
 			prerelease: []
@@ -1146,9 +1146,9 @@ LogicalAnd {
 		}
 		loc: SourceLocation unknown 1:0-1:3
 	}
-	right: Comparator {
+	right: SemverComparator {
 		operator: "<="
-		version: WildcardVersion {
+		version: SemverWildcardVersion {
 			build: []
 			major: 1
 			prerelease: []
@@ -1163,9 +1163,9 @@ LogicalAnd {
 ### `58`
 
 ```javascript
-Comparator {
+SemverComparator {
 	operator: ">"
-	version: WildcardVersion {
+	version: SemverWildcardVersion {
 		build: []
 		major: 1
 		prerelease: []
@@ -1178,10 +1178,10 @@ Comparator {
 ### `59`
 
 ```javascript
-LogicalAnd {
-	left: Comparator {
+SemverLogicalAnd {
+	left: SemverComparator {
 		operator: ">"
-		version: WildcardVersion {
+		version: SemverWildcardVersion {
 			build: []
 			major: 1
 			prerelease: []
@@ -1189,9 +1189,9 @@ LogicalAnd {
 		}
 		loc: SourceLocation unknown 1:0-1:2
 	}
-	right: Comparator {
+	right: SemverComparator {
 		operator: ">"
-		version: WildcardVersion {
+		version: SemverWildcardVersion {
 			build: []
 			major: 1
 			prerelease: []
@@ -1206,9 +1206,9 @@ LogicalAnd {
 ### `60`
 
 ```javascript
-Comparator {
+SemverComparator {
 	operator: "<"
-	version: WildcardVersion {
+	version: SemverWildcardVersion {
 		build: []
 		major: 1
 		prerelease: []
@@ -1221,10 +1221,10 @@ Comparator {
 ### `61`
 
 ```javascript
-LogicalAnd {
-	left: Comparator {
+SemverLogicalAnd {
+	left: SemverComparator {
 		operator: "<"
-		version: WildcardVersion {
+		version: SemverWildcardVersion {
 			build: []
 			major: 1
 			prerelease: []
@@ -1232,9 +1232,9 @@ LogicalAnd {
 		}
 		loc: SourceLocation unknown 1:0-1:2
 	}
-	right: Comparator {
+	right: SemverComparator {
 		operator: "<"
-		version: WildcardVersion {
+		version: SemverWildcardVersion {
 			build: []
 			major: 1
 			prerelease: []
@@ -1249,9 +1249,9 @@ LogicalAnd {
 ### `62`
 
 ```javascript
-Comparator {
+SemverComparator {
 	operator: "^"
-	version: WildcardVersion {
+	version: SemverWildcardVersion {
 		build: []
 		major: 1
 		prerelease: []
@@ -1264,10 +1264,10 @@ Comparator {
 ### `63`
 
 ```javascript
-LogicalAnd {
-	left: Comparator {
+SemverLogicalAnd {
+	left: SemverComparator {
 		operator: "^"
-		version: WildcardVersion {
+		version: SemverWildcardVersion {
 			build: []
 			major: 1
 			prerelease: []
@@ -1275,9 +1275,9 @@ LogicalAnd {
 		}
 		loc: SourceLocation unknown 1:0-1:2
 	}
-	right: Comparator {
+	right: SemverComparator {
 		operator: "^"
-		version: WildcardVersion {
+		version: SemverWildcardVersion {
 			build: []
 			major: 1
 			prerelease: []
@@ -1292,9 +1292,9 @@ LogicalAnd {
 ### `64`
 
 ```javascript
-Comparator {
+SemverComparator {
 	operator: "~"
-	version: WildcardVersion {
+	version: SemverWildcardVersion {
 		build: []
 		major: 1
 		prerelease: []
@@ -1307,10 +1307,10 @@ Comparator {
 ### `65`
 
 ```javascript
-LogicalAnd {
-	left: Comparator {
+SemverLogicalAnd {
+	left: SemverComparator {
 		operator: "~"
-		version: WildcardVersion {
+		version: SemverWildcardVersion {
 			build: []
 			major: 1
 			prerelease: []
@@ -1318,9 +1318,9 @@ LogicalAnd {
 		}
 		loc: SourceLocation unknown 1:0-1:2
 	}
-	right: Comparator {
+	right: SemverComparator {
 		operator: "~"
-		version: WildcardVersion {
+		version: SemverWildcardVersion {
 			build: []
 			major: 1
 			prerelease: []

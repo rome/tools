@@ -7,8 +7,9 @@
 
 import "@internal/cli-layout";
 import {satisfiesSemver} from "@internal/codec-semver";
+import { DiagnosticsError } from "@internal/diagnostics";
 import {test} from "rome";
-import { parseSemverRange, parseSemverVersion } from "./parse";
+import {parseSemverRange, parseSemverVersion} from "./parse";
 
 const looseOnly: [string, string][] = [
 	["||", "1.3.4"],
@@ -233,18 +234,24 @@ test(
 	"satisfies fail",
 	function(t) {
 		for (const [rangeStr, verStr, loose] of testData.fail) {
-			const ver = parseSemverVersion({
-				input: verStr,
-				loose,
-			});
+			try {
+				const ver = parseSemverVersion({
+					input: verStr,
+					loose,
+				});
 
-			const range = parseSemverRange({
-				input: rangeStr,
-				loose,
-			});
+				const range = parseSemverRange({
+					input: rangeStr,
+					loose,
+				});
 
-			const found = satisfiesSemver(ver, range);
-			t.false(found, `${ver} should not be satisfied by ${range}`);
+				const found = satisfiesSemver(ver, range);
+				t.false(found, `${verStr} should not be satisfied by ${rangeStr}`);
+			} catch (err) {
+				if (!(err instanceof DiagnosticsError)) {
+					throw err;
+				}
+			}
 		}
 	},
 );

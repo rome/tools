@@ -38,7 +38,11 @@ import {
 } from "@internal/markup";
 import {json} from "@internal/codec-config";
 import {IS_ROME_DEV_ENV, isEnvVarSet} from "@internal/cli-environment";
-import {parseSemverRange, parseSemverVersion, satisfiesSemver} from "@internal/codec-semver";
+import {
+	parseSemverRange,
+	parseSemverVersion,
+	satisfiesSemver,
+} from "@internal/codec-semver";
 import {Reporter} from "@internal/cli-reporter";
 import {loadUserConfig} from "@internal/core/common/userConfig";
 import {RSERObject} from "@internal/binary-transport";

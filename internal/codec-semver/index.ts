@@ -5,24 +5,19 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {SemverVersion, SemverRange, SemverModifier} from "./types";
+import {SemverModifier, SemverRange, SemverVersion} from "./types";
 import {satisfiesFromAst} from "./satisfies";
 import {compareFromAst} from "./compare";
-import {
-	parseSemverRange,
-	parseSemverVersion,
-} from "./parse";
+import {parseSemverRange, parseSemverVersion} from "./parse";
 import {DiagnosticsError} from "@internal/diagnostics";
 
-export {SemverVersion, SemverRange, SemverModifier} from "./types";
+export {SemverModifier, SemverRange, SemverVersion} from "./types";
 
 export {parseSemverRange, parseSemverVersion};
 
 export {default as stringifySemver} from "./stringify";
 
-export function sortSemverVersions(
-	versions: SemverVersion[],
-): SemverVersion[] {
+export function sortSemverVersions(versions: SemverVersion[]): SemverVersion[] {
 	return versions.sort((a, b) => compareFromAst(a, b));
 }
 
@@ -56,22 +51,12 @@ export function minSatisfyingSemver(
 	return undefined;
 }
 
-export function satisfiesSemver(
-	version: SemverVersion,
-	range: SemverRange,
-): boolean {
-	try {
-		return satisfiesFromAst(version, range);
-	} catch (err) {
-		if (err instanceof DiagnosticsError) {
-			return false;
-		} else {
-			throw err;
-		}
-	}
-}
+export {satisfiesFromAst as satisfiesSemver};
 
-export function incrementSemver(version: SemverVersion, modifier: SemverModifier): SemverVersion {
+export function incrementSemver(
+	version: SemverVersion,
+	modifier: SemverModifier,
+): SemverVersion {
 	switch (modifier) {
 		case SemverModifier.MAJOR:
 			return {

@@ -6,11 +6,11 @@
  */
 
 import {
-	SemverVersion,
 	SemverComparatorOperator,
 	SemverRange,
-	SemverWildcardVersion,
+	SemverVersion,
 	SemverWildcard,
+	SemverWildcardVersion,
 } from "./types";
 import {compareFromAst} from "./compare";
 
@@ -118,7 +118,9 @@ function inRange(
 	return compareOp(">=", version, left) && compareOp("<=", version, right);
 }
 
-function collectVersions(range: SemverRange): (SemverWildcardVersion | SemverVersion)[] {
+function collectVersions(
+	range: SemverRange,
+): (SemverWildcardVersion | SemverVersion)[] {
 	switch (range.type) {
 		case "SemverAbsoluteVersion":
 		case "SemverWildcardVersion":

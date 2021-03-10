@@ -6,17 +6,17 @@
  */
 
 import {
-	SemverVersion,
 	SemverComparator,
 	SemverComparatorOperator,
 	SemverLogicalAnd,
 	SemverLogicalOr,
 	SemverRange,
-	Tokens,
-	SemverWildcardVersion,
+	SemverVersion,
 	SemverVersionPrereleaseParts,
 	SemverVersionRange,
 	SemverWildcard,
+	SemverWildcardVersion,
+	Tokens,
 } from "./types";
 import {
 	ParserCore,
@@ -154,7 +154,9 @@ function parseVersionOrWildcard(
 	return version;
 }
 
-function parseVersion(parser: SemverParser): SemverWildcardVersion | SemverVersion {
+function parseVersion(
+	parser: SemverParser,
+): SemverWildcardVersion | SemverVersion {
 	const startPos = parser.getPosition();
 	const startToken = parser.getToken();
 
@@ -309,7 +311,10 @@ function parseVersionNumber(parser: SemverParser): undefined | number {
 	return undefined;
 }
 
-function parseLogicalOr(parser: SemverParser, left: SemverRange): SemverLogicalOr {
+function parseLogicalOr(
+	parser: SemverParser,
+	left: SemverRange,
+): SemverLogicalOr {
 	parser.nextToken();
 	eatSpaceToken(parser);
 
@@ -328,7 +333,10 @@ function validateRangeSide(
 ): SemverWildcardVersion | SemverVersion | SemverWildcard {
 	// In loose mode, we allow ranges to be a bare wildcard instead of a version
 	// eg. * - 1.2.3
-	if (node.type === "SemverWildcardVersion" || node.type === "SemverAbsoluteVersion") {
+	if (
+		node.type === "SemverWildcardVersion" ||
+		node.type === "SemverAbsoluteVersion"
+	) {
 		return node;
 	}
 
@@ -448,7 +456,10 @@ function parseAtom(parser: SemverParser) {
 	}
 }
 
-function parseLogicalAnd(parser: SemverParser, left: SemverRange): SemverLogicalAnd {
+function parseLogicalAnd(
+	parser: SemverParser,
+	left: SemverRange,
+): SemverLogicalAnd {
 	const right = parseExpression(parser);
 
 	return {
@@ -515,8 +526,6 @@ export function parseSemverRange(opts: SemverParserOptions): SemverRange {
 	return parseInitialRange(semverParser.create(opts, {mode: "range"}));
 }
 
-export function parseSemverVersion(
-	opts: SemverParserOptions,
-): SemverVersion {
+export function parseSemverVersion(opts: SemverParserOptions): SemverVersion {
 	return parseInitialVersion(semverParser.create(opts, {mode: "version"}));
 }

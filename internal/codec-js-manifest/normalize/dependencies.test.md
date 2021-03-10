@@ -31,7 +31,7 @@ npm {
 ```javascript
 npm {
 	name: {packageName: "foo"}
-	range: AbsoluteVersion {
+	range: SemverAbsoluteVersion {
 		build: []
 		major: 1
 		minor: 0
@@ -47,7 +47,7 @@ npm {
 ```javascript
 npm {
 	name: {packageName: "@foo/bar"}
-	range: AbsoluteVersion {
+	range: SemverAbsoluteVersion {
 		build: []
 		major: 1
 		minor: 0

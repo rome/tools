@@ -8,12 +8,16 @@
 import "@internal/cli-layout";
 import {sortSemverVersions, stringifySemver} from "@internal/codec-semver";
 import {test} from "rome";
-import { parseSemverVersion } from "./parse";
+import {parseSemverVersion} from "./parse";
 
 test(
 	"sort",
 	(t) => {
-		const sorted = sortSemverVersions(["5.3.6", "1.2.3", "3.2.1", "1.2.4"].map(str => parseSemverVersion({input: str})));
+		const sorted = sortSemverVersions(
+			["5.3.6", "1.2.3", "3.2.1", "1.2.4"].map((str) =>
+				parseSemverVersion({input: str})
+			),
+		);
 
 		t.is(stringifySemver(sorted[0]), "1.2.3");
 		t.is(stringifySemver(sorted[1]), "1.2.4");

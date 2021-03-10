@@ -141,8 +141,10 @@ function determineDelimiter(path: AbsoluteFilePath): CommentDelimiter {
 	return "ARROW";
 }
 
-function createGeneratedCommentInstructions(scriptName: undefined | string): string {
-	let instructions = `Everything below is automatically generated. DO NOT MODIFY.`;
+function createGeneratedCommentInstructions(
+	scriptName: undefined | string,
+): string {
+	let instructions = "Everything below is automatically generated. DO NOT MODIFY.";
 	if (scriptName !== undefined) {
 		instructions += ` Run \`./rome run scripts/${scriptName}\` to update.`;
 	}
@@ -301,7 +303,6 @@ export async function updateVersion(newVersion: string): Promise<void> {
 
 	const formatted = json.stringify(manifest.asUnknown()) + "\n";
 	await path.writeFile(formatted);
-
 
 	reporter.success(
 		markup`Updated <code>version</code> to <emphasis>${newVersion}</emphasis> in ${path}`,
